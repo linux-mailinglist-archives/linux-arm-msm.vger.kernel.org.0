@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C792D792796
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 18:37:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 83A06792610
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 18:26:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238739AbjIEQGs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Sep 2023 12:06:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50612 "EHLO
+        id S238644AbjIEQGd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Sep 2023 12:06:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244690AbjIEBZi (ORCPT
+        with ESMTP id S244701AbjIEBZj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Sep 2023 21:25:38 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01895CC8
+        Mon, 4 Sep 2023 21:25:39 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A559DCC6
         for <linux-arm-msm@vger.kernel.org>; Mon,  4 Sep 2023 18:25:35 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2b962535808so30003461fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Sep 2023 18:25:34 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-5007c8308c3so3096839e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Sep 2023 18:25:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693877133; x=1694481933; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1693877134; x=1694481934; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2Rm3Y5KAtKu5ohVxEVzs5WePQAFUL7jzU8IZiFS6eHM=;
-        b=Jw4NsrrGzS/IJ9J9DTlST7Z2WdSP2Ygd9Zfs4tIUCcrJvd5wyFOvc118Jdks9JonuZ
-         YoSgIvGmCHiazwIQq3A3Pn++LusEmJ/bPhWdEoi21kcV013TalrfqHJXDxzftY371P92
-         4tomedPaH++svN9V2VX9D7v7aGzLxkdTaYzzvA38FnUOnVPokf20Rd/2AVIadU8Ygo7e
-         6C6Js2fCTzWSvBnjjBW7Klj3ITd9N7+OetKFxvShOCTCCvC+PIAv/zquHgrK/E4Z4kZn
-         mgI21jUqyASqU3ImUldOiWY+RNF1d064BomwkWtVGQgyM2UG+uG8PchXXSfPa+Pe4VzG
-         qXKQ==
+        bh=uQN1Ap/4XKz/5aS/uJ7pfsyxpBDq8/WGhMf2e10wfUM=;
+        b=mrv8oY5bScuCsGmmN0slEv9Yt3QG8zeDrobJu3kerlTR28h7PXAQrVEG60XeQF+SbS
+         zTGlZQ/4OZTZpN7Y54hXDmDPwdluGSVLbbdCcLLKqzk/AXHUPzTeYZXxzljURriaCrAf
+         VPNDUwE6CuzYcFaNae9nZx7kko31xnYxh7UIQ3WG4VtnZ0AbHnWsNxwKEiBxmoJF/xBh
+         Lq96ZRERnWzfS163qZBpvg7p9K0qlX4AEK26zKt2yoiJdagvrHV8lGwQUqNBCYV2hUr1
+         ma92+WkEYxYgTQbxt5zM0yk8ARebLADYmsXiteNk7jZwPp/NtU9oZzNsNtStHyX8FlZU
+         9Orw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693877133; x=1694481933;
+        d=1e100.net; s=20221208; t=1693877134; x=1694481934;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2Rm3Y5KAtKu5ohVxEVzs5WePQAFUL7jzU8IZiFS6eHM=;
-        b=MmVmgOmQM4MIR4Aoem7Szsgc2eDE8iCJJ77rneGhCOFOWkYHpKp6eLn2DSboKJTG8L
-         7Nbt5id7YRBUKACG94rNDZHk+S+KRGqoS1eRx+baNvxSuTyiTQCRwKWExacEKIPz9hNC
-         CiJD/1cJTysP153+iL+Hv2Pz+fo36Sc5sIT05q4UjUNCcYQTPFrSZR1O7YWZy0K9JZnS
-         90ZrTmO3NKv+js8nP5Z6b231YKB1QWNGvh8M7xs7JZyarenF5crvoSnhF9VQZX+/77th
-         ZIu0YX995iQhAl2GWT/ftuSm67SIJMjzyYsggmxFihqHOe5+AvIpZdmW4a64v2DGpdqY
-         TKWA==
-X-Gm-Message-State: AOJu0YztvKOhaAub3INM3+TJOGzJF+9OA6OhXEJrp6XJ+PquejjKoWCM
-        HSYFQygAhUjIAGb+P4GF2heuRw==
-X-Google-Smtp-Source: AGHT+IFISVrODvciD3wTkeSF8eCILfBUiFH6C734EjjBz5hFOMj/JPaBvd/KoMHYhMSBh8gV3ssqAw==
-X-Received: by 2002:a05:6512:3e1a:b0:500:9214:b308 with SMTP id i26-20020a0565123e1a00b005009214b308mr8473224lfv.65.1693877133308;
+        bh=uQN1Ap/4XKz/5aS/uJ7pfsyxpBDq8/WGhMf2e10wfUM=;
+        b=MBqpM4CbaxzKM4MWMl/IbyG+wnCU6T+1oBPoD14O5PsSVOwdYvXMUCdvxSnEZUv4N5
+         ghpVDub+4nQx3H+oI73NYzJmJLZ51WBIllytfzikCdo9IhcJn1YBp2pf5EIM6jW4SPSr
+         byYMphiZPy75tMcBmuaMdfUGOfyqpFbK1UsKJ8ntUtLBitbIk1q8i3J3XvxSspGZ1qFm
+         FZuUWHCWI5Xk2Ih1t4KBsntSj+drALnra18WT5rxg48ubu66DFgEisjuxQxm8/tOr0eS
+         l9vfG8UsNuZKYOdsM+6FQ2bjvu0M4Oc2FwCAFkIPoCmaNTf1wuO1bp/ua4uK0XEdwRWO
+         eJHA==
+X-Gm-Message-State: AOJu0YyrlmmXYM2g5gVnVVVu3GvZXAeJkVX7a8pnDTBHc02jj1wW63y7
+        BSGWdqkevRggviXYb1Ri26cHgQ==
+X-Google-Smtp-Source: AGHT+IFgZpzdyYlSNWhGAlu/VvmDMtFOE5/yU1q9JCDPkK5ohNNOiI9l6k6Oh63CaMCW9FyqOUQEKg==
+X-Received: by 2002:ac2:4d84:0:b0:4fb:7559:aea3 with SMTP id g4-20020ac24d84000000b004fb7559aea3mr6253582lfe.39.1693877133998;
         Mon, 04 Sep 2023 18:25:33 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id v25-20020ac25599000000b004ff70c76208sm2062369lfg.84.2023.09.04.18.25.32
+        by smtp.gmail.com with ESMTPSA id v25-20020ac25599000000b004ff70c76208sm2062369lfg.84.2023.09.04.18.25.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Sep 2023 18:25:32 -0700 (PDT)
+        Mon, 04 Sep 2023 18:25:33 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,9 +60,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v3 7/8] drm/msm/dpu: merge DPU_SSPP_SCALER_QSEED3, QSEED3LITE, QSEED4
-Date:   Tue,  5 Sep 2023 04:25:25 +0300
-Message-Id: <20230905012526.3010798-8-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v3 8/8] drm/msm/gpu: drop duplicating VIG feature masks
+Date:   Tue,  5 Sep 2023 04:25:26 +0300
+Message-Id: <20230905012526.3010798-9-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230905012526.3010798-1-dmitry.baryshkov@linaro.org>
 References: <20230905012526.3010798-1-dmitry.baryshkov@linaro.org>
@@ -77,118 +77,318 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Three different features, DPU_SSPP_SCALER_QSEED3, QSEED3LITE and QSEED4
-are all related to different versions of the same HW scaling block.
-Corresponding driver parts use scaler_blk.version to identify the
-correct way to program the hardware. In order to simplify the driver
-codepath, merge these three feature bits.
+After folding QSEED3LITE and QSEED4 feature bits into QSEED3 several
+VIG feature masks became equal. Drop these duplicates.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 4 ++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 6 +-----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c    | 9 ++-------
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h    | 4 +---
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      | 3 +--
- 5 files changed, 7 insertions(+), 19 deletions(-)
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h    |  2 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    |  8 ++++----
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    |  2 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h    |  2 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h    |  2 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h    |  2 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |  8 ++++----
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  |  8 ++++----
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  8 ++++----
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  8 ++++----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c        | 11 +----------
+ 11 files changed, 26 insertions(+), 35 deletions(-)
 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h
+index c5c44e15a8ea..e196f9e7fd82 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h
+@@ -68,7 +68,7 @@ static const struct dpu_sspp_cfg sm6125_sspp[] = {
+ 	{
+ 		.name = "sspp_0", .id = SSPP_VIG0,
+ 		.base = 0x4000, .len = 0x1f0,
+-		.features = VIG_SM6125_MASK,
++		.features = VIG_SDM845_MASK,
+ 		.sblk = &dpu_vig_sblk_2_4,
+ 		.xin_id = 0,
+ 		.type = SSPP_TYPE_VIG,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
+index e1a06e609cc1..c9576a7b8bef 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
+@@ -74,7 +74,7 @@ static const struct dpu_sspp_cfg sm8250_sspp[] = {
+ 	{
+ 		.name = "sspp_0", .id = SSPP_VIG0,
+ 		.base = 0x4000, .len = 0x1f8,
+-		.features = VIG_SC7180_MASK_SDMA,
++		.features = VIG_SDM845_MASK_SDMA,
+ 		.sblk = &dpu_vig_sblk_3_0,
+ 		.xin_id = 0,
+ 		.type = SSPP_TYPE_VIG,
+@@ -82,7 +82,7 @@ static const struct dpu_sspp_cfg sm8250_sspp[] = {
+ 	}, {
+ 		.name = "sspp_1", .id = SSPP_VIG1,
+ 		.base = 0x6000, .len = 0x1f8,
+-		.features = VIG_SC7180_MASK_SDMA,
++		.features = VIG_SDM845_MASK_SDMA,
+ 		.sblk = &dpu_vig_sblk_3_0,
+ 		.xin_id = 4,
+ 		.type = SSPP_TYPE_VIG,
+@@ -90,7 +90,7 @@ static const struct dpu_sspp_cfg sm8250_sspp[] = {
+ 	}, {
+ 		.name = "sspp_2", .id = SSPP_VIG2,
+ 		.base = 0x8000, .len = 0x1f8,
+-		.features = VIG_SC7180_MASK_SDMA,
++		.features = VIG_SDM845_MASK_SDMA,
+ 		.sblk = &dpu_vig_sblk_3_0,
+ 		.xin_id = 8,
+ 		.type = SSPP_TYPE_VIG,
+@@ -98,7 +98,7 @@ static const struct dpu_sspp_cfg sm8250_sspp[] = {
+ 	}, {
+ 		.name = "sspp_3", .id = SSPP_VIG3,
+ 		.base = 0xa000, .len = 0x1f8,
+-		.features = VIG_SC7180_MASK_SDMA,
++		.features = VIG_SDM845_MASK_SDMA,
+ 		.sblk = &dpu_vig_sblk_3_0,
+ 		.xin_id = 12,
+ 		.type = SSPP_TYPE_VIG,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+index 206e5a64e5e4..7e1156f1ef54 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+@@ -51,7 +51,7 @@ static const struct dpu_sspp_cfg sc7180_sspp[] = {
+ 	{
+ 		.name = "sspp_0", .id = SSPP_VIG0,
+ 		.base = 0x4000, .len = 0x1f8,
+-		.features = VIG_SC7180_MASK,
++		.features = VIG_SDM845_MASK,
+ 		.sblk = &dpu_vig_sblk_3_0,
+ 		.xin_id = 0,
+ 		.type = SSPP_TYPE_VIG,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
+index 1122a62acddf..49d360d2b73b 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
+@@ -38,7 +38,7 @@ static const struct dpu_sspp_cfg sm6115_sspp[] = {
+ 	{
+ 		.name = "sspp_0", .id = SSPP_VIG0,
+ 		.base = 0x4000, .len = 0x1f8,
+-		.features = VIG_SC7180_MASK,
++		.features = VIG_SDM845_MASK,
+ 		.sblk = &dpu_vig_sblk_3_0,
+ 		.xin_id = 0,
+ 		.type = SSPP_TYPE_VIG,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
+index 8aea53d5c86f..ce54e0c695d6 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
+@@ -58,7 +58,7 @@ static const struct dpu_sspp_cfg sm6350_sspp[] = {
+ 	{
+ 		.name = "sspp_0", .id = SSPP_VIG0,
+ 		.base = 0x4000, .len = 0x1f8,
+-		.features = VIG_SC7180_MASK,
++		.features = VIG_SDM845_MASK,
+ 		.sblk = &dpu_vig_sblk_3_0,
+ 		.xin_id = 0,
+ 		.type = SSPP_TYPE_VIG,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
+index 73756ee7bba7..b03f23a0359f 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
+@@ -39,7 +39,7 @@ static const struct dpu_sspp_cfg sm6375_sspp[] = {
+ 	{
+ 		.name = "sspp_0", .id = SSPP_VIG0,
+ 		.base = 0x4000, .len = 0x1f8,
+-		.features = VIG_SC7180_MASK,
++		.features = VIG_SDM845_MASK,
+ 		.sblk = &dpu_vig_sblk_3_0,
+ 		.xin_id = 0,
+ 		.type = SSPP_TYPE_VIG,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+index fcefb7a66bec..928d62caf8c8 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+@@ -73,7 +73,7 @@ static const struct dpu_sspp_cfg sm8350_sspp[] = {
+ 	{
+ 		.name = "sspp_0", .id = SSPP_VIG0,
+ 		.base = 0x4000, .len = 0x1f8,
+-		.features = VIG_SC7180_MASK,
++		.features = VIG_SDM845_MASK,
+ 		.sblk = &dpu_vig_sblk_3_0,
+ 		.xin_id = 0,
+ 		.type = SSPP_TYPE_VIG,
+@@ -81,7 +81,7 @@ static const struct dpu_sspp_cfg sm8350_sspp[] = {
+ 	}, {
+ 		.name = "sspp_1", .id = SSPP_VIG1,
+ 		.base = 0x6000, .len = 0x1f8,
+-		.features = VIG_SC7180_MASK,
++		.features = VIG_SDM845_MASK,
+ 		.sblk = &dpu_vig_sblk_3_0,
+ 		.xin_id = 4,
+ 		.type = SSPP_TYPE_VIG,
+@@ -89,7 +89,7 @@ static const struct dpu_sspp_cfg sm8350_sspp[] = {
+ 	}, {
+ 		.name = "sspp_2", .id = SSPP_VIG2,
+ 		.base = 0x8000, .len = 0x1f8,
+-		.features = VIG_SC7180_MASK,
++		.features = VIG_SDM845_MASK,
+ 		.sblk = &dpu_vig_sblk_3_0,
+ 		.xin_id = 8,
+ 		.type = SSPP_TYPE_VIG,
+@@ -97,7 +97,7 @@ static const struct dpu_sspp_cfg sm8350_sspp[] = {
+ 	}, {
+ 		.name = "sspp_3", .id = SSPP_VIG3,
+ 		.base = 0xa000, .len = 0x1f8,
+-		.features = VIG_SC7180_MASK,
++		.features = VIG_SDM845_MASK,
+ 		.sblk = &dpu_vig_sblk_3_0,
+ 		.xin_id = 12,
+ 		.type = SSPP_TYPE_VIG,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+index 332097f8799f..6e3a05666be6 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+@@ -74,7 +74,7 @@ static const struct dpu_sspp_cfg sc8280xp_sspp[] = {
+ 	{
+ 		.name = "sspp_0", .id = SSPP_VIG0,
+ 		.base = 0x4000, .len = 0x2ac,
+-		.features = VIG_SC7180_MASK,
++		.features = VIG_SDM845_MASK,
+ 		.sblk = &dpu_vig_sblk_3_0,
+ 		.xin_id = 0,
+ 		.type = SSPP_TYPE_VIG,
+@@ -82,7 +82,7 @@ static const struct dpu_sspp_cfg sc8280xp_sspp[] = {
+ 	}, {
+ 		.name = "sspp_1", .id = SSPP_VIG1,
+ 		.base = 0x6000, .len = 0x2ac,
+-		.features = VIG_SC7180_MASK,
++		.features = VIG_SDM845_MASK,
+ 		.sblk = &dpu_vig_sblk_3_0,
+ 		.xin_id = 4,
+ 		.type = SSPP_TYPE_VIG,
+@@ -90,7 +90,7 @@ static const struct dpu_sspp_cfg sc8280xp_sspp[] = {
+ 	}, {
+ 		.name = "sspp_2", .id = SSPP_VIG2,
+ 		.base = 0x8000, .len = 0x2ac,
+-		.features = VIG_SC7180_MASK,
++		.features = VIG_SDM845_MASK,
+ 		.sblk = &dpu_vig_sblk_3_0,
+ 		.xin_id = 8,
+ 		.type = SSPP_TYPE_VIG,
+@@ -98,7 +98,7 @@ static const struct dpu_sspp_cfg sc8280xp_sspp[] = {
+ 	}, {
+ 		.name = "sspp_3", .id = SSPP_VIG3,
+ 		.base = 0xa000, .len = 0x2ac,
+-		.features = VIG_SC7180_MASK,
++		.features = VIG_SDM845_MASK,
+ 		.sblk = &dpu_vig_sblk_3_0,
+ 		.xin_id = 12,
+ 		.type = SSPP_TYPE_VIG,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+index 90977084958a..09c589207d74 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+@@ -74,7 +74,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
+ 	{
+ 		.name = "sspp_0", .id = SSPP_VIG0,
+ 		.base = 0x4000, .len = 0x32c,
+-		.features = VIG_SC7180_MASK,
++		.features = VIG_SDM845_MASK,
+ 		.sblk = &dpu_vig_sblk_3_1,
+ 		.xin_id = 0,
+ 		.type = SSPP_TYPE_VIG,
+@@ -82,7 +82,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
+ 	}, {
+ 		.name = "sspp_1", .id = SSPP_VIG1,
+ 		.base = 0x6000, .len = 0x32c,
+-		.features = VIG_SC7180_MASK,
++		.features = VIG_SDM845_MASK,
+ 		.sblk = &dpu_vig_sblk_3_1,
+ 		.xin_id = 4,
+ 		.type = SSPP_TYPE_VIG,
+@@ -90,7 +90,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
+ 	}, {
+ 		.name = "sspp_2", .id = SSPP_VIG2,
+ 		.base = 0x8000, .len = 0x32c,
+-		.features = VIG_SC7180_MASK,
++		.features = VIG_SDM845_MASK,
+ 		.sblk = &dpu_vig_sblk_3_1,
+ 		.xin_id = 8,
+ 		.type = SSPP_TYPE_VIG,
+@@ -98,7 +98,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
+ 	}, {
+ 		.name = "sspp_3", .id = SSPP_VIG3,
+ 		.base = 0xa000, .len = 0x32c,
+-		.features = VIG_SC7180_MASK,
++		.features = VIG_SDM845_MASK,
+ 		.sblk = &dpu_vig_sblk_3_1,
+ 		.xin_id = 12,
+ 		.type = SSPP_TYPE_VIG,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+index 23f4d8d8e22b..e1f872efb5b2 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+@@ -76,7 +76,7 @@ static const struct dpu_sspp_cfg sm8550_sspp[] = {
+ 	{
+ 		.name = "sspp_0", .id = SSPP_VIG0,
+ 		.base = 0x4000, .len = 0x344,
+-		.features = VIG_SC7180_MASK,
++		.features = VIG_SDM845_MASK,
+ 		.sblk = &dpu_vig_sblk_3_2,
+ 		.xin_id = 0,
+ 		.type = SSPP_TYPE_VIG,
+@@ -84,7 +84,7 @@ static const struct dpu_sspp_cfg sm8550_sspp[] = {
+ 	}, {
+ 		.name = "sspp_1", .id = SSPP_VIG1,
+ 		.base = 0x6000, .len = 0x344,
+-		.features = VIG_SC7180_MASK,
++		.features = VIG_SDM845_MASK,
+ 		.sblk = &dpu_vig_sblk_3_2,
+ 		.xin_id = 4,
+ 		.type = SSPP_TYPE_VIG,
+@@ -92,7 +92,7 @@ static const struct dpu_sspp_cfg sm8550_sspp[] = {
+ 	}, {
+ 		.name = "sspp_2", .id = SSPP_VIG2,
+ 		.base = 0x8000, .len = 0x344,
+-		.features = VIG_SC7180_MASK,
++		.features = VIG_SDM845_MASK,
+ 		.sblk = &dpu_vig_sblk_3_2,
+ 		.xin_id = 8,
+ 		.type = SSPP_TYPE_VIG,
+@@ -100,7 +100,7 @@ static const struct dpu_sspp_cfg sm8550_sspp[] = {
+ 	}, {
+ 		.name = "sspp_3", .id = SSPP_VIG3,
+ 		.base = 0xa000, .len = 0x344,
+-		.features = VIG_SC7180_MASK,
++		.features = VIG_SDM845_MASK,
+ 		.sblk = &dpu_vig_sblk_3_2,
+ 		.xin_id = 12,
+ 		.type = SSPP_TYPE_VIG,
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index b37b4076e53a..67d66319a825 100644
+index 67d66319a825..337d4f612f9a 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -31,10 +31,10 @@
+@@ -30,15 +30,6 @@
+ #define VIG_SDM845_MASK_SDMA \
  	(VIG_SDM845_MASK | BIT(DPU_SSPP_SMART_DMA_V2))
  
- #define VIG_SC7180_MASK \
--	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED4))
-+	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3))
+-#define VIG_SC7180_MASK \
+-	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3))
+-
+-#define VIG_SM6125_MASK \
+-	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3))
+-
+-#define VIG_SC7180_MASK_SDMA \
+-	(VIG_SC7180_MASK | BIT(DPU_SSPP_SMART_DMA_V2))
+-
+ #define VIG_QCM2290_MASK (VIG_BASE_MASK | BIT(DPU_SSPP_QOS_8LVL))
  
- #define VIG_SM6125_MASK \
--	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3LITE))
-+	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3))
+ #define DMA_MSM8998_MASK \
+@@ -47,7 +38,7 @@
+ 	BIT(DPU_SSPP_CDP) | BIT(DPU_SSPP_EXCL_RECT))
  
- #define VIG_SC7180_MASK_SDMA \
- 	(VIG_SC7180_MASK | BIT(DPU_SSPP_SMART_DMA_V2))
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-index 7ca6286756f6..8dbf0322394e 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-@@ -51,9 +51,7 @@ enum {
- /**
-  * SSPP sub-blocks/features
-  * @DPU_SSPP_SCALER_QSEED2,  QSEED2 algorithm support
-- * @DPU_SSPP_SCALER_QSEED3,  QSEED3 alogorithm support
-- * @DPU_SSPP_SCALER_QSEED3LITE,  QSEED3 Lite alogorithm support
-- * @DPU_SSPP_SCALER_QSEED4,  QSEED4 algorithm support
-+ * @DPU_SSPP_SCALER_QSEED3,  QSEED3 alogorithm support (also QSEED3LITE and QSEED4)
-  * @DPU_SSPP_SCALER_RGB,     RGB Scaler, supported by RGB pipes
-  * @DPU_SSPP_CSC,            Support of Color space converion
-  * @DPU_SSPP_CSC_10BIT,      Support of 10-bit Color space conversion
-@@ -72,8 +70,6 @@ enum {
- enum {
- 	DPU_SSPP_SCALER_QSEED2 = 0x1,
- 	DPU_SSPP_SCALER_QSEED3,
--	DPU_SSPP_SCALER_QSEED3LITE,
--	DPU_SSPP_SCALER_QSEED4,
- 	DPU_SSPP_SCALER_RGB,
- 	DPU_SSPP_CSC,
- 	DPU_SSPP_CSC_10BIT,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-index f2192de93713..c20f37c8033c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-@@ -603,9 +603,7 @@ static void _setup_layer_ops(struct dpu_hw_sspp *c,
- 		test_bit(DPU_SSPP_SMART_DMA_V2, &c->cap->features))
- 		c->ops.setup_multirect = dpu_hw_sspp_setup_multirect;
+ #define VIG_SC7280_MASK \
+-	(VIG_SC7180_MASK | BIT(DPU_SSPP_INLINE_ROTATION))
++	(VIG_SDM845_MASK | BIT(DPU_SSPP_INLINE_ROTATION))
  
--	if (test_bit(DPU_SSPP_SCALER_QSEED3, &features) ||
--			test_bit(DPU_SSPP_SCALER_QSEED3LITE, &features) ||
--			test_bit(DPU_SSPP_SCALER_QSEED4, &features)) {
-+	if (test_bit(DPU_SSPP_SCALER_QSEED3, &features)) {
- 		c->ops.setup_scaler = _dpu_hw_sspp_setup_scaler3;
- 		c->ops.get_scaler_ver = _dpu_hw_sspp_get_scaler3_ver;
- 	}
-@@ -640,10 +638,7 @@ int _dpu_hw_sspp_init_debugfs(struct dpu_hw_sspp *hw_pipe, struct dpu_kms *kms,
- 			cfg->len,
- 			kms);
- 
--	if (cfg->features & BIT(DPU_SSPP_SCALER_QSEED3) ||
--			cfg->features & BIT(DPU_SSPP_SCALER_QSEED3LITE) ||
--			cfg->features & BIT(DPU_SSPP_SCALER_QSEED2) ||
--			cfg->features & BIT(DPU_SSPP_SCALER_QSEED4))
-+	if (sblk->scaler_blk.len)
- 		dpu_debugfs_create_regset32("scaler_blk", 0400,
- 				debugfs_root,
- 				sblk->scaler_blk.base + cfg->base,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-index cbf4f95ff0fd..d7954e900296 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-@@ -26,9 +26,7 @@ struct dpu_hw_sspp;
-  */
- #define DPU_SSPP_SCALER (BIT(DPU_SSPP_SCALER_RGB) | \
- 			 BIT(DPU_SSPP_SCALER_QSEED2) | \
--			 BIT(DPU_SSPP_SCALER_QSEED3) | \
--			 BIT(DPU_SSPP_SCALER_QSEED3LITE) | \
--			 BIT(DPU_SSPP_SCALER_QSEED4))
-+			 BIT(DPU_SSPP_SCALER_QSEED3))
- 
- /*
-  * Define all CSC feature bits in catalog
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index c2aaaded07ed..109355275ec5 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -438,8 +438,7 @@ static void _dpu_plane_setup_scaler3(struct dpu_hw_sspp *pipe_hw,
- 			scale_cfg->src_height[i] /= chroma_subsmpl_v;
- 		}
- 
--		if (pipe_hw->cap->features &
--			BIT(DPU_SSPP_SCALER_QSEED4)) {
-+		if (pipe_hw->cap->sblk->scaler_blk.version >= 0x3000) {
- 			scale_cfg->preload_x[i] = DPU_QSEED4_DEFAULT_PRELOAD_H;
- 			scale_cfg->preload_y[i] = DPU_QSEED4_DEFAULT_PRELOAD_V;
- 		} else {
+ #define VIG_SC7280_MASK_SDMA \
+ 	(VIG_SC7280_MASK | BIT(DPU_SSPP_SMART_DMA_V2))
 -- 
 2.39.2
 
