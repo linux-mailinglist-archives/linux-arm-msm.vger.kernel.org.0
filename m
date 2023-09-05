@@ -2,202 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8060879283A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 18:43:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD17D792868
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 18:43:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239381AbjIEQHt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Sep 2023 12:07:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52376 "EHLO
+        id S238190AbjIEQFi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Sep 2023 12:05:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354209AbjIEKJs (ORCPT
+        with ESMTP id S1354257AbjIEKZK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Sep 2023 06:09:48 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 545DF90;
-        Tue,  5 Sep 2023 03:09:44 -0700 (PDT)
-Received: from [192.168.1.23] (unknown [171.76.82.102])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        Tue, 5 Sep 2023 06:25:10 -0400
+Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EC98CE;
+        Tue,  5 Sep 2023 03:25:05 -0700 (PDT)
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: vignesh)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 73F02660716C;
-        Tue,  5 Sep 2023 11:09:37 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1693908581;
-        bh=PHDlogbWriNpSInDU6bgIDQgv8X9PfNf4xdH4kqZ9Sk=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=eQ77jxssWPUan9oBzIXWOuFcqRHIwZgu5AUK/namoH9kzlCuPUDvKCAxDWPHn9Q5+
-         D3xfI2I2zg48ZwcE0p2Wsd5JJZxOMmajFxZWcv20Yr30f3EnUFO4kBnlZT5bmmzfj+
-         PhthVN+NmbADogATjEMdgnWBQRZqoHZe4Tj6lbn1MeGwDArJ3AYlR2+cvQmpNkdOTs
-         puY18CIyqzWoC6EBwxfSYDzW7Uaf77Oa0ft/WGm49VfAF5Q1u5VH8dddlrrssR6y0f
-         0OJ7ZlIC7Xy2wvhqv1j0HR0o04z78w+PPS1skuLvbBuoP4mYovi4K88GhE+E6XJ81Q
-         /0azjpFaYmK8Q==
-Message-ID: <2c812fe4-04ba-0243-5330-c7b7e695cff9@collabora.com>
-Date:   Tue, 5 Sep 2023 15:39:33 +0530
+        by box.trvn.ru (Postfix) with ESMTPSA id 87289408E8;
+        Tue,  5 Sep 2023 15:25:00 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+        t=1693909500; bh=82wnOs2cazR792K57XsVYZG/zGApqL4J6S+GzcIbLSM=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=nmDMXCayMNEpCVMehcyT+sipn6UTXZnLJMSug/hoQHIFtoy3U6nT9sT8WDPK374+D
+         AbAA0puWrXf//XYrOj52NqTKsy74VOhrbAo5djGM4vOM0JngXH+4ue4mrFgPE3GbaL
+         GoWA0IRWXlcawDXem0TU0yw3XayuAkWj/uIyDSEF/fMx8rMLP8/+TG3JCmzxTg+9LR
+         gGSgh91YcED6okYzllUyYt6Nt78PXUzxPiLvGhLiTzFrfURY8fYW410VSlCuh6Axtq
+         9x/l/HwTUZ0GZuQ8VhxgswqaVpx8dWSg4he5ZfaehkU5KFCRfhAsM7g0q/JiZJ34FK
+         fJouHIZv1aLfw==
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2 2/7] drm: ci: Force db410c to host mode
-Content-Language: en-US
-To:     Maxime Ripard <mripard@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     dri-devel@lists.freedesktop.org, helen.koike@collabora.com,
-        guilherme.gallo@collabora.com, sergi.blanch.torne@collabora.com,
-        david.heidelberg@collabora.com, daniels@collabora.com,
-        gustavo.padovan@collabora.com, emma@anholt.net,
-        robclark@freedesktop.org, robdclark@google.com, anholt@google.com,
-        robdclark@gmail.com, airlied@gmail.com, daniel@ffwll.ch,
-        jani.nikula@linux.intel.com, linux-kernel@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        virtualization@lists.linux-foundation.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230904161516.66751-1-vignesh.raman@collabora.com>
- <20230904161516.66751-3-vignesh.raman@collabora.com>
- <CAA8EJpq_cmFQ6TGy1xELh3ButWKLfSkQcp5ix049s_iqKw6DvQ@mail.gmail.com>
- <ueznsu2dlvq5zp3ls262fww54bnlqa3e2ssr6f65vrrionloms@ir2ywgeajj4w>
-From:   Vignesh Raman <vignesh.raman@collabora.com>
-In-Reply-To: <ueznsu2dlvq5zp3ls262fww54bnlqa3e2ssr6f65vrrionloms@ir2ywgeajj4w>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+Date:   Tue, 05 Sep 2023 15:24:59 +0500
+From:   Nikita Travkin <nikita@trvn.ru>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org,
+        David Wronek <davidwronek@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH 2/4] remoteproc: qcom: pas: Add sc7180 adsp
+In-Reply-To: <b85245cc-868a-442e-8f27-ae6ee60d49cc@linaro.org>
+References: <20230905-sc7180-adsp-rproc-v1-0-dfea7699da7b@trvn.ru>
+ <20230905-sc7180-adsp-rproc-v1-2-dfea7699da7b@trvn.ru>
+ <b85245cc-868a-442e-8f27-ae6ee60d49cc@linaro.org>
+Message-ID: <96006deefd7a10a65db5d84ad319524a@trvn.ru>
+X-Sender: nikita@trvn.ru
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry, Maxime,
-
-On 05/09/23 14:13, Maxime Ripard wrote:
-> Hi,
-> 
-> On Mon, Sep 04, 2023 at 07:59:26PM +0300, Dmitry Baryshkov wrote:
->> On Mon, 4 Sept 2023 at 19:16, Vignesh Raman <vignesh.raman@collabora.com> wrote:
->>>
->>> Force db410c to host mode to fix network issue which results in failure
->>> to mount root fs via NFS.
->>> See https://gitlab.freedesktop.org/gfx-ci/linux/-/commit/cb72a629b8c15c80a54dda510743cefd1c4b65b8
->>>
->>> Use fdtoverlay command to merge base device tree with an overlay
->>> which contains the fix for USB controllers to work in host mode.
->>>
->>> Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
->>> ---
->>>
->>> v2:
->>>    - Use fdtoverlay command to merge overlay dtbo with the base dtb instead of modifying the kernel sources
->>>
->>> ---
->>>   drivers/gpu/drm/ci/build.sh                         |  5 +++++
->>>   .../gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts  | 13 +++++++++++++
->>>   2 files changed, 18 insertions(+)
->>>   create mode 100644 drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts
->>>
->>> diff --git a/drivers/gpu/drm/ci/build.sh b/drivers/gpu/drm/ci/build.sh
->>> index 7b014287a041..92ffd98cd09e 100644
->>> --- a/drivers/gpu/drm/ci/build.sh
->>> +++ b/drivers/gpu/drm/ci/build.sh
->>> @@ -92,6 +92,11 @@ done
->>>
->>>   if [[ -n ${DEVICE_TREES} ]]; then
->>>       make dtbs
->>> +    if [[ -e arch/arm64/boot/dts/qcom/apq8016-sbc.dtb ]]; then
->>> +        dtc -@ -I dts -O dtb -o drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dtbo drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts
->>> +        fdtoverlay -i arch/arm64/boot/dts/qcom/apq8016-sbc.dtb -o arch/arm64/boot/dts/qcom/apq8016-sbc-overlay.dtb drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dtbo
->>> +        mv arch/arm64/boot/dts/qcom/apq8016-sbc-overlay.dtb arch/arm64/boot/dts/qcom/apq8016-sbc.dtb
->>> +    fi
->>>       cp ${DEVICE_TREES} /lava-files/.
->>>   fi
->>>
->>> diff --git a/drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts b/drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts
->>> new file mode 100644
->>> index 000000000000..57b7604f1c23
->>> --- /dev/null
->>> +++ b/drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts
->>> @@ -0,0 +1,13 @@
->>> +/dts-v1/;
->>> +/plugin/;
->>> +
->>> +/ {
->>> +    fragment@0 {
->>> +        target-path = "/soc@0";
->>> +        __overlay__ {
->>> +            usb@78d9000 {
->>> +                dr_mode = "host";
->>> +            };
->>> +        };
->>> +    };
->>> +};
->>> --
->>> 2.40.1
+Konrad Dybcio писал(а) 05.09.2023 13:35:
+> On 5.09.2023 07:47, Nikita Travkin wrote:
+>> sc7180 has a dedicated ADSP similar to the one found in sm8250.
+>> Add it's compatible to the driver reusing the existing config so
+>> the devices that use the adsp can probe it.
 >>
->> Can we use normal dtso syntax here instead of defining fragments manually?
+>> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+>> ---
+>>  drivers/remoteproc/qcom_q6v5_pas.c | 1 +
+>>  1 file changed, 1 insertion(+)
+>>
+>> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+>> index b5447dd2dd35..55fafc68200e 100644
+>> --- a/drivers/remoteproc/qcom_q6v5_pas.c
+>> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
+>> @@ -1161,6 +1161,7 @@ static const struct of_device_id adsp_of_match[] = {
+>>  	{ .compatible = "qcom,qcs404-adsp-pas", .data = &adsp_resource_init },
+>>  	{ .compatible = "qcom,qcs404-cdsp-pas", .data = &cdsp_resource_init },
+>>  	{ .compatible = "qcom,qcs404-wcss-pas", .data = &wcss_resource_init },
+>> +	{ .compatible = "qcom,sc7180-adsp-pas", .data = &sm8250_adsp_resource},
+> Should we use a fallback here, maybe?
 > 
-> What Dmitry is hinting about is to use the "Sugar Syntax". There a good documentation here:
-> https://source.android.com/docs/core/architecture/dto/syntax
 
+Not sure if it makes sense to, given afaiu no other soc defines two
+compatibles for the adsp right now...
 
-With the below DTO syntax,
-/dts-v1/;
-/plugin/;
-
-&usb {
-   usb@78d9000 {
-     dr_mode = "host";
-   };
-};
-
-Decoded dtbo file is,
-/dts-v1/;
-
-/ {
-
-	fragment@0 {
-		target = <0xffffffff>;
-
-		__overlay__ {
-
-			usb@78d9000 {
-				dr_mode = "host";
-			};
-		};
-	};
-
-	__fixups__ {
-		usb = "/fragment@0:target:0";
-	};
-};
-
-With the previous fix using fragment we get,
-/ {
-
-	fragment@0 {
-		target-path	 = "/soc@0";
-
-		__overlay__ {
-
-			usb@78d9000 {
-				dr_mode = "host";
-			};
-		};
-	};
-};
-
-Decoded apq8016-sbc.dtb file with the fix (setting dr_mode to host) is,
-/dts-v1/;
-/ {	
-	soc@0 {
-		usb@78d9000 {
-			dr_mode = "host";
-		};	
-	};
-};
-
-How can set the target to "soc@0" using the DTO syntax? Otherwise 
-fdtoverlay fails to apply the dtbo file with the base dtb.
-
-Regards,
-Vignesh
+> Konrad
