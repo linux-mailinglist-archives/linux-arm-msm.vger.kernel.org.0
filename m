@@ -2,108 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 246DD792AFA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 19:02:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD44C792C65
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 19:29:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232257AbjIEQqC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Sep 2023 12:46:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46044 "EHLO
+        id S232900AbjIER3R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Sep 2023 13:29:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242242AbjIEQed (ORCPT
+        with ESMTP id S238442AbjIER1l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Sep 2023 12:34:33 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DBFC2D5F
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Sep 2023 09:33:13 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-99357737980so417469366b.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Sep 2023 09:33:13 -0700 (PDT)
+        Tue, 5 Sep 2023 13:27:41 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B2BC4B680
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Sep 2023 09:50:30 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-9a645e54806so357695066b.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Sep 2023 09:50:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693931465; x=1694536265; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=7lliAJnjKGrKN2HdJy1Zp01oKeEF+jouNcZc6sxAEmg=;
-        b=AeaUwT+RZbntyjLvbbf2GnUCUDO1GNIdSqjXawsGuxfKVmGEF0ldsVOeYHuTo2koC5
-         GCLcxRNHBTEUG+k3cwrENbNG+Xy5TMyj537aFWdJXe+j1HH98XZgnhMRtcfE7/Gbo6RI
-         mMS1iJSGmXlSHewoiux0vLafQGXKOHmJRk/zBQTL0fw8s+ZAKEVQbe0Y0CuelE5NKgiv
-         c0hJoIQy3wSgrzuCawkruMH5o5pOlmyd1gAxtfZK6zEfspJAA9hHY6hhK2ECgHtr85LF
-         qG6AY/8vwrgIl9/o8RwBxjSxJTLABcn8qUAuq7jQFUL9x8j3tkTrPAKVdLnSWL9qO3yi
-         349w==
+        d=linaro.org; s=google; t=1693932550; x=1694537350; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=bjksFs9ME0ZMeGOd6P3pA7Ye4FZ8i8SMNjWPMfIw5lk=;
+        b=P6JUuISrAzex1JfY9onDwR0IW94u9kJpBzZhMOInrPVOKk37dNeyZFibJlCFLlX6Sv
+         ILExT/hULEKwZfIxA5GhTeyc4qzVm4oUDsjpYdwvcToJxyBJi/miWF9YTRu8KnNs2T7j
+         1gTdRoParE7rN5Nzti9N+WcqtlPylujzKZ3neBv+5JkejxYEjun23syY2A30hmGaPTi/
+         kaI9JVbqrTzYf8R061vjYH+I6ckbsxCJVDTJYYYHLLA5ptQEH6dC0ZbBWxa0O8cg3m1/
+         eZQXUpfEHu4HOV25vzV4W52TovLzbSM6XjKE4K+X1m28yU+FhPABCR6XXPPfQXi09cDD
+         c/wQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693931466; x=1694536266;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7lliAJnjKGrKN2HdJy1Zp01oKeEF+jouNcZc6sxAEmg=;
-        b=f4Ao7PXDa2CdVlZiLF9TvhACaPtgkEePvJYDW0bSby8FDuXBWsEkvroLyBVhpZnul8
-         axmSnfFiQc4ha5Zy01vrCgcPxcdylFd7lFToaDv+eh3eONyU3g5SGGjo6jMMVLUiLXlC
-         jHHl+S+urzB52Yji8AZQ80DUx0Txn3swICv3zi40Ihwhx3yMMIprBQP9nyhtZvOt7rbR
-         HYjCvQuS/+TWmd8FqDKO6c2XbAMP0ULvvmYhpU5q8JlUE2UkZIPh/qS5zmCLykBvjKJj
-         kIZ0RZZcIU0dL8kPn+gCO7guVXhuR4/5Ea7s6oRzDlGAeKyP6mz73rwI5L9VanYRMpAd
-         gLkw==
-X-Gm-Message-State: AOJu0YyHIUm/Di4mc6nrP4C4ytgyLhMAkMjExvCJJSzCSIloOAOagEmS
-        tQ9W2WVoAu/pBt3j02AaWsQcLfnuRa0XYdjqeWs=
-X-Google-Smtp-Source: AGHT+IGc9ZoOkCPrWQHAvmzavnP932KKSQltJbJVFwE5KtY8VTlctUL6wrsqrWGa8tPg0SULxnh2RA==
-X-Received: by 2002:a17:906:3054:b0:9a6:8219:6e0b with SMTP id d20-20020a170906305400b009a682196e0bmr307473ejd.35.1693931465798;
-        Tue, 05 Sep 2023 09:31:05 -0700 (PDT)
-Received: from krzk-bin.. (77-252-46-238.static.ip.netia.com.pl. [77.252.46.238])
-        by smtp.gmail.com with ESMTPSA id g24-20020a170906395800b00992e265495csm7796187eje.212.2023.09.05.09.31.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Sep 2023 09:31:05 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Rohit Agarwal <quic_rohiagar@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] arm64: dts: qcom: sdx75-idp: align RPMh regulator nodes with bindings
-Date:   Tue,  5 Sep 2023 18:31:03 +0200
-Message-Id: <20230905163103.257412-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        d=1e100.net; s=20221208; t=1693932550; x=1694537350;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bjksFs9ME0ZMeGOd6P3pA7Ye4FZ8i8SMNjWPMfIw5lk=;
+        b=ZnHdKgSgCjWuvGmIn3T11Ygq6Gzj6eR54PtMDShHp7rgNUorAk6CFZ35AQdxDleEIU
+         xAQcMOZXaVh7lMmbKkyHWGJcl62JALaRqj0RfVHoeG/NBDeBbPJeRWs/GBldKuA7HHjG
+         lFsdvIQIDZgf6EQJF55XXy37aBjp2O74UIK0ZF8+8neSDeTGU69UYBamsmdyzx633yo9
+         CX6ymnY73lFIzYZDXYxGzzdBaUX/jXYSzoMiNjKe0WQigJsrUDZfTYj9nob+04nJ4r+s
+         92WvBozseAMjtULK87oKJ2WfohPNfgOMkh5spRLVQSsad7p2463IXYbNfiMQb8tOVkLy
+         jtvQ==
+X-Gm-Message-State: AOJu0YzsH6iQD4AKSHvXWYWpC1A/5BC6jelVoOz9IT7hql4q5m9wFLs+
+        NE4wLk4aaC08jDDYzbfmful+/vMO4cbvdeAA8cM=
+X-Google-Smtp-Source: AGHT+IGPdPwLCLtw5pl5htm08s4io9/1/fHruh8qkZPW18UOGYZ04JcE/v4EnVNpCFOI8nTRGZI5ow==
+X-Received: by 2002:a17:906:3057:b0:9a1:6252:16a0 with SMTP id d23-20020a170906305700b009a1625216a0mr240900ejd.46.1693931837438;
+        Tue, 05 Sep 2023 09:37:17 -0700 (PDT)
+Received: from [192.168.0.22] (77-252-46-238.static.ip.netia.com.pl. [77.252.46.238])
+        by smtp.gmail.com with ESMTPSA id k23-20020a1709061c1700b00992b71d8f19sm7750341ejg.133.2023.09.05.09.37.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Sep 2023 09:37:16 -0700 (PDT)
+Message-ID: <f5b05cfa-f12c-4f4d-a801-3aa76d843d6d@linaro.org>
+Date:   Tue, 5 Sep 2023 18:37:14 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.0
+Subject: Re: [PATCH v3 0/3] Add qcom hvc/shmem transport
+To:     Nikunj Kela <quic_nkela@quicinc.com>, sudeep.holla@arm.com
+Cc:     cristian.marussi@arm.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20230718160833.36397-1-quic_nkela@quicinc.com>
+ <20230811175719.28378-1-quic_nkela@quicinc.com>
+ <3342d8bf-5281-c082-cb9a-7a027b413237@quicinc.com>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <3342d8bf-5281-c082-cb9a-7a027b413237@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Device node names should be generic and bindings expect certain pattern
-for RPMh regulator nodes:
+On 05/09/2023 18:06, Nikunj Kela wrote:
+> 
+> On 8/11/2023 10:57 AM, Nikunj Kela wrote:
+>> This change introduce a new transport channel for Qualcomm virtual
+>> platforms. The transport is mechanically similar to ARM_SCMI_TRANSPORT_SMC.
+>> The difference between the two transports is that a parameter is passed in
+>> the hypervisor call to identify which doorbell to assert. This parameter is
+>> dynamically generated at runtime on the device and insuitable to pass via
+>> the devicetree.
+>>
+>> The function ID and parameter are stored by firmware in the shmem region.
+>>
+>> This has been tested on ARM64 virtual Qualcomm platform.
+>>
+>> ---
+>> v3 -> fix the compilation error reported by the test bot,
+>>        add support for polling based instances
+>>
+>> v2 -> use allOf construct in dtb schema,
+>>        remove wrappers from mutexes,
+>>        use architecture independent channel layout
+>>
+>> v1 -> original patches
+>>
+>> Nikunj Kela (3):
+>>    dt-bindings: arm: convert nested if-else construct to allOf
+>>    dt-bindings: arm: Add qcom specific hvc transport for SCMI
+>>    firmware: arm_scmi: Add qcom hvc/shmem transport
+>>
+>>   .../bindings/firmware/arm,scmi.yaml           |  67 ++---
+>>   drivers/firmware/arm_scmi/Kconfig             |  13 +
+>>   drivers/firmware/arm_scmi/Makefile            |   2 +
+>>   drivers/firmware/arm_scmi/common.h            |   3 +
+>>   drivers/firmware/arm_scmi/driver.c            |   4 +
+>>   drivers/firmware/arm_scmi/qcom_hvc.c          | 232 ++++++++++++++++++
+>>   6 files changed, 293 insertions(+), 28 deletions(-)
+>>   create mode 100644 drivers/firmware/arm_scmi/qcom_hvc.c
+> Gentle Ping!
 
-  sdx75-idp.dtb: rsc@17a00000: 'pmx75-rpmh-regulators' does not match any of the regexes: '^regulators(-[0-9])?$', 'pinctrl-[0-9]+'
+It's third ping these two weeks from Qualcomm. Folks, it is merge
+window. What do you think will happen with your ping during this time?
 
-Fixes: 8a2dc39d1043 ("arm64: dts: qcom: sdx75-idp: Add regulator nodes")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
----
-
-Really, I can't believe I am still fixing this stuff. New boards bring
-the same mistakes we fixed half year ago. Or even earlier...
----
- arch/arm64/boot/dts/qcom/sdx75-idp.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sdx75-idp.dts b/arch/arm64/boot/dts/qcom/sdx75-idp.dts
-index 10d15871f2c4..a14e0650c4a8 100644
---- a/arch/arm64/boot/dts/qcom/sdx75-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sdx75-idp.dts
-@@ -44,7 +44,7 @@ vreg_bob_3p3: pmx75-bob {
- };
- 
- &apps_rsc {
--	pmx75-rpmh-regulators {
-+	regulators-0 {
- 		compatible = "qcom,pmx75-rpmh-regulators";
- 		qcom,pmic-id = "b";
- 
--- 
-2.34.1
+Best regards,
+Krzysztof
 
