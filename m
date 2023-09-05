@@ -2,122 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 984D8792CE8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 19:58:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8383D792C61
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 19:29:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236211AbjIER6g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Sep 2023 13:58:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34390 "EHLO
+        id S237716AbjIERTa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Sep 2023 13:19:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241252AbjIER6H (ORCPT
+        with ESMTP id S1344187AbjIERSS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Sep 2023 13:58:07 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1986A15A1B;
-        Tue,  5 Sep 2023 10:53:51 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 385BSwJN023491;
-        Tue, 5 Sep 2023 16:06:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=wr1Ck6RCHOMwvpJ21oFY9bXdw5ypgpuIPcQMdoCBAh4=;
- b=m/wKng7Tk6guMKISRL0TCoZoEndSFSBPjqmpIx/ne31b27t3KAapmA76FuyYF4JdmpHO
- MMGYss6YJNkhnxlefcpv20ouRvvN/kpxKXahwzsnuBb4XcmQRZNOrCh160t1qbX0cUYR
- 1T2RM32qRmsuNkzO2qXApdc2gC1hLrsLetpR97yZXQoVR7Fqsx+r8saE4YDdaQdTrqYp
- x8oK1pA3U5B142uBjgNahOkTKzzg87z7nQTvFGLf8deC6JHKZ9A5ijqPP1ZMsQvoAY/0
- RKe/Rsl3KiTVNDiIXITb/+wLfQS65URhU51yadLNLgrFky87iXHuifIrRa8mBlxYCf17 iQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3swtr89q1r-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 05 Sep 2023 16:06:33 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 385G6Wnc021231
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 5 Sep 2023 16:06:32 GMT
-Received: from [10.110.6.69] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 5 Sep
- 2023 09:06:32 -0700
-Message-ID: <3342d8bf-5281-c082-cb9a-7a027b413237@quicinc.com>
-Date:   Tue, 5 Sep 2023 09:06:31 -0700
+        Tue, 5 Sep 2023 13:18:18 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 220D73B045
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Sep 2023 09:44:29 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-52bcd4db4cbso3703613a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Sep 2023 09:44:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693932204; x=1694537004; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=SDmEkkiomzbm/t0kyOHY3bm7nezdvpUGCm1Gee0mEtE=;
+        b=bAHn/fLuzb/2ET+pp4MIjsT/bpDVoUfwjvrkKMm7npc+eLPDGTKzjxTBAKZN9Nn2vG
+         IsVmnSxSrt4A7FM6sgZ6WO+gTlyyzdTo9l0yXlr1M0ZDmKR2ftFtR+um1wKX2eNo3i6M
+         pfd/ZpHyA6uHvZRBpVEs924z3mFgu+yaOvhc4IitVsfBAMiOXXO5xeTUgtjDMGKYNSQD
+         R2LmMDMPmaigq8kSnI9gOVxI8juNF29DCSYYEvIp+gx4BOXED4r6xI7Id2yY2xZ2g/yd
+         9SPyeVErN858A4Rb/eTDYr2TElvVWd8zGLpb7g7gKP3NW3/0jirR6YKkIGLTYEBHArz8
+         CL2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693932204; x=1694537004;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=SDmEkkiomzbm/t0kyOHY3bm7nezdvpUGCm1Gee0mEtE=;
+        b=caycjVHY8YJ3Fdhp+05fQtnN/7zwXLBhbbAW46UjY+uyeeU+EEQcMTKTnt7HsGz2gC
+         aB+qi+mmi+bDadLTnC75S9OA41BmxYT8F9mqNKDRs1WPtGVNtW9M8duL/1iXIb5hUixo
+         iQ2rySdh+ZMFOxuCKpWKKbX3QLju9atTWh+/5akdNiTGQhXyjWjspXOT/Y2p4gLOUyYZ
+         Hu3Rpubu5SUoHgi7c5dqhYz7kxKoaSwoRN56ff2vzsC9ppYGXnkoynm8C9InGJnBwIpR
+         wjDKd+H16MsC3fDYXUKoVnnah5Bt6p+5EccLwtmV3puHMdcmwkHuDeBts55DHwMFjgvA
+         1Z4g==
+X-Gm-Message-State: AOJu0YzBhLf77Bcqmy34hLO0Avn0RJZplmlWiEVvN8BbLRhg8YHFOTQW
+        +UASDZxeDZygLNjekfNpghoz5GM4NIK3xxdYmls9Ng==
+X-Google-Smtp-Source: AGHT+IG95JkmN66/glE3KZ9evrj4ynCBfjln8sFmAB+NvGPgcflf1KTh5SG7UN7y6QuRyekGl9BiHg==
+X-Received: by 2002:a17:907:7714:b0:9a2:1df2:8e08 with SMTP id kw20-20020a170907771400b009a21df28e08mr219686ejc.45.1693930070557;
+        Tue, 05 Sep 2023 09:07:50 -0700 (PDT)
+Received: from [192.168.37.232] (178235177232.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.232])
+        by smtp.gmail.com with ESMTPSA id rl21-20020a170907217500b0099315454e76sm7701782ejb.211.2023.09.05.09.07.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Sep 2023 09:07:50 -0700 (PDT)
+Message-ID: <5446a3fd-59bc-4297-b3c4-204d014ac3cd@linaro.org>
+Date:   Tue, 5 Sep 2023 18:07:47 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v3 0/3] Add qcom hvc/shmem transport
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: ipq6018: Fix tcsr_mutex register
+ size
 Content-Language: en-US
-To:     <sudeep.holla@arm.com>
-CC:     <cristian.marussi@arm.com>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <linux-arm-kernel@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20230718160833.36397-1-quic_nkela@quicinc.com>
- <20230811175719.28378-1-quic_nkela@quicinc.com>
-From:   Nikunj Kela <quic_nkela@quicinc.com>
-In-Reply-To: <20230811175719.28378-1-quic_nkela@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Vignesh Viswanathan <quic_viswanat@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ohad@wizery.com,
+        baolin.wang@linux.alibaba.com, linux-remoteproc@vger.kernel.org
+Cc:     quic_kathirav@quicinc.com, quic_anusha@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_srichara@quicinc.com,
+        quic_varada@quicinc.com, stable@vger.kernel.org
+References: <20230905095535.1263113-1-quic_viswanat@quicinc.com>
+ <20230905095535.1263113-2-quic_viswanat@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230905095535.1263113-2-quic_viswanat@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: NdqNObDs4LPTSCjvvNKeB6Ci4JvZ3isy
-X-Proofpoint-ORIG-GUID: NdqNObDs4LPTSCjvvNKeB6Ci4JvZ3isy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-05_10,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
- impostorscore=0 spamscore=0 mlxlogscore=974 malwarescore=0 bulkscore=0
- lowpriorityscore=0 priorityscore=1501 adultscore=0 suspectscore=0
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309050141
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 8/11/2023 10:57 AM, Nikunj Kela wrote:
-> This change introduce a new transport channel for Qualcomm virtual
-> platforms. The transport is mechanically similar to ARM_SCMI_TRANSPORT_SMC.
-> The difference between the two transports is that a parameter is passed in
-> the hypervisor call to identify which doorbell to assert. This parameter is
-> dynamically generated at runtime on the device and insuitable to pass via
-> the devicetree.
->
-> The function ID and parameter are stored by firmware in the shmem region.
->
-> This has been tested on ARM64 virtual Qualcomm platform.
->
+On 5.09.2023 11:55, Vignesh Viswanathan wrote:
+> IPQ6018's TCSR Mutex HW lock register has 32 locks of size 4KB each.
+> Total size of the TCSR Mutex registers is 128KB.
+> 
+> Fix size of the tcsr_mutex hwlock register to 0x20000.
+> 
+> Changes in v2:
+>  - Drop change to remove qcom,ipq6018-tcsr-mutex compatible string
+>  - Added Fixes and stable tags
+> 
+> Cc: stable@vger.kernel.org
+> Fixes: 5bf635621245 ("arm64: dts: ipq6018: Add a few device nodes")
+> Signed-off-by: Vignesh Viswanathan <quic_viswanat@quicinc.com>
 > ---
-> v3 -> fix the compilation error reported by the test bot,
->        add support for polling based instances
->
-> v2 -> use allOf construct in dtb schema,
->        remove wrappers from mutexes,
->        use architecture independent channel layout
->
-> v1 -> original patches
->
-> Nikunj Kela (3):
->    dt-bindings: arm: convert nested if-else construct to allOf
->    dt-bindings: arm: Add qcom specific hvc transport for SCMI
->    firmware: arm_scmi: Add qcom hvc/shmem transport
->
->   .../bindings/firmware/arm,scmi.yaml           |  67 ++---
->   drivers/firmware/arm_scmi/Kconfig             |  13 +
->   drivers/firmware/arm_scmi/Makefile            |   2 +
->   drivers/firmware/arm_scmi/common.h            |   3 +
->   drivers/firmware/arm_scmi/driver.c            |   4 +
->   drivers/firmware/arm_scmi/qcom_hvc.c          | 232 ++++++++++++++++++
->   6 files changed, 293 insertions(+), 28 deletions(-)
->   create mode 100644 drivers/firmware/arm_scmi/qcom_hvc.c
-Gentle Ping!
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
