@@ -2,132 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DAA0B79279F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 18:37:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 984D8792CE8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 19:58:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238117AbjIEQFb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Sep 2023 12:05:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51754 "EHLO
+        id S236211AbjIER6g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Sep 2023 13:58:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354915AbjIEPyH (ORCPT
+        with ESMTP id S241252AbjIER6H (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Sep 2023 11:54:07 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F50E197
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Sep 2023 08:54:02 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-9a64619d8fbso376026766b.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Sep 2023 08:54:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693929240; x=1694534040; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=pVpIOfthLWFFGPvccuIJVh5mPH0Rncfx7vuDB280HqM=;
-        b=tVCCGzM9Lo7sQ4Zq616P09neAPC63utATraDDBPUuOFrgBzP+jrWI3cEQSqwWGWuG7
-         OzpmC7ACbp4Z31+08N3maAK+AYocCpkL6Vyq0Zqop0vlwnKIPAAA+py8lsRY0fUC9p2o
-         7w2doNXUTKYKxe4oEvJafaRDIaLo1kUb+2oFYiPdzvSenHZDz4AnBK6MwaJdAkxlxAEH
-         al2jtBHB0xH7zf0e1lPBz8bTAM49uXQyQs5O8XDvwFAL+DHlz94oggibjuUWYzbM42vH
-         MuRmIL3WAsrj3d7PzoHz/naeQTJi4M4X5Z3LUAobhCiZXvl5YtHyKTx2lYw8kCtdavl9
-         b41Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693929240; x=1694534040;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pVpIOfthLWFFGPvccuIJVh5mPH0Rncfx7vuDB280HqM=;
-        b=PXA5tBHGkl0IUCai0k6pujwaoXJfGK+G9K+8m8KI/x1KNmuPaFZ/Oagt74+ZTqk0p6
-         4zWsZBoVsQFfcHOU9OHuRF7h9wMwTuOwJey2P62CudVDGw6iCjGeYNJKYc1ejPYS2y9q
-         kN2io0sRVN6utQsUFL0Ui/vqE+9Qhg2NkvVVhzzh7+1ccJgdWfx5PZOIeVRjVxBlNzIZ
-         PQgZ9wem4q2LOoExXISZOjE/DSDunnv5ApV77P0Z3J8efHv4cnFRJQIhuAoXwHy+oQ+1
-         0bmA1Hgyd2kCEnjOeA17kaBl5FkvGcgWOnR8T2GVyc2ylriw1fhe3c78uGx0L0HtHxrX
-         FmQw==
-X-Gm-Message-State: AOJu0Yz3NOaGgZKGe1Y8c4ELYuyW9e/c19gmMc6dKRCB/rz84jiYHZJ8
-        0mEFwe3iXm/aqSZLBGMadRsadg==
-X-Google-Smtp-Source: AGHT+IGvqSCRUiGNuCpTmv+0pI7XTpvHQL8WD+82ZwYSrD8wS8xN+/n8Nc5wLbXyRVOtN9JDnbM8bA==
-X-Received: by 2002:a17:906:214:b0:9a2:86b:bb18 with SMTP id 20-20020a170906021400b009a2086bbb18mr202776ejd.26.1693929240687;
-        Tue, 05 Sep 2023 08:54:00 -0700 (PDT)
-Received: from [192.168.37.233] (178235177232.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.232])
-        by smtp.gmail.com with ESMTPSA id l13-20020a170906a40d00b0099bc0daf3d7sm7838028ejz.182.2023.09.05.08.53.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Sep 2023 08:54:00 -0700 (PDT)
-Message-ID: <4b87a766-9e8d-4676-b77e-d54e6d9c36ef@linaro.org>
-Date:   Tue, 5 Sep 2023 17:53:57 +0200
+        Tue, 5 Sep 2023 13:58:07 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1986A15A1B;
+        Tue,  5 Sep 2023 10:53:51 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 385BSwJN023491;
+        Tue, 5 Sep 2023 16:06:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=wr1Ck6RCHOMwvpJ21oFY9bXdw5ypgpuIPcQMdoCBAh4=;
+ b=m/wKng7Tk6guMKISRL0TCoZoEndSFSBPjqmpIx/ne31b27t3KAapmA76FuyYF4JdmpHO
+ MMGYss6YJNkhnxlefcpv20ouRvvN/kpxKXahwzsnuBb4XcmQRZNOrCh160t1qbX0cUYR
+ 1T2RM32qRmsuNkzO2qXApdc2gC1hLrsLetpR97yZXQoVR7Fqsx+r8saE4YDdaQdTrqYp
+ x8oK1pA3U5B142uBjgNahOkTKzzg87z7nQTvFGLf8deC6JHKZ9A5ijqPP1ZMsQvoAY/0
+ RKe/Rsl3KiTVNDiIXITb/+wLfQS65URhU51yadLNLgrFky87iXHuifIrRa8mBlxYCf17 iQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3swtr89q1r-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 05 Sep 2023 16:06:33 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 385G6Wnc021231
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 5 Sep 2023 16:06:32 GMT
+Received: from [10.110.6.69] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 5 Sep
+ 2023 09:06:32 -0700
+Message-ID: <3342d8bf-5281-c082-cb9a-7a027b413237@quicinc.com>
+Date:   Tue, 5 Sep 2023 09:06:31 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: sc7180: Add tertiary mi2s
- pinctrl
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v3 0/3] Add qcom hvc/shmem transport
 Content-Language: en-US
-To:     Nikita Travkin <nikita@trvn.ru>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org
-Cc:     David Wronek <davidwronek@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-References: <20230905-sc7180-adsp-rproc-v2-0-8ab7f299600a@trvn.ru>
- <20230905-sc7180-adsp-rproc-v2-3-8ab7f299600a@trvn.ru>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230905-sc7180-adsp-rproc-v2-3-8ab7f299600a@trvn.ru>
-Content-Type: text/plain; charset=UTF-8
+To:     <sudeep.holla@arm.com>
+CC:     <cristian.marussi@arm.com>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <linux-arm-kernel@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20230718160833.36397-1-quic_nkela@quicinc.com>
+ <20230811175719.28378-1-quic_nkela@quicinc.com>
+From:   Nikunj Kela <quic_nkela@quicinc.com>
+In-Reply-To: <20230811175719.28378-1-quic_nkela@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: NdqNObDs4LPTSCjvvNKeB6Ci4JvZ3isy
+X-Proofpoint-ORIG-GUID: NdqNObDs4LPTSCjvvNKeB6Ci4JvZ3isy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-05_10,2023-09-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
+ impostorscore=0 spamscore=0 mlxlogscore=974 malwarescore=0 bulkscore=0
+ lowpriorityscore=0 priorityscore=1501 adultscore=0 suspectscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309050141
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5.09.2023 12:41, Nikita Travkin wrote:
-> Some devices use tertiary mi2s to connect external audio codec.
-> Add it near the other two i2s pinctrl definitions so the devices don't
-> have to duplicate it.
-> 
-> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+
+On 8/11/2023 10:57 AM, Nikunj Kela wrote:
+> This change introduce a new transport channel for Qualcomm virtual
+> platforms. The transport is mechanically similar to ARM_SCMI_TRANSPORT_SMC.
+> The difference between the two transports is that a parameter is passed in
+> the hypervisor call to identify which doorbell to assert. This parameter is
+> dynamically generated at runtime on the device and insuitable to pass via
+> the devicetree.
+>
+> The function ID and parameter are stored by firmware in the shmem region.
+>
+> This has been tested on ARM64 virtual Qualcomm platform.
+>
 > ---
-This sorting makes no sense, neither alphabetically nor gpio-idx-wise
-
-I'd suggest chucking it in after pri_mi2s_mclk_active.
-
-Konrad
+> v3 -> fix the compilation error reported by the test bot,
+>        add support for polling based instances
+>
+> v2 -> use allOf construct in dtb schema,
+>        remove wrappers from mutexes,
+>        use architecture independent channel layout
+>
+> v1 -> original patches
+>
+> Nikunj Kela (3):
+>    dt-bindings: arm: convert nested if-else construct to allOf
+>    dt-bindings: arm: Add qcom specific hvc transport for SCMI
+>    firmware: arm_scmi: Add qcom hvc/shmem transport
+>
+>   .../bindings/firmware/arm,scmi.yaml           |  67 ++---
+>   drivers/firmware/arm_scmi/Kconfig             |  13 +
+>   drivers/firmware/arm_scmi/Makefile            |   2 +
+>   drivers/firmware/arm_scmi/common.h            |   3 +
+>   drivers/firmware/arm_scmi/driver.c            |   4 +
+>   drivers/firmware/arm_scmi/qcom_hvc.c          | 232 ++++++++++++++++++
+>   6 files changed, 293 insertions(+), 28 deletions(-)
+>   create mode 100644 drivers/firmware/arm_scmi/qcom_hvc.c
+Gentle Ping!
