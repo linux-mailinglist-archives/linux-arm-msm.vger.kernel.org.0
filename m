@@ -2,72 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BE08792F8A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 22:08:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 02840792F6D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 22:04:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242583AbjIEUIq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Sep 2023 16:08:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45634 "EHLO
+        id S234514AbjIEUEO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Sep 2023 16:04:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242589AbjIEUIl (ORCPT
+        with ESMTP id S234800AbjIEUEN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Sep 2023 16:08:41 -0400
-X-Greylist: delayed 3539 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 05 Sep 2023 13:08:37 PDT
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BE05CC;
-        Tue,  5 Sep 2023 13:08:37 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40F09C433AD;
-        Tue,  5 Sep 2023 18:17:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1693937829;
-        bh=eJvviLwDFqy9JoGB1FIfd4zECgh9rL9Utbsa8UqT9zY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=fWwkGOTBJiXRrUmLSjDfge8NnrrB0ljH9O1BcNAaSq6UvaLq1Q9iJCtD7/Zu2YJKn
-         /sbbh+VoiLiw63Me9M41FT63ozxHfQYWNvdrsglus5eyMAs5fCnbYEa12CbuaBJHMQ
-         GDeAmfL8QhBDGDYwV3gMCknPixQTviyPlYDY8IntXOr+JCqK5r+MOwBCU2IGSW31ya
-         /7oG9Ihc4pxRhed4JqBY5v0ZKJq9FLz1N7i65IpF5HHxk1FVHg4J4s6805cSkZta8M
-         rIJq8gDxMNsNRS/An5jGIQ30SBbmU0jeQca0YfduiWw8+inWLgKHJM8AH7+K+UB3fT
-         DdwJ297tVhvzw==
-Received: (nullmailer pid 3744523 invoked by uid 1000);
-        Tue, 05 Sep 2023 18:17:07 -0000
-Date:   Tue, 5 Sep 2023 13:17:07 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>
-Cc:     gregkh@linuxfoundation.org, robh+dt@kernel.org,
-        conor+dt@kernel.org, andersson@kernel.org,
-        linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, vkoul@kernel.org,
-        quic_wcheng@quicinc.com, kernel@quicinc.com, agross@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@linaro.org,
-        abel.vesa@linaro.org, kishon@kernel.org
-Subject: Re: [PATCH v2 3/5] dt-bindings: usb: qcom,dwc3: Fix SDX65 clocks
-Message-ID: <169393782673.3744474.2406769381713215825.robh@kernel.org>
-References: <1693909838-6682-1-git-send-email-quic_rohiagar@quicinc.com>
- <1693909838-6682-4-git-send-email-quic_rohiagar@quicinc.com>
+        Tue, 5 Sep 2023 16:04:13 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76D19109
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Sep 2023 13:04:08 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-52e828ad46bso1057002a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Sep 2023 13:04:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693944247; x=1694549047; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QBRdKdZ5WjyqUvk4N5iiue5qAMVDhesOYviouHViHm8=;
+        b=TUHm+qjovsdPN2E3Adwo/yktErFumDH6P6f/f40ijMLcZXyfbEG/vyHHGTuW4/gDIs
+         6K0uhfoeaj1BeWJDj8dtkrG4pzRBC5r5k/wVC43xTuSbvvdMqaxXuqHqCoKs7BQYjtqd
+         1bhpvdFspGK74V5ObAdT3aYNZIVexZMfUJnzS+B2Ly84hIqmDM6o43N+RMdjsdES4JDA
+         dp/P5McKZSLeidDMpmHWO80Ua6Ap5Wm2QfvsolUyFPIZxbFiFt0Nm7Ya/BImw3NAdK6y
+         HI9G24UurrkgXIPBRCxvSbXuRatAd2kNTLMfqYc6xTcj66G5fI+wC8+vuTjkvEXFrAkM
+         FJEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693944247; x=1694549047;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QBRdKdZ5WjyqUvk4N5iiue5qAMVDhesOYviouHViHm8=;
+        b=e1UbEGaVP40rLO17v4NZ9245NXZZMJuHQ9qL2LEPZHBruC9uBiWZQmj3Wi4tybZ+XB
+         b7MLqQM21wiZvVFjGLawOQSYCI0c3ZGtgCsoGgwkGwN/rK4Dc9tbqqKlBvYqgF9SQKh3
+         lqOKHxVhjdeSQj7d80VzafeNIIyvhPUkYyIiwm/Nnq/sgopgMWjAY0Uqp1GruIV/YADh
+         VE5ERles1+n86SzOiauVWLUY/PvfgVqapgYohr+3ypcpGkQ/OhOQjznJbD48aykwhMb4
+         qEGHM8LrnfsUQmlUv5CfSoNQRj2BzvjoMRrtZR8whQ3a+s4np3/R2WaoZsunmAeEizuv
+         DVww==
+X-Gm-Message-State: AOJu0YybrZLR5x+b/e4gaO0/PJRI9J9HjCbz0gDoZcy1LG0NohL1HV6f
+        QCdTEAjRzdGd3SfzcBjwx1zBTQ==
+X-Google-Smtp-Source: AGHT+IGhdAXPegcUWCc02b5OC+h0Y/iNRrXwmMGd44XlfKvdJU2O+zod90kkDBW2NHAgsqakJsk5ow==
+X-Received: by 2002:aa7:dcd2:0:b0:52c:164:efe5 with SMTP id w18-20020aa7dcd2000000b0052c0164efe5mr566620edu.39.1693944246854;
+        Tue, 05 Sep 2023 13:04:06 -0700 (PDT)
+Received: from [10.10.15.130] ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id w26-20020a50fa9a000000b0052a401d8ef6sm7562829edr.71.2023.09.05.13.04.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Sep 2023 13:04:06 -0700 (PDT)
+Message-ID: <24cff590-c71f-4a30-9b80-fa9a0bd27957@linaro.org>
+Date:   Tue, 5 Sep 2023 23:04:05 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1693909838-6682-4-git-send-email-quic_rohiagar@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 2/2] phy: qcom-qmp-ufs: Add Phy Configuration support
+ for SC7280
+Content-Language: en-GB
+To:     Nitin Rawat <quic_nitirawa@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
+        kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Manish Pandey <quic_mapa@quicinc.com>
+References: <20230823091757.31311-1-quic_nitirawa@quicinc.com>
+ <20230823091757.31311-3-quic_nitirawa@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230823091757.31311-3-quic_nitirawa@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Tue, 05 Sep 2023 16:00:36 +0530, Rohit Agarwal wrote:
-> SDX65 has 5 clocks so mention in the bindings.
+On 23/08/2023 12:17, Nitin Rawat wrote:
+> Add SC7280 specific register layout and table configs.
 > 
-> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+> Co-developed-by: Manish Pandey <quic_mapa@quicinc.com>
+> Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
+> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
 > ---
->  Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 1 +
->  1 file changed, 1 insertion(+)
+>   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 142 ++++++++++++++++++++++++
+>   1 file changed, 142 insertions(+)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> index 3927eba8e468..514fa14df634 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+
+[skipped tables programming]
+
+4),
+> @@ -888,6 +993,40 @@ static const struct qmp_phy_cfg sa8775p_ufsphy_cfg = {
+>   	.regs			= ufsphy_v5_regs_layout,
+>   };
+> 
+> +static const struct qmp_phy_cfg sc7280_ufsphy_cfg = {
+> +	.lanes                  = 2,
+> +
+> +	.offsets                = &qmp_ufs_offsets,
+> +
+> +	.tbls = {
+> +		.serdes         = sm8150_ufsphy_serdes,
+> +		.serdes_num     = ARRAY_SIZE(sm8150_ufsphy_serdes),
+> +		.tx             = sc7280_ufsphy_tx,
+> +		.tx_num         = ARRAY_SIZE(sc7280_ufsphy_tx),
+> +		.rx             = sc7280_ufsphy_rx,
+> +		.rx_num         = ARRAY_SIZE(sc7280_ufsphy_rx),
+> +		.pcs            = sc7280_ufsphy_pcs,
+> +		.pcs_num        = ARRAY_SIZE(sc7280_ufsphy_pcs),
+> +	},
+> +	.tbls_hs_b = {
+> +		.serdes         = sm8150_ufsphy_hs_b_serdes,
+> +		.serdes_num     = ARRAY_SIZE(sm8150_ufsphy_hs_b_serdes),
+> +	},
+> +	.tbls_hs_g4 = {
+> +		.tx             = sm8250_ufsphy_hs_g4_tx,
+> +		.tx_num         = ARRAY_SIZE(sm8250_ufsphy_hs_g4_tx),
+> +		.rx             = sc7280_ufsphy_hs_g4_rx,
+> +		.rx_num         = ARRAY_SIZE(sc7280_ufsphy_hs_g4_rx),
+> +		.pcs            = sm8150_ufsphy_hs_g4_pcs,
+> +		.pcs_num        = ARRAY_SIZE(sm8150_ufsphy_hs_g4_pcs),
+> +	},
+> +	.clk_list               = sm8450_ufs_phy_clk_l,
+> +	.num_clks               = ARRAY_SIZE(sm8450_ufs_phy_clk_l),
+
+This doesn't correspond to the bindings. This array has 3 enries, while 
+in the bindings you have opted for two clocks for this PHY.
+
+> +	.vreg_list              = qmp_phy_vreg_l,
+> +	.num_vregs              = ARRAY_SIZE(qmp_phy_vreg_l),
+> +	.regs                   = ufsphy_v4_regs_layout,
+> +};
+> +
+>   static const struct qmp_phy_cfg sc8280xp_ufsphy_cfg = {
+>   	.lanes			= 2,
+> 
+> @@ -1648,6 +1787,9 @@ static const struct of_device_id qmp_ufs_of_match_table[] = {
+>   	}, {
+>   		.compatible = "qcom,sa8775p-qmp-ufs-phy",
+>   		.data = &sa8775p_ufsphy_cfg,
+> +	}, {
+> +		.compatible = "qcom,sc7280-qmp-ufs-phy",
+> +		.data = &sc7280_ufsphy_cfg,
+>   	}, {
+>   		.compatible = "qcom,sc8180x-qmp-ufs-phy",
+>   		.data = &sm8150_ufsphy_cfg,
+> --
+> 2.17.1
 > 
 
-Acked-by: Rob Herring <robh@kernel.org>
+-- 
+With best wishes
+Dmitry
 
