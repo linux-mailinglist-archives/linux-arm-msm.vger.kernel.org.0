@@ -2,145 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 59D8B792677
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 18:28:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 402A27926D4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 18:33:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237818AbjIEQEy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Sep 2023 12:04:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49180 "EHLO
+        id S239250AbjIEQHi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Sep 2023 12:07:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353940AbjIEIoC (ORCPT
+        with ESMTP id S1353952AbjIEIuJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Sep 2023 04:44:02 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E8BACCB;
-        Tue,  5 Sep 2023 01:43:59 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C915460ABD;
-        Tue,  5 Sep 2023 08:43:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD5E4C433C7;
-        Tue,  5 Sep 2023 08:43:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1693903438;
-        bh=DwiI5lyTh5bUNu73RK8eFU7X1ZQGBwm/VemwAZ1Cpb8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=iPyTX6BznVbDgamxksQvlZZd/yJ7wvYrwLTGZ8lOGFcK2o7cwvFZvbYfHsqR9UkRe
-         5E0ojMi78/TcC5yHF0Tq0YId7hb3VrVeiajU9MHCmL1YNHKQEg1cP2oC+7uh7R+rkm
-         ypendgexNlI8CLurRC8vPK3Jcju2UhI8OdtPDGwLQO5DV8Bq1+eh8F6ppICzMH9Q7U
-         8LFYc9dZ+p/iWyXNv3lgZ06zVf8jfYifatBj49V/e2mjsOY3wqYYDrNCq//zJPtt0r
-         yvb9Y3opK6kYL/jDayDqRvJmQ5eb/DWiXOpxH3bPqVtZd6Fech8tPCZ5PiVK/9cYDe
-         71t3zQ9eTSMzg==
-Date:   Tue, 5 Sep 2023 10:43:55 +0200
-From:   Maxime Ripard <mripard@kernel.org>
+        Tue, 5 Sep 2023 04:50:09 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A78DAA;
+        Tue,  5 Sep 2023 01:50:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1693903805; x=1725439805;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=fGB8Ql7Gce8esFznLWuQEPATfaVZ2AGRnVV+EfOKE9A=;
+  b=kIT57pMbL4lESL1a4d41BQtoRMVrjr9twlR+eBnLuaNYq2Vf+TciNJor
+   u2RzIc5dgk3Mfl4Tx9nI2hyDd8ysQ4NijU5lVxHlr8RVqUNIfxnpNnSkj
+   0Ab2qVCQA8A/9kjOjjc+Nc9lM2rbpFw7H9NO+ggcapfrAPMSOsm+P1SAS
+   9lPyy9Cy2B26BzAqM53/Ifni0TmZuH+NovN2pr+6FWAGAQryFqAwG/oBL
+   VvDrFx6F8YwLOa3KeciAjGX2EOblXDn3Nch90JBgLRBXVTVIJqasfqJjw
+   UN1IFWr6+meuinuxXJdJixOvUqZ+VNA0ReoSGaIvvMMIPpXoZavfXA5r6
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10823"; a="379463451"
+X-IronPort-AV: E=Sophos;i="6.02,229,1688454000"; 
+   d="scan'208";a="379463451"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Sep 2023 01:50:04 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10823"; a="1071893689"
+X-IronPort-AV: E=Sophos;i="6.02,229,1688454000"; 
+   d="scan'208";a="1071893689"
+Received: from kuha.fi.intel.com ([10.237.72.185])
+  by fmsmga005.fm.intel.com with SMTP; 05 Sep 2023 01:49:56 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Tue, 05 Sep 2023 11:49:56 +0300
+Date:   Tue, 5 Sep 2023 11:49:56 +0300
+From:   Heikki Krogerus <heikki.krogerus@linux.intel.com>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Vignesh Raman <vignesh.raman@collabora.com>,
-        dri-devel@lists.freedesktop.org, helen.koike@collabora.com,
-        guilherme.gallo@collabora.com, sergi.blanch.torne@collabora.com,
-        david.heidelberg@collabora.com, daniels@collabora.com,
-        gustavo.padovan@collabora.com, emma@anholt.net,
-        robclark@freedesktop.org, robdclark@google.com, anholt@google.com,
-        robdclark@gmail.com, airlied@gmail.com, daniel@ffwll.ch,
-        jani.nikula@linux.intel.com, linux-kernel@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        virtualization@lists.linux-foundation.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 2/7] drm: ci: Force db410c to host mode
-Message-ID: <ueznsu2dlvq5zp3ls262fww54bnlqa3e2ssr6f65vrrionloms@ir2ywgeajj4w>
-References: <20230904161516.66751-1-vignesh.raman@collabora.com>
- <20230904161516.66751-3-vignesh.raman@collabora.com>
- <CAA8EJpq_cmFQ6TGy1xELh3ButWKLfSkQcp5ix049s_iqKw6DvQ@mail.gmail.com>
+Cc:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Janne Grunau <j@jannau.net>, Simon Ser <contact@emersion.fr>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        freedreno@lists.freedesktop.org, Won Chung <wonchung@google.com>
+Subject: Re: [RFC PATCH v1 01/12] Revert "drm/sysfs: Link DRM connectors to
+ corresponding Type-C connectors"
+Message-ID: <ZPbrtAlO2Y+bjDhf@kuha.fi.intel.com>
+References: <20230903214150.2877023-1-dmitry.baryshkov@linaro.org>
+ <20230903214150.2877023-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAA8EJpq_cmFQ6TGy1xELh3ButWKLfSkQcp5ix049s_iqKw6DvQ@mail.gmail.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230903214150.2877023-2-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Dmitry,
 
-On Mon, Sep 04, 2023 at 07:59:26PM +0300, Dmitry Baryshkov wrote:
-> On Mon, 4 Sept 2023 at 19:16, Vignesh Raman <vignesh.raman@collabora.com>=
- wrote:
-> >
-> > Force db410c to host mode to fix network issue which results in failure
-> > to mount root fs via NFS.
-> > See https://gitlab.freedesktop.org/gfx-ci/linux/-/commit/cb72a629b8c15c=
-80a54dda510743cefd1c4b65b8
-> >
-> > Use fdtoverlay command to merge base device tree with an overlay
-> > which contains the fix for USB controllers to work in host mode.
-> >
-> > Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
-> > ---
-> >
-> > v2:
-> >   - Use fdtoverlay command to merge overlay dtbo with the base dtb inst=
-ead of modifying the kernel sources
-> >
-> > ---
-> >  drivers/gpu/drm/ci/build.sh                         |  5 +++++
-> >  .../gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts  | 13 +++++++++++++
-> >  2 files changed, 18 insertions(+)
-> >  create mode 100644 drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.=
-dts
-> >
-> > diff --git a/drivers/gpu/drm/ci/build.sh b/drivers/gpu/drm/ci/build.sh
-> > index 7b014287a041..92ffd98cd09e 100644
-> > --- a/drivers/gpu/drm/ci/build.sh
-> > +++ b/drivers/gpu/drm/ci/build.sh
-> > @@ -92,6 +92,11 @@ done
-> >
-> >  if [[ -n ${DEVICE_TREES} ]]; then
-> >      make dtbs
-> > +    if [[ -e arch/arm64/boot/dts/qcom/apq8016-sbc.dtb ]]; then
-> > +        dtc -@ -I dts -O dtb -o drivers/gpu/drm/ci/dt-overlays/apq8016=
--sbc-overlay.dtbo drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts
-> > +        fdtoverlay -i arch/arm64/boot/dts/qcom/apq8016-sbc.dtb -o arch=
-/arm64/boot/dts/qcom/apq8016-sbc-overlay.dtb drivers/gpu/drm/ci/dt-overlays=
-/apq8016-sbc-overlay.dtbo
-> > +        mv arch/arm64/boot/dts/qcom/apq8016-sbc-overlay.dtb arch/arm64=
-/boot/dts/qcom/apq8016-sbc.dtb
-> > +    fi
-> >      cp ${DEVICE_TREES} /lava-files/.
-> >  fi
-> >
-> > diff --git a/drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts b/d=
-rivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts
-> > new file mode 100644
-> > index 000000000000..57b7604f1c23
-> > --- /dev/null
-> > +++ b/drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts
-> > @@ -0,0 +1,13 @@
-> > +/dts-v1/;
-> > +/plugin/;
-> > +
-> > +/ {
-> > +    fragment@0 {
-> > +        target-path =3D "/soc@0";
-> > +        __overlay__ {
-> > +            usb@78d9000 {
-> > +                dr_mode =3D "host";
-> > +            };
-> > +        };
-> > +    };
-> > +};
-> > --
-> > 2.40.1
->=20
-> Can we use normal dtso syntax here instead of defining fragments manually?
+On Mon, Sep 04, 2023 at 12:41:39AM +0300, Dmitry Baryshkov wrote:
+> The kdev->fwnode pointer is never set in drm_sysfs_connector_add(), so
+> dev_fwnode() checks never succeed, making the respective commit NOP.
 
-What Dmitry is hinting about is to use the "Sugar Syntax". There a good doc=
-umentation here:
-https://source.android.com/docs/core/architecture/dto/syntax
+That's not true. The dev->fwnode is assigned when the device is
+created on ACPI platforms automatically. If the drm_connector fwnode
+member is assigned before the device is registered, then that fwnode
+is assigned also to the device - see drm_connector_acpi_find_companion().
 
-Maxime
+But please note that even if drm_connector does not have anything in
+its fwnode member, the device may still be assigned fwnode, just based
+on some other logic (maybe in drivers/acpi/acpi_video.c?).
+
+> And if drm_sysfs_connector_add() is modified to set kdev->fwnode, it
+> breaks drivers already using components (as it was pointed at [1]),
+> resulting in a deadlock. Lockdep trace is provided below.
+> 
+> Granted these two issues, it seems impractical to fix this commit in any
+> sane way. Revert it instead.
+
+I think there is already user space stuff that relies on these links,
+so I'm not sure you can just remove them like that. If the component
+framework is not the correct tool here, then I think you need to
+suggest some other way of creating them.
+
+Side note. The problem you are describing here is a limitation in the
+component framework - right now it's made with the idea that a device
+can represent a single component, but it really should allow a device
+to represent multiple components. I'm not saying that you should try
+to fix the component framework, but I just wanted to make a note about
+this (and this is not the only problem with the component framework).
+
+I like the component framework as a concept, but I think it needs a
+lot of improvements - possibly rewrite.
+
+thanks,
+
+-- 
+heikki
