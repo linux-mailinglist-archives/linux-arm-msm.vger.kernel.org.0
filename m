@@ -2,85 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DF48D792C7C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 19:34:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 246DD792AFA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 19:02:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236610AbjIEReH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Sep 2023 13:34:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34924 "EHLO
+        id S232257AbjIEQqC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Sep 2023 12:46:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232745AbjIERdq (ORCPT
+        with ESMTP id S242242AbjIEQed (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Sep 2023 13:33:46 -0400
-Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D47F2982D;
-        Tue,  5 Sep 2023 09:59:46 -0700 (PDT)
-Received: from authenticated-user (box.trvn.ru [194.87.146.52])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (No client certificate requested)
-        by box.trvn.ru (Postfix) with ESMTPSA id 9EB59413C3;
-        Tue,  5 Sep 2023 21:19:50 +0500 (+05)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
-        t=1693930793; bh=IQAfAAAt1LGu73JtyGaJgjPEBbd/yqvUrrv8VjeBH3A=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=dM91jrBMFeLZtvu8mepoSal8xctG6L/VIffQlMI5eol656uU1qgLbbDdZ8VJUTF+2
-         Tn4V2ZIL0Jm8mvYINEWZdKE9XPB9sge6CqA1oNNb8HpxXZu38j+IU1N8S2Dn/PpyEl
-         tWWjs7QZSDRySpCB3YLDsDo3iaCSX8HpwzHPICcsBH12/R+hlPX4SQJDnlIveBGewJ
-         KWfCKv4+MPy8KPmWDOoiretuXyhw1sgh10iZYzVJRBL7Z9NV5ky7texSrVUynJA6g3
-         EQzIWwwoPa27LI6iyx44sFtnZbOBx5ts6CHtu4wqHN/CiaTWWba8/rCmq2aHTG6fno
-         jEwc0ntDTMLFQ==
-MIME-Version: 1.0
-Date:   Tue, 05 Sep 2023 21:19:49 +0500
-From:   Nikita Travkin <nikita@trvn.ru>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Tue, 5 Sep 2023 12:34:33 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DBFC2D5F
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Sep 2023 09:33:13 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-99357737980so417469366b.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Sep 2023 09:33:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693931465; x=1694536265; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7lliAJnjKGrKN2HdJy1Zp01oKeEF+jouNcZc6sxAEmg=;
+        b=AeaUwT+RZbntyjLvbbf2GnUCUDO1GNIdSqjXawsGuxfKVmGEF0ldsVOeYHuTo2koC5
+         GCLcxRNHBTEUG+k3cwrENbNG+Xy5TMyj537aFWdJXe+j1HH98XZgnhMRtcfE7/Gbo6RI
+         mMS1iJSGmXlSHewoiux0vLafQGXKOHmJRk/zBQTL0fw8s+ZAKEVQbe0Y0CuelE5NKgiv
+         c0hJoIQy3wSgrzuCawkruMH5o5pOlmyd1gAxtfZK6zEfspJAA9hHY6hhK2ECgHtr85LF
+         qG6AY/8vwrgIl9/o8RwBxjSxJTLABcn8qUAuq7jQFUL9x8j3tkTrPAKVdLnSWL9qO3yi
+         349w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693931466; x=1694536266;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7lliAJnjKGrKN2HdJy1Zp01oKeEF+jouNcZc6sxAEmg=;
+        b=f4Ao7PXDa2CdVlZiLF9TvhACaPtgkEePvJYDW0bSby8FDuXBWsEkvroLyBVhpZnul8
+         axmSnfFiQc4ha5Zy01vrCgcPxcdylFd7lFToaDv+eh3eONyU3g5SGGjo6jMMVLUiLXlC
+         jHHl+S+urzB52Yji8AZQ80DUx0Txn3swICv3zi40Ihwhx3yMMIprBQP9nyhtZvOt7rbR
+         HYjCvQuS/+TWmd8FqDKO6c2XbAMP0ULvvmYhpU5q8JlUE2UkZIPh/qS5zmCLykBvjKJj
+         kIZ0RZZcIU0dL8kPn+gCO7guVXhuR4/5Ea7s6oRzDlGAeKyP6mz73rwI5L9VanYRMpAd
+         gLkw==
+X-Gm-Message-State: AOJu0YyHIUm/Di4mc6nrP4C4ytgyLhMAkMjExvCJJSzCSIloOAOagEmS
+        tQ9W2WVoAu/pBt3j02AaWsQcLfnuRa0XYdjqeWs=
+X-Google-Smtp-Source: AGHT+IGc9ZoOkCPrWQHAvmzavnP932KKSQltJbJVFwE5KtY8VTlctUL6wrsqrWGa8tPg0SULxnh2RA==
+X-Received: by 2002:a17:906:3054:b0:9a6:8219:6e0b with SMTP id d20-20020a170906305400b009a682196e0bmr307473ejd.35.1693931465798;
+        Tue, 05 Sep 2023 09:31:05 -0700 (PDT)
+Received: from krzk-bin.. (77-252-46-238.static.ip.netia.com.pl. [77.252.46.238])
+        by smtp.gmail.com with ESMTPSA id g24-20020a170906395800b00992e265495csm7796187eje.212.2023.09.05.09.31.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Sep 2023 09:31:05 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org,
-        David Wronek <davidwronek@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: sc7180: Add tertiary mi2s
- pinctrl
-In-Reply-To: <4b87a766-9e8d-4676-b77e-d54e6d9c36ef@linaro.org>
-References: <20230905-sc7180-adsp-rproc-v2-0-8ab7f299600a@trvn.ru>
- <20230905-sc7180-adsp-rproc-v2-3-8ab7f299600a@trvn.ru>
- <4b87a766-9e8d-4676-b77e-d54e6d9c36ef@linaro.org>
-Message-ID: <c14229b715f98f3270bc7ee63409a8af@trvn.ru>
-X-Sender: nikita@trvn.ru
-Content-Type: text/plain; charset=UTF-8
+        Rohit Agarwal <quic_rohiagar@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: sdx75-idp: align RPMh regulator nodes with bindings
+Date:   Tue,  5 Sep 2023 18:31:03 +0200
+Message-Id: <20230905163103.257412-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Konrad Dybcio писал(а) 05.09.2023 20:53:
-> On 5.09.2023 12:41, Nikita Travkin wrote:
->> Some devices use tertiary mi2s to connect external audio codec.
->> Add it near the other two i2s pinctrl definitions so the devices don't
->> have to duplicate it.
->>
->> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
->> ---
-> This sorting makes no sense, neither alphabetically nor gpio-idx-wise
-> 
-> I'd suggest chucking it in after pri_mi2s_mclk_active.
-> 
+Device node names should be generic and bindings expect certain pattern
+for RPMh regulator nodes:
 
-I assumed these are alphabetically sorted since other nodes before mostly
-are, with the pri_* being an outlier, but I can move it below if you think
-it would be better.
+  sdx75-idp.dtb: rsc@17a00000: 'pmx75-rpmh-regulators' does not match any of the regexes: '^regulators(-[0-9])?$', 'pinctrl-[0-9]+'
 
-Nikita
+Fixes: 8a2dc39d1043 ("arm64: dts: qcom: sdx75-idp: Add regulator nodes")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-> Konrad
+---
+
+Really, I can't believe I am still fixing this stuff. New boards bring
+the same mistakes we fixed half year ago. Or even earlier...
+---
+ arch/arm64/boot/dts/qcom/sdx75-idp.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sdx75-idp.dts b/arch/arm64/boot/dts/qcom/sdx75-idp.dts
+index 10d15871f2c4..a14e0650c4a8 100644
+--- a/arch/arm64/boot/dts/qcom/sdx75-idp.dts
++++ b/arch/arm64/boot/dts/qcom/sdx75-idp.dts
+@@ -44,7 +44,7 @@ vreg_bob_3p3: pmx75-bob {
+ };
+ 
+ &apps_rsc {
+-	pmx75-rpmh-regulators {
++	regulators-0 {
+ 		compatible = "qcom,pmx75-rpmh-regulators";
+ 		qcom,pmic-id = "b";
+ 
+-- 
+2.34.1
+
