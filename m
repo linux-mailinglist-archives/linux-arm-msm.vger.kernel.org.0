@@ -2,50 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B2FD792664
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 18:27:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A21187926F5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Sep 2023 18:34:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238261AbjIEQFp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Sep 2023 12:05:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44188 "EHLO
+        id S238610AbjIEQGc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Sep 2023 12:06:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353663AbjIEHI7 (ORCPT
+        with ESMTP id S1353673AbjIEHLI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Sep 2023 03:08:59 -0400
+        Tue, 5 Sep 2023 03:11:08 -0400
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E9A71B4;
-        Tue,  5 Sep 2023 00:08:55 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3856wr0S017319;
-        Tue, 5 Sep 2023 07:08:45 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1012ACCB;
+        Tue,  5 Sep 2023 00:11:05 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3856YYvi029908;
+        Tue, 5 Sep 2023 07:10:57 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=8TT2LhKEX5eaqHthp0Ltat/ICpv1eC9eiSOETIB1TyE=;
- b=jpJY+bvpyNUG7xSVf15Mh34RJWPWWLBXz3kcXpqKghWHpbV5AQDbkYTQHBsLhGK23P+e
- iyfGWBgX6e4B54Elq4eA0WGLwC76V82E5dzTBdIPqz+J2Q3O7iqjcyq8YuKbs9cVAzeO
- eVNbzIqM7Qw+DpUMsV9qk7pY26AQ6LChj+7unPbR+yL3W9HdvYTNJnn+j8Kx4i6M5YAl
- KFky7WdbMsOqP6/S3DkY2J6QYvOk2xXXZCYSRx39iKixyPCF5lcodH3/8eO6I2EDM0cG
- V21Z9jb/Q7887JYZTSYOvt7EE1ClkGRKZFw4lWNb5vRwDWfOOp3TbSpYK3IiTHc7riHI Ug== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3suvcrcy3s-1
+ bh=CicEJnznBAhMloNzVL9Wyk+0gAikM4+YSKPIwH/GY3I=;
+ b=XFpwLYQjzHNGih18/OTEsHtfqNvjAWfNU6VYiygLgKMrsfEJ57vG2Us4cgzJ0Vd5hx0C
+ hUBQoPb/ItRJx+Lew2f4L6W00alHJHXmwSK6zsFWxPAWgg8P40/IlBQMhBuZuuISmLWb
+ 4Ak1fQlou20NzMjhDuiZN2s1HvkmGSfRS1t0XbUmioZPIzzNyPLokuoiNaS8B+LGwC3Q
+ Cb76r+1ZgcMDk97iLzF2sW1dOBgAYqZm5M8KUO6iAiOrX5CiE2gcY+ZcsPdirsNu0cEk
+ 26qjFvEsdg7Kzqi6o8CrH8NWF3R6MfyV+aMC8Xek6hHhpmAhCroick3ajzS4XM6uP9es Ww== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3swpr6gqck-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 05 Sep 2023 07:08:44 +0000
+        Tue, 05 Sep 2023 07:10:57 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38578hZJ015080
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3857Autu012502
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 5 Sep 2023 07:08:43 GMT
+        Tue, 5 Sep 2023 07:10:56 GMT
 Received: from [10.216.59.199] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 5 Sep
- 2023 00:08:34 -0700
-Message-ID: <00bf888f-1501-70d6-eaf0-2592a36d1114@quicinc.com>
-Date:   Tue, 5 Sep 2023 12:38:31 +0530
+ 2023 00:10:47 -0700
+Message-ID: <e864890e-89cc-a37a-99c1-73a521790673@quicinc.com>
+Date:   Tue, 5 Sep 2023 12:40:42 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.0
-Subject: Re: [PATCH 2/5] dt-bindings: phy: Add qcom,sdx75-qmp-usb3-uni schema
- file
+Subject: Re: [PATCH 3/5] dt-bindings: usb: dwc3: Add missing SDX65 compatible
 Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         <agross@kernel.org>, <andersson@kernel.org>,
@@ -58,27 +57,28 @@ CC:     <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
         <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         <linux-usb@vger.kernel.org>, <kernel@quicinc.com>
 References: <1693889028-6485-1-git-send-email-quic_rohiagar@quicinc.com>
- <1693889028-6485-3-git-send-email-quic_rohiagar@quicinc.com>
- <0a2fcbc0-4b18-a54c-9f91-9710cc0bea1c@linaro.org>
+ <1693889028-6485-4-git-send-email-quic_rohiagar@quicinc.com>
+ <96c76c55-d5d4-e4ef-e7c3-ee35b2d7ad78@linaro.org>
+ <b8bb019d-6832-a956-b314-e7861748d188@linaro.org>
 From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
-In-Reply-To: <0a2fcbc0-4b18-a54c-9f91-9710cc0bea1c@linaro.org>
+In-Reply-To: <b8bb019d-6832-a956-b314-e7861748d188@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: WJi2L6tr0Y3vYh4-3fbhkkACVpKhUOVe
-X-Proofpoint-ORIG-GUID: WJi2L6tr0Y3vYh4-3fbhkkACVpKhUOVe
+X-Proofpoint-ORIG-GUID: sHU1DPaVwMOgJiexu9Pdp_UmQwFjUnyJ
+X-Proofpoint-GUID: sHU1DPaVwMOgJiexu9Pdp_UmQwFjUnyJ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
  definitions=2023-09-05_05,2023-08-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
- priorityscore=1501 mlxlogscore=643 impostorscore=0 suspectscore=0
- lowpriorityscore=0 mlxscore=0 spamscore=0 clxscore=1015 adultscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309050063
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
+ lowpriorityscore=0 malwarescore=0 suspectscore=0 bulkscore=0
+ impostorscore=0 mlxlogscore=668 clxscore=1015 adultscore=0
+ priorityscore=1501 mlxscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2308100000 definitions=main-2309050063
 X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -90,17 +90,32 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 9/5/2023 12:19 PM, Krzysztof Kozlowski wrote:
-> On 05/09/2023 06:43, Rohit Agarwal wrote:
->> Add a dt-binding schema for SDX75 SoC.
->>
-> It's the same as qcom,ipq9574-qmp-usb3-phy.
-Seems like this change is not in the tree. Will rebase my change on top 
-of it and mention the dependency.
+On 9/5/2023 12:21 PM, Krzysztof Kozlowski wrote:
+> On 05/09/2023 08:49, Krzysztof Kozlowski wrote:
+>> On 05/09/2023 06:43, Rohit Agarwal wrote:
+>>> Add missing SDX65 compatible for specifying the clocks used.
+>>>
+>>> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+>>> ---
+>>>   Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 1 +
+>>>   1 file changed, 1 insertion(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+>>> index 5c13229..fa51f50 100644
+>>> --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+>>> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+>>> @@ -186,6 +186,7 @@ allOf:
+>>>                 - qcom,sdm670-dwc3
+>>>                 - qcom,sdm845-dwc3
+>>>                 - qcom,sdx55-dwc3
+>>> +              - qcom,sdx65-dwc3
+>> That's not a complete change. Update the rest of the file.
+> Hm, your subject is confusing. The SDX65 is not missing and you do not
+> add missing compatible.
+Sure will rephrase the subject for this.
 
 Thanks,
 Rohit.
->
 > Best regards,
 > Krzysztof
 >
