@@ -2,150 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 141A57941C9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 18:59:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B0DA2794374
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 21:02:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231878AbjIFQ6y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Sep 2023 12:58:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33932 "EHLO
+        id S242687AbjIFTCy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Sep 2023 15:02:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240252AbjIFQ6x (ORCPT
+        with ESMTP id S244009AbjIFTCh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Sep 2023 12:58:53 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B290199F
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 09:58:48 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-52889bc61b6so5556376a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 09:58:48 -0700 (PDT)
+        Wed, 6 Sep 2023 15:02:37 -0400
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37CCECC7;
+        Wed,  6 Sep 2023 12:02:34 -0700 (PDT)
+Received: by mail-io1-xd2f.google.com with SMTP id ca18e2360f4ac-792717ef3c9so4131539f.3;
+        Wed, 06 Sep 2023 12:02:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694019527; x=1694624327; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+YZuuq224HVhWlxgKlSWCn+foZqdm/dLAWCsSmU0DN0=;
-        b=F8AYBQRi5Dl+ycOI9VCcGHKmv1gbYi9lAfiGrORTR6rtP2pshYE7ee4vdNRz8R7Z7L
-         lWEKoAyegnwJlqeN5OnMaSnoiLAnS9QfT2vUDO/tO53UxCNCntiZxgdaURGYjb8xYApa
-         az1l8bXHwJSwCM9w9WbVvUfkRSJoKzLxQ2zEj5LEIZsvmdF3c3cGMPOFCeR0YnwHN2Po
-         pOV34dmhtv2yCa4PSw3n4mnG530tVHKTYUom+0V/sJHWiZuttE54wTuP79xq3IoYZoIu
-         95WWMAUEe6pe9ea7caKraLkrL0kmlemqwagT21Dci2wTzuGLnUWYvFk4jApTSlbHC7Uo
-         55yQ==
+        d=gmail.com; s=20221208; t=1694026953; x=1694631753; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Shuu74iNOrUzggTrIzmIdLUSQe5OqUirbEavz/33+0U=;
+        b=FFEglAkon2EdUzMQJvIeUA9aHlG/CB49Uyjr0uPSrrlB4t6T0rRiuktA448p/b4INr
+         lrXJ1Rg+dWq+mMVVjiMn+RRN2Tvxq3j4GpGBIlynaKdftvSiBcMi+nnOk3d92fX2CUbh
+         MXIjBvTRkoxjkIsNa7JCMy/zZxN1JxG+IE1qCL1bV1f419//UoBb0muo2jtzJBb/Outz
+         eeYLajpdOC5tuj6YI0LqqgF36/aoPGhLlC7P6BdrPDdMxiXPzn+zHZCDT2FocCyYnuUO
+         ZMcYdp4ytHP7sLysdlXwhw9SN/2APpRda5Lm1l/q4fr7ro7odEG+Lnhae7a6ZU+taigu
+         K5LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1694019527; x=1694624327;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+YZuuq224HVhWlxgKlSWCn+foZqdm/dLAWCsSmU0DN0=;
-        b=iNKLwUWFS3gSXGDIr3tqaIhikrYjIox4iGXeCGw3aJvcY0ajRjaDZK6TxrcdI8+eDr
-         NRpf4PazPY4TWgywvBKohdQ8hPbPhvQrw/vCf4+9qqdcjuVmE/Na5mHKwbQeFQCyLPUR
-         24Nzs+NnpililTLgtcN1psyZ0qTsiifK0gYRQ6G5VT3lFXDpN3NLOO0UT6D7x/jhMro3
-         XJntcXnbF36y6DoEmgf6Xkyfc0hTJV5P5vQOpsuwucgE0FurtoLL0Tmbu54yTT/mcJkg
-         2uyekYjuib0PgqpLOlNjITPOu8Uwjra1BiQHNFGF+IeQXvYkbA9EaEOgp1S/4eHNzz0b
-         3S4w==
-X-Gm-Message-State: AOJu0YxVyTIVU+cEon/DicXThST0mdK3vLjbaMoCPKhJs+nJIKKuKoB4
-        4bJyibTCFLmc8YaRBwYTk+cXGw==
-X-Google-Smtp-Source: AGHT+IErMKReDgCn8zpILAzX10QNjbEeDts6tXmpyzlyQCIwbVZWS2IwN4jXXGR9FdXh9Q814c7JNQ==
-X-Received: by 2002:a50:ef17:0:b0:522:1e24:afb6 with SMTP id m23-20020a50ef17000000b005221e24afb6mr3027095eds.0.1694019526822;
-        Wed, 06 Sep 2023 09:58:46 -0700 (PDT)
-Received: from [192.168.37.154] (178235177204.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.204])
-        by smtp.gmail.com with ESMTPSA id i14-20020aa7dd0e000000b0052bcdbe263esm8727242edv.36.2023.09.06.09.58.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Sep 2023 09:58:46 -0700 (PDT)
-Message-ID: <f19fa545-0ccb-4670-af77-7c034b1016ef@linaro.org>
-Date:   Wed, 6 Sep 2023 18:58:43 +0200
+        d=1e100.net; s=20221208; t=1694026953; x=1694631753;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Shuu74iNOrUzggTrIzmIdLUSQe5OqUirbEavz/33+0U=;
+        b=iEInu+Z1xorFODkfFogcDGtj5OfLOz93500m7/hn+ZcUXltS/heCRbBy3ZoM31XnYX
+         S/JxPOcDYaP8kygAWSFptBLRF+phsUJY5XBwUMwRYCE1bAhOd42Wcra8zMOzJf7LkxgN
+         QnU/mJAw8EuwnnYZIYEmvP7VEe55s9ypldYDMWkjQImvsal5lYdS/3ii678OVCX/RsmM
+         zQGFWgesDsCX1Wh/ah2oR/vgFMVvRNWZmhbYEjS7T0M3Y2cjqQQaaQ+QF0KHqAlycZC7
+         JlBBg0j5XdaQhwmduHgvar3bmrY1KNMTCQqdebmQvNCIIvP5HVDpC5gbQQBgedmnxR76
+         e/xQ==
+X-Gm-Message-State: AOJu0YxpN9/rZ2/yvDr9LOcTLRHNayPYd6So/8uA3qVXjCwpkhpjTARY
+        2u3UPj7Y5BK8PRAL2HSBoYTqTCnfqXa44A==
+X-Google-Smtp-Source: AGHT+IG8dUwsOLP2n+Ukg0ohoD1JineJZS15vcrecPVQqbrwV1b9zykvv4DUg7GBrgG/kgmfyMJyGQ==
+X-Received: by 2002:a6b:dc17:0:b0:792:8d16:91ef with SMTP id s23-20020a6bdc17000000b007928d1691efmr16839930ioc.18.1694026953259;
+        Wed, 06 Sep 2023 12:02:33 -0700 (PDT)
+Received: from frodo.. (c-73-78-62-130.hsd1.co.comcast.net. [73.78.62.130])
+        by smtp.googlemail.com with ESMTPSA id w11-20020a5d844b000000b0076ffebfc9fasm5152306ior.47.2023.09.06.12.02.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Sep 2023 12:02:32 -0700 (PDT)
+From:   Jim Cromie <jim.cromie@gmail.com>
+To:     linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        amd-gfx@lists.freedesktop.org, intel-gvt-dev@lists.freedesktop.org,
+        intel-gfx@lists.freedesktop.org
+Cc:     daniel.vetter@ffwll.ch, daniel@ffwll.ch, jani.nikula@intel.com,
+        ville.syrjala@linux.intel.com, seanpaul@chromium.org,
+        robdclark@gmail.com, Jim Cromie <jim.cromie@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: [PATCH v3 3/5] drm/msm: add trailing newlines to drm_dbg msgs
+Date:   Wed,  6 Sep 2023 13:02:21 -0600
+Message-ID: <20230906190224.583577-4-jim.cromie@gmail.com>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20230906190224.583577-1-jim.cromie@gmail.com>
+References: <20230906190224.583577-1-jim.cromie@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 13/13] arm64: dts: qcom: sa8540-ride: Enable first
- port of tertiary usb controller
-Content-Language: en-US
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Johan Hovold <johan@kernel.org>,
-        Mathias Nyman <mathias.nyman@intel.com>
-Cc:     linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
-        quic_jackp@quicinc.com, ahalaney@redhat.com,
-        quic_shazhuss@quicinc.com
-References: <20230828133033.11988-1-quic_kriskura@quicinc.com>
- <20230828133033.11988-14-quic_kriskura@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230828133033.11988-14-quic_kriskura@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28.08.2023 15:30, Krishna Kurapati wrote:
-> From: Andrew Halaney <ahalaney@redhat.com>
-> 
-> There is now support for the multiport USB controller this uses so
-> enable it.
-> 
-> The board only has a single port hooked up (despite it being wired up to
-> the multiport IP on the SoC). There's also a USB 2.0 mux hooked up,
-> which by default on boot is selected to mux properly. Grab the gpio
-> controlling that and ensure it stays in the right position so USB 2.0
-> continues to be routed from the external port to the SoC.
-> 
-> Co-developed-by: Andrew Halaney <ahalaney@redhat.com>
-> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-> [Krishna: Rebased on top of usb-next]
-> Co-developed-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> ---
-Is there any benefit to removing the other ports?
+By at least strong convention, a print-buffer's trailing newline says
+"message complete, send it".  The exception (no TNL, followed by a call
+to pr_cont) proves the general rule.
 
-i.e. are ports 1-3 not parked properly by the dwc3 driver if
-they're never connected to anything?
+Most DRM.debug calls already comport with this: 207 DRM_DEV_DEBUG,
+1288 drm_dbg.  Clean up the remainders, in maintainer sized chunks.
 
-Konrad
+No functional changes.
+
+Signed-off-by: Jim Cromie <jim.cromie@gmail.com>
+---
+ drivers/gpu/drm/msm/msm_fb.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/msm_fb.c b/drivers/gpu/drm/msm/msm_fb.c
+index e3f61c39df69..88bb5fa23bb1 100644
+--- a/drivers/gpu/drm/msm/msm_fb.c
++++ b/drivers/gpu/drm/msm/msm_fb.c
+@@ -89,7 +89,7 @@ int msm_framebuffer_prepare(struct drm_framebuffer *fb,
+ 
+ 	for (i = 0; i < n; i++) {
+ 		ret = msm_gem_get_and_pin_iova(fb->obj[i], aspace, &msm_fb->iova[i]);
+-		drm_dbg_state(fb->dev, "FB[%u]: iova[%d]: %08llx (%d)",
++		drm_dbg_state(fb->dev, "FB[%u]: iova[%d]: %08llx (%d)\n",
+ 			      fb->base.id, i, msm_fb->iova[i], ret);
+ 		if (ret)
+ 			return ret;
+@@ -176,9 +176,9 @@ static struct drm_framebuffer *msm_framebuffer_init(struct drm_device *dev,
+ 	const struct msm_format *format;
+ 	int ret, i, n;
+ 
+-	drm_dbg_state(dev, "create framebuffer: mode_cmd=%p (%dx%d@%4.4s)",
+-			mode_cmd, mode_cmd->width, mode_cmd->height,
+-			(char *)&mode_cmd->pixel_format);
++	drm_dbg_state(dev, "create framebuffer: mode_cmd=%p (%dx%d@%4.4s)\n",
++		      mode_cmd, mode_cmd->width, mode_cmd->height,
++		      (char *)&mode_cmd->pixel_format);
+ 
+ 	n = info->num_planes;
+ 	format = kms->funcs->get_format(kms, mode_cmd->pixel_format,
+@@ -232,7 +232,7 @@ static struct drm_framebuffer *msm_framebuffer_init(struct drm_device *dev,
+ 
+ 	refcount_set(&msm_fb->dirtyfb, 1);
+ 
+-	drm_dbg_state(dev, "create: FB ID: %d (%p)", fb->base.id, fb);
++	drm_dbg_state(dev, "create: FB ID: %d (%p)\n", fb->base.id, fb);
+ 
+ 	return fb;
+ 
+-- 
+2.41.0
+
