@@ -2,71 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D29CD793BC5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 13:50:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 91993793C04
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 13:59:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239713AbjIFLuv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Sep 2023 07:50:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36300 "EHLO
+        id S240450AbjIFL7T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Sep 2023 07:59:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231449AbjIFLuu (ORCPT
+        with ESMTP id S240354AbjIFL7L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Sep 2023 07:50:50 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86F36CFD
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 04:50:35 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-52683b68c2fso5133852a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 04:50:35 -0700 (PDT)
+        Wed, 6 Sep 2023 07:59:11 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82914CE9
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 04:59:06 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-52c88a03f99so4793426a12.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 04:59:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694001034; x=1694605834; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1694001545; x=1694606345; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=payyeUMA0BoLqXT6iJLBiQ/AAoK7VmcqisdCZ1nbhOk=;
-        b=H0VG2zw8awzpXm2KJIZQDeMCMkrQBxy9JjNY4byaBuEntWQJVPx8u2j7VsgcALTP8Q
-         Y5MzFZnBboV91GWg8CTxPi49ojmhy+2bRRJQJOIZCOQEG8qgTGZw9/3B+eIgWX0ZTRmV
-         Yy5RO66D2QINlrxBqvuQ809P0VLF0xEIukR2V08jdPjpcEe6wJq08d7K3q+hQ5x63p0h
-         NDpiT7Ne/Xco47rioNjxgSaxog5pzivCsvNFSvncTH26PwdMHLGM7dOIUmxMrgOJPkfk
-         3Ccy5wM6DGaHTz9Z/QPSTqGRhop/QSzV5MY7ATHV9JlDQFK1yEN837A/2G7QrjzWu9ES
-         n4yQ==
+        bh=0eY60L1vqLhFNroIzfX3ZIdyRPyMgbcLJxNulph+C5w=;
+        b=fKGWI9W7wR8TmAcC645SaibNfSyqdUgmlqU4euQ81IsKDcrWCDl2qjx1XsRxDHRZl0
+         ZAUiUb6jxFuZCjBKCqM//9iBMqfEWifFG4X+hCHouAYpJaMuiNQ9Q8lNl4Os9xZc5wov
+         axw5qbpfV/cBJaTASEqeZS0o1cUMqa2Nsmu3FuVmXX7rKV872JqkmbLGf75XfOi5Jk0Q
+         2dI9G04cha8bcREqaD8HX8k8l8u9rK+0lTfSbr+YlzdZroc3Zgt460aD+KAk67krOpXV
+         XdbQqQWfxBve+quffrB8AOqjS1Q0jHgyqh84oTomHeWXdTrj7sZ/64OVl2yBoTR66HgE
+         jmOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1694001034; x=1694605834;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1694001545; x=1694606345;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=payyeUMA0BoLqXT6iJLBiQ/AAoK7VmcqisdCZ1nbhOk=;
-        b=FeOpjZW0txkRXjFXc9os+J5v9toEGDKgAJLcU9WK885cBJQg5v4za3VzrntR+I1lOt
-         kJzzpU5zx8JvFoLCJnvM7guiuYiGc5gaJtpn05AqRO9/L6phPor1lfFpCxcLKiWijN7P
-         5r968nf4REHq4mtlsX6QDAL3EiUdcMplUmAZbMxnc0qCiVAvOzrgaYU77cS8e54miwXw
-         m+Hg7DKJ4NOHuPzn0rkWW08ArbAV5UD9towpuRatZ+xeorjLAw/wYAGot+geVAKiir9w
-         89euYLx5iOQrxzkc+fRLwFyfnhQQF3hY1ekzgzaVpoABivglYJr/8h4yl+fvqyi/dk+j
-         3VcQ==
-X-Gm-Message-State: AOJu0Yw6k5JCP95aMORPB3uT4cnbT9tOdaG9DeWa000JiaSqgWYPr9BC
-        PnJeyMRdqqZTmkunWdBWr6hHlw==
-X-Google-Smtp-Source: AGHT+IHyvzK6olU8wJRmdfT+yxix5FrHtH2kKgPN8F5vhkQibpqC6rdQyQ9O5tWFN4oWDGk6CEMvKw==
-X-Received: by 2002:a17:907:a046:b0:9a5:c8ad:20c1 with SMTP id gz6-20020a170907a04600b009a5c8ad20c1mr2245314ejc.9.1694001034086;
-        Wed, 06 Sep 2023 04:50:34 -0700 (PDT)
+        bh=0eY60L1vqLhFNroIzfX3ZIdyRPyMgbcLJxNulph+C5w=;
+        b=DmtNKcB8fM5poy9cq2/CWPJp4haZV3kbXY4Vnb0sTiU5KFXVu3Sfdfcd6Tz2ytkzih
+         FpInh/fEe2/+fPu5ZsES14QuYCX+5g7XgPRCwq775Uo+WfCowEqIW+udz5abM+3obqUq
+         RMlzWOrKs+G0oo78aINrjrsmFUl2UDk57nfj2jjIAvbKuxSnqmSu2AkkIfoYPuEni4qM
+         vXqcVRPMZ+DsDNKSooc5F3PUM+v85mTERxBuJ9G88Msj77hifKy/nwTJLvCq0bvKndmg
+         IsyohM68v4TTUxB/rG+4gROtuzpT/Q7HlR8+8riRQLcqJQp6dGOoFm24/5tbnyAnKsfM
+         aaXQ==
+X-Gm-Message-State: AOJu0Yz5wB73fWImzu94hpJnllheH/hI7efwG4SwewEohjpXUalE1nrF
+        lNDqh0iMzWXoNFRJpsYhAnQexg==
+X-Google-Smtp-Source: AGHT+IF9sAT+cjxkgPNsf+QIwIxOAoiZdeDBevNhm3tks4xh9tnp+4JXd0PrPwEP3hqmdZltjlbETg==
+X-Received: by 2002:aa7:dace:0:b0:523:40d0:34d1 with SMTP id x14-20020aa7dace000000b0052340d034d1mr2179204eds.4.1694001545044;
+        Wed, 06 Sep 2023 04:59:05 -0700 (PDT)
 Received: from [192.168.37.154] (178235177204.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.204])
-        by smtp.gmail.com with ESMTPSA id jj3-20020a170907984300b00992b2c55c67sm8887258ejc.156.2023.09.06.04.50.32
+        by smtp.gmail.com with ESMTPSA id a9-20020aa7d749000000b005257da6be23sm8448955eds.75.2023.09.06.04.59.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Sep 2023 04:50:33 -0700 (PDT)
-Message-ID: <91f74079-1be3-4c66-9942-cb02c96c8848@linaro.org>
-Date:   Wed, 6 Sep 2023 13:50:31 +0200
+        Wed, 06 Sep 2023 04:59:04 -0700 (PDT)
+Message-ID: <168d4136-7382-481a-9c4d-f43b1f95f987@linaro.org>
+Date:   Wed, 6 Sep 2023 13:59:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] arm64: dts: qcom: sm8550-mtp: use correct UFS supply
+Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: sc7180: Add ADSP
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+To:     Nikita Travkin <nikita@trvn.ru>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230906104744.163479-1-krzysztof.kozlowski@linaro.org>
- <9c7fae56-85a2-4691-8192-24237761d25c@linaro.org>
- <fe346849-cd0f-aee5-9ab9-ea581025329b@linaro.org>
+        Manivannan Sadhasivam <mani@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org
+Cc:     David Wronek <davidwronek@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+References: <20230905-sc7180-adsp-rproc-v2-0-8ab7f299600a@trvn.ru>
+ <20230905-sc7180-adsp-rproc-v2-4-8ab7f299600a@trvn.ru>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -103,32 +106,37 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <fe346849-cd0f-aee5-9ab9-ea581025329b@linaro.org>
+In-Reply-To: <20230905-sc7180-adsp-rproc-v2-4-8ab7f299600a@trvn.ru>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6.09.2023 13:39, Krzysztof Kozlowski wrote:
-> On 06/09/2023 13:28, Konrad Dybcio wrote:
->> On 6.09.2023 12:47, Krzysztof Kozlowski wrote:
->>> According to schematics the VCCQ2 supply is not connected and the L3G
->>> regulator instead powers up the controller pads (VDD_PX10).  Use correct
->>> supply vdd-hba and drop unsupported current limit for the vdd-hba.
->> Why is it unsupported?
+On 5.09.2023 12:41, Nikita Travkin wrote:
+> sc7180 has an ADSP remoteproc that exclusively controls the audio
+> hardware on devices that use Qualcomm firmware.
 > 
-> Maybe I was here not precise. I move the regulator from vccq2 to
-> vdd-hba. vccq2 has control of current in UFS core driver. Bindings also
-> allow it.
-Looks like the bindings are out of sync with the driver.
+> Add it along with the relevant audio services.
+> 
+> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+> ---
+> v2: rename service nodes according to the schema, reorder properties
+> ---
+remoteproc@62400000: glink-edge:apr: 'qcom,domain' is a required property
+remoteproc@62400000: glink-edge: Unevaluated properties are not allowed
+('apr' was unexpected)
+remoteproc@62400000: Unevaluated properties are not allowed ('glink-edge',
+'qcom,smem-state-names', 'qcom,smem-states' were unexpected)
+apr: 'qcom,domain' is a required property
+service@4: Unevaluated properties are not allowed ('cc' was unexpected)
 
-ufshcd_populate_vreg() which parses current is used for both vccq2
-and vdd-hba.
+you need to enable the node to get all the warnings
 
 Konrad
