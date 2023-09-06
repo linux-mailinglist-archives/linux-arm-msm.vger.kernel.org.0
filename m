@@ -2,133 +2,449 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B6A547938E4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 11:52:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C3C0E7939BA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 12:24:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237769AbjIFJwR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Sep 2023 05:52:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44812 "EHLO
+        id S237937AbjIFKYE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Sep 2023 06:24:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237799AbjIFJwP (ORCPT
+        with ESMTP id S237922AbjIFKYD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Sep 2023 05:52:15 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BECA92
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 02:52:11 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-523100882f2so4963473a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 02:52:11 -0700 (PDT)
+        Wed, 6 Sep 2023 06:24:03 -0400
+Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7DC010F5
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 03:23:58 -0700 (PDT)
+Received: by mail-yb1-xb29.google.com with SMTP id 3f1490d57ef6-d776e1f181bso2972993276.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 03:23:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693993930; x=1694598730; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/qWVul6xDGsij/8JsKoLuS8R6GKh6yAK3ZG4punNQiw=;
-        b=YGo34iCM/KSAoTKJk7FhEVfVSi1Pe9WcqAcFKevpjBG8KEriPt5ZZd5iUNqf6nPtD2
-         PO/beznbObLzOqkGkREo4RB3Ra842QRUQ9v95OodlPKN4HG/mR3qzi5GZ9ad7ohudfbs
-         YgQUTNGp+cjlIzhKP/+fYMI38qiimEOsPCV3TDAnvMdVUBPEjPpgEEHTnz3WA/5AS2Ry
-         FTXBd/DHrB8t06K2UGj+0dUU6ePzIGwBZPj7MYTIiM4MhCo54XEu0egTSya5h1wnWRQo
-         sTGdPAqjzAqxoplghDebSsLoa2tStBrwguNzl+xS3BP9Y3d4V23sfzDbnqJ8p1t/OM0Z
-         qc5w==
+        d=linaro.org; s=google; t=1693995838; x=1694600638; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ukp5s+yUao7QKt/jBc8w9DnD0YtYgjkSUOZArAv43DA=;
+        b=eYJIAgHE/m7RFBK2N5uBnpqIfEoRV7KkxHLShf3uIr2PC2J0tMQQHHpWi/G6HtKr4a
+         4t1msnPKdxZSlp+5ad1nkEOQnb6C6p2EBuokbumn8OhLVLmpos365/b03Mh41UojC1Se
+         PX5cjc4OrKXXEArm6bZd1zO93YDq3zqDpBnZhWicrkvujopZr8UKkWaCqao93ti4HVoh
+         h9aRH5GlrJrzOQyJRMmes//X29LJ2G5BBXwdycOBZWpogObwBxBfxpQVZjxW6ryD2FIj
+         qNXjijmhkAa/xJDBuNwpm6yFH50nmgwgRgisd0dgJjKBLQBtWNJ3nEzyxBNQfNlBRkVm
+         YKKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693993930; x=1694598730;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/qWVul6xDGsij/8JsKoLuS8R6GKh6yAK3ZG4punNQiw=;
-        b=Q6EGsJHOQauOfFtGSWMsgEprx3JAOtb6ciM/PdjW0/wVbOWqXwR6eiQSzwPUIx4jr+
-         rGxV9cjT3wzCXnGY4oXwVHizrZQiA6dHUjv1UWnqD60/qbqdyt2nkc9lA0DGqEg6Xuau
-         f8uPCFurnOa3tpZ4jxS7J2FIl9dtFzhHYbhM4B4wpqAbQ0M9957rzMr9O5D2xC2Z805X
-         /tcEAJrRvPGpqQ2p7raRs/ZxWAgMeZoa4xvh8RWn+rsi1dcBUH5lqr3n7ncHdS6DHNJR
-         VSigfM0KUOeE8f4jxk68pH8JU7vqLuSuaBjgTd1WPCuR/wieQ46x6wTYXi76lTkJVtQr
-         Vb5Q==
-X-Gm-Message-State: AOJu0YyVhWipb3OWdF1qZ8CEAkujtgV9XNQC5IVNQkVaFoBn9MdFtlCA
-        59cVVEYw9mOZbBgqHNAWsFeQtw==
-X-Google-Smtp-Source: AGHT+IH231i0wuCxooeSb/AxFtQWIGNYHtouLcNPXNMY/3XuVLuYi1hb99K4CjnZ2gvopsgR1m1ixA==
-X-Received: by 2002:a17:906:538a:b0:9a5:c919:55ca with SMTP id g10-20020a170906538a00b009a5c91955camr2062468ejo.65.1693993929749;
-        Wed, 06 Sep 2023 02:52:09 -0700 (PDT)
-Received: from [192.168.37.154] (178235177204.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.204])
-        by smtp.gmail.com with ESMTPSA id lu7-20020a170906fac700b00992e14af9b9sm8652189ejb.134.2023.09.06.02.52.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Sep 2023 02:52:09 -0700 (PDT)
-Message-ID: <c3880fac-7ed4-4981-87a5-8243a81f7342@linaro.org>
-Date:   Wed, 6 Sep 2023 11:52:06 +0200
+        d=1e100.net; s=20221208; t=1693995838; x=1694600638;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ukp5s+yUao7QKt/jBc8w9DnD0YtYgjkSUOZArAv43DA=;
+        b=OoiibaaPCncusGlPlu05m4M3JEboRgUMgHo7Fjo+ZtCbubm4p+BXCDx765Zpg0E2/i
+         BkJejulNRK3RcGgPRRoBpbiV4kTYJwOjZp+m9DfH6doQ+orRbEmEyRSoL17wwalBT547
+         Vggz2obI6drXsm7HHXK6/+UZFGWokEJqjRK5V4IZLo1fh+gj6xMtyfQWHdoblYxlplgD
+         i8gZiPXoIgGsuIva2psAC5IOJ2IszYGAOq/sCIHnYHUyEqR6N2WKZwbzlYdCq6QBIkbr
+         HtqrKh9jtPCtD0w0xpVjk70uBgrsy4XDF1Uw84kzjn/CppTjgwZIFSphqx44EA7khiCs
+         lxpw==
+X-Gm-Message-State: AOJu0YzZkiAvw/vfX3NStT3BSu6o/a/jC1nCXGjWjPTJSa6p/PgmKmdO
+        mZoFrB9uysIgWjK42I58+7uWHfUii1cFqVWasqpnTA==
+X-Google-Smtp-Source: AGHT+IEXapV3LzfxCKINXMoXC3jaR2W2NaMIm408ir2exxJSnl6Laf3IB2GWwIr5RWv4+zYb/g8BKK39Z3eNg7JRnk4=
+X-Received: by 2002:a25:8a03:0:b0:d7f:cdc8:e17a with SMTP id
+ g3-20020a258a03000000b00d7fcdc8e17amr259484ybl.28.1693995838071; Wed, 06 Sep
+ 2023 03:23:58 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] arm64: dts: qcom: ipq5332: Fix hwlock index for
- SMEM
-Content-Language: en-US
-To:     Vignesh Viswanathan <quic_viswanat@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     quic_kathirav@quicinc.com, quic_anusha@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_srichara@quicinc.com,
-        quic_varada@quicinc.com, stable@vger.kernel.org
-References: <20230904172516.479866-1-quic_viswanat@quicinc.com>
- <20230904172516.479866-2-quic_viswanat@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230904172516.479866-2-quic_viswanat@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20230217-topic-cpr3h-v14-0-9fd23241493d@linaro.org> <20230217-topic-cpr3h-v14-8-9fd23241493d@linaro.org>
+In-Reply-To: <20230217-topic-cpr3h-v14-8-9fd23241493d@linaro.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Wed, 6 Sep 2023 12:23:21 +0200
+Message-ID: <CAPDyKFrNprXpdQBEzezyOJg6NJ8LLarZQV_mnQn5QyCrNmsRUw@mail.gmail.com>
+Subject: Re: [PATCH v14 8/9] soc: qcom: Add support for Core Power Reduction
+ v3, v4 and Hardened
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Niklas Cassel <nks@flawful.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Robert Marko <robimarko@gmail.com>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4.09.2023 19:25, Vignesh Viswanathan wrote:
-> SMEM uses lock index 3 of the TCSR Mutex hwlock for allocations
-> in SMEM region shared by the Host and FW.
-> 
-> Fix the SMEM hwlock index to 3 for IPQ5332.
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: d56dd7f935e1 ("arm64: dts: qcom: ipq5332: add SMEM support")
-> Signed-off-by: Vignesh Viswanathan <quic_viswanat@quicinc.com>
+On Mon, 28 Aug 2023 at 13:42, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+>
+> This commit introduces a new driver, based on the one for cpr v1,
+> to enable support for the newer Qualcomm Core Power Reduction
+> hardware, known downstream as CPR3, CPR4 and CPRh, and support
+> for MSM8998 and SDM630 CPU power reduction.
+>
+> In these new versions of the hardware, support for various new
+> features was introduced, including voltage reduction for the GPU,
+> security hardening and a new way of controlling CPU DVFS,
+> consisting in internal communication between microcontrollers,
+> specifically the CPR-Hardened and the Operating State Manager.
+>
+> The CPR v3, v4 and CPRh are present in a broad range of SoCs,
+> from the mid-range to the high end ones including, but not limited
+> to, MSM8953/8996/8998, SDM630/636/660/845.
+>
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> [Konrad: rebase, apply review comments]
+> Tested-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
-Your downstream says otherwise [1]. Perhaps you need to fix it there
-as well?
 
-Konrad
+[...]
 
-[1] https://git.codelinaro.org/clo/qsdk/oss/kernel/linux-ipq-5.4/-/blob/NHSS.QSDK.12.4.r1/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+> +
+> +static unsigned int cpr_get_performance_state(struct generic_pm_domain *genpd,
+> +                                             struct dev_pm_opp *opp)
+> +{
+> +       return dev_pm_opp_get_level(opp);
+> +}
 
+The OPP core doesn't use pm_genpd_opp_to_performance_state() anymore,
+but defaults to use dev_pm_opp_get_level(). Meaning that you can drop
+the above function.
+
+I am planning to remove pm_genpd_opp_to_performance_state(), in the
+next cycle, as it's no longer needed.
+
+> +
+> +static int cpr_power_off(struct generic_pm_domain *domain)
+> +{
+> +       struct cpr_thread *thread = container_of(domain, struct cpr_thread, pd);
+> +
+> +       return cpr_disable(thread);
+> +}
+> +
+> +static int cpr_power_on(struct generic_pm_domain *domain)
+> +{
+> +       struct cpr_thread *thread = container_of(domain, struct cpr_thread, pd);
+> +
+> +       return cpr_enable(thread);
+> +}
+> +
+> +static void cpr_pd_detach_dev(struct generic_pm_domain *domain,
+> +                             struct device *dev)
+> +{
+> +       struct cpr_thread *thread = container_of(domain, struct cpr_thread, pd);
+> +       struct cpr_drv *drv = thread->drv;
+> +
+> +       mutex_lock(&drv->lock);
+> +
+> +       dev_dbg(drv->dev, "detach callback for: %s\n", dev_name(dev));
+> +       thread->attached_cpu_dev = NULL;
+> +
+> +       mutex_unlock(&drv->lock);
+
+Don't you need to do some additional cleanup here? Like calling
+dev_pm_opp_of_remove_table() for example?
+
+> +}
+> +
+> +static int cpr_pd_attach_dev(struct generic_pm_domain *domain,
+> +                            struct device *dev)
+> +{
+> +       struct cpr_thread *thread = container_of(domain, struct cpr_thread, pd);
+> +       struct cpr_drv *drv = thread->drv;
+> +       const struct acc_desc *acc_desc = drv->acc_desc;
+> +       bool cprh_opp_remove_table = false;
+> +       int ret = 0;
+> +
+> +       mutex_lock(&drv->lock);
+> +
+> +       dev_dbg(drv->dev, "attach callback for: %s\n", dev_name(dev));
+> +
+> +       /*
+> +        * This driver only supports scaling voltage for a CPU cluster
+> +        * where all CPUs in the cluster share a single regulator.
+> +        * Therefore, save the struct device pointer only for the first
+> +        * CPU device that gets attached. There is no need to do any
+> +        * additional initialization when further CPUs get attached.
+> +        * This is not an error condition.
+> +        */
+> +       if (thread->attached_cpu_dev)
+> +               goto unlock;
+> +
+> +       /*
+> +        * cpr_scale_voltage() requires the direction (if we are changing
+> +        * to a higher or lower OPP). The first time
+> +        * cpr_set_performance_state() is called, there is no previous
+> +        * performance state defined. Therefore, we call
+> +        * cpr_find_initial_corner() that gets the CPU clock frequency
+> +        * set by the bootloader, so that we can determine the direction
+> +        * the first time cpr_set_performance_state() is called.
+> +        */
+> +       thread->cpu_clk = devm_clk_get(dev, NULL);
+> +       if (drv->desc->cpr_type < CTRL_TYPE_CPRH && IS_ERR(thread->cpu_clk)) {
+> +               ret = PTR_ERR(thread->cpu_clk);
+> +               if (ret != -EPROBE_DEFER)
+> +                       dev_err(drv->dev, "could not get cpu clk: %d\n", ret);
+> +               goto unlock;
+> +       }
+> +       thread->attached_cpu_dev = dev;
+> +
+> +       /*
+> +        * We are exporting the APM and MEM-ACC thresholds to the caller;
+> +        * while APM is necessary in the CPU CPR case, MEM-ACC may not be,
+> +        * depending on the SoC and on fuses.
+> +        * Initialize both to an invalid value, so that the caller can check
+> +        * if they got calculated or read from fuses in this driver.
+> +        */
+> +       thread->ext_data.apm_threshold_uV = -1;
+> +       thread->ext_data.mem_acc_threshold_uV = -1;
+> +       dev_set_drvdata(thread->attached_cpu_dev, &thread->ext_data);
+> +
+> +       dev_dbg(drv->dev, "using cpu clk from: %s\n",
+> +               dev_name(thread->attached_cpu_dev));
+> +
+> +       /*
+> +        * Everything related to (virtual) corners has to be initialized
+> +        * here, when attaching to the power domain, since we need to know
+> +        * the maximum frequency for each fuse corner, and this is only
+> +        * available after the cpufreq driver has attached to us.
+> +        * The reason for this is that we need to know the highest
+> +        * frequency associated with each fuse corner.
+> +        */
+> +       ret = dev_pm_opp_get_opp_count(&thread->pd.dev);
+> +       if (ret < 0) {
+> +               dev_err(drv->dev, "could not get OPP count\n");
+> +               thread->attached_cpu_dev = NULL;
+> +               goto unlock;
+> +       }
+> +       thread->num_corners = ret;
+> +
+> +       thread->corners = devm_kcalloc(drv->dev,
+> +                                      thread->num_corners +
+> +                                      drv->extra_corners,
+> +                                      sizeof(*thread->corners),
+> +                                      GFP_KERNEL);
+> +       if (!thread->corners) {
+> +               ret = -ENOMEM;
+> +               goto unlock;
+> +       }
+> +
+> +       /*
+> +        * If we are on CPR-Hardened we have to make sure that the attached
+> +        * device has a OPP table installed, as we're going to modify it here
+> +        * with our calculations based on qfprom values.
+> +        */
+> +       if (drv->desc->cpr_type == CTRL_TYPE_CPRH) {
+> +               ret = dev_pm_opp_of_add_table(dev);
+> +               if (ret && ret != -EEXIST) {
+> +                       dev_err(drv->dev, "Cannot add table: %d\n", ret);
+> +                       goto unlock;
+> +               }
+> +               cprh_opp_remove_table = true;
+> +       }
+> +
+> +       ret = cpr3_corner_init(thread);
+> +       if (ret)
+> +               goto exit;
+> +
+> +       if (drv->desc->cpr_type < CTRL_TYPE_CPRH) {
+> +               ret = cpr3_find_initial_corner(thread);
+> +               if (ret)
+> +                       goto exit;
+> +
+> +               if (acc_desc->config)
+> +                       regmap_multi_reg_write(drv->tcsr, acc_desc->config,
+> +                                              acc_desc->num_regs_per_fuse);
+> +
+> +               /* Enable ACC if required */
+> +               if (acc_desc->enable_mask)
+> +                       regmap_update_bits(drv->tcsr, acc_desc->enable_reg,
+> +                                          acc_desc->enable_mask,
+> +                                          acc_desc->enable_mask);
+> +       }
+> +       dev_info(drv->dev, "thread %d initialized with %u OPPs\n",
+> +                thread->id, thread->num_corners);
+> +exit:
+> +       /*
+> +        * If we are on CPRh and we reached an error condition, we installed
+> +        * the OPP table but we haven't done any setup on it, nor we ever will.
+> +        * In order to leave a clean state, remove the table.
+> +        */
+> +       if (ret && cprh_opp_remove_table)
+> +               dev_pm_opp_of_remove_table(thread->attached_cpu_dev);
+> +unlock:
+> +       mutex_unlock(&drv->lock);
+> +
+> +       return ret;
+> +}
+
+[...]
+
+> +/**
+> + * cpr_thread_init() - Initialize CPR thread related parameters
+> + * @drv: Main driver structure
+> + * @tid: Thread ID
+> + *
+> + * Return: Zero for success, negative number on error
+> + */
+> +static int cpr_thread_init(struct cpr_drv *drv, int tid)
+> +{
+> +       const struct cpr_desc *desc = drv->desc;
+> +       const struct cpr_thread_desc *tdesc = desc->threads[tid];
+> +       struct cpr_thread *thread = &drv->threads[tid];
+> +       bool pd_registered = false;
+> +       int ret, i;
+> +
+> +       if (tdesc->step_quot_init_min > CPR3_CPR_STEP_QUOT_MIN_MASK ||
+> +           tdesc->step_quot_init_max > CPR3_CPR_STEP_QUOT_MAX_MASK)
+> +               return -EINVAL;
+> +
+> +       thread->id = tid;
+> +       thread->drv = drv;
+> +       thread->desc = tdesc;
+> +       thread->fuse_corners = devm_kcalloc(drv->dev,
+> +                                           tdesc->num_fuse_corners +
+> +                                           drv->extra_corners,
+> +                                           sizeof(*thread->fuse_corners),
+> +                                           GFP_KERNEL);
+> +       if (!thread->fuse_corners)
+> +               return -ENOMEM;
+> +
+> +       thread->cpr_fuses = cpr_get_fuses(drv->dev, tid,
+> +                                         tdesc->num_fuse_corners);
+> +       if (IS_ERR(thread->cpr_fuses))
+> +               return PTR_ERR(thread->cpr_fuses);
+> +
+> +       ret = cpr_populate_ring_osc_idx(thread->drv->dev, thread->fuse_corners,
+> +                                       thread->cpr_fuses,
+> +                                       tdesc->num_fuse_corners);
+> +       if (ret)
+> +               return ret;
+> +
+> +       ret = cpr_fuse_corner_init(thread);
+> +       if (ret)
+> +               return ret;
+> +
+> +       thread->pd.name = devm_kasprintf(drv->dev, GFP_KERNEL,
+> +                                        "%s_thread%d",
+> +                                        drv->dev->of_node->full_name,
+> +                                        thread->id);
+> +       if (!thread->pd.name)
+> +               return -EINVAL;
+> +
+> +       thread->pd.power_off = cpr_power_off;
+> +       thread->pd.power_on = cpr_power_on;
+> +       thread->pd.opp_to_performance_state = cpr_get_performance_state;
+> +       thread->pd.attach_dev = cpr_pd_attach_dev;
+> +       thread->pd.detach_dev = cpr_pd_detach_dev;
+> +
+> +       /* CPR-Hardened performance states are managed in firmware */
+> +       if (desc->cpr_type == CTRL_TYPE_CPRH)
+> +               thread->pd.set_performance_state = cprh_dummy_set_performance_state;
+
+The dummy function above always returns 0, without actually doing
+anything. I am trying to understand the purpose of this.
+
+Would you mind elaborating on this a bit?
+
+> +       else
+> +               thread->pd.set_performance_state = cpr_set_performance_state;
+> +
+> +       /* Anything later than CPR1 must be always-on for now */
+> +       thread->pd.flags = GENPD_FLAG_ALWAYS_ON;
+> +
+> +       drv->cell_data.domains[tid] = &thread->pd;
+> +
+> +       ret = pm_genpd_init(&thread->pd, NULL, false);
+> +       if (ret < 0)
+> +               goto fail;
+> +       else
+> +               pd_registered = true;
+> +
+> +       /* On CPRhardened, the interrupts are managed in firmware */
+> +       if (desc->cpr_type < CTRL_TYPE_CPRH) {
+> +               INIT_WORK(&thread->restart_work, cpr_restart_worker);
+> +
+> +               ret = devm_request_threaded_irq(drv->dev, drv->irq,
+> +                                               NULL, cpr_irq_handler,
+> +                                               IRQF_ONESHOT |
+> +                                               IRQF_TRIGGER_RISING,
+> +                                               "cpr", drv);
+> +               if (ret)
+> +                       goto fail;
+> +       }
+> +
+> +       return 0;
+> +
+> +fail:
+> +       /* Unregister all previously registered genpds */
+> +       for (i = tid - pd_registered; i >= 0; i--)
+> +               pm_genpd_remove(&drv->threads[i].pd);
+> +
+> +       return ret;
+> +}
+
+[...]
+
+> +
+> +static int cpr_remove(struct platform_device *pdev)
+> +{
+> +       struct cpr_drv *drv = platform_get_drvdata(pdev);
+> +       int i;
+> +
+> +       of_genpd_del_provider(pdev->dev.of_node);
+> +
+> +       for (i = 0; i < drv->desc->num_threads; i++) {
+> +               cpr_ctl_disable(&drv->threads[i]);
+> +               cpr_irq_set(&drv->threads[i], 0);
+> +               pm_genpd_remove(&drv->threads[i].pd);
+> +       }
+> +
+> +       debugfs_remove_recursive(drv->debugfs);
+> +
+> +       return 0;
+> +}
+> +
+> +static const struct of_device_id cpr3_match_table[] = {
+> +       { .compatible = "qcom,msm8998-cprh", .data = &msm8998_cpr_acc_desc },
+> +       { .compatible = "qcom,sdm630-cprh", .data = &sdm630_cpr_acc_desc },
+> +       { }
+> +};
+> +MODULE_DEVICE_TABLE(of, cpr3_match_table);
+> +
+> +static struct platform_driver cpr3_driver = {
+> +       .probe          = cpr_probe,
+> +       .remove         = cpr_remove,
+
+There is this .remove_new callback, that you probably should use instead.
+
+> +       .driver         = {
+> +               .name   = "qcom-cpr3",
+> +               .of_match_table = cpr3_match_table,
+> +       },
+> +};
+> +module_platform_driver(cpr3_driver)
+> +
+
+[...]
+
+Note that, this was mostly a drive-by-review, looking at the genpd
+provider specific parts. In general this looks good to me, other than
+the minor comments I had above.
+
+Kind regards
+Uffe
