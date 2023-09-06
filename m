@@ -2,139 +2,328 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D088793525
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 08:07:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA78E79361E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 09:21:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232482AbjIFGHo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Sep 2023 02:07:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46500 "EHLO
+        id S232030AbjIFHVv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Sep 2023 03:21:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241386AbjIFGHn (ORCPT
+        with ESMTP id S231725AbjIFHVv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Sep 2023 02:07:43 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FF3610DC;
-        Tue,  5 Sep 2023 23:07:23 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3865knGv028100;
-        Wed, 6 Sep 2023 06:07:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=XwnqHZrjEXk32wMzzvgxT0wFIpyLkqsdotf/qrmxZ3s=;
- b=CWy6Lh+WsANgEtBKUsepb0F+Sr6TAO2DX1jOYvPpTSlHccWH54Hi1e5ezPKotXQ5eIow
- os95PXOMDyISR0MqK98gnE2zcDsYesdjw+SLrnbtORI9StpI9sOhb93+yP6na/dgOFhV
- ZvQtLZZXmErVYcy/fPmn9bjzMQZPUpAt6n7Cnkh4YzhWdZQwEZvr/V+C0sLbWRueGWzx
- VlLZQ7F1/mOhD12bVGuy5Vp1/sooH9OifhgE9pD7rBDYo01s7T485Jlyi/6Q+5Vsy90m
- WyAZHmMWqGTC+uxp7gRKtzE6qFd7WSZgHZ6spGtrn0kyej1mg+l5xqZchX6adMpjE5Lf XQ== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sww32tvy5-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 06 Sep 2023 06:07:20 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38667J2c021035
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 6 Sep 2023 06:07:19 GMT
-Received: from [10.216.33.5] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 5 Sep
- 2023 23:07:14 -0700
-Message-ID: <22165524-706a-324a-5d3c-83b4aaa0162a@quicinc.com>
-Date:   Wed, 6 Sep 2023 11:37:10 +0530
+        Wed, 6 Sep 2023 03:21:51 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2CC3CFF;
+        Wed,  6 Sep 2023 00:21:45 -0700 (PDT)
+Received: from localhost (unknown [IPv6:2a01:e0a:2c:6930:5cf4:84a1:2763:fe0d])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: bbrezillon)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 889B36606EE0;
+        Wed,  6 Sep 2023 08:21:43 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1693984904;
+        bh=EF969BTemrCj+elk34sHicqOXNgpSQV8cf+02Jqqu/s=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=MY/a2+BTMSgpaGUVmiczwcIuSp+MWRXdCAeSyvlX1BKSMH+/BVDn4SBre1uymh5sO
+         QsXes405U2zNM1kM0JyhS0YJoej659WbjDZARTWZj0AZRNDJWuCTRDrboW32u57/Te
+         piZ4WqpaW/kO9BJRpIAzE1fZsgGI7IdHGbi/HpoYpsnCWxezkL8IYTPUfyUHiclVcE
+         pPUbBz3T/o2oj3EMbnk4AJLFeAS2po8SMXZzfdOe0ceJfMJU9zFGYwbKFtkA30s5mD
+         8X5a4D1oncrM9tYfar3+lA6JUqGJe0vWhnyRrfQ0a6CE89yrm/70XTU/E1sdSH4LMr
+         EsoFbV+3uPkAw==
+Date:   Wed, 6 Sep 2023 09:21:40 +0200
+From:   Boris Brezillon <boris.brezillon@collabora.com>
+To:     =?UTF-8?B?QWRyacOhbg==?= Larumbe <adrian.larumbe@collabora.com>
+Cc:     maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
+        robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run,
+        marijn.suijten@somainline.org, robh@kernel.org,
+        steven.price@arm.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        healych@amazon.com, kernel@collabora.com,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v3 2/8] drm/panfrost: Enable cycle counter register upon
+ job submission
+Message-ID: <20230906092140.3993d40a@collabora.com>
+In-Reply-To: <20230905184533.959171-3-adrian.larumbe@collabora.com>
+References: <20230905184533.959171-1-adrian.larumbe@collabora.com>
+        <20230905184533.959171-3-adrian.larumbe@collabora.com>
+Organization: Collabora
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH 2/4] clk: qcom: branch: Add mem ops support for branch2
- clocks
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-CC:     Taniya Das <quic_tdas@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>
-References: <20230808051407.647395-1-quic_imrashai@quicinc.com>
- <20230808051407.647395-3-quic_imrashai@quicinc.com>
- <98d0632c-7129-4e3a-aba7-e805e3281f91@linaro.org>
-Content-Language: en-US
-From:   Imran Shaik <quic_imrashai@quicinc.com>
-In-Reply-To: <98d0632c-7129-4e3a-aba7-e805e3281f91@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: rU3R9v8C3mx1KS1xG2GYZpwSvD6creZQ
-X-Proofpoint-GUID: rU3R9v8C3mx1KS1xG2GYZpwSvD6creZQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-05_13,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
- clxscore=1015 suspectscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0
- mlxlogscore=877 mlxscore=0 priorityscore=1501 spamscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
- definitions=main-2309060052
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue,  5 Sep 2023 19:45:18 +0100
+Adri=C3=A1n Larumbe <adrian.larumbe@collabora.com> wrote:
 
+> In a future development, we will want to keep track of the number of GPU
+> cycles spent on a given job. That means we should enable it only when the
+> GPU has work to do, and switch it off whenever it is idle to avoid power
+> waste.
+>=20
+> To avoid race conditions during enablement/disabling, a reference counting
+> mechanism was introduced, and a job flag that tells us whether a given job
+> increased the refcount. This is necessary, because a future development
+> will let user space toggle cycle counting through a debugfs file, and a
+> given job might have been in flight by the time cycle counting was
+> disabled.
+>=20
+> Toggling of GPU cycle counting has to be done through a module parameter.
+>=20
+> Signed-off-by: Adri=C3=A1n Larumbe <adrian.larumbe@collabora.com>
+> ---
+>  drivers/gpu/drm/panfrost/panfrost_device.c |  5 +++
+>  drivers/gpu/drm/panfrost/panfrost_device.h |  6 +++
+>  drivers/gpu/drm/panfrost/panfrost_gpu.c    | 43 ++++++++++++++++++++++
+>  drivers/gpu/drm/panfrost/panfrost_gpu.h    |  6 +++
+>  drivers/gpu/drm/panfrost/panfrost_job.c    | 10 +++++
+>  drivers/gpu/drm/panfrost/panfrost_job.h    |  1 +
+>  6 files changed, 71 insertions(+)
+>=20
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_device.c b/drivers/gpu/drm=
+/panfrost/panfrost_device.c
+> index fa1a086a862b..1ea2ac3804f0 100644
+> --- a/drivers/gpu/drm/panfrost/panfrost_device.c
+> +++ b/drivers/gpu/drm/panfrost/panfrost_device.c
+> @@ -18,6 +18,9 @@
+>  #include "panfrost_mmu.h"
+>  #include "panfrost_perfcnt.h"
+> =20
+> +static bool profile;
+> +module_param(profile, bool, 0600);
 
-On 8/10/2023 1:27 AM, Konrad Dybcio wrote:
-> On 8.08.2023 07:14, Imran Shaik wrote:
->> From: Taniya Das <quic_tdas@quicinc.com>
->>
->> Clock CBCRs with memories need an update for memory before enable/disable
->> of the clock. Add support for the mem ops to handle this sequence.
->>
->> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
->> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
->> ---
-> Could you expand the commit message a bit? What does this clock
-> memory do?
-> 
+Not sure if we should make that a module parameter. Might be better
+exposed as a debugfs knob attached to the device (even if having
+multiple Mali devices is rather unlikely, I think I'd prefer to make
+this toggle per-device).
 
-Sure, will expand the commit message with more details and push the next 
-series.
+> +
+>  static int panfrost_reset_init(struct panfrost_device *pfdev)
+>  {
+>  	pfdev->rstc =3D devm_reset_control_array_get_optional_exclusive(pfdev->=
+dev);
+> @@ -207,6 +210,8 @@ int panfrost_device_init(struct panfrost_device *pfde=
+v)
+> =20
+>  	spin_lock_init(&pfdev->as_lock);
+> =20
+> +	atomic_set(&pfdev->profile_mode, profile);
 
-> [..]
-> 
->> +static int clk_branch2_mem_enable(struct clk_hw *hw)
->> +{
->> +	struct clk_branch *br = to_clk_branch(hw);
->> +	u32 val;
->> +	int count = 200;
->> +
->> +	regmap_update_bits(br->clkr.regmap, br->mem_enable_reg,
->> +			br->mem_enable_ack_bit, br->mem_enable_ack_bit);
->> +
->> +	regmap_read(br->clkr.regmap, br->mem_ack_reg, &val);
->> +
->> +	while (count-- > 0) {
->> +		if (val & br->mem_enable_ack_bit)
->> +			return clk_branch2_enable(hw);
->> +		udelay(1);
->> +		regmap_read(br->clkr.regmap, br->mem_ack_reg, &val);
->> +	}
-> readl_poll_timeout?
-> 
+So, profile_mode can only be set at probe time, meaning any changes to
+the profile module param is not taken into account after that point.
 
-Sure, will check and use this.
+> +
+>  	err =3D panfrost_clk_init(pfdev);
+>  	if (err) {
+>  		dev_err(pfdev->dev, "clk init failed %d\n", err);
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_device.h b/drivers/gpu/drm=
+/panfrost/panfrost_device.h
+> index b0126b9fbadc..5c09c9f3ae08 100644
+> --- a/drivers/gpu/drm/panfrost/panfrost_device.h
+> +++ b/drivers/gpu/drm/panfrost/panfrost_device.h
+> @@ -107,6 +107,7 @@ struct panfrost_device {
+>  	struct list_head scheduled_jobs;
+> =20
+>  	struct panfrost_perfcnt *perfcnt;
+> +	atomic_t profile_mode;
+> =20
+>  	struct mutex sched_lock;
+> =20
+> @@ -121,6 +122,11 @@ struct panfrost_device {
+>  	struct shrinker shrinker;
+> =20
+>  	struct panfrost_devfreq pfdevfreq;
+> +
+> +	struct {
+> +		atomic_t use_count;
+> +		spinlock_t lock;
+> +	} cycle_counter;
+>  };
+> =20
+>  struct panfrost_mmu {
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_gpu.c b/drivers/gpu/drm/pa=
+nfrost/panfrost_gpu.c
+> index 2faa344d89ee..fddbc72bf093 100644
+> --- a/drivers/gpu/drm/panfrost/panfrost_gpu.c
+> +++ b/drivers/gpu/drm/panfrost/panfrost_gpu.c
+> @@ -73,6 +73,8 @@ int panfrost_gpu_soft_reset(struct panfrost_device *pfd=
+ev)
+>  	gpu_write(pfdev, GPU_INT_CLEAR, GPU_IRQ_MASK_ALL);
+>  	gpu_write(pfdev, GPU_INT_MASK, GPU_IRQ_MASK_ALL);
+> =20
+> +	atomic_set(&pfdev->cycle_counter.use_count, 0);
 
-Thanks,
-Imran
+I think I'd prefer if the jobs that were in-flight at the time a GPU
+hang occurred explicitly release their reference on use_count. So maybe
+something like
 
-> Konrad
+	/* When we reset the GPU we should have no cycle-counter users
+	 * left.
+	 */
+	if (drm_WARN_ON(cycle_counter.use_count !=3D 0))
+		atomic_set(&pfdev->cycle_counter.use_count, 0);
+
+to catch unbalanced get/put situations.
+
+> +
+>  	return 0;
+>  }
+> =20
+> @@ -321,6 +323,46 @@ static void panfrost_gpu_init_features(struct panfro=
+st_device *pfdev)
+>  		 pfdev->features.shader_present, pfdev->features.l2_present);
+>  }
+> =20
+> +void panfrost_cycle_counter_get(struct panfrost_device *pfdev)
+> +{
+> +	if (atomic_inc_not_zero(&pfdev->cycle_counter.use_count))
+> +		return;
+> +
+> +	spin_lock(&pfdev->cycle_counter.lock);
+> +	if (atomic_inc_return(&pfdev->cycle_counter.use_count) =3D=3D 1)
+> +		gpu_write(pfdev, GPU_CMD, GPU_CMD_CYCLE_COUNT_START);
+> +	spin_unlock(&pfdev->cycle_counter.lock);
+> +}
+> +
+> +void panfrost_cycle_counter_put(struct panfrost_device *pfdev)
+> +{
+> +	if (atomic_add_unless(&pfdev->cycle_counter.use_count, -1, 1))
+> +		return;
+> +
+> +	spin_lock(&pfdev->cycle_counter.lock);
+> +	if (atomic_dec_return(&pfdev->cycle_counter.use_count) =3D=3D 0)
+> +		gpu_write(pfdev, GPU_CMD, GPU_CMD_CYCLE_COUNT_STOP);
+> +	spin_unlock(&pfdev->cycle_counter.lock);
+> +}
+> +
+> +void panfrost_cycle_counter_stop(struct panfrost_device *pfdev)
+> +{
+> +	atomic_set(&pfdev->profile_mode, 0);
+> +	gpu_write(pfdev, GPU_CMD, GPU_CMD_CYCLE_COUNT_STOP);
+
+Why do we need to issue a STOP here. Setting profile_mode to false
+should be enough to prevent future jobs from enabling the
+cycle-counter, and the counter will be naturally disabled when all
+in-flight jobs that had profiling enabled are done.
+
+Actually I'm not even sure I understand why this function exists.
+
+> +}
+> +
+> +unsigned long long panfrost_cycle_counter_read(struct panfrost_device *p=
+fdev)
+> +{
+> +	u32 hi, lo;
+> +
+> +	do {
+> +		hi =3D gpu_read(pfdev, GPU_CYCLE_COUNT_HI);
+> +		lo =3D gpu_read(pfdev, GPU_CYCLE_COUNT_LO);
+> +	} while (hi !=3D gpu_read(pfdev, GPU_CYCLE_COUNT_HI));
+> +
+> +	return ((u64)hi << 32) | lo;
+> +}
+> +
+>  void panfrost_gpu_power_on(struct panfrost_device *pfdev)
+>  {
+>  	int ret;
+> @@ -367,6 +409,7 @@ void panfrost_gpu_power_on(struct panfrost_device *pf=
+dev)
+> =20
+>  void panfrost_gpu_power_off(struct panfrost_device *pfdev)
+>  {
+> +	panfrost_cycle_counter_stop(pfdev);
+
+So, you're setting profile_mode =3D 0 in the suspend path, but AFAICT,
+it's not set back to the module param profile value on resume, which
+means it's disabled on suspend and never re-enabled after that.
+
+Besides, I don't really see a reason to change the pfdev->profile_mode
+value in this path. If we suspend the device, that means we have no
+jobs running, and the use_count refcount should have dropped to zero,
+thus disabling cycle counting.
+
+>  	gpu_write(pfdev, TILER_PWROFF_LO, 0);
+>  	gpu_write(pfdev, SHADER_PWROFF_LO, 0);
+>  	gpu_write(pfdev, L2_PWROFF_LO, 0);
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_gpu.h b/drivers/gpu/drm/pa=
+nfrost/panfrost_gpu.h
+> index 468c51e7e46d..4d62e8901c79 100644
+> --- a/drivers/gpu/drm/panfrost/panfrost_gpu.h
+> +++ b/drivers/gpu/drm/panfrost/panfrost_gpu.h
+> @@ -16,6 +16,12 @@ int panfrost_gpu_soft_reset(struct panfrost_device *pf=
+dev);
+>  void panfrost_gpu_power_on(struct panfrost_device *pfdev);
+>  void panfrost_gpu_power_off(struct panfrost_device *pfdev);
+> =20
+> +void panfrost_stop_cycle_counter(struct panfrost_device *pfdev);
+> +void panfrost_cycle_counter_get(struct panfrost_device *pfdev);
+> +void panfrost_cycle_counter_stop(struct panfrost_device *pfdev);
+> +void panfrost_cycle_counter_put(struct panfrost_device *pfdev);
+> +unsigned long long panfrost_cycle_counter_read(struct panfrost_device *p=
+fdev);
+> +
+>  void panfrost_gpu_amlogic_quirk(struct panfrost_device *pfdev);
+> =20
+>  #endif
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_job.c b/drivers/gpu/drm/pa=
+nfrost/panfrost_job.c
+> index 033f5e684707..8b1bf6ac48f8 100644
+> --- a/drivers/gpu/drm/panfrost/panfrost_job.c
+> +++ b/drivers/gpu/drm/panfrost/panfrost_job.c
+> @@ -297,6 +297,11 @@ int panfrost_job_push(struct panfrost_job *job)
+> =20
+>  	kref_get(&job->refcount); /* put by scheduler job completion */
+> =20
+> +	if (atomic_read(&pfdev->profile_mode)) {
+> +		panfrost_cycle_counter_get(pfdev);
+> +		job->is_profiled =3D true;
+> +	}
+> +
+>  	drm_sched_entity_push_job(&job->base);
+> =20
+>  	mutex_unlock(&pfdev->sched_lock);
+> @@ -351,6 +356,9 @@ static void panfrost_job_free(struct drm_sched_job *s=
+ched_job)
+> =20
+>  	drm_sched_job_cleanup(sched_job);
+> =20
+> +	if (job->is_profiled)
+> +		panfrost_cycle_counter_put(job->pfdev);
+> +
+>  	panfrost_job_put(job);
+>  }
+> =20
+> @@ -842,6 +850,8 @@ int panfrost_job_init(struct panfrost_device *pfdev)
+>  		}
+>  	}
+> =20
+> +	spin_lock_init(&pfdev->cycle_counter.lock);
+> +
+>  	panfrost_job_enable_interrupts(pfdev);
+> =20
+>  	return 0;
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_job.h b/drivers/gpu/drm/pa=
+nfrost/panfrost_job.h
+> index 8becc1ba0eb9..2aa0add35459 100644
+> --- a/drivers/gpu/drm/panfrost/panfrost_job.h
+> +++ b/drivers/gpu/drm/panfrost/panfrost_job.h
+> @@ -32,6 +32,7 @@ struct panfrost_job {
+> =20
+>  	/* Fence to be signaled by drm-sched once its done with the job */
+>  	struct dma_fence *render_done_fence;
+> +	bool is_profiled;
+>  };
+> =20
+>  int panfrost_job_init(struct panfrost_device *pfdev);
+
