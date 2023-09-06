@@ -2,71 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 59239793B2C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 13:28:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 012DD793B39
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 13:29:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233324AbjIFL2A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Sep 2023 07:28:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51424 "EHLO
+        id S236751AbjIFL3J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Sep 2023 07:29:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236390AbjIFL14 (ORCPT
+        with ESMTP id S230161AbjIFL3I (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Sep 2023 07:27:56 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 897C81BC8
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 04:27:17 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-52713d2c606so5074667a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 04:27:17 -0700 (PDT)
+        Wed, 6 Sep 2023 07:29:08 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F13111B7
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 04:28:41 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2bceca8a41aso54596451fa.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 04:28:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693999632; x=1694604432; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1693999708; x=1694604508; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=cNiuGXwwnS+sesSWhGFwIVxz1hChVjpzo6pKzv9bAeA=;
-        b=TU5cwzCqP3zhiuiTsO67CynvMjFldp1yP2uyvJDGK175uThRtW4YwtEvne7o2+X0z4
-         /AI19RuRXkz2ImdEa+Sl/kkCTzmteMi4psIX9sm4/us/vnRjoXGbrdIe/ALHmaX81cU3
-         EplGsMNUtgczJExAcMEOpm4lT5Dy8HHaBtvefaPVstyqDxxw5sl2T8AMefkbEcVims2m
-         2w+kPIRwEjLUS19dg/LBMJ7i39tp0nsjV0G6vjU8lfuw43K5OEDu74De222bZS81fmzS
-         +sSX5DqI3XbpQhC7vr0J6ECcl2JStN64mM7KUUK0BQQoYfSJYIimoJRca3ase88xxwKf
-         V/WA==
+        bh=u8K/0LNMoEfHuT6eTbB6mpssY5JBCuyZOCkew3XwFIE=;
+        b=QpVbKvHBmqHJMV0OHmiJKwL9T2j82Kzhcx8gYDJrodD8DwmHefFq3JYqMbgeYCSCPB
+         a5hwqVaAYkxsS0Ssr5VVnA+6pJBE8MUOqO0ch44AyAjr/GWRpfJJhu3OlGfSc9rlPhcS
+         ZgDk4LLZ+N4rWT2r9a+KSL0ioPG7q9TeLSxS895OKDQ3FXVvaDsXIlYlyfMmLuQVb8tS
+         SJokflJ4kM7i9V3+P+1ho4Pc8PoAWSEnESOBsSS0Vu+wBR/eUrWeQrXfr/Yny2+F+fyZ
+         ifsgY9eTPiX4y2e0vK1H0gRg4UsNYtu60wkNx0n7znJy9KkrWrsaVfX2k5MbfNagUR3p
+         fPaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693999632; x=1694604432;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1693999708; x=1694604508;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cNiuGXwwnS+sesSWhGFwIVxz1hChVjpzo6pKzv9bAeA=;
-        b=JnPqzjQv/qsTv7JcnOjDJ1Yirm8LQ3q3o0CH09JSut0ArjE0t1lywAgtjuS4IeFH12
-         Fh3jTCTyXfte5VDux/fE8cMySlEXcmOlAW002loP6YY0BS+guPqS+EMUaMh8P02KqlM7
-         CWkVs4LC4DPjibRLauc+NVTWlCfyCDjGMKBLJh2UnUiJxBKUnTJ/jP9VLmpD0CWMYtr9
-         rJdXN+gaGXLwVabzESeKlhXCPFcs4xv8f1f+V7O7H8DZYYPtepWNI7rkP0uzgApKG/Df
-         u9VvGjUS0+jTBvHtraXwGfMpAxKc7B4mnzRiWMKKT9olmm8rrkCe9MhHNk6oMnbTFW1K
-         dqXQ==
-X-Gm-Message-State: AOJu0YwOELT/5cmgd/dqea8jau7sv+etCT0Q69o5vqZjI2zNceUKH6Vh
-        tqiasjznOgNcFgm/rdnfb9XEPg==
-X-Google-Smtp-Source: AGHT+IEF65WG1hbTwAEv3xa5BEQHfQttcFFe+hkeiS8r2eYAiC/D5fFPMQIdz1xqeovEabMEVi5bxQ==
-X-Received: by 2002:a17:906:295:b0:9a6:572f:5977 with SMTP id 21-20020a170906029500b009a6572f5977mr2058653ejf.41.1693999632567;
-        Wed, 06 Sep 2023 04:27:12 -0700 (PDT)
+        bh=u8K/0LNMoEfHuT6eTbB6mpssY5JBCuyZOCkew3XwFIE=;
+        b=Qdm3VMtaSqJ4PErovX1QkCkBUs5pwywPi0EgfolAEGR723uFfGSm69InEer0YxlEcP
+         2GZTip2rY37A4xjSM3rS+hY3ZyX/4eAu8ahhBgrN2V+E5+WclnIJj7wsM1Hfpw9DdNR1
+         J7Zivj75QVHe3QiyMVFqr3iBNfXbX6Gae/QxCaUtenCgSP59jC7VJ78H+gn9+ukpK+R1
+         pLhNLJbDiGr4x+pVlejk99lVA5VPvtaxeTuiahjCb64S+UiB7w4FBl92T7AUdn30Paxp
+         fwS5rswrtncqAZy9FG/k6WW8A9V0B0lDRK3K0jWLgwLNzZc+wCEug4P7YzCrvHcX6GHH
+         +EvA==
+X-Gm-Message-State: AOJu0YyAToL10FkPfpfHKLZVqd/yGyXnh61hEfdcPZahWGU0ZB9liUbX
+        kfu2Ifb3hOgevhB9Sg+dK72tBQ==
+X-Google-Smtp-Source: AGHT+IEgsVJdjuYE074JzMVOav1zxY+UanFeM/bUxll0qDIMVbPR8stOB/Dl5qTF4IzyenVY9nUiAw==
+X-Received: by 2002:a2e:984d:0:b0:2bc:f118:7821 with SMTP id e13-20020a2e984d000000b002bcf1187821mr1779256ljj.29.1693999708082;
+        Wed, 06 Sep 2023 04:28:28 -0700 (PDT)
 Received: from [192.168.37.154] (178235177204.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.204])
-        by smtp.gmail.com with ESMTPSA id lt20-20020a170906fa9400b009a193a5acffsm8770546ejb.121.2023.09.06.04.27.10
+        by smtp.gmail.com with ESMTPSA id lt20-20020a170906fa9400b009a193a5acffsm8770546ejb.121.2023.09.06.04.28.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Sep 2023 04:27:12 -0700 (PDT)
-Message-ID: <0241be62-1b7c-4903-9130-ae8c9fac9981@linaro.org>
-Date:   Wed, 6 Sep 2023 13:27:10 +0200
+        Wed, 06 Sep 2023 04:28:27 -0700 (PDT)
+Message-ID: <9c7fae56-85a2-4691-8192-24237761d25c@linaro.org>
+Date:   Wed, 6 Sep 2023 13:28:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: ipq9574: Fix hwlock index for
- SMEM
+Subject: Re: [PATCH 1/6] arm64: dts: qcom: sm8550-mtp: use correct UFS supply
 Content-Language: en-US
-To:     Vignesh Viswanathan <quic_viswanat@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Cc:     quic_kathirav@quicinc.com, quic_anusha@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_srichara@quicinc.com,
-        quic_varada@quicinc.com, stable@vger.kernel.org
-References: <20230904172516.479866-1-quic_viswanat@quicinc.com>
- <20230904172516.479866-5-quic_viswanat@quicinc.com>
+References: <20230906104744.163479-1-krzysztof.kozlowski@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -103,29 +101,22 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230904172516.479866-5-quic_viswanat@quicinc.com>
+In-Reply-To: <20230906104744.163479-1-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4.09.2023 19:25, Vignesh Viswanathan wrote:
-> SMEM uses lock index 3 of the TCSR Mutex hwlock for allocations
-> in SMEM region shared by the Host and FW.
-> 
-> Fix the SMEM hwlock index to 3 for IPQ9574.
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: 46384ac7a618 ("arm64: dts: qcom: ipq9574: Add SMEM support")
-> Signed-off-by: Vignesh Viswanathan <quic_viswanat@quicinc.com>
-> ---
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+On 6.09.2023 12:47, Krzysztof Kozlowski wrote:
+> According to schematics the VCCQ2 supply is not connected and the L3G
+> regulator instead powers up the controller pads (VDD_PX10).  Use correct
+> supply vdd-hba and drop unsupported current limit for the vdd-hba.
+Why is it unsupported?
 
 Konrad
