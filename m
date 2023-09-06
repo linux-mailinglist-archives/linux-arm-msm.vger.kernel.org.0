@@ -2,128 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 66380793B46
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 13:30:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D3F91793B64
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 13:33:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239741AbjIFLaj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Sep 2023 07:30:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46468 "EHLO
+        id S234833AbjIFLdo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Sep 2023 07:33:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239789AbjIFLah (ORCPT
+        with ESMTP id S239875AbjIFLdn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Sep 2023 07:30:37 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C99EF171A
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 04:30:04 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-98377c5d53eso512017766b.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 04:30:04 -0700 (PDT)
+        Wed, 6 Sep 2023 07:33:43 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54D1D19B4
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 04:33:15 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id 46e09a7af769-6bf298ef1f5so2634586a34.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 04:33:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693999772; x=1694604572; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=S8gwvV5pEjtC83ZzYbE6TNkDWEwZfjSVgnN8XiDwZX8=;
-        b=DhGlahxP4K7IXAWHNBiKjHJyk/CNPP2pRWB1rT8WU9nVpbBXd8mXNyadb8hreMThEA
-         mBif4i9Ods2ETQ2Z2GJ7reKmR988m1Ry/WkLT9rBNm081rXb9fggpuP43yFx5nWWXVCH
-         Dl/78wVw8uFxuK9aGLpZq3PEMcwi5qGkJKUmvPjnLFiS9GkjomiZmtfI7+SFuCkM94/w
-         pLKgZXhmibJySPb9SZlVKmiYxxN1xnOklnkb/g4ckbG8hbIys92CaxIrU9VWVvxL7N50
-         yyr8iKj9L7AI7kLapuwfB0eUF3Y7pAJEsTNHmQRHOTV+jQjM8CiD4UQaq/D4Q1NkKsdA
-         dctw==
+        d=linaro.org; s=google; t=1693999994; x=1694604794; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SK8NHS2iC+EdIrz93YoOnu4w+oJGTzeh1xrolghJ1sE=;
+        b=rMeRzV+mZXQwu/UUcwsyWhT+1Lz0a3Aschqifjztd+bsNj2e6OvXs36/ZEyTJdnuuI
+         Yyh/7EfKVjEegXpzjSat3NG7bO98h8qQ6pMJ8f6fSUTPukM8HiOWGWqc3f6gte5D953o
+         jI3+4bAq+IAyENjbLyJBvLnOgs2EVrZLlWrnU80uoQy6q+RqXaHxH6B1rnxdVWah6zAQ
+         m/Hpt+d3I160VzdBtgQ4u2hSvhdthi3yBuTMFXalnukOh1fRHRgpr8Ju4KAmcpNENxk2
+         ypNqgSTluhnj9bdPe6sfpBXAo8XGsFEBFOFDOGKLmXXfq75v+2tP38v4sMjtyIRwd+eL
+         J0Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693999772; x=1694604572;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=S8gwvV5pEjtC83ZzYbE6TNkDWEwZfjSVgnN8XiDwZX8=;
-        b=MmIUr4XPXNNB84GMBon7LOc7joVHE0ywSaOGVjLLH1fSZbDSV5Ib8GCC94ucxWBjLQ
-         NXZEDQLFl0Z2TBvn6b7WxrV7t0JpkPeH3PFvR3IWEM2/kK+GzbD27ewKbFinLgnV4nR5
-         Jczn+f4u7iSz4T1c1c6T168M/6+T/tOZi7fThTga1w03XxyCtk2EznnBlp+qyk9h+iMg
-         oUpEiYMXwQDn8lf0h4TUaen2FgDKX7tt9CoaKly9S2xccwXb/lLpfowylSVu64tD0TJx
-         HFWqEKgD8mcwTawkPlHWjs5kVJtzy1C+wHIXQYLx2kIOFOrVmLqj0NSx6rT1AqHiORnY
-         zh0Q==
-X-Gm-Message-State: AOJu0YwvGJXWHO3J1CsblctQtm+npb0EFj60wtdgWz6SbASXKtZ5MvCg
-        6CvR5Yeei76slRK6zvWACX02oQ==
-X-Google-Smtp-Source: AGHT+IF01pPLIglLUJ7iWmuELyzBiT9qVi+KgWqlz61RcZKrYQ1BiDUQUXAoISfDZrEF+pr35sGMEw==
-X-Received: by 2002:a17:906:5a6c:b0:99d:dd43:d427 with SMTP id my44-20020a1709065a6c00b0099ddd43d427mr1956205ejc.10.1693999772491;
-        Wed, 06 Sep 2023 04:29:32 -0700 (PDT)
-Received: from [192.168.37.154] (178235177204.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.204])
-        by smtp.gmail.com with ESMTPSA id lt20-20020a170906fa9400b009a193a5acffsm8770546ejb.121.2023.09.06.04.29.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Sep 2023 04:29:32 -0700 (PDT)
-Message-ID: <745d70c2-dc6a-46b7-8a25-8aa5993b81ec@linaro.org>
-Date:   Wed, 6 Sep 2023 13:29:31 +0200
+        d=1e100.net; s=20221208; t=1693999994; x=1694604794;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SK8NHS2iC+EdIrz93YoOnu4w+oJGTzeh1xrolghJ1sE=;
+        b=YWmnGIWNchnXB8shvK7HvLiEJPixyuyY71C/1zNoddW3rxgywQGkfghPZp+hLrZ0yD
+         SQzG+FqggfAW474uViR2LePn7yxCRRqmhDM5rEVHdvrHh2lH/g2/WHzfTFN/kEoE+Ms+
+         bIT1lOpJ1Z3LPYn8QYVE3US1Aod0LhGRhVbPt9/BUQsTxrqHi1AlyZ3frmq3PdTwV7uq
+         AiP9zYUnokU6b9UzDQlnRbKPxyLhPbRlgiev6Sd12v5c/EzRRj7FcRUj67IDYwv7Ero8
+         ZkFNOVrP2WsOwya+wO1vWAR44XDDQHFyRel+jXfW3OmkYKpkkKtytE7EInGpdFsRK6+A
+         q0gg==
+X-Gm-Message-State: AOJu0YzJDnx8wza39tYmATobvsmBI1BeZmUBnqSaW2XmJeKnjm+1sCvx
+        2ezMKvCpenSSZ8h94g75zHZRubakysW/v4MceUYUTdWGRuVdT2CDzng=
+X-Google-Smtp-Source: AGHT+IEL+0Z0XHNTz7i2K/mMp7ueLzlwT/AaPbcDh8kRFJFEJmq0WxqnWGkdTYlDm6LWmROLnuMaO3obmL4C5DgIdok=
+X-Received: by 2002:a9d:6956:0:b0:6b9:6481:8e33 with SMTP id
+ p22-20020a9d6956000000b006b964818e33mr16933615oto.13.1693999993888; Wed, 06
+ Sep 2023 04:33:13 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/6] arm64: dts: qcom: sm8450-hdk: add UFS host controller
- supply
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+References: <20230906000213.1286283-1-dmitry.baryshkov@linaro.org> <CA+5PVA71iXzkjWU7x27k3qGxTFz4rdcFAArU9AGVE+Eg0-sdoQ@mail.gmail.com>
+In-Reply-To: <CA+5PVA71iXzkjWU7x27k3qGxTFz4rdcFAArU9AGVE+Eg0-sdoQ@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 6 Sep 2023 14:33:02 +0300
+Message-ID: <CAA8EJpqTd20xGZFpgsA=yoQELonn4QtOwAE6OX9abmv01SWDpA@mail.gmail.com>
+Subject: Re: [PULL] qcom: firmware for Qualcomm Robotics RB1 and RB2 platforms
+To:     Josh Boyer <jwboyer@kernel.org>
+Cc:     linux-firmware@kernel.org, linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230906104744.163479-1-krzysztof.kozlowski@linaro.org>
- <20230906104744.163479-3-krzysztof.kozlowski@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230906104744.163479-3-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        Kalle Valo <kvalo@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6.09.2023 12:47, Krzysztof Kozlowski wrote:
-> According to schematics the L9B regulator supplies VCCQ (already in DTS)
-> and the UFS controller pads (VDD_PX10, missing vdd-hba).  Add the
-> missing supply for full hardware description, even though it should not
-> have functional impact.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+On Wed, 6 Sept 2023 at 14:17, Josh Boyer <jwboyer@kernel.org> wrote:
+>
+> On Tue, Sep 5, 2023 at 8:02=E2=80=AFPM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > Please pull in firmware files for new Thundercomm boards, Qualcomm Robo=
+tics RB1
+> > and RB2 platforms. This includes Audio, Compute and Modem DSP, WiFi, vi=
+deo
+> > en/decoder (venus) and Adreno GPU firmware files.
+> >
+> > The following changes since commit 7be2766de1f45a494a3e913f2e9fb77191a8=
+ddb5:
+> >
+> >   Merge branch 'rb3-update' of https://github.com/lumag/linux-firmware =
+(2023-08-04 06:33:54 -0400)
+> >
+> > are available in the Git repository at:
+> >
+> >   https://github.com/lumag/linux-firmware rb12-fw-v2
+> >
+> > for you to fetch changes up to f29e3265b02430630222fb3aba8b76ebcba632be=
+:
+> >
+> >   qcom: add firmware for the onboard WiFi on qcm2290 / qrb4210 (2023-08=
+-23 20:24:47 +0300)
+> >
+> > ----------------------------------------------------------------
+> > Dmitry Baryshkov (5):
+> >       qcom: add GPU firmware for QCM2290 / QRB2210
+> >       qcom: add firmware for QCM2290 platforms
+> >       qcom: add firmware for QRB4210 platforms
+> >       qcom: add venus firmware files for v6.0
+> >       qcom: add firmware for the onboard WiFi on qcm2290 / qrb4210
+> >
+> >  WHENCE                    |  27 +++++++++++++++++++++++++++
+>
+> This conflicts in WHENCE now with the addition of the RawFile type.
+> Can you rebase on top of the main branch?
 
-Konrad
+Done.
+
+The following changes since commit 20d250e3e9093486a5b70daa942ffbaa3bade901=
+:
+
+  Merge branch 'mlimonci/make-dist' into 'main' (2023-09-06 11:15:24 +0000)
+
+are available in the Git repository at:
+
+  https://github.com/lumag/linux-firmware rb12-fw-v2
+
+for you to fetch changes up to 74cc8ca8217cb0967ade52953f9d9242f09e3460:
+
+  qcom: add firmware for the onboard WiFi on qcm2290 / qrb4210
+(2023-09-06 14:30:16 +0300)
+
+
+--=20
+With best wishes
+Dmitry
