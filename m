@@ -2,389 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 60077793300
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 02:47:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A2E80793482
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 06:56:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231597AbjIFArY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Sep 2023 20:47:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48608 "EHLO
+        id S232221AbjIFE4y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Sep 2023 00:56:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229686AbjIFArY (ORCPT
+        with ESMTP id S229446AbjIFE4y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Sep 2023 20:47:24 -0400
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11A62189
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Sep 2023 17:47:17 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 2EB113F7B7;
-        Wed,  6 Sep 2023 02:47:14 +0200 (CEST)
-Date:   Wed, 6 Sep 2023 02:47:12 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v3 1/8] drm/msm/dpu: populate SSPP scaler block version
-Message-ID: <np3oijyeopbqv426joa3dg4cxqfcd4oo7gu3lwjlhoqtaygpkx@syrouhnomodg>
-References: <20230905012526.3010798-1-dmitry.baryshkov@linaro.org>
- <20230905012526.3010798-2-dmitry.baryshkov@linaro.org>
+        Wed, 6 Sep 2023 00:56:54 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B0D21A8;
+        Tue,  5 Sep 2023 21:56:50 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3864o2OR021049;
+        Wed, 6 Sep 2023 04:56:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : subject :
+ date : message-id : mime-version : content-type :
+ content-transfer-encoding : to : cc; s=qcppdkim1;
+ bh=6dhCSufUff6PZdJkX6WqGu9v1sZ+SMsF2I6xUap+8wg=;
+ b=Jw/FbjY+2ElbVI5X2FrNp0yccMZpj9fwAl5lGZI7jpLDfS4RffhM3QROgni8x5KOB8wE
+ ursM2Lgbqj6lF5xv6wPUJJh2T0AgykrXXCQj2NAIuq3739erylG4WDK0MQnK6j+IH9+x
+ /XSaoIH6XWbRGvIZXdSn2mv3/jNRK/Bk8Ooe24u7NMBbUPHWn1VTtoq2JIQq5nxasw2a
+ VD69GSYf+vIfGamvCIsSrcuEGmXdBlAOgAjCeTDx5LDrqULr39MZGGi1LgOsbBMspwTO
+ aFp7bp3EFPSsX+3paeeugao2cG6CmDyLs5Dbjpu/drWLpoamPiFM6XIvyXbCZZLjfO4v VA== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sxha305gw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 06 Sep 2023 04:56:36 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3864uZBb027323
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 6 Sep 2023 04:56:35 GMT
+Received: from hu-kathirav-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.36; Tue, 5 Sep 2023 21:56:30 -0700
+From:   Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+Subject: [PATCH RESEND 0/7] Add GPLL0 as clock provider for the Qualcomm's
+ IPQ mailbox controller
+Date:   Wed, 6 Sep 2023 10:26:19 +0530
+Message-ID: <20230904-gpll_cleanup-v1-0-de2c448f1188@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230905012526.3010798-2-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Stephen Boyd" <sboyd@kernel.org>,
+        Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+        Anusha Rao <quic_anusha@quicinc.com>,
+        Devi Priya <quic_devipriy@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-clk@vger.kernel.org>
+CC:     Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1693976190; l=2969;
+ i=quic_kathirav@quicinc.com; s=20230906; h=from:subject:message-id;
+ bh=PTzcvWf8C/T3ua26bVQjrUYtonB3P/rkcpv5LygGuzI=;
+ b=QYOcC8vrEcm2J/ByWhipUteyU1ZkPEuV7xpIjwuf2KJsmst4baSee9GoLRGP/0TNM1QcYxIkX
+ cflSfjhRzjFCOpddKR9jzfE7CpHYCCwhyIjIjgUmP3YoBkuvtzWJZa4
+X-Developer-Key: i=quic_kathirav@quicinc.com; a=ed25519;
+ pk=xWsR7pL6ch+vdZ9MoFGEaP61JUaRf0XaZYWztbQsIiM=
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: bg-Jz2mytKI6fOi6VkvY0W5Tr_wZmz1a
+X-Proofpoint-GUID: bg-Jz2mytKI6fOi6VkvY0W5Tr_wZmz1a
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-05_13,2023-09-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
+ mlxlogscore=928 impostorscore=0 lowpriorityscore=0 spamscore=0 mlxscore=0
+ suspectscore=0 adultscore=0 priorityscore=1501 clxscore=1011 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
+ definitions=main-2309060044
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-09-05 04:25:19, Dmitry Baryshkov wrote:
-> The function _dpu_hw_sspp_setup_scaler3() passes and
-> dpu_hw_setup_scaler3() uses scaler_blk.version to determine in which way
-> the scaler (QSEED3) block should be programmed. However up to now we
-> were not setting this field. Set it now, splitting the vig_sblk data
-> which has different version fields.
-> 
-> Reported-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Fixes: 9b6f4fedaac2 ("drm/msm/dpu: Add SM6125 support")
-> Fixes: 27f0df03f3ff ("drm/msm/dpu: Add SM6375 support")
-> Fixes: 3186acba5cdc ("drm/msm/dpu: Add SM6350 support")
-> Fixes: efcd0107727c ("drm/msm/dpu: add support for SM8550")
-> Fixes: 4a352c2fc15a ("drm/msm/dpu: Introduce SC8280XP")
-> Fixes: 0e91bcbb0016 ("drm/msm/dpu: Add SM8350 to hw catalog")
-> Fixes: 100d7ef6995d ("drm/msm/dpu: add support for SM8450")
-> Fixes: 3581b7062cec ("drm/msm/disp/dpu1: add support for display on SM6115")
-> Fixes: dabfdd89eaa9 ("drm/msm/disp/dpu1: add inline rotation support for sc7280")
-> Fixes: f3af2d6ee9ab ("drm/msm/dpu: Add SC8180x to hw catalog")
-> Fixes: 94391a14fc27 ("drm/msm/dpu1: Add MSM8998 to hw catalog")
-> Fixes: af776a3e1c30 ("drm/msm/dpu: add SM8250 to hw catalog")
-> Fixes: 386fced3f76f ("drm/msm/dpu: add SM8150 to hw catalog")
-> Fixes: b75ab05a3479 ("msm:disp:dpu1: add scaler support on SC7180 display")
-> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Currently mailbox controller takes the XO and APSS PLL as the input. It
+can take the GPLL0 also as an input. This patch series adds the same and
+fixes the issue caused by this.
 
-So as it turns out this patch is basically [1] with review comments
-applied, though no mention whatsoever that .version isn't just a
-convenient way to represent the version but what the register read by
-_dpu_hw_sspp_get_scaler3_ver() contains? (That was the review: hardcode the
-constants instead of doing runtime register reads)
+Once the cpufreq driver is up, it tries to bump up the cpu frequency
+above 800MHz, while doing so system is going to unusable state. Reason
+being, with the GPLL0 included as clock source, clock framework tries to
+achieve the required rate with the possible parent and since GPLL0 carries
+the CLK_SET_RATE_PARENT flag, clock rate of the GPLL0 is getting
+changed, causing the issue.
 
-With that, `_dpu_hw_sspp_get_scaler3_ver()` and `dpu_hw_sspp->get_scaler_ver`
-must now be completely unused?
+First half of the series, removes the CLK_SET_RATE_PARENT flag from the
+PLL clocks since the PLL clock rates shouldn't be changed. Another
+half, add the necessary support to include the GPLL0 as clock provider
+for mailbox and accomodate the changes in APSS clock driver.
 
-[1]: https://lore.kernel.org/linux-arm-msm/CAA8EJpobXPSyEqZQ3zgwSqg6fC7pzQumWR9dDPdmGOemtS-epw@mail.gmail.com/#t
+This is also the preparatory series to enable the CPUFreq on IPQ5332
+SoC. Dynamic scaling of CPUFreq is not supported on IPQ5332, so to
+switch between the frequencies we need to park the APSS PLL in safe
+source, here it is GPLL0 and then shutdown and bring up the APSS PLL in
+the desired rate.
 
-It seems patch 6 in this series also has a matching - r-b'd - patch in that
-series ;)
+For IPQ5332 SoC, this series depends on the below patch
+https://lore.kernel.org/linux-arm-msm/1693474133-10467-1-git-send-email-quic_varada@quicinc.com/
 
-- Marijn
+Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+---
+Kathiravan Thirumoorthy (7):
+      clk: qcom: ipq8074: drop the CLK_SET_RATE_PARENT flag from PLL clocks
+      clk: qcom: ipq6018: drop the CLK_SET_RATE_PARENT flag from PLL clocks
+      clk: qcom: ipq9574: drop the CLK_SET_RATE_PARENT flag from GPLL clocks
+      clk: qcom: ipq5332: drop the CLK_SET_RATE_PARENT flag from GPLL clocks
+      dt-bindings: mailbox: qcom: add one more clock provider for IPQ mailbox
+      clk: qcom: apss-ipq6018: add the GPLL0 clock also as clock provider
+      arm64: dts: qcom: include the GPLL0 as clock provider for IPQ mailbox
 
-> ---
->  .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    |  8 +-
->  .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |  8 +-
->  .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  8 +-
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 95 ++++++++++++++-----
->  4 files changed, 85 insertions(+), 34 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-> index 99acaf917e43..f0c3804f4258 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-> @@ -77,7 +77,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
->  		.name = "sspp_0", .id = SSPP_VIG0,
->  		.base = 0x4000, .len = 0x1f0,
->  		.features = VIG_SDM845_MASK,
-> -		.sblk = &sdm845_vig_sblk_0,
-> +		.sblk = &sm8150_vig_sblk_0,
->  		.xin_id = 0,
->  		.type = SSPP_TYPE_VIG,
->  		.clk_ctrl = DPU_CLK_CTRL_VIG0,
-> @@ -85,7 +85,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
->  		.name = "sspp_1", .id = SSPP_VIG1,
->  		.base = 0x6000, .len = 0x1f0,
->  		.features = VIG_SDM845_MASK,
-> -		.sblk = &sdm845_vig_sblk_1,
-> +		.sblk = &sm8150_vig_sblk_1,
->  		.xin_id = 4,
->  		.type = SSPP_TYPE_VIG,
->  		.clk_ctrl = DPU_CLK_CTRL_VIG1,
-> @@ -93,7 +93,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
->  		.name = "sspp_2", .id = SSPP_VIG2,
->  		.base = 0x8000, .len = 0x1f0,
->  		.features = VIG_SDM845_MASK,
-> -		.sblk = &sdm845_vig_sblk_2,
-> +		.sblk = &sm8150_vig_sblk_2,
->  		.xin_id = 8,
->  		.type = SSPP_TYPE_VIG,
->  		.clk_ctrl = DPU_CLK_CTRL_VIG2,
-> @@ -101,7 +101,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
->  		.name = "sspp_3", .id = SSPP_VIG3,
->  		.base = 0xa000, .len = 0x1f0,
->  		.features = VIG_SDM845_MASK,
-> -		.sblk = &sdm845_vig_sblk_3,
-> +		.sblk = &sm8150_vig_sblk_3,
->  		.xin_id = 12,
->  		.type = SSPP_TYPE_VIG,
->  		.clk_ctrl = DPU_CLK_CTRL_VIG3,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> index f3de21025ca7..3ec954722a8e 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> @@ -76,7 +76,7 @@ static const struct dpu_sspp_cfg sc8180x_sspp[] = {
->  		.name = "sspp_0", .id = SSPP_VIG0,
->  		.base = 0x4000, .len = 0x1f0,
->  		.features = VIG_SDM845_MASK,
-> -		.sblk = &sdm845_vig_sblk_0,
-> +		.sblk = &sm8150_vig_sblk_0,
->  		.xin_id = 0,
->  		.type = SSPP_TYPE_VIG,
->  		.clk_ctrl = DPU_CLK_CTRL_VIG0,
-> @@ -84,7 +84,7 @@ static const struct dpu_sspp_cfg sc8180x_sspp[] = {
->  		.name = "sspp_1", .id = SSPP_VIG1,
->  		.base = 0x6000, .len = 0x1f0,
->  		.features = VIG_SDM845_MASK,
-> -		.sblk = &sdm845_vig_sblk_1,
-> +		.sblk = &sm8150_vig_sblk_1,
->  		.xin_id = 4,
->  		.type = SSPP_TYPE_VIG,
->  		.clk_ctrl = DPU_CLK_CTRL_VIG1,
-> @@ -92,7 +92,7 @@ static const struct dpu_sspp_cfg sc8180x_sspp[] = {
->  		.name = "sspp_2", .id = SSPP_VIG2,
->  		.base = 0x8000, .len = 0x1f0,
->  		.features = VIG_SDM845_MASK,
-> -		.sblk = &sdm845_vig_sblk_2,
-> +		.sblk = &sm8150_vig_sblk_2,
->  		.xin_id = 8,
->  		.type = SSPP_TYPE_VIG,
->  		.clk_ctrl = DPU_CLK_CTRL_VIG2,
-> @@ -100,7 +100,7 @@ static const struct dpu_sspp_cfg sc8180x_sspp[] = {
->  		.name = "sspp_3", .id = SSPP_VIG3,
->  		.base = 0xa000, .len = 0x1f0,
->  		.features = VIG_SDM845_MASK,
-> -		.sblk = &sdm845_vig_sblk_3,
-> +		.sblk = &sm8150_vig_sblk_3,
->  		.xin_id = 12,
->  		.type = SSPP_TYPE_VIG,
->  		.clk_ctrl = DPU_CLK_CTRL_VIG3,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> index 1b12178dfbca..3aed290a4111 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> @@ -76,7 +76,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
->  		.name = "sspp_0", .id = SSPP_VIG0,
->  		.base = 0x4000, .len = 0x32c,
->  		.features = VIG_SC7180_MASK,
-> -		.sblk = &sm8250_vig_sblk_0,
-> +		.sblk = &sm8450_vig_sblk_0,
->  		.xin_id = 0,
->  		.type = SSPP_TYPE_VIG,
->  		.clk_ctrl = DPU_CLK_CTRL_VIG0,
-> @@ -84,7 +84,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
->  		.name = "sspp_1", .id = SSPP_VIG1,
->  		.base = 0x6000, .len = 0x32c,
->  		.features = VIG_SC7180_MASK,
-> -		.sblk = &sm8250_vig_sblk_1,
-> +		.sblk = &sm8450_vig_sblk_1,
->  		.xin_id = 4,
->  		.type = SSPP_TYPE_VIG,
->  		.clk_ctrl = DPU_CLK_CTRL_VIG1,
-> @@ -92,7 +92,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
->  		.name = "sspp_2", .id = SSPP_VIG2,
->  		.base = 0x8000, .len = 0x32c,
->  		.features = VIG_SC7180_MASK,
-> -		.sblk = &sm8250_vig_sblk_2,
-> +		.sblk = &sm8450_vig_sblk_2,
->  		.xin_id = 8,
->  		.type = SSPP_TYPE_VIG,
->  		.clk_ctrl = DPU_CLK_CTRL_VIG2,
-> @@ -100,7 +100,7 @@ static const struct dpu_sspp_cfg sm8450_sspp[] = {
->  		.name = "sspp_3", .id = SSPP_VIG3,
->  		.base = 0xa000, .len = 0x32c,
->  		.features = VIG_SC7180_MASK,
-> -		.sblk = &sm8250_vig_sblk_3,
-> +		.sblk = &sm8450_vig_sblk_3,
->  		.xin_id = 12,
->  		.type = SSPP_TYPE_VIG,
->  		.clk_ctrl = DPU_CLK_CTRL_VIG3,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index 713dfc079718..77d09f961d86 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -250,14 +250,17 @@ static const uint32_t wb2_formats[] = {
->   * SSPP sub blocks config
->   *************************************************************/
->  
-> +#define SSPP_SCALER_VER(maj, min) (((maj) << 16) | (min))
-> +
->  /* SSPP common configuration */
-> -#define _VIG_SBLK(sdma_pri, qseed_ver) \
-> +#define _VIG_SBLK(sdma_pri, qseed_ver, scaler_ver) \
->  	{ \
->  	.maxdwnscale = MAX_DOWNSCALE_RATIO, \
->  	.maxupscale = MAX_UPSCALE_RATIO, \
->  	.smart_dma_priority = sdma_pri, \
->  	.scaler_blk = {.name = "scaler", \
->  		.id = qseed_ver, \
-> +		.version = scaler_ver, \
->  		.base = 0xa00, .len = 0xa0,}, \
->  	.csc_blk = {.name = "csc", \
->  		.id = DPU_SSPP_CSC_10BIT, \
-> @@ -269,13 +272,14 @@ static const uint32_t wb2_formats[] = {
->  	.rotation_cfg = NULL, \
->  	}
->  
-> -#define _VIG_SBLK_ROT(sdma_pri, qseed_ver, rot_cfg) \
-> +#define _VIG_SBLK_ROT(sdma_pri, qseed_ver, scaler_ver, rot_cfg) \
->  	{ \
->  	.maxdwnscale = MAX_DOWNSCALE_RATIO, \
->  	.maxupscale = MAX_UPSCALE_RATIO, \
->  	.smart_dma_priority = sdma_pri, \
->  	.scaler_blk = {.name = "scaler", \
->  		.id = qseed_ver, \
-> +		.version = scaler_ver, \
->  		.base = 0xa00, .len = 0xa0,}, \
->  	.csc_blk = {.name = "csc", \
->  		.id = DPU_SSPP_CSC_10BIT, \
-> @@ -299,13 +303,17 @@ static const uint32_t wb2_formats[] = {
->  	}
->  
->  static const struct dpu_sspp_sub_blks msm8998_vig_sblk_0 =
-> -				_VIG_SBLK(0, DPU_SSPP_SCALER_QSEED3);
-> +				_VIG_SBLK(0, DPU_SSPP_SCALER_QSEED3,
-> +					  SSPP_SCALER_VER(1, 2));
->  static const struct dpu_sspp_sub_blks msm8998_vig_sblk_1 =
-> -				_VIG_SBLK(0, DPU_SSPP_SCALER_QSEED3);
-> +				_VIG_SBLK(0, DPU_SSPP_SCALER_QSEED3,
-> +					  SSPP_SCALER_VER(1, 2));
->  static const struct dpu_sspp_sub_blks msm8998_vig_sblk_2 =
-> -				_VIG_SBLK(0, DPU_SSPP_SCALER_QSEED3);
-> +				_VIG_SBLK(0, DPU_SSPP_SCALER_QSEED3,
-> +					  SSPP_SCALER_VER(1, 2));
->  static const struct dpu_sspp_sub_blks msm8998_vig_sblk_3 =
-> -				_VIG_SBLK(0, DPU_SSPP_SCALER_QSEED3);
-> +				_VIG_SBLK(0, DPU_SSPP_SCALER_QSEED3,
-> +					  SSPP_SCALER_VER(1, 2));
->  
->  static const struct dpu_rotation_cfg dpu_rot_sc7280_cfg_v2 = {
->  	.rot_maxheight = 1088,
-> @@ -314,13 +322,30 @@ static const struct dpu_rotation_cfg dpu_rot_sc7280_cfg_v2 = {
->  };
->  
->  static const struct dpu_sspp_sub_blks sdm845_vig_sblk_0 =
-> -				_VIG_SBLK(5, DPU_SSPP_SCALER_QSEED3);
-> +				_VIG_SBLK(5, DPU_SSPP_SCALER_QSEED3,
-> +					  SSPP_SCALER_VER(1, 3));
->  static const struct dpu_sspp_sub_blks sdm845_vig_sblk_1 =
-> -				_VIG_SBLK(6, DPU_SSPP_SCALER_QSEED3);
-> +				_VIG_SBLK(6, DPU_SSPP_SCALER_QSEED3,
-> +					  SSPP_SCALER_VER(1, 3));
->  static const struct dpu_sspp_sub_blks sdm845_vig_sblk_2 =
-> -				_VIG_SBLK(7, DPU_SSPP_SCALER_QSEED3);
-> +				_VIG_SBLK(7, DPU_SSPP_SCALER_QSEED3,
-> +					  SSPP_SCALER_VER(1, 3));
->  static const struct dpu_sspp_sub_blks sdm845_vig_sblk_3 =
-> -				_VIG_SBLK(8, DPU_SSPP_SCALER_QSEED3);
-> +				_VIG_SBLK(8, DPU_SSPP_SCALER_QSEED3,
-> +					  SSPP_SCALER_VER(1, 3));
-> +
-> +static const struct dpu_sspp_sub_blks sm8150_vig_sblk_0 =
-> +				_VIG_SBLK(5, DPU_SSPP_SCALER_QSEED3,
-> +					  SSPP_SCALER_VER(1, 4));
-> +static const struct dpu_sspp_sub_blks sm8150_vig_sblk_1 =
-> +				_VIG_SBLK(6, DPU_SSPP_SCALER_QSEED3,
-> +					  SSPP_SCALER_VER(1, 4));
-> +static const struct dpu_sspp_sub_blks sm8150_vig_sblk_2 =
-> +				_VIG_SBLK(7, DPU_SSPP_SCALER_QSEED3,
-> +					  SSPP_SCALER_VER(1, 4));
-> +static const struct dpu_sspp_sub_blks sm8150_vig_sblk_3 =
-> +				_VIG_SBLK(8, DPU_SSPP_SCALER_QSEED3,
-> +					  SSPP_SCALER_VER(1, 4));
->  
->  static const struct dpu_sspp_sub_blks sdm845_dma_sblk_0 = _DMA_SBLK(1);
->  static const struct dpu_sspp_sub_blks sdm845_dma_sblk_1 = _DMA_SBLK(2);
-> @@ -328,34 +353,60 @@ static const struct dpu_sspp_sub_blks sdm845_dma_sblk_2 = _DMA_SBLK(3);
->  static const struct dpu_sspp_sub_blks sdm845_dma_sblk_3 = _DMA_SBLK(4);
->  
->  static const struct dpu_sspp_sub_blks sc7180_vig_sblk_0 =
-> -				_VIG_SBLK(4, DPU_SSPP_SCALER_QSEED4);
-> +				_VIG_SBLK(4, DPU_SSPP_SCALER_QSEED4,
-> +					  SSPP_SCALER_VER(3, 0));
->  
->  static const struct dpu_sspp_sub_blks sc7280_vig_sblk_0 =
-> -			_VIG_SBLK_ROT(4, DPU_SSPP_SCALER_QSEED4, &dpu_rot_sc7280_cfg_v2);
-> +			_VIG_SBLK_ROT(4, DPU_SSPP_SCALER_QSEED4,
-> +				      SSPP_SCALER_VER(3, 0),
-> +				      &dpu_rot_sc7280_cfg_v2);
->  
->  static const struct dpu_sspp_sub_blks sm6115_vig_sblk_0 =
-> -				_VIG_SBLK(2, DPU_SSPP_SCALER_QSEED4);
-> +				_VIG_SBLK(2, DPU_SSPP_SCALER_QSEED4,
-> +					  SSPP_SCALER_VER(3, 0));
->  
->  static const struct dpu_sspp_sub_blks sm6125_vig_sblk_0 =
-> -				_VIG_SBLK(3, DPU_SSPP_SCALER_QSEED3LITE);
-> +				_VIG_SBLK(3, DPU_SSPP_SCALER_QSEED3LITE,
-> +					  SSPP_SCALER_VER(2, 4));
->  
->  static const struct dpu_sspp_sub_blks sm8250_vig_sblk_0 =
-> -				_VIG_SBLK(5, DPU_SSPP_SCALER_QSEED4);
-> +				_VIG_SBLK(5, DPU_SSPP_SCALER_QSEED4,
-> +					  SSPP_SCALER_VER(3, 0));
->  static const struct dpu_sspp_sub_blks sm8250_vig_sblk_1 =
-> -				_VIG_SBLK(6, DPU_SSPP_SCALER_QSEED4);
-> +				_VIG_SBLK(6, DPU_SSPP_SCALER_QSEED4,
-> +					  SSPP_SCALER_VER(3, 0));
->  static const struct dpu_sspp_sub_blks sm8250_vig_sblk_2 =
-> -				_VIG_SBLK(7, DPU_SSPP_SCALER_QSEED4);
-> +				_VIG_SBLK(7, DPU_SSPP_SCALER_QSEED4,
-> +					  SSPP_SCALER_VER(3, 0));
->  static const struct dpu_sspp_sub_blks sm8250_vig_sblk_3 =
-> -				_VIG_SBLK(8, DPU_SSPP_SCALER_QSEED4);
-> +				_VIG_SBLK(8, DPU_SSPP_SCALER_QSEED4,
-> +					  SSPP_SCALER_VER(3, 0));
-> +
-> +static const struct dpu_sspp_sub_blks sm8450_vig_sblk_0 =
-> +				_VIG_SBLK(5, DPU_SSPP_SCALER_QSEED4,
-> +					  SSPP_SCALER_VER(3, 1));
-> +static const struct dpu_sspp_sub_blks sm8450_vig_sblk_1 =
-> +				_VIG_SBLK(6, DPU_SSPP_SCALER_QSEED4,
-> +					  SSPP_SCALER_VER(3, 1));
-> +static const struct dpu_sspp_sub_blks sm8450_vig_sblk_2 =
-> +				_VIG_SBLK(7, DPU_SSPP_SCALER_QSEED4,
-> +					  SSPP_SCALER_VER(3, 1));
-> +static const struct dpu_sspp_sub_blks sm8450_vig_sblk_3 =
-> +				_VIG_SBLK(8, DPU_SSPP_SCALER_QSEED4,
-> +					  SSPP_SCALER_VER(3, 1));
->  
->  static const struct dpu_sspp_sub_blks sm8550_vig_sblk_0 =
-> -				_VIG_SBLK(7, DPU_SSPP_SCALER_QSEED4);
-> +				_VIG_SBLK(7, DPU_SSPP_SCALER_QSEED4,
-> +					  SSPP_SCALER_VER(3, 2));
->  static const struct dpu_sspp_sub_blks sm8550_vig_sblk_1 =
-> -				_VIG_SBLK(8, DPU_SSPP_SCALER_QSEED4);
-> +				_VIG_SBLK(8, DPU_SSPP_SCALER_QSEED4,
-> +					  SSPP_SCALER_VER(3, 2));
->  static const struct dpu_sspp_sub_blks sm8550_vig_sblk_2 =
-> -				_VIG_SBLK(9, DPU_SSPP_SCALER_QSEED4);
-> +				_VIG_SBLK(9, DPU_SSPP_SCALER_QSEED4,
-> +					  SSPP_SCALER_VER(3, 2));
->  static const struct dpu_sspp_sub_blks sm8550_vig_sblk_3 =
-> -				_VIG_SBLK(10, DPU_SSPP_SCALER_QSEED4);
-> +				_VIG_SBLK(10, DPU_SSPP_SCALER_QSEED4,
-> +					  SSPP_SCALER_VER(3, 2));
->  static const struct dpu_sspp_sub_blks sm8550_dma_sblk_4 = _DMA_SBLK(5);
->  static const struct dpu_sspp_sub_blks sm8550_dma_sblk_5 = _DMA_SBLK(6);
->  
-> -- 
-> 2.39.2
-> 
+ .../devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml         | 2 ++
+ arch/arm64/boot/dts/qcom/ipq5332.dtsi                              | 4 ++--
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi                              | 4 ++--
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi                              | 4 ++--
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi                              | 4 ++--
+ drivers/clk/qcom/apss-ipq6018.c                                    | 3 +++
+ drivers/clk/qcom/gcc-ipq5332.c                                     | 2 --
+ drivers/clk/qcom/gcc-ipq6018.c                                     | 7 -------
+ drivers/clk/qcom/gcc-ipq8074.c                                     | 7 -------
+ drivers/clk/qcom/gcc-ipq9574.c                                     | 4 ----
+ 10 files changed, 13 insertions(+), 28 deletions(-)
+---
+base-commit: a47fc304d2b678db1a5d760a7d644dac9b067752
+change-id: 20230904-gpll_cleanup-8b3e8b058c8b
+
+Best regards,
+-- 
+Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+
