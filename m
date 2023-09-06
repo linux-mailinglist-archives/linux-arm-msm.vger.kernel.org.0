@@ -2,62 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 90C31793818
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 11:25:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1532979381A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 11:25:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236594AbjIFJZI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Sep 2023 05:25:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41738 "EHLO
+        id S236717AbjIFJZJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Sep 2023 05:25:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236672AbjIFJZI (ORCPT
+        with ESMTP id S236702AbjIFJZI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 6 Sep 2023 05:25:08 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A098B1713
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 02:25:03 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-52683b68c2fso4919084a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 02:25:03 -0700 (PDT)
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6D311709
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 02:25:04 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-52bca2e8563so4893258a12.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 02:25:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693992302; x=1694597102; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1693992303; x=1694597103; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=LnYwdqbWQjSGcMevmL2xfokfgyKteExecdSmCDZE+XU=;
-        b=hTkz3JBDI5fAhQ2v35kPlvEPg31/qoX94NA0lgNFlYpB7ubSOtpeAdUPc4H5nphoA/
-         9027Tnp3Id+MMiRtR7ySlwcpLUfZqRvzux0xkENPEW1nCWfC5dxxT4TD4MGFUOlTvFh4
-         DGTuAV5y4T3YKGNm/oIg3k5eU1+lUwR2e5jMELM58ibLLE/xHqIJp5oeEaSEblwJv0na
-         jRgultlQk8YbC6n2EjDCm2BXXgsM2ZIQ+Bo5ow4OHlD+ZPm8kVskgIsDeXngVX9JnJIe
-         Py7k98qYWubWs8YI+VAnznRGX45qc0GKyrgALnjds0Hc4d/6UmCnJIgVNQWyYJLwmyUj
-         Zv9g==
+        bh=/6p/xZXs900v4vDHCTqR/tX5qKtbr2J5Y6y2wWsKdjA=;
+        b=ApaOGQd9FqXgZftmrsjFERD93alSlyBQfC7VrDm2OYdejxYI5HchDzEAg+mnxUypBu
+         udcs9NfIkuJPtb7uMHvVMnld0KUApqujZ/qqYIxrDu74Bh3kLe8o/Qy0/CQSVqg9zMFd
+         1R5A+Z+UrZ8O6sy+XSLV4uYqaeQpuZSBJqYyS5vuY87M8EUhKD7tn7/Ldmb435/ZLxMf
+         QVEJae2jruQvRbdk6n/YRXAI2Ok/61ArsfS2iVLR7XPkRU+Tfd43gATRsHmlsb7t75oq
+         aTjI8zXqBhSAmnviR9thMBgf8YPFfz197MW/JhhdSW6ozzbIggArQYBv8hPnLtajowXP
+         ALZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693992302; x=1694597102;
+        d=1e100.net; s=20221208; t=1693992303; x=1694597103;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=LnYwdqbWQjSGcMevmL2xfokfgyKteExecdSmCDZE+XU=;
-        b=SkZJMEUzrmtcPATCUKmO+0fXlkQmotPEOVrwOl6/M73MqqjfTk0/P6VEgsc45dKJHy
-         9KQ49pdSWXXB/3DkUUUk1dk4IoFTLVoVVrIp2MZk9ApEYyiCLyJXPp4xeIuNYKT7lkZI
-         EPxzB9D8RwmSaHLuBMfG1CJR5fn90gPP/CIPimPnZzXfthPOHeb27KrqNZQKd02iD152
-         v1F7DmnAZ3PEYWboHEuTa+CS5R7vi64PunwXd6teWWhftnoLLjDBXCWIn2oh1XFwwkCp
-         NeU5w9hkyM/MgtDPf+HJIehz1iUKo+FMfnsDYNp+SAlmUFgnqnrLklQoLf+NngNKtE9e
-         Edew==
-X-Gm-Message-State: AOJu0YxJVkMRdtEC7590DT/TGD0iE5lVr7cFwwIbzQMq8EQ7M2IvR0jd
-        m7A3FjCENTFtDb+rBdNv1VYnoQ==
-X-Google-Smtp-Source: AGHT+IEHJE3fGpzoBkTrJS7dRq9rbNAAXB5S+M8nvLb6myUfQXTwv3xVRVwXDoXA+ZA3DxjVdPm0wQ==
-X-Received: by 2002:aa7:df05:0:b0:523:b133:5c7e with SMTP id c5-20020aa7df05000000b00523b1335c7emr2176561edy.1.1693992302078;
-        Wed, 06 Sep 2023 02:25:02 -0700 (PDT)
+        bh=/6p/xZXs900v4vDHCTqR/tX5qKtbr2J5Y6y2wWsKdjA=;
+        b=XMo/8Oqx1waJwjZitnXOcn2gx1YTjGwR3JaaQw24yugFmYc/ZjgBrQqn2LLwYy+2rz
+         rdHYVfvawSEES06fIY4iZqbqti/sPvY34qJqBjN/VDW6epZMc7dwhKPkOYa+XmnRQvRj
+         uWPFnTpbFe/IVTzUtlDKCEt7n/je+ChU7MS2SnfYGZXKKawfut5CB2+A1eKDbu/0FShN
+         noNf84fiXPvmn2Ia60LxQyATjbO0+lMkk0ky5SGHFVo3aaMdDWbiVy2MiswhMGMl8UzO
+         xpyOdlPVGf0F4NFUtuBdFF199lG4lJyEn1l0dqPs/bBXIc0FP6OWRejXLFCZrfK+QpXx
+         dtOw==
+X-Gm-Message-State: AOJu0YyYfspevrBRHLsi6oMYxAGeCIzI/agiTxbso4htO9I38zYbibPu
+        e5+atH9NFA0hjh4BAlH7m96ZyA==
+X-Google-Smtp-Source: AGHT+IFdAEMUz+88edXZb43tzldXC9wcDLVBbqV0a4yyVzNmNROPo4VCN1khS5KFMQ3UGo0caLGccw==
+X-Received: by 2002:a05:6402:5172:b0:523:2e30:aaee with SMTP id d18-20020a056402517200b005232e30aaeemr1773809ede.32.1693992303456;
+        Wed, 06 Sep 2023 02:25:03 -0700 (PDT)
 Received: from [10.167.154.1] (178235177204.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.204])
-        by smtp.gmail.com with ESMTPSA id q10-20020aa7cc0a000000b005232c051605sm8096155edt.19.2023.09.06.02.25.00
+        by smtp.gmail.com with ESMTPSA id q10-20020aa7cc0a000000b005232c051605sm8096155edt.19.2023.09.06.02.25.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Sep 2023 02:25:01 -0700 (PDT)
+        Wed, 06 Sep 2023 02:25:03 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 06 Sep 2023 11:24:57 +0200
-Subject: [PATCH 3/5] arm64: dts: qcom: qrb2210-rb1: Enable remote
- processors
+Date:   Wed, 06 Sep 2023 11:24:58 +0200
+Subject: [PATCH 4/5] arm64: dts: qcom: qrb2210-rb1: Add GPIO LEDs
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230906-topic-rb1_features_sans_icc-v1-3-e92ce6fbde16@linaro.org>
+Message-Id: <20230906-topic-rb1_features_sans_icc-v1-4-e92ce6fbde16@linaro.org>
 References: <20230906-topic-rb1_features_sans_icc-v1-0-e92ce6fbde16@linaro.org>
 In-Reply-To: <20230906-topic-rb1_features_sans_icc-v1-0-e92ce6fbde16@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -71,11 +70,11 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1693992295; l=1269;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1693992295; l=1581;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=GxxdKaABG/4dfsjIOXX0iFhor2LXgsg6bFK7ECFX658=;
- b=zAiOOe27ov+y+/1gzwTD137dN13wjRsAUY980ds26cVqOaYdE4I6j5PXUkf9im2mXXeUXFm0o
- BYBKMrQIAimB3U/u3pBlE3IeGMfEituj1qE56BOsSYytIyTTcIoW4T3
+ bh=UuNd8tggE5iWiyJA3F8yW6H2YAWEjVItZbSqtIqrHRA=;
+ b=vlWYHvPSLfOkpmRgpAeQijRsCZdcBV9xDwMZbr3XygAYB4tIIDlFLKMfebwqwlESs2L4oJgD8
+ 7D5yBqy0iY7CyizPLcKGRnj/YaKJeYHUUMtF8ZnPsqnuyR1Z94G53vc
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -88,53 +87,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the ADSP, MPSS and Wi-Fi. Tighten up the Wi-Fi regulators to
-make them compliant with that the chip expects.
-
-The Wi-Fi reports:
-qmi chip_id 0x120 chip_family 0x4007 board_id 0xff soc_id 0x40670000
+Add the three LEDs (blue/yellow/green) connected to TLMM GPIOs.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/qrb2210-rb1.dts | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ arch/arm64/boot/dts/qcom/qrb2210-rb1.dts | 33 ++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-index 0f7c59187896..5f7619518deb 100644
+index 5f7619518deb..fd45f58e254d 100644
 --- a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
 +++ b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-@@ -134,6 +134,16 @@ &qupv3_id_0 {
- 	status = "okay";
- };
+@@ -5,6 +5,7 @@
  
-+&remoteproc_adsp {
-+	firmware-name = "qcom/qcm2290/adsp.mbn";
-+	status = "okay";
-+};
-+
-+&remoteproc_mpss {
-+	firmware-name = "qcom/qcm2290/modem.mbn";
-+	status = "okay";
-+};
-+
- &rpm_requests {
- 	regulators {
- 		compatible = "qcom,rpm-pm2250-regulators";
-@@ -373,6 +383,14 @@ &usb_hsphy {
- 	status = "okay";
- };
+ /dts-v1/;
  
-+&wifi {
-+	vdd-0.8-cx-mx-supply = <&pm2250_l7>;
-+	vdd-1.8-xo-supply = <&pm2250_l13>;
-+	vdd-1.3-rfa-supply = <&pm2250_l10>;
-+	vdd-3.3-ch0-supply = <&pm2250_l22>;
-+	status = "okay";
-+};
++#include <dt-bindings/leds/common.h>
+ #include "qcm2290.dtsi"
+ #include "pm2250.dtsi"
+ 
+@@ -39,6 +40,38 @@ key-volume-up {
+ 		};
+ 	};
+ 
++	leds {
++		compatible = "gpio-leds";
 +
- &xo_board {
- 	clock-frequency = <38400000>;
- };
++		led-bt {
++			label = "blue:bt";
++			function = LED_FUNCTION_BLUETOOTH;
++			color = <LED_COLOR_ID_BLUE>;
++			gpios = <&tlmm 45 GPIO_ACTIVE_HIGH>;
++			linux,default-trigger = "bluetooth-power";
++			default-state = "off";
++		};
++
++		led-user0 {
++			label = "green:user0";
++			function = LED_FUNCTION_INDICATOR;
++			color = <LED_COLOR_ID_GREEN>;
++			gpios = <&tlmm 52 GPIO_ACTIVE_HIGH>;
++			linux,default-trigger = "none";
++			default-state = "off";
++			panic-indicator;
++		};
++
++		led-wlan {
++			label = "yellow:wlan";
++			function = LED_FUNCTION_WLAN;
++			color = <LED_COLOR_ID_YELLOW>;
++			gpios = <&tlmm 47 GPIO_ACTIVE_HIGH>;
++			linux,default-trigger = "phy0tx";
++			default-state = "off";
++		};
++	};
++
+ 	vreg_hdmi_out_1p2: regulator-hdmi-out-1p2 {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "VREG_HDMI_OUT_1P2";
 
 -- 
 2.42.0
