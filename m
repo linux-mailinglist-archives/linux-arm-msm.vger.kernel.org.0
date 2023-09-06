@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7FCED793B23
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 13:27:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D500793B26
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 13:27:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236735AbjIFL1y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Sep 2023 07:27:54 -0400
+        id S237650AbjIFL14 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Sep 2023 07:27:56 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235532AbjIFL1x (ORCPT
+        with ESMTP id S237139AbjIFL1y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Sep 2023 07:27:53 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E979EA9
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 04:27:10 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-9a64619d8fbso503605066b.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 04:27:10 -0700 (PDT)
+        Wed, 6 Sep 2023 07:27:54 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EC3CE64
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 04:27:14 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-52bcd4db4bdso5131283a12.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 04:27:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693999620; x=1694604420; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1693999627; x=1694604427; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=GOM33DXd3Sk7ndVLCHFEfmNlQYtoykW8EnX2/+VMqsg=;
-        b=UntdfvAat0HwOxkiNAwDKU+GDS4kPqJwXUG/ahTXSae+JKVpvn3XRR1BMnT/rf4BqM
-         9qS+Fmh8+NibDvUbJebLgRhDfpt2WWQj9kWY9yufqiYuqixObIDaaWduodJbk8/tUIso
-         QSEZvEl9/4INjo9huUJlmaRLNnzgTZzovN+3S4g0EqfErbZFh14DHZ/9PvCkGKspPdZn
-         riVGHngh2FRiMsXeVlv+XbkCGQakp1DoMYGR6Tq9IhPRtdWDdT+O4uZbYyOFrgG7ehrm
-         8Gue+a6mZKu8icUl56oeD1LCmQ1v1JMqRzpNinEWEetdwid5XT9JUifGndGBrqNpiNgQ
-         /Lvg==
+        bh=BzYIkWUWUE38ZUDuJgZ2cvxjsY6xPprLp7fF0sj0dY4=;
+        b=JkQL3yb5VgdjMIBgiQ446ywSh3ftKgWWKSCrj860Ek9AHOD3+2UgFYCGAz5xt6Mvyy
+         qLhmgi3TfmHaN316Uvm0ITEGMY+elEG2XNTogHoJ4Ii3zjzoDwFbKC90WTSyJ+y2woUK
+         AtvJFqr1wiO9GU7dOy1H5Mas7dlXrwfkRU6nCbk/mJWR7IXiOsN2FYsvnA5a8LcQmE7x
+         q/nPeNXEkNnEheten9N+RkyJAGEwrSmshto0awnDLX4MavIdS6c8K4SAVJz6LzlHHl6T
+         SQMDncRu675mq5wanrgpv0kODv3oyIQF9T/p2UjRNmi0i/Jep1/1G4TjIaUTgsUTB5G+
+         JYZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693999620; x=1694604420;
+        d=1e100.net; s=20221208; t=1693999627; x=1694604427;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GOM33DXd3Sk7ndVLCHFEfmNlQYtoykW8EnX2/+VMqsg=;
-        b=Hf9KBaIEUYZdwFZP5TQhY1UAOceVSguLFyKqCDAVLmOxNk0DnpOfwL05de8KqmcwDa
-         iTzZ1hCnu1813ZCYPdAS2AjNQNNFrrmk7mN6ZDNk9HcSs7lg/bl4mE+4YxN7iTAzHHwl
-         PQ79EM4TanRcdkGyOg+EhaAEBkWJpn3QIvcTsYypzKCSGSxV1mZ0Dzp2Ijnz0ythmZjE
-         yemeYU7vguCfbrs3kMto7iPIFRWdMOX68FWrWlIPPsxYkSWEowvclc6puf4F+QE0IdUu
-         LTcwOB5WPs77hVTqvfqQFezRdVKeELOwkblMYwxNfrf6puHOTzHkqXAV4mzUIiau4hdR
-         nBCQ==
-X-Gm-Message-State: AOJu0YxHgriPiaBPslXDAkM1uxNuTaK/Xw4bNIah2E9jZS2vAIQyCIm7
-        XmtrFM0xdaDvnaSHkMbWSEe2+Q==
-X-Google-Smtp-Source: AGHT+IEV7duPYAJVA64fvgeFJr+zjvONpH2hUiZb+f+qtTNJ/gM3WrpmPA3dXrLxqQ7pFAKak/3SNA==
-X-Received: by 2002:a17:906:cd2:b0:9a2:c5a:6c9a with SMTP id l18-20020a1709060cd200b009a20c5a6c9amr2205081ejh.45.1693999620169;
-        Wed, 06 Sep 2023 04:27:00 -0700 (PDT)
+        bh=BzYIkWUWUE38ZUDuJgZ2cvxjsY6xPprLp7fF0sj0dY4=;
+        b=AgRbag6Be5x1HbFKpY7QrmcguV6H86uvoWr61teWJEOVG0+67JbXPi9kivM6GBK3Se
+         QKc0tCOiPwNCGvqohwdSvkGoy+as2ZewSX+WzQ0e4JaVdYgiY8Wu2zNDAVCmp/RyQfT/
+         O21DHxRvGsCRfMnkcn4TrAvLtNud4nNSNd4sX5QY2dU0xK2V/llEPlP2WOyOv5ZGtT5O
+         dg1uYqhDC0neCxgtmpaCoZUuHNwW+Un7o78ilpFFzHz12LwQMtxpzcE9oJ7g9ugKYWls
+         Km0yZFaIezIX7I1idjSLZ2/esRf3l3uTNZR7owUsztpj4n8t9mhSuheysuHmCwJyfuo3
+         0s8w==
+X-Gm-Message-State: AOJu0Yx5+uhhWeA1jz7OEFO6Lotilwl2bxB2mLs60lEBYS8k4BHHq3oi
+        fTkYYRaC2tfsJTzW3yGckyXcWw==
+X-Google-Smtp-Source: AGHT+IGTB1o851EmrADzUlRazgMZVreK3BJ+kbODXQvCLx5g1QBpeFqlgU9x2zhD/Avp74AQX3pYlw==
+X-Received: by 2002:a17:906:3115:b0:9a1:c447:3c62 with SMTP id 21-20020a170906311500b009a1c4473c62mr1882583ejx.49.1693999627235;
+        Wed, 06 Sep 2023 04:27:07 -0700 (PDT)
 Received: from [192.168.37.154] (178235177204.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.204])
-        by smtp.gmail.com with ESMTPSA id lt20-20020a170906fa9400b009a193a5acffsm8770546ejb.121.2023.09.06.04.26.58
+        by smtp.gmail.com with ESMTPSA id lt20-20020a170906fa9400b009a193a5acffsm8770546ejb.121.2023.09.06.04.27.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Sep 2023 04:26:59 -0700 (PDT)
-Message-ID: <a96ec24f-1992-4d8b-b3fd-30dfe106f5d4@linaro.org>
-Date:   Wed, 6 Sep 2023 13:26:58 +0200
+        Wed, 06 Sep 2023 04:27:06 -0700 (PDT)
+Message-ID: <7b9dcd0a-4aa1-4aa4-a193-81736e974fe6@linaro.org>
+Date:   Wed, 6 Sep 2023 13:27:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] arm64: dts: qcom: ipq6018: Fix hwlock index for
+Subject: Re: [PATCH v3 3/4] arm64: dts: qcom: ipq8074: Fix hwlock index for
  SMEM
 Content-Language: en-US
 To:     Vignesh Viswanathan <quic_viswanat@quicinc.com>, agross@kernel.org,
@@ -66,7 +66,7 @@ Cc:     quic_kathirav@quicinc.com, quic_anusha@quicinc.com,
         quic_sjaganat@quicinc.com, quic_srichara@quicinc.com,
         quic_varada@quicinc.com, stable@vger.kernel.org
 References: <20230904172516.479866-1-quic_viswanat@quicinc.com>
- <20230904172516.479866-3-quic_viswanat@quicinc.com>
+ <20230904172516.479866-4-quic_viswanat@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -103,11 +103,11 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230904172516.479866-3-quic_viswanat@quicinc.com>
+In-Reply-To: <20230904172516.479866-4-quic_viswanat@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -120,10 +120,10 @@ On 4.09.2023 19:25, Vignesh Viswanathan wrote:
 > SMEM uses lock index 3 of the TCSR Mutex hwlock for allocations
 > in SMEM region shared by the Host and FW.
 > 
-> Fix the SMEM hwlock index to 3 for IPQ6018.
+> Fix the SMEM hwlock index to 3 for IPQ8074.
 > 
 > Cc: stable@vger.kernel.org
-> Fixes: 5bf635621245 ("arm64: dts: ipq6018: Add a few device nodes")
+> Fixes: 42124b947e8e ("arm64: dts: qcom: ipq8074: add SMEM support")
 > Signed-off-by: Vignesh Viswanathan <quic_viswanat@quicinc.com>
 > ---
 Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
