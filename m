@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E9D97934D8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 07:26:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DC5D7934E8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 07:35:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235603AbjIFF0c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Sep 2023 01:26:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56034 "EHLO
+        id S239988AbjIFFf5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Sep 2023 01:35:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229930AbjIFF0b (ORCPT
+        with ESMTP id S229741AbjIFFf4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Sep 2023 01:26:31 -0400
+        Wed, 6 Sep 2023 01:35:56 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D190CCF1;
-        Tue,  5 Sep 2023 22:26:27 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3865ALQ4012812;
-        Wed, 6 Sep 2023 05:26:18 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14809EA;
+        Tue,  5 Sep 2023 22:35:53 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3864eDF1016002;
+        Wed, 6 Sep 2023 05:35:43 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
+ mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=EMHKGw7FOa3vEJGGc37bTqoMMu9Jp5jr8eYVYzNesdw=;
- b=cBHMhJkIAXJQC3db3p1Prtyftd7Js4XWvJwz5JR6mJmGgV0lTTlAZKuUVHqLIVgo00cK
- eZPfNHY79NWfI30n7hoOawvKXaUc6w4xStVcAnP2f5Z/aBJ8N/kneXnqA0fawsvLjjf4
- iJnjtN0/8VVGNTo6/F8G7Lfj3jD5dwsqCK55/6cn0fE84NnmZrs0mG+Zdd9OzfTiMJtk
- caBEw+4TcOMtEB6+DQfJQIpMzy4LRoNH3e4MTzCi95QNn02JsFigtR1ejr55UPYrRqdw
- YKshCfL78lSOZoLAL8nYD9+nZ8MM25u2sn/lUiRCzTVmF7eDeGyT80pqc7uEwoHXMRyY vw== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sxhbhg6ya-1
+ bh=K71dDfISUpoL/pGcHA7RhHkRhwFR2rHL+gv6H9gTCAY=;
+ b=Asd4J4MwC9uzjlHOXoVFBgP0uiId2UnLFVU+v68q4xfSuBMhzHRS0cQSvyCCG1p6iZ/F
+ zrjMGPvUtxMrkp0Oci+73y0SUHDEcvwtsrGaoPmX22Zj3fN/mwyfv1XlIy1NyGaZbRkv
+ aZH2m7OSUN7f6Nav7vZhoxYSICiFYZ0OObXxiBJi62eLbRJQ/fToU/HiKO4zfQ3MWgQg
+ m7Vex6v66Fhv1K8gA9t8y5S5e67GvGlxDAmehSqxma26QuilfsrtXMo4sfXURKLUy+P1
+ NKTQy7EsDp4LomE3UO3MmVe7OTu+Vsk9uBvWCLMX7L9jnUb7BFsRMWjSazALm8ESN4cX 4Q== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sx62wt02p-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 06 Sep 2023 05:26:17 +0000
+        Wed, 06 Sep 2023 05:35:43 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3865QG7r026091
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3865ZgUN000725
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 6 Sep 2023 05:26:16 GMT
+        Wed, 6 Sep 2023 05:35:42 GMT
 Received: from [10.214.66.58] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 5 Sep
- 2023 22:26:09 -0700
-Message-ID: <1838845b-9586-6f8c-a4d6-ef052e0a12db@quicinc.com>
-Date:   Wed, 6 Sep 2023 10:56:05 +0530
+ 2023 22:35:34 -0700
+Message-ID: <0d76f851-ef7a-2d09-a344-9ec31ba581a5@quicinc.com>
+Date:   Wed, 6 Sep 2023 11:05:31 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.0
-Subject: Re: [PATCH v2 2/5] dt-bindings: phy: qcom,qmp-usb: Add SDX75 USB3 PHY
+Subject: Re: [PATCH v2 5/5] phy: qcom-qmp-usb: Add Qualcomm SDX75 USB3 PHY
+ support
 Content-Language: en-US
-From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         <agross@kernel.org>, <andersson@kernel.org>,
         <konrad.dybcio@linaro.org>, <vkoul@kernel.org>,
@@ -58,10 +58,10 @@ CC:     <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
         <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         <linux-usb@vger.kernel.org>, <kernel@quicinc.com>
 References: <1693909838-6682-1-git-send-email-quic_rohiagar@quicinc.com>
- <1693909838-6682-3-git-send-email-quic_rohiagar@quicinc.com>
- <37fe0c7e-60ad-4c27-b40f-471cc3d92e1c@linaro.org>
- <ea9df6f3-dfde-ea7a-af22-2a0839d82d32@quicinc.com>
-In-Reply-To: <ea9df6f3-dfde-ea7a-af22-2a0839d82d32@quicinc.com>
+ <1693909838-6682-6-git-send-email-quic_rohiagar@quicinc.com>
+ <8aefd8f9-cfe9-4011-a24b-ebb13d28faa0@linaro.org>
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+In-Reply-To: <8aefd8f9-cfe9-4011-a24b-ebb13d28faa0@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
@@ -69,16 +69,16 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ZVzo4nNmGSmBtXDRaQi-OqPleqZiiq1g
-X-Proofpoint-ORIG-GUID: ZVzo4nNmGSmBtXDRaQi-OqPleqZiiq1g
+X-Proofpoint-GUID: KMxD0XH2KVxsoNnQxgzWQnaQimkrD6st
+X-Proofpoint-ORIG-GUID: KMxD0XH2KVxsoNnQxgzWQnaQimkrD6st
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
  definitions=2023-09-05_13,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- priorityscore=1501 bulkscore=0 suspectscore=0 clxscore=1011 malwarescore=0
- impostorscore=0 phishscore=0 mlxscore=0 mlxlogscore=999 adultscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309060049
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ bulkscore=0 clxscore=1015 impostorscore=0 mlxscore=0 adultscore=0
+ spamscore=0 malwarescore=0 suspectscore=0 mlxlogscore=999 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309060050
 X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -90,113 +90,92 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 9/6/2023 10:52 AM, Rohit Agarwal wrote:
->
-> On 9/6/2023 2:04 AM, Dmitry Baryshkov wrote:
->> On 05/09/2023 13:30, Rohit Agarwal wrote:
->>> Add dt-bindings for USB3 PHY found on Qualcomm SDX75.
->>>
->>> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
->>> ---
->>>   .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml        | 40 
->>> ++++++++++++++++++++--
->>>   1 file changed, 37 insertions(+), 3 deletions(-)
->>>
->>> diff --git 
->>> a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml 
->>> b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml 
->>>
->>> index f99fbbc..5725620 100644
->>> --- 
->>> a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
->>> +++ 
->>> b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
->>> @@ -20,6 +20,7 @@ properties:
->>>         - qcom,qcm2290-qmp-usb3-phy
->>>         - qcom,sa8775p-qmp-usb3-uni-phy
->>>         - qcom,sc8280xp-qmp-usb3-uni-phy
->>> +      - qcom,sdx75-qmp-usb3-uni-phy
+On 9/6/2023 2:08 AM, Dmitry Baryshkov wrote:
+> On 05/09/2023 13:30, Rohit Agarwal wrote:
+>> Add support for USB3 QMP PHY found in SDX75 platform.
 >>
->> I think the ident is wrong here.
->
-> Same. Somehow, your reply has the issue but original not able to see.
->
+>> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+>> ---
+>>   drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 158 
+>> ++++++++++++++++++++++++++++++++
+>>   1 file changed, 158 insertions(+)
 >>
->>>         - qcom,sm6115-qmp-usb3-phy
->>>       reg:
->>> @@ -38,9 +39,7 @@ properties:
->>>       maxItems: 2
->>>       reset-names:
->>> -    items:
->>> -      - const: phy
->>> -      - const: phy_phy
->>> +    maxItems: 2
->>>       vdda-phy-supply: true
->>>   @@ -75,6 +74,7 @@ allOf:
->>>             contains:
->>>               enum:
->>>                 - qcom,ipq9574-qmp-usb3-phy
->>> +              - qcom,sdx75-qmp-usb3-uni-phy
->>>       then:
->>>         properties:
->>>           clock-names:
->>> @@ -122,6 +122,40 @@ allOf:
->>>         required:
->>>           - power-domains
->>>   +  - if:
->>> +      properties:
->>> +        compatible:
->>> +          contains:
->>> +            enum:
->>> +              - qcom,ipq9574-qmp-usb3-phy
->>> +              - qcom,qcm2290-qmp-usb3-phy
->>> +              - qcom,sa8775p-qmp-usb3-uni-phy
->>> +              - qcom,sc8280xp-qmp-usb3-uni-phy
->>> +              - qcom,sm6115-qmp-usb3-phy
->>> +    then:
->>> +      properties:
->>> +        resets:
->>> +          maxItems: 2
->>> +        reset-names:
->>> +          items:
->>> +            - const: phy
->>> +            - const: phy_phy
->>> +
->>> +  - if:
->>> +      properties:
->>> +        compatible:
->>> +          contains:
->>> +            enum:
->>> +              - qcom,sdx75-qmp-usb3-uni-phy
->>> +    then:
->>> +      properties:
->>> +        resets:
->>> +          maxItems: 2
->>> +        reset-names:
->>> +          items:
->>> +            - const: phy
->>> +            - const: common
->>
->> Could you please point us to the actual DTS patch adding this PHY? 
->> I'd say, it is highly likely that you are trying to bring in the 
->> unnecessary change.
-> I have not posted the dt patches yet. But sdx75 uses these resets.
-> GCC_USB3PHY_PHY_BCR, GCC_USB3_PHY_BCR
+>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c 
+>> b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+>> index 0130bb8..57b8b5b 100644
+>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+>> @@ -23,6 +23,7 @@
+>>   #include "phy-qcom-qmp-pcs-misc-v3.h"
+>>   #include "phy-qcom-qmp-pcs-usb-v4.h"
+>>   #include "phy-qcom-qmp-pcs-usb-v5.h"
+>> +#include "phy-qcom-qmp-pcs-usb-v6.h"
+>>     /* QPHY_SW_RESET bit */
+>>   #define SW_RESET                BIT(0)
+>> @@ -858,6 +859,134 @@ static const struct qmp_phy_init_tbl 
+>> sdx65_usb3_uniphy_rx_tbl[] = {
 >
-> These are same as sdx65 and sdx55.
-Ok I see in your patch 
-https://lore.kernel.org/linux-phy/20230824211952.1397699-17-dmitry.baryshkov@linaro.org/
-you are updating the resets name. Fine, this change becomes unnecessary.
-Will rebase my change on your patches.
+> [skipped the tables]
+>
+>> @@ -1556,6 +1685,32 @@ static const struct qmp_phy_cfg 
+>> sdx65_usb3_uniphy_cfg = {
+>>       .has_pwrdn_delay    = true,
+>>   };
+>>   +static const struct qmp_phy_cfg sdx75_usb3_uniphy_cfg = {
+>> +    .lanes            = 1,
+>> +    .offsets        = &qmp_usb_offsets_v5,
+>
+> v6?
+Since the offsets for v5 and v6 are same, I did not introduce a new 
+struct with the same values.
+Please correct me if I have to introduce v6 offsets.
+>
+>> +
+>> +    .serdes_tbl        = sdx75_usb3_uniphy_serdes_tbl,
+>> +    .serdes_tbl_num        = ARRAY_SIZE(sdx75_usb3_uniphy_serdes_tbl),
+>> +    .tx_tbl            = sdx75_usb3_uniphy_tx_tbl,
+>> +    .tx_tbl_num        = ARRAY_SIZE(sdx75_usb3_uniphy_tx_tbl),
+>> +    .rx_tbl            = sdx75_usb3_uniphy_rx_tbl,
+>> +    .rx_tbl_num        = ARRAY_SIZE(sdx75_usb3_uniphy_rx_tbl),
+>> +    .pcs_tbl        = sdx75_usb3_uniphy_pcs_tbl,
+>> +    .pcs_tbl_num        = ARRAY_SIZE(sdx75_usb3_uniphy_pcs_tbl),
+>> +    .pcs_usb_tbl        = sdx75_usb3_uniphy_pcs_usb_tbl,
+>> +    .pcs_usb_tbl_num    = ARRAY_SIZE(sdx75_usb3_uniphy_pcs_usb_tbl),
+>> +    .clk_list        = qmp_v4_sdx55_usbphy_clk_l,
+>> +    .num_clks        = ARRAY_SIZE(qmp_v4_sdx55_usbphy_clk_l),
+>> +    .reset_list        = msm8996_usb3phy_reset_l,
+>> +    .num_resets        = ARRAY_SIZE(msm8996_usb3phy_reset_l),
+>
+> Clocks and resets are gone in 
+> https://lore.kernel.org/linux-phy/20230824211952.1397699-1-dmitry.baryshkov@linaro.org/
+>
+Sure.
+>> +    .vreg_list        = qmp_phy_vreg_l,
+>> +    .num_vregs        = ARRAY_SIZE(qmp_phy_vreg_l),
+>> +    .regs            = qmp_v5_usb3phy_regs_layout,
+>
+> This must be v6, if the rest of the PHY is using v6 register names.
+Same, Shall I introduce v6 struct?
 
 Thanks,
 Rohit.
 >
-> Thanks,
-> Rohit.
+>> +    .pcs_usb_offset        = 0x1000,
+>> +
+>> +    .has_pwrdn_delay    = true,
+>> +};
+>> +
+>>   static const struct qmp_phy_cfg sm8350_usb3_uniphy_cfg = {
+>>       .lanes            = 1,
+>>   @@ -2256,6 +2411,9 @@ static const struct of_device_id 
+>> qmp_usb_of_match_table[] = {
+>>           .compatible = "qcom,sdx65-qmp-usb3-uni-phy",
+>>           .data = &sdx65_usb3_uniphy_cfg,
+>>       }, {
+>> +        .compatible = "qcom,sdx75-qmp-usb3-uni-phy",
+>> +        .data = &sdx75_usb3_uniphy_cfg,
+>> +    }, {
+>>           .compatible = "qcom,sm6115-qmp-usb3-phy",
+>>           .data = &qcm2290_usb3phy_cfg,
+>>       }, {
 >
->>
->>> +
->>>   additionalProperties: false
->>>     examples:
->>
