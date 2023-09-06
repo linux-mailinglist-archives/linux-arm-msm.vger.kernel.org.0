@@ -2,97 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 38E70793AB3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 13:07:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F421C793AFC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 13:24:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238989AbjIFLHj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Sep 2023 07:07:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56272 "EHLO
+        id S239270AbjIFLYD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Sep 2023 07:24:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238950AbjIFLHj (ORCPT
+        with ESMTP id S235254AbjIFLYC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Sep 2023 07:07:39 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B0691709
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 04:07:35 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-99bdeae1d0aso519774866b.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 04:07:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693998454; x=1694603254; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=04RIGrK/sYk5OEkLrRYOMD1ZJ/ZWGe5NicOO2NNDqGM=;
-        b=g2RZ7viM3qg28RPm9per4gBRmS4hHvRe36pMbtBvIru6mbr4VFwrISkvj729QQmSxO
-         yGsCxLLYe8OM1C/m/jA8UcCKEIY1N7VW0IJIohd+HJZi2Abp50lF5oC8ZOV7cthz3NLg
-         m2feGK5bazOcqF0g5NqCgRZxl7xBv/DUPzJZeDm4ew4Skaf2eogNH1x2qrQx1MHcEK0M
-         KQzJvn6CczEnVHtV6NMMNjKEn3F4gbaHZ1qbDNb1VVFk+gdFfL/5VdLohh7/o9WZM/ia
-         0afePleBLEZY+EMq/sNVe34+pzeMFViIVqZKa+gQldzB6TUiqCT08zvijEykLa4D9Bdj
-         dJqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693998454; x=1694603254;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=04RIGrK/sYk5OEkLrRYOMD1ZJ/ZWGe5NicOO2NNDqGM=;
-        b=QA+ddnHD+CVOdr7Jp9DIN/6fE8QZSogLOt119XI+vagEpuLREmmhIRhLZNxx5VnOBm
-         aGcsH/6VF4gSjqoefH8//nZqHdqFqgEzd0J+6xcc5YjOUc7rIt6RdIcvhkFKjsxQ50ju
-         hb0PLoUkWPTAV9i8myYEucuPSZE6wjuUai13ySp2zh1V1rv0y5sc1/wx+s3+1xvaRCgv
-         G56XLK5AK3vfhu/DvUYV/jZZvYdDtS4qZQjYWBoAWSgR8nbk4fDOdXlxEVIwa/SGQyjG
-         3txoXGFzFqbTUOjivbjeV73Sj19wgAqK1jbTp/K81VXqcTLw9jYIOo//1DVP9wtrjKFY
-         OghQ==
-X-Gm-Message-State: AOJu0YzMYMRrdTwGMZW2cVFCqjwO36468ExkPsEUuDSXKKDtjaDr1u5b
-        lmapiA9lRCzaVPWAhUPEHVD3KA==
-X-Google-Smtp-Source: AGHT+IF0urhKp2q2CDwmVHJCxuzg/kdWzGPsd6ABlX27s8VGanwmnIb6Dc/tu2jAo/fmuU0NM6H8sw==
-X-Received: by 2002:a17:907:2cd9:b0:9a4:119b:741 with SMTP id hg25-20020a1709072cd900b009a4119b0741mr2003575ejc.8.1693998453998;
-        Wed, 06 Sep 2023 04:07:33 -0700 (PDT)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id ja8-20020a170907988800b0099bd5d28dc4sm8775909ejc.195.2023.09.06.04.07.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Sep 2023 04:07:33 -0700 (PDT)
-Message-ID: <f29efb36-99c0-4dc1-ad99-532b88a331d6@linaro.org>
-Date:   Wed, 6 Sep 2023 14:07:32 +0300
+        Wed, 6 Sep 2023 07:24:02 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB02C10CE;
+        Wed,  6 Sep 2023 04:23:39 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3869RcRn011677;
+        Wed, 6 Sep 2023 11:23:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=fMecGYWVMbKDPwlrF1uhldockoqisrqfdD57IoanxLk=;
+ b=Lxbs6jjMi8oUwwRtqhARUCHEdTdk9XOxR0apJud6eNhos1WTndXQe9OURSyNdreerBL7
+ Be3bhkXw5N2qFRyCQqX9n1CaRcV6fj13I89yFZ3Se0sWGI1DzkKlFffn4pvT6qlCDWN5
+ 6pG9OC4B95DXLzTqPzOdZCtjzFI7Ne5wn2H5g7Wq7RIqk5p1baq2sApk6kBlgorEw/+Z
+ isxRfuB+mWzfn7v70dhYK75nrznsSnKOCNPLSskZwlpfstXfkSoJlSsbhijngp3ud21K
+ rMCYiPz7Xuv78V+e3fhg2GDOHgagXF8FKhvTrdJN0jJEb47/ARZqrGuTtSPZjhPSBNPh eg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sxgk2s7rm-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 06 Sep 2023 11:23:34 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 386BNXVM028530
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 6 Sep 2023 11:23:33 GMT
+Received: from [10.201.162.56] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 6 Sep
+ 2023 04:23:29 -0700
+Message-ID: <11a37c52-51fd-40ec-8613-9c87a03cbd5a@quicinc.com>
+Date:   Wed, 6 Sep 2023 16:53:25 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] arm64: dts: qcom: qrb2210-rb1: Hook up USB3
-Content-Language: en-GB
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230906-topic-rb1_features_sans_icc-v1-0-e92ce6fbde16@linaro.org>
- <20230906-topic-rb1_features_sans_icc-v1-5-e92ce6fbde16@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230906-topic-rb1_features_sans_icc-v1-5-e92ce6fbde16@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v2 1/4] arm64: dts: qcom: ipq5332: Fix hwlock index for
+ SMEM
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     <quic_kathirav@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_srichara@quicinc.com>,
+        <quic_varada@quicinc.com>, <stable@vger.kernel.org>
+References: <20230904172516.479866-1-quic_viswanat@quicinc.com>
+ <20230904172516.479866-2-quic_viswanat@quicinc.com>
+ <c3880fac-7ed4-4981-87a5-8243a81f7342@linaro.org>
+Content-Language: en-US
+From:   Vignesh Viswanathan <quic_viswanat@quicinc.com>
+In-Reply-To: <c3880fac-7ed4-4981-87a5-8243a81f7342@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 3E6WjnRFf7njn29ITaOvk-cv4vJiq-0H
+X-Proofpoint-ORIG-GUID: 3E6WjnRFf7njn29ITaOvk-cv4vJiq-0H
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-06_03,2023-09-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
+ mlxscore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0
+ mlxlogscore=725 impostorscore=0 spamscore=0 bulkscore=0 adultscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309060096
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/09/2023 12:24, Konrad Dybcio wrote:
-> Configure the USB3 PHY to enable USB3 functionality
+
+
+On 9/6/2023 3:22 PM, Konrad Dybcio wrote:
+> On 4.09.2023 19:25, Vignesh Viswanathan wrote:
+>> SMEM uses lock index 3 of the TCSR Mutex hwlock for allocations
+>> in SMEM region shared by the Host and FW.
+>>
+>> Fix the SMEM hwlock index to 3 for IPQ5332.
+>>
+>> Cc: stable@vger.kernel.org
+>> Fixes: d56dd7f935e1 ("arm64: dts: qcom: ipq5332: add SMEM support")
+>> Signed-off-by: Vignesh Viswanathan <quic_viswanat@quicinc.com>
+>> ---
+> Your downstream says otherwise [1]. Perhaps you need to fix it there
+> as well?
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/qrb2210-rb1.dts | 6 ++++++
->   1 file changed, 6 insertions(+)
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Yes, the fix is already merged in the downstream branch but CLO is not
+updated date yet.
 
+Thanks,
+Vignesh
 
--- 
-With best wishes
-Dmitry
-
+> Konrad
+> 
+> [1] https://git.codelinaro.org/clo/qsdk/oss/kernel/linux-ipq-5.4/-/blob/NHSS.QSDK.12.4.r1/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+> 
