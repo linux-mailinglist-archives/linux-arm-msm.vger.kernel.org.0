@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A223379387F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 11:40:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8098F793890
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 11:43:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234794AbjIFJk6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Sep 2023 05:40:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51432 "EHLO
+        id S231429AbjIFJnO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Sep 2023 05:43:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233367AbjIFJk4 (ORCPT
+        with ESMTP id S236091AbjIFJnN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Sep 2023 05:40:56 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9666A170E
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 02:40:52 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id 4fb4d7f45d1cf-52bca2e8563so4915834a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 02:40:52 -0700 (PDT)
+        Wed, 6 Sep 2023 05:43:13 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B01DE171C
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 02:43:08 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-9a21b6d105cso506696366b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 02:43:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693993251; x=1694598051; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1693993387; x=1694598187; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=es2sarO5bFYLioHvm6/JijbQ0DncBujvsdbLwRE3vzY=;
-        b=CahbF4jNUCUVqkzeenyJI6nMjojTFHovsegKyF5rWV78SL4n6dCTsMnFoRuThPaazg
-         pmmBe4v3n8eZGc0PSSMBmkjvuSprFIwNHiWHp6WBlV3N7Gnpt7g7lE1v2Pd2EcW/eliX
-         Uup1Es4ve6IX2xV/iatWNNulSAAokP43j1G9HA2gMtp0AsW6rVdYgEN4fC/YHDfifmVv
-         saawqJmj4DTVgERlwy0hevxyzMOXs+wdWTURkGUuPU3e1WullgqP8qjv/GPL7PVlk9qD
-         e9UAcx5I3vWu4MbR3qmTxMrRZJo2judCJOM1UOJERAEJThvwqkozg602NNOn/KT0FtQG
-         uRrw==
+        bh=Jt+WwfC3mbXNXCfu8eW16CF+seCV1jm+OZr2gORVKgA=;
+        b=VGX9VpF4W7yV+ipPJ9CXvabckJi6UNDbRGd9qwZWdv2WZVO8rFUGs3QCAQrHhtJnOW
+         t9KxzyQHImneUViTenQAwAQTu6EXBSiRXrYU6basUoKGbtYnkmjn+QMHwH3Qfrte/nFU
+         wykzPKL9xaqmgZv3Y8bKhz1qBqf5UEOzFHRPsXdNtkCOap5dZ9Toe46vM3liBPx+18WU
+         3woBfkBFriIHRZjuLsCvOjKZM9LC4oMZ9yBd24cO518vJvQz6ParYGBMyAVp10X7+c4g
+         Pkdq7yGgVDnhWTQcpY5PTHG1AXnoe8/0cWSP1gPvCKAeN+wESm8sJ60ycJihP3E093rj
+         /p2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693993251; x=1694598051;
+        d=1e100.net; s=20221208; t=1693993387; x=1694598187;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=es2sarO5bFYLioHvm6/JijbQ0DncBujvsdbLwRE3vzY=;
-        b=jSy5nc/EEpcqagJ7s/26RqlclpKCI5UgnkkzBqNRsOPWdzIaL/+dCTZKYabljQpWtB
-         H4qG92GAOjNpYNskRdZFse0S//oaUlMSekqKbUTu25h7ncvPxfxmmldJMbEI4RNbkUAx
-         R0e/Ti6R8WqbzDcwVkteNuBlGh+Fvvov0NbXgQ3osuhLNO+vk+QM6KT+/6ULIZgDmcCN
-         xA5w99qbXOh5R5p/brpUN4EakJsVTlTpdBvRNKQqxfdfesKqbVdqAb07aBRDTpK3vrCw
-         fVpacskIyD5kuq0GWDa99DkxMLxBgT7Q4PdafTrOljLvHtFTyIJTWlfMCU4y2aCR05Ki
-         aGnA==
-X-Gm-Message-State: AOJu0YzIHLuOSq5C7Atu4byXQXV9eFXgHXrz3neopXGGWIDOi+Cm3kEr
-        uh2qQRXDiERFdarv6RGWVC5c3A==
-X-Google-Smtp-Source: AGHT+IFlWLrY5mLto9yAmRoX0Bssqwn/UOMqa+iWtzoPLmhs32jHv3clH1MBKnHQBmjAG1y//lQpVA==
-X-Received: by 2002:a05:6402:5172:b0:523:2e30:aaee with SMTP id d18-20020a056402517200b005232e30aaeemr1805587ede.32.1693993251111;
-        Wed, 06 Sep 2023 02:40:51 -0700 (PDT)
+        bh=Jt+WwfC3mbXNXCfu8eW16CF+seCV1jm+OZr2gORVKgA=;
+        b=HVMcmlQR8KpY8ZK9/joVPirxt5FgcAeWN581KdMECoz78pG68ze5YIAtF1w4FjbPSE
+         QKw6omJVDUzcojA6kuoduThRTekszCM6d3ufdSb5SpJ/U2v1S8go8Mi0j7qW8ObCtfZt
+         SqaXAqp3+nJC1oAMMxsTNgbooQyWfVvftDL/FhA49aqMAm9NJgxIxJAUUSLqqIy6TScm
+         ZUBfHzM4VwCJTBKFq6oyNL4/6kYP2SkNZf/Z3UyFCOFZDj8rzaiGdA9KpsK1CV7eHLvo
+         CayU0pEtC9gX5+/WPrq6vDe/pPSsELdL/utmFBCPp+NhWcR2ecyfI/wvYXGZUiLaebf9
+         7kyw==
+X-Gm-Message-State: AOJu0Yz4OtCa4deyrCldhdpPctWCPoyBJjM0SHorMV64AMqSsjwKl7Sy
+        a/VPxyRvMn/WdBgnY34E4joFZrVBKIvIn3VVtA8KQg==
+X-Google-Smtp-Source: AGHT+IHAhCIkTWnW3eYsS7ZEQKzMmSiX9cX1Kh4u58+mkMuxum0bJIHyrNdUtahiiUOWszFwqj901g==
+X-Received: by 2002:a17:906:74db:b0:9a1:da9a:f1c0 with SMTP id z27-20020a17090674db00b009a1da9af1c0mr1937403ejl.48.1693993387117;
+        Wed, 06 Sep 2023 02:43:07 -0700 (PDT)
 Received: from [192.168.37.154] (178235177204.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.204])
-        by smtp.gmail.com with ESMTPSA id v18-20020a056402349200b0052e1783ab25sm4191990edc.70.2023.09.06.02.40.49
+        by smtp.gmail.com with ESMTPSA id xo9-20020a170907bb8900b0099cbe71f3b5sm8674419ejc.0.2023.09.06.02.43.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Sep 2023 02:40:50 -0700 (PDT)
-Message-ID: <e5c218a6-5b71-4887-b79a-9fd2dfb85009@linaro.org>
-Date:   Wed, 6 Sep 2023 11:40:48 +0200
+        Wed, 06 Sep 2023 02:43:06 -0700 (PDT)
+Message-ID: <f02dbc3b-5ffb-4023-94f8-a8c67a44db47@linaro.org>
+Date:   Wed, 6 Sep 2023 11:43:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/12] arm64: dts: qcom: sm6125-sprout: drop incorrect UFS
- phy max current
+Subject: Re: [PATCH 02/12] arm64: dts: qcom: sm6125-sprout: correct UFS pad
+ supply
 Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -66,7 +66,7 @@ To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230905161920.252013-1-krzysztof.kozlowski@linaro.org>
- <20230905161920.252013-2-krzysztof.kozlowski@linaro.org>
+ <20230905161920.252013-3-krzysztof.kozlowski@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -103,7 +103,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230905161920.252013-2-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230905161920.252013-3-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -117,14 +117,28 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 5.09.2023 18:19, Krzysztof Kozlowski wrote:
-> Neither bindings nor UFS phy driver use properties like
-> 'vdda-phy-max-microamp' and 'vdda-pll-max-microamp':
+> The Qualcomm UFS phy switched from dedicated driver to QMP phy driver.
+> Eventually the old driver was removed in commit 02dca8c981b5 ("phy:
+> qcom: remove ufs qmp phy driver").  The original driver and its binding
+> used vddp-ref-clk regulator supply, but the new one did not and left the
+> supply unused.
 > 
->   sm6125-xiaomi-laurel-sprout.dtb: phy@4807000: 'vdda-phy-max-microamp', 'vdda-pll-max-microamp' do not match any of the regexes: 'pinctrl-[0-9]+'
+> The Qualcomm UFS phy bindings were also migrated to newer ones and
+> dropped support for vddp-ref-clk regulator in commit dc5cb63592bd
+> ("dt-bindings: phy: migrate QMP UFS PHY bindings to
+> qcom,sc8280xp-qmp-ufs-phy.yaml").
+> 
+> It turns out that this regulator, although with inaccurate name
+> vddp-ref-clk, is actually needed to provide supply for VDD_PX10 (or
+> similar, depending on the SoC) used by UFS controller.
+> 
+> Bring back handling of this supply by using more appropriate regulator -
+> UFS controller host supply.  This also fixes dtbs_check warning:
+> 
+>   sm6125-xiaomi-laurel-sprout.dtb: phy@4807000: 'vddp-ref-clk-supply' does not match any of the regexes: 'pinctrl-[0-9]+'
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
-ufshcd_populate_vreg uses this, but looks like nobody added it
-to bindings.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
