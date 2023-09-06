@@ -2,141 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 75299793862
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 11:34:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 09CB579386D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 11:38:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237256AbjIFJeS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Sep 2023 05:34:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42904 "EHLO
+        id S237191AbjIFJis (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Sep 2023 05:38:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38096 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237414AbjIFJeJ (ORCPT
+        with ESMTP id S229991AbjIFJir (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Sep 2023 05:34:09 -0400
+        Wed, 6 Sep 2023 05:38:47 -0400
 Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2462F172B
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 02:34:02 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-52a23227567so4920317a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 02:34:02 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 170AB10D0
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 02:38:44 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-52a250aa012so4910487a12.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 02:38:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693992840; x=1694597640; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+        d=linaro.org; s=google; t=1693993122; x=1694597922; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ziVk/veg1qjtBNTjNVyae/HZA2k0Y/JtBFbzDoCbnN8=;
-        b=rs/J/SQoxSpzpx/5MrnlH3r9TSlYsblto5vgIVqYtBNsagFlmW6cRqWR8AJBv1pD5D
-         X3dUEoclAGRIwyXdUFUGSV6ngv3C6jHwp5Oedf1Jp1RerzU7bydR3hKOSM2zr2gWNsiY
-         qvrpEJCmVRrXysX1winqcXZG10eSxUOdVQvnVTBRcJht1ZaBC/n4sbqe4nrzUAb+ZSIa
-         TBj5W/BOt1V28nV1ym83IwG/CS8JfyiNs2yYbrc04hQGiPXtIhiGBp2Qq1MM1LZOMDkf
-         1LFtKuNej5B4odu8Ly8Iy/PsqGA0Phq7uZXkoegFXmNGE/DkyLlotzk2Mqi+YHTBewXT
-         CpHQ==
+        bh=VHg/PnZPAmHNCn9sgOYr+tYtY1Bqd8zviST80lc2aw4=;
+        b=r9XJ49dlJG192gaIxnY628pDp9it358verdz1sqfGt4eZHs0FaSVtcp30u9vvBgbRG
+         N5rIO968zNk8ej8kE4sj/TVhkHr6+s/NAkxFuIi/bT86HA3bdyu+dZy8rFbHhyBEUtWK
+         kLOcreQAHdBgjKv9Y1NJ48Kj5KR04IbzYViddrXpNpZvGXoBRqJUN1RsGULDYPs2EDbl
+         krM5KGrxpNNejfNxEQ8wr9F3ScYNNDpOkCBN83TP64ExadffvJEW7DElL7YrfQLJ4cwv
+         Dwokfh8q5R/Y7dyojDAUZh8bTJ7lTxNPo5N2p/ZhMC2LLutnGZmGw4iOPGgpkp3KIqSS
+         eOew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693992840; x=1694597640;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+        d=1e100.net; s=20221208; t=1693993122; x=1694597922;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ziVk/veg1qjtBNTjNVyae/HZA2k0Y/JtBFbzDoCbnN8=;
-        b=WrTH3ZrFheVFhBiS1KbIQBnL8xQlHaNUp95l+cY53osPzjAMxWa9IgoV8rxuZe/rKQ
-         AuBH6zUkGXmrreN/dt8Og+c26VJTuHBjvLQzaDxrNnFe5U2lTwaVRZehaPM4vJfZCB4g
-         BYD+IdNYBfF0MNYmlcsATTVd7mu4wVcCMBev+PqydTGfPK6oe9vWus/4QwlT+FhR4Xx5
-         3n3nWmIfNucWtrZJI8M9UcAaZUl3AdImxy2r2HFVO/2ykeTdPa0XCXfreLVoGtnAmfjp
-         9PEPfPTd+M0OovZpw1B1xj4O5/TR1wolkVMpG4yEYHbn6s+o33rCao9qMIacNmcxtc2o
-         Sk8A==
-X-Gm-Message-State: AOJu0YwMelbICSMQ2aLvNoJBWjZvA8EHv+JB57onisRsA9xcKiRzXtbZ
-        +FPWAZiNxJ8G3KwxgKmcmUXfmg==
-X-Google-Smtp-Source: AGHT+IHkLoR/htCGI0OYQso1z2eOfyHTLyaPZLptfd2ZajzqOzD/lY6+wGXwaDqT4z0S4ZyYfxFbEw==
-X-Received: by 2002:aa7:da93:0:b0:523:4933:b024 with SMTP id q19-20020aa7da93000000b005234933b024mr1931401eds.14.1693992840594;
-        Wed, 06 Sep 2023 02:34:00 -0700 (PDT)
-Received: from [192.168.37.154] (178235177204.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.204])
-        by smtp.gmail.com with ESMTPSA id w13-20020aa7dccd000000b005256e0797acsm8187613edu.37.2023.09.06.02.33.59
+        bh=VHg/PnZPAmHNCn9sgOYr+tYtY1Bqd8zviST80lc2aw4=;
+        b=MxO8mltt547bEMMK+6fFNzzXxXCTknasIKSIPx5iwp05w/Tqo9QrLJAyNQIaQZ7EXP
+         nxDvU184sQk/BbjAy8Sz3CeG2iD6GF9M0aDSkYJ7EDMhEFK0s8Al/Ulf4wmJOvzAL6Bz
+         0g8+JaR43BcwF7crM+prUpm+XP3QqXQ7WiO1XYr/3IiVzKU6pItJ4xs4nRMibuvtVo0w
+         JwZlNLTgclpBujPNJdaD2Wk5aD7seJxiqzjpy19lvF6gQ1vt47aiXORj9u/4QZqMT9qf
+         rRijjs/u/c8yX5/YXM/hCYBiwQsHOgU56nfJUUhDRHdsJhw7qjMZlhb+ikozjNFLZWaJ
+         OCGw==
+X-Gm-Message-State: AOJu0YwR8LCVf/cOzt1ei+lmdGH0s83E45Eva+k60CNL/KiaJlJXdRH0
+        XLAqoKSSdjFLOlsiF3gdQeum3A==
+X-Google-Smtp-Source: AGHT+IEwkq2sY4g0DPxicF7yqTjk6DEJ2KGo5cVCVztNdl+qSYXNw4B9GRl4qit7TtYJmTRtKVKrEw==
+X-Received: by 2002:aa7:d402:0:b0:521:e502:baf8 with SMTP id z2-20020aa7d402000000b00521e502baf8mr2201320edq.11.1693993122553;
+        Wed, 06 Sep 2023 02:38:42 -0700 (PDT)
+Received: from [192.168.0.22] (77-252-46-238.static.ip.netia.com.pl. [77.252.46.238])
+        by smtp.gmail.com with ESMTPSA id r14-20020a056402034e00b00523d2a1626esm8244673edw.6.2023.09.06.02.38.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Sep 2023 02:34:00 -0700 (PDT)
-Message-ID: <cbb530b9-224b-4b6f-8551-dd8340a59408@linaro.org>
-Date:   Wed, 6 Sep 2023 11:33:58 +0200
+        Wed, 06 Sep 2023 02:38:42 -0700 (PDT)
+Message-ID: <c32d93c1-a7f5-6e8b-cd43-96479c17899a@linaro.org>
+Date:   Wed, 6 Sep 2023 11:38:41 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RESEND 7/7] arm64: dts: qcom: include the GPLL0 as clock
- provider for IPQ mailbox
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.0
+Subject: Re: [PATCH 2/5] arm64: dts: qcom: qrb2210-rb1: Fix regulators
 Content-Language: en-US
-To:     Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-        Anusha Rao <quic_anusha@quicinc.com>,
-        Devi Priya <quic_devipriy@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-clk@vger.kernel.org
-References: <20230904-gpll_cleanup-v1-0-de2c448f1188@quicinc.com>
- <20230904-gpll_cleanup-v1-7-de2c448f1188@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230904-gpll_cleanup-v1-7-de2c448f1188@quicinc.com>
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+References: <20230906-topic-rb1_features_sans_icc-v1-0-e92ce6fbde16@linaro.org>
+ <20230906-topic-rb1_features_sans_icc-v1-2-e92ce6fbde16@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230906-topic-rb1_features_sans_icc-v1-2-e92ce6fbde16@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6.09.2023 06:56, Kathiravan Thirumoorthy wrote:
-> While the kernel is booting up, APSS PLL will be running at 800MHz with
-> GPLL0 as source. Once the cpufreq driver is available, APSS PLL will be
-> configured to the rate based on the opp table and the source also will be
-> changed to APSS_PLL_EARLY.
+On 06/09/2023 11:24, Konrad Dybcio wrote:
+> Commit b4fe47d12f1f ("arm64: dts: qcom: qrb2210-rb1: Add regulators")
+> introduced regulator settings that were never put in place, as all of the
+> properties ended 'microvolts' instead of 'microvolt' (which dt schema did
+> not check for back then).
 > 
-> Also, dynamic scaling of CPUFreq is not supported on IPQ5332, so to switch
-> between the frequencies we need to park the APSS PLL in safe source,
-> here it is GPLL0 and then shutdown and bring up the APSS PLL in the
-> desired rate. So this patch is preparatory one to enable the CPUFreq on
-> IPQ5332.
+> Fix the microvolts-microvolt typo and adjust voltage ranges where it's
+> necessary to fit within the volt = base + n*step formula.
 > 
-> Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+> Reported-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Fixes: b4fe47d12f1f ("arm64: dts: qcom: qrb2210-rb1: Add regulators")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
-Please split this. Somebody reverting this in the future will have
-a hard time resolving conflicts.
 
-Konrad
+Dmitry fixed it already... but apparently never sent it upstream, so his
+loss.
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
+
