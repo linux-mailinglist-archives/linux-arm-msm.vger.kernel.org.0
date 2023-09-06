@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B20B793B43
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 13:30:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 66380793B46
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 13:30:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234460AbjIFLa1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Sep 2023 07:30:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39060 "EHLO
+        id S239741AbjIFLaj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Sep 2023 07:30:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239734AbjIFLaY (ORCPT
+        with ESMTP id S239789AbjIFLah (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Sep 2023 07:30:24 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D2EE19AA
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 04:29:57 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2bcd7a207f7so54250211fa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 04:29:57 -0700 (PDT)
+        Wed, 6 Sep 2023 07:30:37 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C99EF171A
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 04:30:04 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-98377c5d53eso512017766b.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 04:30:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693999761; x=1694604561; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1693999772; x=1694604572; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
         bh=S8gwvV5pEjtC83ZzYbE6TNkDWEwZfjSVgnN8XiDwZX8=;
-        b=lXUBorIgSVCQEAAxAF2uS5OcKLKXjerEC8L47r+Wt+lqH6NRL2UPd+YMiBieI0E4K9
-         GRbdKqZG/29/evlr6kEXNtkJJptosRbFfj7fSWE26ZHVk0yDSJT62wUT74uQKEO4ndLk
-         scVNBf3SCg/Nqf5T8O2HfVftcYEF77h9fGXLTjoEBQJ0jFfQuLzuUXMuLRz8wEtDw022
-         Kj9KdWXwZEJUUNoI8+ksN1uJ+ZLP+Ew/2eEozQV0gw7rzDIvnfX2R0vzIW9atVETLEG3
-         kr5G400hccZTmeUJSGXGHuBiG0D2rAYpPtu03lUZriYTxOjAL8v1waMiNLNEuNDDfnty
-         pcXQ==
+        b=DhGlahxP4K7IXAWHNBiKjHJyk/CNPP2pRWB1rT8WU9nVpbBXd8mXNyadb8hreMThEA
+         mBif4i9Ods2ETQ2Z2GJ7reKmR988m1Ry/WkLT9rBNm081rXb9fggpuP43yFx5nWWXVCH
+         Dl/78wVw8uFxuK9aGLpZq3PEMcwi5qGkJKUmvPjnLFiS9GkjomiZmtfI7+SFuCkM94/w
+         pLKgZXhmibJySPb9SZlVKmiYxxN1xnOklnkb/g4ckbG8hbIys92CaxIrU9VWVvxL7N50
+         yyr8iKj9L7AI7kLapuwfB0eUF3Y7pAJEsTNHmQRHOTV+jQjM8CiD4UQaq/D4Q1NkKsdA
+         dctw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693999761; x=1694604561;
+        d=1e100.net; s=20221208; t=1693999772; x=1694604572;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
         bh=S8gwvV5pEjtC83ZzYbE6TNkDWEwZfjSVgnN8XiDwZX8=;
-        b=HlYp735Uyrhfw/9PfM+PQ8xal/BZvYzPtRqUXeQvV+wda6t8odFTF3mUeL86FS+EY+
-         M0raoyrVGhqwYPWXgqAaGalbXo9SDp6CQ+JO/VT3ONWREHtZVI5OTcv727q5sLmbqr0q
-         uJWMpnZW+ToymX8umlag0Rw9NUzG7QejX+Uv+aYcb9MUy3zPo7EBwr71nCQe/avc0MKY
-         N1xG7QQ28rk3YS6yegKtdQc2kZ6MyssNosFzMSrkQsORrhhJL9rPqThBjFYlyJHaYOiN
-         Sg14Aic3zx/uMsHD5q/ua1FZE2VyL6xLfksV/gZGoSZOm6dFQlpa2SVfZHhr+c6POrGC
-         71Nw==
-X-Gm-Message-State: AOJu0YxOscrHCNnqy+28q/H0JJgIjPDi4U9zBPuysW1P48HMGce657ZT
-        J6MdPY82kOyrcNFDA/E8O9kVW7IE+wbIVlgmdaie9A==
-X-Google-Smtp-Source: AGHT+IHWdM8H5k+uTKMIBYt0k8E0yUht6aHj/LS+Kx0eFwG70Uyi9IrOfDo60B3D4PfEfqbY/fVCSQ==
-X-Received: by 2002:a2e:7310:0:b0:2bc:fdec:a3f6 with SMTP id o16-20020a2e7310000000b002bcfdeca3f6mr1923966ljc.48.1693999761221;
-        Wed, 06 Sep 2023 04:29:21 -0700 (PDT)
+        b=MmIUr4XPXNNB84GMBon7LOc7joVHE0ywSaOGVjLLH1fSZbDSV5Ib8GCC94ucxWBjLQ
+         NXZEDQLFl0Z2TBvn6b7WxrV7t0JpkPeH3PFvR3IWEM2/kK+GzbD27ewKbFinLgnV4nR5
+         Jczn+f4u7iSz4T1c1c6T168M/6+T/tOZi7fThTga1w03XxyCtk2EznnBlp+qyk9h+iMg
+         oUpEiYMXwQDn8lf0h4TUaen2FgDKX7tt9CoaKly9S2xccwXb/lLpfowylSVu64tD0TJx
+         HFWqEKgD8mcwTawkPlHWjs5kVJtzy1C+wHIXQYLx2kIOFOrVmLqj0NSx6rT1AqHiORnY
+         zh0Q==
+X-Gm-Message-State: AOJu0YwvGJXWHO3J1CsblctQtm+npb0EFj60wtdgWz6SbASXKtZ5MvCg
+        6CvR5Yeei76slRK6zvWACX02oQ==
+X-Google-Smtp-Source: AGHT+IF01pPLIglLUJ7iWmuELyzBiT9qVi+KgWqlz61RcZKrYQ1BiDUQUXAoISfDZrEF+pr35sGMEw==
+X-Received: by 2002:a17:906:5a6c:b0:99d:dd43:d427 with SMTP id my44-20020a1709065a6c00b0099ddd43d427mr1956205ejc.10.1693999772491;
+        Wed, 06 Sep 2023 04:29:32 -0700 (PDT)
 Received: from [192.168.37.154] (178235177204.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.204])
-        by smtp.gmail.com with ESMTPSA id lt20-20020a170906fa9400b009a193a5acffsm8770546ejb.121.2023.09.06.04.29.19
+        by smtp.gmail.com with ESMTPSA id lt20-20020a170906fa9400b009a193a5acffsm8770546ejb.121.2023.09.06.04.29.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Sep 2023 04:29:20 -0700 (PDT)
-Message-ID: <cd656cb6-5f46-4ce8-828b-b7cb0290bc5f@linaro.org>
-Date:   Wed, 6 Sep 2023 13:29:19 +0200
+        Wed, 06 Sep 2023 04:29:32 -0700 (PDT)
+Message-ID: <745d70c2-dc6a-46b7-8a25-8aa5993b81ec@linaro.org>
+Date:   Wed, 6 Sep 2023 13:29:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] arm64: dts: qcom: sm8350-mtp: add UFS host controller
+Subject: Re: [PATCH 3/6] arm64: dts: qcom: sm8450-hdk: add UFS host controller
  supply
 Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
@@ -66,7 +66,7 @@ To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230906104744.163479-1-krzysztof.kozlowski@linaro.org>
- <20230906104744.163479-6-krzysztof.kozlowski@linaro.org>
+ <20230906104744.163479-3-krzysztof.kozlowski@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -103,7 +103,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230906104744.163479-6-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230906104744.163479-3-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
