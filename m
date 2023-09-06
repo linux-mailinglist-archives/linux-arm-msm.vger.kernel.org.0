@@ -2,59 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D26907932DC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 02:21:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E2187932FA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 02:45:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229607AbjIFAVR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Sep 2023 20:21:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37074 "EHLO
+        id S239933AbjIFApH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Sep 2023 20:45:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229469AbjIFAVR (ORCPT
+        with ESMTP id S232283AbjIFApH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Sep 2023 20:21:17 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B30E01B7
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Sep 2023 17:21:10 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-99de884ad25so477204366b.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Sep 2023 17:21:10 -0700 (PDT)
+        Tue, 5 Sep 2023 20:45:07 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06D80199
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Sep 2023 17:45:04 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-99bcc0adab4so460937666b.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Sep 2023 17:45:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693959669; x=1694564469; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1693961101; x=1694565901; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=xMVYqhgoDtHhF5pmsZuFKhOwMGZVLTFyvkiWPnVn3eY=;
-        b=ZEUT90tLx1Wx57s54/HHostWxYWKWSIEGRbevFyhf4PxDjj71HAjesf47Wp/o+AwgM
-         t93lQ9rhuBluMTCgclq0+qWGIjBr/Hvp8rv7RlQb405HDmCFsIHZlh6rj7OkuMDniEv2
-         eS25CEh78NnzKc2uMW4vBEbyzEOL4h7WQ7jpVCtRTE67so+gdiTQe/3lDuYdwg3h/PVy
-         3RUjBtHUWUZj4uZDySMg9KOrYS5nIvcBXWb78IjCf+bI6Mrda3bcalxQj4iHG1rcGcVR
-         Dq7Z17+6gXd0rhIVhzItsdLRVLB8OR90ph8XF62AGAY02x5j25EbHO6ams6S2lqfOG7b
-         39tg==
+        bh=PCA9M0ErtIMnGr2+NMuuG37Qgx1f0Dgh7duQchM62bY=;
+        b=A2oEcAAvbhQUSjKITVqSb90/UcaivL5QmE15VQOt3eFZGgLVMaWd6i2+brTZItUOld
+         748TZjoJWuiV3V4nOMvjN/9umchWPFG9Yi0XDGWM+zDyERO8uGNtRbM4n7+IKnNSz71k
+         V7cAenF8AoOIH8/SRBjBr1NnW/Q/8+sVkGTI2ow8fJ4VNjKcRC5+wKA2LWKbraRFb3Xc
+         pIgaEXeKV619BVjI7cJZYGUFVCSiQwMTe3ErYagxNJax+Sv+oJaxyqlJMASKAH+K7J02
+         Eq3kAmtizri95cg519JrqXHyZq/coX9iRvuXtX7ON3l18XqT5UKZmmgmWKMhIbGcVh/9
+         k+1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693959669; x=1694564469;
+        d=1e100.net; s=20221208; t=1693961101; x=1694565901;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=xMVYqhgoDtHhF5pmsZuFKhOwMGZVLTFyvkiWPnVn3eY=;
-        b=IBo1541abjM86yqSXv+v3vjC7b1JGAOwrfmkq4/7iedRz2ak8LkeHFlWjNbLX++RA+
-         OcGipSjD4csiToBdfQw0aXjZT4mfw1FPFaCRK32snvZYLqIUrR6K25/eJ7sguVg53NE1
-         10ALTKCH8r2hA2cH09BaR0hGkVXdL9JHnnY2p8ed8kzLsfCRHl+V+/7IwgcVY7W1N5kL
-         wsqWt9QYjTdrQimwGw1EUZhjfd5Mc0J24bweN9K2CMtczImSfghSSeIHeUqW0opjppFv
-         lUDesCHEmsXXoerjDpRldqUQEtXCo5qurzNheEJw7eSuegqIq70VMoA+A9vWQ86NZAT7
-         eoNA==
-X-Gm-Message-State: AOJu0YzWQs9xzERMlSi2cAIlqX7BD6T2tgdwCvQ7/4wLMraSXqR042rY
-        giAMTmP3q6ZwGGOmJq1tuUgsHISb5CjlV/rIMUo=
-X-Google-Smtp-Source: AGHT+IH3EKpbgT8SBSa14ChDUK9xukALT9utSbyiz5vXKhue1jyYHBwAM0OTrcyi8Mkck8TB3Cds/Q==
-X-Received: by 2002:a17:907:2be1:b0:9a2:eb6e:2cf3 with SMTP id gv33-20020a1709072be100b009a2eb6e2cf3mr866818ejc.0.1693959669246;
-        Tue, 05 Sep 2023 17:21:09 -0700 (PDT)
+        bh=PCA9M0ErtIMnGr2+NMuuG37Qgx1f0Dgh7duQchM62bY=;
+        b=jLSBwP+c0+CRaSckJQl3S6xD8Qg2841qW5SfXlF0iAe20Dyy7Ho4Sl5XZN3Zp6Gdsw
+         Ind3RtifTLHJp7Dr++u3vvLCInt7dwpL4wOQrlTWmTj454CV4Sag+bVmd5IgpfotJY5o
+         E5tU6OUZxIZfdVhpO+MNMLi4hKrakfJ/F/Q9x90PyuDBlhu13Tp6nsPM6O8p1xD3B4NA
+         1A0foPH2OLiu+VPDwpHegvZQTBm67+kGqbdaFZ/io41/YtT3gJoRIcyGsb16J2Zm7h6Z
+         0k8GdSgbof0bHcnKTBdqeM3ERUW+vgxzNGYrtT8NLRejRpX7t5irYKs8ApWZDF7OuRc7
+         qG8g==
+X-Gm-Message-State: AOJu0YzpH4/B3pu7qbufTISJ71NR2R62m2WGzz/WBEv8dEdhlj503DT5
+        cnr6b5vvt2stRf4FlDgDxQnclNlEhGQ8gANSQzY=
+X-Google-Smtp-Source: AGHT+IH1vE4SBXZ/Sa6e+78HiEzsV22rk2zukfewmzq/KUqgxMnGrmsQ+PwJPfw0HNb2UzZSFkqstQ==
+X-Received: by 2002:a17:906:3caa:b0:9a2:2635:daa9 with SMTP id b10-20020a1709063caa00b009a22635daa9mr1081028ejh.6.1693961101257;
+        Tue, 05 Sep 2023 17:45:01 -0700 (PDT)
 Received: from eriador.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id f25-20020a170906495900b0099d9dee8108sm8305759ejt.149.2023.09.05.17.21.08
+        by smtp.gmail.com with ESMTPSA id s7-20020a170906c30700b0099cbfee34e3sm8224585ejz.196.2023.09.05.17.45.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Sep 2023 17:21:08 -0700 (PDT)
+        Tue, 05 Sep 2023 17:45:00 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     linux-firmware@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, Kalle Valo <kvalo@qca.qualcomm.com>
-Subject: [PATCH] ath10k/WCN3990: move wlanmdsp to qcom/sdm845
-Date:   Wed,  6 Sep 2023 03:21:07 +0300
-Message-Id: <20230906002107.1311378-1-dmitry.baryshkov@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>
+Subject: [PULL] qcom: firmware updates for the sm8250 / RB5 platform
+Date:   Wed,  6 Sep 2023 03:44:59 +0300
+Message-Id: <20230906004459.1311755-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -67,51 +68,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The firmware file ath10k/WCN3990/hw1.0/wlanmdsp.mbn is platform-specific
-(rather than being specific to the WiFi chip itself) and can be used
-only on the Qualcomm SDM845 platform and close relatives. Other
-platforms (e.g. Qualcomm QCM2290, QRB4210) are going to provie their own
-copies of the wlanmdsp.mbn firmware.
+Please pull in firmware updates for the Qualcomm Robotics RB5 platform. This
+includes SM8250 DSP firmware updates, video encoder/decoder (venus.mbn)
+firmware update. Also as a part of this update is included the board-specific
+firmware for the Sensors DSP.
 
-As discussed with Kalle, move this file to the platform-specific folder,
-providing the backwards-compatibility symlink.
+The following changes since commit 7be2766de1f45a494a3e913f2e9fb77191a8ddb5:
 
-Cc: Kalle Valo <kvalo@qca.qualcomm.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- WHENCE                                              |   6 +++---
- .../hw1.0 => qcom/sdm845}/notice.txt_wlanmdsp       |   0
- {ath10k/WCN3990/hw1.0 => qcom/sdm845}/wlanmdsp.mbn  | Bin
- 3 files changed, 3 insertions(+), 3 deletions(-)
- rename {ath10k/WCN3990/hw1.0 => qcom/sdm845}/notice.txt_wlanmdsp (100%)
- rename {ath10k/WCN3990/hw1.0 => qcom/sdm845}/wlanmdsp.mbn (100%)
+  Merge branch 'rb3-update' of https://github.com/lumag/linux-firmware (2023-08-04 06:33:54 -0400)
 
-diff --git a/WHENCE b/WHENCE
-index 390a5689408e..7c3c34d51f53 100644
---- a/WHENCE
-+++ b/WHENCE
-@@ -3395,10 +3395,10 @@ Version: WLAN.TF.2.1-00021-QCARMSWP-1
- File: ath10k/QCA9377/hw1.0/notice_ath10k_firmware-6.txt
- File: ath10k/WCN3990/hw1.0/board-2.bin
- File: ath10k/WCN3990/hw1.0/firmware-5.bin
--File: ath10k/WCN3990/hw1.0/wlanmdsp.mbn
--Link: qcom/sdm845/wlanmdsp.mbn -> ../../ath10k/WCN3990/hw1.0/wlanmdsp.mbn
-+File: qcom/sdm845/wlanmdsp.mbn
-+Link: ath10k/WCN3990/hw1.0/wlanmdsp.mbn -> ../../../qcom/sdm845/wlanmdsp.mbn
- Version: WLAN.HL.2.0-01387-QCAHLSWMTPLZ-1
--File: ath10k/WCN3990/hw1.0/notice.txt_wlanmdsp
-+File: qcom/sdm845/notice.txt_wlanmdsp
- 
- Licence: Redistributable. See LICENSE.QualcommAtheros_ath10k for details
- 
-diff --git a/ath10k/WCN3990/hw1.0/notice.txt_wlanmdsp b/qcom/sdm845/notice.txt_wlanmdsp
-similarity index 100%
-rename from ath10k/WCN3990/hw1.0/notice.txt_wlanmdsp
-rename to qcom/sdm845/notice.txt_wlanmdsp
-diff --git a/ath10k/WCN3990/hw1.0/wlanmdsp.mbn b/qcom/sdm845/wlanmdsp.mbn
-similarity index 100%
-rename from ath10k/WCN3990/hw1.0/wlanmdsp.mbn
-rename to qcom/sdm845/wlanmdsp.mbn
--- 
-2.40.1
+are available in the Git repository at:
 
+  https://github.com/lumag/linux-firmware rb5-update
+
+for you to fetch changes up to 60b397dfd9d77da4b62e08572bdc7174a29f53a8:
+
+  qcom: sm8250: add RB5 sensors DSP firmware (2023-08-16 16:03:46 +0300)
+
+----------------------------------------------------------------
+Dmitry Baryshkov (3):
+      qcom: sm8250: update DSP firmware
+      qcom: Update vpu-1.0 firmware
+      qcom: sm8250: add RB5 sensors DSP firmware
+
+ qcom/sm8250/Thundercomm/RB5/slpi.mbn   | Bin 0 -> 5646296 bytes
+ qcom/sm8250/Thundercomm/RB5/slpir.jsn  |  21 +++++++++++++++++++++
+ qcom/sm8250/Thundercomm/RB5/slpius.jsn |  21 +++++++++++++++++++++
+ qcom/sm8250/adsp.mbn                   | Bin 15515796 -> 15515796 bytes
+ qcom/sm8250/cdsp.mbn                   | Bin 5822228 -> 5826324 bytes
+ qcom/vpu-1.0/venus.mbn                 | Bin 1973540 -> 1974884 bytes
+ 6 files changed, 42 insertions(+)
+ create mode 100644 qcom/sm8250/Thundercomm/RB5/slpi.mbn
+ create mode 100644 qcom/sm8250/Thundercomm/RB5/slpir.jsn
+ create mode 100644 qcom/sm8250/Thundercomm/RB5/slpius.jsn
