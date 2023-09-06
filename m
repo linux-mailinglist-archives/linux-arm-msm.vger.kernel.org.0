@@ -2,80 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 340297940C8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 17:52:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D86A97941C1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 18:56:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242710AbjIFPwf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Sep 2023 11:52:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41062 "EHLO
+        id S241638AbjIFQ4K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Sep 2023 12:56:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229804AbjIFPwd (ORCPT
+        with ESMTP id S234699AbjIFQ4J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Sep 2023 11:52:33 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 672161724;
-        Wed,  6 Sep 2023 08:52:30 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 386FTX98019312;
-        Wed, 6 Sep 2023 15:52:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=Nl74PhkRTAiQB4cjYZX+m7zutlK9FVL/bFNGUldZSWQ=;
- b=JNME+ZZilJqbL4FqYp2ge16vBY3NtOyD5nh62jJXUYYLlQTL+Ti+DR/IOavcNG35eSQ6
- ngZV7U5TbAtTlXslXNK6uFN3ieM8rER4LwF4Jo07D6776AmGwyLLBRK+/Rb2JWeSWeN9
- yAeS6hq7Ayss+rPO1sXEBG19D41FWSvcpJsNlF1HwW/8yhpx2iI1ihBfR4vs/BCIGAzd
- tpV3RrUlufnphBZHLEEYrfkbjGmpyyI7ls/U4CJ0CV2hnfeCfsLf4ApZ4+rOXSsrdNj+
- 6t9b6ln0KIsjENVDX9CQlhj/Tjtwk+mC92EfBuKYSMd/Xs0k4RiB5kqRBWyHPdN2dT// 5Q== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sxhjfa11a-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 06 Sep 2023 15:52:21 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 386FqLr9004930
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 6 Sep 2023 15:52:21 GMT
-Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Wed, 6 Sep 2023 08:52:17 -0700
-Date:   Wed, 6 Sep 2023 21:22:14 +0530
-From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
-To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Johan Hovold <johan@kernel.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
-Subject: Re: Disconnect interrupt generation for QC targets when role switch
- is enabled
-Message-ID: <cfa39be4-2b33-4900-800c-9884010f5e75@quicinc.com>
-References: <af60c05b-4a0f-51b8-486a-1fc601602515@quicinc.com>
- <20230828172059.GC818859@hu-bjorande-lv.qualcomm.com>
- <325cf945-4d1f-5591-1ef6-b28e803c134b@quicinc.com>
+        Wed, 6 Sep 2023 12:56:09 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05C1F199F
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 09:56:02 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-50078eba7afso6620263e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 09:56:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694019361; x=1694624161; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qILfVliI+Z0dbqFmpny8Op4g7CyqC7ta6joy77TQm3s=;
+        b=dd6wo/pgPhV8ZccQQsCn5fWL3gOtPYyyAKmoJsC0maNxAZ/f+VqN+l1tFXajMqbhDk
+         2GIQgmX24xgo6a9xO4neQTf+IWfNvKMDd8EimPGmy+wZt3X4juJ6d1aqGYb/XLYGxF7j
+         ypWrLa10POGTdLD2eb/Sqd2DA0Iz6XMRb/T8W1obyfMQ8QS12VfL4kODZ0/uSNs7jQMc
+         LNqSp33swciFRkLcNtEMSIuQ1Arzqi7c8+pP+kllm5gF4u99jgmrZJWvyzE9fguIj5ot
+         759Uv/7AL+4fcOrx1iKM7rpl15jf/z/S2SCFa1Pp+yitBVKhAwnQ+nErrnQMA9TyS3AA
+         +Q/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1694019361; x=1694624161;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qILfVliI+Z0dbqFmpny8Op4g7CyqC7ta6joy77TQm3s=;
+        b=cY8H1uhlPaxDP2IT+q1l+NO0kPPqF/PgbadhKJvNSIdpKOXlLpgKsiBrE+zdZWCVOu
+         Xhcc8ivf7P6A5kZG/KiBW+12UZ+2OCNtqGF5VrQ9C6Z90fz2vq/vdMFKf0SAx/hDld8Z
+         P4XTOJVT188Vo5Wxyl4f0M8n7Rmiibe5dhcIHw5lrjv1Uqn+9mfcpeVv9iNrxVEan3ZM
+         raLRfrUwvV3UP7Y+qqmR9pbHn1FCJNB8Md/W326IvlWMw3a9SbMw/wctgL3/iDVNqJcE
+         tF9gNekEL/OiTvURsDtWpiToD+NxLWLKGYK5OQqJbDQXx90hvyykjiL5hQiR6QK6Yvia
+         SLrw==
+X-Gm-Message-State: AOJu0YwfOC3zohrVi115Jiun5Z5F0IXXBGhxLvILLGkVFuQX074pI765
+        472jDmqG+s7tNDy0dtysTvFr/w==
+X-Google-Smtp-Source: AGHT+IF52bYB8PQPRM57rXyMRzL35l8Bn2AKdocV+V0JcsUocBRrCS+scEw/l2/L1g0U8OUr2gVCwA==
+X-Received: by 2002:ac2:43cf:0:b0:500:863e:fc57 with SMTP id u15-20020ac243cf000000b00500863efc57mr2551289lfl.25.1694019361074;
+        Wed, 06 Sep 2023 09:56:01 -0700 (PDT)
+Received: from [192.168.37.154] (178235177204.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.204])
+        by smtp.gmail.com with ESMTPSA id s2-20020a056402164200b00521953ce6e0sm8646837edx.93.2023.09.06.09.55.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 Sep 2023 09:56:00 -0700 (PDT)
+Message-ID: <e3af689b-5e37-49f6-84b0-ea8649d1943d@linaro.org>
+Date:   Wed, 6 Sep 2023 18:55:58 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <325cf945-4d1f-5591-1ef6-b28e803c134b@quicinc.com>
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: XGtOx_M2ACJumWO8KIPFdPR7FgnkiQOE
-X-Proofpoint-GUID: XGtOx_M2ACJumWO8KIPFdPR7FgnkiQOE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-06_06,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
- phishscore=0 lowpriorityscore=0 clxscore=1011 bulkscore=0 adultscore=0
- mlxscore=0 impostorscore=0 priorityscore=1501 mlxlogscore=706
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309060138
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/2] irqchip/qcom-pdc: Add support for v3.2 HW
+Content-Language: en-US
+To:     Neil Armstrong <neil.armstrong@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>
+Cc:     "Maulik Shah (mkshah)" <quic_mkshah@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20230905-topic-sm8x50-upstream-pdc-ver-v4-0-fc633c7df84b@linaro.org>
+ <20230905-topic-sm8x50-upstream-pdc-ver-v4-1-fc633c7df84b@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230905-topic-sm8x50-upstream-pdc-ver-v4-1-fc633c7df84b@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -85,57 +114,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 30, 2023 at 09:57:46AM +0530, Krishna Kurapati PSSNV wrote:
+On 5.09.2023 15:19, Neil Armstrong wrote:
+> Starting from HW version 3.2 the IRQ_ENABLE bit has moved to the
+> IRQ_i_CFG register and requires a change of the driver to avoid
+> writing into an undefined register address.
 > 
+> Get the HW version from registers and set the IRQ_ENABLE bit to the
+> correct register depending on the HW version.
 > 
-> On 8/28/2023 10:50 PM, Bjorn Andersson wrote:
-> > > 
-> > > I had some idea on how to get the role notification reach qcom glue driver
-> > > but wanted your opinion on whether they can be used or not:
-> > > 
-> > > 1. Register a vendor_hook from glue driver and invoke that during
-> > > __dwc3_set_mode.
-> > > 
-> > > 2. Let the role notification reach dwc3-qcom first and then let qcom driver
-> > > invoke role_set of drd. Something similar to what was implemented by Wesley
-> > > on [1].
-> > > 
-> > > But both the options require dwc3_probe to be done in sync with
-> > > of_platform_populate or we need to defer qcom probe if dwc3_probe is
-> > > deferred. Since we are leaning towards async probe, not sure if the above
-> > > two options would be proper.
-> > > 
-> 
-> ...
-> 
-> > As mentioned, this need has been identified a few times by now, so
-> > nothing strange in your request/proposal.
-> > 
-> > But so far no one has come up with a good way to register glue code
-> > callbacks with the core; we can't pass arbitrary data (such as a
-> > function pointer to such callback), and we don't know when the core is
-> > registered, so we can't call a register operation when that happens.
-> > 
-> > Regards,
-> > Bjorn
-> > 
-> > > [1]: https://patchwork.kernel.org/project/linux-usb/patch/20201009082843.28503-4-wcheng@codeaurora.org/
-> > > [2]: https://patchwork.kernel.org/project/linux-usb/cover/20230325165217.31069-1-manivannan.sadhasivam@linaro.org/
-> > > 
-> 
-> Hi Bjorn,
-> 
->  How about we use Component framework to let the glue layer know that the
-> child probe is complete. That way we don't need to defer QCOM probe and in
-> the bind call back coming to master (in this case, the glue layer), we can
-> register the vendor hook or role switch we need and we can pass the role
-> notifications from core to glue as needed.
-> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Reviewed-by: Maulik Shah <quic_mkshah@quicinc.com>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+[...]
 
-Would device_driver::sync_state() help here? The qcom glue driver
-creates a DL_FLAG_SYNC_STATE_ONLY device link with dwc3 core. If it
-works, we can avoid component framework related changes in dwc3 core.
+> +	if (pdc_version < PDC_VERSION_3_2) {
+> +		u32 index, mask;
+> +
+> +		index = pin_out / 32;
+> +		mask = pin_out % 32;
+I get that you're moving around existing code, but would that
+not be equal to FIELD_GET() with GENMASK(31, 5) and GENMASK(4, 0)?
+Perhaps it'd be clearer to read. But don't worry about it in this
+series.
 
+Otherwise:
 
-Thanks,
-Pavan
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
