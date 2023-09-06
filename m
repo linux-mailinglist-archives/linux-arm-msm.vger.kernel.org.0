@@ -2,58 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C2C867945E9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Sep 2023 00:04:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 946A37945EC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Sep 2023 00:04:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229936AbjIFWE2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Sep 2023 18:04:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50304 "EHLO
+        id S232840AbjIFWEk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Sep 2023 18:04:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244982AbjIFWE1 (ORCPT
+        with ESMTP id S233043AbjIFWEk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Sep 2023 18:04:27 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76861172E
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 15:04:22 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-500cd6261fdso399162e87.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 15:04:22 -0700 (PDT)
+        Wed, 6 Sep 2023 18:04:40 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9A4C172E
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 15:04:35 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-50291d987a2so267379e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 15:04:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1694037861; x=1694642661; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1694037874; x=1694642674; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:user-agent:from:references
          :in-reply-to:mime-version:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=hOxKwJOqWAb69rm6x/gQT98m4juYI2Q0oOscr22POkg=;
-        b=OqlR9MJYPizahgj79r91OxXfzFmUuAVYlzr7Op04CxkzdPQjB0UOQ3uy8KToU3rlXd
-         UztzsrwhJLjNLMLGJ/dxK/1ZGdJ5JqMyEBWZRRSTM3V4vQr5XMp5aK18B5AVYnOnEJw9
-         JrlbEY1A+XlKoEOElXBJ733EvYgBG1YI/m4JI=
+        bh=s4j0fXDx0veW0oHGlyRxz1wFWfTQnf1+IJzl7yxdqZI=;
+        b=HlUuX6k/wi3JpiyLdy5veHr717sHE0exAvqPmVsKmkQd39zDc4HjRkiktaTgRR02Vv
+         kpkR8R8IV8DJrrAVMKosqILJLZurbvQuPvMpVB9v+j4kJMFuHkFMHT+9iXYMpGZP6dd6
+         4ki4omeBveHcwP7WKLG4EbpA11iGVW/KJ80hA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1694037861; x=1694642661;
+        d=1e100.net; s=20221208; t=1694037874; x=1694642674;
         h=cc:to:subject:message-id:date:user-agent:from:references
          :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hOxKwJOqWAb69rm6x/gQT98m4juYI2Q0oOscr22POkg=;
-        b=fyBznU9rRiYzYaMPeUg4YUqUkGZkm1Tr3bUuB04oMnHPQy8g7kgOI26fjd5310tC4K
-         CIq/ZV8xmVRse+qfN7HtYQtKeYHpIkeX21v/oob7An0HEWT8ed2WE3qpCNdtHERX5QNM
-         OTB13FGQ+qPBIi86u/IUG9oQCkxb8w9LBrZwNdTU+G2MzX2vj6HzrdAXM8n57goZBe/2
-         EnOYe7A8KhescU/CxfXBc8OoVR13Hrb5xOahSwoE6nNfiStSTjo9yV/32heewhBEHF6Y
-         VS5YBKqkTxCtKOYG4XLXCRyZWzoLNiweOTHB35qeh1C7nfbCl/T+IP4SXl3KMjNFjlJA
-         2wUQ==
-X-Gm-Message-State: AOJu0YwRPKZLQ/eK7IhrOgkBuM96/wjj7ApuvnCCsKyO3OuEQVTFxxr+
-        QIf0aSZq6rXgmBWeOURRWSCMi1TpA87O0+PT63rmbA==
-X-Google-Smtp-Source: AGHT+IFsds0W1nef7yYZh8sAvGm/Eh1+DoJ/z/zG1cykY5DoSMrR/hVmw5xZPpms3LSzxp1q4GyB0lRiQ3W3GTk7DvU=
-X-Received: by 2002:ac2:5f52:0:b0:4fe:5133:1213 with SMTP id
- 18-20020ac25f52000000b004fe51331213mr3072268lfz.12.1694037860795; Wed, 06 Sep
- 2023 15:04:20 -0700 (PDT)
+        bh=s4j0fXDx0veW0oHGlyRxz1wFWfTQnf1+IJzl7yxdqZI=;
+        b=DJccLEPqDtsa0sFygM6dJ3i4aWY3Z66FH724BIwTVaY51CAWQv7YqyCDpTzK8wkorL
+         IlMBzowAVFzdjjN43vunCIN5LZ4IijtGTzrdFlyuUl/FmWYAjl6dRYA3sve8xVcZY1I7
+         oLtXqD0J2GRbTIapQsuYfqehd3KtbfVNPStUYR9BlMZOJmfv9ysKWSxHeP4hAK7aNch7
+         0J9SnbgIS5/FSmeVP+ioRQ4x66m4fQmZXrXfQ3eBwU4kpNStxNSjfRHcIUdWhRWZh5SJ
+         n4omHHcwSNaKusvLIsv6Z4+VPbgwl2ZuoqzjAdq9uDn2bFWIAFR8lG5av1Dnt2/AS8Ty
+         Vvgw==
+X-Gm-Message-State: AOJu0YxT0yWIx83KadsVRp/n+UexkaIVvE1R1qNAATWNP6oLDCXj3hzW
+        GLzF3OYk7X4R4AKeM/5mNEzUr+ZpFZDhR64RHzQ04w==
+X-Google-Smtp-Source: AGHT+IHogaYquQ/PSAv/DYcZmNikDOVlv8huAQHfNnOBb8UD02P+ah517cBedi3ixoKQSI3JIRzAa2e4TiStFXwOIxA=
+X-Received: by 2002:ac2:5f8b:0:b0:500:ac10:1641 with SMTP id
+ r11-20020ac25f8b000000b00500ac101641mr2914398lfe.46.1694037873986; Wed, 06
+ Sep 2023 15:04:33 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 6 Sep 2023 17:04:20 -0500
+ HTTPREST; Wed, 6 Sep 2023 17:04:33 -0500
 MIME-Version: 1.0
-In-Reply-To: <20230904020454.2945667-9-dmitry.baryshkov@linaro.org>
-References: <20230904020454.2945667-1-dmitry.baryshkov@linaro.org> <20230904020454.2945667-9-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230904020454.2945667-8-dmitry.baryshkov@linaro.org>
+References: <20230904020454.2945667-1-dmitry.baryshkov@linaro.org> <20230904020454.2945667-8-dmitry.baryshkov@linaro.org>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Wed, 6 Sep 2023 17:04:20 -0500
-Message-ID: <CAE-0n538jr7DV2XHzjqBdQt1LcTeFXcGcALP0T7xSc4=-bzpWw@mail.gmail.com>
-Subject: Re: [PATCH v3 8/8] drm/msm/dpu: move INTF tearing checks to dpu_encoder_phys_cmd_init
+Date:   Wed, 6 Sep 2023 17:04:33 -0500
+Message-ID: <CAE-0n51WNOZashWbEYQ0hUu1SnrS2m1-Y2Aq1S0mfkzm2p8uig@mail.gmail.com>
+Subject: Re: [PATCH v3 7/8] drm/msm/dpu: drop useless check from dpu_encoder_phys_cmd_te_rd_ptr_irq()
 To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Marijn Suijten <marijn.suijten@somainline.org>,
@@ -73,13 +73,11 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2023-09-03 19:04:54)
-> As the INTF is fixed at the encoder creation time, we can move the
-> check whether INTF supports tearchck to dpu_encoder_phys_cmd_init().
-> This function can return an error if INTF doesn't have required feature.
-> Performing this check in dpu_encoder_phys_cmd_tearcheck_config() is less
-> useful, as this function returns void.
+Quoting Dmitry Baryshkov (2023-09-03 19:04:53)
+> The dpu_encoder_phys_cmd_te_rd_ptr_irq() function uses neither hw_intf
+> nor hw_pp data, so we can drop the corresponding check.
 >
+> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
 
