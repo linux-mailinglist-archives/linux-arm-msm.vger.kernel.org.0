@@ -2,100 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E0F487936CB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 10:06:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 50A1F7936E4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 10:11:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233879AbjIFIGX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Sep 2023 04:06:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52028 "EHLO
+        id S233772AbjIFILL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Sep 2023 04:11:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229667AbjIFIGX (ORCPT
+        with ESMTP id S230222AbjIFILK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Sep 2023 04:06:23 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 078E7CF1
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 01:06:19 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-9a58dbd5daeso517961566b.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 01:06:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693987577; x=1694592377; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=N6rX866dZWeyzbwrDmGLylNXIPdDEierfj+vUzSrXHo=;
-        b=OpMftCNYvMQ+JX4HPuHRdIFb38miZd91DdOI3N/Ld6RtW2c/lv4p5MMNFcpzE7JccN
-         qWQIu/LtmocXSUYM/4rBYjhULtYLL8yw/674zROjMM6y2cZ/JXIaEn3I5OqK0h0t34qI
-         OMuyuH43IRou5PHTNrf64n5rF02DVYOoiW9Dhv12NECcj1NCOF1LZqX0/oL6IMjOIOHx
-         juVjHVa/JGjVHf/goJjB/Vg6SogQO6caoZ5RZuWz4tkdxb/CGyZyibtVM+qjYkIbLQSu
-         1c5seF0GQQP6KKhi1z4xZgp1j8V2RQijBYfq+hFlB3xH1csRBQzlhOrpug6POQnJx6VB
-         lvtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693987577; x=1694592377;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=N6rX866dZWeyzbwrDmGLylNXIPdDEierfj+vUzSrXHo=;
-        b=S/WOH01dEB67iwoRV8LssFUqybWnWWCxahLqYNcPpljPyrKQBNmJd02USavdqhETCE
-         jRIwEqRVX8w1+U6K/YLMRdcVJxtb+SBlc+A+7FLtjRklpZSykW8w2Kx7nZnU/piYJ69g
-         ObiX9kiLQ3p4s72//SsxWWFrnQwnq7JwVQdm1O6JJjx8szzazUuiwP55U8dyON/EU1gx
-         2+GlJ4hvcZwOUtlpFIsyuMsSjZafUz3yYJ6sPSPMyof670+x0vdJZB081VUKu/UOLW9U
-         mn7MzIgsxHUCwnAJS8U6UGAjCZa2uDZKxVNSWrqUOiETOvIOxhO55zdZTpDrjcr7l1Kn
-         aX/w==
-X-Gm-Message-State: AOJu0YxCdjknZAzzN8ugzqplX8lV7rB4t3wWSyBWC49+AzWUDJwNWgJl
-        d2l5UJvcpaiT5TjKl8MbIIFpnA==
-X-Google-Smtp-Source: AGHT+IGAd+DD8OLZo0kvehoHFC2Eczx87NK8Bkhpv9Weu6nYexYG43coH+qot4a4ptKUU/3kIRogPA==
-X-Received: by 2002:a17:906:cc4e:b0:9a2:292d:ea63 with SMTP id mm14-20020a170906cc4e00b009a2292dea63mr1488410ejb.37.1693987577410;
-        Wed, 06 Sep 2023 01:06:17 -0700 (PDT)
-Received: from [192.168.0.22] (77-252-46-238.static.ip.netia.com.pl. [77.252.46.238])
-        by smtp.gmail.com with ESMTPSA id h5-20020a1709062dc500b009a2235ed496sm8871288eji.141.2023.09.06.01.06.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Sep 2023 01:06:16 -0700 (PDT)
-Message-ID: <9df52150-f18b-cebd-11a8-a1c9dece09f0@linaro.org>
-Date:   Wed, 6 Sep 2023 10:06:15 +0200
+        Wed, 6 Sep 2023 04:11:10 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B73D12A;
+        Wed,  6 Sep 2023 01:11:07 -0700 (PDT)
+Received: from localhost (unknown [IPv6:2a01:e0a:2c:6930:5cf4:84a1:2763:fe0d])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: bbrezillon)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 231EF6600BB0;
+        Wed,  6 Sep 2023 09:11:05 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1693987865;
+        bh=8bSTrWbaMc1d/WyrUSjc3GFi3A3hna8Y85gKyKeZ2QE=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=A6irFNZNcrndI+FVnSuQe06fuZ1lV4On04bGSuwM3m51elPTmgtclWNK7Ru7tTz0S
+         CI153LatWq7IsT87scPUnmoZRN0AoUu2+FBh903IZgY/hF9txKqcppB9Ma9oc4D02C
+         ceZlwTYD/7dZpQf4atTnb5/ku4ksxGfcH8gWFMYhxFF0M4cYFa8mOAfD++5tbyoi8b
+         mHlbBCY2K4UIlIbr7w+avVxl0oi0KQN4ZznpMhCylFpN++IUw/pdhlP+qAlQrPhENI
+         4WEQacSCxAl8dkq6puZEBEyx5Ezc14EwdFguepGJ1mBWWfF+bY9urrIDvHwlan+Aw7
+         9RYLoWcWd+c1A==
+Date:   Wed, 6 Sep 2023 10:11:01 +0200
+From:   Boris Brezillon <boris.brezillon@collabora.com>
+To:     =?UTF-8?B?QWRyacOhbg==?= Larumbe <adrian.larumbe@collabora.com>
+Cc:     maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
+        robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run,
+        marijn.suijten@somainline.org, robh@kernel.org,
+        steven.price@arm.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        healych@amazon.com, kernel@collabora.com,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v3 8/8] drm/drm-file: Show finer-grained BO sizes in
+ drm_show_memory_stats
+Message-ID: <20230906101101.04f4e1a2@collabora.com>
+In-Reply-To: <20230905184533.959171-9-adrian.larumbe@collabora.com>
+References: <20230905184533.959171-1-adrian.larumbe@collabora.com>
+        <20230905184533.959171-9-adrian.larumbe@collabora.com>
+Organization: Collabora
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.0
-Subject: Re: [PATCH RESEND 5/7] dt-bindings: mailbox: qcom: add one more clock
- provider for IPQ mailbox
-Content-Language: en-US
-To:     Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-        Anusha Rao <quic_anusha@quicinc.com>,
-        Devi Priya <quic_devipriy@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-clk@vger.kernel.org
-References: <20230904-gpll_cleanup-v1-0-de2c448f1188@quicinc.com>
- <20230904-gpll_cleanup-v1-5-de2c448f1188@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230904-gpll_cleanup-v1-5-de2c448f1188@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/09/2023 06:56, Kathiravan Thirumoorthy wrote:
-> Mailbox controller present in the IPQ SoCs takes the GPLL0 clock also as
-> an input. Document the same.
-> 
+On Tue,  5 Sep 2023 19:45:24 +0100
+Adri=C3=A1n Larumbe <adrian.larumbe@collabora.com> wrote:
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> The current implementation will try to pick the highest available size
+> display unit as soon as the BO size exceeds that of the previous
+> multiplier.
+>=20
+> By selecting a higher threshold, we could show more accurate size numbers.
+>=20
+> Signed-off-by: Adri=C3=A1n Larumbe <adrian.larumbe@collabora.com>
+> ---
+>  drivers/gpu/drm/drm_file.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/drivers/gpu/drm/drm_file.c b/drivers/gpu/drm/drm_file.c
+> index 762965e3d503..0b5fbd493e05 100644
+> --- a/drivers/gpu/drm/drm_file.c
+> +++ b/drivers/gpu/drm/drm_file.c
+> @@ -879,7 +879,7 @@ static void print_size(struct drm_printer *p, const c=
+har *stat,
+>  	unsigned u;
+> =20
+>  	for (u =3D 0; u < ARRAY_SIZE(units) - 1; u++) {
+> -		if (sz < SZ_1K)
+> +		if (sz < (SZ_1K * 10000))
+>  			break;
 
-Best regards,
-Krzysztof
+This threshold looks a bit random. How about picking a unit that allows
+us to print the size with no precision loss?
+
+	for (u =3D 0; u < ARRAY_SIZE(units) - 1; u++) {
+		if (sz & (SZ_1K - 1))
+			break;
+	}
+
+
+>  		sz =3D div_u64(sz, SZ_1K);
+>  	}
 
