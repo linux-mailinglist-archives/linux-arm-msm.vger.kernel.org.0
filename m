@@ -2,115 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 25F9579461E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Sep 2023 00:19:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E862794623
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Sep 2023 00:25:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244401AbjIFWTj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Sep 2023 18:19:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55334 "EHLO
+        id S245021AbjIFWZh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Sep 2023 18:25:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245035AbjIFWTi (ORCPT
+        with ESMTP id S238543AbjIFWZg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Sep 2023 18:19:38 -0400
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6953010F7
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 15:19:35 -0700 (PDT)
-Received: by mail-yb1-xb2d.google.com with SMTP id 3f1490d57ef6-d7f0a60a159so283222276.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 15:19:35 -0700 (PDT)
+        Wed, 6 Sep 2023 18:25:36 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF3891724
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 15:25:32 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-50078e52537so465626e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 15:25:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694038774; x=1694643574; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=0Tnj8GJBcGOqoSNZE01aLcIiGwYJS0wicspbPN1sH9Q=;
-        b=EoxRt0T/iNlV9vW3dhTEXj6voMgW910OaciXcZ+g1ew421BhkdqqwtZRr4Eat58dbu
-         JBzlYm6z/yZIzcXbE1bulRIzxNSGUci20EAkVKA0PA+Tgwrvdc0KUT+4nvMyzs5ijxNJ
-         rs48cOot7j3T5E3HoZqVELZjJ45ly70oYgZfmfEHXMkucCg3DtoNlW73hOKqi9EuCj7U
-         9gJMKWZmIuQAGeQkhoV7DNtY9AiOK4hGVa+Bzo+ynA4aGP8mP7A5wCkWLnh7mGm1QHVi
-         zCnGGnwhldg+XPSDeWXwdG+y02Ijp3wYAwKKVW7nqGrSsMU3uKOn8woeQDQMR6suSxZS
-         HTMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1694038774; x=1694643574;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=chromium.org; s=google; t=1694039131; x=1694643931; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=0Tnj8GJBcGOqoSNZE01aLcIiGwYJS0wicspbPN1sH9Q=;
-        b=H/4DFnk3/0EiQ895cJbER4jnaApXySd1sGPtleROliRAlKX6AGMO5t15jcnjtWUB5t
-         imykZUMLlvfvczaJfvVV1ev2NGJnedI81Fesnzdhfu58fMFrp3NHjIOmSla9I2JgVn81
-         IaoLMHI2qddTsmXCavvuxEr1v3SmXc4NFyZ6UyemdY1nZV3/w4UzenXD9c+sbs60t76w
-         hHLkuhGa4Q7vRJytZTvR0FeIzfKQ0rYYRRi8GhDwaEPIMZtnI7iDs2E7It4oyxRCe2et
-         Gk5+4M2m9t9Y2pTFu7J8YeJ9gFO1XyhhCigt7+LsI6MX8xFpXOObvOjVEpaaBKpOUT7M
-         Xzng==
-X-Gm-Message-State: AOJu0YwcflticI17FBKfEZ881xz20CpWvTu5lTqqetlFPq1mGBSd4XRp
-        m7yMFv8yr48GKuFtpe45hfi3I91sXCAxR++fEAmY+w==
-X-Google-Smtp-Source: AGHT+IGnvVzqDyTaDQN1RRv9vQQEUFxQPYrxhhVQohIrfL86E3wNMufaAcRSF8iiMtJ+eOtngxBck7gdISwdKBFtedU=
-X-Received: by 2002:a25:2d15:0:b0:d78:341d:9ae7 with SMTP id
- t21-20020a252d15000000b00d78341d9ae7mr18444235ybt.46.1694038774649; Wed, 06
- Sep 2023 15:19:34 -0700 (PDT)
+        bh=uDonlp5HbiwJ26g/F+Y1WXSGwKSC1oc1l4KT4dWvVHo=;
+        b=hI54Qv7LrQ35ZmoqCzou/jB1NV7db8V8J/7Fvp/qMkGFc+I73XljYrfoCHIO18Uj9m
+         2N3A4Xu0+5Pd4GgtMGywTwwpdXWrytV4HQqZaoFsUeXnfv8jr55dVzgof15rXTP7025O
+         heMJxqgKWTNjRs12FGGqnroVZnPbFRAXzP3g8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1694039131; x=1694643931;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uDonlp5HbiwJ26g/F+Y1WXSGwKSC1oc1l4KT4dWvVHo=;
+        b=L4TXJhUwkyCBtVpdJlluLwg1CnJMW5TziI/baBboChOWRmEWEBCWmghRxtB4wqePwU
+         qcqthQO6QxiPXXsaZnYELCdirEYp9DBSEvUnG/ayifI1wxm0k8cToRC5+VR5/hlc2AQ3
+         r3O3e9LU8Ep33bnDoy7ujJ9gT0qzFgK84CEcQ5vu2EGUFjvDHZBZD0JeoGVHsCYbulYR
+         2kpcLyWVJg1hLzpYuoD7M06HgcchYSXBZbMKMpSQxZwrZKM2zP8Psop7n+xAHOmGUYpc
+         lxxzijs/grh8pGStguNSU56l69Jp9jQJ6Un5KJFKThAE/gqV7U9fGRtfc9Bffq4jAIn5
+         v2Jw==
+X-Gm-Message-State: AOJu0Yx1Xtvw9lcWJr2FPiYhf5KjQqZBfP133/gMxIVXOtNexoND/dLQ
+        5bzyfCmF3ZW00vQwb7w2R5rrs1EdtPQ8+I+MCRx5vA==
+X-Google-Smtp-Source: AGHT+IGRyS1c97uF22edCstQnjHE3++8HtvAIKFyj1onPIBRInMD2saCMupJhLIk5aHumPexINlma5qaQAzBw+T/Zf4=
+X-Received: by 2002:ac2:4ecc:0:b0:4f8:586a:8af6 with SMTP id
+ p12-20020ac24ecc000000b004f8586a8af6mr3147978lfr.4.1694039131144; Wed, 06 Sep
+ 2023 15:25:31 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 6 Sep 2023 17:25:30 -0500
 MIME-Version: 1.0
-References: <20230905174353.3118648-1-dmitry.baryshkov@linaro.org>
- <20230905174353.3118648-4-dmitry.baryshkov@linaro.org> <CAE-0n509t5hFfKMEHL=3muvn-qo7qZhauzgohgOxDto1oPj2qA@mail.gmail.com>
-In-Reply-To: <CAE-0n509t5hFfKMEHL=3muvn-qo7qZhauzgohgOxDto1oPj2qA@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 7 Sep 2023 01:19:23 +0300
-Message-ID: <CAA8EJprF1BZTi=Ar+D86W58w2byugA8vVpncKMARBfuSHopuLQ@mail.gmail.com>
-Subject: Re: [PATCH 3/6] drm/msm/dpu: support binding to the mdp5 devices
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+In-Reply-To: <20230905174353.3118648-5-dmitry.baryshkov@linaro.org>
+References: <20230905174353.3118648-1-dmitry.baryshkov@linaro.org> <20230905174353.3118648-5-dmitry.baryshkov@linaro.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Wed, 6 Sep 2023 17:25:30 -0500
+Message-ID: <CAE-0n508=RCxtWRd67TFGwMDdfNKWU9dJ+q7hVt1GWyTTz1w-w@mail.gmail.com>
+Subject: Re: [PATCH 4/6] drm/msm: add a kernel param to select between MDP5
+ and DPU drivers
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Marijn Suijten <marijn.suijten@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 7 Sept 2023 at 01:17, Stephen Boyd <swboyd@chromium.org> wrote:
+Quoting Dmitry Baryshkov (2023-09-05 10:43:51)
+> For some of the platforms (e.g. SDM660, SDM630, MSM8996, etc.) it is
+> possible to support this platform via the DPU driver (e.g. to provide
+> support for DP, multirect, etc). Add a modparam to be able to switch
+> between these two drivers.
 >
-> Quoting Dmitry Baryshkov (2023-09-05 10:43:50)
-> > diff --git a/drivers/gpu/drm/msm/msm_io_utils.c b/drivers/gpu/drm/msm/msm_io_utils.c
-> > index 59d2788c4510..9d0d76f3a319 100644
-> > --- a/drivers/gpu/drm/msm/msm_io_utils.c
-> > +++ b/drivers/gpu/drm/msm/msm_io_utils.c
-> > @@ -50,6 +50,24 @@ struct clk *msm_clk_get(struct platform_device *pdev, const char *name)
-> >         return clk;
-> >  }
-> >
-> > +void __iomem *msm_ioremap_mdss(struct platform_device *mdss_pdev,
-> > +                              struct platform_device *pdev,
-> > +                              const char *name)
-> > +{
-> > +       struct resource *res;
-> > +       void __iomem *ptr;
-> > +
-> > +       res = platform_get_resource_byname(mdss_pdev, IORESOURCE_MEM, name);
-> > +       if (!res)
-> > +               return ERR_PTR(-EINVAL);
-> > +
-> > +       ptr = devm_ioremap_resource(&pdev->dev, res);
-> > +       if (!ptr)
+> All platforms supported by both drivers are by default handled by the
+> MDP5 driver. To let them be handled by the DPU driver pass the
+> `msm.prefer_mdp5=false` kernel param.
 >
-> devm_ioremap_resource() returns an error pointer. Too bad we can't use
-> devm_platform_ioremap_resource_byname() here.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
 
-Unfortunately :-(
-
->
-> > +               return ERR_PTR(-ENOMEM);
-> > +
-> > +       return ptr;
-> > +}
-
-
-
--- 
-With best wishes
-Dmitry
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
