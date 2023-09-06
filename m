@@ -2,59 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ADAB87934EC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 07:39:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 533D57934F3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 07:40:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240171AbjIFFjF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Sep 2023 01:39:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42466 "EHLO
+        id S240344AbjIFFkL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Sep 2023 01:40:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239975AbjIFFjF (ORCPT
+        with ESMTP id S238281AbjIFFkK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Sep 2023 01:39:05 -0400
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3869CFA
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Sep 2023 22:38:57 -0700 (PDT)
-Received: by mail-yb1-xb29.google.com with SMTP id 3f1490d57ef6-d7cbcfdf137so2811809276.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Sep 2023 22:38:57 -0700 (PDT)
+        Wed, 6 Sep 2023 01:40:10 -0400
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33562DD
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Sep 2023 22:39:58 -0700 (PDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id 3f1490d57ef6-d7eed15ad69so2833865276.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Sep 2023 22:39:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693978737; x=1694583537; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1693978797; x=1694583597; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=N6Vvpw2CmW0nzmxoVXpfXOrVpezzVvzdgd6ePJqRcdY=;
-        b=mFoWt88bv8Rk/ox7Xk8fqXAnLvAvponBZ0O+rMfZODMTst4dqcISKDO8wsMyBY3KoP
-         NfuoYzQKzbItCzIDYJFmT0GCTdY8eFaHB0ZKwYS4wmnSZM55ErwNyu21rAmjS3XKDWZ9
-         7oP3YMzJksl2Fs/ujSG4NTUZU1xyQq6DuWJg2U/KR8PjiKR+Z3KcXKtP1kYM85+GvFn0
-         nrgsmdmRar0WSLQyWk6qR1vW9P8yxkxq1I9xFXUiMzZRYruwoV6lbnqbySDTpj3ciUlz
-         UTVHF5E4aBJlWSA8pokhksj5ljNpLKHLZK+dYDSgAaMQVYcDfZ7EjyrunnCrIr/awbFa
-         gEaQ==
+        bh=8f/NqI9eJZNZS9Jew7TyzheIQT5LOh0WtCkl6hQ35v0=;
+        b=PzuRwGBHRN4Qoj0eEeRoIDiWGhRyHuK3PF5UGxF8lcEkWN6sAN9Aimh5O15JgKRa2K
+         K8JVyAM8MC3pujK5k3jU330Gt5Je2+ZVdn8bDZfbp7ZWQXHhpITifI2tfkljEa/52KgO
+         FbFwkTDua+mOiHIclVgzkE6jH7EZ8Q6hhWD6XTlQ3PDK6EqslxqoQeOTouuvzAPmOH9Q
+         WmflKillPFyYgn9H3EeGB63XGUe80DRCm57psGiAaHcqp6GyOYjiE6FLa2TKn4fVU595
+         WG5obDUI21VVfVsQ2xInjl4qyyS8FYLwG8jUcqOdoAdbEEq3Zh1ER+Vmk739AcFIZgPa
+         8G8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693978737; x=1694583537;
+        d=1e100.net; s=20221208; t=1693978797; x=1694583597;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=N6Vvpw2CmW0nzmxoVXpfXOrVpezzVvzdgd6ePJqRcdY=;
-        b=j6Vwnpd5zooUYSeXb7wQJMgyGntl2Yi+htpWF1BRXMZsDGhX7orjCRlM6VPMHlSjJK
-         NwW+Akd6xqd7Jd7QvwTaV8kAOjAdDlnQaYzMnQbIeK+8PjHES1yU1eesqpz2btkiH5gy
-         C8OZaTNFCJ5sFwjDYfLxVF/GD9dfeXw1heK0KuzQjPnMqGqoHMDJAf1ayYomDr4YmuH6
-         Nfk58HRTwRLENmE4CJOUTfQaDdyJHAv0d9c/fUJ8SKwUFYjv0L2sCw6cqYuhnlnFv/Hr
-         pMV6TtTmV5OOwpWhONVAkEpef65xHW+ENJAJP48+sg1fO+WwNbJUpNa0UMJsio7byzSy
-         K8YQ==
-X-Gm-Message-State: AOJu0YxyiTM21qTyjEg1DVsrO8GADsk0MGNB5HbDmJ7o4trBboYgoNmH
-        Hh5W/JhdXNBF9+uT00931h4SXXtAbvdFYyZsoK69kA==
-X-Google-Smtp-Source: AGHT+IHi8pHHF8NLpzQYB9v0Pol2eOPcrhcWs3eFGmil2YW0f8FVFZZu+uGmVHEtyjepaxiS6Am92KbgZ80QwJQ18Fc=
-X-Received: by 2002:a25:aaa3:0:b0:d3b:24b:561e with SMTP id
- t32-20020a25aaa3000000b00d3b024b561emr16305720ybi.42.1693978737039; Tue, 05
- Sep 2023 22:38:57 -0700 (PDT)
+        bh=8f/NqI9eJZNZS9Jew7TyzheIQT5LOh0WtCkl6hQ35v0=;
+        b=GCcg37EZxDRZ3VnzZy9JmW9Fz9fOL3RWvskAcdk5kxKA+Q2po2yyBSChKeal8K2fRx
+         t90dfbJXDBTCcNHhzz3HDiHem1pMyAadEr3Z+6YQ94qba9EqFVkJf/ED7tgFP97RGTHp
+         sQ6KjdIhM9XmrHKd63FsWmlJntUOwU+UYylgphydav3DXcvin8do8zqUnt6N4Z6mQAWZ
+         So3UGocYijqKD4q50+lb/CvKBJW+cc+jdyuXTGUePKC8v4v6wrU0fpFCGL31xdU22QTH
+         jTrCrUZRvRhgNRNF2SbdMiJx1Za/Qs0XzPBr1FTiXkp87myXoT00G9i+YhBan+MrNOOW
+         IyYQ==
+X-Gm-Message-State: AOJu0YzW35qUgtQhgq1jli5pnf7nkJOaivpgs55BQMk70xEVPfiaoToD
+        +ivsNMn3abeYv3EdLnIbWUG+QSxVNMAwv/0rNxvmfw==
+X-Google-Smtp-Source: AGHT+IGFfsNqsW45LvllXv0f9d4ie2TdybHTJ9lNAUNOCKumpQv/0qoQbjpjhFYWqp/OLi6ld3eDH++TbixLXN4BKVI=
+X-Received: by 2002:a25:d91:0:b0:d78:26a0:ab8b with SMTP id
+ 139-20020a250d91000000b00d7826a0ab8bmr17030568ybn.55.1693978797353; Tue, 05
+ Sep 2023 22:39:57 -0700 (PDT)
 MIME-Version: 1.0
 References: <1693909838-6682-1-git-send-email-quic_rohiagar@quicinc.com>
- <1693909838-6682-4-git-send-email-quic_rohiagar@quicinc.com>
- <35475122-cc40-486d-90a7-09be53588219@linaro.org> <cde5be37-26a1-3efc-17f4-d58b87a9b99d@quicinc.com>
-In-Reply-To: <cde5be37-26a1-3efc-17f4-d58b87a9b99d@quicinc.com>
+ <1693909838-6682-3-git-send-email-quic_rohiagar@quicinc.com>
+ <37fe0c7e-60ad-4c27-b40f-471cc3d92e1c@linaro.org> <ea9df6f3-dfde-ea7a-af22-2a0839d82d32@quicinc.com>
+ <1838845b-9586-6f8c-a4d6-ef052e0a12db@quicinc.com>
+In-Reply-To: <1838845b-9586-6f8c-a4d6-ef052e0a12db@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 6 Sep 2023 08:38:45 +0300
-Message-ID: <CAA8EJpoEWLw3qmcHtGdjX6RGOWii6ysgrP45RCCMvPQTL4oR2w@mail.gmail.com>
-Subject: Re: [PATCH v2 3/5] dt-bindings: usb: qcom,dwc3: Fix SDX65 clocks
+Date:   Wed, 6 Sep 2023 08:39:45 +0300
+Message-ID: <CAA8EJpqK1FzD2+c6TsicP-fjP+vKJGNWKZ2UodphkROb0WkX1A@mail.gmail.com>
+Subject: Re: [PATCH v2 2/5] dt-bindings: phy: qcom,qmp-usb: Add SDX75 USB3 PHY
 To:     Rohit Agarwal <quic_rohiagar@quicinc.com>
 Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
         vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
@@ -66,55 +67,132 @@ Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
         kernel@quicinc.com
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 6 Sept 2023 at 08:10, Rohit Agarwal <quic_rohiagar@quicinc.com> wrote:
+On Wed, 6 Sept 2023 at 08:26, Rohit Agarwal <quic_rohiagar@quicinc.com> wrote:
 >
 >
-> On 9/6/2023 2:05 AM, Dmitry Baryshkov wrote:
-> > On 05/09/2023 13:30, Rohit Agarwal wrote:
-> >> SDX65 has 5 clocks so mention in the bindings.
+> On 9/6/2023 10:52 AM, Rohit Agarwal wrote:
+> >
+> > On 9/6/2023 2:04 AM, Dmitry Baryshkov wrote:
+> >> On 05/09/2023 13:30, Rohit Agarwal wrote:
+> >>> Add dt-bindings for USB3 PHY found on Qualcomm SDX75.
+> >>>
+> >>> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+> >>> ---
+> >>>   .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml        | 40
+> >>> ++++++++++++++++++++--
+> >>>   1 file changed, 37 insertions(+), 3 deletions(-)
+> >>>
+> >>> diff --git
+> >>> a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+> >>> b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+> >>>
+> >>> index f99fbbc..5725620 100644
+> >>> ---
+> >>> a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+> >>> +++
+> >>> b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+> >>> @@ -20,6 +20,7 @@ properties:
+> >>>         - qcom,qcm2290-qmp-usb3-phy
+> >>>         - qcom,sa8775p-qmp-usb3-uni-phy
+> >>>         - qcom,sc8280xp-qmp-usb3-uni-phy
+> >>> +      - qcom,sdx75-qmp-usb3-uni-phy
 > >>
-> >> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+> >> I think the ident is wrong here.
 > >
-> > Fixes tag?
-> Ack.
+> > Same. Somehow, your reply has the issue but original not able to see.
 > >
-> >> ---
-> >>   Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 1 +
-> >>   1 file changed, 1 insertion(+)
 > >>
-> >> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> >> b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> >> index 6759105..018117b 100644
-> >> --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> >> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> >> @@ -180,6 +180,7 @@ allOf:
-> >>                 - qcom,sdm670-dwc3
-> >>                 - qcom,sdm845-dwc3
-> >>                 - qcom,sdx55-dwc3
-> >> +              - qcom,sdx65-dwc3
+> >>>         - qcom,sm6115-qmp-usb3-phy
+> >>>       reg:
+> >>> @@ -38,9 +39,7 @@ properties:
+> >>>       maxItems: 2
+> >>>       reset-names:
+> >>> -    items:
+> >>> -      - const: phy
+> >>> -      - const: phy_phy
+> >>> +    maxItems: 2
+> >>>       vdda-phy-supply: true
+> >>>   @@ -75,6 +74,7 @@ allOf:
+> >>>             contains:
+> >>>               enum:
+> >>>                 - qcom,ipq9574-qmp-usb3-phy
+> >>> +              - qcom,sdx75-qmp-usb3-uni-phy
+> >>>       then:
+> >>>         properties:
+> >>>           clock-names:
+> >>> @@ -122,6 +122,40 @@ allOf:
+> >>>         required:
+> >>>           - power-domains
+> >>>   +  - if:
+> >>> +      properties:
+> >>> +        compatible:
+> >>> +          contains:
+> >>> +            enum:
+> >>> +              - qcom,ipq9574-qmp-usb3-phy
+> >>> +              - qcom,qcm2290-qmp-usb3-phy
+> >>> +              - qcom,sa8775p-qmp-usb3-uni-phy
+> >>> +              - qcom,sc8280xp-qmp-usb3-uni-phy
+> >>> +              - qcom,sm6115-qmp-usb3-phy
+> >>> +    then:
+> >>> +      properties:
+> >>> +        resets:
+> >>> +          maxItems: 2
+> >>> +        reset-names:
+> >>> +          items:
+> >>> +            - const: phy
+> >>> +            - const: phy_phy
+> >>> +
+> >>> +  - if:
+> >>> +      properties:
+> >>> +        compatible:
+> >>> +          contains:
+> >>> +            enum:
+> >>> +              - qcom,sdx75-qmp-usb3-uni-phy
+> >>> +    then:
+> >>> +      properties:
+> >>> +        resets:
+> >>> +          maxItems: 2
+> >>> +        reset-names:
+> >>> +          items:
+> >>> +            - const: phy
+> >>> +            - const: common
+> >>
+> >> Could you please point us to the actual DTS patch adding this PHY?
+> >> I'd say, it is highly likely that you are trying to bring in the
+> >> unnecessary change.
+> > I have not posted the dt patches yet. But sdx75 uses these resets.
+> > GCC_USB3PHY_PHY_BCR, GCC_USB3_PHY_BCR
 > >
-> > Is indent correct here?
-> >
-> I double cheked the patch and didnt find the indentation wrong. Not
-> sure, in your reply it seems wrong but the original patch has correct
-> indent.
+> > These are same as sdx65 and sdx55.
+> Ok I see in your patch
+> https://lore.kernel.org/linux-phy/20230824211952.1397699-17-dmitry.baryshkov@linaro.org/
+> you are updating the resets name. Fine, this change becomes unnecessary.
+> Will rebase my change on your patches.
 
-Ack.
+Well, even without my changes, GCC_USB3PHY_PHY_BCR is "phy_phy", just
+judging by the name.
 
+>
 > Thanks,
-> Rohit
-> >>                 - qcom,sm6350-dwc3
-> >>       then:
-> >>         properties:
+> Rohit.
 > >
+> > Thanks,
+> > Rohit.
+> >
+> >>
+> >>> +
+> >>>   additionalProperties: false
+> >>>     examples:
+> >>
 
 
 
