@@ -2,135 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A2A0793D2E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 14:55:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2CC98793D5C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 15:02:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230316AbjIFMz6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Sep 2023 08:55:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33730 "EHLO
+        id S241015AbjIFNC4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Sep 2023 09:02:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229751AbjIFMz6 (ORCPT
+        with ESMTP id S241061AbjIFNCr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Sep 2023 08:55:58 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E0F5171D;
-        Wed,  6 Sep 2023 05:55:53 -0700 (PDT)
-Received: from [192.168.68.123] (unknown [177.134.102.128])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: koike)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 29A4466003B2;
-        Wed,  6 Sep 2023 13:55:45 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1694004952;
-        bh=gQjLPgDF2IlvGX/ivEQAkZ/M9eYcT+pDslwhGu6fvqU=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=WXui+qTPSrp44IssO5ZBkHXw544P0fb5Y3CzDPL3YicNCTPnMyfdbjl1CV0j/l1xv
-         d+O44yAcdFrmSgWxmceGHHbpMhGrHEWH5r/vosgrBap0NP2FV1KMkTr669XjZUuD7y
-         EYhAHClhlpL5BCxVelqnDeaKxACc/DzOrF2VjgxP5etJzl0xjCXinnVtQjS4gEYho5
-         uN1D0EWzLtsSSR8q+V+/lxh65WJ9DtN+QEJRbZ+jG23wvQAwM7r9/tRCbswpgNd81N
-         rUz/x2gv6EA214pFDzmdycK6iquRo9e2P9v8u9TrGCOkZmmLZD7DjBHsEhGly9Au+6
-         FJ6F29debKmbQ==
-Message-ID: <cb1b9fea-d74f-fc32-a771-79713cf15674@collabora.com>
-Date:   Wed, 6 Sep 2023 09:55:40 -0300
+        Wed, 6 Sep 2023 09:02:47 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5D0E1730
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 06:02:41 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id d2e1a72fcca58-68a3ced3ec6so2996184b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 06:02:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694005361; x=1694610161; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kQsTGl3+Eqh8ofFG3E7a6oVL6W+DJ0mz15j0T493ubg=;
+        b=mjsrp5qarHL4Hm99N2a5gMqMaBW36Qzrh8tBDnq375kEMcIF9qro9/pyopUthtXzC3
+         CPp3tXmjYuQ8f4f7hPise6E0rELh5Lsl4gnnY5FPr+mqdRMorMHoOtXvdJv7l1tMM2Qf
+         HTm9gcR5jgFUV91j/E6hpoQ43ZL3fF6yMiG+IiyDTFI8t+ayBOO8yg09BAF6AqZ/7qA5
+         lfUggWypxPFv78vud6LN8NA0s+QPMMyDBrNoHubCkUL4PhC/dW+D+jdAb4LjKtaOG85C
+         v+WLS+MvNJd+zMKUbogQ7MDj/M6UcnYBeVyDi1C/dnrW3QqIR0kXhkwAGOc2TGgkiXjQ
+         cAKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1694005361; x=1694610161;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=kQsTGl3+Eqh8ofFG3E7a6oVL6W+DJ0mz15j0T493ubg=;
+        b=EwoLe1wKfS7MzUnQu/9KlP1R/ExgtG+VWLxTkYgEWvldN6vLbvw1vJiyDRrTkbltKv
+         +6la3794k2JeaYh7Uq+jb66RL8XuGkukcapjj7WC1SN3ygK/kCfD1ngKUb7RcFEj8tml
+         n4cyvJlCcuKMC16GBPb4aipmo6HCkOV5b2leGoKM+yK226BDOAjvE94DXFRXibsz/sO4
+         KtFQcgQ8UF7KYyOD1266DKa/42+Z/wgAKh1VnxxTQKVowQmM36tUls//tJ++MMeu0K01
+         u+ozlWitnYMSosrslPPF0Ks0liI+q+kLb80p6zkQ086YI67ia7USZQlgFCnUjAbJRHmA
+         2vyg==
+X-Gm-Message-State: AOJu0YxD/77go7bb2w2sc3f3/uTfGxfjkgE48H6w9flW8+6kU7BEBefN
+        I4ym3mF3fjuPUfGg7tMF1saTPQ==
+X-Google-Smtp-Source: AGHT+IEcMCeoZQMFYj68Y9qGshts5Ugye780JxuFDp52HtImzvXKsQ1OEjGhmMlAwwLcyTIvb+vG/Q==
+X-Received: by 2002:a05:6a00:3983:b0:68c:3f2:5ff9 with SMTP id fi3-20020a056a00398300b0068c03f25ff9mr17119847pfb.7.1694005358807;
+        Wed, 06 Sep 2023 06:02:38 -0700 (PDT)
+Received: from [172.20.5.224] (076-053-041-226.inf.spectrum.com. [76.53.41.226])
+        by smtp.googlemail.com with ESMTPSA id e4-20020aa78c44000000b0068be216b091sm10806039pfd.24.2023.09.06.06.02.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 Sep 2023 06:02:38 -0700 (PDT)
+Message-ID: <7d49d791-bea2-e163-d8db-71866cf7713b@linaro.org>
+Date:   Wed, 6 Sep 2023 06:02:37 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.0
-Subject: Re: [PATCH v2 2/7] drm: ci: Force db410c to host mode
-To:     Vignesh Raman <vignesh.raman@collabora.com>,
-        dri-devel@lists.freedesktop.org
-Cc:     guilherme.gallo@collabora.com, sergi.blanch.torne@collabora.com,
-        david.heidelberg@collabora.com, daniels@collabora.com,
-        gustavo.padovan@collabora.com, emma@anholt.net,
-        robclark@freedesktop.org, robdclark@google.com, anholt@google.com,
-        robdclark@gmail.com, airlied@gmail.com, daniel@ffwll.ch,
-        jani.nikula@linux.intel.com, mripard@kernel.org,
-        linux-kernel@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        virtualization@lists.linux-foundation.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230904161516.66751-1-vignesh.raman@collabora.com>
- <20230904161516.66751-3-vignesh.raman@collabora.com>
+ Thunderbird/102.13.0
 Content-Language: en-US
-From:   Helen Koike <helen.koike@collabora.com>
-In-Reply-To: <20230904161516.66751-3-vignesh.raman@collabora.com>
+To:     linux-firmware@kernel.org
+Cc:     "dmitry.baryshkov@linaro.org >> Dmitry Baryshkov" 
+        <dmitry.baryshkov@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [GIT PULL, v2] Add soft link for Audio topology firmware for SC8280XP
+ X13s platform
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi!
 
-On 04/09/2023 13:15, Vignesh Raman wrote:
-> Force db410c to host mode to fix network issue which results in failure
-> to mount root fs via NFS.
-> See https://gitlab.freedesktop.org/gfx-ci/linux/-/commit/cb72a629b8c15c80a54dda510743cefd1c4b65b8
-> 
-> Use fdtoverlay command to merge base device tree with an overlay
-> which contains the fix for USB controllers to work in host mode.
-> 
-> Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
-> ---
-> 
-> v2:
->    - Use fdtoverlay command to merge overlay dtbo with the base dtb instead of modifying the kernel sources
->    
-> ---
->   drivers/gpu/drm/ci/build.sh                         |  5 +++++
->   .../gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts  | 13 +++++++++++++
->   2 files changed, 18 insertions(+)
->   create mode 100644 drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts
-> 
-> diff --git a/drivers/gpu/drm/ci/build.sh b/drivers/gpu/drm/ci/build.sh
-> index 7b014287a041..92ffd98cd09e 100644
-> --- a/drivers/gpu/drm/ci/build.sh
-> +++ b/drivers/gpu/drm/ci/build.sh
-> @@ -92,6 +92,11 @@ done
->   
->   if [[ -n ${DEVICE_TREES} ]]; then
->       make dtbs
-> +    if [[ -e arch/arm64/boot/dts/qcom/apq8016-sbc.dtb ]]; then
-> +        dtc -@ -I dts -O dtb -o drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dtbo drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts
-> +        fdtoverlay -i arch/arm64/boot/dts/qcom/apq8016-sbc.dtb -o arch/arm64/boot/dts/qcom/apq8016-sbc-overlay.dtb drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dtbo
-> +        mv arch/arm64/boot/dts/qcom/apq8016-sbc-overlay.dtb arch/arm64/boot/dts/qcom/apq8016-sbc.dtb
-> +    fi
->       cp ${DEVICE_TREES} /lava-files/.
->   fi
->   
-> diff --git a/drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts b/drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts
-> new file mode 100644
-> index 000000000000..57b7604f1c23
-> --- /dev/null
-> +++ b/drivers/gpu/drm/ci/dt-overlays/apq8016-sbc-overlay.dts
-> @@ -0,0 +1,13 @@
-> +/dts-v1/;
-> +/plugin/;
-> +
-> +/ {
-> +    fragment@0 {
-> +        target-path = "/soc@0";
-> +        __overlay__ {
-> +            usb@78d9000 {
-> +                dr_mode = "host";
-> +            };
-> +        };
-> +    };
-> +};
+The following changes since commit 20d250e3e9093486a5b70daa942ffbaa3bade901:
 
+   Merge branch 'mlimonci/make-dist' into 'main' (2023-09-06 11:15:24 +0000)
 
-Another thing that I was discussing with David and Vignesh, since we 
-will need this overlay spinets not only for drm-ci but also for mesa ci 
-(and every body who uses the farms), would it be interesting to move it 
-to some place more official? like dts folders? Or would that be against 
-Linux policy?
+are available in the Git repository at:
 
+ 
+https://git.kernel.org/pub/scm/linux/kernel/git/srini/linux-firmware.git 
+sc8280xp-audio-fw-fixes
 
-Regards,
-Helen
+for you to fetch changes up to 7d94e0fa84701f0c01877c21cf4857f94fd367ab:
+
+   linux-firmware: add link to sc8280xp audioreach firmware (2023-09-06 
+05:55:50 -0700)
+
+----------------------------------------------------------------
+Srinivas Kandagatla (1):
+       linux-firmware: add link to sc8280xp audioreach firmware
+
+  WHENCE | 1 +
+  1 file changed, 1 insertion(+)
+
