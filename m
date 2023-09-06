@@ -2,59 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C19EF79369C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 09:57:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 81DF47936A1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 09:58:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232724AbjIFH5i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Sep 2023 03:57:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48086 "EHLO
+        id S229817AbjIFH6b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Sep 2023 03:58:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232322AbjIFH5i (ORCPT
+        with ESMTP id S229530AbjIFH6a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Sep 2023 03:57:38 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8F71CF;
-        Wed,  6 Sep 2023 00:57:34 -0700 (PDT)
-Received: from localhost (unknown [IPv6:2a01:e0a:2c:6930:5cf4:84a1:2763:fe0d])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: bbrezillon)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id A0E246600BB0;
-        Wed,  6 Sep 2023 08:57:32 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1693987053;
-        bh=/d9RcHcAhFerLHxSlk7UfUC6HLZV/5OjrHGohctDWxE=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=HoSsO4qY8l/NwKrCxNZ+I/lu1TXPNw2Njwt2pc82vU2fpSt2U07MfBWqsR5VyPIMz
-         XslL5l8yauC+7/mlKCKwFBN4ReUJ9VLrQdrHnVvvxrnVy/fzcJvCzjONoQmsBQHIwa
-         KI9OA37SZVV+E8qzOX7ygG0MrGrq7sRyxQMOtiW0sjSLDwBiC4AQT3k8MoqLArjRn0
-         XWLwV/1dKFRgR0lWFvvlmoeDQkVQfONUN8r8h4FoTucAM6SdxVbHP6WXm8dPJBiRmN
-         8/DUVYrG2hKeJ91UqGNexnEIxFcQAY5r8lk3/Z84mUZgw51PFM9rAhJxeZn8+50Xrz
-         pypUJp74ghYhQ==
-Date:   Wed, 6 Sep 2023 09:57:30 +0200
-From:   Boris Brezillon <boris.brezillon@collabora.com>
-To:     =?UTF-8?B?QWRyacOhbg==?= Larumbe <adrian.larumbe@collabora.com>
-Cc:     maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
-        robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        dmitry.baryshkov@linaro.org, sean@poorly.run,
-        marijn.suijten@somainline.org, robh@kernel.org,
-        steven.price@arm.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        healych@amazon.com, kernel@collabora.com,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v3 2/8] drm/panfrost: Enable cycle counter register upon
- job submission
-Message-ID: <20230906095730.27cb394f@collabora.com>
-In-Reply-To: <20230905184533.959171-3-adrian.larumbe@collabora.com>
-References: <20230905184533.959171-1-adrian.larumbe@collabora.com>
-        <20230905184533.959171-3-adrian.larumbe@collabora.com>
-Organization: Collabora
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-redhat-linux-gnu)
+        Wed, 6 Sep 2023 03:58:30 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92474CF
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 00:58:26 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2b974031aeaso55565691fa.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 00:58:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693987105; x=1694591905; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=tesgV8kU3XCb/lf2mTrQCPfFGTkmUChK0pxAnvjxU9A=;
+        b=FVy0MFbGWgYlDpvsUX7AWW74QgAzt9FC2kWeNmRJopRwvLVTgKWKkAdGVWSeMOANyS
+         ZBMup1f/61J1xDoo2FhifJceiKV0SLj8wZAWrAb475NoCdbObrUuZUGuc1B2EDogcfBm
+         Ejo9H1uXMMHCjH0oh8R5GS1j/GlfknkJ2yxOcZRSs6oeaYjjI9wvWb8cblc1k4Su6rjW
+         GvWAIXAOHcQAkdPjXwHXC0rPwxe6wsyH6CCrL8mFSa4GQiUd1GHiPevU2ckKt0gujNdt
+         8KeBXVzafJCEHwdFFj5pmqEP56xlFgMs9PHT+vE1o/tL1iDO9mIDzSpJtRrppkh6vwxD
+         Y5yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693987105; x=1694591905;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tesgV8kU3XCb/lf2mTrQCPfFGTkmUChK0pxAnvjxU9A=;
+        b=ZTodKVg9lzQ5Dv8/ZfIn362uDNemp5EVtIfLQyJU4Vc6FfkKsk+F5krhdwB+YkGLXy
+         tn3s+4HQuZnSucCL1BuDVkGs/MAwPwLemrvhwasukXnNWd3Vo1r3fayo/WdTw8jIaXG9
+         Naz/g0NvXT+QQhYELt7uRzieFnKo0Z1Cdng7GxnlZoPPEtSqFUKjtMaNOlmkLnDs8pFM
+         /SI42tJ0Zb7Hg+6C79K5EOIzqCSMWuCLULGr8apDAW1ts/5BDpgWa8xn90xlWbJQil//
+         UWq0aEetbWWKcMdeR5VRU1X6msoJ2JY1BTm/tXDwhU8UN0dg1sHC6w+VbDhcAwfDOTqm
+         1ETw==
+X-Gm-Message-State: AOJu0YxF8HTjJ5kRo+C/xz+KqYYUCN3pD6MNn4sn5xHAnb6/eAWX08GT
+        PdEOKDOzwC0vUv1j43nyoYly6Q==
+X-Google-Smtp-Source: AGHT+IE442k7t62AHxgn5SFP7J4LowMuFNL9bZ6tjhpFmANANokVBj4RiC2pzPcxwTLuHHU/X/8WlA==
+X-Received: by 2002:a2e:910d:0:b0:2bc:b0c3:9e8d with SMTP id m13-20020a2e910d000000b002bcb0c39e8dmr1597383ljg.41.1693987104805;
+        Wed, 06 Sep 2023 00:58:24 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id z10-20020a2e7e0a000000b002b9ec22d9fasm3268324ljc.29.2023.09.06.00.58.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Sep 2023 00:58:24 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>
+Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH 0/4] phy: qcom-qmp-combo: correct sm8550 PHY programming
+Date:   Wed,  6 Sep 2023 10:58:19 +0300
+Message-Id: <20230906075823.7957-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -64,48 +73,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue,  5 Sep 2023 19:45:18 +0100
-Adri=C3=A1n Larumbe <adrian.larumbe@collabora.com> wrote:
+Fix one bug and several small issues with the QMP USB+DP PHY programming
+on the Qualcomm SM8550 platform.
 
-> diff --git a/drivers/gpu/drm/panfrost/panfrost_job.c b/drivers/gpu/drm/pa=
-nfrost/panfrost_job.c
-> index 033f5e684707..8b1bf6ac48f8 100644
-> --- a/drivers/gpu/drm/panfrost/panfrost_job.c
-> +++ b/drivers/gpu/drm/panfrost/panfrost_job.c
-> @@ -297,6 +297,11 @@ int panfrost_job_push(struct panfrost_job *job)
-> =20
->  	kref_get(&job->refcount); /* put by scheduler job completion */
-> =20
-> +	if (atomic_read(&pfdev->profile_mode)) {
-> +		panfrost_cycle_counter_get(pfdev);
+Dmitry Baryshkov (4):
+  phy: qcom-qmp-combo: correct sm8550 PHY programming
+  phy: qcom-qmp-combo: fix the prefix for the PCS_USB v6 registers
+  phy: qcom-qmp-usb: move PCS v6 register to the proper header
+  phy: qcom-qmp-combo: use v6 registers in v6 regs layout
 
-This one should go in panfrost_job_hw_submit() IMO, otherwise you're
-enabling the cycle-counter before the job has its dependencies met, and
-depending on what the job depends on, it might take some time.
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c     | 50 +++++++++----------
+ .../phy/qualcomm/phy-qcom-qmp-pcs-usb-v6.h    | 27 +++-------
+ drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6.h    | 19 ++++++-
+ 3 files changed, 49 insertions(+), 47 deletions(-)
 
-> +		job->is_profiled =3D true;
-> +	}
-> +
->  	drm_sched_entity_push_job(&job->base);
-> =20
->  	mutex_unlock(&pfdev->sched_lock);
-> @@ -351,6 +356,9 @@ static void panfrost_job_free(struct drm_sched_job *s=
-ched_job)
-> =20
->  	drm_sched_job_cleanup(sched_job);
-> =20
-> +	if (job->is_profiled)
-> +		panfrost_cycle_counter_put(job->pfdev);
+-- 
+2.39.2
 
-I think I'd move this panfrost_cycle_counter_put() to
-panfrost_job_handle_{err,done}(), to release the counter as soon as
-we're done executing the job. We also need to make sure we release
-cycle counter refs in the reset path (here [1]), to keep get/put
-balanced when jobs are resubmitted.
-
-> +
->  	panfrost_job_put(job);
->  }
-
-[1]https://elixir.bootlin.com/linux/latest/source/drivers/gpu/drm/panfrost/=
-panfrost_job.c#L666
