@@ -2,162 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FD6D793FAA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 16:54:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 340297940C8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Sep 2023 17:52:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242136AbjIFOyV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Sep 2023 10:54:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55736 "EHLO
+        id S242710AbjIFPwf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Sep 2023 11:52:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229534AbjIFOyP (ORCPT
+        with ESMTP id S229804AbjIFPwd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Sep 2023 10:54:15 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 037EE1995
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Sep 2023 07:54:00 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-9a2a4a5472dso225239066b.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Sep 2023 07:54:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694012039; x=1694616839; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=yzvDUKwNNCvvwcRlGd1bjyuF0B3jRIsnTL9TwpYuaKg=;
-        b=MvsCHIS3+jX4XYoOrRduuN88M6Q0JXRxU7qWYkjQXw8qrikvqaiIgNiNu8MHryHhin
-         s8chAwc0QLCDAixm68sTBOobSw0up1EZ0+4VTHNwGHv9Ac3N7Ba78UdIql+nrFqU2swu
-         /asMWLV85JLeesLwRk21ozT1U1Mixe91JhwtJgo77qPAwFknkQJWPo311z3xlRYZBhff
-         g6JErTQTTmP0S59PNA67qKQeyJkRdfgPcqbDBkKZt5UVZjJrJv9YSRV4r2p6loOyrU53
-         h57iQK7f7kZXfvczLksakdTy59DCjH0uuDlUpfl3HajihfWj6+6HeRux6GhR0kFn1aft
-         TP4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1694012039; x=1694616839;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yzvDUKwNNCvvwcRlGd1bjyuF0B3jRIsnTL9TwpYuaKg=;
-        b=cvAISSjDYPhQHsZzyoZ1cu8BiR5jPaWeiDz5+T+NDX/x9pIzR+K1gTPuE5Cgggpz4p
-         mkN6pzSCdNX+OlA2y/TrYbD/GCQFfye5hrpScSZ021zbATIqqIyTbFaVYq3mSghlVplg
-         XpUulhMEl7Dt0hjw9vHjRi8kQxrG5yP6YdnyrRc9lptrfcGhiYzh1Uj+nV1iaZ4r3gcy
-         RaweSsWMGvOjcWvIbWG6LZ9QCmjBDV5dHqLpOIg/+yBZIco2e/HutnqI9WQl527zCFnx
-         kOteJQ5q0U5JGZUrI7X6nLvUacaDmAEtAwpZqocQqWenhwgYR5JsXB2N7HXdZnzqsTvE
-         0KUg==
-X-Gm-Message-State: AOJu0Yzt2dtCWHb8KY1QAMfUhauMb90oCxbo4Cz2HLPaexjq57Y+D/dO
-        Z/ubNmdEP/ntTGgVqm3g5XPuWA==
-X-Google-Smtp-Source: AGHT+IHSDfLiB9bVqAuS30pEWa+sj7tIzlrEBsFWx7jAaDTU7M9QtSLoVRKCUrvoaHHMpu0uGPDojg==
-X-Received: by 2002:a17:906:9754:b0:9a5:9b93:d60d with SMTP id o20-20020a170906975400b009a59b93d60dmr3099252ejy.36.1694012039506;
-        Wed, 06 Sep 2023 07:53:59 -0700 (PDT)
-Received: from [192.168.37.154] (178235177204.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.204])
-        by smtp.gmail.com with ESMTPSA id p21-20020a170906b21500b0099bc8bd9066sm9134488ejz.150.2023.09.06.07.53.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Sep 2023 07:53:59 -0700 (PDT)
-Message-ID: <458f7f27-958f-47b2-916d-1af1bdf53b7e@linaro.org>
-Date:   Wed, 6 Sep 2023 16:53:57 +0200
+        Wed, 6 Sep 2023 11:52:33 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 672161724;
+        Wed,  6 Sep 2023 08:52:30 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 386FTX98019312;
+        Wed, 6 Sep 2023 15:52:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=Nl74PhkRTAiQB4cjYZX+m7zutlK9FVL/bFNGUldZSWQ=;
+ b=JNME+ZZilJqbL4FqYp2ge16vBY3NtOyD5nh62jJXUYYLlQTL+Ti+DR/IOavcNG35eSQ6
+ ngZV7U5TbAtTlXslXNK6uFN3ieM8rER4LwF4Jo07D6776AmGwyLLBRK+/Rb2JWeSWeN9
+ yAeS6hq7Ayss+rPO1sXEBG19D41FWSvcpJsNlF1HwW/8yhpx2iI1ihBfR4vs/BCIGAzd
+ tpV3RrUlufnphBZHLEEYrfkbjGmpyyI7ls/U4CJ0CV2hnfeCfsLf4ApZ4+rOXSsrdNj+
+ 6t9b6ln0KIsjENVDX9CQlhj/Tjtwk+mC92EfBuKYSMd/Xs0k4RiB5kqRBWyHPdN2dT// 5Q== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sxhjfa11a-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 06 Sep 2023 15:52:21 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 386FqLr9004930
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 6 Sep 2023 15:52:21 GMT
+Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.36; Wed, 6 Sep 2023 08:52:17 -0700
+Date:   Wed, 6 Sep 2023 21:22:14 +0530
+From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
+To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Johan Hovold <johan@kernel.org>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
+Subject: Re: Disconnect interrupt generation for QC targets when role switch
+ is enabled
+Message-ID: <cfa39be4-2b33-4900-800c-9884010f5e75@quicinc.com>
+References: <af60c05b-4a0f-51b8-486a-1fc601602515@quicinc.com>
+ <20230828172059.GC818859@hu-bjorande-lv.qualcomm.com>
+ <325cf945-4d1f-5591-1ef6-b28e803c134b@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: sc7180: Add ADSP
-Content-Language: en-US
-To:     Nikita Travkin <nikita@trvn.ru>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org,
-        David Wronek <davidwronek@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-References: <20230905-sc7180-adsp-rproc-v2-0-8ab7f299600a@trvn.ru>
- <20230905-sc7180-adsp-rproc-v2-4-8ab7f299600a@trvn.ru>
- <4202b582-c0a0-ce13-7561-f5185fe1930a@linaro.org>
- <2caf25a10f8d97dd3694ec57ca0dad36@trvn.ru>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <2caf25a10f8d97dd3694ec57ca0dad36@trvn.ru>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <325cf945-4d1f-5591-1ef6-b28e803c134b@quicinc.com>
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: XGtOx_M2ACJumWO8KIPFdPR7FgnkiQOE
+X-Proofpoint-GUID: XGtOx_M2ACJumWO8KIPFdPR7FgnkiQOE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-06_06,2023-09-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
+ phishscore=0 lowpriorityscore=0 clxscore=1011 bulkscore=0 adultscore=0
+ mlxscore=0 impostorscore=0 priorityscore=1501 mlxlogscore=706
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309060138
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6.09.2023 16:52, Nikita Travkin wrote:
-> Krzysztof Kozlowski писал(а) 06.09.2023 18:36:
->> On 05/09/2023 12:41, Nikita Travkin wrote:
->>> sc7180 has an ADSP remoteproc that exclusively controls the audio
->>> hardware on devices that use Qualcomm firmware.
->>
->>
->>> +					q6afe: service@4 {
->>> +						compatible = "qcom,q6afe";
->>> +						reg = <APR_SVC_AFE>;
->>> +						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
->>> +
->>> +						q6afedai: dais {
->>> +							compatible = "qcom,q6afe-dais";
->>> +							#address-cells = <1>;
->>> +							#size-cells = <0>;
->>> +							#sound-dai-cells = <1>;
->>> +						};
->>> +
->>> +						q6afecc: cc {
->>
->>
->> No improvements.
->>
->> You need to add ADSP to your board and then test it. Otherwise you won't
->> see errors and we do not want incorrect, even if disabled, nodes in DTSI.
->>
+On Wed, Aug 30, 2023 at 09:57:46AM +0530, Krishna Kurapati PSSNV wrote:
 > 
-> Ah, didn't think the check would (partially) ignore disabled nodes...
 > 
-> Is there any simple way to instruct the checker to ignore disabled
-> status and test anyway? I'd like to be able to test the "clean"
-> series as-to-be-sent to have less places for error (and manual action
-> I guess...)
-IDK if schema takes any arguments like that, but search-and-replace
-status = "disabled" with nothing sounds like it could work
+> On 8/28/2023 10:50 PM, Bjorn Andersson wrote:
+> > > 
+> > > I had some idea on how to get the role notification reach qcom glue driver
+> > > but wanted your opinion on whether they can be used or not:
+> > > 
+> > > 1. Register a vendor_hook from glue driver and invoke that during
+> > > __dwc3_set_mode.
+> > > 
+> > > 2. Let the role notification reach dwc3-qcom first and then let qcom driver
+> > > invoke role_set of drd. Something similar to what was implemented by Wesley
+> > > on [1].
+> > > 
+> > > But both the options require dwc3_probe to be done in sync with
+> > > of_platform_populate or we need to defer qcom probe if dwc3_probe is
+> > > deferred. Since we are leaning towards async probe, not sure if the above
+> > > two options would be proper.
+> > > 
+> 
+> ...
+> 
+> > As mentioned, this need has been identified a few times by now, so
+> > nothing strange in your request/proposal.
+> > 
+> > But so far no one has come up with a good way to register glue code
+> > callbacks with the core; we can't pass arbitrary data (such as a
+> > function pointer to such callback), and we don't know when the core is
+> > registered, so we can't call a register operation when that happens.
+> > 
+> > Regards,
+> > Bjorn
+> > 
+> > > [1]: https://patchwork.kernel.org/project/linux-usb/patch/20201009082843.28503-4-wcheng@codeaurora.org/
+> > > [2]: https://patchwork.kernel.org/project/linux-usb/cover/20230325165217.31069-1-manivannan.sadhasivam@linaro.org/
+> > > 
+> 
+> Hi Bjorn,
+> 
+>  How about we use Component framework to let the glue layer know that the
+> child probe is complete. That way we don't need to defer QCOM probe and in
+> the bind call back coming to master (in this case, the glue layer), we can
+> register the vendor hook or role switch we need and we can pass the role
+> notifications from core to glue as needed.
+> 
 
-Konrad
+Would device_driver::sync_state() help here? The qcom glue driver
+creates a DL_FLAG_SYNC_STATE_ONLY device link with dwc3 core. If it
+works, we can avoid component framework related changes in dwc3 core.
+
+
+Thanks,
+Pavan
