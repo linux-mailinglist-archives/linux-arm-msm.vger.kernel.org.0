@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C192797694
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Sep 2023 18:13:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 56561797A25
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Sep 2023 19:32:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238019AbjIGQN0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Sep 2023 12:13:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46846 "EHLO
+        id S231783AbjIGRcW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Sep 2023 13:32:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240091AbjIGQM7 (ORCPT
+        with ESMTP id S230079AbjIGRcW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Sep 2023 12:12:59 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15AAF2C165
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Sep 2023 08:50:15 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-5007abb15e9so1882202e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Sep 2023 08:50:14 -0700 (PDT)
+        Thu, 7 Sep 2023 13:32:22 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 543BE1BFD
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Sep 2023 10:31:56 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-31ad779e6b3so1162172f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Sep 2023 10:31:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694101746; x=1694706546; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1694107862; x=1694712662; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=vpHIUYmzApKmGGiHZZpnMSxi31KSn/xZKBPfgME94EA=;
-        b=f8ax5ryLAEOmmUsQucpL26DqEvKuyZWtLcXtDwGK8nE8v1N8vG58aSjlhxHub0sUb0
-         Z1tCwMAO6lsPEO+sgcTsGosYA841i0Fr1agX93p9aV9LwiUEQ+5Zk4zo1lpqSI0VpCQo
-         DWDZa3QCsEBqHfCiitd2OBhy9PirKbvb3pFu9f7ocKi9ajLF8b5nfsQFRj3xzqnrRs+h
-         C1TSzqxdfO4TZ1UEyR/MLpe8EoN5rtQUwatOPRWHqOaxWe8Y7xYF6QMWg5c8tCNViLQw
-         oDyHrYl82rYAAgn3EBBwZjEdFHFMDEkLv+aepAXWD6+vpmDE2PY0ZlnADwrrNzr5xLpU
-         lNSw==
+        bh=KGhxv+wLkUlJTnXgtlH4J46AYd9o45ySTLmRTKlekWI=;
+        b=SOyEPQFsjDQREdfJs8Ty1AXTaHgMbhwyoc4ieLojh7NoaioPyyK2KFmMNtQE9lIf1E
+         FehW5NTFrQt6rNjrQ0NiflKYcGF9EgqJo9eAJWpvrFWgyGCQgmY8uxJcpy2Tn7jMBzqj
+         G8OjU8azI8ZP4wzwFp9usTBYklIGVRE/cEo26lcMflg0sXOBL/mVMTnKwkhS3135fE5u
+         I+3cbE7JRa+d/Pq7nWvB3nj4BLFY317OQyTYwaerdifSUsdtf07Vjdc171MldM2XpRtc
+         oKmeL67uSvCUOqCm6IygOlYvof2k+x4THQyFZF7A9vnBrKIKHckwHPx0G5812h9V3arV
+         cAkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1694101746; x=1694706546;
+        d=1e100.net; s=20230601; t=1694107862; x=1694712662;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vpHIUYmzApKmGGiHZZpnMSxi31KSn/xZKBPfgME94EA=;
-        b=HS66doTtUn3CiPcCseniYHvQkqouc4l0PqKTqZNcPpueeHIqtJ7mirYaAl6sjgXs0b
-         k1lO1yg9ovCpohZyv/omy3ogR7/o8Zm43zechr3UKuVQ1QVu5UpISvWvV9NQ/pmRsMI4
-         mkDdsxEWsHmQHYwC1cQgUXZPoK+U6C3PrOgFwFZF4DLwjiDkERuZCw71ctL/JErgqThM
-         X2UtuxobKa7I64KUfW7Lq7B0RVhseI3oTn4TTj2LdTHPnIndMaMGawDvLbilKe9YRtb2
-         4wHIr1eC85wBrpwoG5AD2xHtEQrAxi9vAfqVKgfwOZ/ylGk9MA91OLHdVicvdat7K+vm
-         S47g==
-X-Gm-Message-State: AOJu0YySMZy3u0jVuv1zoH4lSDOXg2/R/mcSM7ZBHp2+KDqdPYKnECnt
-        LeIrUHNeLPnAhuOMpbXK7TPxMPa+QtN2o0/9JkU8Aw==
-X-Google-Smtp-Source: AGHT+IE6rP7AS4FnGxp/huXUuWImGW5DpdIfQDtTj/sIRkZFOXfhElTxhQiu10RgpaNZRjIoSI51Qg==
-X-Received: by 2002:a17:906:5c:b0:9a5:db06:4264 with SMTP id 28-20020a170906005c00b009a5db064264mr3607933ejg.72.1694066638936;
-        Wed, 06 Sep 2023 23:03:58 -0700 (PDT)
+        bh=KGhxv+wLkUlJTnXgtlH4J46AYd9o45ySTLmRTKlekWI=;
+        b=uzjoPEcQdBTMjAcZXY7sjlk7tVp3ZYGkdtwwsLhSGlQFw6kwhvnTOrQJqugXTmcy4U
+         DTL7zfsUqQfy+LOqfENW7Qj4ANoHMK1xZUv7hEMZKbQZwZD2kBYW6/E+IeF/mQKKmLKw
+         a5TdC0PPsgfR9AfhqdUfD0sA64wk2ZNhUkNc+lHrvauNfc34mVq8Z4UvRPAkk89tAMKn
+         sodcgPUGsQF0bUEudlnDvlPHdPUAaHiEyhdkTt0ZuNi5IpRqZUCJnn6Ve/8RTFZMRruI
+         kBDogAN9l2SmVkmUxVyh3uJYbffYhU8Cx4z6l5297I4IGV+zx2EG7q/RM4EK76p0PerP
+         YpAA==
+X-Gm-Message-State: AOJu0YwEDhnPn9qdxqPPpvU1ChtYFJgfRl10ip5aojIr3Zh0gWQPGmOt
+        PVpbevjX6F3479nXJBvKMd/bLImVZkfBxWz/Nlaa+A==
+X-Google-Smtp-Source: AGHT+IHgZdZSiR//XinTA9Y8E8bS2xBu6CE90k9cVQP1rRMZIv9GSOKD+LJS0NcyLh090bkwtAQy+Q==
+X-Received: by 2002:a17:906:19:b0:9a1:ec3d:8ffe with SMTP id 25-20020a170906001900b009a1ec3d8ffemr4567309eja.18.1694066647510;
+        Wed, 06 Sep 2023 23:04:07 -0700 (PDT)
 Received: from [192.168.0.22] (77-252-46-238.static.ip.netia.com.pl. [77.252.46.238])
-        by smtp.gmail.com with ESMTPSA id g2-20020a1709064e4200b009a5f7fb51d5sm9928020ejw.21.2023.09.06.23.03.57
+        by smtp.gmail.com with ESMTPSA id qx12-20020a170906fccc00b0099bd86f9248sm9922585ejb.63.2023.09.06.23.04.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Sep 2023 23:03:58 -0700 (PDT)
-Message-ID: <4f882fa1-8174-2816-71c4-a2941372aa19@linaro.org>
-Date:   Thu, 7 Sep 2023 08:03:56 +0200
+        Wed, 06 Sep 2023 23:04:07 -0700 (PDT)
+Message-ID: <2de8953c-f1c5-3c17-5c95-973ef550bc32@linaro.org>
+Date:   Thu, 7 Sep 2023 08:04:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.15.0
-Subject: Re: [PATCH v1 10/10] arm64: dts: qcom: ipq9574: populate the opp
- table based on the eFuse
+Subject: Re: [PATCH v1 08/10] dt-bindings: cpufreq: qcom-cpufreq-nvmem:
+ document IPQ9574
 Content-Language: en-US
 To:     Varadarajan Narayanan <quic_varada@quicinc.com>,
         ilia.lin@kernel.org, agross@kernel.org, andersson@kernel.org,
@@ -68,14 +68,14 @@ To:     Varadarajan Narayanan <quic_varada@quicinc.com>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
 References: <cover.1693996662.git.quic_varada@quicinc.com>
- <1512a94f8fe1f8fe22cef2bf8498a6ac27989633.1693996662.git.quic_varada@quicinc.com>
+ <e0f54a4b249f24b10d3dc21a0224718e46ebd158.1693996662.git.quic_varada@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1512a94f8fe1f8fe22cef2bf8498a6ac27989633.1693996662.git.quic_varada@quicinc.com>
+In-Reply-To: <e0f54a4b249f24b10d3dc21a0224718e46ebd158.1693996662.git.quic_varada@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,24 +84,15 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 07/09/2023 07:21, Varadarajan Narayanan wrote:
-> IPQ95xx SoCs have different OPPs available for the CPU based on
-> SoC variant. This can be determined from an eFuse register
-> present in the silicon.
+> Document IPQ9574 compatible for Qcom NVMEM CPUFreq driver.
 > 
-> Add support to read the eFuse and populate the OPPs based on it.
-> 
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 
-...
 
->  	};
-> @@ -223,6 +254,11 @@
->  			reg = <0x000a4000 0x5a1>;
->  			#address-cells = <1>;
->  			#size-cells = <1>;
-> +
-> +			cpu_speed_bin: cpu_speed_bin@15 {
-
-No underscores in node names
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
