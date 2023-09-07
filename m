@@ -2,168 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B36697975F1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Sep 2023 18:00:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F1837979EC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Sep 2023 19:25:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233270AbjIGQAq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Sep 2023 12:00:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44518 "EHLO
+        id S243309AbjIGRZ4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Sep 2023 13:25:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240706AbjIGP7E (ORCPT
+        with ESMTP id S243345AbjIGRZz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Sep 2023 11:59:04 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F40B6284E4
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Sep 2023 08:47:45 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-31c63cd4ec2so1077873f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Sep 2023 08:47:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20230601.gappssmtp.com; s=20230601; t=1694101581; x=1694706381; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3bdZT/P5i9roSR1VJ+gDQAVNmAdt/Lg6cRS5QQmxk30=;
-        b=fy+rudbAqZwYFsdBHqRnFTlXgsOMv0D0GgrgACNBNzg7PurjdV8ElBRbcMx58t+nQv
-         ZdIWGBdOoqBK3Symt+apgpOtU8QV1gGHS3hUIQFF71LAgHptMiVya3kJYfNEAu6HayZL
-         BNY9gpBHb4mvAPkhyXeJXTVD2c4qJhWlLTiaT0DXtR5WRsbILkfyEZMB0e3spGi2AkC5
-         YKCeUr7pO2o87+eQsdYhHM4x/UYkOw82wgsgswFbT0BY0ca3T765tQqQUwFuCLd6D/e/
-         dAQhBtmVZnty4NKX+lr0OgqblYT2WTQJAc/jCTYV9tKK7tis301d0NGfSQjrxtvzl27e
-         69MA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1694101581; x=1694706381;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3bdZT/P5i9roSR1VJ+gDQAVNmAdt/Lg6cRS5QQmxk30=;
-        b=TZBIlDT6q4DGXUb99HuMCCWx13aRsk+t3Zq/ZC5jI/+gnGt0xRBvCVTnikc8bGQQcT
-         7SG5qi/Z3EzbWc9K7ELuGBKeUj3u4a11WO8gucQCLqdiTrsr4dDGEN0KNpRhD7Kuv3jS
-         IzHiNAfvOo294uiI15R4J9VEpfIYqeEeohy3cA2UCnVdG+ZlWCLFVSHMr/YGOpG1hUuP
-         bWPBuRJ6rT6SeQQmdzJI1hyamuuwycAShX/30HrCJiNFX7wejNWb2ocTTFhJGi81uxLa
-         QDy7ueUWcgOQ9ujybsj/sHugzOJ+5iCodL5RA0x67BnDHH5cu330vhFM1ZftB4TP2Roq
-         Z3qQ==
-X-Gm-Message-State: AOJu0Yym8P4bO5cwEcIpi8K8ksc5wficO1jLF9OiTtikVZUq53XUCYIE
-        Riz6AjKPRNLZsd9r0LO+t7Flag==
-X-Google-Smtp-Source: AGHT+IH1TORyo9IVD8YJbPjark9XxX164XsbE1Fj1Er0RV9L0lX3ZrqKV8Iz1cdwRYWEAf8bPv+06g==
-X-Received: by 2002:adf:fe0d:0:b0:31a:e89a:df0a with SMTP id n13-20020adffe0d000000b0031ae89adf0amr5196749wrr.45.1694101581068;
-        Thu, 07 Sep 2023 08:46:21 -0700 (PDT)
-Received: from [192.168.0.163] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id a3-20020a056000050300b003179d5aee67sm23560976wrf.94.2023.09.07.08.46.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Sep 2023 08:46:19 -0700 (PDT)
-Message-ID: <8eed8cb9-9034-4162-b7bc-958811fb9056@nexus-software.ie>
-Date:   Thu, 7 Sep 2023 16:46:18 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 06/10] cpufreq: qti: Enable cpufreq for ipq53xx
-Content-Language: en-US
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>,
-        ilia.lin@kernel.org, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, rafael@kernel.org,
-        viresh.kumar@linaro.org, robh+dt@kernel.org,
+        Thu, 7 Sep 2023 13:25:55 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2B22CDE;
+        Thu,  7 Sep 2023 10:25:26 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3875npUj020188;
+        Thu, 7 Sep 2023 06:00:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=4UZ+9/d3SUM0emzxqN6v0bSiJxRg8md3/J0gazE6Jus=;
+ b=gm2rQaPdYM1dMA9hG4fC18hPDDutkM2tlypr2RULNAQ58tN/diNfKohTFxTdWH+ev6SF
+ i5AsQ5T0XIVvlVf5ozahoGGZO01ju4XPnX+pLqPRknpFCgGMrEcqWBmuvbCgs8WwbrU+
+ Ngu9f7U5g6Eew0mF81+XPk3TY6xQO+OYOiLoPxqbTAV02xXaVMy7TclQwV4+WUYIxS0I
+ oBg5dSbWQ1w1GJ/VfXe/SwM6oUVQEwveVWX/VsJLELtMEE+71S0ATT/lKju4XHAJ9EEH
+ NjNsYc0VYzySmGHx2dfPsmZOn0i8/IwwfvK464nQnwEOtbQh2UcR4JewyKmeI9XVctid iQ== 
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sxpt02m7x-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 07 Sep 2023 06:00:58 +0000
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 38760tdn011300;
+        Thu, 7 Sep 2023 06:00:55 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3sux4kjqum-1;
+        Thu, 07 Sep 2023 06:00:55 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 38760sNR011295;
+        Thu, 7 Sep 2023 06:00:54 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-krichai-hyd.qualcomm.com [10.213.110.112])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 38760sRL011294;
+        Thu, 07 Sep 2023 06:00:54 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 4058933)
+        id E6FB513A9; Thu,  7 Sep 2023 11:30:53 +0530 (+0530)
+From:   Krishna chaitanya chundru <quic_krichai@quicinc.com>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
         krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        quic_kathirav@quicinc.com, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-References: <cover.1693996662.git.quic_varada@quicinc.com>
- <558c6b70090ea7220bfb0b6e7d81828025018376.1693996662.git.quic_varada@quicinc.com>
-From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <558c6b70090ea7220bfb0b6e7d81828025018376.1693996662.git.quic_varada@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        vireshk@kernel.org, nm@ti.com, sboyd@kernel.org, mani@kernel.org
+Cc:     lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
+        bhelgaas@google.com, rafael@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, quic_vbadigan@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+        quic_ramkri@quicinc.com, quic_parass@quicinc.com,
+        Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Subject: [PATCH v5 0/5] PCI: qcom: Add support for OPP
+Date:   Thu,  7 Sep 2023 11:30:28 +0530
+Message-Id: <1694066433-8677-1-git-send-email-quic_krichai@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 8W5aLJY1N9CQqKdZdvw0uQdbuFlbHFoH
+X-Proofpoint-GUID: 8W5aLJY1N9CQqKdZdvw0uQdbuFlbHFoH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-06_12,2023-09-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 spamscore=0
+ mlxscore=0 phishscore=0 impostorscore=0 suspectscore=0 mlxlogscore=815
+ adultscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309070052
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/09/2023 06:21, Varadarajan Narayanan wrote:
-> IPQ53xx have different OPPs available for the CPU based on
-> SoC variant. This can be determined through use of an eFuse
-> register present in the silicon.
-> 
-> Added support for ipq53xx on nvmem driver which helps to
-> determine OPPs at runtime based on the eFuse register which
-> has the CPU frequency limits. opp-supported-hw dt binding
-> can be used to indicate the available OPPs for each limit.
-> 
-> nvmem driver also creates the "cpufreq-dt" platform_device after
-> passing the version matching data to the OPP framework so that the
-> cpufreq-dt handles the actual cpufreq implementation.
-> 
-> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> ---
->   drivers/cpufreq/cpufreq-dt-platdev.c |  1 +
->   drivers/cpufreq/qcom-cpufreq-nvmem.c | 15 +++++++++++++++
->   2 files changed, 16 insertions(+)
-> 
-> diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c b/drivers/cpufreq/cpufreq-dt-platdev.c
-> index 02ec58a..f0c45d4 100644
-> --- a/drivers/cpufreq/cpufreq-dt-platdev.c
-> +++ b/drivers/cpufreq/cpufreq-dt-platdev.c
-> @@ -178,6 +178,7 @@ static const struct of_device_id blocklist[] __initconst = {
->   	{ .compatible = "ti,am625", },
->   	{ .compatible = "ti,am62a7", },
->   
-> +	{ .compatible = "qcom,ipq5332", },
->   	{ .compatible = "qcom,ipq8064", },
->   	{ .compatible = "qcom,apq8064", },
->   	{ .compatible = "qcom,msm8974", },
-> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> index 84d7033..49d21b0 100644
-> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> @@ -146,6 +146,20 @@ static int qcom_cpufreq_kryo_name_version(struct device *cpu_dev,
->   		return PTR_ERR(speedbin);
->   
->   	switch (msm_id) {
-> +	case QCOM_ID_IPQ5332:
-> +	case QCOM_ID_IPQ5322:
-> +	case QCOM_ID_IPQ5312:
-> +	case QCOM_ID_IPQ5302:
-> +	case QCOM_ID_IPQ5300:
-> +		/* Fuse Value    Freq    BIT to set
-> +		 * ---------------------------------
-> +		 *   2’b00     No Limit     BIT(0)
-> +		 *   2’b01     1.5 GHz      BIT(1)
-> +		 *   2’b10     1.2 Ghz      BIT(2)
-> +		 *   2’b11     1.0 GHz      BIT(3)
-> +		 */
-> +		drv->versions = 1 << (unsigned int)(*speedbin);
-> +		break;
+This patch adds support for OPP to vote for the performance state of RPMH
+power domain based upon GEN speed it PCIe got enumerated.
 
-I like that you've included a comment however, the switch is an ordered 
-list and these values should come after QCOM_ID_APQ8096SG
+Before link up PCIe driver will vote for the maximum performance state.
 
-#define QCOM_ID_MSM8996                 246
-#define QCOM_ID_APQ8096                 291
-#define QCOM_ID_MSM8996SG               305
-#define QCOM_ID_APQ8096SG               312
-#define QCOM_ID_IPQ5332                 592
-...
-#define QCOM_ID_IPQ5300                 624
+Add API dev_pm_opp_find_level_floor to find To find the highest opp for a device
+based on the level.
 
->   	case QCOM_ID_MSM8996:
->   	case QCOM_ID_APQ8096:
->   		drv->versions = 1 << (unsigned int)(*speedbin);
+Changes from v4:
+	- Added a separate patch for returning error from the qcom_pcie_upadate
+	  and moved opp update logic to icc_update and used a bool variable to 
+	  update the opp.
+	- Addressed comments made by pavan.
+changes from v3:
+	- Removing the opp vote on suspend when the link is not up and link is not
+	  up and add debug prints as suggested by pavan.
+	- Added dev_pm_opp_find_level_floor API to find the highest opp to vote.
+changes from v2:
+	- Instead of using the freq based opp search use level based as suggested
+	  by Dmitry Baryshkov.
+Changes from v1:
+        - Addressed comments from Krzysztof Kozlowski.
+        - Added the rpmhpd_opp_xxx phandle as suggested by pavan.
+        - Added dev_pm_opp_set_opp API call which was missed on previous patch.
 
+Krishna chaitanya chundru (5):
+  dt-bindings: pci: qcom: Add opp table
+  arm64: dts: qcom: sm8450: Add opp table support to PCIe
+  opp: Add dev_pm_opp_find_level_floor()
+  PCI: qcom: Return error from 'qcom_pcie_icc_update'
+  PCI: qcom: Add OPP support to scale performance state of power domain
 
-> @@ -359,6 +373,7 @@ static const struct of_device_id qcom_cpufreq_match_list[] __initconst = {
->   	{ .compatible = "qcom,apq8096", .data = &match_data_kryo },
->   	{ .compatible = "qcom,msm8996", .data = &match_data_kryo },
->   	{ .compatible = "qcom,qcs404", .data = &match_data_qcs404 },
-> +	{ .compatible = "qcom,ipq5332", .data = &match_data_kryo },
->   	{ .compatible = "qcom,ipq8064", .data = &match_data_krait },
->   	{ .compatible = "qcom,apq8064", .data = &match_data_krait },
->   	{ .compatible = "qcom,msm8974", .data = &match_data_krait },
+ .../devicetree/bindings/pci/qcom,pcie.yaml         |  4 ++
+ arch/arm64/boot/dts/qcom/sm8450.dtsi               | 47 ++++++++++++++++
+ drivers/opp/core.c                                 | 25 +++++++++
+ drivers/pci/controller/dwc/pcie-qcom.c             | 63 ++++++++++++++++++----
+ include/linux/pm_opp.h                             |  9 ++++
+ 5 files changed, 137 insertions(+), 11 deletions(-)
 
-Other than that.
+-- 
+2.7.4
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-
----
-bod
