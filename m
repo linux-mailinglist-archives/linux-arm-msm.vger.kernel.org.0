@@ -2,119 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E31A79744B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Sep 2023 17:37:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 94A397975EC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Sep 2023 18:00:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245034AbjIGPhM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Sep 2023 11:37:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36806 "EHLO
+        id S232126AbjIGQAo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Sep 2023 12:00:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232817AbjIGPWY (ORCPT
+        with ESMTP id S236486AbjIGP5s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Sep 2023 11:22:24 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id BDFB71BF7;
-        Thu,  7 Sep 2023 08:21:53 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B8F381576;
-        Thu,  7 Sep 2023 03:37:01 -0700 (PDT)
-Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id CBA573F67D;
-        Thu,  7 Sep 2023 03:36:21 -0700 (PDT)
-Date:   Thu, 7 Sep 2023 11:36:19 +0100
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Nikunj Kela <quic_nkela@quicinc.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        cristian.marussi@arm.com, Sudeep Holla <sudeep.holla@arm.com>,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, linux-arm-kernel@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3 0/3] Add qcom hvc/shmem transport
-Message-ID: <20230907103619.2kqh7tfivwdfm5rd@bogus>
-References: <20230718160833.36397-1-quic_nkela@quicinc.com>
- <20230811175719.28378-1-quic_nkela@quicinc.com>
- <3342d8bf-5281-c082-cb9a-7a027b413237@quicinc.com>
- <f5b05cfa-f12c-4f4d-a801-3aa76d843d6d@linaro.org>
+        Thu, 7 Sep 2023 11:57:48 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 962A3AD35
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Sep 2023 08:45:23 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id d9443c01a7336-1c1e3a4a06fso8365685ad.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Sep 2023 08:45:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694101458; x=1694706258; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=yMRlMwN20QLTSRPs/jI5d8COnV1IkaL0AH6Bo1uSv5s=;
+        b=jiihTFMyITprWJA6FJFEuhvYDCDDzxNEcqGwDYaMGsDFEsAVW33KfKN2ECNfXMFydi
+         CScsjSe9WMup3Ao8jGIB+7F6dmjh108xEsmny4oCRhcDhAW3x265rHKdiluIugw7jeBv
+         yupT0rs1pfY5VwMwzkixsC2mqWEyLP+pUWbIeJcNB5IkXRxTbewcz8ZZj3tlIWYz97uW
+         VRU6IR23cOqO3rn65V7Z3VAofrnGppRLCucgejE6xXsupTJFCy1NhE+JikeBsOM/UGvo
+         J8ub0lCBs2rzrkaF5LYZKqHp6QVLjuEI4FU+sLKS4PkpxtR1a7m3rgc6aZjdZZCt9qcJ
+         bhpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1694101458; x=1694706258;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yMRlMwN20QLTSRPs/jI5d8COnV1IkaL0AH6Bo1uSv5s=;
+        b=QTM1zGwJymVddJ1ouh/8R1TrRArMBu/sdDasepi7wMtkTy9vJAn1sw3SJ2BbrBcnDH
+         S1ioaswK3hro9qIg51xj66y51lTL6R/zA3hYICXMPtHc2Yvjv3GRuQz5UMuzBaKbPhIl
+         tVI0PXxg2AaIwguxOLZXpi8MNQqpiS/e1NxzJt1rsOYfej8VAp8GyOnOG7rWB5Jz5K5m
+         yirdzc1l7F5vBgIjdBgRSJqrNhTYhJRsXfEUJ+TgsPsQ8cScswxdn5+szz3cdMAZCE/S
+         6DYxfGbAqnLJqKcvCW/FqbE+wEI19aM6DA/6GRK6TlpLRTsis+kL9fK+c3cj5TCLY1c2
+         upLw==
+X-Gm-Message-State: AOJu0Yxwi7hv62GknDVAK1flRL52ehmW24oIE4zHDIEXN8NdU7RM9bVn
+        aKt0msZD9oQHNG7jnjl7FiYd3NKy5+ecSNpQFIY1gR/XAou381wH
+X-Google-Smtp-Source: AGHT+IFUuNXZQLnUGxYZ4nwOIc/1ZCmT/RBxdiDK6aXiF/foDyogFPcREcWU6P3R5YT2nx0jFgg2XzMsNGlNNM2BlgA=
+X-Received: by 2002:a25:a1e9:0:b0:d78:35cd:7f5c with SMTP id
+ a96-20020a25a1e9000000b00d7835cd7f5cmr19661493ybi.46.1694093927719; Thu, 07
+ Sep 2023 06:38:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f5b05cfa-f12c-4f4d-a801-3aa76d843d6d@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <cover.1693996662.git.quic_varada@quicinc.com> <00a5ca23101df1f8f20bdec03be20af9d39c64d1.1693996662.git.quic_varada@quicinc.com>
+In-Reply-To: <00a5ca23101df1f8f20bdec03be20af9d39c64d1.1693996662.git.quic_varada@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 7 Sep 2023 16:38:36 +0300
+Message-ID: <CAA8EJpqtXw1ukDZ1hXAc3G7LNDwjcduUdNaPHadfSqCuV3fxbg@mail.gmail.com>
+Subject: Re: [PATCH v1 02/10] clk: qcom: apss-ipq-pll: Use stromer plus ops
+ for stromer plus pll
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc:     ilia.lin@kernel.org, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, rafael@kernel.org,
+        viresh.kumar@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        quic_kathirav@quicinc.com, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 05, 2023 at 06:37:14PM +0200, Krzysztof Kozlowski wrote:
-> On 05/09/2023 18:06, Nikunj Kela wrote:
-> > 
-> > On 8/11/2023 10:57 AM, Nikunj Kela wrote:
-> >> This change introduce a new transport channel for Qualcomm virtual
-> >> platforms. The transport is mechanically similar to ARM_SCMI_TRANSPORT_SMC.
-> >> The difference between the two transports is that a parameter is passed in
-> >> the hypervisor call to identify which doorbell to assert. This parameter is
-> >> dynamically generated at runtime on the device and insuitable to pass via
-> >> the devicetree.
-> >>
-> >> The function ID and parameter are stored by firmware in the shmem region.
-> >>
-> >> This has been tested on ARM64 virtual Qualcomm platform.
-> >>
-> >> ---
-> >> v3 -> fix the compilation error reported by the test bot,
-> >>        add support for polling based instances
-> >>
-> >> v2 -> use allOf construct in dtb schema,
-> >>        remove wrappers from mutexes,
-> >>        use architecture independent channel layout
-> >>
-> >> v1 -> original patches
-> >>
-> >> Nikunj Kela (3):
-> >>    dt-bindings: arm: convert nested if-else construct to allOf
-> >>    dt-bindings: arm: Add qcom specific hvc transport for SCMI
-> >>    firmware: arm_scmi: Add qcom hvc/shmem transport
-> >>
-> >>   .../bindings/firmware/arm,scmi.yaml           |  67 ++---
-> >>   drivers/firmware/arm_scmi/Kconfig             |  13 +
-> >>   drivers/firmware/arm_scmi/Makefile            |   2 +
-> >>   drivers/firmware/arm_scmi/common.h            |   3 +
-> >>   drivers/firmware/arm_scmi/driver.c            |   4 +
-> >>   drivers/firmware/arm_scmi/qcom_hvc.c          | 232 ++++++++++++++++++
-> >>   6 files changed, 293 insertions(+), 28 deletions(-)
-> >>   create mode 100644 drivers/firmware/arm_scmi/qcom_hvc.c
-> > Gentle Ping!
-
-Pong !
-
+On Thu, 7 Sept 2023 at 08:22, Varadarajan Narayanan
+<quic_varada@quicinc.com> wrote:
 >
-> It's third ping these two weeks from Qualcomm. Folks, it is merge
-> window. What do you think will happen with your ping during this time?
+> The set rate and determine rate operations are different between
+> Stromer and Stromer Plus PLLs. Hence, use stromer plus ops for
+> ipq_pll_stromer_plus.
+>
+> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+
+Fixes tag?
+
+> ---
+>  drivers/clk/qcom/apss-ipq-pll.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/clk/qcom/apss-ipq-pll.c b/drivers/clk/qcom/apss-ipq-pll.c
+> index e170331..18c4ffe 100644
+> --- a/drivers/clk/qcom/apss-ipq-pll.c
+> +++ b/drivers/clk/qcom/apss-ipq-pll.c
+> @@ -68,7 +68,7 @@ static struct clk_alpha_pll ipq_pll_stromer_plus = {
+>                                 .fw_name = "xo",
+>                         },
+>                         .num_parents = 1,
+> -                       .ops = &clk_alpha_pll_stromer_ops,
+> +                       .ops = &clk_alpha_pll_stromer_plus_ops,
+>                 },
+>         },
+>  };
+> --
+> 2.7.4
 >
 
-+1
 
-Okay, here is the deal with this patch set. As you are aware that a previous
-merged solution was abandoned by Qcom in a single kernel release cycle. So
-I decided to ignore this for one or 2 kernel release cycle to make sure
-Qcom makes up their mind on the design and then we can see how to proceed.
-Qcom must understand upstream kernel is not a playground to push their
-design which they might decided to drop support for in such short period.
-Please understand the upstream kernel supports platforms that are more than
-few decades old. It is not like the mobile platforms that are hardly supported
-for couple of years. And similarly, we push core support if and only if we
-know for sure it will be used on some platform. I trusted Qcom with the
-previous extension of SMC/HVC transport but I was proven wrong.
-
-Also, I definitely don't like the way you have copied the whole smc.c
-and changed it to Qcom's need and made it qcom_hvc.c. Just add the required
-changes in smc.c.
-
---
-Regards,
-Sudeep
+-- 
+With best wishes
+Dmitry
