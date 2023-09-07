@@ -2,132 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B7667976F5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Sep 2023 18:18:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 227D3797AB4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Sep 2023 19:48:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234423AbjIGQSz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Sep 2023 12:18:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46194 "EHLO
+        id S245403AbjIGRsJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Sep 2023 13:48:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242985AbjIGQSP (ORCPT
+        with ESMTP id S245661AbjIGRsA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Sep 2023 12:18:15 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3DF059F3;
-        Thu,  7 Sep 2023 09:04:03 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3879swWG020769;
-        Thu, 7 Sep 2023 09:56:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=JJN2an9C7cmZNdVoHcnWUPhZpuiuA4IshU4Q+93acDg=;
- b=krTLe3BVzK1kwTO4z/hdANOSKIW7Wnt8yVUzH5P+yZl6MK040hpCyHCvGCvd3rkxoZgw
- CuGyuIENjG4CNA8ssmIaWcjNOw/9vrIDK2EChJyIGgHiOeU3P/4y9dkMs2FsV4U+Up7A
- 8WHmAYERTgVsevoY/PBagE4KVxByQbS7HX4pH+XFXDSEbgYvKdhMNqkTOWEbYL9Case5
- 6TjMF5pnczV0TbV6hjL7/oHgB2/+sh2AN6eRALFKfJmB7O/v6Q+WrKS8Devj+lCRpUpI
- 67v3ArK0HBrAjiaNft7vCCMWsaftQvpaFgfpn9Wxsf4WSPLMK4ki1UaKfLmsb5vclKsO uQ== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3syaad087m-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 07 Sep 2023 09:56:58 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3879uudp008519
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 7 Sep 2023 09:56:57 GMT
-Received: from [10.216.2.98] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Thu, 7 Sep
- 2023 02:56:48 -0700
-Message-ID: <347293d1-15e5-5412-9695-01be768283ad@quicinc.com>
-Date:   Thu, 7 Sep 2023 15:26:45 +0530
+        Thu, 7 Sep 2023 13:48:00 -0400
+Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9D581FCF;
+        Thu,  7 Sep 2023 10:47:40 -0700 (PDT)
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        by box.trvn.ru (Postfix) with ESMTPSA id 14E03408FB;
+        Thu,  7 Sep 2023 15:03:04 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+        t=1694080985; bh=UydgDVQiSUviGozQ38IeSZQCohfutWy5gMlbsDElVGI=;
+        h=From:Subject:Date:To:Cc:From;
+        b=TTl3YhZOTLW5oLj4fT9j2yYvOMgL4+xe6tXIO7+dbx+g6JvuoRRlUdXor2El+nDu5
+         5L7BHZC3I2wtfzoQXqK8ww5vj8zG3EZjb23vztrU8lLbYIx+OPRI/a2aRhtDEvkdpr
+         qfzSTbKfrHu7Lo/VL+SY0U5Z1Jel/LziUbouBuVvzN9Dbpp98M1N7yoPFExYjsADXr
+         ohXECoi8FryPEkkzmiZTwx2JYXZq8WP6UywPng0lQMUK7gtDPuIqN9Z0M8kLyXX9os
+         mKcH6A0rl9b4bQHTiGL0vElfaknXlYpzTprkYPfN53x+sEGZ9uuZF8Kwd4f1fkF87U
+         CND7wMVUnfmpA==
+From:   Nikita Travkin <nikita@trvn.ru>
+Subject: [PATCH v3 0/4] sc7180: Add ADSP
+Date:   Thu, 07 Sep 2023 15:02:33 +0500
+Message-Id: <20230907-sc7180-adsp-rproc-v3-0-6515c3fbe0a3@trvn.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH v5 2/5] arm64: dts: qcom: sm8450: Add opp table support to
- PCIe
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <vireshk@kernel.org>, <nm@ti.com>,
-        <sboyd@kernel.org>, <mani@kernel.org>
-CC:     <lpieralisi@kernel.org>, <kw@linux.com>, <robh@kernel.org>,
-        <bhelgaas@google.com>, <rafael@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <quic_vbadigan@quicinc.com>,
-        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
-        <quic_ramkri@quicinc.com>, <quic_parass@quicinc.com>
-References: <1694066433-8677-1-git-send-email-quic_krichai@quicinc.com>
- <1694066433-8677-3-git-send-email-quic_krichai@quicinc.com>
- <38f64349-5139-4207-91eb-cd39fabd4496@linaro.org>
-From:   Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <38f64349-5139-4207-91eb-cd39fabd4496@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: zu2wqzDPrSeflYuDgfDtMYFS5isYnDnA
-X-Proofpoint-GUID: zu2wqzDPrSeflYuDgfDtMYFS5isYnDnA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-07_02,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- priorityscore=1501 suspectscore=0 clxscore=1015 mlxlogscore=634
- adultscore=0 phishscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0
- impostorscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309070087
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-B4-Tracking: v=1; b=H4sIALqf+WQC/4WOQQ6CMBBFr2Jm7ZihCG1deQ/jYqBFugEyxUZDu
+ LuFjTtdvkne+7NA9BJ8hMthAfEpxDAOGcrjAdqeh4fH4DKDIlWSpQpjqwtDyC5OKJOMLbI+V40
+ x3ClrIHuT+C689ubtnrkPcR7lvU+kYrv+qqUCCV3nWdfWOtbNdZY0nOQJWyupv77KvuFG53dsT
+ cRff13XD2Hu+q/wAAAA
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org
+Cc:     David Wronek <davidwronek@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Nikita Travkin <nikita@trvn.ru>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1675; i=nikita@trvn.ru;
+ h=from:subject:message-id; bh=UydgDVQiSUviGozQ38IeSZQCohfutWy5gMlbsDElVGI=;
+ b=owEBbQKS/ZANAwAIAUMc7O4oGb91AcsmYgBk+Z/WMvI8KZwdvygbbGoASchk5qt3AjBHgUYYU
+ st7UotEVBSJAjMEAAEIAB0WIQTAhK9UUj+qg34uxUdDHOzuKBm/dQUCZPmf1gAKCRBDHOzuKBm/
+ daa4D/47b2bcaSAm0q55I/o1527ZcR87PYQWgs8tk7O3H8biqTfugg9KwBhvwUqXALIJgFYFay+
+ ofNXd91lPtTdv2Y4B7MoBysTcK4IFHGH7qnnin3Tn0lcBljHBBXdzqvDI+YRBsI1YGN226MtAxz
+ y+2bynO9JfD1kZOJ6jKCGvJOQXHowqUWWDwtDQKO0slv/X8Fj2tsI9cRp6cVTml4ssTdk2iOLMk
+ l82WUXl2VyAiaB9jK2HcxBwaTiM4YhqXe4yges78zLJCMLsheU/GKDvKKcSySBxDDSsMOcGk5Zg
+ J5xBrCnnth2QPR8sgMD8er3KeHzNomSFuuL6M4fDxV//6SeESsPBl4B7ZrSE5Na2xIQrAZsaMX7
+ HbDAWAcI8A71aoRJL6mCCGGWAATBAojnkV74tT5e+P3/duVyzREE6XGbqulCYc5rExJK8ams8w8
+ W1GbhYakeBBGAUybQs5HhJIjvM3XHadJk9lpKGh1xa4FYR3yxZ/C8qkanA3swZ8+tADFrKnKRdx
+ dFhQIihNUUE9T9Q+QsGlB5RyhWkpg2x+tsVezyUaSJQ/LP5W1E6aQaHDV6y2lX0uBM+PK0yp8O0
+ ZOl4FpQ2tRCxeVuAPXdw1/aWoGp2MeHwoG3D9ajGbMQEBXlE0wsmdCIfDE73KVVE62Rp77kpMjb
+ a4AHxeY8n++etFQ==
+X-Developer-Key: i=nikita@trvn.ru; a=openpgp;
+ fpr=C084AF54523FAA837E2EC547431CECEE2819BF75
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+sc7180 has an ADSP remoteproc that can be used to control the sound
+hardware. This remoteproc has to be used on those devices that use
+Qualcomm firmware and thus are locked out of driving the lpass directly.
 
-On 9/7/2023 2:34 PM, Konrad Dybcio wrote:
-> On 7.09.2023 08:00, Krishna chaitanya chundru wrote:
->> PCIe needs to choose the appropriate performance state of RPMH power
->> domain based up on the PCIe gen speed.
->>
->> So let's add the OPP table support to specify RPMH performance states.
->>
->> Use opp-level for the PCIe gen speed for easier use.
->>
->> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
->> ---
-> [...]
->
->> +
->> +			pcie1_opp_table: opp-table {
->> +				compatible = "operating-points-v2";
->> +
->> +				opp-1 {
->> +					opp-level = <1>;
->> +					required-opps = <&rpmhpd_opp_low_svs>;
->> +				};
->> +
->> +				opp-2 {
->> +					opp-level = <2>;
->> +					required-opps = <&rpmhpd_opp_low_svs>;
->> +				};
->> +
->> +				opp-3 {
->> +					opp-level = <3>;
->> +					required-opps = <&rpmhpd_opp_low_svs>;
-> Is gen3 not supposed to require nom like on pcie0?
-This particular controller instance can operate at low svs for GEN3.
-> Also, can all non-maximum OPPs run at just low_svs?
-This depends on the hardware capability, for this instance expect GEN4 
-remaining can operate in LOW svs. It varies from controller instance to 
-instance and also from target to target.
-> Konrad
+Introducing the ADSP would allow multiple WoA laptops such as Aspire 1
+to provide sound. It's also useful for the sm7125 devices that are to be
+included to the kernel [1]
 
-- KC
+This series adds the ADSP and the sound services needed to make use of
+it later.
+
+[1] https://lore.kernel.org/all/20230824091737.75813-1-davidwronek@gmail.com/
+
+Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+---
+Changes in v3:
+- Reorder the pinctrl
+- Fixup remoteproc submode per schema
+- Link to v2: https://lore.kernel.org/r/20230905-sc7180-adsp-rproc-v2-0-8ab7f299600a@trvn.ru
+
+Changes in v2:
+- Refactor the pas binding to fit adsp better
+- Fixup remoteproc subnode names and property order
+- Link to v1: https://lore.kernel.org/r/20230905-sc7180-adsp-rproc-v1-0-dfea7699da7b@trvn.ru
+
+---
+Nikita Travkin (4):
+      dt-bindings: remoteproc: qcom: sc7180-pas: Add ADSP compatible
+      remoteproc: qcom: pas: Add sc7180 adsp
+      arm64: dts: qcom: sc7180: Add tertiary mi2s pinctrl
+      arm64: dts: qcom: sc7180: Add ADSP
+
+ .../bindings/remoteproc/qcom,sc7180-pas.yaml       |  81 +++++++++----
+ arch/arm64/boot/dts/qcom/sc7180.dtsi               | 127 +++++++++++++++++++++
+ drivers/remoteproc/qcom_q6v5_pas.c                 |   1 +
+ 3 files changed, 184 insertions(+), 25 deletions(-)
+---
+base-commit: cd04b2fab5ee58862674e9bab3cbc8e9a8576845
+change-id: 20230905-sc7180-adsp-rproc-a745b88af298
+
+Best regards,
+-- 
+Nikita Travkin <nikita@trvn.ru>
 
