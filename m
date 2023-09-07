@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C9124797716
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Sep 2023 18:21:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 005A3797656
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Sep 2023 18:06:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235338AbjIGQVT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Sep 2023 12:21:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36888 "EHLO
+        id S237683AbjIGQGf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Sep 2023 12:06:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235222AbjIGQUb (ORCPT
+        with ESMTP id S237669AbjIGQGQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Sep 2023 12:20:31 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD60559C5
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Sep 2023 09:16:45 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-98377c5d53eso137220166b.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Sep 2023 09:16:45 -0700 (PDT)
+        Thu, 7 Sep 2023 12:06:16 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE0AF1FA18
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Sep 2023 08:57:11 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-31dca134c83so1061115f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Sep 2023 08:57:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694103351; x=1694708151; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1694102159; x=1694706959; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=9cqyTbMBftf/joQMRKfMkLzU0Opm2y7wHA3eqP28zpI=;
-        b=aJ3nk5/GM5Bh+x1GvXR5GvboIgfitGOMXnjXEOW9Tor8YGsvH/LSxIRTC4NBBbINTy
-         9Pewc+sfE6h/pX9RUPhJWxpVrEj0rGsgMJaAEiok/pbDfwzh11iIRXduSxB3Dv38xuXD
-         I8IkVn3jAfDHPyPl0z19jcNLKwooIxcqdt0RiHCZNZVDiik7TrI0U1/yAvD/JyQNSPub
-         74luCJg1Ea+plOQrx3W2RWP03gu9aR6AuQM49P08LSsJV50qrMhvPkSEw9Efz6XHtrWh
-         n9xDsa7txWpDn1KUyWCk+SzAeULT8lFPYMQQHpVmaqx7xbtpaoBy3dYhj0qJwoEy41Gw
-         wGVA==
+        bh=Q2mDdOoUtMj+G7MqUHaJG2Oe4r73+j5wUSjZ+K/6r1M=;
+        b=MNboWaBmVZ7eESp7vvaPSp8JVDrDZGI7//BKW5JycUQ+nQqgxP0FoG3PHzOee7i1yq
+         3VV20YqOVt1W5Gx3St9K8Zp2tD6nfgHZyPtAd9UXO8X0LMpQJsviHfYcQXvAPLlNnr34
+         Zn8qv0bZFg1f0QDav8ZZTgudBz40x9Yu55gInloiC4drI3jORqG5BD1+HaYDTh6O7vGs
+         WISzyr6LgIhV7kCcooarHKnBFTDZTjHFoZ1O1I9chyqek8V1vtE1gtFXbHQofeayiFRC
+         4cVt9JVPwZaapnqvAtPtWWiPX/4jgD+FFoe/CqLuQz+O56+oKzIMzDl82bfNslaWTGnU
+         O+Fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1694103351; x=1694708151;
+        d=1e100.net; s=20221208; t=1694102159; x=1694706959;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9cqyTbMBftf/joQMRKfMkLzU0Opm2y7wHA3eqP28zpI=;
-        b=I4Kda2E1iGZVRQiHcR4GCmLcyt/me6+wOXQtKFP0/HkfIBRW6RrFEb/68tcGANJlIH
-         oml7rhN3WxYMBhRwSyR5AY/2eiAEr8x0ggz+MwJ7Nd0+hk5gkAbte9OcQd9iVpCcrbL7
-         FZx2nk/jVcPbLKgCUrZfgm7r6XhZRGLQ3MWbuposxJjDavCmRSlj8cn8oQG+/aFdDXu6
-         2rI73zCr/KoEXcl3zI77Mg9UBHluVAfOpgkwCCnRLlx+uimYQW59IzJMyaZ984a5aK9E
-         JVV7Nl2kJ5JMpvEDJwmI0tFMOcRmVwLd9Dm/fiA4sILAp1jFCJHg7RzJBXrIMBuvq3dj
-         MeFQ==
-X-Gm-Message-State: AOJu0YzSG264wy7elGtHJ38kC8883KTvO5CoqiBPK/4w3bOtEIuNVle0
-        IAWIGNHU20k1MiJZ3+h23DrZmxSWvfgBfHia3bshOw==
-X-Google-Smtp-Source: AGHT+IElMhH6SZyz3Q6I00GiHi9+hHjfTot2J8HBhVaHsG4aeOjUaubp+sXD76/MBLaMZ8727VrnoQ==
-X-Received: by 2002:a17:906:73ce:b0:9a1:edb0:2a8c with SMTP id n14-20020a17090673ce00b009a1edb02a8cmr3878447ejl.39.1694075088243;
-        Thu, 07 Sep 2023 01:24:48 -0700 (PDT)
+        bh=Q2mDdOoUtMj+G7MqUHaJG2Oe4r73+j5wUSjZ+K/6r1M=;
+        b=lBCzUx2FZ3jk7cr73JB8llt34vcXS+q3bpMgg/bj6yrZyVE4qp5pyZebaXNlQ+jjgf
+         61EiHMDPjxMvuOY8BSOFBdoMtUQ9ke1Us09ElcGhxVJQpJRkJdlSSmlYsSLJONnK1smJ
+         mEJWrBhTEynyGDD/166PS6JdrPriaICwd0asc6bGRyZcYrzsX9cSsoK52mDTnLuueNlu
+         tzuAA9cRYBmws2HbWrY/8OZgMc1bdFwV3J1+Qgv1tRxRkGZVlbK2PLYKWvb54m08znKD
+         knNvcEPoBA9E8uKjJg0+5QDm45PE3dNcZbVC1c2XTvzZQhPyjjUayxJpCtESz9TQtKpI
+         iLkw==
+X-Gm-Message-State: AOJu0YzhwKIHlCV5OeK6P+cLH1ekByRfPbxoubtNNCtTilakfdsABJ90
+        BKR+WgPUh/UafrMrW4W77RR+51W9hhLOTDnQHNLuDg==
+X-Google-Smtp-Source: AGHT+IGL3X4jnE8aHxmeAy21FcPDQXKVfwcbk30P7hctEGcYhjE/lblNUGOm9FkXIpnKlicHb8htXQ==
+X-Received: by 2002:a17:907:b18:b0:9a1:e231:67ec with SMTP id h24-20020a1709070b1800b009a1e23167ecmr3903209ejl.61.1694075133580;
+        Thu, 07 Sep 2023 01:25:33 -0700 (PDT)
 Received: from [192.168.37.232] (178235177204.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.204])
-        by smtp.gmail.com with ESMTPSA id lu7-20020a170906fac700b00992e14af9b9sm9949024ejb.134.2023.09.07.01.24.45
+        by smtp.gmail.com with ESMTPSA id lu7-20020a170906fac700b00992e14af9b9sm9949024ejb.134.2023.09.07.01.25.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Sep 2023 01:24:47 -0700 (PDT)
-Message-ID: <4f51bd22-0f7d-4e94-8d84-98091fc2dd53@linaro.org>
-Date:   Thu, 7 Sep 2023 10:24:44 +0200
+        Thu, 07 Sep 2023 01:25:33 -0700 (PDT)
+Message-ID: <667b49cc-dc12-4cee-8865-6b098a9928e0@linaro.org>
+Date:   Thu, 7 Sep 2023 10:25:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 01/10] clk: qcom: clk-alpha-pll: introduce stromer plus
- ops
+Subject: Re: [PATCH v1 03/10] clk: qcom: apss-ipq-pll: Fix 'l' value for
+ ipq5332_pll_config
 Content-Language: en-US
 To:     Varadarajan Narayanan <quic_varada@quicinc.com>,
         ilia.lin@kernel.org, agross@kernel.org, andersson@kernel.org,
@@ -66,7 +66,7 @@ To:     Varadarajan Narayanan <quic_varada@quicinc.com>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
 References: <cover.1693996662.git.quic_varada@quicinc.com>
- <18a3bc0c5b371deec5c4bbe6ceacf8afcf0bc640.1693996662.git.quic_varada@quicinc.com>
+ <543183ecfba929683c1b8d7ff24d75df489ef0cf.1693996662.git.quic_varada@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -103,13 +103,12 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <18a3bc0c5b371deec5c4bbe6ceacf8afcf0bc640.1693996662.git.quic_varada@quicinc.com>
+In-Reply-To: <543183ecfba929683c1b8d7ff24d75df489ef0cf.1693996662.git.quic_varada@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -117,32 +116,14 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 7.09.2023 07:21, Varadarajan Narayanan wrote:
-> Stromer plus APSS PLL does not support dynamic frequency scaling.
-> To switch between frequencies, we have to shut down the PLL,
-> configure the L and ALPHA values and turn on again. So introduce the
-> separate set of ops for Stromer Plus PLL.
+> The earlier 'l' value of 0x3e is for 1.5GHz. Not all SKUs support
+> this frequency. Hence set it to 0x2d to get 1.1GHz which is
+> supported in all SKUs.
 > 
+> Fixes: c7ef7fbb1ccf ("clk: qcom: apss-ipq-pll: add support for IPQ5332")
 > Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
 > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 > ---
-[...]
-
-> +
-> +	/* Wait five micro seconds or more */
-> +	udelay(5);
-> +	regmap_update_bits(pll->clkr.regmap, PLL_MODE(pll), PLL_RESET_N,
-> +			   PLL_RESET_N);
-> +
-> +	/* The lock time should be less than 50 micro seconds worst case */
-> +	udelay(50);
-https://www.kernel.org/doc/Documentation/timers/timers-howto.txt
-
-> +
-> +	ret = wait_for_pll_enable_lock(pll);
-> +	if (ret) {
-> +		pr_err("alpha pll running in 800 MHz with source GPLL0\n");
-> +		return ret;
-> +	}
-Would that not be SoC-specific information?
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
