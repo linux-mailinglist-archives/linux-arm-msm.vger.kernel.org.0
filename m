@@ -2,82 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D78C679744D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Sep 2023 17:37:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 92CAE797459
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Sep 2023 17:37:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245108AbjIGPhO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Sep 2023 11:37:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59588 "EHLO
+        id S245481AbjIGPhR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Sep 2023 11:37:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234886AbjIGPXj (ORCPT
+        with ESMTP id S1344895AbjIGPeC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Sep 2023 11:23:39 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12FECCC;
-        Thu,  7 Sep 2023 08:23:34 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3874sZAx022659;
-        Thu, 7 Sep 2023 06:33:05 GMT
+        Thu, 7 Sep 2023 11:34:02 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCCD3CE7;
+        Thu,  7 Sep 2023 08:33:41 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3875qMYa021714;
+        Thu, 7 Sep 2023 06:48:22 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=JFZTAEqUw06HiKRzwRcV8dHS2Bw07chhvq9SlkyxuJE=;
- b=FKBs//Mi6yNB2zU403Iy8E/w3AytZq7ZNiDCYUzUv4y2CN6PbvS+Czum7fP2VAAEW8Nt
- HwHM8QyYnTK61reoRWun4V/CEg6oH+kiFm2mcGhTQs75TuSaDuwUo6CYQHOXoOYM05mw
- OfG3L95q9eiCrJJYvE/iW+8hIAoaR6uLIIDmS9b8LZul7AsRwDELIztGWJ4xoKW+fHnb
- XwA9RlODZzcI07QbsmCilALgHQOEKBzajh5mJSjTBWowYPcYuvOi2h6aFcnqyd7jCob9
- bMKBzPAtwVW6WlQ6F3WeWpz11y/hSF62FrfXYWLiCkK96gY7cT4F7lxvPN1PMrZ2WbWT yw== 
+ bh=tGFC/H+QVFSqX4jvoN2a0DvydoXYUiFjGa7AQvTYEc0=;
+ b=UFy2YqeLY4tezBFcVmvVNghUFgKYE8d4U947GSY6cKzbj44JQeN+TM3DZ8MtbtM6E6k7
+ FKMHs75EmlBGGdRQvhiwrN2SExm1xc3IF0yjYsis5xxVFpAtwp/p38Nl0+TaeRh0NWwG
+ qDEtLtXrkFhGoa8607PbnMh3x81AKaA4bWNnFZT8rX2yVhyG/8PNUzEaP6UMygSB4kbh
+ xxHPzpZQ5WcoUmpXjdgJi+A/48iDLJ1SDGJP0bHopbtKimUSldy8r9Px/x19wO3LnPHA
+ aCKub16oZJUGteo3Sp5xvphYhTanQFWeFNIAaNTwx4br94mCAqV8Xs3DaaNDJJBytgyB ng== 
 Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sxwes1a8d-1
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sy4bqgjsn-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 07 Sep 2023 06:33:04 +0000
+        Thu, 07 Sep 2023 06:48:21 +0000
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3876X3Hl024064
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3876mLFs012062
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 7 Sep 2023 06:33:03 GMT
-Received: from [10.216.58.2] (10.80.80.8) by nalasex01c.na.qualcomm.com
+        Thu, 7 Sep 2023 06:48:21 GMT
+Received: from [10.239.133.211] (10.80.80.8) by nalasex01c.na.qualcomm.com
  (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 6 Sep
- 2023 23:32:50 -0700
-Message-ID: <005459a2-8daf-1c84-0309-7dd028652909@quicinc.com>
-Date:   Thu, 7 Sep 2023 12:02:45 +0530
+ 2023 23:47:45 -0700
+Message-ID: <2fa491d6-2a1c-8263-f36a-81131adad51f@quicinc.com>
+Date:   Thu, 7 Sep 2023 14:47:42 +0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH v3 2/4] firmware: qcom_scm: disable SDI if required
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.0
+Subject: Re: [PATCH v8 09/13] coresight-tpdm: Add nodes for dsb edge control
 Content-Language: en-US
-To:     Mukesh Ojha <quic_mojha@quicinc.com>,
-        Robert Marko <robimarko@gmail.com>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <quic_gurus@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <computersforpeace@gmail.com>
-References: <20230816164641.3371878-1-robimarko@gmail.com>
- <20230816164641.3371878-2-robimarko@gmail.com>
- <ff9ec6f5-9c7c-546b-5814-159d7e2843a8@quicinc.com>
- <CAOX2RU7wbZopGErQ71frXFMz4+Y9QU6SjfrYbZPT_3yd0gU73A@mail.gmail.com>
- <b096db3b-bb2b-5146-9b75-bcc57ae318b0@quicinc.com>
-From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
-In-Reply-To: <b096db3b-bb2b-5146-9b75-bcc57ae318b0@quicinc.com>
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <andersson@kernel.org>
+References: <1692681973-20764-1-git-send-email-quic_taozha@quicinc.com>
+ <1692681973-20764-10-git-send-email-quic_taozha@quicinc.com>
+ <167f1869-9b73-f56a-f6aa-7587e23fc582@arm.com>
+ <27042351-ba5d-7048-adc1-f58955c6d116@quicinc.com>
+ <4370a34d-e36f-421c-aa02-48dd96c0af77@arm.com>
+From:   Tao Zhang <quic_taozha@quicinc.com>
+In-Reply-To: <4370a34d-e36f-421c-aa02-48dd96c0af77@arm.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 5t3KxcZIZH3xK9oAMV6RfN7d5s_z2KoI
-X-Proofpoint-GUID: 5t3KxcZIZH3xK9oAMV6RfN7d5s_z2KoI
+X-Proofpoint-GUID: H2ValitOd7GsK0n2q1LEAxvKAhrWjZUz
+X-Proofpoint-ORIG-GUID: H2ValitOd7GsK0n2q1LEAxvKAhrWjZUz
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
  definitions=2023-09-06_12,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- priorityscore=1501 bulkscore=0 clxscore=1015 phishscore=0 adultscore=0
- spamscore=0 impostorscore=0 suspectscore=0 mlxscore=0 mlxlogscore=999
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309070057
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1015
+ priorityscore=1501 lowpriorityscore=0 malwarescore=0 suspectscore=0
+ phishscore=0 spamscore=0 mlxlogscore=999 mlxscore=0 impostorscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309070058
 X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -89,128 +99,203 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-<snip ..>
-
->>>> +     int ret;
->>>> +     struct qcom_scm_desc desc = {
->>>> +             .svc = QCOM_SCM_SVC_BOOT,
->>>> +             .cmd = QCOM_SCM_BOOT_SDI_CONFIG,
->>>> +             .args[0] = 1, /* Disable watchdog debug */
->>>> +             .args[1] = 0, /* Disable SDI */
->>>> +             .arginfo = QCOM_SCM_ARGS(2),
->>>> +             .owner = ARM_SMCCC_OWNER_SIP,
->>>> +     };
->>>> +     struct qcom_scm_res res;
->>>> +
->>>> +     ret = qcom_scm_clk_enable();
->>>> +     if (ret)
->>>> +             return ret;
->>>> +     ret = qcom_scm_call(__scm->dev, &desc, &res);
->>>
->>> Would you not be wanting this call to be atomic ?
+On 9/5/2023 5:36 PM, Suzuki K Poulose wrote:
+> On 01/09/2023 17:01, Tao Zhang wrote:
 >>
->> This is implemented based off the downstream 5.4 kernel as I dont have
->> the SCM docs
->> so I dont know if its even supported in the atomic version.
-> 
-> Ok,.
-> 
-> Well, Kernel version does not guarantees us whether certain things
-> are supported or not in the firmware and it is not bound to any
-> particular firmware version;
-> 
-> So, whatever firmware version it is running with, we should try to
-> support.
-> 
-> Should we implement certain kind of call, if fastcall(atomic) is 
-> supported go-ahead otherwise fallback to slowcalls (interruptible)
-> calls, but this is completely out of the context of this patch.
-> 
-
-  I replied on older thread, was not in CC here, just saw this.
-
-  Agree, atomic api is out of this context and we could take it up
-  separately.
-
->>>
->>>> +
->>>> +     qcom_scm_clk_disable();
->>>> +
->>>> +     return ret ? : res.result[0];
->>>> +}
->>>> +
->>>>    static int __qcom_scm_set_dload_mode(struct device *dev, bool 
->>>> enable)
->>>>    {
->>>>        struct qcom_scm_desc desc = {
->>>> @@ -1468,6 +1491,12 @@ static int qcom_scm_probe(struct 
->>>> platform_device *pdev)
->>>>        if (download_mode)
->>>>                qcom_scm_set_download_mode(true);
+>> On 9/1/2023 10:07 PM, Suzuki K Poulose wrote:
+>>> On 22/08/2023 06:26, Tao Zhang wrote:
+>>>> Add the nodes to set value for DSB edge control and DSB edge
+>>>> control mask. Each DSB subunit TPDM has maximum of n(n<16) EDCR
+>>>> resgisters to configure edge control. DSB edge detection control
+>>>> 00: Rising edge detection
+>>>> 01: Falling edge detection
+>>>> 10: Rising and falling edge detection (toggle detection)
+>>>> And each DSB subunit TPDM has maximum of m(m<8) ECDMR registers to
+>>>> configure mask. Eight 32 bit registers providing DSB interface
+>>>> edge detection mask control.
 >>>>
->>>> +     /*
->>>> +      * Disable SDI if indicated by DT that it is enabled by default.
->>>> +      */
->>>> +     if (of_property_read_bool(pdev->dev.of_node, "qcom,sdi-enabled"))
->>>> +             qcom_scm_disable_sdi();
+>>>> Add the nodes to configure DSB edge control and DSB edge control
+>>>> mask. Each DSB subunit TPDM maximum of 256 edge detections can be
+>>>> configured. The index and value sysfs files need to be paired and
+>>>> written to order. The index sysfs file is to set the index number
+>>>> of the edge detection which needs to be configured. And the value
+>>>> sysfs file is to set the control or mask for the edge detection.
+>>>> DSB edge detection control should be set as the following values.
+>>>> 00: Rising edge detection
+>>>> 01: Falling edge detection
+>>>> 10: Rising and falling edge detection (toggle detection)
+>>>> And DSB edge mask should be set as 0 or 1.
+>>>> Each DSB subunit TPDM has maximum of n(n<16) EDCR resgisters to
+>>>> configure edge control. And each DSB subunit TPDM has maximum of
+>>>> m(m<8) ECDMR registers to configure mask.
+>>>>
+>>>> Add the nodes to read a set of the edge control value and mask
+>>>> of the DSB in TPDM.
+>>>>
+>>>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+>>>> ---
+>>>>   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   |  51 ++++++
+>>>>   drivers/hwtracing/coresight/coresight-tpdm.c       | 177 
+>>>> ++++++++++++++++++++-
+>>>>   drivers/hwtracing/coresight/coresight-tpdm.h       |  63 ++++++++
+>>>>   3 files changed, 288 insertions(+), 3 deletions(-)
+>>>>
+>>>> diff --git 
+>>>> a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm 
+>>>> b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>>>> index e17d1b4..097fdc4 100644
+>>>> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>>>> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>>>> @@ -57,3 +57,54 @@ Description:
+>>>>           Bit[3] : Set to 0 for low performance mode.
+>>>>                    Set to 1 for high performance mode.
+>>>>           Bit[4:8] : Select byte lane for high performance mode.
+>>>> +
+>>>> +What: /sys/bus/coresight/devices/<tpdm-name>/dsb_edge/ctrl_idx
+>>>> +Date:        March 2023
+>>>> +KernelVersion    6.5
 >>>
->>> Why don't we do this call in qcom_scm_shutdown()
->>> also does it not conflict with above download_mode
->>> we have enabled download mode but disabling SDI
->>> means (hard reset) and will not be collecting
->>> crash dump?
+>>> s/6.5/6.7
+>> Sure, I will update this in the next patch series.
+>>>
+>>>> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao 
+>>>> Zhang (QUIC) <quic_taozha@quicinc.com>
+>>>> +Description:
+>>>> +        (RW) Set/Get the index number of the edge detection for 
+>>>> the DSB
+>>>> +        subunit TPDM. Since there are at most 256 edge detections, 
+>>>> this
+>>>> +        value ranges from 0 to 255.
+>>>> +
+>>>> +What: /sys/bus/coresight/devices/<tpdm-name>/dsb_edge/ctrl_val
+>>>> +Date:        March 2023
+>>>> +KernelVersion    6.5
+>>>
+>>> same as above
+>>>
+>>>> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao 
+>>>> Zhang (QUIC) <quic_taozha@quicinc.com>
+>>>> +Description:
+>>>> +        Write a data to control the edge detection corresponding to
+>>>> +        the index number. Before writing data to this sysfs file,
+>>>> +        "ctrl_idx" should be written first to configure the index
+>>>> +        number of the edge detection which needs to be controlled.
+>>>> +
+>>>> +        Accepts only one of the following values.
+>>>> +        0 - Rising edge detection
+>>>> +        1 - Falling edge detection
+>>>> +        2 - Rising and falling edge detection (toggle detection)
+>>>> +
+>>>> +
+>>>> +What: /sys/bus/coresight/devices/<tpdm-name>/dsb_edge/ctrl_mask
+>>>> +Date:        March 2023
+>>>> +KernelVersion    6.5
+>>>> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao 
+>>>> Zhang (QUIC) <quic_taozha@quicinc.com>
+>>>> +Description:
+>>>> +        Write a data to mask the edge detection corresponding to 
+>>>> the index
+>>>> +        number. Before writing data to this sysfs file, "ctrl_idx" 
+>>>> should
+>>>> +        be written first to configure the index number of the edge 
+>>>> detection
+>>>> +        which needs to be masked.
+>>>> +
+>>>> +        Accepts only one of the 2 values -  0 or 1.
+>>>> +
+>>>> +What: /sys/bus/coresight/devices/<tpdm-name>/dsb_edge/edcr[0:15]
+>>>> +Date:        March 2023
+>>>> +KernelVersion    6.5
+>>>> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao 
+>>>> Zhang (QUIC) <quic_taozha@quicinc.com>
+>>>> +Description:
+>>>> +        Read a set of the edge control value of the DSB in TPDM.
+>>>
+>>> Read edge control register n for edcr<n>.
 >>
->> Because doing it in SCM removal is too late, what if we have a WDT
->> assertion and not a
->> regular reboot?
->> It would mean that the board will get stuck in the debug mode which is
->> not useful for users and
->> requires the power to be pulled in order to boot normally again.
-> 
-> Agree.
-
-  For IPQ chipsets, SDI bit is used like below,
-
-    For abnormal resets (like WDT), should be set '1' for valid dump
-    collection.
-
-    For reboot, should be cleared to '0' to avoid dump collection which
-    is not required in this case.
-
-    For HLOS panic, is a don't care, dumps always get collected and
-    firmware takes care of clearing the SDI bit.
-
-    Mukesh,  Can you confirm if its same for msm also ?
-> 
-> Just a wild guess..
-> 
-> Can we check if this call __qcom_scm_is_call_available() helps
-> to determine, if the certain soc has this SCM calls supported
-> and if it is there it can be disabled.
-> 
-> __qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_BOOT, 
-> QCOM_SCM_BOOT_SDI_CONFIG)
-> 
-
-  Yes, as i mentioned in other thread, checking using
-  qcom_scm_is_call_available is better. That said, would require
-  testing on all IPQ/MSM socs to confirm if firmware supports it.
-
+>> In fact, we don't read the register directly through this sysfs file, 
+>> but read the value
 >>
->> I am not sure about the download mode, this is where insight from QCA
->> really help as I am
->> doing this with very limited docs.
-> 
-> Download mode would not be reflected unless it is debug
-> board, whatever you write will not be allowed if it is a
-> secure device.
-> 
+>> we set to be written to the registers. Do I still need to modify it 
+>> here?
+>
+> thats fine.
+>
+>>
+>>>
+>>>> +
+>>>> +What: /sys/bus/coresight/devices/<tpdm-name>/dsb_edge/edcmr[0:7]
+>>>> +Date:        March 2023
+>>>> +KernelVersion    6.5
+>>>> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao 
+>>>> Zhang (QUIC) <quic_taozha@quicinc.com>
+>>>> +Description:
+>>>> +        Read a set of the edge control mask of the DSB in TPDM.
+>>>> \ No newline at end of file
+>>>> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c 
+>>>> b/drivers/hwtracing/coresight/coresight-tpdm.c
+>>>> index 2424eb7..ba61e6a 100644
+>>>> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
+>>>> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+>>>> @@ -21,6 +21,29 @@
+>>>>     DEFINE_CORESIGHT_DEVLIST(tpdm_devs, "tpdm");
+>>>>   +/* Read dataset array member with the index number */
+>>>> +static ssize_t tpdm_simple_dataset_show(struct device *dev,
+>>>> +               struct device_attribute *attr, char *buf)
+>>>> +{
+>>>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>>>> +    struct tpdm_dataset_attribute *tpdm_attr =
+>>>> +        container_of(attr, struct tpdm_dataset_attribute, attr);
+>>>> +
+>>>> +    if (tpdm_attr->idx >= tpdm_attr->max)
+>>>
+>>> minor nit: See my comment on max below. We could skip max.
+>> I will update this in the next patch series.
+>>>
+>>>> +        return -EINVAL;
+>>>> +
+>>>> +    switch (tpdm_attr->mem) {
+>>>> +    case DSB_EDGE_CTRL:
+>>>         if (tmp_attr->idx > TPDM_DSB_MAX_EDCR)
+>>>             break;
+>>>
+>>>> +        return sysfs_emit(buf, "0x%x\n",
+>>>> + drvdata->dsb->edge_ctrl[tpdm_attr->idx]);
+>>>> +    case DSB_EDGE_CTRL_MASK:
+>>>         if (tmp_attr->idx > TPDM_DSB_MAX_EDCMR)
+>>>             break;
+>>>
+>>>> +        return sysfs_emit(buf, "0x%x\n",
+>>>> + drvdata->dsb->edge_ctrl_mask[tpdm_attr->idx]);
+>>>     }
+>>>
+>>>     return -EINVAL;
+>> Why do we need to return this error code here?
+>>>
+>
+>
+> The whole block would look like :
+>
+>     switch (tpdm->attr->mem) {
+>     case DSB_EDGE_CTRL:
+>         if (tmp_attr->idx > TPDM_DSB_MAX_EDCR)
+>             break;
+>         return sysfs_...
+>     case DSB_EDGE_CTRL_MASK:
+>         if (tmp_attr->idx > TPDM_DSB_MAX_EDCMR)
+>             break;
+>         return sysfs_...
+>     }
+>
+>     return -EINVAL;
 
-   Yes, 'download mode' bit is similar, but that is used by the firmware
-   to determining whether to collect dumps on non-secure boards.
-   Specifically, 'SDI bit' on some socs is used by firmware to determine
-   if boot is happening from a 'abnormal crash', hence put DDR to
-   self-refresh etc for valid dumps.
+Sure, I will update this in the next patch series.
 
-Regards,
-  Sricharan
+
+Best,
+
+Tao
+
+>
+> Suzuki
+>
