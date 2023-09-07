@@ -2,120 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 38C737975F3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Sep 2023 18:00:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E31A79744B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Sep 2023 17:37:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233451AbjIGQAu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Sep 2023 12:00:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41504 "EHLO
+        id S245034AbjIGPhM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Sep 2023 11:37:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240643AbjIGP7E (ORCPT
+        with ESMTP id S232817AbjIGPWY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Sep 2023 11:59:04 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32704284C2;
-        Thu,  7 Sep 2023 08:47:26 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3876nb4Q016363;
-        Thu, 7 Sep 2023 10:24:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=XLJztAV/phq5KKxeTjoRmOdM6LRYuvdNOdfunfImmz0=;
- b=O25m78kPKU3qPVRbzYBDctUw+uACsHY0eVcMND/kH9QtaP30r8S7NKwWXY2fpUdXNaVl
- 61I4gN0MXSSqFhRY4D2syvGoR2EsKkLQHBqi1esiICEE1BdEnCGdpE7ICLzOJBxeLKhW
- /LMzvAvpW85q+GWTy68juVeVDrnaeK+kQ8f31ErWF9zJ45eV/2f/gVMoe0KoODbTN/lT
- dK1j16/8drhYgKFvLiy7EzaIg6Gbc6yhxHus2T8mQk/N9fKdc20ajsCKYm9vQNR8F79B
- MmBm4ClbtnTRF8LSSdFQKibSQLqO9DzHAn0CONi+7z2WH4uhsy+3ZDqE8Giy+le8iLsn GA== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sy951ggcr-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 07 Sep 2023 10:24:13 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 387AODmW007795
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 7 Sep 2023 10:24:13 GMT
-Received: from varda-linux.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Thu, 7 Sep 2023 03:24:09 -0700
-Date:   Thu, 7 Sep 2023 15:54:05 +0530
-From:   Varadarajan Narayanan <quic_varada@quicinc.com>
-To:     Dan Carpenter <dan.carpenter@linaro.org>
-CC:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <kernel-janitors@vger.kernel.org>
-Subject: Re: [PATCH] phy: qcom-m31: Fix error code in probe()
-Message-ID: <20230907102405.GA7987@varda-linux.qualcomm.com>
-References: <7926c8e6-630e-4d7a-b0b2-d29b3c8b2c09@moroto.mountain>
+        Thu, 7 Sep 2023 11:22:24 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id BDFB71BF7;
+        Thu,  7 Sep 2023 08:21:53 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B8F381576;
+        Thu,  7 Sep 2023 03:37:01 -0700 (PDT)
+Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id CBA573F67D;
+        Thu,  7 Sep 2023 03:36:21 -0700 (PDT)
+Date:   Thu, 7 Sep 2023 11:36:19 +0100
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Nikunj Kela <quic_nkela@quicinc.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        cristian.marussi@arm.com, Sudeep Holla <sudeep.holla@arm.com>,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, linux-arm-kernel@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3 0/3] Add qcom hvc/shmem transport
+Message-ID: <20230907103619.2kqh7tfivwdfm5rd@bogus>
+References: <20230718160833.36397-1-quic_nkela@quicinc.com>
+ <20230811175719.28378-1-quic_nkela@quicinc.com>
+ <3342d8bf-5281-c082-cb9a-7a027b413237@quicinc.com>
+ <f5b05cfa-f12c-4f4d-a801-3aa76d843d6d@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <7926c8e6-630e-4d7a-b0b2-d29b3c8b2c09@moroto.mountain>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: uepUk1hYhfIIYyBLxKaaYwTVyx55XYRF
-X-Proofpoint-ORIG-GUID: uepUk1hYhfIIYyBLxKaaYwTVyx55XYRF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-07_02,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1011
- adultscore=0 impostorscore=0 phishscore=0 lowpriorityscore=0
- suspectscore=0 mlxscore=0 mlxlogscore=782 priorityscore=1501 spamscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309070091
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <f5b05cfa-f12c-4f4d-a801-3aa76d843d6d@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 07, 2023 at 12:54:39PM +0300, Dan Carpenter wrote:
-> This accidentally returns the wrong variable.  It should be "qphy->vreg"
-> instead of "qphy->phy".
->
-> Fixes: 08e49af50701 ("phy: qcom: Introduce M31 USB PHY driver")
-> Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-> ---
-> When we're adding new drivers then we should use the new driver
-> prefix instead of the subsystem prefix.  For example:
->
->  Bad: [PATCH] phy: qcom: Introduce M31 USB PHY driver
-> Good: [PATCH] phy: qcom-m31: Introduce M31 USB PHY driver
->
-> That way it's obvious to the first person who sends a bugfix
-> what the driver prefix is.
->
->  drivers/phy/qualcomm/phy-qcom-m31.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/phy/qualcomm/phy-qcom-m31.c b/drivers/phy/qualcomm/phy-qcom-m31.c
-> index ed08072ca032..99d570f4142a 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-m31.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-m31.c
-> @@ -256,7 +256,7 @@ static int m31usb_phy_probe(struct platform_device *pdev)
->
->  	qphy->vreg = devm_regulator_get(dev, "vdda-phy");
->  	if (IS_ERR(qphy->vreg))
-> -		return dev_err_probe(dev, PTR_ERR(qphy->phy),
-> +		return dev_err_probe(dev, PTR_ERR(qphy->vreg),
->  						"failed to get vreg\n");
->
->  	phy_set_drvdata(qphy->phy, qphy);
-> --
-> 2.39.2
+On Tue, Sep 05, 2023 at 06:37:14PM +0200, Krzysztof Kozlowski wrote:
+> On 05/09/2023 18:06, Nikunj Kela wrote:
+> > 
+> > On 8/11/2023 10:57 AM, Nikunj Kela wrote:
+> >> This change introduce a new transport channel for Qualcomm virtual
+> >> platforms. The transport is mechanically similar to ARM_SCMI_TRANSPORT_SMC.
+> >> The difference between the two transports is that a parameter is passed in
+> >> the hypervisor call to identify which doorbell to assert. This parameter is
+> >> dynamically generated at runtime on the device and insuitable to pass via
+> >> the devicetree.
+> >>
+> >> The function ID and parameter are stored by firmware in the shmem region.
+> >>
+> >> This has been tested on ARM64 virtual Qualcomm platform.
+> >>
+> >> ---
+> >> v3 -> fix the compilation error reported by the test bot,
+> >>        add support for polling based instances
+> >>
+> >> v2 -> use allOf construct in dtb schema,
+> >>        remove wrappers from mutexes,
+> >>        use architecture independent channel layout
+> >>
+> >> v1 -> original patches
+> >>
+> >> Nikunj Kela (3):
+> >>    dt-bindings: arm: convert nested if-else construct to allOf
+> >>    dt-bindings: arm: Add qcom specific hvc transport for SCMI
+> >>    firmware: arm_scmi: Add qcom hvc/shmem transport
+> >>
+> >>   .../bindings/firmware/arm,scmi.yaml           |  67 ++---
+> >>   drivers/firmware/arm_scmi/Kconfig             |  13 +
+> >>   drivers/firmware/arm_scmi/Makefile            |   2 +
+> >>   drivers/firmware/arm_scmi/common.h            |   3 +
+> >>   drivers/firmware/arm_scmi/driver.c            |   4 +
+> >>   drivers/firmware/arm_scmi/qcom_hvc.c          | 232 ++++++++++++++++++
+> >>   6 files changed, 293 insertions(+), 28 deletions(-)
+> >>   create mode 100644 drivers/firmware/arm_scmi/qcom_hvc.c
+> > Gentle Ping!
 
-I believe this is addressed by https://lore.kernel.org/linux-arm-msm/20230824091345.1072650-1-yangyingliang@huawei.com/
+Pong !
 
-Thanks
-Varada
+>
+> It's third ping these two weeks from Qualcomm. Folks, it is merge
+> window. What do you think will happen with your ping during this time?
+>
+
++1
+
+Okay, here is the deal with this patch set. As you are aware that a previous
+merged solution was abandoned by Qcom in a single kernel release cycle. So
+I decided to ignore this for one or 2 kernel release cycle to make sure
+Qcom makes up their mind on the design and then we can see how to proceed.
+Qcom must understand upstream kernel is not a playground to push their
+design which they might decided to drop support for in such short period.
+Please understand the upstream kernel supports platforms that are more than
+few decades old. It is not like the mobile platforms that are hardly supported
+for couple of years. And similarly, we push core support if and only if we
+know for sure it will be used on some platform. I trusted Qcom with the
+previous extension of SMC/HVC transport but I was proven wrong.
+
+Also, I definitely don't like the way you have copied the whole smc.c
+and changed it to Qcom's need and made it qcom_hvc.c. Just add the required
+changes in smc.c.
+
+--
+Regards,
+Sudeep
