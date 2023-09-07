@@ -2,70 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 19D46797885
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Sep 2023 18:47:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB970797C3B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Sep 2023 20:49:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242731AbjIGQrj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Sep 2023 12:47:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37760 "EHLO
+        id S236244AbjIGStd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Sep 2023 14:49:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243590AbjIGQr3 (ORCPT
+        with ESMTP id S236891AbjIGSta (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Sep 2023 12:47:29 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D75191BD9
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Sep 2023 09:47:02 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-31c73c21113so1079361f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Sep 2023 09:47:02 -0700 (PDT)
+        Thu, 7 Sep 2023 14:49:30 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C03ADB9
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Sep 2023 11:49:26 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-40061928e5aso14403975e9.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Sep 2023 11:49:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694105134; x=1694709934; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FIu4eWCkEOSVtI8FoLJRLwwONGivM5mrULXtY5Z5HVI=;
-        b=giVOdMQ5IFjGJzsdDzRayfgwzcrcsDWHJznCZqtaMO8/65Ed1aLt3F3l1EiNniW7tF
-         DGq9snYMVFFSTE+QWHjPYAsZvrDyFkCKsHvyDoNN21bSyHM8SLi0uVtM9dY879VoeNrH
-         eIC9yNGOS4J1+JlRIxOkppaP6OXAP3eR8M4i68t32dJjaDkBsRfIAaQMEcm6lpZdx8yo
-         r8qBoJaf1JbAAiedblCvPzNDbmaVYZ919peP70SSQAgIevOtKDvrpvRVhdTEVkTiGXHk
-         sfxS+UlGCr5xX/CnlKYJayJ11lYgNn4XSnJPBaOjnwcezNzTx6LMrIdqUNDXYmcOzO+i
-         fmEw==
+        d=linaro.org; s=google; t=1694112565; x=1694717365; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rcotZ+hgpp+nJjrDi+TbpAmdclq7uqg53xwk2Tf+VDQ=;
+        b=BjQ/Easv967ELNiwclYq6DomCRlVLh1JizKOXarzRqRKcjn21T3lNSjmzstKWg8ESf
+         06s/Ya5uGCIYouUTTb6PYXk8R6JIUXef3zG6Phxa2T4gcvJas67j1KgxrcDOZvktXLCv
+         dIk96g2wkirncKvdeVx5RjWFSCob1surdbw0cQuvnWi4ZR4lVyw9mCcUwGAuBcN6IDG8
+         E5ZGaKeHiykKMOaKkbD9Oxd9zWuG4IYo/GEcvKjT3S4e/uVgzkcEZvZmd0bYc1rv2VG6
+         w1xsqD+KPkFVX5VK/ZySqf5zHOmvGIlMv2GEQr4Q1mGjdC43TPCYNrZZ+UFm50zSD5kr
+         oHDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1694105134; x=1694709934;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FIu4eWCkEOSVtI8FoLJRLwwONGivM5mrULXtY5Z5HVI=;
-        b=LEARoRxUoMRqdW/vR4Nemuv8CV40ZDZ6SELkC6QDEpc//ET6ImQD3vFsY/tzUBbKCH
-         NHb5ANWjt9uEhp8LTFSTbbigTdPrxBvy0hlSbZXJ9nKVD700gqDlTnA1OuD9ZMui8g9I
-         xm5E+YnUAVIP8krrGkwJVNkp1iG7LmLicmpkukEplrb8ipDd46JXPRUkwTmDz/PuhfoN
-         HhIE4pZNx6T7UKVzXZMB26Skxt2Ozp/EK6N21vN/Y5/USk5zpQgZ+L0lytafNFT1XXfk
-         hvYX7OwTSpSNbOZw7pVc0V+tUWVhL3zNfNBmMasPUwfkzniDu9DLoVT2E4DR0SfzVMfK
-         1p2Q==
-X-Gm-Message-State: AOJu0YzhE0SQAsDN4BgpS5SvvL2XVXWjaDzMxXnXxUZ9cmKb8RBTnTI2
-        kzOmrIafylg24a/1IGHdULmHLV8esYMnw2fT/vo=
-X-Google-Smtp-Source: AGHT+IHYQm/x1ttHvlb4nOLzsoqtQcWa1sflGXM/+Y5olsT43jMQsj+a+Uw0WpuUCkC0LtSmUtNegg==
-X-Received: by 2002:adf:d0ca:0:b0:317:e1fb:d56a with SMTP id z10-20020adfd0ca000000b00317e1fbd56amr5095651wrh.40.1694105077152;
-        Thu, 07 Sep 2023 09:44:37 -0700 (PDT)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id d15-20020adffd8f000000b00317ab75748bsm23822145wrr.49.2023.09.07.09.44.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Sep 2023 09:44:36 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     rfoss@kernel.org, todor.too@gmail.com, bryan.odonoghue@linaro.org,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
-        laurent.pinchart@ideasonboard.com, sakari.ailus@linux.intel.com,
-        andrey.konovalov@linaro.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v4 17/17] media: qcom: camss: Comment CSID dt_id field
-Date:   Thu,  7 Sep 2023 17:44:10 +0100
-Message-ID: <20230907164410.36651-18-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230907164410.36651-1-bryan.odonoghue@linaro.org>
-References: <20230907164410.36651-1-bryan.odonoghue@linaro.org>
+        d=1e100.net; s=20230601; t=1694112565; x=1694717365;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rcotZ+hgpp+nJjrDi+TbpAmdclq7uqg53xwk2Tf+VDQ=;
+        b=bOnbEelg4LDbO2vhMLzX7CewgM1kuep6va5piJZoGhwkJW1w25Lm5BJczj2DElcle8
+         UdGcj3wacbntjGUaocY89PVJF1p0KU72PgbSJ2xedVQbkfTtcMJJArpCPHfC+eOYx04n
+         7Or9R1Wtc3kQSSllz5XHfLPufcNAQcuAB+BdSzOw3kj0XIH6tTfCgL1xJYPMMFeLAoai
+         MDEBjcquH5oxh+ehWFqhI/WmtmFcd7Efje5JfcI8GeBwnjjPw1GcunjrY6iGRP+uT8ht
+         WvlbzdM4HRnJH7uC7iWMbMkB6f/EBOAlAYyCLHWMNgzEcqLBM7IWSX1FC+uAusnAjamJ
+         ZO6w==
+X-Gm-Message-State: AOJu0Yypo3IbK7E55PAp7o89elenEMzIdyTrPR+K4np9CUUjUUNKftef
+        bk/5xLmmOs9Spz7NmMb47GlouewQcTSe+V75aOJ1Xg==
+X-Google-Smtp-Source: AGHT+IEYdFV7oLh32TP8ca2WTxd7wx7Xnds+jA/Gd0dYkjQWZHyvzOW22/tp5BWYDJKXFOGQ72iT1g==
+X-Received: by 2002:a50:fb0f:0:b0:522:3d36:ff27 with SMTP id d15-20020a50fb0f000000b005223d36ff27mr4306806edq.31.1694077443110;
+        Thu, 07 Sep 2023 02:04:03 -0700 (PDT)
+Received: from [192.168.37.232] (178235177204.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.204])
+        by smtp.gmail.com with ESMTPSA id f2-20020a056402150200b0052a3b212157sm9384251edw.63.2023.09.07.02.04.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 Sep 2023 02:04:02 -0700 (PDT)
+Message-ID: <38f64349-5139-4207-91eb-cd39fabd4496@linaro.org>
+Date:   Thu, 7 Sep 2023 11:04:00 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 2/5] arm64: dts: qcom: sm8450: Add opp table support to
+ PCIe
+Content-Language: en-US
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        vireshk@kernel.org, nm@ti.com, sboyd@kernel.org, mani@kernel.org
+Cc:     lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
+        bhelgaas@google.com, rafael@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, quic_vbadigan@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+        quic_ramkri@quicinc.com, quic_parass@quicinc.com
+References: <1694066433-8677-1-git-send-email-quic_krichai@quicinc.com>
+ <1694066433-8677-3-git-send-email-quic_krichai@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <1694066433-8677-3-git-send-email-quic_krichai@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -76,49 +119,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Digging into the documentation we find that the DT_ID bitfield is used to
-map the six bit DT to a two bit ID code. This value is concatenated to the
-VC bitfield to create a CID value. DT_ID is the two least significant bits
-of CID and VC the most significant bits.
+On 7.09.2023 08:00, Krishna chaitanya chundru wrote:
+> PCIe needs to choose the appropriate performance state of RPMH power
+> domain based up on the PCIe gen speed.
+> 
+> So let's add the OPP table support to specify RPMH performance states.
+> 
+> Use opp-level for the PCIe gen speed for easier use.
+> 
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> ---
+[...]
 
-Originally we set dt_id = vc * 4 in and then subsequently set dt_id = vc.
+> +
+> +			pcie1_opp_table: opp-table {
+> +				compatible = "operating-points-v2";
+> +
+> +				opp-1 {
+> +					opp-level = <1>;
+> +					required-opps = <&rpmhpd_opp_low_svs>;
+> +				};
+> +
+> +				opp-2 {
+> +					opp-level = <2>;
+> +					required-opps = <&rpmhpd_opp_low_svs>;
+> +				};
+> +
+> +				opp-3 {
+> +					opp-level = <3>;
+> +					required-opps = <&rpmhpd_opp_low_svs>;
+Is gen3 not supposed to require nom like on pcie0?
 
-commit 3c4ed72a16bc ("media: camss: sm8250: Virtual channels for CSID")
-silently fixed the multiplication by four which would give a better
-value for the generated CID without mentioning what was being done or why.
+Also, can all non-maximum OPPs run at just low_svs?
 
-Next up I haplessly changed the value back to "dt_id = vc * 4" since there
-didn't appear to be any logic behind it.
-
-Hans asked what the change was for and I honestly couldn't remember the
-provenance of it, so I dug in.
-
-Link: https://lore.kernel.org/linux-arm-msm/edd4bf9b-0e1b-883c-1a4d-50f4102c3924@xs4all.nl/
-
-Add a comment so the next hapless programmer doesn't make this same
-mistake.
-
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- drivers/media/platform/qcom/camss/camss-csid-gen2.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/drivers/media/platform/qcom/camss/camss-csid-gen2.c b/drivers/media/platform/qcom/camss/camss-csid-gen2.c
-index 6ba2b10326444..cee50fc87e9de 100644
---- a/drivers/media/platform/qcom/camss/camss-csid-gen2.c
-+++ b/drivers/media/platform/qcom/camss/camss-csid-gen2.c
-@@ -352,6 +352,11 @@ static void __csid_configure_stream(struct csid_device *csid, u8 enable, u8 vc)
- 		phy_sel = csid->phy.csiphy_id;
- 
- 	if (enable) {
-+		/*
-+		 * A value caled 'CID' gets generated internal to CAMSS logic
-+		 * which is a concatenation of [vc:6 | dt_id:2] hence we reuse
-+		 * the least significant two bits of the VC to 'stuff' the CID value.
-+		 */
- 		u8 dt_id = vc;
- 
- 		if (tg->enabled) {
--- 
-2.41.0
-
+Konrad
