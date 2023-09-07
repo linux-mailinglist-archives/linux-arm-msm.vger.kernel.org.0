@@ -2,78 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B8A02797740
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Sep 2023 18:24:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A16E179764B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Sep 2023 18:05:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239898AbjIGQYD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Sep 2023 12:24:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57284 "EHLO
+        id S235360AbjIGQF5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Sep 2023 12:05:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242470AbjIGQWr (ORCPT
+        with ESMTP id S236424AbjIGQFd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Sep 2023 12:22:47 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E7625590;
-        Thu,  7 Sep 2023 09:20:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1694103625; x=1725639625;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=zNEMailIgyjBosQEtquAMy2L53kNHUSvhKExjYy6P7A=;
-  b=JSCaa2Tyf5AQDS30GUQJlOP3DapuBjrnOKgjAb/4VmgR1sysDI+nnN0g
-   mX8kQAz4I99gUWgMKH3BZrCVrSozvuS8tnZUmJjyrsm9L6u3OvOJyoZZg
-   FxUBstM4p/1HuffqRCc7bhlQPELf84osP/YtpUGxqtb3f93d3pRmxvbv3
-   UUJXpJnsGBiBX5RNPAWV0aqsUWHnJYFkfi3TQt+O/6k/2IKTnd9pwplib
-   QMSpkfGb73x4Defg6V3my9N+zvjEC+6tV4t3dC1tiOrAk9YhvbInl8Cq0
-   HPY6MZzaOM4qBePeWTnaVaGXpsWBaVUd0Ju2lVj8LlOaDSc8Zn/UTA0dy
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10825"; a="441325204"
-X-IronPort-AV: E=Sophos;i="6.02,235,1688454000"; 
-   d="scan'208";a="441325204"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Sep 2023 05:24:29 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10825"; a="1072875259"
-X-IronPort-AV: E=Sophos;i="6.02,235,1688454000"; 
-   d="scan'208";a="1072875259"
-Received: from mattu-haswell.fi.intel.com (HELO [10.237.72.199]) ([10.237.72.199])
-  by fmsmga005.fm.intel.com with ESMTP; 07 Sep 2023 05:24:24 -0700
-Message-ID: <ab235faf-1640-e231-bead-1301eebafc92@linux.intel.com>
-Date:   Thu, 7 Sep 2023 15:25:44 +0300
+        Thu, 7 Sep 2023 12:05:33 -0400
+Received: from mail-vk1-f175.google.com (mail-vk1-f175.google.com [209.85.221.175])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 984A21D69A
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Sep 2023 08:55:48 -0700 (PDT)
+Received: by mail-vk1-f175.google.com with SMTP id 71dfb90a1353d-49441300156so274767e0c.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Sep 2023 08:55:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694101993; x=1694706793; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=40rylBcMTDXR7i4w8TksqV00SNZY2PfZiThjPzEVKjU=;
+        b=arY82JdZwnKtVu2QEHXBr6fsYGGpzLa1wDv3zSa+WAVzUTFKZQ/c0i1+3fs92p7YrB
+         ivzvDnbmqmnZ4b+k7BM7px4m2IgEYYp+tcMc7aNq4fff6CqSjtun2x1m4qmqSYBmPzDg
+         lPpoCuQ3OclDiTsLF6iqJKiXGWNzHYKFGZmZ24IuFbV0r4p0axXVk8oZDLoMwroQTYfF
+         m9cTAVPBsWiL0WDRE0/DMLjMrO27Dxsnjn2Q5399LxiU2doMYq6av0U0h3V4XgHWgBVw
+         NjPU1x9Fjm0NiNTwvn8cNNInmeh58416gOGq5IwYJuJwWJDkCtEEzBW85TaG8DdRj5OF
+         NqgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1694101993; x=1694706793;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=40rylBcMTDXR7i4w8TksqV00SNZY2PfZiThjPzEVKjU=;
+        b=DRJX4icPkiQCOzhHSdxqR51LA2yHQj/aVGqPVFyNRAydkPYxk6U7oG0LLQfk+Ur6qW
+         FjiTLdcRg1H/qs3PlE6X2FpI5/6bwWJn7h82bYsdfsk/QM5HV+DxQxl6pSjhsfAY5f9o
+         EnomqmTe+BFyiPb+fZFK61t9GYDMIXY8dKrNfGyUjfWMy/hSIXTYFA/0murSVphF+h2C
+         IPHHD5Y7LeTVhQ4DD3pJnZRRcNTg44W7bgcMtT3oaM5b8NQM6qdkH8IpRahgEJBOokRv
+         zMdSLJJLGcjBJIdlu/+fNMpZr6MScqJbwSe3Vt95vZSAo1lZDnivij0edx+uzQT4RvlF
+         Fr1g==
+X-Gm-Message-State: AOJu0YxyQ+kKYnb4MpWqvXbCFeCboAtAa8YCgQ8T/fyXqHuciKQF/uVZ
+        ICR0alLDavFEeCzrK8m6o61+9anRcZzOAECOwhM096vFw/ipMA5v
+X-Google-Smtp-Source: AGHT+IETdhddPzANTZg932/q6SiIInI1A+ozTRz+mJHbAWbdsy/mtMdePXNFfT+4SqFLkAAkJW11kVd7upfsHv7Zxng=
+X-Received: by 2002:a25:1e0a:0:b0:d1c:876d:2c7d with SMTP id
+ e10-20020a251e0a000000b00d1c876d2c7dmr3250628ybe.13.1694094907900; Thu, 07
+ Sep 2023 06:55:07 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.13.0
-Subject: Re: [PATCH v11 03/13] usb: xhci: Move extcaps related macros to
- respective header file
-Content-Language: en-US
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Johan Hovold <johan@kernel.org>,
-        Mathias Nyman <mathias.nyman@intel.com>
-Cc:     linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+References: <cover.1693996662.git.quic_varada@quicinc.com> <5e3c29df2b42cceb8072b00546a78e1b99b2d374.1693996662.git.quic_varada@quicinc.com>
+In-Reply-To: <5e3c29df2b42cceb8072b00546a78e1b99b2d374.1693996662.git.quic_varada@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 7 Sep 2023 16:54:56 +0300
+Message-ID: <CAA8EJppXxiX7+6nhfKyJYDU0i2pkBzXL5J3EQUapLJXxx3b=HA@mail.gmail.com>
+Subject: Re: [PATCH v1 04/10] clk: qcom: apss-ipq6018: ipq5332: add safe
+ source switch for a53pll
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc:     ilia.lin@kernel.org, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, rafael@kernel.org,
+        viresh.kumar@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        quic_kathirav@quicinc.com, linux-pm@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
-        quic_jackp@quicinc.com, ahalaney@redhat.com,
-        quic_shazhuss@quicinc.com
-References: <20230828133033.11988-1-quic_kriskura@quicinc.com>
- <20230828133033.11988-4-quic_kriskura@quicinc.com>
-From:   Mathias Nyman <mathias.nyman@linux.intel.com>
-In-Reply-To: <20230828133033.11988-4-quic_kriskura@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,13 +74,126 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28.8.2023 16.30, Krishna Kurapati wrote:
-> DWC3 driver needs access to XHCI Extended Capabilities registers to
-> read number of usb2 ports and usb3 ports present on multiport controller.
-> Since the extcaps header is sufficient to parse this info, move port_count
-> related macros and structure from xhci.h to xhci-ext-caps.h.
-> 
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+On Thu, 7 Sept 2023 at 08:22, Varadarajan Narayanan
+<quic_varada@quicinc.com> wrote:
+>
+> Stromer Plus PLL found on IPQ53xx doesn't support dynamic
+> frequency scaling. To achieve the same, we need to park the APPS
+> PLL source to GPLL0, re configure the PLL and then switch the
+> source to APSS_PLL_EARLY.
+>
+> To support this, register a clock notifier to get the PRE_RATE
+> and POST_RATE notification. Change the APSS PLL source to GPLL0
+> when PRE_RATE notification is received, then configure the PLL
+> and then change back the source to APSS_PLL_EARLY.
 
-Acked-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+This means that we are changing the parents behind the back of CCF,
+which is not great.
 
+>
+> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> ---
+>  drivers/clk/qcom/apss-ipq6018.c | 54 ++++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 53 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/clk/qcom/apss-ipq6018.c b/drivers/clk/qcom/apss-ipq6018.c
+> index 4e13a08..ffb6ab5 100644
+> --- a/drivers/clk/qcom/apss-ipq6018.c
+> +++ b/drivers/clk/qcom/apss-ipq6018.c
+> @@ -9,8 +9,11 @@
+>  #include <linux/clk-provider.h>
+>  #include <linux/regmap.h>
+>  #include <linux/module.h>
+> +#include <linux/clk.h>
+> +#include <linux/soc/qcom/smem.h>
+>
+>  #include <dt-bindings/clock/qcom,apss-ipq.h>
+> +#include <dt-bindings/arm/qcom,ids.h>
+>
+>  #include "common.h"
+>  #include "clk-regmap.h"
+> @@ -84,15 +87,64 @@ static const struct qcom_cc_desc apss_ipq6018_desc = {
+>         .num_clks = ARRAY_SIZE(apss_ipq6018_clks),
+>  };
+>
+> +static int cpu_clk_notifier_fn(struct notifier_block *nb, unsigned long action,
+> +                               void *data)
+> +{
+> +       u8 index;
+> +       int err;
+> +
+> +       if (action == PRE_RATE_CHANGE)
+> +               index = P_GPLL0;
+
+I don't see P_GPLL0 being supported in the ipq6018 driver.
+
+> +       else if (action == POST_RATE_CHANGE)
+> +               index = P_APSS_PLL_EARLY;
+
+You also have to handle ABORT_RATE_CHANGE here.
+
+> +       else
+> +               return 0;
+> +
+> +       err = clk_rcg2_mux_closest_ops.set_parent(&apcs_alias0_clk_src.clkr.hw,
+> +                                                 index);
+> +
+> +       return notifier_from_errno(err);
+> +}
+> +
+> +static struct notifier_block cpu_clk_notifier = {
+> +       .notifier_call = cpu_clk_notifier_fn,
+> +};
+> +
+>  static int apss_ipq6018_probe(struct platform_device *pdev)
+>  {
+>         struct regmap *regmap;
+> +       u32 soc_id;
+> +       int ret;
+> +
+> +       ret = qcom_smem_get_soc_id(&soc_id);
+> +       if (ret)
+> +               return ret;
+>
+>         regmap = dev_get_regmap(pdev->dev.parent, NULL);
+>         if (!regmap)
+>                 return -ENODEV;
+>
+> -       return qcom_cc_really_probe(pdev, &apss_ipq6018_desc, regmap);
+> +       ret = qcom_cc_really_probe(pdev, &apss_ipq6018_desc, regmap);
+> +       if (ret)
+> +               return ret;
+> +
+> +       switch (soc_id) {
+> +       /*
+> +        * Only below variants of IPQ53xx support scaling
+> +        */
+> +       case QCOM_ID_IPQ5332:
+> +       case QCOM_ID_IPQ5322:
+> +       case QCOM_ID_IPQ5300:
+
+Please use compat strings instead of using the soc-id.
+
+> +               ret = clk_notifier_register(apcs_alias0_clk_src.clkr.hw.clk,
+> +                                               &cpu_clk_notifier);
+> +               if (ret)
+> +                       return ret;
+> +               break;
+> +       default:
+> +               break;
+> +       }
+> +
+> +       return 0;
+>  }
+>
+>  static struct platform_driver apss_ipq6018_driver = {
+> --
+> 2.7.4
+>
+
+
+--
+With best wishes
+
+Dmitry
