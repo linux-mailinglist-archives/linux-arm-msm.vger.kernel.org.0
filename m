@@ -2,160 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC7FF7975AD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Sep 2023 17:53:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 59B417975AC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Sep 2023 17:53:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234374AbjIGPwE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S231896AbjIGPwE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Thu, 7 Sep 2023 11:52:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36148 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243224AbjIGPu1 (ORCPT
+        with ESMTP id S234571AbjIGPhE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Sep 2023 11:50:27 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA91C59CC;
-        Thu,  7 Sep 2023 08:40:51 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 387DtEDL004974;
-        Thu, 7 Sep 2023 14:20:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=t0M+lC4rAAagaeLRUqBbxq9Tce0AeCSEV2tAjKZ6dY8=;
- b=Jwdnhl850xaIrfI9nDU2q0MLnU79ixvnWamUIsjgcX9xmiXN6ErU9xpYydt/t5AkxhbK
- H/C0Ox1QI4Zu2i57/0KSDQWeOySn8FASWLDgmd/Hq+W2VuEMbOn0y9tup4nn0HlFMlJl
- Z7SSXjG+FNlTJg3QF1ETM7r3fC8ihvcPUe82WI8B3A2Fp+Nu59JMuturi7+YXXeU7l47
- l/Vw3c1oBAirI/svlRvNlgVkr0BvAh7T6EGeBTSySrEXnKuaq/9oxDpEuI0QyCOGD5ek
- dUpn6SRTdwz+wqFWqd9Xqr5F+X6D0b6SH08HmNouZ3i3lU0L9G3CMzD8gqLVjG6HNAQ6 LQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sy4bqhftn-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 07 Sep 2023 14:20:02 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 387EK1GB011421
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 7 Sep 2023 14:20:01 GMT
-Received: from [10.110.56.75] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 7 Sep
- 2023 07:20:00 -0700
-Message-ID: <d79fe150-9930-d351-f096-7d2216526587@quicinc.com>
-Date:   Thu, 7 Sep 2023 07:20:00 -0700
+        Thu, 7 Sep 2023 11:37:04 -0400
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A179926A3
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Sep 2023 08:36:30 -0700 (PDT)
+Received: by mail-pg1-x534.google.com with SMTP id 41be03b00d2f7-564b6276941so813941a12.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Sep 2023 08:36:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694100982; x=1694705782; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bJnHQZI/YTk0Ikc8JOTRLoRDMwR3H4tHaJzcO7hfWr4=;
+        b=z7GxiKN1MJ7uyUUxNGLDRxH59lvMSCBq8RDwVkSIoyRMABB3o9BvjmNs5HF3lUv4E1
+         pVdtU2qLY51C0GJAktncRyDEN/aLSCZIGeIHK2QLWKbP3UkreNwlgWx+A+6jopRUOrSs
+         h+s+OTIoUv9v74J+jhTMPXe8ZNjXqL2AjHoPOaAY74xEZ+1KdSFxV1xLzBgWlTwSa7IJ
+         USQicD1C6dFk/QPno3Qi3vt6Zb57FIZuGuEwaD1jhL3dboa6lD4JLzdZsDtRvRkkmp74
+         36KEWtYTjJApo528+MuY/v/7BUReTZzaFTYZL9SVGH933rzIHg8VJE/wI0k4de4tI2Z4
+         pz9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1694100982; x=1694705782;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bJnHQZI/YTk0Ikc8JOTRLoRDMwR3H4tHaJzcO7hfWr4=;
+        b=KgdiaCxJS2c2M2G7d/CrM4CFBmZ92UuNtrivv0rVB2M6pxQXbCWlSxTZmNB+CflUJ2
+         Q709mpmqHXXFuqPVfs5IHxkfK361SiUfItZApRxz7xXWFbS7/kbrLCrPmG4zhV37wpSl
+         XYBERYz3PTmt7I6hlpyrPkk57NgzKtej73OnBD+B8IP65bneiUZa/bhpBhauOzwhlXC3
+         Zd6SoTbX5nBxRZiZf2EKsxtG/HyRLKd+CCk1dytd2X5Amr4rJdoMvBrpzBAUkBlL1O3c
+         zfXQTdgXY/7Dr1hCO7QAYvjudxH3M0lU22z6uZxrkX3q/p8M2kVLJmbyDDF1aq83gau8
+         afKQ==
+X-Gm-Message-State: AOJu0YzBazrA1I+QD0RCleCQQoXZSXIGaW2n3k4cx3uUJXigxyn52/2S
+        59X3MTJcfPVvQKdCmYRZlr5XUtBbZvdcMQnBkcxiCkrhMGOLL+jR
+X-Google-Smtp-Source: AGHT+IFDVeL1UmCZY05Tqcq76iXML1JvWmurH2xxHKxUGlpH6gpEztrZTplGKLfqwM2mDGTIO4vf6OxfxN/uzjAj4w8=
+X-Received: by 2002:a25:da84:0:b0:d80:1441:9010 with SMTP id
+ n126-20020a25da84000000b00d8014419010mr109512ybf.26.1694096587639; Thu, 07
+ Sep 2023 07:23:07 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v3 0/3] Add qcom hvc/shmem transport
-To:     Sudeep Holla <sudeep.holla@arm.com>
-CC:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <cristian.marussi@arm.com>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <linux-arm-kernel@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20230718160833.36397-1-quic_nkela@quicinc.com>
- <20230811175719.28378-1-quic_nkela@quicinc.com>
- <3342d8bf-5281-c082-cb9a-7a027b413237@quicinc.com>
- <f5b05cfa-f12c-4f4d-a801-3aa76d843d6d@linaro.org>
- <20230907103619.2kqh7tfivwdfm5rd@bogus>
-Content-Language: en-US
-From:   Nikunj Kela <quic_nkela@quicinc.com>
-In-Reply-To: <20230907103619.2kqh7tfivwdfm5rd@bogus>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: weVwHyWYPHpU_KGtnAQ4_EN4Hk8UIdIE
-X-Proofpoint-ORIG-GUID: weVwHyWYPHpU_KGtnAQ4_EN4Hk8UIdIE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-07_07,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1011
- priorityscore=1501 lowpriorityscore=0 malwarescore=0 suspectscore=0
- phishscore=0 spamscore=0 mlxlogscore=999 mlxscore=0 impostorscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309070127
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <cover.1693996662.git.quic_varada@quicinc.com> <f7d49397507e10423b87910e88c52d5a1681f128.1693996662.git.quic_varada@quicinc.com>
+In-Reply-To: <f7d49397507e10423b87910e88c52d5a1681f128.1693996662.git.quic_varada@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 7 Sep 2023 17:22:56 +0300
+Message-ID: <CAA8EJpqox=Ji3cf5iBgL_QvqNZFmikiNu7bBscBYi4AsCdt9CQ@mail.gmail.com>
+Subject: Re: [PATCH v1 09/10] cpufreq: qti: Introduce cpufreq for ipq95xx
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc:     ilia.lin@kernel.org, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, rafael@kernel.org,
+        viresh.kumar@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        quic_kathirav@quicinc.com, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        Praveenkumar I <ipkumar@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, 7 Sept 2023 at 08:24, Varadarajan Narayanan
+<quic_varada@quicinc.com> wrote:
+>
+> IPQ95xx SoCs have different OPPs available for the CPU based on
+> the SoC variant. This can be determined from an eFuse register
+> present in the silicon.
+>
+> Added support for ipq95xx on nvmem driver which helps to
+> determine OPPs at runtime based on the eFuse register which
+> has the CPU frequency limits. opp-supported-hw dt binding
+> can be used to indicate the available OPPs for each limit.
+>
+> Signed-off-by: Praveenkumar I <ipkumar@codeaurora.org>
+> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> ---
+>  drivers/cpufreq/cpufreq-dt-platdev.c |  1 +
+>  drivers/cpufreq/qcom-cpufreq-nvmem.c | 20 ++++++++++++++++++++
+>  2 files changed, 21 insertions(+)
+>
+> diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c b/drivers/cpufreq/cpufr=
+eq-dt-platdev.c
+> index f0c45d4..4ab29c0 100644
+> --- a/drivers/cpufreq/cpufreq-dt-platdev.c
+> +++ b/drivers/cpufreq/cpufreq-dt-platdev.c
+> @@ -180,6 +180,7 @@ static const struct of_device_id blocklist[] __initco=
+nst =3D {
+>
+>         { .compatible =3D "qcom,ipq5332", },
+>         { .compatible =3D "qcom,ipq8064", },
+> +       { .compatible =3D "qcom,ipq9574", },
+>         { .compatible =3D "qcom,apq8064", },
+>         { .compatible =3D "qcom,msm8974", },
+>         { .compatible =3D "qcom,msm8960", },
+> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-=
+cpufreq-nvmem.c
+> index 49d21b0..de70225 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> @@ -168,6 +168,25 @@ static int qcom_cpufreq_kryo_name_version(struct dev=
+ice *cpu_dev,
+>         case QCOM_ID_APQ8096SG:
+>                 drv->versions =3D 1 << ((unsigned int)(*speedbin) + 4);
+>                 break;
+> +       case QCOM_ID_IPQ9514:
+> +       case QCOM_ID_IPQ9550:
+> +       case QCOM_ID_IPQ9554:
+> +       case QCOM_ID_IPQ9570:
+> +       case QCOM_ID_IPQ9574:
+> +               /* Fuse Value    Freq    BIT to set
+> +                * ---------------------------------
+> +                *   2=E2=80=99b00     No Limit     BIT(0)
+> +                *   2=E2=80=99b10     1.8 GHz      BIT(1)
+> +                *   2=E2=80=99b01     1.5 Ghz      BIT(2)
+> +                *   2=E2=80=99b11     1.2 GHz      BIT(3)
+> +                */
+> +               if ((unsigned int)(*speedbin) =3D=3D 2)
+> +                       drv->versions =3D BIT(1);
+> +               else if ((unsigned int)(*speedbin) =3D=3D 1)
+> +                       drv->versions =3D BIT(2);
+> +               else
+> +                       drv->versions =3D 1 << (unsigned int)(*speedbin);
 
-On 9/7/2023 3:36 AM, Sudeep Holla wrote:
-> On Tue, Sep 05, 2023 at 06:37:14PM +0200, Krzysztof Kozlowski wrote:
->> On 05/09/2023 18:06, Nikunj Kela wrote:
->>> On 8/11/2023 10:57 AM, Nikunj Kela wrote:
->>>> This change introduce a new transport channel for Qualcomm virtual
->>>> platforms. The transport is mechanically similar to ARM_SCMI_TRANSPORT_SMC.
->>>> The difference between the two transports is that a parameter is passed in
->>>> the hypervisor call to identify which doorbell to assert. This parameter is
->>>> dynamically generated at runtime on the device and insuitable to pass via
->>>> the devicetree.
->>>>
->>>> The function ID and parameter are stored by firmware in the shmem region.
->>>>
->>>> This has been tested on ARM64 virtual Qualcomm platform.
->>>>
->>>> ---
->>>> v3 -> fix the compilation error reported by the test bot,
->>>>         add support for polling based instances
->>>>
->>>> v2 -> use allOf construct in dtb schema,
->>>>         remove wrappers from mutexes,
->>>>         use architecture independent channel layout
->>>>
->>>> v1 -> original patches
->>>>
->>>> Nikunj Kela (3):
->>>>     dt-bindings: arm: convert nested if-else construct to allOf
->>>>     dt-bindings: arm: Add qcom specific hvc transport for SCMI
->>>>     firmware: arm_scmi: Add qcom hvc/shmem transport
->>>>
->>>>    .../bindings/firmware/arm,scmi.yaml           |  67 ++---
->>>>    drivers/firmware/arm_scmi/Kconfig             |  13 +
->>>>    drivers/firmware/arm_scmi/Makefile            |   2 +
->>>>    drivers/firmware/arm_scmi/common.h            |   3 +
->>>>    drivers/firmware/arm_scmi/driver.c            |   4 +
->>>>    drivers/firmware/arm_scmi/qcom_hvc.c          | 232 ++++++++++++++++++
->>>>    6 files changed, 293 insertions(+), 28 deletions(-)
->>>>    create mode 100644 drivers/firmware/arm_scmi/qcom_hvc.c
->>> Gentle Ping!
-> Pong !
->
->> It's third ping these two weeks from Qualcomm. Folks, it is merge
->> window. What do you think will happen with your ping during this time?
->>
-> +1
->
-> Okay, here is the deal with this patch set. As you are aware that a previous
-> merged solution was abandoned by Qcom in a single kernel release cycle. So
-> I decided to ignore this for one or 2 kernel release cycle to make sure
-> Qcom makes up their mind on the design and then we can see how to proceed.
-> Qcom must understand upstream kernel is not a playground to push their
-> design which they might decided to drop support for in such short period.
-> Please understand the upstream kernel supports platforms that are more than
-> few decades old. It is not like the mobile platforms that are hardly supported
-> for couple of years. And similarly, we push core support if and only if we
-> know for sure it will be used on some platform. I trusted Qcom with the
-> previous extension of SMC/HVC transport but I was proven wrong.
->
-> Also, I definitely don't like the way you have copied the whole smc.c
-> and changed it to Qcom's need and made it qcom_hvc.c. Just add the required
-> changes in smc.c.
->
+If you change the order of speedbins 1 and 2 in DT, you can use 1 <<
+speedbin for all the kinds,
+
+> +               break;
+>         default:
+>                 BUG();
+>                 break;
+> @@ -375,6 +394,7 @@ static const struct of_device_id qcom_cpufreq_match_l=
+ist[] __initconst =3D {
+>         { .compatible =3D "qcom,qcs404", .data =3D &match_data_qcs404 },
+>         { .compatible =3D "qcom,ipq5332", .data =3D &match_data_kryo },
+>         { .compatible =3D "qcom,ipq8064", .data =3D &match_data_krait },
+> +       { .compatible =3D "qcom,ipq9574", .data =3D &match_data_kryo },
+>         { .compatible =3D "qcom,apq8064", .data =3D &match_data_krait },
+>         { .compatible =3D "qcom,msm8974", .data =3D &match_data_krait },
+>         { .compatible =3D "qcom,msm8960", .data =3D &match_data_krait },
 > --
-> Regards,
-> Sudeep
+> 2.7.4
+>
 
-Completely understand your concerns and extending my apologies once 
-again on the patch that was abandoned. I will rework the patch to 
-include changes in smc.c. Thanks so much for your response!
 
+--=20
+With best wishes
+Dmitry
