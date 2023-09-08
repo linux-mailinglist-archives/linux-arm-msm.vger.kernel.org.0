@@ -2,111 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 593487984DE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 11:35:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2240D798566
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 12:03:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239504AbjIHJfy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Sep 2023 05:35:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43408 "EHLO
+        id S232067AbjIHKDa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Sep 2023 06:03:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236932AbjIHJfx (ORCPT
+        with ESMTP id S242687AbjIHKCs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Sep 2023 05:35:53 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 297C11BD3
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Sep 2023 02:35:49 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-31ae6bf91a9so1726273f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Sep 2023 02:35:49 -0700 (PDT)
+        Fri, 8 Sep 2023 06:02:48 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDC611FDE
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Sep 2023 03:02:14 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-51e28cac164so6393371a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Sep 2023 03:02:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694165747; x=1694770547; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
-         :references:cc:to:content-language:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MDWO1CprarscYiMO7KIO/3r5MOCUC0rXrTfcuABCa8E=;
-        b=CxDV/aai0g0AyfolvPTjrgDApQUOr0JtJAkeDDBqOI4t4UDSgckxLbUol8zdQQD+hO
-         ozRRKiCVn13rEDEnD9rRpdD8SzCbaUD5Vq8ifJyhNaUQO11MjA8ZARYexwZrhzG9M10L
-         3CdLEYnU4y43YzrHYPdaspqmcMXR8qG7Mfoj4LlE9AAhDoTroQKVuIdsqtJuFlWjADZN
-         wUQDgKc/yna+yQblhjeSR1zsRQTrfJrTdkHxt9ub6zqjfwbK0WC90BAdEf6dZ8G3vmLY
-         g6OiOzW2F7JhfgK2npFBXizEmC/wOHyDwMqnA4gzPWeRbN9aUaRjMpvvB0rgF6fwwNjU
-         BkQQ==
+        d=linaro.org; s=google; t=1694167333; x=1694772133; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=y7H2NftFy9wZelr/QVelbZLH6v+xwmxp1eoUbtSpB7A=;
+        b=ZWPpzQ+5yLOx1IRlX4X21WOZJv8eic2Rit0IUMccO8PrvIiGhvI5XI2SwJ2b0zRUQ0
+         gZeQn0FR9BETNcCi1hH579Y8Ruo1kdSD34yuvUxWt8x8Rs0f9hY+9hPW0LgUQMVflIM8
+         dVGhX+ToLyXfd83iV9qk3tY5QyEk0JsdtwahHTemBTvUKnlCWEQNM3M9K/0jUOwaYYZU
+         d8sUHxi5l+WlBodBjWxEvKqY+jAxgrIGohW21TNv/9gc3uUf6krMenOIvGD2x4r+45JG
+         qPgSwKQB5d9073Co0UVH5vLMe1giy3UafdtMvqfFiIok0lgEztRJAw6HY1LrjqAfUjwA
+         qL2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694165747; x=1694770547;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
-         :references:cc:to:content-language:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=MDWO1CprarscYiMO7KIO/3r5MOCUC0rXrTfcuABCa8E=;
-        b=ZYLHYCnAT3pVeW31OC3lj86ymdLJDHGxYprpVfQ8A8AWmhG2ylAE9+hiPeancsEEpF
-         cYL/2A4Psbf5Fud8rxM3zX25vjLmWvuJVujoS9KByhUWKUlNAJ/4QTXg95wZB5+jcBmP
-         Hq4Y7IqKJdzOxfaGEfQH39OTmao7zZgmiWSreBAfN2nZJOwQWCy3YpvtItFimS6duHvS
-         vtEIV/KqUaCp9VqapXiGk0/RTB5jAbBdnuN9wZWvBc0GqKJw9Miqq3dXcOLNrmXNh/Zn
-         XXqYEeHCNFjmey32LA03dB0N6uJCL0KDxa1umuXWqTU5eP3APWdhU3Q9/tNytZkaFg5l
-         8Nyg==
-X-Gm-Message-State: AOJu0YxjBBY5l4NdD2XZMZuWq77hE95eg8I6RZ3MpdlqM8WCE7IQpghr
-        NYWG8Vcav3AAiFOpT4xLg3wTAQ==
-X-Google-Smtp-Source: AGHT+IG4h17WeD3lNsGPG2k5F6+NcDioFo8R/AhRZDoLB8HkhB8Kbdgh9YBWmLOi8C3EnX4o7d2Q/g==
-X-Received: by 2002:adf:f48e:0:b0:31a:e73f:3fe7 with SMTP id l14-20020adff48e000000b0031ae73f3fe7mr1663036wro.3.1694165747480;
-        Fri, 08 Sep 2023 02:35:47 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:5f1a:ed04:d131:cda4? ([2a01:e0a:982:cbb0:5f1a:ed04:d131:cda4])
-        by smtp.gmail.com with ESMTPSA id x8-20020a05600c21c800b003fed78b03b4sm1490491wmj.20.2023.09.08.02.35.45
+        d=1e100.net; s=20230601; t=1694167333; x=1694772133;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=y7H2NftFy9wZelr/QVelbZLH6v+xwmxp1eoUbtSpB7A=;
+        b=iFtcg2ZX63y0yIEl/7DAhKuFjRn0zh6G/FjoZcrvN8htMrLtGBhpzUdx+NZ6ZydCE6
+         q5+Al6+JDrrx1IF5UmN+ZT1v8zFbF6NoGKFs0RQjnoIWdZf7LIS0RjzUeFQ2UCvEuH1F
+         Cb8YdEtRGNt5rD2FGvLHsnDd73Lwm3ovBZbkYZ5SGTJDgkeA4YDjC6FSrI4X7cNEcwkW
+         Xw61p4u+JWpxns+5I/XFUqaK2lvCSNEso/zUFPJD+x1zXGmz+RD6IhFkygJe5OFK5MiR
+         hdmhSmQt+tCGo/DgAgbMLCjqymyuxeyrZ+Ut1hJqQf1yl961x+OCvV6i2ujSs0F2ToA8
+         BGQg==
+X-Gm-Message-State: AOJu0YxczFcyTByQqhtJLhGT7diZP5KHsu/N/jNRiZa0vQ/T/DaL1cDK
+        f5aJmUpYBSJSrXGQkzXtFn9/oQ==
+X-Google-Smtp-Source: AGHT+IFMZaA2pjZ8HaPsDFwoIZ2RPaOkWxpZ9yRsgjb/Zu0UGPCDSoOjcknbi9VaZQXlqB9JCqFyfg==
+X-Received: by 2002:aa7:d646:0:b0:522:18b6:c01f with SMTP id v6-20020aa7d646000000b0052218b6c01fmr2380941edr.3.1694167332659;
+        Fri, 08 Sep 2023 03:02:12 -0700 (PDT)
+Received: from [192.168.37.232] (178235177197.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.197])
+        by smtp.gmail.com with ESMTPSA id ca15-20020aa7cd6f000000b005256aaa6e7asm820449edb.78.2023.09.08.03.02.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 08 Sep 2023 02:35:47 -0700 (PDT)
-Message-ID: <861a1baa-bbdb-49c2-b732-35c16f5e927e@linaro.org>
-Date:   Fri, 8 Sep 2023 11:35:44 +0200
+        Fri, 08 Sep 2023 03:02:12 -0700 (PDT)
+Message-ID: <8b424303-09c9-4270-abfd-4f209f5c41e0@linaro.org>
+Date:   Fri, 8 Sep 2023 12:02:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH] scsi: ufs: qcom: dt-bindings: Add MCQ ESI property
-Content-Language: en-US, fr
-To:     Ziqi Chen <quic_ziqichen@quicinc.com>, quic_asutoshd@quicinc.com,
-        quic_cang@quicinc.com, bvanassche@acm.org, mani@kernel.org,
-        adrian.hunter@intel.com, beanhuo@micron.com, avri.altman@wdc.com,
-        junwoo80.lee@samsung.com, martin.petersen@oracle.com,
-        quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com
-Cc:     linux-scsi@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <1694163203-39123-1-git-send-email-quic_ziqichen@quicinc.com>
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <1694163203-39123-1-git-send-email-quic_ziqichen@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v4 15/17] media: qcom: camss: Move vfe_disable into a
+ common routine where applicable
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
+        todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
+        mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
+        laurent.pinchart@ideasonboard.com, sakari.ailus@linux.intel.com,
+        andrey.konovalov@linaro.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230907164410.36651-1-bryan.odonoghue@linaro.org>
+ <20230907164410.36651-16-bryan.odonoghue@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230907164410.36651-16-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -114,35 +114,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On 08/09/2023 10:53, Ziqi Chen wrote:
-> Document the description for the qcom,esi-affinity-mask.
-
-Do you plan to add all the other MCQ and ESI properties ? (reg, reg-names, msi-parent)
-
-Thanks,
-Neil
-
+On 7.09.2023 18:44, Bryan O'Donoghue wrote:
+> We can move vfe_disable() into a common routine in the core VFE file
+> provided we make wm_stop() a VFE specific callback.
 > 
-> Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
+> The callback is required to capture the case where VFE 17x currently isn't
+> VC enabled where as VFE 480 is.
+> 
+> Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
->   Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 4 ++++
->   1 file changed, 4 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> index bdfa86a..323595f 100644
-> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> @@ -97,6 +97,10 @@ properties:
->       description:
->         GPIO connected to the RESET pin of the UFS memory device.
->   
-> +  qcom,esi-affinity-mask:
-> +    description:
-> +       UFS MCQ ESI affinity mask. Affine ESI on registration according to this CPU mask.
-> +
->   required:
->     - compatible
->     - reg
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
+Konrad
