@@ -2,83 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7851379832C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 09:18:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9948C798330
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 09:19:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239483AbjIHHSk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Sep 2023 03:18:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38318 "EHLO
+        id S237739AbjIHHTH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Sep 2023 03:19:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231371AbjIHHSj (ORCPT
+        with ESMTP id S230258AbjIHHTG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Sep 2023 03:18:39 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E93761BC8;
-        Fri,  8 Sep 2023 00:18:34 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3886kSal002858;
-        Fri, 8 Sep 2023 07:18:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=AQRJztB1EIXtKQ30bg7zjUOkkFMv/a0+9Ng4lj8iTgQ=;
- b=DcHO3STdosLn517EPMu6SppVKk9ouXXBRs7clWZpgeQOZ39aEF1v1ur5eryeaSSTJAtx
- OlX06f7ysmGZWo5g7H7O/8spTxwTqbjReRQkl7ZmC8RAXZHAT0FvaLD4XvTY65gvwtLx
- bkMBCKcQlgNTks/NXbez15kp05NCsL1Io5x8gDNBIKAgw+/V/nBlGxSTEPaZsVwapEwq
- TJVwXFaQ5RKW0Yi2UYg7iUhy+WJh25bMCL6U4n+efuTT/Cxyk7mks8UpJaMSHEnqRXRu
- b5ducSAUAye0AZbiG8wtNLs9ZU0zrDLzKqvPlLsh9S3mSanURoRCyONG+c8L/TZH7I7R NQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3syaad2jx5-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 08 Sep 2023 07:18:28 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3887IQ4j016159
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 8 Sep 2023 07:18:26 GMT
-Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Fri, 8 Sep
- 2023 00:18:19 -0700
-Message-ID: <88c10e82-65bf-4610-9bcb-f7c5cc10570e@quicinc.com>
-Date:   Fri, 8 Sep 2023 15:18:16 +0800
+        Fri, 8 Sep 2023 03:19:06 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75A481BD2
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Sep 2023 00:18:55 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-402be83929eso19746905e9.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Sep 2023 00:18:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694157534; x=1694762334; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=4jUsdI8IAMPdJ2/ajS6yTZqWDFGbQHyhhBt8Pkr2WW8=;
+        b=NeAR2uxEmJ7UFdnUqFQbiNrJh6+Yzvc4JMjc8ASsiaixzKWJOgTj0wvFaIfGcRSoGT
+         7LlBdT0SllqJRKtkZeVugBnran4E4ChfylGrDEDmzj2kWMzcCJphb3mixG/K74CFZ+JV
+         md737IVhoiq+Vtcz7T+xIdpCOu6gEzClQRoAqcGZ9vN/EVQHgM6hyxzKlVH46TvH48U9
+         uJSmA16QdkNXrelL4PJU2DKBRwaluLVkPBQahBU7xw7LznaexbT0Nctr+nIPOvNGcLxe
+         yEKIjrRoLoEeeQS09I0lqA12qREhZLtkpPDvsT5GPadX6fCH9/LZpaY/qdwhAQGuR4ai
+         WFPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694157534; x=1694762334;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4jUsdI8IAMPdJ2/ajS6yTZqWDFGbQHyhhBt8Pkr2WW8=;
+        b=rOHK8+v4wowiHHrFmpEY9E4eKgpl9s7LUjruJdaAcVpVIOQKmy7FhpGAkvwVE6pIem
+         QqBTSL7x0bR+Ff+FYdUrcDLdTOgjK3pwyCdjwNm7RfLgbah/9jRXXvsqG8ukVSqEC5vF
+         xtFsMxw2vOOLjeYxNMe/I/V1WMX3ZAY6UbDXp4c5R+oe0AwUbcNvqCt+D58+TtsfBTfi
+         UQ2gqnYZdUyjt4TAMx9Ps1Jfx9X6fFLePsugw2KK+FaqXrZNQMPSmfmbLUCMOD7pWMDd
+         /nmZDaqFTNyCrFLlX230ycgcozrGIqWrbCoEw6BLWgXT27mxlQT2vgOnyyCnZBonXdRV
+         b+5A==
+X-Gm-Message-State: AOJu0YxFpk41kl3iwLb5lOQdj+HNpRY3+Y3poaYNc7TQju+V7pc9QbZN
+        05P+Qq3HFv1vIhNJn9oyjQW0Jw==
+X-Google-Smtp-Source: AGHT+IHQsY/0Ej3aK9aAUnwQ/E6w27NF8Re4ys97xwbLX+YFgUeolkfZLNQJw3R/v4XFVKS7HptjDg==
+X-Received: by 2002:a05:600c:3b1e:b0:402:f536:41c5 with SMTP id m30-20020a05600c3b1e00b00402f53641c5mr1277095wms.3.1694157533662;
+        Fri, 08 Sep 2023 00:18:53 -0700 (PDT)
+Received: from localhost ([102.36.222.112])
+        by smtp.gmail.com with ESMTPSA id t24-20020a1c7718000000b003fee7b67f67sm1182993wmi.31.2023.09.08.00.18.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Sep 2023 00:18:53 -0700 (PDT)
+Date:   Fri, 8 Sep 2023 10:18:50 +0300
+From:   Dan Carpenter <dan.carpenter@linaro.org>
+To:     Deepak R Varma <drv@mailo.com>
+Cc:     Varadarajan Narayanan <quic_varada@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        kernel-janitors@vger.kernel.org
+Subject: Re: [PATCH] phy: qcom-m31: Fix error code in probe()
+Message-ID: <5a6da4c1-6d65-4219-8314-9b5697bcf8e8@kadam.mountain>
+References: <7926c8e6-630e-4d7a-b0b2-d29b3c8b2c09@moroto.mountain>
+ <053077e761ecaeb44b76f5865e100d588101461b.camel@mailo.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/6] arm64: dts: qcom: sm4450: Add apps_rsc and cmd_db
- node
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <tglx@linutronix.de>, <maz@kernel.org>, <lee@kernel.org>
-CC:     <robimarko@gmail.com>, <quic_gurus@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_tsoni@quicinc.com>,
-        <quic_shashim@quicinc.com>, <quic_kaushalk@quicinc.com>,
-        <quic_tdas@quicinc.com>, <quic_tingweiz@quicinc.com>,
-        <quic_aiquny@quicinc.com>, <kernel@quicinc.com>,
-        <quic_bjorande@quicinc.com>, Ajit Pandey <quic_ajipan@quicinc.com>
-References: <20230908065847.28382-1-quic_tengfan@quicinc.com>
- <20230908065847.28382-5-quic_tengfan@quicinc.com>
- <5cc6b461-0a19-429c-ba06-7df73a48c46c@linaro.org>
-From:   Tengfei Fan <quic_tengfan@quicinc.com>
-In-Reply-To: <5cc6b461-0a19-429c-ba06-7df73a48c46c@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Hdys387iJFyVno62Toh86agCinJgrNQj
-X-Proofpoint-GUID: Hdys387iJFyVno62Toh86agCinJgrNQj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-08_04,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- priorityscore=1501 suspectscore=0 clxscore=1011 mlxlogscore=999
- adultscore=0 phishscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0
- impostorscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309080066
+In-Reply-To: <053077e761ecaeb44b76f5865e100d588101461b.camel@mailo.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -88,88 +79,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-在 9/8/2023 3:03 PM, Dmitry Baryshkov 写道:
-> On 08/09/2023 09:58, Tengfei Fan wrote:
->> From: Ajit Pandey <quic_ajipan@quicinc.com>
->>
->> Add apps_rsc node and cmd_db memory region for sm4450.
->>
->> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
->> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/sm4450.dtsi | 34 ++++++++++++++++++++++++++++
->>   1 file changed, 34 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm4450.dtsi 
->> b/arch/arm64/boot/dts/qcom/sm4450.dtsi
->> index c4e5b33f5169..eb544d875806 100644
->> --- a/arch/arm64/boot/dts/qcom/sm4450.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm4450.dtsi
->> @@ -5,6 +5,7 @@
->>   #include <dt-bindings/gpio/gpio.h>
->>   #include <dt-bindings/interrupt-controller/arm-gic.h>
->> +#include <dt-bindings/soc/qcom,rpmh-rsc.h>
->>   / {
->>       interrupt-parent = <&intc>;
->> @@ -328,6 +329,18 @@
->>           };
->>       };
->> +    reserved_memory: reserved-memory {
->> +        #address-cells = <2>;
->> +        #size-cells = <2>;
->> +        ranges;
->> +
->> +        aop_cmd_db_mem: cmd-db@80860000 {
+On Thu, Sep 07, 2023 at 09:53:36PM +0530, Deepak R Varma wrote:
+> On Thu, 2023-09-07 at 12:54 +0300, Dan Carpenter wrote:
+> > This accidentally returns the wrong variable.� It should be "qphy-
+> > >vreg"
+> > instead of "qphy->phy".
 > 
-> Judging from sm8550, this should be aop-cmd-db-region@....
-Got below message when internal review this node name, so update to 
-cmd-db@80860000
-"memory" is a "reserved word", so these nodes needs to be given a
-non-generic name (contrary to all other cases), there was also a recent
-cry from the maintainers that we don't need the "-region" suffix that
-we've been using on recent platform.
-
-> 
->> +            compatible = "qcom,cmd-db";
->> +            reg = <0x0 0x80860000 0x0 0x20000>;
->> +            no-map;
->> +        };
->> +    };
->> +
->>       soc: soc@0 {
->>           #address-cells = <2>;
->>           #size-cells = <2>;
->> @@ -335,6 +348,27 @@
->>           dma-ranges = <0 0 0 0 0x10 0>;
->>           compatible = "simple-bus";
->> +        apps_rsc: rsc@17a00000 {
->> +            label = "apps_rsc";
->> +            compatible = "qcom,rpmh-rsc";
->> +            reg = <0 0x17a00000 0 0x10000>,
->> +                  <0 0x17a10000 0 0x10000>,
->> +                  <0 0x17a20000 0 0x10000>;
->> +            reg-names = "drv-0", "drv-1", "drv-2";
->> +            interrupts = <GIC_SPI 3 IRQ_TYPE_LEVEL_HIGH>,
->> +                     <GIC_SPI 4 IRQ_TYPE_LEVEL_HIGH>,
->> +                     <GIC_SPI 5 IRQ_TYPE_LEVEL_HIGH>;
->> +            qcom,tcs-offset = <0xd00>;
->> +            qcom,drv-id = <2>;
->> +            qcom,tcs-config = <ACTIVE_TCS    2>, <SLEEP_TCS     3>,
->> +                      <WAKE_TCS      3>, <CONTROL_TCS   0>;
->> +            power-domains = <&CLUSTER_PD>;
->> +
->> +            apps_bcm_voter: bcm-voter {
->> +                compatible = "qcom,bcm-voter";
->> +            };
->> +        };
->> +
->>           tcsr_mutex: hwlock@1f40000 {
->>               compatible = "qcom,tcsr-mutex";
->>               reg = <0x0 0x01f40000 0x0 0x40000>;
+> Hi Dan,
+> Just curious: How did you find this? Visual catch or Static Analyzer?
 > 
 
--- 
-Thx and BRs,
-Tengfei Fan
+This was from a Smatch warning.
+
+$ ~/smatch/smatch_scripts/kchecker drivers/phy/qualcomm/phy-qcom-m31.c
+  CHECK   scripts/mod/empty.c
+  CALL    scripts/checksyscalls.sh
+  DESCEND objtool
+  INSTALL libsubcmd_headers
+  CC      drivers/phy/qualcomm/phy-qcom-m31.o
+  CHECK   drivers/phy/qualcomm/phy-qcom-m31.c
+drivers/phy/qualcomm/phy-qcom-m31.c:175 m31usb_phy_init() warn: variable dereferenced before check 'qphy->vreg' (see line 167)
+drivers/phy/qualcomm/phy-qcom-m31.c:259 m31usb_phy_probe() warn: passing a valid pointer to 'PTR_ERR'
+$
+
+regards,
+dan carpenter
+
