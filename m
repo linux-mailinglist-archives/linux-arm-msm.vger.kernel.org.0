@@ -2,84 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 27CD7798155
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 06:44:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EC2C79817C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 07:18:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239527AbjIHEoj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Sep 2023 00:44:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48204 "EHLO
+        id S233205AbjIHFSZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Sep 2023 01:18:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239570AbjIHEoi (ORCPT
+        with ESMTP id S231911AbjIHFSZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Sep 2023 00:44:38 -0400
+        Fri, 8 Sep 2023 01:18:25 -0400
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06D4B1FC6;
-        Thu,  7 Sep 2023 21:44:28 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3883QYFo012349;
-        Fri, 8 Sep 2023 04:44:17 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA78E19AB
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Sep 2023 22:18:20 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3884j9IM023936;
+        Fri, 8 Sep 2023 05:17:56 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=tpfvGfVGoMgya/hP2jj/Kha4fl8r3QnMVMTXIN+MxiQ=;
- b=l4T7uOfmv7IuXxC5nipTF/OpKPT1Gn5l9TQPWQjl5EQNAEI4xTbA4lGiF9wF4LOW1qq+
- jV/R1wJtNWHebTgGrXbz5rNdPJh4Gv0SASdkAOI5m7Z7GXdBmV8/+H2wJwQpbPTNitd5
- Vn+QH1iQIhbzJhzADocOHw6f3ZAloyrGTgUEjZkJY2pH1r1uy4QALqvrw7hJg5DAByPW
- YYHnnq5IpJyxbS/mEWF0BpagOReaJFgLT0l0M6J4zu6s2VCTmHaWR/NFnqAOlkVW4BGw
- vd41WwWrBfaFoqxOtzcANGfytDVBUD1lvbM51ieH1clh45W9XHCsFFOzruTYqD2e3sr+ uA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sy50dawgs-1
+ bh=3jmW1Gsudk5DFVRtx5UHj3kcbCASFchgPm9EOthqwxk=;
+ b=h8XjzBXY0MBFM/6OhmHkSseM6fWNqR8Iv/nRypfSlWOy8TLxQJND3sm6CIors3x/z7Vs
+ biK15MpdfcaVx3Ee7znQnP3QDeQ42ENYumrxDfcyOLaaaqBTQXY0djGgiZPUjBYJd4uN
+ VocsN2WlS/L3/s3wod/LTi9IjV8VMm4o9u3QxdB5NE7lfNKo8uk2yEWYHji1FiRQMMI2
+ cRPWy88Sf3roVLoed+chnj08FWtGGOqYbSIOGj5PCkZQXThHPP1VVUdsKfEdR4rSQYWC
+ lAej9mygeRLKD0DbrwEK7b7QMi3GtTWWOGHtAAEAnpVyb2jPkqot/XTJnbSSKGDwJpJw 3w== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3syf5c1tk5-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 08 Sep 2023 04:44:16 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3884iFJV031528
+        Fri, 08 Sep 2023 05:17:56 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3885HtTj002049
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 8 Sep 2023 04:44:15 GMT
-Received: from [10.217.219.216] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+        Fri, 8 Sep 2023 05:17:55 GMT
+Received: from [10.110.23.148] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Thu, 7 Sep
- 2023 21:44:09 -0700
-Message-ID: <b7eade65-8fa2-05e0-4ab1-fdfca7ad1a40@quicinc.com>
-Date:   Fri, 8 Sep 2023 10:14:06 +0530
+ 2023 22:17:53 -0700
+Message-ID: <ead35ae9-b9cf-4f3f-e967-7d66a88fb8d5@quicinc.com>
+Date:   Thu, 7 Sep 2023 22:17:52 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH v5 1/4] PCI: endpoint: Add D-state change notifier support
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH] iommu/arm-smmu-qcom: NULL pointer check for driver data
+To:     Rob Clark <robdclark@chromium.org>
+CC:     <will@kernel.org>, <joro@8bytes.org>, <robin.murphy@arm.com>,
+        <dmitry.baryshkov@linaro.org>, <quic_bjorande@quicinc.com>,
+        <konrad.dybcio@linaro.org>, <quic_eberman@quicinc.com>,
+        <quic_psodagud@quicinc.com>, <quic_rvishwak@quicinc.com>,
+        <quic_saipraka@quicinc.com>, <quic_molvera@quicinc.com>,
+        <marijn.suijten@somainline.org>, <mani@kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20230816225509.11070-1-quic_aprasann@quicinc.com>
+ <CAJs_Fx7132o3iHDH0ZR7L9G69o2YV2-jC0v15shQcEhH6=-6RA@mail.gmail.com>
+ <c06a31fd-e3b5-1f58-9e4f-7fafd8aa3f28@quicinc.com>
+ <CAJs_Fx464vFbfLaaWWs2Y0pTmhXrJS=AWFTwEyQjifJoU72rCQ@mail.gmail.com>
 Content-Language: en-US
-To:     Manivannan Sadhasivam <mani@kernel.org>,
-        kernel test robot <lkp@intel.com>
-CC:     <manivannan.sadhasivam@linaro.org>,
-        <oe-kbuild-all@lists.linux.dev>, <helgaas@kernel.org>,
-        <linux-pci@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_vbadigan@quicinc.com>,
-        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
-        <quic_ramkri@quicinc.com>, <quic_parass@quicinc.com>,
-        <krzysztof.kozlowski@linaro.org>,
-        "Lorenzo Pieralisi" <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Jonathan Corbet <corbet@lwn.net>, <linux-doc@vger.kernel.org>
-References: <1690948281-2143-2-git-send-email-quic_krichai@quicinc.com>
- <202308021312.obgu7FWM-lkp@intel.com> <20230823061904.GC3737@thinkpad>
-From:   Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20230823061904.GC3737@thinkpad>
+From:   Aravind Vijayakumar <quic_aprasann@quicinc.com>
+In-Reply-To: <CAJs_Fx464vFbfLaaWWs2Y0pTmhXrJS=AWFTwEyQjifJoU72rCQ@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: VAGQX_O0J--bQfxDZwz_naMK78xlsc48
-X-Proofpoint-GUID: VAGQX_O0J--bQfxDZwz_naMK78xlsc48
+X-Proofpoint-GUID: Qs_Dz-2A2LuwnlonNnB4AnFMwmwh0JGn
+X-Proofpoint-ORIG-GUID: Qs_Dz-2A2LuwnlonNnB4AnFMwmwh0JGn
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-08_01,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
- spamscore=0 malwarescore=0 priorityscore=1501 mlxlogscore=999 adultscore=0
- suspectscore=0 bulkscore=0 lowpriorityscore=0 impostorscore=0
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309080042
+ definitions=2023-09-08_02,2023-09-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011
+ priorityscore=1501 spamscore=0 lowpriorityscore=0 phishscore=0
+ malwarescore=0 suspectscore=0 impostorscore=0 bulkscore=0 mlxlogscore=999
+ mlxscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309080046
 X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -91,85 +89,108 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 8/23/2023 11:49 AM, Manivannan Sadhasivam wrote:
-> On Wed, Aug 02, 2023 at 01:14:44PM +0800, kernel test robot wrote:
->> Hi Krishna,
+On 8/29/2023 7:30 AM, Rob Clark wrote:
+> On Mon, Aug 28, 2023 at 2:35 PM Aravind Vijayakumar
+> <quic_aprasann@quicinc.com> wrote:
 >>
->> kernel test robot noticed the following build warnings:
->>
->> [auto build test WARNING on pci/next]
->> [also build test WARNING on pci/for-linus linus/master v6.5-rc4 next-20230801]
->> [If your patch is applied to the wrong git tree, kindly drop us a note.
->> And when submitting patch, we suggest to use '--base' as documented in
->> https://git-scm.com/docs/git-format-patch#_base_tree_information]
->>
->> url:    https://github.com/intel-lab-lkp/linux/commits/Krishna-chaitanya-chundru/PCI-endpoint-Add-D-state-change-notifier-support/20230802-115309
->> base:   https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git next
->> patch link:    https://lore.kernel.org/r/1690948281-2143-2-git-send-email-quic_krichai%40quicinc.com
->> patch subject: [PATCH v5 1/4] PCI: endpoint: Add D-state change notifier support
->> config: loongarch-allyesconfig (https://download.01.org/0day-ci/archive/20230802/202308021312.obgu7FWM-lkp@intel.com/config)
->> compiler: loongarch64-linux-gcc (GCC) 12.3.0
->> reproduce: (https://download.01.org/0day-ci/archive/20230802/202308021312.obgu7FWM-lkp@intel.com/reproduce)
->>
->> If you fix the issue in a separate patch/commit (i.e. not just a new version of
->> the same patch/commit), kindly add following tags
->> | Reported-by: kernel test robot <lkp@intel.com>
->> | Closes: https://lore.kernel.org/oe-kbuild-all/202308021312.obgu7FWM-lkp@intel.com/
->>
->> All warnings (new ones prefixed by >>):
->>
->>>> drivers/pci/endpoint/pci-epc-core.c:795:6: warning: no previous prototype for 'pci_epc_dstate_notity' [-Wmissing-prototypes]
->>       795 | void pci_epc_dstate_notity(struct pci_epc *epc, pci_power_t state)
-> This tells that you haven't build tested the series before sending. Please
-> always do both build and functionality testing before sending each iteration.
+>> On 8/16/2023 6:01 PM, Rob Clark wrote:
+>>> On Wed, Aug 16, 2023 at 3:55 PM Aravind Vijayakumar
+>>> <quic_aprasann@quicinc.com> wrote:
+>>>> The driver_data is NULL when qcom_adreno_smmu_init_context()
+>>>> is called before the dev_set_drvdata() from the client driver
+>>>> and is resulting in kernel crash.
+>>>>
+>>>> So add a null pointer check to handle the scenario
+>>>> where the client driver for the GPU SMMU device would
+>>>> be setting the driver data after the smmu client device
+>>>> probe is done and not necessarily before that. The function
+>>>> qcom_adreno_smmu_init_context() assumes that the client
+>>>> driver always set the driver data using dev_set_drvdata()
+>>>> before the smmu client device probe, but this assumption
+>>>> is not always true.
+>>>>
+>>>> Signed-off-by: Aravind Vijayakumar <quic_aprasann@quicinc.com>
+>>>> ---
+>>>>    drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 3 +++
+>>>>    1 file changed, 3 insertions(+)
+>>>>
+>>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>>> index c71afda79d64..5323f82264ca 100644
+>>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>>> @@ -231,6 +231,9 @@ static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
+>>>>            */
+>>>>
+>>>>           priv = dev_get_drvdata(dev);
+>>>> +       if (!priv)
+>>>> +               return 0;
+>>> could this -EPROBE_DEFER instead, or something like that?  I think you
+>>> patch as proposed would result in per-process gpu pgtables silently
+>>> failing
+>>>
+>>> BR,
+>>> -R
+>> Thanks for the review comments. Returning -EPROBE_DEFER wont work
+>> because the probe of the client driver (which sets the driver data) will
+>> never get triggered. However, the probe of the client driver succeeds if
+>> we return -ENODATA. would that be acceptable?
+> I _think_ so.. I need to page back in the sequence of how this works,
+> but I do have some warn_on's in drm/msm to complain loudly if we don't
+> get per-process pgtables.  I'd be interested to see the callstack
+> where you hit this issue.  From what I remember the sequence should
+> be:
 >
-> - Mani
+> 1) before the client dev probes, arm-smmu probes and attaches the
+> dma-api managed iommu_domain (which IIRC should be an identity domain,
+> and is otherwise unused).. at this point drvdata is NULL
+> 2) the drm/msm can probe
+> 3) at some point later when GPU fw is avail the GPU is loaded, drvdata
+> is set, and we start creating and attaching the iommu_domain's that
+> are actually used (one for kernel context and one each for userspace
+> processes using the GPU
+>
+> I guess maybe if you are hitting this case of NULL drvdata, then you
+> aren't getting an identity context for the dma-api managed
+> iommu_domain?
+>
+> BR,
+> -R
+>
+Yes, there are some warn_ons in io-pgtable.c, which have helped a lot 
+during debugging. The following is the call stack when we are hitting 
+the issue:
 
-sorry for late reply, till now I was using a different branch which has 
-some out of tree patches for testing and rebasing the patch on 
-linux-next to send them because of that few things are getting missed.
+   qcom_adreno_smmu_init_context+0x28/0x100
+   arm_smmu_init_domain_context+0x1fc/0x4cc
+   arm_smmu_attach_dev+0x7c/0x410
+   __iommu_attach_device+0x28/0x110
+   iommu_probe_device+0x98/0x144
+   of_iommu_configure+0x1f0/0x278
+   of_dma_configure_id+0x15c/0x320
+   platform_dma_configure+0x24/0x90
+   really_probe+0x138/0x39c
+   __driver_probe_device+0x114/0x190
+   device_driver_attach+0x4c/0xac
+   bind_store+0xb8/0x110
 
-Now I took time to completely move to the linux next so that testing and 
-sending patches will be on same code base.
+This is the call stack during platform_driver_register() , if there is 
+no NULL check then the initial probe crashes, if there is NULL check, 
+instead of crashing, the really_probe returns and we can call 
+of_dma_configure again from the driver probe after setting the driver 
+data. Please let me know if there is any concerns?
 
-I will correct this in next patch series.
+Regards,
 
-- KC
+Aravind
 
->>           |      ^~~~~~~~~~~~~~~~~~~~~
+>> Regards,
 >>
+>> Aravind
 >>
->> vim +/pci_epc_dstate_notity +795 drivers/pci/endpoint/pci-epc-core.c
->>
->>     785	
->>     786	/**
->>     787	 * pci_epc_dstate_notity() - Notify the EPF driver that EPC device D-state
->>     788	 *			has changed
->>     789	 * @epc: the EPC device which has change in D-state
->>     790	 * @state: the changed D-state
->>     791	 *
->>     792	 * Invoke to Notify the EPF device that the EPC device has D-state has
->>     793	 * changed.
->>     794	 */
->>   > 795	void pci_epc_dstate_notity(struct pci_epc *epc, pci_power_t state)
->>     796	{
->>     797		struct pci_epf *epf;
->>     798	
->>     799		if (!epc || IS_ERR(epc))
->>     800			return;
->>     801	
->>     802		mutex_lock(&epc->list_lock);
->>     803		list_for_each_entry(epf, &epc->pci_epf, list) {
->>     804			mutex_lock(&epf->lock);
->>     805			if (epf->event_ops && epf->event_ops->dstate_notify)
->>     806				epf->event_ops->dstate_notify(epf, state);
->>     807			mutex_unlock(&epf->lock);
->>     808		}
->>     809		mutex_unlock(&epc->list_lock);
->>     810	}
->>     811	EXPORT_SYMBOL_GPL(pci_epc_dstate_notity);
->>     812	
->>
->> -- 
->> 0-DAY CI Kernel Test Service
->> https://github.com/intel/lkp-tests/wiki
+>>>> +
+>>>>           priv->cookie = smmu_domain;
+>>>>           priv->get_ttbr1_cfg = qcom_adreno_smmu_get_ttbr1_cfg;
+>>>>           priv->set_ttbr0_cfg = qcom_adreno_smmu_set_ttbr0_cfg;
+>>>> --
+>>>> 2.40.1
+>>>>
