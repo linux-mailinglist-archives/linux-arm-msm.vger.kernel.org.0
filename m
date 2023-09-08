@@ -2,58 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E46A798356
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 09:42:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7D02798395
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 09:54:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239565AbjIHHmh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Sep 2023 03:42:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43498 "EHLO
+        id S239029AbjIHHyJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Sep 2023 03:54:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231440AbjIHHmg (ORCPT
+        with ESMTP id S236988AbjIHHyI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Sep 2023 03:42:36 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 807C31BDA;
-        Fri,  8 Sep 2023 00:42:27 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B64EDC433C9;
-        Fri,  8 Sep 2023 07:42:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1694158947;
-        bh=b0W2vlY4CgJqt1HiR9SSVt08ChzyrdUmrFpWJeUBUwM=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=L2sgO/dmZOmaI8oqFoM6BaTr5d0fzf1dPzytCdMuvjy8V/VC4BL6pmIp9QMF6gflO
-         0ymS9cWGMvPZRSX18OEYIXpgKPbFBm7Hl9BuIl5fVjMeqBisKBcU22HG100iVGzyrT
-         O9TNntRVx4P4BenWtUL9OuByx2xYdye4ypd4ZtcfgmnydTZhmTq5sBzpk5riywP/hQ
-         lAnWp68ECQkc2R6mj90YJMLG23wNCuEqN7tRWJx2F1e75hTgKrZBR8M8KA6niEUugG
-         Gclmw1wpEuHOFxfLcL7Lq7Em0TB6o7EnXnqvlTmep4jbysPj1sbe9F9EzG4HTmTgTr
-         H4COtm0l2yWyw==
-Received: (nullmailer pid 3239586 invoked by uid 1000);
-        Fri, 08 Sep 2023 07:42:23 -0000
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+        Fri, 8 Sep 2023 03:54:08 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 063881BD3
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Sep 2023 00:54:03 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-401bdff4cb4so18872805e9.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Sep 2023 00:54:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694159641; x=1694764441; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2w7vJeDcbfS6PHlauzsswGt613jFjllSe3mwn1fU2S4=;
+        b=DC1Hab4vltr+z8XWeB02C9X+dT7rG8t8XL/VhexpugwbYgShkhZnWxofzVRzoy3jKc
+         0Pnqbddr0rRFrT9r1e6QZ5maSeYuaj8qxqCnBEwFJ5hs0iahOhA98oIk5Qh/7koOuO08
+         5fd0dFe5gKdiosFCIuDes1T8TcnRs5km//5dFg7I39WEJ8DSKclDHlXL8vaH9yE5MLHZ
+         on7U985XJ23I2BIVtB3w7oWfhxSPoqaZHwEELvl3NNCx0oQyLA/axT5HOoADWvmTHaBH
+         kekf6thTkHoyZqncwPrPY2FMm9Q/kkmQY9pg4Bx7a+WP1KJGP/82YhUQMeYbIHTu3zhX
+         IHKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694159641; x=1694764441;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2w7vJeDcbfS6PHlauzsswGt613jFjllSe3mwn1fU2S4=;
+        b=pgA9aofGMhf/R6FFaqWFQOd5L9w/IgyV7kbJp4XHUGoBXPHKux9YnamZdC3SMLmJ8B
+         Uzdl42LVIIyWd+ROEU7OuM+7DhChdmPrxnqUNpQKwqRsl7YYH+uCYfLugMea3iLXl8Nl
+         M4odmuNdHqtOWd4ahKOgecyBTu49BDiffawYGsM1dKcS6hTDRWR4aTpiHFOzZQAq2UUq
+         zn7V99hdj2YYftr0pkxQm11IJemT99AUobyDAcA1zT/2swSa/s1V5gZ0+aNFkNog1FY8
+         begWwIZOpGMGNx/FY52c6fdOT7R2abpHw7XnEnxT+S8JE2a8sD2B5/6HX5rLP1s70ACG
+         88Bg==
+X-Gm-Message-State: AOJu0Yz9vj9tLCJnTOGo2dFDdLIpKclVhb/ZzihutcYk/00yWG67S5Wb
+        qh09DrAXNxEsSvt34V1mRzXIpA==
+X-Google-Smtp-Source: AGHT+IGGQ98JgfJ2pX31T2twnRbY9gwgje1NTu8GKzbn2/L4bczGE0uA6C6kI/YdjmvgOiAjVYjdvQ==
+X-Received: by 2002:a05:600c:b58:b0:401:b2c7:349d with SMTP id k24-20020a05600c0b5800b00401b2c7349dmr1493646wmr.29.1694159641350;
+        Fri, 08 Sep 2023 00:54:01 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.214.188])
+        by smtp.gmail.com with ESMTPSA id p11-20020a1c740b000000b003ff013a4fd9sm1295984wmc.7.2023.09.08.00.53.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 08 Sep 2023 00:54:00 -0700 (PDT)
+Message-ID: <709fac9a-e153-d495-c421-f556fab30dde@linaro.org>
+Date:   Fri, 8 Sep 2023 09:53:57 +0200
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Tengfei Fan <quic_tengfan@quicinc.com>
-Cc:     will@kernel.org, arnd@arndb.de, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_kaushalk@quicinc.com,
-        peng.fan@nxp.com, kernel@quicinc.com, catalin.marinas@arm.com,
-        rafal@milecki.pl, krzysztof.kozlowski+dt@linaro.org,
-        nfraprado@collabora.com, quic_shashim@quicinc.com,
-        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.0
+Subject: Re: [PATCH 1/3] dt-bindings: pinctrl: qcom: Add SM4450 pinctrl
+To:     Tengfei Fan <quic_tengfan@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        linus.walleij@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        catalin.marinas@arm.com, will@kernel.org
+Cc:     arnd@arndb.de, geert+renesas@glider.be, nfraprado@collabora.com,
+        rafal@milecki.pl, peng.fan@nxp.com, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        quic_tsoni@quicinc.com, quic_shashim@quicinc.com,
+        quic_kaushalk@quicinc.com, quic_tdas@quicinc.com,
         quic_tingweiz@quicinc.com, quic_aiquny@quicinc.com,
-        linux-pm@vger.kernel.org, quic_tsoni@quicinc.com,
-        geert+renesas@glider.be, andersson@kernel.org, conor+dt@kernel.org,
-        linux-arm-kernel@lists.infradead.org, agross@kernel.org,
-        quic_tdas@quicinc.com, djakov@kernel.org, konrad.dybcio@linaro.org
-In-Reply-To: <20230908064427.26999-2-quic_tengfan@quicinc.com>
-References: <20230908064427.26999-1-quic_tengfan@quicinc.com>
- <20230908064427.26999-2-quic_tengfan@quicinc.com>
-Message-Id: <169415894359.3239551.14338430937225080028.robh@kernel.org>
-Subject: Re: [PATCH 1/3] dt-bindings: interconnect: Add Qualcomm SM4450
-Date:   Fri, 08 Sep 2023 02:42:23 -0500
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        kernel@quicinc.com
+References: <20230908063843.26835-1-quic_tengfan@quicinc.com>
+ <20230908063843.26835-2-quic_tengfan@quicinc.com>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230908063843.26835-2-quic_tengfan@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -61,49 +86,170 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Fri, 08 Sep 2023 14:44:25 +0800, Tengfei Fan wrote:
-> The Qualcomm SM4450 SoC has several bus fabrics that could be controlled
-> and tuned dynamically according to the bandwidth demand.
+On 08/09/2023 08:38, Tengfei Fan wrote:
+> Add device tree binding Documentation details for Qualcomm SM4450
+> TLMM device.
 > 
 > Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
 > ---
->  .../interconnect/qcom,sm4450-rpmh.yaml        | 133 ++++++++++++++
->  .../dt-bindings/interconnect/qcom,sm4450.h    | 163 ++++++++++++++++++
->  2 files changed, 296 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sm4450-rpmh.yaml
->  create mode 100644 include/dt-bindings/interconnect/qcom,sm4450.h
+>  .../bindings/pinctrl/qcom,sm4450-tlmm.yaml    | 129 ++++++++++++++++++
+>  1 file changed, 129 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml
 > 
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml
+> new file mode 100644
+> index 000000000000..51735604b3c3
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml
+> @@ -0,0 +1,129 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/bindings/pinctrl/qcom,sm4450-tlmm.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies, Inc. RAVELIN TLMM block
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+SM4450, not ravelin
 
-yamllint warnings/errors:
+> +
+> +maintainers:
+> +  - Tengfei Fan <quic_tengfan@quicinc.com>
+> +
+> +description:
+> +  Top Level Mode Multiplexer pin controller in Qualcomm SM4450 SoC.
+> +
+> +allOf:
+> +  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sm4450-pinctrl
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts: true
+> +  interrupt-controller: true
+> +  "#interrupt-cells": true
+> +  gpio-controller: true
+> +
+> +  gpio-reserved-ranges:
+> +    minItems: 1
+> +    maxItems: 105
 
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/interconnect/qcom,sm4450-rpmh.example.dts:18:18: fatal error: dt-bindings/clock/qcom,gcc-sm4450.h: No such file or directory
-   18 |         #include <dt-bindings/clock/qcom,gcc-sm4450.h>
-      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-compilation terminated.
-make[2]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/interconnect/qcom,sm4450-rpmh.example.dtb] Error 1
-make[2]: *** Waiting for unfinished jobs....
-make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1500: dt_binding_check] Error 2
-make: *** [Makefile:234: __sub-make] Error 2
+That's not true, you cannot have 105 ranges.
 
-doc reference errors (make refcheckdocs):
+> +
+> +  gpio-line-names:
+> +    maxItems: 210
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230908064427.26999-2-quic_tengfan@quicinc.com
+No, your driver tells something entirely different.
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
+> +
+> +  "#gpio-cells": true
+> +  gpio-ranges: true
+> +  wakeup-parent: true
+> +
+> +patternProperties:
+> +  "-state$":
+> +    oneOf:
+> +      - $ref: "#/$defs/qcom-sm4450-tlmm-state"
+> +      - patternProperties:
+> +          "-pins$":
+> +            $ref: "#/$defs/qcom-sm4450-tlmm-state"
+> +        additionalProperties: false
+> +
+> +$defs:
+> +  qcom-sm4450-tlmm-state:
+> +    type: object
+> +    description:
+> +      Pinctrl node's client devices use subnodes for desired pin configuration.
+> +      Client device subnodes use below standard properties.
+> +    $ref: qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state
+> +    unevaluatedProperties: false
+> +
+> +    properties:
+> +      pins:
+> +        description:
+> +          List of gpio pins affected by the properties specified in this
+> +          subnode.
+> +        items:
+> +          oneOf:
+> +            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-9][0-9]|20[0-9])$"
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+You do not have 210 GPIOs. Narrow it to real values.
 
-pip3 install dtschema --upgrade
+> +            - enum: [ sdc2_clk, sdc2_cmd, sdc2_data, ufs_reset ]
 
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+Not tested. Missing min/maxItems.
+
+> +
+> +      function:
+> +        description:
+> +          Specify the alternative function to be configured for the specified
+> +          pins.
+> +        enum: [ gpio, atest_char, atest_char0, atest_char1, atest_char2,
+> +                atest_char3, atest_usb0, atest_usb00, atest_usb01, atest_usb02,
+> +                atest_usb03, audio_ref, cam_mclk, cci_async, cci_i2c,
+> +                cci_timer0, cci_timer1, cci_timer2, cci_timer3, cci_timer4,
+> +                cmu_rng0, cmu_rng1, cmu_rng2, cmu_rng3, coex_uart1, cri_trng,
+> +                cri_trng0, cri_trng1, dbg_out, ddr_bist, ddr_pxi0, ddr_pxi1,
+> +                dp0_hot, gcc_gp1, gcc_gp2, gcc_gp3, host2wlan_sol, ibi_i3c,
+> +                jitter_bist, mdp_vsync, mdp_vsync0, mdp_vsync1, mdp_vsync2,
+> +                mdp_vsync3, mi2s0_data0, mi2s0_data1, mi2s0_sck, mi2s0_ws,
+> +                mi2s2_data0, mi2s2_data1, mi2s2_sck, mi2s2_ws, mi2s_mclk0,
+> +                mi2s_mclk1, nav_gpio0, nav_gpio1, nav_gpio2, pcie0_clk,
+> +                phase_flag0, phase_flag1, phase_flag10, phase_flag11,
+> +                phase_flag12, phase_flag13, phase_flag14, phase_flag15,
+> +                phase_flag16, phase_flag17, phase_flag18, phase_flag19,
+> +                phase_flag2, phase_flag20, phase_flag21, phase_flag22,
+> +                phase_flag23, phase_flag24, phase_flag25, phase_flag26,
+> +                phase_flag27, phase_flag28, phase_flag29, phase_flag3,
+> +                phase_flag30, phase_flag31, phase_flag4, phase_flag5,
+> +                phase_flag6, phase_flag7, phase_flag8, phase_flag9,
+> +                pll_bist, pll_clk, prng_rosc0, prng_rosc1, prng_rosc2,
+> +                prng_rosc3, qdss_cti, qdss_gpio, qdss_gpio0, qdss_gpio1,
+> +                qdss_gpio10, qdss_gpio11, qdss_gpio12, qdss_gpio13, qdss_gpio14,
+> +                qdss_gpio15, qdss_gpio2, qdss_gpio3, qdss_gpio4, qdss_gpio5,
+> +                qdss_gpio6, qdss_gpio7, qdss_gpio8, qdss_gpio9, qlink0_enable,
+> +                qlink0_request, qlink0_wmss, qlink1_enable, qlink1_request,
+> +                qlink1_wmss, qlink2_enable, qlink2_request, qlink2_wmss,
+> +                qup0_se0, qup0_se1, qup0_se2, qup0_se3, qup0_se4, qup0_se5,
+> +                qup0_se6, qup0_se7, qup1_se0, qup1_se1, qup1_se2, qup1_se3,
+> +                qup1_se4, qup1_se5, qup1_se6, sd_write, tb_trig, tgu_ch0,
+> +                tgu_ch1, tgu_ch2, tgu_ch3, tmess_prng0, tmess_prng1,
+> +                tmess_prng2, tmess_prng3, tsense_pwm1, tsense_pwm2, uim0_clk,
+> +                uim0_data, uim0_present, uim0_reset, uim1_clk, uim1_data,
+> +                uim1_present, uim1_reset, usb0_hs, usb0_phy, vfr_0, vfr_1,
+> +                vsense_trigger ]
+> +
+> +        required:
+> +          - pins
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    tlmm: pinctrl@f100000 {
+> +      compatible = "qcom,sm4450-tlmm";
+> +      reg = <0x0f100000 0x300000>;
+> +      gpio-controller;
+> +      #gpio-cells = <2>;
+> +      interrupt-controller;
+> +      #interrupt-cells = <2>;
+> +      interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+
+Example pin config, gpio-ranges.
+
+> +    };
+> +...
+
+Best regards,
+Krzysztof
 
