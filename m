@@ -2,61 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C02D798569
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 12:04:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E6E579856C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 12:05:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241204AbjIHKEP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Sep 2023 06:04:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41134 "EHLO
+        id S234888AbjIHKFD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Sep 2023 06:05:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236574AbjIHKEP (ORCPT
+        with ESMTP id S235133AbjIHKFC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Sep 2023 06:04:15 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FBC62130
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Sep 2023 03:03:46 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-52a3ff5f0abso2565110a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Sep 2023 03:03:46 -0700 (PDT)
+        Fri, 8 Sep 2023 06:05:02 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99A721FF1
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Sep 2023 03:04:20 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-52a4737a08fso2462247a12.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Sep 2023 03:04:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694167411; x=1694772211; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=x4qgEdtbnjdPojiUcXIeqoLIkozde5NaSEfUo+RghdQ=;
-        b=CbZ6LYuFYvTgA9CICiVzVPZXfq/SOAhCKGj4HKXtunfdeQsMifCFBpBJSi3fHYXOQ7
-         Q7tKi3Ug1Qov1bViiBGt37FDZeBBc3gBfrY37zqkWTnEEhcpBbJvrh/XZgjPrU6ZHw1V
-         VyaqjpicPC+o3lwxjxov7vB4EXqhZJShWYtRVYeKpSFdFvFBRhg4mzlaN7PvpXGyH3n7
-         rDxJ02XVLraxc5CVAjUT8FbIDAYpq3tZwpT7636oapGrbO+rioDYV1NSOVWBwHparvJy
-         KBus+X8CqFRsavF3GVmO6Fvsvexk9ccf2jBkKmUgz33nJ4BXiOazAtN4s6+ijnTL36Js
-         nwFw==
+        d=linaro.org; s=google; t=1694167453; x=1694772253; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+         :from:content-language:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=tSzGcdP81zhgMfNddSyrc2+uCL5+l0gqW3eptRGyaY0=;
+        b=qetY8HaRM3SGCTXyVkvn8KJ94sYzOpfKS+eJjeooYvsAAJUnT+qu4keERS3BmMzrfo
+         vn+QlCQ/ukgqp39F53pCfIDwG3h1KTW19MVFerVOjyxVuE+NNXVjh76AWGB7NrHagkHK
+         3aBlJcGh3X4RmoJfHO3K1VbTjn55BgAou7Ao3RlLbhiMEag1SA97Sh7klYDnWQNwqcYz
+         CCDP52leCKKOGqobPIKcwjtTLJOKBUm5hlNsRUzVTWyy/Octa/CwhNujwEtPT5vGz/Zb
+         fus5UGVk27IUZIt5jqwjH3hdK4USfAHslDghVr384oCktOLZijj00nGFeWhSiUUEGnvR
+         7Nug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694167411; x=1694772211;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=x4qgEdtbnjdPojiUcXIeqoLIkozde5NaSEfUo+RghdQ=;
-        b=oN96oVyuIRbTVsB85WvSSbYV28t6Epg8+irmyJ3xyEZ3I1E8q4bWBWnqvuKH6Yo7Im
-         V05fw0kd8mTrlYRDGSyY3IUJiVK2vJn57spVF1Ehv2k7EQVn0yYY/zShz4iRwFqRjmJC
-         RSVNuyGjuWP4d1bjohVDjPG4gsgcskIX/gwrkYFqB/sxUQ4Y0VcW630BzpC2jXGChjcc
-         /WyMeb8rPOn+OM5HAKdb0kGC05MBjzPvOkv+V4lqxGoJiz54HQR5e9K0SIpMyLgCinUM
-         47b0B+HxAE9+PVa7aFGJLCVDhk+XKSvdyBvbNRuAv8YUTKNN6A2j8XO4/6466H/P3pgI
-         Nxkw==
-X-Gm-Message-State: AOJu0YxK+i/Ax2Hkrg138/juHkQWBfLC2uentSjXt3jBdCXM6nCJSo+m
-        c9zqXIDvJ7ghUZ7MzEZFqc3iPA==
-X-Google-Smtp-Source: AGHT+IFiiwpjE80rEroXLVcBfEXJnQ7tsfEDzsAgP9dzRWjnTnoVOfkgtcWhgL31dRubU9Z1e7vPYg==
-X-Received: by 2002:aa7:d852:0:b0:523:1e0a:e12e with SMTP id f18-20020aa7d852000000b005231e0ae12emr1518271eds.23.1694167410893;
-        Fri, 08 Sep 2023 03:03:30 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1694167453; x=1694772253;
+        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+         :from:content-language:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tSzGcdP81zhgMfNddSyrc2+uCL5+l0gqW3eptRGyaY0=;
+        b=hOqjhY8r/kAwtLNt8nN+1pqv85FeK7NJhzz4nNZI/XZ/19+EWTGAoORCQlyJpL9qHn
+         v9lDLg926NZJEDqaiiJYCGsorajT9DGaPnMUxnPg2SvDlhd7wFkbdRLnEJcihOqp/8On
+         qh/+y21tjZLbQC/xdMhw2gXUjBTYtwhUlSdG3z8xZZLZpmsCB4OhosttQhF1gVER/ic3
+         gs+eIIJUo4u8MfUeJkBfbdH8lskRCnJHrvYZI9zczlRz9FqutgDoIF/Uy1nKgQEjaOcM
+         EYXiGTw9zvgfSuzY1xAzS7ZBazBUuxNJVjtMhNVRHlnCEeTFK0p6F1JhJ8x4icki3lDo
+         s52w==
+X-Gm-Message-State: AOJu0YwOVU2N5uJhMGhssn2s1mhddESly33AAKeewaxHXFGbtfwYkN4T
+        lo07a8McrrePelC1MsOsXguMwg==
+X-Google-Smtp-Source: AGHT+IFeaE19G/2qD5HIRDGBKJwEZXGW1uXXw7OLcI/yfvWeenXKYLXSSjpHqrTTjhDhxx8coX6MIw==
+X-Received: by 2002:a50:fe8e:0:b0:52c:84c4:a0bf with SMTP id d14-20020a50fe8e000000b0052c84c4a0bfmr1421834edt.30.1694167453464;
+        Fri, 08 Sep 2023 03:04:13 -0700 (PDT)
 Received: from [192.168.37.232] (178235177197.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.197])
-        by smtp.gmail.com with ESMTPSA id ca15-20020aa7cd6f000000b005256aaa6e7asm820449edb.78.2023.09.08.03.03.29
+        by smtp.gmail.com with ESMTPSA id ca15-20020aa7cd6f000000b005256aaa6e7asm820449edb.78.2023.09.08.03.04.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 08 Sep 2023 03:03:30 -0700 (PDT)
-Message-ID: <d4bf890b-1e25-4041-9032-1ee138e0d691@linaro.org>
-Date:   Fri, 8 Sep 2023 12:03:29 +0200
+        Fri, 08 Sep 2023 03:04:13 -0700 (PDT)
+Message-ID: <41d1e364-40a4-48b2-97ef-6c76d238002e@linaro.org>
+Date:   Fri, 8 Sep 2023 12:04:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 16/17] media: qcom: camss: Propagate vfe_reset error up
- the callstack
+Subject: Re: [PATCH v4 15/17] media: qcom: camss: Move vfe_disable into a
+ common routine where applicable
 Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
         todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
         mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
@@ -65,8 +67,8 @@ To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
 Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230907164410.36651-1-bryan.odonoghue@linaro.org>
- <20230907164410.36651-17-bryan.odonoghue@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+ <20230907164410.36651-16-bryan.odonoghue@linaro.org>
+ <8b424303-09c9-4270-abfd-4f209f5c41e0@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
  BB/OmIWU6X+LZW6P88ZmHe+KeyABLMP5s1tJNK1j4ntT7mECcWZDzafPWF4F6m4WJOG27kTJ
@@ -102,7 +104,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230907164410.36651-17-bryan.odonoghue@linaro.org>
+In-Reply-To: <8b424303-09c9-4270-abfd-4f209f5c41e0@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -115,16 +117,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7.09.2023 18:44, Bryan O'Donoghue wrote:
-> A previous patch I had removed the returns from vfe_disable() since we
-> didn't trap any meaningful errors. Konrad pointed out vfe_reset() could
-> return an error, which is true.
+On 8.09.2023 12:02, Konrad Dybcio wrote:
+> On 7.09.2023 18:44, Bryan O'Donoghue wrote:
+>> We can move vfe_disable() into a common routine in the core VFE file
+>> provided we make wm_stop() a VFE specific callback.
+>>
+>> The callback is required to capture the case where VFE 17x currently isn't
+>> VC enabled where as VFE 480 is.
+>>
+>> Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>> ---
+> Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > 
-> Trap the vfe_reset() error code and throw it up the callstack.
-> 
-> Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Konrad
+Actually there's 
+
+ret = vfe_reset(vfe);
+
+return ret;
+
+
+which could just be
+
+return vfe_reset(vfe);
+
 
 Konrad
