@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C9E27980D2
+	by mail.lfdr.de (Postfix) with ESMTP id D80A57980D3
 	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 05:05:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231545AbjIHDFx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S235743AbjIHDFx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Thu, 7 Sep 2023 23:05:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42822 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238525AbjIHDFt (ORCPT
+        with ESMTP id S238449AbjIHDFt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 7 Sep 2023 23:05:49 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7C081BE2
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Sep 2023 20:05:25 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2bcbfb3705dso26792111fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Sep 2023 20:05:25 -0700 (PDT)
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82FEA1BE9
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Sep 2023 20:05:26 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2bcbfb3705dso26792231fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Sep 2023 20:05:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694142324; x=1694747124; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1694142325; x=1694747125; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PjF+Ni17TVCwIorp3DZ1/pP2g7KWsdAJkvzgXwIGnZs=;
-        b=SgWeKHlycJd+vQMBPGGDGdPWHOuOnHhhChAUD31TdCqk2QuiFVTQw6sYWV88T//I1X
-         iZDSFcZ/QR0XU5ffsVYq2icXZqEyjFJxygLJQhv9QrCDB7M2Ipzxpyyn8jyNJOjWIVDj
-         8JTdDylH3AZudb/tW9FkZOJfCcuTHjdnDZle7VDWlZpqtZbQq22LVzjiL0d01QALaiQ0
-         j42EDXdBcuF5IxLO2hKnvxvfMKc53NZaYNKbNQq0txN1CNNDBamFgdttG0bY+jE8sHRu
-         FyYw4CcQLXYM6u0X9v+nRQNaUGvDaDmNT4LfbeZp859yTAAwc2Jaf8Qpp9oyLlzGZzNV
-         SF0w==
+        bh=FX3U4Kv6boSoIeXiFA0GqPmb+Xk7f6TWSY7AwcdRtXw=;
+        b=pOxSDlRF9k6DA7FWLJgix4KyPK1DnXYu8UBPWQwLCDdNGF/J++ueOuHLnzrQT3ZAf+
+         rf14f98tSUEj/M0qb/QjykwSTu9SUBL+jsQLhPHdnOV+p7K+gobLOJrQozYT5h1ajXc+
+         /IWD4QoHRXmbVgUbWfstGKd2VHtG/R8yeAbOPpXg0Sv6DsSrrSF8aJxh19LcZMPlOZWS
+         CyOzLQy8QXShAcPNe2q5BGxgaGNnGsVnm3YncWIlXiRgf71soTHwJDo0wk1t8173q4lP
+         GMHUuFk36tbvbc4hyJDSHIBWU6JFCqjPWPVHH0lTzhfowHVSvsuW2oRjHiNz/54easzy
+         CXfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694142324; x=1694747124;
+        d=1e100.net; s=20230601; t=1694142325; x=1694747125;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=PjF+Ni17TVCwIorp3DZ1/pP2g7KWsdAJkvzgXwIGnZs=;
-        b=qxIfQqYqwXqJg5m0NeWrARsOWYHirvTKzlrXfdZV9ErIILM50lI1pi6wN86LXyccRL
-         PsTVbw2aM2MW+mvd0RbIieSZ4xmINrv1BgKTDDHH5yNe7Egp9hapwwtUHOGyn4JP1ZF5
-         drlvj3YnS3+DjDQTWXQFXW+TWuCU/6HVjOAdbCn0EAqkRYMWIZOGBq59I1Zda+gBu+wv
-         iTlJ0W+tJYSZ1aFetN6PaJ8n3SAhx+Wfmc0V5/JTDuDsXFATEJ6edzfxnNgxheeDDUXN
-         7+PY0sKKeLzdUdISdP0LyksnG15+7QZNafOH4OnzgT4Tp+o9tTHV1OHVVgRshEaV9555
-         TsjQ==
-X-Gm-Message-State: AOJu0YwjCy+IPh2GvPZlcnS5rSb3TOhBaNXYG1ZvAtBp53NCmbE2Hx81
-        +xtWBLXjxSTCwA1oXBuRlTXrOw==
-X-Google-Smtp-Source: AGHT+IEPZQBKLVkp0sj0YHhbSBoBG7ps4S6wXzS+PGeOdpT3sIK8s0aBEQUUBdV9d5V+uIjuBNLNIw==
-X-Received: by 2002:a2e:b044:0:b0:2bc:befb:b602 with SMTP id d4-20020a2eb044000000b002bcbefbb602mr776445ljl.1.1694142324074;
+        bh=FX3U4Kv6boSoIeXiFA0GqPmb+Xk7f6TWSY7AwcdRtXw=;
+        b=R/ApmTgJ2AZ6X7sphp1Y8lWUYHab4ktVx4DevZ2xqBPZXp/VQPqqB361NCNnXb2Dtf
+         QdtB6qYChOg41BBhwVxnWW144zIQlixHaOrp7xnEv70gu++bDWUirOQANvk8UEjEnKqC
+         wAioTkYzfgEbEx9qJLZgzgeqJvGK10yD3t6ew0kydP6DU6N3Q/MWY9pshAVzNt3gF6gU
+         4W2y/AUM+cFNIVs+b/q9B5UtIFYehAO+d2LLXlsQxTyQscGZCpbwfK3fEAVUkspGY6PA
+         dioSIXv3u7IDQYW1GEHQuEFBHPM1WNSKzr7bKV3URNLuBejSLjfpHKceWKkVq2Gf6GNh
+         A5xA==
+X-Gm-Message-State: AOJu0YykzDdZnMRna12a4ITKGs5OXPytFY8waKgBKFT5T6uurw+t5f85
+        ETAF1lW1nvAnksQFk2FsCfNlMg==
+X-Google-Smtp-Source: AGHT+IE1UWo6gyoG9WOKNs/u/38JmWyXkL5hWEPnw8XhwXskinhp5YUgh8TkpIKV0TF6lTqgb7Va+A==
+X-Received: by 2002:a2e:97d7:0:b0:2b9:f13b:6139 with SMTP id m23-20020a2e97d7000000b002b9f13b6139mr782892ljj.20.1694142324853;
         Thu, 07 Sep 2023 20:05:24 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id z10-20020a2e8e8a000000b002b93d66b82asm128332ljk.112.2023.09.07.20.05.23
+        by smtp.gmail.com with ESMTPSA id z10-20020a2e8e8a000000b002b93d66b82asm128332ljk.112.2023.09.07.20.05.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Sep 2023 20:05:23 -0700 (PDT)
+        Thu, 07 Sep 2023 20:05:24 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
         Maxime Ripard <mripard@kernel.org>,
@@ -60,16 +60,16 @@ Cc:     Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         linux-arm-msm@vger.kernel.org
-Subject: [PATCH 2/5] drm/msm/dpu: finalise global state object
-Date:   Fri,  8 Sep 2023 06:05:18 +0300
-Message-Id: <20230908030521.236309-3-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 3/5] drm/msm/dpu: drop global_state_lock
+Date:   Fri,  8 Sep 2023 06:05:19 +0300
+Message-Id: <20230908030521.236309-4-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230908030521.236309-1-dmitry.baryshkov@linaro.org>
 References: <20230908030521.236309-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,40 +77,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add calls to finalise global state object and corresponding lock.
+Since the commit b962a12050a3 ("drm/atomic: integrate modeset lock with
+private objects") the DRM framework no longer requires the external
+lock for private objects. Drop the lock, letting the DRM to manage
+private object locking.
 
-Fixes: de3916c70a24 ("drm/msm/dpu: Track resources in global state")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 8 --------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h | 1 -
+ 2 files changed, 9 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index aa6ba2cf4b84..fba2294e329f 100644
+index fba2294e329f..ee84160592ce 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -385,6 +385,12 @@ static int dpu_kms_global_obj_init(struct dpu_kms *dpu_kms)
- 	return 0;
+@@ -328,11 +328,6 @@ struct dpu_global_state *dpu_kms_get_global_state(struct drm_atomic_state *s)
+ 	struct msm_drm_private *priv = s->dev->dev_private;
+ 	struct dpu_kms *dpu_kms = to_dpu_kms(priv->kms);
+ 	struct drm_private_state *priv_state;
+-	int ret;
+-
+-	ret = drm_modeset_lock(&dpu_kms->global_state_lock, s->acquire_ctx);
+-	if (ret)
+-		return ERR_PTR(ret);
+ 
+ 	priv_state = drm_atomic_get_private_obj_state(s,
+ 						&dpu_kms->global_state);
+@@ -373,8 +368,6 @@ static int dpu_kms_global_obj_init(struct dpu_kms *dpu_kms)
+ {
+ 	struct dpu_global_state *state;
+ 
+-	drm_modeset_lock_init(&dpu_kms->global_state_lock);
+-
+ 	state = kzalloc(sizeof(*state), GFP_KERNEL);
+ 	if (!state)
+ 		return -ENOMEM;
+@@ -388,7 +381,6 @@ static int dpu_kms_global_obj_init(struct dpu_kms *dpu_kms)
+ static void dpu_kms_global_obj_fini(struct dpu_kms *dpu_kms)
+ {
+ 	drm_atomic_private_obj_fini(&dpu_kms->global_state);
+-	drm_modeset_lock_fini(&dpu_kms->global_state_lock);
  }
  
-+static void dpu_kms_global_obj_fini(struct dpu_kms *dpu_kms)
-+{
-+	drm_atomic_private_obj_fini(&dpu_kms->global_state);
-+	drm_modeset_lock_fini(&dpu_kms->global_state_lock);
-+}
-+
  static int dpu_kms_parse_data_bus_icc_path(struct dpu_kms *dpu_kms)
- {
- 	struct icc_path *path0;
-@@ -827,6 +833,8 @@ static void _dpu_kms_hw_destroy(struct dpu_kms *dpu_kms)
- 		dpu_rm_destroy(&dpu_kms->rm);
- 	dpu_kms->rm_init = false;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+index b6f53ca6e962..ed549f0f7c65 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+@@ -84,7 +84,6 @@ struct dpu_kms {
+ 	 * Global private object state, Do not access directly, use
+ 	 * dpu_kms_global_get_state()
+ 	 */
+-	struct drm_modeset_lock global_state_lock;
+ 	struct drm_private_obj global_state;
  
-+	dpu_kms_global_obj_fini(dpu_kms);
-+
- 	dpu_kms->catalog = NULL;
- 
- 	if (dpu_kms->vbif[VBIF_NRT])
+ 	struct dpu_rm rm;
 -- 
 2.39.2
 
