@@ -2,116 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 879C6798950
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 16:55:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7B2F79897F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 17:03:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235426AbjIHOz3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Sep 2023 10:55:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34410 "EHLO
+        id S238148AbjIHPDx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Sep 2023 11:03:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240124AbjIHOz2 (ORCPT
+        with ESMTP id S233245AbjIHPDx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Sep 2023 10:55:28 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49E341FC1;
-        Fri,  8 Sep 2023 07:55:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1694184916; x=1725720916;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=hRPta3ptzMNjQT7WswU+lJMeajZApy8eHTToKWyCnrg=;
-  b=ni1J1s3emKWzYX2GVe7EgTWHDOlJtxlAg28MmntIn1failtywlofoLuk
-   UuAI0Q2fBsjYa/nKENa6Z8P6Z6URPZT4VDXUYL+ypagqqXKWyg6zo7Cst
-   W8E06/3ZArfxAgRNQIScRFBsWT+Oa3MJq/eGoR0+Tjar1kNjkIK2lWRg/
-   qv2iciD1jbk8WyE7nVbSMvw7ctHNL7Rt35h4OliaC+kc+TePs0LGwcaf8
-   Ax3NAfzATMIfPhAI0pJCoVp9cN5z3zR+/gDvN9deoolyYYohNj73Sv3ba
-   5bsWdalwBXk8SRngrfwRhBYtOD1pRbjK/clxtydprMrWwoCjzP2kG6dQk
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10827"; a="357969728"
-X-IronPort-AV: E=Sophos;i="6.02,237,1688454000"; 
-   d="scan'208";a="357969728"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2023 07:55:15 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10827"; a="1073339873"
-X-IronPort-AV: E=Sophos;i="6.02,237,1688454000"; 
-   d="scan'208";a="1073339873"
-Received: from lkp-server01.sh.intel.com (HELO 59b3c6e06877) ([10.239.97.150])
-  by fmsmga005.fm.intel.com with ESMTP; 08 Sep 2023 07:55:10 -0700
-Received: from kbuild by 59b3c6e06877 with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1qect2-0002Mq-27;
-        Fri, 08 Sep 2023 14:55:08 +0000
-Date:   Fri, 8 Sep 2023 22:55:04 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Tengfei Fan <quic_tengfan@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        tglx@linutronix.de, maz@kernel.org, lee@kernel.org
-Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-        robimarko@gmail.com, quic_gurus@quicinc.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_tsoni@quicinc.com,
-        quic_shashim@quicinc.com, quic_kaushalk@quicinc.com,
-        quic_tdas@quicinc.com, quic_tingweiz@quicinc.com,
-        quic_aiquny@quicinc.com, kernel@quicinc.com,
-        quic_bjorande@quicinc.com, Ajit Pandey <quic_ajipan@quicinc.com>,
-        Tengfei Fan <quic_tengfan@quicinc.com>
-Subject: Re: [PATCH 5/6] arm64: dts: qcom: sm4450: Add RPMH and Global clock
- controller
-Message-ID: <202309082243.JImHPFSN-lkp@intel.com>
-References: <20230908065847.28382-6-quic_tengfan@quicinc.com>
+        Fri, 8 Sep 2023 11:03:53 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35FE61FC0
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Sep 2023 08:03:49 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-9aa0495f9cfso70384266b.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Sep 2023 08:03:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1694185427; x=1694790227; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GgbRCToEb5NmEGS74P9h1ZwNZOKwIjjVNc1A6TPphJs=;
+        b=oAZ8MtO/TglrT1MY1/eewD/01E9hjVMJb0n4JXttqacYCylmvNjdEw+x4SxF9wY0Fy
+         HUOx6st7bk4/5oki9bedcF2bOVkv9Qo3oK2/iG4rayY2RR/CUaTRrM5iwVmE/ZmOogdi
+         IDTBppG4Gu1TTh4MBVvyReA3UawjVe/j4fTxZHyvod94FC93I2DaBPPXbdP1M1cEdLb1
+         8GlNhfi2h4f85Q6T4zQla5UXPzNqyKpv8h3NAgLx50e3xOu6GJcuy0HfHsmlu2d30PWl
+         ABl7vi0GSgegBr+d8QdjMS1nBCX1sNrebfsSVX/FIMpm/uD8uErogLA8D62yUZKJqQlV
+         yw1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694185427; x=1694790227;
+        h=to:subject:message-id:date:from:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GgbRCToEb5NmEGS74P9h1ZwNZOKwIjjVNc1A6TPphJs=;
+        b=A7Qe3dj+Dgcee0i1prPRj74w0UPEbwUCI3Ys/0sC25MfCjgxt2SQRa8lmWS9+6M44a
+         3QFFSw9v0u8+f/gnW4Ii5sm3u2cOiZBNnaDSKW5kdC4dUcbDm1N9gQfCEK3ZjlzdZ/uv
+         MBTbJvz+GbPB8RsPyhk3woZ2AUpoSP3AaeqItKIXQSMMJH9XBdwpuedGhDshZYR5+Jqn
+         wTFVRNkLxzTFFsPKg19tvWGdsIqyOrKGt7HK6OqS4kh1hx8otaER0bBttXxmmlT/Nkrl
+         eZ7xBd2crofkQVEuo6iY321JzuiNhJ4kEKbKjsvcmHI9ZvJoOB5u3Uug4cbqv9A2wzKo
+         Tulg==
+X-Gm-Message-State: AOJu0YxEkjAm3w8zlvQKJ1hmuC55rL3+2D7ihp3yGhYJo0lSn+CBMKoI
+        xucbycIF8jgJlj8yGFNGDk1hQoOZv4JLxLIsIdk=
+X-Google-Smtp-Source: AGHT+IEEPvFKP5sUKl+TfFd5GNBGbrKhtGba+BcCS4qkr1b8bKTyv15XMXkviGb38ahMzZ8eWnhbXhblw9jddy1/ZQw=
+X-Received: by 2002:a17:907:2c62:b0:9a1:eb4f:56f with SMTP id
+ ib2-20020a1709072c6200b009a1eb4f056fmr3345882ejc.13.1694185425763; Fri, 08
+ Sep 2023 08:03:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230908065847.28382-6-quic_tengfan@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+Received: by 2002:a17:907:a41:b0:9a5:a231:1330 with HTTP; Fri, 8 Sep 2023
+ 08:03:45 -0700 (PDT)
+Reply-To: PopovAleksander@proton.me
+From:   Popov Aleksander <offficeo01@gmail.com>
+Date:   Fri, 8 Sep 2023 08:03:45 -0700
+Message-ID: <CAKrNddYK4FjcKf7d8SU2j4-D=9vcownBt7QSHH0b5hA8o-aFcQ@mail.gmail.com>
+Subject: URGENT RESPONSE!!!
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=6.0 required=5.0 tests=ADVANCE_FEE_4_NEW,BAYES_50,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,SUBJ_ALL_CAPS,TVD_PH_SUBJ_META1,UNDISC_MONEY,
+        URG_BIZ autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Report: *  0.0 RCVD_IN_DNSWL_BLOCKED RBL: ADMINISTRATOR NOTICE: The query to
+        *      DNSWL was blocked.  See
+        *      http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
+        *      for more information.
+        *      [2a00:1450:4864:20:0:0:0:635 listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [offficeo01[at]gmail.com]
+        *  0.5 SUBJ_ALL_CAPS Subject is all capitals
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [offficeo01[at]gmail.com]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  0.6 URG_BIZ Contains urgent matter
+        *  1.2 TVD_PH_SUBJ_META1 Email has a Phishy looking subject line
+        *  0.0 ADVANCE_FEE_4_NEW Appears to be advance fee fraud (Nigerian
+        *      419)
+        *  2.8 UNDISC_MONEY Undisclosed recipients + money/fraud signs
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Tengfei,
+Greetings,
 
-kernel test robot noticed the following build errors:
+Trust you are doing well, I got your email contact from Google
+business listing in your country and with your interesting profile, I
+decided to contact you.
 
-[auto build test ERROR on a47fc304d2b678db1a5d760a7d644dac9b067752]
+My name is Popov Aleksander from Ukraine, I'm a businessman reaching
+from Kyiv where I am currently stuck due to the restriction of some
+age bracket which is not allowed to leave the country as part of
+government's martial law by virtue of the ongoing war here in Ukraine.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Tengfei-Fan/dt-bindings-firmware-document-Qualcomm-SM4450-SCM/20230908-150308
-base:   a47fc304d2b678db1a5d760a7d644dac9b067752
-patch link:    https://lore.kernel.org/r/20230908065847.28382-6-quic_tengfan%40quicinc.com
-patch subject: [PATCH 5/6] arm64: dts: qcom: sm4450: Add RPMH and Global clock controller
-config: arm64-randconfig-r024-20230908 (https://download.01.org/0day-ci/archive/20230908/202309082243.JImHPFSN-lkp@intel.com/config)
-compiler: clang version 16.0.4 (https://github.com/llvm/llvm-project.git ae42196bc493ffe877a7e3dff8be32035dea4d07)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20230908/202309082243.JImHPFSN-lkp@intel.com/reproduce)
+It has been over 18 months into the war. Many businesses have
+collapsed, especially in my region the Mariupol City of Donetsk Oblast
+where the Russian Army has invaded and occupied.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202309082243.JImHPFSN-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   In file included from arch/arm64/boot/dts/qcom/sm4450-qrd.dts:8:
->> arch/arm64/boot/dts/qcom/sm4450.dtsi:7:10: fatal error: 'dt-bindings/clock/qcom,sm4450-gcc.h' file not found
-   #include <dt-bindings/clock/qcom,sm4450-gcc.h>
-            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   1 error generated.
+Considering the situation in my country, I have decided to make an
+investment outside Ukraine so I'm searching for a capable partner who
+can manage my resources judiciously, I can fund a multi-million
+investment as partnership or loan as long as my fund will be in safe
+hands. If you are interested, contact  PopovAleksander@proton.me  for
+more discussion.
 
 
-vim +7 arch/arm64/boot/dts/qcom/sm4450.dtsi
-
-   > 7	#include <dt-bindings/clock/qcom,sm4450-gcc.h>
-     8	#include <dt-bindings/gpio/gpio.h>
-     9	#include <dt-bindings/interrupt-controller/arm-gic.h>
-    10	#include <dt-bindings/soc/qcom,rpmh-rsc.h>
-    11	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Regards,
+Popov Aleksander
+Kyiv, Ukraine.
