@@ -2,87 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A068179833C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 09:30:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E46A798356
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 09:42:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233517AbjIHHaF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Sep 2023 03:30:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42760 "EHLO
+        id S239565AbjIHHmh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Sep 2023 03:42:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232310AbjIHHaE (ORCPT
+        with ESMTP id S231440AbjIHHmg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Sep 2023 03:30:04 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8119E1BC8;
-        Fri,  8 Sep 2023 00:30:00 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3887BkCg002871;
-        Fri, 8 Sep 2023 07:29:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=tjETNQR7Qbjn8moY75mNH7bm6GbWzUOROl2QSxDzkM8=;
- b=FlXK3zMAFWE3UBbqZG2G/8XA1MqkVsBl/i+kUsQtrFpx1R1r53PahOUtq9jMa/MhHWeP
- 4OAzQyWk57JptAkAKJ7FbP4HjoqKu9VHztmOZmZv1dtCoAb81Xil21yyAajsBLROr631
- DV02gJiztYRuESmW64UoxrsK0MRhxDdk0YTR+iii2oFZNwcZD/60AWxnrz84cJBwtx2q
- B+PoA6Uc23ZtmOqpBRiSpQ+aW+iPozTk15kRf1ZvpZno5TYyk8ZDU5sJqNnAkz6/NHpV
- OYa+B8blXkGojQoXN53l1WOGvlJPyVinx+Po0zrjqslAuOJXlI/sFaIfZj1B0LkGnnCM 3Q== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sy7m0k20s-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 08 Sep 2023 07:29:26 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3887T7tt006191
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 8 Sep 2023 07:29:07 GMT
-Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Fri, 8 Sep
- 2023 00:28:58 -0700
-Message-ID: <1407c2f0-3abf-4cb0-93c0-e19f821ff2fb@quicinc.com>
-Date:   Fri, 8 Sep 2023 15:28:55 +0800
+        Fri, 8 Sep 2023 03:42:36 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 807C31BDA;
+        Fri,  8 Sep 2023 00:42:27 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B64EDC433C9;
+        Fri,  8 Sep 2023 07:42:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1694158947;
+        bh=b0W2vlY4CgJqt1HiR9SSVt08ChzyrdUmrFpWJeUBUwM=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=L2sgO/dmZOmaI8oqFoM6BaTr5d0fzf1dPzytCdMuvjy8V/VC4BL6pmIp9QMF6gflO
+         0ymS9cWGMvPZRSX18OEYIXpgKPbFBm7Hl9BuIl5fVjMeqBisKBcU22HG100iVGzyrT
+         O9TNntRVx4P4BenWtUL9OuByx2xYdye4ypd4ZtcfgmnydTZhmTq5sBzpk5riywP/hQ
+         lAnWp68ECQkc2R6mj90YJMLG23wNCuEqN7tRWJx2F1e75hTgKrZBR8M8KA6niEUugG
+         Gclmw1wpEuHOFxfLcL7Lq7Em0TB6o7EnXnqvlTmep4jbysPj1sbe9F9EzG4HTmTgTr
+         H4COtm0l2yWyw==
+Received: (nullmailer pid 3239586 invoked by uid 1000);
+        Fri, 08 Sep 2023 07:42:23 -0000
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: pinctrl: qcom: Add SM4450 pinctrl
-To:     Rob Herring <robh@kernel.org>
-CC:     <quic_tingweiz@quicinc.com>,
-        <linux-arm-kernel@lists.infradead.org>, <rafal@milecki.pl>,
-        <conor+dt@kernel.org>, <nfraprado@collabora.com>,
-        <devicetree@vger.kernel.org>, <catalin.marinas@arm.com>,
-        <quic_kaushalk@quicinc.com>, <andersson@kernel.org>,
-        <quic_shashim@quicinc.com>, <linus.walleij@linaro.org>,
-        <quic_tsoni@quicinc.com>, <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <geert+renesas@glider.be>,
-        <peng.fan@nxp.com>, <quic_tdas@quicinc.com>,
-        <konrad.dybcio@linaro.org>, <arnd@arndb.de>, <will@kernel.org>,
-        <robh+dt@kernel.org>, <agross@kernel.org>,
-        <quic_aiquny@quicinc.com>, <kernel@quicinc.com>
-References: <20230908063843.26835-1-quic_tengfan@quicinc.com>
- <20230908063843.26835-2-quic_tengfan@quicinc.com>
- <169415774033.3172287.2910545525997528344.robh@kernel.org>
-From:   Tengfei Fan <quic_tengfan@quicinc.com>
-In-Reply-To: <169415774033.3172287.2910545525997528344.robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: G0yg3CgXkxq4nOWlY_DqugIkk635XNFq
-X-Proofpoint-ORIG-GUID: G0yg3CgXkxq4nOWlY_DqugIkk635XNFq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-08_03,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
- lowpriorityscore=0 adultscore=0 mlxlogscore=875 spamscore=0 malwarescore=0
- suspectscore=0 mlxscore=0 bulkscore=0 priorityscore=1501 clxscore=1011
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
- definitions=main-2309080068
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+From:   Rob Herring <robh@kernel.org>
+To:     Tengfei Fan <quic_tengfan@quicinc.com>
+Cc:     will@kernel.org, arnd@arndb.de, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_kaushalk@quicinc.com,
+        peng.fan@nxp.com, kernel@quicinc.com, catalin.marinas@arm.com,
+        rafal@milecki.pl, krzysztof.kozlowski+dt@linaro.org,
+        nfraprado@collabora.com, quic_shashim@quicinc.com,
+        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        quic_tingweiz@quicinc.com, quic_aiquny@quicinc.com,
+        linux-pm@vger.kernel.org, quic_tsoni@quicinc.com,
+        geert+renesas@glider.be, andersson@kernel.org, conor+dt@kernel.org,
+        linux-arm-kernel@lists.infradead.org, agross@kernel.org,
+        quic_tdas@quicinc.com, djakov@kernel.org, konrad.dybcio@linaro.org
+In-Reply-To: <20230908064427.26999-2-quic_tengfan@quicinc.com>
+References: <20230908064427.26999-1-quic_tengfan@quicinc.com>
+ <20230908064427.26999-2-quic_tengfan@quicinc.com>
+Message-Id: <169415894359.3239551.14338430937225080028.robh@kernel.org>
+Subject: Re: [PATCH 1/3] dt-bindings: interconnect: Add Qualcomm SM4450
+Date:   Fri, 08 Sep 2023 02:42:23 -0500
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -90,48 +62,48 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+On Fri, 08 Sep 2023 14:44:25 +0800, Tengfei Fan wrote:
+> The Qualcomm SM4450 SoC has several bus fabrics that could be controlled
+> and tuned dynamically according to the bandwidth demand.
+> 
+> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+> ---
+>  .../interconnect/qcom,sm4450-rpmh.yaml        | 133 ++++++++++++++
+>  .../dt-bindings/interconnect/qcom,sm4450.h    | 163 ++++++++++++++++++
+>  2 files changed, 296 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sm4450-rpmh.yaml
+>  create mode 100644 include/dt-bindings/interconnect/qcom,sm4450.h
+> 
 
-在 9/8/2023 3:22 PM, Rob Herring 写道:
-> 
-> On Fri, 08 Sep 2023 14:38:41 +0800, Tengfei Fan wrote:
->> Add device tree binding Documentation details for Qualcomm SM4450
->> TLMM device.
->>
->> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
->> ---
->>   .../bindings/pinctrl/qcom,sm4450-tlmm.yaml    | 129 ++++++++++++++++++
->>   1 file changed, 129 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml
->>
-> 
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
-> 
-> yamllint warnings/errors:
-> 
-> dtschema/dtc warnings/errors:
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml:
-> Error in referenced schema matching $id: http://devicetree.org/schemas/pinctrl/qcom,tlmm-common.yaml
-> 
-> doc reference errors (make refcheckdocs):
-> 
-> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230908063843.26835-2-quic_tengfan@quicinc.com
-> 
-> The base for the series is generally the latest rc1. A different dependency
-> should be noted in *this* patch.
-> 
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
-> 
-> pip3 install dtschema --upgrade
-> 
-> Please check and re-submit after running the above command yourself. Note
-> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-> your schema. However, it must be unset to test all examples with your schema
-> 
-Thanks review this change detailly, do update env and do verify again.
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
--- 
-Thx and BRs,
-Tengfei Fan
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/interconnect/qcom,sm4450-rpmh.example.dts:18:18: fatal error: dt-bindings/clock/qcom,gcc-sm4450.h: No such file or directory
+   18 |         #include <dt-bindings/clock/qcom,gcc-sm4450.h>
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make[2]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/interconnect/qcom,sm4450-rpmh.example.dtb] Error 1
+make[2]: *** Waiting for unfinished jobs....
+make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1500: dt_binding_check] Error 2
+make: *** [Makefile:234: __sub-make] Error 2
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230908064427.26999-2-quic_tengfan@quicinc.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
