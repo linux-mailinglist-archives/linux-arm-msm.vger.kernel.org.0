@@ -2,123 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A1F7A7985C6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 12:24:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 082E07985D0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 12:26:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243077AbjIHKYz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Sep 2023 06:24:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48278 "EHLO
+        id S234913AbjIHK0P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Sep 2023 06:26:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232585AbjIHKYy (ORCPT
+        with ESMTP id S239152AbjIHK0P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Sep 2023 06:24:54 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B60DB212D;
-        Fri,  8 Sep 2023 03:24:23 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3889kc3U027822;
-        Fri, 8 Sep 2023 10:22:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=9nZFEAV0AeHreRBRxKAyau56XXjNe94bEf0a+siu2Bk=;
- b=WGpGfZwZupSgW4T17hiV2WY0vpVOB9JZMXb96PQMhHr57qryniaIV4QpsvWhdRXVIpM1
- bKpKkNcxVOGosRxG05LpUTsWLM2WYYmu0p1qKiKw/dVF0unxJmoJfmAuy6zJp7udta5p
- hIJsklH0fQbwUOYsSP4lodguCy4VpXJMpayohxeX7Oiksm6prDIvby/mZPMLgESM0au3
- nUEsOWOlYm+IuScRyv2dKBboUHjscggjx5kluuOMfNsFLaiyWpheVfG5Lwy9ENYAGmiJ
- puEtS2MQrNqnmt3o+zkDsQJacujKkGZvA+xSSHhHUJasAeAU+4hA/q+7brEV1w91c49Y Kw== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3syfj2jb3y-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 08 Sep 2023 10:22:48 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 388AMlh8003373
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 8 Sep 2023 10:22:47 GMT
-Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Fri, 8 Sep 2023 03:22:42 -0700
-Date:   Fri, 8 Sep 2023 15:52:39 +0530
-From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
-To:     Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-CC:     <mani@kernel.org>, <miquel.raynal@bootlin.com>, <richard@nod.at>,
-        <vigneshr@ti.com>, <linux-mtd@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>, <quic_charante@quicinc.com>,
-        <quic_kaushalk@quicinc.com>
-Subject: Re: [PATCH] mtd: nand: qcom: Fix the node for nand unmap resource
-Message-ID: <ff77c3ce-d635-4501-8348-5b7adff9a16c@quicinc.com>
-References: <20230907092854.11408-1-quic_bibekkum@quicinc.com>
+        Fri, 8 Sep 2023 06:26:15 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1439212A
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Sep 2023 03:25:46 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-52a1ce529fdso2609486a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Sep 2023 03:25:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694168692; x=1694773492; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Diwki1H3nMBa2gbVYpcyQqgxJDZVKLGgip1PT183HVw=;
+        b=BfOcuMpbR2Mt6aUvdo7WrHrY7UEE3N5goO/4hEbpDLTsDe7AH3vMX6j8hhg2DCHVUB
+         kpUXm95l4WghRtMv4IVusMQIY6cIYbd9cOEDrKMNgLkV1MyY32fI1ZdqvO9wEUIWc/QT
+         fKEzDsxfQ5YbhQjkWtC6pVNbibQm7L7IH1vT8dI/GaHWbwFe0tw+LUZqVgDaE8SxE1IZ
+         VT+SbvLXRYzKTfCqSZcRArMOdFgUW5BujwZMZeE8CNYbaAqCbpnZbJCR+eVINf9JawNl
+         S7sSJqYNyN2IEsmsX1uajcmHIA1ab65ppF/DC+li648efcpX15eCKZz4EhXyizKBizIK
+         btoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694168692; x=1694773492;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Diwki1H3nMBa2gbVYpcyQqgxJDZVKLGgip1PT183HVw=;
+        b=NxEaqeLjy4OcC4ozRFb4NLISuZZPgnIm3G7d7Qs7/zcEVURnYmMZAH2O5cYlTwx3j4
+         Xe3AQAEZdJsBRyhV9xKox3GaJzzhFtEwyRQ2fw5dndrwnX/OvaWFqK4RONxD4e74/ro9
+         bQAnoUaw/1rrsFqisjPnDzHwEEzjmWDAsMY5JAfx1ZEZKga+pmJipZQmbHyHs8errU7p
+         +wIdDSTR73UwOzB4i17Su0Typ/JJY3xgyU5QdIOoxawS7+DbrP3uM4f/uN46EVIoFPjx
+         MS08qlDzvcKuEvWwzg/pAiCm5bQ8otjQ9s0S0lQs4vG8M3CjTzvsklbQBZ2tGim0wQqK
+         AHvQ==
+X-Gm-Message-State: AOJu0YzJyNddv1A9eHSEgzlGzHv4SrK6CEk80mdEXNAU/jRzvyy2JvhZ
+        hUUSJzZwsVHS9xhN9Cao0aNmtg5qVsbOzZLNvTt0qg==
+X-Google-Smtp-Source: AGHT+IGHC6qdHCJ7eOqx4QHsciaxsECTd5T20mMKi4nbUh4CzU0XmJaRQWBYllJmgG1S0nnP6iLMuQ==
+X-Received: by 2002:a17:906:1011:b0:9a2:2635:daa8 with SMTP id 17-20020a170906101100b009a22635daa8mr1527802ejm.56.1694168691864;
+        Fri, 08 Sep 2023 03:24:51 -0700 (PDT)
+Received: from [192.168.37.232] (178235177197.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.197])
+        by smtp.gmail.com with ESMTPSA id sb5-20020a170906edc500b009a1be9c29d7sm835530ejb.179.2023.09.08.03.24.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 08 Sep 2023 03:24:51 -0700 (PDT)
+Message-ID: <c5d64d12-668a-4d70-85ee-e4111d85a1be@linaro.org>
+Date:   Fri, 8 Sep 2023 12:24:49 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20230907092854.11408-1-quic_bibekkum@quicinc.com>
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: DYbq0Ijztn-nkGYiY9lrL4ApwxS6FMud
-X-Proofpoint-GUID: DYbq0Ijztn-nkGYiY9lrL4ApwxS6FMud
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-08_07,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
- priorityscore=1501 clxscore=1011 impostorscore=0 spamscore=0 bulkscore=0
- malwarescore=0 lowpriorityscore=0 suspectscore=0 mlxscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
- definitions=main-2309080095
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 15/17] media: qcom: camss: Move vfe_disable into a
+ common routine where applicable
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
+        todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
+        mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
+        laurent.pinchart@ideasonboard.com, sakari.ailus@linux.intel.com,
+        andrey.konovalov@linaro.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230907164410.36651-1-bryan.odonoghue@linaro.org>
+ <20230907164410.36651-16-bryan.odonoghue@linaro.org>
+ <8b424303-09c9-4270-abfd-4f209f5c41e0@linaro.org>
+ <41d1e364-40a4-48b2-97ef-6c76d238002e@linaro.org>
+ <c9570c8e-c9a5-43f5-8b69-d5c38d214061@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <c9570c8e-c9a5-43f5-8b69-d5c38d214061@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 07, 2023 at 02:58:54PM +0530, Bibek Kumar Patro wrote:
-> While unmapping the nand resource in case of err_core_clk
-> the dev node being passed is res_start instead of nand->dma_base
-
-It is not not dev not but addr argument.
-
-> (where the iova returned from map operation is stored) causing
-> failure in unmap operation. Hence modifying the unmap operation
-> to pass the nand->base_dma instead of res_start.
+On 8.09.2023 12:21, Bryan O'Donoghue wrote:
+> On 08/09/2023 11:04, Konrad Dybcio wrote:
+>> On 8.09.2023 12:02, Konrad Dybcio wrote:
+>>> On 7.09.2023 18:44, Bryan O'Donoghue wrote:
+>>>> We can move vfe_disable() into a common routine in the core VFE file
+>>>> provided we make wm_stop() a VFE specific callback.
+>>>>
+>>>> The callback is required to capture the case where VFE 17x currently isn't
+>>>> VC enabled where as VFE 480 is.
+>>>>
+>>>> Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+>>>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>>> ---
+>>> Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>>
+>>> Konrad
+>> Actually there's
+>>
+>> ret = vfe_reset(vfe);
+>>
+>> return ret;
+>>
+>>
+>> which could just be
+>>
+>> return vfe_reset(vfe);
+>>
+>>
+>> Konrad
 > 
-
-Pls simplify this commit description. I think, it was a simple copy/paste
-mistake. I would write
-
-"Fix addr argument to dma_unmap_resource() in the error path of probe.
-The addr argument should be dma address not physical address."
-
-> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-> ---
->  drivers/mtd/nand/raw/qcom_nandc.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> On purpose.
 > 
-> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-> index f583022755a2..e085a0f588eb 100644
-> --- a/drivers/mtd/nand/raw/qcom_nandc.c
-> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
-> @@ -3322,7 +3322,7 @@ static int qcom_nandc_probe(struct platform_device *pdev)
->  err_aon_clk:
->  	clk_disable_unprepare(nandc->core_clk);
->  err_core_clk:
-> -	dma_unmap_resource(dev, res->start, resource_size(res),
-> +	dma_unmap_resource(dev, nandc->base_dma, resource_size(res),
->  			   DMA_BIDIRECTIONAL, 0);
->  	dev_err(&pdev->dev, "DEBUG: probe failed for nandc module\n");
->  	return ret;
+> I prefer the ret = ; return ret; pattern since it makes it easier / less work to
+> 
+> ret = fn();
+> if (ret)
+>     goto error;
+> 
+> error:
+>     return ret;
+There's no error label in vfe_disable_output
 
-Since you are fixing a bug introduced by a previous commit, you should
-add Fixes tag like below. Refer to Documentation [1].
-
-Fixes: 7330fc505af4 ("mtd: rawnand: qcom: stop using phys_to_dma()")
-
-[1] https://docs.kernel.org/process/submitting-patches.html#using-reported-by-tested-by-reviewed-by-suggested-by-and-fixes
-
-Thanks,
-Pavan
+Konrad
