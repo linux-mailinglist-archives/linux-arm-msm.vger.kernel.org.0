@@ -2,51 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1EA427986F4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 14:21:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B1E2979877B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 14:59:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229706AbjIHMV7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Sep 2023 08:21:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45452 "EHLO
+        id S243370AbjIHM7S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Sep 2023 08:59:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229577AbjIHMV7 (ORCPT
+        with ESMTP id S229830AbjIHM7S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Sep 2023 08:21:59 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 3E6DF1BC5
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Sep 2023 05:21:52 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CB6EBD75;
-        Fri,  8 Sep 2023 05:22:29 -0700 (PDT)
-Received: from [10.57.5.180] (unknown [10.57.5.180])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4AB3D3F67D;
-        Fri,  8 Sep 2023 05:21:49 -0700 (PDT)
-Message-ID: <8c5035d7-1a65-774c-5490-87cdbcb25542@arm.com>
-Date:   Fri, 8 Sep 2023 13:21:44 +0100
+        Fri, 8 Sep 2023 08:59:18 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.151])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E8D91BFF;
+        Fri,  8 Sep 2023 05:59:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1694177953; x=1725713953;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=VrPMYgQ16pTtZlBVSNm737aoWB5stO3oQMVdp8PvDig=;
+  b=OBwppJDQkoU/VA5cpiprCP6KfbYOBQBycXn4Dc5kSrT+GDIWDYLyYCDW
+   Ah8CVFr8n+e69lyURwi6KKOiQMsO6Ido9sKeLJM2pio09M7jdjmLmW5nF
+   ymzB2GftZz3wZr4wNDIki8gvxetD3Gsw5+nPxKVI+CK1NQVYsilYl79Jf
+   Vz1tm8xnLCmgBWhTh9vZGFBkRiGpQ4Iu7phhGW0njzqtG5U2+csuxeNt3
+   rweH8naoUGmoitesxyQXIK9kEpdLZipe4T7c69zmjDwpXvx4qyGL+Ktn1
+   IlYgNNeFNOz5OLOO3jXx3utxK/6XzR+uf4yF50GFXQwaDjVO5Hj8TFJZA
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10827"; a="357943100"
+X-IronPort-AV: E=Sophos;i="6.02,237,1688454000"; 
+   d="scan'208";a="357943100"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2023 05:59:13 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10827"; a="916165808"
+X-IronPort-AV: E=Sophos;i="6.02,237,1688454000"; 
+   d="scan'208";a="916165808"
+Received: from lkp-server01.sh.intel.com (HELO 59b3c6e06877) ([10.239.97.150])
+  by orsmga005.jf.intel.com with ESMTP; 08 Sep 2023 05:59:07 -0700
+Received: from kbuild by 59b3c6e06877 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qeb4j-0002Gx-02;
+        Fri, 08 Sep 2023 12:59:05 +0000
+Date:   Fri, 8 Sep 2023 20:58:49 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Tengfei Fan <quic_tengfan@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        tglx@linutronix.de, maz@kernel.org, lee@kernel.org
+Cc:     oe-kbuild-all@lists.linux.dev, robimarko@gmail.com,
+        quic_gurus@quicinc.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_tsoni@quicinc.com, quic_shashim@quicinc.com,
+        quic_kaushalk@quicinc.com, quic_tdas@quicinc.com,
+        quic_tingweiz@quicinc.com, quic_aiquny@quicinc.com,
+        kernel@quicinc.com, quic_bjorande@quicinc.com,
+        Ajit Pandey <quic_ajipan@quicinc.com>,
+        Tengfei Fan <quic_tengfan@quicinc.com>
+Subject: Re: [PATCH 5/6] arm64: dts: qcom: sm4450: Add RPMH and Global clock
+ controller
+Message-ID: <202309082044.62LHUCGY-lkp@intel.com>
+References: <20230908065847.28382-6-quic_tengfan@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:102.0) Gecko/20100101
- Thunderbird/102.15.0
-Subject: Re: [PATCH] iommu/arm-smmu-qcom: NULL pointer check for driver data
-Content-Language: en-GB
-To:     Aravind Vijayakumar <quic_aprasann@quicinc.com>,
-        Rob Clark <robdclark@chromium.org>
-Cc:     will@kernel.org, joro@8bytes.org, dmitry.baryshkov@linaro.org,
-        quic_bjorande@quicinc.com, konrad.dybcio@linaro.org,
-        quic_eberman@quicinc.com, quic_psodagud@quicinc.com,
-        quic_rvishwak@quicinc.com, quic_saipraka@quicinc.com,
-        quic_molvera@quicinc.com, marijn.suijten@somainline.org,
-        mani@kernel.org, linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org
-References: <20230816225509.11070-1-quic_aprasann@quicinc.com>
- <CAJs_Fx7132o3iHDH0ZR7L9G69o2YV2-jC0v15shQcEhH6=-6RA@mail.gmail.com>
- <c06a31fd-e3b5-1f58-9e4f-7fafd8aa3f28@quicinc.com>
- <CAJs_Fx464vFbfLaaWWs2Y0pTmhXrJS=AWFTwEyQjifJoU72rCQ@mail.gmail.com>
- <ead35ae9-b9cf-4f3f-e967-7d66a88fb8d5@quicinc.com>
-From:   Robin Murphy <robin.murphy@arm.com>
-In-Reply-To: <ead35ae9-b9cf-4f3f-e967-7d66a88fb8d5@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230908065847.28382-6-quic_tengfan@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -55,121 +76,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-09-08 06:17, Aravind Vijayakumar wrote:
-> 
-> On 8/29/2023 7:30 AM, Rob Clark wrote:
->> On Mon, Aug 28, 2023 at 2:35 PM Aravind Vijayakumar
->> <quic_aprasann@quicinc.com> wrote:
->>>
->>> On 8/16/2023 6:01 PM, Rob Clark wrote:
->>>> On Wed, Aug 16, 2023 at 3:55 PM Aravind Vijayakumar
->>>> <quic_aprasann@quicinc.com> wrote:
->>>>> The driver_data is NULL when qcom_adreno_smmu_init_context()
->>>>> is called before the dev_set_drvdata() from the client driver
->>>>> and is resulting in kernel crash.
->>>>>
->>>>> So add a null pointer check to handle the scenario
->>>>> where the client driver for the GPU SMMU device would
->>>>> be setting the driver data after the smmu client device
->>>>> probe is done and not necessarily before that. The function
->>>>> qcom_adreno_smmu_init_context() assumes that the client
->>>>> driver always set the driver data using dev_set_drvdata()
->>>>> before the smmu client device probe, but this assumption
->>>>> is not always true.
->>>>>
->>>>> Signed-off-by: Aravind Vijayakumar <quic_aprasann@quicinc.com>
->>>>> ---
->>>>>    drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 3 +++
->>>>>    1 file changed, 3 insertions(+)
->>>>>
->>>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c 
->>>>> b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>>> index c71afda79d64..5323f82264ca 100644
->>>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>>> @@ -231,6 +231,9 @@ static int qcom_adreno_smmu_init_context(struct 
->>>>> arm_smmu_domain *smmu_domain,
->>>>>            */
->>>>>
->>>>>           priv = dev_get_drvdata(dev);
->>>>> +       if (!priv)
->>>>> +               return 0;
->>>> could this -EPROBE_DEFER instead, or something like that?  I think you
->>>> patch as proposed would result in per-process gpu pgtables silently
->>>> failing
->>>>
->>>> BR,
->>>> -R
->>> Thanks for the review comments. Returning -EPROBE_DEFER wont work
->>> because the probe of the client driver (which sets the driver data) will
->>> never get triggered. However, the probe of the client driver succeeds if
->>> we return -ENODATA. would that be acceptable?
->> I _think_ so.. I need to page back in the sequence of how this works,
->> but I do have some warn_on's in drm/msm to complain loudly if we don't
->> get per-process pgtables.  I'd be interested to see the callstack
->> where you hit this issue.  From what I remember the sequence should
->> be:
->>
->> 1) before the client dev probes, arm-smmu probes and attaches the
->> dma-api managed iommu_domain (which IIRC should be an identity domain,
->> and is otherwise unused).. at this point drvdata is NULL
->> 2) the drm/msm can probe
->> 3) at some point later when GPU fw is avail the GPU is loaded, drvdata
->> is set, and we start creating and attaching the iommu_domain's that
->> are actually used (one for kernel context and one each for userspace
->> processes using the GPU
->>
->> I guess maybe if you are hitting this case of NULL drvdata, then you
->> aren't getting an identity context for the dma-api managed
->> iommu_domain?
->>
->> BR,
->> -R
->>
-> Yes, there are some warn_ons in io-pgtable.c, which have helped a lot 
-> during debugging. The following is the call stack when we are hitting 
-> the issue:
-> 
->    qcom_adreno_smmu_init_context+0x28/0x100
->    arm_smmu_init_domain_context+0x1fc/0x4cc
->    arm_smmu_attach_dev+0x7c/0x410
->    __iommu_attach_device+0x28/0x110
->    iommu_probe_device+0x98/0x144
->    of_iommu_configure+0x1f0/0x278
->    of_dma_configure_id+0x15c/0x320
->    platform_dma_configure+0x24/0x90
->    really_probe+0x138/0x39c
->    __driver_probe_device+0x114/0x190
->    device_driver_attach+0x4c/0xac
->    bind_store+0xb8/0x110
+Hi Tengfei,
 
-OK, so it looks like you are indeed getting a non-identity default 
-domain as Rob suspected. I guess that means qcom_smmu_client_of_match 
-needs updating for this platform? (In which case, maybe a WARN() here to 
-point in that direction might be handy as well?)
+kernel test robot noticed the following build errors:
 
-Thanks,
-Robin.
+[auto build test ERROR on a47fc304d2b678db1a5d760a7d644dac9b067752]
 
-> 
-> This is the call stack during platform_driver_register() , if there is 
-> no NULL check then the initial probe crashes, if there is NULL check, 
-> instead of crashing, the really_probe returns and we can call 
-> of_dma_configure again from the driver probe after setting the driver 
-> data. Please let me know if there is any concerns?
-> 
-> Regards,
-> 
-> Aravind
-> 
->>> Regards,
->>>
->>> Aravind
->>>
->>>>> +
->>>>>           priv->cookie = smmu_domain;
->>>>>           priv->get_ttbr1_cfg = qcom_adreno_smmu_get_ttbr1_cfg;
->>>>>           priv->set_ttbr0_cfg = qcom_adreno_smmu_set_ttbr0_cfg;
->>>>> -- 
->>>>> 2.40.1
->>>>>
+url:    https://github.com/intel-lab-lkp/linux/commits/Tengfei-Fan/dt-bindings-firmware-document-Qualcomm-SM4450-SCM/20230908-150308
+base:   a47fc304d2b678db1a5d760a7d644dac9b067752
+patch link:    https://lore.kernel.org/r/20230908065847.28382-6-quic_tengfan%40quicinc.com
+patch subject: [PATCH 5/6] arm64: dts: qcom: sm4450: Add RPMH and Global clock controller
+config: arm64-defconfig (https://download.01.org/0day-ci/archive/20230908/202309082044.62LHUCGY-lkp@intel.com/config)
+compiler: aarch64-linux-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20230908/202309082044.62LHUCGY-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202309082044.62LHUCGY-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   In file included from arch/arm64/boot/dts/qcom/sm4450-qrd.dts:8:
+>> arch/arm64/boot/dts/qcom/sm4450.dtsi:7:10: fatal error: dt-bindings/clock/qcom,sm4450-gcc.h: No such file or directory
+       7 | #include <dt-bindings/clock/qcom,sm4450-gcc.h>
+         |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   compilation terminated.
+
+
+vim +7 arch/arm64/boot/dts/qcom/sm4450.dtsi
+
+   > 7	#include <dt-bindings/clock/qcom,sm4450-gcc.h>
+     8	#include <dt-bindings/gpio/gpio.h>
+     9	#include <dt-bindings/interrupt-controller/arm-gic.h>
+    10	#include <dt-bindings/soc/qcom,rpmh-rsc.h>
+    11	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
