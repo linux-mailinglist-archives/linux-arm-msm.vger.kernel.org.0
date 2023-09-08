@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 676197992BE
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Sep 2023 01:18:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 97F357992D4
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Sep 2023 01:30:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345066AbjIHXSR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Sep 2023 19:18:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33838 "EHLO
+        id S238820AbjIHXaX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Sep 2023 19:30:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345064AbjIHXSQ (ORCPT
+        with ESMTP id S1344613AbjIHXaW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Sep 2023 19:18:16 -0400
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 528B7E45
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Sep 2023 16:18:12 -0700 (PDT)
-Received: by mail-yb1-xb33.google.com with SMTP id 3f1490d57ef6-d7b89ae27d3so2253996276.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Sep 2023 16:18:12 -0700 (PDT)
+        Fri, 8 Sep 2023 19:30:22 -0400
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 249B9E45
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Sep 2023 16:30:18 -0700 (PDT)
+Received: by mail-yb1-xb34.google.com with SMTP id 3f1490d57ef6-d7ba4c5f581so2317741276.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Sep 2023 16:30:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694215091; x=1694819891; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1694215817; x=1694820617; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=NJMUBhG0eoBNMSnOz1KraejVtnxEE/dXjjdZnrGqmlg=;
-        b=MV9zkB6B/Tv9qsvUIy1cOaU5dTmzZ6tyR1eV72uFAt+jVmoG5+RsPoPDVotMUVUG+n
-         KbMITwp0hCErEF5a4xsi/bQIXE+KjNT8V3GpApTBB+Ix52vEq1E5InLHksEwobIwXhVJ
-         GEXRgKJVHR9hdi8NNPdLM9VQiwgygrEP6T/JzVzkNdqJgcnOY1ESWpCeDs3g4LChtO7/
-         Yv7+oRhzn4kRDWyoFF38vxSjphH4dRwvXBBwNLVPMKdTx9rU+wpRGQYb+V+Ig6rtxuPj
-         5NnVJg++gsh6u/r29u+d8awEc5sifX532K8msRG9I3fQk3etoVi7Ymo/ziEo0S28zMx4
-         GH6g==
+        bh=PY75H1jflFjdwbxljuQ1fV6R6iCKvsQ0y9zdUNKFhfE=;
+        b=p1DU6jt7ZZEORLJ0++qKRbOMtCemtkBDRBMupn6R4EunLIezSLm8dSLpx5qx2gy+BT
+         okDO5dcT8Q7ijDqm3AWbHZO3ctVV1/ME8Q7qL5XRQv25saoSLknZKMjgUidLd38Wo/d6
+         fHTsy4NHBN6AO3xBaVfcqCRl0E+4wvDTzkzLwTHMGXCbSGj//1CCSgb2EYWYyOk/ddve
+         MblbbK6hnL73m985uH536MQghLpXQh7eZaDnx+JCO2HrLyYMAk5SEFjf28ZKKmSugJ1R
+         08TP2u0SZGhABYsSrqSPb6gsgGxhu8OynZ0BwQsISDBiK1/aCywAe2IYbNDTlN3yoXPk
+         PcxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694215091; x=1694819891;
+        d=1e100.net; s=20230601; t=1694215817; x=1694820617;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=NJMUBhG0eoBNMSnOz1KraejVtnxEE/dXjjdZnrGqmlg=;
-        b=uU7dAXIe7ReBau9FCwYqDgIHz3J10SG0o6uFKEyZkK7C/C7wwfsylCI1SdYEGa9QKd
-         ZFLDBqa3pKIFCSFehfAXlg0QTwtsRtZXBwCuklg2e6ONPya/ICzUjr6PZShoOfhONHES
-         /5250KSjWUjg/u43Rrm2HKM4lf/ZwwSMp0dQHMoTaPnCYySzArtZDWaxSl/LLHVqdMiK
-         Q4JExeOnCOd7dByoEKGmst4+twR34wBz1fzw9fCoq5wBfXG7x3RmOxmok5mE31fUwrss
-         3ZLJkByQRRrMYsqgHDlbk+LuzWjwvmLQS7ih6r5asEHBtLOg77Tvl4sGsUC+wMSvZ0Az
-         VY/w==
-X-Gm-Message-State: AOJu0YwSHjew7JeaSJ8b/KRebtgRe5w3W/iQbRVcoBOmTHY0pJtEuwTO
-        tDt+6s3e1Zy/Sg6pI7zMNeDZb7F4lhgHm2m6uvm6iw==
-X-Google-Smtp-Source: AGHT+IEHwQi9VCn0Ewp1OpyUXVY6DBAkAsvUro6YE8dOwPuGcphb95UIrrUWzqBjJD0FOWCSZ/X/MBXn68aBCYeLzAU=
-X-Received: by 2002:a05:6902:1895:b0:bc9:92c9:7fd1 with SMTP id
- cj21-20020a056902189500b00bc992c97fd1mr4692606ybb.3.1694215091567; Fri, 08
- Sep 2023 16:18:11 -0700 (PDT)
+        bh=PY75H1jflFjdwbxljuQ1fV6R6iCKvsQ0y9zdUNKFhfE=;
+        b=Rk284W7DBPQ31bK6z54Yu7kVYa3MdZ0MFHytDmhtrO/dsuCxIxTa/xsKQu1AXvuvBH
+         1Ku3j1kWDRlmc7i6Bxpno8JP0YTaEIJE2wQKhugs07zHvJjBZydApmbrJ5lLiGIMUDgH
+         AyIGPizA3wbij69IzlkF9VikQHdhWNt6WGhoUEGbrPaX4C/9JPwl0hH3FOQ2EzsGoN9C
+         dr8PaNclguEjH8s41FoVRX39CSw8Jhlnj6lakb9nZUpJn5dJ7PWdea1lC8EFW6NrxYTI
+         TClQPYWTXeg2l4oq9xtUvP6+eWA/ud3cYyTZVn06qu0mqEebSB5FHuJtci/UJhH/cWGh
+         wbmQ==
+X-Gm-Message-State: AOJu0YxwntZYB3Gr57SDJXFeL4Hx646cgDjleb8VkezsIDryOem5oUi2
+        GjCCPIWXfT4m+M0aOcpSW5mFrEF4X1NK1V5JmmZvgA==
+X-Google-Smtp-Source: AGHT+IFf/w3Ll2Vi98yCb/MLhf+vlwG+jwysyimZL9ykydnejFlmX6x8jbG6nmN39VVCN6dQagU++csT2yUv+wExVNk=
+X-Received: by 2002:a25:d050:0:b0:d78:2967:93ea with SMTP id
+ h77-20020a25d050000000b00d78296793eamr3687368ybg.1.1694215817318; Fri, 08 Sep
+ 2023 16:30:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230908193314.27008-1-quic_abhinavk@quicinc.com>
-In-Reply-To: <20230908193314.27008-1-quic_abhinavk@quicinc.com>
+References: <20230908185427.29026-1-quic_abhinavk@quicinc.com> <20230908185427.29026-2-quic_abhinavk@quicinc.com>
+In-Reply-To: <20230908185427.29026-2-quic_abhinavk@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 9 Sep 2023 02:18:00 +0300
-Message-ID: <CAA8EJppXTpTW=Q2N_wJ_VUYeQDagRYqYXHJBBhNWFv8asYPKJQ@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dpu: enable smartdma on sm8350
+Date:   Sat, 9 Sep 2023 02:30:05 +0300
+Message-ID: <CAA8EJppj+JTA8iZ6+Ui8JkD-kP54YKObRDK2_Oh+Wpn4XjU-4Q@mail.gmail.com>
+Subject: Re: [PATCH 2/2] drm/msm/dpu: try multirect based on mdp clock limits
 To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
 Cc:     freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
         Sean Paul <sean@poorly.run>,
@@ -65,64 +65,59 @@ Cc:     freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 8 Sept 2023 at 22:33, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+On Fri, 8 Sept 2023 at 21:55, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
 >
-> To support high resolutions on sm8350, enable smartdma
-> in its catalog.
+> It's certainly possible that for large resolutions a single DPU SSPP
+> cannot process the image without exceeding the MDP clock limits but
+> it can still process it in multirect mode because the source rectangles
+> will get divided and can fall within the MDP clock limits.
+>
+> If the SSPP cannot process the image even in multirect mode, then it
+> will be rejected in dpu_plane_atomic_check_pipe().
+>
+> Hence try using multirect for resolutions which cannot be processed
+> by a single SSPP without exceeding the MDP clock limits.
 >
 > Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 >
-> Notes:
->     only compile tested, to be landed after sufficient testing
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index 62dd9f9b4dce..85072328cd53 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -792,6 +792,7 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>                                                                                  plane);
+>         int ret = 0, min_scale;
+>         struct dpu_plane *pdpu = to_dpu_plane(plane);
+> +       struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
+>         struct dpu_plane_state *pstate = to_dpu_plane_state(new_plane_state);
+>         struct dpu_sw_pipe *pipe = &pstate->pipe;
+>         struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
+> @@ -860,7 +861,8 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>
+>         max_linewidth = pdpu->catalog->caps->max_linewidth;
+>
+> -       if (drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) {
+> +       if ((drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) ||
+> +            _dpu_plane_calc_clk(&crtc_state->mode, pipe_cfg) > kms->perf.max_core_clk_rate) {
 
-I'll test sm8350 (and hopefully sm8450) early next week.
+First, I think this should be an adjusted_mode too. And this probably
+needs some more attention in the next few lines of code, since .e.g
+the UBWC case also needs to be adjusted.
 
->
->  .../drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h   | 16 ++++++++--------
->  1 file changed, 8 insertions(+), 8 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> index 8da424eaee6a..a32d235ff08e 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> @@ -82,21 +82,21 @@ static const struct dpu_ctl_cfg sm8350_ctl[] = {
->  };
->
->  static const struct dpu_sspp_cfg sm8350_sspp[] = {
-> -       SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, 0x1f8, VIG_SC7180_MASK,
-> +       SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, 0x1f8, VIG_SC7180_MASK_SDMA,
->                 sm8250_vig_sblk_0, 0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
-> -       SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, 0x1f8, VIG_SC7180_MASK,
-> +       SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, 0x1f8, VIG_SC7180_MASK_SDMA,
->                 sm8250_vig_sblk_1, 4, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG1),
-> -       SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, 0x1f8, VIG_SC7180_MASK,
-> +       SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, 0x1f8, VIG_SC7180_MASK_SDMA,
->                 sm8250_vig_sblk_2, 8, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG2),
-> -       SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, 0x1f8, VIG_SC7180_MASK,
-> +       SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, 0x1f8, VIG_SC7180_MASK_SDMA,
->                 sm8250_vig_sblk_3, 12, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG3),
-> -       SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000, 0x1f8, DMA_SDM845_MASK,
-> +       SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000, 0x1f8, DMA_SDM845_MASK_SDMA,
->                 sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
-> -       SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000, 0x1f8, DMA_SDM845_MASK,
-> +       SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000, 0x1f8, DMA_SDM845_MASK_SDMA,
->                 sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
-> -       SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000, 0x1f8, DMA_CURSOR_SDM845_MASK,
-> +       SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000, 0x1f8, DMA_CURSOR_SDM845_MASK_SDMA,
->                 sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA2),
-> -       SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000, 0x1f8, DMA_CURSOR_SDM845_MASK,
-> +       SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000, 0x1f8, DMA_CURSOR_SDM845_MASK_SDMA,
->                 sdm845_dma_sblk_3, 13, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA3),
->  };
->
+>                 /*
+>                  * In parallel multirect case only the half of the usual width
+>                  * is supported for tiled formats. If we are here, we know that
 > --
 > 2.40.1
 >
