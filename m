@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 231E47980D1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 05:05:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C81437980D0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 05:05:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233468AbjIHDFw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Sep 2023 23:05:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40778 "EHLO
+        id S235922AbjIHDFv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Sep 2023 23:05:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235743AbjIHDFn (ORCPT
+        with ESMTP id S238039AbjIHDFq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Sep 2023 23:05:43 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 452FD1BDA
+        Thu, 7 Sep 2023 23:05:46 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 196A01BDB
         for <linux-arm-msm@vger.kernel.org>; Thu,  7 Sep 2023 20:05:24 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2b974031aeaso28585281fa.0
+Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2bceca8a41aso26372901fa.0
         for <linux-arm-msm@vger.kernel.org>; Thu, 07 Sep 2023 20:05:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694142322; x=1694747122; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=5o+SPaUCffB9wFtrSLZVybbJbjD0ZXPNdB88Cfri9WY=;
-        b=VMwruw+S9vVjiOos5CVmwTUcWhrJ5OjUa73kkf402lJOu+uGtcsFjcB45AHcwZPvBg
-         k+Sd1sIecGpkviy7aBTbxhMo5wP+v1Rzpz1HlyzyPQ8I6Pb+NPmOT7leWiISCiU5Z96V
-         tfhr7Ep8v1y7p7qFVq0Baw9IYpWSyN13Mmb0aOjiek6qUKliMokeBZjoMQbN2HafSzcW
-         28i0rvml6aMZ/I6ofaV1FKK3maqX+IqSUTworXIZVD/dxb7A3wdPY0Ma/fWh5EwYAVpi
-         jp2hvPsMzXnYQNbynmRBGwp3iLHva8/y1RN+1z7nnBeYt1M0HOcZxIjwHQleUZj7Fi4o
-         8TJQ==
+        d=linaro.org; s=google; t=1694142323; x=1694747123; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=o883M3C8fvtCGweIidn/6JBt/oAPnlfkI17tGXxBy4Q=;
+        b=ECNFxC3f2v3aKRcE9cNiL3G9kICzO/vx5FEmTBzipM7SaLojEcR8/l+6JzhYmsw4RD
+         V03bK6cjDHaDxD9rCkLJRZDYkbr9Plsmh8Ab0R9iOW3ui52383cDaTedGUbxa9Kng6c0
+         OXBjjAzrxADFLTIADJiHipxJGmlr92naZDua9lp56VFEh9zKjYOzC8UEl7iqRUsxIky2
+         gtTyB2/43SdOQFQOV41bBQYck5Hpkl/L36Xkn4WcjQ5QtOuNkpKh7nmOAEaVnv76eYep
+         5LU6pwb4SR7lqL7LKAwH9fYZ861jSpL3XbNpmKQ32chjE8e1O+YoBi5SvQTBVdZQahbS
+         ivhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694142322; x=1694747122;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5o+SPaUCffB9wFtrSLZVybbJbjD0ZXPNdB88Cfri9WY=;
-        b=n2KeO1mhgiWC4SCdIKj8eVU4bpwjEIRfGX49pDZRfQCWDcaGn2Yty4/Q8hEtASwxmi
-         g+JqHN8aVFfCyjXURobokGOTOZKSzmDtpzlsnovvoNJppuhzvc8rIfV26YI8Ox0sWHJP
-         coeP31BCpKhabFEGTgS/AIFASPg0FylBndDVNsYSnRQM1GV3i/ZWT0oB4UOccMuovH+R
-         B4//U2bd7GXjBPhza1oVCa2IUEdq4lCjrajHv4pNnYhnVd1eMeVBLs1TRVbSGXDv/5Ms
-         BBeiu9opchceYjIhQbpqB/kUAI8CMRtt8GU1dqJ7KxQE81CjER+MgjD0CVptFDvMZXO2
-         kkNw==
-X-Gm-Message-State: AOJu0YzrI9URlR+LgvjdtePcjcoqZ7v4BSAHR2IhO201VddeqYfKgPk5
-        ISHcgbYRbWtO32ZfbJigf6mMGw==
-X-Google-Smtp-Source: AGHT+IHGkh/WaT5fi2tv+g9ZoxjNNOQzvf8MVWos7gGhrta4aPejRWa4/qo9xN2YnHu/3XzvVEVFDg==
-X-Received: by 2002:a2e:9012:0:b0:2bc:db5a:9540 with SMTP id h18-20020a2e9012000000b002bcdb5a9540mr646083ljg.42.1694142322434;
-        Thu, 07 Sep 2023 20:05:22 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1694142323; x=1694747123;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=o883M3C8fvtCGweIidn/6JBt/oAPnlfkI17tGXxBy4Q=;
+        b=n/cXEqsR01JiW4ECx3XtfZiSi4x18g4p88kvHo6h5W2R/ZTzdWDqIBAw58So0Of5/0
+         +XvGVAwjD4o6NNwSq1kiRfhIhP8gs+5XY0FYcfEvA4rFgcxzD0vRASdKE3iiq5G//9dC
+         mWLujJ22UoCV+p6HXsuYmAZ6yxrtqSGeJeoyMQQLtYl0KmTrapep4zFAX8KJOsg1u28W
+         l0VZBa/HPCemZt5Yg7tf4prtBhfnX5UUt1XQjIsDyR89YpwSYtM8VLsicUwl2f1NQ3ry
+         PloaMuJilYPVVAxSalDbfmrad3imOasCXCeuYvrlH2sS2HrLZN2hup5u5Zncqx88Ia15
+         8KEA==
+X-Gm-Message-State: AOJu0YyFv+W5JDMyuoH9V+gwrSE2ubtaBk4PDyg/00rceqzj6qMBoRI+
+        WJvHZobdJeRODAqwbpLSNkRt7A==
+X-Google-Smtp-Source: AGHT+IGpggkFyIkBUixeUSKNcYrFKcn+bnKrNcdK4A5JLNXtk7ZuNI1nZCzfID5emgXF1KO8lwSi3Q==
+X-Received: by 2002:a2e:9303:0:b0:2bd:b99:ab7e with SMTP id e3-20020a2e9303000000b002bd0b99ab7emr636452ljh.42.1694142323342;
+        Thu, 07 Sep 2023 20:05:23 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id z10-20020a2e8e8a000000b002b93d66b82asm128332ljk.112.2023.09.07.20.05.21
+        by smtp.gmail.com with ESMTPSA id z10-20020a2e8e8a000000b002b93d66b82asm128332ljk.112.2023.09.07.20.05.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Sep 2023 20:05:21 -0700 (PDT)
+        Thu, 07 Sep 2023 20:05:22 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
         Maxime Ripard <mripard@kernel.org>,
@@ -59,10 +60,12 @@ Cc:     Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         linux-arm-msm@vger.kernel.org
-Subject: [PATCH 0/5] drm/msm: cleanup private obj handling
-Date:   Fri,  8 Sep 2023 06:05:16 +0300
-Message-Id: <20230908030521.236309-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 1/5] drm/atomic: add private obj state to state dump
+Date:   Fri,  8 Sep 2023 06:05:17 +0300
+Message-Id: <20230908030521.236309-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230908030521.236309-1-dmitry.baryshkov@linaro.org>
+References: <20230908030521.236309-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -74,30 +77,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-While debugging one of the features in DRM/MSM I noticed that MSM
-subdrivers still wrap private object access with manual modeset locking.
-Since commit b962a12050a3 ("drm/atomic: integrate modeset lock with
-private objects") this is no longer required, as the DRM framework
-handles private objects internally. Drop these custom locks, while also
-cleaning up the surrounding code.
+The drm_atomic_print_new_state() already prints private object state via
+drm_atomic_private_obj_print_state(). Add private object state dumping
+to __drm_state_dump(), so that it is also included into drm_state_dump()
+output and into debugfs/dri/N/state file.
 
-Dmitry Baryshkov (5):
-  drm/atomic: add private obj state to state dump
-  drm/msm/dpu: finalise global state object
-  drm/msm/dpu: drop global_state_lock
-  drm/msm/mdp5: migrate SMP dumping to using atomic_print_state
-  drm/msm/mdp5: drop global_state_lock
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/drm_atomic.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
- drivers/gpu/drm/drm_atomic.c             |  9 ++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  | 14 +++---
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h  |  1 -
- drivers/gpu/drm/msm/disp/mdp5/mdp5_irq.c |  2 -
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 54 +++++-------------------
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h |  1 -
- drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c | 12 +-----
- drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.h |  4 +-
- 8 files changed, 31 insertions(+), 66 deletions(-)
-
+diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
+index c277b198fa3f..9543e284dc15 100644
+--- a/drivers/gpu/drm/drm_atomic.c
++++ b/drivers/gpu/drm/drm_atomic.c
+@@ -1773,6 +1773,7 @@ static void __drm_state_dump(struct drm_device *dev, struct drm_printer *p,
+ 	struct drm_crtc *crtc;
+ 	struct drm_connector *connector;
+ 	struct drm_connector_list_iter conn_iter;
++	struct drm_private_obj *obj;
+ 
+ 	if (!drm_drv_uses_atomic_modeset(dev))
+ 		return;
+@@ -1801,6 +1802,14 @@ static void __drm_state_dump(struct drm_device *dev, struct drm_printer *p,
+ 	if (take_locks)
+ 		drm_modeset_unlock(&dev->mode_config.connection_mutex);
+ 	drm_connector_list_iter_end(&conn_iter);
++
++	list_for_each_entry(obj, &config->privobj_list, head) {
++		if (take_locks)
++			drm_modeset_lock(&obj->lock, NULL);
++		drm_atomic_private_obj_print_state(p, obj->state);
++		if (take_locks)
++			drm_modeset_unlock(&obj->lock);
++	}
+ }
+ 
+ /**
 -- 
 2.39.2
 
