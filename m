@@ -2,60 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 431257989ED
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 17:24:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 74DE5798E86
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 20:58:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233648AbjIHPYb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Sep 2023 11:24:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40922 "EHLO
+        id S233828AbjIHS6S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Sep 2023 14:58:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244614AbjIHPYa (ORCPT
+        with ESMTP id S231629AbjIHS6R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Sep 2023 11:24:30 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADBB9212D;
-        Fri,  8 Sep 2023 08:23:58 -0700 (PDT)
-Received: from localhost.localdomain (unknown [171.76.82.102])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: vignesh)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id B15E666072AC;
-        Fri,  8 Sep 2023 16:23:51 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1694186637;
-        bh=5EL9eVG51FsQl3AUWqIFCSbQ/zvgCyfjZgP+m+A22ZE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=QOBXsLznaxQVmUs/xs/cLj/OKsA8O9X3FCFqolqoPKMoKNn05MfErt3NG9MFj60VA
-         HW32LskUPFhwmEvWQQCiw2VrCaW2zoCN+o62NO8pIJ7YlZ0iny+kDP2pc6+QtRyBE+
-         bafb6cLs1viGLSnW5jwpHS3H2yzl9JW9PcY++Yi7C6R7E0MSBZsboUjz/ZLbl7/Ve9
-         LbbsN7m7IOMFd46fFKgOAUjRn0x9Zg8QWMKas08G7OrjGCrAu6TIM0CsX+Wk0XHejb
-         BW4xRUQJXvz921dt/+jcI9YYcIZ5qp431ANmpEuRD1lEgpif92WUN9V1cRsKcWvxAB
-         BGzh3vwSim6VQ==
-From:   Vignesh Raman <vignesh.raman@collabora.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     helen.koike@collabora.com, guilherme.gallo@collabora.com,
-        sergi.blanch.torne@collabora.com, david.heidelberg@collabora.com,
-        daniels@collabora.com, gustavo.padovan@collabora.com,
-        angelogioacchino.delregno@collabora.com, emma@anholt.net,
-        robclark@freedesktop.org, robdclark@google.com, anholt@google.com,
-        robdclark@gmail.com, airlied@gmail.com, daniel@ffwll.ch,
-        jani.nikula@linux.intel.com, mripard@kernel.org,
-        dmitry.baryshkov@linaro.org, matthias.bgg@gmail.com,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        virtualization@lists.linux-foundation.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v3 9/9] drm: ci: Use scripts/config to enable/disable configs
-Date:   Fri,  8 Sep 2023 20:52:25 +0530
-Message-Id: <20230908152225.432139-10-vignesh.raman@collabora.com>
+        Fri, 8 Sep 2023 14:58:17 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88D811700;
+        Fri,  8 Sep 2023 11:57:42 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 388HuaWg023842;
+        Fri, 8 Sep 2023 18:54:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=+3Z53mjSwj9Lqo1nh7EP+XQHSOBFfSW9mZLM66MvBgw=;
+ b=bWVxgYuMXTmB3e6AUDJ5bZREY2SBTcs5tjztHpbU1f1eUWbcpMGsadN9Y74pIAqJ3qDR
+ hKIvLFRm1txaRha0F796XZD3j0sD2e0gESBteoRgG4U5usz80JChS7oBGdjWUMDv4hp1
+ 1eATN5ee71NRV2ZCGyuoG2uyHltn4zmBushUeNNyJcfr3kzBop9uRV/wNAqkBQCH8JOF
+ 5Esmxlqyarjbqk/gKVwA9GtZ8XIs5k8St4B4iykE38V4a9/BtcKhnp4wnM2HHEJoXTO8
+ T0afBqFYcKcbbAfiGikUmNy/Izq0cgZmKY8aGBEmNYCLolbmnFAERZwZAYb02Vn7srSA PQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t0069scb8-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 08 Sep 2023 18:54:57 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 388Isurx022303
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 8 Sep 2023 18:54:56 GMT
+Received: from abhinavk-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.36; Fri, 8 Sep 2023 11:54:55 -0700
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+To:     <freedreno@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        "Daniel Vetter" <daniel@ffwll.ch>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        "Jeykumar Sankaran" <jsanka@codeaurora.org>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        Sravanthi Kollukuduru <skolluku@codeaurora.org>
+CC:     <dri-devel@lists.freedesktop.org>, <quic_jesszhan@quicinc.com>,
+        <quic_parellan@quicinc.com>, <nespera@igalia.com>,
+        Rajesh Yadav <ryadav@codeaurora.org>,
+        Archit Taneja <architt@codeaurora.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH 1/2] drm/msm/dpu: fail dpu_plane_atomic_check() based on mdp clk limits
+Date:   Fri, 8 Sep 2023 11:54:26 -0700
+Message-ID: <20230908185427.29026-1-quic_abhinavk@quicinc.com>
 X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230908152225.432139-1-vignesh.raman@collabora.com>
-References: <20230908152225.432139-1-vignesh.raman@collabora.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: JgN4TVKdsiFc8F7zsshDu-_4OaqRlEGn
+X-Proofpoint-GUID: JgN4TVKdsiFc8F7zsshDu-_4OaqRlEGn
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-08_15,2023-09-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ phishscore=0 adultscore=0 lowpriorityscore=0 suspectscore=0
+ mlxlogscore=760 clxscore=1011 impostorscore=0 spamscore=0 bulkscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309080172
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
         autolearn=ham autolearn_force=no version=3.4.6
@@ -65,55 +87,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Instead of modifying files in git to enable/disable
-configs, use scripts/config on the .config file which
-will be used for building the kernel.
+Currently, dpu_plane_atomic_check() does not check whether the
+plane can process the image without exceeding the per chipset
+limits for MDP clock. This leads to underflow issues because the
+SSPP is not able to complete the processing for the data rate of
+the display.
 
-Suggested-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
+Fail the dpu_plane_atomic_check() if the SSPP cannot process the
+image without exceeding the MDP clock limits.
+
+Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 ---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-v2:
-  - Added a new patch in the series to use scripts/config to enable/disable configs
-
-v3:
-  - No changes
-
----
- drivers/gpu/drm/ci/build.sh | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
-
-diff --git a/drivers/gpu/drm/ci/build.sh b/drivers/gpu/drm/ci/build.sh
-index 092c195af242..093929a115de 100644
---- a/drivers/gpu/drm/ci/build.sh
-+++ b/drivers/gpu/drm/ci/build.sh
-@@ -70,19 +70,19 @@ if [ -z "$CI_MERGE_REQUEST_PROJECT_PATH" ]; then
-     fi
- fi
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index 98c1b22e9bca..62dd9f9b4dce 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -733,9 +733,11 @@ static int dpu_plane_check_inline_rotation(struct dpu_plane *pdpu,
+ static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
+ 		struct dpu_sw_pipe *pipe,
+ 		struct dpu_sw_pipe_cfg *pipe_cfg,
+-		const struct dpu_format *fmt)
++		const struct dpu_format *fmt,
++		const struct drm_display_mode *mode)
+ {
+ 	uint32_t min_src_size;
++	struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
  
--for opt in $ENABLE_KCONFIGS; do
--  echo CONFIG_$opt=y >> drivers/gpu/drm/ci/${KERNEL_ARCH}.config
--done
--for opt in $DISABLE_KCONFIGS; do
--  echo CONFIG_$opt=n >> drivers/gpu/drm/ci/${KERNEL_ARCH}.config
--done
--
- if [[ -n "${MERGE_FRAGMENT}" ]]; then
-     ./scripts/kconfig/merge_config.sh ${DEFCONFIG} drivers/gpu/drm/ci/${MERGE_FRAGMENT}
- else
-     make `basename ${DEFCONFIG}`
- fi
+ 	min_src_size = DPU_FORMAT_IS_YUV(fmt) ? 2 : 1;
  
-+for opt in $ENABLE_KCONFIGS; do
-+    ./scripts/config --enable CONFIG_$opt
-+done
-+for opt in $DISABLE_KCONFIGS; do
-+    ./scripts/config --disable CONFIG_$opt
-+done
+@@ -774,6 +776,12 @@ static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
+ 		return -EINVAL;
+ 	}
+ 
++	/* max clk check */
++	if (_dpu_plane_calc_clk(mode, pipe_cfg) > kms->perf.max_core_clk_rate) {
++		DPU_DEBUG_PLANE(pdpu, "plane exceeds max mdp core clk limits\n");
++		return -E2BIG;
++	}
 +
- make ${KERNEL_IMAGE_NAME}
+ 	return 0;
+ }
  
- mkdir -p /lava-files/
+@@ -899,12 +907,13 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+ 		r_pipe_cfg->dst_rect.x1 = pipe_cfg->dst_rect.x2;
+ 	}
+ 
+-	ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt);
++	ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt, &crtc_state->mode);
+ 	if (ret)
+ 		return ret;
+ 
+ 	if (r_pipe->sspp) {
+-		ret = dpu_plane_atomic_check_pipe(pdpu, r_pipe, r_pipe_cfg, fmt);
++		ret = dpu_plane_atomic_check_pipe(pdpu, r_pipe, r_pipe_cfg, fmt,
++						  &crtc_state->mode);
+ 		if (ret)
+ 			return ret;
+ 	}
 -- 
 2.40.1
 
