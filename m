@@ -2,106 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9948C798330
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 09:19:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 34AB3798338
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 09:22:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237739AbjIHHTH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Sep 2023 03:19:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38568 "EHLO
+        id S239616AbjIHHW3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Sep 2023 03:22:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230258AbjIHHTG (ORCPT
+        with ESMTP id S231334AbjIHHW2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Sep 2023 03:19:06 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75A481BD2
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Sep 2023 00:18:55 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-402be83929eso19746905e9.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Sep 2023 00:18:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694157534; x=1694762334; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=4jUsdI8IAMPdJ2/ajS6yTZqWDFGbQHyhhBt8Pkr2WW8=;
-        b=NeAR2uxEmJ7UFdnUqFQbiNrJh6+Yzvc4JMjc8ASsiaixzKWJOgTj0wvFaIfGcRSoGT
-         7LlBdT0SllqJRKtkZeVugBnran4E4ChfylGrDEDmzj2kWMzcCJphb3mixG/K74CFZ+JV
-         md737IVhoiq+Vtcz7T+xIdpCOu6gEzClQRoAqcGZ9vN/EVQHgM6hyxzKlVH46TvH48U9
-         uJSmA16QdkNXrelL4PJU2DKBRwaluLVkPBQahBU7xw7LznaexbT0Nctr+nIPOvNGcLxe
-         yEKIjrRoLoEeeQS09I0lqA12qREhZLtkpPDvsT5GPadX6fCH9/LZpaY/qdwhAQGuR4ai
-         WFPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694157534; x=1694762334;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4jUsdI8IAMPdJ2/ajS6yTZqWDFGbQHyhhBt8Pkr2WW8=;
-        b=rOHK8+v4wowiHHrFmpEY9E4eKgpl9s7LUjruJdaAcVpVIOQKmy7FhpGAkvwVE6pIem
-         QqBTSL7x0bR+Ff+FYdUrcDLdTOgjK3pwyCdjwNm7RfLgbah/9jRXXvsqG8ukVSqEC5vF
-         xtFsMxw2vOOLjeYxNMe/I/V1WMX3ZAY6UbDXp4c5R+oe0AwUbcNvqCt+D58+TtsfBTfi
-         UQ2gqnYZdUyjt4TAMx9Ps1Jfx9X6fFLePsugw2KK+FaqXrZNQMPSmfmbLUCMOD7pWMDd
-         /nmZDaqFTNyCrFLlX230ycgcozrGIqWrbCoEw6BLWgXT27mxlQT2vgOnyyCnZBonXdRV
-         b+5A==
-X-Gm-Message-State: AOJu0YxFpk41kl3iwLb5lOQdj+HNpRY3+Y3poaYNc7TQju+V7pc9QbZN
-        05P+Qq3HFv1vIhNJn9oyjQW0Jw==
-X-Google-Smtp-Source: AGHT+IHQsY/0Ej3aK9aAUnwQ/E6w27NF8Re4ys97xwbLX+YFgUeolkfZLNQJw3R/v4XFVKS7HptjDg==
-X-Received: by 2002:a05:600c:3b1e:b0:402:f536:41c5 with SMTP id m30-20020a05600c3b1e00b00402f53641c5mr1277095wms.3.1694157533662;
-        Fri, 08 Sep 2023 00:18:53 -0700 (PDT)
-Received: from localhost ([102.36.222.112])
-        by smtp.gmail.com with ESMTPSA id t24-20020a1c7718000000b003fee7b67f67sm1182993wmi.31.2023.09.08.00.18.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Sep 2023 00:18:53 -0700 (PDT)
-Date:   Fri, 8 Sep 2023 10:18:50 +0300
-From:   Dan Carpenter <dan.carpenter@linaro.org>
-To:     Deepak R Varma <drv@mailo.com>
-Cc:     Varadarajan Narayanan <quic_varada@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        kernel-janitors@vger.kernel.org
-Subject: Re: [PATCH] phy: qcom-m31: Fix error code in probe()
-Message-ID: <5a6da4c1-6d65-4219-8314-9b5697bcf8e8@kadam.mountain>
-References: <7926c8e6-630e-4d7a-b0b2-d29b3c8b2c09@moroto.mountain>
- <053077e761ecaeb44b76f5865e100d588101461b.camel@mailo.com>
+        Fri, 8 Sep 2023 03:22:28 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9ACC1BD3;
+        Fri,  8 Sep 2023 00:22:24 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D766C433C7;
+        Fri,  8 Sep 2023 07:22:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1694157744;
+        bh=ajqiSrKMjBT7jAGty2zzZBU2SB/Pp/XM2gFx0FcYSbc=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=UghCpV0FxxG9K6hv2KDF1Vay/eYbhUuvA/c6F4vStszwirS5d/xIwgSU3gE0jLv27
+         MHaD+196Shljztbjm6Dv5yJe7iNCRpmwl5w1iPzpkjgfhKhEbTgqbybMXrCudGmmG8
+         CRP0wlDn6XqEuxONJLe51s9nKnuD6IsdWzlok+DeKsOeG8N/bzAI4SxokyLenOpjYu
+         ClPPeHK9Ak1p1LW4RAsc55OswYdia1qsCiFOf6o0Zm0891OMkXbErWfPSY9XC5Pbif
+         II7gT/Ml87wD6gLO3POcdNmbZAUD735v2Cj/YdFVx3cIlO6yyY2BkdwOYvokDJ1pD3
+         kCcRp04Wz4RHg==
+Received: (nullmailer pid 3172383 invoked by uid 1000);
+        Fri, 08 Sep 2023 07:22:20 -0000
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <053077e761ecaeb44b76f5865e100d588101461b.camel@mailo.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+From:   Rob Herring <robh@kernel.org>
+To:     Tengfei Fan <quic_tengfan@quicinc.com>
+Cc:     quic_tingweiz@quicinc.com, linux-arm-kernel@lists.infradead.org,
+        rafal@milecki.pl, conor+dt@kernel.org, nfraprado@collabora.com,
+        devicetree@vger.kernel.org, catalin.marinas@arm.com,
+        quic_kaushalk@quicinc.com, andersson@kernel.org,
+        quic_shashim@quicinc.com, linus.walleij@linaro.org,
+        quic_tsoni@quicinc.com, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, geert+renesas@glider.be,
+        peng.fan@nxp.com, quic_tdas@quicinc.com, konrad.dybcio@linaro.org,
+        arnd@arndb.de, will@kernel.org, robh+dt@kernel.org,
+        agross@kernel.org, quic_aiquny@quicinc.com, kernel@quicinc.com
+In-Reply-To: <20230908063843.26835-2-quic_tengfan@quicinc.com>
+References: <20230908063843.26835-1-quic_tengfan@quicinc.com>
+ <20230908063843.26835-2-quic_tengfan@quicinc.com>
+Message-Id: <169415774033.3172287.2910545525997528344.robh@kernel.org>
+Subject: Re: [PATCH 1/3] dt-bindings: pinctrl: qcom: Add SM4450 pinctrl
+Date:   Fri, 08 Sep 2023 02:22:20 -0500
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 07, 2023 at 09:53:36PM +0530, Deepak R Varma wrote:
-> On Thu, 2023-09-07 at 12:54 +0300, Dan Carpenter wrote:
-> > This accidentally returns the wrong variable.  It should be "qphy-
-> > >vreg"
-> > instead of "qphy->phy".
+
+On Fri, 08 Sep 2023 14:38:41 +0800, Tengfei Fan wrote:
+> Add device tree binding Documentation details for Qualcomm SM4450
+> TLMM device.
 > 
-> Hi Dan,
-> Just curious: How did you find this? Visual catch or Static Analyzer?
+> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+> ---
+>  .../bindings/pinctrl/qcom,sm4450-tlmm.yaml    | 129 ++++++++++++++++++
+>  1 file changed, 129 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml
 > 
 
-This was from a Smatch warning.
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-$ ~/smatch/smatch_scripts/kchecker drivers/phy/qualcomm/phy-qcom-m31.c
-  CHECK   scripts/mod/empty.c
-  CALL    scripts/checksyscalls.sh
-  DESCEND objtool
-  INSTALL libsubcmd_headers
-  CC      drivers/phy/qualcomm/phy-qcom-m31.o
-  CHECK   drivers/phy/qualcomm/phy-qcom-m31.c
-drivers/phy/qualcomm/phy-qcom-m31.c:175 m31usb_phy_init() warn: variable dereferenced before check 'qphy->vreg' (see line 167)
-drivers/phy/qualcomm/phy-qcom-m31.c:259 m31usb_phy_probe() warn: passing a valid pointer to 'PTR_ERR'
-$
+yamllint warnings/errors:
 
-regards,
-dan carpenter
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml:
+Error in referenced schema matching $id: http://devicetree.org/schemas/pinctrl/qcom,tlmm-common.yaml
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230908063843.26835-2-quic_tengfan@quicinc.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
