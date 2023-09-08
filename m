@@ -2,278 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E7357983CE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 10:13:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 089AD7983DA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 10:17:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242132AbjIHINq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Sep 2023 04:13:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58956 "EHLO
+        id S230038AbjIHIRG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Sep 2023 04:17:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231748AbjIHINq (ORCPT
+        with ESMTP id S229667AbjIHIRC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Sep 2023 04:13:46 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C23F01BD8
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Sep 2023 01:13:40 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-9a64619d8fbso221542366b.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Sep 2023 01:13:40 -0700 (PDT)
+        Fri, 8 Sep 2023 04:17:02 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 548BF1BDA
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Sep 2023 01:16:56 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-99c3c8adb27so220415766b.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Sep 2023 01:16:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694160819; x=1694765619; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1694161015; x=1694765815; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=RWZM8Q/uIy8my/IXpdHmpbEduZUYWK8mH9X8KWk+rE4=;
-        b=IXQ+dqqFkd/ASkI/zwtTA6zuPxiuprT7OFtt7KR0IrEnpqKMOUKuuEQ2CXNyjjKlbp
-         i2sUakTjkTnJnFAJ1XHuNESG7ko191imx/iqeZAPlfAWNW+NYtkGE/XKMDYRdpRFFpZP
-         YjYsDwu7ij73CGKz6NcDxDTzSMSYL4PiBtqMfaVw6q/h/Z3EjXPDUGxOGgq87bWHWi/L
-         27bhJv7QH3I6uNaCgc7NIS7P7+RgbWZ/QNs2KsFbHVM1pMTMu/U8k7ONWWGOeEPGfCOP
-         5YTJsQuWU3Leg/04UDAIVRcTwFPEFY4y8pnKdOMoZmve7+ulDG+MC7t+iBDhAZ5QoWy1
-         pWkg==
+        bh=hWnR3iTKLtNaSTGp3ycj3ykgtrH6ON5cNLA1Cxk2dCM=;
+        b=JM0oPDHbH3FuSauK2OeBJGX6i6szIvQgPTXcaoPpck9PZR2EdmDIHe6/EtWbLTi2Fq
+         BZNOq41ICVfifVmfW6eOQD7JQRXzIoqbMJaqWmJn/mmZMl+DEOJVu1ojZsimd6K1/uYX
+         Wi3rpHiRfjTR+YQxNUR/qMJh8I8psuNftc0IEVI0FIiRVMgj2BpsOTlCB7slrijihIUg
+         xclbmC34ZpjLrd0yfx3CaZTwUUHhJZDRorwhqJghG3j9cy1MMWudUyqpRjVY0jlg1JJ9
+         oTSg+B1Dkzw5cDmzKkhQuxE8/ZdqvGkjuOApTAYpW7o21jfYPRFZIihR0x0oE0/TqObf
+         XCnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694160819; x=1694765619;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1694161015; x=1694765815;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RWZM8Q/uIy8my/IXpdHmpbEduZUYWK8mH9X8KWk+rE4=;
-        b=r0tZ334mq7tDzfoQtG8CDWieW00zYM9qetRwoNw0cE5TiyM/Edf+xZyHwJgwgSMp25
-         hi3pW16Oxjq4FPcC0djusYunnDdOJEjiX2Sb2RTXjyw04qe1xjy/I3WWEuLsv0Py2xDk
-         OpRL7Ey7MJTOa4j7SR0NeUA398loJK5ujiNMyWnucCoguyDoce6Ln4SAOFdeG8Tvonfb
-         qvhfZzrjvvG6aeu5suYlS4hcdexT0n8jFrv3kmX5Cft5+xzDy78FlxuSx8AOLBCF7d7b
-         tp0787QAJMozbnYiHnVD3t26CM8RlL+K+gpfb9XVyVfiunfSC3GfYYgj/aLK6JJvIhyh
-         /cmQ==
-X-Gm-Message-State: AOJu0Yw9w+7YW75VQS4x3h7/EoeIuyAmvVNN5g2WH4fmIbn8j8IkgvTT
-        iL4LSP/A/ZKaKNcO7tzEC7IA0A==
-X-Google-Smtp-Source: AGHT+IFlgUgFFWJP4twtv7eegf3o5nfvQzIkS3a6S8h2RTjkRlbK3B/juMDPxfbjjDget6fljmxQVA==
-X-Received: by 2002:a17:906:300f:b0:9a1:b43b:73a0 with SMTP id 15-20020a170906300f00b009a1b43b73a0mr1224993ejz.20.1694160819243;
-        Fri, 08 Sep 2023 01:13:39 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.214.188])
-        by smtp.gmail.com with ESMTPSA id z20-20020a170906241400b009829d2e892csm695713eja.15.2023.09.08.01.13.36
+        bh=hWnR3iTKLtNaSTGp3ycj3ykgtrH6ON5cNLA1Cxk2dCM=;
+        b=Km9wE/t/FCfKrtAMcA0ihvRTNnwHDqbQLfwKisEn7d/dudAO/E1qOl/mfEt1tU85Z/
+         jou9bIkuvQDXNZ1sQzwyDE49kwp4RLg693FqvrXEC4lly71YztT7Xf8R/P6yE4yhwhBG
+         3SRtVlaVt8AfyUw0dnwXkyaJWQKtLpCc0cGUBf01cyGw4fgLm9e1cvvtxITuXSKHs6/Q
+         wAl/G6QYpeDC9l4bUKjyEMScybIinHkk3KFAjEkqGk8Q6yxKgilA0+pcRPHmxjXGYZg9
+         QI+o5357Kto9sfcG0gyhSMF1ZSppJlZBi6BuT+gJriSXqdXptc/rLQx+jyreYX0ry6Ud
+         htfQ==
+X-Gm-Message-State: AOJu0YyV8KX7wqy0dNdiTfj5RmTdHlOk6BH6cQ89CtdMR5NTZCx2o1Ew
+        IptnNXczdaI4RgqyboQ132hRlA==
+X-Google-Smtp-Source: AGHT+IHCW6sUCeMutdZ6gSGXFPFW8wjQS5S3jep7Zuf96HV7IXywECCKcudaC7jjdAublUt9FI5xQA==
+X-Received: by 2002:a17:906:300f:b0:9a1:b43b:73a0 with SMTP id 15-20020a170906300f00b009a1b43b73a0mr1232187ejz.20.1694161014787;
+        Fri, 08 Sep 2023 01:16:54 -0700 (PDT)
+Received: from [192.168.37.45] (178235177197.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.197])
+        by smtp.gmail.com with ESMTPSA id r20-20020a170906c29400b0099d798a6bb5sm692461ejz.67.2023.09.08.01.16.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 08 Sep 2023 01:13:38 -0700 (PDT)
-Message-ID: <9626f079-22f3-5327-5a45-23e5dfcda5c6@linaro.org>
-Date:   Fri, 8 Sep 2023 10:13:35 +0200
+        Fri, 08 Sep 2023 01:16:54 -0700 (PDT)
+Message-ID: <d78b19ef-0fb7-4fc3-bf01-58c10b4fd1cd@linaro.org>
+Date:   Fri, 8 Sep 2023 10:16:50 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.0
-Subject: Re: [PATCH 6/6] arm64: dts: qcom: add uart console support for SM4450
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] interconnect: qcom: Add SM4450 interconnect provider
+ driver
 Content-Language: en-US
 To:     Tengfei Fan <quic_tengfan@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        andersson@kernel.org, djakov@kernel.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        tglx@linutronix.de, maz@kernel.org, lee@kernel.org
-Cc:     robimarko@gmail.com, quic_gurus@quicinc.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_tsoni@quicinc.com,
-        quic_shashim@quicinc.com, quic_kaushalk@quicinc.com,
-        quic_tdas@quicinc.com, quic_tingweiz@quicinc.com,
-        quic_aiquny@quicinc.com, kernel@quicinc.com,
-        quic_bjorande@quicinc.com
-References: <20230908065847.28382-1-quic_tengfan@quicinc.com>
- <20230908065847.28382-7-quic_tengfan@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230908065847.28382-7-quic_tengfan@quicinc.com>
+        catalin.marinas@arm.com, will@kernel.org
+Cc:     arnd@arndb.de, geert+renesas@glider.be, nfraprado@collabora.com,
+        rafal@milecki.pl, peng.fan@nxp.com, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        quic_tsoni@quicinc.com, quic_shashim@quicinc.com,
+        quic_kaushalk@quicinc.com, quic_tdas@quicinc.com,
+        quic_tingweiz@quicinc.com, quic_aiquny@quicinc.com,
+        kernel@quicinc.com
+References: <20230908064427.26999-1-quic_tengfan@quicinc.com>
+ <20230908064427.26999-3-quic_tengfan@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230908064427.26999-3-quic_tengfan@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/09/2023 08:58, Tengfei Fan wrote:
-> Add base description of UART, TLMM, interconnect, TCSRCC and SMMU nodes
-> which helps SM4450 boot to shell with console on boards with this SoC.
+On 8.09.2023 08:44, Tengfei Fan wrote:
+> Add driver for the Qualcomm interconnect buses found in SM4450 based
+> platforms. The topology consists of several NoCs that are controlled
+> by a remote processor that collects the aggregated bandwidth for each
+> master-slave pairs.
 > 
 > Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/sm4450-qrd.dts |  14 +-
->  arch/arm64/boot/dts/qcom/sm4450.dtsi    | 258 ++++++++++++++++++++++++
->  2 files changed, 270 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm4450-qrd.dts b/arch/arm64/boot/dts/qcom/sm4450-qrd.dts
-> index 00a1c81ca397..bb8c58fb4267 100644
-> --- a/arch/arm64/boot/dts/qcom/sm4450-qrd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm4450-qrd.dts
-> @@ -10,9 +10,19 @@
->  	model = "Qualcomm Technologies, Inc. SM4450 QRD";
->  	compatible = "qcom,sm4450-qrd", "qcom,sm4450";
->  
-> -	aliases { };
-> +	aliases {
-> +		serial0 = &uart7;
-> +	};
->  
->  	chosen {
-> -		bootargs = "console=hvc0";
-> +		stdout-path = "serial0:115200n8";
+[...]
 
-Wait, what? You told me you cannot use serial and stdout-path!
-
-https://lore.kernel.org/all/f0f94ea9-94b1-ccd1-0a43-3cb119fc5d94@quicinc.com/
-
->  	};
->  };
+> +++ b/drivers/interconnect/qcom/sm4450.c
+> @@ -0,0 +1,1848 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
+> + *
+Stray blank line
+> + */
 > +
-> +&qupv3_id_0 {
-> +	status = "okay";
-> +};
-> +
-> +&uart7 {
-> +	status = "okay";
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sm4450.dtsi b/arch/arm64/boot/dts/qcom/sm4450.dtsi
-> index 2395b1d655a2..3af7255fca35 100644
-> --- a/arch/arm64/boot/dts/qcom/sm4450.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm4450.dtsi
-> @@ -7,6 +7,8 @@
->  #include <dt-bindings/clock/qcom,sm4450-gcc.h>
->  #include <dt-bindings/gpio/gpio.h>
->  #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +#include <dt-bindings/interconnect/qcom,icc.h>
+> +#include <linux/device.h>
+> +#include <linux/interconnect.h>
+> +#include <linux/interconnect-provider.h>
+> +#include <linux/io.h>
+Is this necessary?
+
+> +#include <linux/module.h>
+> +#include <linux/of_device.h>
+> +#include <linux/of_platform.h>
+> +#include <linux/platform_device.h>
 > +#include <dt-bindings/interconnect/qcom,sm4450.h>
->  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->  
->  / {
-> @@ -262,6 +264,26 @@
->  		};
->  	};
->  
-> +	firmware {
-> +		scm: scm {
-> +			compatible = "qcom,scm-sm4450", "qcom,scm";
-> +			interconnects = <&aggre2_noc MASTER_CRYPTO 0 &mc_virt SLAVE_EBI1 0>;
-> +			#reset-cells = <1>;
-> +		};
-> +	};
 > +
-> +	clk_virt: interconnect-0 {
-> +		compatible = "qcom,sm4450-clk-virt";
-> +		#interconnect-cells = <2>;
-> +		qcom,bcm-voters = <&apps_bcm_voter>;
-> +	};
-> +
-> +	mc_virt: interconnect-1 {
-> +		compatible = "qcom,sm4450-mc-virt";
-> +		#interconnect-cells = <2>;
-> +		qcom,bcm-voters = <&apps_bcm_voter>;
-> +	};
-> +
->  	memory@a0000000 {
->  		device_type = "memory";
->  		/* We expect the bootloader to fill in the size */
-> @@ -387,12 +409,118 @@
->  			clocks = <&rpmhcc RPMH_CXO_CLK>, <&sleep_clk>;
->  		};
->  
-> +		qupv3_id_0: geniqup@ac0000 {
-> +			compatible = "qcom,geni-se-qup";
-> +			reg = <0x0 0x00ac0000 0x0 0x2000>;
-> +			ranges;
-> +			clock-names = "m-ahb", "s-ahb";
-> +			clocks = <&gcc GCC_QUPV3_WRAP_0_M_AHB_CLK>,
-> +				 <&gcc GCC_QUPV3_WRAP_0_S_AHB_CLK>;
-> +			iommus = <&apps_smmu 0x163 0x0>;
-> +			interconnects = <&clk_virt MASTER_QUP_CORE_0 0 &clk_virt SLAVE_QUP_CORE_0 0>;
-> +			interconnect-names = "qup-core";
-> +			#address-cells = <2>;
-> +			#size-cells = <2>;
-> +			status = "disabled";
-> +
-> +			uart7: serial@a88000 {
-> +				compatible = "qcom,geni-debug-uart";
-> +				reg = <0 0x00a88000 0 0x4000>;
-> +				clock-names = "se";
-> +				clocks = <&gcc GCC_QUPV3_WRAP1_S2_CLK>;
-> +				interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&qup_uart7_tx>, <&qup_uart7_rx>;
-> +				status = "disabled";
-> +			};
-> +		};
-> +
-> +		aggre1_noc: interconnect@16e0000 {
-> +			tible = "qcom,sm4450-aggre1-noc";
-> +			reg = <0 0x016e0000 0 0x1c080>;
-> +			#interconnect-cells = <2>;
-> +			clocks = <&gcc GCC_SDCC2_AHB_CLK>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
-> +		};
-> +
-> +		aggre2_noc: interconnect@1700000 {
-> +			compatible = "qcom,sm4450-aggre2-noc";
-> +			reg = <0 0x01700000 0 0x31080>;
-> +			#interconnect-cells = <2>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
-> +			clocks = <&rpmhcc RPMH_IPA_CLK>,
-> +				 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>;
-> +		};
-> +
-> +		cnoc2: interconnect@1500000 {
+[...]
 
-Keep order by unit address.
+> +static struct qcom_icc_node * const mmss_noc_nodes[] = {
+> +	[MASTER_CAMNOC_HF] = &qnm_camnoc_hf,
+> +	[MASTER_CAMNOC_ICP] = &qnm_camnoc_icp,
+> +	[MASTER_CAMNOC_SF] = &qnm_camnoc_sf,
+> +	[MASTER_MDP] = &qnm_mdp,
+> +	[MASTER_CNOC_MNOC_CFG] = &qnm_mnoc_cfg,
+> +	[MASTER_VIDEO_P0_MMNOC] = &qnm_video0,
+> +	[MASTER_VIDEO_PROC_MMNOC] = &qnm_video_cpu,
+> +	[SLAVE_MNOC_HF_MEM_NOC] = &qns_mem_noc_hf,
+> +	[SLAVE_MNOC_SF_MEM_NOC] = &qns_mem_noc_sf,
+> +	[SLAVE_SERVICE_MNOC] = &srvc_mnoc,
+> +	[MASTER_MDP_DISP] = &qnm_mdp_disp,
+> +	[SLAVE_MNOC_HF_MEM_NOC_DISP] = &qns_mem_noc_hf_disp,
+Please drop the _DISP paths, upstream will handle these with icc
+tags.
 
-> +			compatible = "qcom,sm4450-cnoc2";
-> +			reg = <0 0x1500000 0 0x6200>;
-> +			#interconnect-cells = <2>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
-> +		};
-> +
-
-...
+[...]
 
 > +
->  		intc: interrupt-controller@17200000 {
->  			compatible = "arm,gic-v3";
->  			reg = <0x0 0x17200000 0x0 0x10000>,     /* GICD */
-> @@ -480,4 +711,31 @@
->  			     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
->  			     <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
->  	};
-> +
-> +	tlmm: pinctrl@f100000 {
+> +static const struct of_device_id qnoc_of_match[] = {
+> +	{ .compatible = "qcom,sm4450-aggre1-noc",
+> +	  .data = &sm4450_aggre1_noc},
+Nit, but please:
 
-You did not test it... This node cannot be here and tools will tell you
-this. No need for review from us - tools are doing this.
+- make these one line, like this:
+{ .compatible = "qcom,sm4450-aggre1-noc", .data = &sm4450_aggre1_noc },
 
-It does not look like you tested the DTS against bindings. Please run
-`make dtbs_check W=1` (see
-Documentation/devicetree/bindings/writing-schema.rst or
-https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
-for instructions).
-> +		compatible = "qcom,sm4450-tlmm";
-> +		reg = <0 0x0f100000 0 0x300000>;
-> +		interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
-> +		gpio-controller;
-> +		#gpio-cells = <2>;
-> +		interrupt-controller;
-> +		#interrupt-cells = <2>;
-> +		gpio-ranges = <&tlmm 0 0 137>;
-> +		wakeup-parent = <&pdc>;
-> +
-> +		qup_uart7_rx: qup-uart7-rx-state {
-> +			pins = "gpio22";
-> +			function = "qup1_se2_l2";
-> +			drive-strength = <2>;
-> +			bias-disable;
-> +		};
-> +
-> +		qup_uart7_tx: qup-uart7-tx-state {
-> +			pins = "gpio22";
-> +			function = "qup1_se2_l2";
-> +			drive-strength = <2>;
-> +			bias-disable;
-> +		};
-> +	};
-> +
+- add the missing space before '}'
 
-Stray blank line.
-
->  };
-
-Best regards,
-Krzysztof
-
+Konrad
