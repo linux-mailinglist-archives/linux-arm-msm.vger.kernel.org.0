@@ -2,114 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EDB5798473
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 10:54:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6536779849A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 11:13:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233662AbjIHIyJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Sep 2023 04:54:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38886 "EHLO
+        id S236228AbjIHJNW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Sep 2023 05:13:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229844AbjIHIyJ (ORCPT
+        with ESMTP id S229553AbjIHJNV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Sep 2023 04:54:09 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF59B1BEA;
-        Fri,  8 Sep 2023 01:54:04 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3888pS56030341;
-        Fri, 8 Sep 2023 08:53:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id; s=qcppdkim1;
- bh=q9s9v96wDMX4jHjojn/Hh1/cvT2BZYbPHDTPhvzg6uo=;
- b=CUwmhUl8lPlUiWVGaTtKl5QJzR5pn60dCk/uUv6Du9uWTjuV02M+f3mrhuU0oCJA9Yi7
- KtK8dRnTmvaY0b8wSutlSs4Br08J7wqBVMr4hJEKNAUOvivjKelSdRaQUeRkyGWKRaKA
- O6TZ6de2xaWzQRU+1IVsO8C12sszPwy0J+5hDIWA+WAVF3AbVFa73q9tnYnghCxjYWKR
- 3o3aguJSVN8xX7G9dh91F0MUjnk0tNm7q2ruFucKlFLQeg19SyqpO9uZO9OUQhnyGd4n
- 4k1IqNcJ/MRCieTHd1msoDrNV43n/56k8Mm3AAmZmi8U5UCPHUUFj1OWVdPQzhF3SnNv Rw== 
-Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3sy7m0k7p3-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 08 Sep 2023 08:53:41 +0000
-Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-        by APTAIPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3888rcTh028772;
-        Fri, 8 Sep 2023 08:53:38 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 3sux4kugv5-1;
-        Fri, 08 Sep 2023 08:53:38 +0000
-Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3888rcLv028767;
-        Fri, 8 Sep 2023 08:53:38 GMT
-Received: from cbsp-sh-gv.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
-        by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 3888rcQm028765;
-        Fri, 08 Sep 2023 08:53:38 +0000
-Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 393357)
-        id DCD2E4DE7; Fri,  8 Sep 2023 16:53:36 +0800 (CST)
-From:   Ziqi Chen <quic_ziqichen@quicinc.com>
-To:     quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
-        bvanassche@acm.org, mani@kernel.org, adrian.hunter@intel.com,
-        beanhuo@micron.com, avri.altman@wdc.com, junwoo80.lee@samsung.com,
-        martin.petersen@oracle.com, quic_nguyenb@quicinc.com,
-        quic_nitirawa@quicinc.com, quic_ziqichen@quicinc.com
-Cc:     linux-scsi@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
-        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
-        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] scsi: ufs: qcom: dt-bindings: Add MCQ ESI property
-Date:   Fri,  8 Sep 2023 16:53:23 +0800
-Message-Id: <1694163203-39123-1-git-send-email-quic_ziqichen@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 94ua46SlIBwaMT2Kv43d9JZx19qco7F2
-X-Proofpoint-ORIG-GUID: 94ua46SlIBwaMT2Kv43d9JZx19qco7F2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-08_06,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
- lowpriorityscore=0 adultscore=0 mlxlogscore=999 spamscore=0 malwarescore=0
- suspectscore=0 mlxscore=0 bulkscore=0 priorityscore=1501 clxscore=1011
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
- definitions=main-2309080081
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=no
-        autolearn_force=no version=3.4.6
+        Fri, 8 Sep 2023 05:13:21 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30FA01997
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Sep 2023 02:13:17 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-9a9d6b98845so501805166b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Sep 2023 02:13:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694164395; x=1694769195; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=IXVqW1Q51trZqJlGLGeYiuozAuhYVqk3/BmiXFCxCwI=;
+        b=hPumbPWURHUghKOWtRikMx17hfZBgx6UgenU/cm3achNBT517irsDx17ZcIkOyIw5W
+         8Vx0Q47FzmWkFKC0TB6Zpb8qN5BWcgmT1+Xdz8xRJ6zLzRJqmvNUCbmYuuZUPdAmE/rm
+         yhd4uRJUwRaVjkFQYlsOATZz2MWnos3uEMVZ9Q590xWzjvgPEm2078usOZ9SsAqElzdP
+         xs6BZTm+QFYpGjexQGBVCujfRHLDmILxN+8L2hTAJZ2gX/gZaBqxuRhMOABYsOZyFJRW
+         VJGLG8M3ttV7emp8/6oeDBJ9TKs4ULd6XhMV7b3FMKAZ7sbchF+qc1TRZzR1oQdrDa1T
+         nf/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694164395; x=1694769195;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IXVqW1Q51trZqJlGLGeYiuozAuhYVqk3/BmiXFCxCwI=;
+        b=AnYRUPpY5bXhUqYv3m90sC8u5Qa+gQ717A5HYPaTut5qrzkLp5k9lp7F9okfSsvz53
+         xO9cq2Pdmsy9qUTmYfjRbIMavnyysyEX0gTKKofuFDVFKLz2Q/QKFLnbaex4A7PP/cMs
+         qzhhZ2petECDYdITSSwUkQd/2D50nKAjuEZv0P8jqvRhnbuL5sAzae6gysHwDE4j0vJK
+         NLSsQttgkKpstNqMP7+quPe9cY2irQiEcC2A3d6hSJWZ8Bea3nbQAQNXnwGt82/5gMK2
+         0Pn/zYKJbx5/akaXB9tZhhsYiRonVqSbtLIhMAPgQjWZOzjLii0+03jVNGYsvZpNuV48
+         k4zw==
+X-Gm-Message-State: AOJu0YyjY5BcCjJNQb800uqpM0/3bQRTPZrzijNkJAszEVmKktIPp54B
+        j3ZGbE/jjnovsvboU7f/T6cwSg==
+X-Google-Smtp-Source: AGHT+IE/Igq1U6CUrKvj4eZ+OTmvvdgj+7itzGSMXL2cZnfDaXeEkB4cgdUx9TJGFwFTU8J0tCu27Q==
+X-Received: by 2002:a17:907:7604:b0:9a5:bceb:1cf8 with SMTP id jx4-20020a170907760400b009a5bceb1cf8mr1999314ejc.3.1694164395635;
+        Fri, 08 Sep 2023 02:13:15 -0700 (PDT)
+Received: from [192.168.37.45] (178235177197.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.197])
+        by smtp.gmail.com with ESMTPSA id va17-20020a17090711d100b009929ab17be0sm751029ejb.162.2023.09.08.02.13.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 08 Sep 2023 02:13:15 -0700 (PDT)
+Message-ID: <f9cc0fd5-ebc7-4f8b-a595-e4741f77f870@linaro.org>
+Date:   Fri, 8 Sep 2023 11:13:13 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 02/17] media: qcom: camss: Rename camss struct
+ resources to camss_subdev_resources
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
+        todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
+        mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
+        laurent.pinchart@ideasonboard.com, sakari.ailus@linux.intel.com,
+        andrey.konovalov@linaro.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230907164410.36651-1-bryan.odonoghue@linaro.org>
+ <20230907164410.36651-3-bryan.odonoghue@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230907164410.36651-3-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the description for the qcom,esi-affinity-mask.
+On 7.09.2023 18:43, Bryan O'Donoghue wrote:
+> Rename non-specific struct resources {} to struct camss_subdev_resources {}
+> 
+> Each logical block in CAMSS has a number of regulators, clocks and resets
+> associated with it. We represent these blocks as v4l subdevices.
+> 
+> The name "struct camss_subdev_resources" is a more descriptive and accurate
+> name.
+> 
+> Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
----
- Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-index bdfa86a..323595f 100644
---- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-+++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-@@ -97,6 +97,10 @@ properties:
-     description:
-       GPIO connected to the RESET pin of the UFS memory device.
- 
-+  qcom,esi-affinity-mask:
-+    description:
-+       UFS MCQ ESI affinity mask. Affine ESI on registration according to this CPU mask.
-+
- required:
-   - compatible
-   - reg
--- 
-2.7.4
-
+Konrad
