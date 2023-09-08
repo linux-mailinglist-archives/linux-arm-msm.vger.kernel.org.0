@@ -2,61 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 640647984B2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 11:20:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AC557984B9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Sep 2023 11:21:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241958AbjIHJUU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Sep 2023 05:20:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57118 "EHLO
+        id S242112AbjIHJVw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Sep 2023 05:21:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232182AbjIHJUT (ORCPT
+        with ESMTP id S232182AbjIHJVu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Sep 2023 05:20:19 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09B691BF1
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Sep 2023 02:20:15 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-52a49a42353so2490857a12.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Sep 2023 02:20:14 -0700 (PDT)
+        Fri, 8 Sep 2023 05:21:50 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66FC81BF1
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Sep 2023 02:21:44 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-52e64bc7c10so2497929a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Sep 2023 02:21:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694164813; x=1694769613; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9NcBlSpP3bbpN/F3DSH3QxLTsGOHurhbbGUtnwjf0PA=;
-        b=f7nfS7Az2IDvZ6TgqsLej5IRAfKjpEWMrOmu3Okyqa5SusUpizKu0UmntIof7et3M5
-         npEH0XB+1dZmTPDvz2ezQRIobkXKfVduP56tKHa36ZKdOWCXf6zYXpOpglUryBp39A0E
-         o7W96Mt01eCpUm/0UGjhCiPLlOD/vrwmpXV/WUHTzYntbVy7FBcwspvdQElabqWu//nW
-         axEQ72Z8x1yeoEpi+/G/aAcUy9XpmUqBIPN8CTwqlE5AP10UwYztO+BN/jFT7RK3D6QP
-         mrjJ0ZgmxLPidzzTA4VKdEjT4BhYv2OHmrAVnwuBQc2w5irvolgBS86gXfIdjV/g1h9Q
-         60Kw==
+        d=linaro.org; s=google; t=1694164903; x=1694769703; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+         :from:content-language:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=+t4XGXne8eyrgNgv4aLe9v9k8kUrW4rRZ8o7Qd75n90=;
+        b=joSXIzBFEMm7AKMvPtpVwvT4XdFy+0IazWPp49EAPN2HwTpRiIS8AuJw+ca+rcI8MZ
+         ikTKZxpUi59xNZCwQv39eQxkrSYatM32Klp1f82HrZg6D0+SXHF2kxIZ028KhuTTdCFW
+         8UuHLSblJy7hiL1KeikBpiwqtOmSLDhIisrIejbkThKYgUUrULfg7sQF1eTO+pD1l2PV
+         wk9rGkEPIlJtygQZ9m1G1z35Pm5bhQho/74P4NnEw7vo8lYy9jJ/huDfjc2nnu4akAK4
+         oSJqQzxiOooQf8l+oZSj+qFLbNFYnYlbQFmmoQxCOGfqFoh95qbSjQj2wdSXO06wnyfS
+         Lozg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694164813; x=1694769613;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9NcBlSpP3bbpN/F3DSH3QxLTsGOHurhbbGUtnwjf0PA=;
-        b=f320YYGUJcNBcPqlklV76alQF9LfloYkTfQc3XxJuJoa1gLC7yOtvziH0cH0kL8YPg
-         LnWxqRz3YpvcQ8kYvqdn431IqVTwUV+tXdk3gHSCX6HTcwKuT1v8FJBrQmQ0ncYRKLZi
-         BtZOEJbhWdoFFKe6BE9oWSb55vcp9lLb5mZlAxkf9CZefOfJtAIHmjHYnkj/bs2RK/tV
-         CUoogy/hPcX/jESGtm41FzEdzP9Srs0fzwwydYYknQKXXAj4lr+K0Gn8hmjm8Hb45HUu
-         QxTFBRK9lP9rQqVcN75Ofj4VdPzhpXS93WMsTDpkh90U/uggtUtrUOb8W5F/tMCWg9cp
-         rKsw==
-X-Gm-Message-State: AOJu0YwgaNmhV6ZIK4kOmXe7Vag8zgJUgLl4Qzh7WjGaE1AIW+LdlnUd
-        /ZOahIa9agO8r+AJi7EA2W6r9/KhBC6PWLeaq6PejQ==
-X-Google-Smtp-Source: AGHT+IH3e280dAofYaX6UqmPpHB/CuG7Hp4XX4rBg0rpeAv+miUc+CkUX/tB9x06i3rVj8N2LVbgYA==
-X-Received: by 2002:a17:906:3157:b0:9a1:fa4e:ca83 with SMTP id e23-20020a170906315700b009a1fa4eca83mr1630996eje.65.1694164813494;
-        Fri, 08 Sep 2023 02:20:13 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1694164903; x=1694769703;
+        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+         :from:content-language:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+t4XGXne8eyrgNgv4aLe9v9k8kUrW4rRZ8o7Qd75n90=;
+        b=rphiyfKpEmZWtxxmzTqvBj1fC05a/yC0e4yQwzp6rbIK/B8coe7tHQ7be645042Xb7
+         ROJJh9V3DAKUw2JxWZK9ekHvcWGkVl8Fq8A5HOsvTpWMwph7FD9AR0prxRQWLlVTdXNT
+         RKdA80Vm4VjyGuQFhQ2s2n7QItusXQy4hxSng1mqN/IwEHgL862JhdrgO6oVbMj8Vhix
+         kUYPl9nY4rtBSFX+h6d1k9VrmlaXMwQVUmRZ9gGG104EFnvQHy7gGgsBA3xUoqK8MJky
+         BsuuZCAaxC9J3rDA17cZi0DCCzejMleKkWrS57o+elV14suPNfyWDEcWImOQpNzxgyot
+         JLSw==
+X-Gm-Message-State: AOJu0YwDJe5YORruKHshbmqfHi4k6tg975y4zPWpecRHLNpSaqmgf/QH
+        SHtxPbV7XnAJkEtsPZBCAqs4Ug==
+X-Google-Smtp-Source: AGHT+IHRH/NXG6vD5wH5kstbMaMlUumZsAyEMHQ60OJncOJzJ+U/toGziZwcoA22vBDP8NdSzTOOHQ==
+X-Received: by 2002:a17:907:7885:b0:992:c8d7:b66f with SMTP id ku5-20020a170907788500b00992c8d7b66fmr1456299ejc.75.1694164902870;
+        Fri, 08 Sep 2023 02:21:42 -0700 (PDT)
 Received: from [192.168.37.45] (178235177197.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.197])
-        by smtp.gmail.com with ESMTPSA id t14-20020a1709064f0e00b0099e05fb8f95sm765507eju.137.2023.09.08.02.20.11
+        by smtp.gmail.com with ESMTPSA id t14-20020a1709064f0e00b0099e05fb8f95sm765507eju.137.2023.09.08.02.21.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 08 Sep 2023 02:20:13 -0700 (PDT)
-Message-ID: <b2639cdc-30a7-4caa-b6c7-05ea2f3c0fd2@linaro.org>
-Date:   Fri, 8 Sep 2023 11:20:11 +0200
+        Fri, 08 Sep 2023 02:21:42 -0700 (PDT)
+Message-ID: <6ea97401-34da-403c-a05d-e3bd7f891068@linaro.org>
+Date:   Fri, 8 Sep 2023 11:21:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v4 12/17] media: qcom: camss: Functionally decompose
  CSIPHY clock lookups
 Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
         todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
         mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
@@ -66,7 +68,7 @@ Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230907164410.36651-1-bryan.odonoghue@linaro.org>
  <20230907164410.36651-13-bryan.odonoghue@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+ <b2639cdc-30a7-4caa-b6c7-05ea2f3c0fd2@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
  BB/OmIWU6X+LZW6P88ZmHe+KeyABLMP5s1tJNK1j4ntT7mECcWZDzafPWF4F6m4WJOG27kTJ
@@ -102,11 +104,11 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230907164410.36651-13-bryan.odonoghue@linaro.org>
+In-Reply-To: <b2639cdc-30a7-4caa-b6c7-05ea2f3c0fd2@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -115,20 +117,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7.09.2023 18:44, Bryan O'Donoghue wrote:
-> The csiphyX_timer and csiX_phy values need not be hard-coded. We can
-> functionally decompose the string matching inside of a loop.
+On 8.09.2023 11:20, Konrad Dybcio wrote:
+> On 7.09.2023 18:44, Bryan O'Donoghue wrote:
+>> The csiphyX_timer and csiX_phy values need not be hard-coded. We can
+>> functionally decompose the string matching inside of a loop.
+>>
+>> Static string values are brittle, difficult to extend and not required
+>> anyway since the camss->res->csiphy_num value informs us of the number
+>> of CSIPHYs and hence the set of potential clocks for a given CSIPHY.
+>>
+>> In simple terms if we have five CSIPHYs we can have no more and no less
+>> than five csiphy_timer clocks. Similarly csi_phy core clocks have a 1:1
+>> relationship with the PHY they clock.
+>>
+>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>> ---
+> Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > 
-> Static string values are brittle, difficult to extend and not required
-> anyway since the camss->res->csiphy_num value informs us of the number
-> of CSIPHYs and hence the set of potential clocks for a given CSIPHY.
-> 
-> In simple terms if we have five CSIPHYs we can have no more and no less
-> than five csiphy_timer clocks. Similarly csi_phy core clocks have a 1:1
-> relationship with the PHY they clock.
-> 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Konrad
+Actually, well, I'm not sure about the breaks inside..
 
 Konrad
