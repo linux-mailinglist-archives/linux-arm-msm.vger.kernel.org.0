@@ -2,91 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 42F40799683
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Sep 2023 08:03:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2948D799714
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Sep 2023 11:29:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231408AbjIIGDp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 9 Sep 2023 02:03:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50626 "EHLO
+        id S1344433AbjIIJ37 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 9 Sep 2023 05:29:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229704AbjIIGDo (ORCPT
+        with ESMTP id S229957AbjIIJ36 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 9 Sep 2023 02:03:44 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 330561BD3;
-        Fri,  8 Sep 2023 23:03:41 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26224C433C8;
-        Sat,  9 Sep 2023 06:03:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1694239420;
-        bh=D/qZHs6VWJY9qqhwtf08OymHikqt+nVKX982NNZ2RYY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=FDfp+svWZoK6H4kUONHktO5Vuy10qGZnfuBbt0xcd+yzd/PChcz/gy69qUP29zkmX
-         VNHrADeiip9Y3oTvVwFUM8ZeIhFMViVXePZiY72V69QTIC3EzDpoq2WFS3/x4MpO4n
-         bVnkL/M4TIPRZrf1qPkFj8Sx4zH6MNfx4922ukYeBd90JWflq59qePzk3roA9cCEK5
-         OVxRl+oCAbAGbg4EkMUGJBEMP7n51NvprNKMPCnt0w6ar9XoCm9IkKlwBBjJt+LS3O
-         cxRU6tGFfTwjXbBG1iggysEzPwBIY9H/BkIP9ooncdb8Z/PDhXBNCkzMjBpIimNjHd
-         1CXLvKWP5tq1A==
-Date:   Sat, 9 Sep 2023 11:33:27 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-Cc:     miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
-        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kernel@quicinc.com,
-        quic_charante@quicinc.com, quic_kaushalk@quicinc.com
-Subject: Re: [PATCH] mtd: nand: qcom: Fix the node for nand unmap resource
-Message-ID: <20230909060327.GA5847@thinkpad>
-References: <20230907092854.11408-1-quic_bibekkum@quicinc.com>
+        Sat, 9 Sep 2023 05:29:58 -0400
+Received: from casper.infradead.org (casper.infradead.org [IPv6:2001:8b0:10b:1236::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E873510F9;
+        Sat,  9 Sep 2023 02:29:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+        References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description;
+        bh=5f0fYPajxvMLjiTkfmPyOmdt95nfZt54Bxw6PTBnT88=; b=T7IwzKvwGnSREd5YdjLFLimbuk
+        JdIvA1lacNaPuFvo+wiXGQy6hwhPjVQhPmt0gOmBUN0ucb3Qy2KBqn/WTKvshU+umJsHFLnlGHK/2
+        aCFzxr0h5j6qXG3ATxazoPNR1ES39O9Hlf/Fk1N4Cam1ycZ0OX4lcdDyS07RjP5YcWKzuuyDaytnw
+        JuKbLWSGDZy3/rPsGPz/3sjC9f2mMppq1d9ROmQvdGQZ2Ese9XRwW2gVy0nM6LbcuK2sCFNRgpdSZ
+        +M0Nxtiu1ywGEkgPn5fD4aU+QDtawS404jR7B+TcLiAxoURahN9zWmnQQhEECxuWTYfcwh6aDJvuY
+        FkJYVN1w==;
+Received: from j130084.upc-j.chello.nl ([24.132.130.84] helo=noisy.programming.kicks-ass.net)
+        by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+        id 1qeuHb-005Qcq-V5; Sat, 09 Sep 2023 09:29:41 +0000
+Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
+        id 9A383300348; Sat,  9 Sep 2023 11:29:39 +0200 (CEST)
+Date:   Sat, 9 Sep 2023 11:29:39 +0200
+From:   Peter Zijlstra <peterz@infradead.org>
+To:     Elliot Berman <quic_eberman@quicinc.com>
+Cc:     Ingo Molnar <mingo@redhat.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Pavel Machek <pavel@ucw.cz>,
+        Thomas Gleixner <tglx@linutronix.de>, kernel@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org,
+        Prakash Viswalingam <quic_prakashv@quicinc.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Subject: Re: [PATCH v2] freezer,sched: Use saved_state to reduce some
+ spurious wakeups
+Message-ID: <20230909092939.GD2771@noisy.programming.kicks-ass.net>
+References: <20230830-avoid-spurious-freezer-wakeups-v2-1-8877245cdbdc@quicinc.com>
+ <20230904212324.GA2568@noisy.programming.kicks-ass.net>
+ <df61af06-a43e-05c5-66e8-5a68b08ff14b@quicinc.com>
+ <20230907094651.GB16872@noisy.programming.kicks-ass.net>
+ <4c5b5a0b-6d78-878e-7e66-e08e83e6e1c8@quicinc.com>
+ <20230908220804.GA29218@noisy.programming.kicks-ass.net>
+ <783c60ef-5341-7893-e9e8-2b1b249f89c9@quicinc.com>
+ <20230908224829.GA32012@noisy.programming.kicks-ass.net>
+ <8b917006-2c77-0b36-060a-76a1ca04d2e0@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230907092854.11408-1-quic_bibekkum@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <8b917006-2c77-0b36-060a-76a1ca04d2e0@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 07, 2023 at 02:58:54PM +0530, Bibek Kumar Patro wrote:
-> While unmapping the nand resource in case of err_core_clk
-> the dev node being passed is res_start instead of nand->dma_base
-> (where the iova returned from map operation is stored) causing
-> failure in unmap operation. Hence modifying the unmap operation
-> to pass the nand->base_dma instead of res_start.
-> 
-> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-> ---
->  drivers/mtd/nand/raw/qcom_nandc.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-> index f583022755a2..e085a0f588eb 100644
-> --- a/drivers/mtd/nand/raw/qcom_nandc.c
-> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
-> @@ -3322,7 +3322,7 @@ static int qcom_nandc_probe(struct platform_device *pdev)
->  err_aon_clk:
->  	clk_disable_unprepare(nandc->core_clk);
->  err_core_clk:
-> -	dma_unmap_resource(dev, res->start, resource_size(res),
-> +	dma_unmap_resource(dev, nandc->base_dma, resource_size(res),
->  			   DMA_BIDIRECTIONAL, 0);
->  	dev_err(&pdev->dev, "DEBUG: probe failed for nandc module\n");
+On Fri, Sep 08, 2023 at 04:17:09PM -0700, Elliot Berman wrote:
 
-This error indicates that you are sending the patch against downstream tree.
-That's not appropriate. Please send your patches against mainline/mtd-next
-instead and also validate properly.
+> I was wondering what time zone you are in, I saw your previous replies
+> are early in my morning. I think you are giving Greg a run for his money
+> with responses at all hours :-) 
 
-- Mani
-
->  	return ret;
-> -- 
-> 2.17.1
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+Hehe, Greg and me are both in .nl. Me being an actual native here and
+Greg is an expat, but he seems to enjoy the country :-)
