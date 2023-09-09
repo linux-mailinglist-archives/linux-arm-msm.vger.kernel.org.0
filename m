@@ -2,127 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 97F357992D4
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Sep 2023 01:30:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 788EF799541
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Sep 2023 02:52:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238820AbjIHXaX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Sep 2023 19:30:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56402 "EHLO
+        id S241399AbjIIAw6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Sep 2023 20:52:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344613AbjIHXaW (ORCPT
+        with ESMTP id S1346316AbjIIAwu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Sep 2023 19:30:22 -0400
-Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 249B9E45
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Sep 2023 16:30:18 -0700 (PDT)
-Received: by mail-yb1-xb34.google.com with SMTP id 3f1490d57ef6-d7ba4c5f581so2317741276.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Sep 2023 16:30:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694215817; x=1694820617; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=PY75H1jflFjdwbxljuQ1fV6R6iCKvsQ0y9zdUNKFhfE=;
-        b=p1DU6jt7ZZEORLJ0++qKRbOMtCemtkBDRBMupn6R4EunLIezSLm8dSLpx5qx2gy+BT
-         okDO5dcT8Q7ijDqm3AWbHZO3ctVV1/ME8Q7qL5XRQv25saoSLknZKMjgUidLd38Wo/d6
-         fHTsy4NHBN6AO3xBaVfcqCRl0E+4wvDTzkzLwTHMGXCbSGj//1CCSgb2EYWYyOk/ddve
-         MblbbK6hnL73m985uH536MQghLpXQh7eZaDnx+JCO2HrLyYMAk5SEFjf28ZKKmSugJ1R
-         08TP2u0SZGhABYsSrqSPb6gsgGxhu8OynZ0BwQsISDBiK1/aCywAe2IYbNDTlN3yoXPk
-         PcxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694215817; x=1694820617;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PY75H1jflFjdwbxljuQ1fV6R6iCKvsQ0y9zdUNKFhfE=;
-        b=Rk284W7DBPQ31bK6z54Yu7kVYa3MdZ0MFHytDmhtrO/dsuCxIxTa/xsKQu1AXvuvBH
-         1Ku3j1kWDRlmc7i6Bxpno8JP0YTaEIJE2wQKhugs07zHvJjBZydApmbrJ5lLiGIMUDgH
-         AyIGPizA3wbij69IzlkF9VikQHdhWNt6WGhoUEGbrPaX4C/9JPwl0hH3FOQ2EzsGoN9C
-         dr8PaNclguEjH8s41FoVRX39CSw8Jhlnj6lakb9nZUpJn5dJ7PWdea1lC8EFW6NrxYTI
-         TClQPYWTXeg2l4oq9xtUvP6+eWA/ud3cYyTZVn06qu0mqEebSB5FHuJtci/UJhH/cWGh
-         wbmQ==
-X-Gm-Message-State: AOJu0YxwntZYB3Gr57SDJXFeL4Hx646cgDjleb8VkezsIDryOem5oUi2
-        GjCCPIWXfT4m+M0aOcpSW5mFrEF4X1NK1V5JmmZvgA==
-X-Google-Smtp-Source: AGHT+IFf/w3Ll2Vi98yCb/MLhf+vlwG+jwysyimZL9ykydnejFlmX6x8jbG6nmN39VVCN6dQagU++csT2yUv+wExVNk=
-X-Received: by 2002:a25:d050:0:b0:d78:2967:93ea with SMTP id
- h77-20020a25d050000000b00d78296793eamr3687368ybg.1.1694215817318; Fri, 08 Sep
- 2023 16:30:17 -0700 (PDT)
+        Fri, 8 Sep 2023 20:52:50 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A10EF26A2;
+        Fri,  8 Sep 2023 17:52:20 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C539FC116A4;
+        Sat,  9 Sep 2023 00:36:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1694219815;
+        bh=fCfs+gXgrw2Z+CC1ucAzqDhlJlWuD448yET0zL0XWTQ=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=vLneOeQhooyN8wYPdDLSldEVAYG49ink3w6PWtqcNaX44gKu5FpOvgo4gonzkRVv0
+         2ybSDwItFS7YPud/WEhPPk2fP/4R/9+B3mZAz/Pfx3G+G2wNn2IwGljQ584bMwdkPh
+         rw+xt1U5QRjFczjlmrWjcz23eU4umMgt7b5fZGcdW9msfNO6ITx7SmzkC5RBKAHE2Y
+         UJ9zbA2buxJzL8S7RdkBb5vGGiJ9z/gtjEw+6TVj3NJb+YjR/Q0AFkMFsNzJWQUk1g
+         jwPVawYrVHjZKQSl9zp8dyWo8GHSna+N0BaiYuN1edVIi/UuEQiofFm7UMoUn9jKzN
+         sJQAbAAlO4EXA==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Sasha Levin <sashal@kernel.org>, linux@roeck-us.net,
+        heikki.krogerus@linux.intel.com, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.5 27/28] usb: typec: qcom-pmic-typec: register drm_bridge
+Date:   Fri,  8 Sep 2023 20:36:01 -0400
+Message-Id: <20230909003604.3579407-27-sashal@kernel.org>
+X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20230909003604.3579407-1-sashal@kernel.org>
+References: <20230909003604.3579407-1-sashal@kernel.org>
 MIME-Version: 1.0
-References: <20230908185427.29026-1-quic_abhinavk@quicinc.com> <20230908185427.29026-2-quic_abhinavk@quicinc.com>
-In-Reply-To: <20230908185427.29026-2-quic_abhinavk@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 9 Sep 2023 02:30:05 +0300
-Message-ID: <CAA8EJppj+JTA8iZ6+Ui8JkD-kP54YKObRDK2_Oh+Wpn4XjU-4Q@mail.gmail.com>
-Subject: Re: [PATCH 2/2] drm/msm/dpu: try multirect based on mdp clock limits
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel@lists.freedesktop.org, quic_jesszhan@quicinc.com,
-        quic_parellan@quicinc.com, nespera@igalia.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.5.2
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 8 Sept 2023 at 21:55, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->
-> It's certainly possible that for large resolutions a single DPU SSPP
-> cannot process the image without exceeding the MDP clock limits but
-> it can still process it in multirect mode because the source rectangles
-> will get divided and can fall within the MDP clock limits.
->
-> If the SSPP cannot process the image even in multirect mode, then it
-> will be rejected in dpu_plane_atomic_check_pipe().
->
-> Hence try using multirect for resolutions which cannot be processed
-> by a single SSPP without exceeding the MDP clock limits.
->
-> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index 62dd9f9b4dce..85072328cd53 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -792,6 +792,7 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
->                                                                                  plane);
->         int ret = 0, min_scale;
->         struct dpu_plane *pdpu = to_dpu_plane(plane);
-> +       struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
->         struct dpu_plane_state *pstate = to_dpu_plane_state(new_plane_state);
->         struct dpu_sw_pipe *pipe = &pstate->pipe;
->         struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
-> @@ -860,7 +861,8 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
->
->         max_linewidth = pdpu->catalog->caps->max_linewidth;
->
-> -       if (drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) {
-> +       if ((drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) ||
-> +            _dpu_plane_calc_clk(&crtc_state->mode, pipe_cfg) > kms->perf.max_core_clk_rate) {
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-First, I think this should be an adjusted_mode too. And this probably
-needs some more attention in the next few lines of code, since .e.g
-the UBWC case also needs to be adjusted.
+[ Upstream commit 4b3cd783808bb327d931bbb1324d6c367443b721 ]
 
->                 /*
->                  * In parallel multirect case only the half of the usual width
->                  * is supported for tiled formats. If we are here, we know that
-> --
-> 2.40.1
->
+The current approach to handling DP on bridge-enabled platforms requires
+a chain of DP bridges up to the USB-C connector. Register a last DRM
+bridge for such chain.
 
+Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20230817150824.14371-3-dmitry.baryshkov@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/usb/typec/tcpm/Kconfig                |  1 +
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c | 37 +++++++++++++++++++
+ 2 files changed, 38 insertions(+)
 
+diff --git a/drivers/usb/typec/tcpm/Kconfig b/drivers/usb/typec/tcpm/Kconfig
+index 5d393f520fc2f..0b2993fef564b 100644
+--- a/drivers/usb/typec/tcpm/Kconfig
++++ b/drivers/usb/typec/tcpm/Kconfig
+@@ -79,6 +79,7 @@ config TYPEC_WCOVE
+ config TYPEC_QCOM_PMIC
+ 	tristate "Qualcomm PMIC USB Type-C Port Controller Manager driver"
+ 	depends on ARCH_QCOM || COMPILE_TEST
++	depends on DRM || DRM=n
+ 	help
+ 	  A Type-C port and Power Delivery driver which aggregates two
+ 	  discrete pieces of silicon in the PM8150b PMIC block: the
+diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+index 9b467a346114e..273b4811b4ac8 100644
+--- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
++++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+@@ -17,6 +17,9 @@
+ #include <linux/usb/role.h>
+ #include <linux/usb/tcpm.h>
+ #include <linux/usb/typec_mux.h>
++
++#include <drm/drm_bridge.h>
++
+ #include "qcom_pmic_typec_pdphy.h"
+ #include "qcom_pmic_typec_port.h"
+ 
+@@ -33,6 +36,7 @@ struct pmic_typec {
+ 	struct pmic_typec_port	*pmic_typec_port;
+ 	bool			vbus_enabled;
+ 	struct mutex		lock;		/* VBUS state serialization */
++	struct drm_bridge	bridge;
+ };
+ 
+ #define tcpc_to_tcpm(_tcpc_) container_of(_tcpc_, struct pmic_typec, tcpc)
+@@ -146,6 +150,35 @@ static int qcom_pmic_typec_init(struct tcpc_dev *tcpc)
+ 	return 0;
+ }
+ 
++#if IS_ENABLED(CONFIG_DRM)
++static int qcom_pmic_typec_attach(struct drm_bridge *bridge,
++				     enum drm_bridge_attach_flags flags)
++{
++	return flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR ? 0 : -EINVAL;
++}
++
++static const struct drm_bridge_funcs qcom_pmic_typec_bridge_funcs = {
++	.attach = qcom_pmic_typec_attach,
++};
++
++static int qcom_pmic_typec_init_drm(struct pmic_typec *tcpm)
++{
++	tcpm->bridge.funcs = &qcom_pmic_typec_bridge_funcs;
++#ifdef CONFIG_OF
++	tcpm->bridge.of_node = of_get_child_by_name(tcpm->dev->of_node, "connector");
++#endif
++	tcpm->bridge.ops = DRM_BRIDGE_OP_HPD;
++	tcpm->bridge.type = DRM_MODE_CONNECTOR_DisplayPort;
++
++	return devm_drm_bridge_add(tcpm->dev, &tcpm->bridge);
++}
++#else
++static int qcom_pmic_typec_init_drm(struct pmic_typec *tcpm)
++{
++	return 0;
++}
++#endif
++
+ static int qcom_pmic_typec_probe(struct platform_device *pdev)
+ {
+ 	struct pmic_typec *tcpm;
+@@ -208,6 +241,10 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
+ 	mutex_init(&tcpm->lock);
+ 	platform_set_drvdata(pdev, tcpm);
+ 
++	ret = qcom_pmic_typec_init_drm(tcpm);
++	if (ret)
++		return ret;
++
+ 	tcpm->tcpc.fwnode = device_get_named_child_node(tcpm->dev, "connector");
+ 	if (!tcpm->tcpc.fwnode)
+ 		return -EINVAL;
 -- 
-With best wishes
-Dmitry
+2.40.1
+
