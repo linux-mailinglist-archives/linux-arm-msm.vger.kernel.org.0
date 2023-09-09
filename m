@@ -2,129 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 110377998BE
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Sep 2023 15:58:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 299C779999A
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Sep 2023 18:25:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346132AbjIIN6V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 9 Sep 2023 09:58:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49310 "EHLO
+        id S232666AbjIIQZZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 9 Sep 2023 12:25:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345937AbjIIN6V (ORCPT
+        with ESMTP id S1346453AbjIIOiR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 9 Sep 2023 09:58:21 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEF70CC1
-        for <linux-arm-msm@vger.kernel.org>; Sat,  9 Sep 2023 06:58:14 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id d2e1a72fcca58-68becf931d0so2531249b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Sep 2023 06:58:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694267894; x=1694872694; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=qchtHR7zhGIMr/ysoIMSyHwPGpt0Wf8RVcq19XX2dq0=;
-        b=OXuxGN55ayyBcOVpBb031XC9WQMrWtNoZ6SPvcQdSq+iPoccL0c968c5BYKp5fzOqq
-         1bYP4fvlFVO13BHBbhILuF5Oqkoc8ozaiDpiysis0FrxZOESU0yZphIUqjSvYBxDAXR2
-         uw6ddh7g8c5FcukSdft8FCpANf7jHd1UG9o5u4jT7KkrYYWPY/j9OPDfTQgBAq0EWkxN
-         uuZiQX8KBpObMNIaVYVGF/LfHUdBsW5Bh3B976w9HbFGDVUP2CjzbdDJxL87h4mb6sq1
-         8ZPiEGSvNr/MrQhWlblj8gBlubczA/O5hJwH6ujAYnE5ZDvAMdQrH3rG50zofrGQd67+
-         8nug==
+        Sat, 9 Sep 2023 10:38:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A825188
+        for <linux-arm-msm@vger.kernel.org>; Sat,  9 Sep 2023 07:37:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1694270252;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=eRcOkbLQiqXFau3Lzv+lkDuNMwp9k8LF7/IY5MKHdsU=;
+        b=Ekf6PoiE+uQ9x88AYf4zRfx2CZ4HUSwTWAy6jueKhvlxWQvPU07NpxTYR4Pifoul6PvRCp
+        GiAFHD4SxPQED2r3f2VACAFcB+86bf3p46XrLo6aSLKhRQyERax0G3I/JqIza5n1VqfHUR
+        xKf8tK6fwiquMNSCboljOwNHaPXhXls=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-35-AXlhG-fQPRameZwpGOMXbg-1; Sat, 09 Sep 2023 10:37:31 -0400
+X-MC-Unique: AXlhG-fQPRameZwpGOMXbg-1
+Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-401ea9bf934so23638085e9.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Sep 2023 07:37:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694267894; x=1694872694;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qchtHR7zhGIMr/ysoIMSyHwPGpt0Wf8RVcq19XX2dq0=;
-        b=ShswJiJ3ZqoxWD9uYW+kf47xx+26xvUYR7SP917rG3u2JcwHL0m2jqcmg7UGu8n3zD
-         v2ug1oRZMlxhorS9Xw+xsz1wCBvonv7rZfdBouCCREXQevbezbG4xO2WMbgDvyr9tTz+
-         KsGb9VmHG9YWuQqsMMKXgMJYIlKJDyKvn16Vt7SMU0pPrIspLuNmPYhB0guWzzzYxpt9
-         vmG9EqN23XT2dVUFE8qfaZT2hUVujTIqGNaNh4I9MGBBLtzU9+FJwHxMZAHnPemrSy2+
-         C6lVmFauzHwX4C99rVlMNM1kPzSushul83eD4K2KGfkoy9ElIUP/4GSvlZd1Uw0+IV5/
-         /aRQ==
-X-Gm-Message-State: AOJu0YxjuamFNtxT3bRlhUpb8aCpteL0LYk6HdfLPNSe7YzaQ18QUdy8
-        hqPjqvd8T6uBeZLuSrxHOMsn
-X-Google-Smtp-Source: AGHT+IFLRT3bHuBcTCK14edjBktGiNKcvwlxhAcGkqIYJMH9kSuMd9drFXH3fkHzPCtXiz7izcT/vw==
-X-Received: by 2002:a05:6a21:35c2:b0:14c:d5d8:9fed with SMTP id ba2-20020a056a2135c200b0014cd5d89fedmr4565623pzc.54.1694267894030;
-        Sat, 09 Sep 2023 06:58:14 -0700 (PDT)
-Received: from thinkpad ([117.217.187.163])
-        by smtp.gmail.com with ESMTPSA id v8-20020a170902b7c800b001b51b3e84cesm3292415plz.166.2023.09.09.06.58.09
+        d=1e100.net; s=20230601; t=1694270250; x=1694875050;
+        h=content-transfer-encoding:mime-version:message-id:date:references
+         :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=eRcOkbLQiqXFau3Lzv+lkDuNMwp9k8LF7/IY5MKHdsU=;
+        b=QnzLCiiTYuqJWEGRfsVQehAf0AVO8lyv7l1en+QRAPQF6GMX2sRtgMala3wm+BnNHL
+         lrDrlycCloKJB0o296HR4k2Vyy1wY0Rwo9e0I9Ar9gfNXJdxFliGK1vrWNb9KdjNv6Y6
+         yGLdxRtXODwmtvNSA3TH0j+d2wv9H987AhTVPmF5BPDD+/vmp8sMDsfTLanlXPSWvhYT
+         ukd+LLIKbgCAALTUkxuI9N7o23BIBcBpv2qSwdZGBhrYQnhxRpeen+c4xeH6krezq2us
+         i2MrqYfiENl0GjZTFDWjARgttIlawYLS843EPhZKCNXGicF2dm8n8uhoJKN7EvZn1nnC
+         Z3uw==
+X-Gm-Message-State: AOJu0YyEi6JUEO0iLiOOOhbTOJnACeL98iaV00DcGslLccoAeI3nUM4N
+        mUyvruuVXfaBcr7aewrFyQ3cBpHAXDvEhxkm0cfIwWOPDMaIzXgrNDCYhbfLPcTSuAfEV08n0gb
+        v0WNBr/BFLJ+dNWvuLfrwe5XYFA==
+X-Received: by 2002:a05:600c:2483:b0:401:d2cb:e6f3 with SMTP id 3-20020a05600c248300b00401d2cbe6f3mr5088914wms.1.1694270250167;
+        Sat, 09 Sep 2023 07:37:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFuI0CHTrTRuHu7U+ySuZ17CrBG1YsmWNBf7nwWhsv6ytgzHpvaJlIL3zjF99nLHiP4wc2jkQ==
+X-Received: by 2002:a05:600c:2483:b0:401:d2cb:e6f3 with SMTP id 3-20020a05600c248300b00401d2cbe6f3mr5088899wms.1.1694270249806;
+        Sat, 09 Sep 2023 07:37:29 -0700 (PDT)
+Received: from localhost (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
+        by smtp.gmail.com with ESMTPSA id k20-20020a7bc414000000b003fd2e898aa3sm3071184wmi.0.2023.09.09.07.37.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 09 Sep 2023 06:58:13 -0700 (PDT)
-Date:   Sat, 9 Sep 2023 19:28:05 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     jejb@linux.ibm.com, martin.petersen@oracle.com, bvanassche@acm.org,
-        avri.altman@wdc.com, alim.akhtar@samsung.com, andersson@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
-        quic_nitirawa@quicinc.com, stable@vger.kernel.org
-Subject: Re: [PATCH 1/2] scsi: ufs: ufs-qcom: Update PHY settings only when
- scaling to higher gears
-Message-ID: <20230909135805.GA2864@thinkpad>
-References: <20230908145329.154024-1-manivannan.sadhasivam@linaro.org>
- <5722031e-96ab-48f6-9848-086be17fe5bf@linaro.org>
+        Sat, 09 Sep 2023 07:37:28 -0700 (PDT)
+From:   Javier Martinez Canillas <javierm@redhat.com>
+To:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+Cc:     Mali DP Maintainers <malidp@foss.arm.com>,
+        dri-devel@lists.freedesktop.org, kernel@pengutronix.de,
+        Andrew Jeffery <andrew@aj.id.au>,
+        linux-aspeed@lists.ozlabs.org,
+        linux-arm-kernel@lists.infradead.org,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Russell King <linux+etnaviv@armlinux.org.uk>,
+        Christian Gmeiner <christian.gmeiner@gmail.com>,
+        etnaviv@lists.freedesktop.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        linux-samsung-soc@vger.kernel.org,
+        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Yongqin Liu <yongqin.liu@linaro.org>,
+        John Stultz <jstultz@google.com>, linux-mips@vger.kernel.org,
+        lima@lists.freedesktop.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        linux-mediatek@lists.infradead.org,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        linux-amlogic@lists.infradead.org, Sean Paul <sean@poorly.run>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        nouveau@lists.freedesktop.org, Steven Price <steven.price@arm.com>,
+        Alyssa Rosenzweig <alyssa.rosenzweig@collabora.com>,
+        linux-renesas-soc@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org
+Subject: Re: [PATCH 00/53] drm: Convert to platform remove callback
+ returning void
+In-Reply-To: <20230507162616.1368908-1-u.kleine-koenig@pengutronix.de>
+References: <20230507162616.1368908-1-u.kleine-koenig@pengutronix.de>
+Date:   Sat, 09 Sep 2023 16:37:28 +0200
+Message-ID: <8734znjtuf.fsf@minerva.mail-host-address-is-not-set>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5722031e-96ab-48f6-9848-086be17fe5bf@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Sep 09, 2023 at 01:04:52PM +0200, Konrad Dybcio wrote:
-> On 8.09.2023 16:53, Manivannan Sadhasivam wrote:
-> > The "hs_gear" variable is used to program the PHY settings (submode) during
-> > ufs_qcom_power_up_sequence(). Currently, it is being updated every time the
-> > agreed gear changes. Due to this, if the gear got downscaled before suspend
-> > (runtime/system), then while resuming, the PHY settings for the lower gear
-> > will be applied first and later when scaling to max gear with REINIT, the
-> > PHY settings for the max gear will be applied.
-> > 
-> > This adds a latency while resuming and also really not needed as the PHY
-> > gear settings are backwards compatible i.e., we can continue using the PHY
-> > settings for max gear with lower gear speed.
-> > 
-> > So let's update the "hs_gear" variable _only_ when the agreed gear is
-> > greater than the current one. This guarantees that the PHY settings will be
-> > changed only during probe time and fatal error condition.
-> > 
-> > Due to this, UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH can now be skipped
-> > when the PM operation is in progress.
-> > 
-> > Cc: stable@vger.kernel.org
-> > Fixes: 96a7141da332 ("scsi: ufs: core: Add support for reinitializing the UFS device")
-> > Reported-by: Can Guo <quic_cang@quicinc.com>
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> Would that not increase power consumption?
-> 
-> I'd presume that the PHY needs to work harder at higher gear
-> settings to preserve signal integrity with more data flow.
-> 
-> And if so, would that power consumption increase be measurable?
-> Or is it so small that it doesn't matter?
-> 
+Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de> writes:
 
-Well, the power consumption won't be much. Currently the PHY driver supports
-only 2 PHY init sequence, default one (G3/G4) and G4/G5. When ufshcd decides to
-run at G4/G5, second sequence would be used and for rest of the gears, first one
-would be used. So even today, the G3/G4 sequence is used when ufshcd decides to
-downscale to lowest gear G1.
+Hello Uwe,
 
-Moreover, on future SoCs the init sequence won't be compatible i.e., we cannot
-switch between them. For these reasons, it makes sense to stick to the init
-sequence of max gear.
+> Hello,
+>
+> this patch series adapts the platform drivers below drivers/gpu/drm
+> to use the .remove_new() callback. Compared to the traditional .remove()
+> callback .remove_new() returns no value. This is a good thing because
+> the driver core doesn't (and cannot) cope for errors during remove. The
+> only effect of a non-zero return value in .remove() is that the driver
+> core emits a warning. The device is removed anyhow and an early return
+> from .remove() usually yields a resource leak.
+>
+> By changing the remove callback to return void driver authors cannot
+> reasonably (but wrongly) assume any more that there happens some kind of
+> cleanup later.
+>
+> Best regards
+> Uwe
+>
+> Uwe Kleine-K=C3=B6nig (53):
 
-- Mani
+[...]
 
-> Konrad
+>   drm/imx/ipuv3: Convert to platform remove callback returning void
+>   drm/ingenic: Convert to platform remove callback returning void
 
--- 
-மணிவண்ணன் சதாசிவம்
+[...]
+
+>   drm/mediatek: Convert to platform remove callback returning void
+>   drm/mediatek: Convert to platform remove callback returning void
+
+[...]
+
+>   drm/msm: Convert to platform remove callback returning void
+
+[...]
+
+>   drm/shmobile: Convert to platform remove callback returning void
+
+Pushed these to drm-misc (drm-misc-next). Thanks!
+
+--=20
+Best regards,
+
+Javier Martinez Canillas
+Core Platforms
+Red Hat
+
