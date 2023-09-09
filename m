@@ -2,73 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AADE97997B4
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Sep 2023 13:43:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A727E7997C2
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Sep 2023 13:57:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345087AbjIILn1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 9 Sep 2023 07:43:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41102 "EHLO
+        id S1345474AbjIIL5p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 9 Sep 2023 07:57:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345084AbjIILn0 (ORCPT
+        with ESMTP id S238488AbjIIL5j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 9 Sep 2023 07:43:26 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E935EE47
-        for <linux-arm-msm@vger.kernel.org>; Sat,  9 Sep 2023 04:43:21 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-502934c88b7so4418193e87.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Sep 2023 04:43:21 -0700 (PDT)
+        Sat, 9 Sep 2023 07:57:39 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABA03E46
+        for <linux-arm-msm@vger.kernel.org>; Sat,  9 Sep 2023 04:57:34 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2bcc187e0b5so49813511fa.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Sep 2023 04:57:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694259800; x=1694864600; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1694260653; x=1694865453; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=xCpAdva5TEWf3neJC0oPUjxFzfbbailcikmIjix3yK4=;
-        b=pPubzIAQpvNmY0h3HkCpmWd07Jro7Opo7bJPB8pVL7yP38XaNXhhHrRtZDXs6owkEt
-         FR9VEi7e/hC6sowy2SJwjUAoRwkPaqpmorjqpFI3W9KkdKL3mFScDYeeGqOkLkFHH1/U
-         UJ+QN4ifEUieNftd+PJKQFC8sWQOmlXmMH9VR9KjHu9jf2h6oOcqTBujfp/Ycu4Ra3Fd
-         652np1ks8FhGkKup+rTpBhth8njz/+jvCQQUuZTPXlu4ZcqCoyCX+suPpcra4IRh5mj9
-         7nlgw+wAFeTqHZODKDD0oRrV3zZRycr6W4hPc5WJaZVcs9HKfa5T6UWPomjr4SRslDqB
-         BpwQ==
+        bh=SXY2Ogd65uaG6vGfB9Owv5lVCHBu7FWUVN9yBVot574=;
+        b=iMAF7/svKuSMPNXW80xY0CEs27qRewB5VH/L2aOh6osUZI2XCzRWgfyv/A59oZ43gg
+         ISJAvZgQyKaTQYIIV7WggjyFhlPvgk/S2m46O9/H/B/HRpy4Hc5Jr+4WnX/SbBnVznQQ
+         7rxSXO5kiJy/WID6g3bVexLgR1gAbgNxMC7i933U61qfZx/tZ0HI2UxUORGUCbLX/b0X
+         V4fseqAX92JTs0xIKgPZI5b4Y2IeDy0CIvqpNGa10Z8FjLySp0O2FyHheaZiQKjZgMYd
+         YfN+luhzSnDgAIpi7Iy1bZKZlx+J6ak2a/YfylYEfrA6LEah9k0ndnbg1TPLNSOMYftY
+         s8kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694259800; x=1694864600;
+        d=1e100.net; s=20230601; t=1694260653; x=1694865453;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xCpAdva5TEWf3neJC0oPUjxFzfbbailcikmIjix3yK4=;
-        b=XOFl6cxQUeUGWinlF478TPKnXAOr2MTEtTW0/mj1D+2rChCct5cvOXcvcFqWzx/pwm
-         Ew15YElooJJaJhRx6FjC83bCk36dAyDPr0KkSsrSF86zNBu2HPp218Tt5Hk0b9hpQYl7
-         8ULjnw+k21Bk7KlVTCMUmUajr1aNskJ9d25XEYNz9TQEsmMtRQg6QuDjvsuLqk4N7kky
-         8wvrswkicoroub5LnVZ8IwV9dhoj5gZbHQsbTHtufr4jThIrcvhXj0G7nXLAMu9cnvVW
-         EpC/ylfVbyqzx9jnq+jHRkws4145GQsxjKqPlK0lIBmyi4b2n2SqCC1T1xHjtzePjbnz
-         YfTg==
-X-Gm-Message-State: AOJu0YxgLUmXSaPhNLMnqgz1byskBjB3FNq+WJXbtAA2r/YASWDpC6/h
-        WffNqoMJ7Utjk61ZcGqtwcdF6w==
-X-Google-Smtp-Source: AGHT+IHzXeq/4pfSd79mUwWr4jocUgQYAQikmhOdQoqYRM74yDWPGgjY5Lift+Zl3SfQa1a/MDdp9Q==
-X-Received: by 2002:a05:6512:2511:b0:4f8:586a:8af6 with SMTP id be17-20020a056512251100b004f8586a8af6mr3861270lfb.4.1694259800157;
-        Sat, 09 Sep 2023 04:43:20 -0700 (PDT)
+        bh=SXY2Ogd65uaG6vGfB9Owv5lVCHBu7FWUVN9yBVot574=;
+        b=sRq+/3j2sRjj39+e3HGvQs53kWEC2d+ulBqYKUtxAZ9pbIyqr8DOOAHv0Tydsy8o6r
+         lMhKn4Z78rjf1tTgbE7brsAcQY5lSXRBCFR1aUr9cSbdowdAb9TwWRAVzB6UXoSyjPTt
+         voM6p5LLLMhOWYokdP8FqL1vyjs7rv3v4Au81aTGCu0tkq3x30nk5/Gw4HVxRUQTxWQ+
+         UjrFoR2Q3KAICWkG4UwAS4ZL7MgHY7owGsyqVCA6MVQr+VJgbctCPokMr1w/s6cr9auV
+         28+kw4gaLJ5NQjlNgWFdL4cu7KG4MqwQCJTW8EiyndmTabsN9qhpoae3dqqZMaHvoV8s
+         nrrA==
+X-Gm-Message-State: AOJu0YwvbjZCWwd+3m3r4si7fZmHf9GXNZRTovNVKA99twKZekT9KHNT
+        xy72sD8vA0ParZL8fdqB99rgWw==
+X-Google-Smtp-Source: AGHT+IF5JjRKJTgbi0Q38L2ynI42sIu0IhjOe7usM8tslPPsBzdf1V1uose/TPDQgULwNWsg5C8G+w==
+X-Received: by 2002:a2e:914e:0:b0:2bc:f40b:574c with SMTP id q14-20020a2e914e000000b002bcf40b574cmr4288719ljg.42.1694260652968;
+        Sat, 09 Sep 2023 04:57:32 -0700 (PDT)
 Received: from [192.168.37.232] (178235177205.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.205])
-        by smtp.gmail.com with ESMTPSA id xo23-20020a170907bb9700b009a219ecbaf1sm2245134ejc.85.2023.09.09.04.43.18
+        by smtp.gmail.com with ESMTPSA id j9-20020a170906050900b00997e99a662bsm2213950eja.20.2023.09.09.04.57.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 09 Sep 2023 04:43:19 -0700 (PDT)
-Message-ID: <1585395a-bef7-4782-a564-cf8a19bada21@linaro.org>
-Date:   Sat, 9 Sep 2023 13:43:17 +0200
+        Sat, 09 Sep 2023 04:57:32 -0700 (PDT)
+Message-ID: <3f7a5396-c7eb-4a74-b44c-d5e7dbc954ae@linaro.org>
+Date:   Sat, 9 Sep 2023 13:57:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: msm8916-samsung-j5-common: Add
- accelerometer
+Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: sc7180: Add ADSP
 Content-Language: en-US
-To:     "Lin, Meng-Bo" <linmengbo0689@protonmail.com>,
-        linux-kernel@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Nikita Travkin <nikita@trvn.ru>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Markuss Broks <markuss.broks@gmail.com>
-References: <20230904123123.2593-1-linmengbo0689@protonmail.com>
+        Manivannan Sadhasivam <mani@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org
+Cc:     David Wronek <davidwronek@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+References: <20230907-sc7180-adsp-rproc-v3-0-6515c3fbe0a3@trvn.ru>
+ <20230907-sc7180-adsp-rproc-v3-4-6515c3fbe0a3@trvn.ru>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -105,33 +106,27 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230904123123.2593-1-linmengbo0689@protonmail.com>
+In-Reply-To: <20230907-sc7180-adsp-rproc-v3-4-6515c3fbe0a3@trvn.ru>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4.09.2023 14:35, Lin, Meng-Bo wrote:
-> From: Markuss Broks <markuss.broks@gmail.com>
+On 7.09.2023 12:02, Nikita Travkin wrote:
+> sc7180 has an ADSP remoteproc that exclusively controls the audio
+> hardware on devices that use Qualcomm firmware.
 > 
-> J5 and J5X have ST LIS2HH12 accelerometer.
-> Add support for it.
+> Add it along with the relevant audio services.
 > 
-> Signed-off-by: Markuss Broks <markuss.broks@gmail.com>
-> Co-developed-by: Stephan Gerhold <stephan@gerhold.net>
-> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> Co-developed-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
-> Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
+> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
 > ---
-We've concluded off-list that i2c-gpio is used because Samsung
-routed the sensor to pins which are not associated with QUPs.
-
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
