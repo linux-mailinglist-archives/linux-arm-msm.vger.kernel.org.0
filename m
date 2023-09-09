@@ -2,69 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 77ABD79978C
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Sep 2023 13:05:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AADE97997B4
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Sep 2023 13:43:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344885AbjIILFE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 9 Sep 2023 07:05:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33380 "EHLO
+        id S1345087AbjIILn1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 9 Sep 2023 07:43:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344820AbjIILFD (ORCPT
+        with ESMTP id S1345084AbjIILn0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 9 Sep 2023 07:05:03 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E313DCF9
-        for <linux-arm-msm@vger.kernel.org>; Sat,  9 Sep 2023 04:04:57 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-5009d4a4897so4886148e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Sep 2023 04:04:57 -0700 (PDT)
+        Sat, 9 Sep 2023 07:43:26 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E935EE47
+        for <linux-arm-msm@vger.kernel.org>; Sat,  9 Sep 2023 04:43:21 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-502934c88b7so4418193e87.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Sep 2023 04:43:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694257496; x=1694862296; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1694259800; x=1694864600; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=1XUxNwo0jgK1hqYvQ/OBgnXp62Vg7lM+YHP+s8+7VI8=;
-        b=hcoQ/ZccTWwacp/tp4GaHs9wwFhCNF1y9967vcPDmVAI2H5zMSQcCqhhTKYOS+l949
-         2GTZdiH36g7D5F2sGYap/h+5bBrkrRZZuNoSLSDr7NHfwpk3flg883Vwh4OxD/zUwYJk
-         W0/y5FUd0sMArVKb34KJs4RN1l+uH9iotOiCFYvcQE9htjjcVRvi1JlT3lFy/AuYS8o3
-         P2Nblc7UboBOOmqHcKs64YDu0dbkHQpUmGh/yME3WjYWTfz/OOiDk+rDB0BU91RGU287
-         u5S1q5APIx5vALpYwQUYZiFfo4UY0jWL4eA8LXrL/FvDB64K8oTqM3AEnO8g+eNFsMxl
-         gWuw==
+        bh=xCpAdva5TEWf3neJC0oPUjxFzfbbailcikmIjix3yK4=;
+        b=pPubzIAQpvNmY0h3HkCpmWd07Jro7Opo7bJPB8pVL7yP38XaNXhhHrRtZDXs6owkEt
+         FR9VEi7e/hC6sowy2SJwjUAoRwkPaqpmorjqpFI3W9KkdKL3mFScDYeeGqOkLkFHH1/U
+         UJ+QN4ifEUieNftd+PJKQFC8sWQOmlXmMH9VR9KjHu9jf2h6oOcqTBujfp/Ycu4Ra3Fd
+         652np1ks8FhGkKup+rTpBhth8njz/+jvCQQUuZTPXlu4ZcqCoyCX+suPpcra4IRh5mj9
+         7nlgw+wAFeTqHZODKDD0oRrV3zZRycr6W4hPc5WJaZVcs9HKfa5T6UWPomjr4SRslDqB
+         BpwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694257496; x=1694862296;
+        d=1e100.net; s=20230601; t=1694259800; x=1694864600;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1XUxNwo0jgK1hqYvQ/OBgnXp62Vg7lM+YHP+s8+7VI8=;
-        b=Ol9Shp6uRFQVetAIemqA3avrqsPrSfs3jK5mpGH/V8Hc7q96d3gbe09moXK1wd/CDf
-         B6kfvjeuVHSWvicfEWnlR2UAn6qcUUvGKi/VIxQwuCUr+3RTE3xFntUjByquBkdvhXkb
-         +t5URE7cdSnVHoVipvU9CdAZVmEBbSVq4ji7dGFmCxbuCLi9zxrIBUDfzIBlNY88I60p
-         shProXckNijZBvVyiYGaluOyBi7YK5M5FJJQSNjXPEl0gzwV2jJ8WfwgL5mKUqq5hRuw
-         RklQKgof/M+QHTA9FdZbUhaDHKDponAntOSZAyS32zjZSgTSHoXqFCFx/288MaKV2aSe
-         uwzw==
-X-Gm-Message-State: AOJu0YwQTP2wxKn9FMu538CO+wVKS7Z6OwjNsvOQxe05k/9NJSevwQ8k
-        kCyXG5etBU0OTgMinrdpz4YSuQ==
-X-Google-Smtp-Source: AGHT+IElvzkHK7O75wRqtSaZ+3vi5iwX2B4KJcq4CGw/JKy94J6nuTMOmN7FG9+8KVOQ9x+pCxFMAw==
-X-Received: by 2002:a2e:b015:0:b0:2bc:bf29:18d3 with SMTP id y21-20020a2eb015000000b002bcbf2918d3mr3548096ljk.31.1694257495993;
-        Sat, 09 Sep 2023 04:04:55 -0700 (PDT)
+        bh=xCpAdva5TEWf3neJC0oPUjxFzfbbailcikmIjix3yK4=;
+        b=XOFl6cxQUeUGWinlF478TPKnXAOr2MTEtTW0/mj1D+2rChCct5cvOXcvcFqWzx/pwm
+         Ew15YElooJJaJhRx6FjC83bCk36dAyDPr0KkSsrSF86zNBu2HPp218Tt5Hk0b9hpQYl7
+         8ULjnw+k21Bk7KlVTCMUmUajr1aNskJ9d25XEYNz9TQEsmMtRQg6QuDjvsuLqk4N7kky
+         8wvrswkicoroub5LnVZ8IwV9dhoj5gZbHQsbTHtufr4jThIrcvhXj0G7nXLAMu9cnvVW
+         EpC/ylfVbyqzx9jnq+jHRkws4145GQsxjKqPlK0lIBmyi4b2n2SqCC1T1xHjtzePjbnz
+         YfTg==
+X-Gm-Message-State: AOJu0YxgLUmXSaPhNLMnqgz1byskBjB3FNq+WJXbtAA2r/YASWDpC6/h
+        WffNqoMJ7Utjk61ZcGqtwcdF6w==
+X-Google-Smtp-Source: AGHT+IHzXeq/4pfSd79mUwWr4jocUgQYAQikmhOdQoqYRM74yDWPGgjY5Lift+Zl3SfQa1a/MDdp9Q==
+X-Received: by 2002:a05:6512:2511:b0:4f8:586a:8af6 with SMTP id be17-20020a056512251100b004f8586a8af6mr3861270lfb.4.1694259800157;
+        Sat, 09 Sep 2023 04:43:20 -0700 (PDT)
 Received: from [192.168.37.232] (178235177205.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.205])
-        by smtp.gmail.com with ESMTPSA id jj27-20020a170907985b00b009929d998abcsm2177208ejc.209.2023.09.09.04.04.53
+        by smtp.gmail.com with ESMTPSA id xo23-20020a170907bb9700b009a219ecbaf1sm2245134ejc.85.2023.09.09.04.43.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 09 Sep 2023 04:04:55 -0700 (PDT)
-Message-ID: <5722031e-96ab-48f6-9848-086be17fe5bf@linaro.org>
-Date:   Sat, 9 Sep 2023 13:04:52 +0200
+        Sat, 09 Sep 2023 04:43:19 -0700 (PDT)
+Message-ID: <1585395a-bef7-4782-a564-cf8a19bada21@linaro.org>
+Date:   Sat, 9 Sep 2023 13:43:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] scsi: ufs: ufs-qcom: Update PHY settings only when
- scaling to higher gears
+Subject: Re: [PATCH] arm64: dts: qcom: msm8916-samsung-j5-common: Add
+ accelerometer
 Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        jejb@linux.ibm.com, martin.petersen@oracle.com
-Cc:     bvanassche@acm.org, avri.altman@wdc.com, alim.akhtar@samsung.com,
-        andersson@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_cang@quicinc.com, quic_nitirawa@quicinc.com,
-        stable@vger.kernel.org
-References: <20230908145329.154024-1-manivannan.sadhasivam@linaro.org>
+To:     "Lin, Meng-Bo" <linmengbo0689@protonmail.com>,
+        linux-kernel@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Markuss Broks <markuss.broks@gmail.com>
+References: <20230904123123.2593-1-linmengbo0689@protonmail.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -101,7 +105,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230908145329.154024-1-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20230904123123.2593-1-linmengbo0689@protonmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -113,36 +117,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8.09.2023 16:53, Manivannan Sadhasivam wrote:
-> The "hs_gear" variable is used to program the PHY settings (submode) during
-> ufs_qcom_power_up_sequence(). Currently, it is being updated every time the
-> agreed gear changes. Due to this, if the gear got downscaled before suspend
-> (runtime/system), then while resuming, the PHY settings for the lower gear
-> will be applied first and later when scaling to max gear with REINIT, the
-> PHY settings for the max gear will be applied.
+On 4.09.2023 14:35, Lin, Meng-Bo wrote:
+> From: Markuss Broks <markuss.broks@gmail.com>
 > 
-> This adds a latency while resuming and also really not needed as the PHY
-> gear settings are backwards compatible i.e., we can continue using the PHY
-> settings for max gear with lower gear speed.
+> J5 and J5X have ST LIS2HH12 accelerometer.
+> Add support for it.
 > 
-> So let's update the "hs_gear" variable _only_ when the agreed gear is
-> greater than the current one. This guarantees that the PHY settings will be
-> changed only during probe time and fatal error condition.
-> 
-> Due to this, UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH can now be skipped
-> when the PM operation is in progress.
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: 96a7141da332 ("scsi: ufs: core: Add support for reinitializing the UFS device")
-> Reported-by: Can Guo <quic_cang@quicinc.com>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Signed-off-by: Markuss Broks <markuss.broks@gmail.com>
+> Co-developed-by: Stephan Gerhold <stephan@gerhold.net>
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> Co-developed-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
+> Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
 > ---
-Would that not increase power consumption?
+We've concluded off-list that i2c-gpio is used because Samsung
+routed the sensor to pins which are not associated with QUPs.
 
-I'd presume that the PHY needs to work harder at higher gear
-settings to preserve signal integrity with more data flow.
-
-And if so, would that power consumption increase be measurable?
-Or is it so small that it doesn't matter?
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
