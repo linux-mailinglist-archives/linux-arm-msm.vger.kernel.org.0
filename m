@@ -2,74 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A727E7997C2
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Sep 2023 13:57:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B43777997C9
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Sep 2023 13:59:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345474AbjIIL5p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 9 Sep 2023 07:57:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46250 "EHLO
+        id S233940AbjIIL7q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 9 Sep 2023 07:59:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238488AbjIIL5j (ORCPT
+        with ESMTP id S232291AbjIIL7p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 9 Sep 2023 07:57:39 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABA03E46
-        for <linux-arm-msm@vger.kernel.org>; Sat,  9 Sep 2023 04:57:34 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2bcc187e0b5so49813511fa.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Sep 2023 04:57:34 -0700 (PDT)
+        Sat, 9 Sep 2023 07:59:45 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCCE3E4B
+        for <linux-arm-msm@vger.kernel.org>; Sat,  9 Sep 2023 04:59:40 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-52a23227567so3820800a12.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Sep 2023 04:59:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694260653; x=1694865453; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1694260779; x=1694865579; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=SXY2Ogd65uaG6vGfB9Owv5lVCHBu7FWUVN9yBVot574=;
-        b=iMAF7/svKuSMPNXW80xY0CEs27qRewB5VH/L2aOh6osUZI2XCzRWgfyv/A59oZ43gg
-         ISJAvZgQyKaTQYIIV7WggjyFhlPvgk/S2m46O9/H/B/HRpy4Hc5Jr+4WnX/SbBnVznQQ
-         7rxSXO5kiJy/WID6g3bVexLgR1gAbgNxMC7i933U61qfZx/tZ0HI2UxUORGUCbLX/b0X
-         V4fseqAX92JTs0xIKgPZI5b4Y2IeDy0CIvqpNGa10Z8FjLySp0O2FyHheaZiQKjZgMYd
-         YfN+luhzSnDgAIpi7Iy1bZKZlx+J6ak2a/YfylYEfrA6LEah9k0ndnbg1TPLNSOMYftY
-         s8kg==
+        bh=FPDmWuhnFdHyVJsaLOg1TlvNz7Ol1/y8/dbdTjH2H8Y=;
+        b=DeqsedZEpCig0at0HRcPaEXADG8zfpp+c/nzYmoeygAE67z6ZplRj7w6MLuPKnFq5j
+         5ebBepIbsLRT/azVi7MEYLGQtq+vMRv1VwpSXDX7SJp7cZjT1tu9TzwFwMwj9vTouBCL
+         xA6bPRyitYKA5QkCC9IR7De5q17u1YOkYeChpNcEH+5S4y3Gt1xHmvUE3U4j1N8XInPX
+         ghUWa3/EpFd3Wj9L6yFhtJn/5BgFCC+o8xmXFImABlyLPJtolGcRr5M4O/40JedrJIV+
+         JiVmuH1W25vtuakSY51VEU9G42ulkd1DLoCuZlpfKlCwGcqmIQSeI0kw0L1HwL0Z2NHm
+         TzyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694260653; x=1694865453;
+        d=1e100.net; s=20230601; t=1694260779; x=1694865579;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SXY2Ogd65uaG6vGfB9Owv5lVCHBu7FWUVN9yBVot574=;
-        b=sRq+/3j2sRjj39+e3HGvQs53kWEC2d+ulBqYKUtxAZ9pbIyqr8DOOAHv0Tydsy8o6r
-         lMhKn4Z78rjf1tTgbE7brsAcQY5lSXRBCFR1aUr9cSbdowdAb9TwWRAVzB6UXoSyjPTt
-         voM6p5LLLMhOWYokdP8FqL1vyjs7rv3v4Au81aTGCu0tkq3x30nk5/Gw4HVxRUQTxWQ+
-         UjrFoR2Q3KAICWkG4UwAS4ZL7MgHY7owGsyqVCA6MVQr+VJgbctCPokMr1w/s6cr9auV
-         28+kw4gaLJ5NQjlNgWFdL4cu7KG4MqwQCJTW8EiyndmTabsN9qhpoae3dqqZMaHvoV8s
-         nrrA==
-X-Gm-Message-State: AOJu0YwvbjZCWwd+3m3r4si7fZmHf9GXNZRTovNVKA99twKZekT9KHNT
-        xy72sD8vA0ParZL8fdqB99rgWw==
-X-Google-Smtp-Source: AGHT+IF5JjRKJTgbi0Q38L2ynI42sIu0IhjOe7usM8tslPPsBzdf1V1uose/TPDQgULwNWsg5C8G+w==
-X-Received: by 2002:a2e:914e:0:b0:2bc:f40b:574c with SMTP id q14-20020a2e914e000000b002bcf40b574cmr4288719ljg.42.1694260652968;
-        Sat, 09 Sep 2023 04:57:32 -0700 (PDT)
+        bh=FPDmWuhnFdHyVJsaLOg1TlvNz7Ol1/y8/dbdTjH2H8Y=;
+        b=Bsekmj3cmotOpiZo3zK//hNV8PCwgMo2i0MM3w8kG99T6Rub9L5ElIS5RMyHCL0TMn
+         7lvDPHF7q+U+BWhaVMaxm2TK/e5f5ByNB5w16c1H3i0gQYaY/jVsCjfSrSFN3mzi3jSd
+         DRKWqL1lptKbkz9Gz1Hc1TWIq7+1wpHaVFVbrtcFlWqtmKvw8rHZLXTTwR+6ARaxQjwE
+         1K1svfkFRw2qaur53YmJXiMq9C7bdn6HyN+TCh5bSe0SPwGsdeJrxbzpcrJAWYyzr0ce
+         cXoYZTQDTBlOhPzb9zT3af3laR6NxS1T5r1lG8cVzJRVadM/IVE0IZ/Dw7al1lG7fNAp
+         I57g==
+X-Gm-Message-State: AOJu0YzCYtXVlcN8P1NLAJUNTNoyjiKhiffXG6v+IA9WtHeAF+BXyPAh
+        6WvNytJBMXXOYg93HyWcvv/MVg==
+X-Google-Smtp-Source: AGHT+IGp5hXduhdVMpjDOYG5qVShxWo5y5Lb6fsQtfIQ+VPOoDgC4/7ca/YsGqHwI6uancdrmm8/Og==
+X-Received: by 2002:aa7:d40b:0:b0:523:a45f:419a with SMTP id z11-20020aa7d40b000000b00523a45f419amr3772231edq.41.1694260779197;
+        Sat, 09 Sep 2023 04:59:39 -0700 (PDT)
 Received: from [192.168.37.232] (178235177205.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.205])
-        by smtp.gmail.com with ESMTPSA id j9-20020a170906050900b00997e99a662bsm2213950eja.20.2023.09.09.04.57.31
+        by smtp.gmail.com with ESMTPSA id e2-20020a50ec82000000b0052a48f4065esm2109463edr.39.2023.09.09.04.59.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 09 Sep 2023 04:57:32 -0700 (PDT)
-Message-ID: <3f7a5396-c7eb-4a74-b44c-d5e7dbc954ae@linaro.org>
-Date:   Sat, 9 Sep 2023 13:57:30 +0200
+        Sat, 09 Sep 2023 04:59:38 -0700 (PDT)
+Message-ID: <6d8def60-3b88-4c05-a2c3-aba0f83314e6@linaro.org>
+Date:   Sat, 9 Sep 2023 13:59:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: sc7180: Add ADSP
+Subject: Re: [PATCH v14 4/9] soc: qcom: cpr: Move common functions to new file
 Content-Language: en-US
-To:     Nikita Travkin <nikita@trvn.ru>, Andy Gross <agross@kernel.org>,
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Niklas Cassel <nks@flawful.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org
-Cc:     David Wronek <davidwronek@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-References: <20230907-sc7180-adsp-rproc-v3-0-6515c3fbe0a3@trvn.ru>
- <20230907-sc7180-adsp-rproc-v3-4-6515c3fbe0a3@trvn.ru>
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Robert Marko <robimarko@gmail.com>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+References: <20230217-topic-cpr3h-v14-0-9fd23241493d@linaro.org>
+ <20230217-topic-cpr3h-v14-4-9fd23241493d@linaro.org>
+ <20230829151509.GN818859@hu-bjorande-lv.qualcomm.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -106,27 +118,66 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230907-sc7180-adsp-rproc-v3-4-6515c3fbe0a3@trvn.ru>
+In-Reply-To: <20230829151509.GN818859@hu-bjorande-lv.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7.09.2023 12:02, Nikita Travkin wrote:
-> sc7180 has an ADSP remoteproc that exclusively controls the audio
-> hardware on devices that use Qualcomm firmware.
+On 29.08.2023 17:15, Bjorn Andersson wrote:
+> On Mon, Aug 28, 2023 at 01:42:16PM +0200, Konrad Dybcio wrote:
+>> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+>>
 > 
-> Add it along with the relevant audio services.
+> It seems reasonable to update the subject prefix, now that things have
+> moved to the genpd subsystem.
+Right..
+
 > 
-> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> In preparation for implementing a new driver that will be handling
+>> CPRv3, CPRv4 and CPR-Hardened, format out common functions to a new
+>> file.
+>>
+>> Update cpr_get_fuses in preparation for CPR3 implementation, change
+>> parameters where necessary to not take cpr.c private data structures.
+>>
+>> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+>> [Konrad: rebase, apply review comments, improve msg, split]
+>> Tested-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>  drivers/genpd/qcom/Makefile     |   2 +-
+>>  drivers/genpd/qcom/cpr-common.c | 350 ++++++++++++++++++++++++++++++++++++
+>>  drivers/genpd/qcom/cpr-common.h | 103 +++++++++++
+>>  drivers/genpd/qcom/cpr.c        | 384 +++-------------------------------------
+>>  4 files changed, 475 insertions(+), 364 deletions(-)
+>>
+>> diff --git a/drivers/genpd/qcom/Makefile b/drivers/genpd/qcom/Makefile
+>> index 403dfc5af095..b28c8d9128c4 100644
+>> --- a/drivers/genpd/qcom/Makefile
+>> +++ b/drivers/genpd/qcom/Makefile
+>> @@ -1,4 +1,4 @@
+>>  # SPDX-License-Identifier: GPL-2.0
+>> -obj-$(CONFIG_QCOM_CPR)		+= cpr.o
+>> +obj-$(CONFIG_QCOM_CPR)		+= cpr-common.o cpr.o
+> 
+> Is there a reason for this to be split in two drivers? Would it make
+> sense to rewrite this such that the result ends up as a single .ko?
+"meh"
+
+These are separate major revisions of the hardware that achieves the
+same result but requires rather different handling.
 
 Konrad
+> 
+> Then you shouldn't need to EXPORT_SYMBOL between the two parts of the
+> same "driver".
+> 
+> Regards,
+> Bjorn
