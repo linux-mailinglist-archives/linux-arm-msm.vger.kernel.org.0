@@ -2,133 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C8851799B17
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Sep 2023 22:21:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F1408799E76
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Sep 2023 15:21:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241226AbjIIUV4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 9 Sep 2023 16:21:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35276 "EHLO
+        id S237398AbjIJNVv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 10 Sep 2023 09:21:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230089AbjIIUVz (ORCPT
+        with ESMTP id S233725AbjIJNVv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 9 Sep 2023 16:21:55 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09058CF8;
-        Sat,  9 Sep 2023 13:21:21 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 389KGuCQ005668;
-        Sat, 9 Sep 2023 20:19:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=3JWMLPTJbjLRcx5p0jk8GvPTqA1zsJkaIySdfwFynTU=;
- b=Y6bNhA4bFceETlryS6NeID8zpEqXjCWw2UXEokGzdrcKqgC1af0OnmTsbwcRlOPz8SZb
- cRfbqKX6otc16pLC9CYJxKON+NMaXQM25IWcDLK+IDOCm0wMrm/FvCxxnA3amCPwLRPv
- sXFrdRl3ZLXLpjCVEDD37f0M7mPxqhJLh9GJ6X0j7Ub6P1/rIPow1ZLpceqD2wlYMHQe
- yqNn6XLBxsRuQpNT48idkobluWja6Pkcp/yK2M5XoQc0t5OeoUP+La6ObjHtVwj6JVuJ
- /Igs58q60rghBLwrc6c5KdGQHvqYHc/bSAER3t49IB+Vq+SGecbsUkSc4YV3ZFy5zXq/ Hw== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t0fqjh08b-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 09 Sep 2023 20:19:18 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 389KJHiE008405
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 9 Sep 2023 20:19:17 GMT
-Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Sat, 9 Sep 2023 13:19:06 -0700
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-To:     <corbet@lwn.net>, <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <keescook@chromium.org>, <tony.luck@intel.com>,
-        <gpiccoli@igalia.com>, <mathieu.poirier@linaro.org>,
-        <catalin.marinas@arm.com>, <will@kernel.org>,
-        <linus.walleij@linaro.org>, <andy.shevchenko@gmail.com>,
-        <vigneshr@ti.com>, <nm@ti.com>, <matthias.bgg@gmail.com>,
-        <kgene@kernel.org>, <alim.akhtar@samsung.com>,
-        <bmasney@redhat.com>, <quic_tsoni@quicinc.com>
-CC:     <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-gpio@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>, <kernel@quicinc.com>,
-        <quic_mojha@quicinc.com>
-Subject: [PATCH v5 17/17] firmware: qcom_scm: Add multiple download mode support
-Date:   Sun, 10 Sep 2023 01:46:18 +0530
-Message-ID: <1694290578-17733-18-git-send-email-quic_mojha@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1694290578-17733-1-git-send-email-quic_mojha@quicinc.com>
-References: <1694290578-17733-1-git-send-email-quic_mojha@quicinc.com>
+        Sun, 10 Sep 2023 09:21:51 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCC1BCD1;
+        Sun, 10 Sep 2023 06:21:46 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-31fa15f4cc6so267364f8f.2;
+        Sun, 10 Sep 2023 06:21:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1694352105; x=1694956905; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=x3yiYILhEuCNUQeqPmsTOJF5pdnP1MyjjDZaseeFDik=;
+        b=Qfsa0ZJkXvfx2fWGbnqj2cvUSoJE+9XvTFJVaX4o3MLsI7RoRclfuWx8bgaBWcM2nt
+         JR/R6Np5tRfM52pCxuYbz/iBQbTF2syYME2My4SABEzgB/bB8hbi6GI702h2qComZZdh
+         rNASCD5EyP5UmSze0t/yJ06lD4Z8fdqYf/yoOGj9ui+82Ipw3uAQTjij8qY+HQpVqWpA
+         dAtr8jjV/N5F4Sd/KW4Dl9ZPWiiVGG8mdKXN9gw3+mNCxoPl1khTtgH4i2qq+qRTVwM3
+         60cc+lcmz1JYs4fR8Q4w8Gp6R9jhL7vu+uHi4K/SIdvqQRjt5sT0CtEXKxTgzAdyicph
+         ipfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694352105; x=1694956905;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=x3yiYILhEuCNUQeqPmsTOJF5pdnP1MyjjDZaseeFDik=;
+        b=FcQoc/2CuCo15IkXe8lkrjbVzLthOqyu4qDnyIc9osOdUDqjm7dR7nUB0k6DOavXsG
+         +KHIDxDoFCl6VO5k8yKhC43ZTAL1CNvi70GmrF82DaAjMkavZImlQY+7Cwx7/qT0w8aq
+         Tzaxnrc/E+6Elu9nJRZoN5hR8Bt1Ci7bXkIS/08cNTPWQYetoIhngFPSXRebZwfufJ3s
+         lvfgGKkcuN2CIkWZ4S65cXs4JDP+/jyq3cyYTgkoN6L4bUXvGRHvHiqZH4OX0jYk01+0
+         cjJY5/WNcaCnmyNQ0xShIcL5LM9JQIooNsIDhJQ6nsEwbFpd6RmguKrHfnyaiWntMZev
+         X+Iw==
+X-Gm-Message-State: AOJu0YxgbKU5LV1AKAedFyr/53CewILvfgkp3V1ujm4oJboRIQqivJok
+        gP2keOb/xUfIPHQmUICe1Q+vGenThNMKOLiw
+X-Google-Smtp-Source: AGHT+IHBW5u0oYJcRGEvrYuxS4KJf+ofoX9BINJgRqjlcAtgbTBDPybxSD7j2EjBbYgPCuTfVGTdFA==
+X-Received: by 2002:a5d:4809:0:b0:317:73d3:441a with SMTP id l9-20020a5d4809000000b0031773d3441amr5628694wrq.46.1694352104814;
+        Sun, 10 Sep 2023 06:21:44 -0700 (PDT)
+Received: from jernej-laptop.localnet (82-149-12-148.dynamic.telemach.net. [82.149.12.148])
+        by smtp.gmail.com with ESMTPSA id d22-20020aa7ce16000000b005233609e39dsm3358895edv.30.2023.09.10.06.21.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 10 Sep 2023 06:21:44 -0700 (PDT)
+From:   Jernej =?utf-8?B?xaBrcmFiZWM=?= <jernej.skrabec@gmail.com>
+To:     mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
+        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
+        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
+        hverkuil-cisco@xs4all.nl, nicolas.dufresne@collabora.com,
+        Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
+        kernel@collabora.com,
+        Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Subject: Re: [PATCH v6 14/18] media: verisilicon: vp9: Use destination buffer height
+ to compute chroma offset
+Date:   Sun, 10 Sep 2023 15:21:41 +0200
+Message-ID: <4856958.31r3eYUQgx@jernej-laptop>
+In-Reply-To: <20230901124414.48497-15-benjamin.gaignard@collabora.com>
+References: <20230901124414.48497-1-benjamin.gaignard@collabora.com>
+ <20230901124414.48497-15-benjamin.gaignard@collabora.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 5XJZ5p6iudJkReF4dHFFDUj6Rvc95F_c
-X-Proofpoint-ORIG-GUID: 5XJZ5p6iudJkReF4dHFFDUj6Rvc95F_c
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-09_19,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
- spamscore=0 priorityscore=1501 malwarescore=0 clxscore=1015 mlxscore=0
- suspectscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
- definitions=main-2309090187
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently, scm driver only supports full dump when download
-mode is selected. Add support to enable minidump as well as
-enable it along with fulldump.
+Hi Benjamin!
 
-Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
----
- drivers/firmware/qcom_scm.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+Dne petek, 01. september 2023 ob 14:44:10 CEST je Benjamin Gaignard 
+napisal(a):
+> Source and destination buffer height may not be the same because
+> alignment constraint are different.
+> Use destination height to compute chroma offset because we target
+> this buffer as hardware output.
+> 
+> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+> Fixes: e2da465455ce ("media: hantro: Support VP9 on the G2 core")
+> ---
+>  drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
+> 
+> diff --git a/drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c
+> b/drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c index
+> 6db1c32fce4d..1f3f5e7ce978 100644
+> --- a/drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c
+> +++ b/drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c
+> @@ -93,9 +93,7 @@ static int start_prepare_run(struct hantro_ctx *ctx, const
+> struct v4l2_ctrl_vp9_ static size_t chroma_offset(const struct hantro_ctx
+> *ctx,
+>  			    const struct v4l2_ctrl_vp9_frame 
+*dec_params)
+>  {
+> -	int bytes_per_pixel = dec_params->bit_depth == 8 ? 1 : 2;
+> -
+> -	return ctx->src_fmt.width * ctx->src_fmt.height * bytes_per_pixel;
+> +	return ctx->dst_fmt.width * ctx->dst_fmt.height * ctx->bit_depth / 
+8;
 
-diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-index 689bf882cb69..9faf0431d47a 100644
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -34,6 +34,8 @@ static u32 download_mode;
- 
- #define QCOM_DLOAD_MASK		GENMASK(5, 4)
- #define QCOM_DLOAD_FULLDUMP	0x1
-+#define QCOM_DLOAD_MINIDUMP	0x2
-+#define QCOM_DLOAD_BOTHDUMP	(QCOM_DLOAD_FULLDUMP | QCOM_DLOAD_MINIDUMP)
- #define QCOM_DLOAD_NODUMP	0x0
- 
- struct qcom_scm {
-@@ -86,6 +88,8 @@ static const char * const qcom_scm_convention_names[] = {
- static const char * const download_mode_name[] = {
- 	[QCOM_DLOAD_NODUMP]	= "off",
- 	[QCOM_DLOAD_FULLDUMP]	= "full",
-+	[QCOM_DLOAD_MINIDUMP]	= "mini",
-+	[QCOM_DLOAD_BOTHDUMP]	= "full,mini",
- };
- 
- static struct qcom_scm *__scm;
-@@ -1470,7 +1474,7 @@ static const struct kernel_param_ops download_mode_param_ops = {
- 
- module_param_cb(download_mode, &download_mode_param_ops, NULL, 0644);
- MODULE_PARM_DESC(download_mode,
--		"download mode: off/full are acceptable values");
-+		"download mode: off/full/mini/full,mini are acceptable values");
- 
- static int qcom_scm_probe(struct platform_device *pdev)
- {
--- 
-2.7.4
+Commit message doesn't mention bit_depth change at all. While I think there is 
+no difference between dec_params->bit_depth and ctx->bit_depth, you shouldn't 
+just use ordinary division. If bit_depth is 10, it will be rounded down. And 
+if you decide to use bit_depth from context, please remove dec_params 
+argument.
+
+Best regards,
+Jernej
+
+>  }
+> 
+>  static size_t mv_offset(const struct hantro_ctx *ctx,
+
+
+
 
