@@ -2,137 +2,261 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B4AC979BF14
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:18:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FCAC79BA37
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:11:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242776AbjIKVKr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:10:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46920 "EHLO
+        id S241859AbjIKVK2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:10:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236351AbjIKK0o (ORCPT
+        with ESMTP id S236449AbjIKKkr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 06:26:44 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78C73E5F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 03:26:38 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-501bd164fbfso6880500e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 03:26:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694427996; x=1695032796; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7CTbKLPqOJ3LO2uQGHfxjxBQ5iOJncC8YusjNS/BUJQ=;
-        b=nPtxzPxTz0nP83MGnHguQ6BaDgCz1NvMxQK7SFcFxvVV9fhhkWFfqPbLhG+w8Xs53f
-         ZMti+zanM7pe/aHLV4Ztj/a/LPZDQP8ZBSrre34WZISp36s89SXhWfZDBydZ2vl8iFpI
-         cNgxnzzwa8MmbHlNNZZgj8diXZv5UoZPH6/0tEvnc3Jqx3jzEN57Ditry7q3Q2pXf2xb
-         RA8GBDp1T2NlFONQ6Z/di1hSdtMi426YfjCJrgUOpgeF8XOhVtU/fwWNLMX5UzEKBp/q
-         qTbRvihhHgBicXPUm/Qef3h30qVvj4djOhvNVD1w3zmIKEh1yufjnQ6T7/rk9PyvWwJW
-         GDZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694427996; x=1695032796;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7CTbKLPqOJ3LO2uQGHfxjxBQ5iOJncC8YusjNS/BUJQ=;
-        b=XWOqgtVKBNFUF6iXIaxb/q5wU3dTAvJO9VBzXg0E6mQM2YyVQS3bwBZZbU5RnF16cq
-         I8mlEptPIssF8Cyjo2TL6tasm8l0hsOTmw4uMtpgLDR77L+an/P22Q+TwdSGPUVYZrgO
-         FImpu1UF7K7uLvSr1w+86trGhjZ3D60UUDuVRujj9zRorLOoM9LBAT0Lulw/dMObAy4b
-         n/fuGX5yB2/UmJu27kSQWt9CKXMrDfgjxpAL/l/TSbRrK/+7p8oujYAU1WvOcHMZnpCq
-         TsDjKsEzRmv5v/28CNkCe2a/iTcZkzHDl13Hk4M+CZo3KxrLHG6wGiMgLJmgkbdRBJJO
-         Okdg==
-X-Gm-Message-State: AOJu0YzB90vVxZjaNki1Tv6UDsbKWAl56vFwqoEglvp5PkflVYkBD1EN
-        4ivt9eji4sqsWf9Vl2/eop8xBw==
-X-Google-Smtp-Source: AGHT+IHEosmaANX80WYSfQ29dTc6ZOPQxIlb/TKTP69lc8FWGmSbCUFrBjRJ+YpMxDso26Gq++rRVA==
-X-Received: by 2002:a05:6512:e9a:b0:4fb:77d6:89c3 with SMTP id bi26-20020a0565120e9a00b004fb77d689c3mr9327144lfb.12.1694427996563;
-        Mon, 11 Sep 2023 03:26:36 -0700 (PDT)
-Received: from [192.168.37.232] (178235177061.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.61])
-        by smtp.gmail.com with ESMTPSA id w13-20020a056402128d00b005227e53cec2sm4423251edv.50.2023.09.11.03.26.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Sep 2023 03:26:36 -0700 (PDT)
-Message-ID: <39b0f6b8-06bc-438e-882a-84337583e25e@linaro.org>
-Date:   Mon, 11 Sep 2023 12:26:29 +0200
+        Mon, 11 Sep 2023 06:40:47 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A75DCDC;
+        Mon, 11 Sep 2023 03:40:42 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38B5RULT032426;
+        Mon, 11 Sep 2023 10:40:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=XTH8tOm5rLNzgWNIAyk4Cvpm1A3q+IGUDv73zCXL3rc=;
+ b=M2wv2HeWB8TzpZWLUUUNZjywCOC2wlqPA08wS8I0y5PEk9C3HsnI5jEXiUU6FkCEnd6J
+ li9R7T1x63C11UZ25x6AQJf7692t86fgeeiBCmzWQccC3MCfiA2zCslNuKlvCj+E5Vdo
+ 2MO1BoBpvLBL/ngaOBNfCnCBVGfwDURn2jVJ+0o6I8sizIeHxFVQkHPIp+X3UCoglwyg
+ Goc+/x1XmaC9o7Grdz+KPwT4vbW+bk15MgSyiGWaG2PWVPQrD27jLESk8s5LuUXRTOf9
+ 8PN9PR06CIEJD6GzrgY7MhIfGoLCv1v4DDt0rGpFfsP27FX+S0Ydk3HTRqW8OYKxPQfH lQ== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t0gx9uhjh-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 11 Sep 2023 10:40:04 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38BAe30e027349
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 11 Sep 2023 10:40:04 GMT
+Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 11 Sep
+ 2023 03:39:50 -0700
+Message-ID: <c52e90e4-cab0-13b7-9658-1f730de6cf64@quicinc.com>
+Date:   Mon, 11 Sep 2023 16:09:47 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RESEND 6/7] clk: qcom: apss-ipq6018: add the GPLL0 clock
- also as clock provider
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v5 00/17] Add Qualcomm Minidump kernel driver related
+ support
 Content-Language: en-US
-To:     Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-        Anusha Rao <quic_anusha@quicinc.com>,
-        Devi Priya <quic_devipriy@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-clk@vger.kernel.org
-References: <20230904-gpll_cleanup-v1-0-de2c448f1188@quicinc.com>
- <20230904-gpll_cleanup-v1-6-de2c448f1188@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230904-gpll_cleanup-v1-6-de2c448f1188@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Bagas Sanjaya <bagasdotme@gmail.com>, <corbet@lwn.net>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <keescook@chromium.org>, <tony.luck@intel.com>,
+        <gpiccoli@igalia.com>, <mathieu.poirier@linaro.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <linus.walleij@linaro.org>, <andy.shevchenko@gmail.com>,
+        <vigneshr@ti.com>, <nm@ti.com>, <matthias.bgg@gmail.com>,
+        <kgene@kernel.org>, <alim.akhtar@samsung.com>,
+        <bmasney@redhat.com>, <quic_tsoni@quicinc.com>
+CC:     <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-gpio@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
+        <linux-samsung-soc@vger.kernel.org>, <kernel@quicinc.com>
+References: <1694290578-17733-1-git-send-email-quic_mojha@quicinc.com>
+ <ZP7VPfVtvbmB5aQf@debian.me>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <ZP7VPfVtvbmB5aQf@debian.me>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: PE9kifjdXVLLXe5Ps01fwbLHz_EBRrAo
+X-Proofpoint-GUID: PE9kifjdXVLLXe5Ps01fwbLHz_EBRrAo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-11_06,2023-09-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
+ mlxscore=0 lowpriorityscore=0 bulkscore=0 mlxlogscore=999 malwarescore=0
+ suspectscore=0 adultscore=0 priorityscore=1501 impostorscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309110097
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6.09.2023 06:56, Kathiravan Thirumoorthy wrote:
-> While the kernel is booting up, APSS PLL will be running at 800MHz with
-> GPLL0 as source. Once the cpufreq driver is available, APSS PLL will be
-> configured and select the rate based on the opp table and the source will
-> be changed to APSS_PLL_EARLY.
-> 
-> Without this patch, CPU Freq driver reports that CPU is running at 24MHz
-> instead of the 800MHz.
-> 
-> Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Konrad
+
+On 9/11/2023 2:22 PM, Bagas Sanjaya wrote:
+> On Sun, Sep 10, 2023 at 01:46:01AM +0530, Mukesh Ojha wrote:
+>> Hi All,
+>>
+>> This is to continuation from the conversation happened at v4
+>>
+>> https://lore.kernel.org/lkml/632c5b97-4a91-c3e8-1e6c-33d6c4f6454f@quicinc.com/
+>>
+>> https://lore.kernel.org/lkml/695133e6-105f-de2a-5559-555cea0a0462@quicinc.com/
+>>
+>> We have put abstract on LPC on this topic as well as initiated a mail thread
+>> with other SoC vendors but did not get much traction on it.
+>>
+>> https://lore.kernel.org/lkml/0199db00-1b1d-0c63-58ff-03efae02cb21@quicinc.com/
+>>
+>> We explored most of possiblity present in kernel to address this issue[1] but
+>> solution like kdump/fadump does not seems safe/secure/performant from our
+>> perspective.
+>>
+>> Hence, with this series we tried to make the minidump kernel driver, simple
+>> and tied with pstore frontends, so that it collects the present available
+>> frontends data like dmesg, ftrace, pmsg, ftrace., Also, we will be working
+>> towards enhancing generic pstore to capture more debug data which will be
+>> helpful for first hand of debugging that can benefit both other pstore users
+>> as well as us as minidump users.
+>>
+>> One of the proposal made here,
+>> https://lore.kernel.org/lkml/1683561060-2197-1-git-send-email-quic_mojha@quicinc.com/
+>>
+>> Looking forward for your comments.
+>>
+>> Thanks,
+>> Mukesh
+>>
+>> [1]
+>> Minidump is a best effort mechanism to collect useful and predefined data
+>> for first level of debugging on end user devices running on Qualcomm SoCs.
+>> It is built on the premise that System on Chip (SoC) or subsystem part of
+>> SoC crashes, due to a range of hardware and software bugs. Hence, the
+>> ability to collect accurate data is only a best-effort. The data collected
+>> could be invalid or corrupted, data collection itself could fail, and so on.
+>>
+>> Qualcomm devices in engineering mode provides a mechanism for generating
+>> full system ramdumps for post mortem debugging. But in some cases it's
+>> however not feasible to capture the entire content of RAM. The minidump
+>> mechanism provides the means for selecting which snippets should be
+>> included in the ramdump.
+>>
+>> The core of SMEM based minidump feature is part of Qualcomm's boot
+>> firmware code. It initializes shared memory (SMEM), which is a part of
+>> DDR and allocates a small section of SMEM to minidump table i.e also
+>> called global table of content (G-ToC). Each subsystem (APSS, ADSP, ...)
+>> has their own table of segments to be included in the minidump and all
+>> get their reference from G-ToC. Each segment/region has some details
+>> like name, physical address and it's size etc. and it could be anywhere
+>> scattered in the DDR.
+>>
+>> Existing upstream Qualcomm remoteproc driver[1] already supports SMEM
+>> based minidump feature for remoteproc instances like ADSP, MODEM, ...
+>> where predefined selective segments of subsystem region can be dumped
+>> as part of coredump collection which generates smaller size artifacts
+>> compared to complete coredump of subsystem on crash.
+>>
+>> [1]
+>> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/remoteproc/qcom_common.c#n142
+>>
+>> In addition to managing and querying the APSS minidump description,
+>> the Linux driver maintains a ELF header in a segment. This segment
+>> gets updated with section/program header whenever a new entry gets
+>> registered.
+>>
+>> Changes in v5:
+>>   - On suggestion from Pavan.k, to have single function call for minidump collection
+>>     from remoteproc driver, separated the logic to have separate minidump file called
+>>     qcom_rproc_minidump.c and also renamed the function from qcom_minidump() to
+>>     qcom_rproc_minidump(); however, dropped his suggestion about rework on lazy deletion
+>>     during region unregister in this series, will pursue it in next series.
+>>
+>>   - To simplify the minidump driver, removed the complication for frontend and different
+>>     backend from Greg suggestion, will pursue this once main driver gets mainlined.
+>>
+>>   - Move the dynamic ramoops region allocation from Device tree approach to command line
+>>     approch with the introduction command line parsing and memblock reservation during
+>>     early boot up; Not added documentation about it yet, will add if it gets positive
+>>     response.
+>>
+>>   - Exporting linux banner from kernel to make minidump build also as module, however,
+>>     minidump is a debug module and should be kernel built to get most debug information
+>>     from kernel.
+>>
+>>   - Tried to address comments given on dload patch series.
+>>
+>> Changes in v4: https://lore.kernel.org/lkml/1687955688-20809-1-git-send-email-quic_mojha@quicinc.com/
+>>   - Redesigned the driver and divided the driver into front end and backend (smem) so
+>>     that any new backend can be attached easily to avoid code duplication.
+>>   - Patch reordering as per the driver and subsystem to easier review of the code.
+>>   - Removed minidump specific code from remoteproc to minidump smem based driver.
+>>   - Enabled the all the driver as modules.
+>>   - Address comments made on documentation and yaml and Device tree file [Krzysztof/Konrad]
+>>   - Address comments made qcom_pstore_minidump driver and given its Device tree
+>>     same set of properties as ramoops. [Luca/Kees]
+>>   - Added patch for MAINTAINER file.
+>>   - Include defconfig change as one patch as per [Krzysztof] suggestion.
+>>   - Tried to remove the redundant file scope variables from the module as per [Krzysztof] suggestion.
+>>   - Addressed comments made on dload mode patch v6 version
+>>     https://lore.kernel.org/lkml/1680076012-10785-1-git-send-email-quic_mojha@quicinc.com/
+>>
+>> Changes in v3: https://lore.kernel.org/lkml/1683133352-10046-1-git-send-email-quic_mojha@quicinc.com/
+>>   - Addressed most of the comments by Srini on v2 and refactored the minidump driver.
+>>      - Added platform device support
+>>      - Unregister region support.
+>>   - Added update region for clients.
+>>   - Added pending region support.
+>>   - Modified the documentation guide accordingly.
+>>   - Added qcom_pstore_ramdump client driver which happen to add ramoops platform
+>>     device and also registers ramoops region with minidump.
+>>   - Added download mode patch series with this minidump series.
+>>      https://lore.kernel.org/lkml/1680076012-10785-1-git-send-email-quic_mojha@quicinc.com/
+>>
+>> Changes in v2: https://lore.kernel.org/lkml/1679491817-2498-1-git-send-email-quic_mojha@quicinc.com/
+>>   - Addressed review comment made by [quic_tsoni/bmasney] to add documentation.
+>>   - Addressed comments made by [srinivas.kandagatla]
+>>   - Dropped pstore 6/6 from the last series, till i get conclusion to get pstore
+>>     region in minidump.
+>>   - Fixed issue reported by kernel test robot.
+>>
+>> Changes in v1: https://lore.kernel.org/lkml/1676978713-7394-1-git-send-email-quic_mojha@quicinc.com/
+>>
+>> Testing of the patches has been done on sm8450 target after enabling config like
+>> CONFIG_PSTORE_RAM and CONFIG_PSTORE_CONSOLE and once the device boots up.
+>>
+>>   echo mini > /sys/module/qcom_scm/parameters/download_mode
+>>
+>> Try crashing it via devmem2 0xf11c000(this is known to create xpu violation and
+>> and put the device in download mode) on command prompt.
+>>
+>> Default storage type is set to via USB, so minidump would be downloaded with the
+>> help of x86_64 machine (running PCAT tool) attached to Qualcomm device which has
+>> backed minidump boot firmware support.
+>>
+>> This will make the device go to download mode and collect the minidump on to the
+>> attached x86 machine running the Qualcomm PCAT tool(This comes as part Qualcomm
+>> package manager kit).
+>>
+>> After that we will see a bunch of predefined registered region as binary blobs files
+>> starts with md_* downloaded on the x86 machine on given location in PCAT tool from
+>> the target device, more about this can be found in qualcomm minidump guide patch.
+>>
+> 
+> I tried to apply this series on top of 535a265d7f0dd50 (as suggested by
+> `b4 am -l -g`), but it conflicts on patch [04/17]. Please specify the
+> exact base commit or another series for which this series is based on.
+
+Apologies !
+I just realized, it was 6.5-rc7, but let me rebase version of the series;
+
+Sorry, for all the reviewed done so far, i will definitely take care of 
+them or reply.
+
+-Mukesh
+> 
+> Thanks.
+> 
