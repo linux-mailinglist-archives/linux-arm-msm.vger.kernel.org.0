@@ -2,137 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 12C7579C3C9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 05:12:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE3E079C33A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 04:44:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241808AbjILDMl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 23:12:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50806 "EHLO
+        id S239650AbjILCoi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 22:44:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241809AbjILDMd (ORCPT
+        with ESMTP id S238801AbjILCoZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 23:12:33 -0400
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51B8189857
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 15:35:48 -0700 (PDT)
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-501bef6e0d3so8234480e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 15:35:48 -0700 (PDT)
+        Mon, 11 Sep 2023 22:44:25 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C9521AD852
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 19:09:00 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-31f615afa52so5383953f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 19:09:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694471596; x=1695076396; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=n9+eoOqI90b5IJoojeBPaTvWJ+0uXFVbfQP0VbvcLzI=;
-        b=pdris6o4tvJXS2D0dvprjtqTInNtv3BZDjG4wVo5IoK4N0T3MuiPvgjbSVwF6KJLSd
-         uKvOkegL5brlpZqpP5j6jXx/YTGbWSX7vK+OXs/JOECMrYe60CVzMP4dWwFdHeB9k2Jh
-         6VmxgTlKH4iRQRfLDPJjUTpsRwS3Df0wVg9SnadmGH7g2HgrJYoztHpBYbIuN6SD3Osh
-         o3bVv6Q4g6G3fRjuvaYDzJNVO0oeMRCnPSjseqA4i2OJrRRj72mI9lWe2EU98BQDzs4D
-         lpBpQzPDWtwwWKnU4y6pyFNMu4s2wJqnQJ2Qv5vfcJ2HVCffCEtuQMi+d/LPMC3Kg5R3
-         S3zA==
+        d=linaro.org; s=google; t=1694484539; x=1695089339; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=8J6OJLL6yO9801GDZc9YLhZ4do8H4JQeCks1RXRX5uo=;
+        b=nk1vUQau1S72JX/M3dF6XGNBDAkct/Gw/04fcI6nZi/B7U5Jb+DrcaSHWYcDgqePjj
+         6wq5aomZntIfZKgZUFMO+qJtUn68zVCfj09G+c04OVumutyOyygNCvDCq1VWgUlCWYL6
+         Xrv83kE0MxMvGC1S6jFOZ98HQuKrTJkXN6rYFNPT3WLPDH/NfuigoLICkK2P3bMbWnwe
+         nRsUmA1HpfY7Wv35ueGMNYkbuz19S8J0s/8XNcyFbcekZ5Y7VcraRo8O65hNxPJbprJb
+         aa7U5mhA2g1pnCTH4bydT/hJ12NiB/QTo7K2QqXu4DI5TVVHty04xDlwHpkymCA1QRK3
+         AgxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694471596; x=1695076396;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=n9+eoOqI90b5IJoojeBPaTvWJ+0uXFVbfQP0VbvcLzI=;
-        b=DFno/vGzydUQE2LGummRk+xi25kYk77m7NU6JyheAkIsr0tPtxnakwxubO9aS2HhD7
-         8WSbsT/X1Vv3E3EeH/U5mxJuFjoBYwZAuQOGvnBJQiqSqZdf9bK+cnpjx4Eg/Kmdwxbv
-         OT45FrCGqDEquaWV1S9/AZk+6vLARfm24m3lY3wgHw7jbwhxz2bG6mJUVYSCBm6yD++Y
-         Y326luZCValLvbB1a8kSX9ytFMJDhSW43L22lvXxlT6OPKeJp4uGmjFZ8wuxIphCq0ug
-         BG+FUYn494loxG4s0HJO32wYjlNTWeGG36Qbv5xVL9i85c1343fXT93v+zUfTqz9ktpo
-         tP9Q==
-X-Gm-Message-State: AOJu0YyacoKja6n2+EZ4ZzwGW4UOrBdeq5Nog9Di4BgGE5wU1GYElP+U
-        F4NgACyUtTKVoQguPiyoZNL1SDHpIu7reZ3naTSxMA==
-X-Google-Smtp-Source: AGHT+IGBNgSqZ3PSFJY/fSPj/T1VCyEcoWAFXn3cHPB0W49tYwur5uJq49LDYKVIjCN9Ln6+GBh8Sw==
-X-Received: by 2002:ac2:4db8:0:b0:500:b2c9:7da9 with SMTP id h24-20020ac24db8000000b00500b2c97da9mr8667990lfe.45.1694467270569;
-        Mon, 11 Sep 2023 14:21:10 -0700 (PDT)
-Received: from [192.168.37.232] (178235177248.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.248])
-        by smtp.gmail.com with ESMTPSA id s21-20020a170906961500b009937dbabbd5sm5841046ejx.220.2023.09.11.14.21.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Sep 2023 14:21:10 -0700 (PDT)
-Message-ID: <a59aea0b-033d-4862-9d49-8d276d96e970@linaro.org>
-Date:   Mon, 11 Sep 2023 23:21:08 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] phy: qcom-qmp-combo: use v6 registers in v6 regs
- layout
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        d=1e100.net; s=20230601; t=1694484539; x=1695089339;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8J6OJLL6yO9801GDZc9YLhZ4do8H4JQeCks1RXRX5uo=;
+        b=w8HwT4HwCVMB8otwAQaxSFk/61K7NqwUGcK8browjIFN+USQcfFDWBVOOEtzlSM460
+         LLOL6FvhnsBorhJJed4Tqq0d2qHu4ZIpOyIpmkQ2VkR+SltAHLepE8FjOJIFPFgYFPlM
+         zPR5uNvxYb/VNrSknHoZ9bgclZd11V30f99P2RTRl4qrAUa40CBz+QarFObjMbU0ypMG
+         +W5aVkjqlyvlh7hwYiMwVJ7qADRUQRjNbqPU1QbhNbMBVkLDHH2DU6SvB1NAzUUQHdz0
+         TvKqxEBlirXQ1mFKTrHfo9EvqyeSh7MhR2FG/ny15SBwPTb2ciA7DyO8qa9CmRSIfirw
+         f89A==
+X-Gm-Message-State: AOJu0Yx9jc5BoBFqNOnrrAAkkvUO7tMDWMP82b1gBQY0LBrdfJGqW1LI
+        4oqE7q6SunSpy1yvSiIiFtMdDvbDaXrYJMj1TE8=
+X-Google-Smtp-Source: AGHT+IGJG8+w5mQL4Vxq5yngRkpLjVobswZYDr4KahW5nJJpi2M2Aw64a/Svk/t9loqH66PWcO2JlA==
+X-Received: by 2002:a05:6512:281c:b0:4fe:ecd:4950 with SMTP id cf28-20020a056512281c00b004fe0ecd4950mr10973430lfb.1.1694468722444;
+        Mon, 11 Sep 2023 14:45:22 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id b5-20020a0565120b8500b004ff9bfda9d6sm1168804lfv.212.2023.09.11.14.45.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Sep 2023 14:45:21 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-References: <20230911203842.778411-1-dmitry.baryshkov@linaro.org>
- <20230911203842.778411-4-dmitry.baryshkov@linaro.org>
- <2e78c237-d321-4b85-96d5-0568f1a46601@linaro.org>
- <CAA8EJpqNbykWGEGOKMDHK3OehV5ezsA8T4HcX8kadefBdSmUkg@mail.gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <CAA8EJpqNbykWGEGOKMDHK3OehV5ezsA8T4HcX8kadefBdSmUkg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
-X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
-        lindbergh.monkeyblade.net
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v4 0/9] drm/msm/dpu: simplify DPU sub-blocks info
+Date:   Tue, 12 Sep 2023 00:45:12 +0300
+Message-Id: <20230911214521.787453-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11.09.2023 23:17, Dmitry Baryshkov wrote:
-> On Mon, 11 Sept 2023 at 23:42, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->> On 11.09.2023 22:38, Dmitry Baryshkov wrote:
->>> Make sure that we use only v6 registers in qmp_v6_usb3phy_regs_layout.
->>>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->> [...]
->>
->>>  /* Only for QMP V6 PHY - USB3 have different offsets than V5 */
->> This comment becomes invalid
-> 
-> This actually rises the question, why was it called v6 in the first place?
-if "it" == the qmpphy "v6"
-	return "perhaps v5 was mostly ok but needed evolution";
+The handling code also usually knows, which sub-block it is now looking
+at. Drop unused 'id' field and arguments and merge some of sub-block
+declarations.
 
-Konrad
-> 
+While we are at it, also fix all VIG subblocks to contain correct scaler
+block version and drop the becoming unused QSEED-related feature bits.
+
+Changes since v3:
+- Proprely describe dpu_scaler_blk::version field as the register value
+  (Marijn)
+- Picked up Marijn's prior art patches (sorry, missed them while
+  preparing v3) (Marijn)
+
+Changes since v2:
+- Reworked the VIG SBLK definitions to set the scaler version (Marijn,
+  Abhinav)
+- Rebased the reset of the patches on top of this (intrusive) change.
+- Folded QSEED3LITE and QSEED4 feature bits into QSEED3
+
+Changes since v1:
+- Dropped the patch dropping 'name' field (Abhinav).
+- Deduplicate equivalent SBLK definitions.
+- Dropped the dpu_csc_blk and dpu_dsc_blk merge.
+
+Dmitry Baryshkov (7):
+  drm/msm/dpu: populate SSPP scaler block version
+  drm/msm/dpu: drop the `id' field from DPU_HW_SUBBLK_INFO
+  drm/msm/dpu: drop the `smart_dma_priority' field from struct
+    dpu_sspp_sub_blks
+  drm/msm/dpu: deduplicate some (most) of SSPP sub-blocks
+  drm/msm/dpu: drop DPU_HW_SUBBLK_INFO macro
+  drm/msm/dpu: merge DPU_SSPP_SCALER_QSEED3, QSEED3LITE, QSEED4
+  drm/msm/gpu: drop duplicating VIG feature masks
+
+Marijn Suijten (2):
+  drm/msm/dpu: Drop unused get_scaler_ver callback from SSPP
+  drm/msm/dpu: Drop unused qseed_type from catalog dpu_caps
+
+ .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   |  17 +-
+ .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    |  17 +-
+ .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    |  17 +-
+ .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |  17 +-
+ .../msm/disp/dpu1/catalog/dpu_5_4_sm6125.h    |   8 +-
+ .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    |  25 ++-
+ .../msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    |  11 +-
+ .../msm/disp/dpu1/catalog/dpu_6_3_sm6115.h    |   7 +-
+ .../msm/disp/dpu1/catalog/dpu_6_4_sm6350.h    |  11 +-
+ .../msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h   |   4 +-
+ .../msm/disp/dpu1/catalog/dpu_6_9_sm6375.h    |   7 +-
+ .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |  25 ++-
+ .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    |   9 +-
+ .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  |  25 ++-
+ .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  25 ++-
+ .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  29 ++--
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 145 +++++++-----------
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  55 +++----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c   |  20 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h   |  10 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c   |   6 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h   |   3 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     |   3 +-
+ 23 files changed, 200 insertions(+), 296 deletions(-)
+
+-- 
+2.39.2
+
