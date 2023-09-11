@@ -2,121 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B6A9979A37F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Sep 2023 08:27:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B17479A389
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Sep 2023 08:33:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233279AbjIKG1m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 02:27:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34354 "EHLO
+        id S234382AbjIKGdL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 02:33:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230001AbjIKG1l (ORCPT
+        with ESMTP id S232434AbjIKGdL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 02:27:41 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E328EA
-        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Sep 2023 23:27:37 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-31dca134c83so4027929f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Sep 2023 23:27:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694413655; x=1695018455; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RJTJsFK3T0/Rm5w8uJvF7R9ahpNsdXBenI0aBQZljWI=;
-        b=rounOXkfgIZsC7NkU4+jT+m5JD86820sfpExxOV1KSiPKJlRzc7IwKUk/tBvbcw5EY
-         giLs9dV67Bp6yj6m/WnrEmSZ9DDJc/HuTF7xVoqeUtcO2MyPnQfNuU/cusM7j1Kgc5PN
-         g/DxBMED7De/96bncj7UkyTmDdEL5scsnFtDY94XLLdMuxMWJeraBiJOavs40I1XxSsl
-         J124lf19yYH+9Q5/gI+6lNQu1bxJEzQ4YLeZFQaECakijfHi8+tMGAUWXn6HXOE5K0k1
-         jImOeUDt+qlQyri5authxf6sx0/JoIp+lxVKKQRyAoYXY3VqhzUAb4oRx29dQAdc8Qzx
-         U0IQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694413655; x=1695018455;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RJTJsFK3T0/Rm5w8uJvF7R9ahpNsdXBenI0aBQZljWI=;
-        b=bfVfuUp/kTFpLrKQUS4Ytp65hGdQYpvlppFxoJF0Nz8SRp8Lv98r2hXwgnYA8LPii7
-         W/lZ71Z6jtMrrChl1Hx3lXRkzqzuF/0oxiQFytleGE285hql2qlzeXB4lEuhgaczQM9g
-         HVl37ZUTN1CcTD3zUFpat8kY7G9FsWJTJnP05fNTc0rCrC4WcFSzImmRSPvyy2M+buG3
-         sKZGbJCwum41dhSt4wDq5+mf0YJIKMAOItEHsHUyu8g4qfKNT+gRxSrMALdLfMo1tgwS
-         dVkYnx5L68WkC/ySgM2RUG2Ar0Pm72HPWptTvWdB4kZtN9XMhLOxidZXpiovIf/oADpF
-         RBRg==
-X-Gm-Message-State: AOJu0YwnBq25/MPORNauO5E3XZvbeULxPRgun30zTLGuifVk4fnOLVap
-        VRQmffXg4/B4ACfRa8VvS09kGg==
-X-Google-Smtp-Source: AGHT+IHdUYdZOEzSeRxYewp5a8kC9KI+sz7pgbVDMTSbrYiymqBDmQF9SeR7P0v4wf06XCXdnmaRsA==
-X-Received: by 2002:a5d:4e02:0:b0:317:5f04:bc00 with SMTP id p2-20020a5d4e02000000b003175f04bc00mr6273595wrt.27.1694413655449;
-        Sun, 10 Sep 2023 23:27:35 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.214.188])
-        by smtp.gmail.com with ESMTPSA id a11-20020aa7d74b000000b0052a404e5929sm4095585eds.66.2023.09.10.23.27.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 10 Sep 2023 23:27:34 -0700 (PDT)
-Message-ID: <0231fa19-bc71-db11-ffd4-8c922d110447@linaro.org>
-Date:   Mon, 11 Sep 2023 08:27:32 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.0
-Subject: Re: [PATCH] scsi: ufs: qcom: dt-bindings: Add MCQ ESI property
-Content-Language: en-US
-To:     Ziqi Chen <quic_ziqichen@quicinc.com>, quic_asutoshd@quicinc.com,
-        quic_cang@quicinc.com, bvanassche@acm.org, mani@kernel.org,
-        adrian.hunter@intel.com, beanhuo@micron.com, avri.altman@wdc.com,
-        junwoo80.lee@samsung.com, martin.petersen@oracle.com,
-        quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com
-Cc:     linux-scsi@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Mon, 11 Sep 2023 02:33:11 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75DACEA;
+        Sun, 10 Sep 2023 23:33:06 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E429C433C7;
+        Mon, 11 Sep 2023 06:33:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1694413986;
+        bh=18iika8ykLLEdqYdvZw20RyqagpFzM4QR/VITsqp37o=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=EB2OixqkFqp6PXfsfzn0kp2ZM8EULSvPg5dzvF7BMquAiOjMlBZ5xMDctP1gAxmBR
+         ExczqpmZEoi9cglinf1qq0caaE6f8tTveErFqGbL2mFti5vAjHINBRx/dC24C8ROjO
+         KZqJmQqLYgiHETEbcQAj9kVS3sdsYpQnqm7FznfESm07VapeNAr3LYn7E13ELs+xaO
+         80OaX5peySjthdlA551GWXHjXspndntjl9zISUnTQOssVdHQepCadxzqdCR60Duapd
+         PGkeqbjXxz0YK48OoOEFM05arg9i/nvvjXCHOmJcQc92XrfTOfn5jN+/q1paUmMVGr
+         d6zAXcTTtpIng==
+Received: from johan by xi.lan with local (Exim 4.96)
+        (envelope-from <johan@kernel.org>)
+        id 1qfaTm-0004NL-2r;
+        Mon, 11 Sep 2023 08:33:02 +0200
+Date:   Mon, 11 Sep 2023 08:33:02 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Sasha Levin <sashal@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, stable@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <1694163203-39123-1-git-send-email-quic_ziqichen@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1694163203-39123-1-git-send-email-quic_ziqichen@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Bjorn Andersson <andersson@kernel.org>, agross@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH AUTOSEL 6.5 30/36] arm64: dts: qcom: sc8280xp-x13s: Add
+ camera activity LED
+Message-ID: <ZP60ngCV3hhNZiX5@hovoldconsulting.com>
+References: <20230908192848.3462476-1-sashal@kernel.org>
+ <20230908192848.3462476-30-sashal@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230908192848.3462476-30-sashal@kernel.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/09/2023 10:53, Ziqi Chen wrote:
-> Document the description for the qcom,esi-affinity-mask.
-
-This tells me nothing what is this feature for.
-
+On Fri, Sep 08, 2023 at 03:28:41PM -0400, Sasha Levin wrote:
+> From: Konrad Dybcio <konrad.dybcio@linaro.org>
 > 
-> Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 4 ++++
->  1 file changed, 4 insertions(+)
+> [ Upstream commit 1c63dd1c5fdafa8854526d7d60d2b741c813678d ]
 > 
-> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> index bdfa86a..323595f 100644
-> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> @@ -97,6 +97,10 @@ properties:
->      description:
->        GPIO connected to the RESET pin of the UFS memory device.
->  
-> +  qcom,esi-affinity-mask:
+> Disappointigly, the camera activity LED is implemented in software.
+> Hook it up as a gpio-led and (until we have camera *and* a "camera on"
+> LED trigger) configure it as a panic indicator.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Link: https://lore.kernel.org/r/20230805-topic-x13s_cam_led-v1-1-443d752158c4@linaro.org
+> Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
 
-Not tested. You also miss proper type.
+This is a new feature if anything, not a fix. Please drop from all
+autosel queues.
 
-> +    description:
-> +       UFS MCQ ESI affinity mask. Affine ESI on registration according to this CPU mask.
-
-And why is this a property of DT? Aren't you now describing driver?
-
-
-
-Best regards,
-Krzysztof
-
+Johan
