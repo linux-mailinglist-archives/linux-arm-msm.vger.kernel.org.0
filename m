@@ -2,143 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 381B979A3A0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Sep 2023 08:43:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D929E79A474
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Sep 2023 09:29:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233429AbjIKGnE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 02:43:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43422 "EHLO
+        id S232571AbjIKH3F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 03:29:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232031AbjIKGnE (ORCPT
+        with ESMTP id S232278AbjIKH3E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 02:43:04 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 073E5126;
-        Sun, 10 Sep 2023 23:42:59 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38B6HBSq025874;
-        Mon, 11 Sep 2023 06:42:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=mJgaCC6bHfC3tt0UFE/W3pn4k1iUQh7kxD9oPUUTjsg=;
- b=KlEIA3kf/sQl6BA1EfUZN/3zokEdypmWbHJv3SeUGGCaidmXghs0zll6Uzx8Og6HDzI0
- fEIPnTmxDT7vWIojsa4JLvPkq4nGJV3yfcVZPvs2X/yhAORFWtkxiXA+fNEWNF9cU0rr
- fYKtjvs+Uk4qSBzuIq+afuzu5Aq+Tyjdq1GAl9iUx8r3rFxZ67leVubnpTazQQ8Txt8v
- NPlrxZGy/dMFkEgpTC6npqVoOzbZ9CaO7N0nukNCR1pC+kNvH6mWPNDYM+lmEK0X77jV
- Js4JnKpzrDh7nxQdgGgWjc3icCA2oQ27i4HYFiA22Je/wR9U+uHTbptq1opCQ0uifoDt 9w== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t0h3dtnt8-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 11 Sep 2023 06:42:52 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38B6gp1o030227
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 11 Sep 2023 06:42:51 GMT
-Received: from [10.253.14.78] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Sun, 10 Sep
- 2023 23:42:48 -0700
-Message-ID: <b16aa25f-5cb9-4afa-e884-cb60c0aa1268@quicinc.com>
-Date:   Mon, 11 Sep 2023 14:42:46 +0800
+        Mon, 11 Sep 2023 03:29:04 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5383CE6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 00:28:50 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-31f8a05aa24so1852221f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 00:28:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694417329; x=1695022129; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=PmXkMp6hw0QC2PD82S58qjMraTAHY6wvd7XAvr7oIME=;
+        b=ScwxB9W0+9s2HPsreo03gPo1g+DtkqchySy+iaAt1TUs0DYTzzuZDX5+kV6RkmtGCq
+         3NZXzDT23l8+yaL1WTgQVLthy+OZu4ZlRnHEMkuftRsvHUs+k5Bof9ls4lqcjckP/5tj
+         M8BpNFZWBdkb5RO8Rx1t3Q8tlk0Un5vg+w3aBuwhJp3XJrSjH944eR/iqBjlscQca9rR
+         K+yQluzs9DLjrhwmTNYAsNFaCRtWvXyMtwePwWhXRB0o4G3emDgpYiGO/QoTDBFv80+y
+         wJofrybBpRAHS9eEkY+uTt/DXwccr4yFRPNy0go8NQ56XHnFKi+D56DGf6effEg1hVEg
+         dFXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694417329; x=1695022129;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PmXkMp6hw0QC2PD82S58qjMraTAHY6wvd7XAvr7oIME=;
+        b=EvkD5nP+aAtZkv8XUh+4ZHQKPkLE7OyrFMx/1/F21J/j3yBhz8l3xGOZbht73bSJk4
+         /0cc8WOV0Fp2b+hPRcuPSBdajFCHCluW+MNmRnz5C5bM7QhLmYyEDwncN6exVCQk4tKO
+         j6BNTEtZADzdF+tLXNVzZqbzho4CvsUE80zrnyZ98XKE1PfPJttnldXsiY3wau4limqO
+         Z0Yzy43bmF3ySmH2vAQeZmVINVu0JLfkY0858VeYCTWibVS+Mnbo0gPhJ05ZYa+SJaXj
+         Edt/qTUd1MvMbpl1yseep5rkT0yq9WRPkKbWvhb7sZwCHFLtKKT/K2q/eZQ85ywHN+Qv
+         temg==
+X-Gm-Message-State: AOJu0YwZT4Xbf58cl4OWxkQS5sK3HcGBL03K5YAjqG2FtEjtWaBxA1H+
+        qkJrsHABfIsNtIZMifMRUtKo3QCfviINgjufHth6LY87
+X-Google-Smtp-Source: AGHT+IGWydEDfDezZCLFZgH18TY3egwhgA/nekWbF8CK6gOEc9NcN4f+7z/37bdHz8l+sMVy5Jx9dg==
+X-Received: by 2002:adf:ea4b:0:b0:313:f61c:42ab with SMTP id j11-20020adfea4b000000b00313f61c42abmr7610606wrn.56.1694417329295;
+        Mon, 11 Sep 2023 00:28:49 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id c17-20020adfed91000000b0031779a6b451sm9250075wro.83.2023.09.11.00.28.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Sep 2023 00:28:48 -0700 (PDT)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH v4 0/2] arm64: dts: qcom: enable BT on SM8550-QRD
+Date:   Mon, 11 Sep 2023 09:28:45 +0200
+Message-Id: <20230911-topic-sm8550-upstream-bt-v4-0-a5a428c77418@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.0
-Subject: Re: [PATCH V8 0/5] scsi: ufs: qcom: Align programming sequence as per
- HW spec
-To:     Nitin Rawat <quic_nitirawa@quicinc.com>, <mani@kernel.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <jejb@linux.ibm.com>,
-        <martin.petersen@oracle.com>
-CC:     <quic_nguyenb@quicinc.com>, <linux-scsi@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-References: <20230905052400.13935-1-quic_nitirawa@quicinc.com>
-Content-Language: en-US
-From:   Can Guo <quic_cang@quicinc.com>
-In-Reply-To: <20230905052400.13935-1-quic_nitirawa@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: l9KVxlKX2RUg-z-VEGXwihnJMVaWJDOR
-X-Proofpoint-ORIG-GUID: l9KVxlKX2RUg-z-VEGXwihnJMVaWJDOR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-11_03,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- bulkscore=0 phishscore=0 mlxlogscore=668 adultscore=0 spamscore=0
- suspectscore=0 impostorscore=0 malwarescore=0 mlxscore=0
- lowpriorityscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2308100000 definitions=main-2309110060
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-B4-Tracking: v=1; b=H4sIAK3B/mQC/43N0QrCIBgF4FcJr/tD/d1mXfUe0YU6bcLSoWsUs
+ XfP7SYiiC7PgfOdJ8k2eZvJYfMkyU4++xhKENsNMZ0KFwu+LZlwypHWnMIYB28gX2VVUbgNeUx
+ WXUGP0DojkFZub5ggZa5VtqCTCqYrQLj1fSmHZJ2/r3+nc8mdz2NMj/V+Ykv7x9PEgIJouKxq4
+ aRs+LH3QaW4i+lCFnXi/0q8SHupKRXYIlPiS8K3JFnzQ8IiITqUtW20qNmHNM/zCzECdpNqAQA
+ A
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1398;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=V/4/cFdhF3GcYL6PArpmmPN8+yWVbJ7rwyA4ouLJKDA=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBk/sGvvff9SSvbi4K1qObxVakganz1EIpk1EITADmb
+ iYHG2XeJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZP7BrwAKCRB33NvayMhJ0QsQEA
+ CUTtzrU9/caBMK6+Y7PldmUh0OgYa7lLaUU9Ak6yLYKRUoNAQYC0YNuXVhKZexF6boZuEYAZ0TGDSM
+ +D5x4tdz+/YXTTE8Z9VOMkB+bhkoyAEJVv23j3qxlxA/RdChIWON5mZykcDX3Oj6PTHoZymtJSogco
+ HYccQRfF0po9Uy4QMAGGdV3tVysa7uGMPXfwRkqCUzM66k8geXm0bgx+SS8XJdef9KE0uirmKGgc7D
+ OrwPjqLuXLfMhnudX3DR9k7tsvvv4KCSyEb9Oef25jXXfUxGjm2cf0XpEAzUN5zpesmDR9qwWud0cE
+ np/kvwEiVZum0O3UX2QVODxf9BJAP839/hFLM57wa2We75n4Vm4eQPubfORhefJCg8/S8ziY9+6pbV
+ DD0AjPFOs3UsN4FsuA/DugtA/1kUJ5D0WhE3ZdiwmybnbR0MhqSA2Ii/wFUJlmTw4fxGeL9n+Vi56g
+ j4c04BIc2SGYKscvI1OdaWoXInJAMLDLSt+ENpgsU1Fr5MfQ9r2ReCBEis5hHlQMKzMKeR+kt6KwWI
+ IAU+R0wyAT3wygvwWCCpoNj58G4tZgx2je2H2Vv+n9ZJjDuSL0Dbw5euOO9+z8cw53Nb1Ch2OGjK2Y
+ pszlUv9G5X2VsosMxAO2pxt84hSrs3Z49Y22KuMmKDS9xxL6hz5Xrii8T6lw==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9/5/2023 1:23 PM, Nitin Rawat wrote:
-> This patch series adds programming support for Qualcomm UFS V4 and above
-> to align avoid with Hardware Specification. This patch series will address
-> stability and performance issues.
->
-> In this patch series below changes are taken care.
->
-> 1) Register layout for DME_VS_CORE_CLK_CTRL has changed for v4 and above.
-> 2) Adds Support to configure PA_VS_CORE_CLK_40NS_CYCLES attibute for UFS V4
->     and above.
-> 3) Adds Support to configure multiple unipro frequencies like 403MHz,
->     300MHz, 202MHz, 150 MHz, 75Mhz, 37.5 MHz for Qualcomm UFS Controller V4
->     and above.
-> 4) Allow configuration of SYS1CLK_1US_REG for UFS V4 and above.
->
-> Changes From v7:
-> - Fix the compilation error for kernel doc
->
-> Changes from v6:
-> - Addressed bjorn comment to optimize the code.
-> - Addressed bjorn comment to update commit message
-> - removed clean up part related for clk div configuration comapared to v6
->
-> changes from v5:
-> - Addressed Mani comment to FIELD_PREP and FIELD_FIT.
-> - Optimised ufs_qcom_set_core_clk_ctrl API.
-> - Updated commit text for few patches to capture more details.
->
-> Changes from v4:
-> - Addressed bjorn comment to split single patch to multiple patches.
->
-> Changes from v3:
-> -Addressed bjorn comment to update commit msg to capture change details.
->
-> Changes from v2:
-> - Addressed bao comment, removed duplicate clock timer cfg API call
->
-> Changes from v1:
-> - Addressed bao comment, removed wrapper function
-> - Tab alignment
->
-> Nitin Rawat (5):
->    scsi: ufs: qcom: Update MAX_CORE_CLK_1US_CYCLES for UFS V4 and above
->    scsi: ufs: qcom: Add multiple frequency support for
->      MAX_CORE_CLK_1US_CYCLES
->    scsi: ufs: qcom: Add support to Configure PA_VS_CORE_CLK_40NS_CYCLES
->    scsi: ufs: qcom: Align programing of unipro clk attributes
->    scsi: ufs: qcom: Configure SYS1CLK_1US_REG for UFS V4 and above
->
->   drivers/ufs/host/ufs-qcom.c | 202 ++++++++++++++++++++++++++++--------
->   drivers/ufs/host/ufs-qcom.h |  18 +++-
->   2 files changed, 175 insertions(+), 45 deletions(-)
->
-> --
-> 2.17.1
+This serie enables WCN7850 on the Qualcomm SM8550 QRD
+reference platform.
 
-To the whole series -
+The WCN7850 is close to the WCN6855 but uses different
+firmware names.
 
-Reviewed-by: Can Guo <quic_cang@quicinc.com>
+This patchset is the followup of https://lore.kernel.org/r/20230620-topic-sm8550-upstream-bt-v2-0-98b0043d31a4@linaro.org
+with only the DT patches.
+
+---
+Changes in v4:
+- Added review tags
+- Rebased on v6.6-rc1
+- Link to v3: https://lore.kernel.org/r/20230817-topic-sm8550-upstream-bt-v3-0-33f386e7b461@linaro.org
+
+Changes in v3:
+- Dropped applied BT patches, on DT patches remains
+- Link to v2: https://lore.kernel.org/r/20230620-topic-sm8550-upstream-bt-v2-0-98b0043d31a4@linaro.org
+
+Changes in v2:
+- Convert if/else and qca_is_*() macros by switch/case to simplify adding now BT SoCs
+- Add bindings reviewed-by
+- Link to v1: https://lore.kernel.org/r/20230620-topic-sm8550-upstream-bt-v1-0-4728564f8872@linaro.org
+
+---
+Neil Armstrong (2):
+      arm64: dts: qcom: sm8550: add UART14 nodes
+      arm64: dts: qcom: sm8550-qrd: add bluetooth support
+
+ arch/arm64/boot/dts/qcom/sm8550-qrd.dts | 43 +++++++++++++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8550.dtsi    | 30 +++++++++++++++++++++++
+ 2 files changed, 73 insertions(+)
+---
+base-commit: 0bb80ecc33a8fb5a682236443c1e740d5c917d1d
+change-id: 20230620-topic-sm8550-upstream-bt-dfc4305f9c14
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
 
