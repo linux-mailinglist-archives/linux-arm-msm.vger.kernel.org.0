@@ -2,85 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B0FE79B1F2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 01:57:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E6BF79AE7A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 01:45:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344062AbjIKVNL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:13:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37352 "EHLO
+        id S1344621AbjIKVOf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:14:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39096 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236657AbjIKLJ5 (ORCPT
+        with ESMTP id S236765AbjIKLWn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 07:09:57 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79D34CDD
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 04:09:51 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2bf8b9c5ca0so15336771fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 04:09:51 -0700 (PDT)
+        Mon, 11 Sep 2023 07:22:43 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 682B7E4B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 04:22:36 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2bcc4347d2dso71211301fa.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 04:22:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694430590; x=1695035390; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1694431354; x=1695036154; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ItV/PafZYbRtZG+3EH6sRu97i9Pet4QO+NBJ8/y2iuI=;
-        b=tg4h2AL9gT7/qUV0jFTrvkPJl9a/skFZyfbwb9lpcls46kdOpKy/0zULUF05nAJKrw
-         ITd7nMPZiaS5PsZzg1uTs9LpnOIGc5IQoXbM6B0QK8XpMLmTWz7Uvoa0s4ZTgz5Jq9t4
-         v0U5o8trLtrjzW4IH2vQo4mpKEbOiin4b62jWutcLNlCqZmZsOvN5+FxgDlk21bHCJDq
-         AGy8mFU5AJj5nVJ+LxeMb8183iNYaxF1hzP/jM4wDcZfI50R1cg8CQ5wa0RSetIfcJDN
-         Epx6SgrPMDqtOePCk98hrz6ZZ1pRWPxrXpWGXqxYXtz71fRYbYppSVB44eXGFYlNXoj4
-         UTNw==
+        bh=JWYEp19+kxLH9ilfKCkarl8GOyU5SYDVfZv3MA5eqe4=;
+        b=mz1Oanf70aSQ1YkqlAtxjvUhIoGj7+/02AxiZlh+CkXaXVyhwjjVoq0buzAdb8gD92
+         oP1rx0YIOmKtVnl+A3Jy7mezxIHes54Mka7zPatQM8lrxgbj5Ere217D8JB0t+yiJ3K1
+         Q1Isztdrs7Y7egeh6PDW36XUwBqiABG0JBsg1btdYO5c+cHA2WTltZbNQ3pv1tgAVRzt
+         YElDcUnsJSNKiCCLklNE+2ugivTZ7QH4Wq02KYWJp4DXKB1nsQl7W8mf03urUM/85Jot
+         offUfgLJUn+VQiTDBAsUeygrsxYIAIwtH515oMEnhbfAsu51WXB6Wfp3vr3s0x3iid5b
+         GWKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694430590; x=1695035390;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1694431354; x=1695036154;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ItV/PafZYbRtZG+3EH6sRu97i9Pet4QO+NBJ8/y2iuI=;
-        b=oooSQxkj6YTtDYoPLNZgE3yvE1fFkzx9hbpXAVUxN/ZMbXGQ215aXAgXM58BpwAl+b
-         7wLnYbvzKdBCiB9xzN0vWse5z8DCRJy7YdCmY+BI9jNOLkbUCW9fsY/n6tQcyazNE8Ph
-         OnT1tL/P1fccvjdPa/zBwkABhVpWsvs9h3rvF85j4C4rSAvmfJTB4NANEki9L4gjJkDE
-         yncwolcPY7eA6NCm8InEDKtGSFSRlOi5H9sgmVJHPCzsu1/NjtVU3mjSrRGDL5QWZV8b
-         qOFomB9gz8fGOl7MvUGUecCsr9IQTgdMm/vN+VjgaPn85LhDzyCkax8m8zDWwtziWpKL
-         hFuw==
-X-Gm-Message-State: AOJu0YwNN9Polx3LLy3S7CDF4TbY/Z0TTE3ZeD10ckxO2qEbmYf/YaEL
-        2Ynd2lQBAj8TwOpPYyaHMwbdzQ==
-X-Google-Smtp-Source: AGHT+IEA9FyfM8rXa+3k+u+doQWaGigDrU1zuRRVi1v3E2XELPt5LPr2HsZJRl0XxMdT23XFarwUrQ==
-X-Received: by 2002:a2e:8543:0:b0:2bd:180d:67b7 with SMTP id u3-20020a2e8543000000b002bd180d67b7mr6601812ljj.40.1694430589764;
-        Mon, 11 Sep 2023 04:09:49 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.214.188])
-        by smtp.gmail.com with ESMTPSA id lw7-20020a170906bcc700b009a168ab6ee2sm5129780ejb.164.2023.09.11.04.09.46
+        bh=JWYEp19+kxLH9ilfKCkarl8GOyU5SYDVfZv3MA5eqe4=;
+        b=NH138W8bkeqtPDgAc4up32TnV60EzyAD6q0PGaJHlanf7/Z6NhcJKwU5zebI2B07g8
+         O2eK1blrVydy/er16RZ3MCbUnZS78pGChVLqI9Yqmyq/0mwPq/vPtYXj4f4KfWyIhrLV
+         k9IQds99HYWS77rMFTgMQrD0wOVJnVwgDVRkPGhgqTS3efE2rUcs+zRQKXHHq/C+cREl
+         Zm4nLQIGQgLRsbASZGz8SuQmoL3D9L1HsnZ0k5Y/4/jt5rSz8EX7KTgYPmsDAjo/cru/
+         jWvURwqfrhrB3qclusLPx7nohMTSstEIOPdxfKwKtgL5FTdepkCKif4hgkHRh1RtWDYK
+         Ib5Q==
+X-Gm-Message-State: AOJu0YyL6aJoX57t3atgFLKeEnXdswwBPLpf0ZOtIMwT0lVBmEPMBebY
+        Z94s9HHua+wmtGTofOHOnhXICA==
+X-Google-Smtp-Source: AGHT+IHRLMhGsK6RsT9iyCrETaJpm/vgcvBoo5IaCQ506Q9GN4EWNfwfYVLjJBE5Ml1DRyCm7I/IFA==
+X-Received: by 2002:a2e:9e45:0:b0:2bc:dba0:60f9 with SMTP id g5-20020a2e9e45000000b002bcdba060f9mr6734230ljk.44.1694431354467;
+        Mon, 11 Sep 2023 04:22:34 -0700 (PDT)
+Received: from [192.168.37.232] (178235177061.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.61])
+        by smtp.gmail.com with ESMTPSA id ov27-20020a170906fc1b00b00992c92af6f4sm5207739ejb.144.2023.09.11.04.22.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Sep 2023 04:09:48 -0700 (PDT)
-Message-ID: <0041a391-12ba-2e1b-0954-fbc0e00be631@linaro.org>
-Date:   Mon, 11 Sep 2023 13:09:46 +0200
+        Mon, 11 Sep 2023 04:22:33 -0700 (PDT)
+Message-ID: <924aa48f-5c23-4e17-8bc0-256887971ba9@linaro.org>
+Date:   Mon, 11 Sep 2023 13:22:30 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.0
-Subject: Re: [PATCH v5 11/17] qcom_minidump: Register ramoops region with
- minidump
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 04/11] arm64: dts: qcom: pm7250b: make SID configurable
 Content-Language: en-US
-To:     Mukesh Ojha <quic_mojha@quicinc.com>, corbet@lwn.net,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, keescook@chromium.org, tony.luck@intel.com,
-        gpiccoli@igalia.com, mathieu.poirier@linaro.org,
-        catalin.marinas@arm.com, will@kernel.org, linus.walleij@linaro.org,
-        andy.shevchenko@gmail.com, vigneshr@ti.com, nm@ti.com,
-        matthias.bgg@gmail.com, kgene@kernel.org, alim.akhtar@samsung.com,
-        bmasney@redhat.com, quic_tsoni@quicinc.com
-Cc:     linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-hardening@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, kernel@quicinc.com
-References: <1694290578-17733-1-git-send-email-quic_mojha@quicinc.com>
- <1694290578-17733-12-git-send-email-quic_mojha@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1694290578-17733-12-git-send-email-quic_mojha@quicinc.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     cros-qcom-dts-watchers@chromium.org,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-pm@vger.kernel.org
+References: <20230830-fp5-initial-v1-0-5a954519bbad@fairphone.com>
+ <20230830-fp5-initial-v1-4-5a954519bbad@fairphone.com>
+ <b82f4683-e8b5-b424-8f7a-6d2ba1cab61f@linaro.org>
+ <CV6NF0466658.20DGU7QKF2UBR@otso>
+ <CAA8EJpr1+W3f08X-FpiiVrJ98kg52HaMwbbKn=fG15Whm4C8aQ@mail.gmail.com>
+ <728003b9-db27-fdc0-e761-197a02a38c24@linaro.org>
+ <CAA8EJpoXreHpxZQ2G10n0OiQzUX4ffk=gvo87dAU4-r+Svqpeg@mail.gmail.com>
+ <CVAUDGBO4S08.1F0O66ZE6I4IG@otso> <CVFY7D7ND3WS.2B2EYB4ZO86P@otso>
+ <cae7261a-6727-6163-1420-01039bfb8396@linaro.org>
+ <CVFZZ0YSWQ6J.2AKRML6LWRMUH@otso>
+ <bd418fae-accc-bd79-969a-b3b5791efd35@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
+ BB/OmIWU6X+LZW6P88ZmHe+KeyABLMP5s1tJNK1j4ntT7mECcWZDzafPWF4F6m4WJOG27kTJ
+ HGWdmtO+RvadOVi6CoUDqALsmfS3MUG5Pj2Ne9+0jRg4hEnB92AyF9rW2G3qisFcwPgvatt7
+ TXD5E38mLyOPOUyXNj9XpDbt1hNwKQfiidmPh5e7VNAWRnW1iCMMoKqzM1Anzq7e5Afyeifz
+ zRcQPLaqrPjnKqZGL2BKQSZDh6NkI5ZLRhhHQf61fkWcUpTp1oDC6jWVfT7hwRVIQLrrNj9G
+ MpPzrlN4YuAqKeIer1FMt8cq64ifgTzxHzXsMcUdclzq2LTk2RXaPl6Jg/IXWqUClJHbamSk
+ t1bfif3SnmhA6TiNvEpDKPiT3IDs42THU6ygslrBxyROQPWLI9IL1y8S6RtEh8H+NZQWZNzm
+ UQ3imZirlPjxZtvz1BtnnBWS06e7x/UEAguj7VHCuymVgpl2Za17d1jj81YN5Rp5L9GXxkV1
+ aUEwONM3eCI3qcYm5JNc5X+JthZOWsbIPSC1Rhxz3JmWIwP1udr5E3oNRe9u2LIEq+wH/toH
+ kpPDhTeMkvt4KfE5m5ercid9+ZXAqoaYLUL4HCEw+HW0DXcKDwARAQABzShLb25yYWQgRHli
+ Y2lvIDxrb25yYWQuZHliY2lvQGxpbmFyby5vcmc+wsGOBBMBCAA4FiEEU24if9oCL2zdAAQV
+ R4cBcg5dfFgFAmQ5bqwCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQR4cBcg5dfFjO
+ BQ//YQV6fkbqQCceYebGg6TiisWCy8LG77zV7DB0VMIWJv7Km7Sz0QQrHQVzhEr3trNenZrf
+ yy+o2tQOF2biICzbLM8oyQPY8B///KJTWI2khoB8IJSJq3kNG68NjPg2vkP6CMltC/X3ohAo
+ xL2UgwN5vj74QnlNneOjc0vGbtA7zURNhTz5P/YuTudCqcAbxJkbqZM4WymjQhe0XgwHLkiH
+ 5LHSZ31MRKp/+4Kqs4DTXMctc7vFhtUdmatAExDKw8oEz5NbskKbW+qHjW1XUcUIrxRr667V
+ GWH6MkVceT9ZBrtLoSzMLYaQXvi3sSAup0qiJiBYszc/VOu3RbIpNLRcXN3KYuxdQAptacTE
+ mA+5+4Y4DfC3rUSun+hWLDeac9z9jjHm5rE998OqZnOU9aztbd6zQG5VL6EKgsVXAZD4D3RP
+ x1NaAjdA3MD06eyvbOWiA5NSzIcC8UIQvgx09xm7dThCuQYJR4Yxjd+9JPJHI6apzNZpDGvQ
+ BBZzvwxV6L1CojUEpnilmMG1ZOTstktWpNzw3G2Gis0XihDUef0MWVsQYJAl0wfiv/0By+XK
+ mm2zRR+l/dnzxnlbgJ5pO0imC2w0TVxLkAp0eo0LHw619finad2u6UPQAkZ4oj++iIGrJkt5
+ Lkn2XgB+IW8ESflz6nDY3b5KQRF8Z6XLP0+IEdLOOARkOW7yEgorBgEEAZdVAQUBAQdAwmUx
+ xrbSCx2ksDxz7rFFGX1KmTkdRtcgC6F3NfuNYkYDAQgHwsF2BBgBCAAgFiEEU24if9oCL2zd
+ AAQVR4cBcg5dfFgFAmQ5bvICGwwACgkQR4cBcg5dfFju1Q//Xta1ShwL0MLSC1KL1lXGXeRM
+ 8arzfyiB5wJ9tb9U/nZvhhdfilEDLe0jKJY0RJErbdRHsalwQCrtq/1ewQpMpsRxXzAjgfRN
+ jc4tgxRWmI+aVTzSRpywNahzZBT695hMz81cVZJoZzaV0KaMTlSnBkrviPz1nIGHYCHJxF9r
+ cIu0GSIyUjZ/7xslxdvjpLth16H27JCWDzDqIQMtg61063gNyEyWgt1qRSaK14JIH/DoYRfn
+ jfFQSC8bffFjat7BQGFz4ZpRavkMUFuDirn5Tf28oc5ebe2cIHp4/kajTx/7JOxWZ80U70mA
+ cBgEeYSrYYnX+UJsSxpzLc/0sT1eRJDEhI4XIQM4ClIzpsCIN5HnVF76UQXh3a9zpwh3dk8i
+ bhN/URmCOTH+LHNJYN/MxY8wuukq877DWB7k86pBs5IDLAXmW8v3gIDWyIcgYqb2v8QO2Mqx
+ YMqL7UZxVLul4/JbllsQB8F/fNI8AfttmAQL9cwo6C8yDTXKdho920W4WUR9k8NT/OBqWSyk
+ bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
+ nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
+ izWDgYvmBE8=
+In-Reply-To: <bd418fae-accc-bd79-969a-b3b5791efd35@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -89,51 +133,92 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/09/2023 22:16, Mukesh Ojha wrote:
-> Register all the pstore frontend with minidump, so that they can
-> be dumped as default Linux minidump region to be collected on
-> SoC where minidump is enabled.
-> 
+On 11.09.2023 13:15, Krzysztof Kozlowski wrote:
+> On 11/09/2023 11:59, Luca Weiss wrote:
+>> On Mon Sep 11, 2023 at 11:44 AM CEST, Krzysztof Kozlowski wrote:
+>>> On 11/09/2023 10:34, Luca Weiss wrote:
+>>>> On Tue Sep 5, 2023 at 10:30 AM CEST, Luca Weiss wrote:
+>>>>> On Thu Aug 31, 2023 at 2:27 PM CEST, Dmitry Baryshkov wrote:
+>>>>>> On Thu, 31 Aug 2023 at 14:54, Krzysztof Kozlowski
+>>>>>> <krzysztof.kozlowski@linaro.org> wrote:
+>>>>>>>
+>>>>>>> On 31/08/2023 13:33, Dmitry Baryshkov wrote:
+>>>>>>>> On Thu, 31 Aug 2023 at 13:13, Luca Weiss <luca.weiss@fairphone.com> wrote:
+>>>>>>>>>
+>>>>>>>>> On Wed Aug 30, 2023 at 12:06 PM CEST, Krzysztof Kozlowski wrote:
+>>>>>>>>>> On 30/08/2023 11:58, Luca Weiss wrote:
+>>>>>>>>>>> Like other Qualcomm PMICs the PM7250B can be used on different addresses
+>>>>>>>>>>> on the SPMI bus. Use similar defines like the PMK8350 to make this
+>>>>>>>>>>> possible.
+>>>>>>>>>>>
+>>>>>>>>>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>>>>>>>>>>> ---
+>>>>>>>>>>>  arch/arm64/boot/dts/qcom/pm7250b.dtsi | 23 ++++++++++++++++-------
+>>>>>>>>>>>  1 file changed, 16 insertions(+), 7 deletions(-)
+>>>>>>>>>>>
+>>>>>>>>>>> diff --git a/arch/arm64/boot/dts/qcom/pm7250b.dtsi b/arch/arm64/boot/dts/qcom/pm7250b.dtsi
+>>>>>>>>>>> index e8540c36bd99..3514de536baa 100644
+>>>>>>>>>>> --- a/arch/arm64/boot/dts/qcom/pm7250b.dtsi
+>>>>>>>>>>> +++ b/arch/arm64/boot/dts/qcom/pm7250b.dtsi
+>>>>>>>>>>> @@ -7,6 +7,15 @@
+>>>>>>>>>>>  #include <dt-bindings/interrupt-controller/irq.h>
+>>>>>>>>>>>  #include <dt-bindings/spmi/spmi.h>
+>>>>>>>>>>>
+>>>>>>>>>>> +/* This PMIC can be configured to be at different SIDs */
+>>>>>>>>>>> +#ifndef PM7250B_SID
+>>>>>>>>>>> +   #define PM7250B_SID 2
+>>>>>>>>>>> +#endif
+>>>>>>>>>>
+>>>>>>>>>> Why do you send the same patch as v1, without any reference to previous
+>>>>>>>>>> discussions?
+>>>>>>>>>>
+>>>>>>>>>> You got here feedback already.
+>>>>>>>>>>
+>>>>>>>>>> https://lore.kernel.org/linux-arm-msm/f52524da-719b-790f-ad2c-0c3f313d9fe9@linaro.org/
+>>>>>>>>>
+>>>>>>>>> Hi Krzysztof,
+>>>>>>>>>
+>>>>>>>>> I did mention that original patch in the cover letter of this series.
+>>>>>>>>> I'm definitely aware of the discussion earlier this year there but also
+>>>>>>>>> tried to get an update lately if there's any update with no response.
+>>>>>>>>
+>>>>>>>> I think the overall consensus was that my proposal is too complicated
+>>>>>>>> for the DT files.
+>>>>>>>
+>>>>>>> I proposed to duplicate the entries. Do you keep QUP nodes in DTSI and
+>>>>>>> customize per address? No.
+>>>>>>
+>>>>>> At the same time, we do keep SoC files separate from the board files.
+>>>>>> Yes, I'm slightly exaggerating here.
+>>>>>>
+>>>>>> I think that for PMIC files it makes sense to extract common parts if
+>>>>>> that eases reuse of the common parts.
+>>>>>
+>>>>> Hi all,
+>>>>>
+>>>>> what can I do for v2 now?
+>>>>>
+>>>>> 1. Keep this patch as-is, and keep pm7250b in device dts.
+>>>
+>>> This was NAKed by me. What Qualcomm SoC maintainers decide (or not
+>>> decide) about other options, should not cause the wrong solution to be
+>>> re-posted...
+>>>
+>>>>>
+>>>>> 2. Drop pm7250b patch and drop from device dts, until _someone_ figures
+>>>>> out a solution talking to the PMIC on different SID.
+>>>>>
+>>>>> 3. Something else like copy-pasting pm7250b.dtsi to pm7250-8.dtsi and
+>>>>> changing the SID there, and using that in device dts.
+>>
+>> @Konrad, @Bjorn: Can you give any feedback here what's preferable?
+>> Otherwise I'm just blocked on this series.
+I'm sure Krzysztof will disagree, but all of the solutions (which are
+either duplicate the dt, add ifdefs or skip adding this pmic) are
+equally band-aid-class.. A bright future where this PMIC thing is
+handled on the driver side that will hopefully come soon(tm) should
+resolve such problems..
 
-...
+From my side, ifdef is the least burdensome, even if ugly..
 
-> +
-> +	record.type = type;
-> +	record.id = 0;
-> +	max_dump_cnt = 0;
-> +	name = pstore_type_to_name(record.type);
-> +	do {
-> +		ret = pstore_region_defined(&record, &virt, &phys, &size, &max_dump_cnt);
-> +		if (ret < 0)
-> +			break;
-> +
-> +		mdr_list = devm_kzalloc(dev, sizeof(struct md_region_list), GFP_KERNEL);
-
-sizeof(*)
-
-Please fix it everywhere in your code.
-
-> +		if (!mdr_list)
-> +			return -ENOMEM;
-> +
-> +		md_region = &mdr_list->md_region;
-> +		scnprintf(md_region->name, sizeof(md_region->name) - 1, "K%s%llu", name, record.id);
-> +		md_region->virt_addr = virt;
-> +		md_region->phys_addr = phys;
-> +		md_region->size = size;
-> +		ret = qcom_minidump_region_register(md_region);
-> +		if (ret) {
-> +			pr_err("failed to register minidump region\n");
-> +			break;
-> +		}
-> +
-> +		list_add(&mdr_list->list, &ramoops_region_list);
-> +	} while (record.id < max_dump_cnt && ++record.id);
-> +
-> +	return ret;
-> +}
-
-
-Best regards,
-Krzysztof
-
+Konrad
