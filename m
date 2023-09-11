@@ -2,85 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9913979B16F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 01:56:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 57E1B79B303
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 01:59:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343583AbjIKVL6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:11:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50256 "EHLO
+        id S1344899AbjIKVPC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:15:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244332AbjIKUH2 (ORCPT
+        with ESMTP id S244361AbjIKUL4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 16:07:28 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F22071AB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 13:07:22 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-502b0d23f28so3265673e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 13:07:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694462841; x=1695067641; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=A/oE5bznBg4aKiDvY6jBIZITJo1kBxpGdGt4GJUgziI=;
-        b=C1o6HFTcLASMKnVuE0Eum4+Ec/+aNQc1iywqhcTiPOg++IMIKOuwQOs1lwnrrxxs/O
-         JCtj6mrPBdhtPl4IKI6AyaVTOyTPLTyoPht5QdH4ub3gOZLWvIlxuOoYTTW7rABi/iM6
-         FX9daCrrfYMBRvK9Sh94HUFMslo4EBscKZqcJ+yPGcPJJ8KNy1EnEUknx6PbRHU9Uqyi
-         zmeFOS4cy08X+9XtxnVCjmmRvzP0NRFVyZRv6Bg4Wlw2wX3OhE49Yh2DNBrZhVuIc3ML
-         KiUQAgp2hAh8cv1CQVzXppkcKkwFosO4E+fjm02A3mfmcKSlITAN05c3hhM01/UH70u3
-         Egxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694462841; x=1695067641;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=A/oE5bznBg4aKiDvY6jBIZITJo1kBxpGdGt4GJUgziI=;
-        b=vXOWr/a4HcJPD9DDe0aBLycftCEJfFe5Ofp3lxhXRpyNDDgUWBycqY/+q6FoWXSP66
-         QFz9pMuzF+a7Bab5V5BAddHt1jUQ7arDtg49poBh/4KjS9m23GZDM7vTfJG2VPQAzUh2
-         P12jIyfO/I8HNlDipwLu84zUzkzPiI/aKa0j5djtz5gXGeP8lqa6w23BAX1ZMXZzE0aT
-         v5st73KLnPngG0ZWoXsa02hMRfQ9SkKyAA+dFiA0uXVngHA3asFiVP8mPSlpzRtt0bsn
-         9YArdaPMiQb9Wu2G5ojuZcRFv/3EUirWji6ZzbP4O1Gs4xNRdFYUa8J5j/aLfrJ22K8J
-         o0nQ==
-X-Gm-Message-State: AOJu0YxhmQRZtHPbK+/dO1zLimTFprzWUugwlEUg9nkPJBhDhaKdmCuj
-        r7+eWdk4hTy9o0yPTYxesy3kYg==
-X-Google-Smtp-Source: AGHT+IEAONeGtGXQL5OMvfLz4zVnvNRaE/NPqN7TVCaRAiiECgk2yb47kEGsYyVaCnTkcckP44AI3w==
-X-Received: by 2002:a05:6512:3710:b0:502:bdbd:841c with SMTP id z16-20020a056512371000b00502bdbd841cmr2848849lfr.33.1694462841235;
-        Mon, 11 Sep 2023 13:07:21 -0700 (PDT)
-Received: from [10.167.154.1] (178235177248.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.248])
-        by smtp.gmail.com with ESMTPSA id z19-20020a170906715300b00992e14af9b9sm5753258ejj.134.2023.09.11.13.07.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Sep 2023 13:07:20 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Mon, 11 Sep 2023 22:07:15 +0200
-Subject: [PATCH v3 2/2] phy: qcom-qmp-combo: initialize PCS_USB registers
-MIME-Version: 1.0
+        Mon, 11 Sep 2023 16:11:56 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FF601A7;
+        Mon, 11 Sep 2023 13:11:51 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24984C433C8;
+        Mon, 11 Sep 2023 20:11:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1694463111;
+        bh=ySOy1ntTpmfk22+fRD8pdPWyjkkC8+f/y/eC+bME0oE=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=MyPfMJI2SEc+Qk6sOGnLx9KeEb9kCrv+ifG7xCdKi/eQTgJ0CfIo4DzMU7NNUctKb
+         u0aO0ODwRsmRtIYihB0AATXinrSBJhEUKVqykwPfNuvKfmh1RMUG0N+BPEL7nY8yU7
+         vAUzQno0UmXmBpYEIn57u7JKaT+g9JBW63qulumsriu8Oi+Zf9VmwAhuoKlD1RYRi8
+         9PJ3qGQPiOI0D/ysEPTgpCsankGzekBhB/wXPwSrgoAph9He1Fe7/boAgRChMg6iw4
+         wap0FW6tVDyDfWxXo5VsnZ06U3dPBYrsHAFz2Qphhph/OpMS6/fT/+O0cntmYe6QOP
+         ajD+WhJkpwvxQ==
+Message-ID: <92058c25fb11b75ee0a2298a684825e9.sboyd@kernel.org>
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230829-topic-8550_usbphy-v3-2-34ec434194c5@linaro.org>
-References: <20230829-topic-8550_usbphy-v3-0-34ec434194c5@linaro.org>
-In-Reply-To: <20230829-topic-8550_usbphy-v3-0-34ec434194c5@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Adrien Thierry <athierry@redhat.com>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1694462835; l=1296;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=cNyDA6fMaENsuHCLNNVW+UYlzx4pIxp/iYgLeni49ug=;
- b=uHEXpp8NQFwG0H2NddAl1WapfQ5ssKAAw81IEZDNcf3fTfOUgytXxoDVsDQ9foqs+IqEJDHGw
- ptoxYYM09iNA2n89eJVs81tUR7PiSpIfuKVTYNJw+2k3HyugLS1GbuY
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <5a4805f7-f802-b1ba-9804-59c0fe6c7f26@quicinc.com>
+References: <20230901091823.30242-1-quic_luoj@quicinc.com> <20230901091823.30242-5-quic_luoj@quicinc.com> <27ae3297ad161fd67706db70b402db04.sboyd@kernel.org> <16d09acf-7bdd-04ee-6faf-936c0366df03@quicinc.com> <17681a9f756cc70a190c674c51b90140.sboyd@kernel.org> <5a4805f7-f802-b1ba-9804-59c0fe6c7f26@quicinc.com>
+Subject: Re: [PATCH v6 4/4] clk: qcom: add clock controller driver for qca8386/qca8084
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_srichara@quicinc.com
+To:     Jie Luo <quic_luoj@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, catalin.marinas@arm.com, conor+dt@kernel.org,
+        konrad.dybcio@linaro.org, krzysztof.kozlowski+dt@linaro.org,
+        mturquette@baylibre.com, p.zabel@pengutronix.de,
+        robh+dt@kernel.org, will@kernel.org
+Date:   Mon, 11 Sep 2023 13:11:48 -0700
+User-Agent: alot/0.10
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,40 +54,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently, PCS_USB registers that have their initialization data in a
-pcs_usb_tbl table are never initialized. Fix that.
+Quoting Jie Luo (2023-09-08 04:10:35)
+>=20
+>=20
+> Yes, the uniphy implements the clock provider that supports changing=20
+> rate, which will be upstream later, and nss_cc_mac5_rx_clk_src is the=20
+> special case, which is only used in the switch device qca8386.
 
-Fixes: fc64623637da ("phy: qcom-qmp-combo,usb: add support for separate PCS_USB region")
-Reported-by: Adrien Thierry <athierry@redhat.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 4 ++++
- 1 file changed, 4 insertions(+)
+Ok great.
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-index 8fd240dd5127..5e6fc8103e9d 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -2555,6 +2555,7 @@ static int qmp_combo_usb_power_on(struct phy *phy)
- 	void __iomem *tx2 = qmp->tx2;
- 	void __iomem *rx2 = qmp->rx2;
- 	void __iomem *pcs = qmp->pcs;
-+	void __iomem *pcs_usb = qmp->pcs_usb;
- 	void __iomem *status;
- 	unsigned int val;
- 	int ret;
-@@ -2576,6 +2577,9 @@ static int qmp_combo_usb_power_on(struct phy *phy)
- 
- 	qmp_combo_configure(pcs, cfg->pcs_tbl, cfg->pcs_tbl_num);
- 
-+	if (pcs_usb)
-+		qmp_combo_configure(pcs_usb, cfg->pcs_usb_tbl, cfg->pcs_usb_tbl_num);
-+
- 	if (cfg->has_pwrdn_delay)
- 		usleep_range(10, 20);
- 
+>=20
+> For the phy device qca8084(uniphy has only 312.5M fix clock which is=20
+> registered by device tree), this clock nss_cc_mac5_rx_clk_src is not used.
+>=20
+> The issue for the switch device(qca8386) here is the clock rate of=20
+> parent uniphy can't be changed because of the clock rate requirement of=20
+> branch clock, since the uniphy clock rate is decided by the current=20
+> working interface mode(PHY_INTERFACE_MODE_2500BASEX with 312.5M or=20
+> PHY_INTERFACE_MODE_SGMII with 125M).
 
--- 
-2.42.0
+Got it.
 
+>=20
+> For example, when the uniphy works on PHY_INTERFACE_MODE_2500BASEX, then =
+
+> the parent uniphy clock rate is 312.5M, which is decided by hardware and =
+
+> can't be changed. when a branch clock requires a 25M clock, the parent=20
+> uniphy clock maybe updated to 125M by clock framework if the flag=20
+> CLK_SET_RATE_PARENT is set here, but the actual hardware clock rate of=20
+> uniphy is still 315.5M since the uniphy still works in the interface=20
+> mode PHY_INTERFACE_MODE_2500BASEX.
+>=20
+
+If the parent rate can't change because CLK_SET_RATE_PARENT is missing
+and the hardware doesn't allow it, then perhaps instead of having a
+frequency table we should have rcg clk ops for determine_rate that
+simply looks at the parent rates and finds the rate closest to what is
+desired. And for the set_rate clk_op we can have it be simple and just
+program a fixed divider. The benefit is less frequency tables that don't
+do anything and less hard-coding of the frequency. I thought we already
+had those rcg clk_ops but I couldn't find them with a quick glance.
