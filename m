@@ -2,162 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E9CFB79BDD1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:16:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B59779BB3D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:12:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236135AbjIKVQZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:16:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55910 "EHLO
+        id S1344254AbjIKVNk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:13:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242953AbjIKQg2 (ORCPT
+        with ESMTP id S243768AbjIKRmR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 12:36:28 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37734D3;
-        Mon, 11 Sep 2023 09:36:23 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-986d8332f50so622213066b.0;
-        Mon, 11 Sep 2023 09:36:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1694450181; x=1695054981; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tn6ORcYdF7wmn9zYudPCVDeUReDbRM6yHR4pM4CXkGQ=;
-        b=nl5SiwbyX54Hy0jNU+vPyEf2BEHaaAAd9i1P3I2vwU1OLziQBT3fzU/cOsxfZsbsmQ
-         VyLrwQBFVYR63f6gOIkVeTuNNIZGWO2IhhjYmIMqSOwjpDS8FwR6zL+kcgk6EYmS7ElV
-         eWVqgx6SJWsCTYrJaLRGEBMt/Bdtfurq7m9ljkkPsGv4E3MDKgArQQLh5mfeuE0y1IQK
-         0QihY1yWabQutSzCp2U+KV7FeaYgLooYjYJIN+kEZOFWonk0J0TOjEHzFYZoEu0gxe00
-         t8cnev2XHmJoL4DTTVbr+HXNqjRjukjrGs7RPhQinAYnJe01kligiwMaMgXZLp7A1fBM
-         SX3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694450181; x=1695054981;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tn6ORcYdF7wmn9zYudPCVDeUReDbRM6yHR4pM4CXkGQ=;
-        b=M6FNdumC4Wd6AFBx5txdWPgaNTVvQHL8JhMWFV+hGTjR3jO0hdTslKG4Bs8TogilTv
-         qJeKmi/Jr1EQQQzSddlttG/efSHz8l75aaqxhETSJM/LzbVQrMDefjdbGBmuUAVueNfa
-         oojVFBFr0vvVQmQx38TI3J3iTF+2r510pZdE99LM61AC2rwge8yhsGbROubvEgs19FYY
-         RKP/TFBgAu6ly3x898tyAFijZ/iS4EPjFplkRbVScLvzA3bELXoIEpiHyCg9ILtskw9p
-         +Kd/ti5SwxjRxTLbAoZFts4kB+fn4QTwA8DE1L1mxDpz2sG71ZJRlzLHjrtbWxZHcnAM
-         oGaw==
-X-Gm-Message-State: AOJu0YwckpsVrfym9YeXvK9yb2Dr1MYsoBL2CHXxJ7JbTcbZf6+eEs+q
-        ZLaMyuhAMSKxZvF7ytkd7XA=
-X-Google-Smtp-Source: AGHT+IEZkDEwJehDR4fKggLpjoJhnXiAupV9qorq7MLXFhFfk7fRQqvtYUP3Mho6rsQ4juPA6IGloQ==
-X-Received: by 2002:a17:906:224a:b0:9a9:e6c3:ad28 with SMTP id 10-20020a170906224a00b009a9e6c3ad28mr9042772ejr.69.1694450181242;
-        Mon, 11 Sep 2023 09:36:21 -0700 (PDT)
-Received: from jernej-laptop.localnet (82-149-12-148.dynamic.telemach.net. [82.149.12.148])
-        by smtp.gmail.com with ESMTPSA id h17-20020a170906261100b00999bb1e01dfsm5534149ejc.52.2023.09.11.09.36.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Sep 2023 09:36:20 -0700 (PDT)
-From:   Jernej =?utf-8?B?xaBrcmFiZWM=?= <jernej.skrabec@gmail.com>
-To:     mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
-        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
-        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
-        hverkuil-cisco@xs4all.nl, nicolas.dufresne@collabora.com,
-        Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
-        kernel@collabora.com
-Subject: Re: [PATCH v6 14/18] media: verisilicon: vp9: Use destination buffer height
- to compute chroma offset
-Date:   Mon, 11 Sep 2023 18:36:19 +0200
-Message-ID: <3248154.aeNJFYEL58@jernej-laptop>
-In-Reply-To: <7da0a2ab-032a-9de9-e136-58f973238c5b@collabora.com>
-References: <20230901124414.48497-1-benjamin.gaignard@collabora.com>
- <4856958.31r3eYUQgx@jernej-laptop>
- <7da0a2ab-032a-9de9-e136-58f973238c5b@collabora.com>
+        Mon, 11 Sep 2023 13:42:17 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13020CC;
+        Mon, 11 Sep 2023 10:42:11 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1694454122; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=LJxcdjoBR7m4kZllUmnlGCpHFwlrPzBSMUB+gLhnwLGN1OmIs6573h5QZsVrnyJH3Q
+    nWhDKnS7JMUCpp0yoNDrzqM6TVbbSMCxUAKEjfg0MkTins+tP7HmnVMPyeDHyE/aVhZD
+    o6E2iRDfRuE4FNe4S79rLq44D4E9pmk8/zbwu8Tfj+B06vDYxzjZ3pvRre6EoQfM+xV5
+    W+Vc8xeNxjDKGqyMOddI9PZM9oaX8mjyTUV3/o/UT38sGsHV+SFW04/CYrGUkxJAWwUe
+    bWYdRHwMijkyNBVgM83t8UmQgC9/xKqGK+QyU1DlqlFGhJReN017POMBLoV10NGRNv9w
+    Ld4g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1694454122;
+    s=strato-dkim-0002; d=strato.com;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=lUGpYNu9vK0a8TgiT4snvzLq3GB+8pMHx5fquZ+AOBY=;
+    b=jQkzLlsKNGMCXJCwaXZ4UUZLP8v6Ql2hZz99RIwcH5LT0BaE4BTVsHL2ek+hHaSOBE
+    ZGOokN7DFu8aCbnjVRUXONg66ThbAUYpFE5fKZ/UmygCHgECXMj4OXVT+owY5djtpQY5
+    rRIYCObgsd/twv3AjByBQBhw20OVelchiChOjFF7FeAtL1JtjiNcKyxaryJfbKL4pQVA
+    Z6o/maRPosRyTenVpzYE9EFk+uqHnveRSFHEEMN+Pp16R+edTmUdcObMF00/2UYDPkvQ
+    bO/0/c0d2xLekfsBIk5oLD7LYBE2ZThXLzPAwNRqOMM2p5uoh9I7LNkLoXfNh6nPCC5Y
+    Hykg==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1694454122;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=lUGpYNu9vK0a8TgiT4snvzLq3GB+8pMHx5fquZ+AOBY=;
+    b=KmLNmdAXVR3yk+XOGz+oSY3WoD9Tv0S9AjJCElEmrDcg3A02nqhOQlVP0T+xXxSeaP
+    4Ihvr6gG87ggp9c2lkxCoKKZF+YJq86J/AY2J8oIkkwFM/IYDiZBXBL8M9kOuHSXICzN
+    DF+XRjq/VNIB3KwXocrja7XPGZX93h6TLAJlYYcGjcZSjYBEkBhAkohRysuRVp9rrz+1
+    R4GKi5U9EwaDnmjMwp51awUwWadMDK9oA+g9KCt31PcvYMpfTrHOAs4efLRPyKt1k8Kz
+    2+EfSXnz1l9kQ/z4D+QCwYoGGGOEuUMqh/PNVYoKh157oOim0zhAK3UPT8evaccEhgtK
+    gw0w==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1694454122;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=lUGpYNu9vK0a8TgiT4snvzLq3GB+8pMHx5fquZ+AOBY=;
+    b=5Li5ibQq5eWB+dXaKfKbiRBl/0grvZ24b8reXKziFbwtTVK8zdSj+ShcFMURNE614u
+    g0d0N7idhdo/lyIliHBg==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQjVd4CteZ/7jYgS+mLFY+H0JAn8u4l38TY="
+Received: from [192.168.244.3]
+    by smtp.strato.de (RZmta 49.8.2 DYNA|AUTH)
+    with ESMTPSA id 60372az8BHg1awK
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Mon, 11 Sep 2023 19:42:01 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+Subject: [PATCH 0/9] arm64: dts: qcom: msm8916/39: Reserve firmware memory
+ dynamically
+Date:   Mon, 11 Sep 2023 19:41:42 +0200
+Message-Id: <20230911-msm8916-rmem-v1-0-b7089ec3e3a1@gerhold.net>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFdR/2QC/x3MQQqAIBBA0avErBPUwKyrRIvSmZqFFgoRiHdPW
+ r7F/wUyJsYMc1cg4cOZr9ig+g7cucUDBftm0FIPctRShBzspIxIAYMga4nI7M6jh5bcCYnff7e
+ stX4LyF+6XgAAAA==
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>
+X-Mailer: b4 0.12.3
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dne ponedeljek, 11. september 2023 ob 10:55:02 CEST je Benjamin Gaignard=20
-napisal(a):
-> Le 10/09/2023 =C3=A0 15:21, Jernej =C5=A0krabec a =C3=A9crit :
-> > Hi Benjamin!
-> >=20
-> > Dne petek, 01. september 2023 ob 14:44:10 CEST je Benjamin Gaignard
-> >=20
-> > napisal(a):
-> >> Source and destination buffer height may not be the same because
-> >> alignment constraint are different.
-> >> Use destination height to compute chroma offset because we target
-> >> this buffer as hardware output.
-> >>=20
-> >> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-> >> Fixes: e2da465455ce ("media: hantro: Support VP9 on the G2 core")
-> >> ---
-> >>=20
-> >>   drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c | 4 +---
-> >>   1 file changed, 1 insertion(+), 3 deletions(-)
-> >>=20
-> >> diff --git a/drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c
-> >> b/drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c index
-> >> 6db1c32fce4d..1f3f5e7ce978 100644
-> >> --- a/drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c
-> >> +++ b/drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c
-> >> @@ -93,9 +93,7 @@ static int start_prepare_run(struct hantro_ctx *ctx,
-> >> const struct v4l2_ctrl_vp9_ static size_t chroma_offset(const struct
-> >> hantro_ctx *ctx,
-> >>=20
-> >>   			    const struct v4l2_ctrl_vp9_frame
-> >=20
-> > *dec_params)
-> >=20
-> >>   {
-> >>=20
-> >> -	int bytes_per_pixel =3D dec_params->bit_depth =3D=3D 8 ? 1 : 2;
-> >> -
-> >> -	return ctx->src_fmt.width * ctx->src_fmt.height * bytes_per_pixel;
-> >> +	return ctx->dst_fmt.width * ctx->dst_fmt.height * ctx->bit_depth /
-> >=20
-> > 8;
-> >=20
-> > Commit message doesn't mention bit_depth change at all. While I think
-> > there is no difference between dec_params->bit_depth and ctx->bit_depth,
-> > you shouldn't just use ordinary division. If bit_depth is 10, it will be
-> > rounded down. And if you decide to use bit_depth from context, please
-> > remove dec_params argument.
->=20
-> I will change this patch and create a helpers function for chroma and mot=
-ion
-> vectors offsets that VP9 and HEVC code will use since they are identical.
-> I don't see issue with the division. If you have in mind a solution please
-> write it so I could test it.
+Refactor the MSM8916 and MSM8939 device trees to make use of dynamic 
+memory reservations for the firmware regions, rather than hardcoding 
+fixed addresses for each device. This allows to keep most of the 
+definitions in the SoC.dtsi while defining the board-specific 
+properties (such as firmware size) separately for each device.
 
-Solution is same as the code that you removed:
-int bytes_per_pixel =3D dec_params->bit_depth =3D=3D 8 ? 1 : 2;
+The main motivation for this patch set is to simplify enabling the 
+modem on the various MSM8916/39 devices. The modem firmware size 
+differs on almost each device, which requires redefining *all* of
+the firmware reservations with newly calculated addresses to make
+room for the larger modem firmware. I've explained this in detail
+in a previous RFC:
+https://lore.kernel.org/linux-arm-msm/20230510-dt-resv-bottom-up-v1-4-3bf68873dbed@gerhold.net/
 
-Or alternatively:
-int bytes_per_pixel =3D DIV_ROUND_UP(dec_params->bit_depth, 8);
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+---
+Stephan Gerhold (9):
+      arm64: dts: qcom: msm8916: Disable venus by default
+      arm64: dts: qcom: msm8916/39: Disable GPU by default
+      arm64: dts: qcom: msm8916-ufi: Drop gps_mem for now
+      arm64: dts: qcom: msm8916: Reserve firmware memory dynamically
+      arm64: dts: qcom: msm8916: Reserve MBA memory dynamically
+      arm64: dts: qcom: msm8939: Reserve firmware memory dynamically
+      arm64: dts: qcom: msm8916/39: Disable unneeded firmware reservations
+      arm64: dts: qcom: msm8916/39: Move mpss_mem size to boards
+      arm64: dts: qcom: msm8916/39: Fix venus memory size
 
-Consider bit_depth being 10. With old code you get 2, with yours you get 1.
+ arch/arm64/boot/dts/qcom/apq8016-sbc.dts           | 25 ++++++++++++++
+ arch/arm64/boot/dts/qcom/apq8039-t2.dts            |  8 +++++
+ arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts   | 12 +++++++
+ .../boot/dts/qcom/msm8916-alcatel-idol347.dts      | 12 +++++++
+ arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts     | 12 +++++++
+ arch/arm64/boot/dts/qcom/msm8916-gplus-fl8005a.dts | 12 +++++++
+ arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts     | 12 +++++++
+ .../boot/dts/qcom/msm8916-longcheer-l8150.dts      | 21 ++++++++++--
+ .../boot/dts/qcom/msm8916-longcheer-l8910.dts      | 12 +++++++
+ .../dts/qcom/msm8916-samsung-a2015-common.dtsi     | 12 +++++++
+ .../boot/dts/qcom/msm8916-samsung-a3u-eur.dts      |  4 +++
+ .../boot/dts/qcom/msm8916-samsung-a5u-eur.dts      |  4 +++
+ .../dts/qcom/msm8916-samsung-e2015-common.dtsi     |  4 +++
+ .../boot/dts/qcom/msm8916-samsung-gt5-common.dtsi  | 12 +++++++
+ .../boot/dts/qcom/msm8916-samsung-j5-common.dtsi   | 12 +++++++
+ .../boot/dts/qcom/msm8916-samsung-serranove.dts    | 12 +++++++
+ arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi          | 33 +++++++++++-------
+ .../boot/dts/qcom/msm8916-wingtech-wt88047.dts     | 12 +++++++
+ arch/arm64/boot/dts/qcom/msm8916.dtsi              | 39 +++++++++++++++++-----
+ arch/arm64/boot/dts/qcom/msm8939-samsung-a7.dts    |  4 +++
+ .../dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts  |  8 +++++
+ arch/arm64/boot/dts/qcom/msm8939.dtsi              | 37 +++++++++++++++-----
+ 22 files changed, 288 insertions(+), 31 deletions(-)
+---
+base-commit: 0bb80ecc33a8fb5a682236443c1e740d5c917d1d
+change-id: 20230720-msm8916-rmem-f88fff6bcded
 
 Best regards,
-Jernej
-
->=20
-> Regards,
-> Benjamin
->=20
-> > Best regards,
-> > Jernej
-> >=20
-> >>   }
-> >>  =20
-> >>   static size_t mv_offset(const struct hantro_ctx *ctx,
-
-
-
+-- 
+Stephan Gerhold <stephan@gerhold.net>
 
