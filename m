@@ -2,175 +2,227 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 12A8079AF0F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 01:46:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E12479B13E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 01:51:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343659AbjIKVMN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:12:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47762 "EHLO
+        id S1343689AbjIKVMQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:12:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237406AbjIKMsZ (ORCPT
+        with ESMTP id S237756AbjIKNOW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 08:48:25 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E73EE4B;
-        Mon, 11 Sep 2023 05:48:19 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38BC35Gh013880;
-        Mon, 11 Sep 2023 12:48:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=+Cl05E6P52wxr9Cy98s8F10fhtxfqzhVr2uRA7Nhc/s=;
- b=nyJermdAWslYkHg0zyXyXmT3/sJF5CeoSzmq9gMP0h0aNeg9ufW4KeGzue7oX8jaOkbP
- qxzIv8LTCaYm7zhacaIPSeDXlcRT0w2h5p4thDffX/XjhonyJODPWIVAPDUNHuOOSA2G
- V1v/l6AiZZu/HrOeuDfFW8KVZ4jbz642MEA4kZnFQ+pfmGUXpafLhkyVncYT9MYCjJ2a
- OIp/vGs7N7yrut2hCv0mskIDzhmgAS9Q9DEJSueELS0j29oWKFi8jqL8C83UvlNrlmB0
- I/7rcX3k/b5lg5pub3jrJChaVyDuubu9SOpuhiH67lQQOj1+dZIiuxXYmuRM7rY/7D/M 9g== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t22hyg2ce-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 11 Sep 2023 12:48:03 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38BCm2ij006149
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 11 Sep 2023 12:48:02 GMT
-Received: from [10.218.5.19] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 11 Sep
- 2023 05:47:55 -0700
-Message-ID: <63d72a6f-ec05-1515-cd32-269d35d9a66c@quicinc.com>
-Date:   Mon, 11 Sep 2023 18:17:51 +0530
+        Mon, 11 Sep 2023 09:14:22 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29849E40
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 06:14:16 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-52f33659d09so2246248a12.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 06:14:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694438054; x=1695042854; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bEExl+Qnlpbjs/kQF5vqHTfDAzymWTPDJmQL5fGoUhU=;
+        b=O30Nefz8IpD/EzKpngLHnY7JAJMowqEtJBDBz6EbidBVShxjVVg18fwco1dm0yuV7J
+         8ufMa9xmKmpXXA/RIHFfoEG2iw/iOZkSSjzB+rny5fA3WXivYciCqlYdBYvlMKr/UjpT
+         1VaUDwXvjKhGq8+siWytucN8W+t8VTeIIpbfJ2i/U1EypxYanz2GV5BXBbK/rBia3333
+         4itCSPPZ/nE4FsFWkaHlp63Al6XLJsnyK8UNcvFdNt9VBKe0269sXCdjoEuBupY9sm9y
+         h85BgXWvnzqDUPMEDZQRN+Fz7olCfPx2FNTUruMvjOf4Kdi6UBB388Yovt14i/cornY7
+         RkEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694438054; x=1695042854;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bEExl+Qnlpbjs/kQF5vqHTfDAzymWTPDJmQL5fGoUhU=;
+        b=S4znzWr8syz5IvyOKLaY31eQgOFEG+IsOMVDaZh7OLOEhhtRd6K6Aep0J1u1AiwCzE
+         Na006qb2hHqsvAn1i12YAqp5B9UDvz74MP8gTT3BN3ZkEw2+jd6NIoxNQm8/T+S/RohO
+         J5th8I4QLNAMfABAMM4rFhyg6wtYlWZVaMSfGiE0eeCoG58Qmfm5Dg2RZ0KG/FBjEcva
+         Xh9Z+jqvF9GrJVNkKU1w+kUzDnF371H7dka0X0LFR20/jV5PBI0vKrwopPo1YLhvOhbJ
+         SvvrRIWXYjzc/McGpxnF0jKPva1l8jILOLgZBI3OQcvpSPunhJGpegDJkdkONLQBpij5
+         0asw==
+X-Gm-Message-State: AOJu0YzpYvo/V3UhqK4MVpPylYwqWJ4H6GzEsknvUpbAXwFE37FdALs0
+        6FWTWM2n69fYzR000vlGBmm3XQ==
+X-Google-Smtp-Source: AGHT+IEUw9IMod0ZXSwWnw531y8CCVcRYkIXJE/IS9VPSsi86yb58qunvIeGkEFV1EIPP7YnvjXyMQ==
+X-Received: by 2002:a17:906:535d:b0:9a3:c4f4:12de with SMTP id j29-20020a170906535d00b009a3c4f412demr5993428ejo.37.1694438054637;
+        Mon, 11 Sep 2023 06:14:14 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id kt8-20020a170906aac800b00988e953a586sm5313648ejb.61.2023.09.11.06.14.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Sep 2023 06:14:14 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     rfoss@kernel.org, todor.too@gmail.com, bryan.odonoghue@linaro.org,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
+        laurent.pinchart@ideasonboard.com, sakari.ailus@linux.intel.com,
+        andrey.konovalov@linaro.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v5 01/17] media: qcom: camss: Amalgamate struct resource with struct resource_ispif
+Date:   Mon, 11 Sep 2023 14:13:55 +0100
+Message-ID: <20230911131411.196033-2-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20230911131411.196033-1-bryan.odonoghue@linaro.org>
+References: <20230911131411.196033-1-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v2 4/6] clk: qcom: Use HW_CTRL_TRIGGER flag to switch
- video GDSC to HW mode
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>
-CC:     "Rafael J . Wysocki" <rafael@kernel.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Andy Gross" <agross@kernel.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        "Stephen Boyd" <sboyd@kernel.org>,
-        Taniya Das <tdas@qti.qualcomm.com>, <linux-pm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>
-References: <20230816145741.1472721-1-abel.vesa@linaro.org>
- <20230816145741.1472721-5-abel.vesa@linaro.org>
- <2fc0d771-cee2-4826-a62a-56ed4bfad3a2@linaro.org>
- <ZOXiUzxfs1cj3SWT@linaro.org>
- <07e93a9d-69ac-41b7-aa21-b855b97bf801@linaro.org>
- <ef1439f8-4a9b-53b4-34be-1229b39d2310@quicinc.com>
- <8257f7b3-dfb8-4683-85de-600f3b1ed54b@linaro.org>
- <f37d2dd8-d625-048e-9c21-bba710b40086@quicinc.com>
- <b5ae2ad9-f6c7-47d6-bab8-3f3fdb6b43e2@linaro.org>
- <8c88bca4-b562-0122-1451-ef9de7fd8737@quicinc.com>
- <5d4ba948-46e2-4b95-95a2-17775f4c9881@linaro.org>
-From:   Jagadeesh Kona <quic_jkona@quicinc.com>
-In-Reply-To: <5d4ba948-46e2-4b95-95a2-17775f4c9881@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Dpknb6oYYLPnAOcRwvFm5IQVmwnanzp3
-X-Proofpoint-GUID: Dpknb6oYYLPnAOcRwvFm5IQVmwnanzp3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-11_07,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 mlxlogscore=820 phishscore=0 spamscore=0
- impostorscore=0 mlxscore=0 adultscore=0 suspectscore=0 malwarescore=0
- bulkscore=0 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2308100000 definitions=main-2309110116
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+There is no good reason to differentiate the two resource structures
+here. As part of a general tidyup of the declaration and passing of
+resources within in the CAMSS driver it will be advantageous to have
+one unified resource structure.
 
+The two structures are very similar anyway thus leading more credence
+still to the argument there should be only one.
 
-On 9/7/2023 1:06 PM, Konrad Dybcio wrote:
-> On 7.09.2023 07:55, Jagadeesh Kona wrote:
->>
->>
->> On 9/4/2023 9:32 PM, Konrad Dybcio wrote:
->>> On 4.09.2023 11:27, Jagadeesh Kona wrote:
->>>>
->>>>
->>>> On 9/2/2023 5:33 PM, Konrad Dybcio wrote:
->>>>> On 28.08.2023 08:48, Jagadeesh Kona wrote:
->>>>>>
->>>>>>
->>>>>> On 8/26/2023 4:17 PM, Konrad Dybcio wrote:
->>>>>>> On 23.08.2023 12:41, Abel Vesa wrote:
->>>>>>>> On 23-08-16 19:56:46, Konrad Dybcio wrote:
->>>>>>>>> On 16.08.2023 16:57, Abel Vesa wrote:
->>>>>>>>>> From: Jagadeesh Kona <quic_jkona@quicinc.com>
->>>>>>>>>>
->>>>>>>>>> The current HW_CTRL flag switches the video GDSC to HW control mode as
->>>>>>>>>> part of GDSC enable itself, instead of that use HW_CTRL_TRIGGER flag to
->>>>>>>>>> give consumer drivers more control and switch the GDSC mode as and when
->>>>>>>>>> required.
->>>>>>>>>>
->>>>>>>>>> HW_CTRL_TRIGGER flag allows consumer drivers to switch the video GDSC to
->>>>>>>>>> HW/SW control modes at runtime using dev_pm_genpd_set_hwmode API.
->>>>>>>>>>
->>>>>>>>>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
->>>>>>>>>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
->>>>>>>>>> ---
->>>>>>>>> Do we have any use for the HW_CTRL flag?
->>>>>>>>>
->>>>>>>>> Perhaps it should be renamed to HW_CTRL_ALWAYS?
->>>>>>>>>
->>>>>>>>> Or even better, *if and only if* that is necessary, add a common
->>>>>>>>> property like "always_hw_managed" to the genpd code?
->>>>>>>>
->>>>>>>> The HW_CTRL flag is still needed for the consumers that expect the GDSC
->>>>>>>> to be have the HW control bit set right after it gets enabled.
->>>>>>> Guess the correct question here would be.. Are there any?
->>>>>>>
->>>>>>
->>>>>> Yes, Display GDSC(mdss_gdsc) is required to be controlled always in HW control mode when it is enabled.
->>>>> Oh really?
->>>>>
->>>>> Looking at msm-5.10 techpack, only the SDE RSC driver seems to
->>>>> trigger regulator fast mode (so, enabling gdsc hw_ctrl on downstream).
->>>>>
->>>>
->>>> Yes, on downstream, display GDSC has only one consumer(SDE RSC driver) and there are no other consumers. SDE RSC driver switches the GDSC to hw control mode once GDSC is enabled and leaves it in hw control mode. Thanks!
->>> Sorry for pulling your tongue here a bit, but would it only concern
->>> RPMh SoCs? Designs like SM6115 don't implement RSCs, should they not
->>> have HW_CTRL enabled at all times?
->>>
->>
->> Yes, for RPMh SoCs which have display RSC block, GDSC is switched to HW control mode. For SoCs which doesn't have display RSC block, display driver controls the GDSC in SW mode on downstream. Thanks!
-> Thanks for explaining!
-> 
-> One last question, I promise.. Should we switch the MDSS GDSC to
-> HW_CTRL mode only after we start controlling the DISP RSC from Linux,
-> or should it be done regardless (because of the RPMh solving algos)?
-> 
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+---
+ drivers/media/platform/qcom/camss/camss-ispif.c |  4 ++--
+ drivers/media/platform/qcom/camss/camss-ispif.h |  4 ++--
+ drivers/media/platform/qcom/camss/camss.c       | 14 +++++++-------
+ drivers/media/platform/qcom/camss/camss.h       |  8 +-------
+ 4 files changed, 12 insertions(+), 18 deletions(-)
 
- From GDSC driver, MDSS GDSC can be switched to HW_CTRL mode regardless. 
-Thanks!
+diff --git a/drivers/media/platform/qcom/camss/camss-ispif.c b/drivers/media/platform/qcom/camss/camss-ispif.c
+index 1c7e4b1b49401..61765b874b9a2 100644
+--- a/drivers/media/platform/qcom/camss/camss-ispif.c
++++ b/drivers/media/platform/qcom/camss/camss-ispif.c
+@@ -1095,7 +1095,7 @@ static int ispif_init_formats(struct v4l2_subdev *sd, struct v4l2_subdev_fh *fh)
+  * Return 0 on success or a negative error code otherwise
+  */
+ int msm_ispif_subdev_init(struct camss *camss,
+-			  const struct resources_ispif *res)
++			  const struct resources *res)
+ {
+ 	struct device *dev = camss->dev;
+ 	struct ispif_device *ispif = camss->ispif;
+@@ -1152,7 +1152,7 @@ int msm_ispif_subdev_init(struct camss *camss,
+ 
+ 	/* Interrupt */
+ 
+-	ret = platform_get_irq_byname(pdev, res->interrupt);
++	ret = platform_get_irq_byname(pdev, res->interrupt[0]);
+ 	if (ret < 0)
+ 		return ret;
+ 
+diff --git a/drivers/media/platform/qcom/camss/camss-ispif.h b/drivers/media/platform/qcom/camss/camss-ispif.h
+index fdf28e68cc7d8..c7c41f7afcaad 100644
+--- a/drivers/media/platform/qcom/camss/camss-ispif.h
++++ b/drivers/media/platform/qcom/camss/camss-ispif.h
+@@ -66,10 +66,10 @@ struct ispif_device {
+ 	struct camss *camss;
+ };
+ 
+-struct resources_ispif;
++struct resources;
+ 
+ int msm_ispif_subdev_init(struct camss *camss,
+-			  const struct resources_ispif *res);
++			  const struct resources *res);
+ 
+ int msm_ispif_register_entities(struct ispif_device *ispif,
+ 				struct v4l2_device *v4l2_dev);
+diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+index c6df862c79e39..fa0eb30d77c26 100644
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -93,14 +93,14 @@ static const struct resources csid_res_8x16[] = {
+ 	},
+ };
+ 
+-static const struct resources_ispif ispif_res_8x16 = {
++static const struct resources ispif_res_8x16 = {
+ 	/* ISPIF */
+ 	.clock = { "top_ahb", "ahb", "ispif_ahb",
+ 		   "csi0", "csi0_pix", "csi0_rdi",
+ 		   "csi1", "csi1_pix", "csi1_rdi" },
+ 	.clock_for_reset = { "vfe0", "csi_vfe0" },
+ 	.reg = { "ispif", "csi_clk_mux" },
+-	.interrupt = "ispif"
++	.interrupt = { "ispif" }
+ 
+ };
+ 
+@@ -234,7 +234,7 @@ static const struct resources csid_res_8x96[] = {
+ 	}
+ };
+ 
+-static const struct resources_ispif ispif_res_8x96 = {
++static const struct resources ispif_res_8x96 = {
+ 	/* ISPIF */
+ 	.clock = { "top_ahb", "ahb", "ispif_ahb",
+ 		   "csi0", "csi0_pix", "csi0_rdi",
+@@ -243,7 +243,7 @@ static const struct resources_ispif ispif_res_8x96 = {
+ 		   "csi3", "csi3_pix", "csi3_rdi" },
+ 	.clock_for_reset = { "vfe0", "csi_vfe0", "vfe1", "csi_vfe1" },
+ 	.reg = { "ispif", "csi_clk_mux" },
+-	.interrupt = "ispif"
++	.interrupt = { "ispif" }
+ };
+ 
+ static const struct resources vfe_res_8x96[] = {
+@@ -410,7 +410,7 @@ static const struct resources csid_res_660[] = {
+ 	}
+ };
+ 
+-static const struct resources_ispif ispif_res_660 = {
++static const struct resources ispif_res_660 = {
+ 	/* ISPIF */
+ 	.clock = { "top_ahb", "ahb", "ispif_ahb",
+ 		   "csi0", "csi0_pix", "csi0_rdi",
+@@ -419,7 +419,7 @@ static const struct resources_ispif ispif_res_660 = {
+ 		   "csi3", "csi3_pix", "csi3_rdi" },
+ 	.clock_for_reset = { "vfe0", "csi_vfe0", "vfe1", "csi_vfe1" },
+ 	.reg = { "ispif", "csi_clk_mux" },
+-	.interrupt = "ispif"
++	.interrupt = { "ispif" }
+ };
+ 
+ static const struct resources vfe_res_660[] = {
+@@ -1122,7 +1122,7 @@ static int camss_init_subdevices(struct camss *camss)
+ {
+ 	const struct resources *csiphy_res;
+ 	const struct resources *csid_res;
+-	const struct resources_ispif *ispif_res;
++	const struct resources *ispif_res;
+ 	const struct resources *vfe_res;
+ 	unsigned int i;
+ 	int ret;
+diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
+index f6c326cb853b8..e95211cdb1fd6 100644
+--- a/drivers/media/platform/qcom/camss/camss.h
++++ b/drivers/media/platform/qcom/camss/camss.h
+@@ -44,18 +44,12 @@
+ struct resources {
+ 	char *regulators[CAMSS_RES_MAX];
+ 	char *clock[CAMSS_RES_MAX];
++	char *clock_for_reset[CAMSS_RES_MAX];
+ 	u32 clock_rate[CAMSS_RES_MAX][CAMSS_RES_MAX];
+ 	char *reg[CAMSS_RES_MAX];
+ 	char *interrupt[CAMSS_RES_MAX];
+ };
+ 
+-struct resources_ispif {
+-	char *clock[CAMSS_RES_MAX];
+-	char *clock_for_reset[CAMSS_RES_MAX];
+-	char *reg[CAMSS_RES_MAX];
+-	char *interrupt;
+-};
+-
+ struct icc_bw_tbl {
+ 	u32 avg;
+ 	u32 peak;
+-- 
+2.42.0
 
-Regards,
-Jagadeesh
-
-> Konrad
