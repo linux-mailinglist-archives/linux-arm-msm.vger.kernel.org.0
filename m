@@ -2,62 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C1BFE79B6E8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:06:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EB3479BB96
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:13:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344191AbjIKVNb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:13:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60444 "EHLO
+        id S240665AbjIKVLM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:11:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241643AbjIKPLJ (ORCPT
+        with ESMTP id S241653AbjIKPLL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 11:11:09 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92888E5F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 08:11:02 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-52f3ba561d9so3788030a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 08:11:02 -0700 (PDT)
+        Mon, 11 Sep 2023 11:11:11 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A952AE4D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 08:11:05 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-52a40cf952dso6052173a12.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 08:11:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694445061; x=1695049861; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1694445064; x=1695049864; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=116M1Uf4FxkGVcXqN1wBq1UncYtXwEEG2hN8+ByRx2U=;
-        b=Z+Rk4WRCrsSSqttXHrfsPbU2dGv0kPljBb16JEutqFxIf+yVBmWSrpttdE5mUXy7ZO
-         VqUO65FbRH3ib2FzEsmqJTetjhaMxe8doFOOXVCSfBI9Z8xqpq3GRxWvEus42o1FtA3m
-         SkcG+GtRyqhg9HqsoA6NpOj0PrHVY6wO8ts8qpYszaSG3U1XLL+laULKRXqnzPS91gYZ
-         JbzbmVzc9H3xfJLFdUVKspXGTBloFezXxlncrjv4MBFqwde/OkbLPZirHeXepDIx69LZ
-         RUIc+TN/gKy0lLm4hm9aoKHM8agLxXCg9g4TKNhyETeIWx5R4SKbskROhTZoAoNjuslV
-         UG+Q==
+        bh=HVLqCA/ecvInY4c6THAO1tIs6dKSTPnQEjLvdL4WYHk=;
+        b=pBXgNVDCIDhRiCpll+KwCkJAwuYSnUBAmSmJ2RfBzA0adoxzdEzuS/07u00GO10jmc
+         1nprwi6uHOxrzAEg/aZf9oCALcvKChIMjEaHOyKw9NJ3uYCN0/G6RT1Tky2OTPi51IZ0
+         5OgtAA3Z+q1MGLr168WDWdR7MMZVeZO8DS/mH5trz/QficRIvIXFBwSNeHF6QST+nwk4
+         ScEHvVcNBkihiUg+W2vm2OUIGBVFIS+u1VWwfd+wvHGLxrBMnBaj64aHqMMecxUPwNVE
+         +bfCLeZCT3dXUzmuuoZC2H2qiE2UWh74DpC9oAzJCfDYZUFOu6hqGjh26LfS0/em0HQb
+         qPBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694445061; x=1695049861;
+        d=1e100.net; s=20230601; t=1694445064; x=1695049864;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=116M1Uf4FxkGVcXqN1wBq1UncYtXwEEG2hN8+ByRx2U=;
-        b=uCQvmIbmBJ4gBc+Qs+VoZ7FLE7ecgaUSDBUU7DZmdk/HTgVxDFXM0/quYs0c7EgZZC
-         Krf6YJqwqXkYhPk7EEekaYILd7FAAiPvVQs2362DZdQ3Jbvy8vw8CdLhxCiWx4Z0Fmbr
-         LCkwE+gnIxK/TPsaGwrZKokEJtqHk0VCORdOHsa5Mwj3eyG9DlYvl3Wy69cGH6/nDMlQ
-         R94P7lrpybLmKSyHpZiU3ejvf2gr0hVlIseig06ZigIBjcOQ7wXi7j7EAQ87AGbQevL4
-         0aITTnh6zjGj9yANMkoX/EjeBLfd3h+tRSRqqAdKm1UZpHJqj8PIA8NVBIS+4B0cAbna
-         gKkg==
-X-Gm-Message-State: AOJu0Yw4ShJIGcvtEgANiIALzG1jeM58ZqsnhiToEhprQJ3t2zNzOXlC
-        zP5m7xAroYNWkaFfhzleWHF7uA==
-X-Google-Smtp-Source: AGHT+IEvvAGK6lqIPwjV7PEMM+tywxepjWAX/NQ/dlwbyxSX9kJBmKg9i02x5I20YkqjdqPrl/H/Hw==
-X-Received: by 2002:a05:6402:124f:b0:525:8124:20fe with SMTP id l15-20020a056402124f00b00525812420femr14949632edw.18.1694445061156;
-        Mon, 11 Sep 2023 08:11:01 -0700 (PDT)
+        bh=HVLqCA/ecvInY4c6THAO1tIs6dKSTPnQEjLvdL4WYHk=;
+        b=XLnwRzNe3hEEqUabRhmIJtlf7CXfcMTg7EVdDwjVoORIfSFr8GtSYaNYY3RFiuyhb5
+         KueXngZ1uSTL1IwQ927a01KpxKhuF3+2RZrOzwHg/7YQ69Ibv1ZYPi8WofTjFgmeYJzC
+         n6VWoyQwX0ctIyW/ykisCtkZM/AAv9XFnQwX5vilmwwK+9uQHVtZl1DBTKKeJVfHt/bC
+         p178fiUQZsy+BhmzNRlF0deQ4Es+6Q1faBe2s1BWA0MCepn4w1SxZVED/Z4v0dmzsnOw
+         kjjiCsA6QRwDMGtscw/4Trvz1+k4v48XYEIcKSz7qvhPFOjwp7kBqqO8PcAUEm8GsnRD
+         Ogsw==
+X-Gm-Message-State: AOJu0YzSaPGt+Ww1IpuaJWvP4kNvZeTRDvIoiB9rMbPewKXe785hnsVI
+        0uHyHfp5PWVMqe0d83bnRfmIMg==
+X-Google-Smtp-Source: AGHT+IHNS4PmdSp7TCHy+BYzxHt4JAK6ZnEugthWVcBVLN+hPi2VGwGiI2QReNZ350wvDNw4TdzY3Q==
+X-Received: by 2002:aa7:c904:0:b0:525:70b3:72c2 with SMTP id b4-20020aa7c904000000b0052570b372c2mr8260935edt.14.1694445064234;
+        Mon, 11 Sep 2023 08:11:04 -0700 (PDT)
 Received: from [10.167.154.1] (178235177061.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.61])
-        by smtp.gmail.com with ESMTPSA id n4-20020a056402060400b0052a3ad836basm4681281edv.41.2023.09.11.08.10.59
+        by smtp.gmail.com with ESMTPSA id n4-20020a056402060400b0052a3ad836basm4681281edv.41.2023.09.11.08.11.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Sep 2023 08:11:00 -0700 (PDT)
+        Mon, 11 Sep 2023 08:11:03 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Mon, 11 Sep 2023 17:10:32 +0200
-Subject: [PATCH RFT 18/20] media: venus: pm_helpers: Commonize getting
- clocks and GenPDs
+Date:   Mon, 11 Sep 2023 17:10:34 +0200
+Subject: [PATCH RFT 20/20] media: venus: pm_helpers: Commonize venc_get()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230911-topic-mars-v1-18-a7d38bf87bdb@linaro.org>
+Message-Id: <20230911-topic-mars-v1-20-a7d38bf87bdb@linaro.org>
 References: <20230911-topic-mars-v1-0-a7d38bf87bdb@linaro.org>
 In-Reply-To: <20230911-topic-mars-v1-0-a7d38bf87bdb@linaro.org>
 To:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
@@ -75,15 +74,15 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1694445027; l=3351;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1694445027; l=3254;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=9AKWBnlvj+Q6WSygovq46dA98O8B8twaOC1bOaWKQLA=;
- b=laMrLpKy/LbvHFS/2/vbvWUy7x94OHugyBeOVM5X6pDzlPuwylz6rzNcHKYsAIXhTmLLk01xT
- kB9YPsDJwwxDP0sYjSuG/sAqkJOojLShhcDAUhZpqAzpWIXt8wnZ0TP
+ bh=vxb2w5wVyktQxR9j1Q6sGaFooRnQRJnrKSI6AeZH57o=;
+ b=33oCSwwyUM3j+SIJKcWOvs5hYfI+HUSZ161Pxwvi8UnJdtfQsPyPhxkcIPoZoYyPRQOt5RpZ5
+ YIhCik1ceBvCJQ7lLPtb6OObauaxfo62YuhZh+REfQNU9nFAd5JdjmU
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -92,97 +91,99 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As has been the story with the past few commits, much of the resource
-acquisition logic is totally identical between different generations
-and there's no good reason to invent a new function for each one.
-
-Commonize core_get() and rename it to venus_get_resources() to be more
-meaningful.
+This function can be very easily commonized between the supported gens.
+Do so!
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/media/platform/qcom/venus/core.c       | 8 +++-----
- drivers/media/platform/qcom/venus/pm_helpers.c | 5 +----
- drivers/media/platform/qcom/venus/pm_helpers.h | 3 +--
- 3 files changed, 5 insertions(+), 11 deletions(-)
+ drivers/media/platform/qcom/venus/pm_helpers.c | 19 -------------------
+ drivers/media/platform/qcom/venus/pm_helpers.h |  1 -
+ drivers/media/platform/qcom/venus/venc.c       |  9 +++++++--
+ 3 files changed, 7 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index 42bfcef9449a..e8a16355d39e 100644
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -337,11 +337,9 @@ static int venus_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
--	if (core->pm_ops->core_get) {
--		ret = core->pm_ops->core_get(core);
--		if (ret)
--			return ret;
--	}
-+	ret = venus_get_resources(core);
-+	if (ret)
-+		return ret;
- 
- 	ret = dma_set_mask_and_coherent(dev, res->dma_mask);
- 	if (ret)
 diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-index 741b29cc76c9..6e282a69c7c5 100644
+index dfb89d2e7387..9546ad577b5d 100644
 --- a/drivers/media/platform/qcom/venus/pm_helpers.c
 +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-@@ -326,7 +326,6 @@ static int load_scale_v1(struct venus_inst *inst)
+@@ -362,13 +362,6 @@ static int vdec_power_v3(struct device *dev, int on)
+ 	return ret;
  }
  
- static const struct venus_pm_ops pm_ops_v1 = {
--	.core_get = venus_clks_get,
- 	.load_scale = load_scale_v1,
- };
- 
-@@ -395,7 +394,6 @@ static int venc_power_v3(struct device *dev, int on)
- }
+-static int venc_get_v3(struct device *dev)
+-{
+-	struct venus_core *core = dev_get_drvdata(dev);
+-
+-	return vcodec_clks_get(core, dev, 1);
+-}
+-
+ static int venc_power_v3(struct device *dev, int on)
+ {
+ 	struct venus_core *core = dev_get_drvdata(dev);
+@@ -388,7 +381,6 @@ static int venc_power_v3(struct device *dev, int on)
  
  static const struct venus_pm_ops pm_ops_v3 = {
--	.core_get = venus_clks_get,
- 	.vdec_get = vdec_get_v3,
  	.vdec_power = vdec_power_v3,
- 	.venc_get = venc_get_v3,
-@@ -926,7 +924,7 @@ static int core_resets_reset(struct venus_core *core)
- 	return reset_control_bulk_deassert(res->resets_num, core->resets);
+-	.venc_get = venc_get_v3,
+ 	.venc_power = venc_power_v3,
+ 	.load_scale = load_scale_v1,
+ };
+@@ -784,16 +776,6 @@ static int vdec_power_v4(struct device *dev, int on)
+ 	return ret;
  }
  
--static int core_get_v4(struct venus_core *core)
-+int venus_get_resources(struct venus_core *core)
+-static int venc_get_v4(struct device *dev)
+-{
+-	struct venus_core *core = dev_get_drvdata(dev);
+-
+-	if (!legacy_binding)
+-		return 0;
+-
+-	return vcodec_clks_get(core, dev, 1);
+-}
+-
+ static void venc_put_v4(struct device *dev)
  {
- 	struct device *dev = core->dev;
- 	const struct venus_resources *res = core->res;
-@@ -1114,7 +1112,6 @@ static int load_scale_v4(struct venus_inst *inst)
- }
- 
+ 	struct venus_core *core = dev_get_drvdata(dev);
+@@ -1096,7 +1078,6 @@ static int load_scale_v4(struct venus_inst *inst)
  static const struct venus_pm_ops pm_ops_v4 = {
--	.core_get = core_get_v4,
- 	.vdec_get = vdec_get_v4,
  	.vdec_put = vdec_put_v4,
  	.vdec_power = vdec_power_v4,
+-	.venc_get = venc_get_v4,
+ 	.venc_put = venc_put_v4,
+ 	.venc_power = venc_power_v4,
+ 	.coreid_power = coreid_power_v4,
 diff --git a/drivers/media/platform/qcom/venus/pm_helpers.h b/drivers/media/platform/qcom/venus/pm_helpers.h
-index 3014b39aa6e3..7a55a55029f3 100644
+index 4afc57dac865..cbf54e6c6eab 100644
 --- a/drivers/media/platform/qcom/venus/pm_helpers.h
 +++ b/drivers/media/platform/qcom/venus/pm_helpers.h
-@@ -10,8 +10,6 @@ struct venus_core;
- #define POWER_OFF	0
- 
- struct venus_pm_ops {
--	int (*core_get)(struct venus_core *core);
--
- 	int (*vdec_get)(struct device *dev);
+@@ -13,7 +13,6 @@ struct venus_pm_ops {
  	void (*vdec_put)(struct device *dev);
  	int (*vdec_power)(struct device *dev, int on);
-@@ -28,6 +26,7 @@ struct venus_pm_ops {
- const struct venus_pm_ops *venus_pm_get(enum hfi_version version);
- int venus_core_power(struct venus_core *core, int on);
- void vcodec_domains_put(struct venus_core *core);
-+int venus_get_resources(struct venus_core *core);
  
- static inline int venus_pm_load_scale(struct venus_inst *inst)
- {
+-	int (*venc_get)(struct device *dev);
+ 	void (*venc_put)(struct device *dev);
+ 	int (*venc_power)(struct device *dev, int on);
+ 
+diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+index 44b13696cf82..fd3a1dd7f16c 100644
+--- a/drivers/media/platform/qcom/venus/venc.c
++++ b/drivers/media/platform/qcom/venus/venc.c
+@@ -1557,8 +1557,13 @@ static int venc_probe(struct platform_device *pdev)
+ 
+ 	platform_set_drvdata(pdev, core);
+ 
+-	if (core->pm_ops->venc_get) {
+-		ret = core->pm_ops->venc_get(dev);
++	/*
++	 * If the vcodec core clock is missing by now, it either doesn't exist
++	 * (8916) or deprecated bindings with pre-assigned core functions and
++	 * resources under the decoder node are in use.
++	 */
++	if (!core->vcodec_core_clks[1]) {
++		ret = vcodec_clks_get(core, dev, 1);
+ 		if (ret)
+ 			return ret;
+ 	}
 
 -- 
 2.42.0
