@@ -2,139 +2,227 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E3F579B22D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 01:58:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2951B79B0CE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 01:50:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343699AbjIKVMU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:12:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43380 "EHLO
+        id S1344212AbjIKVNd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:13:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236198AbjIKJzP (ORCPT
+        with ESMTP id S236219AbjIKJ7t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 05:55:15 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5345DE67;
-        Mon, 11 Sep 2023 02:55:11 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38B59m6K027720;
-        Mon, 11 Sep 2023 09:54:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=qcppdkim1;
- bh=r3cEFetEC69myoZ2rZNfopgEDH/i+rN96x2jjR/6AgA=;
- b=GCUl7IheVFl2ZdDjIDQuOO5M/Boc5GlhEPZ9jTF/cwj7dAN8LIRHMaq0u5L7RrW+8hGs
- 8UxAkn2MMCArUvaD/FpoZYaHAlnlffaw/DeiFfEj9Yv7GU/FqUdWQ9fj5a+wsf56ZspO
- gRGeLWleorNyIWEOR3dHP4GhnzG7EmKLWFr/tcshMCnxbYqpIUYVHYgSp1dLJKe5i9WR
- QE6yb4F5NFYVuTPzs+RecIljqP7v+vFo76gQIEuRR1aFUNZFuNkk0hhd4RgRoOA5fEEL
- NHR7y4rF7nezhb4rhedTqpEVvZruuJ9kj4IyqgnAZpR6pbF0g9rV7bS+SOeX7SZw0WYc nQ== 
-Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t0gx9uewc-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 11 Sep 2023 09:54:35 +0000
-Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-        by APTAIPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 38B9sXnZ009626;
-        Mon, 11 Sep 2023 09:54:33 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 3t0hsk9q26-1;
-        Mon, 11 Sep 2023 09:54:33 +0000
-Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 38B9sXDk009621;
-        Mon, 11 Sep 2023 09:54:33 GMT
-Received: from cbsp-sh-gv.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
-        by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 38B9sX2R009620;
-        Mon, 11 Sep 2023 09:54:33 +0000
-Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 4098150)
-        id 48AB84879; Mon, 11 Sep 2023 17:54:32 +0800 (CST)
-From:   Qiang Yu <quic_qianyu@quicinc.com>
-To:     mani@kernel.org, quic_jhugo@quicinc.com
-Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
-        quic_mrana@quicinc.com, Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        Qiang Yu <quic_qianyu@quicinc.com>
-Subject: [PATCH 1/2] bus: mhi: host: Add spinlock to protect WP access when queueing TREs
-Date:   Mon, 11 Sep 2023 17:54:28 +0800
-Message-Id: <1694426069-74140-2-git-send-email-quic_qianyu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1694426069-74140-1-git-send-email-quic_qianyu@quicinc.com>
-References: <1694426069-74140-1-git-send-email-quic_qianyu@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: sIOFoJVdiUw_A2hDSO6A8JLua0ZAliDf
-X-Proofpoint-GUID: sIOFoJVdiUw_A2hDSO6A8JLua0ZAliDf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-11_06,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
- mlxscore=0 lowpriorityscore=0 bulkscore=0 mlxlogscore=781 malwarescore=0
- suspectscore=0 adultscore=0 priorityscore=1501 impostorscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309110091
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=no
-        autolearn_force=no version=3.4.6
+        Mon, 11 Sep 2023 05:59:49 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EECEE69
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 02:59:42 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-99c1d03e124so522366066b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 02:59:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1694426381; x=1695031181; darn=vger.kernel.org;
+        h=in-reply-to:references:message-id:to:from:subject:cc:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=H4q2sE+nIlzdDQo1wwer1+w9izjQ9tSODQcg+90cI/s=;
+        b=jSD15mYGTWO5ekKGi593w4g+e7ueZOOCflWEaLq7haQESzPQ+DLgErskn11aF13xXg
+         iyw2/SLAmXrkNHr53SgbII/b0SvFZV0ZGQnRxrw4T9hg3e6mH7zVz17YbBmV3cMShYay
+         bCVph7bj1UAZzTMdZRpgQxvd16qkzHxRcykHgL/0dslYH/0UjrdJTzyASEvDvsPao4le
+         riLhYhmaj3+bW5Sv2ZLFuKBMY8M7cVWFMMz7ASkiEYTAu4C/vlt9FSH/+Tx2R86BR6/1
+         pKNK5MuhxIXEgxnom5cSYkTTqysawLsJdcHIxfDJPWz2pxH3UsPwFM6cWzx1+YfOJPRC
+         1U0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694426381; x=1695031181;
+        h=in-reply-to:references:message-id:to:from:subject:cc:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=H4q2sE+nIlzdDQo1wwer1+w9izjQ9tSODQcg+90cI/s=;
+        b=FnjeHzqcYnqfcUR1hhbFYgwoVPqmCYeAOwxIWsCrMnIfddasaCv7Lz6kXJlphkRrpF
+         llDgb5RSiv7FMb8iDzjq19AlHAu5QDgRmhthhZivZk0Z7VI8i6yY2yBNeFzlObiX2Ex/
+         SHmV8IVUgmcTJR8SZ05guKj8ZaTs4Ms1Kg6rtCPbwJ8r117CSu00vXqA9+m16PqN8GL9
+         OR+XHLp6kzlziwlaefdLte+Ev4tynwVKHCHZgmKBbdm+G7nSZ4c/a5X5SA/68/Baj8rZ
+         M3DgNoieAt1iRXzptPDzaA+C8vZgyYGp8MTpAnxM6ceFuaAzbIYTA5U0kyc3nVYPk2hP
+         nJPA==
+X-Gm-Message-State: AOJu0YzURqtrI53uhSbnLWkxxMAfzlZVZbS8MIPQJ6LW1Dc1sAoWXiF5
+        XwuwL5SDHUptEmuCKZBom6AuLg==
+X-Google-Smtp-Source: AGHT+IHaH1tUVrRWgxCIcILhOE8tAFxtIWyr4iIxgNdhrWJ59XIwWMwYw8gM0nfQEgcQ8f2sEyoPJA==
+X-Received: by 2002:a17:906:5a51:b0:9a1:ffa7:d2da with SMTP id my17-20020a1709065a5100b009a1ffa7d2damr7237115ejc.17.1694426380363;
+        Mon, 11 Sep 2023 02:59:40 -0700 (PDT)
+Received: from localhost (k10064.upc-k.chello.nl. [62.108.10.64])
+        by smtp.gmail.com with ESMTPSA id h3-20020a170906718300b0098e34446464sm5104386ejk.25.2023.09.11.02.59.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Sep 2023 02:59:39 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Mon, 11 Sep 2023 11:59:38 +0200
+Cc:     <cros-qcom-dts-watchers@chromium.org>,
+        "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        "Conor Dooley" <conor+dt@kernel.org>,
+        "Srinivas Kandagatla" <srinivas.kandagatla@linaro.org>,
+        "Linus Walleij" <linus.walleij@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        "Viresh Kumar" <viresh.kumar@linaro.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>,
+        <phone-devel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH 04/11] arm64: dts: qcom: pm7250b: make SID configurable
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
+        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>
+Message-Id: <CVFZZ0YSWQ6J.2AKRML6LWRMUH@otso>
+X-Mailer: aerc 0.15.2
+References: <20230830-fp5-initial-v1-0-5a954519bbad@fairphone.com>
+ <20230830-fp5-initial-v1-4-5a954519bbad@fairphone.com>
+ <b82f4683-e8b5-b424-8f7a-6d2ba1cab61f@linaro.org>
+ <CV6NF0466658.20DGU7QKF2UBR@otso>
+ <CAA8EJpr1+W3f08X-FpiiVrJ98kg52HaMwbbKn=fG15Whm4C8aQ@mail.gmail.com>
+ <728003b9-db27-fdc0-e761-197a02a38c24@linaro.org>
+ <CAA8EJpoXreHpxZQ2G10n0OiQzUX4ffk=gvo87dAU4-r+Svqpeg@mail.gmail.com>
+ <CVAUDGBO4S08.1F0O66ZE6I4IG@otso> <CVFY7D7ND3WS.2B2EYB4ZO86P@otso>
+ <cae7261a-6727-6163-1420-01039bfb8396@linaro.org>
+In-Reply-To: <cae7261a-6727-6163-1420-01039bfb8396@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bhaumik Bhatt <bbhatt@codeaurora.org>
-
-Protect WP accesses such that multiple threads queueing buffers for
-incoming data do not race and access the same WP twice. Ensure read and
-write locks for the channel are not taken in succession by dropping the
-read lock from parse_xfer_event() such that a callback given to client
-can potentially queue buffers and acquire the write lock in that process.
-Any queueing of buffers should be done without channel read lock acquired
-as it can result in multiple locks and a soft lockup.
-
-Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+On Mon Sep 11, 2023 at 11:44 AM CEST, Krzysztof Kozlowski wrote:
+> On 11/09/2023 10:34, Luca Weiss wrote:
+> > On Tue Sep 5, 2023 at 10:30 AM CEST, Luca Weiss wrote:
+> >> On Thu Aug 31, 2023 at 2:27 PM CEST, Dmitry Baryshkov wrote:
+> >>> On Thu, 31 Aug 2023 at 14:54, Krzysztof Kozlowski
+> >>> <krzysztof.kozlowski@linaro.org> wrote:
+> >>>>
+> >>>> On 31/08/2023 13:33, Dmitry Baryshkov wrote:
+> >>>>> On Thu, 31 Aug 2023 at 13:13, Luca Weiss <luca.weiss@fairphone.com>=
+ wrote:
+> >>>>>>
+> >>>>>> On Wed Aug 30, 2023 at 12:06 PM CEST, Krzysztof Kozlowski wrote:
+> >>>>>>> On 30/08/2023 11:58, Luca Weiss wrote:
+> >>>>>>>> Like other Qualcomm PMICs the PM7250B can be used on different a=
+ddresses
+> >>>>>>>> on the SPMI bus. Use similar defines like the PMK8350 to make th=
+is
+> >>>>>>>> possible.
+> >>>>>>>>
+> >>>>>>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> >>>>>>>> ---
+> >>>>>>>>  arch/arm64/boot/dts/qcom/pm7250b.dtsi | 23 ++++++++++++++++----=
 ---
- drivers/bus/mhi/host/main.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+> >>>>>>>>  1 file changed, 16 insertions(+), 7 deletions(-)
+> >>>>>>>>
+> >>>>>>>> diff --git a/arch/arm64/boot/dts/qcom/pm7250b.dtsi b/arch/arm64/=
+boot/dts/qcom/pm7250b.dtsi
+> >>>>>>>> index e8540c36bd99..3514de536baa 100644
+> >>>>>>>> --- a/arch/arm64/boot/dts/qcom/pm7250b.dtsi
+> >>>>>>>> +++ b/arch/arm64/boot/dts/qcom/pm7250b.dtsi
+> >>>>>>>> @@ -7,6 +7,15 @@
+> >>>>>>>>  #include <dt-bindings/interrupt-controller/irq.h>
+> >>>>>>>>  #include <dt-bindings/spmi/spmi.h>
+> >>>>>>>>
+> >>>>>>>> +/* This PMIC can be configured to be at different SIDs */
+> >>>>>>>> +#ifndef PM7250B_SID
+> >>>>>>>> +   #define PM7250B_SID 2
+> >>>>>>>> +#endif
+> >>>>>>>
+> >>>>>>> Why do you send the same patch as v1, without any reference to pr=
+evious
+> >>>>>>> discussions?
+> >>>>>>>
+> >>>>>>> You got here feedback already.
+> >>>>>>>
+> >>>>>>> https://lore.kernel.org/linux-arm-msm/f52524da-719b-790f-ad2c-0c3=
+f313d9fe9@linaro.org/
+> >>>>>>
+> >>>>>> Hi Krzysztof,
+> >>>>>>
+> >>>>>> I did mention that original patch in the cover letter of this seri=
+es.
+> >>>>>> I'm definitely aware of the discussion earlier this year there but=
+ also
+> >>>>>> tried to get an update lately if there's any update with no respon=
+se.
+> >>>>>
+> >>>>> I think the overall consensus was that my proposal is too complicat=
+ed
+> >>>>> for the DT files.
+> >>>>
+> >>>> I proposed to duplicate the entries. Do you keep QUP nodes in DTSI a=
+nd
+> >>>> customize per address? No.
+> >>>
+> >>> At the same time, we do keep SoC files separate from the board files.
+> >>> Yes, I'm slightly exaggerating here.
+> >>>
+> >>> I think that for PMIC files it makes sense to extract common parts if
+> >>> that eases reuse of the common parts.
+> >>
+> >> Hi all,
+> >>
+> >> what can I do for v2 now?
+> >>
+> >> 1. Keep this patch as-is, and keep pm7250b in device dts.
+>
+> This was NAKed by me. What Qualcomm SoC maintainers decide (or not
+> decide) about other options, should not cause the wrong solution to be
+> re-posted...
+>
+> >>
+> >> 2. Drop pm7250b patch and drop from device dts, until _someone_ figure=
+s
+> >> out a solution talking to the PMIC on different SID.
+> >>
+> >> 3. Something else like copy-pasting pm7250b.dtsi to pm7250-8.dtsi and
+> >> changing the SID there, and using that in device dts.
 
-diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-index dcf627b..ce42205 100644
---- a/drivers/bus/mhi/host/main.c
-+++ b/drivers/bus/mhi/host/main.c
-@@ -642,6 +642,7 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
- 			mhi_del_ring_element(mhi_cntrl, tre_ring);
- 			local_rp = tre_ring->rp;
- 
-+			read_unlock_bh(&mhi_chan->lock);
- 			/* notify client */
- 			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
- 
-@@ -667,6 +668,7 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
- 					kfree(buf_info->cb_buf);
- 				}
- 			}
-+			read_lock_bh(&mhi_chan->lock);
- 		}
- 		break;
- 	} /* CC_EOT */
-@@ -1204,6 +1206,9 @@ int mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
- 	int eot, eob, chain, bei;
- 	int ret;
- 
-+	/* Protect accesses for reading and incrementing WP */
-+	write_lock_bh(&mhi_chan->lock);
-+
- 	buf_ring = &mhi_chan->buf_ring;
- 	tre_ring = &mhi_chan->tre_ring;
- 
-@@ -1239,6 +1244,8 @@ int mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
- 	mhi_add_ring_element(mhi_cntrl, tre_ring);
- 	mhi_add_ring_element(mhi_cntrl, buf_ring);
- 
-+	write_unlock_bh(&mhi_chan->lock);
-+
- 	return 0;
- }
- 
--- 
-2.7.4
+@Konrad, @Bjorn: Can you give any feedback here what's preferable?
+Otherwise I'm just blocked on this series.
+
+> >>
+> >> Please let me know what to do.
+> >>
+> >> Regards
+> >> Luca
+> >=20
+> > Hi,
+> >=20
+> > if there's no feedback I'll keep this patch in v2 of this series and we
+> > can continue to discuss there (if necessary).
+>
+> Sorry, I still do not agree and there were no arguments convincing me to
+> change the mind.
+>
+> I gave you the solution from my perspective. Why do you decided to
+> ignore it and send it as is?
+
+I get it that you are not final decider for qcom dts changes but it's
+quite difficult for someone sending patches to not get any feedback what
+other change to replace this is appropriate. I doubt it's a good idea to
+just implement some random pm7250-8.dtsi or whatever to potentially
+immediately get a response that that way is also bad.
+
+That's why I'm trying to get some info before working on something and
+sending it. Hopefully Bjorn or Konrad can add their thoughts above.
+
+Also I don't recall me ever reading a "solution" from your side but
+maybe I need to dig through the old emails again.
+
+Regards
+Luca
+
+>
+>
+> Best regards,
+> Krzysztof
 
