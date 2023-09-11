@@ -2,113 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 06FE879AE26
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 01:42:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5946679AD37
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 01:39:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343674AbjIKVMP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:12:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42998 "EHLO
+        id S1344792AbjIKVOr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:14:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244316AbjIKUDs (ORCPT
+        with ESMTP id S244324AbjIKUHX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 16:03:48 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B16A1185
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 13:03:42 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2bcde83ce9fso81816281fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 13:03:42 -0700 (PDT)
+        Mon, 11 Sep 2023 16:07:23 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0DA11A7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 13:07:18 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-99bcf2de59cso617446466b.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 13:07:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694462621; x=1695067421; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=F+h6TLJO99t/Li4TO2YUvVsZsRG1ygNuhv9nSboCnM8=;
-        b=YxWoR0niRM9x9ROA3zcsQI8IKrP8JPyfuE6GdEP/4faawG53+lbJuX1Gmbf2/pJNbe
-         ssIBgDlb6ikgex+/7NAfQmHY8hYGbtcMl7SL8kcREC3pUR727M3Wl+hNMkJqU5Yf6NXd
-         tfkd6uDaGsoxWG0+mtUiGDZ5fJrichZSq+/skyjv2/GtKkSkuuVL7NmjSTxvXWxtiRcu
-         nPgwrcDawkbQto79/h/S3SMkM9qw2Vh23rb+GC/rkuSOQvYyXCtSWENojeacw5gdQ1Gg
-         S4TJlcTvx/0tVpqOCfaH+bz5SdeLWzfqWIMlwWcaMU/5akl6ocnGLz2gFDxdAHp/fLRU
-         LKfA==
+        d=linaro.org; s=google; t=1694462837; x=1695067637; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=8xKtPAeHdfJ6/z/qz3x+wJCKOROjQ3kUyd8YMWyjKpg=;
+        b=kqeFQE+3mba6yhF6GJRrxFoQazQo9J5IfmER2SqGaWnArRkM6E+1PNIZytYZYf1CXn
+         QIbUfvxIfIq5Ym6L1P1FsuzlgqSuYnWHtxiMfWTjm9OR1Nzm+VPiV5L3DeMMIr35tWuD
+         A06bJBSNw4cIep0fbIAk6b68suKY05N6e/H8rp302oAQRWsG/8SwPAT/VxF+px885U7p
+         tgxLVjzEW0HYEgxg8uBR+n0adJNF44327/0z1snk1a9J7USLrUYgoKQHyqoP6acB2rcn
+         qDwKpnTdOAlve4T6bOQqfC0GAE+S+Do8qhpcg9lePMiB/mWOalFF+GdQu62xoWsB6IJk
+         3p+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694462621; x=1695067421;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=F+h6TLJO99t/Li4TO2YUvVsZsRG1ygNuhv9nSboCnM8=;
-        b=hTOpf1owmDupCxot6v/aEYTbQmIkTJTW3w60vh9/X8LvB0ms/eutnYoXjTmE9mbcSG
-         1O0RBGFYZAXpnbfXVrrBnsNgMc589jE8JqQDGXZS0SqHCIB5nLq/kP0Okh+NY3VQ/R5I
-         om4LnmElNy6WmKtA6+6rovBd7H+d8XK3jxgtipsjP8QOzWuEpAfSiKHFXjr23CshIwT4
-         +S4/3zMXjiJWZuQV6uURNNBUG27tQL0FGU8J09DzsWe7purK6QIFUMg/0ECDjTUcxsFt
-         ikLhMjSxTep7EzL0FVazqPIJv9kKkEwcLTZB11y26i4Azv+bvsrqBObPTDU050s7say9
-         DYaA==
-X-Gm-Message-State: AOJu0YzE9zed0CIVO0mg2xCNpx+NRRnJuEW1MF3HRzidbpZTnL0ciRFc
-        RmXYTn07QO7TjghDp6tBXA8f2Q==
-X-Google-Smtp-Source: AGHT+IHwUw0pnu0YACshEBH069PVdxgeZOsOfd5v+RwgjVt3IoQJLBDix3NjHKioGsNPYaNW6dtZvQ==
-X-Received: by 2002:a2e:8718:0:b0:2bc:c4af:36b7 with SMTP id m24-20020a2e8718000000b002bcc4af36b7mr8568924lji.39.1694462620924;
-        Mon, 11 Sep 2023 13:03:40 -0700 (PDT)
-Received: from [192.168.37.232] (178235177248.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.248])
-        by smtp.gmail.com with ESMTPSA id o24-20020a1709062e9800b009a19701e7b5sm5793704eji.96.2023.09.11.13.03.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Sep 2023 13:03:40 -0700 (PDT)
-Message-ID: <700a7a5f-3c38-4803-af44-0c5d0c230817@linaro.org>
-Date:   Mon, 11 Sep 2023 22:03:38 +0200
+        d=1e100.net; s=20230601; t=1694462837; x=1695067637;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8xKtPAeHdfJ6/z/qz3x+wJCKOROjQ3kUyd8YMWyjKpg=;
+        b=fhpPcJPY6I5Ke6bRPQ7Pd0pbq9r1Q+6c31C23eKYXEL6Csdi7Ezs2CLJNvYbPfPGVd
+         9NDgEqCRKpnnC1OxK8xDenkqqtbJsLMkLa7La4p4JEN6jo7McJVGeEYgH8v1WjwhWb8i
+         bsU6LYZgZ8I5RQvmsxflnzkdMO38K49bSY9p1ZlT8Sk6s7Z1Z2TjORGBVQvDCoVeEE/h
+         AumPoJLtwFfw25Hgi3YIW6UE2Ig+GFecQzy/AwbMFWltKYHT6RzIKvC2YW9KBw9poawA
+         R03UNrJqzicns6rja+DXem/uywAJfpc/3h7tBdkR0y9DOLErEsvt1aQ+JtTBCniYz7q/
+         r/EA==
+X-Gm-Message-State: AOJu0Yys9PkQ+kWX2lFZW6TQkbeJWiYi1NAHY4x6ItP1Ps82QA0Tw69g
+        4qy8pna7H8BW4MdjCFpT0FVXeQ==
+X-Google-Smtp-Source: AGHT+IGw5HRTK8mnycR6zM+zwfL0W2TNmF+pb14up1M7rBqIYMeESqMSuAp5jZ9Yaws+53PW629XQQ==
+X-Received: by 2002:a17:906:ef8b:b0:99b:4ed4:5527 with SMTP id ze11-20020a170906ef8b00b0099b4ed45527mr8984194ejb.25.1694462837037;
+        Mon, 11 Sep 2023 13:07:17 -0700 (PDT)
+Received: from [10.167.154.1] (178235177248.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.248])
+        by smtp.gmail.com with ESMTPSA id z19-20020a170906715300b00992e14af9b9sm5753258ejj.134.2023.09.11.13.07.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Sep 2023 13:07:16 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v3 0/2] 8550 USB QMPPHY fixups
+Date:   Mon, 11 Sep 2023 22:07:13 +0200
+Message-Id: <20230829-topic-8550_usbphy-v3-0-34ec434194c5@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] phy: qcom-qmp-combo: Square out 8550
- POWER_STATE_CONFIG1
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAHFz/2QC/4WNywrDIBQFfyW4rsVHXnbV/yilaNTkQtCgiTSE/
+ HtNdt20yzlwZjYUTQAT0a3YUDAJIniXgV8K1A3S9QaDzowYYZy0TODZT9DhtqrIa4lqGlZcC2p
+ 53SihuEH5p2Q0WAXpuiE/3TKOeZyCsfA+Q49n5gHi7MN6dhM91l+JRDHBlRBaKyuJKOV9BCeDv
+ /rQo0OX2F8FywrZMFtyTqmm4kux7/sHHpDgDAsBAAA=
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Vinod Koul <vkoul@kernel.org>,
         Kishon Vijay Abraham I <kishon@kernel.org>,
         Abel Vesa <abel.vesa@linaro.org>,
         Johan Hovold <johan+linaro@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-References: <20230829-topic-8550_usbphy-v2-0-a72f43311d19@linaro.org>
- <20230829-topic-8550_usbphy-v2-1-a72f43311d19@linaro.org>
- <CAA8EJppHVs18rhb3p7_LGrE02wD_tYzTbOMr46cAHV7imG+rDQ@mail.gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <CAA8EJppHVs18rhb3p7_LGrE02wD_tYzTbOMr46cAHV7imG+rDQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Adrien Thierry <athierry@redhat.com>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1694462835; l=1082;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=GbuZM1oKvKUNGOcNj2S2w9EzwDPdJOgvLs+UCp8aD1E=;
+ b=q7PWDq7q/ELe5Zp+ef3vBLiTCjnqaXMGeijHC9KwM/0rgl8uSFltZ3UzMCialzQSMukCziLdk
+ cApa95206WKCOnqU9gWPPHTGL2GeW7s/A0GE2tcxAVQEv9H6neDKF2G
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -118,40 +89,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11.09.2023 21:37, Dmitry Baryshkov wrote:
-> On Mon, 11 Sept 2023 at 22:32, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->> There are two instances of the POWER_STATE_CONFIG1 register: one in
->> the PCS space and another one in PCS_USB.
->>
->> The downstream init sequence pokes the latter one while we've been poking
->> the former one (and misnamed it as the latter one, impostor!). Fix that
->> up to avoid UB.
->>
->> Fixes: 49742e9edab3 ("phy: qcom-qmp-combo: Add support for SM8550")
->> Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
->> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  drivers/phy/qualcomm/phy-qcom-qmp-combo.c      | 2 +-
->>  drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v6.h | 3 ++-
->>  2 files changed, 3 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
->> index cbb28afce135..843099d314bf 100644
->> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
->> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
->> @@ -859,10 +859,10 @@ static const struct qmp_phy_init_tbl sm8550_usb3_pcs_tbl[] = {
->>         QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_PCS_TX_RX_CONFIG, 0x0c),
->>         QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_EQ_CONFIG1, 0x4b),
->>         QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_EQ_CONFIG5, 0x10),
->> -       QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_USB3_POWER_STATE_CONFIG1, 0x68),
->>  };
->>
->>  static const struct qmp_phy_init_tbl sm8550_usb3_pcs_usb_tbl[] = {
->> +       QMP_PHY_INIT_CFG(QPHY_USB_Q6_PCS_USB3_POWER_STATE_CONFIG1, 0x68),
-> 
-> And this is still _Q6_
-Gah, I thought about compiletesting but pride got me..
+Inspired by [1] I went over the 8550 QMPPHY init sequences and found
+some inconsistencies. This series attempts to fix them.
 
-Konrad
+[1] https://lore.kernel.org/linux-arm-msm/20230828152353.16529-1-athierry@redhat.com/
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Changes in v3:
+- v2 except it now compiles (missed .c change)
+- Link to v2: https://lore.kernel.org/r/20230829-topic-8550_usbphy-v2-0-a72f43311d19@linaro.org
+
+Changes in v2:
+- Pick up tags
+- "Q6" -> "V6"
+- Link to v1: https://lore.kernel.org/r/20230829-topic-8550_usbphy-v1-0-599ddbfa094a@linaro.org
+
+---
+Konrad Dybcio (2):
+      phy: qcom-qmp-combo: Square out 8550 POWER_STATE_CONFIG1
+      phy: qcom-qmp-combo: initialize PCS_USB registers
+
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c      | 6 +++++-
+ drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v6.h | 3 ++-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
+---
+base-commit: 7bc675554773f09d88101bf1ccfc8537dc7c0be9
+change-id: 20230829-topic-8550_usbphy-691f367b9b3e
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
