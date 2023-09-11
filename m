@@ -2,149 +2,225 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E39579BE23
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:17:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3AEE479BCFA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:15:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344163AbjIKVN1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:13:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43490 "EHLO
+        id S245713AbjIKVLb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:11:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237901AbjIKNU2 (ORCPT
+        with ESMTP id S237931AbjIKNXL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 09:20:28 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77A31EB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 06:20:24 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-99de884ad25so582716766b.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 06:20:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694438423; x=1695043223; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=H6ROeUkGbQ9Rsp3Ap+XbILwaeJ+lJZmemhX/U4xe7Go=;
-        b=CrPldppNBhZzFat6Cf/IAgYlUK2d5z5UWRPxo1iG15CXyL3OcF8eUFKFSmNR5Kp5Hc
-         K37drkwuM6SbP63P2TTLe8yf7seBg8NKG7oZF5jCub5AO5IQVYnVyFE8jwoXj6L5r5mm
-         ezcno/G2sgVCJY/YNqMB8c1t5g2QVZYmw98TtY7Z2CMBNilFSwkIZhpMptebR0ssVQFj
-         dgnOtHk6jM3PW2yzKijnYtgbhcO7xbeDLYHGb9L8AqNGHGPODXRU+ZE57BJlPMQYM0NJ
-         Asmo/LAErkZvJ0eE7IfXbOWmFfNmK54RAIjGPWA96g1vboIP1X/dQvIlMunp4ioP1Y1Q
-         fJrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694438423; x=1695043223;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=H6ROeUkGbQ9Rsp3Ap+XbILwaeJ+lJZmemhX/U4xe7Go=;
-        b=RVngizInJQo5IkSF52ZYkUxrs7gh5ynmBLktos9IkIl2pTaqD6IXRWtf6nHAPr99wo
-         dS73+zVw6NaV0zuziBqcSQAMhSkAvRclzwqJZ1qK9oA3i/VxH6UD2W0m2N4Ejn/ra/h2
-         QvGDFconyQhkoI/I3doQCNoW5JOQn4MdAAFOi5pyB50FLVZOIdtbfejqJvaf2r3XXZHd
-         HA23sw/CaEe6/yPA3gT0r7TA4TwOIVHa/igPlJUr4aJIQAZx4xd/+6nTV0bhr6gMCg01
-         IyOKx562C8GVhRZ5qOAsb1GS5Z7C14LZXJ1fh2k8hFJgDkFUGtrPuXYNXgKIlKu4mvg6
-         4fdQ==
-X-Gm-Message-State: AOJu0YxT2MT8YT7GOrU83iNQR5L3iXOcaVfVZQMyM2kvpM+DbqLk853D
-        qhSPN+TTbTaVRFiC5ugCVlutoDPbmkKuSUO5lacJ/A==
-X-Google-Smtp-Source: AGHT+IGgYyfvssT4sNtFxUVZDRaUT+8hl2/TVvIOpsTMRx7+mL+0pcQnZkJK2xnZN0g15Oh+sSqCaw==
-X-Received: by 2002:a17:906:21b:b0:99b:e5c3:2e45 with SMTP id 27-20020a170906021b00b0099be5c32e45mr9047002ejd.28.1694438422953;
-        Mon, 11 Sep 2023 06:20:22 -0700 (PDT)
-Received: from [192.168.37.41] (178235177061.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.61])
-        by smtp.gmail.com with ESMTPSA id g2-20020a1709064e4200b009929ab17bdfsm5309746ejw.168.2023.09.11.06.20.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Sep 2023 06:20:22 -0700 (PDT)
-Message-ID: <7ee011cc-af29-4fb3-8eca-678ec317ba3f@linaro.org>
-Date:   Mon, 11 Sep 2023 15:20:20 +0200
+        Mon, 11 Sep 2023 09:23:11 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19A8912A;
+        Mon, 11 Sep 2023 06:23:07 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38BCrlmO016521;
+        Mon, 11 Sep 2023 13:22:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=R6/RHIDNrYpB6dU4Qi6RuA4BpfNijF7rWGsQ9YQ01Po=;
+ b=VleQknlxy6TXagkecGv67hfIyDV+0xg+oD5olUlv/qNnzonfRnfNfm6YTvKzflYhktmv
+ asurtjRJdtwkC+Fi5DL+AAY4coi/3WfjSy+QTAehOlggWMJXHg+I3MeZBNK0RSIp11YC
+ BOtLZt6r+OVUj+vHywIFQCgAYAHw05gTLJOvwBAhqmcev4L+akfXtcmwKkFZ0vfO5LjY
+ eCrmoGJPeH8lTOXNlIfHbYmUFuBIGkCwHeWhK/MWfwlKgWvp3qvnc1thMEVvwMjoGXLU
+ Tn2ZvRzY+pkswzS9BwpH9UmpGW3wgn/pg3VLLNY3FgW7eb9UJ1ZWBPDfCOeAz1B+sa5X 8Q== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t22kpg4g9-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 11 Sep 2023 13:22:57 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38BDMuBU001025
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 11 Sep 2023 13:22:56 GMT
+Received: from [10.216.10.2] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 11 Sep
+ 2023 06:22:51 -0700
+Message-ID: <1f96396a-558b-2272-3a71-04ed7878728a@quicinc.com>
+Date:   Mon, 11 Sep 2023 18:52:46 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] genpd: qcom: rpmpd: Add MSM8917, MSM8937 and QM215
-To:     =?UTF-8?Q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>,
-        linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        devicetree@vger.kernel.org, linux-pm@vger.kernel.org
-References: <20230911131627.13494-1-otto.pflueger@abscue.de>
- <20230911131627.13494-3-otto.pflueger@abscue.de>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v3 2/4] firmware: qcom_scm: disable SDI if required
 Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230911131627.13494-3-otto.pflueger@abscue.de>
-Content-Type: text/plain; charset=UTF-8
+To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+        Robert Marko <robimarko@gmail.com>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <quic_gurus@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <computersforpeace@gmail.com>
+References: <20230816164641.3371878-1-robimarko@gmail.com>
+ <20230816164641.3371878-2-robimarko@gmail.com>
+ <ff9ec6f5-9c7c-546b-5814-159d7e2843a8@quicinc.com>
+ <CAOX2RU7wbZopGErQ71frXFMz4+Y9QU6SjfrYbZPT_3yd0gU73A@mail.gmail.com>
+ <b096db3b-bb2b-5146-9b75-bcc57ae318b0@quicinc.com>
+ <005459a2-8daf-1c84-0309-7dd028652909@quicinc.com>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <005459a2-8daf-1c84-0309-7dd028652909@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ZhUf0EEa9LgWl0l9oLiOJiC5n5dCz3s3
+X-Proofpoint-GUID: ZhUf0EEa9LgWl0l9oLiOJiC5n5dCz3s3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-11_08,2023-09-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
+ lowpriorityscore=0 malwarescore=0 priorityscore=1501 mlxlogscore=999
+ spamscore=0 clxscore=1015 phishscore=0 suspectscore=0 adultscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309110122
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11.09.2023 15:16, Otto Pflüger wrote:
-> MSM8917 uses the SMPA2 and LDOA3 regulators provided by the PM8937 PMIC
-> for the VDDCX and VDDMX power domains in voltage level mode,
-> respectively. MSM8937 also uses this PMIC and the same regulators.
+
+
+On 9/7/2023 12:02 PM, Sricharan Ramabadhran wrote:
 > 
-> QM215 is typically paired with a PM8916 PMIC and uses its SMPA1 and
-> LDOA2 regulators in voltage level mode.
+> <snip ..>
 > 
-> Signed-off-by: Otto Pflüger <otto.pflueger@abscue.de>
-> ---
-Generally one-per-commit is the consensus.
+>>>>> +     int ret;
+>>>>> +     struct qcom_scm_desc desc = {
+>>>>> +             .svc = QCOM_SCM_SVC_BOOT,
+>>>>> +             .cmd = QCOM_SCM_BOOT_SDI_CONFIG,
+>>>>> +             .args[0] = 1, /* Disable watchdog debug */
+>>>>> +             .args[1] = 0, /* Disable SDI */
+>>>>> +             .arginfo = QCOM_SCM_ARGS(2),
+>>>>> +             .owner = ARM_SMCCC_OWNER_SIP,
+>>>>> +     };
+>>>>> +     struct qcom_scm_res res;
+>>>>> +
+>>>>> +     ret = qcom_scm_clk_enable();
+>>>>> +     if (ret)
+>>>>> +             return ret;
+>>>>> +     ret = qcom_scm_call(__scm->dev, &desc, &res);
+>>>>
+>>>> Would you not be wanting this call to be atomic ?
+>>>
+>>> This is implemented based off the downstream 5.4 kernel as I dont have
+>>> the SCM docs
+>>> so I dont know if its even supported in the atomic version.
+>>
+>> Ok,.
+>>
+>> Well, Kernel version does not guarantees us whether certain things
+>> are supported or not in the firmware and it is not bound to any
+>> particular firmware version;
+>>
+>> So, whatever firmware version it is running with, we should try to
+>> support.
+>>
+>> Should we implement certain kind of call, if fastcall(atomic) is 
+>> supported go-ahead otherwise fallback to slowcalls (interruptible)
+>> calls, but this is completely out of the context of this patch.
+>>
+> 
+>   I replied on older thread, was not in CC here, just saw this.
+> 
+>   Agree, atomic api is out of this context and we could take it up
+>   separately.
+> 
+>>>>
+>>>>> +
+>>>>> +     qcom_scm_clk_disable();
+>>>>> +
+>>>>> +     return ret ? : res.result[0];
+>>>>> +}
+>>>>> +
+>>>>>    static int __qcom_scm_set_dload_mode(struct device *dev, bool 
+>>>>> enable)
+>>>>>    {
+>>>>>        struct qcom_scm_desc desc = {
+>>>>> @@ -1468,6 +1491,12 @@ static int qcom_scm_probe(struct 
+>>>>> platform_device *pdev)
+>>>>>        if (download_mode)
+>>>>>                qcom_scm_set_download_mode(true);
+>>>>>
+>>>>> +     /*
+>>>>> +      * Disable SDI if indicated by DT that it is enabled by default.
+>>>>> +      */
+>>>>> +     if (of_property_read_bool(pdev->dev.of_node, 
+>>>>> "qcom,sdi-enabled"))
+>>>>> +             qcom_scm_disable_sdi();
+>>>>
+>>>> Why don't we do this call in qcom_scm_shutdown()
+>>>> also does it not conflict with above download_mode
+>>>> we have enabled download mode but disabling SDI
+>>>> means (hard reset) and will not be collecting
+>>>> crash dump?
+>>>
+>>> Because doing it in SCM removal is too late, what if we have a WDT
+>>> assertion and not a
+>>> regular reboot?
+>>> It would mean that the board will get stuck in the debug mode which is
+>>> not useful for users and
+>>> requires the power to be pulled in order to boot normally again.
+>>
+>> Agree.
+> 
+>   For IPQ chipsets, SDI bit is used like below,
+> 
+>     For abnormal resets (like WDT), should be set '1' for valid dump
+>     collection.
+> 
+>     For reboot, should be cleared to '0' to avoid dump collection which
+>     is not required in this case.
+> 
+>     For HLOS panic, is a don't care, dumps always get collected and
+>     firmware takes care of clearing the SDI bit.
+> 
+>     Mukesh,  Can you confirm if its same for msm also ?
 
-> +
->  static struct rpmpd *sdm660_rpmpds[] = {
->  	[SDM660_VDDCX] =	&cx_rwcx0_lvl,
->  	[SDM660_VDDCX_AO] =	&cx_rwcx0_lvl_ao,
-> @@ -764,6 +853,8 @@ static const struct of_device_id rpmpd_match_table[] = {
->  	{ .compatible = "qcom,msm8226-rpmpd", .data = &msm8226_desc },
->  	{ .compatible = "qcom,msm8909-rpmpd", .data = &msm8916_desc },
->  	{ .compatible = "qcom,msm8916-rpmpd", .data = &msm8916_desc },
-> +	{ .compatible = "qcom,msm8917-rpmpd", .data = &msm8917_desc },
-> +	{ .compatible = "qcom,msm8937-rpmpd", .data = &msm8917_desc },
-Don't add two compatibles pointing to the same thing, or you'll
-get an angry response from Krzysztof :D
+Yes, it is same in MSM as well.
 
-You can do:
+-Mukesh
 
-compatible = "qcom,msm8937-rpmpd", "qcom,msm8917-rpmpd";
-
-and document the fallback in bindings
-
-Konrad
+>>
+>> Just a wild guess..
+>>
+>> Can we check if this call __qcom_scm_is_call_available() helps
+>> to determine, if the certain soc has this SCM calls supported
+>> and if it is there it can be disabled.
+>>
+>> __qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_BOOT, 
+>> QCOM_SCM_BOOT_SDI_CONFIG)
+>>
+> 
+>   Yes, as i mentioned in other thread, checking using
+>   qcom_scm_is_call_available is better. That said, would require
+>   testing on all IPQ/MSM socs to confirm if firmware supports it.
+> 
+>>>
+>>> I am not sure about the download mode, this is where insight from QCA
+>>> really help as I am
+>>> doing this with very limited docs.
+>>
+>> Download mode would not be reflected unless it is debug
+>> board, whatever you write will not be allowed if it is a
+>> secure device.
+>>
+> 
+>    Yes, 'download mode' bit is similar, but that is used by the firmware
+>    to determining whether to collect dumps on non-secure boards.
+>    Specifically, 'SDI bit' on some socs is used by firmware to determine
+>    if boot is happening from a 'abnormal crash', hence put DDR to
+>    self-refresh etc for valid dumps.
+> 
+> Regards,
+>   Sricharan
