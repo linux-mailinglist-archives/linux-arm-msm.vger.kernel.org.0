@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B504C79ADDC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 01:41:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C28579ADED
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 01:41:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235406AbjIKVQU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:16:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51546 "EHLO
+        id S1344889AbjIKVPA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:15:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235647AbjIKJRq (ORCPT
+        with ESMTP id S235920AbjIKJqa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 05:17:46 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55F71CD7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 02:17:41 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2bcb50e194dso71192281fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 02:17:41 -0700 (PDT)
+        Mon, 11 Sep 2023 05:46:30 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9502DE4D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 02:46:25 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-502934c88b7so6625868e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 02:46:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694423859; x=1695028659; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=JQH9ivnhVEuNYoZ7gWrE/2JTu+vTayND8NJxuSu5kuQ=;
-        b=mgHYMS2RA1BDYgh+qsNoAhbltSkA4epdgjPimN9W8mrGjNRHrwKTKtAcjf3EC2c6qp
-         zJK88O67LCLfVpr4zeoXXp+BWJhuOyvzEtwMfTC/ub/dhdZf+He/g/RfnAUi3fVKW2fp
-         /Waz0OICsAGQQpflODoRjHwEDPj+4AS1iT8dReCpwilOFyKGkg11R8yCFpE4iISTT+B6
-         LlEdrsaVxIFtw74OMHd5hC60HW5Po4Kb2CNSty9KyoOOQubZPpZDHOjkH8g2cIeeR7Jd
-         OW+BBg08xnuSED3GyCASZkfp5567oQrU/EbzDhVwVAFdyNUIaYgsnQPyBoCmmlRFOXU+
-         5z6w==
+        d=linaro.org; s=google; t=1694425584; x=1695030384; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=IVd11RHi3QFilUBHjU00d5ZhZ23EKtBEFJIkR9qPnqI=;
+        b=p3Yft8uZgnqnlV0n2qBp1KG8aWzm6GwMEF5m4LwpgH7j59aNMPCv4/iOHWgjvAXBMR
+         4h3sX0ySoIhDxEoe5W6NyxMGIHb/iESoe1E4p3awdKpo6s9CzwN0dqQZrHlVsImU0clU
+         G7bbRlVGv6DwPQJ2BENA93RcAw+qpldvoE/e7eZndeseQy/nRfDtx3CJw+cenObY+ZRJ
+         OZwWFVi7L3ZP+c+dfZNKWpDSy0vFX57kVkomLRuj9Clf2TaFlj4CfM0KQrHf+Ypc4knF
+         lFs7O36nIMfmF2aV6QsqPMIA4xngAwaRUKI2PX44zMEp9x8TqBCT3e6YzBUamf1Ntf+V
+         gV4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694423859; x=1695028659;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JQH9ivnhVEuNYoZ7gWrE/2JTu+vTayND8NJxuSu5kuQ=;
-        b=upIY7GXMBnZDs/Hl5Cv026sFogIkpVDABrVYFEGyZRVg62rAIW3o/z9Vat/dBUayNy
-         wmr/RRe4xeLrlshCyooKtYd2wkxKXiepBDa9mOcdPRK/S+LUJIaEo1GYSvCyH1i59pmp
-         tn4kyI8m0sP5YH0lpqRxFn5v+tfCKkICkBt4Tm6MPaioJmlvovafplNRUbpTBsbLSwE9
-         W+haNnTWXhM/aJHsE1kL1PFrl0BmJAST3mEQGPy7jYqybnMbjKBTDFK6Ux5EHpsBA4Qp
-         6Hv0TD4Pqe7kjbBt7aArDSOrzb3bPyD+cJrhdkJvBoBtnHmEU5i+jn438TsjyA7EwJCP
-         fScg==
-X-Gm-Message-State: AOJu0YySwNAAeZ/kYA3YRwVsCzfLnCrrbRV3YeI1JNbmCivzfzZjvJQT
-        5e65iHYe8N3FFfW3jRa5t3ttDQ==
-X-Google-Smtp-Source: AGHT+IEQbWgY9VKd4s2CeTD2F0I8xGKbPG1hks7s179vVqmQi67UpBcT0Z4xa+gu9MXya89Y9g3Z+w==
-X-Received: by 2002:a2e:9783:0:b0:2bc:d582:e724 with SMTP id y3-20020a2e9783000000b002bcd582e724mr7008765lji.31.1694423859488;
-        Mon, 11 Sep 2023 02:17:39 -0700 (PDT)
-Received: from [192.168.37.41] (178235177061.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.61])
-        by smtp.gmail.com with ESMTPSA id lc1-20020a170906dfe100b00982a92a849asm5028765ejc.91.2023.09.11.02.17.38
+        d=1e100.net; s=20230601; t=1694425584; x=1695030384;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IVd11RHi3QFilUBHjU00d5ZhZ23EKtBEFJIkR9qPnqI=;
+        b=OgU8jfzL90wfQLU4mbzhtx7nArnTq99Vg1b+2zABfBYuQp0UtzZlrO8Bv7QHxlbXj9
+         Mmr91DoDiPL5yrrLWMMyKMQ0hsdcbLtVQqTDnBvrPPAQYemLpY6dpD/cUKmoV3+cbwG9
+         QxN5GgRP4tvMgORu03xwXcLAiolhcZhEG3TDTJbhz1q2V6lEr0HYws4q3JSZYR4Lli9z
+         57zNnBO5tJqUqJU1oIr0KW3cL1FbOdggvjBQo5Cg62p8RVpEAFl5yOzbPAFvuazRJ4NE
+         HIRqMK12jq0WWZpZvNWDqtDGgUwABvPiU6MxSOcAUo4GKTVxadKZ+JzSJJuxrKqNKRHt
+         DlcQ==
+X-Gm-Message-State: AOJu0YwUFgX3mHpvDZS01zUt2M8dwpDabpnR6/6t+rjFjZGs8O/qOOLh
+        s0BTDmGUjNOHVrjeKkWAqr6blQ==
+X-Google-Smtp-Source: AGHT+IF6e7LCXAYSeQSvEKbbuvVGlfF4fTaSqGpUJS2I7Qrq7ixXgSnRRAiOQ4jtvT1DD3aHjqTJmg==
+X-Received: by 2002:a05:6512:3b25:b0:4ff:a25b:bca1 with SMTP id f37-20020a0565123b2500b004ffa25bbca1mr8830096lfv.33.1694425583740;
+        Mon, 11 Sep 2023 02:46:23 -0700 (PDT)
+Received: from [192.168.37.232] (178235177061.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.61])
+        by smtp.gmail.com with ESMTPSA id x18-20020aa7d6d2000000b005257f90c976sm4377665edr.3.2023.09.11.02.46.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Sep 2023 02:17:39 -0700 (PDT)
-Message-ID: <6055cd57-4de7-4b7e-a4f3-68a7de1aef28@linaro.org>
-Date:   Mon, 11 Sep 2023 11:17:37 +0200
+        Mon, 11 Sep 2023 02:46:23 -0700 (PDT)
+Message-ID: <31823dc4-6f50-435b-9a20-66471209ec31@linaro.org>
+Date:   Mon, 11 Sep 2023 11:46:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 2/6] scsi: ufs: ufs-qcom: Add support for UFS device
  version detection
+Content-Language: en-US
 To:     Can Guo <quic_cang@quicinc.com>, mani@kernel.org,
         quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
         martin.petersen@oracle.com
@@ -68,7 +68,8 @@ Cc:     linux-scsi@vger.kernel.org, Andy Gross <agross@kernel.org>,
         open list <linux-kernel@vger.kernel.org>
 References: <1694411968-14413-1-git-send-email-quic_cang@quicinc.com>
  <1694411968-14413-3-git-send-email-quic_cang@quicinc.com>
-Content-Language: en-US
+ <6055cd57-4de7-4b7e-a4f3-68a7de1aef28@linaro.org>
+ <6225a132-4b7f-bbb4-e863-4e62b99dd79d@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -105,11 +106,11 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <1694411968-14413-3-git-send-email-quic_cang@quicinc.com>
+In-Reply-To: <6225a132-4b7f-bbb4-e863-4e62b99dd79d@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -118,15 +119,68 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11.09.2023 07:59, Can Guo wrote:
-> From: "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
+On 11.09.2023 11:42, Can Guo wrote:
+> Hi Konrad,
 > 
-> Retrieve UFS device version from UFS host controller's spare register
-> which is populated by bootloader, and use the UFS device version together
-> with host controller's HW version to decide the proper power modes which
-> should be used to configure the UFS PHY.
-That sounds a bit fishy.. is there no bootloader-independent
-solution to that? Can't we bring in the code that the bootloader
-uses to determine these values?
+> On 9/11/2023 5:17 PM, Konrad Dybcio wrote:
+>> On 11.09.2023 07:59, Can Guo wrote:
+>>> From: "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
+>>>
+>>> Retrieve UFS device version from UFS host controller's spare register
+>>> which is populated by bootloader, and use the UFS device version together
+>>> with host controller's HW version to decide the proper power modes which
+>>> should be used to configure the UFS PHY.
+>> That sounds a bit fishy.. is there no bootloader-independent
+>> solution to that? Can't we bring in the code that the bootloader
+>> uses to determine these values?
+>>
+>> Konrad
+> 
+> 
+> Agree, it is.
+> 
+> 
+> All these complexities come from one request from PHY design team - power saving.
+> 
+> And to achieve power saving, Qualcomm UFS developers are requested to use the
+> 
+> lowest hanging PHY settings which can sustain the Max agreed HS Gear (btw host
+> 
+> and UFS device) during UFS's lifecycle in High Level OS,  whereas the power saving
+> 
+> request does not apply to bootloader, which works for only a few seconds during
+> 
+> bootup. Hence, there is no such version detect code in bootloader -  it just uses the
+> 
+> highest PHY settings to configure PHY, boot up UFS and put UFS device version in this
+> 
+> register.
+First of all, your email client seems to be inserting 2 newlines
+instead of 1. If you're using thunderbird, you may want to edit:
+
+mail.identity.(default or your mail identity idx).default.compose_html
+
+to `false`
+
+and add that to your internal wiki page, as I see many @quic folks having
+this issue.
+
+
+Going back to the main topic, I don't think we understood each other.
+The commit message states:
+
+
+"Retrieve UFS device version from UFS host controller's spare register
+which is populated by bootloader"
+
+
+Which means the bootloader is able to somehow determine the value
+that's in the spare register and write it there.
+
+I'm asking whether we can take the logic behind this value and
+move it to Linux so that we don't depend on the bootloader to
+guarantee it (e.g. Chrome or some other devices with more exotic
+fw may not work this way).
+
 
 Konrad
