@@ -2,131 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1408799E76
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Sep 2023 15:21:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D354A79A0F5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Sep 2023 03:24:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237398AbjIJNVv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 10 Sep 2023 09:21:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58592 "EHLO
+        id S230406AbjIKBYZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 10 Sep 2023 21:24:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233725AbjIJNVv (ORCPT
+        with ESMTP id S231544AbjIKBYZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 10 Sep 2023 09:21:51 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCC1BCD1;
-        Sun, 10 Sep 2023 06:21:46 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-31fa15f4cc6so267364f8f.2;
-        Sun, 10 Sep 2023 06:21:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1694352105; x=1694956905; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=x3yiYILhEuCNUQeqPmsTOJF5pdnP1MyjjDZaseeFDik=;
-        b=Qfsa0ZJkXvfx2fWGbnqj2cvUSoJE+9XvTFJVaX4o3MLsI7RoRclfuWx8bgaBWcM2nt
-         JR/R6Np5tRfM52pCxuYbz/iBQbTF2syYME2My4SABEzgB/bB8hbi6GI702h2qComZZdh
-         rNASCD5EyP5UmSze0t/yJ06lD4Z8fdqYf/yoOGj9ui+82Ipw3uAQTjij8qY+HQpVqWpA
-         dAtr8jjV/N5F4Sd/KW4Dl9ZPWiiVGG8mdKXN9gw3+mNCxoPl1khTtgH4i2qq+qRTVwM3
-         60cc+lcmz1JYs4fR8Q4w8Gp6R9jhL7vu+uHi4K/SIdvqQRjt5sT0CtEXKxTgzAdyicph
-         ipfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694352105; x=1694956905;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=x3yiYILhEuCNUQeqPmsTOJF5pdnP1MyjjDZaseeFDik=;
-        b=FcQoc/2CuCo15IkXe8lkrjbVzLthOqyu4qDnyIc9osOdUDqjm7dR7nUB0k6DOavXsG
-         +KHIDxDoFCl6VO5k8yKhC43ZTAL1CNvi70GmrF82DaAjMkavZImlQY+7Cwx7/qT0w8aq
-         Tzaxnrc/E+6Elu9nJRZoN5hR8Bt1Ci7bXkIS/08cNTPWQYetoIhngFPSXRebZwfufJ3s
-         lvfgGKkcuN2CIkWZ4S65cXs4JDP+/jyq3cyYTgkoN6L4bUXvGRHvHiqZH4OX0jYk01+0
-         cjJY5/WNcaCnmyNQ0xShIcL5LM9JQIooNsIDhJQ6nsEwbFpd6RmguKrHfnyaiWntMZev
-         X+Iw==
-X-Gm-Message-State: AOJu0YxgbKU5LV1AKAedFyr/53CewILvfgkp3V1ujm4oJboRIQqivJok
-        gP2keOb/xUfIPHQmUICe1Q+vGenThNMKOLiw
-X-Google-Smtp-Source: AGHT+IHBW5u0oYJcRGEvrYuxS4KJf+ofoX9BINJgRqjlcAtgbTBDPybxSD7j2EjBbYgPCuTfVGTdFA==
-X-Received: by 2002:a5d:4809:0:b0:317:73d3:441a with SMTP id l9-20020a5d4809000000b0031773d3441amr5628694wrq.46.1694352104814;
-        Sun, 10 Sep 2023 06:21:44 -0700 (PDT)
-Received: from jernej-laptop.localnet (82-149-12-148.dynamic.telemach.net. [82.149.12.148])
-        by smtp.gmail.com with ESMTPSA id d22-20020aa7ce16000000b005233609e39dsm3358895edv.30.2023.09.10.06.21.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 10 Sep 2023 06:21:44 -0700 (PDT)
-From:   Jernej =?utf-8?B?xaBrcmFiZWM=?= <jernej.skrabec@gmail.com>
-To:     mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
-        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
-        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
-        hverkuil-cisco@xs4all.nl, nicolas.dufresne@collabora.com,
-        Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
-        kernel@collabora.com,
-        Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Subject: Re: [PATCH v6 14/18] media: verisilicon: vp9: Use destination buffer height
- to compute chroma offset
-Date:   Sun, 10 Sep 2023 15:21:41 +0200
-Message-ID: <4856958.31r3eYUQgx@jernej-laptop>
-In-Reply-To: <20230901124414.48497-15-benjamin.gaignard@collabora.com>
-References: <20230901124414.48497-1-benjamin.gaignard@collabora.com>
- <20230901124414.48497-15-benjamin.gaignard@collabora.com>
+        Sun, 10 Sep 2023 21:24:25 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1B9A120;
+        Sun, 10 Sep 2023 18:24:18 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38B0wMWN011370;
+        Mon, 11 Sep 2023 01:23:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=jjUp8svKQlfJPyCMt/gckYHXgUZ34QmZOAlOxqoLL7o=;
+ b=c1suQyKqujR++c91fk6vTBEsXAhn5SFW9K0bCDcXKpngUv7UVvrcRkyhirKf3dbCFM35
+ AvVJbxaag0heehYA3eJkwgjou18TIRUvvpx9e18qA8ZhyMdPEUsjzghfbFAbfhaHsfix
+ nvOx7IBQxgBCDq2JcGB4gUI4kfynwV1VKU4Ski+ZkkefVJnvc5mCSqWYU+E1asttaq/o
+ mQHTeINsbNN6BbvppBVlrpov0b2Gnr7TWfEinvZdzVNuHjVN1dyjfpCN1kRdC3xru0vS
+ vyA++LnCXTQdPbdVvBsIbE/ncyPA/sQkQ6KCX92vxUDctW5I2LwPeQz6INgl7oZRTbKH Ww== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t0g1rjaa1-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 11 Sep 2023 01:23:42 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38B1NfKx002105
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 11 Sep 2023 01:23:41 GMT
+Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Sun, 10 Sep
+ 2023 18:23:32 -0700
+Message-ID: <3b27680b-f34f-49c6-bb74-0146c3ca2484@quicinc.com>
+Date:   Mon, 11 Sep 2023 09:23:30 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] pinctrl: qcom: Add SM4450 pinctrl driver
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <linus.walleij@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <catalin.marinas@arm.com>, <will@kernel.org>
+CC:     <arnd@arndb.de>, <geert+renesas@glider.be>,
+        <nfraprado@collabora.com>, <rafal@milecki.pl>, <peng.fan@nxp.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <quic_tsoni@quicinc.com>,
+        <quic_shashim@quicinc.com>, <quic_kaushalk@quicinc.com>,
+        <quic_tdas@quicinc.com>, <quic_tingweiz@quicinc.com>,
+        <quic_aiquny@quicinc.com>, <kernel@quicinc.com>
+References: <20230908063843.26835-1-quic_tengfan@quicinc.com>
+ <20230908063843.26835-3-quic_tengfan@quicinc.com>
+ <d0d6825a-97f7-405b-910e-772100c325a9@linaro.org>
+From:   Tengfei Fan <quic_tengfan@quicinc.com>
+In-Reply-To: <d0d6825a-97f7-405b-910e-772100c325a9@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: MQPRpea4FhPqSGx_7no7CEpX0ubg0tew
+X-Proofpoint-ORIG-GUID: MQPRpea4FhPqSGx_7no7CEpX0ubg0tew
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-10_18,2023-09-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
+ malwarescore=0 suspectscore=0 mlxscore=0 lowpriorityscore=0 clxscore=1015
+ phishscore=0 spamscore=0 mlxlogscore=880 priorityscore=1501 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
+ definitions=main-2309110010
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Benjamin!
 
-Dne petek, 01. september 2023 ob 14:44:10 CEST je Benjamin Gaignard 
-napisal(a):
-> Source and destination buffer height may not be the same because
-> alignment constraint are different.
-> Use destination height to compute chroma offset because we target
-> this buffer as hardware output.
+
+在 9/8/2023 4:45 PM, Konrad Dybcio 写道:
+> On 8.09.2023 08:38, Tengfei Fan wrote:
+>> Add pinctrl driver for TLMM block found in SM4450 SoC.
+>>
+>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+>> ---
+> [...]
 > 
-> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-> Fixes: e2da465455ce ("media: hantro: Support VP9 on the G2 core")
-> ---
->  drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c | 4 +---
->  1 file changed, 1 insertion(+), 3 deletions(-)
+>> +/* Every pin is maintained as a single group, and missing or non-existing pin
+> /*
+>   * Every pin
 > 
-> diff --git a/drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c
-> b/drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c index
-> 6db1c32fce4d..1f3f5e7ce978 100644
-> --- a/drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c
-> +++ b/drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c
-> @@ -93,9 +93,7 @@ static int start_prepare_run(struct hantro_ctx *ctx, const
-> struct v4l2_ctrl_vp9_ static size_t chroma_offset(const struct hantro_ctx
-> *ctx,
->  			    const struct v4l2_ctrl_vp9_frame 
-*dec_params)
->  {
-> -	int bytes_per_pixel = dec_params->bit_depth == 8 ? 1 : 2;
-> -
-> -	return ctx->src_fmt.width * ctx->src_fmt.height * bytes_per_pixel;
-> +	return ctx->dst_fmt.width * ctx->dst_fmt.height * ctx->bit_depth / 
-8;
-
-Commit message doesn't mention bit_depth change at all. While I think there is 
-no difference between dec_params->bit_depth and ctx->bit_depth, you shouldn't 
-just use ordinary division. If bit_depth is 10, it will be rounded down. And 
-if you decide to use bit_depth from context, please remove dec_params 
-argument.
-
-Best regards,
-Jernej
-
->  }
+>> + * would be maintained as dummy group to synchronize pin group index with
+>> + * pin descriptor registered with pinctrl core.
+>> + * Clients would not be able to request these dummy pin groups.
+>> + */
+> [...]
 > 
->  static size_t mv_offset(const struct hantro_ctx *ctx,
+>> +static const int sm4450_acpi_reserved_gpios[] = {
+>> +	0, 1, 2, 3, 136, -1
+>> +};
+> Are you ever going to boot with ACPI on this platform?
+> 
+> Why reserve UFS_RESET?
+> 
+> Why are 0-3 reserved? FP reader? Please leave a comment. Or
+> delete this.
+> 
+> Konrad
+Thanks Konrad reviewed this patch, will do more test and disscuss about 
+this reserve gpio setting, and will remove this in next patch if possible.
 
-
-
-
+-- 
+Thx and BRs,
+Tengfei Fan
