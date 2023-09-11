@@ -2,133 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CBE3579BEBF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:17:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B34B79C05D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:20:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344705AbjIKVOm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:14:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50702 "EHLO
+        id S1343553AbjIKVLr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:11:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237175AbjIKMLS (ORCPT
+        with ESMTP id S237751AbjIKNOU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 08:11:18 -0400
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F8AB193;
-        Mon, 11 Sep 2023 05:11:13 -0700 (PDT)
-Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
-        by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38BBcf8k020281;
-        Mon, 11 Sep 2023 12:09:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : subject :
- from : to : cc : date : in-reply-to : references : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=HGXHlyuW7tI3KkroRX3EwubPO1mf8HTAk2ndjhHoNFs=;
- b=PWIIEP2lmDUfa1mp9pmw/oaZwzdtcpnlqzQ75hk9+FpJGvJYDU60r9trS5Z/VtLyDHft
- 9WX+n5snuJJ5jbu5vUpOHlKrmCud7gkjCafXw2JlLlwDtpuM9LO25/9hM4ZNnK9/vKhf
- l1qU1LZtGDxzxdwXmQxEa86eJVFAmwBgVfDVbQFx2Nm1Almhe4faCXCK8QzNT1ejl8yF
- QR+nEvWye7K6HENvui0bkEIhPwedV8GX8xMoeAVJHxAzGF7xr7/nFp13TH8Xj3KOQHcr
- h7xH4BM63pjFCbfz/lLveE+A3kojVUwJbk8xCa7Q1WSyEsQ7FXyRLhW42+3i3S8xCX16 Ug== 
-Received: from pps.reinject (localhost [127.0.0.1])
-        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3t1wuq0aj0-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 11 Sep 2023 12:09:50 +0000
-Received: from m0353726.ppops.net (m0353726.ppops.net [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 38BBedp6028128;
-        Mon, 11 Sep 2023 12:07:02 GMT
-Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
-        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3t1wuq08ya-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 11 Sep 2023 12:07:02 +0000
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
-        by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 38BBOZ8H002318;
-        Mon, 11 Sep 2023 12:06:36 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
-        by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3t158jsvr1-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 11 Sep 2023 12:06:35 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com [10.20.54.102])
-        by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 38BC6XqU66978064
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Mon, 11 Sep 2023 12:06:33 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id E64F02004B;
-        Mon, 11 Sep 2023 12:06:32 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id 1D9F220043;
-        Mon, 11 Sep 2023 12:06:30 +0000 (GMT)
-Received: from [9.171.58.134] (unknown [9.171.58.134])
-        by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
-        Mon, 11 Sep 2023 12:06:30 +0000 (GMT)
-Message-ID: <c5ac1459d2967c17e472d1c51d5017beb39e4714.camel@linux.ibm.com>
-Subject: Re: [PATCH v12 5/6] iommu/dma: Allow a single FQ in addition to
- per-CPU FQs
-From:   Niklas Schnelle <schnelle@linux.ibm.com>
-To:     Joerg Roedel <joro@8bytes.org>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Will Deacon <will@kernel.org>,
-        Wenjia Zhang <wenjia@linux.ibm.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Jason Gunthorpe <jgg@ziepe.ca>
-Cc:     Gerd Bayer <gbayer@linux.ibm.com>,
-        Julian Ruess <julianr@linux.ibm.com>,
-        Pierre Morel <pmorel@linux.ibm.com>,
-        Alexandra Winter <wintera@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Sven Schnelle <svens@linux.ibm.com>,
-        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jonathan Corbet <corbet@lwn.net>, linux-s390@vger.kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        iommu@lists.linux.dev, asahi@lists.linux.dev,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        linux-doc@vger.kernel.org
-Date:   Mon, 11 Sep 2023 14:06:29 +0200
-In-Reply-To: <20230825-dma_iommu-v12-5-4134455994a7@linux.ibm.com>
-References: <20230825-dma_iommu-v12-0-4134455994a7@linux.ibm.com>
-         <20230825-dma_iommu-v12-5-4134455994a7@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.48.4 (3.48.4-1.fc38) 
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 36tUcYWsI3-kwg7TjwTB82g2_ly-u1Zp
-X-Proofpoint-ORIG-GUID: CMa4t0Ot4oG8TuboxO12mxpMT2o-4HQO
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+        Mon, 11 Sep 2023 09:14:20 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32BF7EB
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 06:14:15 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-52bcb8b199aso5680222a12.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 06:14:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694438053; x=1695042853; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Bzg1j4l+T9SlvjeUrT1btKedodryHP6lWwaPR4x8CXY=;
+        b=sHY61oXBUBArw1Jbi+F58+Kf17Rw7wLgrSgGbQqBPu6EvsQv/QUezqkYjm4DNUuOpZ
+         ZIKxB+GnGG6nBVlV+kaWx+5Rq2Lt/G41LPxDyuNeokdqx2nGuShfs0dFMgudMDe2zH35
+         UgE+tLnEJrE9No3M//QRjW2JLCMyCPJqpyK1eFoPHKKpPPmlJhGMzGDswDpk0mDWaChw
+         +tl0fTftdPsR3bkonqw+TbVuIJrkikYzVuwAvm9QXh4Y0ITou+VafYfnWkdGYWSXN65a
+         TpWRpsIlKw0hn7jzr21admZdaH70EhB6zy0Txxvn5qWsqca3evYPMfwnPkZUxQsDm5QV
+         3wmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694438053; x=1695042853;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Bzg1j4l+T9SlvjeUrT1btKedodryHP6lWwaPR4x8CXY=;
+        b=FLabBLprqOJFbtw8/K1UfTtRD7b+zaRgHJQ1MP8yQ0vmD2ELqjhC46HhenZEexg/J/
+         NEScBdICs7T5nkSBFGQOsw/U0rRVoXsqKaPZExBC3xF/e6wse/rOpe2f5v11DDU6wKnU
+         BcgQ3M2Iqfi+uKla2WYsTVyc7xeVSFDkX+TkPDplgad+lTPrXm9I0SSx8EAefkMW/E7f
+         0+xaA9rTtiPd/Th60rug1lO09bYcacR8UQ1XEtoFoqlIMTEFM26fsZ43VEg7exZmCPTW
+         zA82L9LrTsaaMB3JLIv9ahupq3R8lU+/Y0QVJuQQ0/l96LQPMVCIcXjaGB/1lnu3eLYp
+         iAXA==
+X-Gm-Message-State: AOJu0YzBV2TsUhMNJFaWFo11OJOQyUhc6a4oLRRQOHP0ZLIbAKD2cM0z
+        ugYCEpQQFvHtzjCTSMR2tvU4WA==
+X-Google-Smtp-Source: AGHT+IFj5+4CXTSkggw+7E+WKQwCfPGMicwOZyOZAcCpdAagzmFGkR8AQFbMmiMrOoOYJaf+r+zbzg==
+X-Received: by 2002:a17:906:2dc:b0:9a6:4f23:9d8f with SMTP id 28-20020a17090602dc00b009a64f239d8fmr8478768ejk.47.1694438053554;
+        Mon, 11 Sep 2023 06:14:13 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id kt8-20020a170906aac800b00988e953a586sm5313648ejb.61.2023.09.11.06.14.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Sep 2023 06:14:13 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     rfoss@kernel.org, todor.too@gmail.com, bryan.odonoghue@linaro.org,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
+        laurent.pinchart@ideasonboard.com, sakari.ailus@linux.intel.com,
+        andrey.konovalov@linaro.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v5 00/17] media: qcom: camss: Add parameter passing to remove several outstanding bugs
+Date:   Mon, 11 Sep 2023 14:13:54 +0100
+Message-ID: <20230911131411.196033-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-11_06,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
- priorityscore=1501 clxscore=1011 impostorscore=0 suspectscore=0
- adultscore=0 phishscore=0 bulkscore=0 malwarescore=0 mlxlogscore=957
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309110110
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_EF,RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -136,73 +72,172 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 2023-08-25 at 12:11 +0200, Niklas Schnelle wrote:
-> In some virtualized environments, including s390 paged memory guests,
-> IOTLB flushes are used to update IOMMU shadow tables. Due to this, they
-> are much more expensive than in typical bare metal environments or
-> non-paged s390 guests. In addition they may parallelize poorly in
-> virtualized environments. This changes the trade off for flushing IOVAs
-> such that minimizing the number of IOTLB flushes trumps any benefit of
-> cheaper queuing operations or increased paralellism.
->=20
-> In this scenario per-CPU flush queues pose several problems. Firstly
-> per-CPU memory is often quite limited prohibiting larger queues.
-> Secondly collecting IOVAs per-CPU but flushing via a global timeout
-> reduces the number of IOVAs flushed for each timeout especially on s390
-> where PCI interrupts may not be bound to a specific CPU.
->=20
-> Let's introduce a single flush queue mode that reuses the same queue
-> logic but only allocates a single global queue. This mode is selected by
-> dma-iommu if a newly introduced .shadow_on_flush flag is set in struct
-> dev_iommu. As a first user the s390 IOMMU driver sets this flag during
-> probe_device. With the unchanged small FQ size and timeouts this setting
-> is worse than per-CPU queues but a follow up patch will make the FQ size
-> and timeout variable. Together this allows the common IOVA flushing code
-> to more closely resemble the global flush behavior used on s390's
-> previous internal DMA API implementation.
->=20
-> Link: https://lore.kernel.org/all/9a466109-01c5-96b0-bf03-304123f435ee@ar=
-m.com/
-> Acked-by: Robin Murphy <robin.murphy@arm.com>
-> Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com> #s390
-> Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-> ---
->  drivers/iommu/dma-iommu.c  | 168 ++++++++++++++++++++++++++++++++++-----=
-------
->  drivers/iommu/s390-iommu.c |   3 +
->  include/linux/iommu.h      |   2 +
->  3 files changed, 134 insertions(+), 39 deletions(-)
->=20
->=20
----8<---
->=20=20
-> diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-> index 182cc4c71e62..c3687e066ed7 100644
-> --- a/include/linux/iommu.h
-> +++ b/include/linux/iommu.h
-> @@ -409,6 +409,7 @@ struct iommu_fault_param {
->   * @priv:	 IOMMU Driver private data
->   * @max_pasids:  number of PASIDs this device can consume
->   * @attach_deferred: the dma domain attachment is deferred
-> + * @shadow_on_flush: IOTLB flushes are used to sync shadow tables
->   *
->   * TODO: migrate other per device data pointers under iommu_dev_data, e.=
-g.
->   *	struct iommu_group	*iommu_group;
-> @@ -422,6 +423,7 @@ struct dev_iommu {
->  	void				*priv;
->  	u32				max_pasids;
->  	u32				attach_deferred:1;
-> +	u32				shadow_on_flush:1;
+V5:
+- drops ret = fn(); return ret; for return fn(); - Hans, Konrad
+Link: https://lore.kernel.org/linux-arm-msm/20230907164410.36651-16-bryan.odonoghue@linaro.org/
 
-This causes a merge conflict with a48ce36e2786f ("iommu: Prevent
-RESV_DIRECT devices from blocking domains"), The resolution is trivial
-though in that shadow_on_flush:1 can just be added after (or before)
-require_direct:1. @Joro do you want me to sent a version with this
-resolution regardless or will you resolve this when applying?
+Bootable:
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-23-09-06-lenovo-x13s-v6.5-rc7-x13s-camss-patches-v5
 
->  };
->=20=20
->  int iommu_device_register(struct iommu_device *iommu,
->=20
+V4:
+- Adds additional Reviewed-by / Acked-by from Laurent and Konrad as indicated
+
+- Updates commit log per Laurent suggestion not go on hunger strike
+  Link: https://lore.kernel.org/linux-arm-msm/20230828185110.GN14596@pendragon.ideasonboard.com/
+
+- Includes suggested changes to switch {} statements - Laurent
+  Link: https://lore.kernel.org/linux-media/d7745ece-bea1-f8f9-a1d2-0f01aa221ade@linaro.org/
+
+- Drops SoC specific vfe_get()/vfe_put() we have been using.
+  There is no need to differentiate on SoC since get/put reference count.
+  Link: https://lore.kernel.org/linux-media/62f78aac-c1e4-018c-93c2-4dac1ec7c688@linaro.org/
+
+- Changes the name of the generic struct resources to struct camss_subdev_resources - Laurent
+  Link: https://lore.kernel.org/lkml/20230828173055.GF14596@pendragon.ideasonboard.com/
+
+- media: qcom: camss: media: qcom: camss: Move vfe_disable into a common routine where applicable
+  Follows up on a comment from Laurent
+  Link: https://lore.kernel.org/linux-media/20230828171725.GZ14596@pendragon.ideasonboard.com/
+
+- media: qcom: camss: Propagate vfe_reset error up the callstack
+  Take the different approach to fixing the vfe_disable() routine doing nothing but returning 0
+  Per Konrad's correct comment on vfe_reset() error
+  Link: https://lore.kernel.org/linux-media/aaf9db49-54c4-4c27-8206-61e86ad560c2@linaro.org/
+
+- Restricts the length of buffer size for clock name string lookups - Konrad
+  Link: https://lore.kernel.org/linux-arm-msm/076d958f-2cf3-4a52-99a2-52a6cdd5443c@linaro.org/
+
+- Some outstanding issues not addressed in this series
+
+  * Clock name string lookups.
+    This warrants a standalone series - which will need yaml and dts changes to group clocks
+    by name across all supported SoCs.
+    This will then negate the string matching for clocks.
+    Link: https://lore.kernel.org/linux-arm-msm/3b3682be-5dbd-5e2d-a6c1-7bdf6d3ff8cd@linaro.org/
+
+  * Pixel formats are assigned via control strucutres not pointers from compat params
+    The struct resources stuff is still sub-optimal and it feels to me as if we should
+    do a bigger intervention to break away from a generic structure to subdevice specific
+    parameter structures. Such a subdevice specific structure would support passing pxiel
+    formats.
+
+  * We still need to follow up on having named genpds instead of magic indexes
+    Link: https://lore.kernel.org/lkml/b7e1d035-ee79-77c9-e81f-56fa8c2cf1df@linaro.org/
+
+  * More generally this driver allows for arbitrary connection of CSID, RDI
+    and VFE but, that is not how the hardware works. I believe other people
+    have works in progress to address some of this shortcoming separately.
+
+Bootable - includes tag for patches queued in Hans staging tree
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/commits/22ed4a935d6d323e71b014a69bafd638ad53cb5c 
+
+V3:
+- Adds RB/AB as indicated - Konrad
+- Replaces >= SDM845 with helper function per discussion - bod/Konrad
+- Leaves out constraining VFE clock names sizes. A full pass for resource strings will happen later. - bod
+- Clarifies commit log resulting in updated patch title also
+  "Add support for setting CSIPHY clock name csiphyX"
+  ->
+  "Fix support for setting CSIPHY clock name csiphyX"
+- Adds patch to remove dead integer return type in vfe_disable()
+- Adds patch to comment CSID dt_id meanining which I personally find non-obvious right now - bod
+
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/commits/09e7805a733b488c5dc19b301eb3b77cb0fad3d6
+
+V2:
+- Replaces &camss->res with pointer to res - Konrad
+- Squashes patch for NULL removal - Konrad
+- Left suggestion on ICC initialisation points alone, doesn't seem to fit Konrad/bod
+
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-23-08-07-db410c-rb3-camss-dts-v3+maintenance-bugfixes-v2
+
+V1:
+- I forgot to include patch # 14 in V0 of this series.
+  This patch leverages previous changes to unwind the fixed polling of
+  RDI[0..2] allowing driver data to articulate on a per-VFE basis how many
+  RDIs to poll.
+
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-23-08-07-db410c-rb3-camss-dts-v3+maintenance-bugfixes-v1
+
+V0:
+This second series of bugfixes stacks ontop of the Fixes series sent earlier.
+
+Link: https://lore.kernel.org/linux-arm-msm/20230814141007.3721197-1-bryan.odonoghue@linaro.org/T/#t
+
+Rather than send both series as one giant series, I opted to send a pure
+Fixes series above, with this second series a non-backport series i.e. no
+Fixes tags in this series.
+
+The existing CAMSS code relies on some hard-coded parameters buried inside
+of the driver, instead of passed via compat .data as arguably ought to be
+the case.
+
+This brittle model is an extending morass of spaghetti code. More than that
+in CAMSS Video Front Ends (VFEs) and the number of Raw Data Interfaces
+(RDIs) per VFE can vary from SoC to SoC. Indeed sm8250 has VFE and VFE Lite
+blocks which have a different number of RDIs per block.
+
+The use of defines as opposed to per-compat parameters inside of ISRs leads
+to either under-polling or over-polling the number of RDIs.
+
+On top of all of that we have some hard-coded statements for clock names
+which breaks easily.
+
+We can solve the under/over polling loop problem by transitioning loop
+controls from macros to parameters passed via probe().
+
+Similarly and unsurprisingly we can also solve the hard-coded clock problem
+by adding some string processing routines that take passed arguments.
+
+There is still some additional maintenance work to be done in this driver
+but before adding one more SoC the code needs to be made more extensible
+and less brittle.
+
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/commits/dc346c7f46c0680bcfb84fded6db97497fffe49a
+
+Bryan O'Donoghue (17):
+  media: qcom: camss: Amalgamate struct resource with struct
+    resource_ispif
+  media: qcom: camss: Rename camss struct resources to
+    camss_subdev_resources
+  media: qcom: camss: Start to move to module compat matched resources
+  media: qcom: camss: Pass icc bandwidth table as a platform parameter
+  media: qcom: camss: Pass remainder of variables as resources
+  media: qcom: camss: Pass line_num from compat resources
+  media: qcom: camss: Pass CAMSS subdev callbacks via resource ops
+    pointer
+  media: qcom: camss: Assign the correct number of RDIs per VFE
+  media: qcom: camss: Remove special case for VFE get/put
+  media: qcom: camss: Untangle if/else spaghetti in camss
+  media: qcom: camss: Allow clocks vfeN vfe_liteN or vfe_lite
+  media: qcom: camss: Functionally decompose CSIPHY clock lookups
+  media: qcom: camss: Fix support for setting CSIPHY clock name csiphyX
+  media: qcom: camss: Support RDI3 for VFE 17x
+  media: qcom: camss: Move vfe_disable into a common routine where
+    applicable
+  media: qcom: camss: Propagate vfe_reset error up the callstack
+  media: qcom: camss: Comment CSID dt_id field
+
+ .../platform/qcom/camss/camss-csid-gen2.c     |   5 +
+ .../media/platform/qcom/camss/camss-csid.c    |  28 +-
+ .../media/platform/qcom/camss/camss-csid.h    |   4 +-
+ .../qcom/camss/camss-csiphy-3ph-1-0.c         |   8 +-
+ .../media/platform/qcom/camss/camss-csiphy.c  |  67 +--
+ .../media/platform/qcom/camss/camss-csiphy.h  |   4 +-
+ .../media/platform/qcom/camss/camss-ispif.c   |  32 +-
+ .../media/platform/qcom/camss/camss-ispif.h   |   4 +-
+ .../media/platform/qcom/camss/camss-vfe-170.c |  57 +--
+ .../media/platform/qcom/camss/camss-vfe-4-1.c |   2 -
+ .../media/platform/qcom/camss/camss-vfe-4-7.c |   2 -
+ .../media/platform/qcom/camss/camss-vfe-4-8.c |   2 -
+ .../media/platform/qcom/camss/camss-vfe-480.c |  45 +-
+ drivers/media/platform/qcom/camss/camss-vfe.c | 127 ++++--
+ drivers/media/platform/qcom/camss/camss-vfe.h |  15 +-
+ .../media/platform/qcom/camss/camss-video.c   |  17 +-
+ drivers/media/platform/qcom/camss/camss.c     | 429 ++++++++++--------
+ drivers/media/platform/qcom/camss/camss.h     |  34 +-
+ 18 files changed, 450 insertions(+), 432 deletions(-)
+
+-- 
+2.42.0
 
