@@ -2,164 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C81E79C1BC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 03:38:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FA2779C123
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:32:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235203AbjILBiG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 21:38:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39630 "EHLO
+        id S230161AbjILAcD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 20:32:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235881AbjILBhs (ORCPT
+        with ESMTP id S230298AbjILAcB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 21:37:48 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEAE11828E3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 17:21:03 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-31ae6bf91a9so5066106f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 17:21:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694477979; x=1695082779; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=20jjjrUd+N4gzk4ksBEuuWe9UZd9AtwfGIVr9t4iq9Y=;
-        b=St+2je86hDBkdbrxpnusLdcK5yZ+pcvc93VbxlKL4d0aZWzQFosDCGmMqRz2zQ1jDR
-         XRByzFxFmnz5DOxlPW8u2pFjCnYkZUOmIlJzAbCUanOHgnhL9CpaHQ4iARQJBDJob/Ek
-         p66EZ6crP9dxG+RoPIQkfYRuvyuM5GO/hRBzbvAj3xizV3RCR8PhxdcPxxx7aXrYwVDA
-         kIsK8ZNM6Dc8sOhMQ0urjyvpqC07r/uMWoSCH0Xg0gTLsDP2K4d+kfVNlvR1eApFPMru
-         G4irh0sw5pCCIgLNASS3I7EjWHqun4iEbWimG7NAWg2tbDXpCL6EAu0yE9JYAj5EEXb8
-         28Gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694477979; x=1695082779;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=20jjjrUd+N4gzk4ksBEuuWe9UZd9AtwfGIVr9t4iq9Y=;
-        b=orlGn3DThVYoDAOEV2NdOPuwDspmbyij4lnZQr+MzItkyyqV8IXLy/U8trLakwMn3E
-         KNW9zJ2uEjznx08yHrlBXmWHH7h7yZLArVN7FuMc7kwaqDHWJbCR2VTcsmJMiHLIRBe/
-         WS9bZ9XFonPGjAksv8u618KUCvBZG+fMkU9ph/pm/72dwt27MbEUmApYX4G6YM6/bYUm
-         ZZLXJxCvGjRYy6RSzRnx+nrKYz4v0hgKnwAnqCSM6QcIkAxcWRP+LBNUaIQjRLfu6ewC
-         RZwXbbnq8gB+s1DvB2SaYcoJm7NEsCc2bM1T8NBnX3kl4P2mR54hHGvXi/rbYuwClYkz
-         gpZg==
-X-Gm-Message-State: AOJu0YwN1kYi9zp6wnf5I9ligNuQrgjP8SQkj7pWiGXvhJt1pmhXL/mk
-        bswGpvyRJsoPYLACr3HyR+h71iZQBqsMjL71Coc=
-X-Google-Smtp-Source: AGHT+IG3KSVpIhA3IPSJgajfgTp9wy5RAuXsZWVwqay7IgqWH7mGAYBH+oCOwkDCRo3IC1TZyblxhQ==
-X-Received: by 2002:a05:6512:39cd:b0:502:9bb6:3abf with SMTP id k13-20020a05651239cd00b005029bb63abfmr10465463lfu.60.1694468728212;
-        Mon, 11 Sep 2023 14:45:28 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id b5-20020a0565120b8500b004ff9bfda9d6sm1168804lfv.212.2023.09.11.14.45.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Sep 2023 14:45:27 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Mon, 11 Sep 2023 20:32:01 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C99EF76C7;
+        Mon, 11 Sep 2023 17:16:17 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38BLVKsp005455;
+        Mon, 11 Sep 2023 22:16:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-transfer-encoding : content-type; s=qcppdkim1;
+ bh=yez8gB2HyVf32KW7kcUHDh1APonpOcYVEipEXie3wrc=;
+ b=nm5q5ErrGcw69lKzMr2/ugzxDFpbaWyNB4TqFiGphc9g4+mVMDi9R/WTlJC9f1fJHQU1
+ OI9wTivAYIT7NkvECkJgXBVn7blkV4R+V/lAgRO0oj6rm0lvBRs2dlQlOZ9bcCWhk82M
+ 2EH2Gb/8wgciSqDV3NOMy4oloMcLv0fHHpzAlj26DEnMv+AWfbVedRUNqZhiEejIlE9n
+ IYFliwv6wo82G62FX8/GBrsFqSUdikLg5pTVTuRVG9bmVAUnGLpB6g16fKYuPVCpDpqH
+ i+EkT121fWAOkfSBQYxI/zhKRJPa9qdEBPm1OMQzT9LrSdPYGY3h+hkQmCW9wkNe+0ib pg== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t1u3yt9aq-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 11 Sep 2023 22:16:50 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38BMGmhf008181
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 11 Sep 2023 22:16:48 GMT
+Received: from abhinavk-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.36; Mon, 11 Sep 2023 15:16:48 -0700
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+To:     <freedreno@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
         David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH v4 7/9] drm/msm/dpu: drop DPU_HW_SUBBLK_INFO macro
-Date:   Tue, 12 Sep 2023 00:45:19 +0300
-Message-Id: <20230911214521.787453-8-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230911214521.787453-1-dmitry.baryshkov@linaro.org>
-References: <20230911214521.787453-1-dmitry.baryshkov@linaro.org>
+        "Daniel Vetter" <daniel@ffwll.ch>
+CC:     <dri-devel@lists.freedesktop.org>, <quic_jesszhan@quicinc.com>,
+        <quic_parellan@quicinc.com>, <nespera@igalia.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v2 2/2] drm/msm/dpu: try multirect based on mdp clock limits
+Date:   Mon, 11 Sep 2023 15:16:27 -0700
+Message-ID: <20230911221627.9569-2-quic_abhinavk@quicinc.com>
+X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20230911221627.9569-1-quic_abhinavk@quicinc.com>
+References: <20230911221627.9569-1-quic_abhinavk@quicinc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: To3ih1vviybwnSeFpHPx_L-WU_Te1E4Z
+X-Proofpoint-ORIG-GUID: To3ih1vviybwnSeFpHPx_L-WU_Te1E4Z
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-11_17,2023-09-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
+ clxscore=1015 phishscore=0 impostorscore=0 suspectscore=0 bulkscore=0
+ priorityscore=1501 mlxscore=0 mlxlogscore=701 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309110203
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,SPF_PASS,
-        T_SPF_HELO_TEMPERROR autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As the subblock info is now mostly gone, inline and drop the macro
-DPU_HW_SUBBLK_INFO.
+It's certainly possible that for large resolutions a single DPU SSPP
+cannot process the image without exceeding the MDP clock limits but
+it can still process it in multirect mode because the source rectangles
+will get divided and can fall within the MDP clock limits.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+If the SSPP cannot process the image even in multirect mode, then it
+will be rejected in dpu_plane_atomic_check_pipe().
+
+Hence try using multirect for resolutions which cannot be processed
+by a single SSPP without exceeding the MDP clock limits.
+
+changes in v2:
+	- use crtc_state's adjusted_mode instead of mode
+	- fix the UBWC condition to check maxlinewidth
+
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 ---
- .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    | 40 ++++++++++---------
- 1 file changed, 21 insertions(+), 19 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-index 19ab36ae6765..fc5027b0123a 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-@@ -252,49 +252,51 @@ enum {
- 	u32 len; \
- 	unsigned long features
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index 0be195f9149c..bf063e21e3dd 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -792,6 +792,8 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+ 										 plane);
+ 	int ret = 0, min_scale;
+ 	struct dpu_plane *pdpu = to_dpu_plane(plane);
++	struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
++	u64 max_mdp_clk_rate = kms->perf.max_core_clk_rate;
+ 	struct dpu_plane_state *pstate = to_dpu_plane_state(new_plane_state);
+ 	struct dpu_sw_pipe *pipe = &pstate->pipe;
+ 	struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
+@@ -860,14 +862,16 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
  
--/**
-- * MACRO DPU_HW_SUBBLK_INFO - information of HW sub-block inside DPU
-- * @name:              string name for debug purposes
-- * @base:              offset of this sub-block relative to the block
-- *                     offset
-- * @len                register block length of this sub-block
-- */
--#define DPU_HW_SUBBLK_INFO \
--	char name[DPU_HW_BLK_NAME_LEN]; \
--	u32 base; \
--	u32 len
--
- /**
-  * struct dpu_scaler_blk: Scaler information
-- * @info:   HW register and features supported by this sub-blk
-+ * @name: string name for debug purposes
-+ * @base: offset of this sub-block relative to the block offset
-+ * @len: register block length of this sub-block
-  * @version: qseed block revision, on QSEED3+ platforms this is the value of
-  *           scaler_blk.base + QSEED3_HW_VERSION registers.
-  */
- struct dpu_scaler_blk {
--	DPU_HW_SUBBLK_INFO;
-+	char name[DPU_HW_BLK_NAME_LEN];
-+	u32 base;
-+	u32 len;
- 	u32 version;
- };
+ 	max_linewidth = pdpu->catalog->caps->max_linewidth;
  
- struct dpu_csc_blk {
--	DPU_HW_SUBBLK_INFO;
-+	char name[DPU_HW_BLK_NAME_LEN];
-+	u32 base;
-+	u32 len;
- };
- 
- /**
-  * struct dpu_pp_blk : Pixel processing sub-blk information
-- * @info:   HW register and features supported by this sub-blk
-+ * @name: string name for debug purposes
-+ * @base: offset of this sub-block relative to the block offset
-+ * @len: register block length of this sub-block
-  * @version: HW Algorithm version
-  */
- struct dpu_pp_blk {
--	DPU_HW_SUBBLK_INFO;
-+	char name[DPU_HW_BLK_NAME_LEN];
-+	u32 base;
-+	u32 len;
- 	u32 version;
- };
- 
- /**
-  * struct dpu_dsc_blk - DSC Encoder sub-blk information
-- * @info:   HW register and features supported by this sub-blk
-+ * @name: string name for debug purposes
-+ * @base: offset of this sub-block relative to the block offset
-+ * @len: register block length of this sub-block
-  */
- struct dpu_dsc_blk {
--	DPU_HW_SUBBLK_INFO;
-+	char name[DPU_HW_BLK_NAME_LEN];
-+	u32 base;
-+	u32 len;
- };
- 
- /**
+-	if (drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) {
++	if ((drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) ||
++	     _dpu_plane_calc_clk(&crtc_state->adjusted_mode, pipe_cfg) > max_mdp_clk_rate) {
+ 		/*
+ 		 * In parallel multirect case only the half of the usual width
+ 		 * is supported for tiled formats. If we are here, we know that
+ 		 * full width is more than max_linewidth, thus each rect is
+ 		 * wider than allowed.
+ 		 */
+-		if (DPU_FORMAT_IS_UBWC(fmt)) {
++		if (DPU_FORMAT_IS_UBWC(fmt) &&
++		    drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) {
+ 			DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u, tiled format\n",
+ 					DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
+ 			return -E2BIG;
 -- 
-2.39.2
+2.40.1
 
