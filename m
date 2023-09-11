@@ -2,206 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1ACD579ACF8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 01:38:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FDF679B265
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 01:58:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343932AbjIKVM6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:12:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60490 "EHLO
+        id S1344915AbjIKVPF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:15:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241646AbjIKPLJ (ORCPT
+        with ESMTP id S241847AbjIKPQL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 11:11:09 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FDCEE40
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 08:11:04 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id ffacd0b85a97d-31dca134c83so4573060f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 08:11:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694445062; x=1695049862; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=asvRsf79Z4t2sQWCzoV7GsZSEWprfQh6kK1bExMAVOg=;
-        b=xjHiblnWXtrmTuD0F5dfIJgT3GvNcDwRUV324X1CCiUrPORvIGA4tY20qPOaykDRAe
-         Xku9M1nRl0gQwRQTZG2DFsL9IGJUBa71sKG68/yX0/rEvhedKeVLnH6gJYWBO4g/9HuO
-         qeW0uGfemgEC3HTRyafsOYCJs9I+gqemobB7C18nIDyZxkvaP6iYdTDNgDXj5uQEGGia
-         hq3n0F1mveVnn0cArgMG71AB7fcLw+e/P89D/ePHtURb0t+8MEE1SmYGd+zaVXZnQYAL
-         nwIufK8zphm707623O0Gv82UE9XG+ykDSuPSurJ6JF06PXMYQ83Ql/W8Cs8SL1wpT3Oz
-         TLsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694445062; x=1695049862;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=asvRsf79Z4t2sQWCzoV7GsZSEWprfQh6kK1bExMAVOg=;
-        b=SB2vV8xs27LbQzBGrIcSl4jowGAQBjf1N7Shd/yKtb7JMsQJW1yqVVgMnge/nCzbF3
-         lM0/3CnFfGfOthmWp6nrS3fYM5Ypj/NCaKzqdKl+UW0X32za7WKhspiliSfHpK+TCCWQ
-         8D6h24Mj3LGw17c+o0bJGFvmHrRXo4uzhsGqryzIQfHVHLk+uuy/CB6JwUfeJbHD/pCq
-         YdDySs5SCrhQwV2tR1WEMDD2y+PnfpH5UEcn5JKOL2Xu0SHRD2HfLlvxepQKoR3VwDUP
-         qdtQV0bcISzAMXdXorIrGK0WhF0tT2yfFtKfIIOF+a7zlwD6rDMzA/hmVtzSRv6sbT+W
-         E/9A==
-X-Gm-Message-State: AOJu0YytFYRNVywdARnO0pEBbQJLd1slw4yzJDUS7zapMZ++3utkomHd
-        QVJofWiRysry27mc+57zSm12rQ==
-X-Google-Smtp-Source: AGHT+IGE5+K1yW8OMCCbQ7LO7syjz0lKVcA0C/SeX6aOskGrNDSwz5DcC1WVx/LeccZYQTPTScyzVQ==
-X-Received: by 2002:a05:6000:183:b0:30e:19a8:4b0a with SMTP id p3-20020a056000018300b0030e19a84b0amr8128899wrx.2.1694445062479;
-        Mon, 11 Sep 2023 08:11:02 -0700 (PDT)
-Received: from [10.167.154.1] (178235177061.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.61])
-        by smtp.gmail.com with ESMTPSA id n4-20020a056402060400b0052a3ad836basm4681281edv.41.2023.09.11.08.11.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Sep 2023 08:11:02 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Mon, 11 Sep 2023 17:10:33 +0200
-Subject: [PATCH RFT 19/20] media: venus: pm_helpers: Commonize vdec_get()
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230911-topic-mars-v1-19-a7d38bf87bdb@linaro.org>
-References: <20230911-topic-mars-v1-0-a7d38bf87bdb@linaro.org>
-In-Reply-To: <20230911-topic-mars-v1-0-a7d38bf87bdb@linaro.org>
-To:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mon, 11 Sep 2023 11:16:11 -0400
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31045120
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 08:16:06 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qfidk-00069m-CE; Mon, 11 Sep 2023 17:15:52 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qfidj-005a7S-FW; Mon, 11 Sep 2023 17:15:51 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qfidh-000igm-W3; Mon, 11 Sep 2023 17:15:50 +0200
+From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+To:     Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1694445027; l=3895;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=YlmzYA4YQxxbZ8+I823ZEVUx3rnP0v9rXONFOCmtrvs=;
- b=KDRi++FuxntqUR4FhQvN/znBeowYpYMg9oFJfeJ2P90qhKY2dUuXl0A5psa8vbOs8KGLaPlj7
- I/3Xltr8F6xB8b3OciZAX6Y+pY/HYC9z5I6oAQo6HER3rzMArtLbLaP
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, kernel@pengutronix.de
+Subject: [PATCH] clk: qcom: cbf-msm8996: Convert to platform remove callback returning void
+Date:   Mon, 11 Sep 2023 17:15:48 +0200
+Message-Id: <20230911151548.672485-1-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.40.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2722; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=bX1MW8+1wZBVxTfQwby6K9/t5il+Vswf92hv70gjQVs=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBk/y8jygiIoFpJ0EtdFbFcr0qZwZUSpJLq25Dus aDm2cqAfMeJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZP8vIwAKCRCPgPtYfRL+ TliuB/9a/6uVl/T7KCMAF5D1v0A6Vv0h/saI88s9Pm9AMmyUUkKhCIANj+hOR94EWXR3IoWsK3B qyaqr8h/NHaWqNyGJFw9jXXwg2STqwtaw6h9XYYeuIZnIhSDA4FdmxWTt2TNxxocw8/DsNcA4nG Br4FRGOA+ENf3+5zq6N307M/rwoV2ypY77qqrvqZ/HH7AofUw/sbpjzjBaTGJROgjZ+SgbVPpNN JQGD9FI7umKXpz5c8FdUrPPmYDQDVaByQmrglOxl24dgT+uQtIIdv46u5K/RsJNrrK6WgQi9+HR ssaMnY2VfxN48sFLykVvmhOeF5sZSiGtTFUyR0qiuZ8IuZZL
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This function can be very easily commonized between the supported gens.
-Do so!
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new() which already returns void. Eventually after all drivers
+are converted, .remove_new() is renamed to .remove().
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+qcom_msm8996_cbf_icc_remove() returned zero unconditionally. After
+changing this function to return void instead, the driver can be
+converted trivially to use .remove_new().
+
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 ---
- drivers/media/platform/qcom/venus/pm_helpers.c | 21 +--------------------
- drivers/media/platform/qcom/venus/pm_helpers.h |  2 +-
- drivers/media/platform/qcom/venus/vdec.c       |  9 +++++++--
- 3 files changed, 9 insertions(+), 23 deletions(-)
+ drivers/clk/qcom/clk-cbf-8996.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-index 6e282a69c7c5..dfb89d2e7387 100644
---- a/drivers/media/platform/qcom/venus/pm_helpers.c
-+++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-@@ -125,7 +125,7 @@ static int core_clks_set_rate(struct venus_core *core, unsigned long freq)
+diff --git a/drivers/clk/qcom/clk-cbf-8996.c b/drivers/clk/qcom/clk-cbf-8996.c
+index 53f205a3f183..fe24b4abeab4 100644
+--- a/drivers/clk/qcom/clk-cbf-8996.c
++++ b/drivers/clk/qcom/clk-cbf-8996.c
+@@ -250,13 +250,11 @@ static int qcom_msm8996_cbf_icc_register(struct platform_device *pdev, struct cl
  	return 0;
  }
  
--static int vcodec_clks_get(struct venus_core *core, struct device *dev, u8 id)
-+int vcodec_clks_get(struct venus_core *core, struct device *dev, u8 id)
+-static int qcom_msm8996_cbf_icc_remove(struct platform_device *pdev)
++static void qcom_msm8996_cbf_icc_remove(struct platform_device *pdev)
  {
- 	char buf[13] = { 0 }; /* vcodecX_core\0 */
+ 	struct icc_provider *provider = platform_get_drvdata(pdev);
  
-@@ -345,13 +345,6 @@ vcodec_control_v3(struct venus_core *core, u32 session_type, bool enable)
- 		writel(1, ctrl);
+ 	icc_clk_unregister(provider);
+-
+-	return 0;
+ }
+ #define qcom_msm8996_cbf_icc_sync_state icc_sync_state
+ #else
+@@ -266,7 +264,7 @@ static int qcom_msm8996_cbf_icc_register(struct platform_device *pdev,  struct c
+ 
+ 	return 0;
+ }
+-#define qcom_msm8996_cbf_icc_remove(pdev) (0)
++#define qcom_msm8996_cbf_icc_remove(pdev) { }
+ #define qcom_msm8996_cbf_icc_sync_state NULL
+ #endif
+ 
+@@ -340,9 +338,9 @@ static int qcom_msm8996_cbf_probe(struct platform_device *pdev)
+ 	return qcom_msm8996_cbf_icc_register(pdev, &cbf_mux.clkr.hw);
  }
  
--static int vdec_get_v3(struct device *dev)
--{
--	struct venus_core *core = dev_get_drvdata(dev);
--
--	return vcodec_clks_get(core, dev, 0);
--}
--
- static int vdec_power_v3(struct device *dev, int on)
+-static int qcom_msm8996_cbf_remove(struct platform_device *pdev)
++static void qcom_msm8996_cbf_remove(struct platform_device *pdev)
  {
- 	struct venus_core *core = dev_get_drvdata(dev);
-@@ -394,7 +387,6 @@ static int venc_power_v3(struct device *dev, int on)
+-	return qcom_msm8996_cbf_icc_remove(pdev);
++	qcom_msm8996_cbf_icc_remove(pdev);
  }
  
- static const struct venus_pm_ops pm_ops_v3 = {
--	.vdec_get = vdec_get_v3,
- 	.vdec_power = vdec_power_v3,
- 	.venc_get = venc_get_v3,
- 	.venc_power = venc_power_v3,
-@@ -759,16 +751,6 @@ static int coreid_power_v4(struct venus_inst *inst, int on)
- 	return ret;
- }
+ static const struct of_device_id qcom_msm8996_cbf_match_table[] = {
+@@ -354,7 +352,7 @@ MODULE_DEVICE_TABLE(of, qcom_msm8996_cbf_match_table);
  
--static int vdec_get_v4(struct device *dev)
--{
--	struct venus_core *core = dev_get_drvdata(dev);
--
--	if (!legacy_binding)
--		return 0;
--
--	return vcodec_clks_get(core, dev, 0);
--}
--
- static void vdec_put_v4(struct device *dev)
- {
- 	struct venus_core *core = dev_get_drvdata(dev);
-@@ -1112,7 +1094,6 @@ static int load_scale_v4(struct venus_inst *inst)
- }
- 
- static const struct venus_pm_ops pm_ops_v4 = {
--	.vdec_get = vdec_get_v4,
- 	.vdec_put = vdec_put_v4,
- 	.vdec_power = vdec_power_v4,
- 	.venc_get = venc_get_v4,
-diff --git a/drivers/media/platform/qcom/venus/pm_helpers.h b/drivers/media/platform/qcom/venus/pm_helpers.h
-index 7a55a55029f3..4afc57dac865 100644
---- a/drivers/media/platform/qcom/venus/pm_helpers.h
-+++ b/drivers/media/platform/qcom/venus/pm_helpers.h
-@@ -10,7 +10,6 @@ struct venus_core;
- #define POWER_OFF	0
- 
- struct venus_pm_ops {
--	int (*vdec_get)(struct device *dev);
- 	void (*vdec_put)(struct device *dev);
- 	int (*vdec_power)(struct device *dev, int on);
- 
-@@ -27,6 +26,7 @@ const struct venus_pm_ops *venus_pm_get(enum hfi_version version);
- int venus_core_power(struct venus_core *core, int on);
- void vcodec_domains_put(struct venus_core *core);
- int venus_get_resources(struct venus_core *core);
-+int vcodec_clks_get(struct venus_core *core, struct device *dev, u8 id);
- 
- static inline int venus_pm_load_scale(struct venus_inst *inst)
- {
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index dbf305cec120..610beba5ca6d 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -1788,8 +1788,13 @@ static int vdec_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, core);
- 
--	if (core->pm_ops->vdec_get) {
--		ret = core->pm_ops->vdec_get(dev);
-+	/*
-+	 * If the vcodec core clock is missing by now, it either doesn't exist
-+	 * (8916) or deprecated bindings with pre-assigned core functions and
-+	 * resources under the decoder node are in use.
-+	 */
-+	if (!core->vcodec_core_clks[0]) {
-+		ret = vcodec_clks_get(core, dev, 0);
- 		if (ret)
- 			return ret;
- 	}
+ static struct platform_driver qcom_msm8996_cbf_driver = {
+ 	.probe = qcom_msm8996_cbf_probe,
+-	.remove = qcom_msm8996_cbf_remove,
++	.remove_new = qcom_msm8996_cbf_remove,
+ 	.driver = {
+ 		.name = "qcom-msm8996-cbf",
+ 		.of_match_table = qcom_msm8996_cbf_match_table,
 
+base-commit: 0bb80ecc33a8fb5a682236443c1e740d5c917d1d
 -- 
-2.42.0
+2.40.1
 
