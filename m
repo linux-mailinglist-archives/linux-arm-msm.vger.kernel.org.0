@@ -2,216 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 90DDB79BC64
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:14:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 877E279B72D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:06:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344426AbjIKVOF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:14:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50046 "EHLO
+        id S1344348AbjIKVN4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:13:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244240AbjIKTom (ORCPT
+        with ESMTP id S244496AbjIKUiu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 15:44:42 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0F3018D;
-        Mon, 11 Sep 2023 12:44:37 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38BFumkc012994;
-        Mon, 11 Sep 2023 19:44:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=mgi3HTFjixu9MZpChz8Nvq4m/bMxQQbtlB2jCrztIyo=;
- b=j5nQZ8nqVmdsJwiShQBDI2T2RS/xm3MJkfDl3YVEWFxVqNmA0WV2SE7XuCHDpRLH9+g4
- 6bcRtVyzB4NYGwLy3JhzXxS9hpC9HXh7Z+Ut+iGpEEqLxj3m2b4HnYvf3GhHl2rvX8Sj
- OTPIehKpoXod7aDgQgdmmSubP98wzqfqe76El42A+tUPhxph8oKk9MXLu6TRerKS0zES
- 8fOZiBT0dFhN+XaTpKSnxy8FKj4Tq6Z2snlwR6VnzJG6LRQA2lFPCHwMQr7yU1vuSzxO
- xtriTQ7WB6CHrF9741fS/wl9Z7EioGawWvehL/9oLiTrgMxoRhgHrbjBYaeLSPw2hFlv Ig== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t25yx0hk2-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 11 Sep 2023 19:44:29 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38BJiS9s015364
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 11 Sep 2023 19:44:28 GMT
-Received: from car-linux11.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Mon, 11 Sep 2023 12:44:28 -0700
-From:   Nikunj Kela <quic_nkela@quicinc.com>
-To:     <sudeep.holla@arm.com>
-CC:     <cristian.marussi@arm.com>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Nikunj Kela <quic_nkela@quicinc.com>
-Subject: [PATCH v4 4/4] firmware: arm_scmi: Add qcom hvc/shmem transport support
-Date:   Mon, 11 Sep 2023 12:43:59 -0700
-Message-ID: <20230911194359.27547-5-quic_nkela@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230911194359.27547-1-quic_nkela@quicinc.com>
-References: <20230718160833.36397-1-quic_nkela@quicinc.com>
- <20230911194359.27547-1-quic_nkela@quicinc.com>
+        Mon, 11 Sep 2023 16:38:50 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E772B1AB
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 13:38:45 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-501eec0a373so7903852e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 13:38:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694464724; x=1695069524; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RquiWTKnMLa3BWnVMnvof5ZnWR6qWtXMTkrlacLzVqE=;
+        b=w1xhrtZe840S9WTftMvyuiNkGEX/nbgRFDOwz3r9/IHgrbHmfl7wg+si6/lLtFAkiL
+         bcI5aJRewB42onS1ezyNZoG1Ne06b2w6Dr8zkl/mBssLvAwxoo0xN3MT+pORVuq1wy6c
+         n8pxDEY4bqkyt28J4CbFsr5rZMPaQxtANsnK/yJEeiTfqaogrb2dz/PonuPB6HPnQ4xd
+         5EBCOsombQoD7IV5yfS3vpm/VLIHHZtIs5nVDI+I1YNBbtdNSr9+al7/koe7HMhsh1S8
+         UnlHJZzHyEPCEEkI9Jh+CHsUpH1j2iqad6v+3wjOYgAfcdjMIgIuVQ4TWwbncJaJGnYa
+         nCbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694464724; x=1695069524;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RquiWTKnMLa3BWnVMnvof5ZnWR6qWtXMTkrlacLzVqE=;
+        b=BIRo0aK5heQlNeSE2NiAfsg18ZpdY7f6gtjhrcb8RskRKFNCi946XqgIZHJsHzacal
+         yfe99HGJvau8iq8oGuo3wWh3/FxBFZfKNYoY/k7eEhSTm+/S1uQ6ocZOpWM/3rxNawe/
+         kr907kOI7rZXBEvpjPYewrWD7BE4fb2JiU2SETmUlAbfiIqmjO0GghYl+uNPjlSWDi7s
+         RteDt7BAH1w05A0YHdUa2CqVGAmWBsp5mbHT3rG7LGk1iSTS8HtYfIyAOEQauXJX1oLU
+         /XeshbgAcMaxCMd5FY7EQQtC9qSxxxlwTywmlJ9ljzkdTNEsKMNDfCcgJ3v0zkUOpQEf
+         zcKA==
+X-Gm-Message-State: AOJu0YzNIwR0LLNDFz93dToEKSSUC87DX1PAgnPUBrAwneSlGlWdEiVq
+        pnaCLyBwdBlQc/jYFiuCpEyC0xXE55YeJ0Hv1XU=
+X-Google-Smtp-Source: AGHT+IGXx7xICV/kcBwxpHRx7oKp2rQPN1p/v9Z25hwi5ClQ2AEfe8APyFG4I//08fnRy7YnEcXElw==
+X-Received: by 2002:a05:6512:398c:b0:4fd:fabf:b6ee with SMTP id j12-20020a056512398c00b004fdfabfb6eemr10503323lfu.9.1694464724135;
+        Mon, 11 Sep 2023 13:38:44 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id l9-20020ac24309000000b00500b3157ec2sm1447753lfh.148.2023.09.11.13.38.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Sep 2023 13:38:43 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>
+Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: [PATCH v2 1/3] phy: qcom-qmp-combo: fix the prefix for the PCS_USB v6 registers
+Date:   Mon, 11 Sep 2023 23:38:40 +0300
+Message-Id: <20230911203842.778411-2-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230911203842.778411-1-dmitry.baryshkov@linaro.org>
+References: <20230911203842.778411-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: cWCo3C-4s9oE985TCAboIMaTT-9qrCzp
-X-Proofpoint-GUID: cWCo3C-4s9oE985TCAboIMaTT-9qrCzp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-11_15,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
- clxscore=1015 mlxlogscore=999 bulkscore=0 lowpriorityscore=0
- priorityscore=1501 malwarescore=0 suspectscore=0 adultscore=0
- impostorscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309110180
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,UPPERCASE_50_75 autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This change adds the support for SCMI message exchange on Qualcomm
-virtual platforms.
+For all other generations, we have been using just the QPHY prefix for
+the PCS registers. Remove the _USB part of the QPHY_USB prefix.
 
-The hypervisor associates an object-id also known as capability-id
-with each hvc doorbell object. The capability-id is used to identify the
-doorbell from the VM's capability namespace, similar to a file-descriptor.
-
-The hypervisor, in addition to the function-id, expects the capability-id
-to be passed in x1 register when HVC call is invoked.
-
-The function-id & capability-id are allocated by the hypervisor on bootup
-and are stored in the shmem region by the firmware before starting Linux.
-
-Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/firmware/arm_scmi/driver.c |  1 +
- drivers/firmware/arm_scmi/smc.c    | 47 ++++++++++++++++++++++++++----
- 2 files changed, 43 insertions(+), 5 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c     | 38 +++++++++---------
+ .../phy/qualcomm/phy-qcom-qmp-pcs-usb-v6.h    | 40 +++++++++----------
+ 2 files changed, 39 insertions(+), 39 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-index 87383c05424b..ea344bc6ae49 100644
---- a/drivers/firmware/arm_scmi/driver.c
-+++ b/drivers/firmware/arm_scmi/driver.c
-@@ -2915,6 +2915,7 @@ static const struct of_device_id scmi_of_match[] = {
- #ifdef CONFIG_ARM_SCMI_TRANSPORT_SMC
- 	{ .compatible = "arm,scmi-smc", .data = &scmi_smc_desc},
- 	{ .compatible = "arm,scmi-smc-param", .data = &scmi_smc_desc},
-+	{ .compatible = "qcom,scmi-hvc-shmem", .data = &scmi_smc_desc},
- #endif
- #ifdef CONFIG_ARM_SCMI_TRANSPORT_VIRTIO
- 	{ .compatible = "arm,scmi-virtio", .data = &scmi_virtio_desc},
-diff --git a/drivers/firmware/arm_scmi/smc.c b/drivers/firmware/arm_scmi/smc.c
-index 0a0b7e401159..94ec07fdc14a 100644
---- a/drivers/firmware/arm_scmi/smc.c
-+++ b/drivers/firmware/arm_scmi/smc.c
-@@ -50,6 +50,9 @@
-  * @func_id: smc/hvc call function id
-  * @param_page: 4K page number of the shmem channel
-  * @param_offset: Offset within the 4K page of the shmem channel
-+ * @cap_id: hvc doorbell's capability id to be used on Qualcomm virtual
-+ *	    platforms
-+ * @qcom_xport: Flag to indicate the transport on Qualcomm virtual platforms
-  */
- 
- struct scmi_smc {
-@@ -63,6 +66,8 @@ struct scmi_smc {
- 	u32 func_id;
- 	u32 param_page;
- 	u32 param_offset;
-+	u64 cap_id;
-+	bool qcom_xport;
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+index 5e6fc8103e9d..02d22595f747 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -845,28 +845,28 @@ static const struct qmp_phy_init_tbl sm8550_usb3_rx_tbl[] = {
  };
  
- static irqreturn_t smc_msg_done_isr(int irq, void *data)
-@@ -129,6 +134,7 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
- 	struct resource res;
- 	struct device_node *np;
- 	u32 func_id;
-+	u64 cap_id;
- 	int ret;
+ static const struct qmp_phy_init_tbl sm8550_usb3_pcs_tbl[] = {
+-	QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_LOCK_DETECT_CONFIG1, 0xc4),
+-	QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_LOCK_DETECT_CONFIG2, 0x89),
+-	QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_LOCK_DETECT_CONFIG3, 0x20),
+-	QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_LOCK_DETECT_CONFIG6, 0x13),
+-	QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_REFGEN_REQ_CONFIG1, 0x21),
+-	QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_RX_SIGDET_LVL, 0x99),
+-	QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_RCVR_DTCT_DLY_P1U2_L, 0xe7),
+-	QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_RCVR_DTCT_DLY_P1U2_H, 0x03),
+-	QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_CDR_RESET_TIME, 0x0a),
+-	QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_ALIGN_DETECT_CONFIG1, 0x88),
+-	QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_ALIGN_DETECT_CONFIG2, 0x13),
+-	QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_PCS_TX_RX_CONFIG, 0x0c),
+-	QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_EQ_CONFIG1, 0x4b),
+-	QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_EQ_CONFIG5, 0x10),
++	QMP_PHY_INIT_CFG(QPHY_V6_PCS_LOCK_DETECT_CONFIG1, 0xc4),
++	QMP_PHY_INIT_CFG(QPHY_V6_PCS_LOCK_DETECT_CONFIG2, 0x89),
++	QMP_PHY_INIT_CFG(QPHY_V6_PCS_LOCK_DETECT_CONFIG3, 0x20),
++	QMP_PHY_INIT_CFG(QPHY_V6_PCS_LOCK_DETECT_CONFIG6, 0x13),
++	QMP_PHY_INIT_CFG(QPHY_V6_PCS_REFGEN_REQ_CONFIG1, 0x21),
++	QMP_PHY_INIT_CFG(QPHY_V6_PCS_RX_SIGDET_LVL, 0x99),
++	QMP_PHY_INIT_CFG(QPHY_V6_PCS_RCVR_DTCT_DLY_P1U2_L, 0xe7),
++	QMP_PHY_INIT_CFG(QPHY_V6_PCS_RCVR_DTCT_DLY_P1U2_H, 0x03),
++	QMP_PHY_INIT_CFG(QPHY_V6_PCS_CDR_RESET_TIME, 0x0a),
++	QMP_PHY_INIT_CFG(QPHY_V6_PCS_ALIGN_DETECT_CONFIG1, 0x88),
++	QMP_PHY_INIT_CFG(QPHY_V6_PCS_ALIGN_DETECT_CONFIG2, 0x13),
++	QMP_PHY_INIT_CFG(QPHY_V6_PCS_PCS_TX_RX_CONFIG, 0x0c),
++	QMP_PHY_INIT_CFG(QPHY_V6_PCS_EQ_CONFIG1, 0x4b),
++	QMP_PHY_INIT_CFG(QPHY_V6_PCS_EQ_CONFIG5, 0x10),
+ };
  
- 	if (!tx)
-@@ -158,9 +164,34 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
- 		return -EADDRNOTAVAIL;
- 	}
+ static const struct qmp_phy_init_tbl sm8550_usb3_pcs_usb_tbl[] = {
+-	QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_USB3_POWER_STATE_CONFIG1, 0x68),
+-	QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_USB3_LFPS_DET_HIGH_COUNT_VAL, 0xf8),
+-	QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_USB3_RXEQTRAINING_DFE_TIME_S2, 0x07),
+-	QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_USB3_RCVR_DTCT_DLY_U3_L, 0x40),
+-	QMP_PHY_INIT_CFG(QPHY_USB_V6_PCS_USB3_RCVR_DTCT_DLY_U3_H, 0x00),
++	QMP_PHY_INIT_CFG(QPHY_V6_PCS_USB3_LFPS_DET_HIGH_COUNT_VAL, 0xf8),
++	QMP_PHY_INIT_CFG(QPHY_V6_PCS_USB3_RXEQTRAINING_DFE_TIME_S2, 0x07),
++	QMP_PHY_INIT_CFG(QPHY_V6_PCS_USB3_RCVR_DTCT_DLY_U3_L, 0x40),
++	QMP_PHY_INIT_CFG(QPHY_V6_PCS_USB3_RCVR_DTCT_DLY_U3_H, 0x00),
++	QMP_PHY_INIT_CFG(QPHY_V6_PCS_USB3_POWER_STATE_CONFIG1, 0x68),
+ };
  
--	ret = of_property_read_u32(dev->of_node, "arm,smc-id", &func_id);
--	if (ret < 0)
--		return ret;
-+	if (of_device_is_compatible(dev->of_node, "qcom,scmi-hvc-shmem")) {
-+		scmi_info->qcom_xport = true;
-+
-+		/* The func-id & capability-id are kept in last 16 bytes of shmem.
-+		 *     +-------+
-+		 *     |       |
-+		 *     | shmem |
-+		 *     |       |
-+		 *     |       |
-+		 *     +-------+ <-- (size - 16)
-+		 *     | funcId|
-+		 *     +-------+ <-- (size - 8)
-+		 *     | capId |
-+		 *     +-------+ <-- size
-+		 */
-+
-+		func_id = readl((void __iomem *)(scmi_info->shmem) + size - 16);
-+#ifdef CONFIG_ARM64
-+		cap_id = readq((void __iomem *)(scmi_info->shmem) + size - 8);
-+#else
-+		/* capability-id is 32 bit wide on 32bit machines */
-+		cap_id = readl((void __iomem *)(scmi_info->shmem) + size - 8);
-+#endif
-+	} else {
-+		ret = of_property_read_u32(dev->of_node, "arm,smc-id", &func_id);
-+		if (ret < 0)
-+			return ret;
-+	}
+ static const struct qmp_phy_init_tbl qmp_v4_dp_serdes_tbl[] = {
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v6.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v6.h
+index c38530d6776b..cf4464849006 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v6.h
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v6.h
+@@ -7,26 +7,26 @@
+ #define QCOM_PHY_QMP_PCS_USB_V6_H_
  
- 	if (of_device_is_compatible(dev->of_node, "arm,scmi-smc-param")) {
- 		scmi_info->param_page = SHMEM_PAGE(res.start);
-@@ -184,6 +215,7 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
- 	}
+ /* Only for QMP V6 PHY - USB3 have different offsets than V5 */
+-#define QPHY_USB_V6_PCS_LOCK_DETECT_CONFIG1		0xc4
+-#define QPHY_USB_V6_PCS_LOCK_DETECT_CONFIG2		0xc8
+-#define QPHY_USB_V6_PCS_LOCK_DETECT_CONFIG3		0xcc
+-#define QPHY_USB_V6_PCS_LOCK_DETECT_CONFIG6		0xd8
+-#define QPHY_USB_V6_PCS_REFGEN_REQ_CONFIG1		0xdc
+-#define QPHY_USB_V6_PCS_POWER_STATE_CONFIG1		0x90
+-#define QPHY_USB_V6_PCS_RX_SIGDET_LVL			0x188
+-#define QPHY_USB_V6_PCS_RCVR_DTCT_DLY_P1U2_L		0x190
+-#define QPHY_USB_V6_PCS_RCVR_DTCT_DLY_P1U2_H		0x194
+-#define QPHY_USB_V6_PCS_CDR_RESET_TIME			0x1b0
+-#define QPHY_USB_V6_PCS_ALIGN_DETECT_CONFIG1		0x1c0
+-#define QPHY_USB_V6_PCS_ALIGN_DETECT_CONFIG2		0x1c4
+-#define QPHY_USB_V6_PCS_PCS_TX_RX_CONFIG		0x1d0
+-#define QPHY_USB_V6_PCS_EQ_CONFIG1			0x1dc
+-#define QPHY_USB_V6_PCS_EQ_CONFIG5			0x1ec
++#define QPHY_V6_PCS_LOCK_DETECT_CONFIG1		0xc4
++#define QPHY_V6_PCS_LOCK_DETECT_CONFIG2		0xc8
++#define QPHY_V6_PCS_LOCK_DETECT_CONFIG3		0xcc
++#define QPHY_V6_PCS_LOCK_DETECT_CONFIG6		0xd8
++#define QPHY_V6_PCS_REFGEN_REQ_CONFIG1		0xdc
++#define QPHY_V6_PCS_POWER_STATE_CONFIG1		0x90
++#define QPHY_V6_PCS_RX_SIGDET_LVL			0x188
++#define QPHY_V6_PCS_RCVR_DTCT_DLY_P1U2_L		0x190
++#define QPHY_V6_PCS_RCVR_DTCT_DLY_P1U2_H		0x194
++#define QPHY_V6_PCS_CDR_RESET_TIME			0x1b0
++#define QPHY_V6_PCS_ALIGN_DETECT_CONFIG1		0x1c0
++#define QPHY_V6_PCS_ALIGN_DETECT_CONFIG2		0x1c4
++#define QPHY_V6_PCS_PCS_TX_RX_CONFIG		0x1d0
++#define QPHY_V6_PCS_EQ_CONFIG1			0x1dc
++#define QPHY_V6_PCS_EQ_CONFIG5			0x1ec
  
- 	scmi_info->func_id = func_id;
-+	scmi_info->cap_id = cap_id;
- 	scmi_info->cinfo = cinfo;
- 	smc_channel_lock_init(scmi_info);
- 	cinfo->transport_info = scmi_info;
-@@ -213,6 +245,7 @@ static int smc_send_message(struct scmi_chan_info *cinfo,
- 	struct arm_smccc_res res;
- 	unsigned long page = scmi_info->param_page;
- 	unsigned long offset = scmi_info->param_offset;
-+	unsigned long cap_id = (unsigned long)scmi_info->cap_id;
+-#define QPHY_USB_V6_PCS_USB3_POWER_STATE_CONFIG1	0x00
+-#define QPHY_USB_V6_PCS_USB3_LFPS_DET_HIGH_COUNT_VAL	0x18
+-#define QPHY_USB_V6_PCS_USB3_RXEQTRAINING_DFE_TIME_S2	0x3c
+-#define QPHY_USB_V6_PCS_USB3_RCVR_DTCT_DLY_U3_L		0x40
+-#define QPHY_USB_V6_PCS_USB3_RCVR_DTCT_DLY_U3_H		0x44
++#define QPHY_V6_PCS_USB3_POWER_STATE_CONFIG1		0x00
++#define QPHY_V6_PCS_USB3_LFPS_DET_HIGH_COUNT_VAL	0x18
++#define QPHY_V6_PCS_USB3_RXEQTRAINING_DFE_TIME_S2	0x3c
++#define QPHY_V6_PCS_USB3_RCVR_DTCT_DLY_U3_L		0x40
++#define QPHY_V6_PCS_USB3_RCVR_DTCT_DLY_U3_H		0x44
  
- 	/*
- 	 * Channel will be released only once response has been
-@@ -222,8 +255,12 @@ static int smc_send_message(struct scmi_chan_info *cinfo,
- 
- 	shmem_tx_prepare(scmi_info->shmem, xfer, cinfo);
- 
--	arm_smccc_1_1_invoke(scmi_info->func_id, page, offset, 0, 0, 0, 0, 0,
--			     &res);
-+	if (scmi_info->qcom_xport)
-+		arm_smccc_1_1_hvc(scmi_info->func_id, cap_id, 0, 0, 0, 0, 0, 0,
-+				  &res);
-+	else
-+		arm_smccc_1_1_invoke(scmi_info->func_id, page, offset, 0, 0, 0,
-+				     0, 0, &res);
- 
- 	/* Only SMCCC_RET_NOT_SUPPORTED is valid error code */
- 	if (res.a0) {
+ #endif
 -- 
-2.17.1
+2.39.2
 
