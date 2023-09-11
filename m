@@ -2,229 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 417C979BA14
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:11:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0CDAF79BF8C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:19:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343762AbjIKVM2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:12:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51598 "EHLO
+        id S1344722AbjIKVOn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:14:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235997AbjIKJsZ (ORCPT
+        with ESMTP id S235869AbjIKJow (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 05:48:25 -0400
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C40BED
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 02:48:21 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id d9443c01a7336-1c3aa44c0faso1785365ad.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 02:48:21 -0700 (PDT)
+        Mon, 11 Sep 2023 05:44:52 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8C96E4D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 02:44:46 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-501bd164fbfso6808050e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 02:44:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1694425700; x=1695030500; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=J+AOjYo5MSUvfxmHTrKdHJPfXG1dzZtS744QdXjNFdA=;
-        b=bT5avikXDx4H1UGZhJFCEKYM4lsGq7iytT9cLVUGysr6HlvE4WrQrpLSQD2xM6fRMC
-         gsyJhkApN0I574hj85IyuIfeTp5elWw9P9EU9E0NdqAZW1DJbuox2kRLUxMUkJphdTm1
-         vVhUfuRCwsOBTI4EvwpLXxbdNDOH7RWFVRDpMG404iHSVbHejm2V6V5uqGjY3NWrOg+R
-         T+5/v+OA50E4lvDNHDB4S1OnRP5T0hMwz3813gmEVPjZau9+xTP7sJyp0wxoOYLTlgfQ
-         rLrTPU1UdHvljER+TcV6KcHozQYsbLKdRrunf6Y25ldmNvw4ALNS2ZyBUE1eEgmO98EX
-         cRIQ==
+        d=linaro.org; s=google; t=1694425485; x=1695030285; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OmsynpPSy7TOyfTB3IX6VnuTU3cYL9zuQjAjoIV3s/c=;
+        b=VzBFzEV1J4+IxY34LUtLRlUghGnPQ4UQQBAMmtnYIzgbRpD+uAAD0jtOMvD0RF1OqB
+         z9sv0ZNioLLu2E9zlIobh11tDdZPNhqo5Un1eB8pmUlb6FZw1EQVT1WsHkxDLTxS3PtD
+         waydRo7pFXWLjuHkEIsi+5mjq81lCfx5zjG88Hj0sNJymCcCLvPEmt/IIQOWr7QqeCv2
+         2977GOCSpJBM9a18P86vMO9v0J7mn5Y1xPBMn7v9SAXPshLpCmpYutt+yanb11JXhDds
+         J0cTeiKcZkIpiMr11Q2zibDopGx1B53Kb4hoGZGTL5BCj2CAMcQwd3EcQUOeheRclrdz
+         7ltQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694425700; x=1695030500;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=J+AOjYo5MSUvfxmHTrKdHJPfXG1dzZtS744QdXjNFdA=;
-        b=r8jb5liWIiNp7Na4jVk1POdk4XBx4oQo9EcrO/CMQ9DSHzevcwI1t2w8AnfEIZqVHQ
-         RcmBsfHevlKADJPpoSS+lp9OUzn7X3V5vj6/HWWrpD0dbm0TJotWYZyC9mJa8deWVP4e
-         nfArtFt4FF5CSkeMyDX4NOkLfpkW/peZY1dIWpVGyTOilScJh7soklCQJthL4sVNcmG9
-         6PSFcBFy88L1S0cCcfZJ0qkafobKfz4gC466cmoXxKvCBlEariqkDNJjNww+sgGa9CiX
-         wd51BIx1Mw6o31nqG95k+LGXv2+3bSsLiDUYfIYv4HJWQRYZxNbJAk+xJPWoO7w3pXhx
-         O87w==
-X-Gm-Message-State: AOJu0YyMMm0W6ON48H/csFPmNgJlEg5u6cezWzPRMV3HbcjP8a5cR8Mm
-        VVEeMKc4WAFFuzNPM+Hejkzx8w==
-X-Google-Smtp-Source: AGHT+IE27vGs/uaz34ojq8+Ua2kGxMGmW1BLKwB00ljr5B+4yLh4dyEjB9Qga47N3yLXlwPZmv4ysw==
-X-Received: by 2002:a17:902:e750:b0:1c1:fbec:bc3f with SMTP id p16-20020a170902e75000b001c1fbecbc3fmr11508200plf.5.1694425700587;
-        Mon, 11 Sep 2023 02:48:20 -0700 (PDT)
-Received: from C02DW0BEMD6R.bytedance.net ([203.208.167.146])
-        by smtp.gmail.com with ESMTPSA id az7-20020a170902a58700b001bdc2fdcf7esm5988188plb.129.2023.09.11.02.48.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Sep 2023 02:48:20 -0700 (PDT)
-From:   Qi Zheng <zhengqi.arch@bytedance.com>
-To:     akpm@linux-foundation.org, david@fromorbit.com, tkhai@ya.ru,
-        vbabka@suse.cz, roman.gushchin@linux.dev, djwong@kernel.org,
-        brauner@kernel.org, paulmck@kernel.org, tytso@mit.edu,
-        steven.price@arm.com, cel@kernel.org, senozhatsky@chromium.org,
-        yujie.liu@intel.com, gregkh@linuxfoundation.org,
-        muchun.song@linux.dev
-Cc:     linux-kernel@vger.kernel.org, linux-mm@kvack.org,
-        linux-fsdevel@vger.kernel.org,
-        Qi Zheng <zhengqi.arch@bytedance.com>,
-        Muchun Song <songmuchun@bytedance.com>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org
-Subject: [PATCH v6 21/45] drm/msm: dynamically allocate the drm-msm_gem shrinker
-Date:   Mon, 11 Sep 2023 17:44:20 +0800
-Message-Id: <20230911094444.68966-22-zhengqi.arch@bytedance.com>
-X-Mailer: git-send-email 2.24.3 (Apple Git-128)
-In-Reply-To: <20230911094444.68966-1-zhengqi.arch@bytedance.com>
-References: <20230911094444.68966-1-zhengqi.arch@bytedance.com>
+        d=1e100.net; s=20230601; t=1694425485; x=1695030285;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OmsynpPSy7TOyfTB3IX6VnuTU3cYL9zuQjAjoIV3s/c=;
+        b=AurIFCQfo/jGTeRyfkGg2+mCxyjMkxMqC/Xg5CN2XKAUyYspNFRVVMrVIvxDprs3Vv
+         EkDVEUKXyl1tq6xvvqcmYzoytYZheKenObT+pzNUSD3UyL5axp4l+6RaSS5H6xixeJCw
+         qIWu5JEd9yxSvowCeVp6rGJVvinpam/To2ge7osun5CEHPtRvK5TebXFAZcGSoNFSuER
+         MIHGIeAy37CWf/7t7Yegl6W/czgFplP4jnXNPNDz4gqjcQL+lwb/R2qItn4w8Sq0LjD3
+         wKYoiDnr668OtcsO8qEVCfvZvdksFNRo9GxEYmhkBTPeGhzVbA5IN/QS39b+hQ6DltYM
+         61kA==
+X-Gm-Message-State: AOJu0YzSkLIHZ/h46E31ol31lFHp3zBtDzyuorOwHsrmHeVVkOuyOxwY
+        aTSlQDU/L5kh50jiWvsFQcouFw==
+X-Google-Smtp-Source: AGHT+IFVrYxA7iHydVJRTySy5FxdaMSR909EKZE3dfa0mH+F5dKlXdxHMp4UmfcWfyRPypkx7BXujw==
+X-Received: by 2002:ac2:5bd1:0:b0:4fd:faf0:6591 with SMTP id u17-20020ac25bd1000000b004fdfaf06591mr6586243lfn.10.1694425484839;
+        Mon, 11 Sep 2023 02:44:44 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.214.188])
+        by smtp.gmail.com with ESMTPSA id w5-20020a17090652c500b0099bd453357esm5030071ejn.41.2023.09.11.02.44.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Sep 2023 02:44:43 -0700 (PDT)
+Message-ID: <cae7261a-6727-6163-1420-01039bfb8396@linaro.org>
+Date:   Mon, 11 Sep 2023 11:44:42 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.0
+Subject: Re: [PATCH 04/11] arm64: dts: qcom: pm7250b: make SID configurable
+Content-Language: en-US
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     cros-qcom-dts-watchers@chromium.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-pm@vger.kernel.org
+References: <20230830-fp5-initial-v1-0-5a954519bbad@fairphone.com>
+ <20230830-fp5-initial-v1-4-5a954519bbad@fairphone.com>
+ <b82f4683-e8b5-b424-8f7a-6d2ba1cab61f@linaro.org>
+ <CV6NF0466658.20DGU7QKF2UBR@otso>
+ <CAA8EJpr1+W3f08X-FpiiVrJ98kg52HaMwbbKn=fG15Whm4C8aQ@mail.gmail.com>
+ <728003b9-db27-fdc0-e761-197a02a38c24@linaro.org>
+ <CAA8EJpoXreHpxZQ2G10n0OiQzUX4ffk=gvo87dAU4-r+Svqpeg@mail.gmail.com>
+ <CVAUDGBO4S08.1F0O66ZE6I4IG@otso> <CVFY7D7ND3WS.2B2EYB4ZO86P@otso>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CVFY7D7ND3WS.2B2EYB4ZO86P@otso>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In preparation for implementing lockless slab shrink, use new APIs to
-dynamically allocate the drm-msm_gem shrinker, so that it can be freed
-asynchronously via RCU. Then it doesn't need to wait for RCU read-side
-critical section when releasing the struct msm_drm_private.
+On 11/09/2023 10:34, Luca Weiss wrote:
+> On Tue Sep 5, 2023 at 10:30 AM CEST, Luca Weiss wrote:
+>> On Thu Aug 31, 2023 at 2:27 PM CEST, Dmitry Baryshkov wrote:
+>>> On Thu, 31 Aug 2023 at 14:54, Krzysztof Kozlowski
+>>> <krzysztof.kozlowski@linaro.org> wrote:
+>>>>
+>>>> On 31/08/2023 13:33, Dmitry Baryshkov wrote:
+>>>>> On Thu, 31 Aug 2023 at 13:13, Luca Weiss <luca.weiss@fairphone.com> wrote:
+>>>>>>
+>>>>>> On Wed Aug 30, 2023 at 12:06 PM CEST, Krzysztof Kozlowski wrote:
+>>>>>>> On 30/08/2023 11:58, Luca Weiss wrote:
+>>>>>>>> Like other Qualcomm PMICs the PM7250B can be used on different addresses
+>>>>>>>> on the SPMI bus. Use similar defines like the PMK8350 to make this
+>>>>>>>> possible.
+>>>>>>>>
+>>>>>>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>>>>>>>> ---
+>>>>>>>>  arch/arm64/boot/dts/qcom/pm7250b.dtsi | 23 ++++++++++++++++-------
+>>>>>>>>  1 file changed, 16 insertions(+), 7 deletions(-)
+>>>>>>>>
+>>>>>>>> diff --git a/arch/arm64/boot/dts/qcom/pm7250b.dtsi b/arch/arm64/boot/dts/qcom/pm7250b.dtsi
+>>>>>>>> index e8540c36bd99..3514de536baa 100644
+>>>>>>>> --- a/arch/arm64/boot/dts/qcom/pm7250b.dtsi
+>>>>>>>> +++ b/arch/arm64/boot/dts/qcom/pm7250b.dtsi
+>>>>>>>> @@ -7,6 +7,15 @@
+>>>>>>>>  #include <dt-bindings/interrupt-controller/irq.h>
+>>>>>>>>  #include <dt-bindings/spmi/spmi.h>
+>>>>>>>>
+>>>>>>>> +/* This PMIC can be configured to be at different SIDs */
+>>>>>>>> +#ifndef PM7250B_SID
+>>>>>>>> +   #define PM7250B_SID 2
+>>>>>>>> +#endif
+>>>>>>>
+>>>>>>> Why do you send the same patch as v1, without any reference to previous
+>>>>>>> discussions?
+>>>>>>>
+>>>>>>> You got here feedback already.
+>>>>>>>
+>>>>>>> https://lore.kernel.org/linux-arm-msm/f52524da-719b-790f-ad2c-0c3f313d9fe9@linaro.org/
+>>>>>>
+>>>>>> Hi Krzysztof,
+>>>>>>
+>>>>>> I did mention that original patch in the cover letter of this series.
+>>>>>> I'm definitely aware of the discussion earlier this year there but also
+>>>>>> tried to get an update lately if there's any update with no response.
+>>>>>
+>>>>> I think the overall consensus was that my proposal is too complicated
+>>>>> for the DT files.
+>>>>
+>>>> I proposed to duplicate the entries. Do you keep QUP nodes in DTSI and
+>>>> customize per address? No.
+>>>
+>>> At the same time, we do keep SoC files separate from the board files.
+>>> Yes, I'm slightly exaggerating here.
+>>>
+>>> I think that for PMIC files it makes sense to extract common parts if
+>>> that eases reuse of the common parts.
+>>
+>> Hi all,
+>>
+>> what can I do for v2 now?
+>>
+>> 1. Keep this patch as-is, and keep pm7250b in device dts.
 
-Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
-Reviewed-by: Muchun Song <songmuchun@bytedance.com>
-Acked-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-CC: Rob Clark <robdclark@gmail.com>
-CC: Abhinav Kumar <quic_abhinavk@quicinc.com>
-CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Sean Paul <sean@poorly.run>
-CC: Marijn Suijten <marijn.suijten@somainline.org>
-CC: David Airlie <airlied@gmail.com>
-CC: linux-arm-msm@vger.kernel.org
-CC: dri-devel@lists.freedesktop.org
----
- drivers/gpu/drm/msm/msm_drv.c          |  4 +++-
- drivers/gpu/drm/msm/msm_drv.h          |  4 ++--
- drivers/gpu/drm/msm/msm_gem_shrinker.c | 33 ++++++++++++++++----------
- 3 files changed, 25 insertions(+), 16 deletions(-)
+This was NAKed by me. What Qualcomm SoC maintainers decide (or not
+decide) about other options, should not cause the wrong solution to be
+re-posted...
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 4bd028fa7500..7f20249d6071 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -462,7 +462,9 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
- 	if (ret)
- 		goto err_msm_uninit;
- 
--	msm_gem_shrinker_init(ddev);
-+	ret = msm_gem_shrinker_init(ddev);
-+	if (ret)
-+		goto err_msm_uninit;
- 
- 	if (priv->kms_init) {
- 		ret = priv->kms_init(ddev);
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index 02fd6c7d0bb7..e2fc56f161b5 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -221,7 +221,7 @@ struct msm_drm_private {
- 	} vram;
- 
- 	struct notifier_block vmap_notifier;
--	struct shrinker shrinker;
-+	struct shrinker *shrinker;
- 
- 	struct drm_atomic_state *pm_state;
- 
-@@ -283,7 +283,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- unsigned long msm_gem_shrinker_shrink(struct drm_device *dev, unsigned long nr_to_scan);
- #endif
- 
--void msm_gem_shrinker_init(struct drm_device *dev);
-+int msm_gem_shrinker_init(struct drm_device *dev);
- void msm_gem_shrinker_cleanup(struct drm_device *dev);
- 
- struct sg_table *msm_gem_prime_get_sg_table(struct drm_gem_object *obj);
-diff --git a/drivers/gpu/drm/msm/msm_gem_shrinker.c b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-index f38296ad8743..5a7d48c02c4b 100644
---- a/drivers/gpu/drm/msm/msm_gem_shrinker.c
-+++ b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-@@ -34,8 +34,7 @@ static bool can_block(struct shrink_control *sc)
- static unsigned long
- msm_gem_shrinker_count(struct shrinker *shrinker, struct shrink_control *sc)
- {
--	struct msm_drm_private *priv =
--		container_of(shrinker, struct msm_drm_private, shrinker);
-+	struct msm_drm_private *priv = shrinker->private_data;
- 	unsigned count = priv->lru.dontneed.count;
- 
- 	if (can_swap())
-@@ -100,8 +99,7 @@ active_evict(struct drm_gem_object *obj)
- static unsigned long
- msm_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
- {
--	struct msm_drm_private *priv =
--		container_of(shrinker, struct msm_drm_private, shrinker);
-+	struct msm_drm_private *priv = shrinker->private_data;
- 	struct {
- 		struct drm_gem_lru *lru;
- 		bool (*shrink)(struct drm_gem_object *obj);
-@@ -148,10 +146,11 @@ msm_gem_shrinker_shrink(struct drm_device *dev, unsigned long nr_to_scan)
- 	struct shrink_control sc = {
- 		.nr_to_scan = nr_to_scan,
- 	};
--	int ret;
-+	unsigned long ret = SHRINK_STOP;
- 
- 	fs_reclaim_acquire(GFP_KERNEL);
--	ret = msm_gem_shrinker_scan(&priv->shrinker, &sc);
-+	if (priv->shrinker)
-+		ret = msm_gem_shrinker_scan(priv->shrinker, &sc);
- 	fs_reclaim_release(GFP_KERNEL);
- 
- 	return ret;
-@@ -210,16 +209,24 @@ msm_gem_shrinker_vmap(struct notifier_block *nb, unsigned long event, void *ptr)
-  *
-  * This function registers and sets up the msm shrinker.
-  */
--void msm_gem_shrinker_init(struct drm_device *dev)
-+int msm_gem_shrinker_init(struct drm_device *dev)
- {
- 	struct msm_drm_private *priv = dev->dev_private;
--	priv->shrinker.count_objects = msm_gem_shrinker_count;
--	priv->shrinker.scan_objects = msm_gem_shrinker_scan;
--	priv->shrinker.seeks = DEFAULT_SEEKS;
--	WARN_ON(register_shrinker(&priv->shrinker, "drm-msm_gem"));
-+
-+	priv->shrinker = shrinker_alloc(0, "drm-msm_gem");
-+	if (!priv->shrinker)
-+		return -ENOMEM;
-+
-+	priv->shrinker->count_objects = msm_gem_shrinker_count;
-+	priv->shrinker->scan_objects = msm_gem_shrinker_scan;
-+	priv->shrinker->private_data = priv;
-+
-+	shrinker_register(priv->shrinker);
- 
- 	priv->vmap_notifier.notifier_call = msm_gem_shrinker_vmap;
- 	WARN_ON(register_vmap_purge_notifier(&priv->vmap_notifier));
-+
-+	return 0;
- }
- 
- /**
-@@ -232,8 +239,8 @@ void msm_gem_shrinker_cleanup(struct drm_device *dev)
- {
- 	struct msm_drm_private *priv = dev->dev_private;
- 
--	if (priv->shrinker.nr_deferred) {
-+	if (priv->shrinker) {
- 		WARN_ON(unregister_vmap_purge_notifier(&priv->vmap_notifier));
--		unregister_shrinker(&priv->shrinker);
-+		shrinker_free(priv->shrinker);
- 	}
- }
--- 
-2.30.2
+>>
+>> 2. Drop pm7250b patch and drop from device dts, until _someone_ figures
+>> out a solution talking to the PMIC on different SID.
+>>
+>> 3. Something else like copy-pasting pm7250b.dtsi to pm7250-8.dtsi and
+>> changing the SID there, and using that in device dts.
+>>
+>> Please let me know what to do.
+>>
+>> Regards
+>> Luca
+> 
+> Hi,
+> 
+> if there's no feedback I'll keep this patch in v2 of this series and we
+> can continue to discuss there (if necessary).
+
+Sorry, I still do not agree and there were no arguments convincing me to
+change the mind.
+
+I gave you the solution from my perspective. Why do you decided to
+ignore it and send it as is?
+
+
+Best regards,
+Krzysztof
 
