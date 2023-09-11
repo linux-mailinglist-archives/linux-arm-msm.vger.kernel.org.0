@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D1D0379BBE9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:13:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF74479C0D6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:21:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245650AbjIKVLT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:11:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45078 "EHLO
+        id S241475AbjIKVLH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:11:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237787AbjIKNOc (ORCPT
+        with ESMTP id S237796AbjIKNOc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 11 Sep 2023 09:14:32 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D446E58
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 06:14:24 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-51a52a7d859so11875191a12.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 06:14:24 -0700 (PDT)
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5282EB
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 06:14:25 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-99c4923195dso556762266b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 06:14:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694438062; x=1695042862; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1694438064; x=1695042864; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XhSKtn1WWoetbFcEPefpk8WL/CMtB2nONd2TgD1HTnc=;
-        b=TxOQngcuQrk9neSYpXpEWDetgRy86M7BgRbVcvi/jBzsjedlSFxqKtxI4oTlPyoXpj
-         Pm6x4/OIkO0zX1fme7BX4cpRCqurJMXUXxzpgG6BnhsGmAN6nJWuIJuXlVG1HEvVCDsN
-         0+r1x+TC6MXPu+YL4c1BiuvKs4EMe2oKK4O2nFhmoGHrsNO7GdL7udiJUUbSrHHUa2Jf
-         8ZhZ+y9WvzwJg5AGL9aO2XQfK6ipjn8nhpPT9AZZ2eNCQeetX2/ZQ/OABrHlGhiOcC5h
-         CcITVGUR3+pdy755Jm89Pld3/0m4fulYoWTYH3e3CapCbZUbigtJJ92kNZjvpG4iSsXg
-         EJdw==
+        bh=0TCXlkx9FBx7XbMn7VMNDwyuOtzJKgBsRO7jREukP4c=;
+        b=Y56b8e+YU9PnufBoGgPTApzgOXcK+2g8EuHQ6pN8bzRIIHBormuQdUdQGGYtp6JAii
+         9lRh8htmjCpb9vGYNhTHrB0uN36c60/tnX3rWrQq/6kh2AdMhWVFtosDRP5xnDNKa5p+
+         lkhVYlNCHpQcrOJ8wFhp99gL0wIuh9axnDgEI9g+zGw1LTczB33ocgoudJ07Wee8aqsH
+         6ZDoTPtp7TOiavw2vSgnpb/YT81scTSm4a6XwSJpc0nha8svVjdcfXll33JAroDBeaHe
+         sQJ6ZzluurGOhRgMhPKFbgDp1NmoJxuMTLbbe3KOBhnP4j5UU5eQYH3Y8ylhZdQh2sia
+         6uFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694438062; x=1695042862;
+        d=1e100.net; s=20230601; t=1694438064; x=1695042864;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=XhSKtn1WWoetbFcEPefpk8WL/CMtB2nONd2TgD1HTnc=;
-        b=JBmfG3j5cukvXydChhD6XOvXN59CX+rybeTDEwAHdKm2MzEmJMemYBLURZ8JGOZSfZ
-         DsnzHRtORQtmbWOO0KAQOFLqSBaJRPu6gJT9Y0jaV4Ke+4KZPmOHcnPNTdX0UI3uZC6C
-         nvEZXwDSJPLJa7mvnrzL/R5COzX6vMqWGpTJljlaj+x8huJaoPAhMIMcR+BAdJmf+ym7
-         Yh35Ua0xN3ZeMU7jt8KOLt3im6zwerFApnvfTNoea74E8G1hRTHU1aDVbof3615DvXSh
-         LoaO2GLhvd3VlNxXaOhOUwK5J5/a6KGCFUdXDUxr8MMiAyFo2If90u4p2/YYKq4Et3tX
-         0cnQ==
-X-Gm-Message-State: AOJu0Yw2LBZob5X/vwfHd5WQOwtlPTby0X6WkqSlgS/caM2d5erRZTOt
-        ictQl5W2gWmcz/aZoiBbGDJBMw==
-X-Google-Smtp-Source: AGHT+IEFbf3WidJFJmKCbSDnTfUZx1nsd3kx3inUQt+W2uUry3n4S5gz+/xikpS3GNUDhEB5vi7IFw==
-X-Received: by 2002:a17:906:8a7a:b0:9a9:fa4a:5a4e with SMTP id hy26-20020a1709068a7a00b009a9fa4a5a4emr10218566ejc.13.1694438062745;
-        Mon, 11 Sep 2023 06:14:22 -0700 (PDT)
+        bh=0TCXlkx9FBx7XbMn7VMNDwyuOtzJKgBsRO7jREukP4c=;
+        b=nEmpAwndu8HlsqAGCPDlrhMGM6aua2w0ZUvM0z7+y8y11oj51R4cLaXAjbrcprL2kG
+         9ztk3wMZDDUSXrTaMVMIHXQuTnfiV6t3I0IavTrxYtjxo35BgRlntG7H1EOP1aGpiX2h
+         kr+4fZ1+WNqrj7PFEB1sODHF+V9g7sthk0qILCh2jdgB+uIT31o4NdXEes8JKk7ry5n7
+         1Lh+qdWnuQohU90r5rG4I6p5+GM+EX48VaAKEDRBaLKnkkN1OkgqGezbrWWbjx/c+b8U
+         KMp7yZO4pR3H2MIac6cSZpGctkvAPpKt/uJYhp3391DoxaZwKc6XiSadiNR72KjrVg2q
+         yyNA==
+X-Gm-Message-State: AOJu0Yze/Q4ugq7dloUrsLnrHoFo5R1XE0JIZ5VhJjyWknSPbHFbO3Id
+        LoTxihqikZOFhwMhdSMfzHGj2w==
+X-Google-Smtp-Source: AGHT+IFZzXhiNfwKFMF6Zm2cRmio9F67gVYIwv8DcTVRfvwtJ3y2kR4pCcWDGQrHs17pzDMQ4a2NaA==
+X-Received: by 2002:a17:907:2cd8:b0:9a1:c357:c743 with SMTP id hg24-20020a1709072cd800b009a1c357c743mr8074375ejc.52.1694438063804;
+        Mon, 11 Sep 2023 06:14:23 -0700 (PDT)
 Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id kt8-20020a170906aac800b00988e953a586sm5313648ejb.61.2023.09.11.06.14.21
+        by smtp.gmail.com with ESMTPSA id kt8-20020a170906aac800b00988e953a586sm5313648ejb.61.2023.09.11.06.14.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Sep 2023 06:14:22 -0700 (PDT)
+        Mon, 11 Sep 2023 06:14:23 -0700 (PDT)
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 To:     rfoss@kernel.org, todor.too@gmail.com, bryan.odonoghue@linaro.org,
         agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
@@ -58,191 +58,73 @@ To:     rfoss@kernel.org, todor.too@gmail.com, bryan.odonoghue@linaro.org,
         andrey.konovalov@linaro.org
 Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v5 08/17] media: qcom: camss: Assign the correct number of RDIs per VFE
-Date:   Mon, 11 Sep 2023 14:14:02 +0100
-Message-ID: <20230911131411.196033-9-bryan.odonoghue@linaro.org>
+Subject: [PATCH v5 09/17] media: qcom: camss: Remove special case for VFE get/put
+Date:   Mon, 11 Sep 2023 14:14:03 +0100
+Message-ID: <20230911131411.196033-10-bryan.odonoghue@linaro.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911131411.196033-1-bryan.odonoghue@linaro.org>
 References: <20230911131411.196033-1-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Each Video Front End - VFE - has a variable number of Raw Data Interfaces -
-RDIs associated with it.
+From sdm845 onwards we need to ensure the VFE is powered on prior to
+switching on the CSID.
 
-The CAMSS code started from a naive implementation where a fixed define was
-used as a control in a for(){} loop iterating through RDIs.
+Currently the code tests for sdm845, sm8250 and then does get/set. This is
+not extensible and it turns out is not necessary either since vfe_get and
+vfe_set reference count.
 
-That model scales badly. An attempt was made with  VFE_LINE_NUM_GEN2 and
-VFE_LINE_NUM_GEN1 to differentiate between SoCs but, the problem with that
-is "gen1" and "gen2" have no meaning in the silicon. There is no fixed
-constraint in the silicon between VFE and RDI, it is entirely up to the SoC
-designers how many VFEs are populated and how many RDIs to associate with
-each VFE.
-
-As an example sdm845 has VFE version 175 and sm8250 VFE version 480.
-sdm845 has 2 VFEs with 4 RDIs and 1 VFE Lite with 4 RDIs.
-sm8250 has 2 VFEs with 3 RDIs and 2 VFE Lite with 4 RDIs.
-
-Clearly then we need a more granular model to capture the necessary data.
-
-The defines have gone away to be replaced with per-SoC data but, we haven't
-populated the parameter data with the real values.
-
-Let's call those values out now
-
-msm8916:
-1 x VFE
-3 x RDI per VFE (not 4)
-
-msm8996:
-2 x VFE
-3 x RDI per VFE (not 4)
-
-sdm660:
-2 x VFE
-3 x RDI per VFE (not 4)
-
-sdm845:
-2 x VFE
-4 x RDI per VFE (not 3)
-1 x VFE Lite
-4 x RDI per VFE Lite (not 3)
-
-sm8250:
-2 x VFE
-3 x RDI per VFE (not 4)
-2 x VFE Lite
-4 x RDI per VFE Lite
-
-This more complex and correct mapping was not possible prior to passing
-values via driver data. Now that we have that change in place we can
-correctly map VFEs to RDIs for each VFE.
+Remove the over-conservative SoC version check.
 
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> # rb3 # db410c
 ---
- drivers/media/platform/qcom/camss/camss-vfe.h |  2 --
- drivers/media/platform/qcom/camss/camss.c     | 20 +++++++++----------
- 2 files changed, 10 insertions(+), 12 deletions(-)
+ drivers/media/platform/qcom/camss/camss-csid.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe.h b/drivers/media/platform/qcom/camss/camss-vfe.h
-index b4bae9f65c68f..4783afa73a365 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe.h
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.h
-@@ -52,9 +52,7 @@ enum vfe_line_id {
- 	VFE_LINE_RDI0 = 0,
- 	VFE_LINE_RDI1 = 1,
- 	VFE_LINE_RDI2 = 2,
--	VFE_LINE_NUM_GEN2 = 3,
- 	VFE_LINE_PIX = 3,
--	VFE_LINE_NUM_GEN1 = 4,
- 	VFE_LINE_NUM_MAX = 4
- };
+diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
+index 99f651e2021cb..02ae3f5cb0c0e 100644
+--- a/drivers/media/platform/qcom/camss/camss-csid.c
++++ b/drivers/media/platform/qcom/camss/camss-csid.c
+@@ -159,15 +159,12 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
+ 	struct camss *camss = csid->camss;
+ 	struct device *dev = camss->dev;
+ 	struct vfe_device *vfe = &camss->vfe[csid->id];
+-	u32 version = camss->res->version;
+ 	int ret = 0;
  
-diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-index 12131d9ea7ca8..8e78dd8d5961e 100644
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -128,7 +128,7 @@ static const struct camss_subdev_resources vfe_res_8x16[] = {
- 				{ 0 } },
- 		.reg = { "vfe0" },
- 		.interrupt = { "vfe0" },
--		.line_num = VFE_LINE_NUM_GEN1,
-+		.line_num = 3,
- 		.ops = &vfe_ops_4_1
+ 	if (on) {
+-		if (version == CAMSS_8250 || version == CAMSS_845) {
+-			ret = vfe_get(vfe);
+-			if (ret < 0)
+-				return ret;
+-		}
++		ret = vfe_get(vfe);
++		if (ret < 0)
++			return ret;
+ 
+ 		ret = pm_runtime_resume_and_get(dev);
+ 		if (ret < 0)
+@@ -217,8 +214,7 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
+ 		regulator_bulk_disable(csid->num_supplies,
+ 				       csid->supplies);
+ 		pm_runtime_put_sync(dev);
+-		if (version == CAMSS_8250 || version == CAMSS_845)
+-			vfe_put(vfe);
++		vfe_put(vfe);
  	}
- };
-@@ -277,7 +277,7 @@ static const struct camss_subdev_resources vfe_res_8x96[] = {
- 				{ 0 } },
- 		.reg = { "vfe0" },
- 		.interrupt = { "vfe0" },
--		.line_num = VFE_LINE_NUM_GEN1,
-+		.line_num = 3,
- 		.ops = &vfe_ops_4_7
- 	},
  
-@@ -297,7 +297,7 @@ static const struct camss_subdev_resources vfe_res_8x96[] = {
- 				{ 0 } },
- 		.reg = { "vfe1" },
- 		.interrupt = { "vfe1" },
--		.line_num = VFE_LINE_NUM_GEN1,
-+		.line_num = 3,
- 		.ops = &vfe_ops_4_7
- 	}
- };
-@@ -467,7 +467,7 @@ static const struct camss_subdev_resources vfe_res_660[] = {
- 				{ 0 } },
- 		.reg = { "vfe0" },
- 		.interrupt = { "vfe0" },
--		.line_num = VFE_LINE_NUM_GEN1,
-+		.line_num = 3,
- 		.ops = &vfe_ops_4_8
- 	},
- 
-@@ -490,7 +490,7 @@ static const struct camss_subdev_resources vfe_res_660[] = {
- 				{ 0 } },
- 		.reg = { "vfe1" },
- 		.interrupt = { "vfe1" },
--		.line_num = VFE_LINE_NUM_GEN1,
-+		.line_num = 3,
- 		.ops = &vfe_ops_4_8
- 	}
- };
-@@ -657,7 +657,7 @@ static const struct camss_subdev_resources vfe_res_845[] = {
- 				{ 384000000 } },
- 		.reg = { "vfe0" },
- 		.interrupt = { "vfe0" },
--		.line_num = VFE_LINE_NUM_GEN2,
-+		.line_num = 4,
- 		.ops = &vfe_ops_170
- 	},
- 
-@@ -679,7 +679,7 @@ static const struct camss_subdev_resources vfe_res_845[] = {
- 				{ 384000000 } },
- 		.reg = { "vfe1" },
- 		.interrupt = { "vfe1" },
--		.line_num = VFE_LINE_NUM_GEN2,
-+		.line_num = 4,
- 		.ops = &vfe_ops_170
- 	},
- 
-@@ -700,7 +700,7 @@ static const struct camss_subdev_resources vfe_res_845[] = {
- 				{ 384000000 } },
- 		.reg = { "vfe_lite" },
- 		.interrupt = { "vfe_lite" },
--		.line_num = VFE_LINE_NUM_GEN2,
-+		.line_num = 4,
- 		.ops = &vfe_ops_170
- 	}
- };
-@@ -839,7 +839,7 @@ static const struct camss_subdev_resources vfe_res_8250[] = {
- 				{ 0 } },
- 		.reg = { "vfe0" },
- 		.interrupt = { "vfe0" },
--		.line_num = 4,
-+		.line_num = 3,
- 		.ops = &vfe_ops_480
- 	},
- 	/* VFE1 */
-@@ -859,7 +859,7 @@ static const struct camss_subdev_resources vfe_res_8250[] = {
- 				{ 0 } },
- 		.reg = { "vfe1" },
- 		.interrupt = { "vfe1" },
--		.line_num = 4,
-+		.line_num = 3,
- 		.ops = &vfe_ops_480
- 	},
- 	/* VFE2 (lite) */
+ 	return ret;
 -- 
 2.42.0
 
