@@ -2,122 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 65FC979BAAE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:11:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1744B79BD6C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:16:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344544AbjIKVO3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:14:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46232 "EHLO
+        id S235715AbjIKVKR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:10:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235635AbjIKJK5 (ORCPT
+        with ESMTP id S235856AbjIKJmY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 05:10:57 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1217ACCD;
-        Mon, 11 Sep 2023 02:10:52 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22B6DC433C8;
-        Mon, 11 Sep 2023 09:10:48 +0000 (UTC)
-Message-ID: <be6b41e0-c610-49c3-ae6c-e811b56aca30@xs4all.nl>
-Date:   Mon, 11 Sep 2023 11:10:47 +0200
+        Mon, 11 Sep 2023 05:42:24 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FE8D102;
+        Mon, 11 Sep 2023 02:42:20 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38B7YVST007689;
+        Mon, 11 Sep 2023 09:42:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=65meyQ02zDJ9RS5oezOgVlLzi+P4MnDTHmSa6k7EHu0=;
+ b=pVLzyEa/3g63V1aOUyiIGR26qGeABWEclQKIS8AtllhpNnVnGrhOohnYwkmXeFRsOLlQ
+ ehcvCwE+FZ181/svY5aezM2+RSf7LapWZ5eylwW2UYue/0KVG0yEbBjkoYDVHrU71enK
+ htp0/A0g5RpOAlj3UlNZY7nfH7sdapFy4GlI80SK1x9hg9VGxgMDDwNoO0uWS3LkUCwj
+ EVnKZV7SqvrBdJ0tC8lDG0lmmvWPtXt7rOZpLi0NVKShxgJh6spRWfU8SLaBjVa+zqN/
+ htomcG4dvwWu9R/RPmrptnb2yV+9lMIQ76YdP9gnLHbTJicPVii62MgaWQArm49UbHrX pA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t1xjmr79r-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 11 Sep 2023 09:42:13 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38B9gCd2004112
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 11 Sep 2023 09:42:12 GMT
+Received: from [10.253.14.78] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 11 Sep
+ 2023 02:42:09 -0700
+Message-ID: <6225a132-4b7f-bbb4-e863-4e62b99dd79d@quicinc.com>
+Date:   Mon, 11 Sep 2023 17:42:06 +0800
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 15/17] media: qcom: camss: Move vfe_disable into a
- common routine where applicable
-Content-Language: en-US, nl
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>, rfoss@kernel.org,
-        todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
-        mchehab@kernel.org, laurent.pinchart@ideasonboard.com,
-        sakari.ailus@linux.intel.com, andrey.konovalov@linaro.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230907164410.36651-1-bryan.odonoghue@linaro.org>
- <20230907164410.36651-16-bryan.odonoghue@linaro.org>
- <8b424303-09c9-4270-abfd-4f209f5c41e0@linaro.org>
- <41d1e364-40a4-48b2-97ef-6c76d238002e@linaro.org>
- <c9570c8e-c9a5-43f5-8b69-d5c38d214061@linaro.org>
- <c5d64d12-668a-4d70-85ee-e4111d85a1be@linaro.org>
- <e1ab1df4-8431-483d-8f20-74de5349cfbc@linaro.org>
-From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-In-Reply-To: <e1ab1df4-8431-483d-8f20-74de5349cfbc@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.0
+Subject: Re: [PATCH 2/6] scsi: ufs: ufs-qcom: Add support for UFS device
+ version detection
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <mani@kernel.org>,
+        <quic_nguyenb@quicinc.com>, <quic_nitirawa@quicinc.com>,
+        <martin.petersen@oracle.com>
+CC:     <linux-scsi@vger.kernel.org>, Andy Gross <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "open list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
+        <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <1694411968-14413-1-git-send-email-quic_cang@quicinc.com>
+ <1694411968-14413-3-git-send-email-quic_cang@quicinc.com>
+ <6055cd57-4de7-4b7e-a4f3-68a7de1aef28@linaro.org>
+Content-Language: en-US
+From:   Can Guo <quic_cang@quicinc.com>
+In-Reply-To: <6055cd57-4de7-4b7e-a4f3-68a7de1aef28@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 6GygYcleddw3CRSgzKVR14os9b2zjpjH
+X-Proofpoint-GUID: 6GygYcleddw3CRSgzKVR14os9b2zjpjH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-11_06,2023-09-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ phishscore=0 lowpriorityscore=0 suspectscore=0 mlxlogscore=999
+ malwarescore=0 adultscore=0 priorityscore=1501 clxscore=1015 bulkscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309110088
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/09/2023 12:36, Bryan O'Donoghue wrote:
-> On 08/09/2023 11:24, Konrad Dybcio wrote:
->> On 8.09.2023 12:21, Bryan O'Donoghue wrote:
->>> On 08/09/2023 11:04, Konrad Dybcio wrote:
->>>> On 8.09.2023 12:02, Konrad Dybcio wrote:
->>>>> On 7.09.2023 18:44, Bryan O'Donoghue wrote:
->>>>>> We can move vfe_disable() into a common routine in the core VFE file
->>>>>> provided we make wm_stop() a VFE specific callback.
->>>>>>
->>>>>> The callback is required to capture the case where VFE 17x currently isn't
->>>>>> VC enabled where as VFE 480 is.
->>>>>>
->>>>>> Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
->>>>>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>>>>> ---
->>>>> Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>>>
->>>>> Konrad
->>>> Actually there's
->>>>
->>>> ret = vfe_reset(vfe);
->>>>
->>>> return ret;
->>>>
->>>>
->>>> which could just be
->>>>
->>>> return vfe_reset(vfe);
->>>>
->>>>
->>>> Konrad
->>>
->>> On purpose.
->>>
->>> I prefer the ret = ; return ret; pattern since it makes it easier / less work to
->>>
->>> ret = fn();
->>> if (ret)
->>>      goto error;
->>>
->>> error:
->>>      return ret;
->> There's no error label in vfe_disable_output
+Hi Konrad,
+
+On 9/11/2023 5:17 PM, Konrad Dybcio wrote:
+> On 11.09.2023 07:59, Can Guo wrote:
+>> From: "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
 >>
->> Konrad
-> 
-> No there is not. Its a pattern I use to make adding jump labels easier later on.
+>> Retrieve UFS device version from UFS host controller's spare register
+>> which is populated by bootloader, and use the UFS device version together
+>> with host controller's HW version to decide the proper power modes which
+>> should be used to configure the UFS PHY.
+> That sounds a bit fishy.. is there no bootloader-independent
+> solution to that? Can't we bring in the code that the bootloader
+> uses to determine these values?
+>
+> Konrad
 
-This adds a bunch of extra lines just in case something might happen in the
-future. That is generally a bad idea, so please change this. As you can see
-it just causes reviewers to trip over this with exactly the question you got
-here.
 
-> 
-> Just like you use the pattern of appending "," to aggregate initialisation.
+Agree, it is.
 
-Adding a comma at the end doesn't add extra lines. To be honest, I don't
-have a strong opinion on this either way. Personally I would probably use a
-comma if it is likely that the list would be extended in the future, and
-leave it out if I am pretty certain that won't happen. In any case, I don't
-mind either way.
 
-Regards,
+All these complexities come from one request from PHY design team - 
+power saving.
 
-	Hans
+And to achieve power saving, Qualcomm UFS developers are requested to 
+use the
 
-> 
-> ---
-> bod
+lowest hanging PHY settings which can sustain the Max agreed HS Gear 
+(btw host
+
+and UFS device) during UFS's lifecycle in High Level OS,  whereas the 
+power saving
+
+request does not apply to bootloader, which works for only a few seconds 
+during
+
+bootup. Hence, there is no such version detect code in bootloader -  it 
+just uses the
+
+highest PHY settings to configure PHY, boot up UFS and put UFS device 
+version in this
+
+register.
+
+
+Thanks,
+
+Can Guo.
 
