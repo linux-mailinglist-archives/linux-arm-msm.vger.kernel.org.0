@@ -2,28 +2,28 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F3F079AEFF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 01:46:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1CBC379B392
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:00:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245688AbjIKVL0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:11:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42968 "EHLO
+        id S1343516AbjIKVLi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:11:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238823AbjIKOFp (ORCPT
+        with ESMTP id S240463AbjIKOoy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 10:05:45 -0400
+        Mon, 11 Sep 2023 10:44:54 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31E6FCF0;
-        Mon, 11 Sep 2023 07:05:41 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EBC3C433C8;
-        Mon, 11 Sep 2023 14:05:40 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F49912A;
+        Mon, 11 Sep 2023 07:44:50 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B86BC433C9;
+        Mon, 11 Sep 2023 14:44:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1694441140;
-        bh=1jnFHpGHBBkyLPMeQDjn1SZEtbvQs6xIw4C/GV4kXj4=;
+        s=korg; t=1694443489;
+        bh=z4ImYPeW9GjYS/F95A4H1O0+loZWDA5MHpNBy8hULSI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=BE7Mcp0Jx3EvniXDOuJ+BQBhVLEuiD9FpCgyi6K5GSrq5c4VCJI5vkDbrdy6PmNG+
-         XBblv0lTU7NYsdhqaM6vEnJRpIG2pRgmLJWDLaeK9CjyNWv+3EWTY8Np+pfVJRM3lo
-         Fz7fcbE1oGfFYRPagl6EEAyUwSddu2GKMNkDIRW8=
+        b=mVNdpZvFmdc16BZi3tNyK2aumPjIpehkhaew3353OUtMF5jkUMW/3zuERwyAIlAnT
+         vWM1UEsYgL//Ywzf+RLrVs9TWRe1jhjqh2mQpzVKOkp4dgHs8YmF0zA/k81j+PE78D
+         E9F7QmoI93FDR+s92MfiSi+/f1B6rbg+V9Sr6FXo=
 From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To:     stable@vger.kernel.org
 Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -36,12 +36,12 @@ Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
         dorum@noisolation.com, Daniel Vetter <daniel.vetter@intel.com>,
         Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 309/739] drm/msm/mdp5: Dont leak some plane state
-Date:   Mon, 11 Sep 2023 15:41:48 +0200
-Message-ID: <20230911134659.750192459@linuxfoundation.org>
+Subject: [PATCH 6.4 358/737] drm/msm/mdp5: Dont leak some plane state
+Date:   Mon, 11 Sep 2023 15:43:37 +0200
+Message-ID: <20230911134700.526532808@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230911134650.921299741@linuxfoundation.org>
-References: <20230911134650.921299741@linuxfoundation.org>
+In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
+References: <20230911134650.286315610@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -57,7 +57,7 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
