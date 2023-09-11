@@ -2,86 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 962DB79A598
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Sep 2023 10:09:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A57879A5B3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Sep 2023 10:12:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234939AbjIKIJ0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 04:09:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49310 "EHLO
+        id S233319AbjIKIMM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 04:12:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234950AbjIKIJW (ORCPT
+        with ESMTP id S232258AbjIKIML (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 04:09:22 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFAE1E54
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 01:09:11 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-40061928e5aso47073475e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 01:09:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694419750; x=1695024550; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=EbUzjiy4o1vK6+eGTRCo3FmI8I3JuBmYotzF+QEDbUg=;
-        b=G5pIpSUlLgrywcZWVhzKgWYPT26G6N/WUlfY/qJQVA+MbiO8BHJdZW46oar0f+qHvC
-         BMC1yzrf57EMuCMCMPv2cGVUJkdbOp3hsOB4mYFtz0Yvx1xfNtVFrU1SgF1zlap3A9I6
-         MbMhYTzX6FumWOORTqccuKJa5ZemtD1EuX30Hr9gHBrvMQzocW4CD2g6m1C80fS7jTvL
-         wZAkg9fTY73ek15pkCs4IQoqDDk/vnZPXOFkULdufboBwdD2asAkIc/Bp+kN0rrAmrzX
-         Q5Gslp30yhkVZ+NyzqyGHsFpjCGYNKNowWTUvKVVw0olHYl0AYotXJWIwXyK+1mDT/Yw
-         V9Cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694419750; x=1695024550;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EbUzjiy4o1vK6+eGTRCo3FmI8I3JuBmYotzF+QEDbUg=;
-        b=ADLnKqAxdJa6A8T7erQ2bFTJWPg5QLP5z2LtF3FeKwC2kiMzrZZBt8VjiUHuwv8iOp
-         sowbxCPXTeo6ELkaY8qHmqk9W+LobGkDNtZML8Vgo3qoOGDirTOi4kfJJpTduD/58h+x
-         JS3RMDqyocOBXtBTlBMwR6Maiens1asaZaLmsSTY/hu1r4yCt9OOm2IlrnS1mvp26XrE
-         Ru33CejNJJLKR9NqCT4Mkv9jXsiNZW+FwrFNR307QVAbRGZpkBBaerFOjF0Wo+ieh+I3
-         FrcQAr1i2J+2V6g6mfynQ5prsKokaKkWPdrtzs0LCVhr5hNFpoBmvmr6K+HQona34z5x
-         x9wg==
-X-Gm-Message-State: AOJu0YwIwKcubjqwY0DMOeveYA7AX9RVF/67aL49HnRSOAg9SvGgBEhb
-        5E9jdX/ss8gtWXmznqNiX7r3Gg==
-X-Google-Smtp-Source: AGHT+IH17NjBNGmOzEesnEW9tcv/zDzsg0kaDQGZfVp6yr4OvabsTsarBsJUqtBSDTS43yE6uYtPtQ==
-X-Received: by 2002:a05:600c:b5a:b0:3fe:15f0:dfbc with SMTP id k26-20020a05600c0b5a00b003fe15f0dfbcmr7767575wmr.12.1694419750151;
-        Mon, 11 Sep 2023 01:09:10 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.214.188])
-        by smtp.gmail.com with ESMTPSA id w18-20020a5d6092000000b0031c52e81490sm9359869wrt.72.2023.09.11.01.09.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Sep 2023 01:09:09 -0700 (PDT)
-Message-ID: <9476d20e-a0f2-e8cf-db4f-d07dda86bb28@linaro.org>
-Date:   Mon, 11 Sep 2023 10:09:05 +0200
+        Mon, 11 Sep 2023 04:12:11 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F00FFB;
+        Mon, 11 Sep 2023 01:12:06 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38B6Kt4L029455;
+        Mon, 11 Sep 2023 08:11:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=LJRWy4EBcDX+2fQ69zfLKOyX3UcEFlR6a3yY/ct/VgI=;
+ b=pEeFkUVCpv2qEzwfidDZAx+0LELN0qLyQHGgwmeRAFInM5TB/wWAOMXpGagZMheugZgK
+ UCeRyBzoD6XKujNK89yflIxo6jsR95vB2Lt7K5O/OzDpMhcDYTKlq4QvsHPHxziq5YhG
+ 2at0lcMkm+kOtTVMfoC5sGuHqnIoKgsHgiWRUKi5Pw+2MtoHyPUM7zgYB4pmRbzcOC9B
+ QnzXOZbJ47glnhA/n9OPPjB/Bhfpq8jx+X2aelu0g0+uvuTCX0sVPTuQYOwgpj+on8dN
+ +Tg14HPjA6Cy91uGc0WBSZyto2fhNRb9nla3uo7PS36K7XBhp+qXXIkOS7hmnueqQeTA mw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t1whx87qh-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 11 Sep 2023 08:11:29 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38B8BPhO007718
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 11 Sep 2023 08:11:25 GMT
+Received: from [10.201.2.96] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 11 Sep
+ 2023 01:11:13 -0700
+Message-ID: <9ab47979-e06f-475d-b1ea-239e3238b2d6@quicinc.com>
+Date:   Mon, 11 Sep 2023 13:41:09 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.0
-Subject: Re: [PATCH v3 2/9] arm64: dts: qcom: apq8016-sbc: Add overlay for usb
- host mode
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 15/17] firmware: scm: Modify only the download bits in
+ TCSR register
 Content-Language: en-US
-To:     Vignesh Raman <vignesh.raman@collabora.com>,
-        dri-devel@lists.freedesktop.org
-Cc:     helen.koike@collabora.com, guilherme.gallo@collabora.com,
-        sergi.blanch.torne@collabora.com, david.heidelberg@collabora.com,
-        daniels@collabora.com, gustavo.padovan@collabora.com,
-        angelogioacchino.delregno@collabora.com, emma@anholt.net,
-        robclark@freedesktop.org, robdclark@google.com, anholt@google.com,
-        robdclark@gmail.com, airlied@gmail.com, daniel@ffwll.ch,
-        jani.nikula@linux.intel.com, mripard@kernel.org,
-        dmitry.baryshkov@linaro.org, matthias.bgg@gmail.com,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        virtualization@lists.linux-foundation.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230908152225.432139-1-vignesh.raman@collabora.com>
- <20230908152225.432139-3-vignesh.raman@collabora.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230908152225.432139-3-vignesh.raman@collabora.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Mukesh Ojha <quic_mojha@quicinc.com>, <corbet@lwn.net>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <keescook@chromium.org>, <tony.luck@intel.com>,
+        <gpiccoli@igalia.com>, <mathieu.poirier@linaro.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <linus.walleij@linaro.org>, <andy.shevchenko@gmail.com>,
+        <vigneshr@ti.com>, <nm@ti.com>, <matthias.bgg@gmail.com>,
+        <kgene@kernel.org>, <alim.akhtar@samsung.com>,
+        <bmasney@redhat.com>, <quic_tsoni@quicinc.com>
+CC:     <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-gpio@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
+        <linux-samsung-soc@vger.kernel.org>, <kernel@quicinc.com>
+References: <1694290578-17733-1-git-send-email-quic_mojha@quicinc.com>
+ <1694290578-17733-16-git-send-email-quic_mojha@quicinc.com>
+From:   Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+In-Reply-To: <1694290578-17733-16-git-send-email-quic_mojha@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: F8oJO76h15tpNbGss0yrj5eRmlvtP48O
+X-Proofpoint-ORIG-GUID: F8oJO76h15tpNbGss0yrj5eRmlvtP48O
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-11_06,2023-09-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ suspectscore=0 impostorscore=0 phishscore=0 adultscore=0 mlxlogscore=999
+ bulkscore=0 lowpriorityscore=0 spamscore=0 priorityscore=1501
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309110074
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,35 +93,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/09/2023 17:22, Vignesh Raman wrote:
-> Due to the presence of the fastboot micro cable in the CI farm,
-> it causes the hardware to remain in gadget mode instead of host mode.
-> So it doesn't find the network, which results in failure to mount root
-> fs via NFS.
-> 
-> Add an overlay dtso file that sets the dr_mode to host, allowing
-> the USB controllers to work in host mode. This dtso file will be used
-> in drm-ci, mesa-ci.
-> 
-> Overlay DT file uses the sugar syntax [suggested by Dmitry Baryshkov and Maxime Ripard]
-> 
-> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Suggested-by: Maxime Ripard <mripard@kernel.org>
-> Signed-off-by: Helen Koike <helen.koike@collabora.com>
-> Signed-off-by: David Heidelberg <david.heidelberg@collabora.com>
-> Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
+
+On 9/10/2023 1:46 AM, Mukesh Ojha wrote:
+> Crashdump collection is based on the DLOAD bit of TCSR register.
+> To retain other bits, we read the register and modify only the
+> DLOAD bit as the other bits have their own significance.
+>
+> Co-developed-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
 > ---
-> 
-> v3:
->   - New patch in the series to add device tree overlay in arch/arm64/boot/dts/qcom
-> 
-> ---
->  arch/arm64/boot/dts/qcom/apq8016-sbc-usb-host.dtso | 8 ++++++++
->  1 file changed, 8 insertions(+)
 
-Split unrelated patches to separate patchsets. This has nothing to do
-with DRM CI system.
 
-Best regards,
-Krzysztof
+This change doesn't cleanly apply on next-20230911. Please rebase it.
 
+Validated this change on IPQ9574 and IPQ5332 and system is entering into 
+the download mode.
+
+Tested-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com> # IPQ9574 
+and IPQ5332
+
+
+>   drivers/firmware/qcom_scm.c | 12 ++++++++++--
+>   1 file changed, 10 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> index 5ea8fc4fd4e8..eda92f713019 100644
+> --- a/drivers/firmware/qcom_scm.c
+> +++ b/drivers/firmware/qcom_scm.c
+> @@ -5,6 +5,8 @@
+>   #include <linux/platform_device.h>
+>   #include <linux/init.h>
+>   #include <linux/interrupt.h>
+> +#include <linux/bitfield.h>
+> +#include <linux/bits.h>
+>   #include <linux/completion.h>
+>   #include <linux/cpumask.h>
+>   #include <linux/export.h>
+> @@ -30,6 +32,10 @@ module_param(download_mode, bool, 0);
+>   #define SCM_HAS_IFACE_CLK	BIT(1)
+>   #define SCM_HAS_BUS_CLK		BIT(2)
+>   
+> +#define QCOM_DLOAD_MASK		GENMASK(5, 4)
+> +#define QCOM_DLOAD_FULLDUMP	0x1
+> +#define QCOM_DLOAD_NODUMP	0x0
+> +
+>   struct qcom_scm {
+>   	struct device *dev;
+>   	struct clk *core_clk;
+> @@ -444,6 +450,7 @@ static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
+>   
+>   static void qcom_scm_set_download_mode(bool enable)
+>   {
+> +	u32 val = enable ? QCOM_DLOAD_FULLDUMP : QCOM_DLOAD_NODUMP;
+>   	bool avail;
+>   	int ret = 0;
+>   
+> @@ -453,8 +460,9 @@ static void qcom_scm_set_download_mode(bool enable)
+>   	if (avail) {
+>   		ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
+>   	} else if (__scm->dload_mode_addr) {
+> -		ret = qcom_scm_io_writel(__scm->dload_mode_addr,
+> -				enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0);
+> +		ret = qcom_scm_io_update_field(__scm->dload_mode_addr,
+> +					       QCOM_DLOAD_MASK,
+> +					       FIELD_PREP(QCOM_DLOAD_MASK, val));
+>   	} else {
+>   		dev_err(__scm->dev,
+>   			"No available mechanism for setting download mode\n");
