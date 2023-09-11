@@ -2,91 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 88C1F79B4AD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:02:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EFE9A79AC92
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 01:37:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344272AbjIKVNr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:13:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35950 "EHLO
+        id S1344880AbjIKVO5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:14:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241413AbjIKPIB (ORCPT
+        with ESMTP id S241543AbjIKPKk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 11:08:01 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A809FA;
-        Mon, 11 Sep 2023 08:07:57 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38BCSGRL031218;
-        Mon, 11 Sep 2023 15:07:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=M/smHuhk+GMwiaIFqSp0QnUyhRqMkvHvq61BOMETG3o=;
- b=X2GbFT2FWpuGQ0iHfzHfjRxH2IelXDoaBDySPx5b09500+V4katOMSKlLPS0+5Z4asUv
- nL7zWUnM5hrRiMVTyPqmbwQVzfNFlfIhljJEusTZe7monlVSqOxcckFW/V43vd1fJaAB
- 3SLbocvICLOeCBGFpqzuGqMwzIQoyjZ7e4VacTx7/y7wZRBVPqwtSrzw/zPmCqJZ2fvi
- 2TCiLFpQLfQbPOgj5ibnqRCM8qKx+4fK3pMYouzyvflZnpNLeKgVxZj1v7H4cVtGi9H+
- ham2bZWDSqJTX5hipCXdJslEa8y+QoJzmUfKvpV0VONcWnoOXe0fcxYImvKRUaxRJHkZ qA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t1yac8uuh-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 11 Sep 2023 15:07:25 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38BF7NvQ031544
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 11 Sep 2023 15:07:24 GMT
-Received: from [10.216.14.127] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 11 Sep
- 2023 08:07:09 -0700
-Message-ID: <9da888dc-401a-4cbb-b616-b4654fa79e35@quicinc.com>
-Date:   Mon, 11 Sep 2023 20:37:03 +0530
+        Mon, 11 Sep 2023 11:10:40 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CCE9E54
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 08:10:35 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-31c3df710bdso4165163f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 08:10:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694445034; x=1695049834; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7ht2UJ2SrAZEBCW6MQUWYMxu5nJ3shvvrcqqoVglcXI=;
+        b=TzZ3f7VlRPGg7/misLMDmmMiGHgCXV0MOieoPxMZNZeG6oPgaQ/cyw4AB9K/9+ybOJ
+         49quPh6n7b4ZcAdzjzObrGAMBTLBMIBJZIpUwl/PzpZOwb/Ub0tjHuA+bVCOdKQXGTgW
+         bLZZ9XreQQro/fKY3ERiGvYpU45MpbD5aI0qORkm389GDUBbzvSZ9vMvvKLdi0iXZyNZ
+         XuEcdxKnFwsZOaDEerfHotGWK0kztBnaFImPiLc4uSDgR6sI8yLo7HQtcng2WR1PBBIa
+         LjfEfTy36RFefoN4ltX03Pewa7jE8o6DaRiQB4hjzoRRXJqrbxDpX06mx5Mm3WCXB1h5
+         Szeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694445034; x=1695049834;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7ht2UJ2SrAZEBCW6MQUWYMxu5nJ3shvvrcqqoVglcXI=;
+        b=lUD0JHwX2LhCO7viaw5r8aEOPRgiMUkJvRBLRonfURMQUR/8A4Fc50mPMFEO+EqvbA
+         qZaGDQr7yupjNcM/cIo0GXxjA0oh0AyhFX71BvbFY23JXxl57ErS9lsEON5q2D6PJx3v
+         osa3n62ytD57BD2L0PJzhWAiiSg5B+SzFagqhFK1YPvb2ZRp7sc59wXesya5SIZiTVx6
+         PvTY95fHQnO3oCe5AOfAjPnQAVCyjsxOltxujrLDs2A4rdSVZO6mIGDrs9to3AxX7qUh
+         2e4Cp5Dy/nyQ9Wap6SrSM22V+n+CAsZ7k2RaquSTJnU5yB/DW81c/vrq9DQDGPuv17B+
+         bAFQ==
+X-Gm-Message-State: AOJu0Yxr5dYVdUvP8LlyMKGfF2+AoVzV3n6c7OMOuOvG78asiTJoY3xH
+        GiUrVVss+5cp+d3lDnbDEaF+1w==
+X-Google-Smtp-Source: AGHT+IE4nKR0UaC4vAJTRWZ8UGSUUnfSj9OlxBtzCtbNOI2rCiLWLB5iH0M/MLPczrSSHlDGkLqR7g==
+X-Received: by 2002:adf:ec42:0:b0:31c:6420:ff4 with SMTP id w2-20020adfec42000000b0031c64200ff4mr7695847wrn.36.1694445033966;
+        Mon, 11 Sep 2023 08:10:33 -0700 (PDT)
+Received: from [10.167.154.1] (178235177061.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.61])
+        by smtp.gmail.com with ESMTPSA id n4-20020a056402060400b0052a3ad836basm4681281edv.41.2023.09.11.08.10.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Sep 2023 08:10:33 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Date:   Mon, 11 Sep 2023 17:10:17 +0200
+Subject: [PATCH RFT 03/20] media: venus: pm_helpers: Add kerneldoc to
+ venus_clks_get()
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [REBASE PATCH v5 15/17] firmware: scm: Modify only the download
- bits in TCSR register
-Content-Language: en-US
-To:     Mukesh Ojha <quic_mojha@quicinc.com>, <corbet@lwn.net>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <keescook@chromium.org>, <tony.luck@intel.com>,
-        <gpiccoli@igalia.com>, <mathieu.poirier@linaro.org>,
-        <catalin.marinas@arm.com>, <will@kernel.org>,
-        <linus.walleij@linaro.org>, <andy.shevchenko@gmail.com>,
-        <vigneshr@ti.com>, <nm@ti.com>, <matthias.bgg@gmail.com>,
-        <kgene@kernel.org>, <alim.akhtar@samsung.com>,
-        <bmasney@redhat.com>, <quic_tsoni@quicinc.com>
-CC:     <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-gpio@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>, <kernel@quicinc.com>,
-        "Poovendhan Selvaraj" <quic_poovendh@quicinc.com>
-References: <1694429639-21484-1-git-send-email-quic_mojha@quicinc.com>
- <1694429639-21484-16-git-send-email-quic_mojha@quicinc.com>
-From:   Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-In-Reply-To: <1694429639-21484-16-git-send-email-quic_mojha@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ZDO2ULWUeou-4qYw_-dQxukWf0tQGiKd
-X-Proofpoint-GUID: ZDO2ULWUeou-4qYw_-dQxukWf0tQGiKd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-11_10,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- spamscore=0 mlxlogscore=999 priorityscore=1501 bulkscore=0 suspectscore=0
- clxscore=1015 adultscore=0 malwarescore=0 lowpriorityscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
- definitions=main-2309110138
+Message-Id: <20230911-topic-mars-v1-3-a7d38bf87bdb@linaro.org>
+References: <20230911-topic-mars-v1-0-a7d38bf87bdb@linaro.org>
+In-Reply-To: <20230911-topic-mars-v1-0-a7d38bf87bdb@linaro.org>
+To:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1694445027; l=2105;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=Vha5xF+p9BTPxJus7eqd6sGp8qGoiJe2/C4TA/PBKzk=;
+ b=f8G7+PSq8vQ8m0fwoFb7lhAeXAZZFKJlZ2K2ok59naEqYbofKKp6JrLJUliGcyJWrNRkL2vPp
+ 0z5kabW6X0jC391xXkpaCqPIoGArBX9faLYDIv0ZpDgQu4zdI6vQRHx
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -94,70 +91,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+To make it easier to understand the various clock requirements within
+this driver, add kerneldoc to venus_clk_get() explaining the fluff.
 
-On 9/11/2023 4:23 PM, Mukesh Ojha wrote:
-> Crashdump collection is based on the DLOAD bit of TCSR register.
-> To retain other bits, we read the register and modify only the
-> DLOAD bit as the other bits have their own significance.
->
-> Co-developed-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
-> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
-> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> Tested-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com> # IPQ9574 and IPQ5332
-> ---
->   drivers/firmware/qcom_scm.c | 16 ++++++++++++++--
->   1 file changed, 14 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> index 321133f0950d..5cacae63ee2a 100644
-> --- a/drivers/firmware/qcom_scm.c
-> +++ b/drivers/firmware/qcom_scm.c
-> @@ -5,6 +5,8 @@
->   #include <linux/platform_device.h>
->   #include <linux/init.h>
->   #include <linux/interrupt.h>
-> +#include <linux/bitfield.h>
-> +#include <linux/bits.h>
->   #include <linux/completion.h>
->   #include <linux/cpumask.h>
->   #include <linux/export.h>
-> @@ -26,6 +28,14 @@
->   static bool download_mode = IS_ENABLED(CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT);
->   module_param(download_mode, bool, 0);
->   
-> +#define SCM_HAS_CORE_CLK	BIT(0)
-> +#define SCM_HAS_IFACE_CLK	BIT(1)
-> +#define SCM_HAS_BUS_CLK		BIT(2)
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ drivers/media/platform/qcom/venus/pm_helpers.c | 28 ++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
+diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+index e2aec0b46126..59e3eaad97ed 100644
+--- a/drivers/media/platform/qcom/venus/pm_helpers.c
++++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+@@ -23,6 +23,34 @@
+ 
+ static bool legacy_binding;
+ 
++/**
++ * venus_clks_get() - Get Venus clocks that are not bound to a vcodec
++ * @core: A pointer to the venus core resource
++ *
++ * The Venus block (depending on the generation) can be split into a couple
++ * of clock domains: one for "main logic" and one for each video core (0-2pcs).
++ *
++ * MSM8916 (and possibly other HFIv1 users) only feature the "main logic"
++ * domain, so this function is the only kind if clk_get necessary there.
++ *
++ * MSM8996 (and other HFIv3 users) feature two video cores, with core0 being
++ * statically proclaimed a decoder and core1 an encoder, with both having
++ * their own clock domains.
++ *
++ * SDM845 features two video cores, each one of which may or may not be
++ * subdivided into 2 enc/dec threads.
++ *
++ * Other SoCs either feature a single video core (with its own clock domain)
++ * or 1 video core and 1 CVP (Computer Vision Processor) core. In both cases
++ * we treat it the same (CVP only happens to live near-by Venus on the SoC).
++ *
++ * Due to unfortunate developments in the past, we have to support bindings
++ * (MSM8996, SDM660, SDM845) that require specifying the clocks and
++ * power-domains associated with a video core domain in a bogus subnode,
++ * which means that additional fluff is necessary..
++ *
++ * Return: 0 on success, negative errno on failure.
++ */
+ static int venus_clks_get(struct venus_core *core)
+ {
+ 	const struct venus_resources *res = core->res;
 
-Is this intentional to add these macros back again?
+-- 
+2.42.0
 
-
-> +
-> +#define QCOM_DLOAD_MASK		GENMASK(5, 4)
-> +#define QCOM_DLOAD_FULLDUMP	0x1
-> +#define QCOM_DLOAD_NODUMP	0x0
-> +
->   struct qcom_scm {
->   	struct device *dev;
->   	struct clk *core_clk;
-> @@ -440,6 +450,7 @@ static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
->   
->   static void qcom_scm_set_download_mode(bool enable)
->   {
-> +	u32 val = enable ? QCOM_DLOAD_FULLDUMP : QCOM_DLOAD_NODUMP;
->   	bool avail;
->   	int ret = 0;
->   
-> @@ -449,8 +460,9 @@ static void qcom_scm_set_download_mode(bool enable)
->   	if (avail) {
->   		ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
->   	} else if (__scm->dload_mode_addr) {
-> -		ret = qcom_scm_io_writel(__scm->dload_mode_addr,
-> -				enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0);
-> +		ret = qcom_scm_io_update_field(__scm->dload_mode_addr,
-> +					       QCOM_DLOAD_MASK,
-> +					       FIELD_PREP(QCOM_DLOAD_MASK, val));
->   	} else {
->   		dev_err(__scm->dev,
->   			"No available mechanism for setting download mode\n");
