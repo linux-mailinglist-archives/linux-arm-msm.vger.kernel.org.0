@@ -2,132 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E917079A335
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Sep 2023 08:03:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B04A79A347
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Sep 2023 08:06:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231216AbjIKGDH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 02:03:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41378 "EHLO
+        id S232005AbjIKGGV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 02:06:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229601AbjIKGDF (ORCPT
+        with ESMTP id S230242AbjIKGGU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 02:03:05 -0400
+        Mon, 11 Sep 2023 02:06:20 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B451CD2;
-        Sun, 10 Sep 2023 23:02:06 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38B5e8Yt002248;
-        Mon, 11 Sep 2023 06:01:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=RR5dflBIS+AjZvT9GMXk42NHZjPTycEkvcZES8b7aR8=;
- b=N+NsLtqFvZRHWyRg/h2XVaRehmpL94AQJXG/AjhjOHjvMn9a6Bc+s9nQ6NiD1lnz4hKo
- fQ8Vv/yTiSC54oq8pWcTrZ0FwVAniOCIjV9dhIYcwCY9xkPgtxFbJMJ5MDmAntSgoB5u
- X7ENsQDEry+P0F8K2jDmJPwq0Xy7WJlhN4/LrTDuuwQ1BN4TZvcdqwCecdW9ozy7ramT
- meSXsO3MCItDNHRfx41CnS19fFAQgMdLFyAX5UCOv+18yhHW3GeBlbJPYisuZsQuyn3r
- jvfudDKO126JFYBnDGWr5P8X7lLimOcH0T1eUrn3svDd5uTpOrajghuRormce2DHmXGY aA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t0j0fjrv1-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E436CCD1;
+        Sun, 10 Sep 2023 23:05:46 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38B5bFLX011277;
+        Mon, 11 Sep 2023 06:00:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references; s=qcppdkim1;
+ bh=2sVTtfHQyoPSBsPZGshT/pHcneEVu4iOjNd4wVdto10=;
+ b=H5Cggt6zuLjIPl+aPBve3YV7z0Y+Ig4AhQU7qUS8lA+fWcxL+rt5uLFprq5sW3aQ8gEY
+ ztvZSG0hsFLmB8XBxcHui+IGAV6Unh6TjloAMSNM5ae/hhVFlghAA4cZOou+gf9x3oIU
+ b4sJsW8HS0+8x4lSI8i21LsD+KQ5HSSsWm05V3v2IWRuYmk2/tNUpiCV38KvaYGzTx0h
+ Dq6G0qj1x5EodBKJz6Pn64fJAPUcLeXy2H9H4cVSfvle+REixzxrTFWcE5eIqYvwSFL1
+ 4/E9kWPwRPZtens5cNgY8PnufocvYcfipGc2Yi3ZRN5wT09+iagWDoDyZN3o0SUkzx9J xQ== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t0hvyjr9n-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 11 Sep 2023 06:01:31 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38B61URt024641
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 11 Sep 2023 06:01:30 GMT
-Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Sun, 10 Sep 2023 23:01:18 -0700
-Date:   Mon, 11 Sep 2023 11:31:15 +0530
-From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
-To:     Mukesh Ojha <quic_mojha@quicinc.com>
-CC:     <corbet@lwn.net>, <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <keescook@chromium.org>, <tony.luck@intel.com>,
-        <gpiccoli@igalia.com>, <mathieu.poirier@linaro.org>,
-        <catalin.marinas@arm.com>, <will@kernel.org>,
-        <linus.walleij@linaro.org>, <andy.shevchenko@gmail.com>,
-        <vigneshr@ti.com>, <nm@ti.com>, <matthias.bgg@gmail.com>,
-        <kgene@kernel.org>, <alim.akhtar@samsung.com>,
-        <bmasney@redhat.com>, <quic_tsoni@quicinc.com>,
-        <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-gpio@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>, <kernel@quicinc.com>
-Subject: Re: [PATCH v5 11/17] qcom_minidump: Register ramoops region with
- minidump
-Message-ID: <3119f3f6-92a5-4db1-85cf-bd16e31ae5a0@quicinc.com>
-References: <1694290578-17733-1-git-send-email-quic_mojha@quicinc.com>
- <1694290578-17733-12-git-send-email-quic_mojha@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <1694290578-17733-12-git-send-email-quic_mojha@quicinc.com>
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+        Mon, 11 Sep 2023 06:00:37 +0000
+Received: from pps.filterd (NASANPPMTA04.qualcomm.com [127.0.0.1])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 38B5ic2M015870;
+        Mon, 11 Sep 2023 06:00:37 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by NASANPPMTA04.qualcomm.com (PPS) with ESMTP id 3t0hskq2fw-1;
+        Mon, 11 Sep 2023 06:00:37 +0000
+Received: from NASANPPMTA04.qualcomm.com (NASANPPMTA04.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 38B60E7S007369;
+        Mon, 11 Sep 2023 06:00:36 GMT
+Received: from stor-dylan.qualcomm.com (stor-dylan.qualcomm.com [192.168.140.207])
+        by NASANPPMTA04.qualcomm.com (PPS) with ESMTP id 38B60a0P007883;
+        Mon, 11 Sep 2023 06:00:36 +0000
+Received: by stor-dylan.qualcomm.com (Postfix, from userid 359480)
+        id 7A83E20DEF; Sun, 10 Sep 2023 23:00:36 -0700 (PDT)
+From:   Can Guo <quic_cang@quicinc.com>
+To:     quic_cang@quicinc.com, mani@kernel.org, quic_nguyenb@quicinc.com,
+        quic_nitirawa@quicinc.com, martin.petersen@oracle.com
+Cc:     linux-scsi@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        linux-arm-msm@vger.kernel.org (open list:UNIVERSAL FLASH STORAGE HOST
+        CONTROLLER DRIVER...), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH 2/6] scsi: ufs: ufs-qcom: Add support for UFS device version detection
+Date:   Sun, 10 Sep 2023 22:59:23 -0700
+Message-Id: <1694411968-14413-3-git-send-email-quic_cang@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1694411968-14413-1-git-send-email-quic_cang@quicinc.com>
+References: <1694411968-14413-1-git-send-email-quic_cang@quicinc.com>
+X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: xBrk-Pn9mM0MxC_5RsdRbWjljej3GIpW
-X-Proofpoint-GUID: xBrk-Pn9mM0MxC_5RsdRbWjljej3GIpW
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: hvxIvFIcC1mjgiBPhKG4ZWV5fS_b81mT
+X-Proofpoint-GUID: hvxIvFIcC1mjgiBPhKG4ZWV5fS_b81mT
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
  definitions=2023-09-11_03,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- malwarescore=0 clxscore=1015 impostorscore=0 mlxlogscore=618 bulkscore=0
- lowpriorityscore=0 adultscore=0 spamscore=0 phishscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
- definitions=main-2309110054
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
+ clxscore=1015 mlxscore=0 malwarescore=0 impostorscore=0 adultscore=0
+ priorityscore=1501 mlxlogscore=999 spamscore=0 lowpriorityscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309110054
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Sep 10, 2023 at 01:46:12AM +0530, Mukesh Ojha wrote:
-> Register all the pstore frontend with minidump, so that they can
-> be dumped as default Linux minidump region to be collected on
-> SoC where minidump is enabled.
-> 
-> Helper functions is written in separate file and built along with
-> the minidump driver, since it is client of minidump and also call
-> it at appropriate place from minidump probe so that they always
-> get registered.
-> 
-> While at it also rename the out minidump module object name during
-> build as qcom_apss_minidump which basically depicts as Qualcomm
-> Application processor subsystem minidump.
-> 
-> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> ---
->  drivers/soc/qcom/Kconfig                 |  1 +
->  drivers/soc/qcom/Makefile                |  3 +-
->  drivers/soc/qcom/qcom_minidump.c         |  4 ++
->  drivers/soc/qcom/qcom_ramoops_minidump.c | 88 ++++++++++++++++++++++++++++++++
->  drivers/soc/qcom/qcom_ramoops_minidump.h | 10 ++++
->  5 files changed, 105 insertions(+), 1 deletion(-)
->  create mode 100644 drivers/soc/qcom/qcom_ramoops_minidump.c
->  create mode 100644 drivers/soc/qcom/qcom_ramoops_minidump.h
-> 
-> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-> index 4b36d46807bc..b3977f1687d8 100644
-> --- a/drivers/soc/qcom/Kconfig
-> +++ b/drivers/soc/qcom/Kconfig
-> @@ -305,6 +305,7 @@ config QCOM_MINIDUMP
->  	tristate "QCOM APSS Minidump driver"
->  	depends on ARCH_QCOM || COMPILE_TEST
->  	depends on QCOM_SMEM
-> +	depends on PSTORE
+From: "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
 
-Can't we make QC minidump available without PSTORE? PSTORE is another
-cllient for minidump, so other clients can still use minidump right?
-Where is this hard dependency coming from?
+Retrieve UFS device version from UFS host controller's spare register
+which is populated by bootloader, and use the UFS device version together
+with host controller's HW version to decide the proper power modes which
+should be used to configure the UFS PHY.
 
-Thanks,
-Pavan
+Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
+Signed-off-by: Can Guo <quic_cang@quicinc.com>
+---
+ drivers/ufs/host/ufs-qcom.c | 30 +++++++++++++++++++++++-------
+ drivers/ufs/host/ufs-qcom.h |  2 ++
+ 2 files changed, 25 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index 710f079..8a9d54f 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -1030,7 +1030,7 @@ static void ufs_qcom_advertise_quirks(struct ufs_hba *hba)
+ 				| UFSHCD_QUIRK_BROKEN_PA_RXHSUNTERMCAP);
+ 	}
+ 
+-	if (host->hw_ver.major > 0x3)
++	if (host->hw_ver.major > 0x3 && host->hw_ver.major < 0x5)
+ 		hba->quirks |= UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH;
+ }
+ 
+@@ -1038,11 +1038,33 @@ static void ufs_qcom_set_pwr_mode_limits(struct ufs_hba *hba)
+ {
+ 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+ 	struct ufs_dev_params *host_pwr_cap = &host->host_pwr_cap;
++	u32 val, dev_major = 0;
+ 
+ 	ufshcd_init_pwr_dev_param(host_pwr_cap);
+ 
+ 	/* This driver only supports symmetic gear setting i.e., hs_tx_gear == hs_rx_gear */
+ 	host_pwr_cap->hs_tx_gear = host_pwr_cap->hs_rx_gear = ufs_qcom_get_hs_gear(hba);
++	host->phy_gear = host_pwr_cap->hs_rx_gear;
++
++	if (host->hw_ver.major < 0x5) {
++		/*
++		 * Power up the PHY using the minimum supported gear (UFS_HS_G2).
++		 * Switching to max gear will be performed during reinit if supported.
++		 */
++		host->phy_gear = UFS_HS_G2;
++	} else {
++		val = ufshcd_readl(host->hba, REG_UFS_DEBUG_SPARE_CFG);
++		dev_major = FIELD_GET(GENMASK(7, 4), val);
++
++		if (host->hw_ver.major == 0x5 && (dev_major >= 0x4 ||
++						  dev_major == 0)) {
++			/* For UFS 4.0 and newer, or dev version is not populated */
++			host_pwr_cap->hs_rate = PA_HS_MODE_A;
++		} else if (dev_major < 0x4 && dev_major > 0) {
++			/* For UFS 3.1 and older, apply HS-G4 PHY settings to save power */
++			host->phy_gear = UFS_HS_G4;
++		}
++	}
+ }
+ 
+ static void ufs_qcom_set_caps(struct ufs_hba *hba)
+@@ -1287,12 +1309,6 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+ 		dev_warn(dev, "%s: failed to configure the testbus %d\n",
+ 				__func__, err);
+ 
+-	/*
+-	 * Power up the PHY using the minimum supported gear (UFS_HS_G2).
+-	 * Switching to max gear will be performed during reinit if supported.
+-	 */
+-	host->phy_gear = UFS_HS_G2;
+-
+ 	return 0;
+ 
+ out_variant_clear:
+diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
+index 4db64d9..e10889f 100644
+--- a/drivers/ufs/host/ufs-qcom.h
++++ b/drivers/ufs/host/ufs-qcom.h
+@@ -56,6 +56,8 @@ enum {
+ 	UFS_AH8_CFG				= 0xFC,
+ 
+ 	REG_UFS_CFG3				= 0x271C,
++
++	REG_UFS_DEBUG_SPARE_CFG			= 0x284C,
+ };
+ 
+ /* QCOM UFS host controller vendor specific debug registers */
+-- 
+2.7.4
+
