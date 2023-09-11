@@ -2,118 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0746F79B944
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:09:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E9CFB79BDD1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:16:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344677AbjIKVOl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:14:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36768 "EHLO
+        id S236135AbjIKVQZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:16:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242757AbjIKQQE (ORCPT
+        with ESMTP id S242953AbjIKQg2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 12:16:04 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38D4A1B8;
-        Mon, 11 Sep 2023 09:16:00 -0700 (PDT)
-Received: from localhost.localdomain (unknown [171.76.82.102])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: vignesh)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id A1D9D6606F85;
-        Mon, 11 Sep 2023 17:15:54 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1694448958;
-        bh=ze+691gluuYjd9QZFnsV1mOxXtAD9BcYbDEUMd5HdqA=;
-        h=From:To:Cc:Subject:Date:From;
-        b=H9+psU4WJ5jGI6rC1lZqxCOkZt3Pc11eEu8qupQyvwKKLADr3BqQv8OPNsX9TwjCT
-         Ngltd3xyqESN2IrsBFVfw+2qt0RVe1M5sp799YbI2BHZe4aAUPYEE1CGAU70y66axQ
-         pO4Xj2qx7osC6A+0muOyuwBv76rrEE6NAA48kmugdLkXwuNUso7bYhZkkyz46T7PFt
-         LpgOVpPFOVgQIHTbsEv9O6h/nocKEXgPZFRiKGAR+oxfnnTXUE0Yqo2d30TKkz91Df
-         zI6L4GuWD+KaaAZbyvj9ST3pkTUn8Hsy8FMsEUCiN2XfnQmF2xKrP2qYjS6inoJcqx
-         pLm+uC990YEvA==
-From:   Vignesh Raman <vignesh.raman@collabora.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     guilherme.gallo@collabora.com, sergi.blanch.torne@collabora.com,
-        daniels@collabora.com, emma@anholt.net, robdclark@gmail.com,
-        Vignesh Raman <vignesh.raman@collabora.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Maxime Ripard <mripard@kernel.org>,
-        Helen Koike <helen.koike@collabora.com>,
-        David Heidelberg <david.heidelberg@collabora.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: apq8016-sbc: Add overlay for usb host mode
-Date:   Mon, 11 Sep 2023 21:45:18 +0530
-Message-Id: <20230911161518.650726-1-vignesh.raman@collabora.com>
-X-Mailer: git-send-email 2.40.1
+        Mon, 11 Sep 2023 12:36:28 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37734D3;
+        Mon, 11 Sep 2023 09:36:23 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-986d8332f50so622213066b.0;
+        Mon, 11 Sep 2023 09:36:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1694450181; x=1695054981; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tn6ORcYdF7wmn9zYudPCVDeUReDbRM6yHR4pM4CXkGQ=;
+        b=nl5SiwbyX54Hy0jNU+vPyEf2BEHaaAAd9i1P3I2vwU1OLziQBT3fzU/cOsxfZsbsmQ
+         VyLrwQBFVYR63f6gOIkVeTuNNIZGWO2IhhjYmIMqSOwjpDS8FwR6zL+kcgk6EYmS7ElV
+         eWVqgx6SJWsCTYrJaLRGEBMt/Bdtfurq7m9ljkkPsGv4E3MDKgArQQLh5mfeuE0y1IQK
+         0QihY1yWabQutSzCp2U+KV7FeaYgLooYjYJIN+kEZOFWonk0J0TOjEHzFYZoEu0gxe00
+         t8cnev2XHmJoL4DTTVbr+HXNqjRjukjrGs7RPhQinAYnJe01kligiwMaMgXZLp7A1fBM
+         SX3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694450181; x=1695054981;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=tn6ORcYdF7wmn9zYudPCVDeUReDbRM6yHR4pM4CXkGQ=;
+        b=M6FNdumC4Wd6AFBx5txdWPgaNTVvQHL8JhMWFV+hGTjR3jO0hdTslKG4Bs8TogilTv
+         qJeKmi/Jr1EQQQzSddlttG/efSHz8l75aaqxhETSJM/LzbVQrMDefjdbGBmuUAVueNfa
+         oojVFBFr0vvVQmQx38TI3J3iTF+2r510pZdE99LM61AC2rwge8yhsGbROubvEgs19FYY
+         RKP/TFBgAu6ly3x898tyAFijZ/iS4EPjFplkRbVScLvzA3bELXoIEpiHyCg9ILtskw9p
+         +Kd/ti5SwxjRxTLbAoZFts4kB+fn4QTwA8DE1L1mxDpz2sG71ZJRlzLHjrtbWxZHcnAM
+         oGaw==
+X-Gm-Message-State: AOJu0YwckpsVrfym9YeXvK9yb2Dr1MYsoBL2CHXxJ7JbTcbZf6+eEs+q
+        ZLaMyuhAMSKxZvF7ytkd7XA=
+X-Google-Smtp-Source: AGHT+IEZkDEwJehDR4fKggLpjoJhnXiAupV9qorq7MLXFhFfk7fRQqvtYUP3Mho6rsQ4juPA6IGloQ==
+X-Received: by 2002:a17:906:224a:b0:9a9:e6c3:ad28 with SMTP id 10-20020a170906224a00b009a9e6c3ad28mr9042772ejr.69.1694450181242;
+        Mon, 11 Sep 2023 09:36:21 -0700 (PDT)
+Received: from jernej-laptop.localnet (82-149-12-148.dynamic.telemach.net. [82.149.12.148])
+        by smtp.gmail.com with ESMTPSA id h17-20020a170906261100b00999bb1e01dfsm5534149ejc.52.2023.09.11.09.36.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Sep 2023 09:36:20 -0700 (PDT)
+From:   Jernej =?utf-8?B?xaBrcmFiZWM=?= <jernej.skrabec@gmail.com>
+To:     mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
+        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
+        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
+        hverkuil-cisco@xs4all.nl, nicolas.dufresne@collabora.com,
+        Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
+        kernel@collabora.com
+Subject: Re: [PATCH v6 14/18] media: verisilicon: vp9: Use destination buffer height
+ to compute chroma offset
+Date:   Mon, 11 Sep 2023 18:36:19 +0200
+Message-ID: <3248154.aeNJFYEL58@jernej-laptop>
+In-Reply-To: <7da0a2ab-032a-9de9-e136-58f973238c5b@collabora.com>
+References: <20230901124414.48497-1-benjamin.gaignard@collabora.com>
+ <4856958.31r3eYUQgx@jernej-laptop>
+ <7da0a2ab-032a-9de9-e136-58f973238c5b@collabora.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Due to the presence of the fastboot micro cable in the CI farm,
-it causes the hardware to remain in gadget mode instead of host mode.
-So it doesn't find the network, which results in failure to mount root
-fs via NFS.
+Dne ponedeljek, 11. september 2023 ob 10:55:02 CEST je Benjamin Gaignard=20
+napisal(a):
+> Le 10/09/2023 =C3=A0 15:21, Jernej =C5=A0krabec a =C3=A9crit :
+> > Hi Benjamin!
+> >=20
+> > Dne petek, 01. september 2023 ob 14:44:10 CEST je Benjamin Gaignard
+> >=20
+> > napisal(a):
+> >> Source and destination buffer height may not be the same because
+> >> alignment constraint are different.
+> >> Use destination height to compute chroma offset because we target
+> >> this buffer as hardware output.
+> >>=20
+> >> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+> >> Fixes: e2da465455ce ("media: hantro: Support VP9 on the G2 core")
+> >> ---
+> >>=20
+> >>   drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c | 4 +---
+> >>   1 file changed, 1 insertion(+), 3 deletions(-)
+> >>=20
+> >> diff --git a/drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c
+> >> b/drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c index
+> >> 6db1c32fce4d..1f3f5e7ce978 100644
+> >> --- a/drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c
+> >> +++ b/drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c
+> >> @@ -93,9 +93,7 @@ static int start_prepare_run(struct hantro_ctx *ctx,
+> >> const struct v4l2_ctrl_vp9_ static size_t chroma_offset(const struct
+> >> hantro_ctx *ctx,
+> >>=20
+> >>   			    const struct v4l2_ctrl_vp9_frame
+> >=20
+> > *dec_params)
+> >=20
+> >>   {
+> >>=20
+> >> -	int bytes_per_pixel =3D dec_params->bit_depth =3D=3D 8 ? 1 : 2;
+> >> -
+> >> -	return ctx->src_fmt.width * ctx->src_fmt.height * bytes_per_pixel;
+> >> +	return ctx->dst_fmt.width * ctx->dst_fmt.height * ctx->bit_depth /
+> >=20
+> > 8;
+> >=20
+> > Commit message doesn't mention bit_depth change at all. While I think
+> > there is no difference between dec_params->bit_depth and ctx->bit_depth,
+> > you shouldn't just use ordinary division. If bit_depth is 10, it will be
+> > rounded down. And if you decide to use bit_depth from context, please
+> > remove dec_params argument.
+>=20
+> I will change this patch and create a helpers function for chroma and mot=
+ion
+> vectors offsets that VP9 and HEVC code will use since they are identical.
+> I don't see issue with the division. If you have in mind a solution please
+> write it so I could test it.
 
-Add an overlay dtso file that sets the dr_mode to host, allowing the
-USB controllers to work in host mode. With commit 15d16d6dadf6
-("kbuild: Add generic rule to apply fdtoverlay"), overlay target can
-be used to simplify the build of DTB overlays. It uses fdtoverlay to
-merge base device tree with the overlay dtso. apq8016-sbc-usb-host.dtb
-file can be used by drm-ci, mesa-ci.
+Solution is same as the code that you removed:
+int bytes_per_pixel =3D dec_params->bit_depth =3D=3D 8 ? 1 : 2;
 
-Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Suggested-by: Maxime Ripard <mripard@kernel.org>
-Signed-off-by: Helen Koike <helen.koike@collabora.com>
-Signed-off-by: David Heidelberg <david.heidelberg@collabora.com>
-Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
----
- arch/arm64/boot/dts/qcom/Makefile                  | 4 ++++
- arch/arm64/boot/dts/qcom/apq8016-sbc-usb-host.dtso | 8 ++++++++
- 2 files changed, 12 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/apq8016-sbc-usb-host.dtso
+Or alternatively:
+int bytes_per_pixel =3D DIV_ROUND_UP(dec_params->bit_depth, 8);
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 2cca20563a1d..99190a6ba6ff 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -1,5 +1,9 @@
- # SPDX-License-Identifier: GPL-2.0
- dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc.dtb
-+
-+apq8016-sbc-usb-host-dtbs	:= apq8016-sbc.dtb apq8016-sbc-usb-host.dtbo
-+
-+dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc-usb-host.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc-d3-camera-mezzanine.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= apq8039-t2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= apq8094-sony-xperia-kitakami-karin_windy.dtb
-diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc-usb-host.dtso b/arch/arm64/boot/dts/qcom/apq8016-sbc-usb-host.dtso
-new file mode 100644
-index 000000000000..a82c26b7eae8
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/apq8016-sbc-usb-host.dtso
-@@ -0,0 +1,8 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+
-+/dts-v1/;
-+/plugin/;
-+
-+&usb {
-+         dr_mode = "host";
-+};
--- 
-2.40.1
+Consider bit_depth being 10. With old code you get 2, with yours you get 1.
+
+Best regards,
+Jernej
+
+>=20
+> Regards,
+> Benjamin
+>=20
+> > Best regards,
+> > Jernej
+> >=20
+> >>   }
+> >>  =20
+> >>   static size_t mv_offset(const struct hantro_ctx *ctx,
+
+
+
 
