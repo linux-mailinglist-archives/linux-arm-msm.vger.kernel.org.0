@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EF74479C0D6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:21:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E24D79B867
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:08:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241475AbjIKVLH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:11:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40410 "EHLO
+        id S1344783AbjIKVOp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:14:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237796AbjIKNOc (ORCPT
+        with ESMTP id S237819AbjIKNOf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 09:14:32 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5282EB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 06:14:25 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-99c4923195dso556762266b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 06:14:25 -0700 (PDT)
+        Mon, 11 Sep 2023 09:14:35 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B422FE40
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 06:14:30 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-99c1c66876aso564362966b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 06:14:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694438064; x=1695042864; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1694438069; x=1695042869; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0TCXlkx9FBx7XbMn7VMNDwyuOtzJKgBsRO7jREukP4c=;
-        b=Y56b8e+YU9PnufBoGgPTApzgOXcK+2g8EuHQ6pN8bzRIIHBormuQdUdQGGYtp6JAii
-         9lRh8htmjCpb9vGYNhTHrB0uN36c60/tnX3rWrQq/6kh2AdMhWVFtosDRP5xnDNKa5p+
-         lkhVYlNCHpQcrOJ8wFhp99gL0wIuh9axnDgEI9g+zGw1LTczB33ocgoudJ07Wee8aqsH
-         6ZDoTPtp7TOiavw2vSgnpb/YT81scTSm4a6XwSJpc0nha8svVjdcfXll33JAroDBeaHe
-         sQJ6ZzluurGOhRgMhPKFbgDp1NmoJxuMTLbbe3KOBhnP4j5UU5eQYH3Y8ylhZdQh2sia
-         6uFQ==
+        bh=3XAtVUAyBOvnRtU7QZlyMg2OvJJmAGTuY+WdBD311GM=;
+        b=cPtdC0pwWsQvtGhN7POjiqr2i20d7TbLDvCi34jnfBusqydetaRfmwbfnxuM8v+JyQ
+         qyAfVtovwUimLSc1S/B8BKD6qjrZbuaI/Hrslf7UWxbY8uf6tKyvgH4YaX+tSzIovII6
+         Ry3xukEUeHfoktCl1xEcKFOGdC2vG9OSBQTBelrDNWtW3ObaE1mV6TwwrT7ZgQCMZDqy
+         HmnAmMJroFC5G9ACshats8r+cPO+MMvCm6eSLFbnQwgD7Hn4aa2CN1biYO7tFUyPng8+
+         wWGSzRNwe+QqCZHPmmNG54hurwYgUGk3EWcrJBIngSXMbH9FKX2mWaT+R5VsXBZ4BWFm
+         Oayw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694438064; x=1695042864;
+        d=1e100.net; s=20230601; t=1694438069; x=1695042869;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=0TCXlkx9FBx7XbMn7VMNDwyuOtzJKgBsRO7jREukP4c=;
-        b=nEmpAwndu8HlsqAGCPDlrhMGM6aua2w0ZUvM0z7+y8y11oj51R4cLaXAjbrcprL2kG
-         9ztk3wMZDDUSXrTaMVMIHXQuTnfiV6t3I0IavTrxYtjxo35BgRlntG7H1EOP1aGpiX2h
-         kr+4fZ1+WNqrj7PFEB1sODHF+V9g7sthk0qILCh2jdgB+uIT31o4NdXEes8JKk7ry5n7
-         1Lh+qdWnuQohU90r5rG4I6p5+GM+EX48VaAKEDRBaLKnkkN1OkgqGezbrWWbjx/c+b8U
-         KMp7yZO4pR3H2MIac6cSZpGctkvAPpKt/uJYhp3391DoxaZwKc6XiSadiNR72KjrVg2q
-         yyNA==
-X-Gm-Message-State: AOJu0Yze/Q4ugq7dloUrsLnrHoFo5R1XE0JIZ5VhJjyWknSPbHFbO3Id
-        LoTxihqikZOFhwMhdSMfzHGj2w==
-X-Google-Smtp-Source: AGHT+IFZzXhiNfwKFMF6Zm2cRmio9F67gVYIwv8DcTVRfvwtJ3y2kR4pCcWDGQrHs17pzDMQ4a2NaA==
-X-Received: by 2002:a17:907:2cd8:b0:9a1:c357:c743 with SMTP id hg24-20020a1709072cd800b009a1c357c743mr8074375ejc.52.1694438063804;
-        Mon, 11 Sep 2023 06:14:23 -0700 (PDT)
+        bh=3XAtVUAyBOvnRtU7QZlyMg2OvJJmAGTuY+WdBD311GM=;
+        b=UeTuwKhWd95rUUNQ6UxrtilDAHwM9YMkSNvS7hYAo6AGjks9fqBJ+LnWA3atDjDf20
+         RVGHOALC+YcVaqxm7p60AJQ9/tZ6ZruB66cPHnTPRYi+oxehtyBpH2i3C1n4+Nh13QfG
+         aJu1zsfihVSg0+CzLXt2LJ87z+2qQjCo2hwsbnOgsW4svgMgth0/iLhg5Prk5IyF5vev
+         SjpR7a5Lt8VWnnS6mbCaJTvq1YT77D8BAs6/8D7K60NgHe5qHv9tjefi5hS/I7Fk8EUw
+         Dha/lvByA1fDAhE5DgswBMEjw2omegTT3ZFX3jndriVG08M2pfw/gwzH0K6UfwNKLpRS
+         PAww==
+X-Gm-Message-State: AOJu0Ywu+cRo9NOhuhDTVOFpAnJ14WR3ZrDSyeg7WlNGUhaC1zK+MbEl
+        VDyKHqV9Z6hTHAJC9LSEMn3BZg==
+X-Google-Smtp-Source: AGHT+IFUcyRm5SPFoxyVmnZ9MYesGgV7U4jcD+0ykckHs/EKmwcAsWQHdxC1SEXItfkQV7GAHZpBMg==
+X-Received: by 2002:a17:907:75fc:b0:9a5:ca42:f3a9 with SMTP id jz28-20020a17090775fc00b009a5ca42f3a9mr8029922ejc.2.1694438069246;
+        Mon, 11 Sep 2023 06:14:29 -0700 (PDT)
 Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id kt8-20020a170906aac800b00988e953a586sm5313648ejb.61.2023.09.11.06.14.22
+        by smtp.gmail.com with ESMTPSA id kt8-20020a170906aac800b00988e953a586sm5313648ejb.61.2023.09.11.06.14.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Sep 2023 06:14:23 -0700 (PDT)
+        Mon, 11 Sep 2023 06:14:28 -0700 (PDT)
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 To:     rfoss@kernel.org, todor.too@gmail.com, bryan.odonoghue@linaro.org,
         agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
@@ -58,9 +58,9 @@ To:     rfoss@kernel.org, todor.too@gmail.com, bryan.odonoghue@linaro.org,
         andrey.konovalov@linaro.org
 Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v5 09/17] media: qcom: camss: Remove special case for VFE get/put
-Date:   Mon, 11 Sep 2023 14:14:03 +0100
-Message-ID: <20230911131411.196033-10-bryan.odonoghue@linaro.org>
+Subject: [PATCH v5 14/17] media: qcom: camss: Support RDI3 for VFE 17x
+Date:   Mon, 11 Sep 2023 14:14:08 +0100
+Message-ID: <20230911131411.196033-15-bryan.odonoghue@linaro.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911131411.196033-1-bryan.odonoghue@linaro.org>
 References: <20230911131411.196033-1-bryan.odonoghue@linaro.org>
@@ -76,55 +76,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From sdm845 onwards we need to ensure the VFE is powered on prior to
-switching on the CSID.
+Some VFEs have four RDIs apiece. Right now the ISR code has a hard-coded
+value which tops-out at RDI2 meaning only three RDIs can be utilised in
+practice.
 
-Currently the code tests for sdm845, sm8250 and then does get/set. This is
-not extensible and it turns out is not necessary either since vfe_get and
-vfe_set reference count.
-
-Remove the over-conservative SoC version check.
+Extend out the various routines in camss-vfe-17x.c to support the higher
+RDI count.
 
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> # rb3 # db410c
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 ---
- drivers/media/platform/qcom/camss/camss-csid.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ drivers/media/platform/qcom/camss/camss-vfe-170.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
-index 99f651e2021cb..02ae3f5cb0c0e 100644
---- a/drivers/media/platform/qcom/camss/camss-csid.c
-+++ b/drivers/media/platform/qcom/camss/camss-csid.c
-@@ -159,15 +159,12 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
- 	struct camss *camss = csid->camss;
- 	struct device *dev = camss->dev;
- 	struct vfe_device *vfe = &camss->vfe[csid->id];
--	u32 version = camss->res->version;
- 	int ret = 0;
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-170.c b/drivers/media/platform/qcom/camss/camss-vfe-170.c
+index 2ba7160b3bd1e..a5aa799501861 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-170.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-170.c
+@@ -209,7 +209,8 @@ static void vfe_global_reset(struct vfe_device *vfe)
+ 			 GLOBAL_RESET_CMD_IDLE_CGC	|
+ 			 GLOBAL_RESET_CMD_RDI0		|
+ 			 GLOBAL_RESET_CMD_RDI1		|
+-			 GLOBAL_RESET_CMD_RDI2;
++			 GLOBAL_RESET_CMD_RDI2		|
++			 GLOBAL_RESET_CMD_RDI3;
  
- 	if (on) {
--		if (version == CAMSS_8250 || version == CAMSS_845) {
--			ret = vfe_get(vfe);
--			if (ret < 0)
--				return ret;
--		}
-+		ret = vfe_get(vfe);
-+		if (ret < 0)
-+			return ret;
+ 	writel_relaxed(BIT(31), vfe->base + VFE_IRQ_MASK_0);
  
- 		ret = pm_runtime_resume_and_get(dev);
- 		if (ret < 0)
-@@ -217,8 +214,7 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
- 		regulator_bulk_disable(csid->num_supplies,
- 				       csid->supplies);
- 		pm_runtime_put_sync(dev);
--		if (version == CAMSS_8250 || version == CAMSS_845)
--			vfe_put(vfe);
-+		vfe_put(vfe);
+@@ -343,7 +344,7 @@ static void vfe_violation_read(struct vfe_device *vfe)
+ static irqreturn_t vfe_isr(int irq, void *dev)
+ {
+ 	struct vfe_device *vfe = dev;
+-	u32 status0, status1, vfe_bus_status[3];
++	u32 status0, status1, vfe_bus_status[VFE_LINE_NUM_MAX];
+ 	int i, wm;
+ 
+ 	status0 = readl_relaxed(vfe->base + VFE_IRQ_STATUS_0);
+@@ -352,7 +353,7 @@ static irqreturn_t vfe_isr(int irq, void *dev)
+ 	writel_relaxed(status0, vfe->base + VFE_IRQ_CLEAR_0);
+ 	writel_relaxed(status1, vfe->base + VFE_IRQ_CLEAR_1);
+ 
+-	for (i = VFE_LINE_RDI0; i <= VFE_LINE_RDI2; i++) {
++	for (i = VFE_LINE_RDI0; i < vfe->line_num; i++) {
+ 		vfe_bus_status[i] = readl_relaxed(vfe->base + VFE_BUS_IRQ_STATUS(i));
+ 		writel_relaxed(vfe_bus_status[i], vfe->base + VFE_BUS_IRQ_CLEAR(i));
  	}
+@@ -366,11 +367,11 @@ static irqreturn_t vfe_isr(int irq, void *dev)
+ 	if (status0 & STATUS_0_RESET_ACK)
+ 		vfe->isr_ops.reset_ack(vfe);
  
- 	return ret;
+-	for (i = VFE_LINE_RDI0; i <= VFE_LINE_RDI2; i++)
++	for (i = VFE_LINE_RDI0; i < vfe->line_num; i++)
+ 		if (status0 & STATUS_0_RDI_REG_UPDATE(i))
+ 			vfe->isr_ops.reg_update(vfe, i);
+ 
+-	for (i = VFE_LINE_RDI0; i <= VFE_LINE_RDI2; i++)
++	for (i = VFE_LINE_RDI0; i < vfe->line_num; i++)
+ 		if (status0 & STATUS_1_RDI_SOF(i))
+ 			vfe->isr_ops.sof(vfe, i);
+ 
 -- 
 2.42.0
 
