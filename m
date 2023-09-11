@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B25A979B5B3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:04:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 97F8E79B1BE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 01:57:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343919AbjIKVMx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:12:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40428 "EHLO
+        id S1343812AbjIKVMk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:12:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237802AbjIKNOd (ORCPT
+        with ESMTP id S237806AbjIKNOd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 11 Sep 2023 09:14:33 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 913FBE69
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 06:14:26 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-52f31fb26e2so2212606a12.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 06:14:26 -0700 (PDT)
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B61C8E40
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 06:14:27 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-99357737980so552325266b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 06:14:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694438065; x=1695042865; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1694438066; x=1695042866; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=379UQYxpAxza5TcrO1uyZtcU91VH4r4NWvGfZfDBNQU=;
-        b=tNVQ4nGsU6PR/CwerNGT9oGENinDJCCte8VLg1pfptWR6/VmtQKXV1xAhp4dhjWF2o
-         DKPUgk04PsJPJG5pJHeHlXWQvE+YoomHX60NuG7/1uVGhRqBcA7TuRyk9q2OKZ75ZUE/
-         HlrtaaRJs9yflWQfB+FH60+WoxSRNcKzUsCYZy/58TgKXYnZ31DHd1lCV4SoO6Nj1UKG
-         4xfD/tvj2XAH57DUo0wcbBrMSk3XbHMPGFjm0wARODR1yhQkpDa9DjF1T6Lf1bQ3Q2by
-         BLVcyPHYTvt3C4p/NcfYeB9AdZaFeIVOLMzkb+tI6jLEPeaVd2DngkRw0mj21KkQuHVq
-         FUIQ==
+        bh=Xlz6iwTR+P+aX/Li0khE/j1svXvZ2ELJqgA8Sp/LWUg=;
+        b=riXB3fTGKV3MTaRcTdAtxsKHyrSTnbX6ELDPgcPe4rDRp08KkX6jk+v4s5Pvb8BCT4
+         jGr8Tz6wCWxERs61lIOQ0LKNk5fn5ZZVGzuketuaYgFzBEo2qV1oD7d/WijarShCUx0x
+         EILB0LzqzmK09J6btHNFkgG/4OrJeE342WhaU0VjfsjT/WAk2hHb+KeuZA2p+K0id8GR
+         4F3jUpLxOVFhA9frkCvMODUf2MwH3Ud747rgSWPxr0yt4GIIPGBoLQsb5jm33fsXPZb8
+         rDBy1si0M01TVvFBm5iwl5saBeAdGjW6ohDA0qpYNzN3t25x9zqLvO/i9Z0RiwzG37TD
+         ecjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694438065; x=1695042865;
+        d=1e100.net; s=20230601; t=1694438066; x=1695042866;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=379UQYxpAxza5TcrO1uyZtcU91VH4r4NWvGfZfDBNQU=;
-        b=YbOYpov+aDpQDfyWe3Cyu0eCbsy5gXBPJuXiGx1LXfEAhhuKu7l/nFDsakaghBV4hY
-         5j575hxCdV6LjUem1K/I7IN/tw6AWS6GY/V+XsESr0cYmvhTUJNLvOlAEQO14PagFpu1
-         2tIBxEcPKafZ9jlFWpdBaLy+d0cswyBPOrb21qAi9Ya3uRjsrp7FeoEBSGYNmBEbvJ90
-         wLQFlCST1ElGS8SiWYogHXGpbCpzv8fSB1gheSs1axotNooHtqgh7eAuHVJDdyuppcwn
-         vdOWKLq1C1YGkWtwfQnutgPkteRs8AUVtamlWz5rscuHwT12iB8SaBAakRZQLtZWCmIB
-         HMUw==
-X-Gm-Message-State: AOJu0Yw5QW7na3C9OkX8FzI39UY+kHMvNrBqdMIgMmmQaa49M7IE8hKS
-        GyKrziJDkIM2TBDsW7UCbsByvQ==
-X-Google-Smtp-Source: AGHT+IFW/BeHj4BsF45zeLrM3V2+VcezcA54mS2dqsyrgNTiGUKG5AXFvFoFU3ljp5mA3sEDX2GtbQ==
-X-Received: by 2002:a17:906:53cb:b0:9a9:d5e7:5531 with SMTP id p11-20020a17090653cb00b009a9d5e75531mr6551644ejo.74.1694438065062;
-        Mon, 11 Sep 2023 06:14:25 -0700 (PDT)
+        bh=Xlz6iwTR+P+aX/Li0khE/j1svXvZ2ELJqgA8Sp/LWUg=;
+        b=Jxfeynp3YjHmgaazKDNwfRPdPUddMfN519inVlodhM3wXWjH2T7u/m4PJ4IcaevP4o
+         1ZZUZQu+Xz1AhdZBj/X2NOUYaS2G+0MCsbOVBuqIL9mRfol9aWTuZdnY6xw/YrIN72NS
+         kbhBWEsO7JWWUk8GO59KI2sfmuIsBPA0sL41khy9uz28I+E04cHasEfMYHIhPLsndnYh
+         ZXwsjgkYXQSVMVxmXi4RRKilaEnDd/sEuEGthcU6KG/888uuZI8Qj3fVrGS7JfiYtMu8
+         85AEzdFAx2idLfFlRDcXNKnFRiI7HEcFsSDkRxD459uU6NKlB/ByixUxNTcOaVOZPIDM
+         nsWg==
+X-Gm-Message-State: AOJu0YxNZOSk1EDZl9X3ABMuletttve30q92vEROFscIgNDeHUEq2Ho4
+        XR4WbUxuIWFIlgjp0XjL+/OZQA==
+X-Google-Smtp-Source: AGHT+IHi1NjC7YYvhb26l/0B9n9PKoTamfRqC35EE+RVrZTXnpH8uVnn+2cDTnwSP+ZX2QXdmHP+Ow==
+X-Received: by 2002:a17:906:1d4:b0:9a2:276d:d83c with SMTP id 20-20020a17090601d400b009a2276dd83cmr8333692ejj.18.1694438066126;
+        Mon, 11 Sep 2023 06:14:26 -0700 (PDT)
 Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id kt8-20020a170906aac800b00988e953a586sm5313648ejb.61.2023.09.11.06.14.23
+        by smtp.gmail.com with ESMTPSA id kt8-20020a170906aac800b00988e953a586sm5313648ejb.61.2023.09.11.06.14.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Sep 2023 06:14:24 -0700 (PDT)
+        Mon, 11 Sep 2023 06:14:25 -0700 (PDT)
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 To:     rfoss@kernel.org, todor.too@gmail.com, bryan.odonoghue@linaro.org,
         agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
@@ -58,9 +58,9 @@ To:     rfoss@kernel.org, todor.too@gmail.com, bryan.odonoghue@linaro.org,
         andrey.konovalov@linaro.org
 Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v5 10/17] media: qcom: camss: Untangle if/else spaghetti in camss
-Date:   Mon, 11 Sep 2023 14:14:04 +0100
-Message-ID: <20230911131411.196033-11-bryan.odonoghue@linaro.org>
+Subject: [PATCH v5 11/17] media: qcom: camss: Allow clocks vfeN vfe_liteN or vfe_lite
+Date:   Mon, 11 Sep 2023 14:14:05 +0100
+Message-ID: <20230911131411.196033-12-bryan.odonoghue@linaro.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911131411.196033-1-bryan.odonoghue@linaro.org>
 References: <20230911131411.196033-1-bryan.odonoghue@linaro.org>
@@ -68,187 +68,88 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We have a very convoluted if/else legacy here which needs to be
-rationalised to make it more sustainable.
+The number of Video Front End - VFE or Image Front End - IFE supported
+with new SoCs can vary both for the full and lite cases.
 
-Adding in another Soc or two will make some of these if statements into
-increasingly large multi-clause behemoths.
+For example sdm845 has one vfe_lite and two vfe interfaces with the vfe
+clock called simply "vfe_lite" with no integer postfix. sc8280xp has four
+vfe and four vfe lite blocks.
 
-Introduce switches in the obvious places to despaghetiify.
+At the moment we declare vfe_lite0 and vfe_lite1 for sm8250 but never set
+those clocks because we don't match the strings.
+
+We need to support the following clock name formats
+
+- vfeN
+- vfe_liteN
+- vfe_lite
+
+with N being any reasonably sized integer.
+
+There are two sites in this code which need to do the same thing,
+constructing and matching strings with the pattern above, so encapsulate
+the logic in one function.
 
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- .../media/platform/qcom/camss/camss-csiphy.c  | 16 +++++----
- drivers/media/platform/qcom/camss/camss-vfe.c | 33 +++++++++++--------
- .../media/platform/qcom/camss/camss-video.c   | 17 +++++-----
- 3 files changed, 37 insertions(+), 29 deletions(-)
+ drivers/media/platform/qcom/camss/camss-vfe.c | 22 ++++++++++++++-----
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
-index 4310a132dcbe2..18f9a4defb2a4 100644
---- a/drivers/media/platform/qcom/camss/camss-csiphy.c
-+++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
-@@ -558,19 +558,21 @@ int msm_csiphy_subdev_init(struct camss *camss,
- 	csiphy->cfg.combo_mode = 0;
- 	csiphy->ops = res->ops;
- 
--	if (camss->res->version == CAMSS_8x16) {
-+	switch (camss->res->version) {
-+	case CAMSS_8x16:
- 		csiphy->formats = csiphy_formats_8x16;
- 		csiphy->nformats = ARRAY_SIZE(csiphy_formats_8x16);
--	} else if (camss->res->version == CAMSS_8x96 ||
--		   camss->res->version == CAMSS_660) {
-+		break;
-+	case CAMSS_8x96:
-+	case CAMSS_660:
- 		csiphy->formats = csiphy_formats_8x96;
- 		csiphy->nformats = ARRAY_SIZE(csiphy_formats_8x96);
--	} else if (camss->res->version == CAMSS_845 ||
--		   camss->res->version == CAMSS_8250) {
-+		break;
-+	case CAMSS_845:
-+	case CAMSS_8250:
- 		csiphy->formats = csiphy_formats_sdm845;
- 		csiphy->nformats = ARRAY_SIZE(csiphy_formats_sdm845);
--	} else {
--		return -EINVAL;
-+		break;
- 	}
- 
- 	/* Memory */
 diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-index 4d5c32d3dddbf..db8f68819ded9 100644
+index db8f68819ded9..f3cf387e4907e 100644
 --- a/drivers/media/platform/qcom/camss/camss-vfe.c
 +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-@@ -170,7 +170,8 @@ static u32 vfe_src_pad_code(struct vfe_line *line, u32 sink_code,
- {
- 	struct vfe_device *vfe = to_vfe(line);
- 
--	if (vfe->camss->res->version == CAMSS_8x16)
-+	switch (vfe->camss->res->version) {
-+	case CAMSS_8x16:
- 		switch (sink_code) {
- 		case MEDIA_BUS_FMT_YUYV8_1X16:
- 		{
-@@ -218,10 +219,11 @@ static u32 vfe_src_pad_code(struct vfe_line *line, u32 sink_code,
- 
- 			return sink_code;
- 		}
--	else if (vfe->camss->res->version == CAMSS_8x96 ||
--		 vfe->camss->res->version == CAMSS_660 ||
--		 vfe->camss->res->version == CAMSS_845 ||
--		 vfe->camss->res->version == CAMSS_8250)
-+		break;
-+	case CAMSS_8x96:
-+	case CAMSS_660:
-+	case CAMSS_845:
-+	case CAMSS_8250:
- 		switch (sink_code) {
- 		case MEDIA_BUS_FMT_YUYV8_1X16:
- 		{
-@@ -281,8 +283,9 @@ static u32 vfe_src_pad_code(struct vfe_line *line, u32 sink_code,
- 
- 			return sink_code;
- 		}
--	else
--		return 0;
-+		break;
-+	}
-+	return 0;
+@@ -431,6 +431,20 @@ void vfe_isr_reset_ack(struct vfe_device *vfe)
+ 	complete(&vfe->reset_complete);
  }
  
- int vfe_reset(struct vfe_device *vfe)
-@@ -1379,7 +1382,8 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
- 		init_completion(&l->output.sof);
- 		init_completion(&l->output.reg_update);
++static int vfe_match_clock_names(struct vfe_device *vfe,
++				 struct camss_clock *clock)
++{
++	char vfe_name[6]; /* vfeXX\0 */
++	char vfe_lite_name[11]; /* vfe_liteXX\0 */
++
++	snprintf(vfe_name, sizeof(vfe_name), "vfe%d", vfe->id);
++	snprintf(vfe_lite_name, sizeof(vfe_lite_name), "vfe_lite%d", vfe->id);
++
++	return (!strcmp(clock->name, vfe_name) ||
++		!strcmp(clock->name, vfe_lite_name) ||
++		!strcmp(clock->name, "vfe_lite"));
++}
++
+ /*
+  * vfe_set_clock_rates - Calculate and set clock rates on VFE module
+  * @vfe: VFE device
+@@ -454,9 +468,7 @@ static int vfe_set_clock_rates(struct vfe_device *vfe)
+ 	for (i = 0; i < vfe->nclocks; i++) {
+ 		struct camss_clock *clock = &vfe->clock[i];
  
--		if (camss->res->version == CAMSS_8x16) {
-+		switch (camss->res->version) {
-+		case CAMSS_8x16:
- 			if (i == VFE_LINE_PIX) {
- 				l->formats = formats_pix_8x16;
- 				l->nformats = ARRAY_SIZE(formats_pix_8x16);
-@@ -1387,8 +1391,9 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
- 				l->formats = formats_rdi_8x16;
- 				l->nformats = ARRAY_SIZE(formats_rdi_8x16);
- 			}
--		} else if (camss->res->version == CAMSS_8x96 ||
--			   camss->res->version == CAMSS_660) {
-+			break;
-+		case CAMSS_8x96:
-+		case CAMSS_660:
- 			if (i == VFE_LINE_PIX) {
- 				l->formats = formats_pix_8x96;
- 				l->nformats = ARRAY_SIZE(formats_pix_8x96);
-@@ -1396,12 +1401,12 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
- 				l->formats = formats_rdi_8x96;
- 				l->nformats = ARRAY_SIZE(formats_rdi_8x96);
- 			}
--		} else if (camss->res->version == CAMSS_845 ||
--			   camss->res->version == CAMSS_8250) {
-+			break;
-+		case CAMSS_845:
-+		case CAMSS_8250:
- 			l->formats = formats_rdi_845;
- 			l->nformats = ARRAY_SIZE(formats_rdi_845);
--		} else {
--			return -EINVAL;
-+			break;
- 		}
- 	}
+-		if (!strcmp(clock->name, "vfe0") ||
+-		    !strcmp(clock->name, "vfe1") ||
+-		    !strcmp(clock->name, "vfe_lite")) {
++		if (vfe_match_clock_names(vfe, clock)) {
+ 			u64 min_rate = 0;
+ 			long rate;
  
-diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
-index 46a89b5f6c171..a89da5ef47109 100644
---- a/drivers/media/platform/qcom/camss/camss-video.c
-+++ b/drivers/media/platform/qcom/camss/camss-video.c
-@@ -1006,7 +1006,8 @@ int msm_video_register(struct camss_video *video, struct v4l2_device *v4l2_dev,
+@@ -537,9 +549,7 @@ static int vfe_check_clock_rates(struct vfe_device *vfe)
+ 	for (i = 0; i < vfe->nclocks; i++) {
+ 		struct camss_clock *clock = &vfe->clock[i];
  
- 	mutex_init(&video->lock);
+-		if (!strcmp(clock->name, "vfe0") ||
+-		    !strcmp(clock->name, "vfe1") ||
+-		    !strcmp(clock->name, "vfe_lite")) {
++		if (vfe_match_clock_names(vfe, clock)) {
+ 			u64 min_rate = 0;
+ 			unsigned long rate;
  
--	if (video->camss->res->version == CAMSS_8x16) {
-+	switch (video->camss->res->version) {
-+	case CAMSS_8x16:
- 		if (is_pix) {
- 			video->formats = formats_pix_8x16;
- 			video->nformats = ARRAY_SIZE(formats_pix_8x16);
-@@ -1014,8 +1015,9 @@ int msm_video_register(struct camss_video *video, struct v4l2_device *v4l2_dev,
- 			video->formats = formats_rdi_8x16;
- 			video->nformats = ARRAY_SIZE(formats_rdi_8x16);
- 		}
--	} else if (video->camss->res->version == CAMSS_8x96 ||
--		   video->camss->res->version == CAMSS_660) {
-+		break;
-+	case CAMSS_8x96:
-+	case CAMSS_660:
- 		if (is_pix) {
- 			video->formats = formats_pix_8x96;
- 			video->nformats = ARRAY_SIZE(formats_pix_8x96);
-@@ -1023,13 +1025,12 @@ int msm_video_register(struct camss_video *video, struct v4l2_device *v4l2_dev,
- 			video->formats = formats_rdi_8x96;
- 			video->nformats = ARRAY_SIZE(formats_rdi_8x96);
- 		}
--	}  else if (video->camss->res->version == CAMSS_845 ||
--		    video->camss->res->version == CAMSS_8250) {
-+		break;
-+	case CAMSS_845:
-+	case CAMSS_8250:
- 		video->formats = formats_rdi_845;
- 		video->nformats = ARRAY_SIZE(formats_rdi_845);
--	} else {
--		ret = -EINVAL;
--		goto error_video_register;
-+		break;
- 	}
- 
- 	ret = msm_video_init_format(video);
 -- 
 2.42.0
 
