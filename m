@@ -2,140 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 16F6A79B84B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:08:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC9C879BE5E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:17:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344049AbjIKVNI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:13:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33812 "EHLO
+        id S1344749AbjIKVOn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:14:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236933AbjIKLnd (ORCPT
+        with ESMTP id S237006AbjIKLuS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 07:43:33 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AAD1E40
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 04:43:28 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-403012f27e1so22341265e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 04:43:28 -0700 (PDT)
+        Mon, 11 Sep 2023 07:50:18 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07A63E40
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 04:50:12 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-52a39a1c4d5so5677012a12.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 04:50:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694432607; x=1695037407; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1694433010; x=1695037810; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=zhvqmtlPbl/ToiLBkS2C664oW0NpQWmg1Qdfqpzz/ks=;
-        b=h85qjoOzihIC+Jfm/OgJKc4r5B0bSGnKrJPXJzit6opvv+s72AytROOKIJwpVsL0hG
-         6SkGak0t3IIVzqDzPAFSQdHqwZ319hzXuWe/SayI/RLJA7r7hU+xSl4fZYUz8kZ0Ui5j
-         IOzNBPhcW1wOlGRiHqn1Zmfz030RUBC5LmyfA5RIzlFNpye7jCf3s/9nnPUUaMcn1f+n
-         MzeDofjuT9JXein4Qje7K7cCr3piT2UpaaqDoiXDV2DudODEtMluqwHgWBS9RuXlGy3w
-         kB+dOFMqH8gHfLqMFpRyw/GDG875jW7CfRuAkA+31gn1VY5NZvD65PAgLyGuTv4sSNg0
-         1hgg==
+        bh=9yz3Tc8gsJQ/qI33P4F+un1BjOWwxkJR3o6Jg2I9evc=;
+        b=SWOODFWynvDQxys10Ohi3lE911YGT/L0sPJ8yNGc7+nXtnSY0iVv9YjY/xIkz+tkMm
+         yfo8kTJ65yooksY6W60IFFypNOknIU8AgOHyu6RhF4Q3kaKdLSvP75SJ6h+C9rbnCx5Z
+         tADPIritliY6lUZfEDh2ii3YuQGZwKtz44VuoESNm+BwYWf9RoRlnEjntSWyerR3Qrf6
+         4qlqqmWLBbMuPcZ2CfKL+JCG6l1uybk6d2w5olQAPxC3w0MJJpMKnSA7WqJNgTA7VG8M
+         Z0LQQ8Hydap6mIPele3+MUH6r32qtAiNmHOeaCsEwTC966j6e6iN0hjkZD/nRj6PEREu
+         3wQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694432607; x=1695037407;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1694433010; x=1695037810;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zhvqmtlPbl/ToiLBkS2C664oW0NpQWmg1Qdfqpzz/ks=;
-        b=VyFvPr9CBbe5gTgcZUeZAPuiCOqzKJUbQkLIVbEhJ8zk+Z0BNl4uWCQibRbMSJprz6
-         CwDL/RpsHDHwiRgdDY16z5LCaMgk2HicdJh4hXRJH1QcDnmVKTaV251PXHJ2xb33J52p
-         7W/4h64exJGx326fKjLilvOYpKkl1k3ON9btKYuid+Zbc6Me7Z+x4AwgLzGSxiTV1XJQ
-         Tzp1UGiWCrDr4pWdXj8kctfU6WG2zM8Iei3XkhiNy41s5LnjlX4rj1TpeSyoGNxn9pYA
-         +iAIXZP/uMZuw8bB1XfBUA3NLexF1G3Umn55kIA9fJcxyixK7+1tVp40iwBl4u1KXuaJ
-         ABzQ==
-X-Gm-Message-State: AOJu0YzTrf0aO70NSNjaG4xTFIslKoAe20X99P2tHyubWgl4WMaNIpjv
-        KxCnP11hONAjooB1IQpsqQu/NA==
-X-Google-Smtp-Source: AGHT+IHDWHlDL5vz5A1MoSOGg/s1su6sfKxPHNvw4o1B8UIig50Xaff6LXy44TsmqogO5HVIRr8EMQ==
-X-Received: by 2002:a5d:6302:0:b0:316:f3cf:6f12 with SMTP id i2-20020a5d6302000000b00316f3cf6f12mr7051795wru.48.1694432606716;
-        Mon, 11 Sep 2023 04:43:26 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.214.188])
-        by smtp.gmail.com with ESMTPSA id r15-20020a056000014f00b0031c6dc684f8sm9771891wrx.20.2023.09.11.04.43.24
+        bh=9yz3Tc8gsJQ/qI33P4F+un1BjOWwxkJR3o6Jg2I9evc=;
+        b=jrrak3zGkAHLvUCPGLGvsCI22dcJbG33O43BaAur0oityaCVWDHZKeGZ416q2MxQQS
+         DTSzVwd9yGmZmos+fP6i3Qe8C2tUVtLC2rHMZYm3qzOK+MX4xBlJgo12NCNJFuGLA+fQ
+         miWDWr2LiKKYD2oKfnWdYhlG+czPdVuiysZj3LTjMj+Zv4LeNg6ZvTvQRKvLFdhhj0rA
+         WRUCSi/ST/npjwEyel86IWaPANp0ESqRczwq/Q5+JFwrdMTO1j2iYwkqfxRJmKA3Wxw2
+         uwZxrUY8SOsBtznWz11kXKPvBKQlHRPQ6VJdv2dnQn57dTgIM1S/bqT24+w7YTtDUWJO
+         mSgQ==
+X-Gm-Message-State: AOJu0YxzpWZQ0kvuRcS8TiEJhiXQvVfFa2Z7OnKl5A0j5aUfG2ktlyqa
+        rMS1imvFIvBaiRGllu6twDwr5Q==
+X-Google-Smtp-Source: AGHT+IGhePx9Cm4vE0XO0UgIH18ILjd1Ti1Ey6T8c0x1E6XmsJwYns5znI3qcjc7sGukqw1OmcgEXg==
+X-Received: by 2002:a05:6402:240b:b0:52f:736f:b50 with SMTP id t11-20020a056402240b00b0052f736f0b50mr1512908eda.18.1694433010478;
+        Mon, 11 Sep 2023 04:50:10 -0700 (PDT)
+Received: from [192.168.37.232] (178235177061.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.61])
+        by smtp.gmail.com with ESMTPSA id v12-20020aa7d80c000000b0052c9f1d3cfasm4523644edq.84.2023.09.11.04.50.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Sep 2023 04:43:25 -0700 (PDT)
-Message-ID: <15898954-3b47-651d-43f4-844f45da171e@linaro.org>
-Date:   Mon, 11 Sep 2023 13:43:23 +0200
+        Mon, 11 Sep 2023 04:50:10 -0700 (PDT)
+Message-ID: <ca53e4cd-1c89-482d-9662-19926efb5b47@linaro.org>
+Date:   Mon, 11 Sep 2023 13:50:06 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.0
-Subject: Re: [PATCH 1/3] dt-bindings: interconnect: Add Qualcomm SM4450
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/9] arm64: dts: qcom: apq8016-sbc: Add overlay for usb
+ host mode
 Content-Language: en-US
-To:     Tengfei Fan <quic_tengfan@quicinc.com>,
-        Rob Herring <robh@kernel.org>
-Cc:     will@kernel.org, arnd@arndb.de, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_kaushalk@quicinc.com,
-        peng.fan@nxp.com, kernel@quicinc.com, catalin.marinas@arm.com,
-        rafal@milecki.pl, krzysztof.kozlowski+dt@linaro.org,
-        nfraprado@collabora.com, quic_shashim@quicinc.com,
-        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        quic_tingweiz@quicinc.com, quic_aiquny@quicinc.com,
-        linux-pm@vger.kernel.org, quic_tsoni@quicinc.com,
-        geert+renesas@glider.be, andersson@kernel.org, conor+dt@kernel.org,
-        linux-arm-kernel@lists.infradead.org, agross@kernel.org,
-        quic_tdas@quicinc.com, djakov@kernel.org, konrad.dybcio@linaro.org
-References: <20230908064427.26999-1-quic_tengfan@quicinc.com>
- <20230908064427.26999-2-quic_tengfan@quicinc.com>
- <169415894359.3239551.14338430937225080028.robh@kernel.org>
- <375df554-e661-42ad-8a6f-f862aa05b654@quicinc.com>
- <5f172a8f-ecd7-44b0-9b02-48eb13d40497@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <5f172a8f-ecd7-44b0-9b02-48eb13d40497@quicinc.com>
+To:     Vignesh Raman <vignesh.raman@collabora.com>,
+        dri-devel@lists.freedesktop.org
+Cc:     helen.koike@collabora.com, guilherme.gallo@collabora.com,
+        sergi.blanch.torne@collabora.com, david.heidelberg@collabora.com,
+        daniels@collabora.com, gustavo.padovan@collabora.com,
+        angelogioacchino.delregno@collabora.com, emma@anholt.net,
+        robclark@freedesktop.org, robdclark@google.com, anholt@google.com,
+        robdclark@gmail.com, airlied@gmail.com, daniel@ffwll.ch,
+        jani.nikula@linux.intel.com, mripard@kernel.org,
+        dmitry.baryshkov@linaro.org, matthias.bgg@gmail.com,
+        agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        virtualization@lists.linux-foundation.org,
+        linux-arm-msm@vger.kernel.org
+References: <20230908152225.432139-1-vignesh.raman@collabora.com>
+ <20230908152225.432139-3-vignesh.raman@collabora.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
+ BB/OmIWU6X+LZW6P88ZmHe+KeyABLMP5s1tJNK1j4ntT7mECcWZDzafPWF4F6m4WJOG27kTJ
+ HGWdmtO+RvadOVi6CoUDqALsmfS3MUG5Pj2Ne9+0jRg4hEnB92AyF9rW2G3qisFcwPgvatt7
+ TXD5E38mLyOPOUyXNj9XpDbt1hNwKQfiidmPh5e7VNAWRnW1iCMMoKqzM1Anzq7e5Afyeifz
+ zRcQPLaqrPjnKqZGL2BKQSZDh6NkI5ZLRhhHQf61fkWcUpTp1oDC6jWVfT7hwRVIQLrrNj9G
+ MpPzrlN4YuAqKeIer1FMt8cq64ifgTzxHzXsMcUdclzq2LTk2RXaPl6Jg/IXWqUClJHbamSk
+ t1bfif3SnmhA6TiNvEpDKPiT3IDs42THU6ygslrBxyROQPWLI9IL1y8S6RtEh8H+NZQWZNzm
+ UQ3imZirlPjxZtvz1BtnnBWS06e7x/UEAguj7VHCuymVgpl2Za17d1jj81YN5Rp5L9GXxkV1
+ aUEwONM3eCI3qcYm5JNc5X+JthZOWsbIPSC1Rhxz3JmWIwP1udr5E3oNRe9u2LIEq+wH/toH
+ kpPDhTeMkvt4KfE5m5ercid9+ZXAqoaYLUL4HCEw+HW0DXcKDwARAQABzShLb25yYWQgRHli
+ Y2lvIDxrb25yYWQuZHliY2lvQGxpbmFyby5vcmc+wsGOBBMBCAA4FiEEU24if9oCL2zdAAQV
+ R4cBcg5dfFgFAmQ5bqwCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQR4cBcg5dfFjO
+ BQ//YQV6fkbqQCceYebGg6TiisWCy8LG77zV7DB0VMIWJv7Km7Sz0QQrHQVzhEr3trNenZrf
+ yy+o2tQOF2biICzbLM8oyQPY8B///KJTWI2khoB8IJSJq3kNG68NjPg2vkP6CMltC/X3ohAo
+ xL2UgwN5vj74QnlNneOjc0vGbtA7zURNhTz5P/YuTudCqcAbxJkbqZM4WymjQhe0XgwHLkiH
+ 5LHSZ31MRKp/+4Kqs4DTXMctc7vFhtUdmatAExDKw8oEz5NbskKbW+qHjW1XUcUIrxRr667V
+ GWH6MkVceT9ZBrtLoSzMLYaQXvi3sSAup0qiJiBYszc/VOu3RbIpNLRcXN3KYuxdQAptacTE
+ mA+5+4Y4DfC3rUSun+hWLDeac9z9jjHm5rE998OqZnOU9aztbd6zQG5VL6EKgsVXAZD4D3RP
+ x1NaAjdA3MD06eyvbOWiA5NSzIcC8UIQvgx09xm7dThCuQYJR4Yxjd+9JPJHI6apzNZpDGvQ
+ BBZzvwxV6L1CojUEpnilmMG1ZOTstktWpNzw3G2Gis0XihDUef0MWVsQYJAl0wfiv/0By+XK
+ mm2zRR+l/dnzxnlbgJ5pO0imC2w0TVxLkAp0eo0LHw619finad2u6UPQAkZ4oj++iIGrJkt5
+ Lkn2XgB+IW8ESflz6nDY3b5KQRF8Z6XLP0+IEdLOOARkOW7yEgorBgEEAZdVAQUBAQdAwmUx
+ xrbSCx2ksDxz7rFFGX1KmTkdRtcgC6F3NfuNYkYDAQgHwsF2BBgBCAAgFiEEU24if9oCL2zd
+ AAQVR4cBcg5dfFgFAmQ5bvICGwwACgkQR4cBcg5dfFju1Q//Xta1ShwL0MLSC1KL1lXGXeRM
+ 8arzfyiB5wJ9tb9U/nZvhhdfilEDLe0jKJY0RJErbdRHsalwQCrtq/1ewQpMpsRxXzAjgfRN
+ jc4tgxRWmI+aVTzSRpywNahzZBT695hMz81cVZJoZzaV0KaMTlSnBkrviPz1nIGHYCHJxF9r
+ cIu0GSIyUjZ/7xslxdvjpLth16H27JCWDzDqIQMtg61063gNyEyWgt1qRSaK14JIH/DoYRfn
+ jfFQSC8bffFjat7BQGFz4ZpRavkMUFuDirn5Tf28oc5ebe2cIHp4/kajTx/7JOxWZ80U70mA
+ cBgEeYSrYYnX+UJsSxpzLc/0sT1eRJDEhI4XIQM4ClIzpsCIN5HnVF76UQXh3a9zpwh3dk8i
+ bhN/URmCOTH+LHNJYN/MxY8wuukq877DWB7k86pBs5IDLAXmW8v3gIDWyIcgYqb2v8QO2Mqx
+ YMqL7UZxVLul4/JbllsQB8F/fNI8AfttmAQL9cwo6C8yDTXKdho920W4WUR9k8NT/OBqWSyk
+ bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
+ nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
+ izWDgYvmBE8=
+In-Reply-To: <20230908152225.432139-3-vignesh.raman@collabora.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/09/2023 12:15, Tengfei Fan wrote:
->>>
->>> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
->>> on your patch (DT_CHECKER_FLAGS is new in v5.13):
->>>
->>> yamllint warnings/errors:
->>>
->>> dtschema/dtc warnings/errors:
->>> Documentation/devicetree/bindings/interconnect/qcom,sm4450-rpmh.example.dts:18:18: fatal error: dt-bindings/clock/qcom,gcc-sm4450.h: No such file or directory
->>>     18 |         #include <dt-bindings/clock/qcom,gcc-sm4450.h>
->>>        |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->>> compilation terminated.
->>> make[2]: *** [scripts/Makefile.lib:419: 
->>> Documentation/devicetree/bindings/interconnect/qcom,sm4450-rpmh.example.dtb] Error 1
->>> make[2]: *** Waiting for unfinished jobs....
->>> make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1500: 
->>> dt_binding_check] Error 2
->>> make: *** [Makefile:234: __sub-make] Error 2
->>>
->>> doc reference errors (make refcheckdocs):
->>>
->>> See 
->>> https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230908064427.26999-2-quic_tengfan@quicinc.com
->>>
->>> The base for the series is generally the latest rc1. A different 
->>> dependency
->>> should be noted in *this* patch.
->>>
->>> If you already ran 'make dt_binding_check' and didn't see the above
->>> error(s), then make sure 'yamllint' is installed and dt-schema is up to
->>> date:
->>>
->>> pip3 install dtschema --upgrade
->>>
->>> Please check and re-submit after running the above command yourself. Note
->>> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
->>> your schema. However, it must be unset to test all examples with your 
->>> schema.
->>>
->> Thanks review this patch, will setup new env for verify again.
->>
-> this error is due to have dependence with: 
-> https://lore.kernel.org/linux-arm-msm/20230824173410.550126-1-quic_ajipan@quicinc.com/, 
-> will add this link to coverletter.
+On 8.09.2023 17:22, Vignesh Raman wrote:
+> Due to the presence of the fastboot micro cable in the CI farm,
+> it causes the hardware to remain in gadget mode instead of host mode.
+> So it doesn't find the network, which results in failure to mount root
+> fs via NFS.
+> 
+> Add an overlay dtso file that sets the dr_mode to host, allowing
+> the USB controllers to work in host mode. This dtso file will be used
+> in drm-ci, mesa-ci.
+> 
+> Overlay DT file uses the sugar syntax [suggested by Dmitry Baryshkov and Maxime Ripard]
+> 
+> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Suggested-by: Maxime Ripard <mripard@kernel.org>
+> Signed-off-by: Helen Koike <helen.koike@collabora.com>
+> Signed-off-by: David Heidelberg <david.heidelberg@collabora.com>
+> Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
+> ---
+For such a small change, maybe you can just use sed in your
+scripts to alter this?
 
-The patch should have it for the bot to understand it.
-
-Best regards,
-Krzysztof
-
+Konrad
