@@ -2,85 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EB3479BB96
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:13:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2DE6479B71D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:06:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240665AbjIKVLM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:11:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60522 "EHLO
+        id S1344903AbjIKVPE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:15:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241653AbjIKPLL (ORCPT
+        with ESMTP id S242393AbjIKPaS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 11:11:11 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A952AE4D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 08:11:05 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-52a40cf952dso6052173a12.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 08:11:05 -0700 (PDT)
+        Mon, 11 Sep 2023 11:30:18 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56F7A1B6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 08:30:12 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-500a398cda5so7609963e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 08:30:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694445064; x=1695049864; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=HVLqCA/ecvInY4c6THAO1tIs6dKSTPnQEjLvdL4WYHk=;
-        b=pBXgNVDCIDhRiCpll+KwCkJAwuYSnUBAmSmJ2RfBzA0adoxzdEzuS/07u00GO10jmc
-         1nprwi6uHOxrzAEg/aZf9oCALcvKChIMjEaHOyKw9NJ3uYCN0/G6RT1Tky2OTPi51IZ0
-         5OgtAA3Z+q1MGLr168WDWdR7MMZVeZO8DS/mH5trz/QficRIvIXFBwSNeHF6QST+nwk4
-         ScEHvVcNBkihiUg+W2vm2OUIGBVFIS+u1VWwfd+wvHGLxrBMnBaj64aHqMMecxUPwNVE
-         +bfCLeZCT3dXUzmuuoZC2H2qiE2UWh74DpC9oAzJCfDYZUFOu6hqGjh26LfS0/em0HQb
-         qPBA==
+        d=linaro.org; s=google; t=1694446210; x=1695051010; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=IewnJfJyIc3JF1ZmFRQB+j/PW2AOwYNqv6ATRNcWgHA=;
+        b=MSsPrJDKE5xoSmNh46Kaa2J0koTBNgoYVM3y3IGS8j/GqYohrp2r34J0cCGJFCoYyb
+         bua0xQOqRN/faoadazGZcAiC6QzRRrg4MMnk+di9x3met538a1jFaNgcHVjkSgLhfvDR
+         JyKxEhWqGjCLD7EGiefBBrT+7fQLd+OrCFqqlh1FuxbwecesoaEyQt1qBS6b93HCDxWD
+         qxupakS10sE8YCdeXS4esjlMNHOf1S0SE3GSOttS9nrryvyei38Zb8ZFYqRaRBX3QDNZ
+         wj7bFjpMn6I0Vgq6PkIGnsHoDRAYokoeBiqka5BowLuuulnO6Y/qgjkIWio6z0QHCS8r
+         pUwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694445064; x=1695049864;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HVLqCA/ecvInY4c6THAO1tIs6dKSTPnQEjLvdL4WYHk=;
-        b=XLnwRzNe3hEEqUabRhmIJtlf7CXfcMTg7EVdDwjVoORIfSFr8GtSYaNYY3RFiuyhb5
-         KueXngZ1uSTL1IwQ927a01KpxKhuF3+2RZrOzwHg/7YQ69Ibv1ZYPi8WofTjFgmeYJzC
-         n6VWoyQwX0ctIyW/ykisCtkZM/AAv9XFnQwX5vilmwwK+9uQHVtZl1DBTKKeJVfHt/bC
-         p178fiUQZsy+BhmzNRlF0deQ4Es+6Q1faBe2s1BWA0MCepn4w1SxZVED/Z4v0dmzsnOw
-         kjjiCsA6QRwDMGtscw/4Trvz1+k4v48XYEIcKSz7qvhPFOjwp7kBqqO8PcAUEm8GsnRD
-         Ogsw==
-X-Gm-Message-State: AOJu0YzSaPGt+Ww1IpuaJWvP4kNvZeTRDvIoiB9rMbPewKXe785hnsVI
-        0uHyHfp5PWVMqe0d83bnRfmIMg==
-X-Google-Smtp-Source: AGHT+IHNS4PmdSp7TCHy+BYzxHt4JAK6ZnEugthWVcBVLN+hPi2VGwGiI2QReNZ350wvDNw4TdzY3Q==
-X-Received: by 2002:aa7:c904:0:b0:525:70b3:72c2 with SMTP id b4-20020aa7c904000000b0052570b372c2mr8260935edt.14.1694445064234;
-        Mon, 11 Sep 2023 08:11:04 -0700 (PDT)
-Received: from [10.167.154.1] (178235177061.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.61])
-        by smtp.gmail.com with ESMTPSA id n4-20020a056402060400b0052a3ad836basm4681281edv.41.2023.09.11.08.11.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Sep 2023 08:11:03 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Mon, 11 Sep 2023 17:10:34 +0200
-Subject: [PATCH RFT 20/20] media: venus: pm_helpers: Commonize venc_get()
+        d=1e100.net; s=20230601; t=1694446210; x=1695051010;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IewnJfJyIc3JF1ZmFRQB+j/PW2AOwYNqv6ATRNcWgHA=;
+        b=P1w9Ptaxl4v/sOdzDPFUPa5KIPbdc3uPj180kMrcRGEIXzQmVt7+3BFt71mWqFJIc0
+         F8u1CeM8kwigMVRHsxWQs4WrNlA0qhfSzdkulypMi3OBZkDbeTvLkvZ9i0+HgFkFEoSr
+         csmjtla7mvsOp591pxkn9YpSDEREr2nyXaZ5MMBBL1sd0Tkqa3lHW32VqhPwHj9QVQnX
+         Ql3617tjoyZ4Z2h/C2TttaAC195aVQQK6CDRRRpt3rlDW2dMnFbV3yDLPBCIgKPlTCAd
+         KzLTfVBgAQe0xr5xbZx8xPZipMHxo72XKhwzBlIH1QFqzHTF+nCfWSlR23fAEv1u0so2
+         BLXw==
+X-Gm-Message-State: AOJu0Yyoc9KAqEujyGIZwlxX5Bbzk25qObDpKZ8gIFLAc8phd3Ywr1jq
+        mPLItr8E7zFqNpoth2cBZFgjSQ==
+X-Google-Smtp-Source: AGHT+IGk3bVe3SE1qLDOb/MT3TwaHl4EvuUcgJ1iHxbI55reTaiI7wcaDe1/Z2ro+fK9iZ8cENhnaw==
+X-Received: by 2002:a05:6512:1592:b0:4fb:fe97:5e35 with SMTP id bp18-20020a056512159200b004fbfe975e35mr11258000lfb.47.1694446210474;
+        Mon, 11 Sep 2023 08:30:10 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id w5-20020ac25985000000b00500a4679148sm1383886lfn.20.2023.09.11.08.30.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Sep 2023 08:30:09 -0700 (PDT)
+Message-ID: <e95c5633-8a36-4500-8414-70b7b201a85e@linaro.org>
+Date:   Mon, 11 Sep 2023 18:30:09 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230911-topic-mars-v1-20-a7d38bf87bdb@linaro.org>
-References: <20230911-topic-mars-v1-0-a7d38bf87bdb@linaro.org>
-In-Reply-To: <20230911-topic-mars-v1-0-a7d38bf87bdb@linaro.org>
-To:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 05/10] drm/msm/a6xx: Add skeleton A7xx support
+Content-Language: en-GB
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
 Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1694445027; l=3254;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=vxb2w5wVyktQxR9j1Q6sGaFooRnQRJnrKSI6AeZH57o=;
- b=33oCSwwyUM3j+SIJKcWOvs5hYfI+HUSZ161Pxwvi8UnJdtfQsPyPhxkcIPoZoYyPRQOt5RpZ5
- YIhCik1ceBvCJQ7lLPtb6OObauaxfo62YuhZh+REfQNU9nFAd5JdjmU
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+        Neil Armstrong <neil.armstrong@linaro.org>
+References: <20230628-topic-a7xx_drmmsm-v3-0-4ee67ccbaf9d@linaro.org>
+ <20230628-topic-a7xx_drmmsm-v3-5-4ee67ccbaf9d@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230628-topic-a7xx_drmmsm-v3-5-4ee67ccbaf9d@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -91,100 +86,178 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This function can be very easily commonized between the supported gens.
-Do so!
+On 23/08/2023 15:55, Konrad Dybcio wrote:
+> A7xx GPUs are - from kernel's POV anyway - basically another generation
+> of A6xx. They build upon the A650/A660_family advancements, skipping some
+> writes (presumably more values are preset correctly on reset), adding
+> some new ones and changing others.
+> 
+> One notable difference is the introduction of a second shadow, called BV.
+> To handle this with the current code, allocate it right after the current
+> RPTR shadow.
+> 
+> BV handling and .submit are mostly based on Jonathan Marek's work.
+> 
+> All A7xx GPUs are assumed to have a GMU.
+> A702 is not an A7xx-class GPU, it's a weird forked A610.
+> 
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+> Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # sm8450
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/adreno/a6xx_gmu.c   |  95 +++++--
+>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c   | 451 ++++++++++++++++++++++++++++----
+>   drivers/gpu/drm/msm/adreno/adreno_gpu.c |   1 +
+>   drivers/gpu/drm/msm/adreno/adreno_gpu.h |  10 +-
+>   drivers/gpu/drm/msm/msm_ringbuffer.h    |   2 +
+>   5 files changed, 478 insertions(+), 81 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> index 03fa89bf3e4b..75984260898e 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> @@ -200,9 +200,10 @@ int a6xx_gmu_wait_for_idle(struct a6xx_gmu *gmu)
+>   
+>   static int a6xx_gmu_start(struct a6xx_gmu *gmu)
+>   {
+> +	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
+> +	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
+> +	u32 mask, reset_val, val;
+>   	int ret;
+> -	u32 val;
+> -	u32 mask, reset_val;
+>   
+>   	val = gmu_read(gmu, REG_A6XX_GMU_CM3_DTCM_START + 0xff8);
+>   	if (val <= 0x20010004) {
+> @@ -218,7 +219,11 @@ static int a6xx_gmu_start(struct a6xx_gmu *gmu)
+>   	/* Set the log wptr index
+>   	 * note: downstream saves the value in poweroff and restores it here
+>   	 */
+> -	gmu_write(gmu, REG_A6XX_GPU_GMU_CX_GMU_PWR_COL_CP_RESP, 0);
+> +	if (adreno_is_a7xx(adreno_gpu))
+> +		gmu_write(gmu, REG_A6XX_GMU_GENERAL_9, 0);
+> +	else
+> +		gmu_write(gmu, REG_A6XX_GPU_GMU_CX_GMU_PWR_COL_CP_RESP, 0);
+> +
+>   
+>   	gmu_write(gmu, REG_A6XX_GMU_CM3_SYSRESET, 0);
+>   
+> @@ -518,7 +523,9 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
+>   	if (IS_ERR(pdcptr))
+>   		goto err;
+>   
+> -	if (adreno_is_a650(adreno_gpu) || adreno_is_a660_family(adreno_gpu))
+> +	if (adreno_is_a650(adreno_gpu) ||
+> +	    adreno_is_a660_family(adreno_gpu) ||
+> +	    adreno_is_a7xx(adreno_gpu))
+>   		pdc_in_aop = true;
+>   	else if (adreno_is_a618(adreno_gpu) || adreno_is_a640_family(adreno_gpu))
+>   		pdc_address_offset = 0x30090;
+> @@ -550,7 +557,8 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
+>   	gmu_write_rscc(gmu, REG_A6XX_RSCC_PDC_MATCH_VALUE_HI, 0x4514);
+>   
+>   	/* Load RSC sequencer uCode for sleep and wakeup */
+> -	if (adreno_is_a650_family(adreno_gpu)) {
+> +	if (adreno_is_a650_family(adreno_gpu) ||
+> +	    adreno_is_a7xx(adreno_gpu)) {
+>   		gmu_write_rscc(gmu, REG_A6XX_RSCC_SEQ_MEM_0_DRV0, 0xeaaae5a0);
+>   		gmu_write_rscc(gmu, REG_A6XX_RSCC_SEQ_MEM_0_DRV0 + 1, 0xe1a1ebab);
+>   		gmu_write_rscc(gmu, REG_A6XX_RSCC_SEQ_MEM_0_DRV0 + 2, 0xa2e0a581);
+> @@ -635,11 +643,18 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
+>   /* Set up the idle state for the GMU */
+>   static void a6xx_gmu_power_config(struct a6xx_gmu *gmu)
+>   {
+> +	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
+> +	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
+> +
+>   	/* Disable GMU WB/RB buffer */
+>   	gmu_write(gmu, REG_A6XX_GMU_SYS_BUS_CONFIG, 0x1);
+>   	gmu_write(gmu, REG_A6XX_GMU_ICACHE_CONFIG, 0x1);
+>   	gmu_write(gmu, REG_A6XX_GMU_DCACHE_CONFIG, 0x1);
+>   
+> +	/* A7xx knows better by default! */
+> +	if (adreno_is_a7xx(adreno_gpu))
+> +		return;
+> +
+>   	gmu_write(gmu, REG_A6XX_GMU_PWR_COL_INTER_FRAME_CTRL, 0x9c40400);
+>   
+>   	switch (gmu->idle_level) {
+> @@ -702,7 +717,7 @@ static int a6xx_gmu_fw_load(struct a6xx_gmu *gmu)
+>   	u32 itcm_base = 0x00000000;
+>   	u32 dtcm_base = 0x00040000;
+>   
+> -	if (adreno_is_a650_family(adreno_gpu))
+> +	if (adreno_is_a650_family(adreno_gpu) || adreno_is_a7xx(adreno_gpu))
+>   		dtcm_base = 0x10004000;
+>   
+>   	if (gmu->legacy) {
+> @@ -751,14 +766,22 @@ static int a6xx_gmu_fw_start(struct a6xx_gmu *gmu, unsigned int state)
+>   {
+>   	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
+>   	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
+> +	u32 fence_range_lower, fence_range_upper;
+>   	int ret;
+>   	u32 chipid;
+>   
+> -	if (adreno_is_a650_family(adreno_gpu)) {
+> +	/* Vote veto for FAL10 */
+> +	if (adreno_is_a650_family(adreno_gpu) || adreno_is_a7xx(adreno_gpu)) {
+>   		gmu_write(gmu, REG_A6XX_GPU_GMU_CX_GMU_CX_FALNEXT_INTF, 1);
+>   		gmu_write(gmu, REG_A6XX_GPU_GMU_CX_GMU_CX_FAL_INTF, 1);
+>   	}
+>   
+> +	/* Turn on TCM (Tightly Coupled Memory) retention */
+> +	if (adreno_is_a7xx(adreno_gpu))
+> +		a6xx_llc_write(a6xx_gpu, REG_A7XX_CX_MISC_TCM_RET_CNTL, 1);
+> +	else
+> +		gmu_write(gmu, REG_A6XX_GMU_GENERAL_7, 1);
+> +
+>   	if (state == GMU_WARM_BOOT) {
+>   		ret = a6xx_rpmh_start(gmu);
+>   		if (ret)
+> @@ -768,9 +791,6 @@ static int a6xx_gmu_fw_start(struct a6xx_gmu *gmu, unsigned int state)
+>   			"GMU firmware is not loaded\n"))
+>   			return -ENOENT;
+>   
+> -		/* Turn on register retention */
+> -		gmu_write(gmu, REG_A6XX_GMU_GENERAL_7, 1);
+> -
+>   		ret = a6xx_rpmh_start(gmu);
+>   		if (ret)
+>   			return ret;
+> @@ -780,6 +800,7 @@ static int a6xx_gmu_fw_start(struct a6xx_gmu *gmu, unsigned int state)
+>   			return ret;
+>   	}
+>   
+> +	/* Clear init result to make sure we are getting a fresh value */
+>   	gmu_write(gmu, REG_A6XX_GMU_CM3_FW_INIT_RESULT, 0);
+>   	gmu_write(gmu, REG_A6XX_GMU_CM3_BOOT_CONFIG, 0x02);
+>   
+> @@ -787,8 +808,18 @@ static int a6xx_gmu_fw_start(struct a6xx_gmu *gmu, unsigned int state)
+>   	gmu_write(gmu, REG_A6XX_GMU_HFI_QTBL_ADDR, gmu->hfi.iova);
+>   	gmu_write(gmu, REG_A6XX_GMU_HFI_QTBL_INFO, 1);
+>   
+> +	if (adreno_is_a7xx(adreno_gpu)) {
+> +		fence_range_upper = 0x32;
+> +		fence_range_lower = 0x8a0;
+> +	} else {
+> +		fence_range_upper = 0xa;
+> +		fence_range_lower = 0xa0;
+> +	}
+> +
+>   	gmu_write(gmu, REG_A6XX_GMU_AHB_FENCE_RANGE_0,
+> -		(1 << 31) | (0xa << 18) | (0xa0));
+> +		  BIT(31) |
+> +		  FIELD_PREP(GENMASK(30, 18), fence_range_upper) |
+> +		  FIELD_PREP(GENMASK(17, 0), fence_range_lower));
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/media/platform/qcom/venus/pm_helpers.c | 19 -------------------
- drivers/media/platform/qcom/venus/pm_helpers.h |  1 -
- drivers/media/platform/qcom/venus/venc.c       |  9 +++++++--
- 3 files changed, 7 insertions(+), 22 deletions(-)
+This fails on arm32 because of the missing #include <linux/bitfields.h>
 
-diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-index dfb89d2e7387..9546ad577b5d 100644
---- a/drivers/media/platform/qcom/venus/pm_helpers.c
-+++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-@@ -362,13 +362,6 @@ static int vdec_power_v3(struct device *dev, int on)
- 	return ret;
- }
- 
--static int venc_get_v3(struct device *dev)
--{
--	struct venus_core *core = dev_get_drvdata(dev);
--
--	return vcodec_clks_get(core, dev, 1);
--}
--
- static int venc_power_v3(struct device *dev, int on)
- {
- 	struct venus_core *core = dev_get_drvdata(dev);
-@@ -388,7 +381,6 @@ static int venc_power_v3(struct device *dev, int on)
- 
- static const struct venus_pm_ops pm_ops_v3 = {
- 	.vdec_power = vdec_power_v3,
--	.venc_get = venc_get_v3,
- 	.venc_power = venc_power_v3,
- 	.load_scale = load_scale_v1,
- };
-@@ -784,16 +776,6 @@ static int vdec_power_v4(struct device *dev, int on)
- 	return ret;
- }
- 
--static int venc_get_v4(struct device *dev)
--{
--	struct venus_core *core = dev_get_drvdata(dev);
--
--	if (!legacy_binding)
--		return 0;
--
--	return vcodec_clks_get(core, dev, 1);
--}
--
- static void venc_put_v4(struct device *dev)
- {
- 	struct venus_core *core = dev_get_drvdata(dev);
-@@ -1096,7 +1078,6 @@ static int load_scale_v4(struct venus_inst *inst)
- static const struct venus_pm_ops pm_ops_v4 = {
- 	.vdec_put = vdec_put_v4,
- 	.vdec_power = vdec_power_v4,
--	.venc_get = venc_get_v4,
- 	.venc_put = venc_put_v4,
- 	.venc_power = venc_power_v4,
- 	.coreid_power = coreid_power_v4,
-diff --git a/drivers/media/platform/qcom/venus/pm_helpers.h b/drivers/media/platform/qcom/venus/pm_helpers.h
-index 4afc57dac865..cbf54e6c6eab 100644
---- a/drivers/media/platform/qcom/venus/pm_helpers.h
-+++ b/drivers/media/platform/qcom/venus/pm_helpers.h
-@@ -13,7 +13,6 @@ struct venus_pm_ops {
- 	void (*vdec_put)(struct device *dev);
- 	int (*vdec_power)(struct device *dev, int on);
- 
--	int (*venc_get)(struct device *dev);
- 	void (*venc_put)(struct device *dev);
- 	int (*venc_power)(struct device *dev, int on);
- 
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index 44b13696cf82..fd3a1dd7f16c 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -1557,8 +1557,13 @@ static int venc_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, core);
- 
--	if (core->pm_ops->venc_get) {
--		ret = core->pm_ops->venc_get(dev);
-+	/*
-+	 * If the vcodec core clock is missing by now, it either doesn't exist
-+	 * (8916) or deprecated bindings with pre-assigned core functions and
-+	 * resources under the decoder node are in use.
-+	 */
-+	if (!core->vcodec_core_clks[1]) {
-+		ret = vcodec_clks_get(core, dev, 1);
- 		if (ret)
- 			return ret;
- 	}
+>   
+>   	/*
+>   	 * Snapshots toggle the NMI bit which will result in a jump to the NMI
 
 -- 
-2.42.0
+With best wishes
+Dmitry
 
