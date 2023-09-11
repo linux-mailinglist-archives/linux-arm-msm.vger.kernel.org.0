@@ -2,177 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6AA7679BA6B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:11:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E39579BE23
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:17:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344779AbjIKVOo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:14:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55456 "EHLO
+        id S1344163AbjIKVN1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:13:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237850AbjIKNPS (ORCPT
+        with ESMTP id S237901AbjIKNU2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 09:15:18 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68FDBCF0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 06:15:14 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2bbbda48904so73930641fa.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 06:15:14 -0700 (PDT)
+        Mon, 11 Sep 2023 09:20:28 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77A31EB
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 06:20:24 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-99de884ad25so582716766b.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 06:20:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694438112; x=1695042912; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=YL6EQgEy3tU456+JOD18a+m3T5ccWapszSBNRkdsmHI=;
-        b=vHXNjYDzKOqcrn+XNPyUE8dUN6iSLRGOgkGduve+2Vl6HYAwqoSmASwtSEPt4r7xld
-         BNp5fZNgi8ZfR76pkGpk9b618vvZretLDMSAtaJTD7cjisIQv5+dIRnaT/D/fpCYBymt
-         OxuqW/rEAZQIJ7jWFUfs7CvKk2m/FvDSZQLv9WJ99w6TnPvuk2ampIYxFXbCbEWH2YMh
-         pr7firIk7xBadI1aqRJ/hTJQbXupUNBfC32kd1lpcB2XRLdsC5BORce6hPvGbiWceJId
-         5rpoia8SGhdZjUhHIt2R6hI73X2M63l3mVnbr1mfKkn0qrExZzmU69F3AZ/3quCKg5Qy
-         q1Xg==
+        d=linaro.org; s=google; t=1694438423; x=1695043223; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=H6ROeUkGbQ9Rsp3Ap+XbILwaeJ+lJZmemhX/U4xe7Go=;
+        b=CrPldppNBhZzFat6Cf/IAgYlUK2d5z5UWRPxo1iG15CXyL3OcF8eUFKFSmNR5Kp5Hc
+         K37drkwuM6SbP63P2TTLe8yf7seBg8NKG7oZF5jCub5AO5IQVYnVyFE8jwoXj6L5r5mm
+         ezcno/G2sgVCJY/YNqMB8c1t5g2QVZYmw98TtY7Z2CMBNilFSwkIZhpMptebR0ssVQFj
+         dgnOtHk6jM3PW2yzKijnYtgbhcO7xbeDLYHGb9L8AqNGHGPODXRU+ZE57BJlPMQYM0NJ
+         Asmo/LAErkZvJ0eE7IfXbOWmFfNmK54RAIjGPWA96g1vboIP1X/dQvIlMunp4ioP1Y1Q
+         fJrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694438112; x=1695042912;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YL6EQgEy3tU456+JOD18a+m3T5ccWapszSBNRkdsmHI=;
-        b=IeEfkaAyaamBO6KdNc8tIjIFRA6z+UXylFeAur3WkGgeuFt5yjtziKOxBa0QUTHFzu
-         Z34bl4ycb+YM06DLr7oPrFRTBArjpMr4WxYZjjccYNb3cpWWts3kJiDeYI0iKpBr7Fr8
-         zlMrrFV47YOI4M2HYkhUTCaWE2uXAkmvMm15kdhbC0O+EtaE0550pXlVvR+bkiq0XS/f
-         stDWOgewy6bWrcCzetB0u4ScjYkPSHW6tWkHAnpKKa2bat11xL5K/w63md9kn1pYsxYQ
-         cpdanj1oKNKAIcJb35ZuZL31akObZV5mQhieQwCdTomuKFPIl+vNyYX9lKMI2COjkYej
-         nnvg==
-X-Gm-Message-State: AOJu0YxK+QQbNAQ8/aSREx0fK1qIf++es6RsK0i83OaQkXonCpBUiKUi
-        7pdXGSfZZchBef9qGCRrdW3H6g==
-X-Google-Smtp-Source: AGHT+IHgPjvN+UWeNyYfeTibcUFW047uMqqj3CXvvMBXFOfU+Wn748lBxSTCSiRTpolOZ0ariUm+vA==
-X-Received: by 2002:a05:651c:14b:b0:2bc:da4a:4649 with SMTP id c11-20020a05651c014b00b002bcda4a4649mr8568770ljd.22.1694438112248;
-        Mon, 11 Sep 2023 06:15:12 -0700 (PDT)
-Received: from [10.2.145.31] ([193.65.47.217])
-        by smtp.gmail.com with ESMTPSA id p17-20020a2ea411000000b002b70aff9a97sm1533510ljn.16.2023.09.11.06.15.10
+        d=1e100.net; s=20230601; t=1694438423; x=1695043223;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=H6ROeUkGbQ9Rsp3Ap+XbILwaeJ+lJZmemhX/U4xe7Go=;
+        b=RVngizInJQo5IkSF52ZYkUxrs7gh5ynmBLktos9IkIl2pTaqD6IXRWtf6nHAPr99wo
+         dS73+zVw6NaV0zuziBqcSQAMhSkAvRclzwqJZ1qK9oA3i/VxH6UD2W0m2N4Ejn/ra/h2
+         QvGDFconyQhkoI/I3doQCNoW5JOQn4MdAAFOi5pyB50FLVZOIdtbfejqJvaf2r3XXZHd
+         HA23sw/CaEe6/yPA3gT0r7TA4TwOIVHa/igPlJUr4aJIQAZx4xd/+6nTV0bhr6gMCg01
+         IyOKx562C8GVhRZ5qOAsb1GS5Z7C14LZXJ1fh2k8hFJgDkFUGtrPuXYNXgKIlKu4mvg6
+         4fdQ==
+X-Gm-Message-State: AOJu0YxT2MT8YT7GOrU83iNQR5L3iXOcaVfVZQMyM2kvpM+DbqLk853D
+        qhSPN+TTbTaVRFiC5ugCVlutoDPbmkKuSUO5lacJ/A==
+X-Google-Smtp-Source: AGHT+IGgYyfvssT4sNtFxUVZDRaUT+8hl2/TVvIOpsTMRx7+mL+0pcQnZkJK2xnZN0g15Oh+sSqCaw==
+X-Received: by 2002:a17:906:21b:b0:99b:e5c3:2e45 with SMTP id 27-20020a170906021b00b0099be5c32e45mr9047002ejd.28.1694438422953;
+        Mon, 11 Sep 2023 06:20:22 -0700 (PDT)
+Received: from [192.168.37.41] (178235177061.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.61])
+        by smtp.gmail.com with ESMTPSA id g2-20020a1709064e4200b009929ab17bdfsm5309746ejw.168.2023.09.11.06.20.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Sep 2023 06:15:11 -0700 (PDT)
-Message-ID: <04eb9f71-78f0-41f2-96a6-fc759ba296fa@linaro.org>
-Date:   Mon, 11 Sep 2023 16:15:10 +0300
+        Mon, 11 Sep 2023 06:20:22 -0700 (PDT)
+Message-ID: <7ee011cc-af29-4fb3-8eca-678ec317ba3f@linaro.org>
+Date:   Mon, 11 Sep 2023 15:20:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/6] arm64: dts: qcom: sdm845: Add OPP table support to
- UFSHC
-Content-Language: en-GB
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
-        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
-        cw00.choi@samsung.com, andersson@kernel.org,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        jejb@linux.ibm.com, martin.petersen@oracle.com
-Cc:     alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
-        linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
-        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
-        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
-        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
-        bmasney@redhat.com, krzysztof.kozlowski@linaro.org,
-        linux-kernel@vger.kernel.org
-References: <20230731163357.49045-1-manivannan.sadhasivam@linaro.org>
- <20230731163357.49045-6-manivannan.sadhasivam@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230731163357.49045-6-manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH 2/2] genpd: qcom: rpmpd: Add MSM8917, MSM8937 and QM215
+To:     =?UTF-8?Q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>,
+        linux-arm-msm@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        devicetree@vger.kernel.org, linux-pm@vger.kernel.org
+References: <20230911131627.13494-1-otto.pflueger@abscue.de>
+ <20230911131627.13494-3-otto.pflueger@abscue.de>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
+ BB/OmIWU6X+LZW6P88ZmHe+KeyABLMP5s1tJNK1j4ntT7mECcWZDzafPWF4F6m4WJOG27kTJ
+ HGWdmtO+RvadOVi6CoUDqALsmfS3MUG5Pj2Ne9+0jRg4hEnB92AyF9rW2G3qisFcwPgvatt7
+ TXD5E38mLyOPOUyXNj9XpDbt1hNwKQfiidmPh5e7VNAWRnW1iCMMoKqzM1Anzq7e5Afyeifz
+ zRcQPLaqrPjnKqZGL2BKQSZDh6NkI5ZLRhhHQf61fkWcUpTp1oDC6jWVfT7hwRVIQLrrNj9G
+ MpPzrlN4YuAqKeIer1FMt8cq64ifgTzxHzXsMcUdclzq2LTk2RXaPl6Jg/IXWqUClJHbamSk
+ t1bfif3SnmhA6TiNvEpDKPiT3IDs42THU6ygslrBxyROQPWLI9IL1y8S6RtEh8H+NZQWZNzm
+ UQ3imZirlPjxZtvz1BtnnBWS06e7x/UEAguj7VHCuymVgpl2Za17d1jj81YN5Rp5L9GXxkV1
+ aUEwONM3eCI3qcYm5JNc5X+JthZOWsbIPSC1Rhxz3JmWIwP1udr5E3oNRe9u2LIEq+wH/toH
+ kpPDhTeMkvt4KfE5m5ercid9+ZXAqoaYLUL4HCEw+HW0DXcKDwARAQABzShLb25yYWQgRHli
+ Y2lvIDxrb25yYWQuZHliY2lvQGxpbmFyby5vcmc+wsGOBBMBCAA4FiEEU24if9oCL2zdAAQV
+ R4cBcg5dfFgFAmQ5bqwCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQR4cBcg5dfFjO
+ BQ//YQV6fkbqQCceYebGg6TiisWCy8LG77zV7DB0VMIWJv7Km7Sz0QQrHQVzhEr3trNenZrf
+ yy+o2tQOF2biICzbLM8oyQPY8B///KJTWI2khoB8IJSJq3kNG68NjPg2vkP6CMltC/X3ohAo
+ xL2UgwN5vj74QnlNneOjc0vGbtA7zURNhTz5P/YuTudCqcAbxJkbqZM4WymjQhe0XgwHLkiH
+ 5LHSZ31MRKp/+4Kqs4DTXMctc7vFhtUdmatAExDKw8oEz5NbskKbW+qHjW1XUcUIrxRr667V
+ GWH6MkVceT9ZBrtLoSzMLYaQXvi3sSAup0qiJiBYszc/VOu3RbIpNLRcXN3KYuxdQAptacTE
+ mA+5+4Y4DfC3rUSun+hWLDeac9z9jjHm5rE998OqZnOU9aztbd6zQG5VL6EKgsVXAZD4D3RP
+ x1NaAjdA3MD06eyvbOWiA5NSzIcC8UIQvgx09xm7dThCuQYJR4Yxjd+9JPJHI6apzNZpDGvQ
+ BBZzvwxV6L1CojUEpnilmMG1ZOTstktWpNzw3G2Gis0XihDUef0MWVsQYJAl0wfiv/0By+XK
+ mm2zRR+l/dnzxnlbgJ5pO0imC2w0TVxLkAp0eo0LHw619finad2u6UPQAkZ4oj++iIGrJkt5
+ Lkn2XgB+IW8ESflz6nDY3b5KQRF8Z6XLP0+IEdLOOARkOW7yEgorBgEEAZdVAQUBAQdAwmUx
+ xrbSCx2ksDxz7rFFGX1KmTkdRtcgC6F3NfuNYkYDAQgHwsF2BBgBCAAgFiEEU24if9oCL2zd
+ AAQVR4cBcg5dfFgFAmQ5bvICGwwACgkQR4cBcg5dfFju1Q//Xta1ShwL0MLSC1KL1lXGXeRM
+ 8arzfyiB5wJ9tb9U/nZvhhdfilEDLe0jKJY0RJErbdRHsalwQCrtq/1ewQpMpsRxXzAjgfRN
+ jc4tgxRWmI+aVTzSRpywNahzZBT695hMz81cVZJoZzaV0KaMTlSnBkrviPz1nIGHYCHJxF9r
+ cIu0GSIyUjZ/7xslxdvjpLth16H27JCWDzDqIQMtg61063gNyEyWgt1qRSaK14JIH/DoYRfn
+ jfFQSC8bffFjat7BQGFz4ZpRavkMUFuDirn5Tf28oc5ebe2cIHp4/kajTx/7JOxWZ80U70mA
+ cBgEeYSrYYnX+UJsSxpzLc/0sT1eRJDEhI4XIQM4ClIzpsCIN5HnVF76UQXh3a9zpwh3dk8i
+ bhN/URmCOTH+LHNJYN/MxY8wuukq877DWB7k86pBs5IDLAXmW8v3gIDWyIcgYqb2v8QO2Mqx
+ YMqL7UZxVLul4/JbllsQB8F/fNI8AfttmAQL9cwo6C8yDTXKdho920W4WUR9k8NT/OBqWSyk
+ bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
+ nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
+ izWDgYvmBE8=
+In-Reply-To: <20230911131627.13494-3-otto.pflueger@abscue.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31/07/2023 19:33, Manivannan Sadhasivam wrote:
-> From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+On 11.09.2023 15:16, Otto Pflüger wrote:
+> MSM8917 uses the SMPA2 and LDOA3 regulators provided by the PM8937 PMIC
+> for the VDDCX and VDDMX power domains in voltage level mode,
+> respectively. MSM8937 also uses this PMIC and the same regulators.
 > 
-> UFS host controller, when scaling gears, should choose appropriate
-> performance state of RPMh power domain controller along with clock
-> frequency. So let's add the OPP table support to specify both clock
-> frequency and RPMh performance states replacing the old "freq-table-hz"
-> property.
+> QM215 is typically paired with a PM8916 PMIC and uses its SMPA1 and
+> LDOA2 regulators in voltage level mode.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> [mani: Splitted pd change and used rpmhpd_opp_low_svs]
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Signed-off-by: Otto Pflüger <otto.pflueger@abscue.de>
 > ---
->   arch/arm64/boot/dts/qcom/sdm845.dtsi | 42 +++++++++++++++++++++-------
->   1 file changed, 32 insertions(+), 10 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> index 055ca80c0075..2ea6eb44953e 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -2605,22 +2605,44 @@ ufs_mem_hc: ufshc@1d84000 {
->   				<&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
->   				<&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>,
->   				<&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
-> -			freq-table-hz =
-> -				<50000000 200000000>,
-> -				<0 0>,
-> -				<0 0>,
-> -				<37500000 150000000>,
-> -				<0 0>,
-> -				<0 0>,
-> -				<0 0>,
-> -				<0 0>,
-> -				<75000000 300000000>;
-> +
-> +			operating-points-v2 = <&ufs_opp_table>;
->   
->   			interconnects = <&aggre1_noc MASTER_UFS_MEM 0 &mem_noc SLAVE_EBI1 0>,
->   					<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_UFS_MEM_CFG 0>;
->   			interconnect-names = "ufs-ddr", "cpu-ufs";
->   
->   			status = "disabled";
-> +
-> +			ufs_opp_table: opp-table {
-> +				compatible = "operating-points-v2";
-> +
-> +				opp-50000000 {
-> +					opp-hz = /bits/ 64 <50000000>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <37500000>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <75000000>;
-> +					required-opps = <&rpmhpd_opp_low_svs>;
-> +				};
-
-I'd say, I'm still slightly unhappy about the 0 clock rates here.
-We need only three clocks here: core, core_clk_unipro and optional 
-ice_core_clk. Can we modify ufshcd_parse_operating_points() to pass only 
-these two or three clock names to devm_pm_opp_set_config() ? The OPP 
-core doesn't need to know about all the rest of the clocks.
+Generally one-per-commit is the consensus.
 
 > +
-> +				opp-200000000 {
-> +					opp-hz = /bits/ 64 <200000000>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <150000000>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <300000000>;
-> +					required-opps = <&rpmhpd_opp_nom>;
-> +				};
-> +			};
->   		};
->   
->   		ufs_mem_phy: phy@1d87000 {
+>  static struct rpmpd *sdm660_rpmpds[] = {
+>  	[SDM660_VDDCX] =	&cx_rwcx0_lvl,
+>  	[SDM660_VDDCX_AO] =	&cx_rwcx0_lvl_ao,
+> @@ -764,6 +853,8 @@ static const struct of_device_id rpmpd_match_table[] = {
+>  	{ .compatible = "qcom,msm8226-rpmpd", .data = &msm8226_desc },
+>  	{ .compatible = "qcom,msm8909-rpmpd", .data = &msm8916_desc },
+>  	{ .compatible = "qcom,msm8916-rpmpd", .data = &msm8916_desc },
+> +	{ .compatible = "qcom,msm8917-rpmpd", .data = &msm8917_desc },
+> +	{ .compatible = "qcom,msm8937-rpmpd", .data = &msm8917_desc },
+Don't add two compatibles pointing to the same thing, or you'll
+get an angry response from Krzysztof :D
 
--- 
-With best wishes
-Dmitry
+You can do:
 
+compatible = "qcom,msm8937-rpmpd", "qcom,msm8917-rpmpd";
+
+and document the fallback in bindings
+
+Konrad
