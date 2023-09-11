@@ -2,219 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B328879AF41
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 01:47:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 68FA479B0C9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 01:50:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238163AbjIKVLE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:11:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43418 "EHLO
+        id S1344121AbjIKVNV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:13:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237984AbjIKN2j (ORCPT
+        with ESMTP id S238095AbjIKNhe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 09:28:39 -0400
-X-Greylist: delayed 588 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 11 Sep 2023 06:28:34 PDT
-Received: from srv01.abscue.de (abscue.de [IPv6:2a03:4000:63:bf5:4817:8eff:feeb:8ac7])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61B19CD7;
-        Mon, 11 Sep 2023 06:28:34 -0700 (PDT)
-Received: from srv01.abscue.de (localhost [127.0.0.1])
-        by spamfilter.srv.local (Postfix) with ESMTP id 2412F1C3D9C;
-        Mon, 11 Sep 2023 15:18:42 +0200 (CEST)
+        Mon, 11 Sep 2023 09:37:34 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 007A0CD7;
+        Mon, 11 Sep 2023 06:37:29 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38BCf6YN025012;
+        Mon, 11 Sep 2023 13:37:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=0ZAOzvzcnnrWBY56bWyJmhc0ZocE2Bz0yU2CRh/7UFs=;
+ b=iOMlEeiaksM1iswP2gpGWwvLxKfgMj4c0zlzTk8aJSAdVQDMzITWIgwIaO55bt/CT/wE
+ dO9mSTU2uYID7nvOgj/xlv58Ay878Pr5ILLw2X0vvxKWlOS+6K+QLeUM1z193H8HMWj1
+ iF11abKgFKaU1enyEw4nOOj920epQC7/IP7TduTu5RNoBfuCdAsrz3o3KoYbGInx6bep
+ XxNFr+uCMKVeCbBWpozMEkh6hxCvTR8/saW10mb9/KYcGZXnqL94B8hx71v952HCxk/t
+ xOZSOe9Sj4sg/8XQuGidpjZ7lgH5iQug1xDQQxZhSMWDmymJm4hMlxPf2bYfNu47r+1y Wg== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t0edmm0fy-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 11 Sep 2023 13:37:13 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38BDbCvm006526
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 11 Sep 2023 13:37:13 GMT
+Received: from [10.214.66.253] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 11 Sep
+ 2023 06:37:07 -0700
+Message-ID: <8cdf46d5-62a9-40da-8db4-e888bfd5c8f3@quicinc.com>
+Date:   Mon, 11 Sep 2023 19:07:04 +0530
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] mtd: nand: qcom: Fix the node for nand unmap resource
+Content-Language: en-US
+To:     Pavan Kondeti <quic_pkondeti@quicinc.com>
+CC:     <mani@kernel.org>, <miquel.raynal@bootlin.com>, <richard@nod.at>,
+        <vigneshr@ti.com>, <linux-mtd@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>, <quic_charante@quicinc.com>,
+        <quic_kaushalk@quicinc.com>
+References: <20230907092854.11408-1-quic_bibekkum@quicinc.com>
+ <ff77c3ce-d635-4501-8348-5b7adff9a16c@quicinc.com>
+From:   Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+In-Reply-To: <ff77c3ce-d635-4501-8348-5b7adff9a16c@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ygLYICXV_QF33gQOr2W_9RXe6s5BaYhw
+X-Proofpoint-GUID: ygLYICXV_QF33gQOr2W_9RXe6s5BaYhw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-11_08,2023-09-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
+ priorityscore=1501 mlxlogscore=999 malwarescore=0 spamscore=0
+ impostorscore=0 lowpriorityscore=0 clxscore=1015 phishscore=0 mlxscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309110124
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_PASS,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
-Received: from fluffy-mammal.fritz.box (dslb-092-072-011-192.092.072.pools.vodafone-ip.de [92.72.11.192])
-        by srv01.abscue.de (Postfix) with ESMTPSA id 7F1151C3D99;
-        Mon, 11 Sep 2023 15:18:41 +0200 (CEST)
-From:   =?UTF-8?q?Otto=20Pfl=C3=BCger?= <otto.pflueger@abscue.de>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
-        =?UTF-8?q?Otto=20Pfl=C3=BCger?= <otto.pflueger@abscue.de>
-Subject: [PATCH 2/2] genpd: qcom: rpmpd: Add MSM8917, MSM8937 and QM215
-Date:   Mon, 11 Sep 2023 15:16:27 +0200
-Message-Id: <20230911131627.13494-3-otto.pflueger@abscue.de>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230911131627.13494-1-otto.pflueger@abscue.de>
-References: <20230911131627.13494-1-otto.pflueger@abscue.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-MSM8917 uses the SMPA2 and LDOA3 regulators provided by the PM8937 PMIC
-for the VDDCX and VDDMX power domains in voltage level mode,
-respectively. MSM8937 also uses this PMIC and the same regulators.
 
-QM215 is typically paired with a PM8916 PMIC and uses its SMPA1 and
-LDOA2 regulators in voltage level mode.
 
-Signed-off-by: Otto Pflüger <otto.pflueger@abscue.de>
----
- drivers/genpd/qcom/rpmpd.c | 92 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 92 insertions(+)
+On 9/8/2023 3:52 PM, Pavan Kondeti wrote:
+> On Thu, Sep 07, 2023 at 02:58:54PM +0530, Bibek Kumar Patro wrote:
+>> While unmapping the nand resource in case of err_core_clk
+>> the dev node being passed is res_start instead of nand->dma_base
+> 
+> It is not not dev not but addr argument.
+> 
+>> (where the iova returned from map operation is stored) causing
+>> failure in unmap operation. Hence modifying the unmap operation
+>> to pass the nand->base_dma instead of res_start.
+>>
+> 
+> Pls simplify this commit description. I think, it was a simple copy/paste
+> mistake. I would write
+> 
+> "Fix addr argument to dma_unmap_resource() in the error path of probe.
+> The addr argument should be dma address not physical address."
+> 
 
-diff --git a/drivers/genpd/qcom/rpmpd.c b/drivers/genpd/qcom/rpmpd.c
-index 3135dd1dafe0..d97f9642fc17 100644
---- a/drivers/genpd/qcom/rpmpd.c
-+++ b/drivers/genpd/qcom/rpmpd.c
-@@ -105,6 +105,24 @@ static struct rpmpd cx_s1a_corner_ao = {
- 	.key = KEY_CORNER,
- };
- 
-+static struct rpmpd cx_s1a_lvl_ao;
-+static struct rpmpd cx_s1a_lvl = {
-+	.pd = { .name = "cx", },
-+	.peer = &cx_s1a_lvl_ao,
-+	.res_type = RPMPD_SMPA,
-+	.res_id = 1,
-+	.key = KEY_LEVEL,
-+};
-+
-+static struct rpmpd cx_s1a_lvl_ao = {
-+	.pd = { .name = "cx_ao", },
-+	.peer = &cx_s1a_lvl,
-+	.active_only = true,
-+	.res_type = RPMPD_SMPA,
-+	.res_id = 1,
-+	.key = KEY_LEVEL,
-+};
-+
- static struct rpmpd cx_s2a_corner_ao;
- static struct rpmpd cx_s2a_corner = {
- 	.pd = { .name = "cx", },
-@@ -180,6 +198,13 @@ static struct rpmpd cx_s1a_vfc = {
- 	.key = KEY_FLOOR_CORNER,
- };
- 
-+static struct rpmpd cx_s1a_vfl = {
-+	.pd = { .name = "cx_vfl", },
-+	.res_type = RPMPD_SMPA,
-+	.res_id = 1,
-+	.key = KEY_FLOOR_LEVEL,
-+};
-+
- static struct rpmpd cx_s2a_vfc = {
- 	.pd = { .name = "cx_vfc", },
- 	.res_type = RPMPD_SMPA,
-@@ -239,6 +264,24 @@ static struct rpmpd gx_rwgx0_lvl_ao = {
- };
- 
- /* MX */
-+static struct rpmpd mx_l2a_lvl_ao;
-+static struct rpmpd mx_l2a_lvl = {
-+	.pd = { .name = "mx", },
-+	.peer = &mx_l2a_lvl_ao,
-+	.res_type = RPMPD_LDOA,
-+	.res_id = 2,
-+	.key = KEY_LEVEL,
-+};
-+
-+static struct rpmpd mx_l2a_lvl_ao = {
-+	.pd = { .name = "mx_ao", },
-+	.peer = &mx_l2a_lvl,
-+	.active_only = true,
-+	.res_type = RPMPD_LDOA,
-+	.res_id = 2,
-+	.key = KEY_LEVEL,
-+};
-+
- static struct rpmpd mx_l3a_corner_ao;
- static struct rpmpd mx_l3a_corner = {
- 	.pd = { .name = "mx", },
-@@ -257,6 +300,24 @@ static struct rpmpd mx_l3a_corner_ao = {
- 	.key = KEY_CORNER,
- };
- 
-+static struct rpmpd mx_l3a_lvl_ao;
-+static struct rpmpd mx_l3a_lvl = {
-+	.pd = { .name = "mx", },
-+	.peer = &mx_l3a_lvl_ao,
-+	.res_type = RPMPD_LDOA,
-+	.res_id = 3,
-+	.key = KEY_LEVEL,
-+};
-+
-+static struct rpmpd mx_l3a_lvl_ao = {
-+	.pd = { .name = "mx_ao", },
-+	.peer = &mx_l3a_lvl,
-+	.active_only = true,
-+	.res_type = RPMPD_LDOA,
-+	.res_id = 3,
-+	.key = KEY_LEVEL,
-+};
-+
- static struct rpmpd mx_l12a_lvl_ao;
- static struct rpmpd mx_l12a_lvl = {
- 	.pd = { .name = "mx", },
-@@ -572,6 +633,20 @@ static const struct rpmpd_desc msm8916_desc = {
- 	.max_state = MAX_CORNER_RPMPD_STATE,
- };
- 
-+static struct rpmpd *msm8917_rpmpds[] = {
-+	[MSM8917_VDDCX] =	&cx_s2a_lvl,
-+	[MSM8917_VDDCX_AO] =	&cx_s2a_lvl_ao,
-+	[MSM8917_VDDCX_VFL] =	&cx_s2a_vfl,
-+	[MSM8917_VDDMX] =	&mx_l3a_lvl,
-+	[MSM8917_VDDMX_AO] =	&mx_l3a_lvl_ao,
-+};
-+
-+static const struct rpmpd_desc msm8917_desc = {
-+	.rpmpds = msm8917_rpmpds,
-+	.num_pds = ARRAY_SIZE(msm8917_rpmpds),
-+	.max_state = RPM_SMD_LEVEL_TURBO,
-+};
-+
- static struct rpmpd *msm8953_rpmpds[] = {
- 	[MSM8953_VDDMD] =	&md_s1a_lvl,
- 	[MSM8953_VDDMD_AO] =	&md_s1a_lvl_ao,
-@@ -672,6 +747,20 @@ static const struct rpmpd_desc qcs404_desc = {
- 	.max_state = RPM_SMD_LEVEL_BINNING,
- };
- 
-+static struct rpmpd *qm215_rpmpds[] = {
-+	[QM215_VDDCX] =		&cx_s1a_lvl,
-+	[QM215_VDDCX_AO] =	&cx_s1a_lvl_ao,
-+	[QM215_VDDCX_VFL] =	&cx_s1a_vfl,
-+	[QM215_VDDMX] =		&mx_l2a_lvl,
-+	[QM215_VDDMX_AO] =	&mx_l2a_lvl_ao,
-+};
-+
-+static const struct rpmpd_desc qm215_desc = {
-+	.rpmpds = qm215_rpmpds,
-+	.num_pds = ARRAY_SIZE(qm215_rpmpds),
-+	.max_state = RPM_SMD_LEVEL_TURBO,
-+};
-+
- static struct rpmpd *sdm660_rpmpds[] = {
- 	[SDM660_VDDCX] =	&cx_rwcx0_lvl,
- 	[SDM660_VDDCX_AO] =	&cx_rwcx0_lvl_ao,
-@@ -764,6 +853,8 @@ static const struct of_device_id rpmpd_match_table[] = {
- 	{ .compatible = "qcom,msm8226-rpmpd", .data = &msm8226_desc },
- 	{ .compatible = "qcom,msm8909-rpmpd", .data = &msm8916_desc },
- 	{ .compatible = "qcom,msm8916-rpmpd", .data = &msm8916_desc },
-+	{ .compatible = "qcom,msm8917-rpmpd", .data = &msm8917_desc },
-+	{ .compatible = "qcom,msm8937-rpmpd", .data = &msm8917_desc },
- 	{ .compatible = "qcom,msm8939-rpmpd", .data = &msm8939_desc },
- 	{ .compatible = "qcom,msm8953-rpmpd", .data = &msm8953_desc },
- 	{ .compatible = "qcom,msm8976-rpmpd", .data = &msm8976_desc },
-@@ -772,6 +863,7 @@ static const struct of_device_id rpmpd_match_table[] = {
- 	{ .compatible = "qcom,msm8998-rpmpd", .data = &msm8998_desc },
- 	{ .compatible = "qcom,qcm2290-rpmpd", .data = &qcm2290_desc },
- 	{ .compatible = "qcom,qcs404-rpmpd", .data = &qcs404_desc },
-+	{ .compatible = "qcom,qm215-rpmpd", .data = &qm215_desc },
- 	{ .compatible = "qcom,sdm660-rpmpd", .data = &sdm660_desc },
- 	{ .compatible = "qcom,sm6115-rpmpd", .data = &sm6115_desc },
- 	{ .compatible = "qcom,sm6125-rpmpd", .data = &sm6125_desc },
--- 
-2.39.1
+Thanks for this suggestion Pavan, this looks simplified and easier to
+understand the bug. Incorporated this in next revision.
+
+>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+>> ---
+>>   drivers/mtd/nand/raw/qcom_nandc.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
+>> index f583022755a2..e085a0f588eb 100644
+>> --- a/drivers/mtd/nand/raw/qcom_nandc.c
+>> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
+>> @@ -3322,7 +3322,7 @@ static int qcom_nandc_probe(struct platform_device *pdev)
+>>   err_aon_clk:
+>>   	clk_disable_unprepare(nandc->core_clk);
+>>   err_core_clk:
+>> -	dma_unmap_resource(dev, res->start, resource_size(res),
+>> +	dma_unmap_resource(dev, nandc->base_dma, resource_size(res),
+>>   			   DMA_BIDIRECTIONAL, 0);
+>>   	dev_err(&pdev->dev, "DEBUG: probe failed for nandc module\n");
+>>   	return ret;
+> 
+> Since you are fixing a bug introduced by a previous commit, you should
+> add Fixes tag like below. Refer to Documentation [1].
+> 
+> Fixes: 7330fc505af4 ("mtd: rawnand: qcom: stop using phys_to_dma()")
+> 
+> [1] https://docs.kernel.org/process/submitting-patches.html#using-reported-by-tested-by-reviewed-by-suggested-by-and-fixes
+
+Thanks very much for the inputs, addressed this in next revision.
+
+Thanks & regards,
+Bibek
+
+> 
+> Thanks,
+> Pavan
