@@ -2,152 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D472679BD2E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:15:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C0F2D79BEB2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:17:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240708AbjIKVKX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:10:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35020 "EHLO
+        id S1344910AbjIKVPE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:15:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243773AbjIKRmS (ORCPT
+        with ESMTP id S243808AbjIKRrD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 13:42:18 -0400
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.84])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27E341A7;
-        Mon, 11 Sep 2023 10:42:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1694454123; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=jb7zf8OTlRokZeA43Vsusc/wSRwJZ3ko79ZM8bSJ95dC1zSdaZ5tJi8rK8lP7C8Qdi
-    CDtbg2Q/9mh04Q637R6u6h6ilIQJRhxS3AoGXBfUub2ekGV7YRmuGGDuJsLNbH38z8HB
-    QXmkEp/sKL19FnnTQR9zMxp+O0GRkdhb16SbcVrBMnhcLfgWof0pYJWMz7tnw7szdqTv
-    ZtnvxIMrUMnUS6vXTgBqOwkL4q9+8CA+7TiDvbTZOEa2LdPEPgZ45+3QMjgjKtFCB7UD
-    Q5Lsmg0yYEwGgIUnlrxlPMYrYO+Tm6V3/2dh59z6+6ifVEKtY4r5C3Eg3UV3yaUtBv6p
-    z+xw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1694454123;
-    s=strato-dkim-0002; d=strato.com;
-    h=Cc:To:In-Reply-To:References:Message-Id:Subject:Date:From:Cc:Date:
-    From:Subject:Sender;
-    bh=zid5A9mrDBDiMz5qTZXzLHu4gdhlVK+coBW08Vfgozg=;
-    b=G/xPkPmAmQPZ4Vbeqn0UE3Uu9K/dz45fNrbmmOlYx1UHSYiCwwfTlzK3kEPQuE89cq
-    KrYYHd6/MvCNl5HFmDbjY/ZbB+fK92zixGwPz/b0DdsVyMJeO4V7KVn3RJ2lm7SQgIuo
-    3IFVyf2Ir95Ud/FzGwF3Tonm3OdEdcdv7MOmHIlGYM5lv5+559KrHNWZ0K8qoox889bS
-    7cY0fGfGGmkclMcIIjTRbcd9mC6/HJgpit1JOw5wLIHp3l1GOlQSGAXNZ8X/jJGtBdv7
-    51dXH2ebKq6OKAPaY6hTQUoaIqB+X4p0/XsY420844gN3JNY5bDwvT+zySNI1jjuQU3p
-    WIrQ==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo02
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1694454123;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=Cc:To:In-Reply-To:References:Message-Id:Subject:Date:From:Cc:Date:
-    From:Subject:Sender;
-    bh=zid5A9mrDBDiMz5qTZXzLHu4gdhlVK+coBW08Vfgozg=;
-    b=TpAc71yn1FFhuqSQOLqpkGZW4TAC2wn+WSljMx3nYPRreob2+Mt1XO7u8LwWcK2WZb
-    59Nyps+3TlvzVFDYTWRlPApTQt3Tmp3uR5BquDgsBpDyU/4sb6yj9ushrFna7Atg4pdd
-    wWdP3tTCJ9hIE1P1NFry2WICJrW6mxXkgXK6QVY0t+U6EzdDwkVXqiAJnjSn1elzZ300
-    YHjJByniSObpw8SNM+z2ZrQGJx8Ttddc5gKh3NxSVThiLY81BWQAfZkqVZ8d/DNb/CSe
-    xk1MkVda0hSbEYA1Cw/vl5/mtbpv2pPBIXRNKV+iqIWMi0L/Nr71uuLxXNolVoX1v/2p
-    k0aQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1694454123;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=Cc:To:In-Reply-To:References:Message-Id:Subject:Date:From:Cc:Date:
-    From:Subject:Sender;
-    bh=zid5A9mrDBDiMz5qTZXzLHu4gdhlVK+coBW08Vfgozg=;
-    b=GkdhUeCrXpn+AfGZxQjWI8DA4aETARMIqcwCcXXKAeOH80wEbW6qxNk2bBbZjsfESE
-    J2oPEVjmnWQAqfwuVXDA==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQjVd4CteZ/7jYgS+mLFY+H0JAn8u4l38TY="
-Received: from [192.168.244.3]
-    by smtp.strato.de (RZmta 49.8.2 DYNA|AUTH)
-    with ESMTPSA id 60372az8BHg3awQ
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Mon, 11 Sep 2023 19:42:03 +0200 (CEST)
-From:   Stephan Gerhold <stephan@gerhold.net>
-Date:   Mon, 11 Sep 2023 19:41:48 +0200
-Subject: [PATCH 6/9] arm64: dts: qcom: msm8939: Reserve firmware memory
- dynamically
+        Mon, 11 Sep 2023 13:47:03 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B753D8;
+        Mon, 11 Sep 2023 10:46:59 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38BGL1X7022836;
+        Mon, 11 Sep 2023 17:46:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=tUtEZn658uuIEeAhGleeCRrPIUW33MXT85cB6oBl1xI=;
+ b=YETj3TqMbpOUXf3Y3E7lTuIRCRN4SK5hIrRMo+PCyV35rZN72/nECoETX9r6LyMBlFg9
+ NAKOBychCnKT0jQkHJYb4gpN9C6QoLQ19RMeBYvK7EDPNlOQn2Op5fOllobtFCiKfD8O
+ AsAibdNSa9yE/08erSfKD8/zAyoADYEQsFtgtl1BvBT6Y/hYYaEgV8ep+I+LTtLJPiVi
+ jCvsEIHXvSFUNMOjvnNBK/iGVxRqUgI+dxAv37HtaD/AcgkU53I4suvvycoh8qCCLUe+
+ WYaX7tpb1YD8J5fYhR53iggl7lpCIajsh34Yyuto8Rg5jTQZbjtO3BmenQ+Tj9q4cSri dw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t22hygsuw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 11 Sep 2023 17:46:29 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38BHkSMr030743
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 11 Sep 2023 17:46:28 GMT
+Received: from [10.71.110.104] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 11 Sep
+ 2023 10:46:24 -0700
+Message-ID: <f4e0d437-bb11-2590-30d1-4feab703306f@quicinc.com>
+Date:   Mon, 11 Sep 2023 10:46:23 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 2/2] drm/msm/dpu: try multirect based on mdp clock limits
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     <freedreno@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
+        "Sean Paul" <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        "David Airlie" <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        <dri-devel@lists.freedesktop.org>, <quic_jesszhan@quicinc.com>,
+        <quic_parellan@quicinc.com>, <nespera@igalia.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20230908185427.29026-1-quic_abhinavk@quicinc.com>
+ <20230908185427.29026-2-quic_abhinavk@quicinc.com>
+ <CAA8EJppj+JTA8iZ6+Ui8JkD-kP54YKObRDK2_Oh+Wpn4XjU-4Q@mail.gmail.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJppj+JTA8iZ6+Ui8JkD-kP54YKObRDK2_Oh+Wpn4XjU-4Q@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230911-msm8916-rmem-v1-6-b7089ec3e3a1@gerhold.net>
-References: <20230911-msm8916-rmem-v1-0-b7089ec3e3a1@gerhold.net>
-In-Reply-To: <20230911-msm8916-rmem-v1-0-b7089ec3e3a1@gerhold.net>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>
-X-Mailer: b4 0.12.3
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 1aNjUn8nbCt_cfxS5iTozcgbxSTDex57
+X-Proofpoint-GUID: 1aNjUn8nbCt_cfxS5iTozcgbxSTDex57
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-11_13,2023-09-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 mlxlogscore=742 phishscore=0 spamscore=0
+ impostorscore=0 mlxscore=0 adultscore=0 suspectscore=0 malwarescore=0
+ bulkscore=0 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2308100000 definitions=main-2309110162
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Follow the example of MSM8916 and reserve the firmware memory regions
-dynamically to allow boards to define only the device-specific parts.
 
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
----
- arch/arm64/boot/dts/qcom/msm8939.dtsi | 28 ++++++++++++++++++++++------
- 1 file changed, 22 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8939.dtsi b/arch/arm64/boot/dts/qcom/msm8939.dtsi
-index b0a64e468629..ebea6de1177b 100644
---- a/arch/arm64/boot/dts/qcom/msm8939.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8939.dtsi
-@@ -346,22 +346,38 @@ rfsa@867e0000 {
- 		};
- 
- 		mpss_mem: mpss@86800000 {
-+			/*
-+			 * The memory region for the mpss firmware is generally
-+			 * relocatable and could be allocated dynamically.
-+			 * However, many firmware versions tend to fail when
-+			 * loaded to some special addresses, so it is hard to
-+			 * define reliable alloc-ranges.
-+			 *
-+			 * alignment = <0x0 0x400000>;
-+			 * alloc-ranges = <0x0 0x86800000 0x0 0x8000000>;
-+			 */
- 			reg = <0x0 0x86800000 0x0 0x5500000>;
- 			no-map;
- 		};
- 
--		wcnss_mem: wcnss@8bd00000 {
--			reg = <0x0 0x8bd00000 0x0 0x600000>;
-+		wcnss_mem: wcnss {
-+			size = <0x0 0x600000>;
-+			alignment = <0x0 0x100000>;
-+			alloc-ranges = <0x0 0x86800000 0x0 0x8000000>;
- 			no-map;
- 		};
- 
--		venus_mem: venus@8c300000 {
--			reg = <0x0 0x8c300000 0x0 0x800000>;
-+		venus_mem: venus {
-+			size = <0x0 0x800000>;
-+			alignment = <0x0 0x100000>;
-+			alloc-ranges = <0x0 0x86800000 0x0 0x8000000>;
- 			no-map;
- 		};
- 
--		mba_mem: mba@8cb00000 {
--			reg = <0x0 0x8cb00000 0x0 0x100000>;
-+		mba_mem: mba {
-+			size = <0x0 0x100000>;
-+			alignment = <0x0 0x100000>;
-+			alloc-ranges = <0x0 0x86800000 0x0 0x8000000>;
- 			no-map;
- 		};
- 	};
+On 9/8/2023 4:30 PM, Dmitry Baryshkov wrote:
+> On Fri, 8 Sept 2023 at 21:55, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>
+>> It's certainly possible that for large resolutions a single DPU SSPP
+>> cannot process the image without exceeding the MDP clock limits but
+>> it can still process it in multirect mode because the source rectangles
+>> will get divided and can fall within the MDP clock limits.
+>>
+>> If the SSPP cannot process the image even in multirect mode, then it
+>> will be rejected in dpu_plane_atomic_check_pipe().
+>>
+>> Hence try using multirect for resolutions which cannot be processed
+>> by a single SSPP without exceeding the MDP clock limits.
+>>
+>> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 4 +++-
+>>   1 file changed, 3 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>> index 62dd9f9b4dce..85072328cd53 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>> @@ -792,6 +792,7 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>>                                                                                   plane);
+>>          int ret = 0, min_scale;
+>>          struct dpu_plane *pdpu = to_dpu_plane(plane);
+>> +       struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
+>>          struct dpu_plane_state *pstate = to_dpu_plane_state(new_plane_state);
+>>          struct dpu_sw_pipe *pipe = &pstate->pipe;
+>>          struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
+>> @@ -860,7 +861,8 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>>
+>>          max_linewidth = pdpu->catalog->caps->max_linewidth;
+>>
+>> -       if (drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) {
+>> +       if ((drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) ||
+>> +            _dpu_plane_calc_clk(&crtc_state->mode, pipe_cfg) > kms->perf.max_core_clk_rate) {
+> 
+> First, I think this should be an adjusted_mode too. And this probably
+> needs some more attention in the next few lines of code, since .e.g
+> the UBWC case also needs to be adjusted.
+> 
 
--- 
-2.42.0
+Ack, will change this to adjusted_mode as well
 
+Yes, need to update UBWC check like below, thanks for catching it.
+
+@@ -869,7 +878,7 @@ static int dpu_plane_atomic_check(struct drm_plane 
+*plane,
+                  * full width is more than max_linewidth, thus each rect is
+                  * wider than allowed.
+                  */
+-               if (DPU_FORMAT_IS_UBWC(fmt)) {
++               if (DPU_FORMAT_IS_UBWC(fmt) && 
+drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) {
+                         DPU_DEBUG_PLANE(pdpu, "invalid src " 
+DRM_RECT_FMT " line:%u, tiled format\n",
+ 
+DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
+                         return -E2BIG;
+
+>>                  /*
+>>                   * In parallel multirect case only the half of the usual width
+>>                   * is supported for tiled formats. If we are here, we know that
+>> --
+>> 2.40.1
+>>
+> 
+> 
