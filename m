@@ -2,95 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 53EAF79B467
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:02:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E71D79B23F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 01:58:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230197AbjIKXRA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 19:17:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45376 "EHLO
+        id S230030AbjIKXQy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 19:16:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352378AbjIKVpD (ORCPT
+        with ESMTP id S1350069AbjIKXMT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 17:45:03 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE84D1E813
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 14:16:21 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2be5e2a3c86so71796181fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 14:16:21 -0700 (PDT)
+        Mon, 11 Sep 2023 19:12:19 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EC8593F7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 15:22:17 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-401da71b85eso54506775e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 15:22:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694466911; x=1695071711; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=EzaancVSFfUidUOe21cHWlakGP7DZJNGuUTO/mcEdwE=;
-        b=n0PD620a++sW9IUDKsU+732ybm7xpm6te1zJpg5Trfxj7P2FVVxG/HUIaiYcQHe2hF
-         EHz48mmfuY+rZbI6NpOnLM5AfR62Axido6iAtDMSasQ8jHh5hKCGNnJSZ7pfnAGVWI13
-         4v4jYx1+mZ1bOrJRbIv1MwJo5ZdHFih8nkNQ4+l1SXmHbNgt9BTQxK7pD2e9TFZcJT+S
-         ldpvg6W/WV7KH/X3rZtvE6cmi4wRxrcu5FlMCNWU9T6bm5Zu4ljbilfdpmO+XIQW3qP6
-         /sGN4uqGTkT/hBPuJ0h+YgIFLMuiKdcAjYy06gqt8JIEgKJa6dwAH5cfwh1nS2kp//Nb
-         aIhg==
+        d=linaro.org; s=google; t=1694470856; x=1695075656; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xTOfPIF9LYdHpAxSH/XAFUroqjv5MWy5k+f01k9rwAA=;
+        b=b9kL/x1OUbufDn7Y1hXHIF0ZWY/q4LgUxW1svLTARAMeq5C/2uVGVAHzmgjejvlSe1
+         W4RZAMB/11lpICH2yDovpvIQ2avKBlLNLwguxFXe9hYbdDQJYNgsDz0kv/K6xWAdwPmL
+         kdbdimKCKYHMdw7Rilf1wdpY4xM02ASqqTc7YAIJyz//2csARTP26vAqVJvZY8jRQl/H
+         R9dF+0i+GP6EXgM/FQbWv5g1HGJ2FWo12T8MlesUTmyXmY0XO0U44jh4Vivpe9XktH+W
+         IJJGtTdQv4tVdxsDQ8lrMRXONDLmzBAETHqtPy7xZVr/tQ0aFOPXXZYPpIOCgCIm0MfQ
+         4zdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694466911; x=1695071711;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EzaancVSFfUidUOe21cHWlakGP7DZJNGuUTO/mcEdwE=;
-        b=eSwSO5XMfzFnY0GInX/E92a5AOTUn50Nwok7SP3rM1XTKBpuPysFKllb/717vhpPd/
-         mAh+OYybqmmwDVuk0l24E8j3J55wDoCOhp7WjpDcbyZNH4/xBjX/4F3k+0ErGLyJVDIf
-         /DuHSw7deaUS7dVeionv2//+6fxMt/fqXhSxdJD6Wqmyx7t940SI/dD0mQF/XEQ49wlp
-         quEVyTykutV70lYjZd3jgieOZvimgazxOv98kSiAeWVUlabSz+EF9F6+DjyMK4GlxMHX
-         d7cBThx5b4BvVByJost0I81/vvL1RQkfDUuh0ZFgLg3z3Wa6JYnOCiVE2tvecSuEx7Ef
-         JOgA==
-X-Gm-Message-State: AOJu0YxedPhyq2u2EYkkDuipKh+jPYXn/6ewWH18klOD4GUXAyx0A3ZL
-        NqxTzwQfXCzZn/P2B3VCqMpM1Q==
-X-Google-Smtp-Source: AGHT+IETWWawdiEO2xkwIL7nt23BxWlpmnqPOF3sikig+xaeKeM9I+kDLN/rZ03iVnX9tQbikD28Ig==
-X-Received: by 2002:a05:6512:3d0d:b0:502:a964:84b1 with SMTP id d13-20020a0565123d0d00b00502a96484b1mr302575lfv.25.1694466911540;
-        Mon, 11 Sep 2023 14:15:11 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id 23-20020ac24837000000b005008286c06bsm1483944lft.91.2023.09.11.14.15.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Sep 2023 14:15:11 -0700 (PDT)
-Message-ID: <6b6bacee-f7b6-4cfe-be3d-24bda44bfbcf@linaro.org>
-Date:   Tue, 12 Sep 2023 00:15:10 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v1 01/12] Revert "drm/sysfs: Link DRM connectors to
- corresponding Type-C connectors"
-Content-Language: en-GB
-To:     Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Cc:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Janne Grunau <j@jannau.net>, Simon Ser <contact@emersion.fr>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        freedreno@lists.freedesktop.org, Won Chung <wonchung@google.com>
-References: <20230903214150.2877023-1-dmitry.baryshkov@linaro.org>
- <20230903214150.2877023-2-dmitry.baryshkov@linaro.org>
- <ZPbrtAlO2Y+bjDhf@kuha.fi.intel.com>
- <CAA8EJpqUg2-k7LLBL38RHU1sThkXB54ca68xEMd1yMnHQcQ++w@mail.gmail.com>
- <ZPh0Ps9UJ3HLzdeR@kuha.fi.intel.com>
- <CAA8EJpratbBybgk8woD3maA=J_HuQis44Unq0n+c_UvaFs__AA@mail.gmail.com>
- <ZPiAwOf00RREiYPr@kuha.fi.intel.com>
+        d=1e100.net; s=20230601; t=1694470856; x=1695075656;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xTOfPIF9LYdHpAxSH/XAFUroqjv5MWy5k+f01k9rwAA=;
+        b=PM+45nUu45SHHJnw91d6b/7GC5dfVCwCkKDyA6ZqMuUKgffCmmtGtyK7uVsBsDLZ6w
+         VtUeLQM8b1fZ+nQ1UcIi7SIna6GBP3bjhtcHlAnf1jWR2/KWFarkEdw+rBg93T19vPwx
+         eD2U4hr/Tw4kl1XOMVNMk3U/4pdWZR8futPJ2W7A15JFC1hqxpDlFGqWRa0J2e0PpU1F
+         +xFnlPzZCxs4Xs/priPeWqZ39Y2O2ocb+hH0OfU/HczmIo6Zjqd1CFvvnNybSul0xYW7
+         a+cOMGTnXBiCMmCLV9xlAIKKBfOQ1aengXOtkqqm/5m0DFhncXW5JyY9nAAncsB13VVd
+         tzhg==
+X-Gm-Message-State: AOJu0Yze2f2jkSKxY2W+r88nPcC9lyxLahLu6IV7sCFgccCouBKkubPW
+        k+SNKofn918QytK05y+F4ql4HDYfXNHUj0iuuRc=
+X-Google-Smtp-Source: AGHT+IH6L6EO4AM5yWWLtSkl5v7ZE3u25hOZYrK7fN+XJdeB7s18jGU0WzJjjLStLkwWOrcwhy/qlg==
+X-Received: by 2002:a05:6512:4007:b0:500:d970:6541 with SMTP id br7-20020a056512400700b00500d9706541mr10761061lfb.39.1694468726592;
+        Mon, 11 Sep 2023 14:45:26 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id b5-20020a0565120b8500b004ff9bfda9d6sm1168804lfv.212.2023.09.11.14.45.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Sep 2023 14:45:26 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <ZPiAwOf00RREiYPr@kuha.fi.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v4 5/9] drm/msm/dpu: drop the `smart_dma_priority' field from struct dpu_sspp_sub_blks
+Date:   Tue, 12 Sep 2023 00:45:17 +0300
+Message-Id: <20230911214521.787453-6-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230911214521.787453-1-dmitry.baryshkov@linaro.org>
+References: <20230911214521.787453-1-dmitry.baryshkov@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -98,98 +77,243 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/09/2023 16:38, Heikki Krogerus wrote:
-> On Wed, Sep 06, 2023 at 03:48:35PM +0300, Dmitry Baryshkov wrote:
->> On Wed, 6 Sept 2023 at 15:44, Heikki Krogerus
->> <heikki.krogerus@linux.intel.com> wrote:
->>>
->>> On Tue, Sep 05, 2023 at 01:56:59PM +0300, Dmitry Baryshkov wrote:
->>>> Hi Heikki,
->>>>
->>>> On Tue, 5 Sept 2023 at 11:50, Heikki Krogerus
->>>> <heikki.krogerus@linux.intel.com> wrote:
->>>>>
->>>>> Hi Dmitry,
->>>>>
->>>>> On Mon, Sep 04, 2023 at 12:41:39AM +0300, Dmitry Baryshkov wrote:
->>>>>> The kdev->fwnode pointer is never set in drm_sysfs_connector_add(), so
->>>>>> dev_fwnode() checks never succeed, making the respective commit NOP.
->>>>>
->>>>> That's not true. The dev->fwnode is assigned when the device is
->>>>> created on ACPI platforms automatically. If the drm_connector fwnode
->>>>> member is assigned before the device is registered, then that fwnode
->>>>> is assigned also to the device - see drm_connector_acpi_find_companion().
->>>>>
->>>>> But please note that even if drm_connector does not have anything in
->>>>> its fwnode member, the device may still be assigned fwnode, just based
->>>>> on some other logic (maybe in drivers/acpi/acpi_video.c?).
->>>>>
->>>>>> And if drm_sysfs_connector_add() is modified to set kdev->fwnode, it
->>>>>> breaks drivers already using components (as it was pointed at [1]),
->>>>>> resulting in a deadlock. Lockdep trace is provided below.
->>>>>>
->>>>>> Granted these two issues, it seems impractical to fix this commit in any
->>>>>> sane way. Revert it instead.
->>>>>
->>>>> I think there is already user space stuff that relies on these links,
->>>>> so I'm not sure you can just remove them like that. If the component
->>>>> framework is not the correct tool here, then I think you need to
->>>>> suggest some other way of creating them.
->>>>
->>>> The issue (that was pointed out during review) is that having a
->>>> component code in the framework code can lead to lockups. With the
->>>> patch #2 in place (which is the only logical way to set kdev->fwnode
->>>> for non-ACPI systems) probing of drivers which use components and set
->>>> drm_connector::fwnode breaks immediately.
->>>>
->>>> Can we move the component part to the respective drivers? With the
->>>> patch 2 in place, connector->fwnode will be copied to the created
->>>> kdev's fwnode pointer.
->>>>
->>>> Another option might be to make this drm_sysfs component registration optional.
->>>
->>> You don't need to use the component framework at all if there is
->>> a better way of determining the connection between the DP and its
->>> Type-C connector (I'm assuming that that's what this series is about).
->>> You just need the symlinks, not the component.
->>
->> The problem is that right now this component registration has become
->> mandatory. And if I set the kdev->fwnode manually (like in the patch
->> 2), the kernel hangs inside the component code.
->> That's why I proposed to move the components to the place where they
->> are really necessary, e.g. i915 and amd drivers.
-> 
-> So why can't we replace the component with the method you are
-> proposing in this series of finding out the Type-C port also with
-> i915, AMD, or whatever driver and platform (that's the only thing that
-> component is used for)?
+In preparation to deduplicating SSPP subblocks, drop the (unused)
+`smart_dma_priority' field from struct dpu_sspp_sub_blks. If it is
+needed later (e.g. for SmartDMA v1), it should be added to the SSPP
+declarations themselves.
 
-The drm/msm driver uses drm_bridge for the pipeline (including the last 
-DP entry) and the drm_bridge_connector to create the connector. I think 
-that enabling i915 and AMD drivers to use drm_bridge fells out of scope 
-for this series.
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 112 +++++++-----------
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   2 -
+ 2 files changed, 40 insertions(+), 74 deletions(-)
 
-
-> Determining the connection between a DP and its Type-C connector is
-> starting to get really important, so ideally we have a common solution
-> for that.
-
-Yes. This is what we have been discussing with Simon for quite some time 
-on #dri-devel.
-
-Unfortunately I think the solution that got merged was pretty much 
-hastened in instead of being well-thought. For example, it is also not 
-always possible to provide the drm_connector / typec_connector links (as 
-you can see from the patch7. Sometimes we can only express that this is 
-a Type-C DP connector, but we can not easily point it to the particular 
-USB-C port.
-
-So, I'm not sure, how can we proceed here. Currently merged patch breaks 
-drm/msm if we even try to use it by setting kdef->fwnode to 
-drm_connector->fwnode. The pointed out `drivers/usb/typec/port-mapper.c` 
-is an ACPI-only thing, which is not expected to work in a non-ACPI cases.
-
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index ed7458991509..e9773274bdd6 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -253,11 +253,10 @@ static const uint32_t wb2_formats[] = {
+ #define SSPP_SCALER_VER(maj, min) (((maj) << 16) | (min))
+ 
+ /* SSPP common configuration */
+-#define _VIG_SBLK(sdma_pri, scaler_ver) \
++#define _VIG_SBLK(scaler_ver) \
+ 	{ \
+ 	.maxdwnscale = MAX_DOWNSCALE_RATIO, \
+ 	.maxupscale = MAX_UPSCALE_RATIO, \
+-	.smart_dma_priority = sdma_pri, \
+ 	.scaler_blk = {.name = "scaler", \
+ 		.version = scaler_ver, \
+ 		.base = 0xa00, .len = 0xa0,}, \
+@@ -270,11 +269,10 @@ static const uint32_t wb2_formats[] = {
+ 	.rotation_cfg = NULL, \
+ 	}
+ 
+-#define _VIG_SBLK_ROT(sdma_pri, scaler_ver, rot_cfg) \
++#define _VIG_SBLK_ROT(scaler_ver, rot_cfg) \
+ 	{ \
+ 	.maxdwnscale = MAX_DOWNSCALE_RATIO, \
+ 	.maxupscale = MAX_UPSCALE_RATIO, \
+-	.smart_dma_priority = sdma_pri, \
+ 	.scaler_blk = {.name = "scaler", \
+ 		.version = scaler_ver, \
+ 		.base = 0xa00, .len = 0xa0,}, \
+@@ -287,11 +285,10 @@ static const uint32_t wb2_formats[] = {
+ 	.rotation_cfg = rot_cfg, \
+ 	}
+ 
+-#define _DMA_SBLK(sdma_pri) \
++#define _DMA_SBLK() \
+ 	{ \
+ 	.maxdwnscale = SSPP_UNITY_SCALE, \
+ 	.maxupscale = SSPP_UNITY_SCALE, \
+-	.smart_dma_priority = sdma_pri, \
+ 	.format_list = plane_formats, \
+ 	.num_formats = ARRAY_SIZE(plane_formats), \
+ 	.virt_format_list = plane_formats, \
+@@ -299,17 +296,13 @@ static const uint32_t wb2_formats[] = {
+ 	}
+ 
+ static const struct dpu_sspp_sub_blks msm8998_vig_sblk_0 =
+-				_VIG_SBLK(0,
+-					  SSPP_SCALER_VER(1, 2));
++				_VIG_SBLK(SSPP_SCALER_VER(1, 2));
+ static const struct dpu_sspp_sub_blks msm8998_vig_sblk_1 =
+-				_VIG_SBLK(0,
+-					  SSPP_SCALER_VER(1, 2));
++				_VIG_SBLK(SSPP_SCALER_VER(1, 2));
+ static const struct dpu_sspp_sub_blks msm8998_vig_sblk_2 =
+-				_VIG_SBLK(0,
+-					  SSPP_SCALER_VER(1, 2));
++				_VIG_SBLK(SSPP_SCALER_VER(1, 2));
+ static const struct dpu_sspp_sub_blks msm8998_vig_sblk_3 =
+-				_VIG_SBLK(0,
+-					  SSPP_SCALER_VER(1, 2));
++				_VIG_SBLK(SSPP_SCALER_VER(1, 2));
+ 
+ static const struct dpu_rotation_cfg dpu_rot_sc7280_cfg_v2 = {
+ 	.rot_maxheight = 1088,
+@@ -318,107 +311,82 @@ static const struct dpu_rotation_cfg dpu_rot_sc7280_cfg_v2 = {
+ };
+ 
+ static const struct dpu_sspp_sub_blks sdm845_vig_sblk_0 =
+-				_VIG_SBLK(5,
+-					  SSPP_SCALER_VER(1, 3));
++				_VIG_SBLK(SSPP_SCALER_VER(1, 3));
+ static const struct dpu_sspp_sub_blks sdm845_vig_sblk_1 =
+-				_VIG_SBLK(6,
+-					  SSPP_SCALER_VER(1, 3));
++				_VIG_SBLK(SSPP_SCALER_VER(1, 3));
+ static const struct dpu_sspp_sub_blks sdm845_vig_sblk_2 =
+-				_VIG_SBLK(7,
+-					  SSPP_SCALER_VER(1, 3));
++				_VIG_SBLK(SSPP_SCALER_VER(1, 3));
+ static const struct dpu_sspp_sub_blks sdm845_vig_sblk_3 =
+-				_VIG_SBLK(8,
+-					  SSPP_SCALER_VER(1, 3));
++				_VIG_SBLK(SSPP_SCALER_VER(1, 3));
+ 
+ static const struct dpu_sspp_sub_blks sm8150_vig_sblk_0 =
+-				_VIG_SBLK(5,
+-					  SSPP_SCALER_VER(1, 4));
++				_VIG_SBLK(SSPP_SCALER_VER(1, 4));
+ static const struct dpu_sspp_sub_blks sm8150_vig_sblk_1 =
+-				_VIG_SBLK(6,
+-					  SSPP_SCALER_VER(1, 4));
++				_VIG_SBLK(SSPP_SCALER_VER(1, 4));
+ static const struct dpu_sspp_sub_blks sm8150_vig_sblk_2 =
+-				_VIG_SBLK(7,
+-					  SSPP_SCALER_VER(1, 4));
++				_VIG_SBLK(SSPP_SCALER_VER(1, 4));
+ static const struct dpu_sspp_sub_blks sm8150_vig_sblk_3 =
+-				_VIG_SBLK(8,
+-					  SSPP_SCALER_VER(1, 4));
++				_VIG_SBLK(SSPP_SCALER_VER(1, 4));
+ 
+-static const struct dpu_sspp_sub_blks sdm845_dma_sblk_0 = _DMA_SBLK(1);
+-static const struct dpu_sspp_sub_blks sdm845_dma_sblk_1 = _DMA_SBLK(2);
+-static const struct dpu_sspp_sub_blks sdm845_dma_sblk_2 = _DMA_SBLK(3);
+-static const struct dpu_sspp_sub_blks sdm845_dma_sblk_3 = _DMA_SBLK(4);
++static const struct dpu_sspp_sub_blks sdm845_dma_sblk_0 = _DMA_SBLK();
++static const struct dpu_sspp_sub_blks sdm845_dma_sblk_1 = _DMA_SBLK();
++static const struct dpu_sspp_sub_blks sdm845_dma_sblk_2 = _DMA_SBLK();
++static const struct dpu_sspp_sub_blks sdm845_dma_sblk_3 = _DMA_SBLK();
+ 
+ static const struct dpu_sspp_sub_blks sc7180_vig_sblk_0 =
+-				_VIG_SBLK(4,
+-					  SSPP_SCALER_VER(3, 0));
++				_VIG_SBLK(SSPP_SCALER_VER(3, 0));
+ 
+ static const struct dpu_sspp_sub_blks sc7280_vig_sblk_0 =
+-			_VIG_SBLK_ROT(4,
+-				      SSPP_SCALER_VER(3, 0),
++			_VIG_SBLK_ROT(SSPP_SCALER_VER(3, 0),
+ 				      &dpu_rot_sc7280_cfg_v2);
+ 
+ static const struct dpu_sspp_sub_blks sm6115_vig_sblk_0 =
+-				_VIG_SBLK(2,
+-					  SSPP_SCALER_VER(3, 0));
++				_VIG_SBLK(SSPP_SCALER_VER(3, 0));
+ 
+ static const struct dpu_sspp_sub_blks sm6125_vig_sblk_0 =
+-				_VIG_SBLK(3,
+-					  SSPP_SCALER_VER(2, 4));
++				_VIG_SBLK(SSPP_SCALER_VER(2, 4));
+ 
+ static const struct dpu_sspp_sub_blks sm8250_vig_sblk_0 =
+-				_VIG_SBLK(5,
+-					  SSPP_SCALER_VER(3, 0));
++				_VIG_SBLK(SSPP_SCALER_VER(3, 0));
+ static const struct dpu_sspp_sub_blks sm8250_vig_sblk_1 =
+-				_VIG_SBLK(6,
+-					  SSPP_SCALER_VER(3, 0));
++				_VIG_SBLK(SSPP_SCALER_VER(3, 0));
+ static const struct dpu_sspp_sub_blks sm8250_vig_sblk_2 =
+-				_VIG_SBLK(7,
+-					  SSPP_SCALER_VER(3, 0));
++				_VIG_SBLK(SSPP_SCALER_VER(3, 0));
+ static const struct dpu_sspp_sub_blks sm8250_vig_sblk_3 =
+-				_VIG_SBLK(8,
+-					  SSPP_SCALER_VER(3, 0));
++				_VIG_SBLK(SSPP_SCALER_VER(3, 0));
+ 
+ static const struct dpu_sspp_sub_blks sm8450_vig_sblk_0 =
+-				_VIG_SBLK(5,
+-					  SSPP_SCALER_VER(3, 1));
++				_VIG_SBLK(SSPP_SCALER_VER(3, 1));
+ static const struct dpu_sspp_sub_blks sm8450_vig_sblk_1 =
+-				_VIG_SBLK(6,
+-					  SSPP_SCALER_VER(3, 1));
++				_VIG_SBLK(SSPP_SCALER_VER(3, 1));
+ static const struct dpu_sspp_sub_blks sm8450_vig_sblk_2 =
+-				_VIG_SBLK(7,
+-					  SSPP_SCALER_VER(3, 1));
++				_VIG_SBLK(SSPP_SCALER_VER(3, 1));
+ static const struct dpu_sspp_sub_blks sm8450_vig_sblk_3 =
+-				_VIG_SBLK(8,
+-					  SSPP_SCALER_VER(3, 1));
++				_VIG_SBLK(SSPP_SCALER_VER(3, 1));
+ 
+ static const struct dpu_sspp_sub_blks sm8550_vig_sblk_0 =
+-				_VIG_SBLK(7,
+-					  SSPP_SCALER_VER(3, 2));
++				_VIG_SBLK(SSPP_SCALER_VER(3, 2));
+ static const struct dpu_sspp_sub_blks sm8550_vig_sblk_1 =
+-				_VIG_SBLK(8,
+-					  SSPP_SCALER_VER(3, 2));
++				_VIG_SBLK(SSPP_SCALER_VER(3, 2));
+ static const struct dpu_sspp_sub_blks sm8550_vig_sblk_2 =
+-				_VIG_SBLK(9,
+-					  SSPP_SCALER_VER(3, 2));
++				_VIG_SBLK(SSPP_SCALER_VER(3, 2));
+ static const struct dpu_sspp_sub_blks sm8550_vig_sblk_3 =
+-				_VIG_SBLK(10,
+-					  SSPP_SCALER_VER(3, 2));
+-static const struct dpu_sspp_sub_blks sm8550_dma_sblk_4 = _DMA_SBLK(5);
+-static const struct dpu_sspp_sub_blks sm8550_dma_sblk_5 = _DMA_SBLK(6);
++				_VIG_SBLK(SSPP_SCALER_VER(3, 2));
++static const struct dpu_sspp_sub_blks sm8550_dma_sblk_4 = _DMA_SBLK();
++static const struct dpu_sspp_sub_blks sm8550_dma_sblk_5 = _DMA_SBLK();
+ 
+-#define _VIG_SBLK_NOSCALE(sdma_pri) \
++#define _VIG_SBLK_NOSCALE() \
+ 	{ \
+ 	.maxdwnscale = SSPP_UNITY_SCALE, \
+ 	.maxupscale = SSPP_UNITY_SCALE, \
+-	.smart_dma_priority = sdma_pri, \
+ 	.format_list = plane_formats_yuv, \
+ 	.num_formats = ARRAY_SIZE(plane_formats_yuv), \
+ 	.virt_format_list = plane_formats, \
+ 	.virt_num_formats = ARRAY_SIZE(plane_formats), \
+ 	}
+ 
+-static const struct dpu_sspp_sub_blks qcm2290_vig_sblk_0 = _VIG_SBLK_NOSCALE(2);
+-static const struct dpu_sspp_sub_blks qcm2290_dma_sblk_0 = _DMA_SBLK(1);
++static const struct dpu_sspp_sub_blks qcm2290_vig_sblk_0 = _VIG_SBLK_NOSCALE();
++static const struct dpu_sspp_sub_blks qcm2290_dma_sblk_0 = _DMA_SBLK();
+ 
+ /*************************************************************
+  * MIXER sub blocks config
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+index c47969ba7ed5..19ab36ae6765 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+@@ -372,7 +372,6 @@ struct dpu_caps {
+  * common: Pointer to common configurations shared by sub blocks
+  * @maxdwnscale: max downscale ratio supported(without DECIMATION)
+  * @maxupscale:  maxupscale ratio supported
+- * @smart_dma_priority: hw priority of rect1 of multirect pipe
+  * @max_per_pipe_bw: maximum allowable bandwidth of this pipe in kBps
+  * @qseed_ver: qseed version
+  * @scaler_blk:
+@@ -386,7 +385,6 @@ struct dpu_caps {
+ struct dpu_sspp_sub_blks {
+ 	u32 maxdwnscale;
+ 	u32 maxupscale;
+-	u32 smart_dma_priority;
+ 	u32 max_per_pipe_bw;
+ 	u32 qseed_ver;
+ 	struct dpu_scaler_blk scaler_blk;
 -- 
-With best wishes
-Dmitry
+2.39.2
 
