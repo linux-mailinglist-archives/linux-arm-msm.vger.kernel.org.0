@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 97F8E79B1BE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 01:57:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C105479B535
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:03:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343812AbjIKVMk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:12:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40452 "EHLO
+        id S1343867AbjIKVMv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:12:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237806AbjIKNOd (ORCPT
+        with ESMTP id S237809AbjIKNOd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 11 Sep 2023 09:14:33 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B61C8E40
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 06:14:27 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-99357737980so552325266b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 06:14:27 -0700 (PDT)
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93D4EE6D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 06:14:28 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-9a9cd066db5so563197966b.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 06:14:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694438066; x=1695042866; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1694438067; x=1695042867; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Xlz6iwTR+P+aX/Li0khE/j1svXvZ2ELJqgA8Sp/LWUg=;
-        b=riXB3fTGKV3MTaRcTdAtxsKHyrSTnbX6ELDPgcPe4rDRp08KkX6jk+v4s5Pvb8BCT4
-         jGr8Tz6wCWxERs61lIOQ0LKNk5fn5ZZVGzuketuaYgFzBEo2qV1oD7d/WijarShCUx0x
-         EILB0LzqzmK09J6btHNFkgG/4OrJeE342WhaU0VjfsjT/WAk2hHb+KeuZA2p+K0id8GR
-         4F3jUpLxOVFhA9frkCvMODUf2MwH3Ud747rgSWPxr0yt4GIIPGBoLQsb5jm33fsXPZb8
-         rDBy1si0M01TVvFBm5iwl5saBeAdGjW6ohDA0qpYNzN3t25x9zqLvO/i9Z0RiwzG37TD
-         ecjQ==
+        bh=MHtDr8xYhXwGqBJmtIj0tvF8SPL/tjbZCKIvzLXh3+Y=;
+        b=xLRr6Lht8sE0J66Esx8teJ13dD38fWIXBUmYq6YLTqEgGSly1o/QjV0Jaey2lhRAkr
+         DrHDLBUn/lMQlvT0m6DmfWEXHdkkXkVUyzy152ALZwnFHKOw3ai3AQLys5P2BzUqFmN/
+         iBewcXhXmZUaxglzp7zVtC5f4Br/rKHNRkG0Z1oxxam8yNODlZJc3DpV+ITtmI3oB8Cc
+         SpRkd8N5JWiitAdD8Fte5cx3HT0oa3zlDjNEFIJMGb8uGnJpvXDtqzzvV2Wu6OgA6ACn
+         WdRn80Z/2zaHhNWZ5Txy86UiAJF0vx2G6LziCl8cyLT5yWN+Kh7l+/EsfkB7I+5619Kj
+         XY6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694438066; x=1695042866;
+        d=1e100.net; s=20230601; t=1694438067; x=1695042867;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Xlz6iwTR+P+aX/Li0khE/j1svXvZ2ELJqgA8Sp/LWUg=;
-        b=Jxfeynp3YjHmgaazKDNwfRPdPUddMfN519inVlodhM3wXWjH2T7u/m4PJ4IcaevP4o
-         1ZZUZQu+Xz1AhdZBj/X2NOUYaS2G+0MCsbOVBuqIL9mRfol9aWTuZdnY6xw/YrIN72NS
-         kbhBWEsO7JWWUk8GO59KI2sfmuIsBPA0sL41khy9uz28I+E04cHasEfMYHIhPLsndnYh
-         ZXwsjgkYXQSVMVxmXi4RRKilaEnDd/sEuEGthcU6KG/888uuZI8Qj3fVrGS7JfiYtMu8
-         85AEzdFAx2idLfFlRDcXNKnFRiI7HEcFsSDkRxD459uU6NKlB/ByixUxNTcOaVOZPIDM
-         nsWg==
-X-Gm-Message-State: AOJu0YxNZOSk1EDZl9X3ABMuletttve30q92vEROFscIgNDeHUEq2Ho4
-        XR4WbUxuIWFIlgjp0XjL+/OZQA==
-X-Google-Smtp-Source: AGHT+IHi1NjC7YYvhb26l/0B9n9PKoTamfRqC35EE+RVrZTXnpH8uVnn+2cDTnwSP+ZX2QXdmHP+Ow==
-X-Received: by 2002:a17:906:1d4:b0:9a2:276d:d83c with SMTP id 20-20020a17090601d400b009a2276dd83cmr8333692ejj.18.1694438066126;
-        Mon, 11 Sep 2023 06:14:26 -0700 (PDT)
+        bh=MHtDr8xYhXwGqBJmtIj0tvF8SPL/tjbZCKIvzLXh3+Y=;
+        b=etDHIWPg2RuufzSKPOzUgkyEzNmpqaMQjPVJsEAURJObqtccsoLk3esLARqSiwA2lR
+         A/p5rCFnkexkE6fppPvQTyeqVOOUFZUCO9z7tN3GGpmshQm6v5zAmJzYFfOpQBbXqPHh
+         yy/49PlBjbhv0TDC9A97kHCuZEDQnw7aMpS7hRQdbmGB/DgP2iQ7eT5oM4u0P9xPi3LW
+         TRaV2GqrU8k4+UBIHotko8pXv7cUlQpGcBX6WKhueSNcGs4HAgInpJrcKZYabzgnhIMT
+         71fiwpC3N1/FY+q9f4wshFP4qFnmTpuA0mBpYubVZerKHsWAMHaGks7eMZ+oXJDtaCOq
+         VKVQ==
+X-Gm-Message-State: AOJu0YxhGYanaKE0la9Mu8gMXnocxiNMn8772q71Q4zSqPW4UB8E8hCA
+        amkdvaDOKGJC5Rr0f6JbzuXOOQ==
+X-Google-Smtp-Source: AGHT+IEJZEhw/8MjyR5Bg/evKvO1z4rIjCAlxCJ+ycLj2cifs6WrOrzLnSR4rYggt+PToKj7F6w++g==
+X-Received: by 2002:a17:906:8a54:b0:99d:6b3c:3d40 with SMTP id gx20-20020a1709068a5400b0099d6b3c3d40mr8212956ejc.6.1694438067102;
+        Mon, 11 Sep 2023 06:14:27 -0700 (PDT)
 Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id kt8-20020a170906aac800b00988e953a586sm5313648ejb.61.2023.09.11.06.14.25
+        by smtp.gmail.com with ESMTPSA id kt8-20020a170906aac800b00988e953a586sm5313648ejb.61.2023.09.11.06.14.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Sep 2023 06:14:25 -0700 (PDT)
+        Mon, 11 Sep 2023 06:14:26 -0700 (PDT)
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 To:     rfoss@kernel.org, todor.too@gmail.com, bryan.odonoghue@linaro.org,
         agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
@@ -58,9 +58,9 @@ To:     rfoss@kernel.org, todor.too@gmail.com, bryan.odonoghue@linaro.org,
         andrey.konovalov@linaro.org
 Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v5 11/17] media: qcom: camss: Allow clocks vfeN vfe_liteN or vfe_lite
-Date:   Mon, 11 Sep 2023 14:14:05 +0100
-Message-ID: <20230911131411.196033-12-bryan.odonoghue@linaro.org>
+Subject: [PATCH v5 12/17] media: qcom: camss: Functionally decompose CSIPHY clock lookups
+Date:   Mon, 11 Sep 2023 14:14:06 +0100
+Message-ID: <20230911131411.196033-13-bryan.odonoghue@linaro.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230911131411.196033-1-bryan.odonoghue@linaro.org>
 References: <20230911131411.196033-1-bryan.odonoghue@linaro.org>
@@ -76,80 +76,84 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The number of Video Front End - VFE or Image Front End - IFE supported
-with new SoCs can vary both for the full and lite cases.
+The csiphyX_timer and csiX_phy values need not be hard-coded. We can
+functionally decompose the string matching inside of a loop.
 
-For example sdm845 has one vfe_lite and two vfe interfaces with the vfe
-clock called simply "vfe_lite" with no integer postfix. sc8280xp has four
-vfe and four vfe lite blocks.
+Static string values are brittle, difficult to extend and not required
+anyway since the camss->res->csiphy_num value informs us of the number
+of CSIPHYs and hence the set of potential clocks for a given CSIPHY.
 
-At the moment we declare vfe_lite0 and vfe_lite1 for sm8250 but never set
-those clocks because we don't match the strings.
-
-We need to support the following clock name formats
-
-- vfeN
-- vfe_liteN
-- vfe_lite
-
-with N being any reasonably sized integer.
-
-There are two sites in this code which need to do the same thing,
-constructing and matching strings with the pattern above, so encapsulate
-the logic in one function.
+In simple terms if we have five CSIPHYs we can have no more and no less
+than five csiphy_timer clocks. Similarly csi_phy core clocks have a 1:1
+relationship with the PHY they clock.
 
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
- drivers/media/platform/qcom/camss/camss-vfe.c | 22 ++++++++++++++-----
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ .../media/platform/qcom/camss/camss-csiphy.c  | 37 ++++++++++++-------
+ 1 file changed, 23 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-index db8f68819ded9..f3cf387e4907e 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-@@ -431,6 +431,20 @@ void vfe_isr_reset_ack(struct vfe_device *vfe)
- 	complete(&vfe->reset_complete);
+diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
+index 18f9a4defb2a4..87d6d65aa90cf 100644
+--- a/drivers/media/platform/qcom/camss/camss-csiphy.c
++++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
+@@ -536,6 +536,15 @@ static int csiphy_init_formats(struct v4l2_subdev *sd,
+ 	return csiphy_set_format(sd, fh ? fh->state : NULL, &format);
  }
  
-+static int vfe_match_clock_names(struct vfe_device *vfe,
-+				 struct camss_clock *clock)
++static bool csiphy_match_clock_name(const char *clock_name, const char *format,
++				    int index)
 +{
-+	char vfe_name[6]; /* vfeXX\0 */
-+	char vfe_lite_name[11]; /* vfe_liteXX\0 */
++	char name[15]; /* csiphyXX_timer\0 */
 +
-+	snprintf(vfe_name, sizeof(vfe_name), "vfe%d", vfe->id);
-+	snprintf(vfe_lite_name, sizeof(vfe_lite_name), "vfe_lite%d", vfe->id);
-+
-+	return (!strcmp(clock->name, vfe_name) ||
-+		!strcmp(clock->name, vfe_lite_name) ||
-+		!strcmp(clock->name, "vfe_lite"));
++	snprintf(name, sizeof(name), format, index);
++	return !strcmp(clock_name, name);
 +}
 +
  /*
-  * vfe_set_clock_rates - Calculate and set clock rates on VFE module
-  * @vfe: VFE device
-@@ -454,9 +468,7 @@ static int vfe_set_clock_rates(struct vfe_device *vfe)
- 	for (i = 0; i < vfe->nclocks; i++) {
- 		struct camss_clock *clock = &vfe->clock[i];
+  * msm_csiphy_subdev_init - Initialize CSIPHY device structure and resources
+  * @csiphy: CSIPHY device
+@@ -550,7 +559,7 @@ int msm_csiphy_subdev_init(struct camss *camss,
+ {
+ 	struct device *dev = camss->dev;
+ 	struct platform_device *pdev = to_platform_device(dev);
+-	int i, j;
++	int i, j, k;
+ 	int ret;
  
--		if (!strcmp(clock->name, "vfe0") ||
--		    !strcmp(clock->name, "vfe1") ||
--		    !strcmp(clock->name, "vfe_lite")) {
-+		if (vfe_match_clock_names(vfe, clock)) {
- 			u64 min_rate = 0;
- 			long rate;
+ 	csiphy->camss = camss;
+@@ -656,19 +665,19 @@ int msm_csiphy_subdev_init(struct camss *camss,
+ 		for (j = 0; j < clock->nfreqs; j++)
+ 			clock->freq[j] = res->clock_rate[i][j];
  
-@@ -537,9 +549,7 @@ static int vfe_check_clock_rates(struct vfe_device *vfe)
- 	for (i = 0; i < vfe->nclocks; i++) {
- 		struct camss_clock *clock = &vfe->clock[i];
+-		if (!strcmp(clock->name, "csiphy0_timer") ||
+-		    !strcmp(clock->name, "csiphy1_timer") ||
+-		    !strcmp(clock->name, "csiphy2_timer") ||
+-		    !strcmp(clock->name, "csiphy3_timer") ||
+-		    !strcmp(clock->name, "csiphy4_timer") ||
+-		    !strcmp(clock->name, "csiphy5_timer"))
+-			csiphy->rate_set[i] = true;
+-
+-		if (camss->res->version == CAMSS_660 &&
+-		    (!strcmp(clock->name, "csi0_phy") ||
+-		     !strcmp(clock->name, "csi1_phy") ||
+-		     !strcmp(clock->name, "csi2_phy")))
+-			csiphy->rate_set[i] = true;
++		for (k = 0; k < camss->res->csiphy_num; k++) {
++			csiphy->rate_set[i] = csiphy_match_clock_name(clock->name,
++								      "csiphy%d_timer", k);
++			if (csiphy->rate_set[i])
++				break;
++
++			if (camss->res->version == CAMSS_660) {
++				csiphy->rate_set[i] = csiphy_match_clock_name(clock->name,
++									      "csi%d_phy", k);
++				if (csiphy->rate_set[i])
++					break;
++			}
++		}
+ 	}
  
--		if (!strcmp(clock->name, "vfe0") ||
--		    !strcmp(clock->name, "vfe1") ||
--		    !strcmp(clock->name, "vfe_lite")) {
-+		if (vfe_match_clock_names(vfe, clock)) {
- 			u64 min_rate = 0;
- 			unsigned long rate;
- 
+ 	return 0;
 -- 
 2.42.0
 
