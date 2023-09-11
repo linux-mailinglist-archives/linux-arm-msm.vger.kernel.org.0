@@ -2,177 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 00F9F79AEB6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 01:45:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C0D279B43C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 02:01:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344030AbjIKVNG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:13:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40680 "EHLO
+        id S1344579AbjIKVOd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:14:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243836AbjIKR6R (ORCPT
+        with ESMTP id S244097AbjIKTEJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 13:58:17 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C70AE0;
-        Mon, 11 Sep 2023 10:58:12 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38BDgOto006536;
-        Mon, 11 Sep 2023 17:57:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : from : subject : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=0TQHaYZr4yaKy9H6ZvKL+gKEicqG4S0R+N5+Acl4ZZg=;
- b=Bz1/kXFcBokSYDq0Dbx2o1WkSy+f+1dU6uBJcyO2E7whOFzCi4gTGECnwfk3RxoOgV6s
- F9jXt/T3hxD1zgb2enq9KQ4b7myTC8tvou1JIoS1T1z7FBAWiYVsxyGe/KzDNpK3V8BA
- bjifzRHncdk7MiRy4OCzcJC7BKugv9nCMEbrNhmQGiLcKeojLYbGdvF5jFZV34dQgDLD
- Mx0j1nu3+/MjM6NItNQUvT7M/nBCGNi2Al77FFdYdbLjSM8SsQcT7F5yvEB2qyAYrTTg
- kw5DlsFkwAm3BV9F/qyclXv4sZ3xTPQRoDxeIQexlNpIYea7MiSDHrjjqvY4pF8TFiS+ eQ== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t1xjmscnp-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 11 Sep 2023 17:57:45 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38BHvhFc012981
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 11 Sep 2023 17:57:43 GMT
-Received: from [10.110.109.129] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 11 Sep
- 2023 10:57:42 -0700
-Message-ID: <c32e6983-4641-1849-cb25-d29da27bff15@quicinc.com>
-Date:   Mon, 11 Sep 2023 10:57:38 -0700
+        Mon, 11 Sep 2023 15:04:09 -0400
+Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80632D8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 12:04:04 -0700 (PDT)
+Received: by mail-yb1-xb32.google.com with SMTP id 3f1490d57ef6-ccc462deca6so4305795276.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 12:04:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694459043; x=1695063843; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=3mIhjm/gLeN7AiCgdCxfDsRxYuO98ZVwAg1FCQmb0mU=;
+        b=p8WVrllAJyQCLoA/1qN8QfJCaW3cGPNAXyGO0Q3ICA1zIFS0+B/Qlp+jzrvSkIFIhG
+         ynWRVPhJS0hMzDdfPQ7qMgU9EPUvLIxwYgpbJJRkJ4LEQ0oNdguHYseQRNFubFvrWOOk
+         aQ2DNkZk+BKcshDaPavp6fJR8Lg6Mzz0oQy0GQJ3PIQrxaZZYU9JQv7ufmunyvlxA/W8
+         3vw1SZHCZFo7dlImtSJ34r3ToPnPyU1i/WncQHH/ATgb0OyWhoZIkn8xbaiPJfcX5XWr
+         RkECrvo7Vn9BQ6tha91zasMQF9By6PIUgzjYlookB4WzK5mAiDzH06psG06lnG8mAiME
+         pvSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694459043; x=1695063843;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3mIhjm/gLeN7AiCgdCxfDsRxYuO98ZVwAg1FCQmb0mU=;
+        b=YzCCnshbFijCsQvb9p3INLjb6luW7W6f5xYXzZgQymZImbfKcA4MO6Xnc9x+hfTWjN
+         BRNwm95KMw+lAW8ukdvFXL8X5AYFcEkX4A0eWxGluS06kQj+INsHuGdegQfx7iw1bhBS
+         fRDTBfm6EBi0E1kgobufwFRYmeNOgNgxKHTw9lmj0IzvU3DRxxsp7+3IBUtELRgSphP3
+         W8+wFc+ad8Jupw/IeqnMggMfLD+xrcn8uW9uARKCsC5gWSpvv47I3LIYlUq+8116Ixoa
+         jlghIH3RGuD1WsEtI0cw99P2ik4UihudLOa7SwyJ9COU6ava+Ek2r9FxJWlu0SX7iyfP
+         sFvA==
+X-Gm-Message-State: AOJu0Ywi1mYwd9/LQZar1+i0YOxOG18kXaghjD2+fSWAFNITDkvnHtqG
+        ACuPGd1B437g/u2yiT2nHuJksc3ozLPUjDJNJyOmDg==
+X-Google-Smtp-Source: AGHT+IFFgWuTRbzhCVUTHa6+RUuMDSdrXvH9fWKAG4dfXv6IHaq3trCC5F8d4kpaXMrx7rWDK0F3jt+hV8eP+spO7lM=
+X-Received: by 2002:a25:ae96:0:b0:d39:fa2f:8b63 with SMTP id
+ b22-20020a25ae96000000b00d39fa2f8b63mr10189018ybj.25.1694459043718; Mon, 11
+ Sep 2023 12:04:03 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-From:   Wesley Cheng <quic_wcheng@quicinc.com>
-Subject: Re: [PATCH v5 11/32] sound: usb: card: Introduce USB SND platform op
- callbacks
-To:     Takashi Iwai <tiwai@suse.de>
-CC:     <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <lgirdwood@gmail.com>, <andersson@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <gregkh@linuxfoundation.org>,
-        <Thinh.Nguyen@synopsys.com>, <broonie@kernel.org>,
-        <bgoswami@quicinc.com>, <tiwai@suse.com>, <robh+dt@kernel.org>,
-        <agross@kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
-        <devicetree@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <quic_jackp@quicinc.com>, <quic_plai@quicinc.com>
-References: <20230829210657.9904-1-quic_wcheng@quicinc.com>
- <20230829210657.9904-12-quic_wcheng@quicinc.com>
- <875y4matbc.wl-tiwai@suse.de>
-Content-Language: en-US
-In-Reply-To: <875y4matbc.wl-tiwai@suse.de>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 834pxEf4zEHVF-QZwWGA1QQnukw4rdPa
-X-Proofpoint-GUID: 834pxEf4zEHVF-QZwWGA1QQnukw4rdPa
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-11_13,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- phishscore=0 lowpriorityscore=0 suspectscore=0 mlxlogscore=999
- malwarescore=0 adultscore=0 priorityscore=1501 clxscore=1015 bulkscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309110164
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20230829-topic-8550_usbphy-v1-0-599ddbfa094a@linaro.org> <20230829-topic-8550_usbphy-v1-1-599ddbfa094a@linaro.org>
+In-Reply-To: <20230829-topic-8550_usbphy-v1-1-599ddbfa094a@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Mon, 11 Sep 2023 22:03:52 +0300
+Message-ID: <CAA8EJpr-q5wJW082zXXzPQO=DjGYEj1bC=z18udSMxEfs+-yQw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] phy: qcom-qmp-combo: Square out 8550 POWER_STATE_CONFIG1
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Takashi,
+On Tue, 29 Aug 2023 at 23:59, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+> There are two instances of the POWER_STATE_CONFIG1 register: one in
+> the PCS space and another one in PCS_USB.
+>
+> The downstream init sequence pokes the latter one while we've been poking
+> the former one (and misnamed it as the latter one, impostor!). Fix that
+> up to avoid UB.
+>
+> Fixes: 49742e9edab3 ("phy: qcom-qmp-combo: Add support for SM8550")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp-combo.c      | 2 +-
+>  drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v6.h | 3 ++-
+>  2 files changed, 3 insertions(+), 2 deletions(-)
 
-On 9/7/2023 8:36 AM, Takashi Iwai wrote:
-> On Tue, 29 Aug 2023 23:06:36 +0200,
-> Wesley Cheng wrote:
->>
->> Allow for different platforms to be notified on USB SND connect/disconnect
->> seqeunces.  This allows for platform USB SND modules to properly initialize
->> and populate internal structures with references to the USB SND chip
->> device.
->>
->> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
->> ---
->>   sound/usb/card.c | 45 +++++++++++++++++++++++++++++++++++++++++++++
->>   sound/usb/card.h |  9 +++++++++
->>   2 files changed, 54 insertions(+)
->>
->> diff --git a/sound/usb/card.c b/sound/usb/card.c
->> index 1b2edc0fd2e9..067a1e82f4bf 100644
->> --- a/sound/usb/card.c
->> +++ b/sound/usb/card.c
->> @@ -118,6 +118,34 @@ MODULE_PARM_DESC(skip_validation, "Skip unit descriptor validation (default: no)
->>   static DEFINE_MUTEX(register_mutex);
->>   static struct snd_usb_audio *usb_chip[SNDRV_CARDS];
->>   static struct usb_driver usb_audio_driver;
->> +static struct snd_usb_platform_ops *platform_ops;
->> +
->> +int snd_usb_register_platform_ops(struct snd_usb_platform_ops *ops)
->> +{
->> +	int ret;
->> +
->> +	mutex_lock(&register_mutex);
->> +	if (platform_ops) {
->> +		ret = -EEXIST;
->> +		goto out;
->> +	}
->> +
->> +	platform_ops = ops;
->> +out:
->> +	mutex_unlock(&register_mutex);
->> +	return 0;
->> +}
->> +EXPORT_SYMBOL_GPL(snd_usb_register_platform_ops);
-> 
-> For adding this kind of API, please give the proper comment.
-> Especially this API is special and need a caution, to mention that it
-> can be used only for a single instance.
-> 
-> Also, it should be mentioned that all callbacks are exclusive under
-> the global register_mutex.
-> 
+[skipped]
 
-Thanks for taking the time to review.  Sure, I'll add some comments in 
-these new APIs to document what they are used for and how they are 
-protected and limited.
+> @@ -23,6 +23,7 @@
+>  #define QPHY_USB_V6_PCS_EQ_CONFIG1                     0x1dc
+>  #define QPHY_USB_V6_PCS_EQ_CONFIG5                     0x1ec
+>
+> +#define QPHY_USB_Q6_PCS_USB3_POWER_STATE_CONFIG1       0x00
 
->> @@ -910,7 +938,11 @@ static int usb_audio_probe(struct usb_interface *intf,
->>   	chip->num_interfaces++;
->>   	usb_set_intfdata(intf, chip);
->>   	atomic_dec(&chip->active);
->> +
->> +	if (platform_ops && platform_ops->connect_cb)
->> +		platform_ops->connect_cb(chip);
->>   	mutex_unlock(&register_mutex);
-> 
-> One uncertain thing is the argument for connect_cb and disconnect_cb.
-> Those take snd_usb_audio object, but the callback gets called per
-> interface at each probe and disconnect.  How does the callee handle
-> multiple calls?
+Konrad, could you please send v2, fixing this to be _V6_ rather than
+_Q6_. I'll rebase my series on top of this.
 
-I guess it should depend on how the platform driver wants to handle it? 
-  I haven't run into a device with multiple UAC interfaces before, so 
-I'll need to mimic this configuration on a device, so I can see how it 
-exposes itself.
+>  #define QPHY_USB_V6_PCS_USB3_LFPS_DET_HIGH_COUNT_VAL   0x18
+>  #define QPHY_USB_V6_PCS_USB3_RXEQTRAINING_DFE_TIME_S2  0x3c
+>  #define QPHY_USB_V6_PCS_USB3_RCVR_DTCT_DLY_U3_L                0x40
+>
+> --
+> 2.42.0
+>
 
-Will investigate this a bit more on my end and come back with my findings.
 
-> 
-> Last but not least, the patch subject should be with "ALSA:" prefix,
-> and in this case, at best "ALSA: usb-audio: xxx".
-> 
-> 
-
-Got it, thanks!
-
-Thanks
-Wesley Cheng
+-- 
+With best wishes
+Dmitry
