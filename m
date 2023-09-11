@@ -2,78 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B721D79AE6B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 01:44:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 12A8079AF0F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 01:46:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343503AbjIKVLg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 17:11:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51700 "EHLO
+        id S1343659AbjIKVMN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 17:12:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237388AbjIKMrF (ORCPT
+        with ESMTP id S237406AbjIKMsZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 08:47:05 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B040D10E;
-        Mon, 11 Sep 2023 05:47:00 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38B9AHUG027134;
-        Mon, 11 Sep 2023 12:46:35 GMT
+        Mon, 11 Sep 2023 08:48:25 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E73EE4B;
+        Mon, 11 Sep 2023 05:48:19 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38BC35Gh013880;
+        Mon, 11 Sep 2023 12:48:03 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=F2GqWFAwwo6RJV4S/9uYLYRwfMTagSoppG6D6MLjYww=;
- b=ZfCKNloy/JB5eSY+bMKm0AlzOxyDu7aecCh3pbc+SLooIKHqUQXJywgXDdeuX2iXfngi
- FyUQMJQm2wiTpavDYhmsajlCY+NYUh5ZjsHyxFu8mbImuybR9RUvyYwEiJ1DWDCX9GEX
- UEraAOqxgy7nNIVJxFA8LSyP8aOVOrz57wLMMoMvDeTGbJoIapf9U04qzA92fqfQmFoL
- Dm+XL5XHPsUQbUFdS29/wMpaAVyRlzt/11xgqpVRv4jEeabbNSsLo1BarsVtQlN/fGxE
- uNIAiCOtAmTei22mr4MJHoByO345hq8eK1c07C+ozos1ccK0HbmzXM4IjhYGRlQhhlg/ HQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t0h3ducse-1
+ bh=+Cl05E6P52wxr9Cy98s8F10fhtxfqzhVr2uRA7Nhc/s=;
+ b=nyJermdAWslYkHg0zyXyXmT3/sJF5CeoSzmq9gMP0h0aNeg9ufW4KeGzue7oX8jaOkbP
+ qxzIv8LTCaYm7zhacaIPSeDXlcRT0w2h5p4thDffX/XjhonyJODPWIVAPDUNHuOOSA2G
+ V1v/l6AiZZu/HrOeuDfFW8KVZ4jbz642MEA4kZnFQ+pfmGUXpafLhkyVncYT9MYCjJ2a
+ OIp/vGs7N7yrut2hCv0mskIDzhmgAS9Q9DEJSueELS0j29oWKFi8jqL8C83UvlNrlmB0
+ I/7rcX3k/b5lg5pub3jrJChaVyDuubu9SOpuhiH67lQQOj1+dZIiuxXYmuRM7rY/7D/M 9g== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t22hyg2ce-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 11 Sep 2023 12:46:34 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38BCkXw5014435
+        Mon, 11 Sep 2023 12:48:03 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38BCm2ij006149
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 11 Sep 2023 12:46:33 GMT
-Received: from [10.214.66.253] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 11 Sep
- 2023 05:46:28 -0700
-Message-ID: <7a69b1e7-7b08-433b-b201-f36ce93c7761@quicinc.com>
-Date:   Mon, 11 Sep 2023 18:16:19 +0530
+        Mon, 11 Sep 2023 12:48:02 GMT
+Received: from [10.218.5.19] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 11 Sep
+ 2023 05:47:55 -0700
+Message-ID: <63d72a6f-ec05-1515-cd32-269d35d9a66c@quicinc.com>
+Date:   Mon, 11 Sep 2023 18:17:51 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mtd: nand: qcom: Fix the node for nand unmap resource
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v2 4/6] clk: qcom: Use HW_CTRL_TRIGGER flag to switch
+ video GDSC to HW mode
 Content-Language: en-US
-To:     Manivannan Sadhasivam <mani@kernel.org>
-CC:     <miquel.raynal@bootlin.com>, <richard@nod.at>, <vigneshr@ti.com>,
-        <linux-mtd@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
-        <quic_charante@quicinc.com>, <quic_kaushalk@quicinc.com>
-References: <20230907092854.11408-1-quic_bibekkum@quicinc.com>
- <20230909060327.GA5847@thinkpad>
-From:   Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-In-Reply-To: <20230909060327.GA5847@thinkpad>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Abel Vesa <abel.vesa@linaro.org>
+CC:     "Rafael J . Wysocki" <rafael@kernel.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Andy Gross" <agross@kernel.org>,
+        Mike Turquette <mturquette@baylibre.com>,
+        "Stephen Boyd" <sboyd@kernel.org>,
+        Taniya Das <tdas@qti.qualcomm.com>, <linux-pm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        Ajit Pandey <quic_ajipan@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>
+References: <20230816145741.1472721-1-abel.vesa@linaro.org>
+ <20230816145741.1472721-5-abel.vesa@linaro.org>
+ <2fc0d771-cee2-4826-a62a-56ed4bfad3a2@linaro.org>
+ <ZOXiUzxfs1cj3SWT@linaro.org>
+ <07e93a9d-69ac-41b7-aa21-b855b97bf801@linaro.org>
+ <ef1439f8-4a9b-53b4-34be-1229b39d2310@quicinc.com>
+ <8257f7b3-dfb8-4683-85de-600f3b1ed54b@linaro.org>
+ <f37d2dd8-d625-048e-9c21-bba710b40086@quicinc.com>
+ <b5ae2ad9-f6c7-47d6-bab8-3f3fdb6b43e2@linaro.org>
+ <8c88bca4-b562-0122-1451-ef9de7fd8737@quicinc.com>
+ <5d4ba948-46e2-4b95-95a2-17775f4c9881@linaro.org>
+From:   Jagadeesh Kona <quic_jkona@quicinc.com>
+In-Reply-To: <5d4ba948-46e2-4b95-95a2-17775f4c9881@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 8meB8A5DaHBM3mmj4I2wkeBP_UI2314i
-X-Proofpoint-ORIG-GUID: 8meB8A5DaHBM3mmj4I2wkeBP_UI2314i
+X-Proofpoint-ORIG-GUID: Dpknb6oYYLPnAOcRwvFm5IQVmwnanzp3
+X-Proofpoint-GUID: Dpknb6oYYLPnAOcRwvFm5IQVmwnanzp3
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-11_06,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- bulkscore=0 phishscore=0 mlxlogscore=999 adultscore=0 spamscore=0
- suspectscore=0 impostorscore=0 malwarescore=0 mlxscore=0
- lowpriorityscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2308100000 definitions=main-2309110115
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+ definitions=2023-09-11_07,2023-09-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 mlxlogscore=820 phishscore=0 spamscore=0
+ impostorscore=0 mlxscore=0 adultscore=0 suspectscore=0 malwarescore=0
+ bulkscore=0 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2308100000 definitions=main-2309110116
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -82,51 +105,72 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 9/9/2023 11:33 AM, Manivannan Sadhasivam wrote:
-> On Thu, Sep 07, 2023 at 02:58:54PM +0530, Bibek Kumar Patro wrote:
->> While unmapping the nand resource in case of err_core_clk
->> the dev node being passed is res_start instead of nand->dma_base
->> (where the iova returned from map operation is stored) causing
->> failure in unmap operation. Hence modifying the unmap operation
->> to pass the nand->base_dma instead of res_start.
+On 9/7/2023 1:06 PM, Konrad Dybcio wrote:
+> On 7.09.2023 07:55, Jagadeesh Kona wrote:
 >>
->> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
->> ---
->>   drivers/mtd/nand/raw/qcom_nandc.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
 >>
->> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
->> index f583022755a2..e085a0f588eb 100644
->> --- a/drivers/mtd/nand/raw/qcom_nandc.c
->> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
->> @@ -3322,7 +3322,7 @@ static int qcom_nandc_probe(struct platform_device *pdev)
->>   err_aon_clk:
->>   	clk_disable_unprepare(nandc->core_clk);
->>   err_core_clk:
->> -	dma_unmap_resource(dev, res->start, resource_size(res),
->> +	dma_unmap_resource(dev, nandc->base_dma, resource_size(res),
->>   			   DMA_BIDIRECTIONAL, 0);
->>   	dev_err(&pdev->dev, "DEBUG: probe failed for nandc module\n");
-> 
-> This error indicates that you are sending the patch against downstream tree.
-> That's not appropriate. Please send your patches against mainline/mtd-next
-> instead and also validate properly.
-> 
-> - Mani
-
-This patch is created against upstream tree only,
-These debug prints got added from a conflicting patch
-created for debugging.
-apologies for this mistake. Will revise this and send
-a new patch set.
-
-regards,
-Bibek
-
-
-> 
->>   	return ret;
->> -- 
->> 2.17.1
+>> On 9/4/2023 9:32 PM, Konrad Dybcio wrote:
+>>> On 4.09.2023 11:27, Jagadeesh Kona wrote:
+>>>>
+>>>>
+>>>> On 9/2/2023 5:33 PM, Konrad Dybcio wrote:
+>>>>> On 28.08.2023 08:48, Jagadeesh Kona wrote:
+>>>>>>
+>>>>>>
+>>>>>> On 8/26/2023 4:17 PM, Konrad Dybcio wrote:
+>>>>>>> On 23.08.2023 12:41, Abel Vesa wrote:
+>>>>>>>> On 23-08-16 19:56:46, Konrad Dybcio wrote:
+>>>>>>>>> On 16.08.2023 16:57, Abel Vesa wrote:
+>>>>>>>>>> From: Jagadeesh Kona <quic_jkona@quicinc.com>
+>>>>>>>>>>
+>>>>>>>>>> The current HW_CTRL flag switches the video GDSC to HW control mode as
+>>>>>>>>>> part of GDSC enable itself, instead of that use HW_CTRL_TRIGGER flag to
+>>>>>>>>>> give consumer drivers more control and switch the GDSC mode as and when
+>>>>>>>>>> required.
+>>>>>>>>>>
+>>>>>>>>>> HW_CTRL_TRIGGER flag allows consumer drivers to switch the video GDSC to
+>>>>>>>>>> HW/SW control modes at runtime using dev_pm_genpd_set_hwmode API.
+>>>>>>>>>>
+>>>>>>>>>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+>>>>>>>>>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+>>>>>>>>>> ---
+>>>>>>>>> Do we have any use for the HW_CTRL flag?
+>>>>>>>>>
+>>>>>>>>> Perhaps it should be renamed to HW_CTRL_ALWAYS?
+>>>>>>>>>
+>>>>>>>>> Or even better, *if and only if* that is necessary, add a common
+>>>>>>>>> property like "always_hw_managed" to the genpd code?
+>>>>>>>>
+>>>>>>>> The HW_CTRL flag is still needed for the consumers that expect the GDSC
+>>>>>>>> to be have the HW control bit set right after it gets enabled.
+>>>>>>> Guess the correct question here would be.. Are there any?
+>>>>>>>
+>>>>>>
+>>>>>> Yes, Display GDSC(mdss_gdsc) is required to be controlled always in HW control mode when it is enabled.
+>>>>> Oh really?
+>>>>>
+>>>>> Looking at msm-5.10 techpack, only the SDE RSC driver seems to
+>>>>> trigger regulator fast mode (so, enabling gdsc hw_ctrl on downstream).
+>>>>>
+>>>>
+>>>> Yes, on downstream, display GDSC has only one consumer(SDE RSC driver) and there are no other consumers. SDE RSC driver switches the GDSC to hw control mode once GDSC is enabled and leaves it in hw control mode. Thanks!
+>>> Sorry for pulling your tongue here a bit, but would it only concern
+>>> RPMh SoCs? Designs like SM6115 don't implement RSCs, should they not
+>>> have HW_CTRL enabled at all times?
+>>>
 >>
+>> Yes, for RPMh SoCs which have display RSC block, GDSC is switched to HW control mode. For SoCs which doesn't have display RSC block, display driver controls the GDSC in SW mode on downstream. Thanks!
+> Thanks for explaining!
 > 
+> One last question, I promise.. Should we switch the MDSS GDSC to
+> HW_CTRL mode only after we start controlling the DISP RSC from Linux,
+> or should it be done regardless (because of the RPMh solving algos)?
+> 
+
+ From GDSC driver, MDSS GDSC can be switched to HW_CTRL mode regardless. 
+Thanks!
+
+Regards,
+Jagadeesh
+
+> Konrad
