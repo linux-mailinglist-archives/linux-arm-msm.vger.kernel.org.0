@@ -2,153 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C055179C359
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 04:53:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FE8879C284
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 04:15:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240832AbjILCx7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 22:53:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45930 "EHLO
+        id S235543AbjILCPz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 22:15:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240644AbjILCxv (ORCPT
+        with ESMTP id S233676AbjILCPo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 22:53:51 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1E20104418;
-        Mon, 11 Sep 2023 16:26:07 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38BLA1gE019094;
-        Mon, 11 Sep 2023 22:16:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=iTbSB/pI39QxEotFpFEZLZAK7TLYbBFkO7NqA2AIVj0=;
- b=mDPqGyUEDdbM9wGIOZTp9k8aCkyR0/pUFGqvnlRcsrJu5VHae8G9Ddd4CJ+kqZwCGMmx
- BDTNwd8/nsVaLfhfgzO8zG4SRqIUtqJo1fzUXxdloeP+0xizhWV9D8Y0CmcnPl/b3/Ha
- tkIvp7ttbQdUhrXIF3XUVztS0G7c6bj2eUanZOYK6d247EsYIHJDXAAwbzU4KxR+4geD
- AP6x6H5g/h96Wls9PFGot+oeFEwNAz74MKi9Zccwtzv3271MBHGbPcaBItP6whnwC5QT
- PT2Tf7RpPCT3y+rm4cp1SwjLayH1NeFyd4Km3cpm84cTbk+hPAvAlFgEFNOLsqt8Ndf5 VA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t24ra94a2-1
+        Mon, 11 Sep 2023 22:15:44 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C041D540E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 16:04:45 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38BMJIpY010114;
+        Mon, 11 Sep 2023 23:03:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=PVNIwibYItIs5Fz00hnO37kemLSPX6mDIPbbRSEVoJQ=;
+ b=dfYPOdITTW9AmjQETLy4wrBd63oUYRrLBz31rQbXcatZxM2gILG8hgBjx64g6Sj46kCy
+ ybnocCLlwLFtkyymg6JrT4VhuKROjvn7lBSwGL6CLIpi+I0VANlbrE24FzC598ZSLiOb
+ wjKyHcUV6xTyAzHD52HMw/zUGhJD0Aoh/Y7NnC/zBLklsMjUofRn34mjUoika3zj/Q3u
+ zfVkclD/jyy6Oga854BJnvMAwHq8/yQ44o0orIpRniBy/KJvpF8liaYBWB6eLx/vdyfi
+ Kz3m56EYs62TaCkdpcrgZO8FvQOh/f7j4wXNlkIZ8NmHulUzNILGn8yCYn8XDiAxcgDC ZQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t25yx0wpr-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 11 Sep 2023 22:16:47 +0000
+        Mon, 11 Sep 2023 23:03:12 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38BMGkLn004032
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38BN3BbR023065
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 11 Sep 2023 22:16:46 GMT
-Received: from abhinavk-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Mon, 11 Sep 2023 15:16:45 -0700
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-To:     <freedreno@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        "Daniel Vetter" <daniel@ffwll.ch>,
-        Archit Taneja <architt@codeaurora.org>,
-        "Chandan Uddaraju" <chandanu@codeaurora.org>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Rajesh Yadav <ryadav@codeaurora.org>
-CC:     <dri-devel@lists.freedesktop.org>, <quic_jesszhan@quicinc.com>,
-        <quic_parellan@quicinc.com>, <nespera@igalia.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2 1/2] drm/msm/dpu: fail dpu_plane_atomic_check() based on mdp clk limits
-Date:   Mon, 11 Sep 2023 15:16:26 -0700
-Message-ID: <20230911221627.9569-1-quic_abhinavk@quicinc.com>
-X-Mailer: git-send-email 2.40.1
+        Mon, 11 Sep 2023 23:03:11 GMT
+Received: from [10.71.110.104] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 11 Sep
+ 2023 16:03:08 -0700
+Message-ID: <273f21b2-debb-46fc-e831-2271ca3cc644@quicinc.com>
+Date:   Mon, 11 Sep 2023 16:03:06 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v4 2/9] drm/msm/dpu: Drop unused get_scaler_ver callback
+ from SSPP
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230911214521.787453-1-dmitry.baryshkov@linaro.org>
+ <20230911214521.787453-3-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230911214521.787453-3-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: OGcO9xz4tUb7yoZ7qgK3ZimWH2WS4569
-X-Proofpoint-ORIG-GUID: OGcO9xz4tUb7yoZ7qgK3ZimWH2WS4569
+X-Proofpoint-ORIG-GUID: RUOERd9ySp4kODKmqqJcX2yDiplSWPtt
+X-Proofpoint-GUID: RUOERd9ySp4kODKmqqJcX2yDiplSWPtt
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-11_18,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
- clxscore=1015 mlxscore=0 bulkscore=0 suspectscore=0 phishscore=0
- impostorscore=0 mlxlogscore=811 priorityscore=1501 adultscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309110205
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+ definitions=2023-09-11_19,2023-09-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
+ clxscore=1015 mlxlogscore=839 bulkscore=0 lowpriorityscore=0
+ priorityscore=1501 malwarescore=0 suspectscore=0 adultscore=0
+ impostorscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309110212
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently, dpu_plane_atomic_check() does not check whether the
-plane can process the image without exceeding the per chipset
-limits for MDP clock. This leads to underflow issues because the
-SSPP is not able to complete the processing for the data rate of
-the display.
 
-Fail the dpu_plane_atomic_check() if the SSPP cannot process the
-image without exceeding the MDP clock limits.
 
-changes in v2:
-	- use crtc_state's adjusted_mode instead of mode
+On 9/11/2023 2:45 PM, Dmitry Baryshkov wrote:
+> From: Marijn Suijten <marijn.suijten@somainline.org>
+> 
+> This pointer callback is never used and should be removed.
+> 
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> [DB: dropped the helpers completely, which are unused now]
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c | 13 +------------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h |  6 ------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c |  6 ------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h |  3 ---
+>   4 files changed, 1 insertion(+), 27 deletions(-)
+> 
 
-Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index 98c1b22e9bca..0be195f9149c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -733,9 +733,11 @@ static int dpu_plane_check_inline_rotation(struct dpu_plane *pdpu,
- static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
- 		struct dpu_sw_pipe *pipe,
- 		struct dpu_sw_pipe_cfg *pipe_cfg,
--		const struct dpu_format *fmt)
-+		const struct dpu_format *fmt,
-+		const struct drm_display_mode *mode)
- {
- 	uint32_t min_src_size;
-+	struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
- 
- 	min_src_size = DPU_FORMAT_IS_YUV(fmt) ? 2 : 1;
- 
-@@ -774,6 +776,12 @@ static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
- 		return -EINVAL;
- 	}
- 
-+	/* max clk check */
-+	if (_dpu_plane_calc_clk(mode, pipe_cfg) > kms->perf.max_core_clk_rate) {
-+		DPU_DEBUG_PLANE(pdpu, "plane exceeds max mdp core clk limits\n");
-+		return -E2BIG;
-+	}
-+
- 	return 0;
- }
- 
-@@ -899,12 +907,13 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
- 		r_pipe_cfg->dst_rect.x1 = pipe_cfg->dst_rect.x2;
- 	}
- 
--	ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt);
-+	ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt, &crtc_state->adjusted_mode);
- 	if (ret)
- 		return ret;
- 
- 	if (r_pipe->sspp) {
--		ret = dpu_plane_atomic_check_pipe(pdpu, r_pipe, r_pipe_cfg, fmt);
-+		ret = dpu_plane_atomic_check_pipe(pdpu, r_pipe, r_pipe_cfg, fmt,
-+						  &crtc_state->adjusted_mode);
- 		if (ret)
- 			return ret;
- 	}
--- 
-2.40.1
-
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
