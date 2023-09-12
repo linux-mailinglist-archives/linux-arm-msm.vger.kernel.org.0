@@ -2,200 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5AC8579D3AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 16:31:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1199879D3BA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 16:32:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235961AbjILObB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Sep 2023 10:31:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34208 "EHLO
+        id S235913AbjILOcl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Sep 2023 10:32:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235968AbjILOa7 (ORCPT
+        with ESMTP id S230444AbjILOck (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Sep 2023 10:30:59 -0400
-Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC88FCC7;
-        Tue, 12 Sep 2023 07:30:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=kernkonzept.com; s=mx1; h=Cc:To:In-Reply-To:References:Message-Id:
-        Content-Transfer-Encoding:Content-Type:MIME-Version:Subject:Date:From:
-        Reply-To:Content-ID:Content-Description;
-        bh=d8aTXSfXKUiK1Xyz5/399gXFzKYpAJm1Z7s+7n6AgiA=; b=VW2OT9MEsssDRMkwh3Uc/UV/sU
-        ZvJI7PAAq82QQLTuNMbZ4JB2NvSLaDDhCPziIIIXjoZuw5Si5G7cBoMsE6xSHv21w48NpUQnK+0aS
-        xlAPsANfObrC1zT09ttft7W+z3JCpckVRiUodnA48hUGcsuU5GRfWlotgo1sSQ/yewjwa4Ld/fYdl
-        nImSY9IBb27xYyDp8bkpdUjxhq30ecnHdGpf0m7nyf5FLHMUCl0mrXQXGHsMEw7GBj54hLCAAKRa7
-        hNAcKfTXX6fvIWrmTWQ9wqC2+4JOJBdElsYVcng7iofUJJ6jJIG88oT9CmsDCrBpjht7ereCuItgF
-        jxnItlew==;
-Received: from [10.22.3.24] (helo=serv1.dd1.int.kernkonzept.com)
-        by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.96)
-        id 1qg4Pk-0034i9-1z;
-        Tue, 12 Sep 2023 16:30:52 +0200
-From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Date:   Tue, 12 Sep 2023 16:30:39 +0200
-Subject: [PATCH 4/4] spi: qup: Vote for interconnect bandwidth to DRAM
+        Tue, 12 Sep 2023 10:32:40 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE4F0115;
+        Tue, 12 Sep 2023 07:32:36 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38CDo0Kr006822;
+        Tue, 12 Sep 2023 14:32:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=0MXVxIMxcRyFzQm0Xx9I9lFxvozA1Kor5DCnR3zK4y4=;
+ b=dnIejVxKqnp5xXncE0ZUNMrPRJv22cT/c11yDNbXVdyszxMCppyB8N5RirZ6tC8iPHUD
+ LHSLfapwGWs2HALaDDWDCjObRbv/E1tGuqq6q/Xt57XkjMyAPpGJ2G4VSjDChyzFSpfK
+ 2Va2Q+BRSJUpMNnoguOtMqQOgKeP+jB/vHNJ8wyiRckhQWlztB7ILUIym+6MXrD9npJy
+ lCQ47sH67DrNqhqZ3cTNsApcyarKadFzl2pCg5Q+CL2SOyZACG6gxi6Wp7c071QnQu47
+ 75jEFl+0bzN6YXYc1pGOK5LeN3eAtyEviZA/dBt6nRrt8/GEiZ/uWNqqBzYh+GoH0BiB Vg== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t2qefggng-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 12 Sep 2023 14:32:18 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38CEWHCd014452
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 12 Sep 2023 14:32:17 GMT
+Received: from [10.214.227.50] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 12 Sep
+ 2023 07:32:11 -0700
+Message-ID: <5e80e600-b523-476a-81bd-93d2c517b7b6@quicinc.com>
+Date:   Tue, 12 Sep 2023 20:02:07 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] mtd: rawnand: qcom: Unmap the right resource upon
+ probe failure
+Content-Language: en-US
+To:     Miquel Raynal <miquel.raynal@bootlin.com>
+CC:     <mani@kernel.org>, <richard@nod.at>, <vigneshr@ti.com>,
+        <linux-mtd@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
+        <quic_charante@quicinc.com>, <quic_kaushalk@quicinc.com>,
+        <quic_pkondeti@quicinc.com>
+References: <20230912115903.1007-1-quic_bibekkum@quicinc.com>
+ <20230912142847.4610c0a0@xps-13>
+From:   Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+In-Reply-To: <20230912142847.4610c0a0@xps-13>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230912-spi-qup-dvfs-v1-4-3e38aa09c2bd@kernkonzept.com>
-References: <20230912-spi-qup-dvfs-v1-0-3e38aa09c2bd@kernkonzept.com>
-In-Reply-To: <20230912-spi-qup-dvfs-v1-0-3e38aa09c2bd@kernkonzept.com>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-X-Mailer: b4 0.12.3
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: UUqJCj4RTDMBGTqI3ChIGIYPOVlEBR2D
+X-Proofpoint-ORIG-GUID: UUqJCj4RTDMBGTqI3ChIGIYPOVlEBR2D
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-12_13,2023-09-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ suspectscore=0 bulkscore=0 spamscore=0 clxscore=1015 lowpriorityscore=0
+ mlxlogscore=473 impostorscore=0 adultscore=0 phishscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
+ definitions=main-2309120121
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When the SPI QUP controller is used together with a DMA engine it needs
-to vote for the interconnect path to the DRAM. Otherwise it may be
-unable to access the memory quickly enough.
 
-The requested peak bandwidth is dependent on the SPI core/bus clock so
-that the bandwidth scales together with the selected SPI speed.
 
-To avoid sending votes too often the bandwidth is always requested when
-a transfer starts, but dropped only on runtime suspend. Runtime suspend
-should only happen if no transfer is active. After resumption we can
-defer the next vote until the first transfer actually happens.
-
-Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
----
-The bandwidth calculation is taken over from Qualcomm's
-downstream/vendor driver [1]. Due to lack of documentation about the
-interconnect setup/behavior I cannot say exactly if this is right.
-Unfortunately, this is not implemented very consistently downstream...
-
-[1]: https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/commit/deca0f346089d32941d6d8194ae9605554486413
----
- drivers/spi/spi-qup.c | 38 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
-
-diff --git a/drivers/spi/spi-qup.c b/drivers/spi/spi-qup.c
-index bf043be3a2a9..e9c186bc530c 100644
---- a/drivers/spi/spi-qup.c
-+++ b/drivers/spi/spi-qup.c
-@@ -6,6 +6,7 @@
- #include <linux/clk.h>
- #include <linux/delay.h>
- #include <linux/err.h>
-+#include <linux/interconnect.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
- #include <linux/list.h>
-@@ -122,11 +123,14 @@
- #define SPI_DELAY_THRESHOLD		1
- #define SPI_DELAY_RETRY			10
- 
-+#define SPI_BUS_WIDTH			8
-+
- struct spi_qup {
- 	void __iomem		*base;
- 	struct device		*dev;
- 	struct clk		*cclk;	/* core clock */
- 	struct clk		*iclk;	/* interface clock */
-+	struct icc_path		*icc_path; /* interconnect to RAM */
- 	int			irq;
- 	spinlock_t		lock;
- 
-@@ -149,6 +153,8 @@ struct spi_qup {
- 	int			mode;
- 	struct dma_slave_config	rx_conf;
- 	struct dma_slave_config	tx_conf;
-+
-+	u32			bw_speed_hz;
- };
- 
- static int spi_qup_io_config(struct spi_device *spi, struct spi_transfer *xfer);
-@@ -181,6 +187,23 @@ static inline bool spi_qup_is_valid_state(struct spi_qup *controller)
- 	return opstate & QUP_STATE_VALID;
- }
- 
-+static int spi_qup_vote_bw(struct spi_qup *controller, u32 speed_hz)
-+{
-+	u32 needed_peak_bw;
-+	int ret;
-+
-+	if (controller->bw_speed_hz == speed_hz)
-+		return 0;
-+
-+	needed_peak_bw = Bps_to_icc(speed_hz * SPI_BUS_WIDTH);
-+	ret = icc_set_bw(controller->icc_path, 0, needed_peak_bw);
-+	if (ret)
-+		return ret;
-+
-+	controller->bw_speed_hz = speed_hz;
-+	return 0;
-+}
-+
- static int spi_qup_set_state(struct spi_qup *controller, u32 state)
- {
- 	unsigned long loop;
-@@ -675,6 +698,12 @@ static int spi_qup_io_prep(struct spi_device *spi, struct spi_transfer *xfer)
- 		return -EIO;
- 	}
- 
-+	ret = spi_qup_vote_bw(controller, xfer->speed_hz);
-+	if (ret) {
-+		dev_err(controller->dev, "fail to vote for ICC bandwidth: %d\n", ret);
-+		return -EIO;
-+	}
-+
- 	controller->w_size = DIV_ROUND_UP(xfer->bits_per_word, 8);
- 	controller->n_words = xfer->len / controller->w_size;
- 
-@@ -994,6 +1023,7 @@ static void spi_qup_set_cs(struct spi_device *spi, bool val)
- static int spi_qup_probe(struct platform_device *pdev)
- {
- 	struct spi_controller *host;
-+	struct icc_path *icc_path;
- 	struct clk *iclk, *cclk;
- 	struct spi_qup *controller;
- 	struct resource *res;
-@@ -1019,6 +1049,11 @@ static int spi_qup_probe(struct platform_device *pdev)
- 	if (IS_ERR(iclk))
- 		return PTR_ERR(iclk);
- 
-+	icc_path = devm_of_icc_get(dev, NULL);
-+	if (IS_ERR(icc_path))
-+		return dev_err_probe(dev, PTR_ERR(icc_path),
-+				     "failed to get interconnect path\n");
-+
- 	/* This is optional parameter */
- 	if (of_property_read_u32(dev->of_node, "spi-max-frequency", &max_freq))
- 		max_freq = SPI_MAX_RATE;
-@@ -1070,6 +1105,7 @@ static int spi_qup_probe(struct platform_device *pdev)
- 	controller->base = base;
- 	controller->iclk = iclk;
- 	controller->cclk = cclk;
-+	controller->icc_path = icc_path;
- 	controller->irq = irq;
- 
- 	ret = spi_qup_init_dma(host, res->start);
-@@ -1190,6 +1226,7 @@ static int spi_qup_pm_suspend_runtime(struct device *device)
- 	writel_relaxed(config, controller->base + QUP_CONFIG);
- 
- 	clk_disable_unprepare(controller->cclk);
-+	spi_qup_vote_bw(controller, 0);
- 	clk_disable_unprepare(controller->iclk);
- 
- 	return 0;
-@@ -1241,6 +1278,7 @@ static int spi_qup_suspend(struct device *device)
- 		return ret;
- 
- 	clk_disable_unprepare(controller->cclk);
-+	spi_qup_vote_bw(controller, 0);
- 	clk_disable_unprepare(controller->iclk);
- 	return 0;
- }
-
--- 
-2.39.2
-
+On 9/12/2023 5:58 PM, Miquel Raynal wrote:
+>> We currently provide the physical address of the DMA region
+>> rather than the output of dma_map_resource() which is obviously wrong.
+>>
+>> Fixes: 7330fc505af4 ("mtd: rawnand: qcom: stop using phys_to_dma()")
+> Cc: stable?
+Cc: stable@vger.kernel.org
