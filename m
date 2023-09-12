@@ -2,70 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 45CC779D8A8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 20:29:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C64F979D92B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 20:53:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237232AbjILS3P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Sep 2023 14:29:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48290 "EHLO
+        id S231477AbjILSxI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Sep 2023 14:53:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232721AbjILS3O (ORCPT
+        with ESMTP id S229536AbjILSxI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Sep 2023 14:29:14 -0400
+        Tue, 12 Sep 2023 14:53:08 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3C6D10D8;
-        Tue, 12 Sep 2023 11:29:10 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D3BC433C7;
-        Tue, 12 Sep 2023 18:29:08 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E92B106;
+        Tue, 12 Sep 2023 11:53:04 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C397C433C7;
+        Tue, 12 Sep 2023 18:53:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1694543350;
-        bh=PCBBmd2rNXdYvalQ81EoedbVyQS1gg/YJ45YkQpk9R8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=h5lWbuDsz8fsbsQ9zdj4m+uoU7PwBXm5e9Vbhs+KCiZg6X060w5uyM3lUpJS7Z3vT
-         ko7rp60/iuf1Y1CrxT+IUXY3qSg+06DByf+LUjgENAD2oggPkJYKZIdt7Q1swUW04h
-         83y/GD1bothIes7zkBF7Izce/wFGMb6GJmFodUgiMf7zk+iP4y/gDLVbO6Ixfi5o27
-         7wC/9zqDd2ytNDQtS0g1cP5OEcsiMSYR6wHw1zK6CC3E6JiktWd26ynEoHpRrMLuiz
-         5cM+1C+ql85JTa1pyNPyMdXDIjx6LKY/yziHe/tkt9Zn/qNsnxEuIODMfGdThtRR6b
-         uxffXapQ+rb7Q==
-Received: (nullmailer pid 1164193 invoked by uid 1000);
-        Tue, 12 Sep 2023 18:29:07 -0000
-Date:   Tue, 12 Sep 2023 13:29:07 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        linux-kernel@vger.kernel.org,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
+        s=k20201202; t=1694544784;
+        bh=42xcdlbrjyVky2/tm5xi0r/vdFecT+EUTCaruqGYrrg=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=tnBXOzns3TRJQ3v2DIWxovHmqpLyVkrdcfa60aU16eqotefX6AAO9ny+VhyOzVTwa
+         vMVlIV1+6hNvf1rt+deYVUX7gXM9V9QdeaZOgSX9LLWJ84wCPMzwus4JETKqLHDFie
+         tNpBDpsy59MWbR3IhREh716peEmbR1aCuxc7C1wfvSsRx7qe3ReSzhUFhI9KWrnQcp
+         vhq3FBdz78lg7Sj/1q4JyfcVMiyyQqFfkbDnkIETWv8F1/V1yLvzVcL9nkwoSAgdfP
+         Z2sb/yqMAUcJnQZSl6mp/qwECmAcbPMIC3tcTyLmmNv/UdA30S0hVPhkz0BS7PcLom
+         g6rQL+BgRt33g==
+From:   Mark Brown <broonie@kernel.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Ilia Lin <ilia.lin@kernel.org>, devicetree@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>, linux-pm@vger.kernel.org,
-        Conor Dooley <conor+dt@kernel.org>
-Subject: Re: [PATCH 3/4] dt-bindings: cpufreq: qcom-nvmem: Document MSM8909
-Message-ID: <169454334732.1164153.5118228878567772612.robh@kernel.org>
-References: <20230912-msm8909-cpufreq-v1-0-767ce66b544b@kernkonzept.com>
- <20230912-msm8909-cpufreq-v1-3-767ce66b544b@kernkonzept.com>
+        Conor Dooley <conor+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20230825-topic-6115tx-v1-0-ebed201ad54b@linaro.org>
+References: <20230825-topic-6115tx-v1-0-ebed201ad54b@linaro.org>
+Subject: Re: [PATCH 0/2] SM6115 TX Macro
+Message-Id: <169454477946.2415953.15150744982318349138.b4-ty@kernel.org>
+Date:   Tue, 12 Sep 2023 19:52:59 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230912-msm8909-cpufreq-v1-3-767ce66b544b@kernkonzept.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13-dev-099c9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Tue, 12 Sep 2023 11:40:17 +0200, Stephan Gerhold wrote:
-> Document that MSM8909 is used with qcom-cpufreq-nvmem for voltage
-> scaling and to restrict the maximum frequency based on the speedbin
-> encoded in the nvmem cells.
+On Fri, 25 Aug 2023 19:23:11 +0200, Konrad Dybcio wrote:
+> Like most Qualcomm SoCs, SM6115 has a TX Macro.
 > 
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-> ---
->  Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml | 1 +
->  1 file changed, 1 insertion(+)
+> Only some minor changes were required.
+> 
 > 
 
-Acked-by: Rob Herring <robh@kernel.org>
+Applied to
+
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+
+Thanks!
+
+[1/2] ASoC: dt-bindings: qcom,lpass-tx-macro: Add SM6115
+      commit: 9ff143aaabba989f275612de0d83cf9d39274828
+[2/2] ASoC: codecs: lpass-tx-macro: Add SM6115 support
+      commit: 510c46884299cf8da8e9d7db27572eafa9a0c567
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
 
