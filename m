@@ -2,106 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B91E79D115
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 14:29:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9862579D163
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 14:52:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235208AbjILM3Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Sep 2023 08:29:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43412 "EHLO
+        id S235278AbjILMwu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Sep 2023 08:52:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235295AbjILM3E (ORCPT
+        with ESMTP id S235266AbjILMwt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Sep 2023 08:29:04 -0400
-Received: from relay7-d.mail.gandi.net (relay7-d.mail.gandi.net [217.70.183.200])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D55710F3;
-        Tue, 12 Sep 2023 05:28:51 -0700 (PDT)
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 8726E2000A;
-        Tue, 12 Sep 2023 12:28:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1694521729;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=6w4eE727ahcXyxO0B8znMsuiPT1RLt1MBCIFRc4fPgg=;
-        b=jC/r0aqRQO/YPCJ8STlSaOY/dw4Vx09EJUWrU8X0QarVh46T7R2kyaqz+mdIXe2ucdLx8Q
-        +7lSNpDrkMAYoQHely2wZKOF09lu6WINOQFz2TsjyJ/wf72PQepBKoyoY2Kwf9Dnic23UZ
-        K81+HS27EPt/QMfNxuTQ+Ex2OBVjuNGP2O47bgrY8G1AufFPpRS/dVTjzU/n3Xvd9/jyTP
-        y2hj2+keElhyWHi+iERfeNCxbHNdVxSob5YxwUqmHMv0htPqUgjLYbtO6kUfhCIz0XBI8x
-        qXDxP5iDkGCcAlPQy18rUefZUWlR/i2k85i564hN8QA7Cg7GPb4PS1tX+FQGog==
-Date:   Tue, 12 Sep 2023 14:28:47 +0200
-From:   Miquel Raynal <miquel.raynal@bootlin.com>
-To:     Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-Cc:     <mani@kernel.org>, <richard@nod.at>, <vigneshr@ti.com>,
-        <linux-mtd@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
-        <quic_charante@quicinc.com>, <quic_kaushalk@quicinc.com>,
-        <quic_pkondeti@quicinc.com>
-Subject: Re: [PATCH v4] mtd: rawnand: qcom: Unmap the right resource upon
- probe failure
-Message-ID: <20230912142847.4610c0a0@xps-13>
-In-Reply-To: <20230912115903.1007-1-quic_bibekkum@quicinc.com>
-References: <20230912115903.1007-1-quic_bibekkum@quicinc.com>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
+        Tue, 12 Sep 2023 08:52:49 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D260C4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Sep 2023 05:52:45 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-522bd411679so7217147a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Sep 2023 05:52:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694523164; x=1695127964; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=u9jJ5YX4xBOqwnaDAA68a0z5gq1OlAA8KPc5IjRYAL0=;
+        b=pIn7SJUnOXtSQvWuIbCHKj39pey4hNMXzHIyzPYNEowM61PRXyaKrSXpv1uGWth42X
+         UNFzO5zlBEoLMIfAPI1IaTbDCH7MthYd05IFGnzo4obOWYgMzsnwsslq/OTrkjnghvN8
+         Eju1n+UCr2y10b4MrZ7ISdLwxdJtMRuCofitmlqS+XGtzz0v0a2nhis8KRDvE8wi1wNg
+         kL/e3AsdvLt2mcDwMoqzp2t/GVk+mhEfN+Wf16WxuHvPO+ScKW5QVSA0pXzWVgbnvH5i
+         x756ahFYuNxwK/inUKMdTyRNuau5LcgOrLelX5JH0rlR9WDzZkZUBxiAIVUOe4G+Y34S
+         2HgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694523164; x=1695127964;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=u9jJ5YX4xBOqwnaDAA68a0z5gq1OlAA8KPc5IjRYAL0=;
+        b=koB/5qxCYQ5PW/zR5Yw+I8VJM/+0sxrT//+zXit489AZE3M3TnViBJg6f+yAVKQOz0
+         jK1lqB4yGfF8HJIEqAHwSjZBkZK5dkdRyLThRjEXjgWHFba3MBy9qpPpBIubyoIv2k20
+         aPAtiadr3rYjCnv8MGK54R5wprgCJtQ3tWbfMRwkkHCNN5YOmNhSGRdRqK7KEGNQDmKz
+         5nFxmzs6FRiBLJzl3SCpAFQUAUBmD8qfuaPDne2aYAhqscKAH7WQr/D8/KZudHMrZIH5
+         QPlmexHSxMj28wfziaPgazogNCr9iiTGmzmb8A8PhG/O0Cc+qlKGgVG967Bysglbi+98
+         N6ag==
+X-Gm-Message-State: AOJu0YzZyiv2WSuc3qJGEtzN0bMD4cFspj5ddwitPJZKYeRzjZt2MUWn
+        7VqfDKICeccmXBxnAuJXwoVi4Q==
+X-Google-Smtp-Source: AGHT+IH7nhx4jfbGgITc9GdSYQHAbQFjAg2RV99LbZV7dHCx51LUIjf5t0mtTdLSyctO699x7bk/HA==
+X-Received: by 2002:a05:6402:1bc1:b0:52f:bd62:2219 with SMTP id ch1-20020a0564021bc100b0052fbd622219mr25440edb.37.1694523164009;
+        Tue, 12 Sep 2023 05:52:44 -0700 (PDT)
+Received: from [192.168.37.232] (178235177248.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.248])
+        by smtp.gmail.com with ESMTPSA id r18-20020aa7cfd2000000b00527e7087d5dsm5807381edy.15.2023.09.12.05.52.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 12 Sep 2023 05:52:43 -0700 (PDT)
+Message-ID: <50d7a478-5d4e-40fc-9c1b-e4f99b17a11d@linaro.org>
+Date:   Tue, 12 Sep 2023 14:52:41 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 09/10] drm/msm/a6xx: Add A740 support
+Content-Language: en-US
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+References: <20230628-topic-a7xx_drmmsm-v3-0-4ee67ccbaf9d@linaro.org>
+ <20230628-topic-a7xx_drmmsm-v3-9-4ee67ccbaf9d@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230628-topic-a7xx_drmmsm-v3-9-4ee67ccbaf9d@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-GND-Sasl: miquel.raynal@bootlin.com
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bibek,
-
-quic_bibekkum@quicinc.com wrote on Tue, 12 Sep 2023 17:29:03 +0530:
-
-> We currently provide the physical address of the DMA region
-> rather than the output of dma_map_resource() which is obviously wrong.
->=20
-> Fixes: 7330fc505af4 ("mtd: rawnand: qcom: stop using phys_to_dma()")
-
-Cc: stable?
-
-> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+On 23.08.2023 14:56, Konrad Dybcio wrote:
+> A740 builds upon the A730 IP, shuffling some values and registers
+> around. More differences will appear when things like BCL are
+> implemented.
+> 
+> adreno_is_a740_family is added in preparation for more A7xx GPUs,
+> the logic checks will be valid resulting in smaller diffs.
+> 
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+> Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # sm8450
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
-> v4: Incorporated suggestion from Miquel
->     - Modified title and commit description.
->=20
-> v3: Incorporated comments from Miquel
->     - Modified the commit message and title as per suggestions.
->     https://lore.kernel.org/all/20230912101814.7748-1-quic_bibekkum@quici=
-nc.com/
->=20
-> v2: Incorporated comments from Pavan/Mani.
->     https://lore.kernel.org/all/20230911133026.29868-1-quic_bibekkum@quic=
-inc.com/
->=20
-> v1: https://lore.kernel.org/all/20230907092854.11408-1-quic_bibekkum@quic=
-inc.com/
->=20
->  drivers/mtd/nand/raw/qcom_nandc.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qco=
-m_nandc.c
-> index 64499c1b3603..b079605c84d3 100644
-> --- a/drivers/mtd/nand/raw/qcom_nandc.c
-> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
-> @@ -3444,7 +3444,7 @@ static int qcom_nandc_probe(struct platform_device =
-*pdev)
->  err_aon_clk:
->  	clk_disable_unprepare(nandc->core_clk);
->  err_core_clk:
-> -	dma_unmap_resource(dev, res->start, resource_size(res),
-> +	dma_unmap_resource(dev, nandc->base_dma, resource_size(res),
->  			   DMA_BIDIRECTIONAL, 0);
->  	return ret;
->  }
-> --
-> 2.17.1
->=20
+[...]
 
+>  		.gmem = SZ_2M,
+>  		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
+> +		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT |
+> +			  ADRENO_QUIRK_HAS_HW_APRIV,
+That's a funny conflict resolution (should have been in the previous
+commit..). If there are no other comments, could you fix this up while
+applying, Rob?
 
-Thanks,
-Miqu=C3=A8l
+Konrad
