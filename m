@@ -2,148 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6579979C1A8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 03:29:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 235F579C17A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 03:14:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235182AbjILB3M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Sep 2023 21:29:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45294 "EHLO
+        id S232533AbjILBOe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Sep 2023 21:14:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234552AbjILB3B (ORCPT
+        with ESMTP id S232806AbjILBOY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Sep 2023 21:29:01 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5850D16479E;
-        Mon, 11 Sep 2023 18:13:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1694481192; x=1726017192;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=X1EJVBAr5si3B8nlNmvY+MmhcTC0HYp8CfIRkvp3yw4=;
-  b=LGtV9ftMf5MUgCtAGLT/Un2AIkm9nUYLxTV6psjV1Wp42cLwiU51Y7/5
-   vWTPZv7KpgNon6AGpB2zPFMQ7ALM0ypwkJCtE6CeUBoz435ifsFaxsoIn
-   1JvQlLVP3uSd31ykUuwD6d2Q0Yo0YrbKLWgASn7+pQ/1SB5p41y890kvP
-   JQdMfxEu9bTpx6TIOHbOH6PIA7qzt/5/XhkY1QEtIbTPImSdVhWMlCpYz
-   SBQWmKGgcbiECo+M9FVK/pjlYgmLkoyKW+uRv/SMNFfpao/+UqHzy2tnn
-   KHwrdfmcvhin2QrO8hMhph3aFfYOnD3my+F9coXKD+IVQPJkm2+8UxyH+
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10830"; a="444673301"
-X-IronPort-AV: E=Sophos;i="6.02,244,1688454000"; 
-   d="scan'208";a="444673301"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Sep 2023 16:54:01 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10830"; a="886733766"
-X-IronPort-AV: E=Sophos;i="6.02,244,1688454000"; 
-   d="scan'208";a="886733766"
-Received: from lkp-server01.sh.intel.com (HELO 59b3c6e06877) ([10.239.97.150])
-  by fmsmga001.fm.intel.com with ESMTP; 11 Sep 2023 16:53:32 -0700
-Received: from kbuild by 59b3c6e06877 with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1qfqj5-0006uM-1y;
-        Mon, 11 Sep 2023 23:53:55 +0000
-Date:   Tue, 12 Sep 2023 07:53:27 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-Cc:     oe-kbuild-all@lists.linux.dev, linux-media@vger.kernel.org,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH RFT 11/20] media: venus: core: Drop cache properties in
- resource struct
-Message-ID: <202309120738.fip6vVJN-lkp@intel.com>
-References: <20230911-topic-mars-v1-11-a7d38bf87bdb@linaro.org>
+        Mon, 11 Sep 2023 21:14:24 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6BDE6FDD1;
+        Mon, 11 Sep 2023 18:03:36 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38C0KXkH031847;
+        Tue, 12 Sep 2023 00:39:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=b+ZDvkvQfKietDBjdlhgqxs9r2mzT6RnU3pGyGd2BkA=;
+ b=XSPS0PTtdcMZxd6ljmCdyxivBX0e0Llbz4hMM1uUnMpq90hn0OTRUTyBkH7/HydYrrMR
+ YTF2AgTo5PKj+DF6euX8I6G7AgrmyuaW8NKAGrMMwUxc74XFT4AbY2FuxNl2vxp9VN5c
+ msoAWjjKQXZlI3VkQa1SH2FEjUGweATifEvcE8WCBv8XicDrVmKdBNx5GyfBu2HYE1NW
+ U6/oISTtd8NH4lq5xcavPb/oA8VDWBlvoAoDFJ34Gp6ZF8uufpX/wv1K+4UKRvX8xEz/
+ nwSBYJebtY+chzhxl4AADpDlSnzat6fdpot3CKwZ8bMonFH8v69FJG0ExQwmaR7R9+6u Yg== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t29b0gggd-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 12 Sep 2023 00:39:37 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38C0daBH012692
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 12 Sep 2023 00:39:36 GMT
+Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.36; Mon, 11 Sep 2023 17:39:24 -0700
+Date:   Tue, 12 Sep 2023 06:09:21 +0530
+From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
+To:     Mukesh Ojha <quic_mojha@quicinc.com>
+CC:     Pavan Kondeti <quic_pkondeti@quicinc.com>, <corbet@lwn.net>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <keescook@chromium.org>, <tony.luck@intel.com>,
+        <gpiccoli@igalia.com>, <mathieu.poirier@linaro.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <linus.walleij@linaro.org>, <andy.shevchenko@gmail.com>,
+        <vigneshr@ti.com>, <nm@ti.com>, <matthias.bgg@gmail.com>,
+        <kgene@kernel.org>, <alim.akhtar@samsung.com>,
+        <bmasney@redhat.com>, <quic_tsoni@quicinc.com>,
+        <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-gpio@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
+        <linux-samsung-soc@vger.kernel.org>, <kernel@quicinc.com>
+Subject: Re: [PATCH v5 09/17] pstore/ram: Use dynamic ramoops reserve resource
+Message-ID: <d69a1822-0972-419a-ae8b-b6979733a18b@quicinc.com>
+References: <1694290578-17733-1-git-send-email-quic_mojha@quicinc.com>
+ <1694290578-17733-10-git-send-email-quic_mojha@quicinc.com>
+ <20425ace-3ef5-4eaf-8319-999bafa34a07@quicinc.com>
+ <35c9d1b1-0f48-b873-d703-c880f3b91422@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20230911-topic-mars-v1-11-a7d38bf87bdb@linaro.org>
+In-Reply-To: <35c9d1b1-0f48-b873-d703-c880f3b91422@quicinc.com>
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: tfU2_hR73glnule_LYZ8-x9Z18vDoumI
+X-Proofpoint-ORIG-GUID: tfU2_hR73glnule_LYZ8-x9Z18vDoumI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-11_19,2023-09-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
+ adultscore=0 impostorscore=0 priorityscore=1501 mlxscore=0 mlxlogscore=719
+ lowpriorityscore=0 bulkscore=0 spamscore=0 suspectscore=0 clxscore=1015
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
+ definitions=main-2309120003
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
+        lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Konrad,
+On Mon, Sep 11, 2023 at 04:21:44PM +0530, Mukesh Ojha wrote:
+> 
+> 
+> On 9/11/2023 11:03 AM, Pavan Kondeti wrote:
+> > On Sun, Sep 10, 2023 at 01:46:10AM +0530, Mukesh Ojha wrote:
+> > > As dynamic ramoops command line parsing is now added, so
+> > > lets add the support in ramoops driver to get the resource
+> > > structure and add it during platform device registration.
+> > > 
+> > > Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> > > ---
+> > >   fs/pstore/ram.c | 10 +++++++---
+> > >   1 file changed, 7 insertions(+), 3 deletions(-)
+> > > 
+> > 
+> > Documentation/admin-guide/ramoops.rst might need an update as well.
+> 
+> I have said in the cover-letter under changes in v5, it is open for
+> comment and not yet documented it yet.
+> 
+Sure.
 
-kernel test robot noticed the following build warnings:
+To easy on the reviewers, the under cut portion of a specific patch could be
+used to add footer notes like TODO/Testing etc. In this case, I was lazy to 
+read the loong cover letter posted in this series ;-)
 
-[auto build test WARNING on 7bc675554773f09d88101bf1ccfc8537dc7c0be9]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Konrad-Dybcio/media-venus-pm_helpers-Only-set-rate-of-the-core-clock-in-core_clks_enable/20230912-051942
-base:   7bc675554773f09d88101bf1ccfc8537dc7c0be9
-patch link:    https://lore.kernel.org/r/20230911-topic-mars-v1-11-a7d38bf87bdb%40linaro.org
-patch subject: [PATCH RFT 11/20] media: venus: core: Drop cache properties in resource struct
-config: m68k-allyesconfig (https://download.01.org/0day-ci/archive/20230912/202309120738.fip6vVJN-lkp@intel.com/config)
-compiler: m68k-linux-gcc (GCC) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20230912/202309120738.fip6vVJN-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202309120738.fip6vVJN-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
-   drivers/media/platform/qcom/venus/hfi_venus.c: In function 'venus_isr_thread':
->> drivers/media/platform/qcom/venus/hfi_venus.c:1060:39: warning: variable 'res' set but not used [-Wunused-but-set-variable]
-    1060 |         const struct venus_resources *res;
-         |                                       ^~~
-
-
-vim +/res +1060 drivers/media/platform/qcom/venus/hfi_venus.c
-
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1056  
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1057  static irqreturn_t venus_isr_thread(struct venus_core *core)
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1058  {
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1059  	struct venus_hfi_device *hdev = to_hfi_priv(core);
-4cb3548a87c4a3 Stanimir Varbanov 2017-06-15 @1060  	const struct venus_resources *res;
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1061  	void *pkt;
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1062  	u32 msg_ret;
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1063  
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1064  	if (!hdev)
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1065  		return IRQ_NONE;
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1066  
-4cb3548a87c4a3 Stanimir Varbanov 2017-06-15  1067  	res = hdev->core->res;
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1068  	pkt = hdev->pkt_buf;
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1069  
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1070  
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1071  	while (!venus_iface_msgq_read(hdev, pkt)) {
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1072  		msg_ret = hfi_process_msg_packet(core, pkt);
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1073  		switch (msg_ret) {
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1074  		case HFI_MSG_EVENT_NOTIFY:
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1075  			venus_process_msg_sys_error(hdev, pkt);
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1076  			break;
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1077  		case HFI_MSG_SYS_INIT:
-8b05e503e6c2dd Konrad Dybcio     2023-09-11  1078  			/* Disable OCMEM/VMEM unconditionally until support is added */
-8b05e503e6c2dd Konrad Dybcio     2023-09-11  1079  			venus_hfi_core_set_resource(core, VIDC_RESOURCE_NONE,
-8b05e503e6c2dd Konrad Dybcio     2023-09-11  1080  						    0,
-8b05e503e6c2dd Konrad Dybcio     2023-09-11  1081  						    0,
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1082  						    hdev);
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1083  			break;
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1084  		case HFI_MSG_SYS_RELEASE_RESOURCE:
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1085  			complete(&hdev->release_resource);
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1086  			break;
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1087  		case HFI_MSG_SYS_PC_PREP:
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1088  			complete(&hdev->pwr_collapse_prep);
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1089  			break;
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1090  		default:
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1091  			break;
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1092  		}
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1093  	}
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1094  
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1095  	venus_flush_debug_queue(hdev);
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1096  
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1097  	return IRQ_HANDLED;
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1098  }
-d96d3f30c0f2f5 Stanimir Varbanov 2017-06-15  1099  
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Thanks,
+Pavan
