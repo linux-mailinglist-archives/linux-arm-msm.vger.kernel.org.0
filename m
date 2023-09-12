@@ -2,181 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A4A1379D4BF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 17:27:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7FCE79D52E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 17:42:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232515AbjILP1P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Sep 2023 11:27:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38664 "EHLO
+        id S230075AbjILPms (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Sep 2023 11:42:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230116AbjILP1O (ORCPT
+        with ESMTP id S229661AbjILPmr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Sep 2023 11:27:14 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20E9D10D9;
-        Tue, 12 Sep 2023 08:27:10 -0700 (PDT)
-Received: from nicolas-tpx395.localdomain (unknown [IPv6:2606:6d00:15:bae9::7a9])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits))
-        (No client certificate requested)
-        (Authenticated sender: nicolas)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 24B3E660731E;
-        Tue, 12 Sep 2023 16:27:07 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1694532428;
-        bh=Kiv47ua9LlleunOuYTbsf64o2QsgVZ5hZeZL4I6VnQc=;
-        h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
-        b=Vwd9Tg2kSYQbKfvPRPM9RG5wiNTxJyarMuQzLP5VL7rPQaMMkIWdy2FLMGYQUGOfa
-         7aw5itKMoR7lsAbGqjUzMuXmn1601+9TRD/sR9m6/3odZ1K4HHdFBAENNyxdwmyBHu
-         X98PfciRE2Zqpptw4kflXwOUaposKu1epf0F2RMcD/KzijCfPCo4eQxYrmaAZAG2gu
-         0KcWtfRKi5LoesmP46KbaErH5dafd0ii8TLf3P+ddlSwghBWUF4GeHa5SZ0UDF2iso
-         3CwvcQWZCFNPPILSuksZVAe77C/e/mpn5NFOC+a/EW/fu5qVzMhfquCDeK4utHlgrx
-         nIbOE41i1kM2g==
-Message-ID: <ea5c4cb3e2dab449a2b13e0e3582dbdb2a6561ee.camel@collabora.com>
-Subject: Re: [PATCH v6 14/18] media: verisilicon: vp9: Use destination
- buffer height to compute chroma offset
-From:   Nicolas Dufresne <nicolas.dufresne@collabora.com>
-To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-        Jernej =?UTF-8?Q?=C5=A0krabec?= <jernej.skrabec@gmail.com>,
-        mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
-        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
-        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
-        hverkuil-cisco@xs4all.nl
-Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
-        kernel@collabora.com
-Date:   Tue, 12 Sep 2023 11:26:57 -0400
-In-Reply-To: <40329795-a57d-d0f3-adb4-0720dd20f6e2@collabora.com>
-References: <20230901124414.48497-1-benjamin.gaignard@collabora.com>
-         <4856958.31r3eYUQgx@jernej-laptop>
-         <7da0a2ab-032a-9de9-e136-58f973238c5b@collabora.com>
-         <3248154.aeNJFYEL58@jernej-laptop>
-         <40329795-a57d-d0f3-adb4-0720dd20f6e2@collabora.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.48.4 (3.48.4-1.fc38) 
+        Tue, 12 Sep 2023 11:42:47 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA50710DE;
+        Tue, 12 Sep 2023 08:42:43 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 134D2C433C7;
+        Tue, 12 Sep 2023 15:42:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1694533363;
+        bh=A9IHpP6N316XfcpL5X56A92IaXw42P2If+Z8SUyUWI4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=k3BrWE/7RbfM1QWdm8ZFo2E/rhhf/ftEQCSvzgrUU15e4Ly0NWaWQRogxrkeiGicS
+         CqhUOYHptTl+2V28epsDtyRwDLuLQ3I5bIxofPXOh376f6lWenJmazIEHdwZn2XRoq
+         C+614udDKn5KhmW96reganCO7bT++uvdkjKU/no24EUNsfc8yX+juJCFZ1RigXQOuy
+         ieSZ/PfKWmkMt/39ne26y7JonMfxcv+oJDemareMcSugualICdMOf4f/6S45dfdKFZ
+         qN9hHMTx78zki2XczUY8Zj4deB6p8rC13WBXGDVGCmK54nbCQT8M49vQ+01FMZxfJY
+         wFk5Q499efOng==
+Received: (nullmailer pid 842293 invoked by uid 1000);
+        Tue, 12 Sep 2023 15:42:39 -0000
+Date:   Tue, 12 Sep 2023 10:42:39 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Robert Marko <robimarko@gmail.com>
+Cc:     ilia.lin@kernel.org, vireshk@kernel.org, nm@ti.com,
+        sboyd@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, rafael@kernel.org, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dmitry.baryshkov@linaro.org,
+        Christian Marangi <ansuelsmth@gmail.com>
+Subject: Re: [PATCH v3 2/3] dt-bindings: opp: opp-v2-kryo-cpu: Document named
+ opp-microvolt property
+Message-ID: <20230912154239.GA833216-robh@kernel.org>
+References: <20230909165739.1036263-1-robimarko@gmail.com>
+ <20230909165739.1036263-2-robimarko@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230909165739.1036263-2-robimarko@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Le mardi 12 septembre 2023 =C3=A0 10:41 +0200, Benjamin Gaignard a =C3=A9cr=
-it=C2=A0:
-> Le 11/09/2023 =C3=A0 18:36, Jernej =C5=A0krabec a =C3=A9crit=C2=A0:
-> > Dne ponedeljek, 11. september 2023 ob 10:55:02 CEST je Benjamin Gaignar=
-d
-> > napisal(a):
-> > > Le 10/09/2023 =C3=A0 15:21, Jernej =C5=A0krabec a =C3=A9crit :
-> > > > Hi Benjamin!
-> > > >=20
-> > > > Dne petek, 01. september 2023 ob 14:44:10 CEST je Benjamin Gaignard
-> > > >=20
-> > > > napisal(a):
-> > > > > Source and destination buffer height may not be the same because
-> > > > > alignment constraint are different.
-> > > > > Use destination height to compute chroma offset because we target
-> > > > > this buffer as hardware output.
-> > > > >=20
-> > > > > Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com=
->
-> > > > > Fixes: e2da465455ce ("media: hantro: Support VP9 on the G2 core")
-> > > > > ---
-> > > > >=20
-> > > > >    drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c | 4 +--=
--
-> > > > >    1 file changed, 1 insertion(+), 3 deletions(-)
-> > > > >=20
-> > > > > diff --git a/drivers/media/platform/verisilicon/hantro_g2_vp9_dec=
-.c
-> > > > > b/drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c index
-> > > > > 6db1c32fce4d..1f3f5e7ce978 100644
-> > > > > --- a/drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c
-> > > > > +++ b/drivers/media/platform/verisilicon/hantro_g2_vp9_dec.c
-> > > > > @@ -93,9 +93,7 @@ static int start_prepare_run(struct hantro_ctx =
-*ctx,
-> > > > > const struct v4l2_ctrl_vp9_ static size_t chroma_offset(const str=
-uct
-> > > > > hantro_ctx *ctx,
-> > > > >=20
-> > > > >    			    const struct v4l2_ctrl_vp9_frame
-> > > > *dec_params)
-> > > >=20
-> > > > >    {
-> > > > >=20
-> > > > > -	int bytes_per_pixel =3D dec_params->bit_depth =3D=3D 8 ? 1 : 2;
-> > > > > -
-> > > > > -	return ctx->src_fmt.width * ctx->src_fmt.height * bytes_per_pix=
-el;
-> > > > > +	return ctx->dst_fmt.width * ctx->dst_fmt.height * ctx->bit_dept=
-h /
-> > > > 8;
-> > > >=20
-> > > > Commit message doesn't mention bit_depth change at all. While I thi=
-nk
-> > > > there is no difference between dec_params->bit_depth and ctx->bit_d=
-epth,
-> > > > you shouldn't just use ordinary division. If bit_depth is 10, it wi=
-ll be
-> > > > rounded down. And if you decide to use bit_depth from context, plea=
-se
-> > > > remove dec_params argument.
-> > > I will change this patch and create a helpers function for chroma and=
- motion
-> > > vectors offsets that VP9 and HEVC code will use since they are identi=
-cal.
-> > > I don't see issue with the division. If you have in mind a solution p=
-lease
-> > > write it so I could test it.
-> > Solution is same as the code that you removed:
-> > int bytes_per_pixel =3D dec_params->bit_depth =3D=3D 8 ? 1 : 2;
-> >=20
-> > Or alternatively:
-> > int bytes_per_pixel =3D DIV_ROUND_UP(dec_params->bit_depth, 8);
-> >=20
-> > Consider bit_depth being 10. With old code you get 2, with yours you ge=
-t 1.
->=20
-> The old code is wrong ;-)
-> If the format depth is 10 bits per pixel then chroma offset (in bytes) fo=
-rmula is
-> width * height * 10 / 8 not width * height * 16 / 8.
->=20
-> I have already confirm that with HEVC on the same hardware.
+On Sat, Sep 09, 2023 at 06:56:01PM +0200, Robert Marko wrote:
+> From: Christian Marangi <ansuelsmth@gmail.com>
+> 
+> Document named opp-microvolt property for opp-v2-kryo-cpu schema.
+> This property is used to declare multiple voltage ranges selected on the
+> different values read from efuses. The selection is done based on the
+> speed pvs values and the named opp-microvolt property is selected by the
+> qcom-cpufreq-nvmem driver.
+> 
+> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> ---
+>  .../bindings/opp/opp-v2-kryo-cpu.yaml         | 40 +++++++++++++++++++
+>  1 file changed, 40 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml b/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
+> index bbbad31ae4ca..6f216306a7eb 100644
+> --- a/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
+> +++ b/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
+> @@ -63,6 +63,12 @@ patternProperties:
+>            5:  MSM8996SG, speedbin 1
+>            6:  MSM8996SG, speedbin 2
+>            7-31:  unused
+> +
+> +          Bitmap for IPQ806X SoC:
+> +          0:  IPQ8062
+> +          1:  IPQ8064/IPQ8066/IPQ8068
+> +          2:  IPQ8065/IPQ8069
+> +          3-31:  unused
+>          enum: [0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7,
+>                 0x9, 0xd, 0xe, 0xf,
+>                 0x10, 0x20, 0x30, 0x70]
+> @@ -71,6 +77,24 @@ patternProperties:
+>  
+>        required-opps: true
+>  
+> +    patternProperties:
+> +      '^opp-microvolt-speed[0-9]+-pvs[0-9]+$':
+> +        description: |
+> +          Named opp-microvolt property following the same generic
+> +          binding for named opp-microvolt.
+> +
+> +          The correct voltage range is selected based on the values
+> +          in the efuse for the speed and the pvs.
 
-Just for general interest, this is related to the fact that the reference f=
-rame
-are not P010 tiled (upstreamed but untested code), but NV15 (packed) tiled.=
- I'm
-effectively missing a log of context around this patch though to comment, b=
-ut
-I'd like to underline that v4l2-common have all the information now to deal=
- with
-fractional pixel sizes, which gives me the impression this code is duplicat=
-ing.
+What is "pvs"?
 
-Nicolas
+> +
+> +          The qcom-cpufreq-nvmem driver will read all these values
+> +          and assign the correct named property.
 
->=20
-> Regards,
-> Benjamin
->=20
-> >=20
-> > Best regards,
-> > Jernej
-> >=20
-> > > Regards,
-> > > Benjamin
-> > >=20
-> > > > Best regards,
-> > > > Jernej
-> > > >=20
-> > > > >    }
-> > > > >   =20
-> > > > >    static size_t mv_offset(const struct hantro_ctx *ctx,
-> >=20
-> >=20
-> >=20
-> >=20
+Specific driver details don't belong in binding. If there's some detail 
+or requirement of all consumers, then that is fine here.
 
+> +        $ref: /schemas/types.yaml#/definitions/uint32-matrix
+
+The common binding already defines the type. Drop.
+
+> +        minItems: 1
+> +        maxItems: 8   # Should be enough regulators
+
+Does this really vary from 1 to 8 entries? Looks like copy-n-paste.
+
+> +        items:
+> +          minItems: 1
+> +          maxItems: 3
+
+Do you really need to support both single voltage and <nom min max> 
+forms?
+
+Rob
