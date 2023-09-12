@@ -2,122 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CBC9C79CD2D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 12:07:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DACD879CD33
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 12:07:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234003AbjILKHQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Sep 2023 06:07:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41922 "EHLO
+        id S233889AbjILKHW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Sep 2023 06:07:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234005AbjILKG7 (ORCPT
+        with ESMTP id S233876AbjILKHJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Sep 2023 06:06:59 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C01B10E5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Sep 2023 03:06:38 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-501eec0a373so8789402e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Sep 2023 03:06:38 -0700 (PDT)
+        Tue, 12 Sep 2023 06:07:09 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3612219AB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Sep 2023 03:06:46 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-9a9d6b98845so1281701966b.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Sep 2023 03:06:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694513197; x=1695117997; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1694513204; x=1695118004; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=B/cidZMzbR/pkG1JbPBqCELwIDk3zAzE05nHJDn/4Dc=;
-        b=amOtGY5d69yajfgJQ1iZ8A+cQRLpIl6XOJqfLJMqJHSU08FUQ5RPGZEl6hVxak2G64
-         A0sE6IZ0tVYvEGjFMfFArOzS16UBZWAPE+nbeglaBJiNwDP2UW/42DFSVNZCmCQ7xlpG
-         5PlCgreq5M/q57D5E2n54P9teOpq86T3+r5JxDOFZeWNyrw3oY6wDjs/NPxlglDaR9VK
-         NBsbBbzy7eYcGibbaEfSzg2vAcBfxLoMtF3XW8iiAF/RY4qhWf12oIxidqRE9r75kRyT
-         LkEdwkaBGANFSTdLI6pp0Do7iW57n0K3i03Q5dXBl7hJt8lOJsH/HnklsRR31wAqyahC
-         Idzg==
+        bh=IBiBGq8YC/oHp0cfRWnQ5YGlOgmjdNVAihPt6gGNcNM=;
+        b=dR2dofEh4XuswaSIzndsGtc4G9Lo5IjAAN4SKBDvmzwjY2h22OkHIE2UXrNP54vV1c
+         ounoZUGiKswVQtcKDZO+BquiTBBUGAKqyaevyuy6joGwJOd1dARjlBr6bxIyhxmxror3
+         H7DLUj35S6M2ITsxUsLyEzPmWz3qyT4i3516bPL/xFOS1snx+F1KooisTxfH9HlVxIl3
+         cAl4Dpf/M4TeUo/hOAZUb2SFxk8rlKEciKZ+d8g8+kLX/OQBH4OGkn6mD3KMvOWrOU5L
+         31BhbfPqQMsOTuTkG62QZJaTqE4QrUIpz/5fmVZ59AdoVNzIuAFMl5UXwltvGekNBg1A
+         8aXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694513197; x=1695117997;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1694513204; x=1695118004;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=B/cidZMzbR/pkG1JbPBqCELwIDk3zAzE05nHJDn/4Dc=;
-        b=eZnYA2Qr/hj60DhVyTBqyeRxq7KmtSiJu7ZBsSZILnunx4abGrjtfYTXJkotJe+yJ8
-         UVFmTdIm6sOtKKPUfakCENWpO7IF2JuKDdCcuOz0gnwNzS7L5BFWiJ+HgLzFqAG53tjy
-         +gdUslQfIRCDm1qDUGG3JuO1xYFrAJg8dW/81bRTr6iDMZ5NZq1id6pOVF9lerqbsbW1
-         CWTWHgKbafEBJ8LHNIFD21HBJLKMPVP+sOyZi8vQ4AMFodZJVEdib/VWGsLuVrZX0QqG
-         0kuNdR6pVaqpX+woq04QwPjICxzk8gvj2YJZn0h3wyqAcAIB5lC8yIpXgU2yfguCJ1DY
-         St8w==
-X-Gm-Message-State: AOJu0YyGhsJZhry9Fx42aEw0kwLrfMuQBEk8UsJEU9W3Ulj8mlNjkrHJ
-        Y6NqHFHI0dEnkfrciur9cKz0dw==
-X-Google-Smtp-Source: AGHT+IE1KkINg82xgXtgfFsAN+elTSLLEuf3n41go6FZvb5dTn5/GUITT7qn3k10AZmV41ZP5ezK6w==
-X-Received: by 2002:a05:6512:20ca:b0:500:9619:d9c9 with SMTP id u10-20020a05651220ca00b005009619d9c9mr8100102lfr.61.1694513196688;
-        Tue, 12 Sep 2023 03:06:36 -0700 (PDT)
-Received: from [192.168.37.85] (178235177248.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.248])
-        by smtp.gmail.com with ESMTPSA id x16-20020a056402415000b0052f3051f7d2sm4056670eda.80.2023.09.12.03.06.35
+        bh=IBiBGq8YC/oHp0cfRWnQ5YGlOgmjdNVAihPt6gGNcNM=;
+        b=G+k+blQpD3oBWWAzNbApVZvPkCXJFbaf7YiNq5B1r6CTKv7NlxlZ4o0IUsvP5vX3mv
+         B/2S7idOUR48nJZoth+ZfFSjg4GOUoDqWPNu1+NdQsFfew2khusVMWtlF8u3000rJfDx
+         LQpdQac+UVXIyK7aybvs1ujbchdhzvxEA6bloIrTPCovnrDwpxcFre6jp1G9emGPeElr
+         /VpAH61v6WWiZWAMh0j2AVIdaS9gKUa//gN2lmY6nEPA4mY7w/GsVjnhaEDqaQo131+m
+         +ODI2xNEq1AHpWPSYW4qYBxph7SCbVcqpTDMczXUKjDwnKAodEZHemAx71XSH/w3kBRp
+         c1Og==
+X-Gm-Message-State: AOJu0YyRFu4en9xg3px+ecOjK/7tnWbei5Pp/G8/NMtw4288Xi0X6fbc
+        g07wDeKnm8Gms8+cfGJuOgRpww==
+X-Google-Smtp-Source: AGHT+IFRiMz1rvx/NGmDmYF9SHj5ttXTISHN66oLEMrxFb0YDiSPZvNprwhgZC4DPQf5c18sfGiofw==
+X-Received: by 2002:a17:907:c246:b0:9ad:7cbc:ea5b with SMTP id tj6-20020a170907c24600b009ad7cbcea5bmr2310997ejc.10.1694513204542;
+        Tue, 12 Sep 2023 03:06:44 -0700 (PDT)
+Received: from [192.168.86.24] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id oy25-20020a170907105900b0099d0c0bb92bsm6583517ejb.80.2023.09.12.03.06.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Sep 2023 03:06:36 -0700 (PDT)
-Message-ID: <b49fe557-a601-4219-a365-afb50dddd64e@linaro.org>
-Date:   Tue, 12 Sep 2023 12:06:34 +0200
+        Tue, 12 Sep 2023 03:06:44 -0700 (PDT)
+Message-ID: <cf3816b0-7718-278c-aac2-bdd2dd85ac87@linaro.org>
+Date:   Tue, 12 Sep 2023 11:06:42 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] interconnect: qcom: Add SDX75 interconnect
- provider driver
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v2 00/10] Hardware wrapped key support for qcom ice and
+ ufs
 Content-Language: en-US
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, djakov@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kernel@quicinc.com
-References: <1694513046-24064-1-git-send-email-quic_rohiagar@quicinc.com>
- <1694513046-24064-3-git-send-email-quic_rohiagar@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <1694513046-24064-3-git-send-email-quic_rohiagar@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Eric Biggers <ebiggers@kernel.org>
+Cc:     Gaurav Kashyap <quic_gaurkash@quicinc.com>,
+        linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-block@vger.kernel.org,
+        linux-fscrypt@vger.kernel.org, omprsing@qti.qualcomm.com,
+        quic_psodagud@quicinc.com, avmenon@quicinc.com,
+        abel.vesa@linaro.org, quic_spuppala@quicinc.com
+References: <20230719170423.220033-1-quic_gaurkash@quicinc.com>
+ <f4b5512b-9922-1511-fc22-f14d25e2426a@linaro.org>
+ <20230825210727.GA1366@sol.localdomain>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20230825210727.GA1366@sol.localdomain>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12.09.2023 12:04, Rohit Agarwal wrote:
-> Add driver for the Qualcomm interconnect buses found in SDX75.
+Hi Eric/Gaurav,
+
+Adding more information and some questions to this discussion,
+
+On 25/08/2023 14:07, Eric Biggers wrote:
+> Hi Srinivas,
 > 
-> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
-> ---
-[...]
+> On Fri, Aug 25, 2023 at 11:19:41AM +0100, Srinivas Kandagatla wrote:
+>>
+>> On 19/07/2023 18:04, Gaurav Kashyap wrote:
+>>> These patches add support to Qualcomm ICE (Inline Crypto Enginr) for hardware
+>>> wrapped keys using Qualcomm Hardware Key Manager (HWKM) and are made on top
+>>> of a rebased version  Eric Bigger's set of changes to support wrapped keys in
+>>> fscrypt and block below:
+>>> https://git.kernel.org/pub/scm/fs/fscrypt/linux.git/log/?h=wrapped-keys-v7
+>>> (The rebased patches are not uploaded here)
+>>>
+>>> Ref v1 here:
+>>> https://lore.kernel.org/linux-scsi/20211206225725.77512-1-quic_gaurkash@quicinc.com/
+>>>
+>>> Explanation and use of hardware-wrapped-keys can be found here:
+>>> Documentation/block/inline-encryption.rst
+>>>
+>>> This patch is organized as follows:
+>>>
+>>> Patch 1 - Prepares ICE and storage layers (UFS and EMMC) to pass around wrapped keys.
+>>> Patch 2 - Adds a new SCM api to support deriving software secret when wrapped keys are used
+>>> Patch 3-4 - Adds support for wrapped keys in the ICE driver. This includes adding HWKM support
+>>> Patch 5-6 - Adds support for wrapped keys in UFS
+>>> Patch 7-10 - Supports generate, prepare and import functionality in ICE and UFS
+>>>
+>>> NOTE: MMC will have similar changes to UFS and will be uploaded in a different patchset
+>>>         Patch 3, 4, 8, 10 will have MMC equivalents.
+>>>
+>>> Testing:
+>>> Test platform: SM8550 MTP
+>>> Engineering trustzone image is required to test this feature only
+>>> for SM8550. For SM8650 onwards, all trustzone changes to support this
+>>> will be part of the released images.
+>>
+>> AFAIU, Prior to these proposed changes in scm, HWKM was done with help of
+>> TA(Trusted Application) for generate, import, unwrap ... functionality.
+>>
+>> 1. What is the reason for moving this from TA to new smc calls?
+>>
+>> Is this because of missing smckinvoke support in upstream?
+>>
+>> How scalable is this approach? Are we going to add new sec sys calls to
+>> every interface to TA?
+>>
+>> 2. How are the older SoCs going to deal with this, given that you are
+>> changing drivers that are common across these?
+>>
+>> Have you tested these patches on any older platforms?
+>>
+>> What happens if someone want to add support to wrapped keys to this
+>> platforms in upstream, How is that going to be handled?
+>>
+>> As I understand with this, we will endup with two possible solutions over
+>> time in upstream.
+> 
+> It's true that Qualcomm based Android devices already use HW-wrapped keys on
+> SoCs earlier than SM8650.  The problem is that the key generation, import, and
+> conversion were added to Android's KeyMint HAL, as a quick way to get the
+> feature out the door when it was needed (so to speak).  Unfortunately this
+> coupled this feature unnecessarily to the Android KeyMint and the corresponding
+> (closed source) userspace HAL provided by Qualcomm, which it's not actually
+> related to.  I'd guess that Qualcomm's closed source userspace HAL makes SMC
+> calls into Qualcomm's KeyMint TA, but I have no insight into those details.
+> 
+> The new SMC calls eliminate the dependency on the Android-specific KeyMint.
+> They're also being documented by Qualcomm.  So, as this patchset does, they can
+> be used by Linux in the implementation of new ioctls which provide a vendor
+> independent interface to HW-wrapped key generation, import, and conversion.
+> 
+> I think the new approach is the only one that is viable outside the Android
+> context.  As such, I don't think anyone has any plan to upstream support for
 
-> +
-> +static struct qcom_icc_bcm * const dc_noc_bcms[] = {
-> +};
-Surely this shouldn't be necessary?
+Just bit of history afaiu.
 
-Konrad
+on Qcom SoCs there are 3 ways to talk to Trusted service/Trusted 
+application.
+
+1> Adding SCM calls. This is not scalable solution, imagine we keep 
+adding new scm calls and static services to the TZ as required and this 
+is going to bloat up the tz image size. Not only that, new SoCs would 
+need to maintain backward compatibility, which is not going to happen. 
+AFAIU this is discouraged in general and Qcom at some point in time will 
+move away from this..
+
+2> using QSEECOM: This has some scalable issues, which is now replaced 
+with smcinvoke.
+
+3> smcinvoke: This is preferred way to talk to any QTEE service or 
+application. The issue is that this is based on some downstream UAPI 
+which is not upstream ready yet.
+
+IMO, adding a solution that is just going to live for few years is 
+questionable for upstream.
+
+Fixing [3] seems to be much scalable solution along with it we will also 
+get support for this feature in all the Qualcomm platforms.
+
+Am interested to hear what Gaurav has to say on this.
+
+
+--srini
+
+
+> HW-wrapped keys for older Qualcomm SoCs that lack the new interface.
+> 
+> - Eric
