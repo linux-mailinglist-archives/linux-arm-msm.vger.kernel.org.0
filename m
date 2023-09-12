@@ -2,260 +2,629 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 70FF479CBAB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 11:27:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0290479CBB7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 11:28:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233086AbjILJ1i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Sep 2023 05:27:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54844 "EHLO
+        id S233558AbjILJ2j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Sep 2023 05:28:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230369AbjILJ1h (ORCPT
+        with ESMTP id S231303AbjILJ2i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Sep 2023 05:27:37 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40EE4AA;
-        Tue, 12 Sep 2023 02:27:33 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38C8mJTK021572;
-        Tue, 12 Sep 2023 09:27:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=yq1i6kxCpYGQXgE2QPg1Ntx2QucXtY9xeX9NGkvmJw4=;
- b=E6l6y7NVDVFV+AyNEFfQhJpkGzPN4EyPGuecW0B8Z+y0q9s7v3Lyhvn5CiknCP/6YygR
- uj5WlB47haS2DXfoRLSp1Aq2b/+pvfvkcSboB5YJHsHca0SIThYnwDgyjieDXVg3WB/B
- cr1IatOWuQRMo03LcSP2dUj7i9hnEWBfXITlUEj3Nl3FXMCxdGFzdE5ZIU8asbdxf++i
- KNN8X+3vXCMCeDJuxja/UF4lHQht6xNOzMOk+PW1jzz/kgomv5zVvUFU82Wj51G/KQRw
- 6TQWBah3o0Sm0ziRiPzv2raKL3zK3n+zQKAEG4fogTcaQ3TDbUoDcaDZSXX+tMfWpwbQ MQ== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t1xjmu0pk-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 12 Sep 2023 09:26:59 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38C9QwF4013043
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 12 Sep 2023 09:26:58 GMT
-Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 12 Sep
- 2023 02:26:46 -0700
-Message-ID: <0eeef9c4-14c0-8283-803b-4684854d4be6@quicinc.com>
-Date:   Tue, 12 Sep 2023 14:56:44 +0530
+        Tue, 12 Sep 2023 05:28:38 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 275E3AA;
+        Tue, 12 Sep 2023 02:28:34 -0700 (PDT)
+Received: from localhost (unknown [IPv6:2a01:e0a:2c:6930:5cf4:84a1:2763:fe0d])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: bbrezillon)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 01E366606F85;
+        Tue, 12 Sep 2023 10:28:31 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1694510912;
+        bh=6lI0v+MPutpYwYbjamsFbEVTyoRAjcSizPdz3wmSm4s=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=lEIuF5obioNoQlnLSS/WJuU9OEY70vGZKXvqHHReMWHH/P7y8SaOXck5Q0GvSpTMd
+         d0dlpsgp7VuocIuCdqSRTYV2Oj9sVhWo6qN3Yk6Hw3WurYRzZw0EjdgDEiam7fHdQv
+         Df32Yt1/agNKuhS4x7H4+4Sotb9+DW7kKsI+5jfpfg5w9xXEYlvy5wj7h/qmOperL6
+         nR9o7wIXDOcPe5H+7pTItdEQTAEi8VFqpW79uwvET/DssbNdJaI2mw3dX5YMKBxKHd
+         dp9YWkofhLXP8kH+l2X8R86vHm9pBCl7fTUw9oeCoydsOUviNsyo3tPmYQAIrpSni4
+         3nlyWzQoyO1Tw==
+Date:   Tue, 12 Sep 2023 11:28:29 +0200
+From:   Boris Brezillon <boris.brezillon@collabora.com>
+To:     =?UTF-8?B?QWRyacOhbg==?= Larumbe <adrian.larumbe@collabora.com>
+Cc:     maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
+        robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run,
+        marijn.suijten@somainline.org, robh@kernel.org,
+        steven.price@arm.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        healych@amazon.com, kernel@collabora.com,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v4 2/6] drm/panfrost: Add fdinfo support GPU load
+ metrics
+Message-ID: <20230912112829.15ae9658@collabora.com>
+In-Reply-To: <20230912084044.955864-3-adrian.larumbe@collabora.com>
+References: <20230912084044.955864-1-adrian.larumbe@collabora.com>
+        <20230912084044.955864-3-adrian.larumbe@collabora.com>
+Organization: Collabora
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v5 06/17] soc: qcom: Add Qualcomm APSS minidump kernel
- driver
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <corbet@lwn.net>, <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <keescook@chromium.org>, <tony.luck@intel.com>,
-        <gpiccoli@igalia.com>, <mathieu.poirier@linaro.org>,
-        <catalin.marinas@arm.com>, <will@kernel.org>,
-        <linus.walleij@linaro.org>, <andy.shevchenko@gmail.com>,
-        <vigneshr@ti.com>, <nm@ti.com>, <matthias.bgg@gmail.com>,
-        <kgene@kernel.org>, <alim.akhtar@samsung.com>,
-        <bmasney@redhat.com>, <quic_tsoni@quicinc.com>
-CC:     <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-gpio@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>, <kernel@quicinc.com>
-References: <1694290578-17733-1-git-send-email-quic_mojha@quicinc.com>
- <1694290578-17733-7-git-send-email-quic_mojha@quicinc.com>
- <3bb1e84f-3b65-0596-1b6b-6decb0ff53cc@linaro.org>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <3bb1e84f-3b65-0596-1b6b-6decb0ff53cc@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: hH9AZtJuheitgf9wV6vo0p7NH8AT0oje
-X-Proofpoint-GUID: hH9AZtJuheitgf9wV6vo0p7NH8AT0oje
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-12_06,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- phishscore=0 lowpriorityscore=0 suspectscore=0 mlxlogscore=999
- malwarescore=0 adultscore=0 priorityscore=1501 clxscore=1015 bulkscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309120079
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks for your time in reviewing this.
+On Tue, 12 Sep 2023 09:36:56 +0100
+Adri=C3=A1n Larumbe <adrian.larumbe@collabora.com> wrote:
 
-On 9/11/2023 4:31 PM, Krzysztof Kozlowski wrote:
-> On 09/09/2023 22:16, Mukesh Ojha wrote:
->> Minidump is a best effort mechanism to collect useful and predefined
->> data for first level of debugging on end user devices running on
->> Qualcomm SoCs. It is built on the premise that System on Chip (SoC)
->> or subsystem part of SoC crashes, due to a range of hardware and
->> software bugs. Hence, the ability to collect accurate data is only
->> a best-effort. The data collected could be invalid or corrupted,
->> data collection itself could fail, and so on.
-> 
-> ...
-> 
->> +static int qcom_apss_md_table_init(struct minidump *md,
->> +				   struct minidump_subsystem *mdss_toc)
->> +{
->> +	struct minidump_ss_data *mdss_data;
->> +
->> +	mdss_data = devm_kzalloc(md->dev, sizeof(*mdss_data), GFP_KERNEL);
->> +	if (!mdss_data)
->> +		return -ENOMEM;
->> +
->> +	mdss_data->md_ss_toc = mdss_toc;
->> +	mdss_data->md_regions = devm_kcalloc(md->dev, MAX_NUM_ENTRIES,
->> +					     sizeof(struct minidump_region),
->> +					     GFP_KERNEL);
->> +	if (!mdss_data->md_regions)
->> +		return -ENOMEM;
->> +
->> +	mdss_toc = mdss_data->md_ss_toc;
->> +	mdss_toc->regions_baseptr = cpu_to_le64(virt_to_phys(mdss_data->md_regions));
->> +	mdss_toc->enabled = cpu_to_le32(MINIDUMP_SS_ENABLED);
->> +	mdss_toc->status = cpu_to_le32(1);
->> +	mdss_toc->region_count = cpu_to_le32(0);
->> +
->> +	/* Tell bootloader not to encrypt the regions of this subsystem */
->> +	mdss_toc->encryption_status = cpu_to_le32(MINIDUMP_SS_ENCR_DONE);
->> +	mdss_toc->encryption_required = cpu_to_le32(MINIDUMP_SS_ENCR_NOTREQ);
->> +
->> +	md->apss_data = mdss_data;
->> +
->> +	return 0;
->> +}
->> +
->> +static int qcom_apss_minidump_probe(struct platform_device *pdev)
->> +{
->> +	struct minidump_global_toc *mdgtoc;
->> +	struct minidump *md;
->> +	size_t size;
->> +	int ret;
->> +
->> +	md = devm_kzalloc(&pdev->dev, sizeof(struct minidump), GFP_KERNEL);
-> 
-> sizeof(*)
-> 
-> Didn't you get such comments already?
+> The drm-stats fdinfo tags made available to user space are drm-engine,
+> drm-cycles, drm-max-freq and drm-curfreq, one per job slot.
+>=20
+> This deviates from standard practice in other DRM drivers, where a single
+> set of key:value pairs is provided for the whole render engine. However,
+> Panfrost has separate queues for fragment and vertex/tiler jobs, so a
+> decision was made to calculate bus cycles and workload times separately.
+>=20
+> Maximum operating frequency is calculated at devfreq initialisation time.
+> Current frequency is made available to user space because nvtop uses it
+> when performing engine usage calculations.
+>=20
+> It is important to bear in mind that both GPU cycle and kernel time numbe=
+rs
+> provided are at best rough estimations, and always reported in excess from
+> the actual figure because of two reasons:
+>  - Excess time because of the delay between the end of a job processing,
+>    the subsequent job IRQ and the actual time of the sample.
+>  - Time spent in the engine queue waiting for the GPU to pick up the next
+>    job.
+>=20
+> To avoid race conditions during enablement/disabling, a reference counting
+> mechanism was introduced, and a job flag that tells us whether a given job
+> increased the refcount. This is necessary, because user space can toggle
+> cycle counting through a debugfs file, and a given job might have been in
+> flight by the time cycle counting was disabled.
+>=20
+> The main goal of the debugfs cycle counter knob is letting tools like nvt=
+op
+> or IGT's gputop switch it at any time, to avoid power waste in case no
+> engine usage measuring is necessary.
+>=20
+> Signed-off-by: Adri=C3=A1n Larumbe <adrian.larumbe@collabora.com>
 
-Ok, will fix this, no i have not got such comments as of yet.
-Any reason of using this way?
+Mostly happy with this version, once you've my new comments you can add
 
-> 
-> 
->> +	if (!md)
->> +		return -ENOMEM;
->> +
->> +	md->dev = &pdev->dev;
->> +	mdgtoc = qcom_smem_get(QCOM_SMEM_HOST_ANY, SBL_MINIDUMP_SMEM_ID, &size);
->> +	if (IS_ERR(mdgtoc)) {
->> +		ret = PTR_ERR(mdgtoc);
->> +		dev_err(md->dev, "Couldn't find minidump smem item: %d\n", ret);
->> +		return ret;
-> 
-> The syntax is:
-> return dev_err_probe
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
 
-ACK.
+> ---
+>  drivers/gpu/drm/panfrost/Makefile           |  2 +
+>  drivers/gpu/drm/panfrost/panfrost_debugfs.c | 20 ++++++++
+>  drivers/gpu/drm/panfrost/panfrost_debugfs.h | 13 +++++
+>  drivers/gpu/drm/panfrost/panfrost_devfreq.c |  8 +++
+>  drivers/gpu/drm/panfrost/panfrost_devfreq.h |  3 ++
+>  drivers/gpu/drm/panfrost/panfrost_device.c  |  2 +
+>  drivers/gpu/drm/panfrost/panfrost_device.h  | 13 +++++
+>  drivers/gpu/drm/panfrost/panfrost_drv.c     | 57 ++++++++++++++++++++-
+>  drivers/gpu/drm/panfrost/panfrost_gpu.c     | 41 +++++++++++++++
+>  drivers/gpu/drm/panfrost/panfrost_gpu.h     |  6 +++
+>  drivers/gpu/drm/panfrost/panfrost_job.c     | 39 ++++++++++++++
+>  drivers/gpu/drm/panfrost/panfrost_job.h     |  5 ++
+>  12 files changed, 208 insertions(+), 1 deletion(-)
+>  create mode 100644 drivers/gpu/drm/panfrost/panfrost_debugfs.c
+>  create mode 100644 drivers/gpu/drm/panfrost/panfrost_debugfs.h
+>=20
+> diff --git a/drivers/gpu/drm/panfrost/Makefile b/drivers/gpu/drm/panfrost=
+/Makefile
+> index 7da2b3f02ed9..2c01c1e7523e 100644
+> --- a/drivers/gpu/drm/panfrost/Makefile
+> +++ b/drivers/gpu/drm/panfrost/Makefile
+> @@ -12,4 +12,6 @@ panfrost-y :=3D \
+>  	panfrost_perfcnt.o \
+>  	panfrost_dump.o
+> =20
+> +panfrost-$(CONFIG_DEBUG_FS) +=3D panfrost_debugfs.o
+> +
+>  obj-$(CONFIG_DRM_PANFROST) +=3D panfrost.o
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_debugfs.c b/drivers/gpu/dr=
+m/panfrost/panfrost_debugfs.c
+> new file mode 100644
+> index 000000000000..cc14eccba206
+> --- /dev/null
+> +++ b/drivers/gpu/drm/panfrost/panfrost_debugfs.c
+> @@ -0,0 +1,20 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/* Copyright 2023 Collabora ltd. */
+> +
+> +#include <linux/debugfs.h>
+> +#include <linux/platform_device.h>
+> +#include <drm/drm_debugfs.h>
+> +#include <drm/drm_file.h>
+> +#include <drm/panfrost_drm.h>
+> +
+> +#include "panfrost_device.h"
+> +#include "panfrost_gpu.h"
+> +#include "panfrost_debugfs.h"
+> +
+> +void panfrost_debugfs_init(struct drm_minor *minor)
+> +{
+> +	struct drm_device *dev =3D minor->dev;
+> +	struct panfrost_device *pfdev =3D platform_get_drvdata(to_platform_devi=
+ce(dev->dev));
+> +
+> +	debugfs_create_atomic_t("profile", 0600, minor->debugfs_root, &pfdev->p=
+rofile_mode);
+> +}
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_debugfs.h b/drivers/gpu/dr=
+m/panfrost/panfrost_debugfs.h
+> new file mode 100644
+> index 000000000000..db1c158bcf2f
+> --- /dev/null
+> +++ b/drivers/gpu/drm/panfrost/panfrost_debugfs.h
+> @@ -0,0 +1,13 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +/*
+> + * Copyright 2023 Collabora ltd.
+> + */
+> +
+> +#ifndef PANFROST_DEBUGFS_H
+> +#define PANFROST_DEBUGFS_H
+> +
+> +#ifdef CONFIG_DEBUG_FS
+> +void panfrost_debugfs_init(struct drm_minor *minor);
+> +#endif
+> +
+> +#endif  /* PANFROST_DEBUGFS_H */
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_devfreq.c b/drivers/gpu/dr=
+m/panfrost/panfrost_devfreq.c
+> index 58dfb15a8757..28caffc689e2 100644
+> --- a/drivers/gpu/drm/panfrost/panfrost_devfreq.c
+> +++ b/drivers/gpu/drm/panfrost/panfrost_devfreq.c
+> @@ -58,6 +58,7 @@ static int panfrost_devfreq_get_dev_status(struct devic=
+e *dev,
+>  	spin_lock_irqsave(&pfdevfreq->lock, irqflags);
+> =20
+>  	panfrost_devfreq_update_utilization(pfdevfreq);
+> +	pfdevfreq->current_frequency =3D status->current_frequency;
+> =20
+>  	status->total_time =3D ktime_to_ns(ktime_add(pfdevfreq->busy_time,
+>  						   pfdevfreq->idle_time));
+> @@ -117,6 +118,7 @@ int panfrost_devfreq_init(struct panfrost_device *pfd=
+ev)
+>  	struct devfreq *devfreq;
+>  	struct thermal_cooling_device *cooling;
+>  	struct panfrost_devfreq *pfdevfreq =3D &pfdev->pfdevfreq;
+> +	unsigned long freq =3D ULONG_MAX;
+> =20
+>  	if (pfdev->comp->num_supplies > 1) {
+>  		/*
+> @@ -172,6 +174,12 @@ int panfrost_devfreq_init(struct panfrost_device *pf=
+dev)
+>  		return ret;
+>  	}
+> =20
+> +	/* Find the fastest defined rate  */
+> +	opp =3D dev_pm_opp_find_freq_floor(dev, &freq);
+> +	if (IS_ERR(opp))
+> +		return PTR_ERR(opp);
+> +	pfdevfreq->fast_rate =3D freq;
+> +
+>  	dev_pm_opp_put(opp);
+> =20
+>  	/*
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_devfreq.h b/drivers/gpu/dr=
+m/panfrost/panfrost_devfreq.h
+> index 1514c1f9d91c..48dbe185f206 100644
+> --- a/drivers/gpu/drm/panfrost/panfrost_devfreq.h
+> +++ b/drivers/gpu/drm/panfrost/panfrost_devfreq.h
+> @@ -19,6 +19,9 @@ struct panfrost_devfreq {
+>  	struct devfreq_simple_ondemand_data gov_data;
+>  	bool opp_of_table_added;
+> =20
+> +	unsigned long current_frequency;
+> +	unsigned long fast_rate;
+> +
+>  	ktime_t busy_time;
+>  	ktime_t idle_time;
+>  	ktime_t time_last_update;
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_device.c b/drivers/gpu/drm=
+/panfrost/panfrost_device.c
+> index fa1a086a862b..9a140af97b24 100644
+> --- a/drivers/gpu/drm/panfrost/panfrost_device.c
+> +++ b/drivers/gpu/drm/panfrost/panfrost_device.c
+> @@ -207,6 +207,8 @@ int panfrost_device_init(struct panfrost_device *pfde=
+v)
+> =20
+>  	spin_lock_init(&pfdev->as_lock);
+> =20
+> +	atomic_set(&pfdev->profile_mode, false);
 
-> 
->> +	}
->> +
->> +	if (size < sizeof(*mdgtoc) || !mdgtoc->status) {
->> +		dev_err(md->dev, "minidump table is not initialized: %d\n", ret);
-> 
-> ret is uninitialized here. Please use automated tools for checking your
-> code:
-> coccinelle, smatch and sparse
+Atomics should be initialized to 0 thanks to kzalloc().
 
-Thanks.
+> +
+>  	err =3D panfrost_clk_init(pfdev);
+>  	if (err) {
+>  		dev_err(pfdev->dev, "clk init failed %d\n", err);
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_device.h b/drivers/gpu/drm=
+/panfrost/panfrost_device.h
+> index b0126b9fbadc..1e85656dc2f7 100644
+> --- a/drivers/gpu/drm/panfrost/panfrost_device.h
+> +++ b/drivers/gpu/drm/panfrost/panfrost_device.h
+> @@ -107,6 +107,7 @@ struct panfrost_device {
+>  	struct list_head scheduled_jobs;
+> =20
+>  	struct panfrost_perfcnt *perfcnt;
+> +	atomic_t profile_mode;
+> =20
+>  	struct mutex sched_lock;
+> =20
+> @@ -121,6 +122,11 @@ struct panfrost_device {
+>  	struct shrinker shrinker;
+> =20
+>  	struct panfrost_devfreq pfdevfreq;
+> +
+> +	struct {
+> +		atomic_t use_count;
+> +		spinlock_t lock;
+> +	} cycle_counter;
+>  };
+> =20
+>  struct panfrost_mmu {
+> @@ -135,12 +141,19 @@ struct panfrost_mmu {
+>  	struct list_head list;
+>  };
+> =20
+> +struct panfrost_engine_usage {
+> +	unsigned long long elapsed_ns[NUM_JOB_SLOTS];
+> +	unsigned long long cycles[NUM_JOB_SLOTS];
+> +};
+> +
+>  struct panfrost_file_priv {
+>  	struct panfrost_device *pfdev;
+> =20
+>  	struct drm_sched_entity sched_entity[NUM_JOB_SLOTS];
+> =20
+>  	struct panfrost_mmu *mmu;
+> +
+> +	struct panfrost_engine_usage engine_usage;
+>  };
+> =20
+>  static inline struct panfrost_device *to_panfrost_device(struct drm_devi=
+ce *ddev)
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_drv.c b/drivers/gpu/drm/pa=
+nfrost/panfrost_drv.c
+> index a2ab99698ca8..2d9c115821a7 100644
+> --- a/drivers/gpu/drm/panfrost/panfrost_drv.c
+> +++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
+> @@ -20,6 +20,7 @@
+>  #include "panfrost_job.h"
+>  #include "panfrost_gpu.h"
+>  #include "panfrost_perfcnt.h"
+> +#include "panfrost_debugfs.h"
+> =20
+>  static bool unstable_ioctls;
+>  module_param_unsafe(unstable_ioctls, bool, 0600);
+> @@ -267,6 +268,7 @@ static int panfrost_ioctl_submit(struct drm_device *d=
+ev, void *data,
+>  	job->requirements =3D args->requirements;
+>  	job->flush_id =3D panfrost_gpu_get_latest_flush_id(pfdev);
+>  	job->mmu =3D file_priv->mmu;
+> +	job->priv =3D file_priv;
 
-> 
->> +		return -EINVAL;
->> +	}
->> +
->> +	mutex_init(&md->md_lock);
->> +	ret = qcom_apss_md_table_init(md, &mdgtoc->subsystems[MINIDUMP_APSS_DESC]);
->> +	if (ret) {
->> +		dev_err(md->dev, "apss minidump initialization failed: %d\n", ret);
->> +		return ret;
->> +	}
->> +
->> +	/* First entry would be ELF header */
->> +	ret = qcom_md_add_elfheader(md);
->> +	if (ret) {
->> +		dev_err(md->dev, "Failed to add elf header: %d\n", ret);
->> +		memset(md->apss_data->md_ss_toc, 0, sizeof(struct minidump_subsystem));
-> 
-> Why do you need it?
+As I said before, passing file_priv to the job is a bad idea because
+it's not refcounted, and you can end up with jobs outliving the FD
+context. I know you added NULL checks in the code, but if we start
+passing panfrost_file_priv around, I'm sure we'll forget about this
+constraint and end up with new code using ->priv without checking for
+the NULL situation. I think I'd be more comfortable if you were passing
+panfrost_engine_usage instead.
 
-Earlier, i got comment about clearing the SS TOC(subsystem table of 
-content) which is shared with other SS and it will have stale values.
+> =20
+>  	slot =3D panfrost_job_get_slot(job);
+> =20
+> @@ -523,7 +525,55 @@ static const struct drm_ioctl_desc panfrost_drm_driv=
+er_ioctls[] =3D {
+>  	PANFROST_IOCTL(MADVISE,		madvise,	DRM_RENDER_ALLOW),
+>  };
+> =20
+> -DEFINE_DRM_GEM_FOPS(panfrost_drm_driver_fops);
+> +
+> +static void panfrost_gpu_show_fdinfo(struct panfrost_device *pfdev,
+> +				     struct panfrost_file_priv *panfrost_priv,
+> +				     struct drm_printer *p)
+> +{
+> +	int i;
+> +
+> +	/*
+> +	 * IMPORTANT NOTE: drm-cycles and drm-engine measurements are not
+> +	 * accurate, as they only provide a rough estimation of the number of
+> +	 * GPU cycles and CPU time spent in a given context. This is due to two
+> +	 * different factors:
+> +	 * - Firstly, we must consider the time the CPU and then the kernel
+> +	 *   takes to process the GPU interrupt, which means additional time and
+> +	 *   GPU cycles will be added in excess to the real figure.
+> +	 * - Secondly, the pipelining done by the Job Manager (2 job slots per
+> +	 *   engine) implies there is no way to know exactly how much time each
+> +	 *   job spent on the GPU.
+> +	 */
+> +
+> +	static const char * const engine_names[] =3D {
+> +		"fragment", "vertex-tiler", "compute-only"
+> +	};
+> +
+> +	for (i =3D 0; i < NUM_JOB_SLOTS - 1; i++) {
+> +		drm_printf(p, "drm-engine-%s:\t%llu ns\n",
+> +			   engine_names[i], panfrost_priv->engine_usage.cycles[i]);
+> +		drm_printf(p, "drm-cycles-%s:\t%llu\n",
+> +			   engine_names[i], panfrost_priv->engine_usage.elapsed_ns[i]);
+> +		drm_printf(p, "drm-maxfreq-%s:\t%lu Hz\n",
+> +			   engine_names[i], pfdev->pfdevfreq.fast_rate);
+> +		drm_printf(p, "drm-curfreq-%s:\t%lu Hz\n",
+> +			   engine_names[i], pfdev->pfdevfreq.current_frequency);
+> +	}
+> +}
+> +
+> +static void panfrost_show_fdinfo(struct drm_printer *p, struct drm_file =
+*file)
+> +{
+> +	struct drm_device *dev =3D file->minor->dev;
+> +	struct panfrost_device *pfdev =3D dev->dev_private;
+> +
+> +	panfrost_gpu_show_fdinfo(pfdev, file->driver_priv, p);
+> +}
+> +
+> +static const struct file_operations panfrost_drm_driver_fops =3D {
+> +	.owner =3D THIS_MODULE,
+> +	DRM_GEM_FOPS,
+> +	.show_fdinfo =3D drm_show_fdinfo,
+> +};
+> =20
+>  /*
+>   * Panfrost driver version:
+> @@ -535,6 +585,7 @@ static const struct drm_driver panfrost_drm_driver =
+=3D {
+>  	.driver_features	=3D DRIVER_RENDER | DRIVER_GEM | DRIVER_SYNCOBJ,
+>  	.open			=3D panfrost_open,
+>  	.postclose		=3D panfrost_postclose,
+> +	.show_fdinfo		=3D panfrost_show_fdinfo,
+>  	.ioctls			=3D panfrost_drm_driver_ioctls,
+>  	.num_ioctls		=3D ARRAY_SIZE(panfrost_drm_driver_ioctls),
+>  	.fops			=3D &panfrost_drm_driver_fops,
+> @@ -546,6 +597,10 @@ static const struct drm_driver panfrost_drm_driver =
+=3D {
+> =20
+>  	.gem_create_object	=3D panfrost_gem_create_object,
+>  	.gem_prime_import_sg_table =3D panfrost_gem_prime_import_sg_table,
+> +
+> +#ifdef CONFIG_DEBUG_FS
+> +	.debugfs_init		=3D panfrost_debugfs_init,
+> +#endif
+>  };
+> =20
+>  static int panfrost_probe(struct platform_device *pdev)
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_gpu.c b/drivers/gpu/drm/pa=
+nfrost/panfrost_gpu.c
+> index 2faa344d89ee..f0be7e19b13e 100644
+> --- a/drivers/gpu/drm/panfrost/panfrost_gpu.c
+> +++ b/drivers/gpu/drm/panfrost/panfrost_gpu.c
+> @@ -73,6 +73,13 @@ int panfrost_gpu_soft_reset(struct panfrost_device *pf=
+dev)
+>  	gpu_write(pfdev, GPU_INT_CLEAR, GPU_IRQ_MASK_ALL);
+>  	gpu_write(pfdev, GPU_INT_MASK, GPU_IRQ_MASK_ALL);
+> =20
+> +	/*
+> +	 * All in-flight jobs should have released their cycle
+> +	 * counter references upon reset, but let us make sure
+> +	 */
+> +	if (drm_WARN_ON(pfdev->ddev, atomic_read(&pfdev->cycle_counter.use_coun=
+t) !=3D 0))
+> +		atomic_set(&pfdev->cycle_counter.use_count, 0);
+> +
+>  	return 0;
+>  }
+> =20
+> @@ -321,6 +328,40 @@ static void panfrost_gpu_init_features(struct panfro=
+st_device *pfdev)
+>  		 pfdev->features.shader_present, pfdev->features.l2_present);
+>  }
+> =20
+> +void panfrost_cycle_counter_get(struct panfrost_device *pfdev)
+> +{
+> +	if (atomic_inc_not_zero(&pfdev->cycle_counter.use_count))
+> +		return;
+> +
+> +	spin_lock(&pfdev->cycle_counter.lock);
+> +	if (atomic_inc_return(&pfdev->cycle_counter.use_count) =3D=3D 1)
+> +		gpu_write(pfdev, GPU_CMD, GPU_CMD_CYCLE_COUNT_START);
+> +	spin_unlock(&pfdev->cycle_counter.lock);
+> +}
+> +
+> +void panfrost_cycle_counter_put(struct panfrost_device *pfdev)
+> +{
+> +	if (atomic_add_unless(&pfdev->cycle_counter.use_count, -1, 1))
+> +		return;
+> +
+> +	spin_lock(&pfdev->cycle_counter.lock);
+> +	if (atomic_dec_return(&pfdev->cycle_counter.use_count) =3D=3D 0)
+> +		gpu_write(pfdev, GPU_CMD, GPU_CMD_CYCLE_COUNT_STOP);
+> +	spin_unlock(&pfdev->cycle_counter.lock);
+> +}
+> +
+> +unsigned long long panfrost_cycle_counter_read(struct panfrost_device *p=
+fdev)
+> +{
+> +	u32 hi, lo;
+> +
+> +	do {
+> +		hi =3D gpu_read(pfdev, GPU_CYCLE_COUNT_HI);
+> +		lo =3D gpu_read(pfdev, GPU_CYCLE_COUNT_LO);
+> +	} while (hi !=3D gpu_read(pfdev, GPU_CYCLE_COUNT_HI));
+> +
+> +	return ((u64)hi << 32) | lo;
+> +}
+> +
+>  void panfrost_gpu_power_on(struct panfrost_device *pfdev)
+>  {
+>  	int ret;
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_gpu.h b/drivers/gpu/drm/pa=
+nfrost/panfrost_gpu.h
+> index 468c51e7e46d..4d62e8901c79 100644
+> --- a/drivers/gpu/drm/panfrost/panfrost_gpu.h
+> +++ b/drivers/gpu/drm/panfrost/panfrost_gpu.h
+> @@ -16,6 +16,12 @@ int panfrost_gpu_soft_reset(struct panfrost_device *pf=
+dev);
+>  void panfrost_gpu_power_on(struct panfrost_device *pfdev);
+>  void panfrost_gpu_power_off(struct panfrost_device *pfdev);
+> =20
+> +void panfrost_stop_cycle_counter(struct panfrost_device *pfdev);
+> +void panfrost_cycle_counter_get(struct panfrost_device *pfdev);
+> +void panfrost_cycle_counter_stop(struct panfrost_device *pfdev);
+> +void panfrost_cycle_counter_put(struct panfrost_device *pfdev);
+> +unsigned long long panfrost_cycle_counter_read(struct panfrost_device *p=
+fdev);
+> +
+>  void panfrost_gpu_amlogic_quirk(struct panfrost_device *pfdev);
+> =20
+>  #endif
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_job.c b/drivers/gpu/drm/pa=
+nfrost/panfrost_job.c
+> index 033f5e684707..b6d3c5309a8c 100644
+> --- a/drivers/gpu/drm/panfrost/panfrost_job.c
+> +++ b/drivers/gpu/drm/panfrost/panfrost_job.c
+> @@ -159,6 +159,23 @@ panfrost_dequeue_job(struct panfrost_device *pfdev, =
+int slot)
+>  	struct panfrost_job *job =3D pfdev->jobs[slot][0];
+> =20
+>  	WARN_ON(!job);
+> +	if (job->priv) {
+> +		if (job->is_profiled) {
+> +			job->priv->engine_usage.elapsed_ns[slot] +=3D
+> +				ktime_to_ns(ktime_sub(ktime_get(), job->start_time));
+> +			job->priv->engine_usage.cycles[slot] +=3D
+> +				panfrost_cycle_counter_read(pfdev) - job->start_cycles;
+> +
+> +			/* Reset in case the job has to be requeued */
+> +			job->start_time =3D 0;
+> +			/* A GPU reset puts the Cycle Counter register back to 0 */
+> +			job->start_cycles =3D atomic_read(&pfdev->reset.pending) ?
+> +				0 : panfrost_cycle_counter_read(pfdev);
 
-> 
->> +		return ret;
->> +	}
->> +
->> +	platform_set_drvdata(pdev, md);
->> +
->> +	return ret;
->> +}
->> +
->> +static int qcom_apss_minidump_remove(struct platform_device *pdev)
->> +{
->> +	struct minidump *md = platform_get_drvdata(pdev);
->> +	struct minidump_ss_data *mdss_data;
->> +
->> +	mdss_data = md->apss_data;
->> +	memset(mdss_data->md_ss_toc, cpu_to_le32(0), sizeof(struct minidump_subsystem));
-> 
-> Why do you need it?
+Reading start_cycles here is useless, you'll read it again when
+resubmitting. Same for the start_time, I'd expect the re-submission to
+set this field.
 
-Same as above.
+> +		}
+> +	} else {
+> +		dev_WARN(pfdev->dev, "Panfrost DRM file closed when job was in-flight\=
+n");
 
-> 
->> +	md = NULL;
-> 
-> That's useless assignment.
+I'd drop this warning, it's a valid situation.
 
-Ok.
+> +	}
+> +
+>  	pfdev->jobs[slot][0] =3D pfdev->jobs[slot][1];
+>  	pfdev->jobs[slot][1] =3D NULL;
+> =20
+> @@ -233,6 +250,13 @@ static void panfrost_job_hw_submit(struct panfrost_j=
+ob *job, int js)
+>  	subslot =3D panfrost_enqueue_job(pfdev, js, job);
+>  	/* Don't queue the job if a reset is in progress */
+>  	if (!atomic_read(&pfdev->reset.pending)) {
+> +		if (atomic_read(&pfdev->profile_mode)) {
+> +			panfrost_cycle_counter_get(pfdev);
+> +			job->is_profiled =3D true;
+> +			job->start_time =3D ktime_get();
+> +			job->start_cycles =3D panfrost_cycle_counter_read(pfdev);
+> +		}
+> +
+>  		job_write(pfdev, JS_COMMAND_NEXT(js), JS_COMMAND_START);
+>  		dev_dbg(pfdev->dev,
+>  			"JS: Submitting atom %p to js[%d][%d] with head=3D0x%llx AS %d",
+> @@ -404,6 +428,9 @@ static void panfrost_job_handle_err(struct panfrost_d=
+evice *pfdev,
+>  	const char *exception_name =3D panfrost_exception_name(js_status);
+>  	bool signal_fence =3D true;
+> =20
+> +	if (job->is_profiled)
+> +		panfrost_cycle_counter_put(job->pfdev);
 
-> 
->> +
->> +	return 0;
->> +}
->> +
->> +static struct platform_driver qcom_minidump_driver = {
->> +	.probe = qcom_apss_minidump_probe,
->> +	.remove = qcom_apss_minidump_remove,
->> +	.driver  = {
->> +		.name = "qcom-minidump-smem",
->> +	},
->> +};
->> +
->> +module_platform_driver(qcom_minidump_driver);
->> +
->> +MODULE_DESCRIPTION("Qualcomm APSS minidump driver");
->> +MODULE_LICENSE("GPL");
->> +MODULE_ALIAS("platform:qcom-minidump-smem");
-> 
-> Add a proper ID table instead of re-inventing it with module aliases.
+Can we move that to panfrost_dequeue_job(), so we don't have to do it
+in both panfrost_job_handle_err() and panfrost_job_handle_done()?
 
-Ok.
+> +
+>  	if (!panfrost_exception_is_fault(js_status)) {
+>  		dev_dbg(pfdev->dev, "js event, js=3D%d, status=3D%s, head=3D0x%x, tail=
+=3D0x%x",
+>  			js, exception_name,
+> @@ -453,6 +480,9 @@ static void panfrost_job_handle_err(struct panfrost_d=
+evice *pfdev,
+>  static void panfrost_job_handle_done(struct panfrost_device *pfdev,
+>  				     struct panfrost_job *job)
+>  {
+> +	if (job->is_profiled)
+> +		panfrost_cycle_counter_put(job->pfdev);
+> +
+>  	/* Set ->jc to 0 to avoid re-submitting an already finished job (can
+>  	 * happen when we receive the DONE interrupt while doing a GPU reset).
+>  	 */
+> @@ -660,10 +690,14 @@ panfrost_reset(struct panfrost_device *pfdev,
+>  	 * stuck jobs. Let's make sure the PM counters stay balanced by
+>  	 * manually calling pm_runtime_put_noidle() and
+>  	 * panfrost_devfreq_record_idle() for each stuck job.
+> +	 * Let's also make sure the cycle counting register's refcnt is
+> +	 * kept balanced to prevent it from running forever
+>  	 */
+>  	spin_lock(&pfdev->js->job_lock);
+>  	for (i =3D 0; i < NUM_JOB_SLOTS; i++) {
+>  		for (j =3D 0; j < ARRAY_SIZE(pfdev->jobs[0]) && pfdev->jobs[i][j]; j++=
+) {
+> +			if (pfdev->jobs[i][j]->is_profiled)
+> +				panfrost_cycle_counter_put(pfdev->jobs[i][j]->pfdev);
+>  			pm_runtime_put_noidle(pfdev->dev);
+>  			panfrost_devfreq_record_idle(&pfdev->pfdevfreq);
+>  		}
+> @@ -842,6 +876,8 @@ int panfrost_job_init(struct panfrost_device *pfdev)
+>  		}
+>  	}
+> =20
+> +	spin_lock_init(&pfdev->cycle_counter.lock);
 
--Mukesh
+Ah, so this is where you're initializing the lock. Was searching for
+this in panfrost_device_init().
 
-> 
-> Best regards,
-> Krzysztof
-> 
+> +
+>  	panfrost_job_enable_interrupts(pfdev);
+> =20
+>  	return 0;
+> @@ -926,6 +962,9 @@ void panfrost_job_close(struct panfrost_file_priv *pa=
+nfrost_priv)
+>  			}
+> =20
+>  			job_write(pfdev, JS_COMMAND(i), cmd);
+> +
+> +			/* Jobs can outlive their file context */
+> +			job->priv =3D NULL;
+>  		}
+>  	}
+>  	spin_unlock(&pfdev->js->job_lock);
+> diff --git a/drivers/gpu/drm/panfrost/panfrost_job.h b/drivers/gpu/drm/pa=
+nfrost/panfrost_job.h
+> index 8becc1ba0eb9..63bc830e057d 100644
+> --- a/drivers/gpu/drm/panfrost/panfrost_job.h
+> +++ b/drivers/gpu/drm/panfrost/panfrost_job.h
+> @@ -32,6 +32,11 @@ struct panfrost_job {
+> =20
+>  	/* Fence to be signaled by drm-sched once its done with the job */
+>  	struct dma_fence *render_done_fence;
+> +
+> +	struct panfrost_file_priv *priv;
+> +	bool is_profiled;
+> +	ktime_t start_time;
+> +	u64 start_cycles;
+>  };
+> =20
+>  int panfrost_job_init(struct panfrost_device *pfdev);
+
