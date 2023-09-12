@@ -2,111 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B288679D637
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 18:27:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C69479D68F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 18:42:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233717AbjILQ1H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Sep 2023 12:27:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35414 "EHLO
+        id S235267AbjILQmV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Sep 2023 12:42:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229554AbjILQ1G (ORCPT
+        with ESMTP id S236801AbjILQmU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Sep 2023 12:27:06 -0400
-Received: from mail-vs1-xe2b.google.com (mail-vs1-xe2b.google.com [IPv6:2607:f8b0:4864:20::e2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C20DF1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Sep 2023 09:27:02 -0700 (PDT)
-Received: by mail-vs1-xe2b.google.com with SMTP id ada2fe7eead31-44e3a4d0a6fso2360546137.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Sep 2023 09:27:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694536021; x=1695140821; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pseX5mxL0XGzXErSRsw7i0t8QwNrs2tSMGIB1qfdxus=;
-        b=RMfdOWrc44XJy4OGGhz9R9MjFJQL87EaWFfhnxGgUwlFTQHbjPyeVDhtQOXqKMiU5K
-         M+lff2+vwdiqmAGWSu2QVAwUcAAB5sDyCd4eRvBgp9iqu5cPUYozJeZ4gY0Kj5u0Ie3+
-         LpkK4eyuNHnLEqgQ/VnfHBeh6YZPFe+ggVrfyUnQIGR7/oHE/OKIHSDXNyWFmMQZ6Pd6
-         wCrOtNjY400CXu8eQWpR95OeOD9ycdXOfacupDlS9cYK7NMUwd94dvL9ff4aFGWPIUXQ
-         NRwivSUXydFSZuRMSy4gcS921oQVivfWFgxtVuDrA4j3V9WVd4RHAmMCAqp0wLzTvCRX
-         GokA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694536021; x=1695140821;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pseX5mxL0XGzXErSRsw7i0t8QwNrs2tSMGIB1qfdxus=;
-        b=q8sz2kJGqCvgHKpGnc17aAlqeWWE8NYfwXY0k1xaltW4ePB+swK93SxY8e/z6f5Hsm
-         yUPX4ZJk9oZTKWQjp8hYLPANOrfAychJAR4+2drR4xFLa1s3acGivOKq56pq635n+p15
-         9YmmUT5UIMHaeS9zBKVi2GrZVKepiwVkvGOLsdOjC1+kFJdgB65dxhFLtxy+nREy5MI/
-         MNZJtcZ4cV2Sb4BM/L63eZXPslAt2BUzk/YzXuGnccjn96jtLT5+V9rJUp9JLaJHLjeS
-         Bj+bSkgOhkMjTgHRomqtt/Uv9UsBjx3lTb3w3KIR6zeJsrfiU/QMxb5CZotneoDeYmmc
-         nDdA==
-X-Gm-Message-State: AOJu0YwkfFHVSG9P7yQyfO/cczWPvs96TWDBHVJ46Ll+zXefD0nR3cti
-        Z/loiIObJl/L52SzVIf8+VKc3Cx86fYzZiaCqhM=
-X-Google-Smtp-Source: AGHT+IFDtSC5zf72fWLWq0KidTMLnnuiCSs2m6UzTaQRvRZ5DF8LMG6gf0LjN9NM/ZzZ9GASPC7izA==
-X-Received: by 2002:a67:ce12:0:b0:44e:b30a:c0da with SMTP id s18-20020a67ce12000000b0044eb30ac0damr11417266vsl.26.1694536021760;
-        Tue, 12 Sep 2023 09:27:01 -0700 (PDT)
-Received: from fedora (072-189-067-006.res.spectrum.com. [72.189.67.6])
-        by smtp.gmail.com with ESMTPSA id r17-20020a67c311000000b0044e97414232sm1719149vsj.33.2023.09.12.09.27.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Sep 2023 09:27:00 -0700 (PDT)
-Date:   Tue, 12 Sep 2023 12:26:58 -0400
-From:   William Breathitt Gray <william.gray@linaro.org>
-To:     Patrick Whewell <patrick.whewell@sightlineapplications.com>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] media: venus: Fix firmware path for resources
-Message-ID: <ZQCRUkR9brqK0Fn7@fedora>
-References: <6afa314b-ca5e-a924-de2f-f1db90770623@linaro.org>
- <20230719214943.22641-1-patrick.whewell@sightlineapplications.com>
+        Tue, 12 Sep 2023 12:42:20 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D72C410DF
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Sep 2023 09:42:16 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38C9S7Cm011359;
+        Tue, 12 Sep 2023 16:41:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=AsHXnwwbd7YXERWnnmLVg0c25HPkD9xWV8YP8pooxf0=;
+ b=mxllP2p9q+5EdPMYjhbRhcIeIB4LU1PZuigR6UfU3OTOWOlb0nen09hAYNVgaEFNmUiR
+ MgC+UdeOiql1NvBf2ZRFPsBhmZ1ng55sy77h8IXnfwKs6RpSZBbuD20bSKIz8tAKUdbE
+ U6Ke9gCkknLHh5h2GT2BXKuWgxnXIEFHDhuKTKSkKQYTzVwgWk32X6XYeH1nIl/+YZ0S
+ 1sWleM6NmulzDmfLOXqvUEw5xboKBc9erGmE0INdJOWXm5PlA/MQ4Z+cYD97iXTMIzFf
+ ioTiqHHuQVGnmJ1mzFKrhtmzdtb9Cr3xHOGQcLY+ecRDPfTL5rPYp0/CFTPs7z4ykSzp zQ== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t2ncp19md-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 12 Sep 2023 16:41:43 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38CGfgQv001003
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 12 Sep 2023 16:41:42 GMT
+Received: from [10.71.110.104] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 12 Sep
+ 2023 09:41:40 -0700
+Message-ID: <36b5dd86-0532-882a-4220-33b38fab2a63@quicinc.com>
+Date:   Tue, 12 Sep 2023 09:41:37 -0700
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="MJaqVacy1OGcgh3o"
-Content-Disposition: inline
-In-Reply-To: <20230719214943.22641-1-patrick.whewell@sightlineapplications.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [Freedreno] [PATCH] drm/msm/dp: skip validity check for DP CTS
+ EDID checksum
+Content-Language: en-US
+To:     Jani Nikula <jani.nikula@intel.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        <dri-devel@lists.freedesktop.org>
+CC:     <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        Kuogee Hsieh <khsieh@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Sean Paul <sean@poorly.run>
+References: <20230901142034.580802-1-jani.nikula@intel.com>
+ <CAE-0n52T4VGVVKqZCJwhpxe=vLUb7WNi=J0hdsHFOqA95u-Ymg@mail.gmail.com>
+ <877covy4bl.fsf@intel.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <877covy4bl.fsf@intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 69tF28V0oyckKYoNOHdDKVSMpFy5Sg-G
+X-Proofpoint-ORIG-GUID: 69tF28V0oyckKYoNOHdDKVSMpFy5Sg-G
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-12_16,2023-09-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
+ bulkscore=0 spamscore=0 priorityscore=1501 mlxscore=0 suspectscore=0
+ clxscore=1011 malwarescore=0 mlxlogscore=999 adultscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309120140
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Jani
 
---MJaqVacy1OGcgh3o
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 9/12/2023 5:16 AM, Jani Nikula wrote:
+> On Thu, 07 Sep 2023, Stephen Boyd <swboyd@chromium.org> wrote:
+>> Quoting Jani Nikula (2023-09-01 07:20:34)
+>>> The DP CTS test for EDID last block checksum expects the checksum for
+>>> the last block, invalid or not. Skip the validity check.
+>>>
+>>> For the most part (*), the EDIDs returned by drm_get_edid() will be
+>>> valid anyway, and there's the CTS workaround to get the checksum for
+>>> completely invalid EDIDs. See commit 7948fe12d47a ("drm/msm/dp: return
+>>> correct edid checksum after corrupted edid checksum read").
+>>>
+>>> This lets us remove one user of drm_edid_block_valid() with hopes the
+>>> function can be removed altogether in the future.
+>>>
+>>> (*) drm_get_edid() ignores checksum errors on CTA extensions.
+>>>
+>>> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>>> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> Cc: Kuogee Hsieh <khsieh@codeaurora.org>
+>>> Cc: Marijn Suijten <marijn.suijten@somainline.org>
+>>> Cc: Rob Clark <robdclark@gmail.com>
+>>> Cc: Sean Paul <sean@poorly.run>
+>>> Cc: Stephen Boyd <swboyd@chromium.org>
+>>> Cc: linux-arm-msm@vger.kernel.org
+>>> Cc: freedreno@lists.freedesktop.org
+>>> Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+>>> ---
+>>
+>> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> 
+> Thanks; is that enough to merge? I can't claim I would have been able to
+> test this.
+> 
 
-On Wed, Jul 19, 2023 at 02:49:42PM -0700, Patrick Whewell wrote:
-> The firmware path for some of the resources is still the old format. This
-> fixes the path to address the firmware correctly using the new .mbn
-> format.
->=20
-> Signed-off-by: Patrick Whewell <patrick.whewell@sightlineapplications.com>
-> ---
-> I've updated all .fwname to match the .mbn format. There is a
-> qcom/venus-4.4/venus.mdt for the sdm660 that still remains but the linux-=
-firmware
-> package does not contain that firmware file anymore, so i left as is.
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-I noticed this patch hasn't been picked up yet. Is there anything
-pending left for approval, or can it be merged now?
+Change looks fine.
 
-William Breathitt Gray
+We can pick this up in the MSM tree if you would like.
 
---MJaqVacy1OGcgh3o
-Content-Type: application/pgp-signature; name="signature.asc"
+Dmitry, you can please pick this up along with my R-b and Kuogee's R-b 
+as well.
 
------BEGIN PGP SIGNATURE-----
+I think his R-b got misformatted. I can ask him to add that again.
 
-iHUEARYKAB0WIQSNN83d4NIlKPjon7a1SFbKvhIjKwUCZQCRUgAKCRC1SFbKvhIj
-K2p6AQC+12yl4i8rRO64p9Haennv4cMxjYHP55D91KkhvyLLtwD/VzljGXG7tbUY
-qKV12MX45Zui13uOcezWMP2zCjewdQM=
-=jLan
------END PGP SIGNATURE-----
-
---MJaqVacy1OGcgh3o--
+>>
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+>>> index 42d52510ffd4..86a8e06c7a60 100644
+>>> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
+>>> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+>>> @@ -289,26 +289,9 @@ int dp_panel_get_modes(struct dp_panel *dp_panel,
+>>>
+>>>   static u8 dp_panel_get_edid_checksum(struct edid *edid)
+>>
+>> It would be nice to make 'edid' const here in another patch.
+> 
+> Sure.
+> 
+> BR,
+> Jani.
+> 
+> 
