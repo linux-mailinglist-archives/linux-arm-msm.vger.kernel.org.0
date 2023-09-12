@@ -2,115 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9512D79C876
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 09:46:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 33B4179C894
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 09:50:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231747AbjILHqG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Sep 2023 03:46:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57974 "EHLO
+        id S231824AbjILHuZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Sep 2023 03:50:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231587AbjILHqF (ORCPT
+        with ESMTP id S231802AbjILHuY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Sep 2023 03:46:05 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E04B5E7A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Sep 2023 00:46:00 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-50079d148aeso8991707e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Sep 2023 00:46:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694504759; x=1695109559; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UO+Ah5ip6KnfB/vBnePvdgXRNVLlUxVxoT5FIOLcDt8=;
-        b=Gp1dbBYkZfEATnl4Xm5x6uq5iLwKPWmltUvCBbFkRQ9+AhzngtZHQm6Z+WtFaUQg5a
-         67VEpOj4WjcL0sS4Fgz11nDXXNd2JIpcqwRW0QX9e6hRje9Ie1NZiJ7h+TAsrGVy2xTA
-         y1V/FWYqyQAwyBhOMvX75bbxok4kGw5DDssCxjEuqQmcfHGM9lg9Vs7fiiyHupfxfJRk
-         iheOwlq8wGOOpCfZLC4YVwFBi35CdJVX9I+BSNiJgua1BTZLNwPldkh6hsxd9xGieEtd
-         VRX4FtHTJzu0RhYWCBbkqaoAlnVRSMA7L//gljxLseehnCTbqUx4WX/GMScytC+hsjbz
-         Giow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694504759; x=1695109559;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UO+Ah5ip6KnfB/vBnePvdgXRNVLlUxVxoT5FIOLcDt8=;
-        b=q9RzNU2rB/U3LJQtym+a4yTKxcNyDqBM78t7QYXy+SzYK2yoHkaVwQv7CK9XBoTaQH
-         HtkV4fi/9uyqusvRLla2hWgz6Toox/uiYas5SUT/oz7zhujax1Y4u1JoZ0P4GDvVXQeC
-         nNT6aC4DGodqXRO6/cRAzwFon/XlJ9IyRWBWS4LslY06UZCsPBUgiVNH0Y+i8zykKvHV
-         HR/6iB59DbaGmMB748Vqp2QbKtwe/gtf6nYgF1JcKq8psowGj2pkB7rwiMchO+JNrq2T
-         kgFs4d52NuqOJaV/obNTIKl0mmgFxgJiTywAzlbBtSCFdd1aH+MpZL/GAPV1fW1VUhdC
-         Z3Eg==
-X-Gm-Message-State: AOJu0Yyjq04p5Wg1kgDonolb9uVt6klXNABhD2GixO7wqnLWzib38SL9
-        w7nQg5wmwEuie0sUsuTBX8kAKw==
-X-Google-Smtp-Source: AGHT+IFCv/tZdiI8/OJwqgQK2aqFb8wWTdsIzzu2OmDGeJCR7xNOUg42/rIKbiOuYW4uVPDAMwbcnQ==
-X-Received: by 2002:a19:6404:0:b0:4ff:89fc:9b5b with SMTP id y4-20020a196404000000b004ff89fc9b5bmr9089333lfb.9.1694504759075;
-        Tue, 12 Sep 2023 00:45:59 -0700 (PDT)
-Received: from [192.168.37.85] (178235177248.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.248])
-        by smtp.gmail.com with ESMTPSA id g25-20020a19ee19000000b004fe3d7861cesm1636603lfb.162.2023.09.12.00.45.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Sep 2023 00:45:58 -0700 (PDT)
-Message-ID: <a906fdd7-0ed9-42ad-abf4-820ecdccda97@linaro.org>
-Date:   Tue, 12 Sep 2023 09:45:56 +0200
+        Tue, 12 Sep 2023 03:50:24 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 259EA10C2;
+        Tue, 12 Sep 2023 00:50:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1694505010; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=DmXgqBUdp8c0XCJ9K3rW2asByY2yNYSpKXLkUQsGKqXQP2ZILmFaVZDT3Pf5RvHISI
+    PdJD7StLS8MUkZawg8eByT57bisbaCd6pRZ1NhsR5gydNZ2dmNayUfYC63jcCV6l73Fk
+    xWN77yPFs7iPiV6GMrGp/hI+lxu71b6wsA85fUkv1ITCnx92n//gTvk3ysbAj3DSBElz
+    ESv5i6z8upH+lo5Z2W1KZnUx0OYRNNKzVGmkUUZZKWbcmORfJjf92ATxpZ+Wc4puo09f
+    XrAvapo1kaUzYihBn0KlysVhr92J2UBssiF4lETOM+n+wdwnUarnTzhRSIutyqkoPx5/
+    /yOQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1694505010;
+    s=strato-dkim-0002; d=strato.com;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=jSjCvcuGUtmDVM5LebemKIMbXYQsSZIFLfVWBoighTA=;
+    b=iGUSK+mFpxJLB9NXXDczqt+dn0Wty+fF6tbpihoOZ2JwV5OAV0Htaj0lMQur5dv35b
+    uZxUCHHLZd5/5LsRfGlihI8Vn8bMJpeHW+xz7yMnDDV5s9BQTreJSgTCYr0iqjnJnGU+
+    i7Dn3RNesN4QUzkgrq2huUiCNmpTJXFco7iSYn5Q24RXrw3oPnCLIf9FYew+y32l1tGE
+    /375bcO1cFz1MSkFauenMZBlz0/PF2C59ILiM/LL5m+N7HOE6APY09WynkOWH9atEIlq
+    NXx4QxwW70E/tHfCX9AHFny+7jpfuODBZStYPyJFV+5C12eWxK1cuzKj0fMcwoexAXF4
+    Hyvw==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1694505010;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=jSjCvcuGUtmDVM5LebemKIMbXYQsSZIFLfVWBoighTA=;
+    b=X58wvMl1YInii6yl+OMTBHNe+t+tGjaQsFFHVMkSJzuKicsrURIkTdJ7RQCbDepbEB
+    0yutOKmOTTeUSPEK4Wy6zksHJsCgZLgOtC82i42wOuQpCb0IKKzEFIi340T8Y6zoJ0d+
+    AgkIBg2iffQnIb2cUk7PAqS0Ch6fyl1be2PrN14g8JlcF2Gh+DY2jHjt/MmuyF24n77F
+    FPo/sfTG8qg1/264QXTU8GORl58aOUAv6ZXgSntOqpNZ1Er94RUzAyz54P0pAQrrteFH
+    6fwhM5XS/lrwtLQUVh3Q3eMHyhw5VGbUJjqY9lxHzIblpIynUBp2XMG5bhZkUyOd0/Q0
+    OfAg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1694505010;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=jSjCvcuGUtmDVM5LebemKIMbXYQsSZIFLfVWBoighTA=;
+    b=lLkdfdVGIQom/dXOgHMlTrGeJjq6Qu7P9OtCQ0r7xVViMJPJiqvxg9q5m7k1QPt5e4
+    9TWxQr3HVgvjHLWhwXAw==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQjVd4CteZ/7jYgS+mLFY+H0JAn9VOL7nT0="
+Received: from [192.168.244.3]
+    by smtp.strato.de (RZmta 49.8.2 DYNA|AUTH)
+    with ESMTPSA id 60372az8C7oAcKl
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Tue, 12 Sep 2023 09:50:10 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+Subject: [PATCH 0/6] regulator: qcom_spmi: Add PM8909, PM8019 and PMA8084
+Date:   Tue, 12 Sep 2023 09:49:48 +0200
+Message-Id: <20230912-spmi-pm8909-v1-0-ba4b3bfaf87d@gerhold.net>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/9] arm64: dts: qcom: msm8916/39: Disable GPU by default
-Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-References: <20230911-msm8916-rmem-v1-0-b7089ec3e3a1@gerhold.net>
- <20230911-msm8916-rmem-v1-2-b7089ec3e3a1@gerhold.net>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230911-msm8916-rmem-v1-2-b7089ec3e3a1@gerhold.net>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABwYAGUC/y2NQQqEMAxFryJZG6gOo9ariIuoUbOwlgZEKN592
+ sHl4/3Hj6AchBX6IkLgS1ROl6AqC5h3chujLImhNvXHWNOg+kPQH501FpeWmKqmoy9ZSMVEyjg
+ FcvOem3eVi2x94FXu/9cwPs8PHDXiLHsAAAA=
+To:     Mark Brown <broonie@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Robert Marko <robimarko@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Stephan Gerhold <stephan@gerhold.net>,
+        Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+X-Mailer: b4 0.12.3
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11.09.2023 19:41, Stephan Gerhold wrote:
-> MSM8916/39 do not need signed GPU firmware
-As in, the only piece of GPU firmware that they require, does
-not feature a vendor signature.
+Add the necessary definitions for the PM8909, PM8019 and PMA8084 PMIC to
+the qcom_spmi-regulator driver to allow reading the actual voltages
+applied to the hardware at runtime. This is mainly intended for
+debugging since the regulators are usually controlled through the
+RPM firmware (via qcom_smd-regulator).
 
-What you said may sound overly optimistic to some :P
+These PMICs are used on totally different platforms (MSM8909, MDM9607, 
+MSM8974/APQ8084). Each PMIC addition is independent and useful on it 
+own. I only bundled them to simplify review.
 
-Konrad
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+---
+Stephan Gerhold (6):
+      dt-bindings: regulator: qcom,spmi: Document PM8909
+      regulator: qcom_spmi: Add PM8909 regulators
+      dt-bindings: regulator: qcom,spmi: Document PM8019
+      regulator: qcom_spmi: Add PM8019 regulators
+      dt-bindings: regulator: qcom,spmi: Document PMA8084
+      regulator: qcom_spmi: Add PMA8084 regulators
+
+ .../bindings/regulator/qcom,spmi-regulator.yaml    | 68 ++++++++++++++-
+ drivers/regulator/qcom_spmi-regulator.c            | 96 ++++++++++++++++++++++
+ 2 files changed, 163 insertions(+), 1 deletion(-)
+---
+base-commit: b03f047d9f28d6e68dce6ca66383b80ad66ec1ce
+change-id: 20230906-spmi-pm8909-d7aea168a5a9
+
+Best regards,
+-- 
+Stephan Gerhold <stephan@gerhold.net>
+
