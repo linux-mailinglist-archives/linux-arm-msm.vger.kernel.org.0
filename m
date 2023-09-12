@@ -2,129 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D32079CC3E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 11:47:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 750E879CC69
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 11:52:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232721AbjILJrO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Sep 2023 05:47:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41178 "EHLO
+        id S232982AbjILJwB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Sep 2023 05:52:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231769AbjILJrN (ORCPT
+        with ESMTP id S231274AbjILJwB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Sep 2023 05:47:13 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79C3B12E;
-        Tue, 12 Sep 2023 02:47:09 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38C98utC000883;
-        Tue, 12 Sep 2023 09:46:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=iBud7bDwgB/NkAvNOZ5XH0nzWWSfAmK24B93zv8Y0zg=;
- b=QdsGspPnJ/v9W1U1h5QbW8T9QcK8JFtFNHI5XMrahMxozMOmJcJ76YlKX2YmNmOxz5tg
- QJB2R9Mx4LIFCB5Tk2gYi8AIo9VJdJUES9Ss12CVKt+TbM2wkCd8JAZJhGj0mUwSScBu
- KFDOupZ9DdwJZ9EGVmDfFSJ380dMFQmpPTAy/CnzjvM5juqT8ZuYD6n/YtO33skUccaV
- y3s0pD1CJGkNe5oOeN8Wk4kiSH2qGsV6EwnoSHBdFp+q7TUnB0a2oFssPzv+Mo9XWzcK
- zB0y/94i4a1a4ymHBuJnxxjtI+IG3N/I2wyBKbHqCsGAs988LdMwg9GdmUKFIaTz1R54 jw== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t20yy2pbh-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 12 Sep 2023 09:46:43 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38C9kg95025681
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 12 Sep 2023 09:46:42 GMT
-Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 12 Sep
- 2023 02:46:23 -0700
-Message-ID: <78509d6a-e721-2395-b5f6-321227e76556@quicinc.com>
-Date:   Tue, 12 Sep 2023 15:16:20 +0530
+        Tue, 12 Sep 2023 05:52:01 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D7CFE64
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Sep 2023 02:51:57 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id ffacd0b85a97d-31fa15f4cc6so2143000f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Sep 2023 02:51:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694512315; x=1695117115; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=9Tih3O3Ydm0JsrnuMZOZV7VpgdAG6a7rdj87uDAe7g0=;
+        b=tNpr2Luhv5QXYSp/F9M7dO2M8hbskn0QSsw8l2LbQktKydPYLSin9HE0VUonRLK3OW
+         5Ti1a3yh+08mDLjh1DaQAIU5dypp3XMJRRMjcEz/2DWkpO1UzEoUW3/gELX8TNkS+BqB
+         LkCwowwAE71ls0KkASyazT+tdGtGwNlgt/4++yl9MoYpBe1sEXb2/3MzmfV3RjJE7OIt
+         FpXpjRjX9mFZELTGdqivpjn1DQtpEf1nfXLLrlFbCJ97K7xwhxLcwgYTiXCP1TJTE40x
+         ySaP7R3S4AYBpiM/CnS09wbNKjSp4eLgfDwxGibTwspiEdsHwyDFvLdx7MPHGx2KiEMF
+         NEgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694512315; x=1695117115;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9Tih3O3Ydm0JsrnuMZOZV7VpgdAG6a7rdj87uDAe7g0=;
+        b=MNV7js1jKSNyd2tdFs3YG/JRDfJqUz876i9VLkKJ43MGYa6PmBwpCy7gTCmBd/yWNc
+         TwH93WqiyQpioz5gmYrFI79/npVXBdgMO/AC+78cZDAqB72pQNNTxxALRPSAzMCJBU6z
+         lHsrH7mjdswCdjalauNBvblIE/fg4TSQupExhRB466tTwXGeqqtNHEq/3GFE2Yr7pzXh
+         3016kCGhshgHzAx+/YGUT6ciO07dzgI0p57Q+ZracqAbJCPNWM9cSqJcMxMV5qyxBtTv
+         W3hlLv0zYQITrEFBwKq3/kT9DtLXx+6jwbxCHaNpfBkz1ZJAFEs+N35Faq4BHumBfMIS
+         V9Uw==
+X-Gm-Message-State: AOJu0YwaEYPiCdwRtgD10SCI6OR72Ss6pYq4OIp5T39CnbJE0JF2wfeX
+        Nth8HGWEOLDK8kbWwdFAk78yHg==
+X-Google-Smtp-Source: AGHT+IFdTQBwPmY6vpkE2SrZ8u5W2o7R+C+UzAfq4FmfjMzRK7cKvY7JleoNcmONCEyN/T0Zmn4k1A==
+X-Received: by 2002:a5d:560e:0:b0:314:1ebc:6e19 with SMTP id l14-20020a5d560e000000b003141ebc6e19mr9255106wrv.64.1694512315556;
+        Tue, 12 Sep 2023 02:51:55 -0700 (PDT)
+Received: from linaro.org ([84.232.191.193])
+        by smtp.gmail.com with ESMTPSA id r15-20020a5d694f000000b003143c6e09ccsm12329116wrw.16.2023.09.12.02.51.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Sep 2023 02:51:55 -0700 (PDT)
+Date:   Tue, 12 Sep 2023 12:51:53 +0300
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     David Heidelberg <david@ixit.cz>
+Cc:     cros-qcom-dts-watchers@chromium.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: sdm845: Fix PSCI power domain
+ names
+Message-ID: <ZQA0uS9ZXtzUY3IG@linaro.org>
+References: <20230912071205.11502-1-david@ixit.cz>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v5 09/17] pstore/ram: Use dynamic ramoops reserve resource
-Content-Language: en-US
-To:     Pavan Kondeti <quic_pkondeti@quicinc.com>
-CC:     <corbet@lwn.net>, <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <keescook@chromium.org>, <tony.luck@intel.com>,
-        <gpiccoli@igalia.com>, <mathieu.poirier@linaro.org>,
-        <catalin.marinas@arm.com>, <will@kernel.org>,
-        <linus.walleij@linaro.org>, <andy.shevchenko@gmail.com>,
-        <vigneshr@ti.com>, <nm@ti.com>, <matthias.bgg@gmail.com>,
-        <kgene@kernel.org>, <alim.akhtar@samsung.com>,
-        <bmasney@redhat.com>, <quic_tsoni@quicinc.com>,
-        <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-gpio@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>, <kernel@quicinc.com>
-References: <1694290578-17733-1-git-send-email-quic_mojha@quicinc.com>
- <1694290578-17733-10-git-send-email-quic_mojha@quicinc.com>
- <20425ace-3ef5-4eaf-8319-999bafa34a07@quicinc.com>
- <35c9d1b1-0f48-b873-d703-c880f3b91422@quicinc.com>
- <d69a1822-0972-419a-ae8b-b6979733a18b@quicinc.com>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <d69a1822-0972-419a-ae8b-b6979733a18b@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: KKdfHQi5R8bi5R4sr-NcU0C0Fz2dstUE
-X-Proofpoint-GUID: KKdfHQi5R8bi5R4sr-NcU0C0Fz2dstUE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-12_07,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
- mlxscore=0 mlxlogscore=841 bulkscore=0 malwarescore=0 priorityscore=1501
- suspectscore=0 clxscore=1015 spamscore=0 adultscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
- definitions=main-2309120081
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230912071205.11502-1-david@ixit.cz>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 9/12/2023 6:09 AM, Pavan Kondeti wrote:
-> On Mon, Sep 11, 2023 at 04:21:44PM +0530, Mukesh Ojha wrote:
->>
->>
->> On 9/11/2023 11:03 AM, Pavan Kondeti wrote:
->>> On Sun, Sep 10, 2023 at 01:46:10AM +0530, Mukesh Ojha wrote:
->>>> As dynamic ramoops command line parsing is now added, so
->>>> lets add the support in ramoops driver to get the resource
->>>> structure and add it during platform device registration.
->>>>
->>>> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
->>>> ---
->>>>    fs/pstore/ram.c | 10 +++++++---
->>>>    1 file changed, 7 insertions(+), 3 deletions(-)
->>>>
->>>
->>> Documentation/admin-guide/ramoops.rst might need an update as well.
->>
->> I have said in the cover-letter under changes in v5, it is open for
->> comment and not yet documented it yet.
->>
-> Sure.
+On 23-09-12 12:42:03, David Heidelberg wrote:
+> The original commit hasn't been updated according to
+> refactoring done in sdm845.dtsi.
 > 
-> To easy on the reviewers, the under cut portion of a specific patch could be
-> used to add footer notes like TODO/Testing etc. In this case, I was lazy to
-> read the loong cover letter posted in this series ;-)
+> Fixes: a1ade6cac5a2 ("arm64: dts: qcom: sdm845: Switch PSCI cpu idle states from PC to OSI")
+> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: David Heidelberg <david@ixit.cz>
 
-I have seen it, will comment related to particular patch under --- .
-Thanks for suggestion.
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
 
--Mukesh
-
+> ---
+> v2:
+>  - removed power-domains from apps_rsc
 > 
-> Thanks,
-> Pavan
+>  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi | 20 +++++++++++---------
+>  1 file changed, 11 insertions(+), 9 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+> index 50934d4ab3bc..e0ee91225eec 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+> @@ -144,15 +144,15 @@ panel_in_edp: endpoint {
+>  };
+>  
+>  &psci {
+> -	/delete-node/ cpu0;
+> -	/delete-node/ cpu1;
+> -	/delete-node/ cpu2;
+> -	/delete-node/ cpu3;
+> -	/delete-node/ cpu4;
+> -	/delete-node/ cpu5;
+> -	/delete-node/ cpu6;
+> -	/delete-node/ cpu7;
+> -	/delete-node/ cpu-cluster0;
+> +	/delete-node/ power-domain-cpu0;
+> +	/delete-node/ power-domain-cpu1;
+> +	/delete-node/ power-domain-cpu2;
+> +	/delete-node/ power-domain-cpu3;
+> +	/delete-node/ power-domain-cpu4;
+> +	/delete-node/ power-domain-cpu5;
+> +	/delete-node/ power-domain-cpu6;
+> +	/delete-node/ power-domain-cpu7;
+> +	/delete-node/ power-domain-cluster;
+>  };
+>  
+>  &cpus {
+> @@ -338,6 +338,8 @@ flash@0 {
+>  
+>  
+>  &apps_rsc {
+> +	/delete-property/ power-domains;
+> +
+>  	regulators-0 {
+>  		compatible = "qcom,pm8998-rpmh-regulators";
+>  		qcom,pmic-id = "a";
+> -- 
+> 2.40.1
+> 
