@@ -2,124 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 25A4779C737
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 08:53:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DCFB79C757
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 08:59:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230265AbjILGx6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Sep 2023 02:53:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44646 "EHLO
+        id S231271AbjILG7l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Sep 2023 02:59:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230408AbjILGx6 (ORCPT
+        with ESMTP id S231228AbjILG7i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Sep 2023 02:53:58 -0400
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B2019B
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 23:53:54 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qfxHP-0008Dx-E4; Tue, 12 Sep 2023 08:53:47 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qfxHO-005icu-Qx; Tue, 12 Sep 2023 08:53:46 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qfxHO-000uB8-5u; Tue, 12 Sep 2023 08:53:46 +0200
-Date:   Tue, 12 Sep 2023 08:53:43 +0200
-From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org, kernel@pengutronix.de
-Subject: Re: [PATCH] clk: qcom: cbf-msm8996: Convert to platform remove
- callback returning void
-Message-ID: <20230912065343.neorcr5mksodbaod@pengutronix.de>
-References: <20230911151548.672485-1-u.kleine-koenig@pengutronix.de>
- <8ec473b5b80d5fad8d76df6d88d2c1d0.sboyd@kernel.org>
+        Tue, 12 Sep 2023 02:59:38 -0400
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DB4110DF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 23:59:33 -0700 (PDT)
+Received: by mail-pg1-x529.google.com with SMTP id 41be03b00d2f7-570836f1c79so3716212a12.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 23:59:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694501973; x=1695106773; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=LlO3N7pqp4fi5xGA4ZVrbbV2rUdgOmvkPdAdAMdS/98=;
+        b=Gk7dvV+JXskLV+T9xokIsdQckwrxM+BEs2NeEq6aRJiz8a18TCLfL+XgPQOMa9J3gC
+         IpWt1MghMIN5VgYSSxpJ1x913Poq7yOTdi9s59YM0J9FiJ3XhhF7CmJoI6SZ/bvtxwG0
+         YCgoA6DLCKYPF+l1yP8Jd1/hWt9plcXWJ/kxV4HHmfFisVyCTd5jrihVJM60NP52QNFv
+         N5cdt4nojDUoxgudn5hBg8nJnbE+g8kk08kmHFhNT3qsRO86NEHOaD5l6PqTD1LZRSrA
+         VRBAAyE9W97ejIpkZ53WzhEM7ne6QoPNABWFyzg2ltAr7QFYCHrBTWOsxjCHxhCUIvDw
+         dN9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694501973; x=1695106773;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LlO3N7pqp4fi5xGA4ZVrbbV2rUdgOmvkPdAdAMdS/98=;
+        b=XFvsM6+mMeIRFCUkZpb8bs/3r2Um/gIbCSIXmHK+mx/jtLakkkDYJAx4znCN9MQUFo
+         Gz0jHCpFmTN24BctxW0by7OPESETs+yIk0tK0f4m/9MdBHmQMq1ES3mWGprSGJB4GQ66
+         rhJZq9Sl0fRYEBbGl4pTetwMz0fZ/BYHFmeHr+R2OLMBWcT4BuB9dz8werYc7ZGBNlBs
+         SJR3Vr5ONAg1ptnPRroh3tI7WJmR1CnK/gATJZV/rfsrjgYtRVAqLqUHfTqVl3L+Ub4h
+         xhYNdIDM7PsU/lDW1sesPsgznp8gWvgm4tpFBhWOAyCEmEMFbhVa0RaHY9veACdumVFy
+         qlCQ==
+X-Gm-Message-State: AOJu0Yy8Q0xHEvY0ooSi2uK3Bw/36FkHJv2Cns9RgU1551HVqeaeu7x7
+        i49yLCfxATkm/RadzSjoNvtv
+X-Google-Smtp-Source: AGHT+IHiiSfJhGC0JZK1XwVhpgMz9qY8FvoEghC/BG98cbA6Z+dik3F1LlzN6wd5MSvhL0wQSV6MRw==
+X-Received: by 2002:a05:6a20:9706:b0:14b:ecab:a6ba with SMTP id hr6-20020a056a20970600b0014becaba6bamr9283969pzc.28.1694501973237;
+        Mon, 11 Sep 2023 23:59:33 -0700 (PDT)
+Received: from thinkpad ([117.206.119.163])
+        by smtp.gmail.com with ESMTPSA id fu8-20020a17090ad18800b00262e485156esm8406071pjb.57.2023.09.11.23.59.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Sep 2023 23:59:32 -0700 (PDT)
+Date:   Tue, 12 Sep 2023 12:29:18 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
+        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
+        cw00.choi@samsung.com, andersson@kernel.org,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        jejb@linux.ibm.com, martin.petersen@oracle.com,
+        alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
+        linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
+        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
+        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
+        bmasney@redhat.com, krzysztof.kozlowski@linaro.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 5/6] arm64: dts: qcom: sdm845: Add OPP table support
+ to UFSHC
+Message-ID: <20230912065918.GB6404@thinkpad>
+References: <20230731163357.49045-1-manivannan.sadhasivam@linaro.org>
+ <20230731163357.49045-6-manivannan.sadhasivam@linaro.org>
+ <04eb9f71-78f0-41f2-96a6-fc759ba296fa@linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="6srksz2gf3ekwjf2"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <8ec473b5b80d5fad8d76df6d88d2c1d0.sboyd@kernel.org>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <04eb9f71-78f0-41f2-96a6-fc759ba296fa@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
---6srksz2gf3ekwjf2
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hello Stephen,
-
-On Mon, Sep 11, 2023 at 01:02:53PM -0700, Stephen Boyd wrote:
-> Quoting Uwe Kleine-K=F6nig (2023-09-11 08:15:48)
-> > The .remove() callback for a platform driver returns an int which makes
-> > many driver authors wrongly assume it's possible to do error handling by
-> > returning an error code. However the value returned is ignored (apart
-> > from emitting a warning) and this typically results in resource leaks.
-> > To improve here there is a quest to make the remove callback return
-> > void. In the first step of this quest all drivers are converted to
-> > .remove_new() which already returns void. Eventually after all drivers
-> > are converted, .remove_new() is renamed to .remove().
-> >=20
-> > qcom_msm8996_cbf_icc_remove() returned zero unconditionally. After
-> > changing this function to return void instead, the driver can be
-> > converted trivially to use .remove_new().
-> >=20
-> > Signed-off-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
+On Mon, Sep 11, 2023 at 04:15:10PM +0300, Dmitry Baryshkov wrote:
+> On 31/07/2023 19:33, Manivannan Sadhasivam wrote:
+> > From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > 
+> > UFS host controller, when scaling gears, should choose appropriate
+> > performance state of RPMh power domain controller along with clock
+> > frequency. So let's add the OPP table support to specify both clock
+> > frequency and RPMh performance states replacing the old "freq-table-hz"
+> > property.
+> > 
+> > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > [mani: Splitted pd change and used rpmhpd_opp_low_svs]
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > > ---
->=20
-> Do you want to take this? Otherwise, I can apply it to fixes.
+> >   arch/arm64/boot/dts/qcom/sdm845.dtsi | 42 +++++++++++++++++++++-------
+> >   1 file changed, 32 insertions(+), 10 deletions(-)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > index 055ca80c0075..2ea6eb44953e 100644
+> > --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > @@ -2605,22 +2605,44 @@ ufs_mem_hc: ufshc@1d84000 {
+> >   				<&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
+> >   				<&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>,
+> >   				<&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
+> > -			freq-table-hz =
+> > -				<50000000 200000000>,
+> > -				<0 0>,
+> > -				<0 0>,
+> > -				<37500000 150000000>,
+> > -				<0 0>,
+> > -				<0 0>,
+> > -				<0 0>,
+> > -				<0 0>,
+> > -				<75000000 300000000>;
+> > +
+> > +			operating-points-v2 = <&ufs_opp_table>;
+> >   			interconnects = <&aggre1_noc MASTER_UFS_MEM 0 &mem_noc SLAVE_EBI1 0>,
+> >   					<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_UFS_MEM_CFG 0>;
+> >   			interconnect-names = "ufs-ddr", "cpu-ufs";
+> >   			status = "disabled";
+> > +
+> > +			ufs_opp_table: opp-table {
+> > +				compatible = "operating-points-v2";
+> > +
+> > +				opp-50000000 {
+> > +					opp-hz = /bits/ 64 <50000000>,
+> > +						 /bits/ 64 <0>,
+> > +						 /bits/ 64 <0>,
+> > +						 /bits/ 64 <37500000>,
+> > +						 /bits/ 64 <0>,
+> > +						 /bits/ 64 <0>,
+> > +						 /bits/ 64 <0>,
+> > +						 /bits/ 64 <0>,
+> > +						 /bits/ 64 <75000000>;
+> > +					required-opps = <&rpmhpd_opp_low_svs>;
+> > +				};
+> 
+> I'd say, I'm still slightly unhappy about the 0 clock rates here.
 
-if "you" =3D=3D "Uwe Kleine-K=F6nig": Please take it via your tree. There is
-still much to do before the next synchronous step, so there is no urge.
-If the patch goes in during the next merge window that's fine, too.
+Neither do I. But it is the only viable option I could found.
 
-> > @@ -266,7 +264,7 @@ static int qcom_msm8996_cbf_icc_register(struct pla=
-tform_device *pdev,  struct c
-> > =20
-> >         return 0;
-> >  }
-> > -#define qcom_msm8996_cbf_icc_remove(pdev) (0)
-> > +#define qcom_msm8996_cbf_icc_remove(pdev) { }
->=20
-> It would be better if this was a static inline function.
+> We need only three clocks here: core, core_clk_unipro and optional
+> ice_core_clk. Can we modify ufshcd_parse_operating_points() to pass only
+> these two or three clock names to devm_pm_opp_set_config() ? The OPP core
+> doesn't need to know about all the rest of the clocks.
+> 
 
-Ack, but this applies to the state before my patch, too, and I think
-this should be addressed separately. That's currently not in my focus,
-so if someone else wants to address this, you're welcome.
+We need to enable/disable all of the clocks, but only need to control the rate
+for these 3 clocks. So we cannot just use 3 clocks.
 
-Best regards
-Uwe
+If the OPP table has only 3 entries (omitting the gate-only clocks), then we
+need some hack in the driver to match the rates against the clock entries. Doing
+so will result in hardcoding the clock info in the driver which I do not want to
+do.
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+If we have something like "opp-hz-names" to relate the rates to clock-names, it
+might do the job. But it needs some input from Viresh.
 
---6srksz2gf3ekwjf2
-Content-Type: application/pgp-signature; name="signature.asc"
+- Mani
 
------BEGIN PGP SIGNATURE-----
+> > +
+> > +				opp-200000000 {
+> > +					opp-hz = /bits/ 64 <200000000>,
+> > +						 /bits/ 64 <0>,
+> > +						 /bits/ 64 <0>,
+> > +						 /bits/ 64 <150000000>,
+> > +						 /bits/ 64 <0>,
+> > +						 /bits/ 64 <0>,
+> > +						 /bits/ 64 <0>,
+> > +						 /bits/ 64 <0>,
+> > +						 /bits/ 64 <300000000>;
+> > +					required-opps = <&rpmhpd_opp_nom>;
+> > +				};
+> > +			};
+> >   		};
+> >   		ufs_mem_phy: phy@1d87000 {
+> 
+> -- 
+> With best wishes
+> Dmitry
+> 
 
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmUACvYACgkQj4D7WH0S
-/k5i9ggAk0+9RuhJ45okO/zG4mX0dUQmIVJXi6eitU513w2CbLQRePSqcjMmGpy0
-suqvqUSId6lP1nj6uJelQvwzzyqTCW5aEQcdQk7P/AdgxkP+5IAdgbX/n0pZxuBG
-sV2iOHK8MgblAIIW5ay8mdvdLI6b4pE3j1sRhuhtyCzQqYiEbcIs52sKHhFcj2Jc
-Hqpck20c0t3sWaaxGmhm1k+ZIrojfQZwKRF879+Nk/F6jT/5a9kUTnZb9dzePYpD
-ZMr1YhgntI28YVz87tUMjgzsGdFFXQhur4VWXb+RNBgHfZ+BjFFFoXpkvlT48je3
-c/B1hlzOPZF77Nocu56vUi9ZHQspKA==
-=p39v
------END PGP SIGNATURE-----
-
---6srksz2gf3ekwjf2--
+-- 
+மணிவண்ணன் சதாசிவம்
