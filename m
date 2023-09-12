@@ -2,123 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C14C79C725
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 08:47:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 25A4779C737
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 08:53:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230320AbjILGrg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Sep 2023 02:47:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44280 "EHLO
+        id S230265AbjILGx6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Sep 2023 02:53:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230254AbjILGre (ORCPT
+        with ESMTP id S230408AbjILGx6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Sep 2023 02:47:34 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3827E76;
-        Mon, 11 Sep 2023 23:47:30 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38C6N6N2018219;
-        Tue, 12 Sep 2023 06:47:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=sds1xdU1dqNFPapFsLerVH3F0XspPNYXUwFsvL5xkNs=;
- b=fEuQWR4R/JEZzm0yCFcGAVzheHwMj0kMUHsp8VYq3dklyp5muCDu4OLBgg6aaEVSAxdv
- QR3t6EWg47R3p9cDwG9FT9X770CaoMYtHKM6g1NTby/yhfYU1zZ6oUOKx7jQp56yjA4E
- aZs1d9xn63gJEW4Fxe0LT98CPslJUOPFC4zFHDVyl0YIrn1E6GgxxrameX0QL+uLaAlo
- Gm4AHCYtU96TvMuckbHvCwuEhygCKZJ086fA8wohEn3RTn0+kNMrHyMJgoKUROgrqwuC
- CyyR+7DH1hW4z2rrHVZk+Y/SA0C+45Czkz0vJCSAfhYEx5auj1DAvulmZkLiH/cjpqNj xQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t1xkjtqmj-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 12 Sep 2023 06:47:21 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38C6kvm6028858
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 12 Sep 2023 06:46:57 GMT
-Received: from [10.233.19.96] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 11 Sep
- 2023 23:46:49 -0700
-Message-ID: <0e69140a-bd2f-16b1-ea34-f2d86ecfc414@quicinc.com>
-Date:   Tue, 12 Sep 2023 14:46:27 +0800
+        Tue, 12 Sep 2023 02:53:58 -0400
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B2019B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 23:53:54 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qfxHP-0008Dx-E4; Tue, 12 Sep 2023 08:53:47 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qfxHO-005icu-Qx; Tue, 12 Sep 2023 08:53:46 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qfxHO-000uB8-5u; Tue, 12 Sep 2023 08:53:46 +0200
+Date:   Tue, 12 Sep 2023 08:53:43 +0200
+From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-clk@vger.kernel.org, kernel@pengutronix.de
+Subject: Re: [PATCH] clk: qcom: cbf-msm8996: Convert to platform remove
+ callback returning void
+Message-ID: <20230912065343.neorcr5mksodbaod@pengutronix.de>
+References: <20230911151548.672485-1-u.kleine-koenig@pengutronix.de>
+ <8ec473b5b80d5fad8d76df6d88d2c1d0.sboyd@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.0
-Subject: Re: [RESEND PATCH v6 0/3] Add support for vibrator in multiple PMICs
-To:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <robh+dt@kernel.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <dmitry.baryshkov@linaro.org>
-CC:     <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
-        <quic_kamalw@quicinc.com>, <jestar@qti.qualcomm.com>
-References: <20230828053205.218950-1-quic_fenglinw@quicinc.com>
-Content-Language: en-US
-From:   Fenglin Wu <quic_fenglinw@quicinc.com>
-In-Reply-To: <20230828053205.218950-1-quic_fenglinw@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: V_HtDXT30fQNn7iVzwUwXdIKNnDSwBh2
-X-Proofpoint-ORIG-GUID: V_HtDXT30fQNn7iVzwUwXdIKNnDSwBh2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-12_04,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- suspectscore=0 phishscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0
- adultscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
- definitions=main-2309120056
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="6srksz2gf3ekwjf2"
+Content-Disposition: inline
+In-Reply-To: <8ec473b5b80d5fad8d76df6d88d2c1d0.sboyd@kernel.org>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Can anyone help to review the driver changes?
-thanks
 
-Fenglin Wu
+--6srksz2gf3ekwjf2
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 8/28/2023 1:32 PM, Fenglin Wu wrote:
-> Add SW support for the vibrator module inside PMI632, PM7250B, PM7325B, PM7550BA.
-> It is very similar to the vibrator module inside PM8916 which is supported in
-> pm8xxx-vib driver but just the drive amplitude is controlled with 2 registers,
-> and the register base offset in each PMIC is different.
-> 
-> Changes in v6:
->    1. Add "qcom,pmi632-vib" as a standalone compatible string.
-> 
-> Changes in v5:
->    1. Drop "qcom,spmi-vib-gen2" generic compatible string as requested
->       and use device specific compatible strings only.
-> 
-> Changes in v4:
->    1. Update to use the combination of the HW type and register offset
->       as the constant match data, the register base address defined in
->       'reg' property will be added when accessing SPMI registers using
->       regmap APIs.
->    2. Remove 'qcom,spmi-vib-gen1' generic compatible string.
-> 
-> Changes in v3:
->    1. Refactor the driver to support different type of the vibrators with
->      better flexibility by introducing the HW type with corresponding
->      register fields definitions.
->    2. Add 'qcom,spmi-vib-gen1' and 'qcom,spmi-vib-gen2' compatible
->      strings, and add PMI632, PM7250B, PM7325B, PM7550BA as compatbile as
->      spmi-vib-gen2.
-> 
-> Changes in v2:
->    Remove the "pm7550ba-vib" compatible string as it's compatible with pm7325b.
-> 
-> 
-> Fenglin Wu (3):
->    input: pm8xxx-vib: refactor to easily support new SPMI vibrator
->    dt-bindings: input: qcom,pm8xxx-vib: add new SPMI vibrator module
->    input: pm8xxx-vibrator: add new SPMI vibrator support
-> 
->   .../bindings/input/qcom,pm8xxx-vib.yaml       |  16 +-
->   drivers/input/misc/pm8xxx-vibrator.c          | 171 ++++++++++++------
->   2 files changed, 132 insertions(+), 55 deletions(-)
-> 
+Hello Stephen,
+
+On Mon, Sep 11, 2023 at 01:02:53PM -0700, Stephen Boyd wrote:
+> Quoting Uwe Kleine-K=F6nig (2023-09-11 08:15:48)
+> > The .remove() callback for a platform driver returns an int which makes
+> > many driver authors wrongly assume it's possible to do error handling by
+> > returning an error code. However the value returned is ignored (apart
+> > from emitting a warning) and this typically results in resource leaks.
+> > To improve here there is a quest to make the remove callback return
+> > void. In the first step of this quest all drivers are converted to
+> > .remove_new() which already returns void. Eventually after all drivers
+> > are converted, .remove_new() is renamed to .remove().
+> >=20
+> > qcom_msm8996_cbf_icc_remove() returned zero unconditionally. After
+> > changing this function to return void instead, the driver can be
+> > converted trivially to use .remove_new().
+> >=20
+> > Signed-off-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
+> > ---
+>=20
+> Do you want to take this? Otherwise, I can apply it to fixes.
+
+if "you" =3D=3D "Uwe Kleine-K=F6nig": Please take it via your tree. There is
+still much to do before the next synchronous step, so there is no urge.
+If the patch goes in during the next merge window that's fine, too.
+
+> > @@ -266,7 +264,7 @@ static int qcom_msm8996_cbf_icc_register(struct pla=
+tform_device *pdev,  struct c
+> > =20
+> >         return 0;
+> >  }
+> > -#define qcom_msm8996_cbf_icc_remove(pdev) (0)
+> > +#define qcom_msm8996_cbf_icc_remove(pdev) { }
+>=20
+> It would be better if this was a static inline function.
+
+Ack, but this applies to the state before my patch, too, and I think
+this should be addressed separately. That's currently not in my focus,
+so if someone else wants to address this, you're welcome.
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+
+--6srksz2gf3ekwjf2
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmUACvYACgkQj4D7WH0S
+/k5i9ggAk0+9RuhJ45okO/zG4mX0dUQmIVJXi6eitU513w2CbLQRePSqcjMmGpy0
+suqvqUSId6lP1nj6uJelQvwzzyqTCW5aEQcdQk7P/AdgxkP+5IAdgbX/n0pZxuBG
+sV2iOHK8MgblAIIW5ay8mdvdLI6b4pE3j1sRhuhtyCzQqYiEbcIs52sKHhFcj2Jc
+Hqpck20c0t3sWaaxGmhm1k+ZIrojfQZwKRF879+Nk/F6jT/5a9kUTnZb9dzePYpD
+ZMr1YhgntI28YVz87tUMjgzsGdFFXQhur4VWXb+RNBgHfZ+BjFFFoXpkvlT48je3
+c/B1hlzOPZF77Nocu56vUi9ZHQspKA==
+=p39v
+-----END PGP SIGNATURE-----
+
+--6srksz2gf3ekwjf2--
