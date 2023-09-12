@@ -2,157 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D1F2D79C610
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 07:02:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CEDE379C6D0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 08:19:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229920AbjILFCM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Sep 2023 01:02:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40314 "EHLO
+        id S229816AbjILGTo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Sep 2023 02:19:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232021AbjILFBw (ORCPT
+        with ESMTP id S229744AbjILGTo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Sep 2023 01:01:52 -0400
-Received: from srv01.abscue.de (abscue.de [IPv6:2a03:4000:63:bf5:4817:8eff:feeb:8ac7])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A05D010EB;
-        Mon, 11 Sep 2023 22:00:39 -0700 (PDT)
-Received: from srv01.abscue.de (localhost [127.0.0.1])
-        by spamfilter.srv.local (Postfix) with ESMTP id D9C221C3D98;
-        Tue, 12 Sep 2023 07:00:37 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on abscue.de
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED autolearn=ham
-        autolearn_force=no version=4.0.0
-Received: from fluffy-mammal.fritz.box (dslb-092-072-011-207.092.072.pools.vodafone-ip.de [92.72.11.207])
-        by srv01.abscue.de (Postfix) with ESMTPSA id 7782F1C3D99;
-        Tue, 12 Sep 2023 07:00:37 +0200 (CEST)
-From:   =?UTF-8?q?Otto=20Pfl=C3=BCger?= <otto.pflueger@abscue.de>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
-        =?UTF-8?q?Otto=20Pfl=C3=BCger?= <otto.pflueger@abscue.de>
-Subject: [PATCH v2 3/3] genpd: qcom: rpmpd: Add QM215 power domains
-Date:   Tue, 12 Sep 2023 07:00:28 +0200
-Message-Id: <20230912050028.4804-4-otto.pflueger@abscue.de>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230912050028.4804-1-otto.pflueger@abscue.de>
-References: <20230912050028.4804-1-otto.pflueger@abscue.de>
+        Tue, 12 Sep 2023 02:19:44 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC060E77
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 23:19:39 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-401b393ddd2so59920225e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Sep 2023 23:19:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694499578; x=1695104378; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=LtxyNVrqbqYRJntPYqZndFwb10b1oYoWvN2Bf9PQuYo=;
+        b=GUQH8+ZxmTeeKoxqZWBBi1PbW82jumecnWfJSIRdZ22i54OWKSzy2g8NcPdB1Oqr/P
+         JuORppIq+Il47kVjr/YJQ1gS3H4192yP5xszYn6hYzaVz6DVwgVKCGd/DojDaa/yMLLj
+         fjdum30GcB7XhoqDTWBCis0+v/wLDPgwhSIvnujwzoi3MzVy+fIUxqOfB9c0XvMc9i0O
+         l4E7cQpl3xoaSutArVP64AeGoT0OoeNtRchSIWI7HEwQsIV/RnTqcsHG9ZrIQHE6i+Oy
+         X8BHwdjJe+CPxJ305iYkSgAvXFo5tZ3XAw65fnHCTEKaBYxMCPqWtLZ2h4YRyUAsjc/F
+         0zjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694499578; x=1695104378;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LtxyNVrqbqYRJntPYqZndFwb10b1oYoWvN2Bf9PQuYo=;
+        b=aPfkAt/lcmPyM5mEAAbT9kP8uYbQLgnKMtsKqDTFxt6QwHwje6qgP/wuFGFQRCR8Wf
+         5WDccEI+Z4XqryKpITIgM/9V2ENuRN4+1Xmar8DbT3YYNMxDMxLZNIwlWiDYfI/eMz/7
+         Xmy5RWT3azXRyDlAiDKwn24MgnVq6dRPyLeua+h+ipal7kAPd1YwoCbkoaRDZ4G58vUG
+         MIY0kEsQPm4eIqRcAQMno0DWYXSm6hRnZvcWv0a4VZ/cpTQpu3NuV9hRvM0/SvbUYreI
+         MN1a3iWCn/EI0d5BpSiiDkI9InxGU2rESXs/gNeFkeHEQSAFhKiWvSq9Ia8W3OwyC+3Z
+         tyjA==
+X-Gm-Message-State: AOJu0Yw3G7UwiGpaRpt1/pcHisPq+jHU82eDabpvYCdqC9Pq1oPSMjVb
+        lunN2xXBgJet7HCW2IGc2GoLrA==
+X-Google-Smtp-Source: AGHT+IFoILfNqUC5S/cn8wwndgL995YGOyCzCehNmLqCcFugaMLUnmwzzE3PQaVZ2KiMh+6Cco4orQ==
+X-Received: by 2002:a5d:688f:0:b0:317:dada:2417 with SMTP id h15-20020a5d688f000000b00317dada2417mr9990021wru.31.1694499578114;
+        Mon, 11 Sep 2023 23:19:38 -0700 (PDT)
+Received: from [192.168.0.163] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id v5-20020a5d43c5000000b003180fdf5589sm12001027wrr.6.2023.09.11.23.19.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Sep 2023 23:19:37 -0700 (PDT)
+Message-ID: <5d13f9c7-665d-4ff5-962d-940898b24754@linaro.org>
+Date:   Tue, 12 Sep 2023 07:19:36 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFT 00/20] Venus cleanups
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230911-topic-mars-v1-0-a7d38bf87bdb@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20230911-topic-mars-v1-0-a7d38bf87bdb@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-QM215 is typically paired with a PM8916 PMIC and uses its SMPA1 and
-LDOA2 regulators in voltage level mode for VDDCX and VDDMX, respectively.
+On 11/09/2023 16:10, Konrad Dybcio wrote:
+> With the driver supporting multiple generations of hardware, some mold
+> has definitely grown over the code..
+> 
+> This series attempts to amend this situation a bit by commonizing some
+> code paths and fixing some bugs while at it.
+> 
+> Only tested on SM8250.
+> 
+> Definitely needs testing on:
+> 
+> - SDM845 with old bindings
+> - SDM845 with new bindings or 7180
+> - MSM8916
+> - MSM8996
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Signed-off-by: Otto Pflüger <otto.pflueger@abscue.de>
+Don't we have both a db410c and db845c in Bjorn's lab you could test 
+this on ?
+
 ---
- drivers/genpd/qcom/rpmpd.c | 58 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 58 insertions(+)
+bod
 
-diff --git a/drivers/genpd/qcom/rpmpd.c b/drivers/genpd/qcom/rpmpd.c
-index 2980ebd6ed8c..d793cf2f3af8 100644
---- a/drivers/genpd/qcom/rpmpd.c
-+++ b/drivers/genpd/qcom/rpmpd.c
-@@ -105,6 +105,24 @@ static struct rpmpd cx_s1a_corner_ao = {
- 	.key = KEY_CORNER,
- };
- 
-+static struct rpmpd cx_s1a_lvl_ao;
-+static struct rpmpd cx_s1a_lvl = {
-+	.pd = { .name = "cx", },
-+	.peer = &cx_s1a_lvl_ao,
-+	.res_type = RPMPD_SMPA,
-+	.res_id = 1,
-+	.key = KEY_LEVEL,
-+};
-+
-+static struct rpmpd cx_s1a_lvl_ao = {
-+	.pd = { .name = "cx_ao", },
-+	.peer = &cx_s1a_lvl,
-+	.active_only = true,
-+	.res_type = RPMPD_SMPA,
-+	.res_id = 1,
-+	.key = KEY_LEVEL,
-+};
-+
- static struct rpmpd cx_s2a_corner_ao;
- static struct rpmpd cx_s2a_corner = {
- 	.pd = { .name = "cx", },
-@@ -180,6 +198,13 @@ static struct rpmpd cx_s1a_vfc = {
- 	.key = KEY_FLOOR_CORNER,
- };
- 
-+static struct rpmpd cx_s1a_vfl = {
-+	.pd = { .name = "cx_vfl", },
-+	.res_type = RPMPD_SMPA,
-+	.res_id = 1,
-+	.key = KEY_FLOOR_LEVEL,
-+};
-+
- static struct rpmpd cx_s2a_vfc = {
- 	.pd = { .name = "cx_vfc", },
- 	.res_type = RPMPD_SMPA,
-@@ -239,6 +264,24 @@ static struct rpmpd gx_rwgx0_lvl_ao = {
- };
- 
- /* MX */
-+static struct rpmpd mx_l2a_lvl_ao;
-+static struct rpmpd mx_l2a_lvl = {
-+	.pd = { .name = "mx", },
-+	.peer = &mx_l2a_lvl_ao,
-+	.res_type = RPMPD_LDOA,
-+	.res_id = 2,
-+	.key = KEY_LEVEL,
-+};
-+
-+static struct rpmpd mx_l2a_lvl_ao = {
-+	.pd = { .name = "mx_ao", },
-+	.peer = &mx_l2a_lvl,
-+	.active_only = true,
-+	.res_type = RPMPD_LDOA,
-+	.res_id = 2,
-+	.key = KEY_LEVEL,
-+};
-+
- static struct rpmpd mx_l3a_corner_ao;
- static struct rpmpd mx_l3a_corner = {
- 	.pd = { .name = "mx", },
-@@ -704,6 +747,20 @@ static const struct rpmpd_desc qcs404_desc = {
- 	.max_state = RPM_SMD_LEVEL_BINNING,
- };
- 
-+static struct rpmpd *qm215_rpmpds[] = {
-+	[QM215_VDDCX] =		&cx_s1a_lvl,
-+	[QM215_VDDCX_AO] =	&cx_s1a_lvl_ao,
-+	[QM215_VDDCX_VFL] =	&cx_s1a_vfl,
-+	[QM215_VDDMX] =		&mx_l2a_lvl,
-+	[QM215_VDDMX_AO] =	&mx_l2a_lvl_ao,
-+};
-+
-+static const struct rpmpd_desc qm215_desc = {
-+	.rpmpds = qm215_rpmpds,
-+	.num_pds = ARRAY_SIZE(qm215_rpmpds),
-+	.max_state = RPM_SMD_LEVEL_TURBO,
-+};
-+
- static struct rpmpd *sdm660_rpmpds[] = {
- 	[SDM660_VDDCX] =	&cx_rwcx0_lvl,
- 	[SDM660_VDDCX_AO] =	&cx_rwcx0_lvl_ao,
-@@ -805,6 +862,7 @@ static const struct of_device_id rpmpd_match_table[] = {
- 	{ .compatible = "qcom,msm8998-rpmpd", .data = &msm8998_desc },
- 	{ .compatible = "qcom,qcm2290-rpmpd", .data = &qcm2290_desc },
- 	{ .compatible = "qcom,qcs404-rpmpd", .data = &qcs404_desc },
-+	{ .compatible = "qcom,qm215-rpmpd", .data = &qm215_desc },
- 	{ .compatible = "qcom,sdm660-rpmpd", .data = &sdm660_desc },
- 	{ .compatible = "qcom,sm6115-rpmpd", .data = &sm6115_desc },
- 	{ .compatible = "qcom,sm6125-rpmpd", .data = &sm6125_desc },
--- 
-2.39.1
