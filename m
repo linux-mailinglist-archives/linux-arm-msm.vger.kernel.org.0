@@ -2,80 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BBAA79C825
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 09:26:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E5F7A79C869
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 09:43:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231550AbjILH0Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Sep 2023 03:26:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44028 "EHLO
+        id S231720AbjILHnE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Sep 2023 03:43:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231520AbjILH0X (ORCPT
+        with ESMTP id S231724AbjILHnE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Sep 2023 03:26:23 -0400
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B20FAA
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Sep 2023 00:26:19 -0700 (PDT)
-Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-d7820f9449bso4920513276.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Sep 2023 00:26:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694503579; x=1695108379; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QLdsOWkCbaUO2wihDuVV34jtr6h0+7J+jydeFj+9d3A=;
-        b=FHxf6FGLo/aAe0RKd3LC72Dqv5r/hojKYGnCpjKTy8FU06ma+pcWsnK8ZD9exQa54W
-         XKdbmTvom03wLo2p/fi0kzXH1cMx3dKnPrfXg7YEHKXKXzpVMnLwa5XZOqoJspYKpbGn
-         5vX9wNS4bCyhPQkhZbY7BcqBXS0kuh+qIi33t59+cuTCyDRHRcqJ9EgrEAXu+7Ap3Pbh
-         FlfanFlakLzBjIh04k+T4vgdcplz7Q39OjjKyUNaFOLbceM0J034d+omgHsqK8hXJmsX
-         vWjnJ/SaPAJHdNdQ4waDnBLZdmA/VyAhOWxJ9V1Y5WpKytay5JzJkkumJcEpCP4aCiJU
-         AhRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694503579; x=1695108379;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QLdsOWkCbaUO2wihDuVV34jtr6h0+7J+jydeFj+9d3A=;
-        b=h2KXUQ1cIB9DumhVf6Lw1b5BZQPvgW4XrKo5QQiQnWtDgZAxQPXoYQdqekY76qevqz
-         J3VdvLORGlNgPKOnxRd2qoHiVRx2uuj/RLdNWUQjMXdaZWKD7Z/hRPNYyxd1WqZoaY3O
-         gWfzDkzqbbKccbvL+nGalCvPUvIn78xYVBVuCkgcxSm7VqRtuIu1+D7nfIlgz5Z67bso
-         sJ6K9BxF+8H2SMwhA2urtswWalKKBqP0XPxp5BJZiK0T9B61RLkm3RVe20lVtugIbHJt
-         2rrNrJx+klvxXXPM17+1CNoCNtrNSMPIW6sPkX6X1QurgYCuzKDDMYpPswIyrBCKNBTX
-         jdPg==
-X-Gm-Message-State: AOJu0YxjrrB0rY+YmkCs+BlY2zzRMSTxW7dx/aLypl3z69yzmK51/I+J
-        8wULVvNWJw1SQ0T58tOvKTQ0u5eUiCEP+TI1CzoslA==
-X-Google-Smtp-Source: AGHT+IGeNWnbTJYHAEpu7ttxsHAQMqTYNLyDgS4Z0qnT0Qv02dPr86nF3zYh83i2sXkcAXGeeyTdc1GC/t+sQyizd3k=
-X-Received: by 2002:a25:4c2:0:b0:d13:5ab9:827e with SMTP id
- 185-20020a2504c2000000b00d135ab9827emr11105762ybe.16.1694503578805; Tue, 12
- Sep 2023 00:26:18 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230809-topic-mpm_mappings-v2-0-4c2b4495e654@linaro.org>
-In-Reply-To: <20230809-topic-mpm_mappings-v2-0-4c2b4495e654@linaro.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Tue, 12 Sep 2023 09:26:07 +0200
-Message-ID: <CACRpkdZw=EfPUWqU3-o3aPQSYZWn5hnenbMqgU73Y8oTo3Ogtw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/4] MPM pin mappings
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        Tue, 12 Sep 2023 03:43:04 -0400
+X-Greylist: delayed 50446 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 12 Sep 2023 00:42:59 PDT
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3464010C7;
+        Tue, 12 Sep 2023 00:42:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1694504577; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=fjWlBWJFmqMV8lH9XejSDLefzNl9T7CIz29FZCK6TxM+4y2SYzBk8oTMoClIG2tjbk
+    j+ujE3Cbta82mXZTEuvy9tMC8CXft/0YFp+bB6p9riYdXucqvsMoUXM0QFXCpsZ/NVuT
+    DlsHnEQHFYiOzOHxhCvTFQWBHE7Yg91L8KfL27YYtV+DEzY3HyDWB4kfLYwqymnn9BN3
+    KmkOowB1fcnxiv1IMwbbjPj90hXyjO4q4kFGHkD38J2ALtY9iy3LdACtacBWWDH0bCW7
+    YoR0Q07dKy0rA7QWLp2LqlRFKd8hT3bsjPGskRLJzkAHI5IMyzSxZ+W5Eymc9LBegU7u
+    etKA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1694504577;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=Jerwlqu1OdkPEzyr0Hjo2diQ+WDDPo13il2Fhs+ym5E=;
+    b=b7E2qdedm/5K/JatTDWMPjrCYyZcGBFHW+V8qhjaLkyhW8LPpBWQF+5bz0inv6Aons
+    R8A52ZeP6cEAytIK38AjrTNV4VtslTWTWO0bCfKNafQsF4/ollF1l0+X2YC5BL4FxaPi
+    uKKQl8jJBHyhD6SiEfN7fgtgSuAGJ9yN6ir/7lcZxJO6RS2KgWHeLn2NowYUqLc28wNI
+    CWH6jttgjiI5W/cJj09xejBRN9osYjqgPlTJApk/Ai7nRRRV6DUbEzbl+j+q+/9grMna
+    uvdG441sgaLqxCOSH8OQIDX0/ALcmmR2WMSKy28Cw8DmjX98uFMIUFiTrL/CIJoN/Yr0
+    BOKA==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1694504577;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=Jerwlqu1OdkPEzyr0Hjo2diQ+WDDPo13il2Fhs+ym5E=;
+    b=KxNIYQCt01jsiwUgYxWMIkm376zV4eOgXHlDOrKqUWnNrPJhHTPF+gXYQjrqGlPEAg
+    blR5DLYLhasS7EVnjXZCQ8flbJ/lZ3f4GqDfbAfM7eP6nl4Vl0duNezp8kv58EbQmd15
+    Pjy2/xWpQx6wTN17DCwOBx0DAud3C5rt7G3WvMzgU38FTqqcqZtW72NL7d9vOXF//0MF
+    ADqLiXQj7tB2sByq7Qr3lJQ6OkWyY4IMRpC1HAKgV7FyeluLDpd7quZoXYrwi3oGheJI
+    V/zhcX4QX4RieRv+06JLmu/fxMBrrY25MdFnVKuRzxoY9tZlImcdCyV9VFmHXL5K4pDC
+    +M3g==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1694504577;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=Jerwlqu1OdkPEzyr0Hjo2diQ+WDDPo13il2Fhs+ym5E=;
+    b=5QVw6WNbkOQ1YBOh0deXtyIItppONq1zYvEz3wAhlGAQ0Z+IiyTVYSMh2YvxhhVVsi
+    RwCiD57XFFazaq9VVxCA==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA8Z2L1A=="
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.8.2 DYNA|AUTH)
+    with ESMTPSA id 60372az8C7gucHu
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Tue, 12 Sep 2023 09:42:56 +0200 (CEST)
+Date:   Tue, 12 Sep 2023 09:42:50 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH 3/9] arm64: dts: qcom: msm8916-ufi: Drop gps_mem for now
+Message-ID: <ZQAWesjhnLzhnK5h@gerhold.net>
+References: <20230911-msm8916-rmem-v1-0-b7089ec3e3a1@gerhold.net>
+ <20230911-msm8916-rmem-v1-3-b7089ec3e3a1@gerhold.net>
+ <d8a17496-d2b4-4ed5-8a25-e61fe38bd377@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d8a17496-d2b4-4ed5-8a25-e61fe38bd377@linaro.org>
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 31, 2023 at 11:21=E2=80=AFPM Konrad Dybcio <konrad.dybcio@linar=
-o.org> wrote:
+On Tue, Sep 12, 2023 at 07:36:43AM +0100, Bryan O'Donoghue wrote:
+> On 11/09/2023 18:41, Stephan Gerhold wrote:
+> > gps_mem is needed by the modem firmware for GPS to work. However, it is
+> > accessed via QMI memshare [1] which is not available upstream yet.
+> > Until it lands upstream reserving this does not provide any advantage.
+> > 
+> > [1]: https://lore.kernel.org/linux-arm-msm/20210319172321.22248-1-nikitos.tr@gmail.com/
+> > 
+> > Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> > ---
+> >   arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi | 5 -----
+> >   1 file changed, 5 deletions(-)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi b/arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi
+> > index c759c0544dd9..69f268db4df9 100644
+> > --- a/arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi
+> > @@ -22,11 +22,6 @@ mpss_mem: mpss@86800000 {
+> >   			reg = <0x0 0x86800000 0x0 0x5500000>;
+> >   			no-map;
+> >   		};
+> > -
+> > -		gps_mem: gps@8bd00000 {
+> > -			reg = <0x0 0x8bd00000 0x0 0x200000>;
+> > -			no-map;
+> > -		};
+> >   	};
+> >   	gpio-keys {
+> > 
+> 
+> Should this have a Fixes tag, should probably be applied to stable.
+> 
 
-> This series adds the MPM wakeirq mappings for some SoCs and fixes my
-> "big oops" within the 8998 driver.
->
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+I'm probably a bit "overcautious" when it comes to stable backporting,
+but I think this is not strictly a fix but more like cleanup. It doesn't
+cause any trouble to reserve the extra memory, it just wastes some RAM.
 
-I simply applied this v2 version since there has been over a week and
-no comments. Any remaining issues can certainly be fixed in-tree.
-
-Yours,
-Linus Walleij
+Thanks,
+Stephan
