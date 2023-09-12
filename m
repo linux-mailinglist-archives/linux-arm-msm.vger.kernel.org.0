@@ -2,126 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C68FA79D745
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 19:09:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 916B279D765
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 19:18:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234075AbjILRJq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Sep 2023 13:09:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39916 "EHLO
+        id S236978AbjILRSS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Sep 2023 13:18:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236653AbjILRJp (ORCPT
+        with ESMTP id S237006AbjILRSR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Sep 2023 13:09:45 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4190810F9;
-        Tue, 12 Sep 2023 10:09:39 -0700 (PDT)
-Received: from [192.168.0.106] (unknown [186.235.7.101])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits))
-        (No client certificate requested)
-        (Authenticated sender: koike)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id C963E66072FA;
-        Tue, 12 Sep 2023 18:09:33 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1694538578;
-        bh=xAT9JbuYW6emcmFF+W5rqg4ZaSjjD8QM385HOKSfF2s=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=kRYt/gRI/hdUZHPqKZKwpqOHmREs13rcuDFHe3fIGcMlQADqID0BeykBLS8uI3Bfq
-         BIAyglyc8E9xhISn4AqH6nEDEdhdN9YHyocqq/VIqm7JP8lwmw9TGYi7R2ixMAuYAP
-         9hU+h4SMOU2GR5Q8FVKi4Ug0kkOGn7jUhDD0cENC9Oz9SFnolEYjUC6+sN8sKa05Uc
-         DFOGdK8InK2Q0fQDqaTLN1ecZYwnMy8DW+fmAVGlgp/55C1fX2bBZd2Mcf+mT8ybqJ
-         4K/KEIH58DKXabT/rRRDvE4965O/PqfBaaCSvnFD0ZTHTI12txGCIWngvLX8afao0X
-         RaojSupULYKWA==
-Message-ID: <a411b3fe-6222-4c86-8d71-afa992ea2f93@collabora.com>
-Date:   Tue, 12 Sep 2023 14:09:29 -0300
+        Tue, 12 Sep 2023 13:18:17 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07C8310F4;
+        Tue, 12 Sep 2023 10:18:14 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8967CC433C8;
+        Tue, 12 Sep 2023 17:18:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1694539093;
+        bh=+2q46O7efDXVGtNITaVnlXpqniY/rjlpX0v8ey8+6L0=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=fgFTkWWLOfuQzE/RIqe1KySaJA0A6/r1GgKbxoH2HvpA9PiX4Fmq2wZ0+RIifXEFo
+         ArgRoNDAQxa2IZjNtwQIwfwP25wDrnGaeOKu1p+6eRCIjTbuWjJVckt0t87hWvZwwn
+         TJSM+HTmP8j6wQdDGbwVRGQuaI4wIdi/cQJNW0dKbK9+72cXNqOLqhmuRMq5kZ7P8M
+         hU/pOqpFd121kKYuOotZJDhKqvZc85Dhcye8la7Fbim9Qfn+IB+nxo2/yVkSO0LMd+
+         QKHBiiuths6GeyeGXHnEuncCEkVv7Y+XckSEvHTSvjZynHvLtr+P/9Nh7vzrcZNJ08
+         aUdpNTF7QBH0g==
+Message-ID: <82adb75659e0d278e25b65b0e81df99a.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.0
-Subject: Re: [PATCH] arm64: dts: qcom: apq8016-sbc: Add overlay for usb host
- mode
-Content-Language: en-US
-To:     Vignesh Raman <vignesh.raman@collabora.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     guilherme.gallo@collabora.com, sergi.blanch.torne@collabora.com,
-        daniels@collabora.com, emma@anholt.net, robdclark@gmail.com,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Maxime Ripard <mripard@kernel.org>,
-        David Heidelberg <david.heidelberg@collabora.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230911161518.650726-1-vignesh.raman@collabora.com>
-From:   Helen Koike <helen.koike@collabora.com>
-In-Reply-To: <20230911161518.650726-1-vignesh.raman@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <f67b354c-8a4b-49f5-6275-66b7d614301a@quicinc.com>
+References: <20230901091823.30242-1-quic_luoj@quicinc.com> <20230901091823.30242-5-quic_luoj@quicinc.com> <27ae3297ad161fd67706db70b402db04.sboyd@kernel.org> <16d09acf-7bdd-04ee-6faf-936c0366df03@quicinc.com> <17681a9f756cc70a190c674c51b90140.sboyd@kernel.org> <5a4805f7-f802-b1ba-9804-59c0fe6c7f26@quicinc.com> <92058c25fb11b75ee0a2298a684825e9.sboyd@kernel.org> <f67b354c-8a4b-49f5-6275-66b7d614301a@quicinc.com>
+Subject: Re: [PATCH v6 4/4] clk: qcom: add clock controller driver for qca8386/qca8084
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_srichara@quicinc.com
+To:     Jie Luo <quic_luoj@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, catalin.marinas@arm.com, conor+dt@kernel.org,
+        konrad.dybcio@linaro.org, krzysztof.kozlowski+dt@linaro.org,
+        mturquette@baylibre.com, p.zabel@pengutronix.de,
+        robh+dt@kernel.org, will@kernel.org
+Date:   Tue, 12 Sep 2023 10:18:11 -0700
+User-Agent: alot/0.10
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Quoting Jie Luo (2023-09-12 05:07:02)
+>=20
+>=20
+> On 9/12/2023 4:11 AM, Stephen Boyd wrote:
+> > Quoting Jie Luo (2023-09-08 04:10:35)
+> >>
+> >> For example, when the uniphy works on PHY_INTERFACE_MODE_2500BASEX, th=
+en
+> >> the parent uniphy clock rate is 312.5M, which is decided by hardware a=
+nd
+> >> can't be changed. when a branch clock requires a 25M clock, the parent
+> >> uniphy clock maybe updated to 125M by clock framework if the flag
+> >> CLK_SET_RATE_PARENT is set here, but the actual hardware clock rate of
+> >> uniphy is still 315.5M since the uniphy still works in the interface
+> >> mode PHY_INTERFACE_MODE_2500BASEX.
+> >>
+> >=20
+> > If the parent rate can't change because CLK_SET_RATE_PARENT is missing
+> > and the hardware doesn't allow it, then perhaps instead of having a
+> > frequency table we should have rcg clk ops for determine_rate that
+> > simply looks at the parent rates and finds the rate closest to what is
+> > desired. And for the set_rate clk_op we can have it be simple and just
+> > program a fixed divider. The benefit is less frequency tables that don't
+> > do anything and less hard-coding of the frequency. I thought we already
+> > had those rcg clk_ops but I couldn't find them with a quick glance.
+>=20
+> Thanks Stephen for the suggestion.
+> looks you are saying the clk ops clk_dp_ops for the fix parent rate?=20
+> which seems not meet the clock requirement of this clock.
 
+Yeah that is close, but the determine_rate clk_op needs to look at all
+possible parents. With the dp clk_ops we assume that only one parent is
+possible.
 
-On 11/09/2023 13:15, Vignesh Raman wrote:
-> Due to the presence of the fastboot micro cable in the CI farm,
-> it causes the hardware to remain in gadget mode instead of host mode.
-> So it doesn't find the network, which results in failure to mount root
-> fs via NFS.
+>=20
+> For the device qca8k, it is also possible to switch the interface modes=20
+> between PHY_INTERFACE_MODE_2500BASEX(312.5M) and=20
+> PHY_INTERFACE_MODE_SGMII(125M) during the running time, and there are=20
+> multiple parent clock source(P_UNIPHY0_RX or P_UNIPHY0_TX) for the RCG=20
+> clocks to select according to the current work mode. so the parent_map=20
+> and freq_tbl are necessary to this clock.
 
-Just a context for others, this was part of this patch series 
-https://lore.kernel.org/r/20230908152225.432139-1-vignesh.raman@collabora.com
-
-> 
-> Add an overlay dtso file that sets the dr_mode to host, allowing the
-> USB controllers to work in host mode. With commit 15d16d6dadf6
-> ("kbuild: Add generic rule to apply fdtoverlay"), overlay target can
-> be used to simplify the build of DTB overlays. It uses fdtoverlay to
-> merge base device tree with the overlay dtso. apq8016-sbc-usb-host.dtb
-> file can be used by drm-ci, mesa-ci.
-> 
-> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Suggested-by: Maxime Ripard <mripard@kernel.org>
-> Signed-off-by: Helen Koike <helen.koike@collabora.com>
-> Signed-off-by: David Heidelberg <david.heidelberg@collabora.com>
-> Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
-
-Acked-by: Helen Koike <helen.koike@collabora.com>
-
-
-> ---
->   arch/arm64/boot/dts/qcom/Makefile                  | 4 ++++
->   arch/arm64/boot/dts/qcom/apq8016-sbc-usb-host.dtso | 8 ++++++++
->   2 files changed, 12 insertions(+)
->   create mode 100644 arch/arm64/boot/dts/qcom/apq8016-sbc-usb-host.dtso
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 2cca20563a1d..99190a6ba6ff 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -1,5 +1,9 @@
->   # SPDX-License-Identifier: GPL-2.0
->   dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc.dtb
-> +
-> +apq8016-sbc-usb-host-dtbs	:= apq8016-sbc.dtb apq8016-sbc-usb-host.dtbo
-> +
-> +dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc-usb-host.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc-d3-camera-mezzanine.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= apq8039-t2.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= apq8094-sony-xperia-kitakami-karin_windy.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc-usb-host.dtso b/arch/arm64/boot/dts/qcom/apq8016-sbc-usb-host.dtso
-> new file mode 100644
-> index 000000000000..a82c26b7eae8
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/apq8016-sbc-usb-host.dtso
-> @@ -0,0 +1,8 @@
-> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-> +
-> +/dts-v1/;
-> +/plugin/;
-> +
-> +&usb {
-> +         dr_mode = "host";
-> +};
+I still don't see why the freq_tbl is necessary.
