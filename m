@@ -2,113 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB4E879D058
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 13:48:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2874979D093
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 14:01:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234813AbjILLss (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Sep 2023 07:48:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42340 "EHLO
+        id S234212AbjILMBd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Sep 2023 08:01:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234630AbjILLsr (ORCPT
+        with ESMTP id S235155AbjILMAg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Sep 2023 07:48:47 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6138AB3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Sep 2023 04:48:43 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-500913779f5so9527697e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Sep 2023 04:48:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694519321; x=1695124121; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=f5xi+W9wNttXDsAffskUe3yb7VMYVEpG0K45ei+urrQ=;
-        b=HpsOvlhnRzQc03BMHWsz0qqD6ZcnQ2cNVqPID6FaJ/xyBWZ+3UcnI8ysReokESBcpg
-         USACsWKed6PC4IBB85dray63ZH4+i+NyTpXMT7twGIO/EBDc6lKESukUMpMS5Qijx4I0
-         +OAuutXDBuT5CMW7vapY/2iu+W9sc8zW1NYzWqKrffXTbheIct1PErnI5c/7BZrkT1bq
-         afDIjtB6u+14q2ld5Si0m1f28XyvEFwcVZJYZGmJ7cq58TmDhBlvWuXAMKNFH+okOA76
-         ZIvWID1bBtBvNaYOBlZ16owhoRsF4barW/RpPbjHyilQv68DHA3ImCR9ylnbgtX8OZw8
-         5RSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694519321; x=1695124121;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=f5xi+W9wNttXDsAffskUe3yb7VMYVEpG0K45ei+urrQ=;
-        b=Hd/IWS9/ZoNb2Poga25rMlikaDBe2nDyjLx4NLnSJR7S37l2aFJhfueHrQ2r7cnLLd
-         7bJgSpN8Sh34AwoqOxIVWzHezCu0QZjWkljhPbtj7B46UGJ/wxKwQNG3BQW7xacAk5B9
-         LDzmj0koNgkXaR4EDkMqH1+hE7jMbyUrvvSXGc9LUoK58SKF9AziYG5YWvIxlepgxj8p
-         vUO1pBmTD5isbR07+E8Akt0ZJAoWmAjUVaYLdGQPVpcQd4aoGbZE9C1sWvosWSbM14zW
-         YPR8Po4s89yuXIE7i562NWJ+OiLmB2k0yoamFUU8H1E7NR9RbENjpvBs7+iBUrBh+axM
-         uc0Q==
-X-Gm-Message-State: AOJu0Yw0VZHnPHBAEXiwr44G8YU86qX43i9vlqVEfRAqSNx+CZAbRQOP
-        yswXwIO3vrCFNIqJBWa75VPuKw==
-X-Google-Smtp-Source: AGHT+IH3WSEIOeopsmU9pzLml+mVZUSW5VFsA80Qjmig2wBWbc8T5X6+2EPoYGdhq36CiL7GvcjVAg==
-X-Received: by 2002:a05:6512:3b86:b0:500:bc14:3e06 with SMTP id g6-20020a0565123b8600b00500bc143e06mr11816978lfv.44.1694519321641;
-        Tue, 12 Sep 2023 04:48:41 -0700 (PDT)
-Received: from [192.168.37.232] (178235177248.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.248])
-        by smtp.gmail.com with ESMTPSA id l15-20020aa7d94f000000b0052338f5b2a4sm5814539eds.86.2023.09.12.04.48.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Sep 2023 04:48:41 -0700 (PDT)
-Message-ID: <675063b7-cac5-4b08-9853-84d7ce16a09e@linaro.org>
-Date:   Tue, 12 Sep 2023 13:48:40 +0200
+        Tue, 12 Sep 2023 08:00:36 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 264D32D44;
+        Tue, 12 Sep 2023 04:59:45 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38CAwh4F005652;
+        Tue, 12 Sep 2023 11:59:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=eCugbjLKOXt5pW0B6VFUSD3Oyxi0vGoBsU/l1OhzvBw=;
+ b=gb49Q0zoy3Fj+BY7HSKeqy75lnDmqYWZ5w54MeA960TtIf8Fgh6YXnm/vC7THwO8hkhx
+ LyimDKF959eZAksg1Vv+PCJj26YKU6MUsYuVpC5ccUzQ/1fjuZ/fsuIr1ziXIr4PUbFR
+ OdMmmKPK8dR1s4tqRS9nMngIfOVNCv2i9yIw0RxxYgm7y5JlUKrq2znpgyNnrbLLxdLb
+ PWcbzBtdFs4STz5ZQNC6wT+b0fy3U+CiAXLQuW1ypz8a8iKSdcKQCXYOBYY1Y2Yx5edx
+ yzXWeseBc8AhkAKd25L/9zFfWaVaCOuRUOc4e9hAZeHSy/RWIwmR4T59sx+IWj/5bp9h lg== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t2c4c19nx-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 12 Sep 2023 11:59:32 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38CBxUFS014381
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 12 Sep 2023 11:59:30 GMT
+Received: from hyd-lablnx450.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Tue, 12 Sep 2023 04:59:24 -0700
+From:   Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+To:     <mani@kernel.org>, <miquel.raynal@bootlin.com>, <richard@nod.at>,
+        <vigneshr@ti.com>
+CC:     <linux-mtd@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
+        <quic_charante@quicinc.com>, <quic_kaushalk@quicinc.com>,
+        <quic_pkondeti@quicinc.com>,
+        Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+Subject: [PATCH v4] mtd: rawnand: qcom: Unmap the right resource upon probe failure
+Date:   Tue, 12 Sep 2023 17:29:03 +0530
+Message-ID: <20230912115903.1007-1-quic_bibekkum@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] phy: qualcomm: Fix typos in comments
-Content-Language: en-US
-To:     Bo Liu <liubo03@inspur.com>, agross@kernel.org,
-        andersson@kernel.org, vkoul@kernel.org, kishon@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-References: <20230912114646.8452-1-liubo03@inspur.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230912114646.8452-1-liubo03@inspur.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: tGiIBfvdcDr4qZPfxhEItkcKrJgw2xy5
+X-Proofpoint-ORIG-GUID: tGiIBfvdcDr4qZPfxhEItkcKrJgw2xy5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-12_09,2023-09-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
+ bulkscore=0 priorityscore=1501 impostorscore=0 spamscore=0 malwarescore=0
+ mlxlogscore=999 suspectscore=0 adultscore=0 phishscore=0 clxscore=1015
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
+ definitions=main-2309120098
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12.09.2023 13:46, Bo Liu wrote:
-> Fix typo in the description of the 'succesfully'.
-> 
-> Signed-off-by: Bo Liu <liubo03@inspur.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+We currently provide the physical address of the DMA region
+rather than the output of dma_map_resource() which is obviously wrong.
 
-Konrad
+Fixes: 7330fc505af4 ("mtd: rawnand: qcom: stop using phys_to_dma()")
+Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+---
+v4: Incorporated suggestion from Miquel
+    - Modified title and commit description.
+
+v3: Incorporated comments from Miquel
+    - Modified the commit message and title as per suggestions.
+    https://lore.kernel.org/all/20230912101814.7748-1-quic_bibekkum@quicinc.com/
+
+v2: Incorporated comments from Pavan/Mani.
+    https://lore.kernel.org/all/20230911133026.29868-1-quic_bibekkum@quicinc.com/
+
+v1: https://lore.kernel.org/all/20230907092854.11408-1-quic_bibekkum@quicinc.com/
+
+ drivers/mtd/nand/raw/qcom_nandc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
+index 64499c1b3603..b079605c84d3 100644
+--- a/drivers/mtd/nand/raw/qcom_nandc.c
++++ b/drivers/mtd/nand/raw/qcom_nandc.c
+@@ -3444,7 +3444,7 @@ static int qcom_nandc_probe(struct platform_device *pdev)
+ err_aon_clk:
+ 	clk_disable_unprepare(nandc->core_clk);
+ err_core_clk:
+-	dma_unmap_resource(dev, res->start, resource_size(res),
++	dma_unmap_resource(dev, nandc->base_dma, resource_size(res),
+ 			   DMA_BIDIRECTIONAL, 0);
+ 	return ret;
+ }
+--
+2.17.1
+
