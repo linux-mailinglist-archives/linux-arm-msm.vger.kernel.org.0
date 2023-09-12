@@ -2,222 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3717579CACA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 11:00:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E760F79CB32
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Sep 2023 11:10:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233125AbjILJAO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Sep 2023 05:00:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47540 "EHLO
+        id S232208AbjILJKp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Sep 2023 05:10:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233117AbjILJAO (ORCPT
+        with ESMTP id S229504AbjILJKo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Sep 2023 05:00:14 -0400
+        Tue, 12 Sep 2023 05:10:44 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43E2DA9;
-        Tue, 12 Sep 2023 02:00:10 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38C4OcMw001858;
-        Tue, 12 Sep 2023 08:59:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=E89geItkUqH/cKueZHtRw065IAyLmJuQaD/AAZu+cqA=;
- b=gXDletRHeI87yse2gdV3wXYZV8ionJoL2L/Rt3Pz0/mHJigXjTN4aoi6Gb7ugVyY5IRu
- zS2V/6LsVJltTmTel6/lTQIDusyDS3LalvYjYcN4fshIoaWyUMFfPetY0zGPpStnONDG
- +nJuWALhJeMvnzCp6eM7nZZk5ThSz4Qu9G7SFV3Dln2V3RDqLe7gdPFVr3P87mthKicd
- MDomgb/K0RL6ndbTWXNMMCOfUTkgBoa4YIsJmy9lhXJ63l1S6GpxTfKuMxy/1iOJ6M8M
- 0feY7kFEGXSwAfqggUAwmxQz4neajoEd5BDP5LzQASQePSKlkqItgQKj3jxP6c7NSPSR Jw== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t22kpjgqk-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05CAC170E;
+        Tue, 12 Sep 2023 02:10:40 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38C91QlS005312;
+        Tue, 12 Sep 2023 09:09:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=M3ziXwQnsWu63lTCY+rxXmBhjn/j4cxz31lGji6ElRk=;
+ b=bP+ahzVfaI9vM1U5xUIV+fFCDB6oZcY3d4WdvA3O7OJA1h9YLELG62NqiPud8w0HL9du
+ tE2XEtqYYZOBBdwhygKBUOUv4O2q8O7uHg0G19jCeb9ZlJDMvVgFSNuQ47v54cS7SLjC
+ w6508zArjv7dJNdPcTgVUfNyH8xSvJ73RD9CorsbCfo+9RP3eu3PAxCdI+YhXsqHJVyw
+ vzLHw8sKqSoRpQItloULC2S6iFblGYh43Uus0BHxR074wBcLQaxSE1RJjjt5McvOsXoS
+ 5bTM/uJ/YRVLglH3XAxu0AhGV/LievQmPQ3dVBPr2O5d7AjmQ2vHhErfqBYIli2FSfaU JQ== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t268fhwhh-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 12 Sep 2023 08:59:55 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38C8xsRI016164
+        Tue, 12 Sep 2023 09:09:50 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38C99nkj006026
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 12 Sep 2023 08:59:54 GMT
-Received: from varda-linux.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Tue, 12 Sep 2023 01:59:48 -0700
-Date:   Tue, 12 Sep 2023 14:29:45 +0530
-From:   Varadarajan Narayanan <quic_varada@quicinc.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     <ilia.lin@kernel.org>, <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <rafael@kernel.org>,
-        <viresh.kumar@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <quic_kathirav@quicinc.com>, <linux-pm@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>
-Subject: Re: [PATCH v1 04/10] clk: qcom: apss-ipq6018: ipq5332: add safe
- source switch for a53pll
-Message-ID: <20230912085944.GA25503@varda-linux.qualcomm.com>
-References: <cover.1693996662.git.quic_varada@quicinc.com>
- <5e3c29df2b42cceb8072b00546a78e1b99b2d374.1693996662.git.quic_varada@quicinc.com>
- <CAA8EJppXxiX7+6nhfKyJYDU0i2pkBzXL5J3EQUapLJXxx3b=HA@mail.gmail.com>
+        Tue, 12 Sep 2023 09:09:49 GMT
+Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 12 Sep
+ 2023 02:09:37 -0700
+Message-ID: <88a80eca-62c0-8398-323e-d1c1cd7adc8f@quicinc.com>
+Date:   Tue, 12 Sep 2023 14:39:34 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <CAA8EJppXxiX7+6nhfKyJYDU0i2pkBzXL5J3EQUapLJXxx3b=HA@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [REBASE PATCH v5 15/17] firmware: scm: Modify only the download
+ bits in TCSR register
+Content-Language: en-US
+To:     Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
+        <corbet@lwn.net>, <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <keescook@chromium.org>, <tony.luck@intel.com>,
+        <gpiccoli@igalia.com>, <mathieu.poirier@linaro.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <linus.walleij@linaro.org>, <andy.shevchenko@gmail.com>,
+        <vigneshr@ti.com>, <nm@ti.com>, <matthias.bgg@gmail.com>,
+        <kgene@kernel.org>, <alim.akhtar@samsung.com>,
+        <bmasney@redhat.com>, <quic_tsoni@quicinc.com>
+CC:     <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-gpio@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
+        <linux-samsung-soc@vger.kernel.org>, <kernel@quicinc.com>,
+        "Poovendhan Selvaraj" <quic_poovendh@quicinc.com>
+References: <1694429639-21484-1-git-send-email-quic_mojha@quicinc.com>
+ <1694429639-21484-16-git-send-email-quic_mojha@quicinc.com>
+ <9da888dc-401a-4cbb-b616-b4654fa79e35@quicinc.com>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <9da888dc-401a-4cbb-b616-b4654fa79e35@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+ nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: e2jtLxXIhdDwgNkw2o5L3kssm-0Bzteb
-X-Proofpoint-GUID: e2jtLxXIhdDwgNkw2o5L3kssm-0Bzteb
+X-Proofpoint-GUID: TxONeWbezp3uJ16nJp3vXiiAcAvKJMpZ
+X-Proofpoint-ORIG-GUID: TxONeWbezp3uJ16nJp3vXiiAcAvKJMpZ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
  definitions=2023-09-12_06,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
- lowpriorityscore=0 malwarescore=0 priorityscore=1501 mlxlogscore=999
- spamscore=0 clxscore=1015 phishscore=0 suspectscore=0 adultscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309120076
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 spamscore=0 adultscore=0 mlxscore=0 bulkscore=0
+ phishscore=0 malwarescore=0 impostorscore=0 priorityscore=1501
+ clxscore=1015 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2308100000 definitions=main-2309120077
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 07, 2023 at 04:54:56PM +0300, Dmitry Baryshkov wrote:
-> On Thu, 7 Sept 2023 at 08:22, Varadarajan Narayanan
-> <quic_varada@quicinc.com> wrote:
-> >
-> > Stromer Plus PLL found on IPQ53xx doesn't support dynamic
-> > frequency scaling. To achieve the same, we need to park the APPS
-> > PLL source to GPLL0, re configure the PLL and then switch the
-> > source to APSS_PLL_EARLY.
-> >
-> > To support this, register a clock notifier to get the PRE_RATE
-> > and POST_RATE notification. Change the APSS PLL source to GPLL0
-> > when PRE_RATE notification is received, then configure the PLL
-> > and then change back the source to APSS_PLL_EARLY.
->
-> This means that we are changing the parents behind the back of CCF,
-> which is not great.
 
-Unfortunately, we are not aware of any other way to do this.
-Please let me know if there is a better way to do this, will
-implement that and post a revision.
 
-> > Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
-> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> > ---
-> >  drivers/clk/qcom/apss-ipq6018.c | 54 ++++++++++++++++++++++++++++++++++++++++-
-> >  1 file changed, 53 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/clk/qcom/apss-ipq6018.c b/drivers/clk/qcom/apss-ipq6018.c
-> > index 4e13a08..ffb6ab5 100644
-> > --- a/drivers/clk/qcom/apss-ipq6018.c
-> > +++ b/drivers/clk/qcom/apss-ipq6018.c
-> > @@ -9,8 +9,11 @@
-> >  #include <linux/clk-provider.h>
-> >  #include <linux/regmap.h>
-> >  #include <linux/module.h>
-> > +#include <linux/clk.h>
-> > +#include <linux/soc/qcom/smem.h>
-> >
-> >  #include <dt-bindings/clock/qcom,apss-ipq.h>
-> > +#include <dt-bindings/arm/qcom,ids.h>
-> >
-> >  #include "common.h"
-> >  #include "clk-regmap.h"
-> > @@ -84,15 +87,64 @@ static const struct qcom_cc_desc apss_ipq6018_desc = {
-> >         .num_clks = ARRAY_SIZE(apss_ipq6018_clks),
-> >  };
-> >
-> > +static int cpu_clk_notifier_fn(struct notifier_block *nb, unsigned long action,
-> > +                               void *data)
-> > +{
-> > +       u8 index;
-> > +       int err;
-> > +
-> > +       if (action == PRE_RATE_CHANGE)
-> > +               index = P_GPLL0;
->
-> I don't see P_GPLL0 being supported in the ipq6018 driver.
+On 9/11/2023 8:37 PM, Kathiravan Thirumoorthy wrote:
+> 
+> On 9/11/2023 4:23 PM, Mukesh Ojha wrote:
+>> Crashdump collection is based on the DLOAD bit of TCSR register.
+>> To retain other bits, we read the register and modify only the
+>> DLOAD bit as the other bits have their own significance.
+>>
+>> Co-developed-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+>> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+>> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+>> Tested-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com> # 
+>> IPQ9574 and IPQ5332
+>> ---
+>>   drivers/firmware/qcom_scm.c | 16 ++++++++++++++--
+>>   1 file changed, 14 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+>> index 321133f0950d..5cacae63ee2a 100644
+>> --- a/drivers/firmware/qcom_scm.c
+>> +++ b/drivers/firmware/qcom_scm.c
+>> @@ -5,6 +5,8 @@
+>>   #include <linux/platform_device.h>
+>>   #include <linux/init.h>
+>>   #include <linux/interrupt.h>
+>> +#include <linux/bitfield.h>
+>> +#include <linux/bits.h>
+>>   #include <linux/completion.h>
+>>   #include <linux/cpumask.h>
+>>   #include <linux/export.h>
+>> @@ -26,6 +28,14 @@
+>>   static bool download_mode = 
+>> IS_ENABLED(CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT);
+>>   module_param(download_mode, bool, 0);
+>> +#define SCM_HAS_CORE_CLK    BIT(0)
+>> +#define SCM_HAS_IFACE_CLK    BIT(1)
+>> +#define SCM_HAS_BUS_CLK        BIT(2)
+> 
+> 
+> Is this intentional to add these macros back again?
 
-This comes from one of the dependency patches mentioned in the
-cover letter [https://lore.kernel.org/linux-arm-msm/20230904-gpll_cleanup-v1-0-de2c448f1188@quicinc.com/].
-Please refer to patch https://lore.kernel.org/linux-arm-msm/20230904-gpll_cleanup-v1-6-de2c448f1188@quicinc.com/.
+This is a mistake, thanks for letting me know.
 
->
-> > +       else if (action == POST_RATE_CHANGE)
-> > +               index = P_APSS_PLL_EARLY;
->
-> You also have to handle ABORT_RATE_CHANGE here.
-
-ok.
-
-> > +       else
-> > +               return 0;
-> > +
-> > +       err = clk_rcg2_mux_closest_ops.set_parent(&apcs_alias0_clk_src.clkr.hw,
-> > +                                                 index);
-> > +
-> > +       return notifier_from_errno(err);
-> > +}
-> > +
-> > +static struct notifier_block cpu_clk_notifier = {
-> > +       .notifier_call = cpu_clk_notifier_fn,
-> > +};
-> > +
-> >  static int apss_ipq6018_probe(struct platform_device *pdev)
-> >  {
-> >         struct regmap *regmap;
-> > +       u32 soc_id;
-> > +       int ret;
-> > +
-> > +       ret = qcom_smem_get_soc_id(&soc_id);
-> > +       if (ret)
-> > +               return ret;
-> >
-> >         regmap = dev_get_regmap(pdev->dev.parent, NULL);
-> >         if (!regmap)
-> >                 return -ENODEV;
-> >
-> > -       return qcom_cc_really_probe(pdev, &apss_ipq6018_desc, regmap);
-> > +       ret = qcom_cc_really_probe(pdev, &apss_ipq6018_desc, regmap);
-> > +       if (ret)
-> > +               return ret;
-> > +
-> > +       switch (soc_id) {
-> > +       /*
-> > +        * Only below variants of IPQ53xx support scaling
-> > +        */
-> > +       case QCOM_ID_IPQ5332:
-> > +       case QCOM_ID_IPQ5322:
-> > +       case QCOM_ID_IPQ5300:
->
-> Please use compat strings instead of using the soc-id.
-
-We have a common compatible string for all IPQ53xx CPUs across
-boards.  The CPU variant is identified from fuse settings. Not
-sure how we can differentiate between the variants using compat
-strings. Can you kindly help.
-
-Thanks
-varada
-
-> > +               ret = clk_notifier_register(apcs_alias0_clk_src.clkr.hw.clk,
-> > +                                               &cpu_clk_notifier);
-> > +               if (ret)
-> > +                       return ret;
-> > +               break;
-> > +       default:
-> > +               break;
-> > +       }
-> > +
-> > +       return 0;
-> >  }
-> >
-> >  static struct platform_driver apss_ipq6018_driver = {
-> > --
-> > 2.7.4
-> >
->
->
-> --
-> With best wishes
->
-> Dmitry
+-Mukesh
+> 
+> 
+>> +
+>> +#define QCOM_DLOAD_MASK        GENMASK(5, 4)
+>> +#define QCOM_DLOAD_FULLDUMP    0x1
+>> +#define QCOM_DLOAD_NODUMP    0x0
+>> +
+>>   struct qcom_scm {
+>>       struct device *dev;
+>>       struct clk *core_clk;
+>> @@ -440,6 +450,7 @@ static int __qcom_scm_set_dload_mode(struct device 
+>> *dev, bool enable)
+>>   static void qcom_scm_set_download_mode(bool enable)
+>>   {
+>> +    u32 val = enable ? QCOM_DLOAD_FULLDUMP : QCOM_DLOAD_NODUMP;
+>>       bool avail;
+>>       int ret = 0;
+>> @@ -449,8 +460,9 @@ static void qcom_scm_set_download_mode(bool enable)
+>>       if (avail) {
+>>           ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
+>>       } else if (__scm->dload_mode_addr) {
+>> -        ret = qcom_scm_io_writel(__scm->dload_mode_addr,
+>> -                enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0);
+>> +        ret = qcom_scm_io_update_field(__scm->dload_mode_addr,
+>> +                           QCOM_DLOAD_MASK,
+>> +                           FIELD_PREP(QCOM_DLOAD_MASK, val));
+>>       } else {
+>>           dev_err(__scm->dev,
+>>               "No available mechanism for setting download mode\n");
