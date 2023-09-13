@@ -2,134 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 16F0079E448
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 11:54:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E769879E468
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 11:58:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239561AbjIMJyO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Sep 2023 05:54:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57158 "EHLO
+        id S231948AbjIMJ6V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Sep 2023 05:58:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239554AbjIMJyK (ORCPT
+        with ESMTP id S230286AbjIMJ6U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Sep 2023 05:54:10 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 873FE19B2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 02:54:05 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-99c3c8adb27so843486066b.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 02:54:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694598844; x=1695203644; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=y61vDLY2d3z1XABw8fo4c9R1eNGV9j8r0ag87ujCd/s=;
-        b=vUYpN1T4xXsSYMKRj6j9d5nyc5Pg+8XJitpgAvy0deWkpspw6AxHOMGy+WQkPD5H7X
-         9q75xgHSA/W0rMTsSPTOJhW7n9dEZzqzZGqrYz87wAYfXgB2sEK597y0TmF2BhukEf67
-         q3Eh2RMVTN8K/Fk6BCJGOLTHCAAcwc1vs4yNkpMtWPMH6vxdCN9Yps8dIR8kTEf1qEH2
-         2DwqbanxuzpN6n/mTqrpwiSg1+PjUkTkb2Df4uHstyOY3TKbhjo3BNkj8+5osAMrO+zj
-         aI/mNRvkjY3BQDhaStvYnbpy6XOxTIyncIy54ScOAinNf7nZcFw2z9MWMsu9dAqbio6J
-         I9Yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694598844; x=1695203644;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=y61vDLY2d3z1XABw8fo4c9R1eNGV9j8r0ag87ujCd/s=;
-        b=wmZcWwPkVKtPRnLHbJwwtYHNQ6KRWgaFXoKYWTNgU8BrZ82DfXtWQ/ph5mm0iDLxGn
-         L09sZKoEXDbBebNS+qJmttrBXvfKZwa/zoeN/OIAlXViTQDn55zh4VS0NQ8LKmZG5dEC
-         XXNgZnbP/RYprv1FkNFq1ahQfh7JP4yCKAN0KGzjTL/yrG/mdqgsxIW5IA+8+rndiltY
-         Hab87M/Z9BGLABZgIxpgcCjo52X87BYAgxU7u8jN0/hdx2Z8ouXEw8+fxKYIhT8FtcBm
-         xCy3qWiF3uOQBU3sGGBg2Ffk5Aw7fQZN4JSugg0Bstcfe54DZoinl46N4mPl/f12OVf1
-         sznw==
-X-Gm-Message-State: AOJu0YyVaSpOyRlWsoeysLjZYjddq+sTVchIvgEYJ/ug6XDt5I/HN4zl
-        GZydTVRWPQRyrIfIO5NwBfuNJg==
-X-Google-Smtp-Source: AGHT+IFq5xptVCdrvn1Iw7ewtXMqSOxhBecllLxs5hb0dwAim5rm5D+Auq3O1vfHh7PKHxaom5Tmng==
-X-Received: by 2002:a17:906:319a:b0:9a1:c00e:60c5 with SMTP id 26-20020a170906319a00b009a1c00e60c5mr1459575ejy.48.1694598844117;
-        Wed, 13 Sep 2023 02:54:04 -0700 (PDT)
-Received: from [10.167.154.1] (178235177106.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.106])
-        by smtp.gmail.com with ESMTPSA id l21-20020a170906939500b00985ed2f1584sm8092669ejx.187.2023.09.13.02.54.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Sep 2023 02:54:03 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 13 Sep 2023 11:53:26 +0200
-Subject: [PATCH v2 4/4] phy: qualcomm: phy-qcom-eusb2-repeater: Add tuning
- overrides
+        Wed, 13 Sep 2023 05:58:20 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB79E198C;
+        Wed, 13 Sep 2023 02:58:16 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38D6K2kw024066;
+        Wed, 13 Sep 2023 09:58:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=SW5XMfAAgQgsQs0sqd4hiosdx6Wy0xqQAEdYoH6RRwc=;
+ b=k9Y5cjBCP7lo4+qGjscXiQoP+kjjz/2Zw6DLuuikpys3MD7FdAFaxSkHYpkycK4BMzlG
+ 8S7LNlqBJuWlsUy94X+eaDgUfSaSGIL/lvluL79u/81bh9TD/lzEqjlUZRKbCuiW37bI
+ ABBla7AxVlRrASH3TOi/FV0+bP/brbdlVy9y42GwkA+KGm3XJZEVsMv8p/7WEzvwppTw
+ 1Yl7pggcOmevX8AJXCA9+PaV+m6Dlqxnu4Ra1GWsIj2iBPy3pNDBKk7qO1E2qxpB0XBq
+ 5+ZVrijesiy5gcI/27RRQSag/mQpdxS3blmh5BMtRfv5WaeGWUcAcR5wizGtKRM/VwqS GA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t2y7w1bjj-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 13 Sep 2023 09:58:07 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38D9w64a021574
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 13 Sep 2023 09:58:06 GMT
+Received: from hu-shazhuss-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.36; Wed, 13 Sep 2023 02:58:00 -0700
+From:   Shazad Hussain <quic_shazhuss@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <jassisinghbrar@gmail.com>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>
+CC:     <kernel@quicinc.com>, <mani@kernel.org>,
+        Shazad Hussain <quic_shazhuss@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+Subject: [PATCH v1] dt-bindings: mailbox: Add protocol and client ID for SAIL and GPDSP's
+Date:   Wed, 13 Sep 2023 15:27:33 +0530
+Message-ID: <20230913095733.27382-1-quic_shazhuss@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230830-topic-eusb2_override-v2-4-7d8c893d93f6@linaro.org>
-References: <20230830-topic-eusb2_override-v2-0-7d8c893d93f6@linaro.org>
-In-Reply-To: <20230830-topic-eusb2_override-v2-0-7d8c893d93f6@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Abel Vesa <abel.vesa@linaro.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1694598835; l=1798;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=vlWt+/crcyxMQdUhFQmb4WOVKaBs0wbkNDm3+xQ+iBc=;
- b=rj7SzS4MbUgXjzqv55kbUGwKD8esrMRttXxGkS+rICUBd8qFKbouTxfru32W5y6X7a00cfv4x
- 32ZjJI8ZlwwBxD5Fbcx78qPt7e2le1FLdTFvkRx6e79+TsMPkhHqPYH
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: EkzXhLsWyP6Ushv0Al8yXD7HCqCkfReU
+X-Proofpoint-GUID: EkzXhLsWyP6Ushv0Al8yXD7HCqCkfReU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-13_02,2023-09-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 phishscore=0
+ malwarescore=0 mlxlogscore=771 adultscore=0 lowpriorityscore=0 spamscore=0
+ priorityscore=1501 mlxscore=0 suspectscore=0 bulkscore=0 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
+ definitions=main-2309130077
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There are devices in the wild, like the Sony Xperia 1 V that *require*
-different tuning than the base design for USB to work.
+Add more protocol and client ID for SAIL and GPDSP's which can be used
+in device tree properties.
 
-Add support for overriding the necessary tuning values.
-
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
 ---
- drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ include/dt-bindings/mailbox/qcom-ipcc.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
-index d4fb85c20eb0..a623f092b11f 100644
---- a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
-+++ b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
-@@ -142,7 +142,9 @@ static int eusb2_repeater_init(struct phy *phy)
- {
- 	struct reg_field *regfields = eusb2_repeater_tune_reg_fields;
- 	struct eusb2_repeater *rptr = phy_get_drvdata(phy);
--	const u32 *init_tbl = rptr->cfg->init_tbl;
-+	struct device_node *np = rptr->dev->of_node;
-+	u32 init_tbl[F_NUM_TUNE_FIELDS] = { 0 };
-+	u8 override;
- 	u32 val;
- 	int ret;
- 	int i;
-@@ -163,6 +165,19 @@ static int eusb2_repeater_init(struct phy *phy)
- 			regmap_field_update_bits(rptr->regs[i], mask, 0);
- 		}
- 	}
-+	memcpy(init_tbl, rptr->cfg->init_tbl, sizeof(init_tbl));
-+
-+	if (!of_property_read_u8(np, "qcom,tune-usb2-amplitude", &override))
-+		init_tbl[F_TUNE_IUSB2] = override;
-+
-+	if (!of_property_read_u8(np, "qcom,tune-usb2-disc-thres", &override))
-+		init_tbl[F_TUNE_HSDISC] = override;
-+
-+	if (!of_property_read_u8(np, "qcom,tune-usb2-preem", &override))
-+		init_tbl[F_TUNE_USB2_PREEM] = override;
-+
-+	for (i = 0; i < F_NUM_TUNE_FIELDS; i++)
-+		regmap_field_update_bits(rptr->regs[i], init_tbl[i], init_tbl[i]);
+diff --git a/include/dt-bindings/mailbox/qcom-ipcc.h b/include/dt-bindings/mailbox/qcom-ipcc.h
+index fbfa3febc66d..4ef14cba6bdd 100644
+--- a/include/dt-bindings/mailbox/qcom-ipcc.h
++++ b/include/dt-bindings/mailbox/qcom-ipcc.h
+@@ -33,5 +33,11 @@
+ #define IPCC_CLIENT_NSP1		18
+ #define IPCC_CLIENT_TME			23
+ #define IPCC_CLIENT_WPSS		24
++#define IPCC_CLIENT_SAIL0		27
++#define IPCC_CLIENT_SAIL1		28
++#define IPCC_CLIENT_SAIL2		29
++#define IPCC_CLIENT_SAIL3		30
++#define IPCC_CLIENT_GPDSP0		31
++#define IPCC_CLIENT_GPDSP1		32
  
- 	ret = regmap_field_read_poll_timeout(rptr->regs[F_RPTR_STATUS],
- 					     val, val & RPTR_OK, 10, 5);
-
+ #endif
 -- 
-2.42.0
+2.17.1
 
