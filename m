@@ -2,116 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5523379F04B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 19:18:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E874E79F058
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 19:22:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231287AbjIMRSp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Sep 2023 13:18:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37596 "EHLO
+        id S229901AbjIMRWw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Sep 2023 13:22:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231800AbjIMRSc (ORCPT
+        with ESMTP id S230327AbjIMRWv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Sep 2023 13:18:32 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85E111BE3;
-        Wed, 13 Sep 2023 10:18:03 -0700 (PDT)
-Received: from localhost (unknown [IPv6:2a01:e0a:2c:6930:5cf4:84a1:2763:fe0d])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: bbrezillon)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 918336607334;
-        Wed, 13 Sep 2023 18:18:00 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1694625481;
-        bh=qkQc0xPkJZv4MQDkYeq0TPKFPY0tuZwz54peEXg8Lxg=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=mQHUyJ8sPtv2kQ3oCun3pRUeCO1BT6ite9Mp5p1x3f6RUWGGTN+L+NIhLEQyjwd7h
-         vIp1ISlItO1EfT60aPYOXLfXDtVuYUg+4dQ/Fl2KZTwuv7tv2lIF8KBttczEUhk2zw
-         8+RD462sEzN1RN9mKuoZ3BnBf0QYnRYP6XcNpzQbkEJ4cD1/k/JJXIdesj1BTJKRsD
-         y1ysYJNIZ1YfmHHRf/rvec4Q6glIpVft1UN7vTv5dmnSTjHd7fuXmDAfHw3HjFJ5uc
-         F/Tn9HGehmvgLpwVmjUqgVruXFj/wToU9vdP11MRSlyTzs5Fthgu/8HhqlVEl6Lylc
-         Q79mfzKTllSVQ==
-Date:   Wed, 13 Sep 2023 19:17:57 +0200
-From:   Boris Brezillon <boris.brezillon@collabora.com>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     =?UTF-8?B?QWRyacOhbg==?= Larumbe <adrian.larumbe@collabora.com>,
-        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
-        quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
-        sean@poorly.run, marijn.suijten@somainline.org, robh@kernel.org,
-        steven.price@arm.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        healych@amazon.com, kernel@collabora.com,
-        freedreno@lists.freedesktop.org,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Subject: Re: [PATCH v4 6/6] drm/drm-file: Show finer-grained BO sizes in
- drm_show_memory_stats
-Message-ID: <20230913191757.6594f8c8@collabora.com>
-In-Reply-To: <CAF6AEGu+NeMfeP3yVLr76fUmXeWPx86D9ckw_WjXu+Xpn6DJvA@mail.gmail.com>
-References: <20230912084044.955864-1-adrian.larumbe@collabora.com>
-        <20230912084044.955864-7-adrian.larumbe@collabora.com>
-        <20230912113210.65897aab@collabora.com>
-        <CAF6AEGtzOS89V1vbobpSEb9KX8x9T0FfmkW2OAaxAKLs+GugKA@mail.gmail.com>
-        <CAF6AEGup93tQMYrmx6iKex2Fxz+Yu5m-MMWPmeOQ4yx_Racnag@mail.gmail.com>
-        <20230913093637.2748d217@collabora.com>
-        <CAF6AEGu+NeMfeP3yVLr76fUmXeWPx86D9ckw_WjXu+Xpn6DJvA@mail.gmail.com>
-Organization: Collabora
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-redhat-linux-gnu)
+        Wed, 13 Sep 2023 13:22:51 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29181A3;
+        Wed, 13 Sep 2023 10:22:46 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38DCVEi6016097;
+        Wed, 13 Sep 2023 17:22:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=hvCVL4Af4zagYv23G23r8OybsiJ9AMifzesX0uokHy4=;
+ b=aXaynT4iAd0eQlmE3oVU0KPcCYUpFbl6wCDiJNFPDbcvuE5n74kIW+RrOxQuv+E80gdN
+ USEV2VhTdtz3Oowi3gjTs2/RnvM8l8wSuXATTz9hU4ZP4QywJvZYw3hdjwrtanlYz/ip
+ Rma8zDrA+1GUmOWOWDSx6pUBJfiNHg3MU/CXWgkUVDVOjb0QCdkbRd1kVs+wcOmlMxuF
+ UfX7Amvs5H07UtC3iUshauJU8+CacBrX/zi5MJGGOlIU9bcgztWA/a+erM0BtrA8+/KL
+ EUORGuizeEalT1mA7t8XDYVHEXfCGaR97oumvlFhAjDqtKzbj7iZEtfzUOSYaPikct/X ng== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t3003j83v-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 13 Sep 2023 17:22:31 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38DHMUOp029014
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 13 Sep 2023 17:22:30 GMT
+Received: from [10.110.7.172] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Wed, 13 Sep
+ 2023 10:22:27 -0700
+Message-ID: <d7b5fd59-8e35-79c8-cf6f-63a8b188593a@quicinc.com>
+Date:   Wed, 13 Sep 2023 10:22:26 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH] EDAC/device: Add sysfs notification for UE,CE count
+ change
+Content-Language: en-US
+To:     Deepti Jaggi <quic_djaggi@quicinc.com>, <james.morse@arm.com>,
+        <mchehab@kernel.org>, <rric@kernel.org>, <bp@alien8.de>,
+        <tony.luck@intel.com>
+CC:     <linux-edac@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>, <quic_psodagud@quicinc.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+References: <20230731220059.28474-1-quic_djaggi@quicinc.com>
+ <3e2bf03e-2bc1-445e-d8ce-4975c044eea0@quicinc.com>
+ <ce06c845-f3c8-a733-dc21-ee0ba4b4ca68@quicinc.com>
+ <2fa11648-6d51-feb7-4d75-6429b13c682f@quicinc.com>
+From:   Trilok Soni <quic_tsoni@quicinc.com>
+In-Reply-To: <2fa11648-6d51-feb7-4d75-6429b13c682f@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: LN7Q61oFen1MjrVjZPA_sug_q1HWMtg1
+X-Proofpoint-GUID: LN7Q61oFen1MjrVjZPA_sug_q1HWMtg1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-13_10,2023-09-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=672 clxscore=1015
+ adultscore=0 malwarescore=0 priorityscore=1501 lowpriorityscore=0
+ spamscore=0 phishscore=0 bulkscore=0 suspectscore=0 mlxscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309130145
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 13 Sep 2023 09:46:45 -0700
-Rob Clark <robdclark@gmail.com> wrote:
+On 8/1/2023 3:37 PM, Deepti Jaggi wrote:
+> On 7/31/2023 10:48 PM, Trilok Soni wrote:
+>> On 7/31/2023 3:40 PM, Trilok Soni wrote:
+>>> On 7/31/2023 3:00 PM, Deepti Jaggi wrote:
+>>>> A daemon running in user space collects information on correctable
+>>>> and uncorrectable errors from EDAC driver by reading corresponding
+>>>> sysfs entries and takes appropriate action.
+>>>
+>>> Which daemon we are referring here? Can you please provide the link to the project?
+>>>
+>>> Are you using this daemon?
+>>>
+>>> https://mcelog.org/ - It is for x86, but is your daemon project different?
+>>>
+> 
+> No this daemon is not used. Daemon is under development and it is more specific to Qualcomm use cases.
+> Based on my limited understanding of mcelog, this daemon is handling errors in an architecture specific way.
+> By adding support for sysfs notification in EDAC framework, drivers which are not using any custom sysfs attributes can take advantage of this modification to notify the user space daemon polling on ue_count and/or ce_count attributes.
 
-> On Wed, Sep 13, 2023 at 12:36=E2=80=AFAM Boris Brezillon
-> <boris.brezillon@collabora.com> wrote:
-> >
-> > On Tue, 12 Sep 2023 19:14:35 -0700
-> > Rob Clark <robdclark@gmail.com> wrote:
-> > =20
-> > > On Tue, Sep 12, 2023 at 6:46=E2=80=AFPM Rob Clark <robdclark@gmail.co=
-m> wrote: =20
-> > > >
-> > > > On Tue, Sep 12, 2023 at 2:32=E2=80=AFAM Boris Brezillon
-> > > > <boris.brezillon@collabora.com> wrote: =20
-> > > > >
-> > > > > On Tue, 12 Sep 2023 09:37:00 +0100
-> > > > > Adri=C3=A1n Larumbe <adrian.larumbe@collabora.com> wrote:
-> > > > > =20
-> > > > > > The current implementation will try to pick the highest availab=
-le size
-> > > > > > display unit as soon as the BO size exceeds that of the previous
-> > > > > > multiplier. That can lead to loss of precision in BO's whose si=
-ze is
-> > > > > > not a multiple of a MiB.
-> > > > > >
-> > > > > > Fix it by changing the unit selection criteria.
-> > > > > >
-> > > > > > For much bigger BO's, their size will naturally be aligned on s=
-omething
-> > > > > > bigger than a 4 KiB page, so in practice it is very unlikely th=
-eir display
-> > > > > > unit would default to KiB. =20
-> > > > >
-> > > > > Let's wait for Rob's opinion on this. =20
-> > > >
-> > > > This would mean that if you have SZ_1G + SZ_1K worth of buffers, yo=
-u'd
-> > > > report the result in KiB.. which seems like overkill to me, esp giv=
-en
-> > > > that the result is just a snapshot in time of a figure that
-> > > > realistically is dynamic. =20
-> >
-> > Yeah, my point was that, generally, such big buffers tend to have
-> > a bigger size alignment (like 2MB for anything bigger than 1GB), but
-> > maybe this assumption doesn't stand for all drivers. =20
->=20
-> Maybe for CMA?  Regardless, this # is the sum of buffer sizes, so you
-> could still get that 1G+1K scenario
 
-My bad, for some reason I had per-buffer size printing in mind.
+Did you look at the rasdaemon then?
+
+https://github.com/mchehab/rasdaemon - rasdaemon is also used on more than one architecture including ARM. 
+
+
+> 
+>>>> This patch adds support for user space daemon to wait on poll() until
+>>>> the sysfs entries for UE count and CE count change and then read updated
+>>>> counts instead of continuously monitoring the sysfs entries for
+>>>> any changes.
+>>>
+>>> The modifications below are architecture agnostic so I really want to know what exactly we are fixing and if there is a problem.
+>>
+> 
+> In the change set, adding support for user space to poll on the ue_count and/or ce_count sysfs attributes.
+> On changes in ue_count,ce_count attributes, unblock user space poll from EDAC driver framework and user space can read the changed ce_count, ue_count.
+> 
+> As an example from user space perform the following steps:
+>     1. Open the sysfs attribute file for UE count and CE count
+>     2. Read the initial CE count and UE count
+>     3. Poll on any changes on CE count, UE count fds.
+>     4. Once poll unblocks, Read the updated count.
+>         5.Take appropriate action on the changed counts.
+> 
+> #####################################################################
+> Example Simple User space code Snippet:
+
+All of this resolved in the EDAC framework by tracing per my understanding. If any changes required
+we should extend the rasdaemon and show the usecase to explain the it better?
+
+This is very old link but if you follow this patch series you will understand the tracing events in the EDAC
+and latest EDAC framework code will help. 
+
+https://lkml.indiana.edu/hypermail/linux/kernel/1205.1/01751.html
+
+-- 
+---Trilok Soni
+
