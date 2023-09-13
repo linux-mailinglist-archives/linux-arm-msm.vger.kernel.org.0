@@ -2,80 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECA7679E26C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 10:43:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55B1C79E281
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 10:47:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238933AbjIMInn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Sep 2023 04:43:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38954 "EHLO
+        id S239070AbjIMIrn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Sep 2023 04:47:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235789AbjIMInm (ORCPT
+        with ESMTP id S239043AbjIMIrl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Sep 2023 04:43:42 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A4CF1997
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 01:43:38 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-9a21b6d105cso834088966b.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 01:43:38 -0700 (PDT)
+        Wed, 13 Sep 2023 04:47:41 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E4631996
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 01:47:37 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-52f9a45b4bdso2332975a12.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 01:47:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694594617; x=1695199417; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1694594856; x=1695199656; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=7VWbnSO3QqQi1sbJoehxyEUytvvrSclKo+E9q29SgaY=;
-        b=j9mPSQFXsaLuexh6o8nfFNRBqWUNtRskjH6vag+wavV+H5hGEno1ZLYzhFTQEyJ5o8
-         0v8ZT9XNtikxrsuvMX8sdvoBSldUyYvQuo7hmakYOooMUlp0bFlFSEFKDTwYuw7HQ+/k
-         YA5dgeU/iq4ohiF7RgCIagvyIwisanDTQQY4DCmJoMIrgCtPHp/VyruoT42USbPim9uu
-         JBkTNnaZHGxssxHhKPWS3U7Bs/I2Sy36sKxNswDUr10Nj7+qpI2oSZtn1gyab8W5uclz
-         do2GwlR2G7fq3FvVQACub4EnUdFoCNgbo1M8vhJLE8sFyLB4AzxKQBfaKnvgeVonF5Sg
-         j5hA==
+        bh=PQEFQQxMh0h+78yTeEwiIcC35VL/vG6Gf1kdzuQcwiU=;
+        b=p4jmRGoQRTk7hzVY/UkUNPTTv6AxQI+W8/gXt3BPy2Hj+9is4bLh2ermIO33E3wRTa
+         Q0w/5WBsR04ikKQ8CdtX5NL4VgxjbexFvk0VaM+6XNrXSQCZyFGCJbuAQI7WEFyC7Gbw
+         MVyxTOTGkZjrqmyiEDCc8Bbnmuu5k/4WJIEpTqmX+rLLt+KvA0RxlpyXeq4qlU5mklLU
+         F8ITEFxQXA3UkfvnCL5TAdpZxjp2RilgNL/nVS6GkZDMKWieXel7XGCnlPqDGTBY7O3l
+         1mjohY8iNjdS2/bs8Hqa+NWhFKS2rQPLCfwZ99dvdsL99AaZeHmqOilZoFMlevjpXhA1
+         c7kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694594617; x=1695199417;
+        d=1e100.net; s=20230601; t=1694594856; x=1695199656;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7VWbnSO3QqQi1sbJoehxyEUytvvrSclKo+E9q29SgaY=;
-        b=gq/CbrgvJNaK9rNo5UW/DpVslcHaBE8GpBRHWDtPoUHU5XBftGR3eqyfp3PLw0X7d3
-         TcbCEAU/fkRWEbwtWEmibtPBCSnMiE1uSVk1A5zCXzO1SpWY+6BrdqtITjXnoI/awmLg
-         Xy0S/2AlYV2HGDNcw56nQsCvkvk6F7iO6j+b+wdabqJhGQYWDFILIDUP+5CQeauNYTXt
-         CKqAiNEUDw4yA2N+PVoCpS6zSeq2PgQZj/bc1qsU+rFvDRNQdMknSEhICQ7enXTFxbKn
-         X9lM+8ib+8MUZ2KBSt6SZIHdBUEI/V+lG3pcp2hnxSRjP+Kw0zKWpFicImcRBqBw1DIX
-         4umw==
-X-Gm-Message-State: AOJu0YxeaiJ5DmBoFUdXYnHrwWb3hy3UpPN+MuXG3qHnyNMJxS775IOo
-        L/2RSMAd/xkIiluZ+FN7/FLcdA==
-X-Google-Smtp-Source: AGHT+IHQhQ4tantOAn3/0fVJr3ybsNR+u4GIF0fRCDA9G6qqdjslm83NMWHFBY3AZ69t5v9qg6zGsQ==
-X-Received: by 2002:a17:906:109a:b0:9a1:c44d:7056 with SMTP id u26-20020a170906109a00b009a1c44d7056mr1640901eju.26.1694594616915;
-        Wed, 13 Sep 2023 01:43:36 -0700 (PDT)
+        bh=PQEFQQxMh0h+78yTeEwiIcC35VL/vG6Gf1kdzuQcwiU=;
+        b=QLphbL99pDL3SGLAbafanDdyeVMGn2HYTzUAtVQ+IAg96tCYlanAfLL+a1TDaShmRu
+         059D9pbOtrx1Qk63usl5Ek2tWHRCcJF2MduuMQxB1dE5Dk6/Y26qDOtlklR/vtdsAZ7/
+         LQdm1Q3G0RbV7q7515Z+QWN9mccG/z9ZR/9avah6FDXn9u69QyOtrt1+uXFSeAj/5U2m
+         MJBeSaH+qbu2CZ3M8NTXzMBelFtRC5Js9uQYNZpEtv0iLyHN48FficWaRYl75mwKCLEn
+         Ahhm+PaAukuENfeU3rnhOHyhsgyTI3AKZ7n+7oNzoJwfMshtsEyhxt8T4DUMNKDGy+Ch
+         XFcQ==
+X-Gm-Message-State: AOJu0Yz2foJ83GtHCC2bhzIS3f9X/BIHL63M/+IR5R2nu0E8foAUKotk
+        erAzoXWjI6AZYV9yavsnvyOCyA==
+X-Google-Smtp-Source: AGHT+IHq8G/vDNKzkpyTrGivbPniBIGyuPjI+ArBrWWcige0YNQz3a3Kfta7CjCjsNCGDZAP+7Uqvg==
+X-Received: by 2002:a17:906:d8:b0:9aa:186:959a with SMTP id 24-20020a17090600d800b009aa0186959amr1364510eji.31.1694594855877;
+        Wed, 13 Sep 2023 01:47:35 -0700 (PDT)
 Received: from [192.168.37.232] (178235177106.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.106])
-        by smtp.gmail.com with ESMTPSA id pv26-20020a170907209a00b00992d122af63sm8018251ejb.89.2023.09.13.01.43.34
+        by smtp.gmail.com with ESMTPSA id mb8-20020a170906eb0800b00992b71d8f19sm7983312ejb.133.2023.09.13.01.47.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Sep 2023 01:43:36 -0700 (PDT)
-Message-ID: <3260f0ca-9e27-4920-8415-7f364dff773d@linaro.org>
-Date:   Wed, 13 Sep 2023 10:43:34 +0200
+        Wed, 13 Sep 2023 01:47:35 -0700 (PDT)
+Message-ID: <ac501bcc-80a1-4b65-ba24-272152d1c95c@linaro.org>
+Date:   Wed, 13 Sep 2023 10:47:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 6/7] arm64: dts: qcom: ipq9574: Add support for nsscc
- node
+Subject: Re: [PATCH v2 01/14] arm64: dts: qcom: msm8916: Drop RPM bus clocks
 Content-Language: en-US
-To:     Geert Uytterhoeven <geert@linux-m68k.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Devi Priya <quic_devipriy@quicinc.com>, andersson@kernel.org,
-        agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, catalin.marinas@arm.com, will@kernel.org,
-        p.zabel@pengutronix.de, richardcochran@gmail.com, arnd@arndb.de,
-        geert+renesas@glider.be, nfraprado@collabora.com, rafal@milecki.pl,
-        peng.fan@nxp.com, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        netdev@vger.kernel.org, quic_saahtoma@quicinc.com
-References: <20230825091234.32713-1-quic_devipriy@quicinc.com>
- <20230825091234.32713-7-quic_devipriy@quicinc.com>
- <CAA8EJpo75zWLXuF-HC-Xz+6mvu_S1ET-9gzW=mOq+FjKspDwhw@mail.gmail.com>
- <CAMuHMdXx_b-uubonRH5=Tcxo+ddxg2wXvRNQNjhMrfvSFh0Xcw@mail.gmail.com>
- <daed3270-847e-f4c6-17ad-4d1962ae7d49@linaro.org>
- <CAMuHMdVxykGwyrKKSHBv9AHy4gAeH7DT7caZarbs-F40zz5Jpw@mail.gmail.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Alexey Minnekhanov <alexeymin@postmarketos.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        linux-usb@vger.kernel.org
+References: <20230721-topic-rpm_clk_cleanup-v2-0-1e506593b1bd@linaro.org>
+ <20230721-topic-rpm_clk_cleanup-v2-1-1e506593b1bd@linaro.org>
+ <bd11d1b1-efe5-4f96-43e7-163fca5d3278@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -112,39 +115,35 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <CAMuHMdVxykGwyrKKSHBv9AHy4gAeH7DT7caZarbs-F40zz5Jpw@mail.gmail.com>
+In-Reply-To: <bd11d1b1-efe5-4f96-43e7-163fca5d3278@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13.09.2023 10:38, Geert Uytterhoeven wrote:
-> Hi Krzysztof,
+On 13.09.2023 09:07, Krzysztof Kozlowski wrote:
+> On 12/09/2023 15:31, Konrad Dybcio wrote:
+>> These clocks are now handled from within the icc framework and are
 > 
-> On Wed, Sep 13, 2023 at 10:26 AM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->> On 13/09/2023 10:23, Geert Uytterhoeven wrote:
->>>>
->>>>> +                       clock-names = "nssnoc_nsscc", "nssnoc_snoc", "nssnoc_snoc_1",
->>>>> +                                     "bias_pll_cc_clk", "bias_pll_nss_noc_clk",
->>>>> +                                     "bias_pll_ubi_nc_clk", "gpll0_out_aux", "uniphy0_nss_rx_clk",
->>>>> +                                     "uniphy0_nss_tx_clk", "uniphy1_nss_rx_clk",
->>>>> +                                     "uniphy1_nss_tx_clk", "uniphy2_nss_rx_clk",
->>>>> +                                     "uniphy2_nss_tx_clk", "xo_board_clk";
->>>>
->>>> You are using clock indices. Please drop clock-names.
->>>
->>> What do you mean by "using clock indices"?
->>> Note that the "clock-names" property is required according to the DT bindings.
->>
->> Indeed, thanks for pointing this out. Probably bindings should be changed.
-> 
-> But what's so great about not having "clock-names"?
-> There are _14_ input clocks.
-clk_parent_data has an "index" member, which lets us bind
-clocks[n] to parent[n]. With the DT properties being ABI,
-including the order of entries within, that lets us get rid
-of clock-names and the matching is marginally faster.
+> That's a driver behavior, not hardware.
+I believe we've been over this already..
+
+The rationale behind this change is: that hardware, which falls
+under the "interconnect" class, was previously misrepresented as
+a bunch of clocks. There are clocks underneath, but accessing them
+directly would be equivalent to e.g. circumventing the PHY subsystem
+and initializing your UFS PHY from within the UFS device.
 
 Konrad
+> 
+>> no longer registered from within the CCF. Remove them.
+>>
+> 
+> Changes in Linux clock drivers should not cause some clocks to disappear
+> from DTS...
+> 
+> 
+> Best regards,
+> Krzysztof
+> 
