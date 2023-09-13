@@ -2,86 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3766A79F172
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 20:55:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B72DA79F188
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 20:58:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232058AbjIMSzY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Sep 2023 14:55:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48180 "EHLO
+        id S232129AbjIMS6p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Sep 2023 14:58:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231987AbjIMSzY (ORCPT
+        with ESMTP id S232115AbjIMS6n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Sep 2023 14:55:24 -0400
-Received: from smtp30.i.mail.ru (smtp30.i.mail.ru [95.163.41.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2739170F;
-        Wed, 13 Sep 2023 11:55:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
-        ; s=mailru; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
-        Cc:To:From:From:Sender:Reply-To:To:Cc:Content-Type:Content-Transfer-Encoding:
-        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-        Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
-        X-Cloud-Ids:Disposition-Notification-To;
-        bh=Bdqu4s7ncA4QNWSmchcpgNA7AzGHQshXAsqWrNvVCTM=; t=1694631319; x=1694721319; 
-        b=NTYvK2aW5GgyVJQYcdEjFCvo22++uRu+vAepCASfaFqEnfihQgDP+Huv6HtV0j3XFcNDFMyZnkh
-        2dD07VsyJGtLtcp6axeblAany09F5Z6ERL06JaN8EF+7QKl6iVSloGAtr56SZPI0l24giZqYd/TQD
-        5DTrGf/mF2WYTaseWP4=;
-Received: by smtp30.i.mail.ru with esmtpa (envelope-from <danila@jiaxyga.com>)
-        id 1qgV1A-00Bqzx-1a; Wed, 13 Sep 2023 21:55:17 +0300
-From:   Danila Tikhonov <danila@jiaxyga.com>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Danila Tikhonov <danila@jiaxyga.com>
-Subject: [PATCH] arm64: dts: qcom: pm8150l: Add wled node
-Date:   Wed, 13 Sep 2023 21:55:14 +0300
-Message-ID: <20230913185514.21840-1-danila@jiaxyga.com>
-X-Mailer: git-send-email 2.41.0
+        Wed, 13 Sep 2023 14:58:43 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A792E1986
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 11:58:39 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-99bf3f59905so22178166b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 11:58:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694631518; x=1695236318; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ef3Np+qKkjrEacuonwofFjR4nCMUn4hDnpQvFat0LCA=;
+        b=EXb7A+/9BMtjf6ZWDZJUkd/bkiA797vEqwaNTDMULwDmHRAa3PGmQHTIm5YwgrtVYS
+         kS9slaz2vcHGFS9KQHHRgl+fAhYYejamFxpBIzjMToOhsOVmAb7IRayv8mzRVv0bUjxT
+         qwxL5JqWUgRpaGrGDvygb67jik5VCdQjvNTb7nV/22YeQ4B+LHoSyVum3PRPRRk3xwK9
+         jEBAmcOF/46vNv9h5rSVMKkpkU4vlnhT3C4dvdmxviEjv4M8hV6myY0uQgi0+d5/VYjJ
+         wUpAjqS289djHdk1ELlYrs6aUH5snTfoQKKVug/QtzJI5D3ksGuuzJBEqRrWJ5tu6FrG
+         7ZwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694631518; x=1695236318;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ef3Np+qKkjrEacuonwofFjR4nCMUn4hDnpQvFat0LCA=;
+        b=SXqFlUxtAeytA1ibYI96izb5WdRPm9u/Npmyv3aU6MDROjX7n98xLpvN7+i/nxaJiI
+         hKrWvwhWab4TqUkMJqyPMgsKuHQdqN+DP1jMB+4B8UHdRw5y90mkKHYYR9EH+smLQQb0
+         Vp3h0ccPnTwdNdzC5ZcpG/KFFSq5kkOLolf9YNNXpkMG1vc3cmHapaUiqwc3AKMm/INy
+         i5yPkEL+gCO85m9mLDPxwtdu2JirnmRTCK/TifjEx0wWYzqL8cbnlR4D8l1zvtaXRngy
+         xv6G6FI1cqmKjxnvTcVeaAJsP9W4mnayY6GBFqJOfjGe93pEw7rAV49RW6INtgKdFCg0
+         TbGQ==
+X-Gm-Message-State: AOJu0Yz+TuMxRjBxbc6WT8AY7Bt9rlY5aAgfYvR4h3AMJepOjwrcachq
+        gbhfBmMLqaqnXgEc3H2aq8Mxuw==
+X-Google-Smtp-Source: AGHT+IGZujscp81DgnIbfwqvfnlgniMbYyyPgrGcdzqXfO9KTbJnK68vHvYSsaYnyShGiZQuMnC8Uw==
+X-Received: by 2002:a17:907:2e19:b0:9ad:a660:95bf with SMTP id ig25-20020a1709072e1900b009ada66095bfmr1745302ejc.17.1694631518134;
+        Wed, 13 Sep 2023 11:58:38 -0700 (PDT)
+Received: from [192.168.37.232] (178235177172.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.172])
+        by smtp.gmail.com with ESMTPSA id s21-20020a170906961500b009937dbabbd5sm8791903ejx.220.2023.09.13.11.58.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Sep 2023 11:58:37 -0700 (PDT)
+Message-ID: <171a7ef6-b37e-4a23-a895-b964dde1aebc@linaro.org>
+Date:   Wed, 13 Sep 2023 20:58:36 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Authentication-Results: smtp30.i.mail.ru; auth=pass smtp.auth=danila@jiaxyga.com smtp.mailfrom=danila@jiaxyga.com
-X-Mailru-Src: smtp
-X-7564579A: B8F34718100C35BD
-X-77F55803: 4F1203BC0FB41BD927CFE6CA1630A10CAE547C3CB81491E147B0A519B3A90A1300894C459B0CD1B97E8814247698D33C30661C66D29D2DC8A5703660123B0E3439E8B8BCDB49C505
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE78E88BD1CA827EF00C2099A533E45F2D0395957E7521B51C2CFCAF695D4D8E9FCEA1F7E6F0F101C6778DA827A17800CE76ABD3380F320B62CEA1F7E6F0F101C6723150C8DA25C47586E58E00D9D99D84E1BDDB23E98D2D38BE5CCB53A13BC8DBAA11B5CEE892613ACE2D41390E4B507A7CC7F00164DA146DAFE8445B8C89999728AA50765F79006377C70927E34808485389733CBF5DBD5E9C8A9BA7A39EFB766F5D81C698A659EA7CC7F00164DA146DA9985D098DBDEAEC8C6602A96AF88C695F6B57BC7E6449061A352F6E88A58FB86F5D81C698A659EA73AA81AA40904B5D9A18204E546F3947CE3786DD2C77EBDAAAD7EC71F1DB884274AD6D5ED66289B523666184CF4C3C14F6136E347CC761E07725E5C173C3A84C3457234DA37CC1B30BA3038C0950A5D36B5C8C57E37DE458B330BD67F2E7D9AF16D1867E19FE14079C09775C1D3CA48CF3D321E7403792E342EB15956EA79C166A417C69337E82CC275ECD9A6C639B01B78DA827A17800CE758ECEFFC28DC0EE1731C566533BA786AA5CC5B56E945C8DA
-X-C1DE0DAB: 0D63561A33F958A5A3892C2D7FF39EF814F48A8AF2C0D2F36316C517E94E872BF87CCE6106E1FC07E67D4AC08A07B9B082B967D547A19D2F9C5DF10A05D560A950611B66E3DA6D700B0A020F03D25A092FFDA4F57982C5F4CB5012B2E24CD356
-X-C8649E89: 1C3962B70DF3F0ADE00A9FD3E00BEEDF77DD89D51EBB7742D3581295AF09D3DF87807E0823442EA2ED31085941D9CD0AF7F820E7B07EA4CFDB79098084455A7C7C2B888197BDEC4B1BC404F1A5301E99C01D86FD553629AF08FC8DA71D385488C4B8F2E8CFB8F571ADE2B3FACB4F0A92C813EED9329642026E346BF9FA413E554C41F94D744909CE4BCAC77546666B612CC0CD5AA9A1B9887EE09F5AAA95A50543082AE146A756F3
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojoMTWofjSWSSmvwuM+wqblA==
-X-Mailru-Sender: 9EB879F2C80682A09F26F806C7394981B1AC1201EBCD528A24F77F4D91D93CDC0090337874FE1BEF643683D8C0F3ED1CA3C71A376745D86BBE86167304C7680C3980CE5AAA35C7CD60F22E8815EDE5EAEAB4BC95F72C04283CDA0F3B3F5B9367
-X-Mras: Ok
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] soc: qcom: socinfo: Add SM7150P ID
+Content-Language: en-US
+To:     Danila Tikhonov <danila@jiaxyga.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230913181722.13917-1-danila@jiaxyga.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230913181722.13917-1-danila@jiaxyga.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-WLED is used for controlling the backlight on some boards, add the node
-for it.
+On 13.09.2023 20:17, Danila Tikhonov wrote:
+> This series adds ID for Qualcomm SM7150P SoC.
+> 
+> The SM7150P does not have Qualcomm IP Accelerator (IPA)
+Most likely because it doesn't have a modem! :D
 
-Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
----
- arch/arm64/boot/dts/qcom/pm8150l.dtsi | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+That's what the P suffix seems to stand for, anyway.
 
-diff --git a/arch/arm64/boot/dts/qcom/pm8150l.dtsi b/arch/arm64/boot/dts/qcom/pm8150l.dtsi
-index b1686e5777b8..ac08a09c64c2 100644
---- a/arch/arm64/boot/dts/qcom/pm8150l.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm8150l.dtsi
-@@ -132,5 +132,15 @@ pm8150l_lpg: pwm {
- 			status = "disabled";
- 		};
- 
-+		pm8150l_wled: leds@d800 {
-+			compatible = "qcom,pm8150l-wled";
-+			reg = <0xd800>, <0xd900>;
-+			interrupts = <0x5 0xd8 0x1 IRQ_TYPE_EDGE_RISING>,
-+				     <0x5 0xd8 0x2 IRQ_TYPE_EDGE_RISING>;
-+			interrupt-names = "ovp", "short";
-+			label = "backlight";
-+
-+			status = "disabled";
-+		};
- 	};
- };
--- 
-2.41.0
-
+Konrad
