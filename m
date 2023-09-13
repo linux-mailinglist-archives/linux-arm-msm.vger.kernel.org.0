@@ -2,113 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ABFE579E7DD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 14:26:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 566D579E82D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 14:39:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230307AbjIMM0r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Sep 2023 08:26:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47386 "EHLO
+        id S234665AbjIMMjM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Sep 2023 08:39:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239372AbjIMM0q (ORCPT
+        with ESMTP id S231132AbjIMMjL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Sep 2023 08:26:46 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E33619AC
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 05:26:42 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-9ad8bba8125so230153666b.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 05:26:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694608001; x=1695212801; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8E6NTnrAXKpDewa3pGzDd8qfOwRsIkXDy/usDX+LrAg=;
-        b=JBcOBfiM1eiShcLgRR4XdqxLoe4fY/Qwfk3fTG23JCUJK3x27K0odDpGrHq35u03DG
-         G/bXwEsV5fMPNPbz6TcqPXKqjHo5BuepcyITcnPoyDYepzqjQ5tHlHxbk86FBWfd0lM2
-         8AVo2ixwHRXjJg5Q6UWvYvWP0yd0bkvrm4OrX4g9JHU46hVuVMnU+E5bT5HmGzFFZFnx
-         1oRQ5rUGyA0PN9I0oyAF9kpFZGLo9EupPH2e9pMBf2hn/QPppWPnDnP+dGGHlUS8qdq0
-         9Y9+6KQzUBXWnmPfHvici9HK0rY7r5DnjKyXESf3OwdQNGvgX4KlLPibd9r7Q2xcAqlP
-         lVUg==
+        Wed, 13 Sep 2023 08:39:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id DAB2019AC
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 05:38:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1694608702;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=a99oLOwjNNMyzFFsHd0MXUMcklXas63C6jeF9Gj5oJI=;
+        b=Bqk8amhDhtaPdwJhf0cIsXk4ee9IIQsbuwJDbHm1nx2EYm0v9MwML2LfJ9BcJoyp2DKgZe
+        DVdUx+34LX+JVLns95tn8i6uIp7acPMYsBUmz3IGyBIL/9QEcjPC0tYjeOFkLOw9bMLShO
+        hIqqWUd2kyu9Ntdi8GLAriA+WGzh8Ak=
+Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
+ [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-438-kVCO56cNP_eXDAJzn1DbSA-1; Wed, 13 Sep 2023 08:38:20 -0400
+X-MC-Unique: kVCO56cNP_eXDAJzn1DbSA-1
+Received: by mail-yw1-f198.google.com with SMTP id 00721157ae682-5925fb6087bso72702937b3.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 05:38:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694608001; x=1695212801;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8E6NTnrAXKpDewa3pGzDd8qfOwRsIkXDy/usDX+LrAg=;
-        b=gs0lSsY3ICHtk30MNBxQDgga7bdzs/Ec+aK2dCHx69eLScvgedhKZI/KlbHeAvk73+
-         7KiZgleuTtwAO7cOqE9PkRRXC+KOmjCxu4eC4grU0Y5ZuoWJUjn04dN082TbpOAWN4w7
-         W79NW/WnQy9OTELSD//dCAw7g1I9Z7fdJiHATzsNQ+VfCBgPMB/pLHyQ4f18YUoSB1/A
-         tCQlJ/xBm3V7UZb9ol6o97FHsBQ1WW+BAGy8IUPDGVXPkYGfkR8YVOzCyq5zzKimonak
-         Rvcyk8pjHEDW4y5AGy6A5OpXLpwljv3l1BscYTiJwAds4UjAN07Io1ABOPmlZYRZ8q0H
-         6mLw==
-X-Gm-Message-State: AOJu0YwKGllgn0H9ZwITvndF1c4wUreAaAiyV+/M9d+UJBnMEcEVsdtb
-        VG9x2lz45l1Sg03ipqMjAcrjUg==
-X-Google-Smtp-Source: AGHT+IH/5F1hSY0BAv5EYN86McI3ASqRbm5sCuJy71SqYqBI6pY3zEpfJCSXerOM4dBZMkPUW/SpgQ==
-X-Received: by 2002:a17:907:9686:b0:9a5:7887:ef09 with SMTP id hd6-20020a170907968600b009a57887ef09mr2243739ejc.32.1694608000944;
-        Wed, 13 Sep 2023 05:26:40 -0700 (PDT)
-Received: from [192.168.0.163] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id pk24-20020a170906d7b800b0098d2d219649sm8489928ejb.174.2023.09.13.05.26.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Sep 2023 05:26:40 -0700 (PDT)
-Message-ID: <e91e7d74-c81b-4b72-85bd-be6a5d25b1e7@linaro.org>
-Date:   Wed, 13 Sep 2023 13:26:39 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFT 00/20] Venus cleanups
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
+        d=1e100.net; s=20230601; t=1694608700; x=1695213500;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=a99oLOwjNNMyzFFsHd0MXUMcklXas63C6jeF9Gj5oJI=;
+        b=TpF1kQdqhJ5Ja68ZnqGkSJQSKOUqKRZ7Wm/AaIQNsjBMEHKzyVTjZJPEtawHO1yCWb
+         hlkoFdsj9aFgBJhLPcctQ15dVkuU+GKpgo77fz/nGeW39JI3oVCS2hTB1bsdq/Za52ws
+         swu5SkaHp6GF9ArhT4BmYeGLgr1ifZFlYpL18t9A7+5u/ETwgkTq6dNsjBqaeT+sBpl0
+         O+S6LM+Kf4bhzMzP3wFQd1SmcNif5oSNzE+mW+FaXngrydIR+r5ERuJIzBqKWyRh7j0o
+         hcwGSV0VljVyupnpPx7nh2hN5cid+9CDmV7Y5UxOH+jHUEn3qkZUue8X0tEP7GfOGo+w
+         7RxQ==
+X-Gm-Message-State: AOJu0YxN4axbXWAoCRyKoNfVTyo+KG1fIIztovchwqS4vQYES1t22fUw
+        yuolFZJl41op4kk3XJz2ytR2V3NgYUxZwZZzxh7ygJXg1R0gHZnwQ7uJImL/k6UdW9gT1iWwGUc
+        le/Ad5zZfjWbpmL7usA5asYqhbg==
+X-Received: by 2002:a81:840d:0:b0:592:227f:7964 with SMTP id u13-20020a81840d000000b00592227f7964mr2260155ywf.47.1694608700355;
+        Wed, 13 Sep 2023 05:38:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHkbtdNrR0YTB2Q5btwwGtmqxiH9pOyvhyovj8vNZpVcBvf93C7I4xQpOhZ3c2r3zgxp2VXpw==
+X-Received: by 2002:a81:840d:0:b0:592:227f:7964 with SMTP id u13-20020a81840d000000b00592227f7964mr2260142ywf.47.1694608700123;
+        Wed, 13 Sep 2023 05:38:20 -0700 (PDT)
+Received: from brian-x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
+        by smtp.gmail.com with ESMTPSA id y198-20020a0dd6cf000000b005707fb5110bsm3106302ywd.58.2023.09.13.05.38.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Sep 2023 05:38:19 -0700 (PDT)
+Date:   Wed, 13 Sep 2023 08:38:17 -0400
+From:   Brian Masney <bmasney@redhat.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20230911-topic-mars-v1-0-a7d38bf87bdb@linaro.org>
- <5d13f9c7-665d-4ff5-962d-940898b24754@linaro.org>
- <c7c0a8af-30c5-49c9-8212-bf08abc7c3fe@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <c7c0a8af-30c5-49c9-8212-bf08abc7c3fe@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH] arm64: dts: qcom: sa8775p: correct PMIC GPIO label in
+ gpio-ranges
+Message-ID: <ZQGtObktGq3tvEuf@brian-x1>
+References: <20230818135538.47481-1-krzysztof.kozlowski@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230818135538.47481-1-krzysztof.kozlowski@linaro.org>
+User-Agent: Mutt/2.2.9 (2022-11-12)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/09/2023 13:03, Konrad Dybcio wrote:
-> On 12.09.2023 08:19, Bryan O'Donoghue wrote:
->> On 11/09/2023 16:10, Konrad Dybcio wrote:
->>> With the driver supporting multiple generations of hardware, some mold
->>> has definitely grown over the code..
->>>
->>> This series attempts to amend this situation a bit by commonizing some
->>> code paths and fixing some bugs while at it.
->>>
->>> Only tested on SM8250.
->>>
->>> Definitely needs testing on:
->>>
->>> - SDM845 with old bindings
->>> - SDM845 with new bindings or 7180
->>> - MSM8916
->>> - MSM8996
->>>
->>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>
->> Don't we have both a db410c and db845c in Bjorn's lab you could test this on ?
-> None that work
+On Fri, Aug 18, 2023 at 03:55:38PM +0200, Krzysztof Kozlowski wrote:
+> There are several PMICs with GPIO nodes and one of the nodes referenced
+> other's in gpio-ranges which could result in deferred-probes like:
 > 
-> Konrad
+>   qcom-spmi-gpio c440000.spmi:pmic@2:gpio@8800: can't add gpio chip
+> 
+> Reported-by: Brian Masney <bmasney@redhat.com>
+> Closes: https://lore.kernel.org/all/ZN5KIlI+RDu92jsi@brian-x1/
+> Fixes: e5a893a7cec5 ("arm64: dts: qcom: sa8775p: add PMIC GPIO controller nodes")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-If you agree to bring more Polish candy to Ams, I will test this series 
-for you.
+Reviewed-by: Brian Masney <bmasney@redhat.com>
 
-Fair exchange.
-
----
-bod
