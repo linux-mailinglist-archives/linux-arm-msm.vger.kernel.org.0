@@ -2,56 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A738779ED30
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 17:35:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE98579EDBE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 17:56:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229586AbjIMPfo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Sep 2023 11:35:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54718 "EHLO
+        id S230135AbjIMP4G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Sep 2023 11:56:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229672AbjIMPfn (ORCPT
+        with ESMTP id S230014AbjIMP4F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Sep 2023 11:35:43 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 255881990
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 08:35:39 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-40061928e5aso78701705e9.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 08:35:38 -0700 (PDT)
+        Wed, 13 Sep 2023 11:56:05 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0028CCD
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 08:56:00 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-52e297c7c39so8760073a12.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 08:56:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694619337; x=1695224137; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DmUa/uK3zl9ZI3WJsapz8xqeCXA+AubzrG5QzcNVHCg=;
-        b=wlxVSvPLL2Al4Xt3sgtM9pAz0KjRiAenleq4Ow693DM9XyAGoCR5MCsEBSOjoP3nU2
-         BAg/ETWIQjB0NHy46XnFfW0JTdfDwWyvKGHOqQv12/nTuFlJi+fa3o/nCgU0KyxkBctU
-         Bg0ZXZE6u3z8xYa8Jv1F86UJTRJsFrGK8T0ejZ3+Jrz/bX2cGU9zskL3iLa2pZFl+FbV
-         VDpfRPRbD2QEVlomXwnhmrIerIa5rYT1rKhG57rT5xyJAna2+LEKRAp+IVqyAT+L6WdK
-         ryyDQbkfTYT2meCP+t9f2ChaKNAftbKk8Q7R05xAExgW3FNomJ/7iF4LgbGNUCjT4Jv6
-         rETA==
+        d=linaro.org; s=google; t=1694620559; x=1695225359; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=tv7XJDdl6834GzjvqOGD358bBmTKqyHRIi14XwGDvOI=;
+        b=J2ZjKir7vSkCqej4qUKm9JqDXFoT3PvKmsv/mv6U/czvSP7bf8ftGLzee73NxJP+gk
+         muLEKF7m7KNI9Wl3TpPNyJDuj5qZOXESe4jSSvqmC0dDtmLD1QEvu7j66M+8VIYtlQ0j
+         dR45cjAK0vNDU8gNLOzk6nJ/NDneEnoH3nRwWL/TX1hrVpolaWE6XFhuPQj6uffCvGJ8
+         uH6eSAio+IAKamfGng+FrJ3AzOwZ1kviURh2oMu6xO9qLZPWyorsKXW7fEs88BQq95f1
+         FZaErb1KZSIxGD/C5QtttikCfdUbyEmBfICeKi9FR9ECMkVcgWQWxwFHIJgzvWn18h2h
+         vX8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694619337; x=1695224137;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DmUa/uK3zl9ZI3WJsapz8xqeCXA+AubzrG5QzcNVHCg=;
-        b=EXdbjvH+fpRuZD2kyHoxTJM+gS9QgubjSLC/zcWo5cpm3hrDGAQFCiPFmymBcxNBy/
-         zbTrfmdE+ltLUVEjTvDouAKqzSxeorcgbxBLb7nwl0muqnGLOUDwhK43GNs/9xVUgFtY
-         V9ZDsgMUhIA6eNpsB3VcgbPSU00gBH8KTZ3ufCKxJ1bnx8/bFZVWdB8ATyZeGfG/ODVC
-         yZ/mlLv9Lgidsdtxhfb4OqtHdf94ii1Sg7qwvZSllZzHVM1couHI+xQJclUc7T6bJ1uZ
-         8q/boKvbLVthnC+3Tt4x7D+wjO63ia15D8eZ3jMaAeUnpxnXk21iua/HZB6Zr8MZBlnO
-         G0AA==
-X-Gm-Message-State: AOJu0YzuDFzELDi8ixml6bGwnlaBKiDgXJxARjj0GU1zzdLJdSBZ1pQU
-        d8ltxQKsaKVpE5E3x4HjvuufdA==
-X-Google-Smtp-Source: AGHT+IGovylkDo6wyDm6xVXmImMBKxNJpRan8u+7VsotkLE1xj+Aoiq8pqQoC8Lo5nr1Gki/S/RP2A==
-X-Received: by 2002:adf:ee8f:0:b0:314:4db:e0b2 with SMTP id b15-20020adfee8f000000b0031404dbe0b2mr2554098wro.15.1694619337374;
-        Wed, 13 Sep 2023 08:35:37 -0700 (PDT)
-Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:3b50:bca5:a754:7463])
-        by smtp.gmail.com with ESMTPSA id e11-20020adffc4b000000b0031f65cdd271sm15750315wrs.100.2023.09.13.08.35.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Sep 2023 08:35:36 -0700 (PDT)
-From:   Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        d=1e100.net; s=20230601; t=1694620559; x=1695225359;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tv7XJDdl6834GzjvqOGD358bBmTKqyHRIi14XwGDvOI=;
+        b=kGWeHX+0eT0K9iIEhj5s++E0Af32sVu9el9XDVY24x5vujT2JNM4z/80Ik2nXp3kGm
+         wXlkMRDYXY0sOpuy1SNj2mLqyo1+v7aPYoqRRMbHbBxd0bWuSk2/M9DbPnAHYGJMvLqE
+         ridMPrSjVjB7CeVdjoMhAR6vc0o6n5cfbVwks6Csq16Pf44l+ywNsPZbLHhma3oBnQ7d
+         8SPvuvrPVVssWywFhadU2rveg6rSb5FQVdd38ve52CqddNDR2dugGB6IyQjPbTKdWVut
+         ywt2LLq4zOqgWG0XfKDsP7hKX0qKoc0VyYZa2M9VYeg/VTYhHssERb5BMg4oclR30+Hc
+         VbhQ==
+X-Gm-Message-State: AOJu0Yx6WXxtuEwRKe/TtW5C7vw0jDfXgDmH4mfLgnXt0LLvRMLGt9Mh
+        Ek8roDa1KX90rN0s4eBAx5WkyQ==
+X-Google-Smtp-Source: AGHT+IHBr64ssqYpCba2U1MbEZa4hifW1e1oF7df36c+VnVjR01KmwawFQH8SGOjBmUtG5VCp8p4kw==
+X-Received: by 2002:aa7:c90c:0:b0:523:1ce9:1f41 with SMTP id b12-20020aa7c90c000000b005231ce91f41mr2521929edt.18.1694620559143;
+        Wed, 13 Sep 2023 08:55:59 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.214.188])
+        by smtp.gmail.com with ESMTPSA id m16-20020aa7c490000000b005236410a16bsm7565230edq.35.2023.09.13.08.55.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Sep 2023 08:55:58 -0700 (PDT)
+Message-ID: <c574c47e-9ceb-ef83-cc92-cdc6cd4982e5@linaro.org>
+Date:   Wed, 13 Sep 2023 17:55:56 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.0
+Subject: Re: [PATCH 1/2] dt-bindings: crypto: ice: document the sa8775p inline
+ crypto engine
+Content-Language: en-US
+To:     Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Herbert Xu <herbert@gondor.apana.org.au>,
@@ -60,54 +68,24 @@ To:     Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 2/2] arm64: dts: qcom: sa8775p: enable the inline crypto engine
-Date:   Wed, 13 Sep 2023 17:35:29 +0200
-Message-Id: <20230913153529.32777-2-bartosz.golaszewski@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230913153529.32777-1-bartosz.golaszewski@linaro.org>
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20230913153529.32777-1-bartosz.golaszewski@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230913153529.32777-1-bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add an ICE node to sa8775p SoC description and enable it by adding a
-phandle to the UFS node.
+On 13/09/2023 17:35, Bartosz Golaszewski wrote:
+> Add the compatible string for QCom ICE on sa8775p SoCs.
+> 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> ---
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sa8775p.dtsi | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index 9f4f58e831a4..b6a93b11cbbd 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -1525,6 +1525,7 @@ ufs_mem_hc: ufs@1d84000 {
- 					<0 0>,
- 					<0 0>,
- 					<0 0>;
-+			qcom,ice = <&ice>;
- 			status = "disabled";
- 		};
- 
-@@ -1546,6 +1547,13 @@ ufs_mem_phy: phy@1d87000 {
- 			status = "disabled";
- 		};
- 
-+		ice: crypto@1d88000 {
-+			compatible = "qcom,sa8775p-inline-crypto-engine",
-+				     "qcom,inline-crypto-engine";
-+			reg = <0x0 0x01d88000 0x0 0x8000>;
-+			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
-+		};
-+
- 		usb_0_hsphy: phy@88e4000 {
- 			compatible = "qcom,sa8775p-usb-hs-phy",
- 				     "qcom,usb-snps-hs-5nm-phy";
--- 
-2.39.2
+Best regards,
+Krzysztof
 
