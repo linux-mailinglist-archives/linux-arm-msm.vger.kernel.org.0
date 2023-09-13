@@ -2,158 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7769A79DD34
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 02:39:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ABF7479DD8F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 03:30:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233051AbjIMAj4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Sep 2023 20:39:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47842 "EHLO
+        id S233643AbjIMBaL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Sep 2023 21:30:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232115AbjIMAjz (ORCPT
+        with ESMTP id S229805AbjIMBaL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Sep 2023 20:39:55 -0400
-Received: from APC01-SG2-obe.outbound.protection.outlook.com (mail-sgaapc01olkn2025.outbound.protection.outlook.com [40.92.53.25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 349E2CF3;
-        Tue, 12 Sep 2023 17:39:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=gGYFZT//BKYZGyj/NtCBrDxpNEe6an+bKKoVCKgAbe4ee23YdFQXAM1CVR8SnvNudlMOzPusHAVl4Q1ZZDN/L5LFSDacCGnuAYfMeL3d8u4GCI8NVQUgJM70c7ozM+kcpgrdYCYUZSYJhIQ7Db9ptnVto6RScctHSMog9/2MNkuTbCPcA7b4UClIdqJDUZfUCpFZf+xRLQnG8u0zbXI59u2g0qz00S3iDv0EfDjRPJblbaFi3LzpL83pQ3gTyiQhdshURIy0vH8kCKacixNAVcJPGpFmoU91ZasOJDUjq5q1j/MCNLvQYctSs3u/K3v5zfxoSJgahAU+EpgNS1Cz7g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=o1tJRu2bHZ+4Yu98W+ji0CraQ6DPHuAIPpD7bRNbEaA=;
- b=Z0ypnTeGz2mSbg2ZcWcugz6lDhLKfXQUo32O+yZfCq3LRUnaB4av2ikLWm/5zFsHnOoxB6yvYkiwSJDNxzflrNIu5Lv+3o+KkGrgvkF8brW56nq60YbLLYdAs8aJ+ZLw0E20nDG5wWlV6y+IDWkWIRHBakNJRHX5FuBA0542v6XpYNsYAi34pYZn4yd279TSyHukqe2e8PQ+zXQgOb097imGKz9SXkPtYYcgKTmYGz2lKn5cRkM5ZSVH2OZbB81uMGK9saGksfORYE67+xtiPDAi7rwGA+CnbIkHLiFiEZhDRY6cTrkdLGS6rmNdFhahF/Ro1xqrWezynYL+P0NRFw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=o1tJRu2bHZ+4Yu98W+ji0CraQ6DPHuAIPpD7bRNbEaA=;
- b=Gh+zcbrUk3w5N+/2EjtAHFimmRzhkJJ9BOBJTXh5OQFTjkdkb1pivInT3GB/a4ezjbdBn77wHbesma4zUs9OZPi5kg+xsylMZFxfzMCsfrSaYFJixLMC5phHJp6OblIRyW5vUOXbBaE8TzUPpv8uQVSUBLOwtk2bDKqZj2YNaSQRMUJyF1HF+dIe0imj9GwiAJD//RHMsIiOyzLj6DtIM+iPO5Nq/bE7A53BMfzmtuS6VEf5ZF7QnETF8gcTvtHuHXoDDK9QKziXo4Y9qrtIs7Csm+PznYLfQ7P4izA0Zdm44ZVtVDIWpCgofqU/B0ksQXnBPqXcGvpkTCVzfm4R3g==
-Received: from TYZPR01MB5556.apcprd01.prod.exchangelabs.com
- (2603:1096:400:363::9) by SEYPR01MB5741.apcprd01.prod.exchangelabs.com
- (2603:1096:101:1ad::10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6768.37; Wed, 13 Sep
- 2023 00:39:45 +0000
-Received: from TYZPR01MB5556.apcprd01.prod.exchangelabs.com
- ([fe80::3ac0:a6a4:2d8b:7fb9]) by TYZPR01MB5556.apcprd01.prod.exchangelabs.com
- ([fe80::3ac0:a6a4:2d8b:7fb9%4]) with mapi id 15.20.6768.029; Wed, 13 Sep 2023
- 00:39:45 +0000
-Message-ID: <TYZPR01MB5556F34E093267B5A04EF43EC9F0A@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
-Date:   Wed, 13 Sep 2023 08:39:33 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.0
-Subject: Re: [PATCH v3] arm64: dts: ipq5018: Correct uart1_pins pinconf
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, quic_gokulsri@quicinc.com,
-        quic_srichara@quicinc.com, quic_varada@quicinc.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <TYZPR01MB5556D24A77DAFA013F93B551C9E4A@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
- <b6fa8337-a5c0-172a-a41b-ab18de3f4f72@linaro.org>
- <TYZPR01MB555673C1E12A27DA8109DBEAC9EAA@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
- <c6f4b93c-aa80-e250-d06b-6b3bdfbfc64b@linaro.org>
-From:   Ziyang Huang <hzyitc@outlook.com>
-In-Reply-To: <c6f4b93c-aa80-e250-d06b-6b3bdfbfc64b@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TMN:  [gQqJWKRZUG7KE7dvpbBbU2KpN4iMQFen]
-X-ClientProxiedBy: SG2PR02CA0042.apcprd02.prod.outlook.com
- (2603:1096:3:18::30) To TYZPR01MB5556.apcprd01.prod.exchangelabs.com
- (2603:1096:400:363::9)
-X-Microsoft-Original-Message-ID: <04c833a5-3fd1-79e1-faae-72f34ce6f681@outlook.com>
+        Tue, 12 Sep 2023 21:30:11 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB29810E6;
+        Tue, 12 Sep 2023 18:30:07 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38D0t6Bq007935;
+        Wed, 13 Sep 2023 01:29:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=uRBI9opgeNWKU7JkoyaAlhvxGF4XiO7Ki7rjehaRTZU=;
+ b=pjOOSuAU9aTnVEgfUTdMRgnBQrFewmT2g+zv+800iSsgB8C7JSoMZYfcTk/Wc3uiIXGg
+ c8Hn2mQMibDAvgElDSBgQd4xuFq2YrWqoWoJZ2qxEbDqNip5tCyQV1bZv4y7PYIW557y
+ 1ttOAdQbO1wQPVAsAa6/zIvUE6vDy8UcrYYnkZ1Y5Eos23i8DhLzYEv6xcqb35Qgv6uI
+ i5fkyZ5ep0v3EockGXX6C6Z95EPh/lRMVGGSInx17Cu8X93A4L3wb1uWxCvlex22tCwT
+ USi6/2iXDbpFXkZlkOqGUsjHUTYZom8cH0U8o3/xRu4OkiYdpszV4hhP643etWACyuAR oA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t2ygr8dd6-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 13 Sep 2023 01:29:53 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38D1Tr1i027648
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 13 Sep 2023 01:29:53 GMT
+Received: from hu-mdtipton-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.36; Tue, 12 Sep 2023 18:29:52 -0700
+Date:   Tue, 12 Sep 2023 18:29:51 -0700
+From:   Mike Tipton <quic_mdtipton@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+CC:     Georgi Djakov <djakov@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        <cros-qcom-dts-watchers@chromium.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 00/53] icc-rpmh multi-RSC voting groundwork
+Message-ID: <20230913012951.GA19284@hu-mdtipton-lv.qualcomm.com>
+References: <20230708-topic-rpmh_icc_rsc-v1-0-b223bd2ac8dd@linaro.org>
+ <c067a45f-9629-d516-9e56-36538e4ff6db@kernel.org>
+ <20230807215739.GA9621@hu-mdtipton-lv.qualcomm.com>
+ <10520827-dc01-475c-b09a-35cefc9e0a62@linaro.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYZPR01MB5556:EE_|SEYPR01MB5741:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2dd46b71-6992-4c5a-29e7-08dbb3f1ea01
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: TVBjIjieCI1+REU7HrL5wuRUpdulWB8+Q0FgiFYoZ9zG8LI8921Dga86MTtXCrneHzxRAISZeotDGxUQcuDsl7WxS/Lh+QVgHEAiNklY9cUN+NrYMWg1AWijyPwLjqcYJse2gyXJWmuKCJRWVP1doEWkALj0JfsuIlGGRx29AAE3JPAO0JeL0rryyv69BiRrlb3dhSsF07a4qJ18foDmUTT+mRtrNXqAurg4+LZuZUz1U8+lt+kGmJ8zIKj8hUgOzm1zGqvVHUXUY+XqEBq0me+es1ptFG12WaE2vaXjph68IvbDqSktslHXDnRngtQ0T1H7cDV9/pwhQT7OOyuK3iSKZajFhHE7nBqr143rgC31RLBsOzkywytZmWEKTtJ0VHRJAABJCRCPtWKMeOPFDJJ6P0BOAj+7qzESOJng/HzT/ETECWvE5Y5s7oAw/L7qqzu0y78F9toQdKtsw0kN4uTTRf1tMKnH2ELze1q2Ec5bCnUD8pIH5dTDrZc7qymEq/ZFEZ+9YQAPt0HJ2RkayvoMkvqkZUr6bOAipoERvxqkquFz5PXjLNYSikoYtZwu
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MXgwZGExbEN0MXVBSFg3aWtiVnlrYnZoM0duWitRYzlvemdmQ1dnQ3o2TXZm?=
- =?utf-8?B?M2liNnJwLzNkSG1ZdmdZTTV5MEhzV2xDMENQVjhZYmJZQ1FsdHNmRUJITnNO?=
- =?utf-8?B?NnJ1YkhzL0czb00yRnV3dEdVanlXTzQ2ajh4Rlg5ektGWTA4U1NMZUx2eU80?=
- =?utf-8?B?V0pwS241UzRaM05FRDQyM2t6YXJPc3NIT0gza0t5ejgwaDNKSUo0ZStuRENS?=
- =?utf-8?B?ai82cTh6U3JKTGpQVXdYckNvYTRPUTZLOU0xQzlZcW9EQkVNdG1KWTdTUlFD?=
- =?utf-8?B?ckl6N2JaOWlqNnFRYWRoNy9uMlVLQ3ZJT3phUkQvQUFuTkZBVHdWRmNCODF2?=
- =?utf-8?B?Sy9YM084a2JTNEVmNmZjYVVZYVhhNm5LNjN3RFJ5alYxQmdNOGFzdW5yUWhU?=
- =?utf-8?B?TU0wUmtGWUcvOXJWSC91ejlMTFJmYlJaSlhnOENLZXk4RTlKUzN1c003ZE5L?=
- =?utf-8?B?dXRxSmZsRDNhMTR1d0NGQVlHWXh1aVRIOTIrM0YxNnI0eUs0OUFKdXZpd3E3?=
- =?utf-8?B?L0xNeEdZYjMzOUc5VDdnaWhsSlBPWkVGWXpSOWt3eG5DRXlUVGRsTTR6NEZq?=
- =?utf-8?B?UURVaFFtcXFnaE1DRnJOV1E4SXFpSHY3dDAxL2ErN1IyaHQyU0h5bjBZTUFN?=
- =?utf-8?B?THhabENjUFpTU0Nsb0UzQm41UExMbTFLNVJhQ25aT3I4V0RzSlYvdkk4R3dL?=
- =?utf-8?B?RkFRNTZwUFBiQU9CSUd6N2RCeGFSWitWZTh0NmlJQ0FQQmExTXY1cEo2Z2hw?=
- =?utf-8?B?OUZFVmg2QWV1c3R5VlZCWml2cUlmcmU3RXlGWDFvZ09rZWJ3QlUxQXl0VFNw?=
- =?utf-8?B?V3YzSFg1YXFNMWdpYVEwZGs5anBEMkNQNnJxMnpDM2ZiK2hYNkxvSENFQnRo?=
- =?utf-8?B?WUxPblp4REs4dUJtVUZpQ043d0poT2dVTUMyZkJXNGRNeTdQWmY5WmFyQ0Yv?=
- =?utf-8?B?RXkrS201dHA5YmNaeVBrRVpiVXBCajIydEthbXpCUlJ3N3AvTWY1SnkyQS9j?=
- =?utf-8?B?L1Z0VDM3VmhiWlFaZmtycC9rNElHcnoycXRQZEtEejBsYjl1MUI3dDJJRk1X?=
- =?utf-8?B?ODQyTys0MkgrUmQzSGJ2cFF0ZkdCQXVYczk0VmpLWDl2VFcrQXM4NDgrNWRa?=
- =?utf-8?B?WXZQUDFjM1M5QmJnaGJoT284RUhWcndxc2I5RnUrcVBUVVp2SXFRbEkyeEJy?=
- =?utf-8?B?RE10cUhwZzJKdkxvOWN3eUtCSzFCYU5pLzhCMTlIWVEzYWYvNVhlZ0Z4YVpE?=
- =?utf-8?B?cEJyWHUrZ3FKdmlCSDM5N1V1eE4vR2xyUUs0WDcxdXhnaDAzMFQ0UmJzSG1U?=
- =?utf-8?B?d2VURmh1ZThJMEluckgxM1ExUjBCUmkxWDBmUDU1VFVhMklQQTdTYW94dWFh?=
- =?utf-8?B?WlQ1TTgxZ1I2NDlJdmNwQ1pvT0lad1JJVmt0NEJadk92ZVgrRXhIaW9CQUpO?=
- =?utf-8?B?ZGNLZS80alVmRHBBblJTU3duMjNjNEdveE9CaFNHYzdZeE9ETW1jVmFLcGxC?=
- =?utf-8?B?VWFUcWlnOW13bUVGSVZjNUZOOVVRc3lTN0FJTnJEYjMzUkhIZ2s5Zlpsc25H?=
- =?utf-8?B?K0ZjQ1lOR0ZycHJTeGVzOGxEOHFYM3lFSFJ0UnRzalhpU2NVZTNPQVM1WG9h?=
- =?utf-8?B?VVlOOFhWSG9mWXcwK2NFUW56MHVlalE9PQ==?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2dd46b71-6992-4c5a-29e7-08dbb3f1ea01
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR01MB5556.apcprd01.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Sep 2023 00:39:45.6242
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR01MB5741
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <10520827-dc01-475c-b09a-35cefc9e0a62@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Jx15JH6gwGlVH_vgYd4PLRPyD2M4TQi1
+X-Proofpoint-ORIG-GUID: Jx15JH6gwGlVH_vgYd4PLRPyD2M4TQi1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-12_24,2023-09-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ clxscore=1011 impostorscore=0 bulkscore=0 phishscore=0 mlxscore=0
+ adultscore=0 mlxlogscore=999 malwarescore=0 lowpriorityscore=0 spamscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309130011
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-在 2023/9/4 8:57, Bryan O'Donoghue 写道:
-> <...>
+On Wed, Sep 06, 2023 at 02:14:14PM +0200, Konrad Dybcio wrote:
+> > The general idea is that we could use tags for this. So, instead of...
+> > 
+> >   path = icc_get(dev, MASTER_MDP_DISP, SLAVE_EBI1_DISP);
+> > 
+> > it would be...
+> > 
+> >   path = icc_get(dev, MASTER_MDP, SLAVE_EBI1);
+> >   icc_set_tag(path, QCOM_ICC_TAG_VOTER_DISP);
+> > 
+> > I have an early prototype with basic testing already. I can hopefully
+> > clean it up and post for review in the next couple of weeks.
+> I was initially not very happy with this approach (overloading tags
+> with additional information), but it grew on me over time.
 > 
-> I've checked the documentation for this chip.
-> 
-> gpio20, gpio21 = blsp0_uart0
-> gpio28, gpio29 = blsp0_uart0
-> 
-> These pins are muxed to UART0, I agree, the u-boot dts also indicates 
-> this also.
-> 
-> If we open the documentation further we see
-> 
-> 0x78AF000 = BLSP1_BLSP_UART0
-> 0x79b0000 = BLSP1_BLSP_UART1
-> 
-> So for starters the dtsi has the _wrong_ label.
-> 
-> Here/anseo
-> 
-> grep uart0: arch/arm64/boot/dts/qcom/*
-> arch/arm64/boot/dts/qcom/ipq5332.dtsi:        blsp1_uart0: serial@78af000 {
-> arch/arm64/boot/dts/qcom/ipq9574.dtsi:        blsp1_uart0: serial@78af000 {
-> 
-> That's how that label ought to be the main hint something is askance is 
-> assigning a pin named "blsp0_uart0" to a dts entry named "blsp1_uart1".
-> 
-> Please update the label in your next revision.
-> 
-> ---
-> bod
+> My only concern is that if we reserve say bits 16-31 for path tags
+> (remember, dt-bindings are ABI), we may eventually run out of them.
 
-I think the root cause is the confused name in pinctrl. I will update 
-the mux index to alphabetical order in next patch.
+The voter tags wouldn't require bitmasks like the bucket tags do. We'd
+just need an integer for each voter shifted into the proper position in
+the tag value. Thus, reserving N bits for the voters would give us 2**N
+voters, which should be plenty. For example:
 
-By the way, can you find out the documents about the pinmux map. For 
-example, the code of pinctrl only show that GPIO20,21 are for UART0. But 
-which pin is TX and which is RX? And yes, because of UART, it's easy to 
-find out.
+  #define QCOM_ICC_VOTERS_START           16
+  #define QCOM_ICC_VOTERS_END             23
 
-But what I want to known is "blsp2_spi". It has 3 pinmux configs - 
-"blsp2_spi" (GPIO27), "blsp2_spi0" (GPIO31,32,33,34) and "blsp2_spi1" 
-(GPIO23,24,25,26). What "blsp2_spi" (GPIO27) for?
+  #define QCOM_ICC_TAG_VOTER_HLOS         (0 << QCOM_ICC_VOTERS_START)
+  #define QCOM_ICC_TAG_VOTER_DISP         (1 << QCOM_ICC_VOTERS_START)
+  #define QCOM_ICC_TAG_VOTER_CAM_IFE_0    (2 << QCOM_ICC_VOTERS_START)
+  #define QCOM_ICC_TAG_VOTER_CAM_IFE_1    (3 << QCOM_ICC_VOTERS_START)
+  #define QCOM_ICC_TAG_VOTER_CAM_IFE_2    (4 << QCOM_ICC_VOTERS_START)
 
+The applicable voters should likely be defined in the target-specific
+headers, rather than the common qcom,icc.h. The bit range used for them
+could be common, but each target may only support a small subset of the
+total set of possible voters across all targets.
+
+Clients requiring multiple voters for the same logical path should be
+rare. On the off-chance they require that, they could just request the
+same path multiple times with different voter tags applied and call
+icc_set_bw() for each of them separately.
+
+I'm back from travel and vacation and plan to pick this up again soon.
