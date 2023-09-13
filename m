@@ -2,209 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C08D979DE6B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 05:00:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 10FE279DE99
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 05:27:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233082AbjIMDAw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Sep 2023 23:00:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48492 "EHLO
+        id S237236AbjIMD1x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Sep 2023 23:27:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231181AbjIMDAv (ORCPT
+        with ESMTP id S234151AbjIMD1w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Sep 2023 23:00:51 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89F16171E;
-        Tue, 12 Sep 2023 20:00:47 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-52e5900cf77so8111602a12.2;
-        Tue, 12 Sep 2023 20:00:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1694574046; x=1695178846; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=B0Ql+Umm198s7EODjUTAFVn1Eek/7t8Ja/ENb4v1xqU=;
-        b=TemaMNVNrUp9WnJKSE+nzrvh+fLsA133vDvMBSDIs/EznNFxYyceoiXoV6eHSAI1IG
-         FfyOwA2dhB2Lc9fQZMn+k1CPaNZmM7M6y5XRFQ1IXbLBZblMwAMXUL8JOlzGq/aT5Ehv
-         lVxL+3xYIfH30XEaksvAvpQ2iyqqZPF/flOLVbxrsPOsrHdDj3oWBuH698ASRUHDgM5o
-         rrfvaSsI3jYJEXQDV9lyHCUj8YVYZ8oPXlR3JwQLX3HvqbP3RA8Nxd7HS8s6fchgfoLc
-         mJwO46sQQBQCFMl79H8hIsvLznGjmIjxNlVnCluF1L0Q90XbKzpIPesZqzd95jSO4K3+
-         xNDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694574046; x=1695178846;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=B0Ql+Umm198s7EODjUTAFVn1Eek/7t8Ja/ENb4v1xqU=;
-        b=R55HVhcsMtcmqhMI074IaiXfuTTstgcZNTGCfyO5xGJJhAFgW+9BTi5SB8dF8R4KDf
-         NGxtdX+QKRCrIGArmW/+EqRnKg4YW0FmtGjvNnqFX9u+gYXzVfDnagcKnHuHIUSyskrM
-         UcIehyC26mjAZqIMbm2dtDZajCZ4RayVfeM7dDkSjwO4rXvsGYQjmIWLd6j7TFxrtQhg
-         m6bLGGFHGYMqyn+/sZcmcEagjjBeG03ZiKCiso3hM1uadNqkb4CpOioxDv2tGm0DIsmE
-         0HojFQolGu3dFD0ato8ceYhnULDZp/IkgpxQgu2GGpN1tafOJ691rBqxV2NlBFkJc38U
-         /xdQ==
-X-Gm-Message-State: AOJu0Yx7TiNMym7fJc80/4G92zMqnPgVXAmsvJS9qD8MJCoOj+dMaX1A
-        EGf2RVO4CMaXak/f/AvFNUUyMxdczo6RhjsY9e8=
-X-Google-Smtp-Source: AGHT+IF0JSzHjtYwGdSyOBax8j/JP+0/XQuGOwuSzxEWvZ+fOgRCHl3kCpfR7eSsYL6DFD5DKB7OxY64M0Kcu7YHNxI=
-X-Received: by 2002:a05:6402:6c7:b0:525:570c:566b with SMTP id
- n7-20020a05640206c700b00525570c566bmr1017895edy.22.1694574045793; Tue, 12 Sep
- 2023 20:00:45 -0700 (PDT)
+        Tue, 12 Sep 2023 23:27:52 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B45911719;
+        Tue, 12 Sep 2023 20:27:48 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38D2m5ZV020174;
+        Wed, 13 Sep 2023 03:27:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=cUTWJon64x7MRrDRa/RUiDbLmlNR0nsD4wwiPTCsA6A=;
+ b=ciWrAwPfBC6sNVVPE7QhhtyVB1hIryKggTiJEVnVCnewC/b14nYaMiaI3e7t4CPkGzrA
+ BIjkfnzeznITodWTbjtPeHPhoQLJCVuWIFgvYBZGmWTaBMqpLDKqbBnZ00IngnfELqjT
+ 5p1X60E6zTTdPRzB4zJyg+VbGSoSw20K9su9TJAT2SndBM45Q11wpibIeX6fn0jnreYa
+ TMezLLwSQpAK+F6H97LlDIZOV1fYwnFzhQC+ZOw2A/xNwErTc8tNKUXlWJrsV844zRO3
+ WJFErvM1fiRZJUfddIhYBq2feaX5wr6TJ+t08PbPGJnMA5w4b64GexmhAlo/c7IB5SqU YQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t2y7trma3-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 13 Sep 2023 03:27:33 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38D3RW1P000371
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 13 Sep 2023 03:27:32 GMT
+Received: from [10.253.32.174] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 12 Sep
+ 2023 20:27:28 -0700
+Message-ID: <9952fa20-a27f-3240-cc49-5c5109febfc1@quicinc.com>
+Date:   Wed, 13 Sep 2023 11:27:25 +0800
 MIME-Version: 1.0
-References: <20230903214150.2877023-1-dmitry.baryshkov@linaro.org>
- <20230903214150.2877023-2-dmitry.baryshkov@linaro.org> <ZPbrtAlO2Y+bjDhf@kuha.fi.intel.com>
- <CAA8EJpqUg2-k7LLBL38RHU1sThkXB54ca68xEMd1yMnHQcQ++w@mail.gmail.com>
- <ZPh0Ps9UJ3HLzdeR@kuha.fi.intel.com> <CAA8EJpratbBybgk8woD3maA=J_HuQis44Unq0n+c_UvaFs__AA@mail.gmail.com>
- <ZPiAwOf00RREiYPr@kuha.fi.intel.com> <6b6bacee-f7b6-4cfe-be3d-24bda44bfbcf@linaro.org>
-In-Reply-To: <6b6bacee-f7b6-4cfe-be3d-24bda44bfbcf@linaro.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 12 Sep 2023 20:00:33 -0700
-Message-ID: <CAF6AEGvjPBETONoNet_wfR2c1o38eJ1JuajLYheMA-zvObeYBg@mail.gmail.com>
-Subject: Re: [Freedreno] [RFC PATCH v1 01/12] Revert "drm/sysfs: Link DRM
- connectors to corresponding Type-C connectors"
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        dri-devel@lists.freedesktop.org,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Janne Grunau <j@jannau.net>, Robert Foss <rfoss@kernel.org>,
-        David Airlie <airlied@gmail.com>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Jonas Karlman <jonas@kwiboo.se>, linux-arm-msm@vger.kernel.org,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Won Chung <wonchung@google.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Simon Ser <contact@emersion.fr>,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.0
+Subject: Re: [PATCH v6 4/4] clk: qcom: add clock controller driver for
+ qca8386/qca8084
+Content-Language: en-US
+To:     Stephen Boyd <sboyd@kernel.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <catalin.marinas@arm.com>,
+        <conor+dt@kernel.org>, <konrad.dybcio@linaro.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
+        <p.zabel@pengutronix.de>, <robh+dt@kernel.org>, <will@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_srichara@quicinc.com>
+References: <20230901091823.30242-1-quic_luoj@quicinc.com>
+ <20230901091823.30242-5-quic_luoj@quicinc.com>
+ <27ae3297ad161fd67706db70b402db04.sboyd@kernel.org>
+ <16d09acf-7bdd-04ee-6faf-936c0366df03@quicinc.com>
+ <17681a9f756cc70a190c674c51b90140.sboyd@kernel.org>
+ <5a4805f7-f802-b1ba-9804-59c0fe6c7f26@quicinc.com>
+ <92058c25fb11b75ee0a2298a684825e9.sboyd@kernel.org>
+ <f67b354c-8a4b-49f5-6275-66b7d614301a@quicinc.com>
+ <82adb75659e0d278e25b65b0e81df99a.sboyd@kernel.org>
+From:   Jie Luo <quic_luoj@quicinc.com>
+In-Reply-To: <82adb75659e0d278e25b65b0e81df99a.sboyd@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 7BYyjn1zRs1uY_oh7kW-dxqVG4pvz1k5
+X-Proofpoint-ORIG-GUID: 7BYyjn1zRs1uY_oh7kW-dxqVG4pvz1k5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-12_24,2023-09-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ priorityscore=1501 lowpriorityscore=0 suspectscore=0 phishscore=0
+ adultscore=0 impostorscore=0 malwarescore=0 clxscore=1015 mlxlogscore=999
+ bulkscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309130026
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 11, 2023 at 2:15=E2=80=AFPM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On 06/09/2023 16:38, Heikki Krogerus wrote:
-> > On Wed, Sep 06, 2023 at 03:48:35PM +0300, Dmitry Baryshkov wrote:
-> >> On Wed, 6 Sept 2023 at 15:44, Heikki Krogerus
-> >> <heikki.krogerus@linux.intel.com> wrote:
-> >>>
-> >>> On Tue, Sep 05, 2023 at 01:56:59PM +0300, Dmitry Baryshkov wrote:
-> >>>> Hi Heikki,
-> >>>>
-> >>>> On Tue, 5 Sept 2023 at 11:50, Heikki Krogerus
-> >>>> <heikki.krogerus@linux.intel.com> wrote:
-> >>>>>
-> >>>>> Hi Dmitry,
-> >>>>>
-> >>>>> On Mon, Sep 04, 2023 at 12:41:39AM +0300, Dmitry Baryshkov wrote:
-> >>>>>> The kdev->fwnode pointer is never set in drm_sysfs_connector_add()=
-, so
-> >>>>>> dev_fwnode() checks never succeed, making the respective commit NO=
-P.
-> >>>>>
-> >>>>> That's not true. The dev->fwnode is assigned when the device is
-> >>>>> created on ACPI platforms automatically. If the drm_connector fwnod=
-e
-> >>>>> member is assigned before the device is registered, then that fwnod=
-e
-> >>>>> is assigned also to the device - see drm_connector_acpi_find_compan=
-ion().
-> >>>>>
-> >>>>> But please note that even if drm_connector does not have anything i=
-n
-> >>>>> its fwnode member, the device may still be assigned fwnode, just ba=
-sed
-> >>>>> on some other logic (maybe in drivers/acpi/acpi_video.c?).
-> >>>>>
-> >>>>>> And if drm_sysfs_connector_add() is modified to set kdev->fwnode, =
-it
-> >>>>>> breaks drivers already using components (as it was pointed at [1])=
-,
-> >>>>>> resulting in a deadlock. Lockdep trace is provided below.
-> >>>>>>
-> >>>>>> Granted these two issues, it seems impractical to fix this commit =
-in any
-> >>>>>> sane way. Revert it instead.
-> >>>>>
-> >>>>> I think there is already user space stuff that relies on these link=
-s,
-> >>>>> so I'm not sure you can just remove them like that. If the componen=
-t
-> >>>>> framework is not the correct tool here, then I think you need to
-> >>>>> suggest some other way of creating them.
-> >>>>
-> >>>> The issue (that was pointed out during review) is that having a
-> >>>> component code in the framework code can lead to lockups. With the
-> >>>> patch #2 in place (which is the only logical way to set kdev->fwnode
-> >>>> for non-ACPI systems) probing of drivers which use components and se=
-t
-> >>>> drm_connector::fwnode breaks immediately.
-> >>>>
-> >>>> Can we move the component part to the respective drivers? With the
-> >>>> patch 2 in place, connector->fwnode will be copied to the created
-> >>>> kdev's fwnode pointer.
-> >>>>
-> >>>> Another option might be to make this drm_sysfs component registratio=
-n optional.
-> >>>
-> >>> You don't need to use the component framework at all if there is
-> >>> a better way of determining the connection between the DP and its
-> >>> Type-C connector (I'm assuming that that's what this series is about)=
-.
-> >>> You just need the symlinks, not the component.
-> >>
-> >> The problem is that right now this component registration has become
-> >> mandatory. And if I set the kdev->fwnode manually (like in the patch
-> >> 2), the kernel hangs inside the component code.
-> >> That's why I proposed to move the components to the place where they
-> >> are really necessary, e.g. i915 and amd drivers.
-> >
-> > So why can't we replace the component with the method you are
-> > proposing in this series of finding out the Type-C port also with
-> > i915, AMD, or whatever driver and platform (that's the only thing that
-> > component is used for)?
->
-> The drm/msm driver uses drm_bridge for the pipeline (including the last
-> DP entry) and the drm_bridge_connector to create the connector. I think
-> that enabling i915 and AMD drivers to use drm_bridge fells out of scope
-> for this series.
->
->
-> > Determining the connection between a DP and its Type-C connector is
-> > starting to get really important, so ideally we have a common solution
-> > for that.
->
-> Yes. This is what we have been discussing with Simon for quite some time
-> on #dri-devel.
->
-> Unfortunately I think the solution that got merged was pretty much
-> hastened in instead of being well-thought. For example, it is also not
-> always possible to provide the drm_connector / typec_connector links (as
-> you can see from the patch7. Sometimes we can only express that this is
-> a Type-C DP connector, but we can not easily point it to the particular
-> USB-C port.
->
-> So, I'm not sure, how can we proceed here. Currently merged patch breaks
-> drm/msm if we even try to use it by setting kdef->fwnode to
-> drm_connector->fwnode. The pointed out `drivers/usb/typec/port-mapper.c`
-> is an ACPI-only thing, which is not expected to work in a non-ACPI cases.
 
-In these cases we revert and try again next cycle
 
-BR,
--R
+On 9/13/2023 1:18 AM, Stephen Boyd wrote:
+> Quoting Jie Luo (2023-09-12 05:07:02)
+>>
+>>
+>> On 9/12/2023 4:11 AM, Stephen Boyd wrote:
+>>> Quoting Jie Luo (2023-09-08 04:10:35)
+>>>>
+>>>> For example, when the uniphy works on PHY_INTERFACE_MODE_2500BASEX, then
+>>>> the parent uniphy clock rate is 312.5M, which is decided by hardware and
+>>>> can't be changed. when a branch clock requires a 25M clock, the parent
+>>>> uniphy clock maybe updated to 125M by clock framework if the flag
+>>>> CLK_SET_RATE_PARENT is set here, but the actual hardware clock rate of
+>>>> uniphy is still 315.5M since the uniphy still works in the interface
+>>>> mode PHY_INTERFACE_MODE_2500BASEX.
+>>>>
+>>>
+>>> If the parent rate can't change because CLK_SET_RATE_PARENT is missing
+>>> and the hardware doesn't allow it, then perhaps instead of having a
+>>> frequency table we should have rcg clk ops for determine_rate that
+>>> simply looks at the parent rates and finds the rate closest to what is
+>>> desired. And for the set_rate clk_op we can have it be simple and just
+>>> program a fixed divider. The benefit is less frequency tables that don't
+>>> do anything and less hard-coding of the frequency. I thought we already
+>>> had those rcg clk_ops but I couldn't find them with a quick glance.
+>>
+>> Thanks Stephen for the suggestion.
+>> looks you are saying the clk ops clk_dp_ops for the fix parent rate?
+>> which seems not meet the clock requirement of this clock.
+> 
+> Yeah that is close, but the determine_rate clk_op needs to look at all
+> possible parents. With the dp clk_ops we assume that only one parent is
+> possible.
+> 
+>>
+>> For the device qca8k, it is also possible to switch the interface modes
+>> between PHY_INTERFACE_MODE_2500BASEX(312.5M) and
+>> PHY_INTERFACE_MODE_SGMII(125M) during the running time, and there are
+>> multiple parent clock source(P_UNIPHY0_RX or P_UNIPHY0_TX) for the RCG
+>> clocks to select according to the current work mode. so the parent_map
+>> and freq_tbl are necessary to this clock.
+> 
+> I still don't see why the freq_tbl is necessary.
 
->
-> --
-> With best wishes
-> Dmitry
->
+Hi Stephen,
+For clk_rcg2_ops, freq_tbl is used to find the closest rate to decided 
+the parent clock, the configuration of clock source and clock divider 
+are saved in the freq_tbl to configure the RCG hardware register, the 
+mapping of parent clock and hardware register value is decided by the 
+freq_tbl for the RCG clock.
