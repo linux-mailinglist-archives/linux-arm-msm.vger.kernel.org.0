@@ -2,97 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4596779E4E8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 12:29:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 27CD979E4FF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 12:34:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232457AbjIMK3N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Sep 2023 06:29:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36322 "EHLO
+        id S239152AbjIMKeW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Sep 2023 06:34:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230407AbjIMK3M (ORCPT
+        with ESMTP id S231643AbjIMKeV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Sep 2023 06:29:12 -0400
-Received: from mail-4324.protonmail.ch (mail-4324.protonmail.ch [185.70.43.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 591141989;
-        Wed, 13 Sep 2023 03:29:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail3; t=1694600946; x=1694860146;
-        bh=Tb4Bg3x5OGpUdHwJymJdAFTJs8535yToLqaPcZ6nlrM=;
-        h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-         Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-        b=iI3BVFsvok36MtypPZwLNZHlRoLEl3x+HNeh1GSCvGWVjSsb7sZOLiU8au/c6JcUi
-         0PUR+vBVFsc5iDQ+Tws2gEvLOhhSQ37Qs7EGU+K76BatVAiWzxHoEh2MViuPLdb6g+
-         vJ7bnT/CtRMcCL1qqAyaT/Utt7X0jLs2QDDVQdt8kNquBvc32LcY//Ok+35l51cLZl
-         S30RiuCmdXDLw36Uo3LBYyTLXjzJvKP4AsciAOC+Wydu6MspQaK+sCvLx3OckSM9i+
-         HQq2/IND57hmOez/OyulGoedxt3f0KVueFCs1i+yZ43s1JnLvdeFOGueX50ZvA5dXK
-         IPzr6xjI9f6CQ==
-Date:   Wed, 13 Sep 2023 10:29:00 +0000
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Wed, 13 Sep 2023 06:34:21 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD419C3;
+        Wed, 13 Sep 2023 03:34:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1694601257; x=1726137257;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=aSLZAhLlCUcLtEt71s9aVgFB3sPUO22k85ZuXX7lIvk=;
+  b=C0Qmswudx36Cx1JSwSQi1JrAbNLUKyrE3OzO/BSKVw9soAN1W/S3bQcB
+   eRkH66UHWXRHATsEaAXVhkNCMAx+khf52If5VuQpUn+hS+JbkyA5Dl+Iy
+   6TkXj7isNDZg/o+n6rrVlZfqr0IleNjdNUDkQB7ksbe6XXI04MagUfYz+
+   wB+DFgnH61/wBVsEzmEOqWp3YnzOeP8vpPiWMnA/La4DFtDqoKC5neRzf
+   70luKTEMlfZEQatf8zETCu/aqLpgpC4hHKT+l9hkDnwV8XWZ8GrDyv3bS
+   BDPuCaDJtRdZsnEXbSbeQ7jCz9Yqj+S/Y1IjLKGmLirKJpOyXqDUXtUzF
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10831"; a="377534957"
+X-IronPort-AV: E=Sophos;i="6.02,142,1688454000"; 
+   d="scan'208";a="377534957"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Sep 2023 03:34:17 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10831"; a="990870840"
+X-IronPort-AV: E=Sophos;i="6.02,142,1688454000"; 
+   d="scan'208";a="990870840"
+Received: from kuha.fi.intel.com ([10.237.72.185])
+  by fmsmga006.fm.intel.com with SMTP; 13 Sep 2023 03:34:09 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Wed, 13 Sep 2023 13:34:08 +0300
+Date:   Wed, 13 Sep 2023 13:34:08 +0300
+From:   Heikki Krogerus <heikki.krogerus@linux.intel.com>
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Robert Foss <rfoss@kernel.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Janne Grunau <j@jannau.net>, Simon Ser <contact@emersion.fr>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>
-From:   Yassine Oudjana <y.oudjana@protonmail.com>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Alexey Minnekhanov <alexeymin@postmarketos.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        linux-usb@vger.kernel.org
-Subject: Re: [PATCH v2 13/14] arm64: dts: qcom: msm8996: Remove PNoC clock from MSS
-Message-ID: <3dce9fea-0544-4219-a9fd-520cb0ef0eb2@protonmail.com>
-Feedback-ID: 6882736:user:proton
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        freedreno@lists.freedesktop.org, Won Chung <wonchung@google.com>
+Subject: Re: [RFC PATCH v1 01/12] Revert "drm/sysfs: Link DRM connectors to
+ corresponding Type-C connectors"
+Message-ID: <ZQGQIGNUq+UL9lpi@kuha.fi.intel.com>
+References: <20230903214150.2877023-2-dmitry.baryshkov@linaro.org>
+ <ZPbrtAlO2Y+bjDhf@kuha.fi.intel.com>
+ <CAA8EJpqUg2-k7LLBL38RHU1sThkXB54ca68xEMd1yMnHQcQ++w@mail.gmail.com>
+ <ZPh0Ps9UJ3HLzdeR@kuha.fi.intel.com>
+ <CAA8EJpratbBybgk8woD3maA=J_HuQis44Unq0n+c_UvaFs__AA@mail.gmail.com>
+ <ZPiAwOf00RREiYPr@kuha.fi.intel.com>
+ <6b6bacee-f7b6-4cfe-be3d-24bda44bfbcf@linaro.org>
+ <ZQBGD8CY5OVKYX63@kuha.fi.intel.com>
+ <a97a33f4-71f3-4610-a59e-0c2d5ae86670@linaro.org>
+ <a36d7b75-b072-4202-8f09-9eab0dfd52ed@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a36d7b75-b072-4202-8f09-9eab0dfd52ed@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/09/2023 4:31 pm, Konrad Dybcio wrote:
-> The PNoC clock is a clock for the entire PNoC bus, managed from
-> within the interconnect driver. Attaching it to MSS was a total hack.
-> Get rid of it and take the liberty to make the clock-names entries
-> more readable.
->
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/msm8996.dtsi | 11 ++++++++---
->   1 file changed, 8 insertions(+), 3 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/=
-qcom/msm8996.dtsi
-> index 7061a8e12c81..51db5ddcef88 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> @@ -2479,10 +2479,15 @@ mss_pil: remoteproc@2080000 {
->   =09=09=09=09 <&gcc GCC_MSS_GPLL0_DIV_CLK>,
->   =09=09=09=09 <&gcc GCC_MSS_SNOC_AXI_CLK>,
->   =09=09=09=09 <&gcc GCC_MSS_MNOC_BIMC_AXI_CLK>,
-> -=09=09=09=09 <&rpmcc RPM_SMD_PCNOC_CLK>,
->   =09=09=09=09 <&rpmcc RPM_SMD_QDSS_CLK>;
-> -=09=09=09clock-names =3D "iface", "bus", "mem", "xo", "gpll0_mss",
-> -=09=09=09=09      "snoc_axi", "mnoc_axi", "pnoc", "qdss";
-> +=09=09=09clock-names =3D "iface",
-> +=09=09=09=09      "bus",
-> +=09=09=09=09      "mem",
-> +=09=09=09=09      "xo",
-> +=09=09=09=09      "gpll0_mss",
-> +=09=09=09=09      "snoc_axi",
-> +=09=09=09=09      "mnoc_axi",
-> +=09=09=09=09      "qdss";
->  =20
->   =09=09=09resets =3D <&gcc GCC_MSS_RESTART>;
->   =09=09=09reset-names =3D "mss_restart";
+Hi Neil,
 
-Tested-by: Yassine Oudjana <y.oudjana@protonmail.com>
+On Wed, Sep 13, 2023 at 11:38:19AM +0200, Neil Armstrong wrote:
+> On new platforms (starting from SM8450) UCSI is mandatory to have
+> pmic_glink_altmode events triggering.
 
+You can also populate the typec devices conditionally, only if UCSI is
+not supported.
+
+However, I took a peek at drivers/soc/qcom/pmic_glink_altmode.c, and
+it seems to be mostly is dealing with the muxes and retimer, and
+sending the HPD notifications to the DRM side. All that is already
+done in typec drivers, so there is actually a potential race here when
+UCSI is used.
+
+On top of that, it is sending two commands to the PMIC (ALTMODE_PAN_EN
+and ALTMODE_PAN_ACK). I'm pretty sure both could be handled in the UCSI
+glue driver (drivers/usb/typec/ucsi/ucsi_glink.c) if they are even
+needed when UCSI is supported.
+
+So why do you need that pmic_glibk_altmode driver at all when UCSI is
+supported?
+
+I don't know the hardware, so I may be missing something.
+
+thanks,
+
+-- 
+heikki
