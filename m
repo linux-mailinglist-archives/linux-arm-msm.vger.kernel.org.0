@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B72DA79F188
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 20:58:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC8F579F18C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 20:59:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232129AbjIMS6p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Sep 2023 14:58:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38658 "EHLO
+        id S232137AbjIMS7H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Sep 2023 14:59:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232115AbjIMS6n (ORCPT
+        with ESMTP id S232114AbjIMS7E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Sep 2023 14:58:43 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A792E1986
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 11:58:39 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-99bf3f59905so22178166b.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 11:58:39 -0700 (PDT)
+        Wed, 13 Sep 2023 14:59:04 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D2B61BC8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 11:59:00 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-9ad8bba8125so23281166b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 11:59:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694631518; x=1695236318; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1694631539; x=1695236339; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ef3Np+qKkjrEacuonwofFjR4nCMUn4hDnpQvFat0LCA=;
-        b=EXb7A+/9BMtjf6ZWDZJUkd/bkiA797vEqwaNTDMULwDmHRAa3PGmQHTIm5YwgrtVYS
-         kS9slaz2vcHGFS9KQHHRgl+fAhYYejamFxpBIzjMToOhsOVmAb7IRayv8mzRVv0bUjxT
-         qwxL5JqWUgRpaGrGDvygb67jik5VCdQjvNTb7nV/22YeQ4B+LHoSyVum3PRPRRk3xwK9
-         jEBAmcOF/46vNv9h5rSVMKkpkU4vlnhT3C4dvdmxviEjv4M8hV6myY0uQgi0+d5/VYjJ
-         wUpAjqS289djHdk1ELlYrs6aUH5snTfoQKKVug/QtzJI5D3ksGuuzJBEqRrWJ5tu6FrG
-         7ZwQ==
+        bh=19tZmZa/dx2FtLxpw9ew7DVMM+dirJ8G8+n67mqQLUM=;
+        b=nKeaDmoWFIBJP5zlJ5BYdye10l5fgJo1VrIl0d4xbhxEvnad6h6OMPYT39Ses//RV2
+         0ce+icXAVrCUG/Gl2Bb5hxK8GNinSKD03j/VSAV0IqVjtcdgRnGreRO+4hEVBTJpIJO9
+         PcqgOwabdG1VLZpQojbYJYjt4jVfzdnf0Nhot4gBiCW9Qn9EprvmtArZSdlMtaB4YtRC
+         XWe6bDeHjVVzN5aQNrxFSj5vRNYgDb2tcOYUdtWLZy2C++ulQWxlm0GFmACWtJ6bFvAG
+         umI49+buF9DOSkhzCphYAUdSYuAuPc21ClaRHG9n5PVaEdVLHm1N3vdcar7nzSUbluYQ
+         ES1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694631518; x=1695236318;
+        d=1e100.net; s=20230601; t=1694631539; x=1695236339;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ef3Np+qKkjrEacuonwofFjR4nCMUn4hDnpQvFat0LCA=;
-        b=SXqFlUxtAeytA1ibYI96izb5WdRPm9u/Npmyv3aU6MDROjX7n98xLpvN7+i/nxaJiI
-         hKrWvwhWab4TqUkMJqyPMgsKuHQdqN+DP1jMB+4B8UHdRw5y90mkKHYYR9EH+smLQQb0
-         Vp3h0ccPnTwdNdzC5ZcpG/KFFSq5kkOLolf9YNNXpkMG1vc3cmHapaUiqwc3AKMm/INy
-         i5yPkEL+gCO85m9mLDPxwtdu2JirnmRTCK/TifjEx0wWYzqL8cbnlR4D8l1zvtaXRngy
-         xv6G6FI1cqmKjxnvTcVeaAJsP9W4mnayY6GBFqJOfjGe93pEw7rAV49RW6INtgKdFCg0
-         TbGQ==
-X-Gm-Message-State: AOJu0Yz+TuMxRjBxbc6WT8AY7Bt9rlY5aAgfYvR4h3AMJepOjwrcachq
-        gbhfBmMLqaqnXgEc3H2aq8Mxuw==
-X-Google-Smtp-Source: AGHT+IGZujscp81DgnIbfwqvfnlgniMbYyyPgrGcdzqXfO9KTbJnK68vHvYSsaYnyShGiZQuMnC8Uw==
-X-Received: by 2002:a17:907:2e19:b0:9ad:a660:95bf with SMTP id ig25-20020a1709072e1900b009ada66095bfmr1745302ejc.17.1694631518134;
-        Wed, 13 Sep 2023 11:58:38 -0700 (PDT)
+        bh=19tZmZa/dx2FtLxpw9ew7DVMM+dirJ8G8+n67mqQLUM=;
+        b=FObkI19vXQlkAnFgfeJHBgCrfAD1fIovlbNsHskUXmOw31P5ibqGZktCMXobXVCZDc
+         O1AX20z8LhOPhEqRTZvrk/d+48nkhAO4fEsoVOKLamVChBhNcoY4L0h6BKpIjVkE4ayi
+         2RP7K+el4dTzOpfi5QFAHxkPTqbG5imp4U+l1AqjTmYMC+qYHtfvs8IEojFAqCXQjqSP
+         ZBGFy/z5FCC82ErX71bDf+KBPxcvFJm+ivwPwNHlZl9PUeKImz/doxx9aGH46FgbZHxE
+         ycnHYTmIK1To4F18FMCJ4z5Cf4g1mhEyqUh2VBCQC3RZjv1q2eX1WsIH/C5rQaGEEENt
+         3tag==
+X-Gm-Message-State: AOJu0Yw1ytvYSxhFn5x7ZiERhDkUWeRX5sXUGP6SAsYFuaW8dXO1glQH
+        bqT4n63DWurbySx/i6XKKl5nlg==
+X-Google-Smtp-Source: AGHT+IF4PQbw+RJ0EPx7oSQW6ICjB0thH1N+mc7dfHkm1rsleLIpy8i7EuyXwiT84WsrZ3STB1/I1A==
+X-Received: by 2002:a17:906:11a:b0:9a1:e994:3440 with SMTP id 26-20020a170906011a00b009a1e9943440mr2691411eje.4.1694631538843;
+        Wed, 13 Sep 2023 11:58:58 -0700 (PDT)
 Received: from [192.168.37.232] (178235177172.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.172])
-        by smtp.gmail.com with ESMTPSA id s21-20020a170906961500b009937dbabbd5sm8791903ejx.220.2023.09.13.11.58.36
+        by smtp.gmail.com with ESMTPSA id s21-20020a170906961500b009937dbabbd5sm8791903ejx.220.2023.09.13.11.58.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Sep 2023 11:58:37 -0700 (PDT)
-Message-ID: <171a7ef6-b37e-4a23-a895-b964dde1aebc@linaro.org>
-Date:   Wed, 13 Sep 2023 20:58:36 +0200
+        Wed, 13 Sep 2023 11:58:58 -0700 (PDT)
+Message-ID: <41a3dcf2-cfe6-4bbf-be0b-1206b04e1fe8@linaro.org>
+Date:   Wed, 13 Sep 2023 20:58:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] soc: qcom: socinfo: Add SM7150P ID
+Subject: Re: [PATCH 2/2] soc: qcom: socinfo: Add Soc ID for SM7150P
 Content-Language: en-US
 To:     Danila Tikhonov <danila@jiaxyga.com>, agross@kernel.org,
         andersson@kernel.org, robh+dt@kernel.org,
@@ -62,6 +62,7 @@ To:     Danila Tikhonov <danila@jiaxyga.com>, agross@kernel.org,
 Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org
 References: <20230913181722.13917-1-danila@jiaxyga.com>
+ <20230913181722.13917-3-danila@jiaxyga.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -98,7 +99,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230913181722.13917-1-danila@jiaxyga.com>
+In-Reply-To: <20230913181722.13917-3-danila@jiaxyga.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -106,11 +107,10 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 13.09.2023 20:17, Danila Tikhonov wrote:
-> This series adds ID for Qualcomm SM7150P SoC.
+> Add Soc ID table entries for Qualcomm SM7150P.
 > 
-> The SM7150P does not have Qualcomm IP Accelerator (IPA)
-Most likely because it doesn't have a modem! :D
-
-That's what the P suffix seems to stand for, anyway.
+> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
