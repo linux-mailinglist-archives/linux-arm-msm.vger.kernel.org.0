@@ -2,190 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 02CC379E4A3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 12:14:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E8C479E4AF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 12:18:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239553AbjIMKOs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Sep 2023 06:14:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37116 "EHLO
+        id S239650AbjIMKSD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Sep 2023 06:18:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239536AbjIMKOr (ORCPT
+        with ESMTP id S239615AbjIMKSD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Sep 2023 06:14:47 -0400
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.51])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 152CA19A9;
-        Wed, 13 Sep 2023 03:14:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1694600081; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=lCIuN2PlVT5HDLZOFxnq6P5CJz3HrTVmnZC4aO0u7GlTwvC6wlgPdDaXarO5hEAvUP
-    MZInFcXNh5SkJn8hggTI4Hdr8jySmaonXJDe82hUsczK5MFL29qB0qbe/7+os79KLj6+
-    em45M4kbhwGWYuRMCDJtzg+rk112dr4bavHrla+bwZCsv5vVhvaYcUzGi6Sk5yvgXbLX
-    niuL34f3UOVasmjn8oD2rQ82SBQdTTYTbRmlMb2soKkYyBEHDWpW1iOmWpxocQbEHT3S
-    4zZoM+RFNmlqnKlMHsUDYxIkWtH0Z27xc4lzGUKBH0djtgITpMa/9t8aEXmUBNpxVm7S
-    cVtQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1694600081;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=4TrT2WOHy3wT/9UuqDgfHvXjpnKQcLSFiiLgz13mjFE=;
-    b=UVwZA1hK7hpvcu0vTZ+s8GHZznTuH/s/i85nrWQH9pDUmvQ3lutA7x8LBds+/2d1oM
-    yBr85vGQ0glWLxXQ2PBrynsxF6MgjDju9xtjUwhB5OsDRTn+UeHRDIqHRM+b69LaQMMu
-    Pfsuk2PDa9wINUnxJ3srCnpoNObspG+jj5VVZ3Y7A2HzcrJBDujGk+wUnalaWVLY5Iil
-    1slU61xbI2ytT8yCxI5Uf/2h1Cz+avL06PI1LNUMi+8gKUTMkkrQk1FgQRJekC8qgU83
-    LQ6ywXuYzY249oCnE2wykyHIqDzDWmymBywFbHGxJwfcw3f6SOeq2A5tUtyMvpOQ7GZh
-    7x7w==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1694600081;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=4TrT2WOHy3wT/9UuqDgfHvXjpnKQcLSFiiLgz13mjFE=;
-    b=cc0qdML+eisNqhEZZDq4x/QWJua4EbWgM2qdYvDc7cr4kbt2IC/1zmsMJH/IidAUm+
-    GRB6CebL7HoiZVWy+Eukvn8I9DmqZppOptVbrr5qJzBxL6FdwpcVIEA2azkIiXbtHv5O
-    bvkpTlVwYY6MBZqPOeIQzS16t+zwEdghF7nqtQ6scKySDEyQVLq2sNNOoyQbkEemTZ0+
-    JPAZGnz/7EXr8tDNdzhsuy9pY4lzvWHsdFl2cKxxpvRc6SF1sMF7H53DawNjiqdGglQ6
-    EqqFz9EHciyabvi+FQvCrX9vNycVxE06QSNCAsQ2Cn5Rdi3zBrxw4VmW5W+xYJV0+1AK
-    YV4A==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1694600081;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=4TrT2WOHy3wT/9UuqDgfHvXjpnKQcLSFiiLgz13mjFE=;
-    b=npksid5vFULF2mlG7Fin7kKNpUoIPFbe+Re8ZAv87CwQ0GNFdkcoWuJIKK+WO8+/+c
-    H68z4BQ03S+aXY1r/YDw==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8Z/h"
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.8.2 DYNA|AUTH)
-    with ESMTPSA id 60372az8DAEegt4
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Wed, 13 Sep 2023 12:14:40 +0200 (CEST)
-Date:   Wed, 13 Sep 2023 12:14:34 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
+        Wed, 13 Sep 2023 06:18:03 -0400
+Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1043A1727;
+        Wed, 13 Sep 2023 03:17:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail3; t=1694600274; x=1694859474;
+        bh=o04ZkDhGEQiMSjegGwkSlBK9o//0n7IC0xvMsy4y6zM=;
+        h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+         Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+        b=cGjQpMVqhLgjT7lMXdRF/pwQdOZwQxW3t3RUKfmyz2TCtcRlRYJbItv+V9FVKLkVv
+         r0uaitQJrw182K3KWyjHl/ABEwuegveaIODXVLt8f6CopA00DZdX2Dphu1uSJUG0Ly
+         7pB+T/jWOQakfTYK8N0BA86+h5kXuLRUCOsaaqYqOO+oRyH8dDCLIEx3UdCJVHSFHC
+         25yDD5PthDOzWnDaB/kIiUYB7J4nKtx6J8IRqCt0Sxs/se0XFUwDE1br7hpH0d1Kdz
+         ymb7pyfY3wIjzSNvcKsBeBjqqiVDNR4KPiaa/oSl4sch1WwNAkVdp/9VVqkdo3jmc3
+         8pJRPIACUtdKw==
+Date:   Wed, 13 Sep 2023 10:17:39 +0000
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 4/9] arm64: dts: qcom: msm8916: Reserve firmware memory
- dynamically
-Message-ID: <ZQGLioVhjCK3TRva@gerhold.net>
-References: <20230911-msm8916-rmem-v1-0-b7089ec3e3a1@gerhold.net>
- <20230911-msm8916-rmem-v1-4-b7089ec3e3a1@gerhold.net>
- <912f90ee-0816-43ae-bc6f-a9a9a3e33d8a@linaro.org>
- <9b1beb38-9ec2-4bdb-97f5-fccf98d3b0c3@linaro.org>
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>
+From:   Yassine Oudjana <y.oudjana@protonmail.com>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Alexey Minnekhanov <alexeymin@postmarketos.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        linux-usb@vger.kernel.org
+Subject: Re: [PATCH v2 02/14] arm64: dts: qcom: msm8996: Drop RPM bus clocks
+Message-ID: <92bc6544-b652-41f5-8819-016c4f93e827@protonmail.com>
+Feedback-ID: 6882736:user:proton
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9b1beb38-9ec2-4bdb-97f5-fccf98d3b0c3@linaro.org>
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 13, 2023 at 10:12:12AM +0100, Bryan O'Donoghue wrote:
-> On 13/09/2023 10:06, Konrad Dybcio wrote:
-> > On 11.09.2023 19:41, Stephan Gerhold wrote:
-> > > Most of the reserved firmware memory on MSM8916 can be relocated when
-> > > respecting the required alignment. To avoid having to precompute the
-> > > reserved memory regions in every board DT, describe the actual
-> > > requirements (size, alignment, alloc-ranges) using the dynamic reserved
-> > > memory allocation.
-> > > 
-> > > This approach has several advantages:
-> > > 
-> > >   1. We can define "templates" for the reserved memory regions in
-> > >      msm8916.dtsi and keep only device-specific details in the board DT.
-> > >      This is useful for the "mpss" region size for example, which varies
-> > >      from device to device. It is no longer necessary to redefine all
-> > >      firmware regions to shift their addresses.
-> > > 
-> > >   2. When some of the functionality (e.g. WCNSS, Modem, Venus) is not
-> > >      enabled or needed for a device, the reserved memory can stay
-> > >      disabled, freeing up the unused reservation for Linux.
-> > > 
-> > >   3. Devices with special requirements for one of the firmware regions
-> > >      are handled automatically. For example, msm8916-longcheer-l8150
-> > >      has non-relocatable "wcnss" firmware that must be loaded exactly
-> > >      at address 0x8b600000. When this is defined as a static region,
-> > >      the other dynamic allocations automatically adjust to a different
-> > >      place with suitable alignment.
-> > > 
-> > > All in all this approach significantly reduces the boilerplate necessary
-> > > to define the different firmware regions, and makes it easier to enable
-> > > functionality on the different devices.
-> > > 
-> > > Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> > > ---
-> > [...]
-> > 
-> > >   		mpss_mem: mpss@86800000 {
-> > > +			/*
-> > > +			 * The memory region for the mpss firmware is generally
-> > > +			 * relocatable and could be allocated dynamically.
-> > > +			 * However, many firmware versions tend to fail when
-> > > +			 * loaded to some special addresses, so it is hard to
-> > > +			 * define reliable alloc-ranges.
-> > > +			 *
-> > > +			 * alignment = <0x0 0x400000>;
-> > > +			 * alloc-ranges = <0x0 0x86800000 0x0 0x8000000>;
-> > > +			 */
-> > Do we know of any devices that this would actually work on?
+On 12/09/2023 4:31 pm, Konrad Dybcio wrote:
+> These clocks are now handled from within the icc framework and are
+> no longer registered from within the CCF. Remove them.
+>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>   arch/arm64/boot/dts/qcom/msm8996.dtsi | 27 ++++-----------------------
+>   1 file changed, 4 insertions(+), 23 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/=
+qcom/msm8996.dtsi
+> index c8e0986425ab..acef67ab0581 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> @@ -798,9 +798,6 @@ bimc: interconnect@408000 {
+>   =09=09=09compatible =3D "qcom,msm8996-bimc";
+>   =09=09=09reg =3D <0x00408000 0x5a000>;
+>   =09=09=09#interconnect-cells =3D <1>;
+> -=09=09=09clock-names =3D "bus", "bus_a";
+> -=09=09=09clocks =3D <&rpmcc RPM_SMD_BIMC_CLK>,
+> -=09=09=09=09 <&rpmcc RPM_SMD_BIMC_A_CLK>;
+>   =09=09};
+>  =20
+>   =09=09tsens0: thermal-sensor@4a9000 {
+> @@ -851,18 +848,12 @@ cnoc: interconnect@500000 {
+>   =09=09=09compatible =3D "qcom,msm8996-cnoc";
+>   =09=09=09reg =3D <0x00500000 0x1000>;
+>   =09=09=09#interconnect-cells =3D <1>;
+> -=09=09=09clock-names =3D "bus", "bus_a";
+> -=09=09=09clocks =3D <&rpmcc RPM_SMD_CNOC_CLK>,
+> -=09=09=09=09 <&rpmcc RPM_SMD_CNOC_A_CLK>;
+>   =09=09};
+>  =20
+>   =09=09snoc: interconnect@524000 {
+>   =09=09=09compatible =3D "qcom,msm8996-snoc";
+>   =09=09=09reg =3D <0x00524000 0x1c000>;
+>   =09=09=09#interconnect-cells =3D <1>;
+> -=09=09=09clock-names =3D "bus", "bus_a";
+> -=09=09=09clocks =3D <&rpmcc RPM_SMD_SNOC_CLK>,
+> -=09=09=09=09 <&rpmcc RPM_SMD_SNOC_A_CLK>;
+>   =09=09};
+>  =20
+>   =09=09a0noc: interconnect@543000 {
+> @@ -882,19 +873,14 @@ a1noc: interconnect@562000 {
+>   =09=09=09compatible =3D "qcom,msm8996-a1noc";
+>   =09=09=09reg =3D <0x00562000 0x5000>;
+>   =09=09=09#interconnect-cells =3D <1>;
+> -=09=09=09clock-names =3D "bus", "bus_a";
+> -=09=09=09clocks =3D <&rpmcc RPM_SMD_AGGR1_NOC_CLK>,
+> -=09=09=09=09 <&rpmcc RPM_SMD_AGGR1_NOC_A_CLK>;
+>   =09=09};
+>  =20
+>   =09=09a2noc: interconnect@583000 {
+>   =09=09=09compatible =3D "qcom,msm8996-a2noc";
+>   =09=09=09reg =3D <0x00583000 0x7000>;
+>   =09=09=09#interconnect-cells =3D <1>;
+> -=09=09=09clock-names =3D "bus", "bus_a", "aggre2_ufs_axi", "ufs_axi";
+> -=09=09=09clocks =3D <&rpmcc RPM_SMD_AGGR2_NOC_CLK>,
+> -=09=09=09=09 <&rpmcc RPM_SMD_AGGR2_NOC_A_CLK>,
+> -=09=09=09=09 <&gcc GCC_AGGRE2_UFS_AXI_CLK>,
+> +=09=09=09clock-names =3D "aggre2_ufs_axi", "ufs_axi";
+> +=09=09=09clocks =3D <&gcc GCC_AGGRE2_UFS_AXI_CLK>,
+>   =09=09=09=09 <&gcc GCC_UFS_AXI_CLK>;
+>   =09=09};
+>  =20
+> @@ -902,19 +888,14 @@ mnoc: interconnect@5a4000 {
+>   =09=09=09compatible =3D "qcom,msm8996-mnoc";
+>   =09=09=09reg =3D <0x005a4000 0x1c000>;
+>   =09=09=09#interconnect-cells =3D <1>;
+> -=09=09=09clock-names =3D "bus", "bus_a", "iface";
+> -=09=09=09clocks =3D <&rpmcc RPM_SMD_MMAXI_CLK>,
+> -=09=09=09=09 <&rpmcc RPM_SMD_MMAXI_A_CLK>,
+> -=09=09=09=09 <&mmcc AHB_CLK_SRC>;
+> +=09=09=09clock-names =3D "iface";
+> +=09=09=09clocks =3D <&mmcc AHB_CLK_SRC>;
+>   =09=09};
+>  =20
+>   =09=09pnoc: interconnect@5c0000 {
+>   =09=09=09compatible =3D "qcom,msm8996-pnoc";
+>   =09=09=09reg =3D <0x005c0000 0x3000>;
+>   =09=09=09#interconnect-cells =3D <1>;
+> -=09=09=09clock-names =3D "bus", "bus_a";
+> -=09=09=09clocks =3D <&rpmcc RPM_SMD_PCNOC_CLK>,
+> -=09=09=09=09 <&rpmcc RPM_SMD_PCNOC_A_CLK>;
+>   =09=09};
+>  =20
+>   =09=09tcsr_mutex: hwlock@740000 {
 
-Yes, the "modem" firmware on DB410c seems to be fine with literally all
-correctly aligned addresses I've tested so far. But when I manually
-experimented with other addresses on actual smartphones it exploded on
-certain addresses, specific to the firmware version / device.
+Tested-by: Yassine Oudjana <y.oudjana@protonmail.com>
 
-> I have the same question here.
-> 
-> How was this tested ?
-> 
 
-Bryan, your question sounds more general, about the dynamic allocation
-of the firmware regions in general (also for wcnss etc).
 
-I'll just explain my tests for both with more detail :D
-
-For wcnss/venus a different memory region has been used in postmarketOS
-for years because I shifted it early on to make room for the larger
-modem firmware. I've never heard of any problems with this on the 50+
-different MSM8916-related devices we support there, with many different
-firmware versions. When preparing this patch set I experimented some
-more and noticed there is a limit (I think around 0x90000000) where TZ
-refuses to load/verify the firmware. The alloc-ranges is chosen
-conservatively to avoid potential trouble. Also because I didn't see
-any use case to have a huge range specified there...
-
-For mpss it's more tricky. First, if you'd comment out the alignment and
-alloc-ranges it would most likely work correctly because Linux just
-allocates it at the start of the range, on 0x86800000 like it was
-before. However, the DT spec doesn't strictly specify where inside the
-range the region is allocated, so I manually experimented with some
-other addresses within the range:
-
- - On DB410c it works just fine. All addresses I tried work without any
-   problems.
-
- - On longcheer-l8150 the modem firmare works fine when the memory
-   region starts somewhere between 0x86800000 and 0x8a800000. It also
-   works again after 0x8e800000. But on anything between 0x8a800000 and
-   0x8e800000 it's broken for who knows what reason.
-
- - On some Samsung devices only 0x86800000 and maybe one or two other
-   addresses worked, again for who knows what reason. Most other
-   addresses were broken.
-
-The symptom is usually some timeout while starting, the actual signature
-verification seems to work fine. I believe that in theory it's supposed
-to be relocatable, but in practice they hardcoded some addresses or did
-some other funny stuff in some of the firmware versions.
-
-To be safe my conclusion was to keep mpss at a fixed address and only
-allocate the others dynamically. This is how the patch implements it.
-
-Thanks,
-Stephan
