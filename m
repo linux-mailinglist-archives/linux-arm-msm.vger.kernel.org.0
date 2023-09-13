@@ -2,122 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1435379F206
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 21:28:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17B9679F210
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 21:31:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232428AbjIMT2r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Sep 2023 15:28:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37792 "EHLO
+        id S231172AbjIMTbd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Sep 2023 15:31:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232403AbjIMT2p (ORCPT
+        with ESMTP id S232199AbjIMTbc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Sep 2023 15:28:45 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D379819AD
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 12:28:41 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-402d499580dso1752675e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 12:28:41 -0700 (PDT)
+        Wed, 13 Sep 2023 15:31:32 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5725C1999
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 12:31:28 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-9ada2e6e75fso27071966b.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 12:31:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694633320; x=1695238120; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gzK1Gimv1xbcD7M0xpMSCJyPfPmTXUtdX1MVmzku7CY=;
-        b=UnrnNOCMQ6X1WTBQ9aT0BIqAoHusz/5LrHPYaoEdBdS/mJ+KRq2f/swK4HsBXVjtNZ
-         WUKiK6u3yN8FxmTpO+M7Sw7+aCUoN0QzwxHqOVNKN8jD95VlKi5U9j3A5c0O2KuLvcld
-         HRm27+Zr4laSvObwoAJC5ZFkeH44bJ9wJZbHBdWCZlAnDOVVoLZGiV9KR1nqtd+xnufz
-         VXqLZ+s8Yp/qeAInUoMN/ZJXng/BSIb5L4dq1pp3McjfaDIN1ey9c9lmj4T+DjMRBh9c
-         4q3bivDpOPRQUuKrnzfUilt5MtFxax3/HoIRCkAXLMmnU+71F9xbHuDrId4vkMm/Barz
-         OmdA==
+        d=linaro.org; s=google; t=1694633487; x=1695238287; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6t/segHl62cG0tgDfHwNZNVnZ9A89vMExRnBSpVNx4M=;
+        b=mb8f6xPQYyBy+KDbOpKDNuR0cj5OuclmA5Xmhe7TDw3kzy40vhxxpdNf7tAzhtk2t0
+         vtG4lUxJRPrxDfkOriYQObaVjqDtlpjgxpopxdN3XBK4ujZS9ELDm9fo2KGeBFwBYxz9
+         jJ4+afTPeVm+rnuq+oGK/PKZTbaeDRyR6QyRtQFkOx+hNFOifimiau2t5VyRM2poNQUm
+         XBetFwfpbOZjOqT0z8OEIB3DZo9rXLvH4atutSw+pRaKpU7fibq4uDxxCDY7ghjVzk/H
+         eC7/qM3Reum3/7jmjgANGHVAeuDtLcfgqPE82/x3J/HFkVOQU5VgchC9Hq5BiZ2oMyOM
+         ocWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694633320; x=1695238120;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gzK1Gimv1xbcD7M0xpMSCJyPfPmTXUtdX1MVmzku7CY=;
-        b=KF6D5W/AnxBBT+2yCCuXuL9oQbAfr8JWjmAWhrSVDRwlv5mD6DNKsSy0Rk9rD4nGwC
-         d6NCA9BW8HwvANVACdg5S9CW6YaLSk0chCv9YxwU3rY0hxhdCkl/tEUSOcYBR7cdZ92y
-         QObt/+YH/Hjmei627aTEClSkpQ+v53yvWmogTFojfgGGGxjImPnblD2eio8Z0uwspFFI
-         tTDW0QupVGN4QcOOC11NCTCfzhlyry6zzeiGvvNzdc5PCIT4DNE6ZESWcELAffIn1q1p
-         CKXmN/1OTWZLQ5GQB7ChXQJU1ERAmpGBhQebigN1hgEAvOJdw1ZEz9+rgyH0zb6xqKmu
-         6VNw==
-X-Gm-Message-State: AOJu0YyBUZzQ5kNsHTbv6oRX5a3kcsHwfrOFZIQMrtE6XtI61TXVGjrH
-        oI4lfxqQscv2A7xulsdfCn1Wvg==
-X-Google-Smtp-Source: AGHT+IGpWVNvAHt4Oe3xGSQbh+t4882VAf6lPjxTPDgD6HQvFzZGuinscL0kjz+WNd1FXQ1L5EBgGw==
-X-Received: by 2002:a1c:4c0d:0:b0:3fd:3006:410b with SMTP id z13-20020a1c4c0d000000b003fd3006410bmr2882173wmf.34.1694633320443;
-        Wed, 13 Sep 2023 12:28:40 -0700 (PDT)
-Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:3b50:bca5:a754:7463])
-        by smtp.gmail.com with ESMTPSA id q5-20020a7bce85000000b004013797efb6sm2847248wmj.9.2023.09.13.12.28.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Sep 2023 12:28:39 -0700 (PDT)
-From:   Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [RESEND PATCH 2/2] firmware: qcom-scm: order includes alphabetically
-Date:   Wed, 13 Sep 2023 21:28:26 +0200
-Message-Id: <20230913192826.36187-2-bartosz.golaszewski@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230913192826.36187-1-bartosz.golaszewski@linaro.org>
-References: <20230913192826.36187-1-bartosz.golaszewski@linaro.org>
+        d=1e100.net; s=20230601; t=1694633487; x=1695238287;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6t/segHl62cG0tgDfHwNZNVnZ9A89vMExRnBSpVNx4M=;
+        b=bLAg4kd5VA3th9FiZRyV2wgo/rvdac2smmpylcK/iAJT0S8pHxMfEoG30uZOvDpdLx
+         /Ap1eX8hqOpv097kXbw7AP7xu2q+hL868GS8vdV8me9P1A1k/kmoeFpT49XJirmfx5wb
+         3X1lBaxF8P9r7aWSrkcsWCHGTKM+J7Sm/RScBaIbsT/GLX7f3T6i47NAJWhuz20t2ldu
+         0auJtyFGldmQ3cBSf+UBjytM0Jn0i0fBUMJ9QUx2JhS1dWFihi++tlx8KhM63zb0l6at
+         Gxm/B7vc+gHVwPabkmRLy57ZnDC83RAoeQpktrHn3WjS4snEO2fmHn92o+nxNFF4vhJR
+         RaiA==
+X-Gm-Message-State: AOJu0Yw3xxXJMohDAjrcW2FLzvNbIl7RTVfskXn2nehJ23FF4QUlsNUx
+        hqs/pSUapCkBT15Xvs2/H9iyvut0xbdNrRbFExErNw==
+X-Google-Smtp-Source: AGHT+IHEROrTYoS6x/KY+dvBnwl/TmbwAYJz+XmpnGflks2i5L/tczqqyom6qBDab3VbsAyc9juI/w==
+X-Received: by 2002:a17:906:4c1:b0:9aa:1020:8c36 with SMTP id g1-20020a17090604c100b009aa10208c36mr2982793eja.27.1694633486721;
+        Wed, 13 Sep 2023 12:31:26 -0700 (PDT)
+Received: from [192.168.37.232] (178235177172.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.172])
+        by smtp.gmail.com with ESMTPSA id v14-20020a17090690ce00b0099c53c44083sm8840393ejw.79.2023.09.13.12.31.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Sep 2023 12:31:25 -0700 (PDT)
+Message-ID: <750065d1-dc87-4b1b-8540-059526623bdd@linaro.org>
+Date:   Wed, 13 Sep 2023 21:31:24 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: pm8150l: Add wled node
+Content-Language: en-US
+To:     Danila Tikhonov <danila@jiaxyga.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230913185514.21840-1-danila@jiaxyga.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230913185514.21840-1-danila@jiaxyga.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-For easier maintenance order the included headers in qcom_scm.c
-alphabetically.
+On 13.09.2023 20:55, Danila Tikhonov wrote:
+> WLED is used for controlling the backlight on some boards, add the node
+> for it.
+> 
+> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+> ---
+>  arch/arm64/boot/dts/qcom/pm8150l.dtsi | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/pm8150l.dtsi b/arch/arm64/boot/dts/qcom/pm8150l.dtsi
+> index b1686e5777b8..ac08a09c64c2 100644
+> --- a/arch/arm64/boot/dts/qcom/pm8150l.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/pm8150l.dtsi
+> @@ -132,5 +132,15 @@ pm8150l_lpg: pwm {
+>  			status = "disabled";
+>  		};
+>  
+> +		pm8150l_wled: leds@d800 {
+> +			compatible = "qcom,pm8150l-wled";
+> +			reg = <0xd800>, <0xd900>;
+> +			interrupts = <0x5 0xd8 0x1 IRQ_TYPE_EDGE_RISING>,
+> +				     <0x5 0xd8 0x2 IRQ_TYPE_EDGE_RISING>;
+> +			interrupt-names = "ovp", "short";
+Could somebody confirm the second irq? It looks sane when
+checking out similar blocks on older gens, but I have no
+reference to confirm it's there on this one.
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/firmware/qcom_scm.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
-
-diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-index 06fe8aca870d..507ce24a3aeb 100644
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -2,24 +2,25 @@
- /* Copyright (c) 2010,2015,2019 The Linux Foundation. All rights reserved.
-  * Copyright (C) 2015 Linaro Ltd.
-  */
--#include <linux/platform_device.h>
--#include <linux/init.h>
--#include <linux/interrupt.h>
-+
-+#include <linux/arm-smccc.h>
-+#include <linux/clk.h>
- #include <linux/completion.h>
- #include <linux/cpumask.h>
--#include <linux/export.h>
- #include <linux/dma-mapping.h>
-+#include <linux/export.h>
-+#include <linux/firmware/qcom/qcom_scm.h>
-+#include <linux/init.h>
- #include <linux/interconnect.h>
-+#include <linux/interrupt.h>
- #include <linux/module.h>
--#include <linux/types.h>
--#include <linux/firmware/qcom/qcom_scm.h>
- #include <linux/of.h>
- #include <linux/of_address.h>
- #include <linux/of_irq.h>
- #include <linux/of_platform.h>
--#include <linux/clk.h>
-+#include <linux/platform_device.h>
- #include <linux/reset-controller.h>
--#include <linux/arm-smccc.h>
-+#include <linux/types.h>
- 
- #include "qcom_scm.h"
- 
--- 
-2.39.2
-
+Konrad
