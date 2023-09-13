@@ -2,181 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 99B6879E573
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 12:56:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 46EA479E657
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 13:15:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239869AbjIMK46 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Sep 2023 06:56:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43226 "EHLO
+        id S240174AbjIMLP4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Sep 2023 07:15:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239894AbjIMK45 (ORCPT
+        with ESMTP id S240161AbjIMLPk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Sep 2023 06:56:57 -0400
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64E9619BF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 03:56:53 -0700 (PDT)
-Received: by mail-yb1-xb33.google.com with SMTP id 3f1490d57ef6-d7820f9449bso6255151276.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 03:56:53 -0700 (PDT)
+        Wed, 13 Sep 2023 07:15:40 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0685B3C20
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 04:14:25 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-401ec23be82so73831005e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 04:14:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694602612; x=1695207412; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=SwE1tmf8tdsVndAPixE3ADwa0SejCshFVF56S6gRoMI=;
-        b=WCQXmB1hdPdLx5jg0szCrHGf6etQvVp/GH6OiQhVKWDk2f9gOXz59D4+IX4d0uNBIq
-         JJcWt6f/NKBJViDo66x2f6P8Sank123ToXsHQqw6uztKyDy67lfpHqqnMp2DZLs3VVUc
-         iCZoUR2N/NS7dOvWZfpOreZFTqPuodaZoyG2YbZF34CrXAseZE670N1hvjca/Wu0GhZO
-         hU2xKL1Z5JgW0PqVxJyIh6n0h2xDyi5jzuZaRf5M0b4l/hqJU860bLmmNmHIKbqp2QbE
-         fdUNEL0bR9xTX5+O9f9mdlyWGjPEVa38O+y9nAG9pmZQa81LaIzxaYdzAP0lrRJf8+LK
-         hlNA==
+        d=linaro.org; s=google; t=1694603663; x=1695208463; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=X4j22lmDBEdz68x3qUhl5gJ0drA+YexofLKRZQjwWfs=;
+        b=MsJTl3hH4aJNrK5tFeLAxICWDzLg91wl3pT/mKCW+Vb19en/I/7/yG0MEMIoEwBxTG
+         7j7n6R1q3u/vNeitp7ccZoqRIUlBvyzPL1Sm3EKawQBtuNKeew02N48cyZo/wYOKCOzu
+         WboobLHLEpW95M5poDU+qbwX39v5xJwzlLwdAj3+7ujFDnrguB6DhcAMXy7OWzIwZUXp
+         v0cPajGP40D1TFXYhNlutjrJF7Siaes0SHtPWicV2i5ott0XXCr5MD+3O9ggspqfh8Ul
+         qXHlbeB2xzpT7xviOxeQ24af1ulbvqpm4lYlYLiMPqhNA1lh/oVrvOVDd5qculDqH48D
+         JDgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694602612; x=1695207412;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=SwE1tmf8tdsVndAPixE3ADwa0SejCshFVF56S6gRoMI=;
-        b=CuOAOFnsHqmw7xJuf2Xw+Z57xVsQi0lkojeBwUo9icrBUrDjY+sYhVJxaH9WhlL4rV
-         wdenvr4r9s8WL+A1FX7B4LSXOkV1tnU+hYG70dZKMg9D/LvwhNXSg3M+padCUuMxR9Yw
-         Yzqkjn/ra6igbugwZ4foWCz8mDuPBZZn90YMCuySOk0kUI+09uCrRnCQ9ds4SJZbrBDL
-         /UWWRfaIq89rXjgxN8v1YPwhT6gAq8l5atRY4IO1afbWPZpViOFQP0z8QUMa0DcDq3Hx
-         5uTNmn8leBC/n5PnIrb8pNyTNmIU2lXjwYH+wTeja2eLnTGbIfJTsosNVXfFslwzUAAP
-         F+wQ==
-X-Gm-Message-State: AOJu0YyPjDPTK8EnU5BIS+h97OGdJKkQ8hwQUV/HLIzUVJmx1ltU88h5
-        t6/tJjxfLA1a4ilZ4uED+OweI/XqbWP+/74u+wun5Q==
-X-Google-Smtp-Source: AGHT+IHMAuFyyQ4cRNYR0B8xdSCeM68K8IjuOrh8tk9MNlECb4FiuI3ryuFikGYu8jUtCFCGET9Y3RPflWwbyZQSia0=
-X-Received: by 2002:a5b:308:0:b0:d7f:f5e:a2bd with SMTP id j8-20020a5b0308000000b00d7f0f5ea2bdmr1911637ybp.10.1694602612496;
- Wed, 13 Sep 2023 03:56:52 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1694603663; x=1695208463;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=X4j22lmDBEdz68x3qUhl5gJ0drA+YexofLKRZQjwWfs=;
+        b=HeRLIyhX19oesTeCJoE8Xo3I5FunGim/nOrS1HEJmWtImOR/4KGBl+/99cbdNUvUhq
+         SnilE6R7RpXfSmsbL3fsK+9PwN8yNt19HnRm4pyzGQm/J8EDIMTuSAa8Y4VuYvEmGLsS
+         fN7IVN0Cxnp8n1X8j6YP/i9dWAvdF9w3X9lswjgqNHV8VH4WpYC7N7W4sxWYQdYIZeGG
+         7mmEmWMkIF+JoAe2bdzl81j11ya0ktiHFXkWGzC/qXd74iJDaMZrwAhHclO6YhZS9OD3
+         ajzTOlZDNgwJlFkYZiNwsNCCOuL6NQ6DsYRE8ZtUR4qjNPj0ua+vtNIS+srB99g/AQpi
+         xerw==
+X-Gm-Message-State: AOJu0YykXAVWqDMDHeg8kEEbyJutNGiAXxmnE+O8nQ/bjyODWauCxGpi
+        Zu/VQYPby98wrwasAhW6ix8OSHD0FqORc4szMEM=
+X-Google-Smtp-Source: AGHT+IFJlSnmnVty++JAQlMdedVZw+ig39ydIHFfYUarwozinwRjAGGXz3bvVLJ7KKgGWK++b7J6OQ==
+X-Received: by 2002:a5d:4a09:0:b0:317:70da:abdd with SMTP id m9-20020a5d4a09000000b0031770daabddmr1727674wrq.59.1694603663440;
+        Wed, 13 Sep 2023 04:14:23 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.214.188])
+        by smtp.gmail.com with ESMTPSA id l5-20020adfe585000000b0031759e6b43fsm15246555wrm.39.2023.09.13.04.14.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Sep 2023 04:14:22 -0700 (PDT)
+Message-ID: <30bb6068-6bb8-9a2c-af19-b989960d0be9@linaro.org>
+Date:   Wed, 13 Sep 2023 13:14:20 +0200
 MIME-Version: 1.0
-References: <20230912-msm8909-cpufreq-v1-0-767ce66b544b@kernkonzept.com> <20230912-msm8909-cpufreq-v1-1-767ce66b544b@kernkonzept.com>
-In-Reply-To: <20230912-msm8909-cpufreq-v1-1-767ce66b544b@kernkonzept.com>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Wed, 13 Sep 2023 12:56:16 +0200
-Message-ID: <CAPDyKFq6U-MR4Bd+GmixYseRECDh142RhydtKbiPd3NHV2g6aw@mail.gmail.com>
-Subject: Re: [PATCH 1/4] cpufreq: qcom-nvmem: Enable virtual power domain devices
-To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.0
+Subject: Re: [PATCH v2 01/14] arm64: dts: qcom: msm8916: Drop RPM bus clocks
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Conor Dooley <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Alexey Minnekhanov <alexeymin@postmarketos.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        linux-usb@vger.kernel.org
+References: <20230721-topic-rpm_clk_cleanup-v2-0-1e506593b1bd@linaro.org>
+ <20230721-topic-rpm_clk_cleanup-v2-1-1e506593b1bd@linaro.org>
+ <bd11d1b1-efe5-4f96-43e7-163fca5d3278@linaro.org>
+ <ac501bcc-80a1-4b65-ba24-272152d1c95c@linaro.org>
+ <7b500bba-3091-f425-a60d-e58a3d9e4c1a@linaro.org>
+ <9a0ab5a9-d4d8-41b8-94b0-9c62bd686254@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <9a0ab5a9-d4d8-41b8-94b0-9c62bd686254@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 12 Sept 2023 at 11:40, Stephan Gerhold
-<stephan.gerhold@kernkonzept.com> wrote:
->
-> The genpd core ignores performance state votes from devices that are
-> runtime suspended as of commit 5937c3ce2122 ("PM: domains: Drop/restore
-> performance state votes for devices at runtime PM").
+On 13/09/2023 12:48, Konrad Dybcio wrote:
+> On 13.09.2023 10:53, Krzysztof Kozlowski wrote:
+>> On 13/09/2023 10:47, Konrad Dybcio wrote:
+>>> On 13.09.2023 09:07, Krzysztof Kozlowski wrote:
+>>>> On 12/09/2023 15:31, Konrad Dybcio wrote:
+>>>>> These clocks are now handled from within the icc framework and are
+>>>>
+>>>> That's a driver behavior, not hardware.
+>>> I believe we've been over this already..
+>>>
+>>> The rationale behind this change is: that hardware, which falls
+>>> under the "interconnect" class, was previously misrepresented as
+>>> a bunch of clocks. There are clocks underneath, but accessing them
+>>> directly would be equivalent to e.g. circumventing the PHY subsystem
+>>> and initializing your UFS PHY from within the UFS device.
+>>
+>> And every time one write such commit msg, how should we remember there
+>> is some exception and actually it is about clock representation not CCF
+>> or ICC framework.
+> So is your reply essentially "fine, but please make it clear in
+> each commit message"?
 
-I think you are referring to the wrong commit above. Please have a
-look at commit 3c5a272202c2 ("PM: domains: Improve runtime PM
-performance state handling"), instead.
+I am fine with this change. If commit msg had such statement, I would
+not have doubts :/
 
-I also suggest rephrasing the above into saying that the performance
-state vote for a device is cached rather than carried out, if
-pm_runtime_suspended() returns true for it.
+Best regards,
+Krzysztof
 
-Another relevant information in the commit message would be to add
-that during device-attach (genpd_dev_pm_attach_by_id()), calls
-pm_runtime_enable() the device.
-
-> However, at the
-> moment nothing ever enables the virtual devices created in
-> qcom-cpufreq-nvmem for the cpufreq power domain scaling, so they are
-> permanently runtime-suspended.
->
-> Fix this by enabling the devices after attaching them and use
-> dev_pm_syscore_device() to ensure the power domain also stays on when
-> going to suspend. Since it supplies the CPU we can never turn it off
-> from Linux. There are other mechanisms to turn it off when needed,
-> usually in the RPM firmware or the cpuidle path.
->
-> Without this fix performance states votes are silently ignored, and the
-> CPU/CPR voltage is never adjusted. This has been broken since 5.14 but
-> for some reason no one noticed this on QCS404 so far.
->
-> Cc: stable@vger.kernel.org
-> Fixes: 1cb8339ca225 ("cpufreq: qcom: Add support for qcs404 on nvmem driver")
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-> ---
->  drivers/cpufreq/qcom-cpufreq-nvmem.c | 21 ++++++++++++++++++++-
->  1 file changed, 20 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> index 84d7033e5efe..17d6ab14c909 100644
-> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> @@ -25,6 +25,7 @@
->  #include <linux/platform_device.h>
->  #include <linux/pm_domain.h>
->  #include <linux/pm_opp.h>
-> +#include <linux/pm_runtime.h>
->  #include <linux/slab.h>
->  #include <linux/soc/qcom/smem.h>
->
-> @@ -280,6 +281,7 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
->         }
->
->         for_each_possible_cpu(cpu) {
-> +               struct device **virt_devs = NULL;
->                 struct dev_pm_opp_config config = {
->                         .supported_hw = NULL,
->                 };
-> @@ -300,7 +302,7 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
->
->                 if (drv->data->genpd_names) {
->                         config.genpd_names = drv->data->genpd_names;
-> -                       config.virt_devs = NULL;
-> +                       config.virt_devs = &virt_devs;
->                 }
->
->                 if (config.supported_hw || config.genpd_names) {
-> @@ -311,6 +313,23 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
->                                 goto free_opp;
->                         }
->                 }
-> +
-> +               if (virt_devs) {
-> +                       const char * const *name = config.genpd_names;
-> +                       int i;
-> +
-> +                       for (i = 0; *name; i++, name++) {
-> +                               ret = pm_runtime_resume_and_get(virt_devs[i]);
-> +                               if (ret) {
-> +                                       dev_err(cpu_dev, "failed to resume %s: %d\n",
-> +                                               *name, ret);
-> +                                       goto free_opp;
-> +                               }
-
-Shouldn't we restore the usage count at ->remove() too?
-
-> +
-> +                               /* Keep CPU power domain always-on */
-> +                               dev_pm_syscore_device(virt_devs[i], true);
-
-Is this really correct? cpufreq is suspended/resumed by the PM core
-during system wide suspend/resume. See dpm_suspend|resume(). Isn't
-that sufficient?
-
-Moreover, it looks like the cpr genpd provider supports genpd's
-->power_on|off() callbacks. Is there something wrong with this, that I
-am missing?
-
-
-> +                       }
-> +               }
->         }
->
->         cpufreq_dt_pdev = platform_device_register_simple("cpufreq-dt", -1,
->
-
-Kind regards
-Uffe
