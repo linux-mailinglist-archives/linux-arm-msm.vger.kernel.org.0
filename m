@@ -2,174 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 62A6479E0E9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 09:36:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55FAF79E1D3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 10:18:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232288AbjIMHgr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Sep 2023 03:36:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58236 "EHLO
+        id S231656AbjIMISp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Sep 2023 04:18:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230004AbjIMHgq (ORCPT
+        with ESMTP id S234572AbjIMISo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Sep 2023 03:36:46 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABC421727;
-        Wed, 13 Sep 2023 00:36:42 -0700 (PDT)
-Received: from localhost (unknown [IPv6:2a01:e0a:2c:6930:5cf4:84a1:2763:fe0d])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: bbrezillon)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 29A3C6607319;
-        Wed, 13 Sep 2023 08:36:40 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1694590600;
-        bh=BoaxSmoEMOcQoMOW33cqNIU5YTH3LaR/kBpDcxa9Mtg=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=MVB4UZdGG1sGVKpv2lA3Ecoc1NWOzsc+C/PO55PphJsf94STiVCVsDY2R3D7RQuHX
-         bB1H6jIjjFuswdr7pyL0clLnmEFe+HCxHyGxdbtcBYuGrqCXanA+N7bnCL+1AMcvkH
-         LXL1X03aCVuheK5YjaOj9xx1p2NS8aQegZoWzih2qDRGLz47mz5EfZ0sPHq2cBtkAh
-         Hj0uPC6QxDFcjug7ldcQR6GDLm91ruCD4xhSTgZyJvp2cZLraWmPrSSC+1LnuArx7Q
-         QlJXWR5lg3+vw19v7UzSZLgsrHSSW3UsR3xf6h8rTjg4rwtDi+dNYuKFPTKJ6mdK7c
-         RW+DbDu7jt9FA==
-Date:   Wed, 13 Sep 2023 09:36:37 +0200
-From:   Boris Brezillon <boris.brezillon@collabora.com>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     =?UTF-8?B?QWRyacOhbg==?= Larumbe <adrian.larumbe@collabora.com>,
-        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
-        quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
-        sean@poorly.run, marijn.suijten@somainline.org, robh@kernel.org,
-        steven.price@arm.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        healych@amazon.com, kernel@collabora.com,
-        freedreno@lists.freedesktop.org,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Subject: Re: [PATCH v4 6/6] drm/drm-file: Show finer-grained BO sizes in
- drm_show_memory_stats
-Message-ID: <20230913093637.2748d217@collabora.com>
-In-Reply-To: <CAF6AEGup93tQMYrmx6iKex2Fxz+Yu5m-MMWPmeOQ4yx_Racnag@mail.gmail.com>
-References: <20230912084044.955864-1-adrian.larumbe@collabora.com>
-        <20230912084044.955864-7-adrian.larumbe@collabora.com>
-        <20230912113210.65897aab@collabora.com>
-        <CAF6AEGtzOS89V1vbobpSEb9KX8x9T0FfmkW2OAaxAKLs+GugKA@mail.gmail.com>
-        <CAF6AEGup93tQMYrmx6iKex2Fxz+Yu5m-MMWPmeOQ4yx_Racnag@mail.gmail.com>
-Organization: Collabora
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-redhat-linux-gnu)
+        Wed, 13 Sep 2023 04:18:44 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03BB5199C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 01:18:39 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-403012f276dso43916925e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 01:18:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694593118; x=1695197918; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vwUUxaP5y+PTaTEbxwe7UpWq12N8jlqbyZbCYEg72fo=;
+        b=nkycTckrP8HdFKUV5uVj93rz9CIQ0vIe/lWNI5Mht9aWGn9ARA47W+zwCZJLnA7nqz
+         9oBLSs8vXq9IPpV9saqED0G8T2XXmWOU3DsfH87Vjd+TftYg5xPMYxfQiLK/QGfsTHqc
+         apJdVd/7q1S3uQIUcy3rN25Xmz30yNEg+ic26nzUoVetr5j2N/l4gv137+QSyeJwmACp
+         yvbnipujkT06AH0xGaqlr83xnx9IUnNQp89PFoDe2hkLmdAFqhvzOocTWAZECbI/FNai
+         W06KC+JZWbFDbY4Vg48+a220GF6ml/d6uMBQ7xhzjfEqbgcD09+BprTovOFKofUfvIfC
+         9dzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694593118; x=1695197918;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vwUUxaP5y+PTaTEbxwe7UpWq12N8jlqbyZbCYEg72fo=;
+        b=Bk7yzyfI5zSjyEwhuQHs1qz1JGykbOLikNbn/MnjO0T1GtOxST2vLJfbXd06ZC8oyX
+         a9aWX/vAOw/il6ccqm5UOMfp69U99M6usZWsERxfw5rjOYEjNkonBwXLidCOBvZ3Zh/a
+         Peeo4G6A3DnxGbwdyXX7idG01IBWZIzWsNPTvOQd3D7tmmDx071Klpr8b+7RfX/buwiJ
+         F83d5/nZTWrt5KU9olz9765NrupgLVs03ARTclpDadwP6VJZQRNiDpwl9yvZJDIEorfn
+         5Q99J28XbmqCrq1sg0sRwFSONJvE7j7L7mFevb/igthppuZwJUl0ob0hTec3z/Yt2Spy
+         Kgfw==
+X-Gm-Message-State: AOJu0Yz8v5KFF3/9JMJLmQRzgRBJojKoarq5fj3/98eMR5g7xMWxuQ3E
+        qwm2yEkNSVeJAl6lGebwOlDLUQ==
+X-Google-Smtp-Source: AGHT+IGtCk7VyJXdF5BMBjTf7j0eels6E5OC9Af+NH7CCXmJf24asywn1LuqHumwFefnCyRSRVL/Fw==
+X-Received: by 2002:a1c:6a11:0:b0:401:b53e:6c3b with SMTP id f17-20020a1c6a11000000b00401b53e6c3bmr1464789wmc.6.1694593118417;
+        Wed, 13 Sep 2023 01:18:38 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.214.188])
+        by smtp.gmail.com with ESMTPSA id l14-20020a1c790e000000b003fe4ca8decdsm1275565wme.31.2023.09.13.01.18.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Sep 2023 01:18:37 -0700 (PDT)
+Message-ID: <da6379ee-a024-0dca-4bde-137ad9090fc2@linaro.org>
+Date:   Wed, 13 Sep 2023 10:18:35 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.0
+Subject: Re: [PATCH 1/4] spi: dt-bindings: qup: Document power-domains and OPP
+Content-Language: en-US
+To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Mark Brown <broonie@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230912-spi-qup-dvfs-v1-0-3e38aa09c2bd@kernkonzept.com>
+ <20230912-spi-qup-dvfs-v1-1-3e38aa09c2bd@kernkonzept.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230912-spi-qup-dvfs-v1-1-3e38aa09c2bd@kernkonzept.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 12 Sep 2023 19:14:35 -0700
-Rob Clark <robdclark@gmail.com> wrote:
+On 12/09/2023 16:30, Stephan Gerhold wrote:
+> Document power-domains and operating-points-v2 to allow making
+> performance state votes for certain clock frequencies of the SPI QUP
+> controller.
+> 
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+> ---
+>  Documentation/devicetree/bindings/spi/qcom,spi-qup.yaml | 8 +++++++
 
-> On Tue, Sep 12, 2023 at 6:46=E2=80=AFPM Rob Clark <robdclark@gmail.com> w=
-rote:
-> >
-> > On Tue, Sep 12, 2023 at 2:32=E2=80=AFAM Boris Brezillon
-> > <boris.brezillon@collabora.com> wrote: =20
-> > >
-> > > On Tue, 12 Sep 2023 09:37:00 +0100
-> > > Adri=C3=A1n Larumbe <adrian.larumbe@collabora.com> wrote:
-> > > =20
-> > > > The current implementation will try to pick the highest available s=
-ize
-> > > > display unit as soon as the BO size exceeds that of the previous
-> > > > multiplier. That can lead to loss of precision in BO's whose size is
-> > > > not a multiple of a MiB.
-> > > >
-> > > > Fix it by changing the unit selection criteria.
-> > > >
-> > > > For much bigger BO's, their size will naturally be aligned on somet=
-hing
-> > > > bigger than a 4 KiB page, so in practice it is very unlikely their =
-display
-> > > > unit would default to KiB. =20
-> > >
-> > > Let's wait for Rob's opinion on this. =20
-> >
-> > This would mean that if you have SZ_1G + SZ_1K worth of buffers, you'd
-> > report the result in KiB.. which seems like overkill to me, esp given
-> > that the result is just a snapshot in time of a figure that
-> > realistically is dynamic.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Yeah, my point was that, generally, such big buffers tend to have
-a bigger size alignment (like 2MB for anything bigger than 1GB), but
-maybe this assumption doesn't stand for all drivers.
-
-> >
-> > Maybe if you have SZ_1G+SZ_1K worth of buffers you should report the
-> > result with more precision than GiB, but more than MiB seems a bit
-> > overkill.
-> >
-> > BR,
-> > -R
-> > =20
-> > > >
-> > > > Signed-off-by: Adri=C3=A1n Larumbe <adrian.larumbe@collabora.com>
-> > > > ---
-> > > >  drivers/gpu/drm/drm_file.c | 2 +-
-> > > >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > > >
-> > > > diff --git a/drivers/gpu/drm/drm_file.c b/drivers/gpu/drm/drm_file.c
-> > > > index 762965e3d503..bf7d2fe46bfa 100644
-> > > > --- a/drivers/gpu/drm/drm_file.c
-> > > > +++ b/drivers/gpu/drm/drm_file.c
-> > > > @@ -879,7 +879,7 @@ static void print_size(struct drm_printer *p, c=
-onst char *stat,
-> > > >       unsigned u;
-> > > >
-> > > >       for (u =3D 0; u < ARRAY_SIZE(units) - 1; u++) {
-> > > > -             if (sz < SZ_1K) =20
->=20
-> btw, I was thinking more along the lines of:
->=20
->    if (sz < 10*SZ_1K)
->=20
-> (or perhaps maybe 100*SZ_1K)
-
-I think I suggested doing that at some point:
-
-		if ((sz & (SZ_1K - 1)) &&
-		    sz < UPPER_UNIT_THRESHOLD * SZ_1K)
-			break;
-
-so we can keep using the upper unit if the size is a multiple of this
-upper unit, even if it's smaller than the selected threshold.
-
->=20
-> I mean, any visualization tool is going to scale the y axis based on
-> the order of magnitude.. and if I'm looking at the fdinfo with my
-> eyeballs I don't want to count the # of digits manually to do the
-> conversion in my head.  The difference btwn 4 or 5 or maybe 6 digits
-> is easy enough to eyeball, but more than that is too much for my
-> eyesight, and I'm not seeing how it is useful ;-)
->=20
-> But if someone really has a valid use case for having precision in 1KB
-> then I'm willing to be overruled.
-
-So, precision loss was one aspect, but my main concern was having
-things displayed in KiB when they could have been displayed in MiB,
-because the size is a multiple of a MiB but still not big enough to
-pass the threshold test (which was set to 10000x in the previous
-version).
-
-> But I'm not a fan of the earlier
-> approach of different drivers reporting results differently, the whole
-> point of fdinfo was to have some standardized reporting.
-
-Totally agree with that.
-
->=20
-> BR,
-> -R
->=20
-> > > > +             if (sz & (SZ_1K - 1))
-> > > >                       break;
-> > > >               sz =3D div_u64(sz, SZ_1K);
-> > > >       } =20
-> > > =20
+Best regards,
+Krzysztof
 
