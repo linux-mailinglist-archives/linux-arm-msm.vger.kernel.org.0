@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BA9E979F570
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 01:24:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 42E8F79F57E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 01:30:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233075AbjIMXYJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Sep 2023 19:24:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48866 "EHLO
+        id S233146AbjIMXaM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Sep 2023 19:30:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233135AbjIMXYI (ORCPT
+        with ESMTP id S232335AbjIMXaK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Sep 2023 19:24:08 -0400
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C21731BD0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 16:24:04 -0700 (PDT)
-Received: by mail-pl1-x62b.google.com with SMTP id d9443c01a7336-1c1e128135aso2774395ad.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 16:24:04 -0700 (PDT)
+        Wed, 13 Sep 2023 19:30:10 -0400
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5F771BCC
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 16:30:06 -0700 (PDT)
+Received: by mail-pl1-x636.google.com with SMTP id d9443c01a7336-1c3f97f2239so2906915ad.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 16:30:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1694647444; x=1695252244; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1694647806; x=1695252606; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=McEVX1hx5k8f+NcqiKTD/lVS9HGO2QYi1j8mbG944+c=;
-        b=nfSprJwJVGxMYiZX6YXuG9lWVv8JSryTkdx3gsOj8IG+vs8bj+7g7pgu9PHCjJda+B
-         /wut+R4zuX/TFDfRj6ed7mWP8vIdHsqE0u3CeFH2Djx71QM80nBglEwaLiEHPKfmfx/0
-         Qu45pTW7IOEdyVCNXH+oFD+1Q7kojdqfovvs0=
+        bh=D8BEuyRIkqA0kbODSrFEJ9LM8ANlZ5MuwmNVEnUG8nE=;
+        b=I4RzppyNU7YncV55OkMU8+X7/vBgwDYhwMxCBR4uY4skKChXESvRr+7E+KlXzjFx4B
+         GiF6oG6O3ISAtK24b99DyXtYHSwHIjVWf54C8Is5hE+yI2PLfEAjTwZraqo/yI8bEQmt
+         c+IxHuUrPaEZu7du/wbjChuhUgZamRR80fvL4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694647444; x=1695252244;
+        d=1e100.net; s=20230601; t=1694647806; x=1695252606;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=McEVX1hx5k8f+NcqiKTD/lVS9HGO2QYi1j8mbG944+c=;
-        b=pugSuFOLveRRybakab/jeMKp3aJeDIa++bs4v0IUr/m0y5uxnG3Vz41fSlHMyW/esa
-         rVlrhuyYguwKJmVnJ4jjykvaRbd5rrikyKVz3Wrnjjfj9yPcyCWul1J2A4+/f3t5Fszu
-         xTvCi5E7zK1lQ/oKbiPwqEKlnWRIdBGft27GkHcnW2eV7BxLK385EG/yNMJC9kY5BfjC
-         MBC5aKsLeCN4Buat1Gr7rffMewhinW2Yw+Cc7CLGEF4b84LlUvXR3RyfSGGz/sABFs2p
-         SO9TReD8Wfp2WmQ6Dn0OorIMmaNyau5sb5wxTduLA8ibZxbBzZiuybs2D+fVnR9Nhqxg
-         WR8g==
-X-Gm-Message-State: AOJu0YwZ5KJurWx0OQKAL8mcs7iohOFQt6DFgltuspTh1GuT1FjdtVer
-        R9WKJMzyA9Yg9y/H2kIpX9A3gQ==
-X-Google-Smtp-Source: AGHT+IEhoRu0Lao0AX88usO4EFB8BidZ06eLDfk+p1OxG1nODfcmpktTieCBSCEMoiWnY1czPMaLqw==
-X-Received: by 2002:a17:902:d2c4:b0:1c0:d575:d28 with SMTP id n4-20020a170902d2c400b001c0d5750d28mr4287074plc.50.1694647444198;
-        Wed, 13 Sep 2023 16:24:04 -0700 (PDT)
+        bh=D8BEuyRIkqA0kbODSrFEJ9LM8ANlZ5MuwmNVEnUG8nE=;
+        b=DzZtzRbxx9jGNCKXP6IU9kktjhx5TByLHgriLqQnw/UOsrqjvNAK07fy79UoN+LrqH
+         rGok5mbYnh6cx2blS/Hppv1ECkNzmbn1444son+T0UyrPBghXdFZo4pOcnk4bUlRopA/
+         kfBdG6Njwk3H8v1WO5zmBKLEhFPzSQp7/ibY8H0mwB5o2pM3HyQuEAJtL+7cpo9VhDtH
+         eGBbZhpwCUxZvfg07OpboozIMcc96Civf8tGhZzt91K0LrpcgC+dvZcojPw0R8L9HPHu
+         nUclZyVDnv0MGoGvndG53efHlp9KQFUXOAEMLRh+5TQMoIc7Nfimb7f1mgoERjd2EgKz
+         7eWA==
+X-Gm-Message-State: AOJu0YyR+WnTrC2Y26k8Di/1h7iuFMwSxLP0r5MvhZvygPOeAPfkWSbn
+        Fi0kcdRHAjxoRn2yFR9+XwTDHw==
+X-Google-Smtp-Source: AGHT+IG6+9IB6uFxWZM3GIOXMU3BPqs4EX0RKLfedlqEvbvt0BgIgu7ki0WNkT/tohlFIibQd5bGSA==
+X-Received: by 2002:a17:902:db11:b0:1bc:9651:57c6 with SMTP id m17-20020a170902db1100b001bc965157c6mr5121186plx.57.1694647806167;
+        Wed, 13 Sep 2023 16:30:06 -0700 (PDT)
 Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id j21-20020a170902c3d500b001bb8895848bsm163538plj.71.2023.09.13.16.24.03
+        by smtp.gmail.com with ESMTPSA id u15-20020a170902e5cf00b001b3bf8001a9sm167730plf.48.2023.09.13.16.30.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Sep 2023 16:24:03 -0700 (PDT)
-Date:   Wed, 13 Sep 2023 16:24:02 -0700
+        Wed, 13 Sep 2023 16:30:05 -0700 (PDT)
+Date:   Wed, 13 Sep 2023 16:30:04 -0700
 From:   Kees Cook <keescook@chromium.org>
 To:     Mukesh Ojha <quic_mojha@quicinc.com>
 Cc:     corbet@lwn.net, agross@kernel.org, andersson@kernel.org,
@@ -64,90 +64,168 @@ Cc:     corbet@lwn.net, agross@kernel.org, andersson@kernel.org,
         linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
         linux-mediatek@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org, kernel@quicinc.com
-Subject: Re: [REBASE PATCH v5 10/17] pstore: Add pstore_region_defined()
- helper and export it
-Message-ID: <202309131620.34EB0F6972@keescook>
+Subject: Re: [REBASE PATCH v5 11/17] qcom_minidump: Register ramoops region
+ with minidump
+Message-ID: <202309131624.0371D7E@keescook>
 References: <1694429639-21484-1-git-send-email-quic_mojha@quicinc.com>
- <1694429639-21484-11-git-send-email-quic_mojha@quicinc.com>
+ <1694429639-21484-12-git-send-email-quic_mojha@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1694429639-21484-11-git-send-email-quic_mojha@quicinc.com>
+In-Reply-To: <1694429639-21484-12-git-send-email-quic_mojha@quicinc.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 11, 2023 at 04:23:52PM +0530, Mukesh Ojha wrote:
-> There are users like Qualcomm minidump which is interested in
-> knowing the pstore frontend addresses and sizes from the backend
-> (ram) to be able to register it with firmware to finally collect
-> them during crash for debugging.
+On Mon, Sep 11, 2023 at 04:23:53PM +0530, Mukesh Ojha wrote:
+> Register all the pstore frontend with minidump, so that they can
+> be dumped as default Linux minidump region to be collected on
+> SoC where minidump is enabled.
+> 
+> Helper functions is written in separate file and built along with
+> the minidump driver, since it is client of minidump and also call
+> it at appropriate place from minidump probe so that they always
+> get registered.
+> 
+> While at it also rename the out minidump module object name during
+> build as qcom_apss_minidump which basically depicts as Qualcomm
+> Application processor subsystem minidump.
 > 
 > Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
 > ---
->  fs/pstore/platform.c   | 15 +++++++++++++++
->  fs/pstore/ram.c        | 42 ++++++++++++++++++++++++++++++++++++++++++
->  include/linux/pstore.h |  6 ++++++
->  3 files changed, 63 insertions(+)
+>  drivers/soc/qcom/Kconfig                 |  1 +
+>  drivers/soc/qcom/Makefile                |  3 +-
+>  drivers/soc/qcom/qcom_minidump.c         |  4 ++
+>  drivers/soc/qcom/qcom_ramoops_minidump.c | 88 ++++++++++++++++++++++++++++++++
+>  drivers/soc/qcom/qcom_ramoops_minidump.h | 10 ++++
+>  5 files changed, 105 insertions(+), 1 deletion(-)
+>  create mode 100644 drivers/soc/qcom/qcom_ramoops_minidump.c
+>  create mode 100644 drivers/soc/qcom/qcom_ramoops_minidump.h
 > 
-> diff --git a/fs/pstore/platform.c b/fs/pstore/platform.c
-> index e5bca9a004cc..fdac951059c1 100644
-> --- a/fs/pstore/platform.c
-> +++ b/fs/pstore/platform.c
-> @@ -139,6 +139,21 @@ enum pstore_type_id pstore_name_to_type(const char *name)
->  }
->  EXPORT_SYMBOL_GPL(pstore_name_to_type);
+> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+> index 0ac7afc2c67d..9f1a1e128fef 100644
+> --- a/drivers/soc/qcom/Kconfig
+> +++ b/drivers/soc/qcom/Kconfig
+> @@ -306,6 +306,7 @@ config QCOM_MINIDUMP
+>  	tristate "QCOM APSS Minidump driver"
+>  	depends on ARCH_QCOM || COMPILE_TEST
+>  	depends on QCOM_SMEM
+> +	depends on PSTORE
+>  	help
+>  	  This config enables linux core infrastructure for Application
+>  	  processor subsystem (APSS) minidump collection i.e, it enables
+> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+> index 4b5f72f78d3c..69df41aba7a9 100644
+> --- a/drivers/soc/qcom/Makefile
+> +++ b/drivers/soc/qcom/Makefile
+> @@ -33,4 +33,5 @@ obj-$(CONFIG_QCOM_ICC_BWMON)	+= icc-bwmon.o
+>  qcom_ice-objs			+= ice.o
+>  obj-$(CONFIG_QCOM_INLINE_CRYPTO_ENGINE)	+= qcom_ice.o
+>  obj-$(CONFIG_QCOM_RPROC_MINIDUMP)	+= qcom_rproc_minidump.o
+> -obj-$(CONFIG_QCOM_MINIDUMP)		+= qcom_minidump.o
+> +obj-$(CONFIG_QCOM_MINIDUMP)		+= qcom_apss_minidump.o
+> +qcom_apss_minidump-objs			+= qcom_minidump.o qcom_ramoops_minidump.o
+> diff --git a/drivers/soc/qcom/qcom_minidump.c b/drivers/soc/qcom/qcom_minidump.c
+> index 4ce36f154e89..7930a80b9100 100644
+> --- a/drivers/soc/qcom/qcom_minidump.c
+> +++ b/drivers/soc/qcom/qcom_minidump.c
+> @@ -23,6 +23,7 @@
+>  #include <soc/qcom/qcom_minidump.h>
 >  
-> +int pstore_region_defined(struct pstore_record *record,
-> +			  void **virt, phys_addr_t *phys,
-> +			  size_t *size, unsigned int *max_dump_cnt)
+>  #include "qcom_minidump_internal.h"
+> +#include "qcom_ramoops_minidump.h"
+>  
+>  /**
+>   * struct minidump_ss_data - Minidump subsystem private data
+> @@ -688,6 +689,8 @@ static int qcom_apss_minidump_probe(struct platform_device *pdev)
+>  		return ret;
+>  	}
+>  
+> +	qcom_ramoops_minidump_register(md->dev);
+> +
+>  	mutex_lock(&md_plist.plock);
+>  	platform_set_drvdata(pdev, md);
+>  	qcom_apss_register_pending_regions(md);
+> @@ -701,6 +704,7 @@ static int qcom_apss_minidump_remove(struct platform_device *pdev)
+>  	struct minidump *md = platform_get_drvdata(pdev);
+>  	struct minidump_ss_data *mdss_data;
+>  
+> +	qcom_ramoops_minidump_unregister();
+>  	mdss_data = md->apss_data;
+>  	memset(mdss_data->md_ss_toc, cpu_to_le32(0), sizeof(struct minidump_subsystem));
+>  	md = NULL;
+> diff --git a/drivers/soc/qcom/qcom_ramoops_minidump.c b/drivers/soc/qcom/qcom_ramoops_minidump.c
+> new file mode 100644
+> index 000000000000..eb97310e3858
+> --- /dev/null
+> +++ b/drivers/soc/qcom/qcom_ramoops_minidump.c
+> @@ -0,0 +1,88 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+> +
+> +#include <linux/device.h>
+> +#include <linux/kernel.h>
+> +#include <linux/module.h>
+> +#include <linux/pstore.h>
+> +#include <linux/slab.h>
+> +#include <soc/qcom/qcom_minidump.h>
+> +
+> +#include "qcom_ramoops_minidump.h"
+> +
+> +static LIST_HEAD(ramoops_region_list);
+> +
+> +struct md_region_list {
+> +	struct qcom_minidump_region md_region;
+> +	struct list_head list;
+> +};
+> +
+> +static int qcom_ramoops_region_register(struct device *dev, int type)
 > +{
-> +	if (!psinfo)
-> +		return -EINVAL;
+> +	struct qcom_minidump_region *md_region;
+> +	struct md_region_list *mdr_list;
+> +	struct pstore_record record;
+> +	unsigned int max_dump_cnt;
+> +	phys_addr_t phys;
+> +	const char *name;
+> +	void *virt;
+> +	size_t size;
+> +	int ret;
 > +
-> +	record->psi = psinfo;
+> +	record.type = type;
+> +	record.id = 0;
+> +	max_dump_cnt = 0;
+> +	name = pstore_type_to_name(record.type);
+> +	do {
+> +		ret = pstore_region_defined(&record, &virt, &phys, &size, &max_dump_cnt);
 
-Uh, this makes no sense to me. If this is a real pstore_record, you
-cannot just assign psi here.
+I really don't want this happening: you're building your own pstore_record
+(which has a common initializer that isn't used here) and manually
+scraping the ramoops regions.
 
-> +
-> +	return psinfo->region_info ?
-> +	       psinfo->region_info(record, virt, phys, size, max_dump_cnt) :
-> +	       -EINVAL;
+It looks to me like you just want a way to talk all the records in
+pstore and then export their location to minidump. The record walker
+needs to be in the pstore core, and likely should be shared with
+fs/pstore/inode.c which does the same thing.
 
-Common code style for this kind of thing is usually like this:
+Then, in this code, you can just do something like:
 
-	if (!psinfo->region_info)
-		return -EINVAL;
+	for (record = pstore_get_record(NULL); record; record = pstore_get_record(record)) {
+		if (ramoops_get_record_details(record, &virt, &phys) < 0)
+			continue
+		...
+		md_region->virt_addr = virt;
+		md_region->phys_addr = phys;
+		md_region->size = record->size;
 
-	return psinfo->region_info(...)
+		ret = qcom_minidump_region_register(md_region);
+		...
+	}
 
-> +}
-> +EXPORT_SYMBOL_GPL(pstore_region_defined);
-> +
->  static void pstore_timer_kick(void)
->  {
->  	if (pstore_update_ms < 0)
-> diff --git a/fs/pstore/ram.c b/fs/pstore/ram.c
-> index ab551caa1d2a..62202f3ddf63 100644
-> --- a/fs/pstore/ram.c
-> +++ b/fs/pstore/ram.c
-> @@ -437,6 +437,47 @@ static int ramoops_pstore_erase(struct pstore_record *record)
->  	return 0;
->  }
->  
-> +static int ramoops_region_info(struct pstore_record *record,
-> +			       void **virt, phys_addr_t *phys,
-> +			       size_t *size, unsigned int *max_dump_cnt)
-
-But there's a larger problem here -- "virt", "phys" and likely
-"max_dump_cnt" are aspects _specific to the ram backend_. This can't be
-a generic pstore interface.
-
-I'm not opposed to it being exposed only from ramoops, though.
-
-But I think you'll want a pstore generic way to iterate over the
-records...
+Probably some way to check the backend is ramoops is needed too.
 
 -- 
 Kees Cook
