@@ -2,45 +2,45 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F0C5179E9F0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 15:44:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0CFEF79E9A8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 15:44:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241152AbjIMNof (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Sep 2023 09:44:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46436 "EHLO
+        id S241058AbjIMNoL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Sep 2023 09:44:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241006AbjIMNod (ORCPT
+        with ESMTP id S241018AbjIMNoI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Sep 2023 09:44:33 -0400
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2047.outbound.protection.outlook.com [40.107.243.47])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D783C19B1;
-        Wed, 13 Sep 2023 06:44:29 -0700 (PDT)
+        Wed, 13 Sep 2023 09:44:08 -0400
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2041.outbound.protection.outlook.com [40.107.244.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E11419B6;
+        Wed, 13 Sep 2023 06:44:04 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=NzrRZ9O8LBvR2EFYlji4hUGIB1Q4lv13HahGRK72MoI+eBdsbUkYcMOmHwfY3/16uIBaNUiP6Qw94bOnZ+IAraIHcpAIz/gPnhfXGx+9Smi/UZadtvvlCxa3G9mz5DjF81xXKBnJcC9LwS+AqPLGYIHvU8L6cPHj37ygNfQArJnK3IFPj55mVojBFYCJ5V5zWBBVXLnEbafdtPzANPls6oQwrA3FQSAmc9EdKFkOtZN14QLn5Yj3SEJl6D1puHFA/Vnl9cYj+7GpQHldkKY4dkaC//tEuUSS2d20aaoF/8U+zs4AcPfPPdWQ8nvgjzzp5Q2CoT8QjU/2xR1AlwKVDg==
+ b=FDcBLmytfyYSB6sThXjmTM0ZhBnOqyhJrP8yQSBSr1dV/6LR7lMOLuppoPkOHnVSHBuTECbOCkncuHLSPBJeDRDut6OFQXK1cJIgTxMPoonE//3VSJEhXqikMzA0PiGE1n4AXlgXHbusers+BD3ZMzGyouYv7gOuFfRLk9wvh28/m6OHmE97w9GEZ2jDbCXAW9NDk+OZeJSjpBBW52XuvuOrSH5jCFwGVTgkWKDsxzHWsVUpokDkqTbhtKIA1871rJJhWtcZ4YdF6oA4o7q8D1nz6LkTTbrKeu84ZeKMpna2vrr5PyI4ydKDmoEnXt+5LZKRxZIOsthaZ845dnb/Mg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=a2jv323DicUCJ6ummfabKbLpPgVIgO9GqLD5nUfu00M=;
- b=SDM7T/GrrnZid0j8uJRSdhnv96A/EJx2Jo6LOQWE71Xv1rdqCWE+08ylrW84icqR1bl89yRveunnCDhfmSet3RQb1jk2+3Wmo8rUjA0anj9Vcm71uMAssvewDp6dfF6Csvld+R5+vLYexk+vTg6DsVSOH9m3k61BT+/nDqypkkJwuZ5s8B1C9GmR+9paWHxIs3o7CSaONmK1doXLQ9/xKDOUfRFea9W9MbFYXmbwP9v3q2rdj//CWX4z9mIOd1cZN5G9eW7iFASEhTcpVVOK4yq2d/xOfwky6bfnzBvCxc34Q6XbaqeoG5yNxGoyWCKKE3ft650XeDI1LhJF4SPTnw==
+ bh=ou7rfQroeYq9baTZ4HBkLryOOjpPSQIHHIszthUqJ3g=;
+ b=TBLeiQLXmGQLnvGxTvc/CxTvaPC/yeIhXwg/B4kMGyOy2d+B02tRiExC+hGoj/SC+3oxoY2cFu44f8W3uJiRIiyRSD9lVS9aVwiwURv6mBRstQeS54d9nuS0Xt9HFraxfuxzh5ZL6YXjs7q49jixCabVlcybyW82FjESfH7PjT4vrw3wC6Xo+r6L3YUg9ED8wiC829oPAGQTjpsoisqyGF/D2I5W4tM7sU62M3unX3QLxA2n89wZhBFbvbgNxYVUvQbgZ92rKBhTC+zUFgcZmegSsFRRdW38+U9VwTcRtUS43eG06X/8PI2ZO9n9sP7PAF+8qXFnoyI9Q/TVUkA17Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=a2jv323DicUCJ6ummfabKbLpPgVIgO9GqLD5nUfu00M=;
- b=GdDvr5DY5AGMgiNoUALT16I0OsBHBix1P6ZxBtT8iXjyCbA1zt3vgrV3ta9g8pHY5HYf/DTPx0cHbdeQEwgBGyd8hZIborDE4qxDsfpUkadpelgfMIoqQlQBZceEnw145w2i07SGISl17mpDhvN8k86ZtkydGp+TC/W/Mbhs5jiYNfw4FFUw+AILAKYekPUC/htf1YRTImkCG//JphIlg+nsi5+FxZNJfw5M/qhUb5NiEdNrN3XmwfMMoL87GFEcLqzxf0zDIdDuxFDlmO2H+mzC3SdsT1xvvuZiXF5SXHsRpG+wtSYhdacJ+MO4x/6GMmjqgmmx9nsU0okM9GtAjA==
+ bh=ou7rfQroeYq9baTZ4HBkLryOOjpPSQIHHIszthUqJ3g=;
+ b=hO7qycxbw7oNWLYmRjwUHO781/AlI2PjSQDIqYEb8KMpLszCo2baVFt15Ze5Wk99ZTIRLWWbESHMuyIq0SCTQNRC0E6jKXoFDwbFBTuaQSn+Fd/HO7iPO1kOAGPKwUaM7bXp7Ls7Bjl1IBfC2pStsW/bi9dG7LW1hhqTdjk2d1L/Jc7Qi+7CBIcpPV61fh9bSSemHAjjJ8sOWUwXoiBm8lgI1bUS+FsaDtHHmU7XKUEb6E5VfWND0+hXAVth/jJK8HESgh8n/Q0X/TH6DT9rqbrFIff/Vu+kFXoJjxz6OSO+n8kME5mmC2J5rduJx4fa9CdydnBI7Ql31KxTs99PWw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
- by SJ2PR12MB7848.namprd12.prod.outlook.com (2603:10b6:a03:4ca::20) with
+ by BL1PR12MB5096.namprd12.prod.outlook.com (2603:10b6:208:316::7) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6768.31; Wed, 13 Sep
- 2023 13:44:27 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6768.40; Wed, 13 Sep
+ 2023 13:44:01 +0000
 Received: from LV2PR12MB5869.namprd12.prod.outlook.com
  ([fe80::faf:4cd0:ae27:1073]) by LV2PR12MB5869.namprd12.prod.outlook.com
  ([fe80::faf:4cd0:ae27:1073%6]) with mapi id 15.20.6768.036; Wed, 13 Sep 2023
- 13:44:27 +0000
+ 13:44:01 +0000
 From:   Jason Gunthorpe <jgg@nvidia.com>
 To:     Andy Gross <agross@kernel.org>,
         Alim Akhtar <alim.akhtar@samsung.com>,
@@ -84,120 +84,150 @@ Cc:     Lu Baolu <baolu.lu@linux.intel.com>,
         Niklas Schnelle <schnelle@linux.ibm.com>,
         Steven Price <steven.price@arm.com>,
         Thierry Reding <treding@nvidia.com>
-Subject: [PATCH v8 18/24] iommu/mtk_iommu: Add an IOMMU_IDENTITIY_DOMAIN
-Date:   Wed, 13 Sep 2023 10:43:51 -0300
-Message-ID: <18-v8-81230027b2fa+9d-iommu_all_defdom_jgg@nvidia.com>
+Subject: [PATCH v8 19/24] iommu/sun50i: Add an IOMMU_IDENTITIY_DOMAIN
+Date:   Wed, 13 Sep 2023 10:43:52 -0300
+Message-ID: <19-v8-81230027b2fa+9d-iommu_all_defdom_jgg@nvidia.com>
 In-Reply-To: <0-v8-81230027b2fa+9d-iommu_all_defdom_jgg@nvidia.com>
 References: 
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: MN2PR03CA0007.namprd03.prod.outlook.com
- (2603:10b6:208:23a::12) To LV2PR12MB5869.namprd12.prod.outlook.com
+X-ClientProxiedBy: BL1PR13CA0373.namprd13.prod.outlook.com
+ (2603:10b6:208:2c0::18) To LV2PR12MB5869.namprd12.prod.outlook.com
  (2603:10b6:408:176::16)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|SJ2PR12MB7848:EE_
-X-MS-Office365-Filtering-Correlation-Id: e9fcf849-e1dc-4b0c-39ef-08dbb45f8c49
+X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|BL1PR12MB5096:EE_
+X-MS-Office365-Filtering-Correlation-Id: 11c573fd-4137-4a07-5ad5-08dbb45f7b7f
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: oG9lFtN02A4uGkJDPQ5hArygFT7sToTaS/MPIE/Ye239KF8KBqOFFBrnMa5/cuCz+CLT2sHfGx9c+yS9t4UzXQPLncJJumw8b9B+PHLQT7GB+eilISXhDq6JKi1qmgcO31wcOjFFOt2YfcQQ+ZOeJNXIAX91+QU6vSZPYxKhpk3jr9rk8mSkZapalZ7NyA8K4PDn7ge66sl9UD35q0IyfwuP6QYTMYGR/PQz5VTyOAQtZ1CvKT8broPUPB6a0z5GZ8H3dJrwM99FsCgsaxjB95mvpo9CPtz6QtX6qXRSlHSHsl67V0zi0Ml9U2cx/W/tictoPNyNjZBjj9eN2FyjqHYIwI7g1UhE7YygIhrb8M9Bd5tA4Adgde76WQwInsxQq4cVtpYuShZ2GJHrjN/I09PvK5QlEgQ0N5HIh1J2xfd/bW3HgXzP3lg7opX5MNiZJ+QIpyGZTm3GyJXh4kSYwiX2OGG0R8Yx9DmiQOgvhPwVV2u9iv3wzYk7ZM9ypLqzmWlolQ2x12OsFVkmbYBXezL4x5NYLHuRNrgwqyrydoLzqrSeY501Qzbd3IUJNSXYbcrZdlirOB6IN5TsDdcZBmYRMo+2X/HeehGyaCaeOGA=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376002)(366004)(136003)(346002)(39860400002)(396003)(1800799009)(186009)(451199024)(83380400001)(86362001)(6512007)(921005)(66946007)(110136005)(2616005)(478600001)(107886003)(6666004)(38100700002)(6506007)(6486002)(26005)(316002)(4326008)(54906003)(66476007)(8936002)(66556008)(41300700001)(36756003)(8676002)(5660300002)(2906002)(7406005)(7416002);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: Ymv0+hdVc5lIQD5kHM7jv0WvugI8kUajj9L5zKIA0T3A6Bi51ZR4WSPUz1w7pO+5lJ2hshNpjFi9kcblUGCHTxEA/bGEw1kKCCZ2P82byIVZzGIbXCo+haEZ6Fzk++VPt88oZyb6fNNZf6mUQxfpvzfvcgwBXZCDLwVAAX3DVitb3rzhuIulv8kxql6GzgXUwg/YnDRTP/krpt//PQFTtkO1h8pVAvYGjNGv60U3i7AAUX07f6jZ4GGTVourjwydSSeIKXfXDsGqwJNtrVMVKuuzhxbgGVVjLEToFmQSSo6SRVSZ8sYDnGe8DQx65k1mq4q9F5LTaaL8stvaXMUGjs6x99z4IQmrutZ9ucun4RmjQawkNmIRGRZ86KqKm2ZJjlGM9dnAJa2hkvfYZYLvaU5NIEYgfHe0Pt1Zp4VsK8li0VZpsSP6KgccBPZKsj2Sb4XFWejTeVWnEodFfBsj2CoCDJ7LIJKZ2yvbKyriUTN3JHwNmTeaMNCme4WTVa7r7JwaADeKOdnJIrAVR5CyFvL1jzjTD5Ht0DrcNnwx45Z+J62+HxaXJIbfb+NHcvU2Q6dl2GZ6yflcbEpMxDwq5zyvvvJJYhnD81iowS4TNo8=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(366004)(376002)(346002)(39860400002)(396003)(136003)(1800799009)(451199024)(186009)(26005)(8936002)(8676002)(4326008)(6666004)(921005)(38100700002)(2616005)(107886003)(478600001)(5660300002)(66556008)(54906003)(66946007)(110136005)(41300700001)(6506007)(6486002)(6512007)(316002)(66476007)(83380400001)(7406005)(7416002)(2906002)(86362001)(36756003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?bAWX+kDWdatX7kGBfCj9VyGX81kDriijFkEVuBV0oJQXmq+mlwWziY/L9OLy?=
- =?us-ascii?Q?h0tzwydMekS4lPY8d9vOJNMQC4IsR/z8S8wUY0TS/fcV+lJG6d/EbNST+FUY?=
- =?us-ascii?Q?I25bOkjnvHDC7wM7v+kVdM9zVejceHRHRahiIDv37I8GOhcZD25yG2U/t93M?=
- =?us-ascii?Q?DIlag+K05jx3eF2dQVyzzmkoofa0LoYuPYv/mkmwIQvg6+olUKvjSKKJ/H4i?=
- =?us-ascii?Q?MgoTaq1CA46vxQ5ZHHUJP9sYE26MH66FVi2YRNSTv2RcB8DOw88uFTr1pG6E?=
- =?us-ascii?Q?8D2yUkEYwG4akdKl3eLwqxaOgoGOEaQYHrPmxee8jWPHNiywZiSlCcaUSyXo?=
- =?us-ascii?Q?MHXgl8YOg/nX3jRDf3daUwJHYbZj+s7AArYRtd55LtUQbBu1GkPfMtD/OdnA?=
- =?us-ascii?Q?21ivCodOJ7i6vl9RAGi62Mspf72uCZk7v2zH9EkZdfKiCwO8K7OTqLYiMiEp?=
- =?us-ascii?Q?S2IVYx7JIs7U89kErcqM+DdBYigndLoi81bQig/8Hl3bKo7//N4cy2wFZKRl?=
- =?us-ascii?Q?zgJexsjKtqiKPJIe7sdGPA/LlYRrFYQqO8WVss3j/15VVUnsKhXe+fomOgXO?=
- =?us-ascii?Q?atszIaWLPtSMdX4grH2+1JGfdZlj0BPIacnYdQRoxgKiNz2GVAgjVcNuTzS2?=
- =?us-ascii?Q?ViSkwSH/0rcDafxizQ8xFaUWnc4uEUaWP3CepiaZ18fBsr1CAPs0d8fouxkB?=
- =?us-ascii?Q?xaFx1zDEKTBGRycDk6LVPOZLhkuelL12ByYq4H2CvKIQiW9M50i1iv1pTkQE?=
- =?us-ascii?Q?uwvTTJSBrE245VT3W5BengE+5A77cbNE5hPHUxFkKmFVTH6aCEMOGieWgbiw?=
- =?us-ascii?Q?6mO0NEvOhJ2tXow7Gh6/I6Biflw4h0/Ge0ZxnYGJfrktRL/98P8Go9o3UulP?=
- =?us-ascii?Q?VVEdmbsVatBHxg3G8Bzn9SNeKmfKOLymW9PYnL6sIDKGMmMWizAAx87xe+1y?=
- =?us-ascii?Q?qS+3F6Kz2qqwFbBBux5kLhleoBiMwff3qx/VymqApbAbgwIhFcKbqB+ibybd?=
- =?us-ascii?Q?MTtJs9/qSSNCIXRd/W2uOcoSGY7W7x/YIS9+JmhA8LxzpXqt+erBVjG7lVm/?=
- =?us-ascii?Q?JdXcP0d+fLcArNWpkoPEm+bZN9dkr8MnlWvozL1wDDOMm8fQJLKK0qBpc4T1?=
- =?us-ascii?Q?gN4yeqaX1fg7JAqdeaQIsp6BmBYJCFkMWQoa86APHDxbt1dqdE32RnSLkubG?=
- =?us-ascii?Q?Tnk61dtEiurn62EUAhEZDl32jgNPgfmjM9TBq2T9mkGRHFsVmYoh8LDNUAVP?=
- =?us-ascii?Q?mmw3QGDbSfsxwi770gWlOg9avX33BNz54SHhWNeIpHjJbNAU2iUBpo0g2vu8?=
- =?us-ascii?Q?4bjKgDBp9i9RvteJnIGqppa7PEHQIM5Lls/z+5HXK6FzStKPGwSdwJlCr3Zn?=
- =?us-ascii?Q?FXyCU9FWH4W6VcNnM0nbI/PBLm4EvQPbOu1X4ECirY4MnpCjbwL7H5QXnJpz?=
- =?us-ascii?Q?ozmZPATxAnjSM32aaoG6m8hMg5zHXaFehKemkuulGFakx8voPMfIs0bC18Ms?=
- =?us-ascii?Q?dwDdZttklzV4YhDD7pKZa6TvGEq9VeNVvjJ7oK+C5Np9Ic6g4JLJQ15rUvH1?=
- =?us-ascii?Q?8g6Z8yxX2Z2l+P8JvtAQzoci8IF8Mng14dgDOsYu?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Wd06HOhEJeNcbEwS3hEKkO/HCitxAXlfUOAEvvsOOFig8DINbH03a4ZtTVkx?=
+ =?us-ascii?Q?iULdX7Gt7gYM32ZYMSTNqYBD7Pko3YZnTYNuTpdwDdbsdWZBko2QWbeL3SLS?=
+ =?us-ascii?Q?rbaHVPiYm6ydxCsNkWf04kGseDgQ1vQlt72ySgaS+ybT2XqE7PQEZPJvZ7uM?=
+ =?us-ascii?Q?Ho5Pp2/KDSXgV8K6cc4370KTHBBnNoPx5a471jbo0VnOC8yosZ0FGMOvSjMb?=
+ =?us-ascii?Q?zx/9umWHZQgzLg2V6XKCI3T329hnXuaaD8bJSFerxr2vZ4L//Pe7B2NGK6ih?=
+ =?us-ascii?Q?B9KCHGQjgZTBEGvipS/fdIm8b+8BveV5IrUdzcWrQAnNRgfOVxptBL12U9GK?=
+ =?us-ascii?Q?UW6QYRmpu4oLx9T3S/oNPvGhQ94uyK4RA+6yQZL/216KW6kZKs1d4w/AlBgP?=
+ =?us-ascii?Q?EMFEOp+oUQhjtkyFZ9ICBGR4sDmxaYqPk73L7qofQpup5lkwbHMUcYSc6QM9?=
+ =?us-ascii?Q?9GhLXLfx7AElkdAtNugK3mY1BJnkUjJFahtM8Sce55b3CMCZJITDlrmreCjL?=
+ =?us-ascii?Q?FNb299hoNJ+AIbT3WFgoysLVwbTGE1Pgqu0DktboPnWTwzMncOI2HiSrFuB3?=
+ =?us-ascii?Q?a+w0//cH1YMEyVksH5PO3a1DGsw8SqwF7AQRB42UkZnHZVbtrn2BpxJK/3TE?=
+ =?us-ascii?Q?ScJm5m0DPVfmpXXuq06e8nJfIviHpV6DSMBD5yI/2VpWe7SyIBbfywiZdk0M?=
+ =?us-ascii?Q?M+noTbfmZrHv+P1bd4frKSLaqTBWlpsKZbmqJ/sVsnW8cQemHrcgwyDwS41J?=
+ =?us-ascii?Q?qeXkhy+fcM40I1iPWSmIZRs3fKZSOZor2T8AOkk7MVmE2HeE77KcocTonjsC?=
+ =?us-ascii?Q?83nmTZegoquwxPgo0adfhRg4kojXy4nwG0ZOlj4+/czvnbZpR+vWAK8VeNDM?=
+ =?us-ascii?Q?IbCk3EXex88zBAbgSNe8fznEIY+8WoEtwcWsX79i4RYsDe7xvhpOyB3yQj6l?=
+ =?us-ascii?Q?nYqrntCiVEB71p9IbyNFroQmQZmErg2wEDpRpJCpzjfXVVWdRSa57aGRjfDs?=
+ =?us-ascii?Q?08Xmov3Z4JOr9+yjozrqwo6j4f7wq3HwO5eQSuoSbBbQtTeE5yj0cen89rjv?=
+ =?us-ascii?Q?9PJhTRbmLVZ41SXyI7lG3REWPhj+Zgm92iJdBxfQtRFam6LFghadKDvxDQgu?=
+ =?us-ascii?Q?rKZiskvkAikgpH+2tQjsZSOVI8LoHCIbl0NhLLJeTZ7Y4tZzPH5MWmM1Q+tw?=
+ =?us-ascii?Q?iGXtrrUoVsoT33frV40MF2RFYcw3WSa1Kz0RFtArsrNJNSmYm8RagWBfsG7q?=
+ =?us-ascii?Q?HPX7xrd9ubYD2hTvhG0B3r5x672vq4blb2VDKTc6su4nqZ4QwcAo3zI95BPh?=
+ =?us-ascii?Q?e1iFNppU1izdvDayO5jT8BFu5dEA0cZA3CAjG3VPnGqvAoDp0vCqnlI8LiPh?=
+ =?us-ascii?Q?uHm/vqLCk8QE04dFi9O0ykWteFH2BxyyoDjzDYuk4qLQwFpveC1cuyR6e6vl?=
+ =?us-ascii?Q?4zu/QqS+Hr+7yicRSL3kw6HfnxEI1RbisIHS4dOoIY1BkUO5Dk8lF+ZDYhzb?=
+ =?us-ascii?Q?+ikn6GKaZZhYYNhV/+/UguDHC0zur7X3hcFSAs8r9HPIEAThJxsRm+UWTk+W?=
+ =?us-ascii?Q?lE/baXTTpfLvECvYimrqMC3pYYVydsdG+kDgFPui?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e9fcf849-e1dc-4b0c-39ef-08dbb45f8c49
+X-MS-Exchange-CrossTenant-Network-Message-Id: 11c573fd-4137-4a07-5ad5-08dbb45f7b7f
 X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Sep 2023 13:44:27.2983
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Sep 2023 13:43:59.1460
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 7ad7Rp4w+9b09PX3ZxuNV8ab7kyLB0mtoeqzdKqtOcXEd9atRvd8OwBUlY0tlF66
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB7848
+X-MS-Exchange-CrossTenant-UserPrincipalName: +kvcB9cgZDKOHx1tooVzhlSh2sOw+PPulGQ54os/SZ8/ikmSDH7B3kuzrMCYu/Qr
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5096
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This brings back the ops->detach_dev() code that commit
-1b932ceddd19 ("iommu: Remove detach_dev callbacks") deleted and turns it
-into an IDENTITY domain.
+Prior to commit 1b932ceddd19 ("iommu: Remove detach_dev callbacks") the
+sun50i_iommu_detach_device() function was being called by
+ops->detach_dev().
 
-Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+This is an IDENTITY domain so convert sun50i_iommu_detach_device() into
+sun50i_iommu_identity_attach() and a full IDENTITY domain and thus hook it
+back up the same was as the old ops->detach_dev().
+
 Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- drivers/iommu/mtk_iommu.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ drivers/iommu/sun50i-iommu.c | 26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
-index 640275873a271e..164f9759e1c039 100644
---- a/drivers/iommu/mtk_iommu.c
-+++ b/drivers/iommu/mtk_iommu.c
-@@ -777,6 +777,28 @@ static int mtk_iommu_attach_device(struct iommu_domain *domain,
- 	return ret;
+diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
+index 74c5cb93e90027..0bf08b120cf105 100644
+--- a/drivers/iommu/sun50i-iommu.c
++++ b/drivers/iommu/sun50i-iommu.c
+@@ -757,21 +757,32 @@ static void sun50i_iommu_detach_domain(struct sun50i_iommu *iommu,
+ 	iommu->domain = NULL;
  }
  
-+static int mtk_iommu_identity_attach(struct iommu_domain *identity_domain,
-+				     struct device *dev)
-+{
-+	struct iommu_domain *domain = iommu_get_domain_for_dev(dev);
-+	struct mtk_iommu_data *data = dev_iommu_priv_get(dev);
-+
-+	if (domain == identity_domain || !domain)
+-static void sun50i_iommu_detach_device(struct iommu_domain *domain,
+-				       struct device *dev)
++static int sun50i_iommu_identity_attach(struct iommu_domain *identity_domain,
++					struct device *dev)
+ {
+-	struct sun50i_iommu_domain *sun50i_domain = to_sun50i_domain(domain);
+ 	struct sun50i_iommu *iommu = dev_iommu_priv_get(dev);
++	struct sun50i_iommu_domain *sun50i_domain;
+ 
+ 	dev_dbg(dev, "Detaching from IOMMU domain\n");
+ 
+-	if (iommu->domain != domain)
+-		return;
++	if (iommu->domain == identity_domain)
 +		return 0;
-+
-+	mtk_iommu_config(data, dev, false, 0);
+ 
++	sun50i_domain = to_sun50i_domain(iommu->domain);
+ 	if (refcount_dec_and_test(&sun50i_domain->refcnt))
+ 		sun50i_iommu_detach_domain(iommu, sun50i_domain);
 +	return 0;
-+}
-+
-+static struct iommu_domain_ops mtk_iommu_identity_ops = {
-+	.attach_dev = mtk_iommu_identity_attach,
-+};
-+
-+static struct iommu_domain mtk_iommu_identity_domain = {
-+	.type = IOMMU_DOMAIN_IDENTITY,
-+	.ops = &mtk_iommu_identity_ops,
-+};
-+
- static int mtk_iommu_map(struct iommu_domain *domain, unsigned long iova,
- 			 phys_addr_t paddr, size_t pgsize, size_t pgcount,
- 			 int prot, gfp_t gfp, size_t *mapped)
-@@ -996,6 +1018,7 @@ static void mtk_iommu_get_resv_regions(struct device *dev,
  }
  
- static const struct iommu_ops mtk_iommu_ops = {
-+	.identity_domain = &mtk_iommu_identity_domain,
- 	.domain_alloc	= mtk_iommu_domain_alloc,
- 	.probe_device	= mtk_iommu_probe_device,
- 	.release_device	= mtk_iommu_release_device,
++static struct iommu_domain_ops sun50i_iommu_identity_ops = {
++	.attach_dev = sun50i_iommu_identity_attach,
++};
++
++static struct iommu_domain sun50i_iommu_identity_domain = {
++	.type = IOMMU_DOMAIN_IDENTITY,
++	.ops = &sun50i_iommu_identity_ops,
++};
++
+ static int sun50i_iommu_attach_device(struct iommu_domain *domain,
+ 				      struct device *dev)
+ {
+@@ -789,8 +800,7 @@ static int sun50i_iommu_attach_device(struct iommu_domain *domain,
+ 	if (iommu->domain == domain)
+ 		return 0;
+ 
+-	if (iommu->domain)
+-		sun50i_iommu_detach_device(iommu->domain, dev);
++	sun50i_iommu_identity_attach(&sun50i_iommu_identity_domain, dev);
+ 
+ 	sun50i_iommu_attach_domain(iommu, sun50i_domain);
+ 
+@@ -827,6 +837,7 @@ static int sun50i_iommu_of_xlate(struct device *dev,
+ }
+ 
+ static const struct iommu_ops sun50i_iommu_ops = {
++	.identity_domain = &sun50i_iommu_identity_domain,
+ 	.pgsize_bitmap	= SZ_4K,
+ 	.device_group	= sun50i_iommu_device_group,
+ 	.domain_alloc	= sun50i_iommu_domain_alloc,
+@@ -985,6 +996,7 @@ static int sun50i_iommu_probe(struct platform_device *pdev)
+ 	if (!iommu)
+ 		return -ENOMEM;
+ 	spin_lock_init(&iommu->iommu_lock);
++	iommu->domain = &sun50i_iommu_identity_domain;
+ 	platform_set_drvdata(pdev, iommu);
+ 	iommu->dev = &pdev->dev;
+ 
 -- 
 2.42.0
 
