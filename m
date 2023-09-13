@@ -2,77 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AE53B79F24C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 21:44:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C703279F55D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 01:17:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232526AbjIMToh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Sep 2023 15:44:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57882 "EHLO
+        id S233126AbjIMXRf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Sep 2023 19:17:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232516AbjIMToh (ORCPT
+        with ESMTP id S233007AbjIMXRf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Sep 2023 15:44:37 -0400
-Received: from smtp56.i.mail.ru (smtp56.i.mail.ru [95.163.41.94])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C45059B;
-        Wed, 13 Sep 2023 12:44:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
-        ; s=mailru; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
-        Cc:To:From:From:Sender:Reply-To:To:Cc:Content-Type:Content-Transfer-Encoding:
-        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-        Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
-        X-Cloud-Ids:Disposition-Notification-To;
-        bh=++SJ5Dkbrvd3/hbARRa2crLSFGPmwlWrz6P14t0GtUc=; t=1694634273; x=1694724273; 
-        b=XWpjaf5EeN+AtzHKbDUi5ontoiC7Xb1t6K4ByMboh89cP9osIHPuDxm/zAxc7mw1NWVsRNCPwUH
-        UzVcUdJsTOBrMyKL+G8YY95WqqltYGl8M/puxmbdy9/PEod+Yeid5FCytomXA5ZmBqIklpv2hFy84
-        ir7l1TavGVeLCDVfAmg=;
-Received: by smtp56.i.mail.ru with esmtpa (envelope-from <danila@jiaxyga.com>)
-        id 1qgVmn-009uvf-0V; Wed, 13 Sep 2023 22:44:29 +0300
-From:   Danila Tikhonov <danila@jiaxyga.com>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        Wed, 13 Sep 2023 19:17:35 -0400
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 275191BCC
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 16:17:31 -0700 (PDT)
+Received: by mail-pg1-x533.google.com with SMTP id 41be03b00d2f7-5779055a474so268001a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 16:17:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1694647050; x=1695251850; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=e1a1XS5FwL95wVQ3U0hOYK16YJk3gJb5vChvM9EJIak=;
+        b=NovGamzA9VvBNl1NvPwObRG4Yw8PVqhR4W2GbES9EwqPPd8vZ4mFtfrvBaSYXGLaA4
+         MAz6DE7lN9SXDmizvtRaBovZL69KvTwI6z/vEVlwZTg/wvvDDcU6p+r1DdhMEYVF7wG0
+         EwreFS0fKayZ4E+M2fxYwOseRYK3+5S9+DSOA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694647050; x=1695251850;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=e1a1XS5FwL95wVQ3U0hOYK16YJk3gJb5vChvM9EJIak=;
+        b=I/7szQZRWf27p1X2rNXV2Hd7jk/vQjTrxoIqt1Bkawayci3sahQbB9Wukfj/e1jvm5
+         JcD+AKQ5+tjSjdGJC6N/Mh8SLhg27I4vUe5Ho1lq2QsOIb5tspZFL1N49JyGDgOzzs6S
+         dalDOBuyFpZDSTNpgjPlUJ//SVc65PC0xzBh7aiZmlKyTNbq+vqxTWP2h18S5jOXQ/Ot
+         Qj98GQvNol4157tbazjr9R2LWq8uGCdioAIupzB0L2iwpFIPHTFv46HWFAmH5/Y60YQk
+         r/Rnzm0Mm9OzsgqQKRtjxE7dRoONIxKT3oAnLXpQYLX38U0cHMbK9oN6Bf06/DxLR30o
+         B+xQ==
+X-Gm-Message-State: AOJu0YzdA37EUXf6PpS/0AZjnlcS0mkqpH817k5ZbFNU0eWr+99x1iqJ
+        2zfm0ZD+FDh6YYQqb+TYzt6U5g==
+X-Google-Smtp-Source: AGHT+IGClTtKAGRhwBX0rTWyQayaNUFl7oUgqH9imWkdIjnn/sGMkGEiuN74YRWSvEaa6g5mBChF6w==
+X-Received: by 2002:a17:90a:a008:b0:26b:24ed:e0d9 with SMTP id q8-20020a17090aa00800b0026b24ede0d9mr3570072pjp.33.1694647050628;
+        Wed, 13 Sep 2023 16:17:30 -0700 (PDT)
+Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
+        by smtp.gmail.com with ESMTPSA id e15-20020a17090a684f00b0026b4d215627sm128652pjm.21.2023.09.13.16.17.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Sep 2023 16:17:30 -0700 (PDT)
+Date:   Wed, 13 Sep 2023 16:17:29 -0700
+From:   Kees Cook <keescook@chromium.org>
+To:     Will Deacon <will@kernel.org>
+Cc:     Mukesh Ojha <quic_mojha@quicinc.com>, corbet@lwn.net,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
         robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, robimarko@gmail.com, quic_gurus@quicinc.com
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Danila Tikhonov <danila@jiaxyga.com>
-Subject: [PATCH] dt-bindings: firmware: document Qualcomm SM7150 SCM
-Date:   Wed, 13 Sep 2023 22:44:18 +0300
-Message-ID: <20230913194418.30272-1-danila@jiaxyga.com>
-X-Mailer: git-send-email 2.41.0
+        conor+dt@kernel.org, tony.luck@intel.com, gpiccoli@igalia.com,
+        mathieu.poirier@linaro.org, catalin.marinas@arm.com,
+        linus.walleij@linaro.org, andy.shevchenko@gmail.com,
+        vigneshr@ti.com, nm@ti.com, matthias.bgg@gmail.com,
+        kgene@kernel.org, alim.akhtar@samsung.com, bmasney@redhat.com,
+        quic_tsoni@quicinc.com, linux-doc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-hardening@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, kernel@quicinc.com
+Subject: Re: [REBASE PATCH v5 08/17] arm64: mm: Add dynamic ramoops region
+ support through command line
+Message-ID: <202309131613.C0E12D0D14@keescook>
+References: <1694429639-21484-1-git-send-email-quic_mojha@quicinc.com>
+ <1694429639-21484-9-git-send-email-quic_mojha@quicinc.com>
+ <20230912101820.GA10884@willie-the-truck>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Authentication-Results: smtp56.i.mail.ru; auth=pass smtp.auth=danila@jiaxyga.com smtp.mailfrom=danila@jiaxyga.com
-X-Mailru-Src: smtp
-X-7564579A: B8F34718100C35BD
-X-77F55803: 4F1203BC0FB41BD927CFE6CA1630A10C0C2E07651900246E0BFBA1F9AAFF16A000894C459B0CD1B911B2854684B9102EEB1C7D3CD30EECC3B4127DE3E3D96F36AF77107535B39722
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7353CFE866E745C13EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F79006375D8840FA58F505298638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D8B1851902FEC7EB0850C076EBC170C7F0117882F4460429724CE54428C33FAD305F5C1EE8F4F765FCEA77C8EAE1CE44B0A471835C12D1D9774AD6D5ED66289B52BA9C0B312567BB23117882F44604297287769387670735201E561CDFBCA1751FF04B652EEC242312D2E47CDBA5A96583BA9C0B312567BB2376E601842F6C81A19E625A9149C048EE4B6963042765DA4B148812EF9080FC94D8FC6C240DEA76429C9F4D5AE37F343AA9539A8B242431040A6AB1C7CE11FEE30085B890FD2717DA9735652A29929C6CC4224003CC836476E2F48590F00D11D6E2021AF6380DFAD1A18204E546F3947CB11811A4A51E3B096D1867E19FE1407959CC434672EE6371089D37D7C0E48F6C8AA50765F790063757B1FBEA53BC6EDBEFF80C71ABB335746BA297DBC24807EABDAD6C7F3747799A
-X-C1DE0DAB: 0D63561A33F958A527C9ACEF86008B865BCCA6C82D6BAFD2D14640B0C5C926F4F87CCE6106E1FC07E67D4AC08A07B9B01DAA61796BF5227B9C5DF10A05D560A950611B66E3DA6D700B0A020F03D25A0997E3FB2386030E77
-X-C8649E89: 1C3962B70DF3F0ADE00A9FD3E00BEEDF77DD89D51EBB7742D3581295AF09D3DF87807E0823442EA2ED31085941D9CD0AF7F820E7B07EA4CF9A1DD9300BCC08FE9C3C506B07A9307A2A52AC4D35A21963AA65ADCEEDDABB0512B9ACBE231CC78AC4B8F2E8CFB8F571F4B5A46BC9DE83B81579546215BAD8B921BEC6C0C71ED4F84C41F94D744909CE4BCAC77546666B612CC0CD5AA9A1B9887EE09F5AAA95A50543082AE146A756F3
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojoMTWofjSWSR9r/oz2xb+RA==
-X-Mailru-Sender: 9EB879F2C80682A09F26F806C73949817A73A00031D9200A4EECB8BFBF450AF1B878F0385D421739643683D8C0F3ED1CA3C71A376745D86BBE86167304C7680C3980CE5AAA35C7CD60F22E8815EDE5EAEAB4BC95F72C04283CDA0F3B3F5B9367
-X-Mras: Ok
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230912101820.GA10884@willie-the-truck>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the compatible for Qualcomm SM7150 SCM.
+On Tue, Sep 12, 2023 at 11:18:20AM +0100, Will Deacon wrote:
+> On Mon, Sep 11, 2023 at 04:23:50PM +0530, Mukesh Ojha wrote:
+> > The reserved memory region for ramoops is assumed to be at a fixed
+> > and known location when read from the devicetree. This may not be
+> > required for something like Qualcomm's minidump which is interested
+> > in knowing addresses of ramoops region but it does not put hard
+> > requirement of address being fixed as most of it's SoC does not
+> > support warm reset and does not use pstorefs at all instead it has
+> > firmware way of collecting ramoops region if it gets to know the
+> > address and register it with apss minidump table which is sitting
+> > in shared memory region in DDR and firmware will have access to
+> > these table during reset and collects it on crash of SoC.
+> > 
+> > So, add the support of reserving ramoops region to be dynamically
+> > allocated early during boot if it is request through command line
+> > via 'dyn_ramoops_size=' and fill up reserved resource structure and
+> > export the structure, so that it can be read by ramoops driver.
+> > 
+> > Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> > ---
+> >  arch/arm64/mm/init.c       | 94 ++++++++++++++++++++++++++++++++++++++++++++++
+> 
+> Why does this need to be in the arch code? There's absolutely nothing
+> arm64-specific here.
 
-Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
----
- Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 1 +
- 1 file changed, 1 insertion(+)
+I would agree: this needs to be in ramoops itself, IMO. It should be a
+ramoops module argument, too.
 
-diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-index 4233ea839bfc..0c073335f8ff 100644
---- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-+++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-@@ -56,6 +56,7 @@ properties:
-           - qcom,scm-sm6125
-           - qcom,scm-sm6350
-           - qcom,scm-sm6375
-+          - qcom,scm-sm7150
-           - qcom,scm-sm8150
-           - qcom,scm-sm8250
-           - qcom,scm-sm8350
+It being unhelpful for systems that don't have an external consumer is
+certainly true, but I think it would still make more sense for this
+change to live entirely within ramoops. Specifically: you're
+implementing a pstore backend behavioral change. In the same way that
+patch 10 is putting the "output" side of this into pstore/, I'd expect
+the "input" side also in pstore/
+
+More comments there, though.
+
 -- 
-2.41.0
-
+Kees Cook
