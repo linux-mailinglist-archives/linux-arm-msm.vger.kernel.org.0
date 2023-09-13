@@ -2,69 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 197C379DEA0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 05:33:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 612E779DEAE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 05:35:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232090AbjIMDdS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Sep 2023 23:33:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42912 "EHLO
+        id S238246AbjIMDfM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Sep 2023 23:35:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231144AbjIMDdS (ORCPT
+        with ESMTP id S238244AbjIMDfK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Sep 2023 23:33:18 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09F42170F;
-        Tue, 12 Sep 2023 20:33:14 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38D1VVes023409;
-        Wed, 13 Sep 2023 03:32:30 GMT
+        Tue, 12 Sep 2023 23:35:10 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A1701719;
+        Tue, 12 Sep 2023 20:35:05 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38D3JPZN016703;
+        Wed, 13 Sep 2023 03:35:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=uFJyocmED4hz9zxf654Kw/VEVbsiQNhYNzZor0D7cI4=;
- b=kdcfk6CBHJEirtPrhb+oIGZax1z1OU+em6Eq6ZrV5oFWju/n1e2TF6lP1ZJOXx4wm0Qu
- /F5GPLm7uwz0CWC24AMg4MFRDjHGU7Wr/gFnREG3clJw9ScDnzZKZLu+fSCnCXpvrAuN
- STBJ2ilabS70foGDDalHOojEfyZG1wJDBAehIXYJ2tnHjPejnIraLQypXpRhDWB5EtH/
- WP1/G2/jnCFZRofGWOmK7nIg2sUR6v6fa+AtyvWftyaQ+6O7+xheg365PEIhZ8Mi6amn
- I+h8kkcey+kLzM4h44yj7ztus8uboGNSTRXquxfNO9GDJLoRFBct1LSUJ0XxPGQmQplF eg== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t2y7q8mer-1
+ bh=zGwc/4NW+5sTeq1afR2q5Sg4Ygu0rpAQCMcO6lgCMd8=;
+ b=IsVsEA43PRFJK32qN8+Dm4ns6UD8Adb3IuGKaO5uf2RE1ff6lF29HQFlA6wVJKE7ofWg
+ 2L1HKHhoOcdkisXKebtynxpCifNgVjlQP90ldsM8XeR8VbECttP8k2mh5/+6NkuxB5Rc
+ Nx1CSe6NOdLvuQWRg4do9jXbhj0UCDhexZoZ0lsSCn0wTJgXLe6f5T3RvSl72hOtdhi1
+ Ow8vBOeQrvu+WPRyekSOEtL3z12NHm1XIE/C26NfWILKYDK0/uqa43yMbv1dTgAXTawz
+ ZALBsgPbQAcN/ycsvD9imqzEjI2oY1WIFqHvFiGEwapXp81XI5sd5008YaMMmk4w/AYw qQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t3003ggmf-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 13 Sep 2023 03:32:30 +0000
+        Wed, 13 Sep 2023 03:35:00 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38D3WT0f004638
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38D3YxN2007057
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 13 Sep 2023 03:32:29 GMT
-Received: from [10.216.41.52] (10.80.80.8) by nalasex01a.na.qualcomm.com
+        Wed, 13 Sep 2023 03:34:59 GMT
+Received: from [10.216.46.24] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 12 Sep
- 2023 20:32:21 -0700
-Message-ID: <ef61cef0-fd3a-d89c-b73e-b10e63fa7789@quicinc.com>
-Date:   Wed, 13 Sep 2023 09:02:13 +0530
+ 2023 20:34:55 -0700
+Message-ID: <8c149fc5-3fb4-f9a2-9512-6cab2503aaa9@quicinc.com>
+Date:   Wed, 13 Sep 2023 09:04:52 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.0
-Subject: Re: [PATCH V2 6/7] arm64: dts: qcom: ipq9574: Add support for nsscc
- node
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     <andersson@kernel.org>, <agross@kernel.org>,
-        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <catalin.marinas@arm.com>, <will@kernel.org>,
-        <p.zabel@pengutronix.de>, <richardcochran@gmail.com>,
-        <arnd@arndb.de>, <geert+renesas@glider.be>,
-        <nfraprado@collabora.com>, <rafal@milecki.pl>, <peng.fan@nxp.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <netdev@vger.kernel.org>,
-        <quic_saahtoma@quicinc.com>
-References: <20230825091234.32713-1-quic_devipriy@quicinc.com>
- <20230825091234.32713-7-quic_devipriy@quicinc.com>
- <CAA8EJpo75zWLXuF-HC-Xz+6mvu_S1ET-9gzW=mOq+FjKspDwhw@mail.gmail.com>
+ Thunderbird/102.11.1
+Subject: Re: Disconnect interrupt generation for QC targets when role switch
+ is enabled
 Content-Language: en-US
-From:   Devi Priya <quic_devipriy@quicinc.com>
-In-Reply-To: <CAA8EJpo75zWLXuF-HC-Xz+6mvu_S1ET-9gzW=mOq+FjKspDwhw@mail.gmail.com>
+To:     Pavan Kondeti <quic_pkondeti@quicinc.com>
+CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Johan Hovold <johan@kernel.org>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
+References: <af60c05b-4a0f-51b8-486a-1fc601602515@quicinc.com>
+ <20230828172059.GC818859@hu-bjorande-lv.qualcomm.com>
+ <325cf945-4d1f-5591-1ef6-b28e803c134b@quicinc.com>
+ <cfa39be4-2b33-4900-800c-9884010f5e75@quicinc.com>
+From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <cfa39be4-2b33-4900-800c-9884010f5e75@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
@@ -72,14 +71,14 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: gApxFy5Cy_uY5wxT9JTOvWBqjExHH7f3
-X-Proofpoint-ORIG-GUID: gApxFy5Cy_uY5wxT9JTOvWBqjExHH7f3
+X-Proofpoint-ORIG-GUID: JA50tHAnCRDGoT2N04CDxigQBXZ18coz
+X-Proofpoint-GUID: JA50tHAnCRDGoT2N04CDxigQBXZ18coz
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
  definitions=2023-09-12_24,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
- malwarescore=0 clxscore=1015 spamscore=0 priorityscore=1501
- mlxlogscore=999 phishscore=0 bulkscore=0 suspectscore=0 adultscore=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=618 clxscore=1015
+ adultscore=0 malwarescore=0 priorityscore=1501 lowpriorityscore=0
+ spamscore=0 phishscore=0 bulkscore=0 suspectscore=0 mlxscore=0
  impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2308100000 definitions=main-2309130027
 Precedence: bulk
@@ -88,114 +87,47 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 8/25/2023 4:58 PM, Dmitry Baryshkov wrote:
-> On Fri, 25 Aug 2023 at 12:15, Devi Priya <quic_devipriy@quicinc.com> wrote:
->>
->> Add a node for the nss clock controller found on ipq9574 based devices.
->>
->> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
->> ---
->>   Changes in V2:
->>          - Dropped the fixed clock node gcc_gpll0_out_aux and added
->>            support for the same in gcc driver
->>          - Updated the node name to clock-controller@39b00000
->>          - Added clock-names to retrieve the nssnoc clocks and add them
->>            to the list of pm clocks in nss driver
->>
->>   arch/arm64/boot/dts/qcom/ipq9574.dtsi | 48 +++++++++++++++++++++++++++
->>   1 file changed, 48 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> index 51aba071c1eb..903311547e96 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> @@ -10,6 +10,8 @@
->>   #include <dt-bindings/clock/qcom,ipq9574-gcc.h>
->>   #include <dt-bindings/interrupt-controller/arm-gic.h>
->>   #include <dt-bindings/reset/qcom,ipq9574-gcc.h>
->> +#include <dt-bindings/clock/qcom,ipq9574-nsscc.h>
->> +#include <dt-bindings/reset/qcom,ipq9574-nsscc.h>
->>   #include <dt-bindings/thermal/thermal.h>
->>
->>   / {
->> @@ -18,6 +20,24 @@ / {
->>          #size-cells = <2>;
->>
->>          clocks {
->> +               bias_pll_cc_clk: bias-pll-cc-clk {
->> +                       compatible = "fixed-clock";
->> +                       clock-frequency = <1200000000>;
->> +                       #clock-cells = <0>;
->> +               };
->> +
->> +               bias_pll_nss_noc_clk: bias-pll-nss-noc-clk {
->> +                       compatible = "fixed-clock";
->> +                       clock-frequency = <461500000>;
->> +                       #clock-cells = <0>;
->> +               };
->> +
->> +               bias_pll_ubi_nc_clk: bias-pll-ubi-nc-clk {
->> +                       compatible = "fixed-clock";
->> +                       clock-frequency = <353000000>;
->> +                       #clock-cells = <0>;
->> +               };
-> 
-> Which part provides these clocks?
-The Bias PLL generates these clocks based on the reference clock.
-> 
->> +
->>                  sleep_clk: sleep-clk {
->>                          compatible = "fixed-clock";
->>                          #clock-cells = <0>;
->> @@ -722,6 +742,34 @@ frame@b128000 {
->>                                  status = "disabled";
->>                          };
->>                  };
->> +
->> +               nsscc: clock-controller@39b00000 {
->> +                       compatible = "qcom,ipq9574-nsscc";
->> +                       reg = <0x39b00000 0x80000>;
->> +                       clocks = <&gcc GCC_NSSNOC_NSSCC_CLK>,
->> +                                <&gcc GCC_NSSNOC_SNOC_CLK>,
->> +                                <&gcc GCC_NSSNOC_SNOC_1_CLK>,
->> +                                <&bias_pll_cc_clk>,
->> +                                <&bias_pll_nss_noc_clk>,
->> +                                <&bias_pll_ubi_nc_clk>,
->> +                                <&gcc GPLL0_OUT_AUX>,
->> +                                <0>,
->> +                                <0>,
->> +                                <0>,
->> +                                <0>,
->> +                                <0>,
->> +                                <0>,
->> +                                <&xo_board_clk>;
-> 
-> If you move xo_board closer to the start of the list, it will be
-> slightly easier to review.
-Sure okay
-> 
->> +                       clock-names = "nssnoc_nsscc", "nssnoc_snoc", "nssnoc_snoc_1",
->> +                                     "bias_pll_cc_clk", "bias_pll_nss_noc_clk",
->> +                                     "bias_pll_ubi_nc_clk", "gpll0_out_aux", "uniphy0_nss_rx_clk",
->> +                                     "uniphy0_nss_tx_clk", "uniphy1_nss_rx_clk",
->> +                                     "uniphy1_nss_tx_clk", "uniphy2_nss_rx_clk",
->> +                                     "uniphy2_nss_tx_clk", "xo_board_clk";
-> 
-> You are using clock indices. Please drop clock-names.
-Sure okay
+On 9/6/2023 9:22 PM, Pavan Kondeti wrote:
 
-Thanks,
-Devi Priya
-> 
->> +                       #clock-cells = <1>;
->> +                       #reset-cells = <1>;
->> +                       #power-domain-cells = <1>;
->> +               };
->>          };
+>>> As mentioned, this need has been identified a few times by now, so
+>>> nothing strange in your request/proposal.
+>>>
+>>> But so far no one has come up with a good way to register glue code
+>>> callbacks with the core; we can't pass arbitrary data (such as a
+>>> function pointer to such callback), and we don't know when the core is
+>>> registered, so we can't call a register operation when that happens.
+>>>
+>>> Regards,
+>>> Bjorn
+>>>
+>>>> [1]: https://patchwork.kernel.org/project/linux-usb/patch/20201009082843.28503-4-wcheng@codeaurora.org/
+>>>> [2]: https://patchwork.kernel.org/project/linux-usb/cover/20230325165217.31069-1-manivannan.sadhasivam@linaro.org/
+>>>>
 >>
->>          thermal-zones {
->> --
->> 2.34.1
+>> Hi Bjorn,
+>>
+>>   How about we use Component framework to let the glue layer know that the
+>> child probe is complete. That way we don't need to defer QCOM probe and in
+>> the bind call back coming to master (in this case, the glue layer), we can
+>> register the vendor hook or role switch we need and we can pass the role
+>> notifications from core to glue as needed.
 >>
 > 
+> Would device_driver::sync_state() help here? The qcom glue driver
+> creates a DL_FLAG_SYNC_STATE_ONLY device link with dwc3 core. If it
+> works, we can avoid component framework related changes in dwc3 core.
 > 
+> 
+
+Hi Pavan,
+
+  Thanks for the suggestion. We can use sync state but we might need to 
+suppress unbind path for dwc3 core to prevent remove from being called 
+(not sure if that is fine on upstream). Reason being if remove is 
+called, we won't get any sync state callback for us to un-register glue 
+hook. Other ideas that came from team internally were to add a list and 
+iterate through in core probe to find out required glue ops and invoke 
+them when required.
+
+Regards,
+Krishna,
