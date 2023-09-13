@@ -2,162 +2,289 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B56F79E7AB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 14:11:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43F9879E7E2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 14:26:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235511AbjIMMLt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Sep 2023 08:11:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36710 "EHLO
+        id S240412AbjIMM0v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Sep 2023 08:26:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230351AbjIMMLs (ORCPT
+        with ESMTP id S240320AbjIMM0u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Sep 2023 08:11:48 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49F4019AC
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 05:11:44 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2bf5bf33bcdso108713581fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 05:11:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694607102; x=1695211902; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=q3K1Nls0KcoT9xh2kC7N040+hi/MqUqF+7oTGY6x81w=;
-        b=PiaVrrfj6i59VIzWhRs7SjvHhgMVGNlY0mMrZ0XAF7ub2OQwQEywqxYaxaSsHGI2TP
-         6iWobdXJzqdRtwrMjBlH5qLKzDsA+Y6eu6yR/2FJT6NWm+LfhrX+GdpopAe6d5kEHLWC
-         9howduRmaxx1afcOkSUtWEsQU/tFyEZJ/fWCQEGBk8zoz8KqxKuUUAGQ/dxepVdcx+fr
-         iQi8XyICpy8KHLCvdxxDb3vZSUwZxpt+JZ4MbZGRv/64QcHWDG8Pw79iIb0uh2UvZDe4
-         OwF5mAT74FdGwLhn7fCtn87ysDoCdYHpXOlyfr/3GUToyKj4dz98LjVQ/EwDoSJdf1L1
-         IfzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694607102; x=1695211902;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=q3K1Nls0KcoT9xh2kC7N040+hi/MqUqF+7oTGY6x81w=;
-        b=sK9gYjwqDEDzhYsGnGUJsgl99yV/XhaEEvXmMkvN0KW3mHFlAVnJAlwEefZwBO7PIY
-         7TiqM1wnrEnqq1BY7VB8BGqtBFaMReF41hSYFHIDjmI6W5pPgw3iZl5TKoLqdmBVXdvV
-         QGYWvyZw41yqlBWDVO5e9Y+/yk3bEPRfbrW0fpWUr/HDhYeOPxuBtaEmsMFpbZTr2t3N
-         y7XQulGzrxVjoJTETiw2JCpzKobroIxX38ZC8UxQ2wIeN+vbXNCBRnGM7YzMYhWLkzc2
-         seK4Ip/yrUJJgVPKFoUgwTP1sR3ycmUlQy4SDMOD1InFK/UiEDhAY5YrPJ55Kbs/GzX4
-         rOWg==
-X-Gm-Message-State: AOJu0YwRo2rbiEZ21eJEd9Z0ouZnx8J3SlbkYYpUF1F0EH5u5vrtMM6o
-        1lfyBTLOgeYOyL5fbcJ3/wg1EuDoMBBSjgTmOt8KdQ==
-X-Google-Smtp-Source: AGHT+IFFBA+lO2mQ5FKWt/u4QbpvfYOfKnkOobimjUCGx0UV4Y49uf8jyKCC92z4ssRQPa8l7BzBjw==
-X-Received: by 2002:a2e:8903:0:b0:2b9:f1ad:9503 with SMTP id d3-20020a2e8903000000b002b9f1ad9503mr2211220lji.35.1694607102448;
-        Wed, 13 Sep 2023 05:11:42 -0700 (PDT)
-Received: from [192.168.37.232] (178235177106.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.106])
-        by smtp.gmail.com with ESMTPSA id p21-20020a170906229500b00992b8d56f3asm8319579eja.105.2023.09.13.05.11.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Sep 2023 05:11:41 -0700 (PDT)
-Message-ID: <f57229ea-69be-4df4-871e-65dfb0d56f5f@linaro.org>
-Date:   Wed, 13 Sep 2023 14:11:39 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 12/13] arm64: dts: qcom: sa8295p: Enable tertiary
- controller and its 4 USB ports
-Content-Language: en-US
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
+        Wed, 13 Sep 2023 08:26:50 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.54])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B31819A8;
+        Wed, 13 Sep 2023 05:26:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1694608003; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=JTSmR/6ETpbi0uwjyDU97x1BjHLQso5BodTIIkziKs/BELGtBVqA4GOrL3h9e0351S
+    cwkjAebGYQgm1ezPtlpHy0OYveFtwgURKFZlOnQsdWLms5UuSQz4eCT5UUK+Odc2g5MP
+    XqNvY7vHkKmwEbK5ciO1kO3vqlEm356+AyaAfxUwkhDSxtF3g6okMHXEpOh5xAhGRUyn
+    Dfqge6qektsUrZj+IleEOPl6ejiDKAnxKWI4FgWlG8lXSvuTa/jINMwtmtAduFsy0qbz
+    xCpORXyXIWVZ+jgN0Do/CzDg8WdFLS4572G9EzIyOBRePjyirGQzNT2MrFNNb0E2r0Hg
+    aW2Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1694608003;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=zhdv2FQe74GDYo6+S9T5NhlkCfIw7X/kW3Qtxk4kjH4=;
+    b=iE7mB2CP2NATK32oV+viiPzSe/lhQwHgYalz0SkYwhdMClTQ8n0sKnUXSaSiqMRnog
+    eG38frZ6RbeiTDkFCDPwggskCBTKzx4FxLC90ApnXnaTZq6CyGs3IUAPK91rCobzo1UF
+    JCQ3cYAYidAjWwhbuF+n1nlb0v5IrFmNCKLRgeLQXNmTX4hBbjPLB7Jba8VBwsMVqZM+
+    7doOXDZpe0eUFIUJXHzHaDWmRZUfB+BhSerSzF/f1XJrDPFxdcBTeCHQUrs+L5ipJFYS
+    X9Rp1Kk1JKh4ntCn/3YehF+YDBqgiwSQWw8P3c0dXNZTUmGR5iyBzDcs9ZQjt56eRGse
+    OZww==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1694608003;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=zhdv2FQe74GDYo6+S9T5NhlkCfIw7X/kW3Qtxk4kjH4=;
+    b=pQqZLsnR5ruF9UUMsuzglnSh2RJQQSzieMLd13p91f8cU/Vv5aFdYFQOIgIsrEXInF
+    KpQYkfIPquP3/w0xDOLZiuNDBLZrXnjBWIFleP9fjx7sCeHSSgbjgKcmxuRgsDNLIYDV
+    a9Xk5oBthvR9VgI0DfRtXNafr8976/jgNy5gpHmN01KwelxZIJFIGqMfduScVw9ZYBzF
+    c05zd4HH0geiHTXW7/mb8Uy8WrFP0HwjLeCQA2GSW1EyVDHIHa3IDdH+q4qYwVKZkosO
+    LNZUuzAgLEaVhpdFcciNTRSiBq2wrSgzaXkcq4pIB0Tzfr2YCGL0oK1kK8kMMVhWSDT2
+    2VeQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1694608003;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=zhdv2FQe74GDYo6+S9T5NhlkCfIw7X/kW3Qtxk4kjH4=;
+    b=S63ltOhMHN80NiyrOQKiTl6lt9vygvAshpVYnE7NSFbUFYjoV2Y4HQeV6BSJAM2HmI
+    PzxfWJKY8TwdZPw8C/Dw==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8Z/h"
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.8.2 DYNA|AUTH)
+    with ESMTPSA id xb560bz8DCQgtpe
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Wed, 13 Sep 2023 14:26:42 +0200 (CEST)
+Date:   Wed, 13 Sep 2023 14:26:36 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Johan Hovold <johan@kernel.org>,
-        Mathias Nyman <mathias.nyman@intel.com>
-Cc:     linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
-        quic_jackp@quicinc.com, ahalaney@redhat.com,
-        quic_shazhuss@quicinc.com
-References: <20230828133033.11988-1-quic_kriskura@quicinc.com>
- <20230828133033.11988-13-quic_kriskura@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230828133033.11988-13-quic_kriskura@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+        Conor Dooley <conor+dt@kernel.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH 1/4] cpufreq: qcom-nvmem: Enable virtual power domain
+ devices
+Message-ID: <ZQGqfMigCFZP_HLA@gerhold.net>
+References: <20230912-msm8909-cpufreq-v1-0-767ce66b544b@kernkonzept.com>
+ <20230912-msm8909-cpufreq-v1-1-767ce66b544b@kernkonzept.com>
+ <CAPDyKFq6U-MR4Bd+GmixYseRECDh142RhydtKbiPd3NHV2g6aw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPDyKFq6U-MR4Bd+GmixYseRECDh142RhydtKbiPd3NHV2g6aw@mail.gmail.com>
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28.08.2023 15:30, Krishna Kurapati wrote:
-> Enable tertiary controller for SA8295P (based on SC8280XP).
-> Add pinctrl support for usb ports to provide VBUS to connected peripherals.
+On Wed, Sep 13, 2023 at 12:56:16PM +0200, Ulf Hansson wrote:
+> On Tue, 12 Sept 2023 at 11:40, Stephan Gerhold
+> <stephan.gerhold@kernkonzept.com> wrote:
+> >
+> > The genpd core ignores performance state votes from devices that are
+> > runtime suspended as of commit 5937c3ce2122 ("PM: domains: Drop/restore
+> > performance state votes for devices at runtime PM").
 > 
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 53 ++++++++++++++++++++++++
->  1 file changed, 53 insertions(+)
+> I think you are referring to the wrong commit above. Please have a
+> look at commit 3c5a272202c2 ("PM: domains: Improve runtime PM
+> performance state handling"), instead.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> index fd253942e5e5..473fe858fbed 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> @@ -9,6 +9,7 @@
->  #include <dt-bindings/gpio/gpio.h>
->  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->  #include <dt-bindings/spmi/spmi.h>
-> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
->  
->  #include "sa8540p.dtsi"
->  #include "sa8540p-pmics.dtsi"
-> @@ -584,6 +585,20 @@ &usb_1_qmpphy {
->  	status = "okay";
->  };
->  
-> +&usb_2 {
-> +	pinctrl-0 = <&usb2_en_state>,
-> +		    <&usb3_en_state>,
-> +		    <&usb4_en_state>,
-> +		    <&usb5_en_state>;
-> +	pinctrl-names = "default";
-> +
-> +	status = "okay";
-> +};
-> +
-> +&usb_2_dwc3 {
-> +	dr_mode = "host";
-I believe you mentioned that the MP controller is host-only
-by design. If that's true, move this property to the SoC dtsi
-and leave an appropriate comment.
+> I also suggest rephrasing the above into saying that the performance
+> state vote for a device is cached rather than carried out, if
+> pm_runtime_suspended() returns true for it.
+> 
+> Another relevant information in the commit message would be to add
+> that during device-attach (genpd_dev_pm_attach_by_id()), calls
+> pm_runtime_enable() the device.
+> 
 
-Konrad
+Thanks, I will try to clarify this a bit! I was actually looking at that
+commit originally but decided to reference the commit that "started the
+change", since the this commit is marked as fix of the one I referenced.
+But I think you're right, it would be more clear to reference "PM:
+domains: Improve runtime PM performance state handling" directly.
+
+> > However, at the
+> > moment nothing ever enables the virtual devices created in
+> > qcom-cpufreq-nvmem for the cpufreq power domain scaling, so they are
+> > permanently runtime-suspended.
+> >
+> > Fix this by enabling the devices after attaching them and use
+> > dev_pm_syscore_device() to ensure the power domain also stays on when
+> > going to suspend. Since it supplies the CPU we can never turn it off
+> > from Linux. There are other mechanisms to turn it off when needed,
+> > usually in the RPM firmware or the cpuidle path.
+> >
+> > Without this fix performance states votes are silently ignored, and the
+> > CPU/CPR voltage is never adjusted. This has been broken since 5.14 but
+> > for some reason no one noticed this on QCS404 so far.
+> >
+> > Cc: stable@vger.kernel.org
+> > Fixes: 1cb8339ca225 ("cpufreq: qcom: Add support for qcs404 on nvmem driver")
+> > Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+> > ---
+> >  drivers/cpufreq/qcom-cpufreq-nvmem.c | 21 ++++++++++++++++++++-
+> >  1 file changed, 20 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> > index 84d7033e5efe..17d6ab14c909 100644
+> > --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> > +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> > @@ -25,6 +25,7 @@
+> >  #include <linux/platform_device.h>
+> >  #include <linux/pm_domain.h>
+> >  #include <linux/pm_opp.h>
+> > +#include <linux/pm_runtime.h>
+> >  #include <linux/slab.h>
+> >  #include <linux/soc/qcom/smem.h>
+> >
+> > @@ -280,6 +281,7 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+> >         }
+> >
+> >         for_each_possible_cpu(cpu) {
+> > +               struct device **virt_devs = NULL;
+> >                 struct dev_pm_opp_config config = {
+> >                         .supported_hw = NULL,
+> >                 };
+> > @@ -300,7 +302,7 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+> >
+> >                 if (drv->data->genpd_names) {
+> >                         config.genpd_names = drv->data->genpd_names;
+> > -                       config.virt_devs = NULL;
+> > +                       config.virt_devs = &virt_devs;
+> >                 }
+> >
+> >                 if (config.supported_hw || config.genpd_names) {
+> > @@ -311,6 +313,23 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+> >                                 goto free_opp;
+> >                         }
+> >                 }
+> > +
+> > +               if (virt_devs) {
+> > +                       const char * const *name = config.genpd_names;
+> > +                       int i;
+> > +
+> > +                       for (i = 0; *name; i++, name++) {
+> > +                               ret = pm_runtime_resume_and_get(virt_devs[i]);
+> > +                               if (ret) {
+> > +                                       dev_err(cpu_dev, "failed to resume %s: %d\n",
+> > +                                               *name, ret);
+> > +                                       goto free_opp;
+> > +                               }
+> 
+> Shouldn't we restore the usage count at ->remove() too?
+> 
+> > +
+> > +                               /* Keep CPU power domain always-on */
+> > +                               dev_pm_syscore_device(virt_devs[i], true);
+> 
+> Is this really correct? cpufreq is suspended/resumed by the PM core
+> during system wide suspend/resume. See dpm_suspend|resume(). Isn't
+> that sufficient?
+> 
+> Moreover, it looks like the cpr genpd provider supports genpd's
+> ->power_on|off() callbacks. Is there something wrong with this, that I
+> am missing?
+> 
+
+I think this question is a quite fundamental one. To explain this
+properly I will need to delve a bit into the implementation details of
+the two different GENPD providers that are applicable here:
+
+Fundamentally, we are describing the main power supply for the CPU here.
+Consider a simple regulator with adjustable voltage. From the Linux
+point of view this regulator should be marked as "regulator-always-on".
+If we would turn off this regulator, the CPU would be immediately dead
+without proper shutdown done by firmware or hardware.
+
+Representing the regulator as power domain does not change much, except
+that we now have abstract "performance states" instead of actual voltages.
+However, for power domains there is currently no generic mechanism like
+"regulator-always-on" in the DT, only drivers can specify
+GENPD_FLAG_ALWAYS_ON.
+
+The special situation on MSM8909 is that there are two possible setups
+for the CPU power supply depending on the PMIC that is used (see
+"[PATCH 4/4] cpufreq: qcom-nvmem: Add MSM8909"): CPR or RPMPD. Both are
+GENPD providers so in theory we can just have either
+
+  cpu@0 { power-domains = <&cpr>; }; // or
+  cpu@0 { power-domains = <&rpmpd MSM8909_VDDCX_AO>; };
+
+in the DT, without handling this specifically on the cpufreq side.
+
+The two GENPD providers behave quite differently though:
+
+ - CPR: CPR is not really a power domain itself. It's more like a monitor
+   on a power supply line coming from some other regulator. CPR provides
+   suggestions how to adjust the voltage for best power/stability.
+
+   The GENPD .power_off() disables the CPR state machine and forwards
+   this to the regulator with regulator_disable(). On QCS404 the
+   regulator is marked regulator-always-on, so it will never be disabled
+   from Linux. The SAW/SPM hardware component on Qualcomm SoCs will
+   usually disable the regulator during deep cpuidle states.
+
+ - RPMPD: This is the generic driver for all the SoC power domains
+   managed by the RPM firmware. It's not CPU-specific. However, as
+   special feature each power domain is exposed twice in Linux, e.g.
+   "MSM8909_VDDCX" and "MSM8909_VDDCX_AO". The _AO ("active-only")
+   variant tells the RPM firmware that the performance/enable vote only
+   applies when the CPU is active (not in deep cpuidle state).
+
+   The GENPD .power_off() drops all performance state votes and also
+   releases the "enable" vote for the power domain.
+
+Now, imagine what happens during system wide suspend/resume:
+
+ - CPR: The CPR state machine gets disabled. The voltage stays as-is.
+     - With "regulator-always-on": The CPU keeps running until WFI.
+     - Without: I would expect the CPU is dead immediately(?)
+
+ - RPMPD: The performance/enable vote is dropped. The power domain might
+   go to minimal voltage or even turn off completely. However, the CPU
+   actually needs to keep running at the same frequency until WFI!
+   Worst case, the CPU is dead immediately when the power domain votes
+   get dropped.
+
+In case of RPMPD, the votes must remain even during system wide suspend.
+The special _AO variant of the power domain tells the firmware to
+release the votes once the CPU has been shut down cleanly. It will also
+restore them once the CPU wakes up (long before the resume handlers run).
+
+My conclusion was that in both cases we want to keep the "power domain"
+enabled, since the CPU must keep running for a short while even after
+the system suspend handlers have been called.
+
+Does this help with understanding the problem? It's a bit complicated. :D
+
+Thanks!
+Stephan
+
+PS: This is essentially just another manifestation of a discussion we
+had a few times already over the years about where to enable power
+domains used by cpufreq, e.g. [1, 2, 3, 4]. Apparently I already
+mentioned back in 2021 already that QCS404 is broken [5] (I forgot
+about that :')).
+
+[1]: https://lore.kernel.org/linux-pm/YLi5N06Qs+gYHgYg@gerhold.net/
+[2]: https://lore.kernel.org/linux-pm/20200826093328.88268-1-stephan@gerhold.net/
+[3]: https://lore.kernel.org/linux-pm/20200730080146.25185-1-stephan@gerhold.net/
+[4]: https://lore.kernel.org/linux-arm-msm/20200426123140.GA190483@gerhold.net/
+[5]: https://lore.kernel.org/linux-pm/YLoTl7MfMfq2g10h@gerhold.net/
