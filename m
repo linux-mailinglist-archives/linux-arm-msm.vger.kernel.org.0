@@ -2,311 +2,331 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 383F679E8E0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 15:15:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B48F679E9D5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 15:44:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240741AbjIMNPH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Sep 2023 09:15:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39676 "EHLO
+        id S241116AbjIMNoT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Sep 2023 09:44:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240189AbjIMNPG (ORCPT
+        with ESMTP id S241108AbjIMNoS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Sep 2023 09:15:06 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.126])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C15BF19B4;
-        Wed, 13 Sep 2023 06:15:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1694610902; x=1726146902;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=gCHxFvVoCPyl/gU+DH/2T/d2oTiFZNc4QrXmsWqFM/I=;
-  b=NYwnBbrhJnf9746uY5fejsgGllxmW2qpBPZtihHT8y/YhF5JWbVUJWOd
-   ODTYJuggbHDcbObX6sWDREl7oBol/cJR/L4bmEzlM8ALWkq8Zp+siyyDX
-   d49tHY67Pu+0SoWAaEv9qQwdYYOlMU2X50Q3awq9jKkMAie5Nb0r8U05U
-   jhYHhGGAxVnXkOtO1G3FcsNSK/iDYXYzllB7Ka+kqDbJ/ZQv+LyUpHEt9
-   g2VIqXET5IMWmGJKn3XJJU6KvF2dhfVRefB7VUYjoHMa2Mz2VM5GR5yZ0
-   p3fGVPEcaRmV75zv3KDgQmZ/EOAtRMVBxl7ak1x2WYfoQdS2zGP2FO+NQ
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10832"; a="363688806"
-X-IronPort-AV: E=Sophos;i="6.02,143,1688454000"; 
-   d="scan'208";a="363688806"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Sep 2023 06:15:01 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10832"; a="990915260"
-X-IronPort-AV: E=Sophos;i="6.02,143,1688454000"; 
-   d="scan'208";a="990915260"
-Received: from kuha.fi.intel.com ([10.237.72.185])
-  by fmsmga006.fm.intel.com with SMTP; 13 Sep 2023 06:14:53 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Wed, 13 Sep 2023 16:14:53 +0300
-Date:   Wed, 13 Sep 2023 16:14:52 +0300
-From:   Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Janne Grunau <j@jannau.net>, Simon Ser <contact@emersion.fr>,
-        Andy Gross <agross@kernel.org>,
+        Wed, 13 Sep 2023 09:44:18 -0400
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2045.outbound.protection.outlook.com [40.107.243.45])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2446319B6;
+        Wed, 13 Sep 2023 06:44:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=CRspkht1ymIeP4sOGmSom0ebeeoCFnazYDjaWjAXh+mUBSttKVUa7MyeGne11kSLN3dS6bnyiqn1SK9ZmnF1XUgAa6w90bq8e/Du0HFDYTOwUY92Apad/ancohPidlD9Ys1XECoX75w07X9xEKDqduRUV1FnbO+rbqpvKOsWtiTkWvPrQ4duoEuAl4eUm2wgGoI/vWwEl1nQhexDeRW0l7J+w0Ctjr3Uixgakc8F+qf8ZsSn3ytDCArX3B6yL6ReEZZK+zFZcXQ49NTjHsc1lxTYu/19kaA9bgqOAPyHzFu3gH05qUcczlrJ+dNzwjs+JDpYAMnho26CtxVW98nOYQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=UwL5Iai/3p1GMeQMa03kMTSjbjzYmp4R4ELx0fkW8hs=;
+ b=jK47u26/XActVUEEUaUwzHxOH2T6Gl1gD8I/KhIZefqAqaD/o7YTpeLIcUV7ALVJ97VEvtr8ZjtWYKo3ylvtC5PR69u9SGthT/J2gSVV03KW9gDD62sbIrlI7Aao7WzpKsWAm6Ynv2BWVlvYxl4oDHdo0PRpe3igk0HNJbnNlzE2XsOB1qtJ/3zc59WuQEdKWOImfIKLEJ/O69ewNkT4LcKVRs8p22uIlXkW6sVLHFoA6SxfNb8qpGRTq/sObASkg1yubY1+37AD3TthvWPbDu+2q2CzAOTrowKSQ9QH/fdeaBhGIXeIPaglmGnqCZ4gOyAfwy4V3iT9yrFO5vUVxA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=UwL5Iai/3p1GMeQMa03kMTSjbjzYmp4R4ELx0fkW8hs=;
+ b=psjrK+HqJIuYf6M0rVQ9r1liMuFdU2veEl49vcEnkwMaYZeCiGPpghoVAyMRHuRsUiC3G47SeVfQfDsCq0GlLtN0u2xMIAUXGxEgJz45cYehcw1TQNDDTtm06H4qNzr0YRLncFh3mzN25EDMI/+fEFQ+J3fVJg8JHJWuCbkYhEiNRlW2UTMWieUC8q3IuFvAQxJ6oXRVSzfz3ADSRA7Di92hfrNeQ7UB+k6KXcBE5LEEXXPozlKkl3ksfnF19UIzYMERWcUd/7kRB3m0CF8scA5ypQVO/4RuvRzgRPiCw2b9gbLV38qgTuagoa9qhv/oWz6sUD5INkTRpEYciwRcHg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
+ by SJ2PR12MB7848.namprd12.prod.outlook.com (2603:10b6:a03:4ca::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6768.31; Wed, 13 Sep
+ 2023 13:44:11 +0000
+Received: from LV2PR12MB5869.namprd12.prod.outlook.com
+ ([fe80::faf:4cd0:ae27:1073]) by LV2PR12MB5869.namprd12.prod.outlook.com
+ ([fe80::faf:4cd0:ae27:1073%6]) with mapi id 15.20.6768.036; Wed, 13 Sep 2023
+ 13:44:11 +0000
+From:   Jason Gunthorpe <jgg@nvidia.com>
+To:     Andy Gross <agross@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
         Bjorn Andersson <andersson@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Christophe Leroy <christophe.leroy@csgroup.eu>,
+        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Kevin Tian <kevin.tian@intel.com>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        freedreno@lists.freedesktop.org, Won Chung <wonchung@google.com>
-Subject: Re: [RFC PATCH v1 01/12] Revert "drm/sysfs: Link DRM connectors to
- corresponding Type-C connectors"
-Message-ID: <ZQG1zMbjWNLtx8lk@kuha.fi.intel.com>
-References: <ZPbrtAlO2Y+bjDhf@kuha.fi.intel.com>
- <CAA8EJpqUg2-k7LLBL38RHU1sThkXB54ca68xEMd1yMnHQcQ++w@mail.gmail.com>
- <ZPh0Ps9UJ3HLzdeR@kuha.fi.intel.com>
- <CAA8EJpratbBybgk8woD3maA=J_HuQis44Unq0n+c_UvaFs__AA@mail.gmail.com>
- <ZPiAwOf00RREiYPr@kuha.fi.intel.com>
- <6b6bacee-f7b6-4cfe-be3d-24bda44bfbcf@linaro.org>
- <ZQBGD8CY5OVKYX63@kuha.fi.intel.com>
- <a97a33f4-71f3-4610-a59e-0c2d5ae86670@linaro.org>
- <ZQGAfnKt9HMB7j6H@kuha.fi.intel.com>
- <CAA8EJpqaipCT66x698R6dKDTSMk-D2iNHv8NSnMzPy-X_jFJ1Q@mail.gmail.com>
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
+        linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
+        linuxppc-dev@lists.ozlabs.org,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Nicholas Piggin <npiggin@gmail.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
+        Yong Wu <yong.wu@mediatek.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>
+Cc:     Lu Baolu <baolu.lu@linux.intel.com>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Jerry Snitselaar <jsnitsel@redhat.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Nicolin Chen <nicolinc@nvidia.com>,
+        Niklas Schnelle <schnelle@linux.ibm.com>,
+        Steven Price <steven.price@arm.com>,
+        Thierry Reding <treding@nvidia.com>
+Subject: [PATCH v8 00/24] iommu: Make default_domain's mandatory
+Date:   Wed, 13 Sep 2023 10:43:33 -0300
+Message-ID: <0-v8-81230027b2fa+9d-iommu_all_defdom_jgg@nvidia.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: MN2PR03CA0012.namprd03.prod.outlook.com
+ (2603:10b6:208:23a::17) To LV2PR12MB5869.namprd12.prod.outlook.com
+ (2603:10b6:408:176::16)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpqaipCT66x698R6dKDTSMk-D2iNHv8NSnMzPy-X_jFJ1Q@mail.gmail.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|SJ2PR12MB7848:EE_
+X-MS-Office365-Filtering-Correlation-Id: 570511ec-927a-464d-0719-08dbb45f8303
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: TBZD2cq1XoWNfevwgl6cO8xRR9qx0Z1x/guy+HLG6AMbEUCYfE6LhP7rKPDoPpIYZS5PkO/iyu4j8HBlcdDfEdJNtxHwnqDsYof9kOEE7De825bFNTZIlS6DBZHqlLcHw0cflkOKTilwZ+jvE+ZD/+GdttP0JGjMPCI4ZKvhhM4kLPO/CMJpINh+Eni0JDr1gVIH6o1MzkdsF5bkYTctvoOch/1N1holocTJ3MQzgsyTLQNNhsDUP+l4hbWjwwJwCKQ02utUlvkgskUsf9WOt+l7wgY1o9eQZOSasAvLNX/LXnZd6/lcPNn6Q59i7cXnRJre3kgvyDm5qPPcZf1GNNXdcHBsgRib/DTG48GMMCf7MVTz+p4ccisHg4jdQG70G50tayZy/bcmQ/NnoPeEqT/6uh123Z+JU0eLa5GJFc7/9PLP1qQN+woP+ySrQ5eHns2ZuEMwO4UpTBp3CKmJgYRFU2A/GSK/hvhew8+UJdt8Ap28EnsA/C+YC2kJJJ9eAnnBGne00Eq1/DhhrsFv/zaM0NBL4VYxEEDzmZYSArsH+SwuEkZO2b281Xq2N6133kOlzZZFsNAayUyMlS0KnP9q9DGNsOSlWblBomXsX2OOfvbZ5Yb94pHW1MupHM4HA2+EiNImFyC/YxhppEXFaY3VPT4w4WYPJvyIDnz66Bc=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376002)(366004)(136003)(346002)(39860400002)(396003)(1800799009)(186009)(451199024)(83380400001)(86362001)(6512007)(921005)(66946007)(110136005)(2616005)(478600001)(966005)(107886003)(6666004)(38100700002)(6506007)(6486002)(26005)(316002)(4326008)(54906003)(66476007)(8936002)(66556008)(41300700001)(36756003)(8676002)(5660300002)(2906002)(7406005)(7416002)(4216001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Lm/1x4nDBCwifZHnBKDeqS0YZ12dl9DsYiW4fvrJXSk0pjfTX2lRPD3zcz0e?=
+ =?us-ascii?Q?j25bxg7EdN/aKuvDwZogOzCh5jacWkJiKIZhVCpWhBNZT+Enlx+fNbNGRMgz?=
+ =?us-ascii?Q?JurawNwxF1aUtIiq9fHu9yTVELGugqz/TEPwzsxyUzTAW1Cs80+kuUIGq3SB?=
+ =?us-ascii?Q?pKlJwd3uFuDHnlnwaypAWdVFcAihtvfHX9GF/9EB5/0R+o7rohGj3LVKIWfq?=
+ =?us-ascii?Q?0Fn6VhGBTpW6GrySmMXUWKHW7WYP5/QYQXwXjplR9Vu7eMkS/1+wj+b/Mg1T?=
+ =?us-ascii?Q?gQdaLxsh3SMeDSILS3H2nzOQAX1rxjil54B0nYk8nBbt/wStM49kf/FaIICC?=
+ =?us-ascii?Q?wn9H4NbxhriJWOGRA1UQkQVF6+1RjkD2RupKGIn3wKNMVjUQY54JxINbswQZ?=
+ =?us-ascii?Q?2lZCkAqE+MGj4C+UcAmaC41GEo8iQKq/zVeewsn0VXUCzYYTPF0Wtxs17O38?=
+ =?us-ascii?Q?0P3g5STpu9qY4aeHkWlqC3KaykicPDo87yMdmMPz8bac/C9Hu2x94VB0bUSm?=
+ =?us-ascii?Q?I464+TufIpEes+m4S6kH8k/1OmDJkC3p8D7oD2x5u+YM4iQTwUEyfAd/4fXJ?=
+ =?us-ascii?Q?V4Sc5MiRxDZclmeUgq77Ag+nxYiTzAVKFhWC8TwSWaLWOl7Ng2vqBc9P06Q+?=
+ =?us-ascii?Q?d5J4xyb+YTJUvJM5IDK4cq3mo3w2XUJXWoE7G0tJqcrjXV63HwtYneqj59yB?=
+ =?us-ascii?Q?GqyMjQSrYnRjPBkPEA2hYhbQ0xHwjqldqWne5dNHo3GuqsBQJxJC+FBQBu44?=
+ =?us-ascii?Q?3MP9WMVzF6vKIiTQ654jx2Ogaynu1Rq/wiOBI8V1mgc8OwLQgnIGohJpPG07?=
+ =?us-ascii?Q?RZGzG6RzPLuyx7+Irfe9qXE1xgxCpJbPpYJ7u9YsElEoP8wJvVryHCYT1PoZ?=
+ =?us-ascii?Q?wKr5DzALpA0PJ6NLb6AImRQVkeKJjMtsl6NsOQ6Zo9ghpD89M5695CoInV8B?=
+ =?us-ascii?Q?ciuZ/80uU5tpYWljtyFyrqMW5IS1q8VjHn3Gx0Hdk535l8v6Q8CrTEKskCn0?=
+ =?us-ascii?Q?Sg2lrvHPCjBESETgFp0qtm5Zmg1W5ms5dMBCbUiJT0kw/MQQm8GJa6N+WNZF?=
+ =?us-ascii?Q?ISMdotlVLKuggNPx/f1X9NYbV4Av7mtWA70dC0a2bwiRei259h3VBgK9c3uT?=
+ =?us-ascii?Q?rFUsz/p/M1+UoD61pXLWvRaJzYzU7YWvhMVC6pUWM0+uSS/EtQgn9w0rAtED?=
+ =?us-ascii?Q?etGhQggl+2hP0G7Tt3ZJt9ESpoj+xbBxE6ycEKrSr6Tbnz+9lz+RqKqKdlBo?=
+ =?us-ascii?Q?QH7Mume5HhYKSBWLdTsKvNhsqVnuPKzX5v2UP8fS2tM5qmpbyNxtIyf3Kt+T?=
+ =?us-ascii?Q?OPXlIbze4K2Cm/0MFPuYwFOUhiQL52LANyZdydSI+61Zu1cjO7hpJlzzW78l?=
+ =?us-ascii?Q?O4sySCQHY8qmSh1/sDP7HnsQiCA4lRTY9aFOYEFBtrCKj09bGkMvpqh7bbYR?=
+ =?us-ascii?Q?6eg94bTs81YeVCyNa2vpafOTkByRwInF8DlGzL+sCBStdvPfBJz1467TGNp5?=
+ =?us-ascii?Q?ZJggK8Dhac+M2QcRHKi1bJFB2jVvGArpa468i6wtZ3DfDBSHuDqTHKX5OoRg?=
+ =?us-ascii?Q?SmdJz3vfo+RYcxdwvzGa4FqNGiE0pBvPKE2sqOUG?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 570511ec-927a-464d-0719-08dbb45f8303
+X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Sep 2023 13:44:11.7593
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: WOt6dtkTnkJuRCFntVRhsZksuLZ2uLsLWz6DMZbuZqh9bBmXuAJga1Qt0W0T2Pv7
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB7848
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 13, 2023 at 01:26:14PM +0300, Dmitry Baryshkov wrote:
-> Hi Heikki,
-> 
-> On Wed, 13 Sept 2023 at 12:27, Heikki Krogerus
-> <heikki.krogerus@linux.intel.com> wrote:
-> > On Tue, Sep 12, 2023 at 08:39:45PM +0300, Dmitry Baryshkov wrote:
-> > > On 12/09/2023 14:05, Heikki Krogerus wrote:
-> > > > On Tue, Sep 12, 2023 at 12:15:10AM +0300, Dmitry Baryshkov wrote:
-> > > > > On 06/09/2023 16:38, Heikki Krogerus wrote:
-> > > > > > On Wed, Sep 06, 2023 at 03:48:35PM +0300, Dmitry Baryshkov wrote:
-> > > > > > > On Wed, 6 Sept 2023 at 15:44, Heikki Krogerus
-> > > > > > > <heikki.krogerus@linux.intel.com> wrote:
-> > > > > > > >
-> > > > > > > > On Tue, Sep 05, 2023 at 01:56:59PM +0300, Dmitry Baryshkov wrote:
-> > > > > > > > > Hi Heikki,
-> > > > > > > > >
-> > > > > > > > > On Tue, 5 Sept 2023 at 11:50, Heikki Krogerus
-> > > > > > > > > <heikki.krogerus@linux.intel.com> wrote:
-> > > > > > > > > >
-> > > > > > > > > > Hi Dmitry,
-> > > > > > > > > >
-> > > > > > > > > > On Mon, Sep 04, 2023 at 12:41:39AM +0300, Dmitry Baryshkov wrote:
-> > > > > > > > > > > The kdev->fwnode pointer is never set in drm_sysfs_connector_add(), so
-> > > > > > > > > > > dev_fwnode() checks never succeed, making the respective commit NOP.
-> > > > > > > > > >
-> > > > > > > > > > That's not true. The dev->fwnode is assigned when the device is
-> > > > > > > > > > created on ACPI platforms automatically. If the drm_connector fwnode
-> > > > > > > > > > member is assigned before the device is registered, then that fwnode
-> > > > > > > > > > is assigned also to the device - see drm_connector_acpi_find_companion().
-> > > > > > > > > >
-> > > > > > > > > > But please note that even if drm_connector does not have anything in
-> > > > > > > > > > its fwnode member, the device may still be assigned fwnode, just based
-> > > > > > > > > > on some other logic (maybe in drivers/acpi/acpi_video.c?).
-> > > > > > > > > >
-> > > > > > > > > > > And if drm_sysfs_connector_add() is modified to set kdev->fwnode, it
-> > > > > > > > > > > breaks drivers already using components (as it was pointed at [1]),
-> > > > > > > > > > > resulting in a deadlock. Lockdep trace is provided below.
-> > > > > > > > > > >
-> > > > > > > > > > > Granted these two issues, it seems impractical to fix this commit in any
-> > > > > > > > > > > sane way. Revert it instead.
-> > > > > > > > > >
-> > > > > > > > > > I think there is already user space stuff that relies on these links,
-> > > > > > > > > > so I'm not sure you can just remove them like that. If the component
-> > > > > > > > > > framework is not the correct tool here, then I think you need to
-> > > > > > > > > > suggest some other way of creating them.
-> > > > > > > > >
-> > > > > > > > > The issue (that was pointed out during review) is that having a
-> > > > > > > > > component code in the framework code can lead to lockups. With the
-> > > > > > > > > patch #2 in place (which is the only logical way to set kdev->fwnode
-> > > > > > > > > for non-ACPI systems) probing of drivers which use components and set
-> > > > > > > > > drm_connector::fwnode breaks immediately.
-> > > > > > > > >
-> > > > > > > > > Can we move the component part to the respective drivers? With the
-> > > > > > > > > patch 2 in place, connector->fwnode will be copied to the created
-> > > > > > > > > kdev's fwnode pointer.
-> > > > > > > > >
-> > > > > > > > > Another option might be to make this drm_sysfs component registration optional.
-> > > > > > > >
-> > > > > > > > You don't need to use the component framework at all if there is
-> > > > > > > > a better way of determining the connection between the DP and its
-> > > > > > > > Type-C connector (I'm assuming that that's what this series is about).
-> > > > > > > > You just need the symlinks, not the component.
-> > > > > > >
-> > > > > > > The problem is that right now this component registration has become
-> > > > > > > mandatory. And if I set the kdev->fwnode manually (like in the patch
-> > > > > > > 2), the kernel hangs inside the component code.
-> > > > > > > That's why I proposed to move the components to the place where they
-> > > > > > > are really necessary, e.g. i915 and amd drivers.
-> > > > > >
-> > > > > > So why can't we replace the component with the method you are
-> > > > > > proposing in this series of finding out the Type-C port also with
-> > > > > > i915, AMD, or whatever driver and platform (that's the only thing that
-> > > > > > component is used for)?
-> > > > >
-> > > > > The drm/msm driver uses drm_bridge for the pipeline (including the last DP
-> > > > > entry) and the drm_bridge_connector to create the connector. I think that
-> > > > > enabling i915 and AMD drivers to use drm_bridge fells out of scope for this
-> > > > > series.
-> > > > >
-> > > > >
-> > > > > > Determining the connection between a DP and its Type-C connector is
-> > > > > > starting to get really important, so ideally we have a common solution
-> > > > > > for that.
-> > > > >
-> > > > > Yes. This is what we have been discussing with Simon for quite some time on
-> > > > > #dri-devel.
-> > > > >
-> > > > > Unfortunately I think the solution that got merged was pretty much hastened
-> > > > > in instead of being well-thought. For example, it is also not always
-> > > > > possible to provide the drm_connector / typec_connector links (as you can
-> > > > > see from the patch7. Sometimes we can only express that this is a Type-C DP
-> > > > > connector, but we can not easily point it to the particular USB-C port.
-> > > > >
-> > > > > So, I'm not sure, how can we proceed here. Currently merged patch breaks
-> > > > > drm/msm if we even try to use it by setting kdef->fwnode to
-> > > > > drm_connector->fwnode. The pointed out `drivers/usb/typec/port-mapper.c` is
-> > > > > an ACPI-only thing, which is not expected to work in a non-ACPI cases.
-> > > >
-> > > > You really have to always supply not only the Type-C ports and partners,
-> > > > but also the alt modes. You need them, firstly to keep things sane
-> > > > inside kernel, but more importantly, so they are always exposed to the
-> > > > user space, AND, always the same way. We have ABIs for all this stuff,
-> > > > including the DP alt mode. Use them. No shortcuts.
-> > > >
-> > > > So here's what you need to do. UCSI does not seem to bring you
-> > > > anything useful, so just disable it for now. You don't need it. Your
-> > > > port driver is clearly drivers/soc/qcom/pmic_glink_altmode.c, so
-> > > > that's where you need to register all these components - the ports,
-> > > > partners and alt modes. You have all the needed information there.
-> > >
-> > > To make things even more complicate, UCSI is necessary for the USB part of
-> > > the story. It handles vbus and direction.
-> > >
-> > > > Only after you've done that we can start to look at how should the
-> > > > connection between the DPs and their USB Type-C connectors be handled.
-> > >
-> > > But sure enough, I can add typec port registration to the altmode driver.
-> > > This will solve the 'port not existing' part of the story.
-> > >
-> > > I'd like to hear your opinion on:
-> > >
-> > > - components. Using them breaks drm/msm. How can we proceed?
-> >
-> > I don't think replacing the components is going to be a problem once
-> > you have described everything properly in you DT. I'm fairly certain now
-> > that that is the main problem here. You don't have this connection
-> > described in your DT as it should.
-> 
-> We have. See https://lore.kernel.org/linux-arm-msm/20230817145940.9887-1-dmitry.baryshkov@linaro.org/
-> (for non-PMIC-GLINK platform)
-> Or arch/arm64/boot/dts/qcom/sm8350-hdk.dts, which already has a full
-> description of USB-C connector and signal flow.
-> 
-> In fact, thanks to this representation I can properly set
-> 'connector->fwnode' to point to the OF node corresponding to the
-> connector's drm_bridge. I can even propagate it to the kdef->fwnode /
-> kdev->of_node in drm_sysfs_connector_add(). But then a component_add()
-> call looks the kernel up.
-> 
-> And to add on top of that, here is another reason why I think that
-> this sysfs links ABI/implementation was not well thought. The
-> typec_connector_ops are added to all fwnode-enabled connector devices.
-> It doesn't even bother checking that the device is really the DP
-> connector and that the device on the other side of fwnode link is a
-> typec port device. The symlink is named 'typec_connector', so one can
-> not easily extend this ABI to support SlimPort aka MyDP (which uses
-> micro-USB-B connectors instead of USB-C). Neither can we extend it to
-> represent MHL connections (again, micro-USB-B).
-> 
-> > > - PATH property usage. This way we make USB-C DisplayPort behave like the
-> > > MST ports.
-> >
-> > That looks to me like an attempt to exploit a feature that is not
-> > designed for this purposes at all. Just drop all that.
-> 
-> But why? From the docs: 'Connector path property to identify how this
-> sink is physically connected.'
-> 
-> So far we have been using it for MST only. But the description above
-> also suits properly for the 'connected to the Type-C port0 device'
-> kind of data. Then the userspace can use this property to change the
-> representation of the controller. Or to rename it as it does for
-> DP-MST connectors. Or just add the USB-C icon in the UI.
-> 
-> Having this data in sysfs only requires userspace first to map the
-> connector to the device under sysfs (which is not trivial since Xorg
-> renames DP-MST connectors), then to look for the symlink value. Quite
-> complicated compared to checking the DRM property.
-> 
-> Moreover, once we get to the SlimPort / MyDP / MHL, we can extend the
-> schema to support 'microusb:something' values for this property.
-> 
-> > The connection has to be first described in your DT, and the way you
-> > usually describe connections in DT is by using the device graph (OF
-> > graph). It seems that you have everything needed for that - the USB
-> > Type-C connectors have their own OF nodes (what you register as
-> > drm_bridges are in fact USB Type-C connectors), and presumable you
-> > also have OF nodes for all your video ports (DisplayPorts) - so
-> > applying the graph between the two really should not be a problem. The
-> > DP is endpoint for the USB Type-C connector, and vice versa.
-> 
-> Not quite. There is no direct connection between the USB Type-C
-> connector and DP controller. The USB-C connector has three ports.
-> 
-> port@0 goes to theHS-USB controller. This is simple.
-> 
-> port@1 goes to the USB+DP PHY. All retimers and SS line muxes are
-> included in between. And it is the USB+DP PHY that is connected to the
-> DP and USB-SS controllers.
-> 
-> port@2 goes to SBU lines mux (e.g. fsa4480).
-> 
-> > After you have everything needed in your DT, the problem here isn't
-> > actually much of a problem at all. We will have options how to move
-> > forward after that.
-> 
-> Could you please describe what is missing there?
+It has been a long time coming, this series completes the default_domain
+transition and makes it so that the core IOMMU code will always have a
+non-NULL default_domain for every driver on every
+platform. set_platform_dma_ops() turned out to be a bad idea, and so
+completely remove it.
 
-We are not after the direct connections here, we are after the final
-endpoints. So you are missing description of the logical connection
-between your DP and Type-C connector.
+This is achieved by changing each driver to either:
 
-I understand that the idea is to build the graph to describe only the
-physical connections, but with just the physical connections you are
-doomed to write separate software solution for almost every single
-platform, even though the final endpoints are always the same (DP to
-Type-C). You just can not generalise the components (muxes, phys,
-retimers, etc.) behind USB Type-C connectors (or anything else for
-that matter), it's not possible. The components and their order vary
-on almost every single platform. On some platforms the stack of parts
-after the connector is also incredibly complex.
+1 - Convert the existing (or deleted) ops->detach_dev() into an
+    op->attach_dev() of an IDENTITY domain.
 
-Having the logical final endpoint connection described in your DT/ACPI
-on top of the physical connections costs very little, but at the same
-time it's usually the only thing that the software needs (like in this
-case).
+    This is based on the theory that the ARM32 HW is able to function when
+    the iommu is turned off and so the turned off state is an IDENTITY
+    translation.
 
-So, either you add one more port to your graph for the DP to Type-C
-connection, or, if that's not an option, then you need to describe
-that connection in some other way. Named references work also quite
-well in my experience.
+2 - Use a new PLATFORM domain type. This is a hack to accommodate drivers
+    that we don't really know WTF they do. S390 is legitimately using this
+    to switch to it's platform dma_ops implementation, which is where the
+    name comes from.
 
-Br,
+3 - Do #1 and force the default domain to be IDENTITY, this corrects
+    the tegra-smmu case where even an ARM64 system would have a NULL
+    default_domain.
 
+Using this we can apply the rules:
+
+a) ARM_DMA_USE_IOMMU mode always uses either the driver's
+   ops->default_domain, ops->def_domain_type(), or an IDENTITY domain.
+   All ARM32 drivers provide one of these three options.
+
+b) dma-iommu.c mode uses either the driver's ops->default_domain,
+   ops->def_domain_type or the usual DMA API policy logic based on the
+   command line/etc to pick IDENTITY/DMA domain types
+
+c) All other arch's (PPC/S390) use ops->default_domain always.
+
+See the patch "Require a default_domain for all iommu drivers" for a
+per-driver breakdown.
+
+The conversion broadly teaches a bunch of ARM32 drivers that they can do
+IDENTITY domains. There is some educated guessing involved that these are
+actual IDENTITY domains. If this turns out to be wrong the driver can be
+trivially changed to use a BLOCKING domain type instead. Further, the
+domain type only matters for drivers using ARM64's dma-iommu.c mode as it
+will select IDENTITY based on the command line and expect IDENTITY to
+work. For ARM32 and other arch cases it is purely documentation.
+
+Finally, based on all the analysis in this series, we can purge
+IOMMU_DOMAIN_UNMANAGED/DMA constants from most of the drivers. This
+greatly simplifies understanding the driver contract to the core
+code. IOMMU drivers should not be involved in policy for how the DMA API
+works, that should be a core core decision.
+
+The main gain from this work is to remove alot of ARM_DMA_USE_IOMMU
+specific code and behaviors from drivers. All that remains in iommu
+drivers after this series is the calls to arm_iommu_create_mapping().
+
+This is a step toward removing ARM_DMA_USE_IOMMU.
+
+The IDENTITY domains added to the ARM64 supporting drivers can be tested
+by booting in ARM64 mode and enabling CONFIG_IOMMU_DEFAULT_PASSTHROUGH. If
+the system still boots then most likely the implementation is an IDENTITY
+domain. If not we can trivially change it to BLOCKING or at worst PLATFORM
+if there is no detail what is going on in the HW.
+
+I think this is pretty safe for the ARM32 drivers as they don't really
+change, the code that was in detach_dev continues to be called in the same
+places it was called before.
+
+This is on github: https://github.com/jgunthorpe/linux/commits/iommu_all_defdom
+
+v8:
+ - Rebase on v6.6-rc1
+ - Adjust comments for ops.default_domain
+v7:
+ - Rebase on v6.5-rc6/Joerg's tree/iommufd
+ - Most of patch "iommufd/selftest: Make the mock iommu driver into a real
+   driver" is now in the iommufd tree, diffuse the remaining bits to
+   "iommu: Add iommu_ops->identity_domain" and
+   "iommu: Add IOMMU_DOMAIN_PLATFORM"
+ - Move the check for domain->ops->free to patch 1 as the rockchip
+   conversion relies on it
+ - Add IOMMU_DOMAIN_PLATFORM to iommu_domain_type_str
+ - Rewrite "iommu: Reorganize iommu_get_default_domain_type() to respect def_domain_type()"
+   to be clearer and more robust
+ - Remove left over .default_domain in tegra-smmu.c
+ - Use group_iommu_ops() in all appropriate places
+ - Typo s/paging/dev/ in sun50i
+v6: https://lore.kernel.org/r/0-v6-e8114faedade+425-iommu_all_defdom_jgg@nvidia.com
+ - Rebase on v6.5-rc1/Joerg's tree
+ - Fix the iommufd self test missing the iommu_device_sysfs_add()
+ - Update typo in msm commit message
+v5: https://lore.kernel.org/r/0-v5-d0a204c678c7+3d16a-iommu_all_defdom_jgg@nvidia.com
+ - Rebase on v6.5-rc1/Joerg's tree
+ - Fix Dan's remark about 'gdev uninitialized' in patch 9
+v4: https://lore.kernel.org/r/0-v4-874277bde66e+1a9f6-iommu_all_defdom_jgg@nvidia.com
+ - Fix rebasing typo missing ops->alloc_domain_paging check
+ - Rebase on latest Joerg tree
+v3: https://lore.kernel.org/r/0-v3-89830a6c7841+43d-iommu_all_defdom_jgg@nvidia.com
+ - FSL is back to a PLATFORM domain, with some fixing so it attach only
+   does something when leaving an UNMANAGED domain like it always was
+ - Rebase on Joerg's tree, adjust for "alloc_type" change
+ - Change the ARM32 untrusted check to a WARN_ON since no ARM32 system
+   can currently set trusted
+v2: https://lore.kernel.org/r/0-v2-8d1dc464eac9+10f-iommu_all_defdom_jgg@nvidia.com
+ - FSL is an IDENTITY domain
+ - Delete terga-gart instead of trying to carry it
+ - Use the policy determination from iommu_get_default_domain_type() to
+   drive the arm_iommu mode
+ - Reorganize and introduce new patches to do the above:
+    * Split the ops->identity_domain to an independent earlier patch
+    * Remove the UNMANAGED return from def_domain_type in mtk_v1 earlier
+      so the new iommu_get_default_domain_type() can work
+    * Make the driver's def_domain_type have higher policy priority than
+      untrusted
+    * Merge the set_platfom_dma_ops hunk from mtk_v1 along with rockchip
+      into the patch that forced IDENTITY on ARM32
+ - Revise sun50i to be cleaner and have a non-NULL internal domain
+ - Reword logging in exynos
+ - Remove the gdev from the group alloc path, instead add a new
+   function __iommu_group_domain_alloc() that takes in the group
+   and uses the first device. Split this to its own patch
+ - New patch to make iommufd's mock selftest into a real driver
+ - New patch to fix power's partial iommu driver
+v1: https://lore.kernel.org/r/0-v1-21cc72fcfb22+a7a-iommu_all_defdom_jgg@nvidia.com
+
+Jason Gunthorpe (24):
+  iommu: Add iommu_ops->identity_domain
+  iommu: Add IOMMU_DOMAIN_PLATFORM
+  powerpc/iommu: Setup a default domain and remove set_platform_dma_ops
+  iommu: Add IOMMU_DOMAIN_PLATFORM for S390
+  iommu/fsl_pamu: Implement a PLATFORM domain
+  iommu/tegra-gart: Remove tegra-gart
+  iommu/mtk_iommu_v1: Implement an IDENTITY domain
+  iommu: Reorganize iommu_get_default_domain_type() to respect
+    def_domain_type()
+  iommu: Allow an IDENTITY domain as the default_domain in ARM32
+  iommu/exynos: Implement an IDENTITY domain
+  iommu/tegra-smmu: Implement an IDENTITY domain
+  iommu/tegra-smmu: Support DMA domains in tegra
+  iommu/omap: Implement an IDENTITY domain
+  iommu/msm: Implement an IDENTITY domain
+  iommu: Remove ops->set_platform_dma_ops()
+  iommu/qcom_iommu: Add an IOMMU_IDENTITIY_DOMAIN
+  iommu/ipmmu: Add an IOMMU_IDENTITIY_DOMAIN
+  iommu/mtk_iommu: Add an IOMMU_IDENTITIY_DOMAIN
+  iommu/sun50i: Add an IOMMU_IDENTITIY_DOMAIN
+  iommu: Require a default_domain for all iommu drivers
+  iommu: Add __iommu_group_domain_alloc()
+  iommu: Add ops->domain_alloc_paging()
+  iommu: Convert simple drivers with DOMAIN_DMA to domain_alloc_paging()
+  iommu: Convert remaining simple drivers to domain_alloc_paging()
+
+ arch/arm/configs/multi_v7_defconfig     |   1 -
+ arch/arm/configs/tegra_defconfig        |   1 -
+ arch/powerpc/kernel/iommu.c             |  38 ++-
+ drivers/iommu/Kconfig                   |  11 -
+ drivers/iommu/Makefile                  |   1 -
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c |  45 ++-
+ drivers/iommu/exynos-iommu.c            |  73 +++--
+ drivers/iommu/fsl_pamu_domain.c         |  41 ++-
+ drivers/iommu/iommu.c                   | 259 ++++++++++-------
+ drivers/iommu/iommufd/selftest.c        |  19 +-
+ drivers/iommu/ipmmu-vmsa.c              |  50 +++-
+ drivers/iommu/msm_iommu.c               |  30 +-
+ drivers/iommu/mtk_iommu.c               |  30 +-
+ drivers/iommu/mtk_iommu_v1.c            |  28 +-
+ drivers/iommu/omap-iommu.c              |  28 +-
+ drivers/iommu/rockchip-iommu.c          |  26 +-
+ drivers/iommu/s390-iommu.c              |  28 +-
+ drivers/iommu/sprd-iommu.c              |   7 +-
+ drivers/iommu/sun50i-iommu.c            |  35 ++-
+ drivers/iommu/tegra-gart.c              | 371 ------------------------
+ drivers/iommu/tegra-smmu.c              |  44 ++-
+ drivers/memory/tegra/mc.c               |  34 ---
+ drivers/memory/tegra/tegra20.c          |  28 --
+ include/linux/iommu.h                   |  18 +-
+ include/soc/tegra/mc.h                  |  26 --
+ 25 files changed, 516 insertions(+), 756 deletions(-)
+ delete mode 100644 drivers/iommu/tegra-gart.c
+
+
+base-commit: 0bb80ecc33a8fb5a682236443c1e740d5c917d1d
 -- 
-heikki
+2.42.0
+
