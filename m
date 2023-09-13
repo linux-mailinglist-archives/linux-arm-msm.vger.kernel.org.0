@@ -2,83 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FD1879E796
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 14:09:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 41EDE79E7A1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Sep 2023 14:10:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240254AbjIMMJE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Sep 2023 08:09:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34844 "EHLO
+        id S233326AbjIMMKq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Sep 2023 08:10:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240244AbjIMMJC (ORCPT
+        with ESMTP id S236688AbjIMMKp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Sep 2023 08:09:02 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D61F19B0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 05:08:58 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-52c9be5e6f0so8149492a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 05:08:58 -0700 (PDT)
+        Wed, 13 Sep 2023 08:10:45 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3454919A7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 05:10:41 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2bd0d135ca3so116944681fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 05:10:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694606937; x=1695211737; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1694607039; x=1695211839; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Dsc3mJorN3B/h1Vd1XyRMUNMxmDX6BmM8Ul2Dt3JUqg=;
-        b=p6zPVxHY9UsEHQvmZ7RjoFRellJ+R2Jww0DGrDEd0zIbcpOP6ZM1rV4lAy6kq482fP
-         EP5ogy9Nf8zYxoZP7MWXE+tamko2bBrN4m1F5r/i/5WnbOx5i+lRtpJYKq696K2A6pdV
-         8n5laNn0KgSuG7U4INoFU/4Vk34Z9QhSmH1uf6Gmr/brpOGfsgKHM7GKIcBPHs9P8lse
-         NdlREm9PieRqCARvL7wOiyiA3KoX3ox31pZ+jIf6kGAXrN4aSwuFkEDfx3yLfc9AKKSO
-         kMxWD/l8No2nUAP86z+x7Dn85SvfUruPjIqABSd6/8OZ7W3KAET8qBFxX1eG3f5Hgbbc
-         MUVw==
+        bh=SQIM+kqMG9ytOOMoiN7yuL7xJYjBwxdRQr4Do42aFXE=;
+        b=mCdOxodGzfbOAhIXjY+KogNqwrxUJr5TxT7bHhdDnhclvsBUSgcBB9B/r6bqqAwH9L
+         V/1K4u1NkWPtirunMj9/2TzQ2yZmhNgy/wlUzyc2FXjbdLqaAewnZcyx5fYwav8ufK/J
+         FSyFmKv3g0vLYph9rwUT4IQmJ3lSKCFZR2T1wDuj6nOuQ+FhO7Ey3JvKpjmvFdRyZ2rH
+         NTtJ7cNY/tFTFSbsbhNjML2YMKT+6aHZ3CJwGJZBDwcgdhlfuUoGNzEwfkehWODLsztZ
+         qmg0saGEs6qH4l2AO2L0dbhQ/qpiZrdOS68eIT+mtPYuQ5NqPpc/m4hXO0Ayaii8HtgS
+         1xQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694606937; x=1695211737;
+        d=1e100.net; s=20230601; t=1694607039; x=1695211839;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Dsc3mJorN3B/h1Vd1XyRMUNMxmDX6BmM8Ul2Dt3JUqg=;
-        b=ZOZF+fAJt208nl9AyqcN9NIFHrm4dfYKJjS+3KUsK/PSqy2RxH/4//B2X6N7HgFbuU
-         cuIAaxJS6P7+lv1q6vHWLD3LLwT2EjeBkcTaBdXfWtRuKZY0n5Qe5gKO+54AABse6M+Y
-         vPik09u15WQiD1X3NutQZx4/Hk6pYiSxbUbuN55h9w30zZ6mdYxycxRpvOLn/AMcxxWn
-         WqGES1/UXFX79wSU6MymYDcMVB2oBgDi+WFwWlc23dUt7x8X4L1nWCKicO3jtFQuXgp5
-         moyY/mPiLVQEaLZNh2W1QqBq/ebLKS/g9d6s01ITsPvucuqohBd8v3ott4UPbeLqddkA
-         Ar7g==
-X-Gm-Message-State: AOJu0YxKS1mANtcTZqp+I//e+cZaYnFt4c2sUvqWA2wPWnx2hCr/k1eN
-        PiiC/ROmZWNEXodnrkTbfmHXkA==
-X-Google-Smtp-Source: AGHT+IFeIWTz7zH3NNiZGG8GawoWgTPZnX8SM7DBQPmw79zI1P9+hmA7uTN3L/vILKVy/rLiMXcj8Q==
-X-Received: by 2002:a17:906:cc16:b0:9a2:23cd:f052 with SMTP id ml22-20020a170906cc1600b009a223cdf052mr1668521ejb.7.1694606936783;
-        Wed, 13 Sep 2023 05:08:56 -0700 (PDT)
+        bh=SQIM+kqMG9ytOOMoiN7yuL7xJYjBwxdRQr4Do42aFXE=;
+        b=DZnZB8AYE1717HYeuT+Wl21IzXLl4GLGUyljST1NemuCIb0kwL9tnxBMBLr0LBfbGZ
+         Y53cElQ4Q3LMYByUTXM9bHyBNHY1pJCPsxIc3QHF9Wlx7PvMHMDlJ/+oOJudQAm+0keL
+         1tOpkRhXIHtZ2I1400Bg8nOP2uVCvsy/thGSecsCIMdo3i5QXgrnsfcXHasXY6hKLaHd
+         uJw3XW7C6nHMDS/S7I2dl08CJGAKNXrzue5SagkCknpEzGNA6ZpelN0z7B/sYcw+EnvZ
+         pby1+2B3C0HZg/KQS1ZMZdLOlbNVugRURKQcSlVK8/j08hoVKRFm2AQusCBttgkITu5t
+         emrQ==
+X-Gm-Message-State: AOJu0YzLu1YjPaZ9OdBiXQ80mTl7dYEpSASys7quhaL7/MuBx4TjWMsy
+        NKb96ESKrVDS15c8whkxzO0X4Q==
+X-Google-Smtp-Source: AGHT+IEHVECWvv1uWhyOqRUFyoZhQUOvMAPZZoteTJ5oOo8s3pvcNbh9qxE07ML7hsTq55A+nMZokw==
+X-Received: by 2002:a2e:9606:0:b0:2bd:2260:46ab with SMTP id v6-20020a2e9606000000b002bd226046abmr1943754ljh.50.1694607039359;
+        Wed, 13 Sep 2023 05:10:39 -0700 (PDT)
 Received: from [192.168.37.232] (178235177106.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.106])
-        by smtp.gmail.com with ESMTPSA id p21-20020a170906229500b00992b8d56f3asm8319579eja.105.2023.09.13.05.08.54
+        by smtp.gmail.com with ESMTPSA id p21-20020a170906229500b00992b8d56f3asm8319579eja.105.2023.09.13.05.10.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Sep 2023 05:08:56 -0700 (PDT)
-Message-ID: <c3dd5f68-af75-4880-83c2-ca7723561ae9@linaro.org>
-Date:   Wed, 13 Sep 2023 14:08:53 +0200
+        Wed, 13 Sep 2023 05:10:38 -0700 (PDT)
+Message-ID: <3920bc96-fe58-4e3b-96ab-706f00edb2ee@linaro.org>
+Date:   Wed, 13 Sep 2023 14:10:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/14] arm64: dts: qcom: sdm630: Drop RPM bus clocks
+Subject: Re: [PATCH v11 13/13] arm64: dts: qcom: sa8540-ride: Enable first
+ port of tertiary usb controller
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Alexey Minnekhanov <alexeymin@postmarketos.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        linux-usb@vger.kernel.org
-References: <20230721-topic-rpm_clk_cleanup-v2-0-1e506593b1bd@linaro.org>
- <20230721-topic-rpm_clk_cleanup-v2-6-1e506593b1bd@linaro.org>
- <70b2a9d7-1a3e-25da-3d78-7bfa5d3a1e05@linaro.org>
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Johan Hovold <johan@kernel.org>,
+        Mathias Nyman <mathias.nyman@intel.com>
+Cc:     linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
+        quic_jackp@quicinc.com, ahalaney@redhat.com,
+        quic_shazhuss@quicinc.com
+References: <20230828133033.11988-1-quic_kriskura@quicinc.com>
+ <20230828133033.11988-14-quic_kriskura@quicinc.com>
+ <f19fa545-0ccb-4670-af77-7c034b1016ef@linaro.org>
+ <e7bd3aa9-b8ee-4b8a-2354-e786f9a9ff47@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -115,45 +114,45 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <70b2a9d7-1a3e-25da-3d78-7bfa5d3a1e05@linaro.org>
+In-Reply-To: <e7bd3aa9-b8ee-4b8a-2354-e786f9a9ff47@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13.09.2023 09:13, Krzysztof Kozlowski wrote:
-> On 12/09/2023 15:31, Konrad Dybcio wrote:
->> These clocks are now handled from within the icc framework and are
->> no longer registered from within the CCF. Remove them.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
-[...]
-
->>  		anoc2_smmu: iommu@16c0000 {
->>  			compatible = "qcom,sdm630-smmu-v2", "qcom,smmu-v2";
->>  			reg = <0x016c0000 0x40000>;
->> -
->> -			assigned-clocks = <&rpmcc RPM_SMD_AGGR2_NOC_CLK>;
->> -			assigned-clock-rates = <1000>;
->> -			clocks = <&rpmcc RPM_SMD_AGGR2_NOC_CLK>;
->> -			clock-names = "bus";
+On 7.09.2023 05:36, Krishna Kurapati PSSNV wrote:
 > 
-> This is also against bindings. After your patch #4, such bus clock (or
-> other combinations) is still required.
-So, we have 4 SMMU instances on this platform:
+> 
+> On 9/6/2023 10:28 PM, Konrad Dybcio wrote:
+>> On 28.08.2023 15:30, Krishna Kurapati wrote:
+>>> From: Andrew Halaney <ahalaney@redhat.com>
+>>>
+>>> There is now support for the multiport USB controller this uses so
+>>> enable it.
+>>>
+>>> The board only has a single port hooked up (despite it being wired up to
+>>> the multiport IP on the SoC). There's also a USB 2.0 mux hooked up,
+>>> which by default on boot is selected to mux properly. Grab the gpio
+>>> controlling that and ensure it stays in the right position so USB 2.0
+>>> continues to be routed from the external port to the SoC.
+>>>
+>>> Co-developed-by: Andrew Halaney <ahalaney@redhat.com>
+>>> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+>>> [Krishna: Rebased on top of usb-next]
+>>> Co-developed-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+>>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+>>> ---
+>> Is there any benefit to removing the other ports?
+>>
+>> i.e. are ports 1-3 not parked properly by the dwc3 driver if
+>> they're never connected to anything?
+>>
+> Hi Konrad,
+> 
+>  Whether or not the phy is connected to a port, the controller would modify the GUSB2PHYCFG/GUSB3PIPECTL registers. But if we don't specify only one phy and let phys from base DTSI take effect (4 HS / 2 SS), we would end up initializing and powering on phy's which are never connected to a port. To avoid that we need to specify only one phy for this platform.
+And does that have any major effect on power use?
 
-MMSS (described, iface, mem, mem_iface)
-GPU (described, iface-mm, iface-smmu, bus-smmu)
-
-ANOC2 (this one, no clocks after removing rpmcc bus)
-LPASS (no clocks)
-
-Should I then create a new entry in the bindings, replicating
-what's there for msm8998[1] and dropping the entry with just "bus"
-from anyOf?
+Do these PHYs not have some dormant/low power mode?
 
 Konrad
-
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/Documentation/devicetree/bindings/iommu/arm,smmu.yaml?h=next-20230913#n272
