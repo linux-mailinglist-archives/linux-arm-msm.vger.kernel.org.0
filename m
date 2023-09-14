@@ -2,63 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 67E467A0A12
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 18:01:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 663DD7A0A5A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 18:07:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241344AbjINQBC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Sep 2023 12:01:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51612 "EHLO
+        id S241799AbjINQHV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Sep 2023 12:07:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241581AbjINQA6 (ORCPT
+        with ESMTP id S241804AbjINQHO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Sep 2023 12:00:58 -0400
+        Thu, 14 Sep 2023 12:07:14 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 132112113;
-        Thu, 14 Sep 2023 09:00:45 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E94C433C8;
-        Thu, 14 Sep 2023 16:00:43 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 556CF1FF0;
+        Thu, 14 Sep 2023 09:07:10 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43EE2C433CB;
+        Thu, 14 Sep 2023 16:07:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1694707244;
-        bh=s5eKT9LyYQ04iLn5WzeyeRWddRgwEAzl0R57g4chGYE=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=Q86ackW4mHDmCq1G3Ni6UfPswm6geToODxi7/rEQGRIneXHYdX0ak3AANS+RZ+DyB
-         7uJEbhCB4N0pTTiVPT6v++QKocqWk7GcxH/PyKpe44GAiQkIaqoDkKJZrL8uh6RSyJ
-         FCXoRSm2sAZloKnr5TUkmBjdUtm7zsIjj4ipz4xItE1TeAlUzel8OOZedoRAz1cFbE
-         1Z1Qt35NQNrqAnxrrgD9JjTNpcnwaH9EaYAkaDpy4Ls0CQ5zDvQGtQwZXrQsfPdvF1
-         JBq33jpqIo9b/dwSwSUhFYVXGV6GWQPTKq/G/vtDV5TEBarTo5tXSxDputV8ezjvrq
-         ywdmuBowpGVHA==
+        s=k20201202; t=1694707630;
+        bh=ehQkWHJBuPju+u+N0FVzD7yR614q+6YZ5daHqnVOHdQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=qVfx31tDhqLl9wzmHkAmCgxBZSbpCl5YH7OypZeHWd42YZ+rEJL6rGrMDNRFagB+R
+         ZIEnFZdvo/nLfLwgr2Kq8iRcBM9VHRwlAqC1XbPi9G5wl7UZQcjK8fgnBxjG6e333r
+         R5cw62WTXsnlKkJxEmZo+qd7tA+mLjyLKKjtwatXzZ8aVM0k4j5meNuhWtyXsfqFts
+         tWQF94JT4aCu0E2YqDc55eWYzbmywaqCNGevLstUdQQC/H0wooAPPyIs6pIYG7oC3n
+         fdh8+jK6pFbfZ6tizguXSJfT85VzScMXQ5upVNUfz4jZQRJnOIVt1DjB928JzE3AcH
+         PelZRzJix0TRA==
+Date:   Thu, 14 Sep 2023 09:11:14 -0700
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     agross@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, Robert Marko <robimarko@gmail.com>
-Subject: Re: (subset) [PATCH 1/2] dt-bindings: arm: qcom,ids: Add IDs for IPQ8174 family
-Date:   Thu, 14 Sep 2023 09:04:32 -0700
-Message-ID: <169470744881.681825.5161252914219672681.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230901181041.1538999-1-robimarko@gmail.com>
-References: <20230901181041.1538999-1-robimarko@gmail.com>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
+        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 08/17] pmdomain: qcom: Move Kconfig options to the
+ pmdomain subsystem
+Message-ID: <4ee5uio5nr467dpljhvzlzrpa4fcdds646dzmm5w2dqgjhyrnb@37d6e2f43vwq>
+References: <20230914111753.586627-1-ulf.hansson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230914111753.586627-1-ulf.hansson@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Fri, 01 Sep 2023 20:10:04 +0200, Robert Marko wrote:
-> IPQ8174 (Oak) family is part of the IPQ8074 family, but the ID-s for it
-> are missing so lets add them.
+On Thu, Sep 14, 2023 at 01:17:53PM +0200, Ulf Hansson wrote:
+> The Kconfig options belongs closer to the corresponding implementations,
+> hence let's move them from the soc subsystem to the pmdomain subsystem.
 > 
-> 
+> Cc: Bjorn Andersson <andersson@kernel.org>
+> Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: <linux-arm-msm@vger.kernel.org>
+> Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 
-Applied, thanks!
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 
-[1/2] dt-bindings: arm: qcom,ids: Add IDs for IPQ8174 family
-      commit: b8c889bef9797a58b8b5aad23875cc4d04b3efd3
-[2/2] soc: qcom: socinfo: Add IDs for IPQ8174 family
-      commit: e9104e73d4fc8a023608be9c18ee1b897d0ccb14
-
-Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+Regards,
+Bjorn
