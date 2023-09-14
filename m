@@ -2,117 +2,262 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FB2E7A057D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 15:24:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A19E17A059E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 15:33:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238797AbjINNYa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Sep 2023 09:24:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51250 "EHLO
+        id S231594AbjINNdh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Sep 2023 09:33:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235397AbjINNYa (ORCPT
+        with ESMTP id S230122AbjINNdh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Sep 2023 09:24:30 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 454301BEF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Sep 2023 06:24:26 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-31fa15f4cc6so861728f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Sep 2023 06:24:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694697864; x=1695302664; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=dXYeKwpulIh1RMbfJr120lsTEAn4d1E2jtPH2MjM2yQ=;
-        b=KKezUFUNZKkcACFWxLvLSaIWzFvK6BmPFgFb+SQCL2uTv7DDUBgdEIKX2tynRkkijn
-         ZGmSOhhi28anTs+be3zEPcczmHrMSgz4kH24A9ePoI4+AJe6ztt1IKigwO8Df2mzIwwj
-         7CnvLjAR5YOqhmUJvxXNIMMwAMLN3XbYF9pzohftF9elDv7XIT8WSGnpSz6/BPkHY2Cz
-         x3jGTXqtoiU/dGf2Mb0s2yFXIB2PdzyfWnh3FVl9jF9pM4rc8P5+EaudVyeoksImnYnT
-         Oew3vdjvumjTlOUgG43l0c2ngSzu+Z1l6SxPVNShRPMu9PUz45FS5EB98hoHimu+vSX7
-         9EvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694697864; x=1695302664;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dXYeKwpulIh1RMbfJr120lsTEAn4d1E2jtPH2MjM2yQ=;
-        b=nOiG0sUn3vUAcUEzigz98S9OAmIxsPh6MbDTF8yxU2CZgfExS7459JsctomtqiC8YR
-         b06bHafD/njKrPfUoONY2eOZ7GeLGrKCtPSt9RUz/a4+w967x6MqdAY/P+hTP+m/lN7o
-         qVID5qD0yy0eQOooTDlHzrh64QR+XkG21HHjqfJf9T2WM3SWPtXNHsRirqRBB3pxlaS5
-         X7zFfa1Vte2MKrZS8lQGSIJGjOKUio5OZtXpMY6XtHdUvdWmGbGrfgFfCDAwQNb5XEWh
-         ETm2MGGKhw4Iw/kh7WqqQ/vwNC2pdj5otXgr/MyYlbIyyaGf3gmo0jDE5MJoC55wOgGI
-         hgFw==
-X-Gm-Message-State: AOJu0YwBXlQFTPNZOE+119WwqId7QmPnHLWbuHVtzs0aCThZSqTtpH5m
-        QY6foEMFjB3KJIDg5TyjomZG3Q==
-X-Google-Smtp-Source: AGHT+IFX5QrHR8UPMv5j2GVDuoTB2MlsHgIQas7bW9TGWw0RIDrLQQV+XqeSvghSOq3cESmIBxYOiQ==
-X-Received: by 2002:a5d:6a4c:0:b0:319:8a28:4001 with SMTP id t12-20020a5d6a4c000000b003198a284001mr4665195wrw.41.1694697864612;
-        Thu, 14 Sep 2023 06:24:24 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id n4-20020a1c7204000000b00402f713c56esm1978015wmc.2.2023.09.14.06.24.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Sep 2023 06:24:24 -0700 (PDT)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Thu, 14 Sep 2023 15:24:21 +0200
-Subject: [PATCH] arm64: defconfig: enable NB7VPQ904M driver as module
+        Thu, 14 Sep 2023 09:33:37 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3F651BF8;
+        Thu, 14 Sep 2023 06:33:32 -0700 (PDT)
+Received: from benjamin-XPS-13-9310.. (unknown [IPv6:2a01:e0a:120:3210:36f2:37bd:ccbb:373f])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: benjamin.gaignard)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 1FD3E660734B;
+        Thu, 14 Sep 2023 14:33:31 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1694698411;
+        bh=eaXeJgAddVDKkPGAq2v7V0eYYyIzO9cEKlcRXrt48s4=;
+        h=From:To:Cc:Subject:Date:From;
+        b=i0+daKYHNEpo9qH64Ew7mFck+hacXgoGKFXpeejwM+4RQrG+sPFAktMLgJ6Ni9ZRf
+         wljEy2mjM5Fnz7RD0e/e0m/Od15sXbJrQnSHXqzxuxzyStwXcQJbuGCLxtksRnhC9m
+         ra+merXUxWTCqjMYOplryE4lLVSX9lToA+5um7w28M029gSLGlUesvj2ANAhodK0rk
+         YjHks3Z55SVbZYAGqnUxKsC47DgGUL9boUUptLKcgycauVX+uQbLJwMN9zGmFwoQ43
+         NkzN5adViFFn07i0KMCXPFBJd2/i1krml/YO69CG1+k0Pxtwv4bTyUbIKMAFnbCuKF
+         yO63hZa9pzTxA==
+From:   Benjamin Gaignard <benjamin.gaignard@collabora.com>
+To:     mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
+        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
+        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
+        hverkuil-cisco@xs4all.nl, nicolas.dufresne@collabora.com
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
+        kernel@collabora.com,
+        Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Subject: [PATCH v7 00/49]  Add DELETE_BUF ioctl
+Date:   Thu, 14 Sep 2023 15:32:34 +0200
+Message-Id: <20230914133323.198857-1-benjamin.gaignard@collabora.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230914-topic-sm8x50-upstream-nb7-defconfig-v1-1-4f6fd9f3fded@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAIQJA2UC/x3NQQ6DIBBA0auYWTsJSK3Uq5guEAc7C4Ew2pgY7
- 17S5dv8f4FQYRIYmwsKfVk4xQrdNuA/Lq6EvFRDpzqjXvqBe8rsUTZ79gqPLHsht2GcB1wo+BQ
- Dr6htGMjMtnfmCbWUCwU+/5fpfd8/wOqaUHUAAAA=
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=853;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=poGyM8hfv14gfER3P/3BziQ95VzWzgF5E72FbTU0TWU=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlAwmHFNG+99IBcTslWCLqNCmV9yiA8+FwHtNAvfjK
- ec+lUCSJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZQMJhwAKCRB33NvayMhJ0T5HD/
- 9rZXvdwnVmUoMuuhz7if8f3QzwDzlg43aF2o2MTqtc21kD2w9K3cAjS5M8VZR5/jJGXtaA/+59rdbA
- PleKpCyFV5opoc95hts+PBqGEN7A9Arf9Iuzc0sdKtvSmCZ5NvvDNzh8YPMl6iqXg/P1IRXvn4eRdA
- kjcxO2BYBX1nh417lt6lUVvHvbeOi8t5+xWsNwSkFZ8UA7T8IPgqKQnUWRm3WB3vfGusaFvUtjXEju
- 1KLtWJSKesjF6fk3oTnekmAa2bGwkn6PQqt1fxxOgLtB/xXg9A9hulM+RQuNiV91m+XFE26A7XyV6Y
- 4k9BVJiNAkkfKE05Vc8vbZYjXwFYKhO5Wak72pfJSTkJOFvPL/l/ugns56eUu6rll4IH3rJS+O5XRH
- mn+2paJ0p27ufuZc5V4KaoF1FvUnBdvEqBnfby1X2GWv9A/8d/XTiM38PB/PPxHQMvMhcymbB6ghHy
- S5gS1sLyffhwLZG1IqUI9ZEY99hbDrYOvZuZyIOagtAffygmifecAGL0lvy4WXkSZDWflya698d1fm
- U9sbxcvuXthH2Go+NCYtU2YFhuDE5UDp87DAIfkqDq0vkYZ7HhUdd7WQeGSrkOQTKX12EaCAA8ym/k
- vi5qiJ1y+H6oxXYvlayiA0XtJTQgxZsJ0I3pz2CnUHBO8NxfqxhA8530GB8g==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the NB7VPQ904M SuperSpeed redriver/retimer as module as
-it is now used on the SM8550 QRD platform.
+Unlike when resolution change on keyframes, dynamic resolution change
+on inter frames doesn't allow to do a stream off/on sequence because
+it is need to keep all previous references alive to decode inter frames.
+This constraint have two main problems:
+- more memory consumption.
+- more buffers in use.
+To solve these issue this series introduce DELETE_BUFS ioctl and remove
+the 32 buffers limit per queue.
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+VP9 conformance tests using fluster give a score of 210/305.
+The 24 resize inter tests (vp90-2-21-resize_inter_* files) are ok
+but require to use postprocessor.
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 5315789f4868..094c9eaa8e53 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1038,6 +1038,7 @@ CONFIG_TYPEC_TPS6598X=m
- CONFIG_TYPEC_HD3SS3220=m
- CONFIG_TYPEC_UCSI=m
- CONFIG_TYPEC_MUX_FSA4480=m
-+CONFIG_TYPEC_MUX_NB7VPQ904M=m
- CONFIG_UCSI_CCG=m
- CONFIG_TYPEC_MUX_GPIO_SBU=m
- CONFIG_MMC=y
+Kernel branch is available here:
+https://gitlab.collabora.com/benjamin.gaignard/for-upstream/-/commits/remove_vb2_queue_limit_v7
 
----
-base-commit: 0bb80ecc33a8fb5a682236443c1e740d5c917d1d
-change-id: 20230914-topic-sm8x50-upstream-nb7-defconfig-18f7e3b85a36
+GStreamer branch to use DELETE_BUF ioctl and testing dynamic resolution
+change is here:
+https://gitlab.freedesktop.org/benjamin.gaignard1/gstreamer/-/commits/VP9_drc
 
-Best regards,
+changes in version 7:
+- Use a bitmap to know which entries are valid in queue bufs array.
+  The number of buffers in the queue could must calculated from the
+  bitmap so num_buffers becomes useless. This led to add quite few
+  patches to remove it from all the drivers.
+  Note: despiste my attention I may have miss some calls to
+  num_buffers...
+- Split patches to make them more readable.
+- Run v4l2-compliance with additional delete-bufs tests.
+- Run ./test-media -kmemleak vivid and no more failures.
+  Note: I had to remove USERPTR streaming test because they to much
+  frequentely hit get_framevec bug. It is not related to my series
+  since this happens all the time on master branch.
+- Fix Hans remarks on v6
+
+changes in version 6:
+- Get a patch per driver to use vb2_get_buffer() instead of directly access
+  to queue buffers array.
+- Add lock in vb2_core_delete_buf()
+- Use vb2_buffer instead of index
+- Fix various comments
+- Change buffer index name to BUFFER_INDEX_MASK
+- Stop spamming kernel log with unbalanced counters
+
+changes in version 5:
+- Rework offset cookie encoding pattern is n ow the first patch of the
+  serie.
+- Use static array instead of allocated one for postprocessor buffers.
+
+changes in version 4:
+- Stop using Xarray, instead let queues decide about their own maximum
+  number of buffer and allocate bufs array given that value.
+- Rework offset cookie encoding pattern.
+- Change DELETE_BUF to DELETE_BUFS because it now usable for
+  range of buffer to be symetrical of CREATE_BUFS.
+- Add fixes tags on couple of Verisilicon related patches.
+- Be smarter in Verisilicon postprocessor buffers management.
+- Rebase on top of v6.4
+
+changes in version 3:
+- Use Xarray API to store allocated video buffers.
+- No module parameter to limit the number of buffer per queue.
+- Use Xarray inside Verisilicon driver to store postprocessor buffers
+  and remove VB2_MAX_FRAME limit.
+- Allow Versilicon driver to change of resolution while streaming
+- Various fixes the Verisilicon VP9 code to improve fluster score.
+ 
+changes in version 2:
+- Use a dynamic array and not a list to keep trace of allocated buffers.
+  Not use IDR interface because it is marked as deprecated in kernel
+  documentation.
+- Add a module parameter to limit the number of buffer per queue.
+- Add DELETE_BUF ioctl and m2m helpers.
+
+Regards,
+Benjamin
+ 
+Benjamin Gaignard (49):
+  media: videobuf2: Rework offset 'cookie' encoding pattern
+  media: videobuf2: Stop spamming kernel log with all queue counter
+  media: videobuf2: Use vb2_buffer instead of index
+  media: amphion: Use vb2_get_buffer() instead of directly access to
+    buffers array
+  media: mediatek: jpeg: Use vb2_get_buffer() instead of directly access
+    to buffers array
+  media: mediatek: vdec: Use vb2_get_buffer() instead of directly access
+    to buffers array
+  media: sti: hva: Use vb2_get_buffer() instead of directly access to
+    buffers array
+  media: visl: Use vb2_get_buffer() instead of directly access to
+    buffers array
+  media: atomisp: Use vb2_get_buffer() instead of directly access to
+    buffers array
+  media: dvb-core: Use vb2_get_buffer() instead of directly access to
+    buffers array
+  media: videobuf2: Access vb2_queue bufs array through helper functions
+  media: videobuf2: Be more flexible on the number of queue stored
+    buffers
+  media: verisilicon: Refactor postprocessor to store more buffers
+  media: verisilicon: Store chroma and motion vectors offset
+  media: verisilicon: g2: Use common helpers to compute chroma and mv
+    offsets
+  media: verisilicon: postproc: Fix down scale test
+  media: verisilicon: vp9: Allow to change resolution while streaming
+  media: Remove duplicated index vs q->num_buffers check
+  media: core: Add helper to get queue number of buffers
+  media: core: Rework how create_buf index returned value is computed
+  media: dvb: Stop direct calls to queue num_buffers field
+  media: i2c: Stop direct calls to queue num_buffers field
+  media: pci: cx18: Stop direct calls to queue num_buffers field
+  media: pci: dt3155: Stop direct calls to queue num_buffers field
+  media: pci: netup_unidvb: Stop direct calls to queue num_buffers field
+  media: pci: tw68: Stop direct calls to queue num_buffers field
+  media: pci: tw686x: Stop direct calls to queue num_buffers field
+  media: amphion: Stop direct calls to queue num_buffers field
+  media: coda: Stop direct calls to queue num_buffers field
+  media: mediatek: vcodec: Stop direct calls to queue num_buffers field
+  media: nxp: Stop direct calls to queue num_buffers field
+  media: renesas: Stop direct calls to queue num_buffers field
+  media: sti: hva: Stop direct calls to queue num_buffers field
+  media: ti: Stop direct calls to queue num_buffers field
+  media: verisilicon: Stop direct calls to queue num_buffers field
+  media: test-drivers: Stop direct calls to queue num_buffers field
+  media: usb: airspy: Stop direct calls to queue num_buffers field
+  media: usb: cx231xx: Stop direct calls to queue num_buffers field
+  media: usb: hackrf: Stop direct calls to queue num_buffers field
+  media: usb: usbtv: Stop direct calls to queue num_buffers field
+  media: atomisp: Stop direct calls to queue num_buffers field
+  media: imx: Stop direct calls to queue num_buffers field
+  media: meson: vdec: Stop direct calls to queue num_buffers field
+  media: cedrus: Stop direct calls to queue num_buffers field
+  media: core: Add bitmap manage bufs array entries
+  media: core: Free range of buffers
+  media: v4l2: Add DELETE_BUFS ioctl
+  media: v4l2: Add mem2mem helpers for DELETE_BUFS ioctl
+  media: test-drivers: Use helper for DELETE_BUFS ioctl
+
+ .../userspace-api/media/v4l/user-func.rst     |   1 +
+ .../media/v4l/vidioc-delete-bufs.rst          |  77 +++
+ .../media/common/videobuf2/videobuf2-core.c   | 583 ++++++++++++------
+ .../media/common/videobuf2/videobuf2-v4l2.c   | 107 +++-
+ drivers/media/dvb-core/dvb_vb2.c              |  17 +-
+ drivers/media/dvb-frontends/rtl2832_sdr.c     |   5 +-
+ drivers/media/i2c/video-i2c.c                 |   2 +-
+ drivers/media/pci/cx18/cx18-streams.c         |   5 +-
+ drivers/media/pci/dt3155/dt3155.c             |   5 +-
+ .../pci/netup_unidvb/netup_unidvb_core.c      |   5 +-
+ drivers/media/pci/tw68/tw68-video.c           |   4 +-
+ drivers/media/pci/tw686x/tw686x-video.c       |   5 +-
+ drivers/media/platform/amphion/vpu_dbg.c      |  30 +-
+ drivers/media/platform/amphion/vpu_v4l2.c     |   4 +-
+ .../media/platform/chips-media/coda-common.c  |   2 +-
+ .../platform/mediatek/jpeg/mtk_jpeg_core.c    |   7 +-
+ .../vcodec/decoder/vdec/vdec_vp9_req_lat_if.c |   4 +-
+ .../mediatek/vcodec/encoder/mtk_vcodec_enc.c  |   2 +-
+ drivers/media/platform/nxp/imx7-media-csi.c   |   7 +-
+ drivers/media/platform/renesas/rcar_drif.c    |   5 +-
+ drivers/media/platform/st/sti/hva/hva-v4l2.c  |   9 +-
+ .../media/platform/ti/am437x/am437x-vpfe.c    |   5 +-
+ drivers/media/platform/ti/cal/cal-video.c     |   5 +-
+ .../media/platform/ti/davinci/vpif_capture.c  |   5 +-
+ .../media/platform/ti/davinci/vpif_display.c  |   5 +-
+ drivers/media/platform/ti/omap/omap_vout.c    |   5 +-
+ drivers/media/platform/verisilicon/hantro.h   |   9 +-
+ .../media/platform/verisilicon/hantro_drv.c   |   4 +-
+ .../media/platform/verisilicon/hantro_g2.c    |  14 +
+ .../platform/verisilicon/hantro_g2_hevc_dec.c |  18 +-
+ .../platform/verisilicon/hantro_g2_vp9_dec.c  |  28 +-
+ .../media/platform/verisilicon/hantro_hw.h    |   7 +-
+ .../platform/verisilicon/hantro_postproc.c    |  95 ++-
+ .../media/platform/verisilicon/hantro_v4l2.c  |  27 +-
+ .../media/test-drivers/vicodec/vicodec-core.c |   1 +
+ drivers/media/test-drivers/vim2m.c            |   1 +
+ .../media/test-drivers/vimc/vimc-capture.c    |   1 +
+ drivers/media/test-drivers/visl/visl-dec.c    |  32 +-
+ drivers/media/test-drivers/visl/visl-video.c  |   1 +
+ drivers/media/test-drivers/vivid/vivid-core.c |   1 +
+ .../media/test-drivers/vivid/vivid-meta-cap.c |   5 +-
+ .../media/test-drivers/vivid/vivid-meta-out.c |   5 +-
+ .../test-drivers/vivid/vivid-touch-cap.c      |   5 +-
+ .../media/test-drivers/vivid/vivid-vbi-cap.c  |   5 +-
+ .../media/test-drivers/vivid/vivid-vbi-out.c  |   5 +-
+ .../media/test-drivers/vivid/vivid-vid-cap.c  |   5 +-
+ .../media/test-drivers/vivid/vivid-vid-out.c  |   5 +-
+ drivers/media/usb/airspy/airspy.c             |   5 +-
+ drivers/media/usb/cx231xx/cx231xx-417.c       |   5 +-
+ drivers/media/usb/cx231xx/cx231xx-video.c     |   5 +-
+ drivers/media/usb/hackrf/hackrf.c             |   5 +-
+ drivers/media/usb/usbtv/usbtv-video.c         |   5 +-
+ drivers/media/v4l2-core/v4l2-dev.c            |   1 +
+ drivers/media/v4l2-core/v4l2-ioctl.c          |  17 +
+ drivers/media/v4l2-core/v4l2-mem2mem.c        |  20 +
+ .../staging/media/atomisp/pci/atomisp_ioctl.c |   4 +-
+ drivers/staging/media/imx/imx-media-capture.c |   7 +-
+ drivers/staging/media/meson/vdec/vdec.c       |  13 +-
+ .../staging/media/sunxi/cedrus/cedrus_h264.c  |   4 +-
+ .../staging/media/sunxi/cedrus/cedrus_h265.c  |   4 +-
+ include/media/v4l2-ioctl.h                    |   4 +
+ include/media/v4l2-mem2mem.h                  |  12 +
+ include/media/videobuf2-core.h                |  57 +-
+ include/media/videobuf2-v4l2.h                |  13 +
+ include/uapi/linux/videodev2.h                |  16 +
+ 65 files changed, 955 insertions(+), 427 deletions(-)
+ create mode 100644 Documentation/userspace-api/media/v4l/vidioc-delete-bufs.rst
+
 -- 
-Neil Armstrong <neil.armstrong@linaro.org>
+2.39.2
 
