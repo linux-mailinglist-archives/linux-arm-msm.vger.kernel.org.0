@@ -2,70 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B7F567A0AC9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 18:30:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 282257A0BB2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 19:26:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230120AbjINQaX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Sep 2023 12:30:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44480 "EHLO
+        id S240414AbjINR0k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Sep 2023 13:26:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232206AbjINQaW (ORCPT
+        with ESMTP id S241646AbjINR0Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Sep 2023 12:30:22 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 678591FCE;
-        Thu, 14 Sep 2023 09:30:18 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C7FC433C7;
-        Thu, 14 Sep 2023 16:30:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1694709018;
-        bh=nhzaDPtDjFNbPiCIGqGrvXSRv8u+mkX5rY5cXHPXIyg=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=Dm8BJHKO+oN1VPX59fBzNz5hbhtgnQTaYqEzNlqiHyg3/Q+TebdGXj2DcI3a2WO0g
-         fU84tjCBbCgehDqn8bZsOzcN6mjV67vc6lQGVnjKjIEjyWUkvC/WYSeG92GE57jAfx
-         dLdWUBX6itACTWdaC6jc15D9ZzLhfEDJCB6mhMx7W5siky4FI4y4Lp+d+c768DN8pn
-         ZIBGMA8/MRfKmtLIKrWK6dZBnrH5jZBhEQjFtbkOj0LZ8egKX7zfgAr3R3Gn2rENu0
-         FnbUZit7JL1A230nO7ifdOsD0kPVrWYqXd5lAtBQI3nhob61IGES8GJpGBXsX4V7ku
-         3geRAMW/3X15Q==
-Message-ID: <580f3934ab1171e27d785db7362c342d.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+        Thu, 14 Sep 2023 13:26:24 -0400
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4B38270C;
+        Thu, 14 Sep 2023 10:25:00 -0700 (PDT)
+Received: by mail-pf1-x431.google.com with SMTP id d2e1a72fcca58-68fb85afef4so1135248b3a.1;
+        Thu, 14 Sep 2023 10:25:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1694712300; x=1695317100; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+79uOjNcwbPpa9/kVCOKluSz7c5JO5jNMvatVqMKNmk=;
+        b=le9eYzacaYfaC8ENloAqRPWLaeUZS49RijAY68gSuZVVv+34Vg+A+6uhGmRswDi6xU
+         ydMWojRBuRME0iO9UzuznxwV5CwpprXuAZopjehw6MYSJdTvuycoYEWThjOrOBiQTeCU
+         64arN+xnRyjrWshoV8Qywwii3X4qu4p7Lhth06U5zp87A6ibcVpllMsZcyI7AprEKp25
+         8RfrsmeibiaEVWgQzwahcFGpdJQFik26o41yuNRPX8HyqzLZtlxPYmeiuZVXZZq3j7o1
+         qB6IGyZvgSUkmzGLogRALiFIV2hoCKXLnBrDM07YydtCUoiSIX1zUpgoEAQVzQP1Ux84
+         rGiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694712300; x=1695317100;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+79uOjNcwbPpa9/kVCOKluSz7c5JO5jNMvatVqMKNmk=;
+        b=LnI+UD2Dh22cW4TkY20PJ/pLFR8i4MasWaCxV+zYbz2SX+MxJatP8ysJ6JQaTv/ztm
+         Y99E9VTSqSAV410L6oMjsLS0MVtwtWJg+YuE46fJAGhgO1dGPXaIavRtDBt4umdz//NY
+         C2ILQXNXXjH6O9iNAC52IYGOOgRzGd5nlj2rmxSwc3GDVG4k3/21cUowyb7r1WWgJ5Ci
+         BZayy295yqOsDNDCuVvAh8JD2KQSk7jL4/VNt172KUNGFuxrZiuYUYb8CFsqp/P/Fb6m
+         LKvrbG1U1e+/P+RtujN+9X9d2QkkA+i0CMSzAEpQcYqyFHwEfBPFbg8l54eop8zIyzQ/
+         ePMQ==
+X-Gm-Message-State: AOJu0Yw/XvPKchPAAV8/c5ZeJ1t1RGhqf0gP358+tIfma7gqDD4BdWc5
+        X5KkIQKbj4vjQzcUG447xVU=
+X-Google-Smtp-Source: AGHT+IE4WagPU98qTyEPXPYSna4/oDNmZGqhDL/qk1IPm23B19BR2S/R2kqj0qHwqaw0dp9Ogt9YEw==
+X-Received: by 2002:a05:6a21:998b:b0:13d:df16:cf29 with SMTP id ve11-20020a056a21998b00b0013ddf16cf29mr6980311pzb.15.1694712300117;
+        Thu, 14 Sep 2023 10:25:00 -0700 (PDT)
+Received: from localhost ([2a00:79e1:abd:4a00:69d1:d8aa:25be:a2b6])
+        by smtp.gmail.com with ESMTPSA id p22-20020aa78616000000b0068aca503b9fsm1587905pfn.114.2023.09.14.10.24.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Sep 2023 10:24:59 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [RFC] drm/msm/rd: Check PT_PTRACED for cmdstream dumping
+Date:   Thu, 14 Sep 2023 10:24:53 -0700
+Message-ID: <20230914172453.9707-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <9952fa20-a27f-3240-cc49-5c5109febfc1@quicinc.com>
-References: <20230901091823.30242-1-quic_luoj@quicinc.com> <20230901091823.30242-5-quic_luoj@quicinc.com> <27ae3297ad161fd67706db70b402db04.sboyd@kernel.org> <16d09acf-7bdd-04ee-6faf-936c0366df03@quicinc.com> <17681a9f756cc70a190c674c51b90140.sboyd@kernel.org> <5a4805f7-f802-b1ba-9804-59c0fe6c7f26@quicinc.com> <92058c25fb11b75ee0a2298a684825e9.sboyd@kernel.org> <f67b354c-8a4b-49f5-6275-66b7d614301a@quicinc.com> <82adb75659e0d278e25b65b0e81df99a.sboyd@kernel.org> <9952fa20-a27f-3240-cc49-5c5109febfc1@quicinc.com>
-Subject: Re: [PATCH v6 4/4] clk: qcom: add clock controller driver for qca8386/qca8084
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_srichara@quicinc.com
-To:     Jie Luo <quic_luoj@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, catalin.marinas@arm.com, conor+dt@kernel.org,
-        konrad.dybcio@linaro.org, krzysztof.kozlowski+dt@linaro.org,
-        mturquette@baylibre.com, p.zabel@pengutronix.de,
-        robh+dt@kernel.org, will@kernel.org
-Date:   Thu, 14 Sep 2023 09:30:15 -0700
-User-Agent: alot/0.10
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Jie Luo (2023-09-12 20:27:25)
->=20
->=20
-> On 9/13/2023 1:18 AM, Stephen Boyd wrote:
-> > Quoting Jie Luo (2023-09-12 05:07:02)
-> >>
-> >> and freq_tbl are necessary to this clock.
-> >=20
-> > I still don't see why the freq_tbl is necessary.
->=20
-> Hi Stephen,
-> For clk_rcg2_ops, freq_tbl is used to find the closest rate to decided=20
-> the parent clock, the configuration of clock source and clock divider=20
-> are saved in the freq_tbl to configure the RCG hardware register, the=20
-> mapping of parent clock and hardware register value is decided by the=20
-> freq_tbl for the RCG clock.
+From: Rob Clark <robdclark@chromium.org>
 
-The divider is always 1. The frequency is the frequency of the parent.
-The two pieces of information are already known without the frequency
-table. Why is it needed?
+So, when you want to get a cmdstream trace of some deqp or piglit test,
+but you happen to be running it on the same laptop with full desktop
+env, the current dump-everything firehose of `cat $debugfs/dri/n/rd` is
+quite a bit too much.  Ptrace seemed kind of a natural way to control
+it, ie. either run what you want to trace under gdb or hack in a
+ptrace(PTRACE_TRACEME) call.
+
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/msm_gem_submit.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+index a908373cf34b..a105ca1f2102 100644
+--- a/drivers/gpu/drm/msm/msm_gem_submit.c
++++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+@@ -979,7 +979,8 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+ 	/* The scheduler owns a ref now: */
+ 	msm_gem_submit_get(submit);
+ 
+-	msm_rd_dump_submit(priv->rd, submit, NULL);
++	if (current->ptrace & PT_PTRACED)
++		msm_rd_dump_submit(priv->rd, submit, NULL);
+ 
+ 	pm_runtime_get_sync(&gpu->pdev->dev);
+ 
+-- 
+2.41.0
+
