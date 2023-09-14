@@ -2,148 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C343F79FD15
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 09:17:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC7BC79FD28
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 09:20:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232030AbjINHSB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Sep 2023 03:18:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39814 "EHLO
+        id S232721AbjINHVA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Sep 2023 03:21:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231670AbjINHSB (ORCPT
+        with ESMTP id S233843AbjINHU7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Sep 2023 03:18:01 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBA51E4D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Sep 2023 00:17:56 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-403012f27e1so6437005e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Sep 2023 00:17:56 -0700 (PDT)
+        Thu, 14 Sep 2023 03:20:59 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C205CF1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Sep 2023 00:20:55 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-31c5cac3ae2so506605f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Sep 2023 00:20:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694675875; x=1695280675; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+        d=linaro.org; s=google; t=1694676054; x=1695280854; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=TnyV9af3KTDSn5LmFo4v6eXcrqZ+B9e5Qxfuac0pjUY=;
-        b=bBbpkGr2n0HTB6HQGlZEQHjLa0Tpxp1IpvUIgNVu3aEXG/u1wqNiL9RxT+wFLnVAYy
-         lPYZSiSU4+dwTbDl+IGFoxUUQUosc8UeoUMfYbiUIl782pzdNqpyRwCktg9c4nVFRXLm
-         gBkPYu82+qa7S3WbZfzhkViQiSBxJbOfQRAUi27r1hseHd+buQOw14PaM8URO0OxFhsX
-         CMHqyrAl1/AKfEPm1sFEICCOjo4cdLFWHUtMAwrUgr/cS+hgl6ORmdowGd1C1Gdy9/bY
-         RZ9iWU5fCtdPoj6s74p7WfHO38h1xLLtMb50CrDf/Y28likNu0J6nXW249GkdCUqp3Gj
-         c+kQ==
+        bh=taIxm6eL4Mx2J2zzMyGsdIis7l49d87TRLXgpFhjd5k=;
+        b=k7uXVF9bXvTEZqHpb0toZYrxewmbq9qjFB2nAFYooZ0sHeGFvfJQdIT0b8EhS8tHfz
+         FShvk3WuvMElqYQ7/5uOdO4kqFcRHXeSR7FudL4XUYlqDKGLxRvj+WV4zafWyZ+iHyhx
+         ZgLbPF68BjcKV6Swxo5Mt4ozDlIvgOV64+xopXTIglCSmzkGiDRkZJusTIzPTf0pfpPj
+         RKFEwyadLRLTaLcK5eNSQt1qtL8eIaYf3wf15w5kzKdNt0GzdcdZzCu6ZL5p7L29yUN5
+         jvoYnZDySzcyMu+vYP5A11bwSsjwigG6NuI2yWiqkh890JGdHMKd0cS/E6w6rZjR+NS3
+         W+oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694675875; x=1695280675;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+        d=1e100.net; s=20230601; t=1694676054; x=1695280854;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TnyV9af3KTDSn5LmFo4v6eXcrqZ+B9e5Qxfuac0pjUY=;
-        b=L8sYWf3hWT+PO9iuF65+wrTdf7Hkccyicaw/oW5CCz6PpEeLNelqen8G56KXcfOuad
-         T+6c3Woylzbpz1KizGHRkqen16DpxWsZf1wg1pwhprKkLbj2qeFCOMorjkUlNvfslZoV
-         wigJMLrNIJn1+QDxmhXdPlcI50joVDpd60JvE5vIdo5Inh5Q/HjM9WQMPn0c3f5P2kpk
-         tU2wmdlqm76/VtEouCuhYD3yvsQsIqWXZGSlnT8Z6fSHx2uQ05F7Qf4aa9IvufWcJ4Uh
-         uoaK6tZIjv47Xb8PhFUiwa4AnYuSBoOBMmVL47bvgS95XQarIQfoG6F31bz36XCXY18R
-         icgw==
-X-Gm-Message-State: AOJu0YzYVxMxnaaPAOOshfbpUWsGDcDZOftdKxEsxl3k8yxDD8DZ2HwD
-        oqGdwGHCfYF00xfwX83a6rMC6w==
-X-Google-Smtp-Source: AGHT+IEK6SYA+nBzWeG6lMDvkeq82QWkULn4oFR/HTZ2x3sw8wMbXcV31yc++OhQtubr4HHqola0wA==
-X-Received: by 2002:adf:de8a:0:b0:314:3bd7:6a0c with SMTP id w10-20020adfde8a000000b003143bd76a0cmr3970173wrl.33.1694675875014;
-        Thu, 14 Sep 2023 00:17:55 -0700 (PDT)
+        bh=taIxm6eL4Mx2J2zzMyGsdIis7l49d87TRLXgpFhjd5k=;
+        b=Le5Nbf6ZI7pkVvX4XCWgh38XkknebjbjxnSaSOwgU4teYY63G56x1A1Ig4DS2mXnXJ
+         Rc3hi3HmyYAvSTFSFL4sL5iPTsJLfU924SeSDxeoDKkw68VM8GelW49prRWbfvVvj7bc
+         M/WjW4CBWT+ooPalXYZFTa4Ez7EPtSq4EvC31/xxZ7dybE8rfbYRuAJqDkb9zJ7TvkRz
+         7aoWiLpQWehKN4eeK/jVd7dPUenCkIKsoDE3sPcPN15eODPBDOAZCyLCYxll1/52s+gA
+         EISH1Is8m+p6kZx1+7JrVKvp93OuwEjlEcmv3xX41uOVyWMIVkwjOzO1yCsAeHMmbh1w
+         IHRQ==
+X-Gm-Message-State: AOJu0YyelB1Al5zARfdRAIBASaHaMJFE5QQCdg30vRYZPctSH1lzgwaT
+        h0Ic4F3Mfot9Ko5ypI3E9sK+WA==
+X-Google-Smtp-Source: AGHT+IFOtrDzFl+9oDW4vU8GYnttUJKqkzHOZyb0l5f+lzpVsekbk/NNZ4ppoXmbhdEUUFCdfgos3w==
+X-Received: by 2002:adf:f112:0:b0:31f:8547:2a59 with SMTP id r18-20020adff112000000b0031f85472a59mr4283144wro.69.1694676053680;
+        Thu, 14 Sep 2023 00:20:53 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.214.188])
-        by smtp.gmail.com with ESMTPSA id q5-20020a5d6585000000b0031f5f0d0be0sm933196wru.31.2023.09.14.00.17.52
+        by smtp.gmail.com with ESMTPSA id h16-20020a5d5490000000b0031773a8e5c4sm930114wrv.37.2023.09.14.00.20.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Sep 2023 00:17:54 -0700 (PDT)
-Message-ID: <bccc1cad-c50b-c10e-6cb0-80b6fb7ac4cd@linaro.org>
-Date:   Thu, 14 Sep 2023 09:17:51 +0200
+        Thu, 14 Sep 2023 00:20:53 -0700 (PDT)
+Message-ID: <8af594db-3f8b-617e-b558-21120e11122b@linaro.org>
+Date:   Thu, 14 Sep 2023 09:20:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.15.0
-Subject: Re: [PATCH v2] scsi: ufs: qcom: dt-bindings: Add MCQ properties
+Subject: Re: [PATCH v3 1/3] dt-bindings: power: rpmpd: Add MSM8917, MSM8937
+ and QM215
 Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Ziqi Chen <quic_ziqichen@quicinc.com>, quic_asutoshd@quicinc.com,
-        quic_cang@quicinc.com, bvanassche@acm.org, mani@kernel.org,
-        adrian.hunter@intel.com, beanhuo@micron.com, avri.altman@wdc.com,
-        martin.petersen@oracle.com, quic_nguyenb@quicinc.com,
-        quic_nitirawa@quicinc.com
-Cc:     linux-scsi@vger.kernel.org, Andy Gross <agross@kernel.org>,
+To:     =?UTF-8?Q?Otto_Pfl=c3=bcger?= <otto.pflueger@abscue.de>,
+        linux-arm-msm@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <1694675158-38301-1-git-send-email-quic_ziqichen@quicinc.com>
- <1e89183a-b42a-b447-0c1a-bbfe646705ef@linaro.org>
-In-Reply-To: <1e89183a-b42a-b447-0c1a-bbfe646705ef@linaro.org>
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        devicetree@vger.kernel.org, linux-pm@vger.kernel.org
+References: <20230914065422.5452-1-otto.pflueger@abscue.de>
+ <20230914065422.5452-2-otto.pflueger@abscue.de>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230914065422.5452-2-otto.pflueger@abscue.de>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/09/2023 09:16, Krzysztof Kozlowski wrote:
-> On 14/09/2023 09:05, Ziqi Chen wrote:
->> Remove the maxItem limitation to property 'reg',
+On 14/09/2023 08:54, Otto Pflüger wrote:
+> The MSM8917, MSM8937 and QM215 SoCs have VDDCX and VDDMX power domains
+> controlled in voltage level mode. Define the MSM8937 and QM215 power
+> domains as aliases because these SoCs are similar to MSM8917 and may
+> share some parts of the device tree.
+> 
+> Also add the compatibles for these SoCs to the documentation, with
+> qcom,msm8937-rpmpd using qcom,msm8917-rpmpd as a fallback compatible
+> because there are no known differences. QM215 is not compatible with
+> these because it uses different regulators.
+> 
+> Signed-off-by: Otto Pflüger <otto.pflueger@abscue.de>
 
-Your commit should answer to "why". Not "what".
+This is a friendly reminder during the review process.
 
->> and add description for the property 'msi-parent'.
->>
->> Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
->> ---
->>  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 12 +++++++++++-
->>  1 file changed, 11 insertions(+), 1 deletion(-)
->>
->> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
->> index bdfa86a..5ec2717 100644
->> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
->> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
->> @@ -77,7 +77,13 @@ properties:
->>  
->>    reg:
->>      minItems: 1
->> -    maxItems: 2
-> 
-> So 20 items are allowed? No, that's not correct.
-> 
-> 
->> +    description:
->> +      Register base addresses and lengths of the UFS areas.
-> 
-> Drop description - it's useless and redundant.
-> 
->> +
->> +  reg-names:
->> +    minItems: 1
->> +    description:
->> +      Names of the reg areas to use during resource lookup.
-> 
-> Drop such description it's useless, instead list and describe items.
-> 
-> Also, why all devices now have two regs? No, this is just wrong. And
-> haven't we been here with two items?
-> 
-> 
->>  
->>    required-opps:
->>      maxItems: 1
->> @@ -97,6 +103,10 @@ properties:
->>      description:
->>        GPIO connected to the RESET pin of the UFS memory device.
->>  
->> +  msi-parent:
->> +    description:
->> +      Pointer to the hardware entity that serves as the MSI controller for thi UFS controller.
-> 
-> typo in "thi". Not wrapped according to Linux coding style (as written
-> in coding style document). BTW, this is usually just "true" and without
-> need for description.
-> 
+It looks like you received a tag and forgot to add it.
 
-BTW, for both my comments - for reg/reg-names and this property - where
-is the user? Except adding this to example, I expect to see users somewhere.
+If you do not know the process, here is a short explanation:
+Please add Acked-by/Reviewed-by/Tested-by tags when posting new
+versions, under or above your Signed-off-by tag. Tag is "received", when
+provided in a message replied to you on the mailing list. Tools like b4
+can help here. However, there's no need to repost patches *only* to add
+the tags. The upstream maintainer will do that for tags received on the
+version they apply.
+
+https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
+
+If a tag was not added on purpose, please state why and what changed.
 
 Best regards,
 Krzysztof
