@@ -2,198 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C17E87A0249
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 13:18:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 257297A02CB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 13:37:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237761AbjINLSK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Sep 2023 07:18:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54136 "EHLO
+        id S233218AbjINLiA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Sep 2023 07:38:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237634AbjINLSC (ORCPT
+        with ESMTP id S230222AbjINLh7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Sep 2023 07:18:02 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD4A62114
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Sep 2023 04:17:57 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-502b0d23f28so1403694e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Sep 2023 04:17:57 -0700 (PDT)
+        Thu, 14 Sep 2023 07:37:59 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C56A1FCE
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Sep 2023 04:37:55 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-52a1ce52ef4so997411a12.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Sep 2023 04:37:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694690276; x=1695295076; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=U0VQhcoNLNdF2hx3KPbex70/0qm7FIzVv2M9Uuzf9Fw=;
-        b=UI2/jrQExavD+yFADzOdKG84ojUmC3d+lagDmIGjgUlMWUs/v3C6kVD8X8fWbnnptc
-         5TCsbYmwMB3ZxWkVlDc+O0UBqrsOwtjUhzpQlcND479rsJGTtJJ3KFn8pbxfC6+ntLYx
-         fyOtFYYG/vU1XcS+9L0s4pK1w1HmLp2+quXlv6eNo7hivW2fxVrqd9FbqRIDH3SXDXxC
-         DdmoLW5uJ5gCHMcTkz+yALuYKKw59UFLi+TNgLDEMGr0kOn7MrCrKwELO3F9XRx2L5OH
-         ocOImPRVvmnEpKuNpD/fqIgYrYsr2vMeMTGobzZT6is5tnVqOaO1ZUcgmyNA/LJ7s93Z
-         wEcw==
+        d=linaro.org; s=google; t=1694691474; x=1695296274; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=WzwnWQaCHzBNH4v5E5Ke/WgGPb/4HugJ4oItdNzqjvk=;
+        b=v0pBHutV/yJHoQnVE/SclR+kd/lAyTaDfztyvl3Nd2FVd3fE+cetAfgKp2GuuiOT7K
+         yed+waClmOoiGJq6dUD3rKjPKFdj5YW82eupVh67ZcLOahQDRHCHRtxlWQkrJ5OC4Ggo
+         Avc5GFgDLkY3UuGug2YDKXTfXIWd6NNv0kduVtiH3kPoLY9LKnlj99Zau7doj5K8rRP8
+         su9uGdZ55JkBGBiGivC+79NkdXnzJdnCQC3EOvkigVBvKwNa1ToxqGJPpO1ojN5cLfHI
+         6nsVA9qqmcPHxKt5KMGjcAIYoAGMwrgZBhfg3QqDeJkbIqQNA57yBlorOMziLLw6vdCk
+         4tHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694690276; x=1695295076;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=U0VQhcoNLNdF2hx3KPbex70/0qm7FIzVv2M9Uuzf9Fw=;
-        b=LdBgeHURKuE+uafgW8aNlJe8tgDrwM3FF688YT5Xt9oTKSmsj14HLJAjYJCtgX9u2m
-         Sy8ITPtN/GJKhBdILvZWs/rQPNpclvYY5kzJFAAfrTXP5X7M9Qn8e7ZJcX2EBg9P0WZT
-         PYnFykgKmm4FAIazU0y3aUQRFXfBVH5p8ReppytA3YBN/GeMzgHEIBrq+ap2uTjTovpJ
-         Jpkoob/UmZqx3VXG1Ac75rpqPoNTUasVhLc8D41RehZQo51RrAcBs9Wi1oqBjeA19z7N
-         RfCWUaGyJnWDsv8L2FMMhI68JFeMcurTQpUb6sZEcUCUsC/dOLeKJ0w7kauWdA23W8la
-         UweA==
-X-Gm-Message-State: AOJu0YyEuxyMopiklQXvlYPEYBroq/r8Sq3qFrkV3UMd5pXJ34uhauaz
-        TCgtxCHnSjnPzTMkVa/EOO/pZA==
-X-Google-Smtp-Source: AGHT+IFzbzNrbUhVTufPQvnBjGY+RhRHGIrGu01HNr1LOR9JVppeqQfxnWwuIVvHuE5VImtOF16wYA==
-X-Received: by 2002:a05:6512:3e26:b0:500:9524:f733 with SMTP id i38-20020a0565123e2600b005009524f733mr4664580lfv.20.1694690275954;
-        Thu, 14 Sep 2023 04:17:55 -0700 (PDT)
-Received: from uffe-tuxpro14.. (h-94-254-63-18.NA.cust.bahnhof.se. [94.254.63.18])
-        by smtp.gmail.com with ESMTPSA id d27-20020ac25edb000000b0050234d02e64sm240423lfq.15.2023.09.14.04.17.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Sep 2023 04:17:55 -0700 (PDT)
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-To:     Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>
-Cc:     Ulf Hansson <ulf.hansson@linaro.org>, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: [PATCH 08/17] pmdomain: qcom: Move Kconfig options to the pmdomain subsystem
-Date:   Thu, 14 Sep 2023 13:17:53 +0200
-Message-Id: <20230914111753.586627-1-ulf.hansson@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        d=1e100.net; s=20230601; t=1694691474; x=1695296274;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WzwnWQaCHzBNH4v5E5Ke/WgGPb/4HugJ4oItdNzqjvk=;
+        b=o5xd+dEZ6xk0IMfKoOYVIUEHfmXj1ioAqbtHeyIe6v8g8kn90qVQk5pMZEv51hwIPc
+         NlkrWiLvT1zjlNdgj57WgNQR3L3An/k1dEkdQJyGylygKZuhT7LwgsV3xyP2JnwsHFbJ
+         IPzP+jkIUFzDsQ7KWfc5N5mzzD/4z0YOczN9raVFBTZkitd7P6Nwt3g2Rx1xGho79iTE
+         TI3XZ2B1fRnb4mchpwgSh2BuClOGCXTsTv3mRpkDl7yiQdqOMwIs0lGw0s0ZUZu4MABe
+         D98ub1o5sBtCm8ljAb3fAzjc0Htq8KC+PkNvOkIsK1mCljgn0FzOs5OO9Y+0ZsIhsUgg
+         zD9Q==
+X-Gm-Message-State: AOJu0YzEn8D6sZcIwwA5e9TgPR/fkCqZlC2RvtdYLVQpQUcqEqPM1l9q
+        doIAXILnkaudobTwVe5aWddzgQ==
+X-Google-Smtp-Source: AGHT+IHcLGAnJsuW8PiNRY0KSZ5FpORn6oFuuYSmN3nEiEkcyNdroRMVB3j+Olo1VO+5Z9DPv5hraQ==
+X-Received: by 2002:aa7:c904:0:b0:525:69ec:e1c8 with SMTP id b4-20020aa7c904000000b0052569ece1c8mr4000556edt.40.1694691473953;
+        Thu, 14 Sep 2023 04:37:53 -0700 (PDT)
+Received: from [192.168.37.232] (178235177003.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.3])
+        by smtp.gmail.com with ESMTPSA id i3-20020aa7c703000000b0051dfa2e30b2sm815967edq.9.2023.09.14.04.37.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 Sep 2023 04:37:53 -0700 (PDT)
+Message-ID: <adef5503-39f2-4fc5-a445-3c173d86c57e@linaro.org>
+Date:   Thu, 14 Sep 2023 13:37:52 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 08/17] pmdomain: qcom: Move Kconfig options to the
+ pmdomain subsystem
+Content-Language: en-US
+To:     Ulf Hansson <ulf.hansson@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>
+Cc:     linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org
+References: <20230914111753.586627-1-ulf.hansson@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230914111753.586627-1-ulf.hansson@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Kconfig options belongs closer to the corresponding implementations,
-hence let's move them from the soc subsystem to the pmdomain subsystem.
+On 14.09.2023 13:17, Ulf Hansson wrote:
+> The Kconfig options belongs closer to the corresponding implementations,
+> hence let's move them from the soc subsystem to the pmdomain subsystem.
+> 
+> Cc: Bjorn Andersson <andersson@kernel.org>
+> Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: <linux-arm-msm@vger.kernel.org>
+> Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+> ---
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Andy Gross <agross@kernel.org>
-Cc: <linux-arm-msm@vger.kernel.org>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
----
- drivers/pmdomain/Kconfig      |  1 +
- drivers/pmdomain/qcom/Kconfig | 41 +++++++++++++++++++++++++++++++++++
- drivers/soc/qcom/Kconfig      | 37 -------------------------------
- 3 files changed, 42 insertions(+), 37 deletions(-)
- create mode 100644 drivers/pmdomain/qcom/Kconfig
-
-diff --git a/drivers/pmdomain/Kconfig b/drivers/pmdomain/Kconfig
-index 5929f2d31588..d7b554c5c384 100644
---- a/drivers/pmdomain/Kconfig
-+++ b/drivers/pmdomain/Kconfig
-@@ -7,5 +7,6 @@ source "drivers/pmdomain/apple/Kconfig"
- source "drivers/pmdomain/bcm/Kconfig"
- source "drivers/pmdomain/imx/Kconfig"
- source "drivers/pmdomain/mediatek/Kconfig"
-+source "drivers/pmdomain/qcom/Kconfig"
- 
- endmenu
-diff --git a/drivers/pmdomain/qcom/Kconfig b/drivers/pmdomain/qcom/Kconfig
-new file mode 100644
-index 000000000000..c67308337805
---- /dev/null
-+++ b/drivers/pmdomain/qcom/Kconfig
-@@ -0,0 +1,41 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+menu "Qualcomm Power Domains"
-+
-+config QCOM_CPR
-+	tristate "QCOM Core Power Reduction (CPR) support"
-+	depends on ARCH_QCOM && HAS_IOMEM
-+	select PM_OPP
-+	select REGMAP
-+	help
-+	  Say Y here to enable support for the CPR hardware found on Qualcomm
-+	  SoCs like QCS404.
-+
-+	  This driver populates CPU OPPs tables and makes adjustments to the
-+	  tables based on feedback from the CPR hardware. If you want to do
-+	  CPUfrequency scaling say Y here.
-+
-+	  To compile this driver as a module, choose M here: the module will
-+	  be called qcom-cpr
-+
-+config QCOM_RPMHPD
-+	tristate "Qualcomm RPMh Power domain driver"
-+	depends on QCOM_RPMH && QCOM_COMMAND_DB
-+	help
-+	  QCOM RPMh Power domain driver to support power-domains with
-+	  performance states. The driver communicates a performance state
-+	  value to RPMh which then translates it into corresponding voltage
-+	  for the voltage rail.
-+
-+config QCOM_RPMPD
-+	tristate "Qualcomm RPM Power domain driver"
-+	depends on PM && OF
-+	depends on QCOM_SMD_RPM
-+	select PM_GENERIC_DOMAINS
-+	select PM_GENERIC_DOMAINS_OF
-+	help
-+	  QCOM RPM Power domain driver to support power-domains with
-+	  performance states. The driver communicates a performance state
-+	  value to RPM which then translates it into corresponding voltage
-+	  for the voltage rail.
-+
-+endmenu
-diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-index 715348869d04..b3634e10f6f5 100644
---- a/drivers/soc/qcom/Kconfig
-+++ b/drivers/soc/qcom/Kconfig
-@@ -26,22 +26,6 @@ config QCOM_COMMAND_DB
- 	  resource on a RPM-hardened platform must use this database to get
- 	  SoC specific identifier and information for the shared resources.
- 
--config QCOM_CPR
--	tristate "QCOM Core Power Reduction (CPR) support"
--	depends on ARCH_QCOM && HAS_IOMEM
--	select PM_OPP
--	select REGMAP
--	help
--	  Say Y here to enable support for the CPR hardware found on Qualcomm
--	  SoCs like QCS404.
--
--	  This driver populates CPU OPPs tables and makes adjustments to the
--	  tables based on feedback from the CPR hardware. If you want to do
--	  CPUfrequency scaling say Y here.
--
--	  To compile this driver as a module, choose M here: the module will
--	  be called qcom-cpr
--
- config QCOM_GENI_SE
- 	tristate "QCOM GENI Serial Engine Driver"
- 	depends on ARCH_QCOM || COMPILE_TEST
-@@ -157,27 +141,6 @@ config QCOM_RPMH
- 	  of hardware components aggregate requests for these resources and
- 	  help apply the aggregated state on the resource.
- 
--config QCOM_RPMHPD
--	tristate "Qualcomm RPMh Power domain driver"
--	depends on QCOM_RPMH && QCOM_COMMAND_DB
--	help
--	  QCOM RPMh Power domain driver to support power-domains with
--	  performance states. The driver communicates a performance state
--	  value to RPMh which then translates it into corresponding voltage
--	  for the voltage rail.
--
--config QCOM_RPMPD
--	tristate "Qualcomm RPM Power domain driver"
--	depends on PM && OF
--	depends on QCOM_SMD_RPM
--	select PM_GENERIC_DOMAINS
--	select PM_GENERIC_DOMAINS_OF
--	help
--	  QCOM RPM Power domain driver to support power-domains with
--	  performance states. The driver communicates a performance state
--	  value to RPM which then translates it into corresponding voltage
--	  for the voltage rail.
--
- config QCOM_SMEM
- 	tristate "Qualcomm Shared Memory Manager (SMEM)"
- 	depends on ARCH_QCOM || COMPILE_TEST
--- 
-2.34.1
-
+Konrad
