@@ -2,110 +2,193 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C91C7A0F47
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 22:49:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D2C17A0FC3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 23:23:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230013AbjINUs7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Sep 2023 16:48:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47522 "EHLO
+        id S229495AbjINVXd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Sep 2023 17:23:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230009AbjINUs6 (ORCPT
+        with ESMTP id S229491AbjINVXc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Sep 2023 16:48:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 681802120
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Sep 2023 13:48:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1694724491;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=p0cINci3mtMHjJpwA+Xu4ty52yxZbAV2eaOQYrtaV0U=;
-        b=JGhoH9Q7dh62l8a8a4Uf5Xo58bCE/3dsdH/YMuqMBxomMfCDL8QEZWnvHlI07fVjoMmP6f
-        yMTyUe01n9qzwD+357liYyYEaA7upP3raffTuWGVrjIfs2vMX5iW73HFOPWKeLl9a5ocjD
-        /dBnFRiHEvYnoh9vyNlZ7hjm8mnANJA=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-474-unnBT6vMNDG365M-QFO6Fw-1; Thu, 14 Sep 2023 16:48:09 -0400
-X-MC-Unique: unnBT6vMNDG365M-QFO6Fw-1
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-416698046eeso13910351cf.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Sep 2023 13:48:09 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694724489; x=1695329289;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=p0cINci3mtMHjJpwA+Xu4ty52yxZbAV2eaOQYrtaV0U=;
-        b=v5yNGQHler4OR1yD68PXCZ1mpvh6OG31A3bigI6rlbUQox6mSm41fwK9T9mLCfl8jj
-         WVWv0pkVvFjKGlPkOD/HcdHV6Q8Gz8Us22s+I9lKbQDriOz3Ei40TK6cvz8uH2GIo3rF
-         43SjU7fMi5mzjzW+W8ekow3wnLbMSNWsZFoNICUJAqV8gvvo7dsWqE9X/nbyxG0IIU2I
-         bfC1AJqtOyrU6/gyHFhcxMa1QzeHeRzZEhZio2D212Ca5i4ABeXHqghym7Dr+tHMCwyT
-         XCFbK3y+cKL4aM4TWSj/o8rzmnOpZf+zbQMTdj6bXbWNlM2VI09kxGZ09P7Rq8bl1wlX
-         BNuQ==
-X-Gm-Message-State: AOJu0YyFStmB/Gcc8sUywOxdjqREVfGXHkXJ58Bx1ys1M8ImNkwU0WEj
-        SHFgFCdVSj8s0ny2MBsdhb9cZZh9RGzu4+OJW0QeK9umrf+/WnnEq64FWMFWc8tnPhhAmelQvL/
-        FRp96/1werqA0uGrhZmxltGXG9Q==
-X-Received: by 2002:ac8:7d96:0:b0:400:9f2c:1211 with SMTP id c22-20020ac87d96000000b004009f2c1211mr3750900qtd.29.1694724489225;
-        Thu, 14 Sep 2023 13:48:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGxac/nHgytRhBDqmqy3prk+SQnWQwVFo9KIB3TJ1fDKpfJ7JHzzP7ElCf4uookycGB0ZhQkA==
-X-Received: by 2002:ac8:7d96:0:b0:400:9f2c:1211 with SMTP id c22-20020ac87d96000000b004009f2c1211mr3750885qtd.29.1694724489001;
-        Thu, 14 Sep 2023 13:48:09 -0700 (PDT)
-Received: from fedora ([107.171.218.122])
-        by smtp.gmail.com with ESMTPSA id t27-20020a05622a181b00b00410957eaf3csm685689qtc.21.2023.09.14.13.48.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Sep 2023 13:48:08 -0700 (PDT)
-Date:   Thu, 14 Sep 2023 16:48:06 -0400
-From:   Adrien Thierry <athierry@redhat.com>
-To:     Andy Gross <agross@kernel.org>,
+        Thu, 14 Sep 2023 17:23:32 -0400
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2224CEB;
+        Thu, 14 Sep 2023 14:23:28 -0700 (PDT)
+Received: from pendragon.ideasonboard.com (213-243-189-158.bb.dnainternet.fi [213.243.189.158])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 73DA0DE5;
+        Thu, 14 Sep 2023 23:21:53 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1694726513;
+        bh=8BED75KJ60zUIDoeejYozq3VfmyLGSG2b2VZhDTtZ+M=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=L6s/HrTflDm1RcQByNZ7Ate1n8JnN/TubWF9b4BowBJ1HGya4KBYXbhEM/ObqVk86
+         zu/pLtRPRoTyORJkzNJ03mEiww6MdApEjfn0Z7yHoQeDWsvTH0FSP6D3jqzvYLQ7I8
+         geGvX5N6gz9LgYB+9Mm9KA5NMkG6D74nz8AtU1Jo=
+Date:   Fri, 15 Sep 2023 00:23:39 +0300
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Robert Foss <rfoss@kernel.org>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Shazad Hussain <quic_shazhuss@quicinc.com>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: Re: [PATCH v2 0/2] phy: qcom-qmp-usb: fix initialization of PCS_USB
-Message-ID: <ZQNxhhI120MGYKbX@fedora>
-References: <20230828152353.16529-1-athierry@redhat.com>
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, linux-usb@vger.kernel.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v4 0/3] drm: simplify support for transparent DRM bridges
+Message-ID: <20230914212339.GA11890@pendragon.ideasonboard.com>
+References: <20230817145516.5924-1-dmitry.baryshkov@linaro.org>
+ <20230822141735.GA14396@pendragon.ideasonboard.com>
+ <20230822141918.GB14396@pendragon.ideasonboard.com>
+ <c266b761-ddd3-4b29-aeb7-fc40348f0662@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230828152353.16529-1-athierry@redhat.com>
+In-Reply-To: <c266b761-ddd3-4b29-aeb7-fc40348f0662@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Gentle ping for this series, is there still anything preventing it from
-being merged?
+Hi Neil,
 
-Best,
-Adrien
+Sorry about the delay, the series got burried in my inbox.
 
-On Mon, Aug 28, 2023 at 11:23:49AM -0400, Adrien Thierry wrote:
-> This series attempts at making sure PCS_USB registers are properly
-> initialized. I tested it on the sa8775p. AFAICT there's no noticeable
-> change before/after the patch series: lsusb and dmesg output are the same.
-> USB is still working properly. I don't know what those PCS_USB registers
-> do exactly on the qmp PHY and I don't have access to the PHY datasheet, so
-> it's hard for me to tell the impact of them being initialized vs not.
+On Tue, Aug 22, 2023 at 04:27:37PM +0200, Neil Armstrong wrote:
+> On 22/08/2023 16:19, Laurent Pinchart wrote:
+> > On Tue, Aug 22, 2023 at 05:17:37PM +0300, Laurent Pinchart wrote:
+> >> On Thu, Aug 17, 2023 at 05:55:13PM +0300, Dmitry Baryshkov wrote:
+> >>> Supporting DP/USB-C can result in a chain of several transparent
+> >>> bridges (PHY, redrivers, mux, etc). This results in drivers having
+> >>> similar boilerplate code for such bridges.
+> >>
+> >> What do you mean by transparent bridge here ? Bridges are a DRM concept,
+> >> and as far as I can tell, a PHY isn't a bridge. Why does it need to be
+> >> handled as one, especially if it's completely transparent ?
+> >>
+> >>> Next, these drivers are susceptible to -EPROBE_DEFER loops: the next
+> >>> bridge can either be probed from the bridge->attach callback, when it is
+> >>> too late to return -EPROBE_DEFER, or from the probe() callback, when the
+> >>> next bridge might not yet be available, because it depends on the
+> >>> resources provided by the probing device.
+> >>
+> >> Can't device links help avoiding defer probing in those cases ?
+> >>
+> >>> Last, but not least, this results in the the internal knowledge of DRM
+> >>> subsystem slowly diffusing into other subsystems, like PHY or USB/TYPEC.
+> >>
+> >> Why so ? The PHY subsystem should provide a PHY, without considering
+> >> what subsystem it will be used by. This patch series seems to me to
+> >> actually create this DRM dependency in other subsystems,
+> > 
+> > I was wrong on this one, there are indeed existing drm_bridge instances
+> > in drivers/usb/ and drivers/phy/. That's certainly not nice. Why do we
+> > even need drm_bridge there, why can't the PHYs be acquired by their
+> > consumers in DRM (and anywhere else) using the PHY API ?
 > 
-> v1 -> v2:
-> - Don't fallback to pcs for PCS_USB initialization (Dmitry Baryshkov)
+> Because with USB-C Altmode/USB4/Thunderbolt, DisplayPort is one of the
+> data streams handled by PHYs, USB-C PD manager, re-timers, SBU muxes...
+> and all this must be coordinated with the display controller and can
+> be considered as bridges between the DP controller and the USB-C connector.
 > 
-> Adrien Thierry (2):
->   phy: qcom-qmp-usb: initialize PCS_USB registers
->   phy: qcom-qmp-usb: split PCS_USB init table for sc8280xp and sa8775p
-> 
->  drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 24 +++++++++++++++++++-----
->  1 file changed, 19 insertions(+), 5 deletions(-)
-> 
-> -- 
-> 2.41.0
-> 
-> 
-> -- 
-> linux-phy mailing list
-> linux-phy@lists.infradead.org
-> https://lists.infradead.org/mailman/listinfo/linux-phy
+> As of today, it has been handled by OOB events on Intel & AMD, but the entirety
+> of USB-C chain is handled in firmare, so this scales.
+> When we need to describe the entire USB-C data stream chain as port/endpoint
+> in DT, OOB handling doesn't work anymore since we need to sync the entire
+> USB-C chain (muxes, switches, retimers, phys...) handled by Linux before
+> starting the DP stream.
 
+No disagreement here. Handling the component as part of the bridges
+chain certainly helps. Ideally, this should be done without spreading
+usage of drm_bridge outside of the DRM subsystem. For instance, we
+handle (some) D-PHYs in DRM and V4L2 by exposing them as PHYs, and
+acquiring them in DSI or CSI-2 controller drivers.
+
+Do I understand correctly that, in this case, the video stream is fully
+handled by the PHY (& related) component, without any other device (in
+the OF sense) wrapping the PHY like the DSI and CSI-2 controllers do ?
+If so that would indeed make it difficult to create the drm_bridge in a
+DRM driver that would acquire the PHY. We could come up with a different
+mechanism, but that's likely overkill to solve this particular issue (at
+least until other similar use cases create a critical mass that will
+call for a major refactoring).
+
+In this specific case, however, I'm a bit puzzled. What coordination is
+required between the PHYs and the display controller ? The two drivers
+modified in patches 2/3 and 3/3 indeed create bridges, but those bridges
+don't implement any operation other than attach. Is this needed only
+because the PHY has an OF node that sits between the display controller
+and the connector, requiring a drm_bridge to exist to bridge the gap and
+create a complete chain of bridges up to the connector ? This would
+simplify the use case, but probably still call for creating a
+drm_bridge in the PHY driver, as other solutions are likely still too
+complex.
+
+It seems to me that this series tries to address two issues. One of them
+is minimizing the DRM-specific amount of code needed in the PHY drivers.
+The second one is to avoid probe deferrals. For the first issue, I agree
+that a helper is currently a good option. For the second issue, however,
+couldn't device links help avoiding probe deferral ? If so, the helper
+could be simplified, avoiding the need to create an auxiliary device.
+
+> >> which I don't
+> >> think is a very good idea. Resources should be registered in their own
+> >> subsystem with the appropriate API, not in a way that is tied to a
+> >> particular consumer.
+> >>
+> >>> To solve all these issues, define a separate DRM helper, which creates
+> >>> separate aux device just for the bridge. During probe such aux device
+> >>> doesn't result in the EPROBE_DEFER loops. Instead it allows the device
+> >>> drivers to probe properly, according to the actual resource
+> >>> dependencies. The bridge auxdevs are then probed when the next bridge
+> >>> becomes available, sparing drivers from drm_bridge_attach() returning
+> >>> -EPROBE_DEFER.
+> >>
+> >> I'm not thrilled :-( Let's discuss the questions above first.
+> >>
+> >>> Proposed merge strategy: immutable branch with the drm commit, which is
+> >>> then merged into PHY and USB subsystems together with the corresponding
+> >>> patch.
+> >>>
+> >>> Changes since v3:
+> >>>   - Moved bridge driver to gpu/drm/bridge (Neil Armstrong)
+> >>>   - Renamed it to aux-bridge (since there is already a simple_bridge driver)
+> >>>   - Made CONFIG_OF mandatory for this driver (Neil Armstrong)
+> >>>   - Added missing kfree and ida_free (Dan Carpenter)
+> >>>
+> >>> Changes since v2:
+> >>>   - ifdef'ed bridge->of_node access (LKP)
+> >>>
+> >>> Changes since v1:
+> >>>   - Added EXPORT_SYMBOL_GPL / MODULE_LICENSE / etc. to drm_simple_bridge
+> >>>
+> >>> Dmitry Baryshkov (3):
+> >>>    drm/bridge: add transparent bridge helper
+> >>>    phy: qcom: qmp-combo: switch to DRM_AUX_BRIDGE
+> >>>    usb: typec: nb7vpq904m: switch to DRM_AUX_BRIDGE
+> >>>
+> >>>   drivers/gpu/drm/bridge/Kconfig            |   9 ++
+> >>>   drivers/gpu/drm/bridge/Makefile           |   1 +
+> >>>   drivers/gpu/drm/bridge/aux-bridge.c       | 132 ++++++++++++++++++++++
+> >>>   drivers/phy/qualcomm/Kconfig              |   2 +-
+> >>>   drivers/phy/qualcomm/phy-qcom-qmp-combo.c |  44 +-------
+> >>>   drivers/usb/typec/mux/Kconfig             |   2 +-
+> >>>   drivers/usb/typec/mux/nb7vpq904m.c        |  44 +-------
+> >>>   include/drm/bridge/aux-bridge.h           |  19 ++++
+> >>>   8 files changed, 167 insertions(+), 86 deletions(-)
+> >>>   create mode 100644 drivers/gpu/drm/bridge/aux-bridge.c
+> >>>   create mode 100644 include/drm/bridge/aux-bridge.h
+
+-- 
+Regards,
+
+Laurent Pinchart
