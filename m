@@ -2,75 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 724DC7A11E6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 01:37:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A73147A11F0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 01:40:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230376AbjINXhx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Sep 2023 19:37:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59060 "EHLO
+        id S230187AbjINXkH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Sep 2023 19:40:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230345AbjINXhx (ORCPT
+        with ESMTP id S230454AbjINXkG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Sep 2023 19:37:53 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B84CA1FE8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Sep 2023 16:37:48 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-9a21b6d105cso192338266b.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Sep 2023 16:37:48 -0700 (PDT)
+        Thu, 14 Sep 2023 19:40:06 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A6322707
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Sep 2023 16:40:02 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-52f3ba561d9so3406374a12.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Sep 2023 16:40:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1694734666; x=1695339466; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1694734799; x=1695339599; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WUQ7K1Uj3M2Ku8c5LZFJY/v14ESPAzqXsk3sQ7d9n6g=;
-        b=NlPDxEu4vgoUUPb/PZgTe/yE4dJpWrVZo5Zud7HsaYLLMqDIqZCOlwkC7NUf0/LGOl
-         CvH99b1NuCsTPaRvo/cmNR5gJTMvdMP3iMsLEwIke5297JsI3umIWgrhLEWh3CEOfaPy
-         5NC2Du6w6iFRylTSrEUn5iAEqXYs9ErZuTreQ=
+        bh=20RRzKZLtjTRYGrIOvHQDuGLhkZQtE0VsAgSgkickKw=;
+        b=X3CqtgTg0BVcErNIMvmip/NxebPAVSTPbKyEMTgqALGxsvBtuDQESi9FAJa6dIfY0Q
+         /VRn3aYWxrUaqLvZO4t6/x3RkK743XEt3HYWHBxnTb4yIFhhC8ux+73J1UQc6/lypTKH
+         NnQmN0p4ZXhk4ovLxlxm3sxZDqj505tq76wS8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694734666; x=1695339466;
+        d=1e100.net; s=20230601; t=1694734799; x=1695339599;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WUQ7K1Uj3M2Ku8c5LZFJY/v14ESPAzqXsk3sQ7d9n6g=;
-        b=pu15OZEC4Zd21sFs5neco5gdjOOJQ8y8DNJDF3tNPDig+N669Cs3JRhqaBAVgsS9Ux
-         RZq+oaPRN4ICiXl0b3a1RSGuIr8PpLqxNret7Z8aOkFWAo+M7scWJSabIPXrD4dgYLGx
-         wqc9cHGJNMnll54Vd78tCFUdJRxYYR7EgKCyxk0X7Kw4WV8PhdACySoY+/KUFdiHml7a
-         vm9i9xiS8EYJSjSsIfgBpR6/ekl9hvXWJHbHs2FcAxF1z6WmVsb4olNCt/s9UnkXyxm6
-         tjWOjY8HL+4clSqfUX8WhvwNG2EAUW3oUZYIT+DGSZQlR9SCD8HvxryOglumlTpBPpxW
-         Ak1g==
-X-Gm-Message-State: AOJu0Yz9yS4xt2zObJKICFCtLMj+Q2pv/GD0ZCq0qqV0CFTMtFu80jiM
-        itjMuDxYJs39epTv20Jfu6tAX/cwpHX7u/1K7Kbq2w==
-X-Google-Smtp-Source: AGHT+IG5G4swdQVqyJ+uCYHHBdM5yzpqZZdufybflD+34napO/97DaexOPvY4nXZ7Ehn0FdfOGH3jw==
-X-Received: by 2002:a17:906:10cd:b0:9a1:ea01:35b1 with SMTP id v13-20020a17090610cd00b009a1ea0135b1mr2554ejv.62.1694734665812;
-        Thu, 14 Sep 2023 16:37:45 -0700 (PDT)
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com. [209.85.128.43])
-        by smtp.gmail.com with ESMTPSA id dx9-20020a170906a84900b009ad7fc17b2asm1606559ejb.224.2023.09.14.16.37.45
+        bh=20RRzKZLtjTRYGrIOvHQDuGLhkZQtE0VsAgSgkickKw=;
+        b=OgpJ+ou7jjKNGibO6fTskAn8kdPbx6r0VDsIB3sPNyQOpCqLL9Fd4Ji5PN7zNy+UTD
+         1Fx/l3zpkWxf8zyEGChNMPajYxYUgUQ2tsiAVyoNVZwSjgcL8mm5zbZBM71m2UVX9MsF
+         WHiD+vXt3qb4pvzzpLhzgsNRTK3gNIPCKocIf4AJYujjY+UeV23AVQofEyaC5379HKbb
+         UBDwPwLYgEJEvmqNmjAjEdWG6+airjzwHNRpuH17E74MBAPPV1zQ+XEHxlQ3lWG4yR9J
+         e4l6SwbjWsTXH3XjTHyimLCBt/6kqj+NiR99d7JDI4H1Iqbm5d1HXXf8ryhsqiWTUwo2
+         PO/w==
+X-Gm-Message-State: AOJu0Yxhl1DKRxZbG+YLytDczPT+svUpB0ro//7jNXfEscdFY993e1hN
+        +nh0UA8PmbSyxat3OuYKuDQcMI9SBfqog+dZa/yuMg==
+X-Google-Smtp-Source: AGHT+IGNwctpncNUNHs2rrhBxQeClALrYBADyjeHXpBfOlEBgKGUDisPMmwk0aTM23laDAgLKfwvbw==
+X-Received: by 2002:aa7:c913:0:b0:525:8124:20fe with SMTP id b19-20020aa7c913000000b00525812420femr99392edt.18.1694734799588;
+        Thu, 14 Sep 2023 16:39:59 -0700 (PDT)
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com. [209.85.128.42])
+        by smtp.gmail.com with ESMTPSA id ec3-20020a0564020d4300b005304967df18sm851034edb.45.2023.09.14.16.39.58
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Sep 2023 16:37:45 -0700 (PDT)
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4009fdc224dso15185e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Sep 2023 16:37:45 -0700 (PDT)
-X-Received: by 2002:a05:600c:6027:b0:3fe:eb42:7ec with SMTP id
- az39-20020a05600c602700b003feeb4207ecmr35638wmb.1.1694734664702; Thu, 14 Sep
- 2023 16:37:44 -0700 (PDT)
+        Thu, 14 Sep 2023 16:39:59 -0700 (PDT)
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4009fdc224dso15365e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Sep 2023 16:39:58 -0700 (PDT)
+X-Received: by 2002:a05:600c:22d4:b0:3fe:ef25:8b86 with SMTP id
+ 20-20020a05600c22d400b003feef258b86mr64827wmg.4.1694734798662; Thu, 14 Sep
+ 2023 16:39:58 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230816112143.1.I7227efd47e0dc42b6ff243bd22aa1a3e01923220@changeid>
-In-Reply-To: <20230816112143.1.I7227efd47e0dc42b6ff243bd22aa1a3e01923220@changeid>
+References: <20230823071306.131373-1-sheng-liang.pan@quanta.corp-partner.google.com>
+In-Reply-To: <20230823071306.131373-1-sheng-liang.pan@quanta.corp-partner.google.com>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 14 Sep 2023 16:37:29 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=U4jmFcZRP0HoyOFbsBwahvsC8xiTkgQX6FhisVw8ubNg@mail.gmail.com>
-Message-ID: <CAD=FV=U4jmFcZRP0HoyOFbsBwahvsC8xiTkgQX6FhisVw8ubNg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sc7180: Move trogdor rt5682s bits
- to a fragment
+Date:   Thu, 14 Sep 2023 16:39:46 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XUW+9F-gUV57bBYMn0wgM4Axr9MM5X8kBXoDekJo3AfA@mail.gmail.com>
+Message-ID: <CAD=FV=XUW+9F-gUV57bBYMn0wgM4Axr9MM5X8kBXoDekJo3AfA@mail.gmail.com>
+Subject: Re: [PATCH v6 0/2] Add no-esim sku for sc7180-lazor family and new
+ board version for audio codec ALC5682i-VS
 To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
+Cc:     LKML <linux-kernel@vger.kernel.org>,
         Andy Gross <agross@kernel.org>,
         Conor Dooley <conor+dt@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+        linux-arm-msm@vger.kernel.org,
+        Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
@@ -79,42 +80,64 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi Bjorn,
 
-On Wed, Aug 16, 2023 at 11:23=E2=80=AFAM Douglas Anderson <dianders@chromiu=
-m.org> wrote:
+On Wed, Aug 23, 2023 at 12:13=E2=80=AFAM Sheng-Liang Pan
+<sheng-liang.pan@quanta.corp-partner.google.com> wrote:
 >
-> Several trogdor boards have moved from the older rt5862i to the newer
-> rt5862s, at least on newer revisions of boards. Let's get rid of the
-> dts duplication across boards and promote this to a fragment.
 >
-> Note: The old boards used to override the "compatible" in the "sound"
-> node with the exact same thing that was in "sc7180-trogdor.dtsi"
-> ("google,sc7180-trogdor"). I got rid of that.
 >
-> This is validated to produce the same result when taking the dtbs
-> generated by the kernel build and then doing:
+> Changes in v6:
+> - commit update, add dependent patch link
+> - remove unnecessary symbol
+> - sort out the order of properties
 >
->   for dtb in *trogdor*.dtb; do
->     dtc -I dtb -O dts $dtb -o out/$dtb.dts;
->   done
+> Changes in v5:
+> - rebased on patch moving rt5682s to a fragment
 >
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
+> Changes in v4:
+> - combine pathc2 and patch3
 >
->  .../boot/dts/qcom/sc7180-trogdor-kingoftown.dts | 13 +------------
->  .../dts/qcom/sc7180-trogdor-pazquel360.dtsi     | 13 +------------
->  .../dts/qcom/sc7180-trogdor-rt5682s-sku.dtsi    | 17 +++++++++++++++++
->  ...180-trogdor-wormdingler-rev1-boe-rt5682s.dts | 13 +------------
->  ...180-trogdor-wormdingler-rev1-inx-rt5682s.dts | 13 +------------
->  5 files changed, 21 insertions(+), 48 deletions(-)
+> Changes in v3:
+> - correct corresponding of new board and new sku
+> - sort out the node order alphabetically
+>
+> Changes in v2:
+> - add new entry rev9 with Parade bridge chip
+> - correct newly create dts files
+>
+> Sheng-Liang Pan (2):
+>   dt-bindings: arm: qcom: add sc7180-lazor board bindings
+>   arm64: dts: qcom: sc7180: Add sku_id and board id for lazor/limozeen
+>
+>  .../devicetree/bindings/arm/qcom.yaml         | 31 +++++++++++++
+>  arch/arm64/boot/dts/qcom/Makefile             |  5 +++
+>  ...sc7180-trogdor-lazor-limozeen-nots-r10.dts | 29 ++++++++++++
+>  .../sc7180-trogdor-lazor-limozeen-nots-r9.dts |  6 +--
+>  .../sc7180-trogdor-lazor-limozeen-r10.dts     | 45 +++++++++++++++++++
+>  .../qcom/sc7180-trogdor-lazor-limozeen-r9.dts | 10 ++---
+>  .../dts/qcom/sc7180-trogdor-lazor-r10-kb.dts  | 23 ++++++++++
+>  .../dts/qcom/sc7180-trogdor-lazor-r10-lte.dts | 27 +++++++++++
+>  .../dts/qcom/sc7180-trogdor-lazor-r10.dts     | 19 ++++++++
+>  .../dts/qcom/sc7180-trogdor-lazor-r9-kb.dts   |  4 +-
+>  .../dts/qcom/sc7180-trogdor-lazor-r9-lte.dts  |  4 +-
+>  .../boot/dts/qcom/sc7180-trogdor-lazor-r9.dts |  4 +-
+>  12 files changed, 193 insertions(+), 14 deletions(-)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozee=
+n-nots-r10.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozee=
+n-r10.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-kb.=
+dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-lte=
+.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10.dts
 
-If you agree, it would be a wonderful time to land this patch now.
-Please let me know if there is anything outstanding you want me to
-change.
+This patch series would also be keen to get landed. As mentioned in
+the dts commit, it depends on the other patch I just pinged, AKA:
 
-NOTE: if it were me, I'd land _just_ patch #1 in this series (AKA
-${SUBJECT} patch) and skip patch #2. I don't mattery a ton either way,
-but it seemed like Konrad agreed with me that the benefits of patch #2
-were questionable and, unless someone loves it, I vote for less churn
-instead of more churn. :-P
+https://lore.kernel.org/r/20230816112143.1.I7227efd47e0dc42b6ff243bd22aa1a3=
+e01923220@changeid
+
+If there is something outstanding that needs to be changed, please yell! :-=
+)
 
 -Doug
