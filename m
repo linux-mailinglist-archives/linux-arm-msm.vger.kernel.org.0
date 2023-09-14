@@ -2,117 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D3F57A0630
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 15:36:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 81D717A06EC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 16:09:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240170AbjINNgF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Sep 2023 09:36:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49500 "EHLO
+        id S239491AbjINOJg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Sep 2023 10:09:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239721AbjINNfQ (ORCPT
+        with ESMTP id S239724AbjINOJg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Sep 2023 09:35:16 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E6C130C1;
-        Thu, 14 Sep 2023 06:33:58 -0700 (PDT)
-Received: from benjamin-XPS-13-9310.. (unknown [IPv6:2a01:e0a:120:3210:36f2:37bd:ccbb:373f])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: benjamin.gaignard)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id ADAC16607363;
-        Thu, 14 Sep 2023 14:33:56 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1694698437;
-        bh=e/0oW+YFaFeImADlNG8EUeKcdUibwENtTNcAqKB0P6A=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=SL+vKn/uv+bwLgADFoLmvyiqfe7/Lo7rBKOrF3RpVfp8gVqlFIgwHnnlBT1svUSxM
-         PsqGrTbXR5ewRPNj+tlt0w6nzkBWLldeaLmQtuHqb7bjpSrsmaqw797Fo7RcpeZZu6
-         E5S1TZU1JlWmB3t5A5CESCWvBDmgMGUVXdQjnn4IIO1mAwAT2Z9ZLvfDN1oWt34LUl
-         IYL1iHAeSuYkZNMzNlVPN8uHOTIsiovx8LnTA9EdFQmA6oXqFqDV3IjnkLfuPY6yaJ
-         NSi1oVparCg69fZ86IB2ARG345RQeyqglO8Jj0sgkLOm7NUdHVUPqlh2+bp5AcLTQu
-         b+2Y4U/qNMblg==
-From:   Benjamin Gaignard <benjamin.gaignard@collabora.com>
-To:     mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
-        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
-        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
-        hverkuil-cisco@xs4all.nl, nicolas.dufresne@collabora.com
-Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
-        kernel@collabora.com,
-        Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Subject: [PATCH v7 49/49] media: test-drivers: Use helper for DELETE_BUFS ioctl
-Date:   Thu, 14 Sep 2023 15:33:23 +0200
-Message-Id: <20230914133323.198857-50-benjamin.gaignard@collabora.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230914133323.198857-1-benjamin.gaignard@collabora.com>
-References: <20230914133323.198857-1-benjamin.gaignard@collabora.com>
+        Thu, 14 Sep 2023 10:09:36 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.51])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EE89DF;
+        Thu, 14 Sep 2023 07:09:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1694700569; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=ECLa/iHpIzlyQADfvAVjpjAHb1awJ9StlaEXiaobB3JIdM1a4GUSND4YJYWJBPNGwR
+    hrwqEPXmUZt4bibYgVIs7YnUMjjYSVwkOPzKQoM/etytRJ4YShrBUZPY/mflT+MsZYvn
+    ChVQYoZly5Kkcs/lFCum9Q/fv0WbcOdY7gh4LV/ua0ZZS6REr+D2LVziwxyKHMXnvz0H
+    HLXy5i6et4oRsbFMJMvDzwAaz32WVUDv83jRe9NepkUgxFyG1E7ZEMHrkpnDHWBxXBCn
+    l621AxGE0YTQfkrX3IfB8cs6JC+C9weeWXiGKgSLdWk4EgldsbtGyzi9ySXHiFOIMdYe
+    HS1g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1694700569;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=Jd84c8VCl84O/X9LEKWHRrmMX+GqRKSgI/d7fqGsbbA=;
+    b=gcH5zWtdkG7/49Jc58d3hNdcfi8OvFZZSXgAoQNlWV27kLJnLY7Vtg2s8AfKO9t6YI
+    K4W5M98yRErJum5bpJp2j0Q9R2fUFWX59AyrH+pUM8JmJFEfoUlnbIXd7FyvdKm5itCm
+    Tsp7Ej/TZ8XfgNPpMUpgWqzXG3LTnjGJfLhMRsN2g6LYWM2S6qOeV+iGo5YZoPFjuEjo
+    T7vt+gueNYKp9RwP8sRpUT2it36KdbytjzffNhqXu9Qx1hH+QLjYVSjo52llUOPTYyZT
+    ja98zf3w8Ft7S6/7wVqiSYMQUTsZdd5blyhTIKpJAs387wUjMbIOS2VBCGqS3HoXiSL0
+    ToLw==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1694700569;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=Jd84c8VCl84O/X9LEKWHRrmMX+GqRKSgI/d7fqGsbbA=;
+    b=OCmbhFhTcMki8DZuV5mKGQPIclWAc7xMHZe785354ILcIz2tXydZ+dg+YaKRpgZb8Q
+    EnimhNLOqgph6ByCK/78wZO9pRLvk9p35WimNkjGIgQVb2qNGSgUIAIQs0OogN+KfXWJ
+    Syv0ElFqF+3is1f5fCgs2slH5pxEnk+LJPIlrby5pSbacFlXhxLQ0MAG+PoRSZjVmPHi
+    d1hCgMT7SxdN1MtgvYEYypXHkgXis2FM96rePqWBU2xX8JwPU0RpNP4ylm4Dhg7Lc6gi
+    8hpJL11/1ntTX662Pl8xCOv4fgR9tV3lL8OC3X+eQpQ3qVGx9UfKtXJ676iDihpbGHhX
+    Rcxw==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1694700569;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=Jd84c8VCl84O/X9LEKWHRrmMX+GqRKSgI/d7fqGsbbA=;
+    b=Q4mPF6ZxHdSrbpH757k/hUpbtKmpalM7zTUSBR1Wx2XHTvqA01GsNSK82g1jl2e8Uf
+    jJUYh9lLf+gePq50wZBg==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA95vh"
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.8.2 DYNA|AUTH)
+    with ESMTPSA id R04c57z8EE9T47Q
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Thu, 14 Sep 2023 16:09:29 +0200 (CEST)
+Date:   Thu, 14 Sep 2023 16:09:22 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 4/9] arm64: dts: qcom: msm8916: Reserve firmware memory
+ dynamically
+Message-ID: <ZQMUDia6cYA0mGmL@gerhold.net>
+References: <20230911-msm8916-rmem-v1-0-b7089ec3e3a1@gerhold.net>
+ <20230911-msm8916-rmem-v1-4-b7089ec3e3a1@gerhold.net>
+ <912f90ee-0816-43ae-bc6f-a9a9a3e33d8a@linaro.org>
+ <9b1beb38-9ec2-4bdb-97f5-fccf98d3b0c3@linaro.org>
+ <ZQGLioVhjCK3TRva@gerhold.net>
+ <568b4e18-1ade-4a12-9766-d16d8ca9838d@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <568b4e18-1ade-4a12-9766-d16d8ca9838d@linaro.org>
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Allow test drivers to use DELETE_BUFS by adding vb2_ioctl_delete_bufs() helper.
+On Wed, Sep 13, 2023 at 09:39:50PM +0200, Konrad Dybcio wrote:
+> On 13.09.2023 12:14, Stephan Gerhold wrote:
+> > On Wed, Sep 13, 2023 at 10:12:12AM +0100, Bryan O'Donoghue wrote:
+> >> On 13/09/2023 10:06, Konrad Dybcio wrote:
+> >>> On 11.09.2023 19:41, Stephan Gerhold wrote:
+> >>>> Most of the reserved firmware memory on MSM8916 can be relocated when
+> >>>> respecting the required alignment. To avoid having to precompute the
+> >>>> reserved memory regions in every board DT, describe the actual
+> >>>> requirements (size, alignment, alloc-ranges) using the dynamic reserved
+> >>>> memory allocation.
+> >>>>
+> >>>> This approach has several advantages:
+> >>>>
+> >>>>   1. We can define "templates" for the reserved memory regions in
+> >>>>      msm8916.dtsi and keep only device-specific details in the board DT.
+> >>>>      This is useful for the "mpss" region size for example, which varies
+> >>>>      from device to device. It is no longer necessary to redefine all
+> >>>>      firmware regions to shift their addresses.
+> >>>>
+> >>>>   2. When some of the functionality (e.g. WCNSS, Modem, Venus) is not
+> >>>>      enabled or needed for a device, the reserved memory can stay
+> >>>>      disabled, freeing up the unused reservation for Linux.
+> >>>>
+> >>>>   3. Devices with special requirements for one of the firmware regions
+> >>>>      are handled automatically. For example, msm8916-longcheer-l8150
+> >>>>      has non-relocatable "wcnss" firmware that must be loaded exactly
+> >>>>      at address 0x8b600000. When this is defined as a static region,
+> >>>>      the other dynamic allocations automatically adjust to a different
+> >>>>      place with suitable alignment.
+> >>>>
+> >>>> All in all this approach significantly reduces the boilerplate necessary
+> >>>> to define the different firmware regions, and makes it easier to enable
+> >>>> functionality on the different devices.
+> >>>>
+> >>>> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> >>>> ---
+> >>> [...]
+> >>>
+> >>>>   		mpss_mem: mpss@86800000 {
+> >>>> +			/*
+> >>>> +			 * The memory region for the mpss firmware is generally
+> >>>> +			 * relocatable and could be allocated dynamically.
+> >>>> +			 * However, many firmware versions tend to fail when
+> >>>> +			 * loaded to some special addresses, so it is hard to
+> >>>> +			 * define reliable alloc-ranges.
+> >>>> +			 *
+> >>>> +			 * alignment = <0x0 0x400000>;
+> >>>> +			 * alloc-ranges = <0x0 0x86800000 0x0 0x8000000>;
+> >>>> +			 */
+> >>> Do we know of any devices that this would actually work on?
+> [...]
+> >  - On DB410c it works just fine. All addresses I tried work without any
+> >    problems.
+> > 
+> >  - On longcheer-l8150 the modem firmare works fine when the memory
+> >    region starts somewhere between 0x86800000 and 0x8a800000. It also
+> >    works again after 0x8e800000. But on anything between 0x8a800000 and
+> >    0x8e800000 it's broken for who knows what reason.
+> > [...]
+> Were you able to find a phone (likely a very reference-design-based
+> one) that this worked on, btw?
 
-Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
----
- drivers/media/test-drivers/vicodec/vicodec-core.c | 1 +
- drivers/media/test-drivers/vimc/vimc-capture.c    | 1 +
- drivers/media/test-drivers/visl/visl-video.c      | 1 +
- drivers/media/test-drivers/vivid/vivid-core.c     | 1 +
- 4 files changed, 4 insertions(+)
+Actually I would count the Longcheer devices (l8150 = Wileyfox Swift and
+l8910 = BQ Aquaris X5) to the category of close-to-QRD-based devices.
+Based on quick tests both behave like described above (only
+0x8a800000-0x8e800000 is broken). Same for wingtech-wt88047.
 
-diff --git a/drivers/media/test-drivers/vicodec/vicodec-core.c b/drivers/media/test-drivers/vicodec/vicodec-core.c
-index 6f0e20df74e9..64bb0d3372f0 100644
---- a/drivers/media/test-drivers/vicodec/vicodec-core.c
-+++ b/drivers/media/test-drivers/vicodec/vicodec-core.c
-@@ -1339,6 +1339,7 @@ static const struct v4l2_ioctl_ops vicodec_ioctl_ops = {
- 	.vidioc_prepare_buf	= v4l2_m2m_ioctl_prepare_buf,
- 	.vidioc_create_bufs	= v4l2_m2m_ioctl_create_bufs,
- 	.vidioc_expbuf		= v4l2_m2m_ioctl_expbuf,
-+	.vidioc_delete_bufs	= v4l2_m2m_ioctl_delete_bufs,
- 
- 	.vidioc_streamon	= v4l2_m2m_ioctl_streamon,
- 	.vidioc_streamoff	= v4l2_m2m_ioctl_streamoff,
-diff --git a/drivers/media/test-drivers/vimc/vimc-capture.c b/drivers/media/test-drivers/vimc/vimc-capture.c
-index aa944270e716..66e76b645346 100644
---- a/drivers/media/test-drivers/vimc/vimc-capture.c
-+++ b/drivers/media/test-drivers/vimc/vimc-capture.c
-@@ -221,6 +221,7 @@ static const struct v4l2_ioctl_ops vimc_capture_ioctl_ops = {
- 	.vidioc_expbuf = vb2_ioctl_expbuf,
- 	.vidioc_streamon = vb2_ioctl_streamon,
- 	.vidioc_streamoff = vb2_ioctl_streamoff,
-+	.vidioc_delete_bufs = vb2_ioctl_delete_bufs,
- };
- 
- static void vimc_capture_return_all_buffers(struct vimc_capture_device *vcapture,
-diff --git a/drivers/media/test-drivers/visl/visl-video.c b/drivers/media/test-drivers/visl/visl-video.c
-index 7cac6a6456eb..2fb5ff4a4987 100644
---- a/drivers/media/test-drivers/visl/visl-video.c
-+++ b/drivers/media/test-drivers/visl/visl-video.c
-@@ -521,6 +521,7 @@ const struct v4l2_ioctl_ops visl_ioctl_ops = {
- 	.vidioc_prepare_buf		= v4l2_m2m_ioctl_prepare_buf,
- 	.vidioc_create_bufs		= v4l2_m2m_ioctl_create_bufs,
- 	.vidioc_expbuf			= v4l2_m2m_ioctl_expbuf,
-+	.vidioc_delete_bufs		= v4l2_m2m_ioctl_delete_bufs,
- 
- 	.vidioc_streamon		= v4l2_m2m_ioctl_streamon,
- 	.vidioc_streamoff		= v4l2_m2m_ioctl_streamoff,
-diff --git a/drivers/media/test-drivers/vivid/vivid-core.c b/drivers/media/test-drivers/vivid/vivid-core.c
-index e95bdccfc18e..43a7594e7c5b 100644
---- a/drivers/media/test-drivers/vivid/vivid-core.c
-+++ b/drivers/media/test-drivers/vivid/vivid-core.c
-@@ -769,6 +769,7 @@ static const struct v4l2_ioctl_ops vivid_ioctl_ops = {
- 	.vidioc_expbuf			= vb2_ioctl_expbuf,
- 	.vidioc_streamon		= vb2_ioctl_streamon,
- 	.vidioc_streamoff		= vb2_ioctl_streamoff,
-+	.vidioc_delete_bufs		= vb2_ioctl_delete_bufs,
- 
- 	.vidioc_enum_input		= vivid_enum_input,
- 	.vidioc_g_input			= vivid_g_input,
--- 
-2.39.2
+In other words, for those using the dynamic allocation would work fine,
+because the alloc-ranges = <0x0 0x86800000 0x0 0x8000000>; only includes
+working start addresses from 0x86800000 to ~0x89800000 (with a size of
+0x5000000).
 
+I guess I could use it for them and only make other devices use a fixed
+address. But I also don't quite have the capacity to test every device
+to see if relocating the region works or not.
+
+I think it's still easiest to allocate mpss on a fixed address
+everywhere. The only real disadvantage is that overriding "reg", e.g.
+
+	&mpss_mem {
+		reg = <0x0 0x86800000 0x0 0x5100000>;
+	};
+
+is a bit more ugly than overriding size:
+
+	&mpss_mem {
+		size = <0x0 0x5100000>;
+	};
+
+but well, this is a very minor disadvantage.
+
+Thanks,
+Stephan
