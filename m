@@ -2,41 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 00CAA7A0D1F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 20:40:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4988B7A0D31
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 20:41:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241777AbjINSk2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Sep 2023 14:40:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37586 "EHLO
+        id S241948AbjINSl0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Sep 2023 14:41:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241867AbjINSjI (ORCPT
+        with ESMTP id S241947AbjINSjf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Sep 2023 14:39:08 -0400
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75F7C2693;
-        Thu, 14 Sep 2023 11:38:57 -0700 (PDT)
+        Thu, 14 Sep 2023 14:39:35 -0400
+Received: from galois.linutronix.de (Galois.linutronix.de [IPv6:2a0a:51c0:0:12e:550::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D38CC26B3;
+        Thu, 14 Sep 2023 11:39:00 -0700 (PDT)
 From:   John Ogness <john.ogness@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020; t=1694716736;
+        s=2020; t=1694716739;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=lU9D8We8m4x72sUrLwTLFKudvB8THnTuYuyUkrl8N/A=;
-        b=hAMHEMsgqejMT1XBX057U7gRX/U0TGRx3iue3x/BaIGP2roM1YCGjozN2L9FUjZkyFgPiO
-        wNfTWFxb0/ZsMZt0RPpay2OdEU7JJs2RY/X4jt+EPSppHA6AWFVLL5/T6PrwgIMEeEqubC
-        EYxKB7lM2J8v0TaCjrXRhAWNCjoiXfxeRwOVToCiZt2ch0bFJmBg+aMXDbzknRGYCju55k
-        lRkHT77aZRlm4KXBzKvDseK8wwh+FN7CZ53u7vuDS1TKBclGeiDLNcGKKXu12nDDfRPWBC
-        0vzQIR61YbtQNGgDRyRvi+qk0aRx/DSdaGwbJsi3WyJ/sMuXwNbSbK0fyL7OCQ==
+        bh=17zj637DQkryRYGb4/9wkWuly22RRdW4LfXIGp3ap80=;
+        b=gJJt8ECptIei3pjqa8XEVI+Fwjnumc3jdwgKHE1l8lrc9aoruj1uhfU5thGoUQktKtVykB
+        i9R0cnq6YsLdnagbYQxc7STHZFFZgEdYBFjDL/zlU1nFx1KTdKV1QqmYZND5Suu3uV8NBj
+        e5GZbEMgaCAS2mUB2re+7iJgGrmGCxjoDuVMlC5AiBvUn2LnOt/r+bI1n7lVDOxE2NPcll
+        bGvchLP71BEje107RFPk4AJD8Nbi/r5tYyiUXkKmPxwGPVyD5j++W5xMPY1FyGWqKhncW2
+        wPHWMbjrp4EJyL6zrnGddSIClo6BeuWKR12+6RqpXNt2sS6CIYakWxIy9AFx1A==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020e; t=1694716736;
+        s=2020e; t=1694716739;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=lU9D8We8m4x72sUrLwTLFKudvB8THnTuYuyUkrl8N/A=;
-        b=w2ZDYAKVL3yIhf3zWrk2VoKWILS3vFbQnBzPcxXlGmzGcK+Zrii90SS8A7LT64OBqbAGcJ
-        fmc4JyzXXOILh3Dw==
+        bh=17zj637DQkryRYGb4/9wkWuly22RRdW4LfXIGp3ap80=;
+        b=trnfmLCq598rEijUt+3jLrOeWMN5bTzCu2nDNdwBc7BKdrhgvOzyjV0oc1f/S8ypF8LsKA
+        gYEZTR+YnQA9qxDg==
 To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc:     Jiri Slaby <jirislaby@kernel.org>, linux-serial@vger.kernel.org,
         Petr Mladek <pmladek@suse.com>,
@@ -45,9 +45,9 @@ Cc:     Jiri Slaby <jirislaby@kernel.org>, linux-serial@vger.kernel.org,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         linux-arm-msm@vger.kernel.org
-Subject: [PATCH tty v1 41/74] serial: msm: Use port lock wrappers
-Date:   Thu, 14 Sep 2023 20:43:58 +0206
-Message-Id: <20230914183831.587273-42-john.ogness@linutronix.de>
+Subject: [PATCH tty v1 49/74] serial: qcom-geni: Use port lock wrappers
+Date:   Thu, 14 Sep 2023 20:44:06 +0206
+Message-Id: <20230914183831.587273-50-john.ogness@linutronix.de>
 In-Reply-To: <20230914183831.587273-1-john.ogness@linutronix.de>
 References: <20230914183831.587273-1-john.ogness@linutronix.de>
 MIME-Version: 1.0
@@ -84,157 +84,43 @@ Converted with coccinelle. No functional change.
 
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 ---
- drivers/tty/serial/msm_serial.c | 38 ++++++++++++++++-----------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+ drivers/tty/serial/qcom_geni_serial.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
-index 90953e679e38..597264b546fd 100644
---- a/drivers/tty/serial/msm_serial.c
-+++ b/drivers/tty/serial/msm_serial.c
-@@ -444,7 +444,7 @@ static void msm_complete_tx_dma(void *args)
- 	unsigned int count;
- 	u32 val;
+diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+index b8aa4c1293ba..7e78f97e8f43 100644
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -482,9 +482,9 @@ static void qcom_geni_serial_console_write(struct console *co, const char *s,
  
--	spin_lock_irqsave(&port->lock, flags);
-+	uart_port_lock_irqsave(port, &flags);
- 
- 	/* Already stopped */
- 	if (!dma->count)
-@@ -476,7 +476,7 @@ static void msm_complete_tx_dma(void *args)
- 
- 	msm_handle_tx(port);
- done:
--	spin_unlock_irqrestore(&port->lock, flags);
-+	uart_port_unlock_irqrestore(port, flags);
- }
- 
- static int msm_handle_tx_dma(struct msm_port *msm_port, unsigned int count)
-@@ -549,7 +549,7 @@ static void msm_complete_rx_dma(void *args)
- 	unsigned long flags;
- 	u32 val;
- 
--	spin_lock_irqsave(&port->lock, flags);
-+	uart_port_lock_irqsave(port, &flags);
- 
- 	/* Already stopped */
- 	if (!dma->count)
-@@ -587,16 +587,16 @@ static void msm_complete_rx_dma(void *args)
- 		if (!(port->read_status_mask & MSM_UART_SR_RX_BREAK))
- 			flag = TTY_NORMAL;
- 
--		spin_unlock_irqrestore(&port->lock, flags);
-+		uart_port_unlock_irqrestore(port, flags);
- 		sysrq = uart_handle_sysrq_char(port, dma->virt[i]);
--		spin_lock_irqsave(&port->lock, flags);
-+		uart_port_lock_irqsave(port, &flags);
- 		if (!sysrq)
- 			tty_insert_flip_char(tport, dma->virt[i], flag);
- 	}
- 
- 	msm_start_rx_dma(msm_port);
- done:
--	spin_unlock_irqrestore(&port->lock, flags);
-+	uart_port_unlock_irqrestore(port, flags);
- 
- 	if (count)
- 		tty_flip_buffer_push(tport);
-@@ -762,9 +762,9 @@ static void msm_handle_rx_dm(struct uart_port *port, unsigned int misr)
- 			if (!(port->read_status_mask & MSM_UART_SR_RX_BREAK))
- 				flag = TTY_NORMAL;
- 
--			spin_unlock(&port->lock);
-+			uart_port_unlock(port);
- 			sysrq = uart_handle_sysrq_char(port, buf[i]);
--			spin_lock(&port->lock);
-+			uart_port_lock(port);
- 			if (!sysrq)
- 				tty_insert_flip_char(tport, buf[i], flag);
- 		}
-@@ -824,9 +824,9 @@ static void msm_handle_rx(struct uart_port *port)
- 		else if (sr & MSM_UART_SR_PAR_FRAME_ERR)
- 			flag = TTY_FRAME;
- 
--		spin_unlock(&port->lock);
-+		uart_port_unlock(port);
- 		sysrq = uart_handle_sysrq_char(port, c);
--		spin_lock(&port->lock);
-+		uart_port_lock(port);
- 		if (!sysrq)
- 			tty_insert_flip_char(tport, c, flag);
- 	}
-@@ -951,7 +951,7 @@ static irqreturn_t msm_uart_irq(int irq, void *dev_id)
- 	unsigned int misr;
- 	u32 val;
- 
--	spin_lock_irqsave(&port->lock, flags);
-+	uart_port_lock_irqsave(port, &flags);
- 	misr = msm_read(port, MSM_UART_MISR);
- 	msm_write(port, 0, MSM_UART_IMR); /* disable interrupt */
- 
-@@ -983,7 +983,7 @@ static irqreturn_t msm_uart_irq(int irq, void *dev_id)
- 		msm_handle_delta_cts(port);
- 
- 	msm_write(port, msm_port->imr, MSM_UART_IMR); /* restore interrupt */
--	spin_unlock_irqrestore(&port->lock, flags);
-+	uart_port_unlock_irqrestore(port, flags);
- 
- 	return IRQ_HANDLED;
- }
-@@ -1128,13 +1128,13 @@ static int msm_set_baud_rate(struct uart_port *port, unsigned int baud,
- 	unsigned long flags, rate;
- 
- 	flags = *saved_flags;
--	spin_unlock_irqrestore(&port->lock, flags);
-+	uart_port_unlock_irqrestore(port, flags);
- 
- 	entry = msm_find_best_baud(port, baud, &rate);
- 	clk_set_rate(msm_port->clk, rate);
- 	baud = rate / 16 / entry->divisor;
- 
--	spin_lock_irqsave(&port->lock, flags);
-+	uart_port_lock_irqsave(port, &flags);
- 	*saved_flags = flags;
- 	port->uartclk = rate;
- 
-@@ -1266,7 +1266,7 @@ static void msm_set_termios(struct uart_port *port, struct ktermios *termios,
- 	unsigned long flags;
- 	unsigned int baud, mr;
- 
--	spin_lock_irqsave(&port->lock, flags);
-+	uart_port_lock_irqsave(port, &flags);
- 
- 	if (dma->chan) /* Terminate if any */
- 		msm_stop_dma(port, dma);
-@@ -1338,7 +1338,7 @@ static void msm_set_termios(struct uart_port *port, struct ktermios *termios,
- 	/* Try to use DMA */
- 	msm_start_rx_dma(msm_port);
- 
--	spin_unlock_irqrestore(&port->lock, flags);
-+	uart_port_unlock_irqrestore(port, flags);
- }
- 
- static const char *msm_type(struct uart_port *port)
-@@ -1620,9 +1620,9 @@ static void __msm_console_write(struct uart_port *port, const char *s,
- 	if (port->sysrq)
- 		locked = 0;
- 	else if (oops_in_progress)
--		locked = spin_trylock(&port->lock);
-+		locked = uart_port_trylock(port);
+ 	uport = &port->uport;
+ 	if (oops_in_progress)
+-		locked = spin_trylock_irqsave(&uport->lock, flags);
++		locked = uart_port_trylock_irqsave(uport, &flags);
  	else
--		spin_lock(&port->lock);
-+		uart_port_lock(port);
+-		spin_lock_irqsave(&uport->lock, flags);
++		uart_port_lock_irqsave(uport, &flags);
  
- 	if (is_uartdm)
- 		msm_reset_dm_count(port, count);
-@@ -1661,7 +1661,7 @@ static void __msm_console_write(struct uart_port *port, const char *s,
- 	}
+ 	geni_status = readl(uport->membase + SE_GENI_STATUS);
+ 
+@@ -520,7 +520,7 @@ static void qcom_geni_serial_console_write(struct console *co, const char *s,
+ 		qcom_geni_serial_setup_tx(uport, port->tx_remaining);
  
  	if (locked)
--		spin_unlock(&port->lock);
-+		uart_port_unlock(port);
- 
- 	local_irq_restore(flags);
+-		spin_unlock_irqrestore(&uport->lock, flags);
++		uart_port_unlock_irqrestore(uport, flags);
  }
+ 
+ static void handle_rx_console(struct uart_port *uport, u32 bytes, bool drop)
+@@ -970,7 +970,7 @@ static irqreturn_t qcom_geni_serial_isr(int isr, void *dev)
+ 	if (uport->suspended)
+ 		return IRQ_NONE;
+ 
+-	spin_lock(&uport->lock);
++	uart_port_lock(uport);
+ 
+ 	m_irq_status = readl(uport->membase + SE_GENI_M_IRQ_STATUS);
+ 	s_irq_status = readl(uport->membase + SE_GENI_S_IRQ_STATUS);
 -- 
 2.39.2
 
