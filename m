@@ -2,133 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5104879F784
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 04:05:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A780279F820
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 04:32:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230014AbjINCFi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Sep 2023 22:05:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46056 "EHLO
+        id S231200AbjINCc7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Sep 2023 22:32:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234152AbjINCF1 (ORCPT
+        with ESMTP id S230121AbjINCc6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Sep 2023 22:05:27 -0400
+        Wed, 13 Sep 2023 22:32:58 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04C658A7A;
-        Wed, 13 Sep 2023 18:59:58 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38E0v5eP021892;
-        Thu, 14 Sep 2023 01:59:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=x8n3MXEK2j8hijljFVUVtE3/21k8bAP/M6M7qZvc9lw=;
- b=SjnNt5rn/i4ZxE860ySihJWE6fUs4HQmfsLL6Px8bQLe6/Zf79K6H0pKb/cPwP5a7xS1
- eQQ2k9giwQftxhPbTYCApr30wjbdNt8cO0a9B/3ArLIiW4g5+Zqrgj4kKZVd7SwWV4L/
- afGk2hzPdLqnKb6A/gEu0ADhyofTmd5ygt6nhkLAuAsqODm4RNf0R6k7s23SgXXiTNvu
- QyvLP7EuEMkkxH9qmAoNpO4VlyTPHjZHkiIrxTErHdomuetEfPDl+EbKuf3o8iZzPptM
- 6Na02fqagwbemqu0Z+OFux4uvWHFZ013mRbMwdy4qwTjkEQactXIzhsZMu+fMejWHnpG gg== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t3h0dh15m-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BEEC1AD;
+        Wed, 13 Sep 2023 19:32:54 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38E0uCgg019721;
+        Thu, 14 Sep 2023 02:32:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=IgO3mqpLSWVJHvkh+qBggAdQouLFnxNzFgwRRXD33KE=;
+ b=g2o3bZy4O+PkbvDLTSF4huJnpfmXwCcxOG+jE6ayjwIAYikwYOPrlN+qwsnsXOwoDeow
+ uTc6+dhK4uwlguBVMfGjrjSgCy7cYPi1SIaqBEoRXSzMKmaPZ1zPyTUY7CXAIJuY8yZK
+ +8KcQiQ2G+y4ZurHlK4nnfo0F1D8ilXjCG+r3VvThetFp5F/F7sJkUvCjc2HFqNkTPRt
+ +AItnt1y4nx71rSc/C7yC/of8xXoqynz2UGHBZA+rwHZizVg9ZfU0wYYPjJG73Jc7NAV
+ FCqwz4i1+p8imApttBUdA9HaZv5ZjAV1V5P3CaPcJBC65ZBkm8Z3nPfyFGSh+F/zxVA7 Lw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t2y7qbg9p-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 14 Sep 2023 01:59:28 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38E1xRsG031046
+        Thu, 14 Sep 2023 02:32:41 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38E2WetV031475
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 14 Sep 2023 01:59:27 GMT
-Received: from [10.239.155.136] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Wed, 13 Sep
- 2023 18:59:22 -0700
-Message-ID: <ee823de5-d5b4-6719-a7e3-cc799cd15ad1@quicinc.com>
-Date:   Thu, 14 Sep 2023 09:59:19 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH] scsi: ufs: qcom: dt-bindings: Add MCQ ESI property
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <quic_asutoshd@quicinc.com>, <quic_cang@quicinc.com>,
-        <bvanassche@acm.org>, <mani@kernel.org>, <adrian.hunter@intel.com>,
-        <beanhuo@micron.com>, <avri.altman@wdc.com>,
-        <junwoo80.lee@samsung.com>, <martin.petersen@oracle.com>,
-        <quic_nguyenb@quicinc.com>, <quic_nitirawa@quicinc.com>
-CC:     <linux-scsi@vger.kernel.org>, Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
+        Thu, 14 Sep 2023 02:32:40 GMT
+Received: from hu-mdtipton-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.36; Wed, 13 Sep 2023 19:32:40 -0700
+Date:   Wed, 13 Sep 2023 19:32:39 -0700
+From:   Mike Tipton <quic_mdtipton@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+CC:     Georgi Djakov <djakov@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <1694163203-39123-1-git-send-email-quic_ziqichen@quicinc.com>
- <0231fa19-bc71-db11-ffd4-8c922d110447@linaro.org>
-From:   Ziqi Chen <quic_ziqichen@quicinc.com>
-In-Reply-To: <0231fa19-bc71-db11-ffd4-8c922d110447@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+        <cros-qcom-dts-watchers@chromium.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 00/53] icc-rpmh multi-RSC voting groundwork
+Message-ID: <20230914023239.GA25147@hu-mdtipton-lv.qualcomm.com>
+References: <20230708-topic-rpmh_icc_rsc-v1-0-b223bd2ac8dd@linaro.org>
+ <c067a45f-9629-d516-9e56-36538e4ff6db@kernel.org>
+ <20230807215739.GA9621@hu-mdtipton-lv.qualcomm.com>
+ <10520827-dc01-475c-b09a-35cefc9e0a62@linaro.org>
+ <20230913012951.GA19284@hu-mdtipton-lv.qualcomm.com>
+ <ffc58838-c306-49f3-a90a-95b2cf02ae3d@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <ffc58838-c306-49f3-a90a-95b2cf02ae3d@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: p5-lBC98slKbgOoJUZwZ5RTPrf5DOIWG
-X-Proofpoint-GUID: p5-lBC98slKbgOoJUZwZ5RTPrf5DOIWG
+X-Proofpoint-GUID: 0dFrF8mWXndu0a5H5z8d_erqmvHIcWJ5
+X-Proofpoint-ORIG-GUID: 0dFrF8mWXndu0a5H5z8d_erqmvHIcWJ5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
  definitions=2023-09-13_19,2023-09-13_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxscore=0
- suspectscore=0 mlxlogscore=999 phishscore=0 priorityscore=1501
- lowpriorityscore=0 spamscore=0 malwarescore=0 bulkscore=0 impostorscore=0
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309140016
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
+ malwarescore=0 clxscore=1015 spamscore=0 priorityscore=1501
+ mlxlogscore=999 phishscore=0 bulkscore=0 suspectscore=0 adultscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309140020
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krzysztof，
+On Wed, Sep 13, 2023 at 10:31:49AM +0200, Konrad Dybcio wrote:
+> > The applicable voters should likely be defined in the target-specific
+> > headers, rather than the common qcom,icc.h. The bit range used for them
+> > could be common, but each target may only support a small subset of the
+> > total set of possible voters across all targets.
+> I'm not sure how client drivers would then choose the
+> correct path other than
+> 
+> switch (soc) {
+> case 8450:
+> 	tag = QCOM_ICC_TAG_VOTER_8450_HLOS;
+> 	break;
+> case 8550:
+> 	tag = QCOM_ICC_TAG_VOTER_8550_HLOS;
+> 	break;
+> ...
+> }
+> 
+> which would be unacceptable.
 
-Thanks for your comment very much ~
-I will remove this property in next patch version.
-We just plan to post "msi-parent" property for MCQ.
+The same general way it's handled for the endpoint bindings, which are
+already target-specific. 
 
+Any client drivers hardcoding the endpoint bindings in their driver
+would have to include the appropriate, target-specific binding header
+(e.g. qcom,sm8550-rpmh.h). That would only be possible if their driver
+file is itself target-specific. Otherwise, it would have to pull the
+endpoint bindings from devicetree. Or just use the recommended
+of_icc_get() and let devicetree do everything for them. Same for the
+target-specific voter tag bindings.
 
-Best Regards,
-Ziqi
+Clients can also specify their tags in devicetree. They don't actually
+have to call icc_set_tag() directly. For example:
 
-On 9/11/2023 2:27 PM, Krzysztof Kozlowski wrote:
-> On 08/09/2023 10:53, Ziqi Chen wrote:
->> Document the description for the qcom,esi-affinity-mask.
-> 
-> This tells me nothing what is this feature for.
-> 
->>
->> Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
->> ---
->>   Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 4 ++++
->>   1 file changed, 4 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
->> index bdfa86a..323595f 100644
->> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
->> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
->> @@ -97,6 +97,10 @@ properties:
->>       description:
->>         GPIO connected to the RESET pin of the UFS memory device.
->>   
->> +  qcom,esi-affinity-mask:
-> 
-> Not tested. You also miss proper type.
-> 
->> +    description:
->> +       UFS MCQ ESI affinity mask. Affine ESI on registration according to this CPU mask.
-> 
-> And why is this a property of DT? Aren't you now describing driver?
-> 
-> 
-> 
-> Best regards,
-> Krzysztof
-> 
+    #include <dt-bindings/interconnect/qcom,sm8450.h>
+
+    interconnects = <&mmss_noc MASTER_MDP QCOM_ICC_TAG_VOTER_DISP
+                     &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_VOTER_DISP>;
+
+Then when they call of_icc_get() for this path it'll automatically have
+QCOM_ICC_TAG_VOTER_DISP set for them.
