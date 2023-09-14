@@ -2,119 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DE7D07A0993
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 17:46:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD92D7A09F6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 18:00:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240974AbjINPq2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Sep 2023 11:46:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42522 "EHLO
+        id S241290AbjINQAf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Sep 2023 12:00:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241191AbjINPq0 (ORCPT
+        with ESMTP id S241180AbjINQAe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Sep 2023 11:46:26 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E847D1FDA;
-        Thu, 14 Sep 2023 08:45:51 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38EFE4hK003959;
-        Thu, 14 Sep 2023 15:45:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=25aS0EJkCskLRfxjNaNCLueqzUMPVBM9At3Cq6IJbeQ=;
- b=J9p+U6Llth2WLxI40mR4dwbssC6++wfnrtGkHxGqZ04A3ihglaORcBUZN5qQU/eM8vNP
- 2fjTLeII18kbE1vZ6zB4EJ9p/0ROenvOb6xIEv7C1zs1oxuIrDLIwScfGcxTlG6v47eg
- csy+T0o79tHLBZhVo4vi01jBlZPuEHobioCLPZjUWy5Sg6PrApDZm4dciHWkW8Y9U4s7
- etSJxVT+lMoknPSm4TqD9F/TM+H8LBmRswTfYU0tMRUterqkuOMyo1epRfQ1OJ1F9tZ8
- OC+8VmJnYv3UgT4NeYNDQ0wmcT3AtsPCjfLenen5DQwGexEiVZow6hrItVjB7u1gEDqK 5w== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t3x6mseav-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 14 Sep 2023 15:45:33 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38EFjXxj021265
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 14 Sep 2023 15:45:33 GMT
-Received: from [10.216.57.92] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Thu, 14 Sep
- 2023 08:45:25 -0700
-Message-ID: <e7e4fc1e-661a-fd62-e8b1-1e173cbfcd3e@quicinc.com>
-Date:   Thu, 14 Sep 2023 21:15:21 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.1
-Subject: Re: [PATCH v11 13/13] arm64: dts: qcom: sa8540-ride: Enable first
- port of tertiary usb controller
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
+        Thu, 14 Sep 2023 12:00:34 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D81901BEF;
+        Thu, 14 Sep 2023 09:00:30 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64221C433C7;
+        Thu, 14 Sep 2023 16:00:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1694707230;
+        bh=OYN5GeHDGg/fi2AaPThTCk4AuKi5RjqpvJ0Y1SDgX/w=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=Fcy6Q1bfxYDY/IOa3YKiQaKZRUXtIgxcdDtZZUjHZw/Djm1cjCKi4u+av9XChdltj
+         pfPAZrMEfjJjxoWshrmdUzUHYIUfA4JbyUZQG7UvjLryoJpKgnOmFInRQukxnBEwj/
+         SxC2GVT415zPjU5UUJJZxheXhyK9DfD9usF1uhaqfBc1DhTd6RDsAYqTUDfy8UMH/l
+         cngmJVmD1VsRP1QBS/JGUvA/q/tPMcQmieszLQMep0tGIcNNIntPTn7d+Tcj7GQORC
+         DHYR5sH2LRqGjswvwj0lyE51TapExlIMZdIXT9rzvUQEoHjE9DdgYdFyIHb8B01aeg
+         pynNGXH7QZ9lg==
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Adam Skladowski <a39.skl@gmail.com>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
         Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Johan Hovold <johan@kernel.org>,
-        Mathias Nyman <mathias.nyman@intel.com>
-CC:     <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
-        <quic_jackp@quicinc.com>, <ahalaney@redhat.com>,
-        <quic_shazhuss@quicinc.com>
-References: <20230828133033.11988-1-quic_kriskura@quicinc.com>
- <20230828133033.11988-14-quic_kriskura@quicinc.com>
- <f19fa545-0ccb-4670-af77-7c034b1016ef@linaro.org>
- <e7bd3aa9-b8ee-4b8a-2354-e786f9a9ff47@quicinc.com>
- <3920bc96-fe58-4e3b-96ab-706f00edb2ee@linaro.org>
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <3920bc96-fe58-4e3b-96ab-706f00edb2ee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: (subset) [PATCH v3 0/7] MSM8976 PLL,RPMPD and DTS changes
+Date:   Thu, 14 Sep 2023 09:04:18 -0700
+Message-ID: <169470744874.681825.2938456613731544807.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20230812112534.8610-1-a39.skl@gmail.com>
+References: <20230812112534.8610-1-a39.skl@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: C3-6HXJM9MvGEdsAnyfnrF0grhv9JR47
-X-Proofpoint-ORIG-GUID: C3-6HXJM9MvGEdsAnyfnrF0grhv9JR47
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-14_09,2023-09-14_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- phishscore=0 mlxlogscore=493 malwarescore=0 mlxscore=0 priorityscore=1501
- suspectscore=0 bulkscore=0 spamscore=0 adultscore=0 impostorscore=0
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309140136
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-
-On 9/13/2023 5:40 PM, Konrad Dybcio wrote:
-> On 7.09.2023 05:36, Krishna Kurapati PSSNV wrote:
->>
->>
->>> Is there any benefit to removing the other ports?
->>>
->>> i.e. are ports 1-3 not parked properly by the dwc3 driver if
->>> they're never connected to anything?
->>>
->> Hi Konrad,
->>
->>   Whether or not the phy is connected to a port, the controller would modify the GUSB2PHYCFG/GUSB3PIPECTL registers. But if we don't specify only one phy and let phys from base DTSI take effect (4 HS / 2 SS), we would end up initializing and powering on phy's which are never connected to a port. To avoid that we need to specify only one phy for this platform.
-> And does that have any major effect on power use?
+On Sat, 12 Aug 2023 13:24:43 +0200, Adam Skladowski wrote:
+> This patch series fixes introduce support for msm8976 pll,
+> also brings some adjustments and fixes domains setup and few dts nitpicks.
 > 
-> Do these PHYs not have some dormant/low power mode?
+> Changes since v1
+> ================
+> 1. Fixed few styling issues
+> 2. Changed compatibles for plls
+> 3. Added fixes: tag to first patch
 > 
-Hi Konrad,
+> [...]
 
-  I believe there will be some minimal power use. IMO its best to keep 
-only one phy enabled for this variant instead of giving all and 
-initializing/powering-on all 4 of them.
+Applied, thanks!
 
-Regards,
-Krishna,
+[2/7] clk: qcom: clk-hfpll: Configure l_val in init when required
+      commit: 500a4609eef46d49a260173b66cabb20bd5159ad
+[3/7] clk: qcom: hfpll: Allow matching pdata
+      commit: 34e000c0963e55f24be2254fa645f8dd8257a9e0
+[4/7] dt-bindings: clock: qcom,hfpll: Document MSM8976 compatibles
+      commit: de37ca2dc98607e74522d8f243aa7feac74577c5
+[5/7] clk: qcom: hfpll: Add MSM8976 PLL data
+      commit: 1fa2d1a887c763246662a88e203d69b36052770c
+
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
