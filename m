@@ -2,62 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 663DD7A0A5A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 18:07:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E6F07A0AA4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 18:20:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241799AbjINQHV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Sep 2023 12:07:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57056 "EHLO
+        id S237440AbjINQU5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Sep 2023 12:20:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241804AbjINQHO (ORCPT
+        with ESMTP id S236974AbjINQU5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Sep 2023 12:07:14 -0400
+        Thu, 14 Sep 2023 12:20:57 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 556CF1FF0;
-        Thu, 14 Sep 2023 09:07:10 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43EE2C433CB;
-        Thu, 14 Sep 2023 16:07:09 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FD411FC8;
+        Thu, 14 Sep 2023 09:20:53 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B319BC433CA;
+        Thu, 14 Sep 2023 16:20:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1694707630;
-        bh=ehQkWHJBuPju+u+N0FVzD7yR614q+6YZ5daHqnVOHdQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=qVfx31tDhqLl9wzmHkAmCgxBZSbpCl5YH7OypZeHWd42YZ+rEJL6rGrMDNRFagB+R
-         ZIEnFZdvo/nLfLwgr2Kq8iRcBM9VHRwlAqC1XbPi9G5wl7UZQcjK8fgnBxjG6e333r
-         R5cw62WTXsnlKkJxEmZo+qd7tA+mLjyLKKjtwatXzZ8aVM0k4j5meNuhWtyXsfqFts
-         tWQF94JT4aCu0E2YqDc55eWYzbmywaqCNGevLstUdQQC/H0wooAPPyIs6pIYG7oC3n
-         fdh8+jK6pFbfZ6tizguXSJfT85VzScMXQ5upVNUfz4jZQRJnOIVt1DjB928JzE3AcH
-         PelZRzJix0TRA==
-Date:   Thu, 14 Sep 2023 09:11:14 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 08/17] pmdomain: qcom: Move Kconfig options to the
- pmdomain subsystem
-Message-ID: <4ee5uio5nr467dpljhvzlzrpa4fcdds646dzmm5w2dqgjhyrnb@37d6e2f43vwq>
-References: <20230914111753.586627-1-ulf.hansson@linaro.org>
+        s=k20201202; t=1694708452;
+        bh=Iz3OaOq7Jg3c1k6+q2I0zpdnqpko+95FwExIqjkenD0=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=amWJ5kA7hssVaXF52M2JWRhuM24paxEfVHoyO8i16sRm1p6hKsaBklVQWnDFuqi4P
+         1wwiUeNAPex238n8USkb1lB9ZAcWs6g4aUI7DoCibiyqAkV0yC6/qGnbVb/TOkygdY
+         c4NEqUMAysIOELbbIbz8sly0D3eKpmTZhdmn6cLgXIhXKgzDKNEIDc9llQPOt1ufUM
+         W+2G4kzWuVF34rQWA0wa+MyfWGovzAJlHEzkoDLb0sBKFNaaLPE8McmE7HdzqtXgRB
+         QjRiP+rLsc+B2RT9LOARgp3ct8O6nrv56m5H6Bw5qTcNhWpjK7/6IYDVMvoADQO3G+
+         IWllD+t5RBvVQ==
+Message-ID: <539752971c7a61ce7a5deddc1478686a.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230914111753.586627-1-ulf.hansson@linaro.org>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20230913175612.8685-1-danila@jiaxyga.com>
+References: <20230913175612.8685-1-danila@jiaxyga.com>
+Subject: Re: [PATCH] clk: qcom: gcc-sm8150: Fix gcc_sdcc2_apps_clk_src
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     danila@jiaxyga.com, adomerlee@gmail.com,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+To:     Danila Tikhonov <danila@jiaxyga.com>, agross@kernel.org,
+        andersson@kernel.org, dkatraga@codeaurora.org,
+        konrad.dybcio@linaro.org, mturquette@baylibre.com,
+        quic_tdas@quicinc.com, vkoul@kernel.org
+Date:   Thu, 14 Sep 2023 09:20:50 -0700
+User-Agent: alot/0.10
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 14, 2023 at 01:17:53PM +0200, Ulf Hansson wrote:
-> The Kconfig options belongs closer to the corresponding implementations,
-> hence let's move them from the soc subsystem to the pmdomain subsystem.
-> 
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: <linux-arm-msm@vger.kernel.org>
-> Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Quoting Danila Tikhonov (2023-09-13 10:56:11)
+> Set .flags =3D CLK_OPS_PARENT_ENABLE to fix "gcc_sdcc2_apps_clk_src: rcg
+> didn't update its configuration" error.
+>=20
+> Fixes: 2a1d7eb854bb ("clk: qcom: gcc: Add global clock controller driver =
+for SM8150")
+> Tested-by: Arseniy Velikanov <adomerlee@gmail.com>
+> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+> ---
+>  drivers/clk/qcom/gcc-sm8150.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
+> index 41ab210875fb..05d115c52dfe 100644
+> --- a/drivers/clk/qcom/gcc-sm8150.c
+> +++ b/drivers/clk/qcom/gcc-sm8150.c
+> @@ -774,7 +774,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src =3D {
+>                 .name =3D "gcc_sdcc2_apps_clk_src",
+>                 .parent_data =3D gcc_parents_6,
+>                 .num_parents =3D ARRAY_SIZE(gcc_parents_6),
+> -               .flags =3D CLK_SET_RATE_PARENT,
+> +               .flags =3D CLK_OPS_PARENT_ENABLE,
+>                 .ops =3D &clk_rcg2_floor_ops,
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-
-Regards,
-Bjorn
+In what case are we getting the rcg stuck? I thought that you could
+write the rcg registers while the parent was off and switch to that
+parent if the parent isn't enabled and it wouldn't get stuck.
