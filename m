@@ -2,36 +2,35 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D2C17A0FC3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 23:23:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF8C97A0FFA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 23:44:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229495AbjINVXd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Sep 2023 17:23:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43888 "EHLO
+        id S229454AbjINVoJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Sep 2023 17:44:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229491AbjINVXc (ORCPT
+        with ESMTP id S229447AbjINVoJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Sep 2023 17:23:32 -0400
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2224CEB;
-        Thu, 14 Sep 2023 14:23:28 -0700 (PDT)
+        Thu, 14 Sep 2023 17:44:09 -0400
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56755270A;
+        Thu, 14 Sep 2023 14:44:05 -0700 (PDT)
 Received: from pendragon.ideasonboard.com (213-243-189-158.bb.dnainternet.fi [213.243.189.158])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 73DA0DE5;
-        Thu, 14 Sep 2023 23:21:53 +0200 (CEST)
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 1B570DE5;
+        Thu, 14 Sep 2023 23:42:29 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1694726513;
-        bh=8BED75KJ60zUIDoeejYozq3VfmyLGSG2b2VZhDTtZ+M=;
+        s=mail; t=1694727750;
+        bh=Ls6Iqpj4d+iGrGYu3xYKdLqh+5iuBjo1ZErfbO+0uUc=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=L6s/HrTflDm1RcQByNZ7Ate1n8JnN/TubWF9b4BowBJ1HGya4KBYXbhEM/ObqVk86
-         zu/pLtRPRoTyORJkzNJ03mEiww6MdApEjfn0Z7yHoQeDWsvTH0FSP6D3jqzvYLQ7I8
-         geGvX5N6gz9LgYB+9Mm9KA5NMkG6D74nz8AtU1Jo=
-Date:   Fri, 15 Sep 2023 00:23:39 +0300
+        b=vrlss3I858TYlhOLMdeM85lhnvtnyVS7sPPwsOqa+Kb8N/JxxiCff0loPMEIDgw62
+         1nM6YuwsRts4UkZ0MZkjY9DqerhRGs9JvBtp8J29XNHGIc7EiIjUD3PuM5c33b6E9m
+         R1gnv8htcFXotv/S0J6hCiF2TNumyyDdc7wZeUsw=
+Date:   Fri, 15 Sep 2023 00:44:16 +0300
 From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
         Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
         Robert Foss <rfoss@kernel.org>,
         Jonas Karlman <jonas@kwiboo.se>,
         Jernej Skrabec <jernej.skrabec@gmail.com>,
@@ -46,147 +45,94 @@ Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         linux-phy@lists.infradead.org, linux-usb@vger.kernel.org,
         freedreno@lists.freedesktop.org
 Subject: Re: [PATCH v4 0/3] drm: simplify support for transparent DRM bridges
-Message-ID: <20230914212339.GA11890@pendragon.ideasonboard.com>
+Message-ID: <20230914214416.GB11890@pendragon.ideasonboard.com>
 References: <20230817145516.5924-1-dmitry.baryshkov@linaro.org>
  <20230822141735.GA14396@pendragon.ideasonboard.com>
- <20230822141918.GB14396@pendragon.ideasonboard.com>
- <c266b761-ddd3-4b29-aeb7-fc40348f0662@linaro.org>
+ <CAA8EJpp_FYOKHziHOWF6E1RTkHEJ8oXXH90EDmJbLG1UDO1ofA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <c266b761-ddd3-4b29-aeb7-fc40348f0662@linaro.org>
+In-Reply-To: <CAA8EJpp_FYOKHziHOWF6E1RTkHEJ8oXXH90EDmJbLG1UDO1ofA@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Neil,
+Hi Dmitry,
 
-Sorry about the delay, the series got burried in my inbox.
-
-On Tue, Aug 22, 2023 at 04:27:37PM +0200, Neil Armstrong wrote:
-> On 22/08/2023 16:19, Laurent Pinchart wrote:
-> > On Tue, Aug 22, 2023 at 05:17:37PM +0300, Laurent Pinchart wrote:
-> >> On Thu, Aug 17, 2023 at 05:55:13PM +0300, Dmitry Baryshkov wrote:
-> >>> Supporting DP/USB-C can result in a chain of several transparent
-> >>> bridges (PHY, redrivers, mux, etc). This results in drivers having
-> >>> similar boilerplate code for such bridges.
-> >>
-> >> What do you mean by transparent bridge here ? Bridges are a DRM concept,
-> >> and as far as I can tell, a PHY isn't a bridge. Why does it need to be
-> >> handled as one, especially if it's completely transparent ?
-> >>
-> >>> Next, these drivers are susceptible to -EPROBE_DEFER loops: the next
-> >>> bridge can either be probed from the bridge->attach callback, when it is
-> >>> too late to return -EPROBE_DEFER, or from the probe() callback, when the
-> >>> next bridge might not yet be available, because it depends on the
-> >>> resources provided by the probing device.
-> >>
-> >> Can't device links help avoiding defer probing in those cases ?
-> >>
-> >>> Last, but not least, this results in the the internal knowledge of DRM
-> >>> subsystem slowly diffusing into other subsystems, like PHY or USB/TYPEC.
-> >>
-> >> Why so ? The PHY subsystem should provide a PHY, without considering
-> >> what subsystem it will be used by. This patch series seems to me to
-> >> actually create this DRM dependency in other subsystems,
-> > 
-> > I was wrong on this one, there are indeed existing drm_bridge instances
-> > in drivers/usb/ and drivers/phy/. That's certainly not nice. Why do we
-> > even need drm_bridge there, why can't the PHYs be acquired by their
-> > consumers in DRM (and anywhere else) using the PHY API ?
+On Mon, Sep 04, 2023 at 12:02:18AM +0300, Dmitry Baryshkov wrote:
+> On Tue, 22 Aug 2023 at 17:17, Laurent Pinchart wrote:
+> > On Thu, Aug 17, 2023 at 05:55:13PM +0300, Dmitry Baryshkov wrote:
+> > > Supporting DP/USB-C can result in a chain of several transparent
+> > > bridges (PHY, redrivers, mux, etc). This results in drivers having
+> > > similar boilerplate code for such bridges.
+> >
+> > What do you mean by transparent bridge here ? Bridges are a DRM concept,
+> > and as far as I can tell, a PHY isn't a bridge. Why does it need to be
+> > handled as one, especially if it's completely transparent ?
+> >
+> > > Next, these drivers are susceptible to -EPROBE_DEFER loops: the next
+> > > bridge can either be probed from the bridge->attach callback, when it is
+> > > too late to return -EPROBE_DEFER, or from the probe() callback, when the
+> > > next bridge might not yet be available, because it depends on the
+> > > resources provided by the probing device.
+> >
+> > Can't device links help avoiding defer probing in those cases ?
 > 
-> Because with USB-C Altmode/USB4/Thunderbolt, DisplayPort is one of the
-> data streams handled by PHYs, USB-C PD manager, re-timers, SBU muxes...
-> and all this must be coordinated with the display controller and can
-> be considered as bridges between the DP controller and the USB-C connector.
+> It looks like both Neil and I missed this question.
+
+And I missed this reply before replying to Neil and pointing to device
+links again :-)
+
+> Two items wrt devlinks. First, I view them as a helper. So if one
+> disables the devlinks enforcement, he'd still get a deferral loop.
+
+That may be true, but I don't think that's a compelling argument. If one
+disables components meant to avoid probe deferral, they should expect
+probe deferral :-)
+
+> Second, in this case we can not enforce devlinks (or return
+> -EPROBE_DEFER from the probe() function) because the next bridge is
+> not yet available when the main driver probes. Unfortunately bridges
+> are allocated in the opposite order. So, using AUX devices helps us to
+> break it. Because first typec mux/retimer/switch/etc devices probe (in
+> the direction from the typec source to the typec port). Then DRM
+> bridge devices are probed starting from the end of the chain
+> (connector) to the DP source (root DP bridge/controller).
+
+I'm not too familiar with the drivers involved in the typec chain. Do
+you mean that the sink driver needs to get hold of the source device at
+probe time, deferring probe if the source is not available ? Does the
+driver handler the USB connector need to do the same ? I'm looking at
+the qcom_pmic_typec driver and I don't immediately see where it would
+defer probing if its source isn't available, but I may well be missing
+something.
+
+> > > Last, but not least, this results in the the internal knowledge of DRM
+> > > subsystem slowly diffusing into other subsystems, like PHY or USB/TYPEC.
+> >
+> > Why so ? The PHY subsystem should provide a PHY, without considering
+> > what subsystem it will be used by. This patch series seems to me to
+> > actually create this DRM dependency in other subsystems, which I don't
+> > think is a very good idea. Resources should be registered in their own
+> > subsystem with the appropriate API, not in a way that is tied to a
+> > particular consumer.
+> >
+> > > To solve all these issues, define a separate DRM helper, which creates
+> > > separate aux device just for the bridge. During probe such aux device
+> > > doesn't result in the EPROBE_DEFER loops. Instead it allows the device
+> > > drivers to probe properly, according to the actual resource
+> > > dependencies. The bridge auxdevs are then probed when the next bridge
+> > > becomes available, sparing drivers from drm_bridge_attach() returning
+> > > -EPROBE_DEFER.
+> >
+> > I'm not thrilled :-( Let's discuss the questions above first.
 > 
-> As of today, it has been handled by OOB events on Intel & AMD, but the entirety
-> of USB-C chain is handled in firmare, so this scales.
-> When we need to describe the entire USB-C data stream chain as port/endpoint
-> in DT, OOB handling doesn't work anymore since we need to sync the entire
-> USB-C chain (muxes, switches, retimers, phys...) handled by Linux before
-> starting the DP stream.
-
-No disagreement here. Handling the component as part of the bridges
-chain certainly helps. Ideally, this should be done without spreading
-usage of drm_bridge outside of the DRM subsystem. For instance, we
-handle (some) D-PHYs in DRM and V4L2 by exposing them as PHYs, and
-acquiring them in DSI or CSI-2 controller drivers.
-
-Do I understand correctly that, in this case, the video stream is fully
-handled by the PHY (& related) component, without any other device (in
-the OF sense) wrapping the PHY like the DSI and CSI-2 controllers do ?
-If so that would indeed make it difficult to create the drm_bridge in a
-DRM driver that would acquire the PHY. We could come up with a different
-mechanism, but that's likely overkill to solve this particular issue (at
-least until other similar use cases create a critical mass that will
-call for a major refactoring).
-
-In this specific case, however, I'm a bit puzzled. What coordination is
-required between the PHYs and the display controller ? The two drivers
-modified in patches 2/3 and 3/3 indeed create bridges, but those bridges
-don't implement any operation other than attach. Is this needed only
-because the PHY has an OF node that sits between the display controller
-and the connector, requiring a drm_bridge to exist to bridge the gap and
-create a complete chain of bridges up to the connector ? This would
-simplify the use case, but probably still call for creating a
-drm_bridge in the PHY driver, as other solutions are likely still too
-complex.
-
-It seems to me that this series tries to address two issues. One of them
-is minimizing the DRM-specific amount of code needed in the PHY drivers.
-The second one is to avoid probe deferrals. For the first issue, I agree
-that a helper is currently a good option. For the second issue, however,
-couldn't device links help avoiding probe deferral ? If so, the helper
-could be simplified, avoiding the need to create an auxiliary device.
-
-> >> which I don't
-> >> think is a very good idea. Resources should be registered in their own
-> >> subsystem with the appropriate API, not in a way that is tied to a
-> >> particular consumer.
-> >>
-> >>> To solve all these issues, define a separate DRM helper, which creates
-> >>> separate aux device just for the bridge. During probe such aux device
-> >>> doesn't result in the EPROBE_DEFER loops. Instead it allows the device
-> >>> drivers to probe properly, according to the actual resource
-> >>> dependencies. The bridge auxdevs are then probed when the next bridge
-> >>> becomes available, sparing drivers from drm_bridge_attach() returning
-> >>> -EPROBE_DEFER.
-> >>
-> >> I'm not thrilled :-( Let's discuss the questions above first.
-> >>
-> >>> Proposed merge strategy: immutable branch with the drm commit, which is
-> >>> then merged into PHY and USB subsystems together with the corresponding
-> >>> patch.
-> >>>
-> >>> Changes since v3:
-> >>>   - Moved bridge driver to gpu/drm/bridge (Neil Armstrong)
-> >>>   - Renamed it to aux-bridge (since there is already a simple_bridge driver)
-> >>>   - Made CONFIG_OF mandatory for this driver (Neil Armstrong)
-> >>>   - Added missing kfree and ida_free (Dan Carpenter)
-> >>>
-> >>> Changes since v2:
-> >>>   - ifdef'ed bridge->of_node access (LKP)
-> >>>
-> >>> Changes since v1:
-> >>>   - Added EXPORT_SYMBOL_GPL / MODULE_LICENSE / etc. to drm_simple_bridge
-> >>>
-> >>> Dmitry Baryshkov (3):
-> >>>    drm/bridge: add transparent bridge helper
-> >>>    phy: qcom: qmp-combo: switch to DRM_AUX_BRIDGE
-> >>>    usb: typec: nb7vpq904m: switch to DRM_AUX_BRIDGE
-> >>>
-> >>>   drivers/gpu/drm/bridge/Kconfig            |   9 ++
-> >>>   drivers/gpu/drm/bridge/Makefile           |   1 +
-> >>>   drivers/gpu/drm/bridge/aux-bridge.c       | 132 ++++++++++++++++++++++
-> >>>   drivers/phy/qualcomm/Kconfig              |   2 +-
-> >>>   drivers/phy/qualcomm/phy-qcom-qmp-combo.c |  44 +-------
-> >>>   drivers/usb/typec/mux/Kconfig             |   2 +-
-> >>>   drivers/usb/typec/mux/nb7vpq904m.c        |  44 +-------
-> >>>   include/drm/bridge/aux-bridge.h           |  19 ++++
-> >>>   8 files changed, 167 insertions(+), 86 deletions(-)
-> >>>   create mode 100644 drivers/gpu/drm/bridge/aux-bridge.c
-> >>>   create mode 100644 include/drm/bridge/aux-bridge.h
+> Laurent, please excuse me for the ping. Any further response from your side?
+> I'd like to send the next iteration of this patchset.
+> 
+> > > Proposed merge strategy: immutable branch with the drm commit, which is
+> > > then merged into PHY and USB subsystems together with the corresponding
+> > > patch.
 
 -- 
 Regards,
