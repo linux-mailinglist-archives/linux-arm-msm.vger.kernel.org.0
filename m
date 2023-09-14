@@ -2,96 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E0637A03D9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 14:29:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA2107A0413
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 14:40:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238108AbjINM3Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Sep 2023 08:29:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36536 "EHLO
+        id S238087AbjINMka (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Sep 2023 08:40:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237943AbjINM3P (ORCPT
+        with ESMTP id S230120AbjINMk3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Sep 2023 08:29:15 -0400
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86EC61FC7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Sep 2023 05:29:11 -0700 (PDT)
-Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-d7e741729a2so944531276.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Sep 2023 05:29:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694694550; x=1695299350; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=MtLDd3fxzJ2qWrurLeB9pHYuc3+Ev2d1hMk3Oahu1Wo=;
-        b=eZiVWtqHfj9kvHKThEITGuUn41nfbpcr+VFfJAISZm7A2GMCm33W2qMKBKVMlJjXyF
-         TKqufbNXUWPDsewBTbFg/WgRLEsIiEhd1BenNJQi3bmyDLys2a1wBsTWMtfaCwfQszXX
-         yLf7QoOOXCj5YDkJj7WRX9Qn/if5SVDykKZeY9me2i9DuLuLDcx8mLCSdFBT1x+nBND9
-         B7n9tmiaigyS7vX9q1b+dIQPL9Aayk2J+0k8C19TuwD1wyEtZHRnxk7O2xxjkuQbfVgO
-         AqLE9UdjxE5ovmPFMLzf4gw7dEC7p5333Bp8K0hvgVB+CaHpiWX0p1b2NyDgt7t565k3
-         KzDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694694550; x=1695299350;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MtLDd3fxzJ2qWrurLeB9pHYuc3+Ev2d1hMk3Oahu1Wo=;
-        b=ACCo2j/EC+wv5cwAholC/WBS5ZyHdz63dnL1CouScNxsjVHUn7AZoH4EF90BLqLg1i
-         u5lcITpTbAj571yTjCoxPcP2DvYCyLNaE23aXjzRKNnRAk8fgvgd9mL4ED1a1+qtXr/8
-         7D+Ldp4wYZ1S644lfzkC3CUuV3rw/AouuoBwkVEWehc7NwgEs/bUT8s9HyttCf1NLPg2
-         lPR+dM9/sJRjguoGz2PFiFD/B8/BYyRrB2HGrjlvfhFMBl3mFcpEopERD1cWLrEQYu5C
-         yVVh/BORdZLPz0dueSCSs9qZuG1T3C4c24q2PcsPDujFmObcDEciWnJWvrfxHo+B+umS
-         lVew==
-X-Gm-Message-State: AOJu0Yxr1FqI/Iu+9tD8XfpySsiUUy9KaxMaSjGQLO6LORRIWP4ihgvk
-        xJkvXHLyqPVeI1oKi9OefYTUZ05qTk6HMuVwN+W3hQ==
-X-Google-Smtp-Source: AGHT+IFKzxsuOJHD2I2G9JidYU6beywYTq4S1b179IHAIq/bnk1xXw7mkm/fBLJ/vc1OHT+Dq/2wiGVPBeOWWrBBbDg=
-X-Received: by 2002:a25:40d:0:b0:d7b:3917:4609 with SMTP id
- 13-20020a25040d000000b00d7b39174609mr4683812ybe.19.1694694550698; Thu, 14 Sep
- 2023 05:29:10 -0700 (PDT)
+        Thu, 14 Sep 2023 08:40:29 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A22351FCC;
+        Thu, 14 Sep 2023 05:40:25 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38E5XEqF028349;
+        Thu, 14 Sep 2023 12:40:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=qez4CXnGUw1IypJ0y5ikMWPHFvJWDjjYZe2toiWMvUU=;
+ b=BWZsMU2gH4P8heNOb6AkE8zY4pcGgw8aLNU87BpwPNysTKj2P+LevDJuKDH1ezuolFWw
+ gg3p1ItaVprjh0za0BfyLBLa0PCuoAg836F4CdSk9qFSzZ5STwQe4mH0E91M11J8+Ntz
+ YYhKCbXUm5Wx7SONjVtMz7ickLeCBVHD6E/GT39zksYUBwaF4TIZyohVqKHrfa+MXOX9
+ rDu3yTu1Z7Ke91h6xP6Q5I9Ujtog1mnJli438Tx199s+Cn2kHheZVn9SxGhNtUSpjIrW
+ V785793+cqP2sQqlxScbzkBczZsjDVOPxzxOyZpugiusGagu4UWvHGrLaRly8EHIYZ/x fw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t3v4h94q8-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 14 Sep 2023 12:40:16 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38ECeF9X015297
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 14 Sep 2023 12:40:15 GMT
+Received: from [10.218.45.181] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Thu, 14 Sep
+ 2023 05:40:11 -0700
+Message-ID: <5a2dc1a8-6a69-2eaa-aa20-127b2ee3d4d0@quicinc.com>
+Date:   Thu, 14 Sep 2023 18:10:08 +0530
 MIME-Version: 1.0
-References: <1694411968-14413-1-git-send-email-quic_cang@quicinc.com> <1694411968-14413-5-git-send-email-quic_cang@quicinc.com>
-In-Reply-To: <1694411968-14413-5-git-send-email-quic_cang@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 14 Sep 2023 15:28:59 +0300
-Message-ID: <CAA8EJpoWnXeJKPB04kJW6Qo7ifAnt1u2ZSiq+W2HWOez=hi5gA@mail.gmail.com>
-Subject: Re: [PATCH 4/6] phy: qualcomm: phy-qcom-qmp-ufs: Move data structs
- and setting tables to header
-To:     Can Guo <quic_cang@quicinc.com>
-Cc:     mani@kernel.org, quic_nguyenb@quicinc.com,
-        quic_nitirawa@quicinc.com, martin.petersen@oracle.com,
-        linux-scsi@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.2
+Subject: Re: [PATCH 1/6] scsi: ufs: ufs-qcom: Setup host power mode during
+ init
+Content-Language: en-US
+To:     Can Guo <quic_cang@quicinc.com>, <mani@kernel.org>,
+        <quic_nguyenb@quicinc.com>, <martin.petersen@oracle.com>
+CC:     <linux-scsi@vger.kernel.org>, Andy Gross <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        "open list:GENERIC PHY FRAMEWORK" <linux-phy@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "open list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
+        <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <1694411968-14413-1-git-send-email-quic_cang@quicinc.com>
+ <1694411968-14413-2-git-send-email-quic_cang@quicinc.com>
+From:   Nitin Rawat <quic_nitirawa@quicinc.com>
+In-Reply-To: <1694411968-14413-2-git-send-email-quic_cang@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: T-PizfkFyaJOGysut6OsFsnTAyCdceIq
+X-Proofpoint-GUID: T-PizfkFyaJOGysut6OsFsnTAyCdceIq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-14_09,2023-09-14_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ clxscore=1015 spamscore=0 impostorscore=0 malwarescore=0
+ lowpriorityscore=0 mlxscore=0 bulkscore=0 mlxlogscore=999 adultscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309140109
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 11 Sept 2023 at 09:01, Can Guo <quic_cang@quicinc.com> wrote:
->
-> To make the code more readable, move the data structs and PHY settting
-> tables to a header file, namely the phy-qcom-qmp-ufs.h.
->
+
+
+On 9/11/2023 11:29 AM, Can Guo wrote:
+> Setup host power mode and its limitations during UFS host driver init to
+> avoid repetitive work during every power mode change.
+> 
+> Co-developed-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
 > Signed-off-by: Can Guo <quic_cang@quicinc.com>
+> Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
+
+Hi Can,
+
+Patch looks good. Please can you just change the order of Signed-off-by.
+I think it should be like below:
+
+Co-developed-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
+Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
+Signed-off-by: Can Guo <quic_cang@quicinc.com>
+
+--Nitin
+
 > ---
->  drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 802 +------------------------------
->  drivers/phy/qualcomm/phy-qcom-qmp-ufs.h | 805 ++++++++++++++++++++++++++++++++
->  2 files changed, 806 insertions(+), 801 deletions(-)
->  create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-ufs.h
-
-Is there any reason to do so? Other than just moving stuff around, it
-doesn't give us anything. This header will not be shared with any
-other driver. Just moving data tables to the header (ugh, static data
-in the header) doesn't make code more readable.
-
-If you really would like to clean up the QMP drivers, please consider
-splitting _common_ parts. But at this point I highly doubt that it is
-possible in a useful way.
-
--- 
-With best wishes
-Dmitry
+>   drivers/ufs/host/ufs-qcom.c | 27 ++++++++++++++++++---------
+>   drivers/ufs/host/ufs-qcom.h |  1 +
+>   2 files changed, 19 insertions(+), 9 deletions(-)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index c3215d3..710f079 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -443,7 +443,11 @@ static u32 ufs_qcom_get_hs_gear(struct ufs_hba *hba)
+>   static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
+>   {
+>   	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> +	struct ufs_dev_params *host_pwr_cap = &host->host_pwr_cap;
+>   	struct phy *phy = host->generic_phy;
+> +	enum phy_mode mode = host_pwr_cap->hs_rate == PA_HS_MODE_B ?
+> +							PHY_MODE_UFS_HS_B :
+> +							PHY_MODE_UFS_HS_A;
+>   	int ret;
+>   
+>   	/* Reset UFS Host Controller and PHY */
+> @@ -460,7 +464,7 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
+>   		return ret;
+>   	}
+>   
+> -	phy_set_mode_ext(phy, PHY_MODE_UFS_HS_B, host->phy_gear);
+> +	phy_set_mode_ext(phy, mode, host->phy_gear);
+>   
+>   	/* power on phy - start serdes and phy's power and clocks */
+>   	ret = phy_power_on(phy);
+> @@ -884,7 +888,6 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
+>   				struct ufs_pa_layer_attr *dev_req_params)
+>   {
+>   	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> -	struct ufs_dev_params ufs_qcom_cap;
+>   	int ret = 0;
+>   
+>   	if (!dev_req_params) {
+> @@ -894,13 +897,7 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
+>   
+>   	switch (status) {
+>   	case PRE_CHANGE:
+> -		ufshcd_init_pwr_dev_param(&ufs_qcom_cap);
+> -		ufs_qcom_cap.hs_rate = UFS_QCOM_LIMIT_HS_RATE;
+> -
+> -		/* This driver only supports symmetic gear setting i.e., hs_tx_gear == hs_rx_gear */
+> -		ufs_qcom_cap.hs_tx_gear = ufs_qcom_cap.hs_rx_gear = ufs_qcom_get_hs_gear(hba);
+> -
+> -		ret = ufshcd_get_pwr_dev_param(&ufs_qcom_cap,
+> +		ret = ufshcd_get_pwr_dev_param(&host->host_pwr_cap,
+>   					       dev_max_params,
+>   					       dev_req_params);
+>   		if (ret) {
+> @@ -1037,6 +1034,17 @@ static void ufs_qcom_advertise_quirks(struct ufs_hba *hba)
+>   		hba->quirks |= UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH;
+>   }
+>   
+> +static void ufs_qcom_set_pwr_mode_limits(struct ufs_hba *hba)
+> +{
+> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> +	struct ufs_dev_params *host_pwr_cap = &host->host_pwr_cap;
+> +
+> +	ufshcd_init_pwr_dev_param(host_pwr_cap);
+> +
+> +	/* This driver only supports symmetic gear setting i.e., hs_tx_gear == hs_rx_gear */
+> +	host_pwr_cap->hs_tx_gear = host_pwr_cap->hs_rx_gear = ufs_qcom_get_hs_gear(hba);
+> +}
+> +
+>   static void ufs_qcom_set_caps(struct ufs_hba *hba)
+>   {
+>   	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> @@ -1259,6 +1267,7 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+>   	if (err)
+>   		goto out_variant_clear;
+>   
+> +	ufs_qcom_set_pwr_mode_limits(hba);
+>   	ufs_qcom_set_caps(hba);
+>   	ufs_qcom_advertise_quirks(hba);
+>   
+> diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
+> index fa54248..4db64d9 100644
+> --- a/drivers/ufs/host/ufs-qcom.h
+> +++ b/drivers/ufs/host/ufs-qcom.h
+> @@ -227,6 +227,7 @@ struct ufs_qcom_host {
+>   
+>   	struct gpio_desc *device_reset;
+>   
+> +	struct ufs_dev_params host_pwr_cap;
+>   	u32 phy_gear;
+>   
+>   	bool esi_enabled;
