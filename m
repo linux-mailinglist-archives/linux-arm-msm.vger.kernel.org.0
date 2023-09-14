@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A435079F9C2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 07:07:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 09D5779F9C4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 07:07:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232060AbjINFHQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Sep 2023 01:07:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48464 "EHLO
+        id S232110AbjINFHR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Sep 2023 01:07:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232110AbjINFHP (ORCPT
+        with ESMTP id S232391AbjINFHP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 14 Sep 2023 01:07:15 -0400
 Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17C3B193
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8F621BCA
         for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 22:07:11 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2bfbbd55158so8341541fa.1
+Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2bd0d135ca3so8077911fa.3
         for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 22:07:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694668029; x=1695272829; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1694668030; x=1695272830; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=R10mXVtDMcWIBom4B4RANApmxfehNpaKxAb93aUCAhw=;
-        b=FiAOlyD9fUWRKVb3+SUEVN0q6GuZyMZ1YgCBuuJW/f+pBIoZpPq1fgYRL8IvTJ4HGc
-         wxMYdL48mqOYO4p90OpoZQVCJ6gppXqHYe4aKpLiorhQ+wWz5CJIA4y+kSr9OELvq3qr
-         W4Mp3CTnIuW/bhKpxT6HEZL59RLuKpgPKgiDYCqlApI04krzdLjCZ2VMD1rmTmjNMujP
-         ZkxxzHvvdwJ9sh0q2Q9fGKqGPybzvRUEB26/f4yWSiDWJKN55mrE9ul3at64pLB0UDS4
-         tPGg0pJUH9igfulyJYSnh/DXieX93riMl80VD/aH8r1rZsZsexIdBpUOWSL8ydAxXvtZ
-         h6Xw==
+        bh=WDVBklRS/zpCaNNSChXZ8oT1YIvTUFQciSEHjoiQ7eM=;
+        b=kAEhKU6eu1IU6hLcbJioDKp/HHE83IQtLcUqcqwGl8NQnWlVhKoPFXUz19ECfEYSq+
+         CCW8DiImYc2OMzZy9wj3gQNkn9t+OyyeKoaLgHfHUQfQNurne+1Q6RMRi07OKCH8FCXc
+         Pb4XrDJrTwCKgJr9DVvi7jMyNuw3DJg4H7bfAMVJrfvim+rOLvYNKbFSR7GgbvhtLcGs
+         O3pusBWW7Ii7wgZXrjQ8fIPeOMsgD62MqhwNnhMxxQ054x2V8BMA05kWjdLLKbIpwSx1
+         Uqcx4H04JO7jRfmyBXOsJfan/tAT78+/czhSfjiQoELWT7DYScwX8yry5VGDqrv2lh4a
+         eW8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694668029; x=1695272829;
+        d=1e100.net; s=20230601; t=1694668030; x=1695272830;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=R10mXVtDMcWIBom4B4RANApmxfehNpaKxAb93aUCAhw=;
-        b=AIu5hXOY/AoBpbDIQImwapMRDV3xzuv60zkY/sla4qQFSRfnTjVjabo2CEhKBfNb8q
-         NyzIsaPU/5zYD8SkH4/0xNQo17Qe1o1yPK8rTUvqSYDEyN0bKoJhOKxeX0dKfElYGyw+
-         mQwFMYenxBVvP8gbD3ts0k8ASAVyP7rhoQ+gp3DYzZmoaQ+r9kxdxVt00Gwk9q2lri+z
-         nTd/JQC9G+oUbv4ssuC4jKaqo6AMPsurBzrF5axEyoaT7apovEDP/yjxMnSzr4gQSS4s
-         Awsfu7s58ab8tMQ/18UCxhZ2GIgbaGXsH3JX9IRj1MnkHPZCVziVzB/9KsqhtA4V9xpD
-         rewg==
-X-Gm-Message-State: AOJu0YybwzD9kYJce835us8ln2mDLT4dL4V+TsGotXdX5jP0eIdbq620
-        UOqeo1kfVafsTJ3D9Jxwv2WI3A==
-X-Google-Smtp-Source: AGHT+IHnihmtc2vsv5dhrZBDc8UMldl6OVUIYcXEBdHEa7UfMhDIENjazXuDNb321U3p6nkW1W1rlA==
-X-Received: by 2002:a2e:98d7:0:b0:2b9:48f1:b195 with SMTP id s23-20020a2e98d7000000b002b948f1b195mr3853326ljj.44.1694668029333;
-        Wed, 13 Sep 2023 22:07:09 -0700 (PDT)
+        bh=WDVBklRS/zpCaNNSChXZ8oT1YIvTUFQciSEHjoiQ7eM=;
+        b=cCTZ2OZBhr1ujxk1Pft/KWxpPe+q8rCAtliHH9xJ+iriyGVX6T0Q1ewsv8JfPCJhCx
+         Uoqt8g7x70m40Ch0Z8B4HnQ0MkAKbj619t1oiPKL2N69cZ1MTuqfBaFKT87vFMJN8q4I
+         qB0p0pjV85eokAFVorQCr29J9kZRqJO5qZ3oPnnZLAmwnnWkeJ/FCNIbHRMG3uqBrkHj
+         qLijcQxDJEJS26xZf74JOMXs3+n4tYtHJZAHwjZW+GgCo7txlbDwHr9/NxfVlwdrad0q
+         y2ver2G9Rg3llToZkJhQL9YOMd4iV05frRQkzQraptv5fGq+OiPWDZuBv3baqExUH99k
+         UJEw==
+X-Gm-Message-State: AOJu0YwbFBr3Wm7RO+bIOn2Ra8izs5VWNu3pPC+rD679/CjEZLqipbK2
+        t86P7HiUKB7dRCvG6hfPbi40MQ==
+X-Google-Smtp-Source: AGHT+IHPChJTKjldNEoz195k+W1j/GESq9pdPTvGHhkhrGfQyU4w3OWF9yh/r4UEcZrnrjDEfCYaoQ==
+X-Received: by 2002:a2e:9bc3:0:b0:2b9:3684:165 with SMTP id w3-20020a2e9bc3000000b002b936840165mr3830429ljj.8.1694668030013;
+        Wed, 13 Sep 2023 22:07:10 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id y15-20020a2e978f000000b002bce38190a3sm124777lji.34.2023.09.13.22.07.08
+        by smtp.gmail.com with ESMTPSA id y15-20020a2e978f000000b002bce38190a3sm124777lji.34.2023.09.13.22.07.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Sep 2023 22:07:08 -0700 (PDT)
+        Wed, 13 Sep 2023 22:07:09 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,9 +60,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v3 02/12] drm/msm/dpu: add current resource allocation to dumped state
-Date:   Thu, 14 Sep 2023 08:06:56 +0300
-Message-Id: <20230914050706.1058620-3-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v3 03/12] drm/msm/dpu: take plane rotation into account for wide planes
+Date:   Thu, 14 Sep 2023 08:06:57 +0300
+Message-Id: <20230914050706.1058620-4-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230914050706.1058620-1-dmitry.baryshkov@linaro.org>
 References: <20230914050706.1058620-1-dmitry.baryshkov@linaro.org>
@@ -72,127 +72,73 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Provide atomic_print_state callback to the DPU's private object. This
-way the debugfs/dri/0/state will also include RM's internal state.
+Take into account the plane rotation and flipping when calculating src
+positions for the wide plane parts.
 
+This is not an issue yet, because rotation is only supported for the
+UBWC planes and wide UBWC planes are rejected anyway because in parallel
+multirect case only the half of the usual width is supported for tiled
+formats. However it's better to fix this now rather than stumbling upon
+it later.
+
+Fixes: 80e8ae3b38ab ("drm/msm/dpu: add support for wide planes")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c |  4 +++
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h |  2 ++
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c  | 48 +++++++++++++++++++++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h  |  8 +++++
- 4 files changed, 62 insertions(+)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 27 ++++++++++++++---------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index ee84160592ce..172b64dc60e6 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -362,6 +362,7 @@ static void dpu_kms_global_destroy_state(struct drm_private_obj *obj,
- static const struct drm_private_state_funcs dpu_kms_global_state_funcs = {
- 	.atomic_duplicate_state = dpu_kms_global_duplicate_state,
- 	.atomic_destroy_state = dpu_kms_global_destroy_state,
-+	.atomic_print_state = dpu_rm_print_state,
- };
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index c2aaaded07ed..67f9c2a62a17 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -827,16 +827,6 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+ 		return -EINVAL;
+ 	}
  
- static int dpu_kms_global_obj_init(struct dpu_kms *dpu_kms)
-@@ -375,6 +376,9 @@ static int dpu_kms_global_obj_init(struct dpu_kms *dpu_kms)
- 	drm_atomic_private_obj_init(dpu_kms->dev, &dpu_kms->global_state,
- 				    &state->base,
- 				    &dpu_kms_global_state_funcs);
-+
-+	state->rm = &dpu_kms->rm;
-+
- 	return 0;
- }
+-	pipe_cfg->src_rect = new_plane_state->src;
+-
+-	/* state->src is 16.16, src_rect is not */
+-	pipe_cfg->src_rect.x1 >>= 16;
+-	pipe_cfg->src_rect.x2 >>= 16;
+-	pipe_cfg->src_rect.y1 >>= 16;
+-	pipe_cfg->src_rect.y2 >>= 16;
+-
+-	pipe_cfg->dst_rect = new_plane_state->dst;
+-
+ 	fb_rect.x2 = new_plane_state->fb->width;
+ 	fb_rect.y2 = new_plane_state->fb->height;
  
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-index ed549f0f7c65..dd2be279b366 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-@@ -130,6 +130,8 @@ struct vsync_info {
- struct dpu_global_state {
- 	struct drm_private_state base;
+@@ -852,6 +842,15 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
  
-+	struct dpu_rm *rm;
-+
- 	uint32_t pingpong_to_enc_id[PINGPONG_MAX - PINGPONG_0];
- 	uint32_t mixer_to_enc_id[LM_MAX - LM_0];
- 	uint32_t ctl_to_enc_id[CTL_MAX - CTL_0];
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-index f9215643c71a..5e3442fb8678 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-@@ -652,3 +652,51 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
+ 	max_linewidth = pdpu->catalog->caps->max_linewidth;
  
- 	return num_blks;
- }
++	/* state->src is 16.16, src_rect is not */
++	drm_rect_fp_to_int(&pipe_cfg->src_rect, &new_plane_state->src);
 +
-+void dpu_rm_print_state(struct drm_printer *p,
-+			const struct drm_private_state *state)
-+{
-+	const struct dpu_global_state *global_state = to_dpu_global_state(state);
-+	const struct dpu_rm *rm = global_state->rm;
-+	int i;
++	pipe_cfg->dst_rect = new_plane_state->dst;
 +
-+	drm_puts(p, "pingpong:");
-+	for (i = 0; i < ARRAY_SIZE(global_state->pingpong_to_enc_id); i++)
-+		if (rm->pingpong_blks[i])
-+			drm_printf(p, " %d,", global_state->pingpong_to_enc_id[i]);
-+		else
-+			drm_puts(p, " -,");
-+	drm_puts(p, "\n");
++	drm_rect_rotate(&pipe_cfg->src_rect,
++			new_plane_state->fb->width, new_plane_state->fb->height,
++			new_plane_state->rotation);
 +
-+	drm_puts(p, "mixer:");
-+	for (i = 0; i < ARRAY_SIZE(global_state->mixer_to_enc_id); i++)
-+		if (rm->mixer_blks[i])
-+			drm_printf(p, " %d,", global_state->mixer_to_enc_id[i]);
-+		else
-+			drm_puts(p, " -,");
-+	drm_puts(p, "\n");
-+
-+	drm_puts(p, "ctl:");
-+	for (i = 0; i < ARRAY_SIZE(global_state->ctl_to_enc_id); i++)
-+		if (rm->ctl_blks[i])
-+			drm_printf(p, " %d,", global_state->ctl_to_enc_id[i]);
-+		else
-+			drm_puts(p, " -,");
-+	drm_puts(p, "\n");
-+
-+	drm_puts(p, "dspp:");
-+	for (i = 0; i < ARRAY_SIZE(global_state->dspp_to_enc_id); i++)
-+		if (rm->dspp_blks[i])
-+			drm_printf(p, " %d,", global_state->dspp_to_enc_id[i]);
-+		else
-+			drm_puts(p, " -,");
-+	drm_puts(p, "\n");
-+
-+	drm_puts(p, "dsc:");
-+	for (i = 0; i < ARRAY_SIZE(global_state->dsc_to_enc_id); i++)
-+		if (rm->dsc_blks[i])
-+			drm_printf(p, " %d,", global_state->dsc_to_enc_id[i]);
-+		else
-+			drm_puts(p, " -,");
-+	drm_puts(p, "\n");
-+}
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-index 2b551566cbf4..913baca81a42 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-@@ -92,6 +92,14 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
- 	struct dpu_global_state *global_state, uint32_t enc_id,
- 	enum dpu_hw_blk_type type, struct dpu_hw_blk **blks, int blks_size);
+ 	if (drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) {
+ 		/*
+ 		 * In parallel multirect case only the half of the usual width
+@@ -899,6 +898,14 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+ 		r_pipe_cfg->dst_rect.x1 = pipe_cfg->dst_rect.x2;
+ 	}
  
-+/**
-+ * dpu_rm_print_state - output the RM private state
-+ * @p: DRM printer
-+ * @state: private object state
-+ */
-+void dpu_rm_print_state(struct drm_printer *p,
-+			const struct drm_private_state *state);
++	drm_rect_rotate_inv(&pipe_cfg->src_rect,
++			    new_plane_state->fb->width, new_plane_state->fb->height,
++			    new_plane_state->rotation);
++	if (r_pipe->sspp)
++		drm_rect_rotate_inv(&r_pipe_cfg->src_rect,
++				    new_plane_state->fb->width, new_plane_state->fb->height,
++				    new_plane_state->rotation);
 +
- /**
-  * dpu_rm_get_intf - Return a struct dpu_hw_intf instance given it's index.
-  * @rm: DPU Resource Manager handle
+ 	ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt);
+ 	if (ret)
+ 		return ret;
 -- 
 2.39.2
 
