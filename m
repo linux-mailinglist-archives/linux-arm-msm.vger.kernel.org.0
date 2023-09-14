@@ -2,194 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EA2107A0413
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 14:40:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FB2E7A057D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 15:24:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238087AbjINMka (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Sep 2023 08:40:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53728 "EHLO
+        id S238797AbjINNYa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Sep 2023 09:24:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230120AbjINMk3 (ORCPT
+        with ESMTP id S235397AbjINNYa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Sep 2023 08:40:29 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A22351FCC;
-        Thu, 14 Sep 2023 05:40:25 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38E5XEqF028349;
-        Thu, 14 Sep 2023 12:40:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=qez4CXnGUw1IypJ0y5ikMWPHFvJWDjjYZe2toiWMvUU=;
- b=BWZsMU2gH4P8heNOb6AkE8zY4pcGgw8aLNU87BpwPNysTKj2P+LevDJuKDH1ezuolFWw
- gg3p1ItaVprjh0za0BfyLBLa0PCuoAg836F4CdSk9qFSzZ5STwQe4mH0E91M11J8+Ntz
- YYhKCbXUm5Wx7SONjVtMz7ickLeCBVHD6E/GT39zksYUBwaF4TIZyohVqKHrfa+MXOX9
- rDu3yTu1Z7Ke91h6xP6Q5I9Ujtog1mnJli438Tx199s+Cn2kHheZVn9SxGhNtUSpjIrW
- V785793+cqP2sQqlxScbzkBczZsjDVOPxzxOyZpugiusGagu4UWvHGrLaRly8EHIYZ/x fw== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t3v4h94q8-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 14 Sep 2023 12:40:16 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38ECeF9X015297
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 14 Sep 2023 12:40:15 GMT
-Received: from [10.218.45.181] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Thu, 14 Sep
- 2023 05:40:11 -0700
-Message-ID: <5a2dc1a8-6a69-2eaa-aa20-127b2ee3d4d0@quicinc.com>
-Date:   Thu, 14 Sep 2023 18:10:08 +0530
+        Thu, 14 Sep 2023 09:24:30 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 454301BEF
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Sep 2023 06:24:26 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-31fa15f4cc6so861728f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Sep 2023 06:24:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694697864; x=1695302664; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=dXYeKwpulIh1RMbfJr120lsTEAn4d1E2jtPH2MjM2yQ=;
+        b=KKezUFUNZKkcACFWxLvLSaIWzFvK6BmPFgFb+SQCL2uTv7DDUBgdEIKX2tynRkkijn
+         ZGmSOhhi28anTs+be3zEPcczmHrMSgz4kH24A9ePoI4+AJe6ztt1IKigwO8Df2mzIwwj
+         7CnvLjAR5YOqhmUJvxXNIMMwAMLN3XbYF9pzohftF9elDv7XIT8WSGnpSz6/BPkHY2Cz
+         x3jGTXqtoiU/dGf2Mb0s2yFXIB2PdzyfWnh3FVl9jF9pM4rc8P5+EaudVyeoksImnYnT
+         Oew3vdjvumjTlOUgG43l0c2ngSzu+Z1l6SxPVNShRPMu9PUz45FS5EB98hoHimu+vSX7
+         9EvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694697864; x=1695302664;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dXYeKwpulIh1RMbfJr120lsTEAn4d1E2jtPH2MjM2yQ=;
+        b=nOiG0sUn3vUAcUEzigz98S9OAmIxsPh6MbDTF8yxU2CZgfExS7459JsctomtqiC8YR
+         b06bHafD/njKrPfUoONY2eOZ7GeLGrKCtPSt9RUz/a4+w967x6MqdAY/P+hTP+m/lN7o
+         qVID5qD0yy0eQOooTDlHzrh64QR+XkG21HHjqfJf9T2WM3SWPtXNHsRirqRBB3pxlaS5
+         X7zFfa1Vte2MKrZS8lQGSIJGjOKUio5OZtXpMY6XtHdUvdWmGbGrfgFfCDAwQNb5XEWh
+         ETm2MGGKhw4Iw/kh7WqqQ/vwNC2pdj5otXgr/MyYlbIyyaGf3gmo0jDE5MJoC55wOgGI
+         hgFw==
+X-Gm-Message-State: AOJu0YwBXlQFTPNZOE+119WwqId7QmPnHLWbuHVtzs0aCThZSqTtpH5m
+        QY6foEMFjB3KJIDg5TyjomZG3Q==
+X-Google-Smtp-Source: AGHT+IFX5QrHR8UPMv5j2GVDuoTB2MlsHgIQas7bW9TGWw0RIDrLQQV+XqeSvghSOq3cESmIBxYOiQ==
+X-Received: by 2002:a5d:6a4c:0:b0:319:8a28:4001 with SMTP id t12-20020a5d6a4c000000b003198a284001mr4665195wrw.41.1694697864612;
+        Thu, 14 Sep 2023 06:24:24 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id n4-20020a1c7204000000b00402f713c56esm1978015wmc.2.2023.09.14.06.24.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Sep 2023 06:24:24 -0700 (PDT)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Date:   Thu, 14 Sep 2023 15:24:21 +0200
+Subject: [PATCH] arm64: defconfig: enable NB7VPQ904M driver as module
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.2
-Subject: Re: [PATCH 1/6] scsi: ufs: ufs-qcom: Setup host power mode during
- init
-Content-Language: en-US
-To:     Can Guo <quic_cang@quicinc.com>, <mani@kernel.org>,
-        <quic_nguyenb@quicinc.com>, <martin.petersen@oracle.com>
-CC:     <linux-scsi@vger.kernel.org>, Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "open list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
-        <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <1694411968-14413-1-git-send-email-quic_cang@quicinc.com>
- <1694411968-14413-2-git-send-email-quic_cang@quicinc.com>
-From:   Nitin Rawat <quic_nitirawa@quicinc.com>
-In-Reply-To: <1694411968-14413-2-git-send-email-quic_cang@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: T-PizfkFyaJOGysut6OsFsnTAyCdceIq
-X-Proofpoint-GUID: T-PizfkFyaJOGysut6OsFsnTAyCdceIq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-14_09,2023-09-14_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
- clxscore=1015 spamscore=0 impostorscore=0 malwarescore=0
- lowpriorityscore=0 mlxscore=0 bulkscore=0 mlxlogscore=999 adultscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309140109
+Message-Id: <20230914-topic-sm8x50-upstream-nb7-defconfig-v1-1-4f6fd9f3fded@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAIQJA2UC/x3NQQ6DIBBA0auYWTsJSK3Uq5guEAc7C4Ew2pgY7
+ 17S5dv8f4FQYRIYmwsKfVk4xQrdNuA/Lq6EvFRDpzqjXvqBe8rsUTZ79gqPLHsht2GcB1wo+BQ
+ Dr6htGMjMtnfmCbWUCwU+/5fpfd8/wOqaUHUAAAA=
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=853;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=poGyM8hfv14gfER3P/3BziQ95VzWzgF5E72FbTU0TWU=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlAwmHFNG+99IBcTslWCLqNCmV9yiA8+FwHtNAvfjK
+ ec+lUCSJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZQMJhwAKCRB33NvayMhJ0T5HD/
+ 9rZXvdwnVmUoMuuhz7if8f3QzwDzlg43aF2o2MTqtc21kD2w9K3cAjS5M8VZR5/jJGXtaA/+59rdbA
+ PleKpCyFV5opoc95hts+PBqGEN7A9Arf9Iuzc0sdKtvSmCZ5NvvDNzh8YPMl6iqXg/P1IRXvn4eRdA
+ kjcxO2BYBX1nh417lt6lUVvHvbeOi8t5+xWsNwSkFZ8UA7T8IPgqKQnUWRm3WB3vfGusaFvUtjXEju
+ 1KLtWJSKesjF6fk3oTnekmAa2bGwkn6PQqt1fxxOgLtB/xXg9A9hulM+RQuNiV91m+XFE26A7XyV6Y
+ 4k9BVJiNAkkfKE05Vc8vbZYjXwFYKhO5Wak72pfJSTkJOFvPL/l/ugns56eUu6rll4IH3rJS+O5XRH
+ mn+2paJ0p27ufuZc5V4KaoF1FvUnBdvEqBnfby1X2GWv9A/8d/XTiM38PB/PPxHQMvMhcymbB6ghHy
+ S5gS1sLyffhwLZG1IqUI9ZEY99hbDrYOvZuZyIOagtAffygmifecAGL0lvy4WXkSZDWflya698d1fm
+ U9sbxcvuXthH2Go+NCYtU2YFhuDE5UDp87DAIfkqDq0vkYZ7HhUdd7WQeGSrkOQTKX12EaCAA8ym/k
+ vi5qiJ1y+H6oxXYvlayiA0XtJTQgxZsJ0I3pz2CnUHBO8NxfqxhA8530GB8g==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Enable the NB7VPQ904M SuperSpeed redriver/retimer as module as
+it is now used on the SM8550 QRD platform.
 
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+ arch/arm64/configs/defconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-On 9/11/2023 11:29 AM, Can Guo wrote:
-> Setup host power mode and its limitations during UFS host driver init to
-> avoid repetitive work during every power mode change.
-> 
-> Co-developed-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
-> Signed-off-by: Can Guo <quic_cang@quicinc.com>
-> Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index 5315789f4868..094c9eaa8e53 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -1038,6 +1038,7 @@ CONFIG_TYPEC_TPS6598X=m
+ CONFIG_TYPEC_HD3SS3220=m
+ CONFIG_TYPEC_UCSI=m
+ CONFIG_TYPEC_MUX_FSA4480=m
++CONFIG_TYPEC_MUX_NB7VPQ904M=m
+ CONFIG_UCSI_CCG=m
+ CONFIG_TYPEC_MUX_GPIO_SBU=m
+ CONFIG_MMC=y
 
-Hi Can,
+---
+base-commit: 0bb80ecc33a8fb5a682236443c1e740d5c917d1d
+change-id: 20230914-topic-sm8x50-upstream-nb7-defconfig-18f7e3b85a36
 
-Patch looks good. Please can you just change the order of Signed-off-by.
-I think it should be like below:
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
 
-Co-developed-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
-Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
-Signed-off-by: Can Guo <quic_cang@quicinc.com>
-
---Nitin
-
-> ---
->   drivers/ufs/host/ufs-qcom.c | 27 ++++++++++++++++++---------
->   drivers/ufs/host/ufs-qcom.h |  1 +
->   2 files changed, 19 insertions(+), 9 deletions(-)
-> 
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index c3215d3..710f079 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -443,7 +443,11 @@ static u32 ufs_qcom_get_hs_gear(struct ufs_hba *hba)
->   static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
->   {
->   	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-> +	struct ufs_dev_params *host_pwr_cap = &host->host_pwr_cap;
->   	struct phy *phy = host->generic_phy;
-> +	enum phy_mode mode = host_pwr_cap->hs_rate == PA_HS_MODE_B ?
-> +							PHY_MODE_UFS_HS_B :
-> +							PHY_MODE_UFS_HS_A;
->   	int ret;
->   
->   	/* Reset UFS Host Controller and PHY */
-> @@ -460,7 +464,7 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
->   		return ret;
->   	}
->   
-> -	phy_set_mode_ext(phy, PHY_MODE_UFS_HS_B, host->phy_gear);
-> +	phy_set_mode_ext(phy, mode, host->phy_gear);
->   
->   	/* power on phy - start serdes and phy's power and clocks */
->   	ret = phy_power_on(phy);
-> @@ -884,7 +888,6 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
->   				struct ufs_pa_layer_attr *dev_req_params)
->   {
->   	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-> -	struct ufs_dev_params ufs_qcom_cap;
->   	int ret = 0;
->   
->   	if (!dev_req_params) {
-> @@ -894,13 +897,7 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
->   
->   	switch (status) {
->   	case PRE_CHANGE:
-> -		ufshcd_init_pwr_dev_param(&ufs_qcom_cap);
-> -		ufs_qcom_cap.hs_rate = UFS_QCOM_LIMIT_HS_RATE;
-> -
-> -		/* This driver only supports symmetic gear setting i.e., hs_tx_gear == hs_rx_gear */
-> -		ufs_qcom_cap.hs_tx_gear = ufs_qcom_cap.hs_rx_gear = ufs_qcom_get_hs_gear(hba);
-> -
-> -		ret = ufshcd_get_pwr_dev_param(&ufs_qcom_cap,
-> +		ret = ufshcd_get_pwr_dev_param(&host->host_pwr_cap,
->   					       dev_max_params,
->   					       dev_req_params);
->   		if (ret) {
-> @@ -1037,6 +1034,17 @@ static void ufs_qcom_advertise_quirks(struct ufs_hba *hba)
->   		hba->quirks |= UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH;
->   }
->   
-> +static void ufs_qcom_set_pwr_mode_limits(struct ufs_hba *hba)
-> +{
-> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-> +	struct ufs_dev_params *host_pwr_cap = &host->host_pwr_cap;
-> +
-> +	ufshcd_init_pwr_dev_param(host_pwr_cap);
-> +
-> +	/* This driver only supports symmetic gear setting i.e., hs_tx_gear == hs_rx_gear */
-> +	host_pwr_cap->hs_tx_gear = host_pwr_cap->hs_rx_gear = ufs_qcom_get_hs_gear(hba);
-> +}
-> +
->   static void ufs_qcom_set_caps(struct ufs_hba *hba)
->   {
->   	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-> @@ -1259,6 +1267,7 @@ static int ufs_qcom_init(struct ufs_hba *hba)
->   	if (err)
->   		goto out_variant_clear;
->   
-> +	ufs_qcom_set_pwr_mode_limits(hba);
->   	ufs_qcom_set_caps(hba);
->   	ufs_qcom_advertise_quirks(hba);
->   
-> diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-> index fa54248..4db64d9 100644
-> --- a/drivers/ufs/host/ufs-qcom.h
-> +++ b/drivers/ufs/host/ufs-qcom.h
-> @@ -227,6 +227,7 @@ struct ufs_qcom_host {
->   
->   	struct gpio_desc *device_reset;
->   
-> +	struct ufs_dev_params host_pwr_cap;
->   	u32 phy_gear;
->   
->   	bool esi_enabled;
