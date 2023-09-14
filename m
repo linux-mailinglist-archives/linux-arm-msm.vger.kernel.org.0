@@ -2,124 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A780279F820
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 04:32:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 726D579F9DB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Sep 2023 07:07:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231200AbjINCc7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Sep 2023 22:32:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58130 "EHLO
+        id S234443AbjINFHe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Sep 2023 01:07:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230121AbjINCc6 (ORCPT
+        with ESMTP id S234197AbjINFHe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Sep 2023 22:32:58 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BEEC1AD;
-        Wed, 13 Sep 2023 19:32:54 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38E0uCgg019721;
-        Thu, 14 Sep 2023 02:32:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=IgO3mqpLSWVJHvkh+qBggAdQouLFnxNzFgwRRXD33KE=;
- b=g2o3bZy4O+PkbvDLTSF4huJnpfmXwCcxOG+jE6ayjwIAYikwYOPrlN+qwsnsXOwoDeow
- uTc6+dhK4uwlguBVMfGjrjSgCy7cYPi1SIaqBEoRXSzMKmaPZ1zPyTUY7CXAIJuY8yZK
- +8KcQiQ2G+y4ZurHlK4nnfo0F1D8ilXjCG+r3VvThetFp5F/F7sJkUvCjc2HFqNkTPRt
- +AItnt1y4nx71rSc/C7yC/of8xXoqynz2UGHBZA+rwHZizVg9ZfU0wYYPjJG73Jc7NAV
- FCqwz4i1+p8imApttBUdA9HaZv5ZjAV1V5P3CaPcJBC65ZBkm8Z3nPfyFGSh+F/zxVA7 Lw== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t2y7qbg9p-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 14 Sep 2023 02:32:41 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38E2WetV031475
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 14 Sep 2023 02:32:40 GMT
-Received: from hu-mdtipton-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Wed, 13 Sep 2023 19:32:40 -0700
-Date:   Wed, 13 Sep 2023 19:32:39 -0700
-From:   Mike Tipton <quic_mdtipton@quicinc.com>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-CC:     Georgi Djakov <djakov@kernel.org>, Andy Gross <agross@kernel.org>,
+        Thu, 14 Sep 2023 01:07:34 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FB8F98
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 22:07:29 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-500913779f5so838114e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Sep 2023 22:07:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694668048; x=1695272848; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/FDKM0kqt8x0UbxVfV3bjcjIyAdF1y2yMeGqfjlTgnI=;
+        b=CCaUESfYYy2YmkyX9bfkTDLG3YyiXnkgTK+iwaOdGlRv852tFHmiKbwwZSRG7VstLm
+         GQcI3OfEInoccVwV+Q9rfATUA6VMEfDeZoZ90XkDSrzUYAZEUtV/boBlvYaaUCNqWqW+
+         KbeGXX5xsTuRVuseQMEDDt1cDjbdbBXRH+OZYyRDERzLcoqkYk/ocSIpUPCDZT+PiID+
+         MHmOwyNLc7Fyj/cGFrC1lMkOnGm9maOVhS/diO3bxqMC/f2sxl0cikRw5WFqCCTC9IGW
+         nkkqug5muWbEqwx6fOdRlpmbXF6DOEl6EMzxPZhTGhNUt37YH4nO0IoLoNoPLUh7fFPy
+         0TEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694668048; x=1695272848;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/FDKM0kqt8x0UbxVfV3bjcjIyAdF1y2yMeGqfjlTgnI=;
+        b=SaYYKRBPf64YAhvZ9J8txUuuPIbKYpCJhVYX9dSSD29/Nsbck5fqrvkNk88UjGs6zJ
+         HuZ39DnCxVp4kWdO8JygQ32hUGSGk4OvtALRoLeHJQ0W5eGUCXe5yHe4Vl15xSw6xyXK
+         mAJhHhGRXRqotnw4mReqPW3kiO96DO0IwKZdZYlzhabsO3Bl1s91FLE6plW0OgGJMcq/
+         0TkcVuEQLUzHLVzk8ZsN5K0qrxdGcJGwoNZ67hA5/l2L6RBNC5xnFkSekjtIGZ8gucS0
+         6ITVqpHjCRUaZLylTz6FXmnRSFJZpyOqAlXlEeTCojio9NsVxxj8+CLszTe9xGtQglhI
+         PKcA==
+X-Gm-Message-State: AOJu0YyJwHVlJ6tzLN8/mQVe26eOU2oj4pdQVdgDUtYVWdg244KOSFDp
+        zEYsa/JQ9ZqoocNYMGrH3kAE0ZiLu0LIPnb9UGQ=
+X-Google-Smtp-Source: AGHT+IHtMHUUYGm+veS7ba1V0nWBgHsVD++J4m55U2tdtgdIV/FDoAJGB8Y/p4NrroeH4BC5sdNsBw==
+X-Received: by 2002:a2e:9791:0:b0:2bc:c557:848a with SMTP id y17-20020a2e9791000000b002bcc557848amr3834635lji.50.1694668027841;
+        Wed, 13 Sep 2023 22:07:07 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id y15-20020a2e978f000000b002bce38190a3sm124777lji.34.2023.09.13.22.07.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Sep 2023 22:07:07 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        <cros-qcom-dts-watchers@chromium.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 00/53] icc-rpmh multi-RSC voting groundwork
-Message-ID: <20230914023239.GA25147@hu-mdtipton-lv.qualcomm.com>
-References: <20230708-topic-rpmh_icc_rsc-v1-0-b223bd2ac8dd@linaro.org>
- <c067a45f-9629-d516-9e56-36538e4ff6db@kernel.org>
- <20230807215739.GA9621@hu-mdtipton-lv.qualcomm.com>
- <10520827-dc01-475c-b09a-35cefc9e0a62@linaro.org>
- <20230913012951.GA19284@hu-mdtipton-lv.qualcomm.com>
- <ffc58838-c306-49f3-a90a-95b2cf02ae3d@linaro.org>
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v3 00/12] drm/msm/dpu: support virtual wide planes
+Date:   Thu, 14 Sep 2023 08:06:54 +0300
+Message-Id: <20230914050706.1058620-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <ffc58838-c306-49f3-a90a-95b2cf02ae3d@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 0dFrF8mWXndu0a5H5z8d_erqmvHIcWJ5
-X-Proofpoint-ORIG-GUID: 0dFrF8mWXndu0a5H5z8d_erqmvHIcWJ5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-13_19,2023-09-13_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
- malwarescore=0 clxscore=1015 spamscore=0 priorityscore=1501
- mlxlogscore=999 phishscore=0 bulkscore=0 suspectscore=0 adultscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309140020
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 13, 2023 at 10:31:49AM +0200, Konrad Dybcio wrote:
-> > The applicable voters should likely be defined in the target-specific
-> > headers, rather than the common qcom,icc.h. The bit range used for them
-> > could be common, but each target may only support a small subset of the
-> > total set of possible voters across all targets.
-> I'm not sure how client drivers would then choose the
-> correct path other than
-> 
-> switch (soc) {
-> case 8450:
-> 	tag = QCOM_ICC_TAG_VOTER_8450_HLOS;
-> 	break;
-> case 8550:
-> 	tag = QCOM_ICC_TAG_VOTER_8550_HLOS;
-> 	break;
-> ...
-> }
-> 
-> which would be unacceptable.
+As promised in the basic wide planes support ([1]) here comes a series
+supporting 2*max_linewidth for all the planes.
 
-The same general way it's handled for the endpoint bindings, which are
-already target-specific. 
+Note: Unlike v1 and v2 this series finally includes support for
+additional planes - having more planes than the number of SSPP blocks.
 
-Any client drivers hardcoding the endpoint bindings in their driver
-would have to include the appropriate, target-specific binding header
-(e.g. qcom,sm8550-rpmh.h). That would only be possible if their driver
-file is itself target-specific. Otherwise, it would have to pull the
-endpoint bindings from devicetree. Or just use the recommended
-of_icc_get() and let devicetree do everything for them. Same for the
-target-specific voter tag bindings.
+Note: this iteration features handling of rotation and reflection of the
+wide plane. However rot90 is still not tested: it is enabled on sc7280
+and it only supports UBWC (tiled) framebuffers, it was quite low on my
+priority list.
 
-Clients can also specify their tags in devicetree. They don't actually
-have to call icc_set_tag() directly. For example:
+[1] https://patchwork.freedesktop.org/series/99909/
 
-    #include <dt-bindings/interconnect/qcom,sm8450.h>
+Changes since v2:
+- Dropped the encoder-related parts, leave all resource allocation as is
+  (Abhinav)
+- Significantly reworked the SSPP allocation code
+- Added debugging code to dump RM state in dri/N/state
 
-    interconnects = <&mmss_noc MASTER_MDP QCOM_ICC_TAG_VOTER_DISP
-                     &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_VOTER_DISP>;
+Changes since v1:
+- Fixed build error due to me missing one of fixups, it was left
+  uncommitted.
+- Implementated proper handling of wide plane rotation & reflection.
 
-Then when they call of_icc_get() for this path it'll automatically have
-QCOM_ICC_TAG_VOTER_DISP set for them.
+Dmitry Baryshkov (12):
+  drm/atomic-helper: split not-scaling part of
+    drm_atomic_helper_check_plane_state
+  drm/msm/dpu: add current resource allocation to dumped state
+  drm/msm/dpu: take plane rotation into account for wide planes
+  drm/msm/dpu: move pstate->pipe initialization to
+    dpu_plane_atomic_check
+  drm/msm/dpu: split dpu_plane_atomic_check()
+  drm/msm/dpu: move rot90 checking to dpu_plane_atomic_check_pipe()
+  drm/msm/dpu: add support for virtual planes
+  drm/msm/dpu: allow using two SSPP blocks for a single plane
+  drm/msm/dpu: allow sharing SSPP between planes
+  drm/msm/dpu: create additional virtual planes
+  drm/msm/dpu: allow sharing of blending stages
+  drm/msm/dpu: include SSPP allocation state into the dumped state
+
+ drivers/gpu/drm/drm_atomic_helper.c         | 110 +++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    |  59 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h |   2 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     |  26 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h     |   6 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   | 671 ++++++++++++++++----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h   |  29 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c      | 130 ++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h      |  36 ++
+ include/drm/drm_atomic_helper.h             |   7 +
+ 10 files changed, 924 insertions(+), 152 deletions(-)
+
+-- 
+2.39.2
+
