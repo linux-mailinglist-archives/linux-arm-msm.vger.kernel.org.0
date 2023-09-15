@@ -2,76 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 886F47A25CA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 20:31:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD24A7A25D7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 20:35:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231775AbjIOSbV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Sep 2023 14:31:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49892 "EHLO
+        id S235978AbjIOSed (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Sep 2023 14:34:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236593AbjIOSbO (ORCPT
+        with ESMTP id S236552AbjIOSeM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Sep 2023 14:31:14 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42F55E6D;
-        Fri, 15 Sep 2023 11:31:07 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38FDXXmO026417;
-        Fri, 15 Sep 2023 18:30:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=R4xBY1UUZCfkSUnpw+JHzAtgUmwmgVegPSoN6/p3CIU=;
- b=d7yX0ANCVS4FlggXku0F/7T/c43meGS0VyFEpskwXsXmDEL/08tNIIy077F7DO53wv/2
- ejoQmSWVcDKPq/SKqLjTgFesDuqFnmtZecKOszfhOC+is5Q/IsH/DT0r5oHwoTad8+TY
- 0AjZx9pFnZ9zBPxKfdb81I20YsDXOvu67rxcXsGlRceC9aE99ub/EP4/Iwu6ZHH4vjaP
- nq5akeaxelSG2coIgv8hiBXz8iAHrd0nNWPel1QfIv0MZutiZav1YJezQQDUOOQ36s/5
- h5+/SZrBZjh+SiL57VffndXhZoIRZkk4W/tssoUv7holAaNW/Df6bdxDYjX60AoqVeDU lA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t4g2xhwun-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 15 Sep 2023 18:30:25 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38FIUPC7006174
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 15 Sep 2023 18:30:25 GMT
-Received: from abhinavk-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Fri, 15 Sep 2023 11:30:24 -0700
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-To:     <freedreno@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        "Daniel Vetter" <daniel@ffwll.ch>, Hai Li <hali@codeaurora.org>
-CC:     <dri-devel@lists.freedesktop.org>, <quic_jesszhan@quicinc.com>,
-        <quic_parellan@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH] drm/msm/dsi: skip the wait for video mode done if not applicable
-Date:   Fri, 15 Sep 2023 11:30:10 -0700
-Message-ID: <20230915183010.32077-1-quic_abhinavk@quicinc.com>
-X-Mailer: git-send-email 2.40.1
+        Fri, 15 Sep 2023 14:34:12 -0400
+Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4A29270A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 11:34:05 -0700 (PDT)
+Received: by mail-yb1-xb30.google.com with SMTP id 3f1490d57ef6-d815a5eee40so2264035276.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 11:34:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694802845; x=1695407645; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=XAp4QGQYuiB0aBhykrwn9fuo1kSVZeoCYVkl9zEjWE8=;
+        b=ZRn2r1NhTF7RYpU9wxUTTfDNoPsm2sCTFXU1/SwBNv25DiPf06YThxVCMV4zUBKCO3
+         cRyQwzUXYv4n6sQXFoqqhqUpCcxXv8Nn7Uf9WvoZEiwCAAZ8FIUnap3XKbucbT57CAJF
+         rIXOxDqv6tUYiUr4p8YFl5KjPOuZ/rkmVNpWnAlE0w2Eo8bmA345EyQuL9VLWpO1VMVT
+         hXIBl0MdO6N1c144hAhtpiGJi5jXaaPE2g1MVc/DILwfFJLW+5h7tvFpOu9cLrpopNVd
+         BeMBNPf/5h5KjAjAo4JSTKrLSLN/HazLaTHgY6jyEpjZa2V2wU18gx7tDmfMmZilxyqE
+         ihbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694802845; x=1695407645;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=XAp4QGQYuiB0aBhykrwn9fuo1kSVZeoCYVkl9zEjWE8=;
+        b=uP82n5ctNT1p/pFR7N3mAkPgUdO9X0pJqesAl7TgqpDmUEepCmlqvmkUFNN5eAhC6N
+         i7+a9ZSkSqVr5r2YHkt9T+vOaOxkPZaSUlUAnS0spmqH1TsrgnGMcQUi8xS8ZxCJ2hQO
+         OFzY/w/3RMmRdo4cshq8ui27lswX0AdXSh0N5RPNot7tUlM8DPRxtq27gNOY8wCHdHrh
+         PHmjs3bw9c9ChHvUx2A5DSgclEKENBfALJUq01GjrsbQXP1NaV+1alNjMYYNprKr7/Be
+         ILFUOObRp15ZtHWhsVh7Ivl3Vno5ktSeTPzuXuTpEqHrtvS5dKhqKf8IcLGmBgiPHcJp
+         41bw==
+X-Gm-Message-State: AOJu0Yxo1W3TEoDEKWgo36sq6Sk+Ls8YY8LxHK8WtYmn95q3jaYeT9rj
+        C5CXzfHPqlaBNywvdWKlvfJHQ5UNWoq6E6eTJ/zKIw==
+X-Google-Smtp-Source: AGHT+IGz/X+sLYorNmDn+iedwieWtRZ/y9HzEpRRT43OwE+qJPUPdVSjf4sOic9847CsYuYN7WCPMNDqcCWsxExcJ04=
+X-Received: by 2002:a25:820e:0:b0:d7b:9a4b:5a72 with SMTP id
+ q14-20020a25820e000000b00d7b9a4b5a72mr2312461ybk.31.1694802844944; Fri, 15
+ Sep 2023 11:34:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: hndVajsFzIa8dLFhtWYczTtZ2is2qXDo
-X-Proofpoint-ORIG-GUID: hndVajsFzIa8dLFhtWYczTtZ2is2qXDo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-15_15,2023-09-15_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1011
- phishscore=0 impostorscore=0 adultscore=0 mlxlogscore=999 bulkscore=0
- mlxscore=0 lowpriorityscore=0 priorityscore=1501 spamscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309150166
+References: <20230823091757.31311-1-quic_nitirawa@quicinc.com>
+ <20230823091757.31311-3-quic_nitirawa@quicinc.com> <24cff590-c71f-4a30-9b80-fa9a0bd27957@linaro.org>
+ <c9719d64-33c1-d13e-0ab6-289011282044@quicinc.com>
+In-Reply-To: <c9719d64-33c1-d13e-0ab6-289011282044@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 15 Sep 2023 21:33:53 +0300
+Message-ID: <CAA8EJppYD8Oq_fkOOKf8_x7RdbjBx7XzV_5y4sKE3ZDv_WV9_Q@mail.gmail.com>
+Subject: Re: [PATCH V3 2/2] phy: qcom-qmp-ufs: Add Phy Configuration support
+ for SC7280
+To:     Nitin Rawat <quic_nitirawa@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Manish Pandey <quic_mapa@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -81,50 +73,109 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-dsi_wait4video_done() API wait for the DSI video mode engine to
-become idle so that we can transmit the DCS commands in the
-beginning of BLLP. However, with the current sequence, the MDP
-timing engine is turned on after the panel's pre_enable() callback
-which can send out the DCS commands needed to power up the panel.
+On Fri, 15 Sept 2023 at 19:14, Nitin Rawat <quic_nitirawa@quicinc.com> wrote:
+>
+>
+>
+> On 9/6/2023 1:34 AM, Dmitry Baryshkov wrote:
+> > On 23/08/2023 12:17, Nitin Rawat wrote:
+> >> Add SC7280 specific register layout and table configs.
+> >>
+> >> Co-developed-by: Manish Pandey <quic_mapa@quicinc.com>
+> >> Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
+> >> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> >> ---
+> >>   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 142 ++++++++++++++++++++++++
+> >>   1 file changed, 142 insertions(+)
+> >>
+> >> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> >> b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> >> index 3927eba8e468..514fa14df634 100644
+> >> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> >> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> >
+> > [skipped tables programming]
+> >
+> > 4),
+> Sorry I quite didn't get this comment. what exactly is skipped ?Please
+> can you help explain?
 
-During those cases, this API will always timeout and print out the
-error spam leading to long bootup times and log flooding.
+I skipped them, as I didn't have comments for them.
 
-Fix this by checking if the DSI video engine was actually busy before
-waiting for it to become idle otherwise this is a redundant wait.
+>
+>
+> >> @@ -888,6 +993,40 @@ static const struct qmp_phy_cfg
+> >> sa8775p_ufsphy_cfg = {
+> >>       .regs            = ufsphy_v5_regs_layout,
+> >>   };
+> >>
+> >> +static const struct qmp_phy_cfg sc7280_ufsphy_cfg = {
+> >> +    .lanes                  = 2,
+> >> +
+> >> +    .offsets                = &qmp_ufs_offsets,
+> >> +
+> >> +    .tbls = {
+> >> +        .serdes         = sm8150_ufsphy_serdes,
+> >> +        .serdes_num     = ARRAY_SIZE(sm8150_ufsphy_serdes),
+> >> +        .tx             = sc7280_ufsphy_tx,
+> >> +        .tx_num         = ARRAY_SIZE(sc7280_ufsphy_tx),
+> >> +        .rx             = sc7280_ufsphy_rx,
+> >> +        .rx_num         = ARRAY_SIZE(sc7280_ufsphy_rx),
+> >> +        .pcs            = sc7280_ufsphy_pcs,
+> >> +        .pcs_num        = ARRAY_SIZE(sc7280_ufsphy_pcs),
+> >> +    },
+> >> +    .tbls_hs_b = {
+> >> +        .serdes         = sm8150_ufsphy_hs_b_serdes,
+> >> +        .serdes_num     = ARRAY_SIZE(sm8150_ufsphy_hs_b_serdes),
+> >> +    },
+> >> +    .tbls_hs_g4 = {
+> >> +        .tx             = sm8250_ufsphy_hs_g4_tx,
+> >> +        .tx_num         = ARRAY_SIZE(sm8250_ufsphy_hs_g4_tx),
+> >> +        .rx             = sc7280_ufsphy_hs_g4_rx,
+> >> +        .rx_num         = ARRAY_SIZE(sc7280_ufsphy_hs_g4_rx),
+> >> +        .pcs            = sm8150_ufsphy_hs_g4_pcs,
+> >> +        .pcs_num        = ARRAY_SIZE(sm8150_ufsphy_hs_g4_pcs),
+> >> +    },
+> >> +    .clk_list               = sm8450_ufs_phy_clk_l,
+> >> +    .num_clks               = ARRAY_SIZE(sm8450_ufs_phy_clk_l),
+> >
+> > This doesn't correspond to the bindings. This array has 3 enries, while
+> > in the bindings you have opted for two clocks for this PHY.
+> Sure. I'll update the bindings.
 
-Fixes: a689554ba6ed ("drm/msm: Initial add DSI connector support")
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
----
- drivers/gpu/drm/msm/dsi/dsi_host.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+Are you sure about the third clock? Neither sm8150 nor sm8250 used the
+qref clock. Or is that an omission on our side?
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 0c4ec0530efc..31495e423c56 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -1075,9 +1075,21 @@ static void dsi_wait4video_done(struct msm_dsi_host *msm_host)
- 
- static void dsi_wait4video_eng_busy(struct msm_dsi_host *msm_host)
- {
-+	u32 data;
-+
-+	data = dsi_read(msm_host, REG_DSI_STATUS0);
-+
- 	if (!(msm_host->mode_flags & MIPI_DSI_MODE_VIDEO))
- 		return;
- 
-+	/* if video mode engine is not busy, its because
-+	 * either timing engine was not turned on or the
-+	 * DSI controller has finished transmitting the video
-+	 * data already, so no need to wait in those cases
-+	 */
-+	if (!(data & DSI_STATUS0_VIDEO_MODE_ENGINE_BUSY))
-+		return;
-+
- 	if (msm_host->power_on && msm_host->enabled) {
- 		dsi_wait4video_done(msm_host);
- 		/* delay 4 ms to skip BLLP */
+>
+> >
+> >> +    .vreg_list              = qmp_phy_vreg_l,
+> >> +    .num_vregs              = ARRAY_SIZE(qmp_phy_vreg_l),
+> >> +    .regs                   = ufsphy_v4_regs_layout,
+> >> +};
+> >> +
+> >>   static const struct qmp_phy_cfg sc8280xp_ufsphy_cfg = {
+> >>       .lanes            = 2,
+> >>
+> >> @@ -1648,6 +1787,9 @@ static const struct of_device_id
+> >> qmp_ufs_of_match_table[] = {
+> >>       }, {
+> >>           .compatible = "qcom,sa8775p-qmp-ufs-phy",
+> >>           .data = &sa8775p_ufsphy_cfg,
+> >> +    }, {
+> >> +        .compatible = "qcom,sc7280-qmp-ufs-phy",
+> >> +        .data = &sc7280_ufsphy_cfg,
+> >>       }, {
+> >>           .compatible = "qcom,sc8180x-qmp-ufs-phy",
+> >>           .data = &sm8150_ufsphy_cfg,
+> >> --
+> >> 2.17.1
+> >>
+> >
+> Thanks,
+> Nitin
+
+
+
 -- 
-2.40.1
-
+With best wishes
+Dmitry
