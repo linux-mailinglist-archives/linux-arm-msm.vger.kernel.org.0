@@ -2,68 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 093577A213C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 16:43:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 612097A2164
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 16:49:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235785AbjIOOnQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Sep 2023 10:43:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45502 "EHLO
+        id S235795AbjIOOtD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Sep 2023 10:49:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235633AbjIOOnP (ORCPT
+        with ESMTP id S235401AbjIOOtC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Sep 2023 10:43:15 -0400
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [81.169.146.170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D42D1BC7;
-        Fri, 15 Sep 2023 07:43:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1694788988; cv=none;
+        Fri, 15 Sep 2023 10:49:02 -0400
+Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.81])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A20F1BE6;
+        Fri, 15 Sep 2023 07:48:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1694789334; cv=none;
     d=strato.com; s=strato-dkim-0002;
-    b=VeiQ4c8U3muKvH3uogNgB1EwN9z+dyrdJkVZpRXMNWcYWhFQrQyjwBdmNOasRnTTGp
-    RM3WNaPvbszckR+1xVIZKu4equXWCrcurdbYeDyM8cnU0nyLYV/6PiWw2Z1dP8LYQxcX
-    o3lTq2b2PTJZVeEsCSKNqqvvoGbhdC+ESsP8e4PZJsYV1+PFExyzAQzx/PATEv65TNvn
-    PHbjcXxjOrJUJGZLckEl9bp7AbX4Yb27S0/BPaUE1hLPzjEMDkzhwkGOA3Rm/8zOJA6b
-    TxlrDSE3bN2BC+XMT/ygu4jTfGY+3iQIIgyw2RM+a4Wa2OTpCjXz9xuHweOZ56jyR9aR
-    IrAA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1694788988;
+    b=BqrFLvcfCv7X7IHwBCzX2oP+K89RPBdwmATUMEA2wCSVbfjOJ0Qbh4NAhp5z7uk7dN
+    go29IkLJnUFneWYsCDNjvtC8VXXBLQwV0fznztJg3x3nW4FQQJoTUWOV458B24lALRUm
+    2lRoQ6U7nakSHQHDoPfA3Nh+VcQb/1+1YJllrsX5E0Rky63lFyZwQFL8/arW94moZntV
+    tn4pto3CFo/Sx0wYwmhu1sW0Z/vsmjy63nu0PTNGTxVJENIAQNj/BPyoi2ymBOvSnW+s
+    7ItbhQn0f7aT4A/I9jlqOsJOxR1sKRn+h7ow6vzm+HgM5nuUmRBrroiSD370+EpsM/+7
+    I6iw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1694789334;
     s=strato-dkim-0002; d=strato.com;
     h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
     From:Subject:Sender;
-    bh=JQDerBwPFpdX+huluqMekIVv5H0FEkeTLnS+oe23mNE=;
-    b=BTVRorL1HtkG+R9/o9oN1jNXB3lZUvF3f94qrrE7sHLsmTB5fyk5aOjWgUEYBv71na
-    O2R16j0YnozRkABga5faDUA/JQ5MaumNbwCRt7FOUmHiKPpqBKFuu3XBUWZPosbM1Xxb
-    SCbHrH+tPN2nGQtqZL1AM6khzDKBfxh32j/XFPEMFmMA1x8XjsmiDhqEDNihq6DuLb+p
-    K/SXIltg3CD0Rs2XUDgowRZPFfaa+uydPPw4f7S1OlulasLOVBCiN0RKCF4SGZj/RRRn
-    ebpVwzcjGPRZqqI8HtKmJsTggnIKj6w8qI/kerVv+38vITZU6HFfYdnKsl0lOUrcaZeg
-    hvIw==
+    bh=DmrH1Y1uu5a9ntgfPpGKbpjnT1F1jyR1nz4MQOqV/5o=;
+    b=FcOowJZjgrlqTMUUq0gFJpLmFLfHQLR8Xt6lhMjs5xaSKMW9GN5A+bUo+wfYzv9won
+    7gLAZDFsg2DMnc3lIgZRAZjbK/dDOF+kQVMbQDwgDbmbk2DwU9JWOkDPC0cnhOKUUBW2
+    Lgf4tTAy8WJ4DSXTqsRrO++6sDzPckLRWu0EJiC0yiI4meIxomqy95gLFo4Y9HJvri7D
+    cQa8Vqx4ConZ5cgWlCaUpQHv8MpgVSjW1ZRWXpfNf7BMXKYBFdDTzfoUTbx+OMKPetjh
+    bIobwcqYhtzcvQqB8O3SBAzw4Sj1xvmcQMXGpAlCAeq434xOjdv3tVAvpV+xzJvJ1PqG
+    wbnQ==
 ARC-Authentication-Results: i=1; strato.com;
     arc=none;
     dkim=none
 X-RZG-CLASS-ID: mo02
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1694788988;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1694789334;
     s=strato-dkim-0002; d=gerhold.net;
     h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
     From:Subject:Sender;
-    bh=JQDerBwPFpdX+huluqMekIVv5H0FEkeTLnS+oe23mNE=;
-    b=Iqm+/odgJBZYGNNv40zYdPmyViEzvQYrKVwNfevyXBW7kNx8iSNnT8hX81LkdbYV52
-    TZYMY6/ehns3E5mVl4tjD4d5cQRDC9n0Yc+81C4iON3vqewnySgUk1p6czuFijQxj1Gr
-    sLYIGFMvvHYnaModGyVxHj0ORvw49UByufLU3j8TprxmZqaIA04ds7TIOGYXaCHhb944
-    8Z/p+STdaJ3Of5HQeeYurDxfFDUTMkwJcpnZrDkcFVidD0DC6eg57JKMEQz06zLXdRZ/
-    lrmCPyzxzoBRTYrj97Lx6TrMDkt1f0G2YjK6mEnbzp9ISX5gIY7syfmmQ8125XQ4SIpG
-    l01w==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1694788988;
+    bh=DmrH1Y1uu5a9ntgfPpGKbpjnT1F1jyR1nz4MQOqV/5o=;
+    b=SuM1C4efoeabT6jDxTioH1hEab3jlv6azyVoWSdTxymXQtW7ByLN2hbQ56CBFn7osj
+    9+6PbTWcNPvTt1w59mecT5fAA6rVRPC8kvFINQuYn5aqJZIUvVlUvukjOgOfPufQoq85
+    HpPsKmYg6jSyDIHDQuXK1amsTjpUAv3oz6Hka68/eOOP7E9GxkJrmwevy1A+PMGW76fx
+    qQ+puMQSPRWobLTaOTrObftO0Keo9nZBnIKqfQjFFdxYuiUTKy5BGEsH3mUleEoSv3HF
+    cibK46LhLBY+gtUpsGWgi10S4ZcTshaCWwWVqeulxxZ7Ha8BdIQkI85nd6UzxXKm9i5Q
+    ryNg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1694789334;
     s=strato-dkim-0003; d=gerhold.net;
     h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
     From:Subject:Sender;
-    bh=JQDerBwPFpdX+huluqMekIVv5H0FEkeTLnS+oe23mNE=;
-    b=xOklVqVdCXbaubQ8rrkuq15K58DwYJ9wvgXRUxhwgsbN2+ZD7ugHIHBPVY7MmAd9pn
-    OWSTCZqZWxd/FRvZ+0DA==
+    bh=DmrH1Y1uu5a9ntgfPpGKbpjnT1F1jyR1nz4MQOqV/5o=;
+    b=jV4IIdZDzLsNpCzmUWSDZ3lvl0aJ1PteSc9Uq6badEshFIZASufGe1OQ/AbRHLZEUM
+    5Cv25p70rbxkcnHBdIAg==
 X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA8piJ1A=="
 Received: from gerhold.net
     by smtp.strato.de (RZmta 49.8.2 DYNA|AUTH)
-    with ESMTPSA id R04c57z8FEh7871
+    with ESMTPSA id R04c57z8FEms881
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
         (Client did not present a certificate);
-    Fri, 15 Sep 2023 16:43:07 +0200 (CEST)
-Date:   Fri, 15 Sep 2023 16:42:58 +0200
+    Fri, 15 Sep 2023 16:48:54 +0200 (CEST)
+Date:   Fri, 15 Sep 2023 16:48:47 +0200
 From:   Stephan Gerhold <stephan@gerhold.net>
 To:     Gaurav Kohli <quic_gkohli@quicinc.com>
 Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
@@ -72,7 +72,7 @@ Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
         kernel@quicinc.com
 Subject: Re: [PATCH v1] arm64: dts: qcom: msm8916: Fix iommu local address
  range
-Message-ID: <ZQRtchQ0HqmgkvIa@gerhold.net>
+Message-ID: <ZQRuzzC7i1kyNqAm@gerhold.net>
 References: <20230915143304.477-1-quic_gkohli@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -80,9 +80,8 @@ Content-Disposition: inline
 In-Reply-To: <20230915143304.477-1-quic_gkohli@quicinc.com>
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -96,14 +95,6 @@ On Fri, Sep 15, 2023 at 08:03:04PM +0530, Gaurav Kohli wrote:
 > Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > Signed-off-by: Gaurav Kohli <quic_gkohli@quicinc.com>
-
-Aside from the minor things Konrad mentioned (v1 -> v2) FWIW:
-
-Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
-
-Although I can kind of understand that starting to count at 0 often
-feels more intuitive, especially for Linux kernel things. :-)
-
 > ---
 > Changes since v0:
 > -Update Fixes tag.
@@ -118,9 +109,9 @@ feels more intuitive, especially for Linux kernel things. :-)
 >  			compatible = "qcom,msm8916-iommu", "qcom,msm-iommu-v1";
 > -			ranges = <0 0x01e20000 0x40000>;
 > +			ranges = <0 0x01e20000 0x20000>;
->  			reg = <0x01ef0000 0x3000>;
->  			clocks = <&gcc GCC_SMMU_CFG_CLK>,
->  				 <&gcc GCC_APSS_TCU_CLK>;
-> -- 
-> 2.17.1
-> 
+
+Please also submit another patch to fix this in msm8939.dtsi. It has the
+same mistake.
+
+Thanks,
+Stephan
