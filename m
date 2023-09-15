@@ -2,116 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 612097A2164
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 16:49:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 595B37A21A3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 16:59:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235795AbjIOOtD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Sep 2023 10:49:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38808 "EHLO
+        id S232499AbjIOO7z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Sep 2023 10:59:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235401AbjIOOtC (ORCPT
+        with ESMTP id S229568AbjIOO7z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Sep 2023 10:49:02 -0400
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.81])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A20F1BE6;
-        Fri, 15 Sep 2023 07:48:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1694789334; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=BqrFLvcfCv7X7IHwBCzX2oP+K89RPBdwmATUMEA2wCSVbfjOJ0Qbh4NAhp5z7uk7dN
-    go29IkLJnUFneWYsCDNjvtC8VXXBLQwV0fznztJg3x3nW4FQQJoTUWOV458B24lALRUm
-    2lRoQ6U7nakSHQHDoPfA3Nh+VcQb/1+1YJllrsX5E0Rky63lFyZwQFL8/arW94moZntV
-    tn4pto3CFo/Sx0wYwmhu1sW0Z/vsmjy63nu0PTNGTxVJENIAQNj/BPyoi2ymBOvSnW+s
-    7ItbhQn0f7aT4A/I9jlqOsJOxR1sKRn+h7ow6vzm+HgM5nuUmRBrroiSD370+EpsM/+7
-    I6iw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1694789334;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=DmrH1Y1uu5a9ntgfPpGKbpjnT1F1jyR1nz4MQOqV/5o=;
-    b=FcOowJZjgrlqTMUUq0gFJpLmFLfHQLR8Xt6lhMjs5xaSKMW9GN5A+bUo+wfYzv9won
-    7gLAZDFsg2DMnc3lIgZRAZjbK/dDOF+kQVMbQDwgDbmbk2DwU9JWOkDPC0cnhOKUUBW2
-    Lgf4tTAy8WJ4DSXTqsRrO++6sDzPckLRWu0EJiC0yiI4meIxomqy95gLFo4Y9HJvri7D
-    cQa8Vqx4ConZ5cgWlCaUpQHv8MpgVSjW1ZRWXpfNf7BMXKYBFdDTzfoUTbx+OMKPetjh
-    bIobwcqYhtzcvQqB8O3SBAzw4Sj1xvmcQMXGpAlCAeq434xOjdv3tVAvpV+xzJvJ1PqG
-    wbnQ==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo02
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1694789334;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=DmrH1Y1uu5a9ntgfPpGKbpjnT1F1jyR1nz4MQOqV/5o=;
-    b=SuM1C4efoeabT6jDxTioH1hEab3jlv6azyVoWSdTxymXQtW7ByLN2hbQ56CBFn7osj
-    9+6PbTWcNPvTt1w59mecT5fAA6rVRPC8kvFINQuYn5aqJZIUvVlUvukjOgOfPufQoq85
-    HpPsKmYg6jSyDIHDQuXK1amsTjpUAv3oz6Hka68/eOOP7E9GxkJrmwevy1A+PMGW76fx
-    qQ+puMQSPRWobLTaOTrObftO0Keo9nZBnIKqfQjFFdxYuiUTKy5BGEsH3mUleEoSv3HF
-    cibK46LhLBY+gtUpsGWgi10S4ZcTshaCWwWVqeulxxZ7Ha8BdIQkI85nd6UzxXKm9i5Q
-    ryNg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1694789334;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=DmrH1Y1uu5a9ntgfPpGKbpjnT1F1jyR1nz4MQOqV/5o=;
-    b=jV4IIdZDzLsNpCzmUWSDZ3lvl0aJ1PteSc9Uq6badEshFIZASufGe1OQ/AbRHLZEUM
-    5Cv25p70rbxkcnHBdIAg==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA8piJ1A=="
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.8.2 DYNA|AUTH)
-    with ESMTPSA id R04c57z8FEms881
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Fri, 15 Sep 2023 16:48:54 +0200 (CEST)
-Date:   Fri, 15 Sep 2023 16:48:47 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Gaurav Kohli <quic_gkohli@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        kernel@quicinc.com
-Subject: Re: [PATCH v1] arm64: dts: qcom: msm8916: Fix iommu local address
- range
-Message-ID: <ZQRuzzC7i1kyNqAm@gerhold.net>
-References: <20230915143304.477-1-quic_gkohli@quicinc.com>
+        Fri, 15 Sep 2023 10:59:55 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3C0C10D;
+        Fri, 15 Sep 2023 07:59:50 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52969C433C9;
+        Fri, 15 Sep 2023 14:59:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1694789990;
+        bh=A21SBk79usPEjw1XUt9dSJPMgbCWV6UEMjwE6HhbYMM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=LlOn7YDxtz9tg+ngRqO/KxN8xHZl8JF3jNCBW7BlL5UBz6r8EZsBtAI5iFpz/A4Lf
+         6tcdotMybw5J5x78GH2/Z6Vk3DyTn+/EzyaS01wMJi6P1oZMqOjak2V6P0spemllzD
+         TbFVMqhjjdSEE+7SnDvFqmV8Tmx7sl3v5RPEXf8Yv7Glai2tbLbKDhilHamd39ljWk
+         yOHz9BEIYql1JRKItl6uR6SLAP6RvB3T4Tzaub3IM65qih4LFsC3TJ946KlVjJ7pbQ
+         w5Y99R2VMds4Xhk+D2Q/fWffT9vN92KA0MGcFfLEjyFZk3ZswpmOtMeuM0pJbCdF0E
+         PyhbAwviYmXhA==
+Received: (nullmailer pid 3718886 invoked by uid 1000);
+        Fri, 15 Sep 2023 14:59:47 -0000
+Date:   Fri, 15 Sep 2023 09:59:47 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Tengfei Fan <quic_tengfan@quicinc.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org,
+        linus.walleij@linaro.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_tsoni@quicinc.com,
+        quic_shashim@quicinc.com, quic_kaushalk@quicinc.com,
+        quic_tdas@quicinc.com, quic_tingweiz@quicinc.com,
+        quic_aiquny@quicinc.com, kernel@quicinc.com
+Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: qcom: Add SM4450 pinctrl
+Message-ID: <20230915145947.GA3716246-robh@kernel.org>
+References: <20230915015808.18296-1-quic_tengfan@quicinc.com>
+ <20230915015808.18296-2-quic_tengfan@quicinc.com>
+ <6f40ee72-b763-c58d-44df-ea40d1309820@linaro.org>
+ <35371580-8e5a-4f72-aec2-951268c296a3@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230915143304.477-1-quic_gkohli@quicinc.com>
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <35371580-8e5a-4f72-aec2-951268c296a3@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 15, 2023 at 08:03:04PM +0530, Gaurav Kohli wrote:
-> Fix the apps iommu local address space range as per data sheet.
+On Fri, Sep 15, 2023 at 03:30:16PM +0800, Tengfei Fan wrote:
 > 
-> Fixes: 6a6729f38436 ("arm64: dts: qcom: msm8916: Add IOMMU support")
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Signed-off-by: Gaurav Kohli <quic_gkohli@quicinc.com>
-> ---
-> Changes since v0:
-> -Update Fixes tag.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> index 33fb65d73104..3c934363368c 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> @@ -1813,7 +1813,7 @@
->  			#size-cells = <1>;
->  			#iommu-cells = <1>;
->  			compatible = "qcom,msm8916-iommu", "qcom,msm-iommu-v1";
-> -			ranges = <0 0x01e20000 0x40000>;
-> +			ranges = <0 0x01e20000 0x20000>;
+> 在 9/15/2023 3:04 PM, Krzysztof Kozlowski 写道:
+> > On 15/09/2023 03:58, Tengfei Fan wrote:
+> > > Add device tree binding Documentation details for Qualcomm SM4450
+> > > TLMM device.
+> > > 
+> > > Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+> > 
+> > ...
+> > 
+> > > +
+> > > +patternProperties:
+> > > +  "-state$":
+> > > +    oneOf:
+> > > +      - $ref: "#/$defs/qcom-sm4450-tlmm-state"
+> > > +      - patternProperties:
+> > > +          "-pins$":
+> > > +            $ref: "#/$defs/qcom-sm4450-tlmm-state"
+> > > +        additionalProperties: false
+> > > +
+> > > +$defs:
+> > > +  qcom-sm4450-tlmm-state:
+> > > +    type: object
+> > > +    description:
+> > > +      Pinctrl node's client devices use subnodes for desired pin configuration.
+> > > +      Client device subnodes use below standard properties.
+> > > +    $ref: qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state
+> > > +    unevaluatedProperties: false
+> > > +
+> > > +    properties:
+> > > +      pins:
+> > > +        description:
+> > > +          List of gpio pins affected by the properties specified in this
+> > > +          subnode.
+> > > +        items:
+> > > +          oneOf:
+> > > +            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-9][0-9])$"
+> > 
+> > This is still wrong. How many GPIOs do you have? Please open existing
+> > bindings for recent device (e.g. sm8550) and look how it is done there.
+> yes, will update to "^gpio([0-9]|[1-9][0-9]|1[0-2][0-5])$".
 
-Please also submit another patch to fix this in msm8939.dtsi. It has the
-same mistake.
+What about 106, 116, etc.?
 
-Thanks,
-Stephan
+Rob
