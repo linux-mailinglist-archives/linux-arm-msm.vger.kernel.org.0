@@ -2,209 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 06D4A7A1A54
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 11:21:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BEB67A1B95
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 12:00:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233696AbjIOJVx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Sep 2023 05:21:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57900 "EHLO
+        id S234022AbjIOKAn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Sep 2023 06:00:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233562AbjIOJVj (ORCPT
+        with ESMTP id S231341AbjIOKAn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Sep 2023 05:21:39 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEAA02111
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 02:21:24 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2bf78950354so30979641fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 02:21:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694769683; x=1695374483; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ya9Nj5WT/J10Cs78iLoaa7AD4/TmGlT+hGtAjhqtW2Y=;
-        b=mICIbkTQZWTjUM/ueObufJQd1Xd0gFyMCkTk+ZKxm3T/v2ijmfM0ci3IScsMa/hbfW
-         Mu5Dt+ZLCkU60EmB0h8/toUu/VHNAI/9u4Xv6m4I1NVfo9PRNPgarUPpcTiPQSJbS+tH
-         xRPdfAQI819gCxR1Ms0pYnCPllJ8muVNXrqWpND5mThk8LrBZPSLj9q6JVJul/XF7ZJZ
-         ugocWdNS8XemIZyFOJ1gVriyUspzObx6BiFW2QVK1gMzxQ4Z4cDLdlP2hSmHFf+kKLJ0
-         bE8jyCLDdyR4Lhol3nW2ARcin55CfGxj4HBamvbxAO69DmOno059DSVkr3P4Cs34Jxot
-         zNzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694769683; x=1695374483;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Ya9Nj5WT/J10Cs78iLoaa7AD4/TmGlT+hGtAjhqtW2Y=;
-        b=gxAyho4H1GJMNlpq+hSGKfEO8TRcoq/IcKJEzKMSl9SrYxQzRLzsr2MpNkR1QIVZh7
-         zTM6y2+tJA3coUWiUv9WVtf9mnlH7v7jnAo+RNkbYwaMOz0ppmWcV1fT4Ke4n5IBF2yz
-         PJnEiR0LVuYBCii8dCMSzeWtjzylPX6ri/y0z4y0C5C9ZIxSdGrcBZ55EED5y8QAfZwv
-         vCkjLtlWZ+fpxGzprDBEqv1yRXECS9/7jPmPG3kSOjdn8BvolwTK3ktT5FjrTIK9VGCr
-         WdeCPcEPbpcLFxup+yJPQAjzzWUGJk+OSQ0WTeQimlOzPQVSdf16hNxthO5lhcGbN5kL
-         WJ4g==
-X-Gm-Message-State: AOJu0YwDrhl8E4H0nluukCVIFiYCNC6Ud6oAQclIJPKm2zlti7ecIPvl
-        acRYtQWcMz4fD4mtD1bNb6G4cw==
-X-Google-Smtp-Source: AGHT+IFSHJRoQx1Ctyhwv1uESkr0oLROtRLqXN8zd1BUs3GoaoZqPq2EXshY166uThtfcvsIXkDBgA==
-X-Received: by 2002:a2e:8019:0:b0:2bf:b142:bd13 with SMTP id j25-20020a2e8019000000b002bfb142bd13mr1075017ljg.4.1694769683203;
-        Fri, 15 Sep 2023 02:21:23 -0700 (PDT)
-Received: from uffe-tuxpro14.. (h-94-254-63-18.NA.cust.bahnhof.se. [94.254.63.18])
-        by smtp.gmail.com with ESMTPSA id p8-20020a2e7408000000b002b9ec22d9fasm639376ljc.29.2023.09.15.02.21.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Sep 2023 02:21:22 -0700 (PDT)
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-To:     Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>
-Cc:     Ulf Hansson <ulf.hansson@linaro.org>, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 08/17] pmdomain: qcom: Move Kconfig options to the pmdomain subsystem
-Date:   Fri, 15 Sep 2023 11:19:54 +0200
-Message-Id: <20230915092003.658361-9-ulf.hansson@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230915092003.658361-1-ulf.hansson@linaro.org>
-References: <20230915092003.658361-1-ulf.hansson@linaro.org>
+        Fri, 15 Sep 2023 06:00:43 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F12912D77;
+        Fri, 15 Sep 2023 02:58:17 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38F6fTpL022594;
+        Fri, 15 Sep 2023 09:58:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=O2ltSwAUi5DTn1NPduao40RCeYP4memzJu1C30yBptQ=;
+ b=YH7IvOSDzsMsza2FLr10/uDJBw6X8wymtZMwm4ezvv9UuPboK5N2adYYAFsdNCNVUW0d
+ /M+JDlVGRsqTBh5GRkNIykYFuyYvJ9H/YKANfNVohKkAgTcS4bM2ScF/AZZDmp3tC2Mg
+ kjpgfZ1MSK4EbEAgrmUNk6Xtfp1BCoOjIzw6jyuCtuHn3EGQ91o0myFVcHvAlRmPPJX7
+ bhpC8x3fBGLHH05cSVvVAtJ/3X11K5dY/bfONLKyl6AC4z8fSYEhBtYtZ2GMARv3Ln4/
+ 30/iFeRUQoanz07VdqgiYRxaXzM/OLG/LhYO91n9n8wj+yGYmwvrWguqJLPYvJQhdR3U gg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t4g070rav-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 15 Sep 2023 09:58:02 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38F9w2vq026994
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 15 Sep 2023 09:58:02 GMT
+Received: from [10.253.32.174] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Fri, 15 Sep
+ 2023 02:57:58 -0700
+Message-ID: <a1bb3ba8-0e46-c266-2cac-a45ab478032e@quicinc.com>
+Date:   Fri, 15 Sep 2023 17:57:54 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v6 4/4] clk: qcom: add clock controller driver for
+ qca8386/qca8084
+Content-Language: en-US
+To:     Stephen Boyd <sboyd@kernel.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <catalin.marinas@arm.com>,
+        <conor+dt@kernel.org>, <konrad.dybcio@linaro.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
+        <p.zabel@pengutronix.de>, <robh+dt@kernel.org>, <will@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_srichara@quicinc.com>
+References: <20230901091823.30242-1-quic_luoj@quicinc.com>
+ <20230901091823.30242-5-quic_luoj@quicinc.com>
+ <27ae3297ad161fd67706db70b402db04.sboyd@kernel.org>
+ <16d09acf-7bdd-04ee-6faf-936c0366df03@quicinc.com>
+ <17681a9f756cc70a190c674c51b90140.sboyd@kernel.org>
+ <5a4805f7-f802-b1ba-9804-59c0fe6c7f26@quicinc.com>
+ <92058c25fb11b75ee0a2298a684825e9.sboyd@kernel.org>
+ <f67b354c-8a4b-49f5-6275-66b7d614301a@quicinc.com>
+ <82adb75659e0d278e25b65b0e81df99a.sboyd@kernel.org>
+ <9952fa20-a27f-3240-cc49-5c5109febfc1@quicinc.com>
+ <580f3934ab1171e27d785db7362c342d.sboyd@kernel.org>
+From:   Jie Luo <quic_luoj@quicinc.com>
+In-Reply-To: <580f3934ab1171e27d785db7362c342d.sboyd@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: JOaKFwz-EPgPvmgH2Avg06GT5vGa4hU9
+X-Proofpoint-ORIG-GUID: JOaKFwz-EPgPvmgH2Avg06GT5vGa4hU9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-15_05,2023-09-14_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 clxscore=1015 phishscore=0 spamscore=0 mlxscore=0
+ adultscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0 bulkscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309150087
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Kconfig options belongs closer to the corresponding implementations,
-hence let's move them from the soc subsystem to the pmdomain subsystem.
 
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Andy Gross <agross@kernel.org>
-Cc: <linux-arm-msm@vger.kernel.org>
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
----
- drivers/pmdomain/Kconfig      |  1 +
- drivers/pmdomain/qcom/Kconfig | 41 +++++++++++++++++++++++++++++++++++
- drivers/soc/qcom/Kconfig      | 37 -------------------------------
- 3 files changed, 42 insertions(+), 37 deletions(-)
- create mode 100644 drivers/pmdomain/qcom/Kconfig
 
-diff --git a/drivers/pmdomain/Kconfig b/drivers/pmdomain/Kconfig
-index b1d9dc7d71e3..c91fdd40163a 100644
---- a/drivers/pmdomain/Kconfig
-+++ b/drivers/pmdomain/Kconfig
-@@ -7,5 +7,6 @@ source "drivers/pmdomain/apple/Kconfig"
- source "drivers/pmdomain/bcm/Kconfig"
- source "drivers/pmdomain/imx/Kconfig"
- source "drivers/pmdomain/mediatek/Kconfig"
-+source "drivers/pmdomain/qcom/Kconfig"
- 
- endmenu
-diff --git a/drivers/pmdomain/qcom/Kconfig b/drivers/pmdomain/qcom/Kconfig
-new file mode 100644
-index 000000000000..3d3948eabef0
---- /dev/null
-+++ b/drivers/pmdomain/qcom/Kconfig
-@@ -0,0 +1,41 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+menu "Qualcomm PM Domains"
-+
-+config QCOM_CPR
-+	tristate "QCOM Core Power Reduction (CPR) support"
-+	depends on ARCH_QCOM && HAS_IOMEM
-+	select PM_OPP
-+	select REGMAP
-+	help
-+	  Say Y here to enable support for the CPR hardware found on Qualcomm
-+	  SoCs like QCS404.
-+
-+	  This driver populates CPU OPPs tables and makes adjustments to the
-+	  tables based on feedback from the CPR hardware. If you want to do
-+	  CPUfrequency scaling say Y here.
-+
-+	  To compile this driver as a module, choose M here: the module will
-+	  be called qcom-cpr
-+
-+config QCOM_RPMHPD
-+	tristate "Qualcomm RPMh Power domain driver"
-+	depends on QCOM_RPMH && QCOM_COMMAND_DB
-+	help
-+	  QCOM RPMh Power domain driver to support power-domains with
-+	  performance states. The driver communicates a performance state
-+	  value to RPMh which then translates it into corresponding voltage
-+	  for the voltage rail.
-+
-+config QCOM_RPMPD
-+	tristate "Qualcomm RPM Power domain driver"
-+	depends on PM && OF
-+	depends on QCOM_SMD_RPM
-+	select PM_GENERIC_DOMAINS
-+	select PM_GENERIC_DOMAINS_OF
-+	help
-+	  QCOM RPM Power domain driver to support power-domains with
-+	  performance states. The driver communicates a performance state
-+	  value to RPM which then translates it into corresponding voltage
-+	  for the voltage rail.
-+
-+endmenu
-diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-index 715348869d04..b3634e10f6f5 100644
---- a/drivers/soc/qcom/Kconfig
-+++ b/drivers/soc/qcom/Kconfig
-@@ -26,22 +26,6 @@ config QCOM_COMMAND_DB
- 	  resource on a RPM-hardened platform must use this database to get
- 	  SoC specific identifier and information for the shared resources.
- 
--config QCOM_CPR
--	tristate "QCOM Core Power Reduction (CPR) support"
--	depends on ARCH_QCOM && HAS_IOMEM
--	select PM_OPP
--	select REGMAP
--	help
--	  Say Y here to enable support for the CPR hardware found on Qualcomm
--	  SoCs like QCS404.
--
--	  This driver populates CPU OPPs tables and makes adjustments to the
--	  tables based on feedback from the CPR hardware. If you want to do
--	  CPUfrequency scaling say Y here.
--
--	  To compile this driver as a module, choose M here: the module will
--	  be called qcom-cpr
--
- config QCOM_GENI_SE
- 	tristate "QCOM GENI Serial Engine Driver"
- 	depends on ARCH_QCOM || COMPILE_TEST
-@@ -157,27 +141,6 @@ config QCOM_RPMH
- 	  of hardware components aggregate requests for these resources and
- 	  help apply the aggregated state on the resource.
- 
--config QCOM_RPMHPD
--	tristate "Qualcomm RPMh Power domain driver"
--	depends on QCOM_RPMH && QCOM_COMMAND_DB
--	help
--	  QCOM RPMh Power domain driver to support power-domains with
--	  performance states. The driver communicates a performance state
--	  value to RPMh which then translates it into corresponding voltage
--	  for the voltage rail.
--
--config QCOM_RPMPD
--	tristate "Qualcomm RPM Power domain driver"
--	depends on PM && OF
--	depends on QCOM_SMD_RPM
--	select PM_GENERIC_DOMAINS
--	select PM_GENERIC_DOMAINS_OF
--	help
--	  QCOM RPM Power domain driver to support power-domains with
--	  performance states. The driver communicates a performance state
--	  value to RPM which then translates it into corresponding voltage
--	  for the voltage rail.
--
- config QCOM_SMEM
- 	tristate "Qualcomm Shared Memory Manager (SMEM)"
- 	depends on ARCH_QCOM || COMPILE_TEST
--- 
-2.34.1
+On 9/15/2023 12:30 AM, Stephen Boyd wrote:
+> Quoting Jie Luo (2023-09-12 20:27:25)
+>>
+>>
+>> On 9/13/2023 1:18 AM, Stephen Boyd wrote:
+>>> Quoting Jie Luo (2023-09-12 05:07:02)
+>>>>
+>>>> and freq_tbl are necessary to this clock.
+>>>
+>>> I still don't see why the freq_tbl is necessary.
+>>
+>> Hi Stephen,
+>> For clk_rcg2_ops, freq_tbl is used to find the closest rate to decided
+>> the parent clock, the configuration of clock source and clock divider
+>> are saved in the freq_tbl to configure the RCG hardware register, the
+>> mapping of parent clock and hardware register value is decided by the
+>> freq_tbl for the RCG clock.
+> 
+> The divider is always 1. The frequency is the frequency of the parent.
+> The two pieces of information are already known without the frequency
+> table. Why is it needed?
 
+Hi Stephen,
+For mac0 and mac5 RCG clock, it is true with divider 1, since these two 
+MACs are connected with CPU port, which is always the fix link speed, 
+the clock rate is always 312.5M or 125M, in this case with multiple 
+parent clocks and divider 1, it seems there is no special RCG clock ops 
+for it currently, so we leverage the clock ops clk_rcg2_ops.
+
+For other MACs(1-4), which are connected with physical port, the link 
+speed is dynamically changed, and the divider is different for the 
+different link speed, such as the mac1 clock freq table as below.
+
+static const struct freq_tbl ftbl_nss_cc_mac1_tx_clk_src[] = { 
+
+         F(25000000, P_UNIPHY1_TX312P5M, 12.5, 0, 0), 
+
+         F(25000000, P_UNIPHY1_RX312P5M, 12.5, 0, 0), 
+
+         F(50000000, P_XO, 1, 0, 0), 
+
+         F(125000000, P_UNIPHY1_TX312P5M, 2.5, 0, 0), 
+
+         F(125000000, P_UNIPHY1_RX312P5M, 2.5, 0, 0), 
+
+         F(312500000, P_UNIPHY1_TX312P5M, 1, 0, 0), 
+
+         F(312500000, P_UNIPHY1_RX312P5M, 1, 0, 0), 
+
+         { } 
+
+};
+
+Thanks,
+Jie.
