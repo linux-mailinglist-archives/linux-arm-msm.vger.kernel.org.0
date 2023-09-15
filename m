@@ -2,90 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D7987A1BE2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 12:19:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D84F77A1D4F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 13:20:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234131AbjIOKTM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Sep 2023 06:19:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37824 "EHLO
+        id S233967AbjIOLUT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Sep 2023 07:20:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231341AbjIOKTM (ORCPT
+        with ESMTP id S234119AbjIOLUR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Sep 2023 06:19:12 -0400
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AFE5E9;
-        Fri, 15 Sep 2023 03:19:04 -0700 (PDT)
-Received: by mail-oi1-x22d.google.com with SMTP id 5614622812f47-3a9b41ffe12so1218028b6e.3;
-        Fri, 15 Sep 2023 03:19:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1694773143; x=1695377943; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gBRNgKBo9636s47BGwWVB4QKKZP3PNOVrB6JUSp8VSU=;
-        b=H1AWv2Jiti17w/RFTWf9ZLidaYhZCE+eFFSuzPZ+mK/LyQyfZ8ZHEwlLT9mkRiWG4F
-         8grW/t4Gw/gxMm2X24JLtEswLrsWu99B7NFAgs/sTmM/RSLW7BSSEAZ2yalr1HQLeIXg
-         7TceqEQ8uypJ7F3BGwdVlI9JpYrUBcuYe0IXmY4iFlS0b2wO/l0RZ2e+mwN34wtjJbKe
-         G86QVNMQB1ygBYghA/smfNu6cnlOsG8bBcYgBdhm08hIWw2by+mhTBaOqgQjF8PZn+XH
-         iZUfeAYpPWOo2eA2o3pwLrEjTU6atltMe/D6f9DLPKdiZhrP0Z0d4WpHK1QoCP0XX4mw
-         h0/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694773143; x=1695377943;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gBRNgKBo9636s47BGwWVB4QKKZP3PNOVrB6JUSp8VSU=;
-        b=FeyAH+XKQxwAe/jA2J3w5fNjZiyA5GtKs/DF4aYXsRyIptD3bET99no0FyMhoJNtg1
-         qVXPm5mW3plHVyLWjkCUK8PZIsvNUQRkYKLtmSkrJwB+0xu7UIXxBZ89GQCNwWIrNw8i
-         5xmO7WdD5INlvQAo+iGMOV+b7jmuzaCllHipxYlIhbGKJ49wQVKmyO68zPxoplEMtJl0
-         +eWgcPI4d7EDc+WH+2hPA7dg8TM+k8EWfkC4N2wXvbo+ISTMSOSOyaS8xuaksmEqflid
-         1XyKrJPKHznFP+9Su4apEYJHp2G6bjxArygFK5WHDT9XvZQmi3csR7XZLG+uoYiZ9puo
-         J7bw==
-X-Gm-Message-State: AOJu0YwvQ1XXHeQ4vmnQwNQW3dRcmL3WVirv61nWH8cDvlVXDIsTKsUA
-        0rgPsnrVJD4JD8bqodHKhKo=
-X-Google-Smtp-Source: AGHT+IEvlosv0SIRPQNAginM3ohzzNzp4Xqh9vNKnbfKPM+wAw9tG7sja/ozbim3kIXbRMVW4vCoKw==
-X-Received: by 2002:a05:6870:5488:b0:1d5:4fb0:102 with SMTP id f8-20020a056870548800b001d54fb00102mr1339662oan.31.1694773143468;
-        Fri, 15 Sep 2023 03:19:03 -0700 (PDT)
-Received: from gondor.apana.org.au ([2404:c804:1b2a:5507:c00a:8aff:fe00:b003])
-        by smtp.gmail.com with ESMTPSA id q7-20020a63ae07000000b005634343cd9esm2491347pgf.44.2023.09.15.03.19.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Sep 2023 03:19:02 -0700 (PDT)
-Sender: Herbert Xu <herbertx@gmail.com>
-Date:   Fri, 15 Sep 2023 18:19:01 +0800
-From:   Herbert Xu <herbert@gondor.apana.org.au>
-To:     Om Prakash Singh <quic_omprsing@quicinc.com>
-Cc:     neil.armstrong@linaro.org, konrad.dybcio@linaro.org,
-        agross@kernel.org, andersson@kernel.org, conor+dt@kernel.org,
-        davem@davemloft.net, devicetree@vger.kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org,
-        marijn.suijten@somainline.org, robh+dt@kernel.org, vkoul@kernel.org
-Subject: Re: [PATCH] crypto: qcom-rng: Add hwrng support
-Message-ID: <ZQQvlXvGy8p01uJS@gondor.apana.org.au>
-References: <20230901131502.1549809-1-quic_omprsing@quicinc.com>
+        Fri, 15 Sep 2023 07:20:17 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8438E1BB;
+        Fri, 15 Sep 2023 04:20:10 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38F6Qn14020351;
+        Fri, 15 Sep 2023 11:19:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=kN2RGYJN1SJPK38oh5iYZfN0XoVOmcJkxB7T4aFKpEQ=;
+ b=np8rpH8terhUNHPW0HjPNs4ad3XJp7WtISzLCY1833/Xx69SINgzGXbU+pn7hA96DP5W
+ 7b8WOg6v97cqSJfrbqN9rVvhYu3sv9PqCamDm42OIqIWhLTearIF3F/p86jM2GsRIcO8
+ 2rd84FmbntEUGrWlV+K3NNwY90s6EqOMww/HLBJsefOXxScWz7/T5a7syIcz9BXszvUb
+ 8LESShpTRDxnXKQh5Xnpq0koT7IR3PoCX4WqULFoBQSCd3xU62ggoWVC2pNNVebMd/WP
+ j89UfgI8wIT/O2lB6/GR8vARbBZ3VM77FFPvXKLKjJ9ENAMEb+rdJdC0zHLULX9r4L8e bw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t4dvqs57a-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 15 Sep 2023 11:19:33 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38FBJ7EL031499
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 15 Sep 2023 11:19:07 GMT
+Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Fri, 15 Sep
+ 2023 04:18:58 -0700
+Message-ID: <f76e1cc8-fc48-4208-bbe4-9204d9d28363@quicinc.com>
+Date:   Fri, 15 Sep 2023 19:18:55 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230901131502.1549809-1-quic_omprsing@quicinc.com>
-X-Spam-Status: No, score=-1.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_EF,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,
-        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 8/8] arm64: defconfig: enable interconnect and pinctrl
+ for SM4450
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <will@kernel.org>, <robin.murphy@arm.com>, <joro@8bytes.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <catalin.marinas@arm.com>
+CC:     <geert+renesas@glider.be>, <arnd@arndb.de>,
+        <neil.armstrong@linaro.org>, <nfraprado@collabora.com>,
+        <rafal@milecki.pl>, <peng.fan@nxp.com>,
+        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <quic_tsoni@quicinc.com>,
+        <quic_shashim@quicinc.com>, <quic_kaushalk@quicinc.com>,
+        <quic_tdas@quicinc.com>, <quic_tingweiz@quicinc.com>,
+        <quic_aiquny@quicinc.com>, <kernel@quicinc.com>
+References: <20230915021509.25773-1-quic_tengfan@quicinc.com>
+ <20230915021509.25773-10-quic_tengfan@quicinc.com>
+ <8f2c9664-a2c8-50dc-8a1c-e50a071ebeb2@linaro.org>
+ <e9ff05b3-2742-416e-b417-5e2414036008@quicinc.com>
+ <0a34dd35-7aea-4655-4cdd-e7196a1ba52b@linaro.org>
+From:   Tengfei Fan <quic_tengfan@quicinc.com>
+In-Reply-To: <0a34dd35-7aea-4655-4cdd-e7196a1ba52b@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 2oA1-4iMP1AmKTZAV6n-MRvtsB6dudR6
+X-Proofpoint-ORIG-GUID: 2oA1-4iMP1AmKTZAV6n-MRvtsB6dudR6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-15_08,2023-09-14_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
+ lowpriorityscore=0 spamscore=0 impostorscore=0 bulkscore=0 clxscore=1015
+ mlxlogscore=950 phishscore=0 adultscore=0 malwarescore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309150101
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 01, 2023 at 06:45:02PM +0530, Om Prakash Singh wrote:
->
-> +	qrng = (struct qcom_rng *)rng->priv;
 
-Please stop using rng->priv, it is obsolete.  Instead embed the
-rng object inside qcom_rng.
 
-Cheers,
+在 9/15/2023 5:16 PM, Krzysztof Kozlowski 写道:
+> On 15/09/2023 11:12, Tengfei Fan wrote:
+>>
+>>
+>> 在 9/15/2023 3:21 PM, Krzysztof Kozlowski 写道:
+>>> On 15/09/2023 04:15, Tengfei Fan wrote:
+>>>> Add the SM4450 interconnect and pinctrl drivers as built-in for
+>>>> support the Qualcomm SM4450 platform to boot to uart shell.
+>>>>
+>>>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+>>>> ---
+>>>>    arch/arm64/configs/defconfig | 2 ++
+>>>>    1 file changed, 2 insertions(+)
+>>>>
+>>>> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+>>>> index ec59174b14db..e91993de865e 100644
+>>>> --- a/arch/arm64/configs/defconfig
+>>>> +++ b/arch/arm64/configs/defconfig
+>>>> @@ -598,6 +598,7 @@ CONFIG_PINCTRL_SC8280XP=y
+>>>>    CONFIG_PINCTRL_SDM660=y
+>>>>    CONFIG_PINCTRL_SDM670=y
+>>>>    CONFIG_PINCTRL_SDM845=y
+>>>> +CONFIG_PINCTRL_SM4450=y
+>>>>    CONFIG_PINCTRL_SM6115=y
+>>>>    CONFIG_PINCTRL_SM6125=y
+>>>>    CONFIG_PINCTRL_SM6350=y
+>>>> @@ -1500,6 +1501,7 @@ CONFIG_INTERCONNECT_QCOM_SC7280=y
+>>>>    CONFIG_INTERCONNECT_QCOM_SC8180X=y
+>>>>    CONFIG_INTERCONNECT_QCOM_SC8280XP=y
+>>>>    CONFIG_INTERCONNECT_QCOM_SDM845=y
+>>>> +CONFIG_INTERCONNECT_QCOM_SM4450=y
+>>>
+>>> Why it cannot be =m?
+>>>
+>>> Best regards,
+>>> Krzysztof
+>>>
+>>
+>> Hi Krzysztof,
+>> Because system haven't capacity of loading ko files at this time on
+>> SM4450 platform, so setting to "Y".
+> 
+> Hm? System has this capability. All systems have. What is so different
+> on SM4450 comparing to everything else we have here?
+> 
+> No, this should be =m and you need to fix your system.
+> 
+> Best regards,
+> Krzysztof
+> 
+Hi Krzysztof,
+Find new way which can load ko files on SM4450 platform, still need use 
+"Y", because of some other modules have dependence to these two config, 
+like scm, smmu module drivers, uart shell console cannot be got if set 
+to "m".
+
+Also do test for setting these two config to "m" on SM8450 platform, get 
+uart shell consle failed if so setting.
+
 -- 
-Email: Herbert Xu <herbert@gondor.apana.org.au>
-Home Page: http://gondor.apana.org.au/~herbert/
-PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
+Thx and BRs,
+Tengfei Fan
