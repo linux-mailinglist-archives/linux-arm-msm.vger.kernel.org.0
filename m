@@ -2,136 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E18107A1A0C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 11:11:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E3F857A1A11
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 11:13:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233489AbjIOJLn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Sep 2023 05:11:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52682 "EHLO
+        id S233235AbjIOJN1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Sep 2023 05:13:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233440AbjIOJLh (ORCPT
+        with ESMTP id S232435AbjIOJN0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Sep 2023 05:11:37 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 073E035A5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 02:11:04 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2bf78950354so30836091fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 02:11:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694769062; x=1695373862; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fqTeh00riXaBjNescHiFGhXjL1S5jjpClV66tpjmVfI=;
-        b=nTkLXp/iw5Jy5fMjZkKVR6u37u+mb7TFRgJFat0bWpDakMZ5uxj2CMA57CyRU8W715
-         0QIZ7op9VNMaleh+msQrvCf2iS4UgPOXfG8vJtDNMyaNbUv1FZ84ZkCM/TsE/bdtksRj
-         vc9gJN80R1kub4L72NDUdl4lMSmpyJw50Fi5cFfPfEZ+9EotYy6CRPAAh6R1Om+QAsy+
-         vUMSdIFb10Mb7qzFEOloLrpQNrzV1VCy9kF4EKAb/fCVNRi4JhczR2unqYqg3jiC2dhM
-         BkH/aKo5xesgusbDsIl/OfWS67E+CRPNHWhjmA7I0QHDAYI4jT+7DTjBaPVhiZHQvzxw
-         edhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694769062; x=1695373862;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fqTeh00riXaBjNescHiFGhXjL1S5jjpClV66tpjmVfI=;
-        b=Gpd3mgPGnxdX2Viy86ZFCHDNbCyZ8HLjZ/4fdFo6ux/sUhqMOcuK89okp404XRQA6c
-         FGm0PLUgPaG8sKg6HXa06os+90N4PdK/FUpQYhoH85B2VEqrLhmCBVg0pSCiGOApsj80
-         AZNgjhtPx4ca9/LjbISJcNPBytn8hmepziLs7gKn1p85msEMaTuBBsa1pWbJfQGq3drh
-         +AJXR8PeWMYl4W8AUtFuC/32dIMI6sJIpc1RQO3Mylod09jl91I1SywWCIl2pY1yrz2K
-         gej4EBuln8FQ3zAwSkildKX3u8Y4AC20pDe6i1PPJHMUvv6L5u4krBKeO/qN9iVvPmQx
-         P73Q==
-X-Gm-Message-State: AOJu0YxmXhCAs2G+08EY0vnzCqe21i6pnh846gYJT6h4Rp11Jdj9I4HK
-        Y/jSrG5pHK/UsWTI2E1D9kubaA==
-X-Google-Smtp-Source: AGHT+IHo7+SxnYzd0/bI0C3S/ETu/ji64wJvleV9efcp2lx53ggD6d7oaLyfrVGa7I3B7WTP908rSQ==
-X-Received: by 2002:a2e:8ec1:0:b0:2bf:cbff:7017 with SMTP id e1-20020a2e8ec1000000b002bfcbff7017mr1089791ljl.11.1694769062001;
-        Fri, 15 Sep 2023 02:11:02 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.214.188])
-        by smtp.gmail.com with ESMTPSA id oq14-20020a170906cc8e00b0099e12a49c8fsm2142599ejb.173.2023.09.15.02.10.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Sep 2023 02:11:01 -0700 (PDT)
-Message-ID: <e026878f-9303-4cae-bcab-7ee69e32db2d@linaro.org>
-Date:   Fri, 15 Sep 2023 11:10:57 +0200
+        Fri, 15 Sep 2023 05:13:26 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2039DC1;
+        Fri, 15 Sep 2023 02:13:01 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38F7MuJh024975;
+        Fri, 15 Sep 2023 09:12:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=M8AcAOmpO2/N7p91G3xot8HpP2eNGiE59Sy1UTk9gHQ=;
+ b=HeCDvm6tI4eyPVOv9jlsw1JOKFjuxSrrGjTex8+RUxdH2oF5zCC1uU/MooqzVISF4aMa
+ 1kh2xTN9Zim+q2+fGYCB4koFGMbDXqjfbJppEe9HUDefW/Qa7sDDEWJtY75puBb5JqSc
+ 81JLET+zFuVlaOtcqh8a/mRHtYfkbgPTY9/il5o2A+j5X/4dssaT5YvVmJYe8blYMeGD
+ BMJYdS+vr2HDOXWzJX3vlRDIrQUkkDD2OWLrJs6Ql1cDjf0B4htNCD3SoX/J7SGp52yu
+ siYiBa+tDdmBCuQT7evBSRjhsGbgQZYuUjQ3/GYsXSrtV1kcG+RORL82akuEw6rtrGsC 1w== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t4fsf8nep-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 15 Sep 2023 09:12:27 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38F9CQXv016948
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 15 Sep 2023 09:12:26 GMT
+Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Fri, 15 Sep
+ 2023 02:12:17 -0700
+Message-ID: <e9ff05b3-2742-416e-b417-5e2414036008@quicinc.com>
+Date:   Fri, 15 Sep 2023 17:12:13 +0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.0
-Subject: Re: [PATCH v2 4/8] dt-bindings: arm-smmu: Add compatible for SM4450
- SoC
-Content-Language: en-US
-To:     Tengfei Fan <quic_tengfan@quicinc.com>, will@kernel.org,
-        robin.murphy@arm.com, joro@8bytes.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        catalin.marinas@arm.com
-Cc:     geert+renesas@glider.be, arnd@arndb.de, neil.armstrong@linaro.org,
-        nfraprado@collabora.com, rafal@milecki.pl, peng.fan@nxp.com,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, quic_tsoni@quicinc.com,
-        quic_shashim@quicinc.com, quic_kaushalk@quicinc.com,
-        quic_tdas@quicinc.com, quic_tingweiz@quicinc.com,
-        quic_aiquny@quicinc.com, kernel@quicinc.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 8/8] arm64: defconfig: enable interconnect and pinctrl
+ for SM4450
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <will@kernel.org>, <robin.murphy@arm.com>, <joro@8bytes.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <catalin.marinas@arm.com>
+CC:     <geert+renesas@glider.be>, <arnd@arndb.de>,
+        <neil.armstrong@linaro.org>, <nfraprado@collabora.com>,
+        <rafal@milecki.pl>, <peng.fan@nxp.com>,
+        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <quic_tsoni@quicinc.com>,
+        <quic_shashim@quicinc.com>, <quic_kaushalk@quicinc.com>,
+        <quic_tdas@quicinc.com>, <quic_tingweiz@quicinc.com>,
+        <quic_aiquny@quicinc.com>, <kernel@quicinc.com>
 References: <20230915021509.25773-1-quic_tengfan@quicinc.com>
- <20230915021509.25773-3-quic_tengfan@quicinc.com>
- <5a386be4-facc-8aef-aad7-da6508aa0505@linaro.org>
- <2c42d2b6-a838-4d8e-99f1-c08b0c8e4457@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <2c42d2b6-a838-4d8e-99f1-c08b0c8e4457@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+ <20230915021509.25773-10-quic_tengfan@quicinc.com>
+ <8f2c9664-a2c8-50dc-8a1c-e50a071ebeb2@linaro.org>
+From:   Tengfei Fan <quic_tengfan@quicinc.com>
+In-Reply-To: <8f2c9664-a2c8-50dc-8a1c-e50a071ebeb2@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: _HUvVFVcgFkop8a71zbPlKCRzhCMNCKj
+X-Proofpoint-GUID: _HUvVFVcgFkop8a71zbPlKCRzhCMNCKj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-15_05,2023-09-14_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 impostorscore=0 mlxlogscore=857 mlxscore=0
+ malwarescore=0 priorityscore=1501 suspectscore=0 adultscore=0 bulkscore=0
+ spamscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309150080
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/09/2023 09:15, Tengfei Fan wrote:
-> 
-> 
-> 在 9/15/2023 3:11 PM, Krzysztof Kozlowski 写道:
->> On 15/09/2023 04:15, Tengfei Fan wrote:
->>> Add the SoC specific compatible for SM4450 implementing arm,mmu-500.
->>>
->>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
->>> ---
->>>   Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 3 +++
->>>   1 file changed, 3 insertions(+)
->>>
->>> diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
->>> index cf29ab10501c..b57751c8ad90 100644
->>> --- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
->>> +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
->>> @@ -47,6 +47,7 @@ properties:
->>>                 - qcom,sdx55-smmu-500
->>>                 - qcom,sdx65-smmu-500
->>>                 - qcom,sdx75-smmu-500
->>> +              - qcom,sm4450-smmu-500
->>>                 - qcom,sm6115-smmu-500
->>>                 - qcom,sm6125-smmu-500
->>>                 - qcom,sm6350-smmu-500
->>> @@ -70,6 +71,7 @@ properties:
->>>                 - qcom,sc8180x-smmu-500
->>>                 - qcom,sc8280xp-smmu-500
->>>                 - qcom,sdm845-smmu-500
->>> +              - qcom,sm4450-smmu-500
+
+
+在 9/15/2023 3:21 PM, Krzysztof Kozlowski 写道:
+> On 15/09/2023 04:15, Tengfei Fan wrote:
+>> Add the SM4450 interconnect and pinctrl drivers as built-in for
+>> support the Qualcomm SM4450 platform to boot to uart shell.
 >>
->> Isn't there comment just few lines above your edit? Comment saying DON'T?
-> yes, I saw this "DON'T" comment, but if I remove "qcom,sm4450-smmu-500" 
-> from sm4450.dtsi and this arm,smmu.yaml, will get DT check warning about 
+>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+>> ---
+>>   arch/arm64/configs/defconfig | 2 ++
+>>   1 file changed, 2 insertions(+)
+>>
+>> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+>> index ec59174b14db..e91993de865e 100644
+>> --- a/arch/arm64/configs/defconfig
+>> +++ b/arch/arm64/configs/defconfig
+>> @@ -598,6 +598,7 @@ CONFIG_PINCTRL_SC8280XP=y
+>>   CONFIG_PINCTRL_SDM660=y
+>>   CONFIG_PINCTRL_SDM670=y
+>>   CONFIG_PINCTRL_SDM845=y
+>> +CONFIG_PINCTRL_SM4450=y
+>>   CONFIG_PINCTRL_SM6115=y
+>>   CONFIG_PINCTRL_SM6125=y
+>>   CONFIG_PINCTRL_SM6350=y
+>> @@ -1500,6 +1501,7 @@ CONFIG_INTERCONNECT_QCOM_SC7280=y
+>>   CONFIG_INTERCONNECT_QCOM_SC8180X=y
+>>   CONFIG_INTERCONNECT_QCOM_SC8280XP=y
+>>   CONFIG_INTERCONNECT_QCOM_SDM845=y
+>> +CONFIG_INTERCONNECT_QCOM_SM4450=y
+> 
+> Why it cannot be =m?
+> 
+> Best regards,
+> Krzysztof
+> 
 
-Why would you remove it?
+Hi Krzysztof,
+Because system haven't capacity of loading ko files at this time on 
+SM4450 platform, so setting to "Y".
 
-> this, this warning cannot be find after add "qcom,sm4450-smmu-500" from 
-> sm4450.dtsi and this arm,smmu.yaml, so update this patch again.
-
-What does the comment say? Why are you adding it to the enum which asks
-- do not add to this enum, but add to other above and below?
-
-
-Best regards,
-Krzysztof
-
+-- 
+Thx and BRs,
+Tengfei Fan
