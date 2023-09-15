@@ -2,180 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DD24A7A25D7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 20:35:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB08D7A2679
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 20:46:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235978AbjIOSed (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Sep 2023 14:34:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51288 "EHLO
+        id S236552AbjIOSpp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Sep 2023 14:45:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236552AbjIOSeM (ORCPT
+        with ESMTP id S236951AbjIOSpU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Sep 2023 14:34:12 -0400
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4A29270A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 11:34:05 -0700 (PDT)
-Received: by mail-yb1-xb30.google.com with SMTP id 3f1490d57ef6-d815a5eee40so2264035276.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 11:34:05 -0700 (PDT)
+        Fri, 15 Sep 2023 14:45:20 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6DA24C13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 11:42:47 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-9adc75f6f09so173756966b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 11:42:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694802845; x=1695407645; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=XAp4QGQYuiB0aBhykrwn9fuo1kSVZeoCYVkl9zEjWE8=;
-        b=ZRn2r1NhTF7RYpU9wxUTTfDNoPsm2sCTFXU1/SwBNv25DiPf06YThxVCMV4zUBKCO3
-         cRyQwzUXYv4n6sQXFoqqhqUpCcxXv8Nn7Uf9WvoZEiwCAAZ8FIUnap3XKbucbT57CAJF
-         rIXOxDqv6tUYiUr4p8YFl5KjPOuZ/rkmVNpWnAlE0w2Eo8bmA345EyQuL9VLWpO1VMVT
-         hXIBl0MdO6N1c144hAhtpiGJi5jXaaPE2g1MVc/DILwfFJLW+5h7tvFpOu9cLrpopNVd
-         BeMBNPf/5h5KjAjAo4JSTKrLSLN/HazLaTHgY6jyEpjZa2V2wU18gx7tDmfMmZilxyqE
-         ihbA==
+        d=linaro.org; s=google; t=1694803365; x=1695408165; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4ok5uPWgXZi45gaAZwMSQWfyEedhaDpchiYD0oWGYgM=;
+        b=STIXBiQmlyBPQJF2Wr2oGB+9q5Xz58anhpFW1Z+id33syW5QVCpNqrlt6PA0E5FL1i
+         Mkttsgpb27NWar6BCQeJqDNL26dg7mv3HXVmB7nCLbJfjL3X/ER9Y8R69LmtBzod2Nby
+         NoUzw5JTqpwhPkWgA9P5OzAprGLl99r5h5moW4tVbwhC+e2hYo7LUdGoyQjNWvye2xeD
+         XLcNwFyqYVnhT1QSSp5PCAhsn9hqTDhhKpYSeKmV2yvegozpccrH3cRdzFrJD5fiJ1pB
+         n++ZJ07wNyWlMxXfqhmCSOSsNjuvrQlT84UASSod+SwdzM95FkpBN8YYNHxzbIS9o9JC
+         WJpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694802845; x=1695407645;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=XAp4QGQYuiB0aBhykrwn9fuo1kSVZeoCYVkl9zEjWE8=;
-        b=uP82n5ctNT1p/pFR7N3mAkPgUdO9X0pJqesAl7TgqpDmUEepCmlqvmkUFNN5eAhC6N
-         i7+a9ZSkSqVr5r2YHkt9T+vOaOxkPZaSUlUAnS0spmqH1TsrgnGMcQUi8xS8ZxCJ2hQO
-         OFzY/w/3RMmRdo4cshq8ui27lswX0AdXSh0N5RPNot7tUlM8DPRxtq27gNOY8wCHdHrh
-         PHmjs3bw9c9ChHvUx2A5DSgclEKENBfALJUq01GjrsbQXP1NaV+1alNjMYYNprKr7/Be
-         ILFUOObRp15ZtHWhsVh7Ivl3Vno5ktSeTPzuXuTpEqHrtvS5dKhqKf8IcLGmBgiPHcJp
-         41bw==
-X-Gm-Message-State: AOJu0Yxo1W3TEoDEKWgo36sq6Sk+Ls8YY8LxHK8WtYmn95q3jaYeT9rj
-        C5CXzfHPqlaBNywvdWKlvfJHQ5UNWoq6E6eTJ/zKIw==
-X-Google-Smtp-Source: AGHT+IGz/X+sLYorNmDn+iedwieWtRZ/y9HzEpRRT43OwE+qJPUPdVSjf4sOic9847CsYuYN7WCPMNDqcCWsxExcJ04=
-X-Received: by 2002:a25:820e:0:b0:d7b:9a4b:5a72 with SMTP id
- q14-20020a25820e000000b00d7b9a4b5a72mr2312461ybk.31.1694802844944; Fri, 15
- Sep 2023 11:34:04 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1694803365; x=1695408165;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4ok5uPWgXZi45gaAZwMSQWfyEedhaDpchiYD0oWGYgM=;
+        b=gshbS23VP4vDViKZ2D3y+PsD+l6oTA6c0UcSwO5OT0oNMz6lcYbxA9FBswNKrgYTBt
+         Cm/BDHx1JbQQOxAgsi8xxIrJeKLFeY0GcH7ZlOOE974k1yHafzkbtSVBtRnVq2BEehQW
+         otz5K+dRKTW2XmgqzajOtVjXFvNoY0M/bHR6IO2GDEImvt8rxtpYys+xwk3J/mymXrRR
+         1F9r29jIahj2xSRwumdoZwTBJWNaINB0l3/52ccLvpMJ7Mx34NSBGIaWRsuBhYsT3NZO
+         fBT8Q2CZt9CE8CBBl2ub6gdvukA3Tlith1seGF+b8M2xd+X+CqdbHA2b867YuLr1lDDt
+         Nvtw==
+X-Gm-Message-State: AOJu0YwdGqFXwV9am6i7H8GfyvtShjV7uWJcQQkOYxN2BWaucWwncDDO
+        m+nR3EYLiHaMh5uhSIPr3heXk5lzBI7VwJM7vO4scw==
+X-Google-Smtp-Source: AGHT+IEsOq+vG923T3c3It6wrdjLcEdiwkGg0B39VZPPbRcQsoDS9rx7I80uvGmFBfWm7trCovXHPA==
+X-Received: by 2002:a17:906:30cd:b0:9a9:f14a:22fa with SMTP id b13-20020a17090630cd00b009a9f14a22famr2176042ejb.16.1694803365168;
+        Fri, 15 Sep 2023 11:42:45 -0700 (PDT)
+Received: from [192.168.37.154] (178235177024.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.24])
+        by smtp.gmail.com with ESMTPSA id rv10-20020a17090710ca00b009932337747esm2746697ejb.86.2023.09.15.11.42.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 Sep 2023 11:42:44 -0700 (PDT)
+Message-ID: <17aab34d-689c-4c27-b9de-f9ed6ee049c5@linaro.org>
+Date:   Fri, 15 Sep 2023 20:42:42 +0200
 MIME-Version: 1.0
-References: <20230823091757.31311-1-quic_nitirawa@quicinc.com>
- <20230823091757.31311-3-quic_nitirawa@quicinc.com> <24cff590-c71f-4a30-9b80-fa9a0bd27957@linaro.org>
- <c9719d64-33c1-d13e-0ab6-289011282044@quicinc.com>
-In-Reply-To: <c9719d64-33c1-d13e-0ab6-289011282044@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 15 Sep 2023 21:33:53 +0300
-Message-ID: <CAA8EJppYD8Oq_fkOOKf8_x7RdbjBx7XzV_5y4sKE3ZDv_WV9_Q@mail.gmail.com>
-Subject: Re: [PATCH V3 2/2] phy: qcom-qmp-ufs: Add Phy Configuration support
- for SC7280
-To:     Nitin Rawat <quic_nitirawa@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] dt-bindings: power: qcom,rpmpd: Add SM7150
+Content-Language: en-US
+To:     Danila Tikhonov <danila@jiaxyga.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Manish Pandey <quic_mapa@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+        ulf.hansson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+References: <20230915182054.113839-1-danila@jiaxyga.com>
+ <20230915182054.113839-2-danila@jiaxyga.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230915182054.113839-2-danila@jiaxyga.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 15 Sept 2023 at 19:14, Nitin Rawat <quic_nitirawa@quicinc.com> wrote:
->
->
->
-> On 9/6/2023 1:34 AM, Dmitry Baryshkov wrote:
-> > On 23/08/2023 12:17, Nitin Rawat wrote:
-> >> Add SC7280 specific register layout and table configs.
-> >>
-> >> Co-developed-by: Manish Pandey <quic_mapa@quicinc.com>
-> >> Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
-> >> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-> >> ---
-> >>   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 142 ++++++++++++++++++++++++
-> >>   1 file changed, 142 insertions(+)
-> >>
-> >> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> >> b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> >> index 3927eba8e468..514fa14df634 100644
-> >> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> >> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> >
-> > [skipped tables programming]
-> >
-> > 4),
-> Sorry I quite didn't get this comment. what exactly is skipped ?Please
-> can you help explain?
+On 15.09.2023 20:20, Danila Tikhonov wrote:
+> Add a compatible for SM7150 platforms and relevant defines to the
+> include file.
+> 
+> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+> ---
+Please redo this series with commit 7f31667d29f4 ("dt-bindings:
+power: qcom,rpmhpd: Add Generic RPMh PD indexes") in mind
 
-I skipped them, as I didn't have comments for them.
-
->
->
-> >> @@ -888,6 +993,40 @@ static const struct qmp_phy_cfg
-> >> sa8775p_ufsphy_cfg = {
-> >>       .regs            = ufsphy_v5_regs_layout,
-> >>   };
-> >>
-> >> +static const struct qmp_phy_cfg sc7280_ufsphy_cfg = {
-> >> +    .lanes                  = 2,
-> >> +
-> >> +    .offsets                = &qmp_ufs_offsets,
-> >> +
-> >> +    .tbls = {
-> >> +        .serdes         = sm8150_ufsphy_serdes,
-> >> +        .serdes_num     = ARRAY_SIZE(sm8150_ufsphy_serdes),
-> >> +        .tx             = sc7280_ufsphy_tx,
-> >> +        .tx_num         = ARRAY_SIZE(sc7280_ufsphy_tx),
-> >> +        .rx             = sc7280_ufsphy_rx,
-> >> +        .rx_num         = ARRAY_SIZE(sc7280_ufsphy_rx),
-> >> +        .pcs            = sc7280_ufsphy_pcs,
-> >> +        .pcs_num        = ARRAY_SIZE(sc7280_ufsphy_pcs),
-> >> +    },
-> >> +    .tbls_hs_b = {
-> >> +        .serdes         = sm8150_ufsphy_hs_b_serdes,
-> >> +        .serdes_num     = ARRAY_SIZE(sm8150_ufsphy_hs_b_serdes),
-> >> +    },
-> >> +    .tbls_hs_g4 = {
-> >> +        .tx             = sm8250_ufsphy_hs_g4_tx,
-> >> +        .tx_num         = ARRAY_SIZE(sm8250_ufsphy_hs_g4_tx),
-> >> +        .rx             = sc7280_ufsphy_hs_g4_rx,
-> >> +        .rx_num         = ARRAY_SIZE(sc7280_ufsphy_hs_g4_rx),
-> >> +        .pcs            = sm8150_ufsphy_hs_g4_pcs,
-> >> +        .pcs_num        = ARRAY_SIZE(sm8150_ufsphy_hs_g4_pcs),
-> >> +    },
-> >> +    .clk_list               = sm8450_ufs_phy_clk_l,
-> >> +    .num_clks               = ARRAY_SIZE(sm8450_ufs_phy_clk_l),
-> >
-> > This doesn't correspond to the bindings. This array has 3 enries, while
-> > in the bindings you have opted for two clocks for this PHY.
-> Sure. I'll update the bindings.
-
-Are you sure about the third clock? Neither sm8150 nor sm8250 used the
-qref clock. Or is that an omission on our side?
-
->
-> >
-> >> +    .vreg_list              = qmp_phy_vreg_l,
-> >> +    .num_vregs              = ARRAY_SIZE(qmp_phy_vreg_l),
-> >> +    .regs                   = ufsphy_v4_regs_layout,
-> >> +};
-> >> +
-> >>   static const struct qmp_phy_cfg sc8280xp_ufsphy_cfg = {
-> >>       .lanes            = 2,
-> >>
-> >> @@ -1648,6 +1787,9 @@ static const struct of_device_id
-> >> qmp_ufs_of_match_table[] = {
-> >>       }, {
-> >>           .compatible = "qcom,sa8775p-qmp-ufs-phy",
-> >>           .data = &sa8775p_ufsphy_cfg,
-> >> +    }, {
-> >> +        .compatible = "qcom,sc7280-qmp-ufs-phy",
-> >> +        .data = &sc7280_ufsphy_cfg,
-> >>       }, {
-> >>           .compatible = "qcom,sc8180x-qmp-ufs-phy",
-> >>           .data = &sm8150_ufsphy_cfg,
-> >> --
-> >> 2.17.1
-> >>
-> >
-> Thanks,
-> Nitin
-
-
-
--- 
-With best wishes
-Dmitry
+Konrad
