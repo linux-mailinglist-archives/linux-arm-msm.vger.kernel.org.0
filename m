@@ -2,69 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D7667A1E21
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 14:07:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D64FE7A1E2F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 14:12:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232836AbjIOMHs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Sep 2023 08:07:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40194 "EHLO
+        id S234570AbjIOMMx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Sep 2023 08:12:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234477AbjIOMHs (ORCPT
+        with ESMTP id S234471AbjIOMMv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Sep 2023 08:07:48 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33BEB30C0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 05:04:47 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-500760b296aso2509410e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 05:04:47 -0700 (PDT)
+        Fri, 15 Sep 2023 08:12:51 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F03B72130
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 05:12:45 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2bfcc35ef7bso26329031fa.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 05:12:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694779485; x=1695384285; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=icfi94Iw++0R/AP2toim4sb84mQcBzKxVTS6OAVvVDA=;
-        b=bF20TnzVDLQAx9XBtjZg/o9oA67v0QYYMjqD0x3vaChuSHcT3G9D5dAMBGjVbvcWSr
-         r5fB2Vuk9V1zsnC/Ee2V0TSS5zJ92IQ3gRw6+IVVHQvL12PO4lWD1GRaJsLlpTX+P2iU
-         LXVgpVu4OaZlYWNL6cuoFTQxGO904oe9yYFuEhN7AhBHos7SQ1akJ4KKK4ICdumBuyxJ
-         vFdbYHyZQfqOEKyZmNvI8bLEmZnf2/C/eKSDY3OMNKFd9+I5CvDLXPKR0LHH820RrxeW
-         ocQ70QvPs1DCfcSVtOAnTw89CL3yN+5bmCi32Z6EdZwUY2v8hNj+0fonWsD5+HJVSsWa
-         cJfg==
+        d=linaro.org; s=google; t=1694779964; x=1695384764; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=w3hxeDElfx0VxqnBapCeZ5PdAdkvv/ZSAzqIOyu7ugk=;
+        b=bz2NDhD/G3RKjbOKOdhLU0xt/2tx6BNFI7QZRoh0n9vuANWOaHNprzXoTUiswWdYcF
+         S4zlpGMoSNB4HiVWc1VC+K58ol+0HH8lekFjmy8Y5calgJ+dcUDskJjgA0ekg5cBk1bv
+         mW7vqpIhSKXfRieEVRn5eLyMn07IniqxVRI084ylSNIFV6fh8oRKmFLPb68lhhYOiLMP
+         40lWgQB5wYsV3ByphEgNh3qsE03QT6krlsR02fJ/wwndsi532sMWLtW5Rv833QezeaaE
+         w1F7QxZPmYki6VXieDlVA2QiQW+uavk8BkaL9bSN1d1TnqnlvUOQgKkjjAU2jovxeEWX
+         cFUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694779485; x=1695384285;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=icfi94Iw++0R/AP2toim4sb84mQcBzKxVTS6OAVvVDA=;
-        b=C+OY91Wc1eJKTV27yPw5ZJ2YF/fAGg/sQz0KR5XPtT10HzKs3sr4WsxwHSyyF9ik/Y
-         bpQRKnbB2VPQvK9cP3+ZeT/sZHEe1IRJKMJuWcmQuZqvMrpXonmIJsQwprNZAg9yoCfQ
-         OIZpwjxCMBsV8sA4uRyCjVblJj66xiqevIHM+pxHqNmNL9JM/ztP379ogvtJ+B4bWspb
-         OL/82ObyQvYRp5qIIoOmPndXSR7YaW1IhCtlBQ6oSmp4LXnDRkE1SpbbkGfe0St+qT2i
-         zLFBw6pCzldqc00FV+PZiCsNF3gEwtizvpB16iQ5mJDXhVnn6OVvyaMy5rS0VdrrWl39
-         4qvQ==
-X-Gm-Message-State: AOJu0YxYsSVCea5D9WbZXlfIO6bkFCUkQYSsEKSET54enxi0N/Jqw6r0
-        s+czh9yUOmAO6LizYbVk0YhdNg==
-X-Google-Smtp-Source: AGHT+IGC51QtLtToliH13uoTDIZ9HjuO7MczTafyoIlsaog7UILk/Ln075g2op/cY9P/VuE/ZnOIOQ==
-X-Received: by 2002:a05:6512:3096:b0:4fe:4896:b6ab with SMTP id z22-20020a056512309600b004fe4896b6abmr601778lfd.15.1694779484198;
-        Fri, 15 Sep 2023 05:04:44 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1694779964; x=1695384764;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=w3hxeDElfx0VxqnBapCeZ5PdAdkvv/ZSAzqIOyu7ugk=;
+        b=u7p5J3UkyICxgY0k/CpwOftMSQmg759L6kbEvAdJPO0is5uuDIJdEZu/5LHK7fzkjc
+         A/ZWjT+b3Rl31MByCTU75XEBJAIq7sNNrpuyJk0ANBOirSWOz+Dq7/67dEkGBkVL0f3O
+         E6EvXBoWJFFm0sWskWdUURi4HcWOOPrreL21IV4l5VsbGM1wTI7Dz7HHswqX0Ih2aIBt
+         v1Qs8m1Y/9+AoVy4pqzA4CtT/Io4GVXC5HL4igecc9GNTqijDei8qpOAoCxsMdWn4d9t
+         DZP2VmKiImP3awaEQqthpdOxGI3WxCTMjqEiEBMZeT8cJFNh8diw46yRooqoc8h1B++Q
+         sdFQ==
+X-Gm-Message-State: AOJu0YwJaUyaagCFC5U0Q62b8kLfK4SQkzEpZ6hKxKRkZdh3luGdQW9T
+        6UtyS8fKwDDaFDCk5thSX++EfA==
+X-Google-Smtp-Source: AGHT+IEVRtsUoOtnh382Qtc+HUxvK7YjqgbsQebXPWPMFM5h4WMWQ+NU7SoEZDzb87g003GCRH8IbQ==
+X-Received: by 2002:a2e:854a:0:b0:2bc:bb3e:1abe with SMTP id u10-20020a2e854a000000b002bcbb3e1abemr1351738ljj.41.1694779964133;
+        Fri, 15 Sep 2023 05:12:44 -0700 (PDT)
 Received: from ?IPV6:2a00:f41:cbe:bc7d:62a6:5d09:5ba7:be5b? ([2a00:f41:cbe:bc7d:62a6:5d09:5ba7:be5b])
-        by smtp.gmail.com with ESMTPSA id l18-20020ac24312000000b004fa52552c7csm614093lfh.151.2023.09.15.05.04.42
+        by smtp.gmail.com with ESMTPSA id n21-20020a2e7215000000b002bcc303bbffsm662827ljc.104.2023.09.15.05.12.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Sep 2023 05:04:43 -0700 (PDT)
-Message-ID: <b6ded7b6-1818-402f-8826-2ab1ecd05056@linaro.org>
-Date:   Fri, 15 Sep 2023 14:04:41 +0200
+        Fri, 15 Sep 2023 05:12:43 -0700 (PDT)
+Message-ID: <f1795027-cbb5-44fe-83ac-dd2b079d65ad@linaro.org>
+Date:   Fri, 15 Sep 2023 14:12:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] clk: qcom: gcc-sm8150: Fix gcc_sdcc2_apps_clk_src
-To:     Stephen Boyd <sboyd@kernel.org>,
-        Danila Tikhonov <danila@jiaxyga.com>, agross@kernel.org,
-        andersson@kernel.org, dkatraga@codeaurora.org,
-        mturquette@baylibre.com, quic_tdas@quicinc.com, vkoul@kernel.org
-Cc:     adomerlee@gmail.com, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230913175612.8685-1-danila@jiaxyga.com>
- <539752971c7a61ce7a5deddc1478686a.sboyd@kernel.org>
+Subject: Re: [PATCH v2 7/8] arm64: dts: qcom: add uart console support for
+ SM4450
 Content-Language: en-US
+To:     Tengfei Fan <quic_tengfan@quicinc.com>, will@kernel.org,
+        robin.murphy@arm.com, joro@8bytes.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        agross@kernel.org, andersson@kernel.org, catalin.marinas@arm.com
+Cc:     geert+renesas@glider.be, arnd@arndb.de, neil.armstrong@linaro.org,
+        nfraprado@collabora.com, rafal@milecki.pl, peng.fan@nxp.com,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, quic_tsoni@quicinc.com,
+        quic_shashim@quicinc.com, quic_kaushalk@quicinc.com,
+        quic_tdas@quicinc.com, quic_tingweiz@quicinc.com,
+        quic_aiquny@quicinc.com, kernel@quicinc.com
+References: <20230915021509.25773-1-quic_tengfan@quicinc.com>
+ <20230915021509.25773-9-quic_tengfan@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -101,42 +107,27 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <539752971c7a61ce7a5deddc1478686a.sboyd@kernel.org>
+In-Reply-To: <20230915021509.25773-9-quic_tengfan@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
+X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
+        lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14.09.2023 18:20, Stephen Boyd wrote:
-> Quoting Danila Tikhonov (2023-09-13 10:56:11)
->> Set .flags = CLK_OPS_PARENT_ENABLE to fix "gcc_sdcc2_apps_clk_src: rcg
->> didn't update its configuration" error.
->>
->> Fixes: 2a1d7eb854bb ("clk: qcom: gcc: Add global clock controller driver for SM8150")
->> Tested-by: Arseniy Velikanov <adomerlee@gmail.com>
->> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
->> ---
->>  drivers/clk/qcom/gcc-sm8150.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
->> index 41ab210875fb..05d115c52dfe 100644
->> --- a/drivers/clk/qcom/gcc-sm8150.c
->> +++ b/drivers/clk/qcom/gcc-sm8150.c
->> @@ -774,7 +774,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
->>                 .name = "gcc_sdcc2_apps_clk_src",
->>                 .parent_data = gcc_parents_6,
->>                 .num_parents = ARRAY_SIZE(gcc_parents_6),
->> -               .flags = CLK_SET_RATE_PARENT,
->> +               .flags = CLK_OPS_PARENT_ENABLE,
->>                 .ops = &clk_rcg2_floor_ops,
+On 15.09.2023 04:15, Tengfei Fan wrote:
+> Add base description of UART, TLMM, interconnect, TCSRCC and SMMU nodes
+> which helps SM4450 boot to shell with console on boards with this SoC.
 > 
-> In what case are we getting the rcg stuck? I thought that you could
-> write the rcg registers while the parent was off and switch to that
-> parent if the parent isn't enabled and it wouldn't get stuck.
-I think the better question here would be "why isn't
-OPS_PARENT_ENABLE the default for all qc clocks on all
-platforms" :/
+> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+> ---
+You're adding multiple independent hardware blocks at once.
+This is impossible to bisect if anyone ever encounters an
+issue with one of them.
 
 Konrad
