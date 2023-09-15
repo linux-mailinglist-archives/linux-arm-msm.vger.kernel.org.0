@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EA127A172C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 09:21:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E12377A1731
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 09:22:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232718AbjIOHV1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Sep 2023 03:21:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46736 "EHLO
+        id S232717AbjIOHWo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Sep 2023 03:22:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232717AbjIOHV0 (ORCPT
+        with ESMTP id S232570AbjIOHWn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Sep 2023 03:21:26 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86E78E7F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 00:21:21 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-31c8321c48fso1889204f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 00:21:21 -0700 (PDT)
+        Fri, 15 Sep 2023 03:22:43 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8095D170B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 00:22:38 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-502d9ce31cbso2987939e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 00:22:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694762480; x=1695367280; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1694762557; x=1695367357; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=B3QV/Vyen7SEvE+//J651UR0v2eTH0jtZ18uF80YocM=;
-        b=TfQpoKur7h/s82G/SEz9E0Cz+ac/9MMJphZ/8tJ8LVkZ1qX2aDMWP6NNUEJQNdc58L
-         RAuGVNQOrfMK+RoVDRjrLrcPAXESrGO02HUrZA7AJJlSIYSLNe03odfouIuDwk/0QAGu
-         5d0y0bnSW9VMqH3fCvg68v1cy+A6UtGoc6r+sXD2XX7JVkY6M25f7xr3LqsF0LmjBtnA
-         fsauN3Wi5bexNUL08Owoso5ZqCArS3iD4CpHnoWcLdiDYxlG1W5HuwyQ0y6GOZZsP9RL
-         lPds7DFJeA8361QE80oRPOHvNeG62HMqXV/gWoU21y1LmYkbVzT8VR10M1zx+2SMrpv5
-         oQ9Q==
+        bh=qd+0FjJZZQNF69fsyzcRFTUVJeEdZzRN74zuVczzR0o=;
+        b=B72hNrpGPNUU3sdN0QIo65NV1pkEpj1AvwHf7XYVhRkQ4jfIrPAVKL+V2xDAZggU9p
+         dBgRHs43m2W+Kt0f97z+7hWGPhXkog3q6Ntx52H6+rnwtKGX8PFx7hvGsj72OvAUr8A1
+         2+B7RCTNZw9dW/siXQy4Yh72I9V2f+85KPqjVtorTzUpPxRAE5ThhGfDOmLR5uBp+TV+
+         p4YjPjBH8++Y5USurvOPFtGvjIAMS1luHIWHW6dG35ft+u5F6mc8x52hLCxer42J4I3E
+         F/CToqNns3mSVaIXd0EuOflhPFvbsl96zjsC4gY7YByz9HkXR5RO8nr/vi9wPGtL1Bes
+         gBlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694762480; x=1695367280;
+        d=1e100.net; s=20230601; t=1694762557; x=1695367357;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=B3QV/Vyen7SEvE+//J651UR0v2eTH0jtZ18uF80YocM=;
-        b=uqudjQ9IqDyeyhr/7wCGd0lqintp2KCW+weDn1Q8eAJQBJQjpqYrMBR828RiN1ogz2
-         t/I0DgTuvgaMoNS7vgW6gPlSAflzVM9A9XZ89nFotHDNPT37DK/v9P3mF4LFcD4gFQXn
-         KwYY9NAKbB1SSVGjt5HmHXSeZ5HeZTafcKJQ9C3sMvb0mxhZE9sykffHl2e4IGVkp4Tr
-         1onjAXEWq00xiPyHbI+wHKqXxXPSkIUM5vvyY9IJa+f3Y+xJ4P+Vp0vbPimS1o304e8V
-         jjFTxv0MfmBn3YVSnytiwGD4bjNFLb5tYXclLjILuHSeAikQr4D0ycGMr0rv9z1qVsVH
-         VZTA==
-X-Gm-Message-State: AOJu0Yz1v3MjhShh9g5kXniVUiwrnbTg+fYGPFZi9oxLOTly9B+BljwF
-        ylrbHWcQHcZKmGLcHxZoSrm6Eg==
-X-Google-Smtp-Source: AGHT+IGwsfAoWHYZgMObPQe5FAVomWG3Jgt+kImTmSbJN5ZZlvJUpMzf6w/uRD/CjOgHJcf56mYb4Q==
-X-Received: by 2002:a5d:5591:0:b0:314:1096:6437 with SMTP id i17-20020a5d5591000000b0031410966437mr602765wrv.19.1694762480099;
-        Fri, 15 Sep 2023 00:21:20 -0700 (PDT)
+        bh=qd+0FjJZZQNF69fsyzcRFTUVJeEdZzRN74zuVczzR0o=;
+        b=lVbctT8N6YVGf+7QxLZIkoOOmY5JmetYJ3teaRhYJF0g0Rav0syaAAdd8OzE3l6ogB
+         +a1LUHT7DPFpBd12Pbm3PLGQ0uXGHyuFLhXVkSoQZgkNW2i74Y++oK+UZ+YhYyfYOuSX
+         hXZ+xtOmshmSduSl1ccwdwputpTydKDyha/eb3w/wgtKR4aKhoJqyr18Mm3Pglf6EUs7
+         ZX9SMVN7/He/+FR4AbLNLEoXT0tTNuxI8Xdv3t885GiHQqwi1k2KsyCEVjOPYCA7XAxR
+         Y8aLWMvT2skNyQ+gIq/wmDYbsm69OShZnG+zpJJhIAsrjj6LUAcfNFLQisBmsLkbqTVC
+         7HyA==
+X-Gm-Message-State: AOJu0YyFQR8BflzPEy3aIMRjt0HDnv3vttLG3sBewnF3D3ayd1OqjMJW
+        Upe+cqj6pT2JAYWb+HElT1Ekag==
+X-Google-Smtp-Source: AGHT+IEoMzCfsponZZoJR8s2GFFY4ypeG3S3VeMRGhIuQelid0wHsUDf3d4ojNtRye73A+fQCv6/mQ==
+X-Received: by 2002:a05:651c:1207:b0:2b6:da88:a2d0 with SMTP id i7-20020a05651c120700b002b6da88a2d0mr768710lja.47.1694762556754;
+        Fri, 15 Sep 2023 00:22:36 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.214.188])
-        by smtp.gmail.com with ESMTPSA id k8-20020a5d4288000000b0031431fb40fasm3671314wrq.89.2023.09.15.00.21.17
+        by smtp.gmail.com with ESMTPSA id s14-20020a170906c30e00b009937e7c4e54sm2002507ejz.39.2023.09.15.00.22.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Sep 2023 00:21:19 -0700 (PDT)
-Message-ID: <8f2c9664-a2c8-50dc-8a1c-e50a071ebeb2@linaro.org>
-Date:   Fri, 15 Sep 2023 09:21:16 +0200
+        Fri, 15 Sep 2023 00:22:36 -0700 (PDT)
+Message-ID: <c4e95307-3f09-5704-e5ea-cb42befb9921@linaro.org>
+Date:   Fri, 15 Sep 2023 09:22:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.15.0
-Subject: Re: [PATCH v2 8/8] arm64: defconfig: enable interconnect and pinctrl
- for SM4450
+Subject: Re: [PATCH v2 6/8] arm64: dts: qcom: sm4450: Add RPMH and Global
+ clock controller
 Content-Language: en-US
 To:     Tengfei Fan <quic_tengfan@quicinc.com>, will@kernel.org,
         robin.murphy@arm.com, joro@8bytes.org, robh+dt@kernel.org,
@@ -70,16 +70,17 @@ Cc:     geert+renesas@glider.be, arnd@arndb.de, neil.armstrong@linaro.org,
         linux-arm-msm@vger.kernel.org, quic_tsoni@quicinc.com,
         quic_shashim@quicinc.com, quic_kaushalk@quicinc.com,
         quic_tdas@quicinc.com, quic_tingweiz@quicinc.com,
-        quic_aiquny@quicinc.com, kernel@quicinc.com
+        quic_aiquny@quicinc.com, kernel@quicinc.com,
+        Ajit Pandey <quic_ajipan@quicinc.com>
 References: <20230915021509.25773-1-quic_tengfan@quicinc.com>
- <20230915021509.25773-10-quic_tengfan@quicinc.com>
+ <20230915021509.25773-8-quic_tengfan@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230915021509.25773-10-quic_tengfan@quicinc.com>
+In-Reply-To: <20230915021509.25773-8-quic_tengfan@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,33 +89,19 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 15/09/2023 04:15, Tengfei Fan wrote:
-> Add the SM4450 interconnect and pinctrl drivers as built-in for
-> support the Qualcomm SM4450 platform to boot to uart shell.
+> From: Ajit Pandey <quic_ajipan@quicinc.com>
 > 
+> Add device node for RPMH and Global clock controller on Qualcomm
+> SM4450 platform.
+> 
+> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
 > Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
-> ---
->  arch/arm64/configs/defconfig | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> index ec59174b14db..e91993de865e 100644
-> --- a/arch/arm64/configs/defconfig
-> +++ b/arch/arm64/configs/defconfig
-> @@ -598,6 +598,7 @@ CONFIG_PINCTRL_SC8280XP=y
->  CONFIG_PINCTRL_SDM660=y
->  CONFIG_PINCTRL_SDM670=y
->  CONFIG_PINCTRL_SDM845=y
-> +CONFIG_PINCTRL_SM4450=y
->  CONFIG_PINCTRL_SM6115=y
->  CONFIG_PINCTRL_SM6125=y
->  CONFIG_PINCTRL_SM6350=y
-> @@ -1500,6 +1501,7 @@ CONFIG_INTERCONNECT_QCOM_SC7280=y
->  CONFIG_INTERCONNECT_QCOM_SC8180X=y
->  CONFIG_INTERCONNECT_QCOM_SC8280XP=y
->  CONFIG_INTERCONNECT_QCOM_SDM845=y
-> +CONFIG_INTERCONNECT_QCOM_SM4450=y
 
-Why it cannot be =m?
+Warnings in your code:
+sm4450-qrd.dtb: clock-controller@100000: clocks: [[28, 0], [29]] is too
+short
+
+
 
 Best regards,
 Krzysztof
