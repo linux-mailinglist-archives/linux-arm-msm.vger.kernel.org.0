@@ -2,280 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2607E7A2541
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 20:00:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6AF6E7A26A8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 20:56:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236156AbjIOSAM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Sep 2023 14:00:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40582 "EHLO
+        id S236503AbjIOS4B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Sep 2023 14:56:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235549AbjIOR7w (ORCPT
+        with ESMTP id S236954AbjIOSzs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Sep 2023 13:59:52 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60ABEAC
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 10:59:47 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38FEWCnj004729;
-        Fri, 15 Sep 2023 17:59:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=wLqLAYh8vdU1kWG4R2K6DX3JlYLNS6uiESUVQyxfRvs=;
- b=dyVbMgyMoKAyFKv+6qyFm3JA18tUoVulQHT9bY65rrTtxhzB1u7+GT0cXEXyfsN5sdUp
- bQzKdzDZ1p3PI5zTs1rdysmile9PPc2XG/abCyEOFKhxPzKVuzfYc3hiFsvRSnYTYTHB
- d3Udmjij3bMzd0fPg8k2fZCXzQUmAmXL2PVjuGLelVV9Q/wFi33x63+NEvJ3aZZg1LrO
- dN9fb98/ZOgrHY1K3OOPDHqqJazDs7EonI08e23e1Ae/PWmBR6PaWsbBtmyXRqOD3N+R
- Wa0R/bKz85sczljyhUj33+hJ+V/ASPnwWDU+iuHaaIcaiLNXIAzQPcWLNjzPmU6Hf1YU 9A== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t4f6v200q-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 15 Sep 2023 17:59:41 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38FHxTJ4001171
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 15 Sep 2023 17:59:29 GMT
-Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Fri, 15 Sep 2023 10:59:28 -0700
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-To:     <konrad.dybcio@linaro.org>, <andersson@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>
-Subject: [PATCH] soc: qcom: smem: Document shared memory item IDs and corresponding structs
-Date:   Fri, 15 Sep 2023 11:59:07 -0600
-Message-ID: <20230915175907.17134-1-quic_jhugo@quicinc.com>
-X-Mailer: git-send-email 2.40.1
+        Fri, 15 Sep 2023 14:55:48 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EE332719
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 11:53:29 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2b95d5ee18dso41363831fa.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 11:53:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694804008; x=1695408808; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=0FAxuwdbhL1UZWKRYCu/VMuW55QBQ5O7sg1MPHSWY4E=;
+        b=jIQE6ALDQscrqMQc8P6Q7nLsCs98uFFGQU6xEY9CpZMUuA3QpXgmKcQ4M5bwisTwI6
+         y1oP6dpukR0PR+qsAm71qaXlq3HNcUFEBiotajR+27mr+hjWaCUjyKl0VBVgnQV9UfCz
+         0UvMg/3TSWW40MNxi6IBBPJxsNo8FeXD9xNk9iMJ3HN876gYg/3KHOMDCuLbhsgkPbqQ
+         ZyqNaP7RMvVHlgDgDTAgDDFLCch4kQO1GjJGEnbPdrr5TrkDspkM49uS4NKVn+DzQSGN
+         ObU4zs3ESOJujx4wiAQMftoyGYhuBwHgT1Vka7eIYzsrIbltm9OnTBMP431CfhjlpQE1
+         o3bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694804008; x=1695408808;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0FAxuwdbhL1UZWKRYCu/VMuW55QBQ5O7sg1MPHSWY4E=;
+        b=fZRqjrcr2hLO9m4lw/Oz2qjlvn8Z3TkpzgFEaNkWGqLysUVQaHQ5jIvpqNX1pp2zc0
+         gKD0PGOuhW3aSqhwK6Vlh12HkZynsVIJlM47nOYJlyRJpG1fh15TJKdnlTnQqYkyU2Sm
+         lhOpR9jzYfVKdrAZCyZPQcefLgsP2HuGxUoaWexx/TxzLCcaM4HkYxpGdqnSfLH4YCS5
+         vk2To0FXLdaBGC5IBNy53uHgLiuRgdGTcnbO34KxtLY1RcxCQoTL5WmGHPmJE5m0w2IR
+         90lKO8dvDbcarfmKYDfmWaEfOyUXn1vP0AbolepnRX/PStSi7mClL7xZ6HPaB5nX2ZYz
+         mvtQ==
+X-Gm-Message-State: AOJu0YzhWJPj+Y8WFM8x4VP05ioDUfYCQvvWip7gyE4FJCxJzuhL0rpl
+        J4gEWz17PTuBC6mdXVYO4nqmyuixtCDz32kYYu8TNmCO
+X-Google-Smtp-Source: AGHT+IEP0i/tzM96cbqyLGXPCqm1aai/p4wEqDzPSxtw+6pTtUjvSOEHloAluxuoxtcLZWKmedVJMA==
+X-Received: by 2002:a2e:850b:0:b0:2bf:ac97:df26 with SMTP id j11-20020a2e850b000000b002bfac97df26mr2304956lji.25.1694804007626;
+        Fri, 15 Sep 2023 11:53:27 -0700 (PDT)
+Received: from [127.0.0.1] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id i20-20020a2e8094000000b002b9bf5b071bsm819625ljg.20.2023.09.15.11.53.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 Sep 2023 11:53:27 -0700 (PDT)
+Date:   Fri, 15 Sep 2023 05:31:45 +0300
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Can Guo <quic_cang@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>, mani@kernel.org,
+        quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
+        martin.petersen@oracle.com
+CC:     linux-scsi@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "open list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
+        <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_2/6=5D_scsi=3A_ufs=3A_ufs-qcom=3A_Add?= =?US-ASCII?Q?_support_for_UFS_device_version_detection?=
+User-Agent: K-9 Mail for Android
+In-Reply-To: <d34242f8-6e21-1549-b87d-3db2e825b7d5@quicinc.com>
+References: <1694411968-14413-1-git-send-email-quic_cang@quicinc.com> <1694411968-14413-3-git-send-email-quic_cang@quicinc.com> <6055cd57-4de7-4b7e-a4f3-68a7de1aef28@linaro.org> <6225a132-4b7f-bbb4-e863-4e62b99dd79d@quicinc.com> <31823dc4-6f50-435b-9a20-66471209ec31@linaro.org> <d34242f8-6e21-1549-b87d-3db2e825b7d5@quicinc.com>
+Message-ID: <1413119B-8B9C-4DE4-A086-476B2BAA60AD@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: TWYcYqNcwnY_Rzxsqjd5tACgtrI2IvZl
-X-Proofpoint-ORIG-GUID: TWYcYqNcwnY_Rzxsqjd5tACgtrI2IvZl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-15_14,2023-09-15_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- lowpriorityscore=0 malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0
- clxscore=1011 mlxlogscore=999 spamscore=0 mlxscore=0 priorityscore=1501
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309150162
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DATE_IN_PAST_12_24,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Shared memory items are assigned a globally unique ID and almost always
-have a defined structure which is stored in the shared memory.  Document
-assigned IDs and corresponding structures.
+On 11 September 2023 13:02:50 GMT+03:00, Can Guo <quic_cang@quicinc=2Ecom> =
+wrote:
+>
+>On 9/11/2023 5:46 PM, Konrad Dybcio wrote:
+>> On 11=2E09=2E2023 11:42, Can Guo wrote:
+>>> Hi Konrad,
+>>>=20
+>>> On 9/11/2023 5:17 PM, Konrad Dybcio wrote:
+>>>> On 11=2E09=2E2023 07:59, Can Guo wrote:
+>>>>> From: "Bao D=2E Nguyen" <quic_nguyenb@quicinc=2Ecom>
+>>>>>=20
+>>>>> Retrieve UFS device version from UFS host controller's spare registe=
+r
+>>>>> which is populated by bootloader, and use the UFS device version tog=
+ether
+>>>>> with host controller's HW version to decide the proper power modes w=
+hich
+>>>>> should be used to configure the UFS PHY=2E
+>>>> That sounds a bit fishy=2E=2E is there no bootloader-independent
+>>>> solution to that? Can't we bring in the code that the bootloader
+>>>> uses to determine these values?
+>>>>=20
+>>>> Konrad
+>>>=20
+>>> Agree, it is=2E
+>>>=20
+>>>=20
+>>> All these complexities come from one request from PHY design team - po=
+wer saving=2E
+>>>=20
+>>> And to achieve power saving, Qualcomm UFS developers are requested to =
+use the
+>>>=20
+>>> lowest hanging PHY settings which can sustain the Max agreed HS Gear (=
+btw host
+>>>=20
+>>> and UFS device) during UFS's lifecycle in High Level OS,=C2=A0 whereas=
+ the power saving
+>>>=20
+>>> request does not apply to bootloader, which works for only a few secon=
+ds during
+>>>=20
+>>> bootup=2E Hence, there is no such version detect code in bootloader -=
+=C2=A0 it just uses the
+>>>=20
+>>> highest PHY settings to configure PHY, boot up UFS and put UFS device =
+version in this
+>>>=20
+>>> register=2E
+>> First of all, your email client seems to be inserting 2 newlines
+>> instead of 1=2E If you're using thunderbird, you may want to edit:
+>>=20
+>> mail=2Eidentity=2E(default or your mail identity idx)=2Edefault=2Ecompo=
+se_html
+>>=20
+>> to `false`
+>>=20
+>> and add that to your internal wiki page, as I see many @quic folks havi=
+ng
+>> this issue=2E
+>>=20
+>>=20
+>> Going back to the main topic, I don't think we understood each other=2E
+>> The commit message states:
+>>=20
+>>=20
+>> "Retrieve UFS device version from UFS host controller's spare register
+>> which is populated by bootloader"
+>>=20
+>>=20
+>> Which means the bootloader is able to somehow determine the value
+>> that's in the spare register and write it there=2E
+>>=20
+>> I'm asking whether we can take the logic behind this value and
+>> move it to Linux so that we don't depend on the bootloader to
+>> guarantee it (e=2Eg=2E Chrome or some other devices with more exotic
+>> fw may not work this way)=2E
+>>=20
+>>=20
+>> Konrad
+>
+>
+>There is no logic behind this value at all in bootloader, as I explained,=
+ after bootloader
+>
+>initializes UFS, bootloader simply reads UFS's device version (the value =
+you are referring)
+>
+>and write it to the register=2E But in Linux kernel, we need (or want to =
+know) this value
+>
+>BEFORE we initialize UFS host controller (and UFS device)=2E
 
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
----
+Depending on the bootloader behaviour is not an option=2E For example the =
+kernel might be started via kexec=2E Or via u-boot=2E Or grub=2E Or any oth=
+er bootloader=2E So please duplicate the logic to read the UFS version inst=
+ead=2E
 
-Konrad, before I get too far into this, I was hoping for some early
-feedback since this documentation is a request that you made.
 
-Please let me know if this is aligned with what you were wanting.
+P=2ES=2E you have been asked to fix your email client=2E Please do so=2E O=
+r, if you are inserting these linebreaks manually, please stop=2E
 
- include/linux/soc/qcom/smem.h | 176 ++++++++++++++++++++++++++++++++++
- 1 file changed, 176 insertions(+)
-
-diff --git a/include/linux/soc/qcom/smem.h b/include/linux/soc/qcom/smem.h
-index 223db6a9c733..2f8d1f3126a4 100644
---- a/include/linux/soc/qcom/smem.h
-+++ b/include/linux/soc/qcom/smem.h
-@@ -4,6 +4,182 @@
- 
- #define QCOM_SMEM_HOST_ANY -1
- 
-+/* fixed items - these have a static position in shared memory */
-+#define SMEM_PROC_COMM				0
-+#define SMEM_HEAP_INFO				1
-+#define SMEM_ALLOCATION_TABLE			2
-+#define SMEM_VERSION_INFO			3
-+#define SMEM_HW_RESET_DETECT			4
-+#define SMEM_AARM_WARM_BOOT			5
-+#define SMEM_DIAG_ERR_MESSAGE			6
-+#define SMEM_SPINLOCK_ARRAY			7
-+#define SMEM_MEMORY_BARRIER_LOCATION		8
-+
-+/* dynamic items - these are allocated out of the shared memory heap */
-+#define SMEM_AARM_PARTITION_TABLE		9
-+#define SMEM_AARM_BAD_BLOCK_TABLE		10
-+#define SMEM_RESERVE_BAD_BLOCKS			11
-+#define SMEM_WM_UUID				12
-+#define SMEM_CHANNEL_ALLOC_TBL			13
-+#define SMEM_SMD_BASE_ID			14
-+#define SMEM_SMEM_LOG_IDX			78
-+#define SMEM_SMEM_LOG_EVENTS			79
-+#define SMEM_SMEM_STATIC_LOG_IDX		80
-+#define SMEM_SMEM_STATIC_LOG_EVENTS		81
-+#define SMEM_SMEM_SLOW_CLOCK_SYNC		82
-+#define SMEM_SMEM_SLOW_CLOCK_VALUE		83
-+#define SMEM_BIO_LED_BUF			84
-+#define SMEM_SMSM_SHARED_STATE			85
-+#define SMEM_SMSM_INT_INFO			86
-+#define SMEM_SMSM_SLEEP_DELAY			87
-+#define SMEM_SMSM_LIMIT_SLEEP			88
-+#define SMEM_SLEEP_POWER_COLLAPSE_DISABLED	89
-+#define SMEM_KEYPAD_KEYS_PRESSED		90
-+#define SMEM_KEYPAD_STATE_UPDATED		91
-+#define SMEM_KEYPAD_STATE_IDX			92
-+#define SMEM_GPIO_INT				93
-+#define SMEM_MDDI_LCD_IDX			94
-+#define SMEM_MDDI_HOST_DRIVER_STATE		95
-+#define SMEM_MDDI_LCD_DISP_STATE		96
-+#define SMEM_LCD_CUR_PANEL			97
-+#define SMEM_MARM_BOOT_SEGMENT_INFO		98
-+#define SMEM_AARM_BOOT_SEGMENT_INFO		99
-+#define SMEM_SLEEP_STATIC			100
-+#define SMEM_SCORPION_FREQUENCY			101
-+#define SMEM_SMD_PROFILES			102
-+#define SMEM_TSSC_BUSY				103
-+#define SMEM_HS_SUSPEND_FILTER_INFO		104
-+#define SMEM_BATT_INFO				105
-+#define SMEM_APPS_BOOT_MODE			106
-+#define SMEM_VERSION_FIRST			107
-+#define SMEM_VERSION_LAST			131
-+#define SMEM_OSS_RRCASN1_BUF1			132
-+#define SMEM_OSS_RRCASN1_BUF2			133
-+#define SMEM_ID_VENDOR0				134
-+#define SMEM_ID_VENDOR1				135
-+#define SMEM_ID_VENDOR2				136
-+#define SMEM_HW_SW_BUILD_ID			137
-+#define SMEM_SMD_BASE_ID_2			138
-+#define SMEM_SMD_FIFO_BASE_ID_2			202
-+#define SMEM_CHANNEL_ALLOC_TBL_2		266
-+#define SMEM_I2C_MUTEX				330
-+#define SMEM_SCLK_CONVERSION			331
-+#define SMEM_SMD_SMSM_INTR_MUX			332
-+#define SMEM_SMSM_CPU_INTR_MASK			333
-+#define SMEM_APPS_DEM_SLAVE_DATA		334
-+#define SMEM_QDSP6_DEM_SLAVE_DATA		335
-+#define SMEM_VSENSE_DATA			336
-+#define SMEM_CLKREGIM_SOURCES			337
-+#define SMEM_SMD_FIFO_BASE_ID			338
-+#define SMEM_USABLE_RAM_PARTITION_TABLE		402
-+#define SMEM_POWER_ON_STATUS_INFO		403
-+#define SMEM_DAL_AREA				404
-+#define SMEM_SMEM_LOG_POWER_IDX			405
-+#define SMEM_SMEM_LOG_POWER_WRAP		406
-+#define SMEM_SMEM_LOG_POWER_EVENTS		407
-+#define SMEM_ERR_CRASH_LOG			408
-+#define SMEM_ERR_F3_TRACE_LOG			409
-+#define SMEM_SMD_BRIDGE_ALLOC_TABLE		410
-+#define SMEM_SMDLITE_TABLE			411
-+#define SMEM_SD_IMG_UPGRADE_STATUS		412
-+#define SMEM_SEFS_INFO				413
-+#define SMEM_RESET_LOG				414
-+#define SMEM_RESET_LOG_SYMBOLS			415
-+#define SMEM_MODEM_SW_BUILD_ID			416
-+#define SMEM_SMEM_LOG_MPROC_WRAP		417
-+#define SMEM_BOOT_INFO_FOR_APPS			418
-+#define SMEM_SMSM_SIZE_INFO			419
-+#define SMEM_SMD_LOOPBACK_REGISTER		420
-+#define SMEM_SSR_REASON_MSS0			421
-+#define SMEM_SSR_REASON_WCNSS0			422
-+#define SMEM_SSR_REASON_LPASS0			423
-+#define SMEM_SSR_REASON_DSPS0			424
-+#define SMEM_SSR_REASON_VCODEC0			425
-+#define SMEM_SMP2P_APPS_BASE			427
-+#define SMEM_SMP2P_MODEM_BASE			435
-+#define SMEM_SMP2P_AUDIO_BASE			443
-+#define SMEM_SMP2P_WIRLESS_BASE			451
-+#define SMEM_SMP2P_POWER_BASE			459
-+#define SMEM_FLASH_DEVICE_INFO			467
-+#define SMEM_BAM_PIPE_MEMORY			468
-+#define SMEM_IMAGE_VERSION_TABLE		469
-+#define SMEM_LC_DEBUGGER			470
-+#define SMEM_FLASH_NAND_DEV_INFO		471
-+#define SMEM_A2_BAM_DESCRIPTOR_FIFO		472
-+#define SMEM_CPR_CONFIG				473
-+#define SMEM_CLOCK_INFO				474
-+#define SMEM_IPC_FIFO				475
-+#define SMEM_RF_EEPROM_DATA			476
-+#define SMEM_COEX_MDM_WCN			477
-+#define SMEM_GLINK_NATIVE_XPRT_DESCRIPTOR	478
-+#define SMEM_GLINK_NATIVE_XPRT_FIFO_0		479
-+#define SMEM_GLINK_NATIVE_XPRT_FIFO_1		480
-+#define SMEM_SMP2P_SENSOR_BASE			481
-+#define SMEM_NUM_ITEMS				489
-+
-+/* Legacy communication protocol between "Apps" and "Modem" processors */
-+struct smem_proc_comm {
-+        __le32 command;
-+        __le32 status;
-+        __le32 data1;
-+        __le32 data2;
-+};
-+
-+/* Metadata structure for shared memory heap allocations */
-+struct smem_heap_info {
-+        __le32 initialized;
-+        __le32 free_offset;
-+        __le32 heap_remaining;
-+        __le32 reserved;
-+};
-+
-+/* SMEM_ALLOCATION_TABLE is an array of these structures.  512 elements in the array. */
-+struct smem_heap_entry {
-+        __le32 allocated;
-+        __le32 offset;
-+        __le32 size;
-+        __le32 reserved; /* bits 1:0 reserved, bits 31:2 aux smem base addr */
-+};
-+
-+struct smem_version_info {
-+	__le32 version[32];
-+};
-+
-+struct smem_spinlock_array {
-+	volatile __le32 lock[8];
-+};
-+
-+#define FLASH_PART_MAGIC1       0x55EE73AA
-+#define FLASH_PART_MAGIC2       0xE35EBDDB
-+#define FLASH_PTABLE_V3         3
-+#define FLASH_PTABLE_V4         4
-+#define FLASH_PTABLE_MAX_PARTS_V3 16
-+#define FLASH_PTABLE_MAX_PARTS_V4 32
-+#define FLASH_PTABLE_ENTRY_NAME_SIZE 16
-+
-+struct flash_partition_entry {
-+        char name[FLASH_PTABLE_ENTRY_NAME_SIZE];
-+        __le32 offset;     /* Offset in blocks from beginning of device */
-+        __le32 length;     /* Length of the partition in blocks */
-+        u8 attr;           /* Flags for this partition */
-+};
-+
-+struct flash_partition_table {
-+        __le32 magic1;
-+        __le32 magic2;
-+        __le32 version;
-+        __le32 numparts;
-+        struct flash_partition_entry part_entry[FLASH_PTABLE_MAX_PARTS_V4];
-+};
-+
-+/* SMEM_CHANNEL_ALLOC_TBL is an array of these.  Used for SMD. */
-+struct smd_alloc_elm {
-+        char name[20];
-+        __le32 cid;
-+        __le32 type;
-+        __le32 ref_count;
-+};
-+
- int qcom_smem_alloc(unsigned host, unsigned item, size_t size);
- void *qcom_smem_get(unsigned host, unsigned item, size_t *size);
- 
--- 
-2.40.1
+>Thanks,
+>
+>Can Guo=2E
+>
 
