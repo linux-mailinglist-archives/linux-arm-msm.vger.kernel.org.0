@@ -2,179 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C1BA7A1BC4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 12:09:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D7987A1BE2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 12:19:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233143AbjIOKJP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Sep 2023 06:09:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51892 "EHLO
+        id S234131AbjIOKTM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Sep 2023 06:19:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233854AbjIOKJO (ORCPT
+        with ESMTP id S231341AbjIOKTM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Sep 2023 06:09:14 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 063332D71
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 03:08:22 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0B9DC1FB;
-        Fri, 15 Sep 2023 03:08:59 -0700 (PDT)
-Received: from [10.57.94.147] (unknown [10.57.94.147])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id E1B1D3F67D;
-        Fri, 15 Sep 2023 03:08:18 -0700 (PDT)
-Message-ID: <39a08615-d05c-3835-faaf-df9fc56c8f3f@arm.com>
-Date:   Fri, 15 Sep 2023 11:08:09 +0100
+        Fri, 15 Sep 2023 06:19:12 -0400
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AFE5E9;
+        Fri, 15 Sep 2023 03:19:04 -0700 (PDT)
+Received: by mail-oi1-x22d.google.com with SMTP id 5614622812f47-3a9b41ffe12so1218028b6e.3;
+        Fri, 15 Sep 2023 03:19:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1694773143; x=1695377943; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gBRNgKBo9636s47BGwWVB4QKKZP3PNOVrB6JUSp8VSU=;
+        b=H1AWv2Jiti17w/RFTWf9ZLidaYhZCE+eFFSuzPZ+mK/LyQyfZ8ZHEwlLT9mkRiWG4F
+         8grW/t4Gw/gxMm2X24JLtEswLrsWu99B7NFAgs/sTmM/RSLW7BSSEAZ2yalr1HQLeIXg
+         7TceqEQ8uypJ7F3BGwdVlI9JpYrUBcuYe0IXmY4iFlS0b2wO/l0RZ2e+mwN34wtjJbKe
+         G86QVNMQB1ygBYghA/smfNu6cnlOsG8bBcYgBdhm08hIWw2by+mhTBaOqgQjF8PZn+XH
+         iZUfeAYpPWOo2eA2o3pwLrEjTU6atltMe/D6f9DLPKdiZhrP0Z0d4WpHK1QoCP0XX4mw
+         h0/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694773143; x=1695377943;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gBRNgKBo9636s47BGwWVB4QKKZP3PNOVrB6JUSp8VSU=;
+        b=FeyAH+XKQxwAe/jA2J3w5fNjZiyA5GtKs/DF4aYXsRyIptD3bET99no0FyMhoJNtg1
+         qVXPm5mW3plHVyLWjkCUK8PZIsvNUQRkYKLtmSkrJwB+0xu7UIXxBZ89GQCNwWIrNw8i
+         5xmO7WdD5INlvQAo+iGMOV+b7jmuzaCllHipxYlIhbGKJ49wQVKmyO68zPxoplEMtJl0
+         +eWgcPI4d7EDc+WH+2hPA7dg8TM+k8EWfkC4N2wXvbo+ISTMSOSOyaS8xuaksmEqflid
+         1XyKrJPKHznFP+9Su4apEYJHp2G6bjxArygFK5WHDT9XvZQmi3csR7XZLG+uoYiZ9puo
+         J7bw==
+X-Gm-Message-State: AOJu0YwvQ1XXHeQ4vmnQwNQW3dRcmL3WVirv61nWH8cDvlVXDIsTKsUA
+        0rgPsnrVJD4JD8bqodHKhKo=
+X-Google-Smtp-Source: AGHT+IEvlosv0SIRPQNAginM3ohzzNzp4Xqh9vNKnbfKPM+wAw9tG7sja/ozbim3kIXbRMVW4vCoKw==
+X-Received: by 2002:a05:6870:5488:b0:1d5:4fb0:102 with SMTP id f8-20020a056870548800b001d54fb00102mr1339662oan.31.1694773143468;
+        Fri, 15 Sep 2023 03:19:03 -0700 (PDT)
+Received: from gondor.apana.org.au ([2404:c804:1b2a:5507:c00a:8aff:fe00:b003])
+        by smtp.gmail.com with ESMTPSA id q7-20020a63ae07000000b005634343cd9esm2491347pgf.44.2023.09.15.03.19.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Sep 2023 03:19:02 -0700 (PDT)
+Sender: Herbert Xu <herbertx@gmail.com>
+Date:   Fri, 15 Sep 2023 18:19:01 +0800
+From:   Herbert Xu <herbert@gondor.apana.org.au>
+To:     Om Prakash Singh <quic_omprsing@quicinc.com>
+Cc:     neil.armstrong@linaro.org, konrad.dybcio@linaro.org,
+        agross@kernel.org, andersson@kernel.org, conor+dt@kernel.org,
+        davem@davemloft.net, devicetree@vger.kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org,
+        marijn.suijten@somainline.org, robh+dt@kernel.org, vkoul@kernel.org
+Subject: Re: [PATCH] crypto: qcom-rng: Add hwrng support
+Message-ID: <ZQQvlXvGy8p01uJS@gondor.apana.org.au>
+References: <20230901131502.1549809-1-quic_omprsing@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH] iommu/arm-smmu-qcom: NULL pointer check for driver data
-Content-Language: en-GB
-To:     Aravind Vijayakumar <quic_aprasann@quicinc.com>,
-        Rob Clark <robdclark@chromium.org>
-Cc:     will@kernel.org, joro@8bytes.org, dmitry.baryshkov@linaro.org,
-        quic_bjorande@quicinc.com, konrad.dybcio@linaro.org,
-        quic_eberman@quicinc.com, quic_psodagud@quicinc.com,
-        quic_rvishwak@quicinc.com, quic_saipraka@quicinc.com,
-        quic_molvera@quicinc.com, marijn.suijten@somainline.org,
-        mani@kernel.org, linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org
-References: <20230816225509.11070-1-quic_aprasann@quicinc.com>
- <CAJs_Fx7132o3iHDH0ZR7L9G69o2YV2-jC0v15shQcEhH6=-6RA@mail.gmail.com>
- <c06a31fd-e3b5-1f58-9e4f-7fafd8aa3f28@quicinc.com>
- <CAJs_Fx464vFbfLaaWWs2Y0pTmhXrJS=AWFTwEyQjifJoU72rCQ@mail.gmail.com>
- <ead35ae9-b9cf-4f3f-e967-7d66a88fb8d5@quicinc.com>
- <8c5035d7-1a65-774c-5490-87cdbcb25542@arm.com>
- <7bff908a-f4f2-6a57-23ea-ab5cc82cde09@quicinc.com>
-From:   Robin Murphy <robin.murphy@arm.com>
-In-Reply-To: <7bff908a-f4f2-6a57-23ea-ab5cc82cde09@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230901131502.1549809-1-quic_omprsing@quicinc.com>
+X-Spam-Status: No, score=-1.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-09-15 01:20, Aravind Vijayakumar wrote:
-> 
-> On 9/8/2023 5:21 AM, Robin Murphy wrote:
->> On 2023-09-08 06:17, Aravind Vijayakumar wrote:
->>>
->>> On 8/29/2023 7:30 AM, Rob Clark wrote:
->>>> On Mon, Aug 28, 2023 at 2:35 PM Aravind Vijayakumar
->>>> <quic_aprasann@quicinc.com> wrote:
->>>>>
->>>>> On 8/16/2023 6:01 PM, Rob Clark wrote:
->>>>>> On Wed, Aug 16, 2023 at 3:55 PM Aravind Vijayakumar
->>>>>> <quic_aprasann@quicinc.com> wrote:
->>>>>>> The driver_data is NULL when qcom_adreno_smmu_init_context()
->>>>>>> is called before the dev_set_drvdata() from the client driver
->>>>>>> and is resulting in kernel crash.
->>>>>>>
->>>>>>> So add a null pointer check to handle the scenario
->>>>>>> where the client driver for the GPU SMMU device would
->>>>>>> be setting the driver data after the smmu client device
->>>>>>> probe is done and not necessarily before that. The function
->>>>>>> qcom_adreno_smmu_init_context() assumes that the client
->>>>>>> driver always set the driver data using dev_set_drvdata()
->>>>>>> before the smmu client device probe, but this assumption
->>>>>>> is not always true.
->>>>>>>
->>>>>>> Signed-off-by: Aravind Vijayakumar <quic_aprasann@quicinc.com>
->>>>>>> ---
->>>>>>>    drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 3 +++
->>>>>>>    1 file changed, 3 insertions(+)
->>>>>>>
->>>>>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c 
->>>>>>> b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>>>>> index c71afda79d64..5323f82264ca 100644
->>>>>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>>>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>>>>> @@ -231,6 +231,9 @@ static int 
->>>>>>> qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
->>>>>>>            */
->>>>>>>
->>>>>>>           priv = dev_get_drvdata(dev);
->>>>>>> +       if (!priv)
->>>>>>> +               return 0;
->>>>>> could this -EPROBE_DEFER instead, or something like that? I think you
->>>>>> patch as proposed would result in per-process gpu pgtables silently
->>>>>> failing
->>>>>>
->>>>>> BR,
->>>>>> -R
->>>>> Thanks for the review comments. Returning -EPROBE_DEFER wont work
->>>>> because the probe of the client driver (which sets the driver data) 
->>>>> will
->>>>> never get triggered. However, the probe of the client driver 
->>>>> succeeds if
->>>>> we return -ENODATA. would that be acceptable?
->>>> I _think_ so.. I need to page back in the sequence of how this works,
->>>> but I do have some warn_on's in drm/msm to complain loudly if we don't
->>>> get per-process pgtables.  I'd be interested to see the callstack
->>>> where you hit this issue.  From what I remember the sequence should
->>>> be:
->>>>
->>>> 1) before the client dev probes, arm-smmu probes and attaches the
->>>> dma-api managed iommu_domain (which IIRC should be an identity domain,
->>>> and is otherwise unused).. at this point drvdata is NULL
->>>> 2) the drm/msm can probe
->>>> 3) at some point later when GPU fw is avail the GPU is loaded, drvdata
->>>> is set, and we start creating and attaching the iommu_domain's that
->>>> are actually used (one for kernel context and one each for userspace
->>>> processes using the GPU
->>>>
->>>> I guess maybe if you are hitting this case of NULL drvdata, then you
->>>> aren't getting an identity context for the dma-api managed
->>>> iommu_domain?
->>>>
->>>> BR,
->>>> -R
->>>>
->>> Yes, there are some warn_ons in io-pgtable.c, which have helped a lot 
->>> during debugging. The following is the call stack when we are hitting 
->>> the issue:
->>>
->>>    qcom_adreno_smmu_init_context+0x28/0x100
->>>    arm_smmu_init_domain_context+0x1fc/0x4cc
->>>    arm_smmu_attach_dev+0x7c/0x410
->>>    __iommu_attach_device+0x28/0x110
->>>    iommu_probe_device+0x98/0x144
->>>    of_iommu_configure+0x1f0/0x278
->>>    of_dma_configure_id+0x15c/0x320
->>>    platform_dma_configure+0x24/0x90
->>>    really_probe+0x138/0x39c
->>>    __driver_probe_device+0x114/0x190
->>>    device_driver_attach+0x4c/0xac
->>>    bind_store+0xb8/0x110
->>
->> OK, so it looks like you are indeed getting a non-identity default 
->> domain as Rob suspected. I guess that means qcom_smmu_client_of_match 
->> needs updating for this platform? (In which case, maybe a WARN() here 
->> to point in that direction might be handy as well?)
->>
->> Thanks,
->> Robin.
->>
-> Hi Rob and Robin,
-> 
-> With the NULL check and return -ENODATA, we are getting the dma-api 
-> managed iommu domain, and reattach the device to iommu domain by calling 
-> "of_dma_configure" from the driver probe, but without the NULL check it 
-> will be a kernel crash.
+On Fri, Sep 01, 2023 at 06:45:02PM +0530, Om Prakash Singh wrote:
+>
+> +	qrng = (struct qcom_rng *)rng->priv;
 
-Um, what? Drivers should absolutely not be calling of_dma_configure() on 
-their own devices, that is a massively egregious abuse of the API.
+Please stop using rng->priv, it is obsolete.  Instead embed the
+rng object inside qcom_rng.
 
-> Also, with the NULL check we don't have to update the 
-> qcom_smmu_client_of_match and we can use the existing function - 
-> "qcom_adreno_smmu_init_context" itself.
-
-So making a bunch of conceptually-wrong code changes "saves" making the 
-correct 1-line data change for the mechanism to work as designed? That 
-hardly sounds like a good justification to me :/
-
-Thanks,
-Robin.
+Cheers,
+-- 
+Email: Herbert Xu <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
