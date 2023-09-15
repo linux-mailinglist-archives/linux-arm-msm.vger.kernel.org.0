@@ -2,153 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C4CCF7A1E39
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 14:15:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B2AE7A1E4B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 14:15:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234554AbjIOMPK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Sep 2023 08:15:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47062 "EHLO
+        id S234668AbjIOMPz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Sep 2023 08:15:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234018AbjIOMPK (ORCPT
+        with ESMTP id S234652AbjIOMPy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Sep 2023 08:15:10 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C1AF211E;
-        Fri, 15 Sep 2023 05:15:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1694780105; x=1726316105;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=jH6v5bbbkkEM6BDUb1aHP3gU8Bm1CEPG4JUxxTB7iDI=;
-  b=fsde/vXU3HuwMCrzIEoccDRLDRxXJbMaO4meSXbukv8h/Cv8NPkjeSlI
-   0++bxDPznL7/I8Uwztgo9F4AQsmZaJi9+6mtQpcciLOPQqCR6KPbn5/qq
-   fBgReRRf42tQhD5gc0QjpOKb0pvWWzaUMl4cTO64J8dUD+M4gdYaJJnKY
-   tF2dT9R3WJueQfa0IwC64xxmdxx0oFRMnmSq320lPSDK1gU0f5dWDuzZn
-   4cHRptDHWoRS9FF9DDdsMup8wgVkt0MlYXwt7IxQZ9c/kbRYsjE5yXqD/
-   P+9wFLnUY3QJ85W4TaYxVQTp9DfhSj5fJfTRR3N9Cmet+SnQl7vXVSonW
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10833"; a="359490902"
-X-IronPort-AV: E=Sophos;i="6.02,149,1688454000"; 
-   d="scan'208";a="359490902"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2023 05:14:44 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10833"; a="835190933"
-X-IronPort-AV: E=Sophos;i="6.02,149,1688454000"; 
-   d="scan'208";a="835190933"
-Received: from kuha.fi.intel.com ([10.237.72.185])
-  by FMSMGA003.fm.intel.com with SMTP; 15 Sep 2023 05:14:36 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Fri, 15 Sep 2023 15:14:35 +0300
-Date:   Fri, 15 Sep 2023 15:14:35 +0300
-From:   Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Janne Grunau <j@jannau.net>, Simon Ser <contact@emersion.fr>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [RFC PATCH v1 12/12] usb: typec: qcom: define the bridge's path
-Message-ID: <ZQRKq7K8jKlH/Y4X@kuha.fi.intel.com>
-References: <20230903214150.2877023-1-dmitry.baryshkov@linaro.org>
- <20230903214150.2877023-13-dmitry.baryshkov@linaro.org>
+        Fri, 15 Sep 2023 08:15:54 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6630F268E;
+        Fri, 15 Sep 2023 05:15:43 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38FAA7Pj030278;
+        Fri, 15 Sep 2023 12:15:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : subject
+ : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=GygQ/u2fnwhNWv//DRS3iWa9bJQ4jyMvttmcZQRrUJg=;
+ b=DdtCcGLs8TKoe/KOIvsB1ZfgOgVOOBAdBOAep0EsPgU21Yf5Pja5owrONHSiA5qrxxsj
+ vllQSYAAXQ5NZ/xgQtJyXrriIi38alYxp3H9S/k8ZfwEghIz1RAAuCp8ulMaTHuC3EPT
+ bA2x6f5CiFDO0XR1BlvtiAnLus/jswrMZIXVwysBHUPnUUYnHgdNTTpdRb12AHpleQeZ
+ 2t6cDr/yi0ph3D/SlPPMXyT+PyDI0zvted6m4H5j/UEa2czDRcPqacJ+BTwwvK1Cc0FZ
+ /9432VfgopUICnqQvKz3KGYwMDU7LIZ5Ep5aQC/3dPI00u6zXiKGiXna9Ejv5NwsGPvr sg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t4g5tgvw0-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 15 Sep 2023 12:15:37 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38FCFZTV004488
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 15 Sep 2023 12:15:35 GMT
+Received: from win-platform-upstream01.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Fri, 15 Sep 2023 05:15:31 -0700
+From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
+To:     <krzysztof.kozlowski@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <srinivas.kandagatla@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <thara.gopinath@gmail.com>, <rafael@kernel.org>,
+        <daniel.lezcano@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <quic_srichara@quicinc.com>
+Subject: [PATCH V2 0/4] Add support for IPQ5018 tsens
+Date:   Fri, 15 Sep 2023 17:45:00 +0530
+Message-ID: <20230915121504.806672-1-quic_srichara@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230903214150.2877023-13-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 05c275zDFas4SN5Locq7WA02D42AB1JN
+X-Proofpoint-GUID: 05c275zDFas4SN5Locq7WA02D42AB1JN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-15_08,2023-09-14_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
+ suspectscore=0 lowpriorityscore=0 impostorscore=0 phishscore=0
+ mlxlogscore=644 priorityscore=1501 adultscore=0 mlxscore=0 spamscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309150108
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
+IPQ5018 has tsens V1.0 IP with 4 sensors and 1 interrupt.
+There is no RPM present in the soc to do tsens early enable.
+Adding support for the same here.
 
-On Mon, Sep 04, 2023 at 12:41:50AM +0300, Dmitry Baryshkov wrote:
-> In order to notify the userspace about the DRM connector's USB-C port,
-> export the corresponding port's name as the bridge's path field.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c     | 11 +++++++----
->  drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_drm.c |  4 +++-
->  drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_drm.h |  6 ++++--
->  3 files changed, 14 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-> index b9d4856101c7..452dc6437861 100644
-> --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-> @@ -156,6 +156,7 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
->  	struct device_node *np = dev->of_node;
->  	const struct pmic_typec_resources *res;
->  	struct regmap *regmap;
-> +	char *tcpm_name;
->  	u32 base[2];
->  	int ret;
->  
-> @@ -211,10 +212,6 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
->  	mutex_init(&tcpm->lock);
->  	platform_set_drvdata(pdev, tcpm);
->  
-> -	tcpm->pmic_typec_drm = qcom_pmic_typec_init_drm(dev);
-> -	if (IS_ERR(tcpm->pmic_typec_drm))
-> -		return PTR_ERR(tcpm->pmic_typec_drm);
-> -
->  	tcpm->tcpc.fwnode = device_get_named_child_node(tcpm->dev, "connector");
->  	if (!tcpm->tcpc.fwnode)
->  		return -EINVAL;
-> @@ -225,6 +222,12 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
->  		goto fwnode_remove;
->  	}
->  
-> +	tcpm_name = tcpm_port_get_name(tcpm->tcpm_port);
-> +	tcpm->pmic_typec_drm = qcom_pmic_typec_init_drm(dev, tcpm_name);
+[v2]
+	*) Sorted the compatible and removed example
+	*) Fixed the name for new tsens_feature
+	*) Used tsend_calibrate_common instead of legacy
+	   and addressed comments from Dmitry.
+	*) Squashed patch 3 & 4
+	*) Fixed node names, order and added qfprom cells
+            for points seprately
+	*) Squashed patch 6 & 7 
 
-So I got some questions and concerns off-list. This was one of the
-concerns. That tcpm_name is now the actual port device name, so I'm
-afraid this is not acceptable.
+Sricharan Ramabadhran (4):
+  dt-bindings: thermal: qcom-tsens: Add ipq5018 compatible
+  thermal/drivers/qcom: Add new feat for soc without rpm
+  thermal/drivers/tsens: Add support for IPQ5018 tsens
+  arm64: dts: qcom: ipq5018: Add tsens node
 
-You can't use device name as a reference, ever. There is no way to
-guarantee that a device with a specific name is what you meant it to
-be by the time it's accessed.
-
-If you need to deal with a device, then you have to get an actual
-reference to it (class_find_device_by_fwnode() should work in this
-case).
-
-Ideally you would get the reference in the place where you actually
-use it (so drm_connector.c or more likely drm_sysfs.c) but that would
-mean a dependency on typec in there, if the component framework or
-something like that (device links?) is not an option. You could of
-course try to confine the dependency somehow. drm_class does not have
-implementation for dev_uevent, so you could take over that as a
-temporary solution.
-
-The only way to avoid the dependency completely would be to pass that
-device reference from here through your drm bridge chain somehow.
-But that's also really fragile. But it could be acceptable as a
-temporary solution perhaps, if it's even possible.
-
-Br,
+ .../bindings/nvmem/qcom,qfprom.yaml           |   1 +
+ .../bindings/thermal/qcom-tsens.yaml          |   1 +
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi         | 169 ++++++++++++++++++
+ drivers/thermal/qcom/tsens-v1.c               |  58 ++++++
+ drivers/thermal/qcom/tsens.c                  |   5 +-
+ drivers/thermal/qcom/tsens.h                  |   5 +-
+ 6 files changed, 237 insertions(+), 2 deletions(-)
 
 -- 
-heikki
+2.34.1
+
