@@ -2,83 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 50AAC7A21B4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 17:03:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 050667A21EE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 17:08:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232075AbjIOPDS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Sep 2023 11:03:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45038 "EHLO
+        id S235903AbjIOPIi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Sep 2023 11:08:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229568AbjIOPDR (ORCPT
+        with ESMTP id S236029AbjIOPIh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Sep 2023 11:03:17 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCA3A1FE0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 08:03:12 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id ffacd0b85a97d-31f7400cb74so1928887f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 08:03:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694790191; x=1695394991; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9C1UHaCOBJhiAypiHyvSaWyiNAJYDTwexCkUigqYDiw=;
-        b=tjI2EcY4NEOmV4v349wfu97gmEqAJgtHFuYoF6jFkzfjVshHLDmvRaaKZuA7gtSjt+
-         SRfjzemiFi5/UEi4siIi7O+aAPSOW2fAA4793D3dUm2LFIxBle0P0WX+DnRk9opT8533
-         NgV2YYpHwTbpujHv0nQNNyayAYgTao3seeuDf3TSQ2aPNSquWmF1JeRwstxZUiajkccZ
-         mwvufprCjRU+FE7wrEFvoXgmg/acVRjamlfSRQlopZDJBG/Yl47eKMJhQntWoCWlTkT7
-         6ld/Fb+p5FYU53XdPr234TnlD1kEzv7XSCB+Mg0+WbDaBlgZVDzq0vWwVof2cVAGPZuq
-         WKJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694790191; x=1695394991;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9C1UHaCOBJhiAypiHyvSaWyiNAJYDTwexCkUigqYDiw=;
-        b=eGRnvrZuTfcJN9n0hTf8gpuo1LFGILc261RW+iau8wlo4QnKukf1CD6r6d2KPry1O1
-         6kcV7Di50bR0hZ8uCvHr2tTTQNhEvK1DEJZslSglo+b9haJIekDvWMMF/4P44M6r8pFY
-         Pexr0eFQgR7nWTr96bF/OV2JG5XxL1J2/BZc1lmBS2AKgD8mZe+a9+LK8AO0yBwi+ts9
-         rm045acxHld+Drjn9YrYui7HANkSPy4Y/kMe6LGQ8sdsvmB6O2OTpPuZ5zduIIVUtcNB
-         SisGEOV8XqNLxiQrT9mRqHIYNv3Yu85j7e18kkobxc/K8y5vXnVkeCIswZvUYNgMBW2q
-         8Hxw==
-X-Gm-Message-State: AOJu0Yzlf5dteyXyn3fCAYSk6r0iI6hKfSUO9F4EXirXPw8hHxIKFSnk
-        j4IwZeBTTh4Fn5lHIXk1EZZZ+Q==
-X-Google-Smtp-Source: AGHT+IFc+ZFaV6Jq0IUQleifvSgcm42U8VytZNKWgSnA6qkqDp3hA8k9nsoXOe9w09rec7hSRTw7Pw==
-X-Received: by 2002:adf:ec4f:0:b0:31f:d52a:82b0 with SMTP id w15-20020adfec4f000000b0031fd52a82b0mr1637996wrn.45.1694790191118;
-        Fri, 15 Sep 2023 08:03:11 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id g14-20020a5d698e000000b0031759e6b43fsm4653581wru.39.2023.09.15.08.03.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Sep 2023 08:03:10 -0700 (PDT)
-Message-ID: <d20ad799-92ed-4a5c-b20b-02c5ab3523d8@linaro.org>
-Date:   Fri, 15 Sep 2023 16:03:09 +0100
+        Fri, 15 Sep 2023 11:08:37 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57F892D70;
+        Fri, 15 Sep 2023 08:05:55 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38FERSEJ025272;
+        Fri, 15 Sep 2023 15:05:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=D4r4CgwN2wvxgiJSuob/BiBF+77aMbyKkuMKPJ/OeW0=;
+ b=nPPhd0wjEEfhEylyZiKtb3f73/oZT0ThX54pR3wDVb5UDiuqdzJ4Yng5Bc0aRUA8oN7z
+ ts69GE76GT6rpHk5BjDtPvnCiqhRZn+FWFM1JYN0wbL5xPPjOnI8wH83X/0wM2wUh9kG
+ 9uMKgOfzmW07P6BhNd/1jdm6f1tvDKSS0BtXYAAm0jDhHzPbSdJ2SqqsV5MiW9Hj4RXw
+ DJv2lXdBbzOpJ9tlvOXj2LIMbnlEmGcgam9LSn0K5ZIZ8DPJ0SzhhoAazSsgcBkiWB4B
+ nAfnEGBZzHapZgD3hr8Ee4Z4nD2HSN/tDTbLxFHX7AjcHEK1PM2hubzNGNdEabOIBHIm KQ== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t4g2ssckp-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 15 Sep 2023 15:05:46 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38FF5jNF000715
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 15 Sep 2023 15:05:45 GMT
+Received: from [10.216.52.149] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Fri, 15 Sep
+ 2023 08:05:40 -0700
+Message-ID: <34fd47ad-bcd1-706f-0ed0-11f0c84bf3c0@quicinc.com>
+Date:   Fri, 15 Sep 2023 20:35:36 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
 Subject: Re: [PATCH v1] arm64: dts: qcom: msm8916: Fix iommu local address
  range
 Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>,
-        Gaurav Kohli <quic_gkohli@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        kernel@quicinc.com
+To:     Stephan Gerhold <stephan@gerhold.net>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <kernel@quicinc.com>
 References: <20230915143304.477-1-quic_gkohli@quicinc.com>
- <ZQRtchQ0HqmgkvIa@gerhold.net>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <ZQRtchQ0HqmgkvIa@gerhold.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <ZQRuzzC7i1kyNqAm@gerhold.net>
+From:   Gaurav Kohli <quic_gkohli@quicinc.com>
+In-Reply-To: <ZQRuzzC7i1kyNqAm@gerhold.net>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: UeO3TFAUOsSH_AxF-drV9dgTR92cMMUj
+X-Proofpoint-ORIG-GUID: UeO3TFAUOsSH_AxF-drV9dgTR92cMMUj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-15_11,2023-09-15_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 impostorscore=0 priorityscore=1501 malwarescore=0
+ mlxlogscore=723 clxscore=1011 adultscore=0 mlxscore=0 spamscore=0
+ phishscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309150134
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/09/2023 15:42, Stephan Gerhold wrote:
+
+
+On 9/15/2023 8:18 PM, Stephan Gerhold wrote:
 > On Fri, Sep 15, 2023 at 08:03:04PM +0530, Gaurav Kohli wrote:
 >> Fix the apps iommu local address space range as per data sheet.
 >>
@@ -86,20 +94,25 @@ On 15/09/2023 15:42, Stephan Gerhold wrote:
 >> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 >> Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 >> Signed-off-by: Gaurav Kohli <quic_gkohli@quicinc.com>
+>> ---
+>> Changes since v0:
+>> -Update Fixes tag.
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+>> index 33fb65d73104..3c934363368c 100644
+>> --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+>> @@ -1813,7 +1813,7 @@
+>>   			#size-cells = <1>;
+>>   			#iommu-cells = <1>;
+>>   			compatible = "qcom,msm8916-iommu", "qcom,msm-iommu-v1";
+>> -			ranges = <0 0x01e20000 0x40000>;
+>> +			ranges = <0 0x01e20000 0x20000>;
 > 
-> Aside from the minor things Konrad mentioned (v1 -> v2) FWIW:
+> Please also submit another patch to fix this in msm8939.dtsi. It has the
+> same mistake.
+
+thanks a lot for review, yes i will send it for other soc also.
 > 
-> Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
-> 
-> Although I can kind of understand that starting to count at 0 often
-> feels more intuitive, especially for Linux kernel things. :-)
-
-Just put
-
-OPTION BASE 0
-
-at the start of your cover letter ;)
-
----
-bod
-
+> Thanks,
+> Stephan
