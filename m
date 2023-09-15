@@ -2,111 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E6917A19CE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 10:57:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 28FD17A1A00
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 11:10:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233234AbjIOI5j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Sep 2023 04:57:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42460 "EHLO
+        id S232109AbjIOJKy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Sep 2023 05:10:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233193AbjIOI5i (ORCPT
+        with ESMTP id S233197AbjIOJKx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Sep 2023 04:57:38 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5F2030DE;
-        Fri, 15 Sep 2023 01:55:58 -0700 (PDT)
-Received: from localhost (unknown [IPv6:2a01:e0a:2c:6930:5cf4:84a1:2763:fe0d])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: bbrezillon)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id F198966072BB;
-        Fri, 15 Sep 2023 09:55:42 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1694768143;
-        bh=+lTKM1jeejz9rZU9eT5TrluIuSbG1Vh8fDRF3LgkNnI=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=SI3i9Zhj0Qsd/nfH6idkojingBexc2muS7LOU6kgO+YvSTWmnAZgZITNki40fV4tY
-         LUwABop1vgFEjK7f4d8nof45yOERdeRyD0Do6IB5GXgrbCOxCsP9NhKDujWUm0AqHH
-         vtBuDgFWnODvdO8SLMNUcu7PPOzC/2HAFzJLoaVqEPjdixXHZEJntaZU+2siPos/tJ
-         6CQ+/CYsn5qFcCayqgvAKbAB9nlYHs4TeCIhVx2j0XEh6J9dBAKA2Maodu1+bUc+9V
-         1bhU1pNw1NlQGeiOUclOX3QC+yqie0qDlbLj4g4AUMEih0R/aVyDeqpG15e1ZL0tZ9
-         X7mSLmf2cdmMA==
-Date:   Fri, 15 Sep 2023 10:55:39 +0200
-From:   Boris Brezillon <boris.brezillon@collabora.com>
-To:     =?UTF-8?B?QWRyacOhbg==?= Larumbe <adrian.larumbe@collabora.com>
-Cc:     maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
-        robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        dmitry.baryshkov@linaro.org, sean@poorly.run,
-        marijn.suijten@somainline.org, robh@kernel.org,
-        steven.price@arm.com, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, healych@amazon.com,
-        kernel@collabora.com
-Subject: Re: [PATCH v5 6/6] drm/drm-file: Show finer-grained BO sizes in
- drm_show_memory_stats
-Message-ID: <20230915105539.23724780@collabora.com>
-In-Reply-To: <20230914223928.2374933-7-adrian.larumbe@collabora.com>
-References: <20230914223928.2374933-1-adrian.larumbe@collabora.com>
-        <20230914223928.2374933-7-adrian.larumbe@collabora.com>
-Organization: Collabora
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-redhat-linux-gnu)
+        Fri, 15 Sep 2023 05:10:53 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06BEB2D66
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 02:10:19 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-9adcb89b48bso73882666b.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 02:10:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694769018; x=1695373818; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9mYurZD8ziFDRqchUnDGZKwBbS/2WFyHG5fbkvlBT2g=;
+        b=y2egOUR7CBlYVvpxmSRZqvPR+KaLj4XccMALmTsyYJaqGm5HGsEpW4ew2434N57fgf
+         vGxqWsS3gNosTYbR6abFVkU7lv/j/kOQy8+p+PwW/qiSnCXPXJWuAoX6KeDZD3XxM7qz
+         emFK6JC7xChlRpVIgBl8DOQaZzEKECjIWl0LNQWHKzr3U6ZzYyixG/cFlBrelnl9sEtm
+         fugh1XwC17qYVPRuMQodWe9fPK03x4TS/jClmqWp0QCMInrLEB7BLmjwGFCesvJxwv+q
+         E/kj+o2U4aEefuX6hAHjFi72DmTmj3QSh+baqttVIY5nkw4lE6AUUikDu6jbrex/CatE
+         +pdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694769018; x=1695373818;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9mYurZD8ziFDRqchUnDGZKwBbS/2WFyHG5fbkvlBT2g=;
+        b=njsdtf4zlXR2aHhbAZMiX+RiDwGkKCH7+HkgfvAda/VwfWV0zGMAybXt9xoq4uyG7X
+         vcbjxCTPCCYnZrwS4xTbkQno0iNZi5VRkscg5H/Y3BrXs9i1i8BNhHWTWkxxUdOKTF53
+         yt2MIQt8pzuKz7Gx1rzJSh3bf65CM8zw9gBP4ilt712PzPMQf5WLq4MTgUCNt28/Nl4v
+         E0FiLUMdj44WE36nJbTT56yl4UGM36bttZiXd8d/N4wdB+0RtHeeM2Xdv6KHKSRKDChp
+         +B/VOUsb8twBA4PGQhQ1lUrAvPMXUVYgcDjM3K3agorfNcNccfoL0rGfmjTUTZrLjmUG
+         1rxw==
+X-Gm-Message-State: AOJu0Yx8yAY+2w68NZO2HiVUk5FIRAphEKZLwz+FF2avaeqMhE6hcIV6
+        SfjVOV6C5WohdVvc+GoPaKVrFQ==
+X-Google-Smtp-Source: AGHT+IHiXgvnk9181h78AWvJiNP0aier6ytGOVVosZgBZ7n55wGrwTWePBUH316xtZO8twLna74yjA==
+X-Received: by 2002:a17:906:54:b0:9ad:78b7:29ef with SMTP id 20-20020a170906005400b009ad78b729efmr787901ejg.57.1694769018446;
+        Fri, 15 Sep 2023 02:10:18 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.214.188])
+        by smtp.gmail.com with ESMTPSA id d22-20020a170906345600b009a9fbeb15f2sm2120791ejb.62.2023.09.15.02.10.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 Sep 2023 02:10:17 -0700 (PDT)
+Message-ID: <f932d000-e328-3267-33ad-f3555a6689fb@linaro.org>
+Date:   Fri, 15 Sep 2023 11:10:14 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.0
+Subject: Re: [PATCH v2 4/8] dt-bindings: arm-smmu: Add compatible for SM4450
+ SoC
+To:     Tengfei Fan <quic_tengfan@quicinc.com>, will@kernel.org,
+        robin.murphy@arm.com, joro@8bytes.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        catalin.marinas@arm.com
+Cc:     geert+renesas@glider.be, arnd@arndb.de, neil.armstrong@linaro.org,
+        nfraprado@collabora.com, rafal@milecki.pl, peng.fan@nxp.com,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, quic_tsoni@quicinc.com,
+        quic_shashim@quicinc.com, quic_kaushalk@quicinc.com,
+        quic_tdas@quicinc.com, quic_tingweiz@quicinc.com,
+        quic_aiquny@quicinc.com, kernel@quicinc.com
+References: <20230915021509.25773-1-quic_tengfan@quicinc.com>
+ <20230915021509.25773-3-quic_tengfan@quicinc.com>
+ <5a386be4-facc-8aef-aad7-da6508aa0505@linaro.org>
+ <c993ecc1-771e-4061-bd10-d3dea1254389@quicinc.com>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <c993ecc1-771e-4061-bd10-d3dea1254389@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 14 Sep 2023 23:38:44 +0100
-Adri=C3=A1n Larumbe <adrian.larumbe@collabora.com> wrote:
+On 15/09/2023 10:52, Tengfei Fan wrote:
+> 
+> 
+> 在 9/15/2023 3:11 PM, Krzysztof Kozlowski 写道:
+>> On 15/09/2023 04:15, Tengfei Fan wrote:
+>>> Add the SoC specific compatible for SM4450 implementing arm,mmu-500.
+>>>
+>>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+>>> ---
+>>>   Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 3 +++
+>>>   1 file changed, 3 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>>> index cf29ab10501c..b57751c8ad90 100644
+>>> --- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>>> +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>>> @@ -47,6 +47,7 @@ properties:
+>>>                 - qcom,sdx55-smmu-500
+>>>                 - qcom,sdx65-smmu-500
+>>>                 - qcom,sdx75-smmu-500
+>>> +              - qcom,sm4450-smmu-500
+>>>                 - qcom,sm6115-smmu-500
+>>>                 - qcom,sm6125-smmu-500
+>>>                 - qcom,sm6350-smmu-500
+>>> @@ -70,6 +71,7 @@ properties:
+>>>                 - qcom,sc8180x-smmu-500
+>>>                 - qcom,sc8280xp-smmu-500
+>>>                 - qcom,sdm845-smmu-500
+>>> +              - qcom,sm4450-smmu-500
+>>
+>> Isn't there comment just few lines above your edit? Comment saying DON'T?
+>>
+>>
+>> Best regards,
+>> Krzysztof
+>>
+> Hi Kraysztof
+> I seems haven't understand your comments totaly.
+> I want to confirm that if you think only need "qcom,smmu-500" and 
+> "arm,mmu-500" compitbale name, needn't specific compitable name for each 
+> platform?
 
-> The current implementation will try to pick the highest available size
-> display unit as soon as the BO size exceeds that of the previous
-> multiplier. That can lead to loss of precision in contexts of low memory
-> usage.
->=20
-> The new selection criteria try to preserve precision, whilst also
-> increasing the display unit selection threshold to render more accurate
-> values.
->=20
-> Signed-off-by: Adri=C3=A1n Larumbe <adrian.larumbe@collabora.com>
 
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+No, please read the comment. It tells you explicitly what to do - which
+compatible add where.
 
-> ---
->  drivers/gpu/drm/drm_file.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->=20
-> diff --git a/drivers/gpu/drm/drm_file.c b/drivers/gpu/drm/drm_file.c
-> index 762965e3d503..34cfa128ffe5 100644
-> --- a/drivers/gpu/drm/drm_file.c
-> +++ b/drivers/gpu/drm/drm_file.c
-> @@ -872,6 +872,8 @@ void drm_send_event(struct drm_device *dev, struct dr=
-m_pending_event *e)
->  }
->  EXPORT_SYMBOL(drm_send_event);
-> =20
-> +#define UPPER_UNIT_THRESHOLD 100
-> +
->  static void print_size(struct drm_printer *p, const char *stat,
->  		       const char *region, u64 sz)
->  {
-> @@ -879,7 +881,8 @@ static void print_size(struct drm_printer *p, const c=
-har *stat,
->  	unsigned u;
-> =20
->  	for (u =3D 0; u < ARRAY_SIZE(units) - 1; u++) {
-> -		if (sz < SZ_1K)
-> +		if ((sz & (SZ_1K - 1)) &&
-> +		    sz < UPPER_UNIT_THRESHOLD * SZ_1K)
->  			break;
->  		sz =3D div_u64(sz, SZ_1K);
->  	}
+Best regards,
+Krzysztof
 
