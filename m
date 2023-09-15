@@ -2,111 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 965047A26C7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 21:01:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E9387A26DC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 21:03:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236891AbjIOTAt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Sep 2023 15:00:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50728 "EHLO
+        id S232007AbjIOTD3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Sep 2023 15:03:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236990AbjIOTA2 (ORCPT
+        with ESMTP id S237082AbjIOTDP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Sep 2023 15:00:28 -0400
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE0DF2130
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 12:00:19 -0700 (PDT)
-Received: by mail-yb1-xb2d.google.com with SMTP id 3f1490d57ef6-d7ecdb99b7aso2398238276.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 12:00:19 -0700 (PDT)
+        Fri, 15 Sep 2023 15:03:15 -0400
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B675A2D4C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 12:02:36 -0700 (PDT)
+Received: by mail-yb1-xb2c.google.com with SMTP id 3f1490d57ef6-d818d4230f6so2217251276.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 12:02:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694804419; x=1695409219; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MA+IH6vFDWnj8CWBjAETZZSe18NWdBhZ5Y5deFFzGMI=;
-        b=L99HJwtiSHN98t1F8KNkQkA0O49wol0PE46W00Ae0kkcMhkacRR4q3flBqZpl1b4Cd
-         /3Z9dkuoCBg9OPrAo98chVHT2OnU4EoznuCn8HSpNJGHxNRII3ztyG6rQfpfD5GBSh3a
-         l7mXkkyEhYeJY2ss/ms6SvU1P94I2ZJ8hXqv9g3FI3aRPryg7DhlSB5Kq/n2YJ6C/CW/
-         1m6YFd9N/JloDi5nE2wb++PTZ+jS69OKoXc+e1ItOBgGpmySOkro0SfSsc1AOzYLJ/va
-         Vb9qlXiUGdoklbc6P566J2hqd5RdA7nshQiUlh45BKB4KL6VE6XlActlbkFYv4a2IoSm
-         vO8Q==
+        d=linaro.org; s=google; t=1694804556; x=1695409356; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=euz/IHIc0mhpSJvprvTibU0nvlspa5qnPH9if5eZjIU=;
+        b=GhDNDZgzjkY7uroEzoTvMLvLvekeX52OO1wkLynYCawICliC+hFE61sl4spp4idvvQ
+         DIyandwCWjvPXcAOoJudVV+xh5+a9bQubWQbP6l5YVUujbeGn1u/uXHhpSDuXSbj6ygW
+         9Gau4B4+n9PfjmdkQJC+OLL8saqedv3l+yj5P2xLCSxmqkK/KlEBpGgwhQsLer3U14ro
+         vUXuh5nOjfnT5B+kjAv6hVCdzQH0fJkXkwMdP0nYb0+ANsn8Dal3Hs6630ZlKVScPBMo
+         wEb4PMGkpAYwE0HsS5OU9XS/P255SbJLIyI0B8KATIhsw5I0Ln2juQNsoLZUZB9AB3wP
+         yHjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694804419; x=1695409219;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MA+IH6vFDWnj8CWBjAETZZSe18NWdBhZ5Y5deFFzGMI=;
-        b=SEozCWZPo6URAsDojq33jBxNDXeWfYJj87MnMjknVUKEYpQekLyLNIzBpXUiMJTppl
-         Xjnh0rtPdVGka45zUIVhrqv0HYlmF8vbfmIF/TeWKkSemolSa0hTC8BZBNk1mpLaxZ+X
-         mqW53z4WE/EUrVQKBOfS7gIuaZO5aL1OKLNNZNzX4imxtOSaoSwydLRlFqL2TSGBEKgO
-         WxjQw53SkvXd7b4DejS3uqmzz4UlaPLCXpRyeQJEOm6CYwmUIK0TVxSMPsAXuUKDFDoJ
-         5mlPlcyAUsQPyJTtquG3RTTSvskV+N57iLJ+PNYJtpbdUbjQO8GDTHEUgSsQmtbVb8G1
-         fP7A==
-X-Gm-Message-State: AOJu0YyadXh/NguQRHU6Foyuub4+QVWviLZWMPG+zabgE9M2JboQ8+BU
-        rlGVp3S+L3m4LbjFu6M0hcFjV+V4es3vbQLMxEWNkV4mfd4RPAi0+opDzJAQ
-X-Google-Smtp-Source: AGHT+IHloveln5I1HrqkenFE7vzYh2eTD6d1bJyya94I6qr4dXlqjiJXzTSkEB8jv6T0Pz0Y9YYlZe8PfZm3J0clBh0=
-X-Received: by 2002:a25:2547:0:b0:d78:878d:e1e1 with SMTP id
- l68-20020a252547000000b00d78878de1e1mr2274459ybl.50.1694804418847; Fri, 15
- Sep 2023 12:00:18 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1694804556; x=1695409356;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=euz/IHIc0mhpSJvprvTibU0nvlspa5qnPH9if5eZjIU=;
+        b=XkWHGfAfZIX60qD1wyB6J/rXlI6swH1J+wGkogQqgI9ftC+WJ+S0hKFDV/mOFvXeci
+         uM+XkU4KFZjmPvFhvykGc/mUf3wLfG2AgOPsCcFjrMeskzMHBgPxL8YWA1p7l4gHCSLS
+         4QFy0uAlTvLsJkFLC576PlCjxjR82iaTGaSbZ2yAE+3Gg/P2rE9EdrB1Y651HIzBs6eF
+         wgYMzrOXqa89mGw+wgeQwjHoz9JyxgdxUGWuQ6YnPczxmR2MJf/YLTBP35dOFWbMX8f5
+         V73cy3Xv2tOwhUk6dFrwb6UmN+Z72CmSZOa5w7sR4MG7HEn0pK2+UTWp1GJXeeuWYmFV
+         lzEg==
+X-Gm-Message-State: AOJu0YzNQ+iIEANxuZryW4Zxabn9FmrpRRoQuurUt/zuM468gCaB4hNt
+        wCZaKZEvA4VcR2eXVS7TQ8JICPZ0ky2JZ3oRwr55PQ==
+X-Google-Smtp-Source: AGHT+IHjvbgo6WAOZyaLXnz4gisXVihpdX/YxZz482tKbWXr6KliN8j5UIIdtWwak5bLhfxaD9Fmf6SeDLlP6dEFAas=
+X-Received: by 2002:a25:8250:0:b0:d81:43ea:d018 with SMTP id
+ d16-20020a258250000000b00d8143ead018mr2631057ybn.42.1694804555819; Fri, 15
+ Sep 2023 12:02:35 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230914065422.5452-1-otto.pflueger@abscue.de>
- <20230914065422.5452-3-otto.pflueger@abscue.de> <72e24711-f485-46ce-bbda-db3043d84bcc@linaro.org>
-In-Reply-To: <72e24711-f485-46ce-bbda-db3043d84bcc@linaro.org>
+References: <20230915183010.32077-1-quic_abhinavk@quicinc.com>
+In-Reply-To: <20230915183010.32077-1-quic_abhinavk@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 15 Sep 2023 22:00:07 +0300
-Message-ID: <CAA8EJpq77L9aviGQ0hJRB9OxC2oswM0HjL6WwCUx7caYoepigw@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] pmdomain: qcom: rpmpd: Add MSM8917 power domains
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     =?UTF-8?Q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        devicetree@vger.kernel.org, linux-pm@vger.kernel.org
+Date:   Fri, 15 Sep 2023 22:02:24 +0300
+Message-ID: <CAA8EJpp-eK1spEBSJtT0YtRkJtSL6MWPyxN5c4AB-1MJMJXs9A@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/dsi: skip the wait for video mode done if not applicable
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, Hai Li <hali@codeaurora.org>,
+        dri-devel@lists.freedesktop.org, quic_jesszhan@quicinc.com,
+        quic_parellan@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 15 Sept 2023 at 16:41, Konrad Dybcio <konrad.dybcio@linaro.org> wro=
-te:
+On Fri, 15 Sept 2023 at 21:30, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
 >
-> On 14.09.2023 08:54, Otto Pfl=C3=BCger wrote:
-> > MSM8917 uses the SMPA2 and LDOA3 regulators provided by the PM8937 PMIC
-> > for the VDDCX and VDDMX power domains in voltage level mode,
-> > respectively. These definitions should also work on MSM8937.
-> >
-> > Signed-off-by: Otto Pfl=C3=BCger <otto.pflueger@abscue.de>
-> > ---
-> Would you mind picking up the RPMPD part of [1] and integrating
-> QM215 and MSM8917 to use the new bindings?
+> dsi_wait4video_done() API wait for the DSI video mode engine to
+> become idle so that we can transmit the DCS commands in the
+> beginning of BLLP. However, with the current sequence, the MDP
+> timing engine is turned on after the panel's pre_enable() callback
+> which can send out the DCS commands needed to power up the panel.
+>
+> During those cases, this API will always timeout and print out the
+> error spam leading to long bootup times and log flooding.
+>
+> Fix this by checking if the DSI video engine was actually busy before
+> waiting for it to become idle otherwise this is a redundant wait.
+>
+> Fixes: a689554ba6ed ("drm/msm: Initial add DSI connector support")
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>  drivers/gpu/drm/msm/dsi/dsi_host.c | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+>
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index 0c4ec0530efc..31495e423c56 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -1075,9 +1075,21 @@ static void dsi_wait4video_done(struct msm_dsi_host *msm_host)
+>
+>  static void dsi_wait4video_eng_busy(struct msm_dsi_host *msm_host)
+>  {
+> +       u32 data;
+> +
+> +       data = dsi_read(msm_host, REG_DSI_STATUS0);
+> +
+>         if (!(msm_host->mode_flags & MIPI_DSI_MODE_VIDEO))
+>                 return;
 
-Please, no. That patch was dropped in favour of [2], which doesn't
-include RPMPD indices.
-And it's good, since we can introduce logical 'default' ones instead
-of the ones proposed in the [1].
-I started working at making generic RPMPD indices, but I haven't sent
-the patches yet.
-So, I think, this patch is fine.
+We can probably skip reading REG_DSI_STATUS0 if the host is in CMD mode.
+LGTM otherwise.
 
 >
-> Konrad
+> +       /* if video mode engine is not busy, its because
+> +        * either timing engine was not turned on or the
+> +        * DSI controller has finished transmitting the video
+> +        * data already, so no need to wait in those cases
+> +        */
+> +       if (!(data & DSI_STATUS0_VIDEO_MODE_ENGINE_BUSY))
+> +               return;
+> +
+>         if (msm_host->power_on && msm_host->enabled) {
+>                 dsi_wait4video_done(msm_host);
+>                 /* delay 4 ms to skip BLLP */
+> --
+> 2.40.1
 >
-> [1] https://lore.kernel.org/linux-arm-msm/1688647793-20950-2-git-send-ema=
-il-quic_rohiagar@quicinc.com/
-
-[2] https://lore.kernel.org/linux-arm-msm/1689744162-9421-2-git-send-email-=
-quic_rohiagar@quicinc.com/
 
 
---=20
+-- 
 With best wishes
 Dmitry
