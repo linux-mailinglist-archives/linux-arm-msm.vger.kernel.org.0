@@ -2,112 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 22C277A1391
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 04:07:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E0D67A139F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 04:16:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231322AbjIOCHm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Sep 2023 22:07:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42880 "EHLO
+        id S231432AbjIOCQf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Sep 2023 22:16:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231269AbjIOCHm (ORCPT
+        with ESMTP id S229584AbjIOCQc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Sep 2023 22:07:42 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4BA51BF8;
-        Thu, 14 Sep 2023 19:07:37 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38F1vjQB031639;
-        Fri, 15 Sep 2023 02:07:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=DFfM3gwuXEv/bD4DPO1UqZiRQA0ptdzLpBiMIY5+g28=;
- b=HJ+Dcw3kxGd/kBzjt1pQxuP3reD8ksTOy+XaBRVZ2/RFRW4RDxtrBrPLp54Qzth2NSEo
- qnLVnnn8RfTybYKJSLG7OdiBWH9CM8aJ3yZtKDud3pR03HuJgPiKVjexO3NdpenGwJQV
- 8szMNp827AaCj1bsjKPwvjHSHN8bQVKCGBvZuWuSHn5xlzjBytHH9lH1OyH4SAOzjDQ6
- 7/8QYA2eOGz7wB8FI+pEPhwnjGwmIFCN3yXiSl8wctF1CuP+0eYuTq0tSan53yBrh7VS
- EikDFrRurnXCXyZVMnqz0nq2SjPJqOd08oIdyq4B9vPtrCfzWch7jd2HSwKyMpnd58Ex FQ== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t4e2b00uj-1
+        Thu, 14 Sep 2023 22:16:32 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B95FD1BEB;
+        Thu, 14 Sep 2023 19:16:28 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38F1VAFp015091;
+        Fri, 15 Sep 2023 02:15:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=ZjPVyq1MqpeBUl5lequMmDSTzopZyeP+Od7ITsvG1gc=;
+ b=JwHKDU+3rZBVtJi7ROkIYDRs4Xq12q4cgYs8d8+PfL3ug6bUSZ5aGvez0ybcmp7RIoov
+ 6x/jXu0N2ZWIjy5o8phlkwugm/OlJbt2+y5GvGr3+n+ffYeSKn9w450NP+ujzBw9hRUR
+ dlpaAZjgdogO9y9QpBrj5j3NdAlvIPIm1slEcfYgiJJVqjpeSt+VXoStPKX6utgB02/J
+ KD14wkyFsEmHYDu424pAbA4Lss/JoL3bB4SI0166mCiZWEIxSNr1hktK/e+MMVpyYU62
+ Mb96lKfRSxcj9saH7cVOpU7yh0zbmuemZC/bBX5EpxAHgPFp9oZgCDf3FHHoQsMyrZWg WQ== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t4dncr2h0-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 15 Sep 2023 02:07:25 +0000
+        Fri, 15 Sep 2023 02:15:43 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38F27OOR015603
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38F2Fgv1005246
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 15 Sep 2023 02:07:24 GMT
-Received: from [10.253.10.13] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Thu, 14 Sep
- 2023 19:07:21 -0700
-Message-ID: <289ec1a4-1930-4bed-b6ff-f1a591dc4295@quicinc.com>
-Date:   Fri, 15 Sep 2023 10:07:18 +0800
+        Fri, 15 Sep 2023 02:15:42 GMT
+Received: from tengfan2-gv.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.36; Thu, 14 Sep 2023 19:15:34 -0700
+From:   Tengfei Fan <quic_tengfan@quicinc.com>
+To:     <will@kernel.org>, <robin.murphy@arm.com>, <joro@8bytes.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <catalin.marinas@arm.com>
+CC:     <geert+renesas@glider.be>, <arnd@arndb.de>,
+        <neil.armstrong@linaro.org>, <nfraprado@collabora.com>,
+        <rafal@milecki.pl>, <peng.fan@nxp.com>,
+        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <quic_tsoni@quicinc.com>,
+        <quic_shashim@quicinc.com>, <quic_kaushalk@quicinc.com>,
+        <quic_tdas@quicinc.com>, <quic_tingweiz@quicinc.com>,
+        <quic_aiquny@quicinc.com>, <kernel@quicinc.com>,
+        Tengfei Fan <quic_tengfan@quicinc.com>
+Subject: [PATCH v2 0/8] soc: qcom: Add uart console support for SM4450
+Date:   Fri, 15 Sep 2023 10:15:00 +0800
+Message-ID: <20230915021509.25773-1-quic_tengfan@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.0
-Subject: Re: [PATCH 3/6] phy: qualcomm: phy-qcom-qmp-ufs: Add High Speed Gear
- 5 support for SM8550
-Content-Language: en-US
-To:     Nitin Rawat <quic_nitirawa@quicinc.com>, <mani@kernel.org>,
-        <quic_nguyenb@quicinc.com>, <martin.petersen@oracle.com>
-CC:     <linux-scsi@vger.kernel.org>, Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        "open list:GENERIC PHY FRAMEWORK" <linux-phy@lists.infradead.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <1694411968-14413-1-git-send-email-quic_cang@quicinc.com>
- <1694411968-14413-4-git-send-email-quic_cang@quicinc.com>
- <bce78c63-139a-852a-f8bb-50510f9c4e7d@quicinc.com>
-From:   Can Guo <quic_cang@quicinc.com>
-In-Reply-To: <bce78c63-139a-852a-f8bb-50510f9c4e7d@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: KvPY1xCdSu9q2FxTzy_2c-X3ysk1Efh3
-X-Proofpoint-ORIG-GUID: KvPY1xCdSu9q2FxTzy_2c-X3ysk1Efh3
+X-Proofpoint-GUID: XdDXLfqqc3EedxKW86OfvWgPS5NuQ0TH
+X-Proofpoint-ORIG-GUID: XdDXLfqqc3EedxKW86OfvWgPS5NuQ0TH
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
  definitions=2023-09-15_02,2023-09-14_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 spamscore=0
- priorityscore=1501 malwarescore=0 suspectscore=0 adultscore=0 mlxscore=0
- lowpriorityscore=0 impostorscore=0 clxscore=1015 phishscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309150017
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ phishscore=0 mlxlogscore=492 mlxscore=0 suspectscore=0 spamscore=0
+ priorityscore=1501 impostorscore=0 bulkscore=0 adultscore=0 malwarescore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309150018
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Nitin,
+This series add base description of UART, TLMM, interconnect, TCSRCC
+RPMHCC, GCC, RPMh PD and SMMU nodes which helps SM4450 boot to shell
+with console on boards with this SoC.
 
-On 9/14/2023 8:26 PM, Nitin Rawat wrote:
->
->
-> On 9/11/2023 11:29 AM, Can Guo wrote:
->> Split High Speed Gear 4 PHY settings from common tables, and add PHY
->> settings to support High Speed Gear 5.
->>
->
-> Hi Can,
->
-> Can you please add more details explaining the change. We can mention 
-> that are we spliting serdes setting for g3 and g4.
-Sure.
->
-> Also how about having 2 patches, one for splitting serdes 
-> configuration b/w gear3 and gear4 and other patch about new g5 setting.
-No, we should have them in one patch, because after splitting, just 
-writing the common settings won't work for G5 mode.
->
-> -Nitin
->
+Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+---
+This patch series depends on below patch series:
+"[PATCH v2 0/4] clk: qcom: Add support for GCC and RPMHCC on SM4450"
+https://lore.kernel.org/linux-arm-msm/20230909123431.1725728-1-quic_ajipan@quicinc.com/
+"[PATCH v2 0/2] pinctl: qcom: Add SM4450 pinctrl driver"
+https://lore.kernel.org/linux-arm-msm/20230915015808.18296-1-quic_tengfan@quicinc.com/
+"[PATCH v2 0/2] interconnect: qcom: Add SM4450 interconnect"
+https://lore.kernel.org/linux-arm-msm/20230915020129.19611-1-quic_tengfan@quicinc.com/
 
-Thanks,
+v1 -> v2:
+  - setting "qcom,rpmh-rsc" compatible to the first property
+  - keep order by unit address
+  - move tlmm node into soc node
+  - update arm,smmu.yaml
+  - add enable pinctrl and interconnect defconfig patches
+  - remove blank line
+  - redo dtbs_check check
 
-Can Guo
+previous discussion here:
+[1]
+https://lore.kernel.org/linux-arm-msm/20230908065847.28382-1-quic_tengfan@quicinc.com
+
+Ajit Pandey (2):
+  arm64: dts: qcom: sm4450: Add apps_rsc and cmd_db node
+  arm64: dts: qcom: sm4450: Add RPMH and Global clock controller
+
+Tengfei Fan (6):
+  dt-bindings: firmware: document Qualcomm SM4450 SCM
+  dt-bindings: mfd: qcom,tcsr: Add compatible for sm4450
+  dt-bindings: interrupt-controller: qcom,pdc: document qcom,sm4450-pdc
+  dt-bindings: arm-smmu: Add compatible for SM4450 SoC
+  arm64: dts: qcom: add uart console support for SM4450
+  arm64: defconfig: enable interconnect and pinctrl for SM4450
+
+ .../bindings/firmware/qcom,scm.yaml           |   3 +
+ .../interrupt-controller/qcom,pdc.yaml        |   1 +
+ .../devicetree/bindings/iommu/arm,smmu.yaml   |   3 +
+ .../devicetree/bindings/mfd/qcom,tcsr.yaml    |   1 +
+ arch/arm64/boot/dts/qcom/sm4450-qrd.dts       |  18 +-
+ arch/arm64/boot/dts/qcom/sm4450.dtsi          | 309 ++++++++++++++++++
+ arch/arm64/configs/defconfig                  |   2 +
+ 7 files changed, 335 insertions(+), 2 deletions(-)
+
+
+base-commit: 98897dc735cf6635f0966f76eb0108354168fb15
+-- 
+2.17.1
 
