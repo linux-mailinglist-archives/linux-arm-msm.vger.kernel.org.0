@@ -2,189 +2,212 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6AF6E7A26A8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 20:56:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 89EB47A2558
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 20:10:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236503AbjIOS4B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Sep 2023 14:56:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43434 "EHLO
+        id S229445AbjIOSJt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Sep 2023 14:09:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236954AbjIOSzs (ORCPT
+        with ESMTP id S236357AbjIOSJc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Sep 2023 14:55:48 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EE332719
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 11:53:29 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2b95d5ee18dso41363831fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 11:53:29 -0700 (PDT)
+        Fri, 15 Sep 2023 14:09:32 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B883E1BF2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 11:09:26 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-9a65f9147ccso309765266b.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 11:09:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694804008; x=1695408808; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=0FAxuwdbhL1UZWKRYCu/VMuW55QBQ5O7sg1MPHSWY4E=;
-        b=jIQE6ALDQscrqMQc8P6Q7nLsCs98uFFGQU6xEY9CpZMUuA3QpXgmKcQ4M5bwisTwI6
-         y1oP6dpukR0PR+qsAm71qaXlq3HNcUFEBiotajR+27mr+hjWaCUjyKl0VBVgnQV9UfCz
-         0UvMg/3TSWW40MNxi6IBBPJxsNo8FeXD9xNk9iMJ3HN876gYg/3KHOMDCuLbhsgkPbqQ
-         ZyqNaP7RMvVHlgDgDTAgDDFLCch4kQO1GjJGEnbPdrr5TrkDspkM49uS4NKVn+DzQSGN
-         ObU4zs3ESOJujx4wiAQMftoyGYhuBwHgT1Vka7eIYzsrIbltm9OnTBMP431CfhjlpQE1
-         o3bw==
+        d=linaro.org; s=google; t=1694801365; x=1695406165; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=3lJbmINvkT47tROxDsH2dYDRY8yv0omZvaPcrFOjLDo=;
+        b=NhCpR+4HB/Wcg1ORzQH2vbrpy9pHparg8m7nqlzjOv8xF7D+v8ZEhKT1CwDyzzvoOc
+         LM/scvs0ETINB2Os4xe5hBpSY5nXGxWeFpnHtKOnSDe7B4kyL6UvcoTKwtzqgiTPMaXr
+         Qp014qvfefPylXMmTeNCthhODLhks5ptcpRBFZdIbea9ox8CDf8txz+ZXd9mDgkt3JV9
+         hv4331ZlB9juhS2u4Rn0QCluTAfDLAAvvXYwCKtXiCE4UnlrdQ4pw2eUrjyj8aJ8Udrd
+         r+aZzc6t0BfA4ANCiTqaUhmyffLnhUGLzWkdi8BMW5A1EOUFkSCnCZru4rWReNYegQhM
+         l0VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694804008; x=1695408808;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0FAxuwdbhL1UZWKRYCu/VMuW55QBQ5O7sg1MPHSWY4E=;
-        b=fZRqjrcr2hLO9m4lw/Oz2qjlvn8Z3TkpzgFEaNkWGqLysUVQaHQ5jIvpqNX1pp2zc0
-         gKD0PGOuhW3aSqhwK6Vlh12HkZynsVIJlM47nOYJlyRJpG1fh15TJKdnlTnQqYkyU2Sm
-         lhOpR9jzYfVKdrAZCyZPQcefLgsP2HuGxUoaWexx/TxzLCcaM4HkYxpGdqnSfLH4YCS5
-         vk2To0FXLdaBGC5IBNy53uHgLiuRgdGTcnbO34KxtLY1RcxCQoTL5WmGHPmJE5m0w2IR
-         90lKO8dvDbcarfmKYDfmWaEfOyUXn1vP0AbolepnRX/PStSi7mClL7xZ6HPaB5nX2ZYz
-         mvtQ==
-X-Gm-Message-State: AOJu0YzhWJPj+Y8WFM8x4VP05ioDUfYCQvvWip7gyE4FJCxJzuhL0rpl
-        J4gEWz17PTuBC6mdXVYO4nqmyuixtCDz32kYYu8TNmCO
-X-Google-Smtp-Source: AGHT+IEP0i/tzM96cbqyLGXPCqm1aai/p4wEqDzPSxtw+6pTtUjvSOEHloAluxuoxtcLZWKmedVJMA==
-X-Received: by 2002:a2e:850b:0:b0:2bf:ac97:df26 with SMTP id j11-20020a2e850b000000b002bfac97df26mr2304956lji.25.1694804007626;
-        Fri, 15 Sep 2023 11:53:27 -0700 (PDT)
-Received: from [127.0.0.1] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id i20-20020a2e8094000000b002b9bf5b071bsm819625ljg.20.2023.09.15.11.53.26
+        d=1e100.net; s=20230601; t=1694801365; x=1695406165;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3lJbmINvkT47tROxDsH2dYDRY8yv0omZvaPcrFOjLDo=;
+        b=ENGOaRTGSwXUZd/4Qu8oEX5Bwy8Ie52ggVik5vH7P6bDnKq2pk4GP191NLjxOTOVWw
+         VSpYTJGlVOKoVIUKQSbz8ie2ZOo0LPGP39eZIcv9Spo/rBe1Dsm/feYJBO7edFQveVdn
+         WEGFghs8vmWZj0am5VDPp7vMDTCWylUc75e3ifFoXdH2ttvP4teTmy7Frenc6TThuTXl
+         5AQkYVKZjy/7BHsQRDFp7L76fCjMsFBOvYG/ly2rQuCFc1KzapgjOzbdkgrBR/hf3SNN
+         fqIzVf7+LGN7TtyCgOnb7E0E5fDpeWUeKB1eSeKkGUHsuSLnvzRNDxRxDBvf9nIoKzsO
+         5gpw==
+X-Gm-Message-State: AOJu0YxI8k63RTbTtGNpntHcZBLuU+dsgFERPPqxPnoPDlDVIU806Lzo
+        tbOAdZEbaynH3yleehyorMUCaQ==
+X-Google-Smtp-Source: AGHT+IGR+An1hVCaHWT2JjEYgCQVmusddVJ96fu2aguOwg0x+Ax99Rr3p95DUVUz5bxhVoR4ixPu8A==
+X-Received: by 2002:a17:907:b0c:b0:9ad:7f13:4db8 with SMTP id h12-20020a1709070b0c00b009ad7f134db8mr2031898ejl.36.1694801365082;
+        Fri, 15 Sep 2023 11:09:25 -0700 (PDT)
+Received: from [192.168.37.154] (178235177024.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.24])
+        by smtp.gmail.com with ESMTPSA id sy5-20020a1709076f0500b009adc7433419sm1684546ejc.18.2023.09.15.11.09.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Sep 2023 11:53:27 -0700 (PDT)
-Date:   Fri, 15 Sep 2023 05:31:45 +0300
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Can Guo <quic_cang@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>, mani@kernel.org,
-        quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
-        martin.petersen@oracle.com
-CC:     linux-scsi@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "open list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
-        <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_2/6=5D_scsi=3A_ufs=3A_ufs-qcom=3A_Add?= =?US-ASCII?Q?_support_for_UFS_device_version_detection?=
-User-Agent: K-9 Mail for Android
-In-Reply-To: <d34242f8-6e21-1549-b87d-3db2e825b7d5@quicinc.com>
-References: <1694411968-14413-1-git-send-email-quic_cang@quicinc.com> <1694411968-14413-3-git-send-email-quic_cang@quicinc.com> <6055cd57-4de7-4b7e-a4f3-68a7de1aef28@linaro.org> <6225a132-4b7f-bbb4-e863-4e62b99dd79d@quicinc.com> <31823dc4-6f50-435b-9a20-66471209ec31@linaro.org> <d34242f8-6e21-1549-b87d-3db2e825b7d5@quicinc.com>
-Message-ID: <1413119B-8B9C-4DE4-A086-476B2BAA60AD@linaro.org>
+        Fri, 15 Sep 2023 11:09:24 -0700 (PDT)
+Message-ID: <66676866-d0d7-44c1-9170-aff687ac452c@linaro.org>
+Date:   Fri, 15 Sep 2023 20:09:22 +0200
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DATE_IN_PAST_12_24,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] soc: qcom: smem: Document shared memory item IDs and
+ corresponding structs
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>, andersson@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org
+References: <20230915175907.17134-1-quic_jhugo@quicinc.com>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230915175907.17134-1-quic_jhugo@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11 September 2023 13:02:50 GMT+03:00, Can Guo <quic_cang@quicinc=2Ecom> =
-wrote:
->
->On 9/11/2023 5:46 PM, Konrad Dybcio wrote:
->> On 11=2E09=2E2023 11:42, Can Guo wrote:
->>> Hi Konrad,
->>>=20
->>> On 9/11/2023 5:17 PM, Konrad Dybcio wrote:
->>>> On 11=2E09=2E2023 07:59, Can Guo wrote:
->>>>> From: "Bao D=2E Nguyen" <quic_nguyenb@quicinc=2Ecom>
->>>>>=20
->>>>> Retrieve UFS device version from UFS host controller's spare registe=
-r
->>>>> which is populated by bootloader, and use the UFS device version tog=
-ether
->>>>> with host controller's HW version to decide the proper power modes w=
-hich
->>>>> should be used to configure the UFS PHY=2E
->>>> That sounds a bit fishy=2E=2E is there no bootloader-independent
->>>> solution to that? Can't we bring in the code that the bootloader
->>>> uses to determine these values?
->>>>=20
->>>> Konrad
->>>=20
->>> Agree, it is=2E
->>>=20
->>>=20
->>> All these complexities come from one request from PHY design team - po=
-wer saving=2E
->>>=20
->>> And to achieve power saving, Qualcomm UFS developers are requested to =
-use the
->>>=20
->>> lowest hanging PHY settings which can sustain the Max agreed HS Gear (=
-btw host
->>>=20
->>> and UFS device) during UFS's lifecycle in High Level OS,=C2=A0 whereas=
- the power saving
->>>=20
->>> request does not apply to bootloader, which works for only a few secon=
-ds during
->>>=20
->>> bootup=2E Hence, there is no such version detect code in bootloader -=
-=C2=A0 it just uses the
->>>=20
->>> highest PHY settings to configure PHY, boot up UFS and put UFS device =
-version in this
->>>=20
->>> register=2E
->> First of all, your email client seems to be inserting 2 newlines
->> instead of 1=2E If you're using thunderbird, you may want to edit:
->>=20
->> mail=2Eidentity=2E(default or your mail identity idx)=2Edefault=2Ecompo=
-se_html
->>=20
->> to `false`
->>=20
->> and add that to your internal wiki page, as I see many @quic folks havi=
-ng
->> this issue=2E
->>=20
->>=20
->> Going back to the main topic, I don't think we understood each other=2E
->> The commit message states:
->>=20
->>=20
->> "Retrieve UFS device version from UFS host controller's spare register
->> which is populated by bootloader"
->>=20
->>=20
->> Which means the bootloader is able to somehow determine the value
->> that's in the spare register and write it there=2E
->>=20
->> I'm asking whether we can take the logic behind this value and
->> move it to Linux so that we don't depend on the bootloader to
->> guarantee it (e=2Eg=2E Chrome or some other devices with more exotic
->> fw may not work this way)=2E
->>=20
->>=20
->> Konrad
->
->
->There is no logic behind this value at all in bootloader, as I explained,=
- after bootloader
->
->initializes UFS, bootloader simply reads UFS's device version (the value =
-you are referring)
->
->and write it to the register=2E But in Linux kernel, we need (or want to =
-know) this value
->
->BEFORE we initialize UFS host controller (and UFS device)=2E
+On 15.09.2023 19:59, Jeffrey Hugo wrote:
+> Shared memory items are assigned a globally unique ID and almost always
+> have a defined structure which is stored in the shared memory.  Document
+> assigned IDs and corresponding structures.
+> 
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> ---
+> 
+> Konrad, before I get too far into this, I was hoping for some early
+> feedback since this documentation is a request that you made.
+> 
+> Please let me know if this is aligned with what you were wanting.
+This is super nice, I'll just leave you with a few nitty
+code-style pointers.
 
-Depending on the bootloader behaviour is not an option=2E For example the =
-kernel might be started via kexec=2E Or via u-boot=2E Or grub=2E Or any oth=
-er bootloader=2E So please duplicate the logic to read the UFS version inst=
-ead=2E
+> +/* fixed items - these have a static position in shared memory */
+Meaningless but eye-pleasing - comments should start with an
+uppercase letter
+
+> +#define SMEM_PROC_COMM				0
+In many places like this where we essentially have a firmware
+interface, it is customary to go like this:
+
+#define FWNAME_CALL_SOMETHING_FOO	(magicval1)
+struct fwname_something_foo {
+	[...]
+};
+
+#define FWNAME_CALL_SOMETHING_BAR	(magicval2)
+struct fwname_something_bar {
+	[...]
+};
+
+This makes matching the call/function/whatev name with what
+it expects/returns easier for a typical human
+
+[...]
+
+> +/* Legacy communication protocol between "Apps" and "Modem" processors */
+The comments explaining what this does are a great addition, I
+think in the spirit of that previous suggestion, they could go
+like this:
+
+/* blah blah blah yes yes yes */
+#define FWNAME_CALL_SOMETHING_FOO	(magicval1)
+struct fwname_something_foo {
+	[...]
+};
+
+/* blah blah something something */
+#define FWNAME_CALL_SOMETHING_BAR	(magicval2)
+struct fwname_something_bar {
+	[...]
+};
 
 
-P=2ES=2E you have been asked to fix your email client=2E Please do so=2E O=
-r, if you are inserting these linebreaks manually, please stop=2E
+[...]
 
->Thanks,
->
->Can Guo=2E
->
+> +/* SMEM_ALLOCATION_TABLE is an array of these structures.  512 elements in the array. */
+> +struct smem_heap_entry {
+> +        __le32 allocated;
+> +        __le32 offset;
+> +        __le32 size;
+> +        __le32 reserved; /* bits 1:0 reserved, bits 31:2 aux smem base addr */
+If we have an integer split into bitfields or similar, something
+like this would make it both readable and usable in code:
 
+struct smem_heap_entry {
+        __le32 allocated;
+        __le32 offset;
+        __le32 size;
+        __le32 reserved;
+#define SMEM_HEAP_ENTRY_BASE_ADDR GENMASK(31, 2)
+#define SMEM_HEAP_ENTRY_RESERVED GENMASK(1, 0)
+};
+
+[...]
+
+> +#define FLASH_PART_MAGIC1       0x55EE73AA
+> +#define FLASH_PART_MAGIC2       0xE35EBDDB
+> +#define FLASH_PTABLE_V3         3
+> +#define FLASH_PTABLE_V4         4
+> +#define FLASH_PTABLE_MAX_PARTS_V3 16
+> +#define FLASH_PTABLE_MAX_PARTS_V4 32
+> +#define FLASH_PTABLE_ENTRY_NAME_SIZE 16
+Similarly having such magic values under the corresponding struct
+member would make things more obvious
+
+> +
+> +struct flash_partition_entry {
+> +        char name[FLASH_PTABLE_ENTRY_NAME_SIZE];
+> +        __le32 offset;     /* Offset in blocks from beginning of device */
+> +        __le32 length;     /* Length of the partition in blocks */
+> +        u8 attr;           /* Flags for this partition */
+Comments like this are welcome too, particularly where things
+are "very not obvious", like here where length is in blocks
+and not bytes.
+
+But if we had something like "u32 flags" followed by a bunch
+of defines, that's self-explanatory.
+
+Konrad
