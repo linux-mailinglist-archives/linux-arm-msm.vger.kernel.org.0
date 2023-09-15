@@ -2,80 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DBF827A2020
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 15:48:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BFBDB7A2030
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 15:51:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234617AbjIONsq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Sep 2023 09:48:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57822 "EHLO
+        id S234736AbjIONvN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Sep 2023 09:51:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234621AbjIONsp (ORCPT
+        with ESMTP id S234714AbjIONvM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Sep 2023 09:48:45 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3767268F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 06:48:25 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2b95d5ee18dso36062261fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 06:48:25 -0700 (PDT)
+        Fri, 15 Sep 2023 09:51:12 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23BE5268A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 06:51:07 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-9a9d6b98845so718174066b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 06:51:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694785704; x=1695390504; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1694785865; x=1695390665; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=WLoVQHNPO7ESrRbvHvtdSLnA8ygdJfPRZs36Hp3fy4s=;
-        b=FV4Xn30eJWjT4XSxr49L88eXC220LAuKU8s19MwXzB06eV6pbWm8OwA2gL+TyJ+5Hz
-         yOFhvK3EnDvksUyi8mEpLPevYTC0JzAtyYNnKWEn9XO4+/jCy+f1PL8TQnzBCrc/ZCxV
-         AR9Rlf8qSHQQ7Sq+0468KQbLT/Zu1D2MbjGDUn93WslsPFZfKKCAGSroo9L4jXye4s83
-         WFiOb5ZFafQtwaBIjpLnvCqIta8oHi21C5AOVI934LZK9cbkTyE9DcW9cCwwyyByDOXx
-         /wSzKJ2JdxayZRlZAcp0SUNzJWwc7qbMKTlHUcsSbS03kzE+2Z9ko+zoaERBMZOPInNp
-         WxJg==
+        bh=Ua/ea1KKbkYSyxqhtoNJDiME1vLwKiKvnqeStTpydJk=;
+        b=nBeJTIvOONod5L5YSymR17yS7gIheplwxQLsi+MtNq0/6SaqBx/5EdyA06LKxNRuvV
+         anN7bNr0dZHeuXG8CMS1ak20U8OfFKS2dqByPdRnQ2XdA7ZpOwI3aLcdh9VLP0LxtUle
+         yAbXG0WEfB26ILlckzmalNyewAhZ3Z1RuQ4f9xmyhLg6BowHRaZkzmGmnGQyPG+no4mT
+         gCMzM3X5sSVeO+P7bChIp0Hw+SXDeBBSxPN6UCoEVgx0TCH9xGr2/pPr12EbY9x9XHC4
+         +iw4hUFLKLpVVVn5m4MnNmB8cDpAw0V23DKHA3cVmcPkkSTKHzu/seydNWh83yIAxq6C
+         Y0ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694785704; x=1695390504;
+        d=1e100.net; s=20230601; t=1694785865; x=1695390665;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WLoVQHNPO7ESrRbvHvtdSLnA8ygdJfPRZs36Hp3fy4s=;
-        b=Kr4OsGX1WBJU2/hmsprLTovrECb/uav24+bj54A/AU4dbaQkl3dpOfXpgND+3Si1XZ
-         oOVsGd8R3EHI2E6CyCJFEf2qsFuY3QHv9WWjMa03gnTWK1IKvtvtOHJto1VEnra6lLWR
-         gQQXNfANCbITeYSl6cZdx7439tU8jgc91vKeRLwRUkM/DulNZIjZ1wdsFi/JjbaHhv8y
-         jCyS9ZNy5HGzZMx6k9Fa5IFYv5u/XyRmi1WDQ/X1fS/hg/9UuMf6XBESMhhKowBKJNLh
-         pa1nVl/Kr7tfjKtMv10RppPXu0cTF9K/380/nlZdE7/LCUKvtSmPH1TyAujTpGdons3q
-         OW3A==
-X-Gm-Message-State: AOJu0YynGxDYRthmC1JPKCb8tzXxijTSgybtRLIOTcQFSCAaV4H381Ce
-        +/30ev3BM58CWKbTGUC84YCRnQ==
-X-Google-Smtp-Source: AGHT+IEYEq1P0psQTkdX/nX4ET1GV+WxWYIW6UFBZT4mI5ipXyYF8ygfjV+nw61ugc3545DB6rGHOg==
-X-Received: by 2002:a2e:95d4:0:b0:2b6:ea3b:f082 with SMTP id y20-20020a2e95d4000000b002b6ea3bf082mr1580793ljh.38.1694785704010;
-        Fri, 15 Sep 2023 06:48:24 -0700 (PDT)
+        bh=Ua/ea1KKbkYSyxqhtoNJDiME1vLwKiKvnqeStTpydJk=;
+        b=bGOGwe16MM52cCCb8uXm6bQK6MwDctFUPKlPeVuMfZQscTQDgutzzddM0uAKay8LgQ
+         wbiwDsjAJqD5G6g+JCwBRkHYH4k0aK7xvqmk5qS/XUuLs6NAVFTHoRR0LhvKYkK3ZJFx
+         a5j1OJUozYLiAAvWgIHV657uYftwycRfmsvi3HLEyQpsE56n5XyAwUUS8KxzbvitoS4V
+         0H6wFjZNta+rDetQLdv3pynhburVMFBL5ePmdHXjyMvMaJdbMFgogxopF7IP5f1BIfVX
+         9eBkeQbwTgm1xQ9wdKe8fYE2NVZdXziP0vI3EwH3oxaTpu+lB4YxI+l4YkfZMi+8YzRT
+         K7LQ==
+X-Gm-Message-State: AOJu0Ywg4rDjtjgvzN4WEWHi2AKkmjJHtuuFt5yLtJQWyay/mpHgCQ2O
+        S9k/IxqaJqmPbWpboYSPGkoRew==
+X-Google-Smtp-Source: AGHT+IF6f030y810gqqF95mdJJwq3sdnNwumzYgRaKlafP4UM/icwJHEd3dypD+OnJQHi/0J5ysZAg==
+X-Received: by 2002:a17:907:ea7:b0:9ad:93c8:c483 with SMTP id ho39-20020a1709070ea700b009ad93c8c483mr6814446ejc.2.1694785865257;
+        Fri, 15 Sep 2023 06:51:05 -0700 (PDT)
 Received: from [192.168.37.232] (178235177024.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.24])
-        by smtp.gmail.com with ESMTPSA id u11-20020a170906068b00b00991faf3810esm2444001ejb.146.2023.09.15.06.48.21
+        by smtp.gmail.com with ESMTPSA id p25-20020a1709060e9900b00992b50fbbe9sm2467926ejf.90.2023.09.15.06.51.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Sep 2023 06:48:23 -0700 (PDT)
-Message-ID: <825bc60b-2067-43e2-8b43-9d38b7cebf02@linaro.org>
-Date:   Fri, 15 Sep 2023 15:48:21 +0200
+        Fri, 15 Sep 2023 06:51:04 -0700 (PDT)
+Message-ID: <70b10fcc-6851-4d48-b27d-3e701ba95ae0@linaro.org>
+Date:   Fri, 15 Sep 2023 15:51:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 10/13] usb: dwc3: qcom: Add multiport suspend/resume
- support for wrapper
+Subject: Re: [PATCH 7/9] arm64: dts: qcom: msm8916/39: Disable unneeded
+ firmware reservations
 Content-Language: en-US
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Johan Hovold <johan@kernel.org>,
-        Mathias Nyman <mathias.nyman@intel.com>
-Cc:     linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
-        quic_jackp@quicinc.com, ahalaney@redhat.com,
-        quic_shazhuss@quicinc.com
-References: <20230828133033.11988-1-quic_kriskura@quicinc.com>
- <20230828133033.11988-11-quic_kriskura@quicinc.com>
+To:     Stephan Gerhold <stephan@gerhold.net>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+References: <20230911-msm8916-rmem-v1-0-b7089ec3e3a1@gerhold.net>
+ <20230911-msm8916-rmem-v1-7-b7089ec3e3a1@gerhold.net>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -112,75 +100,30 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230828133033.11988-11-quic_kriskura@quicinc.com>
+In-Reply-To: <20230911-msm8916-rmem-v1-7-b7089ec3e3a1@gerhold.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28.08.2023 15:30, Krishna Kurapati wrote:
-> QCOM SoC SA8295P's tertiary quad port controller supports 2 HS+SS
-> ports and 2 HS only ports. Add support for configuring PWR_EVENT_IRQ's
-> for all the ports during suspend/resume.
+On 11.09.2023 19:41, Stephan Gerhold wrote:
+> Now that we no longer have fixed addresses for the firmware memory
+> regions, disable them by default and only enable them together with
+> the actual user in the board DT.
 > 
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> This frees up unnecessary reserved memory for boards that do not use
+> some of the remoteprocs and allows moving selected device-specific
+> properties (such as firmware size) to the board-specific DT part in
+> the next step.
+> 
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 > ---
->  drivers/usb/dwc3/dwc3-qcom.c | 39 +++++++++++++++++++++++++++++-------
->  1 file changed, 32 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index f8f8c5e39a01..34eeebb74a6a 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -37,7 +37,11 @@
->  #define PIPE3_PHYSTATUS_SW			BIT(3)
->  #define PIPE_UTMI_CLK_DIS			BIT(8)
->  
-> -#define PWR_EVNT_IRQ_STAT_REG			0x58
-> +#define PWR_EVNT_IRQ1_STAT_REG			0x58
-> +#define PWR_EVNT_IRQ2_STAT_REG			0x1dc
-> +#define PWR_EVNT_IRQ3_STAT_REG			0x228
-> +#define PWR_EVNT_IRQ4_STAT_REG			0x238
-> +
->  #define PWR_EVNT_LPM_IN_L2_MASK			BIT(4)
->  #define PWR_EVNT_LPM_OUT_L2_MASK		BIT(5)
->  
-> @@ -107,6 +111,19 @@ struct dwc3_qcom {
->  	int			num_ports;
->  };
->  
-> +/*
-> + * SA8295 has 4 power event IRQ STAT registers to be checked
-> + * during suspend resume.
-> + */
-But this driver supports much more than just SA8295?
-
-> +#define NUM_PWR_EVENT_STAT_REGS	4
-> +
-> +static u32 pwr_evnt_irq_stat_reg_offset[NUM_PWR_EVENT_STAT_REGS] = {
-> +	PWR_EVNT_IRQ1_STAT_REG,
-> +	PWR_EVNT_IRQ2_STAT_REG,
-> +	PWR_EVNT_IRQ3_STAT_REG,
-> +	PWR_EVNT_IRQ4_STAT_REG,
-> +};
-> +
->  static inline void dwc3_qcom_setbits(void __iomem *base, u32 offset, u32 val)
->  {
->  	u32 reg;
-> @@ -440,15 +457,19 @@ static void dwc3_qcom_enable_interrupts(struct dwc3_qcom *qcom)
->  
->  static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
->  {
-> +	u8 num_ports;
-Maybe I'm picky, but I'm not sure defining a variable for
-a single use of an object with a rather short name
-(qcom->num_ports) is justified, here and below..
+Wouldn't delete-node on the outliers be more concise?
 
 Konrad
