@@ -2,138 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 797A17A26F8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 21:11:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 845EF7A270B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 21:17:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232633AbjIOTK5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Sep 2023 15:10:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48590 "EHLO
+        id S236584AbjIOTQu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Sep 2023 15:16:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237071AbjIOTKs (ORCPT
+        with ESMTP id S236980AbjIOTQb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Sep 2023 15:10:48 -0400
-Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AA2BB3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 12:10:44 -0700 (PDT)
-Received: by mail-yb1-xb34.google.com with SMTP id 3f1490d57ef6-d77ad095e5cso2446128276.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 12:10:44 -0700 (PDT)
+        Fri, 15 Sep 2023 15:16:31 -0400
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87380170E;
+        Fri, 15 Sep 2023 12:16:25 -0700 (PDT)
+Received: by mail-pl1-x630.google.com with SMTP id d9443c01a7336-1bf7423ef3eso21197405ad.3;
+        Fri, 15 Sep 2023 12:16:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694805043; x=1695409843; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=t6Jy9kUIu2DIIzGv4f0XPwXh3BxzxnRtd2YRKiqx28g=;
-        b=OZxwhH5VUt4XRyl1wQQPpAAwK6XyCAOE8PteVePIRNM1g5+Lkat5taGgULlraJiY8Q
-         JXCyPwn9+h4zVjt6GfPKtBfyQihcAFl6UkWt/YcOSUjHrGXBCZhsBi/o1y+crpi/fnf+
-         d8l+9NnaP2Xaa03cLL+MYRuqzZ2k0PB/0Phthbv3Njw83e5UQ2FYKtNUTXW+jFid8uwV
-         V0TaUQJHYnhIiJvO+eAEnjr8ziHOad8bd+7y+tO1/UPH+eu0F5MOK0va1fJ//rdfWCRW
-         PKzSi+U5e7QomCbIf1VqK1BJOLlZ/6u/GasVjLVRd92qaJYfMC+w99VoqGGduZJ4nKL5
-         wUhg==
+        d=gmail.com; s=20230601; t=1694805384; x=1695410184; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=yxY6+HbG+ICeEhQvZXJriceyMdYdIehQa5XbmklSH3s=;
+        b=IjgXin3GF2MKrkGtG9LE3txz2c+/vm1pppLLMZvWv64A4xAtbm5kEefXDyfszB7jcy
+         yJtLehRzU9OvQdyTakW3Lu2e0hW1mjJpe8IgLeBmO+k1kdIOnGw8EzoIhRTeRe22VArZ
+         SdrpF0P/SJn0BqLQZQnwrdjAbOwxBpAwl5ubGOLoq8mQ3QketorknbsweCJ/pPaeZQrk
+         lKMs0UYlu/oV7ZP/XZbjAcb1aDMqcrwexp8UTv4usJw/UjDxercWpdS5USj1YJLfUBQK
+         KlS43ahzOo5+VDQAvIZqUQs1x4jnDvX9TXNfH7ZL7re1FXYNV+KoqG4t337yJ5A99n62
+         4+mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694805043; x=1695409843;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1694805384; x=1695410184;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=t6Jy9kUIu2DIIzGv4f0XPwXh3BxzxnRtd2YRKiqx28g=;
-        b=gaObaJ9wErL5OfaPMt4vm1dS67wLTHdszmLPB3BRjPcQWV/e5uMXGbzRqTCuRPdDjr
-         x/wwS3ei3jCDX4PUY9z/wikm0mJfN29F74gTd7DSQdpf05xE8QHlIUPdzk+JyKx2qPac
-         t3/xf182UEiWhJ6PLrbkSoBzFCN7cykXPusj7NtgWMrhbRoHwTIBw/amk7ki76+ZIfON
-         fbRZaMTz3cKJDU5J0iawU+o4V1LIghxWPAz4KmtKizHHMnEirLz7Zdu/E1rmUjUQZ/QH
-         gyDfLITGKufPE5J2sbSVMRaR7N0LaieZiOHIIPCFw2Ttbf4hi3mgMtaJSKj5gKUO83t+
-         g8ww==
-X-Gm-Message-State: AOJu0Yx0aMsk3wv9+XV9xJ63U3NdxU3to/7Piuffp8Fm91CL90rXWuWt
-        vzJmrBnG7DrSLFZDYasn5S5sA0pDTcLpCaDawYGS5g==
-X-Google-Smtp-Source: AGHT+IFuczj9yuZz9ftZW2btw7mlFe/+y+3qOVlsqeBJ+2RnoZHP30asBXJFzxiczp4dPPSlVOjCo2KBkT1ZdT3gSjA=
-X-Received: by 2002:a25:585:0:b0:d78:3f9c:138e with SMTP id
- 127-20020a250585000000b00d783f9c138emr2468180ybf.37.1694805043192; Fri, 15
- Sep 2023 12:10:43 -0700 (PDT)
+        bh=yxY6+HbG+ICeEhQvZXJriceyMdYdIehQa5XbmklSH3s=;
+        b=gjMUPsN3z8m8C68vamMmiESvBJka1QXfI3P6bonFiSHRPnYbAxSdKq+xH6EzgJE8CZ
+         50Fu9f0sXtRmca2VzhqSE/lb1mkn6aZerWnmMrXGXxOJBi9IgIaODOHoVl3t9M6t6wZB
+         QM4GJUaydH0da4GXkqbQPqQKQUqoKZzKBV2zWyyTprZEYPozS/wty86jcs85x4WWeKs6
+         2xyW8W9pCf7FhDcRp2D7/u2b/HEnnjpHm1Fr9OcWUMBJgBpC4VHinUy0d+2O0YP787q5
+         6A6GzUfZRcfUJgLcn/8Fb8mWLvEmwKOq8jJLjXwIpi6wm/TQ7VEB/VtyItV3pHAR3Kge
+         13Zg==
+X-Gm-Message-State: AOJu0YyIcDXv94edXUVSQhDUYTVUhvZWv87zvgnsvWcsIXKRJhPeO7Jj
+        iBwg91bGLSUtAFlJ4WEb1+mWCafMm9wc7zMh
+X-Google-Smtp-Source: AGHT+IEeqcClEaGFppon7PDzrDsjzlhWAM7HEhhhSjWJTQ46WhULLQsdhliSNh3l2ZHhFyGFLdg22g==
+X-Received: by 2002:a17:902:c149:b0:1c4:4c0f:8d91 with SMTP id 9-20020a170902c14900b001c44c0f8d91mr606194plj.69.1694805384387;
+        Fri, 15 Sep 2023 12:16:24 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:1c60:c4b6:ed28:95c7:9a77:34ba])
+        by smtp.gmail.com with ESMTPSA id ja2-20020a170902efc200b001c444106bcasm830720plb.46.2023.09.15.12.16.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Sep 2023 12:16:23 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.linux@gmail.com>
+To:     netdev@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, vkoul@kernel.org,
+        davem@davemloft.net, bhupesh.linux@gmail.com,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] Update Bhupesh's email address
+Date:   Sat, 16 Sep 2023 00:46:00 +0530
+Message-Id: <20230915191600.3410862-1-bhupesh.linux@gmail.com>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-References: <20230607045345.25049-1-quic_kathirav@quicinc.com> <rzxxoofebcyuoktsl72diwv575md62bxqse4uizfns247gyklp@tdoixme3qrjq>
-In-Reply-To: <rzxxoofebcyuoktsl72diwv575md62bxqse4uizfns247gyklp@tdoixme3qrjq>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 15 Sep 2023 22:10:32 +0300
-Message-ID: <CAA8EJprVQZXXVnNCULDYeUha0-mSyLZr1r6axbmw1MUiP_O9zg@mail.gmail.com>
-Subject: Re: [PATCH V2] firmware: qcom_scm: use the SCM_CONVENTION based on
- ARM / ARM64
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Kathiravan T <quic_kathirav@quicinc.com>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 15 Sept 2023 at 18:17, Bjorn Andersson <andersson@kernel.org> wrote:
->
-> On Wed, Jun 07, 2023 at 10:23:45AM +0530, Kathiravan T wrote:
-> > During SCM probe, to identify the SCM convention, scm call is made with
-> > SMC_CONVENTION_ARM_64 followed by SMC_CONVENTION_ARM_32. Based on the
-> > result what convention to be used is decided.
-> >
-> > IPQ chipsets starting from IPQ807x, supports both 32bit and 64bit kernel
-> > variants, however TZ firmware runs in 64bit mode. When running on 32bit
-> > kernel, scm call is made with SMC_CONVENTION_ARM_64 is causing the
-> > system crash, due to the difference in the register sets between ARM and
-> > AARCH64, which is accessed by the TZ.
-> >
-> > To avoid this, use SMC_CONVENTION_ARM_64 only on ARM64 builds.
-> >
->
-> My memory of this is cloudy, but I feel the logic is complicated because
-> early 64-bit boards all used 32-bit TZ. So, I really would like Elliot's
-> input before picking this change.
+Update the email address for Bhupesh's maintainer entry and fill in
+.mailmap accordingly.
 
-But this codepath is not changed by this patch. Only the 32-bit
-codepath is altered.
+Signed-off-by: Bhupesh Sharma <bhupesh.linux@gmail.com>
+---
+ .mailmap    | 5 +++++
+ MAINTAINERS | 2 +-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
->
-> Regards,
-> Bjorn
->
-> > Cc: stable@vger.kernel.org
-> > Fixes: 9a434cee773a ("firmware: qcom_scm: Dynamically support SMCCC and legacy conventions")
-> > Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
-> > ---
-> > Changes in V2:
-> >       - Added the Fixes tag and cc'd stable mailing list
-> >
-> >  drivers/firmware/qcom_scm.c | 2 ++
-> >  1 file changed, 2 insertions(+)
-> >
-> > diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> > index fde33acd46b7..db6754db48a0 100644
-> > --- a/drivers/firmware/qcom_scm.c
-> > +++ b/drivers/firmware/qcom_scm.c
-> > @@ -171,6 +171,7 @@ static enum qcom_scm_convention __get_convention(void)
-> >       if (likely(qcom_scm_convention != SMC_CONVENTION_UNKNOWN))
-> >               return qcom_scm_convention;
-> >
-> > +#if IS_ENABLED(CONFIG_ARM64)
-> >       /*
-> >        * Device isn't required as there is only one argument - no device
-> >        * needed to dma_map_single to secure world
-> > @@ -191,6 +192,7 @@ static enum qcom_scm_convention __get_convention(void)
-> >               forced = true;
-> >               goto found;
-> >       }
-> > +#endif
-> >
-> >       probed_convention = SMC_CONVENTION_ARM_32;
-> >       ret = __scm_smc_call(NULL, &desc, probed_convention, &res, true);
-> > --
-> > 2.17.1
-> >
-
-
-
+diff --git a/.mailmap b/.mailmap
+index a0a6efe87186..a69dfc6bbf1f 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -94,6 +94,11 @@ Ben M Cahill <ben.m.cahill@intel.com>
+ Ben Widawsky <bwidawsk@kernel.org> <ben@bwidawsk.net>
+ Ben Widawsky <bwidawsk@kernel.org> <ben.widawsky@intel.com>
+ Ben Widawsky <bwidawsk@kernel.org> <benjamin.widawsky@intel.com>
++Bhupesh Sharma <bhupesh.linux@gmail.com> <bhupesh.sharma@linaro.org>
++Bhupesh Sharma <bhupesh.linux@gmail.com> <bhsharma@redhat.com>
++Bhupesh Sharma <bhupesh.linux@gmail.com> <bhupesh.sharma@freescale.com>
++Bhupesh Sharma <bhupesh.linux@gmail.com> <bhupesh.sharma@st.com>
++Bjorn Andersson <andersson@kernel.org> <bjorn@kryo.se>
+ Bjorn Andersson <andersson@kernel.org> <bjorn@kryo.se>
+ Bjorn Andersson <andersson@kernel.org> <bjorn.andersson@linaro.org>
+ Bjorn Andersson <andersson@kernel.org> <bjorn.andersson@sonymobile.com>
+diff --git a/MAINTAINERS b/MAINTAINERS
+index fa7487b7729b..620301a2b5ef 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -17740,7 +17740,7 @@ F:	drivers/net/ethernet/qualcomm/emac/
+ 
+ QUALCOMM ETHQOS ETHERNET DRIVER
+ M:	Vinod Koul <vkoul@kernel.org>
+-R:	Bhupesh Sharma <bhupesh.sharma@linaro.org>
++R:	Bhupesh Sharma <bhupesh.linux@gmail.com>
+ L:	netdev@vger.kernel.org
+ L:	linux-arm-msm@vger.kernel.org
+ S:	Maintained
 -- 
-With best wishes
-Dmitry
+2.38.1
+
