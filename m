@@ -2,70 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 112827A207A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 16:06:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 971497A2092
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Sep 2023 16:13:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235533AbjIOOHA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Sep 2023 10:07:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59686 "EHLO
+        id S235507AbjIOONs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Sep 2023 10:13:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235522AbjIOOG7 (ORCPT
+        with ESMTP id S235475AbjIOONr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Sep 2023 10:06:59 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACE381FCC
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 07:06:54 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-40078c4855fso23514055e9.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 07:06:54 -0700 (PDT)
+        Fri, 15 Sep 2023 10:13:47 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63EF71FD0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 07:13:42 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-401b393ddd2so25136835e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 07:13:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694786813; x=1695391613; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1694787221; x=1695392021; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=yl/JazegorBAq3D3QeTIaZj/pCc3gy7siDATi6rK1hQ=;
-        b=MUvlKSdeqa169iu7XPWykJF/dV+4IyvsxTgMGvI4mHRtwBHUh4yd3G8OIEmG+PWy75
-         hyGKXw+NS3SrZX7Iu+H02RssQcVLrSUswv8wFZKC/HytFZ1i1r818E0IVoiQZ1bSbN7r
-         4ncWYviA8URqzaiGDWSHNl0ewf+iqtnMXJgBGhaRdDO0O3kbh5opjcUsdy24o1y/ZjQP
-         Zsw3cTFzEQXoGCqz37/hqXlKZxTBLSuKre3/aSe+ysQt+NOVCCQAwtVWtzaEKnS3kkpZ
-         oiaR5Rc0DUHJ9A8H0h014F3CtUKn3ZXY+xnzwT/jjGE32heTtrh5v3vVguKzTp5tHMFS
-         667Q==
+        bh=K6yZXoqtvOOS4qbu6sLA5FY9z1WwgeTbxy586H6k95M=;
+        b=j84yIcWXOdKxU+LkEhNe7oxpoqjXsxtzJT9btQ8+YveAjK327mIwg4VBnGj3Ubq8YQ
+         e+IupUeZPcvejcc504qaN2D8KOUMVzuxk9o9aj4dYfbHu86rtg0fh7uYvdp+iulw2iec
+         PnURk7w92gv+t9/QEpv56dx0F2FRZgpOQdEj9gZlt/ou9gG6f9EeXdq4Dk78Ng21l1hI
+         6ZWq4cAfrAgDyy4C1aIlbCdRTTZd0LF3kbigXBGLRBeoczMs8tsFQwMUC1oc3QyIFWqN
+         P3zPsOAiknSqJxRy9zceWqPUZfkrOV1GSxyz2E+Ne1iEt13HSXiVWZswhGzp5nFEPjHc
+         mZpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694786813; x=1695391613;
+        d=1e100.net; s=20230601; t=1694787221; x=1695392021;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yl/JazegorBAq3D3QeTIaZj/pCc3gy7siDATi6rK1hQ=;
-        b=RlMlc/xb/l3U4OyNoH6QrkL2FDF8bmWI/zlLkksPSODlzZiOf7jzoesLxp+MC+Btx6
-         pR6CppyR+DW+Bof7zF5i+iRMp/a2zRqmFKs9RPiu/sjVlXmVkPFBrDEr0J5k+NnLNa5N
-         R1vxWmJvf9+HWE0LcgpgwnNFJsHBu1dXPyvr9Lls3gvWZqZ3uKjGEiGRbAVUqOlHHHXA
-         Z1CehwL4CiR2W0Uwyj1BP+eoS/4NzN2MtwFnisjhFNobMSIUJjzXppYVG0BCthdxHzhe
-         13Nx0qUJ43irhg0LymAPYibjcKriHXFlUutTY2/B5XI4YKwa6TTUUIJOo1s4kKkT3tkH
-         hFgw==
-X-Gm-Message-State: AOJu0Yz7db1jFwKEepGOViswRZWgsLRdOULiXucCxUdlGKWv1MqYerdT
-        WyP8gqvPNbOWQZ5IKORZkOzaGg==
-X-Google-Smtp-Source: AGHT+IHnY4copxmNwbUNbT26v9WbBJm6W4Q2fqQzzZzG0SlMBPMvIw3e9q6cXROeoKqWieiTWKoKVw==
-X-Received: by 2002:a7b:c38c:0:b0:400:f6f2:66b9 with SMTP id s12-20020a7bc38c000000b00400f6f266b9mr1762307wmj.12.1694786813037;
-        Fri, 15 Sep 2023 07:06:53 -0700 (PDT)
+        bh=K6yZXoqtvOOS4qbu6sLA5FY9z1WwgeTbxy586H6k95M=;
+        b=Luw4aDMU7NhzBAOiLXJsstC5wzyAbea9dktV+HzKM9Bk9nnMz0axWZGxxv2mmaFmR1
+         YoK+H+L3aju6Os24/2mQvo/hiUlW1ZqZy5P00m9u6RXJLoqzG5zthU3m96yLJ9NLhhb9
+         z9RN3XjIv0bHzoOOVEcLfQioUcZPXnY0dHuwO1B7Wi4/FZhO8Erz2oCfmJuqcJaHjs1M
+         qYgFxhfrGN1RUT/efJW4NlN1TvHfcQD9jiApPQ+SBvvyHGAP7xEnnu7HkyR81Sflx24e
+         OW4rdGTr+eLNeiRhtwOvkRN8sNfbwhEZbk+bJLGmjuXaFXxEXzwIcU/kTKzudJHaLmV1
+         cTJA==
+X-Gm-Message-State: AOJu0Yy7mC/AWIyU/6zub8EsEgY4ayoAvm2s7vsTiLp/MIAIZtdz120h
+        ivHz33ZcmMu8fy6lLLTmFbQBWw==
+X-Google-Smtp-Source: AGHT+IGNni64BZTGUnXlSAyqxyh5hPWg10T5R2V9mWZY4Z78EANoT4sztE+/HOPhH4TuL8+x2Y8k7A==
+X-Received: by 2002:a05:600c:144:b0:401:b504:b6a0 with SMTP id w4-20020a05600c014400b00401b504b6a0mr2000348wmm.3.1694787220735;
+        Fri, 15 Sep 2023 07:13:40 -0700 (PDT)
 Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id k21-20020a05600c0b5500b003fbe791a0e8sm4744254wmr.0.2023.09.15.07.06.52
+        by smtp.gmail.com with ESMTPSA id p18-20020a1c7412000000b00401d6c0505csm4711631wmc.47.2023.09.15.07.13.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Sep 2023 07:06:52 -0700 (PDT)
-Message-ID: <580b4c78-406c-46c3-b70b-a1d3e0f28b9c@linaro.org>
-Date:   Fri, 15 Sep 2023 15:06:51 +0100
+        Fri, 15 Sep 2023 07:13:40 -0700 (PDT)
+Message-ID: <d8d80db6-7010-47c1-a068-f73fbcbc96a0@linaro.org>
+Date:   Fri, 15 Sep 2023 15:13:39 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: msm8916: Fix iommu local address range
+Subject: Re: [PATCH RFT 00/20] Venus cleanups
 Content-Language: en-US
-To:     Gaurav Kohli <quic_gkohli@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, kernel@quicinc.com,
-        devicetree@vger.kernel.org
-References: <20230915050611.30451-1-quic_gkohli@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230911-topic-mars-v1-0-a7d38bf87bdb@linaro.org>
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20230915050611.30451-1-quic_gkohli@quicinc.com>
+In-Reply-To: <20230911-topic-mars-v1-0-a7d38bf87bdb@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -75,27 +83,141 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/09/2023 06:06, Gaurav Kohli wrote:
-> Fix the apps iommu local address space range as per data sheet.
+On 11/09/2023 16:10, Konrad Dybcio wrote:
+> With the driver supporting multiple generations of hardware, some mold
+> has definitely grown over the code..
 > 
-> Fixes: 327c0f5f2510 ("arm64: dts: qcom: msm8916: Sort nodes")
-> Signed-off-by: Gaurav Kohli <quic_gkohli@quicinc.com>
+> This series attempts to amend this situation a bit by commonizing some
+> code paths and fixing some bugs while at it.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> index 33fb65d73104..3c934363368c 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> @@ -1813,7 +1813,7 @@
->   			#size-cells = <1>;
->   			#iommu-cells = <1>;
->   			compatible = "qcom,msm8916-iommu", "qcom,msm-iommu-v1";
-> -			ranges = <0 0x01e20000 0x40000>;
-> +			ranges = <0 0x01e20000 0x20000>;
->   			reg = <0x01ef0000 0x3000>;
->   			clocks = <&gcc GCC_SMMU_CFG_CLK>,
->   				 <&gcc GCC_APSS_TCU_CLK>;
+> Only tested on SM8250.
+> 
+> Definitely needs testing on:
+> 
+> - SDM845 with old bindings
+> - SDM845 with new bindings or 7180
+> - MSM8916
+> - MSM8996
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+> Konrad Dybcio (20):
+>        media: venus: pm_helpers: Only set rate of the core clock in core_clks_enable
+>        media: venus: pm_helpers: Rename core_clks_get to venus_clks_get
+>        media: venus: pm_helpers: Add kerneldoc to venus_clks_get()
+>        media: venus: core: Set OPP clkname in a common code path
+>        media: venus: pm_helpers: Kill dead code
+>        media: venus: pm_helpers: Move reset acquisition to common code
+>        media: venus: pm_helpers: Use reset_bulk API
+>        media: venus: core: Constify all members of the resource struct
+>        media: venus: core: Deduplicate OPP genpd names
+>        media: venus: core: Get rid of vcodec_num
+>        media: venus: core: Drop cache properties in resource struct
+>        media: venus: core: Use GENMASK for dma_mask
+>        media: venus: core: Remove cp_start
+>        media: venus: pm_helpers: Commonize core_power
+>        media: venus: pm_helpers: Remove pm_ops->core_put
+>        media: venus: core: Define a pointer to core->res
+>        media: venus: pm_helpers: Simplify vcodec clock handling
+>        media: venus: pm_helpers: Commonize getting clocks and GenPDs
+>        media: venus: pm_helpers: Commonize vdec_get()
+>        media: venus: pm_helpers: Commonize venc_get()
+> 
+>   drivers/media/platform/qcom/venus/core.c       | 138 ++++-------
+>   drivers/media/platform/qcom/venus/core.h       |  64 +++--
+>   drivers/media/platform/qcom/venus/firmware.c   |   3 +-
+>   drivers/media/platform/qcom/venus/hfi_venus.c  |   7 +-
+>   drivers/media/platform/qcom/venus/pm_helpers.c | 328 +++++++++----------------
+>   drivers/media/platform/qcom/venus/pm_helpers.h |  10 +-
+>   drivers/media/platform/qcom/venus/vdec.c       |   9 +-
+>   drivers/media/platform/qcom/venus/venc.c       |   9 +-
+>   8 files changed, 213 insertions(+), 355 deletions(-)
+> ---
+> base-commit: 7bc675554773f09d88101bf1ccfc8537dc7c0be9
+> change-id: 20230911-topic-mars-e60bb2269411
+> 
+> Best regards,
 
-from the @linaro.org address
+b4 shazam 20230911-topic-mars-v1-0-a7d38bf87bdb@linaro.org
+Grabbing thread from 
+lore.kernel.org/all/20230911-topic-mars-v1-0-a7d38bf87bdb@linaro.org/t.mbox.gz
+Checking for newer revisions
+Grabbing search results from lore.kernel.org
+Analyzing 27 messages in the thread
+Checking attestation on all messages, may take a moment...
+---
+   [PATCH 1/20] media: venus: pm_helpers: Only set rate of the core 
+clock in core_clks_enable
+   [PATCH 2/20] media: venus: pm_helpers: Rename core_clks_get to 
+venus_clks_get
+   [PATCH 3/20] media: venus: pm_helpers: Add kerneldoc to venus_clks_get()
+   [PATCH 4/20] media: venus: core: Set OPP clkname in a common code path
+   [PATCH 5/20] media: venus: pm_helpers: Kill dead code
+   [PATCH 6/20] media: venus: pm_helpers: Move reset acquisition to 
+common code
+   [PATCH 7/20] media: venus: pm_helpers: Use reset_bulk API
+   [PATCH 8/20] media: venus: core: Constify all members of the resource 
+struct
+   [PATCH 9/20] media: venus: core: Deduplicate OPP genpd names
+   [PATCH 10/20] media: venus: core: Get rid of vcodec_num
+   [PATCH 11/20] media: venus: core: Drop cache properties in resource 
+struct
+   [PATCH 12/20] media: venus: core: Use GENMASK for dma_mask
+   [PATCH 13/20] media: venus: core: Remove cp_start
+   [PATCH 14/20] media: venus: pm_helpers: Commonize core_power
+   [PATCH 15/20] media: venus: pm_helpers: Remove pm_ops->core_put
+   [PATCH 16/20] media: venus: core: Define a pointer to core->res
+   [PATCH 17/20] media: venus: pm_helpers: Simplify vcodec clock handling
+   [PATCH 18/20] media: venus: pm_helpers: Commonize getting clocks and 
+GenPDs
+   [PATCH 19/20] media: venus: pm_helpers: Commonize vdec_get()
+   [PATCH 20/20] media: venus: pm_helpers: Commonize venc_get()
+   ---
+   ✗ No key: ed25519/konrad.dybcio@linaro.org
+   ---
+   NOTE: install dkimpy for DKIM signature verification
+---
+Total patches: 20
+---
+  Base: base-commit 7bc675554773f09d88101bf1ccfc8537dc7c0be9 not known, 
+ignoring
+Applying: media: venus: pm_helpers: Only set rate of the core clock in 
+core_clks_enable
+Applying: media: venus: pm_helpers: Rename core_clks_get to venus_clks_get
+Applying: media: venus: pm_helpers: Add kerneldoc to venus_clks_get()
+Applying: media: venus: core: Set OPP clkname in a common code path
+Applying: media: venus: pm_helpers: Kill dead code
+Applying: media: venus: pm_helpers: Move reset acquisition to common code
+Applying: media: venus: pm_helpers: Use reset_bulk API
+Applying: media: venus: core: Constify all members of the resource struct
+Applying: media: venus: core: Deduplicate OPP genpd names
+Applying: media: venus: core: Get rid of vcodec_num
+Applying: media: venus: core: Drop cache properties in resource struct
+Applying: media: venus: core: Use GENMASK for dma_mask
+Applying: media: venus: core: Remove cp_start
+Applying: media: venus: pm_helpers: Commonize core_power
+Applying: media: venus: pm_helpers: Remove pm_ops->core_put
+Applying: media: venus: core: Define a pointer to core->res
+Applying: media: venus: pm_helpers: Simplify vcodec clock handling
+Applying: media: venus: pm_helpers: Commonize getting clocks and GenPDs
+Applying: media: venus: pm_helpers: Commonize vdec_get()
+Applying: media: venus: pm_helpers: Commonize venc_get()
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+   MODPOST Module.symvers
+^[[BERROR: modpost: "vcodec_clks_get" 
+[drivers/media/platform/qcom/venus/venus-dec.ko] undefined!
+ERROR: modpost: "vcodec_clks_get" 
+[drivers/media/platform/qcom/venus/venus-enc.ko] undefined!
+make[3]: *** 
+[/home/deckard/Development/qualcomm/qlt-kernel/scripts/Makefile.modpost:145: 
+Module.symvers] Error 1
+make[2]: *** 
+[/home/deckard/Development/qualcomm/qlt-kernel/Makefile:1865: modpost] 
+Error 2
+make[1]: *** 
+[/home/deckard/Development/qualcomm/qlt-kernel/Makefile:234: __sub-make] 
+Error 2
+
+---
+bod
+
