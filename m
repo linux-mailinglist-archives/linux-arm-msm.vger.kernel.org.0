@@ -2,201 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 285B77A3247
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Sep 2023 21:43:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A5A87A3272
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Sep 2023 22:32:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235194AbjIPTmo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Sep 2023 15:42:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33278 "EHLO
+        id S233500AbjIPUbf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Sep 2023 16:31:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232530AbjIPTma (ORCPT
+        with ESMTP id S230310AbjIPUbG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Sep 2023 15:42:30 -0400
-Received: from galois.linutronix.de (Galois.linutronix.de [IPv6:2a0a:51c0:0:12e:550::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD929CDE;
-        Sat, 16 Sep 2023 12:42:25 -0700 (PDT)
-From:   John Ogness <john.ogness@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020; t=1694893343;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=/zPwTVnbIqykq0xrJwLN9r6avPOKHnWBnlaBD7Ntd/o=;
-        b=CUQAEeiOCW0UB0mZHKKbATmxrT7v104AXTk8BgIS3LnhJdkwcK31VIKNUWTyr5NJ5FDSAZ
-        1rUmkomzu0i8ra8Pr7MuVj6uXx2bx2AvsuHAsgoTtNXk1SlphGsF2Tko1c6bGtCosz+5D3
-        3LvB5+XWrTyiZslCvN25C026vuzPMwe37ifQkKb5hvuaQ1IXWgjVHVi1QG1ERhp6yVLoCG
-        KEjXv3lRy4sKTNf9zIytvVhfEZiamkJbj8QmGaOgd3j5PMU/plPNL9TqQlN3PM7t/8qtdr
-        r8HTYvNQEPG5ZOF1NNpsGWfBpFE4WC9xOJQFYPlGWWvKaI1nzHahesMl0GR2sw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020e; t=1694893343;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=/zPwTVnbIqykq0xrJwLN9r6avPOKHnWBnlaBD7Ntd/o=;
-        b=/s+j74ZDjoLeO5pQcnU/VyXRmqc0m+3/h/bRCXztbsATbbfdFH/5imwYhMMMSk+geHP+hf
-        BWo+CyCuYQ4k1qBQ==
-To:     Ilpo =?utf-8?Q?J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        linux-serial <linux-serial@vger.kernel.org>,
-        Petr Mladek <pmladek@suse.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Tobias Klauser <tklauser@distanz.ch>,
-        Thierry Reding <treding@nvidia.com>,
-        Joel Stanley <joel@jms.id.au>,
-        Andrew Jeffery <andrew@aj.id.au>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-aspeed@lists.ozlabs.org, Al Cooper <alcooperx@gmail.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Ilpo =?utf-8?Q?J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Andrew Davis <afd@ti.com>,
-        Matthew Howell <matthew.howell@sealevel.com>,
-        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Johan Hovold <johan@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Chen-Yu Tsai <wenst@chromium.org>,
-        linux-mediatek@lists.infradead.org, Lukas Wunner <lukas@wunner.de>,
-        Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Kumaravel Thiagarajan <kumaravel.thiagarajan@microchip.com>,
-        Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>,
-        Russell King <linux@armlinux.org.uk>,
-        "Maciej W. Rozycki" <macro@orcam.me.uk>,
-        Hongyu Xie <xiehongyu1@kylinos.cn>,
-        Jiamei Xie <jiamei.xie@arm.com>, Rob Herring <robh@kernel.org>,
-        delisun <delisun@pateo.com.cn>,
-        Lino Sanfilippo <l.sanfilippo@kunbus.com>,
-        Yangtao Li <frank.li@vivo.com>,
-        Vineet Gupta <vgupta@kernel.org>,
-        linux-snps-arc@lists.infradead.org,
-        Richard Genoud <richard.genoud@gmail.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-        Arend van Spriel <arend.vanspriel@broadcom.com>,
-        Christophe Leroy <christophe.leroy@csgroup.eu>,
-        Baruch Siach <baruch@tkos.co.il>,
-        Sherry Sun <sherry.sun@nxp.com>,
-        Shenwei Wang <shenwei.wang@nxp.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Sergey Organov <sorganov@gmail.com>, Tom Rix <trix@redhat.com>,
-        Marek Vasut <marex@denx.de>,
-        Karol Gugala <kgugala@antmicro.com>,
-        Mateusz Holenko <mholenko@antmicro.com>,
-        Gabriel Somlo <gsomlo@gmail.com>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Jacky Huang <ychuang3@nuvoton.com>,
-        Shan-Chun Hung <schung@nuvoton.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Dmitry Rokosov <ddrokosov@sberdevices.ru>,
-        Lucas Tanure <tanure@linux.com>,
-        linux-amlogic@lists.infradead.org,
-        Taichi Sugaya <sugaya.taichi@socionext.com>,
-        Takao Orito <orito.takao@socionext.com>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Pali =?utf-8?Q?Roh=C3=A1r?= <pali@kernel.org>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Andreas =?utf-8?Q?F=C3=A4rber?= <afaerber@suse.de>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-actions@lists.infradead.org,
-        Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-        Yuan Can <yuancan@huawei.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        linuxppc-dev@lists.ozlabs.org, linux-unisoc@lists.infradead.org,
-        Kevin Cernekee <cernekee@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        linux-samsung-soc@vger.kernel.org,
-        Lukas Bulwahn <lukas.bulwahn@gmail.com>,
-        Lech Perczak <lech.perczak@camlingroup.com>,
-        Hugo Villeneuve <hvilleneuve@dimonoff.com>,
-        Andy Shevchenko <andy.shevchenko@gmail.com>,
-        Isaac True <isaac.true@canonical.com>,
-        Laxman Dewangan <ldewangan@nvidia.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-tegra@vger.kernel.org, Biju Das <biju.das.jz@bp.renesas.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Nick Hu <nick.hu@sifive.com>,
-        Ruan Jinjie <ruanjinjie@huawei.com>,
-        Samuel Holland <samuel.holland@sifive.com>,
-        linux-riscv@lists.infradead.org, Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Patrice Chotard <patrice.chotard@foss.st.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Valentin Caron <valentin.caron@foss.st.com>,
-        Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-        linux-stm32@st-md-mailman.stormreply.com,
-        "David S. Miller" <davem@davemloft.net>,
-        sparclinux@vger.kernel.org, Hammer Hsieh <hammerh0314@gmail.com>,
-        Peter Korsgaard <jacmet@sunsite.dk>,
-        Timur Tabi <timur@kernel.org>,
-        Mukesh Ojha <quic_mojha@quicinc.com>,
-        Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
-        Michal Simek <michal.simek@amd.com>
-Subject: Re: [PATCH tty v1 00/74] serial: wrappers for uart port lock
-In-Reply-To: <1446dc6-5ab0-629-45c8-3b7d8c76367d@linux.intel.com>
-References: <20230914183831.587273-1-john.ogness@linutronix.de>
- <1446dc6-5ab0-629-45c8-3b7d8c76367d@linux.intel.com>
-Date:   Sat, 16 Sep 2023 21:48:14 +0206
-Message-ID: <878r95nbvt.fsf@jogness.linutronix.de>
+        Sat, 16 Sep 2023 16:31:06 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8229FCE3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Sep 2023 13:31:00 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-530c9980556so727211a12.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Sep 2023 13:31:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694896259; x=1695501059; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=EL+k7hXUShrLVxaFRObx7bendR710WJmkBqa6SXN9Ds=;
+        b=lXNdU7KoP2ZeWTajnKd3a1gsyaYEbQtskRviIwXADzuZ0m3i7Zg6Hicr4UuqZwBi17
+         LAsWrTxJ+VOJvFsa4ej6S7f42aJ5r5UuCve6mM+fgAJpxBjmllbqAvcnBSD7mi6ttAeo
+         C2rTeNLj3aU/o3cFELqA7rPfZys/gLqHXzm19rvCDIl3ybDs2dSfZ207LA07ZtbwdYc3
+         rVoW9DF1tSOBPD7CBR4ziR2TYXHNLX30gHIaOjIbpNHqUVJg0CPsc0TxmPMjpC/b4P7O
+         XfVLGCKbJ8FGlppIq8VJf21N52NgYDCZOCG0KxvK5h7as4/WewPjPBWo+ZgY4CFcEBOk
+         kUxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694896259; x=1695501059;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=EL+k7hXUShrLVxaFRObx7bendR710WJmkBqa6SXN9Ds=;
+        b=U9wrMnv2p/DeSLNR4kGX/WFsTw5ilTyO2GejD1E5xr68wfUsUzE5HDHBhN6TB5TelP
+         fl776wV707YJt8u2ywg3DnAh/U0FR7L0kdZyLN5DclLMOcabARMtVPdBxfOQc14UTnTV
+         98joK6omIVgkUbFaP69YHUG+rVuK64XJWEv4w5ZRmvvoG+3hqDJzVjWio/rv+uK6fuSC
+         TMxs+hhK2l9Tf7PEcCvMLqPcTgHDqGH8Mqh7WQRIaYqNPgbHLKkQ0S5GiUpRPar5WXCs
+         xL3iBu9bCwYsqi3p5IpLlBP7G2kF1Sc2Zu6w0Ld/RZToaUDqiuisFlJYYyzdJhaizjqc
+         7c6g==
+X-Gm-Message-State: AOJu0YzUBBPpG/+HM4sMEIzWVFbhX4z5QoAJs+QLW6iMBvFmN/cSU/G7
+        /N1A4Ni71JMndtHoPdiGbEcFTA==
+X-Google-Smtp-Source: AGHT+IFqKWQZecXMTFwDFX2obiJHXcFY1D7b0lePfOb4l9+gqCiVAiuXCUAe/qvDTJXhP/OKrM5x5A==
+X-Received: by 2002:aa7:d142:0:b0:52c:9ce1:f117 with SMTP id r2-20020aa7d142000000b0052c9ce1f117mr3679643edo.40.1694896258889;
+        Sat, 16 Sep 2023 13:30:58 -0700 (PDT)
+Received: from [192.168.1.77] (150-140-187-31.ftth.glasoperator.nl. [31.187.140.150])
+        by smtp.gmail.com with ESMTPSA id d4-20020a056402516400b0052fc0832e08sm3909853ede.1.2023.09.16.13.30.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 16 Sep 2023 13:30:58 -0700 (PDT)
+Message-ID: <40216ed7-22a5-01e6-6863-dff31c9e1ec7@linaro.org>
+Date:   Sat, 16 Sep 2023 22:30:56 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,INVALID_DATE_TZ_ABSURD,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.0
+Subject: Re: [PATCH v2 8/8] arm64: defconfig: enable interconnect and pinctrl
+ for SM4450
+To:     Trilok Soni <quic_tsoni@quicinc.com>,
+        Tengfei Fan <quic_tengfan@quicinc.com>, will@kernel.org,
+        robin.murphy@arm.com, joro@8bytes.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        catalin.marinas@arm.com
+Cc:     geert+renesas@glider.be, arnd@arndb.de, neil.armstrong@linaro.org,
+        nfraprado@collabora.com, rafal@milecki.pl, peng.fan@nxp.com,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, quic_shashim@quicinc.com,
+        quic_kaushalk@quicinc.com, quic_tdas@quicinc.com,
+        quic_tingweiz@quicinc.com, quic_aiquny@quicinc.com,
+        kernel@quicinc.com
+References: <20230915021509.25773-1-quic_tengfan@quicinc.com>
+ <20230915021509.25773-10-quic_tengfan@quicinc.com>
+ <8f2c9664-a2c8-50dc-8a1c-e50a071ebeb2@linaro.org>
+ <e9ff05b3-2742-416e-b417-5e2414036008@quicinc.com>
+ <0a34dd35-7aea-4655-4cdd-e7196a1ba52b@linaro.org>
+ <f76e1cc8-fc48-4208-bbe4-9204d9d28363@quicinc.com>
+ <b7398390-23bc-467c-5b83-411110d60f43@linaro.org>
+ <01c020ae-a019-e4eb-14cb-64503bde05a6@quicinc.com>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <01c020ae-a019-e4eb-14cb-64503bde05a6@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=no autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-09-15, Ilpo J=C3=A4rvinen <ilpo.jarvinen@linux.intel.com> wrote:
-> Would this also be useful to enable printing to console while under
-> port's lock (by postponing the output until the lock is released)?
->
-> E.g., 8250_dw.c has had this commented out since the dawn on time:
->         /*
->          * FIXME: this deadlocks if port->lock is already held
->          * dev_err(p->dev, "Couldn't set LCR to %d\n", value);
->          */
+On 16/09/2023 04:21, Trilok Soni wrote:
 
-Yes, this will fix such issues. However, only for consoles that are
-converted to the new NBCON console type.
+>>>> No, this should be =m and you need to fix your system.
+>>>>
+>>>> Best regards,
+>>>> Krzysztof
+>>>>
+>>> Hi Krzysztof,
+>>> Find new way which can load ko files on SM4450 platform, still need use 
+>>> "Y", because of some other modules have dependence to these two config, 
+>>> like scm, smmu module drivers, uart shell console cannot be got if set 
+>>> to "m".
+>>
+>> That's what I am asking, which device exactly needs it.
+>>
+>>>
+>>> Also do test for setting these two config to "m" on SM8450 platform, get 
+>>> uart shell consle failed if so setting.
+>>
+>> Yeah, this we know, I did this. I am asking about SM4450.
+> 
+> Why we have =m requirement when other drivers above are =Y?. Can we confirm
+> w/ Georgi? I am not aware that Interconnect drivers needs to be =m only.
 
-Good news, the 8250 driver will be the flagship driver that is converted
-as part of the rework. So this particular issue will be solved then. I
-will try to remember this so that I can remove the FIXME in the series.
+There is a requirement of all drivers which can be a module, to be a module.
 
-Thanks for mentioning it.
+Best regards,
+Krzysztof
 
-John
