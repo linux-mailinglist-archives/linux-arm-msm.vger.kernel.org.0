@@ -2,194 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C11A57A2CDF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Sep 2023 03:10:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 187E57A2CFB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Sep 2023 03:17:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238063AbjIPBK2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Sep 2023 21:10:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53274 "EHLO
+        id S233568AbjIPBQy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Sep 2023 21:16:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238631AbjIPBKF (ORCPT
+        with ESMTP id S238631AbjIPBQu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Sep 2023 21:10:05 -0400
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA5CAAC
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 18:09:59 -0700 (PDT)
-Received: by mail-ot1-x334.google.com with SMTP id 46e09a7af769-6bf04263dc8so1714864a34.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 18:09:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694826599; x=1695431399; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=g9WSRgTaw/6et2RmeGdNg8ZMy5I67EliZD9RP5+ifD0=;
-        b=a5D/60narxBsKlknjap8GOTlEcsmg6KD4XxEtgqpK+FGOa4Odhz2ZvmlxTe0/k9e02
-         TSjf5wMgbGrHhGAIgImd2rddpawYylbNMMi+1FuxToXbpZXxJ+MuwD87vNNpxeqc72iI
-         iKGeVUtmApQ1cDjCl2PIqciI7bPjbPcY0rA9hNfCQ5VcIwBcxa1VTkWxesMyeTMfYX2p
-         S1mOJcUrydy4DbPdPNAl5pCuBkQSZmMDZPEr9cn/J0Xfuf8+PvCd5SH9avwtSL2GnfYT
-         MPl5HrCI2q+Ux9iABUfyyMzb/iRr4ehefNMyDH99LtPaeRa6AouUa7O+xM7RhXxqP6U/
-         fLtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694826599; x=1695431399;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=g9WSRgTaw/6et2RmeGdNg8ZMy5I67EliZD9RP5+ifD0=;
-        b=oeGlqtSQDvQWl4LwNVmLQRaBToJz0coPMGKxFC9WoDrqPzWWBRxjge7oooq2CahZ7I
-         Hdi2vX1TbXvrUBKR/32lCfjt4WLDe7Bg7naZ+fjZyuSf4mOdJtdPAr44g/NU5FXBcFLP
-         amrDxlMbpkSzSunb1NXTdtDK72LnNM98/+Y5728xeTBXk7eCipKU/mMTpyyolKkGZehr
-         xOUsV/SVo3gZqEIT+xkFul2kuPq9fVoiOkVNlAOOKZ1RecbrSXUrtMU32/SSj1tYcEuB
-         C4BW0E6tCB67Cl+WMJGLJMMIZkgeeO8S+1q/dzK65kGLmrwM8zIzKL7s3Q+FBt5QRePt
-         bR8w==
-X-Gm-Message-State: AOJu0YxwYburHw5rSm8l0xtzShHAjfjpWuZ3/h0v5cizmi72SQ/TonKE
-        JLmXUSvpiTZxnIDPaoD2aZpqXggxJHaQ+gVlXNZhhw==
-X-Google-Smtp-Source: AGHT+IGG3Egk3rmGcPDco6agP7soG2wHCQVK3RvI3bQXRv1/5cgN8gQV27Ug0GnSJl1EGWa4AgX6HemkpKSXYIpKq4s=
-X-Received: by 2002:a05:6830:2008:b0:6b9:4d79:e08a with SMTP id
- e8-20020a056830200800b006b94d79e08amr3653815otp.32.1694826598950; Fri, 15 Sep
- 2023 18:09:58 -0700 (PDT)
+        Fri, 15 Sep 2023 21:16:50 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8222A8;
+        Fri, 15 Sep 2023 18:16:45 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38G19HRm021822;
+        Sat, 16 Sep 2023 01:16:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=lzUInNfZ/+GSqx3Doaa3+ebCwEy1pXDvPNHjtdmQEjg=;
+ b=Ycfwhlm5luFeuKHDm7B+4ETyXypXu4ky7g+6Oe6MKh8HP7SkmGoLSALaaENrx7DKyKi4
+ xWOSYcK4+6/X2jXmiSdf4TxvMcNOkfpzTRV8sCPskaHRiaTc9IYY4CFzbGaFzlgeUW7Y
+ spQu7RW6b/2qNIeiEfzbYlbvrX1DcFOUDbqYsBTgtxdMCpHJMWzN4bVcKAu3bHODv3E/
+ Vdx/uGNNO+4FXDjrk9Am2f0/QAk4rsSExwwC0+NReOXpdAmotpfROhXn91AG+WOvI0sq
+ ubB3y5kL9ZoEPPMKG6xIde+8fPT+TSDBXHNMhwi3roasyHPlr2ms0bUf4uUM6x0yb5lL EA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t4g072n8e-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 16 Sep 2023 01:16:16 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38G1GFgO019026
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 16 Sep 2023 01:16:15 GMT
+Received: from [10.110.47.184] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Fri, 15 Sep
+ 2023 18:16:14 -0700
+Message-ID: <ae5a603f-459b-84af-239b-aca34c61e95d@quicinc.com>
+Date:   Fri, 15 Sep 2023 18:16:14 -0700
 MIME-Version: 1.0
-References: <1694813901-26952-1-git-send-email-quic_khsieh@quicinc.com> <1694813901-26952-6-git-send-email-quic_khsieh@quicinc.com>
-In-Reply-To: <1694813901-26952-6-git-send-email-quic_khsieh@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 16 Sep 2023 04:09:48 +0300
-Message-ID: <CAA8EJprKA=H0iFOPKiotqQB-b5r4NYdEDdudzJeDU0qBxMkF_A@mail.gmail.com>
-Subject: Re: [PATCH v3 5/7] drm/msm/dp: delete EV_HPD_INIT_SETUP
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, andersson@kernel.org, quic_abhinavk@quicinc.com,
-        quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
-        marijn.suijten@somainline.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v6 10/33] ASoC: qcom: qdsp6: Add USB backend ASoC driver
+ for Q6
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        <mathias.nyman@intel.com>, <gregkh@linuxfoundation.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <perex@perex.cz>,
+        <tiwai@suse.com>, <agross@kernel.org>, <andersson@kernel.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <srinivas.kandagatla@linaro.org>,
+        <bgoswami@quicinc.com>, <Thinh.Nguyen@synopsys.com>
+CC:     <linux-kernel@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+References: <20230916001026.315-1-quic_wcheng@quicinc.com>
+ <20230916001026.315-11-quic_wcheng@quicinc.com>
+ <fc3cecda-72dd-4b7f-8839-95bd04481038@linaro.org>
+From:   Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <fc3cecda-72dd-4b7f-8839-95bd04481038@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: zEvQ2eMYk9JPuewhMCOPnOY4ErObID6W
+X-Proofpoint-ORIG-GUID: zEvQ2eMYk9JPuewhMCOPnOY4ErObID6W
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-15_20,2023-09-15_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 clxscore=1015 phishscore=0 spamscore=0 mlxscore=0
+ adultscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0 bulkscore=0
+ mlxlogscore=772 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309160010
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 16 Sept 2023 at 00:38, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
->
-> EV_HPD_INIT_SETUP flag is used to trigger the initialization of external
-> DP host controller. Since external DP host controller initialization had
-> been incorporated into pm_runtime_resume(), this flag become obsolete.
+Hi Konrad,
 
-became
+On 9/15/2023 5:34 PM, Konrad Dybcio wrote:
+> On 16.09.2023 02:10, Wesley Cheng wrote:
+>> Create a USB BE component that will register a new USB port to the ASoC USB
+>> framework.  This will handle determination on if the requested audio
+>> profile is supported by the USB device currently selected.
+>>
+>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+>> ---
+> [...]
+> 
+>> +	ret = of_parse_phandle_with_fixed_args(node, "iommus", 1, 0, &args);
+>> +	if (ret < 0)
+>> +		data->priv.sid = -1;
+>> +	else
+>> +		data->priv.sid = args.args[0] & SID_MASK;
+> SID masking is done in the devicetree.
+> 
 
-> Lets get rid of it.
+Not sure I get this point, but let me explain the use case of this 
+parameter, and maybe you can help clarify.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In this case, we are saving and passing the SID info so that the buffers 
+being mapped within the QC offload driver can be communicated to the 
+audio DSP.  So in short, the SID masking that is done here is just to 
+extract the SID from the iommus property.
 
->
-> Changes in v3:
-> -- drop EV_HPD_INIT_SETUP and msm_dp_irq_postinstall()
-
-This is not a changelog of the patch. It is a short description of the
-patch itself. Please describe changes.
-
->
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c |  4 ----
->  drivers/gpu/drm/msm/dp/dp_display.c     | 16 ----------------
->  drivers/gpu/drm/msm/msm_drv.h           |  5 -----
->  3 files changed, 25 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index aa8499d..71d0670 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -870,7 +870,6 @@ static int dpu_irq_postinstall(struct msm_kms *kms)
->  {
->         struct msm_drm_private *priv;
->         struct dpu_kms *dpu_kms = to_dpu_kms(kms);
-> -       int i;
->
->         if (!dpu_kms || !dpu_kms->dev)
->                 return -EINVAL;
-> @@ -879,9 +878,6 @@ static int dpu_irq_postinstall(struct msm_kms *kms)
->         if (!priv)
->                 return -EINVAL;
->
-> -       for (i = 0; i < ARRAY_SIZE(priv->dp); i++)
-> -               msm_dp_irq_postinstall(priv->dp[i]);
-> -
->         return 0;
->  }
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index e7af7f7..b6992202 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -55,7 +55,6 @@ enum {
->  enum {
->         EV_NO_EVENT,
->         /* hpd events */
-> -       EV_HPD_INIT_SETUP,
->         EV_HPD_PLUG_INT,
->         EV_IRQ_HPD_INT,
->         EV_HPD_UNPLUG_INT,
-> @@ -1092,8 +1091,6 @@ static int hpd_event_thread(void *data)
->                 spin_unlock_irqrestore(&dp_priv->event_lock, flag);
->
->                 switch (todo->event_id) {
-> -               case EV_HPD_INIT_SETUP:
-> -                       break;
->                 case EV_HPD_PLUG_INT:
->                         dp_hpd_plug_handle(dp_priv, todo->data);
->                         break;
-> @@ -1469,19 +1466,6 @@ void __exit msm_dp_unregister(void)
->         platform_driver_unregister(&dp_display_driver);
->  }
->
-> -void msm_dp_irq_postinstall(struct msm_dp *dp_display)
-> -{
-> -       struct dp_display_private *dp;
-> -
-> -       if (!dp_display)
-> -               return;
-> -
-> -       dp = container_of(dp_display, struct dp_display_private, dp_display);
-> -
-> -       if (!dp_display->is_edp)
-> -               dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 0);
-> -}
-> -
->  bool msm_dp_wide_bus_available(const struct msm_dp *dp_display)
->  {
->         struct dp_display_private *dp;
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index e13a8cb..ff8be59 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -381,7 +381,6 @@ int __init msm_dp_register(void);
->  void __exit msm_dp_unregister(void);
->  int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
->                          struct drm_encoder *encoder);
-> -void msm_dp_irq_postinstall(struct msm_dp *dp_display);
->  void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp_display);
->
->  void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor);
-> @@ -402,10 +401,6 @@ static inline int msm_dp_modeset_init(struct msm_dp *dp_display,
->         return -EINVAL;
->  }
->
-> -static inline void msm_dp_irq_postinstall(struct msm_dp *dp_display)
-> -{
-> -}
-> -
->  static inline void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp_display)
->  {
->  }
-> --
-> 2.7.4
->
-
-
--- 
-With best wishes
-Dmitry
+Thanks
+Wesley Cheng
