@@ -2,67 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BEF97A2C09
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Sep 2023 02:32:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A44357A2C87
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Sep 2023 02:35:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238117AbjIPAcQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Sep 2023 20:32:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47354 "EHLO
+        id S238535AbjIPAf3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Sep 2023 20:35:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238467AbjIPAcC (ORCPT
+        with ESMTP id S239200AbjIPAfH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Sep 2023 20:32:02 -0400
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09834E46
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 17:31:09 -0700 (PDT)
-Received: by mail-oi1-x22e.google.com with SMTP id 5614622812f47-3a88ef953adso1718634b6e.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 17:31:08 -0700 (PDT)
+        Fri, 15 Sep 2023 20:35:07 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C245B3AB0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 17:34:22 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-99bdeae1d0aso326565166b.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 17:34:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694824268; x=1695429068; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Wp9G9s9DRH28HBBlorzfOU/YKDu6BHZ8nl53NHfF+6U=;
-        b=fPHTrDFQ9T5JiURp8ToVxhU+mInfJ3UurKHeGsicMzsg8l5zoqI5SMEvQuO7dTLNlK
-         Fs56EL/eVEt0XRcnaL4bk4yuHkG1wGX8FE+5WezDFDxsbMEwX92aeH7nvjAsSqcYISY7
-         t5Iocen8GGESkM8RHG5zgQQhhzoZ4U4yfAQKvq6HEtSsuCSfQIuLQc5vgFw6/c1YEKwD
-         kE5SmaxUQn3T+sVic060tBmW5Qwtb6UHjvPXYtM9LBp2ZLKGArmp2r3/OZeZnGr6pVC+
-         nIhVXru8Meck+mAX3fLC/Tp+OkORNM231qxdl0iC01Va+eMbaqVjmkkAZlirIKtcxGZy
-         TW1g==
+        d=linaro.org; s=google; t=1694824461; x=1695429261; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=PKWI1/9uW8B4xBhYUhaMnOR3gT8g2FpjpC0atQQWm14=;
+        b=tEMXlHWEaibPwptTDS2q8pnJSeF9LPqua4TKBloKTv1fm2CgDPNYSR0dmEorv1lUuO
+         AMYAv0Z/VrtG+0Y8/6Rz1CFEXrdnTAioN3wxRElJ4Gy3JYjxpX2GBtbHPaSLrpIp3+v7
+         9aRiYYp+uHgYBB2L1/Qc3itd2NP3EkPqYV5O5j3Ve8Nn4si4oomWssdO0kS0rw6KqsRh
+         NzIP3wyqa/WZIgCpPkPBiPof7+jPlB6oxI0VlwxrjiOJRiERSSY/f/Z/MEPUQfwGrNQE
+         CdrKdN7vQ2Iy85P9vLX+13w12iP3v2y1wwDh1CxJpyEHDpvNUaTET3/X6HZVphnJe4kO
+         +R+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694824268; x=1695429068;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Wp9G9s9DRH28HBBlorzfOU/YKDu6BHZ8nl53NHfF+6U=;
-        b=wHSEpEBecwRmWttixWWt6jTsz5l1vvOb0mcJs4F0oaMudIPj6bS9TKJCiEQKjpCpb/
-         VxYVyt2AnS+zUT3r09zBEGntJqFVOWD+8ITjfiUr/TEwUm9TAg8le345YXkBtKX9r3Ry
-         UrKrMgcc3nCZOk8LLkj4qccXgHc25TNPAkq8FShldqc4ibHyF9d4elw6+S29M/ohaMER
-         M02WP45Ei7t/R7z2Hdjba6SRAP0wKKjkSKaaWtEXoHxf1HltUtQNWIiwyuddzuviyQiR
-         3nOcD/jr0Ygc3jS6bjvq7N0ae2xslicKWoTjQa2Y8yeewq6vNfS+c2bd3xZTf7dgZR4/
-         ek/g==
-X-Gm-Message-State: AOJu0YzFerGDgTYwOtF9lvNdCiOYviVDYqF60td+dT/NlBdWJKXbZ8AP
-        Kw9UtsHKEZyS0RTnwdzc2FWyf2lHCYtnaPbkbZ/KTw==
-X-Google-Smtp-Source: AGHT+IGM/5enZcjBhS6KYMkOeT141L6ZhN7mMaxpgFhmwQ/mJpnnizdzjkJxQtWVJhtldV6e0+vYCRheZ7GEycJUPHo=
-X-Received: by 2002:a05:6808:309b:b0:3ab:8295:f2f1 with SMTP id
- bl27-20020a056808309b00b003ab8295f2f1mr4125798oib.45.1694824268304; Fri, 15
- Sep 2023 17:31:08 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1694824461; x=1695429261;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PKWI1/9uW8B4xBhYUhaMnOR3gT8g2FpjpC0atQQWm14=;
+        b=tjCkV7VeTMBD7QpL23Hez6DA32npZihpzd8Iqyd/VCnz1RmumDFKFPuAf8RoUjmAFA
+         vTP3MYPVtPiZriRhEOjrOZWABZIxmq85uUCPxVpMVkCqQ4Uk0EFf+r0Cd6WOh+7qQRHj
+         h4QHJ/NNSMsU0tKyAF+BrVE7naGFMauJBwoeApL3+Xv5FA2AdGMWukvqHOE8PC2uent3
+         eIHV5u2XWF8ThdRj1ySI+qK+haegR2L3Qsdy/fAEFFrMqbC8ks9i5d7q1yiwWtrCrovR
+         IR/wSrS4kcoRnxaw1j26QQh5SeRypEI7hG1e15RyvBpAx/Rylty/KwyMVg7QbBVQNRYf
+         JBqw==
+X-Gm-Message-State: AOJu0Yw2JxTZuAAXaAO5A1dz/NbzoUn+1Y220qBtcKa/ml1NPdl9uEgp
+        mOaWJvm0cKz6jpE+0X2xYKxucA==
+X-Google-Smtp-Source: AGHT+IG/6e5icQ1FKKOHQ8EpeI6y/tsc8LIx1fuPOHY7vrdOJcOP4rH2jhD27RYjXQ7pFgZxef6SBw==
+X-Received: by 2002:a17:907:2cce:b0:99d:f2dc:97e3 with SMTP id hg14-20020a1709072cce00b0099df2dc97e3mr2667553ejc.20.1694824461266;
+        Fri, 15 Sep 2023 17:34:21 -0700 (PDT)
+Received: from [192.168.37.154] (178235177186.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.186])
+        by smtp.gmail.com with ESMTPSA id jw24-20020a17090776b800b009a168ab6ee2sm3035669ejc.164.2023.09.15.17.34.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 Sep 2023 17:34:20 -0700 (PDT)
+Message-ID: <fc3cecda-72dd-4b7f-8839-95bd04481038@linaro.org>
+Date:   Sat, 16 Sep 2023 02:34:17 +0200
 MIME-Version: 1.0
-References: <20230915204426.19011-1-quic_abhinavk@quicinc.com>
-In-Reply-To: <20230915204426.19011-1-quic_abhinavk@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 16 Sep 2023 03:30:57 +0300
-Message-ID: <CAA8EJpqfvmUiOvwE0PE_pWMt7MHTdNeSo1nCA5xG5ykp4Ln6NQ@mail.gmail.com>
-Subject: Re: [PATCH v2] drm/msm/dsi: skip the wait for video mode done if not applicable
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, Hai Li <hali@codeaurora.org>,
-        dri-devel@lists.freedesktop.org, quic_jesszhan@quicinc.com,
-        quic_parellan@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 10/33] ASoC: qcom: qdsp6: Add USB backend ASoC driver
+ for Q6
+Content-Language: en-US
+To:     Wesley Cheng <quic_wcheng@quicinc.com>, mathias.nyman@intel.com,
+        gregkh@linuxfoundation.org, lgirdwood@gmail.com,
+        broonie@kernel.org, perex@perex.cz, tiwai@suse.com,
+        agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        srinivas.kandagatla@linaro.org, bgoswami@quicinc.com,
+        Thinh.Nguyen@synopsys.com
+Cc:     linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230916001026.315-1-quic_wcheng@quicinc.com>
+ <20230916001026.315-11-quic_wcheng@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230916001026.315-11-quic_wcheng@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
@@ -73,36 +118,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 15 Sept 2023 at 23:45, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->
-> dsi_wait4video_done() API waits for the DSI video mode engine to
-> become idle so that we can transmit the DCS commands in the
-> beginning of BLLP. However, with the current sequence, the MDP
-> timing engine is turned on after the panel's pre_enable() callback
-> which can send out the DCS commands needed to power up the panel.
->
-> During those cases, this API will always timeout and print out the
-> error spam leading to long bootup times and log flooding.
->
-> Fix this by checking if the DSI video engine was actually busy before
-> waiting for it to become idle otherwise this is a redundant wait.
->
-> changes in v2:
->         - move the reg read below the video mode check
->         - minor fixes in commit text
->
-> Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/34
-> Fixes: a689554ba6ed ("drm/msm: Initial add DSI connector support")
-> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+On 16.09.2023 02:10, Wesley Cheng wrote:
+> Create a USB BE component that will register a new USB port to the ASoC USB
+> framework.  This will handle determination on if the requested audio
+> profile is supported by the USB device currently selected.
+> 
+> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
 > ---
->  drivers/gpu/drm/msm/dsi/dsi_host.c | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
->
+[...]
 
+> +	ret = of_parse_phandle_with_fixed_args(node, "iommus", 1, 0, &args);
+> +	if (ret < 0)
+> +		data->priv.sid = -1;
+> +	else
+> +		data->priv.sid = args.args[0] & SID_MASK;
+SID masking is done in the devicetree.
 
--- 
-With best wishes
-Dmitry
+Konrad
