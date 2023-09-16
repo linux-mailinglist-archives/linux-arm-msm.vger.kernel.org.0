@@ -2,239 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 58A757A2D04
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Sep 2023 03:22:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C73E7A2D10
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Sep 2023 03:33:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231600AbjIPBWN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Sep 2023 21:22:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51762 "EHLO
+        id S235874AbjIPBdZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Sep 2023 21:33:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236657AbjIPBWD (ORCPT
+        with ESMTP id S234845AbjIPBc7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Sep 2023 21:22:03 -0400
-Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCED9119
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 18:21:56 -0700 (PDT)
-Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-59c0442a359so19231517b3.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 18:21:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694827316; x=1695432116; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=m8BKz5UCMmU/bXzuDaUcle9qWzHdZ3DqG5/pm4LxWZc=;
-        b=KlEjKBrPppqnWtyLLkOD62rpAM77rpqBq/8al+S94M18r0xiqxH/MfCCOxhwPNRb5F
-         MnJKQ/Z4dneKX5YmMWyaBdkR0yr4RgmoLFDdaa+Xo3fbPm9BHnD9Ls+XN75ks/Luew1x
-         r34OUsz1BgBRYyJrMHXFNQTrclZXEeo40zfQ3V9/dH86qL/GLBCFhjVYd+8aXpx/wSfw
-         W+wybrLcO7f3AYngsqjBoEsl60HnvzuNo29QkUlesr+jQwoqxktKYnZCS+guJ6xrGwDk
-         Jl6Oh05cqCyosL0qxUxJl3MAaSZGxA/dBJiNhHjGZdFietqXc5JLgsSJ79/xzNB18jLR
-         cSIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694827316; x=1695432116;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=m8BKz5UCMmU/bXzuDaUcle9qWzHdZ3DqG5/pm4LxWZc=;
-        b=gfVvLQGTLKnodlleJXL/IoHaCsWcdgMjK0a8NIuORa+dO1c3WWvTgdyhRIj8SDfB9J
-         lyIe06ikY7Nx9H78laFsDQ2a+fXSZ9KntzzSHbRV73uCd35A1bl60P3ZLtXm5w8VFqVs
-         h4Iv4la7ZKlq4JwG7bdoATGQSz3Q2ViP85Ufp763xtarlzxChhmuO9zIdrQKuscGSyjs
-         lMWAnp4f524kTnSN+3OLYZsxfqKJIw4+Zl+lQEhsP4GWXqgzr40KHBG5K7sVZX0yY3xc
-         cWoZHitq8TOHPDUfsq4OLs9sqYLL9h+uzYz7WdLQ5od3trflPJUKQoArZ3Mc241gTnwh
-         IyAA==
-X-Gm-Message-State: AOJu0Yzdi+K8JWomK013GMGqW2nQSBQPtphgAyil6qtYiu/mQPUniOAn
-        aouDdDd9x+3K/apIyX1247Yl3d1XTUOG5HKEoThtRg==
-X-Google-Smtp-Source: AGHT+IGirGUvVmFPjV1cL+A1J69fNhmFXvjIP8Zn0NDxSV0Q4j7kEjWfjiCMmV5s1uEqTsShPsx9NphwFc9WmDZ13ck=
-X-Received: by 2002:a81:914d:0:b0:570:65df:21dc with SMTP id
- i74-20020a81914d000000b0057065df21dcmr3509921ywg.3.1694827316007; Fri, 15 Sep
- 2023 18:21:56 -0700 (PDT)
+        Fri, 15 Sep 2023 21:32:59 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76007F9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 18:32:54 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2883C433C7;
+        Sat, 16 Sep 2023 01:32:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1694827973;
+        bh=skBkA9Lvg0glYPEe303wtjJnabG49jEl7UT0uUAwJmM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=aYe7lspdcXGvjcECSclCL3guKatsDA3e+HbcFXTWlKRwC4t7+WkNr9v+QfYGEXcwz
+         pl8/fehJAghLS2FAErkJJ7aNDlrETq3M1YpvMeg4acj6dbQn7fYU9XwVs/n3uLy5lR
+         7Ic1sSpg5o9TAYbj+GEkp3pZrcfNUhxJnVp7StfDQxmyHSYP4Hqv4cubj6vkMKTIRx
+         t9s6TdvYuJcFtFg3yNaF+OaZ4jtQG3IzGHVkORPlH30Eu1xwZbL0ZvqF7llbueJFhq
+         ZsK97G7QGgKO8381cdyDi/FvfFj7ClP4av6u68I8ywuV7vghkkQYlQNyWEGM4GQyOY
+         nonMgpj7+RhTw==
+Date:   Fri, 15 Sep 2023 18:37:08 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc:     konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: smem: Document shared memory item IDs and
+ corresponding structs
+Message-ID: <uk2rm42o7ndvg6rlhcw5zsmqp2c4a3ssqvbyhdigx6a7e3j2se@amf4mkeor34e>
+References: <20230915175907.17134-1-quic_jhugo@quicinc.com>
 MIME-Version: 1.0
-References: <1694813901-26952-1-git-send-email-quic_khsieh@quicinc.com> <1694813901-26952-7-git-send-email-quic_khsieh@quicinc.com>
-In-Reply-To: <1694813901-26952-7-git-send-email-quic_khsieh@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 16 Sep 2023 04:21:44 +0300
-Message-ID: <CAA8EJpqPXoFX4LXyXYgfh07Vpxg-KgD8VBR6x5bXf4GOJmbOtw@mail.gmail.com>
-Subject: Re: [PATCH v3 6/7] drm/msm/dp: add pm_runtime_force_suspend()/resume()
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, andersson@kernel.org, quic_abhinavk@quicinc.com,
-        quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
-        marijn.suijten@somainline.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230915175907.17134-1-quic_jhugo@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 16 Sept 2023 at 00:38, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
->
-> Add pm_runtime_force_suspend()/resume() to complete incorporating pm
-> runtime framework into DP driver. Both dp_pm_prepare() and dp_pm_complete()
-> are added to set hpd_state to correct state. After resume, DP driver will
-> re training its main link after .hpd_enable() callback enabled HPD
-> interrupts and bring up display accordingly.
-
-How will it re-train the main link? What is the code path for that?
-
-I think this is a misuse for prepare/complete callbacks, at least
-judging from their documentation.
-
->
-> Changes in v3:
-> -- replace dp_pm_suspend() with pm_runtime_force_suspend()
-> -- replace dp_pm_resume() with pm_runtime_force_resume()
->
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+On Fri, Sep 15, 2023 at 11:59:07AM -0600, Jeffrey Hugo wrote:
+> Shared memory items are assigned a globally unique ID and almost always
+> have a defined structure which is stored in the shared memory.  Document
+> assigned IDs and corresponding structures.
+> 
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 > ---
->  drivers/gpu/drm/msm/dp/dp_display.c | 87 +++++--------------------------------
->  1 file changed, 10 insertions(+), 77 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index b6992202..b58cb02 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -1333,101 +1333,35 @@ static int dp_pm_runtime_resume(struct device *dev)
->         return 0;
->  }
->
-> -static int dp_pm_resume(struct device *dev)
-> +static void dp_pm_complete(struct device *dev)
->  {
-> -       struct platform_device *pdev = to_platform_device(dev);
-> -       struct msm_dp *dp_display = platform_get_drvdata(pdev);
-> -       struct dp_display_private *dp;
-> -       int sink_count = 0;
-> -
-> -       dp = container_of(dp_display, struct dp_display_private, dp_display);
-> +       struct dp_display_private *dp = dev_get_dp_display_private(dev);
->
->         mutex_lock(&dp->event_mutex);
->
->         drm_dbg_dp(dp->drm_dev,
-> -               "Before, type=%d core_inited=%d phy_inited=%d power_on=%d\n",
-> +               "type=%d core_inited=%d phy_inited=%d power_on=%d\n",
->                 dp->dp_display.connector_type, dp->core_initialized,
-> -               dp->phy_initialized, dp_display->power_on);
-> +               dp->phy_initialized, dp->dp_display.power_on);
->
->         /* start from disconnected state */
->         dp->hpd_state = ST_DISCONNECTED;
->
-> -       /* turn on dp ctrl/phy */
-> -       dp_display_host_init(dp);
-> -
-> -       if (dp_display->is_edp)
-> -               dp_catalog_ctrl_hpd_enable(dp->catalog);
-> -
-> -       if (dp_catalog_link_is_connected(dp->catalog)) {
-> -               /*
-> -                * set sink to normal operation mode -- D0
-> -                * before dpcd read
-> -                */
-> -               dp_display_host_phy_init(dp);
-> -               dp_link_psm_config(dp->link, &dp->panel->link_info, false);
-> -               sink_count = drm_dp_read_sink_count(dp->aux);
-> -               if (sink_count < 0)
-> -                       sink_count = 0;
-> -
-> -               dp_display_host_phy_exit(dp);
-> -       }
-> -
-> -       dp->link->sink_count = sink_count;
-> -       /*
-> -        * can not declared display is connected unless
-> -        * HDMI cable is plugged in and sink_count of
-> -        * dongle become 1
-> -        * also only signal audio when disconnected
-> -        */
-> -       if (dp->link->sink_count) {
-> -               dp->dp_display.link_ready = true;
-> -       } else {
-> -               dp->dp_display.link_ready = false;
-> -               dp_display_handle_plugged_change(dp_display, false);
-> -       }
-> -
-> -       drm_dbg_dp(dp->drm_dev,
-> -               "After, type=%d sink=%d conn=%d core_init=%d phy_init=%d power=%d\n",
-> -               dp->dp_display.connector_type, dp->link->sink_count,
-> -               dp->dp_display.link_ready, dp->core_initialized,
-> -               dp->phy_initialized, dp_display->power_on);
-> -
->         mutex_unlock(&dp->event_mutex);
-> -
-> -       return 0;
->  }
->
-> -static int dp_pm_suspend(struct device *dev)
-> +static int dp_pm_prepare(struct device *dev)
->  {
-> -       struct platform_device *pdev = to_platform_device(dev);
-> -       struct msm_dp *dp_display = platform_get_drvdata(pdev);
-> -       struct dp_display_private *dp;
-> -
-> -       dp = container_of(dp_display, struct dp_display_private, dp_display);
-> +       struct dp_display_private *dp = dev_get_dp_display_private(dev);
->
->         mutex_lock(&dp->event_mutex);
->
-> -       drm_dbg_dp(dp->drm_dev,
-> -               "Before, type=%d core_inited=%d  phy_inited=%d power_on=%d\n",
-> -               dp->dp_display.connector_type, dp->core_initialized,
-> -               dp->phy_initialized, dp_display->power_on);
-> -
->         /* mainlink enabled */
->         if (dp_power_clk_status(dp->power, DP_CTRL_PM))
->                 dp_ctrl_off_link_stream(dp->ctrl);
->
-> -       dp_display_host_phy_exit(dp);
-> -
-> -       /* host_init will be called at pm_resume */
-> -       dp_display_host_deinit(dp);
-> -
->         dp->hpd_state = ST_SUSPENDED;
->
-> -       drm_dbg_dp(dp->drm_dev,
-> -               "After, type=%d core_inited=%d phy_inited=%d power_on=%d\n",
-> -               dp->dp_display.connector_type, dp->core_initialized,
-> -               dp->phy_initialized, dp_display->power_on);
-> -
->         mutex_unlock(&dp->event_mutex);
->
->         return 0;
-> @@ -1435,8 +1369,10 @@ static int dp_pm_suspend(struct device *dev)
->
->  static const struct dev_pm_ops dp_pm_ops = {
->         SET_RUNTIME_PM_OPS(dp_pm_runtime_suspend, dp_pm_runtime_resume, NULL)
-> -       .suspend = dp_pm_suspend,
-> -       .resume =  dp_pm_resume,
-> +       SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
-> +                                pm_runtime_force_resume)
-> +       .prepare = dp_pm_prepare,
-> +       .complete = dp_pm_complete,
->  };
->
->  static struct platform_driver dp_display_driver = {
-> @@ -1670,9 +1606,6 @@ void dp_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
->
->         dp_display = container_of(dp, struct dp_display_private, dp_display);
->
-> -       if (dp->is_edp)
-> -               dp_hpd_unplug_handle(dp_display, 0);
-> -
->         mutex_lock(&dp_display->event_mutex);
->
->         state = dp_display->hpd_state;
-> --
-> 2.7.4
->
+> 
+> Konrad, before I get too far into this, I was hoping for some early
+> feedback since this documentation is a request that you made.
+> 
+> Please let me know if this is aligned with what you were wanting.
+> 
+>  include/linux/soc/qcom/smem.h | 176 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 176 insertions(+)
+> 
+> diff --git a/include/linux/soc/qcom/smem.h b/include/linux/soc/qcom/smem.h
+> index 223db6a9c733..2f8d1f3126a4 100644
+> --- a/include/linux/soc/qcom/smem.h
+> +++ b/include/linux/soc/qcom/smem.h
+> @@ -4,6 +4,182 @@
+>  
+>  #define QCOM_SMEM_HOST_ANY -1
+>  
+> +/* fixed items - these have a static position in shared memory */
+> +#define SMEM_PROC_COMM				0
 
+Other parts of this interface are prefixed with qcom_.
 
--- 
-With best wishes
-Dmitry
+> +#define SMEM_HEAP_INFO				1
+> +#define SMEM_ALLOCATION_TABLE			2
+> +#define SMEM_VERSION_INFO			3
+> +#define SMEM_HW_RESET_DETECT			4
+[..]
+> +
+> +/* Legacy communication protocol between "Apps" and "Modem" processors */
+> +struct smem_proc_comm {
+
+This is already defined in smem.c, with the same name, but slightly
+different definition.
+
+I always envisioned that we would treat this as an smem-internal
+implementation detail and expose a function to invoke a proc command, if
+someone cared...
+
+Does including it here in the client api definition make sense? Is the
+first entry in the smem_heap_entry list pointing to this data, even
+though it's part of the header?
+
+> +        __le32 command;
+> +        __le32 status;
+> +        __le32 data1;
+> +        __le32 data2;
+> +};
+> +
+> +/* Metadata structure for shared memory heap allocations */
+> +struct smem_heap_info {
+
+This, and the next entry shouldn't be accessed outside the heap
+implementation itself...
+
+> +        __le32 initialized;
+> +        __le32 free_offset;
+> +        __le32 heap_remaining;
+> +        __le32 reserved;
+> +};
+> +
+> +/* SMEM_ALLOCATION_TABLE is an array of these structures.  512 elements in the array. */
+> +struct smem_heap_entry {
+> +        __le32 allocated;
+> +        __le32 offset;
+> +        __le32 size;
+> +        __le32 reserved; /* bits 1:0 reserved, bits 31:2 aux smem base addr */
+> +};
+> +
+> +struct smem_version_info {
+> +	__le32 version[32];
+> +};
+> +
+> +struct smem_spinlock_array {
+> +	volatile __le32 lock[8];
+> +};
+> +
+> +#define FLASH_PART_MAGIC1       0x55EE73AA
+> +#define FLASH_PART_MAGIC2       0xE35EBDDB
+> +#define FLASH_PTABLE_V3         3
+> +#define FLASH_PTABLE_V4         4
+> +#define FLASH_PTABLE_MAX_PARTS_V3 16
+> +#define FLASH_PTABLE_MAX_PARTS_V4 32
+> +#define FLASH_PTABLE_ENTRY_NAME_SIZE 16
+> +
+> +struct flash_partition_entry {
+> +        char name[FLASH_PTABLE_ENTRY_NAME_SIZE];
+> +        __le32 offset;     /* Offset in blocks from beginning of device */
+> +        __le32 length;     /* Length of the partition in blocks */
+> +        u8 attr;           /* Flags for this partition */
+> +};
+> +
+> +struct flash_partition_table {
+> +        __le32 magic1;
+> +        __le32 magic2;
+> +        __le32 version;
+> +        __le32 numparts;
+> +        struct flash_partition_entry part_entry[FLASH_PTABLE_MAX_PARTS_V4];
+> +};
+
+This information already exist in qcomsmempart.c, but with slightly
+different names.
+
+> +
+> +/* SMEM_CHANNEL_ALLOC_TBL is an array of these.  Used for SMD. */
+> +struct smd_alloc_elm {
+
+This is called qcom_smd_alloc_entry, in qcom_smd.c...
+
+Regards,
+Bjorn
+
+> +        char name[20];
+> +        __le32 cid;
+> +        __le32 type;
+> +        __le32 ref_count;
+> +};
+> +
+>  int qcom_smem_alloc(unsigned host, unsigned item, size_t size);
+>  void *qcom_smem_get(unsigned host, unsigned item, size_t *size);
+>  
+> -- 
+> 2.40.1
+> 
