@@ -2,57 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A89617A2D80
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Sep 2023 04:37:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 92C657A2E07
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Sep 2023 07:19:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236653AbjIPCh2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Sep 2023 22:37:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42920 "EHLO
+        id S232825AbjIPFSd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Sep 2023 01:18:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231942AbjIPCg6 (ORCPT
+        with ESMTP id S238742AbjIPFSU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Sep 2023 22:36:58 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99A11FA;
-        Fri, 15 Sep 2023 19:36:53 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D12ADC433C8;
-        Sat, 16 Sep 2023 02:36:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1694831813;
-        bh=s/9j8ncCW1j9ftHgl8PJ5uWrhqOWZyMg0gJKtCzpw44=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=V3lgnTnpoxVTXk+zFc3Y7Ufd5mtyYnREpoZ2P9jnoqQaACKVYQpbAfV8kHW0s3eUJ
-         9I0W6CahYt1w7JyUXuEw4pyxyJBK2DsDUI3vOKooneyFtla8ulzgNuv77M2GfiBraR
-         6WPZ0HjYeql1jwrHMVhQC8CFWGCEBarQ8mh5kzDnn2KLRomuSG6pmAQ1hAbxeC7Uhw
-         rvVEg+2MlHSvrKHXeC4i4i2Pc2pNv2zjnvG9psnVX0ehl/m2vT7uEPRbtdcQmZ+kF1
-         xF1ofd4K9rxFn9WLABWCL7j/hGast9tOi0XSxZyb2pGTxMLu1Z0soKe0PexRs4Qxse
-         eAuAxL6rVQsbw==
-Received: (nullmailer pid 607829 invoked by uid 1000);
-        Sat, 16 Sep 2023 02:36:49 -0000
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+        Sat, 16 Sep 2023 01:18:20 -0400
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F9701BCA;
+        Fri, 15 Sep 2023 22:18:14 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id 98e67ed59e1d1-2745cd2ba68so2323042a91.0;
+        Fri, 15 Sep 2023 22:18:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1694841493; x=1695446293; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:subject:to:from
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1qdYiZ8LF0tnKSZBA/euKOT4dE27FmTPvneuvwGAtB4=;
+        b=k7Zl+NS0nW91td44ZPci9WfG0wc8x70mOEIEPeBAcEtIWdTB6PLysFXv9hnOh77wYp
+         i0a+tSeX1yfcryElX5orRWtphblRx4S6d947rTG9fGw3Cg+UMbaG+GtWS+WuXmPA08G0
+         FRb49Yt+4Bv2rC7u+hmE7lC1EwoA26sRsTdtgOhPToGfdTdK0cgN3UhThlL+lejtpB30
+         SOSQ1D+QyldBTEWZf45vlWTiYEg9u+3irmS3wf/HwS91STUq5hBHaqKL6vX4jHpaAroQ
+         Tcfv1EHuivpI6/jkmhTrO1DEhUGfW1JXQHbMoKUWnyzqTb/jrmUM1lQRX0o9WpetYPpd
+         XlEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694841493; x=1695446293;
+        h=content-transfer-encoding:in-reply-to:references:subject:to:from
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=1qdYiZ8LF0tnKSZBA/euKOT4dE27FmTPvneuvwGAtB4=;
+        b=VD4f+Tmx2IAneeS3JnGEOIeEc1OtOvn++cD4ci1LoWMHfUH8/bG8oEnNE+eiKxw5tC
+         ZGkqJiWwqc2s0dbDwOhLBYqEcAj1tGHUNlyKmgIiEkV6s+VnBcCVnG7xO+mAX5D1QBXR
+         duQel+Nz0xoYZuslOP4DCzSjBZq6Mi56X6Zef0MbDwUBFvVciEZmXMQ1XcB5FJ8SE1TS
+         2I+TFR8Q67nuT1YvxESzAXNXtoUWpZXOAinP00g4risbslAhNmTv2IGrSGYDFIHycYyp
+         ZE73RwvWDEcjNISsP2paqTIijwPKR1RjDqksncoaVoBW9JixexW5PSJPwLO7Bwa1Y7MK
+         Tg9A==
+X-Gm-Message-State: AOJu0YyoDTz9pbeOIQT6CtCOusmw37ESsF/TnhO84a6R0UZL0KqDpUAM
+        auy66dj8s8i5sPS4Clv6K20=
+X-Google-Smtp-Source: AGHT+IHdVfenN52p2XAOd1T6Tm4wVogq0iXsaKupgPDHdMKw528Otc/dSSu/9b9aAGUZo4iSklnRww==
+X-Received: by 2002:a17:90b:4d83:b0:274:5638:2a03 with SMTP id oj3-20020a17090b4d8300b0027456382a03mr3239453pjb.20.1694841493383;
+        Fri, 15 Sep 2023 22:18:13 -0700 (PDT)
+Received: from ?IPV6:2401:4900:1c60:c4b6:ed28:95c7:9a77:34ba? ([2401:4900:1c60:c4b6:ed28:95c7:9a77:34ba])
+        by smtp.gmail.com with ESMTPSA id r1-20020a17090a438100b0027480345180sm3451992pjg.2.2023.09.15.22.18.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 Sep 2023 22:18:12 -0700 (PDT)
+Message-ID: <916720db-0d36-2587-9b91-69ec6f70d64c@gmail.com>
+Date:   Sat, 16 Sep 2023 10:48:05 +0530
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Wesley Cheng <quic_wcheng@quicinc.com>
-Cc:     mathias.nyman@intel.com, robh+dt@kernel.org, tiwai@suse.com,
-        lgirdwood@gmail.com, srinivas.kandagatla@linaro.org,
-        bgoswami@quicinc.com, gregkh@linuxfoundation.org,
-        andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        perex@perex.cz, Thinh.Nguyen@synopsys.com,
-        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, agross@kernel.org, broonie@kernel.org,
-        linux-kernel@vger.kernel.org, conor+dt@kernel.org,
-        devicetree@vger.kernel.org, konrad.dybcio@linaro.org
-In-Reply-To: <20230916001026.315-24-quic_wcheng@quicinc.com>
-References: <20230916001026.315-1-quic_wcheng@quicinc.com>
- <20230916001026.315-24-quic_wcheng@quicinc.com>
-Message-Id: <169483180888.607767.1542710881062922444.robh@kernel.org>
-Subject: Re: [PATCH v6 23/33] ASoC: dt-bindings: Add Q6USB backend
-Date:   Fri, 15 Sep 2023 21:36:49 -0500
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.1
+From:   bhupesh.linux@gmail.com
+To:     Georgi Djakov <djakov@kernel.org>, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, vkoul@kernel.org,
+        davem@davemloft.net, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] Update Bhupesh's email address
+References: <20230915191600.3410862-1-bhupesh.linux@gmail.com>
+ <facce62d-07cd-4899-866b-c9d7eebe38a8@kernel.org>
+In-Reply-To: <facce62d-07cd-4899-866b-c9d7eebe38a8@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -60,47 +76,54 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Fri, 15 Sep 2023 17:10:16 -0700, Wesley Cheng wrote:
-> Add a dt-binding to describe the definition of enabling the Q6 USB backend
-> device for audio offloading.  The node carries information, which is passed
-> along to the QC USB SND class driver counterpart.  These parameters will be
-> utilized during QMI stream enable requests.
+On 9/16/23 2:07 AM, Georgi Djakov <djakov@kernel.org> wrote:
+> Hi Bhupesh,
 > 
-> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-> ---
->  .../devicetree/bindings/sound/qcom,q6usb.yaml | 55 +++++++++++++++++++
->  1 file changed, 55 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/sound/qcom,q6usb.yaml
+> On 15.09.23 22:16, Bhupesh Sharma wrote:
+> > Update the email address for Bhupesh's maintainer entry and fill in
+> > .mailmap accordingly.
+> >
+> > Signed-off-by: Bhupesh Sharma <bhupesh.linux@gmail.com>
+> > ---
+> >   .mailmap    | 5 +++++
+> >   MAINTAINERS | 2 +-
+> >   2 files changed, 6 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/.mailmap b/.mailmap
+> > index a0a6efe87186..a69dfc6bbf1f 100644
+> > --- a/.mailmap
+> > +++ b/.mailmap
+> > @@ -94,6 +94,11 @@ Ben M Cahill <ben.m.cahill@intel.com>
+> >   Ben Widawsky <bwidawsk@kernel.org> <ben@bwidawsk.net>
+> >   Ben Widawsky <bwidawsk@kernel.org> <ben.widawsky@intel.com>
+> >   Ben Widawsky <bwidawsk@kernel.org> <benjamin.widawsky@intel.com>
+> > +Bhupesh Sharma <bhupesh.linux@gmail.com> <bhupesh.sharma@linaro.org>
+> > +Bhupesh Sharma <bhupesh.linux@gmail.com> <bhsharma@redhat.com>
+> > +Bhupesh Sharma <bhupesh.linux@gmail.com> <bhupesh.sharma@freescale.com>
+> > +Bhupesh Sharma <bhupesh.linux@gmail.com> <bhupesh.sharma@st.com>
+> > +Bjorn Andersson <andersson@kernel.org> <bjorn@kryo.se>
 > 
+> This line looks like an unintentional change?
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Oops. Indeed. Let me fix this in v2.
 
-yamllint warnings/errors:
+Regards,
+Bhupesh
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/qcom,q6usb.yaml: $id: Cannot determine base path from $id, relative path/filename doesn't match actual path or filename
- 	 $id: http://devicetree.org/schemas/sound/qcom,q6usb-dais.yaml
- 	file: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/qcom,q6usb.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/qcom,q6usb.example.dtb: dais: qcom,usb-audio-intr-num:0: [0, 2] is too long
-	from schema $id: http://devicetree.org/schemas/sound/qcom,q6usb-dais.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/qcom,q6usb.example.dtb: dais: qcom,usb-audio-intr-num:0: [0, 2] is too long
-	from schema $id: http://devicetree.org/schemas/sound/qcom,q6usb-dais.yaml#
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230916001026.315-24-quic_wcheng@quicinc.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+> >   Bjorn Andersson <andersson@kernel.org> <bjorn@kryo.se>
+> >   Bjorn Andersson <andersson@kernel.org> <bjorn.andersson@linaro.org>
+> >   Bjorn Andersson <andersson@kernel.org> <bjorn.andersson@sonymobile.com>
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index fa7487b7729b..620301a2b5ef 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -17740,7 +17740,7 @@ F:    drivers/net/ethernet/qualcomm/emac/
+> >   QUALCOMM ETHQOS ETHERNET DRIVER
+> >   M:    Vinod Koul <vkoul@kernel.org>
+> > -R:    Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> > +R:    Bhupesh Sharma <bhupesh.linux@gmail.com>
+> >   L:    netdev@vger.kernel.org
+> >   L:    linux-arm-msm@vger.kernel.org
+> >   S:    Maintained
+> 
+> 
