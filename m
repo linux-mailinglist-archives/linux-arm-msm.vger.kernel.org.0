@@ -2,157 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9FD2F7A2CD3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Sep 2023 03:07:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B22747A2CC7
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Sep 2023 02:56:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230161AbjIPBE1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Sep 2023 21:04:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59114 "EHLO
+        id S238444AbjIPAzr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Sep 2023 20:55:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238426AbjIPBD7 (ORCPT
+        with ESMTP id S238717AbjIPAzd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Sep 2023 21:03:59 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8C1A90;
-        Fri, 15 Sep 2023 18:03:53 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38G0AjxH018114;
-        Sat, 16 Sep 2023 00:46:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=ck+kiCghvHyIq4BaYnOXBbHHLhiRIKeMgU0Ox/vMOs0=;
- b=bS9T3u21H8RVIEBXoeHKFi33J5e9jT5yQX9DQQcT44fiqw68fHwfAGYMHhd2B+dN9vcJ
- pqGFB7edIOjCbzjqfOEowz+BvF5ZJq7P/7tOaWBXZzn3T/uqnGjwXI8IxREd85LDVqQM
- Dxrcc2VFxSxKMsIxt+pMYzd6a4lyVvPc5Cd3E8fGn9mplSqqygYdrWby095vAW6ACbX6
- HtpYrfMV5yE1ghZ67qtKA31DVX3ubzu15W3RpeOMz3aZyaoL3GNVWPxHZJ91dFRApDs4
- bUNhvYpI5Qo6ZxWQ2q7nfW/jpEPeopycNaak1ucNJEkChwNy4//RBuhncIbpsw28x9+p uA== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t4g86teve-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 16 Sep 2023 00:46:10 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38G0k93I016034
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 16 Sep 2023 00:46:09 GMT
-Received: from [10.110.47.184] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Fri, 15 Sep
- 2023 17:46:07 -0700
-Message-ID: <60df2d55-ce96-1095-0e52-254d7bd91e7b@quicinc.com>
-Date:   Fri, 15 Sep 2023 17:46:07 -0700
+        Fri, 15 Sep 2023 20:55:33 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9154E2721
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 17:54:18 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2bf5bf33bcdso45281061fa.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Sep 2023 17:54:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694825657; x=1695430457; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=YouDa+ERRcXfsKD05SHv7uq2HbLul8fzNckpEFgl+38=;
+        b=A/rXRJ+5hj8kZa4RuChDDkIJtcazBhGC0MaUBkPsdLogNF5KaF8LJJ07/6fvpnJRi6
+         Jc072txH1x7ImV90wUQBnfsGU0rhB0gfb8RFRQ9o3PFxA1nHm661EX9L18pUUjsV3bvm
+         gKTVBsmURcasuyxnH/7V/TEVlEIhXnbE9h7cCO5b4MFL17N9qKnUq+hgw0jPTyoLmXDb
+         OgEsoUGl723pYIBipj4arNIINORb1Ud10xn/3IwD4ouUGORWVFCi817alll4cnHCxoi0
+         vP9+GXkR7AVa0QH7xq15RgExKOzwNlEqytzvWfECLmejltwg9XiBmJLrfYeSm7aT+VXk
+         EL6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694825657; x=1695430457;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YouDa+ERRcXfsKD05SHv7uq2HbLul8fzNckpEFgl+38=;
+        b=Aa5THNUNeQO6M258ch4Q9RgEZN4WPE2k46UEVSkao+gFyS9ACPPdNLzgQhFiwrCOd2
+         tC3QtZ9RefHcXs2YGlbm6Vwo1fNB5uuFBaVCeqsXd9MMNqEAeOCMn5N2qBIDvQlqqlN1
+         dG49u6NtaRynEpbZ1U3Zvtdw3O6Sim5QRNva/2luznNhCaa/EHApycC84P5I5hA+eEC2
+         1VbGAuR5Bp/u9CdW84IUmWvHxTfGogavKzG4ewJ8hzmX3lpqMyiRI7Vg1WTXgk9J4+A6
+         TgZmVuo1wTBKOXynllyV38ZOuiX4wD98Y4PeRtAwtb9yKla9TshcGZbcsj+hVIySeDNq
+         lrUw==
+X-Gm-Message-State: AOJu0YzdyThraWOhJDqKwDmRa8jeo4HI+lTHQprs3BG6k16OjnzpLis+
+        5xS5fhDCMaBE/7fnlwmqZxzfmg==
+X-Google-Smtp-Source: AGHT+IHUdnhlfTeK4MtrE3fpZApJQcwswA5kVYL+eRCHSesSPAIVMBTUHObYeXXNmyeSYbM6adsOHQ==
+X-Received: by 2002:a2e:3505:0:b0:2bd:10b7:4610 with SMTP id z5-20020a2e3505000000b002bd10b74610mr2594910ljz.25.1694825656782;
+        Fri, 15 Sep 2023 17:54:16 -0700 (PDT)
+Received: from [192.168.37.154] (178235177186.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.186])
+        by smtp.gmail.com with ESMTPSA id e10-20020a170906248a00b00993928e4d1bsm3046483ejb.24.2023.09.15.17.54.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 Sep 2023 17:54:16 -0700 (PDT)
+Message-ID: <49687bc6-7121-422c-99fd-e68dd46aae95@linaro.org>
+Date:   Sat, 16 Sep 2023 02:54:14 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v6 23/33] ASoC: dt-bindings: Add Q6USB backend
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/53] icc-rpmh multi-RSC voting groundwork
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        <mathias.nyman@intel.com>, <gregkh@linuxfoundation.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <perex@perex.cz>,
-        <tiwai@suse.com>, <agross@kernel.org>, <andersson@kernel.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <srinivas.kandagatla@linaro.org>,
-        <bgoswami@quicinc.com>, <Thinh.Nguyen@synopsys.com>
-CC:     <linux-kernel@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-References: <20230916001026.315-1-quic_wcheng@quicinc.com>
- <20230916001026.315-24-quic_wcheng@quicinc.com>
- <9144cb67-9606-4b17-b760-a6d3e8e346cc@linaro.org>
-From:   Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <9144cb67-9606-4b17-b760-a6d3e8e346cc@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Mike Tipton <quic_mdtipton@quicinc.com>
+Cc:     Georgi Djakov <djakov@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230708-topic-rpmh_icc_rsc-v1-0-b223bd2ac8dd@linaro.org>
+ <c067a45f-9629-d516-9e56-36538e4ff6db@kernel.org>
+ <20230807215739.GA9621@hu-mdtipton-lv.qualcomm.com>
+ <10520827-dc01-475c-b09a-35cefc9e0a62@linaro.org>
+ <20230913012951.GA19284@hu-mdtipton-lv.qualcomm.com>
+ <ffc58838-c306-49f3-a90a-95b2cf02ae3d@linaro.org>
+ <20230914023239.GA25147@hu-mdtipton-lv.qualcomm.com>
+ <978fd46d-8142-41e6-9c62-df678018d6c2@linaro.org>
+ <20230915160525.GA14240@hu-mdtipton-lv.qualcomm.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
+ BB/OmIWU6X+LZW6P88ZmHe+KeyABLMP5s1tJNK1j4ntT7mECcWZDzafPWF4F6m4WJOG27kTJ
+ HGWdmtO+RvadOVi6CoUDqALsmfS3MUG5Pj2Ne9+0jRg4hEnB92AyF9rW2G3qisFcwPgvatt7
+ TXD5E38mLyOPOUyXNj9XpDbt1hNwKQfiidmPh5e7VNAWRnW1iCMMoKqzM1Anzq7e5Afyeifz
+ zRcQPLaqrPjnKqZGL2BKQSZDh6NkI5ZLRhhHQf61fkWcUpTp1oDC6jWVfT7hwRVIQLrrNj9G
+ MpPzrlN4YuAqKeIer1FMt8cq64ifgTzxHzXsMcUdclzq2LTk2RXaPl6Jg/IXWqUClJHbamSk
+ t1bfif3SnmhA6TiNvEpDKPiT3IDs42THU6ygslrBxyROQPWLI9IL1y8S6RtEh8H+NZQWZNzm
+ UQ3imZirlPjxZtvz1BtnnBWS06e7x/UEAguj7VHCuymVgpl2Za17d1jj81YN5Rp5L9GXxkV1
+ aUEwONM3eCI3qcYm5JNc5X+JthZOWsbIPSC1Rhxz3JmWIwP1udr5E3oNRe9u2LIEq+wH/toH
+ kpPDhTeMkvt4KfE5m5ercid9+ZXAqoaYLUL4HCEw+HW0DXcKDwARAQABzShLb25yYWQgRHli
+ Y2lvIDxrb25yYWQuZHliY2lvQGxpbmFyby5vcmc+wsGOBBMBCAA4FiEEU24if9oCL2zdAAQV
+ R4cBcg5dfFgFAmQ5bqwCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQR4cBcg5dfFjO
+ BQ//YQV6fkbqQCceYebGg6TiisWCy8LG77zV7DB0VMIWJv7Km7Sz0QQrHQVzhEr3trNenZrf
+ yy+o2tQOF2biICzbLM8oyQPY8B///KJTWI2khoB8IJSJq3kNG68NjPg2vkP6CMltC/X3ohAo
+ xL2UgwN5vj74QnlNneOjc0vGbtA7zURNhTz5P/YuTudCqcAbxJkbqZM4WymjQhe0XgwHLkiH
+ 5LHSZ31MRKp/+4Kqs4DTXMctc7vFhtUdmatAExDKw8oEz5NbskKbW+qHjW1XUcUIrxRr667V
+ GWH6MkVceT9ZBrtLoSzMLYaQXvi3sSAup0qiJiBYszc/VOu3RbIpNLRcXN3KYuxdQAptacTE
+ mA+5+4Y4DfC3rUSun+hWLDeac9z9jjHm5rE998OqZnOU9aztbd6zQG5VL6EKgsVXAZD4D3RP
+ x1NaAjdA3MD06eyvbOWiA5NSzIcC8UIQvgx09xm7dThCuQYJR4Yxjd+9JPJHI6apzNZpDGvQ
+ BBZzvwxV6L1CojUEpnilmMG1ZOTstktWpNzw3G2Gis0XihDUef0MWVsQYJAl0wfiv/0By+XK
+ mm2zRR+l/dnzxnlbgJ5pO0imC2w0TVxLkAp0eo0LHw619finad2u6UPQAkZ4oj++iIGrJkt5
+ Lkn2XgB+IW8ESflz6nDY3b5KQRF8Z6XLP0+IEdLOOARkOW7yEgorBgEEAZdVAQUBAQdAwmUx
+ xrbSCx2ksDxz7rFFGX1KmTkdRtcgC6F3NfuNYkYDAQgHwsF2BBgBCAAgFiEEU24if9oCL2zd
+ AAQVR4cBcg5dfFgFAmQ5bvICGwwACgkQR4cBcg5dfFju1Q//Xta1ShwL0MLSC1KL1lXGXeRM
+ 8arzfyiB5wJ9tb9U/nZvhhdfilEDLe0jKJY0RJErbdRHsalwQCrtq/1ewQpMpsRxXzAjgfRN
+ jc4tgxRWmI+aVTzSRpywNahzZBT695hMz81cVZJoZzaV0KaMTlSnBkrviPz1nIGHYCHJxF9r
+ cIu0GSIyUjZ/7xslxdvjpLth16H27JCWDzDqIQMtg61063gNyEyWgt1qRSaK14JIH/DoYRfn
+ jfFQSC8bffFjat7BQGFz4ZpRavkMUFuDirn5Tf28oc5ebe2cIHp4/kajTx/7JOxWZ80U70mA
+ cBgEeYSrYYnX+UJsSxpzLc/0sT1eRJDEhI4XIQM4ClIzpsCIN5HnVF76UQXh3a9zpwh3dk8i
+ bhN/URmCOTH+LHNJYN/MxY8wuukq877DWB7k86pBs5IDLAXmW8v3gIDWyIcgYqb2v8QO2Mqx
+ YMqL7UZxVLul4/JbllsQB8F/fNI8AfttmAQL9cwo6C8yDTXKdho920W4WUR9k8NT/OBqWSyk
+ bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
+ nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
+ izWDgYvmBE8=
+In-Reply-To: <20230915160525.GA14240@hu-mdtipton-lv.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: zgDNW_TDu9Oe6lDKtF37RINtdlYN4fmk
-X-Proofpoint-ORIG-GUID: zgDNW_TDu9Oe6lDKtF37RINtdlYN4fmk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-15_20,2023-09-15_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1015
- bulkscore=0 impostorscore=0 adultscore=0 suspectscore=0 malwarescore=0
- spamscore=0 mlxscore=0 priorityscore=1501 mlxlogscore=712
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309160005
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Konrad,
-
-On 9/15/2023 5:37 PM, Konrad Dybcio wrote:
-> On 16.09.2023 02:10, Wesley Cheng wrote:
->> Add a dt-binding to describe the definition of enabling the Q6 USB backend
->> device for audio offloading.  The node carries information, which is passed
->> along to the QC USB SND class driver counterpart.  These parameters will be
->> utilized during QMI stream enable requests.
+On 15.09.2023 18:05, Mike Tipton wrote:
+> On Fri, Sep 15, 2023 at 03:43:27PM +0200, Konrad Dybcio wrote:
+>> On 14.09.2023 04:32, Mike Tipton wrote:
+>>> On Wed, Sep 13, 2023 at 10:31:49AM +0200, Konrad Dybcio wrote:
+>>>>> The applicable voters should likely be defined in the target-specific
+>>>>> headers, rather than the common qcom,icc.h. The bit range used for them
+>>>>> could be common, but each target may only support a small subset of the
+>>>>> total set of possible voters across all targets.
+>>>> I'm not sure how client drivers would then choose the
+>>>> correct path other than
+>>>>
+>>>> switch (soc) {
+>>>> case 8450:
+>>>> 	tag = QCOM_ICC_TAG_VOTER_8450_HLOS;
+>>>> 	break;
+>>>> case 8550:
+>>>> 	tag = QCOM_ICC_TAG_VOTER_8550_HLOS;
+>>>> 	break;
+>>>> ...
+>>>> }
+>>>>
+>>>> which would be unacceptable.
+>>>
+>>> The same general way it's handled for the endpoint bindings, which are
+>>> already target-specific. 
+>>>
+>>> Any client drivers hardcoding the endpoint bindings in their driver
+>>> would have to include the appropriate, target-specific binding header
+>>> (e.g. qcom,sm8550-rpmh.h). That would only be possible if their driver
+>>> file is itself target-specific. Otherwise, it would have to pull the
+>>> endpoint bindings from devicetree. Or just use the recommended
+>>> of_icc_get() and let devicetree do everything for them. Same for the
+>>> target-specific voter tag bindings.
+>>>
+>>> Clients can also specify their tags in devicetree. They don't actually
+>>> have to call icc_set_tag() directly. For example:
+>>>
+>>>     #include <dt-bindings/interconnect/qcom,sm8450.h>
+>>>
+>>>     interconnects = <&mmss_noc MASTER_MDP QCOM_ICC_TAG_VOTER_DISP
+>>>                      &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_VOTER_DISP>;
+>>>
+>>> Then when they call of_icc_get() for this path it'll automatically have
+>>> QCOM_ICC_TAG_VOTER_DISP set for them.
+>> I think I'd skew towards the "define everything in the DT" approach.
 >>
->> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
->> ---
->>   .../devicetree/bindings/sound/qcom,q6usb.yaml | 55 +++++++++++++++++++
->>   1 file changed, 55 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/sound/qcom,q6usb.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/sound/qcom,q6usb.yaml b/Documentation/devicetree/bindings/sound/qcom,q6usb.yaml
->> new file mode 100644
->> index 000000000000..51ff0b1ffa2d
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/sound/qcom,q6usb.yaml
->> @@ -0,0 +1,55 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/sound/qcom,q6usb-dais.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm ASoC DPCM USB backend DAI
->> +
->> +maintainers:
->> +  - Wesley Cheng <quic_wcheng@quicinc.com>
->> +
->> +description:
->> +  The USB port is a supported AFE path on the Q6 DSP.  This ASoC DPCM
->> +  backend DAI will communicate the required settings to initialize the
->> +  XHCI host controller properly for enabling the offloaded audio stream.
->> +  Parameters defined under this node will carry settings, which will be
->> +  passed along during the QMI stream enable request and configuration of
->> +  the XHCI host controller.
->> +
->> +allOf:
->> +  - $ref: dai-common.yaml#
->> +
->> +properties:
->> +  compatible:
->> +    enum:
->> +      - qcom,q6usb
->> +
->> +  iommus:
->> +    maxItems: 1
->> +
->> +  "#sound-dai-cells":
->> +    const: 1
->> +
->> +  qcom,usb-audio-intr-num:
->> +    description:
->> +      Desired XHCI interrupter number to use.  Depending on the audio DSP
->> +      on the platform, it will operate on a specific XHCI interrupter.
-> So is this the number of interrupters to be used or the index of
-> a single interrupter? If the latter, then "num" is definitely way
-> too ambiguous.
+>> One thing that makes me uneasy to go on with this approach is the
+>> question whether there is a case in which we would want to switch
+>> from e.g. voting through DISP to voting through APPS (or similar)
+>> from within a single device.
 > 
+> It shouldn't be common. But it could be done fairly simply by listing
+> paths for each different voter in the dt properties. 
+> 
+>     interconnects = <&mmss_noc MASTER_MDP QCOM_ICC_TAG_VOTER_APPS
+>                      &mc_virt SLAVE_EBI1  QCOM_ICC_TAG_VOTER_APPS>,
+>                     <&mmss_noc MASTER_MDP QCOM_ICC_TAG_VOTER_DISP
+>                      &mc_virt SLAVE_EBI1  QCOM_ICC_TAG_VOTER_DISP>,
+>     interconnect-names = "path-apps-voter",
+>                          "path-disp-voter";
+Eeeeeh, I don't know.. this almost sounds like a patch-up solution
+to a problem that doesn't quite yet exist.
 
-It defines the index of a single interrupter.  I'll change the naming of 
-this property.
+I debated introducing a third interconnect cell for this, but I am
+not sure the added complexity is worth it.
 
-Thanks
-Wesley Cheng
+
+Having a global set of RSC-bound tags would be a "nice" and tidy
+solution.. Maybe we could even allocate like 24 bits to these, as
+I don't think you'll be introducing new buckets (or at least I hope
+you won't!).
+
+24 is an obscene amount of RSCs to have, even counting virtual
+channels, so unless you folks have some dark plans to make all
+pieces of hardware powered completely separately from each other,
+I suppose I could ask for a pinky-promise to not exceed that
+number, ever :D
+
+Konrad
