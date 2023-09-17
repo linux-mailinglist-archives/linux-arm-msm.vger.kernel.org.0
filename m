@@ -2,74 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 80DFC7A33AB
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Sep 2023 05:29:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 116017A3415
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Sep 2023 09:36:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231652AbjIQD3I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Sep 2023 23:29:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60760 "EHLO
+        id S231169AbjIQHfo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 17 Sep 2023 03:35:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230011AbjIQD2o (ORCPT
+        with ESMTP id S230230AbjIQHfc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Sep 2023 23:28:44 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E912CCD;
-        Sat, 16 Sep 2023 20:28:39 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-401da71b85eso37587485e9.1;
-        Sat, 16 Sep 2023 20:28:39 -0700 (PDT)
+        Sun, 17 Sep 2023 03:35:32 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 230EF18B
+        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Sep 2023 00:35:26 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-99c136ee106so458539766b.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Sep 2023 00:35:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1694921317; x=1695526117; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1694936124; x=1695540924; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=q5M0WMQ46n2FGOpYv7Jc4XqOFTIJE/KY78/IF5A+gUI=;
-        b=FwljwuIdZUy88bKZNljjXrPe3Tt7Za+LiXHc3yZc/PByd55zeHujm1v85fWooUae69
-         zgVGtthpjKroeSGN2Pvs7rLmnqxYb3K4vrQP1FpJftNQLBoc0OYqUbyaJYxl6LugID5h
-         HaLEHyti0FLbaYdmyY9wCe/2mB4wNVpqGJoaRNA7Q5bfCGARHkGpclOEfe34P289uVtj
-         mQROY5rWLk2VhX/+FsArtxC9i3B5sZEnh0UCkk4gBu+ftdxhhgC+Rx27j4Ii8SItk0EZ
-         g5RZ+zYkKTi90vbyMxAaotPoAqthFcwSV6u6TLXyeT1ajjmWkn/3lp0aml9NU2ZS/33r
-         AAhg==
+        bh=GVg4iMqyFo6GXp2VZ+N/pcY2Y8g5Wn2f/zmdGd2t3MI=;
+        b=lar6a0V7EyMJdDCKr4MuzCIk4QQdplSI/2WYfIwB+1LAUsXqc4j4vbSFidTmbOq6SK
+         0bpTJf+NTNSF0NJER3QS6ghdZNx7vn/IQQW6S79DNEHFX13WC7scTWa4BGJdeiHfYeiE
+         di+YqMNuxXgiZm9lD7Q7Ac4PLKbl94CUpB7s9YufmL8JZ4kkZHUAytFQw/JaXE5klPaI
+         DulXd09UItfiFXkGEB9Bbql/5CzTeh+usiVZ2b8el6dX1gwb3mGI3U91K2bP1Iu6buUX
+         BoSx6HvFj6J4C1Ol5wZeJFgnytIF2xAm9n+ysQApemwPIlxQs8cTDiV1YNstNfktBNet
+         Jcpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694921317; x=1695526117;
+        d=1e100.net; s=20230601; t=1694936124; x=1695540924;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=q5M0WMQ46n2FGOpYv7Jc4XqOFTIJE/KY78/IF5A+gUI=;
-        b=IS6eVTwfjBu4xmC+/ySpUSKlb9BBCgfAYMAkLizmOW7I0r5IL2uTmnNjzL9xS+At+x
-         ew9/FRb95Q5OE34WIefUdAPJy7WOLyHaG+2fY/bOVoG/BNV/ju/aPXlsom2M401WzPTw
-         VFdEfevO63vZZkJMVKobiwrMZQmISY7EkaSlWz2SQyc9RiEBS7vWtH+P7Nj180/EUODo
-         W2okXXIMqCGT+LWK/5EDEGyksBSkfX7LeykYrTLM++i1I4vGeCSEQJCbE0Wn/NGHz0m/
-         pQZkl3NdvorCjSdTfMnwjnPbAnTzYN9yYZe2Ts1ecP/FqrVL79Pkr6IxDiDN+RJ8pprX
-         1gRQ==
-X-Gm-Message-State: AOJu0Yy783jpN2SKPMSX4siGpqIAsK3xSFxAchfQqldji8iPRXOlXIQr
-        nHNLiI4KpHk6sOSdTBpym2XClOVdsbg=
-X-Google-Smtp-Source: AGHT+IGgAD0WnANIU0VI4N4cm5B8MSzcXVPwCmCeLyj6PuW/mfzMWkZfnrt3qtEOYHAjWvVEkHHmQw==
-X-Received: by 2002:a1c:f30a:0:b0:402:ea96:c09a with SMTP id q10-20020a1cf30a000000b00402ea96c09amr5090927wmq.16.1694921317365;
-        Sat, 16 Sep 2023 20:28:37 -0700 (PDT)
-Received: from ?IPV6:2a02:8071:b783:140:927c:82ba:d32d:99c1? ([2a02:8071:b783:140:927c:82ba:d32d:99c1])
-        by smtp.gmail.com with ESMTPSA id o16-20020a5d4a90000000b0031ffb51f6f9sm4039685wrq.30.2023.09.16.20.28.35
+        bh=GVg4iMqyFo6GXp2VZ+N/pcY2Y8g5Wn2f/zmdGd2t3MI=;
+        b=I/VgSwMWMlN+dv6IIVTNCLjcgbdSxNprx6In4XlOZWRhgnJkXM0SdN8/n6lrn4kBRx
+         QnReYGwaNt+Z9ZtDaExSEBJrNXJO4FOa3wqrPekaRR0inXvlPlNaN9kRt48y+wNatdPV
+         qa0wSJaAf73wSOR/lFmKDCpduDaBjC02JXBJDdap/kHmKoo448vxeLm8opAFBQtz1oRq
+         9lplNKnbzQLU16OUKFjNwS2u6P7JO5wGRiNOaoz3rcPp0ALz6uVHt6M5lIF2aWkD/evg
+         uA0bw8L/NKKYhZLF45BfwvqXulyRwra+MNsqas5pa6FBtXBPGqPGyvBr36CGniWzY5xY
+         8e0A==
+X-Gm-Message-State: AOJu0YywYReuNQ0ERBg16yfR4YtvAlZxAFbl6c9Rn2EU64SInKV1nGSz
+        60aXJZiBbAkTtJ7Xr3HTTy1UsQ==
+X-Google-Smtp-Source: AGHT+IHV9X9GTjPS8Rpcs9R2kxN8xI/rL5gF7b1VuZpWiQozu9bvvyJUcivpO+mDfPfyOicv9EQkxw==
+X-Received: by 2002:a17:907:775a:b0:9a2:16e2:353 with SMTP id kx26-20020a170907775a00b009a216e20353mr5651059ejc.6.1694936124406;
+        Sun, 17 Sep 2023 00:35:24 -0700 (PDT)
+Received: from [192.168.1.77] (150-140-187-31.ftth.glasoperator.nl. [31.187.140.150])
+        by smtp.gmail.com with ESMTPSA id r20-20020a170906365400b0099bd1a78ef5sm4640735ejb.74.2023.09.17.00.35.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 16 Sep 2023 20:28:36 -0700 (PDT)
-Message-ID: <f3982556-dddc-4936-a628-a1fc8f05a750@gmail.com>
-Date:   Sun, 17 Sep 2023 05:28:34 +0200
+        Sun, 17 Sep 2023 00:35:23 -0700 (PDT)
+Message-ID: <54fcf0c2-c8e2-6ee8-5f6c-4de914c56c19@linaro.org>
+Date:   Sun, 17 Sep 2023 09:35:17 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] firmware: qcom: qseecom: Add missing AUXILIARY_BUS
- dependency
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Randy Dunlap <rdunlap@infradead.org>
-References: <20230915-qseecom-auxiliary-fix-v1-1-38a46cfbfdb0@quicinc.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.0
+Subject: Re: [PATCH v2 8/8] arm64: defconfig: enable interconnect and pinctrl
+ for SM4450
+To:     Georgi Djakov <djakov@kernel.org>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Tengfei Fan <quic_tengfan@quicinc.com>, will@kernel.org,
+        robin.murphy@arm.com, joro@8bytes.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        catalin.marinas@arm.com
+Cc:     geert+renesas@glider.be, arnd@arndb.de, neil.armstrong@linaro.org,
+        nfraprado@collabora.com, rafal@milecki.pl, peng.fan@nxp.com,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, quic_shashim@quicinc.com,
+        quic_kaushalk@quicinc.com, quic_tdas@quicinc.com,
+        quic_tingweiz@quicinc.com, quic_aiquny@quicinc.com,
+        kernel@quicinc.com
+References: <20230915021509.25773-1-quic_tengfan@quicinc.com>
+ <20230915021509.25773-10-quic_tengfan@quicinc.com>
+ <8f2c9664-a2c8-50dc-8a1c-e50a071ebeb2@linaro.org>
+ <e9ff05b3-2742-416e-b417-5e2414036008@quicinc.com>
+ <0a34dd35-7aea-4655-4cdd-e7196a1ba52b@linaro.org>
+ <f76e1cc8-fc48-4208-bbe4-9204d9d28363@quicinc.com>
+ <b7398390-23bc-467c-5b83-411110d60f43@linaro.org>
+ <01c020ae-a019-e4eb-14cb-64503bde05a6@quicinc.com>
+ <212f9bfa-6d4c-bba2-60d2-272c001a4322@quicinc.com>
+ <e30870d5-a0cc-4210-a2b0-c7621ea5ecfa@kernel.org>
+ <accb4814-4826-ff97-3527-4e3fbadcd4ff@linaro.org>
+ <c11fd3c2-770a-4d40-8cf3-d8bc81f7c480@kernel.org>
 Content-Language: en-US
-From:   Maximilian Luz <luzmaximilian@gmail.com>
-In-Reply-To: <20230915-qseecom-auxiliary-fix-v1-1-38a46cfbfdb0@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <c11fd3c2-770a-4d40-8cf3-d8bc81f7c480@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,38 +99,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9/16/23 00:50, Bjorn Andersson wrote:
-> The newly introduced QSEECOM driver fail to link if the system is built
-> without CONFIG_AUXILIARY_BUS, make sure it is selected.
+On 17/09/2023 00:55, Georgi Djakov wrote:
+> Hi Krzysztof,
 > 
-> Fixes: 00b1248606ba ("firmware: qcom_scm: Add support for Qualcomm Secure Execution Environment SCM interface")
-> Reported-by: Randy Dunlap <rdunlap@infradead.org>
-> Closes: https://lore.kernel.org/r/9f156fa6-e5aa-4cb2-ab2b-b67fd8fc4840%40infradead.org
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> On 16.09.23 23:32, Krzysztof Kozlowski wrote:
+>> On 16/09/2023 17:13, Georgi Djakov wrote:
+>>>
+>>>>
+>>>> Complete list here, and it is inconsistent. Latest 8550 is also =y. Do we document
+>>>> the reasons somewhere on why they are added as =y?
+>>>>
+>>>> CONFIG_INTERCONNECT_QCOM=y
+>>>> CONFIG_INTERCONNECT_QCOM_MSM8916=m
+>>>> CONFIG_INTERCONNECT_QCOM_MSM8996=m
+>>>> CONFIG_INTERCONNECT_QCOM_OSM_L3=m
+>>>> CONFIG_INTERCONNECT_QCOM_QCM2290=m
+>>>> CONFIG_INTERCONNECT_QCOM_QCS404=m
+>>>> CONFIG_INTERCONNECT_QCOM_SA8775P=y
+>>>> CONFIG_INTERCONNECT_QCOM_SC7180=y
+>>>> CONFIG_INTERCONNECT_QCOM_SC7280=y
+>>>> CONFIG_INTERCONNECT_QCOM_SC8180X=y
+>>>> CONFIG_INTERCONNECT_QCOM_SC8280XP=y
+>>>> CONFIG_INTERCONNECT_QCOM_SDM845=y
+>>>> CONFIG_INTERCONNECT_QCOM_SM8150=m
+>>>> CONFIG_INTERCONNECT_QCOM_SM8250=m
+>>>> CONFIG_INTERCONNECT_QCOM_SM8350=m
+>>>> CONFIG_INTERCONNECT_QCOM_SM8450=y
+>>>> CONFIG_INTERCONNECT_QCOM_SM8550=y
+>>>
+>>> If the device can boot (to console/initramfs) with =m, we go with that.
+>>> But if something critical like the UART depends on the interconnect
+>>> provider, then we make it built-in.
+>>>
+>>> On SM8550 for example, we have enabled bandwidth scaling support for QUP
+>>> and that's why it needs to be =y.
+>>>
+>>> It looks like on SM4450 this should be =y too.
+>>
+>> I asked why SM4450 has to be =y and there was no answer. The argument
+>> that SM8450 is a module, is not applicable.
+> 
+>  From the hardware description i see in patch 7, the serial engine depends
+> on some interconnect provider. But as the serial console driver is only
+> available as built-in, the interconnect provider also needs be built-in
+> for the UART device to probe and register the console.
+> 
+> So the answer to your question should be that this is needed by the UART
+> device (at least).
+> 
+> Such details of course deserve to be mentioned in the commit message of
+> this patch.
 
-Thanks for the quick fix!
+If you mean here the debug UART with console, then it is the same valid
+reason as in my change for others. This should be mentioned in commit msg.
 
-Reviewed-by: Maximilian Luz <luzmaximilian@gmail.com>
+Best regards,
+Krzysztof
 
-> ---
->   drivers/firmware/Kconfig | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
-> index a94202229a71..8c608be30060 100644
-> --- a/drivers/firmware/Kconfig
-> +++ b/drivers/firmware/Kconfig
-> @@ -229,6 +229,7 @@ config QCOM_SCM_DOWNLOAD_MODE_DEFAULT
->   config QCOM_QSEECOM
->   	bool "Qualcomm QSEECOM interface driver"
->   	depends on QCOM_SCM=y
-> +	select AUXILIARY_BUS
->   	help
->   	  Various Qualcomm SoCs have a Secure Execution Environment (SEE) running
->   	  in the Trust Zone. This module provides an interface to that via the
-> 
-> ---
-> base-commit: dfa449a58323de195773cf928d99db4130702bf7
-> change-id: 20230915-qseecom-auxiliary-fix-1574abe3bc98
-> 
-> Best regards,
