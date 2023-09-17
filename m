@@ -2,28 +2,28 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 590597A37E9
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Sep 2023 21:27:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 926017A3BDC
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Sep 2023 22:23:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239201AbjIQT0z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 17 Sep 2023 15:26:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41242 "EHLO
+        id S239624AbjIQUX3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 17 Sep 2023 16:23:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239559AbjIQT00 (ORCPT
+        with ESMTP id S240834AbjIQUXA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 17 Sep 2023 15:26:26 -0400
+        Sun, 17 Sep 2023 16:23:00 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 113E1DB;
-        Sun, 17 Sep 2023 12:26:21 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B1E8C433A9;
-        Sun, 17 Sep 2023 19:26:20 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1E4610C;
+        Sun, 17 Sep 2023 13:22:54 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2B68C433CC;
+        Sun, 17 Sep 2023 20:22:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1694978780;
-        bh=XTziQflBtU2AkACxr/MEtdaIzxCY2gQQPHQEj56nd50=;
+        s=korg; t=1694982174;
+        bh=o+v4PonNWogajHJSkZS2mVYZgXbtsc/JbpSiBRtaDaA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=cYQTENl93CszGXYt8aPSk1yUD7xFAi5Kg1byJGx9hiDrgATs3eEPDuL/aQVJhi6E7
-         MV3USSSJPTJ9HhEUmzB+Rs8jMoS5z+IAB8+CdZYeXCm0LUgiVC3uyOznCAv9l1bS4R
-         6QA37W75/V4MDGcHSn18Sq2DHnluM/PP/cWWENoQ=
+        b=Z/E093lFRfk/PbxA9FMF0lcfr0QCN4NN/VfVjXhjYpcKKdgARw6cImGaw1qYYwKXo
+         4sYqmUTsM0n68/+ydTAcPZe3O5qYV+J5VpQjBgCrKjtzWUoKbMxQKmGVHC2juhOvbg
+         RlhzbFr7Lq0ge4QReoHBlTC4b/YR71ehA8JhxDlo=
 From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To:     stable@vger.kernel.org
 Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -36,12 +36,12 @@ Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
         dorum@noisolation.com, Daniel Vetter <daniel.vetter@intel.com>,
         Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 158/406] drm/msm/mdp5: Dont leak some plane state
-Date:   Sun, 17 Sep 2023 21:10:12 +0200
-Message-ID: <20230917191105.347169382@linuxfoundation.org>
+Subject: [PATCH 5.15 173/511] drm/msm/mdp5: Dont leak some plane state
+Date:   Sun, 17 Sep 2023 21:10:00 +0200
+Message-ID: <20230917191118.012295435@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230917191101.035638219@linuxfoundation.org>
-References: <20230917191101.035638219@linuxfoundation.org>
+In-Reply-To: <20230917191113.831992765@linuxfoundation.org>
+References: <20230917191113.831992765@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -57,7 +57,7 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -95,10 +95,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-index 0dc23c86747e8..e1c1b4ad5ed04 100644
+index 9c42776cb9a8a..f9cae6460c3be 100644
 --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
 +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-@@ -221,8 +221,7 @@ static void mdp5_plane_destroy_state(struct drm_plane *plane,
+@@ -128,8 +128,7 @@ static void mdp5_plane_destroy_state(struct drm_plane *plane,
  {
  	struct mdp5_plane_state *pstate = to_mdp5_plane_state(state);
  
