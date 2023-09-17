@@ -2,140 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F1537A3467
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Sep 2023 10:35:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 889067A34A3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Sep 2023 10:49:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231676AbjIQIcr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 17 Sep 2023 04:32:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48014 "EHLO
+        id S229696AbjIQIsz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 17 Sep 2023 04:48:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235047AbjIQIcZ (ORCPT
+        with ESMTP id S235089AbjIQIsi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 17 Sep 2023 04:32:25 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E97481A3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Sep 2023 01:32:18 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-9aa2c6f0806so450086166b.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Sep 2023 01:32:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694939537; x=1695544337; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=b23jMIF5+DQOp/GSGV7SwrYXy7pfETR+qmI0IugD7mE=;
-        b=Oc65dVS0PW57ID/u1flhJ4fGxqD8kxVj8uguApEvdrKknuFaVw/0smPrSZFi50wjUz
-         P2s9BvE0+RYFZnmoT0AhLDZF53IzS10SDyPEhZYoZCeqGJuUDfD21CAZtPJEN9TuYBkZ
-         i25wo8N7GEdSlKR6FZpFuSCxhV/+WvJtMJuiSCATyjLlNLzNjxswy8iqm4tT+UXCTlpU
-         SqdnqXSETMydynCwG6RziaU5c/HAEY7dRI0pSr3lEydPZlPCVdRYIKnUcZygGXmBcGIX
-         gDv4Z0wTWGA8Zm5gpfrifUrPpI3cHKgyCN0ersjTyWBMhV+d84hYj/dfR4LzwQBNDxBA
-         chGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694939537; x=1695544337;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=b23jMIF5+DQOp/GSGV7SwrYXy7pfETR+qmI0IugD7mE=;
-        b=MJsiZ9NU1xv0gZAGYmyOBEH5uzQuP3+A62x/lLSwHY+nmEQxG1f0n/BF8UGU3iJA3k
-         ShpUaB4jAXAm4HBjFz01zxSe7doaKFo6rosadDgVhsRA1VzBknL9G4wRwoUOGCumyNrm
-         lqX6YgjnJ/XNPKyeYMiNFPHKPJoo7zxTDZeWQPskUvjrxHLZaEvKBkMXg7s8ei6EjwjD
-         TEicbmMabq1RvAwPAyRy0jLztNKraWulbkYlGEuEf4jHrTxd8Tp8C8rduLETViNo3nQ6
-         GmuoIiy0AJCDUmn8DJdec6JPxVwx3jpWL1bm6noK+X4kCxl8svjCldFdtOzBOqWZQ2hb
-         oO1Q==
-X-Gm-Message-State: AOJu0YxdNnOM8QJJBnc5FfLzDi9sIgA0jFx1aIhGs5ZHZ5WGAEPAzpEw
-        zMUzJDoYgcGe23hrUveGT3If+g==
-X-Google-Smtp-Source: AGHT+IFqbSxj61c+q2xrmKMYlDKNM94+pfIvL33VUVR4I9eHxwJ+oE7xpKSsmL6C7BTKtM5kQwIg4w==
-X-Received: by 2002:a17:906:32d2:b0:9ad:99a8:7c4e with SMTP id k18-20020a17090632d200b009ad99a87c4emr6066682ejk.55.1694939537384;
-        Sun, 17 Sep 2023 01:32:17 -0700 (PDT)
-Received: from [192.168.1.77] (150-140-187-31.ftth.glasoperator.nl. [31.187.140.150])
-        by smtp.gmail.com with ESMTPSA id n26-20020a170906119a00b00997cce73cc7sm4676360eja.29.2023.09.17.01.32.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 17 Sep 2023 01:32:16 -0700 (PDT)
-Message-ID: <011074e5-cec2-1c69-7324-30d9ab653577@linaro.org>
-Date:   Sun, 17 Sep 2023 10:32:16 +0200
+        Sun, 17 Sep 2023 04:48:38 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.126])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDCC6185
+        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Sep 2023 01:48:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1694940513; x=1726476513;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=0Boe7Gc2DP0E8eOe/KIMoMoyqtMVHIVrqsWDAKZBOPE=;
+  b=TJiTyt3EjpUJ9Flfu4nhH5S9sHHihpIP1k2SjEfIO2L+vP8LSpcXxkW/
+   gs6cChQ71SxQk5QO7FaUW7IE4qBcd9s5Whv/2d6B87IUX7BhNxx6QajE1
+   uJGIvd+CH3/7INDdsCBSK0IDeTQmBEcOz2ppv624s4drS96MnoYnB8r1N
+   VSaMnQeokMQN87btIKeratIQjDkUyyF7tD83huF0Xhw2aEyRY1vn2g0ax
+   nPHi7hIaRBhqtoCx+Riw9dparLvat4t4KSTSS8pnRCB0LOaJu/1M8J9+3
+   k2p8jZ3Agm/6FlPmjWfOGctwvNcj8G9J/hZUBDUeDWP8AkwyyVOfmhmgI
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10835"; a="364528902"
+X-IronPort-AV: E=Sophos;i="6.02,153,1688454000"; 
+   d="scan'208";a="364528902"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Sep 2023 01:48:33 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10835"; a="738808548"
+X-IronPort-AV: E=Sophos;i="6.02,153,1688454000"; 
+   d="scan'208";a="738808548"
+Received: from joe-255.igk.intel.com (HELO localhost) ([10.91.220.57])
+  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Sep 2023 01:48:31 -0700
+Date:   Sun, 17 Sep 2023 10:48:29 +0200
+From:   Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc:     quic_carlv@quicinc.com, quic_pkanojiy@quicinc.com,
+        ogabbay@kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH 6/7] accel/qaic: Create a function to initialize BO
+Message-ID: <20230917084829.GA441281@linux.intel.com>
+References: <20230901172247.11410-1-quic_jhugo@quicinc.com>
+ <20230901172247.11410-7-quic_jhugo@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.0
-Subject: Re: [PATCH 1/3] dt-bindings: mfd: qcom,spmi-pmic: Add pm8916 vm-bms
- and lbc
-Content-Language: en-US
-To:     Nikita Travkin <nikita@trvn.ru>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-References: <20230916-pm8916-dtsi-bms-lbc-v1-0-7db0b42f9fb1@trvn.ru>
- <20230916-pm8916-dtsi-bms-lbc-v1-1-7db0b42f9fb1@trvn.ru>
- <18bef7a4-608b-9ba3-ce8f-ca25999705c3@linaro.org>
- <fac4a27d08108bd6e902ba0fa4708ec4@trvn.ru>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <fac4a27d08108bd6e902ba0fa4708ec4@trvn.ru>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230901172247.11410-7-quic_jhugo@quicinc.com>
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/09/2023 10:26, Nikita Travkin wrote:
-> Krzysztof Kozlowski писал(а) 17.09.2023 12:58:
->> On 16/09/2023 15:57, Nikita Travkin wrote:
->>> PM8916 (and probably some other similar pmics) have hardware blocks for
->>> battery monitoring and charging. Add patterns for respecive nodes so the
->>
->> typo: respective
->>
+On Fri, Sep 01, 2023 at 11:22:46AM -0600, Jeffrey Hugo wrote:
+> From: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
 > 
-> Oops, will fix if we get to v2.
+> This makes sure that we have a single place to initialize and
+> re-initialize BO.
 > 
->>> dt for those blocks can be validated properly.
->>>
->>> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
->>> ---
->>> Schemas for those devices were added in [1].
->>
->> "Dependency"
->>
+> Use this new API to cleanup release_dbc()
 > 
-> You are right, will try to word it better next time.
+> We will need this for next patch to detach slicing to a BO.
 > 
->>>
->>> [1] https://lore.kernel.org/r/20230915-pm8916-bms-lbc-v3-0-f30881e951a0@trvn.ru
->>> ---
->>>  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 6 ++++++
->>>  1 file changed, 6 insertions(+)
->>>
->>> diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
->>> index 9f03436b1cdc..8bcd76748faa 100644
->>> --- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
->>> +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
->>> @@ -133,9 +133,15 @@ patternProperties:
->>>      type: object
->>>      $ref: /schemas/sound/qcom,pm8916-wcd-analog-codec.yaml#
->>>
->>> +  "^battery@[0-9a-f]+$":
->>> +    type: object
->>> +    oneOf:
->>> +      - $ref: /schemas/power/supply/qcom,pm8916-bms-vm.yaml#
->>
->> That's just ref, so no need for oneOf... unless you already think this
->> will grow with different schemas like the charger below?
->>
+> Signed-off-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+> Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> ---
+>  drivers/accel/qaic/qaic_data.c | 20 ++++++++++++++------
+>  1 file changed, 14 insertions(+), 6 deletions(-)
 > 
-> Yes, I think some other PMICs have different battery/fuel-gauge
-> blocks too so I'd like to have some room for expansion here.
+> diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
+> index 6e44e00937af..2acb9dbac88b 100644
+> --- a/drivers/accel/qaic/qaic_data.c
+> +++ b/drivers/accel/qaic/qaic_data.c
+> @@ -635,6 +635,18 @@ static const struct drm_gem_object_funcs qaic_gem_funcs = {
+>  	.vm_ops = &drm_vm_ops,
+>  };
+>  
+> +static void qaic_init_bo(struct qaic_bo *bo, bool reinit)
+> +{
+> +	if (reinit) {
+> +		bo->sliced = false;
+> +		reinit_completion(&bo->xfer_done);
+> +	} else {
+> +		init_completion(&bo->xfer_done);
+> +	}
+> +	complete_all(&bo->xfer_done);
+Why do you need complete_all() here ? 
 
-There is always room. Which other device will have different battery
-charger?
-
-Best regards,
-Krzysztof
-
+Regards
+Stanislaw
