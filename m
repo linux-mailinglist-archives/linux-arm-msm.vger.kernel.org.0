@@ -2,85 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4622E7A513F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Sep 2023 19:48:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A504C7A51CC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Sep 2023 20:12:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229504AbjIRRsS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Sep 2023 13:48:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49522 "EHLO
+        id S229502AbjIRSMd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Sep 2023 14:12:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbjIRRsS (ORCPT
+        with ESMTP id S229564AbjIRSM2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Sep 2023 13:48:18 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 737B5FA;
-        Mon, 18 Sep 2023 10:48:12 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38IGMAwr002222;
-        Mon, 18 Sep 2023 17:48:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=uUbP9kQV+ThBkIavYQf5xISOTHSD636KoaAoeeOli5M=;
- b=jqvmDqUEG362Dekj8vMU+Y0YYO35eYNr5UtZXD82LFn3lsR36xZbXv2sfccrtotD7wih
- ok4/PPGlJXA4eY9I8mI5rn430Nbs4eDok3nSv/v/yNrFQjPP91GmdzAis+yM7HK+PE5U
- PVXe140O2Qm3qt2/NuIMig4wBI6Af6YoJJLhsBKssqX1EXcgcphsN8jtZhu4vbvnvwhi
- ejaz5rr4HpOjEwlCz+fuMH1caz7sdf6pMF7TkkOSxYL/S1Qlx907MMCpQELobanJmnJT
- dm+FhTzGzspGrHvk6//WhZTnr3cCxwuhoNMt1ZBwPuKodwUv8yyNe06JRuHXIPIqHicn 6g== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t53ps3pgd-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 18 Sep 2023 17:48:02 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38IHm1R1009244
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 18 Sep 2023 17:48:01 GMT
-Received: from [10.71.109.209] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 18 Sep
- 2023 10:48:00 -0700
-Message-ID: <2f98d5f1-57c1-d9fe-cb1c-b975db057287@quicinc.com>
-Date:   Mon, 18 Sep 2023 10:47:59 -0700
+        Mon, 18 Sep 2023 14:12:28 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38481103;
+        Mon, 18 Sep 2023 11:12:21 -0700 (PDT)
+Received: from mercury (dyndsl-091-248-188-252.ewe-ip-backbone.de [91.248.188.252])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: sre)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 6973E6607079;
+        Mon, 18 Sep 2023 19:12:19 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1695060739;
+        bh=U/6p9D/cU1z0SeNUvPLkslR25HKpH/Me6DaAQtDmwiQ=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=XyAHg+yfhcIXY5zOX6kbHwgddQuoa6KDfcIPxKAqihfFRZEvBlWKn4trg2hTDRIUr
+         lHR4xv3TZQ4VykmFR1QeqBNZXDs0K7hhtdc+OEFztWQR8DqGz4KB7GeaCIlQ28Oq+K
+         /9/kjfw2n8k03LGTMvB8txSE9usaUcrsUNtUFwn5HZMSegGGzH+BKfe/vobDQg9Hcw
+         xkxRzQZ6JJIEsGhZ3sW8JVIQ7rvI1A4LGBW8I/rHke9n6UQZB7LpDkj5iQ5O1GGY9Q
+         GuV6nOtILDg8ZsWawHXiSe35BTGF/fbtx8GZweyzMtEyJQBZ5jKD1PodkzK5Mr30HJ
+         uz6G3c+3F6/0w==
+Received: by mercury (Postfix, from userid 1000)
+        id D9F8510604FE; Mon, 18 Sep 2023 20:12:16 +0200 (CEST)
+From:   Sebastian Reichel <sebastian.reichel@collabora.com>
+To:     Sebastian Reichel <sre@kernel.org>,
+        =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+Cc:     Linus Walleij <linus.walleij@linaro.org>, linux-pm@vger.kernel.org,
+        kernel@pengutronix.de,
+        Support Opensource <support.opensource@diasemi.com>,
+        =?utf-8?q?Pali_Roh=C3=A1r?= <pali@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        patches@opensource.cirrus.com
+In-Reply-To: <20230918133700.1254499-1-u.kleine-koenig@pengutronix.de>
+References: <20230918133700.1254499-1-u.kleine-koenig@pengutronix.de>
+Subject: Re: [PATCH 00/32] power: supply: Convert to platform remove
+ callback returning void
+Message-Id: <169506073687.1085711.8096694819191241787.b4-ty@collabora.com>
+Date:   Mon, 18 Sep 2023 20:12:16 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v3 6/7] drm/msm/dp: add
- pm_runtime_force_suspend()/resume()
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1694813901-26952-1-git-send-email-quic_khsieh@quicinc.com>
- <1694813901-26952-7-git-send-email-quic_khsieh@quicinc.com>
- <CAA8EJpqPXoFX4LXyXYgfh07Vpxg-KgD8VBR6x5bXf4GOJmbOtw@mail.gmail.com>
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <CAA8EJpqPXoFX4LXyXYgfh07Vpxg-KgD8VBR6x5bXf4GOJmbOtw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 2yRmZoFFq4PYJjGmGlmP9W4LESvPS1d0
-X-Proofpoint-GUID: 2yRmZoFFq4PYJjGmGlmP9W4LESvPS1d0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-18_08,2023-09-18_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
- suspectscore=0 lowpriorityscore=0 clxscore=1015 adultscore=0
- malwarescore=0 mlxlogscore=999 spamscore=0 bulkscore=0 impostorscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309180157
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Mailer: b4 0.12.3
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -88,180 +70,85 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 9/15/2023 6:21 PM, Dmitry Baryshkov wrote:
-> On Sat, 16 Sept 2023 at 00:38, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
->> Add pm_runtime_force_suspend()/resume() to complete incorporating pm
->> runtime framework into DP driver. Both dp_pm_prepare() and dp_pm_complete()
->> are added to set hpd_state to correct state. After resume, DP driver will
->> re training its main link after .hpd_enable() callback enabled HPD
->> interrupts and bring up display accordingly.
-> How will it re-train the main link? What is the code path for that?
+On Mon, 18 Sep 2023 15:36:28 +0200, Uwe Kleine-König wrote:
+> this series convert all platform drivers below drivers/power/supply to
+> use remove_new. The motivation is to get rid of an integer return code
+> that is (mostly) ignored by the platform driver core and error prone on
+> the driver side.
+> 
+> See commit 5c5a7680e67b ("platform: Provide a remove callback that
+> returns no value") for an extended explanation and the eventual goal.
+> 
+> [...]
 
-1) for edp, dp_bridge_atomic_enable(), called from framework, to start 
-link training and bring up display.
+Applied, thanks!
 
-2) for external DP, HPD_PLUG_INT will be generated to start link 
-training and bring up display.
+[01/32] power: supply: ab8500_btemp: Convert to platform remove callback returning void
+        commit: dab952c77e5a0bad3a391b8cbb6995f32c9a7b6d
+[02/32] power: supply: ab8500_chargalg: Convert to platform remove callback returning void
+        commit: 465ec888880be0f3170b97a0e975bcb1e9b6961b
+[03/32] power: supply: ab8500_charger: Convert to platform remove callback returning void
+        commit: c5b08e1bfe087c42e43e64f308b16c6f79444dc9
+[04/32] power: supply: ab8500_fg: Convert to platform remove callback returning void
+        commit: 59016f4c0e106ec9ba3ac039bf7e96a474648ea6
+[05/32] power: supply: acer_a500_battery: Convert to platform remove callback returning void
+        commit: 179297b95198526fbef8f6b92f1b486502144861
+[06/32] power: supply: act8945a_charger: Convert to platform remove callback returning void
+        commit: 7a9a4966777b8df6e6f97f82073f4736a5274358
+[07/32] power: supply: charger-manager: Convert to platform remove callback returning void
+        commit: 403eebf95c38302cacc48c127e575461f0e798be
+[08/32] power: supply: cpcap-battery: Convert to platform remove callback returning void
+        commit: 02fecba679bbac3b16c2245e8e462b19fb36cedd
+[09/32] power: supply: cpcap-charger: Convert to platform remove callback returning void
+        commit: 1abbcff9f0c087e88ae542e0d6b0ee0689881027
+[10/32] power: supply: da9030_battery: Convert to platform remove callback returning void
+        commit: b5ba26ab7a886567759b793161cdd0aae4a76910
+[11/32] power: supply: da9052-battery: Convert to platform remove callback returning void
+        commit: ac67d7fd4e1bad9eac25c3a1a07e4aceda6e1ce3
+[12/32] power: supply: da9150-charger: Convert to platform remove callback returning void
+        commit: 749e18a800569e894e82fb5f68edd447311f9675
+[13/32] power: supply: goldfish_battery: Convert to platform remove callback returning void
+        commit: df1953bcb723538faff6ebb403ac321797f3b04f
+[14/32] power: supply: ipaq_micro_battery: Convert to platform remove callback returning void
+        commit: cbc3e1136d1f8b934cc41b4bc12f5c732d543c59
+[15/32] power: supply: isp1704_charger: Convert to platform remove callback returning void
+        commit: cf79047ed4a33704dd465723175041c22091d24c
+[16/32] power: supply: lp8788-charger: Convert to platform remove callback returning void
+        commit: 7810ba3c5110ce66652ec6bd2abb92da5d726c3b
+[17/32] power: supply: max14577_charger: Convert to platform remove callback returning void
+        commit: 81e487b8a4af24c28a3d5c90a6035356098720bb
+[18/32] power: supply: max77650-charger: Convert to platform remove callback returning void
+        commit: cd25ac3e3200626680dac92c9784cce4d59fdc6b
+[19/32] power: supply: max77693_charger: Convert to platform remove callback returning void
+        commit: 1d138270d2963b68d71852c363298460ea7435c7
+[20/32] power: supply: max8925_power: Convert to platform remove callback returning void
+        commit: 026f25f221866ea89a33697935995db6a1c25a52
+[21/32] power: supply: pcf50633-charger: Convert to platform remove callback returning void
+        commit: 6e3ed20e85aacaed7d3deede835a97029ea14560
+[22/32] power: supply: qcom_smbb: Convert to platform remove callback returning void
+        commit: 325cb83bbabcafa3e54528d40c86559dde271bc3
+[23/32] power: supply: rx51_battery: Convert to platform remove callback returning void
+        commit: 9f0da40ae798d3f32d649d1effef246f2c30f13e
+[24/32] power: supply: sc2731_charger: Convert to platform remove callback returning void
+        commit: 0569d4cfa800ba303647dbf8170d1e89bdee3ed9
+[25/32] power: supply: tps65090-charger: Convert to platform remove callback returning void
+        commit: 75d8365c94b685dd7377b0251d2407518dc49c02
+[26/32] power: supply: tps65217_charger: Convert to platform remove callback returning void
+        commit: 07a9398914327bb16584f24dfba02062a5967ab1
+[27/32] power: supply: twl4030_charger: Convert to platform remove callback returning void
+        commit: 83ef1dbc0de4a127661a175350696e9cfa88bbb1
+[28/32] power: supply: twl4030_madc_battery: Convert to platform remove callback returning void
+        commit: ac51982b04a05eb902a223b3bc83c032903b6ba7
+[29/32] power: supply: wm831x_backup: Convert to platform remove callback returning void
+        commit: fc7b34ae1347f4eb36f065458e53d6065cd85928
+[30/32] power: supply: wm831x_power: Convert to platform remove callback returning void
+        commit: dab68bbb5450ee17c9acf77916ac2ed659b1e2a7
+[31/32] power: supply: wm8350_power: Convert to platform remove callback returning void
+        commit: 42720969f394dc074ce1c99cd0c425b7dd6017ee
+[32/32] power: supply: wm97xx_battery: Convert to platform remove callback returning void
+        commit: 6f9fb8afe649a24c7df50ce2f7095b832713e648
 
->
-> I think this is a misuse for prepare/complete callbacks, at least
-> judging from their documentation.
+Best regards,
+-- 
+Sebastian Reichel <sebastian.reichel@collabora.com>
 
-1) dp_pm_prepare() is called to make sure eDP/DP related power/clocks 
-are off and set hpd_state  to ST_SUSPENDED and nothing else.
-
-2) dp_pm_completed() is called to set hpd_state to ST_ST_DISCONNECTED 
-(default state) and nothing else.
-
-I think both are doing proper action.
-
-
->
->> Changes in v3:
->> -- replace dp_pm_suspend() with pm_runtime_force_suspend()
->> -- replace dp_pm_resume() with pm_runtime_force_resume()
->>
->> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/dp/dp_display.c | 87 +++++--------------------------------
->>   1 file changed, 10 insertions(+), 77 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
->> index b6992202..b58cb02 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_display.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->> @@ -1333,101 +1333,35 @@ static int dp_pm_runtime_resume(struct device *dev)
->>          return 0;
->>   }
->>
->> -static int dp_pm_resume(struct device *dev)
->> +static void dp_pm_complete(struct device *dev)
->>   {
->> -       struct platform_device *pdev = to_platform_device(dev);
->> -       struct msm_dp *dp_display = platform_get_drvdata(pdev);
->> -       struct dp_display_private *dp;
->> -       int sink_count = 0;
->> -
->> -       dp = container_of(dp_display, struct dp_display_private, dp_display);
->> +       struct dp_display_private *dp = dev_get_dp_display_private(dev);
->>
->>          mutex_lock(&dp->event_mutex);
->>
->>          drm_dbg_dp(dp->drm_dev,
->> -               "Before, type=%d core_inited=%d phy_inited=%d power_on=%d\n",
->> +               "type=%d core_inited=%d phy_inited=%d power_on=%d\n",
->>                  dp->dp_display.connector_type, dp->core_initialized,
->> -               dp->phy_initialized, dp_display->power_on);
->> +               dp->phy_initialized, dp->dp_display.power_on);
->>
->>          /* start from disconnected state */
->>          dp->hpd_state = ST_DISCONNECTED;
->>
->> -       /* turn on dp ctrl/phy */
->> -       dp_display_host_init(dp);
->> -
->> -       if (dp_display->is_edp)
->> -               dp_catalog_ctrl_hpd_enable(dp->catalog);
->> -
->> -       if (dp_catalog_link_is_connected(dp->catalog)) {
->> -               /*
->> -                * set sink to normal operation mode -- D0
->> -                * before dpcd read
->> -                */
->> -               dp_display_host_phy_init(dp);
->> -               dp_link_psm_config(dp->link, &dp->panel->link_info, false);
->> -               sink_count = drm_dp_read_sink_count(dp->aux);
->> -               if (sink_count < 0)
->> -                       sink_count = 0;
->> -
->> -               dp_display_host_phy_exit(dp);
->> -       }
->> -
->> -       dp->link->sink_count = sink_count;
->> -       /*
->> -        * can not declared display is connected unless
->> -        * HDMI cable is plugged in and sink_count of
->> -        * dongle become 1
->> -        * also only signal audio when disconnected
->> -        */
->> -       if (dp->link->sink_count) {
->> -               dp->dp_display.link_ready = true;
->> -       } else {
->> -               dp->dp_display.link_ready = false;
->> -               dp_display_handle_plugged_change(dp_display, false);
->> -       }
->> -
->> -       drm_dbg_dp(dp->drm_dev,
->> -               "After, type=%d sink=%d conn=%d core_init=%d phy_init=%d power=%d\n",
->> -               dp->dp_display.connector_type, dp->link->sink_count,
->> -               dp->dp_display.link_ready, dp->core_initialized,
->> -               dp->phy_initialized, dp_display->power_on);
->> -
->>          mutex_unlock(&dp->event_mutex);
->> -
->> -       return 0;
->>   }
->>
->> -static int dp_pm_suspend(struct device *dev)
->> +static int dp_pm_prepare(struct device *dev)
->>   {
->> -       struct platform_device *pdev = to_platform_device(dev);
->> -       struct msm_dp *dp_display = platform_get_drvdata(pdev);
->> -       struct dp_display_private *dp;
->> -
->> -       dp = container_of(dp_display, struct dp_display_private, dp_display);
->> +       struct dp_display_private *dp = dev_get_dp_display_private(dev);
->>
->>          mutex_lock(&dp->event_mutex);
->>
->> -       drm_dbg_dp(dp->drm_dev,
->> -               "Before, type=%d core_inited=%d  phy_inited=%d power_on=%d\n",
->> -               dp->dp_display.connector_type, dp->core_initialized,
->> -               dp->phy_initialized, dp_display->power_on);
->> -
->>          /* mainlink enabled */
->>          if (dp_power_clk_status(dp->power, DP_CTRL_PM))
->>                  dp_ctrl_off_link_stream(dp->ctrl);
->>
->> -       dp_display_host_phy_exit(dp);
->> -
->> -       /* host_init will be called at pm_resume */
->> -       dp_display_host_deinit(dp);
->> -
->>          dp->hpd_state = ST_SUSPENDED;
->>
->> -       drm_dbg_dp(dp->drm_dev,
->> -               "After, type=%d core_inited=%d phy_inited=%d power_on=%d\n",
->> -               dp->dp_display.connector_type, dp->core_initialized,
->> -               dp->phy_initialized, dp_display->power_on);
->> -
->>          mutex_unlock(&dp->event_mutex);
->>
->>          return 0;
->> @@ -1435,8 +1369,10 @@ static int dp_pm_suspend(struct device *dev)
->>
->>   static const struct dev_pm_ops dp_pm_ops = {
->>          SET_RUNTIME_PM_OPS(dp_pm_runtime_suspend, dp_pm_runtime_resume, NULL)
->> -       .suspend = dp_pm_suspend,
->> -       .resume =  dp_pm_resume,
->> +       SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
->> +                                pm_runtime_force_resume)
->> +       .prepare = dp_pm_prepare,
->> +       .complete = dp_pm_complete,
->>   };
->>
->>   static struct platform_driver dp_display_driver = {
->> @@ -1670,9 +1606,6 @@ void dp_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
->>
->>          dp_display = container_of(dp, struct dp_display_private, dp_display);
->>
->> -       if (dp->is_edp)
->> -               dp_hpd_unplug_handle(dp_display, 0);
->> -
->>          mutex_lock(&dp_display->event_mutex);
->>
->>          state = dp_display->hpd_state;
->> --
->> 2.7.4
->>
->
