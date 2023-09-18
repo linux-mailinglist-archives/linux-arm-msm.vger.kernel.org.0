@@ -2,69 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BD01B7A3F4B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Sep 2023 03:47:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 041DD7A4350
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Sep 2023 09:46:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233072AbjIRBqu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 17 Sep 2023 21:46:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48432 "EHLO
+        id S239921AbjIRHoz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Sep 2023 03:44:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234086AbjIRBqj (ORCPT
+        with ESMTP id S240510AbjIRHoj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 17 Sep 2023 21:46:39 -0400
-Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD37311C
-        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Sep 2023 18:46:32 -0700 (PDT)
-Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-59c0b9ad491so24487837b3.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Sep 2023 18:46:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695001592; x=1695606392; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=GN+ZP7HO00noajf9njN6jgdBrsju6UYYDWypBjncENU=;
-        b=yUJSEtlukS4Fxmd6o4eG1oM8+TdJwX6dHWcaqZaJW7R8nybnrrBCVgu3+3+MjToLno
-         xHpTAti73edNw1W01OATkWCyspBMGOSGcWHkD8HA53lrSdhw9ihgE9H1b1t6/eeD6WHB
-         W8kXD/j8PT1a2nsykKLo6FJrSBownXLfGs78VHitLu3IZhmpHLCjHCx55X1u4QJW8vIk
-         StQPntPO2iTnyzyCHLAg8pLgbb7R3ycj4GompH849L0GB5/Nk7hoHyq41shVr98WqsVq
-         8nyv4L5YC/eW9JkWjTWqMh+ovKtGRgJgjkegM0opxMN/ph/LE6xxY5NkFHu0F+rNwfd1
-         64pw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695001592; x=1695606392;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GN+ZP7HO00noajf9njN6jgdBrsju6UYYDWypBjncENU=;
-        b=uGxRkor1MO6tWZj3ugjKSHhdSpHJZuAEqS0i7bUZbpQr25Sgo1rch3+WSo6PXChDxu
-         aJwTfClWoXhOHbXT2DZ5ddYT3rYqEj9aqlqkxO31XGv3d/KIQ6jS+wOAY2SYlQ7A6Dgi
-         6GHUG9M+1fuodRDXWZP3VEVJFQG+u4WKN8he7ayeLi04ToQ5bM6IQNo7iNwL8HPZrOPH
-         qiURcdyNRzKA8Uq0GzK5nmVmJGmTlqhJALQZ40KMG2KgYpujjaEH2gcFw0P+o6CRjISX
-         uVBrvO/WhzQBIVrPQ+WddEKYLuYFKlgR6HgOmIdQKT7EyKFJ/kCdrwusl9HCxTdtAGCL
-         sBgw==
-X-Gm-Message-State: AOJu0YxTUBJ4XRPWICb2TuWazsP6QAKp5zRiTrJZCJGOwzR5s2pC0Edh
-        JyBzU10JKkteqwf0ILpQWqT1CZaTR2QiHUTacWTGSw==
-X-Google-Smtp-Source: AGHT+IFyyon2ii0QkHQJw/3KC5VRE/P0uqsTDjykAK8zhw2UPsZAy0HTamPa4+DC6onQOC4lZV/moBMVBprp9PLEc4M=
-X-Received: by 2002:a81:524e:0:b0:59b:fe73:dec1 with SMTP id
- g75-20020a81524e000000b0059bfe73dec1mr7886346ywb.7.1695001591904; Sun, 17 Sep
- 2023 18:46:31 -0700 (PDT)
+        Mon, 18 Sep 2023 03:44:39 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC35FCF8;
+        Mon, 18 Sep 2023 00:43:08 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38I6ld5U014295;
+        Mon, 18 Sep 2023 07:42:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=kW+M14qfpcF97hoQluC9tM98hOjjeZ40Kqhq2jXRfr8=;
+ b=BGvjtnWK+Cg0TYVBbxLWhrVTI8OTU9Zs/doYmTy+ShojJHz2wvzUOTO1zwUih1hfSXE4
+ X2SugyTqUUds5ABNOvMIMwO69sp383+R3XzHQHqYBi0Uga/aWVpk+7wLcDV+S0RhfCZM
+ jSPNvQmEu4cOa0wVKSIKQ8ZxNjU8u3QuZBx+lJLXzh1tlUwABr0YwBz72R9BkJqI8ih6
+ G5sYy5UXnlAoC/SMCLPVtEvQ8fnB7Timyza7YoFyTU/rqQwLd2pey/8aEKx8k7SxLsF8
+ 6jbsPAOjPACUJSaxxorbuc8L+lxyVf2UZhuVKTdKTVa3gjCTPf/1oZUt50NGVzb0+8fF EA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t53ayaqgp-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 18 Sep 2023 07:42:53 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38I7gqMm015793
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 18 Sep 2023 07:42:52 GMT
+Received: from [10.216.25.71] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 18 Sep
+ 2023 00:42:45 -0700
+Message-ID: <961b0ad4-baac-4ca4-bc2a-7dae6f129e6f@quicinc.com>
+Date:   Mon, 18 Sep 2023 13:12:42 +0530
 MIME-Version: 1.0
-References: <20230823091757.31311-1-quic_nitirawa@quicinc.com>
- <20230823091757.31311-3-quic_nitirawa@quicinc.com> <24cff590-c71f-4a30-9b80-fa9a0bd27957@linaro.org>
- <c9719d64-33c1-d13e-0ab6-289011282044@quicinc.com> <CAA8EJppYD8Oq_fkOOKf8_x7RdbjBx7XzV_5y4sKE3ZDv_WV9_Q@mail.gmail.com>
- <68e111ba-9a7b-511a-5765-24b491ad201b@quicinc.com>
-In-Reply-To: <68e111ba-9a7b-511a-5765-24b491ad201b@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 18 Sep 2023 04:46:20 +0300
-Message-ID: <CAA8EJpr-E=wASYXnsviLTwYEvkzOCDi-m5Nu8v-yV5=xKP5yEg@mail.gmail.com>
-Subject: Re: [PATCH V3 2/2] phy: qcom-qmp-ufs: Add Phy Configuration support
- for SC7280
-To:     Nitin Rawat <quic_nitirawa@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Manish Pandey <quic_mapa@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 10/13] usb: dwc3: qcom: Add multiport suspend/resume
+ support for wrapper
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Johan Hovold <johan@kernel.org>,
+        Mathias Nyman <mathias.nyman@intel.com>
+CC:     <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
+        <quic_jackp@quicinc.com>, <ahalaney@redhat.com>,
+        <quic_shazhuss@quicinc.com>
+References: <20230828133033.11988-1-quic_kriskura@quicinc.com>
+ <20230828133033.11988-11-quic_kriskura@quicinc.com>
+ <825bc60b-2067-43e2-8b43-9d38b7cebf02@linaro.org>
+From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <825bc60b-2067-43e2-8b43-9d38b7cebf02@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: CxEyHg7gQX47R1U-FyrDzTqzLzbI0dFx
+X-Proofpoint-ORIG-GUID: CxEyHg7gQX47R1U-FyrDzTqzLzbI0dFx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-15_20,2023-09-15_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 suspectscore=0
+ spamscore=0 mlxscore=0 impostorscore=0 malwarescore=0 bulkscore=0
+ clxscore=1015 priorityscore=1501 mlxlogscore=411 phishscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309180067
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -74,128 +94,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 17 Sept 2023 at 17:23, Nitin Rawat <quic_nitirawa@quicinc.com> wrote:
->
->
->
-> On 9/16/2023 12:03 AM, Dmitry Baryshkov wrote:
-> > On Fri, 15 Sept 2023 at 19:14, Nitin Rawat <quic_nitirawa@quicinc.com> wrote:
-> >>
-> >>
-> >>
-> >> On 9/6/2023 1:34 AM, Dmitry Baryshkov wrote:
-> >>> On 23/08/2023 12:17, Nitin Rawat wrote:
-> >>>> Add SC7280 specific register layout and table configs.
-> >>>>
-> >>>> Co-developed-by: Manish Pandey <quic_mapa@quicinc.com>
-> >>>> Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
-> >>>> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-> >>>> ---
-> >>>>    drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 142 ++++++++++++++++++++++++
-> >>>>    1 file changed, 142 insertions(+)
-> >>>>
-> >>>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> >>>> b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> >>>> index 3927eba8e468..514fa14df634 100644
-> >>>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> >>>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> >>>
-> >>> [skipped tables programming]
-> >>>
-> >>> 4),
-> >> Sorry I quite didn't get this comment. what exactly is skipped ?Please
-> >> can you help explain?
-> >
-> > I skipped them, as I didn't have comments for them.
-> >
-> >>
-> >>
-> >>>> @@ -888,6 +993,40 @@ static const struct qmp_phy_cfg
-> >>>> sa8775p_ufsphy_cfg = {
-> >>>>        .regs            = ufsphy_v5_regs_layout,
-> >>>>    };
-> >>>>
-> >>>> +static const struct qmp_phy_cfg sc7280_ufsphy_cfg = {
-> >>>> +    .lanes                  = 2,
-> >>>> +
-> >>>> +    .offsets                = &qmp_ufs_offsets,
-> >>>> +
-> >>>> +    .tbls = {
-> >>>> +        .serdes         = sm8150_ufsphy_serdes,
-> >>>> +        .serdes_num     = ARRAY_SIZE(sm8150_ufsphy_serdes),
-> >>>> +        .tx             = sc7280_ufsphy_tx,
-> >>>> +        .tx_num         = ARRAY_SIZE(sc7280_ufsphy_tx),
-> >>>> +        .rx             = sc7280_ufsphy_rx,
-> >>>> +        .rx_num         = ARRAY_SIZE(sc7280_ufsphy_rx),
-> >>>> +        .pcs            = sc7280_ufsphy_pcs,
-> >>>> +        .pcs_num        = ARRAY_SIZE(sc7280_ufsphy_pcs),
-> >>>> +    },
-> >>>> +    .tbls_hs_b = {
-> >>>> +        .serdes         = sm8150_ufsphy_hs_b_serdes,
-> >>>> +        .serdes_num     = ARRAY_SIZE(sm8150_ufsphy_hs_b_serdes),
-> >>>> +    },
-> >>>> +    .tbls_hs_g4 = {
-> >>>> +        .tx             = sm8250_ufsphy_hs_g4_tx,
-> >>>> +        .tx_num         = ARRAY_SIZE(sm8250_ufsphy_hs_g4_tx),
-> >>>> +        .rx             = sc7280_ufsphy_hs_g4_rx,
-> >>>> +        .rx_num         = ARRAY_SIZE(sc7280_ufsphy_hs_g4_rx),
-> >>>> +        .pcs            = sm8150_ufsphy_hs_g4_pcs,
-> >>>> +        .pcs_num        = ARRAY_SIZE(sm8150_ufsphy_hs_g4_pcs),
-> >>>> +    },
-> >>>> +    .clk_list               = sm8450_ufs_phy_clk_l,
-> >>>> +    .num_clks               = ARRAY_SIZE(sm8450_ufs_phy_clk_l),
-> >>>
-> >>> This doesn't correspond to the bindings. This array has 3 enries, while
-> >>> in the bindings you have opted for two clocks for this PHY.
-> >> Sure. I'll update the bindings.
-> >
-> > Are you sure about the third clock? Neither sm8150 nor sm8250 used the
-> > qref clock. Or is that an omission on our side?
-> >
->
-> Hi Dmitry,
->
-> For SC7280 we need all the three clocks for this target. Same is being
-> used in downstream code as well. Hence I would need to update the
-> binding as well.
 
-Ack, thanks for the confirmation.
 
->
-> Thanks,
-> Nitin
->
->
-> >>
-> >>>
-> >>>> +    .vreg_list              = qmp_phy_vreg_l,
-> >>>> +    .num_vregs              = ARRAY_SIZE(qmp_phy_vreg_l),
-> >>>> +    .regs                   = ufsphy_v4_regs_layout,
-> >>>> +};
-> >>>> +
-> >>>>    static const struct qmp_phy_cfg sc8280xp_ufsphy_cfg = {
-> >>>>        .lanes            = 2,
-> >>>>
-> >>>> @@ -1648,6 +1787,9 @@ static const struct of_device_id
-> >>>> qmp_ufs_of_match_table[] = {
-> >>>>        }, {
-> >>>>            .compatible = "qcom,sa8775p-qmp-ufs-phy",
-> >>>>            .data = &sa8775p_ufsphy_cfg,
-> >>>> +    }, {
-> >>>> +        .compatible = "qcom,sc7280-qmp-ufs-phy",
-> >>>> +        .data = &sc7280_ufsphy_cfg,
-> >>>>        }, {
-> >>>>            .compatible = "qcom,sc8180x-qmp-ufs-phy",
-> >>>>            .data = &sm8150_ufsphy_cfg,
-> >>>> --
-> >>>> 2.17.1
-> >>>>
-> >>>
-> >> Thanks,
-> >> Nitin
-> >
-> >
-> >
---
-With best wishes
-Dmitry
+On 9/15/2023 7:18 PM, Konrad Dybcio wrote:
+>>   
+>> -#define PWR_EVNT_IRQ_STAT_REG			0x58
+>> +#define PWR_EVNT_IRQ1_STAT_REG			0x58
+>> +#define PWR_EVNT_IRQ2_STAT_REG			0x1dc
+>> +#define PWR_EVNT_IRQ3_STAT_REG			0x228
+>> +#define PWR_EVNT_IRQ4_STAT_REG			0x238
+>> +
+>>   #define PWR_EVNT_LPM_IN_L2_MASK			BIT(4)
+>>   #define PWR_EVNT_LPM_OUT_L2_MASK		BIT(5)
+>>   
+>> @@ -107,6 +111,19 @@ struct dwc3_qcom {
+>>   	int			num_ports;
+>>   };
+>>   
+>> +/*
+>> + * SA8295 has 4 power event IRQ STAT registers to be checked
+>> + * during suspend resume.
+>> + */
+> But this driver supports much more than just SA8295?
+> 
+Yes. Other than SA8295, all single port controllers and SA8195(2 port 
+controller), have these reigsters.
+
+The rational behind adding this array was that depending on num_ports, 
+any controller can access its required pwr_event_irq_stat register and 
+loop in the suspend/resume code would take care of it. Perhaps I can 
+change the comments to indicate that the array would be used by all 
+controllers and not just SA8295.
+
+>> +#define NUM_PWR_EVENT_STAT_REGS	4
+>> +
+>> +static u32 pwr_evnt_irq_stat_reg_offset[NUM_PWR_EVENT_STAT_REGS] = {
+>> +	PWR_EVNT_IRQ1_STAT_REG,
+>> +	PWR_EVNT_IRQ2_STAT_REG,
+>> +	PWR_EVNT_IRQ3_STAT_REG,
+>> +	PWR_EVNT_IRQ4_STAT_REG,
+>> +};
+>> +
+>>   static inline void dwc3_qcom_setbits(void __iomem *base, u32 offset, u32 val)
+>>   {
+>>   	u32 reg;
+>> @@ -440,15 +457,19 @@ static void dwc3_qcom_enable_interrupts(struct dwc3_qcom *qcom)
+>>   
+>>   static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
+>>   {
+>> +	u8 num_ports;
+> Maybe I'm picky, but I'm not sure defining a variable for
+> a single use of an object with a rather short name
+> (qcom->num_ports) is justified, here and below..
+> 
+
+Sure, will replace num_ports with (qcom->num_ports) and remove the extra 
+variable.
+
+Regards,
+Krishna,
