@@ -2,83 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 75BC47A3F42
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Sep 2023 03:40:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD01B7A3F4B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Sep 2023 03:47:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235177AbjIRBkX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 17 Sep 2023 21:40:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42772 "EHLO
+        id S233072AbjIRBqu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 17 Sep 2023 21:46:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235866AbjIRBkF (ORCPT
+        with ESMTP id S234086AbjIRBqj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 17 Sep 2023 21:40:05 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37C3011C;
-        Sun, 17 Sep 2023 18:40:00 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38I1dsoJ012864;
-        Mon, 18 Sep 2023 01:39:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=fektZLu9V9H5UJ+0rOKIBNhaOjy+v1AhJEJMQgo9JkI=;
- b=IC6piAl0AVJVCWL+0cWa/IvS67M9eAIc0qje6aZL3b1gUr6PxokrUrmkaLCrCFsxSkMW
- i4dtPpWk/NxUJGImHD17LYF+jUuoe/5Jowu+YfrCymvoAql+RNDhcxx29SIpI0uaYGhe
- YizuKdYgOSyz12Zcxq6chhyCi7rzcEwPDO61BbTQSOBdczqfa62FHe5869kk69ytDj9K
- NOa9qeeJXjLgmbSQ+CqFTSUZVFnz0XcNOltuVWTxyj5sUmMgkZ2v6WDcwe8+BBRovsTN
- Wf+BB4mqHBuY4oTaMM/X7uMYIQ/WEVbeRzE79c8kaHkebPacXvc/1TCcC5qyQRfHJFn8 1Q== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t554pj2y1-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 18 Sep 2023 01:39:54 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38I1dree024140
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 18 Sep 2023 01:39:53 GMT
-Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Sun, 17 Sep
- 2023 18:39:46 -0700
-Message-ID: <6e31d07f-133e-4abe-8225-45c822429bae@quicinc.com>
-Date:   Mon, 18 Sep 2023 09:39:43 +0800
+        Sun, 17 Sep 2023 21:46:39 -0400
+Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD37311C
+        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Sep 2023 18:46:32 -0700 (PDT)
+Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-59c0b9ad491so24487837b3.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Sep 2023 18:46:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1695001592; x=1695606392; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=GN+ZP7HO00noajf9njN6jgdBrsju6UYYDWypBjncENU=;
+        b=yUJSEtlukS4Fxmd6o4eG1oM8+TdJwX6dHWcaqZaJW7R8nybnrrBCVgu3+3+MjToLno
+         xHpTAti73edNw1W01OATkWCyspBMGOSGcWHkD8HA53lrSdhw9ihgE9H1b1t6/eeD6WHB
+         W8kXD/j8PT1a2nsykKLo6FJrSBownXLfGs78VHitLu3IZhmpHLCjHCx55X1u4QJW8vIk
+         StQPntPO2iTnyzyCHLAg8pLgbb7R3ycj4GompH849L0GB5/Nk7hoHyq41shVr98WqsVq
+         8nyv4L5YC/eW9JkWjTWqMh+ovKtGRgJgjkegM0opxMN/ph/LE6xxY5NkFHu0F+rNwfd1
+         64pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695001592; x=1695606392;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GN+ZP7HO00noajf9njN6jgdBrsju6UYYDWypBjncENU=;
+        b=uGxRkor1MO6tWZj3ugjKSHhdSpHJZuAEqS0i7bUZbpQr25Sgo1rch3+WSo6PXChDxu
+         aJwTfClWoXhOHbXT2DZ5ddYT3rYqEj9aqlqkxO31XGv3d/KIQ6jS+wOAY2SYlQ7A6Dgi
+         6GHUG9M+1fuodRDXWZP3VEVJFQG+u4WKN8he7ayeLi04ToQ5bM6IQNo7iNwL8HPZrOPH
+         qiURcdyNRzKA8Uq0GzK5nmVmJGmTlqhJALQZ40KMG2KgYpujjaEH2gcFw0P+o6CRjISX
+         uVBrvO/WhzQBIVrPQ+WddEKYLuYFKlgR6HgOmIdQKT7EyKFJ/kCdrwusl9HCxTdtAGCL
+         sBgw==
+X-Gm-Message-State: AOJu0YxTUBJ4XRPWICb2TuWazsP6QAKp5zRiTrJZCJGOwzR5s2pC0Edh
+        JyBzU10JKkteqwf0ILpQWqT1CZaTR2QiHUTacWTGSw==
+X-Google-Smtp-Source: AGHT+IFyyon2ii0QkHQJw/3KC5VRE/P0uqsTDjykAK8zhw2UPsZAy0HTamPa4+DC6onQOC4lZV/moBMVBprp9PLEc4M=
+X-Received: by 2002:a81:524e:0:b0:59b:fe73:dec1 with SMTP id
+ g75-20020a81524e000000b0059bfe73dec1mr7886346ywb.7.1695001591904; Sun, 17 Sep
+ 2023 18:46:31 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: qcom: Add SM4450 pinctrl
-To:     Rob Herring <robh@kernel.org>
-CC:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <andersson@kernel.org>, <agross@kernel.org>,
-        <konrad.dybcio@linaro.org>, <linus.walleij@linaro.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_tsoni@quicinc.com>, <quic_shashim@quicinc.com>,
-        <quic_kaushalk@quicinc.com>, <quic_tdas@quicinc.com>,
-        <quic_tingweiz@quicinc.com>, <quic_aiquny@quicinc.com>,
-        <kernel@quicinc.com>
-References: <20230915015808.18296-1-quic_tengfan@quicinc.com>
- <20230915015808.18296-2-quic_tengfan@quicinc.com>
- <6f40ee72-b763-c58d-44df-ea40d1309820@linaro.org>
- <35371580-8e5a-4f72-aec2-951268c296a3@quicinc.com>
- <20230915145947.GA3716246-robh@kernel.org>
-From:   Tengfei Fan <quic_tengfan@quicinc.com>
-In-Reply-To: <20230915145947.GA3716246-robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: MWke8LkhVPybNMe8Z95GKq2FrQujruRu
-X-Proofpoint-ORIG-GUID: MWke8LkhVPybNMe8Z95GKq2FrQujruRu
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-15_20,2023-09-15_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- priorityscore=1501 lowpriorityscore=0 phishscore=0 suspectscore=0
- clxscore=1015 bulkscore=0 mlxlogscore=999 adultscore=0 mlxscore=0
- spamscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309180014
+References: <20230823091757.31311-1-quic_nitirawa@quicinc.com>
+ <20230823091757.31311-3-quic_nitirawa@quicinc.com> <24cff590-c71f-4a30-9b80-fa9a0bd27957@linaro.org>
+ <c9719d64-33c1-d13e-0ab6-289011282044@quicinc.com> <CAA8EJppYD8Oq_fkOOKf8_x7RdbjBx7XzV_5y4sKE3ZDv_WV9_Q@mail.gmail.com>
+ <68e111ba-9a7b-511a-5765-24b491ad201b@quicinc.com>
+In-Reply-To: <68e111ba-9a7b-511a-5765-24b491ad201b@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Mon, 18 Sep 2023 04:46:20 +0300
+Message-ID: <CAA8EJpr-E=wASYXnsviLTwYEvkzOCDi-m5Nu8v-yV5=xKP5yEg@mail.gmail.com>
+Subject: Re: [PATCH V3 2/2] phy: qcom-qmp-ufs: Add Phy Configuration support
+ for SC7280
+To:     Nitin Rawat <quic_nitirawa@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Manish Pandey <quic_mapa@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -88,58 +74,128 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Sun, 17 Sept 2023 at 17:23, Nitin Rawat <quic_nitirawa@quicinc.com> wrote:
+>
+>
+>
+> On 9/16/2023 12:03 AM, Dmitry Baryshkov wrote:
+> > On Fri, 15 Sept 2023 at 19:14, Nitin Rawat <quic_nitirawa@quicinc.com> wrote:
+> >>
+> >>
+> >>
+> >> On 9/6/2023 1:34 AM, Dmitry Baryshkov wrote:
+> >>> On 23/08/2023 12:17, Nitin Rawat wrote:
+> >>>> Add SC7280 specific register layout and table configs.
+> >>>>
+> >>>> Co-developed-by: Manish Pandey <quic_mapa@quicinc.com>
+> >>>> Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
+> >>>> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> >>>> ---
+> >>>>    drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 142 ++++++++++++++++++++++++
+> >>>>    1 file changed, 142 insertions(+)
+> >>>>
+> >>>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> >>>> b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> >>>> index 3927eba8e468..514fa14df634 100644
+> >>>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> >>>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> >>>
+> >>> [skipped tables programming]
+> >>>
+> >>> 4),
+> >> Sorry I quite didn't get this comment. what exactly is skipped ?Please
+> >> can you help explain?
+> >
+> > I skipped them, as I didn't have comments for them.
+> >
+> >>
+> >>
+> >>>> @@ -888,6 +993,40 @@ static const struct qmp_phy_cfg
+> >>>> sa8775p_ufsphy_cfg = {
+> >>>>        .regs            = ufsphy_v5_regs_layout,
+> >>>>    };
+> >>>>
+> >>>> +static const struct qmp_phy_cfg sc7280_ufsphy_cfg = {
+> >>>> +    .lanes                  = 2,
+> >>>> +
+> >>>> +    .offsets                = &qmp_ufs_offsets,
+> >>>> +
+> >>>> +    .tbls = {
+> >>>> +        .serdes         = sm8150_ufsphy_serdes,
+> >>>> +        .serdes_num     = ARRAY_SIZE(sm8150_ufsphy_serdes),
+> >>>> +        .tx             = sc7280_ufsphy_tx,
+> >>>> +        .tx_num         = ARRAY_SIZE(sc7280_ufsphy_tx),
+> >>>> +        .rx             = sc7280_ufsphy_rx,
+> >>>> +        .rx_num         = ARRAY_SIZE(sc7280_ufsphy_rx),
+> >>>> +        .pcs            = sc7280_ufsphy_pcs,
+> >>>> +        .pcs_num        = ARRAY_SIZE(sc7280_ufsphy_pcs),
+> >>>> +    },
+> >>>> +    .tbls_hs_b = {
+> >>>> +        .serdes         = sm8150_ufsphy_hs_b_serdes,
+> >>>> +        .serdes_num     = ARRAY_SIZE(sm8150_ufsphy_hs_b_serdes),
+> >>>> +    },
+> >>>> +    .tbls_hs_g4 = {
+> >>>> +        .tx             = sm8250_ufsphy_hs_g4_tx,
+> >>>> +        .tx_num         = ARRAY_SIZE(sm8250_ufsphy_hs_g4_tx),
+> >>>> +        .rx             = sc7280_ufsphy_hs_g4_rx,
+> >>>> +        .rx_num         = ARRAY_SIZE(sc7280_ufsphy_hs_g4_rx),
+> >>>> +        .pcs            = sm8150_ufsphy_hs_g4_pcs,
+> >>>> +        .pcs_num        = ARRAY_SIZE(sm8150_ufsphy_hs_g4_pcs),
+> >>>> +    },
+> >>>> +    .clk_list               = sm8450_ufs_phy_clk_l,
+> >>>> +    .num_clks               = ARRAY_SIZE(sm8450_ufs_phy_clk_l),
+> >>>
+> >>> This doesn't correspond to the bindings. This array has 3 enries, while
+> >>> in the bindings you have opted for two clocks for this PHY.
+> >> Sure. I'll update the bindings.
+> >
+> > Are you sure about the third clock? Neither sm8150 nor sm8250 used the
+> > qref clock. Or is that an omission on our side?
+> >
+>
+> Hi Dmitry,
+>
+> For SC7280 we need all the three clocks for this target. Same is being
+> used in downstream code as well. Hence I would need to update the
+> binding as well.
 
+Ack, thanks for the confirmation.
 
-在 9/15/2023 10:59 PM, Rob Herring 写道:
-> On Fri, Sep 15, 2023 at 03:30:16PM +0800, Tengfei Fan wrote:
->>
->>
->> 在 9/15/2023 3:04 PM, Krzysztof Kozlowski 写道:
->>> On 15/09/2023 03:58, Tengfei Fan wrote:
->>>> Add device tree binding Documentation details for Qualcomm SM4450
->>>> TLMM device.
->>>>
->>>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
->>>
->>> ...
->>>
->>>> +
->>>> +patternProperties:
->>>> +  "-state$":
->>>> +    oneOf:
->>>> +      - $ref: "#/$defs/qcom-sm4450-tlmm-state"
->>>> +      - patternProperties:
->>>> +          "-pins$":
->>>> +            $ref: "#/$defs/qcom-sm4450-tlmm-state"
->>>> +        additionalProperties: false
->>>> +
->>>> +$defs:
->>>> +  qcom-sm4450-tlmm-state:
->>>> +    type: object
->>>> +    description:
->>>> +      Pinctrl node's client devices use subnodes for desired pin configuration.
->>>> +      Client device subnodes use below standard properties.
->>>> +    $ref: qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state
->>>> +    unevaluatedProperties: false
->>>> +
->>>> +    properties:
->>>> +      pins:
->>>> +        description:
->>>> +          List of gpio pins affected by the properties specified in this
->>>> +          subnode.
->>>> +        items:
->>>> +          oneOf:
->>>> +            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-9][0-9])$"
->>>
->>> This is still wrong. How many GPIOs do you have? Please open existing
->>> bindings for recent device (e.g. sm8550) and look how it is done there.
->> yes, will update to "^gpio([0-9]|[1-9][0-9]|1[0-2][0-5])$".
-> 
-> What about 106, 116, etc.?
-> 
-> Rob
-understand more, need "^gpio([0-9]|[1-9][0-9]|1[0-1][0-9]|12[0-5])$".
-
--- 
-Thx and BRs,
-Tengfei Fan
+>
+> Thanks,
+> Nitin
+>
+>
+> >>
+> >>>
+> >>>> +    .vreg_list              = qmp_phy_vreg_l,
+> >>>> +    .num_vregs              = ARRAY_SIZE(qmp_phy_vreg_l),
+> >>>> +    .regs                   = ufsphy_v4_regs_layout,
+> >>>> +};
+> >>>> +
+> >>>>    static const struct qmp_phy_cfg sc8280xp_ufsphy_cfg = {
+> >>>>        .lanes            = 2,
+> >>>>
+> >>>> @@ -1648,6 +1787,9 @@ static const struct of_device_id
+> >>>> qmp_ufs_of_match_table[] = {
+> >>>>        }, {
+> >>>>            .compatible = "qcom,sa8775p-qmp-ufs-phy",
+> >>>>            .data = &sa8775p_ufsphy_cfg,
+> >>>> +    }, {
+> >>>> +        .compatible = "qcom,sc7280-qmp-ufs-phy",
+> >>>> +        .data = &sc7280_ufsphy_cfg,
+> >>>>        }, {
+> >>>>            .compatible = "qcom,sc8180x-qmp-ufs-phy",
+> >>>>            .data = &sm8150_ufsphy_cfg,
+> >>>> --
+> >>>> 2.17.1
+> >>>>
+> >>>
+> >> Thanks,
+> >> Nitin
+> >
+> >
+> >
+--
+With best wishes
+Dmitry
