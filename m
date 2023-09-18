@@ -2,175 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 13E167A4A6B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Sep 2023 15:01:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF8B97A4CDB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Sep 2023 17:42:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242190AbjIRNBW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Sep 2023 09:01:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49610 "EHLO
+        id S229473AbjIRPm1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Sep 2023 11:42:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242038AbjIRNAu (ORCPT
+        with ESMTP id S229713AbjIRPmT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Sep 2023 09:00:50 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 6EF7E103;
-        Mon, 18 Sep 2023 05:59:52 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 692A11FB;
-        Mon, 18 Sep 2023 06:00:29 -0700 (PDT)
-Received: from [10.57.64.210] (unknown [10.57.64.210])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 290C23F5A1;
-        Mon, 18 Sep 2023 05:59:47 -0700 (PDT)
-Message-ID: <ea68e477-1e77-563e-81a4-bf6d7af5bd94@arm.com>
-Date:   Mon, 18 Sep 2023 13:59:48 +0100
+        Mon, 18 Sep 2023 11:42:19 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B99C910F6;
+        Mon, 18 Sep 2023 08:42:06 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38ICv8BG009815;
+        Mon, 18 Sep 2023 15:01:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=pzDWu196/vVfc5Cy6n7DSpFd3OI9eHlBm42sWI2Kw8M=;
+ b=aK1ofPuG0f4SWui9IY+VrjnI4JYMXo0kSfP/e4UurKxMAQ/j9IulNuUqJjTFR04WHsMS
+ 15B95CktnNiK1i8qiYgoCR5CgeE7AqVWrIAmkpf9bze8F5+95/5GutaeY9Z/LqUUgBi9
+ cgatOwp796YcRJvYZPa+5Uyg/PLlokOL8wF4pndIFwEDXQYmf8WIe992MnNija5NtSe4
+ uP0g2n7dMIO5rW4nx9n2q3OX1cMsBX6LQc8vVkwY46sA7R537i+Y2UxRYlI0rbsWKm5l
+ CToC5Yt14DzClitjvpiUmgpyPLe/uZwvDMt7N3LED7WGIzkThSwG/M9/F5uXr427Q8Go sQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t6pmq08sm-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 18 Sep 2023 15:01:27 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38IF1RXC011944
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 18 Sep 2023 15:01:27 GMT
+Received: from [10.110.81.225] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 18 Sep
+ 2023 08:01:26 -0700
+Message-ID: <0efe305e-031b-bdf5-0268-ca1c6d562653@quicinc.com>
+Date:   Mon, 18 Sep 2023 08:01:26 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.0
-Subject: Re: [PATCH v5 5/6] drm/panfrost: Implement generic DRM object RSS
- reporting function
-Content-Language: en-GB
-To:     Boris Brezillon <boris.brezillon@collabora.com>
-Cc:     =?UTF-8?Q?Adri=c3=a1n_Larumbe?= <adrian.larumbe@collabora.com>,
-        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
-        robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        dmitry.baryshkov@linaro.org, sean@poorly.run,
-        marijn.suijten@somainline.org, robh@kernel.org,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        healych@amazon.com, kernel@collabora.com
-References: <20230914223928.2374933-1-adrian.larumbe@collabora.com>
- <20230914223928.2374933-6-adrian.larumbe@collabora.com>
- <a8d9fe07-7acc-db10-5660-293a449d9dd2@arm.com>
- <20230918123218.14ca9fde@collabora.com>
-From:   Steven Price <steven.price@arm.com>
-In-Reply-To: <20230918123218.14ca9fde@collabora.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v4 0/4] Add qcom hvc/shmem transport support
+To:     <sudeep.holla@arm.com>
+CC:     <cristian.marussi@arm.com>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20230718160833.36397-1-quic_nkela@quicinc.com>
+ <20230911194359.27547-1-quic_nkela@quicinc.com>
+Content-Language: en-US
+From:   Nikunj Kela <quic_nkela@quicinc.com>
+In-Reply-To: <20230911194359.27547-1-quic_nkela@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: M4f-170Wm_3aMa5RAadGq8DqTd9dsuf9
+X-Proofpoint-ORIG-GUID: M4f-170Wm_3aMa5RAadGq8DqTd9dsuf9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-18_08,2023-09-18_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
+ mlxlogscore=999 mlxscore=0 phishscore=0 lowpriorityscore=0 suspectscore=0
+ adultscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309180131
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/09/2023 11:32, Boris Brezillon wrote:
-> On Mon, 18 Sep 2023 11:01:43 +0100
-> Steven Price <steven.price@arm.com> wrote:
-> 
->> On 14/09/2023 23:38, Adrián Larumbe wrote:
->>> BO's RSS is updated every time new pages are allocated on demand and mapped
->>> for the object at GPU page fault's IRQ handler, but only for heap buffers.
->>> The reason this is unnecessary for non-heap buffers is that they are mapped
->>> onto the GPU's VA space and backed by physical memory in their entirety at
->>> BO creation time.
->>>
->>> This calculation is unnecessary for imported PRIME objects, since heap
->>> buffers cannot be exported by our driver, and the actual BO RSS size is the
->>> one reported in its attached dmabuf structure.
->>>
->>> Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
->>> Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>  
->>
->> Am I missing something, or are we missing a way of resetting
->> heap_rss_size when the shrinker purges? It looks like after several
->> grow/purge cycles, heap_rss_size could actually grow to be larger than
->> the BO which is clearly wrong.
-> 
-> Didn't even consider this case since we don't flag heap BOs purgeable
-> in mesa(panfrost), but let's assume we did. If the BO is purged, I'd
-> expect the core to report 0MB of resident memory anyway. And purged BOs
-> are not supposed to be re-used if MADVISE(WILL_NEED) returns
-> retained=false, they should be destroyed. Not 100% sure this is
-> enforced everywhere though (we might actually miss tests to make sure
-> users don't pass purged BOs to jobs, or make the alloc-on-fault logic
-> doesn't try to grow a purged GEM).
-> 
-> If we want to implement transparent BO swap{out,in} (Dmitry's
-> patchset), that's be a different story, and we'll indeed have to set
-> heap_rss_size back to zero on eviction.
+Gentle Ping!
 
-Ah, ok. So we should be safe as things stand - but this is something to
-remember about in the future. Looking more closely at the code I can see
-an madvise(WILL_NEED) will fail if retained=false
-(drm_gem_shmem_madvise() only updates the state it shmem->madv >= 0).
-
-In which case:
-
-Reviewed-by: Steven Price <steven.price@arm.com>
-
->>
->> Steve
->>
->>> ---
->>>  drivers/gpu/drm/panfrost/panfrost_gem.c | 15 +++++++++++++++
->>>  drivers/gpu/drm/panfrost/panfrost_gem.h |  5 +++++
->>>  drivers/gpu/drm/panfrost/panfrost_mmu.c |  1 +
->>>  3 files changed, 21 insertions(+)
->>>
->>> diff --git a/drivers/gpu/drm/panfrost/panfrost_gem.c b/drivers/gpu/drm/panfrost/panfrost_gem.c
->>> index 7d8f83d20539..4365434b48db 100644
->>> --- a/drivers/gpu/drm/panfrost/panfrost_gem.c
->>> +++ b/drivers/gpu/drm/panfrost/panfrost_gem.c
->>> @@ -208,6 +208,20 @@ static enum drm_gem_object_status panfrost_gem_status(struct drm_gem_object *obj
->>>  	return res;
->>>  }
->>>  
->>> +static size_t panfrost_gem_rss(struct drm_gem_object *obj)
->>> +{
->>> +	struct panfrost_gem_object *bo = to_panfrost_bo(obj);
->>> +
->>> +	if (bo->is_heap) {
->>> +		return bo->heap_rss_size;
->>> +	} else if (bo->base.pages) {
->>> +		WARN_ON(bo->heap_rss_size);
->>> +		return bo->base.base.size;
->>> +	} else {
->>> +		return 0;
->>> +	}
->>> +}
->>> +
->>>  static const struct drm_gem_object_funcs panfrost_gem_funcs = {
->>>  	.free = panfrost_gem_free_object,
->>>  	.open = panfrost_gem_open,
->>> @@ -220,6 +234,7 @@ static const struct drm_gem_object_funcs panfrost_gem_funcs = {
->>>  	.vunmap = drm_gem_shmem_object_vunmap,
->>>  	.mmap = drm_gem_shmem_object_mmap,
->>>  	.status = panfrost_gem_status,
->>> +	.rss = panfrost_gem_rss,
->>>  	.vm_ops = &drm_gem_shmem_vm_ops,
->>>  };
->>>  
->>> diff --git a/drivers/gpu/drm/panfrost/panfrost_gem.h b/drivers/gpu/drm/panfrost/panfrost_gem.h
->>> index ad2877eeeccd..13c0a8149c3a 100644
->>> --- a/drivers/gpu/drm/panfrost/panfrost_gem.h
->>> +++ b/drivers/gpu/drm/panfrost/panfrost_gem.h
->>> @@ -36,6 +36,11 @@ struct panfrost_gem_object {
->>>  	 */
->>>  	atomic_t gpu_usecount;
->>>  
->>> +	/*
->>> +	 * Object chunk size currently mapped onto physical memory
->>> +	 */
->>> +	size_t heap_rss_size;
->>> +
->>>  	bool noexec		:1;
->>>  	bool is_heap		:1;
->>>  };
->>> diff --git a/drivers/gpu/drm/panfrost/panfrost_mmu.c b/drivers/gpu/drm/panfrost/panfrost_mmu.c
->>> index d54d4e7b2195..7b1490cdaa48 100644
->>> --- a/drivers/gpu/drm/panfrost/panfrost_mmu.c
->>> +++ b/drivers/gpu/drm/panfrost/panfrost_mmu.c
->>> @@ -522,6 +522,7 @@ static int panfrost_mmu_map_fault_addr(struct panfrost_device *pfdev, int as,
->>>  		   IOMMU_WRITE | IOMMU_READ | IOMMU_NOEXEC, sgt);
->>>  
->>>  	bomapping->active = true;
->>> +	bo->heap_rss_size += SZ_2;
->>>  
->>>  	dev_dbg(pfdev->dev, "mapped page fault @ AS%d %llx", as, addr);
->>>    
->>
-> 
-
+On 9/11/2023 12:43 PM, Nikunj Kela wrote:
+> This change augments smc transport to include support for Qualcomm virtual
+> platforms by passing a parameter(capability-id) in the hypervisor call to
+> identify which doorbell to assert. This parameter is dynamically generated
+> at runtime on the device and insuitable to pass via the devicetree.
+>
+> The function ID and parameter are stored by firmware in the shmem region.
+>
+> This has been tested on ARM64 virtual Qualcomm platform.
+>
+> ---
+> v4 -> port the changes into smc.c
+>
+> v3 -> fix the compilation error reported by the test bot,
+>        add support for polling based instances
+>
+> v2 -> use allOf construct in dtb schema,
+>        remove wrappers from mutexes,
+>        use architecture independent channel layout
+>
+> v1 -> original patches
+>
+> Nikunj Kela (4):
+>    firmware: arm_scmi: Add polling support for completion in smc
+>    dt-bindings: arm: convert nested if-else construct to allOf
+>    dt-bindings: arm: Add new compatible for smc/hvc transport for SCMI
+>    firmware: arm_scmi: Add qcom hvc/shmem transport support
+>
+>   .../bindings/firmware/arm,scmi.yaml           | 67 +++++++++++--------
+>   drivers/firmware/arm_scmi/Kconfig             | 14 ++++
+>   drivers/firmware/arm_scmi/driver.c            |  1 +
+>   drivers/firmware/arm_scmi/smc.c               | 62 +++++++++++++++--
+>   4 files changed, 110 insertions(+), 34 deletions(-)
+>
