@@ -2,102 +2,207 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BDBE7A4E8F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Sep 2023 18:19:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F70D7A505F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Sep 2023 19:04:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230109AbjIRQTC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Sep 2023 12:19:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50720 "EHLO
+        id S230399AbjIRREN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Sep 2023 13:04:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229925AbjIRQSp (ORCPT
+        with ESMTP id S229705AbjIRRD7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Sep 2023 12:18:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A9B72D7E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Sep 2023 08:58:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1695052472;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=mOhdBYOOnOw2Xv4QV/a0Y13rP1z4QA5P773/OFzDxDo=;
-        b=Z7rRXsXU7iqwLrmt5iuJCb0VhxAKLHkodpmnocLpEnalKmr2/o/Tt4MWtF5ZC06ZYg5fJX
-        +7DAJOsmZ4BeM0WvIQGhJrZNnfrbHNZGZd0U4zyszT/u8cneTjzWDvE3cDZdJKgXNsOnL5
-        QT4yAcmO0rFgATpU3b3V5XFYMmrbwEc=
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-379-bUNHcaMcNMmy7UNwjPDg_Q-1; Mon, 18 Sep 2023 11:54:28 -0400
-X-MC-Unique: bUNHcaMcNMmy7UNwjPDg_Q-1
-Received: by mail-yw1-f199.google.com with SMTP id 00721157ae682-59beb3a8291so58269867b3.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Sep 2023 08:54:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695052468; x=1695657268;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mOhdBYOOnOw2Xv4QV/a0Y13rP1z4QA5P773/OFzDxDo=;
-        b=amYJKAPZGgL04ceXW3gPKv/pTuCJsElS3jLzKJVAuuDjenI9o+7LbvFOcwfK0dW2rt
-         kNNgJMRCH8YEjiCOXzSEK03HkM0rmMAvqLUmOXbH8UnruZEuovZU4ttfuPteE6uuDuwu
-         t8sa3SJURQy8fwdpSyjq8+q7prnexe/EZE8RQyKiXITPJ157j40oWapegzGh4J6m7HH+
-         0Bl7Fwba4oRJilYtOjQA7BjI5Z9iIMi+HUva7FG/XC4hHOyuazPe8KorlgqRnT8bxT+Z
-         q5Kr/IksQ2/orVWXPob7BnIGtPKy0TPFX2hAAx4f982u60xTyTEfZwKp0kNepkye4124
-         5Kqg==
-X-Gm-Message-State: AOJu0Yxs8ECTYuzA9F7444qYztY3Z/XJSw+62iRsf9XpOPJiV1+Exi9c
-        skNky18E9bd3V0+EXDIkEnMnLWNdaFvgmOomCNnUPnq0z5b8Zip8OwVKv0t8kyFhTwnAzjMPOme
-        drM1Md1CWU4C0zvCvzXlpGmstvQ==
-X-Received: by 2002:a0d:d892:0:b0:58f:ae13:462b with SMTP id a140-20020a0dd892000000b0058fae13462bmr9906405ywe.4.1695052468199;
-        Mon, 18 Sep 2023 08:54:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFZ+PPa37KkghWX0FxlMbPyu/VGLHVykUnMpS9N8b28iqb6GVc4LQaBkI7nwKXvPf5Ws77YcA==
-X-Received: by 2002:a0d:d892:0:b0:58f:ae13:462b with SMTP id a140-20020a0dd892000000b0058fae13462bmr9906390ywe.4.1695052467962;
-        Mon, 18 Sep 2023 08:54:27 -0700 (PDT)
-Received: from brian-x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
-        by smtp.gmail.com with ESMTPSA id v26-20020a81b71a000000b0059c0629d59csm2339594ywh.115.2023.09.18.08.54.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Sep 2023 08:54:27 -0700 (PDT)
-Date:   Mon, 18 Sep 2023 11:54:25 -0400
-From:   Brian Masney <bmasney@redhat.com>
-To:     Sudeep Holla <sudeep.holla@arm.com>
-Cc:     Nikunj Kela <quic_nkela@quicinc.com>, cristian.marussi@arm.com,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, linux-arm-kernel@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 0/4] Add qcom hvc/shmem transport support
-Message-ID: <ZQhysWhFtR68iVMa@brian-x1>
-References: <20230718160833.36397-1-quic_nkela@quicinc.com>
- <20230911194359.27547-1-quic_nkela@quicinc.com>
- <0efe305e-031b-bdf5-0268-ca1c6d562653@quicinc.com>
- <20230918151552.n3jvw2qqi5tmyfbb@bogus>
+        Mon, 18 Sep 2023 13:03:59 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE923CDB;
+        Mon, 18 Sep 2023 10:03:21 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38IEvJSv026033;
+        Mon, 18 Sep 2023 17:02:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=lbb9poKKnoIX5f99teaqOdZfia9gsHyX0zdOJWkDC/w=;
+ b=gB0k+5Yvi9ejpCfMAIp91MV5IikEfIYphWkqT7Us4KMLqkSTJfhm/OPgoBopzp1qoX85
+ 1iG1nP0o709Wd2PaDVCi9zonv1sgVNfwkh2xNDXPSdedJdO7zI/voA3DwjLRqbHZfoEo
+ pQKWrrTBNvxgamQ2MsfimaAT0vwCiKcU1daTenCZgOswzB8RlquPY0Mnsqqk6jElp+ly
+ qUw6fOi58OhWcU//vk3OVa3S9CBaDDWr68stfZiyGg8DctL0r/AyZP8ovIcQyqiPJ6D+
+ VFDnFNPayA96Uf9hmO/TnAMD2h8sRNm2dNJyyP83MyXvmV/gnnUckUGvpZOyZYANscBo Cg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t6pmq0mxj-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 18 Sep 2023 17:02:57 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38IH2ucq028956
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 18 Sep 2023 17:02:56 GMT
+Received: from [10.71.109.209] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 18 Sep
+ 2023 10:02:55 -0700
+Message-ID: <4634ca79-e12b-0608-a123-6ed123f4a03c@quicinc.com>
+Date:   Mon, 18 Sep 2023 10:02:44 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230918151552.n3jvw2qqi5tmyfbb@bogus>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v3 1/7] drm/msm/dp: tie dp_display_irq_handler() with dp
+ driver
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
+        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1694813901-26952-1-git-send-email-quic_khsieh@quicinc.com>
+ <1694813901-26952-2-git-send-email-quic_khsieh@quicinc.com>
+ <CAA8EJprRFYMF-6yxcL75rftfii0kt7hmg_+TeOMJw+BRyDYdeg@mail.gmail.com>
+Content-Language: en-US
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <CAA8EJprRFYMF-6yxcL75rftfii0kt7hmg_+TeOMJw+BRyDYdeg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: yDS0sS-dKLbuPrJtNyiZxcMdH_2Qzb9r
+X-Proofpoint-ORIG-GUID: yDS0sS-dKLbuPrJtNyiZxcMdH_2Qzb9r
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-18_08,2023-09-18_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
+ priorityscore=1501 impostorscore=0 mlxlogscore=999 mlxscore=0 phishscore=0
+ clxscore=1015 lowpriorityscore=0 adultscore=0 bulkscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
+ definitions=main-2309180150
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
+        lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 18, 2023 at 04:15:52PM +0100, Sudeep Holla wrote:
-> On Mon, Sep 18, 2023 at 08:01:26AM -0700, Nikunj Kela wrote:
-> > Gentle Ping!
-> > 
-> 
-> I will take a look at this later this week. That said, I am unable be
-> gauge the urgency based on you ping here. You have shown the same urgency
-> last time for a feature that I queued promptly just to know that it was
-> abandon within couple of days. So I don't want to rush here simply based
-> on the number of pings here. I need to understand that it is really that
-> important. For now, I am thinking of skipping even v6.7 just to allow
-> some time for Qcom to make up its mind and be absolutely sure this is what
-> they *really* want this time.
 
-Hi Sudeep,
+On 9/15/2023 5:29 PM, Dmitry Baryshkov wrote:
+> On Sat, 16 Sept 2023 at 00:38, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+>> Currently the dp_display_irq_handler() is executed at msm_dp_modeset_init()
+>> which ties irq registration to the DPU device's life cycle, while depending on
+>> resources that are released as the DP device is torn down. Move register DP
+>> driver irq handler at dp_display_probe() to have dp_display_irq_handler()
+>> is tied with DP device.
+>>
+>> Changes in v3:
+>> -- move calling dp_display_irq_handler() to probe
+> Was there a changelog for the previous reivions? What is the
+> difference between v1 and v2?
 
-Red Hat is interested in this patch set. Qualcomm is moving one of their
-automotive platforms over to use SCMI and this will appear in that
-product.
+Sorry, v2 is same as v3.
 
-Brian
+I submitted v2 first but found i forget to add change logs from review 
+comments of v1.
 
+Therefore i submit v3 to add changes logs which missing at v2.
+
+
+
+>
+>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/dp/dp_display.c | 35 +++++++++++++----------------------
+>>   drivers/gpu/drm/msm/dp/dp_display.h |  1 -
+>>   2 files changed, 13 insertions(+), 23 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+>> index 76f1395..c217430 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+>> @@ -1193,30 +1193,23 @@ static irqreturn_t dp_display_irq_handler(int irq, void *dev_id)
+>>          return ret;
+>>   }
+>>
+>> -int dp_display_request_irq(struct msm_dp *dp_display)
+>> +static int dp_display_request_irq(struct dp_display_private *dp)
+>>   {
+>>          int rc = 0;
+>> -       struct dp_display_private *dp;
+>> -
+>> -       if (!dp_display) {
+>> -               DRM_ERROR("invalid input\n");
+>> -               return -EINVAL;
+>> -       }
+>> -
+>> -       dp = container_of(dp_display, struct dp_display_private, dp_display);
+>> +       struct device *dev = &dp->pdev->dev;
+>>
+>> -       dp->irq = irq_of_parse_and_map(dp->pdev->dev.of_node, 0);
+>>          if (!dp->irq) {
+> What is the point in this check?
+>
+>> -               DRM_ERROR("failed to get irq\n");
+>> -               return -EINVAL;
+>> +               dp->irq = platform_get_irq(dp->pdev, 0);
+>> +               if (!dp->irq) {
+>> +                       DRM_ERROR("failed to get irq\n");
+>> +                       return -EINVAL;
+>> +               }
+>>          }
+>>
+>> -       rc = devm_request_irq(dp_display->drm_dev->dev, dp->irq,
+>> -                       dp_display_irq_handler,
+>> +       rc = devm_request_irq(dev, dp->irq, dp_display_irq_handler,
+>>                          IRQF_TRIGGER_HIGH, "dp_display_isr", dp);
+>>          if (rc < 0) {
+>> -               DRM_ERROR("failed to request IRQ%u: %d\n",
+>> -                               dp->irq, rc);
+>> +               DRM_ERROR("failed to request IRQ%u: %d\n", dp->irq, rc);
+>>                  return rc;
+>>          }
+>>
+>> @@ -1287,6 +1280,10 @@ static int dp_display_probe(struct platform_device *pdev)
+>>
+>>          platform_set_drvdata(pdev, &dp->dp_display);
+>>
+>> +       rc = dp_display_request_irq(dp);
+>> +       if (rc)
+>> +               return rc;
+> This way the IRQ ends up being enabled in _probe. Are we ready to
+> handle it here? Is the DP device fully setup at this moment?
+>
+>> +
+>>          rc = component_add(&pdev->dev, &dp_display_comp_ops);
+>>          if (rc) {
+>>                  DRM_ERROR("component add failed, rc=%d\n", rc);
+>> @@ -1549,12 +1546,6 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+>>
+>>          dp_priv = container_of(dp_display, struct dp_display_private, dp_display);
+>>
+>> -       ret = dp_display_request_irq(dp_display);
+>> -       if (ret) {
+>> -               DRM_ERROR("request_irq failed, ret=%d\n", ret);
+>> -               return ret;
+>> -       }
+>> -
+>>          ret = dp_display_get_next_bridge(dp_display);
+>>          if (ret)
+>>                  return ret;
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
+>> index 1e9415a..b3c08de 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_display.h
+>> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
+>> @@ -35,7 +35,6 @@ struct msm_dp {
+>>   int dp_display_set_plugged_cb(struct msm_dp *dp_display,
+>>                  hdmi_codec_plugged_cb fn, struct device *codec_dev);
+>>   int dp_display_get_modes(struct msm_dp *dp_display);
+>> -int dp_display_request_irq(struct msm_dp *dp_display);
+>>   bool dp_display_check_video_test(struct msm_dp *dp_display);
+>>   int dp_display_get_test_bpp(struct msm_dp *dp_display);
+>>   void dp_display_signal_audio_start(struct msm_dp *dp_display);
+>> --
+>> 2.7.4
+>>
+>
