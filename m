@@ -2,87 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E80287A48F0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Sep 2023 13:56:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 13E167A4A6B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Sep 2023 15:01:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240233AbjIRL4U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Sep 2023 07:56:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52032 "EHLO
+        id S242190AbjIRNBW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Sep 2023 09:01:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241785AbjIRLz6 (ORCPT
+        with ESMTP id S242038AbjIRNAu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Sep 2023 07:55:58 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24E0B10D1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Sep 2023 04:54:31 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2c00c0f11b2so13963281fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Sep 2023 04:54:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695038069; x=1695642869; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+XTuYj+doNNU72YBaw1CaA5ZGAyKTkm1rkVWPnny88Q=;
-        b=husEoK37/BjUPjxFHJwBJP6/Bx+o+1hbR+eXQmf2CzIupYDlJ3kZh/Clqye2WB2tZ1
-         TBrkDT0NcFHjBBPMtEhA5pi/2H/BhAqlbFNED+WjTQ+xMqJpK1hD/XcV0/fLmRPCTPw5
-         nprAjjHdPqjB1RDo3Emm2o7/ZsavqsqI6u7t6EHsYoerp39yIBC55kbpPggLcLiCfc4g
-         aAzWqqTsiMveQQKquVx83VI1DLGn970hRsrZFO0rRv0rqxolr2mEXPScqkOipyAxG63E
-         /1RJTblZzuTGtL/hbUnkhl5J+lXnnxZzzIvPICw29IL+q+lY/ak5b0SqR+exFLm8OpK3
-         5EaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695038069; x=1695642869;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+XTuYj+doNNU72YBaw1CaA5ZGAyKTkm1rkVWPnny88Q=;
-        b=hbDuSHr1/PlBf9r3sGChzcYWIf2YOUUkhTqh0oyYntXFi3XMW887LKe9Ad/txN6sub
-         9y6tTrTZd4/71+uAAVN/acImvmhVV2foEv4yfr4pvYXdb2I/5OZurDwNe+wEWbe7zNR1
-         3pKL6uO5A/1VRFUgQroNPkEYA8deh2yfNvcZ6qUeyGkQBJgDMYmbvetqrLNPVnnpQdIh
-         mWofexJ5zY8/KsA+Rl2gsICpF6Wo5IcA3SxFqYEaJhh2fCM76Os1G2YcYFZXYzDjoSpF
-         l4DxbnYxU5UnHcdzotOpM2PwqVjaZlgzOFUbT2bBgn0eG2OCVfZ22C2Sx+MpqBQiHFs9
-         OMjg==
-X-Gm-Message-State: AOJu0YwG9b6118UzGzsPwC7729uQDuOQ3IO0n+a5/JEEDjM19JltL/MY
-        cKjKDwDmK0RYzvzGo8Oo+qQsLQ==
-X-Google-Smtp-Source: AGHT+IFFJVzuNiojURIGIa0Y2S0/cv6X2tyb8l1Ch14n1dQLx1ebsX7rXJSwkNoFewVC8Flj1/YkLg==
-X-Received: by 2002:a2e:95cb:0:b0:2b6:a3a0:5f7 with SMTP id y11-20020a2e95cb000000b002b6a3a005f7mr7882460ljh.9.1695038069338;
-        Mon, 18 Sep 2023 04:54:29 -0700 (PDT)
-Received: from [172.25.80.114] ([217.67.225.27])
-        by smtp.gmail.com with ESMTPSA id g11-20020a170906198b00b009926928d486sm6324008ejd.35.2023.09.18.04.54.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Sep 2023 04:54:28 -0700 (PDT)
-Message-ID: <b71c60f2-6781-02fa-ec31-13060af05c7a@linaro.org>
-Date:   Mon, 18 Sep 2023 13:54:27 +0200
+        Mon, 18 Sep 2023 09:00:50 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 6EF7E103;
+        Mon, 18 Sep 2023 05:59:52 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 692A11FB;
+        Mon, 18 Sep 2023 06:00:29 -0700 (PDT)
+Received: from [10.57.64.210] (unknown [10.57.64.210])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 290C23F5A1;
+        Mon, 18 Sep 2023 05:59:47 -0700 (PDT)
+Message-ID: <ea68e477-1e77-563e-81a4-bf6d7af5bd94@arm.com>
+Date:   Mon, 18 Sep 2023 13:59:48 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v2 6/8] arm64: dts: qcom: sm4450: Add RPMH and Global
- clock controller
-To:     Tengfei Fan <quic_tengfan@quicinc.com>, will@kernel.org,
-        robin.murphy@arm.com, joro@8bytes.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        catalin.marinas@arm.com
-Cc:     geert+renesas@glider.be, arnd@arndb.de, neil.armstrong@linaro.org,
-        nfraprado@collabora.com, rafal@milecki.pl, peng.fan@nxp.com,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, quic_tsoni@quicinc.com,
-        quic_shashim@quicinc.com, quic_kaushalk@quicinc.com,
-        quic_tdas@quicinc.com, quic_tingweiz@quicinc.com,
-        quic_aiquny@quicinc.com, kernel@quicinc.com,
-        Ajit Pandey <quic_ajipan@quicinc.com>
-References: <20230915021509.25773-1-quic_tengfan@quicinc.com>
- <20230915021509.25773-8-quic_tengfan@quicinc.com>
- <c4e95307-3f09-5704-e5ea-cb42befb9921@linaro.org>
- <1a7fdafb-e75e-46a1-94be-36a9c3c94c15@quicinc.com>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1a7fdafb-e75e-46a1-94be-36a9c3c94c15@quicinc.com>
+ Thunderbird/102.15.0
+Subject: Re: [PATCH v5 5/6] drm/panfrost: Implement generic DRM object RSS
+ reporting function
+Content-Language: en-GB
+To:     Boris Brezillon <boris.brezillon@collabora.com>
+Cc:     =?UTF-8?Q?Adri=c3=a1n_Larumbe?= <adrian.larumbe@collabora.com>,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
+        robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run,
+        marijn.suijten@somainline.org, robh@kernel.org,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        healych@amazon.com, kernel@collabora.com
+References: <20230914223928.2374933-1-adrian.larumbe@collabora.com>
+ <20230914223928.2374933-6-adrian.larumbe@collabora.com>
+ <a8d9fe07-7acc-db10-5660-293a449d9dd2@arm.com>
+ <20230918123218.14ca9fde@collabora.com>
+From:   Steven Price <steven.price@arm.com>
+In-Reply-To: <20230918123218.14ca9fde@collabora.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -90,37 +56,121 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/09/2023 12:34, Tengfei Fan wrote:
+On 18/09/2023 11:32, Boris Brezillon wrote:
+> On Mon, 18 Sep 2023 11:01:43 +0100
+> Steven Price <steven.price@arm.com> wrote:
 > 
-> 
-> 在 9/15/2023 3:22 PM, Krzysztof Kozlowski 写道:
->> On 15/09/2023 04:15, Tengfei Fan wrote:
->>> From: Ajit Pandey <quic_ajipan@quicinc.com>
+>> On 14/09/2023 23:38, Adrián Larumbe wrote:
+>>> BO's RSS is updated every time new pages are allocated on demand and mapped
+>>> for the object at GPU page fault's IRQ handler, but only for heap buffers.
+>>> The reason this is unnecessary for non-heap buffers is that they are mapped
+>>> onto the GPU's VA space and backed by physical memory in their entirety at
+>>> BO creation time.
 >>>
->>> Add device node for RPMH and Global clock controller on Qualcomm
->>> SM4450 platform.
+>>> This calculation is unnecessary for imported PRIME objects, since heap
+>>> buffers cannot be exported by our driver, and the actual BO RSS size is the
+>>> one reported in its attached dmabuf structure.
 >>>
->>> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
->>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+>>> Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
+>>> Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>  
 >>
->> Warnings in your code:
->> sm4450-qrd.dtb: clock-controller@100000: clocks: [[28, 0], [29]] is too
->> short
->>
->>
->>
->> Best regards,
->> Krzysztof
->>
-> Hi Krzyszrof,
-> Want to know how did you find this warning?
-> I cannot find this warning when I do dt check(make ARCH=arm64 
-> DT_CHECKER_FLAGS=-m dtbs_check) or kernel compile(make -j8 ARCH=arm64 
-> CROSS_COMPILE=aarch64-linux-gnu- Image.gz dtbs modules).
+>> Am I missing something, or are we missing a way of resetting
+>> heap_rss_size when the shrinker purges? It looks like after several
+>> grow/purge cycles, heap_rss_size could actually grow to be larger than
+>> the BO which is clearly wrong.
 > 
+> Didn't even consider this case since we don't flag heap BOs purgeable
+> in mesa(panfrost), but let's assume we did. If the BO is purged, I'd
+> expect the core to report 0MB of resident memory anyway. And purged BOs
+> are not supposed to be re-used if MADVISE(WILL_NEED) returns
+> retained=false, they should be destroyed. Not 100% sure this is
+> enforced everywhere though (we might actually miss tests to make sure
+> users don't pass purged BOs to jobs, or make the alloc-on-fault logic
+> doesn't try to grow a purged GEM).
+> 
+> If we want to implement transparent BO swap{out,in} (Dmitry's
+> patchset), that's be a different story, and we'll indeed have to set
+> heap_rss_size back to zero on eviction.
 
-I just applied dependencies and these patches, and run dtbs_check.
+Ah, ok. So we should be safe as things stand - but this is something to
+remember about in the future. Looking more closely at the code I can see
+an madvise(WILL_NEED) will fail if retained=false
+(drm_gem_shmem_madvise() only updates the state it shmem->madv >= 0).
 
-Best regards,
-Krzysztof
+In which case:
+
+Reviewed-by: Steven Price <steven.price@arm.com>
+
+>>
+>> Steve
+>>
+>>> ---
+>>>  drivers/gpu/drm/panfrost/panfrost_gem.c | 15 +++++++++++++++
+>>>  drivers/gpu/drm/panfrost/panfrost_gem.h |  5 +++++
+>>>  drivers/gpu/drm/panfrost/panfrost_mmu.c |  1 +
+>>>  3 files changed, 21 insertions(+)
+>>>
+>>> diff --git a/drivers/gpu/drm/panfrost/panfrost_gem.c b/drivers/gpu/drm/panfrost/panfrost_gem.c
+>>> index 7d8f83d20539..4365434b48db 100644
+>>> --- a/drivers/gpu/drm/panfrost/panfrost_gem.c
+>>> +++ b/drivers/gpu/drm/panfrost/panfrost_gem.c
+>>> @@ -208,6 +208,20 @@ static enum drm_gem_object_status panfrost_gem_status(struct drm_gem_object *obj
+>>>  	return res;
+>>>  }
+>>>  
+>>> +static size_t panfrost_gem_rss(struct drm_gem_object *obj)
+>>> +{
+>>> +	struct panfrost_gem_object *bo = to_panfrost_bo(obj);
+>>> +
+>>> +	if (bo->is_heap) {
+>>> +		return bo->heap_rss_size;
+>>> +	} else if (bo->base.pages) {
+>>> +		WARN_ON(bo->heap_rss_size);
+>>> +		return bo->base.base.size;
+>>> +	} else {
+>>> +		return 0;
+>>> +	}
+>>> +}
+>>> +
+>>>  static const struct drm_gem_object_funcs panfrost_gem_funcs = {
+>>>  	.free = panfrost_gem_free_object,
+>>>  	.open = panfrost_gem_open,
+>>> @@ -220,6 +234,7 @@ static const struct drm_gem_object_funcs panfrost_gem_funcs = {
+>>>  	.vunmap = drm_gem_shmem_object_vunmap,
+>>>  	.mmap = drm_gem_shmem_object_mmap,
+>>>  	.status = panfrost_gem_status,
+>>> +	.rss = panfrost_gem_rss,
+>>>  	.vm_ops = &drm_gem_shmem_vm_ops,
+>>>  };
+>>>  
+>>> diff --git a/drivers/gpu/drm/panfrost/panfrost_gem.h b/drivers/gpu/drm/panfrost/panfrost_gem.h
+>>> index ad2877eeeccd..13c0a8149c3a 100644
+>>> --- a/drivers/gpu/drm/panfrost/panfrost_gem.h
+>>> +++ b/drivers/gpu/drm/panfrost/panfrost_gem.h
+>>> @@ -36,6 +36,11 @@ struct panfrost_gem_object {
+>>>  	 */
+>>>  	atomic_t gpu_usecount;
+>>>  
+>>> +	/*
+>>> +	 * Object chunk size currently mapped onto physical memory
+>>> +	 */
+>>> +	size_t heap_rss_size;
+>>> +
+>>>  	bool noexec		:1;
+>>>  	bool is_heap		:1;
+>>>  };
+>>> diff --git a/drivers/gpu/drm/panfrost/panfrost_mmu.c b/drivers/gpu/drm/panfrost/panfrost_mmu.c
+>>> index d54d4e7b2195..7b1490cdaa48 100644
+>>> --- a/drivers/gpu/drm/panfrost/panfrost_mmu.c
+>>> +++ b/drivers/gpu/drm/panfrost/panfrost_mmu.c
+>>> @@ -522,6 +522,7 @@ static int panfrost_mmu_map_fault_addr(struct panfrost_device *pfdev, int as,
+>>>  		   IOMMU_WRITE | IOMMU_READ | IOMMU_NOEXEC, sgt);
+>>>  
+>>>  	bomapping->active = true;
+>>> +	bo->heap_rss_size += SZ_2;
+>>>  
+>>>  	dev_dbg(pfdev->dev, "mapped page fault @ AS%d %llx", as, addr);
+>>>    
+>>
+> 
 
