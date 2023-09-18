@@ -2,40 +2,31 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D69B17A4494
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Sep 2023 10:26:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6512C7A449F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Sep 2023 10:28:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238268AbjIRI0M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Sep 2023 04:26:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52386 "EHLO
+        id S238813AbjIRI1t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Sep 2023 04:27:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240853AbjIRI0B (ORCPT
+        with ESMTP id S240770AbjIRI1E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Sep 2023 04:26:01 -0400
-Received: from galois.linutronix.de (Galois.linutronix.de [IPv6:2a0a:51c0:0:12e:550::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C9649D;
-        Mon, 18 Sep 2023 01:23:43 -0700 (PDT)
-From:   John Ogness <john.ogness@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020; t=1695025421;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=vbS9QPc1Pl8aynK4QW1lmF6vjAQ0ZTxsQY3l4MyK258=;
-        b=I/zxI14CZHZrII9ihm3trQ7fyyqM9MBHlADU5jK/WCz0qmJ7qdh/gVp7MrHnT76kGCn2OS
-        thbrjm+5/p0AUL3k3y0Me+t3WXGfgewtHVa3jLT3mQIW+uh19uaZJo4dDuuzTnKNH9gxbv
-        YqECxqsZmXE12Rs6n3pfqikyRNI02rXD922Wk1RsqzmyFP2Q/TQ0JlDB7tNnIb53lXVkEi
-        CufhfKqHdPXTBi4P4Wa/XMaoZh4D9DvciGhluoUsXp5UvHxZKk2LWwPbB1vTfE61jrJ00V
-        Ogro8L9qiUNaoDXe+9b8RHsC1EhXb9nWyWvagEl9+oWqRYTCu3Dz/+VCPP0L6A==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020e; t=1695025421;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=vbS9QPc1Pl8aynK4QW1lmF6vjAQ0ZTxsQY3l4MyK258=;
-        b=ZRHDOxKys82eUfF3vL0yjr3X8TEhFmzqT0RH/vdzReXsYMA0wfYIhUsDDRhUJ++sGu6dag
-        f4crLl8OAPE2xoBw==
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+        Mon, 18 Sep 2023 04:27:04 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90BA11B6;
+        Mon, 18 Sep 2023 01:26:43 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1362EC433C7;
+        Mon, 18 Sep 2023 08:26:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1695025603;
+        bh=sMXA/6fEari6gFcvN4K1t3oFk4UFIEvXkCv0bTqIj5w=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Z2XvmWcozWHkSw/N8sb8Ry+NwN7vHjaQPDv3sxyalk6XldCahUkcj1cgGARw0kkHz
+         yKR/pNFJ9fM2gO4iQ63iJwfyjudX+nJreWAHWO/Y0KD87L4PsdK8/ClAb9aCu4qrBz
+         XIHRzKPc76RORYHeobe15Z6xsHb2TSzbLBEp9zlA=
+Date:   Mon, 18 Sep 2023 10:26:38 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     John Ogness <john.ogness@linutronix.de>
 Cc:     Jiri Slaby <jirislaby@kernel.org>, linux-serial@vger.kernel.org,
         Petr Mladek <pmladek@suse.com>,
         Thomas Gleixner <tglx@linutronix.de>,
@@ -49,11 +40,11 @@ Cc:     Jiri Slaby <jirislaby@kernel.org>, linux-serial@vger.kernel.org,
         <bcm-kernel-feedback-list@broadcom.com>,
         Tony Lindgren <tony@atomide.com>,
         Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Ilpo =?utf-8?Q?J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+        Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
         Florian Fainelli <f.fainelli@gmail.com>,
         Andrew Davis <afd@ti.com>,
         Matthew Howell <matthew.howell@sealevel.com>,
-        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
         <u.kleine-koenig@pengutronix.de>, Johan Hovold <johan@kernel.org>,
         Matthias Brugger <matthias.bgg@gmail.com>,
         AngeloGioacchino Del Regno 
@@ -111,9 +102,9 @@ Cc:     Jiri Slaby <jirislaby@kernel.org>, linux-serial@vger.kernel.org,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         linux-arm-msm@vger.kernel.org,
-        Pali =?utf-8?Q?Roh=C3=A1r?= <pali@kernel.org>,
+        Pali =?iso-8859-1?Q?Roh=E1r?= <pali@kernel.org>,
         Andrew Morton <akpm@linux-foundation.org>,
-        Andreas =?utf-8?Q?F=C3=A4rber?= <afaerber@suse.de>,
+        Andreas =?iso-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
         Manivannan Sadhasivam <mani@kernel.org>,
         linux-actions@lists.infradead.org,
         Xiongfeng Wang <wangxiongfeng2@huawei.com>,
@@ -154,35 +145,38 @@ Cc:     Jiri Slaby <jirislaby@kernel.org>, linux-serial@vger.kernel.org,
         Peter Korsgaard <jacmet@sunsite.dk>,
         Timur Tabi <timur@kernel.org>,
         Mukesh Ojha <quic_mojha@quicinc.com>,
-        Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+        Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>,
         Michal Simek <michal.simek@amd.com>
 Subject: Re: [PATCH tty v1 00/74] serial: wrappers for uart port lock
-In-Reply-To: <20230914183831.587273-1-john.ogness@linutronix.de>
+Message-ID: <2023091826-seventy-opium-17b8@gregkh>
 References: <20230914183831.587273-1-john.ogness@linutronix.de>
-Date:   Mon, 18 Sep 2023 10:29:30 +0206
-Message-ID: <87y1h3lwjh.fsf@jogness.linutronix.de>
+ <87y1h3lwjh.fsf@jogness.linutronix.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,INVALID_DATE_TZ_ABSURD,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87y1h3lwjh.fsf@jogness.linutronix.de>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-09-14, John Ogness <john.ogness@linutronix.de> wrote:
-> Provide and use wrapper functions for spin_[un]lock*(port->lock)
-> invocations so that the console mechanics can be applied later on at a
-> single place and does not require to copy the same logic all over the
-> drivers.
+On Mon, Sep 18, 2023 at 10:29:30AM +0206, John Ogness wrote:
+> On 2023-09-14, John Ogness <john.ogness@linutronix.de> wrote:
+> > Provide and use wrapper functions for spin_[un]lock*(port->lock)
+> > invocations so that the console mechanics can be applied later on at a
+> > single place and does not require to copy the same logic all over the
+> > drivers.
+> 
+> For the full 74-patch series:
+> 
+> Signed-off-by: John Ogness <john.ogness@linutronix.de>
+> 
+> Sorry that my SoB was missing from the initial posting.
 
-For the full 74-patch series:
+Thanks for this, I'll rebuild my tree with this added.
 
-Signed-off-by: John Ogness <john.ogness@linutronix.de>
-
-Sorry that my SoB was missing from the initial posting.
-
-John Ogness
+greg k-h
