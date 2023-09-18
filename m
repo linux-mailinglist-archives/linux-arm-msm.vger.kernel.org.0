@@ -2,154 +2,187 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 041DD7A4350
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Sep 2023 09:46:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D69B17A4494
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Sep 2023 10:26:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239921AbjIRHoz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Sep 2023 03:44:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59410 "EHLO
+        id S238268AbjIRI0M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Sep 2023 04:26:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240510AbjIRHoj (ORCPT
+        with ESMTP id S240853AbjIRI0B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Sep 2023 03:44:39 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC35FCF8;
-        Mon, 18 Sep 2023 00:43:08 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38I6ld5U014295;
-        Mon, 18 Sep 2023 07:42:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=kW+M14qfpcF97hoQluC9tM98hOjjeZ40Kqhq2jXRfr8=;
- b=BGvjtnWK+Cg0TYVBbxLWhrVTI8OTU9Zs/doYmTy+ShojJHz2wvzUOTO1zwUih1hfSXE4
- X2SugyTqUUds5ABNOvMIMwO69sp383+R3XzHQHqYBi0Uga/aWVpk+7wLcDV+S0RhfCZM
- jSPNvQmEu4cOa0wVKSIKQ8ZxNjU8u3QuZBx+lJLXzh1tlUwABr0YwBz72R9BkJqI8ih6
- G5sYy5UXnlAoC/SMCLPVtEvQ8fnB7Timyza7YoFyTU/rqQwLd2pey/8aEKx8k7SxLsF8
- 6jbsPAOjPACUJSaxxorbuc8L+lxyVf2UZhuVKTdKTVa3gjCTPf/1oZUt50NGVzb0+8fF EA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t53ayaqgp-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 18 Sep 2023 07:42:53 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38I7gqMm015793
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 18 Sep 2023 07:42:52 GMT
-Received: from [10.216.25.71] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 18 Sep
- 2023 00:42:45 -0700
-Message-ID: <961b0ad4-baac-4ca4-bc2a-7dae6f129e6f@quicinc.com>
-Date:   Mon, 18 Sep 2023 13:12:42 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 10/13] usb: dwc3: qcom: Add multiport suspend/resume
- support for wrapper
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
+        Mon, 18 Sep 2023 04:26:01 -0400
+Received: from galois.linutronix.de (Galois.linutronix.de [IPv6:2a0a:51c0:0:12e:550::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C9649D;
+        Mon, 18 Sep 2023 01:23:43 -0700 (PDT)
+From:   John Ogness <john.ogness@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+        s=2020; t=1695025421;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=vbS9QPc1Pl8aynK4QW1lmF6vjAQ0ZTxsQY3l4MyK258=;
+        b=I/zxI14CZHZrII9ihm3trQ7fyyqM9MBHlADU5jK/WCz0qmJ7qdh/gVp7MrHnT76kGCn2OS
+        thbrjm+5/p0AUL3k3y0Me+t3WXGfgewtHVa3jLT3mQIW+uh19uaZJo4dDuuzTnKNH9gxbv
+        YqECxqsZmXE12Rs6n3pfqikyRNI02rXD922Wk1RsqzmyFP2Q/TQ0JlDB7tNnIb53lXVkEi
+        CufhfKqHdPXTBi4P4Wa/XMaoZh4D9DvciGhluoUsXp5UvHxZKk2LWwPbB1vTfE61jrJ00V
+        Ogro8L9qiUNaoDXe+9b8RHsC1EhXb9nWyWvagEl9+oWqRYTCu3Dz/+VCPP0L6A==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+        s=2020e; t=1695025421;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=vbS9QPc1Pl8aynK4QW1lmF6vjAQ0ZTxsQY3l4MyK258=;
+        b=ZRHDOxKys82eUfF3vL0yjr3X8TEhFmzqT0RH/vdzReXsYMA0wfYIhUsDDRhUJ++sGu6dag
+        f4crLl8OAPE2xoBw==
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Jiri Slaby <jirislaby@kernel.org>, linux-serial@vger.kernel.org,
+        Petr Mladek <pmladek@suse.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        linux-kernel@vger.kernel.org, Tobias Klauser <tklauser@distanz.ch>,
+        Thierry Reding <treding@nvidia.com>,
+        Joel Stanley <joel@jms.id.au>,
+        Andrew Jeffery <andrew@aj.id.au>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-aspeed@lists.ozlabs.org, Al Cooper <alcooperx@gmail.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Ilpo =?utf-8?Q?J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Andrew Davis <afd@ti.com>,
+        Matthew Howell <matthew.howell@sealevel.com>,
+        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Johan Hovold <johan@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Chen-Yu Tsai <wenst@chromium.org>,
+        linux-mediatek@lists.infradead.org, Lukas Wunner <lukas@wunner.de>,
+        Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Kumaravel Thiagarajan <kumaravel.thiagarajan@microchip.com>,
+        Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>,
+        Russell King <linux@armlinux.org.uk>,
+        "Maciej W. Rozycki" <macro@orcam.me.uk>,
+        Hongyu Xie <xiehongyu1@kylinos.cn>,
+        Jiamei Xie <jiamei.xie@arm.com>, Rob Herring <robh@kernel.org>,
+        delisun <delisun@pateo.com.cn>,
+        Lino Sanfilippo <l.sanfilippo@kunbus.com>,
+        Yangtao Li <frank.li@vivo.com>,
+        Vineet Gupta <vgupta@kernel.org>,
+        linux-snps-arc@lists.infradead.org,
+        Richard Genoud <richard.genoud@gmail.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+        Arend van Spriel <arend.vanspriel@broadcom.com>,
+        Christophe Leroy <christophe.leroy@csgroup.eu>,
+        Baruch Siach <baruch@tkos.co.il>,
+        Sherry Sun <sherry.sun@nxp.com>,
+        Shenwei Wang <shenwei.wang@nxp.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Sergey Organov <sorganov@gmail.com>, Tom Rix <trix@redhat.com>,
+        Marek Vasut <marex@denx.de>,
+        Karol Gugala <kgugala@antmicro.com>,
+        Mateusz Holenko <mholenko@antmicro.com>,
+        Gabriel Somlo <gsomlo@gmail.com>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Jacky Huang <ychuang3@nuvoton.com>,
+        Shan-Chun Hung <schung@nuvoton.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Dmitry Rokosov <ddrokosov@sberdevices.ru>,
+        Lucas Tanure <tanure@linux.com>,
+        linux-amlogic@lists.infradead.org,
+        Taichi Sugaya <sugaya.taichi@socionext.com>,
+        Takao Orito <orito.takao@socionext.com>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
         Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Johan Hovold <johan@kernel.org>,
-        Mathias Nyman <mathias.nyman@intel.com>
-CC:     <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
-        <quic_jackp@quicinc.com>, <ahalaney@redhat.com>,
-        <quic_shazhuss@quicinc.com>
-References: <20230828133033.11988-1-quic_kriskura@quicinc.com>
- <20230828133033.11988-11-quic_kriskura@quicinc.com>
- <825bc60b-2067-43e2-8b43-9d38b7cebf02@linaro.org>
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <825bc60b-2067-43e2-8b43-9d38b7cebf02@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: CxEyHg7gQX47R1U-FyrDzTqzLzbI0dFx
-X-Proofpoint-ORIG-GUID: CxEyHg7gQX47R1U-FyrDzTqzLzbI0dFx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-15_20,2023-09-15_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 suspectscore=0
- spamscore=0 mlxscore=0 impostorscore=0 malwarescore=0 bulkscore=0
- clxscore=1015 priorityscore=1501 mlxlogscore=411 phishscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309180067
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        Pali =?utf-8?Q?Roh=C3=A1r?= <pali@kernel.org>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Andreas =?utf-8?Q?F=C3=A4rber?= <afaerber@suse.de>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-actions@lists.infradead.org,
+        Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+        Yuan Can <yuancan@huawei.com>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Nicholas Piggin <npiggin@gmail.com>,
+        linuxppc-dev@lists.ozlabs.org, linux-unisoc@lists.infradead.org,
+        Kevin Cernekee <cernekee@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        linux-samsung-soc@vger.kernel.org,
+        Lukas Bulwahn <lukas.bulwahn@gmail.com>,
+        Lech Perczak <lech.perczak@camlingroup.com>,
+        Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        Isaac True <isaac.true@canonical.com>,
+        Laxman Dewangan <ldewangan@nvidia.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        linux-tegra@vger.kernel.org, Biju Das <biju.das.jz@bp.renesas.com>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Nick Hu <nick.hu@sifive.com>,
+        Ruan Jinjie <ruanjinjie@huawei.com>,
+        Samuel Holland <samuel.holland@sifive.com>,
+        linux-riscv@lists.infradead.org, Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Patrice Chotard <patrice.chotard@foss.st.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Valentin Caron <valentin.caron@foss.st.com>,
+        Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+        linux-stm32@st-md-mailman.stormreply.com,
+        "David S. Miller" <davem@davemloft.net>,
+        sparclinux@vger.kernel.org, Hammer Hsieh <hammerh0314@gmail.com>,
+        Peter Korsgaard <jacmet@sunsite.dk>,
+        Timur Tabi <timur@kernel.org>,
+        Mukesh Ojha <quic_mojha@quicinc.com>,
+        Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+        Michal Simek <michal.simek@amd.com>
+Subject: Re: [PATCH tty v1 00/74] serial: wrappers for uart port lock
+In-Reply-To: <20230914183831.587273-1-john.ogness@linutronix.de>
+References: <20230914183831.587273-1-john.ogness@linutronix.de>
+Date:   Mon, 18 Sep 2023 10:29:30 +0206
+Message-ID: <87y1h3lwjh.fsf@jogness.linutronix.de>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,INVALID_DATE_TZ_ABSURD,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 2023-09-14, John Ogness <john.ogness@linutronix.de> wrote:
+> Provide and use wrapper functions for spin_[un]lock*(port->lock)
+> invocations so that the console mechanics can be applied later on at a
+> single place and does not require to copy the same logic all over the
+> drivers.
 
+For the full 74-patch series:
 
-On 9/15/2023 7:18 PM, Konrad Dybcio wrote:
->>   
->> -#define PWR_EVNT_IRQ_STAT_REG			0x58
->> +#define PWR_EVNT_IRQ1_STAT_REG			0x58
->> +#define PWR_EVNT_IRQ2_STAT_REG			0x1dc
->> +#define PWR_EVNT_IRQ3_STAT_REG			0x228
->> +#define PWR_EVNT_IRQ4_STAT_REG			0x238
->> +
->>   #define PWR_EVNT_LPM_IN_L2_MASK			BIT(4)
->>   #define PWR_EVNT_LPM_OUT_L2_MASK		BIT(5)
->>   
->> @@ -107,6 +111,19 @@ struct dwc3_qcom {
->>   	int			num_ports;
->>   };
->>   
->> +/*
->> + * SA8295 has 4 power event IRQ STAT registers to be checked
->> + * during suspend resume.
->> + */
-> But this driver supports much more than just SA8295?
-> 
-Yes. Other than SA8295, all single port controllers and SA8195(2 port 
-controller), have these reigsters.
+Signed-off-by: John Ogness <john.ogness@linutronix.de>
 
-The rational behind adding this array was that depending on num_ports, 
-any controller can access its required pwr_event_irq_stat register and 
-loop in the suspend/resume code would take care of it. Perhaps I can 
-change the comments to indicate that the array would be used by all 
-controllers and not just SA8295.
+Sorry that my SoB was missing from the initial posting.
 
->> +#define NUM_PWR_EVENT_STAT_REGS	4
->> +
->> +static u32 pwr_evnt_irq_stat_reg_offset[NUM_PWR_EVENT_STAT_REGS] = {
->> +	PWR_EVNT_IRQ1_STAT_REG,
->> +	PWR_EVNT_IRQ2_STAT_REG,
->> +	PWR_EVNT_IRQ3_STAT_REG,
->> +	PWR_EVNT_IRQ4_STAT_REG,
->> +};
->> +
->>   static inline void dwc3_qcom_setbits(void __iomem *base, u32 offset, u32 val)
->>   {
->>   	u32 reg;
->> @@ -440,15 +457,19 @@ static void dwc3_qcom_enable_interrupts(struct dwc3_qcom *qcom)
->>   
->>   static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
->>   {
->> +	u8 num_ports;
-> Maybe I'm picky, but I'm not sure defining a variable for
-> a single use of an object with a rather short name
-> (qcom->num_ports) is justified, here and below..
-> 
-
-Sure, will replace num_ports with (qcom->num_ports) and remove the extra 
-variable.
-
-Regards,
-Krishna,
+John Ogness
