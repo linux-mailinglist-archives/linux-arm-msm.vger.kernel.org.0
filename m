@@ -2,111 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 321F37A4E92
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Sep 2023 18:19:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2BDBE7A4E8F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Sep 2023 18:19:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230064AbjIRQTf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Sep 2023 12:19:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60744 "EHLO
+        id S230109AbjIRQTC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Sep 2023 12:19:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230200AbjIRQTT (ORCPT
+        with ESMTP id S229925AbjIRQSp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Sep 2023 12:19:19 -0400
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 456795B81
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Sep 2023 09:09:37 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qiER5-00024w-JQ; Mon, 18 Sep 2023 15:37:11 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qiER5-007EZO-5Y; Mon, 18 Sep 2023 15:37:11 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qiER4-002fXG-Sa; Mon, 18 Sep 2023 15:37:10 +0200
-From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-To:     Sebastian Reichel <sre@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        kernel@pengutronix.de
-Subject: [PATCH 22/32] power: supply: qcom_smbb: Convert to platform remove callback returning void
-Date:   Mon, 18 Sep 2023 15:36:50 +0200
-Message-Id: <20230918133700.1254499-23-u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230918133700.1254499-1-u.kleine-koenig@pengutronix.de>
-References: <20230918133700.1254499-1-u.kleine-koenig@pengutronix.de>
+        Mon, 18 Sep 2023 12:18:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A9B72D7E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Sep 2023 08:58:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1695052472;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=mOhdBYOOnOw2Xv4QV/a0Y13rP1z4QA5P773/OFzDxDo=;
+        b=Z7rRXsXU7iqwLrmt5iuJCb0VhxAKLHkodpmnocLpEnalKmr2/o/Tt4MWtF5ZC06ZYg5fJX
+        +7DAJOsmZ4BeM0WvIQGhJrZNnfrbHNZGZd0U4zyszT/u8cneTjzWDvE3cDZdJKgXNsOnL5
+        QT4yAcmO0rFgATpU3b3V5XFYMmrbwEc=
+Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
+ [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-379-bUNHcaMcNMmy7UNwjPDg_Q-1; Mon, 18 Sep 2023 11:54:28 -0400
+X-MC-Unique: bUNHcaMcNMmy7UNwjPDg_Q-1
+Received: by mail-yw1-f199.google.com with SMTP id 00721157ae682-59beb3a8291so58269867b3.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Sep 2023 08:54:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695052468; x=1695657268;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mOhdBYOOnOw2Xv4QV/a0Y13rP1z4QA5P773/OFzDxDo=;
+        b=amYJKAPZGgL04ceXW3gPKv/pTuCJsElS3jLzKJVAuuDjenI9o+7LbvFOcwfK0dW2rt
+         kNNgJMRCH8YEjiCOXzSEK03HkM0rmMAvqLUmOXbH8UnruZEuovZU4ttfuPteE6uuDuwu
+         t8sa3SJURQy8fwdpSyjq8+q7prnexe/EZE8RQyKiXITPJ157j40oWapegzGh4J6m7HH+
+         0Bl7Fwba4oRJilYtOjQA7BjI5Z9iIMi+HUva7FG/XC4hHOyuazPe8KorlgqRnT8bxT+Z
+         q5Kr/IksQ2/orVWXPob7BnIGtPKy0TPFX2hAAx4f982u60xTyTEfZwKp0kNepkye4124
+         5Kqg==
+X-Gm-Message-State: AOJu0Yxs8ECTYuzA9F7444qYztY3Z/XJSw+62iRsf9XpOPJiV1+Exi9c
+        skNky18E9bd3V0+EXDIkEnMnLWNdaFvgmOomCNnUPnq0z5b8Zip8OwVKv0t8kyFhTwnAzjMPOme
+        drM1Md1CWU4C0zvCvzXlpGmstvQ==
+X-Received: by 2002:a0d:d892:0:b0:58f:ae13:462b with SMTP id a140-20020a0dd892000000b0058fae13462bmr9906405ywe.4.1695052468199;
+        Mon, 18 Sep 2023 08:54:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFZ+PPa37KkghWX0FxlMbPyu/VGLHVykUnMpS9N8b28iqb6GVc4LQaBkI7nwKXvPf5Ws77YcA==
+X-Received: by 2002:a0d:d892:0:b0:58f:ae13:462b with SMTP id a140-20020a0dd892000000b0058fae13462bmr9906390ywe.4.1695052467962;
+        Mon, 18 Sep 2023 08:54:27 -0700 (PDT)
+Received: from brian-x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
+        by smtp.gmail.com with ESMTPSA id v26-20020a81b71a000000b0059c0629d59csm2339594ywh.115.2023.09.18.08.54.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Sep 2023 08:54:27 -0700 (PDT)
+Date:   Mon, 18 Sep 2023 11:54:25 -0400
+From:   Brian Masney <bmasney@redhat.com>
+To:     Sudeep Holla <sudeep.holla@arm.com>
+Cc:     Nikunj Kela <quic_nkela@quicinc.com>, cristian.marussi@arm.com,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, linux-arm-kernel@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v4 0/4] Add qcom hvc/shmem transport support
+Message-ID: <ZQhysWhFtR68iVMa@brian-x1>
+References: <20230718160833.36397-1-quic_nkela@quicinc.com>
+ <20230911194359.27547-1-quic_nkela@quicinc.com>
+ <0efe305e-031b-bdf5-0268-ca1c6d562653@quicinc.com>
+ <20230918151552.n3jvw2qqi5tmyfbb@bogus>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1852; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=4twwal5CxO05aJdYGCbLEbuMJZAYxeRM+s8fOAENmkE=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlCFJpl1W9dWhwlKYrUlRNCGkMmYKxzkyXXwa2c Rr+map4pUWJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZQhSaQAKCRCPgPtYfRL+ TtNYCACt0BLDIBGVZ16APWEjpvAppn36ltBpvcueMFQUST8wu0scA9Uog2gi/Z2bX12n+CVmQC+ 7WOTEoMO0BH9T/RkWUvNtsQUv7thWg6mCnv3FiN/Fsc+tiUHpYqqKzsSPj0CYkeQRqzTwtMiqVF UJeN9NqG+cCqb8jQ1GtbOLOACmHlRjVs900JWOdY5xv0VGrUKFcs4i+OT3WQRqjNaqvoTDVHq/x mzHTSF+0yegOczp/9wjWHco6dUZdb8W8AWCDsQFtEHFqscNi6fOL4zpi8mSWeAa31rsmFdKvE34 j/TnLb8Z0Og74Ht/22i2FO940CUFF8jNQdKMj2CPw+TU2/r6
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
-X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
-        lindbergh.monkeyblade.net
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230918151552.n3jvw2qqi5tmyfbb@bogus>
+User-Agent: Mutt/2.2.9 (2022-11-12)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new() which already returns void. Eventually after all drivers
-are converted, .remove_new() is renamed to .remove().
+On Mon, Sep 18, 2023 at 04:15:52PM +0100, Sudeep Holla wrote:
+> On Mon, Sep 18, 2023 at 08:01:26AM -0700, Nikunj Kela wrote:
+> > Gentle Ping!
+> > 
+> 
+> I will take a look at this later this week. That said, I am unable be
+> gauge the urgency based on you ping here. You have shown the same urgency
+> last time for a feature that I queued promptly just to know that it was
+> abandon within couple of days. So I don't want to rush here simply based
+> on the number of pings here. I need to understand that it is really that
+> important. For now, I am thinking of skipping even v6.7 just to allow
+> some time for Qcom to make up its mind and be absolutely sure this is what
+> they *really* want this time.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+Hi Sudeep,
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
----
- drivers/power/supply/qcom_smbb.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+Red Hat is interested in this patch set. Qualcomm is moving one of their
+automotive platforms over to use SCMI and this will appear in that
+product.
 
-diff --git a/drivers/power/supply/qcom_smbb.c b/drivers/power/supply/qcom_smbb.c
-index bd50124eef9f..4e57762e27ba 100644
---- a/drivers/power/supply/qcom_smbb.c
-+++ b/drivers/power/supply/qcom_smbb.c
-@@ -1000,15 +1000,13 @@ static int smbb_charger_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int smbb_charger_remove(struct platform_device *pdev)
-+static void smbb_charger_remove(struct platform_device *pdev)
- {
- 	struct smbb_charger *chg;
- 
- 	chg = platform_get_drvdata(pdev);
- 
- 	regmap_update_bits(chg->regmap, chg->addr + SMBB_CHG_CTRL, CTRL_EN, 0);
--
--	return 0;
- }
- 
- static const struct of_device_id smbb_charger_id_table[] = {
-@@ -1020,7 +1018,7 @@ MODULE_DEVICE_TABLE(of, smbb_charger_id_table);
- 
- static struct platform_driver smbb_charger_driver = {
- 	.probe	  = smbb_charger_probe,
--	.remove	 = smbb_charger_remove,
-+	.remove_new	 = smbb_charger_remove,
- 	.driver	 = {
- 		.name   = "qcom-smbb",
- 		.of_match_table = smbb_charger_id_table,
--- 
-2.40.1
+Brian
 
