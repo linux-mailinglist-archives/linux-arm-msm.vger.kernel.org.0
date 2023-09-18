@@ -2,119 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DF8B97A4CDB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Sep 2023 17:42:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E8EFA7A4C19
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Sep 2023 17:26:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229473AbjIRPm1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Sep 2023 11:42:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54680 "EHLO
+        id S234573AbjIRP00 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Sep 2023 11:26:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229713AbjIRPmT (ORCPT
+        with ESMTP id S233190AbjIRP00 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Sep 2023 11:42:19 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B99C910F6;
-        Mon, 18 Sep 2023 08:42:06 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38ICv8BG009815;
-        Mon, 18 Sep 2023 15:01:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=pzDWu196/vVfc5Cy6n7DSpFd3OI9eHlBm42sWI2Kw8M=;
- b=aK1ofPuG0f4SWui9IY+VrjnI4JYMXo0kSfP/e4UurKxMAQ/j9IulNuUqJjTFR04WHsMS
- 15B95CktnNiK1i8qiYgoCR5CgeE7AqVWrIAmkpf9bze8F5+95/5GutaeY9Z/LqUUgBi9
- cgatOwp796YcRJvYZPa+5Uyg/PLlokOL8wF4pndIFwEDXQYmf8WIe992MnNija5NtSe4
- uP0g2n7dMIO5rW4nx9n2q3OX1cMsBX6LQc8vVkwY46sA7R537i+Y2UxRYlI0rbsWKm5l
- CToC5Yt14DzClitjvpiUmgpyPLe/uZwvDMt7N3LED7WGIzkThSwG/M9/F5uXr427Q8Go sQ== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t6pmq08sm-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 18 Sep 2023 15:01:27 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38IF1RXC011944
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 18 Sep 2023 15:01:27 GMT
-Received: from [10.110.81.225] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 18 Sep
- 2023 08:01:26 -0700
-Message-ID: <0efe305e-031b-bdf5-0268-ca1c6d562653@quicinc.com>
-Date:   Mon, 18 Sep 2023 08:01:26 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
+        Mon, 18 Sep 2023 11:26:26 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 4650E173D;
+        Mon, 18 Sep 2023 08:24:29 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id EE28B1FB;
+        Mon, 18 Sep 2023 08:16:33 -0700 (PDT)
+Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id E6E163F67D;
+        Mon, 18 Sep 2023 08:15:54 -0700 (PDT)
+Date:   Mon, 18 Sep 2023 16:15:52 +0100
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Nikunj Kela <quic_nkela@quicinc.com>
+Cc:     cristian.marussi@arm.com, robh+dt@kernel.org,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
 Subject: Re: [PATCH v4 0/4] Add qcom hvc/shmem transport support
-To:     <sudeep.holla@arm.com>
-CC:     <cristian.marussi@arm.com>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
+Message-ID: <20230918151552.n3jvw2qqi5tmyfbb@bogus>
 References: <20230718160833.36397-1-quic_nkela@quicinc.com>
  <20230911194359.27547-1-quic_nkela@quicinc.com>
-Content-Language: en-US
-From:   Nikunj Kela <quic_nkela@quicinc.com>
-In-Reply-To: <20230911194359.27547-1-quic_nkela@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: M4f-170Wm_3aMa5RAadGq8DqTd9dsuf9
-X-Proofpoint-ORIG-GUID: M4f-170Wm_3aMa5RAadGq8DqTd9dsuf9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-18_08,2023-09-18_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
- mlxlogscore=999 mlxscore=0 phishscore=0 lowpriorityscore=0 suspectscore=0
- adultscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309180131
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE autolearn=ham autolearn_force=no
-        version=3.4.6
+ <0efe305e-031b-bdf5-0268-ca1c6d562653@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0efe305e-031b-bdf5-0268-ca1c6d562653@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Gentle Ping!
+On Mon, Sep 18, 2023 at 08:01:26AM -0700, Nikunj Kela wrote:
+> Gentle Ping!
+> 
 
-On 9/11/2023 12:43 PM, Nikunj Kela wrote:
-> This change augments smc transport to include support for Qualcomm virtual
-> platforms by passing a parameter(capability-id) in the hypervisor call to
-> identify which doorbell to assert. This parameter is dynamically generated
-> at runtime on the device and insuitable to pass via the devicetree.
->
-> The function ID and parameter are stored by firmware in the shmem region.
->
-> This has been tested on ARM64 virtual Qualcomm platform.
->
-> ---
-> v4 -> port the changes into smc.c
->
-> v3 -> fix the compilation error reported by the test bot,
->        add support for polling based instances
->
-> v2 -> use allOf construct in dtb schema,
->        remove wrappers from mutexes,
->        use architecture independent channel layout
->
-> v1 -> original patches
->
-> Nikunj Kela (4):
->    firmware: arm_scmi: Add polling support for completion in smc
->    dt-bindings: arm: convert nested if-else construct to allOf
->    dt-bindings: arm: Add new compatible for smc/hvc transport for SCMI
->    firmware: arm_scmi: Add qcom hvc/shmem transport support
->
->   .../bindings/firmware/arm,scmi.yaml           | 67 +++++++++++--------
->   drivers/firmware/arm_scmi/Kconfig             | 14 ++++
->   drivers/firmware/arm_scmi/driver.c            |  1 +
->   drivers/firmware/arm_scmi/smc.c               | 62 +++++++++++++++--
->   4 files changed, 110 insertions(+), 34 deletions(-)
->
+I will take a look at this later this week. That said, I am unable be
+gauge the urgency based on you ping here. You have shown the same urgency
+last time for a feature that I queued promptly just to know that it was
+abandon within couple of days. So I don't want to rush here simply based
+on the number of pings here. I need to understand that it is really that
+important. For now, I am thinking of skipping even v6.7 just to allow
+some time for Qcom to make up its mind and be absolutely sure this is what
+they *really* want this time.
+
+-- 
+Regards,
+Sudeep
