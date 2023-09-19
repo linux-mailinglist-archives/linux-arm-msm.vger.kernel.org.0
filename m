@@ -2,140 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FE327A68D0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 18:26:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D9CCB7A6999
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 19:27:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230170AbjISQ0i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Sep 2023 12:26:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60810 "EHLO
+        id S229552AbjISR1O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Sep 2023 13:27:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229770AbjISQ0h (ORCPT
+        with ESMTP id S231968AbjISR1M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Sep 2023 12:26:37 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F39BEA9;
-        Tue, 19 Sep 2023 09:26:31 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38JBu2AU004360;
-        Tue, 19 Sep 2023 16:26:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=gCIY04ta2zwSB0oAu5savGSfd8+mF+dsGqBagg5pEfA=;
- b=YXb6RtvWq4pWLNeeALgralSOvLNoXDIHhn1gG7h6XedHjids4/mxFTouVGh1UmbVu7q9
- FyP52dC05vtrEUoKOanu2dpcN/OuoVfaBmeIyEOvdjN0s7dtG7Vzy4ZhLBS+yzYBzxS3
- QxqejNUaiEwjXEfVg6gZuBskE//5QSm5PZUQVNGbuyKsMUePqpGH3KdS6m6iWa+n6VjA
- 5EJ7CmcfXE/Lmjt2av1vR/8vbv2BoU0VFXrYGiMUSBY8afR2hs+SHFC/7afFGTRLjjS5
- RHhDKrCY2Zs662QgV/4QoJaC/aB5I+oOMh1oEfyAJq60vJrueTSyW6yEuCwuiI+Dl6UE cg== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t79180ya5-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 19 Sep 2023 16:26:22 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38JGQLG6015333
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 19 Sep 2023 16:26:21 GMT
-Received: from [10.216.36.122] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 19 Sep
- 2023 09:26:16 -0700
-Message-ID: <9c3d1857-5053-cd8f-75d5-d2691139dfc9@quicinc.com>
-Date:   Tue, 19 Sep 2023 21:56:12 +0530
+        Tue, 19 Sep 2023 13:27:12 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.88])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 682EE9F;
+        Tue, 19 Sep 2023 10:27:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1695144426; x=1726680426;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=/GfKecIDbouGTE7n4315amFnYOI3c0tRqeNu43t9cFw=;
+  b=Cm9dyKwXGdwFPawE+t8KoqNWXi4KrTIsqC8eGmVjqET3QPgOPTHlRJ6B
+   8bfMK1Wzkq+kXKBT8kH+7Wu/JaKH1JrsJvBlUsWqOnI+Nza/dUMrOw0qH
+   70k4m0cgeu3+GNJ/AEeZwDIZFtSClHYsuUfqlyfn/0psoS2KnZTYddQk/
+   KwEi+omLlWFLyNVLu4wx2Xjvt3EjEVtihylxD7Uv/pz0S5LfN1SO2jtc8
+   XEkRvDdZvj1ZWT6mgGUphr450FEMD0WhXpjQmyP6bmvn5ZsRdJynhfPkM
+   +rHCa6i+8RcWxNN+1ZAyDfT3qoONsB3z5/s4lS1POAlsGrrSJCrtGpgwC
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10838"; a="410936065"
+X-IronPort-AV: E=Sophos;i="6.02,160,1688454000"; 
+   d="scan'208";a="410936065"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Sep 2023 10:27:06 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10838"; a="746316089"
+X-IronPort-AV: E=Sophos;i="6.02,160,1688454000"; 
+   d="scan'208";a="746316089"
+Received: from lkp-server02.sh.intel.com (HELO 9ef86b2655e5) ([10.239.97.151])
+  by orsmga002.jf.intel.com with ESMTP; 19 Sep 2023 10:27:00 -0700
+Received: from kbuild by 9ef86b2655e5 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qieV0-0007jz-15;
+        Tue, 19 Sep 2023 17:26:58 +0000
+Date:   Wed, 20 Sep 2023 01:26:33 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Johan Hovold <johan@kernel.org>,
+        Mathias Nyman <mathias.nyman@intel.com>
+Cc:     oe-kbuild-all@lists.linux.dev, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
+        quic_ppratap@quicinc.com, quic_jackp@quicinc.com,
+        ahalaney@redhat.com, quic_shazhuss@quicinc.com,
+        Harsh Agarwal <quic_harshq@quicinc.com>,
+        Krishna Kurapati <quic_kriskura@quicinc.com>
+Subject: Re: [PATCH v11 06/13] usb: dwc3: core: Refactor PHY logic to support
+ Multiport Controller
+Message-ID: <202309200156.CxQ3yaLY-lkp@intel.com>
+References: <20230828133033.11988-7-quic_kriskura@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH V2 1/4] dt-bindings: thermal: qcom-tsens: Add ipq5018
- compatible
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <srinivas.kandagatla@linaro.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <thara.gopinath@gmail.com>,
-        <rafael@kernel.org>, <daniel.lezcano@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <dmitry.baryshkov@linaro.org>
-References: <20230915121504.806672-1-quic_srichara@quicinc.com>
- <20230915121504.806672-2-quic_srichara@quicinc.com>
- <03b0cafa-49c7-8838-b116-927c9649cbd3@linaro.org>
- <f5aee51d-0345-1294-a85b-ea96ed937685@linaro.org>
- <1f09339e-b3b5-874c-4874-199e8c7ae890@quicinc.com>
- <ee19e076-8f9c-c5b2-3e25-2832dbdab25b@linaro.org>
- <affb1f63-c1ed-f0cc-ea79-887ae61b9b90@quicinc.com>
- <156f4705-ca1a-f82e-9282-534a22183f37@linaro.org>
-From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
-In-Reply-To: <156f4705-ca1a-f82e-9282-534a22183f37@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: w5D_J84Rb0vKzZ_2XoTkvdS3B7OxDg_5
-X-Proofpoint-GUID: w5D_J84Rb0vKzZ_2XoTkvdS3B7OxDg_5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-19_07,2023-09-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
- priorityscore=1501 adultscore=0 clxscore=1015 lowpriorityscore=0
- spamscore=0 bulkscore=0 impostorscore=0 suspectscore=0 malwarescore=0
- mlxscore=0 mlxlogscore=645 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309190142
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230828133033.11988-7-quic_kriskura@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Krishna,
+
+kernel test robot noticed the following build warnings:
+
+[auto build test WARNING on usb/usb-testing]
+[also build test WARNING on usb/usb-next usb/usb-linus robh/for-next pza/reset/next linus/master v6.6-rc2 next-20230919]
+[cannot apply to pza/imx-drm/next]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Krishna-Kurapati/dt-bindings-usb-qcom-dwc3-Add-bindings-for-SC8280-Multiport/20230828-214326
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb.git usb-testing
+patch link:    https://lore.kernel.org/r/20230828133033.11988-7-quic_kriskura%40quicinc.com
+patch subject: [PATCH v11 06/13] usb: dwc3: core: Refactor PHY logic to support Multiport Controller
+config: x86_64-randconfig-011-20230902 (https://download.01.org/0day-ci/archive/20230920/202309200156.CxQ3yaLY-lkp@intel.com/config)
+compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20230920/202309200156.CxQ3yaLY-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202309200156.CxQ3yaLY-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+   drivers/usb/dwc3/core.c: In function 'dwc3_core_get_phy':
+>> drivers/usb/dwc3/core.c:1375:53: warning: '%d' directive writing between 1 and 3 bytes into a region of size 2 [-Wformat-overflow=]
+    1375 |                         sprintf(phy_name, "usb2-port%d", i);
+         |                                                     ^~
+   drivers/usb/dwc3/core.c:1375:43: note: directive argument in the range [0, 254]
+    1375 |                         sprintf(phy_name, "usb2-port%d", i);
+         |                                           ^~~~~~~~~~~~~
+   drivers/usb/dwc3/core.c:1375:25: note: 'sprintf' output between 11 and 13 bytes into a destination of size 11
+    1375 |                         sprintf(phy_name, "usb2-port%d", i);
+         |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   drivers/usb/dwc3/core.c:1390:53: warning: '%d' directive writing between 1 and 3 bytes into a region of size 2 [-Wformat-overflow=]
+    1390 |                         sprintf(phy_name, "usb3-port%d", i);
+         |                                                     ^~
+   drivers/usb/dwc3/core.c:1390:43: note: directive argument in the range [0, 254]
+    1390 |                         sprintf(phy_name, "usb3-port%d", i);
+         |                                           ^~~~~~~~~~~~~
+   drivers/usb/dwc3/core.c:1390:25: note: 'sprintf' output between 11 and 13 bytes into a destination of size 11
+    1390 |                         sprintf(phy_name, "usb3-port%d", i);
+         |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-On 9/19/2023 6:26 PM, Krzysztof Kozlowski wrote:
-> On 19/09/2023 14:48, Sricharan Ramabadhran wrote:
->>
->>
->> On 9/19/2023 6:02 PM, Krzysztof Kozlowski wrote:
->>> On 19/09/2023 09:22, Sricharan Ramabadhran wrote:
->>>>
->>>>
->>>> On 9/15/2023 6:15 PM, Krzysztof Kozlowski wrote:
->>>>> On 15/09/2023 14:43, Krzysztof Kozlowski wrote:
->>>>>> On 15/09/2023 14:15, Sricharan Ramabadhran wrote:
->>>>>>> IPQ5018 has tsens v1.0 block with 4 sensors and 1 interrupt.
->>>>>>>
->>>>>>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->>>>>>> ---
->>>>>>>     [v2] Sorted the compatible and removed example
->>>>>>>
->>>>>>
->>>>>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>>>
->>>>> No, unreviewed. Your driver says it is not compatible with
->>>>> qcom,tsens-v1. This does not look right :/
->>>>>
->>>>
->>>>     Yes it is V1 IP, but since there is no RPM, to enable the IP/SENSORS
->>>>     have to do those steps after calling init_common. Similar reason
->>>>     added a new feat as well in patch #2 as well. Hence for this,
->>>>     new compatible was required.
->>>
->>> I dud not write about new or old compatible ("compatible" as noun). I
->>> wrote that it is not compatible ("compatible" as adjective) with v1.
->>>
->>
->>    Ho, in that case, yes it is not compatible with V1 init and features
->>    because of 'no rpm'. So in that case, should this be documented
->>    as a separate version of 'V1 without rpm' ?
-> 
-> It should not be mixed with regular v1, just as new entry there. I don't
-> think fallback is needed - just use SoC specific compatible.
-> 
-  ok, sure, will add in V3.
+vim +1375 drivers/usb/dwc3/core.c
 
-Regards,
-  Sricharan
+  1338	
+  1339	static int dwc3_core_get_phy(struct dwc3 *dwc)
+  1340	{
+  1341		struct device		*dev = dwc->dev;
+  1342		struct device_node	*node = dev->of_node;
+  1343		char phy_name[11];
+  1344		int ret;
+  1345		int i;
+  1346	
+  1347		if (node) {
+  1348			dwc->usb2_phy = devm_usb_get_phy_by_phandle(dev, "usb-phy", 0);
+  1349			dwc->usb3_phy = devm_usb_get_phy_by_phandle(dev, "usb-phy", 1);
+  1350		} else {
+  1351			dwc->usb2_phy = devm_usb_get_phy(dev, USB_PHY_TYPE_USB2);
+  1352			dwc->usb3_phy = devm_usb_get_phy(dev, USB_PHY_TYPE_USB3);
+  1353		}
+  1354	
+  1355		if (IS_ERR(dwc->usb2_phy)) {
+  1356			ret = PTR_ERR(dwc->usb2_phy);
+  1357			if (ret == -ENXIO || ret == -ENODEV)
+  1358				dwc->usb2_phy = NULL;
+  1359			else
+  1360				return dev_err_probe(dev, ret, "no usb2 phy configured\n");
+  1361		}
+  1362	
+  1363		if (IS_ERR(dwc->usb3_phy)) {
+  1364			ret = PTR_ERR(dwc->usb3_phy);
+  1365			if (ret == -ENXIO || ret == -ENODEV)
+  1366				dwc->usb3_phy = NULL;
+  1367			else
+  1368				return dev_err_probe(dev, ret, "no usb3 phy configured\n");
+  1369		}
+  1370	
+  1371		for (i = 0; i < dwc->num_usb2_ports; i++) {
+  1372			if (dwc->num_usb2_ports == 1)
+  1373				sprintf(phy_name, "usb2-phy");
+  1374			else
+> 1375				sprintf(phy_name, "usb2-port%d", i);
+  1376	
+  1377			dwc->usb2_generic_phy[i] = devm_phy_get(dev, phy_name);
+  1378			if (IS_ERR(dwc->usb2_generic_phy[i])) {
+  1379				ret = PTR_ERR(dwc->usb2_generic_phy[i]);
+  1380				if (ret == -ENOSYS || ret == -ENODEV)
+  1381					dwc->usb2_generic_phy[i] = NULL;
+  1382				else
+  1383					return dev_err_probe(dev, ret,
+  1384						"failed to lookup phy %s\n", phy_name);
+  1385			}
+  1386	
+  1387			if (dwc->num_usb2_ports == 1)
+  1388				sprintf(phy_name, "usb3-phy");
+  1389			else
+  1390				sprintf(phy_name, "usb3-port%d", i);
+  1391	
+  1392			dwc->usb3_generic_phy[i] = devm_phy_get(dev, phy_name);
+  1393			if (IS_ERR(dwc->usb3_generic_phy[i])) {
+  1394				ret = PTR_ERR(dwc->usb3_generic_phy[i]);
+  1395				if (ret == -ENOSYS || ret == -ENODEV)
+  1396					dwc->usb3_generic_phy[i] = NULL;
+  1397				else
+  1398					return dev_err_probe(dev, ret,
+  1399						"failed to lookup phy %s\n", phy_name);
+  1400			}
+  1401		}
+  1402	
+  1403		return 0;
+  1404	}
+  1405	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
