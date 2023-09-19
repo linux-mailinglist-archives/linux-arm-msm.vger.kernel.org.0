@@ -2,62 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC98E7A687B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 18:00:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D8127A68B3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 18:16:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233218AbjISQAK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Sep 2023 12:00:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39574 "EHLO
+        id S231246AbjISQQW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Sep 2023 12:16:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232566AbjISQAJ (ORCPT
+        with ESMTP id S231255AbjISQQP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Sep 2023 12:00:09 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C476D93;
-        Tue, 19 Sep 2023 09:00:02 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 486CCC433C7;
-        Tue, 19 Sep 2023 16:00:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1695139202;
-        bh=j+je6EwFfbrHn1KR+5qoIrxDj3ULQFaOMs2skufPBAs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=g5+YhxppFl6dvjbZSF4bFhD5v4Y0CEJZVqUV5jORmTYmswjX4vrY8resqsJekLw7T
-         APp14MZcwyJoH4/8rCrH1CqDpkfk4myHnwOtP6y0tqhGvoh+QNZJHdju84GKNWbX2/
-         Vic5cByP31d/V9MbMedBWyh8qEeTX86TGB8AIZ4fG5ioDVXWO0Q+yWcI+HXpXfh9/i
-         dL+H9hatLi20JaanCXREKHKcuVuQRXpmUpT9tH+ZQjpY3yY1WKZ+r1u0JoxzAu3ws6
-         oMtK4T/LfoC7aRGYfaY6zpRnDumzmulMTLvS5J25ivRFAs4A4rd5aqQ6yYylIUEaH3
-         dn0/4BNPh6RqA==
-Received: from johan by xi.lan with local (Exim 4.96)
-        (envelope-from <johan@kernel.org>)
-        id 1qid95-00013m-2H;
-        Tue, 19 Sep 2023 18:00:16 +0200
-Date:   Tue, 19 Sep 2023 18:00:15 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Sasha Levin <sashal@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>, agross@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH AUTOSEL 6.5 30/36] arm64: dts: qcom: sc8280xp-x13s: Add
- camera activity LED
-Message-ID: <ZQnFj6g4pbwMz69C@hovoldconsulting.com>
-References: <20230908192848.3462476-1-sashal@kernel.org>
- <20230908192848.3462476-30-sashal@kernel.org>
- <ZP60ngCV3hhNZiX5@hovoldconsulting.com>
- <ZQjEEt7sB2M5EO53@sashalap>
- <ZQk8aJx268Soy4yH@hovoldconsulting.com>
- <ZQmc7hznPpIh6iwP@sashalap>
- <ZQmh-DaBTwMuOLHe@hovoldconsulting.com>
- <ZQm5woD5zwRIG9cf@sashalap>
- <ZQnA4o7G4A3YC-pe@hovoldconsulting.com>
+        Tue, 19 Sep 2023 12:16:15 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FEA5AB;
+        Tue, 19 Sep 2023 09:16:10 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38JAphEU023378;
+        Tue, 19 Sep 2023 16:15:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=PHUbtJEzjbMFZuHtcDHBZZbSPs5viejV11pTdFjLUTQ=;
+ b=R4IE6g13ZSkfxduyBMWw4rbjl9O/CZTx/K13ki1x7EDG3c1YJR6gMtNzSPWWCJXNeGou
+ sD9Kp8Hovrh6fugJJshW8+V5+9yATZfufybr1Tvvh3Y3KJ8FOU46XUueLwzyThu7j+D7
+ 6gqib4rP/NuukIEJOmZYyVfLg3dDQgJLsxyf/Ky8guOetYAkx8t0JrjgAZh8SxF78zIv
+ 1d3TGRx64DrTc9k87Ib+LrEKvuHPXtpNV49XGy6ltje4D9khGSDcFGRbBBPp7Tqp/lD9
+ u1LsYtu/E4goye7ox4LC9jvhvLNsYg+evXDBOehy1wSsR73EZ3kx06vT5VAmVoOORm7M Zw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t6mtsbexe-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 19 Sep 2023 16:15:59 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38JGFwDf002121
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 19 Sep 2023 16:15:58 GMT
+Received: from [10.216.36.122] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 19 Sep
+ 2023 09:15:53 -0700
+Message-ID: <62147eab-aa1b-34c2-b6d2-7e5700a46cb6@quicinc.com>
+Date:   Tue, 19 Sep 2023 21:45:50 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZQnA4o7G4A3YC-pe@hovoldconsulting.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH V2 4/4] arm64: dts: qcom: ipq5018: Add tsens node
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <srinivas.kandagatla@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <thara.gopinath@gmail.com>,
+        <rafael@kernel.org>, <daniel.lezcano@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <dmitry.baryshkov@linaro.org>
+References: <20230915121504.806672-1-quic_srichara@quicinc.com>
+ <20230915121504.806672-5-quic_srichara@quicinc.com>
+ <b0fe17e4-e4d8-02af-4e09-06b3930b38fe@linaro.org>
+ <b40c6439-ab73-d796-589e-ffee21cedfc9@quicinc.com>
+ <463923fe-7938-ad1b-fd79-6491329289af@linaro.org>
+From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
+In-Reply-To: <463923fe-7938-ad1b-fd79-6491329289af@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ywFUsbtpKLShfYHjl9BIzYo50TACc1QU
+X-Proofpoint-ORIG-GUID: ywFUsbtpKLShfYHjl9BIzYo50TACc1QU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-19_07,2023-09-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 bulkscore=0 suspectscore=0 adultscore=0 mlxlogscore=999
+ malwarescore=0 mlxscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309190140
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -66,53 +89,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 19, 2023 at 05:40:18PM +0200, Johan Hovold wrote:
-> On Tue, Sep 19, 2023 at 11:09:54AM -0400, Sasha Levin wrote:
-> > On Tue, Sep 19, 2023 at 03:28:24PM +0200, Johan Hovold wrote:
-> > >On Tue, Sep 19, 2023 at 09:06:54AM -0400, Sasha Levin wrote:
-> > >> On Tue, Sep 19, 2023 at 08:15:04AM +0200, Johan Hovold wrote:
-> 
-> > >> >Call it what you will, but please drop it. Otherwise by that logic you'd
-> > >> >need to backport all devicetree patches (as well as most driver changes)
-> > >> >since they ultimately aim at enabling hardware.
-> > >>
-> > >> Not all, only ones that re-use existing kernel driver but enable it for
-> > >> new hardware (i.e. adding a new pci-id/usb-id/dts entries).
-> > >
-> > >Again, that's basically all our device-tree patches. And that can break
-> > >in all sorts of ways. So again, please drop. This does not belong in
-> > >stable.
-> > 
-> > This is part of the criteria we use to select patches, yes? If you have
-> > an objection around this particular patch then please let me know, or if
-> > you have an objection around hardware enablement patches in stable then
-> > we can have a bigger discussion around that one.
-> > 
-> > However, just dropping this one for no particular reasonisn't the right
-> > approach: we've been using this selection criteria for quite a few years
-> > now.
-> 
-> This patch makes zero sense to backport. It's a place holder for a
-> camera led that we may one day need. No one marked it for stable, no
-> one wants it in stable, no one needs it in stable, yet you repeatedly
-> refuse to drop it and keep wasting my time.
-> 
-> Backports, and especially your autosel ones, always come with a risk.
-> And here there is ZERO upsides to that. Next time the feature you try to
-> retroactively enable may not be as trivial and could cause real
-> regressions.
-> 
-> We're on our knees dealing with development and review of stuff that
-> people do want and need. And you keep pushing silly things like and
-> spamming us with backports that no one asked for. I'm just baffled.
 
-You also seem to have made up new stable kernel rules as adding device
-tree nodes clearly doesn't fit the description in
-stable-kernel-rules.rst:
 
-	It must either fix a real bug that bothers people or just add a
-	device ID.
+On 9/19/2023 6:07 PM, Krzysztof Kozlowski wrote:
+> On 19/09/2023 09:28, Sricharan Ramabadhran wrote:
+>>
+>>
+>> On 9/15/2023 6:16 PM, Krzysztof Kozlowski wrote:
+>>> On 15/09/2023 14:15, Sricharan Ramabadhran wrote:
+>>>> IPQ5018 has tsens V1.0 IP with 4 sensors.
+>>>> There is no RPM, so tsens has to be manually enabled. Adding the tsens
+>>>> and nvmem node and IPQ5018 has 4 thermal sensors (zones). With the
+>>>> critical temperature being 120'C and action is to reboot. Adding all
+>>>> the 4 zones here.
+>>>>
+>>>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>>>> ---
+>>>>    [v2] Fixed node names, order and added qfprom cells for points
+>>>>         seperately to use the calibrate_common and squashed thermal_zone
+>>>>         nodes here
+>>>>
+>>>>    arch/arm64/boot/dts/qcom/ipq5018.dtsi | 169 ++++++++++++++++++++++++++
+>>>>    1 file changed, 169 insertions(+)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+>>>> index 9f13d2dcdfd5..d53aea5342e2 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+>>>> @@ -93,6 +93,117 @@ soc: soc@0 {
+>>>>    		#size-cells = <1>;
+>>>>    		ranges = <0 0 0 0xffffffff>;
+>>>>    
+>>>> +		qfprom: qfprom@a0000 {
+>>>> +			#address-cells = <1>;
+>>>> +			#size-cells = <1>;
+>>>> +			compatible = "qcom,ipq5018-qfprom", "qcom,qfprom";
+>>>
+>>> This is a friendly reminder during the review process.
+>>>
+>>> It seems my previous comments were not fully addressed. Maybe my
+>>> feedback got lost between the quotes, maybe you just forgot to apply it.
+>>> Please go back to the previous discussion and either implement all
+>>> requested changes or keep discussing them.
+>>>
+>>
+>>    oops, moved the compatible to first, but missed it on posting version.
+>>    Will fix it in V3.
+> 
+> What do you mean by "posting version"? If it is not the same as your Git
+> version, then your process is buggy. You must work on mainline tree and
+> send patches from that tree. Not edit patches and edit Git separately...
+> 
+   Working on mainline tree only, just that i had 2 different build
+   servers (one build machine and other local machine). Usually develop
+   all on build server, copy/apply patches to local machine (mainline)
+   and send. This time missed copying to local finally.
 
-(This used to say "New device IDs and quirks are also accepted.")
+Regards,
+  Sricharan
 
-Johan
+   one for
