@@ -2,52 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 64F057A5CE5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 10:49:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 377DA7A5D1A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 10:57:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229690AbjISItK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Sep 2023 04:49:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55556 "EHLO
+        id S230145AbjISI50 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Sep 2023 04:57:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229821AbjISItJ (ORCPT
+        with ESMTP id S229714AbjISI50 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Sep 2023 04:49:09 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB74F122;
-        Tue, 19 Sep 2023 01:49:03 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6066C433C8;
-        Tue, 19 Sep 2023 08:49:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1695113343;
-        bh=ZDqFz515SDyLoYhDtvajPu9nG5pjPzTdqzRnLr3foyc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=KURv/cnQGrc7BzW1zes213O+fmTB3ZqS79BAydZ9FKa8aDa5iyGnVFa3eASOC4wvj
-         KTeWIdlqzpxyxmwBI5heVP1qqyrnczsklvOdsjKXc+6zMjOoudzoBUe3wwQaMmB89p
-         nkM3eZScNbsp7yGkTZcR60TNkmVmLjjikO2RF675dAUbM6sjAXy+DF+fS6bHvGn6LE
-         T2TRcKIkxbDOrF756DMP0azWQT9StF80mVlEqpzY2Yqga3C2GWIqUAqAVND4/KXKBj
-         RdTa0NkoDvqNEuAO8QzCLHzIkwUSPzCaiq9cCGuDJPb9bdFPCQL9hExaoHGUrV0ORq
-         rZZsrz3V72lBw==
-Date:   Tue, 19 Sep 2023 09:48:58 +0100
-From:   Conor Dooley <conor@kernel.org>
-To:     Nitin Rawat <quic_nitirawa@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
+        Tue, 19 Sep 2023 04:57:26 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C96F4E6;
+        Tue, 19 Sep 2023 01:57:16 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9ABCF1FB;
+        Tue, 19 Sep 2023 01:57:53 -0700 (PDT)
+Received: from bogus (unknown [10.57.0.63])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D80693F59C;
+        Tue, 19 Sep 2023 01:57:11 -0700 (PDT)
+Date:   Tue, 19 Sep 2023 09:56:12 +0100
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Brian Masney <bmasney@redhat.com>
+Cc:     Nikunj Kela <quic_nkela@quicinc.com>, cristian.marussi@arm.com,
+        Sudeep Holla <sudeep.holla@arm.com>, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH V4 1/2] dt-bindings: phy: Add QMP UFS PHY comptible for
- SC7280
-Message-ID: <20230919-c2a5521d840f4c238b02b26f@fedora>
-References: <20230918205037.25658-1-quic_nitirawa@quicinc.com>
- <20230918205037.25658-2-quic_nitirawa@quicinc.com>
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v4 0/4] Add qcom hvc/shmem transport support
+Message-ID: <20230919085612.gdmpze6c6stvammg@bogus>
+References: <20230718160833.36397-1-quic_nkela@quicinc.com>
+ <20230911194359.27547-1-quic_nkela@quicinc.com>
+ <0efe305e-031b-bdf5-0268-ca1c6d562653@quicinc.com>
+ <20230918151552.n3jvw2qqi5tmyfbb@bogus>
+ <ZQhysWhFtR68iVMa@brian-x1>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="XTPnFVF3xntyWeLv"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230918205037.25658-2-quic_nitirawa@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZQhysWhFtR68iVMa@brian-x1>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -55,60 +51,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Sep 18, 2023 at 11:54:25AM -0400, Brian Masney wrote:
+> On Mon, Sep 18, 2023 at 04:15:52PM +0100, Sudeep Holla wrote:
+> > On Mon, Sep 18, 2023 at 08:01:26AM -0700, Nikunj Kela wrote:
+> > > Gentle Ping!
+> > >
+> >
+> > I will take a look at this later this week. That said, I am unable be
+> > gauge the urgency based on you ping here. You have shown the same urgency
+> > last time for a feature that I queued promptly just to know that it was
+> > abandon within couple of days. So I don't want to rush here simply based
+> > on the number of pings here. I need to understand that it is really that
+> > important. For now, I am thinking of skipping even v6.7 just to allow
+> > some time for Qcom to make up its mind and be absolutely sure this is what
+> > they *really* want this time.
+>
+> Hi Sudeep,
+>
+> Red Hat is interested in this patch set. Qualcomm is moving one of their
+> automotive platforms over to use SCMI and this will appear in that
+> product.
+>
 
---XTPnFVF3xntyWeLv
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks Brian, I trust Redhat over Qcom 😄. I will try to review and enable
+progress later this week. We can try to target next merge window.
 
-On Tue, Sep 19, 2023 at 02:20:36AM +0530, Nitin Rawat wrote:
-> Document the QMP UFS PHY compatible for SC7280.
->=20
-> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-
-Thanks,
-Conor.
-> ---
->  .../devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml      | 2 ++
->  1 file changed, 2 insertions(+)
->=20
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-=
-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.=
-yaml
-> index d981d77e82e4..f3a3296c811c 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
-> @@ -19,6 +19,7 @@ properties:
->        - qcom,msm8996-qmp-ufs-phy
->        - qcom,msm8998-qmp-ufs-phy
->        - qcom,sa8775p-qmp-ufs-phy
-> +      - qcom,sc7280-qmp-ufs-phy
->        - qcom,sc8180x-qmp-ufs-phy
->        - qcom,sc8280xp-qmp-ufs-phy
->        - qcom,sdm845-qmp-ufs-phy
-> @@ -85,6 +86,7 @@ allOf:
->            contains:
->              enum:
->                - qcom,sa8775p-qmp-ufs-phy
-> +              - qcom,sc7280-qmp-ufs-phy
->                - qcom,sm8450-qmp-ufs-phy
->      then:
->        properties:
-> --
-> 2.17.1
->=20
-
---XTPnFVF3xntyWeLv
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEARYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZQlgcwAKCRB4tDGHoIJi
-0rumAQDTYAtxyXoMwqyYmON3XROCQC7lq3XVIsz6mQJ5BMEPNwEAyO14FVWmEN9w
-zhQlGOkCpm+F2GIng9CSsKfVNMrzJwo=
-=rTnQ
------END PGP SIGNATURE-----
-
---XTPnFVF3xntyWeLv--
+--
+Regards,
+Sudeep
