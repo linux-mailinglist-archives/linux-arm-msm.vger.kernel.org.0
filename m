@@ -2,56 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 21F177A624A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 14:15:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 04F697A62A9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 14:20:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231360AbjISMPh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Sep 2023 08:15:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45682 "EHLO
+        id S232166AbjISMUV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Sep 2023 08:20:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229552AbjISMPg (ORCPT
+        with ESMTP id S232023AbjISMUF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Sep 2023 08:15:36 -0400
+        Tue, 19 Sep 2023 08:20:05 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56184E3;
-        Tue, 19 Sep 2023 05:15:31 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96AB2C433C7;
-        Tue, 19 Sep 2023 12:15:27 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E18DCD2;
+        Tue, 19 Sep 2023 05:19:17 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36C8BC433C8;
+        Tue, 19 Sep 2023 12:19:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1695125731;
-        bh=xvCx7ZWNm6jnB4edU9vEvToGC6Z5Sc/hEVmL8SgiqZU=;
+        s=k20201202; t=1695125956;
+        bh=KWxrBE8BT1ctag8F1WD5tAIg+4DrPuUNHnklsRSxoSE=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=HZseuY35WtH77s0q6NFTQCnN8iQjLfnq+vTD+TAUlrk1wwvuAA+DFYeeWDHg+Fvv2
-         2p6iwRJRenvbl6ao3MJAEqtuyGay6DGmaLxjZg6b1l2VHtsnzUtBHtes7Oij33Zb77
-         ZfFX+F1k6Mf3stSs08AxTMhP+Go1OwBLN5x1+1uwlvf/2EhbrGuYo3QXWoHcFjP2Gw
-         ZyDw0apc9XL/oqWyk+cv6tI5vgjRRTRkDU87aT5x4nGDyfPua3g5WTFmVoZeyMe+LT
-         5Nt4CcQC2lHyCUj1KsDJGxI7CwdjierL8EemVsHwQ7gRYVYCp+RKS6T+xspknKRDa9
-         bZAI19Hco5l0g==
-Date:   Tue, 19 Sep 2023 14:15:24 +0200
+        b=h1ieTEC7kJrlAKkCSFGmz/GMmrgdOneAwxqrwiVeVtI3H3Dkr2DNMYY/5iwe3nZkt
+         fQHHEPjl+1pbSu4IJq6W8Tz9NI/LyHwt387rujE6jlckQxZiH3LBmPucwpZyDpaq18
+         /TYlcLKZL5VipVjjoO9GtRfmWQC4q60qPg2QaDhcll/Md8NTQHx19m99AVVeUlHEot
+         Rekfq1IZJnmZoRijp2A5ITBcdker3hovduuu3e1SvQ0TTrTxHZzgTuQVDakxfIwWuh
+         Rj8fs9xIs20S+5Berz5mxpfU/6HOHzU0KRrgqxGzpdT9jZhUjr5dDRAI8+9k3Wwxe3
+         VCOOvbi8K+duw==
+Date:   Tue, 19 Sep 2023 14:19:09 +0200
 From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Can Guo <quic_cang@quicinc.com>, quic_nguyenb@quicinc.com,
-        quic_nitirawa@quicinc.com, martin.petersen@oracle.com,
-        linux-scsi@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        "open list:GENERIC PHY FRAMEWORK" <linux-phy@lists.infradead.org>
-Subject: Re: [PATCH 4/6] phy: qualcomm: phy-qcom-qmp-ufs: Move data structs
- and setting tables to header
-Message-ID: <20230919121524.GD4732@thinkpad>
-References: <1694411968-14413-1-git-send-email-quic_cang@quicinc.com>
- <1694411968-14413-5-git-send-email-quic_cang@quicinc.com>
- <CAA8EJpoWnXeJKPB04kJW6Qo7ifAnt1u2ZSiq+W2HWOez=hi5gA@mail.gmail.com>
+To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh@kernel.org, lpieralisi@kernel.org, bhelgaas@google.com,
+        kw@linux.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        gregkh@linuxfoundation.org, dmitry.baryshkov@linaro.org,
+        stable@vger.kernel.org, robimarko@gmail.com
+Subject: Re: [PATCH V6] PCI: qcom: Fix broken pcie enumeration for 2_3_3
+ configs ops
+Message-ID: <20230919121909.GF4732@thinkpad>
+References: <20230919102948.1844909-1-quic_srichara@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAA8EJpoWnXeJKPB04kJW6Qo7ifAnt1u2ZSiq+W2HWOez=hi5gA@mail.gmail.com>
+In-Reply-To: <20230919102948.1844909-1-quic_srichara@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -62,39 +55,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 14, 2023 at 03:28:59PM +0300, Dmitry Baryshkov wrote:
-> On Mon, 11 Sept 2023 at 09:01, Can Guo <quic_cang@quicinc.com> wrote:
-> >
-> > To make the code more readable, move the data structs and PHY settting
-> > tables to a header file, namely the phy-qcom-qmp-ufs.h.
-> >
-> > Signed-off-by: Can Guo <quic_cang@quicinc.com>
-> > ---
-> >  drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 802 +------------------------------
-> >  drivers/phy/qualcomm/phy-qcom-qmp-ufs.h | 805 ++++++++++++++++++++++++++++++++
-> >  2 files changed, 806 insertions(+), 801 deletions(-)
-> >  create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-ufs.h
+On Tue, Sep 19, 2023 at 03:59:48PM +0530, Sricharan Ramabadhran wrote:
+> PARF_SLV_ADDR_SPACE_SIZE_2_3_3 macro is used for qcom_pcie_post_init_2_3_3.
+> PCIe slave address space size register offset is 0x358, but was wrongly
+> changed to 0x16c as a part of commit 39171b33f652 ("PCI: qcom: Remove
+> PCIE20_ prefix from register definitions"). Fixing it, by using the right
+> macro and remove the unused PARF_SLV_ADDR_SPACE_SIZE_2_3_3.
 > 
-> Is there any reason to do so? Other than just moving stuff around, it
-> doesn't give us anything. This header will not be shared with any
-> other driver. Just moving data tables to the header (ugh, static data
-> in the header) doesn't make code more readable.
+> Without this access to the registers of slave addr space like iATU etc
+> are broken leading to PCIe enumeration failure on IPQ8074.
 > 
+> Fixes: 39171b33f652 ("PCI: qcom: Remove PCIE20_ prefix from register definitions")
+> Cc: <Stable@vger.kernel.org>
 
-I think the motive here is to move the static tables to one file and have the
-rest of the code in another. Because, the static tables itself occupy 1.2k LoC
-now and it is going to grow. So let's keep them in a single file to avoid mixing
-it with rest of the driver code.
+Please fix the stable list address: stable@vger.kernel.org
 
 - Mani
 
-> If you really would like to clean up the QMP drivers, please consider
-> splitting _common_ parts. But at this point I highly doubt that it is
-> possible in a useful way.
+> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Tested-by: Robert Marko <robimarko@gmail.com>
+> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> ---
+>  [V6] Fixed subject and commit text as per Bjorn Helgaas
 > 
+>  drivers/pci/controller/dwc/pcie-qcom.c | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index e2f29404c84e..64420ecc24d1 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -43,7 +43,6 @@
+>  #define PARF_PHY_REFCLK				0x4c
+>  #define PARF_CONFIG_BITS			0x50
+>  #define PARF_DBI_BASE_ADDR			0x168
+> -#define PARF_SLV_ADDR_SPACE_SIZE_2_3_3		0x16c /* Register offset specific to IP ver 2.3.3 */
+>  #define PARF_MHI_CLOCK_RESET_CTRL		0x174
+>  #define PARF_AXI_MSTR_WR_ADDR_HALT		0x178
+>  #define PARF_AXI_MSTR_WR_ADDR_HALT_V2		0x1a8
+> @@ -797,8 +796,7 @@ static int qcom_pcie_post_init_2_3_3(struct qcom_pcie *pcie)
+>  	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+>  	u32 val;
+>  
+> -	writel(SLV_ADDR_SPACE_SZ,
+> -		pcie->parf + PARF_SLV_ADDR_SPACE_SIZE_2_3_3);
+> +	writel(SLV_ADDR_SPACE_SZ, pcie->parf + PARF_SLV_ADDR_SPACE_SIZE);
+>  
+>  	val = readl(pcie->parf + PARF_PHY_CTRL);
+>  	val &= ~PHY_TEST_PWR_DOWN;
 > -- 
-> With best wishes
-> Dmitry
+> 2.34.1
+> 
 
 -- 
 மணிவண்ணன் சதாசிவம்
