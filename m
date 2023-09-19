@@ -2,59 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C67D7A5E6E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 11:44:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DE3F7A5E7D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 11:46:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231256AbjISJo7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Sep 2023 05:44:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48830 "EHLO
+        id S229522AbjISJqO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Sep 2023 05:46:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231464AbjISJo4 (ORCPT
+        with ESMTP id S230137AbjISJqN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Sep 2023 05:44:56 -0400
-Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0720CED
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Sep 2023 02:44:50 -0700 (PDT)
-Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-59bcd927b45so57188877b3.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Sep 2023 02:44:49 -0700 (PDT)
+        Tue, 19 Sep 2023 05:46:13 -0400
+Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BEE6EA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Sep 2023 02:46:07 -0700 (PDT)
+Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-59c0d002081so38788947b3.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Sep 2023 02:46:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695116689; x=1695721489; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695116766; x=1695721566; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=kJo8D8JWanSKhtAvp3wVew9z7mMntNBF78rt2N3S95c=;
-        b=lFWBcpxIUP2fSTBlbTrIPi5hiymBIi5amdRAdE17kX2Ib2P4cDhNwn/ph5ZvIgsJtM
-         CmbUd543Ot/90OicYer6Jy16CjgtFUUdWJJ3oj4VhK/0oRho6T6y8vKEQwRo/ggrnyNo
-         ja9h/3KWGm8AT6ZTAVJwX0CqYvHi8xTONzd8mUBexfQU0Sr8ebUEeRT6oXys2omUpyYA
-         Xh+BChx8IP0dH0YypXy9ACdQB+FpTMLPAVgUoxo1nLbJj4hbllOtJfQHD62QOlNEE476
-         OErKa3nb4OcYBx09BWYUApTJNejS2OgVN4jmC5M4eX38dRsyyuiWl3poBxVF2q4pbj/6
-         TMdA==
+        bh=5QwnMEr9g+UV2zSClp4LdEyAkoPr5XRWwAzh3mE4dxo=;
+        b=mBvslSxQphJKG9udkoY1d+G6n/bMqlZjYqXJvpx03D6+YEqRJGGWO2CbkQABTlLpCc
+         cg7e/7DMALHfA/zI5/L98My1CmB4ORJOxkx73FoKKYeIxPDbd2YYF2P0w3+Zq10+trIn
+         CbRSRKh1H+g1xeZwQCkiGTfnCY3kF/Qs6BIXsEA8azCu+hhDYicozQrOXHS/38yBB7VC
+         Pw7fm8IUILwV2w0kAMIcqpG1asegS1vl2Vj+8yn/Tv5P+WpQHUiHl2UUPbz/JT2kDw0A
+         UhSPRcvdHjqVRzY7lYi1qivplECh9BiRxZrAglsrQ9zuKvvbWGvSBIXZIYKnIQZ4bgHK
+         lrRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695116689; x=1695721489;
+        d=1e100.net; s=20230601; t=1695116766; x=1695721566;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=kJo8D8JWanSKhtAvp3wVew9z7mMntNBF78rt2N3S95c=;
-        b=WertXrq1P2Uiv0kc6S2kH9YlGqPKDneAH9iUQt84gkxHEfr73uBpj43g8jKA1/dhC1
-         IqNuNkALz7/DOpfYQWV5VDNyWVrs+hUyQmT2QiqWTEX9PAOLvIVxtq8tWHjmecW7fRRF
-         Jj1gcmQtBBqCT29pigjcrbvJYR5brWolRb/2+XOzduB2szkrrULHC7ysuULHcbwZCS1C
-         bpdUgaX4Ii1rnQ91DHi3Bjsjoq5LZ4d3yLC3Rwy5UjGMSrxF2ysEw9gERZmkQWJZtiPg
-         8xU6g8sUBU55zVAaXekB0CM8i7pJtnqIkq2578FV0zaqjeTMCqB67W87ENm/Lo1RtzBU
-         kU/g==
-X-Gm-Message-State: AOJu0YyHvuwHaew40BfzMFOnAwye2v4A1phV1ULw2VIc2HsVrvH+wzF6
-        Yq4VGCH3SHWdhVu/IXZ60TiRuB6XQEEyEF3/2djaQleu6F2mjVL6NUs=
-X-Google-Smtp-Source: AGHT+IENyn8VI3VAOno3vVbJ1bNqVaui83jdYwUQMKt0LOgHNtl5eLnB0nSX0Nl6ZAz1VNxEww1ovp95wTFVdQ2s8hs=
-X-Received: by 2002:a0d:df43:0:b0:59a:b7b2:5f02 with SMTP id
- i64-20020a0ddf43000000b0059ab7b25f02mr13131931ywe.18.1695116689106; Tue, 19
- Sep 2023 02:44:49 -0700 (PDT)
+        bh=5QwnMEr9g+UV2zSClp4LdEyAkoPr5XRWwAzh3mE4dxo=;
+        b=C8m9HhmQXUY0oRrPNUNA6QiZvZaNUoP7MvWya69FIc/+WcdFbd6uEgdyODEZU/pZ16
+         1r2MJdyvz14uHcZJr/c6rU8OiAxHSUAyl9/Ij0udmbyCV0qTfSzxspqhFTyjpBM2OPoi
+         TFpZCTRguUPEE817AB1BdMyimxbbiGyNv7jtXuUHwHUsOUqFsyQrHbQMxHgFXjWS5vJ7
+         Y1xa6fjwv5pHOKkSiwZX9WZrzVnIwFikrkL1c3/yQufY7nU2mKwePPIQkSV5T5X1kKyB
+         TMkRePLhLNmwB956eq6k9YcEz9pKjL6O5y0+v4BwmPA5pR1Eoc9ccoE/JomP8ZIDl48F
+         3D7g==
+X-Gm-Message-State: AOJu0YzVJ8yXUDpy+2WhHXgq4VChkQsunPHnLMnsGEU5gHxRiVFSFqgG
+        LMLDhVCV1dV+b7fZMESZi88tJjKJp8iwdm04IOsyzw==
+X-Google-Smtp-Source: AGHT+IEPLhKcEQ8VnPqTGkwZWPQeCGEa8pbJIGsJUn9x4bl87n6z2UlZ8WodvmGmXYRjZe6EBVmQQgOm6zqwAoRaqB8=
+X-Received: by 2002:a81:a208:0:b0:583:d722:9ae9 with SMTP id
+ w8-20020a81a208000000b00583d7229ae9mr12169719ywg.41.1695116766554; Tue, 19
+ Sep 2023 02:46:06 -0700 (PDT)
 MIME-Version: 1.0
 References: <1694813901-26952-1-git-send-email-quic_khsieh@quicinc.com>
- <1694813901-26952-3-git-send-email-quic_khsieh@quicinc.com>
- <CAA8EJprRrTW3pqmjVbfKG5t8t_QNGvPboETNgaAUxg3PvkRjcA@mail.gmail.com> <c1b816bc-4fee-338b-d066-6e6c528b5e3c@quicinc.com>
-In-Reply-To: <c1b816bc-4fee-338b-d066-6e6c528b5e3c@quicinc.com>
+ <1694813901-26952-4-git-send-email-quic_khsieh@quicinc.com>
+ <CAA8EJprG8HuhDHV9k5_4+vkejnYmwmg61isZXT7EsBCbGP0pJA@mail.gmail.com> <f855b3db-2754-5f66-9fc2-061a517814ef@quicinc.com>
+In-Reply-To: <f855b3db-2754-5f66-9fc2-061a517814ef@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 19 Sep 2023 12:44:38 +0300
-Message-ID: <CAA8EJppEJ_0JwVqRv+ue9kJRZhOdxXVnHe5G_ey-8eKZ9H23TQ@mail.gmail.com>
-Subject: Re: [PATCH v3 2/7] drm/msm/dp: replace is_connected with link_ready
+Date:   Tue, 19 Sep 2023 12:45:55 +0300
+Message-ID: <CAA8EJpof+dp_d_5-oADuA7RNU7ut=TKLY5Fw12EjxaSa2S+=rg@mail.gmail.com>
+Subject: Re: [PATCH v3 3/7] drm/msm/dp: use drm_bridge_hpd_notify() to report
+ HPD status changes
 To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
 Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
         sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
@@ -73,165 +74,82 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 18 Sept 2023 at 20:09, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+On Mon, 18 Sept 2023 at 23:16, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
 >
 >
-> On 9/15/2023 6:51 PM, Dmitry Baryshkov wrote:
+> On 9/15/2023 5:41 PM, Dmitry Baryshkov wrote:
 > > On Sat, 16 Sept 2023 at 00:38, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
-> >> The is_connected flag is set to true after DP mainlink successfully
-> >> finish link training. Replace the is_connected flag with link_ready
-> > finishes.
-> > Also this is not a replace, this patch renames the flag.
-> yes, it is rename.
-> >
-> >> flag to avoid confusing.
-> > confusing what with what?
->
-> we have ST_MAINLINK_RAEDY state which means mainlink had finished link
-> training and ready for video.
->
-> Therefore I think link_ready is more meaningful than is_connected.
-
-Guess, all this should have been in the commit message.
-
->
->
-> >
+> >> Currently DP driver use drm_helper_hpd_irq_event(), bypassing drm bridge
+> >> framework, to report HPD status changes to user space frame work.
+> >> Replace it with drm_bridge_hpd_notify() since DP driver is part of drm
+> >> bridge.
+> >>
 > >> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >
+> > Also see the comment below.
+> >
 > >> ---
-> >>   drivers/gpu/drm/msm/dp/dp_display.c | 19 +++++++++----------
-> >>   drivers/gpu/drm/msm/dp/dp_display.h |  2 +-
-> >>   drivers/gpu/drm/msm/dp/dp_drm.c     | 14 +++++++-------
-> >>   3 files changed, 17 insertions(+), 18 deletions(-)
+> >>   drivers/gpu/drm/msm/dp/dp_display.c | 20 ++------------------
+> >>   1 file changed, 2 insertions(+), 18 deletions(-)
 > >>
 > >> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> >> index c217430..18d16c7 100644
+> >> index 18d16c7..59f9d85 100644
 > >> --- a/drivers/gpu/drm/msm/dp/dp_display.c
 > >> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> >> @@ -367,12 +367,11 @@ static void dp_display_send_hpd_event(struct msm_dp *dp_display)
-> >>          drm_helper_hpd_irq_event(connector->dev);
+> >> @@ -356,26 +356,10 @@ static bool dp_display_is_sink_count_zero(struct dp_display_private *dp)
+> >>                  (dp->link->sink_count == 0);
 > >>   }
 > >>
+> >> -static void dp_display_send_hpd_event(struct msm_dp *dp_display)
+> >> -{
+> >> -       struct dp_display_private *dp;
+> >> -       struct drm_connector *connector;
+> >> -
+> >> -       dp = container_of(dp_display, struct dp_display_private, dp_display);
+> >> -
+> >> -       connector = dp->dp_display.connector;
+> >> -       drm_helper_hpd_irq_event(connector->dev);
+> >> -}
 > >> -
 > >>   static int dp_display_send_hpd_notification(struct dp_display_private *dp,
 > >>                                              bool hpd)
 > >>   {
-> >> -       if ((hpd && dp->dp_display.is_connected) ||
-> >> -                       (!hpd && !dp->dp_display.is_connected)) {
-> >> +       if ((hpd && dp->dp_display.link_ready) ||
-> >> +                       (!hpd && !dp->dp_display.link_ready)) {
-> >>                  drm_dbg_dp(dp->drm_dev, "HPD already %s\n",
-> >>                                  (hpd ? "on" : "off"));
-> >>                  return 0;
-> >> @@ -382,7 +381,7 @@ static int dp_display_send_hpd_notification(struct dp_display_private *dp,
-> >>          if (!hpd)
-> >>                  dp->panel->video_test = false;
+> >> -       if ((hpd && dp->dp_display.link_ready) ||
+> >> -                       (!hpd && !dp->dp_display.link_ready)) {
+> >> -               drm_dbg_dp(dp->drm_dev, "HPD already %s\n",
+> >> -                               (hpd ? "on" : "off"));
+> >> -               return 0;
+> >> -       }
+> >> +       struct drm_bridge *bridge = dp->dp_display.bridge;
 > >>
-> >> -       dp->dp_display.is_connected = hpd;
-> >> +       dp->dp_display.link_ready = hpd;
+> >>          /* reset video pattern flag on disconnect */
+> >>          if (!hpd)
+> > Note, this part (resetting the video_test and setting of is_connected)
+> > should be moved to the dp_bridge_hpd_notify() too. Please ignore this
+> > comment if this is handled later in the series.
+>
+> I think keep them here is better since eDP does not populate hpd_enable,
+> hpd_disable and hpd_notify at edp_bridge_ops at drm_bridge_attach().
+>
+> Keep them here will work for both eDP and DP.
+
+Having them here doesn't work for DP-with-external-bridges, which will
+not use dp_display_send_hpd_notification.
+
+>
+>
+> >
+> >
+> >> @@ -385,7 +369,7 @@ static int dp_display_send_hpd_notification(struct dp_display_private *dp,
 > >>
 > >>          drm_dbg_dp(dp->drm_dev, "type=%d hpd=%d\n",
 > >>                          dp->dp_display.connector_type, hpd);
-> >> @@ -922,7 +921,7 @@ int dp_display_set_plugged_cb(struct msm_dp *dp_display,
-> >>
-> >>          dp_display->plugged_cb = fn;
-> >>          dp_display->codec_dev = codec_dev;
-> >> -       plugged = dp_display->is_connected;
-> >> +       plugged = dp_display->link_ready;
-> >>          dp_display_handle_plugged_change(dp_display, plugged);
-> >>
-> >>          return 0;
-> >> @@ -1352,16 +1351,16 @@ static int dp_pm_resume(struct device *dev)
-> >>           * also only signal audio when disconnected
-> >>           */
-> >>          if (dp->link->sink_count) {
-> >> -               dp->dp_display.is_connected = true;
-> >> +               dp->dp_display.link_ready = true;
-> >>          } else {
-> >> -               dp->dp_display.is_connected = false;
-> >> +               dp->dp_display.link_ready = false;
-> >>                  dp_display_handle_plugged_change(dp_display, false);
-> >>          }
-> >>
-> >>          drm_dbg_dp(dp->drm_dev,
-> >>                  "After, type=%d sink=%d conn=%d core_init=%d phy_init=%d power=%d\n",
-> >>                  dp->dp_display.connector_type, dp->link->sink_count,
-> >> -               dp->dp_display.is_connected, dp->core_initialized,
-> >> +               dp->dp_display.link_ready, dp->core_initialized,
-> >>                  dp->phy_initialized, dp_display->power_on);
-> >>
-> >>          mutex_unlock(&dp->event_mutex);
-> >> @@ -1754,8 +1753,8 @@ void dp_bridge_hpd_notify(struct drm_bridge *bridge,
-> >>                  return;
-> >>          }
-> >>
-> >> -       if (!dp_display->is_connected && status == connector_status_connected)
-> >> +       if (!dp_display->link_ready && status == connector_status_connected)
-> >>                  dp_add_event(dp, EV_HPD_PLUG_INT, 0, 0);
-> >> -       else if (dp_display->is_connected && status == connector_status_disconnected)
-> >> +       else if (dp_display->link_ready && status == connector_status_disconnected)
-> >>                  dp_add_event(dp, EV_HPD_UNPLUG_INT, 0, 0);
-> >>   }
-> >> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
-> >> index b3c08de..d65693e 100644
-> >> --- a/drivers/gpu/drm/msm/dp/dp_display.h
-> >> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
-> >> @@ -16,7 +16,7 @@ struct msm_dp {
-> >>          struct drm_bridge *bridge;
-> >>          struct drm_connector *connector;
-> >>          struct drm_bridge *next_bridge;
-> >> -       bool is_connected;
-> >> +       bool link_ready;
-> >>          bool audio_enabled;
-> >>          bool power_on;
-> >>          unsigned int connector_type;
-> >> diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
-> >> index 785d766..ee945ca 100644
-> >> --- a/drivers/gpu/drm/msm/dp/dp_drm.c
-> >> +++ b/drivers/gpu/drm/msm/dp/dp_drm.c
-> >> @@ -24,10 +24,10 @@ static enum drm_connector_status dp_bridge_detect(struct drm_bridge *bridge)
-> >>
-> >>          dp = to_dp_bridge(bridge)->dp_display;
-> >>
-> >> -       drm_dbg_dp(dp->drm_dev, "is_connected = %s\n",
-> >> -               (dp->is_connected) ? "true" : "false");
-> >> +       drm_dbg_dp(dp->drm_dev, "link_ready = %s\n",
-> >> +               (dp->link_ready) ? "true" : "false");
-> >>
-> >> -       return (dp->is_connected) ? connector_status_connected :
-> >> +       return (dp->link_ready) ? connector_status_connected :
-> >>                                          connector_status_disconnected;
-> >>   }
-> >>
-> >> @@ -40,8 +40,8 @@ static int dp_bridge_atomic_check(struct drm_bridge *bridge,
-> >>
-> >>          dp = to_dp_bridge(bridge)->dp_display;
-> >>
-> >> -       drm_dbg_dp(dp->drm_dev, "is_connected = %s\n",
-> >> -               (dp->is_connected) ? "true" : "false");
-> >> +       drm_dbg_dp(dp->drm_dev, "link_ready = %s\n",
-> >> +               (dp->link_ready) ? "true" : "false");
-> >>
-> >>          /*
-> >>           * There is no protection in the DRM framework to check if the display
-> >> @@ -55,7 +55,7 @@ static int dp_bridge_atomic_check(struct drm_bridge *bridge,
-> >>           * After that this piece of code can be removed.
-> >>           */
-> >>          if (bridge->ops & DRM_BRIDGE_OP_HPD)
-> >> -               return (dp->is_connected) ? 0 : -ENOTCONN;
-> >> +               return (dp->link_ready) ? 0 : -ENOTCONN;
+> >> -       dp_display_send_hpd_event(&dp->dp_display);
+> >> +       drm_bridge_hpd_notify(bridge, dp->dp_display.link_ready);
 > >>
 > >>          return 0;
 > >>   }
-> >> @@ -78,7 +78,7 @@ static int dp_bridge_get_modes(struct drm_bridge *bridge, struct drm_connector *
-> >>          dp = to_dp_bridge(bridge)->dp_display;
-> >>
-> >>          /* pluggable case assumes EDID is read when HPD */
-> >> -       if (dp->is_connected) {
-> >> +       if (dp->link_ready) {
-> >>                  rc = dp_display_get_modes(dp);
-> >>                  if (rc <= 0) {
-> >>                          DRM_ERROR("failed to get DP sink modes, rc=%d\n", rc);
 > >> --
 > >> 2.7.4
 > >>
