@@ -2,101 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E68D7A5653
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 01:51:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 650B87A5687
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 02:23:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230170AbjIRXvN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Sep 2023 19:51:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40890 "EHLO
+        id S230328AbjISAXy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Sep 2023 20:23:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbjIRXvM (ORCPT
+        with ESMTP id S229508AbjISAXx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Sep 2023 19:51:12 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C190D99
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Sep 2023 16:51:05 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3ff1c397405so55159225e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Sep 2023 16:51:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695081064; x=1695685864; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=x0KW891hJlwQAFNhQncFmrJVpCSu1XwqJpLgBJeFg4I=;
-        b=FAB33c+JUWnUgWZEofbIgFwdt2gr2pDNYyChH9WsJIevWKVcgcYEdBwMjR+CER5/ay
-         5MIDqR4x9qIQ1aHpUjmSj3FS1qJJvvjnXICbCwryxtNSSt9t53B/Sw12Rd2mZe5NxXkb
-         aomogRL6MhL17Xul8nfGR3OGJf9g8PddkvfjbbRJZfvrIXxMeqftD4PEPF/23CuoZIA+
-         jTUfhh83Qdqe/6vWMu1//0WlHnUX+Sg6uv5K4YTfQIF150/4hiXjpGY6eR6lhYycGN3p
-         Ykhkimr/G1NOR5569G3mtKWz070ZKvfPj9IeEvOIIzPDkbXp5XkK4NkXYcwR+Mgjl1P4
-         r63Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695081064; x=1695685864;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=x0KW891hJlwQAFNhQncFmrJVpCSu1XwqJpLgBJeFg4I=;
-        b=V3zu652QDAWqlL/xJ8zNMeRqnTo3Eia8ymO8GFJj1K1w8ob5hi8Qq26Tf7NyBFG240
-         Frj8be5N9m24zbc2iEAAm1uL5KWgfIK8YWQTVeFnmqsoWwF8qGSsVMrawRA8po+UJfYT
-         XOWlZKbVEDqmRDgYmDF9733ypcB61PkoA7RYhSiJZLPQwm7S3YcaY2c3XjEDs2bmh6FV
-         aie2cABvcp/0GfpYpSfVOc5p8BexVf7O6IWxuDjjG/e2S8mgmsvrQw0ZeSnCcVZGIezV
-         v6vO7OrSSUqmnJXWO6iid7W+X1GNC045eeJqZWqkAAelNS4H5UyoLsOuNjS3yFtjwxON
-         kEng==
-X-Gm-Message-State: AOJu0YyNQHsdWqgc+a/zvbkZVSnTtSrquOUhYNdJ/pWTpPRsu+Jvw1WI
-        OTI//wyDAeXWLc5Fa4jQYCmdOA==
-X-Google-Smtp-Source: AGHT+IFhu8EdErkJ/W7CMZJDvRxTbgF8EwR5K35B2/sL2ZDesRLdqtHoB9c1EbKS+JUAF1rQMYSscg==
-X-Received: by 2002:a05:600c:2053:b0:3fe:4548:1892 with SMTP id p19-20020a05600c205300b003fe45481892mr9241926wmg.16.1695081064206;
-        Mon, 18 Sep 2023 16:51:04 -0700 (PDT)
-Received: from [172.25.80.116] ([217.67.225.27])
-        by smtp.gmail.com with ESMTPSA id i8-20020a170906698800b00988dbbd1f7esm6997386ejr.213.2023.09.18.16.51.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Sep 2023 16:51:03 -0700 (PDT)
-Message-ID: <5d8f7468-241a-506f-69b1-c6ca1b15f0e4@linaro.org>
-Date:   Tue, 19 Sep 2023 01:51:03 +0200
+        Mon, 18 Sep 2023 20:23:53 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05C6C107;
+        Mon, 18 Sep 2023 17:23:45 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38INSgM7019894;
+        Tue, 19 Sep 2023 00:23:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=ZzAyxflayBdGB5NOfX/tkFpQl2JCuDSFOECx7lyWW4w=;
+ b=hLuqgdvLPsiVtXcgftB/4FfYgoInPmmD2++eoGa0tCWFhUg+QJSixCv4nEb4WIPOTyu2
+ IElYIgXhGufTorMRnwuJlMLGY/UZ832/zaGSaZoa17feqRCjq7FD7O8K9qp6pu2c6yt1
+ uX+HoTq9w+l2OVjbsciJITOFqMcBK3I0Uu2Z4aiy93Z9wilmqiaJk+XPli2vi2h2+O30
+ UdK/Qs9Pu+e6sKrRd/gK+rWw7EpM9TRwl+1Q68Y2rn6KvvfS0v5/pGcmZZ3ya73SJOuy
+ /SDBeyN5wmcjYKmXcUGrqUO2JpQ6bPIdsKtjuXrIkXjQvGaMmuXT2zAVSGJ1Lng3GS9H xQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t53ybc9f6-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 19 Sep 2023 00:23:22 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38J0NLYE009462
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 19 Sep 2023 00:23:21 GMT
+Received: from [10.110.39.29] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 18 Sep
+ 2023 17:23:20 -0700
+Message-ID: <f77aa92d-b71c-b6f7-bce2-35fa0c3011c0@quicinc.com>
+Date:   Mon, 18 Sep 2023 17:23:16 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 22/32] power: supply: qcom_smbb: Convert to platform
- remove callback returning void
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v6 13/33] dt-bindings: usb: dwc3: Add
+ snps,num-hc-interrupters definition
 Content-Language: en-US
-To:     =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>,
-        Sebastian Reichel <sre@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        kernel@pengutronix.de
-References: <20230918133700.1254499-1-u.kleine-koenig@pengutronix.de>
- <20230918133700.1254499-23-u.kleine-koenig@pengutronix.de>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230918133700.1254499-23-u.kleine-koenig@pengutronix.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+To:     Rob Herring <robh@kernel.org>
+CC:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        <mathias.nyman@intel.com>, <gregkh@linuxfoundation.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <perex@perex.cz>,
+        <tiwai@suse.com>, <agross@kernel.org>, <andersson@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <srinivas.kandagatla@linaro.org>, <bgoswami@quicinc.com>,
+        <Thinh.Nguyen@synopsys.com>, <linux-kernel@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>, <alsa-devel@alsa-project.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>
+References: <20230916001026.315-1-quic_wcheng@quicinc.com>
+ <20230916001026.315-14-quic_wcheng@quicinc.com>
+ <6e66d821-1275-4830-a898-bb82c333dcc5@linaro.org>
+ <ef3731af-5b58-3dcb-9a6f-7e8755a13895@quicinc.com>
+ <20230918201919.GA1694628-robh@kernel.org>
+From:   Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <20230918201919.GA1694628-robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 9MWiJGmzLM4Bj6yRSS5de11vRTYHJIHr
+X-Proofpoint-ORIG-GUID: 9MWiJGmzLM4Bj6yRSS5de11vRTYHJIHr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-18_11,2023-09-18_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
+ suspectscore=0 adultscore=0 phishscore=0 clxscore=1015 bulkscore=0
+ impostorscore=0 malwarescore=0 priorityscore=1501 mlxlogscore=599
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309190001
 X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Rob,
 
-
-On 9/18/23 15:36, Uwe Kleine-König wrote:
-> The .remove() callback for a platform driver returns an int which makes
-> many driver authors wrongly assume it's possible to do error handling by
-> returning an error code. However the value returned is ignored (apart
-> from emitting a warning) and this typically results in resource leaks.
-> To improve here there is a quest to make the remove callback return
-> void. In the first step of this quest all drivers are converted to
-> .remove_new() which already returns void. Eventually after all drivers
-> are converted, .remove_new() is renamed to .remove().
+On 9/18/2023 1:19 PM, Rob Herring wrote:
+> On Fri, Sep 15, 2023 at 05:43:45PM -0700, Wesley Cheng wrote:
+>> Hi Konrad,
+>>
+>> On 9/15/2023 5:35 PM, Konrad Dybcio wrote:
+>>> On 16.09.2023 02:10, Wesley Cheng wrote:
+>>>> Add a new definition for specifying how many XHCI secondary interrupters
+>>>> can be allocated.  XHCI in general can potentially support up to 1024
+>>>> interrupters, which some uses may want to limit depending on how many
+>>>> users utilize the interrupters.
+>>>>
+>>>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+>>>> ---
+>>> Any reason for a DWC3-specific property? Why not just
+>>> use the XHCI-common one from patch 14 and error out if
+>>> a value of more than 8 is found?
+>>>
 > 
-> Trivially convert this driver from always returning zero in the remove
-> callback to the void returning variant.
+> I'm pretty sure I said use the common one already...
 > 
-> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Konrad
+Yes, you mentioned that in the last rev.
+
+>>
+>> Not every XHCI plat user is going to be DWC3.  In case DWC3 is used, the
+>> DWC3 host driver is the one that populates and adds the XHCI plat device (no
+>> separate device node for XHCI), so that requires the DWC3 host to also
+>> populate properties for the XHCI device. (dwc3_host_init())
+> 
+> This binding references usb-xhci.yaml already, so any property from
+> there is allowed. Linux needs to handle that regardless of what the
+> driver structure/division looks like.
+> 
+
+Ok, understood.  I will remove the need to have another DWC3 property 
+and just use the XHCI one directly.  Checks are already in place in the 
+DWC3 parser to limit the interrupters if it exceeds 8.
+
+Thanks
+Wesley Cheng
