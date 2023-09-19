@@ -2,75 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 952A17A6EAA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 00:30:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 917B27A6ECD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 00:47:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233482AbjISWak (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Sep 2023 18:30:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33748 "EHLO
+        id S229887AbjISWrP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Sep 2023 18:47:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42516 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229887AbjISWaj (ORCPT
+        with ESMTP id S229748AbjISWrP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Sep 2023 18:30:39 -0400
-Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72460BE
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Sep 2023 15:30:33 -0700 (PDT)
-Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-59be9a09c23so62387967b3.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Sep 2023 15:30:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695162632; x=1695767432; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZWE12E4GSEQPScLBBOQ9P6hDatI6KkLL6gqpAgFkrJo=;
-        b=soJyAgZiT4Cl7Zd2UErM9QgPsoV+TWtECVkyzApg8RgfBkCVmq++TeHLMxGN4JQvdC
-         JC1JY1D+T4gmIgV3LHMka6wvWCDNq/OrVM6vjYTtbJEe0v4LnoNXhWtZe/DhSN1jX3ZW
-         ninZ1J+7mXQ0cMMISmlrIT8FVutMPdQX4WuH1qO5L3aom8xYy0Oyxww+r7d/YVUfEYPQ
-         b8pKQ1lOXj2wIoRatfTCnjRMoIh8SYslIdt2xaTwQiZYo3vqu1JWn03RP+RU9Es5CAf9
-         GOsVIG1mIb1rURhhaMZtZX+2QGts9z+H6Ir1MdvV49b2VzIMo/jZcSX8aYuBY8JJFKXV
-         bMBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695162632; x=1695767432;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ZWE12E4GSEQPScLBBOQ9P6hDatI6KkLL6gqpAgFkrJo=;
-        b=xEUa/LidmMJCikMSpxPX+Qj9MhYgvZUpeoSbV0jzJIKrDWqKl8YQyMUgOF47LMtqfv
-         0t3e1G+8L99/SIu3sF3iNmB/IPSaJTyy/Vv1uYgcfMb6AxHYdly3Ev18xpXb8oJemcMM
-         anffbxZXXpF8qfNKapz2yGYWyo9jSy/RSqd0LPffCoKKsQWJgGW8aQSHLMDGqjU8/lIG
-         ktUUoqE1CJzdHlIuMeGwIUPJ0pL1oOfjiCq8ZIf1ED+16McohcYDMW2f0tKo9Zgrue3D
-         tKjrW0nMOAf2Uit+aioHa5YAWH4M8N2fylEmsy6Gd5E6QK4nczFy1+Ij0gb2mEZk3yz3
-         CkOA==
-X-Gm-Message-State: AOJu0YyeWq0Na5seY7KVIap3aL3UCknXNDqlKIHpv9OpIAn2OjOic94o
-        I+s7eO4/ID4k+/S6mR8D40a1SAJA2p30X6Oryh+jJA==
-X-Google-Smtp-Source: AGHT+IEV8SVk5WgId3f74CGiOEcj5v/vf1O/cO2KcQDyXtlP/RbqH7RmWLEiFf0qFc30CL2l7x/95xY4aKHQ9wEx8sQ=
-X-Received: by 2002:a0d:d88e:0:b0:58f:96d8:e7ad with SMTP id
- a136-20020a0dd88e000000b0058f96d8e7admr899833ywe.18.1695162632620; Tue, 19
- Sep 2023 15:30:32 -0700 (PDT)
-MIME-Version: 1.0
-References: <1694411968-14413-1-git-send-email-quic_cang@quicinc.com>
- <1694411968-14413-5-git-send-email-quic_cang@quicinc.com> <CAA8EJpoWnXeJKPB04kJW6Qo7ifAnt1u2ZSiq+W2HWOez=hi5gA@mail.gmail.com>
- <20230919121524.GD4732@thinkpad>
-In-Reply-To: <20230919121524.GD4732@thinkpad>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 20 Sep 2023 01:30:21 +0300
-Message-ID: <CAA8EJpoqRBxS7HJrFdRAvv677hKJw+d_K+fN_4ABDrj+68r28w@mail.gmail.com>
-Subject: Re: [PATCH 4/6] phy: qualcomm: phy-qcom-qmp-ufs: Move data structs
- and setting tables to header
-To:     Manivannan Sadhasivam <mani@kernel.org>
-Cc:     Can Guo <quic_cang@quicinc.com>, quic_nguyenb@quicinc.com,
-        quic_nitirawa@quicinc.com, martin.petersen@oracle.com,
-        linux-scsi@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Tue, 19 Sep 2023 18:47:15 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6951EBF;
+        Tue, 19 Sep 2023 15:47:09 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6970CC433C8;
+        Tue, 19 Sep 2023 22:47:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1695163628;
+        bh=Zz55Rzz0ip2wh5I/XTQWnZtdEa5fny//y92DvP3sTKc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Q/MlhSvv21ZgsuWDJddvDo3okpD2ESxhiWA4KP6uCQrXFhFeM1z6i/y/8YgD2JDlx
+         Dlg2ZF2NQ02VFG12UeUtc8KNuyPIgCIu3HR28cNUHw+kPBHFMK5vYQpvL9r/nxOJmb
+         1l8mxY5n5KPIPvWsr+wd59z1+MZ88qnI1EQbqBqP+yThkpxz4khj1BIpQLjxbYU0dv
+         moYuyJMSJWVPr29lKbBJ6CkAeahaArs1xfHGW2sac1FBgnhnjGz0F8xdeDt7u+O6HU
+         +JTdFVGhU9gfglulQ/+tfq3yM1tO7JJCbFYS+Lv74t9P85QhyPkCiZeKL6MmoNM7yY
+         xkgxZWDQ7dpQw==
+Date:   Tue, 19 Sep 2023 15:51:16 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
+Cc:     linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        "open list:GENERIC PHY FRAMEWORK" <linux-phy@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Walter Broemeling <wallebroem@gmail.com>,
+        Joe Mason <buddyjojo06@outlook.com>,
+        Siddharth Manthan <siddharth.manthan@gmail.com>,
+        Gareth Peoples <mail@gpeopl.es>
+Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: msm8916-samsung-fortuna: Add
+ initial device trees
+Message-ID: <lpoghxjh3nid67iv6r3sqfd7ol3ut73fzm2zpb2w5eca4rbeiw@irmzrhnj3mia>
+References: <20230801111745.4629-1-linmengbo0689@protonmail.com>
+ <20230801112123.4672-1-linmengbo0689@protonmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230801112123.4672-1-linmengbo0689@protonmail.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,46 +60,114 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 19 Sept 2023 at 15:15, Manivannan Sadhasivam <mani@kernel.org> wrote:
->
-> On Thu, Sep 14, 2023 at 03:28:59PM +0300, Dmitry Baryshkov wrote:
-> > On Mon, 11 Sept 2023 at 09:01, Can Guo <quic_cang@quicinc.com> wrote:
-> > >
-> > > To make the code more readable, move the data structs and PHY settting
-> > > tables to a header file, namely the phy-qcom-qmp-ufs.h.
-> > >
-> > > Signed-off-by: Can Guo <quic_cang@quicinc.com>
-> > > ---
-> > >  drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 802 +------------------------------
-> > >  drivers/phy/qualcomm/phy-qcom-qmp-ufs.h | 805 ++++++++++++++++++++++++++++++++
-> > >  2 files changed, 806 insertions(+), 801 deletions(-)
-> > >  create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-ufs.h
-> >
-> > Is there any reason to do so? Other than just moving stuff around, it
-> > doesn't give us anything. This header will not be shared with any
-> > other driver. Just moving data tables to the header (ugh, static data
-> > in the header) doesn't make code more readable.
-> >
->
-> I think the motive here is to move the static tables to one file and have the
-> rest of the code in another. Because, the static tables itself occupy 1.2k LoC
-> now and it is going to grow. So let's keep them in a single file to avoid mixing
-> it with rest of the driver code.
+On Tue, Aug 01, 2023 at 11:22:47AM +0000, Lin, Meng-Bo wrote:
+> From: Walter Broemeling <wallebroem@gmail.com>
+> 
+> Samsung Galaxy Core Prime, Grand Prime and Ace 4 are phones based on
+> MSM8916. They are similar to the other Samsung devices based on MSM8916
+> with only a few minor differences.
+> 
+> This initial commit adds support for:
+>  - fortuna3g (SM-G530H)
+>  - fortunaltezt (SM-G530Y)
+>  - gprimeltecan (SM-G530W)
+>  - grandprimelte (SM-G530FZ)
+>  - heatqlte (SM-G357FZ)
+>  - rossa (SM-G360G)
+> 
+> The device trees contain initial support with:
+>  - GPIO keys
+>  - Regulator haptic
+>  - SDHCI (internal and external storage)
+>  - USB Device Mode
+>  - UART (on USB connector via the SM5502/SM5504 MUIC)
+>  - WCNSS (WiFi/BT)
+>  - Regulators
+> 
+> There are different variants of Grand Prime, with some differences
+> in accelerometer, NFC and panel.
+> Core Prime and Grand Prime are similar, with some differences in MUIC,
+> panel and touchscreen.
+> Ace 4 and Core Prime are similar, with some differences in panel and
+> touchscreen.
+> 
+> The common parts are shared in
+> msm8916-samsung-fortuna-common.dtsi and msm8916-samsung-rossa-common.dtsi
+> to reduce duplication.
+> 
+> Unfortunately, SM-G357FZ and SM-G530Y were released with outdated 32-bit
+> only firmware and never received any update from Samsung. Since the 32-bit
+> TrustZone firmware is signed there seems to be no way currently to
+> actually boot this device tree on arm64 Linux at the moment.
+> 
+> However, it is possible to use this device tree by compiling an ARM32
+> kernel instead. The device tree can be easily built on ARM32 with
+> an #include and it works really well there. To avoid confusion for others
+> it is still better to add this device tree on arm64. Otherwise it's easy
+> to forget to update this one when making some changes that affect all
+> MSM8916 devices.
+> 
+> Maybe someone finds a way to boot ARM64 Linux on this device at some
+> point. In this case I expect that this device tree can be simply used
+> as-is.
+> 
 
-My 2c is that this is mostly useless. The headers are for sharing, not
-for moving the data out of the .c files. Not to mention that the
-driver code comes after the tables.
-I'd really suggest starting such a move with separating common parts
-of all the QMP drivers.
+Can you please help me understand the development flow of this patch?
 
->
-> - Mani
->
-> > If you really would like to clean up the QMP drivers, please consider
-> > splitting _common_ parts. But at this point I highly doubt that it is
-> > possible in a useful way.
+> Signed-off-by: Walter Broemeling <wallebroem@gmail.com>
+> Co-developed-by: Stephan Gerhold <stephan@gerhold.net>
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+
+Walter and Stephan wrote the initial patch, right?
+
+> [Add fortuna-common.dtsi, buttons, and WiFi]
+> Co-developed-by: Joe Mason <buddyjojo06@outlook.com>
+> Signed-off-by: Joe Mason <buddyjojo06@outlook.com>
+
+Then Joe added fortuna-common, buttons and Wifi.
+
+If so, then Joe shouldn't be "Co-developed-by", the [note] and
+Signed-off-by is sufficient here.
+
+But it is customary to prefix the "changes note" with ones first name,
+such as:
+
+[joe: Add fortuna-common.dtsi, buttons, and WiFi]
+
+> [Add fortuna3g]
+> Co-developed-by: Siddharth Manthan <siddharth.manthan@gmail.com>
+> Signed-off-by: Siddharth Manthan <siddharth.manthan@gmail.com>
+
+Then Siddharth picked it up, ad added fortuna3g. Again, it looks like he
+did this step alone, and as such no Co-developed-by, please.
+
+> [Add heatqlte]
+> Co-developed-by: Gareth Peoples <mail@gpeopl.es>
+> Signed-off-by: Gareth Peoples <mail@gpeopl.es>
+
+Again, no Co-developed-by, and please prefix the change note with
+"Gareth:", or "gareth:".
+
+> [Add grandprimelte and fortunaltezt]
+> [Use msm8916-samsung-rossa-common.dtsi and reword the commit]
+
+Why two different notes? Is this one note split over two separate
+entries? Please just comma-separate them, possible line wrap within the
+[].
+
+> Co-developed-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
+> Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
+
+You should be alone here.
 
 
--- 
-With best wishes
-Dmitry
+Alternatively, if y'all all contributed to this one patch through the
+entire flow, please drop the change notes and just list out each
+contributor with the Co-developed-by and Signed-off-by.
+
+
+PS. Could you please drop the ',' from your name. When I tried to apply
+this everything after the ',' disappeared.
+
+Regards,
+Bjorn
