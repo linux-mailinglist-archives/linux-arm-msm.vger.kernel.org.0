@@ -2,205 +2,292 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D9CCB7A6999
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 19:27:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 635C97A6A31
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 19:51:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229552AbjISR1O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Sep 2023 13:27:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42646 "EHLO
+        id S231842AbjISRvE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Sep 2023 13:51:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231968AbjISR1M (ORCPT
+        with ESMTP id S232910AbjISRu7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Sep 2023 13:27:12 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.88])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 682EE9F;
-        Tue, 19 Sep 2023 10:27:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1695144426; x=1726680426;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=/GfKecIDbouGTE7n4315amFnYOI3c0tRqeNu43t9cFw=;
-  b=Cm9dyKwXGdwFPawE+t8KoqNWXi4KrTIsqC8eGmVjqET3QPgOPTHlRJ6B
-   8bfMK1Wzkq+kXKBT8kH+7Wu/JaKH1JrsJvBlUsWqOnI+Nza/dUMrOw0qH
-   70k4m0cgeu3+GNJ/AEeZwDIZFtSClHYsuUfqlyfn/0psoS2KnZTYddQk/
-   KwEi+omLlWFLyNVLu4wx2Xjvt3EjEVtihylxD7Uv/pz0S5LfN1SO2jtc8
-   XEkRvDdZvj1ZWT6mgGUphr450FEMD0WhXpjQmyP6bmvn5ZsRdJynhfPkM
-   +rHCa6i+8RcWxNN+1ZAyDfT3qoONsB3z5/s4lS1POAlsGrrSJCrtGpgwC
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10838"; a="410936065"
-X-IronPort-AV: E=Sophos;i="6.02,160,1688454000"; 
-   d="scan'208";a="410936065"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Sep 2023 10:27:06 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10838"; a="746316089"
-X-IronPort-AV: E=Sophos;i="6.02,160,1688454000"; 
-   d="scan'208";a="746316089"
-Received: from lkp-server02.sh.intel.com (HELO 9ef86b2655e5) ([10.239.97.151])
-  by orsmga002.jf.intel.com with ESMTP; 19 Sep 2023 10:27:00 -0700
-Received: from kbuild by 9ef86b2655e5 with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1qieV0-0007jz-15;
-        Tue, 19 Sep 2023 17:26:58 +0000
-Date:   Wed, 20 Sep 2023 01:26:33 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
+        Tue, 19 Sep 2023 13:50:59 -0400
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A0D011C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Sep 2023 10:50:53 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qierE-0006Jj-CX; Tue, 19 Sep 2023 19:49:56 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qier4-007VVT-A1; Tue, 19 Sep 2023 19:49:46 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qier3-0034WI-Qd; Tue, 19 Sep 2023 19:49:45 +0200
+From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+To:     Jonathan Cameron <jic23@kernel.org>
+Cc:     Jiri Kosina <jikos@kernel.org>,
+        Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        linux-input@vger.kernel.org, linux-iio@vger.kernel.org,
+        kernel@pengutronix.de, Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        Eugen Hristev <eugen.hristev@collabora.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+        Jinjie Ruan <ruanjinjie@huawei.com>,
+        Rob Herring <robh@kernel.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Yang Yingliang <yangyingliang@huawei.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Aidan MacDonald <aidanmacdonald.0x0@gmail.com>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Hartley Sweeten <hsweeten@visionengravers.com>,
+        Alexander Sverdlin <alexander.sverdlin@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        linux-samsung-soc@vger.kernel.org, Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Andreas Klinger <ak@it-klinger.de>,
+        Cai Huoqing <cai.huoqing@linux.dev>,
+        Haibo Chen <haibo.chen@nxp.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        George Stark <gnstark@sberdevices.ru>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        =?utf-8?q?Nuno_S=C3=A1?= <nuno.sa@analog.com>,
+        linux-amlogic@lists.infradead.org,
+        Saravanan Sekar <sravanhome@gmail.com>,
+        Jiakai Luo <jkluo@hust.edu.cn>,
+        Dongliang Mu <dzm91@hust.edu.cn>,
+        Avi Fishman <avifishman70@gmail.com>,
+        Tomer Maimon <tmaimon77@gmail.com>,
+        Tali Perry <tali.perry1@gmail.com>,
+        Patrick Venture <venture@google.com>,
+        Nancy Yuen <yuenn@google.com>,
+        Benjamin Fair <benjaminfair@google.com>,
+        openbmc@lists.ozlabs.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Johan Hovold <johan@kernel.org>,
-        Mathias Nyman <mathias.nyman@intel.com>
-Cc:     oe-kbuild-all@lists.linux.dev, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com, quic_jackp@quicinc.com,
-        ahalaney@redhat.com, quic_shazhuss@quicinc.com,
-        Harsh Agarwal <quic_harshq@quicinc.com>,
-        Krishna Kurapati <quic_kriskura@quicinc.com>
-Subject: Re: [PATCH v11 06/13] usb: dwc3: core: Refactor PHY logic to support
- Multiport Controller
-Message-ID: <202309200156.CxQ3yaLY-lkp@intel.com>
-References: <20230828133033.11988-7-quic_kriskura@quicinc.com>
+        linux-arm-msm@vger.kernel.org, Marek Vasut <marek.vasut@gmail.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Olivier Moysan <olivier.moysan@foss.st.com>,
+        Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+        Zhang Shurong <zhang_shurong@foxmail.com>,
+        Yangtao Li <frank.li@vivo.com>,
+        linux-stm32@st-md-mailman.stormreply.com,
+        Sean Nyekjaer <sean@geanix.com>, Tom Rix <trix@redhat.com>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+        Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+        Mark Brown <broonie@kernel.org>,
+        Ido Schimmel <idosch@nvidia.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        linux-sunxi@lists.linux.dev,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Andreas Kemnade <andreas@kemnade.info>,
+        Peter Rosin <peda@axentia.se>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Kevin Tsai <ktsai@capellamicro.com>,
+        Benson Leung <bleung@chromium.org>,
+        Guenter Roeck <groeck@chromium.org>,
+        chrome-platform@lists.linux.dev
+Subject: [PATCH 00/49] iio: Convert to platform remove callback returning void
+Date:   Tue, 19 Sep 2023 19:48:42 +0200
+Message-Id: <20230919174931.1417681-1-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230828133033.11988-7-quic_kriskura@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=8269; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=cuk3jxOiXgIUBikmjG+zsljm9zaWYjBmeiLtAd8rO9k=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlCd7vIlP2VeriuGG1jpId5rgS1c3dyBe3FAkva bOz+Cms2ZmJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZQne7wAKCRCPgPtYfRL+ TsaKCACYcNf6TucJIdrcTmQocW5rXVUHd8FGg6zjf77q9iaRUcrRyMgufZi9kHX8CoIc2VNzbsv Sde9oTXarxauVNSU2DTuCbLLiugw9ge4kE3wo0PdLHL9coUwmk305A07oPwBGaGcdefyG/pv0mS 7mgPmofLk6Td5oOSGwnSqH4xwnrUxuSzcFX4MpqRhtkP32Fzg+DnME4I4s2cGFXTFIqg/vAGlsa Uwoc2RCCeY71MmhjdOQIxaY3AhrFWMB+ykVE9omgDbWdXlwtJTMvje2RVVEzY+gNAnN8MTMBoE4 21HS4CQJwqcc/GDvaxBw4owlQCUlt+760qbqOvyBf33TGiQz
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krishna,
+this series converts all platform drivers below drivers/iio to use
+.remove_new(). The motivation is to get rid of an integer return code
+that is (mostly) ignored by the platform driver core and error prone on
+the driver side. As all platform drivers return zero unconditionally in their
+remove callback up to now, the conversions are "trivial".
 
-kernel test robot noticed the following build warnings:
+See commit 5c5a7680e67b ("platform: Provide a remove callback that
+returns no value") for an extended explanation and the eventual goal.
 
-[auto build test WARNING on usb/usb-testing]
-[also build test WARNING on usb/usb-next usb/usb-linus robh/for-next pza/reset/next linus/master v6.6-rc2 next-20230919]
-[cannot apply to pza/imx-drm/next]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+There are no interdependencies between the patches. As there are still
+quite a few drivers to convert, I'm happy about every patch that makes
+it in. So even if there is a merge conflict with one patch until you
+apply or I picked a wrong subject prefix, please apply the remainder of
+this series anyhow.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Krishna-Kurapati/dt-bindings-usb-qcom-dwc3-Add-bindings-for-SC8280-Multiport/20230828-214326
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb.git usb-testing
-patch link:    https://lore.kernel.org/r/20230828133033.11988-7-quic_kriskura%40quicinc.com
-patch subject: [PATCH v11 06/13] usb: dwc3: core: Refactor PHY logic to support Multiport Controller
-config: x86_64-randconfig-011-20230902 (https://download.01.org/0day-ci/archive/20230920/202309200156.CxQ3yaLY-lkp@intel.com/config)
-compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20230920/202309200156.CxQ3yaLY-lkp@intel.com/reproduce)
+Best regards
+Uwe
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202309200156.CxQ3yaLY-lkp@intel.com/
+Uwe Kleine-König (49):
+  iio: accel: hid-sensor-accel-3d: Convert to platform remove callback
+    returning void
+  iio: adc: ab8500-gpadc: Convert to platform remove callback returning
+    void
+  iio: adc: at91-sama5d2: Convert to platform remove callback returning
+    void
+  iio: adc: at91: Convert to platform remove callback returning void
+  iio: adc: axp20x: Convert to platform remove callback returning void
+  iio: adc: bcm_iproc: Convert to platform remove callback returning
+    void
+  iio: adc: dln2: Convert to platform remove callback returning void
+  iio: adc: ep93xx: Convert to platform remove callback returning void
+  iio: adc: exynos: Convert to platform remove callback returning void
+  iio: adc: fsl-imx25-gcq: Convert to platform remove callback returning
+    void
+  iio: adc: hx711: Convert to platform remove callback returning void
+  iio: adc: imx8qxp: Convert to platform remove callback returning void
+  iio: adc: imx93: Convert to platform remove callback returning void
+  iio: adc: meson_saradc: Convert to platform remove callback returning
+    void
+  iio: adc: mp2629: Convert to platform remove callback returning void
+  iio: adc: mxs-lradc: Convert to platform remove callback returning
+    void
+  iio: adc: npcm: Convert to platform remove callback returning void
+  iio: adc: qcom-pm8xxx-xoadc: Convert to platform remove callback
+    returning void
+  iio: adc: rcar-gyroadc: Convert to platform remove callback returning
+    void
+  iio: adc: stm32-adc-core: Convert to platform remove callback
+    returning void
+  iio: adc: stm32-adc: Convert to platform remove callback returning
+    void
+  iio: adc: stm32-dfsdm-adc: Convert to platform remove callback
+    returning void
+  iio: adc: stm32-dfsdm-core: Convert to platform remove callback
+    returning void
+  iio: adc: sun4i-gpadc-iio: Convert to platform remove callback
+    returning void
+  iio: adc: ti_am335x_adc: Convert to platform remove callback returning
+    void
+  iio: adc: twl4030-madc: Convert to platform remove callback returning
+    void
+  iio: adc: twl6030-gpadc: Convert to platform remove callback returning
+    void
+  iio: adc: vf610_adc: Convert to platform remove callback returning
+    void
+  iio: dac: dpot-dac: Convert to platform remove callback returning void
+  iio: dac: lpc18xx_dac: Convert to platform remove callback returning
+    void
+  iio: dac: stm32-dac-core: Convert to platform remove callback
+    returning void
+  iio: dac: stm32-dac: Convert to platform remove callback returning
+    void
+  iio: dac: vf610: Convert to platform remove callback returning void
+  iio: gyro: hid-sensor-gyro-3d: Convert to platform remove callback
+    returning void
+  iio: humidity: hid-sensor-humidity: Convert to platform remove
+    callback returning void
+  iio: light: cm3605: Convert to platform remove callback returning void
+  iio: light: hid-sensor-als: Convert to platform remove callback
+    returning void
+  iio: light: hid-sensor-prox: Convert to platform remove callback
+    returning void
+  iio: light: lm3533-als: Convert to platform remove callback returning
+    void
+  iio: magnetometer: hid-sensor-magn-3d: Convert to platform remove
+    callback returning void
+  iio: orientation: hid-sensor-incl-3d: Convert to platform remove
+    callback returning void
+  iio: orientation: hid-sensor-rotation: Convert to platform remove
+    callback returning void
+  iio: position: hid-sensor-custom-intel-hinge: Convert to platform
+    remove callback returning void
+  iio: pressure: hid-sensor: Convert to platform remove callback
+    returning void
+  iio: proximity: cros_ec_mkbp: Convert to platform remove callback
+    returning void
+  iio: proximity: srf04: Convert to platform remove callback returning
+    void
+  iio: temperature: hid-sensor: Convert to platform remove callback
+    returning void
+  iio: trigger: iio-trig-interrupt: Convert to platform remove callback
+    returning void
+  iio: trigger: stm32-timer: Convert to platform remove callback
+    returning void
 
-All warnings (new ones prefixed by >>):
+ drivers/iio/accel/hid-sensor-accel-3d.c              | 6 ++----
+ drivers/iio/adc/ab8500-gpadc.c                       | 6 ++----
+ drivers/iio/adc/at91-sama5d2_adc.c                   | 6 ++----
+ drivers/iio/adc/at91_adc.c                           | 6 ++----
+ drivers/iio/adc/axp20x_adc.c                         | 6 ++----
+ drivers/iio/adc/bcm_iproc_adc.c                      | 6 ++----
+ drivers/iio/adc/dln2-adc.c                           | 5 ++---
+ drivers/iio/adc/ep93xx_adc.c                         | 6 ++----
+ drivers/iio/adc/exynos_adc.c                         | 6 ++----
+ drivers/iio/adc/fsl-imx25-gcq.c                      | 6 ++----
+ drivers/iio/adc/hx711.c                              | 6 ++----
+ drivers/iio/adc/imx8qxp-adc.c                        | 6 ++----
+ drivers/iio/adc/imx93_adc.c                          | 6 ++----
+ drivers/iio/adc/meson_saradc.c                       | 6 ++----
+ drivers/iio/adc/mp2629_adc.c                         | 6 ++----
+ drivers/iio/adc/mxs-lradc-adc.c                      | 6 ++----
+ drivers/iio/adc/npcm_adc.c                           | 6 ++----
+ drivers/iio/adc/qcom-pm8xxx-xoadc.c                  | 6 ++----
+ drivers/iio/adc/rcar-gyroadc.c                       | 6 ++----
+ drivers/iio/adc/stm32-adc-core.c                     | 6 ++----
+ drivers/iio/adc/stm32-adc.c                          | 6 ++----
+ drivers/iio/adc/stm32-dfsdm-adc.c                    | 6 ++----
+ drivers/iio/adc/stm32-dfsdm-core.c                   | 6 ++----
+ drivers/iio/adc/sun4i-gpadc-iio.c                    | 8 +++-----
+ drivers/iio/adc/ti_am335x_adc.c                      | 6 ++----
+ drivers/iio/adc/twl4030-madc.c                       | 6 ++----
+ drivers/iio/adc/twl6030-gpadc.c                      | 6 ++----
+ drivers/iio/adc/vf610_adc.c                          | 6 ++----
+ drivers/iio/dac/dpot-dac.c                           | 6 ++----
+ drivers/iio/dac/lpc18xx_dac.c                        | 6 ++----
+ drivers/iio/dac/stm32-dac-core.c                     | 6 ++----
+ drivers/iio/dac/stm32-dac.c                          | 6 ++----
+ drivers/iio/dac/vf610_dac.c                          | 6 ++----
+ drivers/iio/gyro/hid-sensor-gyro-3d.c                | 6 ++----
+ drivers/iio/humidity/hid-sensor-humidity.c           | 6 ++----
+ drivers/iio/light/cm3605.c                           | 6 ++----
+ drivers/iio/light/hid-sensor-als.c                   | 6 ++----
+ drivers/iio/light/hid-sensor-prox.c                  | 6 ++----
+ drivers/iio/light/lm3533-als.c                       | 6 ++----
+ drivers/iio/magnetometer/hid-sensor-magn-3d.c        | 6 ++----
+ drivers/iio/orientation/hid-sensor-incl-3d.c         | 6 ++----
+ drivers/iio/orientation/hid-sensor-rotation.c        | 6 ++----
+ drivers/iio/position/hid-sensor-custom-intel-hinge.c | 6 ++----
+ drivers/iio/pressure/hid-sensor-press.c              | 6 ++----
+ drivers/iio/proximity/cros_ec_mkbp_proximity.c       | 6 ++----
+ drivers/iio/proximity/srf04.c                        | 6 ++----
+ drivers/iio/temperature/hid-sensor-temperature.c     | 6 ++----
+ drivers/iio/trigger/iio-trig-interrupt.c             | 6 ++----
+ drivers/iio/trigger/stm32-timer-trigger.c            | 6 ++----
+ 49 files changed, 99 insertions(+), 196 deletions(-)
 
-   drivers/usb/dwc3/core.c: In function 'dwc3_core_get_phy':
->> drivers/usb/dwc3/core.c:1375:53: warning: '%d' directive writing between 1 and 3 bytes into a region of size 2 [-Wformat-overflow=]
-    1375 |                         sprintf(phy_name, "usb2-port%d", i);
-         |                                                     ^~
-   drivers/usb/dwc3/core.c:1375:43: note: directive argument in the range [0, 254]
-    1375 |                         sprintf(phy_name, "usb2-port%d", i);
-         |                                           ^~~~~~~~~~~~~
-   drivers/usb/dwc3/core.c:1375:25: note: 'sprintf' output between 11 and 13 bytes into a destination of size 11
-    1375 |                         sprintf(phy_name, "usb2-port%d", i);
-         |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   drivers/usb/dwc3/core.c:1390:53: warning: '%d' directive writing between 1 and 3 bytes into a region of size 2 [-Wformat-overflow=]
-    1390 |                         sprintf(phy_name, "usb3-port%d", i);
-         |                                                     ^~
-   drivers/usb/dwc3/core.c:1390:43: note: directive argument in the range [0, 254]
-    1390 |                         sprintf(phy_name, "usb3-port%d", i);
-         |                                           ^~~~~~~~~~~~~
-   drivers/usb/dwc3/core.c:1390:25: note: 'sprintf' output between 11 and 13 bytes into a destination of size 11
-    1390 |                         sprintf(phy_name, "usb3-port%d", i);
-         |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
-vim +1375 drivers/usb/dwc3/core.c
-
-  1338	
-  1339	static int dwc3_core_get_phy(struct dwc3 *dwc)
-  1340	{
-  1341		struct device		*dev = dwc->dev;
-  1342		struct device_node	*node = dev->of_node;
-  1343		char phy_name[11];
-  1344		int ret;
-  1345		int i;
-  1346	
-  1347		if (node) {
-  1348			dwc->usb2_phy = devm_usb_get_phy_by_phandle(dev, "usb-phy", 0);
-  1349			dwc->usb3_phy = devm_usb_get_phy_by_phandle(dev, "usb-phy", 1);
-  1350		} else {
-  1351			dwc->usb2_phy = devm_usb_get_phy(dev, USB_PHY_TYPE_USB2);
-  1352			dwc->usb3_phy = devm_usb_get_phy(dev, USB_PHY_TYPE_USB3);
-  1353		}
-  1354	
-  1355		if (IS_ERR(dwc->usb2_phy)) {
-  1356			ret = PTR_ERR(dwc->usb2_phy);
-  1357			if (ret == -ENXIO || ret == -ENODEV)
-  1358				dwc->usb2_phy = NULL;
-  1359			else
-  1360				return dev_err_probe(dev, ret, "no usb2 phy configured\n");
-  1361		}
-  1362	
-  1363		if (IS_ERR(dwc->usb3_phy)) {
-  1364			ret = PTR_ERR(dwc->usb3_phy);
-  1365			if (ret == -ENXIO || ret == -ENODEV)
-  1366				dwc->usb3_phy = NULL;
-  1367			else
-  1368				return dev_err_probe(dev, ret, "no usb3 phy configured\n");
-  1369		}
-  1370	
-  1371		for (i = 0; i < dwc->num_usb2_ports; i++) {
-  1372			if (dwc->num_usb2_ports == 1)
-  1373				sprintf(phy_name, "usb2-phy");
-  1374			else
-> 1375				sprintf(phy_name, "usb2-port%d", i);
-  1376	
-  1377			dwc->usb2_generic_phy[i] = devm_phy_get(dev, phy_name);
-  1378			if (IS_ERR(dwc->usb2_generic_phy[i])) {
-  1379				ret = PTR_ERR(dwc->usb2_generic_phy[i]);
-  1380				if (ret == -ENOSYS || ret == -ENODEV)
-  1381					dwc->usb2_generic_phy[i] = NULL;
-  1382				else
-  1383					return dev_err_probe(dev, ret,
-  1384						"failed to lookup phy %s\n", phy_name);
-  1385			}
-  1386	
-  1387			if (dwc->num_usb2_ports == 1)
-  1388				sprintf(phy_name, "usb3-phy");
-  1389			else
-  1390				sprintf(phy_name, "usb3-port%d", i);
-  1391	
-  1392			dwc->usb3_generic_phy[i] = devm_phy_get(dev, phy_name);
-  1393			if (IS_ERR(dwc->usb3_generic_phy[i])) {
-  1394				ret = PTR_ERR(dwc->usb3_generic_phy[i]);
-  1395				if (ret == -ENOSYS || ret == -ENODEV)
-  1396					dwc->usb3_generic_phy[i] = NULL;
-  1397				else
-  1398					return dev_err_probe(dev, ret,
-  1399						"failed to lookup phy %s\n", phy_name);
-  1400			}
-  1401		}
-  1402	
-  1403		return 0;
-  1404	}
-  1405	
-
+base-commit: 29e400e3ea486bf942b214769fc9778098114113
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.40.1
+
