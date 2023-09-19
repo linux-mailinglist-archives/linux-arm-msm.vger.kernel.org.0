@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B4A267A6069
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 12:59:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D67987A60FF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 13:16:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231808AbjISK6r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Sep 2023 06:58:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41742 "EHLO
+        id S232145AbjISLQ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Sep 2023 07:16:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231833AbjISK6Z (ORCPT
+        with ESMTP id S232161AbjISLQQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Sep 2023 06:58:25 -0400
+        Tue, 19 Sep 2023 07:16:16 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B32E812F;
-        Tue, 19 Sep 2023 03:57:49 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07A79C433C7;
-        Tue, 19 Sep 2023 10:57:45 +0000 (UTC)
-Message-ID: <929e9bf7-9b9e-4b7f-889d-b2bc144fd39a@xs4all.nl>
-Date:   Tue, 19 Sep 2023 12:57:44 +0200
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 740CAFC;
+        Tue, 19 Sep 2023 04:16:09 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544B8C433C8;
+        Tue, 19 Sep 2023 11:16:05 +0000 (UTC)
+Message-ID: <cbfef598-8faa-40e6-8dc2-a1efd03f9560@xs4all.nl>
+Date:   Tue, 19 Sep 2023 13:16:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 13/49] media: verisilicon: Refactor postprocessor to
- store more buffers
+Subject: Re: [PATCH v7 16/49] media: verisilicon: postproc: Fix down scale
+ test
 Content-Language: en-US, nl
 To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
         mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
@@ -35,9 +35,9 @@ Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
         kernel@collabora.com
 References: <20230914133323.198857-1-benjamin.gaignard@collabora.com>
- <20230914133323.198857-14-benjamin.gaignard@collabora.com>
+ <20230914133323.198857-17-benjamin.gaignard@collabora.com>
 From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-In-Reply-To: <20230914133323.198857-14-benjamin.gaignard@collabora.com>
+In-Reply-To: <20230914133323.198857-17-benjamin.gaignard@collabora.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,
@@ -50,242 +50,48 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 14/09/2023 15:32, Benjamin Gaignard wrote:
-> Since vb2 queue can store than VB2_MAX_FRAME buffers postprocessor
+> Do not allow down scaling if the source buffer resolution is
+> smaller  than destination one.
+> 
+> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+> Fixes: fbb6c848dd89 ("media: destage Hantro VPU driver")
 
-Change to:
+Is this really a fix? I gather that this relies on "VP9 resolution change without
+doing stream off/on" support, and support for that is added by these patches.
 
-Since vb2 queue can store more than VB2_MAX_FRAME buffers, the postprocessor
+Adding the Fixes tag would cause stable maintainers to queue this patch up for
+older kernels, but I don't think that is needed here at all.
+
+And related I also think that this really does not belong to this patch series.
+
+As I understand it, patch 13/49 extends the verisilicon driver to support more
+than 32 buffers, so that one makes sense in the context of this series.
+
+But the other verisilicon patches appear to be unrelated and instead add a new
+feature, and I don't believe it relates to this series at all.
+
+If I am right, then please post this as a separate series, possibly mentioning
+that it sits on top of this series.
 
 Regards,
 
 	Hans
 
-> buffer storage must be capable to store more buffers too.
-> Change static dec_q array to allocated array to be capable to store
-> up to queue 'max_allowed_buffers'.
-> Keep allocating queue 'num_buffers' at queue setup time but also allows
-> to allocate postprocessors buffers on the fly.
-> 
-> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
 > ---
->  drivers/media/platform/verisilicon/hantro.h   |  7 +-
->  .../media/platform/verisilicon/hantro_drv.c   |  4 +-
->  .../media/platform/verisilicon/hantro_hw.h    |  4 +-
->  .../platform/verisilicon/hantro_postproc.c    | 93 +++++++++++++++----
->  .../media/platform/verisilicon/hantro_v4l2.c  |  2 +-
->  5 files changed, 85 insertions(+), 25 deletions(-)
+>  drivers/media/platform/verisilicon/hantro_postproc.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/drivers/media/platform/verisilicon/hantro.h b/drivers/media/platform/verisilicon/hantro.h
-> index 77aee9489516..0948b04a9f8d 100644
-> --- a/drivers/media/platform/verisilicon/hantro.h
-> +++ b/drivers/media/platform/verisilicon/hantro.h
-> @@ -469,11 +469,14 @@ hantro_get_dst_buf(struct hantro_ctx *ctx)
->  bool hantro_needs_postproc(const struct hantro_ctx *ctx,
->  			   const struct hantro_fmt *fmt);
->  
-> +dma_addr_t
-> +hantro_postproc_get_dec_buf_addr(struct hantro_ctx *ctx, int index);
-> +
->  static inline dma_addr_t
->  hantro_get_dec_buf_addr(struct hantro_ctx *ctx, struct vb2_buffer *vb)
->  {
->  	if (hantro_needs_postproc(ctx, ctx->vpu_dst_fmt))
-> -		return ctx->postproc.dec_q[vb->index].dma;
-> +		return hantro_postproc_get_dec_buf_addr(ctx, vb->index);
->  	return vb2_dma_contig_plane_dma_addr(vb, 0);
->  }
->  
-> @@ -485,8 +488,8 @@ vb2_to_hantro_decoded_buf(struct vb2_buffer *buf)
->  
->  void hantro_postproc_disable(struct hantro_ctx *ctx);
->  void hantro_postproc_enable(struct hantro_ctx *ctx);
-> +int hantro_postproc_init(struct hantro_ctx *ctx);
->  void hantro_postproc_free(struct hantro_ctx *ctx);
-> -int hantro_postproc_alloc(struct hantro_ctx *ctx);
->  int hanto_postproc_enum_framesizes(struct hantro_ctx *ctx,
->  				   struct v4l2_frmsizeenum *fsize);
->  
-> diff --git a/drivers/media/platform/verisilicon/hantro_drv.c b/drivers/media/platform/verisilicon/hantro_drv.c
-> index 423fc85d79ee..18f56edee3fc 100644
-> --- a/drivers/media/platform/verisilicon/hantro_drv.c
-> +++ b/drivers/media/platform/verisilicon/hantro_drv.c
-> @@ -234,8 +234,10 @@ queue_init(void *priv, struct vb2_queue *src_vq, struct vb2_queue *dst_vq)
->  	 * The Kernel needs access to the JPEG destination buffer for the
->  	 * JPEG encoder to fill in the JPEG headers.
->  	 */
-> -	if (!ctx->is_encoder)
-> +	if (!ctx->is_encoder) {
->  		dst_vq->dma_attrs |= DMA_ATTR_NO_KERNEL_MAPPING;
-> +		dst_vq->max_allowed_buffers = MAX_POSTPROC_BUFFERS;
-> +	}
->  
->  	dst_vq->type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE;
->  	dst_vq->io_modes = VB2_MMAP | VB2_DMABUF;
-> diff --git a/drivers/media/platform/verisilicon/hantro_hw.h b/drivers/media/platform/verisilicon/hantro_hw.h
-> index 7f33f7b07ce4..292a76ef643e 100644
-> --- a/drivers/media/platform/verisilicon/hantro_hw.h
-> +++ b/drivers/media/platform/verisilicon/hantro_hw.h
-> @@ -40,6 +40,8 @@
->  
->  #define AV1_MAX_FRAME_BUF_COUNT	(V4L2_AV1_TOTAL_REFS_PER_FRAME + 1)
->  
-> +#define MAX_POSTPROC_BUFFERS	64
-> +
->  struct hantro_dev;
->  struct hantro_ctx;
->  struct hantro_buf;
-> @@ -336,7 +338,7 @@ struct hantro_av1_dec_hw_ctx {
->   * @dec_q:		References buffers, in decoder format.
->   */
->  struct hantro_postproc_ctx {
-> -	struct hantro_aux_buf dec_q[VB2_MAX_FRAME];
-> +	struct hantro_aux_buf dec_q[MAX_POSTPROC_BUFFERS];
->  };
->  
->  /**
 > diff --git a/drivers/media/platform/verisilicon/hantro_postproc.c b/drivers/media/platform/verisilicon/hantro_postproc.c
-> index 0224ff68ab3f..e624cd98f41b 100644
+> index e624cd98f41b..77d8ecfbe12f 100644
 > --- a/drivers/media/platform/verisilicon/hantro_postproc.c
 > +++ b/drivers/media/platform/verisilicon/hantro_postproc.c
-> @@ -177,9 +177,11 @@ static int hantro_postproc_g2_enum_framesizes(struct hantro_ctx *ctx,
->  void hantro_postproc_free(struct hantro_ctx *ctx)
+> @@ -107,7 +107,7 @@ static void hantro_postproc_g1_enable(struct hantro_ctx *ctx)
+>  
+>  static int down_scale_factor(struct hantro_ctx *ctx)
 >  {
->  	struct hantro_dev *vpu = ctx->dev;
-> +	struct v4l2_m2m_ctx *m2m_ctx = ctx->fh.m2m_ctx;
-> +	struct vb2_queue *queue = &m2m_ctx->cap_q_ctx.q;
->  	unsigned int i;
+> -	if (ctx->src_fmt.width == ctx->dst_fmt.width)
+> +	if (ctx->src_fmt.width <= ctx->dst_fmt.width)
+>  		return 0;
 >  
-> -	for (i = 0; i < VB2_MAX_FRAME; ++i) {
-> +	for (i = 0; i < queue->max_allowed_buffers; ++i) {
->  		struct hantro_aux_buf *priv = &ctx->postproc.dec_q[i];
->  
->  		if (priv->cpu) {
-> @@ -190,20 +192,17 @@ void hantro_postproc_free(struct hantro_ctx *ctx)
->  	}
->  }
->  
-> -int hantro_postproc_alloc(struct hantro_ctx *ctx)
-> +static unsigned int hantro_postproc_buffer_size(struct hantro_ctx *ctx)
->  {
-> -	struct hantro_dev *vpu = ctx->dev;
-> -	struct v4l2_m2m_ctx *m2m_ctx = ctx->fh.m2m_ctx;
-> -	struct vb2_queue *cap_queue = &m2m_ctx->cap_q_ctx.q;
-> -	unsigned int num_buffers = cap_queue->num_buffers;
->  	struct v4l2_pix_format_mplane pix_mp;
->  	const struct hantro_fmt *fmt;
-> -	unsigned int i, buf_size;
-> +	unsigned int buf_size;
->  
->  	/* this should always pick native format */
->  	fmt = hantro_get_default_fmt(ctx, false, ctx->bit_depth, HANTRO_AUTO_POSTPROC);
->  	if (!fmt)
-> -		return -EINVAL;
-> +		return 0;
-> +
->  	v4l2_fill_pixfmt_mp(&pix_mp, fmt->fourcc, ctx->src_fmt.width,
->  			    ctx->src_fmt.height);
->  
-> @@ -221,23 +220,77 @@ int hantro_postproc_alloc(struct hantro_ctx *ctx)
->  		buf_size += hantro_av1_mv_size(pix_mp.width,
->  					       pix_mp.height);
->  
-> -	for (i = 0; i < num_buffers; ++i) {
-> -		struct hantro_aux_buf *priv = &ctx->postproc.dec_q[i];
-> +	return buf_size;
-> +}
-> +
-> +static int hantro_postproc_alloc(struct hantro_ctx *ctx, int index)
-> +{
-> +	struct hantro_dev *vpu = ctx->dev;
-> +	struct hantro_aux_buf *priv = &ctx->postproc.dec_q[index];
-> +	unsigned int buf_size = hantro_postproc_buffer_size(ctx);
-> +
-> +	if (!buf_size)
-> +		return -EINVAL;
-> +
-> +	/*
-> +	 * The buffers on this queue are meant as intermediate
-> +	 * buffers for the decoder, so no mapping is needed.
-> +	 */
-> +	priv->attrs = DMA_ATTR_NO_KERNEL_MAPPING;
-> +	priv->cpu = dma_alloc_attrs(vpu->dev, buf_size, &priv->dma,
-> +				    GFP_KERNEL, priv->attrs);
-> +	if (!priv->cpu)
-> +		return -ENOMEM;
-> +	priv->size = buf_size;
-> +
-> +	return 0;
-> +}
->  
-> -		/*
-> -		 * The buffers on this queue are meant as intermediate
-> -		 * buffers for the decoder, so no mapping is needed.
-> -		 */
-> -		priv->attrs = DMA_ATTR_NO_KERNEL_MAPPING;
-> -		priv->cpu = dma_alloc_attrs(vpu->dev, buf_size, &priv->dma,
-> -					    GFP_KERNEL, priv->attrs);
-> -		if (!priv->cpu)
-> -			return -ENOMEM;
-> -		priv->size = buf_size;
-> +int hantro_postproc_init(struct hantro_ctx *ctx)
-> +{
-> +	struct v4l2_m2m_ctx *m2m_ctx = ctx->fh.m2m_ctx;
-> +	struct vb2_queue *cap_queue = &m2m_ctx->cap_q_ctx.q;
-> +	unsigned int num_buffers = cap_queue->num_buffers;
-> +	unsigned int i;
-> +	int ret;
-> +
-> +	for (i = 0; i < num_buffers; i++) {
-> +		ret = hantro_postproc_alloc(ctx, i);
-> +		if (ret)
-> +			return ret;
->  	}
-> +
->  	return 0;
->  }
->  
-> +dma_addr_t
-> +hantro_postproc_get_dec_buf_addr(struct hantro_ctx *ctx, int index)
-> +{
-> +	struct hantro_aux_buf *priv = &ctx->postproc.dec_q[index];
-> +	unsigned int buf_size = hantro_postproc_buffer_size(ctx);
-> +	struct hantro_dev *vpu = ctx->dev;
-> +	int ret;
-> +
-> +	if (priv->size < buf_size && priv->cpu) {
-> +		/* buffer is too small, release it */
-> +		dma_free_attrs(vpu->dev, priv->size, priv->cpu,
-> +			       priv->dma, priv->attrs);
-> +		priv->cpu = NULL;
-> +	}
-> +
-> +	if (!priv->cpu) {
-> +		/* buffer not already allocated, try getting a new one */
-> +		ret = hantro_postproc_alloc(ctx, index);
-> +		if (ret)
-> +			return 0;
-> +	}
-> +
-> +	if (!priv->cpu)
-> +		return 0;
-> +
-> +	return priv->dma;
-> +}
-> +
->  static void hantro_postproc_g1_disable(struct hantro_ctx *ctx)
->  {
->  	struct hantro_dev *vpu = ctx->dev;
-> diff --git a/drivers/media/platform/verisilicon/hantro_v4l2.c b/drivers/media/platform/verisilicon/hantro_v4l2.c
-> index b3ae037a50f6..f0d8b165abcd 100644
-> --- a/drivers/media/platform/verisilicon/hantro_v4l2.c
-> +++ b/drivers/media/platform/verisilicon/hantro_v4l2.c
-> @@ -933,7 +933,7 @@ static int hantro_start_streaming(struct vb2_queue *q, unsigned int count)
->  		}
->  
->  		if (hantro_needs_postproc(ctx, ctx->vpu_dst_fmt)) {
-> -			ret = hantro_postproc_alloc(ctx);
-> +			ret = hantro_postproc_init(ctx);
->  			if (ret)
->  				goto err_codec_exit;
->  		}
+>  	return DIV_ROUND_CLOSEST(ctx->src_fmt.width, ctx->dst_fmt.width);
 
