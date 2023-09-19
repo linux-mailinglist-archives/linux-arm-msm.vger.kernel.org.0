@@ -2,26 +2,26 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 33E217A65F7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 15:58:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E170A7A6623
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 16:05:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232723AbjISN6M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Sep 2023 09:58:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32904 "EHLO
+        id S232487AbjISOFw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Sep 2023 10:05:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232756AbjISN57 (ORCPT
+        with ESMTP id S232573AbjISOFv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Sep 2023 09:57:59 -0400
+        Tue, 19 Sep 2023 10:05:51 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC53719B;
-        Tue, 19 Sep 2023 06:57:34 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D95BDC433C9;
-        Tue, 19 Sep 2023 13:57:30 +0000 (UTC)
-Message-ID: <f33399d2-9a80-43b9-bf32-9d26f0efa4fb@xs4all.nl>
-Date:   Tue, 19 Sep 2023 15:57:30 +0200
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0362F3;
+        Tue, 19 Sep 2023 07:05:45 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18007C433C8;
+        Tue, 19 Sep 2023 14:05:41 +0000 (UTC)
+Message-ID: <77267d52-e423-4de7-b840-9945699884b3@xs4all.nl>
+Date:   Tue, 19 Sep 2023 16:05:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 27/49] media: pci: tw686x: Stop direct calls to queue
+Subject: Re: [PATCH v7 32/49] media: renesas: Stop direct calls to queue
  num_buffers field
 Content-Language: en-US, nl
 To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
@@ -35,9 +35,9 @@ Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
         kernel@collabora.com
 References: <20230914133323.198857-1-benjamin.gaignard@collabora.com>
- <20230914133323.198857-28-benjamin.gaignard@collabora.com>
+ <20230914133323.198857-33-benjamin.gaignard@collabora.com>
 From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-In-Reply-To: <20230914133323.198857-28-benjamin.gaignard@collabora.com>
+In-Reply-To: <20230914133323.198857-33-benjamin.gaignard@collabora.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,
@@ -54,37 +54,32 @@ On 14/09/2023 15:33, Benjamin Gaignard wrote:
 > 
 > Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
 > ---
->  drivers/media/pci/tw686x/tw686x-video.c | 5 +++--
+>  drivers/media/platform/renesas/rcar_drif.c | 5 +++--
 >  1 file changed, 3 insertions(+), 2 deletions(-)
 > 
-> diff --git a/drivers/media/pci/tw686x/tw686x-video.c b/drivers/media/pci/tw686x/tw686x-video.c
-> index 3ebf7a2c95f0..6bc6d143d18c 100644
-> --- a/drivers/media/pci/tw686x/tw686x-video.c
-> +++ b/drivers/media/pci/tw686x/tw686x-video.c
-> @@ -423,6 +423,7 @@ static int tw686x_queue_setup(struct vb2_queue *vq,
->  			      unsigned int sizes[], struct device *alloc_devs[])
+> diff --git a/drivers/media/platform/renesas/rcar_drif.c b/drivers/media/platform/renesas/rcar_drif.c
+> index 163a4ba61c17..020845689ed3 100644
+> --- a/drivers/media/platform/renesas/rcar_drif.c
+> +++ b/drivers/media/platform/renesas/rcar_drif.c
+> @@ -424,10 +424,11 @@ static int rcar_drif_queue_setup(struct vb2_queue *vq,
+>  			unsigned int sizes[], struct device *alloc_devs[])
 >  {
->  	struct tw686x_video_channel *vc = vb2_get_drv_priv(vq);
-> +	unsigned int q_num_bufs = vb2_get_num_buffers(vq);
->  	unsigned int szimage =
->  		(vc->width * vc->height * vc->format->depth) >> 3;
+>  	struct rcar_drif_sdr *sdr = vb2_get_drv_priv(vq);
+> +	unsigned int q_num_buffers = vb2_get_num_buffers(vq);
 >  
-> @@ -430,8 +431,8 @@ static int tw686x_queue_setup(struct vb2_queue *vq,
->  	 * Let's request at least three buffers: two for the
->  	 * DMA engine and one for userspace.
->  	 */
-> -	if (vq->num_buffers + *nbuffers < 3)
-> -		*nbuffers = 3 - vq->num_buffers;
-> +	if (q_num_bufs + *nbuffers < 3)
-> +		*nbuffers = 3 - q_num_bufs;
+>  	/* Need at least 16 buffers */
+> -	if (vq->num_buffers + *num_buffers < 16)
+> -		*num_buffers = 16 - vq->num_buffers;
+> +	if (q_num_buffers + *num_buffers < 16)
+> +		*num_buffers = 16 - q_num_buffers;
 
-Drop this check, and instead update min_buffers_needed from 2 to 3.
+This should be dropped, and instead min_buffers_needed should be set to 16.
 
 Regards,
 
 	Hans
 
 >  
->  	if (*nplanes) {
->  		if (*nplanes != 1 || sizes[0] < szimage)
+>  	*num_planes = 1;
+>  	sizes[0] = PAGE_ALIGN(sdr->fmt->buffersize);
 
