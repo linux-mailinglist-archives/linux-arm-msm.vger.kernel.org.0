@@ -2,135 +2,254 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 387957A6328
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 14:38:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 93E917A634D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 14:42:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231697AbjISMiF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Sep 2023 08:38:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37538 "EHLO
+        id S230021AbjISMme (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Sep 2023 08:42:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231784AbjISMiF (ORCPT
+        with ESMTP id S231913AbjISMmd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Sep 2023 08:38:05 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 610A6FC
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Sep 2023 05:37:59 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-99bdcade7fbso722599666b.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Sep 2023 05:37:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695127078; x=1695731878; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ElFl2P9I49dKgc5GPio4ojq866f2cNZ+vD/OQLMGKro=;
-        b=QCUlzv6R3rLQKKKVaSdV5L7V0i20DHFDDz855oS0zFmKvifyo7+LGtVNjS8MHaoJLI
-         hABKXjwTS94H44hjD20Iy8Htabheo2p4XSH0L4+4RXIvWPblkj1Qn4DHxBKHfm9T+A6f
-         NZnKtPgi0Z77hpIpIOLXHgy1n8lqQxSiyEFW3Vx3YAZglTPF17S0Swoc42juYfuDsegI
-         FS0BPjKftJi+3cfJn90PuA9RmVekZSo4gJMH8j3+7Bh0Yaoe9/q1N74FK/DwxR8DwFtW
-         ID5Wx5iSBnYIRKVDx/dBVF/fHuueY9xTWAHI9rbqVX+WZgtc4Q6TvCl70rz0Y2w/4tii
-         s4+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695127078; x=1695731878;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ElFl2P9I49dKgc5GPio4ojq866f2cNZ+vD/OQLMGKro=;
-        b=hHxg+q4I7kHNoeRIREoda0/Uuw9sYdLn1quvC0QvNgNSpUz+sD2gfiAwm6J+Bi0+BF
-         GOefaTJEf+lrPuDyvti+RplWIswnPmiy9dsnRkFu+DWwq5SxdO/QQVxk0I2BI2922wMe
-         IanzBbS2gnGY31VQPYHBzSHUhoRC8AuR2K60jlqaHyoGqP+UEIPRS44+BOdax4r5Mzxt
-         /GEbT2/RVC5ri4m1yUd9OFEZ8IQ+S7YMEu8ICYNgqYMZr9j7oiRIjIxz6yD19HkU+yh2
-         hS/7ifFM2ug9apUkWM0zsIY30UoU2vX2l8nDVwtUz2nTXLwTMZstmxwB7oIEpUgYtdgH
-         9QLQ==
-X-Gm-Message-State: AOJu0YxiTTbUWyYeZqxGz71c83aVwj7xkSo2swSVmCfbvBfRarRrxXbv
-        gCw3s+JeeHnImyv3yaq6TNaHpg==
-X-Google-Smtp-Source: AGHT+IHF+mK3Ru/oqZskjsjpAcam/b3opFYlTzcYXoOk56BMQtkD/TfxpO/C1DxDPxuKm7003vykSg==
-X-Received: by 2002:a17:906:73c4:b0:9ad:bffb:2e2c with SMTP id n4-20020a17090673c400b009adbffb2e2cmr10789397ejl.39.1695127077803;
-        Tue, 19 Sep 2023 05:37:57 -0700 (PDT)
-Received: from [172.20.24.238] (static-212-193-78-212.thenetworkfactory.nl. [212.78.193.212])
-        by smtp.gmail.com with ESMTPSA id jx10-20020a170906ca4a00b009ae3e6c342asm106371ejb.111.2023.09.19.05.37.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Sep 2023 05:37:57 -0700 (PDT)
-Message-ID: <463923fe-7938-ad1b-fd79-6491329289af@linaro.org>
-Date:   Tue, 19 Sep 2023 14:37:56 +0200
+        Tue, 19 Sep 2023 08:42:33 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F7DFE3;
+        Tue, 19 Sep 2023 05:42:27 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF2FCC433C8;
+        Tue, 19 Sep 2023 12:42:23 +0000 (UTC)
+Message-ID: <c58cdf5a-7176-457e-98f3-85606cec7f09@xs4all.nl>
+Date:   Tue, 19 Sep 2023 14:42:22 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH V2 4/4] arm64: dts: qcom: ipq5018: Add tsens node
-Content-Language: en-US
-To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        srinivas.kandagatla@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        thara.gopinath@gmail.com, rafael@kernel.org,
-        daniel.lezcano@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, dmitry.baryshkov@linaro.org
-References: <20230915121504.806672-1-quic_srichara@quicinc.com>
- <20230915121504.806672-5-quic_srichara@quicinc.com>
- <b0fe17e4-e4d8-02af-4e09-06b3930b38fe@linaro.org>
- <b40c6439-ab73-d796-589e-ffee21cedfc9@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <b40c6439-ab73-d796-589e-ffee21cedfc9@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 12/49] media: videobuf2: Be more flexible on the number
+ of queue stored buffers
+Content-Language: en-US, nl
+To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+        mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
+        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
+        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
+        nicolas.dufresne@collabora.com
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
+        kernel@collabora.com
+References: <20230914133323.198857-1-benjamin.gaignard@collabora.com>
+ <20230914133323.198857-13-benjamin.gaignard@collabora.com>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+In-Reply-To: <20230914133323.198857-13-benjamin.gaignard@collabora.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/09/2023 09:28, Sricharan Ramabadhran wrote:
+On 14/09/2023 15:32, Benjamin Gaignard wrote:
+> Add 'max_allowed_buffers' field in vb2_queue struct to let drivers decide
+> how many buffers could be stored in a queue.
+> This request 'bufs' array to be allocated at queue init time and freed
+> when releasing the queue.
+> By default VB2_MAX_FRAME remains the limit.
 > 
-> 
-> On 9/15/2023 6:16 PM, Krzysztof Kozlowski wrote:
->> On 15/09/2023 14:15, Sricharan Ramabadhran wrote:
->>> IPQ5018 has tsens V1.0 IP with 4 sensors.
->>> There is no RPM, so tsens has to be manually enabled. Adding the tsens
->>> and nvmem node and IPQ5018 has 4 thermal sensors (zones). With the
->>> critical temperature being 120'C and action is to reboot. Adding all
->>> the 4 zones here.
->>>
->>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->>> ---
->>>   [v2] Fixed node names, order and added qfprom cells for points
->>>        seperately to use the calibrate_common and squashed thermal_zone
->>>        nodes here
->>>
->>>   arch/arm64/boot/dts/qcom/ipq5018.dtsi | 169 ++++++++++++++++++++++++++
->>>   1 file changed, 169 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
->>> index 9f13d2dcdfd5..d53aea5342e2 100644
->>> --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
->>> @@ -93,6 +93,117 @@ soc: soc@0 {
->>>   		#size-cells = <1>;
->>>   		ranges = <0 0 0 0xffffffff>;
->>>   
->>> +		qfprom: qfprom@a0000 {
->>> +			#address-cells = <1>;
->>> +			#size-cells = <1>;
->>> +			compatible = "qcom,ipq5018-qfprom", "qcom,qfprom";
->>
->> This is a friendly reminder during the review process.
->>
->> It seems my previous comments were not fully addressed. Maybe my
->> feedback got lost between the quotes, maybe you just forgot to apply it.
->> Please go back to the previous discussion and either implement all
->> requested changes or keep discussing them.
->>
-> 
->   oops, moved the compatible to first, but missed it on posting version.
->   Will fix it in V3.
+> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+> Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+> ---
+>  .../media/common/videobuf2/videobuf2-core.c   | 40 ++++++++++++++-----
+>  .../media/common/videobuf2/videobuf2-v4l2.c   |  4 +-
+>  include/media/videobuf2-core.h                |  4 +-
+>  3 files changed, 35 insertions(+), 13 deletions(-)
 
-What do you mean by "posting version"? If it is not the same as your Git
-version, then your process is buggy. You must work on mainline tree and
-send patches from that tree. Not edit patches and edit Git separately...
+After this patch I would like to see a patches adding support for this to
+vicodec and vivid. For vivid it might be a good idea to mix this: say
+the video output remains at 32 buffers, but video capture can do more.
 
-Best regards,
-Krzysztof
+And the swradio device should be able to handle quite a lot more (try
+1024 there) since these buffers are quite small (32 kB).
+
+The vicodec driver can increase it to 64, just as the verisilicon driver
+does.
+
+This makes it easy to do compliance testing for this new feature.
+
+Regards,
+
+	Hans
+
+> 
+> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
+> index afe76577acc1..ee4df7c68397 100644
+> --- a/drivers/media/common/videobuf2/videobuf2-core.c
+> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
+> @@ -411,7 +411,7 @@ static void init_buffer_cache_hints(struct vb2_queue *q, struct vb2_buffer *vb)
+>   */
+>  static bool vb2_queue_add_buffer(struct vb2_queue *q, struct vb2_buffer *vb, unsigned int index)
+>  {
+> -	if (index < VB2_MAX_FRAME && !q->bufs[index]) {
+> +	if (index < q->max_allowed_buffers && !q->bufs[index]) {
+>  		q->bufs[index] = vb;
+>  		vb->index = index;
+>  		vb->vb2_queue = q;
+> @@ -428,7 +428,7 @@ static bool vb2_queue_add_buffer(struct vb2_queue *q, struct vb2_buffer *vb, uns
+>   */
+>  static void vb2_queue_remove_buffer(struct vb2_queue *q, struct vb2_buffer *vb)
+>  {
+> -	if (vb->index < VB2_MAX_FRAME) {
+> +	if (vb->index < q->max_allowed_buffers) {
+>  		q->bufs[vb->index] = NULL;
+>  		vb->vb2_queue = NULL;
+>  	}
+> @@ -449,9 +449,9 @@ static int __vb2_queue_alloc(struct vb2_queue *q, enum vb2_memory memory,
+>  	struct vb2_buffer *vb;
+>  	int ret;
+>  
+> -	/* Ensure that q->num_buffers+num_buffers is below VB2_MAX_FRAME */
+> +	/* Ensure that q->num_buffers+num_buffers is below q->max_allowed_buffers */
+>  	num_buffers = min_t(unsigned int, num_buffers,
+> -			    VB2_MAX_FRAME - q->num_buffers);
+> +			    q->max_allowed_buffers - q->num_buffers);
+>  
+>  	for (buffer = 0; buffer < num_buffers; ++buffer) {
+>  		/* Allocate vb2 buffer structures */
+> @@ -814,7 +814,7 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
+>  	unsigned plane_sizes[VB2_MAX_PLANES] = { };
+>  	bool non_coherent_mem = flags & V4L2_MEMORY_FLAG_NON_COHERENT;
+>  	unsigned int i;
+> -	int ret;
+> +	int ret = 0;
+>  
+>  	if (q->streaming) {
+>  		dprintk(q, 1, "streaming active\n");
+> @@ -858,17 +858,23 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
+>  	/*
+>  	 * Make sure the requested values and current defaults are sane.
+>  	 */
+> -	WARN_ON(q->min_buffers_needed > VB2_MAX_FRAME);
+> +	WARN_ON(q->min_buffers_needed > q->max_allowed_buffers);
+>  	num_buffers = max_t(unsigned int, *count, q->min_buffers_needed);
+> -	num_buffers = min_t(unsigned int, num_buffers, VB2_MAX_FRAME);
+> +	num_buffers = min_t(unsigned int, num_buffers, q->max_allowed_buffers);
+>  	memset(q->alloc_devs, 0, sizeof(q->alloc_devs));
+>  	/*
+>  	 * Set this now to ensure that drivers see the correct q->memory value
+>  	 * in the queue_setup op.
+>  	 */
+>  	mutex_lock(&q->mmap_lock);
+> +	if (!q->bufs)
+> +		q->bufs = kcalloc(q->max_allowed_buffers, sizeof(*q->bufs), GFP_KERNEL);
+> +	if (!q->bufs)
+> +		ret = -ENOMEM;
+>  	q->memory = memory;
+>  	mutex_unlock(&q->mmap_lock);
+> +	if (ret)
+> +		return ret;
+>  	set_queue_coherency(q, non_coherent_mem);
+>  
+>  	/*
+> @@ -974,9 +980,9 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
+>  	unsigned plane_sizes[VB2_MAX_PLANES] = { };
+>  	bool non_coherent_mem = flags & V4L2_MEMORY_FLAG_NON_COHERENT;
+>  	bool no_previous_buffers = !q->num_buffers;
+> -	int ret;
+> +	int ret = 0;
+>  
+> -	if (q->num_buffers == VB2_MAX_FRAME) {
+> +	if (q->num_buffers == q->max_allowed_buffers) {
+>  		dprintk(q, 1, "maximum number of buffers already allocated\n");
+>  		return -ENOBUFS;
+>  	}
+> @@ -993,7 +999,13 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
+>  		 */
+>  		mutex_lock(&q->mmap_lock);
+>  		q->memory = memory;
+> +		if (!q->bufs)
+> +			q->bufs = kcalloc(q->max_allowed_buffers, sizeof(*q->bufs), GFP_KERNEL);
+> +		if (!q->bufs)
+> +			ret = -ENOMEM;
+>  		mutex_unlock(&q->mmap_lock);
+> +		if (ret)
+> +			return ret;
+>  		q->waiting_for_buffers = !q->is_output;
+>  		set_queue_coherency(q, non_coherent_mem);
+>  	} else {
+> @@ -1005,7 +1017,7 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
+>  			return -EINVAL;
+>  	}
+>  
+> -	num_buffers = min(*count, VB2_MAX_FRAME - q->num_buffers);
+> +	num_buffers = min(*count, q->max_allowed_buffers - q->num_buffers);
+>  
+>  	if (requested_planes && requested_sizes) {
+>  		num_planes = requested_planes;
+> @@ -2515,6 +2527,12 @@ int vb2_core_queue_init(struct vb2_queue *q)
+>  
+>  	q->memory = VB2_MEMORY_UNKNOWN;
+>  
+> +	if (!q->max_allowed_buffers)
+> +		q->max_allowed_buffers = VB2_MAX_FRAME;
+> +
+> +	/* The maximum is limited by offset cookie encoding pattern */
+> +	q->max_allowed_buffers = min_t(unsigned int, q->max_allowed_buffers, BUFFER_INDEX_MASK + 1);
+> +
+>  	if (q->buf_struct_size == 0)
+>  		q->buf_struct_size = sizeof(struct vb2_buffer);
+>  
+> @@ -2539,6 +2557,8 @@ void vb2_core_queue_release(struct vb2_queue *q)
+>  	__vb2_queue_cancel(q);
+>  	mutex_lock(&q->mmap_lock);
+>  	__vb2_queue_free(q, q->num_buffers);
+> +	kfree(q->bufs);
+> +	q->bufs = NULL;
+>  	mutex_unlock(&q->mmap_lock);
+>  }
+>  EXPORT_SYMBOL_GPL(vb2_core_queue_release);
+> diff --git a/drivers/media/common/videobuf2/videobuf2-v4l2.c b/drivers/media/common/videobuf2/videobuf2-v4l2.c
+> index f460cac560f6..87c2d5916960 100644
+> --- a/drivers/media/common/videobuf2/videobuf2-v4l2.c
+> +++ b/drivers/media/common/videobuf2/videobuf2-v4l2.c
+> @@ -1156,7 +1156,7 @@ int _vb2_fop_release(struct file *file, struct mutex *lock)
+>  
+>  	if (lock)
+>  		mutex_lock(lock);
+> -	if (file->private_data == vdev->queue->owner) {
+> +	if (!vdev->queue->owner || file->private_data == vdev->queue->owner) {
+>  		vb2_queue_release(vdev->queue);
+>  		vdev->queue->owner = NULL;
+>  	}
+> @@ -1284,7 +1284,7 @@ void vb2_video_unregister_device(struct video_device *vdev)
+>  	 */
+>  	get_device(&vdev->dev);
+>  	video_unregister_device(vdev);
+> -	if (vdev->queue && vdev->queue->owner) {
+> +	if (vdev->queue) {
+>  		struct mutex *lock = vdev->queue->lock ?
+>  			vdev->queue->lock : vdev->lock;
+>  
+> diff --git a/include/media/videobuf2-core.h b/include/media/videobuf2-core.h
+> index cd3ff1cd759d..97153c69583f 100644
+> --- a/include/media/videobuf2-core.h
+> +++ b/include/media/videobuf2-core.h
+> @@ -558,6 +558,7 @@ struct vb2_buf_ops {
+>   * @dma_dir:	DMA mapping direction.
+>   * @bufs:	videobuf2 buffer structures
+>   * @num_buffers: number of allocated/used buffers
+> + * @max_allowed_buffers: upper limit of number of allocated/used buffers
+>   * @queued_list: list of buffers currently queued from userspace
+>   * @queued_count: number of buffers queued and ready for streaming.
+>   * @owned_by_drv_count: number of buffers owned by the driver
+> @@ -619,8 +620,9 @@ struct vb2_queue {
+>  	struct mutex			mmap_lock;
+>  	unsigned int			memory;
+>  	enum dma_data_direction		dma_dir;
+> -	struct vb2_buffer		*bufs[VB2_MAX_FRAME];
+> +	struct vb2_buffer		**bufs;
+>  	unsigned int			num_buffers;
+> +	unsigned int			max_allowed_buffers;
+>  
+>  	struct list_head		queued_list;
+>  	unsigned int			queued_count;
 
