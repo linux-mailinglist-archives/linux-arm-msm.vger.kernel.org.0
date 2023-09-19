@@ -2,58 +2,44 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 64FCB7A6EEA
+	by mail.lfdr.de (Postfix) with ESMTP id E11387A6EEC
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 01:03:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233267AbjISXDp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S233324AbjISXDp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Tue, 19 Sep 2023 19:03:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37736 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232804AbjISXDo (ORCPT
+        with ESMTP id S233295AbjISXDp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Sep 2023 19:03:44 -0400
+        Tue, 19 Sep 2023 19:03:45 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F9ACC0;
-        Tue, 19 Sep 2023 16:03:39 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FAF6C433CD;
-        Tue, 19 Sep 2023 23:03:36 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCF68C4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Sep 2023 16:03:39 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E845CC4339A;
+        Tue, 19 Sep 2023 23:03:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1695164618;
-        bh=AVm/wivqgdaYPeb2TV3gnjnCGczTQW2Knav2WIIU+3o=;
+        s=k20201202; t=1695164619;
+        bh=ZlM9v8YkTIu5gldl3i0xrKYWR8j2pPgJLuQ7gGbLUGQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=pHeNS/agG4PS6WxON62G7QizekGP+u5vmPP2ipBG9P8uwxjXW73vH9UdVrn6WwsUX
-         6vj/DYrQ14u7MCBDHmt/PNYf/5QogI4s9Q2qDAIQ8RjmUqJGtZMa+/HHPdILKcUTqv
-         rKRZ+FtjEEs4ZwWdnVA0nEaS/9sZE8ZHWaoqlI8ODh5wUUZvmQqni6a58P8HUUhy/m
-         A/0zyE9i5u1D34c4aqUkTYtJoSDelOi2ug+TUJ7Ekydhbq0qGuJataqmS+wOvtY+9Q
-         SJrCq78hKb8rM0ph9DeRyYaYa0fbPU9Vm7NbbIdjoUYfBUFW3Z+o2Yzm9O7aftsWMG
-         BdLPieoZMA90g==
+        b=cu1FMNLyu9IZ/4HXEKLQDug2OSpMYKvqR1p+ZlT7vXPQYe3oBK94azEXeD+Yw8iSN
+         znGuy1jXWzEfM9QInckBrRCrOdo3LrfIiEqgHs/uRO8hW71CjDnmfgKyRqRMqAq/vM
+         TYjrw9JDvyP69olobBAHr/vts9CR17MvylbOnspE0nq4YJlpVyYZo2HquiOJFeeWpa
+         2IPmtxgj2BWZxGmhGPR/tKudb45SNKqI4aqEZ7XUcjgye0YJ3AjPd5RLQN0TFs6/4z
+         wUa/ceTU47XhZjRvxyPL+IcceK9pCu67LOiOkRdf6XbVoGR/LbHf9XXAOy/9ns/2iu
+         76yc9+MflfmAg==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Jiri Kosina <jikos@kernel.org>,
-        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+To:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Douglas Anderson <dianders@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        yangcong5@huaqin.corp-partner.google.com,
-        devicetree@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
-        hsinyi@google.com, Chris Morgan <macroalpha82@gmail.com>,
-        linux-input@vger.kernel.org, cros-qcom-dts-watchers@chromium.org,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org
-Subject: Re: (subset) [PATCH v4 00/11] drm/panel and i2c-hid: Allow panels and touchscreens to power sequence together
-Date:   Tue, 19 Sep 2023 16:07:29 -0700
-Message-ID: <169516486001.787935.12322857337806445764.b4-ty@kernel.org>
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sc8180x: switch UFS QMP PHY to new style of bindings
+Date:   Tue, 19 Sep 2023 16:07:30 -0700
+Message-ID: <169516486002.787935.6971009810772569919.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230727171750.633410-1-dianders@chromium.org>
-References: <20230727171750.633410-1-dianders@chromium.org>
+In-Reply-To: <20230731111158.3998107-1-dmitry.baryshkov@linaro.org>
+References: <20230731111158.3998107-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -67,21 +53,16 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Thu, 27 Jul 2023 10:16:27 -0700, Douglas Anderson wrote:
-> The big motivation for this patch series is mostly described in the patch
-> ("drm/panel: Add a way for other devices to follow panel state"), but to
-> quickly summarize here: for touchscreens that are connected to a panel we
-> need the ability to power sequence the two device together. This is not a
-> new need, but so far we've managed to get by through a combination of
-> inefficiency, added costs, or perhaps just a little bit of brokenness.
-> It's time to do better. This patch series allows us to do better.
+On Mon, 31 Jul 2023 14:11:58 +0300, Dmitry Baryshkov wrote:
+> Change the UFS QMP PHY to use newer style of QMP PHY bindings (single
+> resource region, no per-PHY subnodes).
 > 
-> [...]
+> 
 
 Applied, thanks!
 
-[11/11] arm64: dts: qcom: sc7180: Link trogdor touchscreens to the panels
-        commit: 989aac9dea7fcfc33b5eedc4ae44abbf71460a4d
+[1/1] arm64: dts: qcom: sc8180x: switch UFS QMP PHY to new style of bindings
+      commit: 916b5916f228a9f83a22ad91ad8c5bf788a456d7
 
 Best regards,
 -- 
