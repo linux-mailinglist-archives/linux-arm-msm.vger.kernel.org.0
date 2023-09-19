@@ -2,113 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DF98D7A69E9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 19:50:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BABF37A6A9C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 20:23:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232643AbjISRuF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Sep 2023 13:50:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44998 "EHLO
+        id S232043AbjISSXY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Sep 2023 14:23:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232574AbjISRuF (ORCPT
+        with ESMTP id S229772AbjISSXY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Sep 2023 13:50:05 -0400
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6026697
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Sep 2023 10:49:59 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qier9-0006Uo-LT; Tue, 19 Sep 2023 19:49:51 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qier9-007VWb-6B; Tue, 19 Sep 2023 19:49:51 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qier8-0034Xf-TC; Tue, 19 Sep 2023 19:49:50 +0200
-From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-To:     Jonathan Cameron <jic23@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        kernel@pengutronix.de
-Subject: [PATCH 18/49] iio: adc: qcom-pm8xxx-xoadc: Convert to platform remove callback returning void
-Date:   Tue, 19 Sep 2023 19:49:00 +0200
-Message-Id: <20230919174931.1417681-19-u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230919174931.1417681-1-u.kleine-koenig@pengutronix.de>
-References: <20230919174931.1417681-1-u.kleine-koenig@pengutronix.de>
+        Tue, 19 Sep 2023 14:23:24 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAAA58F;
+        Tue, 19 Sep 2023 11:23:16 -0700 (PDT)
+Received: from ginger.. (unknown [191.33.115.175])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: koike)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id C75A5660319E;
+        Tue, 19 Sep 2023 19:23:09 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1695147794;
+        bh=MIhVHMuMS8iI5c/lxHJyWBy4zZOfp/8Z+Dcp2sjs9HE=;
+        h=From:To:Cc:Subject:Date:From;
+        b=iuLqsyfB8fSIgvACmga4IETDB20ZBCSv6kG9g0vdiSY90VLIoO5vB+mCeuaQ797AG
+         deeVUmA7lrgGv9vjb8L+n9ivv+BYXlQ97hOgJAcc8oUfPQUvVg0rqJy7YT2p0ropxM
+         2B/0usnIHgzo7dCz5jDoNqOyNoRd5QY2SEUV0+MMsYIJjLCwuMy/JEwmEh8EMfcZfM
+         bNg/j+rwyOlY8WCVavlnK0ME2MfX5iaG6KDEMfbzUN94thOpuwPGD2Fezw7ILuMv23
+         b49RvWTo0OYFhrlHd/RwJEkbQuRt/xr2bn62owJXsXY4flp6K4/13XbOBBK0T9zRSM
+         O2mMc1ScM99kw==
+From:   Helen Koike <helen.koike@collabora.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     robdclark@gmail.com, linux-arm-msm@vger.kernel.org,
+        neil.armstrong@linaro.org, linux-amlogic@lists.infradead.org,
+        p.zabel@pengutronix.de, linux-mediatek@lists.infradead.org,
+        heiko@sntech.de, jani.nikula@linux.intel.com,
+        intel-gfx@lists.freedesktop.org, alexander.deucher@amd.com,
+        amd-gfx@lists.freedesktop.org, airlied@redhat.com, daniel@ffwll.ch,
+        mripard@kernel.org, michel.daenzer@mailbox.org,
+        daniel@fooishbar.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] MAINTAINERS: drm/ci: add entries for xfail files
+Date:   Tue, 19 Sep 2023 15:22:49 -0300
+Message-Id: <20230919182249.153499-1-helen.koike@collabora.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1943; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=mgB08Ssm4kCGcek3HIIGbtIdKUkwaZ+3XGTC/slBrdU=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlCd8Euyxw681EZ5uGhj4Q+YhTo7MPmq9R2pOMW OxIKV6NnKmJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZQnfBAAKCRCPgPtYfRL+ TkH9CACZxdw5WZfHPWsqVsSjllo1OQQjRcUPaFXp7KoSmGsN+5vBTWPmaJD5odGlcE++3UklBdT bupQNfq6WLLDUjQmVFHBTJb0WGraHk7ZmRrXnxZi8GK9bsbIdpsg8bEot67Q2i5Gcp6TsuVuJ1H aPklMYjyJeu+fvwkAyhzyZZUj5pC03bU0kOjd7D7p3S/uj/733OknU6BEEaM19Z8TTJBCPWrWaL Xodo8X7vLmKE1APSxuv8qimSf5vmDQp1TG7PKSYdiO9xurS750/LyUoLirz/9DSJtCwWvnbmBIM Pf+BnNG5PHPasXz8clp7Ti6vzL8i+/Rc5PvNOPGsF6MeFzeb
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new() which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
+DRM CI keeps track of which tests are failing, flaking or being skipped
+by the ci in the expectations files. Add entries for those files to the
+corresponding driver maintainer, so they can be notified when they
+change.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
-
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Helen Koike <helen.koike@collabora.com>
 ---
- drivers/iio/adc/qcom-pm8xxx-xoadc.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iio/adc/qcom-pm8xxx-xoadc.c b/drivers/iio/adc/qcom-pm8xxx-xoadc.c
-index 64a3aeb6261c..01c5586df56d 100644
---- a/drivers/iio/adc/qcom-pm8xxx-xoadc.c
-+++ b/drivers/iio/adc/qcom-pm8xxx-xoadc.c
-@@ -957,7 +957,7 @@ static int pm8xxx_xoadc_probe(struct platform_device *pdev)
- 	return ret;
- }
+For reference: https://www.mail-archive.com/dri-devel@lists.freedesktop.org/msg463165.html
+
+ MAINTAINERS | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 90f13281d297..740a2ce2689c 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -6614,6 +6614,7 @@ S:	Maintained
+ B:	https://gitlab.freedesktop.org/drm/msm/-/issues
+ T:	git https://gitlab.freedesktop.org/drm/msm.git
+ F:	Documentation/devicetree/bindings/display/msm/
++F:	drivers/gpu/drm/ci/xfails/msm*
+ F:	drivers/gpu/drm/msm/
+ F:	include/uapi/drm/msm_drm.h
  
--static int pm8xxx_xoadc_remove(struct platform_device *pdev)
-+static void pm8xxx_xoadc_remove(struct platform_device *pdev)
- {
- 	struct iio_dev *indio_dev = platform_get_drvdata(pdev);
- 	struct pm8xxx_xoadc *adc = iio_priv(indio_dev);
-@@ -965,8 +965,6 @@ static int pm8xxx_xoadc_remove(struct platform_device *pdev)
- 	iio_device_unregister(indio_dev);
+@@ -6886,6 +6887,7 @@ T:	git git://anongit.freedesktop.org/drm/drm-misc
+ F:	Documentation/devicetree/bindings/display/amlogic,meson-dw-hdmi.yaml
+ F:	Documentation/devicetree/bindings/display/amlogic,meson-vpu.yaml
+ F:	Documentation/gpu/meson.rst
++F:	drivers/gpu/drm/ci/xfails/meson*
+ F:	drivers/gpu/drm/meson/
  
- 	regulator_disable(adc->vref);
--
--	return 0;
- }
+ DRM DRIVERS FOR ATMEL HLCDC
+@@ -6994,6 +6996,7 @@ L:	dri-devel@lists.freedesktop.org
+ L:	linux-mediatek@lists.infradead.org (moderated for non-subscribers)
+ S:	Supported
+ F:	Documentation/devicetree/bindings/display/mediatek/
++F:	drivers/gpu/drm/ci/xfails/mediatek*
+ F:	drivers/gpu/drm/mediatek/
+ F:	drivers/phy/mediatek/phy-mtk-dp.c
+ F:	drivers/phy/mediatek/phy-mtk-hdmi*
+@@ -7034,6 +7037,7 @@ L:	dri-devel@lists.freedesktop.org
+ S:	Maintained
+ T:	git git://anongit.freedesktop.org/drm/drm-misc
+ F:	Documentation/devicetree/bindings/display/rockchip/
++F:	drivers/gpu/drm/ci/xfails/rockchip*
+ F:	drivers/gpu/drm/rockchip/
  
- static const struct xoadc_variant pm8018_variant = {
-@@ -1019,7 +1017,7 @@ static struct platform_driver pm8xxx_xoadc_driver = {
- 		.of_match_table = pm8xxx_xoadc_id_table,
- 	},
- 	.probe		= pm8xxx_xoadc_probe,
--	.remove		= pm8xxx_xoadc_remove,
-+	.remove_new	= pm8xxx_xoadc_remove,
- };
- module_platform_driver(pm8xxx_xoadc_driver);
+ DRM DRIVERS FOR STI
+@@ -10476,6 +10480,7 @@ C:	irc://irc.oftc.net/intel-gfx
+ T:	git git://anongit.freedesktop.org/drm-intel
+ F:	Documentation/ABI/testing/sysfs-driver-intel-i915-hwmon
+ F:	Documentation/gpu/i915.rst
++F:	drivers/gpu/drm/ci/xfails/i915*
+ F:	drivers/gpu/drm/i915/
+ F:	include/drm/i915*
+ F:	include/uapi/drm/i915_drm.h
+@@ -17862,6 +17867,7 @@ C:	irc://irc.oftc.net/radeon
+ T:	git https://gitlab.freedesktop.org/agd5f/linux.git
+ F:	Documentation/gpu/amdgpu/
+ F:	drivers/gpu/drm/amd/
++F:	drivers/gpu/drm/ci/xfails/amd*
+ F:	drivers/gpu/drm/radeon/
+ F:	include/uapi/drm/amdgpu_drm.h
+ F:	include/uapi/drm/radeon_drm.h
+@@ -22846,6 +22852,7 @@ L:	dri-devel@lists.freedesktop.org
+ L:	virtualization@lists.linux-foundation.org
+ S:	Maintained
+ T:	git git://anongit.freedesktop.org/drm/drm-misc
++F:	drivers/gpu/drm/ci/xfails/virtio*
+ F:	drivers/gpu/drm/virtio/
+ F:	include/uapi/linux/virtio_gpu.h
  
 -- 
-2.40.1
+2.34.1
 
