@@ -2,224 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 44A2E7A6312
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 14:34:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 387957A6328
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 14:38:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231174AbjISMez (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Sep 2023 08:34:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56354 "EHLO
+        id S231697AbjISMiF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Sep 2023 08:38:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231320AbjISMey (ORCPT
+        with ESMTP id S231784AbjISMiF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Sep 2023 08:34:54 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E98FDF5;
-        Tue, 19 Sep 2023 05:34:45 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36D65C433C9;
-        Tue, 19 Sep 2023 12:34:42 +0000 (UTC)
-Message-ID: <50e4bc29-2c2d-48ae-aafc-bcedcba9c104@xs4all.nl>
-Date:   Tue, 19 Sep 2023 14:34:40 +0200
+        Tue, 19 Sep 2023 08:38:05 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 610A6FC
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Sep 2023 05:37:59 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-99bdcade7fbso722599666b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Sep 2023 05:37:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1695127078; x=1695731878; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ElFl2P9I49dKgc5GPio4ojq866f2cNZ+vD/OQLMGKro=;
+        b=QCUlzv6R3rLQKKKVaSdV5L7V0i20DHFDDz855oS0zFmKvifyo7+LGtVNjS8MHaoJLI
+         hABKXjwTS94H44hjD20Iy8Htabheo2p4XSH0L4+4RXIvWPblkj1Qn4DHxBKHfm9T+A6f
+         NZnKtPgi0Z77hpIpIOLXHgy1n8lqQxSiyEFW3Vx3YAZglTPF17S0Swoc42juYfuDsegI
+         FS0BPjKftJi+3cfJn90PuA9RmVekZSo4gJMH8j3+7Bh0Yaoe9/q1N74FK/DwxR8DwFtW
+         ID5Wx5iSBnYIRKVDx/dBVF/fHuueY9xTWAHI9rbqVX+WZgtc4Q6TvCl70rz0Y2w/4tii
+         s4+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695127078; x=1695731878;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ElFl2P9I49dKgc5GPio4ojq866f2cNZ+vD/OQLMGKro=;
+        b=hHxg+q4I7kHNoeRIREoda0/Uuw9sYdLn1quvC0QvNgNSpUz+sD2gfiAwm6J+Bi0+BF
+         GOefaTJEf+lrPuDyvti+RplWIswnPmiy9dsnRkFu+DWwq5SxdO/QQVxk0I2BI2922wMe
+         IanzBbS2gnGY31VQPYHBzSHUhoRC8AuR2K60jlqaHyoGqP+UEIPRS44+BOdax4r5Mzxt
+         /GEbT2/RVC5ri4m1yUd9OFEZ8IQ+S7YMEu8ICYNgqYMZr9j7oiRIjIxz6yD19HkU+yh2
+         hS/7ifFM2ug9apUkWM0zsIY30UoU2vX2l8nDVwtUz2nTXLwTMZstmxwB7oIEpUgYtdgH
+         9QLQ==
+X-Gm-Message-State: AOJu0YxiTTbUWyYeZqxGz71c83aVwj7xkSo2swSVmCfbvBfRarRrxXbv
+        gCw3s+JeeHnImyv3yaq6TNaHpg==
+X-Google-Smtp-Source: AGHT+IHF+mK3Ru/oqZskjsjpAcam/b3opFYlTzcYXoOk56BMQtkD/TfxpO/C1DxDPxuKm7003vykSg==
+X-Received: by 2002:a17:906:73c4:b0:9ad:bffb:2e2c with SMTP id n4-20020a17090673c400b009adbffb2e2cmr10789397ejl.39.1695127077803;
+        Tue, 19 Sep 2023 05:37:57 -0700 (PDT)
+Received: from [172.20.24.238] (static-212-193-78-212.thenetworkfactory.nl. [212.78.193.212])
+        by smtp.gmail.com with ESMTPSA id jx10-20020a170906ca4a00b009ae3e6c342asm106371ejb.111.2023.09.19.05.37.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Sep 2023 05:37:57 -0700 (PDT)
+Message-ID: <463923fe-7938-ad1b-fd79-6491329289af@linaro.org>
+Date:   Tue, 19 Sep 2023 14:37:56 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 20/49] media: core: Rework how create_buf index
- returned value is computed
-Content-Language: en-US, nl
-To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-        mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
-        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
-        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
-        nicolas.dufresne@collabora.com
-Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
-        kernel@collabora.com
-References: <20230914133323.198857-1-benjamin.gaignard@collabora.com>
- <20230914133323.198857-21-benjamin.gaignard@collabora.com>
-From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-In-Reply-To: <20230914133323.198857-21-benjamin.gaignard@collabora.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH V2 4/4] arm64: dts: qcom: ipq5018: Add tsens node
+Content-Language: en-US
+To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        srinivas.kandagatla@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        thara.gopinath@gmail.com, rafael@kernel.org,
+        daniel.lezcano@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, dmitry.baryshkov@linaro.org
+References: <20230915121504.806672-1-quic_srichara@quicinc.com>
+ <20230915121504.806672-5-quic_srichara@quicinc.com>
+ <b0fe17e4-e4d8-02af-4e09-06b3930b38fe@linaro.org>
+ <b40c6439-ab73-d796-589e-ffee21cedfc9@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <b40c6439-ab73-d796-589e-ffee21cedfc9@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,
-        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch is too early, it should be moved to after 44/49.
-
-Up to 44/49 (and excluding this patch), it is all internal rework that can
-fairly easily be merged. This patch + 45-49 is where the actual delete_buf
-implementation happens.
-
-I would like to get all the prep work merged fairly soon (ideally for 6.7).
-At that point we support more than 32 buffers, but not yet deleting buffers.
-
-That last step can be worked on separately. But we're dealing with a much
-shorter patch series at that point.
-
-I'll get back to this patch later for a proper review.
-
-Regards,
-
-	Hans
-
-On 14/09/2023 15:32, Benjamin Gaignard wrote:
-> When DELETE_BUFS will be introduced holes could created in bufs array.
-> To be able to reuse these unused indices reworking how create->index
-> is set is mandatory.
-> Let __vb2_queue_alloc() decide which first index is correct and
-> forward this to the caller.
+On 19/09/2023 09:28, Sricharan Ramabadhran wrote:
 > 
-> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-> ---
->  .../media/common/videobuf2/videobuf2-core.c   | 24 +++++++++++++------
->  .../media/common/videobuf2/videobuf2-v4l2.c   | 17 +++++++------
->  include/media/videobuf2-core.h                |  4 +++-
->  3 files changed, 30 insertions(+), 15 deletions(-)
 > 
-> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
-> index 70b6b8f8c390..a4c2fae8705d 100644
-> --- a/drivers/media/common/videobuf2/videobuf2-core.c
-> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
-> @@ -443,15 +443,24 @@ static void vb2_queue_remove_buffer(struct vb2_queue *q, struct vb2_buffer *vb)
->   */
->  static int __vb2_queue_alloc(struct vb2_queue *q, enum vb2_memory memory,
->  			     unsigned int num_buffers, unsigned int num_planes,
-> -			     const unsigned plane_sizes[VB2_MAX_PLANES])
-> +			     const unsigned plane_sizes[VB2_MAX_PLANES],
-> +			     unsigned int *first)
->  {
->  	unsigned int buffer, plane;
->  	struct vb2_buffer *vb;
-> +	unsigned long first_index;
->  	int ret;
->  
->  	/* Ensure that q->num_buffers+num_buffers is below q->max_allowed_buffers */
->  	num_buffers = min_t(unsigned int, num_buffers,
-> -			    q->max_allowed_buffers - q->num_buffers);
-> +			    q->max_allowed_buffers - vb2_get_num_buffers(q));
-> +
-> +	first_index = vb2_get_num_buffers(q);
-> +
-> +	if (first_index >= q->max_allowed_buffers)
-> +		return 0;
-> +
-> +	*first = first_index;
->  
->  	for (buffer = 0; buffer < num_buffers; ++buffer) {
->  		/* Allocate vb2 buffer structures */
-> @@ -472,7 +481,7 @@ static int __vb2_queue_alloc(struct vb2_queue *q, enum vb2_memory memory,
->  		}
->  		call_void_bufop(q, init_buffer, vb);
->  
-> -		if (!vb2_queue_add_buffer(q, vb, q->num_buffers + buffer)) {
-> +		if (!vb2_queue_add_buffer(q, vb, first_index++)) {
->  			dprintk(q, 1, "failed adding buffer %d to queue\n", buffer);
->  			kfree(vb);
->  			break;
-> @@ -832,7 +841,7 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
->  	unsigned int q_num_bufs = vb2_get_num_buffers(q);
->  	unsigned plane_sizes[VB2_MAX_PLANES] = { };
->  	bool non_coherent_mem = flags & V4L2_MEMORY_FLAG_NON_COHERENT;
-> -	unsigned int i;
-> +	unsigned int i, first;
->  	int ret = 0;
->  
->  	if (q->streaming) {
-> @@ -919,7 +928,7 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
->  
->  	/* Finally, allocate buffers and video memory */
->  	allocated_buffers =
-> -		__vb2_queue_alloc(q, memory, num_buffers, num_planes, plane_sizes);
-> +		__vb2_queue_alloc(q, memory, num_buffers, num_planes, plane_sizes, &first);
->  	if (allocated_buffers == 0) {
->  		dprintk(q, 1, "memory allocation failed\n");
->  		ret = -ENOMEM;
-> @@ -993,7 +1002,8 @@ EXPORT_SYMBOL_GPL(vb2_core_reqbufs);
->  int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
->  			 unsigned int flags, unsigned int *count,
->  			 unsigned int requested_planes,
-> -			 const unsigned int requested_sizes[])
-> +			 const unsigned int requested_sizes[],
-> +			 unsigned int *first)
->  {
->  	unsigned int num_planes = 0, num_buffers, allocated_buffers;
->  	unsigned plane_sizes[VB2_MAX_PLANES] = { };
-> @@ -1055,7 +1065,7 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
->  
->  	/* Finally, allocate buffers and video memory */
->  	allocated_buffers = __vb2_queue_alloc(q, memory, num_buffers,
-> -				num_planes, plane_sizes);
-> +				num_planes, plane_sizes, first);
->  	if (allocated_buffers == 0) {
->  		dprintk(q, 1, "memory allocation failed\n");
->  		ret = -ENOMEM;
-> diff --git a/drivers/media/common/videobuf2/videobuf2-v4l2.c b/drivers/media/common/videobuf2/videobuf2-v4l2.c
-> index 3eb707abc26b..a88abcea2921 100644
-> --- a/drivers/media/common/videobuf2/videobuf2-v4l2.c
-> +++ b/drivers/media/common/videobuf2/videobuf2-v4l2.c
-> @@ -762,7 +762,6 @@ int vb2_create_bufs(struct vb2_queue *q, struct v4l2_create_buffers *create)
->  
->  	fill_buf_caps(q, &create->capabilities);
->  	validate_memory_flags(q, create->memory, &create->flags);
-> -	create->index = q->num_buffers;
->  	if (create->count == 0)
->  		return ret != -EBUSY ? ret : 0;
->  
-> @@ -804,11 +803,16 @@ int vb2_create_bufs(struct vb2_queue *q, struct v4l2_create_buffers *create)
->  	for (i = 0; i < requested_planes; i++)
->  		if (requested_sizes[i] == 0)
->  			return -EINVAL;
-> -	return ret ? ret : vb2_core_create_bufs(q, create->memory,
-> -						create->flags,
-> -						&create->count,
-> -						requested_planes,
-> -						requested_sizes);
-> +	if (ret)
-> +		return ret;
-> +
-> +	ret = vb2_core_create_bufs(q, create->memory,
-> +				   create->flags,
-> +				   &create->count,
-> +				   requested_planes,
-> +				   requested_sizes,
-> +				   &create->index);
-> +	return ret;
->  }
->  EXPORT_SYMBOL_GPL(vb2_create_bufs);
->  
-> @@ -1036,7 +1040,6 @@ int vb2_ioctl_create_bufs(struct file *file, void *priv,
->  	int res = vb2_verify_memory_type(vdev->queue, p->memory,
->  			p->format.type);
->  
-> -	p->index = vdev->queue->num_buffers;
->  	fill_buf_caps(vdev->queue, &p->capabilities);
->  	validate_memory_flags(vdev->queue, p->memory, &p->flags);
->  	/*
-> diff --git a/include/media/videobuf2-core.h b/include/media/videobuf2-core.h
-> index 1ecaf4b5a76f..19c93d8eb7c8 100644
-> --- a/include/media/videobuf2-core.h
-> +++ b/include/media/videobuf2-core.h
-> @@ -803,6 +803,7 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
->   * @count: requested buffer count.
->   * @requested_planes: number of planes requested.
->   * @requested_sizes: array with the size of the planes.
-> + * @first: index of the first created buffer
->   *
->   * Videobuf2 core helper to implement VIDIOC_CREATE_BUFS() operation. It is
->   * called internally by VB2 by an API-specific handler, like
-> @@ -819,7 +820,8 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
->  int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
->  			 unsigned int flags, unsigned int *count,
->  			 unsigned int requested_planes,
-> -			 const unsigned int requested_sizes[]);
-> +			 const unsigned int requested_sizes[],
-> +			 unsigned int *first);
->  
->  /**
->   * vb2_core_prepare_buf() - Pass ownership of a buffer from userspace
+> On 9/15/2023 6:16 PM, Krzysztof Kozlowski wrote:
+>> On 15/09/2023 14:15, Sricharan Ramabadhran wrote:
+>>> IPQ5018 has tsens V1.0 IP with 4 sensors.
+>>> There is no RPM, so tsens has to be manually enabled. Adding the tsens
+>>> and nvmem node and IPQ5018 has 4 thermal sensors (zones). With the
+>>> critical temperature being 120'C and action is to reboot. Adding all
+>>> the 4 zones here.
+>>>
+>>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>>> ---
+>>>   [v2] Fixed node names, order and added qfprom cells for points
+>>>        seperately to use the calibrate_common and squashed thermal_zone
+>>>        nodes here
+>>>
+>>>   arch/arm64/boot/dts/qcom/ipq5018.dtsi | 169 ++++++++++++++++++++++++++
+>>>   1 file changed, 169 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+>>> index 9f13d2dcdfd5..d53aea5342e2 100644
+>>> --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+>>> @@ -93,6 +93,117 @@ soc: soc@0 {
+>>>   		#size-cells = <1>;
+>>>   		ranges = <0 0 0 0xffffffff>;
+>>>   
+>>> +		qfprom: qfprom@a0000 {
+>>> +			#address-cells = <1>;
+>>> +			#size-cells = <1>;
+>>> +			compatible = "qcom,ipq5018-qfprom", "qcom,qfprom";
+>>
+>> This is a friendly reminder during the review process.
+>>
+>> It seems my previous comments were not fully addressed. Maybe my
+>> feedback got lost between the quotes, maybe you just forgot to apply it.
+>> Please go back to the previous discussion and either implement all
+>> requested changes or keep discussing them.
+>>
+> 
+>   oops, moved the compatible to first, but missed it on posting version.
+>   Will fix it in V3.
+
+What do you mean by "posting version"? If it is not the same as your Git
+version, then your process is buggy. You must work on mainline tree and
+send patches from that tree. Not edit patches and edit Git separately...
+
+Best regards,
+Krzysztof
 
