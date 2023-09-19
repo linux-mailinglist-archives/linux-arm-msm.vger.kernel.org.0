@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 60C727A5E65
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 11:44:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C67D7A5E6E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 11:44:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230132AbjISJob (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Sep 2023 05:44:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37144 "EHLO
+        id S231256AbjISJo7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Sep 2023 05:44:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230137AbjISJoa (ORCPT
+        with ESMTP id S231464AbjISJo4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Sep 2023 05:44:30 -0400
-Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9C9E9E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Sep 2023 02:44:24 -0700 (PDT)
-Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-59c26aa19b7so33219787b3.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Sep 2023 02:44:24 -0700 (PDT)
+        Tue, 19 Sep 2023 05:44:56 -0400
+Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0720CED
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Sep 2023 02:44:50 -0700 (PDT)
+Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-59bcd927b45so57188877b3.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Sep 2023 02:44:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695116664; x=1695721464; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695116689; x=1695721489; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ysPzsxoFUrEsYdw65gOzDGE5dn8Oinp+8joKldVVKSw=;
-        b=q6fFo60PabHPLZuA8h87idm3N0ItrtPB9b6z1MtlWDXOc0/ZH3ryyzl2BoAhgmTXpr
-         qSHe5ZWIZ170ZWHRk2lw3wjpQr+Vx3iDAMEFP5vHqP7NleIpqMLtuzwALCq4454phPdr
-         eGQoizFQV55FeRlagANENi6KE68OOziyG5G4JXbhmRwhb9HqQdQGlKxYMO9cTXxipYDB
-         0ETP0i2SFGLqZMDmyzgAiIYjgrkx0A5O7rWTJzubYJF/hkQHv4OhpEGqbpA8ZqRKf0ks
-         gfhVb7u6bYn6wxLBupIRX6kCU0RThfTOSnz+FCxJALD+JkKavMcOeAahJukztc15xatN
-         ahQg==
+        bh=kJo8D8JWanSKhtAvp3wVew9z7mMntNBF78rt2N3S95c=;
+        b=lFWBcpxIUP2fSTBlbTrIPi5hiymBIi5amdRAdE17kX2Ib2P4cDhNwn/ph5ZvIgsJtM
+         CmbUd543Ot/90OicYer6Jy16CjgtFUUdWJJ3oj4VhK/0oRho6T6y8vKEQwRo/ggrnyNo
+         ja9h/3KWGm8AT6ZTAVJwX0CqYvHi8xTONzd8mUBexfQU0Sr8ebUEeRT6oXys2omUpyYA
+         Xh+BChx8IP0dH0YypXy9ACdQB+FpTMLPAVgUoxo1nLbJj4hbllOtJfQHD62QOlNEE476
+         OErKa3nb4OcYBx09BWYUApTJNejS2OgVN4jmC5M4eX38dRsyyuiWl3poBxVF2q4pbj/6
+         TMdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695116664; x=1695721464;
+        d=1e100.net; s=20230601; t=1695116689; x=1695721489;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ysPzsxoFUrEsYdw65gOzDGE5dn8Oinp+8joKldVVKSw=;
-        b=HmvcTL96bAA69l4TF8p9QNycCVQY33I1cnY1jTnZCcp3KZ7KHgi4MiWUvJDylk79XT
-         rMCUA2H7eCjf4vsgnQ6vn7M9XHN/zsZzEJ1mnRHve5T0KiQ5ryub87uSXcFINFmQQH3r
-         QL3J165W6lBpcA0J8+aBfbZzqzwEJzIIYQzoT2UcpToGq9pC/TVujwaVPSwr1Pv8oqHf
-         hLIxn7Ui5VMPVh9HLNw81unc1WBdaTFCk3kaIIiMdblnZXfTj7Nk7vFPPDDCQbKh/8rk
-         40RN69LdC89W3a18AQYuxr0ZABXMUaGVYojF1I9ngqdApnFhID3hZsVIE1t1xskpEUdF
-         zPsg==
-X-Gm-Message-State: AOJu0YwuFMA66vIf6qOQtx5tLzRiaiARSwIW4cz5REWd3kXRno4HfmtI
-        Wt8gsP01FxaWKYEv50yrf7jF8YEh6ykAYLOaV34zKg==
-X-Google-Smtp-Source: AGHT+IFDoHCMQ5h63cC088FeLRoLD59RSptUQufYrG2ZNSumbv3kjymGxXEH332h+NW8JmWZ7HwRSrR2GmVTVtko5os=
-X-Received: by 2002:a81:48cb:0:b0:58c:b5d2:bbd8 with SMTP id
- v194-20020a8148cb000000b0058cb5d2bbd8mr11777166ywa.28.1695116663916; Tue, 19
- Sep 2023 02:44:23 -0700 (PDT)
+        bh=kJo8D8JWanSKhtAvp3wVew9z7mMntNBF78rt2N3S95c=;
+        b=WertXrq1P2Uiv0kc6S2kH9YlGqPKDneAH9iUQt84gkxHEfr73uBpj43g8jKA1/dhC1
+         IqNuNkALz7/DOpfYQWV5VDNyWVrs+hUyQmT2QiqWTEX9PAOLvIVxtq8tWHjmecW7fRRF
+         Jj1gcmQtBBqCT29pigjcrbvJYR5brWolRb/2+XOzduB2szkrrULHC7ysuULHcbwZCS1C
+         bpdUgaX4Ii1rnQ91DHi3Bjsjoq5LZ4d3yLC3Rwy5UjGMSrxF2ysEw9gERZmkQWJZtiPg
+         8xU6g8sUBU55zVAaXekB0CM8i7pJtnqIkq2578FV0zaqjeTMCqB67W87ENm/Lo1RtzBU
+         kU/g==
+X-Gm-Message-State: AOJu0YyHvuwHaew40BfzMFOnAwye2v4A1phV1ULw2VIc2HsVrvH+wzF6
+        Yq4VGCH3SHWdhVu/IXZ60TiRuB6XQEEyEF3/2djaQleu6F2mjVL6NUs=
+X-Google-Smtp-Source: AGHT+IENyn8VI3VAOno3vVbJ1bNqVaui83jdYwUQMKt0LOgHNtl5eLnB0nSX0Nl6ZAz1VNxEww1ovp95wTFVdQ2s8hs=
+X-Received: by 2002:a0d:df43:0:b0:59a:b7b2:5f02 with SMTP id
+ i64-20020a0ddf43000000b0059ab7b25f02mr13131931ywe.18.1695116689106; Tue, 19
+ Sep 2023 02:44:49 -0700 (PDT)
 MIME-Version: 1.0
 References: <1694813901-26952-1-git-send-email-quic_khsieh@quicinc.com>
- <1694813901-26952-2-git-send-email-quic_khsieh@quicinc.com>
- <CAA8EJprRFYMF-6yxcL75rftfii0kt7hmg_+TeOMJw+BRyDYdeg@mail.gmail.com> <4634ca79-e12b-0608-a123-6ed123f4a03c@quicinc.com>
-In-Reply-To: <4634ca79-e12b-0608-a123-6ed123f4a03c@quicinc.com>
+ <1694813901-26952-3-git-send-email-quic_khsieh@quicinc.com>
+ <CAA8EJprRrTW3pqmjVbfKG5t8t_QNGvPboETNgaAUxg3PvkRjcA@mail.gmail.com> <c1b816bc-4fee-338b-d066-6e6c528b5e3c@quicinc.com>
+In-Reply-To: <c1b816bc-4fee-338b-d066-6e6c528b5e3c@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 19 Sep 2023 12:44:12 +0300
-Message-ID: <CAA8EJppuxn94o01Us-xdJAP4dVeH3Gp=bSrKrJPtJ4N=72G2fA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/7] drm/msm/dp: tie dp_display_irq_handler() with dp driver
+Date:   Tue, 19 Sep 2023 12:44:38 +0300
+Message-ID: <CAA8EJppEJ_0JwVqRv+ue9kJRZhOdxXVnHe5G_ey-8eKZ9H23TQ@mail.gmail.com>
+Subject: Re: [PATCH v3 2/7] drm/msm/dp: replace is_connected with link_ready
 To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
 Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
         sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
@@ -73,127 +73,165 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 18 Sept 2023 at 20:03, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+On Mon, 18 Sept 2023 at 20:09, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
 >
 >
-> On 9/15/2023 5:29 PM, Dmitry Baryshkov wrote:
+> On 9/15/2023 6:51 PM, Dmitry Baryshkov wrote:
 > > On Sat, 16 Sept 2023 at 00:38, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
-> >> Currently the dp_display_irq_handler() is executed at msm_dp_modeset_init()
-> >> which ties irq registration to the DPU device's life cycle, while depending on
-> >> resources that are released as the DP device is torn down. Move register DP
-> >> driver irq handler at dp_display_probe() to have dp_display_irq_handler()
-> >> is tied with DP device.
-> >>
-> >> Changes in v3:
-> >> -- move calling dp_display_irq_handler() to probe
-> > Was there a changelog for the previous reivions? What is the
-> > difference between v1 and v2?
+> >> The is_connected flag is set to true after DP mainlink successfully
+> >> finish link training. Replace the is_connected flag with link_ready
+> > finishes.
+> > Also this is not a replace, this patch renames the flag.
+> yes, it is rename.
+> >
+> >> flag to avoid confusing.
+> > confusing what with what?
 >
-> Sorry, v2 is same as v3.
+> we have ST_MAINLINK_RAEDY state which means mainlink had finished link
+> training and ready for video.
 >
-> I submitted v2 first but found i forget to add change logs from review
-> comments of v1.
->
-> Therefore i submit v3 to add changes logs which missing at v2.
+> Therefore I think link_ready is more meaningful than is_connected.
 
-This doesn't consist of a change. It should have been a RESEND or just
-responding with the changelog. V3 means new revision.
+Guess, all this should have been in the commit message.
 
->
 >
 >
 > >
 > >> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 > >> ---
-> >>   drivers/gpu/drm/msm/dp/dp_display.c | 35 +++++++++++++----------------------
-> >>   drivers/gpu/drm/msm/dp/dp_display.h |  1 -
-> >>   2 files changed, 13 insertions(+), 23 deletions(-)
+> >>   drivers/gpu/drm/msm/dp/dp_display.c | 19 +++++++++----------
+> >>   drivers/gpu/drm/msm/dp/dp_display.h |  2 +-
+> >>   drivers/gpu/drm/msm/dp/dp_drm.c     | 14 +++++++-------
+> >>   3 files changed, 17 insertions(+), 18 deletions(-)
 > >>
 > >> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> >> index 76f1395..c217430 100644
+> >> index c217430..18d16c7 100644
 > >> --- a/drivers/gpu/drm/msm/dp/dp_display.c
 > >> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> >> @@ -1193,30 +1193,23 @@ static irqreturn_t dp_display_irq_handler(int irq, void *dev_id)
-> >>          return ret;
+> >> @@ -367,12 +367,11 @@ static void dp_display_send_hpd_event(struct msm_dp *dp_display)
+> >>          drm_helper_hpd_irq_event(connector->dev);
 > >>   }
 > >>
-> >> -int dp_display_request_irq(struct msm_dp *dp_display)
-> >> +static int dp_display_request_irq(struct dp_display_private *dp)
+> >> -
+> >>   static int dp_display_send_hpd_notification(struct dp_display_private *dp,
+> >>                                              bool hpd)
 > >>   {
-> >>          int rc = 0;
-> >> -       struct dp_display_private *dp;
-> >> -
-> >> -       if (!dp_display) {
-> >> -               DRM_ERROR("invalid input\n");
-> >> -               return -EINVAL;
-> >> -       }
-> >> -
-> >> -       dp = container_of(dp_display, struct dp_display_private, dp_display);
-> >> +       struct device *dev = &dp->pdev->dev;
+> >> -       if ((hpd && dp->dp_display.is_connected) ||
+> >> -                       (!hpd && !dp->dp_display.is_connected)) {
+> >> +       if ((hpd && dp->dp_display.link_ready) ||
+> >> +                       (!hpd && !dp->dp_display.link_ready)) {
+> >>                  drm_dbg_dp(dp->drm_dev, "HPD already %s\n",
+> >>                                  (hpd ? "on" : "off"));
+> >>                  return 0;
+> >> @@ -382,7 +381,7 @@ static int dp_display_send_hpd_notification(struct dp_display_private *dp,
+> >>          if (!hpd)
+> >>                  dp->panel->video_test = false;
 > >>
-> >> -       dp->irq = irq_of_parse_and_map(dp->pdev->dev.of_node, 0);
-> >>          if (!dp->irq) {
-> > What is the point in this check?
-> >
-> >> -               DRM_ERROR("failed to get irq\n");
-> >> -               return -EINVAL;
-> >> +               dp->irq = platform_get_irq(dp->pdev, 0);
-> >> +               if (!dp->irq) {
-> >> +                       DRM_ERROR("failed to get irq\n");
-> >> +                       return -EINVAL;
-> >> +               }
+> >> -       dp->dp_display.is_connected = hpd;
+> >> +       dp->dp_display.link_ready = hpd;
+> >>
+> >>          drm_dbg_dp(dp->drm_dev, "type=%d hpd=%d\n",
+> >>                          dp->dp_display.connector_type, hpd);
+> >> @@ -922,7 +921,7 @@ int dp_display_set_plugged_cb(struct msm_dp *dp_display,
+> >>
+> >>          dp_display->plugged_cb = fn;
+> >>          dp_display->codec_dev = codec_dev;
+> >> -       plugged = dp_display->is_connected;
+> >> +       plugged = dp_display->link_ready;
+> >>          dp_display_handle_plugged_change(dp_display, plugged);
+> >>
+> >>          return 0;
+> >> @@ -1352,16 +1351,16 @@ static int dp_pm_resume(struct device *dev)
+> >>           * also only signal audio when disconnected
+> >>           */
+> >>          if (dp->link->sink_count) {
+> >> -               dp->dp_display.is_connected = true;
+> >> +               dp->dp_display.link_ready = true;
+> >>          } else {
+> >> -               dp->dp_display.is_connected = false;
+> >> +               dp->dp_display.link_ready = false;
+> >>                  dp_display_handle_plugged_change(dp_display, false);
 > >>          }
 > >>
-> >> -       rc = devm_request_irq(dp_display->drm_dev->dev, dp->irq,
-> >> -                       dp_display_irq_handler,
-> >> +       rc = devm_request_irq(dev, dp->irq, dp_display_irq_handler,
-> >>                          IRQF_TRIGGER_HIGH, "dp_display_isr", dp);
-> >>          if (rc < 0) {
-> >> -               DRM_ERROR("failed to request IRQ%u: %d\n",
-> >> -                               dp->irq, rc);
-> >> +               DRM_ERROR("failed to request IRQ%u: %d\n", dp->irq, rc);
-> >>                  return rc;
+> >>          drm_dbg_dp(dp->drm_dev,
+> >>                  "After, type=%d sink=%d conn=%d core_init=%d phy_init=%d power=%d\n",
+> >>                  dp->dp_display.connector_type, dp->link->sink_count,
+> >> -               dp->dp_display.is_connected, dp->core_initialized,
+> >> +               dp->dp_display.link_ready, dp->core_initialized,
+> >>                  dp->phy_initialized, dp_display->power_on);
+> >>
+> >>          mutex_unlock(&dp->event_mutex);
+> >> @@ -1754,8 +1753,8 @@ void dp_bridge_hpd_notify(struct drm_bridge *bridge,
+> >>                  return;
 > >>          }
 > >>
-> >> @@ -1287,6 +1280,10 @@ static int dp_display_probe(struct platform_device *pdev)
-> >>
-> >>          platform_set_drvdata(pdev, &dp->dp_display);
-> >>
-> >> +       rc = dp_display_request_irq(dp);
-> >> +       if (rc)
-> >> +               return rc;
-> > This way the IRQ ends up being enabled in _probe. Are we ready to
-> > handle it here? Is the DP device fully setup at this moment?
-> >
-> >> +
-> >>          rc = component_add(&pdev->dev, &dp_display_comp_ops);
-> >>          if (rc) {
-> >>                  DRM_ERROR("component add failed, rc=%d\n", rc);
-> >> @@ -1549,12 +1546,6 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
-> >>
-> >>          dp_priv = container_of(dp_display, struct dp_display_private, dp_display);
-> >>
-> >> -       ret = dp_display_request_irq(dp_display);
-> >> -       if (ret) {
-> >> -               DRM_ERROR("request_irq failed, ret=%d\n", ret);
-> >> -               return ret;
-> >> -       }
-> >> -
-> >>          ret = dp_display_get_next_bridge(dp_display);
-> >>          if (ret)
-> >>                  return ret;
+> >> -       if (!dp_display->is_connected && status == connector_status_connected)
+> >> +       if (!dp_display->link_ready && status == connector_status_connected)
+> >>                  dp_add_event(dp, EV_HPD_PLUG_INT, 0, 0);
+> >> -       else if (dp_display->is_connected && status == connector_status_disconnected)
+> >> +       else if (dp_display->link_ready && status == connector_status_disconnected)
+> >>                  dp_add_event(dp, EV_HPD_UNPLUG_INT, 0, 0);
+> >>   }
 > >> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
-> >> index 1e9415a..b3c08de 100644
+> >> index b3c08de..d65693e 100644
 > >> --- a/drivers/gpu/drm/msm/dp/dp_display.h
 > >> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
-> >> @@ -35,7 +35,6 @@ struct msm_dp {
-> >>   int dp_display_set_plugged_cb(struct msm_dp *dp_display,
-> >>                  hdmi_codec_plugged_cb fn, struct device *codec_dev);
-> >>   int dp_display_get_modes(struct msm_dp *dp_display);
-> >> -int dp_display_request_irq(struct msm_dp *dp_display);
-> >>   bool dp_display_check_video_test(struct msm_dp *dp_display);
-> >>   int dp_display_get_test_bpp(struct msm_dp *dp_display);
-> >>   void dp_display_signal_audio_start(struct msm_dp *dp_display);
+> >> @@ -16,7 +16,7 @@ struct msm_dp {
+> >>          struct drm_bridge *bridge;
+> >>          struct drm_connector *connector;
+> >>          struct drm_bridge *next_bridge;
+> >> -       bool is_connected;
+> >> +       bool link_ready;
+> >>          bool audio_enabled;
+> >>          bool power_on;
+> >>          unsigned int connector_type;
+> >> diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
+> >> index 785d766..ee945ca 100644
+> >> --- a/drivers/gpu/drm/msm/dp/dp_drm.c
+> >> +++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+> >> @@ -24,10 +24,10 @@ static enum drm_connector_status dp_bridge_detect(struct drm_bridge *bridge)
+> >>
+> >>          dp = to_dp_bridge(bridge)->dp_display;
+> >>
+> >> -       drm_dbg_dp(dp->drm_dev, "is_connected = %s\n",
+> >> -               (dp->is_connected) ? "true" : "false");
+> >> +       drm_dbg_dp(dp->drm_dev, "link_ready = %s\n",
+> >> +               (dp->link_ready) ? "true" : "false");
+> >>
+> >> -       return (dp->is_connected) ? connector_status_connected :
+> >> +       return (dp->link_ready) ? connector_status_connected :
+> >>                                          connector_status_disconnected;
+> >>   }
+> >>
+> >> @@ -40,8 +40,8 @@ static int dp_bridge_atomic_check(struct drm_bridge *bridge,
+> >>
+> >>          dp = to_dp_bridge(bridge)->dp_display;
+> >>
+> >> -       drm_dbg_dp(dp->drm_dev, "is_connected = %s\n",
+> >> -               (dp->is_connected) ? "true" : "false");
+> >> +       drm_dbg_dp(dp->drm_dev, "link_ready = %s\n",
+> >> +               (dp->link_ready) ? "true" : "false");
+> >>
+> >>          /*
+> >>           * There is no protection in the DRM framework to check if the display
+> >> @@ -55,7 +55,7 @@ static int dp_bridge_atomic_check(struct drm_bridge *bridge,
+> >>           * After that this piece of code can be removed.
+> >>           */
+> >>          if (bridge->ops & DRM_BRIDGE_OP_HPD)
+> >> -               return (dp->is_connected) ? 0 : -ENOTCONN;
+> >> +               return (dp->link_ready) ? 0 : -ENOTCONN;
+> >>
+> >>          return 0;
+> >>   }
+> >> @@ -78,7 +78,7 @@ static int dp_bridge_get_modes(struct drm_bridge *bridge, struct drm_connector *
+> >>          dp = to_dp_bridge(bridge)->dp_display;
+> >>
+> >>          /* pluggable case assumes EDID is read when HPD */
+> >> -       if (dp->is_connected) {
+> >> +       if (dp->link_ready) {
+> >>                  rc = dp_display_get_modes(dp);
+> >>                  if (rc <= 0) {
+> >>                          DRM_ERROR("failed to get DP sink modes, rc=%d\n", rc);
 > >> --
 > >> 2.7.4
 > >>
