@@ -2,204 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8395B7A61E9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 14:00:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2980C7A621C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Sep 2023 14:08:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231299AbjISMAN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Sep 2023 08:00:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60254 "EHLO
+        id S231431AbjISMIs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Sep 2023 08:08:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230469AbjISMAJ (ORCPT
+        with ESMTP id S231549AbjISMIm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Sep 2023 08:00:09 -0400
-Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89987F7;
-        Tue, 19 Sep 2023 05:00:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=kernkonzept.com; s=mx1; h=Cc:To:In-Reply-To:References:Message-Id:
-        Content-Transfer-Encoding:Content-Type:MIME-Version:Subject:Date:From:
-        Reply-To:Content-ID:Content-Description;
-        bh=UyKwlUDaiF86KyNIUUsDgQd4DUj+MPMX/4UCY0BXI9Y=; b=REBqlop70cSboq5iJNGVHKCeGW
-        6XxFjt4uD+NCxBn3zPI5ruKbModWdn68BfW3J2lF77MW5o/Wcv6iXtU36fYuBIv57Z1A+M0XAooSU
-        ADY5wDJw875gcegSY3FTuZXPPXOn4wYEbcsA8/StbpPXdPh+Gsu0JC/IDHWeXjnHW1zu/cbtWkijw
-        Drq9SSlN4YQLGCbHS0zlYjcDj/X5+gKcHjGGmxDCuG7wSGJLtRdFs9+Aea5dP8Jz5oL+PAr8OYJjT
-        S+rowje+lrrFPAVJyWs00XtHryNeg+ydBxpxrHctOL8NWqvzspH1GYvmqy/cth6YXpYqro4p/fAud
-        4lZX4IdQ==;
-Received: from [10.22.3.24] (helo=serv1.dd1.int.kernkonzept.com)
-        by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.96)
-        id 1qiZOZ-004b4T-1o;
-        Tue, 19 Sep 2023 13:59:59 +0200
-From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Date:   Tue, 19 Sep 2023 13:59:51 +0200
-Subject: [PATCH v2 4/4] spi: qup: Vote for interconnect bandwidth to DRAM
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230919-spi-qup-dvfs-v2-4-1bac2e9ab8db@kernkonzept.com>
-References: <20230919-spi-qup-dvfs-v2-0-1bac2e9ab8db@kernkonzept.com>
-In-Reply-To: <20230919-spi-qup-dvfs-v2-0-1bac2e9ab8db@kernkonzept.com>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Tue, 19 Sep 2023 08:08:42 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACE59137;
+        Tue, 19 Sep 2023 05:08:36 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 377BAC433C8;
+        Tue, 19 Sep 2023 12:08:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1695125316;
+        bh=W9ipK051ocJIW66PJaJ8tCAwQFhj7/D8IpoO8hvwg3U=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=F+sxGf/Ps9MkN76zQsIZhziQGMCL3UmGSP+jg9uePF3wcQehC7XveEB1nq5ivWU8A
+         JRPGC4imkxkxAtPBmlvDCWXeaivAw3wtoEyuxjxqD4R+gvls0eGp+rp/Uvm/qHT5jA
+         Hqz8cIe214/uBVjya7eEZ+Jh8b8ASLFRk+JKtLRlfl33DR+Az6sFw5nsRMkgpcLaCH
+         pMN4sS+h1MsRg73aEVOYiT9e6sN45ivQOn9Klxzk05epDQ75gGOgQ9kvvjQLnyvs7y
+         pSqAkjsDAAULD2z67gt/NZOormcfIg8X5lFnDFEMYEaETXSbCTGHoq/HJkC8AuXpLs
+         AFdyIhFe3+ecw==
+Date:   Tue, 19 Sep 2023 14:08:29 +0200
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Can Guo <quic_cang@quicinc.com>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-X-Mailer: b4 0.12.3
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "open list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
+        <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 2/6] scsi: ufs: ufs-qcom: Add support for UFS device
+ version detection
+Message-ID: <20230919120829.GB4732@thinkpad>
+References: <1694411968-14413-1-git-send-email-quic_cang@quicinc.com>
+ <1694411968-14413-3-git-send-email-quic_cang@quicinc.com>
+ <6055cd57-4de7-4b7e-a4f3-68a7de1aef28@linaro.org>
+ <6225a132-4b7f-bbb4-e863-4e62b99dd79d@quicinc.com>
+ <31823dc4-6f50-435b-9a20-66471209ec31@linaro.org>
+ <d34242f8-6e21-1549-b87d-3db2e825b7d5@quicinc.com>
+ <1413119B-8B9C-4DE4-A086-476B2BAA60AD@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1413119B-8B9C-4DE4-A086-476B2BAA60AD@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When the SPI QUP controller is used together with a DMA engine it needs
-to vote for the interconnect path to the DRAM. Otherwise it may be
-unable to access the memory quickly enough.
+On Fri, Sep 15, 2023 at 05:31:45AM +0300, Dmitry Baryshkov wrote:
+> On 11 September 2023 13:02:50 GMT+03:00, Can Guo <quic_cang@quicinc.com> wrote:
+> >
+> >On 9/11/2023 5:46 PM, Konrad Dybcio wrote:
+> >> On 11.09.2023 11:42, Can Guo wrote:
+> >>> Hi Konrad,
+> >>> 
+> >>> On 9/11/2023 5:17 PM, Konrad Dybcio wrote:
+> >>>> On 11.09.2023 07:59, Can Guo wrote:
+> >>>>> From: "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
+> >>>>> 
+> >>>>> Retrieve UFS device version from UFS host controller's spare register
+> >>>>> which is populated by bootloader, and use the UFS device version together
+> >>>>> with host controller's HW version to decide the proper power modes which
+> >>>>> should be used to configure the UFS PHY.
+> >>>> That sounds a bit fishy.. is there no bootloader-independent
+> >>>> solution to that? Can't we bring in the code that the bootloader
+> >>>> uses to determine these values?
+> >>>> 
+> >>>> Konrad
+> >>> 
+> >>> Agree, it is.
+> >>> 
+> >>> 
+> >>> All these complexities come from one request from PHY design team - power saving.
+> >>> 
+> >>> And to achieve power saving, Qualcomm UFS developers are requested to use the
+> >>> 
+> >>> lowest hanging PHY settings which can sustain the Max agreed HS Gear (btw host
+> >>> 
+> >>> and UFS device) during UFS's lifecycle in High Level OS,  whereas the power saving
+> >>> 
+> >>> request does not apply to bootloader, which works for only a few seconds during
+> >>> 
+> >>> bootup. Hence, there is no such version detect code in bootloader -  it just uses the
+> >>> 
+> >>> highest PHY settings to configure PHY, boot up UFS and put UFS device version in this
+> >>> 
+> >>> register.
+> >> First of all, your email client seems to be inserting 2 newlines
+> >> instead of 1. If you're using thunderbird, you may want to edit:
+> >> 
+> >> mail.identity.(default or your mail identity idx).default.compose_html
+> >> 
+> >> to `false`
+> >> 
+> >> and add that to your internal wiki page, as I see many @quic folks having
+> >> this issue.
+> >> 
+> >> 
+> >> Going back to the main topic, I don't think we understood each other.
+> >> The commit message states:
+> >> 
+> >> 
+> >> "Retrieve UFS device version from UFS host controller's spare register
+> >> which is populated by bootloader"
+> >> 
+> >> 
+> >> Which means the bootloader is able to somehow determine the value
+> >> that's in the spare register and write it there.
+> >> 
+> >> I'm asking whether we can take the logic behind this value and
+> >> move it to Linux so that we don't depend on the bootloader to
+> >> guarantee it (e.g. Chrome or some other devices with more exotic
+> >> fw may not work this way).
+> >> 
+> >> 
+> >> Konrad
+> >
+> >
+> >There is no logic behind this value at all in bootloader, as I explained, after bootloader
+> >
+> >initializes UFS, bootloader simply reads UFS's device version (the value you are referring)
+> >
+> >and write it to the register. But in Linux kernel, we need (or want to know) this value
+> >
+> >BEFORE we initialize UFS host controller (and UFS device).
+> 
+> Depending on the bootloader behaviour is not an option. For example the kernel might be started via kexec. Or via u-boot. Or grub. Or any other bootloader. So please duplicate the logic to read the UFS version instead.
+> 
 
-The requested peak bandwidth is dependent on the SPI core/bus clock so
-that the bandwidth scales together with the selected SPI speed.
+As Can said, there is no logic in the bootloader. What it does it, after doing
+the UFS initialization, it writes the agreed gear (between host and the device)
+to this register. And in linux, we use that value to initialize the device
+(i.e., not doing init based on the min gear).
 
-To avoid sending votes too often the bandwidth is always requested when
-a DMA transfer starts, but dropped only on runtime suspend. Runtime
-suspend should only happen if no transfer is active. After resumption we
-can defer the next vote until the first DMA transfer actually happens.
+But the important factor here is that, we use this gear value to program the PHY
+init sequence. So if there is no hint from the bootloader, linux will program
+the min phy sequence (G3/G4) and then once the gear scaling happens, it will
+program the max phy sequence (G4/G5).
 
-Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
----
-The bandwidth calculation is taken over from Qualcomm's
-downstream/vendor driver [1]. Due to lack of documentation about the
-interconnect setup/behavior I cannot say exactly if this is right.
-Unfortunately, this is not implemented very consistently downstream...
+Now on recent platforms, the init sequences are not compatible with each other
+i.e., once the min seq. is programmed, then before programming max seq. the
+registers not common to both seq. should be programmed to default value. In
+other words, min seq. specific registers should be reset to the default value.
+Otherwise, there will be stability issues in the PHY.
 
-[1]: https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/commit/deca0f346089d32941d6d8194ae9605554486413
----
- drivers/spi/spi-qup.c | 38 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
+So to avoid that, if we get the hint from bootloader (always the max supported
+gear between host and device), then only one seq. will be programmed.
 
-diff --git a/drivers/spi/spi-qup.c b/drivers/spi/spi-qup.c
-index bf043be3a2a9..2af63040ac6e 100644
---- a/drivers/spi/spi-qup.c
-+++ b/drivers/spi/spi-qup.c
-@@ -6,6 +6,7 @@
- #include <linux/clk.h>
- #include <linux/delay.h>
- #include <linux/err.h>
-+#include <linux/interconnect.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
- #include <linux/list.h>
-@@ -122,11 +123,14 @@
- #define SPI_DELAY_THRESHOLD		1
- #define SPI_DELAY_RETRY			10
- 
-+#define SPI_BUS_WIDTH			8
-+
- struct spi_qup {
- 	void __iomem		*base;
- 	struct device		*dev;
- 	struct clk		*cclk;	/* core clock */
- 	struct clk		*iclk;	/* interface clock */
-+	struct icc_path		*icc_path; /* interconnect to RAM */
- 	int			irq;
- 	spinlock_t		lock;
- 
-@@ -149,6 +153,8 @@ struct spi_qup {
- 	int			mode;
- 	struct dma_slave_config	rx_conf;
- 	struct dma_slave_config	tx_conf;
-+
-+	u32			bw_speed_hz;
- };
- 
- static int spi_qup_io_config(struct spi_device *spi, struct spi_transfer *xfer);
-@@ -181,6 +187,23 @@ static inline bool spi_qup_is_valid_state(struct spi_qup *controller)
- 	return opstate & QUP_STATE_VALID;
- }
- 
-+static int spi_qup_vote_bw(struct spi_qup *controller, u32 speed_hz)
-+{
-+	u32 needed_peak_bw;
-+	int ret;
-+
-+	if (controller->bw_speed_hz == speed_hz)
-+		return 0;
-+
-+	needed_peak_bw = Bps_to_icc(speed_hz * SPI_BUS_WIDTH);
-+	ret = icc_set_bw(controller->icc_path, 0, needed_peak_bw);
-+	if (ret)
-+		return ret;
-+
-+	controller->bw_speed_hz = speed_hz;
-+	return 0;
-+}
-+
- static int spi_qup_set_state(struct spi_qup *controller, u32 state)
- {
- 	unsigned long loop;
-@@ -451,6 +474,12 @@ static int spi_qup_do_dma(struct spi_device *spi, struct spi_transfer *xfer,
- 	struct scatterlist *tx_sgl, *rx_sgl;
- 	int ret;
- 
-+	ret = spi_qup_vote_bw(qup, xfer->speed_hz);
-+	if (ret) {
-+		dev_err(qup->dev, "fail to vote for ICC bandwidth: %d\n", ret);
-+		return -EIO;
-+	}
-+
- 	if (xfer->rx_buf)
- 		rx_done = spi_qup_dma_done;
- 	else if (xfer->tx_buf)
-@@ -994,6 +1023,7 @@ static void spi_qup_set_cs(struct spi_device *spi, bool val)
- static int spi_qup_probe(struct platform_device *pdev)
- {
- 	struct spi_controller *host;
-+	struct icc_path *icc_path;
- 	struct clk *iclk, *cclk;
- 	struct spi_qup *controller;
- 	struct resource *res;
-@@ -1019,6 +1049,11 @@ static int spi_qup_probe(struct platform_device *pdev)
- 	if (IS_ERR(iclk))
- 		return PTR_ERR(iclk);
- 
-+	icc_path = devm_of_icc_get(dev, NULL);
-+	if (IS_ERR(icc_path))
-+		return dev_err_probe(dev, PTR_ERR(icc_path),
-+				     "failed to get interconnect path\n");
-+
- 	/* This is optional parameter */
- 	if (of_property_read_u32(dev->of_node, "spi-max-frequency", &max_freq))
- 		max_freq = SPI_MAX_RATE;
-@@ -1070,6 +1105,7 @@ static int spi_qup_probe(struct platform_device *pdev)
- 	controller->base = base;
- 	controller->iclk = iclk;
- 	controller->cclk = cclk;
-+	controller->icc_path = icc_path;
- 	controller->irq = irq;
- 
- 	ret = spi_qup_init_dma(host, res->start);
-@@ -1190,6 +1226,7 @@ static int spi_qup_pm_suspend_runtime(struct device *device)
- 	writel_relaxed(config, controller->base + QUP_CONFIG);
- 
- 	clk_disable_unprepare(controller->cclk);
-+	spi_qup_vote_bw(controller, 0);
- 	clk_disable_unprepare(controller->iclk);
- 
- 	return 0;
-@@ -1241,6 +1278,7 @@ static int spi_qup_suspend(struct device *device)
- 		return ret;
- 
- 	clk_disable_unprepare(controller->cclk);
-+	spi_qup_vote_bw(controller, 0);
- 	clk_disable_unprepare(controller->iclk);
- 	return 0;
- }
+Other way to solve this issue is to reset the non common registers in the init
+seq. to default value. But that will be an additional overhead.
+
+But... if the bootloader doesn't populate this register (if the boot device is
+not UFS, like in compute platforms), then this whole logic won't work. This
+should also be taken into consideration.
+
+- Mani
+
+> 
+> P.S. you have been asked to fix your email client. Please do so. Or, if you are inserting these linebreaks manually, please stop.
+> 
+> >Thanks,
+> >
+> >Can Guo.
+> >
+> 
 
 -- 
-2.39.2
-
+மணிவண்ணன் சதாசிவம்
