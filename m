@@ -2,110 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA60C7A824C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 14:58:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EBF8A7A8290
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 15:03:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235973AbjITM7D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Sep 2023 08:59:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33814 "EHLO
+        id S236393AbjITNDW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Sep 2023 09:03:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235970AbjITM7B (ORCPT
+        with ESMTP id S234753AbjITNDU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Sep 2023 08:59:01 -0400
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 151881A8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Sep 2023 05:58:47 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qiwmv-0005Hn-FG; Wed, 20 Sep 2023 14:58:41 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qiwmv-007gzo-2G; Wed, 20 Sep 2023 14:58:41 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qiwmu-003IDv-PI; Wed, 20 Sep 2023 14:58:40 +0200
-From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-To:     Dmitry Torokhov <dmitry.torokhov@gmail.com>
+        Wed, 20 Sep 2023 09:03:20 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5ECBF2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Sep 2023 06:03:05 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b962535808so109629061fa.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Sep 2023 06:03:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1695214984; x=1695819784; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ztb1RGGYrfwP5JwjfpfbJ/dfRAOrJ8qtDmO12YBZve8=;
+        b=nNynK4HaY31bm6NQiYtVm1hHlhFQVf6oVrSnh7HXQP5oPPZLSGkpaJhbgHqdrxDoSQ
+         9fIR5RBFx0BclxnLPE5WZFeZK2PF11rkGOLg3XRVhEQcI0OOzF1Xt1nPWxDSXOfNDPot
+         4hLMQQX/+UUSzTlH+IRuhEGKjZSiS15EAtMF/y/ulga5qIspfKE2X9UvTrCBVcyer5Q7
+         HljgQKHQw86kw1KHWV1+nYSOXD1fbBmkqLugz8iUEW+c2i8HLoMIOEjPoyaYWpEw67up
+         wLBS2v+jRquOmMxbH9Utg1Zzn2jppVGQYY9M4mj9rwTBL4gHkPRv3rTty/8SuKPzw4rr
+         1oUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695214984; x=1695819784;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ztb1RGGYrfwP5JwjfpfbJ/dfRAOrJ8qtDmO12YBZve8=;
+        b=CBknk3HD9gj1WHFcWlG805l5raY/gfsAS+tt93+NFsi8PtK+BRyqB/uLl5N0rezT96
+         DmAW7DJ5yWU7UTGzFN1dJI6KNCqf8l52wp2KLAGvTwNW64GMb88noLUC395k8OZsSHfs
+         8jc1J98EhpH8Op8rCzNO9vHN52Vxfy1iBmUX2UcwfoPWluQaC45bWYLAXOOBOUz2vGvn
+         iCBN4g+CEITFYwIHKJF5tkwJnQbG/+6xAkBC94oQVUDc9saiyUDrdDAplhBloLC2OvHd
+         iIVCniRAc4PbEfluxctVKKbfvIHbYLBfknZAEm68adMmBExdsxItqyolwTE73u3D+Apn
+         JSVw==
+X-Gm-Message-State: AOJu0Yyt0yI+CvJ+5w4HShJDSoGSoqh+faq68W7HPFY3R7ctHOAWwy2B
+        KhB1crwcJIaecPqtAVH7I+AwQg==
+X-Google-Smtp-Source: AGHT+IH4JPL2VNc8ltA2Civzr7C475DFU0XS/aR6ZfXmibqfLpGuImdITfEbdIV7s241TmLXgE7n+Q==
+X-Received: by 2002:a2e:8656:0:b0:2c0:3413:5d9a with SMTP id i22-20020a2e8656000000b002c034135d9amr2367001ljj.34.1695214983582;
+        Wed, 20 Sep 2023 06:03:03 -0700 (PDT)
+Received: from [172.20.86.172] (static-212-193-78-212.thenetworkfactory.nl. [212.78.193.212])
+        by smtp.gmail.com with ESMTPSA id h27-20020a170906111b00b009a1fef32ce6sm9507844eja.177.2023.09.20.06.03.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Sep 2023 06:03:03 -0700 (PDT)
+Message-ID: <8691c163-5d1b-dcf7-45f0-d450b71b5a05@linaro.org>
+Date:   Wed, 20 Sep 2023 15:03:02 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 23/52] input: pm8941-pwrkey - Convert to platform remove
+ callback returning void
+Content-Language: en-US
+To:     =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org,
         kernel@pengutronix.de
-Subject: [PATCH 23/52] input: pm8941-pwrkey - Convert to platform remove callback returning void
-Date:   Wed, 20 Sep 2023 14:58:00 +0200
-Message-Id: <20230920125829.1478827-24-u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230920125829.1478827-1-u.kleine-koenig@pengutronix.de>
 References: <20230920125829.1478827-1-u.kleine-koenig@pengutronix.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1886; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=+Cya8auCZYXraL2ZhN0lNfUtJzINrULP5iO4cvvhxkY=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlCuxNPW40yovhzJcSR0lMk0KO9b+523EEDrzU1 zycL+ecV7qJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZQrsTQAKCRCPgPtYfRL+ TlAiB/wIe4fGfnZLoRrKENZa9wq/NMRaW6bjGEyGeM38qc3zDjAbAcHkyJ76Bz0Zp2I6aju0ixY tBIAowUu+O2sWUsFqdKZF+PnOY6FA7drM7dkyHjHLGFVKpCjXBnKqEQF58sSqfwO6+kQkx5JVUn gwklSLYZgNSOou2TbepnjC9vFvaXeav8LiZ+d4W6SF+OIPcnC8B4TYSK/uA5mU2ldQ++gE/5A23 2G/c0dfSykFFHCNHAaBjpoHAjCpsvrHBbxPFUGJi4yBDesYMbFR9s6LKyXrR61pZ3p5lFYR0Hqt S5lXxMnNIonOQqVJ9nZQdS1eFQeS1iwNtqiLXm1+wKiTuwB/
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+ <20230920125829.1478827-24-u.kleine-koenig@pengutronix.de>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230920125829.1478827-24-u.kleine-koenig@pengutronix.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new() which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
----
- drivers/input/misc/pm8941-pwrkey.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+On 9/20/23 14:58, Uwe Kleine-König wrote:
+> The .remove() callback for a platform driver returns an int which makes
+> many driver authors wrongly assume it's possible to do error handling by
+> returning an error code. However the value returned is ignored (apart
+> from emitting a warning) and this typically results in resource leaks.
+> To improve here there is a quest to make the remove callback return
+> void. In the first step of this quest all drivers are converted to
+> .remove_new() which already returns void. Eventually after all drivers
+> are converted, .remove_new() will be renamed to .remove().
+> 
+> Trivially convert this driver from always returning zero in the remove
+> callback to the void returning variant.
+> 
+> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-diff --git a/drivers/input/misc/pm8941-pwrkey.c b/drivers/input/misc/pm8941-pwrkey.c
-index ba747c5b2b5f..bab710023d8f 100644
---- a/drivers/input/misc/pm8941-pwrkey.c
-+++ b/drivers/input/misc/pm8941-pwrkey.c
-@@ -408,14 +408,12 @@ static int pm8941_pwrkey_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int pm8941_pwrkey_remove(struct platform_device *pdev)
-+static void pm8941_pwrkey_remove(struct platform_device *pdev)
- {
- 	struct pm8941_pwrkey *pwrkey = platform_get_drvdata(pdev);
- 
- 	if (pwrkey->data->supports_ps_hold_poff_config)
- 		unregister_reboot_notifier(&pwrkey->reboot_notifier);
--
--	return 0;
- }
- 
- static const struct pm8941_data pwrkey_data = {
-@@ -467,7 +465,7 @@ MODULE_DEVICE_TABLE(of, pm8941_pwr_key_id_table);
- 
- static struct platform_driver pm8941_pwrkey_driver = {
- 	.probe = pm8941_pwrkey_probe,
--	.remove = pm8941_pwrkey_remove,
-+	.remove_new = pm8941_pwrkey_remove,
- 	.driver = {
- 		.name = "pm8941-pwrkey",
- 		.pm = pm_sleep_ptr(&pm8941_pwr_key_pm_ops),
--- 
-2.40.1
-
+Konrad
