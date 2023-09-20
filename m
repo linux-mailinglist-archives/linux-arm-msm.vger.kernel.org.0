@@ -2,71 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E5BA7A79A8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 12:48:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 441AA7A7A2B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 13:13:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234548AbjITKsX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Sep 2023 06:48:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51204 "EHLO
+        id S234336AbjITLNc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Sep 2023 07:13:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233727AbjITKru (ORCPT
+        with ESMTP id S233970AbjITLNb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Sep 2023 06:47:50 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 727DD97;
-        Wed, 20 Sep 2023 03:47:39 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38K9rZ7A005156;
-        Wed, 20 Sep 2023 10:47:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=SX6rZUjGcL73HkjcqQno+7tDYQSU+S9wDZakuIwCU/M=;
- b=Q+HFSutT/AuEb/stsk3et5GD7QWtMugL+0C+R86x6hQSQqOcPgR3MsWM1eKQrQbTh8c7
- h5c7ANp7ol1Kx58YtvnRGSU867reuWhBikKpShu7elx3IYv9K4mV0+oftMPC0kFGZa5c
- 2vr/TlG2+CkEjsCsT6MFyTZ1WpAC/TcY8g1PPBsjKWIe1u8Bkt5julE3nS5Dk1F0JJYK
- 5AMnYH0z8PAfKlGW7lSKsL33zkYBFJOUGmxSkM26N3ldJAlkPFjC6F9cqI6iMoct+BIl
- HTPiRv1abrOKmIFkhkcj2wMxl29w/uX0LixaemSu6UlA+IP67e/cYLKkRCWqUMfaOwVZ YQ== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t7amnaq70-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 20 Sep 2023 10:47:34 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38KAlXkL000689
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 20 Sep 2023 10:47:34 GMT
-Received: from ekangupt-linux.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Wed, 20 Sep 2023 03:47:31 -0700
-From:   Ekansh Gupta <quic_ekangupt@quicinc.com>
-To:     <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
-CC:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
-        <ekangupt@qti.qualcomm.com>, <gregkh@linuxfoundation.org>,
-        <linux-kernel@vger.kernel.org>, <fastrpc.upstream@qti.qualcomm.com>
-Subject: [PATCH v3 5/5] misc: fastrpc: Add support to allocate shared context bank
-Date:   Wed, 20 Sep 2023 16:17:07 +0530
-Message-ID: <1695206827-29446-6-git-send-email-quic_ekangupt@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1695206827-29446-1-git-send-email-quic_ekangupt@quicinc.com>
-References: <1695206827-29446-1-git-send-email-quic_ekangupt@quicinc.com>
+        Wed, 20 Sep 2023 07:13:31 -0400
+Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81B3FC2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Sep 2023 04:13:25 -0700 (PDT)
+Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-59e6ebdf949so11405347b3.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Sep 2023 04:13:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1695208404; x=1695813204; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0Jwn7Ew5nILHx+5GR+NTRHmaRmX431keEmXsyqdl+cE=;
+        b=N5ts5z/qcIAYAiiXCsKFQqSIhcp6iAXBz2ORgEsgZ+Z1HISeg5ffxxVQ2S/S0XfA2O
+         DaEs+yMWTg9tVG7OuRB3EEG5FyjBux8fDL93Hv+3StZukOE1IZVYi6xrT9GVi4Hxgqtj
+         Tsq4tEf82AkuZ1Y1cipgabwBgv6Cer/lNRduGlNWewZJWY88Wk1QQVud71NBuqlmmDu9
+         OA+2k1+WTY1d7UgEmtNtAWGC15phWRC+alfiicl6snLV4YMSf3cCCO6GXJEupwwIri3l
+         1/Q22dEaqAFm1Um2PmRz3R8ArWfflCoPnDyVMvPEtZrjdmF7vHCNG5KhXQJk4S7AnDcz
+         lhXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695208404; x=1695813204;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0Jwn7Ew5nILHx+5GR+NTRHmaRmX431keEmXsyqdl+cE=;
+        b=BoKVYjoQKX2srOONAmFQs7+N3fFRe17M0F2T9iJfQTFG6xBUmdVcMHbBkS7gp8YpMr
+         hyimj4ZcN6Vrsj3lOIyWAPjCgy4PE4mccQwhBHWSTUCub0VZNG/L6bCMzT9DX6PD+wcW
+         iAWFHcAen0WrMKpqkSbnq31E8jxySyo0Vl0C3i/HnPJpDzwwJnBUwcKugd1knrFZyjB9
+         MC4Tjoa0rcWddz8Ta4euevCj7pro4nj1HO8Ej4P3CLeoaL+pWVU9lNXcw+KLuc0n7NT1
+         nDaKltiKiz0I0A9i3MUTjXj3Zdsk3OlHnUl805L54g4ep+p+OFbeQXCFssErzcpiCb01
+         tFpA==
+X-Gm-Message-State: AOJu0YzOUoNQt1dUKu3LoAR8MGVyHGc+CvXobcyZcAu716IaCAbq/tfx
+        2igibaN4dPoPTnc2vMNJYO8EBpLqpwCfxsTU5N1q0g==
+X-Google-Smtp-Source: AGHT+IHFsk9NaAteTvH3BmgCmk5ASoDueVueBNUnIXp+GgAzs2/Sm1uxwVIu+WcbtMUf2HUohWdEYcPhj4wbxzyvucw=
+X-Received: by 2002:a81:9115:0:b0:56d:4d1e:74ab with SMTP id
+ i21-20020a819115000000b0056d4d1e74abmr5958371ywg.23.1695208404698; Wed, 20
+ Sep 2023 04:13:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: jfWdKxqRM4YNfU2e8wJAaDZsxibsVg3D
-X-Proofpoint-ORIG-GUID: jfWdKxqRM4YNfU2e8wJAaDZsxibsVg3D
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-20_05,2023-09-20_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
- clxscore=1015 bulkscore=0 priorityscore=1501 suspectscore=0 spamscore=0
- lowpriorityscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
- definitions=main-2309200085
+References: <1694411968-14413-1-git-send-email-quic_cang@quicinc.com>
+ <1694411968-14413-3-git-send-email-quic_cang@quicinc.com> <6055cd57-4de7-4b7e-a4f3-68a7de1aef28@linaro.org>
+ <6225a132-4b7f-bbb4-e863-4e62b99dd79d@quicinc.com> <31823dc4-6f50-435b-9a20-66471209ec31@linaro.org>
+ <d34242f8-6e21-1549-b87d-3db2e825b7d5@quicinc.com> <1413119B-8B9C-4DE4-A086-476B2BAA60AD@linaro.org>
+ <20230919120829.GB4732@thinkpad> <CAA8EJppwjzNDsPHZqUdmgQy3fAbP+AFnOo4+FTDCdpBEZp5S_w@mail.gmail.com>
+ <20230920102327.GH4732@thinkpad>
+In-Reply-To: <20230920102327.GH4732@thinkpad>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 20 Sep 2023 14:13:13 +0300
+Message-ID: <CAA8EJprSVv0E7w7LQoN=Ar+tducP_7dDS8SF_k_BBi6cJDos5A@mail.gmail.com>
+Subject: Re: [PATCH 2/6] scsi: ufs: ufs-qcom: Add support for UFS device
+ version detection
+To:     Manivannan Sadhasivam <mani@kernel.org>
+Cc:     Can Guo <quic_cang@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "open list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
+        <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -76,261 +82,211 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Context banks could be set as a shared one using a DT propery
-"qcom,nsessions". The property takes the number of session to
-be created of the context bank. This change provides a control
-mechanism for user to use shared context banks for light weight
-processes. The session is set as shared while its creation and if
-a user requests for shared context bank, the same will be allocated
-during process initialization.
+On Wed, 20 Sept 2023 at 13:23, Manivannan Sadhasivam <mani@kernel.org> wrot=
+e:
+>
+> On Wed, Sep 20, 2023 at 01:27:59AM +0300, Dmitry Baryshkov wrote:
+> > On Tue, 19 Sept 2023 at 15:08, Manivannan Sadhasivam <mani@kernel.org> =
+wrote:
+> > >
+> > > On Fri, Sep 15, 2023 at 05:31:45AM +0300, Dmitry Baryshkov wrote:
+> > > > On 11 September 2023 13:02:50 GMT+03:00, Can Guo <quic_cang@quicinc=
+.com> wrote:
+> > > > >
+> > > > >On 9/11/2023 5:46 PM, Konrad Dybcio wrote:
+> > > > >> On 11.09.2023 11:42, Can Guo wrote:
+> > > > >>> Hi Konrad,
+> > > > >>>
+> > > > >>> On 9/11/2023 5:17 PM, Konrad Dybcio wrote:
+> > > > >>>> On 11.09.2023 07:59, Can Guo wrote:
+> > > > >>>>> From: "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
+> > > > >>>>>
+> > > > >>>>> Retrieve UFS device version from UFS host controller's spare =
+register
+> > > > >>>>> which is populated by bootloader, and use the UFS device vers=
+ion together
+> > > > >>>>> with host controller's HW version to decide the proper power =
+modes which
+> > > > >>>>> should be used to configure the UFS PHY.
+> > > > >>>> That sounds a bit fishy.. is there no bootloader-independent
+> > > > >>>> solution to that? Can't we bring in the code that the bootload=
+er
+> > > > >>>> uses to determine these values?
+> > > > >>>>
+> > > > >>>> Konrad
+> > > > >>>
+> > > > >>> Agree, it is.
+> > > > >>>
+> > > > >>>
+> > > > >>> All these complexities come from one request from PHY design te=
+am - power saving.
+> > > > >>>
+> > > > >>> And to achieve power saving, Qualcomm UFS developers are reques=
+ted to use the
+> > > > >>>
+> > > > >>> lowest hanging PHY settings which can sustain the Max agreed HS=
+ Gear (btw host
+> > > > >>>
+> > > > >>> and UFS device) during UFS's lifecycle in High Level OS,  where=
+as the power saving
+> > > > >>>
+> > > > >>> request does not apply to bootloader, which works for only a fe=
+w seconds during
+> > > > >>>
+> > > > >>> bootup. Hence, there is no such version detect code in bootload=
+er -  it just uses the
+> > > > >>>
+> > > > >>> highest PHY settings to configure PHY, boot up UFS and put UFS =
+device version in this
+> > > > >>>
+> > > > >>> register.
+> > > > >> First of all, your email client seems to be inserting 2 newlines
+> > > > >> instead of 1. If you're using thunderbird, you may want to edit:
+> > > > >>
+> > > > >> mail.identity.(default or your mail identity idx).default.compos=
+e_html
+> > > > >>
+> > > > >> to `false`
+> > > > >>
+> > > > >> and add that to your internal wiki page, as I see many @quic fol=
+ks having
+> > > > >> this issue.
+> > > > >>
+> > > > >>
+> > > > >> Going back to the main topic, I don't think we understood each o=
+ther.
+> > > > >> The commit message states:
+> > > > >>
+> > > > >>
+> > > > >> "Retrieve UFS device version from UFS host controller's spare re=
+gister
+> > > > >> which is populated by bootloader"
+> > > > >>
+> > > > >>
+> > > > >> Which means the bootloader is able to somehow determine the valu=
+e
+> > > > >> that's in the spare register and write it there.
+> > > > >>
+> > > > >> I'm asking whether we can take the logic behind this value and
+> > > > >> move it to Linux so that we don't depend on the bootloader to
+> > > > >> guarantee it (e.g. Chrome or some other devices with more exotic
+> > > > >> fw may not work this way).
+> > > > >>
+> > > > >>
+> > > > >> Konrad
+> > > > >
+> > > > >
+> > > > >There is no logic behind this value at all in bootloader, as I exp=
+lained, after bootloader
+> > > > >
+> > > > >initializes UFS, bootloader simply reads UFS's device version (the=
+ value you are referring)
+> > > > >
+> > > > >and write it to the register. But in Linux kernel, we need (or wan=
+t to know) this value
+> > > > >
+> > > > >BEFORE we initialize UFS host controller (and UFS device).
+> > > >
+> > > > Depending on the bootloader behaviour is not an option. For example=
+ the kernel might be started via kexec. Or via u-boot. Or grub. Or any othe=
+r bootloader. So please duplicate the logic to read the UFS version instead=
+.
+> > > >
+> > >
+> > > As Can said, there is no logic in the bootloader. What it does it, af=
+ter doing
+> > > the UFS initialization, it writes the agreed gear (between host and t=
+he device)
+> > > to this register. And in linux, we use that value to initialize the d=
+evice
+> > > (i.e., not doing init based on the min gear).
+> > >
+> > > But the important factor here is that, we use this gear value to prog=
+ram the PHY
+> > > init sequence. So if there is no hint from the bootloader, linux will=
+ program
+> > > the min phy sequence (G3/G4) and then once the gear scaling happens, =
+it will
+> > > program the max phy sequence (G4/G5).
+> > >
+> > > Now on recent platforms, the init sequences are not compatible with e=
+ach other
+> > > i.e., once the min seq. is programmed, then before programming max se=
+q. the
+> > > registers not common to both seq. should be programmed to default val=
+ue. In
+> > > other words, min seq. specific registers should be reset to the defau=
+lt value.
+> > > Otherwise, there will be stability issues in the PHY.
+> >
+> > I see nothing wrong with adding 'default' register programming to the
+> > gear tables. If we have to reset them to the default values to switch
+> > the PHY settings, these writes must be a part of the corresponding
+> > tables.
+> >
+>
+> Yep, that's what I initially proposed. But Qcom wanted to avoid the cost =
+of
+> programming the reset tables in the PHY driver.
 
-Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
----
-Changes in v2:
-  - Fixed missing definition
-  - Fixes compile time issue
+We should not be programming the whole reset table. Only those several
+registers that are changed in the lowest settings.
 
- drivers/misc/fastrpc.c      | 122 ++++++++++++++++++++++++++++++--------------
- include/uapi/misc/fastrpc.h |  12 +++++
- 2 files changed, 95 insertions(+), 39 deletions(-)
+>
+> Can, could you please check if programming the additional sequence doesn'=
+t cause
+> any power/performance effect?
+>
+> - Mani
+>
+> > >
+> > > So to avoid that, if we get the hint from bootloader (always the max =
+supported
+> > > gear between host and device), then only one seq. will be programmed.
+> > >
+> > > Other way to solve this issue is to reset the non common registers in=
+ the init
+> > > seq. to default value. But that will be an additional overhead.
+> > >
+> > > But... if the bootloader doesn't populate this register (if the boot =
+device is
+> > > not UFS, like in compute platforms), then this whole logic won't work=
+. This
+> > > should also be taken into consideration.
+> >
+> > Yep, that's the dependency on the bootloader. Which we should avoid.
+> >
+> > >
+> > > - Mani
+> > >
+> > > >
+> > > > P.S. you have been asked to fix your email client. Please do so. Or=
+, if you are inserting these linebreaks manually, please stop.
+> > > >
+> > > > >Thanks,
+> > > > >
+> > > > >Can Guo.
+> > > > >
+> > > >
+> > >
+> > > --
+> > > =E0=AE=AE=E0=AE=A3=E0=AE=BF=E0=AE=B5=E0=AE=A3=E0=AF=8D=E0=AE=A3=E0=AE=
+=A9=E0=AF=8D =E0=AE=9A=E0=AE=A4=E0=AE=BE=E0=AE=9A=E0=AE=BF=E0=AE=B5=E0=AE=
+=AE=E0=AF=8D
+> >
+> >
+> >
+> > --
+> > With best wishes
+> > Dmitry
+>
+> --
+> =E0=AE=AE=E0=AE=A3=E0=AE=BF=E0=AE=B5=E0=AE=A3=E0=AF=8D=E0=AE=A3=E0=AE=A9=
+=E0=AF=8D =E0=AE=9A=E0=AE=A4=E0=AE=BE=E0=AE=9A=E0=AE=BF=E0=AE=B5=E0=AE=AE=
+=E0=AF=8D
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 1c625571..6deef32 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -296,6 +296,7 @@ struct fastrpc_session_ctx {
- 	int sid;
- 	bool used;
- 	bool valid;
-+	bool sharedcb;
- };
- 
- struct fastrpc_channel_ctx {
-@@ -343,12 +344,22 @@ struct fastrpc_user {
- 	int tgid;
- 	int pd;
- 	bool is_secure_dev;
-+	bool sharedcb;
- 	/* Lock for lists */
- 	spinlock_t lock;
- 	/* lock for allocations */
- 	struct mutex mutex;
- };
- 
-+struct fastrpc_ctrl_smmu {
-+	u32 sharedcb;	/* Set to SMMU share context bank */
-+};
-+
-+struct fastrpc_internal_control {
-+	u32 req;
-+	struct fastrpc_ctrl_smmu smmu;
-+};
-+
- static inline int64_t getnstimediff(struct timespec64 *start)
- {
- 	int64_t ns;
-@@ -850,6 +861,37 @@ static const struct dma_buf_ops fastrpc_dma_buf_ops = {
- 	.release = fastrpc_release,
- };
- 
-+static struct fastrpc_session_ctx *fastrpc_session_alloc(
-+					struct fastrpc_channel_ctx *cctx, bool sharedcb)
-+{
-+	struct fastrpc_session_ctx *session = NULL;
-+	unsigned long flags;
-+	int i;
-+
-+	spin_lock_irqsave(&cctx->lock, flags);
-+	for (i = 0; i < cctx->sesscount; i++) {
-+		if (!cctx->session[i].used && cctx->session[i].valid &&
-+			cctx->session[i].sharedcb == sharedcb) {
-+			cctx->session[i].used = true;
-+			session = &cctx->session[i];
-+			break;
-+		}
-+	}
-+	spin_unlock_irqrestore(&cctx->lock, flags);
-+
-+	return session;
-+}
-+
-+static void fastrpc_session_free(struct fastrpc_channel_ctx *cctx,
-+				 struct fastrpc_session_ctx *session)
-+{
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&cctx->lock, flags);
-+	session->used = false;
-+	spin_unlock_irqrestore(&cctx->lock, flags);
-+}
-+
- static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
- 			      u64 len, u32 attr, struct fastrpc_map **ppmap)
- {
-@@ -1446,6 +1488,10 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
- 		goto err_name;
- 	}
- 
-+	fl->sctx = fastrpc_session_alloc(fl->cctx, fl->sharedcb);
-+	if (!fl->sctx)
-+		return -EBUSY;
-+
- 	if (!fl->cctx->remote_heap) {
- 		err = fastrpc_remote_heap_alloc(fl, fl->sctx->dev, init.memlen,
- 						&fl->cctx->remote_heap);
-@@ -1563,6 +1609,10 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
- 		goto err;
- 	}
- 
-+	fl->sctx = fastrpc_session_alloc(fl->cctx, fl->sharedcb);
-+	if (!fl->sctx)
-+		return -EBUSY;
-+
- 	inbuf.pgid = fl->tgid;
- 	inbuf.namelen = strlen(current->comm) + 1;
- 	inbuf.filelen = init.filelen;
-@@ -1637,36 +1687,6 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
- 	return err;
- }
- 
--static struct fastrpc_session_ctx *fastrpc_session_alloc(
--					struct fastrpc_channel_ctx *cctx)
--{
--	struct fastrpc_session_ctx *session = NULL;
--	unsigned long flags;
--	int i;
--
--	spin_lock_irqsave(&cctx->lock, flags);
--	for (i = 0; i < cctx->sesscount; i++) {
--		if (!cctx->session[i].used && cctx->session[i].valid) {
--			cctx->session[i].used = true;
--			session = &cctx->session[i];
--			break;
--		}
--	}
--	spin_unlock_irqrestore(&cctx->lock, flags);
--
--	return session;
--}
--
--static void fastrpc_session_free(struct fastrpc_channel_ctx *cctx,
--				 struct fastrpc_session_ctx *session)
--{
--	unsigned long flags;
--
--	spin_lock_irqsave(&cctx->lock, flags);
--	session->used = false;
--	spin_unlock_irqrestore(&cctx->lock, flags);
--}
--
- static void fastrpc_context_list_free(struct fastrpc_user *fl)
- {
- 	struct fastrpc_invoke_ctx *ctx, *n;
-@@ -1770,15 +1790,6 @@ static int fastrpc_device_open(struct inode *inode, struct file *filp)
- 	fl->cctx = cctx;
- 	fl->is_secure_dev = fdevice->secure;
- 
--	fl->sctx = fastrpc_session_alloc(cctx);
--	if (!fl->sctx) {
--		dev_err(&cctx->rpdev->dev, "No session available\n");
--		mutex_destroy(&fl->mutex);
--		kfree(fl);
--
--		return -EBUSY;
--	}
--
- 	spin_lock_irqsave(&cctx->lock, flags);
- 	list_add_tail(&fl->user, &cctx->users);
- 	spin_unlock_irqrestore(&cctx->lock, flags);
-@@ -1837,6 +1848,10 @@ static int fastrpc_init_attach(struct fastrpc_user *fl, int pd)
- 	struct fastrpc_enhanced_invoke ioctl;
- 	int tgid = fl->tgid;
- 
-+	fl->sctx = fastrpc_session_alloc(fl->cctx, fl->sharedcb);
-+	if (!fl->sctx)
-+		return -EBUSY;
-+
- 	args[0].ptr = (u64)(uintptr_t) &tgid;
- 	args[0].length = sizeof(tgid);
- 	args[0].fd = -1;
-@@ -1883,11 +1898,33 @@ static int fastrpc_invoke(struct fastrpc_user *fl, char __user *argp)
- 	return err;
- }
- 
-+static int fastrpc_internal_control(struct fastrpc_user *fl,
-+					struct fastrpc_internal_control *cp)
-+{
-+	int err = 0;
-+
-+	if (!fl)
-+		return -EBADF;
-+	if (!cp)
-+		return -EINVAL;
-+
-+	switch (cp->req) {
-+	case FASTRPC_CONTROL_SMMU:
-+		fl->sharedcb = cp->smmu.sharedcb;
-+		break;
-+	default:
-+		err = -EBADRQC;
-+		break;
-+	}
-+	return err;
-+}
-+
- static int fastrpc_multimode_invoke(struct fastrpc_user *fl, char __user *argp)
- {
- 	struct fastrpc_enhanced_invoke einv;
- 	struct fastrpc_invoke_args *args = NULL;
- 	struct fastrpc_ioctl_multimode_invoke invoke;
-+	struct fastrpc_internal_control cp = {0};
- 	u32 nscalars;
- 	u64 *perf_kernel;
- 	int err;
-@@ -1920,6 +1957,12 @@ static int fastrpc_multimode_invoke(struct fastrpc_user *fl, char __user *argp)
- 		err = fastrpc_internal_invoke(fl, false, &einv);
- 		kfree(args);
- 		break;
-+	case FASTRPC_INVOKE_CONTROL:
-+		if (copy_from_user(&cp, (void __user *)(uintptr_t)invoke.invparam, sizeof(cp)))
-+			return  -EFAULT;
-+
-+		err = fastrpc_internal_control(fl, &cp);
-+		break;
- 	default:
- 		err = -ENOTTY;
- 		break;
-@@ -2420,6 +2463,7 @@ static int fastrpc_cb_probe(struct platform_device *pdev)
- 	if (sessions > 0) {
- 		struct fastrpc_session_ctx *dup_sess;
- 
-+		sess->sharedcb = true;
- 		for (i = 1; i < sessions; i++) {
- 			if (cctx->sesscount >= FASTRPC_MAX_SESSIONS)
- 				break;
-diff --git a/include/uapi/misc/fastrpc.h b/include/uapi/misc/fastrpc.h
-index c64cf6a..c9faecf 100644
---- a/include/uapi/misc/fastrpc.h
-+++ b/include/uapi/misc/fastrpc.h
-@@ -165,6 +165,18 @@ struct fastrpc_ioctl_capability {
- 	__u32 reserved[4];
- };
- 
-+enum fastrpc_control_type {
-+	FASTRPC_CONTROL_LATENCY		=	1,
-+	FASTRPC_CONTROL_SMMU		=	2,
-+	FASTRPC_CONTROL_KALLOC		=	3,
-+	FASTRPC_CONTROL_WAKELOCK	=	4,
-+	FASTRPC_CONTROL_PM		=	5,
-+	FASTRPC_CONTROL_DSPPROCESS_CLEAN	=	6,
-+	FASTRPC_CONTROL_RPC_POLL	=	7,
-+	FASTRPC_CONTROL_ASYNC_WAKE	=	8,
-+	FASTRPC_CONTROL_NOTIF_WAKE	=	9,
-+};
-+
- enum fastrpc_perfkeys {
- 	PERF_COUNT = 0,
- 	PERF_RESERVED1 = 1,
--- 
-2.7.4
 
+
+--=20
+With best wishes
+Dmitry
