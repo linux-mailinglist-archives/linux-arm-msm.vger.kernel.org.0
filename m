@@ -2,44 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BCC9D7A8B46
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 20:11:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3ECCF7A8BA1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 20:26:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229687AbjITSLd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Sep 2023 14:11:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58474 "EHLO
+        id S229700AbjITS0N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Sep 2023 14:26:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229655AbjITSLc (ORCPT
+        with ESMTP id S229680AbjITS0N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Sep 2023 14:11:32 -0400
+        Wed, 20 Sep 2023 14:26:13 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7747EDC;
-        Wed, 20 Sep 2023 11:11:26 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F7EC433C9;
-        Wed, 20 Sep 2023 18:11:25 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4510CA;
+        Wed, 20 Sep 2023 11:26:06 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2158C433C8;
+        Wed, 20 Sep 2023 18:26:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1695233486;
-        bh=be+zabTmXv7/l62mTC5GSeWFLNg/+okcaQ3h+uUJUak=;
+        s=k20201202; t=1695234366;
+        bh=PE75NYjmQVobATPo4V3+LF6HiqjEzfsGddCxmXSEr60=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=AyeqsFYv6R8k3NLlcKeUEYtc2FOgiAQ8pMnEC6CmtXRV4cFGQQJLLPq33iKrKn7MX
-         lYgQghffm/VK6RxzMsVWao4LkTvY7h8HJXE3wajd0T65UXwGm73qSwJJGU7pvCPPt6
-         LAEt/1iC9fBvxqNCOee+87uxZxYuXyknO4voj8X9Fuxr9erL1oVcLJ/cD5pef6pJd6
-         ZDW6cuec2cwdFfGJZekxff3kXUKGdgaTOFIw9KEzRT4my0TCKFbpxchndnMPnrADQ7
-         gF5Y7WhFZjG7E9u/tfSercr5NZcKbCnCiaANgUukonkaVQU+V0KA16oAi983XNre8r
-         vCKW9WCyujEmw==
+        b=L6Yfo7agYCmjL+bWnB39wMEUypQbfAQ+kp2viYl3yEKNfeBr9baIHqzEsMpLGFy7h
+         moJaQl8Yje2nySFn0EPczEP1fyAWAUjrEjG5+XzAUpYavn6vN1aQcQZmF/eqzHs4MI
+         Zq4/0SEnqxe3TNX3DesxNQw40lsUthpzJFhBKL0FWHBQlTXUFRawo1FjTInU6//KRF
+         w5YDgPaQlDNgPDfQopiQ8EKeJHRGm4iTnA3Xjkh5VcaGr6cQHOEuGfWfOqacs7nAkf
+         QxAxqaom6O8iXr2P9oyhVJuLchXqlSqie6/Pk7qeb/szK/LQXIkdtWXpaVX0faWbqE
+         LwgebLp7L1qDw==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     agross@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        quic_gurus@quicinc.com, linux-arm-msm@vger.kernel.org,
+To:     Andy Gross <agross@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Alexey Minnekhanov <alexeymin@postmarketos.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_mojha@quicinc.com, Robert Marko <robimarko@gmail.com>
-Cc:     computersforpeace@gmail.com
-Subject: Re: (subset) [PATCH v3 1/4] dt-bindings: firmware: qcom,scm: support indicating SDI default state
-Date:   Wed, 20 Sep 2023 11:15:31 -0700
-Message-ID: <169523372601.2994310.13795981750540613883.b4-ty@kernel.org>
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        linux-usb@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: (subset) [PATCH v2 00/14] Clean up RPM bus clocks remnants
+Date:   Wed, 20 Sep 2023 11:30:12 -0700
+Message-ID: <169523460861.3191956.15228997966255141519.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230816164641.3371878-1-robimarko@gmail.com>
-References: <20230816164641.3371878-1-robimarko@gmail.com>
+In-Reply-To: <20230721-topic-rpm_clk_cleanup-v2-0-1e506593b1bd@linaro.org>
+References: <20230721-topic-rpm_clk_cleanup-v2-0-1e506593b1bd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -53,21 +67,24 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Wed, 16 Aug 2023 18:45:38 +0200, Robert Marko wrote:
-> IPQ5018 has SDI (Secure Debug Image) enabled by TZ by default, and that
-> means that WDT being asserted or just trying to reboot will hang the board
-> in the debug mode and only pulling the power and repowering will help.
-> Some IPQ4019 boards like Google WiFI have it enabled as well.
+On Tue, 12 Sep 2023 15:31:38 +0200, Konrad Dybcio wrote:
+> After the recent cleanups ([1], [2]) some in-tree abusers that directly
+> accessed the RPM bus clocks, effectively circumventing and working
+> against the efforts of the interconnect framework, were found.
 > 
-> So, lets add a boolean property to indicate that SDI is enabled by default
-> and thus needs to be disabled by the kernel.
+> Patches 1-5 drop deprecated references and the rest attempt to stop
+> direct bus clock abuses.
 > 
 > [...]
 
 Applied, thanks!
 
-[4/4] arm64: dts: qcom: ipq5018: indicate that SDI should be disabled
-      commit: 79796e87215db9587d6c66ec6f6781e091bc6464
+[08/14] dt-bindings: remoteproc: qcom,adsp: Remove AGGRE2 clock
+        commit: c4c5b47958529bc1de10260df0c583710853b516
+[09/14] dt-bindings: remoteproc: qcom,msm8996-mss-pil: Remove PNoC clock
+        commit: e7781901449cbcff129d80a5d9021e9e96084ec4
+[10/14] remoteproc: qcom: q6v5-mss: Remove PNoC clock from 8996 MSS
+        commit: e1592981c51bac38ea2041b642777b3ba30606a8
 
 Best regards,
 -- 
