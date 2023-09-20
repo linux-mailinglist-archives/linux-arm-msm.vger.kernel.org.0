@@ -2,79 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 441AA7A7A2B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 13:13:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 681737A7A74
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 13:31:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234336AbjITLNc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Sep 2023 07:13:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47504 "EHLO
+        id S234033AbjITLbf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Sep 2023 07:31:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233970AbjITLNb (ORCPT
+        with ESMTP id S233125AbjITLbe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Sep 2023 07:13:31 -0400
-Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81B3FC2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Sep 2023 04:13:25 -0700 (PDT)
-Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-59e6ebdf949so11405347b3.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Sep 2023 04:13:25 -0700 (PDT)
+        Wed, 20 Sep 2023 07:31:34 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73291B0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Sep 2023 04:31:28 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-532c66a105bso1986567a12.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Sep 2023 04:31:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695208404; x=1695813204; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0Jwn7Ew5nILHx+5GR+NTRHmaRmX431keEmXsyqdl+cE=;
-        b=N5ts5z/qcIAYAiiXCsKFQqSIhcp6iAXBz2ORgEsgZ+Z1HISeg5ffxxVQ2S/S0XfA2O
-         DaEs+yMWTg9tVG7OuRB3EEG5FyjBux8fDL93Hv+3StZukOE1IZVYi6xrT9GVi4Hxgqtj
-         Tsq4tEf82AkuZ1Y1cipgabwBgv6Cer/lNRduGlNWewZJWY88Wk1QQVud71NBuqlmmDu9
-         OA+2k1+WTY1d7UgEmtNtAWGC15phWRC+alfiicl6snLV4YMSf3cCCO6GXJEupwwIri3l
-         1/Q22dEaqAFm1Um2PmRz3R8ArWfflCoPnDyVMvPEtZrjdmF7vHCNG5KhXQJk4S7AnDcz
-         lhXg==
+        d=linaro.org; s=google; t=1695209487; x=1695814287; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=sISPinFUDL5u/bpoyx1Ij7HAjgfiATRW0k6PVgeAEsw=;
+        b=Gau0z9A3Gdm/I+ZRLP/nM/zUAaLnyCCd9eWOhNEHXEjAx6uI2Rw6/BdH9a9soPI5eE
+         cGTuHQt4jCSVbk3G4Z7Ow84psJiYVk/7uXiJbPYsN5srjWh4cnGmPw2I1+ehnDrRm+1e
+         I41z70tJ7Ok/huzpLqf6xrWnee81cxGOk3g+uitX+ECmHscCiwrkCAv5CMQsHIaRfCQx
+         1t0n5Q4H8OYoi8kvi25ThpZ61JgxrqVYrd0HA6OG+FDbbRpCTMp+1HnDH/vtOfwWLg05
+         OW9RUNiDvxUWbL09Rm2p9OnxVQNiCRot/7y19vnH4Nw8FQ7u6PEIGswlMO97TmikOJ+m
+         SOJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695208404; x=1695813204;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0Jwn7Ew5nILHx+5GR+NTRHmaRmX431keEmXsyqdl+cE=;
-        b=BoKVYjoQKX2srOONAmFQs7+N3fFRe17M0F2T9iJfQTFG6xBUmdVcMHbBkS7gp8YpMr
-         hyimj4ZcN6Vrsj3lOIyWAPjCgy4PE4mccQwhBHWSTUCub0VZNG/L6bCMzT9DX6PD+wcW
-         iAWFHcAen0WrMKpqkSbnq31E8jxySyo0Vl0C3i/HnPJpDzwwJnBUwcKugd1knrFZyjB9
-         MC4Tjoa0rcWddz8Ta4euevCj7pro4nj1HO8Ej4P3CLeoaL+pWVU9lNXcw+KLuc0n7NT1
-         nDaKltiKiz0I0A9i3MUTjXj3Zdsk3OlHnUl805L54g4ep+p+OFbeQXCFssErzcpiCb01
-         tFpA==
-X-Gm-Message-State: AOJu0YzOUoNQt1dUKu3LoAR8MGVyHGc+CvXobcyZcAu716IaCAbq/tfx
-        2igibaN4dPoPTnc2vMNJYO8EBpLqpwCfxsTU5N1q0g==
-X-Google-Smtp-Source: AGHT+IHFsk9NaAteTvH3BmgCmk5ASoDueVueBNUnIXp+GgAzs2/Sm1uxwVIu+WcbtMUf2HUohWdEYcPhj4wbxzyvucw=
-X-Received: by 2002:a81:9115:0:b0:56d:4d1e:74ab with SMTP id
- i21-20020a819115000000b0056d4d1e74abmr5958371ywg.23.1695208404698; Wed, 20
- Sep 2023 04:13:24 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1695209487; x=1695814287;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=sISPinFUDL5u/bpoyx1Ij7HAjgfiATRW0k6PVgeAEsw=;
+        b=fnABnunJwDCGUZZiBHP9zCZbYWag8GqRHfkBy/q/uT7h1zsVaFB0btChI4ZoWq6P1H
+         ajQtsnJDfLZdoWkiCOYjBJGWImiC39m2aOZRIURtAt4W5r77MlQDdt6ODIFDGsR5UOS/
+         3rBwTp5aNJ+AZ3dEe0WTzzsvTft8oQLXpQJAQDzojpzecrSKvSAn2MPUQxiYpNdiPRsg
+         0vt3bq/+BKa3e8vFLUbw5ii5b1xQiS29e222kYxDScik+YmYcyOYJepULDHJFfCuRVdV
+         4QI9fWukh2dyDrHsB0YHu1KW6EnfQDpVxFyohIsgBp6VlQzT6TXz+IkWu+9pPVQTMkcv
+         930w==
+X-Gm-Message-State: AOJu0YxAOD4Up4ADGpeNAAPdfxp0PJwovVDDJVjNsvH7GseLL3aGOp9v
+        bpbj9wN8LUyw+4NLYCtfMmz2OQ==
+X-Google-Smtp-Source: AGHT+IHvJqMLFU0/0VeoTulP60Slvf5E2yjtSP8/g6btQDvx/25B9cI7c5ufzI5k4+V+RhB2J3IRkg==
+X-Received: by 2002:a17:906:220f:b0:9a9:f09d:7c10 with SMTP id s15-20020a170906220f00b009a9f09d7c10mr1849511ejs.11.1695209486889;
+        Wed, 20 Sep 2023 04:31:26 -0700 (PDT)
+Received: from [172.20.24.238] (static-212-193-78-212.thenetworkfactory.nl. [212.78.193.212])
+        by smtp.gmail.com with ESMTPSA id rh1-20020a17090720e100b009ad8ba6976bsm9277668ejb.9.2023.09.20.04.31.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Sep 2023 04:31:26 -0700 (PDT)
+Message-ID: <2529838c-501f-45d6-d886-558bccac98b9@linaro.org>
+Date:   Wed, 20 Sep 2023 13:31:25 +0200
 MIME-Version: 1.0
-References: <1694411968-14413-1-git-send-email-quic_cang@quicinc.com>
- <1694411968-14413-3-git-send-email-quic_cang@quicinc.com> <6055cd57-4de7-4b7e-a4f3-68a7de1aef28@linaro.org>
- <6225a132-4b7f-bbb4-e863-4e62b99dd79d@quicinc.com> <31823dc4-6f50-435b-9a20-66471209ec31@linaro.org>
- <d34242f8-6e21-1549-b87d-3db2e825b7d5@quicinc.com> <1413119B-8B9C-4DE4-A086-476B2BAA60AD@linaro.org>
- <20230919120829.GB4732@thinkpad> <CAA8EJppwjzNDsPHZqUdmgQy3fAbP+AFnOo4+FTDCdpBEZp5S_w@mail.gmail.com>
- <20230920102327.GH4732@thinkpad>
-In-Reply-To: <20230920102327.GH4732@thinkpad>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 20 Sep 2023 14:13:13 +0300
-Message-ID: <CAA8EJprSVv0E7w7LQoN=Ar+tducP_7dDS8SF_k_BBi6cJDos5A@mail.gmail.com>
-Subject: Re: [PATCH 2/6] scsi: ufs: ufs-qcom: Add support for UFS device
- version detection
-To:     Manivannan Sadhasivam <mani@kernel.org>
-Cc:     Can Guo <quic_cang@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "open list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
-        <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v4 1/2] dt-bindings: pinctrl: qcom: Add SM4450 pinctrl
+Content-Language: en-US
+To:     Tengfei Fan <quic_tengfan@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, djakov@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_tsoni@quicinc.com, quic_shashim@quicinc.com,
+        quic_kaushalk@quicinc.com, quic_tdas@quicinc.com,
+        quic_tingweiz@quicinc.com, quic_aiquny@quicinc.com,
+        kernel@quicinc.com
+References: <20230920082102.5744-1-quic_tengfan@quicinc.com>
+ <20230920082102.5744-2-quic_tengfan@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230920082102.5744-2-quic_tengfan@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,211 +82,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 20 Sept 2023 at 13:23, Manivannan Sadhasivam <mani@kernel.org> wrot=
-e:
->
-> On Wed, Sep 20, 2023 at 01:27:59AM +0300, Dmitry Baryshkov wrote:
-> > On Tue, 19 Sept 2023 at 15:08, Manivannan Sadhasivam <mani@kernel.org> =
-wrote:
-> > >
-> > > On Fri, Sep 15, 2023 at 05:31:45AM +0300, Dmitry Baryshkov wrote:
-> > > > On 11 September 2023 13:02:50 GMT+03:00, Can Guo <quic_cang@quicinc=
-.com> wrote:
-> > > > >
-> > > > >On 9/11/2023 5:46 PM, Konrad Dybcio wrote:
-> > > > >> On 11.09.2023 11:42, Can Guo wrote:
-> > > > >>> Hi Konrad,
-> > > > >>>
-> > > > >>> On 9/11/2023 5:17 PM, Konrad Dybcio wrote:
-> > > > >>>> On 11.09.2023 07:59, Can Guo wrote:
-> > > > >>>>> From: "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
-> > > > >>>>>
-> > > > >>>>> Retrieve UFS device version from UFS host controller's spare =
-register
-> > > > >>>>> which is populated by bootloader, and use the UFS device vers=
-ion together
-> > > > >>>>> with host controller's HW version to decide the proper power =
-modes which
-> > > > >>>>> should be used to configure the UFS PHY.
-> > > > >>>> That sounds a bit fishy.. is there no bootloader-independent
-> > > > >>>> solution to that? Can't we bring in the code that the bootload=
-er
-> > > > >>>> uses to determine these values?
-> > > > >>>>
-> > > > >>>> Konrad
-> > > > >>>
-> > > > >>> Agree, it is.
-> > > > >>>
-> > > > >>>
-> > > > >>> All these complexities come from one request from PHY design te=
-am - power saving.
-> > > > >>>
-> > > > >>> And to achieve power saving, Qualcomm UFS developers are reques=
-ted to use the
-> > > > >>>
-> > > > >>> lowest hanging PHY settings which can sustain the Max agreed HS=
- Gear (btw host
-> > > > >>>
-> > > > >>> and UFS device) during UFS's lifecycle in High Level OS,  where=
-as the power saving
-> > > > >>>
-> > > > >>> request does not apply to bootloader, which works for only a fe=
-w seconds during
-> > > > >>>
-> > > > >>> bootup. Hence, there is no such version detect code in bootload=
-er -  it just uses the
-> > > > >>>
-> > > > >>> highest PHY settings to configure PHY, boot up UFS and put UFS =
-device version in this
-> > > > >>>
-> > > > >>> register.
-> > > > >> First of all, your email client seems to be inserting 2 newlines
-> > > > >> instead of 1. If you're using thunderbird, you may want to edit:
-> > > > >>
-> > > > >> mail.identity.(default or your mail identity idx).default.compos=
-e_html
-> > > > >>
-> > > > >> to `false`
-> > > > >>
-> > > > >> and add that to your internal wiki page, as I see many @quic fol=
-ks having
-> > > > >> this issue.
-> > > > >>
-> > > > >>
-> > > > >> Going back to the main topic, I don't think we understood each o=
-ther.
-> > > > >> The commit message states:
-> > > > >>
-> > > > >>
-> > > > >> "Retrieve UFS device version from UFS host controller's spare re=
-gister
-> > > > >> which is populated by bootloader"
-> > > > >>
-> > > > >>
-> > > > >> Which means the bootloader is able to somehow determine the valu=
-e
-> > > > >> that's in the spare register and write it there.
-> > > > >>
-> > > > >> I'm asking whether we can take the logic behind this value and
-> > > > >> move it to Linux so that we don't depend on the bootloader to
-> > > > >> guarantee it (e.g. Chrome or some other devices with more exotic
-> > > > >> fw may not work this way).
-> > > > >>
-> > > > >>
-> > > > >> Konrad
-> > > > >
-> > > > >
-> > > > >There is no logic behind this value at all in bootloader, as I exp=
-lained, after bootloader
-> > > > >
-> > > > >initializes UFS, bootloader simply reads UFS's device version (the=
- value you are referring)
-> > > > >
-> > > > >and write it to the register. But in Linux kernel, we need (or wan=
-t to know) this value
-> > > > >
-> > > > >BEFORE we initialize UFS host controller (and UFS device).
-> > > >
-> > > > Depending on the bootloader behaviour is not an option. For example=
- the kernel might be started via kexec. Or via u-boot. Or grub. Or any othe=
-r bootloader. So please duplicate the logic to read the UFS version instead=
-.
-> > > >
-> > >
-> > > As Can said, there is no logic in the bootloader. What it does it, af=
-ter doing
-> > > the UFS initialization, it writes the agreed gear (between host and t=
-he device)
-> > > to this register. And in linux, we use that value to initialize the d=
-evice
-> > > (i.e., not doing init based on the min gear).
-> > >
-> > > But the important factor here is that, we use this gear value to prog=
-ram the PHY
-> > > init sequence. So if there is no hint from the bootloader, linux will=
- program
-> > > the min phy sequence (G3/G4) and then once the gear scaling happens, =
-it will
-> > > program the max phy sequence (G4/G5).
-> > >
-> > > Now on recent platforms, the init sequences are not compatible with e=
-ach other
-> > > i.e., once the min seq. is programmed, then before programming max se=
-q. the
-> > > registers not common to both seq. should be programmed to default val=
-ue. In
-> > > other words, min seq. specific registers should be reset to the defau=
-lt value.
-> > > Otherwise, there will be stability issues in the PHY.
-> >
-> > I see nothing wrong with adding 'default' register programming to the
-> > gear tables. If we have to reset them to the default values to switch
-> > the PHY settings, these writes must be a part of the corresponding
-> > tables.
-> >
->
-> Yep, that's what I initially proposed. But Qcom wanted to avoid the cost =
-of
-> programming the reset tables in the PHY driver.
-
-We should not be programming the whole reset table. Only those several
-registers that are changed in the lowest settings.
-
->
-> Can, could you please check if programming the additional sequence doesn'=
-t cause
-> any power/performance effect?
->
-> - Mani
->
-> > >
-> > > So to avoid that, if we get the hint from bootloader (always the max =
-supported
-> > > gear between host and device), then only one seq. will be programmed.
-> > >
-> > > Other way to solve this issue is to reset the non common registers in=
- the init
-> > > seq. to default value. But that will be an additional overhead.
-> > >
-> > > But... if the bootloader doesn't populate this register (if the boot =
-device is
-> > > not UFS, like in compute platforms), then this whole logic won't work=
-. This
-> > > should also be taken into consideration.
-> >
-> > Yep, that's the dependency on the bootloader. Which we should avoid.
-> >
-> > >
-> > > - Mani
-> > >
-> > > >
-> > > > P.S. you have been asked to fix your email client. Please do so. Or=
-, if you are inserting these linebreaks manually, please stop.
-> > > >
-> > > > >Thanks,
-> > > > >
-> > > > >Can Guo.
-> > > > >
-> > > >
-> > >
-> > > --
-> > > =E0=AE=AE=E0=AE=A3=E0=AE=BF=E0=AE=B5=E0=AE=A3=E0=AF=8D=E0=AE=A3=E0=AE=
-=A9=E0=AF=8D =E0=AE=9A=E0=AE=A4=E0=AE=BE=E0=AE=9A=E0=AE=BF=E0=AE=B5=E0=AE=
-=AE=E0=AF=8D
-> >
-> >
-> >
-> > --
-> > With best wishes
-> > Dmitry
->
-> --
-> =E0=AE=AE=E0=AE=A3=E0=AE=BF=E0=AE=B5=E0=AE=A3=E0=AF=8D=E0=AE=A3=E0=AE=A9=
-=E0=AF=8D =E0=AE=9A=E0=AE=A4=E0=AE=BE=E0=AE=9A=E0=AE=BF=E0=AE=B5=E0=AE=AE=
-=E0=AF=8D
+On 20/09/2023 10:21, Tengfei Fan wrote:
+> Add device tree binding Documentation details for Qualcomm SM4450
+> TLMM device.
+> 
+> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
 
 
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
---=20
-With best wishes
-Dmitry
+Best regards,
+Krzysztof
+
