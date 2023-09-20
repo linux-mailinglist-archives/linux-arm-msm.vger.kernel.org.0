@@ -2,66 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 19EF97A8801
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 17:17:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DE427A8872
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 17:32:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234603AbjITPRw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Sep 2023 11:17:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54932 "EHLO
+        id S236650AbjITPdC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Sep 2023 11:33:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234765AbjITPRv (ORCPT
+        with ESMTP id S235323AbjITPdB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Sep 2023 11:17:51 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05197A3;
-        Wed, 20 Sep 2023 08:17:45 -0700 (PDT)
-Received: from [IPV6:2a01:e0a:120:3210:def9:8f6c:3807:7d89] (unknown [IPv6:2a01:e0a:120:3210:def9:8f6c:3807:7d89])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: benjamin.gaignard)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 365C366071DC;
-        Wed, 20 Sep 2023 16:17:43 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1695223063;
-        bh=sVWbeVvViH+sanbxD7UOCdPMVWb4cp4MCMV6I8qEHqU=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=fgjOVRxHl8kCiwY7Hcd8T0jWmApbiH0ed+OZ+JjHsOgnk81FeqgeM2NfWKpSyo393
-         tWZdmT/mZxwtvLVhu2lpoxiO3Gj9JGJYBJJVnuDIqefxCVQ6rcdllneEzVEKrRB1/e
-         jNKWiKjocDbGPpaDX3JAMzrBqU0vTo9NCdtaHu1pRNRyWgE8CBjekFaQzyyXhqKEHj
-         jBcC12vTx/Ho6DbjY7Ow4kmQyy53rsA/NxZIfylqsR4qcHvHDrOLELIuaUyr6j0GF6
-         gPylEuqd7wDouKvgZ05UYjO9coGCA0zBwD+8tGXMt3joh1WfqVi77e0AtVidQsYYAl
-         6LF8/U/HCyRCA==
-Message-ID: <10a9a265-6910-807a-57c5-62ee41c731a5@collabora.com>
-Date:   Wed, 20 Sep 2023 17:17:40 +0200
+        Wed, 20 Sep 2023 11:33:01 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.88])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C21B2B9;
+        Wed, 20 Sep 2023 08:32:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1695223974; x=1726759974;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=a7HKqSTQd2pJTS++JjjmKo7EjWkTiEjMiBb8rRIWewA=;
+  b=bVtHmeChnvQLCjZfAAui6+HaKJGG3fFmaxCivMOgYmnuBYsRr0VMV/yn
+   PC3SqFKW4C05w/JnNx+P1c6Z+Ir+OZHqF4ILe5UoSGP2Ype2BqcPHGuBb
+   T7U6V8y2WhTln7N1NJPET5FYQIUOK/G58EVq5Ol56K41v/HPiu2DdCg3H
+   B11irndVd9jlKZNrfO9hduR2dcD83W708Ix+7MzLZPtLLWUpYcBoXDWr/
+   xg7/1hi4dPpNbQd9p2CAcPcbhLjaMUz62NHU6Uq4pOW0hO9faLRwBYvBX
+   46yf1+6efe6NEuDpTPbz4+rAALqNO6qNTTq923mdqbICQcagnJv9Fy5yR
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10839"; a="411198688"
+X-IronPort-AV: E=Sophos;i="6.03,162,1694761200"; 
+   d="scan'208";a="411198688"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Sep 2023 08:32:54 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10839"; a="696337302"
+X-IronPort-AV: E=Sophos;i="6.03,162,1694761200"; 
+   d="scan'208";a="696337302"
+Received: from conorbyr-mobl1.ger.corp.intel.com (HELO [10.213.199.161]) ([10.213.199.161])
+  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Sep 2023 08:32:48 -0700
+Message-ID: <ccfa3697-b015-ff35-fb92-0efcbd1d7d7c@linux.intel.com>
+Date:   Wed, 20 Sep 2023 16:32:46 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.15.1
-Subject: Re: [PATCH v7 45/49] media: core: Add bitmap manage bufs array
- entries
+Subject: Re: [PATCH v6 6/6] drm/drm-file: Show finer-grained BO sizes in
+ drm_show_memory_stats
 Content-Language: en-US
-To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>, mchehab@kernel.org,
-        tfiga@chromium.org, m.szyprowski@samsung.com, ming.qian@nxp.com,
-        ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de,
-        gregkh@linuxfoundation.org, nicolas.dufresne@collabora.com
-Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
-        kernel@collabora.com
-References: <20230914133323.198857-1-benjamin.gaignard@collabora.com>
- <20230914133323.198857-46-benjamin.gaignard@collabora.com>
- <1142bbb4-b8f1-44ec-962e-9347a231782f@xs4all.nl>
- <20b6b93e-eef8-3d7b-a3c2-795f220059d4@collabora.com>
- <470682b4-c14b-4237-bc46-fddfdd085026@xs4all.nl>
-From:   Benjamin Gaignard <benjamin.gaignard@collabora.com>
-In-Reply-To: <470682b4-c14b-4237-bc46-fddfdd085026@xs4all.nl>
+To:     =?UTF-8?Q?Adri=c3=a1n_Larumbe?= <adrian.larumbe@collabora.com>,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
+        robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run,
+        marijn.suijten@somainline.org, robh@kernel.org,
+        steven.price@arm.com
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, healych@amazon.com,
+        Boris Brezillon <boris.brezillon@collabora.com>,
+        kernel@collabora.com, freedreno@lists.freedesktop.org
+References: <20230919233556.1458793-1-adrian.larumbe@collabora.com>
+ <20230919233556.1458793-7-adrian.larumbe@collabora.com>
+From:   Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Organization: Intel Corporation UK Plc
+In-Reply-To: <20230919233556.1458793-7-adrian.larumbe@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-5.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,HK_RANDOM_ENVFROM,HK_RANDOM_FROM,
+        NICE_REPLY_A,RCVD_IN_DNSWL_MED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -69,46 +76,56 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-Le 20/09/2023 à 16:56, Hans Verkuil a écrit :
-> On 20/09/2023 16:30, Benjamin Gaignard wrote:
-> <snip>
->
->>>>        num_buffers = min_t(unsigned int, num_buffers,
->>>>                    q->max_allowed_buffers - vb2_get_num_buffers(q));
->>>>    -    first_index = vb2_get_num_buffers(q);
->>>> +    first_index = bitmap_find_next_zero_area(q->bufs_map, q->max_allowed_buffers,
->>>> +                         0, num_buffers, 0);
->>>>          if (first_index >= q->max_allowed_buffers)
->>>>            return 0;
->>>> @@ -675,7 +678,13 @@ static void __vb2_queue_free(struct vb2_queue *q, unsigned int buffers)
->>>>      struct vb2_buffer *vb2_get_buffer(struct vb2_queue *q, unsigned int index)
->>>>    {
->>>> -    if (index < q->num_buffers)
->>>> +    if (!q->bufs_map || !q->bufs)
->>>> +        return NULL;
->>> I don't think this can ever happen.
->> I got kernel crash without them.
->> I will keep them.
-> What is the backtrace? How can this happen? It feels wrong that this can be
-> called with a vb2_queue that apparently is not properly initialized.
+On 20/09/2023 00:34, Adrián Larumbe wrote:
+> The current implementation will try to pick the highest available size
+> display unit as soon as the BO size exceeds that of the previous
+> multiplier. That can lead to loss of precision in contexts of low memory
+> usage.
+> 
+> The new selection criteria try to preserve precision, whilst also
+> increasing the display unit selection threshold to render more accurate
+> values.
+> 
+> Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
+> Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+> Reviewed-by: Steven Price <steven.price@arm.com>
+> ---
+>   drivers/gpu/drm/drm_file.c | 5 ++++-
+>   1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/drm_file.c b/drivers/gpu/drm/drm_file.c
+> index 762965e3d503..34cfa128ffe5 100644
+> --- a/drivers/gpu/drm/drm_file.c
+> +++ b/drivers/gpu/drm/drm_file.c
+> @@ -872,6 +872,8 @@ void drm_send_event(struct drm_device *dev, struct drm_pending_event *e)
+>   }
+>   EXPORT_SYMBOL(drm_send_event);
+>   
+> +#define UPPER_UNIT_THRESHOLD 100
+> +
+>   static void print_size(struct drm_printer *p, const char *stat,
+>   		       const char *region, u64 sz)
+>   {
+> @@ -879,7 +881,8 @@ static void print_size(struct drm_printer *p, const char *stat,
+>   	unsigned u;
+>   
+>   	for (u = 0; u < ARRAY_SIZE(units) - 1; u++) {
+> -		if (sz < SZ_1K)
+> +		if ((sz & (SZ_1K - 1)) &&
 
-I will add backtrace when doing test on v8
+IS_ALIGNED worth it at all?
 
->
->
->>>> +
->>>> +    return (bitmap_weight(q->bufs_map, q->max_allowed_buffers) > 0);
->>> How about:
->>>
->>>      return vb2_get_num_buffers(q) > 0;
->> vb2_get_num_buffers is defined in videobuf2-core.c, I'm not sure that
->> an inline function could depend of a module function.
-> Not a problem. E.g. v4l2-ctrls.h is full of such static inlines.
+> +		    sz < UPPER_UNIT_THRESHOLD * SZ_1K)
+>   			break;
 
-I will change vb2_get_num_buffers() to inline function that solve the problem too.
+Excuse me for a late comment (I was away). I did not get what what is 
+special about a ~10% threshold? Sounds to me just going with the lower 
+unit, when size is not aligned to the higher one, would be better than 
+sometimes precision-sometimes-not.
 
->
-> Regards,
->
-> 	Hans
->
+Regards,
+
+Tvrtko
+
+>   		sz = div_u64(sz, SZ_1K);
+>   	}
