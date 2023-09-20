@@ -2,45 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F10027A89A0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 18:38:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8CDF47A89AB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 18:43:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234501AbjITQil (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Sep 2023 12:38:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32976 "EHLO
+        id S234174AbjITQnX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Sep 2023 12:43:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232318AbjITQik (ORCPT
+        with ESMTP id S234501AbjITQnW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Sep 2023 12:38:40 -0400
+        Wed, 20 Sep 2023 12:43:22 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E6A39F;
-        Wed, 20 Sep 2023 09:38:35 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B7AC433C8;
-        Wed, 20 Sep 2023 16:38:34 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A34CCCA;
+        Wed, 20 Sep 2023 09:43:17 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 969C7C433C8;
+        Wed, 20 Sep 2023 16:43:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1695227915;
-        bh=AgYijWzT5fNgSzF/C7Jot8W6orxc3fFWdO1GipiPPGg=;
+        s=k20201202; t=1695228197;
+        bh=yoeBHvv0QH4aSbA/oAFONsW054HHzRA0z4ZaijSOAlc=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=glL6tI1vEyAqBpV3z1E7pIHhWkHpXUMz7qTblOwbDmKT/EL9u8j6yceLwut8Tgx/n
-         X81BblqXbF8R9DOUFsP0rN+mwfGH+lHUJtVgNrM4UsQuU+oXFsXWrPlL3beFHePx7c
-         juhXhwm7k8sX8Nb319nGivK40ooVpm++zuXUvf9JTkN2Kzq2aMzytAB+BqCBvdrwke
-         9t49eU6j30Yd5rh2vxTE+5iSLcdp1BDVDZmxsQ/HzVIitgQk9yv57iD/FMsWtO2yvT
-         RuxAYfedqZRldLLCPAfL2uEQngVLq78ACz+MriKO3ucwASXBxrryPbFUczLjvVLUqN
-         mGrbL8BPhCeSg==
-Date:   Wed, 20 Sep 2023 09:42:42 -0700
+        b=LeV+LG/YDoC0+9+af/1a5Erov8uH1NXbRSMm0skLWpjY60cckKI6qu9LLr423DlEP
+         K9uWquTpLB9RWPNiu+PmRd6A6Mb0VKcA915WtUdut1jLLMS/8eyXg829y3P6mcaiC7
+         Aehjlj2/Oni844AAV0PBxeDuYsITbYl1HO60wwEDsBmJCQj/+WTO2/oGNgcUhgmxQB
+         o81AtA3PFgJ7Byji5HpOfT1Fq00sSA1Gw10TXSdRbDL31DJ8TKge5lhRMjCZzDGEv+
+         SfGvgaqrZC+AFTk01bLh1OHeh7WJhcIj9lGQaqkrmm/UE/4KW9fWboFvjzSf6ERia+
+         XTrthmm7kDlfg==
+Date:   Wed, 20 Sep 2023 09:47:24 -0700
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Danila Tikhonov <danila@jiaxyga.com>
+To:     Sridharan S N <quic_sridsn@quicinc.com>
 Cc:     agross@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: pm8150l: Add wled node
-Message-ID: <sofnrufl5lkxozwjq5fzqjmkkqdk4gokevylzun6isithgfhgu@nibgf2y7tx34>
-References: <20230913185514.21840-1-danila@jiaxyga.com>
+Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: ipq9574: add support for the
+ RDP417 variant
+Message-ID: <zn43mwjxnbpah2xnvsqpvzqthbksgrall7hkoh5ilosu4lmnwp@sf2dw7osdw2x>
+References: <20230713152522.1063154-1-quic_sridsn@quicinc.com>
+ <20230713152522.1063154-3-quic_sridsn@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230913185514.21840-1-danila@jiaxyga.com>
+In-Reply-To: <20230713152522.1063154-3-quic_sridsn@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -51,41 +53,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 13, 2023 at 09:55:14PM +0300, Danila Tikhonov wrote:
-> WLED is used for controlling the backlight on some boards, add the node
-> for it.
+On Thu, Jul 13, 2023 at 08:55:22PM +0530, Sridharan S N wrote:
+> Add the initial device tree support for the Reference Design
+> Platform(RDP) 417 based on IPQ9574 family of SoC.
 > 
-> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+> Signed-off-by: Sridharan S N <quic_sridsn@quicinc.com>
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Please spell out your name.
+
+> ---
+> changes in v2:
+> 	- updated commit message.Moved dependency to change log
+> 	  This patch depends on below patchset:
+> 	  https://lore.kernel.org/lkml/20230713105909.14209-2-quic_anusha@quicinc.com/
+
+I don't see a new version of this, perhaps I'm just missing it. Please
+resubmit this, if it's still relevant.
 
 Regards,
 Bjorn
 
-> ---
->  arch/arm64/boot/dts/qcom/pm8150l.dtsi | 10 ++++++++++
->  1 file changed, 10 insertions(+)
+> 	
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/pm8150l.dtsi b/arch/arm64/boot/dts/qcom/pm8150l.dtsi
-> index b1686e5777b8..ac08a09c64c2 100644
-> --- a/arch/arm64/boot/dts/qcom/pm8150l.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pm8150l.dtsi
-> @@ -132,5 +132,15 @@ pm8150l_lpg: pwm {
->  			status = "disabled";
->  		};
->  
-> +		pm8150l_wled: leds@d800 {
-> +			compatible = "qcom,pm8150l-wled";
-> +			reg = <0xd800>, <0xd900>;
-> +			interrupts = <0x5 0xd8 0x1 IRQ_TYPE_EDGE_RISING>,
-> +				     <0x5 0xd8 0x2 IRQ_TYPE_EDGE_RISING>;
-> +			interrupt-names = "ovp", "short";
-> +			label = "backlight";
+>  arch/arm64/boot/dts/qcom/Makefile           |  1 +
+>  arch/arm64/boot/dts/qcom/ipq9574-rdp417.dts | 16 ++++++++++++++++
+>  2 files changed, 17 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-rdp417.dts
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 337abc4ceb17..9c30344d08c1 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -12,6 +12,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= ipq6018-cp01-c1.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk01.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk10-c1.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk10-c2.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp417.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp418.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp433.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp449.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp417.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp417.dts
+> new file mode 100644
+> index 000000000000..9a5d4c3db1f2
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp417.dts
+> @@ -0,0 +1,16 @@
+> +// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
+> +/*
+> + * IPQ9574 RDP417 board device tree source
+> + *
+> + * Copyright (c) 2020-2021 The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
 > +
-> +			status = "disabled";
-> +		};
->  	};
->  };
+> +/dts-v1/;
+> +
+> +#include "ipq9574-rdp-common.dtsi"
+> +
+> +/ {
+> +	model = "Qualcomm Technologies, Inc. IPQ9574/AP-AL01-C1";
+> +	compatible = "qcom,ipq9574-ap-al01-c1", "qcom,ipq9574";
+> +};
 > -- 
-> 2.41.0
+> 2.34.1
 > 
