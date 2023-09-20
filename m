@@ -2,111 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 83C6A7A8EAF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 23:50:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F81F7A8F26
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Sep 2023 00:13:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229451AbjITVuK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Sep 2023 17:50:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42112 "EHLO
+        id S229452AbjITWOB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Sep 2023 18:14:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbjITVuK (ORCPT
+        with ESMTP id S229472AbjITWOA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Sep 2023 17:50:10 -0400
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CF71AF;
-        Wed, 20 Sep 2023 14:50:04 -0700 (PDT)
-Received: by mail-yb1-xb33.google.com with SMTP id 3f1490d57ef6-d818d4230f6so445898276.1;
-        Wed, 20 Sep 2023 14:50:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695246603; x=1695851403; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=mQx5kR2+x3nFQSDzEdoMYbuPwtfcLZH/PujwlS1E1J4=;
-        b=VwyLHEt/Fwp1D47qNTR04FQ2IIgDQxbiPd+HRyVuxm6+3ofcKR2nt4jjTjk8ehSE4E
-         HRAIFmMNHAKfTofrZynzFXSWzoeh2CQbKz9ryaVbrEK0uH2wZc1NzTFGxjz2Ev65MKKZ
-         lSbCtNZO/o+Gra0ADeJNl8hxycPCSxSB66a/Xsy7KnBk5pKC/awUvYNRpmUQymmllzxn
-         8MK5wvLDBOjGUsedgHhflpXeVGPhfFPOwOFK7AaZK4AbzLmW2CuDm9ldVtIXmlwe5tne
-         9+Jd9cdptA8t035KkWmIjh208QWhYZsiO7+yUFlQHoWcpszW3C7KhYLlTbzvWCN6OmSF
-         0KtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695246603; x=1695851403;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mQx5kR2+x3nFQSDzEdoMYbuPwtfcLZH/PujwlS1E1J4=;
-        b=nAGq6lZojNDDkGCMKCi45sAEuiXlvSUwVMMUifcLh61PIsWj4SF/mP9BcjAWDbHuQA
-         bR/3oOE6Jy3TwmjjwTzTjw8RLCzj40tD/JFyjqfBhqUsWvKeXCbz3A5l0xDjIfSdnD/0
-         m5qN2LSiOXzf0kwNLQrRJa5hpRj6rziOUzMs7Y8QaLK8YMhewvx3018jqhVTK9aEjKGo
-         r55XwmenP6LDqk+byJHioeN3HOiuIaVZODKJV23rehOJ+dOdPC1pUfmZZve1wUV8LqNk
-         uiF5LgUhesvXwgrA08m12XJd2rdIZ6F9Gv4q50+WLtG4tQG+fUZEL0Ly1Rx97GhNKJod
-         VtoA==
-X-Gm-Message-State: AOJu0YxRTTxs1Z60TsHmZAjS51Bj4K2hL88zu+4bS5izDu7Cac16VuG3
-        r6W31zgcfqG9//pqnFLmJic=
-X-Google-Smtp-Source: AGHT+IEygTwYLySY4BjNw/ewyPAQ2Qpy7n0akNiWnZACj9K8CWmE4Xt6icWC72UevDMvuVkVSNlvvw==
-X-Received: by 2002:a25:3787:0:b0:d3a:28bb:2c95 with SMTP id e129-20020a253787000000b00d3a28bb2c95mr3716281yba.22.1695246603281;
-        Wed, 20 Sep 2023 14:50:03 -0700 (PDT)
-Received: from localhost ([2607:fea8:529e:7800::efbe])
-        by smtp.gmail.com with ESMTPSA id a125-20020a254d83000000b00d7bb3c4893fsm34541ybb.8.2023.09.20.14.50.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Sep 2023 14:50:02 -0700 (PDT)
-Date:   Wed, 20 Sep 2023 17:49:58 -0400
-From:   Richard Acayan <mailingradian@gmail.com>
-To:     "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 0/3] SDM670 CPU frequency scaling: dtschema fixes
-Message-ID: <ZQtpBtX-tN4Hg3uh@radian>
-References: <20230816230412.76862-6-mailingradian@gmail.com>
+        Wed, 20 Sep 2023 18:14:00 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82710C9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Sep 2023 15:13:54 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38KLvnqQ013400;
+        Wed, 20 Sep 2023 22:13:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=wLy9ZuT3wPvKTwBKpSkA0+5HBXOIkeLFyP43M1pbTXI=;
+ b=DTsM1gxLESbGBPPe0gy8ZesfDdJl2Bwz9a9HI60kKfUrzHKNF08VjFcJbfMiLeSGA5Dd
+ qWkJRtVq9QiDwAC52Z/1NxSbLPcEfHoW7yMtublcEQ7EqUlYJFALsZR3xyOg23njWFn2
+ bJ8E+1SMaGGEzZDlf3v0zPisfC+IIMIWMqyPJuKX8CMQz82c0ikUIe5UeJuc+wGOnrhB
+ a3TU9f4Gw5hBpmy/PUIkDw0ug9EdfLPWJvKNsBM2tX+mG6kwgmyjXIvCJQ1kmDayICuy
+ uX8zLKw2T4C8JXzzK5dXOBL8kuhj8ZLbfVRZmlGmb1IUMSaFUxFzNdUiVKbfTCsJihoP kg== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t7qj92hww-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 20 Sep 2023 22:13:33 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38KMDWHw018308
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 20 Sep 2023 22:13:32 GMT
+Received: from [10.71.111.102] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Wed, 20 Sep
+ 2023 15:13:31 -0700
+Message-ID: <d2df8304-76c1-6918-35bf-6b2886568fb3@quicinc.com>
+Date:   Wed, 20 Sep 2023 15:13:31 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230816230412.76862-6-mailingradian@gmail.com>
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLY,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 1/6] drm/msm/mdss: fix highest-bank-bit for msm8998
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230905174353.3118648-1-dmitry.baryshkov@linaro.org>
+ <20230905174353.3118648-2-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230905174353.3118648-2-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: cO8i2DOl1L8P7Z3NtatouXqH-0WZ1AB-
+X-Proofpoint-ORIG-GUID: cO8i2DOl1L8P7Z3NtatouXqH-0WZ1AB-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-20_11,2023-09-20_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 impostorscore=0 suspectscore=0 mlxlogscore=759
+ mlxscore=0 phishscore=0 lowpriorityscore=0 adultscore=0 bulkscore=0
+ malwarescore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309200186
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 16, 2023 at 07:04:14PM -0400, Richard Acayan wrote:
-> Changes since v1 (20230815223108.306018-5-mailingradian@gmail.com):
->  - add compatible to allOf area (2/3)
->  - change subject line (Acked-by tag retained) (1/3)
->  - add fixes tag (2/3)
->
-> This adds appropriate compatible strings to pass bindings checks.
->
-> Patch 1/3 is preserved from a previous series, as it was not applied to
-> linux-next yet and I wasn't notified that it was applied anywhere else:
-> https://lore.kernel.org/linux-arm-msm/20230724214209.208699-7-mailingradian@gmail.com/
->
-> Richard Acayan (3):
->   dt-bindings: interconnect: OSM L3: add SDM670 compatible
->   dt-bindings: cpufreq: cpufreq-qcom-hw: add SDM670 compatible
->   arm64: dts: qcom: sdm670: add specific cpufreq compatible
 
-Hi, just a reminder that this series is here, and patches 2-3 are stale.
 
-Would it help to send them separately?
+On 9/5/2023 10:43 AM, Dmitry Baryshkov wrote:
+> According to the vendor DT files, msm8998 has highest-bank-bit equal to
+> 2. Update the data accordingly.
+> 
+> Fixes: 6f410b246209 ("drm/msm/mdss: populate missing data")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/msm_mdss.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
 
->
->  Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml  | 2 ++
->  Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml | 1 +
->  arch/arm64/boot/dts/qcom/sdm670.dtsi                            | 2 +-
->  3 files changed, 4 insertions(+), 1 deletion(-)
->
-> -- 
-> 2.41.0
->
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
