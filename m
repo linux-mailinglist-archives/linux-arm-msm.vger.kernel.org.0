@@ -2,48 +2,44 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F9587A712B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 05:55:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 144C37A712D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 05:55:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232564AbjITDzE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Sep 2023 23:55:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36064 "EHLO
+        id S231948AbjITDzF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Sep 2023 23:55:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232543AbjITDzA (ORCPT
+        with ESMTP id S232545AbjITDzB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Sep 2023 23:55:00 -0400
+        Tue, 19 Sep 2023 23:55:01 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 002F0C9;
-        Tue, 19 Sep 2023 20:54:54 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF6D8C4339A;
-        Wed, 20 Sep 2023 03:54:53 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAFD9DD
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Sep 2023 20:54:55 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D29CBC433CB;
+        Wed, 20 Sep 2023 03:54:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1695182094;
-        bh=mICcC6rktU45GhsCDFEsjPe9V0J3ZeBNnG++L2yyG+M=;
+        s=k20201202; t=1695182095;
+        bh=VATz1YuiOizNoYOp18zfXULPZiNNbfUSxGAA3RGZDGo=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=c0xJzW8pTEsX205JgTNi3Y5RhCcjcS4gUO/A8CtS0ExkGmQ1AyIALtIxrYgphoUE5
-         MGj/gKbmP08SFJWg8xotUQG1trs6wFiWS6Cq9qmkOryrhhhztPcsu+FKcORpZ6t/dn
-         TMAcmrw/oEATz2XklPYBBeeDJwkRB/YmJgKihgrtUVbNyQTB2CtT7SKJ3XLLM2tKcV
-         8cb5Yx1OjgbcFZOQi1SzWwr4eTvJAVf3JjFopnii5jHNV31vVFIjuc3xNXLu2vDvbj
-         aiCG1lbSq6uKSvdM3NHhAOWBiXC6PZEc1KNtmAL2wMLxMnnC+RZwEaMnRy4yxuKM5z
-         kYRrceeMrUBWQ==
+        b=AjHfha4uDGodr/Jv4pn78mbZVIS+ptUq2TGp1p2ZnlwnKmtIhfFTMyoVzaRq3LEuj
+         Q3qVnHJyWbHDhn8twm8PVSXW/jgfCJ3btpkRHONh5MzpNwxGdzyg9rtpuLnAqhICIW
+         Yac5vJwmgbyXq/RFoHYNhgjnjA2HP6aVuNWOYleDspQJqrOKVCgZvk7+UKbcMCaMEO
+         0cAn/2nDgnR7OO+jqqamtPXFXVOfC/L3waaDAlsYLTnwo2/zIytJmVlgDjpnClyj3H
+         GFW+5ucT9SauJhc6vfXTXokJIzHol5FXexlKiRS5JfHtGBCJtwzhNYhd5RQxtEzmj7
+         IvRdVDANkphxA==
 From:   Bjorn Andersson <andersson@kernel.org>
 To:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        David Wronek <davidwronek@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        cros-qcom-dts-watchers@chromium.org
-Subject: Re: [PATCH v5 0/4] Add initial support for SM7125 and Xiaomi SM7125 platform
-Date:   Tue, 19 Sep 2023 20:58:45 -0700
-Message-ID: <169518233715.1055386.5478137137290382412.b4-ty@kernel.org>
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: (subset) [PATCH 1/3] arm64: dts: qcom: sm8350: fix pinctrl for UART18
+Date:   Tue, 19 Sep 2023 20:58:46 -0700
+Message-ID: <169518233717.1055386.285753115535542575.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230824091737.75813-1-davidwronek@gmail.com>
-References: <20230824091737.75813-1-davidwronek@gmail.com>
+In-Reply-To: <20230825214550.1650938-1-dmitry.baryshkov@linaro.org>
+References: <20230825214550.1650938-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -57,22 +53,20 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Thu, 24 Aug 2023 11:15:03 +0200, David Wronek wrote:
-> This series introduces support for the Qualcomm SM7125 SoC and the
-> Xiaomi SM7125 platform.
+On Sat, 26 Aug 2023 00:45:48 +0300, Dmitry Baryshkov wrote:
+> On sm8350 QUP18 uses GPIO 68/69, not 58/59. Fix correponding UART18
+> pinconf configuraion.
 > 
 > 
 
 Applied, thanks!
 
-[1/4] dt-bindings: arm: qcom: Document SM7125 and xiaomi,joyeuse board
-      commit: 9b4adf37fdc0ca8cd1d14b4160e2f04b63df98e6
-[2/4] arm64: dts: qcom: pm6150: Add resin and rtc nodes
-      commit: ec053ec90c245a4efc8dda87d9207de0adf0040e
-[3/4] arm64: dts: qcom: Add SM7125 device tree
-      commit: 72fbf05149bd451e7222c2ed1e3823972f19df9c
-[4/4] arm64: dts: qcom: Add support for the Xiaomi SM7125 platform
-      commit: 7d65d4b7d70fb9560ce9baaf4219fb24646bd578
+[1/3] arm64: dts: qcom: sm8350: fix pinctrl for UART18
+      commit: c1efa960114f743924b884da098298512a7e9983
+[2/3] arm64: dts: qcom: sm8350-hdk: add missing PMICs
+      commit: 2037fefcdea0252b45f9003659f8b0431054c417
+[3/3] arm64: dts: qcom: sm8350-hdk: add pmr735a regulators
+      commit: 4e4c45f90ee313a4b475591a3109ff5314127f40
 
 Best regards,
 -- 
