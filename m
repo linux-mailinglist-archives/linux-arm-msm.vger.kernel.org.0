@@ -2,86 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF74B7A8686
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 16:28:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 70E857A8697
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 16:31:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234658AbjITO2s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Sep 2023 10:28:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52434 "EHLO
+        id S235049AbjITObK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Sep 2023 10:31:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234570AbjITO2r (ORCPT
+        with ESMTP id S234994AbjITObK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Sep 2023 10:28:47 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2CE9C6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Sep 2023 07:28:41 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2c022ce8114so36760211fa.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Sep 2023 07:28:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695220120; x=1695824920; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=LtxCq9Na6rpCtPYQhYFE+hYkNtnlIQOOpKV463CAC6I=;
-        b=fx3mtXeOQDHaBTQqDb8QNb5zG9AA0ZRMUjibtAtPb8eIW47Rg8uPulz6+FPRi/yEQU
-         T7nZjwO5DcDXFv9DRXh4MVFjvSBqE8xjoxuHOdn3uRq3BvaqgJfvLwIB1Lt3g5zsO2J2
-         bA+7ifQ9dGnWwYQEvm87fDeC2VhZA54P5Y3SYwszQwamig6B4CgbiF1GEucv2cJQOAg0
-         6aJFHn2IxXypSw9y4l0UV87vemzYPgKjOz6WAaQmaOBG2NTWfmtAaDkc3rMEDH1OZmkn
-         DLYVuQEqEZ3hXmPO/O80mCBpRF3IIaej1VvoOJrMifY/AhdLNB/oOnzJ0lbjQZG/ZlbC
-         FFcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695220120; x=1695824920;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LtxCq9Na6rpCtPYQhYFE+hYkNtnlIQOOpKV463CAC6I=;
-        b=YbEs9Gd0uzZ9f9PpNqWUKDkTWQlQphwM/A6DQ2WPPc3VCcdc+wNf2dcv0PdFpw/RiR
-         3HE4e3Joy7VGu2uBrMhuokwYZRUSp8uvqKJ9i0qQXvo1GykLQRbNSaBgjmzugCfZqKoQ
-         mhrjdZIiDRhXdB24FZ4qemf6X6X7QSC+L0gMIojfY7xlhKN5QJz4mEtxfT65a43C2XW7
-         gYyKDo96tfdqSKAQLdS0/NQqnoF58ERKVM8jZ6jMMSzIRYn0BjWzElllbl1tal42UFaV
-         CC90QcSrEjuTDYmOnxv531+JRuXX9n2fPhXwX1swVNnVW6nmJKxkWYPIVvsIG60j9hO3
-         TtMw==
-X-Gm-Message-State: AOJu0Yz6bqwXZmdh+mEkSSn8O0dqReCyLcUvzv0QT4TKDTqFm40LKy8G
-        Trm1Jn7BqaDvPOspecjxaq83dA==
-X-Google-Smtp-Source: AGHT+IHy7BqgLDFZs6UQbHtu2/7vJypH4EJX8MKjk8ev1/EHp8Jj55x1ob7FX8sqs1VAb0K4W9HOQA==
-X-Received: by 2002:a2e:884e:0:b0:2bc:39f5:ecb4 with SMTP id z14-20020a2e884e000000b002bc39f5ecb4mr2411051ljj.25.1695220119763;
-        Wed, 20 Sep 2023 07:28:39 -0700 (PDT)
-Received: from [172.20.86.172] (static-212-193-78-212.thenetworkfactory.nl. [212.78.193.212])
-        by smtp.gmail.com with ESMTPSA id f13-20020a170906390d00b00982a92a849asm9418489eje.91.2023.09.20.07.28.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Sep 2023 07:28:39 -0700 (PDT)
-Message-ID: <911fd752-d5dc-79e2-91b7-74c70e5d8632@linaro.org>
-Date:   Wed, 20 Sep 2023 16:28:38 +0200
+        Wed, 20 Sep 2023 10:31:10 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFC95B9;
+        Wed, 20 Sep 2023 07:31:02 -0700 (PDT)
+Received: from [IPV6:2a01:e0a:120:3210:def9:8f6c:3807:7d89] (unknown [IPv6:2a01:e0a:120:3210:def9:8f6c:3807:7d89])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: benjamin.gaignard)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id EC9F76600B9D;
+        Wed, 20 Sep 2023 15:31:00 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1695220261;
+        bh=qSxCMCW4YAsLR2FIqziFq6kIetJZ96LBazqTUvh3JSE=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=WwrgS797Z2sNCnhv7CF1QbkVYbXZWXZWW2Semdqrfj+CIOX8RAUG9urjunXsJpaUQ
+         bhVQ1YJ/5HxJFiNaUgv+0UcMAClUThvV12CgUsSFeZdmXoLcT7taol1Y1aUZHuSgmO
+         lWQaJnofjNTAYvkLRInzcET0Mxkwi9LU8AeJ+lRgsVeG5pMMO+Sg67LUvRuhlrzVKQ
+         9lo/eIi+TUiMzBpG/6Fn5HBpgPHoepBFlI7145/QTAFhtHJgqYH64P5tdv8rVzQBnh
+         2JTNKf8SrZvLXd0dvZqgyMcHg0H+TN9IUKPF/HbGafOIVtJt/RDYhg0RGKmJM40G/+
+         7Ekw+hJKYoTBA==
+Message-ID: <20b6b93e-eef8-3d7b-a3c2-795f220059d4@collabora.com>
+Date:   Wed, 20 Sep 2023 16:30:57 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.15.1
-Subject: Re: [PATCH v1 4/5] PCI: epf-mhi: Add support for SA8775P
+Subject: Re: [PATCH v7 45/49] media: core: Add bitmap manage bufs array
+ entries
 Content-Language: en-US
-To:     Mrinmay Sarkar <quic_msarkar@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, mani@kernel.org
-Cc:     quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
-        quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
-        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
-        quic_parass@quicinc.com, Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
-        linux-phy@lists.infradead.org
-References: <1695218113-31198-1-git-send-email-quic_msarkar@quicinc.com>
- <1695218113-31198-5-git-send-email-quic_msarkar@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <1695218113-31198-5-git-send-email-quic_msarkar@quicinc.com>
+To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>, mchehab@kernel.org,
+        tfiga@chromium.org, m.szyprowski@samsung.com, ming.qian@nxp.com,
+        ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de,
+        gregkh@linuxfoundation.org, nicolas.dufresne@collabora.com
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
+        kernel@collabora.com
+References: <20230914133323.198857-1-benjamin.gaignard@collabora.com>
+ <20230914133323.198857-46-benjamin.gaignard@collabora.com>
+ <1142bbb4-b8f1-44ec-962e-9347a231782f@xs4all.nl>
+From:   Benjamin Gaignard <benjamin.gaignard@collabora.com>
+In-Reply-To: <1142bbb4-b8f1-44ec-962e-9347a231782f@xs4all.nl>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -89,26 +66,247 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+Le 19/09/2023 à 17:00, Hans Verkuil a écrit :
+> On 14/09/2023 15:33, Benjamin Gaignard wrote:
+>> Add a bitmap field to know which of bufs array entries are
+>> used or not.
+>> Remove no more used num_buffers field from queue structure.
+>> Use bitmap_find_next_zero_area() to find the first possible
+>> range when creating new buffers to fill the gaps.
+>>
+>> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+>> ---
+>>   .../media/common/videobuf2/videobuf2-core.c   | 55 +++++++++++++++----
+>>   include/media/videobuf2-core.h                |  9 ++-
+>>   2 files changed, 51 insertions(+), 13 deletions(-)
+>>
+>> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
+>> index a4c2fae8705d..c5d4a388331b 100644
+>> --- a/drivers/media/common/videobuf2/videobuf2-core.c
+>> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
+>> @@ -411,10 +411,11 @@ static void init_buffer_cache_hints(struct vb2_queue *q, struct vb2_buffer *vb)
+>>    */
+>>   static bool vb2_queue_add_buffer(struct vb2_queue *q, struct vb2_buffer *vb, unsigned int index)
+>>   {
+>> -	if (index < q->max_allowed_buffers && !q->bufs[index]) {
+>> +	if (index < q->max_allowed_buffers && !test_bit(index, q->bufs_map)) {
+> I think bufs_bitmap would be a better name.
 
-On 9/20/23 15:55, Mrinmay Sarkar wrote:
-> Add support for Qualcomm Snapdragon SA8775P SoC to the EPF driver.
-> SA8775P has the PID (0x0306) and supports HDMA. Currently, it has
-> no fixed PCI class, so it is being advertised as "PCI_CLASS_OTHERS".
-> 
-> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-> ---
->   drivers/pci/endpoint/functions/pci-epf-mhi.c | 18 ++++++++++++++++++
->   1 file changed, 18 insertions(+)
-> 
-> diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-> index b7b9d3e..4b349fd 100644
-> --- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
-> +++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-> @@ -114,6 +114,23 @@ static const struct pci_epf_mhi_ep_info sm8450_info = {
->   	.flags = MHI_EPF_USE_DMA,
->   };
->   
-> +static struct pci_epf_header sa8775p_header = {
-const?
+Ok I will change it
 
-Konrad
+>
+>>   		q->bufs[index] = vb;
+>>   		vb->index = index;
+>>   		vb->vb2_queue = q;
+>> +		set_bit(index, q->bufs_map);
+>>   		return true;
+>>   	}
+>>   
+>> @@ -428,9 +429,10 @@ static bool vb2_queue_add_buffer(struct vb2_queue *q, struct vb2_buffer *vb, uns
+>>    */
+>>   static void vb2_queue_remove_buffer(struct vb2_queue *q, struct vb2_buffer *vb)
+>>   {
+>> -	if (vb->index < q->max_allowed_buffers) {
+>> +	if (vb->index < q->max_allowed_buffers && test_bit(vb->index, q->bufs_map)) {
+> As mentioned in past reviews, I think these tests can be dropped, it makes no
+> sense that these ever fail.
+
+I will drop them.
+
+>
+>>   		q->bufs[vb->index] = NULL;
+>>   		vb->vb2_queue = NULL;
+>> +		clear_bit(vb->index, q->bufs_map);
+>>   	}
+>>   }
+>>   
+>> @@ -451,11 +453,12 @@ static int __vb2_queue_alloc(struct vb2_queue *q, enum vb2_memory memory,
+>>   	unsigned long first_index;
+>>   	int ret;
+>>   
+>> -	/* Ensure that q->num_buffers+num_buffers is below q->max_allowed_buffers */
+>> +	/* Ensure that the number of already queue + num_buffers is below q->max_allowed_buffers */
+> Hmm, how about:
+>
+> 	/* Ensure that vb2_get_num_buffers(q) + num_buffers is no more than q->max_allowed_buffers */
+
+sure
+
+>
+>>   	num_buffers = min_t(unsigned int, num_buffers,
+>>   			    q->max_allowed_buffers - vb2_get_num_buffers(q));
+>>   
+>> -	first_index = vb2_get_num_buffers(q);
+>> +	first_index = bitmap_find_next_zero_area(q->bufs_map, q->max_allowed_buffers,
+>> +						 0, num_buffers, 0);
+>>   
+>>   	if (first_index >= q->max_allowed_buffers)
+>>   		return 0;
+>> @@ -675,7 +678,13 @@ static void __vb2_queue_free(struct vb2_queue *q, unsigned int buffers)
+>>   
+>>   struct vb2_buffer *vb2_get_buffer(struct vb2_queue *q, unsigned int index)
+>>   {
+>> -	if (index < q->num_buffers)
+>> +	if (!q->bufs_map || !q->bufs)
+>> +		return NULL;
+> I don't think this can ever happen.
+
+I got kernel crash without them.
+I will keep them.
+
+>
+>> +
+>> +	if (index >= q->max_allowed_buffers)
+>> +		return NULL;
+>> +
+>> +	if (test_bit(index, q->bufs_map))
+>>   		return q->bufs[index];
+>>   	return NULL;
+>>   }
+>> @@ -683,7 +692,10 @@ EXPORT_SYMBOL_GPL(vb2_get_buffer);
+>>   
+>>   unsigned int vb2_get_num_buffers(struct vb2_queue *q)
+>>   {
+>> -	return q->num_buffers;
+>> +	if (!q->bufs_map)
+>> +		return 0;
+> Ditto.
+>
+>> +
+>> +	return bitmap_weight(q->bufs_map, q->max_allowed_buffers);
+>>   }
+>>   EXPORT_SYMBOL_GPL(vb2_get_num_buffers);
+>>   
+>> @@ -899,6 +911,14 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
+>>   		q->bufs = kcalloc(q->max_allowed_buffers, sizeof(*q->bufs), GFP_KERNEL);
+>>   	if (!q->bufs)
+>>   		ret = -ENOMEM;
+>> +
+>> +	if (!q->bufs_map)
+>> +		q->bufs_map = bitmap_zalloc(q->max_allowed_buffers, GFP_KERNEL);
+>> +	if (!q->bufs_map) {
+>> +		ret = -ENOMEM;
+>> +		kfree(q->bufs);
+>> +		q->bufs = NULL;
+>> +	}
+>>   	q->memory = memory;
+>>   	mutex_unlock(&q->mmap_lock);
+>>   	if (ret)
+>> @@ -968,7 +988,6 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
+>>   	}
+>>   
+>>   	mutex_lock(&q->mmap_lock);
+>> -	q->num_buffers = allocated_buffers;
+>>   
+>>   	if (ret < 0) {
+>>   		/*
+>> @@ -995,6 +1014,10 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
+>>   	mutex_lock(&q->mmap_lock);
+>>   	q->memory = VB2_MEMORY_UNKNOWN;
+>>   	mutex_unlock(&q->mmap_lock);
+>> +	kfree(q->bufs);
+>> +	q->bufs = NULL;
+>> +	bitmap_free(q->bufs_map);
+>> +	q->bufs_map = NULL;
+>>   	return ret;
+>>   }
+>>   EXPORT_SYMBOL_GPL(vb2_core_reqbufs);
+>> @@ -1031,9 +1054,19 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
+>>   		q->memory = memory;
+>>   		if (!q->bufs)
+>>   			q->bufs = kcalloc(q->max_allowed_buffers, sizeof(*q->bufs), GFP_KERNEL);
+>> -		if (!q->bufs)
+>> +		if (!q->bufs) {
+>> +			ret = -ENOMEM;
+>> +			goto unlock;
+>> +		}
+>> +		if (!q->bufs_map)
+>> +			q->bufs_map = bitmap_zalloc(q->max_allowed_buffers, GFP_KERNEL);
+>> +		if (!q->bufs_map) {
+>>   			ret = -ENOMEM;
+>> +			kfree(q->bufs);
+>> +			q->bufs = NULL;
+>> +		}
+>>   		mutex_unlock(&q->mmap_lock);
+>> +unlock:
+>>   		if (ret)
+>>   			return ret;
+>>   		q->waiting_for_buffers = !q->is_output;
+>> @@ -1095,7 +1128,6 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
+>>   	}
+>>   
+>>   	mutex_lock(&q->mmap_lock);
+>> -	q->num_buffers += allocated_buffers;
+>>   
+>>   	if (ret < 0) {
+>>   		/*
+>> @@ -2588,6 +2620,9 @@ void vb2_core_queue_release(struct vb2_queue *q)
+>>   	__vb2_queue_free(q, q->max_allowed_buffers);
+>>   	kfree(q->bufs);
+>>   	q->bufs = NULL;
+>> +	bitmap_free(q->bufs_map);
+>> +	q->bufs_map = NULL;
+>> +
+>>   	mutex_unlock(&q->mmap_lock);
+>>   }
+>>   EXPORT_SYMBOL_GPL(vb2_core_queue_release);
+>> @@ -2944,7 +2979,7 @@ static size_t __vb2_perform_fileio(struct vb2_queue *q, char __user *data, size_
+>>   	 * Check if we need to dequeue the buffer.
+>>   	 */
+>>   	index = fileio->cur_index;
+>> -	if (index >= q->num_buffers) {
+>> +	if (!test_bit(index, q->bufs_map)) {
+>>   		struct vb2_buffer *b;
+>>   
+>>   		/*
+>> diff --git a/include/media/videobuf2-core.h b/include/media/videobuf2-core.h
+>> index 19c93d8eb7c8..734437236cc4 100644
+>> --- a/include/media/videobuf2-core.h
+>> +++ b/include/media/videobuf2-core.h
+>> @@ -557,7 +557,7 @@ struct vb2_buf_ops {
+>>    * @memory:	current memory type used
+>>    * @dma_dir:	DMA mapping direction.
+>>    * @bufs:	videobuf2 buffer structures
+>> - * @num_buffers: number of allocated/used buffers
+>> + * @bufs_map:	bitmap to manage bufs entries.
+>>    * @max_allowed_buffers: upper limit of number of allocated/used buffers
+>>    * @queued_list: list of buffers currently queued from userspace
+>>    * @queued_count: number of buffers queued and ready for streaming.
+>> @@ -621,7 +621,7 @@ struct vb2_queue {
+>>   	unsigned int			memory;
+>>   	enum dma_data_direction		dma_dir;
+>>   	struct vb2_buffer		**bufs;
+>> -	unsigned int			num_buffers;
+>> +	unsigned long			*bufs_map;
+>>   	unsigned int			max_allowed_buffers;
+>>   
+>>   	struct list_head		queued_list;
+>> @@ -1151,7 +1151,10 @@ static inline bool vb2_fileio_is_active(struct vb2_queue *q)
+>>    */
+>>   static inline bool vb2_is_busy(struct vb2_queue *q)
+>>   {
+>> -	return (q->num_buffers > 0);
+>> +	if (!q->bufs_map)
+>> +		return false;
+> I don't think this can happen.
+>
+>> +
+>> +	return (bitmap_weight(q->bufs_map, q->max_allowed_buffers) > 0);
+> How about:
+>
+> 	return vb2_get_num_buffers(q) > 0;
+
+vb2_get_num_buffers is defined in videobuf2-core.c, I'm not sure that
+an inline function could depend of a module function.
+
+Regards,
+Benjamin
+
+>
+>>   }
+>>   
+>>   /**
+> Regards,
+>
+> 	Hans
+>
