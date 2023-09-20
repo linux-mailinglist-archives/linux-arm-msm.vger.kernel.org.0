@@ -2,149 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 17C227A73CF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 09:17:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B62E7A73F6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 09:24:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233588AbjITHRF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Sep 2023 03:17:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44304 "EHLO
+        id S233728AbjITHYq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Sep 2023 03:24:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233567AbjITHRE (ORCPT
+        with ESMTP id S233720AbjITHYi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Sep 2023 03:17:04 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20697CA
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Sep 2023 00:16:57 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-9aa0495f9cfso126568566b.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Sep 2023 00:16:57 -0700 (PDT)
+        Wed, 20 Sep 2023 03:24:38 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DA90CE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Sep 2023 00:24:24 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-9a9d82d73f9so820546166b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Sep 2023 00:24:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695194215; x=1695799015; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695194663; x=1695799463; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=q2eQVdoUT9SBA1b8M5ykPkKlAeuNJeFmhFlc8MCDqTU=;
-        b=oQBC5J5Vh97nxtE389DqY7yqQHPoHfnktkMg2IqdJ6BSitANYGT2pvkv9KkfxLt5Up
-         Rxy3et6EfDJU82MtrNrVEVL8l3A4hZ/jWY4TdTKY/X5SkOp3/4f+veUoQ0hw+fOt8J2D
-         VfYUVLJpaH88C2o+JOdwoNBo8eskfU+C6fPNQGzwNV8y9NNC91OQNK49Wld2wqd2Eopk
-         ApQKexLKCJeUttv2gnHJCo7F5Psl0rwozhiY2NvAQp8lcLzn5JwL3peKG5p/1CtXWxXf
-         SpxDMJhXHCX6xcGkvKC72F94xM0ccG/2xqE3E3rNik0KafL1dFSugLWnWCH4hwei2rpF
-         d1MA==
+        bh=Gh6bN/XfsrzCsTKkHAHoaKxBwUi0FWCvO6Qlvt6FoGE=;
+        b=FQ9t6WvxuVlk/47MWJ2FS+avZ3nndh95dLIb2rQCOsIdD0QUtf7Jl3uArODoSC1wCR
+         VVXemckB7nu2KHJblXddSclH1SG0CL4Y3c4zOT6xYelrBgpISeocLhR2Y8W8qmYtl4n2
+         1ztXuHxue9IvwXsQA5W2JoEsqWxYRHETkPpNmERwI8kMKuTXJB7OlGhSGB5Uk9k+n25O
+         vh/DVj/V8UvGv772kiuSuQzSLnMdYutWBuLJiM8ObpMfiJME6H5KqL3syG+NkNxkuO1v
+         EXNz8QGVK//8NLThj1C0UxuzZU6AYsbxT25c1lVljSiDlPjTYTjigCfSh/SzhKfBzhc/
+         Uhjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695194215; x=1695799015;
+        d=1e100.net; s=20230601; t=1695194663; x=1695799463;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=q2eQVdoUT9SBA1b8M5ykPkKlAeuNJeFmhFlc8MCDqTU=;
-        b=mMpcBqJNNe2LnlpDEC5H8JBHyUQp7ToFSt27yz+hK55AaudyWLEb78Dq72l0yqNYD1
-         b5fcubEgQR92bx1HoKlA35EO0E8NIgA62tswRP7+HKKK5h/JaKuhNelpaAUoj/X24jCT
-         T+S1yy0Hqvclqj10D+/GnhIdshR9sFPLZ0k7ViBGJA9ZFzuO14R8qPn/7fPF+9Rt1QB2
-         EnZtadCkUZVj11EYPAreQZR2VSSvJq+3MjtqlLBSvcb/p7rSxJKqgwxJ75nteAk1qGnT
-         kvYCSvi6Le2O4rHOVG+lCkijwfGROsUIZHBEox2cVJySYf90YFLSFbBj2dvEedZ7/M68
-         vnHA==
-X-Gm-Message-State: AOJu0YyAEmezCY+DGsxayiSUbq3Qk020NV51TsUtrCncPN3xuwn04tKT
-        FJyeUQ8fd08oFt1VJpQVDRDJng==
-X-Google-Smtp-Source: AGHT+IHhkthx7La4ES4fm9zVIeF/hC42jbQNxbARKR3kkYPQQKu6/fzEtLxK3AGfYDSmQri0prplFQ==
-X-Received: by 2002:a17:907:760a:b0:9ae:513f:b837 with SMTP id jx10-20020a170907760a00b009ae513fb837mr192908ejc.5.1695194215478;
-        Wed, 20 Sep 2023 00:16:55 -0700 (PDT)
-Received: from [172.20.24.238] (static-212-193-78-212.thenetworkfactory.nl. [212.78.193.212])
-        by smtp.gmail.com with ESMTPSA id w18-20020a170906481200b0099329b3ab67sm8914549ejq.71.2023.09.20.00.16.54
+        bh=Gh6bN/XfsrzCsTKkHAHoaKxBwUi0FWCvO6Qlvt6FoGE=;
+        b=VKs8GIPemxmimUnmvMbXb/n6vKCiELgGDgyUrXppB6B1TjPOlaYT5EhEwViv7i1o6C
+         Pk83qKn/F625lGaKflben+fFqj2hdPuT6HnVp1mX1dKmxUmUxZbivUD6nxYZ+E4c9pok
+         l35UllCErSh2lXNkfHAF3cBfCivWBfA6WmumWj+PMDiuqanbNiVa72reAfldSAh4qewE
+         F3eYk12VP8Zpbt2XJUIgFW+m4623YlspKq6AFsc40i9tQsXtFH0EsPCruYgg+PgiNRsw
+         dG5C7F8GdxgCaxNKYP2x6hhQgQVPQvYR1CPuNMPZo7QA9V2xPU1eXohLmGqrQ4Y6a4RU
+         C4oA==
+X-Gm-Message-State: AOJu0YyJsQcyQqQldpXSmVWehpfBOuvScrkp3QS3aKYrEExd+EBdRhBW
+        aIEV8jSgFfEPJrnzw497nPYqHg==
+X-Google-Smtp-Source: AGHT+IGI6kJ9MIS9s0oujXu1c46uNGlXl85H+BimXj90vilN9IFdT+328TLODqgYWzrAcqqC1a0w1A==
+X-Received: by 2002:a17:906:1053:b0:9ae:4d6d:ba4f with SMTP id j19-20020a170906105300b009ae4d6dba4fmr514445ejj.42.1695194662816;
+        Wed, 20 Sep 2023 00:24:22 -0700 (PDT)
+Received: from [172.20.63.174] (static-212-193-78-212.thenetworkfactory.nl. [212.78.193.212])
+        by smtp.googlemail.com with ESMTPSA id jx10-20020a170906ca4a00b009ae3e6c342asm1256419ejb.111.2023.09.20.00.24.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Sep 2023 00:16:55 -0700 (PDT)
-Message-ID: <263d0059-d0d9-9eaa-d3c9-90b5a16a8025@linaro.org>
-Date:   Wed, 20 Sep 2023 09:16:53 +0200
+        Wed, 20 Sep 2023 00:24:22 -0700 (PDT)
+Message-ID: <9575d7d8-83dc-5814-ced0-46d49eeded84@linaro.org>
+Date:   Wed, 20 Sep 2023 09:24:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH AUTOSEL 6.5 30/36] arm64: dts: qcom: sc8280xp-x13s: Add
- camera activity LED
+ Thunderbird/102.15.0
+Subject: Re: [PATCH v8 3/6] nvmem: core: Add stub for nvmem_cell_read_u8
 Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>, Sasha Levin <sashal@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>, agross@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230908192848.3462476-1-sashal@kernel.org>
- <20230908192848.3462476-30-sashal@kernel.org>
- <ZP60ngCV3hhNZiX5@hovoldconsulting.com> <ZQjEEt7sB2M5EO53@sashalap>
- <ZQk8aJx268Soy4yH@hovoldconsulting.com> <ZQmc7hznPpIh6iwP@sashalap>
- <ZQmh-DaBTwMuOLHe@hovoldconsulting.com> <ZQm5woD5zwRIG9cf@sashalap>
- <ZQnA4o7G4A3YC-pe@hovoldconsulting.com>
- <ZQnFj6g4pbwMz69C@hovoldconsulting.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <ZQnFj6g4pbwMz69C@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Komal Bajaj <quic_kbajaj@quicinc.com>
+Cc:     agross@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        bryan.odonoghue@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230830105654.28057-1-quic_kbajaj@quicinc.com>
+ <20230830105654.28057-4-quic_kbajaj@quicinc.com>
+ <pvif5decuie62pid3zjpsb2tp5hzndxvww7v3jdhl6jkymbpcn@bjhud2hevjm6>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <pvif5decuie62pid3zjpsb2tp5hzndxvww7v3jdhl6jkymbpcn@bjhud2hevjm6>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/09/2023 18:00, Johan Hovold wrote:
-> On Tue, Sep 19, 2023 at 05:40:18PM +0200, Johan Hovold wrote:
->> On Tue, Sep 19, 2023 at 11:09:54AM -0400, Sasha Levin wrote:
->>> On Tue, Sep 19, 2023 at 03:28:24PM +0200, Johan Hovold wrote:
->>>> On Tue, Sep 19, 2023 at 09:06:54AM -0400, Sasha Levin wrote:
->>>>> On Tue, Sep 19, 2023 at 08:15:04AM +0200, Johan Hovold wrote:
+
+
+On 13/09/2023 21:27, Bjorn Andersson wrote:
+> On Wed, Aug 30, 2023 at 04:26:51PM +0530, Komal Bajaj wrote:
+>> Add the stub nvmem_cell_read_u8() function for drivers running with
+>> CONFIG_NVMEM disabled.
 >>
->>>>>> Call it what you will, but please drop it. Otherwise by that logic you'd
->>>>>> need to backport all devicetree patches (as well as most driver changes)
->>>>>> since they ultimately aim at enabling hardware.
->>>>>
->>>>> Not all, only ones that re-use existing kernel driver but enable it for
->>>>> new hardware (i.e. adding a new pci-id/usb-id/dts entries).
->>>>
->>>> Again, that's basically all our device-tree patches. And that can break
->>>> in all sorts of ways. So again, please drop. This does not belong in
->>>> stable.
->>>
->>> This is part of the criteria we use to select patches, yes? If you have
->>> an objection around this particular patch then please let me know, or if
->>> you have an objection around hardware enablement patches in stable then
->>> we can have a bigger discussion around that one.
->>>
->>> However, just dropping this one for no particular reasonisn't the right
->>> approach: we've been using this selection criteria for quite a few years
->>> now.
->>
->> This patch makes zero sense to backport. It's a place holder for a
->> camera led that we may one day need. No one marked it for stable, no
->> one wants it in stable, no one needs it in stable, yet you repeatedly
->> refuse to drop it and keep wasting my time.
->>
->> Backports, and especially your autosel ones, always come with a risk.
->> And here there is ZERO upsides to that. Next time the feature you try to
->> retroactively enable may not be as trivial and could cause real
->> regressions.
->>
->> We're on our knees dealing with development and review of stuff that
->> people do want and need. And you keep pushing silly things like and
->> spamming us with backports that no one asked for. I'm just baffled.
+>> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
 > 
-> You also seem to have made up new stable kernel rules as adding device
-> tree nodes clearly doesn't fit the description in
-> stable-kernel-rules.rst:
+> Srini, do you have any concerns with me taking this together with the
+> remaining patches through my tree?
+
+It works for me.
+
+Acked-by: Srinivas Kandagatla <srinivas.kadnagatla@linaro.org>
+
+
+--srin
 > 
-> 	It must either fix a real bug that bothers people or just add a
-> 	device ID.
+> Regards,
+> Bjorn
 > 
-> (This used to say "New device IDs and quirks are also accepted.")
-
-I agree here with Johan. This is not a new device ID, not a quirk, not
-minor stuff for hardware enablement. DTS describes the hardware for the
-OS. The original commit is such new hardware description for previously
-undescribed hardware. Such description might rely on changes in OS
-drivers and might not work without driver patches, even if compatible
-looks documented. Because this is not a quirk.
-
-Such DTS patches should not be backported to stable kernels.
-
-Best regards,
-Krzysztof
-
+>> ---
+>>   include/linux/nvmem-consumer.h | 6 ++++++
+>>   1 file changed, 6 insertions(+)
+>>
+>> diff --git a/include/linux/nvmem-consumer.h b/include/linux/nvmem-consumer.h
+>> index 4523e4e83319..6ec4b9743e25 100644
+>> --- a/include/linux/nvmem-consumer.h
+>> +++ b/include/linux/nvmem-consumer.h
+>> @@ -127,6 +127,12 @@ static inline int nvmem_cell_write(struct nvmem_cell *cell,
+>>   	return -EOPNOTSUPP;
+>>   }
+>>
+>> +static inline int nvmem_cell_read_u8(struct device *dev,
+>> +				     const char *cell_id, u8 *val)
+>> +{
+>> +	return -EOPNOTSUPP;
+>> +}
+>> +
+>>   static inline int nvmem_cell_read_u16(struct device *dev,
+>>   				      const char *cell_id, u16 *val)
+>>   {
+>> --
+>> 2.41.0
+>>
