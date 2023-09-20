@@ -2,98 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E7F57A88E3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 17:49:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EBC807A8904
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 17:54:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235461AbjITPti (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Sep 2023 11:49:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34344 "EHLO
+        id S235495AbjITPyr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Sep 2023 11:54:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235426AbjITPth (ORCPT
+        with ESMTP id S236793AbjITPym (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Sep 2023 11:49:37 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B4BFAF;
-        Wed, 20 Sep 2023 08:49:32 -0700 (PDT)
+        Wed, 20 Sep 2023 11:54:42 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.115])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97C2DB9;
+        Wed, 20 Sep 2023 08:54:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1695224972; x=1726760972;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=9BObM4Lytu9yb7SGsKBARlJL+kOZDhJhXYFWzJTPPfU=;
-  b=iZ4wPBfBgQABGZ8g/ETgLej1sJQxucwYqRou2+crFVBxj9i0CWHFnFRr
-   LNlaRzlwKrVunZ4TIJbfQ4NSM/1pags949duo4FaNvfXCO4YkQBQh4sdp
-   /iPdUkV/WkVHvUgnoGyWLe4IilqKFjEiZDPFk2uqpqvc2W7v+f/BNJpnu
-   jTM/B7lkbImHREtRWRl+cVuWQ682YwGCLmBnw7BczVYv27t4kNn3fthmw
-   J/kG7FftezdKgfhfVh26bL98+Kc0QANf3RRQLHbABaDG3qUwMF350+JSc
-   AFftkO3N793wH7i7Y1WtJG77eOw+duzwYuDKdW8H1r9VNF3kT6DtCMsGN
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10839"; a="446730107"
+  t=1695225276; x=1726761276;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=GX8QBYbOXmpGWhJr3AbYH3d7nSxzLiqXFbOp3mAqEig=;
+  b=ZodkR2bu8Xg2RXmFrsfepYqZP+jwDXIe3GO9uDV7uhGyCF9Z338K/50A
+   SUFTYIcnbWE3qk9FLUrLyT++VRsM2gmNTtS2za60entcySntICFbCP0Nb
+   KFg4KoAJ4kH8zD6y/Q2Grml/SgT9MNEh1jti3vtpDLNzWMhP7Q+MsNmOB
+   TdXRbg7MeAL7EwLP1i/tLKEInBheu7DsHJsd9y/S453xVTQqgPCvJsfZb
+   K7WjBRlvoS6p9LAFsHCAtEha66NcsQNEs98GrMnMRVClslAlhADS5gY9/
+   zVpbZWNcg6bFsOf93BD1tmaxMIm+WUfUush5axz2EF/hge9TuHDJQw1TU
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10839"; a="380178456"
 X-IronPort-AV: E=Sophos;i="6.03,162,1694761200"; 
-   d="scan'208";a="446730107"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Sep 2023 08:49:32 -0700
+   d="scan'208";a="380178456"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Sep 2023 08:54:01 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10839"; a="993654619"
+X-IronPort-AV: E=McAfee;i="6600,9927,10839"; a="776043470"
 X-IronPort-AV: E=Sophos;i="6.03,162,1694761200"; 
-   d="scan'208";a="993654619"
-Received: from black.fi.intel.com ([10.237.72.28])
-  by fmsmga006.fm.intel.com with ESMTP; 20 Sep 2023 08:49:29 -0700
-Received: by black.fi.intel.com (Postfix, from userid 1003)
-        id E416F71B; Wed, 20 Sep 2023 18:49:27 +0300 (EEST)
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Georgi Djakov <djakov@kernel.org>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH v1 1/1] interconnect: qcom: osm-l3: Replace custom implementation of COUNT_ARGS()
-Date:   Wed, 20 Sep 2023 18:49:27 +0300
-Message-Id: <20230920154927.2090732-1-andriy.shevchenko@linux.intel.com>
-X-Mailer: git-send-email 2.40.0.1.gaa8946217a0b
+   d="scan'208";a="776043470"
+Received: from conorbyr-mobl1.ger.corp.intel.com (HELO [10.213.199.161]) ([10.213.199.161])
+  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Sep 2023 08:53:57 -0700
+Message-ID: <495203cd-d85e-2c00-4fa9-81879a882441@linux.intel.com>
+Date:   Wed, 20 Sep 2023 16:53:55 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v6 4/6] drm/drm_file: Add DRM obj's RSS reporting function
+ for fdinfo
+Content-Language: en-US
+To:     =?UTF-8?Q?Adri=c3=a1n_Larumbe?= <adrian.larumbe@collabora.com>,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
+        robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run,
+        marijn.suijten@somainline.org, robh@kernel.org,
+        steven.price@arm.com
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, healych@amazon.com,
+        Boris Brezillon <boris.brezillon@collabora.com>,
+        kernel@collabora.com, freedreno@lists.freedesktop.org
+References: <20230919233556.1458793-1-adrian.larumbe@collabora.com>
+ <20230919233556.1458793-5-adrian.larumbe@collabora.com>
+From:   Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Organization: Intel Corporation UK Plc
+In-Reply-To: <20230919233556.1458793-5-adrian.larumbe@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,HK_RANDOM_ENVFROM,HK_RANDOM_FROM,
+        NICE_REPLY_A,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Replace custom and non-portable implementation of COUNT_ARGS().
 
-Fixes: 5bc9900addaf ("interconnect: qcom: Add OSM L3 interconnect provider support")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
----
- drivers/interconnect/qcom/osm-l3.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+On 20/09/2023 00:34, Adrián Larumbe wrote:
+> Some BO's might be mapped onto physical memory chunkwise and on demand,
+> like Panfrost's tiler heap. In this case, even though the
+> drm_gem_shmem_object page array might already be allocated, only a very
+> small fraction of the BO is currently backed by system memory, but
+> drm_show_memory_stats will then proceed to add its entire virtual size to
+> the file's total resident size regardless.
+> 
+> This led to very unrealistic RSS sizes being reckoned for Panfrost, where
+> said tiler heap buffer is initially allocated with a virtual size of 128
+> MiB, but only a small part of it will eventually be backed by system memory
+> after successive GPU page faults.
+> 
+> Provide a new DRM object generic function that would allow drivers to
+> return a more accurate RSS size for their BOs.
+> 
+> Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
+> Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+> Reviewed-by: Steven Price <steven.price@arm.com>
+> ---
+>   drivers/gpu/drm/drm_file.c | 5 ++++-
+>   include/drm/drm_gem.h      | 9 +++++++++
+>   2 files changed, 13 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/drm_file.c b/drivers/gpu/drm/drm_file.c
+> index 883d83bc0e3d..762965e3d503 100644
+> --- a/drivers/gpu/drm/drm_file.c
+> +++ b/drivers/gpu/drm/drm_file.c
+> @@ -944,7 +944,10 @@ void drm_show_memory_stats(struct drm_printer *p, struct drm_file *file)
+>   		}
+>   
+>   		if (s & DRM_GEM_OBJECT_RESIDENT) {
+> -			status.resident += obj->size;
+> +			if (obj->funcs && obj->funcs->rss)
+> +				status.resident += obj->funcs->rss(obj);
+> +			else
+> +				status.resident += obj->size;
 
-diff --git a/drivers/interconnect/qcom/osm-l3.c b/drivers/interconnect/qcom/osm-l3.c
-index dc321bb86d0b..e97478bbc282 100644
---- a/drivers/interconnect/qcom/osm-l3.c
-+++ b/drivers/interconnect/qcom/osm-l3.c
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
-  */
- 
-+#include <linux/args.h>
- #include <linux/bitfield.h>
- #include <linux/clk.h>
- #include <linux/interconnect-provider.h>
-@@ -78,7 +79,7 @@ enum {
- 		.name = #_name,						\
- 		.id = _id,						\
- 		.buswidth = _buswidth,					\
--		.num_links = ARRAY_SIZE(((int[]){ __VA_ARGS__ })),	\
-+		.num_links = COUNT_ARGS(__VA_ARGS__),			\
- 		.links = { __VA_ARGS__ },				\
- 	}
- 
--- 
-2.40.0.1.gaa8946217a0b
+Presumably you'd want the same smaller size in both active and 
+purgeable? Or you can end up with more in those two than in rss which 
+would look odd.
 
+Also, alternative to adding a new callback could be adding multiple 
+output parameters to the existing obj->func->status() which maybe ends 
+up simpler due fewer callbacks?
+
+Like:
+
+  s = obj->funcs->status(obj, &supported_status, &rss)
+
+And adjust the code flow to pick up the rss if driver signaled it 
+supports reporting it.
+
+Regards,
+
+Tvrtko
+
+>   		} else {
+>   			/* If already purged or not yet backed by pages, don't
+>   			 * count it as purgeable:
+> diff --git a/include/drm/drm_gem.h b/include/drm/drm_gem.h
+> index bc9f6aa2f3fe..16364487fde9 100644
+> --- a/include/drm/drm_gem.h
+> +++ b/include/drm/drm_gem.h
+> @@ -208,6 +208,15 @@ struct drm_gem_object_funcs {
+>   	 */
+>   	enum drm_gem_object_status (*status)(struct drm_gem_object *obj);
+>   
+> +	/**
+> +	 * @rss:
+> +	 *
+> +	 * Return resident size of the object in physical memory.
+> +	 *
+> +	 * Called by drm_show_memory_stats().
+> +	 */
+> +	size_t (*rss)(struct drm_gem_object *obj);
+> +
+>   	/**
+>   	 * @vm_ops:
+>   	 *
