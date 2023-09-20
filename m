@@ -2,270 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D3A77A7670
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 10:56:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3A087A770C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 11:19:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233744AbjITI4R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Sep 2023 04:56:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44906 "EHLO
+        id S233250AbjITJTU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Sep 2023 05:19:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233464AbjITI4Q (ORCPT
+        with ESMTP id S232318AbjITJTT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Sep 2023 04:56:16 -0400
+        Wed, 20 Sep 2023 05:19:19 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EAEA93;
-        Wed, 20 Sep 2023 01:56:10 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 807F4C433C8;
-        Wed, 20 Sep 2023 08:56:06 +0000 (UTC)
-Message-ID: <6c88160d-3421-4d1d-a4a9-0a495f0fe5f3@xs4all.nl>
-Date:   Wed, 20 Sep 2023 10:56:04 +0200
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3D7E83;
+        Wed, 20 Sep 2023 02:19:13 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8352C433C8;
+        Wed, 20 Sep 2023 09:19:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1695201553;
+        bh=9xBbxr+swRhwwQgmUTAanBRHI1SK4zTTAg4FJYXKK24=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=Gwkcc8Xu5Nso+9thrscxOksnORUUzS6emX7ckBzzFxMBJUbeQsViBBg7tKz0IYHBe
+         3xSxW2DGNqUJQpjF34PagKy3hH3cKXS78UuR5ptd4VCnObq9SqHDuIxPy+Rdng4Y8U
+         Lsa1zPhYc55ZxPPTPJvLhF2jeJpl1avLsLfAKmcWhXsFzkWH0jL36nGGUl1sEEY/+4
+         /mAqv7azDV4eECtV/HS7JZ3Vojf9HTNzYKJ6Wsze4zOdZsNnJp8tTK3pFSL0fRR7bm
+         3tz3QRf/bFwz7LAEhAKqddoHPGQ8rnZNUgR8j6Sxe2+xa21kBRLRk4ffV1QcMgJ6vO
+         3GIDT/6cj8Mfw==
+From:   Lee Jones <lee@kernel.org>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        lee@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        sboyd@kernel.org, luca.weiss@fairphone.com,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230816115151.501736-2-bryan.odonoghue@linaro.org>
+References: <20230816115151.501736-1-bryan.odonoghue@linaro.org>
+ <20230816115151.501736-2-bryan.odonoghue@linaro.org>
+Subject: Re: (subset) [PATCH v9 1/7] dt-bindings: mfd: qcom,spmi-pmic: Add
+ typec to SPMI device types
+Message-Id: <169520155063.3348589.10688565387981596667.b4-ty@kernel.org>
+Date:   Wed, 20 Sep 2023 10:19:10 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 12/49] media: videobuf2: Be more flexible on the number
- of queue stored buffers
-Content-Language: en-US, nl
-From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-        mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
-        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
-        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
-        nicolas.dufresne@collabora.com
-Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
-        kernel@collabora.com
-References: <20230914133323.198857-1-benjamin.gaignard@collabora.com>
- <20230914133323.198857-13-benjamin.gaignard@collabora.com>
- <c58cdf5a-7176-457e-98f3-85606cec7f09@xs4all.nl>
-In-Reply-To: <c58cdf5a-7176-457e-98f3-85606cec7f09@xs4all.nl>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.12.2
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/09/2023 14:42, Hans Verkuil wrote:
-> On 14/09/2023 15:32, Benjamin Gaignard wrote:
->> Add 'max_allowed_buffers' field in vb2_queue struct to let drivers decide
->> how many buffers could be stored in a queue.
->> This request 'bufs' array to be allocated at queue init time and freed
->> when releasing the queue.
->> By default VB2_MAX_FRAME remains the limit.
->>
->> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
->> Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
->> ---
->>  .../media/common/videobuf2/videobuf2-core.c   | 40 ++++++++++++++-----
->>  .../media/common/videobuf2/videobuf2-v4l2.c   |  4 +-
->>  include/media/videobuf2-core.h                |  4 +-
->>  3 files changed, 35 insertions(+), 13 deletions(-)
+On Wed, 16 Aug 2023 12:51:45 +0100, Bryan O'Donoghue wrote:
+> Add the PMIC Type-C port driver to the list of devices.
 > 
-> After this patch I would like to see a patches adding support for this to
-> vicodec and vivid. For vivid it might be a good idea to mix this: say
-> the video output remains at 32 buffers, but video capture can do more.
 > 
-> And the swradio device should be able to handle quite a lot more (try
-> 1024 there) since these buffers are quite small (32 kB).
 
-I thought about this a bit more, and I think it would be good to select
-the maximum number of buffers (32768) for the VBI capture queue in vivid.
+Applied, thanks!
 
-These buffers are small (1440 bytes), so choosing to use 32768 buffers
-is feasible for testing on most systems (a bit less than 50 MB).
+[1/7] dt-bindings: mfd: qcom,spmi-pmic: Add typec to SPMI device types
+      commit: 852355e98e45ec7f9adf06de92bba063424aa7cb
 
-This is nice for v4l2-compliance, since it can test that corner case.
-
-Regards,
-
-	Hans
-
-> 
-> The vicodec driver can increase it to 64, just as the verisilicon driver
-> does.
-> 
-> This makes it easy to do compliance testing for this new feature.
-> 
-> Regards,
-> 
-> 	Hans
-> 
->>
->> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
->> index afe76577acc1..ee4df7c68397 100644
->> --- a/drivers/media/common/videobuf2/videobuf2-core.c
->> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
->> @@ -411,7 +411,7 @@ static void init_buffer_cache_hints(struct vb2_queue *q, struct vb2_buffer *vb)
->>   */
->>  static bool vb2_queue_add_buffer(struct vb2_queue *q, struct vb2_buffer *vb, unsigned int index)
->>  {
->> -	if (index < VB2_MAX_FRAME && !q->bufs[index]) {
->> +	if (index < q->max_allowed_buffers && !q->bufs[index]) {
->>  		q->bufs[index] = vb;
->>  		vb->index = index;
->>  		vb->vb2_queue = q;
->> @@ -428,7 +428,7 @@ static bool vb2_queue_add_buffer(struct vb2_queue *q, struct vb2_buffer *vb, uns
->>   */
->>  static void vb2_queue_remove_buffer(struct vb2_queue *q, struct vb2_buffer *vb)
->>  {
->> -	if (vb->index < VB2_MAX_FRAME) {
->> +	if (vb->index < q->max_allowed_buffers) {
->>  		q->bufs[vb->index] = NULL;
->>  		vb->vb2_queue = NULL;
->>  	}
->> @@ -449,9 +449,9 @@ static int __vb2_queue_alloc(struct vb2_queue *q, enum vb2_memory memory,
->>  	struct vb2_buffer *vb;
->>  	int ret;
->>  
->> -	/* Ensure that q->num_buffers+num_buffers is below VB2_MAX_FRAME */
->> +	/* Ensure that q->num_buffers+num_buffers is below q->max_allowed_buffers */
->>  	num_buffers = min_t(unsigned int, num_buffers,
->> -			    VB2_MAX_FRAME - q->num_buffers);
->> +			    q->max_allowed_buffers - q->num_buffers);
->>  
->>  	for (buffer = 0; buffer < num_buffers; ++buffer) {
->>  		/* Allocate vb2 buffer structures */
->> @@ -814,7 +814,7 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
->>  	unsigned plane_sizes[VB2_MAX_PLANES] = { };
->>  	bool non_coherent_mem = flags & V4L2_MEMORY_FLAG_NON_COHERENT;
->>  	unsigned int i;
->> -	int ret;
->> +	int ret = 0;
->>  
->>  	if (q->streaming) {
->>  		dprintk(q, 1, "streaming active\n");
->> @@ -858,17 +858,23 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
->>  	/*
->>  	 * Make sure the requested values and current defaults are sane.
->>  	 */
->> -	WARN_ON(q->min_buffers_needed > VB2_MAX_FRAME);
->> +	WARN_ON(q->min_buffers_needed > q->max_allowed_buffers);
->>  	num_buffers = max_t(unsigned int, *count, q->min_buffers_needed);
->> -	num_buffers = min_t(unsigned int, num_buffers, VB2_MAX_FRAME);
->> +	num_buffers = min_t(unsigned int, num_buffers, q->max_allowed_buffers);
->>  	memset(q->alloc_devs, 0, sizeof(q->alloc_devs));
->>  	/*
->>  	 * Set this now to ensure that drivers see the correct q->memory value
->>  	 * in the queue_setup op.
->>  	 */
->>  	mutex_lock(&q->mmap_lock);
->> +	if (!q->bufs)
->> +		q->bufs = kcalloc(q->max_allowed_buffers, sizeof(*q->bufs), GFP_KERNEL);
->> +	if (!q->bufs)
->> +		ret = -ENOMEM;
->>  	q->memory = memory;
->>  	mutex_unlock(&q->mmap_lock);
->> +	if (ret)
->> +		return ret;
->>  	set_queue_coherency(q, non_coherent_mem);
->>  
->>  	/*
->> @@ -974,9 +980,9 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
->>  	unsigned plane_sizes[VB2_MAX_PLANES] = { };
->>  	bool non_coherent_mem = flags & V4L2_MEMORY_FLAG_NON_COHERENT;
->>  	bool no_previous_buffers = !q->num_buffers;
->> -	int ret;
->> +	int ret = 0;
->>  
->> -	if (q->num_buffers == VB2_MAX_FRAME) {
->> +	if (q->num_buffers == q->max_allowed_buffers) {
->>  		dprintk(q, 1, "maximum number of buffers already allocated\n");
->>  		return -ENOBUFS;
->>  	}
->> @@ -993,7 +999,13 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
->>  		 */
->>  		mutex_lock(&q->mmap_lock);
->>  		q->memory = memory;
->> +		if (!q->bufs)
->> +			q->bufs = kcalloc(q->max_allowed_buffers, sizeof(*q->bufs), GFP_KERNEL);
->> +		if (!q->bufs)
->> +			ret = -ENOMEM;
->>  		mutex_unlock(&q->mmap_lock);
->> +		if (ret)
->> +			return ret;
->>  		q->waiting_for_buffers = !q->is_output;
->>  		set_queue_coherency(q, non_coherent_mem);
->>  	} else {
->> @@ -1005,7 +1017,7 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
->>  			return -EINVAL;
->>  	}
->>  
->> -	num_buffers = min(*count, VB2_MAX_FRAME - q->num_buffers);
->> +	num_buffers = min(*count, q->max_allowed_buffers - q->num_buffers);
->>  
->>  	if (requested_planes && requested_sizes) {
->>  		num_planes = requested_planes;
->> @@ -2515,6 +2527,12 @@ int vb2_core_queue_init(struct vb2_queue *q)
->>  
->>  	q->memory = VB2_MEMORY_UNKNOWN;
->>  
->> +	if (!q->max_allowed_buffers)
->> +		q->max_allowed_buffers = VB2_MAX_FRAME;
->> +
->> +	/* The maximum is limited by offset cookie encoding pattern */
->> +	q->max_allowed_buffers = min_t(unsigned int, q->max_allowed_buffers, BUFFER_INDEX_MASK + 1);
->> +
->>  	if (q->buf_struct_size == 0)
->>  		q->buf_struct_size = sizeof(struct vb2_buffer);
->>  
->> @@ -2539,6 +2557,8 @@ void vb2_core_queue_release(struct vb2_queue *q)
->>  	__vb2_queue_cancel(q);
->>  	mutex_lock(&q->mmap_lock);
->>  	__vb2_queue_free(q, q->num_buffers);
->> +	kfree(q->bufs);
->> +	q->bufs = NULL;
->>  	mutex_unlock(&q->mmap_lock);
->>  }
->>  EXPORT_SYMBOL_GPL(vb2_core_queue_release);
->> diff --git a/drivers/media/common/videobuf2/videobuf2-v4l2.c b/drivers/media/common/videobuf2/videobuf2-v4l2.c
->> index f460cac560f6..87c2d5916960 100644
->> --- a/drivers/media/common/videobuf2/videobuf2-v4l2.c
->> +++ b/drivers/media/common/videobuf2/videobuf2-v4l2.c
->> @@ -1156,7 +1156,7 @@ int _vb2_fop_release(struct file *file, struct mutex *lock)
->>  
->>  	if (lock)
->>  		mutex_lock(lock);
->> -	if (file->private_data == vdev->queue->owner) {
->> +	if (!vdev->queue->owner || file->private_data == vdev->queue->owner) {
->>  		vb2_queue_release(vdev->queue);
->>  		vdev->queue->owner = NULL;
->>  	}
->> @@ -1284,7 +1284,7 @@ void vb2_video_unregister_device(struct video_device *vdev)
->>  	 */
->>  	get_device(&vdev->dev);
->>  	video_unregister_device(vdev);
->> -	if (vdev->queue && vdev->queue->owner) {
->> +	if (vdev->queue) {
->>  		struct mutex *lock = vdev->queue->lock ?
->>  			vdev->queue->lock : vdev->lock;
->>  
->> diff --git a/include/media/videobuf2-core.h b/include/media/videobuf2-core.h
->> index cd3ff1cd759d..97153c69583f 100644
->> --- a/include/media/videobuf2-core.h
->> +++ b/include/media/videobuf2-core.h
->> @@ -558,6 +558,7 @@ struct vb2_buf_ops {
->>   * @dma_dir:	DMA mapping direction.
->>   * @bufs:	videobuf2 buffer structures
->>   * @num_buffers: number of allocated/used buffers
->> + * @max_allowed_buffers: upper limit of number of allocated/used buffers
->>   * @queued_list: list of buffers currently queued from userspace
->>   * @queued_count: number of buffers queued and ready for streaming.
->>   * @owned_by_drv_count: number of buffers owned by the driver
->> @@ -619,8 +620,9 @@ struct vb2_queue {
->>  	struct mutex			mmap_lock;
->>  	unsigned int			memory;
->>  	enum dma_data_direction		dma_dir;
->> -	struct vb2_buffer		*bufs[VB2_MAX_FRAME];
->> +	struct vb2_buffer		**bufs;
->>  	unsigned int			num_buffers;
->> +	unsigned int			max_allowed_buffers;
->>  
->>  	struct list_head		queued_list;
->>  	unsigned int			queued_count;
-> 
+--
+Lee Jones [李琼斯]
 
