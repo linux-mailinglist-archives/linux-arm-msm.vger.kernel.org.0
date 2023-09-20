@@ -2,51 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 024487A702E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 04:10:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B58D97A7031
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Sep 2023 04:10:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231899AbjITCKH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Sep 2023 22:10:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55370 "EHLO
+        id S231974AbjITCKJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Sep 2023 22:10:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231840AbjITCKH (ORCPT
+        with ESMTP id S231840AbjITCKI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Sep 2023 22:10:07 -0400
+        Tue, 19 Sep 2023 22:10:08 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11C03C9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Sep 2023 19:10:00 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D46C433C8;
-        Wed, 20 Sep 2023 02:09:58 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23F74CE;
+        Tue, 19 Sep 2023 19:10:01 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4790C433CC;
+        Wed, 20 Sep 2023 02:09:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1695175799;
-        bh=DFfP4IoEJmoEfhZtfQJFBZL2aVXZkiydQfe+9+2kgQY=;
+        s=k20201202; t=1695175800;
+        bh=Vv/k0XfU635pKagxS1yVwKInDfpvPuQUWW4tmVK3bH4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=vAKQN8fdlgDjnF5U+3vA0iXnpdayVzjAbSyG2Z3Hx5HU5DYaH4lja6E5mZ8Z7dJyu
-         Z4ZuwAS3TpH4nLQ9WU1qQrjhn71WzW/BLVV88q2B3pumEHwOvNgtfyGroSAeYQZRxL
-         aTPla5ROb598YNQSmwDksQZIurUQ9RVOyjciZVMOuTAQhSFLSvITcKlxlzHhXmrtNQ
-         LXVWS3nwzc+vI5FYCgL6/0cSOFdzhq6T7TKmpbg3wKKwm0On/eZPZu8cbHKzW+Uqk/
-         Iig9bx/oANd4xS7utlOxymgTKhYVYfFdr8DHy71lRX3WHURNXH9iyXwWHJOfuJszD5
-         bc8Sf1VEt4sdA==
+        b=KZTCNhCkAGmZJrqZcS/ojYeWZSoHbkfPlQdikglz5QftJkjuSufYxt2OY3ow4zkqp
+         eMvZAA/KEf7fJYeOS0KcKtXMzwvVHtHv6eIdFx8CaX5CPE8k+yMNM+cMgHaLZnF7LM
+         Eqy/cQT7qlkbuSidYKimEkDe0WDyzs46yQWUs/gqLox0GZfHLYGzT4VapLW/bzmkkx
+         OmbhbKXAo2DSiReq1ctdSIKiz/ZJ4CeNKWHPU8AFnvHNOuEeAj7rvBND5oKmMsBJaN
+         aMO90G0Adc9WUwobdFBqg0MXNmEtMwT72WT+FJ0Omz5sH076w3Qgy+Q8HKc2sn7KG9
+         Sxnod11HithRQ==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
+To:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 0/4] arm64: dts: qcom: qrb5165-rb5: enable DP support
-Date:   Tue, 19 Sep 2023 19:13:59 -0700
-Message-ID: <169517603994.822793.9794338866644758315.b4-ty@kernel.org>
+        Conor Dooley <conor+dt@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Subject: Re: [PATCH 0/5] RB1 features
+Date:   Tue, 19 Sep 2023 19:14:00 -0700
+Message-ID: <169517603987.822793.12171416203818012201.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230817145940.9887-1-dmitry.baryshkov@linaro.org>
-References: <20230817145940.9887-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230906-topic-rb1_features_sans_icc-v1-0-e92ce6fbde16@linaro.org>
+References: <20230906-topic-rb1_features_sans_icc-v1-0-e92ce6fbde16@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -61,28 +57,29 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Thu, 17 Aug 2023 17:59:36 +0300, Dmitry Baryshkov wrote:
-> Implement DisplayPort support for the Qualcomm RB5 platform.
+On Wed, 06 Sep 2023 11:24:54 +0200, Konrad Dybcio wrote:
+> This series brings:
 > 
-> Note: while testing this, I had link training issues with several
-> dongles with DP connectors. Other DisplayPort-USB-C dongles (with HDMI
-> or VGA connectors) work perfectly.
-> 
-> Dependencies: [1]
-> Soft-dependencies: [2], [3]
+> - a boot fix (Qualcomm's promises of updated hw never materialized)
+> - regulator fixes (way back then schema didn't notice my mistakes)
+> - GPIO LEDs
+> - USB3
+> - remote processors
 > 
 > [...]
 
 Applied, thanks!
 
-[1/4] arm64: dts: qcom: sm8250: Add DisplayPort device node
-      commit: 956aa24b16350a50d3a6beb9237bc35aa2f447d6
-[2/4] arm64: dts: qcom: qrb5165-rb5: add onboard USB-C redriver
-      commit: d342e1c993bd7589cad9d2da099c6a9c652ecb9f
-[3/4] arm64: dts: qcom: qrb5165-rb5: enable displayport controller
-      commit: 96387ee7534dc449be35a9bb98b7668da2bed545
-[4/4] arm64: dts: qcom: qrb5165-rb5: enable DP altmode
-      commit: b3dea914127e9065df003002ed13a2ef40d19877
+[1/5] arm64: dts: qcom: qrb2210-rb1: Swap UART index
+      commit: 973c015facabcbd320063648010942c51992c1a1
+[2/5] arm64: dts: qcom: qrb2210-rb1: Fix regulators
+      commit: 31bee70793b67f4b428825434542afc72ddb2b3b
+[3/5] arm64: dts: qcom: qrb2210-rb1: Enable remote processors
+      commit: 9692ccc49583cd43184ea192af127635877e0f24
+[4/5] arm64: dts: qcom: qrb2210-rb1: Add GPIO LEDs
+      commit: 02a2fcfbb835bac0c523b3f89326bc1c69f83ce0
+[5/5] arm64: dts: qcom: qrb2210-rb1: Hook up USB3
+      commit: 59f9ff79cd9cf3bc10743d61662b5729fcffff24
 
 Best regards,
 -- 
