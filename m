@@ -2,41 +2,42 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B6F77AA029
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Sep 2023 22:33:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B3E87AA1F1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Sep 2023 23:10:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231935AbjIUUd0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Sep 2023 16:33:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57786 "EHLO
+        id S231250AbjIUVLA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Sep 2023 17:11:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231967AbjIUUdH (ORCPT
+        with ESMTP id S232859AbjIUVFF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Sep 2023 16:33:07 -0400
+        Thu, 21 Sep 2023 17:05:05 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 322E586135
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Sep 2023 10:37:58 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 850EEC4E759;
-        Thu, 21 Sep 2023 14:26:12 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D13FA86138;
+        Thu, 21 Sep 2023 10:37:58 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B7CDC4E75F;
+        Thu, 21 Sep 2023 14:26:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1695306373;
-        bh=2++/YFBh55cXJ6n3YekHfxDVcknebtLcmOWyG73zSoI=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=NdZj15U9ei2kE6ljm78/Q67BgZX8bUyB7M/lpYZqKZibNC3djB7gpL+zMKPRhvsu3
-         Q9/kfZNsluV38XiFKHfxbuxR7Q/uPJmmmXbgtgcaX7YPGwfQx1WdNYcZzJE/WQuNu9
-         +QgF1aEXlPDV6jZyGEsu+axkXYXA4b+9JT1LqsBKgyNnqQg77kbPIRhletyN6Z3WLu
-         I/ZRXuohSwyMMDEQT1WLbD+tKNMeRy7So/R984y7P8llOCWXjLUvlqrkIXg2XHo3LV
-         3ObJ4n5ojEwa7okFefvQUKoq7BV29V9CvntfMv7ddjCO+WYIwz836RRFn128zIokz+
-         k4FvKawZEjD4A==
+        s=k20201202; t=1695306378;
+        bh=Y6tF5Sxcca3uknZoiD/RUnNmXLKJdlsB7DP2Xfz3jH8=;
+        h=From:To:In-Reply-To:References:Subject:Date:From;
+        b=Oow2mZRnk+semWy/ipKx+k8QwxReBm+OSDMXyq0ak5vClB9HJH5RTVQKBHHNFj0AS
+         OJ76rfLM1FPKDS5/qRKPEPl5giDEPW1xtnUQlonfcZZakQPFUqTxwh6tVDi8F37Til
+         G7s5rZwh9z7iiwlhIgOVPEo5Zn711BAhrxARs3bGfkxs2g/jRCS0CB6U+5AQMtknlb
+         Os4crsN1kXLjpB3s/2ZZjlnUJP8XsCCW44uA+lEJhSB8SI6R9SEtLfCgRKZozptoTM
+         Wko0pEZ8kXpoyUk3VJ1Gn3xGa1k5l+YSgiNq0NmieVaXv4EMEN/o1lotfFZ8FIBnjp
+         V9rqMxpUe5eYw==
 From:   Vinod Koul <vkoul@kernel.org>
-To:     linux-phy@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        Yang Yingliang <yangyingliang@huawei.com>
-Cc:     quic_varada@quicinc.com, andersson@kernel.org
-In-Reply-To: <20230824092356.1154839-1-yangyingliang@huawei.com>
-References: <20230824092356.1154839-1-yangyingliang@huawei.com>
-Subject: Re: [PATCH -next] phy: qcom: phy-qcom-m31: change m31_ipq5332_regs
- to static
-Message-Id: <169530637215.106093.2062943843024168234.b4-ty@kernel.org>
-Date:   Thu, 21 Sep 2023 16:26:12 +0200
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        kishon@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
+        Varadarajan Narayanan <quic_varada@quicinc.com>
+In-Reply-To: <1694069452-3794-1-git-send-email-quic_varada@quicinc.com>
+References: <1694069452-3794-1-git-send-email-quic_varada@quicinc.com>
+Subject: Re: [PATCH] phy: qcom: m31: Remove unwanted qphy->vreg is NULL
+ check
+Message-Id: <169530637607.106093.6024035938522205244.b4-ty@kernel.org>
+Date:   Thu, 21 Sep 2023 16:26:16 +0200
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
@@ -52,16 +53,23 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Thu, 24 Aug 2023 17:23:56 +0800, Yang Yingliang wrote:
-> m31_ipq5332_regs is only used in phy-qcom-m31.c now, change
-> it to static.
+On Thu, 07 Sep 2023 12:20:52 +0530, Varadarajan Narayanan wrote:
+> Fix the following Smatch complaint:
+> 	drivers/phy/qualcomm/phy-qcom-m31.c:175 m31usb_phy_init()
+> 	warn: variable dereferenced before check 'qphy->vreg' (see line 167)
 > 
+> drivers/phy/qualcomm/phy-qcom-m31.c
+>    166
+>    167		ret = regulator_enable(qphy->vreg);
+>                                        ^^^^^^^^^^
+> Unchecked dereference
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] phy: qcom: phy-qcom-m31: change m31_ipq5332_regs to static
-      commit: 426e05ce126e8febc21fae643139a1072d2670ad
+[1/1] phy: qcom: m31: Remove unwanted qphy->vreg is NULL check
+      commit: ecec1de5c58f8f3ab6959fcf8d68752eeb65311d
 
 Best regards,
 -- 
