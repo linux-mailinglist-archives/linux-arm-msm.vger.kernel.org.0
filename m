@@ -2,136 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C08F07AA2EC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Sep 2023 23:43:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 972757AA0CD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Sep 2023 22:48:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231586AbjIUVnI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Sep 2023 17:43:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43400 "EHLO
+        id S231535AbjIUUss (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Sep 2023 16:48:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231786AbjIUVmz (ORCPT
+        with ESMTP id S230250AbjIUUs1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Sep 2023 17:42:55 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.88])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 723AD72A0;
-        Thu, 21 Sep 2023 10:28:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1695317320; x=1726853320;
-  h=message-id:date:mime-version:subject:from:to:cc:
-   references:in-reply-to:content-transfer-encoding;
-  bh=DUAFX+JNi4nRkne3bhKFanmYulDhmk2cpGuyh+eKgqo=;
-  b=FEmp4GMi5sFXuNeAppelkM4neNxsBpk/C6B4yuDpgTd5oUe3CNmu1EbS
-   Pz+EcVdT1/DRTcw6s0vEXitgkkJ8lF9LHY11wH7AULNQ2KKkRP8PcEuAF
-   oUBo99iTsSotQyjgzPcxxlHlz48gz8RKuKxw1G8No9VpmekvfAz6XRyF9
-   DdMqTcvbMa7MpUdw58MiQAdpqog6xMvVV+sgodfOWwAFSge2K7DPtBeUs
-   CKPi0nZPuAl4SzPzNVB8t+00xzoZiHeodnCW0qlLxa3s/DriJoGcBDd42
-   86fUxClvwgS/ANCDD8rDMKqvpEMRC8oDrxjQCJYd7Vqokp7rJzfZRKw+u
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10839"; a="411422757"
-X-IronPort-AV: E=Sophos;i="6.03,165,1694761200"; 
-   d="scan'208";a="411422757"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Sep 2023 03:14:34 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10839"; a="723688411"
-X-IronPort-AV: E=Sophos;i="6.03,165,1694761200"; 
-   d="scan'208";a="723688411"
-Received: from asilke-mobl2.ger.corp.intel.com (HELO [10.213.199.249]) ([10.213.199.249])
-  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Sep 2023 03:14:29 -0700
-Message-ID: <6b9c8566-926d-40ff-7907-228d317fab3d@linux.intel.com>
-Date:   Thu, 21 Sep 2023 11:14:27 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v6 6/6] drm/drm-file: Show finer-grained BO sizes in
- drm_show_memory_stats
-Content-Language: en-US
-From:   Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-To:     =?UTF-8?Q?Adri=c3=a1n_Larumbe?= <adrian.larumbe@collabora.com>,
-        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
-        robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        dmitry.baryshkov@linaro.org, sean@poorly.run,
-        marijn.suijten@somainline.org, robh@kernel.org,
-        steven.price@arm.com
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, healych@amazon.com,
-        Boris Brezillon <boris.brezillon@collabora.com>,
-        kernel@collabora.com, freedreno@lists.freedesktop.org
-References: <20230919233556.1458793-1-adrian.larumbe@collabora.com>
- <20230919233556.1458793-7-adrian.larumbe@collabora.com>
- <ccfa3697-b015-ff35-fb92-0efcbd1d7d7c@linux.intel.com>
-Organization: Intel Corporation UK Plc
-In-Reply-To: <ccfa3697-b015-ff35-fb92-0efcbd1d7d7c@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,HK_RANDOM_ENVFROM,HK_RANDOM_FROM,
-        NICE_REPLY_A,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        Thu, 21 Sep 2023 16:48:27 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7A348920D;
+        Thu, 21 Sep 2023 10:39:37 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38LA0op8018599;
+        Thu, 21 Sep 2023 10:21:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references; s=qcppdkim1;
+ bh=T0zvtAbAPebOnsvprf62IRLD4kapb6CxEu2qq4E60Ls=;
+ b=JlgiKF4XZPvMOUSNl2QGekxnp3jeoZepr2jHVEBb8boK+WYU/ANCPR8C0Ur2O2V9ph/4
+ kzp3ZnrwJ6aCixQ3MZ+uZ4jxqovYkpW1onD/rfQ9SNffbcazCvIHlgxoGu8q86nKjTNb
+ Hu8azLwyZ6/3vnCi/Arg0d+X+Phoyv08di+XjdJp/42oGHU6ZJR6GMdBgx6YuLt4b4Rg
+ lY8CqwGhVvS4CnUyBAxpe/fRyK0sVDezBnSRJWMc5hZrIRiUfV/1EnXfJbbOiyUyRSCO
+ v0q8G9NnAZe+PynNb2zEgZg0+VA/2uc1Hu6w+x3Ybpjyp88S94ZMFPagdita/22x+7sF 5w== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t8hb8gc7d-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 21 Sep 2023 10:21:40 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 38LALbjV023130;
+        Thu, 21 Sep 2023 10:21:37 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3t55ekq7nu-1;
+        Thu, 21 Sep 2023 10:21:37 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 38LALbc1023117;
+        Thu, 21 Sep 2023 10:21:37 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-rohiagar-hyd.qualcomm.com [10.213.106.138])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 38LALbgG023107;
+        Thu, 21 Sep 2023 10:21:37 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3970568)
+        id 8D1471E45; Thu, 21 Sep 2023 15:51:36 +0530 (+0530)
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        gregkh@linuxfoundation.org, abel.vesa@linaro.org,
+        quic_wcheng@quicinc.com, dmitry.baryshkov@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, kernel@quicinc.com,
+        Rohit Agarwal <quic_rohiagar@quicinc.com>
+Subject: [PATCH v3 2/5] dt-bindings: phy: qcom,qmp-usb: Add SDX75 USB3 PHY
+Date:   Thu, 21 Sep 2023 15:51:29 +0530
+Message-Id: <1695291692-18850-3-git-send-email-quic_rohiagar@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1695291692-18850-1-git-send-email-quic_rohiagar@quicinc.com>
+References: <1695291692-18850-1-git-send-email-quic_rohiagar@quicinc.com>
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: MDHs_XGrg-urHVPLut4tMZThdEQB6t0q
+X-Proofpoint-GUID: MDHs_XGrg-urHVPLut4tMZThdEQB6t0q
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-21_07,2023-09-20_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
+ bulkscore=0 lowpriorityscore=0 mlxlogscore=585 impostorscore=0
+ phishscore=0 priorityscore=1501 clxscore=1015 adultscore=0 malwarescore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309210090
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add dt-bindings for USB3 PHY found on Qualcomm SDX75.
 
-On 20/09/2023 16:32, Tvrtko Ursulin wrote:
-> 
-> On 20/09/2023 00:34, Adrián Larumbe wrote:
->> The current implementation will try to pick the highest available size
->> display unit as soon as the BO size exceeds that of the previous
->> multiplier. That can lead to loss of precision in contexts of low memory
->> usage.
->>
->> The new selection criteria try to preserve precision, whilst also
->> increasing the display unit selection threshold to render more accurate
->> values.
->>
->> Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
->> Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
->> Reviewed-by: Steven Price <steven.price@arm.com>
->> ---
->>   drivers/gpu/drm/drm_file.c | 5 ++++-
->>   1 file changed, 4 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/gpu/drm/drm_file.c b/drivers/gpu/drm/drm_file.c
->> index 762965e3d503..34cfa128ffe5 100644
->> --- a/drivers/gpu/drm/drm_file.c
->> +++ b/drivers/gpu/drm/drm_file.c
->> @@ -872,6 +872,8 @@ void drm_send_event(struct drm_device *dev, struct 
->> drm_pending_event *e)
->>   }
->>   EXPORT_SYMBOL(drm_send_event);
->> +#define UPPER_UNIT_THRESHOLD 100
->> +
->>   static void print_size(struct drm_printer *p, const char *stat,
->>                  const char *region, u64 sz)
->>   {
->> @@ -879,7 +881,8 @@ static void print_size(struct drm_printer *p, 
->> const char *stat,
->>       unsigned u;
->>       for (u = 0; u < ARRAY_SIZE(units) - 1; u++) {
->> -        if (sz < SZ_1K)
->> +        if ((sz & (SZ_1K - 1)) &&
-> 
-> IS_ALIGNED worth it at all?
-> 
->> +            sz < UPPER_UNIT_THRESHOLD * SZ_1K)
->>               break;
-> 
-> Excuse me for a late comment (I was away). I did not get what what is 
-> special about a ~10% threshold? Sounds to me just going with the lower 
-> unit, when size is not aligned to the higher one, would be better than 
-> sometimes precision-sometimes-not.
+Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+---
+ .../devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml         | 2 ++
+ 1 file changed, 2 insertions(+)
 
-FWIW both current and the threshold option make testing the feature very 
-annoying.
+diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+index f99fbbc..d58dd74 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+@@ -20,6 +20,7 @@ properties:
+       - qcom,qcm2290-qmp-usb3-phy
+       - qcom,sa8775p-qmp-usb3-uni-phy
+       - qcom,sc8280xp-qmp-usb3-uni-phy
++      - qcom,sdx75-qmp-usb3-uni-phy
+       - qcom,sm6115-qmp-usb3-phy
+ 
+   reg:
+@@ -75,6 +76,7 @@ allOf:
+           contains:
+             enum:
+               - qcom,ipq9574-qmp-usb3-phy
++              - qcom,sdx75-qmp-usb3-uni-phy
+     then:
+       properties:
+         clock-names:
+-- 
+2.7.4
 
-So I'd really propose we simply use smaller unit when unaligned.
-
-Regards,
-
-Tvrtko
