@@ -2,64 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A4177A9014
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Sep 2023 02:10:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B68A17A9025
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Sep 2023 02:26:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229692AbjIUALA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Sep 2023 20:11:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57780 "EHLO
+        id S229594AbjIUA0n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Sep 2023 20:26:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229689AbjIUALA (ORCPT
+        with ESMTP id S229478AbjIUA0n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Sep 2023 20:11:00 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D606ADC;
-        Wed, 20 Sep 2023 17:10:51 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38KNPmx6028711;
-        Thu, 21 Sep 2023 00:10:45 GMT
+        Wed, 20 Sep 2023 20:26:43 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE799D7;
+        Wed, 20 Sep 2023 17:26:36 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38L0QRU1005211;
+        Thu, 21 Sep 2023 00:26:27 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
+ mime-version : subject : to : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=qneqChtbcPJwHLGFVb5R0IVC9y05pxxQTCA5porCVq4=;
- b=olRyOq8qJO0hAqgugwkkdFv/gp944EqmpoF/PEc2CDTwPlk3++zQ09xW5D60hp4VT5E2
- XtxuPU8tDEWvEtpcInE7KwqpEpRRA9+XxrS+s8SLlPsDnefsW8xzjGp4OOBPC5j5ZvpS
- 7kEg9PFf/AbU/EKz0OIQuy+/QxdcmemisSzOgRHPj9IrZQS/u5s7iMnNhTpzyb99RsJC
- glaUhMEIG6YfyVQubXkd8qvd1hQbNk3dnzIEZU+GWF3uzWio6zd+N57QizopB3ycrSxC
- MlHop92f8gj1SEnOaa7BNTxcQntr/XenRZpsvr20qFbNgg0wkTnWaxBytMQkbJgxDvGl QA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t7r8w2f45-1
+ bh=hiFCCl/MJHW12WaPm21+mtf9pdSpv8QL8D+K6g5ozQU=;
+ b=GJAiIcVhPBP2epM0fRlLXLhMudaIR4OEilS6FY46jD6BHN6EnddPOTniw6YE7V+ppjKX
+ AE3mb+nex4TjmpZ0cxhUjmQNbDqe4eyj7gU1d4Q1arYnnn7By9Lkf4mqcn3LMut/DYEt
+ +xUgloYnI9wszyxdJ4QN3qqRr70vKwIVSHZUclck06YgoDEntSq5ljwm33bLkta9CMCj
+ ELn1KSkbpMjdGGbF6TL9VLvR6mEZeD24sPNR7av22yM6qNJuRWVIjdRUwHh0V81SH+Gm
+ AkX/X7tlt8t2txWEktQWl25D+xGDaUtRi6bHvh+gXvq0FqiCaDLjn8yhN0t7+NK5T4tx qg== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t7rhutkr3-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 21 Sep 2023 00:10:45 +0000
+        Thu, 21 Sep 2023 00:26:27 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38L0Ahb0012680
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38L0QQZJ003410
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 21 Sep 2023 00:10:43 GMT
-Received: from [10.71.111.102] (10.80.80.8) by nalasex01a.na.qualcomm.com
+        Thu, 21 Sep 2023 00:26:26 GMT
+Received: from [192.168.142.6] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Wed, 20 Sep
- 2023 17:10:43 -0700
-Message-ID: <d5304033-143b-f093-a58b-67a809ac4540@quicinc.com>
-Date:   Wed, 20 Sep 2023 17:10:42 -0700
+ 2023 17:26:25 -0700
+Message-ID: <349a7b1c-915f-4f58-260f-900aa7e3db65@quicinc.com>
+Date:   Wed, 20 Sep 2023 17:26:25 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 3/3] drm/msm/dpu: Fix SC7280 DSC block length
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 net-next 2/2] net: qrtr: Add support for processing
+ DEL_PROC type control message
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>
-CC:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20230921-topic-7280_dpu-v1-0-6912a97183d5@linaro.org>
- <20230921-topic-7280_dpu-v1-3-6912a97183d5@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230921-topic-7280_dpu-v1-3-6912a97183d5@linaro.org>
+To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+        <mani@kernel.org>, <davem@davemloft.net>, <edumazet@google.com>,
+        <kuba@kernel.org>, <pabeni@redhat.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <netdev@vger.kernel.org>, <quic_viswanat@quicinc.com>,
+        <horms@kernel.org>
+References: <20230920053317.2165867-1-quic_srichara@quicinc.com>
+ <20230920053317.2165867-3-quic_srichara@quicinc.com>
+From:   Chris Lew <quic_clew@quicinc.com>
+In-Reply-To: <20230920053317.2165867-3-quic_srichara@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
@@ -67,20 +63,19 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: MfPBCMWuGdqGjSre9CD2k9i64Os-ty7y
-X-Proofpoint-ORIG-GUID: MfPBCMWuGdqGjSre9CD2k9i64Os-ty7y
+X-Proofpoint-ORIG-GUID: dQ90yI795B6dzzHNMLJKua5wLu4G7y-r
+X-Proofpoint-GUID: dQ90yI795B6dzzHNMLJKua5wLu4G7y-r
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
  definitions=2023-09-20_12,2023-09-20_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
- mlxscore=0 suspectscore=0 bulkscore=0 mlxlogscore=999 adultscore=0
- clxscore=1015 impostorscore=0 lowpriorityscore=0 priorityscore=1501
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309200202
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
+ priorityscore=1501 bulkscore=0 phishscore=0 lowpriorityscore=0
+ malwarescore=0 clxscore=1011 adultscore=0 mlxlogscore=999 mlxscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309210001
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -88,52 +83,60 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+On 9/19/2023 10:33 PM, Sricharan Ramabadhran wrote:
 
-On 9/20/2023 3:46 PM, Konrad Dybcio wrote:
-> Commit e550ad0e5c3d ("drm/msm/dpu: fix DSC 1.2 block lengths") changed
-> the block length from a wrong value to another wrong value.
-> 
-> Use the correct one this time.
-> 
+> @@ -122,6 +123,9 @@ static DEFINE_XARRAY_ALLOC(qrtr_ports);
+>    * @qrtr_tx_lock: lock for qrtr_tx_flow inserts
+>    * @rx_queue: receive queue
+>    * @item: list item for broadcast list
+> + * @kworker: worker thread for recv work
+> + * @task: task to run the worker thread
+> + * @read_data: scheduled work for recv work
 
-No that change is correct as well.
+I think I made these descriptions a bit ambiguous with "recv work". 
+Since we are only parsing DEL_PROC messages at the moment, the 
+descriptions should be more accurate on what they are for.
 
-After we moved to sub-blk parsing, we have enc and ctl blocks length 
-used from the dsc_sblk_* instead:
+>    */
+>   struct qrtr_node {
+>   	struct mutex ep_lock;
+> @@ -134,6 +138,9 @@ struct qrtr_node {
+>   
+>   	struct sk_buff_head rx_queue;
+>   	struct list_head item;
+> +	struct kthread_worker kworker;
+> +	struct task_struct *task;
+> +	struct kthread_work read_data;
 
-static const struct dpu_dsc_sub_blks dsc_sblk_0 = {
-         .enc = {.name = "enc", .base = 0x100, .len = 0x9c},
-         .ctl = {.name = "ctl", .base = 0xF00, .len = 0x10},
-};
+I think our own kthread here might have been overkill. I forget why we 
+needed it instead of using a workqueue.
 
-static const struct dpu_dsc_sub_blks dsc_sblk_1 = {
-         .enc = {.name = "enc", .base = 0x200, .len = 0x9c},
-         .ctl = {.name = "ctl", .base = 0xF80, .len = 0x10},
-};
+> +		if (cb->type == QRTR_TYPE_DEL_PROC) {
+> +			/* Free tx flow counters */
+> +			mutex_lock(&node->qrtr_tx_lock);
+> +			radix_tree_for_each_slot(slot, &node->qrtr_tx_flow, &iter, 0) {
+> +				flow = rcu_dereference_raw(*slot);
+> +				wake_up_interruptible_all(&flow->resume_tx);
+> +			}
+> +			mutex_unlock(&node->qrtr_tx_lock);
+> +
 
-The main block has only one register now which is the DSC_CMN register.
+I don't see any other places where we use rcu_dereference_raw for the 
+flow. Does this need to be updated for the rest of the places we get the 
+flow?
 
-Hence len = 0x4 is correct for that.
+The same loop is done in qrtr_endpoint_unregister() so maybe we should 
+look into adding a helper for this logic?
 
-Sorry, but this is right too :)
+> +			/* Translate DEL_PROC to BYE for local enqueue */
+> +			cb->type = QRTR_TYPE_BYE;
+> +			pkt = (struct qrtr_ctrl_pkt *)skb->data;
+> +			memset(pkt, 0, sizeof(*pkt));
+> +			pkt->cmd = cpu_to_le32(QRTR_TYPE_BYE);
+> +
 
-> Fixes: e550ad0e5c3d ("drm/msm/dpu: fix DSC 1.2 block lengths")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-> index b6a59d7b94c4..de5e1a57a142 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-> @@ -163,7 +163,7 @@ static const struct dpu_pingpong_cfg sc7280_pp[] = {
->   static const struct dpu_dsc_cfg sc7280_dsc[] = {
->   	{
->   		.name = "dce_0_0", .id = DSC_0,
-> -		.base = 0x80000, .len = 0x4,
-> +		.base = 0x80000, .len = 0x10,
->   		.features = BIT(DPU_DSC_HW_REV_1_2) | BIT(DPU_DSC_NATIVE_42x_EN) | BIT(DPU_DSC_OUTPUT_CTRL),
->   		.sblk = &dsc_sblk_0,
->   	},
-> 
+Are we relying on the remote to program the destination of this packet 
+to be the control port?
+
+Thanks,
+Chris
