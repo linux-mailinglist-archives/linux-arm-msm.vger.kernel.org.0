@@ -2,136 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3AAFA7AA197
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Sep 2023 23:04:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AAE887A9EED
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Sep 2023 22:14:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232443AbjIUVD6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Sep 2023 17:03:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41282 "EHLO
+        id S231305AbjIUUOv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Sep 2023 16:14:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232422AbjIUVD0 (ORCPT
+        with ESMTP id S230347AbjIUUOd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Sep 2023 17:03:26 -0400
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.83])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B680C171F;
-        Thu, 21 Sep 2023 11:11:27 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1695319884; cv=none;
+        Thu, 21 Sep 2023 16:14:33 -0400
+Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [81.169.146.170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC8B36E44B;
+        Thu, 21 Sep 2023 11:56:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1695322580; cv=none;
     d=strato.com; s=strato-dkim-0002;
-    b=Bam1vUcyihG1lqNc7Xs0K+o/bvAAPuEmv9n1mjtgIT8gkgBd2oX5wjpMDZWRtwYWpN
-    lhlGdEARXWx7up5To7RE4H+SgdrApRCr4TWFIUwgsQbG7CyG+W9sX/e/WrPZ69tbvRuD
-    cUNsApOzUhrrmSuOjTAmnVmSdi1DWOsk52aI8vTSW6totpclPdA6QmRujxlHQm5yobgD
-    Q1H9+U1JEoCjK3hOZnEpZV7LsopyAR3mLLViTYLhTKq5WEsAOcW+e015ZQMFVd41ZkgS
-    DF73MKS+TGRnCex96pWH0Q1cP4mUzTRECy6huWhxWZyiLlxxUcyWBTr0xR+HEghC9dG2
-    Wxew==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1695319884;
+    b=kwsFHd7dCNIN57VWN7QKM+BBB6VKJ/Uibh4NUM9H0XB9GxEg2DCO2D/mfezxAieNmp
+    wyenxbyOBLch9mTzXyWZ3WG8qogeEDTSaRjVLqDLlrxYEOblGZgyGebvcBa7cS96Rhwa
+    U0/jg9vF/MvmB1wMqG5iZU6Ofj6BHM66gm2POhDkeLzXynPHfyJWy+VbsnfL5CmniipG
+    6H7Prkq724jjUOV4MnuRkwotcBS9lpwZpk6SGk1NnWj6rrvv2ll4DPZ/B1rKEdIFkkvx
+    EdJ24yMRD8HnGcCq7sWhbMS7Rs0FEBzd2ypRI/L01GQlo6nE1IW2nxZe7um4768wXX/b
+    TY1Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1695322580;
     s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=ahCo3lNhh52oZdX8vz08vk15RlYtdTcqGpzjjeIwnXQ=;
-    b=JdQzqBDcIbknXR3ENnTcVDwBgtjtSPdl15sG1AWpGIDFojGHFXAwi46V3WFi02Sv0F
-    nNllnVStiYoutkSMPWpDnKXIy3PSuzNSovGo3GV6i70Q3xk/UoyJXe5sTbjDUQO96Bae
-    LXzWadMBKrjikaUuET81tFL4CCNaTJLlEpMU7Zd8QAbbPqL0Lf5pDsas2ufdmR+LUL03
-    Z8LiiXDTn5GaOC2uqmApKnYRYIvLTxVXUKaNCG5DmBJebL8FgD7d37y1+bzwi5JZuI7t
-    0x4PgEIzzlPMTzRTQkoUZi1jlqZ0yaGQNOz9Dpysqzy3rSJuu+M5Ex23hcJEHV3vqcOz
-    2GpQ==
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=FOf+v/wwke3TzeouGqEc99A5tALTzvpovMJRRE6ypb8=;
+    b=ob1WdY5UM8jZ05rlehHwRi+F5WbKQP3iWocUD6qCbZBe+dOvM1mta1ffWEAODcfYsb
+    Bkjx3x0sL3pgaedaU2iDs/yTJv5+VPQbV15qOiNtJznnseqhO81MP1De/VBWtggPKS0G
+    dogeiqIrtKrZ/98jwe+ThaJ4xBNPNrryG4Mx+n5wdzK0eP6On9AKGqrcE4IVTDUkTNFz
+    aGw6G8zReVm/THYiAYsEAdHrIPXnk99BT3j+zR2ENUctyHoFt1w/GWZG/7cJQVbHoZzs
+    KIBnOcFoRPfNRS/r9ug8CwlOcWkKMysUUPBKROB222SP90PycbvgrpgDLTlCsyYa04fB
+    38IA==
 ARC-Authentication-Results: i=1; strato.com;
     arc=none;
     dkim=none
 X-RZG-CLASS-ID: mo02
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1695319884;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1695322580;
     s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=ahCo3lNhh52oZdX8vz08vk15RlYtdTcqGpzjjeIwnXQ=;
-    b=o1pHRFnAhQYP/bv6DCSPKMbluR//9glDgxihI3Fqlu14ES1ieJJAhUjTJ3oogBKx8m
-    JNNlfnBvfQvkXoZU9sTPirSq4lAdk5Z5gPQGIj5pTe2m42y0UqcCjMzsuRh32DHBJVYq
-    zmkWDhHLYrpJAYaDmLoCTygHFtYWkI5BjKsfGM4ngbG2LvCW27LYbM9lniVFLki1d9EE
-    k82ZQf+5t3Q0mq4V5h6zFHJa5/YEreZJWNaHcAm1ybZ1cUVUGFKZ2HTIihNCFlK6gRc2
-    tmmAvnVOLlGYFckcZgpoFD7FGwsasSr5Vs6JChwIO+slxPNVwRDirBYuc7xHP1UYu4P2
-    S/AQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1695319884;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=FOf+v/wwke3TzeouGqEc99A5tALTzvpovMJRRE6ypb8=;
+    b=FPsTxJYj4YRGiCWPj5d5cCOlfeakn5s6F7H1aBePVJHPyJ7ZjvWe3IkS6mFoozYU+B
+    sOp1km5C6g8zmT+F2HNIGOmnb2q1G6bPHm4QIFKoWOfuapwGgLxQk3jtskWxMzt4wKHc
+    1A2N5yy6g98YCUOimXQ5bPETD++jVk9v8jhBIknLTiqQ/Hnuh9MXq0AqQB8/5SzRx9zQ
+    XLiIlNNjDVAgHEnGNpaQMedy2xI9qe2Apu5o1J4nE2INpvCXS904PJRySbhzr5yih/AP
+    D9OOthvq0+NgKGmLzLGS3YNiJbUGELzJZfz41YoVdYG9l2X7OFkaA86BKpWabHel168c
+    IJNA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1695322580;
     s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=ahCo3lNhh52oZdX8vz08vk15RlYtdTcqGpzjjeIwnXQ=;
-    b=mzvBxC8X+dLe3lq7Uh7SgDGQuHNe9pNjCKzBNs/ommsuRxvrqxeEMMDTrVityLikS7
-    dwt+HNqY2pbDN42MTnAg==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8Z+P1A=="
-Received: from gerhold.net
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=FOf+v/wwke3TzeouGqEc99A5tALTzvpovMJRRE6ypb8=;
+    b=JPFvhmCrerYgAMpUXBCZxOZ1dISBOPRMIAkDVGC6ADixzj9M4CFXu1qlkhtEVdCqxH
+    el4u1VWgtUnE/942wlAg==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQjVd4CteZ/7jYgS+mLFY+H0JAn8u4p39TY="
+Received: from [192.168.244.3]
     by smtp.strato.de (RZmta 49.8.2 DYNA|AUTH)
-    with ESMTPSA id R04c57z8LIBORNe
+    with ESMTPSA id R04c57z8LIuKRRy
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
         (Client did not present a certificate);
-    Thu, 21 Sep 2023 20:11:24 +0200 (CEST)
-Date:   Thu, 21 Sep 2023 20:11:23 +0200
+    Thu, 21 Sep 2023 20:56:20 +0200 (CEST)
 From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Caleb Connolly <caleb.connolly@linaro.org>
-Subject: Re: [PATCH v3 3/3] soc: qcom: rtmfs: Handle reserved-memory
- allocation issues
-Message-ID: <ZQyHS__ZPlnvMIFo@gerhold.net>
-References: <20230920-rmtfs-mem-guard-pages-v3-0-305b37219b78@quicinc.com>
- <20230920-rmtfs-mem-guard-pages-v3-3-305b37219b78@quicinc.com>
+Subject: [PATCH 0/3] arm64: dts: qcom: msm8916/39: Fix-ups for dynamic
+ reserved mem patches
+Date:   Thu, 21 Sep 2023 20:56:03 +0200
+Message-Id: <20230921-msm8916-rmem-fixups-v1-0-34d2b6e721cf@gerhold.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230920-rmtfs-mem-guard-pages-v3-3-305b37219b78@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMORDGUC/x2MywqAIBAAfyX23ELaA+1XokPZVnvQwqUIwn9PO
+ g7DzAtCkUmgL16IdLPwETKosgC3T2Ej5CUz6ErXldUKvXhjVYfRk8eVn+sUbDpyysx2ntoFcnl
+ Gyua/DmNKH8FtMY9lAAAA
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Stephan Gerhold <stephan@gerhold.net>
+X-Mailer: b4 0.12.3
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_PASS,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 20, 2023 at 07:37:32PM -0700, Bjorn Andersson wrote:
-> In the even that Linux failed to allocate the reserved memory range
-> specified in the DeviceTree, the size of the reserved_mem will be 0,
-> which results in a oops when memory remapping is attempted.
-> 
-> Detect this and report that the memory region was not found instead.
-> 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Enable GPU/WCNSS properly in some MSM8916/MSM8939 boards that were 
+changed after I sent the patches for the dynamic reserved memory 
+allocation.
 
-I dropped these checks in my remoteproc patches because Caleb suggested
-maybe putting this check directly in of_reserved_mem_lookup() (or
-similar) given that almost none of the users verify this [1].
+I have magic scripts that make the necessary changes automatically so 
+I'm quite sure that I caught all new instances that need adjustment. :-)
 
-Do you have any opinion on that? I asked back then too but you did not
-reply yet [2]. :-)
+Since my scripts only work properly on board DTs with sorted nodes
+I also included a bonus patch to fix that in some of the MSM8916 DTs. 
 
-[1]: https://lore.kernel.org/linux-arm-msm/c3f59fb4-4dd8-f27a-d3f5-b1870006a75c@linaro.org/
-[2]: https://lore.kernel.org/linux-arm-msm/ZIsld-MAdkKvdzTx@gerhold.net/
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+---
+Stephan Gerhold (3):
+      arm64: dts: qcom: msm8916-samsung-gt5: Enable GPU
+      arm64: dts: qcom: msm8939-longcheer-l9100: Enable wcnss_mem
+      arm64: dts: qcom: msm8916-*: Fix alphabetic node order
 
-> ---
->  drivers/soc/qcom/rmtfs_mem.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/soc/qcom/rmtfs_mem.c b/drivers/soc/qcom/rmtfs_mem.c
-> index 83bba9321e72..13823abd85c2 100644
-> --- a/drivers/soc/qcom/rmtfs_mem.c
-> +++ b/drivers/soc/qcom/rmtfs_mem.c
-> @@ -180,7 +180,7 @@ static int qcom_rmtfs_mem_probe(struct platform_device *pdev)
->  	int ret, i;
->  
->  	rmem = of_reserved_mem_lookup(node);
-> -	if (!rmem) {
-> +	if (!rmem || !rmem->size) {
->  		dev_err(&pdev->dev, "failed to acquire memory region\n");
->  		return -EINVAL;
->  	}
-> 
-> -- 
-> 2.25.1
-> 
+ .../boot/dts/qcom/msm8916-alcatel-idol347.dts      |  8 ++---
+ .../boot/dts/qcom/msm8916-samsung-a3u-eur.dts      | 10 +++---
+ .../boot/dts/qcom/msm8916-samsung-gt5-common.dtsi  | 38 +++++++++++-----------
+ arch/arm64/boot/dts/qcom/msm8916-samsung-gt510.dts |  4 +++
+ arch/arm64/boot/dts/qcom/msm8916-samsung-gt58.dts  |  4 +++
+ arch/arm64/boot/dts/qcom/msm8916-thwc-uf896.dts    |  8 ++---
+ arch/arm64/boot/dts/qcom/msm8916-thwc-ufi001c.dts  |  8 ++---
+ .../arm64/boot/dts/qcom/msm8916-yiming-uz801v3.dts |  8 ++---
+ .../boot/dts/qcom/msm8939-longcheer-l9100.dts      |  4 +++
+ 9 files changed, 52 insertions(+), 40 deletions(-)
+---
+base-commit: a35461d47fe3e555602912b905f1bae7045256eb
+change-id: 20230921-msm8916-rmem-fixups-46ec18b9ba5d
+
+Best regards,
+-- 
+Stephan Gerhold <stephan@gerhold.net>
+
