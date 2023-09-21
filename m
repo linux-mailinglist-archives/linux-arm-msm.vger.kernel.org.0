@@ -2,231 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F0547A9905
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Sep 2023 20:10:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 111167A9974
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Sep 2023 20:14:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229886AbjIUSKl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Sep 2023 14:10:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54294 "EHLO
+        id S230086AbjIUSPB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Sep 2023 14:15:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229512AbjIUSKi (ORCPT
+        with ESMTP id S229998AbjIUSO6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Sep 2023 14:10:38 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D59785D3D;
-        Thu, 21 Sep 2023 10:37:53 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF7DC4E74B;
-        Thu, 21 Sep 2023 13:48:08 +0000 (UTC)
-Message-ID: <13b47528-153d-417d-8fe3-0288aa4d1003@xs4all.nl>
-Date:   Thu, 21 Sep 2023 15:48:06 +0200
+        Thu, 21 Sep 2023 14:14:58 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3266A86E4D;
+        Thu, 21 Sep 2023 10:38:14 -0700 (PDT)
+Received: from [192.168.1.23] (unknown [171.76.82.102])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: vignesh)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 8AE526607310;
+        Thu, 21 Sep 2023 15:01:44 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1695304911;
+        bh=3yyWULKsjhkzzVa9p1IJTEYYL2jBpe+zpuFtKjH7+oA=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=CBPEGhhBs5OUcu324ztmJ3Bu8KarI6VTr6bI9r1B88hlpXMeZjnm31An8Bio6kRY+
+         Y+O1+bnmOkyn2FnXfheLP7AHHE5GBRu2po/2TCKYriru/oB+Nojv7NmLASCw73KDwg
+         AZZORMaV9fK4Pl2Izg/7ZpOQs6RLN9zkuxZ3sHCKA894PTaKjk0HB3Gtr6C5FNkwsl
+         QEOqhXe3+SOu6EDutNnDpSVdwhS2p/r5iEi/eggAQ2copuyibLFH4qwooOSoy9+7FF
+         nX5MmRECQ2VscvwQTGh2N/Ta7ihDbaK2xCMQt2Pmv/cHsIy2Mxw+rQv+nzU/ZjtBQA
+         zNzzWT6eGtLMA==
+Message-ID: <29e47c3e-e10d-9268-93c7-133c959c5a82@collabora.com>
+Date:   Thu, 21 Sep 2023 19:31:40 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 45/49] media: core: Add bitmap manage bufs array
- entries
-Content-Language: en-US, nl
-To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-        mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
-        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
-        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
-        nicolas.dufresne@collabora.com
-Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
-        kernel@collabora.com
-References: <20230914133323.198857-1-benjamin.gaignard@collabora.com>
- <20230914133323.198857-46-benjamin.gaignard@collabora.com>
- <1142bbb4-b8f1-44ec-962e-9347a231782f@xs4all.nl>
- <20b6b93e-eef8-3d7b-a3c2-795f220059d4@collabora.com>
- <470682b4-c14b-4237-bc46-fddfdd085026@xs4all.nl>
- <31f298ec-6280-d21b-3d8a-c7bf1c9c0c30@collabora.com>
- <b10a7414-b710-4fb9-a72d-e2d7eff2616d@xs4all.nl>
- <aa649adf-8faf-801b-f6bd-d4a4760e040f@collabora.com>
- <a6a6da68-d9f2-44d3-9741-aa2cf83fac6d@xs4all.nl>
- <c8b7db47-3875-a10b-8d81-a0b3dcbc564a@collabora.com>
-From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-In-Reply-To: <c8b7db47-3875-a10b-8d81-a0b3dcbc564a@collabora.com>
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH] arm64: dts: qcom: apq8016-sbc: Add overlay for usb host
+ mode
+Content-Language: en-US
+To:     Helen Koike <helen.koike@collabora.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     guilherme.gallo@collabora.com, sergi.blanch.torne@collabora.com,
+        daniels@collabora.com, emma@anholt.net, robdclark@gmail.com,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Maxime Ripard <mripard@kernel.org>,
+        David Heidelberg <david.heidelberg@collabora.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230911161518.650726-1-vignesh.raman@collabora.com>
+ <a411b3fe-6222-4c86-8d71-afa992ea2f93@collabora.com>
+From:   Vignesh Raman <vignesh.raman@collabora.com>
+In-Reply-To: <a411b3fe-6222-4c86-8d71-afa992ea2f93@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,
-        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/09/2023 14:46, Benjamin Gaignard wrote:
+Hi maintainers,
+
+On 12/09/23 22:39, Helen Koike wrote:
 > 
-> Le 21/09/2023 à 14:13, Hans Verkuil a écrit :
->> On 21/09/2023 14:05, Benjamin Gaignard wrote:
->>> Le 21/09/2023 à 12:24, Hans Verkuil a écrit :
->>>> On 21/09/2023 11:28, Benjamin Gaignard wrote:
->>>>> Le 20/09/2023 à 16:56, Hans Verkuil a écrit :
->>>>>> On 20/09/2023 16:30, Benjamin Gaignard wrote:
->>>>>> <snip>
->>>>>>
->>>>>>>>>          num_buffers = min_t(unsigned int, num_buffers,
->>>>>>>>>                      q->max_allowed_buffers - vb2_get_num_buffers(q));
->>>>>>>>>      -    first_index = vb2_get_num_buffers(q);
->>>>>>>>> +    first_index = bitmap_find_next_zero_area(q->bufs_map, q->max_allowed_buffers,
->>>>>>>>> +                         0, num_buffers, 0);
->>>>>>>>>            if (first_index >= q->max_allowed_buffers)
->>>>>>>>>              return 0;
->>>>>>>>> @@ -675,7 +678,13 @@ static void __vb2_queue_free(struct vb2_queue *q, unsigned int buffers)
->>>>>>>>>        struct vb2_buffer *vb2_get_buffer(struct vb2_queue *q, unsigned int index)
->>>>>>>>>      {
->>>>>>>>> -    if (index < q->num_buffers)
->>>>>>>>> +    if (!q->bufs_map || !q->bufs)
->>>>>>>>> +        return NULL;
->>>>>>>> I don't think this can ever happen.
->>>>>>> I got kernel crash without them.
->>>>>>> I will keep them.
->>>>>> What is the backtrace? How can this happen? It feels wrong that this can be
->>>>>> called with a vb2_queue that apparently is not properly initialized.
->>>>> I have this log when adding dump_stack() in vb2_get_buffer() if !q->bufs_bitmap:
->>>>>
->>>>> [   18.924627] Call trace:
->>>>> [   18.927090]  dump_backtrace+0x94/0xec
->>>>> [   18.930787]  show_stack+0x18/0x24
->>>>> [   18.934137]  dump_stack_lvl+0x48/0x60
->>>>> [   18.937833]  dump_stack+0x18/0x24
->>>>> [   18.941166]  __vb2_queue_cancel+0x23c/0x2f0
->>>>> [   18.945365]  vb2_core_queue_release+0x24/0x6c
->>>>> [   18.949740]  vb2_queue_release+0x10/0x1c
->>>>> [   18.953677]  v4l2_m2m_ctx_release+0x20/0x40
->>>>> [   18.957892]  hantro_release+0x20/0x54
->>>>> [   18.961584]  v4l2_release+0x74/0xec
->>>>> [   18.965110]  __fput+0xb4/0x274
->>>>> [   18.968205]  __fput_sync+0x50/0x5c
->>>>> [   18.971626]  __arm64_sys_close+0x38/0x7c
->>>>> [   18.975562]  invoke_syscall+0x48/0x114
->>>>> [   18.979329]  el0_svc_common.constprop.0+0xc0/0xe0
->>>>> [   18.984068]  do_el0_svc+0x1c/0x28
->>>>> [   18.987402]  el0_svc+0x40/0xe8
->>>>> [   18.990470]  el0t_64_sync_handler+0x100/0x12c
->>>>> [   18.994842]  el0t_64_sync+0x190/0x194
->>>>>
->>>>> This happen at boot time when hantro driver is open and close without other actions.
->>>> Ah, now I see the problem. q->bufs and q->bufs_map are allocated in
->>>> vb2_core_create_bufs and vb2_core_reqbufs, but they should be allocated
->>>> in vb2_queue_init: that's the counterpart of vb2_core_queue_release.
->>>>
->>>> With that change you shouldn't have to check for q->bufs/bufs_map anymore.
->>> It is a better solution but even like this vb2_core_queue_release() is called
->>> at least 2 times on the same vivid queue and without testing q->bufs_bitmap
->>> makes kernel crash.
->> Do you have a stacktrace for that? Perhaps vb2_core_queue_release should check
->> for q->bufs/q->bufs_map and return if those are NULL. But it could also be a
->> bug that it is called twice, it just was never noticed because it was harmless
->> before.
 > 
-> I have added some printk to log that when running test-media on vivid:
+> On 11/09/2023 13:15, Vignesh Raman wrote:
+>> Due to the presence of the fastboot micro cable in the CI farm,
+>> it causes the hardware to remain in gadget mode instead of host mode.
+>> So it doesn't find the network, which results in failure to mount root
+>> fs via NFS.
 > 
-> [  130.497426] vb2_core_queue_init queue cap-0000000050d195ab allocate q->bufs 00000000dc2c15ed and q->bufs_bitmap 000000008173fc5a
-> ...
-> [  130.733967] vb2_core_queue_release queue cap-0000000050d195ab release q->bufs and q->bufs_bitmap
-> [  133.866345] vb2_get_buffer queue cap-0000000050d195ab q->bufs_bitmap is NULL
-> [  133.873454] CPU: 1 PID: 321 Comm: v4l2-ctl Not tainted 6.6.0-rc1+ #542
-> [  133.879997] Hardware name: NXP i.MX8MQ EVK (DT)
-> [  133.884536] Call trace:
-> [  133.886988]  dump_backtrace+0x94/0xec
-> [  133.890673]  show_stack+0x18/0x24
-> [  133.894002]  dump_stack_lvl+0x48/0x60
-> [  133.897681]  dump_stack+0x18/0x24
-> [  133.901009]  __vb2_queue_cancel+0x250/0x31c
-> [  133.905209]  vb2_core_queue_release+0x24/0x88
-> [  133.909580]  _vb2_fop_release+0xb0/0xbc
-> [  133.913428]  vb2_fop_release+0x2c/0x58
-> [  133.917187]  vivid_fop_release+0x80/0x388 [vivid]
-> [  133.921948]  v4l2_release+0x74/0xec
-> [  133.925452]  __fput+0xb4/0x274
-> [  133.928520]  __fput_sync+0x50/0x5c
-> [  133.931934]  __arm64_sys_close+0x38/0x7c
-> [  133.935868]  invoke_syscall+0x48/0x114
-> [  133.939630]  el0_svc_common.constprop.0+0x40/0xe0
-> [  133.944349]  do_el0_svc+0x1c/0x28
-> [  133.947677]  el0_svc+0x40/0xe8
-> [  133.950741]  el0t_64_sync_handler+0x100/0x12c
-> [  133.955109]  el0t_64_sync+0x190/0x194
+> Just a context for others, this was part of this patch series 
+> https://lore.kernel.org/r/20230908152225.432139-1-vignesh.raman@collabora.com
 > 
-> and later I have a call to reqbufs on the same queue without call to vb2_core_queue_init before
+>>
+>> Add an overlay dtso file that sets the dr_mode to host, allowing the
+>> USB controllers to work in host mode. With commit 15d16d6dadf6
+>> ("kbuild: Add generic rule to apply fdtoverlay"), overlay target can
+>> be used to simplify the build of DTB overlays. It uses fdtoverlay to
+>> merge base device tree with the overlay dtso. apq8016-sbc-usb-host.dtb
+>> file can be used by drm-ci, mesa-ci.
+>>
+>> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> Suggested-by: Maxime Ripard <mripard@kernel.org>
+>> Signed-off-by: Helen Koike <helen.koike@collabora.com>
+>> Signed-off-by: David Heidelberg <david.heidelberg@collabora.com>
+>> Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
 > 
-> [   58.696812] __vb2_queue_alloc queue cap- 0000000050d195abq->bufs_bitmap is NULL
-> [   58.704148] CPU: 1 PID: 319 Comm: v4l2-compliance Not tainted 6.6.0-rc1+ #544
-> [   58.711291] Hardware name: NXP i.MX8MQ EVK (DT)
-> [   58.715826] Call trace:
-> [   58.718274]  dump_backtrace+0x94/0xec
-> [   58.721951]  show_stack+0x18/0x24
-> [   58.725274]  dump_stack_lvl+0x48/0x60
-> [   58.728946]  dump_stack+0x18/0x24
-> [   58.732268]  __vb2_queue_alloc+0x4a8/0x50c
-> [   58.736374]  vb2_core_reqbufs+0x274/0x46c
-> [   58.740391]  vb2_ioctl_reqbufs+0xb0/0xe8
-> [   58.744320]  vidioc_reqbufs+0x50/0x64 [vivid]
-> [   58.748717]  v4l_reqbufs+0x50/0x64
-> [   58.752125]  __video_do_ioctl+0x164/0x3c8
-> [   58.756140]  video_usercopy+0x200/0x668
-> [   58.759982]  video_ioctl2+0x18/0x28
-> [   58.763475]  v4l2_ioctl+0x40/0x60
-> [   58.766798]  __arm64_sys_ioctl+0xac/0xf0
-> [   58.770730]  invoke_syscall+0x48/0x114
-> [   58.774487]  el0_svc_common.constprop.0+0x40/0xe0
-> [   58.779199]  do_el0_svc+0x1c/0x28
-> [   58.782520]  el0_svc+0x40/0xe8
-> [   58.785580]  el0t_64_sync_handler+0x100/0x12c
-> [   58.789942]  el0t_64_sync+0x190/0x194
+> Acked-by: Helen Koike <helen.koike@collabora.com>
+> 
+> 
+>> ---
+>>   arch/arm64/boot/dts/qcom/Makefile                  | 4 ++++
+>>   arch/arm64/boot/dts/qcom/apq8016-sbc-usb-host.dtso | 8 ++++++++
+>>   2 files changed, 12 insertions(+)
+>>   create mode 100644 arch/arm64/boot/dts/qcom/apq8016-sbc-usb-host.dtso
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/Makefile 
+>> b/arch/arm64/boot/dts/qcom/Makefile
+>> index 2cca20563a1d..99190a6ba6ff 100644
+>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>> @@ -1,5 +1,9 @@
+>>   # SPDX-License-Identifier: GPL-2.0
+>>   dtb-$(CONFIG_ARCH_QCOM)    += apq8016-sbc.dtb
+>> +
+>> +apq8016-sbc-usb-host-dtbs    := apq8016-sbc.dtb 
+>> apq8016-sbc-usb-host.dtbo
+>> +
+>> +dtb-$(CONFIG_ARCH_QCOM)    += apq8016-sbc-usb-host.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)    += apq8016-sbc-d3-camera-mezzanine.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)    += apq8039-t2.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)    += 
+>> apq8094-sony-xperia-kitakami-karin_windy.dtb
+>> diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc-usb-host.dtso 
+>> b/arch/arm64/boot/dts/qcom/apq8016-sbc-usb-host.dtso
+>> new file mode 100644
+>> index 000000000000..a82c26b7eae8
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/apq8016-sbc-usb-host.dtso
+>> @@ -0,0 +1,8 @@
+>> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+>> +
+>> +/dts-v1/;
+>> +/plugin/;
+>> +
+>> +&usb {
+>> +         dr_mode = "host";
+>> +};
 
-Argh, I see what is happening. The root cause is that vb2_core_queue_release
-is actually not a true counterpart to vb2_core_queue_init.
-
-The '_release' part refers to when a file handle is released, and not to
-releasing resources allocated in queue_init.
-
-The queue_init function never actually allocated any resources, so there
-was never a reason to make a counterpart to that, but now that bites us.
-
-Changing this would be a huge amount of work, and it is not worth the
-effort, IMHO.
-
-But at least we shouldn't have to test for both bufs and bufs_map,
-they are either both set or both NULL. Just test one of the two.
-
-The vb2_core_queue_init() function documentation in the header
-should perhaps be more clear about the fact that this function
-does not allocate any resources, and that there is no cleanup
-counterpart.
-
-It is what got me confused...
+Please could you review this patch. Thanks.
 
 Regards,
-
-	Hans
-
-> 
->>
->> Regards,
->>
->>     Hans
->>
->>>> Regards,
->>>>
->>>>      Hans
->>>>
->>>>>    
->>>>>>>>> +
->>>>>>>>> +    return (bitmap_weight(q->bufs_map, q->max_allowed_buffers) > 0);
->>>>>>>> How about:
->>>>>>>>
->>>>>>>>        return vb2_get_num_buffers(q) > 0;
->>>>>>> vb2_get_num_buffers is defined in videobuf2-core.c, I'm not sure that
->>>>>>> an inline function could depend of a module function.
->>>>>> Not a problem. E.g. v4l2-ctrls.h is full of such static inlines.
->>>>>>
->>>>>> Regards,
->>>>>>
->>>>>>       Hans
->>>>>>
->>
-
+Vignesh
