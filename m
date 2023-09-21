@@ -2,150 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BE1777A9D47
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Sep 2023 21:30:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CFDE57A9A72
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Sep 2023 20:39:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230349AbjIUTak (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Sep 2023 15:30:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43612 "EHLO
+        id S230098AbjIUSjy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Sep 2023 14:39:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229643AbjIUTaH (ORCPT
+        with ESMTP id S229878AbjIUSjp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Sep 2023 15:30:07 -0400
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97F8CAD957;
-        Thu, 21 Sep 2023 11:04:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1695319453; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=JjgtlM1qT5peRew9uUMoUtgT2/JunfOouUA4TgH7RMjRCJf/7nfKu+ru+pifhtPdFX
-    3ICcbIPOHtyusCdFPulR7EQv9Uct4D5zYhC+O5NVVAjCA6ChwKLTFNHqZFcLbd+qduFD
-    KYvCbutM0E61oKWIkO/w4g9CgQr7gVZ9mGrZlhjSX3e08bcyi7SPsvTGmgd6ZL8WJoT0
-    evWIoc/LXkiJAxW1MXcFOJvxWaRuJU+nl/sLTb5TUscN4qAvBkFuIiXgtx7YI+Eachhg
-    89dDWjBzVaNu2aoQclREoqKvH5cgyXbagStXzwBQi6YA3cq1FlZO/nm33efnohEtD0hx
-    Dp1Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1695319453;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=ER9Rl/dAAvA3/1hcaTkniApxXyi9907vmiYDjLpHhQU=;
-    b=cBGZvzqZz+loVgGaSlYXg2fqn0eSCgaw84UnZYLdW/+gFfhLTFdVMO7UZ29Tvfzjeu
-    o757p9ZdUUnzGyCSJG3Una9WIW/DR/DM3GQ6SioLXRQfoe51/IG3JRp+x1tU1eDDu4yb
-    NF2V0ebblZTFEuypYOFKWG2lo2ISBQND7yOfGyainEV9Ye09P69pbsYvpMzDXxs9q1Wl
-    HqDJh/1k3oHN/8wE9QTqU2MtnLt1hmhcgXcVxT0DzZUIPpzQUmynYescs9+MnVjGAt+p
-    K0eYvIWTDtAEkKP/SjOjO6Cs07ZkaL9nPlCnU/6LvbXxJICUTOFLxYQiHD9ToFNLMhki
-    h7tw==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1695319453;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=ER9Rl/dAAvA3/1hcaTkniApxXyi9907vmiYDjLpHhQU=;
-    b=CXgfIu6PKRYcEA5pamfwHgdUKe4UnFcMMOQBITnekEUVD6ygZXJD+H6XAPFLhfJ2zz
-    mJwGc8kIM2mKWd/NrOg4tsxiiISxvfMAmxLCLWFnUySLHBKitw03V8ma4Mme4qfLIrZ2
-    CG/EOS8diWeYuvgc/4Shv+jsSY+G7cMJJYGG/hEsWWpwzfSYaIrSWk4QB0hNA5a6mE6y
-    IiZuBc3QwoPzNuXRdN3HuiMz91l5QRz3Fpd9lwHa7cy3T3B5PcBxHKTPPZn05fknrp7a
-    bWNjvadJJgHMX/+Auof+XBM3MBjTPO8tDqFFOuAG7GSm5V/OJq+ZuBjfXZUQwiam55Mm
-    C4Dw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1695319453;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=ER9Rl/dAAvA3/1hcaTkniApxXyi9907vmiYDjLpHhQU=;
-    b=EFnJfmaS9VXsw64L4JveushSUYVIw38yNjjKOoqNLYG1L38gul3cNOAwj0/AEzk+j3
-    WnzGDxAZQ7GmPU2qpbAQ==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8Z+P1A=="
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.8.2 DYNA|AUTH)
-    with ESMTPSA id R04c57z8LI4DRMY
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Thu, 21 Sep 2023 20:04:13 +0200 (CEST)
-Date:   Thu, 21 Sep 2023 20:04:06 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
+        Thu, 21 Sep 2023 14:39:45 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A788B0F5E;
+        Thu, 21 Sep 2023 11:39:11 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A46C433C7;
+        Thu, 21 Sep 2023 18:38:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1695321533;
+        bh=Jo3M7JtBDMiHK2zM7MVLMg4fZ9vIWVE8KTJC0QLndO8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=BcnsYo6A8D09XBG+riw76rhi9G0pfINMuDAzNBm524D+q7PUAIk1b3wUl5vL4ug18
+         hgJfsn8lAIay59okmDzzZwjUKxpAnKyoGIxQ9Q1cvfaRd0ZnV3LchtOZi8alhoZtkl
+         QLpEEFlUpgggXoSESoS1Scm1qIBqt6Cfnj7rzPUkGzvPjAbQI4LHFFeD7AqJpwSD21
+         PIeVEK+LegHr1y88bqx+U9dXi70CoZA9tjFag7pxUk/GRgGVpsVtV9Yzv2VD232p8w
+         QqTO8HIV5FhRxbPI84b2rnjLD23VMFddu64fvvrJBWf5XrNIsrOaur8YH/XXrVRyAk
+         Duge0PLfpwgZA==
+Received: (nullmailer pid 782544 invoked by uid 1000);
+        Thu, 21 Sep 2023 18:38:50 -0000
+Date:   Thu, 21 Sep 2023 13:38:50 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Mrinmay Sarkar <quic_msarkar@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        konrad.dybcio@linaro.org, mani@kernel.org,
+        quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
+        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
+        quic_parass@quicinc.com, Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-pci@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 2/3] soc: qcom: rmtfs: Support discarding guard pages
-Message-ID: <ZQyFliFYV7dUwGJg@gerhold.net>
-References: <20230920-rmtfs-mem-guard-pages-v3-0-305b37219b78@quicinc.com>
- <20230920-rmtfs-mem-guard-pages-v3-2-305b37219b78@quicinc.com>
+        linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
+        linux-phy@lists.infradead.org
+Subject: Re: [PATCH v1 1/5] dt-bindings: PCI: qcom-ep: Add support for
+ SA8775P SoC
+Message-ID: <20230921183850.GA762694-robh@kernel.org>
+References: <1695218113-31198-1-git-send-email-quic_msarkar@quicinc.com>
+ <1695218113-31198-2-git-send-email-quic_msarkar@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230920-rmtfs-mem-guard-pages-v3-2-305b37219b78@quicinc.com>
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <1695218113-31198-2-git-send-email-quic_msarkar@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 20, 2023 at 07:37:31PM -0700, Bjorn Andersson wrote:
-> In some configurations, the exact placement of the rmtfs shared memory
-> region isn't so strict. The DeviceTree author can then choose to use the
-> "size" property and rely on the OS for placement (in combination with
-> "alloc-ranges", if desired).
+On Wed, Sep 20, 2023 at 07:25:08PM +0530, Mrinmay Sarkar wrote:
+> Add devicetree bindings support for SA8775P SoC.
+> Define reg and interrupt per platform.
 > 
-> But on some platforms the rmtfs memory region may not be allocated
-> adjacent to regions allocated by other clients. Add support for
-> discarding the first and last 4k block in the region, if
-> qcom,use-guard-pages is specified in DeviceTree.
-> 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
 > ---
->  drivers/soc/qcom/rmtfs_mem.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
+>  .../devicetree/bindings/pci/qcom,pcie-ep.yaml      | 130 +++++++++++++++++----
+>  1 file changed, 108 insertions(+), 22 deletions(-)
 > 
-> diff --git a/drivers/soc/qcom/rmtfs_mem.c b/drivers/soc/qcom/rmtfs_mem.c
-> index f83811f51175..83bba9321e72 100644
-> --- a/drivers/soc/qcom/rmtfs_mem.c
-> +++ b/drivers/soc/qcom/rmtfs_mem.c
-> @@ -200,6 +200,15 @@ static int qcom_rmtfs_mem_probe(struct platform_device *pdev)
->  	rmtfs_mem->client_id = client_id;
->  	rmtfs_mem->size = rmem->size;
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+> index a223ce0..e860e8f 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+> @@ -13,6 +13,7 @@ properties:
+>    compatible:
+>      oneOf:
+>        - enum:
+> +          - qcom,sa8775p-pcie-ep
+>            - qcom,sdx55-pcie-ep
+>            - qcom,sm8450-pcie-ep
+>        - items:
+> @@ -20,29 +21,19 @@ properties:
+>            - const: qcom,sdx55-pcie-ep
 >  
-> +	/*
-> +	 * If requested, discard the first and last 4k block in order to ensure
-> +	 * that the rmtfs region isn't adjacent to other protected regions.
-> +	 */
-> +	if (of_property_present(node, "qcom,use-guard-pages")) {
+>    reg:
+> -    items:
+> -      - description: Qualcomm-specific PARF configuration registers
+> -      - description: DesignWare PCIe registers
+> -      - description: External local bus interface registers
+> -      - description: Address Translation Unit (ATU) registers
+> -      - description: Memory region used to map remote RC address space
+> -      - description: BAR memory region
+> +    minItems: 6
+> +    maxItems: 7
+>  
+>    reg-names:
+> -    items:
+> -      - const: parf
+> -      - const: dbi
+> -      - const: elbi
+> -      - const: atu
+> -      - const: addr_space
+> -      - const: mmio
+> +    minItems: 6
+> +    maxItems: 7
 
-I think of_property_read_bool() would be more fitting here. Right now
-of_property_present() is just a wrapper around of_property_read_bool().
-Semantically reading a bool fits better here though. :-)
+Don't move these into if/then schemas. Then we are duplicating the 
+names, and there is no reason to keep them aligned for new compatibles.
 
-Feel free to fix that up while applying.
-
-FWIW I don't really have an opinion if "qcom,use-guard-pages" is a good
-way to describe this in the DT. For the implementation side feel free to
-add my
-
-Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
-
-Thanks,
-Stephan
-
-> +		rmtfs_mem->addr += SZ_4K;
-> +		rmtfs_mem->size -= 2 * SZ_4K;
-> +	}
-> +
->  	device_initialize(&rmtfs_mem->dev);
->  	rmtfs_mem->dev.parent = &pdev->dev;
->  	rmtfs_mem->dev.groups = qcom_rmtfs_mem_groups;
-> 
-> -- 
-> 2.25.1
-> 
+Rob
