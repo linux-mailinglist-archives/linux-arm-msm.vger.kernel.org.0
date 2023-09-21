@@ -2,149 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D52007A97D0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Sep 2023 19:27:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BDD247A97CC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Sep 2023 19:27:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229943AbjIUR15 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Sep 2023 13:27:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53728 "EHLO
+        id S230235AbjIUR1t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Sep 2023 13:27:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230119AbjIUR12 (ORCPT
+        with ESMTP id S229823AbjIUR1P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Sep 2023 13:27:28 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 632B52D60;
-        Thu, 21 Sep 2023 10:02:41 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BD34C32783;
-        Thu, 21 Sep 2023 09:48:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1695289713;
-        bh=J91xLLYh3063mIz8vTCj0EDjswezy2qXl2KyxMg3RQI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=fU057suNKQbihbsVL2RWa98mU6/opeEGInjY7XwbSg83INDcPahdBga23HxJVedq6
-         1940hb8sDpd52ueZhRszkTZGjQTbKIVk45BC9C0Oiz4+XQSj4k7iZwPlFgY6B2Wg71
-         6JhA70Ulb3ae4S/VLNazQq97Bv4IvAJzX9bqjQOi1hIRY5/L7HK1mo1T1fQCWIJ9Q7
-         bpSlWHVeppCYURvyle4n7VWHn7jZX31tJIU3/sR3VXwGM7f3BNWLdsH7FZUP8jb/4D
-         qYASDzCHLGqEop9vHSeG6kbvvHySj4zYKY2VnfAkaBRhm/eQwBHOejreG5Xor6mwtI
-         UUo9yEKkxigmA==
-Date:   Thu, 21 Sep 2023 11:48:23 +0200
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Mrinmay Sarkar <quic_msarkar@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org,
+        Thu, 21 Sep 2023 13:27:15 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 503C32733;
+        Thu, 21 Sep 2023 10:02:25 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38L9lsFx016537;
+        Thu, 21 Sep 2023 10:21:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=jvjyqmXjGaLDAO0qCQr4SvmyGJx0LScVYR7S+2vUExo=;
+ b=l/I3CFVTgAKh/PXPQ8CZJ+aIq7mAxpzCjz+uyNZdnI5seHtCPpsDtZaSYY7rFcNBZ81m
+ 7XUz31Evjyab/cVPV7rhIoL1p4sZTPxmLy09pxrbxiPvTjjrcBirIEiuYFesHNJoiIvo
+ zvvZFUzxf6oU9mPaE6mqsuVEfYeRD4Vf4XLydheZyGdysnPCWoMMSULOwbjyB5EtDJ7l
+ dKrKqOZ2QqKAj31B6BzGsBbO3uu63z5jyFrSTZZjFU2WYCjwxbzNyYokPoKzY8I6hVNf
+ xKCmp2CCohb41xRNqc075D2F6n3huF1NT9AIBqF1hKarkdhdaOBnRHdZc5Pvvp9tcEsa Uw== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t8e0agrr9-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 21 Sep 2023 10:21:41 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 38LALbDm023115;
+        Thu, 21 Sep 2023 10:21:37 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3t55ekq7nm-1;
+        Thu, 21 Sep 2023 10:21:37 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 38LALbhj023104;
+        Thu, 21 Sep 2023 10:21:37 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-rohiagar-hyd.qualcomm.com [10.213.106.138])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 38LALa3R023100;
+        Thu, 21 Sep 2023 10:21:37 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3970568)
+        id D6D301E1A; Thu, 21 Sep 2023 15:51:35 +0530 (+0530)
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        konrad.dybcio@linaro.org, quic_shazhuss@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_ramkri@quicinc.com,
-        quic_nayiluri@quicinc.com, quic_krichai@quicinc.com,
-        quic_vbadigan@quicinc.com, quic_parass@quicinc.com,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
-        linux-phy@lists.infradead.org
-Subject: Re: [PATCH v1 5/5] arm64: dts: qcom: sa8775p: Add ep pcie0
- controller node
-Message-ID: <20230921094823.GE2891@thinkpad>
-References: <1695218113-31198-1-git-send-email-quic_msarkar@quicinc.com>
- <1695218113-31198-6-git-send-email-quic_msarkar@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1695218113-31198-6-git-send-email-quic_msarkar@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        gregkh@linuxfoundation.org, abel.vesa@linaro.org,
+        quic_wcheng@quicinc.com, dmitry.baryshkov@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, kernel@quicinc.com,
+        Rohit Agarwal <quic_rohiagar@quicinc.com>
+Subject: [PATCH v3 0/5] Add USB Support on Qualcomm's SDX75 Platform
+Date:   Thu, 21 Sep 2023 15:51:27 +0530
+Message-Id: <1695291692-18850-1-git-send-email-quic_rohiagar@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 4o-s8FiR1q4jZRh_UdHDlXhpeb5Akvgw
+X-Proofpoint-GUID: 4o-s8FiR1q4jZRh_UdHDlXhpeb5Akvgw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-21_07,2023-09-20_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
+ mlxlogscore=562 bulkscore=0 priorityscore=1501 malwarescore=0
+ suspectscore=0 mlxscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309210090
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 20, 2023 at 07:25:12PM +0530, Mrinmay Sarkar wrote:
-> Add ep pcie dtsi node for pcie0 controller found on sa8775p platform.
-> 
+Hi,
 
-It would be good to add more info in the commit message, like PCIe Gen, lane
-info, IP revision etc...
+Changes in v3:
+ - Removed the unnecessary change introduced in v2 of patch 2/5
+ - Added Fixes tag in patch 3/5
+ - Rebased patch 5/5 on Dmitry's cleanup patches.
+   https://lore.kernel.org/all/20230911203842.778411-1-dmitry.baryshkov@linaro.org/
+   https://lore.kernel.org/linux-phy/20230824211952.1397699-1-dmitry.baryshkov@linaro.org/
 
-> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 45 +++++++++++++++++++++++++++++++++++
->  1 file changed, 45 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> index 9f4f58e8..5571131 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> @@ -2600,4 +2600,49 @@
->  
->  		status = "disabled";
->  	};
-> +
-> +	pcie0_ep: pcie-ep@1c00000 {
-> +		compatible = "qcom,sa8775p-pcie-ep";
-> +		reg = <0x0 0x01c00000 0x0 0x3000>,
-> +		      <0x0 0x40000000 0x0 0xf20>,
-> +		      <0x0 0x40000f20 0x0 0xa8>,
-> +		      <0x0 0x40001000 0x0 0x4000>,
-> +		      <0x0 0x40200000 0x0 0x100000>,
-> +		      <0x0 0x01c03000 0x0 0x1000>,
-> +		      <0x0 0x40005000 0x0 0x2000>;
-> +		reg-names = "parf", "dbi", "elbi", "atu", "addr_space",
-> +			    "mmio", "dma";
-> +
-> +		clocks = <&gcc GCC_PCIE_0_AUX_CLK>,
-> +			<&gcc GCC_PCIE_0_CFG_AHB_CLK>,
-> +			<&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
-> +			<&gcc GCC_PCIE_0_SLV_AXI_CLK>,
-> +			<&gcc GCC_PCIE_0_SLV_Q2A_AXI_CLK>;
-> +
-> +		clock-names = "aux",
-> +			      "cfg",
-> +			      "bus_master",
-> +			      "bus_slave",
-> +			      "slave_q2a";
-> +
-> +		interrupts = <GIC_SPI 306 IRQ_TYPE_LEVEL_HIGH>,
-> +			     <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>,
-> +			     <GIC_SPI 630 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +		interrupt-names = "global", "doorbell", "dma";
-> +
-> +		interconnects = <&pcie_anoc MASTER_PCIE_0 0 &mc_virt SLAVE_EBI1 0>,
-> +				<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_0 0>;
-> +		interconnect-names = "pcie-mem", "cpu-pcie";
-> +
+Changes in v2:
+ - Dropped the new dt schema introduced in v1 for sdx75 usb3 phy
+   and reusing the bindings.
+ - Rephrased the commit message of patch 3/5
+ - Removed stray lines from the patch 5/5
 
-Don't you need iommu property?
+This series adds support of USB3 PHY support for Qualcomm's SDX75 Platform.
 
-> +		resets = <&gcc GCC_PCIE_0_BCR>;
-> +		reset-names = "core";
-> +		power-domains = <&gcc PCIE_0_GDSC>;
-> +		phys = <&pcie0_phy>;
-> +		phy-names = "pciephy";
-> +		max-link-speed = <3>;
+Thanks,
+Rohit.
 
-Gen 3?
+Rohit Agarwal (5):
+  dt-bindings: phy: qcom,snps-eusb2-phy: Add compatible for SDX75
+  dt-bindings: phy: qcom,qmp-usb: Add SDX75 USB3 PHY
+  dt-bindings: usb: qcom,dwc3: Fix SDX65 clocks
+  dt-bindings: usb: dwc3: Add SDX75 compatible
+  phy: qcom-qmp-usb: Add Qualcomm SDX75 USB3 PHY support
 
-> +		num-lanes = <2>;
-
-Only 2 lanes? Or the other one has 4 lanes?
-
-- Mani
-
-> +
-> +		status = "disabled";
-> +	};
->  };
-> -- 
-> 2.7.4
-> 
+ .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml        |   2 +
+ .../bindings/phy/qcom,snps-eusb2-phy.yaml          |   7 +-
+ .../devicetree/bindings/usb/qcom,dwc3.yaml         |   4 +
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c            | 165 +++++++++++++++++++++
+ 4 files changed, 177 insertions(+), 1 deletion(-)
 
 -- 
-மணிவண்ணன் சதாசிவம்
+2.7.4
+
