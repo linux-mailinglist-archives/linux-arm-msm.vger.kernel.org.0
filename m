@@ -2,114 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EE58D7A9E74
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Sep 2023 22:02:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B98B7A9B16
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Sep 2023 20:53:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231310AbjIUUBr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Sep 2023 16:01:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46622 "EHLO
+        id S230383AbjIUSxu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Sep 2023 14:53:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231330AbjIUUBS (ORCPT
+        with ESMTP id S230412AbjIUSxW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Sep 2023 16:01:18 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 463812D7D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Sep 2023 10:27:58 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-52bd9ddb741so1465195a12.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Sep 2023 10:27:58 -0700 (PDT)
+        Thu, 21 Sep 2023 14:53:22 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BA0AA6174
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Sep 2023 11:37:21 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-5042f391153so1170825e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Sep 2023 11:37:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1695317271; x=1695922071; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=wT6/A5jKUKPNqREpSjfwwNBvJsp9RJseHUsd7KRCJ5w=;
-        b=gyV/lhnmx5CuA3fYvXtheidQdtg9BYmFIVJIDgKUy+Lq2/ezJrQin0F8a8HFoNFwZR
-         LuRu65oQgPJUrd/vtNZo4wPL98FCE3xVpUtXt+c+0SZ1l6pjpbc5Pm3IWuhjB3G7I5hR
-         oQaWhqfCRqmzJSPdDeoW4N58NpWbC51SbsZIo5cAHvZCQpF7+diPH+hSKhV4/Xz3nTTY
-         tIiQjN3UCl8agJ7zPqhKvNyg5sc6gvn56eYsbhMmrz0Gfi2t2NXqNcOt1qNPbqKSMT2v
-         uPBPfIK1QD6JpiSJgyTWwU/v19tqX8CPctmLDr718UwQjYUFxsXwa1Nw+TViD9qPyLfV
-         f8fg==
+        d=linaro.org; s=google; t=1695321439; x=1695926239; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TXv2swyixrrXvv0zGvrj0+c4WbYkAz74mw7u1eEONl8=;
+        b=JFrgwPahVkCBNJJqAjGmn0VLw4a1aFAmH/yGL0AkQceFwXuh6OlYi0iwUIlldzL5cd
+         0QT2BzYr/do6aknG6MIGK51XsbHV9iSvESj8KwjpBmMXpQUy99Ow6X2seDqXcQAbSAQ4
+         LxhtLSmMlVNmWT2zyGhmKp7bisSKZLInHIqbfvp1T0CLy4o5GOn0LzgK35YErdD84tzb
+         KuCqYYXGIpOvAWu5vYOI1J4OcuksbZNhrlb+INEINhXZYd/k0xcxhgQx4KtFxLRDQmTB
+         NcYkUPiKRzAlndZHQvBRJ+7SzegNbjIRjFhmcqLsmey41JoPxxbhca7j0nA2hCLKOylt
+         m9TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695317271; x=1695922071;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wT6/A5jKUKPNqREpSjfwwNBvJsp9RJseHUsd7KRCJ5w=;
-        b=mX9SSqNds5pYCBd1bQpoEf70MHrGMKCZxsH2cKthokgxVkwiPsLsnuAwrRhTYfP/hN
-         JRtKXsOICdwEeIXjleZ9fAk1tllIoMUmMfbrWA3sWQaWJOMB0cUHB4C99JjPPCEMMore
-         W01c7Afb4h7BLECYGwPiJd8xVujC6NzX5cWAUvcVmskN0yN90r1ew68jtfEfKxAlfnlh
-         dJ43ErHAHz8227zTw34T9zk8wOoYspfzE2f+T+pj4wzkXq+WTvNa3KmCr3Nfwdz9AYQi
-         RQHMRTvquGAIsGzU5azpnN9HRkxYJkCyW7gS79e21HpEDgnllBVsnbS1pt9JuWxk2Zy4
-         9Gyg==
-X-Gm-Message-State: AOJu0YzcuZX/DoqEwHwcQEA8gYAjxw5UObO+JQhx+vEXNid52ujd6ttO
-        wnUfg6+nP+TrPWH4pDFwPFvD6riEhkb7sHGbWpMGsg==
-X-Google-Smtp-Source: AGHT+IGieRqnzeLuaUx6Ie7RXs8JxfkdBUmowjxYl2mDxddATi1AGsiIJ7LQSmc6+cCJVTz0fUr3Aw==
-X-Received: by 2002:a2e:8696:0:b0:2ba:18e5:1064 with SMTP id l22-20020a2e8696000000b002ba18e51064mr3815918lji.14.1695278048481;
-        Wed, 20 Sep 2023 23:34:08 -0700 (PDT)
-Received: from otso.local (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id z25-20020aa7c659000000b00530ba0fd672sm367971edr.75.2023.09.20.23.34.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Sep 2023 23:34:08 -0700 (PDT)
-From:   Luca Weiss <luca.weiss@fairphone.com>
-Date:   Thu, 21 Sep 2023 08:34:02 +0200
-Subject: [PATCH] ARM: dts: qcom: sdx65-mtp: Specify PM7250B SID to use
+        d=1e100.net; s=20230601; t=1695321439; x=1695926239;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TXv2swyixrrXvv0zGvrj0+c4WbYkAz74mw7u1eEONl8=;
+        b=Hqe/5DPyxAA3CERo5ixWa7fDe+Q+uCjkN7SI8TMGxw9gfkXfKW5ilRG2Aeq/zFUgkK
+         zA16tNtsGitvYnh5i1aDosFayLIn85uIvhIKA0ZtkiJCmRv5/x01iQRkRf+4l+xwDHAu
+         BoaUiDBv2nx6wfW1bwt9wbeYxfmjs70dZU58R1rN74zQxXFvvP/Jra6aeIDPfilbudFH
+         DQXsMtUlPFEBLU39hwaaJEVZH3I7ri+X1zHBlFA+JUPoRUsfdirvjQpogSFG4/y8qnuu
+         OE8gR4LAHO7YBgwwZ98T8iZ6hSbQ0m2VrT9XYxEJMiv4jjb3vGBFH3EqICMW8EWnpQN5
+         V9xA==
+X-Gm-Message-State: AOJu0YxUUZl3WT2GPc4iuPvdvwXX0exNO62T+TWXlO4bpXccfxk61Xp4
+        nncUB2me7uYrao5NX0aEEAqedqc0G+9YXMWVZg7Tkg==
+X-Google-Smtp-Source: AGHT+IF33ZszVwsMibxsoJczJ31Md6SkIWFl+NgIPjyaeu55oxkozMwjQ2+h4m7DsUHVeCJrMeMh0Q==
+X-Received: by 2002:a50:ec83:0:b0:531:1f3b:cb47 with SMTP id e3-20020a50ec83000000b005311f3bcb47mr7302479edr.0.1695279710178;
+        Thu, 21 Sep 2023 00:01:50 -0700 (PDT)
+Received: from [172.20.15.189] (static-212-193-78-212.thenetworkfactory.nl. [212.78.193.212])
+        by smtp.gmail.com with ESMTPSA id m26-20020a056402051a00b00532d2b5126bsm389571edv.94.2023.09.21.00.01.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 Sep 2023 00:01:49 -0700 (PDT)
+Message-ID: <8f24963f-a016-3095-29da-a2fcae5ec9eb@linaro.org>
+Date:   Thu, 21 Sep 2023 09:01:50 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 1/3] drm/msm/dpu: Fix SC7280 PP length
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20230921-topic-7280_dpu-v1-0-6912a97183d5@linaro.org>
+ <20230921-topic-7280_dpu-v1-1-6912a97183d5@linaro.org>
+ <3b23270c-ec89-2177-8252-6ccaf58d37ac@quicinc.com>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <3b23270c-ec89-2177-8252-6ccaf58d37ac@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230921-pm7250b-sid-fixup-v1-1-231c1a65471f@fairphone.com>
-X-B4-Tracking: v=1; b=H4sIANnjC2UC/x2MQQqAIBAAvxJ7bkFXJOwr0aFsqz1kohRB+Pek4
- zDMvJA5CWfomxcS35LlDBV024Dfp7AxylIZSJFRjjTGoyOrZsyy4CrPFVF5Y73x1hlNULuYuIr
- /OYylfA4JhdVjAAAA
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.12.3
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Now that the pm7250b.dtsi can be configured to be on a different SID, we
-also need to specify it for this dts file. Set it to the SID 2/3 like it
-was before commit 8e2d56f64572 ("arm64: dts: qcom: pm7250b: make SID
-configurable").
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- arch/arm/boot/dts/qcom/qcom-sdx65-mtp.dts | 4 ++++
- 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-sdx65-mtp.dts b/arch/arm/boot/dts/qcom/qcom-sdx65-mtp.dts
-index fcf1c51c5e7a..9649c859a2c3 100644
---- a/arch/arm/boot/dts/qcom/qcom-sdx65-mtp.dts
-+++ b/arch/arm/boot/dts/qcom/qcom-sdx65-mtp.dts
-@@ -4,6 +4,10 @@
-  */
- /dts-v1/;
- 
-+/* PM7250B is configured to use SID2/3 */
-+#define PM7250B_SID 2
-+#define PM7250B_SID1 3
-+
- #include "qcom-sdx65.dtsi"
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include <arm64/qcom/pmk8350.dtsi>
+On 9/21/23 01:41, Abhinav Kumar wrote:
+> 
+> 
+> On 9/20/2023 3:46 PM, Konrad Dybcio wrote:
+>> Commit 194347df5844 ("drm/msm/dpu: inline DSC_BLK and DSC_BLK_1_2
+>> macros") unrolled a macro incorrectly. Fix that.
+>>
+> 
+> No, its correct from what i can tell.
+> 
+> Before inlining it was using PP_BLK_DITHER macro and not PP_BLK.
+> 
+> PP_BLK_DITHER has a len of 0 and not 0xd4.
+> 
+> Hence I cannot see whats wrong here.
+Right, I misread the thing..
 
----
-base-commit: 7fc7222d9680366edeecc219c21ca96310bdbc10
-change-id: 20230921-pm7250b-sid-fixup-0c35c3c59312
-
-Best regards,
--- 
-Luca Weiss <luca.weiss@fairphone.com>
-
+Konrad
