@@ -2,166 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F94D7AA15E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Sep 2023 23:01:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C08F07AA2EC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Sep 2023 23:43:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232333AbjIUVBF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Sep 2023 17:01:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37710 "EHLO
+        id S231586AbjIUVnI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Sep 2023 17:43:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232342AbjIUVAh (ORCPT
+        with ESMTP id S231786AbjIUVmz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Sep 2023 17:00:37 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86EFB83F4D;
-        Thu, 21 Sep 2023 10:37:16 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA915C116B1;
-        Thu, 21 Sep 2023 08:11:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1695283900;
-        bh=Gewh+X/afwnYE29YDMBBSxcYouKp+J6pI9o/VDPi61s=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=OOA97oSA87QUXG8tkGzL4e+OSoo31vbKdlGVmS82Rki1F6e6aK/ISRu3oFg3WttHU
-         hzASotkvmkEWgGL97btIXv1zY0ngfxmtdLZBbCPkYelDLUT7JFSaLbzD4C9di3BSRa
-         15TTx1vPfe5HUOO2e6VENo6GqHKp4RgPcCW6zSDK69bYfQrPm02bNtZZapQMWRCw7b
-         c5yYrG9EmjRXx3OWJ5D/VwlH3ZO4UVCOC7E/R9M6WC78qrfh1h9I4vP47H1w9YT55m
-         9fy/q6WY3fczWq9OLQN+8Dqyxfk6PWf12G6xLK69kEifZm3iUQR1hZ7HflCin9DRbO
-         NLGEIL3TcplMw==
-Date:   Thu, 21 Sep 2023 10:11:32 +0200
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Mrinmay Sarkar <quic_msarkar@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        konrad.dybcio@linaro.org, mani@kernel.org,
-        quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
-        quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
-        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
-        quic_parass@quicinc.com, Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
-        linux-phy@lists.infradead.org
-Subject: Re: [PATCH v1 1/5] dt-bindings: PCI: qcom-ep: Add support for
- SA8775P SoC
-Message-ID: <20230921081132.GA2891@thinkpad>
-References: <1695218113-31198-1-git-send-email-quic_msarkar@quicinc.com>
- <1695218113-31198-2-git-send-email-quic_msarkar@quicinc.com>
+        Thu, 21 Sep 2023 17:42:55 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.88])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 723AD72A0;
+        Thu, 21 Sep 2023 10:28:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1695317320; x=1726853320;
+  h=message-id:date:mime-version:subject:from:to:cc:
+   references:in-reply-to:content-transfer-encoding;
+  bh=DUAFX+JNi4nRkne3bhKFanmYulDhmk2cpGuyh+eKgqo=;
+  b=FEmp4GMi5sFXuNeAppelkM4neNxsBpk/C6B4yuDpgTd5oUe3CNmu1EbS
+   Pz+EcVdT1/DRTcw6s0vEXitgkkJ8lF9LHY11wH7AULNQ2KKkRP8PcEuAF
+   oUBo99iTsSotQyjgzPcxxlHlz48gz8RKuKxw1G8No9VpmekvfAz6XRyF9
+   DdMqTcvbMa7MpUdw58MiQAdpqog6xMvVV+sgodfOWwAFSge2K7DPtBeUs
+   CKPi0nZPuAl4SzPzNVB8t+00xzoZiHeodnCW0qlLxa3s/DriJoGcBDd42
+   86fUxClvwgS/ANCDD8rDMKqvpEMRC8oDrxjQCJYd7Vqokp7rJzfZRKw+u
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10839"; a="411422757"
+X-IronPort-AV: E=Sophos;i="6.03,165,1694761200"; 
+   d="scan'208";a="411422757"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Sep 2023 03:14:34 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10839"; a="723688411"
+X-IronPort-AV: E=Sophos;i="6.03,165,1694761200"; 
+   d="scan'208";a="723688411"
+Received: from asilke-mobl2.ger.corp.intel.com (HELO [10.213.199.249]) ([10.213.199.249])
+  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Sep 2023 03:14:29 -0700
+Message-ID: <6b9c8566-926d-40ff-7907-228d317fab3d@linux.intel.com>
+Date:   Thu, 21 Sep 2023 11:14:27 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v6 6/6] drm/drm-file: Show finer-grained BO sizes in
+ drm_show_memory_stats
+Content-Language: en-US
+From:   Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+To:     =?UTF-8?Q?Adri=c3=a1n_Larumbe?= <adrian.larumbe@collabora.com>,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
+        robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run,
+        marijn.suijten@somainline.org, robh@kernel.org,
+        steven.price@arm.com
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, healych@amazon.com,
+        Boris Brezillon <boris.brezillon@collabora.com>,
+        kernel@collabora.com, freedreno@lists.freedesktop.org
+References: <20230919233556.1458793-1-adrian.larumbe@collabora.com>
+ <20230919233556.1458793-7-adrian.larumbe@collabora.com>
+ <ccfa3697-b015-ff35-fb92-0efcbd1d7d7c@linux.intel.com>
+Organization: Intel Corporation UK Plc
+In-Reply-To: <ccfa3697-b015-ff35-fb92-0efcbd1d7d7c@linux.intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1695218113-31198-2-git-send-email-quic_msarkar@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,HK_RANDOM_ENVFROM,HK_RANDOM_FROM,
+        NICE_REPLY_A,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 20, 2023 at 07:25:08PM +0530, Mrinmay Sarkar wrote:
-> Add devicetree bindings support for SA8775P SoC.
-> Define reg and interrupt per platform.
+
+On 20/09/2023 16:32, Tvrtko Ursulin wrote:
 > 
-> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-> ---
->  .../devicetree/bindings/pci/qcom,pcie-ep.yaml      | 130 +++++++++++++++++----
->  1 file changed, 108 insertions(+), 22 deletions(-)
+> On 20/09/2023 00:34, Adrián Larumbe wrote:
+>> The current implementation will try to pick the highest available size
+>> display unit as soon as the BO size exceeds that of the previous
+>> multiplier. That can lead to loss of precision in contexts of low memory
+>> usage.
+>>
+>> The new selection criteria try to preserve precision, whilst also
+>> increasing the display unit selection threshold to render more accurate
+>> values.
+>>
+>> Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
+>> Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+>> Reviewed-by: Steven Price <steven.price@arm.com>
+>> ---
+>>   drivers/gpu/drm/drm_file.c | 5 ++++-
+>>   1 file changed, 4 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/gpu/drm/drm_file.c b/drivers/gpu/drm/drm_file.c
+>> index 762965e3d503..34cfa128ffe5 100644
+>> --- a/drivers/gpu/drm/drm_file.c
+>> +++ b/drivers/gpu/drm/drm_file.c
+>> @@ -872,6 +872,8 @@ void drm_send_event(struct drm_device *dev, struct 
+>> drm_pending_event *e)
+>>   }
+>>   EXPORT_SYMBOL(drm_send_event);
+>> +#define UPPER_UNIT_THRESHOLD 100
+>> +
+>>   static void print_size(struct drm_printer *p, const char *stat,
+>>                  const char *region, u64 sz)
+>>   {
+>> @@ -879,7 +881,8 @@ static void print_size(struct drm_printer *p, 
+>> const char *stat,
+>>       unsigned u;
+>>       for (u = 0; u < ARRAY_SIZE(units) - 1; u++) {
+>> -        if (sz < SZ_1K)
+>> +        if ((sz & (SZ_1K - 1)) &&
 > 
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> index a223ce0..e860e8f 100644
-> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> @@ -13,6 +13,7 @@ properties:
->    compatible:
->      oneOf:
->        - enum:
-> +          - qcom,sa8775p-pcie-ep
->            - qcom,sdx55-pcie-ep
->            - qcom,sm8450-pcie-ep
->        - items:
-> @@ -20,29 +21,19 @@ properties:
->            - const: qcom,sdx55-pcie-ep
->  
->    reg:
-> -    items:
-> -      - description: Qualcomm-specific PARF configuration registers
-> -      - description: DesignWare PCIe registers
-> -      - description: External local bus interface registers
-> -      - description: Address Translation Unit (ATU) registers
-> -      - description: Memory region used to map remote RC address space
-> -      - description: BAR memory region
-> +    minItems: 6
-> +    maxItems: 7
->  
->    reg-names:
-> -    items:
-> -      - const: parf
-> -      - const: dbi
-> -      - const: elbi
-> -      - const: atu
-> -      - const: addr_space
-> -      - const: mmio
-> +    minItems: 6
-> +    maxItems: 7
->  
->    clocks:
-> -    minItems: 7
-> +    minItems: 5
->      maxItems: 8
->  
->    clock-names:
-> -    minItems: 7
-> +    minItems: 5
->      maxItems: 8
->  
->    qcom,perst-regs:
-> @@ -57,14 +48,12 @@ properties:
->            - description: Perst separation enable offset
->  
->    interrupts:
-> -    items:
-> -      - description: PCIe Global interrupt
-> -      - description: PCIe Doorbell interrupt
-> +    minItems: 2
-> +    maxItems: 3
->  
->    interrupt-names:
-> -    items:
-> -      - const: global
-> -      - const: doorbell
-> +    minItems: 2
-> +    maxItems: 3
->  
->    reset-gpios:
->      description: GPIO used as PERST# input signal
-> @@ -122,6 +111,51 @@ allOf:
->          compatible:
->            contains:
->              enum:
-> +              - qcom,sa8775p-pcie-ep
-> +    then:
-> +      properties:
-> +        reg:
-> +          items:
-> +            - description: Qualcomm-specific PARF configuration registers
-> +            - description: DesignWare PCIe registers
-> +            - description: External local bus interface registers
-> +            - description: Address Translation Unit (ATU) registers
-> +            - description: Memory region used to map remote RC address space
-> +            - description: BAR memory region
-> +            - description: DMA memory region
+> IS_ALIGNED worth it at all?
+> 
+>> +            sz < UPPER_UNIT_THRESHOLD * SZ_1K)
+>>               break;
+> 
+> Excuse me for a late comment (I was away). I did not get what what is 
+> special about a ~10% threshold? Sounds to me just going with the lower 
+> unit, when size is not aligned to the higher one, would be better than 
+> sometimes precision-sometimes-not.
 
-It should be described as "DMA register space" or something, because this could
-be misinterpreted as memory region for doing DMA.
+FWIW both current and the threshold option make testing the feature very 
+annoying.
 
-- Mani
+So I'd really propose we simply use smaller unit when unaligned.
 
--- 
-மணிவண்ணன் சதாசிவம்
+Regards,
+
+Tvrtko
