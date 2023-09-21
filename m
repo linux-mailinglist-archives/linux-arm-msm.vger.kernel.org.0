@@ -2,50 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CEEC47A97F9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Sep 2023 19:29:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D52007A97D0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Sep 2023 19:27:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229997AbjIUR3T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Sep 2023 13:29:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55010 "EHLO
+        id S229943AbjIUR15 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Sep 2023 13:27:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230308AbjIUR2n (ORCPT
+        with ESMTP id S230119AbjIUR12 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Sep 2023 13:28:43 -0400
+        Thu, 21 Sep 2023 13:27:28 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54423A9E5;
-        Thu, 21 Sep 2023 10:07:28 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26713C32784;
-        Thu, 21 Sep 2023 09:38:05 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 632B52D60;
+        Thu, 21 Sep 2023 10:02:41 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BD34C32783;
+        Thu, 21 Sep 2023 09:48:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1695289087;
-        bh=C4un4gYxCr/CUvb+/OQ1fTPtd4znlJYmidwWhyiPGtU=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=d0HpfYzobyg8jx7fPPVL5WntNltqZx9usHaRcy9vjWuXQGA/nvs9gFdsiBwYJD91m
-         0kr/oaqLLDtvrwDqEeE0CUCCjaLRp2s53UbI2pkT0vF77i1RqpZMUMh28EWlkUZLWk
-         sUGmAnhIxapCI9JT1zJK7W5snh2t0jOKajrHK1g/UL71wdMWy/NgAVyHjxp7e3BJNC
-         3/X+PbMykegQr0QQhurtrXO3Wc7AdeSDDmfxikFC4pQcVWN12lfceRi75O8gqjBkeX
-         h9pXlDTofyeq0S8DWpT/mL73Iw1LT3v5NPBtNyImpod9dbH6BhE7/v3c8+sJN1p5CU
-         2drPD/S3ahN7w==
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bard Liao <yung-chuan.liao@linux.intel.com>,
-        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        Sanyog Kale <sanyog.r.kale@intel.com>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org
-In-Reply-To: <20230721164901.2155287-1-quic_bjorande@quicinc.com>
-References: <20230721164901.2155287-1-quic_bjorande@quicinc.com>
-Subject: Re: [PATCH] soundwire: qcom: Log clk_get("iface") failures
-Message-Id: <169528908579.97319.3591383647900607937.b4-ty@kernel.org>
-Date:   Thu, 21 Sep 2023 11:38:05 +0200
+        s=k20201202; t=1695289713;
+        bh=J91xLLYh3063mIz8vTCj0EDjswezy2qXl2KyxMg3RQI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=fU057suNKQbihbsVL2RWa98mU6/opeEGInjY7XwbSg83INDcPahdBga23HxJVedq6
+         1940hb8sDpd52ueZhRszkTZGjQTbKIVk45BC9C0Oiz4+XQSj4k7iZwPlFgY6B2Wg71
+         6JhA70Ulb3ae4S/VLNazQq97Bv4IvAJzX9bqjQOi1hIRY5/L7HK1mo1T1fQCWIJ9Q7
+         bpSlWHVeppCYURvyle4n7VWHn7jZX31tJIU3/sR3VXwGM7f3BNWLdsH7FZUP8jb/4D
+         qYASDzCHLGqEop9vHSeG6kbvvHySj4zYKY2VnfAkaBRhm/eQwBHOejreG5Xor6mwtI
+         UUo9yEKkxigmA==
+Date:   Thu, 21 Sep 2023 11:48:23 +0200
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Mrinmay Sarkar <quic_msarkar@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        konrad.dybcio@linaro.org, quic_shazhuss@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_ramkri@quicinc.com,
+        quic_nayiluri@quicinc.com, quic_krichai@quicinc.com,
+        quic_vbadigan@quicinc.com, quic_parass@quicinc.com,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
+        linux-phy@lists.infradead.org
+Subject: Re: [PATCH v1 5/5] arm64: dts: qcom: sa8775p: Add ep pcie0
+ controller node
+Message-ID: <20230921094823.GE2891@thinkpad>
+References: <1695218113-31198-1-git-send-email-quic_msarkar@quicinc.com>
+ <1695218113-31198-6-git-send-email-quic_msarkar@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.12.3
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DATE_IN_PAST_06_12,
-        DKIMWL_WL_HIGH,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1695218113-31198-6-git-send-email-quic_msarkar@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -53,21 +65,86 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Fri, 21 Jul 2023 09:49:01 -0700, Bjorn Andersson wrote:
-> Failing to acquire the iface clock makes probing of the Qualcomm
-> SoundWire driver fail without providing any indication to the user. Make
-> the driver log the error to aid debugging system configuration issues.
-> 
+On Wed, Sep 20, 2023 at 07:25:12PM +0530, Mrinmay Sarkar wrote:
+> Add ep pcie dtsi node for pcie0 controller found on sa8775p platform.
 > 
 
-Applied, thanks!
+It would be good to add more info in the commit message, like PCIe Gen, lane
+info, IP revision etc...
 
-[1/1] soundwire: qcom: Log clk_get("iface") failures
-      commit: 95b0f3aa71eb09d067d89395fdb7f2dd87feae18
+> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 45 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 45 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> index 9f4f58e8..5571131 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> @@ -2600,4 +2600,49 @@
+>  
+>  		status = "disabled";
+>  	};
+> +
+> +	pcie0_ep: pcie-ep@1c00000 {
+> +		compatible = "qcom,sa8775p-pcie-ep";
+> +		reg = <0x0 0x01c00000 0x0 0x3000>,
+> +		      <0x0 0x40000000 0x0 0xf20>,
+> +		      <0x0 0x40000f20 0x0 0xa8>,
+> +		      <0x0 0x40001000 0x0 0x4000>,
+> +		      <0x0 0x40200000 0x0 0x100000>,
+> +		      <0x0 0x01c03000 0x0 0x1000>,
+> +		      <0x0 0x40005000 0x0 0x2000>;
+> +		reg-names = "parf", "dbi", "elbi", "atu", "addr_space",
+> +			    "mmio", "dma";
+> +
+> +		clocks = <&gcc GCC_PCIE_0_AUX_CLK>,
+> +			<&gcc GCC_PCIE_0_CFG_AHB_CLK>,
+> +			<&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
+> +			<&gcc GCC_PCIE_0_SLV_AXI_CLK>,
+> +			<&gcc GCC_PCIE_0_SLV_Q2A_AXI_CLK>;
+> +
+> +		clock-names = "aux",
+> +			      "cfg",
+> +			      "bus_master",
+> +			      "bus_slave",
+> +			      "slave_q2a";
+> +
+> +		interrupts = <GIC_SPI 306 IRQ_TYPE_LEVEL_HIGH>,
+> +			     <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>,
+> +			     <GIC_SPI 630 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +		interrupt-names = "global", "doorbell", "dma";
+> +
+> +		interconnects = <&pcie_anoc MASTER_PCIE_0 0 &mc_virt SLAVE_EBI1 0>,
+> +				<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_0 0>;
+> +		interconnect-names = "pcie-mem", "cpu-pcie";
+> +
 
-Best regards,
+Don't you need iommu property?
+
+> +		resets = <&gcc GCC_PCIE_0_BCR>;
+> +		reset-names = "core";
+> +		power-domains = <&gcc PCIE_0_GDSC>;
+> +		phys = <&pcie0_phy>;
+> +		phy-names = "pciephy";
+> +		max-link-speed = <3>;
+
+Gen 3?
+
+> +		num-lanes = <2>;
+
+Only 2 lanes? Or the other one has 4 lanes?
+
+- Mani
+
+> +
+> +		status = "disabled";
+> +	};
+>  };
+> -- 
+> 2.7.4
+> 
+
 -- 
-~Vinod
-
-
+மணிவண்ணன் சதாசிவம்
