@@ -2,136 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F5A97A9E39
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Sep 2023 21:58:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DE627AA429
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Sep 2023 00:02:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229688AbjIUT64 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Sep 2023 15:58:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46580 "EHLO
+        id S231462AbjIUWCF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Sep 2023 18:02:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229619AbjIUT6n (ORCPT
+        with ESMTP id S231330AbjIUWBx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Sep 2023 15:58:43 -0400
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [81.169.146.171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2689C72428;
-        Thu, 21 Sep 2023 11:56:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1695322581; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=Af0kNSkUIApYMW7jR2nJgT9wxojCBucsRZBp+Vb6ZVML328uVEZl5KWVRsSKfOK6Zc
-    TuZaZ7ubvcx5LgLED7ZxSDLa2o14HsCHKdTwGxay3BRGmsSTRhZB1bzSg9E4Ob6gbKGl
-    kSt4dPhoLexNS2MokU41DLXr5Eseun8dMKPLp6WJXmQA/oZlA/TcmZqabs58esg7yhIw
-    0bRgk1nf29CR239HnCR2I7/S95AKmyAL6l9aVKlQBIfWnuIp16cSyA4jzTl4z99zWd9k
-    flBByvs4zVVBjG1zNXR1EygkEnO27rTG1OFlqm4lk0+UbgDMtvohp9MEgmY79/Cd8As2
-    y3iA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1695322581;
-    s=strato-dkim-0002; d=strato.com;
-    h=Cc:To:In-Reply-To:References:Message-Id:Subject:Date:From:Cc:Date:
-    From:Subject:Sender;
-    bh=k3VeNueovqwvAeOtbPbFknTbbRAKphS4vEK7X7L7wHQ=;
-    b=nkw01R8YKzWcEGXUkZE0Aa9OEk9EJm5Z4jWCK0bEHZwydEedD4cGi7vvqE/iRU4cDz
-    RGj61uvbMNM7faXDc4DHSbbXWCdnACI7fO+QMWQOHUvwXRksGIaaQIVXRsk29olAxWN0
-    gHYVdINPv20fMBF15pTPmb90oMpHHjbyN5W647pUYAh8/Ghvoee2UxSvKM7Fqy5k7WlD
-    WdUl/WIy4SMAvC7/x0WZK+/JJqTYZNhzhvBftdkRgKD1NHksRBe6eare4J8U/xXscjrK
-    3KWZfzf8ylgVdlWMtAuz2O5Ow1+MAn1dgJgaomLW4WToK2R2+n457HRlETluZlFpk3/1
-    CXEA==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo02
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1695322581;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=Cc:To:In-Reply-To:References:Message-Id:Subject:Date:From:Cc:Date:
-    From:Subject:Sender;
-    bh=k3VeNueovqwvAeOtbPbFknTbbRAKphS4vEK7X7L7wHQ=;
-    b=gRHNOThj80hRmZu8wjSMrj7VUOETuBnVzKvrP7QAvOraydeZbgqD76K+VC22QDJ+yj
-    IcAeLyRd30/dQgU6RdxGcG3n8GhGVbvwpid1atSfQxgWijC+fxEMP1H18bsTAOE2e/nB
-    6c030PQJ0WAV1jL5kt8ek2PNNPXap2UTdPt7wYiV3PdanLd1i6wRs1m7akt2Zn7TfrPp
-    ntNY5sFIawnqP6QGYKQ9wqAxHkSRTjKc6ypFIO7dLTbqysF23ecqwrqJJaqeW0Ohk9q2
-    z4v73x9kRnXC2hv8vZ8PYrthvxShZ6uvwfeb/ypXLzGaVWUzqWu8h0SwXaOdLGbZOcKz
-    GDgQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1695322581;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=Cc:To:In-Reply-To:References:Message-Id:Subject:Date:From:Cc:Date:
-    From:Subject:Sender;
-    bh=k3VeNueovqwvAeOtbPbFknTbbRAKphS4vEK7X7L7wHQ=;
-    b=6hjDRegVapE8eu7LZIqKREGbBd4zQ9AaSG6c2gICci7xyO7AxzmQrIoB8f+uwdZ0oB
-    craDQmTjPX36s3LNJsAg==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQjVd4CteZ/7jYgS+mLFY+H0JAn8u4p39TY="
-Received: from [192.168.244.3]
-    by smtp.strato.de (RZmta 49.8.2 DYNA|AUTH)
-    with ESMTPSA id R04c57z8LIuKRRz
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Thu, 21 Sep 2023 20:56:20 +0200 (CEST)
-From:   Stephan Gerhold <stephan@gerhold.net>
-Date:   Thu, 21 Sep 2023 20:56:04 +0200
-Subject: [PATCH 1/3] arm64: dts: qcom: msm8916-samsung-gt5: Enable GPU
+        Thu, 21 Sep 2023 18:01:53 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15E573BE35
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Sep 2023 11:18:01 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-40472c3faadso13849455e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Sep 2023 11:18:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1695320279; x=1695925079; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=U7gFQeovCOqyG+Vt42B/k9KqcPKnAtH77aTFoPbh9E0=;
+        b=LcDXklsnvQKK9OShLmv5Eq+mI0QJJDzVsZEAvjQf8h73Q/Co/l0uEvX4vQlxFXzbxT
+         xl05J6dyLn11Y8K2pGlN3pFl+Zq1HhqR2gBhnJnyUlXqg67izQZE6hEkazIqxC/NLSh/
+         5Y2bu8fEZzd8Ggp1K9gqrZulUiDv46MHD3EPmscXCCy2Al3M3yiorhrplp3U14hJ0VfG
+         GWiGlLhqE2ISTYtsTpo4Lccuhf4qZekEcMuOLPTj2md8PKDt8E+Fc7QaA3UNCg8wiodB
+         qaS2DvV3K6b2IcESoEDSu2SZcBa9tDDDFV32a1n8u2U+sWgMHJoS4DgVGIf8Xc1vylsA
+         nNXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695320279; x=1695925079;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=U7gFQeovCOqyG+Vt42B/k9KqcPKnAtH77aTFoPbh9E0=;
+        b=f6ulyItHyg9detpfBZ73JYCB3nOCNc13qWu3vyRcUQ9FivvJ+Ky4R7lLfxDe7ZkgCv
+         VHMn5BHssmk6pP1j/4nVz3RjtloJJ3to6STO16GfiyPWggnWeXbm+okr7W1Lo/sVzYcN
+         9Be9YOV9tJ+BQW6hMjDCph1NWknqT6g1khQH2eBDxRc3PqHNRZqTFIinsflbek72ztJh
+         7hjSFrZvEgrOQsbWNGcjddQmSd80n0RhjiCiNqD4cWmUtfoBXbCyvpsnRMeW311TAapk
+         6x7+GRfTY8GrMtVUbBEb1znTiEdAFF0cIQdFj7/iaC2xl+sDHSvYWNfd/7bID9ea222Y
+         swRg==
+X-Gm-Message-State: AOJu0YzI484qNa1iMpyBK/mzK8mtldTTAqZkNbhL+yOepLoeqoY7q2vv
+        ISzmX2pdXAGqjBCmQgAhp8RF1/TyUHOr3hyldLxng3bY
+X-Google-Smtp-Source: AGHT+IHjIQkVJQybbyYx/PL2aE6OMJIhMwgKGQdYG4h1ptw97QpAlXlx1ORnozqq/yIgm5Zhfz1miQ==
+X-Received: by 2002:a17:906:704d:b0:9a1:c42e:5e5e with SMTP id r13-20020a170906704d00b009a1c42e5e5emr3859123ejj.42.1695281319261;
+        Thu, 21 Sep 2023 00:28:39 -0700 (PDT)
+Received: from [172.20.15.189] (static-212-193-78-212.thenetworkfactory.nl. [212.78.193.212])
+        by smtp.gmail.com with ESMTPSA id a24-20020a170906245800b0098963eb0c3dsm616369ejb.26.2023.09.21.00.28.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 Sep 2023 00:28:38 -0700 (PDT)
+Message-ID: <2ec21b71-bfdc-885f-827a-eca7b70f2728@linaro.org>
+Date:   Thu, 21 Sep 2023 09:28:39 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v3 2/3] soc: qcom: rmtfs: Support discarding guard pages
+Content-Language: en-US
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230920-rmtfs-mem-guard-pages-v3-0-305b37219b78@quicinc.com>
+ <20230920-rmtfs-mem-guard-pages-v3-2-305b37219b78@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230920-rmtfs-mem-guard-pages-v3-2-305b37219b78@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230921-msm8916-rmem-fixups-v1-1-34d2b6e721cf@gerhold.net>
-References: <20230921-msm8916-rmem-fixups-v1-0-34d2b6e721cf@gerhold.net>
-In-Reply-To: <20230921-msm8916-rmem-fixups-v1-0-34d2b6e721cf@gerhold.net>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Stephan Gerhold <stephan@gerhold.net>
-X-Mailer: b4 0.12.3
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_PASS,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the GPU for the msm8916-samsung-gt58 and gt510 tablets now that
-they have display panels enabled in the device tree. This was missed
-when the GPU was disabled by default because the change was not applied
-yet.
 
-Fixes: 0ce5bb825d54 ("arm64: dts: qcom: msm8916/39: Disable GPU by default")
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
----
- arch/arm64/boot/dts/qcom/msm8916-samsung-gt510.dts | 4 ++++
- arch/arm64/boot/dts/qcom/msm8916-samsung-gt58.dts  | 4 ++++
- 2 files changed, 8 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-gt510.dts b/arch/arm64/boot/dts/qcom/msm8916-samsung-gt510.dts
-index 75c4854ecd64..c3f1acc55078 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-gt510.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-gt510.dts
-@@ -112,6 +112,10 @@ touchscreen@4a {
- 	};
- };
- 
-+&gpu {
-+	status = "okay";
-+};
-+
- &mdss {
- 	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-gt58.dts b/arch/arm64/boot/dts/qcom/msm8916-samsung-gt58.dts
-index 11359bcc27b3..998625abd409 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-gt58.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-gt58.dts
-@@ -64,6 +64,10 @@ touchscreen@20 {
- 	};
- };
- 
-+&gpu {
-+	status = "okay";
-+};
-+
- &mdss {
- 	status = "okay";
- };
+On 9/21/23 04:37, Bjorn Andersson wrote:
+> In some configurations, the exact placement of the rmtfs shared memory
+> region isn't so strict. The DeviceTree author can then choose to use the
+> "size" property and rely on the OS for placement (in combination with
+> "alloc-ranges", if desired).
+> 
+> But on some platforms the rmtfs memory region may not be allocated
+> adjacent to regions allocated by other clients. Add support for
+> discarding the first and last 4k block in the region, if
+> qcom,use-guard-pages is specified in DeviceTree.
+> 
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> ---
+I don't want to block this anymore, but I guess I should ask
+the question whether it would be valuable to add a common
+reserved-memory property for e.g. low-padding and high-padding
 
--- 
-2.42.0
+Have we seen cases of that outside rmtfs?
 
+Konrad
