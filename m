@@ -2,124 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F30B7AA0EF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Sep 2023 22:51:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 346027AA066
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Sep 2023 22:36:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232625AbjIUUvL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Sep 2023 16:51:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53556 "EHLO
+        id S232195AbjIUUgX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Sep 2023 16:36:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232628AbjIUUu5 (ORCPT
+        with ESMTP id S232854AbjIUUfu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Sep 2023 16:50:57 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A49C8A217;
-        Thu, 21 Sep 2023 10:40:34 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38L7JlNG024466;
-        Thu, 21 Sep 2023 10:21:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=qcppdkim1;
- bh=vt4HQkzBRhpNc52cASEe6rG3/9p26Oq4MI20JoPy4ZY=;
- b=VT2IVVchE1GjETE74gE6BfN2/yADIml54BESXfxo37lnhR8AqYVsUVV3C6DZ1uDGmeCa
- zDlh1xqIHJS7ifZb/M41LtieIQSo32b+D0nSfMjRFlbkgDqLMYwVFNk2tZ+odwnvcCY4
- EqQ7yIpbIEUyHf1yqFazV4zy67fyIJPIHeR+w/o2PQazoWUVf+PVyHz4rVjDqt2Q/GJ4
- FQjS11dP2UDl1tXpBtvt1iCUakMyCXKMHFOaZ9wM8uNswKCUBL0VKQCLY6q/ujN+we7F
- gfF9MpoRFq0BypdZqXs07DUVkcWO40At1Qal5HLwTCWUeTNWk89MM8hrU1BuS9nb3BYH Hg== 
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t8hb8gc7e-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 21 Sep 2023 10:21:42 +0000
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 38LALbEW023129;
-        Thu, 21 Sep 2023 10:21:38 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3t55ekq7p2-1;
-        Thu, 21 Sep 2023 10:21:38 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 38LALcC0023136;
-        Thu, 21 Sep 2023 10:21:38 GMT
-Received: from hu-sgudaval-hyd.qualcomm.com (hu-rohiagar-hyd.qualcomm.com [10.213.106.138])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 38LALcXH023134;
-        Thu, 21 Sep 2023 10:21:38 +0000
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3970568)
-        id 232881E4E; Thu, 21 Sep 2023 15:51:37 +0530 (+0530)
-From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        gregkh@linuxfoundation.org, abel.vesa@linaro.org,
-        quic_wcheng@quicinc.com, dmitry.baryshkov@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org, kernel@quicinc.com,
-        Rohit Agarwal <quic_rohiagar@quicinc.com>
-Subject: [PATCH v3 4/5] dt-bindings: usb: dwc3: Add SDX75 compatible
-Date:   Thu, 21 Sep 2023 15:51:31 +0530
-Message-Id: <1695291692-18850-5-git-send-email-quic_rohiagar@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1695291692-18850-1-git-send-email-quic_rohiagar@quicinc.com>
-References: <1695291692-18850-1-git-send-email-quic_rohiagar@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Jsn0IRLAw3xXxL0OXU5mhpsPXJnaEdZG
-X-Proofpoint-GUID: Jsn0IRLAw3xXxL0OXU5mhpsPXJnaEdZG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-21_07,2023-09-20_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
- bulkscore=0 lowpriorityscore=0 mlxlogscore=558 impostorscore=0
- phishscore=0 priorityscore=1501 clxscore=1015 adultscore=0 malwarescore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309210090
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED
-        autolearn=no autolearn_force=no version=3.4.6
+        Thu, 21 Sep 2023 16:35:50 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8865180FBA;
+        Thu, 21 Sep 2023 10:36:57 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4979C32794;
+        Thu, 21 Sep 2023 10:24:10 +0000 (UTC)
+Message-ID: <b10a7414-b710-4fb9-a72d-e2d7eff2616d@xs4all.nl>
+Date:   Thu, 21 Sep 2023 12:24:08 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 45/49] media: core: Add bitmap manage bufs array
+ entries
+Content-Language: en-US, nl
+To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+        mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
+        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
+        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
+        nicolas.dufresne@collabora.com
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
+        kernel@collabora.com
+References: <20230914133323.198857-1-benjamin.gaignard@collabora.com>
+ <20230914133323.198857-46-benjamin.gaignard@collabora.com>
+ <1142bbb4-b8f1-44ec-962e-9347a231782f@xs4all.nl>
+ <20b6b93e-eef8-3d7b-a3c2-795f220059d4@collabora.com>
+ <470682b4-c14b-4237-bc46-fddfdd085026@xs4all.nl>
+ <31f298ec-6280-d21b-3d8a-c7bf1c9c0c30@collabora.com>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+In-Reply-To: <31f298ec-6280-d21b-3d8a-c7bf1c9c0c30@collabora.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the SDX75 dwc3 compatible.
+On 21/09/2023 11:28, Benjamin Gaignard wrote:
+> 
+> Le 20/09/2023 à 16:56, Hans Verkuil a écrit :
+>> On 20/09/2023 16:30, Benjamin Gaignard wrote:
+>> <snip>
+>>
+>>>>>        num_buffers = min_t(unsigned int, num_buffers,
+>>>>>                    q->max_allowed_buffers - vb2_get_num_buffers(q));
+>>>>>    -    first_index = vb2_get_num_buffers(q);
+>>>>> +    first_index = bitmap_find_next_zero_area(q->bufs_map, q->max_allowed_buffers,
+>>>>> +                         0, num_buffers, 0);
+>>>>>          if (first_index >= q->max_allowed_buffers)
+>>>>>            return 0;
+>>>>> @@ -675,7 +678,13 @@ static void __vb2_queue_free(struct vb2_queue *q, unsigned int buffers)
+>>>>>      struct vb2_buffer *vb2_get_buffer(struct vb2_queue *q, unsigned int index)
+>>>>>    {
+>>>>> -    if (index < q->num_buffers)
+>>>>> +    if (!q->bufs_map || !q->bufs)
+>>>>> +        return NULL;
+>>>> I don't think this can ever happen.
+>>> I got kernel crash without them.
+>>> I will keep them.
+>> What is the backtrace? How can this happen? It feels wrong that this can be
+>> called with a vb2_queue that apparently is not properly initialized.
+> 
+> I have this log when adding dump_stack() in vb2_get_buffer() if !q->bufs_bitmap:
+> 
+> [   18.924627] Call trace:
+> [   18.927090]  dump_backtrace+0x94/0xec
+> [   18.930787]  show_stack+0x18/0x24
+> [   18.934137]  dump_stack_lvl+0x48/0x60
+> [   18.937833]  dump_stack+0x18/0x24
+> [   18.941166]  __vb2_queue_cancel+0x23c/0x2f0
+> [   18.945365]  vb2_core_queue_release+0x24/0x6c
+> [   18.949740]  vb2_queue_release+0x10/0x1c
+> [   18.953677]  v4l2_m2m_ctx_release+0x20/0x40
+> [   18.957892]  hantro_release+0x20/0x54
+> [   18.961584]  v4l2_release+0x74/0xec
+> [   18.965110]  __fput+0xb4/0x274
+> [   18.968205]  __fput_sync+0x50/0x5c
+> [   18.971626]  __arm64_sys_close+0x38/0x7c
+> [   18.975562]  invoke_syscall+0x48/0x114
+> [   18.979329]  el0_svc_common.constprop.0+0xc0/0xe0
+> [   18.984068]  do_el0_svc+0x1c/0x28
+> [   18.987402]  el0_svc+0x40/0xe8
+> [   18.990470]  el0t_64_sync_handler+0x100/0x12c
+> [   18.994842]  el0t_64_sync+0x190/0x194
+> 
+> This happen at boot time when hantro driver is open and close without other actions.
 
-Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 3 +++
- 1 file changed, 3 insertions(+)
+Ah, now I see the problem. q->bufs and q->bufs_map are allocated in
+vb2_core_create_bufs and vb2_core_reqbufs, but they should be allocated
+in vb2_queue_init: that's the counterpart of vb2_core_queue_release.
 
-diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-index 018117b..d78b721 100644
---- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-+++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-@@ -34,6 +34,7 @@ properties:
-           - qcom,sdm845-dwc3
-           - qcom,sdx55-dwc3
-           - qcom,sdx65-dwc3
-+          - qcom,sdx75-dwc3
-           - qcom,sm4250-dwc3
-           - qcom,sm6115-dwc3
-           - qcom,sm6125-dwc3
-@@ -181,6 +182,7 @@ allOf:
-               - qcom,sdm845-dwc3
-               - qcom,sdx55-dwc3
-               - qcom,sdx65-dwc3
-+              - qcom,sdx75-dwc3
-               - qcom,sm6350-dwc3
-     then:
-       properties:
-@@ -364,6 +366,7 @@ allOf:
-               - qcom,sdm845-dwc3
-               - qcom,sdx55-dwc3
-               - qcom,sdx65-dwc3
-+              - qcom,sdx75-dwc3
-               - qcom,sm4250-dwc3
-               - qcom,sm6125-dwc3
-               - qcom,sm6350-dwc3
--- 
-2.7.4
+With that change you shouldn't have to check for q->bufs/bufs_map anymore.
+
+Regards,
+
+	Hans
+
+>    
+>>
+>>>>> +
+>>>>> +    return (bitmap_weight(q->bufs_map, q->max_allowed_buffers) > 0);
+>>>> How about:
+>>>>
+>>>>      return vb2_get_num_buffers(q) > 0;
+>>> vb2_get_num_buffers is defined in videobuf2-core.c, I'm not sure that
+>>> an inline function could depend of a module function.
+>> Not a problem. E.g. v4l2-ctrls.h is full of such static inlines.
+>>
+>> Regards,
+>>
+>>     Hans
+>>
 
