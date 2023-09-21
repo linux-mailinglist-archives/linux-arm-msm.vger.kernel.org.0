@@ -2,49 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B3E87AA1F1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Sep 2023 23:10:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E03277A9EA6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Sep 2023 22:07:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231250AbjIUVLA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Sep 2023 17:11:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50716 "EHLO
+        id S230046AbjIUUH5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Sep 2023 16:07:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232859AbjIUVFF (ORCPT
+        with ESMTP id S230488AbjIUUHr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Sep 2023 17:05:05 -0400
+        Thu, 21 Sep 2023 16:07:47 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D13FA86138;
-        Thu, 21 Sep 2023 10:37:58 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B7CDC4E75F;
-        Thu, 21 Sep 2023 14:26:16 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F1A326A1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Sep 2023 10:02:40 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9743C4E758;
+        Thu, 21 Sep 2023 14:29:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1695306378;
-        bh=Y6tF5Sxcca3uknZoiD/RUnNmXLKJdlsB7DP2Xfz3jH8=;
-        h=From:To:In-Reply-To:References:Subject:Date:From;
-        b=Oow2mZRnk+semWy/ipKx+k8QwxReBm+OSDMXyq0ak5vClB9HJH5RTVQKBHHNFj0AS
-         OJ76rfLM1FPKDS5/qRKPEPl5giDEPW1xtnUQlonfcZZakQPFUqTxwh6tVDi8F37Til
-         G7s5rZwh9z7iiwlhIgOVPEo5Zn711BAhrxARs3bGfkxs2g/jRCS0CB6U+5AQMtknlb
-         Os4crsN1kXLjpB3s/2ZZjlnUJP8XsCCW44uA+lEJhSB8SI6R9SEtLfCgRKZozptoTM
-         Wko0pEZ8kXpoyUk3VJ1Gn3xGa1k5l+YSgiNq0NmieVaXv4EMEN/o1lotfFZ8FIBnjp
-         V9rqMxpUe5eYw==
+        s=k20201202; t=1695306566;
+        bh=i7yPeuk2Yj5yCsGwQ+SXnhbxyv502egxjv2oc9SFNmE=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=PCZ16C3C4Dbv8TEe8702mLOtUgACJfVB5x0outhchQVYNtesPJMUye/gHbkGDyXR+
+         P5ZVpxRfVNMZBl8VLIC59dERUnVdSsBy/EMkIZ2dV/PMqV0TIBS45ofEPTHtbdezB3
+         5Jb2qJZCTea3xOZ9eIwZtcTpH2hJyY0lrdE+r7M4k7Fykm0cGcI6l3ELkhtmOVuJ0T
+         Qfvb0QTm2Az1/rQuYtFXs7JKSmXl5THRc86wn7o8tfQgOqI/zAd4SAquhHygZPS7yE
+         CNPanpj9Q3Br/q8g+SLoDG/lxaw61miuswZ0ImVGlF6SQFjxW6RDK/wX0fv99xAJ2l
+         WmgeNvrRlPWkQ==
 From:   Vinod Koul <vkoul@kernel.org>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        kishon@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
-        Varadarajan Narayanan <quic_varada@quicinc.com>
-In-Reply-To: <1694069452-3794-1-git-send-email-quic_varada@quicinc.com>
-References: <1694069452-3794-1-git-send-email-quic_varada@quicinc.com>
-Subject: Re: [PATCH] phy: qcom: m31: Remove unwanted qphy->vreg is NULL
- check
-Message-Id: <169530637607.106093.6024035938522205244.b4-ty@kernel.org>
-Date:   Thu, 21 Sep 2023 16:26:16 +0200
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
+        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org
+In-Reply-To: <20230824211952.1397699-1-dmitry.baryshkov@linaro.org>
+References: <20230824211952.1397699-1-dmitry.baryshkov@linaro.org>
+Subject: Re: (subset) [PATCH v3 00/16] phy: qcom-qmp-usb: convert to newer
+ style of bindings
+Message-Id: <169530656347.106263.14330882289989442266.b4-ty@kernel.org>
+Date:   Thu, 21 Sep 2023 16:29:23 +0200
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.12.3
-X-Spam-Status: No, score=-0.5 required=5.0 tests=BAYES_00,DATE_IN_PAST_03_06,
-        DKIMWL_WL_HIGH,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=no
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -53,23 +60,30 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Thu, 07 Sep 2023 12:20:52 +0530, Varadarajan Narayanan wrote:
-> Fix the following Smatch complaint:
-> 	drivers/phy/qualcomm/phy-qcom-m31.c:175 m31usb_phy_init()
-> 	warn: variable dereferenced before check 'qphy->vreg' (see line 167)
-> 
-> drivers/phy/qualcomm/phy-qcom-m31.c
->    166
->    167		ret = regulator_enable(qphy->vreg);
->                                        ^^^^^^^^^^
-> Unchecked dereference
+On Fri, 25 Aug 2023 00:19:36 +0300, Dmitry Baryshkov wrote:
+> Reviewing several patchsets for newer platforms made it clear that
+> having two styles of QMP PHY bindings causes confusion. Despite binding
+> documents having notes telling that old bindings should be used for
+> older platforms, it is too easy to attempt adding new platform with
+> older QMP PHY binding. Thus let's have just a single documented style of
+> bindings.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] phy: qcom: m31: Remove unwanted qphy->vreg is NULL check
-      commit: ecec1de5c58f8f3ab6959fcf8d68752eeb65311d
+[01/16] dt-bindings: phy: migrate QMP USB PHY bindings to qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+        commit: 15c83637402c3654dbc7aac368119c3809a119fa
+[02/16] phy: qcom-qmp-usb: simplify clock handling
+        commit: 7233090aba54d82a1ed64f125b32c3ac0b91803c
+[03/16] phy: qcom-qmp-usb: rework reset handling
+        commit: fcf63482f6a9d383f04e409bc50f00eecb74ae73
+[04/16] phy: qcom-qmp-usb: make QPHY_PCS_MISC_CLAMP_ENABLE access conditional
+        commit: 6e9402261e8c85ec386b473ce3738d6e9d3e5013
+[05/16] phy: qcom-qmp: move PCS MISC V4 registers to separate header
+        commit: dc32762214e4bb683bfb21dcb4ade10e27e11c6d
+[06/16] phy: qcom-qmp-usb: populate offsets configuration
+        commit: 2be22aae6b18326426443d6c0cc9ac6985183a89
 
 Best regards,
 -- 
