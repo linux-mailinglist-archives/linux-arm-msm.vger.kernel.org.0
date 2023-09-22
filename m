@@ -2,134 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 768817AB022
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Sep 2023 13:03:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76C387AB136
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Sep 2023 13:50:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233291AbjIVLD2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Sep 2023 07:03:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36578 "EHLO
+        id S233856AbjIVLuw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Sep 2023 07:50:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229564AbjIVLD0 (ORCPT
+        with ESMTP id S233835AbjIVLuv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Sep 2023 07:03:26 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B32FBAC;
-        Fri, 22 Sep 2023 04:03:20 -0700 (PDT)
-Received: from localhost (unknown [IPv6:2a02:8010:65b5:0:1ac0:4dff:feee:236a])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: alarumbe)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 2AB356607298;
-        Fri, 22 Sep 2023 12:03:19 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1695380599;
-        bh=wXSEIbq/K8kiAYrJuMuWZuTjJmcTmyqx7vXAGyjqEuo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=PNXIUrVnI3zfpD/o9V6Srvtwpz+lY6DtO5MRZEPiGJreVRtOd6TAOOJXuN18Yo4C+
-         ETU695ehyNkW8No6+UYz0cRAJJR9yxEwJ0pnKfyfwa5PuDsooIe3fieT/Yhgww/csa
-         G/MLjjKse1U1LpLI69gH5uHLoqVJHJ93NxCQIztzAcOHXDGw8jYWm4v140Xa9nK/Lh
-         SvcQKFjWG5fSIY42mUsEAFR+bsl2DoLC6vcFW/HuzyTEqGkfPp8MIJMAFw+gmYFcDY
-         j2PnqjRLrr/LK17eGxQnxwc5IyBZpCACmUzDcLuxvK7XVcMq5eOnUMJOiAmte/c5SM
-         +3aVpuuvPR4bQ==
-Date:   Fri, 22 Sep 2023 12:03:17 +0100
-From:   =?utf-8?Q?Adri=C3=A1n?= Larumbe <adrian.larumbe@collabora.com>
-To:     Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Cc:     maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
-        robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        dmitry.baryshkov@linaro.org, sean@poorly.run,
-        marijn.suijten@somainline.org, robh@kernel.org,
-        steven.price@arm.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        healych@amazon.com,
-        Boris Brezillon <boris.brezillon@collabora.com>,
-        kernel@collabora.com, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v6 6/6] drm/drm-file: Show finer-grained BO sizes in
- drm_show_memory_stats
-Message-ID: <rn5metso2yr2kyxix3fh2ub77jpjf6avs754eshgpd2lu33bkw@33way22pozgh>
-References: <20230919233556.1458793-1-adrian.larumbe@collabora.com>
- <20230919233556.1458793-7-adrian.larumbe@collabora.com>
- <ccfa3697-b015-ff35-fb92-0efcbd1d7d7c@linux.intel.com>
- <6b9c8566-926d-40ff-7907-228d317fab3d@linux.intel.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6b9c8566-926d-40ff-7907-228d317fab3d@linux.intel.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        Fri, 22 Sep 2023 07:50:51 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D145100;
+        Fri, 22 Sep 2023 04:50:46 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38M97jVP025444;
+        Fri, 22 Sep 2023 11:50:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=glpcgZA8oUTgGE4tKF2MfFMEKh8mSWEkHjWh1yU7B3s=;
+ b=A4Df76avjJEJBRMCHaM7svfX/o7N6cUjtN2g1dgnRQdUN6E9NJzbqPF2QZwm1yP88ty7
+ 0b353+5HK8FYWTIIi3iWBm0kf9EZgkIg6RAXyAkMypwLJRC9TUE4LLHg0adl6XQIlhZc
+ kAcnygF3aBcQD49xviAdD7IdjaUFsmc3FScUbdA8Uf7OMi52jg7fW6TOhsRGhoCW5QLT
+ 46heN4YHFWncq2Pqv02O0xTlSQ+BQKNIOhld9YEJ0w1Hesm2Yw/9ClTkY653A8HyWJxk
+ aHoYmHBC+87pl0jeDDlRm8AiCk6+hrdL7jCTyGO+0DIzuSJ1RsTFR0NOKEoz0rLLVA5E EA== 
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t8uknsqb8-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 22 Sep 2023 11:50:40 +0000
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 38MBoa3P027190;
+        Fri, 22 Sep 2023 11:50:36 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3t55eman8r-1;
+        Fri, 22 Sep 2023 11:50:36 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 38MBoacs027178;
+        Fri, 22 Sep 2023 11:50:36 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-rohiagar-hyd.qualcomm.com [10.213.106.138])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 38MBoarc027175;
+        Fri, 22 Sep 2023 11:50:36 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3970568)
+        id 5F7171E2E; Fri, 22 Sep 2023 17:20:35 +0530 (+0530)
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Rohit Agarwal <quic_rohiagar@quicinc.com>
+Subject: [PATCH 0/3] Add devicetree support of Interconnects and USB for SDX75
+Date:   Fri, 22 Sep 2023 17:20:31 +0530
+Message-Id: <1695383434-24705-1-git-send-email-quic_rohiagar@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: n0X2C5BnSSY4xXT7rX1452n1aAJWueR0
+X-Proofpoint-ORIG-GUID: n0X2C5BnSSY4xXT7rX1452n1aAJWueR0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-09-22_09,2023-09-21_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
+ bulkscore=0 adultscore=0 impostorscore=0 spamscore=0 lowpriorityscore=0
+ mlxlogscore=242 priorityscore=1501 phishscore=0 mlxscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
+ definitions=main-2309220100
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21.09.2023 11:14, Tvrtko Ursulin wrote:
->
->On 20/09/2023 16:32, Tvrtko Ursulin wrote:
->> 
->> On 20/09/2023 00:34, Adrián Larumbe wrote:
->> > The current implementation will try to pick the highest available size
->> > display unit as soon as the BO size exceeds that of the previous
->> > multiplier. That can lead to loss of precision in contexts of low memory
->> > usage.
->> > 
->> > The new selection criteria try to preserve precision, whilst also
->> > increasing the display unit selection threshold to render more accurate
->> > values.
->> > 
->> > Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
->> > Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
->> > Reviewed-by: Steven Price <steven.price@arm.com>
->> > ---
->> >   drivers/gpu/drm/drm_file.c | 5 ++++-
->> >   1 file changed, 4 insertions(+), 1 deletion(-)
->> > 
->> > diff --git a/drivers/gpu/drm/drm_file.c b/drivers/gpu/drm/drm_file.c
->> > index 762965e3d503..34cfa128ffe5 100644
->> > --- a/drivers/gpu/drm/drm_file.c
->> > +++ b/drivers/gpu/drm/drm_file.c
->> > @@ -872,6 +872,8 @@ void drm_send_event(struct drm_device *dev, struct
->> > drm_pending_event *e)
->> >   }
->> >   EXPORT_SYMBOL(drm_send_event);
->> > +#define UPPER_UNIT_THRESHOLD 100
->> > +
->> >   static void print_size(struct drm_printer *p, const char *stat,
->> >                  const char *region, u64 sz)
->> >   {
->> > @@ -879,7 +881,8 @@ static void print_size(struct drm_printer *p,
->> > const char *stat,
->> >       unsigned u;
->> >       for (u = 0; u < ARRAY_SIZE(units) - 1; u++) {
->> > -        if (sz < SZ_1K)
->> > +        if ((sz & (SZ_1K - 1)) &&
->> 
->> IS_ALIGNED worth it at all?
->> 
->> > +            sz < UPPER_UNIT_THRESHOLD * SZ_1K)
->> >               break;
->> 
->> Excuse me for a late comment (I was away). I did not get what what is
->> special about a ~10% threshold? Sounds to me just going with the lower
->> unit, when size is not aligned to the higher one, would be better than
->> sometimes precision-sometimes-not.
->
->FWIW both current and the threshold option make testing the feature very
->annoying.
+Hi,
 
-How so?
+This series adds devicetree nodes to support interconnects and usb for sdx75.
+This is based on previously sent driver series[1], [2].
 
->So I'd really propose we simply use smaller unit when unaligned.
+[1] https://lore.kernel.org/all/1694614256-24109-1-git-send-email-quic_rohiagar@quicinc.com/
+[2] https://lore.kernel.org/all/1695359525-4548-1-git-send-email-quic_rohiagar@quicinc.com/
 
-Like I said in the previous reply, for drm files whose overall BO size sum is enormous
-but not a multiple of a MiB, this would render huge number representations in KiB.
-I don't find this particularly comfortable to read, and then this extra precision
-would mean nothing to nvtop or gputop, which would have to scale the size to their
-available screen dimensions when plotting them.
+Thanks,
+Rohit.
 
->Regards,
->
->Tvrtko
+Rohit Agarwal (3):
+  arm64: dts: qcom: Add interconnect nodes for SDX75
+  arm64: dts: qcom: Add USB3 and PHY support
+  arm64: dts: qcom: sdx75-idp: Enable USB3 and PHY support
+
+ arch/arm64/boot/dts/qcom/sdx75-idp.dts |  29 ++++++
+ arch/arm64/boot/dts/qcom/sdx75.dtsi    | 164 +++++++++++++++++++++++++++++++++
+ 2 files changed, 193 insertions(+)
+
+-- 
+2.7.4
+
