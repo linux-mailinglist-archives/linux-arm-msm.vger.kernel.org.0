@@ -2,37 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8836E7AB013
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Sep 2023 12:59:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC1E57AB01D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Sep 2023 13:01:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233435AbjIVK7J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Sep 2023 06:59:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39404 "EHLO
+        id S229997AbjIVLCB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Sep 2023 07:02:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229564AbjIVK7H (ORCPT
+        with ESMTP id S229564AbjIVLCA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Sep 2023 06:59:07 -0400
+        Fri, 22 Sep 2023 07:02:00 -0400
 Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB6F9AF;
-        Fri, 22 Sep 2023 03:59:01 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACEA4AC;
+        Fri, 22 Sep 2023 04:01:54 -0700 (PDT)
 Received: from localhost (unknown [IPv6:2a02:8010:65b5:0:1ac0:4dff:feee:236a])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
         (No client certificate requested)
         (Authenticated sender: alarumbe)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 4050D6607298;
-        Fri, 22 Sep 2023 11:59:00 +0100 (BST)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 4003F6607298;
+        Fri, 22 Sep 2023 12:01:53 +0100 (BST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1695380340;
-        bh=U4C5cQtZcQUA0ntsm4nl33wSbsxoVynBlr2Tlu5UDy0=;
+        s=mail; t=1695380513;
+        bh=DH0CgaoapBhQcnFaMJV2Rkn3poFia6kb9FUwld5Yr2E=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=jvfWbikvgdoKQbUkrvqLw0U1sjfu3wnPVUCbTLp2hdcbWzKgS9nyfpa+Jn/8KR6Ya
-         eT8dmGSWkNQ2d6qUvouxGZGcvSw6eIi+QVLEKUbqAfqT8SBkqeZ0BNMsfrkUihea5T
-         IingQ9QSsI1epKGvyciQUR6HTQf/6IjzAM0PNC5FVW0xfpkuAcv0lPlR/FFzPYAh/A
-         yQY4FQ/qnoH0PZXdD4X4LVf0g03plzju55E1Ftk0KucXC4OYpW6U8GVf+HZBsYwzWN
-         n6XYS9FCmIpHgqiPkdh4E4/0LtBUm6iIFKSUFnOe19pphgBNxkInSy7PtzgWfrSrDn
-         GxIQhYxRM5PXQ==
-Date:   Fri, 22 Sep 2023 11:58:57 +0100
+        b=dJ6zNgz1saDEIBBf1GHZ23CbSGegBUGIrVNb+i9AEu7qR7jYz7IFXRRwOXFkniNu1
+         6W2QvGETHn3Hg4eV1rtjcfRLwntU5BFH9z16vwMG+INRFoLhmsK/hyd038lOzee5MG
+         AN5V2N/xLwAz9WcUkPcDs6BjqK6OhUIl4L7Oiv8GEkueYje3z+Q9DexAffumG3TVZw
+         AhdiIfJS9WhrfHrzWBCT03jT0+u2Kj7Rjw6R8BqH5Q/t+b9YaeI+e9gBQBq8NqVkU0
+         LT3OV+n/GPDdwshll/UEVl7U9WRMwpbWzK0dG0oxPb9ao1Z+1dfAzXG49BGOpBPbUh
+         /+nO2CcbzXwbg==
+Date:   Fri, 22 Sep 2023 12:01:51 +0100
 From:   =?utf-8?Q?Adri=C3=A1n?= Larumbe <adrian.larumbe@collabora.com>
 To:     Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
 Cc:     maarten.lankhorst@linux.intel.com, mripard@kernel.org,
@@ -45,17 +45,17 @@ Cc:     maarten.lankhorst@linux.intel.com, mripard@kernel.org,
         healych@amazon.com,
         Boris Brezillon <boris.brezillon@collabora.com>,
         kernel@collabora.com, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v6 4/6] drm/drm_file: Add DRM obj's RSS reporting
- function for fdinfo
-Message-ID: <fs3u3b62vhixqpuoa5c4dwckew3l4etvps4zhlgeuwle6o2as2@tsgwsil4s35k>
+Subject: Re: [PATCH v6 6/6] drm/drm-file: Show finer-grained BO sizes in
+ drm_show_memory_stats
+Message-ID: <3l4prybv2bhyd5s3s7vkfo3k42cjndl2db53sntduqeuwjquld@tfop5o5p6gez>
 References: <20230919233556.1458793-1-adrian.larumbe@collabora.com>
- <20230919233556.1458793-5-adrian.larumbe@collabora.com>
- <495203cd-d85e-2c00-4fa9-81879a882441@linux.intel.com>
+ <20230919233556.1458793-7-adrian.larumbe@collabora.com>
+ <ccfa3697-b015-ff35-fb92-0efcbd1d7d7c@linux.intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <495203cd-d85e-2c00-4fa9-81879a882441@linux.intel.com>
+In-Reply-To: <ccfa3697-b015-ff35-fb92-0efcbd1d7d7c@linux.intel.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
         URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
@@ -65,94 +65,78 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20.09.2023 16:53, Tvrtko Ursulin wrote:
+On 20.09.2023 16:32, Tvrtko Ursulin wrote:
 >
 >On 20/09/2023 00:34, Adrián Larumbe wrote:
->> Some BO's might be mapped onto physical memory chunkwise and on demand,
->> like Panfrost's tiler heap. In this case, even though the
->> drm_gem_shmem_object page array might already be allocated, only a very
->> small fraction of the BO is currently backed by system memory, but
->> drm_show_memory_stats will then proceed to add its entire virtual size to
->> the file's total resident size regardless.
+>> The current implementation will try to pick the highest available size
+>> display unit as soon as the BO size exceeds that of the previous
+>> multiplier. That can lead to loss of precision in contexts of low memory
+>> usage.
 >> 
->> This led to very unrealistic RSS sizes being reckoned for Panfrost, where
->> said tiler heap buffer is initially allocated with a virtual size of 128
->> MiB, but only a small part of it will eventually be backed by system memory
->> after successive GPU page faults.
->> 
->> Provide a new DRM object generic function that would allow drivers to
->> return a more accurate RSS size for their BOs.
+>> The new selection criteria try to preserve precision, whilst also
+>> increasing the display unit selection threshold to render more accurate
+>> values.
 >> 
 >> Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
 >> Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
 >> Reviewed-by: Steven Price <steven.price@arm.com>
 >> ---
 >>   drivers/gpu/drm/drm_file.c | 5 ++++-
->>   include/drm/drm_gem.h      | 9 +++++++++
->>   2 files changed, 13 insertions(+), 1 deletion(-)
+>>   1 file changed, 4 insertions(+), 1 deletion(-)
 >> 
 >> diff --git a/drivers/gpu/drm/drm_file.c b/drivers/gpu/drm/drm_file.c
->> index 883d83bc0e3d..762965e3d503 100644
+>> index 762965e3d503..34cfa128ffe5 100644
 >> --- a/drivers/gpu/drm/drm_file.c
 >> +++ b/drivers/gpu/drm/drm_file.c
->> @@ -944,7 +944,10 @@ void drm_show_memory_stats(struct drm_printer *p, struct drm_file *file)
->>   		}
->>   		if (s & DRM_GEM_OBJECT_RESIDENT) {
->> -			status.resident += obj->size;
->> +			if (obj->funcs && obj->funcs->rss)
->> +				status.resident += obj->funcs->rss(obj);
->> +			else
->> +				status.resident += obj->size;
+>> @@ -872,6 +872,8 @@ void drm_send_event(struct drm_device *dev, struct drm_pending_event *e)
+>>   }
+>>   EXPORT_SYMBOL(drm_send_event);
+>> +#define UPPER_UNIT_THRESHOLD 100
+>> +
+>>   static void print_size(struct drm_printer *p, const char *stat,
+>>   		       const char *region, u64 sz)
+>>   {
+>> @@ -879,7 +881,8 @@ static void print_size(struct drm_printer *p, const char *stat,
+>>   	unsigned u;
+>>   	for (u = 0; u < ARRAY_SIZE(units) - 1; u++) {
+>> -		if (sz < SZ_1K)
+>> +		if ((sz & (SZ_1K - 1)) &&
 >
->Presumably you'd want the same smaller size in both active and purgeable? Or
->you can end up with more in those two than in rss which would look odd.
+>IS_ALIGNED worth it at all?
 
-I didn't think of this. I guess when an object is both resident and purgeable,
-then its RSS and purgeable sizes should be the same.
+This could look better, yeah.
 
->Also, alternative to adding a new callback could be adding multiple output
->parameters to the existing obj->func->status() which maybe ends up simpler due
->fewer callbacks?
+>> +		    sz < UPPER_UNIT_THRESHOLD * SZ_1K)
+>>   			break;
 >
->Like:
->
-> s = obj->funcs->status(obj, &supported_status, &rss)
->
->And adjust the code flow to pick up the rss if driver signaled it supports
->reporting it.
+>Excuse me for a late comment (I was away). I did not get what what is special
+>about a ~10% threshold? Sounds to me just going with the lower unit, when size
+>is not aligned to the higher one, would be better than sometimes
+>precision-sometimes-not.
 
-I personally find having a separate object callback more readable in this case.
-There's also the question of what output parameter value would be used as a token
-that the relevant BO doesn't have an RSS different from its virtual
-size. I guess '0' would be alright, but this is on the assumption that this
-could never be a legitimate BO virtual size across all DRM drivers. I guess
-most of them round the size up to the nearest page multiple at BO creation
-time.
+We had a bit of a debate over this in previous revisions of the patch. It all began
+when a Panfrost user complained that for relatively small BOs, they were losing
+precision in the fdinfo file because the sum of the sizes of all BOs for a drm file
+was in the order of MiBs, but not big enough to warrant losing accuracy when
+plotting them on nvtop or gputop.
 
->
+At first I thought of letting drivers pick their own preferred unit, but this would
+lead to inconsistency in the units presented in the fdinfo file across different
+DRM devices. Rob then suggested imposing a unit multiple threshold, while Boris
+made the suggestion of checking for unit size alignment to lessen precision loss.
+
+In the end Rob thought that minding both constraints was a good solution of compromise.
+
+The unit threshold was picked sort of arbitrarily, and suggested by Rob himself. The
+point of having it is avoiding huge number representations for BO size tallies that
+aren't aligned to the next unit, and also because BO size sums are scaled when
+plotting them on a Y axis, so complete accuracy isn't a requirement.
+
 >Regards,
 >
 >Tvrtko
 >
->>   		} else {
->>   			/* If already purged or not yet backed by pages, don't
->>   			 * count it as purgeable:
->> diff --git a/include/drm/drm_gem.h b/include/drm/drm_gem.h
->> index bc9f6aa2f3fe..16364487fde9 100644
->> --- a/include/drm/drm_gem.h
->> +++ b/include/drm/drm_gem.h
->> @@ -208,6 +208,15 @@ struct drm_gem_object_funcs {
->>   	 */
->>   	enum drm_gem_object_status (*status)(struct drm_gem_object *obj);
->> +	/**
->> +	 * @rss:
->> +	 *
->> +	 * Return resident size of the object in physical memory.
->> +	 *
->> +	 * Called by drm_show_memory_stats().
->> +	 */
->> +	size_t (*rss)(struct drm_gem_object *obj);
->> +
->>   	/**
->>   	 * @vm_ops:
->>   	 *
+>>   		sz = div_u64(sz, SZ_1K);
+>>   	}
+
+Adrian Larumbe
