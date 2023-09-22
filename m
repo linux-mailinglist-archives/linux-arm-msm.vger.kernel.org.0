@@ -2,49 +2,44 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 043577AB697
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Sep 2023 18:57:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F4627AB69C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Sep 2023 18:58:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232469AbjIVQ5b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Sep 2023 12:57:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34100 "EHLO
+        id S231310AbjIVQ6n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Sep 2023 12:58:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230443AbjIVQ50 (ORCPT
+        with ESMTP id S230223AbjIVQ6h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Sep 2023 12:57:26 -0400
+        Fri, 22 Sep 2023 12:58:37 -0400
 Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84DFB198;
-        Fri, 22 Sep 2023 09:57:18 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F6EC122;
+        Fri, 22 Sep 2023 09:58:30 -0700 (PDT)
 Received: from g550jk.localnet (k10064.upc-k.chello.nl [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 01F29CFADA;
-        Fri, 22 Sep 2023 16:56:46 +0000 (UTC)
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id A17E0CFADA;
+        Fri, 22 Sep 2023 16:57:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1695401807; bh=rK5mAbbiQpqlLCWKbud4SA+Xd793oMxnhhSEUiqVv/w=;
+        t=1695401878; bh=l2uaQdl/zjcri8u7O6TdgKvYgL59pb6rEs98yvz6Xio=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=TaNlayt6gRWpSNQ0zSytpOvDi8n403zBwEqlSZfulE94+TaduxD2u4h1t+k0+5vQq
-         0SA9PpSvKSoHvNRP9XzPySVYsbJ1EARl00BFMI3t5e1p59bWQDmwu+8GoyuRxuWp2D
-         gMjmQx2UVwyFVFM2G9Ve9Q1Dm1aXGLmZQ7JlWQLE=
+        b=GCRzLVMBAWwDZa5wTWeHAdz6QcFhwHuy+6h4ZemEUzGVSrALr69RhuRGgXNCQLzme
+         cVE0sF/qrjvdXy6NPftTWv/MndjHZC1T3cTga6IemVWNAqUwjA/euxnbeNBEVi53gu
+         DV/JDwpMLolUyqDQfQTenahg/Qy9eOT6lDAe+5F8=
 From:   Luca Weiss <luca@z3ntu.xyz>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Eduardo Valentin <edubezval@gmail.com>,
         Conor Dooley <conor+dt@kernel.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Rob Herring <robh@kernel.org>,
-        Andy Gross <andy.gross@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Craig Tatlor <ctatlor97@gmail.com>
-Subject: Re: [PATCH v2] ARM: dts: qcom: msm8974: correct qfprom node size
-Date:   Fri, 22 Sep 2023 18:56:46 +0200
-Message-ID: <4831735.GXAFRqVoOG@z3ntu.xyz>
-In-Reply-To: <12394955.O9o76ZdvQC@z3ntu.xyz>
-References: <20230130-msm8974-qfprom-v2-1-3839cf41d9ee@z3ntu.xyz>
- <ff6fwomoik6kz4jtbm5jac7jahrtcia5fb6dj5ykxg7xt574sn@ti42sevqj6pk>
- <12394955.O9o76ZdvQC@z3ntu.xyz>
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] ARM: dts: qcom: msm8226: provide dsi phy clocks to mmcc
+Date:   Fri, 22 Sep 2023 18:57:58 +0200
+Message-ID: <2155790.irdbgypaU6@z3ntu.xyz>
+In-Reply-To: <3275085e-e4ed-6b0b-c108-cde90a8283b8@linaro.org>
+References: <20230712-msm8226-dsi-clock-fixup-v1-1-71010b0b89ca@z3ntu.xyz>
+ <3275085e-e4ed-6b0b-c108-cde90a8283b8@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7Bit
 Content-Type: text/plain; charset="us-ascii"
@@ -58,104 +53,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sonntag, 6. August 2023 12:47:51 CEST Luca Weiss wrote:
-> Hi Bjorn,
-> 
-> On Montag, 31. Juli 2023 23:45:21 CEST Bjorn Andersson wrote:
-> > On Thu, Jun 15, 2023 at 08:20:41PM +0200, Konrad Dybcio wrote:
-> > > On 15.06.2023 20:17, Luca Weiss wrote:
-> > > > From: Craig Tatlor <ctatlor97@gmail.com>
-> > > > 
-> > > > The qfprom actually has size 0x3000, so adjust the reg.
-> > > > 
-> > > > Note that the non-ECC-corrected qfprom can be found at 0xfc4b8000
-> > > > (-0x4000). The current reg points to the ECC-corrected qfprom block
-> > > > which should have equivalent values at all offsets compared to the
-> > > > non-corrected version.
-> > > > 
-> > > > [luca@z3ntu.xyz: extract to standalone patch and adjust for review
-> > > > comments]
-> > > > 
-> > > > Fixes: c59ffb519357 ("arm: dts: msm8974: Add thermal zones, tsens and
-> > > > qfprom nodes") Signed-off-by: Craig Tatlor <ctatlor97@gmail.com>
-> > > > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> > > > ---
-> > > 
-> > > Not sure of the actual size of the region, maybe Bjorn can help..
-> > > 
-> > > Downstream 3.10 suggests 0x60F0, 0x20F0 after adjusting for the ECC
-> > > offset
+On Samstag, 15. Juli 2023 16:08:37 CEST Konrad Dybcio wrote:
+> On 12.07.2023 09:52, Luca Weiss wrote:
+> > Some mmcc clocks have dsi0pll & dsi0pllbyte as clock parents so we
+> > should provide them in the dt, which I missed in the commit adding the
+> > mdss nodes.
 > > 
-> > There is indeed 0x3000 bytes until the next region, but afaict the
-> > corrected ECC values only cover the first 0x800 bytes thereof.
-> > 
-> > Can you please let me know if this patch fixes a problem, or just
-> > makes the numbers look better?
+> > Fixes: d5fb01ad5eb4 ("ARM: dts: qcom: msm8226: Add mdss nodes")
+> > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> > ---
 > 
-> Initially this patch came from a different direction, to make space to use
-> the PVS bits for cpufreq. Since Konrad said in earlier revisions that I
-> should always use the +0x4000 space for the ECC-corrected variant I've
-> switched to that.
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > 
-> If you think it's not useful to have the qfprom size reflect the actual
-> size, we can also drop this patch since I don't think it's actually
-> necessary for anything that I have lying around in some branches.
-> 
-> I think I've just sent the current patch to make sure the hardware
-> description (dts) is as accurate as possible, but of course since any info
-> on Qualcomm is very restricted it could also be a bit wrong.
+> Konrad
 
 Hi Bjorn,
 
-this patch is still lying in my inbox. Do you think it's correct or incorrect 
-- so should we drop it?
+this patch is still waiting to be picked up :) Would be nice to get it into 
+v6.7.
 
 Regards
 Luca
 
 > 
-> Regards
-> Luca
-> 
-> > Regards,
-> > Bjorn
+> >  arch/arm/boot/dts/qcom/qcom-msm8226.dtsi | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
 > > 
-> > > Konrad
-> > > 
-> > > > Changes in v2:
-> > > > - Keep base offset but expand reg from 0x1000 to 0x3000 (Konrad)
-> > > > - Link to v1:
-> > > > https://lore.kernel.org/r/20230130-msm8974-qfprom-v1-1-975aa0e5e083@z3
-> > > > n
-> > > > tu.xyz ---
-> > > > 
-> > > >  arch/arm/boot/dts/qcom-msm8974.dtsi | 2 +-
-> > > >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > > > 
-> > > > diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi
-> > > > b/arch/arm/boot/dts/qcom-msm8974.dtsi index 7ed0d925a4e9..3156fe25967f
-> > > > 100644
-> > > > --- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-> > > > +++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-> > > > @@ -1194,7 +1194,7 @@ restart@fc4ab000 {
-> > > > 
-> > > >  		qfprom: qfprom@fc4bc000 {
-> > > >  		
-> > > >  			compatible = "qcom,msm8974-qfprom",
-> 
-> "qcom,qfprom";
-> 
-> > > > -			reg = <0xfc4bc000 0x1000>;
-> > > > +			reg = <0xfc4bc000 0x3000>;
-> > > > 
-> > > >  			#address-cells = <1>;
-> > > >  			#size-cells = <1>;
-> > > > 
-> > > > ---
-> > > > base-commit: 858fd168a95c5b9669aac8db6c14a9aeab446375
-> > > > change-id: 20230130-msm8974-qfprom-619c0e8f26eb
-> > > > 
-> > > > Best regards,
+> > diff --git a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+> > b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi index
+> > b6ae4b7936e3..d2d09f2f3cee 100644
+> > --- a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+> > +++ b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+> > @@ -404,8 +404,8 @@ mmcc: clock-controller@fd8c0000 {
+> > 
+> >  				 <&gcc GPLL0_VOTE>,
+> >  				 <&gcc GPLL1_VOTE>,
+> >  				 <&rpmcc RPM_SMD_GFX3D_CLK_SRC>,
+> > 
+> > -				 <0>,
+> > -				 <0>;
+> > +				 <&mdss_dsi0_phy 1>,
+> > +				 <&mdss_dsi0_phy 0>;
+> > 
+> >  			clock-names = "xo",
+> >  			
+> >  				      "mmss_gpll0_vote",
+> >  				      "gpll0_vote",
+> > 
+> > ---
+> > base-commit: 40b055fe7f276cf2c1da47316c52f2ff9255a68a
+> > change-id: 20230712-msm8226-dsi-clock-fixup-ad8bfd411eb9
+> > 
+> > Best regards,
 
 
 
