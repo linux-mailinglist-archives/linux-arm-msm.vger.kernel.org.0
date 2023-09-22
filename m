@@ -2,75 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8978E7ABAA7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Sep 2023 22:50:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F8C07ABAB9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Sep 2023 22:58:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229672AbjIVUue (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Sep 2023 16:50:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42904 "EHLO
+        id S229672AbjIVU6u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Sep 2023 16:58:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229619AbjIVUud (ORCPT
+        with ESMTP id S229625AbjIVU6r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Sep 2023 16:50:33 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 576C91A2;
-        Fri, 22 Sep 2023 13:50:26 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45085C433C7;
-        Fri, 22 Sep 2023 20:50:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1695415826;
-        bh=8rUQPVnfBZ8nP+opU6DTtF/9h/0Y3eo/+O/9HxRH5wE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=uV4w3zy8Ixj9BOX7Sc6mk0f8Opy6CAAoMdR0lguNgOWPqPzTpJjnJsObzg0NBlPpw
-         5aA1K+y8AFcnFCTzfUwu1wxG4513oPJeNZ08bndBhLu7sbsttyltqabFz795u7fvwx
-         MI70lspZm3m4M0IJ21M9YdjmKQZfmErXdH0sHN/lr+5lltm6iBu47CwaIdZmwE0MX4
-         Ts/JYCPNuGsyJWe8z4d0mYZHlCcMRDBsNcqg9kAJLtO9JA2dhH8JVjIS5/11G5KcwL
-         qYR0wCFoZ4vEJEp323lTJd8Krh2tsYFVPkl0OhYKBFzgj7V1QV6LErk7bHgfVye9X/
-         hg1ez4SEp4jBg==
-Received: (nullmailer pid 3556203 invoked by uid 1000);
-        Fri, 22 Sep 2023 20:50:23 -0000
-Date:   Fri, 22 Sep 2023 15:50:23 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Sricharan R <srichara@win-platform-upstream01.qualcomm.com>
-Cc:     rafael@kernel.org, quic_srichara@quicinc.com,
-        linux-kernel@vger.kernel.org, dmitry.baryshkov@linaro.org,
-        linux-pm@vger.kernel.org, srinivas.kandagatla@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        andersson@kernel.org, thara.gopinath@gmail.com,
-        konrad.dybcio@linaro.org, devicetree@vger.kernel.org,
-        krzysztof.kozlowski@linaro.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org, conor+dt@kernel.org, daniel.lezcano@linaro.org
-Subject: Re: [PATCH V3 1/4] dt-bindings: thermal: qcom-tsens: Add ipq5018
- compatible
-Message-ID: <169541580075.3555585.17615922669140216464.robh@kernel.org>
-References: <20230922115116.2748804-1-srichara@win-platform-upstream01.qualcomm.com>
- <20230922115116.2748804-2-srichara@win-platform-upstream01.qualcomm.com>
+        Fri, 22 Sep 2023 16:58:47 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EA0CCA;
+        Fri, 22 Sep 2023 13:58:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1695416319; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=DM/h0Ssk0CSA9pBKpoZS8kdda7elTUspMXJEKVezdP4+6VL2SQyG/MWM6ynsZWhRn4
+    4XPLQwCXCZ75FwZ1OkdjZnAGPokgALuigmtutunaUUi1PGXkqhKVyT9kzjpz1iOEoy7G
+    oRtCuUb+joCKolPmNK6stMCosYadegI3vZgthJMZsoMB5dyLLQ8oq0fe7c9AIAENnBjP
+    P/XRpWItZsjuBGdz19CfVFApMrAtmVSl4RylrX1h/TkwEeignyNZpZ2YkK2ad/TjSdb0
+    x2TJapPf0uUWWVd18jJl8PtYwe8zz1GFQUkR9fXAxBbhzdkiRP9kBZnJdFlcpTmUZSDo
+    ep2g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1695416319;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=8tC0I6qpuuVb1JXq7RbaHdrmQDpUMmS81IG277Uq2N0=;
+    b=jvnqkqGH2Fs3yEBV4q27JdZ+3s2khgVp8QxjWfXsyqVH02bJvXxjklLRCOU91pgO4a
+    xmI1cGT4flHzQvN6Dg1yLkk8zz+uqcVmP8MGFx19CDkPBUGkvb3HB8HYTu1jYgBxMtfx
+    HrXHczkB7Xme2ffyqPesXeGiT48gqraO3Rk9fgPWCUpCQBRs5HYJk4AtS2pJOrtLdrPT
+    A91POIsH3CFHXSQ1uCQXmQifrLTTYIYUKcOyL3yONEW7L1g3qjgtAV7XLcHeXRbp2VKG
+    k4nXzMas0Pjxrlh6U313R6xGVz2Uec7qDZQ5k9xSo85Sd13LwCzozoMVSm8v4CpRgAdK
+    a30A==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1695416319;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=8tC0I6qpuuVb1JXq7RbaHdrmQDpUMmS81IG277Uq2N0=;
+    b=DYf1JNT65qQUFMsZ3QOoEtAk7L2p9XblVEHUl8wb6Cbjx7WcIs+AVCgDLD5CL56naA
+    TOjnpHHM42Y3fXgne9CjZL6nKE0xrmfbandZjAmd5tUBRqjlWASACKMXOR/9RZ4R0PQy
+    9Twece7okBc/HoTQ1fN3Lb5pn+peTuX3zBhVjr80HLUhCkpBt+MEWGk8J500+9H9x/uv
+    SbwlS36J95ZOxNaYAsQ4XVWWIA4zdoxDF+FoVpruqTjPGNZSSdcugScYmW6QWvy2eFgV
+    CF+diwNzXAgB76iZ1HSx6UmPZEF2dPLzzDOhzwxEpXfBIJ5FRg5crbiiRvWx/LsGG2lC
+    BhJw==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1695416319;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=8tC0I6qpuuVb1JXq7RbaHdrmQDpUMmS81IG277Uq2N0=;
+    b=fYiHF2mPW1t2pD2tOWsZDlhu76pYSkEdvl1g26zOO2D3X1uK81wZQzvl+Rf+m/9kGe
+    xqQP/W8Zelefhj9MTpAQ==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA8Z/h"
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.8.2 DYNA|AUTH)
+    with ESMTPSA id R04c57z8MKwcV4V
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Fri, 22 Sep 2023 22:58:38 +0200 (CEST)
+Date:   Fri, 22 Sep 2023 22:58:26 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/2] arm64: dts: qcom: apq8016-sbc-d3-camera: Convert to
+ DT overlay
+Message-ID: <ZQ3_8njijHqat5eV@gerhold.net>
+References: <20230922-apq8016-sbc-camera-dtso-v1-0-ce9451895ca1@gerhold.net>
+ <c835c404-33f3-4f5b-8a8a-819d4019e74b@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230922115116.2748804-2-srichara@win-platform-upstream01.qualcomm.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <c835c404-33f3-4f5b-8a8a-819d4019e74b@linaro.org>
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, Sep 22, 2023 at 09:47:07PM +0100, Bryan O'Donoghue wrote:
+> On 22/09/2023 16:11, Stephan Gerhold wrote:
+> > Follow the example of the recently added apq8016-sbc-usb-host.dtso and
+> > convert apq8016-sbc-d3-camera-mezzanine.dts to a DT overlay that can be
+> > applied on top of the apq8016-sbc.dtb. This makes it more clear that
+> > this is not a special type of DB410c but just an addon board that can
+> > be added on top.
+> > 
+> > I also prepended a patch that cleans up the node names a bit.
+> > 
+> > Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> > ---
+> > Stephan Gerhold (2):
+> >        arm64: dts: qcom: apq8016-sbc-d3-camera: Use more generic node names
+> >        arm64: dts: qcom: apq8016-sbc-d3-camera: Convert to DT overlay
+> > 
+> >   arch/arm64/boot/dts/qcom/Makefile                    |  5 +++--
+> >   ...nine.dts => apq8016-sbc-d3-camera-mezzanine.dtso} | 20 ++++++++++++++------
+> >   2 files changed, 17 insertions(+), 8 deletions(-)
+> > ---
+> > base-commit: 7236e86ce5c8198b01c30933c2334d07d877cf48
+> > change-id: 20230922-apq8016-sbc-camera-dtso-f247bea40f99
+> > 
+> > Best regards,
+> 
+> db410c doesn't ship with a bootloader that is capable of applying a dtbo
+> though, so this conversion mandates an updated or chainloaded bootloader or
+> out-of-tree kernel patch to support.
+> 
+> __adding__ is fine but, converting implies imposes a new requirement on the
+> bootchain.
+> 
+> Perhaps a middle road solution is to
+> 
+> - Add, not convert a standalone dtbo or
+> - Add a dtbo that includes the mezzanine dts but amends it
+> 
+> Option 2 for preference but, I'm not sure the dts syntax can be meaningfully
+> made to do that.
+> 
 
-On Fri, 22 Sep 2023 17:21:13 +0530, Sricharan R wrote:
-> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> 
-> IPQ5018 has tsens v1.0 block with 4 sensors and 1 interrupt.
-> 
-> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> ---
->  [v3] Added the tsens-ipq5018 as  new binding without rpm
-> 
->  Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
+With these patches the apq8016-sbc-d3-camera-mezzanine.dtb is still
+magically built, by running fdtoverlay on apq8016-sbc.dtb and applying
+the dtbo. It's applied during the build process so you don't need a
+bootloader that supports DTBOs.
 
-Acked-by: Rob Herring <robh@kernel.org>
+There is literally *no change* for you in terms of usage. :-)
 
+Thanks,
+Stephan
