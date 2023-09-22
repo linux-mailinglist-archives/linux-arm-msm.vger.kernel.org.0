@@ -2,129 +2,266 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D8E437AB618
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Sep 2023 18:35:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E50317AB61F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Sep 2023 18:36:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230223AbjIVQfq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Sep 2023 12:35:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54746 "EHLO
+        id S232058AbjIVQg3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Sep 2023 12:36:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229623AbjIVQfl (ORCPT
+        with ESMTP id S232391AbjIVQg1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Sep 2023 12:35:41 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 246FC114;
-        Fri, 22 Sep 2023 09:35:34 -0700 (PDT)
-Received: from g550jk.localnet (k10064.upc-k.chello.nl [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 2EA7DD0F4B;
-        Fri, 22 Sep 2023 16:35:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1695400532; bh=Trik2Fp3cY2CgD0hfjMvGBShjwznm5mwm8ZrD31Rg80=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=giDUjNsSKjxev//ztHAX9kkPdkuwYheyNNlkpF/jVatsZ5aFJkxSu9xaMq2CZ5+he
-         nLInojaidcckO2Mv36MboCSDCBC61Pe8AsLPh9GERGk+JtQ53J5ezw9qhr8Cs9e60L
-         TU8ZTXYgVHV51G4iy59TJIFtYeMUFh2dN5YIUqrA=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Matti =?ISO-8859-1?Q?Lehtim=E4ki?= <matti.lehtimaki@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Matti =?ISO-8859-1?Q?Lehtim=E4ki?= <matti.lehtimaki@gmail.com>
-Subject: Re: [PATCH 1/2] ARM: qcom: msm8226: Add rpm-master-stats node
-Date:   Fri, 22 Sep 2023 18:35:31 +0200
-Message-ID: <5709950.DvuYhMxLoT@z3ntu.xyz>
-In-Reply-To: <20230922003533.107835-2-matti.lehtimaki@gmail.com>
-References: <20230922003533.107835-1-matti.lehtimaki@gmail.com>
- <20230922003533.107835-2-matti.lehtimaki@gmail.com>
+        Fri, 22 Sep 2023 12:36:27 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CDAB1A8;
+        Fri, 22 Sep 2023 09:36:20 -0700 (PDT)
+Received: from [192.168.68.123] (unknown [177.98.21.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: koike)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 07D7166072C1;
+        Fri, 22 Sep 2023 17:36:13 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1695400578;
+        bh=StzjijuhgshkM93uzVvI9X0zOsS0vaEICTCqvv1AW6Y=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=YLzGYijeq7dOen6ZKmdrS0orLODfS40iAVBGl01OQSxYXzqIDRsuYqk0KHP78on5o
+         lSyooWiwt0qEvw7BSCcEh7p0iOHjOr1RQjRsLVLkiwdzgF1mAzWiKRMILJYGKY4MNx
+         9aB2txvmW0d4RG5rVulZ2JtyALEGtab6m2xxMBcPWM5h3xJG2ho31YDxih4N2ICu14
+         wet2oDaJGcKRdGcNezBpflp7Hqz5RKhkWsYTtgeIUxo3+iJ2+V+pLRVGhpaz9PoDvj
+         +mqi49QuEWnBjcopvkJiFJg4GaXtiYs6cTbvBVXyK8oiV+R7vucn137CF0sh/Bk2JZ
+         7SaWsky7yFosg==
+Message-ID: <f8e0caab-32f4-bae4-ef0d-1511c48d67e2@collabora.com>
+Date:   Fri, 22 Sep 2023 13:36:08 -0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v4 5/7] drm: ci: Update xfails
+Content-Language: en-US
+To:     Vignesh Raman <vignesh.raman@collabora.com>, airlied@gmail.com,
+        daniel@ffwll.ch
+Cc:     daniels@collabora.com, emma@anholt.net,
+        gustavo.padovan@collabora.com, linux-arm-msm@vger.kernel.org,
+        guilherme.gallo@collabora.com, sergi.blanch.torne@collabora.com,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        virtualization@lists.linux-foundation.org,
+        david.heidelberg@collabora.com, linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org
+References: <20230914085426.883255-1-vignesh.raman@collabora.com>
+ <20230914085426.883255-6-vignesh.raman@collabora.com>
+From:   Helen Koike <helen.koike@collabora.com>
+In-Reply-To: <20230914085426.883255-6-vignesh.raman@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Freitag, 22. September 2023 02:35:32 CEST Matti Lehtim=E4ki wrote:
-> Add rpm-master-stats node for MSM8226 and the required RPM MSG RAM
-> slices for memory access.
->=20
-> Signed-off-by: Matti Lehtim=E4ki <matti.lehtimaki@gmail.com>
+Hi o/
 
-Makes sense from what I can see in msm-3.10 msm8226-v2-pm.dtsi and the driv=
-er=20
-code.
-
-Reviewed-by: Luca Weiss <luca@z3ntu.xyz>
-
+On 14/09/2023 05:54, Vignesh Raman wrote:
+> Update amdgpu-stoney-fails, mediatek-mt8173-flakes,
+> mediatek-mt8173-fails, rockchip-rk3399-fails, rockchip-rk3399-flakes,
+> rockchip-rk3288-flakes, i915-cml-fails, i915-cml-flakes,
+> msm-apq8016-flakes files.
+> 
+> Add tests that fail sometimes into the *-flakes file and tests
+> that are failing into the *-fails file.
+> 
+> Signed-off-by: Helen Koike <helen.koike@collabora.com>
+> Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
 > ---
->  arch/arm/boot/dts/qcom/qcom-msm8226.dtsi | 32 ++++++++++++++++++++++++
->  1 file changed, 32 insertions(+)
->=20
-> diff --git a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
-> b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi index 44f3f0127fd7..98cc5ea637=
-e1
-> 100644
-> --- a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
-> +++ b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
-> @@ -56,6 +56,18 @@ pmu {
->  	rpm: remoteproc {
->  		compatible =3D "qcom,msm8226-rpm-proc", "qcom,rpm-proc";
->=20
-> +		master-stats {
-> +			compatible =3D "qcom,rpm-master-stats";
-> +			qcom,rpm-msg-ram =3D <&apss_master_stats>,
-> +					   <&mpss_master_stats>,
-> +					   <&lpss_master_stats>,
-> +					   <&pronto_master_stats>;
-> +			qcom,master-names =3D "APSS",
-> +					    "MPSS",
-> +					    "LPSS",
-> +					    "PRONTO";
-> +		};
-> +
->  		smd-edge {
->  			interrupts =3D <GIC_SPI 168 IRQ_TYPE_EDGE_RISING>;
->  			qcom,ipc =3D <&apcs 8 0>;
-> @@ -742,6 +754,26 @@ sram@fc190000 {
->  		rpm_msg_ram: sram@fc428000 {
->  			compatible =3D "qcom,rpm-msg-ram";
->  			reg =3D <0xfc428000 0x4000>;
-> +
-> +			#address-cells =3D <1>;
-> +			#size-cells =3D <1>;
-> +			ranges =3D <0 0xfc428000 0x4000>;
-> +
-> +			apss_master_stats: sram@150 {
-> +				reg =3D <0x150 0x14>;
-> +			};
-> +
-> +			mpss_master_stats: sram@b50 {
-> +				reg =3D <0xb50 0x14>;
-> +			};
-> +
-> +			lpss_master_stats: sram@1550 {
-> +				reg =3D <0x1550 0x14>;
-> +			};
-> +
-> +			pronto_master_stats: sram@1f50 {
-> +				reg =3D <0x1f50 0x14>;
-> +			};
->  		};
->=20
->  		tcsr_mutex: hwlock@fd484000 {
+> 
+> v2:
+>    - No changes
+> 
+> v3:
+>    - No changes
+> 
+> v4:
+>    - No changes
+> 
+> ---
+>   .../gpu/drm/ci/xfails/amdgpu-stoney-fails.txt    |  1 -
+>   drivers/gpu/drm/ci/xfails/i915-cml-fails.txt     |  1 -
+>   drivers/gpu/drm/ci/xfails/i915-cml-flakes.txt    |  2 ++
+>   drivers/gpu/drm/ci/xfails/i915-glk-flakes.txt    |  1 +
+>   .../gpu/drm/ci/xfails/mediatek-mt8173-fails.txt  |  2 --
+>   .../gpu/drm/ci/xfails/mediatek-mt8173-flakes.txt | 16 ++++++++++++++++
+>   drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt |  2 ++
+>   .../gpu/drm/ci/xfails/rockchip-rk3288-flakes.txt |  1 +
+>   .../gpu/drm/ci/xfails/rockchip-rk3399-fails.txt  |  4 ++--
+>   .../gpu/drm/ci/xfails/rockchip-rk3399-flakes.txt |  3 +++
+>   10 files changed, 27 insertions(+), 6 deletions(-)
+
+I found an error in the script that updates the flakes from a pipeline, 
+it was adding errors in *-flakes.txt instead of *-fails.txt even when it 
+was consistently failing.
+
+I have a partial fix where it works if -flakes.txt is empty (otherwise 
+it duplicates flakes and fails) 
+https://gitlab.freedesktop.org/-/snippets/7655
+
+Could you please regenerate these files with this new version of the script?
+Btw, I'm improving the script and I'll submit a RFC proposing to include 
+it as a handy tool in ci folder.
+
+Thanks,
+Helen
 
 
-
-
+> 
+> diff --git a/drivers/gpu/drm/ci/xfails/amdgpu-stoney-fails.txt b/drivers/gpu/drm/ci/xfails/amdgpu-stoney-fails.txt
+> index bd9392536e7c..58bfded8a3fc 100644
+> --- a/drivers/gpu/drm/ci/xfails/amdgpu-stoney-fails.txt
+> +++ b/drivers/gpu/drm/ci/xfails/amdgpu-stoney-fails.txt
+> @@ -1,7 +1,6 @@
+>   kms_addfb_basic@bad-pitch-65536,Fail
+>   kms_addfb_basic@bo-too-small,Fail
+>   kms_async_flips@invalid-async-flip,Fail
+> -kms_atomic@plane-immutable-zpos,Fail
+>   kms_atomic_transition@plane-toggle-modeset-transition,Fail
+>   kms_bw@linear-tiling-1-displays-2560x1440p,Fail
+>   kms_bw@linear-tiling-1-displays-3840x2160p,Fail
+> diff --git a/drivers/gpu/drm/ci/xfails/i915-cml-fails.txt b/drivers/gpu/drm/ci/xfails/i915-cml-fails.txt
+> index 6139b410e767..5f513c638beb 100644
+> --- a/drivers/gpu/drm/ci/xfails/i915-cml-fails.txt
+> +++ b/drivers/gpu/drm/ci/xfails/i915-cml-fails.txt
+> @@ -1,4 +1,3 @@
+> -kms_color@ctm-0-25,Fail
+>   kms_flip_scaled_crc@flip-32bpp-linear-to-64bpp-linear-downscaling,Fail
+>   kms_flip_scaled_crc@flip-32bpp-linear-to-64bpp-linear-upscaling,Fail
+>   kms_flip_scaled_crc@flip-32bpp-xtile-to-64bpp-xtile-downscaling,Fail
+> diff --git a/drivers/gpu/drm/ci/xfails/i915-cml-flakes.txt b/drivers/gpu/drm/ci/xfails/i915-cml-flakes.txt
+> index 0514a7b3fdb0..f06f1a5b16f9 100644
+> --- a/drivers/gpu/drm/ci/xfails/i915-cml-flakes.txt
+> +++ b/drivers/gpu/drm/ci/xfails/i915-cml-flakes.txt
+> @@ -7,6 +7,8 @@ kms_bw@linear-tiling-3-displays-3840x2160p
+>   kms_bw@linear-tiling-4-displays-1920x1080p
+>   kms_bw@linear-tiling-4-displays-2560x1440p
+>   kms_bw@linear-tiling-4-displays-3840x2160p
+> +kms_color@ctm-0-25
+> +kms_cursor_legacy@torture-move
+>   kms_draw_crc@draw-method-xrgb8888-render-xtiled
+>   kms_flip@flip-vs-suspend
+>   kms_flip_scaled_crc@flip-32bpp-ytile-to-64bpp-ytile-downscaling
+> diff --git a/drivers/gpu/drm/ci/xfails/i915-glk-flakes.txt b/drivers/gpu/drm/ci/xfails/i915-glk-flakes.txt
+> index fc41d13a2d56..3aee1f11ee90 100644
+> --- a/drivers/gpu/drm/ci/xfails/i915-glk-flakes.txt
+> +++ b/drivers/gpu/drm/ci/xfails/i915-glk-flakes.txt
+> @@ -8,6 +8,7 @@ kms_bw@linear-tiling-3-displays-3840x2160p
+>   kms_bw@linear-tiling-4-displays-1920x1080p
+>   kms_bw@linear-tiling-4-displays-2560x1440p
+>   kms_bw@linear-tiling-4-displays-3840x2160p
+> +kms_cursor_legacy@torture-bo
+>   kms_flip@blocking-wf_vblank
+>   kms_flip@wf_vblank-ts-check
+>   kms_flip@wf_vblank-ts-check-interruptible
+> diff --git a/drivers/gpu/drm/ci/xfails/mediatek-mt8173-fails.txt b/drivers/gpu/drm/ci/xfails/mediatek-mt8173-fails.txt
+> index 671916067dba..c8e64bbfd480 100644
+> --- a/drivers/gpu/drm/ci/xfails/mediatek-mt8173-fails.txt
+> +++ b/drivers/gpu/drm/ci/xfails/mediatek-mt8173-fails.txt
+> @@ -1,5 +1,4 @@
+>   kms_3d,Fail
+> -kms_addfb_basic@addfb25-bad-modifier,Fail
+>   kms_bw@linear-tiling-1-displays-1920x1080p,Fail
+>   kms_bw@linear-tiling-1-displays-2560x1440p,Fail
+>   kms_bw@linear-tiling-1-displays-3840x2160p,Fail
+> @@ -11,7 +10,6 @@ kms_bw@linear-tiling-3-displays-2560x1440p,Fail
+>   kms_bw@linear-tiling-3-displays-3840x2160p,Fail
+>   kms_color@pipe-A-invalid-gamma-lut-sizes,Fail
+>   kms_color@pipe-B-invalid-gamma-lut-sizes,Fail
+> -kms_force_connector_basic@force-connector-state,Fail
+>   kms_force_connector_basic@force-edid,Fail
+>   kms_force_connector_basic@force-load-detect,Fail
+>   kms_force_connector_basic@prune-stale-modes,Fail
+> diff --git a/drivers/gpu/drm/ci/xfails/mediatek-mt8173-flakes.txt b/drivers/gpu/drm/ci/xfails/mediatek-mt8173-flakes.txt
+> index e69de29bb2d1..9ed6722df2c2 100644
+> --- a/drivers/gpu/drm/ci/xfails/mediatek-mt8173-flakes.txt
+> +++ b/drivers/gpu/drm/ci/xfails/mediatek-mt8173-flakes.txt
+> @@ -0,0 +1,16 @@
+> +core_setmaster_vs_auth
+> +kms_addfb_basic@addfb25-bad-modifier
+> +kms_color@invalid-gamma-lut-sizes
+> +kms_cursor_legacy@cursor-vs-flip-atomic
+> +kms_cursor_legacy@cursor-vs-flip-legacy
+> +kms_force_connector_basic@force-connector-state
+> +kms_hdmi_inject@inject-4k
+> +kms_plane_scaling@plane-scaler-with-pixel-format-unity-scaling
+> +kms_plane_scaling@plane-upscale-with-modifiers-20x20
+> +kms_plane_scaling@plane-upscale-with-pixel-format-20x20
+> +kms_plane_scaling@plane-upscale-with-rotation-20x20
+> +kms_plane_scaling@planes-downscale-factor-0-25-upscale-20x20
+> +kms_plane_scaling@planes-downscale-factor-0-5-upscale-20x20
+> +kms_plane_scaling@planes-downscale-factor-0-75-upscale-20x20
+> +kms_prop_blob@invalid-set-prop
+> +kms_prop_blob@invalid-set-prop-any
+> diff --git a/drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt b/drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt
+> index 0e3b60d3fade..cd48a8c1d569 100644
+> --- a/drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt
+> +++ b/drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt
+> @@ -1,3 +1,5 @@
+> +kms_cursor_legacy@forked-bo
+> +kms_cursor_legacy@forked-move
+>   kms_force_connector_basic@force-connector-state
+>   kms_force_connector_basic@force-edid
+>   kms_force_connector_basic@force-load-detect
+> diff --git a/drivers/gpu/drm/ci/xfails/rockchip-rk3288-flakes.txt b/drivers/gpu/drm/ci/xfails/rockchip-rk3288-flakes.txt
+> index 45c54c75c899..081fe6f8d488 100644
+> --- a/drivers/gpu/drm/ci/xfails/rockchip-rk3288-flakes.txt
+> +++ b/drivers/gpu/drm/ci/xfails/rockchip-rk3288-flakes.txt
+> @@ -1,6 +1,7 @@
+>   kms_addfb_basic@addfb25-bad-modifier
+>   kms_cursor_crc@.*
+>   kms_flip@basic-flip-vs-wf_vblank
+> +kms_flip@blocking-wf_vblank
+>   kms_invalid_mode@int-max-clock,Crash
+>   kms_pipe_crc_basic@.*
+>   kms_properties@connector-properties-atomic,Crash
+> diff --git a/drivers/gpu/drm/ci/xfails/rockchip-rk3399-fails.txt b/drivers/gpu/drm/ci/xfails/rockchip-rk3399-fails.txt
+> index 6db08ba6b008..029a3be3164d 100644
+> --- a/drivers/gpu/drm/ci/xfails/rockchip-rk3399-fails.txt
+> +++ b/drivers/gpu/drm/ci/xfails/rockchip-rk3399-fails.txt
+> @@ -2,14 +2,13 @@ kms_color@legacy-gamma,Fail
+>   kms_color@pipe-A-legacy-gamma,Fail
+>   kms_color@pipe-B-legacy-gamma,Fail
+>   kms_flip@basic-flip-vs-wf_vblank,Fail
+> -kms_flip@blocking-wf_vblank,Fail
+>   kms_flip@dpms-vs-vblank-race,Fail
+>   kms_flip@flip-vs-absolute-wf_vblank,Fail
+>   kms_flip@flip-vs-absolute-wf_vblank-interruptible,Fail
+>   kms_flip@flip-vs-blocking-wf-vblank,Fail
+>   kms_flip@flip-vs-panning,Fail
+>   kms_flip@flip-vs-panning-interruptible,Fail
+> -kms_flip@flip-vs-wf_vblank-interruptible,Fail
+> +kms_flip@modeset-vs-vblank-race,Fail
+>   kms_flip@plain-flip-fb-recreate,Fail
+>   kms_flip@plain-flip-fb-recreate-interruptible,Fail
+>   kms_flip@plain-flip-ts-check,Fail
+> @@ -35,3 +34,4 @@ kms_plane_multiple@atomic-pipe-B-tiling-none,Fail
+>   kms_plane_multiple@tiling-none,Fail
+>   kms_prime@basic-crc,Fail
+>   kms_rmfb@close-fd,Fail
+> +kms_universal_plane@universal-plane-pipe-B-functional,Fail
+> diff --git a/drivers/gpu/drm/ci/xfails/rockchip-rk3399-flakes.txt b/drivers/gpu/drm/ci/xfails/rockchip-rk3399-flakes.txt
+> index 4c0539b4beaf..869426a02cbd 100644
+> --- a/drivers/gpu/drm/ci/xfails/rockchip-rk3399-flakes.txt
+> +++ b/drivers/gpu/drm/ci/xfails/rockchip-rk3399-flakes.txt
+> @@ -1,7 +1,10 @@
+>   
+> +kms_color@gamma
+>   kms_cursor_crc@.*
+> +kms_flip@blocking-wf_vblank
+>   kms_flip@dpms-vs-vblank-race-interruptible
+>   kms_flip@flip-vs-expired-vblank
+> +kms_flip@flip-vs-wf_vblank-interruptible
+>   kms_flip@modeset-vs-vblank-race-interruptible
+>   kms_pipe_crc_basic@.*
+>   kms_pipe_crc_basic@compare-crc-sanitycheck-pipe-A
