@@ -2,59 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 467427AB7E4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Sep 2023 19:42:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 173887AB7B4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Sep 2023 19:33:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229843AbjIVRmX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Sep 2023 13:42:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47066 "EHLO
+        id S232770AbjIVRdk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Sep 2023 13:33:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230053AbjIVRmW (ORCPT
+        with ESMTP id S233462AbjIVRcw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Sep 2023 13:42:22 -0400
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DCF194
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Sep 2023 10:42:14 -0700 (PDT)
-Received: by mail-ot1-x329.google.com with SMTP id 46e09a7af769-6c4c594c0eeso476496a34.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Sep 2023 10:42:14 -0700 (PDT)
+        Fri, 22 Sep 2023 13:32:52 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB7AA10F9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Sep 2023 10:32:27 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id d9443c01a7336-1c465d59719so20699525ad.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Sep 2023 10:32:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1695404534; x=1696009334; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1695403947; x=1696008747; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=aju3+JSf6eGUIv+LcbKwNlrE4eQbXi+VM+zVoGclrt0=;
-        b=IDfbgNZxe2wGlp4dphr/NIwpb4Fi76oZ7dicLJyK52GUDOJHBljWuoM57DtqMU8D99
-         /h/Wacf72gDdfu3yT02N28QDBV0T9WEWPBQ5yXu+yn21FnrGegWRODzOx0Du1iPPfiiU
-         bJL0ZqTYwM7reW2uU+qFUManJ2FRY9z+hrBQY=
+        bh=gDHDeV42Frwj7XYTpJqGl5ND8N8KbUFLGf1moqK0weE=;
+        b=ba1nxS/RqQHudZO4/x3fannYl8NGDAPfxRiqZFu3wSv2oJcnNc9A/3yciGOdP3JbwZ
+         v4WVBTBbRBwcsS0i16jxBNbjUAsLJigQwnBtmwlklDwOVaz1dW3l875ih6BrEIj3GH50
+         LSlMP23XgZd3+7BZDEjx/cnfCqOV14b7g59NQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695404534; x=1696009334;
+        d=1e100.net; s=20230601; t=1695403947; x=1696008747;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=aju3+JSf6eGUIv+LcbKwNlrE4eQbXi+VM+zVoGclrt0=;
-        b=u4F0GOYmAg29L8ptpg+9gf4yyuajtBCvToz3dH2IXRY3/RNOEPlGG6UR5faN64+k5T
-         Mb5EZy9W7UQAdpn0i+nGjdJtJ4YpzvqctbYaHyB2pa1XoKgr1usIJlDSi07J0xaNnVM+
-         D5j2h8XDPUYamH2lH5w60/2EuMa8brjBcel+DFerhgfpBFYkF4ewUx8Ty98gt9tihwbn
-         hx/ZZdI0l0OD3Eg4CCSOE1IW0twyuMXGAmoBCkc3jJk5Tw/VYKg+FV8Qx93Wl5wTGJwa
-         M3VUfq3FOsegTws33DNII82oTvlHszjfRNbeKb/ayT/bu6aBrKLAgpcGZ+sWxvVJW7sq
-         mEwA==
-X-Gm-Message-State: AOJu0Yw4pQMFIf3FFC6wKZu/wk8k+lkBGxErcdcplaqAUQeywdJkRlU/
-        BTgNg4j/0p+RI01vpdDFFe99Jg==
-X-Google-Smtp-Source: AGHT+IEB7Uya0pjQSb5rvbW6cOeUYseQfbC+/qu/95o4dNfLB8KpYlxWTd9ON1NPF1LX/xhEFubnCA==
-X-Received: by 2002:a05:6358:5906:b0:143:935a:a096 with SMTP id g6-20020a056358590600b00143935aa096mr389953rwf.2.1695404533707;
-        Fri, 22 Sep 2023 10:42:13 -0700 (PDT)
+        bh=gDHDeV42Frwj7XYTpJqGl5ND8N8KbUFLGf1moqK0weE=;
+        b=trruoENlFgBJgz77biTpbHkHBm7tgn7myg0iPHHsAfOPs5bc3pc6wzFJ+ZUoqWWMXt
+         SB40z0axE+zuy+QUr0thwg8IvJFn6CQyzb9+MDFMAXRW5VfPQQD6d+Q4YtpKVMXI5L0v
+         fld+2B3KSEsSJ8yb/MYfthCuzbNpl41m19X/08pHS87ky7PUSlhXXXAoFsne8p/aQFbr
+         ITFT5f2Earq4lanKra9GOnTivQl84nSRMA/hgdvQ4Z6q5/nJRYg82UXBpuVae5W8cHgw
+         own4PQyzEjufBc7iZmvgJ08qWH+kk1RNjXECdgiiLW5i3DmMKSEBfXKbi+BjLFIrsBb0
+         YyGA==
+X-Gm-Message-State: AOJu0YyypGq4g0nmQ+J9hwkqjyv6Fkyzat1ohuE6NXIEW6FYQdZgPPKk
+        Di3vy9Cyqm7TTsh7kf9OWwb7ow==
+X-Google-Smtp-Source: AGHT+IEC3lNqd6k67JPujYxNrx9QHnlj6kWd/En5u8yIwMg5BjeP/3s86llo86YUSFuXOu6sjLAyYg==
+X-Received: by 2002:a17:902:e802:b0:1c5:efd1:82b6 with SMTP id u2-20020a170902e80200b001c5efd182b6mr188724plg.30.1695403947353;
+        Fri, 22 Sep 2023 10:32:27 -0700 (PDT)
 Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id y10-20020a63b50a000000b0057412d84d25sm3385998pge.4.2023.09.22.10.42.13
+        by smtp.gmail.com with ESMTPSA id x4-20020a170902ec8400b001c5f62a639asm67076plg.196.2023.09.22.10.32.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Sep 2023 10:42:13 -0700 (PDT)
+        Fri, 22 Sep 2023 10:32:25 -0700 (PDT)
 From:   Kees Cook <keescook@chromium.org>
 To:     David Airlie <airlied@gmail.com>
-Cc:     Kees Cook <keescook@chromium.org>, Zack Rusin <zackr@vmware.com>,
-        VMware Graphics Reviewers 
-        <linux-graphics-maintainer@vmware.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel@lists.freedesktop.org, Emma Anholt <emma@anholt.net>,
-        Evan Quan <evan.quan@amd.com>,
+Cc:     Kees Cook <keescook@chromium.org>, Emma Anholt <emma@anholt.net>,
+        Melissa Wen <mwen@igalia.com>, Daniel Vetter <daniel@ffwll.ch>,
+        dri-devel@lists.freedesktop.org, Evan Quan <evan.quan@amd.com>,
         Alex Deucher <alexander.deucher@amd.com>,
         =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
         "Pan, Xinhui" <Xinhui.Pan@amd.com>,
@@ -83,7 +80,9 @@ Cc:     Kees Cook <keescook@chromium.org>, Zack Rusin <zackr@vmware.com>,
         David Airlie <airlied@redhat.com>,
         Gerd Hoffmann <kraxel@redhat.com>,
         Gurchetan Singh <gurchetansingh@chromium.org>,
-        Chia-I Wu <olvaffe@gmail.com>, Melissa Wen <mwen@igalia.com>,
+        Chia-I Wu <olvaffe@gmail.com>, Zack Rusin <zackr@vmware.com>,
+        VMware Graphics Reviewers 
+        <linux-graphics-maintainer@vmware.com>,
         Nathan Chancellor <nathan@kernel.org>,
         Nick Desaulniers <ndesaulniers@google.com>,
         Tom Rix <trix@redhat.com>, Le Ma <le.ma@amd.com>,
@@ -100,32 +99,32 @@ Cc:     Kees Cook <keescook@chromium.org>, Zack Rusin <zackr@vmware.com>,
         freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
         virtualization@lists.linux-foundation.org, llvm@lists.linux.dev,
         linux-hardening@vger.kernel.org
-Subject: [PATCH 8/9] drm/vmwgfx: Annotate struct vmw_surface_dirty with __counted_by
-Date:   Fri, 22 Sep 2023 10:32:13 -0700
-Message-Id: <20230922173216.3823169-8-keescook@chromium.org>
+Subject: [PATCH 9/9] drm/v3d: Annotate struct v3d_perfmon with __counted_by
+Date:   Fri, 22 Sep 2023 10:32:14 -0700
+Message-Id: <20230922173216.3823169-9-keescook@chromium.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230922173110.work.084-kees@kernel.org>
 References: <20230922173110.work.084-kees@kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1369; i=keescook@chromium.org;
- h=from:subject; bh=arqXb+Ta6Sc7/P6cgbiuTW33qm7tl3AbrpWLIpWMOrs=;
- b=owEBbQKS/ZANAwAKAYly9N/cbcAmAcsmYgBlDc+eMheJSZWlkxEjVkQYSxOb48cD+nN4OVb7V
- LKQ+3uUqo6JAjMEAAEKAB0WIQSlw/aPIp3WD3I+bhOJcvTf3G3AJgUCZQ3PngAKCRCJcvTf3G3A
- JrX8D/4u4mGTNY0H31raYIAy39e0MQyr+8F7lCaJtmz2p55bHTGxLREiFkYdiEpuailORE0wwsW
- BdlQDhRjLTf2KU9T7kldf6gcsBqFx5GS03UQDFirRowApSq5fh8IhxpEuGCuARDeUQrxNtmKCN0
- kN+bcH9BoSyxbEJQzpBBCbp5RMSt4XXDDkDi3oSsbZuZRkPmbszcp8iXrqUoFv7S/Vb8X5tGSRw
- nMO+fGglPvpNerLuaODEVbqAcj6XsI5FnEUPAbqIRdOyr/vAf4ZrHXXTeukSN6uOcb1w6XAw9GC
- 4wnO7W4eW8CaLB6Kn2OhET6y8+h69ft05VnFFrnCTVxxJScjLTXrSCCsV544YFnE9eWFcjVivpW
- F3KuWexvi43Nc986ga140ka16uCaP//Thnt3s311iQsr5hvWJH4fkl32zdBPXWCwGX4ceRWSch2
- JEogxta26Yvy5CIJRHdU1z5humCdNzFVvMxbgMwQIRSKyKG1M7mMT/nBOIMfytjgY8S0vaBALVu
- EciVOC1nl86GXTm1b+MB9R8ZKZyOZPrX7vK8PyRCASDUnCN/37sg23Cq5Aqn4UUJ+sZeFPAF+11
- o0r5FyrPrmPW3O3hQUprUGrQsd68XMRpXTFcnKOPsEaG9G23VqHiDSPPILF+sczZ20HKQ+LMyhP 63vfZbPCZqHgx8g==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1250; i=keescook@chromium.org;
+ h=from:subject; bh=SnNIrp1FHi4lB0nFNYirvVw5/7/jvEw6i/lP/RJRA6A=;
+ b=owEBbQKS/ZANAwAKAYly9N/cbcAmAcsmYgBlDc+e3L4G5PZF7SaBMxHwj62ZCFc4FzMHTqhT9
+ tfDr8MgF6uJAjMEAAEKAB0WIQSlw/aPIp3WD3I+bhOJcvTf3G3AJgUCZQ3PngAKCRCJcvTf3G3A
+ JnkWEACXtjUq16fS873Hx8yyB8djpvoH6XVS+/OuSPCo2t7GIoIpy1zBkPiH2Ei14JMNlHdMGGy
+ 8yOKrl1rGoQOP3jjY04cxJWy1h5uFFHAxW6VGYIBsbbFRIqAXuVC4UKEN+qYZ97MTJmwc0eHVdX
+ Z441sTRctCLNHoMhSAQn6O3TWU2+/QOV8cz2Ls8cuKVLErRruCIa6OzHgGSnhC5Rq1OWXZyJNiQ
+ 1aWVoVn67WL0VqIe3RW1cZvMnlWNTbgZP1DUee1eLb7MmfT7XMLkW6Jz/8rTfAeSUSsLhxKbIcO
+ ZpXIWrrfcefYP4Dz3BMU6z9OLUAHdpdLEnnvQyDviUPLmbRyS5mdJpKrC9XT7FTANcayQSTonRu
+ M12CaA8ASNf3ak1iu7o4DhTMZeHyb2Wpz2kwj4Nyg6YzYpRNC2gtRkBRdxIJn60r90kd27Yxl7Y
+ Hb+w/DnzIvunJlaIiKWIEE9lJfyZWF2fgi9gcXtI26HlMj/Jn9jmdHnLwh96IqxloMmooRdvULL
+ NK01ICP7mB/XJ36KSBZv5ss3B5LUV9OwyC4T2xpvqKmG/iSr65/EUsg0AYInGQ5v0STKkN7TYFV
+ abYOWvuq0o/pltuNX+Gpbsn9+VvBaxhF2CeSHtOP8ARhgkctRhQJ2+OhqQ35i3SIQBBSkeCOxlL 2y59f7fhlJo6LCg==
 X-Developer-Key: i=keescook@chromium.org; a=openpgp; fpr=A5C3F68F229DD60F723E6E138972F4DFDC6DC026
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -138,33 +137,33 @@ their accesses bounds-checked at run-time checking via CONFIG_UBSAN_BOUNDS
 (for array indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family
 functions).
 
-As found with Coccinelle[1], add __counted_by for struct vmw_surface_dirty.
+As found with Coccinelle[1], add __counted_by for struct v3d_perfmon.
 
 [1] https://github.com/kees/kernel-tools/blob/trunk/coccinelle/examples/counted_by.cocci
 
-Cc: Zack Rusin <zackr@vmware.com>
-Cc: VMware Graphics Reviewers <linux-graphics-maintainer@vmware.com>
+Cc: Emma Anholt <emma@anholt.net>
+Cc: Melissa Wen <mwen@igalia.com>
 Cc: David Airlie <airlied@gmail.com>
 Cc: Daniel Vetter <daniel@ffwll.ch>
 Cc: dri-devel@lists.freedesktop.org
 Signed-off-by: Kees Cook <keescook@chromium.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_surface.c | 2 +-
+ drivers/gpu/drm/v3d/v3d_drv.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_surface.c b/drivers/gpu/drm/vmwgfx/vmwgfx_surface.c
-index 5db403ee8261..2d1d857f99ae 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_surface.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_surface.c
-@@ -77,7 +77,7 @@ struct vmw_surface_offset {
- struct vmw_surface_dirty {
- 	struct vmw_surface_cache cache;
- 	u32 num_subres;
--	SVGA3dBox boxes[];
-+	SVGA3dBox boxes[] __counted_by(num_subres);
+diff --git a/drivers/gpu/drm/v3d/v3d_drv.h b/drivers/gpu/drm/v3d/v3d_drv.h
+index 7f664a4b2a75..106454f28956 100644
+--- a/drivers/gpu/drm/v3d/v3d_drv.h
++++ b/drivers/gpu/drm/v3d/v3d_drv.h
+@@ -59,7 +59,7 @@ struct v3d_perfmon {
+ 	 * values can't be reset, but you can fake a reset by
+ 	 * destroying the perfmon and creating a new one.
+ 	 */
+-	u64 values[];
++	u64 values[] __counted_by(ncounters);
  };
  
- static void vmw_user_surface_free(struct vmw_resource *res);
+ struct v3d_dev {
 -- 
 2.34.1
 
