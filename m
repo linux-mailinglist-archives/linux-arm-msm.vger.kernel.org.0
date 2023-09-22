@@ -2,176 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 328097AAA5C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Sep 2023 09:35:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9BA1C7AAC6E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Sep 2023 10:18:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231262AbjIVHfT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Sep 2023 03:35:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40562 "EHLO
+        id S232372AbjIVIMT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Sep 2023 04:12:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231489AbjIVHfS (ORCPT
+        with ESMTP id S232335AbjIVILt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Sep 2023 03:35:18 -0400
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.164])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44507C2;
-        Fri, 22 Sep 2023 00:35:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1695368108; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=n9wVQ3pfoBvTx0TdZ/TxHP6hT3lhos3psc+qkOV0quLn7NsePI0XqchVGr0/LnuMrk
-    LLikuqSUkfpVCKWyUItXDvTpbJHUKwVDmqLfmYG+g0Fr2iZnfT1T2zPL5gJUbK0fuQrv
-    6vaXu8TEtsp52iupfMy1RuHjpk56g6rlGya42CgYGNJvvIzB5e2lBKpRKPglTLW+46Ib
-    RpT+L/5k+hNnSjw0KcAsML5ElpNGx4WsnBaJZfyFkHYx5TZEea99pUvS5Zsa8bk38hgn
-    2PyciDMH5qgqQxL9NccVF6tuTEtWIy7jNumuwpEXW82SI4/qmzYQexo0d6YHz0rOFS+E
-    WSHA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1695368108;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=D5ImVpCLkXISi+bVaGBTi//vA7N/Q4GRoHQQ/PDmcPs=;
-    b=QfB6OuDjfOB6mHRQvBtWHUnpuFYUjR4G8sqfu6t92UvpeOugOKv5k5Fd9YiX55g/yK
-    WAAxdJlVPDOY8aFEf2y7kZcuHMW2TgHF69O0vSSEIy9yvhscrRQcTK8O+uMRudu0E4zY
-    KPf/yBcBQ6rF+lcEIsOqDzxgpPbQC8vYDv71dGDMacaUxr/anDii5pVyDIy1B5UGmYyk
-    +iGunZH2EtwR4Sr+FPuJuuHD3YG/gZv/BWflYXAZZoWgkpaDYBmg6ybiuoe4nAETCNrX
-    jsMgugHQjs+EtFIPB4JQ+LeR4uPaP7qAuWzrRfXxuRF7OPvS111pxb57Vh750wH4iUtV
-    o/0A==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1695368108;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=D5ImVpCLkXISi+bVaGBTi//vA7N/Q4GRoHQQ/PDmcPs=;
-    b=XJ1sqLV1E8Dj637EjSGDAqpbhqAs8QRS2vB7zIme/lMYXkameCECFzaOqPT29LfUig
-    auZpEtc5iPtjOp8kalhSaHohNOHUhZkZyTBQH08nolPI29bXonEul+56shpYjXZ3c3BT
-    18d0L98XjXqqG+sM0B0UoCXU6rjrlN+MFVb8w8WVw/318u1cghWWRqVPbIEwcNU2C6T4
-    CmpSA9JUgbuDxRzcKzijNUcMe5WdbJF+syRFEb10MjSS5DMVXjBDTOSJyhczxqHZ633h
-    4qCAizgCJKwHgK9nIuhC3uvom9Yset0nJHhkTD3uk874JJF9YX+mYHpg7oQQtibc69qG
-    3prA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1695368108;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=D5ImVpCLkXISi+bVaGBTi//vA7N/Q4GRoHQQ/PDmcPs=;
-    b=EzxYb4tdhahf+ur3fB66cA1oawZQAIYRED3kEOoCLax7JuSldBrhdcjlKFzZN2poAq
-    ICAF0V7s5lEL2IWDy2Bw==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA8Z/h"
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.8.2 DYNA|AUTH)
-    with ESMTPSA id R04c57z8M7Z8Sa3
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Fri, 22 Sep 2023 09:35:08 +0200 (CEST)
-Date:   Fri, 22 Sep 2023 09:35:00 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 2/3] soc: qcom: rmtfs: Support discarding guard pages
-Message-ID: <ZQ1DmSRIe56WQmnK@gerhold.net>
-References: <20230920-rmtfs-mem-guard-pages-v3-0-305b37219b78@quicinc.com>
- <20230920-rmtfs-mem-guard-pages-v3-2-305b37219b78@quicinc.com>
- <ZQyFliFYV7dUwGJg@gerhold.net>
- <j5ivvbjprgdcekujzjiobk7gpoaz3jxpnda5dsgoh6f4hsn5id@3ug5i74ubkqf>
+        Fri, 22 Sep 2023 04:11:49 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30898A9;
+        Fri, 22 Sep 2023 01:11:43 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38M5MT1D025494;
+        Fri, 22 Sep 2023 08:11:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=6uYlX5IYxZoYeDr9ljzkBrhqLj6FcLpxy/K98TiwgNI=;
+ b=n1JBoGxzdwCz8CEMZZL7i35tQ5B//k6wq7FLwhu3lcNVQy9pXcO8adtdA/jWfvW9SQhO
+ X0argvouRZzX7MJUmtXVnSKU4/3uhUREzhJMXe1t2ICKQfEh/uz+lRMzDS9D41FcKoh4
+ wmdJ7ULNv9bcH7aQhaOMmwSDghj7HCl6p2l/tixG06ROL0k2eCqjFFWCvWlxRjInf4QE
+ sQcfwTNZSUzJncVf6iyYvp1jlF7FeKOoCrDdkthlgI0s32aIYu3laO7TFBaBAX5HunUh
+ nF9JWwaNTnPbdH+yuGJNHxJZmkKOme9BOmysfbbPqjpYTTC8pTcRlSfoEOZJ9lzJQAdM 5A== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t8u5n1c7v-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 22 Sep 2023 08:11:09 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38M8B82j031955
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 22 Sep 2023 08:11:08 GMT
+Received: from tengfan2-gv.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.36; Fri, 22 Sep 2023 01:10:56 -0700
+From:   Tengfei Fan <quic_tengfan@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <tglx@linutronix.de>, <maz@kernel.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <catalin.marinas@arm.com>, <will@kernel.org>
+CC:     <geert+renesas@glider.be>, <arnd@arndb.de>,
+        <neil.armstrong@linaro.org>, <nfraprado@collabora.com>,
+        <rafal@milecki.pl>, <peng.fan@nxp.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <quic_tsoni@quicinc.com>,
+        <quic_shashim@quicinc.com>, <quic_kaushalk@quicinc.com>,
+        <quic_tdas@quicinc.com>, <quic_tingweiz@quicinc.com>,
+        <quic_aiquny@quicinc.com>, <kernel@quicinc.com>,
+        Tengfei Fan <quic_tengfan@quicinc.com>
+Subject: [PATCH v4 0/6] soc: qcom: Add uart console support for SM4450
+Date:   Fri, 22 Sep 2023 16:10:20 +0800
+Message-ID: <20230922081026.2799-1-quic_tengfan@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <j5ivvbjprgdcekujzjiobk7gpoaz3jxpnda5dsgoh6f4hsn5id@3ug5i74ubkqf>
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: GcvvbLXYa5CucNMiTAmDfHkJzmXQGE2u
+X-Proofpoint-GUID: GcvvbLXYa5CucNMiTAmDfHkJzmXQGE2u
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-09-22_06,2023-09-21_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=635
+ priorityscore=1501 malwarescore=0 spamscore=0 bulkscore=0 impostorscore=0
+ lowpriorityscore=0 mlxscore=0 clxscore=1015 adultscore=0 phishscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2309220067
 X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-eOn Thu, Sep 21, 2023 at 07:51:42PM -0700, Bjorn Andersson wrote:
-> On Thu, Sep 21, 2023 at 08:04:06PM +0200, Stephan Gerhold wrote:
-> > On Wed, Sep 20, 2023 at 07:37:31PM -0700, Bjorn Andersson wrote:
-> > > In some configurations, the exact placement of the rmtfs shared memory
-> > > region isn't so strict. The DeviceTree author can then choose to use the
-> > > "size" property and rely on the OS for placement (in combination with
-> > > "alloc-ranges", if desired).
-> > > 
-> > > But on some platforms the rmtfs memory region may not be allocated
-> > > adjacent to regions allocated by other clients. Add support for
-> > > discarding the first and last 4k block in the region, if
-> > > qcom,use-guard-pages is specified in DeviceTree.
-> > > 
-> > > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> > > ---
-> > >  drivers/soc/qcom/rmtfs_mem.c | 9 +++++++++
-> > >  1 file changed, 9 insertions(+)
-> > > 
-> > > diff --git a/drivers/soc/qcom/rmtfs_mem.c b/drivers/soc/qcom/rmtfs_mem.c
-> > > index f83811f51175..83bba9321e72 100644
-> > > --- a/drivers/soc/qcom/rmtfs_mem.c
-> > > +++ b/drivers/soc/qcom/rmtfs_mem.c
-> > > @@ -200,6 +200,15 @@ static int qcom_rmtfs_mem_probe(struct platform_device *pdev)
-> > >  	rmtfs_mem->client_id = client_id;
-> > >  	rmtfs_mem->size = rmem->size;
-> > >  
-> > > +	/*
-> > > +	 * If requested, discard the first and last 4k block in order to ensure
-> > > +	 * that the rmtfs region isn't adjacent to other protected regions.
-> > > +	 */
-> > > +	if (of_property_present(node, "qcom,use-guard-pages")) {
-> > 
-> > I think of_property_read_bool() would be more fitting here. Right now
-> > of_property_present() is just a wrapper around of_property_read_bool().
-> > Semantically reading a bool fits better here though. :-)
-> > 
-> 
-> Are you saying that you would prefer this to be a bool, so hat you can
-> give it a "false" value? Or you are simply saying "it walks like a
-> boolean, quacks like a boolean, let's use the boolean accessor"?
-> 
+This series add base description of UART, TLMM, RPMHCC, GCC and RPMh PD
+nodes which helps SM4450 boot to shell with console on boards with this
+SoC.
 
-The latter. I would expect that of_property_present() is used for
-properties which usually have a value, while of_property_read_bool()
-is used for pure bool values which can be present or not but must not
-have a value. I think a "bool" in terms of DT is simply a present or
-not-present property without any value?
+Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+---
+This patch series depends on below patch series:
+"[PATCH v2 0/4] clk: qcom: Add support for GCC and RPMHCC on SM4450"
+https://lore.kernel.org/linux-arm-msm/20230909123431.1725728-1-quic_ajipan@quicinc.com/
+"[PATCH v4 0/2] pinctl: qcom: Add SM4450 pinctrl driver"
+https://lore.kernel.org/linux-arm-msm/20230920082102.5744-1-quic_tengfan@quicinc.com/
 
-For example consider
+v3 -> v4:
+  - adjustment the sequence of property and property-names
+  - update 0 to 0x0 for reg params
+  - remove unrelated change
+  - separate SoC change and board change
 
-  regulator-min-microvolts = <4200000000>;
-  regulator-always-on;
+v2 -> v3:
+  - fix dtbs_check warning
+  - remove interconnect, iommu, scm and tcsr related code
+  - rearrangement dt node
+  - remove smmu, scm and tcsr related documentation update
+  - enable CONFIG_SM_GCC_4450 in defconfig related patch
 
-Then I would expect
+v1 -> v2:
+  - setting "qcom,rpmh-rsc" compatible to the first property
+  - keep order by unit address
+  - move tlmm node into soc node
+  - update arm,smmu.yaml
+  - add enable pinctrl and interconnect defconfig patches
+  - remove blank line
+  - redo dtbs_check check
 
-  - of_property_present(..., "regulator-min-microvolts"), but
-  - of_property_read_bool(..., "regulator-always-on")
+previous discussion here:
+[1] v3: https://lore.kernel.org/linux-arm-msm/20230920082102.5744-1-quic_tengfan@quicinc.com
+[2] v2: https://lore.kernel.org/linux-arm-msm/20230915021509.25773-1-quic_tengfan@quicinc.com
+[3] v1: https://lore.kernel.org/linux-arm-msm/20230908065847.28382-1-quic_tengfan@quicinc.com
 
-Does that make sense? :D
+Ajit Pandey (1):
+  arm64: dts: qcom: sm4450: Add apps_rsc and cmd_db node
 
-> > Feel free to fix that up while applying.
-> > 
-> > FWIW I don't really have an opinion if "qcom,use-guard-pages" is a good
-> > way to describe this in the DT. For the implementation side feel free to
-> > add my
-> > 
-> 
-> Right, I don't think I commented on your suggestion to make the size of
-> the guard page configurable. I am not aware of any current or upcoming
-> reasons for adding such complexity, so I'd simply prefer to stick with a
-> boolean. Should that need arise, I think this model would allow
-> extension to express that.
-> 
+Tengfei Fan (5):
+  dt-bindings: interrupt-controller: qcom,pdc: document qcom,sm4450-pdc
+  arm64: dts: qcom: sm4450: Add RPMH and Global clock
+  arm64: dts: qcom: add uart console support for SM4450
+  arm64: dts: qcom: sm4450-qrd: add QRD4450 uart support
+  arm64: defconfig: enable clock controller and pinctrl
 
-I must admit I forgot that I suggested this until now. :')
-I don't see a use case for a different "guard size" either so I think
-it's fine to have it as a bool.
+ .../interrupt-controller/qcom,pdc.yaml        |   1 +
+ arch/arm64/boot/dts/qcom/sm4450-qrd.dts       |  19 +++-
+ arch/arm64/boot/dts/qcom/sm4450.dtsi          | 107 ++++++++++++++++++
+ arch/arm64/configs/defconfig                  |   2 +
+ 4 files changed, 127 insertions(+), 2 deletions(-)
 
-Thanks,
-Stephan
+
+base-commit: 940fcc189c51032dd0282cbee4497542c982ac59
+-- 
+2.17.1
+
