@@ -2,182 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D94A7AB82C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Sep 2023 19:51:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A7097AB8AB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Sep 2023 19:56:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233519AbjIVRv1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Sep 2023 13:51:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42900 "EHLO
+        id S233742AbjIVR4W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Sep 2023 13:56:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233216AbjIVRvJ (ORCPT
+        with ESMTP id S233901AbjIVR4C (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Sep 2023 13:51:09 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29C54C6;
-        Fri, 22 Sep 2023 10:50:48 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38MHKlot017535;
-        Fri, 22 Sep 2023 17:49:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Tq6gJJYKIaOR288NhHGipRUExs1TJ3M3G1f6vr3gs7Q=;
- b=l0Y0qgLJaJOsjU3zSDtYSahlztNYDtgEoMnCKSDcRh3/0OXX2hDi429f0czi5vjWlfb+
- Hl65x3gq8GxRgmqeQhdBDsg3zj3jLVVR3mJNaaxUKesX6VM99QezrNpAGsfjmtd4g3V7
- 5OOJpW7aho/tL5OQyOZ+gkNcdRM1InLlWdpJ8DGTqAVSueK/7LKr2+utN4VXwueqjDWV
- 5THLkxGFY39R18qt7M8sLrXGJ0hrbyzbcrcO85msuIgSiEzEAEaVthQRcRkY6MOjLpze
- uPeOkt/PRCQvk7sxUjsdLlqrTMM5hotdv+nVtDxk6DKX6RqWbUP5E+vuw4UrMX76gotV dQ== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t9f8b038p-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 22 Sep 2023 17:49:35 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38MHnYM2010168
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 22 Sep 2023 17:49:34 GMT
-Received: from [10.110.112.217] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Fri, 22 Sep
- 2023 10:49:33 -0700
-Message-ID: <752176d8-23f4-4689-8bf4-db27f153fd39@quicinc.com>
-Date:   Fri, 22 Sep 2023 10:49:23 -0700
+        Fri, 22 Sep 2023 13:56:02 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC1032129
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Sep 2023 10:53:43 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id d9443c01a7336-1c4586b12feso21026145ad.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Sep 2023 10:53:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1695405223; x=1696010023; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=F/L92X22dJhyhtQ8lDKApFNV7vkLUEgyD7DW61AIGrg=;
+        b=R9xyZN9cQTzCHh1zGdoKQao8yI/eVpTF6uJsDtWMYY9GWDxthUzvTpDgsXfpkWgh/V
+         /YdrSM1hp+eLqX2UPVgWaL9dStDGnatO9ahE+XSJD1OT50KM+lT5TJGelJE5MTBTX30t
+         wdulrdqgzfVkdLnMjJs0YdPshpQ7OKZseb+YY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695405223; x=1696010023;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=F/L92X22dJhyhtQ8lDKApFNV7vkLUEgyD7DW61AIGrg=;
+        b=mrNJlhRqkyhSvBGLeegMSq9a+FDTIKPKSBilqzmbMl1dRe0Zt0C2NMIhS4IgQqnb0y
+         ENkSRcJMWP8QF0amjjp/9TulpvUscB0KmRbqnzBgehTXY57bgbgIxPifPFlaI1A29RVx
+         20K3kBJlZ5vrHe2p3FnFHv0wstSM7fh0+qE9MCViaMxkAyuIjGdV7wxfRPfNgrxl2PBd
+         TeKQxe/hGP8QxaLmtySgzPUmxRAS6IPMklMwCi0kn0QS4giF4f8FQk66sYf+d52d+HJY
+         RTdMkSrpo9Ny0gUhS8ifdelQtwCF5yy2hNbqKATBfS/vsaMl4TzUz20gXhOW3cULrSeN
+         ljgA==
+X-Gm-Message-State: AOJu0YwYCQwXNKZn1nB9g2/f9oE+iv9KWT7B/54HwiMw2XlHmMjQoVm5
+        qt5jdGsMxNEfXuxYSGdHR49T8g==
+X-Google-Smtp-Source: AGHT+IHGWszC9sNGNLlYcYJz1tQiG2EBYKJI1eKGKzyA7OlbgEJ46OgR6p2V4Nmm7b7vzpvejaUosA==
+X-Received: by 2002:a17:903:110d:b0:1bb:d280:5e0b with SMTP id n13-20020a170903110d00b001bbd2805e0bmr246508plh.18.1695405223181;
+        Fri, 22 Sep 2023 10:53:43 -0700 (PDT)
+Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
+        by smtp.gmail.com with ESMTPSA id ji18-20020a170903325200b001bdbe6c86a9sm3779903plb.225.2023.09.22.10.53.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Sep 2023 10:53:42 -0700 (PDT)
+From:   Kees Cook <keescook@chromium.org>
+To:     Andy Gross <agross@kernel.org>
+Cc:     Kees Cook <keescook@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Tom Rix <trix@redhat.com>, linux-kernel@vger.kernel.org,
+        llvm@lists.linux.dev, linux-hardening@vger.kernel.org
+Subject: [PATCH] drivers: thermal: tsens: Annotate struct tsens_priv with __counted_by
+Date:   Fri, 22 Sep 2023 10:53:41 -0700
+Message-Id: <20230922175341.work.919-kees@kernel.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [Freedreno] [PATCH RFC v6 07/10] drm/atomic: Loosen FB atomic
- checks
-To:     Pekka Paalanen <ppaalanen@gmail.com>
-CC:     <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
-        <sebastian.wick@redhat.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        "Sean Paul" <sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        <quic_abhinavk@quicinc.com>, "Maxime Ripard" <mripard@kernel.org>,
-        <linux-kernel@vger.kernel.org>, Rob Clark <robdclark@gmail.com>,
-        <laurent.pinchart@ideasonboard.com>,
-        Daniel Vetter <daniel@ffwll.ch>, <contact@emersion.fr>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        <wayland-devel@lists.freedesktop.org>,
-        "David Airlie" <airlied@gmail.com>, <ville.syrjala@linux.intel.com>
-References: <20230828-solid-fill-v6-0-a820efcce852@quicinc.com>
- <20230828-solid-fill-v6-7-a820efcce852@quicinc.com>
- <20230829112230.7106a8bf@eldfell>
-Content-Language: en-US
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <20230829112230.7106a8bf@eldfell>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: uf7t3up0j0GwKZ7poXrDXC5KIWUYWgH1
-X-Proofpoint-ORIG-GUID: uf7t3up0j0GwKZ7poXrDXC5KIWUYWgH1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-09-22_15,2023-09-21_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 suspectscore=0
- spamscore=0 adultscore=0 bulkscore=0 malwarescore=0 lowpriorityscore=0
- phishscore=0 mlxscore=0 mlxlogscore=999 impostorscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
- definitions=main-2309220154
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1437; i=keescook@chromium.org;
+ h=from:subject:message-id; bh=yU2HdTIvaMKiOikp0zqOQXXfFgKhOPJCGAbuECY4jOI=;
+ b=owEBbQKS/ZANAwAKAYly9N/cbcAmAcsmYgBlDdSlvezRdvtVZduY7QM2bmTOaemd9ierWA9Ag
+ 6m2g04zvqaJAjMEAAEKAB0WIQSlw/aPIp3WD3I+bhOJcvTf3G3AJgUCZQ3UpQAKCRCJcvTf3G3A
+ Jj+VD/9XA5O7ImEBS5lp7pFupDLhl0qpeveeJl1/ws9XB4+qfWGwP+u+B/yGl1V1if8pWYaZHlS
+ gsqmwyDwotCQkne3cBhWOEhu34q/vFTAAFYkmFsBxgqdEmAvCgw6E93LPtr32936+3M036VPvAF
+ 69Kn+xQ++3aBnlnaUnGWexWUQtZ1BS1/3Qk1BZX9wiZcM2AppV+v03THCd2OnaV7GiuE8rZLidJ
+ IKwzISZpU7HmiLVADRtiQRxDQYY7udzm1EYCbIKeB16siRiRX/wJ8B0rmqgucSPZNQOor4PZM4l
+ vgNXz3L3qYnqgZa8ZT96/zA8GcZu7v8wB3rYxEfOqmYw43FXc0J0geWreIJRzsL9HEFlKGt1dSQ
+ rOFKd0sHwKcpv9uSOSDoYV7pbxj7ZQ24AKv7OeLykWg9uOpGPezAYIKNyHMbgHpRqmgHihP1Tmj
+ 4otwf/3z+CJgIl0XIVW0W1B6YF4lUaRB5hyf71QQggSR4OB0ReLaLvDMAtIslb+edPFvWeTzTHs
+ YSmoWaWdM3Mh1xXVaa4/UzuDRz1J8T3rY1YXU0VoYQZAsZIknGkKW3jUm/ZVnO4Gk0P7rHrxkSA
+ udeto6Sq0lS20NGkgL1YMg62eSI2ZRseFlf3zhvVz6ax5crha3+IWjhindVoZ+Xh3fMVbQllLbX
+ FqtV4/g FbpWcylQ==
+X-Developer-Key: i=keescook@chromium.org; a=openpgp; fpr=A5C3F68F229DD60F723E6E138972F4DFDC6DC026
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Prepare for the coming implementation by GCC and Clang of the __counted_by
+attribute. Flexible array members annotated with __counted_by can have
+their accesses bounds-checked at run-time checking via CONFIG_UBSAN_BOUNDS
+(for array indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family
+functions).
 
+As found with Coccinelle[1], add __counted_by for struct tsens_priv.
 
-On 8/29/2023 1:22 AM, Pekka Paalanen wrote:
-> On Mon, 28 Aug 2023 17:05:13 -0700
-> Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
-> 
->> Loosen the requirements for atomic and legacy commit so that, in cases
->> where pixel_source != FB, the commit can still go through.
->>
->> This includes adding framebuffer NULL checks in other areas to account for
->> FB being NULL when non-FB pixel sources are enabled.
->>
->> To disable a plane, the pixel_source must be NONE or the FB must be NULL
->> if pixel_source == FB.
->>
->> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->> ---
->>   drivers/gpu/drm/drm_atomic.c        | 20 +++++++++++---------
->>   drivers/gpu/drm/drm_atomic_helper.c | 36 ++++++++++++++++++++----------------
->>   include/drm/drm_atomic_helper.h     |  4 ++--
->>   include/drm/drm_plane.h             | 29 +++++++++++++++++++++++++++++
->>   4 files changed, 62 insertions(+), 27 deletions(-)
-> 
-> ...
-> 
->> diff --git a/include/drm/drm_plane.h b/include/drm/drm_plane.h
->> index a58f84b6bd5e..4c5b7bcdb25c 100644
->> --- a/include/drm/drm_plane.h
->> +++ b/include/drm/drm_plane.h
->> @@ -992,6 +992,35 @@ static inline struct drm_plane *drm_plane_find(struct drm_device *dev,
->>   #define drm_for_each_plane(plane, dev) \
->>   	list_for_each_entry(plane, &(dev)->mode_config.plane_list, head)
->>   
->> +/**
->> + * drm_plane_solid_fill_enabled - Check if solid fill is enabled on plane
->> + * @state: plane state
->> + *
->> + * Returns:
->> + * Whether the plane has been assigned a solid_fill_blob
->> + */
->> +static inline bool drm_plane_solid_fill_enabled(struct drm_plane_state *state)
->> +{
->> +	if (!state)
->> +		return false;
->> +	return state->pixel_source == DRM_PLANE_PIXEL_SOURCE_SOLID_FILL && state->solid_fill_blob;
->> +}
->> +
->> +static inline bool drm_plane_has_visible_data(const struct drm_plane_state *state)
->> +{
->> +	switch (state->pixel_source) {
->> +	case DRM_PLANE_PIXEL_SOURCE_NONE:
->> +		return false;
->> +	case DRM_PLANE_PIXEL_SOURCE_SOLID_FILL:
->> +		return state->solid_fill_blob != NULL;
-> 
-> This reminds me, new UAPI docs did not say what the requirements are for
-> choosing solid fill pixel source. Is the atomic commit rejected if
-> pixel source is solid fill, but solid_fill property has no blob?
+[1] https://github.com/kees/kernel-tools/blob/trunk/coccinelle/examples/counted_by.cocci
 
-Hi Pekka,
+Cc: Andy Gross <agross@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Amit Kucheria <amitk@kernel.org>
+Cc: Thara Gopinath <thara.gopinath@gmail.com>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc: Zhang Rui <rui.zhang@intel.com>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-pm@vger.kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+---
+ drivers/thermal/qcom/tsens.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Yes, if pixel_source is solid_fill and the solid_fill property blob 
-isn't set, the atomic commit should throw an error.
+diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+index 2805de1c6827..cb637fa289ca 100644
+--- a/drivers/thermal/qcom/tsens.h
++++ b/drivers/thermal/qcom/tsens.h
+@@ -585,7 +585,7 @@ struct tsens_priv {
+ 	struct dentry			*debug_root;
+ 	struct dentry			*debug;
+ 
+-	struct tsens_sensor		sensor[];
++	struct tsens_sensor		sensor[] __counted_by(num_sensors);
+ };
+ 
+ /**
+-- 
+2.34.1
 
-Will document this in the UAPI.
-
-Thanks,
-
-Jessica Zhang
-
-> 
-> This should be doc'd.
-> 
-> 
-> Thanks,
-> pq
-> 
->> +	case DRM_PLANE_PIXEL_SOURCE_FB:
->> +	default:
->> +		WARN_ON(state->pixel_source != DRM_PLANE_PIXEL_SOURCE_FB);
->> +	}
->> +
->> +	return state->fb != NULL;
->> +}
->> +
->>   bool drm_any_plane_has_format(struct drm_device *dev,
->>   			      u32 format, u64 modifier);
->>   
->>
-> 
