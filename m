@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 00A3B7AA708
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Sep 2023 04:40:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 16E417AA714
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Sep 2023 04:47:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229540AbjIVClB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Sep 2023 22:41:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47202 "EHLO
+        id S229658AbjIVCro (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Sep 2023 22:47:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229497AbjIVClA (ORCPT
+        with ESMTP id S229497AbjIVCrn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Sep 2023 22:41:00 -0400
+        Thu, 21 Sep 2023 22:47:43 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A080196;
-        Thu, 21 Sep 2023 19:40:53 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27A7CC433C8;
-        Fri, 22 Sep 2023 02:40:52 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD298192;
+        Thu, 21 Sep 2023 19:47:37 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90F79C433C7;
+        Fri, 22 Sep 2023 02:47:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1695350453;
-        bh=8qIsVL6sv2Akw91FdfMBwVa1nZmidwwqy/fuoJa0HVo=;
+        s=k20201202; t=1695350857;
+        bh=qyx3IGyXgOk1LNpPqO2sLQkmWUYXhJs8VFn1kQPNpRI=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=pe++EJqt+ieoBhFxCYIpPJrcJiOj+irtamDCPdzxUeWuBGJIH+UXsLFGz2yg2Qh5c
-         1xM0gdD0UFUW4I2/w7H0QcWsKmRlaDENUsyuhFDcTGopr5MweMWAhoBF7MVKlZr/D8
-         iDrKwI6U7T628dsJkHEPL9WHGeuLOnBf0TRVN4p8G5kNr3bngpO01kCpKHdIn7A0Jp
-         otBlQW+2g64kqnnR8BPeDk0jQ4KpBUPNtziXsWkCJEWMk7wurZzRWij+LV+he3TJ0P
-         DAvGk3MZ8wh6bNYsH6L6YazWntB2PzCRyl5u+USSUW/qkH3kjLirF3FoNt7PrCmSIc
-         coLZ+QN11+9AA==
-Date:   Thu, 21 Sep 2023 19:44:58 -0700
+        b=T34bs/xhUYnwdBQ2FyGg2ipvtGMswOFWbV9gVEKgnvg2yNWxzQfyk+PJ48LZQ95oR
+         qVHux3rPecDoJYnE0CTifK7dk1QozGnXBXhbOTXrrkbUlNsdKZvkvshRY2EpKAsp/n
+         gEhkUsyQ+sBW5HCDEne3ihu5cK1ZWVhpaiVVOtEUqQvL5VVEGk40vOoHUdg14VWP8M
+         oD0VmwSbi5oT7Qx8FSrqYLAAgB+38GWMqetevzohhY1m1AxdIKpaOoF75lGIfshBch
+         GNgQBzrPF6xF6FLXt1EuxL6gpJDAC0ecvBLbXKoIn3Qw2aaanAsbRQir0/ZSvXZv+D
+         M/cZu0gSZLm0g==
+Date:   Thu, 21 Sep 2023 19:51:42 -0700
 From:   Bjorn Andersson <andersson@kernel.org>
 To:     Stephan Gerhold <stephan@gerhold.net>
 Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
@@ -37,18 +37,16 @@ Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Caleb Connolly <caleb.connolly@linaro.org>
-Subject: Re: [PATCH v3 3/3] soc: qcom: rtmfs: Handle reserved-memory
- allocation issues
-Message-ID: <3jscpkqc4jpywcfpo3qxkgajtkjhzncw3kpi6cnmjesyrswpr2@ndwvowbq7vrq>
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] soc: qcom: rmtfs: Support discarding guard pages
+Message-ID: <j5ivvbjprgdcekujzjiobk7gpoaz3jxpnda5dsgoh6f4hsn5id@3ug5i74ubkqf>
 References: <20230920-rmtfs-mem-guard-pages-v3-0-305b37219b78@quicinc.com>
- <20230920-rmtfs-mem-guard-pages-v3-3-305b37219b78@quicinc.com>
- <ZQyHS__ZPlnvMIFo@gerhold.net>
+ <20230920-rmtfs-mem-guard-pages-v3-2-305b37219b78@quicinc.com>
+ <ZQyFliFYV7dUwGJg@gerhold.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZQyHS__ZPlnvMIFo@gerhold.net>
+In-Reply-To: <ZQyFliFYV7dUwGJg@gerhold.net>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -59,51 +57,74 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 21, 2023 at 08:11:23PM +0200, Stephan Gerhold wrote:
-> On Wed, Sep 20, 2023 at 07:37:32PM -0700, Bjorn Andersson wrote:
-> > In the even that Linux failed to allocate the reserved memory range
-> > specified in the DeviceTree, the size of the reserved_mem will be 0,
-> > which results in a oops when memory remapping is attempted.
+On Thu, Sep 21, 2023 at 08:04:06PM +0200, Stephan Gerhold wrote:
+> On Wed, Sep 20, 2023 at 07:37:31PM -0700, Bjorn Andersson wrote:
+> > In some configurations, the exact placement of the rmtfs shared memory
+> > region isn't so strict. The DeviceTree author can then choose to use the
+> > "size" property and rely on the OS for placement (in combination with
+> > "alloc-ranges", if desired).
 > > 
-> > Detect this and report that the memory region was not found instead.
+> > But on some platforms the rmtfs memory region may not be allocated
+> > adjacent to regions allocated by other clients. Add support for
+> > discarding the first and last 4k block in the region, if
+> > qcom,use-guard-pages is specified in DeviceTree.
 > > 
 > > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> 
-> I dropped these checks in my remoteproc patches because Caleb suggested
-> maybe putting this check directly in of_reserved_mem_lookup() (or
-> similar) given that almost none of the users verify this [1].
-> 
-> Do you have any opinion on that? I asked back then too but you did not
-> reply yet [2]. :-)
-> 
-
-I'm struggling to come up with a use case where one would like to get
-hold of the rmem when it wasn't properly initialized. So, let's make an
-attempt at returning NULL from of_reserved_mem_lookup() instead.
-
-Thanks,
-Bjorn
-
-> [1]: https://lore.kernel.org/linux-arm-msm/c3f59fb4-4dd8-f27a-d3f5-b1870006a75c@linaro.org/
-> [2]: https://lore.kernel.org/linux-arm-msm/ZIsld-MAdkKvdzTx@gerhold.net/
-> 
 > > ---
-> >  drivers/soc/qcom/rmtfs_mem.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >  drivers/soc/qcom/rmtfs_mem.c | 9 +++++++++
+> >  1 file changed, 9 insertions(+)
 > > 
 > > diff --git a/drivers/soc/qcom/rmtfs_mem.c b/drivers/soc/qcom/rmtfs_mem.c
-> > index 83bba9321e72..13823abd85c2 100644
+> > index f83811f51175..83bba9321e72 100644
 > > --- a/drivers/soc/qcom/rmtfs_mem.c
 > > +++ b/drivers/soc/qcom/rmtfs_mem.c
-> > @@ -180,7 +180,7 @@ static int qcom_rmtfs_mem_probe(struct platform_device *pdev)
-> >  	int ret, i;
+> > @@ -200,6 +200,15 @@ static int qcom_rmtfs_mem_probe(struct platform_device *pdev)
+> >  	rmtfs_mem->client_id = client_id;
+> >  	rmtfs_mem->size = rmem->size;
 > >  
-> >  	rmem = of_reserved_mem_lookup(node);
-> > -	if (!rmem) {
-> > +	if (!rmem || !rmem->size) {
-> >  		dev_err(&pdev->dev, "failed to acquire memory region\n");
-> >  		return -EINVAL;
-> >  	}
+> > +	/*
+> > +	 * If requested, discard the first and last 4k block in order to ensure
+> > +	 * that the rmtfs region isn't adjacent to other protected regions.
+> > +	 */
+> > +	if (of_property_present(node, "qcom,use-guard-pages")) {
+> 
+> I think of_property_read_bool() would be more fitting here. Right now
+> of_property_present() is just a wrapper around of_property_read_bool().
+> Semantically reading a bool fits better here though. :-)
+> 
+
+Are you saying that you would prefer this to be a bool, so hat you can
+give it a "false" value? Or you are simply saying "it walks like a
+boolean, quacks like a boolean, let's use the boolean accessor"?
+
+> Feel free to fix that up while applying.
+> 
+> FWIW I don't really have an opinion if "qcom,use-guard-pages" is a good
+> way to describe this in the DT. For the implementation side feel free to
+> add my
+> 
+
+Right, I don't think I commented on your suggestion to make the size of
+the guard page configurable. I am not aware of any current or upcoming
+reasons for adding such complexity, so I'd simply prefer to stick with a
+boolean. Should that need arise, I think this model would allow
+extension to express that.
+
+Regards,
+Bjorn
+
+> Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
+> 
+> Thanks,
+> Stephan
+> 
+> > +		rmtfs_mem->addr += SZ_4K;
+> > +		rmtfs_mem->size -= 2 * SZ_4K;
+> > +	}
+> > +
+> >  	device_initialize(&rmtfs_mem->dev);
+> >  	rmtfs_mem->dev.parent = &pdev->dev;
+> >  	rmtfs_mem->dev.groups = qcom_rmtfs_mem_groups;
 > > 
 > > -- 
 > > 2.25.1
