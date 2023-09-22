@@ -2,163 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DFE07AB33F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Sep 2023 16:04:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A19707AB3FB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Sep 2023 16:44:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233380AbjIVOER (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Sep 2023 10:04:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43858 "EHLO
+        id S230419AbjIVOoT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Sep 2023 10:44:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231191AbjIVOEQ (ORCPT
+        with ESMTP id S230339AbjIVOoS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Sep 2023 10:04:16 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.93])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D40C2136;
-        Fri, 22 Sep 2023 07:04:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1695391449; x=1726927449;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=BTfvrs5EOPQJfVJYIu6aaO3NsW53LRV0R0jYG09hQ3Y=;
-  b=Gsr0XRxk7MmVs/cpHbgDI60b6qRbwq9NOnYuuvepp27O5qFrokEq0qf9
-   xhY/02rR5miG2+AvmtLna9kr+9NHySIFcgeRWPtt0SAnFvqmp949lO5wk
-   dTEcuXwbtUatU6XtLUKaKMGQGHHsaEXdty8fKI89rni+yPC1UUTqtjulY
-   3CJJygM98IZwfkn933WZ2G+dk9pWoU80LmBNXg+GKCGeGpIQnyrZD/5b+
-   aUBGlsAai+SvDiG1ZVxg/ADjWqHK2ZObpVnLAtoUy2l3CmbOY7hpItgWL
-   VO1o3dTIW34V7+QyzpA08U5mVAsEdOl8TUeldUZscxELoncs/4+GyDeNC
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10841"; a="378122882"
-X-IronPort-AV: E=Sophos;i="6.03,167,1694761200"; 
-   d="scan'208";a="378122882"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Sep 2023 07:03:00 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10841"; a="871253379"
-X-IronPort-AV: E=Sophos;i="6.03,167,1694761200"; 
-   d="scan'208";a="871253379"
-Received: from placki-mobl.ger.corp.intel.com (HELO [10.213.200.149]) ([10.213.200.149])
-  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Sep 2023 07:02:32 -0700
-Message-ID: <5a92b93c-6c6c-059a-c07b-a8b0b4b2b364@linux.intel.com>
-Date:   Fri, 22 Sep 2023 15:02:30 +0100
+        Fri, 22 Sep 2023 10:44:18 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7335DC6;
+        Fri, 22 Sep 2023 07:44:12 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38MEBvdu025832;
+        Fri, 22 Sep 2023 14:44:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=LbFeoloWRxRrwi9BvqCwJ3WHW3JbWo1zCUDcGy9w4i8=;
+ b=PDl2TtNwP9vcGPNS2zIcEmknyPJHYcGx+264sOsxdMWRLKArd9ZfJqVWjgwr5FwAQysh
+ 5ZDHLk5vXxat30e1VL8TQ8ZqwIrev4KZv4I/lV49oBHTLMlH34CeKjnWoV2y9kqrJVQd
+ +0okmgiGF0MX6+5wF07xLO5ej3qlO9Br1doHuzQjTbATtilF8Nt7c/gBn7tzfGbPay+W
+ VY2n91QTuSIGEuQtG7j6Dzxp7l7ickzHJnGwv05RMIKrVkKmZSa0AcgT29h2eSitoemn
+ UuaBCVK2YCWmg5+cllZ0kR67kGvuQ8gp42MuxulIppSRav0vJvKnP32PiLF77oWNDW0f Aw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t8u9ha169-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 22 Sep 2023 14:44:06 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38MEi58N026898
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 22 Sep 2023 14:44:05 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Fri, 22 Sep
+ 2023 07:44:04 -0700
+Message-ID: <af4fc816-d75b-997d-6d37-a774f5eb96ae@quicinc.com>
+Date:   Fri, 22 Sep 2023 08:44:03 -0600
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v6 6/6] drm/drm-file: Show finer-grained BO sizes in
- drm_show_memory_stats
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH v2 1/2] bus: mhi: host: Add spinlock to protect WP access
+ when queueing TREs
 Content-Language: en-US
-To:     =?UTF-8?Q?Adri=c3=a1n_Larumbe?= <adrian.larumbe@collabora.com>
-Cc:     maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
-        robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        dmitry.baryshkov@linaro.org, sean@poorly.run,
-        marijn.suijten@somainline.org, robh@kernel.org,
-        steven.price@arm.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        healych@amazon.com,
-        Boris Brezillon <boris.brezillon@collabora.com>,
-        kernel@collabora.com, freedreno@lists.freedesktop.org
-References: <20230919233556.1458793-1-adrian.larumbe@collabora.com>
- <20230919233556.1458793-7-adrian.larumbe@collabora.com>
- <ccfa3697-b015-ff35-fb92-0efcbd1d7d7c@linux.intel.com>
- <6b9c8566-926d-40ff-7907-228d317fab3d@linux.intel.com>
- <rn5metso2yr2kyxix3fh2ub77jpjf6avs754eshgpd2lu33bkw@33way22pozgh>
-From:   Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Organization: Intel Corporation UK Plc
-In-Reply-To: <rn5metso2yr2kyxix3fh2ub77jpjf6avs754eshgpd2lu33bkw@33way22pozgh>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,HK_RANDOM_ENVFROM,HK_RANDOM_FROM,
-        NICE_REPLY_A,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+To:     Qiang Yu <quic_qianyu@quicinc.com>, <mani@kernel.org>
+CC:     <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
+        <quic_mrana@quicinc.com>
+References: <1694594861-12691-1-git-send-email-quic_qianyu@quicinc.com>
+ <1694594861-12691-2-git-send-email-quic_qianyu@quicinc.com>
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <1694594861-12691-2-git-send-email-quic_qianyu@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: hweOo_-hxqLmD1dGwUGyMy4GAL7LCy1l
+X-Proofpoint-ORIG-GUID: hweOo_-hxqLmD1dGwUGyMy4GAL7LCy1l
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-09-22_13,2023-09-21_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ impostorscore=0 bulkscore=0 spamscore=0 priorityscore=1501 phishscore=0
+ suspectscore=0 malwarescore=0 clxscore=1011 mlxlogscore=814 mlxscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2309220126
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 22/09/2023 12:03, Adrián Larumbe wrote:
-> On 21.09.2023 11:14, Tvrtko Ursulin wrote:
->>
->> On 20/09/2023 16:32, Tvrtko Ursulin wrote:
->>>
->>> On 20/09/2023 00:34, Adrián Larumbe wrote:
->>>> The current implementation will try to pick the highest available size
->>>> display unit as soon as the BO size exceeds that of the previous
->>>> multiplier. That can lead to loss of precision in contexts of low memory
->>>> usage.
->>>>
->>>> The new selection criteria try to preserve precision, whilst also
->>>> increasing the display unit selection threshold to render more accurate
->>>> values.
->>>>
->>>> Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
->>>> Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
->>>> Reviewed-by: Steven Price <steven.price@arm.com>
->>>> ---
->>>>    drivers/gpu/drm/drm_file.c | 5 ++++-
->>>>    1 file changed, 4 insertions(+), 1 deletion(-)
->>>>
->>>> diff --git a/drivers/gpu/drm/drm_file.c b/drivers/gpu/drm/drm_file.c
->>>> index 762965e3d503..34cfa128ffe5 100644
->>>> --- a/drivers/gpu/drm/drm_file.c
->>>> +++ b/drivers/gpu/drm/drm_file.c
->>>> @@ -872,6 +872,8 @@ void drm_send_event(struct drm_device *dev, struct
->>>> drm_pending_event *e)
->>>>    }
->>>>    EXPORT_SYMBOL(drm_send_event);
->>>> +#define UPPER_UNIT_THRESHOLD 100
->>>> +
->>>>    static void print_size(struct drm_printer *p, const char *stat,
->>>>                   const char *region, u64 sz)
->>>>    {
->>>> @@ -879,7 +881,8 @@ static void print_size(struct drm_printer *p,
->>>> const char *stat,
->>>>        unsigned u;
->>>>        for (u = 0; u < ARRAY_SIZE(units) - 1; u++) {
->>>> -        if (sz < SZ_1K)
->>>> +        if ((sz & (SZ_1K - 1)) &&
->>>
->>> IS_ALIGNED worth it at all?
->>>
->>>> +            sz < UPPER_UNIT_THRESHOLD * SZ_1K)
->>>>                break;
->>>
->>> Excuse me for a late comment (I was away). I did not get what what is
->>> special about a ~10% threshold? Sounds to me just going with the lower
->>> unit, when size is not aligned to the higher one, would be better than
->>> sometimes precision-sometimes-not.
->>
->> FWIW both current and the threshold option make testing the feature very
->> annoying.
+On 9/13/2023 2:47 AM, Qiang Yu wrote:
+> From: Bhaumik Bhatt <bbhatt@codeaurora.org>
 > 
-> How so?
-
-I have to build in the knowledge of implementation details of 
-print_size() into my IGT in order to use the right size BOs, so test is 
-able to verify stats move as expected. It just feels wrong.
-
->> So I'd really propose we simply use smaller unit when unaligned.
+> Protect WP accesses such that multiple threads queueing buffers for
+> incoming data do not race and access the same WP twice. Ensure read and
+> write locks for the channel are not taken in succession by dropping the
+> read lock from parse_xfer_event() such that a callback given to client
+> can potentially queue buffers and acquire the write lock in that process.
+> Any queueing of buffers should be done without channel read lock acquired
+> as it can result in multiple locks and a soft lockup.
 > 
-> Like I said in the previous reply, for drm files whose overall BO size sum is enormous
-> but not a multiple of a MiB, this would render huge number representations in KiB.
-> I don't find this particularly comfortable to read, and then this extra precision
-> would mean nothing to nvtop or gputop, which would have to scale the size to their
-> available screen dimensions when plotting them.
+> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+> ---
+>   drivers/bus/mhi/host/main.c | 11 ++++++++++-
+>   1 file changed, 10 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+> index dcf627b..13c4b89 100644
+> --- a/drivers/bus/mhi/host/main.c
+> +++ b/drivers/bus/mhi/host/main.c
+> @@ -642,6 +642,7 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
+>   			mhi_del_ring_element(mhi_cntrl, tre_ring);
+>   			local_rp = tre_ring->rp;
+>   
+> +			read_unlock_bh(&mhi_chan->lock);
 
-I don't think numbers in KiB are so huge.
+This doesn't work due to the write_lock_irqsave(&mhi_chan->lock, flags); 
+on line 591.
 
-And I don't think people will end up reading them manually a lot anyway, 
-since you have to hunt the pid, and fd, etc.. It is much more realistic 
-that some tool like gputop will be used.
+I really don't like that we are unlocking the mhi_chan while still using 
+it.  It opens up a window where the mhi_chan state can be updated 
+between here and the client using the callback to queue a buf.
 
-And I don't think consistency of units across drivers or whatever 
-matters. Even better to keep userspace parser on their toes and make 
-then follow drm-usage-stats.rst and not any implementations, at some 
-point in time.
+Perhaps we need a new lock that just protects the wp, and needs to be 
+only grabbed while mhi_chan->lock is held?
 
-Regards,
+>   			/* notify client */
+>   			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
+>   
+> @@ -667,6 +668,7 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
+>   					kfree(buf_info->cb_buf);
+>   				}
+>   			}
+> +			read_lock_bh(&mhi_chan->lock);
+>   		}
+>   		break;
+>   	} /* CC_EOT */
+> @@ -1204,6 +1206,9 @@ int mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
+>   	int eot, eob, chain, bei;
+>   	int ret;
+>   
+> +	/* Protect accesses for reading and incrementing WP */
+> +	write_lock_bh(&mhi_chan->lock);
+> +
+>   	buf_ring = &mhi_chan->buf_ring;
+>   	tre_ring = &mhi_chan->tre_ring;
+>   
+> @@ -1221,8 +1226,10 @@ int mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
+>   
+>   	if (!info->pre_mapped) {
+>   		ret = mhi_cntrl->map_single(mhi_cntrl, buf_info);
+> -		if (ret)
+> +		if (ret) {
+> +			write_unlock_bh(&mhi_chan->lock);
+>   			return ret;
+> +		}
+>   	}
+>   
+>   	eob = !!(flags & MHI_EOB);
+> @@ -1239,6 +1246,8 @@ int mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
+>   	mhi_add_ring_element(mhi_cntrl, tre_ring);
+>   	mhi_add_ring_element(mhi_cntrl, buf_ring);
+>   
+> +	write_unlock_bh(&mhi_chan->lock);
+> +
+>   	return 0;
+>   }
+>   
 
-Tvrtko
