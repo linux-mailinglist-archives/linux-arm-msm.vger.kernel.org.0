@@ -2,54 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 092F37AA624
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Sep 2023 02:36:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B2FDD7AA665
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Sep 2023 03:12:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230056AbjIVAgK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Sep 2023 20:36:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50210 "EHLO
+        id S229509AbjIVBMZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Sep 2023 21:12:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230032AbjIVAgE (ORCPT
+        with ESMTP id S229497AbjIVBMY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Sep 2023 20:36:04 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB19A192;
-        Thu, 21 Sep 2023 17:35:58 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2c012232792so26786441fa.0;
-        Thu, 21 Sep 2023 17:35:58 -0700 (PDT)
+        Thu, 21 Sep 2023 21:12:24 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB9DFCC;
+        Thu, 21 Sep 2023 18:12:18 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2c00b37ad84so28144111fa.0;
+        Thu, 21 Sep 2023 18:12:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695342957; x=1695947757; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AfoMHihfovaHfyKxqDS+0qJZLmze+vosMqpYMgWqQy4=;
-        b=D47y6dOwMus8BRmoCGQQtJnHTlBHZzFrfbS18Zl1mbGueDjMbarsWzWBUQfA5z3eqA
-         kXUgvi4RcNGED90d80mQS6+sFqen41mEA9a81x+LQoqrDv/nrIZzvw9qgWDEBSOhgvFP
-         U+mg6OXC6VfzMYuJpWf02TXHN3KKy4SdjymZIfRiB/gDicBdEmU0mFnwpHkW+PV5ENI3
-         te3LtE6v8ImaDHc9TR7WqjtRTMn4YVePfqB8QQUZWavn6EElYiMQ1agcqRSOsjbGqMve
-         XZmAlAXRsfGTAGAwhdu+RSiLAKYXc8/qyuVk4qBcG1M1L4N+q1Ajrk3LclXHSs13bbkH
-         e9NQ==
+        d=gmail.com; s=20230601; t=1695345137; x=1695949937; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+Rq82wx/J2BnMt9Mh1FLCBxp+NcwkPBk3LgXjrklglE=;
+        b=fNBqvxnKsSSWVewrSz8ANnaRPSA+vYHsGWDqzpjqBx1U34KhT38p8vgh+qVUyDfR3b
+         j0W8Vf8EbBssackNH64pV7Hjl0d+iU8aMe6p1ran1AjApv0Su09SAYLDtF9BJWCdWIpZ
+         6xgoFLPvqaRci4mdEOwWHsqFsKuXNcn9VdcLvOpAsu+GvuC47ty9rblxhtpGPtiRxjU3
+         ZqihiLJ1LjeKIlvC4RNoDbYixAwWVs2a/G85ZGVC8wDapvrsJMK3bIwuqDKoHNpNMChc
+         MLYXi7XJgdnXoQp8c0g90GijfPAqP12MD1/yHnW8qZ2JV9IP3i17TAtsoElm96MRgOf7
+         rR+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695342957; x=1695947757;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=AfoMHihfovaHfyKxqDS+0qJZLmze+vosMqpYMgWqQy4=;
-        b=NfaaCzcloLAdfF8ttkgq7w/sRQVeVt1KooVjU7jCXyJG/3CSlguAJ2iQUDyo2kgJ4S
-         VuUy4HsgZQVGOcQRzQOYxTJihcmUMhPBj5/SIk4lyOZ5yadgpJ6Z8CUo3BQ0++lCKm9Q
-         U2xwblHegnAkqR/xdiJ5tjr5Sz/HOwMQaCz2WrlgoBmcAEajam0oRsuzUSs3b9T5bG7S
-         qUzIUYs/j+lhE7vkyanN3LJmNawJnpTi3kmhKEg0yRyXdedKJoYn+K7o34EGUkzlsbYD
-         ClI1qshxWVwZVyHYtVj9bh6O6MsNLfC5YAABgOcXnLTzTJVI4sFy3Kw9IMn0QDoVQo++
-         V1RA==
-X-Gm-Message-State: AOJu0YzES0Jp/YqUPvddBeyWoLjeoNCRI87113IaMb7ewvmMvBQwMEsI
-        xn1KOpLQzBR88jiw8IbvoyxsaKC2kDQVGQ==
-X-Google-Smtp-Source: AGHT+IE8jLPzi93ThtNWNZKAEOE4YXeG4ZcjOzA8Mse4BqvWpUBAD/Q7FFbDe8eaPhRKlTj9J/xHLQ==
-X-Received: by 2002:a2e:b605:0:b0:2c0:33be:3530 with SMTP id r5-20020a2eb605000000b002c033be3530mr6370803ljn.45.1695342956926;
-        Thu, 21 Sep 2023 17:35:56 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1695345137; x=1695949937;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+Rq82wx/J2BnMt9Mh1FLCBxp+NcwkPBk3LgXjrklglE=;
+        b=FcdFch78L+OB8wbo39o6hCQ2nru/Ep08DlUAoO7lVcCPRuO3Vob70hlM0432Nsq+wA
+         LqdUEhL9pVuahPZv87r6ttWqfK5AhWrMeFMedU7nh9jIHWaE5GHdEB7p/4feek3vteBB
+         dm9WYP10zoTIAGwhLoZgdCm+52jlsgbXa7vJuwAFByS9T3RELfkj93eUNq2Qc9h+HsdA
+         np+pQWlVVKr4gE+zaztiWDLuOEE7pWma8u18d+xVz7eryquCcYcyd3ZkuO3+FsfOulru
+         s9zL8n2UgtHZBH0KdipYI+1fMI0M02jt3wLCZrIMkM+aOMkgxMH1590RO1Q1d/JJ9hLL
+         +SWg==
+X-Gm-Message-State: AOJu0YylfA5FLnxVRhksmSj5JW+uDTan/Y/9EMMZxflgP0SFdBfGGLKc
+        A8fDjR1SPh9LhOYsdv/RYbTFL9mvQVe8Dw==
+X-Google-Smtp-Source: AGHT+IHcUyeJmxxV2sQ3q19siVjabbSs1LW6kJYyDzbwc1nSxLC9hL0WXQXDMCU3cO/jSZxEAf4CWw==
+X-Received: by 2002:a2e:98cb:0:b0:2c0:2124:7a06 with SMTP id s11-20020a2e98cb000000b002c021247a06mr6138901ljj.45.1695345136772;
+        Thu, 21 Sep 2023 18:12:16 -0700 (PDT)
 Received: from i-vetokaappi.home.lan (dsl-hkibng42-56733b-36.dhcp.inet.fi. [86.115.59.36])
-        by smtp.gmail.com with ESMTPSA id j23-20020a2e3c17000000b002bff365c7bfsm615462lja.35.2023.09.21.17.35.56
+        by smtp.gmail.com with ESMTPSA id l6-20020a2e7006000000b002b6e77e87fcsm609446ljc.68.2023.09.21.18.12.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Sep 2023 17:35:56 -0700 (PDT)
+        Thu, 21 Sep 2023 18:12:16 -0700 (PDT)
 From:   =?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
@@ -61,12 +60,10 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] ARM: qcom: msm8974: Add rpm-master-stats node
-Date:   Fri, 22 Sep 2023 03:35:33 +0300
-Message-Id: <20230922003533.107835-3-matti.lehtimaki@gmail.com>
+Subject: [PATCH] ARM: dts: qcom: apq8026-samsung-matisse-wifi: Fix inverted hall sensor
+Date:   Fri, 22 Sep 2023 04:12:11 +0300
+Message-Id: <20230922011211.115234-1-matti.lehtimaki@gmail.com>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230922003533.107835-1-matti.lehtimaki@gmail.com>
-References: <20230922003533.107835-1-matti.lehtimaki@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,64 +77,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add rpm-master-stats node for MSM8974 and the required RPM MSG RAM
-slices for memory access.
+Fix hall sensor GPIO polarity and also allow disabling the sensor.
+Remove unneeded interrupt.
 
+Fixes: f15623bda1dc ("ARM: dts: qcom: Add support for Samsung Galaxy Tab 4 10.1 (SM-T530)")
 Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
 ---
- arch/arm/boot/dts/qcom/qcom-msm8974.dtsi | 32 ++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ arch/arm/boot/dts/qcom/qcom-apq8026-samsung-matisse-wifi.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
-index 706fef53767e..0bc2e66d15b1 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
-@@ -116,6 +116,18 @@ pmu {
- 	rpm: remoteproc {
- 		compatible = "qcom,msm8974-rpm-proc", "qcom,rpm-proc";
+diff --git a/arch/arm/boot/dts/qcom/qcom-apq8026-samsung-matisse-wifi.dts b/arch/arm/boot/dts/qcom/qcom-apq8026-samsung-matisse-wifi.dts
+index 884d99297d4c..f516e0426bb9 100644
+--- a/arch/arm/boot/dts/qcom/qcom-apq8026-samsung-matisse-wifi.dts
++++ b/arch/arm/boot/dts/qcom/qcom-apq8026-samsung-matisse-wifi.dts
+@@ -45,11 +45,11 @@ gpio-hall-sensor {
  
-+		master-stats {
-+			compatible = "qcom,rpm-master-stats";
-+			qcom,rpm-msg-ram = <&apss_master_stats>,
-+					   <&mpss_master_stats>,
-+					   <&lpss_master_stats>,
-+					   <&pronto_master_stats>;
-+			qcom,master-names = "APSS",
-+					    "MPSS",
-+					    "LPSS",
-+					    "PRONTO";
-+		};
-+
- 		smd-edge {
- 			interrupts = <GIC_SPI 168 IRQ_TYPE_EDGE_RISING>;
- 			qcom,ipc = <&apcs 8 0>;
-@@ -1067,6 +1079,26 @@ gcc: clock-controller@fc400000 {
- 		rpm_msg_ram: sram@fc428000 {
- 			compatible = "qcom,rpm-msg-ram";
- 			reg = <0xfc428000 0x4000>;
-+
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			ranges = <0 0xfc428000 0x4000>;
-+
-+			apss_master_stats: sram@150 {
-+				reg = <0x150 0x14>;
-+			};
-+
-+			mpss_master_stats: sram@b50 {
-+				reg = <0xb50 0x14>;
-+			};
-+
-+			lpss_master_stats: sram@1550 {
-+				reg = <0x1550 0x14>;
-+			};
-+
-+			pronto_master_stats: sram@1f50 {
-+				reg = <0x1f50 0x14>;
-+			};
+ 		event-hall-sensor {
+ 			label = "Hall Effect Sensor";
+-			gpios = <&tlmm 110 GPIO_ACTIVE_HIGH>;
+-			interrupts = <&tlmm 110 IRQ_TYPE_EDGE_FALLING>;
++			gpios = <&tlmm 110 GPIO_ACTIVE_LOW>;
+ 			linux,input-type = <EV_SW>;
+ 			linux,code = <SW_LID>;
+ 			debounce-interval = <15>;
++			linux,can-disable;
+ 			wakeup-source;
  		};
- 
- 		bimc: interconnect@fc380000 {
+ 	};
 -- 
 2.39.2
 
