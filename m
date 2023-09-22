@@ -2,174 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 970A97AACFA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Sep 2023 10:44:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 044537AAFED
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Sep 2023 12:50:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232785AbjIVIoC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Sep 2023 04:44:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59872 "EHLO
+        id S229664AbjIVKu1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Sep 2023 06:50:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232795AbjIVIoA (ORCPT
+        with ESMTP id S229810AbjIVKu0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Sep 2023 04:44:00 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 180C4CA;
-        Fri, 22 Sep 2023 01:43:50 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38M8V6ls014673;
-        Fri, 22 Sep 2023 08:43:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=OLxNwF3Lj8XrOm0ayvRe3v4psWEG2yC9uYbOTbrLQw4=;
- b=T3VFDv6hjRV2w1lKVWd86duga8QkX/KbiYTEOOOldO35yP1fWhz523SECYX8uk+8Gp1S
- 6Dq/KTyh6DqnbmE4xyxwLrweY7GDi/eMwgPwqE+2V9KfC32H0yWRNHbJXGCCM5ezmTMU
- oegO5/yDPnPy+DLT1G2zcGJMZniaMEvNjodwTHkRyGFM2f/lHY1P1CF7zqICDZyqUnGP
- epCjLVdExsbr7efD9V4eqScQ1S6m9woH9bPxDzvEml8h5yyrW95rwAxvB7dk6IDHxmDb
- a4Y6gPwRIWKC7VH9C3Q0I5tBlTo//cj8VfS2QT2QXh8eDuOk/QPvl17HrcfHqIZ4GryO Tw== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t8tyxhe96-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 22 Sep 2023 08:43:37 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38M8hax8016641
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 22 Sep 2023 08:43:36 GMT
-Received: from hu-gokulsri-blr.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Fri, 22 Sep 2023 01:43:32 -0700
-From:   Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <jassisinghbrar@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC:     <quic_varada@quicinc.com>, <quic_srichara@quicinc.com>,
-        <quic_gokulsri@quicinc.com>
-Subject: [PATCH V2 3/3] arm64: dts: qcom: ipq5018: enable the CPUFreq support
-Date:   Fri, 22 Sep 2023 14:13:03 +0530
-Message-ID: <20230922084303.4164046-4-quic_gokulsri@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230922084303.4164046-1-quic_gokulsri@quicinc.com>
-References: <20230922084303.4164046-1-quic_gokulsri@quicinc.com>
+        Fri, 22 Sep 2023 06:50:26 -0400
+Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [81.169.146.221])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6726AC;
+        Fri, 22 Sep 2023 03:50:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1695379816; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=PyfkQ2CJJo4r5UL55sqaXwzAE7PnEhZx9OfgNEyVfoLba9ol53fbpt5Y0NZr3MSNd3
+    PuB1nGROD800A9laJH7IYEf8D89DvkKE0tK6/VIPYMpK064XIyEFKHC0czw2xEfJYfkw
+    LwagCTlF27bQ6ziuwLonmWeWzI57La7GGk25Qhndvdlpjm2mfYy7gVFH3R87fNRqY3qE
+    QnA3/zI2wbGf0VoslwnMzDRxZctRb44Ik7VuT1gNSORZku88X1zoyBguoCUDhsjR4G7g
+    J0VA0iZ+mgRDaZphx5JIoxm6zCXNpTQKTXviKyztbnv3uc5h2eo7wR6M7NPgswH1ewA3
+    YQ/Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1695379816;
+    s=strato-dkim-0002; d=strato.com;
+    h=Cc:To:Message-Id:Subject:Date:From:Cc:Date:From:Subject:Sender;
+    bh=MBmy+6PAEVsZIeJOyaTNzolxAAyu/OIriMDq4k6N6nA=;
+    b=O0gAbB+MZCmr4L72TPGUP6V5GTHMMRQwAJWmcJ+GO1Gy9qCWoIUReMDnMkKpA9VFWy
+    jkw/hqgeGWQd+KZtF0rYbi+pOLryw/VBZktvB/nxtHQObeVApAHi1YDjyFDMQcOPGeNr
+    bz5QHMxcbR/MVLES087wY2eTyjlGV9CO2tF0ZliR+3KzC0vW+ms4ADCcjN9GI01AOVAG
+    AwqbpL4rtrCElmmNGf4gqkGAHPe3cKrKPNsHrYgalmKJDlGxrMH/WSM39qM72TYz9Q5a
+    76Emq0uEcdbXtzLePvIadBWOrjIcerh8a1EnrLbZTkNcByDYXaAnErrdPuelb1joLxmE
+    SmIw==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo00
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1695379816;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=Cc:To:Message-Id:Subject:Date:From:Cc:Date:From:Subject:Sender;
+    bh=MBmy+6PAEVsZIeJOyaTNzolxAAyu/OIriMDq4k6N6nA=;
+    b=U5NLr5i1ELb9DsLIWmw4m/eTQppGkvaA1NPKvk0o53RiXHMKE0wMm2f7+tP9GU8hip
+    LEVO5dCsZYK2tZpOxhJ4kkU81dogIf+aXB4ZzKV8M9JcUMSw95AUrFfD86FyhzNa313g
+    k6BOZbysIbuJH2bODtZ+eLvDu5Eu86GMscsbc8fLo3IBXHvhH18I7P3muH87VCzRNLaQ
+    6HHtbOpBO48GSIyOQ1SDc31LQ5Dj0rrWAJLnEgKSCK2BcxV0uYBUyC7f0P2bO/k8rDRs
+    Bc2KOFy5YbYgjpJto6BzdjPLAWXl1OH+YNsI5pivi/cefY8lWbNIQj8tb8Jc5ytud7+y
+    Ul0g==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1695379816;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=Cc:To:Message-Id:Subject:Date:From:Cc:Date:From:Subject:Sender;
+    bh=MBmy+6PAEVsZIeJOyaTNzolxAAyu/OIriMDq4k6N6nA=;
+    b=7k6GyjYOOZIrcufc6fC5Wp5zXKzqY50GVi0rklMhsU42xg+4ihbmpznLs3zv4GI8Ab
+    Yu3VDymQiDqI7ziU2ABA==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQjVd4CteZ/7jYgS+mLFY+H0JAn9VOL59w=="
+Received: from [192.168.244.3]
+    by smtp.strato.de (RZmta 49.8.2 DYNA|AUTH)
+    with ESMTPSA id R04c57z8MAoFTnM
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Fri, 22 Sep 2023 12:50:15 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+Date:   Fri, 22 Sep 2023 12:49:55 +0200
+Subject: [PATCH] arm64: dts: qcom: apq8016-sbc: Add missing ADV7533
+ regulators
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 72QBVEbP9t0Zwm_1hEWTFSktaNZniQz5
-X-Proofpoint-ORIG-GUID: 72QBVEbP9t0Zwm_1hEWTFSktaNZniQz5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-09-22_07,2023-09-21_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
- mlxscore=0 lowpriorityscore=0 suspectscore=0 priorityscore=1501
- bulkscore=0 malwarescore=0 spamscore=0 mlxlogscore=864 adultscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2309220071
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230922-db410c-adv7533-regulators-v1-1-68aba71e529b@gerhold.net>
+X-B4-Tracking: v=1; b=H4sIAFJxDWUC/x3MQQqDMBBA0avIrDswSdqm9iriIppRBySWiYog3
+ t3Q5Vv8f0JmFc7wrU5Q3iXLkgrMo4J+CmlklFgMlqyj2lqM3dNQjyHu/uUcKo/bHNZFM37q8CZ
+ vHA0mQul/yoMc/3fTXtcNHDbbaGsAAAA=
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Stephan Gerhold <stephan@gerhold.net>
+X-Mailer: b4 0.12.3
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the APCS, A53 PLL, cpu-opp-table nodes to set
-the CPU frequency at 800MHz (idle) or 1.008GHz.
+Add the missing regulator supplies to the ADV7533 HDMI bridge to fix
+the following dtbs_check warnings. They are all also supplied by
+pm8916_l6 so there is no functional difference.
 
-Co-developed-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-Signed-off-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
+apq8016-sbc.dtb: bridge@39: 'dvdd-supply' is a required property
+apq8016-sbc.dtb: bridge@39: 'pvdd-supply' is a required property
+apq8016-sbc.dtb: bridge@39: 'a2vdd-supply' is a required property
+        from schema display/bridge/adi,adv7533.yaml
+
+Fixes: 28546b095511 ("arm64: dts: apq8016-sbc: Add HDMI display support")
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 ---
- arch/arm64/boot/dts/qcom/ipq5018.dtsi | 40 +++++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
+ arch/arm64/boot/dts/qcom/apq8016-sbc.dts | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-index 9f13d2dcdfd5..a04b2019c779 100644
---- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-@@ -5,6 +5,7 @@
-  * Copyright (c) 2023 The Linux Foundation. All rights reserved.
-  */
+diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
+index 3c51f891029e..9ffad7d1f2b6 100644
+--- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
++++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
+@@ -172,6 +172,9 @@ adv_bridge: bridge@39 {
+ 		pd-gpios = <&tlmm 32 GPIO_ACTIVE_HIGH>;
  
-+#include <dt-bindings/clock/qcom,apss-ipq.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/clock/qcom,gcc-ipq5018.h>
- #include <dt-bindings/reset/qcom,gcc-ipq5018.h>
-@@ -36,6 +37,8 @@ CPU0: cpu@0 {
- 			reg = <0x0>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
-+			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-+			operating-points-v2 = <&cpu_opp_table>;
- 		};
+ 		avdd-supply = <&pm8916_l6>;
++		a2vdd-supply = <&pm8916_l6>;
++		dvdd-supply = <&pm8916_l6>;
++		pvdd-supply = <&pm8916_l6>;
+ 		v1p2-supply = <&pm8916_l6>;
+ 		v3p3-supply = <&pm8916_l17>;
  
- 		CPU1: cpu@1 {
-@@ -44,6 +47,8 @@ CPU1: cpu@1 {
- 			reg = <0x1>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
-+			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-+			operating-points-v2 = <&cpu_opp_table>;
- 		};
- 
- 		L2_0: l2-cache {
-@@ -54,6 +59,23 @@ L2_0: l2-cache {
- 		};
- 	};
- 
-+	cpu_opp_table: opp-table-cpu {
-+		compatible = "operating-points-v2";
-+		opp-shared;
-+
-+		opp-800000000 {
-+			opp-hz = /bits/ 64 <800000000>;
-+			opp-microvolt = <1100000>;
-+			clock-latency-ns = <200000>;
-+		};
-+
-+		opp-1008000000 {
-+			opp-hz = /bits/ 64 <1008000000>;
-+			opp-microvolt = <1100000>;
-+			clock-latency-ns = <200000>;
-+		};
-+	};
-+
- 	firmware {
- 		scm {
- 			compatible = "qcom,scm-ipq5018", "qcom,scm";
-@@ -181,6 +203,24 @@ v2m1: v2m@1000 {
- 			};
- 		};
- 
-+		a53pll: clock@b116000 {
-+			compatible = "qcom,ipq5018-a53pll";
-+			reg = <0x0b116000 0x40>;
-+			#clock-cells = <0>;
-+			clocks = <&xo_board_clk>;
-+			clock-names = "xo";
-+		};
-+
-+		apcs_glb: mailbox@b111000 {
-+			compatible = "qcom,ipq5018-apcs-apps-global",
-+				     "qcom,ipq6018-apcs-apps-global";
-+			reg = <0x0b111000 0x1000>;
-+			#clock-cells = <1>;
-+			clocks = <&a53pll>, <&xo_board_clk>, <&gcc GPLL0>;
-+			clock-names = "pll", "xo", "gpll0";
-+			#mbox-cells = <1>;
-+		};
-+
- 		timer@b120000 {
- 			compatible = "arm,armv7-timer-mem";
- 			reg = <0x0b120000 0x1000>;
+
+---
+base-commit: a35461d47fe3e555602912b905f1bae7045256eb
+change-id: 20230922-db410c-adv7533-regulators-89a607130f1d
+
+Best regards,
 -- 
-2.34.1
+Stephan Gerhold <stephan@gerhold.net>
 
