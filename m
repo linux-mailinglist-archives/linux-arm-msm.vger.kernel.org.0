@@ -2,149 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 170637AA4D9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Sep 2023 00:21:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CBCB27AA61E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Sep 2023 02:36:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233263AbjIUWVj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Sep 2023 18:21:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36242 "EHLO
+        id S229509AbjIVAgC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Sep 2023 20:36:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233207AbjIUWVA (ORCPT
+        with ESMTP id S229458AbjIVAgB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Sep 2023 18:21:00 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF240269E;
-        Thu, 21 Sep 2023 14:49:31 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38LLkGvV024475;
-        Thu, 21 Sep 2023 21:49:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=CL3FVM1qBZnRnbh0US8YjFD3CDy8ri2rtoQ7u0QpjGc=;
- b=aASXP1CRFPXmTtiLeI+Rn/0NcGH/688lUbhc1GWeWnomme3cxVY0ZSZ7hCvui8c4Zx4h
- ECd+8v/AoaqqCx+bV21BA/R5ChzMACFFRVyJDcn2yJRmdvnM2sK8MeE+jPZ3vWxbZgsF
- aLXkYcqrsx/hR0spGGAb/E3h6j4ATNmQOrp8Qw9jq3AwTcvEqzXrB+l0hVmAXd49B1LC
- OfsN7vmOlANLTXQdCSJblb7Q/ELghKtMFBJzBxSLWmejvLtFwDQCY3wHUpa4v/RyF0b2
- Ga8BMB08c7zT3BKESw4Ay1jxGx9w8Tomnz3ubGmCjCmMJSi+b2neHJ91SxP8tchx86hj uA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t8uf2g9pp-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 21 Sep 2023 21:49:03 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38LLn2Xw031173
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 21 Sep 2023 21:49:02 GMT
-Received: from hu-wcheng-lv.qualcomm.com (10.49.16.6) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Thu, 21 Sep 2023 14:49:02 -0700
-From:   Wesley Cheng <quic_wcheng@quicinc.com>
-To:     <mathias.nyman@intel.com>, <gregkh@linuxfoundation.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <perex@perex.cz>,
-        <tiwai@suse.com>, <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <srinivas.kandagatla@linaro.org>, <bgoswami@quicinc.com>,
-        <Thinh.Nguyen@synopsys.com>
-CC:     <linux-kernel@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>
-Subject: [PATCH v7 32/33] ALSA: usb-audio: Allow for rediscovery of connected USB SND devices
-Date:   Thu, 21 Sep 2023 14:48:42 -0700
-Message-ID: <20230921214843.18450-33-quic_wcheng@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230921214843.18450-1-quic_wcheng@quicinc.com>
-References: <20230921214843.18450-1-quic_wcheng@quicinc.com>
+        Thu, 21 Sep 2023 20:36:01 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DC49F5;
+        Thu, 21 Sep 2023 17:35:55 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2c00b37ad84so27861741fa.0;
+        Thu, 21 Sep 2023 17:35:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1695342953; x=1695947753; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pcgEpxf6nFpDc1AoWBX1NbEg1wTZhjC9vC9cuLFntGk=;
+        b=bP4VmE/yFI4vZJuXrzG/dTfW722v32fqJ01fOeyJGWPQRhdLLZcF8GdGCDtrA/A0Ap
+         eOxx5sBxTu7FUM3KXH05jHHIG6bpBHg+MamyPSgGRVqhTabdMgefO5ZbITa2EcVRxxze
+         VMR4Hf3YNVvQK84aBqQfXqmet/QqsYR/+5bj63oy2ARMIH/LbQ9FjR9xdmsg8q9+5wZX
+         Mo8UuHQXOrilQBm7cr89IzkSwVS8mBsebqetQaNQ8TR7CmcR0FsSvhFmQv8vAb+p1v4Y
+         X4bnMq8Tsz7p4ElxBYg5vWHubTsyadrsrqa7ATKSzaAAgHO0vkf8tJIJJTj+HixXN0fi
+         Ou6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695342953; x=1695947753;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pcgEpxf6nFpDc1AoWBX1NbEg1wTZhjC9vC9cuLFntGk=;
+        b=U/lEXPxmwL0mxeIG5E8LC+vexqnWflYQXUUaumYdPbS6apT+nnUcofO4UoWCVIXAU1
+         0eVZwInILYlqSyBfcPyoh6z3lPa415v0PGUXKoh+pn0v6UZerjXhxTEJN3mg0BcdS8B0
+         7+a49D23fY4FJ0PwWgRCUC2V2l6AHlTCHd+EFzjVXERBGCE5wlEFt3KjJ564op6ZWSHf
+         EymniS3vqBpGAyPXRPm2qSjEQXrc3scLFcrCu7Bvff8JreRqTmXM7My9lFfjb2yvdtnK
+         cWsbJdbd+ppdCuSaq7kw3FbNByhJlP5dSNOzXoTxkjSlrGRQeh2Ya3+ATJaY/0lxfmtA
+         L8sA==
+X-Gm-Message-State: AOJu0YycTfgQrbghQXnPGxTJOF20S5iN2QDuWb8O2s2Z6+RfKLI6CNpT
+        ZhFQZ4Ah/myIHWIECzZZts42LaMNKMY=
+X-Google-Smtp-Source: AGHT+IGH/FfccntZ6SNaaAn/GWzo7C23wHsPYmFcJSIYjoNSGJSSL4IrSjXHAakui0LRqDfkJhDUjQ==
+X-Received: by 2002:a2e:9295:0:b0:2b6:dc55:c3c7 with SMTP id d21-20020a2e9295000000b002b6dc55c3c7mr6360106ljh.20.1695342953141;
+        Thu, 21 Sep 2023 17:35:53 -0700 (PDT)
+Received: from i-vetokaappi.home.lan (dsl-hkibng42-56733b-36.dhcp.inet.fi. [86.115.59.36])
+        by smtp.gmail.com with ESMTPSA id j23-20020a2e3c17000000b002bff365c7bfsm615462lja.35.2023.09.21.17.35.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Sep 2023 17:35:52 -0700 (PDT)
+From:   =?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        =?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 0/2] Add rpm-master-stats nodes for MSM8226 and MSM8974
+Date:   Fri, 22 Sep 2023 03:35:31 +0300
+Message-Id: <20230922003533.107835-1-matti.lehtimaki@gmail.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: RoeeOnwb49JI3NqfV2kxyqmPbxKTjn-9
-X-Proofpoint-ORIG-GUID: RoeeOnwb49JI3NqfV2kxyqmPbxKTjn-9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-09-21_18,2023-09-21_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- priorityscore=1501 malwarescore=0 adultscore=0 mlxlogscore=999 mlxscore=0
- impostorscore=0 clxscore=1015 suspectscore=0 phishscore=0 bulkscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2309210188
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In case of notifying SND platform drivers of connection events, some of
-these use cases, such as offloading, require an ASoC USB backend device to
-be initialized before the events can be handled.  If the USB backend device
-has not yet been probed, this leads to missing initial USB audio device
-connection events.
+Add rpm-master-stats nodes and the required RPM MSG RAM slices
+for MSM8226 and MSM8974.
 
-Expose an API that traverses the usb_chip array for connected devices, and
-to call the respective connection callback registered to the SND platform
-driver.
+Matti Lehtimäki (2):
+  ARM: qcom: msm8226: Add rpm-master-stats node
+  ARM: qcom: msm8974: Add rpm-master-stats node
 
-Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
----
- sound/usb/card.c | 19 +++++++++++++++++++
- sound/usb/card.h |  2 ++
- 2 files changed, 21 insertions(+)
+ arch/arm/boot/dts/qcom/qcom-msm8226.dtsi | 32 ++++++++++++++++++++++++
+ arch/arm/boot/dts/qcom/qcom-msm8974.dtsi | 32 ++++++++++++++++++++++++
+ 2 files changed, 64 insertions(+)
 
-diff --git a/sound/usb/card.c b/sound/usb/card.c
-index 88f431917c15..7d3f470754ca 100644
---- a/sound/usb/card.c
-+++ b/sound/usb/card.c
-@@ -202,6 +202,25 @@ struct snd_usb_stream *snd_usb_find_suppported_substream(int card_idx,
- }
- EXPORT_SYMBOL_GPL(snd_usb_find_suppported_substream);
- 
-+/*
-+ * in case the platform driver was not ready at the time of USB SND
-+ * device connect, expose an API to discover all connected USB devices
-+ * so it can populate any dependent resources/structures.
-+ */
-+void snd_usb_rediscover_devices(void)
-+{
-+	int i;
-+
-+	mutex_lock(&register_mutex);
-+	for (i = 0; i < SNDRV_CARDS; i++) {
-+		if (usb_chip[i])
-+			if (platform_ops && platform_ops->connect_cb)
-+				platform_ops->connect_cb(usb_chip[i]);
-+	}
-+	mutex_unlock(&register_mutex);
-+}
-+EXPORT_SYMBOL_GPL(snd_usb_rediscover_devices);
-+
- /*
-  * disconnect streams
-  * called from usb_audio_disconnect()
-diff --git a/sound/usb/card.h b/sound/usb/card.h
-index 01f7e10f30f4..c0aeda17ed69 100644
---- a/sound/usb/card.h
-+++ b/sound/usb/card.h
-@@ -221,11 +221,13 @@ int snd_usb_unregister_platform_ops(void);
- #if IS_ENABLED(CONFIG_SND_USB_AUDIO)
- struct snd_usb_stream *snd_usb_find_suppported_substream(int card_idx,
- 			struct snd_pcm_hw_params *params, int direction);
-+void snd_usb_rediscover_devices(void);
- #else
- static struct snd_usb_stream *snd_usb_find_suppported_substream(int card_idx,
- 			struct snd_pcm_hw_params *params, int direction)
- {
- 	return NULL;
- }
-+static void snd_usb_rediscover_devices(void) { }
- #endif /* IS_ENABLED(CONFIG_SND_USB_AUDIO) */
- #endif /* __USBAUDIO_CARD_H */
+-- 
+2.39.2
+
