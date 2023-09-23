@@ -2,108 +2,207 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 744EE7AC427
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Sep 2023 19:46:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B932F7AC47B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Sep 2023 20:45:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232137AbjIWRqM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 Sep 2023 13:46:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55530 "EHLO
+        id S229674AbjIWSpn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Sep 2023 14:45:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232127AbjIWRqL (ORCPT
+        with ESMTP id S229634AbjIWSpm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 Sep 2023 13:46:11 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A936A194
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Sep 2023 10:46:04 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-532bf1943ebso4752761a12.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Sep 2023 10:46:04 -0700 (PDT)
+        Sat, 23 Sep 2023 14:45:42 -0400
+Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63F7E136
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Sep 2023 11:45:36 -0700 (PDT)
+Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-59f6492b415so3729447b3.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Sep 2023 11:45:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695491163; x=1696095963; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zpKk21cNUHADpHved85Mc4llwz1lMTxoOCJMbiwCyKA=;
-        b=jUveVYLaTDRThjLRrEMWOdk4MUEuUdHNVyFxMLDdVcSan3R4wxY99zm6zUXXYPfuiU
-         Q1W9kKabVn/u3RArr+6yf7MEJGQp9WQREuL0iUyLo9Q1rbk3B2Uc+6xihquUiP8EziIa
-         sgdgnHYVReK9uqiTWRNlyCwaaTWZitmxTka2T1F3NF3BPA0qjiouExjNckDijPLigfCq
-         i7CIJKm1m9fuQapqlh9fHK8tUv+FPt8X6RYSx3N4Iqy8vnDErO6CGtk110Oz5WyX7mat
-         g8cO2d3dRygZeP9whkCKVTJF/TBkwOvGoM/L15+ZQdPu/0S8BeNq0lLH39SutSYzmQy5
-         0H5g==
+        d=linaro.org; s=google; t=1695494735; x=1696099535; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=GmaXvBuWa7AvubraK1rqvA0Y3W4i4RTGV9iuI7F73tQ=;
+        b=jIvXCGKo9I1DQzZMHANuPcidttZEFYKbH/Fs5bpACAdICj6XTU5iYe7bcB/iVdvg3e
+         uraJIygLe5U2USFilIvToGOql/J4hVFmsTtzF/5TKuQ0LFrh7blQMcLRYAtHhJFizF25
+         xd3JSSN46jjSSS3fYJhlhrm0w9Y9AYMMZrXwNRGwlxJPQ3clkH16DYGDBTxCgiY5YiEg
+         0eQ11KATPn+Iu1Z7rK1eqfvX3kqa2AxYTxFuQv3Iw7KcmKzZa1uZcxAbtwSlWR/vEHrP
+         Scwuv/xVRp8xHccMBgOpgOwxHTNOW5f/exrYVYVnt5FBuIx+e4iz9WFYet2M/Miotq/G
+         VeGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695491163; x=1696095963;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zpKk21cNUHADpHved85Mc4llwz1lMTxoOCJMbiwCyKA=;
-        b=DAEv5UoZK4FUZ9NSvNUEFKK+KODsL3AacTqaUeIj3n/YhIzSLnzQ3qiIXilbDv4FQ9
-         V9CaoiGbkhfHGRg3IZ6h4hu39MGOGnmUB5FTvKwz/cSz/w46DzHD/7ikMHBj33xOoGVi
-         GCKLoYEX9O1pxxvaqFGSk8acsJ0dB5LTFwkHz2lbauAy/DTOwLodVyQ3dKUNdeSAfw0V
-         R7CR7e4xM5opMwXYoRaRrFdDqj3HyUPbbjC6BgWM6sB9PX1vauCVVyluLgWciHEK6bqE
-         UGujZeT9qR4PVTAmKCoEveX899MJCHoyKWcjBc9HOWNgftwnfh7uEkrdX9C0BGsp6NWP
-         Xu5A==
-X-Gm-Message-State: AOJu0Yya1fsKbNUwuI/dOFRBLka+TXEJSJQNzA6NKbOlShTHSNSQbebH
-        /rYiPR/qSBLvd85+lVFEDBdLHg==
-X-Google-Smtp-Source: AGHT+IH8Pla4hYyuJwWIentvI+uehMgSIzlegcxu0whiArY0JoahjPG0a7PfV5DHuPn+yhBHqV6FRA==
-X-Received: by 2002:aa7:c318:0:b0:525:442b:6068 with SMTP id l24-20020aa7c318000000b00525442b6068mr2340355edq.13.1695491163142;
-        Sat, 23 Sep 2023 10:46:03 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.100])
-        by smtp.gmail.com with ESMTPSA id fi9-20020a056402550900b00533bab9d9f1sm962586edb.1.2023.09.23.10.46.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 23 Sep 2023 10:46:02 -0700 (PDT)
-Message-ID: <8d7672a6-67e9-f983-b22f-37f1ee47f125@linaro.org>
-Date:   Sat, 23 Sep 2023 19:46:00 +0200
+        d=1e100.net; s=20230601; t=1695494735; x=1696099535;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GmaXvBuWa7AvubraK1rqvA0Y3W4i4RTGV9iuI7F73tQ=;
+        b=jVTHDygK/ZeLSPcwy+YAe0plC8UeX34GlvwMIyDPxyV/ivtleOAfrk+iYDs9nhLFTC
+         I9ZZAXv0xnszPWrAZCJ2oKHV6aOEuoimqX5xxGnWoYJFrOHfS9QzfcVM/7pUc1PVPNU2
+         gcQK5EbPG4oamPV0oYcjf6OQ6kwFT+CHzRxfuTfkjDw5HOSD6uWLnLd8AzFrbRU3yZz7
+         CUM41ftV8kYZBDFMTmMnjA5L/wekNmYWJzlHrAyMLW2qEzYw+KhwnVdjaqBXTu59mHaG
+         abVUScgYBUX4+KM8IBJ9cnPD2km3Vl2RMDQNI2K0fB8gXodXdlSgNp5INQdgus2uNzqu
+         PgCA==
+X-Gm-Message-State: AOJu0YyxHjZ6sXUU8pmUoajch97ydnFtmMosSBYOFEBA0Pzm8u4BEsfX
+        /a5CCE60HTekkpnbDknLblO3cASRofZTtDa/71i5rw==
+X-Google-Smtp-Source: AGHT+IHUX/HpZOHnPohy3vbcV4DvnRkwtBEzkQ60I21JGnwItYErq9DaNssYhIBNS9II39Q3/GLOrpeU1DuEsvI6y4A=
+X-Received: by 2002:a81:bc0c:0:b0:59f:3343:951b with SMTP id
+ a12-20020a81bc0c000000b0059f3343951bmr3528849ywi.4.1695494735537; Sat, 23 Sep
+ 2023 11:45:35 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v3 1/3] dt-bindings: reserved-memory: rmtfs: Allow guard
- pages
-Content-Language: en-US
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230920-rmtfs-mem-guard-pages-v3-0-305b37219b78@quicinc.com>
- <20230920-rmtfs-mem-guard-pages-v3-1-305b37219b78@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230920-rmtfs-mem-guard-pages-v3-1-305b37219b78@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+References: <1694813901-26952-1-git-send-email-quic_khsieh@quicinc.com>
+ <1694813901-26952-2-git-send-email-quic_khsieh@quicinc.com>
+ <CAA8EJprRFYMF-6yxcL75rftfii0kt7hmg_+TeOMJw+BRyDYdeg@mail.gmail.com> <1c82a0a6-d85f-9800-bdc4-2a4892b4239b@quicinc.com>
+In-Reply-To: <1c82a0a6-d85f-9800-bdc4-2a4892b4239b@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sat, 23 Sep 2023 21:45:23 +0300
+Message-ID: <CAA8EJpoW8COZD7+yg9oZ=k=x36+XQKaJgvhab=XZPwTVuixh2A@mail.gmail.com>
+Subject: Re: [PATCH v3 1/7] drm/msm/dp: tie dp_display_irq_handler() with dp driver
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, andersson@kernel.org, quic_abhinavk@quicinc.com,
+        quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
+        marijn.suijten@somainline.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/09/2023 04:37, Bjorn Andersson wrote:
-> On some Qualcomm platforms the firwmare, or hardware, does not
-> gracefully handle memory protection of the rmtfs memory region when
-> placed adjacent to other protected region. Some DeviceTree authors have
-> worked around this issue by explicitly reserving the space around the
-> region, but this prevents such author to use rely on the OS to place the
-> region, through the use of "size" (instead of a fixed location).
-> 
+On Sat, 23 Sept 2023 at 02:03, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+>
+>
+> On 9/15/2023 5:29 PM, Dmitry Baryshkov wrote:
+> > On Sat, 16 Sept 2023 at 00:38, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+> >> Currently the dp_display_irq_handler() is executed at msm_dp_modeset_init()
+> >> which ties irq registration to the DPU device's life cycle, while depending on
+> >> resources that are released as the DP device is torn down. Move register DP
+> >> driver irq handler at dp_display_probe() to have dp_display_irq_handler()
+> >> is tied with DP device.
+> >>
+> >> Changes in v3:
+> >> -- move calling dp_display_irq_handler() to probe
+> > Was there a changelog for the previous reivions? What is the
+> > difference between v1 and v2?
+> >
+> >> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> >> ---
+> >>   drivers/gpu/drm/msm/dp/dp_display.c | 35 +++++++++++++----------------------
+> >>   drivers/gpu/drm/msm/dp/dp_display.h |  1 -
+> >>   2 files changed, 13 insertions(+), 23 deletions(-)
+> >>
+> >> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> >> index 76f1395..c217430 100644
+> >> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> >> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> >> @@ -1193,30 +1193,23 @@ static irqreturn_t dp_display_irq_handler(int irq, void *dev_id)
+> >>          return ret;
+> >>   }
+> >>
+> >> -int dp_display_request_irq(struct msm_dp *dp_display)
+> >> +static int dp_display_request_irq(struct dp_display_private *dp)
+> >>   {
+> >>          int rc = 0;
+> >> -       struct dp_display_private *dp;
+> >> -
+> >> -       if (!dp_display) {
+> >> -               DRM_ERROR("invalid input\n");
+> >> -               return -EINVAL;
+> >> -       }
+> >> -
+> >> -       dp = container_of(dp_display, struct dp_display_private, dp_display);
+> >> +       struct device *dev = &dp->pdev->dev;
+> >>
+> >> -       dp->irq = irq_of_parse_and_map(dp->pdev->dev.of_node, 0);
+> >>          if (!dp->irq) {
+> > What is the point in this check?
+> >
+> >> -               DRM_ERROR("failed to get irq\n");
+> >> -               return -EINVAL;
+> >> +               dp->irq = platform_get_irq(dp->pdev, 0);
+> >> +               if (!dp->irq) {
+> >> +                       DRM_ERROR("failed to get irq\n");
+> >> +                       return -EINVAL;
+> >> +               }
+> >>          }
+> >>
+> >> -       rc = devm_request_irq(dp_display->drm_dev->dev, dp->irq,
+> >> -                       dp_display_irq_handler,
+> >> +       rc = devm_request_irq(dev, dp->irq, dp_display_irq_handler,
+> >>                          IRQF_TRIGGER_HIGH, "dp_display_isr", dp);
+> >>          if (rc < 0) {
+> >> -               DRM_ERROR("failed to request IRQ%u: %d\n",
+> >> -                               dp->irq, rc);
+> >> +               DRM_ERROR("failed to request IRQ%u: %d\n", dp->irq, rc);
+> >>                  return rc;
+> >>          }
+> >>
+> >> @@ -1287,6 +1280,10 @@ static int dp_display_probe(struct platform_device *pdev)
+> >>
+> >>          platform_set_drvdata(pdev, &dp->dp_display);
+> >>
+> >> +       rc = dp_display_request_irq(dp);
+> >> +       if (rc)
+> >> +               return rc;
+> > This way the IRQ ends up being enabled in _probe. Are we ready to
+> > handle it here? Is the DP device fully setup at this moment?
+>
+> The irq is enabled here.
+>
+> but DP driver hpd hardware block has not yet be enabled. this means no
+> irq will be delivered.
+
+There are other IRQ kinds, not only just HPD ones.
+
+>
+>   .hpd_enable() will call pm_runtime_resume_and_get() and
+> dp_catalog_ctrl_hpd_enable().
+>
+> after .hpd_enable() irq will be delivered and handled properly.
+>
+>
+>
+> >> +
+> >>          rc = component_add(&pdev->dev, &dp_display_comp_ops);
+> >>          if (rc) {
+> >>                  DRM_ERROR("component add failed, rc=%d\n", rc);
+> >> @@ -1549,12 +1546,6 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+> >>
+> >>          dp_priv = container_of(dp_display, struct dp_display_private, dp_display);
+> >>
+> >> -       ret = dp_display_request_irq(dp_display);
+> >> -       if (ret) {
+> >> -               DRM_ERROR("request_irq failed, ret=%d\n", ret);
+> >> -               return ret;
+> >> -       }
+> >> -
+> >>          ret = dp_display_get_next_bridge(dp_display);
+> >>          if (ret)
+> >>                  return ret;
+> >> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
+> >> index 1e9415a..b3c08de 100644
+> >> --- a/drivers/gpu/drm/msm/dp/dp_display.h
+> >> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
+> >> @@ -35,7 +35,6 @@ struct msm_dp {
+> >>   int dp_display_set_plugged_cb(struct msm_dp *dp_display,
+> >>                  hdmi_codec_plugged_cb fn, struct device *codec_dev);
+> >>   int dp_display_get_modes(struct msm_dp *dp_display);
+> >> -int dp_display_request_irq(struct msm_dp *dp_display);
+> >>   bool dp_display_check_video_test(struct msm_dp *dp_display);
+> >>   int dp_display_get_test_bpp(struct msm_dp *dp_display);
+> >>   void dp_display_signal_audio_start(struct msm_dp *dp_display);
+> >> --
+> >> 2.7.4
+> >>
+> >
 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-> +
-> +      When this is set, the first and last 4kB should be left unused, and the
-> +      effective size of the region will thereby shrink with 8kB.
-
-Maybe we should not reference the actual size (4 and 8 kB), but rather
-page - "the first and last pages in mapping should be left unused ..." etc?
-
-
-
-Best regards,
-Krzysztof
-
+-- 
+With best wishes
+Dmitry
