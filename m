@@ -2,106 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 36C977AC1C0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Sep 2023 14:13:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A53E7AC230
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Sep 2023 15:14:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231387AbjIWMNS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 Sep 2023 08:13:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53956 "EHLO
+        id S231688AbjIWNOu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Sep 2023 09:14:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231343AbjIWMNR (ORCPT
+        with ESMTP id S231494AbjIWNOt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 Sep 2023 08:13:17 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D63A3197;
-        Sat, 23 Sep 2023 05:13:11 -0700 (PDT)
-Received: from g550jk.localnet (k10064.upc-k.chello.nl [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 5560ED0F49;
-        Sat, 23 Sep 2023 12:12:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1695471160; bh=Xj/Uw7m2O7QMa0IkU2qWDtz5/lenB2nNjxkSTe8qFYs=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=sa0RpBTjd2XsuLTx3H6lYlWvkLTKLXQ/GottY4arpVDzHeWt9NwX9o9uwVfinJZeQ
-         oWfv1qtdXQRTz18dQDCBKNkV8HH5qevgk+dsE2UEmaB6/d4i+OMu29jL3pRLIh0smR
-         jHxhC1dL+Zt0KFR2RBncSdEf7/XctTNd/JO7PRuk=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/2] Small style fixes in msm8974.dtsi
-Date:   Sat, 23 Sep 2023 14:12:39 +0200
-Message-ID: <1961613.usQuhbGJ8B@z3ntu.xyz>
-In-Reply-To: <a26911e0-c77b-1eee-5f85-1491b83acd10@linaro.org>
-References: <20230627-msm8974-sort-v1-0-75c5800a2e09@z3ntu.xyz>
- <2899653.e9J7NaK4W3@z3ntu.xyz>
- <a26911e0-c77b-1eee-5f85-1491b83acd10@linaro.org>
+        Sat, 23 Sep 2023 09:14:49 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B99F3199;
+        Sat, 23 Sep 2023 06:14:38 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2c008d8fd07so60244531fa.1;
+        Sat, 23 Sep 2023 06:14:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1695474877; x=1696079677; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2O84Olrgji0dplUaih9FZ5HqCL+isSXoo5opIqSD9tk=;
+        b=aeXcKcUqqFOfRLigQsDSTBXW0Kd+wFNKu94poy2Cng8QPnE1Ff5Y3e8D7QLob4tjC/
+         o4Zr3xi8BlnGRQobm35bsst6U80U7G5EqINOvXYmm7c4vsAnf3OUORRk/PId+wiKfNRB
+         J/AXswpfzHiXcWfUECtE7dRS7b47139bDBBWsJJ05nMFVFSvU6K7SUE2isaV3INTTZwI
+         6S6VJY2hGqfVQVsPeImsRFMBP42ZqQQzKm04FL0MaliM4+0G9bUbvYxf2VDk8JcS1Ldp
+         JcpKwvwwSCD6BgCZ6CteQpiVFI3aoOCuLtSw5g0L/AwElg8TFzaksu5oCmC5i50OQ6Tx
+         Jrog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695474877; x=1696079677;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2O84Olrgji0dplUaih9FZ5HqCL+isSXoo5opIqSD9tk=;
+        b=N7at0p4kQcpDOLedV+im4VNQGDVsWUPegNEyjQCPFUPDZGLOBIrm+3Uxp8yWhWJEIR
+         ZGqXQdffSKogQPCsrEvOYnl9mepfZiYk7MfI0BlX2AW7cC1udOiXDeciBVvFyqDULV3j
+         reNy1RLwh014nKSkUM1WVLcWxpqSeisahS4PbqmKWty1REo6L+xl3kAb8QUJT4nkOf+/
+         +XMbY79Rlej0Spo/lF0yKVr7D0yFCXnsjb/DaK880EcpQvbYowIaghltG51ZndkKVtqH
+         g/EbUZScYjeffdMSTqV2YqeD5bbbeqDR4ATiBdHzpDVyq0LhEYwvhmfvnmPCDv48+cqm
+         S9aA==
+X-Gm-Message-State: AOJu0YxBePsnFcJ7JJPeEvJ5R81FmDJ8FcXngGxb7+YeeyXaztOIv2qV
+        o75Y7+Eu7FCCOjwpUXSE8n1rgMw1QVY=
+X-Google-Smtp-Source: AGHT+IHg+zM0GJOc24XFRIaA7ONZWbhpFwyDvcz8TPb20uWJE2B2ifW0ySLiYIjSPTbF9PFcXykb7w==
+X-Received: by 2002:a05:6512:238f:b0:503:1992:4d63 with SMTP id c15-20020a056512238f00b0050319924d63mr2295747lfv.19.1695474876726;
+        Sat, 23 Sep 2023 06:14:36 -0700 (PDT)
+Received: from i-vetokaappi.home.lan (dsl-hkibng42-56733b-36.dhcp.inet.fi. [86.115.59.36])
+        by smtp.gmail.com with ESMTPSA id m1-20020ac24281000000b004ff96c09b47sm1080847lfh.260.2023.09.23.06.14.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 23 Sep 2023 06:14:36 -0700 (PDT)
+From:   =?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        =?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/2] MPM pin mappings for MSM8226 and MSM8974
+Date:   Sat, 23 Sep 2023 16:14:30 +0300
+Message-Id: <20230923131432.21721-1-matti.lehtimaki@gmail.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Samstag, 23. September 2023 14:03:05 CEST Konrad Dybcio wrote:
-> On 9/22/23 18:59, Luca Weiss wrote:
-> > On Dienstag, 27. Juni 2023 21:45:12 CEST Luca Weiss wrote:
-> >> While making sure the nodes are sorted correctly, I also noticed that
-> >> some lines are wrongly indented. Fix both.
-> >> 
-> >> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> >> ---
-> >> 
-> >> Luca Weiss (2):
-> >>        ARM: dts: qcom: msm8974: replace incorrect indentation in
-> >>        interconnect
-> >> 
-> >> ARM: dts: qcom: msm8974: sort nodes by reg
-> >> 
-> >>   arch/arm/boot/dts/qcom/qcom-msm8974.dtsi | 80
-> >> 
-> >> ++++++++++++++++---------------- 1 file changed, 40 insertions(+), 40
-> >> deletions(-)
-> >> ---
-> >> base-commit: 53cdf865f90ba922a854c65ed05b519f9d728424
-> >> change-id: 20230627-msm8974-sort-e34b28f10a34
-> >> 
-> >> Best regards,
-> > 
-> > Hi Bjorn,
-> > 
-> > also ping on this one. I didn't check again if it now conflicts with -next
-> > (as pointed out by Konrad a while ago), if it does let me know and I'll
-> > resend.
-> git fetch linux-next
-> git checkout linux-next/master
-> b4 shazam <msgid>
-> 
-> if retval == 0:
-> 	ping
-> else
-> 	resend
-> 
-> this only takes a couple seconds and saves you the burden of sending
-> an email and Bjorn of checking ^^
+This series adds the MPM wakeirq mappings for MSM8226 and MSM8974.
 
-Well, seems to apply fine still, so seems the other series wasn't picked up 
-yet. But true, would've been faster to check instead of writing that message 
-;)
+Changes in v2:
+  - Add missing entry to MSM8226 mapping
+  - Add Reviewed-by tag to MSM8974 patch
 
-> 
-> Konrad
+Matti Lehtimäki (2):
+  pinctrl: qcom: msm8226: Add MPM pin mappings
+  pinctrl: qcom: msm8974: Add MPM pin mappings
 
+ drivers/pinctrl/qcom/pinctrl-msm8226.c | 12 ++++++++++++
+ drivers/pinctrl/qcom/pinctrl-msm8x74.c | 12 ++++++++++++
+ 2 files changed, 24 insertions(+)
 
-
+-- 
+2.39.2
 
