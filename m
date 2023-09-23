@@ -2,71 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2811F7AC4C1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Sep 2023 21:19:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AAC977AC4CA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Sep 2023 21:25:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229521AbjIWTTa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 Sep 2023 15:19:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58650 "EHLO
+        id S229592AbjIWTZd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Sep 2023 15:25:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229493AbjIWTT3 (ORCPT
+        with ESMTP id S229460AbjIWTZd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 Sep 2023 15:19:29 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3409FB
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Sep 2023 12:19:22 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-4053cf48670so27007235e9.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Sep 2023 12:19:22 -0700 (PDT)
+        Sat, 23 Sep 2023 15:25:33 -0400
+Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87B9819A
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Sep 2023 12:25:26 -0700 (PDT)
+Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-59eb8ec5e20so48282627b3.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Sep 2023 12:25:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695496761; x=1696101561; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Z8xXffWx5kVe/4j/cS4SgS21MBCU87jO1sBks4myRec=;
-        b=QOVudxrP8jBGrVyaoqCycWtWegWAMqpQn4Jx4ZYahxAYPMLKhUw604xDfscmTLxDUW
-         GgoeYozsR3c8IXq3M9qCqo8Jn9ZioDVcadq7mWKccfdgnSPqEqyF9VdZj5VlU8FKu2Wg
-         psVYG4tsxp5NRwyDQjEtc7ZPHAiOC73DvyISyotNzJQvM3nTpjkD+xzZLohqjchRPCd1
-         QikPjlUKnznQ8hFFkj6OFFRNKAZbHo5VijO+tjZFEtXpLRE6HQsmIYViUu4puPHUNY4b
-         EQL8+zIttb/tcY5IM3iQGZjoVdlEy/jlEknyvug5TAcVMd2pymO0qEPHZWRS2MALMbh8
-         161A==
+        d=linaro.org; s=google; t=1695497125; x=1696101925; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=bxesPwbKK+IbMVfBmjWGgUeL1XEUWzxsSpby7O2MdPw=;
+        b=DlfYuI5aGglWeu/+eBC0xwDAVUpKuie/z9nXzJ/nnqYKlx14qw0kjlf06AKAdQp/Ny
+         rxkioxZ4J6Jmka5r/+889fxTKMai5aI21JP0MZfv1Vm+221dMOM6tylkpuP6tdyosFhh
+         OM4CSpVx4V9PqDMw/bBUP+ZgTmlXdqN7kVQUw5e0diqhppLoaU1S/F0AVJBdbjKX8CfY
+         1v4AhEu7imk722Zoz2aXGQqLR4pUMfhq6RJf1+A6U43/zzJQnBdetwhE53VYURh7ntx5
+         ufq8Cle/r+s45ozuR+uQASts9gSZn3/zKyb6fecutdorudCcT6VsCU/h+00qFBjQh6/z
+         LyPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695496761; x=1696101561;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z8xXffWx5kVe/4j/cS4SgS21MBCU87jO1sBks4myRec=;
-        b=lRNqFN/gbjqlu+0hEsjjyhEfsgRym9uWFtxB9d9TgdnQrsomBF5rjNalKVn92bgSEj
-         IbECyDjIX/WctqAcQZPztB2yp219L1GLeBUywx26Jdo0HDMr/UsH/Yb1FQSg3YpZXbkD
-         79PQS4r7Ilo+oYHxIsnMOmAreaFLiLNMd2c9rwn+UFVdTf7SCd17jFeFJ++dqJN/84Fw
-         Q7OK6mO3ykZqdBKlpz6eAqW4xP/Iwn4rxIUzJK2dkNObbISSM7uAJQ/jVEcZB3+mFNQl
-         WUB8uHjVZ92oOOqLpj8TJ/lxxSkIm3rSwLzSX0Fl0rBrfKadHRJXJkukLmWlUKa/NoJo
-         HWQg==
-X-Gm-Message-State: AOJu0Yxfo3g5+baa0MjcH/6SG3xZrJFow9a37IgZ14zBuxSJxdID/pD0
-        CLTbDYtNOy22DobCumGu/tY433nqjsROK/4+AH091A==
-X-Google-Smtp-Source: AGHT+IFh4AYqzmkpbkxYp2xkj0c0iNGkqPrGZTygHfEDvoelBIFMh/S2eXgEqZe3+Mv/8+lWyX8ycg==
-X-Received: by 2002:a1c:720c:0:b0:401:38dc:891c with SMTP id n12-20020a1c720c000000b0040138dc891cmr2333405wmc.5.1695496761269;
-        Sat, 23 Sep 2023 12:19:21 -0700 (PDT)
-Received: from [10.73.151.44] ([188.111.42.10])
-        by smtp.gmail.com with ESMTPSA id k12-20020a7bc40c000000b003fc04d13242sm10858665wmi.0.2023.09.23.12.19.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 23 Sep 2023 12:19:20 -0700 (PDT)
-Message-ID: <29b774d4-3759-4b49-926e-551c92d3f8c7@linaro.org>
-Date:   Sat, 23 Sep 2023 22:19:18 +0300
+        d=1e100.net; s=20230601; t=1695497125; x=1696101925;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bxesPwbKK+IbMVfBmjWGgUeL1XEUWzxsSpby7O2MdPw=;
+        b=pHnoPSk0jLS2U2sW3yWpS+xuSL/biO4QNxnKJPfa5ikWeKLOM2Di25omqCckUGqHNm
+         tv4j/KAd/MsirxhZ0nxg3Wq+YvC4JRlcjUQvzraRPh1Dl0VQoIT3QQowkOpPBi5c6qEb
+         cR4RfZwwJ0L6QZj+YtjtWmAFt9Tabbaqo/R9VDxlrqUj3zVq/h6iklk71gGlbKiPm0mB
+         iABFri3XP4Zef7G1pkEfMximL3yr5yU+UV7nRn2ZeQMdLwKjvDKnZtYOIJuBppyb9WLw
+         UUdkjJ//u9Z1ZCHaZbBNe4xhBHGOuZ8vy08uBXvhj0ERNnSgo020zs8hzudmyVTGyywB
+         hbHw==
+X-Gm-Message-State: AOJu0YzQgEwj4c43mEXav/LaVq1mQhniI/zpW91oZjRMmZ0dgwwiC2UN
+        9LQuR3rZyMSR2+IeDlviYmvy0JXwZg5ku2XIegHLJA==
+X-Google-Smtp-Source: AGHT+IG3UL8gjMqkSV9UZreXyPAOKYXw7SQBs9BVE5PjxhebQt4h+VQhMShs+JNFq9ZQ13DzznAVw/do8m3GfWdF7oA=
+X-Received: by 2002:a81:6907:0:b0:59b:be67:84cb with SMTP id
+ e7-20020a816907000000b0059bbe6784cbmr2608480ywc.26.1695497125756; Sat, 23 Sep
+ 2023 12:25:25 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: Add USB3 and PHY support
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1695383434-24705-1-git-send-email-quic_rohiagar@quicinc.com>
- <1695383434-24705-3-git-send-email-quic_rohiagar@quicinc.com>
-Content-Language: en-GB
+References: <20230922-msm8226-i2c6-v2-0-3fb55c47a084@z3ntu.xyz> <20230922-msm8226-i2c6-v2-2-3fb55c47a084@z3ntu.xyz>
+In-Reply-To: <20230922-msm8226-i2c6-v2-2-3fb55c47a084@z3ntu.xyz>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1695383434-24705-3-git-send-email-quic_rohiagar@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date:   Sat, 23 Sep 2023 22:25:14 +0300
+Message-ID: <CAA8EJppafz38Wp7CUQGyxLoacO0kXexgyJyA27M38gS104Z_Dw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] pinctrl: qcom: msm8226: Add blsp_i2c6 function
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -77,156 +75,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/09/2023 14:50, Rohit Agarwal wrote:
-> Add devicetree nodes for enabling USB3 controller, Qcom QMP PHY and
-> HS PHY on SDX75.
-
-Please fix the subject to mention the platform.
-
-Other than that, LGTM.
-
-> 
-> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+On Fri, 22 Sept 2023 at 19:56, Luca Weiss <luca@z3ntu.xyz> wrote:
+>
+> On GPIO22 and GPIO23 there is another I2C bus. Add the function for it.
+>
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 > ---
->   arch/arm64/boot/dts/qcom/sdx75.dtsi | 116 ++++++++++++++++++++++++++++++++++++
->   1 file changed, 116 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdx75.dtsi b/arch/arm64/boot/dts/qcom/sdx75.dtsi
-> index dd3a525..c44cdd1 100644
-> --- a/arch/arm64/boot/dts/qcom/sdx75.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdx75.dtsi
-> @@ -473,6 +473,47 @@
->   			};
->   		};
->   
-> +		usb_hsphy: phy@ff4000 {
-> +			compatible = "qcom,sdx75-snps-eusb2-phy", "qcom,sm8550-snps-eusb2-phy";
-> +			reg = <0x0 0x00ff4000 0x0 0x154>;
-> +			#phy-cells = <0>;
-> +
-> +			clocks = <&rpmhcc RPMH_CXO_CLK>;
-> +			clock-names = "ref";
-> +
-> +			resets = <&gcc GCC_QUSB2PHY_BCR>;
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		usb_qmpphy: phy@ff6000 {
-> +			compatible = "qcom,sdx75-qmp-usb3-uni-phy";
-> +			reg = <0x0 0x00ff6000 0x0 0x2000>;
-> +
-> +			clocks = <&gcc GCC_USB3_PHY_AUX_CLK>,
-> +				 <&gcc GCC_USB2_CLKREF_EN>,
-> +				 <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>,
-> +				 <&gcc GCC_USB3_PHY_PIPE_CLK>;
-> +			clock-names = "aux",
-> +				      "ref",
-> +				      "cfg_ahb",
-> +				      "pipe";
-> +
-> +			power-domains = <&gcc GCC_USB3_PHY_GDSC>;
-> +
-> +			resets = <&gcc GCC_USB3_PHY_BCR>,
-> +				 <&gcc GCC_USB3PHY_PHY_BCR>;
-> +			reset-names = "phy",
-> +				      "phy_phy";
-> +
-> +			#clock-cells = <0>;
-> +			clock-output-names = "usb3_uni_phy_pipe_clk_src";
-> +
-> +			#phy-cells = <0>;
-> +
-> +			status = "disabled";
-> +		};
-> +
->   		system_noc: interconnect@1640000 {
->   			compatible = "qcom,sdx75-system-noc";
->   			reg = <0x0 0x01640000 0x0 0x4b400>;
-> @@ -493,6 +534,81 @@
->   			#hwlock-cells = <1>;
->   		};
->   
-> +		usb: usb@a6f8800 {
-> +			compatible = "qcom,sdx75-dwc3", "qcom,dwc3";
-> +			reg = <0x0 0x0a6f8800 0x0 0x400>;
-> +			#address-cells = <2>;
-> +			#size-cells = <2>;
-> +			ranges;
-> +
-> +			clocks = <&gcc GCC_USB30_SLV_AHB_CLK>,
-> +				 <&gcc GCC_USB30_MASTER_CLK>,
-> +				 <&gcc GCC_USB30_MSTR_AXI_CLK>,
-> +				 <&gcc GCC_USB30_SLEEP_CLK>,
-> +				 <&gcc GCC_USB30_MOCK_UTMI_CLK>;
-> +			clock-names = "cfg_noc",
-> +				      "core",
-> +				      "iface",
-> +				      "sleep",
-> +				      "mock_utmi";
-> +
-> +			assigned-clocks = <&gcc GCC_USB30_MOCK_UTMI_CLK>,
-> +					  <&gcc GCC_USB30_MASTER_CLK>;
-> +			assigned-clock-rates = <19200000>, <200000000>;
-> +
-> +			interrupts-extended = <&intc GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&pdc 17 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&pdc 9 IRQ_TYPE_EDGE_RISING>,
-> +					      <&pdc 10 IRQ_TYPE_EDGE_RISING>;
-> +			interrupt-names = "hs_phy_irq",
-> +					  "ss_phy_irq",
-> +					  "dm_hs_phy_irq",
-> +					  "dp_hs_phy_irq";
-> +
-> +			power-domains = <&gcc GCC_USB30_GDSC>;
-> +
-> +			resets = <&gcc GCC_USB30_BCR>;
-> +
-> +			interconnects = <&system_noc MASTER_USB3_0 0 &mc_virt SLAVE_EBI1 0>,
-> +					<&gem_noc MASTER_APPSS_PROC 0 &system_noc SLAVE_USB3 0>;
-> +			interconnect-names = "usb-ddr",
-> +					     "apps-usb";
-> +
-> +			status = "disabled";
-> +
-> +			usb_dwc3: usb@a600000 {
-> +				compatible = "snps,dwc3";
-> +				reg = <0x0 0x0a600000 0x0 0xcd00>;
-> +				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
-> +				iommus = <&apps_smmu 0x80 0x0>;
-> +				snps,dis_u2_susphy_quirk;
-> +				snps,dis_enblslpm_quirk;
-> +				phys = <&usb_hsphy>,
-> +				       <&usb_qmpphy>;
-> +				phy-names = "usb2-phy",
-> +					    "usb3-phy";
-> +
-> +				ports {
-> +					#address-cells = <1>;
-> +					#size-cells = <0>;
-> +
-> +					port@0 {
-> +						reg = <0>;
-> +
-> +						usb_1_dwc3_hs: endpoint {
-> +						};
-> +					};
-> +
-> +					port@1 {
-> +						reg = <1>;
-> +
-> +						usb_1_dwc3_ss: endpoint {
-> +						};
-> +					};
-> +				};
-> +			};
-> +		};
-> +
->   		pdc: interrupt-controller@b220000 {
->   			compatible = "qcom,sdx75-pdc", "qcom,pdc";
->   			reg = <0x0 0xb220000 0x0 0x30000>,
+>  drivers/pinctrl/qcom/pinctrl-msm8226.c | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
+>
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
 With best wishes
 Dmitry
-
