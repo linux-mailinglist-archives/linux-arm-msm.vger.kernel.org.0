@@ -2,50 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 50A6D7AC23B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Sep 2023 15:21:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A2D47AC301
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Sep 2023 17:01:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229476AbjIWNVb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 Sep 2023 09:21:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42444 "EHLO
+        id S231977AbjIWPCA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Sep 2023 11:02:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229616AbjIWNVa (ORCPT
+        with ESMTP id S231883AbjIWPB4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 Sep 2023 09:21:30 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EDFE11D;
-        Sat, 23 Sep 2023 06:21:24 -0700 (PDT)
-Received: from g550jk.localnet (k10064.upc-k.chello.nl [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 504B8D0F49;
-        Sat, 23 Sep 2023 13:20:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1695475252; bh=iHvBiQzorU0EG6kr/U8qttUZDmGPcm76uY0tqu2HcNo=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=ebZzoxdWLbWYX/Or2eyq2ZhgXvDatM9iwHqwO2K0KhZMXy77gGYA6bPNcij9tTraY
-         hyZ7MVaTnCemeQcnYgJ9TFtuuHz9MPvE5ZSll6zxlUNFQw91wwlkJBy3LZ82HS9STJ
-         WuoFvJ1l+t4UVlfHtV8UsSV6XovH8sKTOLFm098Q=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Matti =?ISO-8859-1?Q?Lehtim=E4ki?= <matti.lehtimaki@gmail.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Matti =?ISO-8859-1?Q?Lehtim=E4ki?= <matti.lehtimaki@gmail.com>
-Subject: Re: [PATCH v2 1/2] pinctrl: qcom: msm8226: Add MPM pin mappings
-Date:   Sat, 23 Sep 2023 15:20:51 +0200
-Message-ID: <1866740.CQOukoFCf9@z3ntu.xyz>
-In-Reply-To: <20230923131432.21721-2-matti.lehtimaki@gmail.com>
-References: <20230923131432.21721-1-matti.lehtimaki@gmail.com>
- <20230923131432.21721-2-matti.lehtimaki@gmail.com>
+        Sat, 23 Sep 2023 11:01:56 -0400
+Received: from omta036.useast.a.cloudfilter.net (omta036.useast.a.cloudfilter.net [44.202.169.35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E2121A6;
+        Sat, 23 Sep 2023 08:01:47 -0700 (PDT)
+Received: from eig-obgw-6002a.ext.cloudfilter.net ([10.0.30.222])
+        by cmsmtp with ESMTP
+        id jx8iqaxc5DKaKk48fqJ3vE; Sat, 23 Sep 2023 15:01:46 +0000
+Received: from gator4166.hostgator.com ([108.167.133.22])
+        by cmsmtp with ESMTPS
+        id k48fqaK9HjsHGk48fq8Iae; Sat, 23 Sep 2023 15:01:45 +0000
+X-Authority-Analysis: v=2.4 cv=FtoWQknq c=1 sm=1 tr=0 ts=650efdd9
+ a=1YbLdUo/zbTtOZ3uB5T3HA==:117 a=P7XfKmiOJ4/qXqHZrN7ymg==:17
+ a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
+ a=IkcTkHD0fZMA:10 a=zNV7Rl7Rt7sA:10 a=wYkD_t78qR0A:10 a=NEAV23lmAAAA:8
+ a=eh1Yez-EAAAA:8 a=pGLkceISAAAA:8 a=e5mUnYsNAAAA:8 a=cm27Pg_UAAAA:8
+ a=VwQbUJbxAAAA:8 a=HvF037n1xESchLcPDVoA:9 a=QEXdDO2ut3YA:10
+ a=Vxmtnl_E_bksehYqCbjh:22 a=xmb-EsYY8bH0VWELuYED:22 a=AjGcO6oz07-iQ99wixmX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=embeddedor.com; s=default; h=Content-Transfer-Encoding:Content-Type:
+        In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+        :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=o8E/r0wuMmRjHcbDYiPdXr88j22h/Q9UdmpVBTr3fBw=; b=BLe+r9AA41QKGz9wo55FNBte6i
+        H72+radBOWNzTAB6YiP7NELCaOSUh0zphAmfZIqfiso9KD0nTzsR68abI0R7dpkp8YLmdo9rH9W1M
+        y/x7o2CfwQI49wqo9+6Arj3JEoAcl6KpVfpycFLpDKudkIwexQ30QLJmtHnMVeeApcR7HtyzJSLzd
+        N1Qw5maGcqTTQvoP1cKBzAaqU0SwOha6paZj9rt4HM+HiWmFfsl7/PgdBWS5Y1NWyXIc29RHLGBel
+        ssGmkoESQQLyM5+lfD8ksLaw8QMPB6hySoTXQwz5w943dZ/ZjstewVsj/SjhEK2Lq1iGO6RoxYqaB
+        oZTNnKkQ==;
+Received: from [94.239.20.48] (port=59176 helo=[192.168.1.98])
+        by gator4166.hostgator.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.96)
+        (envelope-from <gustavo@embeddedor.com>)
+        id 1qjl0l-000khc-1m;
+        Fri, 22 Sep 2023 13:36:19 -0500
+Message-ID: <9aa42b20-4388-4954-012f-65e3bc99b7f0@embeddedor.com>
+Date:   Fri, 22 Sep 2023 20:37:09 -0600
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 8/9] drm/vmwgfx: Annotate struct vmw_surface_dirty with
+ __counted_by
+Content-Language: en-US
+To:     Kees Cook <keescook@chromium.org>, David Airlie <airlied@gmail.com>
+Cc:     Zack Rusin <zackr@vmware.com>,
+        VMware Graphics Reviewers 
+        <linux-graphics-maintainer@vmware.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        dri-devel@lists.freedesktop.org, Emma Anholt <emma@anholt.net>,
+        Evan Quan <evan.quan@amd.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
+        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
+        Xiaojian Du <Xiaojian.Du@amd.com>,
+        Huang Rui <ray.huang@amd.com>,
+        Kevin Wang <kevin1.wang@amd.com>,
+        Hawking Zhang <Hawking.Zhang@amd.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Chris Wilson <chris@chris-wilson.co.uk>,
+        John Harrison <john.c.harrison@Intel.com>,
+        Andi Shyti <andi.shyti@linux.intel.com>,
+        Matthew Brost <matthew.brost@intel.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Ben Skeggs <bskeggs@redhat.com>,
+        Karol Herbst <kherbst@redhat.com>,
+        Lyude Paul <lyude@redhat.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        David Airlie <airlied@redhat.com>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        Gurchetan Singh <gurchetansingh@chromium.org>,
+        Chia-I Wu <olvaffe@gmail.com>, Melissa Wen <mwen@igalia.com>,
+        Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Tom Rix <trix@redhat.com>, Le Ma <le.ma@amd.com>,
+        Lijo Lazar <lijo.lazar@amd.com>,
+        Yifan Zhang <yifan1.zhang@amd.com>,
+        Prike Liang <Prike.Liang@amd.com>, Lang Yu <Lang.Yu@amd.com>,
+        Tejas Upadhyay <tejas.upadhyay@intel.com>,
+        Nirmoy Das <nirmoy.das@intel.com>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        linux-kernel@vger.kernel.org, amd-gfx@lists.freedesktop.org,
+        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        virtualization@lists.linux-foundation.org, llvm@lists.linux.dev,
+        linux-hardening@vger.kernel.org
+References: <20230922173110.work.084-kees@kernel.org>
+ <20230922173216.3823169-8-keescook@chromium.org>
+From:   "Gustavo A. R. Silva" <gustavo@embeddedor.com>
+In-Reply-To: <20230922173216.3823169-8-keescook@chromium.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - gator4166.hostgator.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - embeddedor.com
+X-BWhitelist: no
+X-Source-IP: 94.239.20.48
+X-Source-L: No
+X-Exim-ID: 1qjl0l-000khc-1m
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: ([192.168.1.98]) [94.239.20.48]:59176
+X-Source-Auth: gustavo@embeddedor.com
+X-Email-Count: 0
+X-Org:  HG=hgshared;ORG=hostgator;
+X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfGn6qotgw9zuL/RvACs7oEvaFbM+uAb77jEQu5pwWoBzM9TrzWtMh3BjRLsZPs9yM0OvG14QTiWwkxeBYFaSwMpuBYYyC/3Oc84bxWN6S4Qbk0ALKKas
+ dMsbsGEORdWtMz3WJ30HTuabzmLW2WqyGsjOhzF+vgFLybFhjG4P9MKmCfMX+oPBM8clAHRWdIflDsVWlgs3dPfPgzRDCWGjtXYctNmF2pgfcx15ELDR4rQA
+ Wb6WymaBbtoSynVtMevtw1az1i4zLLuVEU9ZWlbF3hFBx3gVQKu7j2IpPpIn5spSFCk4dxEZiRSHeBDif3PSdg==
+X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,DATE_IN_FUTURE_06_12,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -53,61 +143,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Samstag, 23. September 2023 15:14:31 CEST Matti Lehtim=E4ki wrote:
-> Add pin <-> wakeirq mappings to allow for waking up the AP from sleep
-> through MPM-connected pins.
->=20
-> Signed-off-by: Matti Lehtim=E4ki <matti.lehtimaki@gmail.com>
 
-Looks good now :)
 
-Reviewed-by: Luca Weiss <luca@z3ntu.xyz>
+On 9/22/23 11:32, Kees Cook wrote:
+> Prepare for the coming implementation by GCC and Clang of the __counted_by
+> attribute. Flexible array members annotated with __counted_by can have
+> their accesses bounds-checked at run-time checking via CONFIG_UBSAN_BOUNDS
+> (for array indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family
+> functions).
+> 
+> As found with Coccinelle[1], add __counted_by for struct vmw_surface_dirty.
+> 
+> [1] https://github.com/kees/kernel-tools/blob/trunk/coccinelle/examples/counted_by.cocci
+> 
+> Cc: Zack Rusin <zackr@vmware.com>
+> Cc: VMware Graphics Reviewers <linux-graphics-maintainer@vmware.com>
+> Cc: David Airlie <airlied@gmail.com>
+> Cc: Daniel Vetter <daniel@ffwll.ch>
+> Cc: dri-devel@lists.freedesktop.org
+> Signed-off-by: Kees Cook <keescook@chromium.org>
+
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+
+Thanks
+-- 
+Gustavo
+
 
 > ---
-> Changes in v2:
->   - Add missing entry to mapping
-> ---
->  drivers/pinctrl/qcom/pinctrl-msm8226.c | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
->=20
-> diff --git a/drivers/pinctrl/qcom/pinctrl-msm8226.c
-> b/drivers/pinctrl/qcom/pinctrl-msm8226.c index 994619840a70..4030baa3715f
-> 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-msm8226.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-msm8226.c
-> @@ -612,6 +612,16 @@ static const struct msm_pingroup msm8226_groups[] =
-=3D {
->=20
->  #define NUM_GPIO_PINGROUPS 117
->=20
-> +static const struct msm_gpio_wakeirq_map msm8226_mpm_map[] =3D {
-> +	{ 1, 3 }, { 4, 4 }, { 5, 5 }, { 9, 6 }, { 13, 7 }, { 17, 8 },
-> +	{ 21, 9 }, { 27, 10 }, { 29, 11 }, { 31, 12 }, { 33, 13 }, { 35, 14=20
-},
-> +	{ 37, 15 }, { 38, 16 }, { 39, 17 }, { 41, 18 }, { 46, 19 }, { 48, 20=20
-},
-> +	{ 49, 21 }, { 50, 22 }, { 51, 23 }, { 52, 24 }, { 54, 25 }, { 62, 26=20
-},
-> +	{ 63, 27 }, { 64, 28 }, { 65, 29 }, { 66, 30 }, { 67, 31 }, { 68, 32=20
-},
-> +	{ 69, 33 }, { 71, 34 }, { 72, 35 }, { 106, 36 }, { 107, 37 }, { 108,=20
-38 },
-> +	{ 109, 39 }, { 110, 40 }, { 111, 54 }, { 113, 55 }, { 115, 41 }, +};
-> +
->  static const struct msm_pinctrl_soc_data msm8226_pinctrl =3D {
->  	.pins =3D msm8226_pins,
->  	.npins =3D ARRAY_SIZE(msm8226_pins),
-> @@ -620,6 +630,8 @@ static const struct msm_pinctrl_soc_data msm8226_pinc=
-trl
-> =3D { .groups =3D msm8226_groups,
->  	.ngroups =3D ARRAY_SIZE(msm8226_groups),
->  	.ngpios =3D NUM_GPIO_PINGROUPS,
-> +	.wakeirq_map =3D msm8226_mpm_map,
-> +	.nwakeirq_map =3D ARRAY_SIZE(msm8226_mpm_map),
->  };
->=20
->  static int msm8226_pinctrl_probe(struct platform_device *pdev)
-
-
-
-
+>   drivers/gpu/drm/vmwgfx/vmwgfx_surface.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_surface.c b/drivers/gpu/drm/vmwgfx/vmwgfx_surface.c
+> index 5db403ee8261..2d1d857f99ae 100644
+> --- a/drivers/gpu/drm/vmwgfx/vmwgfx_surface.c
+> +++ b/drivers/gpu/drm/vmwgfx/vmwgfx_surface.c
+> @@ -77,7 +77,7 @@ struct vmw_surface_offset {
+>   struct vmw_surface_dirty {
+>   	struct vmw_surface_cache cache;
+>   	u32 num_subres;
+> -	SVGA3dBox boxes[];
+> +	SVGA3dBox boxes[] __counted_by(num_subres);
+>   };
+>   
+>   static void vmw_user_surface_free(struct vmw_resource *res);
