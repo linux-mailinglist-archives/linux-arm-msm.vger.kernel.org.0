@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 24F3F7AC4B2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Sep 2023 21:13:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 034C97AC4B6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Sep 2023 21:14:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229504AbjIWTOA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 Sep 2023 15:14:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44932 "EHLO
+        id S229539AbjIWTOp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Sep 2023 15:14:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229476AbjIWTOA (ORCPT
+        with ESMTP id S229456AbjIWTOo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 Sep 2023 15:14:00 -0400
+        Sat, 23 Sep 2023 15:14:44 -0400
 Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AE93136
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Sep 2023 12:13:53 -0700 (PDT)
-Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-59c07cf02ebso48214347b3.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Sep 2023 12:13:53 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5B25FB
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Sep 2023 12:14:38 -0700 (PDT)
+Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-59c215f2f4aso49881607b3.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Sep 2023 12:14:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695496433; x=1696101233; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695496478; x=1696101278; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=/ZmYNV3oT+zkVAf2ugnkULn4izub45DJoleWbLBZiLk=;
-        b=BYmUWmHm1d+2YeSfA6FrjZLsVZIWFYDvO+oimM5AK1Ut1MfL9t6+qD0oiN7kaG94e0
-         KKBLl867I3svVBLc4CWICmmboBjCFPY5D+IJtJSFiXUPcp/mw4jkteJuu7RdQfzBF1x/
-         OZtYgkJrUE8ncCeNi3NQPI6wa0WmgYRuTJQekEzFg3ShGcFrWD2r/NR6DjijuiQrhlpr
-         54vKvq52qjLHw5z/8fdmCfm8HFwR5hg2fU4PadZYdQhm6p2ZehRM0HQuz/xV0w/oP4TY
-         2WuyrsWKKcRVcLsN5y7CH9gjiPAQNsVj8pneQf50dX2wk5lc8dp8to1vOQvpyv7OEw76
-         bwwA==
+        bh=6VhOCWF+ynd7copH4f2yVtc2i5yJp0tKjP7DBJWHccA=;
+        b=XxDmdafF5SqkVHtM6DYnVQfXJilGRFyMvcBgZrPmAnkYzBqZuyNew+I5oPaaN/rWfL
+         i/Mm/+B9nSXR//u0GhkATeJdDVG4zZzLf+YKOsfBZHnoEK0Hfb82dIMdOvaCFab0XPbU
+         DNlHxH5XHoYejfO+bBjWqGJgk5YqE5HZ/tGW1gHD4lynwwT8EOM9tKxw24ZVo6Q6n183
+         tGm90SJRDJdDYTPxwpjLVDF7d8q2yMVFc+spf9/ZmqRRuy0Dom1NtWWJJB3sH0tuwiOn
+         lE3bHNBYgaAC/UuTCywvurL5ye4VNMQDqrXQBLkkOPRqDIWzDzDnBtw2BzpY3koVttDV
+         x/pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695496433; x=1696101233;
+        d=1e100.net; s=20230601; t=1695496478; x=1696101278;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=/ZmYNV3oT+zkVAf2ugnkULn4izub45DJoleWbLBZiLk=;
-        b=Kfewcppdyacj0w+f+hOT0zBTzXpD+Jfu0H5wbA41DIesEp2OZYDEdL9FZrfxW11f+B
-         UlVxhbLZ227ez1Zsplyt4l4ZrXeeQiUED07FsRrBKOZAGnaXZh27iyoy3JeBXu47iRVV
-         aDVKjYPMZkW2d9xnZxtpnLB7EhKVHlfLkiS4qdPJ8xzSmP1+ELaHGqsL5TwMoi0teifL
-         h5gNUrQceadBXvTpX1oRfJiNvpGI0d/VS8crWtc5spNUefCidA1/hUzfj1B1X+TY8FA8
-         N9mLVwrgV+moDns+3RNTcj/nLZxUizu6q55PiuRIM6oTWBHr2Gf8WXm/gLrbqESWO3+S
-         mRxA==
-X-Gm-Message-State: AOJu0Yyr5NsoRZDnvJQUsdbzi41fHIH5M4MXNk+/cxehJu1yQzL41hFX
-        PYrHoXgabB99/zBre3bCxJDOASNo7AC1cUmprhuuCRNm8CZaappmqwPgjA==
-X-Google-Smtp-Source: AGHT+IGXN+4C918nlV0X9cam2P53VSEtGaNCjhNVGXRfBhpYoducXAEJcOhhSM/a1gaDZ9hAbqMkiRbLfciiL/l5bZg=
-X-Received: by 2002:a05:690c:4483:b0:59f:5361:d18c with SMTP id
- gr3-20020a05690c448300b0059f5361d18cmr2111515ywb.41.1695496432784; Sat, 23
- Sep 2023 12:13:52 -0700 (PDT)
+        bh=6VhOCWF+ynd7copH4f2yVtc2i5yJp0tKjP7DBJWHccA=;
+        b=EVezdYdgQoEFGVUOoPa857Pd7hm5V6sa7HIAZjJL4fdCi1y+S1S3Ev9kVmHeTU+YUT
+         ZyNIbnYBqHNEZamTcA7JmzNaL9JQQToNyYHqFslN1O8AqUmGyKHqYp3h8BPgm+sSY25p
+         FGegxIzlv/5inlDwGLAmkjlK1+2wmlPehGSDr8khTQ/Ecgna+S9cUDOyQe79s63Fvita
+         C/RqW4/XRzpggzdKLH7vZOlcQWDaDkN86iNm3+ZJV33CKAKgEdZE/PHtu1HLYzPlryNU
+         8U0VBOZWSyjLelzb2J9/ETowuQeYwn1b5iXuoveAO2c1/K259sbf5bj7/1EBup3QT0wp
+         HfCw==
+X-Gm-Message-State: AOJu0YygAuRO184nTWd5o+UCe6hKHiKsUL/tx5uade6+4T9POXICq1+g
+        0TQqqiCSsnxVDcqNZxIbJiP5uCQTkmcxFKJURdEcIw==
+X-Google-Smtp-Source: AGHT+IEXrA6dbcuQVgJj6jiFnJaGVpMmWaaRY9SNum7koxm9FFIHsiBiEqOprk+GF7Q5FQ/v6O7buksQm9OGfKYzgUY=
+X-Received: by 2002:a05:690c:2b0a:b0:59f:535b:52a8 with SMTP id
+ em10-20020a05690c2b0a00b0059f535b52a8mr1489573ywb.23.1695496477936; Sat, 23
+ Sep 2023 12:14:37 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230922084303.4164046-1-quic_gokulsri@quicinc.com> <20230922084303.4164046-3-quic_gokulsri@quicinc.com>
-In-Reply-To: <20230922084303.4164046-3-quic_gokulsri@quicinc.com>
+References: <20230922084303.4164046-1-quic_gokulsri@quicinc.com> <20230922084303.4164046-4-quic_gokulsri@quicinc.com>
+In-Reply-To: <20230922084303.4164046-4-quic_gokulsri@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 23 Sep 2023 22:13:41 +0300
-Message-ID: <CAA8EJpoyaM0_utG9oAwyqO3RPoNDNduuPc3u+tzrjYM6NXRnjg@mail.gmail.com>
-Subject: Re: [PATCH V2 2/3] clk: qcom: apss-ipq-pll: add support for IPQ5018
+Date:   Sat, 23 Sep 2023 22:14:27 +0300
+Message-ID: <CAA8EJppX==xq8Z9MCS4ZwveV0-WKbvEC3Wv1NzGvXXV=2q5DzQ@mail.gmail.com>
+Subject: Re: [PATCH V2 3/3] arm64: dts: qcom: ipq5018: enable the CPUFreq support
 To:     Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
 Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
         mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
@@ -63,8 +63,7 @@ Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -74,15 +73,16 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On Fri, 22 Sept 2023 at 11:44, Gokul Sriram Palanisamy
 <quic_gokulsri@quicinc.com> wrote:
 >
-> IPQ5018 APSS PLL is of type Stromer. Reuse Stromer Plus PLL offsets,
-> add configuration values and the compatible.
+> Add the APCS, A53 PLL, cpu-opp-table nodes to set
+> the CPU frequency at 800MHz (idle) or 1.008GHz.
 >
 > Co-developed-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 > Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 > Signed-off-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
 > ---
->  drivers/clk/qcom/apss-ipq-pll.c | 21 +++++++++++++++++++++
->  1 file changed, 21 insertions(+)
+>  arch/arm64/boot/dts/qcom/ipq5018.dtsi | 40 +++++++++++++++++++++++++++
+>  1 file changed, 40 insertions(+)
+>
 
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
