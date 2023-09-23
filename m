@@ -2,91 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8721C7ABF77
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Sep 2023 12:01:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 932F87ABF6B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Sep 2023 11:42:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230488AbjIWKBV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 Sep 2023 06:01:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36674 "EHLO
+        id S231431AbjIWJmU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Sep 2023 05:42:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230299AbjIWKBV (ORCPT
+        with ESMTP id S231305AbjIWJmN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 Sep 2023 06:01:21 -0400
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21426199;
-        Sat, 23 Sep 2023 03:01:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1695463260; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=SOwtE8p7O4MdBm2QHtWNtB04u+ohAVr9S9pNEkBHKWwDNhCs5OWS9SAyQj0OYv6OjF
-    UyEVmw59nnIVjEd7BU5tokekOMyAv6Pm9K7ncmT6fLI14eQAauOYJUw+knblUDlCJ9iC
-    dveN4dAbfOLTEsCBWs+7jq8udeNco9Yd/D56LiQIqlQT+vD/oq6uyVsnUtOs5oBgjCH8
-    48/cXqaxEACZ0bBaoRHkEFBbgBUrg8RddNIJjENh8+u0N+lV0WJsknq2IsTRtzCny7kc
-    IbH9OzwWtX0Sv85nXp7/23KyW8H461oJXQ+kl4sCj5GEhZ5CLDUOQyWIduiwUBedQZmQ
-    jbqA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1695463260;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=y/LWFlnNJk8p3a1fOpeYQEnkfVUcN4zPkKbPDikCflU=;
-    b=Emi5iVoquMFUQgZhM7zNjPT6inypZ19jN8IG3EWhBbN+cgj75+V/B7+BH0+A5iRamQ
-    JtVLcNn51YhCM5QVldUwekTLR+Dgg5t6WJj4tTyHeFP5IeHnWeCH4sjWNKmERBz//R57
-    mASaTCUScdK/HSaK3L5R8kyDybdN5zUGIkTkDV7B/PfReJIbcc2GquaJOs/6h15rYBps
-    A7Gh3JTT5l6LqdY/Snue2t+BiFxIfe+pJ9aZstIfurVdryiMTRa041vO49DYjYV0ys73
-    3ZHU6F7/mxfVgpZnzYJL1FXTZc9IF0YUtj9IOPmooW5U4j00qMM9ptfwZCCX3g8iN3md
-    gBDg==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1695463260;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=y/LWFlnNJk8p3a1fOpeYQEnkfVUcN4zPkKbPDikCflU=;
-    b=YPjQHJgFI6mxDCrrc3AoioEuSkpSjUdd6VaN4vGQHzUHTy/PnL+ZcF7TAB4ID0SrmV
-    PBY0jz4F4F+j+5R2bqv1uFZMD6uHWPT23J8Hbzj4kw/BC5kdRJjzPLW+CUE3c/vTjDit
-    21Uoa3VC/G9z8+WtEWHkzDgejbr20XsavFp8LUlvdOKwFU4XS8OL6/QUjGDAuw4yu+xh
-    ObTk7AuEp5t8rxag6Lx2YyZGWBtyS+ikw5sucomggwZDLsk65UH+33zAssOMVsPRusQ9
-    jqNlBFbLYyefF59C5/GIUebuN+7BA+vTd2bagEJwEbjXIvWZAlbFM/8tXp2ir8GMAgG3
-    ww9A==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1695463260;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=y/LWFlnNJk8p3a1fOpeYQEnkfVUcN4zPkKbPDikCflU=;
-    b=k+N0857/KDhfMNHKiGyhi7p0vrGQCAkA97wLaml9H1SMXNZfAfG/shdFEmArbCUbLs
-    3EM5FTt337U4h11t/4BQ==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA+p3h"
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.8.2 DYNA|AUTH)
-    with ESMTPSA id R04c57z8NA0xVlK
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Sat, 23 Sep 2023 12:00:59 +0200 (CEST)
-Date:   Sat, 23 Sep 2023 12:00:52 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Luca Weiss <luca@z3ntu.xyz>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Matti =?iso-8859-1?Q?Lehtim=E4ki?= <matti.lehtimaki@gmail.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] pinctrl: qcom: msm8226: Add MPM pin mappings
-Message-ID: <ZQ63VCVfR51Ueunv@gerhold.net>
-References: <20230922224027.85291-1-matti.lehtimaki@gmail.com>
- <20230922224027.85291-2-matti.lehtimaki@gmail.com>
- <10339711.nUPlyArG6x@z3ntu.xyz>
+        Sat, 23 Sep 2023 05:42:13 -0400
+Received: from omta036.useast.a.cloudfilter.net (omta036.useast.a.cloudfilter.net [44.202.169.35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 939CACCA;
+        Sat, 23 Sep 2023 02:41:47 -0700 (PDT)
+Received: from eig-obgw-5002a.ext.cloudfilter.net ([10.0.29.215])
+        by cmsmtp with ESMTP
+        id jx8cqaxZ8DKaKjz90qHoLh; Sat, 23 Sep 2023 09:41:46 +0000
+Received: from gator4166.hostgator.com ([108.167.133.22])
+        by cmsmtp with ESMTPS
+        id jz8zqyRBBZb7Mjz8zq1r5N; Sat, 23 Sep 2023 09:41:46 +0000
+X-Authority-Analysis: v=2.4 cv=Z57/oVdA c=1 sm=1 tr=0 ts=650eb2da
+ a=1YbLdUo/zbTtOZ3uB5T3HA==:117 a=P7XfKmiOJ4/qXqHZrN7ymg==:17
+ a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
+ a=IkcTkHD0fZMA:10 a=zNV7Rl7Rt7sA:10 a=wYkD_t78qR0A:10 a=NEAV23lmAAAA:8
+ a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=pGLkceISAAAA:8 a=QyXUC8HyAAAA:8
+ a=cm27Pg_UAAAA:8 a=gq5M5jF_6ledRb6gi8cA:9 a=QEXdDO2ut3YA:10
+ a=AjGcO6oz07-iQ99wixmX:22 a=cvBusfyB2V15izCimMoJ:22 a=xmb-EsYY8bH0VWELuYED:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=embeddedor.com; s=default; h=Content-Transfer-Encoding:Content-Type:
+        In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+        :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=0NtaCTVGjOYSpp7Vv4BMjxuQDFYb5u3uxvIHM5NV04k=; b=FU7vQujz2rS0onI7bq2398r92f
+        yjnfA8G0aQkFCaHHiAQNObT89HDOuXpxfchnLtf/LZIOXXI0557oPadCaz0cxOIpO9vlp5nyaJnmY
+        lzY1kKtx8iuZ7r7Xjk35r6tfJFqh3Ts9D/jxjrOEcwDxCxsS+ySD59ijGTizylOrSBrQ01ds7h8DC
+        QHghQuneEEYZqbsgDkaGauphGNKcrayXtHw+QATlBE70wJDGgK2cTrgIQFGxJjxhR3tUUKQzpZsKc
+        jriQOX3K7c/NHW2rIm1sVxGbppvGhYvkLgpBnFmABsLohWW/mIF8h5JoWjW777iXZn+Sat7EzEXmr
+        JBZs88PQ==;
+Received: from [94.239.20.48] (port=55432 helo=[192.168.1.98])
+        by gator4166.hostgator.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.96)
+        (envelope-from <gustavo@embeddedor.com>)
+        id 1qjy7m-003gxW-0M;
+        Sat, 23 Sep 2023 03:36:26 -0500
+Message-ID: <436d7488-1a20-b6af-8e3f-f151ba2c210d@embeddedor.com>
+Date:   Sat, 23 Sep 2023 10:37:30 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <10339711.nUPlyArG6x@z3ntu.xyz>
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH] drivers: thermal: tsens: Annotate struct tsens_priv with
+ __counted_by
+Content-Language: en-US
+To:     Kees Cook <keescook@chromium.org>, Andy Gross <agross@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Tom Rix <trix@redhat.com>, linux-kernel@vger.kernel.org,
+        llvm@lists.linux.dev, linux-hardening@vger.kernel.org
+References: <20230922175341.work.919-kees@kernel.org>
+From:   "Gustavo A. R. Silva" <gustavo@embeddedor.com>
+In-Reply-To: <20230922175341.work.919-kees@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - gator4166.hostgator.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - embeddedor.com
+X-BWhitelist: no
+X-Source-IP: 94.239.20.48
+X-Source-L: No
+X-Exim-ID: 1qjy7m-003gxW-0M
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: ([192.168.1.98]) [94.239.20.48]:55432
+X-Source-Auth: gustavo@embeddedor.com
+X-Email-Count: 0
+X-Org:  HG=hgshared;ORG=hostgator;
+X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfArTGrjtDyCD+nMBKezyuAx5fwLeVjXFBuwD2atG6aDTeJ40gn1jnEDJj4Hx59AAYCAr5+CUvPxoFCSyHDeK2gdWLq1aCMdBdP3df4EtwL9zdekjkyBm
+ 6+zmKihJqDBBHqbrqf3FBQ+73EDOqYMx5NY7rTqX02UeDzkzQ/Xl5746xxBn2Be0Jt+ql/7oTiuhH/sYPkD+K5EzHdAvaltzrGrYJj0t7WQdkN/OU5d9hnXS
+ xDyxVANNoRXSAEbWnIBl8OowUHYidPNMqdZYnd11iDdhzQP7H/HlxBHn9JrqbHOZr4qKWch2ZZj8syvGIHw11+ma/8V4yJzaWdZQNwe9S6p03TclWjvlxz0c
+ gHAxYZ7U
+X-Spam-Status: No, score=-2.3 required=5.0 tests=BAYES_00,DATE_IN_FUTURE_06_12,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_LOW,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -94,92 +103,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Sep 23, 2023 at 11:32:47AM +0200, Luca Weiss wrote:
-> Hi Matti,
+
+
+On 9/22/23 11:53, Kees Cook wrote:
+> Prepare for the coming implementation by GCC and Clang of the __counted_by
+> attribute. Flexible array members annotated with __counted_by can have
+> their accesses bounds-checked at run-time checking via CONFIG_UBSAN_BOUNDS
+> (for array indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family
+> functions).
 > 
-> On Samstag, 23. September 2023 00:40:26 CEST Matti Lehtimäki wrote:
-> > Add pin <-> wakeirq mappings to allow for waking up the AP from sleep
-> > through MPM-connected pins.
-> > 
-> > Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
-> > ---
-> >  drivers/pinctrl/qcom/pinctrl-msm8226.c | 12 ++++++++++++
-> >  1 file changed, 12 insertions(+)
-> > 
-> > diff --git a/drivers/pinctrl/qcom/pinctrl-msm8226.c
-> > b/drivers/pinctrl/qcom/pinctrl-msm8226.c index 994619840a70..1e46a9ab382f
-> > 100644
-> > --- a/drivers/pinctrl/qcom/pinctrl-msm8226.c
-> > +++ b/drivers/pinctrl/qcom/pinctrl-msm8226.c
-> > @@ -612,6 +612,16 @@ static const struct msm_pingroup msm8226_groups[] = {
-> > 
-> >  #define NUM_GPIO_PINGROUPS 117
-> > 
-> > +static const struct msm_gpio_wakeirq_map msm8226_mpm_map[] = {
-> > +	{ 1, 3 }, { 4, 4 }, { 5, 5 }, { 9, 6 }, { 13, 7 }, { 17, 8 },
+> As found with Coccinelle[1], add __counted_by for struct tsens_priv.
 > 
-> I'm not really convinced this is the correct order of values...
+> [1] https://github.com/kees/kernel-tools/blob/trunk/coccinelle/examples/counted_by.cocci
 > 
-> Let's look at downstream:
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: Bjorn Andersson <andersson@kernel.org>
+> Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Cc: Amit Kucheria <amitk@kernel.org>
+> Cc: Thara Gopinath <thara.gopinath@gmail.com>
+> Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+> Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
+> Cc: Zhang Rui <rui.zhang@intel.com>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: linux-pm@vger.kernel.org
+> Signed-off-by: Kees Cook <keescook@chromium.org>
+
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+
+Thanks
+-- 
+Gustavo
+
+> ---
+>   drivers/thermal/qcom/tsens.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
->   qcom,gpio-map = <3  1>,
->                   <4  4 >,
->                   <5  5 >,
->                   <6  9 >,
->                   [...]
-> 
-> From Documentation/devicetree/bindings/arm/msm/mpm.txt downstream:
-> 
->   Each tuple represents a MPM pin and which GIC interrupt is routed to it.
-> 
-> So first is pin number, second is interrupt number.
-> 
-> And check mainline: 
-> 
->   /**
->    * struct msm_gpio_wakeirq_map - Map of GPIOs and their wakeup pins
->    * @gpio:          The GPIOs that are wakeup capable
->    * @wakeirq:       The interrupt at the always-on interrupt controller
->    */
->   struct msm_gpio_wakeirq_map {
->   	unsigned int gpio;
->   	unsigned int wakeirq;
+> diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+> index 2805de1c6827..cb637fa289ca 100644
+> --- a/drivers/thermal/qcom/tsens.h
+> +++ b/drivers/thermal/qcom/tsens.h
+> @@ -585,7 +585,7 @@ struct tsens_priv {
+>   	struct dentry			*debug_root;
+>   	struct dentry			*debug;
+>   
+> -	struct tsens_sensor		sensor[];
+> +	struct tsens_sensor		sensor[] __counted_by(num_sensors);
 >   };
-> 
-> So here we also have the order pin-interrupt, not the reverse order.
-> 
-> Therefore I believe the order in this patch is incorrect, and it should rather 
-> be:
-> 
->   { 3, 1 }, { 4, 4 }, { 5, 5 }, { 6, 9 }, { 7, 13 }, { 8, 17 },
->   [...]
-> 
-> Or do you think I'm missing something?
-> 
-
-Yes :)
-
-Let's look at the later entries:
-
-> > +	{ 21, 9 }, { 27, 10 }, { 29, 11 }, { 31, 12 }, { 33, 13 }, { 35, 14 
-> },
-> > +	{ 37, 15 }, { 38, 16 }, { 39, 17 }, { 41, 18 }, { 46, 19 }, { 48, 20 
-> },
-> > +	{ 49, 21 }, { 50, 22 }, { 51, 23 }, { 52, 24 }, { 54, 25 }, { 62, 26 
-> },
-> > +	{ 63, 27 }, { 64, 28 }, { 65, 29 }, { 66, 30 }, { 67, 31 }, { 68, 32 
-> },
-> > +	{ 69, 33 }, { 71, 34 }, { 72, 35 }, { 106, 36 }, { 107, 37 },
-> > +	{ 108, 38 }, { 109, 39 }, { 110, 40 }, { 111, 54 }, { 113, 55 },
-> > +};
-> > +
-
-For example: { 113, 55 }, i.e. { .gpio = 113, .wakeirq = 55 }.
-
-MSM8226 has GPIOs 0-116 and 64 MPM pins/interrupts. The order in this
-patch is the only one that can be correct because the definition would
-be invalid the other way around. 113 must be the GPIO number because it
-is larger than the 64 available MPM interrupt pins. :)
-
-Thanks,
-Stephan
+>   
+>   /**
