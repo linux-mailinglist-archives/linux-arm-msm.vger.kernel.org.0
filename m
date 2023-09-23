@@ -2,195 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C13E67ABC13
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Sep 2023 01:01:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C6C87ABD1B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Sep 2023 03:35:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230142AbjIVXBp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Sep 2023 19:01:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36644 "EHLO
+        id S229568AbjIWBgA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Sep 2023 21:36:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229576AbjIVXBp (ORCPT
+        with ESMTP id S229473AbjIWBgA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Sep 2023 19:01:45 -0400
-Received: from omta034.useast.a.cloudfilter.net (omta034.useast.a.cloudfilter.net [44.202.169.33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4CE6AF;
-        Fri, 22 Sep 2023 16:01:38 -0700 (PDT)
-Received: from eig-obgw-6002a.ext.cloudfilter.net ([10.0.30.222])
-        by cmsmtp with ESMTP
-        id jkwDqENIFez0Cjp97q8wDu; Fri, 22 Sep 2023 23:01:13 +0000
-Received: from gator4166.hostgator.com ([108.167.133.22])
-        by cmsmtp with ESMTPS
-        id jp9UqaiqZbWAcjp9UqCtl4; Fri, 22 Sep 2023 23:01:37 +0000
-X-Authority-Analysis: v=2.4 cv=dpnItns4 c=1 sm=1 tr=0 ts=650e1cd1
- a=1YbLdUo/zbTtOZ3uB5T3HA==:117 a=P7XfKmiOJ4/qXqHZrN7ymg==:17
- a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
- a=IkcTkHD0fZMA:10 a=zNV7Rl7Rt7sA:10 a=wYkD_t78qR0A:10 a=NEAV23lmAAAA:8
- a=pGLkceISAAAA:8 a=COk6AnOGAAAA:8 a=KKAkSRfTAAAA:8 a=tVI0ZWmoAAAA:8
- a=VwQbUJbxAAAA:8 a=e5mUnYsNAAAA:8 a=cm27Pg_UAAAA:8 a=HSIKE4f6JIY9BbnNq1MA:9
- a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
- a=-BPWgnxRz2uhmvdm1NTO:22 a=AjGcO6oz07-iQ99wixmX:22 a=Vxmtnl_E_bksehYqCbjh:22
- a=xmb-EsYY8bH0VWELuYED:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=embeddedor.com; s=default; h=Content-Transfer-Encoding:Content-Type:
-        In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-        :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=2zK48vQolMqlRSqjrCvSBXgjsAGsv6hepauhi4xjwpA=; b=b/1EYxIBUgGg9cZaaUjjmBS/mU
-        T2yEbpC2AZEdHIQFce+UFklWWGOgixs7mO+CKHnf06Wj3lTM9QRuwhvK+2SO19wHzObu9CLwmmvSS
-        4dOgYBpfteeN/G8IiOP4ZVetuaf5o6Cy9KGmXGoMaNauY6O+iPFWV0fV72EvQ5mwZxC6Dkg74SA3E
-        a1ZrEaqFYpIJ55vv142MQF2bE+tdbkhAmX54s4nIsXKbLS3bfQ6DgLPLnRPaxA9M/AEuH5ImPeV23
-        yMuu/BVEnGSt08kaloGvrDygEYGGLJx2ejKtsDLcRnMTXbeCrWUvyxpWiIU8XvzTw4kSnqosp+LIZ
-        IWwif/Wg==;
-Received: from [94.239.20.48] (port=43798 helo=[192.168.1.98])
-        by gator4166.hostgator.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.96)
-        (envelope-from <gustavo@embeddedor.com>)
-        id 1qjkfx-000PVa-1n;
-        Fri, 22 Sep 2023 13:14:49 -0500
-Message-ID: <ebf2ca90-2582-4221-5aa2-45e0d98602a0@embeddedor.com>
-Date:   Fri, 22 Sep 2023 20:15:40 -0600
+        Fri, 22 Sep 2023 21:36:00 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A168CE8;
+        Fri, 22 Sep 2023 18:35:53 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38N16bxV006809;
+        Sat, 23 Sep 2023 01:35:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=C5Pi/Hiu81gwHXsRnreMP9dALYwD5nvn3uXY+FzJ5CU=;
+ b=UR/I0rfH5D+g0vFQjL3/9zWDvCQgqo3aCrSWEtKcbrdDnwAX4m1qrAIet41PNXQ8pYiH
+ p6elEErFhNZmClpyoo4ELt75aqRgBb9VuUflbvgVaIqmGlAzV/Ci1FlwztYmaNH9lagT
+ 9C6QuKLVm4/5+ee2fyQYp9Mc99tYxNJNQlvqypZDVBmv/EGRIeyxjEz9/BQVzmcNcJCR
+ YIWBFaphfAMVTpPZbjaQxe1387SzlynkTwmVIPQLLHRvhss96t3Ywra2CRy1h63xE0wO
+ lJcl6kjTyB1Z35MzalJsK+h77ELyxO8LnqXhBbdQypVoCRa5ESCLIhDpA0yvjCob42RL iA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t9nqnr1ve-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 23 Sep 2023 01:35:30 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38N1ZThO017144
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 23 Sep 2023 01:35:29 GMT
+Received: from [10.110.28.191] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Fri, 22 Sep
+ 2023 18:35:28 -0700
+Message-ID: <65566a68-3510-2e5f-7d57-e4dba08c008c@quicinc.com>
+Date:   Fri, 22 Sep 2023 18:35:27 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 4/9] drm/msm/dpu: Annotate struct dpu_hw_intr with
- __counted_by
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v3 6/7] drm/msm/dp: add
+ pm_runtime_force_suspend()/resume()
 Content-Language: en-US
-To:     Kees Cook <keescook@chromium.org>, David Airlie <airlied@gmail.com>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+To:     Stephen Boyd <swboyd@chromium.org>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Emma Anholt <emma@anholt.net>,
-        Evan Quan <evan.quan@amd.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
-        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
-        Xiaojian Du <Xiaojian.Du@amd.com>,
-        Huang Rui <ray.huang@amd.com>,
-        Kevin Wang <kevin1.wang@amd.com>,
-        Hawking Zhang <Hawking.Zhang@amd.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Chris Wilson <chris@chris-wilson.co.uk>,
-        John Harrison <john.c.harrison@Intel.com>,
-        Andi Shyti <andi.shyti@linux.intel.com>,
-        Matthew Brost <matthew.brost@intel.com>,
-        Ben Skeggs <bskeggs@redhat.com>,
-        Karol Herbst <kherbst@redhat.com>,
-        Lyude Paul <lyude@redhat.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        David Airlie <airlied@redhat.com>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        Gurchetan Singh <gurchetansingh@chromium.org>,
-        Chia-I Wu <olvaffe@gmail.com>, Zack Rusin <zackr@vmware.com>,
-        VMware Graphics Reviewers 
-        <linux-graphics-maintainer@vmware.com>,
-        Melissa Wen <mwen@igalia.com>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Tom Rix <trix@redhat.com>, Le Ma <le.ma@amd.com>,
-        Lijo Lazar <lijo.lazar@amd.com>,
-        Yifan Zhang <yifan1.zhang@amd.com>,
-        Prike Liang <Prike.Liang@amd.com>, Lang Yu <Lang.Yu@amd.com>,
-        Tejas Upadhyay <tejas.upadhyay@intel.com>,
-        Nirmoy Das <nirmoy.das@intel.com>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        linux-kernel@vger.kernel.org, amd-gfx@lists.freedesktop.org,
-        intel-gfx@lists.freedesktop.org, nouveau@lists.freedesktop.org,
-        virtualization@lists.linux-foundation.org, llvm@lists.linux.dev,
-        linux-hardening@vger.kernel.org
-References: <20230922173110.work.084-kees@kernel.org>
- <20230922173216.3823169-4-keescook@chromium.org>
-From:   "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-In-Reply-To: <20230922173216.3823169-4-keescook@chromium.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Kuogee Hsieh <quic_khsieh@quicinc.com>
+CC:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <dianders@chromium.org>, <vkoul@kernel.org>,
+        <daniel@ffwll.ch>, <airlied@gmail.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <quic_jesszhan@quicinc.com>,
+        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1694813901-26952-1-git-send-email-quic_khsieh@quicinc.com>
+ <1694813901-26952-7-git-send-email-quic_khsieh@quicinc.com>
+ <CAA8EJpqPXoFX4LXyXYgfh07Vpxg-KgD8VBR6x5bXf4GOJmbOtw@mail.gmail.com>
+ <2f98d5f1-57c1-d9fe-cb1c-b975db057287@quicinc.com>
+ <CAA8EJpr2wRq6Txi7YAQpJKa_9UGqH_nmHzvVOaAPkwOrtDg4Tw@mail.gmail.com>
+ <CAE-0n53dqHONzMTd_ZC-fKWTzDVq6Wqwo4OFZMUcghZ5SD5RhA@mail.gmail.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAE-0n53dqHONzMTd_ZC-fKWTzDVq6Wqwo4OFZMUcghZ5SD5RhA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator4166.hostgator.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - embeddedor.com
-X-BWhitelist: no
-X-Source-IP: 94.239.20.48
-X-Source-L: No
-X-Exim-ID: 1qjkfx-000PVa-1n
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: ([192.168.1.98]) [94.239.20.48]:43798
-X-Source-Auth: gustavo@embeddedor.com
-X-Email-Count: 0
-X-Org:  HG=hgshared;ORG=hostgator;
-X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfBTSiONnvdIHSZ3JQhlL9W56GibH1LIbKgH8wBWWcVOg7ciR1Xw9JI0bCaIsKAfI73v3mTAUChfrdkr7PjDgkapIClpzYD4nPVtxOhVQTY1b1+R5VUxr
- QD+RivrRxrxPqvCMRXWU8kPuO2nxo27VKm8NMdU+IqqI25MpS2QAsRksjGVUUVBjgf+aaH0THPYapAxjVZZnSJ2XDZ3HnWjKe46JsANqN2KSClVbp6kOUw8t
- yVwnPtnk4VVVrfQByTHw6vb1hTQBO+JZz6PNsRXEgDgg+KB1OYrANdElWq4zMcsBoKrU00SID2FGBbd045c+Dw==
-X-Spam-Status: No, score=-0.5 required=5.0 tests=BAYES_00,DATE_IN_FUTURE_03_06,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: UlklZ01rmbcdcrNvAHp9SEp5pFYq-myZ
+X-Proofpoint-ORIG-GUID: UlklZ01rmbcdcrNvAHp9SEp5pFYq-myZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-09-22_21,2023-09-21_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ lowpriorityscore=0 impostorscore=0 malwarescore=0 mlxlogscore=999
+ adultscore=0 phishscore=0 priorityscore=1501 mlxscore=0 suspectscore=0
+ spamscore=0 clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2309230013
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Stephen
 
+On 9/22/2023 2:54 PM, Stephen Boyd wrote:
+> Quoting Dmitry Baryshkov (2023-09-19 02:50:12)
+>> On Mon, 18 Sept 2023 at 20:48, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+>>>
+>>>
+>>> On 9/15/2023 6:21 PM, Dmitry Baryshkov wrote:
+>>>> On Sat, 16 Sept 2023 at 00:38, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+>>>>> Add pm_runtime_force_suspend()/resume() to complete incorporating pm
+>>>>> runtime framework into DP driver. Both dp_pm_prepare() and dp_pm_complete()
+>>>>> are added to set hpd_state to correct state. After resume, DP driver will
+>>>>> re training its main link after .hpd_enable() callback enabled HPD
+>>>>> interrupts and bring up display accordingly.
+>>>> How will it re-train the main link? What is the code path for that?
+>>>
+>>> 1) for edp, dp_bridge_atomic_enable(), called from framework, to start
+>>> link training and bring up display.
+>>
+>> And this path doesn't use .hpd_enable() which you have mentioned in
+>> the commit message. Please don't try to shorten the commit message.
+>> You see, I have had questions to several of them, which means that
+>> they were not verbose enough.
+>>
+>>>
+>>> 2) for external DP, HPD_PLUG_INT will be generated to start link
+>>> training and bring up display.
+>>
+>> This should be hpd_notify, who starts link training, not some event.
+> 
+> I think this driver should train the link during atomic_enable(), not
+> hpd_notify() (or directly from the irq handler). The drm_bridge_funcs
+> talk a bit about when the clocks and timing signals are supposed to be
+> enabled. For example, struct drm_bridge_funcs::atomic_pre_enable() says
+> the "display pipe (i.e.  clocks and timing signals) feeding this bridge
+> will not yet be running when this callback is called". And struct
+> drm_bridge_funcs::atomic_enable() says "this callback must enable the
+> display link feeding the next bridge in the chain if there is one."
+> 
+> That looks to me like link training, i.e. the display link, should
+> happen in the enable path and not hpd_notify. It looks like link
+> training could fail, but when that happens I believe the driver should
+> call drm_connector_set_link_status_property() with
+> DRM_MODE_LINK_STATUS_BAD. The two callers of that which exist in the
+> tree also call drm_kms_helper_hotplug_event() or
+> drm_kms_helper_connector_hotplug_event() after updating the link so that
+> userspace knows to try again.
+> 
+> It would be nice if there was some drm_bridge_set_link_status_bad() API
+> that bridge drivers could use to signal that the link status is bad and
+> call the hotplug helper. Maybe it could also record some diagnostics
+> about which bridge failed to setup the link and stop the atomic_enable()
+> chain for that connector.
 
-On 9/22/23 11:32, Kees Cook wrote:
-> Prepare for the coming implementation by GCC and Clang of the __counted_by
-> attribute. Flexible array members annotated with __counted_by can have
-> their accesses bounds-checked at run-time checking via CONFIG_UBSAN_BOUNDS
-> (for array indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family
-> functions).
-> 
-> As found with Coccinelle[1], add __counted_by for struct dpu_hw_intr.
-> 
-> [1] https://github.com/kees/kernel-tools/blob/trunk/coccinelle/examples/counted_by.cocci
-> 
-> Cc: Rob Clark <robdclark@gmail.com>
-> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Cc: Sean Paul <sean@poorly.run>
-> Cc: Marijn Suijten <marijn.suijten@somainline.org>
-> Cc: David Airlie <airlied@gmail.com>
-> Cc: Daniel Vetter <daniel@ffwll.ch>
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: dri-devel@lists.freedesktop.org
-> Cc: freedreno@lists.freedesktop.org
-> Signed-off-by: Kees Cook <keescook@chromium.org>
+Doing link training when we get hpd instead of atomic_enable() is a 
+design choice we have been following for a while because for the case 
+when link training fails in atomic_enable() and setting the link status 
+property as you mentioned, the compositor needs to be able to handle 
+that and also needs to try with a different resolution or take some 
+other corrective action. We have seen many compositors not able to 
+handle this complexity. So the design sends the hotplug to usermode only 
+after link training succeeds.
 
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+I do not think we should change this design unless prototyped with an 
+existing compositor such as chrome or android at this point.
 
 Thanks
--- 
-Gustavo
 
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-> index dab761e54863..50cf9523d367 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-> @@ -61,7 +61,7 @@ struct dpu_hw_intr {
->   		void (*cb)(void *arg, int irq_idx);
->   		void *arg;
->   		atomic_t count;
-> -	} irq_tbl[];
-> +	} irq_tbl[] __counted_by(total_irqs);
->   };
->   
->   /**
+Abhinav
