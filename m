@@ -2,115 +2,220 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D11BA7AC150
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Sep 2023 13:44:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A1627AC161
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Sep 2023 13:49:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230414AbjIWLoM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 Sep 2023 07:44:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34682 "EHLO
+        id S230458AbjIWLt1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Sep 2023 07:49:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229655AbjIWLoM (ORCPT
+        with ESMTP id S230426AbjIWLt0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 Sep 2023 07:44:12 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFD0D11D
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Sep 2023 04:44:05 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-533c4d20b33so1390862a12.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Sep 2023 04:44:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695469444; x=1696074244; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=vla4OZsvqD5RmSyqkNtWVp3bfdJ5jFtYYQ5MrELcXSM=;
-        b=nDbEAVteD7aGdLtChPEt/+FkeMGFRMhA1Nd/qCP6CxF202JZWaq+YPyIYDUT0GzGFW
-         HLB3R5r/nn6/j/FJi7p6T9ALwPRXEeJOrYRywbYT8RKeO9prvdHu/7QcwPd+ZmqSYwTt
-         huVEP4SFaDkhQPZtyqFlsTfJx4qENLp1XbNhFxj5ChEEclciuqR56QcKzRP1i9hISX+h
-         3uRJx1VqodiWx+C+Yc3cN//klaJ+7mZDXvIX9hH8ZMaukf/clQue/1KVjo9ecFKdNYSF
-         DLZoNiiGaqTjfHDxqTiKOw+QXkjkEG1OGgk4aL63DfnSIT5k1zaOH+hLqiUa/Da0hKH7
-         1DfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695469444; x=1696074244;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vla4OZsvqD5RmSyqkNtWVp3bfdJ5jFtYYQ5MrELcXSM=;
-        b=LY6u0bu4J8Q8e1Vv3aBYNK2lxUFiRhL6sfOUxYTC6xJjvVndlCkU/2Toa1IRJBoqWU
-         /3Xb3Xll8SIaw8SZatWaTQBFUCyULLU5WyeQ2LzX8lcN/sU7Kc9+NVh2LleiG58bFX7m
-         JzcsSGHMpOwLiEmECQ8CbECwpppfV5ZIaki6qDObkcanH2ECgVjHXRek1z//gm8Z6RBs
-         xBekjwg5MutBTe7Sm0VVsxgAG1WjnyZQgo0z39Jf2cGw2M5zcGOg2Nx//JelOlQpJCJI
-         plG7R2e8mr7mKI/BVwTyeb4lQHinXGEs8ccdQmJTja6wmAQC2MAAl2om60rrd+xsOmzS
-         M94Q==
-X-Gm-Message-State: AOJu0YxSZJdpCCqb+HMT9I+9kVJw2vJiM8AKGU0tlAyE9Z8I87arLxjH
-        xXobby6rVSk1Nz03DZ4plLm0cRtizg5/5j87WI2GjQ==
-X-Google-Smtp-Source: AGHT+IH6goftz+deG7oSTeTuzwqyw9P8c6mgIH9qR63I1IV/ch6sI7RIzn2uujDg7rQtq/HyjVsX6g==
-X-Received: by 2002:aa7:c158:0:b0:52a:38c3:1b4b with SMTP id r24-20020aa7c158000000b0052a38c31b4bmr3444238edp.15.1695469444353;
-        Sat, 23 Sep 2023 04:44:04 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.100])
-        by smtp.gmail.com with ESMTPSA id s3-20020aa7d783000000b0053116e45317sm3274449edq.44.2023.09.23.04.44.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 23 Sep 2023 04:44:03 -0700 (PDT)
-Message-ID: <f4fa94ab-78fb-d01b-7188-c498ec3053ff@linaro.org>
-Date:   Sat, 23 Sep 2023 13:44:01 +0200
+        Sat, 23 Sep 2023 07:49:26 -0400
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CC649F;
+        Sat, 23 Sep 2023 04:49:20 -0700 (PDT)
+Received: from g550jk.localnet (k10064.upc-k.chello.nl [62.108.10.64])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id CC44BD0F49;
+        Sat, 23 Sep 2023 11:49:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1695469759; bh=kBe11jmRLaOVJhGVOL0BQH3axSYxyviTE0+dWdDMB9o=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=m6ONAgACgDg9nRxAFYlumXEaFnN7FSjLIuGbfeBQCTIbabGyec+zsn79N4v/C40Qv
+         QLJuP5wYu4Yo8q2mwpSs/uPS1Zjnr4+AGu3AR1MBenW3+C21m0WKAcJCYBKXDkvxDy
+         dU3DYUWWv34N783Gvg0vg2dl4cubFqAYoq0Qgxz0=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Matti =?ISO-8859-1?Q?Lehtim=E4ki?= <matti.lehtimaki@gmail.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] pinctrl: qcom: msm8226: Add MPM pin mappings
+Date:   Sat, 23 Sep 2023 13:49:17 +0200
+Message-ID: <3182524.5fSG56mABF@z3ntu.xyz>
+In-Reply-To: <ZQ7NcuLOAwAJgQNr@gerhold.net>
+References: <20230922224027.85291-1-matti.lehtimaki@gmail.com>
+ <7570584.EvYhyI6sBW@z3ntu.xyz> <ZQ7NcuLOAwAJgQNr@gerhold.net>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH V3 1/4] dt-bindings: thermal: qcom-tsens: Add ipq5018
- compatible
-Content-Language: en-US
-To:     Sricharan R <srichara@win-platform-upstream01.qualcomm.com>,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        srinivas.kandagatla@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        thara.gopinath@gmail.com, rafael@kernel.org,
-        daniel.lezcano@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, dmitry.baryshkov@linaro.org,
-        quic_srichara@quicinc.com
-References: <20230922115116.2748804-1-srichara@win-platform-upstream01.qualcomm.com>
- <20230922115116.2748804-2-srichara@win-platform-upstream01.qualcomm.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230922115116.2748804-2-srichara@win-platform-upstream01.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/09/2023 13:51, Sricharan R wrote:
-> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> 
-> IPQ5018 has tsens v1.0 block with 4 sensors and 1 interrupt.
+On Samstag, 23. September 2023 13:35:25 CEST Stephan Gerhold wrote:
+> On Sat, Sep 23, 2023 at 01:19:46PM +0200, Luca Weiss wrote:
+> > On Samstag, 23. September 2023 12:00:52 CEST Stephan Gerhold wrote:
+> > > On Sat, Sep 23, 2023 at 11:32:47AM +0200, Luca Weiss wrote:
+> > > > Hi Matti,
+> > > >=20
+> > > > On Samstag, 23. September 2023 00:40:26 CEST Matti Lehtim=E4ki wrot=
+e:
+> > > > > Add pin <-> wakeirq mappings to allow for waking up the AP from
+> > > > > sleep
+> > > > > through MPM-connected pins.
+> > > > >=20
+> > > > > Signed-off-by: Matti Lehtim=E4ki <matti.lehtimaki@gmail.com>
+> > > > > ---
+> > > > >=20
+> > > > >  drivers/pinctrl/qcom/pinctrl-msm8226.c | 12 ++++++++++++
+> > > > >  1 file changed, 12 insertions(+)
+> > > > >=20
+> > > > > diff --git a/drivers/pinctrl/qcom/pinctrl-msm8226.c
+> > > > > b/drivers/pinctrl/qcom/pinctrl-msm8226.c index
+> > > > > 994619840a70..1e46a9ab382f
+> > > > > 100644
+> > > > > --- a/drivers/pinctrl/qcom/pinctrl-msm8226.c
+> > > > > +++ b/drivers/pinctrl/qcom/pinctrl-msm8226.c
+> > > > > @@ -612,6 +612,16 @@ static const struct msm_pingroup
+> > > > > msm8226_groups[] =3D
+> > > > > {
+> > > > >=20
+> > > > >  #define NUM_GPIO_PINGROUPS 117
+> > > > >=20
+> > > > > +static const struct msm_gpio_wakeirq_map msm8226_mpm_map[] =3D {
+> > > > > +	{ 1, 3 }, { 4, 4 }, { 5, 5 }, { 9, 6 }, { 13, 7 }, { 17, 8=20
+},
+> > > >=20
+> > > > I'm not really convinced this is the correct order of values...
+> > > >=20
+> > > > Let's look at downstream:
+> > > >   qcom,gpio-map =3D <3  1>,
+> > > >  =20
+> > > >                   <4  4 >,
+> > > >                   <5  5 >,
+> > > >                   <6  9 >,
+> > > >                   [...]
+> > > >=20
+> > > > From Documentation/devicetree/bindings/arm/msm/mpm.txt downstream:
+> > > >   Each tuple represents a MPM pin and which GIC interrupt is routed=
+ to
+> > > >   it.
+> > > >=20
+> > > > So first is pin number, second is interrupt number.
+> > > >=20
+> > > > And check mainline:
+> > > >   /**
+> > > >  =20
+> > > >    * struct msm_gpio_wakeirq_map - Map of GPIOs and their wakeup pi=
+ns
+> > > >    * @gpio:          The GPIOs that are wakeup capable
+> > > >    * @wakeirq:       The interrupt at the always-on interrupt
+> > > >    controller
+> > > >    */
+> > > >  =20
+> > > >   struct msm_gpio_wakeirq_map {
+> > > >  =20
+> > > >   	unsigned int gpio;
+> > > >   	unsigned int wakeirq;
+> > > >  =20
+> > > >   };
+> > > >=20
+> > > > So here we also have the order pin-interrupt, not the reverse order.
+> > > >=20
+> > > > Therefore I believe the order in this patch is incorrect, and it
+> > > > should
+> > > > rather>
+> > > >=20
+> > > > be:
+> > > >   { 3, 1 }, { 4, 4 }, { 5, 5 }, { 6, 9 }, { 7, 13 }, { 8, 17 },
+> > > >   [...]
+> > > >=20
+> > > > Or do you think I'm missing something?
+> > >=20
+> > > Yes :)
+> > >=20
+> > > Let's look at the later entries:
+> > > > > +	{ 21, 9 }, { 27, 10 }, { 29, 11 }, { 31, 12 }, { 33, 13 },=20
+{ 35,
+> > > > > 14
+> > > >=20
+> > > > },
+> > > >=20
+> > > > > +	{ 37, 15 }, { 38, 16 }, { 39, 17 }, { 41, 18 }, { 46, 19=20
+}, { 48,
+> > > > > 20
+> > > >=20
+> > > > },
+> > > >=20
+> > > > > +	{ 49, 21 }, { 50, 22 }, { 51, 23 }, { 52, 24 }, { 54, 25=20
+}, { 62,
+> > > > > 26
+> > > >=20
+> > > > },
+> > > >=20
+> > > > > +	{ 63, 27 }, { 64, 28 }, { 65, 29 }, { 66, 30 }, { 67, 31=20
+}, { 68,
+> > > > > 32
+> > > >=20
+> > > > },
+> > > >=20
+> > > > > +	{ 69, 33 }, { 71, 34 }, { 72, 35 }, { 106, 36 }, { 107, 37=20
+},
+> > > > > +	{ 108, 38 }, { 109, 39 }, { 110, 40 }, { 111, 54 }, { 113,=20
+55 },
+> > > > > +};
+> > > > > +
+> > >=20
+> > > For example: { 113, 55 }, i.e. { .gpio =3D 113, .wakeirq =3D 55 }.
+> > >=20
+> > > MSM8226 has GPIOs 0-116 and 64 MPM pins/interrupts. The order in this
+> > > patch is the only one that can be correct because the definition would
+> > > be invalid the other way around. 113 must be the GPIO number because =
+it
+> > > is larger than the 64 available MPM interrupt pins. :)
+> >=20
+> > So basically you're saying downstream is wrong / buggy?
+>=20
+> "Misleading" or "confusing" would be the words I would use. :-)
 
-Then why do you allow two interrupts?
+;)
 
-> 
-> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> ---
->  [v3] Added the tsens-ipq5018 as  new binding without rpm
-> 
->  Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> index 27e9e16e6455..a02829deeb24 100644
-> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> @@ -44,6 +44,10 @@ properties:
->                - qcom,qcs404-tsens
->            - const: qcom,tsens-v1
->  
-> +      - description: v1 of TSENS without rpm
-> +        enum:
-> +          - qcom,ipq5018-tsens
+>=20
+> > From qcom,gpio-map =3D [...], <55 113>; it's taking the properties like=
+ this
+> >=20
+> > (drivers/soc/qcom/mpm-of.c):
+> >   unsigned long pin =3D be32_to_cpup(list++);
+> >   irq_hw_number_t hwirq =3D be32_to_cpup(list++);
+> >=20
+> > Your explanation does make sense I guess but somewhere the link downstr=
+eam
+> > -> mainline must be broken, no?
+>=20
+> After staring at mpm-of.c for a while I would say that there:
+>  - downstream "pin" =3D MPM pin =3D mainline "wakeirq"
+>    - because this is used as index to msm_mpm_irqs_m2a, which has a size
+>      of MSM_MPM_NR_MPM_IRQS (64)
+>  - downstream "hwirq" =3D GPIO / GIC IRQ =3D mainline "gpio"
+>=20
+> This means for <55 113>: pin =3D wakeirq =3D 55 and hwirq =3D gpio =3D 11=
+3.
+> Which matches the definition in this patch:
+>   { .gpio =3D 113, .wakeirq =3D 55 } =3D { 113, 55 }
 
-You miss now description of interrupts, like the other variants have.
+=46un, thanks for digging into it!
 
-Best regards,
-Krzysztof
+@Matti: I think I see one missing entry here "<41  115>," on downstream, so
+{ 115, 41 } appears to be missing in this patch? Or is there a reason you=20
+omitted that one? The rest looks correct :)
+
+Regards
+Luca
+
+
+>=20
+> Stephan
+
+
+
 
