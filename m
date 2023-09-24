@@ -2,142 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 474BE7AC5C0
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Sep 2023 01:01:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D76A7AC63B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Sep 2023 03:49:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229716AbjIWXBp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 Sep 2023 19:01:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58258 "EHLO
+        id S229798AbjIXBt4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Sep 2023 21:49:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229456AbjIWXBp (ORCPT
+        with ESMTP id S229535AbjIXBtz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 Sep 2023 19:01:45 -0400
-Received: from omta40.uswest2.a.cloudfilter.net (omta40.uswest2.a.cloudfilter.net [35.89.44.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0745B127;
-        Sat, 23 Sep 2023 16:01:38 -0700 (PDT)
-Received: from eig-obgw-5003a.ext.cloudfilter.net ([10.0.29.159])
-        by cmsmtp with ESMTP
-        id jjIJqGROobK1VkBd4qnMsj; Sat, 23 Sep 2023 23:01:38 +0000
-Received: from gator4166.hostgator.com ([108.167.133.22])
-        by cmsmtp with ESMTPS
-        id kBd3qbZ0oVpk9kBd3qY14a; Sat, 23 Sep 2023 23:01:37 +0000
-X-Authority-Analysis: v=2.4 cv=CLw54DnD c=1 sm=1 tr=0 ts=650f6e51
- a=1YbLdUo/zbTtOZ3uB5T3HA==:117 a=P7XfKmiOJ4/qXqHZrN7ymg==:17
- a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
- a=IkcTkHD0fZMA:10 a=zNV7Rl7Rt7sA:10 a=wYkD_t78qR0A:10 a=NEAV23lmAAAA:8
- a=20KFwNOVAAAA:8 a=cm27Pg_UAAAA:8 a=pGLkceISAAAA:8 a=e5mUnYsNAAAA:8
- a=Z4Rwk6OoAAAA:8 a=VwQbUJbxAAAA:8 a=HvF037n1xESchLcPDVoA:9 a=QEXdDO2ut3YA:10
- a=xmb-EsYY8bH0VWELuYED:22 a=Vxmtnl_E_bksehYqCbjh:22 a=HkZW87K1Qel5hWWM3VKY:22
- a=AjGcO6oz07-iQ99wixmX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=embeddedor.com; s=default; h=Content-Transfer-Encoding:Content-Type:
-        In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-        :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=lsg3//jjqgWrIpnVUXs6kZLjDiMPa9J5cQHlkHzKtj8=; b=dRtx4r6TqPf7Mv5fzXz+pSeVme
-        dAF8L2m62NiWDV/asI3acAilMy1xx0fyXiKnlxIJOX5GpNFRG1kQ1KDYtDzrFRdgKlrdn9LRI3jGA
-        5q7/ryZATxM+E0ru/ObMVSdacNO0B0FOYy7dFKFT1ic6281ieBe1DQzGjQb06dQ3z8EHmVuOXicV/
-        NMBgvlCz/Ob+3bZIvRJlxaA8AczUEmDaPSFfQDWOSJuAflg/WGoz0+8uIGaNwsPC3kpY2AigNb7yT
-        k9rJLUnzu00Z/o5Uf4tCS0qBrAe+XRSPifLmZwYWmd4dVqHsXjZmXAlZXnqkMreFUQ7funbsi6tHD
-        OJLWfFbg==;
-Received: from [94.239.20.48] (port=43876 helo=[192.168.1.98])
-        by gator4166.hostgator.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.96)
-        (envelope-from <gustavo@embeddedor.com>)
-        id 1qjl0P-000jps-0z;
-        Fri, 22 Sep 2023 13:35:57 -0500
-Message-ID: <082a4081-5dc2-ada7-e187-7536768fa63f@embeddedor.com>
-Date:   Fri, 22 Sep 2023 20:36:48 -0600
+        Sat, 23 Sep 2023 21:49:55 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08F2911D;
+        Sat, 23 Sep 2023 18:49:49 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38O1nQgh027351;
+        Sun, 24 Sep 2023 01:49:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=4VLKUqTxeqOaNbyYh4MYg0CT/s3Ahd/+306CMK1HYi0=;
+ b=M0psSG3guhtUT4LPooJOu7g64WqFePnXdBOsxI1oGt4WWwWXclgjN6extBX9qMjBvkIh
+ krNCqQi74Qtt31gb17654ISEqT7RFWxaubqI6ElJzcG11HVHLAbacMh/eDjg8s2vCRri
+ GTGyfPD5MTGDWhbMQ2bgHT3/Cdom/dTXwpMRFwI89MlADWdwShPjcPrmlLUNvkgr+Khv
+ AUi1kQouW+P77jRutYZELs0rYCGYKQujdugZoH4Kt/y7R/lfXFwX1a9vsYh8WS67rBPY
+ mN6ZbbULDf18u4Qb/xdNddgqxNhWyVbEl91wrTm81qQ3gEQT6ctgoYcrVj1VAITJkUEY Jg== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t9saf9ccg-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 24 Sep 2023 01:49:26 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38O1nPfJ006722
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 24 Sep 2023 01:49:25 GMT
+Received: from [10.216.19.6] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Sat, 23 Sep
+ 2023 18:49:21 -0700
+Message-ID: <0db026e7-6017-83ed-4071-c2ea6d72e3d7@quicinc.com>
+Date:   Sun, 24 Sep 2023 07:19:18 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 7/9] drm/virtio: Annotate struct virtio_gpu_object_array
- with __counted_by
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH V2 net-next 2/2] net: qrtr: Add support for processing
+ DEL_PROC type control message
 Content-Language: en-US
-To:     Kees Cook <keescook@chromium.org>, David Airlie <airlied@gmail.com>
-Cc:     David Airlie <airlied@redhat.com>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        Gurchetan Singh <gurchetansingh@chromium.org>,
-        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel@lists.freedesktop.org,
-        virtualization@lists.linux-foundation.org,
-        Emma Anholt <emma@anholt.net>, Evan Quan <evan.quan@amd.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
-        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
-        Xiaojian Du <Xiaojian.Du@amd.com>,
-        Huang Rui <ray.huang@amd.com>,
-        Kevin Wang <kevin1.wang@amd.com>,
-        Hawking Zhang <Hawking.Zhang@amd.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Chris Wilson <chris@chris-wilson.co.uk>,
-        John Harrison <john.c.harrison@Intel.com>,
-        Andi Shyti <andi.shyti@linux.intel.com>,
-        Matthew Brost <matthew.brost@intel.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Ben Skeggs <bskeggs@redhat.com>,
-        Karol Herbst <kherbst@redhat.com>,
-        Lyude Paul <lyude@redhat.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Zack Rusin <zackr@vmware.com>,
-        VMware Graphics Reviewers 
-        <linux-graphics-maintainer@vmware.com>,
-        Melissa Wen <mwen@igalia.com>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Tom Rix <trix@redhat.com>, Le Ma <le.ma@amd.com>,
-        Lijo Lazar <lijo.lazar@amd.com>,
-        Yifan Zhang <yifan1.zhang@amd.com>,
-        Prike Liang <Prike.Liang@amd.com>, Lang Yu <Lang.Yu@amd.com>,
-        Tejas Upadhyay <tejas.upadhyay@intel.com>,
-        Nirmoy Das <nirmoy.das@intel.com>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        linux-kernel@vger.kernel.org, amd-gfx@lists.freedesktop.org,
-        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
-        llvm@lists.linux.dev, linux-hardening@vger.kernel.org
-References: <20230922173110.work.084-kees@kernel.org>
- <20230922173216.3823169-7-keescook@chromium.org>
-From:   "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-In-Reply-To: <20230922173216.3823169-7-keescook@chromium.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator4166.hostgator.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - embeddedor.com
-X-BWhitelist: no
-X-Source-IP: 94.239.20.48
-X-Source-L: No
-X-Exim-ID: 1qjl0P-000jps-0z
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: ([192.168.1.98]) [94.239.20.48]:43876
-X-Source-Auth: gustavo@embeddedor.com
-X-Email-Count: 0
-X-Org:  HG=hgshared;ORG=hostgator;
-X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfA07VJQcYEeersP9RSUcXnp3ZJeNvtMM7hdfYFp/x381r3dAyIfBhxc77pMR0ohcX5qPENkqdxMUllJPz9is27z6Rrn9OSw1SEUBseJa3AlbTlTEkY5E
- 0zRus16IeVDbJ9sXgFu6zwGCJ4zdrhvUOsVyAMhvVg/TLLEbU+3epcFjwqj6cyIsWZ3uQ756qRlbzr7Gwd14AIS5jP1PXvZk6+0Gdp4cUtx5d4hz5nm7CEjl
- U84nqAEzeKby0EJaJGx0kU6t/2zmOnz5bfijuDv0wraHxxLIrvP6lSmBQPzsF/OMyZ1ejAcSQjOn/gQmgH2bbA==
-X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,DATE_IN_FUTURE_06_12,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+To:     Chris Lew <quic_clew@quicinc.com>, <mani@kernel.org>,
+        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
+        <pabeni@redhat.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <quic_viswanat@quicinc.com>, <horms@kernel.org>
+References: <20230920053317.2165867-1-quic_srichara@quicinc.com>
+ <20230920053317.2165867-3-quic_srichara@quicinc.com>
+ <349a7b1c-915f-4f58-260f-900aa7e3db65@quicinc.com>
+From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
+In-Reply-To: <349a7b1c-915f-4f58-260f-900aa7e3db65@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 9xriFD8UV0JUzODUSEkrLtI4pQ8BHVnB
+X-Proofpoint-GUID: 9xriFD8UV0JUzODUSEkrLtI4pQ8BHVnB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-09-23_21,2023-09-21_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
+ mlxscore=0 priorityscore=1501 impostorscore=0 bulkscore=0 suspectscore=0
+ phishscore=0 malwarescore=0 mlxlogscore=999 spamscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
+ definitions=main-2309240013
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -146,46 +86,82 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 9/22/23 11:32, Kees Cook wrote:
-> Prepare for the coming implementation by GCC and Clang of the __counted_by
-> attribute. Flexible array members annotated with __counted_by can have
-> their accesses bounds-checked at run-time checking via CONFIG_UBSAN_BOUNDS
-> (for array indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family
-> functions).
+On 9/21/2023 5:56 AM, Chris Lew wrote:
 > 
-> As found with Coccinelle[1], add __counted_by for struct virtio_gpu_object_array.
+> On 9/19/2023 10:33 PM, Sricharan Ramabadhran wrote:
 > 
-> [1] https://github.com/kees/kernel-tools/blob/trunk/coccinelle/examples/counted_by.cocci
+>> @@ -122,6 +123,9 @@ static DEFINE_XARRAY_ALLOC(qrtr_ports);
+>>    * @qrtr_tx_lock: lock for qrtr_tx_flow inserts
+>>    * @rx_queue: receive queue
+>>    * @item: list item for broadcast list
+>> + * @kworker: worker thread for recv work
+>> + * @task: task to run the worker thread
+>> + * @read_data: scheduled work for recv work
 > 
-> Cc: David Airlie <airlied@redhat.com>
-> Cc: Gerd Hoffmann <kraxel@redhat.com>
-> Cc: Gurchetan Singh <gurchetansingh@chromium.org>
-> Cc: Chia-I Wu <olvaffe@gmail.com>
-> Cc: Daniel Vetter <daniel@ffwll.ch>
-> Cc: dri-devel@lists.freedesktop.org
-> Cc: virtualization@lists.linux-foundation.org
-> Signed-off-by: Kees Cook <keescook@chromium.org>
+> I think I made these descriptions a bit ambiguous with "recv work". 
+> Since we are only parsing DEL_PROC messages at the moment, the 
+> descriptions should be more accurate on what they are for.
 
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+  ok, btw, then would keep your authorship in first place.
+  In our downstream, there were multiple changes around here and
+  could not get a clear author here. I fixed this while testing
+  with Modem SSR recently for our tree, that said, will fix it
+  next version.
 
-Thanks
--- 
-Gustavo
-
-> ---
->   drivers/gpu/drm/virtio/virtgpu_drv.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/drivers/gpu/drm/virtio/virtgpu_drv.h b/drivers/gpu/drm/virtio/virtgpu_drv.h
-> index 8513b671f871..96365a772f77 100644
-> --- a/drivers/gpu/drm/virtio/virtgpu_drv.h
-> +++ b/drivers/gpu/drm/virtio/virtgpu_drv.h
-> @@ -119,7 +119,7 @@ struct virtio_gpu_object_array {
->   	struct ww_acquire_ctx ticket;
->   	struct list_head next;
->   	u32 nents, total;
-> -	struct drm_gem_object *objs[];
-> +	struct drm_gem_object *objs[] __counted_by(total);
->   };
->   
->   struct virtio_gpu_vbuffer;
+>>    */
+>>   struct qrtr_node {
+>>       struct mutex ep_lock;
+>> @@ -134,6 +138,9 @@ struct qrtr_node {
+>>       struct sk_buff_head rx_queue;
+>>       struct list_head item;
+>> +    struct kthread_worker kworker;
+>> +    struct task_struct *task;
+>> +    struct kthread_work read_data;
+> 
+> I think our own kthread here might have been overkill. I forget why we 
+> needed it instead of using a workqueue.
+
+   I added a workqueue here because endpoint post is getting called from
+   atomic contexts and below DEL_PROC handling acquires qrtr_tx_lock.
+
+> 
+>> +        if (cb->type == QRTR_TYPE_DEL_PROC) {
+>> +            /* Free tx flow counters */
+>> +            mutex_lock(&node->qrtr_tx_lock);
+>> +            radix_tree_for_each_slot(slot, &node->qrtr_tx_flow, 
+>> &iter, 0) {
+>> +                flow = rcu_dereference_raw(*slot);
+>> +                wake_up_interruptible_all(&flow->resume_tx);
+>> +            }
+>> +            mutex_unlock(&node->qrtr_tx_lock);
+>> +
+> 
+> I don't see any other places where we use rcu_dereference_raw for the 
+> flow. Does this need to be updated for the rest of the places we get the 
+> flow?
+> 
+     Yes, without the rcu_dereference_raw there is a SPARSE warning.
+     For some reason, did not see the same in other places where flow is
+     de-referenced. That said, yeah, will pull this common code and
+     create a new helper.
+
+> The same loop is done in qrtr_endpoint_unregister() so maybe we should 
+> look into adding a helper for this logic?
+> 
+>> +            /* Translate DEL_PROC to BYE for local enqueue */
+>> +            cb->type = QRTR_TYPE_BYE;
+>> +            pkt = (struct qrtr_ctrl_pkt *)skb->data;
+>> +            memset(pkt, 0, sizeof(*pkt));
+>> +            pkt->cmd = cpu_to_le32(QRTR_TYPE_BYE);
+>> +
+> 
+> Are we relying on the remote to program the destination of this packet 
+> to be the control port?
+> 
+     Yeah, targets like SDX modems, have a qrtr_fwd_del_proc in the
+     endpoint_unregister path.
+
+Regards,
+  Sricharan
+
