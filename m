@@ -2,187 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 000857AC75F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Sep 2023 11:41:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E80657AC73C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Sep 2023 10:59:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229687AbjIXJl4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 24 Sep 2023 05:41:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57706 "EHLO
+        id S229511AbjIXI7v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 24 Sep 2023 04:59:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229737AbjIXJly (ORCPT
+        with ESMTP id S229489AbjIXI7v (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 24 Sep 2023 05:41:54 -0400
-Received: from omta038.useast.a.cloudfilter.net (omta038.useast.a.cloudfilter.net [44.202.169.37])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0749710B;
-        Sun, 24 Sep 2023 02:41:46 -0700 (PDT)
-Received: from eig-obgw-5003a.ext.cloudfilter.net ([10.0.29.159])
-        by cmsmtp with ESMTP
-        id kJQ6q4SUuWU1ckLcYqXMUv; Sun, 24 Sep 2023 09:41:46 +0000
-Received: from gator4166.hostgator.com ([108.167.133.22])
-        by cmsmtp with ESMTPS
-        id kLcXqnsVhVpk9kLcXqe4I9; Sun, 24 Sep 2023 09:41:45 +0000
-X-Authority-Analysis: v=2.4 cv=CLw54DnD c=1 sm=1 tr=0 ts=65100459
- a=1YbLdUo/zbTtOZ3uB5T3HA==:117 a=P7XfKmiOJ4/qXqHZrN7ymg==:17
- a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
- a=IkcTkHD0fZMA:10 a=zNV7Rl7Rt7sA:10 a=wYkD_t78qR0A:10 a=NEAV23lmAAAA:8
- a=20KFwNOVAAAA:8 a=pGLkceISAAAA:8 a=e5mUnYsNAAAA:8 a=cm27Pg_UAAAA:8
- a=VwQbUJbxAAAA:8 a=HvF037n1xESchLcPDVoA:9 a=QEXdDO2ut3YA:10
- a=Vxmtnl_E_bksehYqCbjh:22 a=xmb-EsYY8bH0VWELuYED:22 a=AjGcO6oz07-iQ99wixmX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=embeddedor.com; s=default; h=Content-Transfer-Encoding:Content-Type:
-        In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-        :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=LJpKFYI8HAurZQUNChdEApljY9SFiaiFueT/5w9ez8A=; b=WyNj3hQ4m7k99wwrLc5UCHs1Jc
-        69JnjimjP16rPGM6Z286Pdu1EnpdBf8mvn8UjKRtZI4bAMSZGQvQ1d9x7xbbF7jhGmj8i/KfgpVr7
-        c6kMdlOOArSNLIvPI7ALTr7ZlFSq7jOM6qDaQO6AiuyehwfBegbjTZSqAQxzkVDGe842WreDX4kmx
-        XHRRkPtm2Lm/yGKMlAU/xXjqaVY17tUk+7nbeeqd30QAFyaig/PT4oxogP8/FHPvh54Qsp4aKp1TB
-        3O/2rSe65FJAdRxmlsC+oYSc83Oe5/HxuSX2iIA+whoUWfQqwbJkO09DT4sckq66htTHHi6PRZ1hS
-        7w0+uMIg==;
-Received: from [94.239.20.48] (port=43422 helo=[192.168.1.98])
-        by gator4166.hostgator.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.96)
-        (envelope-from <gustavo@embeddedor.com>)
-        id 1qjkgF-000Q0w-1S;
-        Fri, 22 Sep 2023 13:15:07 -0500
-Message-ID: <1916c681-cc7b-c101-de7d-5e9e0746c0c1@embeddedor.com>
-Date:   Fri, 22 Sep 2023 20:15:58 -0600
+        Sun, 24 Sep 2023 04:59:51 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BE63100;
+        Sun, 24 Sep 2023 01:59:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1695545985; x=1727081985;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=bBFElxUO241xaAvnbHFo2DA22JmPV94Jq2K50cyALrw=;
+  b=ZyLBM5Em5lDB13R8oEzhyxd7twTnkLc2EdOfWUt4+YR73tjIJ9wzwbCx
+   ytzqvLHg1tkEnl2tET/oTXxXVcDblMh8vqBGpPUW6f8cQHL/sk57Em481
+   oCZ1sqB48uF8XMCcYL7c/G/vg2fkbQ2x5TVcOXFBSdUbexqZLRSIjzwI0
+   SkdypuhKwLQQeyOgoUERzMrQyP90YPm+TTqGip7GgVjhZlLWu6PxI7DjM
+   8tNUgP3wTVbhi19YWMdZ1xe+Y/sS7f6O7jASn7sZvLzlywRnjLVruTgJ8
+   6+NNoFpVyWq9zM+BNvDydu3C/lrUum+MlJ6P97VcJjUbcRqixvj5TKjU8
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10842"; a="383842822"
+X-IronPort-AV: E=Sophos;i="6.03,173,1694761200"; 
+   d="scan'208";a="383842822"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Sep 2023 01:59:44 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10842"; a="741584796"
+X-IronPort-AV: E=Sophos;i="6.03,173,1694761200"; 
+   d="scan'208";a="741584796"
+Received: from lkp-server02.sh.intel.com (HELO 493f6c7fed5d) ([10.239.97.151])
+  by orsmga007.jf.intel.com with ESMTP; 24 Sep 2023 01:59:42 -0700
+Received: from kbuild by 493f6c7fed5d with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qkKxn-0003Q5-30;
+        Sun, 24 Sep 2023 08:59:39 +0000
+Date:   Sun, 24 Sep 2023 16:59:26 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     liuhaoran <liuhaoran14@163.com>, robdclark@gmail.com
+Cc:     oe-kbuild-all@lists.linux.dev, liuhaoran <liuhaoran14@163.com>,
+        linux-arm-msm@vger.kernel.org, quic_abhinavk@quicinc.com,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH] drm/msm/mdp4: Add error handling in
+ mdp4_lvds_connector_init()
+Message-ID: <202309241619.RHCRkWza-lkp@intel.com>
+References: <20230924064159.14739-1-liuhaoran14@163.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 5/9] drm/nouveau/pm: Annotate struct nvkm_perfdom with
- __counted_by
-Content-Language: en-US
-To:     Kees Cook <keescook@chromium.org>, David Airlie <airlied@gmail.com>
-Cc:     Ben Skeggs <bskeggs@redhat.com>, Karol Herbst <kherbst@redhat.com>,
-        Lyude Paul <lyude@redhat.com>, Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel@lists.freedesktop.org, nouveau@lists.freedesktop.org,
-        Emma Anholt <emma@anholt.net>, Evan Quan <evan.quan@amd.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
-        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
-        Xiaojian Du <Xiaojian.Du@amd.com>,
-        Huang Rui <ray.huang@amd.com>,
-        Kevin Wang <kevin1.wang@amd.com>,
-        Hawking Zhang <Hawking.Zhang@amd.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Chris Wilson <chris@chris-wilson.co.uk>,
-        John Harrison <john.c.harrison@Intel.com>,
-        Andi Shyti <andi.shyti@linux.intel.com>,
-        Matthew Brost <matthew.brost@intel.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Maxime Ripard <mripard@kernel.org>,
-        David Airlie <airlied@redhat.com>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        Gurchetan Singh <gurchetansingh@chromium.org>,
-        Chia-I Wu <olvaffe@gmail.com>, Zack Rusin <zackr@vmware.com>,
-        VMware Graphics Reviewers 
-        <linux-graphics-maintainer@vmware.com>,
-        Melissa Wen <mwen@igalia.com>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Tom Rix <trix@redhat.com>, Le Ma <le.ma@amd.com>,
-        Lijo Lazar <lijo.lazar@amd.com>,
-        Yifan Zhang <yifan1.zhang@amd.com>,
-        Prike Liang <Prike.Liang@amd.com>, Lang Yu <Lang.Yu@amd.com>,
-        Tejas Upadhyay <tejas.upadhyay@intel.com>,
-        Nirmoy Das <nirmoy.das@intel.com>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        linux-kernel@vger.kernel.org, amd-gfx@lists.freedesktop.org,
-        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org,
-        virtualization@lists.linux-foundation.org, llvm@lists.linux.dev,
-        linux-hardening@vger.kernel.org
-References: <20230922173110.work.084-kees@kernel.org>
- <20230922173216.3823169-5-keescook@chromium.org>
-From:   "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-In-Reply-To: <20230922173216.3823169-5-keescook@chromium.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator4166.hostgator.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - embeddedor.com
-X-BWhitelist: no
-X-Source-IP: 94.239.20.48
-X-Source-L: No
-X-Exim-ID: 1qjkgF-000Q0w-1S
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: ([192.168.1.98]) [94.239.20.48]:43422
-X-Source-Auth: gustavo@embeddedor.com
-X-Email-Count: 0
-X-Org:  HG=hgshared;ORG=hostgator;
-X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfCxE3WD6exDlnOmD0zV1OLqGyrFfBSwzJN2uXCqrNCXIUzfLGJUZDcVlAOdUJPv8yknQV64bkxokpOyYPpucOmwJL0QXtLOzhU65rg8kdbdKDCEfpbIV
- eFHr8Sp1pJQJQX2baE4fEWLNBr1QU5paOTJ81dbAdrygtecAzaFRr+H8lo3+nZLgIn+rJD7IECLw1QvXaPZCrpyDZA2WJWRegOzib6NQuaJXS91zpVB93dKi
- LTbUHZZpKryO5t3d8KJePW5ML/XCdXKSQEJvfL7HARlzlZOKBpaC627BA6hz+81fA0ano0YowWq4hg4VsvWsuQ==
-X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,DATE_IN_FUTURE_06_12,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230924064159.14739-1-liuhaoran14@163.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi liuhaoran,
+
+kernel test robot noticed the following build warnings:
+
+[auto build test WARNING on drm-misc/drm-misc-next]
+[also build test WARNING on linus/master v6.6-rc2 next-20230921]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/liuhaoran/drm-msm-mdp4-Add-error-handling-in-mdp4_lvds_connector_init/20230924-144326
+base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
+patch link:    https://lore.kernel.org/r/20230924064159.14739-1-liuhaoran14%40163.com
+patch subject: [PATCH] drm/msm/mdp4: Add error handling in mdp4_lvds_connector_init()
+config: arm-defconfig (https://download.01.org/0day-ci/archive/20230924/202309241619.RHCRkWza-lkp@intel.com/config)
+compiler: arm-linux-gnueabi-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20230924/202309241619.RHCRkWza-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202309241619.RHCRkWza-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+   drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c: In function 'mdp4_lvds_connector_init':
+>> drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c:114:24: warning: returning 'int' from a function with return type 'struct drm_connector *' makes pointer from integer without a cast [-Wint-conversion]
+     114 |                 return ret;
+         |                        ^~~
+   drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c:126:24: warning: returning 'int' from a function with return type 'struct drm_connector *' makes pointer from integer without a cast [-Wint-conversion]
+     126 |                 return ret;
+         |                        ^~~
 
 
-On 9/22/23 11:32, Kees Cook wrote:
-> Prepare for the coming implementation by GCC and Clang of the __counted_by
-> attribute. Flexible array members annotated with __counted_by can have
-> their accesses bounds-checked at run-time checking via CONFIG_UBSAN_BOUNDS
-> (for array indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family
-> functions).
-> 
-> As found with Coccinelle[1], add __counted_by for struct nvkm_perfdom.
-> 
-> [1] https://github.com/kees/kernel-tools/blob/trunk/coccinelle/examples/counted_by.cocci
-> 
-> Cc: Ben Skeggs <bskeggs@redhat.com>
-> Cc: Karol Herbst <kherbst@redhat.com>
-> Cc: Lyude Paul <lyude@redhat.com>
-> Cc: David Airlie <airlied@gmail.com>
-> Cc: Daniel Vetter <daniel@ffwll.ch>
-> Cc: dri-devel@lists.freedesktop.org
-> Cc: nouveau@lists.freedesktop.org
-> Signed-off-by: Kees Cook <keescook@chromium.org>
+vim +114 drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c
 
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+    92	
+    93	/* initialize connector */
+    94	struct drm_connector *mdp4_lvds_connector_init(struct drm_device *dev,
+    95			struct device_node *panel_node, struct drm_encoder *encoder)
+    96	{
+    97		struct drm_connector *connector = NULL;
+    98		struct mdp4_lvds_connector *mdp4_lvds_connector;
+    99		int ret;
+   100	
+   101		mdp4_lvds_connector = kzalloc(sizeof(*mdp4_lvds_connector), GFP_KERNEL);
+   102		if (!mdp4_lvds_connector)
+   103			return ERR_PTR(-ENOMEM);
+   104	
+   105		mdp4_lvds_connector->encoder = encoder;
+   106		mdp4_lvds_connector->panel_node = panel_node;
+   107	
+   108		connector = &mdp4_lvds_connector->base;
+   109	
+   110		ret = drm_connector_init(dev, connector, &mdp4_lvds_connector_funcs,
+   111					 DRM_MODE_CONNECTOR_LVDS);
+   112	
+   113		if (ret)
+ > 114			return ret;
 
-Thanks
 -- 
-Gustavo
-
-> ---
->   drivers/gpu/drm/nouveau/nvkm/engine/pm/priv.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/nouveau/nvkm/engine/pm/priv.h b/drivers/gpu/drm/nouveau/nvkm/engine/pm/priv.h
-> index 6ae25d3e7f45..c011227f7052 100644
-> --- a/drivers/gpu/drm/nouveau/nvkm/engine/pm/priv.h
-> +++ b/drivers/gpu/drm/nouveau/nvkm/engine/pm/priv.h
-> @@ -82,7 +82,7 @@ struct nvkm_perfdom {
->   	u8  mode;
->   	u32 clk;
->   	u16 signal_nr;
-> -	struct nvkm_perfsig signal[];
-> +	struct nvkm_perfsig signal[] __counted_by(signal_nr);
->   };
->   
->   struct nvkm_funcdom {
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
