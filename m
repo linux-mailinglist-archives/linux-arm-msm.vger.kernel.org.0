@@ -2,215 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 66EF67AC78C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Sep 2023 12:29:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D3FA27AC7C8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Sep 2023 13:45:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229720AbjIXK3O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 24 Sep 2023 06:29:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34688 "EHLO
+        id S229641AbjIXLpO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 24 Sep 2023 07:45:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229508AbjIXK3N (ORCPT
+        with ESMTP id S229545AbjIXLpN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 24 Sep 2023 06:29:13 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38BE09B
-        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Sep 2023 03:29:07 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-522bd411679so5406471a12.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Sep 2023 03:29:07 -0700 (PDT)
+        Sun, 24 Sep 2023 07:45:13 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE187103
+        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Sep 2023 04:45:06 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-32001d16a14so4528367f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Sep 2023 04:45:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695551345; x=1696156145; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695555905; x=1696160705; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Nbc4SBJzI3SAAZeeJhZ6/5GW5H6amKESEP+VIUjBVso=;
-        b=QvYxtZ2OfXrZTeOvsQr2vL05UeM1mbQtHC6ika4nNtous7CoHYGumOc9hXKxm3KCW/
-         u4ATcVOGV0WX6bmKM0Y7/e9kx0FXsZdzh4CPwbbNP1+TVydpCQ/ckkFe0SMIF3r2GMz+
-         3t95JZpypzaLuhgYPONUtgJ5GdX6kULi+LQrmP7hHbLPERzWg6F8LYPjn0G2/lFkT92/
-         Kj5MDPL7iEWYmkwyLoxKa6yZRGckWifjP7/pwAJxH1Hwl1MFM1/sm1MoiwrhPxE0qKph
-         eYDjyLjsZH6tIBso1bKDW9p8/EGHpFxJ3COVYzHyvR98GuvYPnAkb2kX8QM1J6D6O0BH
-         ldnw==
+        bh=Bfo+tbTQVTfcB3muEtJ5dcAI76Wff7ckKMaMA7hGJTc=;
+        b=mem4Gj/ALL5KmE+GqBobzCFoByRTLQrhDm+bsx2yj7BTmWi35kVTl+bSpbpEjhtKtb
+         2HLj4REEhbEOFrDk0ZR8uAFwXQ5fgS0m+eEF7ft8DVbZJbo1hMsyaKLP+kJo5c1icU8N
+         2B+mAcYGQLD5rid+ktVMS5B5fOdReUaiG+Hj0NJJgz70xMjY5YmKKlj2WrfOKSpANXC/
+         HwDZdVccXtgHjuW8BHGewq4oImC4JhPKjpuDF8aZPTEdLRuB9Knfg5/ilmVmEw55RQbO
+         Z47AwwybN7m86WHppRh26Fr2B8HIBsQU/7EYLCl9H1rkL1h02tk8d/DaU73nb6RKfABo
+         XcuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695551345; x=1696156145;
+        d=1e100.net; s=20230601; t=1695555905; x=1696160705;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Nbc4SBJzI3SAAZeeJhZ6/5GW5H6amKESEP+VIUjBVso=;
-        b=Ea5ZovsFbfbJ22NhvVPrPvE2SXxZSmboAHALvgjKBybxxhWRuJxSk6bziOTLKjJ/9B
-         pBsaGMSRoj4xIqiMx6q5dB0f6Q8KprS6TavnMMPT81vCAtPZbB92mIswQfBTWpORsBmF
-         QUytTnJB6ZC1c9IVW65ROeVvPH7/g39Eixub9mamceQxZsWHF7b8eNyKJ9q4NqyAjFpQ
-         WKlPSLAqhnnt/0ejJqE45V8PrTZTw9wjkIgSYDXNsx3j5bpvWM+BipqsTgo/tvs/75rS
-         NGTKnNcWMU5PYOhEr+j+lcZVNROke/axmScYu+JDM+MxOaYaw8PZZ/rK01IezhJnYq+R
-         Z2Zg==
-X-Gm-Message-State: AOJu0YwHXisIrTUOtDvQ7hOXQiOj/XaX5niiuK834VTLCd78SQXgIcYr
-        IC3odKb5ZxHyQinD4KA1V//AzQ==
-X-Google-Smtp-Source: AGHT+IF6bAns8yGi5kzdcAwLnOHgRn70eXm2R80TU2tam3x1oqVlcLZLihzPzFGSyzauBV4H3GJ8ew==
-X-Received: by 2002:aa7:db99:0:b0:525:680a:6b89 with SMTP id u25-20020aa7db99000000b00525680a6b89mr3206467edt.12.1695551345403;
-        Sun, 24 Sep 2023 03:29:05 -0700 (PDT)
-Received: from [10.73.151.44] ([188.111.42.10])
-        by smtp.gmail.com with ESMTPSA id q3-20020aa7d443000000b0052576969ef8sm4182115edr.14.2023.09.24.03.29.03
+        bh=Bfo+tbTQVTfcB3muEtJ5dcAI76Wff7ckKMaMA7hGJTc=;
+        b=RUNpjcPgFfCpMFff4bnDj5SfXUQdsUfkKZCxbIBQpP0SBI08UqqJg4bnkyb+MpB4/p
+         gcPZxbCXnIY51qC49szN1VJxym9LHKVgpKSRgnY755EJORfYy+CHGy3SKB7jYKo/5KQO
+         4OamK0cBZpxLkTZGEkPxMksAa+Cyphu0DyG806jUHg3Hft8Yh5V3AfG4LYj/p71HY71x
+         skr7cwZDlucVT2QcDJR7iDVHFqJoq1Zbtj7pcNZbrpwIVClxfhHwS/jlP7kv9TenaU0P
+         0qOOO9ofzVVSrrBlVe+qk08Xtew5y3c8ZFZFO5t2Xr9lzQVY8ffPiedIMPS0fafdDjVY
+         w+BA==
+X-Gm-Message-State: AOJu0YxJw7kl3X/RzJW6lgsaC8IL8gg5q5aQpf9rrosByP8QST8vuFMC
+        yXPqUAmJYyInz52DAZKicFSQuA==
+X-Google-Smtp-Source: AGHT+IEatxzY4iGxij3aKDiWG2DKIBpfinUH0KyqJo8wPunfVfcVbwDKYCOzxb44z/Samx/U6zZbBg==
+X-Received: by 2002:adf:e791:0:b0:31f:fab1:c3c3 with SMTP id n17-20020adfe791000000b0031ffab1c3c3mr3898673wrm.35.1695555905240;
+        Sun, 24 Sep 2023 04:45:05 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.100])
+        by smtp.gmail.com with ESMTPSA id m12-20020a056000008c00b0031f3b04e7cdsm9077174wrx.109.2023.09.24.04.45.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 24 Sep 2023 03:29:04 -0700 (PDT)
-Message-ID: <494ede51-46bf-437b-98b8-2460f4c40285@linaro.org>
-Date:   Sun, 24 Sep 2023 13:29:03 +0300
+        Sun, 24 Sep 2023 04:45:04 -0700 (PDT)
+Message-ID: <53e67234-1dc3-0f23-c4c4-6622828a24b9@linaro.org>
+Date:   Sun, 24 Sep 2023 13:45:03 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v6 08/10] drm/msm/dpu: Allow NULL FBs in atomic commit
-Content-Language: en-GB
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     quic_abhinavk@quicinc.com, ppaalanen@gmail.com,
-        contact@emersion.fr, laurent.pinchart@ideasonboard.com,
-        sebastian.wick@redhat.com, ville.syrjala@linux.intel.com,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        wayland-devel@lists.freedesktop.org
-References: <20230828-solid-fill-v6-0-a820efcce852@quicinc.com>
- <20230828-solid-fill-v6-8-a820efcce852@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230828-solid-fill-v6-8-a820efcce852@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 1/4] dt-bindings: clock: qcom,camcc.yaml: Convert
+ qcom,camcc to a single yaml file
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        jonathan@marek.ca, quic_tdas@quicinc.com,
+        vladimir.zapolskiy@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230923150045.1068556-1-bryan.odonoghue@linaro.org>
+ <20230923150045.1068556-2-bryan.odonoghue@linaro.org>
+ <2565aa33-619c-6c90-de96-29dc5ac5d961@linaro.org>
+ <fac95d85-0802-4819-9efe-a31e6df7a0e4@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <fac95d85-0802-4819-9efe-a31e6df7a0e4@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/08/2023 03:05, Jessica Zhang wrote:
-> Since solid fill planes allow for a NULL framebuffer in a valid commit,
-> add NULL framebuffer checks to atomic commit calls within DPU.
+On 24/09/2023 12:20, Bryan O'Donoghue wrote:
+> On 23/09/2023 17:13, Krzysztof Kozlowski wrote:
+>> On 23/09/2023 17:00, Bryan O'Donoghue wrote:
+>>> Move the various camcc yaml files into one. The Camera Clock Controller
+>>> is pretty similar from SoC to SoC.
+>>>
+>>> Mostly we have some SoCs which require fewer clocks than others. In some
+>>> cases we have SoCs which have required-opps and required-power-domains.
+>>>
+>>> It is likely we could and should extend the thin CAMCC descriptions such
+>>> as sdm845 an sm6350 to the more robust descriptions such as sm8250 and
+>>> sm8450.
+>>>
+>>> As a result of listing sm8250 and sm8450 together required-opps and
+>>> power-domains become required for sm8250, which is a NOP for the dtsi
+>>> since both declarations already exist for sm8250.
+>>>
+>>> sm8250 is also chosen as the example for the new combined camcc.yaml.
+>>>
+>>> A minor tweak to fix Bjorn's email address in the Maintainer list is
+>>> included.
+>>>
+>>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>
+>> No, that's not the right approach. For GCC and CamCC and all other
+>> Qualcomm clock controllers, we split into device schemas, not merge into
+>> one. The one schema is just becoming unreviewable over time with
+>> multiple if:then clauses.
+>>
+>> Please use approach like we have for GCC, RPMh interconnects or remote
+>> proc loaders - common file. What's more, here you probably don't even
+>> need common file because it is already there - qcom,gcc.yaml
+>>
+>> Best regards,
+>> Krzysztof
+>>
 > 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  9 ++++++-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 41 ++++++++++++++++++++-----------
->   2 files changed, 34 insertions(+), 16 deletions(-)
+> Ah OK, I see what you mean.
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index 8ce7586e2ddf..5e845510e8c1 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -451,6 +451,7 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
->   	struct drm_plane_state *state;
->   	struct dpu_crtc_state *cstate = to_dpu_crtc_state(crtc->state);
->   	struct dpu_plane_state *pstate = NULL;
-> +	const struct msm_format *fmt;
->   	struct dpu_format *format;
->   	struct dpu_hw_ctl *ctl = mixer->lm_ctl;
->   
-> @@ -470,7 +471,13 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
->   		pstate = to_dpu_plane_state(state);
->   		fb = state->fb;
->   
-> -		format = to_dpu_format(msm_framebuffer_format(pstate->base.fb));
-> +		if (drm_plane_solid_fill_enabled(state))
-> +			fmt = dpu_get_msm_format(&_dpu_crtc_get_kms(crtc)->base,
-> +					DRM_FORMAT_ABGR8888, 0);
-> +		else
-> +			fmt = msm_framebuffer_format(pstate->base.fb);
-> +
-> +		format = to_dpu_format(fmt);
->   
->   		if (pstate->stage == DPU_STAGE_BASE && format->alpha_enable)
->   			bg_alpha_enable = true;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index c2aaaded07ed..114c803ff99b 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -837,8 +837,13 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
->   
->   	pipe_cfg->dst_rect = new_plane_state->dst;
->   
-> -	fb_rect.x2 = new_plane_state->fb->width;
-> -	fb_rect.y2 = new_plane_state->fb->height;
-> +	if (drm_plane_solid_fill_enabled(new_plane_state))
-> +		return 0;
-
-This would skip all the width checks, dpu_plane_atomic_check_pipe(), 
-etc. Could you please confirm that all of those checks are irrelevant 
-for solid fill?
-
-> +
-> +	if (new_plane_state->pixel_source == DRM_PLANE_PIXEL_SOURCE_FB && new_plane_state->fb) {
-> +		fb_rect.x2 = new_plane_state->fb->width;
-> +		fb_rect.y2 = new_plane_state->fb->height;
-> +	}
->   
->   	/* Ensure fb size is supported */
->   	if (drm_rect_width(&fb_rect) > MAX_IMG_WIDTH ||
-> @@ -1082,21 +1087,32 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
->   	struct drm_crtc *crtc = state->crtc;
->   	struct drm_framebuffer *fb = state->fb;
->   	bool is_rt_pipe;
-> -	const struct dpu_format *fmt =
-> -		to_dpu_format(msm_framebuffer_format(fb));
-> +	const struct dpu_format *fmt;
->   	struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
->   	struct dpu_sw_pipe_cfg *r_pipe_cfg = &pstate->r_pipe_cfg;
->   	struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
->   	struct msm_gem_address_space *aspace = kms->base.aspace;
->   	struct dpu_hw_fmt_layout layout;
->   	bool layout_valid = false;
-> -	int ret;
->   
-> -	ret = dpu_format_populate_layout(aspace, fb, &layout);
-> -	if (ret)
-> -		DPU_ERROR_PLANE(pdpu, "failed to get format layout, %d\n", ret);
-> -	else
-> -		layout_valid = true;
-> +	if (state->pixel_source == DRM_PLANE_PIXEL_SOURCE_FB && fb) {
-> +		int ret;
-> +
-> +		fmt = to_dpu_format(msm_framebuffer_format(fb));
-> +
-> +		ret = dpu_format_populate_layout(aspace, fb, &layout);
-> +		if (ret)
-> +			DPU_ERROR_PLANE(pdpu, "failed to get format layout, %d\n", ret);
-> +		else
-> +			layout_valid = true;
-> +
-> +		DPU_DEBUG_PLANE(pdpu, "FB[%u] " DRM_RECT_FP_FMT "->crtc%u " DRM_RECT_FMT
-> +				", %4.4s ubwc %d\n", fb->base.id, DRM_RECT_FP_ARG(&state->src),
-> +				crtc->base.id, DRM_RECT_ARG(&state->dst),
-> +				(char *)&fmt->base.pixel_format, DPU_FORMAT_IS_UBWC(fmt));
-> +	} else {
-> +		fmt = dpu_get_dpu_format(DRM_FORMAT_ABGR8888);
-
-#define DPU_SOLID_FILL_FORMAT ?
-
-Also, I don't think that solid_fill planes consume bandwidth, so this 
-likely needs to be fixed too.
-
-
-> +	}
->   
->   	pstate->pending = true;
->   
-> @@ -1104,11 +1120,6 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
->   	pstate->needs_qos_remap |= (is_rt_pipe != pdpu->is_rt_pipe);
->   	pdpu->is_rt_pipe = is_rt_pipe;
->   
-> -	DPU_DEBUG_PLANE(pdpu, "FB[%u] " DRM_RECT_FP_FMT "->crtc%u " DRM_RECT_FMT
-> -			", %4.4s ubwc %d\n", fb->base.id, DRM_RECT_FP_ARG(&state->src),
-> -			crtc->base.id, DRM_RECT_ARG(&state->dst),
-> -			(char *)&fmt->base.pixel_format, DPU_FORMAT_IS_UBWC(fmt));
-> -
->   	dpu_plane_sspp_update_pipe(plane, pipe, pipe_cfg, fmt,
->   				   drm_mode_vrefresh(&crtc->mode),
->   				   layout_valid ? &layout : NULL);
+> commit f8cc21d454c50157a528c900b60aa9588b4066b3
+> Author: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Date:   Tue Dec 27 15:40:56 2022 +0100
 > 
+>      media: dt-bindings: qcom,venus: split common properties
 
--- 
-With best wishes
-Dmitry
+Yes, except that in case of camcc it might be enough to use existing
+gcc.yaml
+
+Best regards,
+Krzysztof
 
