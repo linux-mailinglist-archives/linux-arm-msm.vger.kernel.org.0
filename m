@@ -2,117 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 761857ACA28
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Sep 2023 16:57:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D03C17ACA9D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Sep 2023 17:52:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230055AbjIXO5d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 24 Sep 2023 10:57:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58358 "EHLO
+        id S229574AbjIXPwG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 24 Sep 2023 11:52:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229973AbjIXO5c (ORCPT
+        with ESMTP id S229437AbjIXPwG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 24 Sep 2023 10:57:32 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EFE6FC;
-        Sun, 24 Sep 2023 07:57:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1695567446; x=1727103446;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=vz2UOygP0PG/3NMBGLLpj3xINFuw6s3dUMhingYavng=;
-  b=gjbSUqDOCvJl/pDN1RwPy5Oco21MqntaoI1rwKcKS6xTwCarn+p4WxX+
-   OOjKgOrqcntQL4nq6xgZWPgkcMpUdKaqd3iJnXlA7AXYdbabMbJmAdzkg
-   eNVt3hv6/NRVKhZ7Og3Sf2mhdPxitn9YKWsIHlJp2+1uHHSd1HyOMA33Q
-   GYnjXFIhDyYN/o8hEQbM6jmWtKn1plSsrAWX4j9QvBUIfXFV6Rfa0bRS9
-   HluUGJ9F4C/138Ddtl6e6jEqHG6vEGg39tpTesTyUuSGOleHrLOYWv+RE
-   7vgHnz42g7/w94K8MEj8bCO8zSEhKxhpKSi5VBAPj6jXQ/G8eFUlj8CrF
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10843"; a="447586299"
-X-IronPort-AV: E=Sophos;i="6.03,173,1694761200"; 
-   d="scan'208";a="447586299"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Sep 2023 07:57:25 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10843"; a="783200304"
-X-IronPort-AV: E=Sophos;i="6.03,173,1694761200"; 
-   d="scan'208";a="783200304"
-Received: from lkp-server02.sh.intel.com (HELO 493f6c7fed5d) ([10.239.97.151])
-  by orsmga001.jf.intel.com with ESMTP; 24 Sep 2023 07:57:19 -0700
-Received: from kbuild by 493f6c7fed5d with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1qkQXt-0003oH-0P;
-        Sun, 24 Sep 2023 14:57:17 +0000
-Date:   Sun, 24 Sep 2023 22:57:11 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Tengfei Fan <quic_tengfan@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, tglx@linutronix.de,
-        maz@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        catalin.marinas@arm.com, will@kernel.org
-Cc:     oe-kbuild-all@lists.linux.dev, geert+renesas@glider.be,
-        arnd@arndb.de, neil.armstrong@linaro.org, nfraprado@collabora.com,
-        rafal@milecki.pl, peng.fan@nxp.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, quic_tsoni@quicinc.com,
-        quic_shashim@quicinc.com, quic_kaushalk@quicinc.com,
-        quic_tdas@quicinc.com, quic_tingweiz@quicinc.com,
-        quic_aiquny@quicinc.com, kernel@quicinc.com,
-        Tengfei Fan <quic_tengfan@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>
-Subject: Re: [PATCH v4 3/6] arm64: dts: qcom: sm4450: Add RPMH and Global
- clock
-Message-ID: <202309242226.wwMJhznj-lkp@intel.com>
-References: <20230922081026.2799-4-quic_tengfan@quicinc.com>
+        Sun, 24 Sep 2023 11:52:06 -0400
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8043EFA
+        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Sep 2023 08:51:58 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qkRO5-0002j6-Pr; Sun, 24 Sep 2023 17:51:13 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qkRNp-008fPX-Q2; Sun, 24 Sep 2023 17:50:57 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qkRNp-004RHy-E4; Sun, 24 Sep 2023 17:50:57 +0200
+Date:   Sun, 24 Sep 2023 17:50:57 +0200
+From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To:     Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Cc:     Lee Jones <lee@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Pavel Machek <pavel@ucw.cz>,
+        Guenter Roeck <groeck@chromium.org>, Liang He <windhl@126.com>,
+        linux-stm32@st-md-mailman.stormreply.com,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        chrome-platform@lists.linux.dev, Arnd Bergmann <arnd@arndb.de>,
+        Samuel Holland <samuel@sholland.org>,
+        Andrey Moiseev <o2g.org.ru@gmail.com>,
+        Michal Simek <michal.simek@amd.com>,
+        Ruan Jinjie <ruanjinjie@huawei.com>,
+        Yangtao Li <frank.li@vivo.com>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        joewu =?utf-8?B?KOWQs+S7suaMryk=?= <joewu@msi.com>,
+        Miloslav Trmac <mitr@volny.cz>,
+        Robert Jarzmik <robert.jarzmik@free.fr>,
+        Chen-Yu Tsai <wens@csie.org>, Andy Gross <agross@kernel.org>,
+        linux-input@vger.kernel.org, Jeff LaBundy <jeff@labundy.com>,
+        linux-sunxi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Michael Hennerich <michael.hennerich@analog.com>,
+        Rob Herring <robh@kernel.org>,
+        ye xingchen <ye.xingchen@zte.com.cn>,
+        Kalle Valo <kvalo@kernel.org>,
+        "Steven Rostedt (Google)" <rostedt@goodmis.org>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Siarhei Volkau <lis8215@gmail.com>,
+        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Benson Leung <bleung@chromium.org>,
+        linux-arm-kernel@lists.infradead.org,
+        Paolo Abeni <pabeni@redhat.com>,
+        Support Opensource <support.opensource@diasemi.com>,
+        Chen Jun <chenjun102@huawei.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Mattijs Korpershoek <mkorpershoek@baylibre.com>,
+        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        kernel@pengutronix.de, patches@opensource.cirrus.com,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Bjorn Andersson <andersson@kernel.org>
+Subject: Re: [PATCH 00/52] input: Convert to platform remove callback
+ returning void
+Message-ID: <20230924155057.e4k4ruv5iggbt6q6@pengutronix.de>
+References: <20230920125829.1478827-1-u.kleine-koenig@pengutronix.de>
+ <ZQ+jddG+UbuSD7pP@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="w2nepdqjggoh4sie"
 Content-Disposition: inline
-In-Reply-To: <20230922081026.2799-4-quic_tengfan@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <ZQ+jddG+UbuSD7pP@google.com>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Tengfei,
 
-kernel test robot noticed the following build errors:
+--w2nepdqjggoh4sie
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-[auto build test ERROR on 940fcc189c51032dd0282cbee4497542c982ac59]
+Hello Dmitry,
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Tengfei-Fan/dt-bindings-interrupt-controller-qcom-pdc-document-qcom-sm4450-pdc/20230922-161433
-base:   940fcc189c51032dd0282cbee4497542c982ac59
-patch link:    https://lore.kernel.org/r/20230922081026.2799-4-quic_tengfan%40quicinc.com
-patch subject: [PATCH v4 3/6] arm64: dts: qcom: sm4450: Add RPMH and Global clock
-config: arm64-randconfig-002-20230924 (https://download.01.org/0day-ci/archive/20230924/202309242226.wwMJhznj-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20230924/202309242226.wwMJhznj-lkp@intel.com/reproduce)
+On Sat, Sep 23, 2023 at 07:48:21PM -0700, Dmitry Torokhov wrote:
+> On Wed, Sep 20, 2023 at 02:57:37PM +0200, Uwe Kleine-K=F6nig wrote:
+> > Hello,
+> >=20
+> > this series converts all platform drivers below drivers/input to use
+> > remove_new. The motivation is to get rid of an integer return code
+> > that is (mostly) ignored by the platform driver core and error prone on
+> > the driver side.
+> >=20
+> > See commit 5c5a7680e67b ("platform: Provide a remove callback that
+> > returns no value") for an extended explanation and the eventual goal.
+> >=20
+> > There are no interdependencies between the patches. As there are still
+> > quite a few drivers to convert, I'm happy about every patch that makes
+> > it in. So even if there is a merge conflict with one patch until you
+> > apply or a subject prefix is suboptimal, please apply the remainder of
+> > this series anyhow.
+>=20
+> Applied the lot (fixing the i8042-sparcio patch subject), thank you!
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202309242226.wwMJhznj-lkp@intel.com/
+Thanks. In the meantime I found out why my process failed here: I only
+fixed *.c, but this driver struct is defined in a header file
+i8042-sparcio.h.
 
-All errors (new ones prefixed by >>):
+This file is only included by drivers/input/serio/i8042.h which in turn
+is only included by drivers/input/serio/i8042.c. So there is only one
+instance created, but I'd call that unusual anyhow.
 
-   In file included from arch/arm64/boot/dts/qcom/sm4450-qrd.dts:8:
->> arch/arm64/boot/dts/qcom/sm4450.dtsi:7:10: fatal error: dt-bindings/clock/qcom,sm4450-gcc.h: No such file or directory
-       7 | #include <dt-bindings/clock/qcom,sm4450-gcc.h>
-         |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   compilation terminated.
+Best regards
+Uwe
 
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
 
-vim +7 arch/arm64/boot/dts/qcom/sm4450.dtsi
+--w2nepdqjggoh4sie
+Content-Type: application/pgp-signature; name="signature.asc"
 
-   > 7	#include <dt-bindings/clock/qcom,sm4450-gcc.h>
-     8	#include <dt-bindings/gpio/gpio.h>
-     9	#include <dt-bindings/interrupt-controller/arm-gic.h>
-    10	#include <dt-bindings/soc/qcom,rpmh-rsc.h>
-    11	
+-----BEGIN PGP SIGNATURE-----
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmUQWuAACgkQj4D7WH0S
+/k4z2wf/fRpeO2RuT0KNoThVdJCLb7VTgbHa+9l0qDPdA3JAbYzxbQ6K12SP/CIT
+/y1woqUQa2ATctxXvuRS1TmBlYCbX5IQB/D24pgnGlz+UOGxAoNPNd1HsFSWGnRo
+Retc138nrb3r+4HCwC6nBZ9VHaYy8kZMDs121e3M/t/bwVJQROuWowsT+b9gzqD+
+XSwiABX3Ij7bgUS+iwf1FN68HK10/dd/jhSPepCDr4Q+4JMDp7gus6xC5ImGlDHx
+hRvacVKc88L7gt/mlcj8JDmugGjcMWAlNGxQRqrhdWC0ANnGgN5L32jbH+HGk85t
+hmCwwQWgjsTehkTnb/axaDJK83wyhw==
+=h4JX
+-----END PGP SIGNATURE-----
+
+--w2nepdqjggoh4sie--
