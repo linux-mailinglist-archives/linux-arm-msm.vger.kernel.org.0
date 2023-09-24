@@ -2,82 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D51F37AC786
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Sep 2023 12:23:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 66EF67AC78C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Sep 2023 12:29:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229609AbjIXKXY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 24 Sep 2023 06:23:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37126 "EHLO
+        id S229720AbjIXK3O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 24 Sep 2023 06:29:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229508AbjIXKXY (ORCPT
+        with ESMTP id S229508AbjIXK3N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 24 Sep 2023 06:23:24 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0BEB100
-        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Sep 2023 03:23:17 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-99357737980so569532866b.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Sep 2023 03:23:17 -0700 (PDT)
+        Sun, 24 Sep 2023 06:29:13 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38BE09B
+        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Sep 2023 03:29:07 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-522bd411679so5406471a12.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Sep 2023 03:29:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695550996; x=1696155796; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695551345; x=1696156145; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=NAyZdodbhEHxyvfq9t25K1kT6NpZjHkp5WFQo3bH0kU=;
-        b=dPhvxPsmi2ULOZlaBLixH9C5ikSzaU/Ps9qavWOYUH1nOrgRumElAetfGYhf2rUdLz
-         2i+TFGU3lturtc7AN5fd/mt4UzS0iQEL3MIlcAZiLBytiq9rOfzimBsX/pADfsZScgQX
-         GCK5xdt1fFlaadXPcWiA4qTQ/ylz/RQxWYIIA5m+INusKDhckz5NMIpLThXDLNVUaGsW
-         OSiqi+Mm/9hn8vJiimdzNsWOeN1eWoHLjedPE871biRe9Kiu9CIB0vpt+QJ2RGDDW8Id
-         tCmvW3NNsPs7ZF1ijT9Mg5aGN+aeyP6/+vbKLnwQNojULzqefh6HkmNtwbkMU0543mq6
-         f8lw==
+        bh=Nbc4SBJzI3SAAZeeJhZ6/5GW5H6amKESEP+VIUjBVso=;
+        b=QvYxtZ2OfXrZTeOvsQr2vL05UeM1mbQtHC6ika4nNtous7CoHYGumOc9hXKxm3KCW/
+         u4ATcVOGV0WX6bmKM0Y7/e9kx0FXsZdzh4CPwbbNP1+TVydpCQ/ckkFe0SMIF3r2GMz+
+         3t95JZpypzaLuhgYPONUtgJ5GdX6kULi+LQrmP7hHbLPERzWg6F8LYPjn0G2/lFkT92/
+         Kj5MDPL7iEWYmkwyLoxKa6yZRGckWifjP7/pwAJxH1Hwl1MFM1/sm1MoiwrhPxE0qKph
+         eYDjyLjsZH6tIBso1bKDW9p8/EGHpFxJ3COVYzHyvR98GuvYPnAkb2kX8QM1J6D6O0BH
+         ldnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695550996; x=1696155796;
+        d=1e100.net; s=20230601; t=1695551345; x=1696156145;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NAyZdodbhEHxyvfq9t25K1kT6NpZjHkp5WFQo3bH0kU=;
-        b=Jndxbp0s6xXteq0eLBygHRllOORYRLj/So8w8Um3SW7L+u2tjHKS7vOqe/RuCTG4E8
-         E4fIIKClh4+uXQ+Os+DvGVnN8B4QuERcBvmwFrfChp/Y9Bu2KDlFPM5okQVAnUVDPJHU
-         nEVxKJBAQa6WhMb0cAxTyOIBEHmNBUVLyLqdMIYjo0OT5bZjyXTxdowr2umX4IFF15w4
-         utPDEfoMF4enzZHHoWsZuse3spEs5R8ZkmoGt5ME93OoulMy8tQHW9ssZNP96P4mEyZv
-         Cpsh7malGDxdpMqbMivaER2s9LEHCzo7+ItCI07qNf7ZoJ5Ifvj/Nc/lD7UYyjOhXblI
-         q6kQ==
-X-Gm-Message-State: AOJu0Yz/aZCv0aHVnQFH+xypYte/y+TFrQe6xdZ/WW4VE2zgid0vGEY6
-        5JLdyOhrv3EbUSRhByE1oS3TaQ==
-X-Google-Smtp-Source: AGHT+IErimtHQwXCllH1LgG+MK0TOlPSL6e6E6XP+QbXRiZkmk5TFH/ytDFtnePyqJJQRL/OxC7FCg==
-X-Received: by 2002:a17:907:7636:b0:9ad:99a8:7c53 with SMTP id jy22-20020a170907763600b009ad99a87c53mr3492921ejc.60.1695550996095;
-        Sun, 24 Sep 2023 03:23:16 -0700 (PDT)
+        bh=Nbc4SBJzI3SAAZeeJhZ6/5GW5H6amKESEP+VIUjBVso=;
+        b=Ea5ZovsFbfbJ22NhvVPrPvE2SXxZSmboAHALvgjKBybxxhWRuJxSk6bziOTLKjJ/9B
+         pBsaGMSRoj4xIqiMx6q5dB0f6Q8KprS6TavnMMPT81vCAtPZbB92mIswQfBTWpORsBmF
+         QUytTnJB6ZC1c9IVW65ROeVvPH7/g39Eixub9mamceQxZsWHF7b8eNyKJ9q4NqyAjFpQ
+         WKlPSLAqhnnt/0ejJqE45V8PrTZTw9wjkIgSYDXNsx3j5bpvWM+BipqsTgo/tvs/75rS
+         NGTKnNcWMU5PYOhEr+j+lcZVNROke/axmScYu+JDM+MxOaYaw8PZZ/rK01IezhJnYq+R
+         Z2Zg==
+X-Gm-Message-State: AOJu0YwHXisIrTUOtDvQ7hOXQiOj/XaX5niiuK834VTLCd78SQXgIcYr
+        IC3odKb5ZxHyQinD4KA1V//AzQ==
+X-Google-Smtp-Source: AGHT+IF6bAns8yGi5kzdcAwLnOHgRn70eXm2R80TU2tam3x1oqVlcLZLihzPzFGSyzauBV4H3GJ8ew==
+X-Received: by 2002:aa7:db99:0:b0:525:680a:6b89 with SMTP id u25-20020aa7db99000000b00525680a6b89mr3206467edt.12.1695551345403;
+        Sun, 24 Sep 2023 03:29:05 -0700 (PDT)
 Received: from [10.73.151.44] ([188.111.42.10])
-        by smtp.gmail.com with ESMTPSA id lw13-20020a170906bccd00b0098884f86e41sm4809559ejb.123.2023.09.24.03.23.14
+        by smtp.gmail.com with ESMTPSA id q3-20020aa7d443000000b0052576969ef8sm4182115edr.14.2023.09.24.03.29.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 24 Sep 2023 03:23:15 -0700 (PDT)
-Message-ID: <6851b864-447f-453f-8b34-1fbb6e97eefe@linaro.org>
-Date:   Sun, 24 Sep 2023 13:23:13 +0300
+        Sun, 24 Sep 2023 03:29:04 -0700 (PDT)
+Message-ID: <494ede51-46bf-437b-98b8-2460f4c40285@linaro.org>
+Date:   Sun, 24 Sep 2023 13:29:03 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [Freedreno] [PATCH RFC v6 07/10] drm/atomic: Loosen FB atomic
- checks
+Subject: Re: [PATCH RFC v6 08/10] drm/msm/dpu: Allow NULL FBs in atomic commit
 Content-Language: en-GB
 To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Pekka Paalanen <ppaalanen@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        sebastian.wick@redhat.com, Thomas Zimmermann <tzimmermann@suse.de>,
-        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
         Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        quic_abhinavk@quicinc.com, Maxime Ripard <mripard@kernel.org>,
-        linux-kernel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        laurent.pinchart@ideasonboard.com, Daniel Vetter <daniel@ffwll.ch>,
-        contact@emersion.fr,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        wayland-devel@lists.freedesktop.org,
-        David Airlie <airlied@gmail.com>, ville.syrjala@linux.intel.com
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     quic_abhinavk@quicinc.com, ppaalanen@gmail.com,
+        contact@emersion.fr, laurent.pinchart@ideasonboard.com,
+        sebastian.wick@redhat.com, ville.syrjala@linux.intel.com,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        wayland-devel@lists.freedesktop.org
 References: <20230828-solid-fill-v6-0-a820efcce852@quicinc.com>
- <20230828-solid-fill-v6-7-a820efcce852@quicinc.com>
- <20230829112230.7106a8bf@eldfell>
- <752176d8-23f4-4689-8bf4-db27f153fd39@quicinc.com>
+ <20230828-solid-fill-v6-8-a820efcce852@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <752176d8-23f4-4689-8bf4-db27f153fd39@quicinc.com>
+In-Reply-To: <20230828-solid-fill-v6-8-a820efcce852@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -87,106 +85,130 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/09/2023 20:49, Jessica Zhang wrote:
+On 29/08/2023 03:05, Jessica Zhang wrote:
+> Since solid fill planes allow for a NULL framebuffer in a valid commit,
+> add NULL framebuffer checks to atomic commit calls within DPU.
 > 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  9 ++++++-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 41 ++++++++++++++++++++-----------
+>   2 files changed, 34 insertions(+), 16 deletions(-)
 > 
-> On 8/29/2023 1:22 AM, Pekka Paalanen wrote:
->> On Mon, 28 Aug 2023 17:05:13 -0700
->> Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
->>
->>> Loosen the requirements for atomic and legacy commit so that, in cases
->>> where pixel_source != FB, the commit can still go through.
->>>
->>> This includes adding framebuffer NULL checks in other areas to 
->>> account for
->>> FB being NULL when non-FB pixel sources are enabled.
->>>
->>> To disable a plane, the pixel_source must be NONE or the FB must be NULL
->>> if pixel_source == FB.
->>>
->>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->>> ---
->>>   drivers/gpu/drm/drm_atomic.c        | 20 +++++++++++---------
->>>   drivers/gpu/drm/drm_atomic_helper.c | 36 
->>> ++++++++++++++++++++----------------
->>>   include/drm/drm_atomic_helper.h     |  4 ++--
->>>   include/drm/drm_plane.h             | 29 +++++++++++++++++++++++++++++
->>>   4 files changed, 62 insertions(+), 27 deletions(-)
->>
->> ...
->>
->>> diff --git a/include/drm/drm_plane.h b/include/drm/drm_plane.h
->>> index a58f84b6bd5e..4c5b7bcdb25c 100644
->>> --- a/include/drm/drm_plane.h
->>> +++ b/include/drm/drm_plane.h
->>> @@ -992,6 +992,35 @@ static inline struct drm_plane 
->>> *drm_plane_find(struct drm_device *dev,
->>>   #define drm_for_each_plane(plane, dev) \
->>>       list_for_each_entry(plane, &(dev)->mode_config.plane_list, head)
->>> +/**
->>> + * drm_plane_solid_fill_enabled - Check if solid fill is enabled on 
->>> plane
->>> + * @state: plane state
->>> + *
->>> + * Returns:
->>> + * Whether the plane has been assigned a solid_fill_blob
->>> + */
->>> +static inline bool drm_plane_solid_fill_enabled(struct 
->>> drm_plane_state *state)
->>> +{
->>> +    if (!state)
->>> +        return false;
->>> +    return state->pixel_source == DRM_PLANE_PIXEL_SOURCE_SOLID_FILL 
->>> && state->solid_fill_blob;
->>> +}
->>> +
->>> +static inline bool drm_plane_has_visible_data(const struct 
->>> drm_plane_state *state)
->>> +{
->>> +    switch (state->pixel_source) {
->>> +    case DRM_PLANE_PIXEL_SOURCE_NONE:
->>> +        return false;
->>> +    case DRM_PLANE_PIXEL_SOURCE_SOLID_FILL:
->>> +        return state->solid_fill_blob != NULL;
->>
->> This reminds me, new UAPI docs did not say what the requirements are for
->> choosing solid fill pixel source. Is the atomic commit rejected if
->> pixel source is solid fill, but solid_fill property has no blob?
-> 
-> Hi Pekka,
-> 
-> Yes, if pixel_source is solid_fill and the solid_fill property blob 
-> isn't set, the atomic commit should throw an error.
-> 
-> Will document this in the UAPI.
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> index 8ce7586e2ddf..5e845510e8c1 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> @@ -451,6 +451,7 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
+>   	struct drm_plane_state *state;
+>   	struct dpu_crtc_state *cstate = to_dpu_crtc_state(crtc->state);
+>   	struct dpu_plane_state *pstate = NULL;
+> +	const struct msm_format *fmt;
+>   	struct dpu_format *format;
+>   	struct dpu_hw_ctl *ctl = mixer->lm_ctl;
+>   
+> @@ -470,7 +471,13 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
+>   		pstate = to_dpu_plane_state(state);
+>   		fb = state->fb;
+>   
+> -		format = to_dpu_format(msm_framebuffer_format(pstate->base.fb));
+> +		if (drm_plane_solid_fill_enabled(state))
+> +			fmt = dpu_get_msm_format(&_dpu_crtc_get_kms(crtc)->base,
+> +					DRM_FORMAT_ABGR8888, 0);
+> +		else
+> +			fmt = msm_framebuffer_format(pstate->base.fb);
+> +
+> +		format = to_dpu_format(fmt);
+>   
+>   		if (pstate->stage == DPU_STAGE_BASE && format->alpha_enable)
+>   			bg_alpha_enable = true;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index c2aaaded07ed..114c803ff99b 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -837,8 +837,13 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>   
+>   	pipe_cfg->dst_rect = new_plane_state->dst;
+>   
+> -	fb_rect.x2 = new_plane_state->fb->width;
+> -	fb_rect.y2 = new_plane_state->fb->height;
+> +	if (drm_plane_solid_fill_enabled(new_plane_state))
+> +		return 0;
 
-I don't see a corresponding error check in atomic_check() functions. 
-Could you please check that there is one, as you are updating the uAPI.
+This would skip all the width checks, dpu_plane_atomic_check_pipe(), 
+etc. Could you please confirm that all of those checks are irrelevant 
+for solid fill?
 
+> +
+> +	if (new_plane_state->pixel_source == DRM_PLANE_PIXEL_SOURCE_FB && new_plane_state->fb) {
+> +		fb_rect.x2 = new_plane_state->fb->width;
+> +		fb_rect.y2 = new_plane_state->fb->height;
+> +	}
+>   
+>   	/* Ensure fb size is supported */
+>   	if (drm_rect_width(&fb_rect) > MAX_IMG_WIDTH ||
+> @@ -1082,21 +1087,32 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+>   	struct drm_crtc *crtc = state->crtc;
+>   	struct drm_framebuffer *fb = state->fb;
+>   	bool is_rt_pipe;
+> -	const struct dpu_format *fmt =
+> -		to_dpu_format(msm_framebuffer_format(fb));
+> +	const struct dpu_format *fmt;
+>   	struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
+>   	struct dpu_sw_pipe_cfg *r_pipe_cfg = &pstate->r_pipe_cfg;
+>   	struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
+>   	struct msm_gem_address_space *aspace = kms->base.aspace;
+>   	struct dpu_hw_fmt_layout layout;
+>   	bool layout_valid = false;
+> -	int ret;
+>   
+> -	ret = dpu_format_populate_layout(aspace, fb, &layout);
+> -	if (ret)
+> -		DPU_ERROR_PLANE(pdpu, "failed to get format layout, %d\n", ret);
+> -	else
+> -		layout_valid = true;
+> +	if (state->pixel_source == DRM_PLANE_PIXEL_SOURCE_FB && fb) {
+> +		int ret;
+> +
+> +		fmt = to_dpu_format(msm_framebuffer_format(fb));
+> +
+> +		ret = dpu_format_populate_layout(aspace, fb, &layout);
+> +		if (ret)
+> +			DPU_ERROR_PLANE(pdpu, "failed to get format layout, %d\n", ret);
+> +		else
+> +			layout_valid = true;
+> +
+> +		DPU_DEBUG_PLANE(pdpu, "FB[%u] " DRM_RECT_FP_FMT "->crtc%u " DRM_RECT_FMT
+> +				", %4.4s ubwc %d\n", fb->base.id, DRM_RECT_FP_ARG(&state->src),
+> +				crtc->base.id, DRM_RECT_ARG(&state->dst),
+> +				(char *)&fmt->base.pixel_format, DPU_FORMAT_IS_UBWC(fmt));
+> +	} else {
+> +		fmt = dpu_get_dpu_format(DRM_FORMAT_ABGR8888);
+
+#define DPU_SOLID_FILL_FORMAT ?
+
+Also, I don't think that solid_fill planes consume bandwidth, so this 
+likely needs to be fixed too.
+
+
+> +	}
+>   
+>   	pstate->pending = true;
+>   
+> @@ -1104,11 +1120,6 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+>   	pstate->needs_qos_remap |= (is_rt_pipe != pdpu->is_rt_pipe);
+>   	pdpu->is_rt_pipe = is_rt_pipe;
+>   
+> -	DPU_DEBUG_PLANE(pdpu, "FB[%u] " DRM_RECT_FP_FMT "->crtc%u " DRM_RECT_FMT
+> -			", %4.4s ubwc %d\n", fb->base.id, DRM_RECT_FP_ARG(&state->src),
+> -			crtc->base.id, DRM_RECT_ARG(&state->dst),
+> -			(char *)&fmt->base.pixel_format, DPU_FORMAT_IS_UBWC(fmt));
+> -
+>   	dpu_plane_sspp_update_pipe(plane, pipe, pipe_cfg, fmt,
+>   				   drm_mode_vrefresh(&crtc->mode),
+>   				   layout_valid ? &layout : NULL);
 > 
-> Thanks,
-> 
-> Jessica Zhang
-> 
->>
->> This should be doc'd.
->>
->>
->> Thanks,
->> pq
->>
->>> +    case DRM_PLANE_PIXEL_SOURCE_FB:
->>> +    default:
->>> +        WARN_ON(state->pixel_source != DRM_PLANE_PIXEL_SOURCE_FB);
->>> +    }
->>> +
->>> +    return state->fb != NULL;
->>> +}
->>> +
->>>   bool drm_any_plane_has_format(struct drm_device *dev,
->>>                     u32 format, u64 modifier);
->>>
->>
 
 -- 
 With best wishes
