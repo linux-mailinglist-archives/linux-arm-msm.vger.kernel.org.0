@@ -2,165 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C29287AD0EF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 09:00:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF8547AD122
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 09:10:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232365AbjIYHAc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Sep 2023 03:00:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47988 "EHLO
+        id S232372AbjIYHLD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Sep 2023 03:11:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232388AbjIYHAV (ORCPT
+        with ESMTP id S232426AbjIYHLB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Sep 2023 03:00:21 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DA24120;
-        Mon, 25 Sep 2023 00:00:14 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38P3Btba019848;
-        Mon, 25 Sep 2023 06:59:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=U4H5CUSZBMNk8yH3RVT2ePXs/x4w8hw03NsXbrG+TBQ=;
- b=LxRwLhmwwAqj4nUWFqiaqiD7LcDvB6gWiW8dEsMARqvk/bP5NqvJHE7cMEob58tEpOAm
- KQatLFOHTxrhRDRDRlGLfoLdJsCMctGZbnoDngesaHfwsK1PRUXL2fVtEvWknkJ3Ws8O
- Ho3jOF/FCjgUMWimSgRg4unLOfG1d8IwG/oP1NN7RQKqyLVkA9JlftmciNOXs4CgOXex
- 0Q1j6PIQTm0JzJs19vfCUbIRzhLbnCDb6h3dG5WuHV6n03pixmoMP51J/K1bAkRoGA/h
- c5BZTfZejzJKxAu6uDVt10u7cf0jCD67A3nJhS/c9bjpfvt/6aJLSJLJxX5WGlp9niQ8 Dg== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tajaphkfr-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 25 Sep 2023 06:59:48 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38P6xlgE028796
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 25 Sep 2023 06:59:48 GMT
-Received: from hu-devipriy-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Sun, 24 Sep 2023 23:59:43 -0700
-From:   Devi Priya <quic_devipriy@quicinc.com>
-To:     <thierry.reding@gmail.com>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <ndesaulniers@google.com>,
-        <trix@redhat.com>, <baruch@tkos.co.il>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <llvm@lists.linux.dev>
-CC:     <linux-pwm@vger.kernel.org>, <u.kleine-koenig@pengutronix.de>,
-        <nathan@kernel.org>
-Subject: [PATCH V12 3/3] arm64: dts: ipq6018: add pwm node
-Date:   Mon, 25 Sep 2023 12:29:15 +0530
-Message-ID: <20230925065915.3467964-4-quic_devipriy@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230925065915.3467964-1-quic_devipriy@quicinc.com>
-References: <20230925065915.3467964-1-quic_devipriy@quicinc.com>
+        Mon, 25 Sep 2023 03:11:01 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B26C9B8;
+        Mon, 25 Sep 2023 00:10:54 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12C41C433C7;
+        Mon, 25 Sep 2023 07:10:51 +0000 (UTC)
+Message-ID: <936acf18-b961-40e3-b68b-f1c679961d67@xs4all.nl>
+Date:   Mon, 25 Sep 2023 09:10:50 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 7w6MzZ7UMwfapwVFDF8Mp1Pt_tw7gSYp
-X-Proofpoint-GUID: 7w6MzZ7UMwfapwVFDF8Mp1Pt_tw7gSYp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-09-25_03,2023-09-21_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 malwarescore=0
- phishscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 clxscore=1015
- mlxscore=0 bulkscore=0 impostorscore=0 priorityscore=1501 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
- definitions=main-2309250047
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 11/17] media: qcom: camss: Allow clocks vfeN vfe_liteN
+ or vfe_lite
+Content-Language: en-US, nl
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
+        todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, mchehab@kernel.org,
+        laurent.pinchart@ideasonboard.com, sakari.ailus@linux.intel.com,
+        andrey.konovalov@linaro.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230911131411.196033-1-bryan.odonoghue@linaro.org>
+ <20230911131411.196033-12-bryan.odonoghue@linaro.org>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+In-Reply-To: <20230911131411.196033-12-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Describe the PWM block on IPQ6018.
+On 11/09/2023 15:14, Bryan O'Donoghue wrote:
+> The number of Video Front End - VFE or Image Front End - IFE supported
+> with new SoCs can vary both for the full and lite cases.
+> 
+> For example sdm845 has one vfe_lite and two vfe interfaces with the vfe
+> clock called simply "vfe_lite" with no integer postfix. sc8280xp has four
+> vfe and four vfe lite blocks.
+> 
+> At the moment we declare vfe_lite0 and vfe_lite1 for sm8250 but never set
+> those clocks because we don't match the strings.
+> 
+> We need to support the following clock name formats
+> 
+> - vfeN
+> - vfe_liteN
+> - vfe_lite
+> 
+> with N being any reasonably sized integer.
+> 
+> There are two sites in this code which need to do the same thing,
+> constructing and matching strings with the pattern above, so encapsulate
+> the logic in one function.
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  drivers/media/platform/qcom/camss/camss-vfe.c | 22 ++++++++++++++-----
+>  1 file changed, 16 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+> index db8f68819ded9..f3cf387e4907e 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+> @@ -431,6 +431,20 @@ void vfe_isr_reset_ack(struct vfe_device *vfe)
+>  	complete(&vfe->reset_complete);
+>  }
+>  
+> +static int vfe_match_clock_names(struct vfe_device *vfe,
+> +				 struct camss_clock *clock)
+> +{
+> +	char vfe_name[6]; /* vfeXX\0 */
+> +	char vfe_lite_name[11]; /* vfe_liteXX\0 */
+> +
+> +	snprintf(vfe_name, sizeof(vfe_name), "vfe%d", vfe->id);
+> +	snprintf(vfe_lite_name, sizeof(vfe_lite_name), "vfe_lite%d", vfe->id);
+> +
+> +	return (!strcmp(clock->name, vfe_name) ||
+> +		!strcmp(clock->name, vfe_lite_name) ||
+> +		!strcmp(clock->name, "vfe_lite"));
+> +}
 
-The PWM is in the TCSR area. Make &tcsr "simple-mfd" compatible, and add
-&pwm as child of &tcsr.
+I'm getting this compiler warning:
 
-Add also ipq6018 specific compatible string.
+drivers/media/platform/qcom/camss/camss-vfe.c: In function 'vfe_match_clock_names':
+drivers/media/platform/qcom/camss/camss-vfe.c:483:52: warning: 'snprintf' output may be truncated before the last format character [-Wformat-truncation=]
+  483 |         snprintf(vfe_name, sizeof(vfe_name), "vfe%d", vfe->id);
+      |                                                    ^
 
-Co-developed-by: Baruch Siach <baruch.siach@siklu.com>
-Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
-Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
----
-v12: 
+Since vfe->id is a u8 I would just increase both the vfe_name and vfe_lite_name
+sizes by 1.
 
-  No change
+Regards,
 
-v11:
+	Hans
 
-  No change
-
-v10:
-
-  No change
-
-v9:
-
-  Add 'ranges' property (Rob)
-
-v8:
-
-  Add size cell to 'reg' (Rob)
-
-v7:
-
-  Use 'reg' instead of 'offset' (Rob)
-
-  Add qcom,tcsr-ipq6018 (Rob)
-
-  Drop clock-names (Bjorn)
-
-v6:
-
-  Make the PWM node child of TCSR (Rob Herring)
-
-  Add assigned-clocks/assigned-clock-rates (Uwe Kleine-König)
-
-v5: Use qcom,pwm-regs for TCSR phandle instead of direct regs
-
-v3: s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
-
- arch/arm64/boot/dts/qcom/ipq6018.dtsi | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-index 47b8b1d6730a..cadd2c583526 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -398,8 +398,21 @@ tcsr_mutex: hwlock@1905000 {
- 		};
- 
- 		tcsr: syscon@1937000 {
--			compatible = "qcom,tcsr-ipq6018", "syscon";
-+			compatible = "qcom,tcsr-ipq6018", "syscon", "simple-mfd";
- 			reg = <0x0 0x01937000 0x0 0x21000>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			ranges = <0x0 0x0 0x01937000 0x21000>;
-+
-+			 pwm: pwm@a010 {
-+				compatible = "qcom,ipq6018-pwm";
-+				reg = <0xa010 0x20>;
-+				clocks = <&gcc GCC_ADSS_PWM_CLK>;
-+				assigned-clocks = <&gcc GCC_ADSS_PWM_CLK>;
-+				assigned-clock-rates = <100000000>;
-+				#pwm-cells = <2>;
-+				status = "disabled";
-+			};
- 		};
- 
- 		usb2: usb@70f8800 {
--- 
-2.34.1
+> +
+>  /*
+>   * vfe_set_clock_rates - Calculate and set clock rates on VFE module
+>   * @vfe: VFE device
+> @@ -454,9 +468,7 @@ static int vfe_set_clock_rates(struct vfe_device *vfe)
+>  	for (i = 0; i < vfe->nclocks; i++) {
+>  		struct camss_clock *clock = &vfe->clock[i];
+>  
+> -		if (!strcmp(clock->name, "vfe0") ||
+> -		    !strcmp(clock->name, "vfe1") ||
+> -		    !strcmp(clock->name, "vfe_lite")) {
+> +		if (vfe_match_clock_names(vfe, clock)) {
+>  			u64 min_rate = 0;
+>  			long rate;
+>  
+> @@ -537,9 +549,7 @@ static int vfe_check_clock_rates(struct vfe_device *vfe)
+>  	for (i = 0; i < vfe->nclocks; i++) {
+>  		struct camss_clock *clock = &vfe->clock[i];
+>  
+> -		if (!strcmp(clock->name, "vfe0") ||
+> -		    !strcmp(clock->name, "vfe1") ||
+> -		    !strcmp(clock->name, "vfe_lite")) {
+> +		if (vfe_match_clock_names(vfe, clock)) {
+>  			u64 min_rate = 0;
+>  			unsigned long rate;
+>  
 
