@@ -2,150 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CE72E7AD1A4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 09:26:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6610A7AD316
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 10:15:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230444AbjIYH0t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Sep 2023 03:26:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34918 "EHLO
+        id S232921AbjIYIPi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Sep 2023 04:15:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230489AbjIYH0s (ORCPT
+        with ESMTP id S232938AbjIYIPR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Sep 2023 03:26:48 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67544C0;
-        Mon, 25 Sep 2023 00:26:41 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CB83C433C9;
-        Mon, 25 Sep 2023 07:26:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1695626801;
-        bh=I4CNi9Q/JBftF6qP99taJllMHcyGXlOe1VzUdcgnrWs=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=j+Zfq8JXfDD5lGXmuBZtgQo6VKdWDgPUMBpj0dWZTupcXLhcRTmXkeMs0Aaq5G26L
-         V11jhZjeoSR/2Ug+4fLlfnYLPrwtA+Ut8zH5BsrVHn2sPozS3nVjGObrxPDRZCH2nj
-         ZJvDqOTOgG4Cj75dOue7ZRUwHO8JKVsYtlVQwcgXkkmsMMUgX9P1B1owgk3fb398so
-         4Gqq6PYbts8Qk1xJbO33NbU/jGpLMHs2Q2SbeFaaj9WJoUJk6oHYg7//E9mWLtYYqJ
-         dFL3W9Iz2L1ruJQHkyd/1V8r6MOoPuFbwmMNlh/mMJcfDkZOH+h7BTZoCNvHrwLig5
-         L/MAWdDlIjFug==
-Received: (nullmailer pid 286711 invoked by uid 1000);
-        Mon, 25 Sep 2023 07:26:38 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+        Mon, 25 Sep 2023 04:15:17 -0400
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2ACECE6B;
+        Mon, 25 Sep 2023 01:14:43 -0700 (PDT)
+Received: from pendragon.ideasonboard.com (213-243-189-158.bb.dnainternet.fi [213.243.189.158])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 78D0013C5;
+        Mon, 25 Sep 2023 10:13:01 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1695629581;
+        bh=UayU5lkKf30RwZHdj36MVC/jnuYHI1+ittUZYokTGlU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=HpIdGXb5Nz4TdNxofbbT8FN6Jtz+yOCoi/j+Js7k7YjqS3LXuzZxG5hUrSj/QpjNr
+         YQyDuokVLHdMpBXcPrY9SMjvrqxoNOoS0hqdfkotQv1NwhUbwL2hmY8IvJ3T1Jb55P
+         J5vcoOPtDQuFO5D5Nz4koSR1yaIG7PZSxOJioyOg=
+Date:   Mon, 25 Sep 2023 11:14:52 +0300
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, rfoss@kernel.org,
+        todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, mchehab@kernel.org,
+        sakari.ailus@linux.intel.com, andrey.konovalov@linaro.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 17/17] media: qcom: camss: Comment CSID dt_id field
+Message-ID: <20230925081452.GA8583@pendragon.ideasonboard.com>
+References: <20230911131411.196033-1-bryan.odonoghue@linaro.org>
+ <20230911131411.196033-18-bryan.odonoghue@linaro.org>
+ <1e815d41-719a-4ca1-98e3-872f882ed03e@xs4all.nl>
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Devi Priya <quic_devipriy@quicinc.com>
-Cc:     devicetree@vger.kernel.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org,
-        andersson@kernel.org, thierry.reding@gmail.com,
-        u.kleine-koenig@pengutronix.de, ndesaulniers@google.com,
-        nathan@kernel.org, konrad.dybcio@linaro.org, conor+dt@kernel.org,
-        baruch@tkos.co.il, robh+dt@kernel.org,
-        linux-kernel@vger.kernel.org, trix@redhat.com,
-        krzysztof.kozlowski+dt@linaro.org, llvm@lists.linux.dev
-In-Reply-To: <20230925065915.3467964-3-quic_devipriy@quicinc.com>
-References: <20230925065915.3467964-1-quic_devipriy@quicinc.com>
- <20230925065915.3467964-3-quic_devipriy@quicinc.com>
-Message-Id: <169562679800.286677.6236841313565579111.robh@kernel.org>
-Subject: Re: [PATCH V12 2/3] dt-bindings: pwm: add IPQ6018 binding
-Date:   Mon, 25 Sep 2023 02:26:38 -0500
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1e815d41-719a-4ca1-98e3-872f882ed03e@xs4all.nl>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Sep 25, 2023 at 09:11:52AM +0200, Hans Verkuil wrote:
+> On 11/09/2023 15:14, Bryan O'Donoghue wrote:
+> > Digging into the documentation we find that the DT_ID bitfield is used to
+> > map the six bit DT to a two bit ID code. This value is concatenated to the
+> > VC bitfield to create a CID value. DT_ID is the two least significant bits
+> > of CID and VC the most significant bits.
+> > 
+> > Originally we set dt_id = vc * 4 in and then subsequently set dt_id = vc.
+> > 
+> > commit 3c4ed72a16bc ("media: camss: sm8250: Virtual channels for CSID")
+> > silently fixed the multiplication by four which would give a better
+> > value for the generated CID without mentioning what was being done or why.
+> > 
+> > Next up I haplessly changed the value back to "dt_id = vc * 4" since there
+> > didn't appear to be any logic behind it.
+> > 
+> > Hans asked what the change was for and I honestly couldn't remember the
+> > provenance of it, so I dug in.
+> > 
+> > Link: https://lore.kernel.org/linux-arm-msm/edd4bf9b-0e1b-883c-1a4d-50f4102c3924@xs4all.nl/
+> > 
+> > Add a comment so the next hapless programmer doesn't make this same
+> > mistake.
+> > 
+> > Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> > ---
+> >  drivers/media/platform/qcom/camss/camss-csid-gen2.c | 5 +++++
+> >  1 file changed, 5 insertions(+)
+> > 
+> > diff --git a/drivers/media/platform/qcom/camss/camss-csid-gen2.c b/drivers/media/platform/qcom/camss/camss-csid-gen2.c
+> > index 6ba2b10326444..cee50fc87e9de 100644
+> > --- a/drivers/media/platform/qcom/camss/camss-csid-gen2.c
+> > +++ b/drivers/media/platform/qcom/camss/camss-csid-gen2.c
+> > @@ -352,6 +352,11 @@ static void __csid_configure_stream(struct csid_device *csid, u8 enable, u8 vc)
+> >  		phy_sel = csid->phy.csiphy_id;
+> >  
+> >  	if (enable) {
+> > +		/*
+> > +		 * A value caled 'CID' gets generated internal to CAMSS logic
+> 
+> caled -> called
+> 
+> > +		 * which is a concatenation of [vc:6 | dt_id:2] hence we reuse
+> 
+> vc:6? Do you mean bit 6 or do you mean the least significant 6 bits?
+> 
+> Regardless, since the vc variable <= 3 (since MSM_CSID_MAX_SRC_STREAMS is 4),
+> either interpretation makes little sense.
 
-On Mon, 25 Sep 2023 12:29:14 +0530, Devi Priya wrote:
-> DT binding for the PWM block in Qualcomm IPQ6018 SoC.
-> 
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Co-developed-by: Baruch Siach <baruch.siach@siklu.com>
-> Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
-> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
-> ---
-> v12:
-> 
->   Picked up the R-b tag
-> 
-> v11:
-> 
->   No change
-> 
-> v10:
-> 
->   No change
-> 
-> v9:
-> 
->   Add 'ranges' property to example (Rob)
-> 
->   Drop label in example (Rob)
-> 
-> v8:
-> 
->   Add size cell to 'reg' (Rob)
-> 
-> v7:
-> 
->   Use 'reg' instead of 'offset' (Rob)
-> 
->   Drop 'clock-names' and 'assigned-clock*' (Bjorn)
-> 
->   Use single cell address/size in example node (Bjorn)
-> 
->   Move '#pwm-cells' lower in example node (Bjorn)
-> 
->   List 'reg' as required
-> 
-> v6:
-> 
->   Device node is child of TCSR; remove phandle (Rob Herring)
-> 
->   Add assigned-clocks/assigned-clock-rates (Uwe Kleine-König)
-> 
-> v5: Use qcom,pwm-regs for phandle instead of direct regs (Bjorn
->     Andersson, Kathiravan T)
-> 
-> v4: Update the binding example node as well (Rob Herring's bot)
-> 
-> v3: s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
-> 
-> v2: Make #pwm-cells const (Rob Herring)
-> 
->  .../devicetree/bindings/pwm/ipq-pwm.yaml      | 53 +++++++++++++++++++
->  1 file changed, 53 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
-> 
+More recent versions of CSI-2 support up to 6 bits of VC (or possibly
+even more in versions I may not know about). It would probably make
+sense to write vc[5:0] | dt_id[1:0] or something similar.
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+> And what does "DT" stand for?
 
-yamllint warnings/errors:
+Data Type.
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pwm/ipq-pwm.example.dtb: syscon@1937000: compatible: ['qcom,tcsr-ipq6018', 'syscon', 'simple-mfd'] is too long
-	from schema $id: http://devicetree.org/schemas/mfd/qcom,tcsr.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pwm/ipq-pwm.example.dtb: syscon@1937000: '#address-cells', '#size-cells', 'pwm@a010', 'ranges' do not match any of the regexes: 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/mfd/qcom,tcsr.yaml#
+> > +		 * the least significant two bits of the VC to 'stuff' the CID value.
+> > +		 */
+> >  		u8 dt_id = vc;
+> 
+> If dt_id should be the least significant two bits of vc, shouldn't
+> this say: "= vc & 3;"? Or, alternatively, have a comment that vc <= 3?
+> 
+> >  
+> >  		if (tg->enabled) {
 
-doc reference errors (make refcheckdocs):
+-- 
+Regards,
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230925065915.3467964-3-quic_devipriy@quicinc.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+Laurent Pinchart
