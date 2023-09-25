@@ -2,122 +2,238 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 153E87AD376
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 10:34:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF7357AD3C6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 10:51:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232827AbjIYIeX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Sep 2023 04:34:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42476 "EHLO
+        id S233041AbjIYIvl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Sep 2023 04:51:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232097AbjIYIeX (ORCPT
+        with ESMTP id S233044AbjIYIvk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Sep 2023 04:34:23 -0400
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1EE19D;
-        Mon, 25 Sep 2023 01:34:16 -0700 (PDT)
-Received: from pendragon.ideasonboard.com (213-243-189-158.bb.dnainternet.fi [213.243.189.158])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id E153EB1;
-        Mon, 25 Sep 2023 10:32:34 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1695630755;
-        bh=0QwUbjQUlXfPv/XmeskRAPh2SX5+oNeZWNjuJJ2bi40=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Ke1gke97WaCQtADlcgql9ZVjilv8aUaUYAJPObQaTeICFbdX0WNfSlMLqjKE5BfpS
-         O853vMK90rgyqEo2AElK1b3QG0dGxe3H3dwwVE81XJFyNQlfScay/BtU4JffV8+L0K
-         QUxmO7yiBp2tbE62H9tu1wLmty1ToELhkivgI1OU=
-Date:   Mon, 25 Sep 2023 11:34:25 +0300
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     rfoss@kernel.org, todor.too@gmail.com, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, mchehab@kernel.org,
-        hverkuil-cisco@xs4all.nl, sakari.ailus@linux.intel.com,
-        andrey.konovalov@linaro.org, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 09/17] media: qcom: camss: Remove special case for VFE
- get/put
-Message-ID: <20230925083425.GB8583@pendragon.ideasonboard.com>
-References: <20230911131411.196033-1-bryan.odonoghue@linaro.org>
- <20230911131411.196033-10-bryan.odonoghue@linaro.org>
+        Mon, 25 Sep 2023 04:51:40 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 781E4E3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 01:51:32 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-5041cc983f9so9400396e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 01:51:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1695631891; x=1696236691; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=I76aapIgIVc4qPta64xuBqsqk0Sj1BIrc3XVjBiRxTE=;
+        b=GUsbRxK0GI2qWy9OwCgmghPEDcVq6K1wQq6T6tZVRVqSuB6QpuEyvQbiVpmcaHy8ct
+         DWMY0s6LmSJzb58DaqAj80YK2yBnuE5nEcAvor9d0lWJrp+0FEy64INYh6Og2v5K0cBQ
+         USF7j8f8FQtHMMUIru5QGLI4yVxcPaqAYr4ZP28kGJKNOWJJyG0c7JjoTiX3b0ZsEEVQ
+         2RnHxT+C35RnVrovtgAdu3WcoAXm1Z1Nc4qg7LrY0vO8F5kf1KrxtYgHMPcCppU1B+Se
+         mbvSSQEyLa8Tl2RWmIVXGkkhFP9mem83j+v2R+Ifkg7wDMjYFmQ9pdmuLnefcT/hDsOz
+         kO5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695631891; x=1696236691;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=I76aapIgIVc4qPta64xuBqsqk0Sj1BIrc3XVjBiRxTE=;
+        b=jB3cTVX9Nh3SyTI8jlXdcguOa4a6YgNj99tSfqITl+Ssks/wceQ99WiK1PHMMV2dnq
+         gkHN6yXOlSn5C8TdfmVUi21LHn8rTjyLMubuQSt8M7cHG2Xb6j4GTnP4mG5RmHp5dLG2
+         R0zR+BWC/ywwe38O2fSZESpCjAWW8KFPRZSeyVB1FjKf+O6Sy2UlPL2QgxAc2NdgzZfY
+         WA2BnGkLd5I9AsdHb64vdSIpre462Q4traDkbtpWqxB+QM0mYW4uYubCgi3gSbSQKLl3
+         eE1OtosF4cu0scPi3BHZ4s5cUTkyFPnlGAHFQRJyj5fYe9V8AXzmJSV8b0fR1sJJvnlK
+         Cg5A==
+X-Gm-Message-State: AOJu0YyQuSWRx7CnOrDQcFzxiBHxVKGg1RBptc4V5uK/+u9tDLNSPiMS
+        wJmBJV2yED6XTadvwW/6CmS0ag==
+X-Google-Smtp-Source: AGHT+IHh0oKfVPyzhpGT3Ziiot7eAhVSnmmFfexkrn/80gAwc67Wx0fZ14VRfctlOLgzAbaHj7Kxmg==
+X-Received: by 2002:a05:6512:214d:b0:503:3913:c2c9 with SMTP id s13-20020a056512214d00b005033913c2c9mr4484268lfr.40.1695631890372;
+        Mon, 25 Sep 2023 01:51:30 -0700 (PDT)
+Received: from [192.168.101.165] (178235177023.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.23])
+        by smtp.gmail.com with ESMTPSA id v4-20020a056402174400b0053424352ab3sm663625edx.19.2023.09.25.01.51.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Sep 2023 01:51:30 -0700 (PDT)
+Message-ID: <2678d8a5-4101-4fc3-9f9d-cbe616eee131@linaro.org>
+Date:   Mon, 25 Sep 2023 10:51:27 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230911131411.196033-10-bryan.odonoghue@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] clk: qcom: camcc-sc8280xp: Add sc8280xp CAMCC
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        andersson@kernel.org, agross@kernel.org, mturquette@baylibre.com,
+        sboyd@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        jonathan@marek.ca, quic_tdas@quicinc.com,
+        vladimir.zapolskiy@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230923150045.1068556-1-bryan.odonoghue@linaro.org>
+ <20230923150045.1068556-4-bryan.odonoghue@linaro.org>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230923150045.1068556-4-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bryan,
-
-Thank you for the patch.
-
-On Mon, Sep 11, 2023 at 02:14:03PM +0100, Bryan O'Donoghue wrote:
-> From sdm845 onwards we need to ensure the VFE is powered on prior to
-> switching on the CSID.
-> 
-> Currently the code tests for sdm845, sm8250 and then does get/set. This is
-> not extensible and it turns out is not necessary either since vfe_get and
-> vfe_set reference count.
-> 
-> Remove the over-conservative SoC version check.
+On 23.09.2023 17:00, Bryan O'Donoghue wrote:
+> Add the sc8280xp CAMCC driver which follows the sdm845 CAMCC lineage
+> with additional CCI and IFE blocks and more granular clock parentage.
 > 
 > Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-> Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> # rb3 # db410c
 > ---
->  drivers/media/platform/qcom/camss/camss-csid.c | 12 ++++--------
->  1 file changed, 4 insertions(+), 8 deletions(-)
+>  drivers/clk/qcom/Kconfig          |    9 +
+>  drivers/clk/qcom/Makefile         |    1 +
+>  drivers/clk/qcom/camcc-sc8280xp.c | 3051 +++++++++++++++++++++++++++++
+>  3 files changed, 3061 insertions(+)
+>  create mode 100644 drivers/clk/qcom/camcc-sc8280xp.c
 > 
-> diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
-> index 99f651e2021cb..02ae3f5cb0c0e 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csid.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csid.c
-> @@ -159,15 +159,12 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
->  	struct camss *camss = csid->camss;
->  	struct device *dev = camss->dev;
->  	struct vfe_device *vfe = &camss->vfe[csid->id];
-> -	u32 version = camss->res->version;
->  	int ret = 0;
+> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+> index 4b72e98eaa70..5ce6d888aba0 100644
+> --- a/drivers/clk/qcom/Kconfig
+> +++ b/drivers/clk/qcom/Kconfig
+> @@ -426,6 +426,15 @@ config SC_CAMCC_7280
+>  	  Say Y if you want to support camera devices and functionality such as
+>  	  capturing pictures.
 >  
->  	if (on) {
-> -		if (version == CAMSS_8250 || version == CAMSS_845) {
-> -			ret = vfe_get(vfe);
-> -			if (ret < 0)
-> -				return ret;
-> -		}
+> +config SC_CAMCC_8280XP
+> +	tristate "SC8280XP Camera Clock Controller"
+> +	select SC_GCC_8280XP
+> +	help
+> +	  Support for the camera clock controller on Qualcomm Technologies, Inc
+> +	  SC8280XP devices.
+> +	  Say Y if you want to support camera devices and functionality such as
+> +	  capturing pictures.
+> +
+>  config SC_DISPCC_7180
+>  	tristate "SC7180 Display Clock Controller"
+>  	depends on ARM64 || COMPILE_TEST
+> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
+> index a301b08dba05..8f66cefa9e57 100644
+> --- a/drivers/clk/qcom/Makefile
+> +++ b/drivers/clk/qcom/Makefile
+> @@ -68,6 +68,7 @@ obj-$(CONFIG_QCS_TURING_404) += turingcc-qcs404.o
+>  obj-$(CONFIG_QDU_GCC_1000) += gcc-qdu1000.o
+>  obj-$(CONFIG_SC_CAMCC_7180) += camcc-sc7180.o
+>  obj-$(CONFIG_SC_CAMCC_7280) += camcc-sc7280.o
+> +obj-$(CONFIG_SC_CAMCC_8280XP) += camcc-sc8280xp.o
+>  obj-$(CONFIG_SC_DISPCC_7180) += dispcc-sc7180.o
+>  obj-$(CONFIG_SC_DISPCC_7280) += dispcc-sc7280.o
+>  obj-$(CONFIG_SC_DISPCC_8280XP) += dispcc-sc8280xp.o
+> diff --git a/drivers/clk/qcom/camcc-sc8280xp.c b/drivers/clk/qcom/camcc-sc8280xp.c
+> new file mode 100644
+> index 000000000000..fbb3fa39862c
+> --- /dev/null
+> +++ b/drivers/clk/qcom/camcc-sc8280xp.c
+> @@ -0,0 +1,3051 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2023, Linaro Ltd.
+> + */
+> +
+> +#include <linux/clk-provider.h>
+> +#include <linux/err.h>
+> +#include <linux/kernel.h>
+> +#include <linux/module.h>
+> +#include <linux/of_device.h>
+> +#include <linux/of.h>
+> +#include <linux/pm_clock.h>
+> +#include <linux/pm_runtime.h>
+> +#include <linux/regmap.h>
+> +#include <linux/pm_runtime.h>
+> +
+> +#include <dt-bindings/clock/qcom,camcc-sc8280xp.h>
+> +
+> +#include "clk-alpha-pll.h"
+> +#include "clk-branch.h"
+> +#include "clk-rcg.h"
+> +#include "clk-regmap.h"
+> +#include "common.h"
+> +#include "gdsc.h"
+> +#include "reset.h"
+> +
+> +enum {
+> +	DT_BI_TCXO,
+> +	DT_BI_TCXO_AO,
+> +	DT_SLEEP_CLK,
+> +};
+This enum here is so that
 
-Maybe a comment to explain why we call vfe_get() could be useful ?
+[...]
 
-		/*
-		 * From SDM845 onwards, the VFE needs to be powered on before
-		 * switching on the CSID. Do so unconditionally, as there is no
-		 * drawback in following the same powering order on older SoCs.
-		 */
+> +static struct clk_alpha_pll cam_cc_pll0 = {
+> +	.offset = 0x0,
+> +	.vco_table = lucid_vco,
+> +	.num_vco = ARRAY_SIZE(lucid_vco),
+> +	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID],
+> +	.clkr = {
+> +		.hw.init = &(struct clk_init_data){
+> +			.name = "cam_cc_pll0",
+> +			.parent_data = &(const struct clk_parent_data){
+> +				.fw_name = "bi_tcxo", .name = "bi_tcxo",
+you can use .index = <some enum member> here
 
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-> +		ret = vfe_get(vfe);
-> +		if (ret < 0)
-> +			return ret;
->  
->  		ret = pm_runtime_resume_and_get(dev);
->  		if (ret < 0)
-> @@ -217,8 +214,7 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
->  		regulator_bulk_disable(csid->num_supplies,
->  				       csid->supplies);
->  		pm_runtime_put_sync(dev);
-> -		if (version == CAMSS_8250 || version == CAMSS_845)
-> -			vfe_put(vfe);
-> +		vfe_put(vfe);
->  	}
->  
->  	return ret;
+[...]
 
--- 
-Regards,
+> +
+> +static const struct clk_parent_data cam_cc_parent_data_0[] = {
+> +	{ .fw_name = "bi_tcxo", .name = "bi_tcxo" },
+also in these arrays
 
-Laurent Pinchart
+[...]
+
+> +static struct gdsc bps_gdsc = {
+> +	.gdscr = 0x7004,
+> +	.pd = {
+> +		.name = "bps_gdsc",
+> +	},
+> +	.flags = HW_CTRL | RETAIN_FF_ENABLE,
+HW_CTRL means "hardware controlled mode is always on", not
+"hardware controlled mode is available". Is that what you want?
+
+Also, does this clock controller not take GCC_CAMERA_AHB_CLK as
+input?
+
+Konrad
