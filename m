@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 63B057ADC38
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 17:47:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7F7B7ADC42
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 17:48:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233146AbjIYPr6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Sep 2023 11:47:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58082 "EHLO
+        id S233337AbjIYPsV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Sep 2023 11:48:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233135AbjIYPri (ORCPT
+        with ESMTP id S233150AbjIYPrj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Sep 2023 11:47:38 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B9D019C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 08:47:30 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id ffacd0b85a97d-32157c8e4c7so6622846f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 08:47:30 -0700 (PDT)
+        Mon, 25 Sep 2023 11:47:39 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B13DCE1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 08:47:31 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-40572aeb6d0so31604335e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 08:47:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695656848; x=1696261648; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695656849; x=1696261649; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8DxLhsFGQa0BTkz7p4gD6/w8EaSRpwpvd+XFr08IQZw=;
-        b=LZlnh0xUnVJ5e6ELnJk4teq+a0xyXb9CtxIjXENsIDXStmEHIVNNWK2sP+9iGIbkP8
-         VXeWqQdAO7TISU4WvEG8vHRjmYtN8u9dqVvGwVTnG1qouaZuBKMguT+QP0UfAR9958Bg
-         20ysUECGyEV0di8JW/2EG/wXcdGbftZ+AjHlphhnuIsn3RoUEZNZ48XNrXUPebHgHDrc
-         8Zy3jxg8mkMD9r/44tZVZO4wrFheb6I7F8xEOcYxARLp3EiDwk0eYMabVlR8P5XH1O5d
-         2zz7YjGpTD/IS5yCVWAbnNNRE40cwPr5JsP2oyVcmApBMsUf3YCrl1nvJnR9pw0cz1os
-         objA==
+        bh=yKTR9FGAJbp1Nit0RKPxQtBceNed5p1nXP0aMRVoGew=;
+        b=fHa419QvOcMY3fX1MkE/QRM/XI/th837ZFDNaLME2XfJn65nuWG0W1GjL9Mh7toEMO
+         xfDltwaBv+WgSYDIGDKJFFdxvfFjfep96BwPItoeXfLnj/QigJSIerF1H5lJVm2jYZSY
+         hzYvBjJWMS5mBAAAc2CVtaCmlxFvfOuGRdPT4CWmFmJqaYkJACXsd04pAeIfxYNZ/EMj
+         QOx81lZQ6WqitIKgim1Z0ldwGloM7v/xp8z9vwWHGZjKmLXT9nDWzRQ9Mep2egV5d18W
+         5Wr07w03xPpP9IMmU3Ztdqc9dR++CnPz5nywekPUqpE9UaxXCfASOVF3gCQDoD8Qy8i+
+         KL9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695656848; x=1696261648;
+        d=1e100.net; s=20230601; t=1695656849; x=1696261649;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8DxLhsFGQa0BTkz7p4gD6/w8EaSRpwpvd+XFr08IQZw=;
-        b=pUSMWkIdm7naDG9VQJVjl9Sa0p/474k3VSQ791LOlhwRtbrWtOw/LcPhUdoz4eEhwY
-         OSvDf1gNNzyzWyOSNm/A298aDfDsFWnoD0Ra3QB1v/yc1er276rCORHRr5TcmdN/CdUl
-         63wXrEKGSCBulccBwemZV3W/n0A/SBLTv65+98BH9qv2MXqGrtkMBFKolndBJ0JU0Ys0
-         g/bDM9zLr7HyE7r9FWoRZ1u/TLmKQlE1VkAbB6/Lz/k2j7lHUi77K5v/FLiS9uNFFGV7
-         pEMNFIQYRqDxbs4Y9783VSOnjVBuc7OyjdP4X0uZO450QYBklBmwS+QMheOfTXLBnVTf
-         aIiw==
-X-Gm-Message-State: AOJu0YwnkPlwZQfLR2pRy1obC2NPOhnrevfsV60jVIRa87b5lqUEVf0K
-        wp8kddSGRPbKYIWy/3yaln0meY66YBkT1EQNnQ4=
-X-Google-Smtp-Source: AGHT+IH+9c2e0yXhNRnuueGYs+KCwAvyqn08ir8+5lwMbxXYdPD4eJuMwQeJXJEHlMDrbQ2hom055Q==
-X-Received: by 2002:a5d:6a0c:0:b0:314:ca7:f30b with SMTP id m12-20020a5d6a0c000000b003140ca7f30bmr6183611wru.54.1695656848598;
-        Mon, 25 Sep 2023 08:47:28 -0700 (PDT)
+        bh=yKTR9FGAJbp1Nit0RKPxQtBceNed5p1nXP0aMRVoGew=;
+        b=VB3xp1MbjiVeWFmT9TtAx563IYgwnIA5i87vj29Ju3o6/Vl+4q8olgXGp3B+PaCgA5
+         ZHIv0ftdZPVCQlTb8M3xiabRGhllYUtcbzaP5+oQvXL35EYk6gkYDs6w4MUrI4Te/j2j
+         uFZoZIJ5R28IG4cZwV88AbVHrKj6ueK6rDliB3DCaS52I5mxdik0Ey8hayWfccblxj46
+         cd5mMRPOsOjG3VybiDynBWXq46AqxM9m4LFbJEwWRWMkgn1k4ljQ63F4jvjY1smIj24Y
+         KTKojldSob/hHEhiy/IJGSjXlTlKFVrfspeWJJ4kFzgsawpSk1N4P04jFws7xwKajO50
+         U7og==
+X-Gm-Message-State: AOJu0YwAjjnxAXRFi34zJCoP/uyXcDVQtZydMaQWLlcN8yQuuCDosTnx
+        R/kaoIQZA5Ix/E86ZxWtgGyvQS6vxaOAWdnt6jI=
+X-Google-Smtp-Source: AGHT+IFKeZu788gHWgsRongPTtFe1L8P+ypwnDHQNU1kHF/IJhSKZslu+Zrp5iqyGWbQVXRGeB/6pA==
+X-Received: by 2002:a7b:c456:0:b0:405:2d23:16d9 with SMTP id l22-20020a7bc456000000b004052d2316d9mr5885861wmi.21.1695656849715;
+        Mon, 25 Sep 2023 08:47:29 -0700 (PDT)
 Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id d4-20020adffd84000000b0031f34a395e7sm12077536wrr.45.2023.09.25.08.47.27
+        by smtp.gmail.com with ESMTPSA id d4-20020adffd84000000b0031f34a395e7sm12077536wrr.45.2023.09.25.08.47.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Sep 2023 08:47:28 -0700 (PDT)
+        Mon, 25 Sep 2023 08:47:29 -0700 (PDT)
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
         hverkuil@xs4all.nl, laurent.pinchart@ideasonboard.com,
@@ -58,9 +58,9 @@ To:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
         sakari.ailus@linux.intel.com, andrey.konovalov@linaro.org
 Cc:     linux-kernel@vger.kernel.org,
         Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Subject: [RESEND PATCH v6 16/17] media: qcom: camss: Propagate vfe_reset error up the callstack
-Date:   Mon, 25 Sep 2023 16:47:06 +0100
-Message-ID: <20230925154707.837542-17-bryan.odonoghue@linaro.org>
+Subject: [RESEND PATCH v6 17/17] media: qcom: camss: Comment CSID dt_id field
+Date:   Mon, 25 Sep 2023 16:47:07 +0100
+Message-ID: <20230925154707.837542-18-bryan.odonoghue@linaro.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230925154707.837542-1-bryan.odonoghue@linaro.org>
 References: <20230925154707.837542-1-bryan.odonoghue@linaro.org>
@@ -76,45 +76,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-A previous patch I had removed the returns from vfe_disable() since we
-didn't trap any meaningful errors. Konrad pointed out vfe_reset() could
-return an error, which is true.
+Digging into the documentation we find that the DT_ID bitfield is used to
+map the six bit DT to a two bit ID code. This value is concatenated to the
+VC bitfield to create a CID value. DT_ID is the two least significant bits
+of CID and VC the most significant bits.
 
-Trap the vfe_reset() error code and throw it up the callstack.
+Originally we set dt_id = vc * 4 in and then subsequently set dt_id = vc.
 
-Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+commit 3c4ed72a16bc ("media: camss: sm8250: Virtual channels for CSID")
+silently fixed the multiplication by four which would give a better
+value for the generated CID without mentioning what was being done or why.
+
+Next up I haplessly changed the value back to "dt_id = vc * 4" since there
+didn't appear to be any logic behind it.
+
+Hans asked what the change was for and I honestly couldn't remember the
+provenance of it, so I dug in.
+
+Link: https://lore.kernel.org/linux-arm-msm/edd4bf9b-0e1b-883c-1a4d-50f4102c3924@xs4all.nl/
+
+Add a comment so the next hapless programmer doesn't make this same
+mistake.
+
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
- drivers/media/platform/qcom/camss/camss-vfe.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/media/platform/qcom/camss/camss-csid-gen2.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-index b3d5af7f09690..4839e2cedfe58 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-@@ -435,8 +435,11 @@ static int vfe_disable_output(struct vfe_line *line)
- int vfe_disable(struct vfe_line *line)
- {
- 	struct vfe_device *vfe = to_vfe(line);
-+	int ret;
+diff --git a/drivers/media/platform/qcom/camss/camss-csid-gen2.c b/drivers/media/platform/qcom/camss/camss-csid-gen2.c
+index 6ba2b10326444..791f27b18c394 100644
+--- a/drivers/media/platform/qcom/camss/camss-csid-gen2.c
++++ b/drivers/media/platform/qcom/camss/camss-csid-gen2.c
+@@ -352,6 +352,18 @@ static void __csid_configure_stream(struct csid_device *csid, u8 enable, u8 vc)
+ 		phy_sel = csid->phy.csiphy_id;
  
--	vfe_disable_output(line);
-+	ret = vfe_disable_output(line);
-+	if (ret)
-+		goto error;
+ 	if (enable) {
++		/*
++		 * DT_ID is a two bit bitfield that is concatenated with
++		 * the four least significant bits of the six bit VC
++		 * bitfield to generate an internal CID value.
++		 *
++		 * CSID_RDI_CFG0(vc)
++		 * DT_ID : 28:27
++		 * VC    : 26:22
++		 * DT    : 21:16
++		 *
++		 * CID   : VC 3:0 << 2 | DT_ID 1:0
++		 */
+ 		u8 dt_id = vc;
  
- 	vfe_put_output(line);
- 
-@@ -446,7 +449,8 @@ int vfe_disable(struct vfe_line *line)
- 
- 	mutex_unlock(&vfe->stream_lock);
- 
--	return 0;
-+error:
-+	return ret;
- }
- 
- /**
+ 		if (tg->enabled) {
 -- 
 2.42.0
 
