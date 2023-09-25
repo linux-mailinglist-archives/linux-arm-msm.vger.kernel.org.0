@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CFFE07ADA75
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 16:51:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B54F7ADA82
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 16:51:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232540AbjIYOvD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Sep 2023 10:51:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47868 "EHLO
+        id S232563AbjIYOvM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Sep 2023 10:51:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232566AbjIYOu6 (ORCPT
+        with ESMTP id S232605AbjIYOu6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 25 Sep 2023 10:50:58 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41C94111
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 07:50:39 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-9adca291f99so808025866b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 07:50:39 -0700 (PDT)
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3D921B4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 07:50:40 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-4050bd2e33aso69265635e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 07:50:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695653437; x=1696258237; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695653439; x=1696258239; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=55KLykjn1PnKwPDK5zu7mxi2gd1J0lug+paYekIyZv8=;
-        b=Em/7YuYr1LzrDMFK+aUb8qVxH7QHdCk11IQovVtDRFLnVfC2xfvJ5exV8aSsdj1NAf
-         NdKsyl4s7bOws3kHPUlwATzQuXd2BvI/PSI18Fc5cUbhr6YIkdCkmIzC/foZolo/ed0p
-         o5kn8sXv0BU6gbHt2zlQbP29sYm7r7thbEEW9VPbulPEjbenmdUcg4OLta5nTN/b9rCn
-         tWGQgZxol0KEiOe9OLtfCeigsehly1xFD62KLqJF4CXJZfeM/xFBC4//MxxRWYWbOgwd
-         U7w1OCYy+7+hQDdzF7X9I5sWGGsCb9816S793ESNQ+fZGkHSlBPuc+MN/nDH2q4lMMDo
-         tVVw==
+        bh=iqDQqT2DLj9ftb1a+cS59Q82hjk6LlDusCS/om2BnIQ=;
+        b=ScfjfFpLK1xKnUr2VTavZyRt4HjBbISxkcUP+bN45bJ/CUucDAkbXOZr6j7kVnrefI
+         0T/HzAnC+miNdrwfnhy+4yXMh4gLqtjj5YJrz2rM1Ilq9i0G+5NQGUfVL8crWkTwqZdy
+         NApkvONJ1A55PbFPOc+47aKYuXK0zxkk+NejuvMSLF9Gdzgg0FOAlcnaClYYTIVtL4uY
+         4YZsy6BAhvjIKA47TG550j+T6Gx+naqjyl1Q7VvSyhsBdR4z0D2CVcYJDubGWt+WNKX+
+         XJl9ERrO1PabQrL1Bx0cWXSDSK9a2vdIWGrQWJiKSlq0poPFWXQDOeV6Wuvl7wkjGloL
+         JVlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695653437; x=1696258237;
+        d=1e100.net; s=20230601; t=1695653439; x=1696258239;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=55KLykjn1PnKwPDK5zu7mxi2gd1J0lug+paYekIyZv8=;
-        b=t8uxYFZCmDc+pvXW0C/RWuvhFGwzp+8AVLgxcnG7CHftHpCnqkrRBixSvZhnLQ0UbC
-         FO/pXYtkNyFCaWDpdvyLCILl8He+047Ah18uWqrg2eNfUye2pA/Q8GJCmr6W7ggaYRkr
-         sZahURHlgVgPU81OXN5qe/7HGq+tBJnohW94Ytx/OeS65PXSnnzOjled9YlAJUxDiRCs
-         3lP6tkKSRI2JYABcgBrdtxJzo2QGwIVdasYchaA2Qj8rJQvBZ4JVetDJsYIzU3ZMGuQk
-         r3zopWI+H6CyY9yeN0AATRXiBVfpGt68uh3ed5GyzjI9foyMxlzrh0zz2uBVYDPWDwOe
-         IKbQ==
-X-Gm-Message-State: AOJu0YwuJ1JS9g71RplLpxgighzzUeWvPbDbDR0Qmpk/XVRF4PPbTrJT
-        dfBW+L69wW0xLaK8LQmZ9RmdKg==
-X-Google-Smtp-Source: AGHT+IFaXNxwlFWxMeQ/5HhV3ihSzn+GoLwlLRm3zMJhAHhxXB8RJs6h/QPnFbQfHoV4sGwMyi+Eww==
-X-Received: by 2002:a17:906:1bb2:b0:9ae:5202:e611 with SMTP id r18-20020a1709061bb200b009ae5202e611mr6132132ejg.14.1695653437554;
-        Mon, 25 Sep 2023 07:50:37 -0700 (PDT)
+        bh=iqDQqT2DLj9ftb1a+cS59Q82hjk6LlDusCS/om2BnIQ=;
+        b=brKProzwLSjBRfGY4C1O1asuDgYa5QUE2K8py5HyiKK8pOl5TubgE8WC0rphn13haj
+         IbQfIyzSvxlMr6b4t63P9FKBEVfJqpSPjtw/jGSQI2Hljo9jk/RTrzsuNCugej7flU8s
+         7EvoHC3qHm9xjt/wh818UdifyLokv9JIZMxepuDOPbd8qyZ1yNXabWl8cgedS8faVN0a
+         BJs8qTo/zjuSr+C0eDqClAVDGV1J+EqvQWQ/VILPZP2dDpV3zmcmoNVUPL64MkkwLlOc
+         IVnBgXNrKf2as7hIyNURnpF6MSvQU2tCPSg8AeJnVRamsTJwL0DYG3UUap8c2tAhuETm
+         A7mg==
+X-Gm-Message-State: AOJu0YwD3ZPYbugl5gZjUur4rEiQ0yFt38oPolOR/5wKCowhrfxC4iHL
+        rlz8CNcI1sJKPh9FnOgQgSDMwA==
+X-Google-Smtp-Source: AGHT+IGb3673GOOtKMB73cB0OpDzVMreybHEgPR0HZphki/E0Du6EKRHegiTKTBna0+j64IS3Gi2kg==
+X-Received: by 2002:adf:eb84:0:b0:314:dc0:2fca with SMTP id t4-20020adfeb84000000b003140dc02fcamr5633684wrn.29.1695653439086;
+        Mon, 25 Sep 2023 07:50:39 -0700 (PDT)
 Received: from [10.167.154.1] (178235177023.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.23])
-        by smtp.gmail.com with ESMTPSA id k8-20020a170906a38800b0099bc2d1429csm6426640ejz.72.2023.09.25.07.50.36
+        by smtp.gmail.com with ESMTPSA id k8-20020a170906a38800b0099bc2d1429csm6426640ejz.72.2023.09.25.07.50.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Sep 2023 07:50:37 -0700 (PDT)
+        Mon, 25 Sep 2023 07:50:38 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Mon, 25 Sep 2023 16:50:30 +0200
-Subject: [PATCH v5 01/10] dt-bindings: display/msm/gmu: Add Adreno 7[34]0
- GMU
+Date:   Mon, 25 Sep 2023 16:50:31 +0200
+Subject: [PATCH v5 02/10] dt-bindings: display/msm/gmu: Allow passing QMP
+ handle
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230628-topic-a7xx_drmmsm-v5-1-3dc527b472d7@linaro.org>
+Message-Id: <20230628-topic-a7xx_drmmsm-v5-2-3dc527b472d7@linaro.org>
 References: <20230628-topic-a7xx_drmmsm-v5-0-3dc527b472d7@linaro.org>
 In-Reply-To: <20230628-topic-a7xx_drmmsm-v5-0-3dc527b472d7@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>,
@@ -75,99 +75,59 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1695653434; l=2826;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1695653434; l=1312;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=uMWu7ymKY3eYzgWjGn5JPo+8PeGurJ1cuv0/kOUDIFY=;
- b=Au0tyJmG59eJHkGXgh4DHk2BrLSfA+/HoUwV5HtBq64LbTFibaQZfUzhkr/yPaIUtrIBPgr42
- n+Q1vPaYOCPB04BVrSZuGVaQwet2V7UvZG6HHVnWwglRKZLBvVEef6G
+ bh=3t6V8wanxGXA/i0mTDCvRvjHggKHs3OjhBjkt6x7rlo=;
+ b=GoJwpk3Vnxi78DXqBVEHwcY7i3nunpLwnIlz6jJr9Ti3ctmzI5ms3Pb95nenYzkdUPJL4B0HD
+ FzG0v1hhsYSCC5QdQyBqa/CbKk4AQMNbfRbzIsJD+5+s0LuZx6TuW9g
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The GMU on the A7xx series is pretty much the same as on the A6xx parts.
-It's now "smarter", needs a bit less register writes and controls more
-things (like inter-frame power collapse) mostly internally (instead of
-us having to write to G[PM]U_[CG]X registers from APPS)
+When booting the GMU, the QMP mailbox should be pinged about some tunables
+(e.g. adaptive clock distribution state). To achieve that, a reference to
+it is necessary. Allow it and require it with A730.
 
-The only difference worth mentioning is the now-required DEMET clock,
-which is strictly required for things like asserting reset lines, not
-turning it on results in GMU not being fully functional (all OOB requests
-would fail and HFI would hang after the first submitted OOB).
-
-Describe the A730 and A740 GMU.
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
 Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # sm8450
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- .../devicetree/bindings/display/msm/gmu.yaml       | 40 +++++++++++++++++++++-
- 1 file changed, 39 insertions(+), 1 deletion(-)
+ Documentation/devicetree/bindings/display/msm/gmu.yaml | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/Documentation/devicetree/bindings/display/msm/gmu.yaml b/Documentation/devicetree/bindings/display/msm/gmu.yaml
-index d65926b4f054..428eb138881a 100644
+index 428eb138881a..4e1c25b42908 100644
 --- a/Documentation/devicetree/bindings/display/msm/gmu.yaml
 +++ b/Documentation/devicetree/bindings/display/msm/gmu.yaml
-@@ -21,7 +21,7 @@ properties:
-   compatible:
-     oneOf:
-       - items:
--          - pattern: '^qcom,adreno-gmu-6[0-9][0-9]\.[0-9]$'
-+          - pattern: '^qcom,adreno-gmu-[67][0-9][0-9]\.[0-9]$'
-           - const: qcom,adreno-gmu
-       - const: qcom,adreno-gmu-wrapper
+@@ -64,6 +64,10 @@ properties:
+   iommus:
+     maxItems: 1
  
-@@ -213,6 +213,44 @@ allOf:
-             - const: axi
-             - const: memnoc
++  qcom,qmp:
++    $ref: /schemas/types.yaml#/definitions/phandle
++    description: Reference to the AOSS side-channel message RAM
++
+   operating-points-v2: true
  
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,adreno-gmu-730.1
-+              - qcom,adreno-gmu-740.1
-+    then:
-+      properties:
-+        reg:
-+          items:
-+            - description: Core GMU registers
-+            - description: Resource controller registers
-+            - description: GMU PDC registers
-+        reg-names:
-+          items:
-+            - const: gmu
-+            - const: rscc
-+            - const: gmu_pdc
-+        clocks:
-+          items:
-+            - description: GPU AHB clock
-+            - description: GMU clock
-+            - description: GPU CX clock
-+            - description: GPU AXI clock
-+            - description: GPU MEMNOC clock
-+            - description: GMU HUB clock
-+            - description: GPUSS DEMET clock
-+        clock-names:
-+          items:
-+            - const: ahb
-+            - const: gmu
-+            - const: cxo
-+            - const: axi
-+            - const: memnoc
-+            - const: hub
-+            - const: demet
+   opp-table:
+@@ -251,6 +255,9 @@ allOf:
+             - const: hub
+             - const: demet
+ 
++      required:
++        - qcom,qmp
 +
    - if:
        properties:
