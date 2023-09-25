@@ -2,160 +2,188 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E5777AD9AC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 16:01:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 405CD7AD9B9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 16:07:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232099AbjIYOBz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Sep 2023 10:01:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49188 "EHLO
+        id S232070AbjIYOHq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Sep 2023 10:07:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232067AbjIYOBy (ORCPT
+        with ESMTP id S232067AbjIYOHq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Sep 2023 10:01:54 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FE04107
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 07:01:47 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-307d58b3efbso5447167f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 07:01:47 -0700 (PDT)
+        Mon, 25 Sep 2023 10:07:46 -0400
+Received: from mail-oa1-x33.google.com (mail-oa1-x33.google.com [IPv6:2001:4860:4864:20::33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD8F5C0;
+        Mon, 25 Sep 2023 07:07:39 -0700 (PDT)
+Received: by mail-oa1-x33.google.com with SMTP id 586e51a60fabf-1dcedc832d4so1596272fac.3;
+        Mon, 25 Sep 2023 07:07:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695650506; x=1696255306; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=B65znnPKGc/kSnG351YXtEb2b6JUEftCxKy2HXeBLEs=;
-        b=O1onFIGPnMoicI1+K/Bb6k+wx5ts7f2hbjzMy5IEIIyHB2Ls/9r44GuLBdZ5nHwiju
-         dAcu2w5YMl12QN+WsnK27pR1mCgzGcliAehGsEc2OF2CPhHKL2/mQldGaXH7tFi+AauF
-         RJEpatGn+pR+Lr+go8qD54SwzVPuM7JyFInSmjs8CLASl7jUI05RMf7xHmSEnUZR0Q0h
-         A2tPJ4Oyt2ojrRTy9Ut4lCAHWtTj2eTP/hg9T44PGs5nCzrxo8KSzekV6ITkSXJssRy1
-         sh9MnfNajMvGJSgEAxQL/ohkHtoN1S3+DzPhSNXPtr2muT86XS3t2IfyuVRWOiuyVggu
-         tKdw==
+        d=gmail.com; s=20230601; t=1695650859; x=1696255659; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eOm71FSa/a54JWdPxFTdFQYbsSYB0XKCvLJel7l+Bek=;
+        b=jpP9f+SoKQVqdTnEQFoH5+vMmHrMw0e/70zsHfZH/xpE97jLfDgqAHah88ugAV0rnN
+         2abK60Jt4jELKdCt/4ejxbl/HvUUPl0eYNToTSNFZNMpYHecr2+qKLW57q6NeNoVfuy0
+         O+Zski8i8p1tE+ZhSDi+y+iK9sgwLoLqFf7uDMqUB85m0wLCmoMVp3ijoHEFafFCm7L+
+         hE6O616wGt0zbqORXyYHqQwyLLn/4+GMP8VInbs9Sb9Y7Mn/6OFKR5VJ+NJddMRmdnHO
+         bDirD2rZA8i7dqUwEQdRYqpTBDu2bejN8pAqDKDF+nzQgxkXLNk6I+vwhRDSFLELji32
+         ZpdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695650506; x=1696255306;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=B65znnPKGc/kSnG351YXtEb2b6JUEftCxKy2HXeBLEs=;
-        b=vu9L7iIUUQgqKOJVPDpmpc4ehkgQsea39t5YubiGnWDDamy3cBhPh/YwGC64ESYPUc
-         SPuzrICqXdUhspagEWS25rfd+m7LeY4u7V66GOEQKXJbAsz6ijoR19S8BK/6Hm+8kPrA
-         59ArxOjp7jWxhTnQNseGTajDCQAhkjtNxLKQZ9i0uenMQ7bVqpTthdOHYcXsg6cC3nXV
-         faFcUSrKPzk8gGltka6HwYMShWSUY/NuCk2bCnLK14CxbaBvrwk2uADy05IHsSoCUqFk
-         SoicFHPVtxC13ZuGdbnJWL99CasqBTBEtq1hlvblZ8j2FSKQPeMIYL+8B97PnB4IG4wK
-         laWQ==
-X-Gm-Message-State: AOJu0Yzd79xSSpvjgyTIKpBz1Zm3FmBHknwUDmOnxEm8w5PGO8ji/EjZ
-        TTvjoV/XS+DC5q1J7kaGmGgsfQ==
-X-Google-Smtp-Source: AGHT+IH6A3pXZQDF358jCVZZKD5lXk/EW6dIzhrStDEO3z42JkDq/nm/3gH9pTecMt9SP6HzX8xbxg==
-X-Received: by 2002:a5d:58ee:0:b0:31f:f94f:e13f with SMTP id f14-20020a5d58ee000000b0031ff94fe13fmr6689312wrd.19.1695650505606;
-        Mon, 25 Sep 2023 07:01:45 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id f18-20020a5d58f2000000b00317b0155502sm11943090wrd.8.2023.09.25.07.01.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Sep 2023 07:01:45 -0700 (PDT)
-Message-ID: <a6991564-c496-4f87-9a32-c107de0214d7@linaro.org>
-Date:   Mon, 25 Sep 2023 15:01:44 +0100
+        d=1e100.net; s=20230601; t=1695650859; x=1696255659;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=eOm71FSa/a54JWdPxFTdFQYbsSYB0XKCvLJel7l+Bek=;
+        b=um0ZjABdcpWgOfuqigQtnzpgcpSIN7joQYjrmG/Vds25nR0FNlGiGIBOkSnbH+KEDI
+         /68OvvuO7TahZRsBTWyt60y5CJjNKN3ibJUPitnDpvbmlBHLxECAPrydizwHapx8gaCn
+         qHTP8DOTksdSkd4mdKaUr45GfYqKSpNvH54fhMM3Zi7tOg3FKXeMoA3A42IswNUE/bb+
+         t+dVwgNHFKzfkD6+L+9R4PiUoSKhQZf+eaVEku8rh1smOXTooTQ7PCz+uOxXpnS6LK/F
+         i9BOz4o+6oa2zhGawmH/cl8XdtrbOLV0LP5MkyGpcEjfBgtOKK71gpdqXg3DX8eum3qR
+         nDgg==
+X-Gm-Message-State: AOJu0YyK/5RVyHaJ0pfuiyLO0XgzxV7c99+uS/99j9rs8gdW2M76EIkU
+        yaPuwfnax9Cd55Wd74MHAO3Emzd9u4u/X3dOrUs=
+X-Google-Smtp-Source: AGHT+IEAGihrK0Fxy+zmQS+jCavrD8i0S0F6RPaTyUWR0Tsr+swWkiWj17Z4gpkbPnpNw9W+uaTcvGPHY2GFxPPQ6jk=
+X-Received: by 2002:a05:6870:b68b:b0:19e:fa1f:fc2f with SMTP id
+ cy11-20020a056870b68b00b0019efa1ffc2fmr7668945oab.38.1695650859043; Mon, 25
+ Sep 2023 07:07:39 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 17/17] media: qcom: camss: Comment CSID dt_id field
-Content-Language: en-US
-To:     Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Cc:     rfoss@kernel.org, todor.too@gmail.com, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, mchehab@kernel.org,
-        sakari.ailus@linux.intel.com, andrey.konovalov@linaro.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230911131411.196033-1-bryan.odonoghue@linaro.org>
- <20230911131411.196033-18-bryan.odonoghue@linaro.org>
- <1e815d41-719a-4ca1-98e3-872f882ed03e@xs4all.nl>
- <20230925081452.GA8583@pendragon.ideasonboard.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20230925081452.GA8583@pendragon.ideasonboard.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20230922173110.work.084-kees@kernel.org> <20230922173216.3823169-1-keescook@chromium.org>
+ <CADnq5_P2p3bmczci=pU+pG6f9+hqn=-xp1EynP2345CJZRW08w@mail.gmail.com> <2635922e-f52a-4e91-40c6-4f1358972786@amd.com>
+In-Reply-To: <2635922e-f52a-4e91-40c6-4f1358972786@amd.com>
+From:   Alex Deucher <alexdeucher@gmail.com>
+Date:   Mon, 25 Sep 2023 10:07:27 -0400
+Message-ID: <CADnq5_P1tg2-rWUmsRAy3aPJLT7ZmaZORMSOrPa6t6oSc5xS3g@mail.gmail.com>
+Subject: Re: [PATCH 1/9] drm/amd/pm: Annotate struct smu10_voltage_dependency_table
+ with __counted_by
+To:     =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
+Cc:     Kees Cook <keescook@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Tejas Upadhyay <tejas.upadhyay@intel.com>,
+        Emma Anholt <emma@anholt.net>, Tom Rix <trix@redhat.com>,
+        llvm@lists.linux.dev, dri-devel@lists.freedesktop.org,
+        Chris Wilson <chris@chris-wilson.co.uk>,
+        Prike Liang <Prike.Liang@amd.com>,
+        Huang Rui <ray.huang@amd.com>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Matthew Brost <matthew.brost@intel.com>,
+        Karol Herbst <kherbst@redhat.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        amd-gfx@lists.freedesktop.org,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Nathan Chancellor <nathan@kernel.org>,
+        VMware Graphics Reviewers 
+        <linux-graphics-maintainer@vmware.com>,
+        Ben Skeggs <bskeggs@redhat.com>,
+        Andi Shyti <andi.shyti@linux.intel.com>,
+        nouveau@lists.freedesktop.org, David Airlie <airlied@redhat.com>,
+        virtualization@lists.linux-foundation.org,
+        linux-hardening@vger.kernel.org, Lijo Lazar <lijo.lazar@amd.com>,
+        Yifan Zhang <yifan1.zhang@amd.com>,
+        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        Kevin Wang <kevin1.wang@amd.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Melissa Wen <mwen@igalia.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Gurchetan Singh <gurchetansingh@chromium.org>,
+        Maxime Ripard <mripard@kernel.org>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Evan Quan <evan.quan@amd.com>, Sean Paul <sean@poorly.run>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Xiaojian Du <Xiaojian.Du@amd.com>, Le Ma <le.ma@amd.com>,
+        freedreno@lists.freedesktop.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        linux-kernel@vger.kernel.org,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Nirmoy Das <nirmoy.das@intel.com>, Lang Yu <Lang.Yu@amd.com>,
+        John Harrison <john.c.harrison@intel.com>,
+        Hawking Zhang <Hawking.Zhang@amd.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/09/2023 09:14, Laurent Pinchart wrote:
-> On Mon, Sep 25, 2023 at 09:11:52AM +0200, Hans Verkuil wrote:
->> On 11/09/2023 15:14, Bryan O'Donoghue wrote:
->>> Digging into the documentation we find that the DT_ID bitfield is used to
->>> map the six bit DT to a two bit ID code. This value is concatenated to the
->>> VC bitfield to create a CID value. DT_ID is the two least significant bits
->>> of CID and VC the most significant bits.
->>>
->>> Originally we set dt_id = vc * 4 in and then subsequently set dt_id = vc.
->>>
->>> commit 3c4ed72a16bc ("media: camss: sm8250: Virtual channels for CSID")
->>> silently fixed the multiplication by four which would give a better
->>> value for the generated CID without mentioning what was being done or why.
->>>
->>> Next up I haplessly changed the value back to "dt_id = vc * 4" since there
->>> didn't appear to be any logic behind it.
->>>
->>> Hans asked what the change was for and I honestly couldn't remember the
->>> provenance of it, so I dug in.
->>>
->>> Link: https://lore.kernel.org/linux-arm-msm/edd4bf9b-0e1b-883c-1a4d-50f4102c3924@xs4all.nl/
->>>
->>> Add a comment so the next hapless programmer doesn't make this same
->>> mistake.
->>>
->>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>> ---
->>>   drivers/media/platform/qcom/camss/camss-csid-gen2.c | 5 +++++
->>>   1 file changed, 5 insertions(+)
->>>
->>> diff --git a/drivers/media/platform/qcom/camss/camss-csid-gen2.c b/drivers/media/platform/qcom/camss/camss-csid-gen2.c
->>> index 6ba2b10326444..cee50fc87e9de 100644
->>> --- a/drivers/media/platform/qcom/camss/camss-csid-gen2.c
->>> +++ b/drivers/media/platform/qcom/camss/camss-csid-gen2.c
->>> @@ -352,6 +352,11 @@ static void __csid_configure_stream(struct csid_device *csid, u8 enable, u8 vc)
->>>   		phy_sel = csid->phy.csiphy_id;
->>>   
->>>   	if (enable) {
->>> +		/*
->>> +		 * A value caled 'CID' gets generated internal to CAMSS logic
->>
->> caled -> called
->>
->>> +		 * which is a concatenation of [vc:6 | dt_id:2] hence we reuse
->>
->> vc:6? Do you mean bit 6 or do you mean the least significant 6 bits?
->>
->> Regardless, since the vc variable <= 3 (since MSM_CSID_MAX_SRC_STREAMS is 4),
->> either interpretation makes little sense.
-> 
-> More recent versions of CSI-2 support up to 6 bits of VC (or possibly
-> even more in versions I may not know about). It would probably make
-> sense to write vc[5:0] | dt_id[1:0] or something similar.
-> 
->> And what does "DT" stand for?
-> 
-> Data Type.
-> 
->>> +		 * the least significant two bits of the VC to 'stuff' the CID value.
->>> +		 */
->>>   		u8 dt_id = vc;
->>
->> If dt_id should be the least significant two bits of vc, shouldn't
->> this say: "= vc & 3;"? Or, alternatively, have a comment that vc <= 3?
->>
->>>   
->>>   		if (tg->enabled) {
-> 
+On Mon, Sep 25, 2023 at 2:30=E2=80=AFAM Christian K=C3=B6nig
+<christian.koenig@amd.com> wrote:
+>
+> Am 22.09.23 um 19:41 schrieb Alex Deucher:
+> > On Fri, Sep 22, 2023 at 1:32=E2=80=AFPM Kees Cook <keescook@chromium.or=
+g> wrote:
+> >> Prepare for the coming implementation by GCC and Clang of the __counte=
+d_by
+> >> attribute. Flexible array members annotated with __counted_by can have
+> >> their accesses bounds-checked at run-time checking via CONFIG_UBSAN_BO=
+UNDS
+> >> (for array indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-fami=
+ly
+> >> functions).
+> >>
+> >> As found with Coccinelle[1], add __counted_by for struct smu10_voltage=
+_dependency_table.
+> >>
+> >> [1] https://github.com/kees/kernel-tools/blob/trunk/coccinelle/example=
+s/counted_by.cocci
+> >>
+> >> Cc: Evan Quan <evan.quan@amd.com>
+> >> Cc: Alex Deucher <alexander.deucher@amd.com>
+> >> Cc: "Christian K=C3=B6nig" <christian.koenig@amd.com>
+> >> Cc: "Pan, Xinhui" <Xinhui.Pan@amd.com>
+> >> Cc: David Airlie <airlied@gmail.com>
+> >> Cc: Daniel Vetter <daniel@ffwll.ch>
+> >> Cc: Xiaojian Du <Xiaojian.Du@amd.com>
+> >> Cc: Huang Rui <ray.huang@amd.com>
+> >> Cc: Kevin Wang <kevin1.wang@amd.com>
+> >> Cc: amd-gfx@lists.freedesktop.org
+> >> Cc: dri-devel@lists.freedesktop.org
+> >> Signed-off-by: Kees Cook <keescook@chromium.org>
+> > Acked-by: Alex Deucher <alexander.deucher@amd.com>
+>
+> Mhm, I'm not sure if this is a good idea. That is a structure filled in
+> by the firmware, isn't it?
+>
+> That would imply that we might need to byte swap count before it is
+> checkable.
 
-I'll rewrite this comment since its still confusing people.
+True. Good point.  Same for the other amdgpu patch.
 
-@Hans VC and DT are fields in the CSI protocol structure sections 
-2.2.2.2 and 2.2.2.3
+Alex
 
-https://www.nxp.com/docs/en/application-note/AN5305.pdf
-
----
-bod
+>
+> Regards,
+> Christian.
+>
+> >
+> >> ---
+> >>   drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu10_hwmgr.h | 2 +-
+> >>   1 file changed, 1 insertion(+), 1 deletion(-)
+> >>
+> >> diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu10_hwmgr.h b/dr=
+ivers/gpu/drm/amd/pm/powerplay/hwmgr/smu10_hwmgr.h
+> >> index 808e0ecbe1f0..42adc2a3dcbc 100644
+> >> --- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu10_hwmgr.h
+> >> +++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu10_hwmgr.h
+> >> @@ -192,7 +192,7 @@ struct smu10_clock_voltage_dependency_record {
+> >>
+> >>   struct smu10_voltage_dependency_table {
+> >>          uint32_t count;
+> >> -       struct smu10_clock_voltage_dependency_record entries[];
+> >> +       struct smu10_clock_voltage_dependency_record entries[] __count=
+ed_by(count);
+> >>   };
+> >>
+> >>   struct smu10_clock_voltage_information {
+> >> --
+> >> 2.34.1
+> >>
+>
