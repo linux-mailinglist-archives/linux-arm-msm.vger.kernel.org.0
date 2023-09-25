@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DF7357AD3C6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 10:51:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76CAF7AD3CC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 10:52:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233041AbjIYIvl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Sep 2023 04:51:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55150 "EHLO
+        id S233096AbjIYIwV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Sep 2023 04:52:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233044AbjIYIvk (ORCPT
+        with ESMTP id S233075AbjIYIwT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Sep 2023 04:51:40 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 781E4E3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 01:51:32 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-5041cc983f9so9400396e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 01:51:32 -0700 (PDT)
+        Mon, 25 Sep 2023 04:52:19 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 861C6FB
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 01:52:12 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-530ea522f5eso6924010a12.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 01:52:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695631891; x=1696236691; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=I76aapIgIVc4qPta64xuBqsqk0Sj1BIrc3XVjBiRxTE=;
-        b=GUsbRxK0GI2qWy9OwCgmghPEDcVq6K1wQq6T6tZVRVqSuB6QpuEyvQbiVpmcaHy8ct
-         DWMY0s6LmSJzb58DaqAj80YK2yBnuE5nEcAvor9d0lWJrp+0FEy64INYh6Og2v5K0cBQ
-         USF7j8f8FQtHMMUIru5QGLI4yVxcPaqAYr4ZP28kGJKNOWJJyG0c7JjoTiX3b0ZsEEVQ
-         2RnHxT+C35RnVrovtgAdu3WcoAXm1Z1Nc4qg7LrY0vO8F5kf1KrxtYgHMPcCppU1B+Se
-         mbvSSQEyLa8Tl2RWmIVXGkkhFP9mem83j+v2R+Ifkg7wDMjYFmQ9pdmuLnefcT/hDsOz
-         kO5Q==
+        d=linaro.org; s=google; t=1695631931; x=1696236731; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gLPIK/6A0OdvTUmgqW6fMGOpG0vd/sid0O/dWoZpXFk=;
+        b=O+ik+tdH2Au3yfXyzSQtplnu87GviBuuEzuxmRa4RVFbNGR/lrlU71y7A0XBBoqZor
+         zhAZI6ZSkJU57gXyC/9mELHaxTKj8boJn8QmFi+wKv1f1DDmf7OHUDh1v16W4SAk4Ln5
+         e30LwoyUKnbM8QZOic31PMUhT5LB4H540Nc0Icr6P1GJk+q55CRt686PiE8dQOi4f5Ip
+         XFI+5WxdxfifCSsCnjmZa0PU/lgCl3CSieWG9wJSW7892+i2LrwyT1nQCl3CzZIG143k
+         O5od/okmgqMiGvsGzmYFd2E7hrkc2rFu7dRsUwLqvc9SIkwvMXAfJ7/QRMwjZ8rACpOf
+         dC1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695631891; x=1696236691;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=I76aapIgIVc4qPta64xuBqsqk0Sj1BIrc3XVjBiRxTE=;
-        b=jB3cTVX9Nh3SyTI8jlXdcguOa4a6YgNj99tSfqITl+Ssks/wceQ99WiK1PHMMV2dnq
-         gkHN6yXOlSn5C8TdfmVUi21LHn8rTjyLMubuQSt8M7cHG2Xb6j4GTnP4mG5RmHp5dLG2
-         R0zR+BWC/ywwe38O2fSZESpCjAWW8KFPRZSeyVB1FjKf+O6Sy2UlPL2QgxAc2NdgzZfY
-         WA2BnGkLd5I9AsdHb64vdSIpre462Q4traDkbtpWqxB+QM0mYW4uYubCgi3gSbSQKLl3
-         eE1OtosF4cu0scPi3BHZ4s5cUTkyFPnlGAHFQRJyj5fYe9V8AXzmJSV8b0fR1sJJvnlK
-         Cg5A==
-X-Gm-Message-State: AOJu0YyQuSWRx7CnOrDQcFzxiBHxVKGg1RBptc4V5uK/+u9tDLNSPiMS
-        wJmBJV2yED6XTadvwW/6CmS0ag==
-X-Google-Smtp-Source: AGHT+IHh0oKfVPyzhpGT3Ziiot7eAhVSnmmFfexkrn/80gAwc67Wx0fZ14VRfctlOLgzAbaHj7Kxmg==
-X-Received: by 2002:a05:6512:214d:b0:503:3913:c2c9 with SMTP id s13-20020a056512214d00b005033913c2c9mr4484268lfr.40.1695631890372;
-        Mon, 25 Sep 2023 01:51:30 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1695631931; x=1696236731;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gLPIK/6A0OdvTUmgqW6fMGOpG0vd/sid0O/dWoZpXFk=;
+        b=WocNa4aivLId0vvNcrHcMJo8X/g41GwV1EYBhTTLTHy1poftCsR9VhnEV44zkkb6wY
+         9Wn39E9K11Tw1sLPAqxHNgiVP2EBABCXYDk2RGLW4Od4tMHl5MUVqURCZ+lI3GtD13Md
+         yxqPVc2alTjV08WkCHTR9CMa3nmPIhh9pbYvKJnidWMj170ozvogiDuHsVW25JxLPEEA
+         nSvSuKh1EtSmahBln/7xd2wQXnDX0X84yuF6Ct3uPbaRH9Y+ak4YcCJnG88C7b2uUXhD
+         rWw3I0d1WBUvMOBD7qeScBVkBf3HRiQHg/hEyLXXkY6sPcQc6D7843bbUspardijiKbq
+         0CUg==
+X-Gm-Message-State: AOJu0Yzi9lHTefepI4qrhHhrZH46TGJHaUXRIl/d8yJX1YThGvSaY5r2
+        hIzazQ/22ltQUlPzn3XDwa1IEQ==
+X-Google-Smtp-Source: AGHT+IEknGXpUcjCFhyykhoIm20lhyrc7fXegdvuAII0uwwwGWRrkN5jwyVbotbwFuNd+lYoXvXe+g==
+X-Received: by 2002:aa7:c38d:0:b0:530:8d55:9c6f with SMTP id k13-20020aa7c38d000000b005308d559c6fmr5184794edq.2.1695631930980;
+        Mon, 25 Sep 2023 01:52:10 -0700 (PDT)
 Received: from [192.168.101.165] (178235177023.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.23])
-        by smtp.gmail.com with ESMTPSA id v4-20020a056402174400b0053424352ab3sm663625edx.19.2023.09.25.01.51.28
+        by smtp.gmail.com with ESMTPSA id v4-20020a056402174400b0053424352ab3sm663625edx.19.2023.09.25.01.52.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Sep 2023 01:51:30 -0700 (PDT)
-Message-ID: <2678d8a5-4101-4fc3-9f9d-cbe616eee131@linaro.org>
-Date:   Mon, 25 Sep 2023 10:51:27 +0200
+        Mon, 25 Sep 2023 01:52:10 -0700 (PDT)
+Message-ID: <a983d891-74ef-48e0-9de1-d3d000cbf415@linaro.org>
+Date:   Mon, 25 Sep 2023 10:52:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] clk: qcom: camcc-sc8280xp: Add sc8280xp CAMCC
+Subject: Re: [PATCH 4/4] arm64: boot: dts: qcom: sc8280xp: Add in CAMCC for
+ sc8280xp
+Content-Language: en-US
 To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
         andersson@kernel.org, agross@kernel.org, mturquette@baylibre.com,
         sboyd@kernel.org, robh+dt@kernel.org,
@@ -65,8 +66,7 @@ To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20230923150045.1068556-1-bryan.odonoghue@linaro.org>
- <20230923150045.1068556-4-bryan.odonoghue@linaro.org>
-Content-Language: en-US
+ <20230923150045.1068556-5-bryan.odonoghue@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -103,7 +103,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230923150045.1068556-4-bryan.odonoghue@linaro.org>
+In-Reply-To: <20230923150045.1068556-5-bryan.odonoghue@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -117,123 +117,32 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 23.09.2023 17:00, Bryan O'Donoghue wrote:
-> Add the sc8280xp CAMCC driver which follows the sdm845 CAMCC lineage
-> with additional CCI and IFE blocks and more granular clock parentage.
+> Add in CAMCC for sc8280xp. The sc8280xp Camera Clock Controller looks
+> similar to most of the sdmX, smX and now scX controllers.
 > 
 > Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
->  drivers/clk/qcom/Kconfig          |    9 +
->  drivers/clk/qcom/Makefile         |    1 +
->  drivers/clk/qcom/camcc-sc8280xp.c | 3051 +++++++++++++++++++++++++++++
->  3 files changed, 3061 insertions(+)
->  create mode 100644 drivers/clk/qcom/camcc-sc8280xp.c
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 15 +++++++++++++++
+>  1 file changed, 15 insertions(+)
 > 
-> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-> index 4b72e98eaa70..5ce6d888aba0 100644
-> --- a/drivers/clk/qcom/Kconfig
-> +++ b/drivers/clk/qcom/Kconfig
-> @@ -426,6 +426,15 @@ config SC_CAMCC_7280
->  	  Say Y if you want to support camera devices and functionality such as
->  	  capturing pictures.
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> index cad59af7ccef..dad4894f358c 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> @@ -3450,6 +3450,21 @@ usb_1_role_switch: endpoint {
+>  			};
+>  		};
 >  
-> +config SC_CAMCC_8280XP
-> +	tristate "SC8280XP Camera Clock Controller"
-> +	select SC_GCC_8280XP
-> +	help
-> +	  Support for the camera clock controller on Qualcomm Technologies, Inc
-> +	  SC8280XP devices.
-> +	  Say Y if you want to support camera devices and functionality such as
-> +	  capturing pictures.
-> +
->  config SC_DISPCC_7180
->  	tristate "SC7180 Display Clock Controller"
->  	depends on ARM64 || COMPILE_TEST
-> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-> index a301b08dba05..8f66cefa9e57 100644
-> --- a/drivers/clk/qcom/Makefile
-> +++ b/drivers/clk/qcom/Makefile
-> @@ -68,6 +68,7 @@ obj-$(CONFIG_QCS_TURING_404) += turingcc-qcs404.o
->  obj-$(CONFIG_QDU_GCC_1000) += gcc-qdu1000.o
->  obj-$(CONFIG_SC_CAMCC_7180) += camcc-sc7180.o
->  obj-$(CONFIG_SC_CAMCC_7280) += camcc-sc7280.o
-> +obj-$(CONFIG_SC_CAMCC_8280XP) += camcc-sc8280xp.o
->  obj-$(CONFIG_SC_DISPCC_7180) += dispcc-sc7180.o
->  obj-$(CONFIG_SC_DISPCC_7280) += dispcc-sc7280.o
->  obj-$(CONFIG_SC_DISPCC_8280XP) += dispcc-sc8280xp.o
-> diff --git a/drivers/clk/qcom/camcc-sc8280xp.c b/drivers/clk/qcom/camcc-sc8280xp.c
-> new file mode 100644
-> index 000000000000..fbb3fa39862c
-> --- /dev/null
-> +++ b/drivers/clk/qcom/camcc-sc8280xp.c
-> @@ -0,0 +1,3051 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2023, Linaro Ltd.
-> + */
-> +
-> +#include <linux/clk-provider.h>
-> +#include <linux/err.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/of_device.h>
-> +#include <linux/of.h>
-> +#include <linux/pm_clock.h>
-> +#include <linux/pm_runtime.h>
-> +#include <linux/regmap.h>
-> +#include <linux/pm_runtime.h>
-> +
-> +#include <dt-bindings/clock/qcom,camcc-sc8280xp.h>
-> +
-> +#include "clk-alpha-pll.h"
-> +#include "clk-branch.h"
-> +#include "clk-rcg.h"
-> +#include "clk-regmap.h"
-> +#include "common.h"
-> +#include "gdsc.h"
-> +#include "reset.h"
-> +
-> +enum {
-> +	DT_BI_TCXO,
-> +	DT_BI_TCXO_AO,
-> +	DT_SLEEP_CLK,
-> +};
-This enum here is so that
+> +		camcc: clock-controller@ad00000 {
+> +			compatible = "qcom,sc8280xp-camcc";
+> +			reg = <0 0x0ad00000 0 0x20000>;
+> +			clocks = <&gcc GCC_CAMERA_AHB_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK_A>,
+> +				 <&sleep_clk>;
+This does not match what you added in the clock driver
 
-[...]
-
-> +static struct clk_alpha_pll cam_cc_pll0 = {
-> +	.offset = 0x0,
-> +	.vco_table = lucid_vco,
-> +	.num_vco = ARRAY_SIZE(lucid_vco),
-> +	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID],
-> +	.clkr = {
-> +		.hw.init = &(struct clk_init_data){
-> +			.name = "cam_cc_pll0",
-> +			.parent_data = &(const struct clk_parent_data){
-> +				.fw_name = "bi_tcxo", .name = "bi_tcxo",
-you can use .index = <some enum member> here
-
-
-[...]
-
-> +
-> +static const struct clk_parent_data cam_cc_parent_data_0[] = {
-> +	{ .fw_name = "bi_tcxo", .name = "bi_tcxo" },
-also in these arrays
-
-[...]
-
-> +static struct gdsc bps_gdsc = {
-> +	.gdscr = 0x7004,
-> +	.pd = {
-> +		.name = "bps_gdsc",
-> +	},
-> +	.flags = HW_CTRL | RETAIN_FF_ENABLE,
-HW_CTRL means "hardware controlled mode is always on", not
-"hardware controlled mode is available". Is that what you want?
-
-Also, does this clock controller not take GCC_CAMERA_AHB_CLK as
-input?
+> +			clock-names = "iface", "bi_tcxo", "bi_tcxo_ao", "sleep_clk";
+And with using .index there, clock-names will become redundant
 
 Konrad
