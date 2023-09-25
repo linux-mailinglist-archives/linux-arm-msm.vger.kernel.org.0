@@ -2,110 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1821C7AD6EE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 13:24:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E669B7AD703
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 13:33:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230114AbjIYLYV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Sep 2023 07:24:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35040 "EHLO
+        id S230045AbjIYLdy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Sep 2023 07:33:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231181AbjIYLYT (ORCPT
+        with ESMTP id S229632AbjIYLdx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Sep 2023 07:24:19 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B215103
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 04:24:12 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-5041d6d8b10so10144654e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 04:24:12 -0700 (PDT)
+        Mon, 25 Sep 2023 07:33:53 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE947D3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 04:33:46 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-533f193fc8dso2660844a12.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 04:33:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695641051; x=1696245851; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qMhmMAQQbl/7qD+DBAIyGJ2AG8c+5UuMVzq4znI+3L8=;
-        b=g8p9/4FKFnMY5PNu7jaucK+xOc9vl50UhHgSTb1pm8FhSYghQxjl4DAxhVANmTKTP7
-         zlgKau0n+r0/478OUsXbw8a5OctYBaWQRUkAjA5ghoJWQ18IeMsJ3Ev3XuwcFXVxD4Rg
-         imvCt4OwF6gVk76FzaYTh3j1xb2qMNnCzs40OXaA15CiEBMLd2DrvvGmJFaeGXQ4gJLp
-         5npCJlNRMirQQNhG1mz9rZ8oyNIdcHzIvmMfXlEa+ti5Cv+Xxh1ZsUOasgk8yE8YCe1U
-         ORQ3WTg2YBUGdJIxEQRYezZiR2aQVukb6jr4Q4Xu7bqiLQqalR7l4i9Uxw1+lCRH+uMm
-         h0Vg==
+        d=linaro.org; s=google; t=1695641625; x=1696246425; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vetUAJZCai5DfDrNhJxFo+s7DWEOMC+DXVpHjpuMCA0=;
+        b=o+fQCpe9uSEoqb3DMp4qr8tGE9dj9cfC7tgdEIUMBfEMhWFTng+YfvRIn0uPzkb7Aj
+         WPjngw6W3bk50eJYDUwhntTg7D5X+FX3ZmHKEOxcMkPnlKQ9P2nDFWh8/KKBeyEkMPrD
+         SpT+SoLzkRcyoLygSFm9dUBNXb/o7s8r8xMajJi39eESBjfUTWfYOIZWgR3fWXYcYsJX
+         70pwvlMWgUOSv6yNQBpt9ix6+2KiJ8rl12zL3rq64rZUMGirsXgWjAq8N+U8Nq/eobOs
+         HSGBADOTytW/DnkK+fgU4a+JzJm6If6V4ldmpTatyzIuwY/T58DDviUdTKmBEHH0STSY
+         TXhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695641051; x=1696245851;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qMhmMAQQbl/7qD+DBAIyGJ2AG8c+5UuMVzq4znI+3L8=;
-        b=qBu/utB4ugYG4xFzhEGxk1RqXAroNs5xnxYX32XWeuoxRw9Xi8fbGpLJ1mP3E2mldc
-         sWz5dDuCQQHLkcryMyq8KBwloFAlxjp9+fybmcjB6iGhezhvfBeHTODin0+3rIt3ONH5
-         n/5Tm8cWiLoSBF29ttjvgxCCNeEZxyADiV9PqMYu9YogEOx/QHGjqihiX9zUl/xeqfSo
-         /ReixK79UNpe+BFUNqRBU7SkG96B5f5in/A8GNp6lFt5uRBsO8bc4OptpNy2TlKBuxui
-         fPDHyS0p9+W2bTtKjkc37PBBW4nzGcJur4vay3ElsRo0BkXNrpEEme7V4W51Q/YcYS5f
-         vXLQ==
-X-Gm-Message-State: AOJu0YxjGJwq2t8Jpre2pt6ovAGKeZVwbLgUWdAvQndq81s/pqBPD3q3
-        MrXOapfPnr/Cg19qA3E3JzJ1xQ==
-X-Google-Smtp-Source: AGHT+IFqIBkgVpP+AhlxyEQ0hkTfnfhpfzlJa4GthGn4gn/ftTVslN7s9txRdFNAZVQPZpNXmO0eXg==
-X-Received: by 2002:a05:6512:3d9e:b0:504:3424:215c with SMTP id k30-20020a0565123d9e00b005043424215cmr6852228lfv.51.1695641051028;
-        Mon, 25 Sep 2023 04:24:11 -0700 (PDT)
-Received: from srini-hackbase.lan ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id x62-20020a50bac4000000b0053443c8fd90sm152170ede.24.2023.09.25.04.24.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Sep 2023 04:24:10 -0700 (PDT)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     cros-qcom-dts-watchers@chromium.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Luca Weiss <luca.weiss@fairphone.com>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-pm@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230919-fp5-initial-v2-0-14bb7cedadf5@fairphone.com>
-References: <20230919-fp5-initial-v2-0-14bb7cedadf5@fairphone.com>
-Subject: Re: (subset) [PATCH v2 0/7] Initial support for the Fairphone 5
- smartphone
-Message-Id: <169564104980.23811.11629211382725152116.b4-ty@linaro.org>
-Date:   Mon, 25 Sep 2023 12:24:09 +0100
+        d=1e100.net; s=20230601; t=1695641625; x=1696246425;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vetUAJZCai5DfDrNhJxFo+s7DWEOMC+DXVpHjpuMCA0=;
+        b=hepAjeMrq4VAQiGDCRqJTNY/aMBaSOs0AD+YM2gcypy10T1qXU641jVAsYw+JTNlJs
+         EAb3GkTEsAkTK2ITkC1cbEF5ygZyRG9OWYp/cFOtCCaOlF0Y1tonaNzCTMegvUj4nX4f
+         Glzn3ToToWwUlMuIsRkg84AYGBhinzb8AspU9/503ZIMjjtXP70/JrEYOD/+/7n0c9RL
+         LdYmrnkVhRQidYmg7GUP+bE2B4GKLiYTEvJ1rNrgsxco78ElSuc9RFRa6TZQnPkUTk/H
+         ths2iYsfU82vO1wH+eD3AJK3whwwwlfony6YKx7WNe7yQ3Y0HaGE9j8uKVuMQbvgGQyz
+         e0jA==
+X-Gm-Message-State: AOJu0Yy/ZZp7tfqe8QrwuGSWL+mytTnvK4S/4z95UxAoRn4foX70JxHL
+        i4y43+exLKgQbdSwP3Fr67NBWw==
+X-Google-Smtp-Source: AGHT+IHq9zn8cChiZsp53fAzFyAydchkiW9Nt+LEV4pMfRdwjKV9i+DMdznH0Qku3diwr7BdtG2ZCQ==
+X-Received: by 2002:a17:906:8445:b0:9ae:76b0:c0fe with SMTP id e5-20020a170906844500b009ae76b0c0femr4700783ejy.20.1695641625342;
+        Mon, 25 Sep 2023 04:33:45 -0700 (PDT)
+Received: from [192.168.101.165] (178235177023.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.23])
+        by smtp.gmail.com with ESMTPSA id bu24-20020a170906a15800b0098669cc16b2sm6112702ejb.83.2023.09.25.04.33.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Sep 2023 04:33:45 -0700 (PDT)
+Message-ID: <6d2b4d74-dd38-440b-b48b-fd8508f33f0e@linaro.org>
+Date:   Mon, 25 Sep 2023 13:33:40 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 5/7] arm64: dts: qcom: sm4450-qrd: add QRD4450 uart
+ support
+Content-Language: en-US
+To:     Tengfei Fan <quic_tengfan@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, tglx@linutronix.de, maz@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, catalin.marinas@arm.com, will@kernel.org
+Cc:     geert+renesas@glider.be, arnd@arndb.de, neil.armstrong@linaro.org,
+        nfraprado@collabora.com, u-kumar1@ti.com, peng.fan@nxp.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        quic_tsoni@quicinc.com, quic_shashim@quicinc.com,
+        quic_kaushalk@quicinc.com, quic_tdas@quicinc.com,
+        quic_tingweiz@quicinc.com, quic_aiquny@quicinc.com,
+        kernel@quicinc.com
+References: <20230925064927.26448-1-quic_tengfan@quicinc.com>
+ <20230925064927.26448-6-quic_tengfan@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230925064927.26448-6-quic_tengfan@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.12.2
-X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
-X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Tue, 19 Sep 2023 14:45:54 +0200, Luca Weiss wrote:
-> Add support to boot up mainline kernel on the QCM6490-based Fairphone 5
-> smartphone.
+On 25.09.2023 08:49, Tengfei Fan wrote:
+> Add uart support for QRD4450 for enable uart console.
 > 
-> These patches only cover a part of the functionality brought up on
-> mainline so far, with the rest needing larger dts and driver changes or
-> depend on patches that are not yet merged. I will work on sending those
-> once these base patches here have settled.
-> 
-> [...]
+> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Applied, thanks!
-
-[2/7] nvmem: qfprom: Mark core clk as optional
-      commit: 844ac302b2aa81c47a4323fc34a0a454cc749dbc
-
-Best regards,
--- 
-Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-
+Konrad
