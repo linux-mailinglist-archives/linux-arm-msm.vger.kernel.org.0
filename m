@@ -2,71 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 76CAF7AD3CC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 10:52:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5EF1F7AD3E5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 10:57:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233096AbjIYIwV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Sep 2023 04:52:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44254 "EHLO
+        id S232819AbjIYI6A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Sep 2023 04:58:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233075AbjIYIwT (ORCPT
+        with ESMTP id S232959AbjIYI56 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Sep 2023 04:52:19 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 861C6FB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 01:52:12 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-530ea522f5eso6924010a12.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 01:52:12 -0700 (PDT)
+        Mon, 25 Sep 2023 04:57:58 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3ED83C0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 01:57:51 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-99c93638322so1362019666b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 01:57:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695631931; x=1696236731; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695632270; x=1696237070; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=gLPIK/6A0OdvTUmgqW6fMGOpG0vd/sid0O/dWoZpXFk=;
-        b=O+ik+tdH2Au3yfXyzSQtplnu87GviBuuEzuxmRa4RVFbNGR/lrlU71y7A0XBBoqZor
-         zhAZI6ZSkJU57gXyC/9mELHaxTKj8boJn8QmFi+wKv1f1DDmf7OHUDh1v16W4SAk4Ln5
-         e30LwoyUKnbM8QZOic31PMUhT5LB4H540Nc0Icr6P1GJk+q55CRt686PiE8dQOi4f5Ip
-         XFI+5WxdxfifCSsCnjmZa0PU/lgCl3CSieWG9wJSW7892+i2LrwyT1nQCl3CzZIG143k
-         O5od/okmgqMiGvsGzmYFd2E7hrkc2rFu7dRsUwLqvc9SIkwvMXAfJ7/QRMwjZ8rACpOf
-         dC1A==
+        bh=WQmd5YE9MyP7uhp/mbVtxmJE/LKRazeYO5qAyNu7Lqk=;
+        b=yqNdFd6elqHeZ/VzaU3DVx3mmkE7N/ozgSPhUR32vhuLerAWqt9THi7N8w2lKuyGwB
+         AU4rEVgTzwigBFLSWSv6r3C83o6I+YZqLEOATjwPdnNothEdzFh7f/AM1f877CUxaNXP
+         NoTVbtZniDFxc9xgtRCLjgIeo2Chi3PpOkRHhhsb9JLnEoos2XSymxGQEfycriczH0cb
+         nWN6cLQ/d7jO20XBbl+SZySG5rQ/nm2R7ZhCK4yZvAiKTDFt33QSXjFVmJsGx5NFp6qX
+         /9NoN0AIyhefNzc9yjl2TMUQ+Sw3jvdQnrcAL7Qb4hsg+wARO1rxvMVm+1JGjRgu2KHN
+         dUXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695631931; x=1696236731;
+        d=1e100.net; s=20230601; t=1695632270; x=1696237070;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gLPIK/6A0OdvTUmgqW6fMGOpG0vd/sid0O/dWoZpXFk=;
-        b=WocNa4aivLId0vvNcrHcMJo8X/g41GwV1EYBhTTLTHy1poftCsR9VhnEV44zkkb6wY
-         9Wn39E9K11Tw1sLPAqxHNgiVP2EBABCXYDk2RGLW4Od4tMHl5MUVqURCZ+lI3GtD13Md
-         yxqPVc2alTjV08WkCHTR9CMa3nmPIhh9pbYvKJnidWMj170ozvogiDuHsVW25JxLPEEA
-         nSvSuKh1EtSmahBln/7xd2wQXnDX0X84yuF6Ct3uPbaRH9Y+ak4YcCJnG88C7b2uUXhD
-         rWw3I0d1WBUvMOBD7qeScBVkBf3HRiQHg/hEyLXXkY6sPcQc6D7843bbUspardijiKbq
-         0CUg==
-X-Gm-Message-State: AOJu0Yzi9lHTefepI4qrhHhrZH46TGJHaUXRIl/d8yJX1YThGvSaY5r2
-        hIzazQ/22ltQUlPzn3XDwa1IEQ==
-X-Google-Smtp-Source: AGHT+IEknGXpUcjCFhyykhoIm20lhyrc7fXegdvuAII0uwwwGWRrkN5jwyVbotbwFuNd+lYoXvXe+g==
-X-Received: by 2002:aa7:c38d:0:b0:530:8d55:9c6f with SMTP id k13-20020aa7c38d000000b005308d559c6fmr5184794edq.2.1695631930980;
-        Mon, 25 Sep 2023 01:52:10 -0700 (PDT)
+        bh=WQmd5YE9MyP7uhp/mbVtxmJE/LKRazeYO5qAyNu7Lqk=;
+        b=PQr9iQ3MG7huJLbziHVJusKm+eHVVoFgMYvb2YDsgesjNjfsllbT7/v2MEzHwVn0h4
+         evu1EkaRJlzrN7xeUKCOUjTq8bpAIWkHdQmwsmTTLF1VipPhxQumUXuVQcl4f+4hrEIQ
+         B4lsC8WlGoL6DbhonBb+EW63KytE2TkACRF3rlN0FKauy+lrF3RzRUn9YAyC+LS9iAS0
+         AjV8VHekbPUzISk4JHS7meM+mH1kABWFqda4RI//hEcLBugA/3GSHAdbbb1aJ9eYeyv0
+         lUzQIK/KCxCMkkCzaANCsBQDuvIusvCx7MI04RrrKvUOZAVu7bKC6ZeOIRSqgUp99n1o
+         mzcA==
+X-Gm-Message-State: AOJu0YxIuFcj9zlVBC0rY/OibtBuwyKVNCBKNGSg6W2PEV0aKyNNfGbc
+        m9crbxZ98GqhG9ULS3ZDxDA7Ow==
+X-Google-Smtp-Source: AGHT+IHP36aQS6ALpUTPI7ydd5L2seI7Qiy6BJ/G0j2CKfyIwQElC198nfAuq+y7wn2ZA9ZhzXvxzA==
+X-Received: by 2002:a17:906:4fce:b0:9aa:206d:b052 with SMTP id i14-20020a1709064fce00b009aa206db052mr14447299ejw.27.1695632269683;
+        Mon, 25 Sep 2023 01:57:49 -0700 (PDT)
 Received: from [192.168.101.165] (178235177023.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.23])
-        by smtp.gmail.com with ESMTPSA id v4-20020a056402174400b0053424352ab3sm663625edx.19.2023.09.25.01.52.09
+        by smtp.gmail.com with ESMTPSA id s25-20020a170906061900b00997d76981e0sm5952185ejb.208.2023.09.25.01.57.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Sep 2023 01:52:10 -0700 (PDT)
-Message-ID: <a983d891-74ef-48e0-9de1-d3d000cbf415@linaro.org>
-Date:   Mon, 25 Sep 2023 10:52:09 +0200
+        Mon, 25 Sep 2023 01:57:49 -0700 (PDT)
+Message-ID: <f49d0543-17bb-4105-9cdf-3df8c116481a@linaro.org>
+Date:   Mon, 25 Sep 2023 10:57:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] arm64: boot: dts: qcom: sc8280xp: Add in CAMCC for
- sc8280xp
+Subject: Re: [PATCH] PCI: qcom: Add interconnect bandwidth for PCIe Gen4
 Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        andersson@kernel.org, agross@kernel.org, mturquette@baylibre.com,
-        sboyd@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        jonathan@marek.ca, quic_tdas@quicinc.com,
-        vladimir.zapolskiy@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230923150045.1068556-1-bryan.odonoghue@linaro.org>
- <20230923150045.1068556-5-bryan.odonoghue@linaro.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        lpieralisi@kernel.org, kw@linux.com
+Cc:     andersson@kernel.org, bhelgaas@google.com,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, abel.vesa@linaro.org
+References: <20230924160713.217086-1-manivannan.sadhasivam@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -103,7 +98,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230923150045.1068556-5-bryan.odonoghue@linaro.org>
+In-Reply-To: <20230924160713.217086-1-manivannan.sadhasivam@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -116,33 +111,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23.09.2023 17:00, Bryan O'Donoghue wrote:
-> Add in CAMCC for sc8280xp. The sc8280xp Camera Clock Controller looks
-> similar to most of the sdmX, smX and now scX controllers.
+On 24.09.2023 18:07, Manivannan Sadhasivam wrote:
+> PCIe Gen4 supports the interconnect bandwidth of 1969 MBps. So let's add
+> the bandwidth support in the driver. Otherwise, the default bandwidth of
+> 985 MBps will be used.
 > 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 15 +++++++++++++++
->  1 file changed, 15 insertions(+)
+>  drivers/pci/controller/dwc/pcie-qcom.c | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index cad59af7ccef..dad4894f358c 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> @@ -3450,6 +3450,21 @@ usb_1_role_switch: endpoint {
->  			};
->  		};
->  
-> +		camcc: clock-controller@ad00000 {
-> +			compatible = "qcom,sc8280xp-camcc";
-> +			reg = <0 0x0ad00000 0 0x20000>;
-> +			clocks = <&gcc GCC_CAMERA_AHB_CLK>,
-> +				 <&rpmhcc RPMH_CXO_CLK>,
-> +				 <&rpmhcc RPMH_CXO_CLK_A>,
-> +				 <&sleep_clk>;
-This does not match what you added in the clock driver
-
-> +			clock-names = "iface", "bi_tcxo", "bi_tcxo_ao", "sleep_clk";
-And with using .index there, clock-names will become redundant
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 297442c969b6..6853123f92c1 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1384,11 +1384,14 @@ static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
+>  	case 2:
+>  		bw = MBps_to_icc(500);
+>  		break;
+> +	case 3:
+> +		bw = MBps_to_icc(985);
+> +		break;
+>  	default:
+>  		WARN_ON_ONCE(1);
+>  		fallthrough;
+> -	case 3:
+> -		bw = MBps_to_icc(985);
+> +	case 4:
+> +		bw = MBps_to_icc(1969);
+>  		break;
+Are you adding case 4 under `default`? That looks.. bizzare..
 
 Konrad
