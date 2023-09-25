@@ -2,176 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2DF227AD5EF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 12:29:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BE9B7AD5FD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 12:31:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231553AbjIYK3q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Sep 2023 06:29:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50672 "EHLO
+        id S229475AbjIYKbs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Sep 2023 06:31:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231258AbjIYK3j (ORCPT
+        with ESMTP id S231202AbjIYKbs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Sep 2023 06:29:39 -0400
+        Mon, 25 Sep 2023 06:31:48 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E11058E;
-        Mon, 25 Sep 2023 03:29:32 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38P9Ublr021060;
-        Mon, 25 Sep 2023 10:29:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=bih0g4dycmaTUji9/KI8JMhRgvzpmPyPyMqn7Zh/OiY=;
- b=beMeHMNqqNdpWz92aNbYdlZLObpmjHkMPUvCHZ37t91TFF8raOrREJjN549iDKhTZSjI
- 2qipti3rfC3yM5rIdNgafhc1N7sICu3HRsgX/yAxrJtW4l43uDXtks+hfyO5D6Yls1gh
- tfhYqftaqEdI/Gsxh2vT7fhwPiyQefY/Is73BHeRwjUzVQgLl67/HJ5duauwST1l0iXx
- Fv8wpJFZwHEAd4wuKaYfJEkXav58eVbuue9nuUMMZbwTdkxb8jC4wwkgHqOH1kYbLYZq
- OMFk4DSHhkJpt4HxpKdBeL1aNAJD5q6rfXwMG4cIye5bHx1jmwrGLUKxQJcVJLPsJ3rI 8Q== 
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB92A9B;
+        Mon, 25 Sep 2023 03:31:41 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38P8dbDH009835;
+        Mon, 25 Sep 2023 10:31:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=6ahpxHAe9uPRFOWahBTPR3rP3XTiEzodzSyuBb9vMko=;
+ b=gYZhrgnL7uc1UAJ3fk9UC4zZeGfm+wXj4HXcJpbVR4u9hrKs3YhS3vCnrEU//DcZ05e2
+ IT37nP3Yn5iGuCdXxLn/yzPIseK89F9VQWtLiWoX2Q0VdU3C9aI1SItU26/M1Z4tTreW
+ abii1yDvFXsKPiYp38nE/qnnA8bIJXF7jVxUYrnwCCPtkdLzj8WNonShuzPh34/rLIsj
+ LRmwSf3YA5/L1JIcXatOqV2b6yR5KjfZjSXTzazOTw9niyx6pLJr1kzJ7Ik7VtY0nKis
+ E157tuBp9aOLz6B0j1rG609nFZfD7dMFKMbe0/MFjLVZtQAZmCAtXBBl5ulQNUSa5BZO 7g== 
 Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tb5n88cw3-1
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t9safbsxx-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 25 Sep 2023 10:29:19 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38PASw7g031592
+        Mon, 25 Sep 2023 10:31:33 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38PAVW6R002722
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 25 Sep 2023 10:28:58 GMT
-Received: from hu-gokulsri-blr.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Mon, 25 Sep 2023 03:28:53 -0700
-From:   Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
-To:     <dmitry.baryshkov@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <jassisinghbrar@gmail.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC:     <quic_varada@quicinc.com>, <quic_srichara@quicinc.com>,
-        <quic_gokulsri@quicinc.com>
-Subject: [PATCH V3 3/3] arm64: dts: qcom: ipq5018: enable the CPUFreq support
-Date:   Mon, 25 Sep 2023 15:58:26 +0530
-Message-ID: <20230925102826.405446-4-quic_gokulsri@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230925102826.405446-1-quic_gokulsri@quicinc.com>
-References: <20230925102826.405446-1-quic_gokulsri@quicinc.com>
+        Mon, 25 Sep 2023 10:31:32 GMT
+Received: from [10.201.203.60] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 25 Sep
+ 2023 03:31:27 -0700
+Message-ID: <8922b2f1-7869-409c-8974-d2560d72f454@quicinc.com>
+Date:   Mon, 25 Sep 2023 16:01:24 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH V3 1/4] dt-bindings: thermal: qcom-tsens: Add ipq5018
+ compatible
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <srinivas.kandagatla@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <thara.gopinath@gmail.com>,
+        <rafael@kernel.org>, <daniel.lezcano@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <dmitry.baryshkov@linaro.org>
+References: <20230922115116.2748804-1-srichara@win-platform-upstream01.qualcomm.com>
+ <20230922115116.2748804-2-srichara@win-platform-upstream01.qualcomm.com>
+ <f4fa94ab-78fb-d01b-7188-c498ec3053ff@linaro.org>
+ <21caae64-b8db-ed1f-2275-a7279227cf92@quicinc.com>
+ <a225833f-e645-48cc-a0e9-103999064548@linaro.org>
+From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
+In-Reply-To: <a225833f-e645-48cc-a0e9-103999064548@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 9XKjpmcXF0Eyltqx7WMTuzUffxYbBGXP
-X-Proofpoint-GUID: 9XKjpmcXF0Eyltqx7WMTuzUffxYbBGXP
+X-Proofpoint-ORIG-GUID: NSKKkb9ysLa7uV1MxPtBLDqHjZOyOqgs
+X-Proofpoint-GUID: NSKKkb9ysLa7uV1MxPtBLDqHjZOyOqgs
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-09-25_07,2023-09-21_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
- adultscore=0 priorityscore=1501 impostorscore=0 bulkscore=0 spamscore=0
- clxscore=1015 malwarescore=0 mlxlogscore=890 phishscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2309250077
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+ definitions=2023-09-25_07,2023-09-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
+ mlxscore=0 priorityscore=1501 impostorscore=0 bulkscore=0 suspectscore=0
+ phishscore=0 malwarescore=0 mlxlogscore=564 spamscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
+ definitions=main-2309250077
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the APCS, A53 PLL, cpu-opp-table nodes to set
-the CPU frequency at 800MHz (idle) or 1.008GHz.
 
-Co-developed-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-Signed-off-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/ipq5018.dtsi | 40 +++++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-index 9f13d2dcdfd5..56f3c5260bbd 100644
---- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-@@ -5,6 +5,7 @@
-  * Copyright (c) 2023 The Linux Foundation. All rights reserved.
-  */
- 
-+#include <dt-bindings/clock/qcom,apss-ipq.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/clock/qcom,gcc-ipq5018.h>
- #include <dt-bindings/reset/qcom,gcc-ipq5018.h>
-@@ -36,6 +37,8 @@ CPU0: cpu@0 {
- 			reg = <0x0>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
-+			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-+			operating-points-v2 = <&cpu_opp_table>;
- 		};
- 
- 		CPU1: cpu@1 {
-@@ -44,6 +47,8 @@ CPU1: cpu@1 {
- 			reg = <0x1>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
-+			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-+			operating-points-v2 = <&cpu_opp_table>;
- 		};
- 
- 		L2_0: l2-cache {
-@@ -54,6 +59,23 @@ L2_0: l2-cache {
- 		};
- 	};
- 
-+	cpu_opp_table: opp-table-cpu {
-+		compatible = "operating-points-v2";
-+		opp-shared;
-+
-+		opp-800000000 {
-+			opp-hz = /bits/ 64 <800000000>;
-+			opp-microvolt = <1100000>;
-+			clock-latency-ns = <200000>;
-+		};
-+
-+		opp-1008000000 {
-+			opp-hz = /bits/ 64 <1008000000>;
-+			opp-microvolt = <1100000>;
-+			clock-latency-ns = <200000>;
-+		};
-+	};
-+
- 	firmware {
- 		scm {
- 			compatible = "qcom,scm-ipq5018", "qcom,scm";
-@@ -181,6 +203,24 @@ v2m1: v2m@1000 {
- 			};
- 		};
- 
-+		apcs_glb: mailbox@b111000 {
-+			compatible = "qcom,ipq5018-apcs-apps-global",
-+				     "qcom,ipq6018-apcs-apps-global";
-+			reg = <0x0b111000 0x1000>;
-+			#clock-cells = <1>;
-+			clocks = <&a53pll>, <&xo_board_clk>, <&gcc GPLL0>;
-+			clock-names = "pll", "xo", "gpll0";
-+			#mbox-cells = <1>;
-+		};
-+
-+		a53pll: clock@b116000 {
-+			compatible = "qcom,ipq5018-a53pll";
-+			reg = <0x0b116000 0x40>;
-+			#clock-cells = <0>;
-+			clocks = <&xo_board_clk>;
-+			clock-names = "xo";
-+		};
-+
- 		timer@b120000 {
- 			compatible = "arm,armv7-timer-mem";
- 			reg = <0x0b120000 0x1000>;
--- 
-2.34.1
+On 9/25/2023 12:16 PM, Krzysztof Kozlowski wrote:
+> On 25/09/2023 04:06, Sricharan Ramabadhran wrote:
+>>
+>>
+>> On 9/23/2023 5:14 PM, Krzysztof Kozlowski wrote:
+>>> On 22/09/2023 13:51, Sricharan R wrote:
+>>>> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>>>>
+>>>> IPQ5018 has tsens v1.0 block with 4 sensors and 1 interrupt.
+>>>
+>>> Then why do you allow two interrupts?
+>>>
+>>    infact there is only one interrupt. Will fix in the binding
+>>    description.
+> 
+> Description? So you still allow two interrupts? No, this must be
+> constrained in allOf:if:then.
+> 
 
+  ok, it should be fine to add this new compatible to the existing
+  allof:if:then block of v1 targets ? (Because they also have same
+  single interrupt (uplow) constraint)
+
+Regards,
+  Sricharan
