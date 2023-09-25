@@ -2,123 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BC797AD0A4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 08:52:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 486097AD0DD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 08:59:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232434AbjIYGvz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Sep 2023 02:51:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60306 "EHLO
+        id S232321AbjIYG7b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Sep 2023 02:59:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232286AbjIYGvU (ORCPT
+        with ESMTP id S232318AbjIYG7a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Sep 2023 02:51:20 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D421112;
-        Sun, 24 Sep 2023 23:51:09 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38P59aMC019338;
-        Mon, 25 Sep 2023 06:50:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=xBUDgiQc8/Wh7DXN0iZA8+ruE3hMW0PoKPidKMB6Hz4=;
- b=N+j4d+0PPA73S4Z61uX7bP2VcraLMDwiYAgPKKWPsztxrqzAO8BmQAyK3D0+ZoQybPIH
- OXRIrPwTg50FYBBvdnv0P6iJKMK+Mdo2q5zY1I7jK6dFQjERLq7X0T0zYAytWja9B9dt
- TzOIjvuPc1O/cQRK8qFPaO9PWnlIfn88O+bi/mBXTSppwMxt8t/E7GP2ipbZ3du7tPTK
- KUOlA8ZNhZfnDv0o01Bhsbo8iBNI3418NSfknSP+CIe9WPKRNtHcvBS6zu3uXulLOCql
- DPq5Nx5PiNC+9mNxaBs2o/3Vu45AAFKPtRbWzU8ORmNNkmj+Im7b2Qc2DkrAQalEP8T0 5A== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t9ncuk8ty-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 25 Sep 2023 06:50:47 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38P6okJw016345
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 25 Sep 2023 06:50:46 GMT
-Received: from tengfan2-gv.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Sun, 24 Sep 2023 23:50:37 -0700
-From:   Tengfei Fan <quic_tengfan@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <tglx@linutronix.de>, <maz@kernel.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <catalin.marinas@arm.com>, <will@kernel.org>
-CC:     <geert+renesas@glider.be>, <arnd@arndb.de>,
-        <neil.armstrong@linaro.org>, <nfraprado@collabora.com>,
-        <u-kumar1@ti.com>, <peng.fan@nxp.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <quic_tsoni@quicinc.com>,
-        <quic_shashim@quicinc.com>, <quic_kaushalk@quicinc.com>,
-        <quic_tdas@quicinc.com>, <quic_tingweiz@quicinc.com>,
-        <quic_aiquny@quicinc.com>, <kernel@quicinc.com>,
-        Tengfei Fan <quic_tengfan@quicinc.com>
-Subject: [PATCH v5 7/7] arm64: defconfig: enable clock controller and pinctrl
-Date:   Mon, 25 Sep 2023 14:49:27 +0800
-Message-ID: <20230925064927.26448-8-quic_tengfan@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230925064927.26448-1-quic_tengfan@quicinc.com>
-References: <20230925064927.26448-1-quic_tengfan@quicinc.com>
+        Mon, 25 Sep 2023 02:59:30 -0400
+Received: from mail-vk1-xa2b.google.com (mail-vk1-xa2b.google.com [IPv6:2607:f8b0:4864:20::a2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61D64CE
+        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Sep 2023 23:59:23 -0700 (PDT)
+Received: by mail-vk1-xa2b.google.com with SMTP id 71dfb90a1353d-49a319c9e17so337772e0c.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Sep 2023 23:59:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1695625162; x=1696229962; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=z8qEI90LoSzHC7OVIZurF0tjd1Yq1runGQ/mYc0XDOc=;
+        b=Vqzbn/Q+sAS971Sf0mtq97YG9LJ8YmaSizP0uS6xzRCripmVmtSEmkJa03caIZC65m
+         PtnNizla3o9UyzYEKADbYk8WtA/5nhjFIKZHs7bZ+WXfyhiRfw2LreUR0pLqyTNpoAdo
+         XjlaBU1tQ7wsIQR5YtkLL1SOwQz1e8W+ykzZX0cuHSJ3ZPRZuaeyKFed5MxfYHjTLFZ+
+         /TWETr6LSTyembbEvq+eqP3hgT614ird0hhcooQqi5n6BvipuCGm9tLTiiEC8PFvBXYV
+         xDBr+XN3Y3dW0s2EN62R2ym0/gRfWR10MRSsu/g2GBNSqBUlz79LHlAKC440S0ExoVA+
+         gXWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695625162; x=1696229962;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=z8qEI90LoSzHC7OVIZurF0tjd1Yq1runGQ/mYc0XDOc=;
+        b=gMZGDG5YvD4331f8uQfMUfD8nFwTMGc2eEP7K4/OSXY5MWwFW46JdTS373jDAi+7o+
+         /Z/dntOUfjDDEM5nrw8RKCC4wCNJJHZvZ2wYB3YiQTAqCMpkwnDAW9dvHi/cncOPyBtF
+         isDSoT1KVLr8XO7s331otXHfe2ar48lONKkgaslTWGzSPhbv5aW72I/KYIDEcB3enPk2
+         kEeQRomXj5MvvfFcG6VoIpNPzXxPxZ3PNAOxoZA+FpddL59CcaB68N9OKpwJl9Eahder
+         dtWTo/83ERLfGYMI/dQYL9/dAAscFFq7zCe9n8Y6Daw501E1I52cgosdGsHmafHbfwY+
+         zLdw==
+X-Gm-Message-State: AOJu0YyaVsahwt/7ckcRAckBOQWMcPArb6wVejTdyxqCHHftkDRZLWxw
+        ATrHp3BrC+SV5I10feEhDoauQUFFBxh7LIWrbb/Sev1hHnIud2qT
+X-Google-Smtp-Source: AGHT+IF/Zg1NsknbtSQpgBwTNUOHG3qhF9RP3mNCyeEXfaFEh7vh3SlLepbzoDFv12Fu/M9ql+IpvbyggHe6hJYXuQw=
+X-Received: by 2002:a1f:d546:0:b0:48d:3b80:fba9 with SMTP id
+ m67-20020a1fd546000000b0048d3b80fba9mr1691006vkg.11.1695625162450; Sun, 24
+ Sep 2023 23:59:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: l4HCHcZQcoT1VfDR0HBZUZAMr5Z57N7f
-X-Proofpoint-GUID: l4HCHcZQcoT1VfDR0HBZUZAMr5Z57N7f
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-09-25_03,2023-09-21_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
- impostorscore=0 adultscore=0 clxscore=1015 spamscore=0 priorityscore=1501
- suspectscore=0 phishscore=0 mlxscore=0 lowpriorityscore=0 mlxlogscore=663
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
- definitions=main-2309250047
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20230913153529.32777-1-bartosz.golaszewski@linaro.org> <c574c47e-9ceb-ef83-cc92-cdc6cd4982e5@linaro.org>
+In-Reply-To: <c574c47e-9ceb-ef83-cc92-cdc6cd4982e5@linaro.org>
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+Date:   Mon, 25 Sep 2023 08:59:11 +0200
+Message-ID: <CAMRc=Md1x1ZVj1pfyGZf+=KULd+eujRnGQ0JM43-jd=cB4mPng@mail.gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: crypto: ice: document the sa8775p inline
+ crypto engine
+To:     Herbert Xu <herbert@gondor.apana.org.au>
+Cc:     Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "David S . Miller" <davem@davemloft.net>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable global clock controller and pinctrl for support the Qualcomm
-SM4450 platform to boot to UART console.
+On Wed, Sep 13, 2023 at 5:56=E2=80=AFPM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 13/09/2023 17:35, Bartosz Golaszewski wrote:
+> > Add the compatible string for QCom ICE on sa8775p SoCs.
+> >
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > ---
+>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>
+> Best regards,
+> Krzysztof
+>
 
-The serial engine depends on some global clock controller and pinctrl, but
-as the serial console driver is only available as built-in, so the global
-clock controller and pinctrl also needs be built-in for the UART device to
-probe and register the console.
+Herbert,
 
-Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
----
- arch/arm64/configs/defconfig | 2 ++
- 1 file changed, 2 insertions(+)
+Gentle ping for the binding as Bjorn already picked up the dts part.
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 5f77f5d1fe94..c645ad738c72 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -598,6 +598,7 @@ CONFIG_PINCTRL_SC8280XP=y
- CONFIG_PINCTRL_SDM660=y
- CONFIG_PINCTRL_SDM670=y
- CONFIG_PINCTRL_SDM845=y
-+CONFIG_PINCTRL_SM4450=y
- CONFIG_PINCTRL_SM6115=y
- CONFIG_PINCTRL_SM6115_LPASS_LPI=m
- CONFIG_PINCTRL_SM6125=y
-@@ -1244,6 +1245,7 @@ CONFIG_SM_DISPCC_6115=m
- CONFIG_SM_DISPCC_8250=y
- CONFIG_SM_DISPCC_8450=m
- CONFIG_SM_DISPCC_8550=m
-+CONFIG_SM_GCC_4450=y
- CONFIG_SM_GCC_6115=y
- CONFIG_SM_GCC_8350=y
- CONFIG_SM_GCC_8450=y
--- 
-2.17.1
-
+Bart
