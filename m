@@ -2,83 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 95D747AD145
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 09:20:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE72E7AD1A4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 09:26:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229907AbjIYHUW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Sep 2023 03:20:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44658 "EHLO
+        id S230444AbjIYH0t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Sep 2023 03:26:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229810AbjIYHUU (ORCPT
+        with ESMTP id S230489AbjIYH0s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Sep 2023 03:20:20 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD699DF;
-        Mon, 25 Sep 2023 00:20:12 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38P4nxce013442;
-        Mon, 25 Sep 2023 07:20:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=c6f2BxdBF3vgTPlNcikKDgRPEjUn6m3A1J3kOzNzU2s=;
- b=X6IYW0Y09DKBAmALOibTF6u/L4fTNK1gx3InbYyPxa09erYXPDRc2F8Q+XV+T2QzxE/W
- PtKhirohsFPySR7eKQvfXnQYfSIFMP1QAd608+uRj67QWpJin8XfQtQaGU8qfMqnZu4M
- 2Im36qzXMpV54/lytAAfo+bj5p0oEeEtBYFEu6wlJcIJELfWn+ulPyD77OV8FzO8Ti+V
- Qiq+ivf9q/PWcj/JKSivwDFJl+AUrf/WFvMgJ6DuiDhXxdvwlZhw/rjWy+HjloVmBsAQ
- sn3ufd6g/TrS3VbLV9r6OA2blbgkscIOQh65gHEEbFK/WKrQAxd2KzvQrlIfD/E+VhrH Dw== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t9qbpu5w3-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 25 Sep 2023 07:20:07 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38P7K6iC004414
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 25 Sep 2023 07:20:06 GMT
-Received: from [10.201.2.48] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 25 Sep
- 2023 00:20:01 -0700
-Message-ID: <ad1ecbab-f138-45fa-9faf-2b27c0f6d536@quicinc.com>
-Date:   Mon, 25 Sep 2023 12:49:53 +0530
+        Mon, 25 Sep 2023 03:26:48 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67544C0;
+        Mon, 25 Sep 2023 00:26:41 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CB83C433C9;
+        Mon, 25 Sep 2023 07:26:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1695626801;
+        bh=I4CNi9Q/JBftF6qP99taJllMHcyGXlOe1VzUdcgnrWs=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=j+Zfq8JXfDD5lGXmuBZtgQo6VKdWDgPUMBpj0dWZTupcXLhcRTmXkeMs0Aaq5G26L
+         V11jhZjeoSR/2Ug+4fLlfnYLPrwtA+Ut8zH5BsrVHn2sPozS3nVjGObrxPDRZCH2nj
+         ZJvDqOTOgG4Cj75dOue7ZRUwHO8JKVsYtlVQwcgXkkmsMMUgX9P1B1owgk3fb398so
+         4Gqq6PYbts8Qk1xJbO33NbU/jGpLMHs2Q2SbeFaaj9WJoUJk6oHYg7//E9mWLtYYqJ
+         dFL3W9Iz2L1ruJQHkyd/1V8r6MOoPuFbwmMNlh/mMJcfDkZOH+h7BTZoCNvHrwLig5
+         L/MAWdDlIjFug==
+Received: (nullmailer pid 286711 invoked by uid 1000);
+        Mon, 25 Sep 2023 07:26:38 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH V2 3/3] arm64: dts: qcom: ipq5018: enable the CPUFreq
- support
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <jassisinghbrar@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_varada@quicinc.com>, <quic_srichara@quicinc.com>
-References: <20230922084303.4164046-1-quic_gokulsri@quicinc.com>
- <20230922084303.4164046-4-quic_gokulsri@quicinc.com>
- <CAA8EJpqpQkFLm13cf=4tOakCV2q1-FZv4vzBmfQURXNi5-do7A@mail.gmail.com>
-From:   Gokul Sriram P <quic_gokulsri@quicinc.com>
-In-Reply-To: <CAA8EJpqpQkFLm13cf=4tOakCV2q1-FZv4vzBmfQURXNi5-do7A@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: qXXd76zv6FHWdI6Ogd0D5PpPmH130Pl-
-X-Proofpoint-ORIG-GUID: qXXd76zv6FHWdI6Ogd0D5PpPmH130Pl-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-09-25_04,2023-09-21_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- priorityscore=1501 adultscore=0 mlxlogscore=889 spamscore=0 malwarescore=0
- impostorscore=0 lowpriorityscore=0 phishscore=0 suspectscore=0
- clxscore=1015 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2309250050
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+From:   Rob Herring <robh@kernel.org>
+To:     Devi Priya <quic_devipriy@quicinc.com>
+Cc:     devicetree@vger.kernel.org, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org,
+        andersson@kernel.org, thierry.reding@gmail.com,
+        u.kleine-koenig@pengutronix.de, ndesaulniers@google.com,
+        nathan@kernel.org, konrad.dybcio@linaro.org, conor+dt@kernel.org,
+        baruch@tkos.co.il, robh+dt@kernel.org,
+        linux-kernel@vger.kernel.org, trix@redhat.com,
+        krzysztof.kozlowski+dt@linaro.org, llvm@lists.linux.dev
+In-Reply-To: <20230925065915.3467964-3-quic_devipriy@quicinc.com>
+References: <20230925065915.3467964-1-quic_devipriy@quicinc.com>
+ <20230925065915.3467964-3-quic_devipriy@quicinc.com>
+Message-Id: <169562679800.286677.6236841313565579111.robh@kernel.org>
+Subject: Re: [PATCH V12 2/3] dt-bindings: pwm: add IPQ6018 binding
+Date:   Mon, 25 Sep 2023 02:26:38 -0500
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -88,33 +59,93 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 9/24/2023 12:45 AM, Dmitry Baryshkov wrote:
-> On Fri, 22 Sept 2023 at 11:44, Gokul Sriram Palanisamy
-> <quic_gokulsri@quicinc.com> wrote:
->> @@ -181,6 +203,24 @@ v2m1: v2m@1000 {
->>                          };
->>                  };
->>
->> +               a53pll: clock@b116000 {
->> +                       compatible = "qcom,ipq5018-a53pll";
->> +                       reg = <0x0b116000 0x40>;
->> +                       #clock-cells = <0>;
->> +                       clocks = <&xo_board_clk>;
->> +                       clock-names = "xo";
->> +               };
->> +
->> +               apcs_glb: mailbox@b111000 {
->> +                       compatible = "qcom,ipq5018-apcs-apps-global",
->> +                                    "qcom,ipq6018-apcs-apps-global";
->> +                       reg = <0x0b111000 0x1000>;
->> +                       #clock-cells = <1>;
->> +                       clocks = <&a53pll>, <&xo_board_clk>, <&gcc GPLL0>;
->> +                       clock-names = "pll", "xo", "gpll0";
->> +                       #mbox-cells = <1>;
->> +               };
-> Hmm, no, I was too quick to R-B. 0xb111 < 0xb116, please change these two nodes.
+On Mon, 25 Sep 2023 12:29:14 +0530, Devi Priya wrote:
+> DT binding for the PWM block in Qualcomm IPQ6018 SoC.
+> 
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Co-developed-by: Baruch Siach <baruch.siach@siklu.com>
+> Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
+> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> ---
+> v12:
+> 
+>   Picked up the R-b tag
+> 
+> v11:
+> 
+>   No change
+> 
+> v10:
+> 
+>   No change
+> 
+> v9:
+> 
+>   Add 'ranges' property to example (Rob)
+> 
+>   Drop label in example (Rob)
+> 
+> v8:
+> 
+>   Add size cell to 'reg' (Rob)
+> 
+> v7:
+> 
+>   Use 'reg' instead of 'offset' (Rob)
+> 
+>   Drop 'clock-names' and 'assigned-clock*' (Bjorn)
+> 
+>   Use single cell address/size in example node (Bjorn)
+> 
+>   Move '#pwm-cells' lower in example node (Bjorn)
+> 
+>   List 'reg' as required
+> 
+> v6:
+> 
+>   Device node is child of TCSR; remove phandle (Rob Herring)
+> 
+>   Add assigned-clocks/assigned-clock-rates (Uwe Kleine-König)
+> 
+> v5: Use qcom,pwm-regs for phandle instead of direct regs (Bjorn
+>     Andersson, Kathiravan T)
+> 
+> v4: Update the binding example node as well (Rob Herring's bot)
+> 
+> v3: s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
+> 
+> v2: Make #pwm-cells const (Rob Herring)
+> 
+>  .../devicetree/bindings/pwm/ipq-pwm.yaml      | 53 +++++++++++++++++++
+>  1 file changed, 53 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
+> 
 
-Sure, will update and resend. Thanks.
-Regards,
-Gokul
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pwm/ipq-pwm.example.dtb: syscon@1937000: compatible: ['qcom,tcsr-ipq6018', 'syscon', 'simple-mfd'] is too long
+	from schema $id: http://devicetree.org/schemas/mfd/qcom,tcsr.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pwm/ipq-pwm.example.dtb: syscon@1937000: '#address-cells', '#size-cells', 'pwm@a010', 'ranges' do not match any of the regexes: 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/mfd/qcom,tcsr.yaml#
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230925065915.3467964-3-quic_devipriy@quicinc.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
