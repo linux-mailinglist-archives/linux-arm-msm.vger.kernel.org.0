@@ -2,502 +2,464 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 21C297AD403
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 11:01:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B24BB7AD431
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 11:06:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233145AbjIYJBK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Sep 2023 05:01:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55502 "EHLO
+        id S233192AbjIYJG6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Sep 2023 05:06:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232159AbjIYJBH (ORCPT
+        with ESMTP id S233197AbjIYJGz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Sep 2023 05:01:07 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84DC99B
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 02:00:59 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2c108e106f0so96013221fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 02:00:59 -0700 (PDT)
+        Mon, 25 Sep 2023 05:06:55 -0400
+Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 031A6E8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 02:06:47 -0700 (PDT)
+Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-59c04237bf2so74712227b3.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 02:06:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695632458; x=1696237258; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4SfM7IUW4HNyBmUHERy/TJztuGKOoFuNAM0rkOXAyK0=;
-        b=kRUOtIsMLHAMBdSfY23OXlTVA4XmNLuqSLcpxnWrmN6uj/lxhKgeU6iUYKJZo3RUQl
-         1EKQS1c2MXUBr7x68wEtBPeWUwY7ZzPHbljEGCZGQUsNHE8mK0ZP1tucGavzVNSUPeGb
-         TJJTXEutl5vuSIGWOsm0o3Unrm/hcqpX0Qsu10vLetbXk4OykYJBSeztHbTUrP76noYj
-         8f0K81kftfSkRWGwYAto2UhZL03UHuq1WVsyb7eVcnZKEzeuG7XLCt1nI18yC0tcNHaQ
-         Et9Ss12JP8yEJYBqd9+rRPK9ul0lrIjFsKm9GiLV/CB18CFd7xPS7X4hKW2tr+a/lvSQ
-         tvpg==
+        d=linaro.org; s=google; t=1695632806; x=1696237606; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=+urIhpwTEkz79Am9RJHC2fm0g6Ug78XuKIyvd3DUPuQ=;
+        b=axRb5kQ5ZcSl8YZzdQe095NUajyP1XI9tK77IGsDCZ6yLEVcHutdhrqrbTLniiFZku
+         8qu89ri4i3XH2LPR64ivX404RNP/wCevAfxJr7wkncXy+0KQHd+Jfp6MSqPxBEPxIjUO
+         KOmVYdL/vLJ28V6JK1BkP7bVj98NGZK3VzN/tQfv/sG0Cho3bWIR7a8/n51By2a866FI
+         PKarNBRvIgpkoGRJO7zKQcpBCBHOQ4F8MvUZDzZpdLqrpev7p9GE/pmIF9Z7O2e5rJqr
+         HKrTDPRIeWb0C4YqYppES6Wa5gWFGsarmTOChEO7Q6oqFwVQZptiq+NWSDcw525kKz0K
+         FKOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695632458; x=1696237258;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4SfM7IUW4HNyBmUHERy/TJztuGKOoFuNAM0rkOXAyK0=;
-        b=ekROkaKkudyPqF08DwL3VM2CrCHEWwQ43Y99WI5gVvRtAVYMRVsUmSnB6YMrNYoQOw
-         TAmEH7CpMJ8iR8QewdwA1HrAt9wKa0WGUAax21zX89PALsn9SVeFNmVpbiIU68a8/oTV
-         ZmKtz4xn6Ek+zGIw7HtfGefjyigDbzJZn+d4YyvZDzOQsFW3pFnNd3CkNdEVNQcjM21e
-         Y3jN7yUy2TP65SZQasy6tGrZ2VmsAEquRinTo6NH3D7id4gZKAEcdW5UZXkcMLjogApX
-         SigrL1tRjBqv6e47E0aORHgiBFNx9V4RMhJP7Rr0l7WXSU0Onuz7EhCanyY3Bs/GJiu/
-         7pvQ==
-X-Gm-Message-State: AOJu0Yz1HmdqUngxPzn8iFG5uX3o8jQpoj04s6aANiuNzC0Th5rhpEsy
-        mtMdKdh+8yKs7mlEkY53UmN+cw==
-X-Google-Smtp-Source: AGHT+IF13KKrx0XJaSK2S8XP/rBik7Fl7ul2tGvX1Xx+oIMRGIIh8UZkq2jP/obIB2iHhWA3wY/3sg==
-X-Received: by 2002:a2e:9049:0:b0:2c0:20c4:925a with SMTP id n9-20020a2e9049000000b002c020c4925amr5403952ljg.26.1695632457663;
-        Mon, 25 Sep 2023 02:00:57 -0700 (PDT)
-Received: from [192.168.86.24] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id lf11-20020a170907174b00b009ad81554c1bsm5964596ejc.55.2023.09.25.02.00.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Sep 2023 02:00:56 -0700 (PDT)
-Message-ID: <a22b1a3f-b4a3-5ec2-db67-77f4a0adc12b@linaro.org>
-Date:   Mon, 25 Sep 2023 10:00:54 +0100
+        d=1e100.net; s=20230601; t=1695632806; x=1696237606;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+urIhpwTEkz79Am9RJHC2fm0g6Ug78XuKIyvd3DUPuQ=;
+        b=Tzni3JX54Ev0YV+lp7Sntec5CHOFkVwwqrYnELoWFsVkaEpMWSJ2Cc6upay3GIBmxy
+         V9pbpElqC7oqQ1XduWMXJ7nKMjeIebTH04Ut+Yiw8BAQYunoZUpDJj1sjWbc5NJkJ1Xo
+         sSQBbjHY24tJkNwH2aNZ8t+SoZZ81wa9nbV3Xy0T8vftAAKi9+fpVueGZXumor7wLuiz
+         QKfYyEwEKLxkveHrUvM78FCt6gxDYbXPlTVlxcwAzY3v5FWErYnwj5icfUbTCGVedbJp
+         3AOZ96NEU7CKf8e/Y9pcBRxqqi6TLRlqmrq1es+tMQesvz4EbM9LG5LF77ob+ZCXaGfU
+         SFrw==
+X-Gm-Message-State: AOJu0YxYBTUNculMzWk65sLZ63G6ZAHmaDp7QxC7p8AqW0lTHVK2dhW0
+        nKFqTgKFl8aqv4l9G4I44P2yGKi/BvcmGr1jalX8dQ==
+X-Google-Smtp-Source: AGHT+IE64N8skrf+Bmn4uvgUUnI55Ok8J2iAxLChmf8aSNWlCtr5mJztZE3sYT3WrMo31YsKjBNpaLKXZvSajNObFV4=
+X-Received: by 2002:a05:690c:e17:b0:59f:4dcd:227e with SMTP id
+ cp23-20020a05690c0e1700b0059f4dcd227emr5678550ywb.37.1695632805969; Mon, 25
+ Sep 2023 02:06:45 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.0
-Subject: Re: [PATCH V4] nvmem: add explicit config option to read old syntax
- fixed OF cells
-Content-Language: en-US
-To:     =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>
-Cc:     Miquel Raynal <miquel.raynal@bootlin.com>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Vincent Shih <vincent.sunplus@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Evgeniy Polyakov <zbr@ioremap.net>,
-        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
-        asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-rtc@vger.kernel.org,
-        Michael Walle <michael@walle.cc>,
-        =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>
-References: <20230403225540.1931-1-zajec5@gmail.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20230403225540.1931-1-zajec5@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+References: <1694813901-26952-1-git-send-email-quic_khsieh@quicinc.com>
+ <1694813901-26952-5-git-send-email-quic_khsieh@quicinc.com>
+ <CAA8EJprxf5RBfuiJVJsfnb7buC9Mbxr=U7VSaPRc1+OMJcBFZg@mail.gmail.com> <febc4aaf-c36c-b683-d1c5-403279bd980a@quicinc.com>
+In-Reply-To: <febc4aaf-c36c-b683-d1c5-403279bd980a@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Mon, 25 Sep 2023 12:06:34 +0300
+Message-ID: <CAA8EJprcKwGRjsORCMRObjd5XvF2CQMtV41OM82EgHfwBYZQNQ@mail.gmail.com>
+Subject: Re: [PATCH v3 4/7] drm/msm/dp: incorporate pm_runtime framework into
+ DP driver
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, andersson@kernel.org, quic_abhinavk@quicinc.com,
+        quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
+        marijn.suijten@somainline.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rafal,
+On Thu, 21 Sept 2023 at 01:46, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+>
+>
+> On 9/15/2023 6:07 PM, Dmitry Baryshkov wrote:
+> > On Sat, 16 Sept 2023 at 00:38, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+> >> Currently DP driver is executed independent of PM runtime framework.
+> >> This lead DP driver incompatible with others. Incorporating pm runtime
+> > Why is it incompatible? Which others are mentioned here?
+> >
+> >> framework into DP driver so that both power and clocks to enable/disable
+> >> host controller fits with PM runtime mechanism. Once pm runtime framework
+> >> is incorporated into DP driver, wake up device from power up path is not
+> >> necessary. Hence remove it. Both EV_POWER_PM_GET and EV_POWER_PM_PUT events
+> >> are introduced to perform pm runtime control for the HPD GPIO routing to a
+> >> display-connector case.
+> >>
+> >> Changes in v3:
+> >> -- incorporate removing pm_runtime_xx() from dp_pwer.c to this patch
+> >> -- use pm_runtime_resume_and_get() instead of pm_runtime_get()
+> >> -- error checking pm_runtime_resume_and_get() return value
+> >> -- add EV_POWER_PM_GET and PM_EV_POWER_PUT to handle HPD_GPIO case
+> > Previous changelog?
+> >
+> >> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> >> ---
+> >>   drivers/gpu/drm/msm/dp/dp_aux.c     |   5 ++
+> >>   drivers/gpu/drm/msm/dp/dp_display.c | 114 +++++++++++++++++++++++++++---------
+> >>   drivers/gpu/drm/msm/dp/dp_power.c   |   9 ---
+> >>   3 files changed, 90 insertions(+), 38 deletions(-)
+> >>
+> >> diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c b/drivers/gpu/drm/msm/dp/dp_aux.c
+> >> index 8e3b677..8fa93c5 100644
+> >> --- a/drivers/gpu/drm/msm/dp/dp_aux.c
+> >> +++ b/drivers/gpu/drm/msm/dp/dp_aux.c
+> >> @@ -291,6 +291,9 @@ static ssize_t dp_aux_transfer(struct drm_dp_aux *dp_aux,
+> >>                  return -EINVAL;
+> >>          }
+> >>
+> >> +       if (pm_runtime_resume_and_get(dp_aux->dev))
+> >> +               return  -EINVAL;
+> > Please propagate error values instead of reinventing them.
+> >
+> >> +
+> >>          mutex_lock(&aux->mutex);
+> >>          if (!aux->initted) {
+> >>                  ret = -EIO;
+> >> @@ -364,6 +367,8 @@ static ssize_t dp_aux_transfer(struct drm_dp_aux *dp_aux,
+> >>
+> >>   exit:
+> >>          mutex_unlock(&aux->mutex);
+> >> +       pm_runtime_mark_last_busy(dp_aux->dev);
+> >> +       pm_runtime_put_autosuspend(dp_aux->dev);
+> > What is the reason for using autosuspend? Such design decisions should
+> > be described in the commit message.
+> >
+> >>          return ret;
+> >>   }
+> >> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> >> index 59f9d85..e7af7f7 100644
+> >> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> >> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> >> @@ -60,6 +60,8 @@ enum {
+> >>          EV_IRQ_HPD_INT,
+> >>          EV_HPD_UNPLUG_INT,
+> >>          EV_USER_NOTIFICATION,
+> >> +       EV_POWER_PM_GET,
+> >> +       EV_POWER_PM_PUT,
+> >>   };
+> >>
+> >>   #define EVENT_TIMEOUT  (HZ/10) /* 100ms */
+> >> @@ -276,13 +278,6 @@ static int dp_display_bind(struct device *dev, struct device *master,
+> >>          dp->dp_display.drm_dev = drm;
+> >>          priv->dp[dp->id] = &dp->dp_display;
+> >>
+> >> -       rc = dp->parser->parse(dp->parser);
+> >> -       if (rc) {
+> >> -               DRM_ERROR("device tree parsing failed\n");
+> >> -               goto end;
+> >> -       }
+> >> -
+> >> -
+> >>          dp->drm_dev = drm;
+> >>          dp->aux->drm_dev = drm;
+> >>          rc = dp_aux_register(dp->aux);
+> >> @@ -291,12 +286,6 @@ static int dp_display_bind(struct device *dev, struct device *master,
+> >>                  goto end;
+> >>          }
+> >>
+> >> -       rc = dp_power_client_init(dp->power);
+> >> -       if (rc) {
+> >> -               DRM_ERROR("Power client create failed\n");
+> >> -               goto end;
+> >> -       }
+> >> -
+> >>          rc = dp_register_audio_driver(dev, dp->audio);
+> >>          if (rc) {
+> >>                  DRM_ERROR("Audio registration Dp failed\n");
+> >> @@ -320,10 +309,6 @@ static void dp_display_unbind(struct device *dev, struct device *master,
+> >>          struct dp_display_private *dp = dev_get_dp_display_private(dev);
+> >>          struct msm_drm_private *priv = dev_get_drvdata(master);
+> >>
+> >> -       /* disable all HPD interrupts */
+> >> -       if (dp->core_initialized)
+> >> -               dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_INT_MASK, false);
+> >> -
+> >>          kthread_stop(dp->ev_tsk);
+> >>
+> >>          of_dp_aux_depopulate_bus(dp->aux);
+> >> @@ -467,6 +452,18 @@ static void dp_display_host_deinit(struct dp_display_private *dp)
+> >>          dp->core_initialized = false;
+> >>   }
+> >>
+> >> +static void dp_display_pm_get(struct dp_display_private *dp)
+> >> +{
+> >> +       if (pm_runtime_resume_and_get(&dp->pdev->dev))
+> >> +               DRM_ERROR("failed to start power\n");
+> >> +}
+> > Huge NAK here. This means that the error is completely ignored (other
+> > than being dumped to the log). This is a short path to Sync error and
+> > other kinds of reboot.
+> >
+> >> +
+> >> +static void dp_display_pm_put(struct dp_display_private *dp)
+> >> +{
+> >> +       pm_runtime_mark_last_busy(&dp->pdev->dev);
+> >> +       pm_runtime_put_autosuspend(&dp->pdev->dev);
+> >> +}
+> >> +
+> >>   static int dp_display_usbpd_configure_cb(struct device *dev)
+> >>   {
+> >>          struct dp_display_private *dp = dev_get_dp_display_private(dev);
+> >> @@ -1096,7 +1093,6 @@ static int hpd_event_thread(void *data)
+> >>
+> >>                  switch (todo->event_id) {
+> >>                  case EV_HPD_INIT_SETUP:
+> >> -                       dp_display_host_init(dp_priv);
+> >>                          break;
+> >>                  case EV_HPD_PLUG_INT:
+> >>                          dp_hpd_plug_handle(dp_priv, todo->data);
+> >> @@ -1111,6 +1107,12 @@ static int hpd_event_thread(void *data)
+> >>                          dp_display_send_hpd_notification(dp_priv,
+> >>                                                  todo->data);
+> >>                          break;
+> >> +               case EV_POWER_PM_GET:
+> >> +                       dp_display_pm_get(dp_priv);
+> >> +                       break;
+> >> +               case EV_POWER_PM_PUT:
+> >> +                       dp_display_pm_put(dp_priv);
+> >> +                       break;
+> > No. runtime_get / runtime_put are not HPD events. They should be
+> > executed directly from the place where the drivers needs the device to
+> > be powered up.
+> >
+> >>                  default:
+> >>                          break;
+> >>                  }
+> >> @@ -1251,6 +1253,18 @@ static int dp_display_probe(struct platform_device *pdev)
+> >>                  return -EPROBE_DEFER;
+> >>          }
+> >>
+> >> +       rc = dp->parser->parse(dp->parser);
+> >> +       if (rc) {
+> >> +               DRM_ERROR("device tree parsing failed\n");
+> >> +               return -EPROBE_DEFER;
+> >> +       }
+> >> +
+> >> +       rc = dp_power_client_init(dp->power);
+> >> +       if (rc) {
+> >> +               DRM_ERROR("Power client create failed\n");
+> >> +               return -EPROBE_DEFER;
+> >> +       }
+> > Why? This moves resource allocation to the probe function, which is
+> > irrelevant to the pm_runtime code. If this is required, you can move
+> > these changes to a separate patch.
+> >
+> >> +
+> >>          /* setup event q */
+> >>          mutex_init(&dp->event_mutex);
+> >>          init_waitqueue_head(&dp->event_q);
+> >> @@ -1263,6 +1277,10 @@ static int dp_display_probe(struct platform_device *pdev)
+> >>
+> >>          platform_set_drvdata(pdev, &dp->dp_display);
+> >>
+> >> +       devm_pm_runtime_enable(&pdev->dev);
+> > error code handling?
+> >
+> >> +       pm_runtime_set_autosuspend_delay(&pdev->dev, 1000);
+> >> +       pm_runtime_use_autosuspend(&pdev->dev);
+> >> +
+> >>          rc = dp_display_request_irq(dp);
+> >>          if (rc)
+> >>                  return rc;
+> >> @@ -1285,6 +1303,36 @@ static int dp_display_remove(struct platform_device *pdev)
+> >>
+> >>          platform_set_drvdata(pdev, NULL);
+> >>
+> >> +       pm_runtime_put_sync_suspend(&pdev->dev);
+> > Why? Who is holding the pm count here?
+> >
+> >> +       pm_runtime_dont_use_autosuspend(&pdev->dev);
+> >> +       pm_runtime_disable(&pdev->dev);
+> > Why do you need _disable if you have a devm_pm_runtime_enable()? Not
+> > to mention that pm_runtime_disable_action() already has a call to
+> > pm_runtime_dont_use_autosuspend()
+> >
+> >> +
+> >> +       return 0;
+> >> +}
+> >> +
+> >> +static int dp_pm_runtime_suspend(struct device *dev)
+> >> +{
+> >> +       struct dp_display_private *dp = dev_get_dp_display_private(dev);
+> >> +
+> >> +       if (dp->dp_display.is_edp) {
+> >> +               dp_display_host_phy_exit(dp);
+> >> +               dp_catalog_ctrl_hpd_disable(dp->catalog);
+> >> +       }
+> >> +       dp_display_host_deinit(dp);
+> >> +
+> >> +       return 0;
+> >> +}
+> >> +
+> >> +static int dp_pm_runtime_resume(struct device *dev)
+> >> +{
+> >> +       struct dp_display_private *dp = dev_get_dp_display_private(dev);
+> >> +
+> >> +       dp_display_host_init(dp);
+> >> +       if (dp->dp_display.is_edp) {
+> >> +               dp_catalog_ctrl_hpd_enable(dp->catalog);
+> >> +               dp_display_host_phy_init(dp);
+> >> +       }
+> >> +
+> >>          return 0;
+> >>   }
+> >>
+> >> @@ -1389,6 +1437,7 @@ static int dp_pm_suspend(struct device *dev)
+> >>   }
+> >>
+> >>   static const struct dev_pm_ops dp_pm_ops = {
+> >> +       SET_RUNTIME_PM_OPS(dp_pm_runtime_suspend, dp_pm_runtime_resume, NULL)
+> >>          .suspend = dp_pm_suspend,
+> >>          .resume =  dp_pm_resume,
+> >>   };
+> >> @@ -1473,10 +1522,6 @@ static int dp_display_get_next_bridge(struct msm_dp *dp)
+> >>          aux_bus = of_get_child_by_name(dev->of_node, "aux-bus");
+> >>
+> >>          if (aux_bus && dp->is_edp) {
+> >> -               dp_display_host_init(dp_priv);
+> >> -               dp_catalog_ctrl_hpd_enable(dp_priv->catalog);
+> >> -               dp_display_host_phy_init(dp_priv);
+> >> -
+> >>                  /*
+> >>                   * The code below assumes that the panel will finish probing
+> >>                   * by the time devm_of_dp_aux_populate_ep_devices() returns.
+> >> @@ -1578,6 +1623,11 @@ void dp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
+> >>                  dp_hpd_plug_handle(dp_display, 0);
+> >>
+> >>          mutex_lock(&dp_display->event_mutex);
+> >> +       if (pm_runtime_resume_and_get(&dp_display->pdev->dev)) {
+> >> +               DRM_ERROR("failed to start power\n");
+> >> +               mutex_unlock(&dp_display->event_mutex);
+> >> +               return;
+> >> +       }
+> >>
+> >>          state = dp_display->hpd_state;
+> >>          if (state != ST_DISPLAY_OFF && state != ST_MAINLINK_READY) {
+> >> @@ -1658,6 +1708,8 @@ void dp_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
+> >>          }
+> >>
+> >>          drm_dbg_dp(dp->drm_dev, "type=%d Done\n", dp->connector_type);
+> >> +
+> >> +       pm_runtime_put_sync(&dp_display->pdev->dev);
+> > So, no autosuspend now?
+> >
+> > Also, I think we can get an unbalanced runtime status, as there is no
+> > guarantee that atomic_enable / atomic_disable will be paired. Please
+> > correct me if I'm wrong.
+>
+>   I always assume atomic_enable / atomic_disable should be paired.
+> Otherwise nothing will work.
+> Could you please give me example what situations they are not paired?
 
-thankyou for the patch and having patience.
+Please excuse me, it took a while to check the docs. Indeed, you were
+right. For atomic drivers corresponding encoder helper calls are
+required to be inverse pairs. Thus bridge calls should also be an
+inverse of each other.
 
-Patch, does not apply on rc1.
+>
+> > And also there is a possible return earlier in this function. The
+> > driver will leak the runtime status again.
+> >
+> >>          mutex_unlock(&dp_display->event_mutex);
+> >>   }
+> >>
+> >> @@ -1697,6 +1749,9 @@ void dp_bridge_hpd_enable(struct drm_bridge *bridge)
+> >>          struct dp_display_private *dp = container_of(dp_display, struct dp_display_private, dp_display);
+> >>
+> >>          mutex_lock(&dp->event_mutex);
+> >> +       if (pm_runtime_resume_and_get(&dp->pdev->dev))
+> >> +               DRM_ERROR("failed to start power\n");
+> > Return?
+> >
+> >> +
+> >>          dp_catalog_ctrl_hpd_enable(dp->catalog);
+> >>
+> >>          /* enable HDP interrupts */
+> >> @@ -1718,6 +1773,9 @@ void dp_bridge_hpd_disable(struct drm_bridge *bridge)
+> >>          dp_catalog_ctrl_hpd_disable(dp->catalog);
+> >>
+> >>          dp_display->internal_hpd = false;
+> >> +
+> >> +       pm_runtime_mark_last_busy(&dp->pdev->dev);
+> >> +       pm_runtime_put_autosuspend(&dp->pdev->dev);
+> >>          mutex_unlock(&dp->event_mutex);
+> >>   }
+> >>
+> >> @@ -1732,13 +1790,11 @@ void dp_bridge_hpd_notify(struct drm_bridge *bridge,
+> >>          if (dp_display->internal_hpd)
+> >>                  return;
+> >>
+> >> -       if (!dp->core_initialized) {
+> >> -               drm_dbg_dp(dp->drm_dev, "not initialized\n");
+> >> -               return;
+> >> -       }
+> >> -
+> >> -       if (!dp_display->link_ready && status == connector_status_connected)
+> >> +       if (!dp_display->link_ready && status == connector_status_connected) {
+> >> +               dp_add_event(dp, EV_POWER_PM_GET, 0, 0);
+> > Why? What for?
+> >
+> >>                  dp_add_event(dp, EV_HPD_PLUG_INT, 0, 0);
+> >> -       else if (dp_display->link_ready && status == connector_status_disconnected)
+> >> +       } else if (dp_display->link_ready && status == connector_status_disconnected) {
+> >>                  dp_add_event(dp, EV_HPD_UNPLUG_INT, 0, 0);
+> >> +               dp_add_event(dp, EV_POWER_PM_PUT, 0, 0);
+> >> +       }
+> >>   }
+> >> diff --git a/drivers/gpu/drm/msm/dp/dp_power.c b/drivers/gpu/drm/msm/dp/dp_power.c
+> >> index 5cb84ca..ed2f62a 100644
+> >> --- a/drivers/gpu/drm/msm/dp/dp_power.c
+> >> +++ b/drivers/gpu/drm/msm/dp/dp_power.c
+> >> @@ -152,8 +152,6 @@ int dp_power_client_init(struct dp_power *dp_power)
+> >>
+> >>          power = container_of(dp_power, struct dp_power_private, dp_power);
+> >>
+> >> -       pm_runtime_enable(power->dev);
+> >> -
+> >>          return dp_power_clk_init(power);
+> >>   }
+> >>
+> >> @@ -162,8 +160,6 @@ void dp_power_client_deinit(struct dp_power *dp_power)
+> >>          struct dp_power_private *power;
+> >>
+> >>          power = container_of(dp_power, struct dp_power_private, dp_power);
+> >> -
+> >> -       pm_runtime_disable(power->dev);
+> >>   }
+> >>
+> >>   int dp_power_init(struct dp_power *dp_power)
+> >> @@ -173,11 +169,7 @@ int dp_power_init(struct dp_power *dp_power)
+> >>
+> >>          power = container_of(dp_power, struct dp_power_private, dp_power);
+> >>
+> >> -       pm_runtime_get_sync(power->dev);
+> >> -
+> >>          rc = dp_power_clk_enable(dp_power, DP_CORE_PM, true);
+> >> -       if (rc)
+> >> -               pm_runtime_put_sync(power->dev);
+> >>
+> >>          return rc;
+> >>   }
+> >> @@ -189,7 +181,6 @@ int dp_power_deinit(struct dp_power *dp_power)
+> >>          power = container_of(dp_power, struct dp_power_private, dp_power);
+> >>
+> >>          dp_power_clk_enable(dp_power, DP_CORE_PM, false);
+> >> -       pm_runtime_put_sync(power->dev);
+> >>          return 0;
+> >>   }
+> >>
+> >> --
+> >> 2.7.4
+> >>
+> >
 
-Can you rebase this and if possible include drivers/nvmem/sec-qfprom.c
 
-thanks,
-Srini
 
-On 03/04/2023 23:55, Rafał Miłecki wrote:
-> From: Rafał Miłecki <rafal@milecki.pl>
-> 
-> Binding for fixed NVMEM cells defined directly as NVMEM device subnodes
-> has been deprecated. It has been replaced by the "fixed-layout" NVMEM
-> layout binding.
-> 
-> New syntax is meant to be clearer and should help avoiding imprecise
-> bindings.
-> 
-> NVMEM subsystem already supports the new binding. It should be a good
-> idea to limit support for old syntax to existing drivers that actually
-> support & use it (we can't break backward compatibility!). That way we
-> additionally encourage new bindings & drivers to ignore deprecated
-> binding.
-> 
-> It wasn't clear (to me) if rtc and w1 code actually uses old syntax
-> fixed cells. I enabled them to don't risk any breakage.
-> 
-> Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-> [for meson-{efuse,mx-efuse}.c]
-> Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-> [for mtk-efuse.c, nvmem/core.c, nvmem-provider.h]
-> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> [MT8192, MT8195 Chromebooks]
-> Tested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> [for microchip-otpc.c]
-> Reviewed-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-> [SAMA7G5-EK]
-> Tested-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-> ---
-> This is based on top of them
-> [PATCH V6 3/3] nvmem: core: add support for fixed cells *layout*
-> 
-> V2: Fix stm32-romem.c typo breaking its compilation
->      Pick Martin's Acked-by
->      Add paragraph about layouts deprecating add_legacy_fixed_of_cells
-> V3: Update commit description:
->      1. Make it clear we're NOT dropping fixed cells support
->      2. Use nicer words (s/made sense/was totally safe/)
->      3. Explain fixed cells layout thing
->      4. Add paragraph with purpose of this commit
-> V4: Completely rewrite commit message.
->      Rename config option to "add_legacy_fixed_of_cells".
-> ---
->   drivers/mtd/mtdcore.c          | 2 ++
->   drivers/nvmem/apple-efuses.c   | 1 +
->   drivers/nvmem/core.c           | 8 +++++---
->   drivers/nvmem/imx-ocotp-scu.c  | 1 +
->   drivers/nvmem/imx-ocotp.c      | 1 +
->   drivers/nvmem/meson-efuse.c    | 1 +
->   drivers/nvmem/meson-mx-efuse.c | 1 +
->   drivers/nvmem/microchip-otpc.c | 1 +
->   drivers/nvmem/mtk-efuse.c      | 1 +
->   drivers/nvmem/qcom-spmi-sdam.c | 1 +
->   drivers/nvmem/qfprom.c         | 1 +
->   drivers/nvmem/rave-sp-eeprom.c | 1 +
->   drivers/nvmem/rockchip-efuse.c | 1 +
->   drivers/nvmem/sc27xx-efuse.c   | 1 +
->   drivers/nvmem/sprd-efuse.c     | 1 +
->   drivers/nvmem/stm32-romem.c    | 1 +
->   drivers/nvmem/sunplus-ocotp.c  | 1 +
->   drivers/nvmem/sunxi_sid.c      | 1 +
->   drivers/nvmem/uniphier-efuse.c | 1 +
->   drivers/nvmem/zynqmp_nvmem.c   | 1 +
->   drivers/rtc/nvmem.c            | 1 +
->   drivers/w1/slaves/w1_ds250x.c  | 1 +
->   include/linux/nvmem-provider.h | 2 ++
->   23 files changed, 29 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
-> index 60670b2f70b9..334adbae3690 100644
-> --- a/drivers/mtd/mtdcore.c
-> +++ b/drivers/mtd/mtdcore.c
-> @@ -522,6 +522,7 @@ static int mtd_nvmem_add(struct mtd_info *mtd)
->   	config.dev = &mtd->dev;
->   	config.name = dev_name(&mtd->dev);
->   	config.owner = THIS_MODULE;
-> +	config.add_legacy_fixed_of_cells = of_device_is_compatible(node, "nvmem-cells");
->   	config.reg_read = mtd_nvmem_reg_read;
->   	config.size = mtd->size;
->   	config.word_size = 1;
-> @@ -889,6 +890,7 @@ static struct nvmem_device *mtd_otp_nvmem_register(struct mtd_info *mtd,
->   	config.name = compatible;
->   	config.id = NVMEM_DEVID_AUTO;
->   	config.owner = THIS_MODULE;
-> +	config.add_legacy_fixed_of_cells = true;
->   	config.type = NVMEM_TYPE_OTP;
->   	config.root_only = true;
->   	config.ignore_wp = true;
-> diff --git a/drivers/nvmem/apple-efuses.c b/drivers/nvmem/apple-efuses.c
-> index 9b7c87102104..d3d49d22338b 100644
-> --- a/drivers/nvmem/apple-efuses.c
-> +++ b/drivers/nvmem/apple-efuses.c
-> @@ -36,6 +36,7 @@ static int apple_efuses_probe(struct platform_device *pdev)
->   	struct resource *res;
->   	struct nvmem_config config = {
->   		.dev = &pdev->dev,
-> +		.add_legacy_fixed_of_cells = true,
->   		.read_only = true,
->   		.reg_read = apple_efuses_read,
->   		.stride = sizeof(u32),
-> diff --git a/drivers/nvmem/core.c b/drivers/nvmem/core.c
-> index b3d5a29477f9..80c1d0a30a26 100644
-> --- a/drivers/nvmem/core.c
-> +++ b/drivers/nvmem/core.c
-> @@ -994,9 +994,11 @@ struct nvmem_device *nvmem_register(const struct nvmem_config *config)
->   	if (rval)
->   		goto err_remove_cells;
->   
-> -	rval = nvmem_add_cells_from_legacy_of(nvmem);
-> -	if (rval)
-> -		goto err_remove_cells;
-> +	if (config->add_legacy_fixed_of_cells) {
-> +		rval = nvmem_add_cells_from_legacy_of(nvmem);
-> +		if (rval)
-> +			goto err_remove_cells;
-> +	}
->   
->   	dev_dbg(&nvmem->dev, "Registering nvmem device %s\n", config->name);
->   
-> diff --git a/drivers/nvmem/imx-ocotp-scu.c b/drivers/nvmem/imx-ocotp-scu.c
-> index 399e1eb8b4c1..899e9108a521 100644
-> --- a/drivers/nvmem/imx-ocotp-scu.c
-> +++ b/drivers/nvmem/imx-ocotp-scu.c
-> @@ -220,6 +220,7 @@ static int imx_scu_ocotp_write(void *context, unsigned int offset,
->   
->   static struct nvmem_config imx_scu_ocotp_nvmem_config = {
->   	.name = "imx-scu-ocotp",
-> +	.add_legacy_fixed_of_cells = true,
->   	.read_only = false,
->   	.word_size = 4,
->   	.stride = 1,
-> diff --git a/drivers/nvmem/imx-ocotp.c b/drivers/nvmem/imx-ocotp.c
-> index ac0edb6398f1..0f7531a7e15d 100644
-> --- a/drivers/nvmem/imx-ocotp.c
-> +++ b/drivers/nvmem/imx-ocotp.c
-> @@ -621,6 +621,7 @@ static int imx_ocotp_probe(struct platform_device *pdev)
->   		return PTR_ERR(priv->clk);
->   
->   	priv->params = of_device_get_match_data(&pdev->dev);
-> +	imx_ocotp_nvmem_config.add_legacy_fixed_of_cells = true;
->   	imx_ocotp_nvmem_config.size = 4 * priv->params->nregs;
->   	imx_ocotp_nvmem_config.dev = dev;
->   	imx_ocotp_nvmem_config.priv = priv;
-> diff --git a/drivers/nvmem/meson-efuse.c b/drivers/nvmem/meson-efuse.c
-> index d6b533497ce1..b922df99f9bc 100644
-> --- a/drivers/nvmem/meson-efuse.c
-> +++ b/drivers/nvmem/meson-efuse.c
-> @@ -93,6 +93,7 @@ static int meson_efuse_probe(struct platform_device *pdev)
->   
->   	econfig->dev = dev;
->   	econfig->name = dev_name(dev);
-> +	econfig->add_legacy_fixed_of_cells = true;
->   	econfig->stride = 1;
->   	econfig->word_size = 1;
->   	econfig->reg_read = meson_efuse_read;
-> diff --git a/drivers/nvmem/meson-mx-efuse.c b/drivers/nvmem/meson-mx-efuse.c
-> index 13eb14316f46..34a911696155 100644
-> --- a/drivers/nvmem/meson-mx-efuse.c
-> +++ b/drivers/nvmem/meson-mx-efuse.c
-> @@ -213,6 +213,7 @@ static int meson_mx_efuse_probe(struct platform_device *pdev)
->   	efuse->config.owner = THIS_MODULE;
->   	efuse->config.dev = &pdev->dev;
->   	efuse->config.priv = efuse;
-> +	efuse->config.add_legacy_fixed_of_cells = true;
->   	efuse->config.stride = drvdata->word_size;
->   	efuse->config.word_size = drvdata->word_size;
->   	efuse->config.size = SZ_512;
-> diff --git a/drivers/nvmem/microchip-otpc.c b/drivers/nvmem/microchip-otpc.c
-> index 436e0dc4f337..7cf81738a3e0 100644
-> --- a/drivers/nvmem/microchip-otpc.c
-> +++ b/drivers/nvmem/microchip-otpc.c
-> @@ -261,6 +261,7 @@ static int mchp_otpc_probe(struct platform_device *pdev)
->   		return ret;
->   
->   	mchp_nvmem_config.dev = otpc->dev;
-> +	mchp_nvmem_config.add_legacy_fixed_of_cells = true;
->   	mchp_nvmem_config.size = size;
->   	mchp_nvmem_config.priv = otpc;
->   	nvmem = devm_nvmem_register(&pdev->dev, &mchp_nvmem_config);
-> diff --git a/drivers/nvmem/mtk-efuse.c b/drivers/nvmem/mtk-efuse.c
-> index b36cd0dcc8c7..87c94686cfd2 100644
-> --- a/drivers/nvmem/mtk-efuse.c
-> +++ b/drivers/nvmem/mtk-efuse.c
-> @@ -83,6 +83,7 @@ static int mtk_efuse_probe(struct platform_device *pdev)
->   		return PTR_ERR(priv->base);
->   
->   	pdata = device_get_match_data(dev);
-> +	econfig.add_legacy_fixed_of_cells = true;
->   	econfig.stride = 1;
->   	econfig.word_size = 1;
->   	econfig.reg_read = mtk_reg_read;
-> diff --git a/drivers/nvmem/qcom-spmi-sdam.c b/drivers/nvmem/qcom-spmi-sdam.c
-> index f822790db49e..be618ba8b550 100644
-> --- a/drivers/nvmem/qcom-spmi-sdam.c
-> +++ b/drivers/nvmem/qcom-spmi-sdam.c
-> @@ -142,6 +142,7 @@ static int sdam_probe(struct platform_device *pdev)
->   	sdam->sdam_config.name = "spmi_sdam";
->   	sdam->sdam_config.id = NVMEM_DEVID_AUTO;
->   	sdam->sdam_config.owner = THIS_MODULE;
-> +	sdam->sdam_config.add_legacy_fixed_of_cells = true;
->   	sdam->sdam_config.stride = 1;
->   	sdam->sdam_config.word_size = 1;
->   	sdam->sdam_config.reg_read = sdam_read;
-> diff --git a/drivers/nvmem/qfprom.c b/drivers/nvmem/qfprom.c
-> index c1e893c8a247..e4dacde70fdd 100644
-> --- a/drivers/nvmem/qfprom.c
-> +++ b/drivers/nvmem/qfprom.c
-> @@ -357,6 +357,7 @@ static int qfprom_probe(struct platform_device *pdev)
->   {
->   	struct nvmem_config econfig = {
->   		.name = "qfprom",
-> +		.add_legacy_fixed_of_cells = true,
->   		.stride = 1,
->   		.word_size = 1,
->   		.id = NVMEM_DEVID_AUTO,
-> diff --git a/drivers/nvmem/rave-sp-eeprom.c b/drivers/nvmem/rave-sp-eeprom.c
-> index c456011b75e8..75d98fd25cb6 100644
-> --- a/drivers/nvmem/rave-sp-eeprom.c
-> +++ b/drivers/nvmem/rave-sp-eeprom.c
-> @@ -328,6 +328,7 @@ static int rave_sp_eeprom_probe(struct platform_device *pdev)
->   	of_property_read_string(np, "zii,eeprom-name", &config.name);
->   	config.priv		= eeprom;
->   	config.dev		= dev;
-> +	config.add_legacy_fixed_of_cells	= true;
->   	config.size		= size;
->   	config.reg_read		= rave_sp_eeprom_reg_read;
->   	config.reg_write	= rave_sp_eeprom_reg_write;
-> diff --git a/drivers/nvmem/rockchip-efuse.c b/drivers/nvmem/rockchip-efuse.c
-> index e4579de5d014..adc8bc70cffa 100644
-> --- a/drivers/nvmem/rockchip-efuse.c
-> +++ b/drivers/nvmem/rockchip-efuse.c
-> @@ -205,6 +205,7 @@ static int rockchip_rk3399_efuse_read(void *context, unsigned int offset,
->   
->   static struct nvmem_config econfig = {
->   	.name = "rockchip-efuse",
-> +	.add_legacy_fixed_of_cells = true,
->   	.stride = 1,
->   	.word_size = 1,
->   	.read_only = true,
-> diff --git a/drivers/nvmem/sc27xx-efuse.c b/drivers/nvmem/sc27xx-efuse.c
-> index c825fc902d10..8d13b81d5250 100644
-> --- a/drivers/nvmem/sc27xx-efuse.c
-> +++ b/drivers/nvmem/sc27xx-efuse.c
-> @@ -248,6 +248,7 @@ static int sc27xx_efuse_probe(struct platform_device *pdev)
->   	econfig.reg_read = sc27xx_efuse_read;
->   	econfig.priv = efuse;
->   	econfig.dev = &pdev->dev;
-> +	econfig.add_legacy_fixed_of_cells = true;
->   	nvmem = devm_nvmem_register(&pdev->dev, &econfig);
->   	if (IS_ERR(nvmem)) {
->   		dev_err(&pdev->dev, "failed to register nvmem config\n");
-> diff --git a/drivers/nvmem/sprd-efuse.c b/drivers/nvmem/sprd-efuse.c
-> index 4f1fcbfec394..ffc0cbfe87b3 100644
-> --- a/drivers/nvmem/sprd-efuse.c
-> +++ b/drivers/nvmem/sprd-efuse.c
-> @@ -408,6 +408,7 @@ static int sprd_efuse_probe(struct platform_device *pdev)
->   	econfig.read_only = false;
->   	econfig.name = "sprd-efuse";
->   	econfig.size = efuse->data->blk_nums * SPRD_EFUSE_BLOCK_WIDTH;
-> +	econfig.add_legacy_fixed_of_cells = true;
->   	econfig.reg_read = sprd_efuse_read;
->   	econfig.reg_write = sprd_efuse_write;
->   	econfig.priv = efuse;
-> diff --git a/drivers/nvmem/stm32-romem.c b/drivers/nvmem/stm32-romem.c
-> index 38d0bf557129..a44c2d6c20f9 100644
-> --- a/drivers/nvmem/stm32-romem.c
-> +++ b/drivers/nvmem/stm32-romem.c
-> @@ -208,6 +208,7 @@ static int stm32_romem_probe(struct platform_device *pdev)
->   	priv->cfg.priv = priv;
->   	priv->cfg.owner = THIS_MODULE;
->   	priv->cfg.type = NVMEM_TYPE_OTP;
-> +	priv->cfg.add_legacy_fixed_of_cells = true;
->   
->   	priv->lower = 0;
->   
-> diff --git a/drivers/nvmem/sunplus-ocotp.c b/drivers/nvmem/sunplus-ocotp.c
-> index 52b928a7a6d5..1b6632fb81ea 100644
-> --- a/drivers/nvmem/sunplus-ocotp.c
-> +++ b/drivers/nvmem/sunplus-ocotp.c
-> @@ -145,6 +145,7 @@ static int sp_ocotp_read(void *priv, unsigned int offset, void *value, size_t by
->   
->   static struct nvmem_config sp_ocotp_nvmem_config = {
->   	.name = "sp-ocotp",
-> +	.add_legacy_fixed_of_cells = true,
->   	.read_only = true,
->   	.word_size = 1,
->   	.size = QAC628_OTP_SIZE,
-> diff --git a/drivers/nvmem/sunxi_sid.c b/drivers/nvmem/sunxi_sid.c
-> index a970f1741cc6..155f07afd9cc 100644
-> --- a/drivers/nvmem/sunxi_sid.c
-> +++ b/drivers/nvmem/sunxi_sid.c
-> @@ -156,6 +156,7 @@ static int sunxi_sid_probe(struct platform_device *pdev)
->   	nvmem_cfg->dev = dev;
->   	nvmem_cfg->name = "sunxi-sid";
->   	nvmem_cfg->type = NVMEM_TYPE_OTP;
-> +	nvmem_cfg->add_legacy_fixed_of_cells = true;
->   	nvmem_cfg->read_only = true;
->   	nvmem_cfg->size = cfg->size;
->   	nvmem_cfg->word_size = 1;
-> diff --git a/drivers/nvmem/uniphier-efuse.c b/drivers/nvmem/uniphier-efuse.c
-> index aca910b3b6f8..d16ed22d105c 100644
-> --- a/drivers/nvmem/uniphier-efuse.c
-> +++ b/drivers/nvmem/uniphier-efuse.c
-> @@ -53,6 +53,7 @@ static int uniphier_efuse_probe(struct platform_device *pdev)
->   	econfig.size = resource_size(res);
->   	econfig.priv = priv;
->   	econfig.dev = dev;
-> +	econfig.add_legacy_fixed_of_cells = true;
->   	nvmem = devm_nvmem_register(dev, &econfig);
->   
->   	return PTR_ERR_OR_ZERO(nvmem);
-> diff --git a/drivers/nvmem/zynqmp_nvmem.c b/drivers/nvmem/zynqmp_nvmem.c
-> index e28d7b133e11..23cceb823cd0 100644
-> --- a/drivers/nvmem/zynqmp_nvmem.c
-> +++ b/drivers/nvmem/zynqmp_nvmem.c
-> @@ -58,6 +58,7 @@ static int zynqmp_nvmem_probe(struct platform_device *pdev)
->   
->   	priv->dev = dev;
->   	econfig.dev = dev;
-> +	econfig.add_legacy_fixed_of_cells = true;
->   	econfig.reg_read = zynqmp_nvmem_read;
->   	econfig.priv = priv;
->   
-> diff --git a/drivers/rtc/nvmem.c b/drivers/rtc/nvmem.c
-> index 07ede21cee34..37df7e80525b 100644
-> --- a/drivers/rtc/nvmem.c
-> +++ b/drivers/rtc/nvmem.c
-> @@ -21,6 +21,7 @@ int devm_rtc_nvmem_register(struct rtc_device *rtc,
->   
->   	nvmem_config->dev = dev;
->   	nvmem_config->owner = rtc->owner;
-> +	nvmem_config->add_legacy_fixed_of_cells = true;
->   	nvmem = devm_nvmem_register(dev, nvmem_config);
->   	if (IS_ERR(nvmem))
->   		dev_err(dev, "failed to register nvmem device for RTC\n");
-> diff --git a/drivers/w1/slaves/w1_ds250x.c b/drivers/w1/slaves/w1_ds250x.c
-> index 7592c7050d1d..cb426f7dd23d 100644
-> --- a/drivers/w1/slaves/w1_ds250x.c
-> +++ b/drivers/w1/slaves/w1_ds250x.c
-> @@ -168,6 +168,7 @@ static int w1_eprom_add_slave(struct w1_slave *sl)
->   	struct nvmem_device *nvmem;
->   	struct nvmem_config nvmem_cfg = {
->   		.dev = &sl->dev,
-> +		.add_legacy_fixed_of_cells = true,
->   		.reg_read = w1_nvmem_read,
->   		.type = NVMEM_TYPE_OTP,
->   		.read_only = true,
-> diff --git a/include/linux/nvmem-provider.h b/include/linux/nvmem-provider.h
-> index dae26295e6be..1b81adebdb8b 100644
-> --- a/include/linux/nvmem-provider.h
-> +++ b/include/linux/nvmem-provider.h
-> @@ -82,6 +82,7 @@ struct nvmem_cell_info {
->    * @owner:	Pointer to exporter module. Used for refcounting.
->    * @cells:	Optional array of pre-defined NVMEM cells.
->    * @ncells:	Number of elements in cells.
-> + * @add_legacy_fixed_of_cells:	Read fixed NVMEM cells from old OF syntax.
->    * @keepout:	Optional array of keepout ranges (sorted ascending by start).
->    * @nkeepout:	Number of elements in the keepout array.
->    * @type:	Type of the nvmem storage
-> @@ -112,6 +113,7 @@ struct nvmem_config {
->   	struct module		*owner;
->   	const struct nvmem_cell_info	*cells;
->   	int			ncells;
-> +	bool			add_legacy_fixed_of_cells;
->   	const struct nvmem_keepout *keepout;
->   	unsigned int		nkeepout;
->   	enum nvmem_type		type;
+-- 
+With best wishes
+Dmitry
