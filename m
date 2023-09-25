@@ -2,106 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 246027AD526
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 11:59:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A9317AD549
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 12:03:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231193AbjIYJ7P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Sep 2023 05:59:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54062 "EHLO
+        id S229702AbjIYKDo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Sep 2023 06:03:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231200AbjIYJ7A (ORCPT
+        with ESMTP id S230208AbjIYKDV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Sep 2023 05:59:00 -0400
-Received: from mail.8bytes.org (mail.8bytes.org [IPv6:2a01:238:42d9:3f00:e505:6202:4f0c:f051])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 4116910C7;
-        Mon, 25 Sep 2023 02:56:08 -0700 (PDT)
-Received: from 8bytes.org (pd9fe9df8.dip0.t-ipconnect.de [217.254.157.248])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by mail.8bytes.org (Postfix) with ESMTPSA id 27E6E1A1EA9;
-        Mon, 25 Sep 2023 11:56:06 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
-        s=default; t=1695635766;
-        bh=9PqcnP0fBBXYm0nOdc0nJm0+qTAxRYNwHHGdJDVyqnY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=do7SoP/ej6m+DzfP4zanqVSPHmELmY4rQuPveywCzYUG9GioGs2VSc4FX38kVa6kt
-         wij9Buf7fttF4+WTjZNXOCViquEeFNwnQGeE+JJxIwZrJ6koxAZdyvOCsEQaGP2ztI
-         9hsYO5tXUSh/zasJgIHtxaYPZ4vmZS6RUmmVLuQSWX+5zZ1jz6PZlvBaTuMJkKm8sq
-         LZhnJzcpHy3eIAxEwxoAQU20Ap/BrMLgkVdi131b2HnLrigEVAYynHMUY3q/gfljoY
-         vhMDTuZpUhXdn6DgG3Bx19EPCc3Hf3w4DD7BlRsnrSUlwyA51GhnKacwD6kVdB4a9+
-         Y/BgwZcbGa0gA==
-Date:   Mon, 25 Sep 2023 11:56:05 +0200
-From:   Joerg Roedel <joro@8bytes.org>
-To:     Niklas Schnelle <schnelle@linux.ibm.com>
-Cc:     Matthew Rosato <mjrosato@linux.ibm.com>,
-        Will Deacon <will@kernel.org>,
-        Wenjia Zhang <wenjia@linux.ibm.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Jason Gunthorpe <jgg@ziepe.ca>,
-        Gerd Bayer <gbayer@linux.ibm.com>,
-        Julian Ruess <julianr@linux.ibm.com>,
-        Pierre Morel <pmorel@linux.ibm.com>,
-        Alexandra Winter <wintera@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Sven Schnelle <svens@linux.ibm.com>,
-        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jonathan Corbet <corbet@lwn.net>, linux-s390@vger.kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        iommu@lists.linux.dev, asahi@lists.linux.dev,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        linux-doc@vger.kernel.org
-Subject: Re: [PATCH v12 0/6] iommu/dma: s390 DMA API conversion and optimized
- IOTLB flushing
-Message-ID: <ZRFZNbR_3p9nhQEU@8bytes.org>
-References: <20230825-dma_iommu-v12-0-4134455994a7@linux.ibm.com>
+        Mon, 25 Sep 2023 06:03:21 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43D7249DA
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 02:57:48 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-99c136ee106so733661566b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 02:57:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1695635867; x=1696240667; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TXCCllwZ4z8DXewZcqb2sv1grtSHNDoEfG3kyz/bz1g=;
+        b=GP5X9vtzqCcnEs0YWgLtpZnynIbyE4wBHjdUpl2WkAA0RE8LHp4tu1batC3Y61wMYY
+         DSYQq2GomWbew0rYQHKOH9DGvU/XI6oq2sfU1ubvFH1BsylQcUvg2nZlyMmcqL46zK0h
+         8xkb9jCkaHCURZCBzLr5LmacaAGnwRlLdzQSMnL62EYemkRCSwpEy3SMbPLCUDtzf+uQ
+         Yod3RdtxeYrljDp6az9w10KFHSnPZKIgKAA6rizMDcqcT8+Yo67Pgo+VpmdkgTk7EQU9
+         iuRQwbxR62AOWadQxjzm+CwIMu7SpUk8Nqm77nzSDqcWizJ0/Fzd9drCclA1bFV2NjRp
+         Kfzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695635867; x=1696240667;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TXCCllwZ4z8DXewZcqb2sv1grtSHNDoEfG3kyz/bz1g=;
+        b=CMWZ/d5sXvG5rKDObrSuP4TOAL07zrcvUcRgnpfVMtQXubj+uTUEOers0E2RZWL86b
+         W9cuWVQlzBN2o1O3F1gn1rcXMIwvxT2axyA2Dj0TU+j0vBY6GzLJcsoY7xPVaQeAVZjI
+         hkqBAzE+UGTARzmNxDZXgj1JWd5opOoyeajFxs543+LFs7SGfgHXTR4A8XOoAx1kXWQc
+         pJSBwB/VwmfAtxhXOq6k3/N4oeItRMjCnsz3NZQ5KVTa7e7TjCqG0MLQP4hoH/jHaQ2u
+         saKOj0VNflI8PygghKbAXPr4eLv0I0u4SDzGEYaGia5xptCRRbay5LSuk/34kKaQZGDw
+         NYcg==
+X-Gm-Message-State: AOJu0YxSuQrEt8/bBCuUfr3ye2khrmfRSdpA4EJhPM3C1/gO1xfJUnXg
+        /9/kYPmvuNvTYWuIZUaUxetP5Q==
+X-Google-Smtp-Source: AGHT+IEuPMkqZnYjen1gLkIp17k8bwUw0RZnHSGTk1YHnMqg/6041RUYkJdCq94a8hGenU7mfYjFQw==
+X-Received: by 2002:a17:906:51d4:b0:9ae:3c09:8ce1 with SMTP id v20-20020a17090651d400b009ae3c098ce1mr5816797ejk.39.1695635866741;
+        Mon, 25 Sep 2023 02:57:46 -0700 (PDT)
+Received: from [192.168.101.165] (178235177023.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.23])
+        by smtp.gmail.com with ESMTPSA id k3-20020a17090646c300b009ae57888718sm6040535ejs.207.2023.09.25.02.57.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Sep 2023 02:57:46 -0700 (PDT)
+Message-ID: <13ab111c-d1bc-4352-9427-136407b1bb24@linaro.org>
+Date:   Mon, 25 Sep 2023 11:57:44 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230825-dma_iommu-v12-0-4134455994a7@linux.ibm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 18/40] soc/qcom: icc-bwmon: Convert to platform remove
+ callback returning void
+Content-Language: en-US
+To:     =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kernel@pengutronix.de
+References: <20230925095532.1984344-1-u.kleine-koenig@pengutronix.de>
+ <20230925095532.1984344-19-u.kleine-koenig@pengutronix.de>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230925095532.1984344-19-u.kleine-koenig@pengutronix.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 25, 2023 at 12:11:15PM +0200, Niklas Schnelle wrote:
-> Niklas Schnelle (6):
->       iommu: Allow .iotlb_sync_map to fail and handle s390's -ENOMEM return
->       s390/pci: prepare is_passed_through() for dma-iommu
->       s390/pci: Use dma-iommu layer
->       iommu/s390: Disable deferred flush for ISM devices
->       iommu/dma: Allow a single FQ in addition to per-CPU FQs
->       iommu/dma: Use a large flush queue and timeout for shadow_on_flush
+On 25.09.2023 11:55, Uwe Kleine-König wrote:
+> The .remove() callback for a platform driver returns an int which makes
+> many driver authors wrongly assume it's possible to do error handling by
+> returning an error code. However the value returned is ignored (apart
+> from emitting a warning) and this typically results in resource leaks.
+> To improve here there is a quest to make the remove callback return
+> void. In the first step of this quest all drivers are converted to
+> .remove_new() which already returns void. Eventually after all drivers
+> are converted, .remove_new() will be renamed to .remove().
+> 
+> Trivially convert this driver from always returning zero in the remove
+> callback to the void returning variant.
+> 
+> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+> ---
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Applied, thanks.
+Konrad
