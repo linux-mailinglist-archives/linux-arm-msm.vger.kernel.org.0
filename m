@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2ECB97ADBE6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 17:41:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BEE1D7ADBE9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 17:42:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233015AbjIYPmA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Sep 2023 11:42:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45692 "EHLO
+        id S232845AbjIYPmI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Sep 2023 11:42:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233017AbjIYPlk (ORCPT
+        with ESMTP id S232831AbjIYPll (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Sep 2023 11:41:40 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CEBC11F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 08:41:21 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-401d6f6b2e0so52841525e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 08:41:20 -0700 (PDT)
+        Mon, 25 Sep 2023 11:41:41 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37070CC9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 08:41:22 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-404fbfac998so75421945e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 08:41:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695656479; x=1696261279; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695656480; x=1696261280; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5xDdHYwLfg0JHODBOnX5/PYY4PGuDuMNIjsuATRv640=;
-        b=DKmaV5K0OdPdPd+V+L8BFKr5kKiqHYrCd77ijCnMNhUshH1ZuuUHKBxj8xq+TZis99
-         u7TgPL41Ty2vurWShsZGpu+30k5ufdGYL+dbjheMiT7binRlVBYSfAbTerVbWKlk7zPD
-         5a5Tt2I7H8F81vnWyXn6CpAjq0qVhukZr+2qD68TWrrpvV3NnfK3LuebgzkujdX8gpRO
-         Lcranl09kF7M6YTLagOGz4DFB75HtrbRsouEWocS8BQqTwiVm59H6mlw9JJ/7BFJFzzo
-         EEp8hmZsBSaHQFFhJc1u7jCcnGKC9O/IB68tyTQ8Wxi/58/51cbSpfbvnjp+5DbU8iR2
-         Uddw==
+        bh=3XAtVUAyBOvnRtU7QZlyMg2OvJJmAGTuY+WdBD311GM=;
+        b=Xnz7pFyZOCUK3oas2KxJmig/iFPqwGiN85LZmi0ddh0OZ92VL2m1uAcKKQrMeDaN6O
+         WVJqxFJ7/xT/ktc4GHgbzQ7EXzSVWf9cN0zmpkNudAV0CV783EnknC0RhUBzkgGgGNk9
+         FGapO/XgQH8sni4DPMSU1ljMV0wM+Knw//e0JO+KdS10jHbwTyJ53PUyebO5FI+NiabM
+         fkmK+7mZLhHbfT4/u+JPYUgSKHYLrAeFBCy/raj/Ql6J8AYsfmhNC5WsQrzoaAzjO4Ky
+         lzu3hpwelu7TAPdF+gAYpvcE8SCXoXiGAKvaDoMlUiWqbJR0RJVxVxtj4P8KkXUCM8LV
+         yDsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695656479; x=1696261279;
+        d=1e100.net; s=20230601; t=1695656480; x=1696261280;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5xDdHYwLfg0JHODBOnX5/PYY4PGuDuMNIjsuATRv640=;
-        b=tk3CYGF+1gTgLvKvXgrf7lziIWQrB9gqzukQW5TZel11xhztAuz9GRn42Meyg9Hnv8
-         Sycz3+J6ol9qBOmkbrnF2kfCXLyf7jZOPIwu00rGr/O1aKJdLb+LOPi/P3Ec3TQ7bCGi
-         cRPO+GrF/bW0ZM3Hn6ltbHCLHhXMbgpxhNHk6IoQph3BayJXlR2NPd26Ny0dcZL/mrIE
-         mRodZSHfk3LE+NVUMwibZQkGlYbP13TT6t8jXVyCOxyxenLfhz094BnOJqeDKARRXcAb
-         wVZIyPnOK0qkOZMWFF62noMuwJTETqGFSqmQJavPZ2hiDUtr5ivfAtIJSb7iS/uQNlkj
-         75ng==
-X-Gm-Message-State: AOJu0YxXMNZVWGjdw0P3KyT2yqztM19DrGMP5ofZ79J0rUo0iOuGKaJI
-        KlR0DupBhpm1yKDi5iu5P2zVQjjPaC7OFAgUk9Q=
-X-Google-Smtp-Source: AGHT+IEmXCMcmZ9IN+MzhG/I0CE2OFRAroFblh36HMUsurrTYSHR7FXHQgUXJAxsAXuGDbumqmRIrg==
-X-Received: by 2002:a05:600c:b9b:b0:405:3f06:d2ef with SMTP id fl27-20020a05600c0b9b00b004053f06d2efmr36244wmb.4.1695656479339;
-        Mon, 25 Sep 2023 08:41:19 -0700 (PDT)
+        bh=3XAtVUAyBOvnRtU7QZlyMg2OvJJmAGTuY+WdBD311GM=;
+        b=MHHWFDkf3AgKEsgwnALGlflXsZUehSRWWu8eaGaL+oSqFhriG295HzbvSkTD2ayhZ8
+         dsrb/OztBQItkdutV2tIubTVanRjxG+Vt/c7WXp/gdzCAsKIHkJTz9/GdVCDI/IUmPqH
+         6MBm6Gmhkl4NrktChshGQ8ZEEbS1XYkw2rjjHBM7H+b3ArWTnPrRlr69/o8uecgRYF3i
+         K4mcvcnJuodYoLWEOYS+uo/QqS+HzyRoZlr/RyjI5Ep47aubxfHSiH8mhkPL6u1L9l5t
+         PsSGdrpy7xNtGXFjo1bF/nIK0OHr+7ZJHFkyqEphuy0Fr1KjsBPPZD1zmlPlfLTxgCbp
+         ul5Q==
+X-Gm-Message-State: AOJu0YwTlvUTzfmVu+nEZnfMb+qkOjTZORMYovUwunR3UrSN+XcwfPFb
+        Xy01hBH1bFrldSZw5ACZPdc6C6SfB+KaiKw2MQI=
+X-Google-Smtp-Source: AGHT+IHIYsIZ8vZqQaDPoDXEY7tcVUbqvj1KdoeCpEzq1zo6LVnPKhEuMzJyfNb1ZAcyPclD6hYQ9g==
+X-Received: by 2002:a05:600c:ca:b0:404:757e:c5ba with SMTP id u10-20020a05600c00ca00b00404757ec5bamr5470692wmm.26.1695656480416;
+        Mon, 25 Sep 2023 08:41:20 -0700 (PDT)
 Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id m15-20020a7bca4f000000b003fe4548188bsm15206155wml.48.2023.09.25.08.41.18
+        by smtp.gmail.com with ESMTPSA id m15-20020a7bca4f000000b003fe4548188bsm15206155wml.48.2023.09.25.08.41.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Sep 2023 08:41:19 -0700 (PDT)
+        Mon, 25 Sep 2023 08:41:20 -0700 (PDT)
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
         hverkuil@xs4all.nl, laurent.pinchart@ideasonboard.com,
@@ -58,9 +58,9 @@ To:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
         sakari.ailus@linux.intel.com, andrey.konovalov@linaro.org
 Cc:     linux-kernel@vger.kernel.org,
         Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Subject: [PATCH v6 13/17] media: qcom: camss: Fix support for setting CSIPHY clock name csiphyX
-Date:   Mon, 25 Sep 2023 16:40:55 +0100
-Message-ID: <20230925154059.837152-14-bryan.odonoghue@linaro.org>
+Subject: [PATCH v6 14/17] media: qcom: camss: Support RDI3 for VFE 17x
+Date:   Mon, 25 Sep 2023 16:40:56 +0100
+Message-ID: <20230925154059.837152-15-bryan.odonoghue@linaro.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20230925154059.837152-1-bryan.odonoghue@linaro.org>
 References: <20230925154059.837152-1-bryan.odonoghue@linaro.org>
@@ -76,42 +76,65 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Several of our upstream and soon-to-be upstream SoC CAMSS dtsi declare
-csiphyX as opposed to the older clock name csiX_phy.
+Some VFEs have four RDIs apiece. Right now the ISR code has a hard-coded
+value which tops-out at RDI2 meaning only three RDIs can be utilised in
+practice.
 
-Right now the CAMSS code will fail to set the csiphyX clock even if we have
-declared it in our list of clocks. For sdm845 and sm8250 we appear to "get
-away" with this error, however on sc8280xp we don't.
-
-The right approach here is to set the clock when it is declared. If a SoC
-doesn't require or a SoC driver implementer doesn't think we need, then the
-clock ought to simply be omitted from the clock list.
-
-Include csiphyX in the set of permissible strings which will subsequently
-lead to the csiphyX clock being set during csiphy_set_clock_rates() phase.
-
-sdm845 and sm8250 will work with the code as-is so I've omitted this from a
-suggested Fixes list.
+Extend out the various routines in camss-vfe-17x.c to support the higher
+RDI count.
 
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 ---
- drivers/media/platform/qcom/camss/camss-csiphy.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/media/platform/qcom/camss/camss-vfe-170.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
-index 20bb361e9ad05..edd573606a6ae 100644
---- a/drivers/media/platform/qcom/camss/camss-csiphy.c
-+++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
-@@ -677,6 +677,10 @@ int msm_csiphy_subdev_init(struct camss *camss,
- 				if (csiphy->rate_set[i])
- 					break;
- 			}
-+
-+			csiphy->rate_set[i] = csiphy_match_clock_name(clock->name, "csiphy%d", k);
-+			if (csiphy->rate_set[i])
-+				break;
- 		}
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-170.c b/drivers/media/platform/qcom/camss/camss-vfe-170.c
+index 2ba7160b3bd1e..a5aa799501861 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-170.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-170.c
+@@ -209,7 +209,8 @@ static void vfe_global_reset(struct vfe_device *vfe)
+ 			 GLOBAL_RESET_CMD_IDLE_CGC	|
+ 			 GLOBAL_RESET_CMD_RDI0		|
+ 			 GLOBAL_RESET_CMD_RDI1		|
+-			 GLOBAL_RESET_CMD_RDI2;
++			 GLOBAL_RESET_CMD_RDI2		|
++			 GLOBAL_RESET_CMD_RDI3;
+ 
+ 	writel_relaxed(BIT(31), vfe->base + VFE_IRQ_MASK_0);
+ 
+@@ -343,7 +344,7 @@ static void vfe_violation_read(struct vfe_device *vfe)
+ static irqreturn_t vfe_isr(int irq, void *dev)
+ {
+ 	struct vfe_device *vfe = dev;
+-	u32 status0, status1, vfe_bus_status[3];
++	u32 status0, status1, vfe_bus_status[VFE_LINE_NUM_MAX];
+ 	int i, wm;
+ 
+ 	status0 = readl_relaxed(vfe->base + VFE_IRQ_STATUS_0);
+@@ -352,7 +353,7 @@ static irqreturn_t vfe_isr(int irq, void *dev)
+ 	writel_relaxed(status0, vfe->base + VFE_IRQ_CLEAR_0);
+ 	writel_relaxed(status1, vfe->base + VFE_IRQ_CLEAR_1);
+ 
+-	for (i = VFE_LINE_RDI0; i <= VFE_LINE_RDI2; i++) {
++	for (i = VFE_LINE_RDI0; i < vfe->line_num; i++) {
+ 		vfe_bus_status[i] = readl_relaxed(vfe->base + VFE_BUS_IRQ_STATUS(i));
+ 		writel_relaxed(vfe_bus_status[i], vfe->base + VFE_BUS_IRQ_CLEAR(i));
  	}
+@@ -366,11 +367,11 @@ static irqreturn_t vfe_isr(int irq, void *dev)
+ 	if (status0 & STATUS_0_RESET_ACK)
+ 		vfe->isr_ops.reset_ack(vfe);
+ 
+-	for (i = VFE_LINE_RDI0; i <= VFE_LINE_RDI2; i++)
++	for (i = VFE_LINE_RDI0; i < vfe->line_num; i++)
+ 		if (status0 & STATUS_0_RDI_REG_UPDATE(i))
+ 			vfe->isr_ops.reg_update(vfe, i);
+ 
+-	for (i = VFE_LINE_RDI0; i <= VFE_LINE_RDI2; i++)
++	for (i = VFE_LINE_RDI0; i < vfe->line_num; i++)
+ 		if (status0 & STATUS_1_RDI_SOF(i))
+ 			vfe->isr_ops.sof(vfe, i);
  
 -- 
 2.42.0
