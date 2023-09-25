@@ -2,68 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DA037AD544
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 12:02:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 862267AD54D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 12:03:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231200AbjIYKCn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Sep 2023 06:02:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54046 "EHLO
+        id S230506AbjIYKDr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Sep 2023 06:03:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230415AbjIYKCS (ORCPT
+        with ESMTP id S230513AbjIYKDX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Sep 2023 06:02:18 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2011ACFA
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 02:58:16 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-502e7d66c1eso9550665e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 02:58:16 -0700 (PDT)
+        Mon, 25 Sep 2023 06:03:23 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1A7A1BC3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 02:58:54 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-9b27bc8b65eso209038766b.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 02:58:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695635894; x=1696240694; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695635933; x=1696240733; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=TXCCllwZ4z8DXewZcqb2sv1grtSHNDoEfG3kyz/bz1g=;
-        b=e/8UA3+3REhaWBO4ESsXhU6jrcMS3tU2tcKqDeHW/cdLGYh1n4vEt2WeUjb5PjfGxs
-         n4Bk9+F6vHkh1yI9srXC3Wowjqo74HfHDU/FYVaDN0UfYsd9C+g3pmS+HquKRtCbXS8D
-         UthdjGxpYEy3qPwoArx9XSFskHfjrpTuHq8X6jUPpOWE5BPQanL0vqKE0GtGyoJIWd+U
-         yfv6coHnBXivkjfCcxMsVEB8G8FcxvCCd3VBcehW1FHmcOZF0RrOwp6AWXAnATeDxHkj
-         ueelza72IBbAqz5JQCGwThl+6mQmHCS6bPyMj3RejGGrx2TCOF+1Z2qgU7oQm7tqxT8/
-         53iw==
+        bh=07uVGcYaT587O+lJP2m3ZC4n8yo7xprZQQOPVOh74lw=;
+        b=LQgE6d877ZTfqLeh9Jov8Jp/ZK4NUcsktEp3Nwz0XRnOBNtLp1bsAm7OEfTkNBCoJM
+         2U1aQQTs5z+I9+CvJrG3He7b9+8dRuNijzZQ/4IVeMO/kedBMDRH/6snWJ6QblFJutQr
+         rUNy6fkhUaK2/MPJFmigZA+LPBvssB/WM/KKp32dgyGFD6NSfOoWp+OxiMmDs8eX/qx3
+         njFZxzcqvds1HgLf96iph+3rCiyT2F9e4K6b5iiom7REIoWOvY3E4IVSi4745oevmw+n
+         nc7RWKO1mw843ExIeSzhKzBoq940MeGjP6b9vNKvq3TjES/Yb5KeYxtlhgQZOSaLDdLs
+         Xs4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695635894; x=1696240694;
+        d=1e100.net; s=20230601; t=1695635933; x=1696240733;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TXCCllwZ4z8DXewZcqb2sv1grtSHNDoEfG3kyz/bz1g=;
-        b=NzmJzjnmp3Is00l7FCryTgGXdDrAFmzwkkdEfSPocVaQoMqyhoJRUXX8jzPnTYR3eb
-         vblA9caJW0/JNirrx4Ct51prehIh84HWaJLD6l1nbRqAhjjCcJfelbztnTzDeOnIXuPI
-         XOn5knEl4SiowtD9OjnRF2IBrXoBi98OtBHmMSHf0Qf+zR+sKQ54211hzSk3tJ+2dWW1
-         LWmjPzTYLAsN3w4coiFG96GIZuVUI4v55i4T3xGmTg0k85h+6sRFjZszeMTS7NSerrOx
-         3xpDOTJ24JFE2ZXQo/zkCbAV1YT1eoVp8aA5GqkFoyqIPY94nHk0tgAYmkJkU7tQVrHH
-         uOlg==
-X-Gm-Message-State: AOJu0Yy5t5w7qFGACz6+ywGual45JkJWgYy1snx0FZCDDAHZrvInxCdc
-        uHCy55KwimCiRhdKY6SJ5b3kCQ==
-X-Google-Smtp-Source: AGHT+IGJ6sne9LdG8Z+47LLtuwAYb6dyLWJVUq4Amr5t6wO939A6044kiRuAcgsp2Qo9LGRMFmOVsg==
-X-Received: by 2002:a05:6512:360e:b0:503:eac:747 with SMTP id f14-20020a056512360e00b005030eac0747mr4833498lfs.47.1695635893804;
-        Mon, 25 Sep 2023 02:58:13 -0700 (PDT)
+        bh=07uVGcYaT587O+lJP2m3ZC4n8yo7xprZQQOPVOh74lw=;
+        b=HARhtiWV4hZrC2FoDwpjw/stN/yy5NfH0xWn8J4SFD9tsSscREArlosqlEmbW/xloT
+         q1tauWamk4YE66sxlqYtCkD4kUEtXnfr13yXJhCPEzLK7xaeE5y6HrYr0YyvB0HucNSW
+         o6GC8KbQ1ECss3VZr68AlIYST+pqWBDUoI+LxBFuekESem5h3Pa3WQVinsm11GbYOGG6
+         ToxkHGecL0G3fRpLWADwhkcImnnJ+Zaiiyd7bHAtqmiIvPdXGpzwh9P+I16iE5OPzzqn
+         rV5XNnZ6PejuTAdGVd85eULTMtNwzchpzomo23jIQrF3JeVQRJ2m+kNc06yXU7kd8uOv
+         SX8w==
+X-Gm-Message-State: AOJu0YwtcNMcqWSCfXKAa+N2sKhYOLds6L7QrAZXln+V0hKiJqOEyYjf
+        zZ+XQ3iRhG3a9htCyaROc/Mu5g==
+X-Google-Smtp-Source: AGHT+IGSfyahZeZWFSCp2lS84BASF/3XwkdnTR8ykM/qYp0D0Ky7td4khxNtqawySDMtRTwzWoBeZw==
+X-Received: by 2002:a17:907:2cc1:b0:9a1:f10d:9746 with SMTP id hg1-20020a1709072cc100b009a1f10d9746mr5022065ejc.20.1695635933026;
+        Mon, 25 Sep 2023 02:58:53 -0700 (PDT)
 Received: from [192.168.101.165] (178235177023.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.23])
-        by smtp.gmail.com with ESMTPSA id k3-20020a17090646c300b009ae57888718sm6040535ejs.207.2023.09.25.02.58.12
+        by smtp.gmail.com with ESMTPSA id k3-20020a17090646c300b009ae57888718sm6040535ejs.207.2023.09.25.02.58.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Sep 2023 02:58:13 -0700 (PDT)
-Message-ID: <dc4068ef-ab53-4349-87e2-45c32ef0d569@linaro.org>
-Date:   Mon, 25 Sep 2023 11:58:12 +0200
+        Mon, 25 Sep 2023 02:58:52 -0700 (PDT)
+Message-ID: <311837de-5acb-4b5b-b64d-9bdc1403a087@linaro.org>
+Date:   Mon, 25 Sep 2023 11:58:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 20/40] soc/qcom: ocmem: Convert to platform remove
- callback returning void
+Subject: Re: [PATCH 00/40] soc: Convert to platform remove callback returning
+ void
 Content-Language: en-US
 To:     =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+        Joel Stanley <joel@jms.id.au>, Li Yang <leoyang.li@nxp.com>,
+        Herve Codina <herve.codina@bootlin.com>,
+        Qiang Zhao <qiang.zhao@nxp.com>,
+        Hitomi Hasegawa <hasegawa-hitomi@fujitsu.com>,
+        Huisong Li <lihuisong@huawei.com>,
+        Krzysztof Halasa <khalasa@piap.pl>,
+        Karol Gugala <kgugala@antmicro.com>,
+        Mateusz Holenko <mholenko@antmicro.com>,
+        Gabriel Somlo <gsomlo@gmail.com>,
+        Yinbo Zhu <zhuyinbo@loongson.cn>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Conor Dooley <conor.dooley@microchip.com>,
+        Daire McNamara <daire.mcnamara@microchip.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kernel@pengutronix.de
+        Bjorn Andersson <andersson@kernel.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Sumit Gupta <sumitg@nvidia.com>,
+        Shang XiaoJing <shangxiaojing@huawei.com>,
+        Muhammad Usama Anjum <usama.anjum@collabora.com>,
+        Rob Herring <robh@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Santosh Shilimkar <ssantosh@kernel.org>,
+        Michal Simek <michal.simek@amd.com>
+Cc:     Andrew Jeffery <andrew@aj.id.au>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+        Arnd Bergmann <arnd@arndb.de>,
+        Zev Weiss <zev@bewilderbeest.net>,
+        linuxppc-dev@lists.ozlabs.org, loongarch@lists.linux.dev,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        linux-mediatek@lists.infradead.org,
+        linux-riscv@lists.infradead.org,
+        zhang songyi <zhang.songyi@zte.com.cn>,
+        Lubomir Rintel <lkundrak@v3.sk>, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        linux-samsung-soc@vger.kernel.org,
+        Nick Alcock <nick.alcock@oracle.com>,
+        Yang Yingliang <yangyingliang@huawei.com>,
+        linux-tegra@vger.kernel.org, linux-pm@vger.kernel.org,
+        Ruan Jinjie <ruanjinjie@huawei.com>, kernel@pengutronix.de
 References: <20230925095532.1984344-1-u.kleine-koenig@pengutronix.de>
- <20230925095532.1984344-21-u.kleine-koenig@pengutronix.de>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -100,7 +139,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230925095532.1984344-21-u.kleine-koenig@pengutronix.de>
+In-Reply-To: <20230925095532.1984344-1-u.kleine-koenig@pengutronix.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -113,21 +152,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25.09.2023 11:55, Uwe Kleine-König wrote:
-> The .remove() callback for a platform driver returns an int which makes
-> many driver authors wrongly assume it's possible to do error handling by
-> returning an error code. However the value returned is ignored (apart
-> from emitting a warning) and this typically results in resource leaks.
-> To improve here there is a quest to make the remove callback return
-> void. In the first step of this quest all drivers are converted to
-> .remove_new() which already returns void. Eventually after all drivers
-> are converted, .remove_new() will be renamed to .remove().
+On 25.09.2023 11:54, Uwe Kleine-König wrote:
+> Hello,
 > 
-> Trivially convert this driver from always returning zero in the remove
-> callback to the void returning variant.
+> this series converts all platform drivers below drivers/soc to use
+> .remove_new(). The motivation is to get rid of an integer return code
+> that is (mostly) ignored by the platform driver core and error prone on
+> the driver side.
 > 
-> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-> ---
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> See commit 5c5a7680e67b ("platform: Provide a remove callback that
+> returns no value") for an extended explanation and the eventual goal.
+>
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org> # qcom
 
 Konrad
