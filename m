@@ -2,108 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1AF707AE1F5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 00:57:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B0257AE281
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 01:38:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233320AbjIYW5Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Sep 2023 18:57:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45662 "EHLO
+        id S232712AbjIYXhP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Sep 2023 19:37:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229585AbjIYW5X (ORCPT
+        with ESMTP id S231653AbjIYXhN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Sep 2023 18:57:23 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1CC810C;
-        Mon, 25 Sep 2023 15:57:15 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38PMjvcC001796;
-        Mon, 25 Sep 2023 22:57:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=DSjRjYkmB7BUFVNAKJ4xYkcEzmZhEXiK8XKFZovjGcU=;
- b=H8NTLX4+J0Nvfambodg6NzHsKmqLb6SVSMnzWbnukSQyPGxZSJtchJ/bO1Ee/QzDBvMi
- LhtPQNhLKozmaK0QRRtuDhLSe6VJGz7/BjiEQ0p/IjxwTB3mWo5CtQVpGC4P0Ui9/w9+
- 1XxaxeDRhqt6w2kxgTJIGbypLp29Jpwz3uZY0gnP4FnjXpBzhEZ2haJLeggOKd+B8s7J
- qpaNBpdL2SAQ30l3twHfcmc2YWHYf3EyAIS4Pz/OLLWW7XDVh1Ult3KIkn0XIb/8fyOJ
- zyDRhi4zr8VtXLSbQoEuGaDAFdF1ewZp2o0OCuhS9OAPYO2N5bZD5h6yQB06w4HrRQow 9A== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tb5n8a2kp-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 25 Sep 2023 22:57:02 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38PMv14c010258
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 25 Sep 2023 22:57:01 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Mon, 25 Sep 2023 15:57:01 -0700
-Date:   Mon, 25 Sep 2023 15:57:00 -0700
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Om Prakash Singh <quic_omprsing@quicinc.com>
-CC:     <neil.armstrong@linaro.org>, <konrad.dybcio@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>, <conor+dt@kernel.org>,
-        <davem@davemloft.net>, <devicetree@vger.kernel.org>,
-        <herbert@gondor.apana.org.au>, <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-crypto@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <marijn.suijten@somainline.org>,
-        <robh+dt@kernel.org>, <vkoul@kernel.org>
-Subject: Re: [PATCH V3] crypto: qcom-rng - Add hw_random interface support
-Message-ID: <20230925225700.GC437346@hu-bjorande-lv.qualcomm.com>
-References: <20230925172312.2843262-1-quic_omprsing@quicinc.com>
+        Mon, 25 Sep 2023 19:37:13 -0400
+Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F02B810C;
+        Mon, 25 Sep 2023 16:37:06 -0700 (PDT)
+Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-59bf1dde73fso96830627b3.3;
+        Mon, 25 Sep 2023 16:37:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1695685026; x=1696289826; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=XusWQaiVLnnypr9tEOMeBvsSPZlhaNXNSC6Pr95vupU=;
+        b=CkPq1iYn+CYUWWBcQM8DKFZiD8n1O08Pl6TyG6l7ZnBuf8W1B/5c9GMgy8/W2Pdorh
+         0eM0fMQ2fCI0cwKb9oAm5C7lzUXRZOZLlCDKFFdXoieDgTKw270ZfRzSRymxP9zdRNQM
+         +EdHJ2b5VHZOg+2o4wGh912AsTRKukf1MuLO7B53cERdlYEpaTqZImIUAiC8CPLL09+G
+         LymAf4w9a3zR3RG1LW53irIRPiymfqnXdVlurwivCwpgZe9ktzWi45PFbzmwoEBGLfbq
+         jxxT5gE67fDUqbmN38HS/S6D0afRgV/GteCGniESiDPdCShjm1xtmzTeVxECnS2pQ0zE
+         8SCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695685026; x=1696289826;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=XusWQaiVLnnypr9tEOMeBvsSPZlhaNXNSC6Pr95vupU=;
+        b=PynQTAapXbMtJ9Fy8qyQGeWFivs9ndbDNo5/lsjpeH+0l7ugt2NoQIYMGC3yzlQI3Q
+         Siix++YX8YO041n92xTRAm4GrNxF0JXJrMkb8m8tgR2csOFIi9ko+hh1BGJLcaCDMjIJ
+         juIdcb6drSSRLDTVCj6WgS9Vmc3LGw1HJYpeuOo5buZJBIMrzoRWapbIuKvxxJYqHS4Z
+         HCW5gmABjNrHTTZTtHtUkcgewydsDx1qgcTH43iRGEtg2pERB42IF8YycVbB08gzKanJ
+         HnLin7vr6IG8x6Raf4HV0ftRPQmbhbApF7wBUqKVWE40Gusrwt8bhOgdsib/rS0ebRHz
+         16mg==
+X-Gm-Message-State: AOJu0Yw274/sD4BYaNRcSOu6dZWrG6dPe8jvrEtDMMnjooYPDINon+Se
+        43mK1Oo/o0cyrsg5boBFick=
+X-Google-Smtp-Source: AGHT+IGWYEcfZBHT8tIWl1aa1+4+LVlzd5+IjI30XfF1jhF0OnlyzN7cwbBtYzp2chrfmVlAzzzZ5g==
+X-Received: by 2002:a0d:c381:0:b0:592:9035:834f with SMTP id f123-20020a0dc381000000b005929035834fmr8800286ywd.34.1695685026161;
+        Mon, 25 Sep 2023 16:37:06 -0700 (PDT)
+Received: from localhost ([2607:fea8:529e:7800::efbe])
+        by smtp.gmail.com with ESMTPSA id e11-20020a81690b000000b0059b20231f1dsm2699161ywc.121.2023.09.25.16.37.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Sep 2023 16:37:05 -0700 (PDT)
+From:   Richard Acayan <mailingradian@gmail.com>
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        Ryan McCann <quic_rmccann@quicinc.com>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Liu Shixin <liushixin2@huawei.com>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     Richard Acayan <mailingradian@gmail.com>
+Subject: [PATCH 0/6] SDM670 display subsystem support
+Date:   Mon, 25 Sep 2023 19:26:27 -0400
+Message-ID: <20230925232625.846666-9-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20230925172312.2843262-1-quic_omprsing@quicinc.com>
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ZuTC_JaemTshKClJTMs3DsKAeZpgi9uV
-X-Proofpoint-GUID: ZuTC_JaemTshKClJTMs3DsKAeZpgi9uV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-09-25_18,2023-09-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
- adultscore=0 priorityscore=1501 impostorscore=0 bulkscore=0 spamscore=0
- clxscore=1015 malwarescore=0 mlxlogscore=998 phishscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2309250177
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 25, 2023 at 10:53:12PM +0530, Om Prakash Singh wrote:
-> From: Om Prakash Singh <omprsing@qti.qualcomm.com>
+This series adds support for the display subsystem on the Snapdragon
+670. It is based on an earlier patch a few versions back, which had
+missing device tree bindings and device tree changes.
 
-That is not a valid email address here, please correct this.
+There is a separate IOMMU patch which adds the MDSS compatible to a
+workaround.
 
-> 
-> Add hw_random interface support in qcom-rng driver as new IP block
-> in Qualcomm SoC has inbuilt NIST SP800 90B compliant entropic source
-> to generate true random number.
-> 
-> Keeping current rng_alg interface as well for random number generation
-> using Kernel Crypto API.
-> 
-> Signed-off-by: Om Prakash Singh <quic_omprsing@quicinc.com>
-[..]
-> diff --git a/drivers/crypto/qcom-rng.c b/drivers/crypto/qcom-rng.c
-[..]
-> +static int qcom_hwrng_read(struct hwrng *hwrng, void *data, size_t max, bool wait)
-> +{
-> +	struct qcom_rng *qrng =  container_of(hwrng, struct qcom_rng, hwrng);
+Richard Acayan (6):
+  dt-bindings: display/msm: dsi-controller-main: add SDM670 compatible
+  dt-bindings: display/msm: sdm845-dpu: Describe SDM670
+  dt-bindings: display: msm: Add SDM670 MDSS
+  drm/msm: mdss: add support for SDM670
+  drm/msm/dpu: Add hw revision 4.1 (SDM670)
+  arm64: dts: qcom: sdm670: add display subsystem
 
-Please also remove one of the spaces after '='.
+ .../display/msm/dsi-controller-main.yaml      |   1 +
+ .../display/msm/qcom,sdm670-mdss.yaml         | 280 +++++++++++++++++
+ .../bindings/display/msm/qcom,sdm845-dpu.yaml |   4 +-
+ arch/arm64/boot/dts/qcom/sdm670.dtsi          | 294 ++++++++++++++++++
+ .../msm/disp/dpu1/catalog/dpu_4_1_sdm670.h    | 105 +++++++
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |   6 +
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   1 +
+ drivers/gpu/drm/msm/msm_mdss.c                |   7 +
+ 9 files changed, 698 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sdm670-mdss.yaml
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h
 
+-- 
+2.42.0
 
-Other than that, this looks good to me.
-
-Regards,
-Bjorn
