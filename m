@@ -2,130 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E7F7B7ADC42
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 17:48:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 927F27ADCB7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 18:07:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233337AbjIYPsV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Sep 2023 11:48:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58100 "EHLO
+        id S232086AbjIYQHw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Sep 2023 12:07:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233150AbjIYPrj (ORCPT
+        with ESMTP id S233120AbjIYQHu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Sep 2023 11:47:39 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B13DCE1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 08:47:31 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-40572aeb6d0so31604335e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 08:47:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695656849; x=1696261649; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yKTR9FGAJbp1Nit0RKPxQtBceNed5p1nXP0aMRVoGew=;
-        b=fHa419QvOcMY3fX1MkE/QRM/XI/th837ZFDNaLME2XfJn65nuWG0W1GjL9Mh7toEMO
-         xfDltwaBv+WgSYDIGDKJFFdxvfFjfep96BwPItoeXfLnj/QigJSIerF1H5lJVm2jYZSY
-         hzYvBjJWMS5mBAAAc2CVtaCmlxFvfOuGRdPT4CWmFmJqaYkJACXsd04pAeIfxYNZ/EMj
-         QOx81lZQ6WqitIKgim1Z0ldwGloM7v/xp8z9vwWHGZjKmLXT9nDWzRQ9Mep2egV5d18W
-         5Wr07w03xPpP9IMmU3Ztdqc9dR++CnPz5nywekPUqpE9UaxXCfASOVF3gCQDoD8Qy8i+
-         KL9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695656849; x=1696261649;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yKTR9FGAJbp1Nit0RKPxQtBceNed5p1nXP0aMRVoGew=;
-        b=VB3xp1MbjiVeWFmT9TtAx563IYgwnIA5i87vj29Ju3o6/Vl+4q8olgXGp3B+PaCgA5
-         ZHIv0ftdZPVCQlTb8M3xiabRGhllYUtcbzaP5+oQvXL35EYk6gkYDs6w4MUrI4Te/j2j
-         uFZoZIJ5R28IG4cZwV88AbVHrKj6ueK6rDliB3DCaS52I5mxdik0Ey8hayWfccblxj46
-         cd5mMRPOsOjG3VybiDynBWXq46AqxM9m4LFbJEwWRWMkgn1k4ljQ63F4jvjY1smIj24Y
-         KTKojldSob/hHEhiy/IJGSjXlTlKFVrfspeWJJ4kFzgsawpSk1N4P04jFws7xwKajO50
-         U7og==
-X-Gm-Message-State: AOJu0YwAjjnxAXRFi34zJCoP/uyXcDVQtZydMaQWLlcN8yQuuCDosTnx
-        R/kaoIQZA5Ix/E86ZxWtgGyvQS6vxaOAWdnt6jI=
-X-Google-Smtp-Source: AGHT+IFKeZu788gHWgsRongPTtFe1L8P+ypwnDHQNU1kHF/IJhSKZslu+Zrp5iqyGWbQVXRGeB/6pA==
-X-Received: by 2002:a7b:c456:0:b0:405:2d23:16d9 with SMTP id l22-20020a7bc456000000b004052d2316d9mr5885861wmi.21.1695656849715;
-        Mon, 25 Sep 2023 08:47:29 -0700 (PDT)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id d4-20020adffd84000000b0031f34a395e7sm12077536wrr.45.2023.09.25.08.47.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Sep 2023 08:47:29 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        hverkuil@xs4all.nl, laurent.pinchart@ideasonboard.com,
-        rfoss@kernel.org, todor.too@gmail.com, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, mchehab@kernel.org,
-        sakari.ailus@linux.intel.com, andrey.konovalov@linaro.org
-Cc:     linux-kernel@vger.kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Subject: [RESEND PATCH v6 17/17] media: qcom: camss: Comment CSID dt_id field
-Date:   Mon, 25 Sep 2023 16:47:07 +0100
-Message-ID: <20230925154707.837542-18-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230925154707.837542-1-bryan.odonoghue@linaro.org>
-References: <20230925154707.837542-1-bryan.odonoghue@linaro.org>
+        Mon, 25 Sep 2023 12:07:50 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE85C101;
+        Mon, 25 Sep 2023 09:07:43 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38PEGBFt007267;
+        Mon, 25 Sep 2023 16:07:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=JAoOarfwvRZXn1BQvmqwapFIbkl3fBs0IHfImvog/zI=;
+ b=aiOKnXcw7wl0G0ITN3J/vczi8Kh32vc1HHKXjyzgTXrA60pXUzHE2v5wHFFiEhjZde9U
+ sRaveN32STxxQcpSuxGiUznzYM78ODWB6+pkAQtkQ0wlmXbg/ET3rfh6CpJ4eJDC97wq
+ RmsWtKgtjtKL4aD7fUFYcXOVh4buTV+xiPO1f6SMXgpEemlTGSM1F28DCJD4sgYnkO+i
+ SRTJAPxUSm/WtmebBRT9Ow/vBWFWQsKPPkmRIwtw66miNPKyg96bl3vUxrXz4W1Uwns+
+ IDrf7B8t15FOcAE5piowVGX7YBs99kLZIj/LVv/w1ErLKRkvR5ngFjxTjJTEsTfK9cod pA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tb5n89877-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 25 Sep 2023 16:07:21 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38PG7LFQ027910
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 25 Sep 2023 16:07:21 GMT
+Received: from [10.110.46.220] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 25 Sep
+ 2023 09:07:19 -0700
+Message-ID: <1d9bf80d-0267-937b-4dd9-c57db7a89cb4@quicinc.com>
+Date:   Mon, 25 Sep 2023 09:07:18 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v3 6/7] drm/msm/dp: add
+ pm_runtime_force_suspend()/resume()
+Content-Language: en-US
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <dianders@chromium.org>, <vkoul@kernel.org>,
+        <daniel@ffwll.ch>, <airlied@gmail.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <quic_jesszhan@quicinc.com>,
+        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1694813901-26952-1-git-send-email-quic_khsieh@quicinc.com>
+ <1694813901-26952-7-git-send-email-quic_khsieh@quicinc.com>
+ <CAA8EJpqPXoFX4LXyXYgfh07Vpxg-KgD8VBR6x5bXf4GOJmbOtw@mail.gmail.com>
+ <2f98d5f1-57c1-d9fe-cb1c-b975db057287@quicinc.com>
+ <CAA8EJpr2wRq6Txi7YAQpJKa_9UGqH_nmHzvVOaAPkwOrtDg4Tw@mail.gmail.com>
+ <CAE-0n53dqHONzMTd_ZC-fKWTzDVq6Wqwo4OFZMUcghZ5SD5RhA@mail.gmail.com>
+ <65566a68-3510-2e5f-7d57-e4dba08c008c@quicinc.com>
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <65566a68-3510-2e5f-7d57-e4dba08c008c@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Wij6QzDqF0P95Gh71wzbih36j-IAi5RL
+X-Proofpoint-GUID: Wij6QzDqF0P95Gh71wzbih36j-IAi5RL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-09-25_13,2023-09-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
+ adultscore=0 priorityscore=1501 impostorscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 malwarescore=0 mlxlogscore=999 phishscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2309250124
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Digging into the documentation we find that the DT_ID bitfield is used to
-map the six bit DT to a two bit ID code. This value is concatenated to the
-VC bitfield to create a CID value. DT_ID is the two least significant bits
-of CID and VC the most significant bits.
 
-Originally we set dt_id = vc * 4 in and then subsequently set dt_id = vc.
+On 9/22/2023 6:35 PM, Abhinav Kumar wrote:
+> Hi Stephen
+>
+> On 9/22/2023 2:54 PM, Stephen Boyd wrote:
+>> Quoting Dmitry Baryshkov (2023-09-19 02:50:12)
+>>> On Mon, 18 Sept 2023 at 20:48, Kuogee Hsieh 
+>>> <quic_khsieh@quicinc.com> wrote:
+>>>>
+>>>>
+>>>> On 9/15/2023 6:21 PM, Dmitry Baryshkov wrote:
+>>>>> On Sat, 16 Sept 2023 at 00:38, Kuogee Hsieh 
+>>>>> <quic_khsieh@quicinc.com> wrote:
+>>>>>> Add pm_runtime_force_suspend()/resume() to complete incorporating pm
+>>>>>> runtime framework into DP driver. Both dp_pm_prepare() and 
+>>>>>> dp_pm_complete()
+>>>>>> are added to set hpd_state to correct state. After resume, DP 
+>>>>>> driver will
+>>>>>> re training its main link after .hpd_enable() callback enabled HPD
+>>>>>> interrupts and bring up display accordingly.
+>>>>> How will it re-train the main link? What is the code path for that?
+>>>>
+>>>> 1) for edp, dp_bridge_atomic_enable(), called from framework, to start
+>>>> link training and bring up display.
+>>>
+>>> And this path doesn't use .hpd_enable() which you have mentioned in
+>>> the commit message. Please don't try to shorten the commit message.
+>>> You see, I have had questions to several of them, which means that
+>>> they were not verbose enough.
+>>>
+>>>>
+>>>> 2) for external DP, HPD_PLUG_INT will be generated to start link
+>>>> training and bring up display.
+>>>
+>>> This should be hpd_notify, who starts link training, not some event.
+>>
+>> I think this driver should train the link during atomic_enable(), not
+>> hpd_notify() (or directly from the irq handler). The drm_bridge_funcs
+>> talk a bit about when the clocks and timing signals are supposed to be
+>> enabled. For example, struct drm_bridge_funcs::atomic_pre_enable() says
+>> the "display pipe (i.e.  clocks and timing signals) feeding this bridge
+>> will not yet be running when this callback is called". And struct
+>> drm_bridge_funcs::atomic_enable() says "this callback must enable the
+>> display link feeding the next bridge in the chain if there is one."
+>>
+>> That looks to me like link training, i.e. the display link, should
+>> happen in the enable path and not hpd_notify. It looks like link
+>> training could fail, but when that happens I believe the driver should
+>> call drm_connector_set_link_status_property() with
+>> DRM_MODE_LINK_STATUS_BAD. The two callers of that which exist in the
+>> tree also call drm_kms_helper_hotplug_event() or
+>> drm_kms_helper_connector_hotplug_event() after updating the link so that
+>> userspace knows to try again.
+>>
+>> It would be nice if there was some drm_bridge_set_link_status_bad() API
+>> that bridge drivers could use to signal that the link status is bad and
+>> call the hotplug helper. Maybe it could also record some diagnostics
+>> about which bridge failed to setup the link and stop the atomic_enable()
+>> chain for that connector.
+>
+> Doing link training when we get hpd instead of atomic_enable() is a 
+> design choice we have been following for a while because for the case 
+> when link training fails in atomic_enable() and setting the link 
+> status property as you mentioned, the compositor needs to be able to 
+> handle that and also needs to try with a different resolution or take 
+> some other corrective action. We have seen many compositors not able 
+> to handle this complexity. So the design sends the hotplug to usermode 
+> only after link training succeeds.
+>
+> I do not think we should change this design unless prototyped with an 
+> existing compositor such as chrome or android at this point.
+>
+> Thanks
+>
+> Abhinav
 
-commit 3c4ed72a16bc ("media: camss: sm8250: Virtual channels for CSID")
-silently fixed the multiplication by four which would give a better
-value for the generated CID without mentioning what was being done or why.
 
-Next up I haplessly changed the value back to "dt_id = vc * 4" since there
-didn't appear to be any logic behind it.
+We did perform link training at atomic_enable() at eDP case since we can 
+assume link training will always success without link rate or link lane 
+being reduced.
 
-Hans asked what the change was for and I honestly couldn't remember the
-provenance of it, so I dug in.
+However for external DP case, link training can not be guarantee always 
+success without link rate or lane being reduced as Abhinav mentioned.
 
-Link: https://lore.kernel.org/linux-arm-msm/edd4bf9b-0e1b-883c-1a4d-50f4102c3924@xs4all.nl/
+In addition,  CTS (compliance test) it required to complete link 
+training within 10ms after hpd asserted.
 
-Add a comment so the next hapless programmer doesn't make this same
-mistake.
+I am not sure do link training at atomic_enable() can meet this timing 
+requirement.
 
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- drivers/media/platform/qcom/camss/camss-csid-gen2.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-csid-gen2.c b/drivers/media/platform/qcom/camss/camss-csid-gen2.c
-index 6ba2b10326444..791f27b18c394 100644
---- a/drivers/media/platform/qcom/camss/camss-csid-gen2.c
-+++ b/drivers/media/platform/qcom/camss/camss-csid-gen2.c
-@@ -352,6 +352,18 @@ static void __csid_configure_stream(struct csid_device *csid, u8 enable, u8 vc)
- 		phy_sel = csid->phy.csiphy_id;
- 
- 	if (enable) {
-+		/*
-+		 * DT_ID is a two bit bitfield that is concatenated with
-+		 * the four least significant bits of the six bit VC
-+		 * bitfield to generate an internal CID value.
-+		 *
-+		 * CSID_RDI_CFG0(vc)
-+		 * DT_ID : 28:27
-+		 * VC    : 26:22
-+		 * DT    : 21:16
-+		 *
-+		 * CID   : VC 3:0 << 2 | DT_ID 1:0
-+		 */
- 		u8 dt_id = vc;
- 
- 		if (tg->enabled) {
--- 
-2.42.0
 
