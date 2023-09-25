@@ -2,69 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 915907AD632
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 12:39:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E5087AD637
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 12:40:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231706AbjIYKjf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Sep 2023 06:39:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54010 "EHLO
+        id S231232AbjIYKkq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Sep 2023 06:40:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231232AbjIYKje (ORCPT
+        with ESMTP id S231472AbjIYKkp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Sep 2023 06:39:34 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7198AB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 03:39:25 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id ffacd0b85a97d-3214d4ecd39so5101464f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 03:39:25 -0700 (PDT)
+        Mon, 25 Sep 2023 06:40:45 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 059B8FB
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 03:40:38 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-31f7638be6eso5840566f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 03:40:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695638364; x=1696243164; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1695638436; x=1696243236; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=OsiyRxcUh3c8bygX93xCcQ6MCwYrHzAWJfbBkC3skO0=;
-        b=hoFy9EHr4ym1C5t0vQm3KJ7Yw+MIeqpjJmjhSiFuAlB6DX002yjjDur25sPsFZsbBk
-         w4r0+M2SyFDR/aFoOOSema+u+3QB+ZE3ML2YCKiOzchZVbD3Br7MGnl4hslKYpuqmPN/
-         W6tAy6Gu/x7Pb8gDbTR3lqJiKLS0oM8HWOlh9xjyJFjKvGhrMgLo9kERCTUZpW/yh1NL
-         MeDHqrTWthwP5TyBQ4XHevIapRqtG/OsnrBBMAfitplUjlFafESGbG892o4c/fa7MzlM
-         IGJjuSiGD04AJN1G4YlgNuG46UV9LmhsSXeDkyLWHtFi3iyzJz84UVgUfH/UVGWiKDco
-         lUEg==
+        bh=AcG6dKqnPh6NDWonuBzt7zJSnIN1u16MKiy+tQ6e/Pc=;
+        b=o4E8g2jUEaCZPwg9cw2P2CiOyLLoy+Ezi3en1lwSls2m4LewTguu3GTiDBCjhn6ouQ
+         69y08H01XB9eVit8/vWLXpXH38HM/EoPv9Uh6FCIDvLihqd42u/gRpPKRiPnXyvlLIbp
+         QImwGp7rRTql/GRZnXgbxPnPT382KE6Gw8zylpBPWLFFF08qwas0Zl4eFgDmsXE+Ku1p
+         OJNa/PsYBHoQLS6mWJEWOicBhjNfQ82gaNfMs5tBY0OTecdwSbygIacBawDxqbAYESGb
+         xt9YzzTNElJGWD+ddooxutDGcSPsccoSN+ewsrwpAiCOqEcji8EuUwHFNTgLaB4k+/yp
+         beKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695638364; x=1696243164;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1695638436; x=1696243236;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OsiyRxcUh3c8bygX93xCcQ6MCwYrHzAWJfbBkC3skO0=;
-        b=goc6S7fMKJHoEKRVQOvik9n4dc1olhtoQuwE98nhDBxrYxtPqHc+EZIEMxA6TCIxIv
-         Q2uU3Dnb8C00Fam13A0Pf50acmhEATbM8j/s8/4kQcd0SWlkWHaTunl5Tf22DF6wrZNe
-         P+smGva0rOPIttuShn7aRpVKMLyCizDe30NvkoCfiJQ+8wEqtVy1ExRjMHlfYsM+kLmD
-         DIYUJmIeGM6PZZIwEHA4Jzn/cEtZoxXcvVsNq/BPASiF8xMy6T2zBVgZSQA705pPZATr
-         nyakRG1KtTtBXNjWQjx9W296S7wG+UgFsFIoyT2I0neMgYx/VdG8ZJ6nKw51m+fIyjTZ
-         Gq6A==
-X-Gm-Message-State: AOJu0Yxb8V0VYjIeuVuxsHHOWixFmxCB1id9X7sHskTYtdnnQxqG4aVF
-        mLP+hoakHu9VsJ/x3J3TIPbSFg==
-X-Google-Smtp-Source: AGHT+IHG3cK+trWhc/bSHPhl8vg0r2dS2O0bbLXkCuWR58l0R9MtnBjzMiJRrRNXaX+EqWdLfCOHKA==
-X-Received: by 2002:adf:e586:0:b0:31f:b138:5a0 with SMTP id l6-20020adfe586000000b0031fb13805a0mr5113468wrm.48.1695638363351;
-        Mon, 25 Sep 2023 03:39:23 -0700 (PDT)
+        bh=AcG6dKqnPh6NDWonuBzt7zJSnIN1u16MKiy+tQ6e/Pc=;
+        b=xVGwT8acFosN9VsdhztmUTYFr7iTWJhE/SD8ezRmbfAFgYot41ROH33I+k9uAEm3re
+         ApnIU7EXNATjmSk7OV6s3PU9NRUqpFcbDXF6czXGLU9XE8M+jvVCGau51y6q/8V7l8ld
+         Le1fRcN0ZSIprsMihyS20/sOKWlbeHRZKDd6AX4ZMdJFrA53jecL2OEp7mssBcJeTUIe
+         dW9nUGG8HrZewpx2sP4e6XhHkVJb9YqPGxeQtfnL2sk6uNUrTMf9Ll15BUyYr76owHMQ
+         2UErLw9tnlNdb6tbzVv58gtaPHhXkwt9/FOVEHsKhlSSo5483AmyUXkXZHhoqzbIC9wV
+         RgnA==
+X-Gm-Message-State: AOJu0Yxq41CSvVIAupFR0nCdRAqMR8UhaHSAKlo8rciAj81ahjQqRsq9
+        FyHYN19nzwHw+TIhj0hPpyDoxA==
+X-Google-Smtp-Source: AGHT+IF8RCL56K/TNhChvR9Sd1sg5Sx9S2AOrq1y9gBazy2tDjoJGXyUNiPgazwA7mFfRddMbd8H/Q==
+X-Received: by 2002:a5d:4006:0:b0:31f:4173:2ac8 with SMTP id n6-20020a5d4006000000b0031f41732ac8mr5457073wrp.18.1695638436415;
+        Mon, 25 Sep 2023 03:40:36 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.100])
-        by smtp.gmail.com with ESMTPSA id x11-20020a5d650b000000b00318147fd2d3sm11486283wru.41.2023.09.25.03.39.22
+        by smtp.gmail.com with ESMTPSA id x11-20020a5d650b000000b00318147fd2d3sm11486283wru.41.2023.09.25.03.40.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Sep 2023 03:39:22 -0700 (PDT)
-Message-ID: <1b328720-7774-4bc1-8f7f-ad40aa1794b7@linaro.org>
-Date:   Mon, 25 Sep 2023 12:39:21 +0200
+        Mon, 25 Sep 2023 03:40:35 -0700 (PDT)
+Message-ID: <fbb3adde-3c2b-4748-aaa9-8b63fdbf6082@linaro.org>
+Date:   Mon, 25 Sep 2023 12:40:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 18/40] soc/qcom: icc-bwmon: Convert to platform remove
- callback returning void
+Subject: Re: [PATCH V3 1/4] dt-bindings: thermal: qcom-tsens: Add ipq5018
+ compatible
 Content-Language: en-US
-To:     =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kernel@pengutronix.de
-References: <20230925095532.1984344-1-u.kleine-koenig@pengutronix.de>
- <20230925095532.1984344-19-u.kleine-koenig@pengutronix.de>
+To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        srinivas.kandagatla@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        thara.gopinath@gmail.com, rafael@kernel.org,
+        daniel.lezcano@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, dmitry.baryshkov@linaro.org
+References: <20230922115116.2748804-1-srichara@win-platform-upstream01.qualcomm.com>
+ <20230922115116.2748804-2-srichara@win-platform-upstream01.qualcomm.com>
+ <f4fa94ab-78fb-d01b-7188-c498ec3053ff@linaro.org>
+ <21caae64-b8db-ed1f-2275-a7279227cf92@quicinc.com>
+ <a225833f-e645-48cc-a0e9-103999064548@linaro.org>
+ <8922b2f1-7869-409c-8974-d2560d72f454@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -110,36 +116,46 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20230925095532.1984344-19-u.kleine-koenig@pengutronix.de>
+In-Reply-To: <8922b2f1-7869-409c-8974-d2560d72f454@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/09/2023 11:55, Uwe Kleine-König wrote:
-> The .remove() callback for a platform driver returns an int which makes
-> many driver authors wrongly assume it's possible to do error handling by
-> returning an error code. However the value returned is ignored (apart
-> from emitting a warning) and this typically results in resource leaks.
-> To improve here there is a quest to make the remove callback return
-> void. In the first step of this quest all drivers are converted to
-> .remove_new() which already returns void. Eventually after all drivers
-> are converted, .remove_new() will be renamed to .remove().
+On 25/09/2023 12:31, Sricharan Ramabadhran wrote:
 > 
-> Trivially convert this driver from always returning zero in the remove
-> callback to the void returning variant.
 > 
-> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-> ---
+> On 9/25/2023 12:16 PM, Krzysztof Kozlowski wrote:
+>> On 25/09/2023 04:06, Sricharan Ramabadhran wrote:
+>>>
+>>>
+>>> On 9/23/2023 5:14 PM, Krzysztof Kozlowski wrote:
+>>>> On 22/09/2023 13:51, Sricharan R wrote:
+>>>>> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>>>>>
+>>>>> IPQ5018 has tsens v1.0 block with 4 sensors and 1 interrupt.
+>>>>
+>>>> Then why do you allow two interrupts?
+>>>>
+>>>    infact there is only one interrupt. Will fix in the binding
+>>>    description.
+>>
+>> Description? So you still allow two interrupts? No, this must be
+>> constrained in allOf:if:then.
+>>
+> 
+>   ok, it should be fine to add this new compatible to the existing
+>   allof:if:then block of v1 targets ? (Because they also have same
+>   single interrupt (uplow) constraint)
 
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Yes.
 
 Best regards,
 Krzysztof
