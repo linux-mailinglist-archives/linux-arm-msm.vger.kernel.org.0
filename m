@@ -2,131 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6ABC07AD587
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 12:11:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B519D7AD5E4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 12:29:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230387AbjIYKLc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Sep 2023 06:11:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39588 "EHLO
+        id S229475AbjIYK3F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Sep 2023 06:29:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231377AbjIYKLD (ORCPT
+        with ESMTP id S231437AbjIYK3E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Sep 2023 06:11:03 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B50C1B5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 03:10:48 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-532c81b9adbso7317341a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 03:10:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695636647; x=1696241447; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Xr0WnodR6L9SeYdsFuEWMgBEBiAtYzrQsEO7pPjODfo=;
-        b=LLvqwFYEcuEwB6Clv6i7RqhS3VxA53t/rEwdrDIH1WGg5V4eEGcrLdyYEzxyAhqVVY
-         UxKd4X/tBW0aHsx3lI3BDcDkSt8wLtz6qTNexnpLE2E+ofxbbhqKlc8axeqlvqauO5a8
-         YQWVj+Efve2XvFQxPL89OeTrQ61dQSj/78k7MXMW/YkfklIlxht1S4y/k1V6jN3T01o/
-         Q4JscRWgIIZFp4GKsAVcDPGM38RYLCo2aep3n3Een/h6bjYM9ErHstnwq/42DR/+VHb9
-         b3NP7W+1LPf6OhgDzxO++tV3f+EBNwHI+Nwk/Xvfj7M79BboD+VqCgsEY8zyr86m9mh8
-         aVew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695636647; x=1696241447;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Xr0WnodR6L9SeYdsFuEWMgBEBiAtYzrQsEO7pPjODfo=;
-        b=eowTSbehCHBB7BrqxX3am2HsnsCoJYmcVS+Gm+uF4Y+wd6gk0PT8pY8gmDmaOctYcN
-         mP15cu458LGtSPPun2eJ/FIZLxA2n/s6A5vUgszqWU5uAaaiBin3trqJVuN2G6hxrEI6
-         vnJiHa6gkRIrVZ0Ht1aIGPgExXSbjpC3T39ebF4mGXLvIzN+mRDC6ro1TDCLZcu/ypq2
-         8rAshj8oo3rnZZX7vKTgFFBtZHuFSMCSLL9rzgorpyb97tES8u7hLqrSBohi42Y3CGWU
-         0S5GiWVVIfNVStp3DibhCV2PG6EyZewMK9dVuswoKEQnK0S586zDNBicXyXmDGPoHd9D
-         zgZQ==
-X-Gm-Message-State: AOJu0YwVbg7fhALyZ2bjKR/IcOPF6bwqOxX0jl8h0OVA/qjeqDN4Nb7S
-        +FJ6ZGUl3zcQVlXd52ETypD3Gw==
-X-Google-Smtp-Source: AGHT+IFjmOoaGth1rXZEF8N96U9x/BOcopq9M+OEXGmLEt9p2sYbcNz+OXbdqBHaG3CqmkcJXNkfNw==
-X-Received: by 2002:aa7:c98b:0:b0:533:310b:a8aa with SMTP id c11-20020aa7c98b000000b00533310ba8aamr5114170edt.13.1695636646962;
-        Mon, 25 Sep 2023 03:10:46 -0700 (PDT)
-Received: from [192.168.101.165] (178235177023.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.23])
-        by smtp.gmail.com with ESMTPSA id u7-20020a05640207c700b005311e934765sm5349942edy.27.2023.09.25.03.10.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Sep 2023 03:10:46 -0700 (PDT)
-Message-ID: <3b48f232-501a-4adb-b6fe-0c62415c3caa@linaro.org>
-Date:   Mon, 25 Sep 2023 12:10:43 +0200
+        Mon, 25 Sep 2023 06:29:04 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7088B9B;
+        Mon, 25 Sep 2023 03:28:58 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38P8eEgU012494;
+        Mon, 25 Sep 2023 10:28:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=vws1dp5OU+F2CqVIXLbul7wyURVu7p3uJsVpOZVrkwo=;
+ b=V2qkHE9XgnNVKwvUSX/IK5gnGU8stqHCdFWyv2O2NZxGzJ1vOno7idTybDy/dLkw3GEU
+ I6+WRd1KZFaT3bxxdIXW8QyeWpFGyswelgy4RxhTzMNB5nMUvvso02VBebLh/CgC7U65
+ 8hhoiIZivrMImWdV8NMLk7BB9LqeSQrUgTvzfeEXMDEgqfrkhSx4lbi/LFROl7cEaKqu
+ j8yecKejxrIQs74jfRYIxYX9IEOiga2ZD+X2eP99UVWLEMO8b0hOi7YkzXPPjvkl6zY1
+ hCE+ByQ8xbHQSK2dzpOJ3Ry30J+ti1nce+qw9qd2tlJsMi24/jBc9D2/3mIH5v1XPhki Mg== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t9safbsrt-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 25 Sep 2023 10:28:45 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38PASiDu031432
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 25 Sep 2023 10:28:44 GMT
+Received: from hu-gokulsri-blr.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.36; Mon, 25 Sep 2023 03:28:39 -0700
+From:   Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
+To:     <dmitry.baryshkov@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <jassisinghbrar@gmail.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     <quic_varada@quicinc.com>, <quic_srichara@quicinc.com>,
+        <quic_gokulsri@quicinc.com>
+Subject: [PATCH V3 0/3] Add APSS clock driver support for IPQ5018
+Date:   Mon, 25 Sep 2023 15:58:23 +0530
+Message-ID: <20230925102826.405446-1-quic_gokulsri@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/7] arm64: dts: qcom: sm4450: Add RPMH and Global
- clock
-Content-Language: en-US
-To:     Tengfei Fan <quic_tengfan@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, tglx@linutronix.de, maz@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, catalin.marinas@arm.com, will@kernel.org
-Cc:     geert+renesas@glider.be, arnd@arndb.de, neil.armstrong@linaro.org,
-        nfraprado@collabora.com, u-kumar1@ti.com, peng.fan@nxp.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        quic_tsoni@quicinc.com, quic_shashim@quicinc.com,
-        quic_kaushalk@quicinc.com, quic_tdas@quicinc.com,
-        quic_tingweiz@quicinc.com, quic_aiquny@quicinc.com,
-        kernel@quicinc.com, Ajit Pandey <quic_ajipan@quicinc.com>
-References: <20230925064927.26448-1-quic_tengfan@quicinc.com>
- <20230925064927.26448-4-quic_tengfan@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230925064927.26448-4-quic_tengfan@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: I0WKHb-HDuuba0GaV1oevpXrrllpqIS8
+X-Proofpoint-GUID: I0WKHb-HDuuba0GaV1oevpXrrllpqIS8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-09-25_07,2023-09-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
+ mlxscore=0 priorityscore=1501 impostorscore=0 bulkscore=0 suspectscore=0
+ phishscore=0 malwarescore=0 mlxlogscore=643 spamscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
+ definitions=main-2309250076
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25.09.2023 08:49, Tengfei Fan wrote:
-> Add device node for RPMH and Global clock controller on Qualcomm
-> SM4450 platform.
-> 
-> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
-> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+This series adds support for the APSS clock to bump the CPU frequency
+above 800MHz. APSS PLL found in the IPQ5018 is of type Stromer. 
 
-Konrad
+- The first patch in the series adds the required a53pll compatible.
+
+- The second patch reuses Stormer Plus PLL offsets, adds configuration values
+  for Stromer.
+
+- The third patch adds dts nodes to enable the pll along with the cpu
+  operating frequency table.
+
+This series depends on below series
+https://patchwork.kernel.org/project/linux-arm-msm/cover/20230913-gpll_cleanup-v2-0-c8ceb1a37680@quicinc.com/
+
+Changes in v3:
+- Addressed review comment by Dmitry in patch 3.
+
+Changes in v2:
+- Addressed review comments
+- Adds dependency on above mentioned patch series for dropping
+  CLK_SET_RATE_PARENT flag from GPLL clocks, GPLL0 clock provider for
+  mailbox
+- Add CPU operating point at 800MHz based on the review comments.
+
+Gokul Sriram Palanisamy (3):
+  dt-bindings: clock: qcom,a53pll: add IPQ5018 compatible
+  clk: qcom: apss-ipq-pll: add support for IPQ5018
+  arm64: dts: qcom: ipq5018: enable the CPUFreq support
+
+ .../bindings/clock/qcom,a53pll.yaml           |  1 +
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi         | 40 +++++++++++++++++++
+ drivers/clk/qcom/apss-ipq-pll.c               | 21 ++++++++++
+ 3 files changed, 62 insertions(+)
+
+-- 
+2.34.1
+
