@@ -2,69 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A9317AD549
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 12:03:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DA037AD544
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 12:02:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229702AbjIYKDo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Sep 2023 06:03:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51124 "EHLO
+        id S231200AbjIYKCn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Sep 2023 06:02:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230208AbjIYKDV (ORCPT
+        with ESMTP id S230415AbjIYKCS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Sep 2023 06:03:21 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43D7249DA
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 02:57:48 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-99c136ee106so733661566b.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 02:57:48 -0700 (PDT)
+        Mon, 25 Sep 2023 06:02:18 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2011ACFA
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 02:58:16 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-502e7d66c1eso9550665e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 02:58:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695635867; x=1696240667; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695635894; x=1696240694; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
         bh=TXCCllwZ4z8DXewZcqb2sv1grtSHNDoEfG3kyz/bz1g=;
-        b=GP5X9vtzqCcnEs0YWgLtpZnynIbyE4wBHjdUpl2WkAA0RE8LHp4tu1batC3Y61wMYY
-         DSYQq2GomWbew0rYQHKOH9DGvU/XI6oq2sfU1ubvFH1BsylQcUvg2nZlyMmcqL46zK0h
-         8xkb9jCkaHCURZCBzLr5LmacaAGnwRlLdzQSMnL62EYemkRCSwpEy3SMbPLCUDtzf+uQ
-         Yod3RdtxeYrljDp6az9w10KFHSnPZKIgKAA6rizMDcqcT8+Yo67Pgo+VpmdkgTk7EQU9
-         iuRQwbxR62AOWadQxjzm+CwIMu7SpUk8Nqm77nzSDqcWizJ0/Fzd9drCclA1bFV2NjRp
-         Kfzw==
+        b=e/8UA3+3REhaWBO4ESsXhU6jrcMS3tU2tcKqDeHW/cdLGYh1n4vEt2WeUjb5PjfGxs
+         n4Bk9+F6vHkh1yI9srXC3Wowjqo74HfHDU/FYVaDN0UfYsd9C+g3pmS+HquKRtCbXS8D
+         UthdjGxpYEy3qPwoArx9XSFskHfjrpTuHq8X6jUPpOWE5BPQanL0vqKE0GtGyoJIWd+U
+         yfv6coHnBXivkjfCcxMsVEB8G8FcxvCCd3VBcehW1FHmcOZF0RrOwp6AWXAnATeDxHkj
+         ueelza72IBbAqz5JQCGwThl+6mQmHCS6bPyMj3RejGGrx2TCOF+1Z2qgU7oQm7tqxT8/
+         53iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695635867; x=1696240667;
+        d=1e100.net; s=20230601; t=1695635894; x=1696240694;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
         bh=TXCCllwZ4z8DXewZcqb2sv1grtSHNDoEfG3kyz/bz1g=;
-        b=CMWZ/d5sXvG5rKDObrSuP4TOAL07zrcvUcRgnpfVMtQXubj+uTUEOers0E2RZWL86b
-         W9cuWVQlzBN2o1O3F1gn1rcXMIwvxT2axyA2Dj0TU+j0vBY6GzLJcsoY7xPVaQeAVZjI
-         hkqBAzE+UGTARzmNxDZXgj1JWd5opOoyeajFxs543+LFs7SGfgHXTR4A8XOoAx1kXWQc
-         pJSBwB/VwmfAtxhXOq6k3/N4oeItRMjCnsz3NZQ5KVTa7e7TjCqG0MLQP4hoH/jHaQ2u
-         saKOj0VNflI8PygghKbAXPr4eLv0I0u4SDzGEYaGia5xptCRRbay5LSuk/34kKaQZGDw
-         NYcg==
-X-Gm-Message-State: AOJu0YxSuQrEt8/bBCuUfr3ye2khrmfRSdpA4EJhPM3C1/gO1xfJUnXg
-        /9/kYPmvuNvTYWuIZUaUxetP5Q==
-X-Google-Smtp-Source: AGHT+IEuPMkqZnYjen1gLkIp17k8bwUw0RZnHSGTk1YHnMqg/6041RUYkJdCq94a8hGenU7mfYjFQw==
-X-Received: by 2002:a17:906:51d4:b0:9ae:3c09:8ce1 with SMTP id v20-20020a17090651d400b009ae3c098ce1mr5816797ejk.39.1695635866741;
-        Mon, 25 Sep 2023 02:57:46 -0700 (PDT)
+        b=NzmJzjnmp3Is00l7FCryTgGXdDrAFmzwkkdEfSPocVaQoMqyhoJRUXX8jzPnTYR3eb
+         vblA9caJW0/JNirrx4Ct51prehIh84HWaJLD6l1nbRqAhjjCcJfelbztnTzDeOnIXuPI
+         XOn5knEl4SiowtD9OjnRF2IBrXoBi98OtBHmMSHf0Qf+zR+sKQ54211hzSk3tJ+2dWW1
+         LWmjPzTYLAsN3w4coiFG96GIZuVUI4v55i4T3xGmTg0k85h+6sRFjZszeMTS7NSerrOx
+         3xpDOTJ24JFE2ZXQo/zkCbAV1YT1eoVp8aA5GqkFoyqIPY94nHk0tgAYmkJkU7tQVrHH
+         uOlg==
+X-Gm-Message-State: AOJu0Yy5t5w7qFGACz6+ywGual45JkJWgYy1snx0FZCDDAHZrvInxCdc
+        uHCy55KwimCiRhdKY6SJ5b3kCQ==
+X-Google-Smtp-Source: AGHT+IGJ6sne9LdG8Z+47LLtuwAYb6dyLWJVUq4Amr5t6wO939A6044kiRuAcgsp2Qo9LGRMFmOVsg==
+X-Received: by 2002:a05:6512:360e:b0:503:eac:747 with SMTP id f14-20020a056512360e00b005030eac0747mr4833498lfs.47.1695635893804;
+        Mon, 25 Sep 2023 02:58:13 -0700 (PDT)
 Received: from [192.168.101.165] (178235177023.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.23])
-        by smtp.gmail.com with ESMTPSA id k3-20020a17090646c300b009ae57888718sm6040535ejs.207.2023.09.25.02.57.45
+        by smtp.gmail.com with ESMTPSA id k3-20020a17090646c300b009ae57888718sm6040535ejs.207.2023.09.25.02.58.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Sep 2023 02:57:46 -0700 (PDT)
-Message-ID: <13ab111c-d1bc-4352-9427-136407b1bb24@linaro.org>
-Date:   Mon, 25 Sep 2023 11:57:44 +0200
+        Mon, 25 Sep 2023 02:58:13 -0700 (PDT)
+Message-ID: <dc4068ef-ab53-4349-87e2-45c32ef0d569@linaro.org>
+Date:   Mon, 25 Sep 2023 11:58:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 18/40] soc/qcom: icc-bwmon: Convert to platform remove
+Subject: Re: [PATCH 20/40] soc/qcom: ocmem: Convert to platform remove
  callback returning void
 Content-Language: en-US
 To:     =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         kernel@pengutronix.de
 References: <20230925095532.1984344-1-u.kleine-koenig@pengutronix.de>
- <20230925095532.1984344-19-u.kleine-koenig@pengutronix.de>
+ <20230925095532.1984344-21-u.kleine-koenig@pengutronix.de>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -101,7 +100,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230925095532.1984344-19-u.kleine-koenig@pengutronix.de>
+In-Reply-To: <20230925095532.1984344-21-u.kleine-koenig@pengutronix.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
