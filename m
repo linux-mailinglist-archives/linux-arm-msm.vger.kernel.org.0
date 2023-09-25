@@ -2,145 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4CA567AD7DF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 14:20:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E5777AD9AC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Sep 2023 16:01:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231256AbjIYMVB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Sep 2023 08:21:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57818 "EHLO
+        id S232099AbjIYOBz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Sep 2023 10:01:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229556AbjIYMVB (ORCPT
+        with ESMTP id S232067AbjIYOBy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Sep 2023 08:21:01 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 667B0103;
-        Mon, 25 Sep 2023 05:20:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1695644454; x=1727180454;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=DuowFPWx8WzqGKtlSQ1LLSC/9eNAA11N0z3LCFyNJPw=;
-  b=ff+IftKAhdGpIZBjye12W7HsazMjN6ZE/3buBQWYO5jQxeTvk3Iy6cr0
-   wAK4IFydmdybFdzSbZ0t9BJNqnL2+xTE+WsDnKrAmtrkDHd3pqc90JqOM
-   kCJPZHcaUy07RSEQvzUj7pOekdfdMcZk67ceczGmpkaS4X0XA8WHL2eUU
-   qDcyISSgBwAeGXf9329VpNbM9VzbgicITJ3efoQZOji2BOqNJjb2KLRTN
-   7MVCsdJeyv8iQrNM/tfpba72A8qwDUUZDDE5iXXAGchiAh1xFk/9RIaC5
-   kusFKfhog2H7DwqWJ+KHAe3bHIohQyMnPT6ycTZqZ2J+nSZH/y+b379Cj
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10843"; a="383996632"
-X-IronPort-AV: E=Sophos;i="6.03,174,1694761200"; 
-   d="scan'208";a="383996632"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Sep 2023 05:20:53 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10843"; a="748329775"
-X-IronPort-AV: E=Sophos;i="6.03,174,1694761200"; 
-   d="scan'208";a="748329775"
-Received: from nurqayrx-mobl2.gar.corp.intel.com (HELO intel.com) ([10.213.34.118])
-  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Sep 2023 05:20:19 -0700
-Date:   Mon, 25 Sep 2023 14:20:13 +0200
-From:   Andi Shyti <andi.shyti@linux.intel.com>
-To:     Kees Cook <keescook@chromium.org>
-Cc:     David Airlie <airlied@gmail.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Chris Wilson <chris@chris-wilson.co.uk>,
-        John Harrison <john.c.harrison@intel.com>,
-        Andi Shyti <andi.shyti@linux.intel.com>,
-        Matthew Brost <matthew.brost@intel.com>,
-        intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        Emma Anholt <emma@anholt.net>, Evan Quan <evan.quan@amd.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Christian =?iso-8859-15?Q?K=F6nig?= <christian.koenig@amd.com>,
-        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
-        Xiaojian Du <Xiaojian.Du@amd.com>,
-        Huang Rui <ray.huang@amd.com>,
-        Kevin Wang <kevin1.wang@amd.com>,
-        Hawking Zhang <Hawking.Zhang@amd.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Ben Skeggs <bskeggs@redhat.com>,
-        Karol Herbst <kherbst@redhat.com>,
-        Lyude Paul <lyude@redhat.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        David Airlie <airlied@redhat.com>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        Gurchetan Singh <gurchetansingh@chromium.org>,
-        Chia-I Wu <olvaffe@gmail.com>, Zack Rusin <zackr@vmware.com>,
-        VMware Graphics Reviewers 
-        <linux-graphics-maintainer@vmware.com>,
-        Melissa Wen <mwen@igalia.com>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Tom Rix <trix@redhat.com>, Le Ma <le.ma@amd.com>,
-        Lijo Lazar <lijo.lazar@amd.com>,
-        Yifan Zhang <yifan1.zhang@amd.com>,
-        Prike Liang <Prike.Liang@amd.com>, Lang Yu <Lang.Yu@amd.com>,
-        Tejas Upadhyay <tejas.upadhyay@intel.com>,
-        Nirmoy Das <nirmoy.das@intel.com>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        linux-kernel@vger.kernel.org, amd-gfx@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        nouveau@lists.freedesktop.org,
-        virtualization@lists.linux-foundation.org, llvm@lists.linux.dev,
-        linux-hardening@vger.kernel.org
-Subject: Re: [PATCH 3/9] drm/i915/selftests: Annotate struct perf_series with
- __counted_by
-Message-ID: <ZRF6/VBgVvgl6lpn@ashyti-mobl2.lan>
-References: <20230922173110.work.084-kees@kernel.org>
- <20230922173216.3823169-3-keescook@chromium.org>
+        Mon, 25 Sep 2023 10:01:54 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FE04107
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 07:01:47 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-307d58b3efbso5447167f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 07:01:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1695650506; x=1696255306; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=B65znnPKGc/kSnG351YXtEb2b6JUEftCxKy2HXeBLEs=;
+        b=O1onFIGPnMoicI1+K/Bb6k+wx5ts7f2hbjzMy5IEIIyHB2Ls/9r44GuLBdZ5nHwiju
+         dAcu2w5YMl12QN+WsnK27pR1mCgzGcliAehGsEc2OF2CPhHKL2/mQldGaXH7tFi+AauF
+         RJEpatGn+pR+Lr+go8qD54SwzVPuM7JyFInSmjs8CLASl7jUI05RMf7xHmSEnUZR0Q0h
+         A2tPJ4Oyt2ojrRTy9Ut4lCAHWtTj2eTP/hg9T44PGs5nCzrxo8KSzekV6ITkSXJssRy1
+         sh9MnfNajMvGJSgEAxQL/ohkHtoN1S3+DzPhSNXPtr2muT86XS3t2IfyuVRWOiuyVggu
+         tKdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695650506; x=1696255306;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=B65znnPKGc/kSnG351YXtEb2b6JUEftCxKy2HXeBLEs=;
+        b=vu9L7iIUUQgqKOJVPDpmpc4ehkgQsea39t5YubiGnWDDamy3cBhPh/YwGC64ESYPUc
+         SPuzrICqXdUhspagEWS25rfd+m7LeY4u7V66GOEQKXJbAsz6ijoR19S8BK/6Hm+8kPrA
+         59ArxOjp7jWxhTnQNseGTajDCQAhkjtNxLKQZ9i0uenMQ7bVqpTthdOHYcXsg6cC3nXV
+         faFcUSrKPzk8gGltka6HwYMShWSUY/NuCk2bCnLK14CxbaBvrwk2uADy05IHsSoCUqFk
+         SoicFHPVtxC13ZuGdbnJWL99CasqBTBEtq1hlvblZ8j2FSKQPeMIYL+8B97PnB4IG4wK
+         laWQ==
+X-Gm-Message-State: AOJu0Yzd79xSSpvjgyTIKpBz1Zm3FmBHknwUDmOnxEm8w5PGO8ji/EjZ
+        TTvjoV/XS+DC5q1J7kaGmGgsfQ==
+X-Google-Smtp-Source: AGHT+IH6A3pXZQDF358jCVZZKD5lXk/EW6dIzhrStDEO3z42JkDq/nm/3gH9pTecMt9SP6HzX8xbxg==
+X-Received: by 2002:a5d:58ee:0:b0:31f:f94f:e13f with SMTP id f14-20020a5d58ee000000b0031ff94fe13fmr6689312wrd.19.1695650505606;
+        Mon, 25 Sep 2023 07:01:45 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id f18-20020a5d58f2000000b00317b0155502sm11943090wrd.8.2023.09.25.07.01.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Sep 2023 07:01:45 -0700 (PDT)
+Message-ID: <a6991564-c496-4f87-9a32-c107de0214d7@linaro.org>
+Date:   Mon, 25 Sep 2023 15:01:44 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230922173216.3823169-3-keescook@chromium.org>
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 17/17] media: qcom: camss: Comment CSID dt_id field
+Content-Language: en-US
+To:     Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Cc:     rfoss@kernel.org, todor.too@gmail.com, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, mchehab@kernel.org,
+        sakari.ailus@linux.intel.com, andrey.konovalov@linaro.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230911131411.196033-1-bryan.odonoghue@linaro.org>
+ <20230911131411.196033-18-bryan.odonoghue@linaro.org>
+ <1e815d41-719a-4ca1-98e3-872f882ed03e@xs4all.nl>
+ <20230925081452.GA8583@pendragon.ideasonboard.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20230925081452.GA8583@pendragon.ideasonboard.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Kees,
-
-On Fri, Sep 22, 2023 at 10:32:08AM -0700, Kees Cook wrote:
-> Prepare for the coming implementation by GCC and Clang of the __counted_by
-> attribute. Flexible array members annotated with __counted_by can have
-> their accesses bounds-checked at run-time checking via CONFIG_UBSAN_BOUNDS
-> (for array indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family
-> functions).
+On 25/09/2023 09:14, Laurent Pinchart wrote:
+> On Mon, Sep 25, 2023 at 09:11:52AM +0200, Hans Verkuil wrote:
+>> On 11/09/2023 15:14, Bryan O'Donoghue wrote:
+>>> Digging into the documentation we find that the DT_ID bitfield is used to
+>>> map the six bit DT to a two bit ID code. This value is concatenated to the
+>>> VC bitfield to create a CID value. DT_ID is the two least significant bits
+>>> of CID and VC the most significant bits.
+>>>
+>>> Originally we set dt_id = vc * 4 in and then subsequently set dt_id = vc.
+>>>
+>>> commit 3c4ed72a16bc ("media: camss: sm8250: Virtual channels for CSID")
+>>> silently fixed the multiplication by four which would give a better
+>>> value for the generated CID without mentioning what was being done or why.
+>>>
+>>> Next up I haplessly changed the value back to "dt_id = vc * 4" since there
+>>> didn't appear to be any logic behind it.
+>>>
+>>> Hans asked what the change was for and I honestly couldn't remember the
+>>> provenance of it, so I dug in.
+>>>
+>>> Link: https://lore.kernel.org/linux-arm-msm/edd4bf9b-0e1b-883c-1a4d-50f4102c3924@xs4all.nl/
+>>>
+>>> Add a comment so the next hapless programmer doesn't make this same
+>>> mistake.
+>>>
+>>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>> ---
+>>>   drivers/media/platform/qcom/camss/camss-csid-gen2.c | 5 +++++
+>>>   1 file changed, 5 insertions(+)
+>>>
+>>> diff --git a/drivers/media/platform/qcom/camss/camss-csid-gen2.c b/drivers/media/platform/qcom/camss/camss-csid-gen2.c
+>>> index 6ba2b10326444..cee50fc87e9de 100644
+>>> --- a/drivers/media/platform/qcom/camss/camss-csid-gen2.c
+>>> +++ b/drivers/media/platform/qcom/camss/camss-csid-gen2.c
+>>> @@ -352,6 +352,11 @@ static void __csid_configure_stream(struct csid_device *csid, u8 enable, u8 vc)
+>>>   		phy_sel = csid->phy.csiphy_id;
+>>>   
+>>>   	if (enable) {
+>>> +		/*
+>>> +		 * A value caled 'CID' gets generated internal to CAMSS logic
+>>
+>> caled -> called
+>>
+>>> +		 * which is a concatenation of [vc:6 | dt_id:2] hence we reuse
+>>
+>> vc:6? Do you mean bit 6 or do you mean the least significant 6 bits?
+>>
+>> Regardless, since the vc variable <= 3 (since MSM_CSID_MAX_SRC_STREAMS is 4),
+>> either interpretation makes little sense.
 > 
-> As found with Coccinelle[1], add __counted_by for struct perf_series.
+> More recent versions of CSI-2 support up to 6 bits of VC (or possibly
+> even more in versions I may not know about). It would probably make
+> sense to write vc[5:0] | dt_id[1:0] or something similar.
 > 
-> [1] https://github.com/kees/kernel-tools/blob/trunk/coccinelle/examples/counted_by.cocci
+>> And what does "DT" stand for?
 > 
-> Cc: Jani Nikula <jani.nikula@linux.intel.com>
-> Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-> Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-> Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-> Cc: David Airlie <airlied@gmail.com>
-> Cc: Daniel Vetter <daniel@ffwll.ch>
-> Cc: Chris Wilson <chris@chris-wilson.co.uk>
-> Cc: John Harrison <john.c.harrison@Intel.com>
-> Cc: Andi Shyti <andi.shyti@linux.intel.com>
-> Cc: Matthew Brost <matthew.brost@intel.com>
-> Cc: intel-gfx@lists.freedesktop.org
-> Cc: dri-devel@lists.freedesktop.org
-> Signed-off-by: Kees Cook <keescook@chromium.org>
+> Data Type.
+> 
+>>> +		 * the least significant two bits of the VC to 'stuff' the CID value.
+>>> +		 */
+>>>   		u8 dt_id = vc;
+>>
+>> If dt_id should be the least significant two bits of vc, shouldn't
+>> this say: "= vc & 3;"? Or, alternatively, have a comment that vc <= 3?
+>>
+>>>   
+>>>   		if (tg->enabled) {
+> 
 
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com> 
+I'll rewrite this comment since its still confusing people.
 
-Thanks,
-Andi
+@Hans VC and DT are fields in the CSI protocol structure sections 
+2.2.2.2 and 2.2.2.3
+
+https://www.nxp.com/docs/en/application-note/AN5305.pdf
+
+---
+bod
