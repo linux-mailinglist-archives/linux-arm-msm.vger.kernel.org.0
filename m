@@ -2,158 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD52A7AF4D4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 22:09:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EBDF87AF4E4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 22:17:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235810AbjIZUJn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Sep 2023 16:09:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54936 "EHLO
+        id S231564AbjIZURr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Sep 2023 16:17:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235848AbjIZUJm (ORCPT
+        with ESMTP id S229694AbjIZURr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Sep 2023 16:09:42 -0400
-Received: from mo4-p03-ob.smtp.rzone.de (mo4-p03-ob.smtp.rzone.de [81.169.146.174])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E882F3;
-        Tue, 26 Sep 2023 13:09:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1695758965; cv=none;
+        Tue, 26 Sep 2023 16:17:47 -0400
+Received: from mo4-p03-ob.smtp.rzone.de (mo4-p03-ob.smtp.rzone.de [85.215.255.103])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 376A8120;
+        Tue, 26 Sep 2023 13:17:40 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1695759457; cv=none;
     d=strato.com; s=strato-dkim-0002;
-    b=WS4x5rvdJI4EAJiDhdSIw2lnGrRPbo88z5YH2ex+jD/Z7VwMojhvLQEIvswFj2ba+Z
-    Rm1LV1ucw8Vsqi6cR3dCPS7XQAGem7/jpAOOw9/LMqxCsPNxqysyMEhJ+gsAcqlwGVaB
-    ezxdmiTZkvNtRkxUmIm4nQ307mu6HtX2DLDbuDzusgSRbYvh3UmeShxCUYN+D2Ik3P/m
-    I8+AvdSWhrQrBHA4Wl8n3txxLXBqUWGd7vB9QwdAiOzmpyl6vh5sk6DMagao5vT9JXsG
-    eoeksHVZoK/DGioqbwxJ2/ulMH3YCDAvxUegXGApPHwVlVCsevJAdk11dFQBxFDr2v1m
-    jNIw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1695758965;
+    b=Gd2+GX7jicTOYyGDuJ+V+AktN7HvaAPB7C6faEsx8mxol2lCeLqyRKwUchUkTQK/3V
+    M84NSLhXYVxzeTwIibP+jftyQBBgwgsPXB1me51s8D29EFxnQ/0PdivNXPy8gDldazGx
+    KzSueGJh0bOOzN0auc0QaPpIDd4QIfDMoyL7jrnrVgTvYFIBcgvIFh5TI6IjBHEP+Yf7
+    Pmvwe8bZHvM1KFZZRSNNU4OzTbSs+53lHhZh8nQo6xLwYnCuxMnR68nQ9OvXUCIN6zIG
+    mXUiKMK2c92kxdAV0WBpYDDozQvfQoyABr3M6CGdyBkSbc72doY9SvDQLsp/BkCyCD11
+    4HLA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1695759457;
     s=strato-dkim-0002; d=strato.com;
     h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
     From:Subject:Sender;
-    bh=YETXfSsUtaof3nncdDu3fY7ytFdEFMKv0AFZkw1Jcqk=;
-    b=WBNa0DhNutK6mySOxWBwEmC7AzWQe2cpRYDLNEqEJ7MgCQZmxfOj7+V2V6198M46my
-    o+g+yRTggBvdHUz6om35xlhiC0MZ6HNlrPje9MpIwwLS7fXxnPvanjtq674919WfecBZ
-    LNb2XgIreDF4a8ct5oCAuK7NaEScOSVtMtvNgfcuhqghF68ACCGj+1KNWnVsvY2U8X/l
-    zboK+sAHGZHpW7p9fLOnnK9CtmVEO+mW7DKAFD7jfksbt58I1v4/EJPNyEyr6a1eW9DX
-    v6/3XIVwqGyVtlkdHWpWEw8eM+dUPRrY1Kzj0S3TbHMt0oIw5cRJHPZcV7t4qoLV80ZL
-    xCkQ==
+    bh=gXP9+C6uV2gAxP9cx2kOiZiHz5Y6eAXv91fPvZhh35U=;
+    b=QX+Qtds5nmHZjfflrA8oiEN2teA+EiMCpxwvbbj//1DIINo43b42XXLKfbkVyPhFtv
+    C5NA+nRJ/8eTS8+uuXopLuuS+Pi908S47cVADWCbnVPPattydk5d/krljK6yK7BPjAND
+    7R0vI4DvTrba5eNvA0SGKCAjzAeLJU1MFKCN5AkFWVMnOTBFVgJTryYLrhagp+vlnssG
+    QKpzlqlPvBy/E5pGajBLTD/b1HgWCoGbkuuvyP8NzaKS+xQ7d6CW7EBDRDATt22BZgGS
+    g/emyg93ZJTpdpKpKXczCx7R1HPJIHsBAJlRQyPZrPF3sAKlHnSMBPYvPdVCzTySFDRv
+    hMOQ==
 ARC-Authentication-Results: i=1; strato.com;
     arc=none;
     dkim=none
 X-RZG-CLASS-ID: mo03
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1695758965;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1695759457;
     s=strato-dkim-0002; d=gerhold.net;
     h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
     From:Subject:Sender;
-    bh=YETXfSsUtaof3nncdDu3fY7ytFdEFMKv0AFZkw1Jcqk=;
-    b=SLNR1sTInafG0F33FzaJUaynQq1s4n15rnXa/uCo6g3+bE8Z8N6xSYjf6gC2NZ+bhY
-    Sfl7z9waTLCEun2yxzZt5qWclJ8z3lerHrVOaDxTPlyi3yb8KvmHz9xpMji20rJCMLcu
-    u0FYn1JsjH5oj+8RrtYCTogV5H7+4uodNjseACcLT81A/VCHiwBhmIBX5AMkwS+mxeqV
-    g4tm1j7fEfMeWMPmbwx8WzI0/z4indO5eJcmFMBS1kRWo3fK8Tle08HXTSlvB8URAHKD
-    GpxKZ1AmOxj3r7nnxjku4DBmk+2VHrDOIliksjgk/KS9iGTLXmRyqQGqoLOa00U8zZ4o
-    h9pg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1695758965;
+    bh=gXP9+C6uV2gAxP9cx2kOiZiHz5Y6eAXv91fPvZhh35U=;
+    b=eN4ybnc1ebaw6IEGAYV9fsaRFEbn0hL8jaYE1ogGVzJFiLwefD/xNr6AZ8YmgXfdJP
+    uaWgjnrk/mJPeoYM/cDWCwEbeAP0NtqauugUpG1PbOjkiDl0DCWEUdAI2GmTBdGsM8+L
+    Es8hNQbzxjgSvYcw5+WTMG1uag06EaJGa1MEMhKnJ6JErMQarXDhg0J9dQ3JTMAsiWGn
+    VLYrDoEvcSBywyySQp1/NukccV7AJSmFcZjE8FI1dlZv2ZSFElFCOb9eOJyPlne4+yrc
+    CF6KXHl5h2sIsY87h0Om248KzXKCccAUxYvvd6UpN3pO3qmsANCezhkut+7dBqlyp0pn
+    hlBQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1695759457;
     s=strato-dkim-0003; d=gerhold.net;
     h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
     From:Subject:Sender;
-    bh=YETXfSsUtaof3nncdDu3fY7ytFdEFMKv0AFZkw1Jcqk=;
-    b=h8a93bmqQe2gWd3zJX3LsPbssJWzJ9kEGICQrOLz3/j1eYZdv8FScXnhvukhKHxJ/e
-    /+lk4cOdqbV2EsfaMVBA==
+    bh=gXP9+C6uV2gAxP9cx2kOiZiHz5Y6eAXv91fPvZhh35U=;
+    b=S8jZrobbnQXGh6ZKHuq9A7XtHhvfl/EW/RDZhc/O0feR6BkIvQw5XsdP1CD/Nl2emV
+    4ANU6Ku0mzIkNh94BzAg==
 X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA8piJ1A=="
 Received: from gerhold.net
     by smtp.strato.de (RZmta 49.8.2 SBL|AUTH)
-    with ESMTPSA id R04c57z8QK9PgRK
+    with ESMTPSA id R04c57z8QKHbgSJ
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
         (Client did not present a certificate);
-    Tue, 26 Sep 2023 22:09:25 +0200 (CEST)
-Date:   Tue, 26 Sep 2023 22:09:24 +0200
+    Tue, 26 Sep 2023 22:17:37 +0200 (CEST)
+Date:   Tue, 26 Sep 2023 22:17:35 +0200
 From:   Stephan Gerhold <stephan@gerhold.net>
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc:     Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
-Subject: Re: [PATCH 04/13] arm64: dts: qcom: msm8916-samsung-a2015: Add sound
- and modem
-Message-ID: <ZRM6dJXNvx93jFrM@gerhold.net>
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: Re: [PATCH 03/13] arm64: dts: qcom: msm8916: Add common
+ msm8916-modem-qdsp6.dtsi
+Message-ID: <ZRM8XzmAz8RAqkUg@gerhold.net>
 References: <20230926-msm8916-modem-v1-0-398eec74bac9@gerhold.net>
- <20230926-msm8916-modem-v1-4-398eec74bac9@gerhold.net>
- <2c9eda54-a90e-483a-abc2-865d82854b80@linaro.org>
- <ZRMwdRo9hAm4BO5E@gerhold.net>
- <278ac134-992e-460a-b37a-60a746eab107@linaro.org>
+ <20230926-msm8916-modem-v1-3-398eec74bac9@gerhold.net>
+ <45665b43-3be9-4f27-aa88-12cdef56346d@linaro.org>
+ <ZRMrqsZ0QeDNFHFj@gerhold.net>
+ <1be747ae-1d80-4ebc-9841-c0e98e64a0d1@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <278ac134-992e-460a-b37a-60a746eab107@linaro.org>
+In-Reply-To: <1be747ae-1d80-4ebc-9841-c0e98e64a0d1@linaro.org>
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 26, 2023 at 09:56:12PM +0200, Konrad Dybcio wrote:
-> [...]
-> 
-> >>> +
-> >>>  &blsp_i2c2 {
-> >>>  	status = "okay";
-> >>>  
-> >>> @@ -243,6 +258,13 @@ &gpu {
-> >>>  	status = "okay";
-> >>>  };
-> >>>  
-> >>> +&lpass {
-> >>> +	dai-link@3 {
-> >>> +		reg = <MI2S_QUATERNARY>;
-> >>> +		qcom,playback-sd-lines = <1>;
-> >>> +	};
-> >>> +};
-> >> Is that not status = reserved?
+On Tue, Sep 26, 2023 at 10:01:21PM +0200, Konrad Dybcio wrote:
+> On 26.09.2023 21:06, Stephan Gerhold wrote:
+> > On Tue, Sep 26, 2023 at 08:49:24PM +0200, Konrad Dybcio wrote:
+> >> On 26.09.2023 18:51, Stephan Gerhold wrote:
+> >>> Most MSM8916/MSM8939 devices use very similar setups for the modem,
+> >>> because most of the device-specific details are abstracted by the modem
+> >>> firmware. There are several definitions (status switches, DAI links
+> >>> etc) that will be exactly the same for every board.
+> >>>
+> >>> Introduce a common msm8916-modem-qdsp6.dtsi include that can be used to
+> >>> simplify enabling the modem for such devices. By default the
+> >>> digital/analog codec in the SoC/PMIC is used, but boards can define
+> >>> additional codecs using the templates for Secondary and Quaternary
+> >>> MI2S.
+> >>>
+> >>> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> >>> ---
+> >> I'd rather see at least one usage so that you aren't introducing
+> >> effectively non-compiled code..
 > >>
 > > 
-> > Correct. This is here to simplify switching to the modem-bypass audio
-> > routing if someone does not need (or want) the modem. The direct audio
-> > path with the LPASS drivers tends to be more reliable and configurable
-> > (especially wrt bit formats, sampling rates, latency, channels etc).
-> > I know that at some point this helped someone who tried to use an old
-> > phone as some kind of portable musical instrument / synthesizer.
+> > There are 10 usages in the rest of the patch series.
+> > Is that enough? :D
 > > 
-> > It's not too obvious that these definitions would be needed when making
-> > those changes (because devices using the standard SD lines (i.e <0>) do
-> > not need it). If you forget about this you get non-functional audio with
-> > no error or any hint what could be wrong.
-> > 
-> > To simplify switching between the different audio routing options, the
-> > lk2nd bootloader actually has an option to do this transformation in the
-> > DTB automagically during boot. It's sort of like a DTB overlay that
-> > disables the QDSP6 audio path and enables this node instead. The DAI
-> > links are also adjusted where necessary.
-> > 
-> > Do you think a comment would help here?
-> I'd say a comment would be necessary here :D
+> > IMHO it doesn't make sense to squash this with one of the device
+> > patches, especially considering several of them are primarily authored
+> > by others.
+> I see..
+> 
+> Well, I guess I don't have better counter-arguments, but please
+> consider this the next time around.
 > 
 
-No problem, I will try to add something simple.
+Will do!
 
-> While I understand this use-case, I believe this is better suited
-> for an actual DTBO or something entirely kept inside lk2nd.
-> Otherwise this looks very confusing to an outside reader.
+> [...]
+> 
+> >>> +&lpass_codec {
+> >>> +	status = "okay";
+> >>> +};
+> >> Any reason for it to stay disabled?
+> >>
+> > 
+> > You mean in msm8916.dtsi?
+> Yes
+> 
+> > For the SoC dtsi we don't make assumptions
+> > what devices use or not. There could be devices that ignore the internal
+> > codec entirely. If there is nothing connected to the codec lpass_codec
+> > should not be enabled (e.g. the msm8916-ufi.dtsi devices).
+> See my reply to patch 5
+> 
+> [...]
 > 
 
-Translating from the QDSP6 audio setup to the LPASS one is mostly simple
-but not entirely trivial (especially the patching needed for the DAI
-links). Main blocker for DTBOs is that you can only add or change, but
-AFAIK there is no mechanism to _delete_ or fully recreate nodes.
+Let's continue discussing that there I guess. :D
 
-I guess I could maybe derive this from the QDSP6 definitions using
-custom magic code, but the code complexity for that is much higher than
-adding these nodes here for completeness.
+> >>> +	sound_dai_secondary: mi2s-secondary-dai-link {
+> >>> +		link-name = "Secondary MI2S";
+> >>> +		status = "disabled"; /* Needs extra codec configuration */
+> >> Hmm.. Potential good user of /omit-if-no-ref/?
+> >>
+> > 
+> > AFAICT /omit-if-no-ref/ is for phandle references only. Basically it
+> > would only work if you would somewhere reference the phandle:
+> > 
+> > 	list-of-sound-dais = <&sound_dai_primary &sound_dai_secondary>;
+> > 
+> > But this doesn't exist so /omit-if-no-ref/ cannot be used here.
+> Ahh right, this is the one we don't reference.. Too bad,
+> would be a nice fit :/
+> 
+> I only see one usage of it though (patch 7), perhaps it could
+> be kept local to that one?
+> 
 
-Let me try to add some comment first.
+This patch series just contains the initial set of
+msm8916-modem-qdsp6.dtsi users (for devices which are already upstream).
+We probably have like 20 more that still need to be upstreamed. :D
+
+sound_dai_secondary is fairly rare, but there is at least one more user
+that will probably end up upstream soon.
+
+I think the overhead of these template notes is absolutely negligible
+compared to all the (potentially) unused SoC nodes we have. :D
 
 Thanks,
 Stephan
