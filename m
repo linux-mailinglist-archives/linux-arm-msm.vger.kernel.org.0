@@ -2,55 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 84C0A7AE8E0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 11:22:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 906BA7AE936
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 11:29:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234120AbjIZJXA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Sep 2023 05:23:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51986 "EHLO
+        id S234168AbjIZJ3r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Sep 2023 05:29:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233835AbjIZJW7 (ORCPT
+        with ESMTP id S234298AbjIZJ3o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Sep 2023 05:22:59 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF0F4BE;
-        Tue, 26 Sep 2023 02:22:52 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FBE8C433C8;
-        Tue, 26 Sep 2023 09:22:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1695720172;
-        bh=5Ay18k+jPh73OS8+ssl9DFrqcOhVxl+RBRenHltQGiI=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=QpNEEZ/25PZBLK1cSeRjXuRk8hB1hpJ00YxGA5akv2L4mQxQz7hvEKPaJoaCni+Kg
-         HgZNsQK74Mytzw/jD/MWdyZrUuaS1tsuvkZlNgxN/ojco5QVZXp7rWOUJWSKaG9e0F
-         7VkrF9jMMrQQ30ja8qyLV/XI58eSY3e3huQGXBlMxkaoi20TDnIiIua6fcguek9zBV
-         1yX6h7FFoFr2SKvkfcjN2Dgpb76yMxhaoW57LImT3zSAIlAVwZN4RuAG1zhkT2LKAA
-         aL9L/wAODA00gB/IFWX5ziAoCggxmzLXj5kle79fXHhkTFa28BRf6XIl4Lp4SEaG/q
-         um/HpNdlDnGyg==
-From:   Mark Brown <broonie@kernel.org>
-To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230919-spi-qup-dvfs-v2-0-1bac2e9ab8db@kernkonzept.com>
-References: <20230919-spi-qup-dvfs-v2-0-1bac2e9ab8db@kernkonzept.com>
-Subject: Re: [PATCH v2 0/4] spi: qup: Allow scaling power domains and
- interconnect
-Message-Id: <169572016977.2563985.17070473917450911159.b4-ty@kernel.org>
-Date:   Tue, 26 Sep 2023 11:22:49 +0200
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-099c9
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        Tue, 26 Sep 2023 05:29:44 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3668F101;
+        Tue, 26 Sep 2023 02:29:38 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38Q4UkTt028789;
+        Tue, 26 Sep 2023 09:29:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=YD6TNBb0PH+pJri9BpRNJOaNzubtn2YqRwEMYMRp5Y8=;
+ b=DWUN/FOxYpnqHbdvXbd7Zln7oiZy92IVHvggmFDSG+ta+jQayMVLxrlOxyXI2BT5iEdy
+ Ley3ZwzoV1i0u5rkk05BCgLPNZL127H6pXy5D1SvjoJqtwc5j4MFt0VCD3mcDSBHr4z0
+ 1/AB3xf2B/5ges1sRmTaq37s1Di+Ako3eLnuXRbfedYsodoJR/FYMir7KMOw2ECkMB1m
+ cjc6TdySP3FUpGTOF/uI75YjfiNQnrG56uEyOaDXghKIXKRUo3X4x9g1vgKEPMWooDcC
+ 0s31dIyh13s75xs+J+Fp1bBy40dbKqaWR5epVIXTFP4N3G8J8epBI9AbWHfJlN+XARPQ qw== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tbbyf28hs-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 26 Sep 2023 09:29:31 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 38Q9TRfE001613;
+        Tue, 26 Sep 2023 09:29:27 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3t9s3knfx0-1;
+        Tue, 26 Sep 2023 09:29:27 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 38Q9TRtf001598;
+        Tue, 26 Sep 2023 09:29:27 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-rohiagar-hyd.qualcomm.com [10.213.106.138])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 38Q9TQMT001596;
+        Tue, 26 Sep 2023 09:29:27 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3970568)
+        id C3DBB1E52; Tue, 26 Sep 2023 14:59:25 +0530 (+0530)
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, dmitry.baryshkov@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Rohit Agarwal <quic_rohiagar@quicinc.com>
+Subject: [PATCH v2 0/3] Add devicetree support of Interconnects and USB for SDX75
+Date:   Tue, 26 Sep 2023 14:59:21 +0530
+Message-Id: <1695720564-2978-1-git-send-email-quic_rohiagar@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: NnvIhph6yJNR-luuyuhP_AUXPHc8duta
+X-Proofpoint-ORIG-GUID: NnvIhph6yJNR-luuyuhP_AUXPHc8duta
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-09-26_07,2023-09-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ suspectscore=0 priorityscore=1501 mlxscore=0 lowpriorityscore=0
+ phishscore=0 malwarescore=0 spamscore=0 clxscore=1015 adultscore=0
+ mlxlogscore=298 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2309180000 definitions=main-2309260082
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -58,48 +79,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 19 Sep 2023 13:59:47 +0200, Stephan Gerhold wrote:
-> Make it possible to scale performance states of the power domain and
-> interconnect of the SPI QUP controller in relation to the selected SPI
-> speed / core clock. This is done separately by:
-> 
->   - Parsing the OPP table from the device tree for performance state
->     votes of the power domain
->   - Voting for the necessary bandwidth on the interconnect path to DRAM
-> 
-> [...]
+Hi,
 
-Applied to
+Changes in v2:
+ - Updated the commit subject of patch 2/3.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+This series adds devicetree nodes to support interconnects and usb for sdx75.
+This is based on previously sent driver series[1], [2].
 
-Thanks!
-
-[1/4] spi: dt-bindings: qup: Document power-domains and OPP
-      commit: e6419c35f0d92632e06708c5610a31957f1bd6b3
-[2/4] spi: qup: Parse OPP table for DVFS support
-      commit: 287fcdaa35fc666640f805310095c52f2d818d26
-[3/4] spi: dt-bindings: qup: Document interconnects
-      commit: d15befc0cef42db7712714157d9483cab81149a1
-[4/4] spi: qup: Vote for interconnect bandwidth to DRAM
-      commit: ecdaa9473019f94e0ad6974a5f69b9be7de137d3
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+[1] https://lore.kernel.org/all/1694614256-24109-1-git-send-email-quic_rohiagar@quicinc.com/
+[2] https://lore.kernel.org/all/1695359525-4548-1-git-send-email-quic_rohiagar@quicinc.com/
 
 Thanks,
-Mark
+Rohit.
+
+
+Rohit Agarwal (3):
+  arm64: dts: qcom: Add interconnect nodes for SDX75
+  arm64: dts: qcom: Add USB3 and PHY support on SDX75
+  arm64: dts: qcom: sdx75-idp: Enable USB3 and PHY support
+
+ arch/arm64/boot/dts/qcom/sdx75-idp.dts |  29 ++++++
+ arch/arm64/boot/dts/qcom/sdx75.dtsi    | 164 +++++++++++++++++++++++++++++++++
+ 2 files changed, 193 insertions(+)
+
+-- 
+2.7.4
 
