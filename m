@@ -2,107 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8BBE77AE4B4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 06:48:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BE8D7AE64A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 08:55:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232781AbjIZEst (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Sep 2023 00:48:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52376 "EHLO
+        id S231224AbjIZGzg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Sep 2023 02:55:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229472AbjIZEss (ORCPT
+        with ESMTP id S231129AbjIZGzf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Sep 2023 00:48:48 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60F00D9;
-        Mon, 25 Sep 2023 21:48:41 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38Q3SmSc023777;
-        Tue, 26 Sep 2023 04:48:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=7+U+bg6mNPTBakerXQD6k6E+X6B7lLRqpcPeZotduPY=;
- b=PHJrv0YTQXcjQzYp0A5YvWBJj3lLVd09jizxW2eefAOU5q2YWUIB+D7Ib4tHkK/S+22v
- W4zprvsyPu4s4thwj5GrjF4lZgn00xOJ/3fdZcVZtmR9vROJ7/XpaAb2sJpBiSyvK+p+
- FSmmCXpN/Mmcxhz5Xp52P5/VmwYD3+d3b1vdQVJ/98337OSRjFwyQkFFrIq9FifVfOUN
- exIxzQEGog3iMkUov4B4gpA4jJ/gdRJkwy7hoGg9ZWDaRtj3CJqYUm7fk5oWJ4GtzApW
- V88Rk0VEzQUF3Tcj6+q6hOe/z1Cf+fs7lW/n9smffOZ9k5/SWnFeJEhCL//Vd1u7iBck yg== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tbh25gq8f-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 26 Sep 2023 04:48:32 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38Q4mVHV002847
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 26 Sep 2023 04:48:31 GMT
-Received: from hu-rkakarla-hyd.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.30; Mon, 25 Sep 2023 21:48:27 -0700
-From:   Raghavendra Kakarla <quic_rkakarla@quicinc.com>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Raghavendra Kakarla <quic_rkakarla@quicinc.com>
-CC:     <quic_mkshah@quicinc.com>, <quic_lsrao@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-Subject: [PATCH v2] arm64: dts: qcom: sa8775p: Add RPMh sleep stats
-Date:   Tue, 26 Sep 2023 10:18:14 +0530
-Message-ID: <20230926044814.535-1-quic_rkakarla@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+        Tue, 26 Sep 2023 02:55:35 -0400
+Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C07D511D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 23:55:27 -0700 (PDT)
+Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-59f7f46b326so41192447b3.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 23:55:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1695711327; x=1696316127; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eHSkNGK03t5d9rG+f10qQXua3Wp3jtHQqzKshE119FY=;
+        b=mypcl9B6J1Cs0PkTManL/as8PTIqMef9XvLWO6qrachl1UJwrEOOmiDcTEgdmWBsPm
+         GU/y2uYvgxYhT8uIzrrKDCYp/I7vDpdh+8IxJP3e7nTVYv9thPH/xqvBCHY0kS57VUzA
+         nkzu/kCi1EwnWBUY1pZ8BxEb9RhFzJt91g7QdfsTlrj4quIPIEIcC0jYnGNXjO3fbeB7
+         HzbK94muvO7LOREahc6LuH7E8RSKvtufn1zxPi2uqJdFhL/ulRWkcC2BbQKBxdykxu47
+         evSIAm/pcAdas0xnhIgsoK/M0WmekrUTMfh0N+zYNTuTNMSM8GyuWlYwf1d2ju7Iswie
+         9tJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695711327; x=1696316127;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=eHSkNGK03t5d9rG+f10qQXua3Wp3jtHQqzKshE119FY=;
+        b=MvhxA099UyJP0SLGMTIn4Ku5qkeEmIkvZgK3169TMcm1fLsQj4q8fUlTg6lXDspp4k
+         eTluXzOCni54ihOPh3+RQWgqb1HVNm+q11cYV0F+3Bcu0aGxkxoaU2eDt5+aXGMQfapb
+         r6qNq15FV0uXJ8Bp0CWq8GLvfh7rW/aw7b8eoBveOgqoiQkAuEn8gvQm6j5SN5xPYjsM
+         35Kbe0LEvGDtcvE3snC8Laxijvxz0udWeoYZR6wt2RFjHMUcpfio/MYgkodo7nuRiUKH
+         3B03HRp2tyuEgwvpmtYhzdnbLb59HmMnJISyMtbx006/48fChLvo7u5fZxqkKVGYCD0x
+         BDNg==
+X-Gm-Message-State: AOJu0YwxTnu8ujWpu9OBeFJ/CI2D45wYhAYOfz/sRqGOUDPgzxk2tYSN
+        6lfEzhQpXePB76cA2jFp1p8GMw03PPAtAc5K0qJmhg==
+X-Google-Smtp-Source: AGHT+IHoO7TBziPA5htbsuH2VXUX9yGcO/aIOtLwPZZVCJAErZgDwgIkJ3nSHIbU3VSV/WI7WX5/gfB00KELiu+FW9A=
+X-Received: by 2002:a81:4f92:0:b0:592:60e9:97cf with SMTP id
+ d140-20020a814f92000000b0059260e997cfmr8225904ywb.12.1695711326765; Mon, 25
+ Sep 2023 23:55:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: u43Ai1iMSYV4_0KP6pobufFaN1nOoQgh
-X-Proofpoint-ORIG-GUID: u43Ai1iMSYV4_0KP6pobufFaN1nOoQgh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-09-26_02,2023-09-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
- spamscore=0 adultscore=0 malwarescore=0 phishscore=0 lowpriorityscore=0
- priorityscore=1501 clxscore=1015 suspectscore=0 mlxscore=0 mlxlogscore=586
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
- definitions=main-2309260041
+References: <20230925212713.1975800-1-robh@kernel.org>
+In-Reply-To: <20230925212713.1975800-1-robh@kernel.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Tue, 26 Sep 2023 08:55:09 +0200
+Message-ID: <CACRpkdYSvgUsuMS+-=LXmCtH0bLF=EMguuvWwZ7VjUfnx+uyaQ@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: pinctrl: Add missing additionalProperties on
+ child node schemas
+To:     Rob Herring <robh@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-renesas-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-rockchip@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device node for sleep stats driver which provides various
-low power mode stats.
+On Mon, Sep 25, 2023 at 11:27=E2=80=AFPM Rob Herring <robh@kernel.org> wrot=
+e:
 
-Cc: devicetree@vger.kernel.org
-Signed-off-by: Raghavendra Kakarla <quic_rkakarla@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sa8775p.dtsi | 5 +++++
- 1 file changed, 5 insertions(+)
+> Just as unevaluatedProperties or additionalProperties are required at
+> the top level of schemas, they should (and will) also be required for
+> child node schemas. That ensures only documented properties are
+> present for any node.
+>
+> Signed-off-by: Rob Herring <robh@kernel.org>
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index 9f4f58e831a4..cee7491de675 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -1912,6 +1912,11 @@
- 			#clock-cells = <0>;
- 		};
- 
-+		sram@c3f0000 {
-+			compatible = "qcom,rpmh-stats";
-+			reg = <0 0x0c3f0000 0 0x400>;
-+		};
-+
- 		spmi_bus: spmi@c440000 {
- 			compatible = "qcom,spmi-pmic-arb";
- 			reg = <0x0 0x0c440000 0x0 0x1100>,
--- 
-2.17.1
+Patch applied!
 
+Yours,
+Linus Walleij
