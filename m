@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D39F07AF383
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 21:00:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D0D47AF395
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 21:00:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235705AbjIZTAF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Sep 2023 15:00:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44056 "EHLO
+        id S235719AbjIZTAv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Sep 2023 15:00:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235679AbjIZTAD (ORCPT
+        with ESMTP id S235707AbjIZTAt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Sep 2023 15:00:03 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CE74199
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 11:59:56 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-530c9980556so11241217a12.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 11:59:55 -0700 (PDT)
+        Tue, 26 Sep 2023 15:00:49 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37C5C180
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 12:00:42 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-50437f39c9dso12996338e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 12:00:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695754794; x=1696359594; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695754840; x=1696359640; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=fVEGG5cPSm9VHVnnB3IjMGencP439qzAgXCSoy2L0Mw=;
-        b=dysdhWVVNJzTgIDxKpqcsfm30jvpLsWQiEHEep60ZOkTD7e9lnsFiceAW/2tpTfSj5
-         QiKUeYlpcHlnmsp8Rl9s+KxfoaLwRSz+9jXiQLPfTQhKwi80ul2++6lK1s5qiFD+k8St
-         Z9ipSD/ZK49wZlDpL9HeYXqR+V57sRLxn77goCHs6+bJFMBh56SqqwJb29GxVqT29Qc7
-         dLldapaGuLZCZQA1gwlRnXdawW/MwaCZkqE4DSZ8n3OaqtYwFSEaYB3HDUX1fymo/Eol
-         S14Nm62SnKuqEjpL2OT4XkmLgrlsOnnIfgjui2v1JYNv/dxKHEsSGp1f6p3oPq76008u
-         XD4A==
+        bh=TrjPMuhWwAih9+asoSrsIQ1qfY984QVYCQpToXUHupg=;
+        b=Fv6TWSadzlZ76k8mMys7Lp1gzuGtXQz7EzvmWOho5k7ricGAldaXw07FzyfzR3geWJ
+         fx3oO1ILaHAXL1KXdTDQ+/UhWdp8bKRZo4HX3cgA/S77ScfyFAhQytQSOPbxnnVi/4vB
+         bBI3y82yjm+95zMFOg3+s+qtqzj7qqMnpE8JLpS3JQJYp2Z/MzK48y6Ytvhr5lyfidnR
+         l9QEwm7rn7+Lnpqckq7nU5VIjnT2FDpj6fspnMtiW3TWicvoE3gHiClimSQ7qPfD3+TF
+         dME+k5DbUbQp9A1U797p/ZNgXmfVT2fFe+P1h5c0R9uKP69UhLGaL7bw9oqa1QdreoFc
+         6ebA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695754794; x=1696359594;
+        d=1e100.net; s=20230601; t=1695754840; x=1696359640;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fVEGG5cPSm9VHVnnB3IjMGencP439qzAgXCSoy2L0Mw=;
-        b=vF8S6tgkJ25t2L9LKrsjSFV0UW/+8NpXv5EO7d7Qfa8AsCoPYvXKn7xqsGV0dRKNs9
-         80KMnfePxKtPsd8Y+SNf07J/y4uUaroxy4isJ7VXOYT89yTrRz9ahZIR43KoXKqODMs2
-         HavDfFZY22gmgAunPOcnH3P9Svc99JKeaC8CEgnW3GT6QPqzu61YfPxAaRDxWsDQXvZQ
-         15s+N+1EytrnKszZ84Of7v36vJv8fimDzCdR6P1HJiNBa7wsZuaHtqZU+0ulpWvBUiqu
-         FggjM1sk16ZGd1RIfo6hs/GNwzfH5xkuHhx3z3ZfkX26Nv2micWiwzdOO5rEQiazizs1
-         FMGw==
-X-Gm-Message-State: AOJu0Yz9CEUuKJBcV54YBofF4w/xC13e8gGYkkXlbCRLXfscjk3+CrVW
-        ptd5a5+3nHTCHmS69BBlLFLsvaIPT613SwaqSxhY/Q==
-X-Google-Smtp-Source: AGHT+IHsu61Z9x4vrJKedh9oOSEm3NJB8PkqYqCsBbhGw+9yEsafoynTupdU5NEDPPhy09XdrcXISw==
-X-Received: by 2002:a05:6402:5148:b0:533:39da:6ffb with SMTP id n8-20020a056402514800b0053339da6ffbmr9467391edd.14.1695754794563;
-        Tue, 26 Sep 2023 11:59:54 -0700 (PDT)
+        bh=TrjPMuhWwAih9+asoSrsIQ1qfY984QVYCQpToXUHupg=;
+        b=QZsbxFVJKwuEAlUO5Mv+graeutUxPE9u26OJ8H9BMCFQbn7SiV2MVVKKK8fK+wf9Mi
+         MUObr8sL2imeCKQ04QsWUHDwHJaI6ZPX2uubBKJIlyEhrAXYxodbJ4DbqZ1JBDdPRdKp
+         W6bWfJqIjIvuDNwpDsLL/szAd3NSoHPvpBRIVoaXCYrneA73bRaQ41o6XW41CEUhGGb4
+         /b80+j7gKD2zCfCNVF4u8xocBBxFfeYGn9GbxybtqG21884xxIinOQWnYY70yHhxB7eL
+         HGKkH/yFA9MskpTP8sC752IIVRvXWKuMt7yFFkPHrucot5OfBqNf4vwA7W242xWRmY7P
+         pAFQ==
+X-Gm-Message-State: AOJu0Yz+kndA48TWE0m7d2KABbCNLJMPPQMFKMW77ex+I6VJW21Eoybg
+        1lNEsO6lKb+hFtIL/EXieQcUYcoigN3b43vd/niRHQ==
+X-Google-Smtp-Source: AGHT+IEJQU86v6Kth8wNwtzMBFKr22BnpqlSF/2gkWPwQK35EQXX1JPTQzoMEkcQia3P9FtfoB2bEg==
+X-Received: by 2002:a05:6512:3b9f:b0:500:7696:200 with SMTP id g31-20020a0565123b9f00b0050076960200mr11141126lfv.59.1695754840427;
+        Tue, 26 Sep 2023 12:00:40 -0700 (PDT)
 Received: from [192.168.33.189] ([178.235.177.23])
-        by smtp.gmail.com with ESMTPSA id f15-20020a50ee8f000000b0052a19a75372sm7088795edr.90.2023.09.26.11.59.53
+        by smtp.gmail.com with ESMTPSA id f15-20020a50ee8f000000b0052a19a75372sm7088795edr.90.2023.09.26.12.00.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Sep 2023 11:59:54 -0700 (PDT)
-Message-ID: <14262938-4150-429f-a730-df1b2fadd9ff@linaro.org>
-Date:   Tue, 26 Sep 2023 20:59:52 +0200
+        Tue, 26 Sep 2023 12:00:40 -0700 (PDT)
+Message-ID: <01d7386b-fe2f-4193-a4ef-04707a17b639@linaro.org>
+Date:   Tue, 26 Sep 2023 21:00:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/13] arm64: dts: qcom: msm8916-longcheer-l8150: Add
+Subject: Re: [PATCH 10/13] arm64: dts: qcom: msm8916-longcheer-l8910: Add
  sound and modem
 Content-Language: en-US
 To:     Stephan Gerhold <stephan@gerhold.net>,
@@ -63,9 +63,9 @@ Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
         Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Nikita Travkin <nikita@trvn.ru>
+        Jonathan Albrieux <jonathan.albrieux@gmail.com>
 References: <20230926-msm8916-modem-v1-0-398eec74bac9@gerhold.net>
- <20230926-msm8916-modem-v1-9-398eec74bac9@gerhold.net>
+ <20230926-msm8916-modem-v1-10-398eec74bac9@gerhold.net>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -102,11 +102,11 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230926-msm8916-modem-v1-9-398eec74bac9@gerhold.net>
+In-Reply-To: <20230926-msm8916-modem-v1-10-398eec74bac9@gerhold.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -116,16 +116,28 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 26.09.2023 18:51, Stephan Gerhold wrote:
-> From: Nikita Travkin <nikita@trvn.ru>
+> From: Jonathan Albrieux <jonathan.albrieux@gmail.com>
 > 
-> Enable sound and modem for the Longcheer L8150 (e.g. Wileyfox Swift).
-e.g. -> i.e., or is that thing sold under many labels?
-
-[...]
-
->  	reserved-memory {
-> +		/delete-node/ mpss@86800000;
->  		/delete-node/ wcnss;
-delete by label, please
+> Enable sound and modem for the Longcheer L8910 (BQ Aquaris X5).
+> The setup is similar to most MSM8916 devices, i.e.:
+> 
+>  - QDSP6 audio
+>  - Earpiece/headphones/microphones via digital/analog codec in
+>    MSM8916/PM8916
+>  - Audio jack detection via analog codec in PM8916
+>  - WWAN Internet via BAM-DMUX
+> 
+> except:
+> 
+>  - Awinic AW8738 connected to HPH_R (headphones) output of the analog
+>    codec. Note that unlike for wingtech-wt88047 there is no analog
+>    switch that would allow disabling output via the headphone jack
+>    when the speaker is enabled.
+> 
+> Signed-off-by: Jonathan Albrieux <jonathan.albrieux@gmail.com>
+> Co-developed-by: Stephan Gerhold <stephan@gerhold.net>
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
