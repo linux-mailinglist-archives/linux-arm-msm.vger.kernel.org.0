@@ -2,70 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AC50E7AF3B4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 21:04:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A92B7AF3B9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 21:05:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235726AbjIZTE6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Sep 2023 15:04:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34852 "EHLO
+        id S235698AbjIZTFh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Sep 2023 15:05:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235719AbjIZTE6 (ORCPT
+        with ESMTP id S235743AbjIZTFg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Sep 2023 15:04:58 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1104B126
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 12:04:51 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2c16bc71e4cso58061341fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 12:04:50 -0700 (PDT)
+        Tue, 26 Sep 2023 15:05:36 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03610136
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 12:05:27 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-50309daf971so15457508e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 12:05:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695755089; x=1696359889; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695755125; x=1696359925; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=T7FFgJozJbXYnnJsqXAR4SCS3RhusVygm4wKL/gsctg=;
-        b=GzFXLGnbIqXVfZczy3QVQpQUZIqqm09vpf0IdLmY4Kw/Hhxb9RymV/rjRhWGCUp40q
-         V0PGnAOrh5iGVQNIQZisYFlJhDattMRUAUrhGyRZ/vSIPBbN4QvBEasAItLFDCQufu/a
-         XLswHtVypS6n631MAIHRedkLWPkuNa0iIVChtUiTUuZqLc8ytlQP0pL9tUd05VNUjm5u
-         N8/t/KXI8D1wpFJswIMAK2w/O5b4KVLzt5Kb/ikXUHRJNfu4LDCaQsCRErrfZtwP6d07
-         uG5LnXm44ggt2duatHQWDcrcCmEpSxnilwVH+5ktG+u+waMum1IfR9moit38+Gu+rWDr
-         x93Q==
+        bh=dUXWStiSrTgaM+wf5mDuYNTfzDznRYYmB0R3mrZd5PM=;
+        b=TvuVf/E8uAnR03QmMoawj4T+te3lMnNreMAs8eMO2iFtRQcegyAcLUf4h20MNe/swk
+         77rQWvmqMG1MLWhWTLCJObkb9VzS1ZGZyCtmtzqGEsKahO4OKjHDraYqHJt80qI4RqOc
+         O9VoIKWleytksJSyk4+PPFytPadzLLcvpCYBhW0nGhYWZMTJMMfIweNHB+I3K+LeqwCB
+         Z4y4fI0r2MnJV1A76zktzH/wRnvsWUl8pW/2CEfIp4Ajd5EbEoqG+WdX181tlnCvr9iI
+         Vg1volBPCA/KWZnXAvmhov27eewP/iM8wMlfqsbediShyXBgh/CQYj/HTEx3SgjkWerS
+         0woQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695755089; x=1696359889;
+        d=1e100.net; s=20230601; t=1695755125; x=1696359925;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=T7FFgJozJbXYnnJsqXAR4SCS3RhusVygm4wKL/gsctg=;
-        b=UDK/GLcLVEjXtnfNFKjYLMR/4fuB22gDcmhbWykaJRo/y/OvUEwo2Oh3q+igmMiXWL
-         8Ki0X3IdCeOUhCahogLUiRiBC65O6ALL7bRAqfVAh/qoa9Vdw+KMfdsXENtMXEZPCPbZ
-         aFIwmmn3/gAlLF5KHRbE3lnCbl2B94QtLH/B3Un02b0z4lyTqamZjop4XZOx7zzYW09s
-         W3u/R/gLoP2paEcjrAJvPcX3JAui5sp0HxK8NbsMSlwYqAIiDR/89DmHTJwGSZF83PY6
-         4UAyuGvkfUTPXSCyv7tTZQ3Ta6oZgOYViZdOtlMNhR1R7eCCCVUgB8MfJm88mSF9Jpe9
-         QZ4w==
-X-Gm-Message-State: AOJu0YzdOv2oGnp9khG0VdUvn/kLw6Z1Bmp0v5UTFEg3sTy21gLusvI/
-        jj4dkC1tEWIQu84TrOKSXa8s6u92wdp8Ut+6Z/KrjA==
-X-Google-Smtp-Source: AGHT+IGaPWnEynlY+j3X54fEKXXily8KQA9zXpBBhDYhJoFf5s01QH+YNNCs/qHxQB8s83r5sshQuQ==
-X-Received: by 2002:a05:6512:110f:b0:503:7dd:7ebf with SMTP id l15-20020a056512110f00b0050307dd7ebfmr9818728lfg.63.1695755088713;
-        Tue, 26 Sep 2023 12:04:48 -0700 (PDT)
+        bh=dUXWStiSrTgaM+wf5mDuYNTfzDznRYYmB0R3mrZd5PM=;
+        b=uxMbNNTy6K1qSWgH3BGH/b6WVNvHT9bfgAdfepFvumuopxJ1VRfnAo9s1xFNeIt7J2
+         GXyhG64YUl6HuvIcKzOuDCfDQG2F/Vs5NvCz3kC2uFsmZy/609S2ysUMkl3FIMyMoll1
+         UI3nHw9R57/cbDrGd/vfZ90oP2RW2iCpMKvKaTXKWLVMypKGEI+piY2AvXfPcr61Pzn8
+         HGHnbdDqWJ+MOBBMj1HXNzy7llEmOfVjJ0avxWbT6i3a/fhR1ALAkM7jOpPfE6oW7gVt
+         5GOPfcC6dEl2MNQkKrZwgnnRNnlgqG8SSEqEzX8dhXOol+N857RenMa+LlV2ufGTjlpr
+         q+sQ==
+X-Gm-Message-State: AOJu0YxFegCa4ZJAEqUgCajt7sIQQN5PGsqq9POEOi7INf6toj84Vvxw
+        zwvd2+DBRHb6HUN5qs5pgh380hYWIYQu2It+SpH/lA==
+X-Google-Smtp-Source: AGHT+IFjxrJqW2ekBZ4l4/RcwAGmRijfKXiEiowenhbIvEaoSQrR9DJsr4YCLz1Me157J5A9Xo2E7w==
+X-Received: by 2002:a19:2d4b:0:b0:4fe:3724:fdae with SMTP id t11-20020a192d4b000000b004fe3724fdaemr7662744lft.66.1695755125257;
+        Tue, 26 Sep 2023 12:05:25 -0700 (PDT)
 Received: from [192.168.33.189] (178235177023.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.23])
-        by smtp.gmail.com with ESMTPSA id h19-20020ac25973000000b00500cfb168a3sm2283303lfp.139.2023.09.26.12.04.47
+        by smtp.gmail.com with ESMTPSA id h19-20020ac25973000000b00500cfb168a3sm2283303lfp.139.2023.09.26.12.05.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Sep 2023 12:04:48 -0700 (PDT)
-Message-ID: <dd85dc88-467d-460c-a47f-60f3cac1cf53@linaro.org>
-Date:   Tue, 26 Sep 2023 21:04:47 +0200
+        Tue, 26 Sep 2023 12:05:24 -0700 (PDT)
+Message-ID: <959825a0-5327-46b7-b91d-9753601c7ba0@linaro.org>
+Date:   Tue, 26 Sep 2023 21:05:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/13] arm64: dts: qcom: msm8939-samsung-a7: Add sound and
- modem
+Subject: Re: [PATCH 02/13] arm64: dts: qcom: msm8916/39: Add QDSP6
 Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 References: <20230926-msm8916-modem-v1-0-398eec74bac9@gerhold.net>
- <20230926-msm8916-modem-v1-13-398eec74bac9@gerhold.net>
+ <20230926-msm8916-modem-v1-2-398eec74bac9@gerhold.net>
+ <698c8d60-e284-4267-8349-b327712c94cc@linaro.org>
+ <ZRMo8oxIKJIY5WG8@gerhold.net>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -102,7 +102,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230926-msm8916-modem-v1-13-398eec74bac9@gerhold.net>
+In-Reply-To: <ZRMo8oxIKJIY5WG8@gerhold.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -115,36 +115,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26.09.2023 18:51, Stephan Gerhold wrote:
-> From: "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
+On 26.09.2023 20:54, Stephan Gerhold wrote:
+> On Tue, Sep 26, 2023 at 08:46:36PM +0200, Konrad Dybcio wrote:
+>> On 26.09.2023 18:51, Stephan Gerhold wrote:
+>>> MSM8916 and MSM8939 do not have a dedicated ADSP. Instead, the audio
+>>> services via APR are also implemented by the modem DSP. Audio can be
+>>> either routed via the modem DSP (necessary for voice call audio etc)
+>>> or directly sent to the LPASS hardware (currently used by DB410c).
+>>> Bypassing QDSP6 audio is only possible with special firmware
+>>> (on DB410c) or when the modem DSP is completely disabled.
+>>>
+>>> Add the typical nodes for QDSP6 audio to msm8916.dtsi and msm8939.dtsi.
+>>> The apr node is disabled by default to avoid changing behavior for
+>>> devices like DB410c that use the bypassed audio path.
+>>>
+>>> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+>>> ---
+>> I'm generally grumpy with regards to multi-soc changes that
+>> have no need to be multi-soc..
+>>
 > 
-> Enable sound and modem for the Samsung A7. The setup is similar to most
-> MSM8916 devices, i.e.:
-> 
->  - QDSP6 audio
->  - Earpiece/headphones/microphones via digital/analog codec in
->    MSM8916/PM8916
->  - WWAN Internet via BAM-DMUX
-> 
-> except for the same differences as the MSM8916-based Samsung A2015
-> devices:
-> 
->  - NXP TFA9895 codec for speaker on Quaternary MI2S
->  - Samsung-specific audio jack detection (not supported yet)
-> 
-> Signed-off-by: "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
-> [Stephan: Add consistent commit message]
-> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> ---
-[...]
-
->  
-> +&lpass {
-> +	dai-link@3 {
-> +		reg = <MI2S_QUATERNARY>;
-> +		qcom,playback-sd-lines = <1>;
-> +	};
-> +};
-reserved hw?
+> Well it's 100% the same diff so reviewing it separately doesn't really
+> make sense IMHO. When I do "msm8916/39" patches these are generally the
+> changes where strictly speaking there is no need to duplicate at all.
+> It could go into a common include between both. We just haven't found
+> a good solution/agreement yet how sharing SoC components could work.
+My bottom line is that, somebody trying to track down an issue on
+one may need to unnecessarily resolve 2 merge conflicts when reverting :/
 
 Konrad
