@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EF487AF297
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 20:24:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 891B97AF2A2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 20:24:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235471AbjIZSYx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Sep 2023 14:24:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45494 "EHLO
+        id S235477AbjIZSY5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Sep 2023 14:24:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229621AbjIZSYw (ORCPT
+        with ESMTP id S235481AbjIZSYy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Sep 2023 14:24:52 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F73F10A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 11:24:45 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-530ce262ab2so10612808a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 11:24:45 -0700 (PDT)
+        Tue, 26 Sep 2023 14:24:54 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFCE412A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 11:24:47 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-52fe27898e9so11363498a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 11:24:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695752684; x=1696357484; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695752686; x=1696357486; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=rdOeaLeHcwftMyYfA8G29tOCdXwXQaoJFb0mcu8r5zw=;
-        b=i24kSgq2i8rJgR+WoHufsvGJOPIKXRKuuFpXtAdJkKiFHCf2dGEb1X1ZjjLieX90hm
-         tIDtmI9LbwoUrIYh7QjeMuSOLcmBWfjZ50bg5C7iHdOnfylSZ/02EyNGxcSX4i20TzGz
-         q7nrmI80zuurD7OUCpjWmNa0E5G0B4gUIgSclHeqQ+AX3pj/iwg779o0I6wiODgbYnJ5
-         sAu+uCS0zl0OJeKLDRyZbjNeygz+NOIGQNUZdljiChK8JYXAnvS44yMnawqa0Sf4kMq2
-         G8lk1J9wzHnhVWsgHSWJglcGVvodjSX5rvNIYH5hZFen3/n0J0zvFc4o4FGK/4026HQk
-         hRcg==
+        bh=1mXLi+0rIXccn25x+LJrv2RkBxKqdDr4aU+Gv5GVsoM=;
+        b=qvdlTL4BzurGFCOGcZshuDnvSoaEC9Mq/N+iKHOo4GKJkciE5GyDteT1HiOH6cnNdS
+         nU2G4VfEPPWJcotzqBtm52lE+xkBacPjXscnEZ/jfgXIMMeSQJeTpxmNV4jQ5FM/oQLe
+         RAht6h1kgw0wDtNosz2Epv7oLPmzdngwgIhJwMv6bnkEY561e2Tgl2e1Y5SE9+HE8bT6
+         Arbep1HaJaAU5vBy6WXgUjPQDEXZFtUEP2t2uqXrB7Mqbmh2uBPLXGV6wGIEYhq8uIlT
+         yFsgqVm2+9ZZy3mCZIAvShjXXA/CeG1P/gElwVML657qUEMXj0zX3p1rubG8ii76HR8h
+         Tj6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695752684; x=1696357484;
+        d=1e100.net; s=20230601; t=1695752686; x=1696357486;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rdOeaLeHcwftMyYfA8G29tOCdXwXQaoJFb0mcu8r5zw=;
-        b=AaO0pFWpj2nFIfNRUr29c+nwkd8KBeLv8NZlDDzd8QNlDw7gtvY40wEyAXBR2JLf9c
-         NosTVg9Rx0LfeqiL1/pdNfhOWcXMQqBrH5VCXQKe8GbHc9ltHwKFc2tkfnGXFly+BHnH
-         PX8WtvCLKaEOX9Au+OvABzrxUQDIPX/21y78sx9eHJS2uvuvwVNGCAKx5pQj7YMlxwB1
-         ANNry6qzTdPOZ9ptLcv3sIi9CfRXlz47qYy3i95Cm+lN/41d+lHJGFjl2D6bns9przMp
-         6VgFOVE9fZ6uRfPNt3+jQEqfzAKe7ONxSZj/u48okOQtoIerDuy95XSlIs7IdqfiAWyp
-         csGA==
-X-Gm-Message-State: AOJu0YytSO5CvKG2bvfb+2AJiyhocjwI5RGhFuxt3f4QpBN+l+kDV7nb
-        i95LLV7wswb7JMmyLQ3//yrZ3A==
-X-Google-Smtp-Source: AGHT+IFNPKWtqP96Z/0gyVWxTahuOivQkjQlQvuDt3caSQC/FoLkRgSGW7croA7ASQ1ChCEC2PL20g==
-X-Received: by 2002:aa7:d0c2:0:b0:51d:f5bd:5a88 with SMTP id u2-20020aa7d0c2000000b0051df5bd5a88mr10428662edo.38.1695752684159;
-        Tue, 26 Sep 2023 11:24:44 -0700 (PDT)
+        bh=1mXLi+0rIXccn25x+LJrv2RkBxKqdDr4aU+Gv5GVsoM=;
+        b=MczVZbGSFu8U3yfb+DzMTIDmEzId6p+SulaqgSWrz/DwoIhmocCcRkzsqb5bSzdVZX
+         Bfo/S00go/MRGfFbFcgpMq47jq2edtiBHvwebnfPfTgrwukRfWkOEMVtaaR/Ne8vcHr4
+         l9oDi9DZatpB4A+J2fOT877tvHWaXW1d/Zj/yUpYtrHTWvPFXRS9125kBg5kvrDByv90
+         HFM4m73D6okYtu1U3U//GLtpMG8naRoZFiWujU56UTPOskLChK3DnvZ2uG8/q+4gM5o5
+         7czkuM7E8t+wJmya/xUN4Dho2DIIXWwS8b//b9EMUXHihj8K7QmomJZ5AVfcsLwUWtLq
+         P5aw==
+X-Gm-Message-State: AOJu0YwRE9RKZLDaGvRoM2ePpOJ58gwcd6gcTWC9j9Ud8XBlZR/KP7Mb
+        MUhgYeBlHWhX8GvIZRwfyeWgVw==
+X-Google-Smtp-Source: AGHT+IGh0ktD94Pk4wwsYiXRvrPoEyd0YO/XrDphwvk3G5mbEos4//shaUTYKbj122Zo01fAUAE68Q==
+X-Received: by 2002:aa7:d7c7:0:b0:51e:53eb:88a3 with SMTP id e7-20020aa7d7c7000000b0051e53eb88a3mr8851616eds.25.1695752686393;
+        Tue, 26 Sep 2023 11:24:46 -0700 (PDT)
 Received: from [10.167.154.1] (178235177023.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.23])
-        by smtp.gmail.com with ESMTPSA id f19-20020a056402151300b0053090e2afafsm7020643edw.22.2023.09.26.11.24.42
+        by smtp.gmail.com with ESMTPSA id f19-20020a056402151300b0053090e2afafsm7020643edw.22.2023.09.26.11.24.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Sep 2023 11:24:43 -0700 (PDT)
+        Tue, 26 Sep 2023 11:24:46 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 26 Sep 2023 20:24:37 +0200
-Subject: [PATCH 2/7] drm/msm/adreno: Add ZAP firmware name to A635
+Date:   Tue, 26 Sep 2023 20:24:38 +0200
+Subject: [PATCH 3/7] drm/msm/adreno: Add A635 speedbin 0xac (A643)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230926-topic-a643-v1-2-7af6937ac0a3@linaro.org>
+Message-Id: <20230926-topic-a643-v1-3-7af6937ac0a3@linaro.org>
 References: <20230926-topic-a643-v1-0-7af6937ac0a3@linaro.org>
 In-Reply-To: <20230926-topic-a643-v1-0-7af6937ac0a3@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>,
@@ -80,11 +80,11 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         devicetree@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1695752677; l=810;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1695752677; l=751;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=j4J3bf93En8hfomc6iMl3gRDui2N6DxaHKguZItPSOc=;
- b=Z/8uVHWeeJiYMBhmKxURKKCY6E5ujoQW1IdowESmbyutCxeRpM55YuxSzaiPf3F/h1M6I0ebF
- Yo50w8YlEoVB1iHo9jiNgpsMDNM+4THYBPUM/ETvorOic57gT4f4kk5
+ bh=4Rw51EV+m1pbTmR00ftxlMR26PkphHnsyFSR2kZ1LeI=;
+ b=SXUVrGfcSRMs/58bky5kYAUilsScEIoXeRRt6NDpibqMT9twn8G3KlhPx8o0SOlAHp7e6EZAZ
+ ljAxQUAiqQsAsx7kSjWbCIUQoLnRFJOt84DDBQzWxWuw9V//8Y+N+Ur
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -97,9 +97,8 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some (many?) devices with A635 expect a ZAP shader to be loaded.
-
-Set the file name to allow for that.
+Downstream calls this the "speedbin 1", but that number is already
+occupied. Use index two.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
@@ -107,17 +106,17 @@ Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index fa527935ffd4..16527fe8584d 100644
+index 16527fe8584d..4977fd759b5b 100644
 --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
 +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -454,6 +454,7 @@ static const struct adreno_info gpulist[] = {
- 		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT |
- 			ADRENO_QUIRK_HAS_HW_APRIV,
- 		.init = a6xx_gpu_init,
-+		.zapfw = "a660_zap.mbn",
- 		.hwcg = a660_hwcg,
- 		.address_space_size = SZ_16G,
+@@ -460,6 +460,7 @@ static const struct adreno_info gpulist[] = {
  		.speedbins = ADRENO_SPEEDBINS(
+ 			{ 0,   0 },
+ 			{ 117, 0 },
++			{ 172, 2 }, /* Called speedbin 1 downstream, but let's not break things! */
+ 			{ 190, 1 },
+ 		),
+ 	}, {
 
 -- 
 2.42.0
