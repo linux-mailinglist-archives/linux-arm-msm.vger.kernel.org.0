@@ -2,155 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 175867AEA43
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 12:22:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A0F237AEA51
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 12:28:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232521AbjIZKWX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Sep 2023 06:22:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39990 "EHLO
+        id S229993AbjIZK2D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Sep 2023 06:28:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229458AbjIZKWV (ORCPT
+        with ESMTP id S229845AbjIZK2C (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Sep 2023 06:22:21 -0400
-Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 441A5DD
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 03:22:15 -0700 (PDT)
-Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-59bf1dde73fso106822247b3.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 03:22:15 -0700 (PDT)
+        Tue, 26 Sep 2023 06:28:02 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BB00B3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 03:27:55 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-9adb9fa7200so1887172366b.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 03:27:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695723734; x=1696328534; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=a98I+/enWVs0BEjUps7tbFx8/Tj78e5XZIx5A8fkfhE=;
-        b=eT/u6bJUvD3zAQnvIe1VnlKFkKwyk7s+H5HFzh0L7pvVn3OtZ0x38c0K30VkyEGBhJ
-         hPBTNKjiTEeOipNfw+6fbf9pvV7qnXJY6TAjhNH5/tFgrmk7QIV/XAV/iZgJTxInPvyh
-         4dRzTZDs3DSze7gTdR8uud7MHfYD3BRBXlOctDewLRxSD0vpzkdbtS1+ZX0XaN0NIIe7
-         vd7kkDQ6iGjP451lIBiiqC2722J9ROG0M+41vEfmWRws1217ENwA5pyeqmVmcR/vyDKs
-         Y66qzSDp7h+agAbVFtqxz2rJMvOzqVGkPtuzqX047utvdSsFE3yhBTjE80t0XANAxEa7
-         FB7w==
+        d=linaro.org; s=google; t=1695724073; x=1696328873; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OJCY8Me/FNTd/3Q4t/OHKV9ApYCGDApYXH49P21T41E=;
+        b=y2UamL7UyTqHcDgoXFwDJD/dL9+5iptY8ripG7BDhERnhwba5BD6bmmcrKvdzAGwPe
+         p3mI+55WQS4yGZyeK4j60aYZTwl7H9AYlmEytwOddI1SaSdx0R0eieg1wPO050kv9K/u
+         Exm76J9SBAkjJJvpoqNItlmBm0Vw+WkjU3XGdnafwgKD3ZZlnhirqhYF7k4Rb7SWseUq
+         jzYw3GRZyGjjltWDrYwRGy4ipqf52uKsJ7NBPcNaJvfDofxVy6MuxWhvKqhij9rXErOt
+         O4Ss5piSUeeSFCqRhKxrSlEV+JP4Y0M6CZ08SvJJ/UmiEwmny+ByMMUBbGJPqALeAx0s
+         t93w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695723734; x=1696328534;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=a98I+/enWVs0BEjUps7tbFx8/Tj78e5XZIx5A8fkfhE=;
-        b=qWL/Ry2dFQgzUwftVnGATfJ7dZ5UCjmdMQz9dem4+5xOq8tDrBFe5RLY8fE8gDkiGk
-         7SS7ycTSY8MvgzYVhdriHr+8cm1Zp9Y4N+5qt4PjysBLDflTQOMnFoNa9koLZy41gQoq
-         /ov7Tabz8Dnns7/Dj7VpePlVGZEz42FEF6Ink+wiWBEvujgO1JSovoleeTsz+wruaPrY
-         bHPl+LnfsW4NIyPKfDEC04ICgDnfJqpJ4YMUtpYZReGP2KzBIvOqj7P0v0pzTd+Abla3
-         /Hm2HfLqufY0W0tWrHYQJmxUJtOiutjijnePL/bmsqivo/8MGLCP7LxCQL54MVAdINcV
-         x+Lg==
-X-Gm-Message-State: AOJu0Yxy21V2LE50/Gs5uLPF3ACcoB/VutnoDMlNBU9MSJpAIwbwcgKs
-        7V0EyxqY8DN6a2N9zHe8y6IjBTuuSWkf9s+LoeP4Lw==
-X-Google-Smtp-Source: AGHT+IGmLuat8sSPGzk/B0CHDauKNfvhdOvdCcSe26K4vrmzaiM9ls0m20+5wDgFIeDnTqlnb5On9IWTdPLMoG6LBvQ=
-X-Received: by 2002:a0d:d046:0:b0:586:c27c:3eee with SMTP id
- s67-20020a0dd046000000b00586c27c3eeemr10831532ywd.38.1695723734453; Tue, 26
- Sep 2023 03:22:14 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1695724073; x=1696328873;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OJCY8Me/FNTd/3Q4t/OHKV9ApYCGDApYXH49P21T41E=;
+        b=lwOcbwKtfvP1jW/Z3GdxDvO7ga3fjGnZzwAGtTBsSew88Pp4umpfsrqStzwaOk9fcz
+         sNlLsGSTHVTucINm1YyrbNH82cFJj2J722ihFGOFm55BkAlTXPkAvONIEuOOYS5srHB9
+         xFXXYf8SrfEWY1wyTTr9S9AXF4T21arIFpKuwvAolYT1dE6suYRigVromyCOyBQMz3qw
+         ImWb6u5o1wn/2eLv17F2O36ZEiGwFwZhk6oHS2NMI7+qmVigXwrtgcSg6D98nNcO607t
+         orlavp/5rKcJ3gMU1cCCzGChmhDZyYdbIMChxPkPdxi/clnv2LO0jJNYqCkx1JRqEFeA
+         c3Fg==
+X-Gm-Message-State: AOJu0YxTMoyhu19HMrqzk0dFKO9OlEcY+mnWUSEptKx6sDEqycdmdqxc
+        zwiQ0Mgh7kwGkE+11L2kvS2cyg==
+X-Google-Smtp-Source: AGHT+IEhBfhnsnKLswFK75Zx3YExEbWoBKkgTmp+Z+ndOhuTFxnaoeLiVsYJaeT6i0mA9+tM65UF2Q==
+X-Received: by 2002:a17:907:760f:b0:9ad:e0fb:6edf with SMTP id jx15-20020a170907760f00b009ade0fb6edfmr3348436ejc.7.1695724073523;
+        Tue, 26 Sep 2023 03:27:53 -0700 (PDT)
+Received: from [192.168.86.24] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id mh2-20020a170906eb8200b00992b2c55c67sm7571754ejb.156.2023.09.26.03.27.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 26 Sep 2023 03:27:52 -0700 (PDT)
+Message-ID: <90dffe7f-02c1-4965-8d48-1d689abc9323@linaro.org>
+Date:   Tue, 26 Sep 2023 11:27:51 +0100
 MIME-Version: 1.0
-References: <20230911221627.9569-1-quic_abhinavk@quicinc.com>
-In-Reply-To: <20230911221627.9569-1-quic_abhinavk@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 26 Sep 2023 13:21:08 +0300
-Message-ID: <CAA8EJppsY059KXaw6fh2Rdyuh210ibMa_MwsPz-mxivK3QE=Zw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] drm/msm/dpu: fail dpu_plane_atomic_check() based
- on mdp clk limits
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Archit Taneja <architt@codeaurora.org>,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Rajesh Yadav <ryadav@codeaurora.org>,
-        dri-devel@lists.freedesktop.org, quic_jesszhan@quicinc.com,
-        quic_parellan@quicinc.com, nespera@igalia.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.0
+Subject: Re: [PATCH v1] misc: fastrpc: Free DMA handles for RPC calls with no
+ arguments
+Content-Language: en-US
+To:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
+        linux-arm-msm@vger.kernel.org
+Cc:     ekangupt@qti.qualcomm.com, gregkh@linuxfoundation.org,
+        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com
+References: <1693463029-9311-1-git-send-email-quic_ekangupt@quicinc.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <1693463029-9311-1-git-send-email-quic_ekangupt@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 12 Sept 2023 at 01:18, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->
-> Currently, dpu_plane_atomic_check() does not check whether the
-> plane can process the image without exceeding the per chipset
-> limits for MDP clock. This leads to underflow issues because the
-> SSPP is not able to complete the processing for the data rate of
-> the display.
->
-> Fail the dpu_plane_atomic_check() if the SSPP cannot process the
-> image without exceeding the MDP clock limits.
->
-> changes in v2:
->         - use crtc_state's adjusted_mode instead of mode
->
-> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Thanks Ekansh for this patch.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+few comments below
 
+On 31/08/2023 07:23, Ekansh Gupta wrote:
+> The FDs for DMA handles to be freed is updated in fdlist by DSP over
+
+So the dsp is updating the fd list after invoke?
+
+
+> a remote call. This holds true even for remote calls with no
+> arguments. To handle this, get_args and put_args are needed to
+> be called for remote calls with no arguments also as fdlist
+> is allocated in get_args and FDs updated in fdlist is freed
+> in put_args.
+> 
+> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 15 ++++++++++++---
->  1 file changed, 12 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index 98c1b22e9bca..0be195f9149c 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -733,9 +733,11 @@ static int dpu_plane_check_inline_rotation(struct dpu_plane *pdpu,
->  static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
->                 struct dpu_sw_pipe *pipe,
->                 struct dpu_sw_pipe_cfg *pipe_cfg,
-> -               const struct dpu_format *fmt)
-> +               const struct dpu_format *fmt,
-> +               const struct drm_display_mode *mode)
->  {
->         uint32_t min_src_size;
-> +       struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
->
->         min_src_size = DPU_FORMAT_IS_YUV(fmt) ? 2 : 1;
->
-> @@ -774,6 +776,12 @@ static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
->                 return -EINVAL;
->         }
->
-> +       /* max clk check */
-> +       if (_dpu_plane_calc_clk(mode, pipe_cfg) > kms->perf.max_core_clk_rate) {
-> +               DPU_DEBUG_PLANE(pdpu, "plane exceeds max mdp core clk limits\n");
-> +               return -E2BIG;
-> +       }
-> +
->         return 0;
->  }
->
-> @@ -899,12 +907,13 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
->                 r_pipe_cfg->dst_rect.x1 = pipe_cfg->dst_rect.x2;
->         }
->
-> -       ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt);
-> +       ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt, &crtc_state->adjusted_mode);
->         if (ret)
->                 return ret;
->
->         if (r_pipe->sspp) {
-> -               ret = dpu_plane_atomic_check_pipe(pdpu, r_pipe, r_pipe_cfg, fmt);
-> +               ret = dpu_plane_atomic_check_pipe(pdpu, r_pipe, r_pipe_cfg, fmt,
-> +                                                 &crtc_state->adjusted_mode);
->                 if (ret)
->                         return ret;
->         }
-> --
-> 2.40.1
->
+>   drivers/misc/fastrpc.c | 22 +++++++++-------------
+>   1 file changed, 9 insertions(+), 13 deletions(-)
+> 
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index 9666d28..e6df66e 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -1153,11 +1153,9 @@ static int fastrpc_internal_invoke(struct fastrpc_user *fl,  u32 kernel,
+>   	if (IS_ERR(ctx))
+>   		return PTR_ERR(ctx);
+>   
+> -	if (ctx->nscalars) {
+
+Why do we need to remove this check?
+fastrpc_internal_invoke will have nscalars set before calling. and we 
+are not dealing with fdlist in fastrpc_get_args(), so am not sure what 
+this change is helping with.
 
 
--- 
-With best wishes
-Dmitry
+> -		err = fastrpc_get_args(kernel, ctx);
+> -		if (err)
+> -			goto bail;
+> -	}
+> +	err = fastrpc_get_args(kernel, ctx);
+> +	if (err)
+> +		goto bail;
+>   
+>   	/* make sure that all CPU memory writes are seen by DSP */
+>   	dma_wmb();
+> @@ -1181,14 +1179,12 @@ static int fastrpc_internal_invoke(struct fastrpc_user *fl,  u32 kernel,
+>   	if (err)
+>   		goto bail;
+>   
+> -	if (ctx->nscalars) {
+> -		/* make sure that all memory writes by DSP are seen by CPU */
+> -		dma_rmb();
+> -		/* populate all the output buffers with results */
+> -		err = fastrpc_put_args(ctx, kernel);
+> -		if (err)
+> -			goto bail;
+> -	}
+> +	/* make sure that all memory writes by DSP are seen by CPU */
+> +	dma_rmb();
+> +	/* populate all the output buffers with results */
+
+A comment about fdlist here would be really useful
+
+> +	err = fastrpc_put_args(ctx, kernel);
+> +	if (err)
+> +		goto bail;
+>   
+>   bail:
+>   	if (err != -ERESTARTSYS && err != -ETIMEDOUT) {
