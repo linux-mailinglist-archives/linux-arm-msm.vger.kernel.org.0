@@ -2,81 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CE9B87AF2D5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 20:27:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A976C7AF2F4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 20:31:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235471AbjIZS1o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Sep 2023 14:27:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42072 "EHLO
+        id S235419AbjIZSbS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Sep 2023 14:31:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235420AbjIZS1o (ORCPT
+        with ESMTP id S235398AbjIZSbR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Sep 2023 14:27:44 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A1ABBF
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 11:27:36 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-502e7d66c1eso15358238e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 11:27:36 -0700 (PDT)
+        Tue, 26 Sep 2023 14:31:17 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8D94F3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 11:31:09 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-50325ce89e9so15759096e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 11:31:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695752854; x=1696357654; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695753068; x=1696357868; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=w+WhEvVzq354lp8en3vleqjPVBkIdxbFh2tnxte7FFY=;
-        b=PovOo45hn4PitTGs8n59N5e0qFRgsYoDAgiFe7PMdXJ7ITVN1aF6IajISsIyOhm2K9
-         NhuWIRNvTX7Hq4FmqRsOuTv8gEDW6JHBs3kpxxf6AuAbVJQDeymgJLxoUzK7tNBlyjQK
-         5HA22CCVGnlRfC5KYaulfNY8Y17nkh7KKQ64vfNhZncd0By6I0tdFf/xWd+Y37U3F2+/
-         z5v5iZYCe4DViNjSG/KBa8QBNXDF7F7JWrsSg5mCyIHyzSVq2Kyag2AEnRNls9Ajc/UF
-         kefycjUt4Z+opy2WsoQcgBgsLCOJ0Xnlo3+23SHFpYeRf+lfiP4TGIjXa+jVbWPkHBmw
-         g1gg==
+        bh=d/myCHqw7Y6f+5xQcBNEbOGknqH3f0sUeqk2WLdYAig=;
+        b=N76C/9MbAZe8oDDZdHo1XxEhAkFD5l+Q4cA84twNFU4zbusv7xA9HgifN+R/ZjOx79
+         aTGBB7/TNe6x8gUD6b6rbIfrtr6PdrRcrLV3Z5mfxz8A66I+J2bWIKCbjaB7HD8ulmR3
+         1d4f+WkiYCS2oUPbOQsiNVMc1k+cLLdh/faMVqup7iFNrk0nnMX368+Qxp7EnT24oSRG
+         A1QLqX0XGm9jLr5VXCsi4C9cRWkMW2C4OxGrhjzYbbCNjxRkMpFEEVloyoTfsMoW1/Yp
+         quU8zJ4BclyQsPP+mIY7bT6xuzKd09UUyZxj3LVDbCTNowWHK8Joq64QDvRrnCGw9WC1
+         FPOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695752854; x=1696357654;
+        d=1e100.net; s=20230601; t=1695753068; x=1696357868;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=w+WhEvVzq354lp8en3vleqjPVBkIdxbFh2tnxte7FFY=;
-        b=fvSihRKUDHDbYWC8MxBdKT1UlQcbhp+0lo3+Vy4y0PXSuhFWBK09XZBxtFPyhgd8XE
-         xf4oxUkJ2gzUnWqILslzV7gtV2uRLbm1vwB1ORm5C60k3VgbcjGZ5DaEgCnRnyA1+rwE
-         Rfn3UDvGvtNzMdHihz5v2SFcpixrxmAka0Zpr73iYEpwyWXvPgZLo0q4dEYDmPo1ORPH
-         yCJ8NiX9Fkddf1xmKtIyd/Twb5ozSkxEBZ12r8beBcsUa7eLfQPrKtkKGbIkf/qUecnS
-         BwQh8ctIDzIqlkIauH0C8vzAIOxiyOf7GO5m1jDZoKpIaHUJS+zgmKsR0i8iIQWNIl6E
-         X+vw==
-X-Gm-Message-State: AOJu0YxGVcAdQsC2ucsdYWgIdHR6iC1RZ/BnNbtfjNXtHD/G5k9hXBkm
-        wA9yzd6s9YrBP5kxp3BScDldEg==
-X-Google-Smtp-Source: AGHT+IGEOwe5h8wRsbW86uovHuF6C3KdXUg4eQbG+lGNwE4BDIcXlWp3pHYrGv6+2lPWBKDyxbsq9A==
-X-Received: by 2002:a05:6512:3b98:b0:500:be57:ce53 with SMTP id g24-20020a0565123b9800b00500be57ce53mr11045472lfv.42.1695752854381;
-        Tue, 26 Sep 2023 11:27:34 -0700 (PDT)
+        bh=d/myCHqw7Y6f+5xQcBNEbOGknqH3f0sUeqk2WLdYAig=;
+        b=mEONa6Kbms8xc11/SKt9NgsHwYVyoFTtm7GGllqNt0LlHqH2SZ5AVBBe87kjxhCFys
+         JpM3ckx6JlLKUHde0hkgFqczx8M/Wv7b/kZ6qFfb128b0NqphC4Dfr9ac5gL3z8QChRv
+         ZcwXBa7c+/0zwJWnd/uge/bhnUpgNBkm2EgKqdvTo22wRGUcCHsEjT4i9mSjIF8wRgti
+         ouRBHWqvk0Sa6vTxGUMEgxV7R896115FDPYE+5bQKLuDpO/hFBYNbXP8i9keAZwKPPmh
+         Me7OQVWhm0hmzIkDNI2ivDKU3vXwwSVEWxoDrmFL/5dmUSZme7LJzBSX/s9X3yMQIpS3
+         Od8Q==
+X-Gm-Message-State: AOJu0Yx+S2yKmbNBj7+9bdihXRE3S2Pf+iUVkbd3T3/zGQZXxEGhTedY
+        pYB+H22upv3Of25mMD9T93metg==
+X-Google-Smtp-Source: AGHT+IE6U4dbpZkMiDLUilr+o3lM7oLQfDnwoNQRV1X9qb1YY2228fmM4TWOfFylp4qEhYmYaVX3ZQ==
+X-Received: by 2002:ac2:5b9c:0:b0:503:3587:fd15 with SMTP id o28-20020ac25b9c000000b005033587fd15mr8278374lfn.61.1695753067817;
+        Tue, 26 Sep 2023 11:31:07 -0700 (PDT)
 Received: from [192.168.33.189] (178235177023.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.23])
-        by smtp.gmail.com with ESMTPSA id eo2-20020a056512480200b004fe7011072fsm2292076lfb.58.2023.09.26.11.27.31
+        by smtp.gmail.com with ESMTPSA id b6-20020ac24106000000b004ff9ee35739sm2295053lfi.283.2023.09.26.11.31.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Sep 2023 11:27:34 -0700 (PDT)
-Message-ID: <1736686f-d7b5-4433-aa45-2369a1e9b53e@linaro.org>
-Date:   Tue, 26 Sep 2023 20:27:31 +0200
+        Tue, 26 Sep 2023 11:31:07 -0700 (PDT)
+Message-ID: <e6c77627-c257-45e1-b4bd-19807aefd829@linaro.org>
+Date:   Tue, 26 Sep 2023 20:31:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/7] arm64: dts: qcom: sc7280: Add ZAP shader support
+Subject: Re: [PATCH V2 2/3] arm64: dts: qcom: sc7280: Add UFS nodes for sc7280
+ soc
 Content-Language: en-US
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        cros-qcom-dts-watchers@chromium.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        Rob Clark <robdclark@chromium.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230926-topic-a643-v1-0-7af6937ac0a3@linaro.org>
- <20230926-topic-a643-v1-4-7af6937ac0a3@linaro.org>
+To:     Nitin Rawat <quic_nitirawa@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, mani@kernel.org, alim.akhtar@samsung.com,
+        bvanassche@acm.org, avri.altman@wdc.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        cros-qcom-dts-watchers@chromium.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20230926162042.14180-1-quic_nitirawa@quicinc.com>
+ <20230926162042.14180-3-quic_nitirawa@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -113,7 +102,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230926-topic-a643-v1-4-7af6937ac0a3@linaro.org>
+In-Reply-To: <20230926162042.14180-3-quic_nitirawa@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -126,54 +115,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26.09.2023 20:24, Konrad Dybcio wrote:
-> Non-Chrome SC7280-family platforms ship a ZAP shader with the Adreno GPU.
-> Describe that and make sure it doesn't interfere with Chrome devices.
+On 26.09.2023 18:20, Nitin Rawat wrote:
+> Add UFS host controller and PHY nodes for sc7280 soc.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi |  2 ++
->  arch/arm64/boot/dts/qcom/sc7280.dtsi               | 10 ++++++++++
->  2 files changed, 12 insertions(+)
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 64 ++++++++++++++++++++++++++++
+>  1 file changed, 64 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> index 5d462ae14ba1..88fc67c3646e 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> @@ -17,6 +17,8 @@
->   * required by the setup for Chrome boards.
->   */
->  
-> +/delete-node/ &gpu_zap_mem;
-> +/delete-node/ &gpu_zap_shader;
->  /delete-node/ &hyp_mem;
->  /delete-node/ &xbl_mem;
->  /delete-node/ &reserved_xbl_uefi_log;
 > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index 66f1eb83cca7..c38ddf267ef5 100644
+> index 66f1eb83cca7..3be8ea090ade 100644
 > --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
 > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -152,6 +152,11 @@ ipa_fw_mem: memory@8b700000 {
->  			no-map;
+> @@ -3353,6 +3353,70 @@
+>  			};
 >  		};
->  
-> +		gpu_zap_mem: zap@8b71a000 {
-> +			reg = <0 0x8b71a000 0 0x2000>;
-> +			no-map;
-> +		};
+> 
+> +		ufs_mem_hc: ufs@1d84000 {
+> +			compatible = "qcom,sc7280-ufshc", "qcom,ufshc",
+> +				     "jedec,ufs-2.0";
+> +			reg = <0x0 0x01d84000 0x0 0x3000>;
+> +			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
+> +			phys = <&ufs_mem_phy>;
+> +			phy-names = "ufsphy";
+> +			lanes-per-direction = <2>;
+> +			#reset-cells = <1>;
+> +			resets = <&gcc GCC_UFS_PHY_BCR>;
+> +			reset-names = "rst";
 > +
->  		rmtfs_mem: memory@9c900000 {
->  			compatible = "qcom,rmtfs-mem";
->  			reg = <0x0 0x9c900000 0x0 0x280000>;
-> @@ -2608,6 +2613,11 @@ gpu: gpu@3d00000 {
->  			nvmem-cells = <&gpu_speed_bin>;
->  			nvmem-cell-names = "speed_bin";
->  
-> +			gpu_zap_shader: zap-shader {
-> +				memory-region = <&gpu_zap_mem>;
-> +				firmware-name = "qcom/a660_zap.mdt";
-Gah. This line shouldn't have been there.
+> +			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
+> +			required-opps = <&rpmhpd_opp_nom>;
+> +
+> +			iommus = <&apps_smmu 0x80 0x0>;
+> +			dma-coherent;
+> +
+> +			clock-names = "core_clk",
+> +				      "bus_aggr_clk",
+> +				      "iface_clk",
+> +				      "core_clk_unipro",
+> +				      "ref_clk",
+> +				      "tx_lane0_sync_clk",
+> +				      "rx_lane0_sync_clk",
+> +				      "rx_lane1_sync_clk";
+As discussed, property-names is preferred to come after
+property, just like in the other node you're adding.
 
-Considering it's not the only oops, I'll resend.
+[...]
+
+> +		ufs_mem_phy: phy@1d87000 {
+> +			compatible = "qcom,sc7280-qmp-ufs-phy";
+> +			reg = <0x0 0x01d87000 0x0 0xe00>;
+> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>,
+> +				 <&gcc GCC_UFS_1_CLKREF_EN>;
+> +			clock-names = "ref", "ref_aux", "qref";
+> +
+> +			resets = <&ufs_mem_hc 0>;
+> +			reset-names = "ufsphy";
+> +
+> +			#clock-cells = <1>;
+> +			#phy-cells = <0>;
+> +
+> +			status = "disabled";
+> +
+> +		};
+Stray newline above.
 
 Konrad
