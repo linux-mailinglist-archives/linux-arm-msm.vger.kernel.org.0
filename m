@@ -2,70 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C53D17AF303
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 20:33:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A25877AF316
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 20:40:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235547AbjIZSdM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Sep 2023 14:33:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59484 "EHLO
+        id S229674AbjIZSko (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Sep 2023 14:40:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235548AbjIZSdL (ORCPT
+        with ESMTP id S235552AbjIZSkn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Sep 2023 14:33:11 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0808D12A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 11:33:01 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-50300cb4776so15466927e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 11:33:00 -0700 (PDT)
+        Tue, 26 Sep 2023 14:40:43 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA31812A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 11:40:35 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2c008d8fd07so158060381fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 11:40:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695753179; x=1696357979; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695753634; x=1696358434; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=QKVf1Emw3dSvJq1GjTn2XiVZrczJ8M+MUDSm4v82vj8=;
-        b=bQlm1d7Ir+fi+0Z8WCEURnWFDYiBiOpv/zsIjjOm9oqJ1TqvBrC70zyKZ6lCJyr+kr
-         C8qa/9B61l28DcXGnsXezmUW2JITOJ6Equ9uOgCvBMroX81eQPHCz703ZGSfllUqLMhc
-         E5OVOvmgxSk2rwYmVJlHBNAxF5vv/VpkH4LRn70Ukq8SpRoC/SjQ1vV0dz9Qb93OZEQo
-         9CHRBnrBSn0XOBsGs2kk0GXb3QWNw1AakxjlosMHpZtVF+ayJGkMW4qvqybRyLuqqxs4
-         Wirq6ctDORWJVAoLPNPpHlyx0x5YbQvb4NyEHJfJRJ+GYQzPoGCDOq428juVBm+dXHDK
-         KGIQ==
+        bh=Cbj7xG6ItjgyzB3JMPXb9POyuicvcin6fqpj2Mlq0nA=;
+        b=y5tE8tWGHMO0SkfEyQ0x8dftVo4zKwW+4KDdH2vv4EBAR0IzyZ8ejQ1/RKzCewigYb
+         bEBsdbhKGmZb8oWLGSZfI0iA7UJvkxJit/IwR9Z/c1ytZRMcz+0RCHOjvZBWJdn8Q3Hk
+         3tt5LeYgnBnwYQSq8A/5tj4PQf1IrEDmXQ8su82vnvTYkPlXF7MDmC+M9K4PV32ZNP/L
+         6mghR9bqtrYpu+/2uaOnJ35oRM+MroejL8seFk+dci00DQaXExmn//usLkNg/KlSi6uf
+         s1Xpdu+QH/JnaLLCa0rUB0SKxOS+nwK2cEid/cUZakk6xV/QJsKbp6JZvDt4ow9lSvis
+         fKbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695753179; x=1696357979;
+        d=1e100.net; s=20230601; t=1695753634; x=1696358434;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QKVf1Emw3dSvJq1GjTn2XiVZrczJ8M+MUDSm4v82vj8=;
-        b=uI2fFjUOcWDqWCdntOI/ZyJVCPDjUHQ8KnAUCbVfBmT/2hHiNHui1vLL0a/pkNd96R
-         ZsYFU/+vQNSKbhouwj+JQGFKiBwrtZdGWG+PpzzPyrggv2s6/iACzVtdlDw085fn6yLv
-         fGY6kn2XIFSz7UBnhAMkxlSUMLOUpxxnALGZ6PK0YlcrTppM2kwc8Azu0BGWb9gcsQrs
-         xTzobU+FQCmbnyd8Ejf5kcQLTx1lAcITjXrvIm0xDW9ie8gD35S1a6/O9+uCNr1C0Co7
-         CDC32T/c5HEbo2+i8waTZDZ9aSuWX+aGDNuj98CTKmrTVRLAR2D/5UZSFLLKc/42zdxp
-         7vCg==
-X-Gm-Message-State: AOJu0YzvwrX58cvpJ8ahV+BPsSANNz5lfjqNRGPeZ4mmobuap1OnGVGa
-        otRNELBBZ+BGKEiYdTGCI5IMnQ==
-X-Google-Smtp-Source: AGHT+IFLV5Ipx5Mz2OCqfpQ52rEwvqLALF2SGwbyWVPmVTgbDOgheWGnwGxJR4x/oP2qgwHcfJA7Qw==
-X-Received: by 2002:a05:6512:b1a:b0:502:a942:d7a8 with SMTP id w26-20020a0565120b1a00b00502a942d7a8mr9441265lfu.69.1695753179076;
-        Tue, 26 Sep 2023 11:32:59 -0700 (PDT)
+        bh=Cbj7xG6ItjgyzB3JMPXb9POyuicvcin6fqpj2Mlq0nA=;
+        b=C2XtpGl/+tqYzcQ1u4QjN2ESuQO3QfWeiE2OlCBAgwuTOs0v6jQbFyW4bi37ijtBE1
+         R+Bc8gbuqd5SHgF5ixEbJap7/7aSZPXIG51PZqeZXJ/lWle3e7ndKzNGaDYdWM2BFlPY
+         RER0l9JuZfbd3K7bT+6wPNv+h4UFJtYsaniobA9wnIOL+b6RjKRUsI+eJMWQoBgs1izW
+         3qa+PdifWWPlQ8PkwQqxa/659Q0nQtp63pyeQeJU2DGwPI/YAu0mv5uY8RC5G8DX+nkt
+         SwdXMS8EoxJmbNRjyoxprBhiPSo4mTnqjNWWgazzDAcbhNTsSfvP2BqkxRJmkNRGYeF0
+         WBAQ==
+X-Gm-Message-State: AOJu0YxjAT4yFurfy+Nha7AcjzpsEFHahjMacOYajFjQTx/2KrtU+bua
+        7M1Lvdg9BSiloHIU1dpFWjhCrg==
+X-Google-Smtp-Source: AGHT+IG0KLoWhYGIScPU0gY7MREMIOVjC/ozkDwJXiLjuGVLdz5Jw6Tn3wLyJn4evDa/npr+KgmZJQ==
+X-Received: by 2002:a2e:9788:0:b0:2bc:b9c7:7ba3 with SMTP id y8-20020a2e9788000000b002bcb9c77ba3mr9035168lji.12.1695753634185;
+        Tue, 26 Sep 2023 11:40:34 -0700 (PDT)
 Received: from [192.168.33.189] (178235177023.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.23])
-        by smtp.gmail.com with ESMTPSA id u2-20020a056512040200b005030a35019dsm2287736lfk.178.2023.09.26.11.32.57
+        by smtp.gmail.com with ESMTPSA id v16-20020a2e9f50000000b002c12c2094e4sm2740700ljk.74.2023.09.26.11.40.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Sep 2023 11:32:58 -0700 (PDT)
-Message-ID: <daa73a81-569a-467e-aa28-0e711184331f@linaro.org>
-Date:   Tue, 26 Sep 2023 20:32:56 +0200
+        Tue, 26 Sep 2023 11:40:33 -0700 (PDT)
+Message-ID: <42a1d0ab-4e8d-461d-bb2c-977a793e52b2@linaro.org>
+Date:   Tue, 26 Sep 2023 20:40:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 3/3] arm64: dts: qcom: sc7280: Add UFS nodes for sc7280
- IDP board
+Subject: Re: [PATCH v2 1/1] drm/msm/adreno: Add support for SM7150 SoC machine
 Content-Language: en-US
-To:     Nitin Rawat <quic_nitirawa@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, mani@kernel.org, alim.akhtar@samsung.com,
-        bvanassche@acm.org, avri.altman@wdc.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        cros-qcom-dts-watchers@chromium.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20230926162042.14180-1-quic_nitirawa@quicinc.com>
- <20230926162042.14180-4-quic_nitirawa@quicinc.com>
+To:     Danila Tikhonov <danila@jiaxyga.com>, robdclark@gmail.com,
+        quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
+        sean@poorly.run, marijn.suijten@somainline.org, airlied@gmail.com,
+        daniel@ffwll.ch, johan+linaro@kernel.org, andersson@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20230926174243.161422-1-danila@jiaxyga.com>
+ <20230926174243.161422-2-danila@jiaxyga.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -102,7 +100,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230926162042.14180-4-quic_nitirawa@quicinc.com>
+In-Reply-To: <20230926174243.161422-2-danila@jiaxyga.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -115,33 +113,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26.09.2023 18:20, Nitin Rawat wrote:
-> Add UFS host controller and PHY nodes for sc7280 IDP board.
+On 26.09.2023 19:42, Danila Tikhonov wrote:
+> SM7150 has 5 power levels which correspond to 5 speed-bin values: 0,
+> 128, 146, 167, 172. Speed-bin value is calulated as FMAX/4.8MHz round up
+> to zero decimal places.
 > 
-> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> Also a618 on SM7150 uses a615 zapfw. Add a squashed version (.mbn).
+> 
+> Add this as machine = "qcom,sm7150", because speed-bin values are
+> different from atoll (sc7180/sm7125).
+> 
+> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
 > ---
->  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> index 2ff549f4dc7a..a0059527d9e4 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> @@ -499,6 +499,25 @@
->  	status = "okay";
->  };
-> 
-> +&ufs_mem_hc {
-> +	reset-gpios = <&tlmm 175 GPIO_ACTIVE_LOW>;
-> +	vcc-supply = <&vreg_l7b_2p9>;
-> +	vcc-max-microamp = <800000>;
-> +	vccq-supply = <&vreg_l9b_1p2>;
-> +	vccq-max-microamp = <900000>;
-> +	vccq2-supply = <&vreg_l9b_1p2>;
-> +	vccq2-max-microamp = <900000>;
-Can you confirm VCCQ2 is in fact connected, to avoid the mistake
-fixed in [1]?
+What's the downstream dt name for 7150?
+
+Do you have some more complete tree published somewhere?
 
 Konrad
-
-[1] https://lore.kernel.org/linux-arm-msm/20230906104744.163479-1-krzysztof.kozlowski@linaro.org/#b
