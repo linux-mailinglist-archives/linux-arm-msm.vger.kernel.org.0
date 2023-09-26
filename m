@@ -2,110 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A3B9B7AE369
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 03:44:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BBE77AE4B4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 06:48:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229486AbjIZBpC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Sep 2023 21:45:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40230 "EHLO
+        id S232781AbjIZEst (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Sep 2023 00:48:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229481AbjIZBpC (ORCPT
+        with ESMTP id S229472AbjIZEss (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Sep 2023 21:45:02 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94B67101
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 18:44:55 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46D57C433C7;
-        Tue, 26 Sep 2023 01:44:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1695692695;
-        bh=3GmjWwlLfKkAaee1U7rANvoiG26U/KNUaceqIPsT6ng=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=iygnGX/zFTHpDM5zr/7FqpXcmSkCqfdehvGtxkU7MbfwLy/cUlC/E1M8LoQPpaQBN
-         Gksex02EneZnNH11O34brahnhFYM90ZhLA4YsBrD9OpOFvsa7KqsYh8651sMiomYRY
-         dq8QrDUSRenRpeB70fhqfhLQ7GDLLui2cqvdoyZdTlbtfGVKROfuQac/Z59NIQ+xTF
-         2sSD9tOqAX4h1RPaamOVZ+hwhL2gAJSll2R9H1p1co9KBIWvYAfgDPaVr9IpiNiLHF
-         GSmLjIg4eg8YfCYdRaHSjrsUuhTPE6lK3lweZGyOHUPuGZid0XLm+H8OAPWW7f3x+u
-         ng8IVaPvMpsAw==
-Received: (nullmailer pid 2651675 invoked by uid 1000);
-        Tue, 26 Sep 2023 01:44:49 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Richard Acayan <mailingradian@gmail.com>
-Cc:     Sean Paul <sean@poorly.run>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Ryan McCann <quic_rmccann@quicinc.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
+        Tue, 26 Sep 2023 00:48:48 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60F00D9;
+        Mon, 25 Sep 2023 21:48:41 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38Q3SmSc023777;
+        Tue, 26 Sep 2023 04:48:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=7+U+bg6mNPTBakerXQD6k6E+X6B7lLRqpcPeZotduPY=;
+ b=PHJrv0YTQXcjQzYp0A5YvWBJj3lLVd09jizxW2eefAOU5q2YWUIB+D7Ib4tHkK/S+22v
+ W4zprvsyPu4s4thwj5GrjF4lZgn00xOJ/3fdZcVZtmR9vROJ7/XpaAb2sJpBiSyvK+p+
+ FSmmCXpN/Mmcxhz5Xp52P5/VmwYD3+d3b1vdQVJ/98337OSRjFwyQkFFrIq9FifVfOUN
+ exIxzQEGog3iMkUov4B4gpA4jJ/gdRJkwy7hoGg9ZWDaRtj3CJqYUm7fk5oWJ4GtzApW
+ V88Rk0VEzQUF3Tcj6+q6hOe/z1Cf+fs7lW/n9smffOZ9k5/SWnFeJEhCL//Vd1u7iBck yg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tbh25gq8f-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 26 Sep 2023 04:48:32 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38Q4mVHV002847
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 26 Sep 2023 04:48:31 GMT
+Received: from hu-rkakarla-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Mon, 25 Sep 2023 21:48:27 -0700
+From:   Raghavendra Kakarla <quic_rkakarla@quicinc.com>
+To:     Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        dri-devel@lists.freedesktop.org,
-        Liu Shixin <liushixin2@huawei.com>, devicetree@vger.kernel.org,
-        Robert Foss <rfoss@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
-        David Airlie <airlied@gmail.com>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        freedreno@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230925232625.846666-12-mailingradian@gmail.com>
-References: <20230925232625.846666-9-mailingradian@gmail.com>
- <20230925232625.846666-12-mailingradian@gmail.com>
-Message-Id: <169569268968.2651575.14271780119784995097.robh@kernel.org>
-Subject: Re: [PATCH 3/6] dt-bindings: display: msm: Add SDM670 MDSS
-Date:   Mon, 25 Sep 2023 20:44:49 -0500
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Raghavendra Kakarla <quic_rkakarla@quicinc.com>
+CC:     <quic_mkshah@quicinc.com>, <quic_lsrao@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+Subject: [PATCH v2] arm64: dts: qcom: sa8775p: Add RPMh sleep stats
+Date:   Tue, 26 Sep 2023 10:18:14 +0530
+Message-ID: <20230926044814.535-1-quic_rkakarla@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: u43Ai1iMSYV4_0KP6pobufFaN1nOoQgh
+X-Proofpoint-ORIG-GUID: u43Ai1iMSYV4_0KP6pobufFaN1nOoQgh
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-09-26_02,2023-09-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
+ spamscore=0 adultscore=0 malwarescore=0 phishscore=0 lowpriorityscore=0
+ priorityscore=1501 clxscore=1015 suspectscore=0 mlxscore=0 mlxlogscore=586
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
+ definitions=main-2309260041
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add device node for sleep stats driver which provides various
+low power mode stats.
 
-On Mon, 25 Sep 2023 19:26:30 -0400, Richard Acayan wrote:
-> Add documentation for the SDM670 display subsystem, adapted from the
-> SDM845 and SM6125 documentation.
-> 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> ---
->  .../display/msm/qcom,sdm670-mdss.yaml         | 280 ++++++++++++++++++
->  1 file changed, 280 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sdm670-mdss.yaml
-> 
+Cc: devicetree@vger.kernel.org
+Signed-off-by: Raghavendra Kakarla <quic_rkakarla@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/display/msm/qcom,sdm670-mdss.example.dts:198.43-200.27: Warning (graph_endpoint): /example-0/display-subsystem@ae00000/dsi@ae96000/ports/port@0/endpoint: graph connection to node '/example-0/display-subsystem@ae00000/display-controller@ae01000/ports/port@1/endpoint' is not bidirectional
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230925232625.846666-12-mailingradian@gmail.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+index 9f4f58e831a4..cee7491de675 100644
+--- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
++++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+@@ -1912,6 +1912,11 @@
+ 			#clock-cells = <0>;
+ 		};
+ 
++		sram@c3f0000 {
++			compatible = "qcom,rpmh-stats";
++			reg = <0 0x0c3f0000 0 0x400>;
++		};
++
+ 		spmi_bus: spmi@c440000 {
+ 			compatible = "qcom,spmi-pmic-arb";
+ 			reg = <0x0 0x0c440000 0x0 0x1100>,
+-- 
+2.17.1
 
