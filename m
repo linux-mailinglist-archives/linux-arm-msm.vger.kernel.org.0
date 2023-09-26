@@ -2,75 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D28AB7AF4CE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 22:07:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B9307AF4D0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 22:08:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235831AbjIZUHc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Sep 2023 16:07:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47300 "EHLO
+        id S235790AbjIZUIr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Sep 2023 16:08:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231899AbjIZUHc (ORCPT
+        with ESMTP id S233435AbjIZUIr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Sep 2023 16:07:32 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7568B136
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 13:07:25 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-99357737980so1179372266b.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 13:07:25 -0700 (PDT)
+        Tue, 26 Sep 2023 16:08:47 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 499A911D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 13:08:40 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-9a58dbd5daeso1209425566b.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 13:08:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695758844; x=1696363644; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1695758919; x=1696363719; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=GnPN1NOYmkf+oNudX673WFOim8syjAZ8/Se4c2tU2Nc=;
-        b=CN/ZO5Cr3TelCc9UIRzrIv9ENKncxKTvpQhTJE7AwYdNWMEhhRrbV1VoSSSFCCFBDG
-         WseRZyyreYNXgwuUQokKQMZfL2fPsb4qCuCfyEmWk+WA11H+HmNmpdYwUtgR6Q52oq8z
-         Et2/gy8WLeg7dOfUS7j910GrGAo3NikB38Cdea4evmL1t7H+IherJtcMsPGQjZSyZZQY
-         lXEXPNm1EvhDDDy8yHbrOVR0RMNP8bp2rrRJ1sGjZ5oGin1GAaOp8VI9x+JkU1MpmN5a
-         Lyt80MyuLoGwzvhMVA0WU/gROCyAshNcgn3zB7RWXUADqUFOpIgk8paoxUO1SVywFuZ3
-         AdVg==
+        bh=conOmV4UnpH+Q2D4qTpLIFkdyVF7jD1Has9tIlu1nh8=;
+        b=c6DjRz72CIy+itwBxe8plfZjojxNzuML2cBsCGkkiX+/TyB5SVuqMDn+h/0XB0NHrI
+         tbei/m/UX3A7YnHRqV8WNWvNGsljnorhVurTBLeyjlvp6o9YiWL4rJrpR85yRbusJDDd
+         b4lFJfyeqBpfj++zAsQyHVEInPX2Im9aXPvgfibwy7oegJDFWNgsgWIC67i4I1/1V4LG
+         j2W+fQFFQteeuVv1yZYm9hCgoRyG1un0sne0OVlILUwytaujJ7iYfzxtVgi5koBVudlS
+         i/933LFhtcWhb3kNqO7IQzCPHBKidMCOldIlz1/hXzPFfEe+bzfpH6lBgUrZcdDqEQri
+         mDoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695758844; x=1696363644;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1695758919; x=1696363719;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GnPN1NOYmkf+oNudX673WFOim8syjAZ8/Se4c2tU2Nc=;
-        b=A7aqymNwjQL4EWQADuh8AS85hh9ZTRgTTkE2AF8QkbZ8zMmvNk/wYGsudtGRDqRAGH
-         iXH90bfrImeSw+lEWDlMCF5BOerRFhXibAzTFTDTMjeyIhBwBn0GMsOlxVDEQPkpuELF
-         2h/CAawzKWBYeHcjjyVY7Z+S1MozUKmRPwyZ2FjJ3cuIPjB6/kjRGnYJzin0Nd4f6BsE
-         1alBKBN7fbfKMi0AzoCxyecmNUWzduF21zLxF3eodTy2Wl+HYrNNdszHRcwd6GE2rFJZ
-         MhzxrsggLtBUlIzdpXASHfsNa7OHSNWfTwmcq/xLkVQ20ugHM51zITU2TIthqXNVGPF0
-         aqeA==
-X-Gm-Message-State: AOJu0YyokKDVXNJ4xtR38UN/+C6KzvMI37rUNu3NldqmYRcCErXr1SM5
-        pD8X1l8RxYOGsJivy68azq7QwA==
-X-Google-Smtp-Source: AGHT+IEpcloLUT7V/Nzji/sun7iJolr6vWxw/e3GcLqXFw2c32z0CZyuBUDDPjlr4esUEcapUYoVyQ==
-X-Received: by 2002:a17:906:310d:b0:9a2:24f9:fabe with SMTP id 13-20020a170906310d00b009a224f9fabemr10679684ejx.66.1695758843936;
-        Tue, 26 Sep 2023 13:07:23 -0700 (PDT)
+        bh=conOmV4UnpH+Q2D4qTpLIFkdyVF7jD1Has9tIlu1nh8=;
+        b=vRJYqKWR011RtkXO3/8BATML8ws+FTcYMwI9eL1vG8+2SU+fXJlI09+uSZiP7coknG
+         CkTlnqDdcmAjG1kJfXWcSrqGCFeXCIVY2Xr3znMgpudA+S2c/0qvE7n+w/gdmi5l4ReS
+         dWhMeJGuE8y+oOQIB+zIt1lz9jWxLxmXbEVG8DU30PmMTYUgMvDfNF0SYfj2YanSFb8l
+         jL1zGd5jZZ123KyggmsSXwqfv6/7za3Z6h0iFfIdS5NVO/4GL7cIrA4vmZS/1zn9j2vf
+         YmbQFhrVcpSollWmM1/TPV0n9cThwEKCPXIagDAg0M7r1BVnIygEeSnekRm206gCQqal
+         Biqw==
+X-Gm-Message-State: AOJu0Ywj5v9zhwP78m4p1wz9xvB0pgCfFsp2KR7qxWRqy4THKfTax2qn
+        koGoJtwXzWNYMQBwSs+l8FyJYA==
+X-Google-Smtp-Source: AGHT+IE3mX7XtIp2+XFL8eoufFAwfUsDD8mUXJ93RlWKtM2nL1m+4rhbELs1gfs8dFpzVoAXOTj/PQ==
+X-Received: by 2002:a17:906:8445:b0:9ae:5493:2e0e with SMTP id e5-20020a170906844500b009ae54932e0emr7949763ejy.24.1695758918655;
+        Tue, 26 Sep 2023 13:08:38 -0700 (PDT)
 Received: from [192.168.33.189] (178235177023.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.23])
-        by smtp.gmail.com with ESMTPSA id h9-20020a17090619c900b009ae54eba5casm8218821ejd.102.2023.09.26.13.07.22
+        by smtp.gmail.com with ESMTPSA id h9-20020a17090619c900b009ae54eba5casm8218821ejd.102.2023.09.26.13.08.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Sep 2023 13:07:23 -0700 (PDT)
-Message-ID: <47a4bc7d-3f87-4a55-9905-19df20a9e03d@linaro.org>
-Date:   Tue, 26 Sep 2023 22:07:21 +0200
+        Tue, 26 Sep 2023 13:08:38 -0700 (PDT)
+Message-ID: <1faee5fe-3873-47ad-99d4-d264aedb0572@linaro.org>
+Date:   Tue, 26 Sep 2023 22:08:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] Enable tsens and thermal for sa8775p SoC
+Subject: Re: [PATCH 5/6] drm/msm/dpu: Add hw revision 4.1 (SDM670)
 Content-Language: en-US
-To:     Priyansh Jain <quic_priyjain@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
+To:     Richard Acayan <mailingradian@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_manafm@quicinc.com, kernel@quicinc.com
-References: <20230926085948.23046-1-quic_priyjain@quicinc.com>
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        Ryan McCann <quic_rmccann@quicinc.com>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Liu Shixin <liushixin2@huawei.com>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+References: <20230925232625.846666-9-mailingradian@gmail.com>
+ <20230925232625.846666-14-mailingradian@gmail.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -107,35 +117,65 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230926085948.23046-1-quic_priyjain@quicinc.com>
+In-Reply-To: <20230925232625.846666-14-mailingradian@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26.09.2023 10:59, Priyansh Jain wrote:
-> Adding compatible string in TSENS dt-bindings, device node
-> for TSENS controller and Thermal zone support
+On 26.09.2023 01:26, Richard Acayan wrote:
+> The Snapdragon 670 uses similar clocks (with one frequency added) to the
+> Snapdragon 845 but reports DPU revision 4.1. Add support for this DPU
+> with configuration from the Pixel 3a downstream kernel.
 > 
-> Changes since v3:
-"since v3", but this is v2.. but only in the cover letter?
-Did you mean "in v3"?
+> Since revision 4.0 is SDM845, reuse some configuration from its catalog
+> entry.
+> 
+> Link: https://android.googlesource.com/kernel/msm/+/368478b0ae76566927a2769a2bf24dfe7f38bb78/arch/arm64/boot/dts/qcom/sdm670-sde.dtsi
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> ---
+>  .../msm/disp/dpu1/catalog/dpu_4_1_sdm670.h    | 105 ++++++++++++++++++
+>  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |   6 +
+>  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   1 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   1 +
+>  4 files changed, 113 insertions(+)
+>  create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h
+> new file mode 100644
+> index 000000000000..eaccb16b5db9
+> --- /dev/null
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h
+> @@ -0,0 +1,105 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2022. Qualcomm Innovation Center, Inc. All rights reserved.
+> + * Copyright (c) 2023, Richard Acayan. All rights reserved.
+> + */
+> +
+> +#ifndef _DPU_4_1_SDM670_H
+> +#define _DPU_4_1_SDM670_H
+> +
+> +static const struct dpu_mdp_cfg sdm670_mdp = {
+> +	.name = "top_0",
+> +	.base = 0x0, .len = 0x45c,
+> +	.features = BIT(DPU_MDP_AUDIO_SELECT),
+> +	.clk_ctrls = {
+> +		[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0},
+space before the closing curly bracket, please
 
-I guess this is the v3 series, but you accidentally sent the cover
-letter with "v2" in the title and then resent it separately at [1]?
+[...]
 
-Please consider using the b4 tool [2], it makes such mistakes not
-happen and simplifies a couple more things for both the submitters
-and maintainers.
-
-
-[1] https://lore.kernel.org/linux-arm-msm/28473da7-e194-4581-a1d9-6ef574d52ed7@linaro.org/T/#t
-[2] https://b4.docs.kernel.org/en/latest/index.html
+> +
+> +static struct dpu_dsc_cfg sdm670_dsc[] = {
+const
 
 Konrad
