@@ -2,103 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E5707AF671
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 00:45:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2BFD77AF63C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 00:18:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231540AbjIZWp5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Sep 2023 18:45:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38598 "EHLO
+        id S229794AbjIZWR7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Sep 2023 18:17:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231633AbjIZWn4 (ORCPT
+        with ESMTP id S231447AbjIZWP7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Sep 2023 18:43:56 -0400
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98C98192
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 13:56:30 -0700 (PDT)
-Received: by mail-pl1-x634.google.com with SMTP id d9443c01a7336-1c5cd27b1acso86550945ad.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 13:56:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1695761790; x=1696366590; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=K+cA0vEenc1gqjUMM9wmqTHY3iLNBl/eCPHeoCPbd9o=;
-        b=Kq/RuLeI1lsxBMQk6FTV9WLOxdyOooQs0Jb29yl0kLyXR9SBKICMctAwUj71b2pgSm
-         l7Bd2Tie3PBRIhRmzsZWl4Q5kDzQuhoFiLsCdL/5p206FS+lSLbapfL6FAfzBXOc/yC5
-         DK/VWMVnjYvxdWLKh7Lxf/MwA98AJBzNG4YH5uI57g8xKa3Jd1o71Wee2HNbFxiC9i5x
-         S4bAbvDf70DVjeonBw77JLXtKLzEbI1rg4UyiSfPP1dLA/V+DDBmCiiAEXAL5k8t2F2T
-         SkWpIclpLt8ElFDJZOamU3AMGOj2pjI7QUm9QYn4mCw6+DTCB2gEJ31l6uFT9Ke6TGW+
-         fVOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695761790; x=1696366590;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=K+cA0vEenc1gqjUMM9wmqTHY3iLNBl/eCPHeoCPbd9o=;
-        b=p3mg78q+6vFe9Zc0yABIQqBxXUI/aGOTu/QJ4hyRoCDf7Ua8EgiDtzvxLtJC/5MXX/
-         SL51QyuzZnKSVLQ1rPncCdm/L8lb1e2RYBb91TppUTBAFUHgS/6pZLfag8C/a8ByBu/S
-         8618NDNdNYSVqBlDtJrLf69CR1YiNm8WINxoL3EfeJD7r3IDgOoLLaDRT/qY+qVWA4aM
-         8LC76FBAqd94BSqo3nprwPSasmeeOea6cUCRwtHvpM+ozii+aMcOZ36ejh/SrO5t2W1j
-         xYKh3fiikbkDWIYx9B4LBArVOnbUIBVlSPGj8IN65TfEQlQmbdlHqbWqi6DbSUU3OLp8
-         eA6w==
-X-Gm-Message-State: AOJu0Yy5CGQctHC/AzrK++cpKDldNWD2RLCmzZg3y3F67jDX10oNLOV8
-        yICiFiXyfchdR4Ms/IuqTOIVXA==
-X-Google-Smtp-Source: AGHT+IHm1IEuFlvmqbG+rMZZJWspqFftAv9gQV/yoTCiylQnMNOAJue7sY122lWTZw0J/AV6+YyC/Q==
-X-Received: by 2002:a17:902:c951:b0:1c3:a91a:627f with SMTP id i17-20020a170902c95100b001c3a91a627fmr12682196pla.47.1695761789886;
-        Tue, 26 Sep 2023 13:56:29 -0700 (PDT)
-Received: from google.com (55.212.185.35.bc.googleusercontent.com. [35.185.212.55])
-        by smtp.gmail.com with ESMTPSA id f13-20020a170902ce8d00b001bdb85291casm11445673plg.208.2023.09.26.13.56.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Sep 2023 13:56:29 -0700 (PDT)
-Date:   Tue, 26 Sep 2023 20:56:25 +0000
-From:   Carlos Llamas <cmllamas@google.com>
-To:     Peter Zijlstra <peterz@infradead.org>
-Cc:     Elliot Berman <quic_eberman@quicinc.com>,
-        Ingo Molnar <mingo@redhat.com>,
+        Tue, 26 Sep 2023 18:15:59 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B70423128;
+        Tue, 26 Sep 2023 15:05:28 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38QLs9jb012012;
+        Tue, 26 Sep 2023 22:04:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=PKb/D0HqamWxi3Wj4ngvJzC8qkJDnebrZ+o4mvzqv1s=;
+ b=p6d1x0TQkx3wzOuyLL7onb4u6LtHYEyn58xaDH3eS1aUpaDUsCbNKDwzQPiZeyzoJYOA
+ oUDklgXR5Ihtz6bX2D0bOsAf0wWfm5FlYytvmoSmCg6XhPcft7YWhVLY2uva3jdO6tJY
+ ldY+w8pRI36mlun8k4uvucDoqmy5blVkHjl2oY+9cgn5fnyMnrn42Z5elGaJwhovMwPv
+ YoOVL5V5dyJ6oFK28j5hkUkxP7r51RXHN5+O90Ma43OTqQNVYw1f3tb1X45lnVNrY4MZ
+ 4qB4dq2GCme6pGC8Q5fVhOEdwwWh661OtPaSLr9Ra2W0zzHM4byK2DLeFWPToYRm70+I 0w== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tbgfv37v8-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 26 Sep 2023 22:04:49 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38QM4miu006581
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 26 Sep 2023 22:04:48 GMT
+Received: from [10.110.53.84] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 26 Sep
+ 2023 15:04:45 -0700
+Message-ID: <7db6eaee-af6d-492a-bc7c-23c6aa6bbdf8@quicinc.com>
+Date:   Tue, 26 Sep 2023 15:04:44 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/2] Avoid spurious freezer wakeups
+To:     Carlos Llamas <cmllamas@google.com>,
+        Peter Zijlstra <peterz@infradead.org>
+CC:     Ingo Molnar <mingo@redhat.com>,
         "Rafael J. Wysocki" <rafael@kernel.org>,
         Pavel Machek <pavel@ucw.cz>,
-        Thomas Gleixner <tglx@linutronix.de>, kernel@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org,
-        Prakash Viswalingam <quic_prakashv@quicinc.com>,
+        Thomas Gleixner <tglx@linutronix.de>, <kernel@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>,
+        "Prakash Viswalingam" <quic_prakashv@quicinc.com>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        stable@vger.kernel.org
-Subject: Re: [PATCH v4 0/2] Avoid spurious freezer wakeups
-Message-ID: <ZRNFeXZ4tRbT7ws6@google.com>
+        <stable@vger.kernel.org>
 References: <20230908-avoid-spurious-freezer-wakeups-v4-0-6155aa3dafae@quicinc.com>
  <ZRMEHb3_0Ku1UuK_@google.com>
  <20230926200238.GB13828@noisy.programming.kicks-ass.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230926200238.GB13828@noisy.programming.kicks-ass.net>
-X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,
-        USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL autolearn=unavailable
-        autolearn_force=no version=3.4.6
+ <ZRNFeXZ4tRbT7ws6@google.com>
+Content-Language: en-US
+From:   Elliot Berman <quic_eberman@quicinc.com>
+In-Reply-To: <ZRNFeXZ4tRbT7ws6@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: xtoe0jaJDYGL5l2tozlam7dUcuC-zwrx
+X-Proofpoint-ORIG-GUID: xtoe0jaJDYGL5l2tozlam7dUcuC-zwrx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-09-26_15,2023-09-26_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
+ phishscore=0 impostorscore=0 bulkscore=0 mlxlogscore=793 mlxscore=0
+ spamscore=0 adultscore=0 priorityscore=1501 clxscore=1015
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2309260189
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 26, 2023 at 10:02:38PM +0200, Peter Zijlstra wrote:
-> On Tue, Sep 26, 2023 at 04:17:33PM +0000, Carlos Llamas wrote:
-> > 
-> > This issue is hurting the performance of our stable 6.1 releases. Does
-> > it make sense to backport these patches into stable branches once they
-> > land in mainline? I would assume we want to fix the perf regression
-> > there too?
+
+
+On 9/26/2023 1:56 PM, Carlos Llamas wrote:
+> On Tue, Sep 26, 2023 at 10:02:38PM +0200, Peter Zijlstra wrote:
+>> On Tue, Sep 26, 2023 at 04:17:33PM +0000, Carlos Llamas wrote:
+>>>
+>>> This issue is hurting the performance of our stable 6.1 releases. Does
+>>> it make sense to backport these patches into stable branches once they
+>>> land in mainline? I would assume we want to fix the perf regression
+>>> there too?
+>>
+>> Note that these patches are in tip/sched/core, slated for the next merge
+>> window.
 > 
-> Note that these patches are in tip/sched/core, slated for the next merge
-> window.
+> We can wait, no problem. I just wanted to make sure we also patch stable
+> if needed. Elliot, would you be able to send a backport of your patches
+> to stable once they land in mainline on the next merge window?
 
-We can wait, no problem. I just wanted to make sure we also patch stable
-if needed. Elliot, would you be able to send a backport of your patches
-to stable once they land in mainline on the next merge window?
+Yep, happy to send it. There's a trivial conflict to resolve w/older
+kernels not having the new guard(...)(...) macros.
 
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org
-
---
-Carlos Llamas
+> 
+> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Cc: stable@vger.kernel.org
+> 
+> --
+> Carlos Llamas
