@@ -2,115 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9195E7AEDC9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 15:12:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 19D9E7AEF67
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 17:15:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234814AbjIZNMW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Sep 2023 09:12:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43938 "EHLO
+        id S235181AbjIZPFT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Sep 2023 11:05:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234800AbjIZNMV (ORCPT
+        with ESMTP id S234991AbjIZPFA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Sep 2023 09:12:21 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 7C7E8FC;
-        Tue, 26 Sep 2023 06:12:14 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 40AEC1FB;
-        Tue, 26 Sep 2023 06:12:52 -0700 (PDT)
-Received: from [10.1.197.1] (ewhatever.cambridge.arm.com [10.1.197.1])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id BC9EF3F5A1;
-        Tue, 26 Sep 2023 06:12:11 -0700 (PDT)
-Message-ID: <2fe54425-70b5-95e8-1e9e-337424827adb@arm.com>
-Date:   Tue, 26 Sep 2023 14:12:10 +0100
+        Tue, 26 Sep 2023 11:05:00 -0400
+Received: from mail.8bytes.org (mail.8bytes.org [85.214.250.239])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 62F3FCCA;
+        Tue, 26 Sep 2023 08:04:32 -0700 (PDT)
+Received: from 8bytes.org (pd9fe9df8.dip0.t-ipconnect.de [217.254.157.248])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mail.8bytes.org (Postfix) with ESMTPSA id CA82A1A21CC;
+        Tue, 26 Sep 2023 17:04:29 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
+        s=default; t=1695740670;
+        bh=o8oWUCyKGLr6aRpJEcyERxcIW3a0GD0rf9gmZgpvK2A=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=6TpFhndRPNvIgt7yzA2/aJMoYkdnS16cebzf4UtP23CQlpQ+Gak1eYrm6l6OjKYEx
+         6ov9MN4xTFyWr54bLnOpm430Hupplf8W0SxvaQlB6FgmJn2Bupf3Brid8BS/nZqAQO
+         hvu4Svos9D+f462V9LsyrLj63TJ5HQrEH7+hL9EoBYr83zCI6QFPn3sNZtjggMsFkX
+         51VP71UAzDGONwXr20Y36QdQJVa+iP+T27lz3G41fM7pXzHksLzD0rpLSvyCctLemD
+         t/LuaiNXAWO/0BIuVB8b3mYUK3IzpvwsvgMpvM9qZ4RAN8ZffK3kqVvFnLVTK8C6cL
+         klQPepXng8EOg==
+Date:   Tue, 26 Sep 2023 17:04:28 +0200
+From:   Joerg Roedel <joro@8bytes.org>
+To:     Niklas Schnelle <schnelle@linux.ibm.com>,
+        Jason Gunthorpe <jgg@ziepe.ca>
+Cc:     Matthew Rosato <mjrosato@linux.ibm.com>,
+        Will Deacon <will@kernel.org>,
+        Wenjia Zhang <wenjia@linux.ibm.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Gerd Bayer <gbayer@linux.ibm.com>,
+        Julian Ruess <julianr@linux.ibm.com>,
+        Pierre Morel <pmorel@linux.ibm.com>,
+        Alexandra Winter <wintera@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Sven Schnelle <svens@linux.ibm.com>,
+        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Lu Baolu <baolu.lu@linux.intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Yong Wu <yong.wu@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jonathan Corbet <corbet@lwn.net>, linux-s390@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        iommu@lists.linux.dev, asahi@lists.linux.dev,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+        linux-doc@vger.kernel.org
+Subject: Re: [PATCH v12 0/6] iommu/dma: s390 DMA API conversion and optimized
+ IOTLB flushing
+Message-ID: <ZRLy_AaJiXxZ2AfK@8bytes.org>
+References: <20230825-dma_iommu-v12-0-4134455994a7@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v9 00/13] Add support to configure TPDM DSB subunit
-Content-Language: en-US
-To:     Tao Zhang <quic_taozha@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org
-References: <1694670204-11515-1-git-send-email-quic_taozha@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <1694670204-11515-1-git-send-email-quic_taozha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230825-dma_iommu-v12-0-4134455994a7@linux.ibm.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/09/2023 06:43, Tao Zhang wrote:
-> Introduction of TPDM DSB subunit
-> DSB subunit is responsible for creating a dataset element, and is also
-> optionally responsible for packing it to fit multiple elements on a
-> single ATB transfer if possible in the configuration. The TPDM Core
-> Datapath requests timestamps be stored by the TPDA and then delivering
-> ATB sized data (depending on ATB width and element size, this could
-> be smaller or larger than a dataset element) to the ATB Mast FSM.
-> 
-> The DSB subunit must be configured prior to enablement. This series
-> adds support for TPDM to configure the configure DSB subunit.
-> 
-> Once this series patches are applied properly, the new tpdm nodes for
-> should be observed at the tpdm path /sys/bus/coresight/devices/tpdm*
-> which supports DSB subunit.
-> e.g.
-> root@qemuarm64:/sys/devices/platform/soc@0/6c08000.tpdm/tpdm1# ls -l
-> drwxr-xr-x    2 root     root             0 Jan  1 00:00 connections
-> drwxr-xr-x    2 root     root             0 Jan  1 00:00 dsb_edge
-> -rw-r--r--    1 root     root          4096 Jan  1 00:00 dsb_mode
-> drwxr-xr-x    2 root     root             0 Jan  1 00:00 dsb_msr
-> drwxr-xr-x    2 root     root             0 Jan  1 00:00 dsb_patt
-> -rw-r--r--    1 root     root          4096 Jan  1 00:00 dsb_patt_ts
-> -rw-r--r--    1 root     root          4096 Jan  1 00:00 dsb_patt_type
-> drwxr-xr-x    2 root     root             0 Jan  1 00:00 dsb_trig_patt
-> -rw-r--r--    1 root     root          4096 Jan  1 00:00 dsb_trig_ts
-> -rw-r--r--    1 root     root          4096 Jan  1 00:00 dsb_trig_type
-> -rw-r--r--    1 root     root          4096 Jan  1 00:02 enable_source
-> --w-------    1 root     root          4096 Jan  1 00:00 integration_test
-> drwxr-xr-x    2 root     root             0 Jan  1 00:00 power
-> --w-------    1 root     root          4096 Jan  1 00:02 reset_dataset
-> lrwxrwxrwx    1 root     root             0 Apr  5  2021 subsystem -> ../../../../../bus/coresight
-> -rw-r--r--    1 root     root          4096 Apr  5  2021 uevent
-> -r--r--r--    1 root     root          4096 Jan  1 00:00 waiting_for_supplier
-> 
-> We can use the commands are similar to the below to configure the
-> TPDMs which support DSB subunit. Enable coresight sink first.
-> echo 1 > /sys/bus/coresight/devices/tmc_etf0/enable_sink
-> echo 1 > /sys/bus/coresight/devices/tpdm1/reset_dataset
-> echo 0x3 > /sys/bus/coresight/devices/tpdm1/dsb_edge/ctrl_idx
-> echo 0x1 > /sys/bus/coresight/devices/tpdm1/dsb_edge/ctrl_mask
-> echo 0x0 > /sys/bus/coresight/devices/tpdm1/dsb_edge/ctrl_val
-> echo 1 > /sys/bus/coresight/devices/tpdm1/dsb_patt/enable_ts
-> echo 1 > /sys/bus/coresight/devices/tpdm1/dsb_patt/set_type
-> echo 0 > /sys/bus/coresight/devices/tpdm1/dsb_trig_ts
-> echo 0xFFFFFFFF > /sys/bus/coresight/devices/tpdm1/dsb_patt/tpmr5
-> echo 0xFFFFFFFF > /sys/bus/coresight/devices/tpdm1/dsb_trig_patt/xpr2
-> echo 1 > /sys/bus/coresight/devices/tpdm1/enable_source
-> 
+Hi Niklas,
 
-I have reviewed this set, except for the last patch, rest looks fine.
-If you could resend the series with the comments addressed, we could
-queue this.
+On Fri, Aug 25, 2023 at 12:11:15PM +0200, Niklas Schnelle wrote:
+> Niklas Schnelle (6):
+>       iommu: Allow .iotlb_sync_map to fail and handle s390's -ENOMEM return
+>       s390/pci: prepare is_passed_through() for dma-iommu
+>       s390/pci: Use dma-iommu layer
+>       iommu/s390: Disable deferred flush for ISM devices
+>       iommu/dma: Allow a single FQ in addition to per-CPU FQs
+>       iommu/dma: Use a large flush queue and timeout for shadow_on_flush
 
-Suzuki
+Turned out this series has non-trivial conflicts with Jasons
+default-domain work so I had to remove it from the IOMMU tree for now.
+Can you please rebase it to the latest iommu/core branch and re-send? I
+will take it into the tree again then.
+
+Thanks,
+
+	Joerg
