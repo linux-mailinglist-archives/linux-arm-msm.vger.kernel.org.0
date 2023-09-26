@@ -2,230 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 73A867AF0A2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 18:25:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 71C997AF13B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 18:52:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233309AbjIZQZX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Sep 2023 12:25:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43196 "EHLO
+        id S235419AbjIZQwG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Sep 2023 12:52:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231668AbjIZQZW (ORCPT
+        with ESMTP id S235402AbjIZQwE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Sep 2023 12:25:22 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D79C8E;
-        Tue, 26 Sep 2023 09:25:16 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38QDwh5m020866;
-        Tue, 26 Sep 2023 16:25:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Kn0NWfrf2PoJA+utp/K+B/7mDfqS5Mn1G1dsC5wgm6E=;
- b=j2xXP4VwzjZTvmyk4bS2D9EQ5n3uXudKaH7UeS0GwyN0LrQgWfVfGTFjXyN4CPk+TPm2
- uf/Rh6uRAimblBjYEOiJv4SUlOVRE/4o39+35ZgNKoi9dhqFBI6H6B1jNBLQEVK0/L9l
- PLzqSVTWyvhs0Xy1XLCknlJHK/HivC0wE3O46n3t+d6ZwfGiM63JiUvLWMiHEnJ/61+4
- s9ejxvoCZXOkwRkTSQYgI1bKyZhbS5vN9Yc4YOthMS2SU5Ybl+0OJhMdg9CCuPE01jlb
- TqSGX72UyoYCtRro2Al8D21yNye3DOECUWCvE+uQS9BRsM/GLpt6EyK3KLCLQ9i/1JeF Iw== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tbmwwt26q-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 26 Sep 2023 16:25:02 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38QGOSsC010322
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 26 Sep 2023 16:24:28 GMT
-Received: from [10.218.45.181] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 26 Sep
- 2023 09:24:22 -0700
-Message-ID: <593fa9be-9f55-3649-e825-1dee31ac5c21@quicinc.com>
-Date:   Tue, 26 Sep 2023 21:54:19 +0530
+        Tue, 26 Sep 2023 12:52:04 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB046127;
+        Tue, 26 Sep 2023 09:51:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1695747097; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=WU2lwHCMZgk1EsprLFii7WasIJeI/SMV3MhuNkXSajOE5YN+LFJqgDhnx8TaF1OgaY
+    Sw5G3hlOvW/whA/lY6PEhLViumKmHL1bnT9Ujg8+tE0HqOlb0gz44fXNa9C3D8SI/YKy
+    1GOI07LiOm1OoeDN4HR+MCkpb5EUjdGy5Ab3xa8X4qAqbjbmDgzZQGz5kWe44vG6QVR/
+    54lf6N7OVjQKBXBZCPzDcLVQ8g8b+FyzA9MJr1NCV7mLUNWdcUMzjDCQgO4lZttwuQhN
+    GQaPtXDZ6Kkpk/enZPzRnG+Sidpuc7zzkUOdx0E/aPETkcJBJ5Xv8VieE4GQ4c9s2dTK
+    2bBA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1695747097;
+    s=strato-dkim-0002; d=strato.com;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=yRLM5+8bfAKKkXJ6kvgTOc046sJD+dLfqkmxoa1P6AY=;
+    b=knjqHNWnCjg+YVLkne4HPUszVr3VsIXAgTNLRlq+UUKZq9BgDqAHVSmcsCJKIX3R1u
+    wKLshdW1Sge7aZ26CgyaYTxlptBoXJBvUvDykEHZsv28+AcBilhZAFgz00K8gnmnzxvc
+    kno8tHZLOT+dZZnMiSuYQFFuLJvsL6u9InwnDx67hG2jzvdyi3+5gdlKyFJMYhMc1JS3
+    IVfOp2sdIUEo1vra3+t05IGyvAazRm+9xBgEINsp1sredDricTRnwUZXUbARl5XNngQg
+    9wN64caIMDV8JTl/w78LpK2yDc5hGQdG6jCxgSRJYxUISNqZXfErhmXFvzZfV4rGZI73
+    Zz/Q==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1695747097;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=yRLM5+8bfAKKkXJ6kvgTOc046sJD+dLfqkmxoa1P6AY=;
+    b=m9O3S61HgTh+EYajqFOLWQx5OSiKcSNXkSTc9aFJmzPPFsqbgbN0mLWDI2JC2lAuCR
+    zkzP8CKJMUf7n5WmL5Dfyfcd4DFcuT3metFCC54aXoMZRkBTbIu4DvH7jbfOQsTA70JV
+    74a7FAElDEHQ5JVeFp3448SbQrDFQqrhUgk6jrW35a88o3M+9mSPs1Ha8bPo7KP4qpKV
+    h8fPgPFO3W96vef64WpvAkNoEl6DdsigM4NGGb/lYecsNrf/mgwJZ83NFDi009HfetBB
+    mbq0Z7KZYiWEvBOUkyLsOwq4zAkxmL8r2QGiIlm+Vw9Fvvxc75rk+Ibq8Z7vWSz7I8ps
+    6Qjg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1695747097;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=yRLM5+8bfAKKkXJ6kvgTOc046sJD+dLfqkmxoa1P6AY=;
+    b=V/g6IdamHickOiFoCad98wOmkVTORBHTDf01aV6CvNE/24HDY+ZFVrhFMexJFzT4zo
+    TxpXYzlP4Bm0ViuvIoAg==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQjVd4CteZ/7jYgS+mLFY+H0JAn9VOH+nz0="
+Received: from [192.168.244.3]
+    by smtp.strato.de (RZmta 49.8.2 SBL|AUTH)
+    with ESMTPSA id R04c57z8QGpag5X
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Tue, 26 Sep 2023 18:51:36 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+Subject: [PATCH 00/13] arm64: dts: qcom: msm8916/39: Enable sound and modem
+ with QDSP6
+Date:   Tue, 26 Sep 2023 18:51:14 +0200
+Message-Id: <20230926-msm8916-modem-v1-0-398eec74bac9@gerhold.net>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.2
-Subject: Re: [PATCH V1 2/2] arm64: dts: qcom: sc7280: Add UFS host controller
- and phy nodes
-To:     Manivannan Sadhasivam <mani@kernel.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <alim.akhtar@samsung.com>,
-        <bvanassche@acm.org>, <robh+dt@kernel.org>, <avri.altman@wdc.com>,
-        <cros-qcom-dts-watchers@chromium.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>
-References: <20230821094937.13059-1-quic_nitirawa@quicinc.com>
- <20230821094937.13059-3-quic_nitirawa@quicinc.com>
- <20230822070841.GA24753@thinkpad>
-Content-Language: en-US
-From:   Nitin Rawat <quic_nitirawa@quicinc.com>
-In-Reply-To: <20230822070841.GA24753@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 5TkmNezfs8z-kSjLn0mFlFVUitDhXyq9
-X-Proofpoint-ORIG-GUID: 5TkmNezfs8z-kSjLn0mFlFVUitDhXyq9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-09-26_13,2023-09-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
- bulkscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0 phishscore=0
- mlxlogscore=999 spamscore=0 priorityscore=1501 clxscore=1015 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
- definitions=main-2309260144
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-B4-Tracking: v=1; b=H4sIAAIME2UC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI2MDSyMj3dziXAtLQzPd3PyU1FxdgxSLJLNki8SkNHMzJaCegqLUtMwKsHn
+ RsbW1AEQ4kNlfAAAA
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Vincent Knecht <vincent.knecht@mailoo.org>,
+        "Lin, Meng-Bo" <linmengbo0689@protonmail.com>,
+        "J.R. Divya Antony" <d.antony.jr@gmail.com>,
+        Nikita Travkin <nikita@trvn.ru>,
+        Jonathan Albrieux <jonathan.albrieux@gmail.com>,
+        Jasper Korten <jja2000@gmail.com>,
+        Siddharth Manthan <siddharth.manthan@gmail.com>,
+        Markuss Broks <markuss.broks@gmail.com>
+X-Mailer: b4 0.12.3
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Enable sound and modem on most of the MSM8916/MSM8939 
+smartphones/tablets supported upstream by:
 
+ - Adding the BAM-DMUX DT nodes to msm8939.dtsi for WWAN Internet
+ - Adding the QDSP6 DT nodes to both msm8916.dtsi and msm8939.dtsi.
+   This is needed because audio must be routed through the QDSP6 
+   services provided by the modem firmware when the modem is active.
+ - Setting up the sound/codec related nodes for all the devices.
 
-On 8/22/2023 12:38 PM, Manivannan Sadhasivam wrote:
-> On Mon, Aug 21, 2023 at 03:19:37PM +0530, Nitin Rawat wrote:
->> Add UFS host controller and PHY nodes for sc7280.
->>
-> 
-> You should split this patch into 2. One for SoC and another for board.
-Updated in Latest Patchset.
+Most of the sound/modem setup is very similar on all MSM8916/MSM8939 
+devices because the device-specific details are abstracted by the modem 
+firmware. Reduce duplication by adding "msm8916-modem-qdsp6.dtsi" which 
+contains most of the common definitions. The board-specific DT part is 
+limited to extra codecs or board-specific sound setup.
 
-> 
->> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 19 +++++++
->>   arch/arm64/boot/dts/qcom/sc7280.dtsi     | 64 ++++++++++++++++++++++++
->>   2 files changed, 83 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> index 2ff549f4dc7a..c60cdd511222 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> @@ -451,6 +451,25 @@
->>   	status = "okay";
->>   };
->>
->> +&ufs_mem_hc {
->> +	reset-gpios = <&tlmm 175 GPIO_ACTIVE_LOW>;
->> +	vcc-supply = <&vreg_l7b_2p9>;
->> +	vcc-max-microamp = <800000>;
->> +	vccq-supply = <&vreg_l9b_1p2>;
->> +	vccq-max-microamp = <900000>;
->> +	vccq2-supply = <&vreg_l9b_1p2>;
->> +	vccq2-max-microamp = <900000>;
->> +
->> +	status = "okay";
->> +};
->> +
->> +&ufs_mem_phy {
->> +	vdda-phy-supply = <&vreg_l10c_0p8>;
->> +	vdda-pll-supply = <&vreg_l6b_1p2>;
->> +
->> +	status = "okay";
->> +};
->> +
->>   &sdhc_1 {
->>   	status = "okay";
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> index 925428a5f6ae..d4a15d56b384 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> @@ -908,6 +908,70 @@
->>   			};
->>   		};
->>
->> +		ufs_mem_phy: phy@1d87000 {
-> 
-> Please sort the nodes in ascending order.
-Updated in Latest Patchset.
+With this patch set, the following functionality works on most 
+MSM8916/MSM8939 devices supported upstream:
 
-> 
->> +			compatible = "qcom,sc7280-qmp-ufs-phy";
->> +			reg = <0x0 0x01d87000 0x0 0xe00>;
->> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
->> +				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>,
->> +				 <&gcc GCC_UFS_1_CLKREF_EN>;
->> +			clock-names = "ref", "ref_aux", "qref";
->> +
->> +			resets = <&ufs_mem_hc 0>;
->> +			reset-names = "ufsphy";
->> +
->> +			#clock-cells = <1>;
->> +			#phy-cells = <0>;
->> +
->> +			status = "disabled";
->> +
->> +		};
->> +
->> +		ufs_mem_hc: ufs@1d84000 {
->> +			compatible = "qcom,sc7280-ufshc", "qcom,ufshc",
->> +				     "jedec,ufs-2.0";
->> +			reg = <0x0 0x01d84000 0x0 0x3000>;
->> +			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
->> +			phys = <&ufs_mem_phy>;
->> +			phy-names = "ufsphy";
->> +			lanes-per-direction = <2>;
->> +			#reset-cells = <1>;
->> +			resets = <&gcc GCC_UFS_PHY_BCR>;
->> +			reset-names = "rst";
->> +
->> +			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
->> +			required-opps = <&rpmhpd_opp_nom>;
->> +
->> +			iommus = <&apps_smmu 0x80 0x0>;
->> +			dma-coherent;
->> +
->> +			clock-names = "core_clk",
->> +				      "bus_aggr_clk",
->> +				      "iface_clk",
->> +				      "core_clk_unipro",
->> +				      "ref_clk",
->> +				      "tx_lane0_sync_clk",
->> +				      "rx_lane0_sync_clk",
->> +				      "rx_lane1_sync_clk";
-> 
-> "clocks" property should come first.
-  DT binding shows clock-names first followed by clocks.
-  Let me know if see still see concern, would update .
+ - Sound: Speaker/earpiece/headphones/microphones
+ - Modem: Calls, SMS, WWAN Internet (e.g. with ModemManager)
 
-> 
-> - Mani
-> 
->> +			clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
->> +				 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
->> +				 <&gcc GCC_UFS_PHY_AHB_CLK>,
->> +				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
->> +				 <&rpmhcc RPMH_CXO_CLK>,
->> +				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
->> +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
->> +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
->> +			freq-table-hz =
->> +				<75000000 300000000>,
->> +				<0 0>,
->> +				<0 0>,
->> +				<75000000 300000000>,
->> +				<0 0>,
->> +				<0 0>,
->> +				<0 0>,
->> +				<0 0>;
->> +			status = "disabled";
->> +		};
->> +
->>   		sdhc_1: mmc@7c4000 {
->>   			compatible = "qcom,sc7280-sdhci", "qcom,sdhci-msm-v5";
->>   			pinctrl-names = "default", "sleep";
->> --
->> 2.17.1
->>
-> 
+And with extra pending patches also:
 
-Thanks,
-Nitin
+ - Voice call audio
+ - GPS
+
+These patches have been contributed by different people and have been 
+used/tested in postmarketOS for several years. Until now they had to 
+wait for other changes to be upstreamed (QDSP6 audio support for 
+MSM8916, dynamic reserved memory, ...).
+
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+---
+J.R. Divya Antony (1):
+      arm64: dts: qcom: msm8916-asus-z00l: Add sound and modem
+
+Jasper Korten (1):
+      arm64: dts: qcom: msm8916-samsung-gt5: Add sound and modem
+
+Jonathan Albrieux (1):
+      arm64: dts: qcom: msm8916-longcheer-l8910: Add sound and modem
+
+Lin, Meng-Bo (2):
+      arm64: dts: qcom: msm8916-samsung-j5: Add sound and modem
+      arm64: dts: qcom: msm8939-samsung-a7: Add sound and modem
+
+Nikita Travkin (1):
+      arm64: dts: qcom: msm8916-longcheer-l8150: Add sound and modem
+
+Stephan Gerhold (5):
+      arm64: dts: qcom: msm8916/39: Add QDSP6
+      arm64: dts: qcom: msm8916: Add common msm8916-modem-qdsp6.dtsi
+      arm64: dts: qcom: msm8916-samsung-a2015: Add sound and modem
+      arm64: dts: qcom: msm8916-samsung-serranove: Add sound and modem
+      arm64: dts: qcom: msm8916-wingtech-wt88047: Add sound and modem
+
+Vincent Knecht (2):
+      arm64: dts: qcom: msm8939: Add BAM-DMUX WWAN
+      arm64: dts: qcom: msm8916-alcatel-idol347: Add sound and modem
+
+ .../boot/dts/qcom/msm8916-alcatel-idol347.dts      | 164 +++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts     |  22 +++
+ .../boot/dts/qcom/msm8916-longcheer-l8150.dts      |  32 +++-
+ .../boot/dts/qcom/msm8916-longcheer-l8910.dts      |  54 +++++++
+ arch/arm64/boot/dts/qcom/msm8916-modem-qdsp6.dtsi  | 163 ++++++++++++++++++++
+ .../dts/qcom/msm8916-samsung-a2015-common.dtsi     |  55 +++++++
+ .../dts/qcom/msm8916-samsung-e2015-common.dtsi     |   4 +
+ .../boot/dts/qcom/msm8916-samsung-grandmax.dts     |   4 +
+ .../boot/dts/qcom/msm8916-samsung-gt5-common.dtsi  |  36 +++++
+ arch/arm64/boot/dts/qcom/msm8916-samsung-gt510.dts |  23 +++
+ arch/arm64/boot/dts/qcom/msm8916-samsung-gt58.dts  |  43 ++++++
+ .../boot/dts/qcom/msm8916-samsung-j5-common.dtsi   |  15 ++
+ arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dts    |   4 +
+ .../boot/dts/qcom/msm8916-samsung-serranove.dts    |  14 ++
+ .../boot/dts/qcom/msm8916-wingtech-wt88047.dts     |  76 ++++++++++
+ arch/arm64/boot/dts/qcom/msm8916.dtsi              |  49 ++++++
+ arch/arm64/boot/dts/qcom/msm8939-samsung-a7.dts    |  54 +++++++
+ arch/arm64/boot/dts/qcom/msm8939.dtsi              |  79 ++++++++++
+ 18 files changed, 888 insertions(+), 3 deletions(-)
+---
+change-id: 20230922-msm8916-modem-0d8b6c8abf76
+
+Best regards,
+-- 
+Stephan Gerhold <stephan@gerhold.net>
+
