@@ -2,238 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FA3F7AF1BF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 19:29:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 13BA77AF1DB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 19:42:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233977AbjIZR3n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Sep 2023 13:29:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47618 "EHLO
+        id S234104AbjIZRm6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Sep 2023 13:42:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234111AbjIZR3m (ORCPT
+        with ESMTP id S232053AbjIZRm6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Sep 2023 13:29:42 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B35FFDC
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 10:29:34 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-9ad8bf9bfabso1180367666b.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 10:29:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695749373; x=1696354173; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=6Vhbig0nhhNfTJO4IcAt/zm7dBAJ/m7itblDhT37dyg=;
-        b=AkTGNxkBgOJcUTUI9M3ouei2ZJf/eoILQ0NS869PckfcFxY9Q+Qk2w4LGbzHpPrfxz
-         tDG+V0GJnIVSjANp+f9izGb6FHztrb43wtvUEiK7q4BfMba03S7wTsLPFLK5s9XhARZV
-         DCLdoF4B8llnDHU2tLHVHqxIguEN9cp0fk0FawJcsq9KiE+CoUUdQTBa83JlmPO6qbmo
-         cKNfFXfq2oN+RPWF9vEXKxvrCvpdCbmqcgU7Vgf9CRKaO9FvWNd6yFTIdlS0TxIdNKYd
-         fYuHonNDcfKJOh9HkrMSie45l28PWwXQ2lD5LS9klp6zPwON0CBRKQmweySn4SouoI8x
-         kdJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695749373; x=1696354173;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6Vhbig0nhhNfTJO4IcAt/zm7dBAJ/m7itblDhT37dyg=;
-        b=PyePgwJzwwbtiL66mwRRarOmdSEdkggGILLFD7a0P+DqZW8qp57DMez0jkE198J02Q
-         vscjaM+UXdOctjN04ywXmzPKreMRZGcfYD5gYkaocdHNDfdBdzBlNczNeju83p5+Kejq
-         jbKrsZseRXb7AH+SgI+9Hvl9JuiGm81RtcTNOL+CAKXKesMME8vvRIVilIgWPb2vX+jw
-         +xkv1nWfPR3jngM6hlxEnaCkImU1jmF73GPH3wnOEp84c2gjlmQKqfWgRZqrgyeTZK2q
-         WV74Myhh8ZqDOB/lvAbHWjJDWElYA/x/mysTQ2j3rfIlSkfBXXKHPChZNY96a7mMfdC/
-         Z23w==
-X-Gm-Message-State: AOJu0YyNXkUexm50WHMSdZ/LFgeaoQfkKFtXbQzTjypLnLWE4I5hPdE9
-        xPKCL5ww90G1hqsBfFREuSrA51LSjfVUGwUan8RJeA==
-X-Google-Smtp-Source: AGHT+IGB9ym/8CHHY0o/7Ji55tJkJHvDjFFfY8xPcDoyEVQ+TdI7OuCiUQy0lMCAqdS20jKH/MqsFg==
-X-Received: by 2002:a17:907:2cd3:b0:9a1:be5b:f4aa with SMTP id hg19-20020a1709072cd300b009a1be5bf4aamr8939397ejc.0.1695749373105;
-        Tue, 26 Sep 2023 10:29:33 -0700 (PDT)
-Received: from [192.168.33.189] (178235177023.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.23])
-        by smtp.gmail.com with ESMTPSA id n19-20020a170906165300b009a1c05bd672sm7949359ejd.127.2023.09.26.10.29.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Sep 2023 10:29:32 -0700 (PDT)
-Message-ID: <b54d43b5-89fe-4801-9eff-57bd795cfed5@linaro.org>
-Date:   Tue, 26 Sep 2023 19:29:30 +0200
+        Tue, 26 Sep 2023 13:42:58 -0400
+Received: from smtp29.i.mail.ru (smtp29.i.mail.ru [95.163.41.68])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D50F116;
+        Tue, 26 Sep 2023 10:42:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
+        ; s=mailru; h=Content-Transfer-Encoding:MIME-Version:Message-Id:Date:Subject:
+        Cc:To:From:From:Sender:Reply-To:To:Cc:Content-Type:Content-Transfer-Encoding:
+        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+        Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
+        X-Cloud-Ids:Disposition-Notification-To;
+        bh=kZRL+Y4MjwkbRg11XYLjP8jww2HjKfXpxdnb8WERheY=; t=1695750170; x=1695840170; 
+        b=q8sqbs5p0ylpYB61dVgV137LZaAfOuBH3owNw95thpTlHkHd9yNSmdqhzbzLvkCgWhuP17lt3px
+        a+XtiRTDuvNQcnCi2TQ0D/eeRghpeOWX2ORANDC4Mv3FsCsDnMw072UH8qYY0W4ZiJC681FCwLDam
+        5K5V10jeJTGZb8MLSMQ=;
+Received: by smtp29.i.mail.ru with esmtpa (envelope-from <danila@jiaxyga.com>)
+        id 1qlC57-00EHSD-2I; Tue, 26 Sep 2023 20:42:46 +0300
+From:   Danila Tikhonov <danila@jiaxyga.com>
+To:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run,
+        marijn.suijten@somainline.org, airlied@gmail.com, daniel@ffwll.ch,
+        konrad.dybcio@linaro.org, johan+linaro@kernel.org,
+        andersson@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        danila@jiaxyga.com
+Subject: [PATCH v2 0/1] drm/msm/adreno: Add support for SM7150
+Date:   Tue, 26 Sep 2023 20:42:42 +0300
+Message-Id: <20230926174243.161422-1-danila@jiaxyga.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1 2/2] arm64: dts: qcom: sc7280: Add UFS host controller
- and phy nodes
-To:     Nitin Rawat <quic_nitirawa@quicinc.com>,
-        Manivannan Sadhasivam <mani@kernel.org>
-Cc:     agross@kernel.org, andersson@kernel.org, alim.akhtar@samsung.com,
-        bvanassche@acm.org, robh+dt@kernel.org, avri.altman@wdc.com,
-        cros-qcom-dts-watchers@chromium.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20230821094937.13059-1-quic_nitirawa@quicinc.com>
- <20230821094937.13059-3-quic_nitirawa@quicinc.com>
- <20230822070841.GA24753@thinkpad>
- <593fa9be-9f55-3649-e825-1dee31ac5c21@quicinc.com>
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
- BB/OmIWU6X+LZW6P88ZmHe+KeyABLMP5s1tJNK1j4ntT7mECcWZDzafPWF4F6m4WJOG27kTJ
- HGWdmtO+RvadOVi6CoUDqALsmfS3MUG5Pj2Ne9+0jRg4hEnB92AyF9rW2G3qisFcwPgvatt7
- TXD5E38mLyOPOUyXNj9XpDbt1hNwKQfiidmPh5e7VNAWRnW1iCMMoKqzM1Anzq7e5Afyeifz
- zRcQPLaqrPjnKqZGL2BKQSZDh6NkI5ZLRhhHQf61fkWcUpTp1oDC6jWVfT7hwRVIQLrrNj9G
- MpPzrlN4YuAqKeIer1FMt8cq64ifgTzxHzXsMcUdclzq2LTk2RXaPl6Jg/IXWqUClJHbamSk
- t1bfif3SnmhA6TiNvEpDKPiT3IDs42THU6ygslrBxyROQPWLI9IL1y8S6RtEh8H+NZQWZNzm
- UQ3imZirlPjxZtvz1BtnnBWS06e7x/UEAguj7VHCuymVgpl2Za17d1jj81YN5Rp5L9GXxkV1
- aUEwONM3eCI3qcYm5JNc5X+JthZOWsbIPSC1Rhxz3JmWIwP1udr5E3oNRe9u2LIEq+wH/toH
- kpPDhTeMkvt4KfE5m5ercid9+ZXAqoaYLUL4HCEw+HW0DXcKDwARAQABzShLb25yYWQgRHli
- Y2lvIDxrb25yYWQuZHliY2lvQGxpbmFyby5vcmc+wsGOBBMBCAA4FiEEU24if9oCL2zdAAQV
- R4cBcg5dfFgFAmQ5bqwCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQR4cBcg5dfFjO
- BQ//YQV6fkbqQCceYebGg6TiisWCy8LG77zV7DB0VMIWJv7Km7Sz0QQrHQVzhEr3trNenZrf
- yy+o2tQOF2biICzbLM8oyQPY8B///KJTWI2khoB8IJSJq3kNG68NjPg2vkP6CMltC/X3ohAo
- xL2UgwN5vj74QnlNneOjc0vGbtA7zURNhTz5P/YuTudCqcAbxJkbqZM4WymjQhe0XgwHLkiH
- 5LHSZ31MRKp/+4Kqs4DTXMctc7vFhtUdmatAExDKw8oEz5NbskKbW+qHjW1XUcUIrxRr667V
- GWH6MkVceT9ZBrtLoSzMLYaQXvi3sSAup0qiJiBYszc/VOu3RbIpNLRcXN3KYuxdQAptacTE
- mA+5+4Y4DfC3rUSun+hWLDeac9z9jjHm5rE998OqZnOU9aztbd6zQG5VL6EKgsVXAZD4D3RP
- x1NaAjdA3MD06eyvbOWiA5NSzIcC8UIQvgx09xm7dThCuQYJR4Yxjd+9JPJHI6apzNZpDGvQ
- BBZzvwxV6L1CojUEpnilmMG1ZOTstktWpNzw3G2Gis0XihDUef0MWVsQYJAl0wfiv/0By+XK
- mm2zRR+l/dnzxnlbgJ5pO0imC2w0TVxLkAp0eo0LHw619finad2u6UPQAkZ4oj++iIGrJkt5
- Lkn2XgB+IW8ESflz6nDY3b5KQRF8Z6XLP0+IEdLOOARkOW7yEgorBgEEAZdVAQUBAQdAwmUx
- xrbSCx2ksDxz7rFFGX1KmTkdRtcgC6F3NfuNYkYDAQgHwsF2BBgBCAAgFiEEU24if9oCL2zd
- AAQVR4cBcg5dfFgFAmQ5bvICGwwACgkQR4cBcg5dfFju1Q//Xta1ShwL0MLSC1KL1lXGXeRM
- 8arzfyiB5wJ9tb9U/nZvhhdfilEDLe0jKJY0RJErbdRHsalwQCrtq/1ewQpMpsRxXzAjgfRN
- jc4tgxRWmI+aVTzSRpywNahzZBT695hMz81cVZJoZzaV0KaMTlSnBkrviPz1nIGHYCHJxF9r
- cIu0GSIyUjZ/7xslxdvjpLth16H27JCWDzDqIQMtg61063gNyEyWgt1qRSaK14JIH/DoYRfn
- jfFQSC8bffFjat7BQGFz4ZpRavkMUFuDirn5Tf28oc5ebe2cIHp4/kajTx/7JOxWZ80U70mA
- cBgEeYSrYYnX+UJsSxpzLc/0sT1eRJDEhI4XIQM4ClIzpsCIN5HnVF76UQXh3a9zpwh3dk8i
- bhN/URmCOTH+LHNJYN/MxY8wuukq877DWB7k86pBs5IDLAXmW8v3gIDWyIcgYqb2v8QO2Mqx
- YMqL7UZxVLul4/JbllsQB8F/fNI8AfttmAQL9cwo6C8yDTXKdho920W4WUR9k8NT/OBqWSyk
- bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
- nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
- izWDgYvmBE8=
-In-Reply-To: <593fa9be-9f55-3649-e825-1dee31ac5c21@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+Authentication-Results: smtp29.i.mail.ru; auth=pass smtp.auth=danila@jiaxyga.com smtp.mailfrom=danila@jiaxyga.com
+X-Mailru-Src: smtp
+X-7564579A: B8F34718100C35BD
+X-77F55803: 4F1203BC0FB41BD9724621A6593A829D3988570A8930496FDFDA338775C7A6AF182A05F538085040EA618371E3D0BBB0983094E8AC5AFDC532835674666856AD7149A0FB41FE4BB1
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7DD4CC05688AD5D0CEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637889C00975665ABF68638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D878FA909FCFF8F9A74E377AD6966A402C117882F4460429724CE54428C33FAD305F5C1EE8F4F765FC05EF1B56D39DD5F7389733CBF5DBD5E9C8A9BA7A39EFB766F5D81C698A659EA7CC7F00164DA146DA9985D098DBDEAEC85DBE5CE84B47B0E4117882F4460429728AD0CFFFB425014E868A13BD56FB6657D81D268191BDAD3DC09775C1D3CA48CFA4DC95554899BC9EBA3038C0950A5D36C8A9BA7A39EFB766D91E3A1F190DE8FDBA3038C0950A5D36D5E8D9A59859A8B6D4C4ECAC619A54F376E601842F6C81A1F004C906525384303E02D724532EE2C3F43C7A68FF6260569E8FC8737B5C2249EC8D19AE6D49635B68655334FD4449CB9ECD01F8117BC8BEAAAE862A0553A39223F8577A6DFFEA7C58E6ABEB090DA66043847C11F186F3C59DAA53EE0834AAEE
+X-C1DE0DAB: 0D63561A33F958A5F8FDF476235380094FDDCF9F63C055A59CA7FDC079330CF9F87CCE6106E1FC07E67D4AC08A07B9B0A7DFDF579AB090EF9C5DF10A05D560A950611B66E3DA6D700B0A020F03D25A0997E3FB2386030E77
+X-C8649E89: 1C3962B70DF3F0ADBF74143AD284FC7177DD89D51EBB7742DC8270968E61249B1004E42C50DC4CA955A7F0CF078B5EC49A30900B95165D3467D08F30473A58424A33E0C2D865C3F9F54813C62FF54451A8719F3FB0985FCE8B354AEB8D59E5391D7E09C32AA3244C6C8779C59F14DFCA61092F61DD17C82D81560E2432555DBB22D8497622A0BBEDB6C6411D86935C89F1B989832B1231FADA9B151D4D6D28F5093753811196C242
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojArMfh9+zH8kos5wsT83M8Q==
+X-Mailru-Sender: 9EB879F2C80682A09F26F806C73949814CD12929D710BEA15B293A5AAFEFBACADF76B9B9158B2F3E643683D8C0F3ED1CA3C71A376745D86BBE86167304C7680C3980CE5AAA35C7CD60F22E8815EDE5EAEAB4BC95F72C04283CDA0F3B3F5B9367
+X-Mras: Ok
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26.09.2023 18:24, Nitin Rawat wrote:
-> 
-> 
-> On 8/22/2023 12:38 PM, Manivannan Sadhasivam wrote:
->> On Mon, Aug 21, 2023 at 03:19:37PM +0530, Nitin Rawat wrote:
->>> Add UFS host controller and PHY nodes for sc7280.
->>>
->>
->> You should split this patch into 2. One for SoC and another for board.
-> Updated in Latest Patchset.
-> 
->>
->>> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
->>> ---
->>>   arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 19 +++++++
->>>   arch/arm64/boot/dts/qcom/sc7280.dtsi     | 64 ++++++++++++++++++++++++
->>>   2 files changed, 83 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->>> index 2ff549f4dc7a..c60cdd511222 100644
->>> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->>> @@ -451,6 +451,25 @@
->>>       status = "okay";
->>>   };
->>>
->>> +&ufs_mem_hc {
->>> +    reset-gpios = <&tlmm 175 GPIO_ACTIVE_LOW>;
->>> +    vcc-supply = <&vreg_l7b_2p9>;
->>> +    vcc-max-microamp = <800000>;
->>> +    vccq-supply = <&vreg_l9b_1p2>;
->>> +    vccq-max-microamp = <900000>;
->>> +    vccq2-supply = <&vreg_l9b_1p2>;
->>> +    vccq2-max-microamp = <900000>;
->>> +
->>> +    status = "okay";
->>> +};
->>> +
->>> +&ufs_mem_phy {
->>> +    vdda-phy-supply = <&vreg_l10c_0p8>;
->>> +    vdda-pll-supply = <&vreg_l6b_1p2>;
->>> +
->>> +    status = "okay";
->>> +};
->>> +
->>>   &sdhc_1 {
->>>       status = "okay";
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->>> index 925428a5f6ae..d4a15d56b384 100644
->>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->>> @@ -908,6 +908,70 @@
->>>               };
->>>           };
->>>
->>> +        ufs_mem_phy: phy@1d87000 {
->>
->> Please sort the nodes in ascending order.
-> Updated in Latest Patchset.
-> 
->>
->>> +            compatible = "qcom,sc7280-qmp-ufs-phy";
->>> +            reg = <0x0 0x01d87000 0x0 0xe00>;
->>> +            clocks = <&rpmhcc RPMH_CXO_CLK>,
->>> +                 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>,
->>> +                 <&gcc GCC_UFS_1_CLKREF_EN>;
->>> +            clock-names = "ref", "ref_aux", "qref";
->>> +
->>> +            resets = <&ufs_mem_hc 0>;
->>> +            reset-names = "ufsphy";
->>> +
->>> +            #clock-cells = <1>;
->>> +            #phy-cells = <0>;
->>> +
->>> +            status = "disabled";
->>> +
->>> +        };
->>> +
->>> +        ufs_mem_hc: ufs@1d84000 {
->>> +            compatible = "qcom,sc7280-ufshc", "qcom,ufshc",
->>> +                     "jedec,ufs-2.0";
->>> +            reg = <0x0 0x01d84000 0x0 0x3000>;
->>> +            interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
->>> +            phys = <&ufs_mem_phy>;
->>> +            phy-names = "ufsphy";
->>> +            lanes-per-direction = <2>;
->>> +            #reset-cells = <1>;
->>> +            resets = <&gcc GCC_UFS_PHY_BCR>;
->>> +            reset-names = "rst";
->>> +
->>> +            power-domains = <&gcc GCC_UFS_PHY_GDSC>;
->>> +            required-opps = <&rpmhpd_opp_nom>;
->>> +
->>> +            iommus = <&apps_smmu 0x80 0x0>;
->>> +            dma-coherent;
->>> +
->>> +            clock-names = "core_clk",
->>> +                      "bus_aggr_clk",
->>> +                      "iface_clk",
->>> +                      "core_clk_unipro",
->>> +                      "ref_clk",
->>> +                      "tx_lane0_sync_clk",
->>> +                      "rx_lane0_sync_clk",
->>> +                      "rx_lane1_sync_clk";
->>
->> "clocks" property should come first.
->  DT binding shows clock-names first followed by clocks.
->  Let me know if see still see concern, would update .
-The dt bindings example is rarely useful.. perhaps we should
-change that..
+This patch adds support for SM7150 SoC machine.
 
-The general consensus there is to have
+Changes in v2:
+- Use a630_gmu.bin instead of a618_gmu.bin.
+- Use squashed version of a615_zap (.mbn).
+- Drop .revn.
+- Link to v1:
+https://lore.kernel.org/all/20230913191957.26537-1-danila@jiaxyga.com/
 
-property
-property-names
+Danila Tikhonov (1):
+  drm/msm/adreno: Add support for SM7150 SoC machine
 
-Konrad
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+-- 
+2.34.1
+
