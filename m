@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 240607AF2A4
+	by mail.lfdr.de (Postfix) with ESMTP id BF1C97AF2A6
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 20:24:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235493AbjIZSY6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Sep 2023 14:24:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45572 "EHLO
+        id S229885AbjIZSZB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Sep 2023 14:25:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235475AbjIZSY5 (ORCPT
+        with ESMTP id S235505AbjIZSY7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Sep 2023 14:24:57 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38774F3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 11:24:50 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-5043a01ee20so12988959e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 11:24:50 -0700 (PDT)
+        Tue, 26 Sep 2023 14:24:59 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9185010A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 11:24:52 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-50308217223so15044124e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 11:24:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695752688; x=1696357488; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695752691; x=1696357491; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Hv259dlxpBQTllwsNOUgVjMH2doZt+8ko67T2DfMJJY=;
-        b=Mg0irCEXsuqsYZW+3vR9Hpq0O3Dx7ThkfnDxkbR8CdtuHkM/uQB4llkPZgx5B7A/4P
-         PEL/mIvtJGzYrWXv3sSffo2aqrs0JWwh+EHf4eNZ3GdOPE4nhFe5AVSFLGT41rYMaTPB
-         q8esbkj+D2rYz9VWcZ6ovSyiXbFAMOt8ieyH4+6HWVgk/KrD5AHVgT3zdn1GXKF0qO1g
-         r9sO4kRWYgGSlOclHeTutFGIDGwwNj4DdZR28I8TIlzBpXusPn9/dTPJlxQcs7pxqkat
-         dzYYdr26I9Nj7KXyWpi2+OD/7hN55CKl6ngMDb8Cl/FsosCJ9wr1w9Ws7XvDuSlXV8//
-         YD+g==
+        bh=JSsmJJyHe36J6r6QQN8EBPervMH/lsHyGZmLHEQGT3w=;
+        b=qRef7QQ4Y0aE/PfLnNoJhKKwy3B2TYzDdfrvuoUXh3IbUnkdzfkGyGIcQKjQqGeQ3Q
+         wu4SEEUCpIhGJEttpiLU9ngucPS+xS0ifvAo4uVZGeJ6Kc7XruNokiJkEWrn1sLU2bUb
+         0XPPMvT5S0m8nmY1dBRMq09Qss89sJ9Qv7MKrx4DpMIUq62Ov4yuftKLV/IPgFwlY6VC
+         D8ZJH/VTqJVKA9Lqa9wMm/5Kdm9otCjxo/hJe9g+NptWcRe1nGV2ULiqy6DOWFLV1dqx
+         /bLLJHYQn6OYWoEz4fHcwmF3x/erOoW0GEQdF1dWmbnfOrpwvzGy10dDqzys5cukkwUR
+         zKDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695752688; x=1696357488;
+        d=1e100.net; s=20230601; t=1695752691; x=1696357491;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Hv259dlxpBQTllwsNOUgVjMH2doZt+8ko67T2DfMJJY=;
-        b=JcNVGZq+6rPu9tkp1SuciFjSQoOSW61IxKw3WW7wCJGFeqxx7yBRDCvzvlGevUbWx7
-         4JU2COCgLSKaa8LUj8ThkD8Mn/Phm+Lt9Q8YtnUBchoSYW07lT73LuVLtJcPI/vnCdee
-         Yq58a8VzrgfmFP6SJDOmU64ExqMf/TYPPB+WXu9x/S06+Er5d7TnP2/5LQKkXhLxaPnC
-         IjezuSPxXshWC+zKYXHIj4L3fDTDbZx78tvj8+cMa/exSMXbagAVB9foHoeuOQFEENLL
-         czAIoiOdvYzfekvXuFrPpM4MOSn9TBC0K7AL2Yi9tHWNUeiAWsHc1gQZ3kkEGXl/7hGM
-         4lZw==
-X-Gm-Message-State: AOJu0YxyJN/9A3LT0p1O6/qZh00ZyzmzHx7PyGzBquMjOikdz7kYhzK7
-        IYLL1U9noEcpaVw7LaxGTU5QIA==
-X-Google-Smtp-Source: AGHT+IE9ZA2Nur1n92NY0RcBoLiL+/hKUSUFtLkVB3x4JPU/I5ukFpS3TU2XD2rmTj/1KM/Es0EFmw==
-X-Received: by 2002:ac2:5990:0:b0:4fe:7e7f:1328 with SMTP id w16-20020ac25990000000b004fe7e7f1328mr8327434lfn.16.1695752688279;
-        Tue, 26 Sep 2023 11:24:48 -0700 (PDT)
+        bh=JSsmJJyHe36J6r6QQN8EBPervMH/lsHyGZmLHEQGT3w=;
+        b=T5HweeIjVZy/KEiCZNMgsWvLbQC1NlvBsrqSAl+cdcvHhepWd8d7QHa3eRsQLZkF0/
+         dHldaNpVV6VN3wsO2HxT713tfJIxp0Sx4+gtJ2iyzWO+UX6SCDX4GTnaK45SCv30KH6X
+         me4Z7JbEIbGt+sRecpadtnFWEj2DIyCRVAWJpv6/UK8RICNHXIUEDq2+QqF0EVpOP9z0
+         +S54MW8ksQYHU+y9pLitn3LScMFUW8KoPRfS/iFSrHfoMrt81dOBYZOVH1/1goGyBYQ6
+         iS7Gsclv0WxxgmWvJzhyhECfZ8Gp1Lm41b+LRg7x7Ld8NAdn1m0RHc5MI0hOmoMpsgnm
+         qTAw==
+X-Gm-Message-State: AOJu0YxKqlT6D4G+X9ipNAROWOG5hdIqQFncxYGHqNsFIoOhrkp+LJT9
+        1B0BuHDHUpuyGPCtN+vuVdZBGg==
+X-Google-Smtp-Source: AGHT+IFxdFFgpcBTFxSLcZfqdtgfPTF/TNGZldeq7ysgqWnx8RGOLQ5gHMDX+UzFDSjdg3j002TJ9A==
+X-Received: by 2002:ac2:53ac:0:b0:503:2877:67e3 with SMTP id j12-20020ac253ac000000b00503287767e3mr8396426lfh.6.1695752690659;
+        Tue, 26 Sep 2023 11:24:50 -0700 (PDT)
 Received: from [10.167.154.1] (178235177023.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.23])
-        by smtp.gmail.com with ESMTPSA id f19-20020a056402151300b0053090e2afafsm7020643edw.22.2023.09.26.11.24.46
+        by smtp.gmail.com with ESMTPSA id f19-20020a056402151300b0053090e2afafsm7020643edw.22.2023.09.26.11.24.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Sep 2023 11:24:48 -0700 (PDT)
+        Tue, 26 Sep 2023 11:24:50 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 26 Sep 2023 20:24:39 +0200
-Subject: [PATCH 4/7] arm64: dts: qcom: sc7280: Add ZAP shader support
+Date:   Tue, 26 Sep 2023 20:24:40 +0200
+Subject: [PATCH 5/7] arm64: dts: qcom: sc7280: Fix up GPU SIDs
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230926-topic-a643-v1-4-7af6937ac0a3@linaro.org>
+Message-Id: <20230926-topic-a643-v1-5-7af6937ac0a3@linaro.org>
 References: <20230926-topic-a643-v1-0-7af6937ac0a3@linaro.org>
 In-Reply-To: <20230926-topic-a643-v1-0-7af6937ac0a3@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>,
@@ -80,72 +80,50 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         devicetree@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1695752677; l=1716;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1695752677; l=1149;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=KPLzI8JFAgOM8lipaf6IRavq4f0Qs8pGOQ9Xz036QH0=;
- b=PDlPugMO+iF59ClerI17jCYJbl64YHQKAQ2PSltxjIudAdlihLWSc6nsLkhRsORmNGP+5xoQK
- f6Hn3X2fOEGDA22Z+Akv8Movy+kal6fJjl/lAjkYrwFQELNg6ZJ4gyA
+ bh=OKCYVjhQ/19k9GeBxxh+l0sjJaWU5GkjdhxKB9u2/vs=;
+ b=9SVEap5bj9/9iIFUrp99rqRpCkF1yJSJnavWYyJzILyjurm26Pij46Bw+/KnOwd6frqVCvagj
+ hxwquK7i3gkByj7w1dl5dnEr24gj8ym5NJr5mweF32LNem2LLWjiRad
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Non-Chrome SC7280-family platforms ship a ZAP shader with the Adreno GPU.
-Describe that and make sure it doesn't interfere with Chrome devices.
+GPU_SMMU SID 1 is meant for Adreno LPAC (Low Priority Async Compute).
+On platforms that support it (in firmware), it is necessary to
+describe that link, or Adreno register access will hang the board.
 
+Add that and fix up the SMR mask of SID 0, which seems to have been
+copypasted from another SoC.
+
+Fixes: 96c471970b7b ("arm64: dts: qcom: sc7280: Add gpu support")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi |  2 ++
- arch/arm64/boot/dts/qcom/sc7280.dtsi               | 10 ++++++++++
- 2 files changed, 12 insertions(+)
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-index 5d462ae14ba1..88fc67c3646e 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-@@ -17,6 +17,8 @@
-  * required by the setup for Chrome boards.
-  */
- 
-+/delete-node/ &gpu_zap_mem;
-+/delete-node/ &gpu_zap_shader;
- /delete-node/ &hyp_mem;
- /delete-node/ &xbl_mem;
- /delete-node/ &reserved_xbl_uefi_log;
 diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 66f1eb83cca7..c38ddf267ef5 100644
+index c38ddf267ef5..0d96d1454c49 100644
 --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -152,6 +152,11 @@ ipa_fw_mem: memory@8b700000 {
- 			no-map;
- 		};
- 
-+		gpu_zap_mem: zap@8b71a000 {
-+			reg = <0 0x8b71a000 0 0x2000>;
-+			no-map;
-+		};
-+
- 		rmtfs_mem: memory@9c900000 {
- 			compatible = "qcom,rmtfs-mem";
- 			reg = <0x0 0x9c900000 0x0 0x280000>;
-@@ -2608,6 +2613,11 @@ gpu: gpu@3d00000 {
- 			nvmem-cells = <&gpu_speed_bin>;
- 			nvmem-cell-names = "speed_bin";
- 
-+			gpu_zap_shader: zap-shader {
-+				memory-region = <&gpu_zap_mem>;
-+				firmware-name = "qcom/a660_zap.mdt";
-+			};
-+
- 			gpu_opp_table: opp-table {
- 				compatible = "operating-points-v2";
- 
+@@ -2603,7 +2603,8 @@ gpu: gpu@3d00000 {
+ 				    "cx_mem",
+ 				    "cx_dbgc";
+ 			interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
+-			iommus = <&adreno_smmu 0 0x401>;
++			iommus = <&adreno_smmu 0 0x400>,
++				 <&adreno_smmu 1 0x400>;
+ 			operating-points-v2 = <&gpu_opp_table>;
+ 			qcom,gmu = <&gmu>;
+ 			interconnects = <&gem_noc MASTER_GFX3D 0 &mc_virt SLAVE_EBI1 0>;
 
 -- 
 2.42.0
