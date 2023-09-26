@@ -2,74 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EFD4C7AEA36
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 12:20:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 175867AEA43
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 12:22:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234285AbjIZKUv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Sep 2023 06:20:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55156 "EHLO
+        id S232521AbjIZKWX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Sep 2023 06:22:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231182AbjIZKUu (ORCPT
+        with ESMTP id S229458AbjIZKWV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Sep 2023 06:20:50 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5582EB3;
-        Tue, 26 Sep 2023 03:20:40 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38Q8xw6X005613;
-        Tue, 26 Sep 2023 10:20:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=SoO76paamv0PioszEiN3AVES7Unte5nzNg2ivgsCr64=;
- b=UG9/fOY+tX3tq1GkQmr/3r0yGvQCVDJDA91Bzn0eIs0hmQOUaRPCkZFY2lHzmfRPtwWg
- hr3FUy8udPWbx0adbSAieLtDjADpRaKgLocipNDvU1GZ8OCba29FZ3DonsBi7ji8cjlo
- v4o5iv/Snbm1ZZJWNpOORNJajFUALiSuz2ITc99b9rG2q4GX4SldaYZoW+t4jILqNpG+
- OpWdT+cvpLlrSpmX9RN3q79zuC6oHf7OoD1qNZnucR+F8ePenRWcnw1NyCVyd0RkGFDT
- gpVZon00FUlUFQrn18GHwoiEfaOKJYJpFTa8N1fvzwiOfps8klME9OKALuFFPs4qps3d 5w== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tbmwws2ns-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 26 Sep 2023 10:20:26 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38QAKPXl031276
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 26 Sep 2023 10:20:25 GMT
-Received: from hu-omprsing-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Tue, 26 Sep 2023 03:20:20 -0700
-From:   Om Prakash Singh <quic_omprsing@quicinc.com>
-To:     <quic_omprsing@quicinc.com>
-CC:     <neil.armstrong@linaro.org>, <konrad.dybcio@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>, <conor+dt@kernel.org>,
-        <davem@davemloft.net>, <devicetree@vger.kernel.org>,
-        <herbert@gondor.apana.org.au>, <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-crypto@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <marijn.suijten@somainline.org>,
-        <robh+dt@kernel.org>, <vkoul@kernel.org>
-Subject: [PATCH V4] crypto: qcom-rng - Add hw_random interface support
-Date:   Tue, 26 Sep 2023 15:50:05 +0530
-Message-ID: <20230926102005.3277045-1-quic_omprsing@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+        Tue, 26 Sep 2023 06:22:21 -0400
+Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 441A5DD
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 03:22:15 -0700 (PDT)
+Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-59bf1dde73fso106822247b3.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 03:22:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1695723734; x=1696328534; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=a98I+/enWVs0BEjUps7tbFx8/Tj78e5XZIx5A8fkfhE=;
+        b=eT/u6bJUvD3zAQnvIe1VnlKFkKwyk7s+H5HFzh0L7pvVn3OtZ0x38c0K30VkyEGBhJ
+         hPBTNKjiTEeOipNfw+6fbf9pvV7qnXJY6TAjhNH5/tFgrmk7QIV/XAV/iZgJTxInPvyh
+         4dRzTZDs3DSze7gTdR8uud7MHfYD3BRBXlOctDewLRxSD0vpzkdbtS1+ZX0XaN0NIIe7
+         vd7kkDQ6iGjP451lIBiiqC2722J9ROG0M+41vEfmWRws1217ENwA5pyeqmVmcR/vyDKs
+         Y66qzSDp7h+agAbVFtqxz2rJMvOzqVGkPtuzqX047utvdSsFE3yhBTjE80t0XANAxEa7
+         FB7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695723734; x=1696328534;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=a98I+/enWVs0BEjUps7tbFx8/Tj78e5XZIx5A8fkfhE=;
+        b=qWL/Ry2dFQgzUwftVnGATfJ7dZ5UCjmdMQz9dem4+5xOq8tDrBFe5RLY8fE8gDkiGk
+         7SS7ycTSY8MvgzYVhdriHr+8cm1Zp9Y4N+5qt4PjysBLDflTQOMnFoNa9koLZy41gQoq
+         /ov7Tabz8Dnns7/Dj7VpePlVGZEz42FEF6Ink+wiWBEvujgO1JSovoleeTsz+wruaPrY
+         bHPl+LnfsW4NIyPKfDEC04ICgDnfJqpJ4YMUtpYZReGP2KzBIvOqj7P0v0pzTd+Abla3
+         /Hm2HfLqufY0W0tWrHYQJmxUJtOiutjijnePL/bmsqivo/8MGLCP7LxCQL54MVAdINcV
+         x+Lg==
+X-Gm-Message-State: AOJu0Yxy21V2LE50/Gs5uLPF3ACcoB/VutnoDMlNBU9MSJpAIwbwcgKs
+        7V0EyxqY8DN6a2N9zHe8y6IjBTuuSWkf9s+LoeP4Lw==
+X-Google-Smtp-Source: AGHT+IGmLuat8sSPGzk/B0CHDauKNfvhdOvdCcSe26K4vrmzaiM9ls0m20+5wDgFIeDnTqlnb5On9IWTdPLMoG6LBvQ=
+X-Received: by 2002:a0d:d046:0:b0:586:c27c:3eee with SMTP id
+ s67-20020a0dd046000000b00586c27c3eeemr10831532ywd.38.1695723734453; Tue, 26
+ Sep 2023 03:22:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: CVvXhIafNzcgd_uXEkF23H0mV34gnzl2
-X-Proofpoint-ORIG-GUID: CVvXhIafNzcgd_uXEkF23H0mV34gnzl2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-09-26_07,2023-09-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
- bulkscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0 phishscore=0
- mlxlogscore=999 spamscore=0 priorityscore=1501 clxscore=1015 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
- definitions=main-2309260090
+References: <20230911221627.9569-1-quic_abhinavk@quicinc.com>
+In-Reply-To: <20230911221627.9569-1-quic_abhinavk@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 26 Sep 2023 13:21:08 +0300
+Message-ID: <CAA8EJppsY059KXaw6fh2Rdyuh210ibMa_MwsPz-mxivK3QE=Zw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] drm/msm/dpu: fail dpu_plane_atomic_check() based
+ on mdp clk limits
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Archit Taneja <architt@codeaurora.org>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Rajesh Yadav <ryadav@codeaurora.org>,
+        dri-devel@lists.freedesktop.org, quic_jesszhan@quicinc.com,
+        quic_parellan@quicinc.com, nespera@igalia.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -79,193 +77,80 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add hw_random interface support in qcom-rng driver as new IP block
-in Qualcomm SoC has inbuilt NIST SP800 90B compliant entropic source
-to generate true random number.
+On Tue, 12 Sept 2023 at 01:18, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>
+> Currently, dpu_plane_atomic_check() does not check whether the
+> plane can process the image without exceeding the per chipset
+> limits for MDP clock. This leads to underflow issues because the
+> SSPP is not able to complete the processing for the data rate of
+> the display.
+>
+> Fail the dpu_plane_atomic_check() if the SSPP cannot process the
+> image without exceeding the MDP clock limits.
+>
+> changes in v2:
+>         - use crtc_state's adjusted_mode instead of mode
+>
+> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-Keeping current rng_alg interface as well for random number generation
-using Kernel Crypto API.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Signed-off-by: Om Prakash Singh <quic_omprsing@quicinc.com>
----
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 15 ++++++++++++---
+>  1 file changed, 12 insertions(+), 3 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index 98c1b22e9bca..0be195f9149c 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -733,9 +733,11 @@ static int dpu_plane_check_inline_rotation(struct dpu_plane *pdpu,
+>  static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
+>                 struct dpu_sw_pipe *pipe,
+>                 struct dpu_sw_pipe_cfg *pipe_cfg,
+> -               const struct dpu_format *fmt)
+> +               const struct dpu_format *fmt,
+> +               const struct drm_display_mode *mode)
+>  {
+>         uint32_t min_src_size;
+> +       struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
+>
+>         min_src_size = DPU_FORMAT_IS_YUV(fmt) ? 2 : 1;
+>
+> @@ -774,6 +776,12 @@ static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
+>                 return -EINVAL;
+>         }
+>
+> +       /* max clk check */
+> +       if (_dpu_plane_calc_clk(mode, pipe_cfg) > kms->perf.max_core_clk_rate) {
+> +               DPU_DEBUG_PLANE(pdpu, "plane exceeds max mdp core clk limits\n");
+> +               return -E2BIG;
+> +       }
+> +
+>         return 0;
+>  }
+>
+> @@ -899,12 +907,13 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>                 r_pipe_cfg->dst_rect.x1 = pipe_cfg->dst_rect.x2;
+>         }
+>
+> -       ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt);
+> +       ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt, &crtc_state->adjusted_mode);
+>         if (ret)
+>                 return ret;
+>
+>         if (r_pipe->sspp) {
+> -               ret = dpu_plane_atomic_check_pipe(pdpu, r_pipe, r_pipe_cfg, fmt);
+> +               ret = dpu_plane_atomic_check_pipe(pdpu, r_pipe, r_pipe_cfg, fmt,
+> +                                                 &crtc_state->adjusted_mode);
+>                 if (ret)
+>                         return ret;
+>         }
+> --
+> 2.40.1
+>
 
-Changes in V4:
-- Fixed email address of author
-- Removed extra space added in qcom_hwrng_read()
 
-Changes in V3:
-- Fix qcom_rng_read() implementation to account for remaining bytes read
-- Update qcom_rng_generate() return condition for success case
-- Added hwrng structure as part of qcom_rng structure
-
-Changes in V2:
-- Updated patch to fix the return value from qcom_rng_generate() to be
-  consistent with current implementation
-- Updated patch to make it more concise
-- Removed unnecessary use local variable and it's initialization
-- Updated patch to use devm_hwrng_register() instead of hwrng_register()
-- Updated subject line of the patch
-
-This patch is depends on [1]
-[1] https://lore.kernel.org/lkml/20230824-topic-sm8550-rng-v2-4-dfcafbb16a3e@linaro.org/
-
- drivers/crypto/qcom-rng.c | 66 ++++++++++++++++++++++++++++++++++-----
- 1 file changed, 58 insertions(+), 8 deletions(-)
-
-diff --git a/drivers/crypto/qcom-rng.c b/drivers/crypto/qcom-rng.c
-index fb54b8cfc35f..8b506abb934c 100644
---- a/drivers/crypto/qcom-rng.c
-+++ b/drivers/crypto/qcom-rng.c
-@@ -7,6 +7,7 @@
- #include <linux/acpi.h>
- #include <linux/clk.h>
- #include <linux/crypto.h>
-+#include <linux/hw_random.h>
- #include <linux/io.h>
- #include <linux/iopoll.h>
- #include <linux/kernel.h>
-@@ -28,17 +29,25 @@
- 
- #define WORD_SZ			4
- 
-+#define QCOM_TRNG_QUALITY	1024
-+
- struct qcom_rng {
- 	struct mutex lock;
- 	void __iomem *base;
- 	struct clk *clk;
--	unsigned int skip_init;
-+	struct hwrng hwrng;
-+	struct qcom_rng_of_data *of_data;
- };
- 
- struct qcom_rng_ctx {
- 	struct qcom_rng *rng;
- };
- 
-+struct qcom_rng_of_data {
-+	bool skip_init;
-+	bool hwrng_support;
-+};
-+
- static struct qcom_rng *qcom_rng_dev;
- 
- static int qcom_rng_read(struct qcom_rng *rng, u8 *data, unsigned int max)
-@@ -66,11 +75,11 @@ static int qcom_rng_read(struct qcom_rng *rng, u8 *data, unsigned int max)
- 		} else {
- 			/* copy only remaining bytes */
- 			memcpy(data, &val, max - currsize);
--			break;
-+			currsize = max;
- 		}
- 	} while (currsize < max);
- 
--	return 0;
-+	return currsize;
- }
- 
- static int qcom_rng_generate(struct crypto_rng *tfm,
-@@ -92,6 +101,9 @@ static int qcom_rng_generate(struct crypto_rng *tfm,
- 	mutex_unlock(&rng->lock);
- 	clk_disable_unprepare(rng->clk);
- 
-+	if (ret >= 0)
-+		ret = 0;
-+
- 	return ret;
- }
- 
-@@ -101,6 +113,13 @@ static int qcom_rng_seed(struct crypto_rng *tfm, const u8 *seed,
- 	return 0;
- }
- 
-+static int qcom_hwrng_read(struct hwrng *hwrng, void *data, size_t max, bool wait)
-+{
-+	struct qcom_rng *qrng = container_of(hwrng, struct qcom_rng, hwrng);
-+
-+	return qcom_rng_read(qrng, data, max);
-+}
-+
- static int qcom_rng_enable(struct qcom_rng *rng)
- {
- 	u32 val;
-@@ -136,7 +155,7 @@ static int qcom_rng_init(struct crypto_tfm *tfm)
- 
- 	ctx->rng = qcom_rng_dev;
- 
--	if (!ctx->rng->skip_init)
-+	if (!ctx->rng->of_data->skip_init)
- 		return qcom_rng_enable(ctx->rng);
- 
- 	return 0;
-@@ -177,15 +196,31 @@ static int qcom_rng_probe(struct platform_device *pdev)
- 	if (IS_ERR(rng->clk))
- 		return PTR_ERR(rng->clk);
- 
--	rng->skip_init = (unsigned long)device_get_match_data(&pdev->dev);
-+	rng->of_data = (struct qcom_rng_of_data *)of_device_get_match_data(&pdev->dev);
- 
- 	qcom_rng_dev = rng;
- 	ret = crypto_register_rng(&qcom_rng_alg);
- 	if (ret) {
- 		dev_err(&pdev->dev, "Register crypto rng failed: %d\n", ret);
- 		qcom_rng_dev = NULL;
-+		return ret;
-+	}
-+
-+	if (rng->of_data->hwrng_support) {
-+		rng->hwrng.name = "qcom_hwrng";
-+		rng->hwrng.read = qcom_hwrng_read;
-+		rng->hwrng.quality = QCOM_TRNG_QUALITY;
-+		ret = devm_hwrng_register(&pdev->dev, &rng->hwrng);
-+		if (ret) {
-+			dev_err(&pdev->dev, "Register hwrng failed: %d\n", ret);
-+			qcom_rng_dev = NULL;
-+			goto fail;
-+		}
- 	}
- 
-+	return ret;
-+fail:
-+	crypto_unregister_rng(&qcom_rng_alg);
- 	return ret;
- }
- 
-@@ -198,6 +233,21 @@ static int qcom_rng_remove(struct platform_device *pdev)
- 	return 0;
- }
- 
-+struct qcom_rng_of_data qcom_prng_of_data = {
-+	.skip_init = false,
-+	.hwrng_support = false,
-+};
-+
-+struct qcom_rng_of_data qcom_prng_ee_of_data = {
-+	.skip_init = true,
-+	.hwrng_support = false,
-+};
-+
-+struct qcom_rng_of_data qcom_trng_of_data = {
-+	.skip_init = true,
-+	.hwrng_support = true,
-+};
-+
- static const struct acpi_device_id __maybe_unused qcom_rng_acpi_match[] = {
- 	{ .id = "QCOM8160", .driver_data = 1 },
- 	{}
-@@ -205,9 +255,9 @@ static const struct acpi_device_id __maybe_unused qcom_rng_acpi_match[] = {
- MODULE_DEVICE_TABLE(acpi, qcom_rng_acpi_match);
- 
- static const struct of_device_id __maybe_unused qcom_rng_of_match[] = {
--	{ .compatible = "qcom,prng", .data = (void *)0},
--	{ .compatible = "qcom,prng-ee", .data = (void *)1},
--	{ .compatible = "qcom,trng", .data = (void *)1},
-+	{ .compatible = "qcom,prng", .data = &qcom_prng_of_data },
-+	{ .compatible = "qcom,prng-ee", .data = &qcom_prng_ee_of_data },
-+	{ .compatible = "qcom,trng", .data = &qcom_trng_of_data },
- 	{}
- };
- MODULE_DEVICE_TABLE(of, qcom_rng_of_match);
 -- 
-2.25.1
-
+With best wishes
+Dmitry
