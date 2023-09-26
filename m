@@ -2,119 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10DB17AF421
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 21:29:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1492B7AF42E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 21:35:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229880AbjIZT3a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Sep 2023 15:29:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47236 "EHLO
+        id S229985AbjIZTfm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Sep 2023 15:35:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229580AbjIZT3a (ORCPT
+        with ESMTP id S229853AbjIZTfk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Sep 2023 15:29:30 -0400
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [81.169.146.171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C5B6DE;
-        Tue, 26 Sep 2023 12:29:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1695756559; cv=none;
+        Tue, 26 Sep 2023 15:35:40 -0400
+Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.83])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4F8ADE;
+        Tue, 26 Sep 2023 12:35:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1695756925; cv=none;
     d=strato.com; s=strato-dkim-0002;
-    b=pBtXdsTBi4BB4ZZIAsiwsl8geiL/EHWri7LG+42VMJxRAFdL1Mv8407qp56jkKrkC5
-    3zerT1uFA6Sp8LNEj6Lc69mVpZ3kDmcdU1xpEAVcJYH8ohCaBOOeucqsBZyMAd01cMcn
-    xotQ2Pb1zM/n6X+x8JVj1PnZ70TdYVwocSui/Qh8hCS+2qzi86DxLwNIy/G7n4uO2QkU
-    JpL9H31vvbOafTH48uGEB+UxtF0J2T/4trGiy3Hkf8cv7SDUVj0qHMurzJ7dlu/XrJX2
-    e72ZVrKeB1kQ4+nsIAB6KcV26QbSx+B0gdBt2mrmiXj+70Vvx6xYJBjFwRwnR+FvUEAJ
-    GjFw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1695756559;
+    b=ACcTc/7xLVKm9MQagXeedFOflcfO7CeyZW1ewfiKuOIZUPFAygewerJwbkzjwZxrm6
+    bjly+24xw+ZI05iwmDuLPb3Hcdm8yONZUiq1+vJtafH4EI/Lr4WeD+DnHwDjcKJClRnl
+    Ze4MdAdQGu29srE5eqT+9hFDoJ+glRBYvUgEQ0Aeyj505rrOiT47IfygoyNHWnPmXHiQ
+    f1or1j46OsSg4bcN+Jdyqsm8qoRz+Odiew1Wp6ZusKA1bFsdUDZQiHsRi5awX/aan1Q1
+    3dp8il9MbiTUMQ0fcr+JJNSrXa0lyzHnSO5ZOtiUlxAjx4aixEupW5fTs7eoHbtpXSDt
+    2oZA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1695756925;
     s=strato-dkim-0002; d=strato.com;
     h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
     From:Subject:Sender;
-    bh=+ha073wnHBmefyf38pQm6waJvTbEZvmyvSKrKKLGllY=;
-    b=Uvpg5d973WjUN/hvVfyabcIy6IK/fZ2kLdxopTyuFKrnNZHwCAR+YX+U8NOOY10R6N
-    nKMR49xQsD4qp3eZ968qZAdMiRyf6d+2jBbx5z87+JEebp8auS61p8oQ+mjpOm8TsnOB
-    RQhFHbcjN2r15xZxNmHu0Qs5ANFo2TjKt7bQILkEVFkmu8PGP+0pGSB1xrgINXg9DLUI
-    JajmwCRFdykaDBWZbHkGvMbvk/1/ijWCCjuCJ8XyuMfunkbm9R5CEDni2Hh+KJF7+jxK
-    4C4TzG82UuU6O5eweD+RQ7oVvOGHF18WmW/glyJCfKZB1ciV4IHfgN/QCM4MGGvgxiUJ
-    fvPQ==
+    bh=2f7d9Y0ED9nXfENKGMQIn0vTxb4lnSJrmVirloDnY4o=;
+    b=gtcOhIk/t+B5pJFUou2qF847Hk277QYdD92W8TNYEyLbXfR+0qsgJzh4BueTODuBDi
+    uq3qzL9NYhIYgIVazBiABkjvl1OGO0FwzKT1XPHZ48so0WZtY23AD7tofyUhBmlXq2Ne
+    mzf5pmPdPDCAVuHF5I1g2yx7XHnav9kODooh3OIuBCyKTGdHTx5NuMZF/u0+8JzUJY06
+    4NWMMdzALyiDdbU9TX7xP0Bu7rU9227OkAfQKbbe3z0oKyC8b9WRrHj1+rBMuZT9vJjj
+    9KmoGCb+6xcWQOTgNjItjbfrBgbW+zWqPkG+xQO7zcBdw9yYmCsC86HcK2BV44WdgHmG
+    pVCg==
 ARC-Authentication-Results: i=1; strato.com;
     arc=none;
     dkim=none
 X-RZG-CLASS-ID: mo02
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1695756559;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1695756925;
     s=strato-dkim-0002; d=gerhold.net;
     h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
     From:Subject:Sender;
-    bh=+ha073wnHBmefyf38pQm6waJvTbEZvmyvSKrKKLGllY=;
-    b=XTIrBrXmUaeOEWkVueKQ5MYLaZcZLHaFQ/5wY3HN+3RO8GYXm4SoWI6LPrI0C9JPYU
-    UR1SPh992kwS40F9FdoAPsep71V5+WP6+pOk8xJaTDE30V8bAFvmT1+iIwpIPpFBChDP
-    /ugvAHaZgZMN1Qjgi+J97eC09fXKxiDkYhMpGAbFCiNazZRsJwo5y04en6D4HwG7I6pt
-    D6c1nvGNxh+YKj6SY/9e2OgdRxmeCZwADcCaHNbNGEpnE8Grn7Mi2Y98aJfL8MJ3B8ij
-    mRDPPWw+uf7xxmVCydvMr9ILzWTDvNmpPlneOrVorjQjuPMi5pk6yqcBRdgHKtrHaJk+
-    CtnA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1695756559;
+    bh=2f7d9Y0ED9nXfENKGMQIn0vTxb4lnSJrmVirloDnY4o=;
+    b=H0dq7A1QC/g2HwSQXIi1o9I4cwNJfD6gywZH/HKTNQKpgwEfMumDuMuuQa825TpGyp
+    3bxlj+71G0GpotptWqlQDpg3LKcK74ghdxU8v3t7aQLmTg5TtFiBTMkXsiZXOfpCEqbv
+    P1uhZdZGTUPlxJF5fQV4d705n57coZzlQvXKMRSUcRj6lXUFltwT0RUgmS/Nh/3Hnt+a
+    C+Rq6zRAZWesZ7h8uTu/dPSmlWGMGLxQZD1jxO/dpeQ2DqSnNp+wYMygul15B+vwStfp
+    sDT5nXQzqZe1JmO3hb4okskml9fEjLgusxRlnvmykKIeImi7wRn/GqBBIJ/JWtnqh6aq
+    dIgQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1695756925;
     s=strato-dkim-0003; d=gerhold.net;
     h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
     From:Subject:Sender;
-    bh=+ha073wnHBmefyf38pQm6waJvTbEZvmyvSKrKKLGllY=;
-    b=up4SogWsy5tkiKisO/BTG0Kxn1TrF/+xWIwLJsCpBGpeW1gb2bt5dBYHNkWlocTJ3n
-    yJsg7s6Y9CYWPGvMePBg==
+    bh=2f7d9Y0ED9nXfENKGMQIn0vTxb4lnSJrmVirloDnY4o=;
+    b=G7Yq9N7I+LagQsF0yojR+vQkjETgk88pyFv2bFdAPoirTGXcwLMeXVG9p1UY7HbLIZ
+    A7vIFa0vWxhXC2bNf2Cg==
 X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA8piJ1A=="
 Received: from gerhold.net
     by smtp.strato.de (RZmta 49.8.2 SBL|AUTH)
-    with ESMTPSA id R04c57z8QJTJgML
+    with ESMTPSA id R04c57z8QJZOgNo
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
         (Client did not present a certificate);
-    Tue, 26 Sep 2023 21:29:19 +0200 (CEST)
-Date:   Tue, 26 Sep 2023 21:29:18 +0200
+    Tue, 26 Sep 2023 21:35:24 +0200 (CEST)
+Date:   Tue, 26 Sep 2023 21:35:23 +0200
 From:   Stephan Gerhold <stephan@gerhold.net>
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc:     Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Subject: Re: [PATCH 05/13] arm64: dts: qcom: msm8916-samsung-serranove: Add
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Vincent Knecht <vincent.knecht@mailoo.org>
+Subject: Re: [PATCH 07/13] arm64: dts: qcom: msm8916-alcatel-idol347: Add
  sound and modem
-Message-ID: <ZRMxDjVKu-kGIs5f@gerhold.net>
+Message-ID: <ZRMye1HeiUno5N_p@gerhold.net>
 References: <20230926-msm8916-modem-v1-0-398eec74bac9@gerhold.net>
- <20230926-msm8916-modem-v1-5-398eec74bac9@gerhold.net>
- <64f030ca-27e5-47c8-b0d4-5fd0d4fce9d9@linaro.org>
+ <20230926-msm8916-modem-v1-7-398eec74bac9@gerhold.net>
+ <cb78cd52-c638-4977-a762-365a6fe5f723@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <64f030ca-27e5-47c8-b0d4-5fd0d4fce9d9@linaro.org>
+In-Reply-To: <cb78cd52-c638-4977-a762-365a6fe5f723@linaro.org>
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
-        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 26, 2023 at 08:55:14PM +0200, Konrad Dybcio wrote:
+On Tue, Sep 26, 2023 at 08:58:12PM +0200, Konrad Dybcio wrote:
 > On 26.09.2023 18:51, Stephan Gerhold wrote:
-> > Enable sound and modem for the Samsung S4 Mini Value Edition. The setup
-> > is similar to most MSM8916 devices, i.e.:
+> > From: Vincent Knecht <vincent.knecht@mailoo.org>
+> > 
+> > Enable sound and modem for the Alcatel Idol 3 (4.7"). The setup is
+> > similar to most MSM8916 devices, i.e.:
 > > 
 > >  - QDSP6 audio
-> >  - Speaker/earpiece/headphones/microphones via digital/analog codec in
-> >    MSM8916/PM8916
+> >  - Microphones via digital/analog codec in MSM8916/PM8916
 > >  - WWAN Internet via BAM-DMUX
 > > 
 > > except:
 > > 
-> >  - Samsung-specific audio jack detection (not supported yet)
+> >  - Stereo NXP TFA9890 codecs for speakers on Quaternary MI2S
+> >    - These are also used as earpieces at the top/bottom.
+> >  - Asahi Kasei AK4375 headphone codec on Secondary MI2S
+> >  -> Primary MI2S is not used for playback
 > > 
+> > Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
+> > [Stephan: minor cleanup, add consistent commit message]
 > > Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 > > ---
-> >  arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts | 14 ++++++++++++++
-> >  1 file changed, 14 insertions(+)
+> > There are some trivial conflicts unless
+> > https://lore.kernel.org/linux-arm-msm/20230921-msm8916-rmem-fixups-v1-3-34d2b6e721cf@gerhold.net/
+> > is applied first. But given that there are important fixups for the
+> > dynamic reserved memory changes in that series it should preferably
+> > get applied before this one anyway.
+> > ---
+> >  .../boot/dts/qcom/msm8916-alcatel-idol347.dts      | 164 +++++++++++++++++++++
+> >  1 file changed, 164 insertions(+)
 > > 
-> > diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts b/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
-> > index 68da2a2d3077..5f33aa0ad7b5 100644
-> > --- a/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
-> > +++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
-> > @@ -6,6 +6,8 @@
+> > diff --git a/arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts b/arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts
+> > index fade93c55299..ef5fc9289754 100644
+> > --- a/arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts
+> > +++ b/arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts
+> > @@ -3,6 +3,8 @@
 > >  /dts-v1/;
 > >  
 > >  #include "msm8916-pm8916.dtsi"
@@ -122,41 +135,71 @@ On Tue, Sep 26, 2023 at 08:55:14PM +0200, Konrad Dybcio wrote:
 > > +
 > >  #include <dt-bindings/gpio/gpio.h>
 > >  #include <dt-bindings/input/input.h>
-> >  #include <dt-bindings/interrupt-controller/irq.h>
-> > @@ -319,6 +321,10 @@ &blsp_uart2 {
-> >  	status = "okay";
-> >  };
+> >  #include <dt-bindings/leds/common.h>
+> > @@ -22,6 +24,19 @@ chosen {
+> >  		stdout-path = "serial0";
+> >  	};
 > >  
-> > +&mpss_mem {
-> > +	reg = <0x0 0x86800000 0x0 0x5a00000>;
-> > +};
-> > +
-> >  &pm8916_resin {
-> >  	status = "okay";
-> >  	linux,code = <KEY_VOLUMEDOWN>;
-> > @@ -350,6 +356,14 @@ &sdhc_2 {
-> >  	no-1-8-v;
-> >  };
-> >  
-> > +&sound {
-> > +	status = "okay";
-> > +	audio-routing =
-> > +		"AMIC1", "MIC BIAS External1",
-> > +		"AMIC2", "MIC BIAS Internal2",
-> > +		"AMIC3", "MIC BIAS External1";
-> > +};
-> I *think* we should be able to harmlessly enable &audio globally?
+> > +	reserved-memory {
+> > +		/delete-node/ reserved@86680000;
+> > +		/delete-node/ rmtfs@86700000;
+> Deleting with a label reference is strongly preferred to avoid
+> mistakes.
 > 
 
-What about boards that do not have/use audio at all? (see
-msm8916-ufi.dtsi). We don't even want to load the kernel modules on
-those.
+I would say the opposite applies here. The deletions are based on the
+assumption that the nodes are at the address that are listed here. If
+you would move rmtfs somewhere else the adjustments made here must be
+re-evaulated.
 
-IMO the SoC dtsi should always be minimal by default. This also
-guarantees that you don't run into trouble because of half- or
-incorrectly configured components during early bring-up, especially if
-you don't have serial and are hoping to get the device booting far
-enough to debug it.
+/delete-node/ throws an error if the referenced name does not exist,
+so it's exactly the indication we need if someone makes changes to the
+original node in the SoC dtsi.
+
+Note that this is different from property assignments, i.e.
+
+	/ {
+		reserved-memory {
+			rmtfs@86700000 {
+				status = "disabled";
+			};
+		};
+	};
+
+instead of
+
+	&rmtfs {
+		status = "disabled";
+	};
+
+because here there would not be an error if the node is renamed.
+
+> [...]
+> 
+> >  
+> > +&q6afedai {
+> > +	dai@18 {
+> > +		reg = <SECONDARY_MI2S_RX>;
+> > +		qcom,sd-lines = <0>;
+> > +	};
+> > +	dai@22 {
+> Missing newline above
+> 
+
+Thanks, will fix this!
+
+> 
+> > +
+> > +&sound_dai_primary {
+> > +	status = "disabled";
+> > +};
+> > +
+> Hm, gives me an idea to sprinkle a bit more /omit-if-no-ref/ in
+> patch 3..
+> 
+
+(See reply in patch 3, /omit-if-no-ref/ sadly only works for phandle
+ references...)
 
 Thanks,
 Stephan
