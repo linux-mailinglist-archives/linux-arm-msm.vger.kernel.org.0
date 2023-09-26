@@ -2,82 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E3F047AE2AA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 01:55:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A3B9B7AE369
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 03:44:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229471AbjIYXzz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Sep 2023 19:55:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54990 "EHLO
+        id S229486AbjIZBpC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Sep 2023 21:45:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229460AbjIYXzz (ORCPT
+        with ESMTP id S229481AbjIZBpC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Sep 2023 19:55:55 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69D7FFB;
-        Mon, 25 Sep 2023 16:55:48 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38PNddmU003441;
-        Mon, 25 Sep 2023 23:55:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=9WRP/dH5LzRyecuJLSulsR2WIEaltd6yZiyLu9pOr44=;
- b=MfbXRJkdMSjbeT3E5Tvi6NDku2B1FaLjc2K39/8KHnMz3yQ7702e0b4Ovn+4kMFknUKz
- wuNcvexdGn8EM0KRJKykDZuxOBbNRZv4FbqOiAgHzfmp/EbBTofwsLAuwp62QGQDjA7b
- IeFbC0sxcX4rrhrbgGjEQUEqzYH7uqWfz0q72dr172jkYtQu72XF+SBE4/ConN3i7mEB
- DOqYZ8el/RLNE3zMXPDLS0HX9qOzrWzY3eRIMQs2iRk2zg7zpy03Yiif3u6JNEVg1Bzv
- 1aHftk4de7XfB7tAVeELxgZ/tjotmUPAQ29xHpuGv0o4uQhB0iEiuQIyf70uaEWtlsqy tw== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tb72shu55-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 25 Sep 2023 23:55:40 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38PNtdAH023250
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 25 Sep 2023 23:55:39 GMT
-Received: from [192.168.142.6] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 25 Sep
- 2023 16:55:39 -0700
-Message-ID: <dffdbd5c-3d21-5cee-03d6-b89e0caf9a41@quicinc.com>
-Date:   Mon, 25 Sep 2023 16:55:38 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 net-next 2/2] net: qrtr: Add support for processing
- DEL_PROC type control message
-Content-Language: en-US
-To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-        <mani@kernel.org>, <davem@davemloft.net>, <edumazet@google.com>,
-        <kuba@kernel.org>, <pabeni@redhat.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <netdev@vger.kernel.org>, <quic_viswanat@quicinc.com>,
-        <horms@kernel.org>
-References: <20230920053317.2165867-1-quic_srichara@quicinc.com>
- <20230920053317.2165867-3-quic_srichara@quicinc.com>
- <349a7b1c-915f-4f58-260f-900aa7e3db65@quicinc.com>
- <0db026e7-6017-83ed-4071-c2ea6d72e3d7@quicinc.com>
-From:   Chris Lew <quic_clew@quicinc.com>
-In-Reply-To: <0db026e7-6017-83ed-4071-c2ea6d72e3d7@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Mon, 25 Sep 2023 21:45:02 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94B67101
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Sep 2023 18:44:55 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46D57C433C7;
+        Tue, 26 Sep 2023 01:44:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1695692695;
+        bh=3GmjWwlLfKkAaee1U7rANvoiG26U/KNUaceqIPsT6ng=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=iygnGX/zFTHpDM5zr/7FqpXcmSkCqfdehvGtxkU7MbfwLy/cUlC/E1M8LoQPpaQBN
+         Gksex02EneZnNH11O34brahnhFYM90ZhLA4YsBrD9OpOFvsa7KqsYh8651sMiomYRY
+         dq8QrDUSRenRpeB70fhqfhLQ7GDLLui2cqvdoyZdTlbtfGVKROfuQac/Z59NIQ+xTF
+         2sSD9tOqAX4h1RPaamOVZ+hwhL2gAJSll2R9H1p1co9KBIWvYAfgDPaVr9IpiNiLHF
+         GSmLjIg4eg8YfCYdRaHSjrsUuhTPE6lK3lweZGyOHUPuGZid0XLm+H8OAPWW7f3x+u
+         ng8IVaPvMpsAw==
+Received: (nullmailer pid 2651675 invoked by uid 1000);
+        Tue, 26 Sep 2023 01:44:49 -0000
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 4QfOrP3wocDMjFYvr6tmtwL2UN1bdoEs
-X-Proofpoint-ORIG-GUID: 4QfOrP3wocDMjFYvr6tmtwL2UN1bdoEs
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-09-25_18,2023-09-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
- mlxscore=0 priorityscore=1501 lowpriorityscore=0 clxscore=1015
- malwarescore=0 adultscore=0 mlxlogscore=740 spamscore=0 suspectscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2309250184
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+MIME-Version: 1.0
+From:   Rob Herring <robh@kernel.org>
+To:     Richard Acayan <mailingradian@gmail.com>
+Cc:     Sean Paul <sean@poorly.run>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Ryan McCann <quic_rmccann@quicinc.com>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        dri-devel@lists.freedesktop.org,
+        Liu Shixin <liushixin2@huawei.com>, devicetree@vger.kernel.org,
+        Robert Foss <rfoss@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        David Airlie <airlied@gmail.com>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        Conor Dooley <conor+dt@kernel.org>,
+        freedreno@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230925232625.846666-12-mailingradian@gmail.com>
+References: <20230925232625.846666-9-mailingradian@gmail.com>
+ <20230925232625.846666-12-mailingradian@gmail.com>
+Message-Id: <169569268968.2651575.14271780119784995097.robh@kernel.org>
+Subject: Re: [PATCH 3/6] dt-bindings: display: msm: Add SDM670 MDSS
+Date:   Mon, 25 Sep 2023 20:44:49 -0500
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -85,29 +73,39 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-
-On 9/23/2023 6:49 PM, Sricharan Ramabadhran wrote:
->>>    */
->>>   struct qrtr_node {
->>>       struct mutex ep_lock;
->>> @@ -134,6 +138,9 @@ struct qrtr_node {
->>>       struct sk_buff_head rx_queue;
->>>       struct list_head item;
->>> +    struct kthread_worker kworker;
->>> +    struct task_struct *task;
->>> +    struct kthread_work read_data;
->>
->> I think our own kthread here might have been overkill. I forget why we 
->> needed it instead of using a workqueue.
+On Mon, 25 Sep 2023 19:26:30 -0400, Richard Acayan wrote:
+> Add documentation for the SDM670 display subsystem, adapted from the
+> SDM845 and SM6125 documentation.
 > 
->    I added a workqueue here because endpoint post is getting called from
->    atomic contexts and below DEL_PROC handling acquires qrtr_tx_lock.
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> ---
+>  .../display/msm/qcom,sdm670-mdss.yaml         | 280 ++++++++++++++++++
+>  1 file changed, 280 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sdm670-mdss.yaml
+> 
 
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-Got it, I think deferring the processing makes sense. I was more 
-focusing on the fact that we are creating our own kthread instead of 
-using the system workqueues.
+yamllint warnings/errors:
 
-Prior to commit e04df98adf7d ("net: qrtr: Remove receive worker"), this 
-was a work_struct. I think we should keep it as a work_struct until we 
-can motivate why a qrtr_node needs it's own kthread.
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/display/msm/qcom,sdm670-mdss.example.dts:198.43-200.27: Warning (graph_endpoint): /example-0/display-subsystem@ae00000/dsi@ae96000/ports/port@0/endpoint: graph connection to node '/example-0/display-subsystem@ae00000/display-controller@ae01000/ports/port@1/endpoint' is not bidirectional
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230925232625.846666-12-mailingradian@gmail.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
