@@ -2,80 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C1B37AF08D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 18:21:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 73A867AF0A2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 18:25:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235237AbjIZQVI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Sep 2023 12:21:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39210 "EHLO
+        id S233309AbjIZQZX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Sep 2023 12:25:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235213AbjIZQVH (ORCPT
+        with ESMTP id S231668AbjIZQZW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Sep 2023 12:21:07 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FB648E;
-        Tue, 26 Sep 2023 09:21:01 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38QEqOVq001484;
-        Tue, 26 Sep 2023 16:20:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=qcppdkim1;
- bh=LehS//YoR2gic3xDd8E3tZ4tviPkBJ1Uha5rLlpj9tY=;
- b=MN+WZK6SeUNZjXf3VnZUK0cggxNo+aK4FxJZXQU99U+xH0lO6XR2YPYHxex8RhvJq3nb
- UCV70gaaKrLkMimHZ10X5rkLMQoy46/c1uQtmZEbopd53gA5oKwXoQFdyLGv/eMElSY8
- BikcjkgMvkBpYaicxFl2MBBfjtY957voIsxljNrb0FCurjfxn2+oZqLpuUTxKWKxBxvr
- i1T5myuzhrM/b07TE6xpcH4+LiC3vEe4gGrBXqP6Hc0APmMqnl3ICncKNcI9WLMbeDVs
- jrbiBgD/4N2Fb2kveQWnemW+bg60WL37Npqh9x4GsCYLgySIWGV2/nroEhYf8bOHDDbu Jg== 
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tbexgjkbr-1
+        Tue, 26 Sep 2023 12:25:22 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D79C8E;
+        Tue, 26 Sep 2023 09:25:16 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38QDwh5m020866;
+        Tue, 26 Sep 2023 16:25:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Kn0NWfrf2PoJA+utp/K+B/7mDfqS5Mn1G1dsC5wgm6E=;
+ b=j2xXP4VwzjZTvmyk4bS2D9EQ5n3uXudKaH7UeS0GwyN0LrQgWfVfGTFjXyN4CPk+TPm2
+ uf/Rh6uRAimblBjYEOiJv4SUlOVRE/4o39+35ZgNKoi9dhqFBI6H6B1jNBLQEVK0/L9l
+ PLzqSVTWyvhs0Xy1XLCknlJHK/HivC0wE3O46n3t+d6ZwfGiM63JiUvLWMiHEnJ/61+4
+ s9ejxvoCZXOkwRkTSQYgI1bKyZhbS5vN9Yc4YOthMS2SU5Ybl+0OJhMdg9CCuPE01jlb
+ TqSGX72UyoYCtRro2Al8D21yNye3DOECUWCvE+uQS9BRsM/GLpt6EyK3KLCLQ9i/1JeF Iw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tbmwwt26q-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 26 Sep 2023 16:20:53 +0000
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 38QGKoXG010076;
-        Tue, 26 Sep 2023 16:20:50 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3t9s3kk6nh-1;
-        Tue, 26 Sep 2023 16:20:50 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 38QGDbPq002942;
-        Tue, 26 Sep 2023 16:20:50 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-nitirawa-hyd.qualcomm.com [10.213.109.152])
-        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 38QGKowh010070;
-        Tue, 26 Sep 2023 16:20:50 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2342877)
-        id 6DC36601917; Tue, 26 Sep 2023 21:50:49 +0530 (+0530)
+        Tue, 26 Sep 2023 16:25:02 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38QGOSsC010322
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 26 Sep 2023 16:24:28 GMT
+Received: from [10.218.45.181] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 26 Sep
+ 2023 09:24:22 -0700
+Message-ID: <593fa9be-9f55-3649-e825-1dee31ac5c21@quicinc.com>
+Date:   Tue, 26 Sep 2023 21:54:19 +0530
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.2
+Subject: Re: [PATCH V1 2/2] arm64: dts: qcom: sc7280: Add UFS host controller
+ and phy nodes
+To:     Manivannan Sadhasivam <mani@kernel.org>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <alim.akhtar@samsung.com>,
+        <bvanassche@acm.org>, <robh+dt@kernel.org>, <avri.altman@wdc.com>,
+        <cros-qcom-dts-watchers@chromium.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>
+References: <20230821094937.13059-1-quic_nitirawa@quicinc.com>
+ <20230821094937.13059-3-quic_nitirawa@quicinc.com>
+ <20230822070841.GA24753@thinkpad>
+Content-Language: en-US
 From:   Nitin Rawat <quic_nitirawa@quicinc.com>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        mani@kernel.org, alim.akhtar@samsung.com, bvanassche@acm.org,
-        avri.altman@wdc.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        cros-qcom-dts-watchers@chromium.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Nitin Rawat <quic_nitirawa@quicinc.com>
-Subject: [PATCH V2 3/3] arm64: dts: qcom: sc7280: Add UFS nodes for sc7280 IDP board
-Date:   Tue, 26 Sep 2023 21:50:42 +0530
-Message-Id: <20230926162042.14180-4-quic_nitirawa@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230926162042.14180-1-quic_nitirawa@quicinc.com>
-References: <20230926162042.14180-1-quic_nitirawa@quicinc.com>
-X-QCInternal: smtphost
+In-Reply-To: <20230822070841.GA24753@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: rCNSMKswIH4bKmtGgqW-jKlgPNC0A0Pa
-X-Proofpoint-GUID: rCNSMKswIH4bKmtGgqW-jKlgPNC0A0Pa
+X-Proofpoint-GUID: 5TkmNezfs8z-kSjLn0mFlFVUitDhXyq9
+X-Proofpoint-ORIG-GUID: 5TkmNezfs8z-kSjLn0mFlFVUitDhXyq9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-09-26_13,2023-09-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- phishscore=0 spamscore=0 suspectscore=0 impostorscore=0 mlxlogscore=736
- adultscore=0 clxscore=1015 bulkscore=0 mlxscore=0 malwarescore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2309260142
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=no
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
+ bulkscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0 phishscore=0
+ mlxlogscore=999 spamscore=0 priorityscore=1501 clxscore=1015 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
+ definitions=main-2309260144
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,43 +87,145 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add UFS host controller and PHY nodes for sc7280 IDP board.
 
-Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-index 2ff549f4dc7a..a0059527d9e4 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-@@ -499,6 +499,25 @@
- 	status = "okay";
- };
+On 8/22/2023 12:38 PM, Manivannan Sadhasivam wrote:
+> On Mon, Aug 21, 2023 at 03:19:37PM +0530, Nitin Rawat wrote:
+>> Add UFS host controller and PHY nodes for sc7280.
+>>
+> 
+> You should split this patch into 2. One for SoC and another for board.
+Updated in Latest Patchset.
 
-+&ufs_mem_hc {
-+	reset-gpios = <&tlmm 175 GPIO_ACTIVE_LOW>;
-+	vcc-supply = <&vreg_l7b_2p9>;
-+	vcc-max-microamp = <800000>;
-+	vccq-supply = <&vreg_l9b_1p2>;
-+	vccq-max-microamp = <900000>;
-+	vccq2-supply = <&vreg_l9b_1p2>;
-+	vccq2-max-microamp = <900000>;
-+
-+	status = "okay";
-+};
-+
-+&ufs_mem_phy {
-+	vdda-phy-supply = <&vreg_l10c_0p8>;
-+	vdda-pll-supply = <&vreg_l6b_1p2>;
-+
-+	status = "okay";
-+};
-+
- &usb_1 {
- 	status = "okay";
- };
---
-2.17.1
+> 
+>> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 19 +++++++
+>>   arch/arm64/boot/dts/qcom/sc7280.dtsi     | 64 ++++++++++++++++++++++++
+>>   2 files changed, 83 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> index 2ff549f4dc7a..c60cdd511222 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> @@ -451,6 +451,25 @@
+>>   	status = "okay";
+>>   };
+>>
+>> +&ufs_mem_hc {
+>> +	reset-gpios = <&tlmm 175 GPIO_ACTIVE_LOW>;
+>> +	vcc-supply = <&vreg_l7b_2p9>;
+>> +	vcc-max-microamp = <800000>;
+>> +	vccq-supply = <&vreg_l9b_1p2>;
+>> +	vccq-max-microamp = <900000>;
+>> +	vccq2-supply = <&vreg_l9b_1p2>;
+>> +	vccq2-max-microamp = <900000>;
+>> +
+>> +	status = "okay";
+>> +};
+>> +
+>> +&ufs_mem_phy {
+>> +	vdda-phy-supply = <&vreg_l10c_0p8>;
+>> +	vdda-pll-supply = <&vreg_l6b_1p2>;
+>> +
+>> +	status = "okay";
+>> +};
+>> +
+>>   &sdhc_1 {
+>>   	status = "okay";
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> index 925428a5f6ae..d4a15d56b384 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> @@ -908,6 +908,70 @@
+>>   			};
+>>   		};
+>>
+>> +		ufs_mem_phy: phy@1d87000 {
+> 
+> Please sort the nodes in ascending order.
+Updated in Latest Patchset.
 
+> 
+>> +			compatible = "qcom,sc7280-qmp-ufs-phy";
+>> +			reg = <0x0 0x01d87000 0x0 0xe00>;
+>> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
+>> +				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>,
+>> +				 <&gcc GCC_UFS_1_CLKREF_EN>;
+>> +			clock-names = "ref", "ref_aux", "qref";
+>> +
+>> +			resets = <&ufs_mem_hc 0>;
+>> +			reset-names = "ufsphy";
+>> +
+>> +			#clock-cells = <1>;
+>> +			#phy-cells = <0>;
+>> +
+>> +			status = "disabled";
+>> +
+>> +		};
+>> +
+>> +		ufs_mem_hc: ufs@1d84000 {
+>> +			compatible = "qcom,sc7280-ufshc", "qcom,ufshc",
+>> +				     "jedec,ufs-2.0";
+>> +			reg = <0x0 0x01d84000 0x0 0x3000>;
+>> +			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
+>> +			phys = <&ufs_mem_phy>;
+>> +			phy-names = "ufsphy";
+>> +			lanes-per-direction = <2>;
+>> +			#reset-cells = <1>;
+>> +			resets = <&gcc GCC_UFS_PHY_BCR>;
+>> +			reset-names = "rst";
+>> +
+>> +			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
+>> +			required-opps = <&rpmhpd_opp_nom>;
+>> +
+>> +			iommus = <&apps_smmu 0x80 0x0>;
+>> +			dma-coherent;
+>> +
+>> +			clock-names = "core_clk",
+>> +				      "bus_aggr_clk",
+>> +				      "iface_clk",
+>> +				      "core_clk_unipro",
+>> +				      "ref_clk",
+>> +				      "tx_lane0_sync_clk",
+>> +				      "rx_lane0_sync_clk",
+>> +				      "rx_lane1_sync_clk";
+> 
+> "clocks" property should come first.
+  DT binding shows clock-names first followed by clocks.
+  Let me know if see still see concern, would update .
+
+> 
+> - Mani
+> 
+>> +			clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
+>> +				 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
+>> +				 <&gcc GCC_UFS_PHY_AHB_CLK>,
+>> +				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
+>> +				 <&rpmhcc RPMH_CXO_CLK>,
+>> +				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
+>> +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
+>> +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
+>> +			freq-table-hz =
+>> +				<75000000 300000000>,
+>> +				<0 0>,
+>> +				<0 0>,
+>> +				<75000000 300000000>,
+>> +				<0 0>,
+>> +				<0 0>,
+>> +				<0 0>,
+>> +				<0 0>;
+>> +			status = "disabled";
+>> +		};
+>> +
+>>   		sdhc_1: mmc@7c4000 {
+>>   			compatible = "qcom,sc7280-sdhci", "qcom,sdhci-msm-v5";
+>>   			pinctrl-names = "default", "sleep";
+>> --
+>> 2.17.1
+>>
+> 
+
+Thanks,
+Nitin
