@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A9837AF3B1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 21:04:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC50E7AF3B4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Sep 2023 21:04:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235702AbjIZTEd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Sep 2023 15:04:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35908 "EHLO
+        id S235726AbjIZTE6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Sep 2023 15:04:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235715AbjIZTEc (ORCPT
+        with ESMTP id S235719AbjIZTE6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Sep 2023 15:04:32 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62316193
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 12:04:25 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-50325ce89e9so15847628e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 12:04:25 -0700 (PDT)
+        Tue, 26 Sep 2023 15:04:58 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1104B126
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 12:04:51 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2c16bc71e4cso58061341fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Sep 2023 12:04:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695755063; x=1696359863; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695755089; x=1696359889; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=bmA/G1DduQEvKKUEDX6DUZAubV5hEh6IhETLhiRVy9Q=;
-        b=VxKhWLrXLF9uHOjgOR1hqrMT/KGsxJs0DmZCCG6AiinMhoNPw3psz43r9sJcwfKcEu
-         yLiu7duv7O7mPkxxIe0ql7QPhuRI8jWLUtGvIrvmJWZMIDFWAL6/XnG2jAoMCf1kzTxr
-         JhT4sCHpWx80JGB2yJFtsmvO53n9YoEt8x/8HaGsYaqc96IoYkmRidyFgtR7Qly3Q3/u
-         39TV2oJdCp4dboAxWQES1bsHu3tdhkYqIAKxKDSP8D6CmYVptZ4UIK0x3ySgarq1kwb7
-         S5653cNTiTsA5jpsE5qxSRJdDKXXQl9TAnfjQkpiQfRU8mZXOLss+FcqQTrV0s2BEgVX
-         MEaA==
+        bh=T7FFgJozJbXYnnJsqXAR4SCS3RhusVygm4wKL/gsctg=;
+        b=GzFXLGnbIqXVfZczy3QVQpQUZIqqm09vpf0IdLmY4Kw/Hhxb9RymV/rjRhWGCUp40q
+         V0PGnAOrh5iGVQNIQZisYFlJhDattMRUAUrhGyRZ/vSIPBbN4QvBEasAItLFDCQufu/a
+         XLswHtVypS6n631MAIHRedkLWPkuNa0iIVChtUiTUuZqLc8ytlQP0pL9tUd05VNUjm5u
+         N8/t/KXI8D1wpFJswIMAK2w/O5b4KVLzt5Kb/ikXUHRJNfu4LDCaQsCRErrfZtwP6d07
+         uG5LnXm44ggt2duatHQWDcrcCmEpSxnilwVH+5ktG+u+waMum1IfR9moit38+Gu+rWDr
+         x93Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695755063; x=1696359863;
+        d=1e100.net; s=20230601; t=1695755089; x=1696359889;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bmA/G1DduQEvKKUEDX6DUZAubV5hEh6IhETLhiRVy9Q=;
-        b=nT9BK+qRm4PxhhSVd/5nq5At2KhJYB9TuupJzF0U3ZzKVxsPfJkexiyU6ICkW7YYuz
-         9zhWGAoXYDV7Lv1JuyXqvNk1Mj1fkLBrqKwpSjgPKmpO4ZUWUNFEjtd9IsD5SX2w1EUm
-         rJ2fizwba1w7qkuupoIqAgU5FhMXncvjx1TQlvfQlLWxQP009zqHnJL7DgzRECXX4gXm
-         PMg6ZWB5Ge6mYPDXx9n9DaCDK5Q2Rc+kUM2h/Eux0co8QSxYhcpAjSvErXFK09RHy4py
-         tdwUgQxW4VrkCr6+u38WaxjT+4fcdw8jHZdWzD+6UQFujOFMFFsdjddCbTOU6Sc1elEP
-         krSg==
-X-Gm-Message-State: AOJu0YzOawpHfCiBje1k74US5KVJjF9pxEdyJohOyVj1FoqvWJZjXadN
-        OLh6OcAfLIv/FsnGTfbOe8201A==
-X-Google-Smtp-Source: AGHT+IEW7fdu6dA3sOIjvjUN49UidyoreyDLPBUdHYjoLw27fkNtm6mPjvSxismxxmmifWKPtvTYIg==
-X-Received: by 2002:a05:6512:3ca2:b0:503:1c07:f7f9 with SMTP id h34-20020a0565123ca200b005031c07f7f9mr11615591lfv.29.1695755063516;
-        Tue, 26 Sep 2023 12:04:23 -0700 (PDT)
+        bh=T7FFgJozJbXYnnJsqXAR4SCS3RhusVygm4wKL/gsctg=;
+        b=UDK/GLcLVEjXtnfNFKjYLMR/4fuB22gDcmhbWykaJRo/y/OvUEwo2Oh3q+igmMiXWL
+         8Ki0X3IdCeOUhCahogLUiRiBC65O6ALL7bRAqfVAh/qoa9Vdw+KMfdsXENtMXEZPCPbZ
+         aFIwmmn3/gAlLF5KHRbE3lnCbl2B94QtLH/B3Un02b0z4lyTqamZjop4XZOx7zzYW09s
+         W3u/R/gLoP2paEcjrAJvPcX3JAui5sp0HxK8NbsMSlwYqAIiDR/89DmHTJwGSZF83PY6
+         4UAyuGvkfUTPXSCyv7tTZQ3Ta6oZgOYViZdOtlMNhR1R7eCCCVUgB8MfJm88mSF9Jpe9
+         QZ4w==
+X-Gm-Message-State: AOJu0YzdOv2oGnp9khG0VdUvn/kLw6Z1Bmp0v5UTFEg3sTy21gLusvI/
+        jj4dkC1tEWIQu84TrOKSXa8s6u92wdp8Ut+6Z/KrjA==
+X-Google-Smtp-Source: AGHT+IGaPWnEynlY+j3X54fEKXXily8KQA9zXpBBhDYhJoFf5s01QH+YNNCs/qHxQB8s83r5sshQuQ==
+X-Received: by 2002:a05:6512:110f:b0:503:7dd:7ebf with SMTP id l15-20020a056512110f00b0050307dd7ebfmr9818728lfg.63.1695755088713;
+        Tue, 26 Sep 2023 12:04:48 -0700 (PDT)
 Received: from [192.168.33.189] (178235177023.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.23])
-        by smtp.gmail.com with ESMTPSA id h19-20020ac25973000000b00500cfb168a3sm2283303lfp.139.2023.09.26.12.04.22
+        by smtp.gmail.com with ESMTPSA id h19-20020ac25973000000b00500cfb168a3sm2283303lfp.139.2023.09.26.12.04.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Sep 2023 12:04:23 -0700 (PDT)
-Message-ID: <9d0ad1cf-77d5-4704-9861-4eaae4cbec42@linaro.org>
-Date:   Tue, 26 Sep 2023 21:04:22 +0200
+        Tue, 26 Sep 2023 12:04:48 -0700 (PDT)
+Message-ID: <dd85dc88-467d-460c-a47f-60f3cac1cf53@linaro.org>
+Date:   Tue, 26 Sep 2023 21:04:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/13] arm64: dts: qcom: msm8916-samsung-j5: Add sound and
+Subject: Re: [PATCH 13/13] arm64: dts: qcom: msm8939-samsung-a7: Add sound and
  modem
 Content-Language: en-US
 To:     Stephan Gerhold <stephan@gerhold.net>,
@@ -63,10 +63,9 @@ Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
         Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        "Lin, Meng-Bo" <linmengbo0689@protonmail.com>,
-        Markuss Broks <markuss.broks@gmail.com>
+        "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
 References: <20230926-msm8916-modem-v1-0-398eec74bac9@gerhold.net>
- <20230926-msm8916-modem-v1-12-398eec74bac9@gerhold.net>
+ <20230926-msm8916-modem-v1-13-398eec74bac9@gerhold.net>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -103,11 +102,11 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230926-msm8916-modem-v1-12-398eec74bac9@gerhold.net>
+In-Reply-To: <20230926-msm8916-modem-v1-13-398eec74bac9@gerhold.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -119,64 +118,33 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On 26.09.2023 18:51, Stephan Gerhold wrote:
 > From: "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
 > 
-> Enable sound and modem for the Samsung J5 smartphones. The setup is
-> similar to most MSM8916 devices, i.e.:
+> Enable sound and modem for the Samsung A7. The setup is similar to most
+> MSM8916 devices, i.e.:
 > 
 >  - QDSP6 audio
->  - Speaker/earpiece/headphones/microphones via digital/analog codec
->    in MSM8916/PM8916
+>  - Earpiece/headphones/microphones via digital/analog codec in
+>    MSM8916/PM8916
 >  - WWAN Internet via BAM-DMUX
 > 
-> except:
+> except for the same differences as the MSM8916-based Samsung A2015
+> devices:
 > 
->  - There is no secondary microphone, so a different "model" is used to
->    differentiate that in the UCM configuration.
+>  - NXP TFA9895 codec for speaker on Quaternary MI2S
 >  - Samsung-specific audio jack detection (not supported yet)
 > 
-> Co-developed-by: Markuss Broks <markuss.broks@gmail.com>
-> Signed-off-by: Markuss Broks <markuss.broks@gmail.com>
 > Signed-off-by: "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
 > [Stephan: Add consistent commit message]
 > Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 > ---
->  arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi | 15 +++++++++++++++
->  arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dts         |  4 ++++
->  2 files changed, 19 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi b/arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi
-> index fe59be3505fe..2caa820b0c26 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi
-> @@ -1,6 +1,8 @@
->  // SPDX-License-Identifier: GPL-2.0-only
->  
->  #include "msm8916-pm8916.dtsi"
-> +#include "msm8916-modem-qdsp6.dtsi"
-> +
->  #include <dt-bindings/gpio/gpio.h>
->  #include <dt-bindings/input/input.h>
->  #include <dt-bindings/interrupt-controller/irq.h>
-> @@ -135,6 +137,10 @@ &blsp_uart2 {
->  	status = "okay";
->  };
->  
-> +&mpss_mem {
-> +	reg = <0x0 0x86800000 0x0 0x5800000>;
-> +};
-> +
->  &pm8916_resin {
->  	status = "okay";
->  	linux,code = <KEY_VOLUMEDOWN>;
-> @@ -154,6 +160,15 @@ &sdhc_2 {
->  	cd-gpios = <&tlmm 38 GPIO_ACTIVE_LOW>;
->  };
->  
-> +&sound {
-> +	model = "msm8916-1mic";
-That's.. vague.. Is that intended?
+[...]
 
-I also noticed only now that random patches have status
-at random places in the property tree.. Removing the disablement
-would aid that as well (wink wink)!
+>  
+> +&lpass {
+> +	dai-link@3 {
+> +		reg = <MI2S_QUATERNARY>;
+> +		qcom,playback-sd-lines = <1>;
+> +	};
+> +};
+reserved hw?
 
 Konrad
