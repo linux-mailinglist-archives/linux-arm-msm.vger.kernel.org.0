@@ -2,105 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 248187B048B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 14:43:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 06EA57B04D1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 14:59:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231700AbjI0Mn2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Sep 2023 08:43:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49864 "EHLO
+        id S231768AbjI0M66 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Sep 2023 08:58:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231378AbjI0Mn1 (ORCPT
+        with ESMTP id S231740AbjI0M65 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Sep 2023 08:43:27 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A51A6E6;
-        Wed, 27 Sep 2023 05:43:26 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E8D0C433C8;
-        Wed, 27 Sep 2023 12:43:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1695818606;
-        bh=hot0489NCeMODOQPnfql7FbJn28GF6c4vF2S/pF88X4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=tyWPcsVLiZasHkrVXcm9nVnluFasSlBWl5wPJQBuv+eho/mQs2sCvJD+87VwOWmpf
-         0JclVCe+5GHl9GEkjM0aTOmQN9XqmW0zIDD/bDtRMUMx3FLjK0qwsgv2GkJHCGzZVt
-         vzB1HDekfqQROvqSd/RQbhjJ9N/5KhAqMDTD1jT113/dcGpJOfR8lgitEe9S5yn/u6
-         nK1VB7/iUTzFXaxKAkdTaaWxwXDaY1LOzWfmOb8xjq7Cw5NtuOHivPuABzN6Fh4iG9
-         /l2LruT31kaTAoa/cEIgOOe24Ir/M8POKw9CTlYbboazOmH35rDosXOdHnsR6MRT2l
-         qCwZUpWUnJ+yA==
-Date:   Wed, 27 Sep 2023 14:43:17 +0200
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Nitin Rawat <quic_nitirawa@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        alim.akhtar@samsung.com, bvanassche@acm.org, avri.altman@wdc.com,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, cros-qcom-dts-watchers@chromium.org,
-        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH V3 3/4] arm64: dts: qcom: sc7280: Add UFS nodes for
- sc7280 IDP board
-Message-ID: <20230927124317.GC18050@thinkpad>
-References: <20230927081858.15961-1-quic_nitirawa@quicinc.com>
- <20230927081858.15961-4-quic_nitirawa@quicinc.com>
+        Wed, 27 Sep 2023 08:58:57 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C64110A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 05:58:55 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-4064014bca5so25944325e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 05:58:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1695819533; x=1696424333; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=XDBxB4K/Dc2f6E7RfsykVyDhFDN+EKOunIZYRlh5xQ4=;
+        b=de8DF/OYG/1kvRnNXKqBqgdjpYtV581zHYAUezl+J0O/u3/ejABPRiEssgkB11Zxn8
+         F6rT4/OkLTevQsjVAI1hSziWqenB843K0P0/+RcES1c2AAhAcSf5rDtlVp5oE7ji9WA7
+         /VuPYKu6KFQLWCOL5FnfX9qSgaBtyHvXa8uXGHNrQukQ0vSmRqIakdgRBODAHCqV5c3W
+         ni5c2q+5M8nQq00xz1xUqC5fst5TH5Y6h8zYa1bpLICpaxrrywzA0USF33ivfhv5Y9SK
+         pV6Q23bcnPK3ep9ZKFc9J8B+SZ/7CrfEQJ32uT9SXfKE+BvQxRFe0Qov9lxxRu/rgUkI
+         UX4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695819533; x=1696424333;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XDBxB4K/Dc2f6E7RfsykVyDhFDN+EKOunIZYRlh5xQ4=;
+        b=VR0ZPcT60JIhdWEQBQYGzPILzyPud31BrPAjd1ArWVuYj2CJvS26WVKzluAsSRgTpC
+         edWH6y0/yKvQW/UPehQ5elMJ0Joyj58VQOrR8pOHymxE1DBijRw/MUoZpnEkq0yODbho
+         ntMpVjARjYIPRK1HR2CrH/fk2lsC1rs5cI8NqJZeyY1o5RULIKU5lF6iRCu5ik+h41B0
+         0Plf/gHxErm1cLTbnUdhav6nwv7+uIzUIKU8b+tJumyIR/ubxcaCNyQJ1O9hi4S1y5qw
+         L0s80Hktr3QEmRVW4nJdqIA72cG2chMrPXNZou3RzAEoxTDP4GjV5EnsV6IQ10KdlECN
+         fHfw==
+X-Gm-Message-State: AOJu0Yx8fzWcOPkqtNnPiq3cMMb5HXRT6MzCWDk5f7QZUW60XG0I6bHS
+        TtdJd/g8dfjuykKkiIX4nndC
+X-Google-Smtp-Source: AGHT+IEDKHA7Ugd7ZSlR7GfH1BkKpWJKecatYW9bH9VwobJzVpJZUVAEALaG7FH/tUYkaetWvZnMow==
+X-Received: by 2002:a1c:7917:0:b0:401:b53e:6c3b with SMTP id l23-20020a1c7917000000b00401b53e6c3bmr1803043wme.6.1695819533523;
+        Wed, 27 Sep 2023 05:58:53 -0700 (PDT)
+Received: from thinkpad ([2a02:2454:9d09:3f00:b024:394e:56d7:d8b4])
+        by smtp.gmail.com with ESMTPSA id 12-20020a05600c240c00b003fc02e8ea68sm20417720wmp.13.2023.09.27.05.58.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Sep 2023 05:58:52 -0700 (PDT)
+Date:   Wed, 27 Sep 2023 14:58:50 +0200
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Abel Vesa <abel.vesa@linaro.org>, lpieralisi@kernel.org,
+        kw@linux.com, andersson@kernel.org, bhelgaas@google.com,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] PCI: qcom: Add interconnect bandwidth for PCIe Gen4
+Message-ID: <20230927125850.GA19623@thinkpad>
+References: <20230924160713.217086-1-manivannan.sadhasivam@linaro.org>
+ <f49d0543-17bb-4105-9cdf-3df8c116481a@linaro.org>
+ <ZRFiD3EXwZI/B8JB@linaro.org>
+ <18635bed-b7e3-4acb-b176-cd9f87a35c7f@linaro.org>
+ <ZRFjAIYQQZnbNIdt@linaro.org>
+ <09058de7-e207-414b-ab4c-88f0cbde9c22@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230927081858.15961-4-quic_nitirawa@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <09058de7-e207-414b-ab4c-88f0cbde9c22@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 27, 2023 at 01:48:57PM +0530, Nitin Rawat wrote:
-> Add UFS host controller and PHY nodes for sc7280 IDP board.
+On Mon, Sep 25, 2023 at 12:40:34PM +0200, Konrad Dybcio wrote:
+> On 25.09.2023 12:37, Abel Vesa wrote:
+> > On 23-09-25 12:34:53, Konrad Dybcio wrote:
+> >> On 25.09.2023 12:33, Abel Vesa wrote:
+> >>> On 23-09-25 10:57:47, Konrad Dybcio wrote:
+> >>>> On 24.09.2023 18:07, Manivannan Sadhasivam wrote:
+> >>>>> PCIe Gen4 supports the interconnect bandwidth of 1969 MBps. So let's add
+> >>>>> the bandwidth support in the driver. Otherwise, the default bandwidth of
+> >>>>> 985 MBps will be used.
+> >>>>>
+> >>>>> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> >>>>> ---
+> >>>>>  drivers/pci/controller/dwc/pcie-qcom.c | 7 +++++--
+> >>>>>  1 file changed, 5 insertions(+), 2 deletions(-)
+> >>>>>
+> >>>>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> >>>>> index 297442c969b6..6853123f92c1 100644
+> >>>>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> >>>>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> >>>>> @@ -1384,11 +1384,14 @@ static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
+> >>>>>  	case 2:
+> >>>>>  		bw = MBps_to_icc(500);
+> >>>>>  		break;
+> >>>>> +	case 3:
+> >>>>> +		bw = MBps_to_icc(985);
+> >>>>> +		break;
+> >>>>>  	default:
+> >>>>>  		WARN_ON_ONCE(1);
+> >>>>>  		fallthrough;
+> >>>>> -	case 3:
+> >>>>> -		bw = MBps_to_icc(985);
+> >>>>> +	case 4:
+> >>>>> +		bw = MBps_to_icc(1969);
+> >>>>>  		break;
+> >>>> Are you adding case 4 under `default`? That looks.. bizzare..
+> >>>
+> >>> That's intentional. You want it to use 1969MBps if there is a different
+> >>> gen value. AFAIU.
+> >> Gah right, then the commit message is wrong.
+> > 
+> > Yep, should be: "Otherwise, the default bandwidth of 1969 MBps will be
+> > used."
+> > 
+> > But maybe we should not default to that. Maybe we should still default
+> > to 985 MBps.
+> Perhaps we shouldn't have a default at all..
 > 
-> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> E.g. if the gen5 bus may get clogged if we exceed gen4
+> limits
+> 
 
-Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+So the idea here is that if we happen to run this driver on a new Gen supported
+SoC, we have to let the user know that the interconnects are running at a lower
+gen speed and it needs attention.
+
+But I think we can simplify it by fixing a default bandwidth, say Gen3 and get
+rid of the fallthrough. And yeah, the same needs to be done for the pcie-qcom-ep
+driver as well.
 
 - Mani
 
-> ---
->  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> index 2ff549f4dc7a..a0059527d9e4 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> @@ -499,6 +499,25 @@
->  	status = "okay";
->  };
-> 
-> +&ufs_mem_hc {
-> +	reset-gpios = <&tlmm 175 GPIO_ACTIVE_LOW>;
-> +	vcc-supply = <&vreg_l7b_2p9>;
-> +	vcc-max-microamp = <800000>;
-> +	vccq-supply = <&vreg_l9b_1p2>;
-> +	vccq-max-microamp = <900000>;
-> +	vccq2-supply = <&vreg_l9b_1p2>;
-> +	vccq2-max-microamp = <900000>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&ufs_mem_phy {
-> +	vdda-phy-supply = <&vreg_l10c_0p8>;
-> +	vdda-pll-supply = <&vreg_l6b_1p2>;
-> +
-> +	status = "okay";
-> +};
-> +
->  &usb_1 {
->  	status = "okay";
->  };
-> --
-> 2.17.1
-> 
+> Konrad
 
 -- 
 மணிவண்ணன் சதாசிவம்
