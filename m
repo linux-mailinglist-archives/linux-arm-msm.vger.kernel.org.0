@@ -2,152 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 468A07B0262
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 13:06:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 345137B028D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 13:15:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231143AbjI0LGC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Sep 2023 07:06:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45986 "EHLO
+        id S231366AbjI0LPw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Sep 2023 07:15:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230401AbjI0LGB (ORCPT
+        with ESMTP id S231365AbjI0LPv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Sep 2023 07:06:01 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC91013A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 04:05:59 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-9b281a2aa94so785177666b.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 04:05:59 -0700 (PDT)
+        Wed, 27 Sep 2023 07:15:51 -0400
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF4D513A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 04:15:49 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id d2e1a72fcca58-690bccb0d8aso8439484b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 04:15:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695812758; x=1696417558; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=X4MNJypFjWhOXg+vjR8/6N1m0XwqdwpdrXf8qtp+Kfc=;
-        b=vnrBHK8OmUxcdByFT+xxVfqd1hvUD0uDHkLefXQ/ow9eygvUHT16ACmSmr9cwgFSiO
-         ABM4JKbGpr/XsM2q84d/3nivrkNKGmKAi4t/WVxoBe0tKOfxC12ePLmU6HafkaVhx3II
-         GK7Eri5QMzrTecIcHFV4/cvK4+mNFEhkBOafU/ZCxgEQneF4Sbz2fwTjh5HJs6X1fYcy
-         MLkP3dE0jDiCHcyhtrFSAuHSaPMn/mVN+rZ9fuXJPwFHOhBZg8zdkQKC87wuGJ9mAXG6
-         NWcGqxCbPAx2GBXn4g43kRQkVjBN0ubhlsH9xbJBUP6XwYO30wKHltIsw5fFshHYb5EU
-         RW+g==
+        d=linaro.org; s=google; t=1695813349; x=1696418149; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=7ILQTIya7HcBL5OZKx6dzjYAup4yveW1HKg0YsYZucU=;
+        b=nSzohTHczpdag7naXoE2adPHh/Xn9NhSJno4hgEJwib6XGti0U5R4lKRj4K4UQvOve
+         LxI1ZP7cyshbq5vk81dcylZmz/IBP9dHa9o94q50SPUABCLEcGLcwSayf6Ce4SLbfb3E
+         M0xpZ4I5JDMZnvZfFIrZlYlEE6Hqa4TOc4CctbTJBYc8WmhC1hWbePS+bhgz+WNg1afb
+         kmTJUd7qZR3yxPV3x6PSsiYBwdRfa4yIy2+tc4dY/eAwjSrfv431UVqnbyS/FXsZurjm
+         XpkmC8bS2Ttdok+zTmHyU+TL+ZgZH1C/N7LFrV9zuPRYKZgllzUMCbKM3EkkNOFk8fN/
+         8LeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695812758; x=1696417558;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=X4MNJypFjWhOXg+vjR8/6N1m0XwqdwpdrXf8qtp+Kfc=;
-        b=IP4U7AHHt/C/n1Y2RRvCLgSmiLKD4J+/KRofmhfsCKGp6eXb0sUf0s3Ny35IAoIWyU
-         b2fZtgLGMX6Fg3qsJ1Osun80foRWTfhKE7zS3fovMuIMq1BCB9mF3MIx683kCOCmJelH
-         dHR5GsANoUuGeNPJmisSzmQ8PA5XbsSpEdyL9ogP71qYWdG2CwFrYC4JVdVP30l3/rC4
-         oE4Q8zjbSaoZeGZJhC9BLFJonBn6nd93cfJyi41Riaphll3Z028B6DmwCLtkgetXHzA8
-         jj5+iat62eT2x6qr2wA6ed43jnt4DJHeNLPasKr4R9TxuPYo5QP49XqSP6D8Lm8IqiMV
-         fTeg==
-X-Gm-Message-State: AOJu0YzP3DMw6evtYWlNnq3ZjV1euZmnPyqTQhj1T2QXyIE1ty7txE9/
-        NQP5mLqF+FgLPLwi4aoF3vx4KgQ4RXElli8a2eR7SQ==
-X-Google-Smtp-Source: AGHT+IGe5XHS5ZU+n0G4YE9QX62/Daz5mEmdvc2HFNeTQgta0/VGL8VhH3AUp4VGsIwvB6VyUJJ6Ow==
-X-Received: by 2002:a17:907:78d8:b0:9a1:c447:3c62 with SMTP id kv24-20020a17090778d800b009a1c4473c62mr1427055ejc.49.1695812758428;
-        Wed, 27 Sep 2023 04:05:58 -0700 (PDT)
-Received: from [192.168.33.189] (178235177023.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.23])
-        by smtp.gmail.com with ESMTPSA id ey6-20020a1709070b8600b009b2b7333c8bsm421980ejc.81.2023.09.27.04.05.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Sep 2023 04:05:58 -0700 (PDT)
-Message-ID: <354e5b45-468e-4fe6-9646-6b4d9596393a@linaro.org>
-Date:   Wed, 27 Sep 2023 13:05:56 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: sm6375-pdx225: Add USBPHY
- regulators
-Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        d=1e100.net; s=20230601; t=1695813349; x=1696418149;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7ILQTIya7HcBL5OZKx6dzjYAup4yveW1HKg0YsYZucU=;
+        b=erLyDafFC/bz8Xh5VxbLVPsvP7wRpd/woDaVgiK87N9HXP1vF5Dkovnt9Nz/NUbRUn
+         dAg4Dt7ktMYNWunS9tJxVtbU35uPucvdJDAm9G06P6TjIbKhnSRhD1515wrEcuu/UcCU
+         x5Jeg0DMRXvcavkYPnqqMZtaZ2mMwAAp3QjLCRwFr/yTqGAmYSRQSe7fGtT9Ef1j5JY8
+         I4qpfAOhVKD1ftvD//t9ZQxww8jVnr/pZPLrJBD5kVJLh0BwlbpMjYnpqfl7qmV/0Y0i
+         1Xv8p9IcONeU6Ujm65tgFB1DWbOls+4taCOzjyeDHZERLIRVPx3hT01nOMnbr8e95YV/
+         vteg==
+X-Gm-Message-State: AOJu0YxAWmDCs8WMmqpM/wlEb8TsiMpyDhSr/6W+u3DYLomur2raUGHz
+        iTC11T8/E8hhQ+TVrAPc5BE4mg==
+X-Google-Smtp-Source: AGHT+IF+OQNFDztWq/9f7H4m3a5CkvfRLNuyr7Z1Y+kYUGAK9CSyS/G0wHhHEiX+Nc+jvptbD3e6ig==
+X-Received: by 2002:a05:6a20:a11b:b0:15d:facd:f20c with SMTP id q27-20020a056a20a11b00b0015dfacdf20cmr1779519pzk.41.1695813349251;
+        Wed, 27 Sep 2023 04:15:49 -0700 (PDT)
+Received: from localhost ([122.172.81.92])
+        by smtp.gmail.com with ESMTPSA id gk6-20020a17090b118600b00263cca08d95sm3647431pjb.55.2023.09.27.04.15.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Sep 2023 04:15:48 -0700 (PDT)
+Date:   Wed, 27 Sep 2023 16:45:46 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, vireshk@kernel.org,
+        nm@ti.com, sboyd@kernel.org, myungjoo.ham@samsung.com,
+        kyungmin.park@samsung.com, cw00.choi@samsung.com,
+        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        jejb@linux.ibm.com, martin.petersen@oracle.com,
+        alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
+        linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
+        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
+        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
+        bmasney@redhat.com, krzysztof.kozlowski@linaro.org,
         linux-kernel@vger.kernel.org
-References: <20230927-topic-6375_stuff-v1-0-12243e36b45c@linaro.org>
- <20230927-topic-6375_stuff-v1-4-12243e36b45c@linaro.org>
- <8bbdf132-a007-4cb7-b842-a81de7c1629a@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <8bbdf132-a007-4cb7-b842-a81de7c1629a@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v3 5/6] arm64: dts: qcom: sdm845: Add OPP table support
+ to UFSHC
+Message-ID: <20230927111546.uyaod34zcjr7npgf@vireshk-i7>
+References: <20230731163357.49045-1-manivannan.sadhasivam@linaro.org>
+ <20230731163357.49045-6-manivannan.sadhasivam@linaro.org>
+ <04eb9f71-78f0-41f2-96a6-fc759ba296fa@linaro.org>
+ <20230912065918.GB6404@thinkpad>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230912065918.GB6404@thinkpad>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27.09.2023 13:01, Bryan O'Donoghue wrote:
-> On 27/09/2023 10:21, Konrad Dybcio wrote:
->> To make dtbs_check happy and the software more aware of what's going
->> on, describe the HSUSB PHY's regulators and tighten up VDDA_PLL to match.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>   arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts | 7 +++++--
->>   1 file changed, 5 insertions(+), 2 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts b/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
->> index bbec7aee60be..0ce4fa8de8b0 100644
->> --- a/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
->> +++ b/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
->> @@ -243,8 +243,8 @@ pm6125_l6: l6 {
->>           };
->>             pm6125_l7: l7 {
->> -            regulator-min-microvolt = <720000>;
->> -            regulator-max-microvolt = <1050000>;
->> +            regulator-min-microvolt = <880000>;
->> +            regulator-max-microvolt = <880000>;
+On 12-09-23, 12:29, Manivannan Sadhasivam wrote:
+> On Mon, Sep 11, 2023 at 04:15:10PM +0300, Dmitry Baryshkov wrote:
+> > I'd say, I'm still slightly unhappy about the 0 clock rates here.
 > 
-> Where did the old values come from and why are the new values better ?
+> Neither do I. But it is the only viable option I could found.
 > 
-> Consider enumerating that in the commit log.
-That's the pretty standard situation where:
+> > We need only three clocks here: core, core_clk_unipro and optional
+> > ice_core_clk. Can we modify ufshcd_parse_operating_points() to pass only
+> > these two or three clock names to devm_pm_opp_set_config() ? The OPP core
+> > doesn't need to know about all the rest of the clocks.
+> > 
+> 
+> We need to enable/disable all of the clocks, but only need to control the rate
+> for these 3 clocks. So we cannot just use 3 clocks.
+> 
+> If the OPP table has only 3 entries (omitting the gate-only clocks), then we
+> need some hack in the driver to match the rates against the clock entries. Doing
+> so will result in hardcoding the clock info in the driver which I do not want to
+> do.
+> 
+> If we have something like "opp-hz-names" to relate the rates to clock-names, it
+> might do the job. But it needs some input from Viresh.
 
-- downstream defines very loose ranges
-- developer uses these very loose ranges as a guideline
-- some hardware (often the exclusive user of that regulator)
-  has a hidden-ish request of a tighter range
-- the developer realizes that and has to fix up the ranges
+I have already given an option earlier about this [1]. You can change the order
+of clks in the "clock-names" field, so that the first three are the one with
+valid frequencies. You shouldn't need much of the hacks after that I guess.
 
-Konrad
+Or maybe I missed something else now, talked about this a long time ago :)
+
+-- 
+viresh
+[1] https://lore.kernel.org/all/20230713040918.jnf5oqiwymrdnrmq@vireshk-i7/
