@@ -2,79 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BCCCE7B0330
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 13:37:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 829D47B033C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 13:40:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231410AbjI0LhQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Sep 2023 07:37:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42104 "EHLO
+        id S231455AbjI0Lk5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Sep 2023 07:40:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231305AbjI0LhQ (ORCPT
+        with ESMTP id S231409AbjI0Lk4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Sep 2023 07:37:16 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E1A1FC
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 04:37:14 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2bfea381255so183961861fa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 04:37:14 -0700 (PDT)
+        Wed, 27 Sep 2023 07:40:56 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD99C13A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 04:40:54 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-5347e657a11so2580849a12.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 04:40:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695814632; x=1696419432; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695814853; x=1696419653; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ynMxhZsb1RwRjxa41UJyZdRgOe/P995qAEy3Dqy5MkY=;
-        b=FWwolEjYJfSFICYfpQKXmUHuzrPA9KkMm9FEG9No22+E6uKN6JEI6ZX00WJS4W+VcT
-         aXwGO/bOrJ/FbZvsQs0PW8FiWQn4RI9yyumUxJOYBVIazPy+uIyzb7SS6uyCrBuf+L3C
-         SWF6E7fo+mmTStkDtj/PVkRgWoTj0Owi/RVtyAh0MrHKdxLkq9hxwqY8jFG/Lfq3mLtX
-         oFx5KhtGBUgQ+emTRbrW18rDru+X49IFABdWjoKaBDn3b/3oFl2mDf8waixs/EXseO2j
-         OMgOGZFqldPtYfNlkWi6PXxHU9X27/DIPzWk4ctOC7KMioF+dPmS3huVIwRo3MA59Nuq
-         +J0w==
+        bh=GxIR3EO6aP2fK/+9UgrcHthkeV5Bvuqoj4iTIScM8Jo=;
+        b=B5IO8Md65dBvNmflYDE9Z+JQ88AbgH8OkIYFSy7m+NLl2Udmrbnt8GoWweNg30akWT
+         hcYONLNFO/lqdxKSsgcJN2fS8ZZ1lL9nnnUlEQoXPMeBgOw42Yy2l3L5kRbAZz9PjHtG
+         sjdopCXycQQq/K85qKf2XCaEPeJEdEW7DipfUTm7jGvcqtVcXa+DkHdzZplZQOj3IOeg
+         agYjq5xAzo6ILqG4l5MniDLmccVPPI33W+he9TgrynKeOWWRZVnvxRvQDj9slxDoikqq
+         RcjZFtLWIWU428kt4cWyWESGM8Aukq0WsnsvxjFGxbzxQH1rA/5fspdWenrDkKt7hrii
+         L7Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695814632; x=1696419432;
+        d=1e100.net; s=20230601; t=1695814853; x=1696419653;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ynMxhZsb1RwRjxa41UJyZdRgOe/P995qAEy3Dqy5MkY=;
-        b=EqS/EHJZdJYDmzKqVaxASHATRgR6ywQOs+Iu7GojwIepJ//4AtkNaaaalA6RvVvret
-         DEGejuB+7cV+YHEWW0jIRwBZA18Kj/UiVyjAug8M+6D9dYC3ymjnSuIWeDNetNtaVCpP
-         6JWsR3vcjzxrm4W1Y77pVLQ/qKYiZwJe/tR83FHzyHjEeqpXwXYkY5ao5y0a2aAVq9dm
-         Pm9+sdYoHCHyoZo8jEueaRR/WhemuXjSSnfyCcpAHEQw+Ygdx3Wegb8tFjFxy2673CUq
-         lns7IBXVYn7x9GtMrKx5vyk232oKeDIYWkR8O6+LoGhHvqpHlZY2sMmD/Jmri5KXyYeh
-         2+7g==
-X-Gm-Message-State: AOJu0YywXGOo6GYohbb+bTo62beiXQyOSG5IZEKA4PDceN/qnwUNoodR
-        s+uWO8YJvT8ZQ0/5U+iWx+kaew==
-X-Google-Smtp-Source: AGHT+IGX5f/NUoo8Wnq48GpJV1v4/emZ/q+GTGAZ70lhETKv/NS91G/JT0UietmK1rOhk6FJ8mmE+g==
-X-Received: by 2002:a2e:9cc2:0:b0:2bd:19c5:3950 with SMTP id g2-20020a2e9cc2000000b002bd19c53950mr1825623ljj.33.1695814632257;
-        Wed, 27 Sep 2023 04:37:12 -0700 (PDT)
+        bh=GxIR3EO6aP2fK/+9UgrcHthkeV5Bvuqoj4iTIScM8Jo=;
+        b=UvmT1UGpD5wQuBob0m8UPRMRkE4tU6l6i5sjIayABqcA6vPzPn84ELu0rvl56SA8X8
+         f2pH/3h0qE9pTgy3E9yEf3dnlwEFYajNogbKXr4CepCGQsVJT4ZAzuFGTsOQcP3C+eta
+         n0PKfUONRpbEKJMR6dCtjfOuMGXR1GxSg8RnsR6nMZZ7f8P+GIfyrP6A0yMXmvVVSbHF
+         +Yoih5mvyl5bkMTipBLDrxVuqIueFM/JMLbgY08af3raNp6O04GsAaDLXQdWOTwWFaKc
+         Udi4psRFTW+4c7GNE7NfRXu3NDrwkmLvSRorYEpUYV8DD6opI+VO7xNVzFFZQ2eBhGkX
+         O5LA==
+X-Gm-Message-State: AOJu0YwApyHFuUAkxVms9pY+KNxne/1/H0Ed/Jpd/QbcUDk2kRdCwVIz
+        xMCRhEGtHxl9LCbKzk9qowSRJQ==
+X-Google-Smtp-Source: AGHT+IFxtNBQUKXcnlNppuZs8Xdyd86OoDEAtuanVddwZ5SqZfpvcCCeQW9hKBkzcqdxI6kE+xebCA==
+X-Received: by 2002:a17:906:738b:b0:9ae:3435:ad45 with SMTP id f11-20020a170906738b00b009ae3435ad45mr1421170ejl.76.1695814853182;
+        Wed, 27 Sep 2023 04:40:53 -0700 (PDT)
 Received: from [192.168.33.189] (178235177023.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.23])
-        by smtp.gmail.com with ESMTPSA id md1-20020a170906ae8100b009ad8acac02asm9234029ejb.172.2023.09.27.04.37.10
+        by smtp.gmail.com with ESMTPSA id ep14-20020a1709069b4e00b009a168ab6ee2sm8591168ejc.164.2023.09.27.04.40.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Sep 2023 04:37:11 -0700 (PDT)
-Message-ID: <093d1c77-0a76-4f72-80d8-ffb9f9d09cf9@linaro.org>
-Date:   Wed, 27 Sep 2023 13:37:09 +0200
+        Wed, 27 Sep 2023 04:40:52 -0700 (PDT)
+Message-ID: <96c1e8b9-6e77-435f-8a65-b7d92fd5aae2@linaro.org>
+Date:   Wed, 27 Sep 2023 13:40:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RESEND v3 0/5] PM: domains: Add control for switching back and
- forth to HW control
+Subject: Re: [PATCH V3 2/4] arm64: dts: qcom: sc7280: Add UFS nodes for sc7280
+ soc
 Content-Language: en-US
-To:     Ulf Hansson <ulf.hansson@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     "Rafael J . Wysocki" <rafael@kernel.org>,
-        Kevin Hilman <khilman@kernel.org>, Pavel Machek <pavel@ucw.cz>,
-        Len Brown <len.brown@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@qti.qualcomm.com>, linux-pm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-References: <20230923114950.1697701-1-abel.vesa@linaro.org>
- <CAPDyKFrEgZhPJcYXxxZ=o_VwEi3Dav8ZLBk2vHWNuiqQp8hSZQ@mail.gmail.com>
+To:     Nitin Rawat <quic_nitirawa@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, mani@kernel.org, alim.akhtar@samsung.com,
+        bvanassche@acm.org, avri.altman@wdc.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        cros-qcom-dts-watchers@chromium.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20230927081858.15961-1-quic_nitirawa@quicinc.com>
+ <20230927081858.15961-3-quic_nitirawa@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -111,7 +102,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <CAPDyKFrEgZhPJcYXxxZ=o_VwEi3Dav8ZLBk2vHWNuiqQp8hSZQ@mail.gmail.com>
+In-Reply-To: <20230927081858.15961-3-quic_nitirawa@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -124,45 +115,12 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27.09.2023 13:32, Ulf Hansson wrote:
-> On Sat, 23 Sept 2023 at 13:49, Abel Vesa <abel.vesa@linaro.org> wrote:
->>
->> This is just a resend of v3:
->> https://lore.kernel.org/lkml/20230823114528.3677667-1-abel.vesa@linaro.org/
->>
->> Just added Ulf's R-b tag to the 2nd patch. No other changes.
->>
->> Abel Vesa (1):
->>   PM: domains: Add the domain HW-managed mode to the summary
->>
->> Jagadeesh Kona (3):
->>   clk: qcom: gdsc: Add set and get hwmode callbacks to switch GDSC mode
->>   clk: qcom: Use HW_CTRL_TRIGGER flag to switch video GDSC to HW mode
->>   venus: pm_helpers: Use dev_pm_genpd_set_hwmode to switch GDSC mode
->>
->> Ulf Hansson (1):
->>   PM: domains: Allow devices attached to genpd to be managed by HW
->>
->>  drivers/base/power/domain.c                   | 84 ++++++++++++++++++-
->>  drivers/clk/qcom/gdsc.c                       | 32 +++++++
->>  drivers/clk/qcom/gdsc.h                       |  1 +
->>  drivers/clk/qcom/videocc-sc7180.c             |  2 +-
->>  drivers/clk/qcom/videocc-sc7280.c             |  2 +-
->>  drivers/clk/qcom/videocc-sdm845.c             |  4 +-
->>  drivers/clk/qcom/videocc-sm8250.c             |  4 +-
->>  drivers/clk/qcom/videocc-sm8550.c             |  4 +-
->>  drivers/media/platform/qcom/venus/core.c      |  4 +
->>  drivers/media/platform/qcom/venus/core.h      |  1 +
->>  .../media/platform/qcom/venus/pm_helpers.c    | 47 +++++------
->>  include/linux/pm_domain.h                     | 17 ++++
->>  12 files changed, 165 insertions(+), 37 deletions(-)
->>
+On 27.09.2023 10:18, Nitin Rawat wrote:
+> Add UFS host controller and PHY nodes for sc7280 soc.
 > 
-> It looks like we need a plan for what tree to route this through. Or
-> if we should use more than one tree. Bjorn, Stephen, thoughts?
-+CC Vikash, Dikshita, Stan
-
-The venus patch should also be taken with the rest, I guess
-taking everything through qcom would make sense
+> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Tested-by: Konrad Dybcio <konrad.dybcio@linaro.org> # QCM6490 FP5
 
 Konrad
