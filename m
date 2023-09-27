@@ -2,80 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C2B9D7AFFCA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 11:22:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E75657AFFD9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 11:25:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230417AbjI0JWB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Sep 2023 05:22:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44144 "EHLO
+        id S230306AbjI0JZN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Sep 2023 05:25:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230402AbjI0JV7 (ORCPT
+        with ESMTP id S230304AbjI0JZL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Sep 2023 05:21:59 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3138DDE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 02:21:56 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-9b2a3fd5764so399461966b.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 02:21:56 -0700 (PDT)
+        Wed, 27 Sep 2023 05:25:11 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E127612A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 02:25:09 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2c16757987fso90400891fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 02:25:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695806515; x=1696411315; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TWm1kTvALKqdp6UrH/Oz1h9cS//ES9dxbJ1u6BdZbf0=;
-        b=aYm77+pgt9sRW24bzYX6DSPiLTVr/ZKs3rbG1pFv3rcr0Kqu5LnPgjynRKQ338EK07
-         M2hq85dZ5sqkyrz7wzm6t5O671jtdNHOR/SB1A6to46YHNLSg/uj/hJv307bkdlDeWog
-         apPoaresBhc2zcDOHpbjnBNj04pZyyoaLRKgNriov9m2g3Z/6ulxDk5+Zv05JljRWm90
-         +cJplgYhuDrEMKzeYlZhV6S2aNGd03ZVII14GSBgVGH1PclA+xpYi9/R/7QPG80/7vzp
-         xRdUsn4bWQPS5oVVNiYlpdf/So0s94RW3sU/5rJU2mX4VO0wVkVz2sy+aRtjwpUHSXDf
-         4R1g==
+        d=linaro.org; s=google; t=1695806708; x=1696411508; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Tx78fQ268fCCK112gQHRLPlPwlRrUAegvp0thTyf+O0=;
+        b=ytFTP/shvGPjo2aegje8dGrAaJ3ashrHJGXeAE96bFLbc/YObtgGLGRE14oQifF8vU
+         Upt86USnQBXJaJp8/mVqkLYEmTIGy58rtwHG2S+Ly5xTasutB34q0TLE9532qQf3jJCH
+         l5+UBiFD2qr0Aw4+n5kh8YQ+qrOOy5cXxcwoY5Yyg2BPoENr2W3wQr1a8/cEqSeDnMv5
+         lBceLjQxaiGVrkihsmnzpp+gVffGrrIQQTMITxFHqeufLpm4yemqPoeHe1P3EF4Qjyiw
+         45f+T/FKffKss347OKUqPdFKug27ZTaT+w67TjRWf4QcEKyyXwfYtn1Ur7g4VqLOreYJ
+         HvRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695806515; x=1696411315;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=TWm1kTvALKqdp6UrH/Oz1h9cS//ES9dxbJ1u6BdZbf0=;
-        b=DAoK0D6nzHJtgkSfbyVobIsfCT1n2+xRnkTf5poG+w4/Ku38VSK6cq/ruspkhm4mwR
-         BibKGaEBt4j61EpXog5q8fWbktR/pbetIqV5ClEdIdvq/hxqQMonQiRS+GqjAhhApvQe
-         VI8lRqVGwAJeEMN3vovBfpx6msz1yecID4XV/Li/5b/g7B9fm3dMGo1FJ3MUqmma213L
-         cmo/tYTYMO2iKy4XfIws8NltQZW47PQXxZUYfI2d/cdPiTScj+uQtFTI7GNhOttr8win
-         q6nfurjaEujetz7QkbDPzOp81jEP2dRuUpJEGtPE2vFYn2yX0ZFaaNiBAUwhpwW11eL7
-         PgLg==
-X-Gm-Message-State: AOJu0Yy8zuEjuddVdMHAhM1s3f4fwM4NFi5/Hj+F2fKR4PyHML+rEzRX
-        bxjpmsBiNXbYJ/4U+DaKTISLhg==
-X-Google-Smtp-Source: AGHT+IGuhunRQjEcowCkdHaMAAcBPnbycL1eQFuP09gaEtEPVWkMveTm1Vx4nab6bUsiXM7tdLsg7A==
-X-Received: by 2002:a17:907:25ca:b0:9ae:3a60:570a with SMTP id ae10-20020a17090725ca00b009ae3a60570amr1474637ejc.18.1695806515299;
-        Wed, 27 Sep 2023 02:21:55 -0700 (PDT)
-Received: from [10.167.154.1] (178235177023.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.23])
-        by smtp.gmail.com with ESMTPSA id qq23-20020a17090720d700b00993664a9987sm8948574ejb.103.2023.09.27.02.21.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Sep 2023 02:21:55 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 27 Sep 2023 11:21:43 +0200
-Subject: [PATCH 4/4] arm64: dts: qcom: sm6375-pdx225: Add USBPHY regulators
+        d=1e100.net; s=20230601; t=1695806708; x=1696411508;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Tx78fQ268fCCK112gQHRLPlPwlRrUAegvp0thTyf+O0=;
+        b=N1Ju609LmIftiYu3kPF1AlP9B5BSRbQPviBSZj+7E3O2jMQICiqi63tpyLJz7WMn48
+         nMaKfJuA+z9ry2BWf2d//R6F4usS7PwMkuj+cpQMJAYBAerUtHg1HugvFhlydh3pdP+/
+         R8Twsr7UgwIElT47jv8MU0lviuFP1Cus/Gm5WBtkyM45jIf+6vxH8zY4oKTz8Xs83EHE
+         3DJhaRn/uG3/ON6+5AhV6qWDtNDF9t61nV4E/FfO0y4dlOOKtDcKD9ts9Mndhuu9yQYD
+         TLvYu7Btu+0hSbHAzZN6GagVetBG44t74fCD1WRXmkQ2dKkYZvlp1QX5SJG6Q8jXED9n
+         /ODw==
+X-Gm-Message-State: AOJu0YxVSN3ktBFQMLDeEytcc65lPTrZw0v4qf8leVOPJoPe2VSWm3ut
+        M+ymbS1/t0Q2nMBwZ2AxmX37Mg==
+X-Google-Smtp-Source: AGHT+IEQl8OWG1dKPh3/PDyouqW/3rBJ3LrvEdck5K0sQLWyR43DO7tYzx485e2tzfLp+C7KdL6BMQ==
+X-Received: by 2002:a2e:9815:0:b0:2c0:34ed:b5ea with SMTP id a21-20020a2e9815000000b002c034edb5eamr1271078ljj.45.1695806708061;
+        Wed, 27 Sep 2023 02:25:08 -0700 (PDT)
+Received: from [192.168.33.189] (178235177023.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.23])
+        by smtp.gmail.com with ESMTPSA id u23-20020a17090617d700b00993a9a951fasm9161055eje.11.2023.09.27.02.25.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Sep 2023 02:25:07 -0700 (PDT)
+Message-ID: <b5146a7f-91b6-480c-b61a-514a365dc41d@linaro.org>
+Date:   Wed, 27 Sep 2023 11:25:05 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 3/4] arm64: dts: qcom: sc7280: Add UFS nodes for sc7280
+ IDP board
+To:     Nitin Rawat <quic_nitirawa@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, mani@kernel.org, alim.akhtar@samsung.com,
+        bvanassche@acm.org, avri.altman@wdc.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        cros-qcom-dts-watchers@chromium.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20230927081858.15961-1-quic_nitirawa@quicinc.com>
+ <20230927081858.15961-4-quic_nitirawa@quicinc.com>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230927081858.15961-4-quic_nitirawa@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230927-topic-6375_stuff-v1-4-12243e36b45c@linaro.org>
-References: <20230927-topic-6375_stuff-v1-0-12243e36b45c@linaro.org>
-In-Reply-To: <20230927-topic-6375_stuff-v1-0-12243e36b45c@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1695806508; l=1124;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=kfCuRxKJPakhy+dYlGoAXo1GkhMTh9kKuB4nSV7OqPc=;
- b=FuuOXXR8da7l+sqQespL/53ZTFiJLfX0apJEbsmRKQvBt3KRNjOex63DWBneGsx5rHUmRe2w0
- HzhTEyMSqe9AnEsXtuECV+oBhyDJ0y7j7aI491pxM6ZHl0ZxXbZgERg
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -86,40 +116,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-To make dtbs_check happy and the software more aware of what's going
-on, describe the HSUSB PHY's regulators and tighten up VDDA_PLL to match.
+On 27.09.2023 10:18, Nitin Rawat wrote:
+> Add UFS host controller and PHY nodes for sc7280 IDP board.
+> 
+> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> index 2ff549f4dc7a..a0059527d9e4 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> @@ -499,6 +499,25 @@
+>  	status = "okay";
+>  };
+> 
+> +&ufs_mem_hc {
+> +	reset-gpios = <&tlmm 175 GPIO_ACTIVE_LOW>;
+> +	vcc-supply = <&vreg_l7b_2p9>;
+> +	vcc-max-microamp = <800000>;
+> +	vccq-supply = <&vreg_l9b_1p2>;
+> +	vccq-max-microamp = <900000>;
+> +	vccq2-supply = <&vreg_l9b_1p2>;
+> +	vccq2-max-microamp = <900000>;
+Were you able to confirm it's correct (see the q in [1])
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+Konrad
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts b/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
-index bbec7aee60be..0ce4fa8de8b0 100644
---- a/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
-+++ b/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
-@@ -243,8 +243,8 @@ pm6125_l6: l6 {
- 		};
- 
- 		pm6125_l7: l7 {
--			regulator-min-microvolt = <720000>;
--			regulator-max-microvolt = <1050000>;
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <880000>;
- 		};
- 
- 		pm6125_l8: l8 {
-@@ -430,6 +430,9 @@ &usb_1_dwc3 {
- };
- 
- &usb_1_hsphy {
-+	vdda-pll-supply = <&pm6125_l7>;
-+	vdda18-supply = <&pm6125_l10>;
-+	vdda33-supply = <&pmr735a_l7>;
- 	status = "okay";
- };
- 
-
--- 
-2.42.0
-
+[1] https://lore.kernel.org/linux-arm-msm/20230926162042.14180-1-quic_nitirawa@quicinc.com/T/#m72ca82a9145af380ffd37415455d6ef3d4195795
