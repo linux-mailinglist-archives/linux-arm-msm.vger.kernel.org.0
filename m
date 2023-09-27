@@ -2,69 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B8E07B022B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 12:48:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 41A7F7B022F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 12:50:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229543AbjI0KsQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Sep 2023 06:48:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44530 "EHLO
+        id S229543AbjI0Kug (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Sep 2023 06:50:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230510AbjI0KsO (ORCPT
+        with ESMTP id S230057AbjI0Kuf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Sep 2023 06:48:14 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A7A7139
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 03:48:13 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-99c3c8adb27so1386924066b.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 03:48:13 -0700 (PDT)
+        Wed, 27 Sep 2023 06:50:35 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 890A8194
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 03:50:33 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-534848725e8so2310182a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 03:50:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695811692; x=1696416492; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695811832; x=1696416632; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=hgYtHaJmWbG/l/mQSkduAi/lldsxlVfqeTOi4f5g8SI=;
-        b=w8RPAH/T5DAj/QLxqBViR0NnnAJzzL6MMOR2a7GPSNdbS/6BB/8JyYUEtb1G+odh1C
-         ngveOxU2cOqQTWIYZKWPGW2EbbWvx8+XnCuA6oqIOlUJQ2Lz4l1U5YYQI8RnVTp/GxMu
-         qINKFMIrl/+H6pv8G0FCmhF2+S4YSau+GjKKmPZGnagsBa6sKARJC4x0WLfOVkLxcdpF
-         UUZTtlcLcRL/v+b8v9Z9ebfyKysl8LOikAM5DiRSThKkjpAHPaPiXq+8+relOAOTIdRA
-         k9aU4eAisa7DCLt6T/m8hNaW42vqFk9GwClbTYxU+Dc+bkwzk3di6P05o5rbdTXL9sim
-         BceQ==
+        bh=BcZwty3YwKXMNp2kaCQvwRNl/V3x5eEkhxHVuvITMA0=;
+        b=AUxIQfo8XwQf5b2IU3HMUpdWjMxoVougKzohWqwpZstmQ+LJezcZEzuWDIvxDu7jPg
+         cRqep9SZD49L4liBkT9SWEH9kAApIvWTpS39FAAdGlW29YubgzkI8Bh3E1fzKRk+wOCG
+         vcwr9HXdDrPMhjxuhCQ9dvc9Z5KM40JWFXnDyfQOgRCJ02BZSIvQcvi1q4XggWCMqL+w
+         ZJhnJk/mmflCrQgO+aMnorlaGnmoLr6F1LsTiyaiDp128tF8YfR9EEPoYQnwz4aizP+e
+         hUHunTs4h9ft53iDzp7ZxYXF14/Zsliy7eE+MWHOUs99G1uZJsuD7BtZotB79xg3tU0p
+         hp2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695811692; x=1696416492;
+        d=1e100.net; s=20230601; t=1695811832; x=1696416632;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hgYtHaJmWbG/l/mQSkduAi/lldsxlVfqeTOi4f5g8SI=;
-        b=DDQXk94n6WsbZPABXfe7Bx/+DPcbg08FelPUpsjvtup164L9gEBVidJmv5fCgngtx0
-         gjOlrmyzxOtNfcsnoPHxGhfBxLItB6l1vpk3lBTYmSfkSe3bkLF0vpqlRQj4ff5VN/8V
-         3G5qraLCQwTVWe6es1uGzfwTnyN7VAZchiXr2SL+bRd9X91VXNlIedQTDkVyHD4Rgq4/
-         R812bOg7gbiQSdPxo9wfcj3Xm82gsCNeMq9ZJQ53Ut+h20oJhbwOiW0L0l8HylVypUPD
-         1pAHx9V1FpjUDhr7XHm8J/ouURwnPGYQjj/9DOcoXjLrioXx5qfeBOp/l7Gtf0NCmwkE
-         GfBA==
-X-Gm-Message-State: AOJu0Yw38u/1M2kn4mfG2kuMLGUVUWf8Tzn6Iqt6EPnGXqiCl4GPe5mg
-        jW8v2AOCpaCuiBQ6DfC7pBWRzw==
-X-Google-Smtp-Source: AGHT+IHWOcLosFxEUUGzC06Wi0710O90AgroQ05CZ7Q1zNBshuuuM1xgDQWhYjeilX2YeqyXTdPKWA==
-X-Received: by 2002:a17:906:76d1:b0:9a2:40e:2caf with SMTP id q17-20020a17090676d100b009a2040e2cafmr1440228ejn.13.1695811691865;
-        Wed, 27 Sep 2023 03:48:11 -0700 (PDT)
+        bh=BcZwty3YwKXMNp2kaCQvwRNl/V3x5eEkhxHVuvITMA0=;
+        b=GqcueKrUfjU7Tuwq6IK1fDELIRkZAHOjLwZIXn/ZQPTLX6l+E9sUM3Ja/ipdhSkBIs
+         7OkJRNzb0eNorJnka5oFmv92paToB3AzI0j90RORPfTgG1koyYs9H6zMDJhW4b7sZyg5
+         wP1384sG2seNylGWlMj6vJqtw/yyp+2W8/bpuh0XsxmBLONAno0yClESG7sMRbftVtUL
+         V0IGJroSup5pQpvwCyPIoR7aYuNT1eFmy+cy4zn/hM5D3hsw7WvuRnfr42CviYw66Xl1
+         /WRnWvmwYOl+9JLCFMOFR7/M3Zc2Dfx2B/96MpDWWfZlPucCMKx+5+6Yt3k5kdp0SjNR
+         Wo2w==
+X-Gm-Message-State: AOJu0YxEge1fxAeHMm9IdFZhJmDVSsS5yMnS34f3bXFGkPvMJg+GL/oG
+        MMRNmgv1k1arM7zrQnnwt4wgfQ==
+X-Google-Smtp-Source: AGHT+IGUq/BYy543S0FfnecrLfwf3mygukChFBYkop7PfCIKMlcjBeO+5A58iVIZsNaWTTrq/zlVDA==
+X-Received: by 2002:a05:6402:759:b0:530:c536:443 with SMTP id p25-20020a056402075900b00530c5360443mr1705055edy.1.1695811832000;
+        Wed, 27 Sep 2023 03:50:32 -0700 (PDT)
 Received: from [192.168.33.189] (178235177023.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.23])
-        by smtp.gmail.com with ESMTPSA id k5-20020a1709062a4500b009934b1eb577sm9212009eje.77.2023.09.27.03.48.10
+        by smtp.gmail.com with ESMTPSA id r21-20020aa7c155000000b005227e53cec2sm8039228edp.50.2023.09.27.03.50.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Sep 2023 03:48:11 -0700 (PDT)
-Message-ID: <cce67898-9caf-4898-9dfe-5374d66c3477@linaro.org>
-Date:   Wed, 27 Sep 2023 12:48:10 +0200
+        Wed, 27 Sep 2023 03:50:31 -0700 (PDT)
+Message-ID: <08febf5f-c0a1-48f1-a017-32b28857a6d8@linaro.org>
+Date:   Wed, 27 Sep 2023 12:50:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sdx75-idp: Enable USB3 and PHY
- support
+Subject: Re: [PATCH v2 2/2] pmdomain: qcom: rpmhpd: Add support for SM7150
+ rpmh clocks
 Content-Language: en-US
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
+To:     Danila Tikhonov <danila@jiaxyga.com>, agross@kernel.org,
         andersson@kernel.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        dmitry.baryshkov@linaro.org
+        ulf.hansson@linaro.org
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1695720564-2978-1-git-send-email-quic_rohiagar@quicinc.com>
- <1695720564-2978-4-git-send-email-quic_rohiagar@quicinc.com>
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+References: <20230916175952.178611-1-danila@jiaxyga.com>
+ <20230916175952.178611-3-danila@jiaxyga.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -101,7 +101,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <1695720564-2978-4-git-send-email-quic_rohiagar@quicinc.com>
+In-Reply-To: <20230916175952.178611-3-danila@jiaxyga.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -114,11 +114,10 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26.09.2023 11:29, Rohit Agarwal wrote:
-> Enable the support for USB3 controller, QMP PHY and HS PHY
-> on SDX75 IDP.
+On 16.09.2023 19:59, Danila Tikhonov wrote:
+> This adds the RPMH clocks present in SM7150 SoC.
 > 
-> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
