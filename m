@@ -2,107 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 41A7F7B022F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 12:50:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 546A57B0249
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 12:59:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229543AbjI0Kug (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Sep 2023 06:50:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56764 "EHLO
+        id S231240AbjI0K7x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Sep 2023 06:59:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230057AbjI0Kuf (ORCPT
+        with ESMTP id S231158AbjI0K7w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Sep 2023 06:50:35 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 890A8194
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 03:50:33 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-534848725e8so2310182a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 03:50:33 -0700 (PDT)
+        Wed, 27 Sep 2023 06:59:52 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31045194
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 03:59:50 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-40594697600so57397565e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 03:59:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695811832; x=1696416632; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1695812388; x=1696417188; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=BcZwty3YwKXMNp2kaCQvwRNl/V3x5eEkhxHVuvITMA0=;
-        b=AUxIQfo8XwQf5b2IU3HMUpdWjMxoVougKzohWqwpZstmQ+LJezcZEzuWDIvxDu7jPg
-         cRqep9SZD49L4liBkT9SWEH9kAApIvWTpS39FAAdGlW29YubgzkI8Bh3E1fzKRk+wOCG
-         vcwr9HXdDrPMhjxuhCQ9dvc9Z5KM40JWFXnDyfQOgRCJ02BZSIvQcvi1q4XggWCMqL+w
-         ZJhnJk/mmflCrQgO+aMnorlaGnmoLr6F1LsTiyaiDp128tF8YfR9EEPoYQnwz4aizP+e
-         hUHunTs4h9ft53iDzp7ZxYXF14/Zsliy7eE+MWHOUs99G1uZJsuD7BtZotB79xg3tU0p
-         hp2g==
+        bh=IWg5TiNW1Dws0r0H6VHI8s8vbhc7ehxun/IKO0phH0Y=;
+        b=ztCHOP7O6ndfRucAyWcGFFtW/OD19VIZcg4K2Byr1Uc+GzrlkS8a1fp5Et5zs3vz0u
+         /woZeMS+Pop2neTfqe0VM/j0UtPydkFJo7RftnZtI5io61NJuYBGWyK6kH+A/w4hqi/d
+         /T6Y9cUJrWyAcmmiDdtDPCm8ASkTMI7duMDi2JBRwMF96iCF/Aw1nu17nbOybod6eL83
+         T9+gIdxNaWcDypN9RZlDkSr1zHYVgGl2CnWQOUDdAsbpHXDKD5i0lBKHl7osekZmiFJh
+         fsXskhtxLGr2JxrJjpPFcEO7pTrrp1J+5vuzT9Ce+jTpUGUaaeJnkhVd5PAkhK7Kxc/O
+         XYlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695811832; x=1696416632;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1695812388; x=1696417188;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BcZwty3YwKXMNp2kaCQvwRNl/V3x5eEkhxHVuvITMA0=;
-        b=GqcueKrUfjU7Tuwq6IK1fDELIRkZAHOjLwZIXn/ZQPTLX6l+E9sUM3Ja/ipdhSkBIs
-         7OkJRNzb0eNorJnka5oFmv92paToB3AzI0j90RORPfTgG1koyYs9H6zMDJhW4b7sZyg5
-         wP1384sG2seNylGWlMj6vJqtw/yyp+2W8/bpuh0XsxmBLONAno0yClESG7sMRbftVtUL
-         V0IGJroSup5pQpvwCyPIoR7aYuNT1eFmy+cy4zn/hM5D3hsw7WvuRnfr42CviYw66Xl1
-         /WRnWvmwYOl+9JLCFMOFR7/M3Zc2Dfx2B/96MpDWWfZlPucCMKx+5+6Yt3k5kdp0SjNR
-         Wo2w==
-X-Gm-Message-State: AOJu0YxEge1fxAeHMm9IdFZhJmDVSsS5yMnS34f3bXFGkPvMJg+GL/oG
-        MMRNmgv1k1arM7zrQnnwt4wgfQ==
-X-Google-Smtp-Source: AGHT+IGUq/BYy543S0FfnecrLfwf3mygukChFBYkop7PfCIKMlcjBeO+5A58iVIZsNaWTTrq/zlVDA==
-X-Received: by 2002:a05:6402:759:b0:530:c536:443 with SMTP id p25-20020a056402075900b00530c5360443mr1705055edy.1.1695811832000;
-        Wed, 27 Sep 2023 03:50:32 -0700 (PDT)
-Received: from [192.168.33.189] (178235177023.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.23])
-        by smtp.gmail.com with ESMTPSA id r21-20020aa7c155000000b005227e53cec2sm8039228edp.50.2023.09.27.03.50.29
+        bh=IWg5TiNW1Dws0r0H6VHI8s8vbhc7ehxun/IKO0phH0Y=;
+        b=VtvFkm18gsE27dgA+I78o+6cu3JsZds/KMmhlsPmqsE8urM3NbZBKTb/9ZKM8KVRYF
+         b8N9EbfTyUnugdJyxcTlZkT0LMuwaWyGi5RfNvskKqEb5NqbbLeE8TTWPxKWnGwuzhEZ
+         shyd9iePWG74MQb+FVuxX29eIBeps1LyBjdH7pcOXfwh09mawGJIdlL1pO0Iz/EyVeqv
+         kWGsFoZY4jXlhnr6nx6yFSivsNNDlQ5EGypNHPDgUP/pwwxFartFbNRj1VUWb+t64bzA
+         OkSHWw7L6kEXlHYeAwKDCKiBwfm9OAuBXaSeYQU8PXS2ILHXEhphWmca69HENgmSQEsG
+         XTNg==
+X-Gm-Message-State: AOJu0YziXcX/4CbC31xKQtrSQyeWURGPwI3SYPY9bCWSQo01vz3dfcAT
+        mqy6pCzX3OANtvTmIZeA4ZP8xA==
+X-Google-Smtp-Source: AGHT+IElOxv/ufPOyKieeHDHmlR/WUO2h7LLzGfcWwjtp2J6oQ+ov6B97LkCHZFhfopbeNWJkDMySw==
+X-Received: by 2002:a7b:ca4d:0:b0:405:359e:ee43 with SMTP id m13-20020a7bca4d000000b00405359eee43mr1694856wml.1.1695812388513;
+        Wed, 27 Sep 2023 03:59:48 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id p19-20020a05600c1d9300b0040531f5c51asm17650473wms.5.2023.09.27.03.59.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Sep 2023 03:50:31 -0700 (PDT)
-Message-ID: <08febf5f-c0a1-48f1-a017-32b28857a6d8@linaro.org>
-Date:   Wed, 27 Sep 2023 12:50:28 +0200
+        Wed, 27 Sep 2023 03:59:48 -0700 (PDT)
+Message-ID: <7f4f3e06-af20-4276-bcb9-6ad7acbf9c35@linaro.org>
+Date:   Wed, 27 Sep 2023 11:59:47 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] pmdomain: qcom: rpmhpd: Add support for SM7150
- rpmh clocks
+Subject: Re: [PATCH 1/4] arm64: dts: qcom: sm6375: Add UART1
 Content-Language: en-US
-To:     Danila Tikhonov <danila@jiaxyga.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        ulf.hansson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-References: <20230916175952.178611-1-danila@jiaxyga.com>
- <20230916175952.178611-3-danila@jiaxyga.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230916175952.178611-3-danila@jiaxyga.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230927-topic-6375_stuff-v1-0-12243e36b45c@linaro.org>
+ <20230927-topic-6375_stuff-v1-1-12243e36b45c@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20230927-topic-6375_stuff-v1-1-12243e36b45c@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
@@ -114,11 +81,80 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16.09.2023 19:59, Danila Tikhonov wrote:
-> This adds the RPMH clocks present in SM7150 SoC.
+On 27/09/2023 10:21, Konrad Dybcio wrote:
+> Add UART1 node, generally used for the Bluetooth module.
 > 
-> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>   arch/arm64/boot/dts/qcom/sm6375.dtsi | 43 ++++++++++++++++++++++++++++++++++++
+>   1 file changed, 43 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm6375.dtsi b/arch/arm64/boot/dts/qcom/sm6375.dtsi
+> index e7ff55443da7..2fba0e7ea4e6 100644
+> --- a/arch/arm64/boot/dts/qcom/sm6375.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm6375.dtsi
+> @@ -896,6 +896,36 @@ qup_spi0_default: qup-spi0-default-state {
+>   				drive-strength = <6>;
+>   				bias-disable;
+>   			};
+> +
+> +			qup_uart1_default: qup-uart1-default-state {
+> +				cts-pins {
+> +					pins = "gpio61";
+> +					function = "qup01";
+> +					drive-strength = <2>;
+> +					bias-pull-down;
+> +				};
 
-Konrad
+Any particular reason you are doing bias-pull-down here instead of
+
+bias-disable ?
+
+> +
+> +				rts-pins {
+> +					pins = "gpio62";
+> +					function = "qup01";
+> +					drive-strength = <2>;
+> +					bias-disable;
+> +				};
+> +
+> +				tx-pins {
+> +					pins = "gpio63";
+> +					function = "qup01";
+> +					drive-strength = <2>;
+> +					bias-disable;
+> +				};
+> +
+> +				rx-pins {
+> +					pins = "gpio64";
+> +					function = "qup01";
+> +					drive-strength = <2>;
+> +					bias-pull-up;
+> +				};
+> +			};
+>   		};
+>   
+>   		gcc: clock-controller@1400000 {
+> @@ -1111,6 +1141,19 @@ spi1: spi@4a84000 {
+>   				status = "disabled";
+>   			};
+>   
+> +			uart1: serial@4a84000 {
+> +				compatible = "qcom,geni-uart";
+> +				reg = <0x0 0x04a84000 0x0 0x4000>;
+> +				interrupts = <GIC_SPI 328 IRQ_TYPE_LEVEL_HIGH>;
+> +				clocks = <&gcc GCC_QUPV3_WRAP0_S1_CLK>;
+> +				clock-names = "se";
+> +				power-domains = <&rpmpd SM6375_VDDCX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+> +				pinctrl-0 = <&qup_uart1_default>;
+> +				pinctrl-names = "default";
+> +				status = "disabled";
+> +			};
+> +
+>   			i2c2: i2c@4a88000 {
+>   				compatible = "qcom,geni-i2c";
+>   				reg = <0x0 0x04a88000 0x0 0x4000>;
+> 
+
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
