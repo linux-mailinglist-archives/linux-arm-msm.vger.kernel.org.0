@@ -2,76 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 06EA57B04D1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 14:59:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B093D7B04E6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 15:05:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231768AbjI0M66 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Sep 2023 08:58:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57504 "EHLO
+        id S231814AbjI0NFC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Sep 2023 09:05:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231740AbjI0M65 (ORCPT
+        with ESMTP id S231378AbjI0NFB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Sep 2023 08:58:57 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C64110A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 05:58:55 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-4064014bca5so25944325e9.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 05:58:55 -0700 (PDT)
+        Wed, 27 Sep 2023 09:05:01 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31D2C126
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 06:04:59 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-9a648f9d8e3so1476515266b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 06:04:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695819533; x=1696424333; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695819897; x=1696424697; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=XDBxB4K/Dc2f6E7RfsykVyDhFDN+EKOunIZYRlh5xQ4=;
-        b=de8DF/OYG/1kvRnNXKqBqgdjpYtV581zHYAUezl+J0O/u3/ejABPRiEssgkB11Zxn8
-         F6rT4/OkLTevQsjVAI1hSziWqenB843K0P0/+RcES1c2AAhAcSf5rDtlVp5oE7ji9WA7
-         /VuPYKu6KFQLWCOL5FnfX9qSgaBtyHvXa8uXGHNrQukQ0vSmRqIakdgRBODAHCqV5c3W
-         ni5c2q+5M8nQq00xz1xUqC5fst5TH5Y6h8zYa1bpLICpaxrrywzA0USF33ivfhv5Y9SK
-         pV6Q23bcnPK3ep9ZKFc9J8B+SZ/7CrfEQJ32uT9SXfKE+BvQxRFe0Qov9lxxRu/rgUkI
-         UX4g==
+        bh=9pyRPFM/sI4rOWP+tRGMK/egiWElrb+QbrVYo7Uy96U=;
+        b=K5zwiUkznYW0Dkup4+sMUjtwyjdkWBlFOGt9mxLy1bexbUEDWHG79+I41thZL6wL+E
+         k/VRLN6LhHBddV4h+8bDNaE/f2h2e0ho16whPt2Rad/H+t02vmDdRIPl35SdpxtF+QIU
+         FHbZC2pGUzI7xD8jj2Qej05ON7/MSV47mzooKFmLwTojbs0gkky9UMkMhMmpALwgdryo
+         VZE9jagFiqXDy/hM+oUmQNLMhrA2meSH02mmxY4CCNRXngNfFPK9GrGcPPJYpvhfyjpU
+         tHpMB/sal8MNRHEDdK9nXk/QMmW5h/9k4V8eJdPNrktzAqC9rXvU8Z1rM23XpCOUSXYw
+         KJFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695819533; x=1696424333;
+        d=1e100.net; s=20230601; t=1695819897; x=1696424697;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XDBxB4K/Dc2f6E7RfsykVyDhFDN+EKOunIZYRlh5xQ4=;
-        b=VR0ZPcT60JIhdWEQBQYGzPILzyPud31BrPAjd1ArWVuYj2CJvS26WVKzluAsSRgTpC
-         edWH6y0/yKvQW/UPehQ5elMJ0Joyj58VQOrR8pOHymxE1DBijRw/MUoZpnEkq0yODbho
-         ntMpVjARjYIPRK1HR2CrH/fk2lsC1rs5cI8NqJZeyY1o5RULIKU5lF6iRCu5ik+h41B0
-         0Plf/gHxErm1cLTbnUdhav6nwv7+uIzUIKU8b+tJumyIR/ubxcaCNyQJ1O9hi4S1y5qw
-         L0s80Hktr3QEmRVW4nJdqIA72cG2chMrPXNZou3RzAEoxTDP4GjV5EnsV6IQ10KdlECN
-         fHfw==
-X-Gm-Message-State: AOJu0Yx8fzWcOPkqtNnPiq3cMMb5HXRT6MzCWDk5f7QZUW60XG0I6bHS
-        TtdJd/g8dfjuykKkiIX4nndC
-X-Google-Smtp-Source: AGHT+IEDKHA7Ugd7ZSlR7GfH1BkKpWJKecatYW9bH9VwobJzVpJZUVAEALaG7FH/tUYkaetWvZnMow==
-X-Received: by 2002:a1c:7917:0:b0:401:b53e:6c3b with SMTP id l23-20020a1c7917000000b00401b53e6c3bmr1803043wme.6.1695819533523;
-        Wed, 27 Sep 2023 05:58:53 -0700 (PDT)
+        bh=9pyRPFM/sI4rOWP+tRGMK/egiWElrb+QbrVYo7Uy96U=;
+        b=kAePaq46KrDw/Y9FvqGT8z2uQLITpJtfeQ33n2el4vjeCWOLEu3SuDw98HwwCaZGDl
+         0m/hJx2WC6/W9NbiGVpavtWyNWjHbJ7ff/EYbaZv9/ELC9Fokg9PEceSUXOrKhCpNRNu
+         J9MtoxB/oai0PeHNi/R/+mL/F2CPwqNH6uw//VUhcVceHtcMCwD+G3Pj3pr3mXu9e/L8
+         5n73kBg7p/sBTzm9g8TCX4MhttPCFBsNlTHrYpJRSZYCyIt0YFcMModJ+vlpfTFPxkOI
+         pmpxohyd7R/2ff9g2DV7/KQGBDTvHd0tZq9si8P/yQiDRBrfLzkCQ1GaSC3/a8dHkD34
+         IW1A==
+X-Gm-Message-State: AOJu0YxPklhpbRSW0embPSyNGkPOtUs50JL1l8PmP6EGlJ7wkx1RGKWs
+        ulR9+vy2SjF2n6eUO/Y1YYk6
+X-Google-Smtp-Source: AGHT+IFqyNEC2JG004BLvFeQ883vvmzZmbXiMQhzHmmFHvL4w/Lf027wOmvQvTqgLndBUE84MjF0KA==
+X-Received: by 2002:a17:906:7694:b0:9b2:82d2:a2db with SMTP id o20-20020a170906769400b009b282d2a2dbmr1434401ejm.28.1695819897021;
+        Wed, 27 Sep 2023 06:04:57 -0700 (PDT)
 Received: from thinkpad ([2a02:2454:9d09:3f00:b024:394e:56d7:d8b4])
-        by smtp.gmail.com with ESMTPSA id 12-20020a05600c240c00b003fc02e8ea68sm20417720wmp.13.2023.09.27.05.58.52
+        by smtp.gmail.com with ESMTPSA id ep14-20020a1709069b4e00b009a168ab6ee2sm8703004ejc.164.2023.09.27.06.04.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Sep 2023 05:58:52 -0700 (PDT)
-Date:   Wed, 27 Sep 2023 14:58:50 +0200
+        Wed, 27 Sep 2023 06:04:56 -0700 (PDT)
+Date:   Wed, 27 Sep 2023 15:04:55 +0200
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Abel Vesa <abel.vesa@linaro.org>, lpieralisi@kernel.org,
-        kw@linux.com, andersson@kernel.org, bhelgaas@google.com,
+To:     Bjorn Helgaas <helgaas@kernel.org>
+Cc:     lpieralisi@kernel.org, kw@linux.com, andersson@kernel.org,
+        konrad.dybcio@linaro.org, bhelgaas@google.com,
         linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+        linux-kernel@vger.kernel.org, abel.vesa@linaro.org
 Subject: Re: [PATCH] PCI: qcom: Add interconnect bandwidth for PCIe Gen4
-Message-ID: <20230927125850.GA19623@thinkpad>
+Message-ID: <20230927130455.GB19623@thinkpad>
 References: <20230924160713.217086-1-manivannan.sadhasivam@linaro.org>
- <f49d0543-17bb-4105-9cdf-3df8c116481a@linaro.org>
- <ZRFiD3EXwZI/B8JB@linaro.org>
- <18635bed-b7e3-4acb-b176-cd9f87a35c7f@linaro.org>
- <ZRFjAIYQQZnbNIdt@linaro.org>
- <09058de7-e207-414b-ab4c-88f0cbde9c22@linaro.org>
+ <20230926210823.GA427669@bhelgaas>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <09058de7-e207-414b-ab4c-88f0cbde9c22@linaro.org>
+In-Reply-To: <20230926210823.GA427669@bhelgaas>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -80,68 +76,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 25, 2023 at 12:40:34PM +0200, Konrad Dybcio wrote:
-> On 25.09.2023 12:37, Abel Vesa wrote:
-> > On 23-09-25 12:34:53, Konrad Dybcio wrote:
-> >> On 25.09.2023 12:33, Abel Vesa wrote:
-> >>> On 23-09-25 10:57:47, Konrad Dybcio wrote:
-> >>>> On 24.09.2023 18:07, Manivannan Sadhasivam wrote:
-> >>>>> PCIe Gen4 supports the interconnect bandwidth of 1969 MBps. So let's add
-> >>>>> the bandwidth support in the driver. Otherwise, the default bandwidth of
-> >>>>> 985 MBps will be used.
-> >>>>>
-> >>>>> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> >>>>> ---
-> >>>>>  drivers/pci/controller/dwc/pcie-qcom.c | 7 +++++--
-> >>>>>  1 file changed, 5 insertions(+), 2 deletions(-)
-> >>>>>
-> >>>>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> >>>>> index 297442c969b6..6853123f92c1 100644
-> >>>>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> >>>>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> >>>>> @@ -1384,11 +1384,14 @@ static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
-> >>>>>  	case 2:
-> >>>>>  		bw = MBps_to_icc(500);
-> >>>>>  		break;
-> >>>>> +	case 3:
-> >>>>> +		bw = MBps_to_icc(985);
-> >>>>> +		break;
-> >>>>>  	default:
-> >>>>>  		WARN_ON_ONCE(1);
-> >>>>>  		fallthrough;
-> >>>>> -	case 3:
-> >>>>> -		bw = MBps_to_icc(985);
-> >>>>> +	case 4:
-> >>>>> +		bw = MBps_to_icc(1969);
-> >>>>>  		break;
-> >>>> Are you adding case 4 under `default`? That looks.. bizzare..
-> >>>
-> >>> That's intentional. You want it to use 1969MBps if there is a different
-> >>> gen value. AFAIU.
-> >> Gah right, then the commit message is wrong.
+On Tue, Sep 26, 2023 at 04:08:23PM -0500, Bjorn Helgaas wrote:
+> On Sun, Sep 24, 2023 at 06:07:13PM +0200, Manivannan Sadhasivam wrote:
+> > PCIe Gen4 supports the interconnect bandwidth of 1969 MBps. So let's add
+> > the bandwidth support in the driver. Otherwise, the default bandwidth of
+> > 985 MBps will be used.
 > > 
-> > Yep, should be: "Otherwise, the default bandwidth of 1969 MBps will be
-> > used."
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  drivers/pci/controller/dwc/pcie-qcom.c | 7 +++++--
+> >  1 file changed, 5 insertions(+), 2 deletions(-)
 > > 
-> > But maybe we should not default to that. Maybe we should still default
-> > to 985 MBps.
-> Perhaps we shouldn't have a default at all..
+> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > index 297442c969b6..6853123f92c1 100644
+> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > @@ -1384,11 +1384,14 @@ static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
+> >  	case 2:
+> >  		bw = MBps_to_icc(500);
+> >  		break;
+> > +	case 3:
+> > +		bw = MBps_to_icc(985);
+> > +		break;
+> >  	default:
+> >  		WARN_ON_ONCE(1);
+> >  		fallthrough;
+> > -	case 3:
+> > -		bw = MBps_to_icc(985);
+> > +	case 4:
+> > +		bw = MBps_to_icc(1969);
 > 
-> E.g. if the gen5 bus may get clogged if we exceed gen4
-> limits
+> The bare numbers here are sort of weird.  I assume they correspond to
+> the Supported Link Speeds Vector in Link Cap 2, and I expected them to
+> correspond somehow to PCIE_SPEED2MBS_ENC(), which computes the usable
+> PCIe bandwidth per lane.  I see the ratios between 250, 500, 986, 1969
+> *do* match up with the ratios of PCIE_SPEED2MBS_ENC() values, but I
+> don't know the PCIE_SPEED2MBS_ENC() values aren't used:
+> 
+>             SLS Vector                         PCIE_SPEED2MBS_ENC()
+>   CLS 1:  bit 0  2.5 GT/s   MBps_to_icc(250)      2000 Mbps
+>   CLS 2:  bit 1  5.0 GT/s   MBps_to_icc(500)      4000 Mbps
+>   CLS 3:  bit 2  8.0 GT/s   MBps_to_icc(985)      7879 Mbps
+>   CLS 4:  bit 3 16.0 GT/s   MBps_to_icc(1969)    15753 Mbps
+> 
+> This is just my curiosity, probably no change is needed, or at most a
+> short comment.
 > 
 
-So the idea here is that if we happen to run this driver on a new Gen supported
-SoC, we have to let the user know that the interconnects are running at a lower
-gen speed and it needs attention.
+You are right. I'm not aware of this macro before and yes, I can make use of it.
 
-But I think we can simplify it by fixing a default bandwidth, say Gen3 and get
-rid of the fallthrough. And yeah, the same needs to be done for the pcie-qcom-ep
-driver as well.
+> I do notice that pcie-qcom-ep.c uses #defines like PCIE_GEN1_BW_MBPS,
+> and it seems like both could use the same style.
+> 
+> Also agree with Konrad that the ordering ends up looking unusual;
+> maybe would be more readable if the default case repeated the speed
+> you want instead of using the fallthrough.
+> 
+
+Yes, that would be more readable.
 
 - Mani
 
-> Konrad
+> >  		break;
+> >  	}
 
 -- 
 மணிவண்ணன் சதாசிவம்
