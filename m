@@ -2,67 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AA30E7B0EBD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 00:02:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F5387B0EC2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 00:05:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229493AbjI0WCC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Sep 2023 18:02:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47170 "EHLO
+        id S229493AbjI0WFn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Sep 2023 18:05:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229731AbjI0WCB (ORCPT
+        with ESMTP id S229460AbjI0WFm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Sep 2023 18:02:01 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEF5C193
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 15:01:58 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-50444e756deso15731194e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 15:01:58 -0700 (PDT)
+        Wed, 27 Sep 2023 18:05:42 -0400
+Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8475CFB
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 15:05:41 -0700 (PDT)
+Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-5a200028437so25512147b3.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 15:05:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1695852117; x=1696456917; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:user-agent
-         :from:references:in-reply-to:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oSjejR5JF3wP/eMQJYeeQ3/RdpG//Fx9fX4rCgiiwsA=;
-        b=nA1MPKGhAJBCTrEnASX1o3wwHSDH3cO7zZokWQCm61ftStt8KJlPtUQpkOrcsMeVT2
-         J83k8ko1v5Qu6jWhsq+BONEG2J44sG3uu3wWSulnjB6OCj0HZl04K0ZsSXe8dwHrE+TE
-         glkT00cvZKpeGjUjX1PC6WAr1YZwKtRFcJMaI=
+        d=linaro.org; s=google; t=1695852340; x=1696457140; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=CNs9Uy0sZIcXogJDKuzAoviMSMHPVfDjWIe9eamVRQE=;
+        b=rf8g9OXS/oQoEFEXXB2zV9m5e/4cb13RHHUf3gEEj70UJR1deKo01vC48RGyOCeqDU
+         Q942J5yGADD9nFPRtMzd3AAnW11czyimawbD4wKhC2k+LBCwgPDdtIR2nam0UXG8AKJ+
+         rBXg3jTADlUJJUpz8ClVl+gqgtj2UxLrXG0go9jmrh+Y6a1zr+eT80sMdlF5zQfI8dR9
+         SSenLoSTjOc/VquA3KXVQjgO0lN+6K8bVk6uWxaTqroJycEX/Ygb1RSR5BvF6HMBuUMv
+         wfdF7EUpdpVZJGQbcm0tRxE1RjeTZteTairpRY2xDCpX+voJTRDQSt/Z12LFKKn9U+bA
+         lIZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695852117; x=1696456917;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:user-agent
-         :from:references:in-reply-to:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=oSjejR5JF3wP/eMQJYeeQ3/RdpG//Fx9fX4rCgiiwsA=;
-        b=gDSjj4Z5v3pWwPMbsXbdGhzmyodMqHADLqHsY5X4VTnLDdbsip+vTBLf4WwMmIq0mi
-         Q7lrsvzxLhIAMvui1PQKRGpwylOR6hk37AbvIkZ0i3rd+mEk5bbsP/uNDbNToZ9HFoIR
-         qr+WCld0cdSnQ6gSNe72pLKq4DmnyZ7L2LOM3LCwLhYAE8x+tyHE1tSmYyMsGhdRI64/
-         AaFyQnKdzm9cxtXzST0GkiowMgYVuXgDTlW3ARI+qO2yniPnjv5YtTXk4iH8V4V3DfhR
-         tVlKktw0EO5g0KOoytIPdIKTWcaUvG8maC1LLN7/heyX13RpXH1AfYZiwkfVPbDAUVrs
-         iwzA==
-X-Gm-Message-State: AOJu0YwZOABrnOUXJG7AKUieXOeR+XcBII/KOE530RMw0WTw2uhLzlIe
-        Ij4nNpbl2ko7/+gp9VPHi/FEuYTyqVad2boEjkpkQg==
-X-Google-Smtp-Source: AGHT+IEgoSwtXUeWp+41zOUCP+Gyi7NJVp2syU0i8Hpe8Zg2aPjEvc03dD/eiB9Gw5SnGn3VLWFNtVmb2S4r5fJtUcI=
-X-Received: by 2002:ac2:410e:0:b0:502:f740:220 with SMTP id
- b14-20020ac2410e000000b00502f7400220mr2552704lfi.58.1695852116130; Wed, 27
- Sep 2023 15:01:56 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 27 Sep 2023 17:01:55 -0500
+        d=1e100.net; s=20230601; t=1695852340; x=1696457140;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CNs9Uy0sZIcXogJDKuzAoviMSMHPVfDjWIe9eamVRQE=;
+        b=rzSiLli+MzpQsZcdQ6+IknJLEYTzmRMsDQeofrKNX1bH0e79JcmH3U0/3ZRLvCF0Gf
+         xbWveZZByHzw8HBFHvzBnP78yPrpQZI8MTJG4SKntKwcO85ObSM3RXzNGTlodPn/ROka
+         jyvqd8Ysv3Sr63TRXihi1IsM1E8SJKsH6d/9TcU3Q8wXRrPozLmr6aIsaFIG0mHhzc2q
+         pH6Q1L9OJBJI9bfRzBvCC4vvHt0xQfudd2fZ1/PvTQTg32He62KQu7tke/0evc+/2lo9
+         EwCHcwyM4WkcSOguTL5XtJf5wHROI5+bEw3Hzr/WMPeLfzr8X15TYTs14VPSOvcS5Xg/
+         Od7w==
+X-Gm-Message-State: AOJu0Yw4TbAIbRieTrHJrnx4EpGUNKKlZwoCufsFBPz2Kqb/kvfcq66y
+        MnQb+3wIeY+kSPtAjF8QUYqIFRt3WEXCRKJcovIjBw==
+X-Google-Smtp-Source: AGHT+IHR+moAslgN5T2iYRiOJljTYTXI9au6Nrv8poHtrZJxnq88ULiQGkND2FasIyvPuzQVl0Il+NK5ZQcIELMzmQs=
+X-Received: by 2002:a81:9186:0:b0:59f:4c52:2f51 with SMTP id
+ i128-20020a819186000000b0059f4c522f51mr3574047ywg.17.1695852340711; Wed, 27
+ Sep 2023 15:05:40 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <1d9bf80d-0267-937b-4dd9-c57db7a89cb4@quicinc.com>
 References: <1694813901-26952-1-git-send-email-quic_khsieh@quicinc.com>
  <1694813901-26952-7-git-send-email-quic_khsieh@quicinc.com>
  <CAA8EJpqPXoFX4LXyXYgfh07Vpxg-KgD8VBR6x5bXf4GOJmbOtw@mail.gmail.com>
  <2f98d5f1-57c1-d9fe-cb1c-b975db057287@quicinc.com> <CAA8EJpr2wRq6Txi7YAQpJKa_9UGqH_nmHzvVOaAPkwOrtDg4Tw@mail.gmail.com>
  <CAE-0n53dqHONzMTd_ZC-fKWTzDVq6Wqwo4OFZMUcghZ5SD5RhA@mail.gmail.com>
  <65566a68-3510-2e5f-7d57-e4dba08c008c@quicinc.com> <1d9bf80d-0267-937b-4dd9-c57db7a89cb4@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Wed, 27 Sep 2023 17:01:55 -0500
-Message-ID: <CAE-0n51Hrs66oG4NF5rDETkVO-ocG_6_=Aqc5cE-qPDViSgKyA@mail.gmail.com>
+ <CAE-0n51Hrs66oG4NF5rDETkVO-ocG_6_=Aqc5cE-qPDViSgKyA@mail.gmail.com>
+In-Reply-To: <CAE-0n51Hrs66oG4NF5rDETkVO-ocG_6_=Aqc5cE-qPDViSgKyA@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 28 Sep 2023 01:04:31 +0300
+Message-ID: <CAA8EJppNSS-ZUoJRbLaO7XHr+69Th6ANU5KGrnbj8eWGyGFQDw@mail.gmail.com>
 Subject: Re: [PATCH v3 6/7] drm/msm/dp: add pm_runtime_force_suspend()/resume()
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
         sean@poorly.run, dianders@chromium.org, vkoul@kernel.org,
         daniel@ffwll.ch, airlied@gmail.com, agross@kernel.org,
         andersson@kernel.org, quic_jesszhan@quicinc.com,
@@ -70,9 +70,8 @@ Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
         freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,58 +79,68 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2023-09-25 09:07:18)
+On Thu, 28 Sept 2023 at 01:01, Stephen Boyd <swboyd@chromium.org> wrote:
 >
-> On 9/22/2023 6:35 PM, Abhinav Kumar wrote:
+> Quoting Kuogee Hsieh (2023-09-25 09:07:18)
 > >
-> > Doing link training when we get hpd instead of atomic_enable() is a
-> > design choice we have been following for a while because for the case
-> > when link training fails in atomic_enable() and setting the link
-> > status property as you mentioned, the compositor needs to be able to
-> > handle that and also needs to try with a different resolution or take
-> > some other corrective action. We have seen many compositors not able
-> > to handle this complexity. So the design sends the hotplug to usermode
-> > only after link training succeeds.
+> > On 9/22/2023 6:35 PM, Abhinav Kumar wrote:
+> > >
+> > > Doing link training when we get hpd instead of atomic_enable() is a
+> > > design choice we have been following for a while because for the case
+> > > when link training fails in atomic_enable() and setting the link
+> > > status property as you mentioned, the compositor needs to be able to
+> > > handle that and also needs to try with a different resolution or take
+> > > some other corrective action. We have seen many compositors not able
+> > > to handle this complexity. So the design sends the hotplug to usermode
+> > > only after link training succeeds.
+> > >
+> > > I do not think we should change this design unless prototyped with an
+> > > existing compositor such as chrome or android at this point.
+> > >
+> > > Thanks
+> > >
+> > > Abhinav
 > >
-> > I do not think we should change this design unless prototyped with an
-> > existing compositor such as chrome or android at this point.
 > >
-> > Thanks
+> > We did perform link training at atomic_enable() at eDP case since we can
+> > assume link training will always success without link rate or link lane
+> > being reduced.
 > >
-> > Abhinav
+> > However for external DP case, link training can not be guarantee always
+> > success without link rate or lane being reduced as Abhinav mentioned.
+> >
+> > In addition,  CTS (compliance test) it required to complete link
+> > training within 10ms after hpd asserted.
 >
+> Is it possible to change that timeout? I have to look around for the CTS
+> parameters because I'm pretty confused how it can work. What do we do if
+> DP wakes the system from suspend and asserts HPD? We need resume time to
+> be < 10ms?  That's not realistic.
 >
-> We did perform link training at atomic_enable() at eDP case since we can
-> assume link training will always success without link rate or link lane
-> being reduced.
+> >
+> > I am not sure do link training at atomic_enable() can meet this timing
+> > requirement.
+> >
 >
-> However for external DP case, link training can not be guarantee always
-> success without link rate or lane being reduced as Abhinav mentioned.
+> At least in the DP spec itself it doesn't require the link to be trained
+> within 10ms of HPD being asserted. Instead it simply recommends that the
+> OS start configuring the display promptly after HPD is asserted, e.g.
+> within 100ms. There's some strict timing on IRQ_HPD, so the driver must
+> read DPCD registers within 100ms of IRQ_HPD rising edge; maybe that is
+> what CTS is checking for?
 >
-> In addition,=C2=A0 CTS (compliance test) it required to complete link
-> training within 10ms after hpd asserted.
+> TL;DR: I don't see why CTS should stop us from link training in
+> atomic_enable(). It would be beneficial to do so to make eDP and DP the
+> same. It would also help to report a drm connector being connected
+> _before_ link training so that userspace knows the link itself is the
+> bad part of the equation (and not that the DP connector looks
+> disconnected to userspace when in fact it really is connected and the
+> monitor is asserting HPD, just the link training failed).
 
-Is it possible to change that timeout? I have to look around for the CTS
-parameters because I'm pretty confused how it can work. What do we do if
-DP wakes the system from suspend and asserts HPD? We need resume time to
-be < 10ms?  That's not realistic.
+Also this will move us closer to i915 user experience: failing link
+training in the display enablement part. So that a part of xrandr
+calls can retry link training.
 
->
-> I am not sure do link training at atomic_enable() can meet this timing
-> requirement.
->
-
-At least in the DP spec itself it doesn't require the link to be trained
-within 10ms of HPD being asserted. Instead it simply recommends that the
-OS start configuring the display promptly after HPD is asserted, e.g.
-within 100ms. There's some strict timing on IRQ_HPD, so the driver must
-read DPCD registers within 100ms of IRQ_HPD rising edge; maybe that is
-what CTS is checking for?
-
-TL;DR: I don't see why CTS should stop us from link training in
-atomic_enable(). It would be beneficial to do so to make eDP and DP the
-same. It would also help to report a drm connector being connected
-_before_ link training so that userspace knows the link itself is the
-bad part of the equation (and not that the DP connector looks
-disconnected to userspace when in fact it really is connected and the
-monitor is asserting HPD, just the link training failed).
+-- 
+With best wishes
+Dmitry
