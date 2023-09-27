@@ -2,74 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AE7B87AFBBD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 09:15:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F58E7AFD6E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 09:59:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229906AbjI0HPE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Sep 2023 03:15:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46208 "EHLO
+        id S230034AbjI0H7z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Sep 2023 03:59:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229550AbjI0HPD (ORCPT
+        with ESMTP id S229981AbjI0H7y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Sep 2023 03:15:03 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A743DBF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 00:15:01 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id 98e67ed59e1d1-274b3d48e15so7022182a91.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 00:15:01 -0700 (PDT)
+        Wed, 27 Sep 2023 03:59:54 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53EFD126
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 00:59:53 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-9b2b53e17feso57591566b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 00:59:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695798901; x=1696403701; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Bja12LI17w7SlAGim+7rV0lYQwVQg67VffGOzL5a63Q=;
-        b=NtK7MWFyclEp5SNVF26d/FbChfxjHSl6IZ2rWeYm8tNp/DVqRoSucr6BVUi9DQB3t7
-         IeeyNPp/Bk2WY3XsmQz27xOGtVV3O/4APv0T2eVMz85uTswkjDaliDMnyk8Vg4FQsqTP
-         v2B35jzO3y40j7ss/Oh5OT9zLASRPKQ+LgisQzPP9FAQoB4xf8aPXTxu7oBA/1+U/pYI
-         l8uskEL80kRTms9WFU7WVroKYKJDR3rUCylkieBez3k7H0Bzeq72G6fLJwQVFeeiGw4p
-         azbDnu6WveRK4JSqlrH6cwusnR3ASMzFqhpXjBc889+FCKPxJqyyhNO9NinDp0afsIIu
-         itdA==
+        d=linaro.org; s=google; t=1695801592; x=1696406392; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AjRLFRGx2QpH1A9CNEqwY9UWkOvdiR9DcjW30C5/5ew=;
+        b=P2QGcTimBhsTqD+VPJ9cqAWuJXVxDIjjHx8U5dH8Ra5sm0HUK9e4Z8NPHGZNLMvB9S
+         06JNx/PRfgDrQenBsc7CtxXwhoJLGdBLRODZCo34Drau+NzFBrKNEZj8FmtaE7RZMhI2
+         u+RK9P4zms2kfM4KpCFvzTxFWhkBUrqFZSmgK/ANX0yvXE70jHYZ2rB09Mz3rUKkvD6Q
+         xqWtLJYVdAPmNuEnDDW4f0JVXt7Rz0XdmMHDnFSCmsRiF3xi4cYr8zAx37ZM5KoKzT7/
+         0NuIInlCJAoDA58JedCO0qt3XWf4EyuNBowWCLfKJk68t3j86vAsUHgtMWv+C4QiDuuB
+         WZMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695798901; x=1696403701;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Bja12LI17w7SlAGim+7rV0lYQwVQg67VffGOzL5a63Q=;
-        b=ZEL3ZLVOxfUZKMJ1sJTr0wgyBnAeBQ1CDA2UJRw74JcM7l+gmAsIB9cUDeqhazWSfa
-         TRCLhhsJi/PNTPMShaJm62Ybk7lnOymJOCReScjuHlcMUwcv58PjCYYIM7j2ToxHOg4F
-         x2OnAvzUdcipNiiuWk3M3YzwfWe+0/NPACOakDq1l5D1pj6a8Ql9Aks9un1VJ5LK7Zh6
-         H7dRxNjnhhI9ixahH1Z7bx7v/zbDekATptIWhdOEhafFX9nOpaW1Mp3IF10NRj9zl1Fp
-         L7Z0SOhADdl2CGP+5wSAoRPXmtYkXkvz8hSxqC8RdX1AsK1bXkQ1iWg8fAB2CFOjsn2D
-         yu9A==
-X-Gm-Message-State: AOJu0YzCMPMVI7RkSFOULOQ3rRnip/0Oke7xz00syodj2LtsZ7AaHd5h
-        plWPtADRKC7tGEV1b9kBBRmWag==
-X-Google-Smtp-Source: AGHT+IFEZBCbksbtcNTYf/GSZEytPkrOcuA47MwSgUX5XYYf4aTBNmh0w+tEc6YDfL3KznT/8qU+LA==
-X-Received: by 2002:a17:90b:1e0e:b0:269:2682:11fb with SMTP id pg14-20020a17090b1e0e00b00269268211fbmr908623pjb.8.1695798901045;
-        Wed, 27 Sep 2023 00:15:01 -0700 (PDT)
-Received: from localhost ([122.172.81.92])
-        by smtp.gmail.com with ESMTPSA id b8-20020a17090aa58800b00277326038dasm6928001pjq.39.2023.09.27.00.15.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Sep 2023 00:15:00 -0700 (PDT)
-Date:   Wed, 27 Sep 2023 12:44:58 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        vireshk@kernel.org, nm@ti.com, sboyd@kernel.org, mani@kernel.org,
-        lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
-        bhelgaas@google.com, rafael@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, quic_vbadigan@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-        quic_ramkri@quicinc.com, quic_parass@quicinc.com
-Subject: Re: [PATCH v5 3/5] opp: Add dev_pm_opp_find_level_floor()
-Message-ID: <20230927071458.busudwwj26kmia4u@vireshk-i7>
-References: <1694066433-8677-1-git-send-email-quic_krichai@quicinc.com>
- <1694066433-8677-4-git-send-email-quic_krichai@quicinc.com>
+        d=1e100.net; s=20230601; t=1695801592; x=1696406392;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AjRLFRGx2QpH1A9CNEqwY9UWkOvdiR9DcjW30C5/5ew=;
+        b=By+gtgpKHzyq9bUQgSvxT7GJo28JDrS6GFmnvkTVshpc4GfLytzxgzT1ttcrGtm0Vm
+         mF1cxpDNvn+J3LNOAWB3ISC/TKpCHtESfHrvIfxlPLHJx3EI9PyveAkGqHh2qruQyHU6
+         iT4uFbOMEJg0/Shyw9LwZRoQqIJuMiwOBTfp1KKUBByXzWFALcuw4AkCBIvrlRW24VMy
+         rQkAizYLYsH5UH8D7rtzU18aTVXNIDkFyISIqoTq64ZIFUvAN+euNOkzlpPGbRvn2btH
+         GCA7znUIICdhVNx5lUa+3F5o2g0c0H1NYuXwyzyDbgXe1VmS0I7V3KlnlBEwD/iCVMMO
+         ZuEQ==
+X-Gm-Message-State: AOJu0YxYK8Y1elua8sCFoR81L0EAOhAQVXtFWIiQ/WVDWDuT1/qxlm2I
+        mTF7HC/P2A4YlV5CNJz7i4N4DA==
+X-Google-Smtp-Source: AGHT+IEW+3T0cjOGDnR9o0zEnysXpX2hkYOqwFyitgfte7ZD7JVwwsDt6rDAUcQcwKq9As16QvIYVg==
+X-Received: by 2002:a17:906:738b:b0:9ae:3435:ad45 with SMTP id f11-20020a170906738b00b009ae3435ad45mr980539ejl.76.1695801591732;
+        Wed, 27 Sep 2023 00:59:51 -0700 (PDT)
+Received: from [192.168.1.160] (host-87-4-82-94.retail.telecomitalia.it. [87.4.82.94])
+        by smtp.gmail.com with ESMTPSA id ez23-20020a1709070bd700b009b285351817sm2532485ejc.116.2023.09.27.00.59.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Sep 2023 00:59:51 -0700 (PDT)
+Message-ID: <931e3793-670e-4cb7-b1bd-61e445b3bb04@linaro.org>
+Date:   Wed, 27 Sep 2023 09:59:49 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1694066433-8677-4-git-send-email-quic_krichai@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] arm64: dts: qcom: sa8775p: Add RPMh sleep stats
+Content-Language: en-US
+To:     Raghavendra Kakarla <quic_rkakarla@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     quic_mkshah@quicinc.com, quic_lsrao@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230926044814.535-1-quic_rkakarla@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20230926044814.535-1-quic_rkakarla@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -79,93 +123,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07-09-23, 11:30, Krishna chaitanya chundru wrote:
-
-$Subject should have OPP instead of opp. Past history of framework can be seen
-for this.
-
-> During initialization of some drivers, need to vote for max level.
+On 26/09/2023 06:48, Raghavendra Kakarla wrote:
+> Add device node for sleep stats driver which provides various
+> low power mode stats.
 > 
-> Adding dev_pm_opp_find_level_floor() for searching a lesser match or
-> operating on OPP in the order of decreasing level.
-> 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> Cc: devicetree@vger.kernel.org
+
+No need to keep such Cc in commit log.
+
+> Signed-off-by: Raghavendra Kakarla <quic_rkakarla@quicinc.com>
 > ---
->  drivers/opp/core.c     | 25 +++++++++++++++++++++++++
->  include/linux/pm_opp.h |  9 +++++++++
->  2 files changed, 34 insertions(+)
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 5 +++++
+>  1 file changed, 5 insertions(+)
 > 
-> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
-> index 919cc53..6d4d226 100644
-> --- a/drivers/opp/core.c
-> +++ b/drivers/opp/core.c
-> @@ -814,6 +814,31 @@ struct dev_pm_opp *dev_pm_opp_find_level_ceil(struct device *dev,
->  EXPORT_SYMBOL_GPL(dev_pm_opp_find_level_ceil);
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> index 9f4f58e831a4..cee7491de675 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> @@ -1912,6 +1912,11 @@
+>  			#clock-cells = <0>;
+>  		};
 >  
->  /**
-> + * dev_pm_opp_find_level_floor() - Search for a rounded floor freq
+> +		sram@c3f0000 {
+> +			compatible = "qcom,rpmh-stats";
+> +			reg = <0 0x0c3f0000 0 0x400>;
 
-freq ?
+Please use consistent format - hex.
 
-> + * @dev:	device for which we do this operation
-> + * @level:	Start level
-> + *
-> + * Search for the matching floor *available* OPP from a starting level
-> + * for a device.
-> + *
-> + * Return: matching *opp and refreshes *level accordingly, else returns
-> + * ERR_PTR in case of error and should be handled using IS_ERR. Error return
-> + * values can be:
-> + * EINVAL:	for bad pointer
-> + * ERANGE:	no match found for search
-> + * ENODEV:	if device not found in list of registered devices
-> + *
-> + * The callers are required to call dev_pm_opp_put() for the returned OPP after
-> + * use.
-> + */
-> +struct dev_pm_opp *dev_pm_opp_find_level_floor(struct device *dev,
-> +					       unsigned long *level)
-> +{
-> +	return _find_key_floor(dev, level, 0, true, _read_level, NULL);
-> +}
-> +EXPORT_SYMBOL_GPL(dev_pm_opp_find_level_floor);
-> +
-> +/**
->   * dev_pm_opp_find_bw_ceil() - Search for a rounded ceil bandwidth
->   * @dev:	device for which we do this operation
->   * @bw:	start bandwidth
-> diff --git a/include/linux/pm_opp.h b/include/linux/pm_opp.h
-> index 91f87d7..baea92f 100644
-> --- a/include/linux/pm_opp.h
-> +++ b/include/linux/pm_opp.h
-> @@ -144,6 +144,9 @@ struct dev_pm_opp *dev_pm_opp_find_level_exact(struct device *dev,
->  struct dev_pm_opp *dev_pm_opp_find_level_ceil(struct device *dev,
->  					      unsigned int *level);
->  
-> +struct dev_pm_opp *dev_pm_opp_find_level_floor(struct device *dev,
-> +					       unsigned long *level);
-> +
->  struct dev_pm_opp *dev_pm_opp_find_bw_ceil(struct device *dev,
->  					   unsigned int *bw, int index);
->  
-> @@ -314,6 +317,12 @@ static inline struct dev_pm_opp *dev_pm_opp_find_bw_ceil(struct device *dev,
->  	return ERR_PTR(-EOPNOTSUPP);
->  }
->  
-> +static inline struct dev_pm_opp *dev_pm_opp_find_level_floor(struct device *dev,
 
-Why add between two bw related functions ?
+Best regards,
+Krzysztof
 
-> +							     unsigned long *level)
-> +{
-> +	return ERR_PTR(-EOPNOTSUPP);
-> +}
-> +
->  static inline struct dev_pm_opp *dev_pm_opp_find_bw_floor(struct device *dev,
->  					unsigned int *bw, int index)
->  {
-
-Fixed all this and applied. Thanks.
-
--- 
-viresh
