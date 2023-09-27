@@ -2,74 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F5387B0EC2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 00:05:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D01717B0EFE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 00:45:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229493AbjI0WFn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Sep 2023 18:05:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41648 "EHLO
+        id S229547AbjI0Wpr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Sep 2023 18:45:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229460AbjI0WFm (ORCPT
+        with ESMTP id S229460AbjI0Wpq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Sep 2023 18:05:42 -0400
-Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8475CFB
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 15:05:41 -0700 (PDT)
-Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-5a200028437so25512147b3.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 15:05:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695852340; x=1696457140; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=CNs9Uy0sZIcXogJDKuzAoviMSMHPVfDjWIe9eamVRQE=;
-        b=rf8g9OXS/oQoEFEXXB2zV9m5e/4cb13RHHUf3gEEj70UJR1deKo01vC48RGyOCeqDU
-         Q942J5yGADD9nFPRtMzd3AAnW11czyimawbD4wKhC2k+LBCwgPDdtIR2nam0UXG8AKJ+
-         rBXg3jTADlUJJUpz8ClVl+gqgtj2UxLrXG0go9jmrh+Y6a1zr+eT80sMdlF5zQfI8dR9
-         SSenLoSTjOc/VquA3KXVQjgO0lN+6K8bVk6uWxaTqroJycEX/Ygb1RSR5BvF6HMBuUMv
-         wfdF7EUpdpVZJGQbcm0tRxE1RjeTZteTairpRY2xDCpX+voJTRDQSt/Z12LFKKn9U+bA
-         lIZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695852340; x=1696457140;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CNs9Uy0sZIcXogJDKuzAoviMSMHPVfDjWIe9eamVRQE=;
-        b=rzSiLli+MzpQsZcdQ6+IknJLEYTzmRMsDQeofrKNX1bH0e79JcmH3U0/3ZRLvCF0Gf
-         xbWveZZByHzw8HBFHvzBnP78yPrpQZI8MTJG4SKntKwcO85ObSM3RXzNGTlodPn/ROka
-         jyvqd8Ysv3Sr63TRXihi1IsM1E8SJKsH6d/9TcU3Q8wXRrPozLmr6aIsaFIG0mHhzc2q
-         pH6Q1L9OJBJI9bfRzBvCC4vvHt0xQfudd2fZ1/PvTQTg32He62KQu7tke/0evc+/2lo9
-         EwCHcwyM4WkcSOguTL5XtJf5wHROI5+bEw3Hzr/WMPeLfzr8X15TYTs14VPSOvcS5Xg/
-         Od7w==
-X-Gm-Message-State: AOJu0Yw4TbAIbRieTrHJrnx4EpGUNKKlZwoCufsFBPz2Kqb/kvfcq66y
-        MnQb+3wIeY+kSPtAjF8QUYqIFRt3WEXCRKJcovIjBw==
-X-Google-Smtp-Source: AGHT+IHR+moAslgN5T2iYRiOJljTYTXI9au6Nrv8poHtrZJxnq88ULiQGkND2FasIyvPuzQVl0Il+NK5ZQcIELMzmQs=
-X-Received: by 2002:a81:9186:0:b0:59f:4c52:2f51 with SMTP id
- i128-20020a819186000000b0059f4c522f51mr3574047ywg.17.1695852340711; Wed, 27
- Sep 2023 15:05:40 -0700 (PDT)
+        Wed, 27 Sep 2023 18:45:46 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22D00AF;
+        Wed, 27 Sep 2023 15:45:44 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38RMhLEc021202;
+        Wed, 27 Sep 2023 22:44:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=2WzMCyujUUN8vsItkqe30uu8LNBKln4ud1vWe5HQBXc=;
+ b=gp/ksm5e9YgMqVJk1uaNNgbzZXcDL9Y5PUlM8QRbA/WQGoOju4jq+yo6DBVFV/arFrxr
+ 3Lsii92FbWJhJiVUmyzbCbKMgKESQ1iw3zecNq+yFsqdSoynyWjQqR/5LVHFF2uk6r9B
+ 6OlyhnZ1WNYXmPOHIp2+W2d7FEw2Yy00vavA/7K2mTyYLJuQnzIMKW76PyAz60YHY8Uk
+ cYH7LJP3EgAgYFADMUcwJ+SAfU2zn9EXDZi/OXxd5sDTINUz8mZbCXbxNrmetlf13KdP
+ 30+NKDfSkehHZsm+71weqSzFdgJlcWQGP66V+I7zQ7KdternlvvZbsAEF56KyfDJIUF3 bA== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tc43mu1gr-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 27 Sep 2023 22:44:34 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38RMiXT1007881
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 27 Sep 2023 22:44:33 GMT
+Received: from quicinc.com (10.49.16.6) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Wed, 27 Sep
+ 2023 15:44:30 -0700
+Date:   Wed, 27 Sep 2023 15:44:28 -0700
+From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
+To:     Pavan Kondeti <quic_pkondeti@quicinc.com>
+CC:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Masahiro Yamada <masahiroy@kernel.org>,
+        "Nick Desaulniers" <ndesaulniers@google.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Nicolas Schier <nicolas@fjasle.eu>,
+        "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>,
+        Kees Cook <keescook@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, Will Deacon <will@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
+        <workflows@vger.kernel.org>, <tools@linux.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH v3 1/1] scripts: Add add-maintainer.py
+Message-ID: <ZRSwTBkhlg5kj7jf@quicinc.com>
+Mail-Followup-To: Pavan Kondeti <quic_pkondeti@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Masahiro Yamada <masahiroy@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Nicolas Schier <nicolas@fjasle.eu>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Kees Cook <keescook@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, Will Deacon <will@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-kernel@vger.kernel.org, kernel@quicinc.com,
+        workflows@vger.kernel.org, tools@linux.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org
+References: <cover.1693037031.git.quic_gurus@quicinc.com>
+ <141b9fcab2208ace3001df4fc10e3dfd42b9f5d9.1693037031.git.quic_gurus@quicinc.com>
+ <2efba6b3-2399-9deb-d0ce-78f7b5e12f30@linaro.org>
+ <0f0bc437-e052-459d-bbda-bebeff1537ae@quicinc.com>
 MIME-Version: 1.0
-References: <1694813901-26952-1-git-send-email-quic_khsieh@quicinc.com>
- <1694813901-26952-7-git-send-email-quic_khsieh@quicinc.com>
- <CAA8EJpqPXoFX4LXyXYgfh07Vpxg-KgD8VBR6x5bXf4GOJmbOtw@mail.gmail.com>
- <2f98d5f1-57c1-d9fe-cb1c-b975db057287@quicinc.com> <CAA8EJpr2wRq6Txi7YAQpJKa_9UGqH_nmHzvVOaAPkwOrtDg4Tw@mail.gmail.com>
- <CAE-0n53dqHONzMTd_ZC-fKWTzDVq6Wqwo4OFZMUcghZ5SD5RhA@mail.gmail.com>
- <65566a68-3510-2e5f-7d57-e4dba08c008c@quicinc.com> <1d9bf80d-0267-937b-4dd9-c57db7a89cb4@quicinc.com>
- <CAE-0n51Hrs66oG4NF5rDETkVO-ocG_6_=Aqc5cE-qPDViSgKyA@mail.gmail.com>
-In-Reply-To: <CAE-0n51Hrs66oG4NF5rDETkVO-ocG_6_=Aqc5cE-qPDViSgKyA@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 28 Sep 2023 01:04:31 +0300
-Message-ID: <CAA8EJppNSS-ZUoJRbLaO7XHr+69Th6ANU5KGrnbj8eWGyGFQDw@mail.gmail.com>
-Subject: Re: [PATCH v3 6/7] drm/msm/dp: add pm_runtime_force_suspend()/resume()
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, dianders@chromium.org, vkoul@kernel.org,
-        daniel@ffwll.ch, airlied@gmail.com, agross@kernel.org,
-        andersson@kernel.org, quic_jesszhan@quicinc.com,
-        quic_sbillaka@quicinc.com, marijn.suijten@somainline.org,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <0f0bc437-e052-459d-bbda-bebeff1537ae@quicinc.com>
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: T6hX6RCIoYGyX4HlYCDsPLRHDWQvfoYp
+X-Proofpoint-GUID: T6hX6RCIoYGyX4HlYCDsPLRHDWQvfoYp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-09-27_15,2023-09-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ impostorscore=0 bulkscore=0 phishscore=0 mlxlogscore=819 malwarescore=0
+ adultscore=0 spamscore=0 clxscore=1011 priorityscore=1501 mlxscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2309270195
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -79,68 +105,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 28 Sept 2023 at 01:01, Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Quoting Kuogee Hsieh (2023-09-25 09:07:18)
-> >
-> > On 9/22/2023 6:35 PM, Abhinav Kumar wrote:
-> > >
-> > > Doing link training when we get hpd instead of atomic_enable() is a
-> > > design choice we have been following for a while because for the case
-> > > when link training fails in atomic_enable() and setting the link
-> > > status property as you mentioned, the compositor needs to be able to
-> > > handle that and also needs to try with a different resolution or take
-> > > some other corrective action. We have seen many compositors not able
-> > > to handle this complexity. So the design sends the hotplug to usermode
-> > > only after link training succeeds.
-> > >
-> > > I do not think we should change this design unless prototyped with an
-> > > existing compositor such as chrome or android at this point.
-> > >
-> > > Thanks
-> > >
-> > > Abhinav
-> >
-> >
-> > We did perform link training at atomic_enable() at eDP case since we can
-> > assume link training will always success without link rate or link lane
-> > being reduced.
-> >
-> > However for external DP case, link training can not be guarantee always
-> > success without link rate or lane being reduced as Abhinav mentioned.
-> >
-> > In addition,  CTS (compliance test) it required to complete link
-> > training within 10ms after hpd asserted.
->
-> Is it possible to change that timeout? I have to look around for the CTS
-> parameters because I'm pretty confused how it can work. What do we do if
-> DP wakes the system from suspend and asserts HPD? We need resume time to
-> be < 10ms?  That's not realistic.
->
-> >
-> > I am not sure do link training at atomic_enable() can meet this timing
-> > requirement.
-> >
->
-> At least in the DP spec itself it doesn't require the link to be trained
-> within 10ms of HPD being asserted. Instead it simply recommends that the
-> OS start configuring the display promptly after HPD is asserted, e.g.
-> within 100ms. There's some strict timing on IRQ_HPD, so the driver must
-> read DPCD registers within 100ms of IRQ_HPD rising edge; maybe that is
-> what CTS is checking for?
->
-> TL;DR: I don't see why CTS should stop us from link training in
-> atomic_enable(). It would be beneficial to do so to make eDP and DP the
-> same. It would also help to report a drm connector being connected
-> _before_ link training so that userspace knows the link itself is the
-> bad part of the equation (and not that the DP connector looks
-> disconnected to userspace when in fact it really is connected and the
-> monitor is asserting HPD, just the link training failed).
+On Sep 27 2023 10:21, Pavan Kondeti wrote:
+> On Mon, Aug 28, 2023 at 10:21:32AM +0200, Krzysztof Kozlowski wrote:
+> > On 26/08/2023 10:07, Guru Das Srinagesh wrote:
+> > > This script runs get_maintainer.py on a given patch file (or multiple
+> > > patch files) and adds its output to the patch file in place with the
+> > > appropriate email headers "To: " or "Cc: " as the case may be. These new
+> > > headers are added after the "From: " line in the patch.
+> > > 
+> > > Currently, for a single patch, maintainers and reviewers are added as
+> > > "To: ", mailing lists and all other roles are added as "Cc: ".
+> > > 
+> > > For a series of patches, however, a set-union scheme is employed in
+> > > order to solve the all-too-common problem of ending up sending only
+> > > subsets of a patch series to some lists, which results in important
+> > > pieces of context such as the cover letter (or other patches in the
+> > > series) being dropped from those lists. This scheme is as follows:
+> > > 
+> > > - Create set-union of all maintainers and reviewers from all patches and
+> > >   use this to do the following per patch:
+> > >   - add only that specific patch's maintainers and reviewers as "To: "
+> > >   - add the other maintainers and reviewers from the other patches as "Cc: "
+> > > 
+> > > - Create set-union of all mailing lists corresponding to all patches and
+> > >   add this to all patches as "Cc: "
+> > > 
+> > > - Create set-union of all other roles corresponding to all patches and
+> > >   add this to all patches as "Cc: "
+> > > 
+> > > Please note that patch files that don't have any "Maintainer"s or
+> > > "Reviewers" explicitly listed in their `get_maintainer.pl` output will
+> > 
+> > So before you will ignoring the reviewers, right? One more reason to not
+> > get it right...
+> > 
+> > > not have any "To: " entries added to them; developers are expected to
+> > > manually make edits to the added entries in such cases to convert some
+> > > "Cc: " entries to "To: " as desired.
+> > > 
+> > > The script is quiet by default (only prints errors) and its verbosity
+> > > can be adjusted via an optional parameter.
+> > > 
+> > > Signed-off-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
+> > > ---
+> > >  MAINTAINERS               |   5 ++
+> > >  scripts/add-maintainer.py | 164 ++++++++++++++++++++++++++++++++++++++
+> > >  2 files changed, 169 insertions(+)
+> > >  create mode 100755 scripts/add-maintainer.py
+> > > 
+> > 
+> > I do not see the benefits of this script. For me - it's unnecessarily
+> > more complicated instead of my simple bash function which makes
+> > everything one command less than here.
+> > One more thing to maintain.
+> 
+> Thanks for your bash script. I slightly modified it to keep maintainers
+> in To and rest in Cc. 
+> 
+> git send-email --dry-run --to="$(scripts/get_maintainer.pl --no-multiline --separator=, --no-r --no-l --no-git --no-roles --no-rolestats --no-git-fallback *.patch)" --cc="$(scripts/get_maintainer.pl --no-multiline --separator=, --no-m --no-git --no-roles --no-rolestats --no-git-fallback *.patch)" *.patch
 
-Also this will move us closer to i915 user experience: failing link
-training in the display enablement part. So that a part of xrandr
-calls can retry link training.
+FYI, b4 has "b4.send-auto-to-cmd" and "b4.send-auto-cc-cmd" [1] as well to
+override its default behaviour. You can just set the above two b4 config
+options as you like and it will do the right thing.
 
--- 
-With best wishes
-Dmitry
+Guru Das.
