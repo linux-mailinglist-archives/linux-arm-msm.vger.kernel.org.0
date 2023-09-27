@@ -2,169 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 944337AFB2F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 08:38:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C27FF7AFB3F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 08:43:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229667AbjI0GiU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Sep 2023 02:38:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47180 "EHLO
+        id S229495AbjI0Gni (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Sep 2023 02:43:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229555AbjI0GiT (ORCPT
+        with ESMTP id S229584AbjI0Gng (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Sep 2023 02:38:19 -0400
+        Wed, 27 Sep 2023 02:43:36 -0400
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02C14A3;
-        Tue, 26 Sep 2023 23:38:17 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28059F4;
+        Tue, 26 Sep 2023 23:43:35 -0700 (PDT)
 Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38R6aZMS012952;
-        Wed, 27 Sep 2023 06:38:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=4i4Rs2Gw3sKQAemTlW9aNC01Scl3fW/betrdids60e4=;
- b=ipY5jE9KhWt6/0jf1Kgdz7Evf9F0etr1cRDF97+HMtJmOrP6+mMQf8pB/5e4D2RxBuDv
- a85wg1pxQJ7urjIeZFrzF7cDgdvOVobzFBzLgAnAbfCJgcWIwnsmpDeLR4SbbMiwAn0T
- wteoxy43TZElS9wrs/x99n72UiBOFzUJvNMb3oil5au29aDONXw+LZyWMmtSDOiFyK2g
- v3fALTXJqOTdq9EGA3uK4L/ejLr0kNSqwlMrHew63YmjYxVZvJZxldRuOtjynR8YyWFZ
- aZ0hyAL+tIBY/D9nkJLFkPCJ9GtgRBeBJaFQUeNhAYauLR/+qbVz3hEthpVXSm62Zulg 3A== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tc5hc0y19-1
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38R5nPjR010615;
+        Wed, 27 Sep 2023 06:43:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : subject :
+ date : message-id : mime-version : content-type :
+ content-transfer-encoding : to : cc; s=qcppdkim1;
+ bh=hNBJJmbBpAYvrY4LaMiKewOmArBoB7dabJIZbpjgBhU=;
+ b=iggL3OTSYQC9jEDyQ2y2hONiiGph5Jg/jSk17n2aQYVHL0WLyDWsZ5k2JDR7rRX53f6B
+ c8K22DEZ8sIx3vAP8p717e+Iw4PKxfg6/9RSAAHaFyGW97YZAj9rMGKL8Nc9+R2Hod5E
+ ByOn9vUG2u0XFYW6xyI2zrVbD2/1fxY+5b7vTqCIoIBvSqxeEKcHUhxpo8T8R1ZgSsym
+ dsZ0mRc3a4Xf53vuSKRn4Rjw4fUy+SUPAkVmktpWN9IhE4Xi0ZD+UoMwSy8ZERy0s+hI
+ srAqxJ48FdwH63mYn2CU2oLjZhjPyaYfHeZTq9Pgw1D9N9gQcVppUyB6rSRnKqH9pLju XQ== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tc5hc0y90-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 27 Sep 2023 06:38:05 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38R6c4Zp011291
+        Wed, 27 Sep 2023 06:43:31 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38R6hUXk031664
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 27 Sep 2023 06:38:04 GMT
-Received: from [10.239.133.211] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 26 Sep
- 2023 23:37:59 -0700
-Message-ID: <b31e427e-071f-1ded-eeb0-eb9a0f5dc075@quicinc.com>
-Date:   Wed, 27 Sep 2023 14:37:57 +0800
+        Wed, 27 Sep 2023 06:43:30 GMT
+Received: from hu-kathirav-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.36; Tue, 26 Sep 2023 23:43:26 -0700
+From:   Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+Subject: [PATCH v3 0/2] Add common RDP dtsi file for IPQ9574
+Date:   Wed, 27 Sep 2023 12:13:17 +0530
+Message-ID: <20230927-common-rdp-v3-0-3d07b3ff6d42@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v9 00/13] Add support to configure TPDM DSB subunit
-Content-Language: en-US
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAXPE2UC/0WNQQrDIBRErxJc9wc1DWJXvUcpxZhvdaGm36QUQ
+ u5e7aYwi3kMM7OzghSwsEu3M8J3KCGnCsOpY9ab9EQIc2UmuRy4lgpsjjEnoHmBUTrN3VylFKu
+ FyRSEiUyyvlWiKStSCxZCFz6/l9u9sqMcYfWE5r+txCD4qLnuxVlyDQJeW7APk7bizbX5kGxf3
+ 9lxfAHDeX67tgAAAA==
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <andersson@kernel.org>
-References: <1694670204-11515-1-git-send-email-quic_taozha@quicinc.com>
- <2fe54425-70b5-95e8-1e9e-337424827adb@arm.com>
-From:   Tao Zhang <quic_taozha@quicinc.com>
-In-Reply-To: <2fe54425-70b5-95e8-1e9e-337424827adb@arm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Anusha Rao <quic_anusha@quicinc.com>,
+        Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1695797006; l=1825;
+ i=quic_kathirav@quicinc.com; s=20230906; h=from:subject:message-id;
+ bh=byy6280lYDSJfrolP4cJDoEKRYE3BKOLgzskFRP9tiA=;
+ b=xJsEDIRsBsvicefRCJYIZh1cA1ofVJ46cg9Ozjc0nptjkgCiWoKICzErDKDLZsLu2kYYcLr7M
+ JskkJ3aQ+GnBODGag2Mt2jRFVB4CHsCLmedvGENDXmrlrAoNBYCPZeJ
+X-Developer-Key: i=quic_kathirav@quicinc.com; a=ed25519;
+ pk=xWsR7pL6ch+vdZ9MoFGEaP61JUaRf0XaZYWztbQsIiM=
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 8_S7EGau8sETySx_yqtG_GmL9t6EKOm7
-X-Proofpoint-GUID: 8_S7EGau8sETySx_yqtG_GmL9t6EKOm7
+X-Proofpoint-ORIG-GUID: u6XfVUkI6gt4gSZQIJcX_QeWjRATPa_f
+X-Proofpoint-GUID: u6XfVUkI6gt4gSZQIJcX_QeWjRATPa_f
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-09-27_03,2023-09-26_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
  mlxscore=0 impostorscore=0 bulkscore=0 phishscore=0 suspectscore=0
- lowpriorityscore=0 spamscore=0 priorityscore=1501 mlxlogscore=999
+ lowpriorityscore=0 spamscore=0 priorityscore=1501 mlxlogscore=427
  malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2309270055
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+ engine=8.12.0-2309180000 definitions=main-2309270056
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Some interfaces are common across RDPs. Move the common nodes to
+ipq9574-rdp-common.dtsi like how it is done for IPQ5332. Use rdp specific
+dts file to include interfaces that vary across RDPs. For instance, IPQ9574
+has 4 PCIE controllers. RDP417 enables PCIE0 and PCIE1 whereas RDP433
+enables PCIE1, PCIE2 and PCIE3.
 
-On 9/26/2023 9:12 PM, Suzuki K Poulose wrote:
-> On 14/09/2023 06:43, Tao Zhang wrote:
->> Introduction of TPDM DSB subunit
->> DSB subunit is responsible for creating a dataset element, and is also
->> optionally responsible for packing it to fit multiple elements on a
->> single ATB transfer if possible in the configuration. The TPDM Core
->> Datapath requests timestamps be stored by the TPDA and then delivering
->> ATB sized data (depending on ATB width and element size, this could
->> be smaller or larger than a dataset element) to the ATB Mast FSM.
->>
->> The DSB subunit must be configured prior to enablement. This series
->> adds support for TPDM to configure the configure DSB subunit.
->>
->> Once this series patches are applied properly, the new tpdm nodes for
->> should be observed at the tpdm path /sys/bus/coresight/devices/tpdm*
->> which supports DSB subunit.
->> e.g.
->> root@qemuarm64:/sys/devices/platform/soc@0/6c08000.tpdm/tpdm1# ls -l
->> drwxr-xr-x    2 root     root             0 Jan  1 00:00 connections
->> drwxr-xr-x    2 root     root             0 Jan  1 00:00 dsb_edge
->> -rw-r--r--    1 root     root          4096 Jan  1 00:00 dsb_mode
->> drwxr-xr-x    2 root     root             0 Jan  1 00:00 dsb_msr
->> drwxr-xr-x    2 root     root             0 Jan  1 00:00 dsb_patt
->> -rw-r--r--    1 root     root          4096 Jan  1 00:00 dsb_patt_ts
->> -rw-r--r--    1 root     root          4096 Jan  1 00:00 dsb_patt_type
->> drwxr-xr-x    2 root     root             0 Jan  1 00:00 dsb_trig_patt
->> -rw-r--r--    1 root     root          4096 Jan  1 00:00 dsb_trig_ts
->> -rw-r--r--    1 root     root          4096 Jan  1 00:00 dsb_trig_type
->> -rw-r--r--    1 root     root          4096 Jan  1 00:02 enable_source
->> --w-------    1 root     root          4096 Jan  1 00:00 
->> integration_test
->> drwxr-xr-x    2 root     root             0 Jan  1 00:00 power
->> --w-------    1 root     root          4096 Jan  1 00:02 reset_dataset
->> lrwxrwxrwx    1 root     root             0 Apr  5  2021 subsystem -> 
->> ../../../../../bus/coresight
->> -rw-r--r--    1 root     root          4096 Apr  5  2021 uevent
->> -r--r--r--    1 root     root          4096 Jan  1 00:00 
->> waiting_for_supplier
->>
->> We can use the commands are similar to the below to configure the
->> TPDMs which support DSB subunit. Enable coresight sink first.
->> echo 1 > /sys/bus/coresight/devices/tmc_etf0/enable_sink
->> echo 1 > /sys/bus/coresight/devices/tpdm1/reset_dataset
->> echo 0x3 > /sys/bus/coresight/devices/tpdm1/dsb_edge/ctrl_idx
->> echo 0x1 > /sys/bus/coresight/devices/tpdm1/dsb_edge/ctrl_mask
->> echo 0x0 > /sys/bus/coresight/devices/tpdm1/dsb_edge/ctrl_val
->> echo 1 > /sys/bus/coresight/devices/tpdm1/dsb_patt/enable_ts
->> echo 1 > /sys/bus/coresight/devices/tpdm1/dsb_patt/set_type
->> echo 0 > /sys/bus/coresight/devices/tpdm1/dsb_trig_ts
->> echo 0xFFFFFFFF > /sys/bus/coresight/devices/tpdm1/dsb_patt/tpmr5
->> echo 0xFFFFFFFF > /sys/bus/coresight/devices/tpdm1/dsb_trig_patt/xpr2
->> echo 1 > /sys/bus/coresight/devices/tpdm1/enable_source
->>
->
-> I have reviewed this set, except for the last patch, rest looks fine.
-> If you could resend the series with the comments addressed, we could
-> queue this.
+With the introduction of the common RDP DTSI,
+	- RDP433 gains SPI NOR support
+	- All the IPQ9574 RDPs gains USB2 and USB3 support
 
-That's great. Thanks for your review.
+While at it, add support for WPS buttons.
 
-I also want to make a minor change.
+Since Anusha's is busy and can't take up this series right now, I'm
+stepping up to work on this series.
 
-Can I rename "tpdm_dsb_attrs_grp" to "tpdm_dsb_attr_grp" in the next 
-patch series?
+Changes in V3:
+	- Reworded the cover letter to indicate the need and advantages
+	  of common RDP DTSI
+	- Change logs are in respective patches
+	- V2: https://lore.kernel.org/linux-arm-msm/20230713105909.14209-1-quic_anusha@quicinc.com/
 
+Changes in V2:
+	- Detailed change logs are added to the respective patches.
+	- V1: https://lore.kernel.org/linux-arm-msm/20230614085040.22071-1-quic_anusha@quicinc.com/
 
-Best,
+---
+Anusha Rao (2):
+      arm64: dts: qcom: ipq9574: Add common RDP dtsi file
+      arm64: dts: qcom: ipq9574: Enable WPS buttons
 
-Tao
+ arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi | 147 +++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/ipq9574-rdp418.dts      |  63 +---------
+ arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts      |  91 +-------------
+ arch/arm64/boot/dts/qcom/ipq9574-rdp449.dts      |  65 +---------
+ arch/arm64/boot/dts/qcom/ipq9574-rdp453.dts      |  65 +---------
+ arch/arm64/boot/dts/qcom/ipq9574-rdp454.dts      |  66 +---------
+ 6 files changed, 152 insertions(+), 345 deletions(-)
+---
+base-commit: 18030226a48de1fbfabf4ae16aaa2695a484254f
+change-id: 20230927-common-rdp-52f90fd0fd77
 
->
-> Suzuki
+Best regards,
+-- 
+Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+
