@@ -2,83 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CCEB27B0163
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 12:08:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 42EEB7B01BD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 12:23:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231231AbjI0KIY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Sep 2023 06:08:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60344 "EHLO
+        id S231416AbjI0KXc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Sep 2023 06:23:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231210AbjI0KIW (ORCPT
+        with ESMTP id S231235AbjI0KXG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Sep 2023 06:08:22 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F34CAEB;
-        Wed, 27 Sep 2023 03:08:20 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38R9dL5S001454;
-        Wed, 27 Sep 2023 10:08:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=vcmf/AbqgkauR+V3cXJxEoKuVFxfwi5GPyt7nCXwHtQ=;
- b=iE3sLYMpOIdQzkImaHGeJihVeIQGwAu9Yr9Jpfwx8cP2UDB8CeLzQS2gfk3WyKIanhXD
- WvzPK5YH8RHcVNEP4RyY2fq9n6JGaN/+SpewQ9GyIwka06RU61MB5tLa7EYxUG6G1226
- RZ3xKPzWzfNyvFvR638NBaqMVjcvXS5q1wpLqK2e1aF8IOyGHOv+dFnL+2onD02fPuBY
- Lyp3DY5wtiJaNAnrfzXRpia1dbjPVM7tr8aCM5XZXW311sFbF0Zw95n0kEw0LYO+4VnP
- IVNOcaDo6rSclsbatH30r0ivhFLMnSJogzN+MA6ystF+9nRTlZGfrlW16VzoA4gHdL26 Ow== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tcda7rkqm-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 27 Sep 2023 10:08:09 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38RA88v2017101
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 27 Sep 2023 10:08:08 GMT
-Received: from [10.218.45.181] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Wed, 27 Sep
- 2023 03:08:03 -0700
-Message-ID: <4e130774-0f4f-eaf1-3916-2860ea232150@quicinc.com>
-Date:   Wed, 27 Sep 2023 15:38:00 +0530
+        Wed, 27 Sep 2023 06:23:06 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB668449A;
+        Wed, 27 Sep 2023 03:11:19 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84DF4C433C8;
+        Wed, 27 Sep 2023 10:11:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1695809478;
+        bh=AsqrDF9NU5xeBJ5ZD8/j8B6x2uUVmpdua9PB6GUbGBU=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=RJ2L3aiM74bOH7cDQ4Jb3leOE49w45romXH+DmI9x30rE3CErmU1XRY2KNXxJES7m
+         Sm0uVOwqtYyCOPZIiEvmXxO4SLjmfOoCUhI1LYyrzm1Fr0xDnFS+A/hEYQ7zCC3Kj2
+         BPDe/uBTiqybVVN4/OCW7TSSJdphz/spEFLcL6eb8XrcEnYPV8Qq4oLDdJfMALxuS7
+         yLmJqt74fBvM7AoQkgnFkUCGWuQ53tUJK+X2QSiM4vvZqDsv0NX/v8ClNC3NMk5TAi
+         nqZ3sLehBXVwIWYUZzqIh+qM0oCAudKRSuV+hbc4R93FgC3kB8weQGXHHtKWPWpP4A
+         UHnvDbnXcdpxQ==
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2c12fc235fbso124029621fa.0;
+        Wed, 27 Sep 2023 03:11:18 -0700 (PDT)
+X-Gm-Message-State: AOJu0YyVGhzuOGyi3SWnMBPkp18zKw3Bws8RgFsgWzh//Pr8tl/C8Wtz
+        hvdZ3BIH+V2y1YQqgqguzoNKT7VUlQxVGEANHb0=
+X-Google-Smtp-Source: AGHT+IErHOGMjYxrQ1t/+DgPaZ4dBmBSaTLegmhhD5AyCtWVIwsd7X66QDMROebWfGTc2GB04ctfmhYYpYi8z7uDJJs=
+X-Received: by 2002:a2e:700d:0:b0:2bc:fd50:573d with SMTP id
+ l13-20020a2e700d000000b002bcfd50573dmr678352ljc.23.1695809476737; Wed, 27 Sep
+ 2023 03:11:16 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.2
-Subject: Re: [PATCH V3 3/4] arm64: dts: qcom: sc7280: Add UFS nodes for sc7280
- IDP board
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <mani@kernel.org>,
-        <alim.akhtar@samsung.com>, <bvanassche@acm.org>,
-        <avri.altman@wdc.com>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <cros-qcom-dts-watchers@chromium.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>
-References: <20230927081858.15961-1-quic_nitirawa@quicinc.com>
- <20230927081858.15961-4-quic_nitirawa@quicinc.com>
- <b5146a7f-91b6-480c-b61a-514a365dc41d@linaro.org>
-From:   Nitin Rawat <quic_nitirawa@quicinc.com>
-In-Reply-To: <b5146a7f-91b6-480c-b61a-514a365dc41d@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: xa7tpmUHRGUe-ofpUtvO91LwwWOcl2G4
-X-Proofpoint-GUID: xa7tpmUHRGUe-ofpUtvO91LwwWOcl2G4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-09-27_05,2023-09-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 malwarescore=0
- clxscore=1015 lowpriorityscore=0 impostorscore=0 bulkscore=0
- mlxlogscore=846 priorityscore=1501 mlxscore=0 suspectscore=0 spamscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2309270083
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+References: <20230927055954.3755-1-quic_aiquny@quicinc.com>
+ <CAMj1kXEh=yQ12v1Ht6=-vgXVe8VCQTPdUD8AowkKcpyDXh_0mg@mail.gmail.com> <af59ec04-aa68-5a22-0f3f-f4872cefeb46@quicinc.com>
+In-Reply-To: <af59ec04-aa68-5a22-0f3f-f4872cefeb46@quicinc.com>
+From:   Ard Biesheuvel <ardb@kernel.org>
+Date:   Wed, 27 Sep 2023 10:11:05 +0000
+X-Gmail-Original-Message-ID: <CAMj1kXEUTOpATv_jbimGktSXBBweyfVNPpqWWJaJNp0U-zvg+w@mail.gmail.com>
+Message-ID: <CAMj1kXEUTOpATv_jbimGktSXBBweyfVNPpqWWJaJNp0U-zvg+w@mail.gmail.com>
+Subject: Re: [PATCH] ARM: kprobes: Explicitly assign register for local variables
+To:     "Aiqun(Maria) Yu" <quic_aiquny@quicinc.com>
+Cc:     linux@armlinux.org.uk, mhiramat@kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        kernel@quicinc.com, quic_lijuang@quicinc.com,
+        linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -87,40 +61,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, 27 Sept 2023 at 09:44, Aiqun(Maria) Yu <quic_aiquny@quicinc.com> wr=
+ote:
+>
+> On 9/27/2023 5:26 PM, Ard Biesheuvel wrote:
+> > Hello Maria,
+> >
+> > On Wed, 27 Sept 2023 at 06:00, Maria Yu <quic_aiquny@quicinc.com> wrote=
+:
+> >>
+> >> Registers r7 is removed in clobber list, so compiler may choose r7 for
+> >> local variables usage, while r7 will be actually updated by the inline=
+ asm
+> >> code.
+> >
+> > The inline asm does not update R7, it preserves and restores it.
+> That is the asm is updating r7 purposely and compiler still choose r7
+> for the asm local varialbe and use it inside the asm code.
+> So the change is to fix the issue when "r7 is removed from the clobber
+> list of current asm code while actually r7 shouldn't be choosed for the
+> current asm local variables".
+> The issue is only reproducible when ftrace is not enabled, and r7 is
+> removed from the current clobber list.
+>
+> Let me have the assemble code that will make you understand better.
+>
+> --the original code:
+> "mov    r11, r7                 \n\t"
+> ...
+> "ldmia  %[regs], {r0-r7}        \n\t"
+> "blx    %[fn]                   \n\t"
+> ...
+> "mov    r7, r11                 \n\t"
+>
+> --After compile to choose register for [fn] and [regs].
+> mov     r11, r7
+> ldr=E2=80=83=E2=80=83r7, [r1, #16] //r7 used for store asi->insn_fn
+> ...
+> ldmia.w=E2=80=83=E2=80=83ip, {r0, r1, r2, r3, r4, r5, r6, r7}
+> blx r7
+> ...
+> mov r7,r11
+>
+> The current change is to avoid by fix the registers for local variable
+> usage and not choose r7 for [fn].
+>
 
+OK, I understand now, thanks.
 
-On 9/27/2023 2:55 PM, Konrad Dybcio wrote:
-> On 27.09.2023 10:18, Nitin Rawat wrote:
->> Add UFS host controller and PHY nodes for sc7280 IDP board.
->>
->> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 19 +++++++++++++++++++
->>   1 file changed, 19 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> index 2ff549f4dc7a..a0059527d9e4 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> @@ -499,6 +499,25 @@
->>   	status = "okay";
->>   };
->>
->> +&ufs_mem_hc {
->> +	reset-gpios = <&tlmm 175 GPIO_ACTIVE_LOW>;
->> +	vcc-supply = <&vreg_l7b_2p9>;
->> +	vcc-max-microamp = <800000>;
->> +	vccq-supply = <&vreg_l9b_1p2>;
->> +	vccq-max-microamp = <900000>;
->> +	vccq2-supply = <&vreg_l9b_1p2>;
->> +	vccq2-max-microamp = <900000>;
-> Were you able to confirm it's correct (see the q in [1])
-Sorry I missed to reply to your query in my last reply .
-Yes Kodiak support both UFS2.x and UFS3.x and UFS2.x needs
-vccq2 . Hence we need that node.
+Would it help if we just always enabled frame pointers for this source file=
+?
 
-
-> 
-> Konrad
-> 
-> [1] https://lore.kernel.org/linux-arm-msm/20230926162042.14180-1-quic_nitirawa@quicinc.com/T/#m72ca82a9145af380ffd37415455d6ef3d4195795
+--- a/arch/arm/probes/kprobes/Makefile
++++ b/arch/arm/probes/kprobes/Makefile
+@@ -9,6 +9,7 @@ test-kprobes-objs               :=3D test-core.o
+ ifdef CONFIG_THUMB2_KERNEL
+ obj-$(CONFIG_KPROBES)          +=3D actions-thumb.o checkers-thumb.o
+ test-kprobes-objs              +=3D test-thumb.o
++KBUILD_CFLAGS                  +=3D -fno-omit-frame-pointer
+ else
+ obj-$(CONFIG_KPROBES)          +=3D actions-arm.o checkers-arm.o
+ obj-$(CONFIG_OPTPROBES)                +=3D opt-arm.o
