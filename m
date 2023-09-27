@@ -2,286 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 71FD37B0EB7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 00:01:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA30E7B0EBD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 00:02:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229539AbjI0WBp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Sep 2023 18:01:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56552 "EHLO
+        id S229493AbjI0WCC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Sep 2023 18:02:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229458AbjI0WBp (ORCPT
+        with ESMTP id S229731AbjI0WCB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Sep 2023 18:01:45 -0400
-Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B466114
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 15:01:42 -0700 (PDT)
-Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-59f6492b415so112884017b3.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 15:01:42 -0700 (PDT)
+        Wed, 27 Sep 2023 18:02:01 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEF5C193
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 15:01:58 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-50444e756deso15731194e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 15:01:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695852102; x=1696456902; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=DK2//dAy5K7j90PyspmllW/O9Qk44y8OxCULgT1tmAM=;
-        b=JeJq7CMIUKLS4Y5iGQl72hJ6UaLMpBGUm2dGNiYRAD9xm2XArgxgwj05TfqMzZR7wb
-         EV0u2MuBnIuEEhoEIyBrG3q1jBAbyDz1sE/lgBG7mndP4IQOzn9yYAa2kfqbDJf2PBuq
-         MHxRkZoynikU+UpeKLxbV94ZUv9UmEGyoJNrUNyODy04nXxGAAlVUNOR4E4aA5EiMwdd
-         6/EqqpsBAOWH8eXtBEoNqzAZCJ+aeLB1fGjxV2LjKLTi0acx6LYMwgGWzMr6GTzWmqwM
-         gTIASpXEw6ultnudiXdh+5wLL4IugLxZQpMKvoaeYkvCWcw4dnv55bDYlcEBvhYthdCR
-         fCtg==
+        d=chromium.org; s=google; t=1695852117; x=1696456917; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:user-agent
+         :from:references:in-reply-to:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oSjejR5JF3wP/eMQJYeeQ3/RdpG//Fx9fX4rCgiiwsA=;
+        b=nA1MPKGhAJBCTrEnASX1o3wwHSDH3cO7zZokWQCm61ftStt8KJlPtUQpkOrcsMeVT2
+         J83k8ko1v5Qu6jWhsq+BONEG2J44sG3uu3wWSulnjB6OCj0HZl04K0ZsSXe8dwHrE+TE
+         glkT00cvZKpeGjUjX1PC6WAr1YZwKtRFcJMaI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695852102; x=1696456902;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DK2//dAy5K7j90PyspmllW/O9Qk44y8OxCULgT1tmAM=;
-        b=W370PP2L/bWqlxNSk9t+tPZMRNnSBAYTsr/zeXmyVOwA5YPgFYEpyE/63/sqfhu3XD
-         /EjFh6oAEuPhTcrk7epNDdoBYhTTDzaiLo05+SmKDraykdARaG2fBf1PZ7HNS9Xn/BeB
-         H7ZIe7zbQM+4zY7YZF53vL5eLZlUhzsVxL1aDCLo3CsEMUrAMOUrm1fy1kKZOAEL1U3b
-         SybAiPt0Z6zgcYNaB3gChhfiEdYNUj08LGQNZNk27uc1BQ9lcfTW8jVefBalOwSNeyuI
-         CP6M6CpMFL6H5iqLPujrqcZTB/Kfgv3S1bjJjIvUjpEiSO1K+c67p8GPVQFK4UuG1CJ0
-         W9Zw==
-X-Gm-Message-State: AOJu0YztgLLEOS9E+d71wseRMgR6E9O4Sn+9lPgsKA+pL1gg4IfCYJB2
-        +E1XYva8e36kpY2SHovRTbiQkjPCm2P88y232PsDwg==
-X-Google-Smtp-Source: AGHT+IGjs7bRV3ZmI7Hf2ZEtwAj4BnVrYRotu4/pK3M8QHQkiZIQevkBsKFMThogOqhGaijWSkFEIVI4Ek97lZGZcEc=
-X-Received: by 2002:a81:49cb:0:b0:59f:d01:779f with SMTP id
- w194-20020a8149cb000000b0059f0d01779fmr2770858ywa.23.1695852101790; Wed, 27
- Sep 2023 15:01:41 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1695852117; x=1696456917;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:user-agent
+         :from:references:in-reply-to:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=oSjejR5JF3wP/eMQJYeeQ3/RdpG//Fx9fX4rCgiiwsA=;
+        b=gDSjj4Z5v3pWwPMbsXbdGhzmyodMqHADLqHsY5X4VTnLDdbsip+vTBLf4WwMmIq0mi
+         Q7lrsvzxLhIAMvui1PQKRGpwylOR6hk37AbvIkZ0i3rd+mEk5bbsP/uNDbNToZ9HFoIR
+         qr+WCld0cdSnQ6gSNe72pLKq4DmnyZ7L2LOM3LCwLhYAE8x+tyHE1tSmYyMsGhdRI64/
+         AaFyQnKdzm9cxtXzST0GkiowMgYVuXgDTlW3ARI+qO2yniPnjv5YtTXk4iH8V4V3DfhR
+         tVlKktw0EO5g0KOoytIPdIKTWcaUvG8maC1LLN7/heyX13RpXH1AfYZiwkfVPbDAUVrs
+         iwzA==
+X-Gm-Message-State: AOJu0YwZOABrnOUXJG7AKUieXOeR+XcBII/KOE530RMw0WTw2uhLzlIe
+        Ij4nNpbl2ko7/+gp9VPHi/FEuYTyqVad2boEjkpkQg==
+X-Google-Smtp-Source: AGHT+IEgoSwtXUeWp+41zOUCP+Gyi7NJVp2syU0i8Hpe8Zg2aPjEvc03dD/eiB9Gw5SnGn3VLWFNtVmb2S4r5fJtUcI=
+X-Received: by 2002:ac2:410e:0:b0:502:f740:220 with SMTP id
+ b14-20020ac2410e000000b00502f7400220mr2552704lfi.58.1695852116130; Wed, 27
+ Sep 2023 15:01:56 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 27 Sep 2023 17:01:55 -0500
 MIME-Version: 1.0
-References: <1695848028-18023-1-git-send-email-quic_khsieh@quicinc.com> <1695848028-18023-8-git-send-email-quic_khsieh@quicinc.com>
-In-Reply-To: <1695848028-18023-8-git-send-email-quic_khsieh@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 28 Sep 2023 01:00:32 +0300
-Message-ID: <CAA8EJpor3WEYmN=hQJQPFyjZGdr4j8F-XAB=2BDVRFCTNioEiA@mail.gmail.com>
-Subject: Re: [PATCH v4 7/8] drm/msm/dp: add pm_runtime_force_suspend()/resume()
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <1d9bf80d-0267-937b-4dd9-c57db7a89cb4@quicinc.com>
+References: <1694813901-26952-1-git-send-email-quic_khsieh@quicinc.com>
+ <1694813901-26952-7-git-send-email-quic_khsieh@quicinc.com>
+ <CAA8EJpqPXoFX4LXyXYgfh07Vpxg-KgD8VBR6x5bXf4GOJmbOtw@mail.gmail.com>
+ <2f98d5f1-57c1-d9fe-cb1c-b975db057287@quicinc.com> <CAA8EJpr2wRq6Txi7YAQpJKa_9UGqH_nmHzvVOaAPkwOrtDg4Tw@mail.gmail.com>
+ <CAE-0n53dqHONzMTd_ZC-fKWTzDVq6Wqwo4OFZMUcghZ5SD5RhA@mail.gmail.com>
+ <65566a68-3510-2e5f-7d57-e4dba08c008c@quicinc.com> <1d9bf80d-0267-937b-4dd9-c57db7a89cb4@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Wed, 27 Sep 2023 17:01:55 -0500
+Message-ID: <CAE-0n51Hrs66oG4NF5rDETkVO-ocG_6_=Aqc5cE-qPDViSgKyA@mail.gmail.com>
+Subject: Re: [PATCH v3 6/7] drm/msm/dp: add pm_runtime_force_suspend()/resume()
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>
 Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, andersson@kernel.org, quic_abhinavk@quicinc.com,
-        quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
-        marijn.suijten@somainline.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+        sean@poorly.run, dianders@chromium.org, vkoul@kernel.org,
+        daniel@ffwll.ch, airlied@gmail.com, agross@kernel.org,
+        andersson@kernel.org, quic_jesszhan@quicinc.com,
+        quic_sbillaka@quicinc.com, marijn.suijten@somainline.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 27 Sept 2023 at 23:54, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+Quoting Kuogee Hsieh (2023-09-25 09:07:18)
 >
-> After incorporated pm_runtime framework into eDP/DP driver, the
+> On 9/22/2023 6:35 PM, Abhinav Kumar wrote:
+> >
+> > Doing link training when we get hpd instead of atomic_enable() is a
+> > design choice we have been following for a while because for the case
+> > when link training fails in atomic_enable() and setting the link
+> > status property as you mentioned, the compositor needs to be able to
+> > handle that and also needs to try with a different resolution or take
+> > some other corrective action. We have seen many compositors not able
+> > to handle this complexity. So the design sends the hotplug to usermode
+> > only after link training succeeds.
+> >
+> > I do not think we should change this design unless prototyped with an
+> > existing compositor such as chrome or android at this point.
+> >
+> > Thanks
+> >
+> > Abhinav
+>
+>
+> We did perform link training at atomic_enable() at eDP case since we can
+> assume link training will always success without link rate or link lane
+> being reduced.
+>
+> However for external DP case, link training can not be guarantee always
+> success without link rate or lane being reduced as Abhinav mentioned.
+>
+> In addition,=C2=A0 CTS (compliance test) it required to complete link
+> training within 10ms after hpd asserted.
 
-incorporating
-
-
-> original dp_pm_suspend() to handle power off both DP phy and
-> controller during suspend and dp_pm_resume() to handle power on
-> both DP phy and controller during resume are not necessary since
-> those function are replaced by dp_pm_runtime_suspend() and
-> dp_pm_runtime_resume() through pm runtime framework.
-> Therefore add pm framework provides functions,
-> pm_runtime_force_suspend()/resume() to complete incorporating pm
-> runtime framework into DP driver.
->
-> Changes in v4:
-> -- drop both dp_pm_prepare() and dp_pm_compete() from this change
-> -- delete ST_SUSPENDED state
-> -- rewording commit text to add more details regrading the purpose
->    of this change
->
-> Changes in v3:
-> -- replace dp_pm_suspend() with pm_runtime_force_suspend()
-> -- replace dp_pm_resume() with pm_runtime_force_resume()
->
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/dp/dp_display.c | 113 ++----------------------------------
->  1 file changed, 5 insertions(+), 108 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 9158a2c..711d262 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -49,7 +49,6 @@ enum {
->         ST_CONNECTED,
->         ST_DISCONNECT_PENDING,
->         ST_DISPLAY_OFF,
-> -       ST_SUSPENDED,
->  };
->
->  enum {
-> @@ -560,7 +559,7 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
->         drm_dbg_dp(dp->drm_dev, "Before, type=%d hpd_state=%d\n",
->                         dp->dp_display.connector_type, state);
->
-> -       if (state == ST_DISPLAY_OFF || state == ST_SUSPENDED) {
-> +       if (state == ST_DISPLAY_OFF) {
->                 mutex_unlock(&dp->event_mutex);
->                 return 0;
->         }
-> @@ -674,7 +673,7 @@ static int dp_irq_hpd_handle(struct dp_display_private *dp, u32 data)
->         drm_dbg_dp(dp->drm_dev, "Before, type=%d hpd_state=%d\n",
->                         dp->dp_display.connector_type, state);
->
-> -       if (state == ST_DISPLAY_OFF || state == ST_SUSPENDED) {
-> +       if (state == ST_DISPLAY_OFF) {
->                 mutex_unlock(&dp->event_mutex);
->                 return 0;
->         }
-> @@ -1321,110 +1320,10 @@ static int dp_pm_runtime_resume(struct device *dev)
->         return 0;
->  }
->
-> -static int dp_pm_resume(struct device *dev)
-> -{
-> -       struct platform_device *pdev = to_platform_device(dev);
-> -       struct msm_dp *dp_display = platform_get_drvdata(pdev);
-> -       struct dp_display_private *dp;
-> -       int sink_count = 0;
-> -
-> -       dp = container_of(dp_display, struct dp_display_private, dp_display);
-> -
-> -       mutex_lock(&dp->event_mutex);
-> -
-> -       drm_dbg_dp(dp->drm_dev,
-> -               "Before, type=%d core_inited=%d phy_inited=%d power_on=%d\n",
-> -               dp->dp_display.connector_type, dp->core_initialized,
-> -               dp->phy_initialized, dp_display->power_on);
-> -
-> -       /* start from disconnected state */
-> -       dp->hpd_state = ST_DISCONNECTED;
-> -
-> -       /* turn on dp ctrl/phy */
-> -       dp_display_host_init(dp);
-> -
-> -       if (dp_display->is_edp)
-> -               dp_catalog_ctrl_hpd_enable(dp->catalog);
-> -
-> -       if (dp_catalog_link_is_connected(dp->catalog)) {
-> -               /*
-> -                * set sink to normal operation mode -- D0
-> -                * before dpcd read
-> -                */
-> -               dp_display_host_phy_init(dp);
-> -               dp_link_psm_config(dp->link, &dp->panel->link_info, false);
-> -               sink_count = drm_dp_read_sink_count(dp->aux);
-> -               if (sink_count < 0)
-> -                       sink_count = 0;
-> -
-> -               dp_display_host_phy_exit(dp);
-> -       }
-> -
-> -       dp->link->sink_count = sink_count;
-> -       /*
-> -        * can not declared display is connected unless
-> -        * HDMI cable is plugged in and sink_count of
-> -        * dongle become 1
-> -        * also only signal audio when disconnected
-> -        */
-> -       if (dp->link->sink_count) {
-> -               dp->dp_display.link_ready = true;
-> -       } else {
-> -               dp->dp_display.link_ready = false;
-> -               dp_display_handle_plugged_change(dp_display, false);
-> -       }
-> -
-> -       drm_dbg_dp(dp->drm_dev,
-> -               "After, type=%d sink=%d conn=%d core_init=%d phy_init=%d power=%d\n",
-> -               dp->dp_display.connector_type, dp->link->sink_count,
-> -               dp->dp_display.link_ready, dp->core_initialized,
-> -               dp->phy_initialized, dp_display->power_on);
-> -
-> -       mutex_unlock(&dp->event_mutex);
-> -
-> -       return 0;
-> -}
-> -
-> -static int dp_pm_suspend(struct device *dev)
-> -{
-> -       struct platform_device *pdev = to_platform_device(dev);
-> -       struct msm_dp *dp_display = platform_get_drvdata(pdev);
-> -       struct dp_display_private *dp;
-> -
-> -       dp = container_of(dp_display, struct dp_display_private, dp_display);
-> -
-> -       mutex_lock(&dp->event_mutex);
-> -
-> -       drm_dbg_dp(dp->drm_dev,
-> -               "Before, type=%d core_inited=%d  phy_inited=%d power_on=%d\n",
-> -               dp->dp_display.connector_type, dp->core_initialized,
-> -               dp->phy_initialized, dp_display->power_on);
-> -
-> -       /* mainlink enabled */
-> -       if (dp_power_clk_status(dp->power, DP_CTRL_PM))
-> -               dp_ctrl_off_link_stream(dp->ctrl);
-> -
-> -       dp_display_host_phy_exit(dp);
-
-I was under the impression that dp_pm_runtime_suspend / _resume
-functions perform phy init/exit only in eDP cases. Can we really drop
-the main suspend/resume functions?
-
-> -
-> -       /* host_init will be called at pm_resume */
-> -       dp_display_host_deinit(dp);
-> -
-> -       dp->hpd_state = ST_SUSPENDED;
-> -
-> -       drm_dbg_dp(dp->drm_dev,
-> -               "After, type=%d core_inited=%d phy_inited=%d power_on=%d\n",
-> -               dp->dp_display.connector_type, dp->core_initialized,
-> -               dp->phy_initialized, dp_display->power_on);
-> -
-> -       mutex_unlock(&dp->event_mutex);
-> -
-> -       return 0;
-> -}
-> -
->  static const struct dev_pm_ops dp_pm_ops = {
->         SET_RUNTIME_PM_OPS(dp_pm_runtime_suspend, dp_pm_runtime_resume, NULL)
-> -       .suspend = dp_pm_suspend,
-> -       .resume =  dp_pm_resume,
-> +       SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
-> +                                pm_runtime_force_resume)
->  };
->
->  static struct platform_driver dp_display_driver = {
-> @@ -1658,9 +1557,6 @@ void dp_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
->
->         dp_display = container_of(dp, struct dp_display_private, dp_display);
->
-> -       if (dp->is_edp)
-> -               dp_hpd_unplug_handle(dp_display, 0);
-
-Why?
-
-> -
->         mutex_lock(&dp_display->event_mutex);
->
->         state = dp_display->hpd_state;
-> @@ -1748,6 +1644,7 @@ void dp_bridge_hpd_disable(struct drm_bridge *bridge)
->         dp_catalog_ctrl_hpd_disable(dp->catalog);
->
->         dp_display->internal_hpd = false;
-> +       dp->hpd_state = ST_DISCONNECTED;
-
-Why? We have only disabled sending of the HPD events. The dongle might
-still be connected.
+Is it possible to change that timeout? I have to look around for the CTS
+parameters because I'm pretty confused how it can work. What do we do if
+DP wakes the system from suspend and asserts HPD? We need resume time to
+be < 10ms?  That's not realistic.
 
 >
->         pm_runtime_mark_last_busy(&dp->pdev->dev);
->         pm_runtime_put_autosuspend(&dp->pdev->dev);
-> --
-> 2.7.4
+> I am not sure do link training at atomic_enable() can meet this timing
+> requirement.
 >
 
+At least in the DP spec itself it doesn't require the link to be trained
+within 10ms of HPD being asserted. Instead it simply recommends that the
+OS start configuring the display promptly after HPD is asserted, e.g.
+within 100ms. There's some strict timing on IRQ_HPD, so the driver must
+read DPCD registers within 100ms of IRQ_HPD rising edge; maybe that is
+what CTS is checking for?
 
---
-With best wishes
-
-Dmitry
+TL;DR: I don't see why CTS should stop us from link training in
+atomic_enable(). It would be beneficial to do so to make eDP and DP the
+same. It would also help to report a drm connector being connected
+_before_ link training so that userspace knows the link itself is the
+bad part of the equation (and not that the DP connector looks
+disconnected to userspace when in fact it really is connected and the
+monitor is asserting HPD, just the link training failed).
