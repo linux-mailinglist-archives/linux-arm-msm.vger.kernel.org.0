@@ -2,98 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 56CA87B0748
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 16:50:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CD947B0772
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 16:57:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232100AbjI0OuN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Sep 2023 10:50:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50640 "EHLO
+        id S232248AbjI0O5p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Sep 2023 10:57:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232046AbjI0OuN (ORCPT
+        with ESMTP id S232238AbjI0O5o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Sep 2023 10:50:13 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 976C6F4;
-        Wed, 27 Sep 2023 07:50:12 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E43D4C433C7;
-        Wed, 27 Sep 2023 14:50:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1695826212;
-        bh=S3t6WfkBtrlDPyuQRQNCERHweGiWYZNq6In/oIlqkrY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Xqxl9YtfF6gBWEWkIBqKeC00ViFsurxit8aICZyKBgxLkzQoi3sNactgDQgsQQnLv
-         M/g88sOmrJaThi22O6njdm/mYIzheuoxffYc0hYtqL7HMoLB+8XJ9kSLofzNbW8/Oe
-         TycmM4/lWZKFT1/C64CKzRK8G1w/Yr1mjU/BZi3Rj8QECEh+FQ/NTHxeFVnxwpK2E2
-         j6cmNrD0z6R/jlTDbqOSGXX09wxZeq9QU+3IGq6ehOSy+sFAPa9EJ5W9VRJCK3QTFg
-         iuxAe4AmbO4cZA/iEEAacM4CnYJ8D/q9UsycbydPntdakXXnAP+rERnjji24AVVDb7
-         dANP334bOgQEg==
-Date:   Wed, 27 Sep 2023 16:50:09 +0200
-From:   Mark Brown <broonie@kernel.org>
-To:     Wesley Cheng <quic_wcheng@quicinc.com>
-Cc:     mathias.nyman@intel.com, gregkh@linuxfoundation.org,
-        lgirdwood@gmail.com, perex@perex.cz, tiwai@suse.com,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, srinivas.kandagatla@linaro.org,
-        bgoswami@quicinc.com, Thinh.Nguyen@synopsys.com,
-        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v7 09/33] ASoC: qdsp6: q6afe: Increase APR timeout
-Message-ID: <ZRRBIa+bVSqTHprO@finisterre.sirena.org.uk>
-References: <20230921214843.18450-1-quic_wcheng@quicinc.com>
- <20230921214843.18450-10-quic_wcheng@quicinc.com>
+        Wed, 27 Sep 2023 10:57:44 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48B09F9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 07:57:42 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2bff776fe0bso189136951fa.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 07:57:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1695826660; x=1696431460; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=kF3xTzsn9HLZQj02Y4JAVq4+cnHK5cK7+MRBOAK1zto=;
+        b=zSHzsHoystgSRI8WbSiGKcLfQskrpMxRxAB7ABn3riafYp8WN13+U4YT8L77Mw6W0f
+         HlnWyaGbi6Sy2AFz0T6jr3/fu55o6cvQj3/AiSF56I2EYHpCa6Shb30U/6pYPW80mW1l
+         qOemVXQDrwuXuXOme4SGTK+owFNnvrGjEOq0MPcU17uz01WoZmeKqcgBHdfAaeD8EYy9
+         jsBYUPRiE+YWntvqQt2BVNqephU2XWl4P5A4zn8g3Q1hwNduz3WgCK8RfvhEwR6WMm2X
+         lyUauhquPV8zo7Np3nWwrw2cxyqRwuaqd9X5L7w5qTW2JbtWLdjKrO7MBtxREuuQZoBq
+         Bf7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695826660; x=1696431460;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kF3xTzsn9HLZQj02Y4JAVq4+cnHK5cK7+MRBOAK1zto=;
+        b=v1m0q5X/X6vSwMW4atf/ddcFd21h0ZfLliArTCyPj7TMhi5n92FGEdFiOBA1Xr87fW
+         E2FJdYG8W7PXr7JsUgM9IfDUqYIAEuEAMqbz+Fv64pRarA/4DSe0iW+l2Rg2lXE7hFfC
+         V/rj92vlW0YPjv05XyOBeqYX8SghfbnPbtfg22JLfM/jd/k+1a1G4uvEOEE4+TrOuSp+
+         3Lmzwgp7jBbkf1FZmd+IxHglxKxKwcqDiqS8DjBqXIszfOTcWga+KHRXpNrCOBf2gDjz
+         iY2roSBJjFWZu6pGXc0QMyMjl1l7LwIcYklcmoyXPRWysMkS5Trph/A2ipIlwA0YhKLp
+         kDag==
+X-Gm-Message-State: AOJu0YxfD9PisrgtN/F/MBkdDj5vEhQpW0Sr4ysditYqwHXtoBeBK3iJ
+        WngqO61mOg8AtkFyM0abz7Cd
+X-Google-Smtp-Source: AGHT+IGG7mnyMmEuRPdbZUTFhUCWPBXMktolkIEDpgdfwWvheKVZBGucA66WnqOUDknn4aOsIf4umw==
+X-Received: by 2002:a2e:9d55:0:b0:2c0:1cfd:8698 with SMTP id y21-20020a2e9d55000000b002c01cfd8698mr2040919ljj.36.1695826660497;
+        Wed, 27 Sep 2023 07:57:40 -0700 (PDT)
+Received: from thinkpad.fritz.box ([2a02:2454:9d09:3f00:b024:394e:56d7:d8b4])
+        by smtp.gmail.com with ESMTPSA id j26-20020a170906831a00b0099bc8bd9066sm9405220ejx.150.2023.09.27.07.57.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Sep 2023 07:57:39 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     lpieralisi@kernel.org, kw@linux.com
+Cc:     andersson@kernel.org, konrad.dybcio@linaro.org,
+        bhelgaas@google.com, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+        abel.vesa@linaro.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v2] PCI: qcom: Make use of QCOM_PCIE_LINK_SPEED_TO_BW() macro for encoding link speed
+Date:   Wed, 27 Sep 2023 16:57:38 +0200
+Message-Id: <20230927145738.115843-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="68PF2jVZjsLysHnC"
-Content-Disposition: inline
-In-Reply-To: <20230921214843.18450-10-quic_wcheng@quicinc.com>
-X-Cookie: Save energy:  Drive a smaller shell.
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Instead of hardcoding the link speed in MBps, let's make use of the
+existing QCOM_PCIE_LINK_SPEED_TO_BW() macro that does the encoding of the
+link speed for us.
 
---68PF2jVZjsLysHnC
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+This eliminates the need for a switch case in qcom_pcie_icc_update() and
+also works for future Gen speeds without any code modifications.
 
-On Thu, Sep 21, 2023 at 02:48:19PM -0700, Wesley Cheng wrote:
-> For USB offloading situations, the AFE port start command will result in a
-> QMI handshake between the Q6DSP and the main processor.  Depending on if
-> the USB bus is suspended, this routine would require more time to complete,
-> as resuming the USB bus has some overhead associated with it.  Increase the
-> timeout to 3s to allow for sufficient time for the USB QMI stream enable
-> handshake to complete.
+Suggested-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
 
-...
+Changes in v2:
 
-> -#define TIMEOUT_MS 1000
-> +#define TIMEOUT_MS 3000
+- Switched to QCOM_PCIE_LINK_SPEED_TO_BW() macro as per Bjorn's suggestion
+  https://lore.kernel.org/linux-pci/20230924160713.217086-1-manivannan.sadhasivam@linaro.org/
 
-That seems worryingly large but if it's what the hardware/firmware needs
-I guess there's nothing doing - even the 1s that's being replaced would
-be nasty if we ever actually hit it.
+ drivers/pci/controller/dwc/pcie-qcom.c | 24 ++++++------------------
+ 1 file changed, 6 insertions(+), 18 deletions(-)
 
---68PF2jVZjsLysHnC
-Content-Type: application/pgp-signature; name="signature.asc"
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index 297442c969b6..dce80d6dc88f 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -148,6 +148,9 @@
+ 
+ #define QCOM_PCIE_CRC8_POLYNOMIAL		(BIT(2) | BIT(1) | BIT(0))
+ 
++#define QCOM_PCIE_LINK_SPEED_TO_BW(speed) \
++		MBps_to_icc(PCIE_SPEED2MBS_ENC(pcie_link_speed[speed]) / BITS_PER_BYTE)
++
+ #define QCOM_PCIE_1_0_0_MAX_CLOCKS		4
+ struct qcom_pcie_resources_1_0_0 {
+ 	struct clk_bulk_data clks[QCOM_PCIE_1_0_0_MAX_CLOCKS];
+@@ -1347,7 +1350,7 @@ static int qcom_pcie_icc_init(struct qcom_pcie *pcie)
+ 	 * Set an initial peak bandwidth corresponding to single-lane Gen 1
+ 	 * for the pcie-mem path.
+ 	 */
+-	ret = icc_set_bw(pcie->icc_mem, 0, MBps_to_icc(250));
++	ret = icc_set_bw(pcie->icc_mem, 0, QCOM_PCIE_LINK_SPEED_TO_BW(1));
+ 	if (ret) {
+ 		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
+ 			ret);
+@@ -1360,7 +1363,7 @@ static int qcom_pcie_icc_init(struct qcom_pcie *pcie)
+ static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
+ {
+ 	struct dw_pcie *pci = pcie->pci;
+-	u32 offset, status, bw;
++	u32 offset, status;
+ 	int speed, width;
+ 	int ret;
+ 
+@@ -1377,22 +1380,7 @@ static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
+ 	speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, status);
+ 	width = FIELD_GET(PCI_EXP_LNKSTA_NLW, status);
+ 
+-	switch (speed) {
+-	case 1:
+-		bw = MBps_to_icc(250);
+-		break;
+-	case 2:
+-		bw = MBps_to_icc(500);
+-		break;
+-	default:
+-		WARN_ON_ONCE(1);
+-		fallthrough;
+-	case 3:
+-		bw = MBps_to_icc(985);
+-		break;
+-	}
+-
+-	ret = icc_set_bw(pcie->icc_mem, 0, width * bw);
++	ret = icc_set_bw(pcie->icc_mem, 0, width * QCOM_PCIE_LINK_SPEED_TO_BW(speed));
+ 	if (ret) {
+ 		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
+ 			ret);
+-- 
+2.25.1
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmUUQSAACgkQJNaLcl1U
-h9BZgAf/cEFWzCSLaDAf1NhbSXiH8O1hyl3xIAiZQXxybdY1U6/Tveia8sc7xRZq
-ZMFhARjaEtXLKPUh5UH3IpUKdSWAo7Tf/4tF5Z6H40kY0j9WYhzeM7ciaxZc8LC9
-Ftmj8/TB2CZ+AQj3At+M2lO/LL39vyBdhBntF94GF8jcnti2PbW86dvm9swf01hx
-JOKfMH3zsHDKBw9/0SoDVR7Db1ZfXbgzePottCPmleVVNqVT0NTzQmadCVyfsZk0
-8dJWSynhbPUGoCy7ujs9wtWPEgNHCqjsj75W+4pDSA1x8fOAyPmRsWEqlwaX7fSr
-tKy9Yo3pp0eL9YD7mwrpBHUe4OjDrg==
-=SlIC
------END PGP SIGNATURE-----
-
---68PF2jVZjsLysHnC--
