@@ -2,231 +2,220 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 91ECB7B081B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 17:25:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA05B7B0825
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 17:25:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232421AbjI0PZN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Sep 2023 11:25:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47076 "EHLO
+        id S232422AbjI0PZz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Sep 2023 11:25:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232350AbjI0PZM (ORCPT
+        with ESMTP id S232449AbjI0PZx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Sep 2023 11:25:12 -0400
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FD8C121;
-        Wed, 27 Sep 2023 08:25:10 -0700 (PDT)
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
-        by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38RF9bGt013931;
-        Wed, 27 Sep 2023 15:24:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : subject :
- from : to : cc : date : in-reply-to : references : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=4GPUWKZBZaFYZhimWD5PFmL2oSJK61nkKmWq/1HRzfE=;
- b=pGD5yYhHZPXV3FeyG3eNaMML/UeQExGT+ai7edcPW8GFAbJMrq5WuQsLABBSBh/9onkR
- qJEXWOwnsIhMT+5To2DVZ949fEsLY2pEbXikCAXRX1w+ha859lRUnJAWl57sac1Ug+Pk
- PZbAm0kNSBXnp6n5gVrOJUMtABk3ywDPTCMy6MlAULNFrVKAJuqBC23DXYzhXHS50flM
- /nr/8midSqe0+CVgvu9cSDL81aiKfqQN99l1BsqzWUeRu3Oaf6lXiPFviy95PuyX6Wqv
- IxEoEQiGuj6Ql2UQ0i4Y8YHNWbx1fbX0dRIN+ojf5GCrDCz3AQtrk/IVKHWwBw8gVhy+ Kw== 
-Received: from pps.reinject (localhost [127.0.0.1])
-        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3tcpg40spq-1
+        Wed, 27 Sep 2023 11:25:53 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8139E180;
+        Wed, 27 Sep 2023 08:25:51 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38RDsYES008775;
+        Wed, 27 Sep 2023 15:25:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=d4FJvpr7tEX7m/dsJ1AhmcAfSu9jDJjlVoFgBrAxQf4=;
+ b=XtsUdV1/BOdcjvlFqPXgnavoRKuzlTD9H7QJDQyRwPsDKpbyrDpQaYjcMCFD4sFCOVml
+ umS0oMoWv/kOeN45fccKUvBOUfzAst5m9jb+qSWGb3lgS+BJdwEwQHLv5ThBr7Npzw/z
+ CKxxWYAT4XzdJ2RPAhlNkhbZJ7FZA11AOIxwoMvJ75Er/zxZ/z9hHppfk+iALHUqF9ym
+ 7qx0Obz/64t56kJh6yRI8nD3T72dwioTi2GMr8eQ9ubiIDcexHGH2d5osobg2m++4YFT
+ LrOMV8MzSsVrmCFdDPRziIFxEdlA3qsaDdAzBKBdv+AxZfT+NWT3x0Ur3sh/FOxf1HpU hw== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tc9b89m6n-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 27 Sep 2023 15:24:27 +0000
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 38RFKfwH016987;
-        Wed, 27 Sep 2023 15:24:26 GMT
-Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
-        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3tcpg40snq-1
+        Wed, 27 Sep 2023 15:25:29 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38RFPSWI023346
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 27 Sep 2023 15:24:26 +0000
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
-        by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 38RD7jbc008126;
-        Wed, 27 Sep 2023 15:24:24 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
-        by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3taaqymr5f-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 27 Sep 2023 15:24:24 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com [10.20.54.104])
-        by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 38RFOLkO14877436
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Wed, 27 Sep 2023 15:24:21 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id 088A42004D;
-        Wed, 27 Sep 2023 15:24:21 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id 7A20C20040;
-        Wed, 27 Sep 2023 15:24:20 +0000 (GMT)
-Received: from [9.152.212.236] (unknown [9.152.212.236])
-        by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
-        Wed, 27 Sep 2023 15:24:20 +0000 (GMT)
-Message-ID: <a672b6b122c7a5f708614346885c190a6960aaea.camel@linux.ibm.com>
-Subject: Re: [PATCH v12 0/6] iommu/dma: s390 DMA API conversion and
- optimized IOTLB flushing
-From:   Niklas Schnelle <schnelle@linux.ibm.com>
-To:     Joerg Roedel <joro@8bytes.org>
-Cc:     Jason Gunthorpe <jgg@ziepe.ca>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Will Deacon <will@kernel.org>,
-        Wenjia Zhang <wenjia@linux.ibm.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Gerd Bayer <gbayer@linux.ibm.com>,
-        Julian Ruess <julianr@linux.ibm.com>,
-        Pierre Morel <pmorel@linux.ibm.com>,
-        Alexandra Winter <wintera@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Sven Schnelle <svens@linux.ibm.com>,
-        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jonathan Corbet <corbet@lwn.net>, linux-s390@vger.kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        iommu@lists.linux.dev, asahi@lists.linux.dev,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        linux-doc@vger.kernel.org
-Date:   Wed, 27 Sep 2023 17:24:20 +0200
-In-Reply-To: <6dab29f58ac1ccd58caaee031f98f4d0d382cbcd.camel@linux.ibm.com>
-References: <20230825-dma_iommu-v12-0-4134455994a7@linux.ibm.com>
-         <ZRLy_AaJiXxZ2AfK@8bytes.org> <20230926160832.GM13795@ziepe.ca>
-         <cfc9e9128ed5571d2e36421e347301057662a09e.camel@linux.ibm.com>
-         <ZRP8CiBui7suB5D6@8bytes.org>
-         <b06a14de270a63050b0d027c24b333dba25001a4.camel@linux.ibm.com>
-         <e1efbbd827e34800bd7fb0ea687645cc6c65e1ab.camel@linux.ibm.com>
-         <6dab29f58ac1ccd58caaee031f98f4d0d382cbcd.camel@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.48.4 (3.48.4-1.fc38) 
+        Wed, 27 Sep 2023 15:25:28 GMT
+Received: from [10.110.47.87] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Wed, 27 Sep
+ 2023 08:25:27 -0700
+Message-ID: <31bff2df-40a1-21f7-e155-38028b2688e8@quicinc.com>
+Date:   Wed, 27 Sep 2023 08:25:26 -0700
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 1V1HFM5XJ2XYGhTpmGqGOrM8x8bKe6Pt
-X-Proofpoint-GUID: MdpAhX9T9gQ4cUAJLa_z553KP9Gq2ZRV
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v3 1/7] drm/msm/dp: tie dp_display_irq_handler() with dp
+ driver
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
+        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1694813901-26952-1-git-send-email-quic_khsieh@quicinc.com>
+ <1694813901-26952-2-git-send-email-quic_khsieh@quicinc.com>
+ <CAA8EJprRFYMF-6yxcL75rftfii0kt7hmg_+TeOMJw+BRyDYdeg@mail.gmail.com>
+ <1c82a0a6-d85f-9800-bdc4-2a4892b4239b@quicinc.com>
+ <CAA8EJpoW8COZD7+yg9oZ=k=x36+XQKaJgvhab=XZPwTVuixh2A@mail.gmail.com>
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <CAA8EJpoW8COZD7+yg9oZ=k=x36+XQKaJgvhab=XZPwTVuixh2A@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: tBt7hbvv072v9-rBpRZ3DM-36U5Vvha_
+X-Proofpoint-ORIG-GUID: tBt7hbvv072v9-rBpRZ3DM-36U5Vvha_
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-09-27_09,2023-09-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- phishscore=0 bulkscore=0 spamscore=0 malwarescore=0 mlxscore=0
- priorityscore=1501 clxscore=1015 adultscore=0 mlxlogscore=999
- impostorscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2309180000 definitions=main-2309270127
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_EF,RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
+ clxscore=1015 phishscore=0 priorityscore=1501 spamscore=0 adultscore=0
+ suspectscore=0 mlxscore=0 malwarescore=0 mlxlogscore=999
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2309270131
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 2023-09-27 at 16:31 +0200, Niklas Schnelle wrote:
-> On Wed, 2023-09-27 at 15:20 +0200, Niklas Schnelle wrote:
-> > On Wed, 2023-09-27 at 13:24 +0200, Niklas Schnelle wrote:
-> > > On Wed, 2023-09-27 at 11:55 +0200, Joerg Roedel wrote:
-> > > > Hi Niklas,
-> > > >=20
-> > > > On Wed, Sep 27, 2023 at 10:55:23AM +0200, Niklas Schnelle wrote:
-> > > > > The problem is that something seems to  be broken in the iommu/co=
-re
-> > > > > branch. Regardless of whether I have my DMA API conversion on top=
- or
-> > > > > with the base iommu/core branch I can not use ConnectX-4 VFs.
-> > > >=20
-> > > > Have you already tried to bisect the issue in the iommu/core branch=
-?
-> > > > The result might sched some light on the issue.
-> > > >=20
-> > > > Regards,
-> > > >=20
-> > > > 	Joerg
-> > >=20
-> > > Hi Joerg,
-> > >=20
-> > > Working on it, somehow I must have messed up earlier. It now looks li=
-ke
-> > > it might in fact be caused by my DMA API conversion rebase and the
-> > > "s390/pci: Use dma-iommu layer" commit. Maybe there is some interacti=
-on
-> > > with Jason's patches that I haven't thought about. So sorry for any
-> > > wrong blame.
-> > >=20
-> > > Thanks,
-> > > Niklas
-> >=20
-> > Hi,
-> >=20
-> > I tracked the problem=C2=A0down from mlx5_core's alloc_cmd_page() via
-> > dma_alloc_coherent(), ops->alloc, iommu_dma_alloc_remap(), and
-> > __iommu_dma_alloc_noncontiguous() to a failed iommu_dma_alloc_iova().
-> > The allocation here is for 4K so nothing crazy.
-> >=20
-> > On second look I also noticed:
-> >=20
-> > nvme 2007:00:00.0: Using 42-bit DMA addresses
-> >=20
-> > for the NVMe that is working. The problem here seems to be that we set
-> > iommu_dma_forcedac =3D true in s390_iommu_probe_finalize() because we
-> > have currently have a reserved region over the first 4 GiB anyway so
-> > will always use IOVAs larger than that. That however is too late since
-> > iommu_dma_set_pci_32bit_workaround() is already checked in
-> > __iommu_probe_device() which is called just before ops-
-> > > probe_finalize(). So I moved setting iommu_dma_forcedac =3D true to
-> > zpci_init_iommu() and that gets rid of the notice for the NVMe but I
-> > still get a failure of iommu_dma_alloc_iova() in
-> > __iommu_dma_alloc_noncontiguous(). So I'll keep digging.
-> >=20
-> > Thanks,
-> > Niklas
->=20
->=20
-> Ok I think I got it and this doesn't seem strictly s390x specific but
-> I'd think should happen with iommu.forcedac=3D1 everywhere.
->=20
-> The reason iommu_dma_alloc_iova() fails seems to be that mlx5_core does
-> dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64)) in=C2=A0
-> mlx5_pci_init()->set_dma_caps() which happens after it already called
-> mlx5_mdev_init()->mlx5_cmd_init()->alloc_cmd_page() so for the
-> dma_alloc_coherent() in there the dev->coherent_dma_mask is still
-> DMA_BIT_MASK(32) for which we can't find an IOVA because well we don't
-> have IOVAs below 4 GiB. Not entirely sure what caused this not to be
-> enforced before.
->=20
-> Thanks,
-> Niklas
->=20
 
-Ok, another update. On trying it out again this problem actually also
-occurs when applying this v12 on top of v6.6-rc3 too. Also I guess
-unlike my prior thinking it probably doesn't occur with
-iommu.forcedac=3D1 since that still allows IOVAs below 4 GiB and we might
-be the only ones who don't support those. From my point of view this
-sounds like a mlx5_core issue they really should call
-dma_set_mask_and_coherent() before their first call to
-dma_alloc_coherent() not after. So I guess I'll send a v13 of this
-series rebased on iommu/core and with an additional mlx5 patch and then
-let's hope we can get that merged in a way that doesn't leave us with
-broken ConnectX VFs for too long.
+On 9/23/2023 11:45 AM, Dmitry Baryshkov wrote:
+> On Sat, 23 Sept 2023 at 02:03, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+>>
+>> On 9/15/2023 5:29 PM, Dmitry Baryshkov wrote:
+>>> On Sat, 16 Sept 2023 at 00:38, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+>>>> Currently the dp_display_irq_handler() is executed at msm_dp_modeset_init()
+>>>> which ties irq registration to the DPU device's life cycle, while depending on
+>>>> resources that are released as the DP device is torn down. Move register DP
+>>>> driver irq handler at dp_display_probe() to have dp_display_irq_handler()
+>>>> is tied with DP device.
+>>>>
+>>>> Changes in v3:
+>>>> -- move calling dp_display_irq_handler() to probe
+>>> Was there a changelog for the previous reivions? What is the
+>>> difference between v1 and v2?
+>>>
+>>>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>>>> ---
+>>>>    drivers/gpu/drm/msm/dp/dp_display.c | 35 +++++++++++++----------------------
+>>>>    drivers/gpu/drm/msm/dp/dp_display.h |  1 -
+>>>>    2 files changed, 13 insertions(+), 23 deletions(-)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+>>>> index 76f1395..c217430 100644
+>>>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>>>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+>>>> @@ -1193,30 +1193,23 @@ static irqreturn_t dp_display_irq_handler(int irq, void *dev_id)
+>>>>           return ret;
+>>>>    }
+>>>>
+>>>> -int dp_display_request_irq(struct msm_dp *dp_display)
+>>>> +static int dp_display_request_irq(struct dp_display_private *dp)
+>>>>    {
+>>>>           int rc = 0;
+>>>> -       struct dp_display_private *dp;
+>>>> -
+>>>> -       if (!dp_display) {
+>>>> -               DRM_ERROR("invalid input\n");
+>>>> -               return -EINVAL;
+>>>> -       }
+>>>> -
+>>>> -       dp = container_of(dp_display, struct dp_display_private, dp_display);
+>>>> +       struct device *dev = &dp->pdev->dev;
+>>>>
+>>>> -       dp->irq = irq_of_parse_and_map(dp->pdev->dev.of_node, 0);
+>>>>           if (!dp->irq) {
+>>> What is the point in this check?
+>>>
+>>>> -               DRM_ERROR("failed to get irq\n");
+>>>> -               return -EINVAL;
+>>>> +               dp->irq = platform_get_irq(dp->pdev, 0);
+>>>> +               if (!dp->irq) {
+>>>> +                       DRM_ERROR("failed to get irq\n");
+>>>> +                       return -EINVAL;
+>>>> +               }
+>>>>           }
+>>>>
+>>>> -       rc = devm_request_irq(dp_display->drm_dev->dev, dp->irq,
+>>>> -                       dp_display_irq_handler,
+>>>> +       rc = devm_request_irq(dev, dp->irq, dp_display_irq_handler,
+>>>>                           IRQF_TRIGGER_HIGH, "dp_display_isr", dp);
+>>>>           if (rc < 0) {
+>>>> -               DRM_ERROR("failed to request IRQ%u: %d\n",
+>>>> -                               dp->irq, rc);
+>>>> +               DRM_ERROR("failed to request IRQ%u: %d\n", dp->irq, rc);
+>>>>                   return rc;
+>>>>           }
+>>>>
+>>>> @@ -1287,6 +1280,10 @@ static int dp_display_probe(struct platform_device *pdev)
+>>>>
+>>>>           platform_set_drvdata(pdev, &dp->dp_display);
+>>>>
+>>>> +       rc = dp_display_request_irq(dp);
+>>>> +       if (rc)
+>>>> +               return rc;
+>>> This way the IRQ ends up being enabled in _probe. Are we ready to
+>>> handle it here? Is the DP device fully setup at this moment?
+>> The irq is enabled here.
+>>
+>> but DP driver hpd hardware block has not yet be enabled. this means no
+>> irq will be delivered.
+> There are other IRQ kinds, not only just HPD ones.
 
-Thanks,
-Niklas
+pm_runtime_resume_and_get() will enable host controller (including hpd and aux block).
+so that as long as pm_runtime_resume_and_get() called, then all DP related interrupts will be handled accordingly.
+
+>
+>>    .hpd_enable() will call pm_runtime_resume_and_get() and
+>> dp_catalog_ctrl_hpd_enable().
+>>
+>> after .hpd_enable() irq will be delivered and handled properly.
+>>
+>>
+>>
+>>>> +
+>>>>           rc = component_add(&pdev->dev, &dp_display_comp_ops);
+>>>>           if (rc) {
+>>>>                   DRM_ERROR("component add failed, rc=%d\n", rc);
+>>>> @@ -1549,12 +1546,6 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+>>>>
+>>>>           dp_priv = container_of(dp_display, struct dp_display_private, dp_display);
+>>>>
+>>>> -       ret = dp_display_request_irq(dp_display);
+>>>> -       if (ret) {
+>>>> -               DRM_ERROR("request_irq failed, ret=%d\n", ret);
+>>>> -               return ret;
+>>>> -       }
+>>>> -
+>>>>           ret = dp_display_get_next_bridge(dp_display);
+>>>>           if (ret)
+>>>>                   return ret;
+>>>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
+>>>> index 1e9415a..b3c08de 100644
+>>>> --- a/drivers/gpu/drm/msm/dp/dp_display.h
+>>>> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
+>>>> @@ -35,7 +35,6 @@ struct msm_dp {
+>>>>    int dp_display_set_plugged_cb(struct msm_dp *dp_display,
+>>>>                   hdmi_codec_plugged_cb fn, struct device *codec_dev);
+>>>>    int dp_display_get_modes(struct msm_dp *dp_display);
+>>>> -int dp_display_request_irq(struct msm_dp *dp_display);
+>>>>    bool dp_display_check_video_test(struct msm_dp *dp_display);
+>>>>    int dp_display_get_test_bpp(struct msm_dp *dp_display);
+>>>>    void dp_display_signal_audio_start(struct msm_dp *dp_display);
+>>>> --
+>>>> 2.7.4
+>>>>
+>
+>
