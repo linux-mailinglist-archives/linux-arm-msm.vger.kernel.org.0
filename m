@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 605B97B0DEC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 23:16:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 097367B0DF7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 23:19:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229942AbjI0VQ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Sep 2023 17:16:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59688 "EHLO
+        id S229950AbjI0VTD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Sep 2023 17:19:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229923AbjI0VQ4 (ORCPT
+        with ESMTP id S229949AbjI0VTA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Sep 2023 17:16:56 -0400
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 293B8126
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 14:16:54 -0700 (PDT)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-59f7cc71e2eso94058737b3.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 14:16:54 -0700 (PDT)
+        Wed, 27 Sep 2023 17:19:00 -0400
+Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCFE211F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 14:18:57 -0700 (PDT)
+Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-59e77e4f707so148350037b3.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 14:18:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695849413; x=1696454213; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695849536; x=1696454336; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=9Egs/0a9obKo4OfCKrbX3EcZMRe8x/y6shojMDmUEqA=;
-        b=gRECJSkTVjSOni0ZSLw+1dRD7hn4qtm8PSEty/o72krOagDguiM6p9NPOuSLSemNjx
-         XcMxSZLiJp2hYRl7SOoll4r5ojDqNxY2n0766+s6SIH66G1/lE9OUEp+KNfr+ofq1Nvi
-         JZ5VaqAoeT/01bDXmB6dqfHVKmcNQ7mhTGmbyPIo0KJLyoxLyelKdH28OcxrApaqiqxI
-         OU0/7SsDoXfH0EArKsyYypBvKFC/spGGE9fegOEi+uia7YZ4vJGwRC1G5H507QKGO1Fe
-         IN3PRojAeYbRgCRhoK0ZMNA3VUi8Q5G93HOqOLHellSTlpIa9SB/BbswNE9bsowZSFdA
-         OR9w==
+        bh=UiA24Vnoe9mDlXFXQmDQoe2D01RtP5rHlDPFXWiZnis=;
+        b=ttM3Al7pUoQkeKdTct1F1IMNr2Ar5gNr0ttE6KExq7MQzOIjjLUSSiCW+GJrnQZ67O
+         nXDk8tBDX4JHLiaiKyGOCq4582bTakP0IvT6mNCFAXy9QQr9Ya71bpeh9N4dm5MoNJdf
+         lLBqkYvjaqjFhL2hHBUxYZ32Dp1GWzdMbPk6TSWjxYOf4YGQ3KoSssImO7SzvOb3t63e
+         1BwsN4kya3jzJ2VbYZ880ysNutgNGeIS9JYOAILtcdzmxrf6PFEoQlrRzXfLLrwLsV3P
+         ZR8hQsUBZy25yqEut61VEzLIxHXjcXwaivUCgS0DdSfwWsgXm1dKIpo6Uw0378QL9LMh
+         eCrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695849413; x=1696454213;
+        d=1e100.net; s=20230601; t=1695849536; x=1696454336;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=9Egs/0a9obKo4OfCKrbX3EcZMRe8x/y6shojMDmUEqA=;
-        b=WLLPxSIQUMbUjkpHDWCtht9kHJ9KuVM5yevDW3tIDaJzfF6R0+gTnQKaBDYe5z/6nT
-         J53lHsazVEwmqJ/yIRR0Kq/uS9cDylQDyey4rfUNaFOlvagbjcDlRJzYHg0cPpWxBlfW
-         7GZz5aLlzagh5xJ1KVTl+Gt17+Ih6zLHxNEeyWYoXMmT6LDFhb6W133anL3krHa+PsJF
-         3Kpevb22eK6rP+YqoE0JRAPz+5sXNa2Cm+UEJzb1qBtLMfWRxMUtcd5WvKwwx5Lq1LQ7
-         ZwF26U27C3DxuRKOy5gEFIXzkLl5IS/C4nTuDpWxsOOMZYmGlr7wIUraA35GvrFitv99
-         bV5w==
-X-Gm-Message-State: AOJu0YzJhFZLSQI+wfSw8rr1Orn8Sbeejc+neXnxi2B2546S01b5m+eX
-        xQliCPiXWSAyKxOVA7qapBbn5jxyg4b/hwhkpZ3Utw==
-X-Google-Smtp-Source: AGHT+IGO1KiVE2bI8blvCLR/sjY97K/2QcJne6dK+EgiphioOMUo1x3UAeM4EbLQnYd1r63pwHNusKznnhSsSR1nJT0=
-X-Received: by 2002:a0d:fa82:0:b0:59f:5361:d18c with SMTP id
- k124-20020a0dfa82000000b0059f5361d18cmr3552091ywf.41.1695849413286; Wed, 27
- Sep 2023 14:16:53 -0700 (PDT)
+        bh=UiA24Vnoe9mDlXFXQmDQoe2D01RtP5rHlDPFXWiZnis=;
+        b=cbUGwLokbSrX6m7iabOdUhl3HwKQF/EtJO+lKsGZTWUY2e40qVPBIOiDnPKokbogGu
+         D3XuyoTYl3V62HcvVN0kusIS/Jod/4i/JitTp2VBX/hiWqZM7ayZtPng5/kItgRpYlMH
+         QmG2eEau23Hq3nzY9GQc1pdqXV87+97RgPZT/ExDvzhSLDArx3//KyIYZsvPZKBmyudk
+         wr3YBpAxDktTmp/AYpsrhm0jwtAwJaUXBJSCpvCUtOPJqkYm6tojRWZrgVsyE1fKVIc4
+         IxyoNjOgkAAG/nyM4Q2W+sCitciG5LJm4vGYhnegPeFb0MQsmmC4OeugX9AO5RyJrTJu
+         CFOw==
+X-Gm-Message-State: AOJu0Yz4h6JUJMdjyPzFYGM8JDZ6vfr/b+d/+0p9G+6uc95zjvO0BMJm
+        7tZx5gKhHV7JoXiCq/CPiveBuvJhOEG2BLxXvhN2bw==
+X-Google-Smtp-Source: AGHT+IG1QuRlqd5WUg5LSq9Sa+2WG3+pH9aEWm6KmPW4M8nLweQkVnYD51xD/qDJ9L+z4gIuMfCpNnkLCGu0v7Z3tZY=
+X-Received: by 2002:a81:6f03:0:b0:59f:773a:b14c with SMTP id
+ k3-20020a816f03000000b0059f773ab14cmr3251803ywc.37.1695849536678; Wed, 27 Sep
+ 2023 14:18:56 -0700 (PDT)
 MIME-Version: 1.0
 References: <1695848028-18023-1-git-send-email-quic_khsieh@quicinc.com> <1695848028-18023-5-git-send-email-quic_khsieh@quicinc.com>
 In-Reply-To: <1695848028-18023-5-git-send-email-quic_khsieh@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 28 Sep 2023 00:15:46 +0300
-Message-ID: <CAA8EJprubda19zW=XBRp-ORQwEB1YYrmkUiqmy5gH5TzCM8bhQ@mail.gmail.com>
+Date:   Thu, 28 Sep 2023 00:17:50 +0300
+Message-ID: <CAA8EJpqwDOPD3dkWO1ap2pjMVnP1r2giUE0bAjTYzPBiz1aewA@mail.gmail.com>
 Subject: Re: [PATCH v4 4/8] drm/msm/dp: move parser->parse() and
  dp_power_client_init() to probe
 To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
@@ -78,10 +78,6 @@ On Wed, 27 Sept 2023 at 23:54, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
 > Move parser->parse() and dp_power_client_init() from dp_display_bind()
 > to dp_display_probe() in preparation of adding pm_runtime framework
 > at next patch.
-
-This describes what the patch does, not why it is done. Could you
-please rewrite it to describe the reason for the change?
-
 >
 > Changes in v4:
 > -- split this patch out of "incorporate pm_runtime framework into DP driver" patch
@@ -134,6 +130,12 @@ please rewrite it to describe the reason for the change?
 > +               DRM_ERROR("Power client create failed\n");
 > +               return -EPROBE_DEFER;
 > +       }
+
+Hit enter too soon. No submodules teardown, so NAK.
+
+Also please propagate returned error codes instead of inventing
+EPROBE_DEFER on your own.
+
 > +
 >         /* setup event q */
 >         mutex_init(&dp->event_mutex);
