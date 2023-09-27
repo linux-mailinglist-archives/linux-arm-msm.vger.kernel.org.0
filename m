@@ -2,147 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B55957B094A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 17:50:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 12E8C7B0919
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 17:46:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231974AbjI0PuP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Sep 2023 11:50:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38940 "EHLO
+        id S232055AbjI0PqJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Sep 2023 11:46:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232489AbjI0PuE (ORCPT
+        with ESMTP id S231942AbjI0PqJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Sep 2023 11:50:04 -0400
-Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 082551B0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 08:40:14 -0700 (PDT)
-Received: by mail-qv1-xf2b.google.com with SMTP id 6a1803df08f44-65afae9e51fso46927176d6.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 08:40:14 -0700 (PDT)
+        Wed, 27 Sep 2023 11:46:09 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA276272A6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 08:46:06 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-3231df054c4so7426379f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 08:46:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ziepe.ca; s=google; t=1695829211; x=1696434011; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=t9oIEXPNWkoSP0yICfThZznT48YRRSxNiQbO+UpaNXk=;
-        b=REPvhS0od8YGeIuF8pH6xO7Z6Nm5hZjrPlyVdh7k+7W57+wslImmwmFDpr9Si1InPQ
-         v9MKY4koSdpGP9mGG1NiWxhdKQqDUG7D5oDSypk78gCbbiG0P67vj0AzPT/AxcKejuoG
-         8jdjFvm4LXJ4bZqorrR3X66+ui3ZaiaEsEa96mHzBIl5EzTTpygaN1VywN/JTi966tvF
-         RFZZ4jSkT71tem9hdvKNonJ5b/2pZXxsTznO30rtUPo5hqep55nUvnsMjhyl8hI/Iy5n
-         jPHsWwKXRTzW/KOFjoC9Y7qzBFFdHd1ktdahzs6YfoT5jKaqsI7/Bh5cHg5CzMLkx6Y9
-         ItgQ==
+        d=linaro.org; s=google; t=1695829565; x=1696434365; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=AnVyIhUQftvj++Ho5Yy6rcq1eYnc1pWWiufohODrEFE=;
+        b=yMMij82nkhn4Th830NPLjXLNPcSSoWWVBozahIduJCUCr97mo97OVUDEnaUSIqHIn8
+         mB2+bKQFfdICXcxkcifGdTUhUFG0s7cTcx2viflW6pMBn2s01RlHhAGUyz8aYaQMdrXk
+         Dwp3G9SRV+fm2cvq4NPT7yYTJaDodrhOfSBlbG95/og1E4w1Jjd48WhTGKQtgtbJ4lDF
+         IWtElAfog+Wbm6L5MXKfCew5VKxWgJFJjm536l7oYh8Z0psCzMqJNVPCf4kcxmd/g0Q2
+         w55c+P+jV1i/xJOWuplzClh91O7xjX8qGtI8Fe6ugc5aFbIPicSPFQKdbU8Ja6n8+k9O
+         T86w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695829211; x=1696434011;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=t9oIEXPNWkoSP0yICfThZznT48YRRSxNiQbO+UpaNXk=;
-        b=tz+XPrOP8KWcqLLf+cq9lAWBpYuCKYwnoh1tsvaDeh7sc6F0Qa/A9VnSkjePDzwfBp
-         b5hClKxWjXz9Of3oLHBNoxINySNcySbU0FG8FFFp6Z9y0QLKZ4gOiv8+8GhETEzPa4GT
-         anOj28znZ1evUNF3xp4iXKjEMt7wYzLmopQQuQ5K1FcQnWSs8xVEcRKO9TNohIVVIpW9
-         5Kmtprtq1C+0ZCbFsBoaftrbag0QNpkeR5feZbbY6k2icD6I4iZvPrnRQaweoR2vt3gW
-         QckIkb0F5E5cIexOq8/S4CzTifwM4H+edcTgkGtSAJEeVWVCrh7U8hzXftwbQw8d/4sN
-         /RNQ==
-X-Gm-Message-State: AOJu0YybKWzxIylB+M0oKgYkd9EB0bAbhTAZHCLrsaol34oPu0GEZ1Gn
-        vA0MgwdqmcNloZro+SN5eALNsw==
-X-Google-Smtp-Source: AGHT+IEBIEK8bL4oC9/JbUXAJTo9b7yotL8eHtI4zGCh9Ar0J6VaF2Vk0l+zBuzNRh2jU30sxMvEWQ==
-X-Received: by 2002:a0c:de03:0:b0:64f:8d4c:1c0b with SMTP id t3-20020a0cde03000000b0064f8d4c1c0bmr2581322qvk.43.1695829210841;
-        Wed, 27 Sep 2023 08:40:10 -0700 (PDT)
-Received: from ziepe.ca (hlfxns017vw-142-68-26-201.dhcp-dynamic.fibreop.ns.bellaliant.net. [142.68.26.201])
-        by smtp.gmail.com with ESMTPSA id i11-20020a0cab4b000000b00655e4f57732sm3474144qvb.35.2023.09.27.08.40.10
+        d=1e100.net; s=20230601; t=1695829565; x=1696434365;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AnVyIhUQftvj++Ho5Yy6rcq1eYnc1pWWiufohODrEFE=;
+        b=QFRkJ9SZCQ6mz5dibLyR/O+FV9LZD+fd/C6R4dLLP4fuv47OgParQxINMxIlS22MTs
+         s9WQJ+k2yZnqBgWMkEjrb+GOYyIYBZndxKQI8XNDaGMWF6Zg8A+J01q4swaX79d3s+1Q
+         6pTbRoCsE7Xyq3gZrVSCQ1JaEO97rZNGrvSRjldeBR/AfHsFKgrjI/6BUn6W/vBRhszp
+         CxHOxSIFJ+2EExIb3in4SexR11tCdmUXdv1rwcK1WHojuB3i35hMocb5omT98OTFAtOJ
+         KaPwnTTBiqdfgwIjfhPFyX/VWeRkR1w0/5CCUGXS4QELANKNgOtTGxNf+XUhJieCQuK9
+         lV2g==
+X-Gm-Message-State: AOJu0Yxjott7GY69HEFoMt90Dvcrgc7ETZx8h4cm7bKTDoOBCrQ87cJo
+        jYu7fEp3gR/U1BzC2Jlqef3Z
+X-Google-Smtp-Source: AGHT+IHPVlFHZSR7dS0CVY+TjYfy0oJ3z2n7yBnN6VGdCusCelDVK4SOfVJbaXNnh5OXlhTYFnYG6A==
+X-Received: by 2002:a05:6000:4cd:b0:321:4df5:b85e with SMTP id h13-20020a05600004cd00b003214df5b85emr2167996wri.26.1695829565184;
+        Wed, 27 Sep 2023 08:46:05 -0700 (PDT)
+Received: from thinkpad.fritz.box ([2a02:2454:9d09:3f00:b024:394e:56d7:d8b4])
+        by smtp.gmail.com with ESMTPSA id s28-20020adfa29c000000b003232f167df5sm6925852wra.108.2023.09.27.08.46.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Sep 2023 08:40:10 -0700 (PDT)
-Received: from jgg by wakko with local (Exim 4.95)
-        (envelope-from <jgg@ziepe.ca>)
-        id 1qlWe1-001Qtr-JG;
-        Wed, 27 Sep 2023 12:40:09 -0300
-Date:   Wed, 27 Sep 2023 12:40:09 -0300
-From:   Jason Gunthorpe <jgg@ziepe.ca>
-To:     Niklas Schnelle <schnelle@linux.ibm.com>
-Cc:     Joerg Roedel <joro@8bytes.org>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Will Deacon <will@kernel.org>,
-        Wenjia Zhang <wenjia@linux.ibm.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Gerd Bayer <gbayer@linux.ibm.com>,
-        Julian Ruess <julianr@linux.ibm.com>,
-        Pierre Morel <pmorel@linux.ibm.com>,
-        Alexandra Winter <wintera@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Sven Schnelle <svens@linux.ibm.com>,
-        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jonathan Corbet <corbet@lwn.net>, linux-s390@vger.kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        iommu@lists.linux.dev, asahi@lists.linux.dev,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        linux-doc@vger.kernel.org
-Subject: Re: [PATCH v12 0/6] iommu/dma: s390 DMA API conversion and optimized
- IOTLB flushing
-Message-ID: <20230927154009.GN13795@ziepe.ca>
-References: <20230825-dma_iommu-v12-0-4134455994a7@linux.ibm.com>
- <ZRLy_AaJiXxZ2AfK@8bytes.org>
- <20230926160832.GM13795@ziepe.ca>
- <cfc9e9128ed5571d2e36421e347301057662a09e.camel@linux.ibm.com>
- <ZRP8CiBui7suB5D6@8bytes.org>
- <b06a14de270a63050b0d027c24b333dba25001a4.camel@linux.ibm.com>
- <e1efbbd827e34800bd7fb0ea687645cc6c65e1ab.camel@linux.ibm.com>
- <6dab29f58ac1ccd58caaee031f98f4d0d382cbcd.camel@linux.ibm.com>
- <a672b6b122c7a5f708614346885c190a6960aaea.camel@linux.ibm.com>
+        Wed, 27 Sep 2023 08:46:04 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     lpieralisi@kernel.org, kw@linux.com
+Cc:     andersson@kernel.org, konrad.dybcio@linaro.org,
+        bhelgaas@google.com, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+        abel.vesa@linaro.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v3 1/3] PCI: qcom: Make use of PCIE_SPEED2MBS_ENC() macro for encoding link speed
+Date:   Wed, 27 Sep 2023 17:46:01 +0200
+Message-Id: <20230927154603.172049-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a672b6b122c7a5f708614346885c190a6960aaea.camel@linux.ibm.com>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 27, 2023 at 05:24:20PM +0200, Niklas Schnelle wrote:
+Instead of hardcoding the link speed in MBps, let's make use of the
+existing PCIE_SPEED2MBS_ENC() macro that does the encoding of the
+link speed for us. Also, let's Wrap it with QCOM_PCIE_LINK_SPEED_TO_BW()
+macro to do the conversion to ICC speed.
 
-> Ok, another update. On trying it out again this problem actually also
-> occurs when applying this v12 on top of v6.6-rc3 too. Also I guess
-> unlike my prior thinking it probably doesn't occur with
-> iommu.forcedac=1 since that still allows IOVAs below 4 GiB and we might
-> be the only ones who don't support those. From my point of view this
-> sounds like a mlx5_core issue they really should call
-> dma_set_mask_and_coherent() before their first call to
-> dma_alloc_coherent() not after. So I guess I'll send a v13 of this
-> series rebased on iommu/core and with an additional mlx5 patch and then
-> let's hope we can get that merged in a way that doesn't leave us with
-> broken ConnectX VFs for too long.
+This eliminates the need for a switch case in qcom_pcie_icc_update() and
+also works for future Gen speeds without any code modifications.
 
-Yes, OK. It definitely sounds wrong that mlx5 is doing dma allocations before
-setting it's dma_set_mask_and_coherent(). Please link to this thread
-and we can get Leon or Saeed to ack it for Joerg.
+Suggested-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
 
-(though wondering why s390 is the only case that ever hit this?)
+Changes in v3:
 
-Jason
+- Used Mbps_to_icc() macro and changed the commit message a bit
+
+Changes in v2:
+
+- Switched to QCOM_PCIE_LINK_SPEED_TO_BW() macro as per Bjorn's suggestion
+  https://lore.kernel.org/linux-pci/20230924160713.217086-1-manivannan.sadhasivam@linaro.org/
+
+ drivers/pci/controller/dwc/pcie-qcom.c | 24 ++++++------------------
+ 1 file changed, 6 insertions(+), 18 deletions(-)
+
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index e2f29404c84e..367acb419a2b 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -148,6 +148,9 @@
+ 
+ #define QCOM_PCIE_CRC8_POLYNOMIAL		(BIT(2) | BIT(1) | BIT(0))
+ 
++#define QCOM_PCIE_LINK_SPEED_TO_BW(speed) \
++		Mbps_to_icc(PCIE_SPEED2MBS_ENC(pcie_link_speed[speed]))
++
+ #define QCOM_PCIE_1_0_0_MAX_CLOCKS		4
+ struct qcom_pcie_resources_1_0_0 {
+ 	struct clk_bulk_data clks[QCOM_PCIE_1_0_0_MAX_CLOCKS];
+@@ -1347,7 +1350,7 @@ static int qcom_pcie_icc_init(struct qcom_pcie *pcie)
+ 	 * Set an initial peak bandwidth corresponding to single-lane Gen 1
+ 	 * for the pcie-mem path.
+ 	 */
+-	ret = icc_set_bw(pcie->icc_mem, 0, MBps_to_icc(250));
++	ret = icc_set_bw(pcie->icc_mem, 0, QCOM_PCIE_LINK_SPEED_TO_BW(1));
+ 	if (ret) {
+ 		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
+ 			ret);
+@@ -1360,7 +1363,7 @@ static int qcom_pcie_icc_init(struct qcom_pcie *pcie)
+ static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
+ {
+ 	struct dw_pcie *pci = pcie->pci;
+-	u32 offset, status, bw;
++	u32 offset, status;
+ 	int speed, width;
+ 	int ret;
+ 
+@@ -1377,22 +1380,7 @@ static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
+ 	speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, status);
+ 	width = FIELD_GET(PCI_EXP_LNKSTA_NLW, status);
+ 
+-	switch (speed) {
+-	case 1:
+-		bw = MBps_to_icc(250);
+-		break;
+-	case 2:
+-		bw = MBps_to_icc(500);
+-		break;
+-	default:
+-		WARN_ON_ONCE(1);
+-		fallthrough;
+-	case 3:
+-		bw = MBps_to_icc(985);
+-		break;
+-	}
+-
+-	ret = icc_set_bw(pcie->icc_mem, 0, width * bw);
++	ret = icc_set_bw(pcie->icc_mem, 0, width * QCOM_PCIE_LINK_SPEED_TO_BW(speed));
+ 	if (ret) {
+ 		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
+ 			ret);
+-- 
+2.25.1
+
