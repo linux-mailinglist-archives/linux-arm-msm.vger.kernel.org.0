@@ -2,284 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E9C9D7B0DC3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 22:54:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A53A7B0DCF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 23:05:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229954AbjI0Uyo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Sep 2023 16:54:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51492 "EHLO
+        id S229493AbjI0VF5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Sep 2023 17:05:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229918AbjI0Uyc (ORCPT
+        with ESMTP id S229458AbjI0VF5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Sep 2023 16:54:32 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F5BB1B0;
-        Wed, 27 Sep 2023 13:54:30 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38RKPPHW016169;
-        Wed, 27 Sep 2023 20:54:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=opdOQuI6EXH5/tIxo5LrVinQuVUkdt5vDpsHEYA8a7M=;
- b=mNebwj7ns3eoUV2kijYajfgE+vMHNYPRgpvEQDM+NrsQR9nt2FVPUoZBzhMSi+JAxQaD
- mYFDUy2yvQH6tXiSLUiXuhxOfA7fH/W0CnNbvimaGTOHHgjnCZBS3RYM+dPgv6VayViI
- loFaxdX6LibjGfS/XJ/g8dbWY26YwsXd/XimaS8iHOBvFk5uDnH7aO8Roe3SufWIk+zp
- umU2CPEiFIyFPmEvuDSVedn4JuhaWrwpi6pD6Lg0VRfz/q63b7ZNgphzkdZlZw+E2CH7
- Db4eL7dX/exMwbtOeL2zDo9BQrDjtA6i6TB7uBOhSezPx7+bYHFdqaLTL4ZN2LE7lmC5 lA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tcda7t1eh-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 27 Sep 2023 20:54:11 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38RKsAGx017240
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 27 Sep 2023 20:54:10 GMT
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Wed, 27 Sep 2023 13:54:10 -0700
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <andersson@kernel.org>
-CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v4 8/8] drm/msm/dp: move of_dp_aux_populate_bus() to eDP probe()
-Date:   Wed, 27 Sep 2023 13:53:48 -0700
-Message-ID: <1695848028-18023-9-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1695848028-18023-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1695848028-18023-1-git-send-email-quic_khsieh@quicinc.com>
+        Wed, 27 Sep 2023 17:05:57 -0400
+Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AAC111D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 14:05:55 -0700 (PDT)
+Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-5a200028437so24440337b3.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 14:05:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1695848755; x=1696453555; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=uStOTeDx0/Ukuzu0JJvG25AFIJvkKa932ouE8HZ3uLs=;
+        b=z0sshQMWAqSeBB03ZNcweIEs2rEq1Qvb/zopT+0FjYOhr0/wZTnl/PGUgd82+5ZyPx
+         U/RRBKv0g2K5e9oXX1Bb3E81pf8+wUmOfrKHbb0SlZoPDZ2+h4ycWG4O89shi86574UM
+         RL3E1qdCA55JlTqNSK1FwftnC90PubdrjbFGJ4gZtXwovAJb/9xzMJN8fzLtPCfrUBoH
+         PhuRtk2irR0peB/dh9gHN/65RhSvE1/6Jgq9o844+Ucw+dcstU121uCuvmZtGS1IvQTI
+         WjDPlSYqgkJt66EEjQZXiWJ2SFf0pLE+11yGLTdt1YPvaAk0e3hIHXA6gMB84QHXl6vO
+         C9xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695848755; x=1696453555;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uStOTeDx0/Ukuzu0JJvG25AFIJvkKa932ouE8HZ3uLs=;
+        b=RWgAfVdfEP6A0EUyc4fDmNxpRHcn4JMnCssLJKEFqnhan49UPoXIuE2zs8dC2SzwTX
+         a5nRscN9X5Fu7zkyOG+czdR09AdknCwg9ay5vuu93LLtQxoNKL1+PSUW90ZS8RM4w5On
+         Ai5ln+uD4YlX8emwzSZGKHzhugln8ziHk0DaVVpkJUy8oc8X/fprfkJ06YM9iMvbiYJG
+         txH+w2zrp75vcrgzrpNFi7+Si8XkAYMJraHanDa5XJIQoIaIrzGr2CBBB9K5SuEwxGqv
+         qGZd4vYrKFvehGO/E0kaPNa+wo4K3TUYP4JFhJnh8+6XpdAxx/CLLuePcG0xG1PpDoCI
+         iQxw==
+X-Gm-Message-State: AOJu0YyZFCoVYxf/CeFczLgHpChV55pXo0RtOUYIUa+psDiY3COCm2MG
+        pLK4MpV7UdqAeFH3AXckJDcsgjSVpixilJsLAfyddw==
+X-Google-Smtp-Source: AGHT+IE0km6y8O5Y6e29Gn2cDaSHvokzeKWCzYSEz0u70AbH6xc5f8kdSMkaI9/l/srJYZ/TK7N++QbvgI4+vUtVqkk=
+X-Received: by 2002:a0d:e684:0:b0:576:93f1:d118 with SMTP id
+ p126-20020a0de684000000b0057693f1d118mr3624518ywe.2.1695848754752; Wed, 27
+ Sep 2023 14:05:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: xS7gqQ1pLOZIOpdkaUt4Vdm4qh7kj1_J
-X-Proofpoint-GUID: xS7gqQ1pLOZIOpdkaUt4Vdm4qh7kj1_J
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-09-27_13,2023-09-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 malwarescore=0
- clxscore=1015 lowpriorityscore=0 impostorscore=0 bulkscore=0
- mlxlogscore=999 priorityscore=1501 mlxscore=0 suspectscore=0 spamscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2309270178
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <1695848028-18023-1-git-send-email-quic_khsieh@quicinc.com> <1695848028-18023-2-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <1695848028-18023-2-git-send-email-quic_khsieh@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 28 Sep 2023 00:04:47 +0300
+Message-ID: <CAA8EJpqB-sDsQiWmqQS+cxnupTeGBv4G9RcV8vJT3CnWqEbP8g@mail.gmail.com>
+Subject: Re: [PATCH v4 1/8] drm/msm/dp: tie dp_display_irq_handler() with dp driver
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, andersson@kernel.org, quic_abhinavk@quicinc.com,
+        quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
+        marijn.suijten@somainline.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently eDP population is done at msm_dp_modeset_init() which happen
-at binding time. Move eDP population to be done at display probe time
-so that probe deferral cases can be handled effectively.
-wait_for_hpd_asserted callback is added during drm_dp_aux_init()
-to ensure eDP's HPD is up before proceeding eDP population.
+On Wed, 27 Sept 2023 at 23:54, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+>
+> Currently the dp_display_irq_handler() is executed at msm_dp_modeset_init()
 
-Changes in v4:
--- delete duplicate initialize code to dp_aux before drm_dp_aux_register()
--- delete of_get_child_by_name(dev->of_node, "aux-bus") and inline the function
--- not initialize rc = 0
+dp_display_request_irq()
 
-Changes in v3:
--- add done_probing callback into devm_of_dp_aux_populate_bus()
+> which ties irq registration to the DPU device's life cycle, while depending on
+> resources that are released as the DP device is torn down. Move register DP
 
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
----
- drivers/gpu/drm/msm/dp/dp_aux.c     | 34 ++++++++++++++----
- drivers/gpu/drm/msm/dp/dp_display.c | 69 ++++++++++++++++++-------------------
- 2 files changed, 60 insertions(+), 43 deletions(-)
+`registering` or `registration of`
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c b/drivers/gpu/drm/msm/dp/dp_aux.c
-index 22eb774..425b5c5 100644
---- a/drivers/gpu/drm/msm/dp/dp_aux.c
-+++ b/drivers/gpu/drm/msm/dp/dp_aux.c
-@@ -480,7 +480,6 @@ void dp_aux_deinit(struct drm_dp_aux *dp_aux)
- 
- int dp_aux_register(struct drm_dp_aux *dp_aux)
- {
--	struct dp_aux_private *aux;
- 	int ret;
- 
- 	if (!dp_aux) {
-@@ -488,12 +487,7 @@ int dp_aux_register(struct drm_dp_aux *dp_aux)
- 		return -EINVAL;
- 	}
- 
--	aux = container_of(dp_aux, struct dp_aux_private, dp_aux);
--
--	aux->dp_aux.name = "dpu_dp_aux";
--	aux->dp_aux.dev = aux->dev;
--	aux->dp_aux.transfer = dp_aux_transfer;
--	ret = drm_dp_aux_register(&aux->dp_aux);
-+	ret = drm_dp_aux_register(dp_aux);
- 	if (ret) {
- 		DRM_ERROR("%s: failed to register drm aux: %d\n", __func__,
- 				ret);
-@@ -508,6 +502,21 @@ void dp_aux_unregister(struct drm_dp_aux *dp_aux)
- 	drm_dp_aux_unregister(dp_aux);
- }
- 
-+static int dp_wait_hpd_asserted(struct drm_dp_aux *dp_aux,
-+				 unsigned long wait_us)
-+{
-+	int ret;
-+	struct dp_aux_private *aux;
-+
-+	aux = container_of(dp_aux, struct dp_aux_private, dp_aux);
-+
-+	pm_runtime_get_sync(aux->dev);
-+	ret = dp_catalog_aux_wait_for_hpd_connect_state(aux->catalog);
-+	pm_runtime_put_sync(aux->dev);
-+
-+	return ret;
-+}
-+
- struct drm_dp_aux *dp_aux_get(struct device *dev, struct dp_catalog *catalog,
- 			      bool is_edp)
- {
-@@ -531,6 +540,17 @@ struct drm_dp_aux *dp_aux_get(struct device *dev, struct dp_catalog *catalog,
- 	aux->catalog = catalog;
- 	aux->retry_cnt = 0;
- 
-+	/*
-+	 * Use the drm_dp_aux_init() to use the aux adapter
-+	 * before registering aux with the DRM device so that
-+	 * msm edp panel can be detected by generic_dep_panel_probe().
-+	 */
-+	aux->dp_aux.name = "dpu_dp_aux";
-+	aux->dp_aux.dev = dev;
-+	aux->dp_aux.transfer = dp_aux_transfer;
-+	aux->dp_aux.wait_hpd_asserted = dp_wait_hpd_asserted;
-+	drm_dp_aux_init(&aux->dp_aux);
-+
- 	return &aux->dp_aux;
- }
- 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 711d262..9a2b403 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -1203,6 +1203,28 @@ static const struct msm_dp_desc *dp_display_get_desc(struct platform_device *pde
- 	return NULL;
- }
- 
-+static int dp_auxbus_done_probe(struct drm_dp_aux *aux)
-+{
-+	int rc;
-+
-+	rc = component_add(aux->dev, &dp_display_comp_ops);
-+	if (rc)
-+		DRM_ERROR("eDP component add failed, rc=%d\n", rc);
-+
-+	return rc;
-+}
-+
-+static inline int dp_display_auxbus_population(struct dp_display_private *dp)
-+{
-+	int ret;
-+
-+	ret = devm_of_dp_aux_populate_bus(dp->aux, dp_auxbus_done_probe);
-+	if (ret == -ENODEV)
-+		DRM_ERROR("aux-bus not found\n");
-+
-+	return ret;
-+}
-+
- static int dp_display_probe(struct platform_device *pdev)
- {
- 	int rc = 0;
-@@ -1271,10 +1293,16 @@ static int dp_display_probe(struct platform_device *pdev)
- 	if (rc)
- 		return rc;
- 
--	rc = component_add(&pdev->dev, &dp_display_comp_ops);
--	if (rc) {
--		DRM_ERROR("component add failed, rc=%d\n", rc);
--		dp_display_deinit_sub_modules(dp);
-+	if (dp->dp_display.is_edp) {
-+		rc = dp_display_auxbus_population(dp);
-+		if (rc)
-+			DRM_ERROR("eDP auxbus population failed, rc=%d\n", rc);
-+	} else {
-+		rc = component_add(&pdev->dev, &dp_display_comp_ops);
-+		if (rc) {
-+			DRM_ERROR("component add failed, rc=%d\n", rc);
-+			dp_display_deinit_sub_modules(dp);
-+		}
- 	}
- 
- 	return rc;
-@@ -1285,8 +1313,6 @@ static int dp_display_remove(struct platform_device *pdev)
- 	struct dp_display_private *dp = dev_get_dp_display_private(&pdev->dev);
- 
- 	component_del(&pdev->dev, &dp_display_comp_ops);
--	dp_display_deinit_sub_modules(dp);
--
- 	platform_set_drvdata(pdev, NULL);
- 
- 	dp_display_deinit_sub_modules(dp);
-@@ -1385,29 +1411,8 @@ static int dp_display_get_next_bridge(struct msm_dp *dp)
- {
- 	int rc;
- 	struct dp_display_private *dp_priv;
--	struct device_node *aux_bus;
--	struct device *dev;
- 
- 	dp_priv = container_of(dp, struct dp_display_private, dp_display);
--	dev = &dp_priv->pdev->dev;
--	aux_bus = of_get_child_by_name(dev->of_node, "aux-bus");
--
--	if (aux_bus && dp->is_edp) {
--		/*
--		 * The code below assumes that the panel will finish probing
--		 * by the time devm_of_dp_aux_populate_ep_devices() returns.
--		 * This isn't a great assumption since it will fail if the
--		 * panel driver is probed asynchronously but is the best we
--		 * can do without a bigger driver reorganization.
--		 */
--		rc = of_dp_aux_populate_bus(dp_priv->aux, NULL);
--		of_node_put(aux_bus);
--		if (rc)
--			goto error;
--	} else if (dp->is_edp) {
--		DRM_ERROR("eDP aux_bus not found\n");
--		return -ENODEV;
--	}
- 
- 	/*
- 	 * External bridges are mandatory for eDP interfaces: one has to
-@@ -1420,17 +1425,9 @@ static int dp_display_get_next_bridge(struct msm_dp *dp)
- 	if (!dp->is_edp && rc == -ENODEV)
- 		return 0;
- 
--	if (!rc) {
-+	if (!rc)
- 		dp->next_bridge = dp_priv->parser->next_bridge;
--		return 0;
--	}
- 
--error:
--	if (dp->is_edp) {
--		of_dp_aux_depopulate_bus(dp_priv->aux);
--		dp_display_host_phy_exit(dp_priv);
--		dp_display_host_deinit(dp_priv);
--	}
- 	return rc;
- }
- 
+> driver irq handler at dp_display_probe() to have dp_display_irq_handler()
+
+IRQ, s/at/to/
+
+> is tied with DP device.
+
+s/is //
+
+Moreover, your commit does more that you have described in the commit
+message. It also e.g. switches to platform_get_irq().
+
+>
+> Changes in v4:
+> -- delete dp->irq check at dp_display_request_irq()
+>
+> Changes in v3:
+> -- move calling dp_display_irq_handler() to probe
+>
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> ---
+>  drivers/gpu/drm/msm/dp/dp_display.c | 29 +++++++++--------------------
+>  drivers/gpu/drm/msm/dp/dp_display.h |  1 -
+>  2 files changed, 9 insertions(+), 21 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 76f1395..5645178 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -1193,30 +1193,21 @@ static irqreturn_t dp_display_irq_handler(int irq, void *dev_id)
+>         return ret;
+>  }
+>
+> -int dp_display_request_irq(struct msm_dp *dp_display)
+> +static int dp_display_request_irq(struct dp_display_private *dp)
+>  {
+>         int rc = 0;
+> -       struct dp_display_private *dp;
+> -
+> -       if (!dp_display) {
+> -               DRM_ERROR("invalid input\n");
+> -               return -EINVAL;
+> -       }
+> -
+> -       dp = container_of(dp_display, struct dp_display_private, dp_display);
+> +       struct device *dev = &dp->pdev->dev;
+>
+> -       dp->irq = irq_of_parse_and_map(dp->pdev->dev.of_node, 0);
+> +       dp->irq = platform_get_irq(dp->pdev, 0);
+>         if (!dp->irq) {
+>                 DRM_ERROR("failed to get irq\n");
+>                 return -EINVAL;
+>         }
+>
+> -       rc = devm_request_irq(dp_display->drm_dev->dev, dp->irq,
+> -                       dp_display_irq_handler,
+> +       rc = devm_request_irq(dev, dp->irq, dp_display_irq_handler,
+>                         IRQF_TRIGGER_HIGH, "dp_display_isr", dp);
+>         if (rc < 0) {
+> -               DRM_ERROR("failed to request IRQ%u: %d\n",
+> -                               dp->irq, rc);
+> +               DRM_ERROR("failed to request IRQ%u: %d\n", dp->irq, rc);
+
+Please don't mix functional changes with code reformatting.
+
+>                 return rc;
+>         }
+>
+> @@ -1287,6 +1278,10 @@ static int dp_display_probe(struct platform_device *pdev)
+>
+>         platform_set_drvdata(pdev, &dp->dp_display);
+>
+> +       rc = dp_display_request_irq(dp);
+> +       if (rc)
+> +               return rc;
+
+Who will perform component teardown for you if the driver just returns
+an error here?
+
+> +
+>         rc = component_add(&pdev->dev, &dp_display_comp_ops);
+>         if (rc) {
+>                 DRM_ERROR("component add failed, rc=%d\n", rc);
+> @@ -1549,12 +1544,6 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+>
+>         dp_priv = container_of(dp_display, struct dp_display_private, dp_display);
+>
+> -       ret = dp_display_request_irq(dp_display);
+> -       if (ret) {
+> -               DRM_ERROR("request_irq failed, ret=%d\n", ret);
+> -               return ret;
+> -       }
+> -
+>         ret = dp_display_get_next_bridge(dp_display);
+>         if (ret)
+>                 return ret;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
+> index 1e9415a..b3c08de 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
+> @@ -35,7 +35,6 @@ struct msm_dp {
+>  int dp_display_set_plugged_cb(struct msm_dp *dp_display,
+>                 hdmi_codec_plugged_cb fn, struct device *codec_dev);
+>  int dp_display_get_modes(struct msm_dp *dp_display);
+> -int dp_display_request_irq(struct msm_dp *dp_display);
+>  bool dp_display_check_video_test(struct msm_dp *dp_display);
+>  int dp_display_get_test_bpp(struct msm_dp *dp_display);
+>  void dp_display_signal_audio_start(struct msm_dp *dp_display);
+> --
+> 2.7.4
+>
+
+
 -- 
-2.7.4
-
+With best wishes
+Dmitry
