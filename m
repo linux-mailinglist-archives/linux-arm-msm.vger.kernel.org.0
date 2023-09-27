@@ -2,151 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9CD947B0772
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 16:57:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 362077B078E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 17:02:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232248AbjI0O5p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Sep 2023 10:57:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43170 "EHLO
+        id S232316AbjI0PCU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Sep 2023 11:02:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232238AbjI0O5o (ORCPT
+        with ESMTP id S232336AbjI0PCQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Sep 2023 10:57:44 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48B09F9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 07:57:42 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2bff776fe0bso189136951fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 07:57:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695826660; x=1696431460; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=kF3xTzsn9HLZQj02Y4JAVq4+cnHK5cK7+MRBOAK1zto=;
-        b=zSHzsHoystgSRI8WbSiGKcLfQskrpMxRxAB7ABn3riafYp8WN13+U4YT8L77Mw6W0f
-         HlnWyaGbi6Sy2AFz0T6jr3/fu55o6cvQj3/AiSF56I2EYHpCa6Shb30U/6pYPW80mW1l
-         qOemVXQDrwuXuXOme4SGTK+owFNnvrGjEOq0MPcU17uz01WoZmeKqcgBHdfAaeD8EYy9
-         jsBYUPRiE+YWntvqQt2BVNqephU2XWl4P5A4zn8g3Q1hwNduz3WgCK8RfvhEwR6WMm2X
-         lyUauhquPV8zo7Np3nWwrw2cxyqRwuaqd9X5L7w5qTW2JbtWLdjKrO7MBtxREuuQZoBq
-         Bf7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695826660; x=1696431460;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kF3xTzsn9HLZQj02Y4JAVq4+cnHK5cK7+MRBOAK1zto=;
-        b=v1m0q5X/X6vSwMW4atf/ddcFd21h0ZfLliArTCyPj7TMhi5n92FGEdFiOBA1Xr87fW
-         E2FJdYG8W7PXr7JsUgM9IfDUqYIAEuEAMqbz+Fv64pRarA/4DSe0iW+l2Rg2lXE7hFfC
-         V/rj92vlW0YPjv05XyOBeqYX8SghfbnPbtfg22JLfM/jd/k+1a1G4uvEOEE4+TrOuSp+
-         3Lmzwgp7jBbkf1FZmd+IxHglxKxKwcqDiqS8DjBqXIszfOTcWga+KHRXpNrCOBf2gDjz
-         iY2roSBJjFWZu6pGXc0QMyMjl1l7LwIcYklcmoyXPRWysMkS5Trph/A2ipIlwA0YhKLp
-         kDag==
-X-Gm-Message-State: AOJu0YxfD9PisrgtN/F/MBkdDj5vEhQpW0Sr4ysditYqwHXtoBeBK3iJ
-        WngqO61mOg8AtkFyM0abz7Cd
-X-Google-Smtp-Source: AGHT+IGG7mnyMmEuRPdbZUTFhUCWPBXMktolkIEDpgdfwWvheKVZBGucA66WnqOUDknn4aOsIf4umw==
-X-Received: by 2002:a2e:9d55:0:b0:2c0:1cfd:8698 with SMTP id y21-20020a2e9d55000000b002c01cfd8698mr2040919ljj.36.1695826660497;
-        Wed, 27 Sep 2023 07:57:40 -0700 (PDT)
-Received: from thinkpad.fritz.box ([2a02:2454:9d09:3f00:b024:394e:56d7:d8b4])
-        by smtp.gmail.com with ESMTPSA id j26-20020a170906831a00b0099bc8bd9066sm9405220ejx.150.2023.09.27.07.57.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Sep 2023 07:57:39 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     lpieralisi@kernel.org, kw@linux.com
-Cc:     andersson@kernel.org, konrad.dybcio@linaro.org,
-        bhelgaas@google.com, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-        abel.vesa@linaro.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v2] PCI: qcom: Make use of QCOM_PCIE_LINK_SPEED_TO_BW() macro for encoding link speed
-Date:   Wed, 27 Sep 2023 16:57:38 +0200
-Message-Id: <20230927145738.115843-1-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
+        Wed, 27 Sep 2023 11:02:16 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72528CD6;
+        Wed, 27 Sep 2023 08:02:13 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A96E6C433C7;
+        Wed, 27 Sep 2023 15:02:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1695826933;
+        bh=r8NJqB+Eskoh9K1MkrQnG5srH7gWNZFeblzEWCKg2ek=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=dF1x9v6FR31R1fdTryZ3/4xKYsKnyb5iunoYG4CVwJ5i098D+gDiHo3u6uZUhAdvJ
+         cTpvMuST3Lli3Py9ecOWHMbwtisIuicQUhgBopTU+JRcNTLvwb6W4B3QU/feEoCv9p
+         GnMUkhO9AnInoB761J+f21N+VBhkhCReHrcZGtBTEcnK+THjD7jl6/aIGC15LTh6aZ
+         spJ6J/R4Em4Un+nyAsTkdvEN+QY/OeXE4e9ASC1RrsIUHff6I8dH1C9kghGG5Zpmku
+         5+zl8WSbP69JzRtaq457YiCW3w25jxluEN+Se+Y920RqssBM9dBkqYzDkcPamot36G
+         UgZPe2sXHMamw==
+Date:   Wed, 27 Sep 2023 17:02:09 +0200
+From:   Mark Brown <broonie@kernel.org>
+To:     Wesley Cheng <quic_wcheng@quicinc.com>
+Cc:     mathias.nyman@intel.com, gregkh@linuxfoundation.org,
+        lgirdwood@gmail.com, perex@perex.cz, tiwai@suse.com,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, srinivas.kandagatla@linaro.org,
+        bgoswami@quicinc.com, Thinh.Nguyen@synopsys.com,
+        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v7 29/33] ASoC: qcom: qdsp6: Add SND kcontrol for
+ fetching offload status
+Message-ID: <ZRRD8eFZugh/+dex@finisterre.sirena.org.uk>
+References: <20230921214843.18450-1-quic_wcheng@quicinc.com>
+ <20230921214843.18450-30-quic_wcheng@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="2qid1YG4vVF/Hdr6"
+Content-Disposition: inline
+In-Reply-To: <20230921214843.18450-30-quic_wcheng@quicinc.com>
+X-Cookie: Save energy:  Drive a smaller shell.
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Instead of hardcoding the link speed in MBps, let's make use of the
-existing QCOM_PCIE_LINK_SPEED_TO_BW() macro that does the encoding of the
-link speed for us.
 
-This eliminates the need for a switch case in qcom_pcie_icc_update() and
-also works for future Gen speeds without any code modifications.
+--2qid1YG4vVF/Hdr6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Suggested-by: Bjorn Helgaas <bhelgaas@google.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
+On Thu, Sep 21, 2023 at 02:48:39PM -0700, Wesley Cheng wrote:
 
-Changes in v2:
+> Add a kcontrol to the platform sound card to fetch the current offload
+> status.  This can allow for userspace to ensure/check which USB SND
+> resources are actually busy versus having to attempt opening the USB SND
+> devices, which will result in an error if offloading is active.
 
-- Switched to QCOM_PCIE_LINK_SPEED_TO_BW() macro as per Bjorn's suggestion
-  https://lore.kernel.org/linux-pci/20230924160713.217086-1-manivannan.sadhasivam@linaro.org/
+> +static int q6usb_prepare(struct snd_pcm_substream *substream,
+> +               struct snd_soc_dai *dai)
+> +{
+> +       struct q6usb_port_data *data =3D dev_get_drvdata(dai->dev);
+> +=20
+> +       mutex_lock(&data->mutex);
+> +       data->status[data->sel_card_idx].running =3D true;
+> +       mutex_unlock(&data->mutex);
 
- drivers/pci/controller/dwc/pcie-qcom.c | 24 ++++++------------------
- 1 file changed, 6 insertions(+), 18 deletions(-)
+These updates of running should really have a snd_ctl_notify() so that
+UIs can know to update when the value changes while they're open.
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 297442c969b6..dce80d6dc88f 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -148,6 +148,9 @@
- 
- #define QCOM_PCIE_CRC8_POLYNOMIAL		(BIT(2) | BIT(1) | BIT(0))
- 
-+#define QCOM_PCIE_LINK_SPEED_TO_BW(speed) \
-+		MBps_to_icc(PCIE_SPEED2MBS_ENC(pcie_link_speed[speed]) / BITS_PER_BYTE)
-+
- #define QCOM_PCIE_1_0_0_MAX_CLOCKS		4
- struct qcom_pcie_resources_1_0_0 {
- 	struct clk_bulk_data clks[QCOM_PCIE_1_0_0_MAX_CLOCKS];
-@@ -1347,7 +1350,7 @@ static int qcom_pcie_icc_init(struct qcom_pcie *pcie)
- 	 * Set an initial peak bandwidth corresponding to single-lane Gen 1
- 	 * for the pcie-mem path.
- 	 */
--	ret = icc_set_bw(pcie->icc_mem, 0, MBps_to_icc(250));
-+	ret = icc_set_bw(pcie->icc_mem, 0, QCOM_PCIE_LINK_SPEED_TO_BW(1));
- 	if (ret) {
- 		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
- 			ret);
-@@ -1360,7 +1363,7 @@ static int qcom_pcie_icc_init(struct qcom_pcie *pcie)
- static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
- {
- 	struct dw_pcie *pci = pcie->pci;
--	u32 offset, status, bw;
-+	u32 offset, status;
- 	int speed, width;
- 	int ret;
- 
-@@ -1377,22 +1380,7 @@ static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
- 	speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, status);
- 	width = FIELD_GET(PCI_EXP_LNKSTA_NLW, status);
- 
--	switch (speed) {
--	case 1:
--		bw = MBps_to_icc(250);
--		break;
--	case 2:
--		bw = MBps_to_icc(500);
--		break;
--	default:
--		WARN_ON_ONCE(1);
--		fallthrough;
--	case 3:
--		bw = MBps_to_icc(985);
--		break;
--	}
--
--	ret = icc_set_bw(pcie->icc_mem, 0, width * bw);
-+	ret = icc_set_bw(pcie->icc_mem, 0, width * QCOM_PCIE_LINK_SPEED_TO_BW(speed));
- 	if (ret) {
- 		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
- 			ret);
--- 
-2.25.1
+> +static int q6usb_mixer_get_offload_status(struct snd_kcontrol *kcontrol,
+> +				   struct snd_ctl_elem_value *ucontrol)
+> +{
 
+> +	running =3D q6usb_find_running(data);
+> +	if (running < 0) {
+> +		card_idx =3D -1;
+> +		pcm_idx =3D -1;
+> +	} else {
+> +		card_idx =3D running;
+> +		pcm_idx =3D data->status[running].pcm_index;
+> +	}
+> +
+> +	ucontrol->value.integer.value[0] =3D card_idx;
+> +	ucontrol->value.integer.value[1] =3D pcm_idx;
+
+This feels a bit messy but I'm not sure what we'd do that's better so
+unless someone else has better ideas let's go with this.  Possibly we
+should standardise this as a new control type for joining cards up so at
+least if there's further needs for this we can use the same solution?
+
+--2qid1YG4vVF/Hdr6
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmUUQ+0ACgkQJNaLcl1U
+h9Bd4gf/SmW7ryUa29e71/V9HuX7Jew2MdnRQDuXz6STFyi1WM6tcjFJSRGg0qG4
++JqN2fHT/gRP7Bflr/Bn+DVjr4ms8Rp0KS98kfKk4gHHoJr+Y7yDROhNJ3gMUxP7
+V7c/ZtQoP32PyNcM8K2x48fbOm1PBkZS8ch/BRzaIV0Jswv9aArfeP30ApjrIZb+
+tG7/Qrgeyao2F7u4J4wd74HaFKdp0HXk3csDcXlZ8bqit2/zx5de1UBVnmHzRaVS
+g0dubyNXyFQVTJRYfAphnLkmg7T7Cknn17SxaEmlkfMTKoS6kXB+t04e3NsyvuvM
+Tt1rVGB3hzwIPa1u8VT5/HgysV7eFQ==
+=JgtR
+-----END PGP SIGNATURE-----
+
+--2qid1YG4vVF/Hdr6--
