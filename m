@@ -2,123 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 42EEB7B01BD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 12:23:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 896A47B0227
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Sep 2023 12:47:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231416AbjI0KXc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Sep 2023 06:23:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43930 "EHLO
+        id S229648AbjI0KrQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Sep 2023 06:47:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231235AbjI0KXG (ORCPT
+        with ESMTP id S229543AbjI0KrO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Sep 2023 06:23:06 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB668449A;
-        Wed, 27 Sep 2023 03:11:19 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84DF4C433C8;
-        Wed, 27 Sep 2023 10:11:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1695809478;
-        bh=AsqrDF9NU5xeBJ5ZD8/j8B6x2uUVmpdua9PB6GUbGBU=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=RJ2L3aiM74bOH7cDQ4Jb3leOE49w45romXH+DmI9x30rE3CErmU1XRY2KNXxJES7m
-         Sm0uVOwqtYyCOPZIiEvmXxO4SLjmfOoCUhI1LYyrzm1Fr0xDnFS+A/hEYQ7zCC3Kj2
-         BPDe/uBTiqybVVN4/OCW7TSSJdphz/spEFLcL6eb8XrcEnYPV8Qq4oLDdJfMALxuS7
-         yLmJqt74fBvM7AoQkgnFkUCGWuQ53tUJK+X2QSiM4vvZqDsv0NX/v8ClNC3NMk5TAi
-         nqZ3sLehBXVwIWYUZzqIh+qM0oCAudKRSuV+hbc4R93FgC3kB8weQGXHHtKWPWpP4A
-         UHnvDbnXcdpxQ==
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2c12fc235fbso124029621fa.0;
-        Wed, 27 Sep 2023 03:11:18 -0700 (PDT)
-X-Gm-Message-State: AOJu0YyVGhzuOGyi3SWnMBPkp18zKw3Bws8RgFsgWzh//Pr8tl/C8Wtz
-        hvdZ3BIH+V2y1YQqgqguzoNKT7VUlQxVGEANHb0=
-X-Google-Smtp-Source: AGHT+IErHOGMjYxrQ1t/+DgPaZ4dBmBSaTLegmhhD5AyCtWVIwsd7X66QDMROebWfGTc2GB04ctfmhYYpYi8z7uDJJs=
-X-Received: by 2002:a2e:700d:0:b0:2bc:fd50:573d with SMTP id
- l13-20020a2e700d000000b002bcfd50573dmr678352ljc.23.1695809476737; Wed, 27 Sep
- 2023 03:11:16 -0700 (PDT)
+        Wed, 27 Sep 2023 06:47:14 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99B06139
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 03:47:13 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-99c93638322so2391092866b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 03:47:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1695811632; x=1696416432; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=PQ3dRWFSzFn+xxVwVVaoy7t/aSLLVEtHDoJ4V/iI1zg=;
+        b=ZcaiorcXKf6of8oh7Y4tGgStw4rvHgTNKUqc5fNNOED1wG/ovpwOZcuwBB2fO1K5mt
+         mT6yLp+J3AkHzFtq53FCjX9o8fP1udBd3/3q1G1NoMEuJkX0Sg+CtoF66o1m+r7Q6R9M
+         KRTVz12RYv9L1YiUkBr/XzG6xgPIp9Y3VF7Kh6K6kzHrlF6rQrHl26uyv3udOJ2y0vVg
+         KKNdq/2g7zUC/ToWbDHtLfq6CFFMejstg3pcHu7qeW+tfs0aZsMUFR4YrN00UVGd+Sgt
+         0mfPiE8s5+nM4M1xWPcD8WzAzO1zvKnqcJ3Ervckzy2KW4wfHhkaWihRBfR6MuUq6wml
+         Gk8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695811632; x=1696416432;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PQ3dRWFSzFn+xxVwVVaoy7t/aSLLVEtHDoJ4V/iI1zg=;
+        b=eZ7Nu5VO2XauQmz90hGaKW1jTgtx52DeZfSDwxoIqmb63zYqedy9rvE1PeBS3ZlaOd
+         SekrFtA9I9q2qBGN7gL/kPk+ag+RRXt3NCylR+X2Prey1NPiPNvIYHGladO/U8aig8vc
+         1c2yEqi7L9080QYZa/ySfVGS2wTxaCnijaBaU6HE7D0Rorx13kHBtythRys5ulDOc5HR
+         FnLQg8jI2CyJtW2F5crAy4kvSFpeBs9GltPYMJ3oPV9CdamVP98fcMqRgbkKxmXmDLMX
+         oZELg5bgjOZRhakSGYfunVUoFw9LD8HzfU3KK9w10ds3R70esWqoRBcRfsM9VwEGge/W
+         B97w==
+X-Gm-Message-State: AOJu0Yyt2mC1UdS+6Mjb9f6QDmWQZ7xzTjsHE8jZqYP2UNEj514otjCs
+        y4D7kde+1I2EoOo5I6ZdxUjqyg==
+X-Google-Smtp-Source: AGHT+IETV+6cwPeaHCYHkCp7qDMiBWINene2tNDTs1LgDTmUSv8Os1xlNfbkHXrCpiodmdzKX2cmKQ==
+X-Received: by 2002:a17:906:c144:b0:9ae:513f:a4f3 with SMTP id dp4-20020a170906c14400b009ae513fa4f3mr7899469ejc.32.1695811632037;
+        Wed, 27 Sep 2023 03:47:12 -0700 (PDT)
+Received: from [192.168.33.189] (178235177023.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.23])
+        by smtp.gmail.com with ESMTPSA id k5-20020a1709062a4500b009934b1eb577sm9212009eje.77.2023.09.27.03.47.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Sep 2023 03:47:11 -0700 (PDT)
+Message-ID: <35703a29-5c5a-47a8-9a4b-04953dc3faba@linaro.org>
+Date:   Wed, 27 Sep 2023 12:47:09 +0200
 MIME-Version: 1.0
-References: <20230927055954.3755-1-quic_aiquny@quicinc.com>
- <CAMj1kXEh=yQ12v1Ht6=-vgXVe8VCQTPdUD8AowkKcpyDXh_0mg@mail.gmail.com> <af59ec04-aa68-5a22-0f3f-f4872cefeb46@quicinc.com>
-In-Reply-To: <af59ec04-aa68-5a22-0f3f-f4872cefeb46@quicinc.com>
-From:   Ard Biesheuvel <ardb@kernel.org>
-Date:   Wed, 27 Sep 2023 10:11:05 +0000
-X-Gmail-Original-Message-ID: <CAMj1kXEUTOpATv_jbimGktSXBBweyfVNPpqWWJaJNp0U-zvg+w@mail.gmail.com>
-Message-ID: <CAMj1kXEUTOpATv_jbimGktSXBBweyfVNPpqWWJaJNp0U-zvg+w@mail.gmail.com>
-Subject: Re: [PATCH] ARM: kprobes: Explicitly assign register for local variables
-To:     "Aiqun(Maria) Yu" <quic_aiquny@quicinc.com>
-Cc:     linux@armlinux.org.uk, mhiramat@kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        kernel@quicinc.com, quic_lijuang@quicinc.com,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] arm64: dts: qcom: Add interconnect nodes for SDX75
+Content-Language: en-US
+To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        dmitry.baryshkov@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1695720564-2978-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1695720564-2978-2-git-send-email-quic_rohiagar@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <1695720564-2978-2-git-send-email-quic_rohiagar@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 27 Sept 2023 at 09:44, Aiqun(Maria) Yu <quic_aiquny@quicinc.com> wr=
-ote:
->
-> On 9/27/2023 5:26 PM, Ard Biesheuvel wrote:
-> > Hello Maria,
-> >
-> > On Wed, 27 Sept 2023 at 06:00, Maria Yu <quic_aiquny@quicinc.com> wrote=
-:
-> >>
-> >> Registers r7 is removed in clobber list, so compiler may choose r7 for
-> >> local variables usage, while r7 will be actually updated by the inline=
- asm
-> >> code.
-> >
-> > The inline asm does not update R7, it preserves and restores it.
-> That is the asm is updating r7 purposely and compiler still choose r7
-> for the asm local varialbe and use it inside the asm code.
-> So the change is to fix the issue when "r7 is removed from the clobber
-> list of current asm code while actually r7 shouldn't be choosed for the
-> current asm local variables".
-> The issue is only reproducible when ftrace is not enabled, and r7 is
-> removed from the current clobber list.
->
-> Let me have the assemble code that will make you understand better.
->
-> --the original code:
-> "mov    r11, r7                 \n\t"
-> ...
-> "ldmia  %[regs], {r0-r7}        \n\t"
-> "blx    %[fn]                   \n\t"
-> ...
-> "mov    r7, r11                 \n\t"
->
-> --After compile to choose register for [fn] and [regs].
-> mov     r11, r7
-> ldr=E2=80=83=E2=80=83r7, [r1, #16] //r7 used for store asi->insn_fn
-> ...
-> ldmia.w=E2=80=83=E2=80=83ip, {r0, r1, r2, r3, r4, r5, r6, r7}
-> blx r7
-> ...
-> mov r7,r11
->
-> The current change is to avoid by fix the registers for local variable
-> usage and not choose r7 for [fn].
->
+On 26.09.2023 11:29, Rohit Agarwal wrote:
+> Add interconnect nodes to support interconnects on SDX75.
+> Also parallely add the interconnect property for UART required
+> so that the bootup to shell does not break with interconnects
+> in place.
+> 
+> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+> ---
+[...]
 
-OK, I understand now, thanks.
+>  		scm: scm {
+>  			compatible = "qcom,scm-sdx75", "qcom,scm";
+> @@ -434,6 +448,8 @@
+>  			clock-names = "m-ahb",
+>  				      "s-ahb";
+>  			iommus = <&apps_smmu 0xe3 0x0>;
+> +			interconnects = <&clk_virt MASTER_QUP_CORE_0 0 &clk_virt SLAVE_QUP_CORE_0 0>;
+0 -> QCOM_ICC_TAG_ALWAYS (dt-bindings/interconnect/qcom,icc.h)
 
-Would it help if we just always enabled frame pointers for this source file=
-?
-
---- a/arch/arm/probes/kprobes/Makefile
-+++ b/arch/arm/probes/kprobes/Makefile
-@@ -9,6 +9,7 @@ test-kprobes-objs               :=3D test-core.o
- ifdef CONFIG_THUMB2_KERNEL
- obj-$(CONFIG_KPROBES)          +=3D actions-thumb.o checkers-thumb.o
- test-kprobes-objs              +=3D test-thumb.o
-+KBUILD_CFLAGS                  +=3D -fno-omit-frame-pointer
- else
- obj-$(CONFIG_KPROBES)          +=3D actions-arm.o checkers-arm.o
- obj-$(CONFIG_OPTPROBES)                +=3D opt-arm.o
+Konrad
