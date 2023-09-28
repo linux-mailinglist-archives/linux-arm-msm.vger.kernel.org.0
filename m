@@ -2,120 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 840E57B1553
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 09:49:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8EA027B1713
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 11:21:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230509AbjI1HtU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Sep 2023 03:49:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32884 "EHLO
+        id S231550AbjI1JVI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Sep 2023 05:21:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230450AbjI1HtT (ORCPT
+        with ESMTP id S231252AbjI1JVH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Sep 2023 03:49:19 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E151997;
-        Thu, 28 Sep 2023 00:49:17 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87A57C433C8;
-        Thu, 28 Sep 2023 07:49:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1695887357;
-        bh=Gs6aFP7wkoeloUPjh3P+7ZqWXKrUV+lmRvPOXvjf8Ds=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=C07hz1x9ZBOot13NmBg/w+8/7UOMHZqam5kdmBhRs0FIMx+p817yeI0/AwYqADdFf
-         LyROsByfc7udfgvzO+iVFxt40scEHqiTsEuBV2anPvz2pvOqA5rNaglngGFVYkDqNi
-         8llzR1bKPikKnXdUU/UiExt0M1sNhonfI2Tg9VWZ4Ep2jjWHYlWMlubIYLpGAoPemh
-         /llBuONh0YVRMZh24Aia4Qvo0KfHmtLVm+XDoqoKF4CTK02whHvixcoVQ+egWgMk7x
-         FTO4SCB3n9ecoNHU2OdnjDnT9Gq59BrqP6Jgw3zOEG+2pLxraJj4zpxQ8BtWBKRvcG
-         KuqZYg3uAID5g==
-Date:   Thu, 28 Sep 2023 13:19:13 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-Cc:     Olivier Dautricourt <olivierdautricourt@gmail.com>,
-        Stefan Roese <sr@denx.de>, dmaengine@vger.kernel.org,
-        kernel@pengutronix.de, Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Tudor Ambarus <tudor.ambarus@linaro.org>,
-        Florian Fainelli <florian.fainelli@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        linux-rpi-kernel@lists.infradead.org,
-        Rob Herring <robh@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Paul Cercueil <paul@crapouillou.net>,
-        linux-mips@vger.kernel.org,
-        Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Li Yang <leoyang.li@nxp.com>, Zhang Wei <zw@zh-kernel.org>,
-        linuxppc-dev@lists.ozlabs.org, Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Sean Wang <sean.wang@mediatek.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        linux-mediatek@lists.infradead.org,
-        Andreas =?iso-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-actions@lists.infradead.org,
-        ye xingchen <ye.xingchen@zte.com.cn>,
-        Daniel Mack <daniel@zonque.org>,
-        Haojian Zhuang <haojian.zhuang@gmail.com>,
-        Robert Jarzmik <robert.jarzmik@free.fr>,
-        Andy Gross <agross@kernel.org>,
+        Thu, 28 Sep 2023 05:21:07 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B38A91
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 02:21:01 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-32336a30d18so4723603f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 02:21:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1695892860; x=1696497660; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Oh9cj7emIXRYfVzKVzGsfFEfSezfYh/zsZTNNRw9uKk=;
+        b=eeH1cMhIYZyFWo4wuhbK1K9AexcD8ELSrx4+lhEnY9LCAEsTyp4WKszRpfucYcg5b2
+         lh6pa+i9bkaZQ98zQgXJfAF7Ch9aM4fy5AKMOcaH2boY0pQRhKxrAan2+lYie+sEgB0Y
+         4m6rIFAhMROpfFR9f8mUSe0Mp3qjLzJgzRyJSxMz2sKpg7AK0fGGIe5ln/BY7fHgMs1S
+         3o+jiOLYRA8nimlunJMcZrT/tdGChRwyKTYbIqYhZgbm71YnDwgF5nMsOoXT9EmdHexh
+         zbEr7o009zA1Zgc+GhJj2gnmo9Z62Es6fp66K8TwxuC+mpJhJV2q6kkjkSaPFzSPPeWZ
+         XacQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695892860; x=1696497660;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Oh9cj7emIXRYfVzKVzGsfFEfSezfYh/zsZTNNRw9uKk=;
+        b=aPLJj7tsWaZMHUCboShKV+e0CRlq9hb9u2A2UtlS7+CcS3OidxjF3S4a8m+Obr0ec4
+         XEaixvBzSqzS7L9Puro82NkkHah0g9D3EhbmSWv2MLPwMpNBloSlZqCce3sBrjFOMmA/
+         sTM/u1pb7JDhXLKCWfAmR6uVhYZtTKEbwiLT1weS/obqdKZhDtD2bCtOxYZTRcu6SQQW
+         /dehQVL6NH6kOlVhh9/yamEGIRzEWHj5SqEmD08ZBK2VBuQ+6VTeQhCK1cOY3yGP9yfB
+         AstGhJs+vcIUcD69mXdARaQcMdmieAsM03wzX3+wQHpRkL6lqxpImAuSOKYu5yRjM9uI
+         33Lg==
+X-Gm-Message-State: AOJu0Yw46hWrrOYFbIhiLLw7vedFoJ3mYn8aL2RItCHJwWNZ6v9UU+k/
+        uWt/mI8/zk+UPJFAAMI/nUYQ7A==
+X-Google-Smtp-Source: AGHT+IEmRB93IHqkI+FEarFdfiDoG74c83jd/+Pi1E+NcrPtrEXk0oH7u/JRCroiepCaQzNqmADvSQ==
+X-Received: by 2002:adf:f641:0:b0:324:647e:a8b3 with SMTP id x1-20020adff641000000b00324647ea8b3mr718935wrp.14.1695892859940;
+        Thu, 28 Sep 2023 02:20:59 -0700 (PDT)
+Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:6e4c:e3c1:5cb8:b60e])
+        by smtp.gmail.com with ESMTPSA id e9-20020adfe7c9000000b003197efd1e7bsm5009156wrn.114.2023.09.28.02.20.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 Sep 2023 02:20:59 -0700 (PDT)
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Sinan Kaya <okaya@kernel.org>,
-        Green Wan <green.wan@sifive.com>,
-        Kees Cook <keescook@chromium.org>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        Biju Das <biju.das.jz@bp.renesas.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        Pavel Machek <pavel@denx.de>,
-        Hien Huynh <hien.huynh.px@renesas.com>,
-        Yangtao Li <frank.li@vivo.com>,
-        Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Patrice Chotard <patrice.chotard@foss.st.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Samuel Holland <samuel@sholland.org>,
-        linux-sunxi@lists.linux.dev,
-        Laxman Dewangan <ldewangan@nvidia.com>,
-        Jon Hunter <jonathanh@nvidia.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        linux-tegra@vger.kernel.org, Lizhi Hou <lizhi.hou@amd.com>,
-        Brian Xu <brian.xu@amd.com>,
-        Raj Kumar Rampelli <raj.kumar.rampelli@amd.com>,
-        Michal Simek <michal.simek@amd.com>,
-        Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-        Peter Korsgaard <peter@korsgaard.com>,
-        Liu Shixin <liushixin2@huawei.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Harini Katakam <harini.katakam@amd.com>,
-        Swati Agarwal <swati.agarwal@amd.com>
-Subject: Re: [PATCH 00/59] dma: Convert to platform remove callback returning
- void
-Message-ID: <ZRUv+WgkovPotwIr@matsya>
-References: <20230919133207.1400430-1-u.kleine-koenig@pengutronix.de>
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        kernel@quicinc.com,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH v2 00/11] arm64: qcom: add and enable SHM Bridge support
+Date:   Thu, 28 Sep 2023 11:20:29 +0200
+Message-Id: <20230928092040.9420-1-brgl@bgdev.pl>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230919133207.1400430-1-u.kleine-koenig@pengutronix.de>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -123,37 +73,92 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19-09-23, 15:31, Uwe Kleine-König wrote:
-> Hello,
-> 
-> this series convert nearly all platform drivers below drivers/dma to use
-> .remove_new(). The motivation is to get rid of an integer return code
-> that is (mostly) ignored by the platform driver core and error prone on
-> the driver side.
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-I have applied this, with change of subsystem to dmaengine: xxx
-> 
-> See commit 5c5a7680e67b ("platform: Provide a remove callback that
-> returns no value") for an extended explanation and the eventual goal.
-> 
-> There are 4 drivers I didn't convert in this series:
-> 
-> 	drivers/dma/milbeaut-hdmac.c
-> 	drivers/dma/milbeaut-xdmac.c
-> 	drivers/dma/uniphier-mdmac.c
-> 	drivers/dma/uniphier-xdmac.c
-> 
-> These all might return early in .remove() if dmaengine_terminate_sync()
-> fails. I only looked deeper into the first one, and this shows exactly
-> the error that is easy to make with .remove() returning an int: When
-> returning early from .remove(), some cleanup (here:
-> dma_async_device_unregister()) is skipped. So the dma device stays
-> known, but the device is still unregistered and the devm allocated stuff
-> (here e.g. *mdev) is freed. So it can probably easily happen, that
-> something tries to use the dma device and this will likely result in an
-> oops.
+This is technically the second iteration of the SHM Bridge enablement on
+QCom platforms but in practice it's a complete rewrite.
 
-We should convert these too, thanks for your work for the conversion
+During the internal discussion with QCom the requirement has been established
+as an SHM Bridge pool manager with the assumption that there will be multiple
+users, each with their own pool. The problem with this is that we don't have
+many potential users of SHM pools upstream at the moment which was rightfully
+pointed out in the reviews under v1 (which even had some unused symbols etc.).
+
+Moreover: after some investigating, it turns out that there simply isn't any
+need for multiple pools as the core SCM only allocates a buffer if given call
+requires more than 4 arguments and there are only a handful of SCM calls that
+need to pass a physical address to a buffer as argument to the trustzone.
+
+Additionally all but one SCM call allocate buffers passed to the TZ only for
+the duration of the call and then free it right aftr it returns. The one
+exception is called once and the buffer it uses can remain in memory until
+released by the user.
+
+This all makes using multiple pools wasteful as most of that memory will be
+reserved but remain unused 99% of the time. What we need is a single pool of
+SCM memory that deals out chunks of suitable format (coherent and
+page-aligned) that fulfills the requirements of all calls.
+
+As not all architectures support SHM bridge, it makes sense to first unify the
+memory operations in SCM calls. All users do some kind of DMA mapping to obtain
+buffers, most using dma_alloc_coherent() which impacts performance.
+
+Genalloc pools are very fast so let's use them instead. Create a custom
+allocator that also deals with the mapping and use it across all SCM calls.
+
+Then once this is done, let's extend the allocator to use the SHM bridge
+functionality if available on the given platform.
+
+While at it: let's create a qcom specific directory in drivers/firmware/ and
+move relevant code in there.
+
+I couldn't test all SCM calls but tested with the inline crypto engine on
+sm8550 and sa8775p that runs most of new code paths (with and without SHM
+bridge). At least qseecom would need some Tested-by.
+
+v1 -> v2:
+- too many changes to list, it's a complete rewrite as explained above
+
+Bartosz Golaszewski (11):
+  firmware: qcom: move Qualcomm code into its own directory
+  firmware: qcom: scm: add a dedicated SCM memory allocator
+  firmware: qcom: scm: switch to using the SCM allocator
+  firmware: qcom: scm: make qcom_scm_assign_mem() use the SCM allocator
+  firmware: qcom: scm: make qcom_scm_ice_set_key() use the SCM allocator
+  firmware: qcom: scm: make qcom_scm_pas_init_image() use the SCM
+    allocator
+  firmware: qcom: scm: make qcom_scm_lmh_dcvsh() use the SCM allocator
+  firmware: qcom: scm: make qcom_scm_qseecom_app_get_id() use the SCM
+    allocator
+  firmware: qcom: qseecom: convert to using the SCM allocator
+  firmware: qcom-scm: add support for SHM bridge operations
+  firmware: qcom: scm: enable SHM bridge
+
+ MAINTAINERS                                   |   4 +-
+ drivers/firmware/Kconfig                      |  48 +---
+ drivers/firmware/Makefile                     |   5 +-
+ drivers/firmware/qcom/Kconfig                 |  56 ++++
+ drivers/firmware/qcom/Makefile                |   9 +
+ drivers/firmware/{ => qcom}/qcom_qseecom.c    |   0
+ .../{ => qcom}/qcom_qseecom_uefisecapp.c      | 251 ++++++------------
+ drivers/firmware/{ => qcom}/qcom_scm-legacy.c |   0
+ drivers/firmware/qcom/qcom_scm-mem.c          | 170 ++++++++++++
+ drivers/firmware/{ => qcom}/qcom_scm-smc.c    |  21 +-
+ drivers/firmware/{ => qcom}/qcom_scm.c        | 149 ++++++-----
+ drivers/firmware/{ => qcom}/qcom_scm.h        |   9 +
+ include/linux/firmware/qcom/qcom_qseecom.h    |   4 +-
+ include/linux/firmware/qcom/qcom_scm.h        |  13 +
+ 14 files changed, 427 insertions(+), 312 deletions(-)
+ create mode 100644 drivers/firmware/qcom/Kconfig
+ create mode 100644 drivers/firmware/qcom/Makefile
+ rename drivers/firmware/{ => qcom}/qcom_qseecom.c (100%)
+ rename drivers/firmware/{ => qcom}/qcom_qseecom_uefisecapp.c (84%)
+ rename drivers/firmware/{ => qcom}/qcom_scm-legacy.c (100%)
+ create mode 100644 drivers/firmware/qcom/qcom_scm-mem.c
+ rename drivers/firmware/{ => qcom}/qcom_scm-smc.c (92%)
+ rename drivers/firmware/{ => qcom}/qcom_scm.c (94%)
+ rename drivers/firmware/{ => qcom}/qcom_scm.h (95%)
 
 -- 
-~Vinod
+2.39.2
+
