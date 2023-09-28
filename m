@@ -2,118 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A0E497B2532
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 20:24:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 798C67B2543
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 20:28:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231904AbjI1SYu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Sep 2023 14:24:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49108 "EHLO
+        id S231952AbjI1S2y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Sep 2023 14:28:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230139AbjI1SYu (ORCPT
+        with ESMTP id S230390AbjI1S2y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Sep 2023 14:24:50 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F8D2AC;
-        Thu, 28 Sep 2023 11:24:48 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D28C433B8;
-        Thu, 28 Sep 2023 18:24:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1695925487;
-        bh=h9io9sW/9EKNfXuhbVDmG/ERea8sgTVkea3CXbxpcMM=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=aAdZvCdpTxtSZe7T3jbt37NB8EhqfCnx/8i1HWRu9uqCjCUq7iPbdaQ4od2pz/EKo
-         cR/ZfEwnJ6heg0PqVJCAqwE9llx6nUjocN7gHvKhcMBSd7KZhF2AIdPZw6liFjPj1Q
-         sbuN88hyxQdkcRYBeSsqvCzJ9DN9zQwoEJktVc52eymvWE8jtCSLCTQJ0DaH5setXF
-         kcJbpWcXJHnDdk+tpvsOr4c3kOzc8LkLxpfk+K9qZq0Hx5Go+yJWYj0qwpLYg969CE
-         59qxx2dg0VoX/96mNpYEWsboAtdT+nLVsiRWUt0cnKVSg06WS+a5QRc4trB775fjxn
-         FbC2Kkym6D08A==
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5041cc983f9so21262839e87.3;
-        Thu, 28 Sep 2023 11:24:47 -0700 (PDT)
-X-Gm-Message-State: AOJu0YxTFa8mVXh+J3zbggtx+cXIEOWB2hbzRbe8PODpZi/SYW+QZaoZ
-        cdIbdPuc9W87UIOvwwtILGwW21AYWi+gBwQCrA==
-X-Google-Smtp-Source: AGHT+IFIjVbmeOmoi1Ex9wWzryBy0huO5vhLMaCPZ42y3Diqs0tyk+JP/B6O/jxBFtqJcFlDkre6GZiUXkBPfrtKulA=
-X-Received: by 2002:a05:6512:234a:b0:500:7fc1:414b with SMTP id
- p10-20020a056512234a00b005007fc1414bmr2158838lfu.25.1695925485862; Thu, 28
- Sep 2023 11:24:45 -0700 (PDT)
+        Thu, 28 Sep 2023 14:28:54 -0400
+Received: from mail-ua1-x935.google.com (mail-ua1-x935.google.com [IPv6:2607:f8b0:4864:20::935])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BADB11F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 11:28:52 -0700 (PDT)
+Received: by mail-ua1-x935.google.com with SMTP id a1e0cc1a2514c-7ab9ad973e6so4205427241.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 11:28:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1695925731; x=1696530531; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=S9om/ckVzu1BhXirEdAXOAM/NI9XSDzx9LPQqirOKE8=;
+        b=rQhA3anGPz22kMupp9q+zjND4NHBXYYo4uaXLSBsPsA2HaA1Q9yYRd852XGELPGp7w
+         Zs8Gg5fP8VEPlp3ILAXDW5Cce8HLEbjertovh7Z11x60lqUCdFRSNAVj2GbZmU/63OkO
+         ISOYMWNYbjIu0gzlNDbC/EpSGRCcpPOEHzv2RRKeIlkcTMOrX2RSbECaIfq0uFq+QPVg
+         qjrjuKfm3sEcUlvLlXb0d9MELROEmzp7LSF59v9/HpWbTJ8IMgoEdiiGYzbK+0NQSJZz
+         Fn86DiHDjYIGvkuO5qa3pwsqR45yqAywcAq1MP5g2dhFkzs29Y9C8KhX+DRVr3ol0/Dw
+         XZaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695925731; x=1696530531;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=S9om/ckVzu1BhXirEdAXOAM/NI9XSDzx9LPQqirOKE8=;
+        b=e/Y06A6eWaMgCdYiOqJK6hfBm45gWz7QwuCwrVd4VjY3xOfTk/bUAmM9mOpqr7DR3v
+         i1FUH77DoKYvuboIGIU7RknPx7xXmPvHuN9USGpeka9XtjeTBGOoNf4Ng6xpxnu0E0mE
+         pMMxd3qsx9LiGnIUkFUAVTcBW/4mCRB2GTPk6FfjaHkpkWy428JwiFvlMsYBJYHcleaj
+         WjY5ytFhoH24M0wwX6v6MJqVkyUBdD0RHohSjhPTGqPWaS5bUme5CjxLODfnrharUmpo
+         XbtIc7SkdFFVvxgQypNt8cNt3AJMUk8R5k+VaSuQNw+QY0QVknjMSNW+rBtfBqvwfU/L
+         unsg==
+X-Gm-Message-State: AOJu0YyRY7tyCN8NhpKNhOsXOCtHeJfShXFK2k0h5QZvhZfbbbMOA9T7
+        acUQ8Y+vzukr4cKzWoZ/910svVSRrjo6fezq3KUIFA==
+X-Google-Smtp-Source: AGHT+IExNLsGCshiEnWnkOn9rm4VKOCrckIERMzWbi8yYxtEZqjFp3axc5ckdLZshhUcJKUOliKxiH6PKLQwwxEe3Qw=
+X-Received: by 2002:a67:fd49:0:b0:452:7799:9d5a with SMTP id
+ g9-20020a67fd49000000b0045277999d5amr1920245vsr.20.1695925731091; Thu, 28 Sep
+ 2023 11:28:51 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230723-sm6125-dpu-v4-0-a3f287dd6c07@somainline.org> <20230723-sm6125-dpu-v4-17-a3f287dd6c07@somainline.org>
-In-Reply-To: <20230723-sm6125-dpu-v4-17-a3f287dd6c07@somainline.org>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Thu, 28 Sep 2023 13:24:33 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqJymkURYKONU4b9g7QHi7LzpbhLmo8i1WEHy995vfdS6w@mail.gmail.com>
-Message-ID: <CAL_JsqJymkURYKONU4b9g7QHi7LzpbhLmo8i1WEHy995vfdS6w@mail.gmail.com>
-Subject: Re: [PATCH v4 17/17] arm64: dts: qcom: sm6125-seine: Configure MDSS,
- DSI and panel
-To:     Marijn Suijten <marijn.suijten@somainline.org>
+References: <20230928092040.9420-1-brgl@bgdev.pl> <20230928092040.9420-12-brgl@bgdev.pl>
+ <1160e239-b227-411d-8d64-a23fde014dd5@quicinc.com>
+In-Reply-To: <1160e239-b227-411d-8d64-a23fde014dd5@quicinc.com>
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+Date:   Thu, 28 Sep 2023 20:28:40 +0200
+Message-ID: <CAMRc=MdMd7CGWEvDbcYRTHZaLpAYdKyR6wEuFTKux6T+C3UU+Q@mail.gmail.com>
+Subject: Re: [PATCH v2 11/11] firmware: qcom: scm: enable SHM bridge
+To:     Elliot Berman <quic_eberman@quicinc.com>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Lux Aliaga <they@mint.lgbt>
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        kernel@quicinc.com,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jul 23, 2023 at 11:09=E2=80=AFAM Marijn Suijten
-<marijn.suijten@somainline.org> wrote:
+On Thu, Sep 28, 2023 at 7:10=E2=80=AFPM Elliot Berman <quic_eberman@quicinc=
+.com> wrote:
 >
-> Enable MDSS and DSI, and configure the Samsung SOFEF01-M ams597ut01
-> 6.0" 1080x2520 panel.
 >
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> ---
->  .../dts/qcom/sm6125-sony-xperia-seine-pdx201.dts   | 59 ++++++++++++++++=
-++++++
->  1 file changed, 59 insertions(+)
 >
-> diff --git a/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts=
- b/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
-> index 82b0da5bb794..62c3e6d8147c 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
-> @@ -179,6 +179,43 @@ &i2c3 {
->         /* Cirrus Logic CS35L41 boosted audio amplifier @ 40 */
->  };
+> On 9/28/2023 2:20 AM, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > Extens the SCM memory allocator with using the SHM Bridge feature if
+> > available on the platform. This makes the trustzone only use dedicated
+> > buffers for SCM calls. We map the entire SCM genpool as a bridge.
+> >
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > ---
+> >  drivers/firmware/qcom/qcom_scm-mem.c | 42 ++++++++++++++++++++++++++--
+> >  1 file changed, 39 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/drivers/firmware/qcom/qcom_scm-mem.c b/drivers/firmware/qc=
+om/qcom_scm-mem.c
+> > index eafecbe23770..12b12b15f46f 100644
+> > --- a/drivers/firmware/qcom/qcom_scm-mem.c
+> > +++ b/drivers/firmware/qcom/qcom_scm-mem.c
+> > @@ -16,6 +16,8 @@
+> >
+> >  #include "qcom_scm.h"
+> >
+> > +#define QCOM_SHM_BRIDGE_NUM_VM_SHIFT 9
+> > +
+> >  static size_t qcom_scm_mem_pool_size =3D SZ_2M;
+> >  module_param_named(qcom_scm_mem_pool_size, qcom_scm_mem_pool_size,
+> >                  ulong, 0400);
+> > @@ -108,8 +110,24 @@ phys_addr_t qcom_scm_mem_to_phys(void *vaddr)
+> >       return chunk->paddr;
+> >  }
+> >
+> > +static int qcom_scm_mem_shm_bridge_create(void)
+> > +{
+> > +     uint64_t pfn_and_ns_perm, ipfn_and_s_perm, size_and_flags, ns_per=
+ms;
+> > +
+> > +     ns_perms =3D (QCOM_SCM_PERM_WRITE | QCOM_SCM_PERM_READ);
+> > +     pfn_and_ns_perm =3D (u64)qcom_scm_mem.pbase | ns_perms;
+> > +     ipfn_and_s_perm =3D (u64)qcom_scm_mem.pbase | ns_perms;
+> > +     size_and_flags =3D qcom_scm_mem.size | (1 << QCOM_SHM_BRIDGE_NUM_=
+VM_SHIFT);
+> > +
+> > +     return qcom_scm_create_shm_bridge(qcom_scm_mem.dev, pfn_and_ns_pe=
+rm,
+> > +                                       ipfn_and_s_perm, size_and_flags=
+,
+> > +                                       QCOM_SCM_VMID_HLOS);
+> > +}
+> > +
+> >  int qcom_scm_mem_enable(struct device *dev)
+> >  {
+> > +     int ret;
+> > +
+> >       INIT_RADIX_TREE(&qcom_scm_mem.chunks, GFP_ATOMIC);
+> >       spin_lock_init(&qcom_scm_mem.lock);
+> >       qcom_scm_mem.dev =3D dev;
+> > @@ -128,7 +146,25 @@ int qcom_scm_mem_enable(struct device *dev)
+> >
+> >       gen_pool_set_algo(qcom_scm_mem.pool, gen_pool_best_fit, NULL);
+> >
+> > -     return gen_pool_add_virt(qcom_scm_mem.pool,
+> > -                              (unsigned long)qcom_scm_mem.vbase,
+> > -                              qcom_scm_mem.pbase, qcom_scm_mem.size, -=
+1);
+> > +     ret =3D gen_pool_add_virt(qcom_scm_mem.pool,
+> > +                             (unsigned long)qcom_scm_mem.vbase,
+> > +                             qcom_scm_mem.pbase, qcom_scm_mem.size, -1=
+);
+> > +     if (ret)
+> > +             return ret;
+> > +
+> > +     ret =3D qcom_scm_enable_shm_bridge();
+> > +     if (ret) {
+> > +             if (ret =3D=3D EOPNOTSUPP)
+> > +                     dev_info(dev, "SHM Bridge not supported\n");
+> > +             else
+> > +                     return ret;
+> > +     } else {
+> > +             ret =3D qcom_scm_mem_shm_bridge_create();
+> > +             if (ret)
+> > +                     return ret;
+> > +
+> > +             dev_info(dev, "SHM Bridge enabled\n");
 >
-> +&mdss {
-> +       status =3D "okay";
-> +};
-> +
-> +&mdss_dsi0 {
-> +       vdda-supply =3D <&pm6125_l18>;
-> +       status =3D "okay";
-> +
-> +       panel@0 {
-> +               compatible =3D "samsung,sofef01-m-ams597ut01";
+> Do you need to add clean up (deletion) of the SHM bridge on driver remove=
+?
+>
+> One easy approach I could think: implemnet devm_qcom_scm_mem_shm_bridge_c=
+reate
+> which calls qcom_scm_delete_shm_bridge on the clean up
+> (qcom_scm_delete_shm_bridge implemented in downstream, not in this series=
+).
+>
 
-This needs to be documented.
+There wouldn't be any user of these symbols yet so let's think about
+it when there's a valid use-case upstream.
 
-Rob
+Bart
+
+> > +     }
+> > +
+> > +     return 0;
+> >  }
