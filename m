@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2482E7B18A9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 12:54:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1184E7B18AB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 12:54:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231676AbjI1Ky4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Sep 2023 06:54:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39628 "EHLO
+        id S231127AbjI1Ky5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Sep 2023 06:54:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231726AbjI1Kyz (ORCPT
+        with ESMTP id S231754AbjI1Kyz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 28 Sep 2023 06:54:55 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E20CE19E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 03:54:49 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2c16757987fso125651641fa.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 03:54:49 -0700 (PDT)
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEEB61A1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 03:54:50 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2c124adf469so213239631fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 03:54:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695898488; x=1696503288; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695898489; x=1696503289; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=94VHlZVsf6bXdjIfoogRbhmFUuCTuzhRqvR0EtjE+eY=;
-        b=R4Fl541IdQaa6AXrI3nwjDpNH0LBB5KUieRN9GKRhu3Agyoglymjwywe/TKl1ToBaK
-         +1sQX+0JYwwlQO3cRnrKIakz7ul/w6kO6NPm7v7SzP1ItrdexIkHT/8m5uW3LNrV3Rk2
-         4J0EvnqC/HZzPGS7OoniLIE6H3/pu/xCX0wkFH7qXxwUYlLcHD9GyvqZEVaowgPEXtKe
-         J6KErqcCunb1Hqzf4ezfQz5ed5pOa/+CxQPhPPsajNGs9OouCIDf37Ul4mzw4i5cb2/O
-         NvL7XCQ0JZnLJ7baVL3pazk5TicjT3MFDC6QALUcc1xcIAxJA+46M9K59/WJQsL+u63H
-         E/kw==
+        bh=yl70rxw6j+gH7QmFj4s1C1nJkm733ZrDJmrxt04NnVU=;
+        b=B6z1hHODhr09WXdSKMXsG7FEJ3EQ2/aUWawUIvPstCRxXkyjcoBVA27UiyVCS6I/14
+         TxIlXVBHJeFFwxgsDpjfA6Z0rTrINRgyWmML1HOOHLuCB0CRm3Gx2AZ+8Nou19rsCfnN
+         lK8o5MwTHLToAU1IIr9lSjVq6o5pFk5pkyYugdZ+W+PCAM6vU182/zrpQ5Z6shV6HFY9
+         SP8nkyKca7zG9di6eeHtOncQqnVNUT1rJiz8bJ9SC+dD/KoPiuK31Q3oehiVZRBVXGwu
+         rKvRjfOE8EkLF4zZGgDDe3ztDaLETfv+2L/F5opVBl+fbhpG0b9up1qw1Rh72C9lMdSr
+         rbIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695898488; x=1696503288;
+        d=1e100.net; s=20230601; t=1695898489; x=1696503289;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=94VHlZVsf6bXdjIfoogRbhmFUuCTuzhRqvR0EtjE+eY=;
-        b=iiFx1d7yzCUByaxUI4f8k3N9g84aRi35GDfZookwo3vsrVC4sCGQBpeTAin5oybVgB
-         JC1ijG4QAQsoX+QA4QuZzw+CEn0YPmzyAaT8dhgyQ3byvsVqnOyBOG+JIO2hyahQmxoi
-         CoKqU6IYBB0U3fapD7n8LGScy5j6g0QDAR6dzlQOWsxgigJJFcwLK239G1hjtUEXwGE+
-         rAyZuy5NsRMTpHSSrD6amo5mRuXfBXWbMy41ow3DYXq1yHUoMYAvNX9AX60rQen5CbjV
-         MIgMWJ4fbBAV6dIWbCBbcg4E4fDcf8F7PB0qU8nx2+pBQGYs/drcRktwIuLZ8Q6Yvzzi
-         OJ9A==
-X-Gm-Message-State: AOJu0YwXc38x+kAsGDOp0Eofik7j2WD7LXQV4FfkhKBZy4lhxuYbdv8Z
-        PTriP8vs0Xhjkg2+3bX/XcLlGg==
-X-Google-Smtp-Source: AGHT+IGdePFOtUBL5hIpIiNS1i8PagrhLzfXQarBvR6qslkMvha7/O9Bbpqng3QVL4pnGiccUZX1QQ==
-X-Received: by 2002:a2e:7a19:0:b0:2bf:f32a:1f70 with SMTP id v25-20020a2e7a19000000b002bff32a1f70mr822992ljc.11.1695898488213;
+        bh=yl70rxw6j+gH7QmFj4s1C1nJkm733ZrDJmrxt04NnVU=;
+        b=oA/wCYViTVepioN2kSaxePIOJsM+pLbHIissAKS5uDOBeaj0jLZZTBTpHIOGP78nEO
+         2utOuxu6LldjGsRCbrUHM7ZJjCBQv9/tKGFniTyxu2ltGJEjmfKFczwNAR3KoC8b//DT
+         g9ymCQzq7v3U1CjffXWQH+HwtHrDifXrcWlJ7YTA2B3GORaE+rqTVBFU0BL+SO323Vcy
+         HMY06zwIjXBvYUssoVFl4/Z4Uff6Efe8n/leHyMnln8DIkFiEGn0Qir4dI+uBc5BjO36
+         HS+tDOnh/bZeAon+njRUoTW7EvO2bjUJGx5zV2gk3TRtWG9e/NsQ7+UFlsOBLTdXSiID
+         Qv6w==
+X-Gm-Message-State: AOJu0YzgQKtT0LTj4n6NivJODqbzFDJ2/BniTJULcKbdYuxwFGjDdGTb
+        uDmisFGWkEbCQ5geHSEjRWMqtA==
+X-Google-Smtp-Source: AGHT+IEe3OpvGijOc8+MNS8f/nUTPwRNbTZVVVZGpeIkTR6E4ETUdgnxYtGQFi2GRBcwpCWVtoD3uA==
+X-Received: by 2002:a2e:3a05:0:b0:2bc:b815:d64d with SMTP id h5-20020a2e3a05000000b002bcb815d64dmr948022lja.30.1695898488952;
         Thu, 28 Sep 2023 03:54:48 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id y24-20020a2e9d58000000b002b47a15a2eesm3551455ljj.45.2023.09.28.03.54.47
+        by smtp.gmail.com with ESMTPSA id y24-20020a2e9d58000000b002b47a15a2eesm3551455ljj.45.2023.09.28.03.54.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Sep 2023 03:54:47 -0700 (PDT)
+        Thu, 28 Sep 2023 03:54:48 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -58,9 +58,9 @@ To:     Andy Gross <agross@kernel.org>,
         Kishon Vijay Abraham I <kishon@kernel.org>
 Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: [PATCH v3 2/3] phy: qcom-qmp-usb: move PCS v6 register to the proper header
-Date:   Thu, 28 Sep 2023 13:54:44 +0300
-Message-Id: <20230928105445.1210861-3-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v3 3/3] phy: qcom-qmp-combo: use v6 registers in v6 regs layout
+Date:   Thu, 28 Sep 2023 13:54:45 +0300
+Message-Id: <20230928105445.1210861-4-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230928105445.1210861-1-dmitry.baryshkov@linaro.org>
 References: <20230928105445.1210861-1-dmitry.baryshkov@linaro.org>
@@ -75,72 +75,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The commit 39bbf82d8c2b ("phy: qcom-qmp: pcs-usb: Add v6 register
-offsets") incorrectly added plain PCS registers to the PCS_USB header.
-Move them to a proper location.
+Make sure that we use only v6 registers in qmp_v6_usb3phy_regs_layout.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v6.h | 16 ----------------
- drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6.h     | 16 ++++++++++++++--
- 2 files changed, 14 insertions(+), 18 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c      | 12 ++++++------
+ drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v6.h |  3 ++-
+ drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6.h     |  4 ++++
+ 3 files changed, 12 insertions(+), 7 deletions(-)
 
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+index 02d22595f747..9c87845c78ec 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -194,14 +194,14 @@ static const unsigned int qmp_v5_5nm_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
+ };
+ 
+ static const unsigned int qmp_v6_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
+-	[QPHY_SW_RESET]			= QPHY_V5_PCS_SW_RESET,
+-	[QPHY_START_CTRL]		= QPHY_V5_PCS_START_CONTROL,
+-	[QPHY_PCS_STATUS]		= QPHY_V5_PCS_PCS_STATUS1,
+-	[QPHY_PCS_POWER_DOWN_CONTROL]	= QPHY_V5_PCS_POWER_DOWN_CONTROL,
++	[QPHY_SW_RESET]			= QPHY_V6_PCS_SW_RESET,
++	[QPHY_START_CTRL]		= QPHY_V6_PCS_START_CONTROL,
++	[QPHY_PCS_STATUS]		= QPHY_V6_PCS_PCS_STATUS1,
++	[QPHY_PCS_POWER_DOWN_CONTROL]	= QPHY_V6_PCS_POWER_DOWN_CONTROL,
+ 
+ 	/* In PCS_USB */
+-	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= QPHY_V5_PCS_USB3_AUTONOMOUS_MODE_CTRL,
+-	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V5_PCS_USB3_LFPS_RXTERM_IRQ_CLEAR,
++	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= QPHY_V6_PCS_USB3_AUTONOMOUS_MODE_CTRL,
++	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V6_PCS_USB3_LFPS_RXTERM_IRQ_CLEAR,
+ 
+ 	[QPHY_COM_RESETSM_CNTRL]	= QSERDES_V6_COM_RESETSM_CNTRL,
+ 	[QPHY_COM_C_READY_STATUS]	= QSERDES_V6_COM_C_READY_STATUS,
 diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v6.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v6.h
-index cf4464849006..7c16af0b1cc3 100644
+index 7c16af0b1cc3..df670143feb1 100644
 --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v6.h
 +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v6.h
-@@ -7,22 +7,6 @@
+@@ -6,8 +6,9 @@
+ #ifndef QCOM_PHY_QMP_PCS_USB_V6_H_
  #define QCOM_PHY_QMP_PCS_USB_V6_H_
  
- /* Only for QMP V6 PHY - USB3 have different offsets than V5 */
--#define QPHY_V6_PCS_LOCK_DETECT_CONFIG1		0xc4
--#define QPHY_V6_PCS_LOCK_DETECT_CONFIG2		0xc8
--#define QPHY_V6_PCS_LOCK_DETECT_CONFIG3		0xcc
--#define QPHY_V6_PCS_LOCK_DETECT_CONFIG6		0xd8
--#define QPHY_V6_PCS_REFGEN_REQ_CONFIG1		0xdc
--#define QPHY_V6_PCS_POWER_STATE_CONFIG1		0x90
--#define QPHY_V6_PCS_RX_SIGDET_LVL			0x188
--#define QPHY_V6_PCS_RCVR_DTCT_DLY_P1U2_L		0x190
--#define QPHY_V6_PCS_RCVR_DTCT_DLY_P1U2_H		0x194
--#define QPHY_V6_PCS_CDR_RESET_TIME			0x1b0
--#define QPHY_V6_PCS_ALIGN_DETECT_CONFIG1		0x1c0
--#define QPHY_V6_PCS_ALIGN_DETECT_CONFIG2		0x1c4
--#define QPHY_V6_PCS_PCS_TX_RX_CONFIG		0x1d0
--#define QPHY_V6_PCS_EQ_CONFIG1			0x1dc
--#define QPHY_V6_PCS_EQ_CONFIG5			0x1ec
--
+-/* Only for QMP V6 PHY - USB3 have different offsets than V5 */
  #define QPHY_V6_PCS_USB3_POWER_STATE_CONFIG1		0x00
++#define QPHY_V6_PCS_USB3_AUTONOMOUS_MODE_CTRL		0x08
++#define QPHY_V6_PCS_USB3_LFPS_RXTERM_IRQ_CLEAR		0x14
  #define QPHY_V6_PCS_USB3_LFPS_DET_HIGH_COUNT_VAL	0x18
  #define QPHY_V6_PCS_USB3_RXEQTRAINING_DFE_TIME_S2	0x3c
+ #define QPHY_V6_PCS_USB3_RCVR_DTCT_DLY_U3_L		0x40
 diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6.h
-index 18c4a3abe590..47cedb860fef 100644
+index 47cedb860fef..08299d2b78f0 100644
 --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6.h
 +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6.h
-@@ -7,10 +7,22 @@
+@@ -7,6 +7,10 @@
  #define QCOM_PHY_QMP_PCS_V6_H_
  
  /* Only for QMP V6 PHY - USB/PCIe PCS registers */
--#define QPHY_V6_PCS_REFGEN_REQ_CONFIG1		0xdc
-+#define QPHY_V6_PCS_POWER_STATE_CONFIG1		0x090
-+#define QPHY_V6_PCS_LOCK_DETECT_CONFIG1		0x0c4
-+#define QPHY_V6_PCS_LOCK_DETECT_CONFIG2		0x0c8
-+#define QPHY_V6_PCS_LOCK_DETECT_CONFIG3		0x0cc
-+#define QPHY_V6_PCS_LOCK_DETECT_CONFIG6		0x0d8
-+#define QPHY_V6_PCS_REFGEN_REQ_CONFIG1		0x0dc
- #define QPHY_V6_PCS_RX_SIGDET_LVL		0x188
-+#define QPHY_V6_PCS_RCVR_DTCT_DLY_P1U2_L	0x190
-+#define QPHY_V6_PCS_RCVR_DTCT_DLY_P1U2_H	0x194
- #define QPHY_V6_PCS_RATE_SLEW_CNTRL1		0x198
--#define QPHY_V6_PCS_EQ_CONFIG2			0x1e0
-+#define QPHY_V6_PCS_CDR_RESET_TIME		0x1b0
-+#define QPHY_V6_PCS_ALIGN_DETECT_CONFIG1	0x1c0
-+#define QPHY_V6_PCS_ALIGN_DETECT_CONFIG2	0x1c4
- #define QPHY_V6_PCS_PCS_TX_RX_CONFIG		0x1d0
-+#define QPHY_V6_PCS_EQ_CONFIG1			0x1dc
-+#define QPHY_V6_PCS_EQ_CONFIG2			0x1e0
-+#define QPHY_V6_PCS_EQ_CONFIG5			0x1ec
- 
- #endif
++#define QPHY_V6_PCS_SW_RESET			0x000
++#define QPHY_V6_PCS_PCS_STATUS1			0x014
++#define QPHY_V6_PCS_POWER_DOWN_CONTROL		0x040
++#define QPHY_V6_PCS_START_CONTROL		0x044
+ #define QPHY_V6_PCS_POWER_STATE_CONFIG1		0x090
+ #define QPHY_V6_PCS_LOCK_DETECT_CONFIG1		0x0c4
+ #define QPHY_V6_PCS_LOCK_DETECT_CONFIG2		0x0c8
 -- 
 2.39.2
 
