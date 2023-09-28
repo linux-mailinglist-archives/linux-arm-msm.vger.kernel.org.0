@@ -2,49 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D2547B2366
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 19:10:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4009B7B236F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 19:11:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231757AbjI1RKM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Sep 2023 13:10:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56022 "EHLO
+        id S230246AbjI1RLM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Sep 2023 13:11:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231890AbjI1RKF (ORCPT
+        with ESMTP id S230251AbjI1RLM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Sep 2023 13:10:05 -0400
+        Thu, 28 Sep 2023 13:11:12 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 992E11B3;
-        Thu, 28 Sep 2023 10:10:02 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38SFfWsP004752;
-        Thu, 28 Sep 2023 17:09:49 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89EDA1A3;
+        Thu, 28 Sep 2023 10:11:09 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38SFfKDZ015735;
+        Thu, 28 Sep 2023 17:10:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=3tON1gLIqp/tPlDuSOu5ArpoTQRgcHQEUzTqf6Wzfz0=;
- b=jYfUeaC76/EwCEtukk2drHBKFjsGPP/w5dZKTRyynti71Wki++zlQGv+v8Bn8Q9LgTqp
- 40hELgcx8LsDktUfpYyUY40AvTg8tGKvwauooarl9dyqevyKO2E18iLkWrd+VONQgJcn
- xNhOBFPehC9o1J6eb6jA9aToa0tzDNwH12UxRKiIVkDpnYX4d1ZVaDZ228YHWGAhHuSP
- HuRG2IqU1aRSJZpu3RNYolC27t/dTlsc0SKY63k8azJ3Gz0ZqflhwEdQ2IKkccYV7Crp
- boymnAkqHJLkT6RYVdo8sgUZaRtgibCZEtkbniFepnPQ0QHb4ppKJg1McMVSdA7InkLm rg== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tcra22xry-1
+ bh=sm6cNehmgWv8ZfAyHO6st/a82A17AeDo6kCaTc5lR24=;
+ b=k3qWCkV0qlXnlH7CyowU6fK6oLUtXXZx2vbvRw+YCsTv9FUzAVCEVmB5A7fOgYzhIHXm
+ Rn5supJOB069YBDdr0BW/5psKANwJI6G/ZutSpr6KYe0KvCSYcvGEZNk6b1hvOFMTJTH
+ sIvCS3zDDGOFyHqcOFu2pAio3hqAdsVT+9/qG8aWbu1Pwa5PCUe53YA9D6L/dC1bU3tT
+ dOzu1UNtrOoIOK0WzOY0mbrELIjixrdBKsTHgB4HHPEPD3oOY8IaE5I3bjBn15+cx+gR
+ eboCkkP4qbI7XLU4wHq3PsrMi0xZsl+wKFWqZX09/HWv2XQYh1OGMRBY51fz/wGvnJ04 lg== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3td8wdrswd-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 28 Sep 2023 17:09:48 +0000
+        Thu, 28 Sep 2023 17:10:55 +0000
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38SH9mZ4008722
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38SHAsjx014391
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 28 Sep 2023 17:09:48 GMT
+        Thu, 28 Sep 2023 17:10:54 GMT
 Received: from [10.110.102.158] (10.80.80.8) by nasanex01b.na.qualcomm.com
  (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Thu, 28 Sep
- 2023 10:09:43 -0700
-Message-ID: <4c7a0ba9-754a-4feb-b078-4b14a96b4a23@quicinc.com>
-Date:   Thu, 28 Sep 2023 10:09:43 -0700
+ 2023 10:10:51 -0700
+Message-ID: <1160e239-b227-411d-8d64-a23fde014dd5@quicinc.com>
+Date:   Thu, 28 Sep 2023 10:10:51 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/11] firmware: qcom-scm: add support for SHM bridge
- operations
+Subject: Re: [PATCH v2 11/11] firmware: qcom: scm: enable SHM bridge
 Content-Language: en-US
 To:     Bartosz Golaszewski <brgl@bgdev.pl>,
         Andy Gross <agross@kernel.org>,
@@ -56,9 +55,9 @@ CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
         <kernel@quicinc.com>,
         Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 References: <20230928092040.9420-1-brgl@bgdev.pl>
- <20230928092040.9420-11-brgl@bgdev.pl>
+ <20230928092040.9420-12-brgl@bgdev.pl>
 From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <20230928092040.9420-11-brgl@bgdev.pl>
+In-Reply-To: <20230928092040.9420-12-brgl@bgdev.pl>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
@@ -66,15 +65,15 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: UVpfw5UZLruojDcAOEqrKOGuquEM0OdD
-X-Proofpoint-GUID: UVpfw5UZLruojDcAOEqrKOGuquEM0OdD
+X-Proofpoint-ORIG-GUID: zZ4FEoKPw2iW8t8Qxm5b7XcSv3b7Yb47
+X-Proofpoint-GUID: zZ4FEoKPw2iW8t8Qxm5b7XcSv3b7Yb47
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-09-28_16,2023-09-28_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
- spamscore=0 mlxscore=0 lowpriorityscore=0 suspectscore=0 mlxlogscore=999
- malwarescore=0 priorityscore=1501 adultscore=0 clxscore=1015
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ mlxlogscore=975 malwarescore=0 lowpriorityscore=0 impostorscore=0
+ phishscore=0 mlxscore=0 clxscore=1015 suspectscore=0 bulkscore=0
+ adultscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2309180000 definitions=main-2309280150
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
@@ -86,120 +85,90 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+
 On 9/28/2023 2:20 AM, Bartosz Golaszewski wrote:
 > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> Add low-level primitives for enabling SHM bridge support, creating SHM
-> bridge pools and testing the availability of SHM bridges to qcom-scm. We
-> don't yet provide a way to destroy the bridges as the first user will
-> not require it.
+> Extens the SCM memory allocator with using the SHM Bridge feature if
+> available on the platform. This makes the trustzone only use dedicated
+> buffers for SCM calls. We map the entire SCM genpool as a bridge.
 > 
 > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-
-After fixing the typo:
-
-Reviewed-by: Elliot Berman <quic_eberman@quicinc.com>
-
 > ---
->  drivers/firmware/qcom/qcom_scm.c       | 43 ++++++++++++++++++++++++++
->  drivers/firmware/qcom/qcom_scm.h       |  2 ++
->  include/linux/firmware/qcom/qcom_scm.h |  6 ++++
->  3 files changed, 51 insertions(+)
+>  drivers/firmware/qcom/qcom_scm-mem.c | 42 ++++++++++++++++++++++++++--
+>  1 file changed, 39 insertions(+), 3 deletions(-)
 > 
-> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-> index 1fa27c44f472..5969ff0c0beb 100644
-> --- a/drivers/firmware/qcom/qcom_scm.c
-> +++ b/drivers/firmware/qcom/qcom_scm.c
-> @@ -1296,6 +1296,49 @@ bool qcom_scm_lmh_dcvsh_available(void)
->  }
->  EXPORT_SYMBOL_GPL(qcom_scm_lmh_dcvsh_available);
+> diff --git a/drivers/firmware/qcom/qcom_scm-mem.c b/drivers/firmware/qcom/qcom_scm-mem.c
+> index eafecbe23770..12b12b15f46f 100644
+> --- a/drivers/firmware/qcom/qcom_scm-mem.c
+> +++ b/drivers/firmware/qcom/qcom_scm-mem.c
+> @@ -16,6 +16,8 @@
 >  
-> +int qcom_scm_enable_shm_bridge(void)
+>  #include "qcom_scm.h"
+>  
+> +#define QCOM_SHM_BRIDGE_NUM_VM_SHIFT 9
+> +
+>  static size_t qcom_scm_mem_pool_size = SZ_2M;
+>  module_param_named(qcom_scm_mem_pool_size, qcom_scm_mem_pool_size,
+>  		   ulong, 0400);
+> @@ -108,8 +110,24 @@ phys_addr_t qcom_scm_mem_to_phys(void *vaddr)
+>  	return chunk->paddr;
+>  }
+>  
+> +static int qcom_scm_mem_shm_bridge_create(void)
 > +{
-> +	struct qcom_scm_desc desc = {
-> +		.svc = QCOM_SCM_SVC_MP,
-> +		.cmd = QCOM_SCM_MP_SHM_BRIDGE_ENABLE,
-> +		.owner = ARM_SMCCC_OWNER_SIP
-> +	};
+> +	uint64_t pfn_and_ns_perm, ipfn_and_s_perm, size_and_flags, ns_perms;
 > +
-> +	struct qcom_scm_res res;
+> +	ns_perms = (QCOM_SCM_PERM_WRITE | QCOM_SCM_PERM_READ);
+> +	pfn_and_ns_perm = (u64)qcom_scm_mem.pbase | ns_perms;
+> +	ipfn_and_s_perm = (u64)qcom_scm_mem.pbase | ns_perms;
+> +	size_and_flags = qcom_scm_mem.size | (1 << QCOM_SHM_BRIDGE_NUM_VM_SHIFT);
 > +
-> +	if (!__qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_MP,
-> +					  QCOM_SCM_MP_SHM_BRIDGE_ENABLE))
-> +		return -EOPNOTSUPP;
-> +
-> +	return qcom_scm_call(__scm->dev, &desc, &res) ?: res.result[0];
+> +	return qcom_scm_create_shm_bridge(qcom_scm_mem.dev, pfn_and_ns_perm,
+> +					  ipfn_and_s_perm, size_and_flags,
+> +					  QCOM_SCM_VMID_HLOS);
 > +}
-> +EXPORT_SYMBOL_GPL(qcom_scm_enable_shm_bridge);
 > +
-> +int qcom_scm_create_shm_bridge(struct device *dev, u64 pfn_and_ns_perm_flags,
-> +			       u64 ipfn_and_s_perm_flags, u64 size_and_flags,
-> +			       u64 ns_vmids)
-> +{
-> +	struct qcom_scm_desc desc = {
-> +		.svc = QCOM_SCM_SVC_MP,
-> +		.cmd = QCOM_SCM_MP_SHM_BRDIGE_CREATE,
-
-s/BRDIGE/BRIDGE/g
-
-> +		.owner = ARM_SMCCC_OWNER_SIP,
-> +		.args[0] = pfn_and_ns_perm_flags,
-> +		.args[1] = ipfn_and_s_perm_flags,
-> +		.args[2] = size_and_flags,
-> +		.args[3] = ns_vmids,
-> +		.arginfo = QCOM_SCM_ARGS(4, QCOM_SCM_VAL, QCOM_SCM_VAL,
-> +					 QCOM_SCM_VAL, QCOM_SCM_VAL),
-> +	};
-> +
-> +	struct qcom_scm_res res;
+>  int qcom_scm_mem_enable(struct device *dev)
+>  {
 > +	int ret;
 > +
-> +	ret = qcom_scm_call(__scm->dev, &desc, &res);
+>  	INIT_RADIX_TREE(&qcom_scm_mem.chunks, GFP_ATOMIC);
+>  	spin_lock_init(&qcom_scm_mem.lock);
+>  	qcom_scm_mem.dev = dev;
+> @@ -128,7 +146,25 @@ int qcom_scm_mem_enable(struct device *dev)
+>  
+>  	gen_pool_set_algo(qcom_scm_mem.pool, gen_pool_best_fit, NULL);
+>  
+> -	return gen_pool_add_virt(qcom_scm_mem.pool,
+> -				 (unsigned long)qcom_scm_mem.vbase,
+> -				 qcom_scm_mem.pbase, qcom_scm_mem.size, -1);
+> +	ret = gen_pool_add_virt(qcom_scm_mem.pool,
+> +				(unsigned long)qcom_scm_mem.vbase,
+> +				qcom_scm_mem.pbase, qcom_scm_mem.size, -1);
+> +	if (ret)
+> +		return ret;
 > +
-> +	return ret ?: res.result[0];
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_scm_create_shm_bridge);
+> +	ret = qcom_scm_enable_shm_bridge();
+> +	if (ret) {
+> +		if (ret == EOPNOTSUPP)
+> +			dev_info(dev, "SHM Bridge not supported\n");
+> +		else
+> +			return ret;
+> +	} else {
+> +		ret = qcom_scm_mem_shm_bridge_create();
+> +		if (ret)
+> +			return ret;
 > +
->  int qcom_scm_lmh_profile_change(u32 profile_id)
->  {
->  	struct qcom_scm_desc desc = {
-> diff --git a/drivers/firmware/qcom/qcom_scm.h b/drivers/firmware/qcom/qcom_scm.h
-> index 8c97e3906afa..f5a29bc0f549 100644
-> --- a/drivers/firmware/qcom/qcom_scm.h
-> +++ b/drivers/firmware/qcom/qcom_scm.h
-> @@ -116,6 +116,8 @@ extern int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
->  #define QCOM_SCM_MP_IOMMU_SET_CP_POOL_SIZE	0x05
->  #define QCOM_SCM_MP_VIDEO_VAR			0x08
->  #define QCOM_SCM_MP_ASSIGN			0x16
-> +#define QCOM_SCM_MP_SHM_BRIDGE_ENABLE		0x1c
-> +#define QCOM_SCM_MP_SHM_BRDIGE_CREATE		0x1e
+> +		dev_info(dev, "SHM Bridge enabled\n");
 
-s/BRDIGE/BRIDGE/g
+Do you need to add clean up (deletion) of the SHM bridge on driver remove?
 
->  
->  #define QCOM_SCM_SVC_OCMEM		0x0f
->  #define QCOM_SCM_OCMEM_LOCK_CMD		0x01
-> diff --git a/include/linux/firmware/qcom/qcom_scm.h b/include/linux/firmware/qcom/qcom_scm.h
-> index 291ef8fd21b0..dc26cfd6d011 100644
-> --- a/include/linux/firmware/qcom/qcom_scm.h
-> +++ b/include/linux/firmware/qcom/qcom_scm.h
-> @@ -6,6 +6,7 @@
->  #define __QCOM_SCM_H
->  
->  #include <linux/cleanup.h>
-> +#include <linux/device.h>
->  #include <linux/err.h>
->  #include <linux/gfp.h>
->  #include <linux/types.h>
-> @@ -122,6 +123,11 @@ int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
->  int qcom_scm_lmh_profile_change(u32 profile_id);
->  bool qcom_scm_lmh_dcvsh_available(void);
->  
-> +int qcom_scm_enable_shm_bridge(void);
-> +int qcom_scm_create_shm_bridge(struct device *dev, u64 pfn_and_ns_perm_flags,
-> +			       u64 ipfn_and_s_perm_flags, u64 size_and_flags,
-> +			       u64 ns_vmids);
+One easy approach I could think: implemnet devm_qcom_scm_mem_shm_bridge_create
+which calls qcom_scm_delete_shm_bridge on the clean up 
+(qcom_scm_delete_shm_bridge implemented in downstream, not in this series).
+
+> +	}
 > +
->  #ifdef CONFIG_QCOM_QSEECOM
->  
->  int qcom_scm_qseecom_app_get_id(const char *app_name, u32 *app_id);
+> +	return 0;
+>  }
