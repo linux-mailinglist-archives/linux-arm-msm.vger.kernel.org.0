@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BA2B7B1B31
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 13:35:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F17F7B1B33
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 13:35:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232009AbjI1Lf5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Sep 2023 07:35:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34138 "EHLO
+        id S232174AbjI1Lf6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Sep 2023 07:35:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231843AbjI1Lfz (ORCPT
+        with ESMTP id S231927AbjI1Lf4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Sep 2023 07:35:55 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73E19196
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 04:35:39 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-5042bfb4fe9so20149406e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 04:35:39 -0700 (PDT)
+        Thu, 28 Sep 2023 07:35:56 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33F881A3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 04:35:40 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-5048156976cso4672190e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 04:35:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695900937; x=1696505737; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695900938; x=1696505738; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+25IDQ76KUI1/7TueTvDQOk2w9Kir7V1RtvH4IZRvA0=;
-        b=IN4d/aKujwYW0bJRr03lJJ7/Knn5glhzWYosLWqgbwLbPpUPVy6fVW+7ddsy7vJ0pV
-         FiHqBx/TUfn01eLV76nEOnLTwwzb+qnWEk87+iq7XtMFv7Sudcn3qDEyh6gXNlBAcky/
-         H5ZFZDd2waSntcGz52bMGy3ZkTM/WdEDu0E6Bj8uhVT2AWO4qCB0fqcrp8iIyDzPf/td
-         g9IvBW71neTIghR7RvIlzgYik0MMlHstQZKoN4jszdUzZXseKXYJ6QC+xrrcNcQqk9G7
-         +LS7bX45OpkbLLdKrOvCuPEI15khHQAIx14WtiA2RHEls3YHPJvaRMYHIVClwxOlRiPo
-         s6Wg==
+        bh=NAgwmDYSEumxdHOz03qqC77Wc8/BmRIQnaYQ3alh34M=;
+        b=Nj/A6Sd3ywpyTGlCILvGEZzS+RoeiaI42RFOeceeNoK34YTjKwZR1unIUVJ72b0Ita
+         l7wJTO2daqAeKCK+uCyDjTrpSn1uI4/S94RpLh9JVT1q4wAR8tFAFfqWJ2FNaVOpsWKe
+         r8g6PnTSckMETKYa5bXLU57efjxuA0arSKvtI5pYbSTJGfYHrb22pI9Q9hKz0jYqiurf
+         jI8Cn1bB+u8jhcQwcBYvhJIEX2qYGyFE/lxGtc5ZicPZ0zzbYk2EOZ7reKwuL34I79Sq
+         P7HPL6mdhCZbyt2+JZfThb5ma1TUHzluZTGgwWES7WyLvPymrcAozB+ggcV5ifyctqdt
+         +dZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695900937; x=1696505737;
+        d=1e100.net; s=20230601; t=1695900938; x=1696505738;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+25IDQ76KUI1/7TueTvDQOk2w9Kir7V1RtvH4IZRvA0=;
-        b=cI02+iocq5oioW0R7ckULhMJZuN/PKmSAuUMlm0EaqSZEvMzPw9MNEMLyzFTJ+hREJ
-         ax6zzoE61SU2HRbeXTbYlzIcm9ru+zX7PA+qQvs9aJ5tjnW+5clRvx/DxJna9pMJvg/y
-         cn0ffJ1Xbden0jQHh31BvSt0q8rY6ER9epgw0dSQbz3b3PBSMSovj0ELHRz/sHlNYBkm
-         5OMcfbHDmvGodK5p4bCQ0mlg1jxBf4myy+pAFdAbBmjxxAf5zK3thce1FubHrj6KCxuC
-         l+lyAeELu0V7LVfb09g3F33KNdAlAH+r6bTxJMH3itSKreTW+BOYkLvDz3mza8I8Dr8g
-         eB9Q==
-X-Gm-Message-State: AOJu0Yw4/oLehi9jaF+N2e3U058ENwv97yJtDx6NdF5jSzxVPGlIRMko
-        7OOccfdxbHsJx0mN3tNnrpxJQQ==
-X-Google-Smtp-Source: AGHT+IF358+CPVuR9KqvfUAb9TMd2gvka7EXkUCLd+mlbdkUKYsBpovqFKKaWZK3Ok0fmpH0gsrUeg==
-X-Received: by 2002:a05:6512:b8e:b0:503:5e1:9b6e with SMTP id b14-20020a0565120b8e00b0050305e19b6emr1083041lfv.10.1695900937660;
-        Thu, 28 Sep 2023 04:35:37 -0700 (PDT)
+        bh=NAgwmDYSEumxdHOz03qqC77Wc8/BmRIQnaYQ3alh34M=;
+        b=Fdc08MHlszvRSZgG3XoTU56v6yhEcjMCNYvziB4TvwOpcoy/9JY8fVyN+1BzrKWaBX
+         DLaum3lhZNbDbRJzAjpRw+FYyXFQIOVPPI3gkHaPRG2osPDEhpJgFf7D+iTxoL7u7Nfk
+         alwpRnbkwfckXfd0CgeUk2bXeEEtvZhuhxmk4WmDA/16PS2KYRP+rkLJNe2REbDlqv/+
+         Lt5ELPndDus4Prek1c0bZ+gmql0W6pPD0Z6R9vN7KjIVbvexggptDz5MQu6qe1SsYy9l
+         gM+dl0pwWLxmoeGM0mt9+T7y9ZkBzwDSwmBcb8g7wG29/nWNUiAyLiXKdaEoQwa4lLmw
+         /jKQ==
+X-Gm-Message-State: AOJu0YywoM5sZX/Wlsi+u3ocHKWGm/ohwJyhvuaYIbrj09x4zl8eMPJQ
+        2zoXMeH63yvRCjx6erL6+dbqMw==
+X-Google-Smtp-Source: AGHT+IFWa4lOq/RH6ekC+d9SDuQzdJV19CgPIBvotr5aSSznaLJHkEocII3osyAz87VI01x0kZ0NDA==
+X-Received: by 2002:a05:6512:2521:b0:4f8:6abe:5249 with SMTP id be33-20020a056512252100b004f86abe5249mr859962lfb.3.1695900938521;
+        Thu, 28 Sep 2023 04:35:38 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id k14-20020a0565123d8e00b00504816564c7sm704327lfv.104.2023.09.28.04.35.36
+        by smtp.gmail.com with ESMTPSA id k14-20020a0565123d8e00b00504816564c7sm704327lfv.104.2023.09.28.04.35.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 28 Sep 2023 04:35:37 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -60,10 +60,11 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH v3 1/6] Linux 6.6-rc2
-Date:   Thu, 28 Sep 2023 14:35:30 +0300
-Message-Id: <20230928113535.1217613-2-dmitry.baryshkov@linaro.org>
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3 2/6] dt-bindings: display/msm: Add reg bus and rotator interconnects
+Date:   Thu, 28 Sep 2023 14:35:31 +0300
+Message-Id: <20230928113535.1217613-3-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230928113535.1217613-1-dmitry.baryshkov@linaro.org>
 References: <20230928113535.1217613-1-dmitry.baryshkov@linaro.org>
@@ -78,25 +79,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
+Apart from the already handled data bus (MAS_MDP_Pn<->DDR), there are
+other connection paths:
+- a path that connects rotator block to the DDR.
+- a path that needs to be handled to ensure MDSS register access
+  functions properly, namely the "reg bus", a.k.a the CPU-MDSS CFG
+  interconnect.
+
+Describe these paths bindings to allow using them in device trees and in
+the driver
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/devicetree/bindings/display/msm/mdss-common.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/Makefile b/Makefile
-index ceb23eed4dce..57698d048e2c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2,7 +2,7 @@
- VERSION = 6
- PATCHLEVEL = 6
- SUBLEVEL = 0
--EXTRAVERSION = -rc1
-+EXTRAVERSION = -rc2
- NAME = Hurr durr I'ma ninja sloth
+diff --git a/Documentation/devicetree/bindings/display/msm/mdss-common.yaml b/Documentation/devicetree/bindings/display/msm/mdss-common.yaml
+index f69196e4cc76..6b4ce08a60dc 100644
+--- a/Documentation/devicetree/bindings/display/msm/mdss-common.yaml
++++ b/Documentation/devicetree/bindings/display/msm/mdss-common.yaml
+@@ -66,12 +66,14 @@ properties:
+     items:
+       - description: Interconnect path from mdp0 (or a single mdp) port to the data bus
+       - description: Interconnect path from mdp1 port to the data bus
++      - description: Interconnect path from CPU to the reg bus
  
- # *DOCUMENTATION*
+   interconnect-names:
+     minItems: 1
+     items:
+       - const: mdp0-mem
+       - const: mdp1-mem
++      - const: cpu-cfg
+ 
+   resets:
+     items:
 -- 
 2.39.2
 
