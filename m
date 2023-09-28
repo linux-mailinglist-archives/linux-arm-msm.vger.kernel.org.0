@@ -2,140 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D538F7B251D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 20:19:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E61A57B252C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 20:23:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231451AbjI1STt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Sep 2023 14:19:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43758 "EHLO
+        id S231406AbjI1SXv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Sep 2023 14:23:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230139AbjI1STs (ORCPT
+        with ESMTP id S230139AbjI1SXv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Sep 2023 14:19:48 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0402099;
-        Thu, 28 Sep 2023 11:19:45 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38SHkJBL015485;
-        Thu, 28 Sep 2023 18:19:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=jHZvQiOxHYcs4+bL8Soq5nh7GIkaD0yQT0HCRUww26g=;
- b=iF+q9qHSLPhWgIP0M7OaSHObf/wZ4Cl18nr+lG0Qaek8AU2oFlNEiplxMZUBhjlPdXot
- ly2eFBbHwCyi8+9K40ErE6rtFmSWaySJoBNBFw20muEHkjrzzu4GpMn8qBjYq4zU4q0O
- OLqFynJtsckoEcJvzy9MHUvF28KKrL07aCGFNSTEDR0aZ6xF/cmOWFJHXKDjape5jdga
- WU5zKOnfYeH6GIqTAEUTKnkHq8GTrskHSmDs9XFFcMuqXRRcgHrgLinJumrY4aYfj4nY
- 2AAzyLwVZXvlfRksnIgLEsw4pG9V3L4KKw+HEcWTOJadOmJ63xHWrJRp6tS14qORbXOH SQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tcvg9ae9a-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 28 Sep 2023 18:19:39 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38SIJcQh018306
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 28 Sep 2023 18:19:38 GMT
-Received: from [10.111.177.152] (10.49.16.6) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Thu, 28 Sep
- 2023 11:19:35 -0700
-Message-ID: <be27a31c-6c63-43cd-9857-f4b2a9568cf6@quicinc.com>
-Date:   Thu, 28 Sep 2023 11:19:34 -0700
+        Thu, 28 Sep 2023 14:23:51 -0400
+Received: from mail-vs1-xe2f.google.com (mail-vs1-xe2f.google.com [IPv6:2607:f8b0:4864:20::e2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D74A2BF
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 11:23:48 -0700 (PDT)
+Received: by mail-vs1-xe2f.google.com with SMTP id ada2fe7eead31-452962769bdso6302280137.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 11:23:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1695925428; x=1696530228; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6lUaiAsD9uV0//FhVSk6Od3pR7CJd+sOtqQwhqcrEfk=;
+        b=xPCPSdZov6JOwl5X9QWXEoqop+2np/fyd6BkgmT+MIEYV8h5RElQ8q8crc8KQC5vr6
+         bC3Rbt1+11NIzI7QzTmG5skbCttfSHlrcnwTmTmWNWwDXnEiOiZ0EWwAwocs//OnkfR1
+         OQxdRZ4NfLGrHad0WUTNcok2txcRONeUSkxUfoJynysh2TUkIJJjM45+wEOSkplSkeIF
+         wRKIkHqT+nCyUXN6+gD5u2SkbiKACi+IE+elN3OQZ3FEvcryQyfAHfuHJK95DQ2xqVNy
+         HlMRmTdHctv5QsRvlPlYtzFNkm9FJEcGOpYnmHDVPTb6+NDCd6OHCOz1HIDtd93/RvfU
+         svJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695925428; x=1696530228;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6lUaiAsD9uV0//FhVSk6Od3pR7CJd+sOtqQwhqcrEfk=;
+        b=nwA6cn2qWy06HH8UTeZpGG5F+nrtDfaT8Kk8i4AGew4eVBkp6FluABwN7JHo71/REO
+         ZWVHhKPuxf83VgLB4JH9Ls5h0nSPGBl233t0RcKobS7a7hHyZf8+HK0+I3in43zlZ8WI
+         4eHKLL6nOWU4S7f3FXm9gA3QUGbqaOp8EzJEAfhxJWumM6BkDxUxdMODDA7P/32mqMrf
+         DydKUHQGMCWPpJrPwtwivehwUO6fFqo9phpHxC9PBCnHYMOn0ivJJZoycLrHZN6lghhf
+         x7/foF6OPHNAMDhD1bbymOEaQW/lntVp7zhMX0qyVaBt+pmemWYoXPv+10qv5lwYLSnx
+         n4rg==
+X-Gm-Message-State: AOJu0YxJn/Mwc3MGq+e8tpraDQ876hP+y/tKPaP7gT0ahbLZeGiecb3T
+        R4M0N3hL10LmiZaHBa76/JdRRJx/esN9fiRI8dQnVA==
+X-Google-Smtp-Source: AGHT+IGJDuok+EkGthTBLrhPMTIfi4D8car2cm/ywKltBjmQ+vwJOCAjivQg7Xfj8u0+3jc8LrVtBF53Amql/LCtMEo=
+X-Received: by 2002:a67:f754:0:b0:452:7f81:1502 with SMTP id
+ w20-20020a67f754000000b004527f811502mr1905774vso.26.1695925427931; Thu, 28
+ Sep 2023 11:23:47 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/11] firmware: qcom: scm: add a dedicated SCM memory
- allocator
-Content-Language: en-US
-To:     Bartosz Golaszewski <brgl@bgdev.pl>,
-        Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
+References: <20230928092040.9420-1-brgl@bgdev.pl> <20230928092040.9420-3-brgl@bgdev.pl>
+ <be27a31c-6c63-43cd-9857-f4b2a9568cf6@quicinc.com>
+In-Reply-To: <be27a31c-6c63-43cd-9857-f4b2a9568cf6@quicinc.com>
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+Date:   Thu, 28 Sep 2023 20:23:36 +0200
+Message-ID: <CAMRc=McCqDLQaDP_ordNgHi3-7bGH2Y6H-JU3Uwyh0SOe_BYkg@mail.gmail.com>
+Subject: Re: [PATCH v2 02/11] firmware: qcom: scm: add a dedicated SCM memory allocator
+To:     Jeff Johnson <quic_jjohnson@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Maximilian Luz <luzmaximilian@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <kernel@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        kernel@quicinc.com,
         Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20230928092040.9420-1-brgl@bgdev.pl>
- <20230928092040.9420-3-brgl@bgdev.pl>
-From:   Jeff Johnson <quic_jjohnson@quicinc.com>
-In-Reply-To: <20230928092040.9420-3-brgl@bgdev.pl>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: cN2kaxH8Uy7BnjdSVzcQD18GmrkARi9i
-X-Proofpoint-GUID: cN2kaxH8Uy7BnjdSVzcQD18GmrkARi9i
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-09-28_17,2023-09-28_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 impostorscore=0
- priorityscore=1501 lowpriorityscore=0 phishscore=0 adultscore=0
- bulkscore=0 suspectscore=0 mlxscore=0 mlxlogscore=803 spamscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2309280157
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9/28/2023 2:20 AM, Bartosz Golaszewski wrote:
-> +void *qcom_scm_mem_alloc(size_t size, gfp_t gfp)
-> +{
-> +	struct qcom_scm_mem_chunk *chunk;
-> +	unsigned long vaddr;
+On Thu, Sep 28, 2023 at 8:19=E2=80=AFPM Jeff Johnson <quic_jjohnson@quicinc=
+.com> wrote:
+>
+> On 9/28/2023 2:20 AM, Bartosz Golaszewski wrote:
+> > +void *qcom_scm_mem_alloc(size_t size, gfp_t gfp)
+> > +{
+> > +     struct qcom_scm_mem_chunk *chunk;
+> > +     unsigned long vaddr;
+>
+> there are places below where you unnecessarily typecast this to its
+> given type
+>
 
-there are places below where you unnecessarily typecast this to its 
-given type
+Ah, it's a leftover from when this variable was of type void *. Thanks.
 
-> +	int ret;
-> +
-> +	if (!size)
-> +		return ZERO_SIZE_PTR;
-> +
-> +	size = roundup(size, 1 << PAGE_SHIFT);
-> +
-> +	chunk = kzalloc(sizeof(*chunk), gfp);
-> +	if (!chunk)
-> +		return NULL;
-> +
-> +	vaddr = gen_pool_alloc(qcom_scm_mem.pool, size);
-> +	if (!vaddr) {
-> +		kfree(chunk);
-> +		return NULL;
-> +	}
-> +
-> +	chunk->paddr = gen_pool_virt_to_phys(qcom_scm_mem.pool,
-> +					     (unsigned long)vaddr);
+> > +     int ret;
+> > +
+> > +     if (!size)
+> > +             return ZERO_SIZE_PTR;
+> > +
+> > +     size =3D roundup(size, 1 << PAGE_SHIFT);
+> > +
+> > +     chunk =3D kzalloc(sizeof(*chunk), gfp);
+> > +     if (!chunk)
+> > +             return NULL;
+> > +
+> > +     vaddr =3D gen_pool_alloc(qcom_scm_mem.pool, size);
+> > +     if (!vaddr) {
+> > +             kfree(chunk);
+> > +             return NULL;
+> > +     }
+> > +
+> > +     chunk->paddr =3D gen_pool_virt_to_phys(qcom_scm_mem.pool,
+> > +                                          (unsigned long)vaddr);
+>
+> unnecessary typecast?
+>
+> > +     chunk->size =3D size;
+> > +
+> > +     scoped_guard(spinlock_irqsave, &qcom_scm_mem.lock) {
+>
+> my first exposure to this infrastructure..very cool now that I've
+> wrapped my head around it! This helped for those also new to this:
+> https://lwn.net/Articles/934679/
+>
 
-unnecessary typecast?
+It's amazing but be careful with it. I used it wrong in one place and
+got yelled at by Linus Torvalds personally already. :)
 
-> +	chunk->size = size;
-> +
-> +	scoped_guard(spinlock_irqsave, &qcom_scm_mem.lock) {
+Bartosz
 
-my first exposure to this infrastructure..very cool now that I've 
-wrapped my head around it! This helped for those also new to this:
-https://lwn.net/Articles/934679/
-
-> +		ret = radix_tree_insert(&qcom_scm_mem.chunks, vaddr, chunk);
-> +		if (ret) {
-> +			gen_pool_free(qcom_scm_mem.pool, (unsigned long)vaddr,
-
-unnecessary typecast?
-
-> +				      chunk->size);
-> +			kfree(chunk);
-> +			return NULL;
-> +		}
-> +	}
-> +
-> +	return (void *)vaddr;
-> +}
-
+> > +             ret =3D radix_tree_insert(&qcom_scm_mem.chunks, vaddr, ch=
+unk);
+> > +             if (ret) {
+> > +                     gen_pool_free(qcom_scm_mem.pool, (unsigned long)v=
+addr,
+>
+> unnecessary typecast?
+>
+> > +                                   chunk->size);
+> > +                     kfree(chunk);
+> > +                     return NULL;
+> > +             }
+> > +     }
+> > +
+> > +     return (void *)vaddr;
+> > +}
+>
