@@ -2,87 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A6CBA7B1139
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 05:35:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 462337B1282
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 08:16:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230061AbjI1Dfi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Sep 2023 23:35:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54266 "EHLO
+        id S229453AbjI1GQA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Sep 2023 02:16:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229920AbjI1Dfg (ORCPT
+        with ESMTP id S230239AbjI1GQA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Sep 2023 23:35:36 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1BAD94;
-        Wed, 27 Sep 2023 20:35:35 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38S2Hdmo017390;
-        Thu, 28 Sep 2023 03:35:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=zjsWLhBbxghFcZQJvI05NQSxSkxktlTftSOowIaiCrE=;
- b=WEkZ7qzL7DOzI+6bdGiGNKvoeFfdwwz34zV84vtNISzesUlxcE97dXFCsNjItFMNwZzF
- bFPO0Rzv/cjY8r3OTtO1pTRuPWzuxBYkN8Adg4wcAKvL6USB0njlD8NtMcfD0YlW4mj9
- jiaqLafog94Nn0K5fhu8YPR9TkEd0WExY2j4hQiAWQR08hyz72ttOb4PHGwVAbs4INjo
- aUo97gZ0o2MqAYFGNymuIh1NegSUY4Oj2EcwiPgcj+C+3q+ec0/JV/c5z70/gbZb7FzU
- S6d7CZdstIZbm1n5AyfKsXUAOsdnzk3VXZYpyys4v9P5dvh627MA6OHPnACWR7zGYAIf 3Q== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tcvg98mh3-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 28 Sep 2023 03:35:27 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38S3ZP25014967
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 28 Sep 2023 03:35:25 GMT
-Received: from [10.216.41.51] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Wed, 27 Sep
- 2023 20:35:16 -0700
-Message-ID: <7d5426cc-01db-e3c5-c968-d57122d0d0f6@quicinc.com>
-Date:   Thu, 28 Sep 2023 09:05:11 +0530
+        Thu, 28 Sep 2023 02:16:00 -0400
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E60CA3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Sep 2023 23:15:58 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qlkIf-0005M7-3R; Thu, 28 Sep 2023 08:15:01 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qlkIT-009W0C-Oq; Thu, 28 Sep 2023 08:14:49 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qlkIT-005Ytu-DX; Thu, 28 Sep 2023 08:14:49 +0200
+Date:   Thu, 28 Sep 2023 08:14:49 +0200
+From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Arnd Bergmann <arnd@arndb.de>, Nishanth Menon <nm@ti.com>,
+        Herve Codina <herve.codina@bootlin.com>,
+        Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>,
+        Mateusz Holenko <mholenko@antmicro.com>,
+        Muhammad Usama Anjum <usama.anjum@collabora.com>,
+        linux-tegra@vger.kernel.org,
+        "Conor.Dooley" <conor.dooley@microchip.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        linux-riscv@lists.infradead.org,
+        Karol Gugala <kgugala@antmicro.com>,
+        Qiang Zhao <qiang.zhao@nxp.com>,
+        Hitomi Hasegawa <hasegawa-hitomi@fujitsu.com>,
+        Rob Herring <robh@kernel.org>,
+        linux-samsung-soc@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
+        Ruan Jinjie <ruanjinjie@huawei.com>,
+        Yinbo Zhu <zhuyinbo@loongson.cn>,
+        Jon Hunter <jonathanh@nvidia.com>,
+        linux-rockchip@lists.infradead.org,
+        Gabriel Somlo <gsomlo@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Huisong Li <lihuisong@huawei.com>,
+        Joel Stanley <joel@jms.id.au>, Sumit Gupta <sumitg@nvidia.com>,
+        "zhang.songyi" <zhang.songyi@zte.com.cn>,
+        Zev Weiss <zev@bewilderbeest.net>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Yang Yingliang <yangyingliang@huawei.com>,
+        Lubomir Rintel <lkundrak@v3.sk>,
+        Krzysztof Halasa <khalasa@piap.pl>, loongarch@lists.linux.dev,
+        Santosh Shilimkar <ssantosh@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Michal Simek <michal.simek@amd.com>,
+        linux-arm-kernel@lists.infradead.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Daire McNamara <daire.mcnamara@microchip.com>,
+        linux-kernel@vger.kernel.org,
+        Shang XiaoJing <shangxiaojing@huawei.com>,
+        Leo Li <leoyang.li@nxp.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andrew Jeffery <andrew@aj.id.au>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        linux-mediatek@lists.infradead.org,
+        Nick Alcock <nick.alcock@oracle.com>,
+        linuxppc-dev@lists.ozlabs.org
+Subject: Re: [PATCH 00/40] soc: Convert to platform remove callback returning
+ void
+Message-ID: <20230928061449.xxqhyyrg6e357dn2@pengutronix.de>
+References: <20230925095532.1984344-1-u.kleine-koenig@pengutronix.de>
+ <CACPK8XeROYz_XaB3TvUhdXm7Vm8fjC8yU+mfvA58=_FiDrBy-g@mail.gmail.com>
+ <1b2fddf8-c0a6-4afa-8ad0-f280dea1607f@app.fastmail.com>
+ <f4hvrslynlgmxu4a2gogc5idvumskhaalxgwildy56yqk2wz7d@lkh4swkv52mi>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH v5 3/5] opp: Add dev_pm_opp_find_level_floor()
-Content-Language: en-US
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <vireshk@kernel.org>, <nm@ti.com>,
-        <sboyd@kernel.org>, <mani@kernel.org>, <lpieralisi@kernel.org>,
-        <kw@linux.com>, <robh@kernel.org>, <bhelgaas@google.com>,
-        <rafael@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <quic_vbadigan@quicinc.com>, <quic_nitegupt@quicinc.com>,
-        <quic_skananth@quicinc.com>, <quic_ramkri@quicinc.com>,
-        <quic_parass@quicinc.com>
-References: <1694066433-8677-1-git-send-email-quic_krichai@quicinc.com>
- <1694066433-8677-4-git-send-email-quic_krichai@quicinc.com>
- <20230927071458.busudwwj26kmia4u@vireshk-i7>
-From:   Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20230927071458.busudwwj26kmia4u@vireshk-i7>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: tSZjtMznI6EeQ1NvReX8kI2cEAfR29Jt
-X-Proofpoint-GUID: tSZjtMznI6EeQ1NvReX8kI2cEAfR29Jt
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-09-27_17,2023-09-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- priorityscore=1501 lowpriorityscore=0 phishscore=0 adultscore=0
- bulkscore=0 suspectscore=0 mlxscore=0 mlxlogscore=999 spamscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2309280030
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="yfll6esgccshw4fu"
+Content-Disposition: inline
+In-Reply-To: <f4hvrslynlgmxu4a2gogc5idvumskhaalxgwildy56yqk2wz7d@lkh4swkv52mi>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -90,93 +103,77 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 9/27/2023 12:44 PM, Viresh Kumar wrote:
-> On 07-09-23, 11:30, Krishna chaitanya chundru wrote:
->
-> $Subject should have OPP instead of opp. Past history of framework can be seen
-> for this.
->
->> During initialization of some drivers, need to vote for max level.
->>
->> Adding dev_pm_opp_find_level_floor() for searching a lesser match or
->> operating on OPP in the order of decreasing level.
->>
->> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
->> ---
->>   drivers/opp/core.c     | 25 +++++++++++++++++++++++++
->>   include/linux/pm_opp.h |  9 +++++++++
->>   2 files changed, 34 insertions(+)
->>
->> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
->> index 919cc53..6d4d226 100644
->> --- a/drivers/opp/core.c
->> +++ b/drivers/opp/core.c
->> @@ -814,6 +814,31 @@ struct dev_pm_opp *dev_pm_opp_find_level_ceil(struct device *dev,
->>   EXPORT_SYMBOL_GPL(dev_pm_opp_find_level_ceil);
->>   
->>   /**
->> + * dev_pm_opp_find_level_floor() - Search for a rounded floor freq
-> freq ?
->
->> + * @dev:	device for which we do this operation
->> + * @level:	Start level
->> + *
->> + * Search for the matching floor *available* OPP from a starting level
->> + * for a device.
->> + *
->> + * Return: matching *opp and refreshes *level accordingly, else returns
->> + * ERR_PTR in case of error and should be handled using IS_ERR. Error return
->> + * values can be:
->> + * EINVAL:	for bad pointer
->> + * ERANGE:	no match found for search
->> + * ENODEV:	if device not found in list of registered devices
->> + *
->> + * The callers are required to call dev_pm_opp_put() for the returned OPP after
->> + * use.
->> + */
->> +struct dev_pm_opp *dev_pm_opp_find_level_floor(struct device *dev,
->> +					       unsigned long *level)
->> +{
->> +	return _find_key_floor(dev, level, 0, true, _read_level, NULL);
->> +}
->> +EXPORT_SYMBOL_GPL(dev_pm_opp_find_level_floor);
->> +
->> +/**
->>    * dev_pm_opp_find_bw_ceil() - Search for a rounded ceil bandwidth
->>    * @dev:	device for which we do this operation
->>    * @bw:	start bandwidth
->> diff --git a/include/linux/pm_opp.h b/include/linux/pm_opp.h
->> index 91f87d7..baea92f 100644
->> --- a/include/linux/pm_opp.h
->> +++ b/include/linux/pm_opp.h
->> @@ -144,6 +144,9 @@ struct dev_pm_opp *dev_pm_opp_find_level_exact(struct device *dev,
->>   struct dev_pm_opp *dev_pm_opp_find_level_ceil(struct device *dev,
->>   					      unsigned int *level);
->>   
->> +struct dev_pm_opp *dev_pm_opp_find_level_floor(struct device *dev,
->> +					       unsigned long *level);
->> +
->>   struct dev_pm_opp *dev_pm_opp_find_bw_ceil(struct device *dev,
->>   					   unsigned int *bw, int index);
->>   
->> @@ -314,6 +317,12 @@ static inline struct dev_pm_opp *dev_pm_opp_find_bw_ceil(struct device *dev,
->>   	return ERR_PTR(-EOPNOTSUPP);
->>   }
->>   
->> +static inline struct dev_pm_opp *dev_pm_opp_find_level_floor(struct device *dev,
-> Why add between two bw related functions ?
->
->> +							     unsigned long *level)
->> +{
->> +	return ERR_PTR(-EOPNOTSUPP);
->> +}
->> +
->>   static inline struct dev_pm_opp *dev_pm_opp_find_bw_floor(struct device *dev,
->>   					unsigned int *bw, int index)
->>   {
-> Fixed all this and applied. Thanks.
->
-I didn't notice this before, thanks for fixing and applying .
+--yfll6esgccshw4fu
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-- KC
+On Wed, Sep 27, 2023 at 04:01:58PM -0700, Bjorn Andersson wrote:
+> On Wed, Sep 27, 2023 at 10:43:16AM +0200, Arnd Bergmann wrote:
+> > On Wed, Sep 27, 2023, at 04:25, Joel Stanley wrote:
+> > > On Mon, 25 Sept 2023 at 09:55, Uwe Kleine-K=F6nig <u.kleine-koenig@pe=
+ngutronix.de> wrote:
+> > >>
+> > >> this series converts all platform drivers below drivers/soc to use
+> > >> .remove_new(). The motivation is to get rid of an integer return code
+> > >> that is (mostly) ignored by the platform driver core and error prone=
+ on
+> > >> the driver side.
+> > >>
+> > >> See commit 5c5a7680e67b ("platform: Provide a remove callback that
+> > >> returns no value") for an extended explanation and the eventual goal.
+> > >>
+> > >> As there is no single maintainer team for drivers/soc, I suggest the
+> > >> individual maintainers to pick up "their" patches.
+> > >
+> > > I'd be happy if Arnd merged the lot at once. Arnd, what do you think?
+> > >
+> > > If that will be too messy then I understand. I have queued the aspeed
+> > > ones locally and will push that out if we decide that's the best way
+> > > to go.
+> >=20
+> > The main downside of merging it all at once through the soc tree
+> > is that there may be patches that conflict with other work going on
+> > in individual drivers.
+> >=20
+> > What I'd suggest doing here is:
+> >=20
+> > - have platform maintainers pick up patches for their drivers
+> >   if that is their preference for any reason
+>=20
+> I'd prefer this for the qcom drivers at least, please let me know if you
+> would like me to proceed.
 
+I can send a pull request as Arnd suggested. So iff you want the qcom
+drivers not be a part of that PR, just make sure they appear in next
+during the next week. :-)
+
+(I'm not sure if "this" in your last quoted sentence is "platform
+maintainers pick up" or "merging it all at once through the soc tree". I
+think you mean the former. Still if you don't want me to pick up the
+qcom patches and won't manage to make them appear in next via your tree,
+I ask you to tell me explicitly to skip these in my PR.)
+
+Best regards and thanks,
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+
+--yfll6esgccshw4fu
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmUVGdgACgkQj4D7WH0S
+/k4H8ggAlzMNhL51l548JwUtvGIKaakJoHBLPcGIj/hsCvofuN0HLiMSEtj8Dg6K
+8y1eWVR1Yl+MqkggqjwkOCCy2eX7GYvKXYBRynjaryEtuaE5wSH09zlTWvWBc/ac
+XaBPBsvT6wrBDQBNG9hy4EuMwz7hTRZqp6r0nJV4SSrnor+Lh3EgudImNy82xdmh
+qewYGPdP1R2M1dIIvRSxcLGWHQike9Rti3B8LNTQOTOKB4RrnNfwmPZAk+6LSRAW
+ArlW9S66AzVOe1E5gY70pi4VTQ8AmegEFPOJf3ZqPVAr5s/FYfmxf7GUUM/j/BMh
+7vHOjZMrtO+JkBW/lzWwgV6oKIHgtA==
+=TaoJ
+-----END PGP SIGNATURE-----
+
+--yfll6esgccshw4fu--
