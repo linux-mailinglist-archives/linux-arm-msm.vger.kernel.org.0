@@ -2,84 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AE5427B281F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 00:11:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 77F567B287F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 00:36:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231689AbjI1WLV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Sep 2023 18:11:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36712 "EHLO
+        id S231446AbjI1WgX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Sep 2023 18:36:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231446AbjI1WLV (ORCPT
+        with ESMTP id S230325AbjI1WgW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Sep 2023 18:11:21 -0400
+        Thu, 28 Sep 2023 18:36:22 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5F90199;
-        Thu, 28 Sep 2023 15:11:18 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38SLMrYD005712;
-        Thu, 28 Sep 2023 22:10:37 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5F4419D;
+        Thu, 28 Sep 2023 15:36:20 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38SLYRRB023964;
+        Thu, 28 Sep 2023 22:35:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=uk+G1kp/tg9sdS+9uFAYBPz89f84jH42slLz163CM0A=;
- b=aNWY771bOrjm5LLfcK+bUkOwd2QJAYdn6UORXLtisHn8J0yGhx3AwhFwkN5a2vQL9F+m
- vExDIAjZSXaBJKCu/0xkb/zt2+uk+9W0IJX8XWoEID+N58NAwHhekr6qeGS97W0aZ1Lc
- hBPX21lNFDFNG+ATyKCfAxpQTenFu6P8d81FI0I6MXrTls0iCnmEM2J21X8OoJ95IQHy
- d71y9zZQFovSIgw4U3HJpxX89IFa4ytYVmMLy3PxfptcvriisQz7oOuVCbtzmnze2s5e
- vtYIl62J/0QdeUqnjMyA3x/c0jv0tK4i6PAmesVKbCSNHndVXOqQe2TMeBVsbFxBaFee hw== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tct5gu7bv-1
+ bh=0oLww7t8NDTz6izW9MTTTB5935394WQk9q/qSKmqzyc=;
+ b=Ts92vjeVu9hrV6OvcFfsTQ6n19jahFEaBO1FxeOMc4eHXNNTkskYJjhanq81fnWvB0LG
+ YwMxsxo+zlf1rPtfVMlvzyJ5SG1PNztSKusr5LGho7G5SmX9Rjh0ow5akA47tnxlgcaj
+ EhU0/RlWNu1Xxds2algjTGI7OXJoy3Fb84eRECKKjrqQzGD0mJDNeBKmkgzCx6wAdCeR
+ 5pEfcFy74YM+H8dTFyJYAFhKMUk7HyfbJ5BpFPkWgmq+nBdWI8VaUOGmwt9/stmKn+Wt
+ v+o8DzbBZSALETLo3vgw/rK+r6toBSflsrEVUB+K3wT/O2z4xq2HkLbighr1haVoqMQE aw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tcpkguvc4-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 28 Sep 2023 22:10:36 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38SMAa9R031137
+        Thu, 28 Sep 2023 22:35:55 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38SMZsD0031313
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 28 Sep 2023 22:10:36 GMT
-Received: from [10.71.112.36] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+        Thu, 28 Sep 2023 22:35:54 GMT
+Received: from [10.110.70.158] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Thu, 28 Sep
- 2023 15:10:35 -0700
-Message-ID: <0cbc80f2-4238-c9c6-7954-2d6d7e750446@quicinc.com>
-Date:   Thu, 28 Sep 2023 15:10:34 -0700
+ 2023 15:35:51 -0700
+Message-ID: <15ccacce-c20b-5fe2-5d89-a0627bd4a9e0@quicinc.com>
+Date:   Thu, 28 Sep 2023 15:35:49 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v7 02/33] xhci: add helper to stop endpoint and wait for
- completion
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v3 6/7] drm/msm/dp: add
+ pm_runtime_force_suspend()/resume()
 Content-Language: en-US
-To:     Mathias Nyman <mathias.nyman@linux.intel.com>,
-        <mathias.nyman@intel.com>, <gregkh@linuxfoundation.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <perex@perex.cz>,
-        <tiwai@suse.com>, <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <srinivas.kandagatla@linaro.org>, <bgoswami@quicinc.com>,
-        <Thinh.Nguyen@synopsys.com>
-CC:     <linux-kernel@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-References: <20230921214843.18450-1-quic_wcheng@quicinc.com>
- <20230921214843.18450-3-quic_wcheng@quicinc.com>
- <6e9d2094-0bf9-b2ac-29f3-99115b456fdb@linux.intel.com>
-From:   Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <6e9d2094-0bf9-b2ac-29f3-99115b456fdb@linux.intel.com>
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>
+CC:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <dianders@chromium.org>, <vkoul@kernel.org>,
+        <daniel@ffwll.ch>, <airlied@gmail.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <quic_jesszhan@quicinc.com>,
+        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1694813901-26952-1-git-send-email-quic_khsieh@quicinc.com>
+ <1694813901-26952-7-git-send-email-quic_khsieh@quicinc.com>
+ <CAA8EJpqPXoFX4LXyXYgfh07Vpxg-KgD8VBR6x5bXf4GOJmbOtw@mail.gmail.com>
+ <2f98d5f1-57c1-d9fe-cb1c-b975db057287@quicinc.com>
+ <CAA8EJpr2wRq6Txi7YAQpJKa_9UGqH_nmHzvVOaAPkwOrtDg4Tw@mail.gmail.com>
+ <CAE-0n53dqHONzMTd_ZC-fKWTzDVq6Wqwo4OFZMUcghZ5SD5RhA@mail.gmail.com>
+ <65566a68-3510-2e5f-7d57-e4dba08c008c@quicinc.com>
+ <CAE-0n51Ep4zBx6bswL4Yb+F0+8dW+L2kaKQaZBi-91jsVqm_9Q@mail.gmail.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAE-0n51Ep4zBx6bswL4Yb+F0+8dW+L2kaKQaZBi-91jsVqm_9Q@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: N-MC0TjGQafJ131XUacYB100yuWmPZQF
-X-Proofpoint-GUID: N-MC0TjGQafJ131XUacYB100yuWmPZQF
+X-Proofpoint-GUID: V3j7udvTMQzgURdnq_tEUPI5YIRroyh7
+X-Proofpoint-ORIG-GUID: V3j7udvTMQzgURdnq_tEUPI5YIRroyh7
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-09-28_21,2023-09-28_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 mlxlogscore=999 impostorscore=0 phishscore=0 adultscore=0
- suspectscore=0 priorityscore=1501 mlxscore=0 bulkscore=0 clxscore=1015
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2309280190
+ definitions=2023-09-28_22,2023-09-28_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ bulkscore=0 phishscore=0 spamscore=0 malwarescore=0 impostorscore=0
+ mlxlogscore=999 suspectscore=0 lowpriorityscore=0 adultscore=0
+ clxscore=1015 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2309280193
 X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -90,214 +94,109 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mathias,
 
-On 9/28/2023 6:31 AM, Mathias Nyman wrote:
-> On 22.9.2023 0.48, Wesley Cheng wrote:
->> From: Mathias Nyman <mathias.nyman@linux.intel.com>
+
+On 9/27/2023 2:41 PM, Stephen Boyd wrote:
+> Quoting Abhinav Kumar (2023-09-22 18:35:27)
+>> On 9/22/2023 2:54 PM, Stephen Boyd wrote:
+>>> Quoting Dmitry Baryshkov (2023-09-19 02:50:12)
+>>>>
+>>>> This should be hpd_notify, who starts link training, not some event.
+>>>
+>>> I think this driver should train the link during atomic_enable(), not
+>>> hpd_notify() (or directly from the irq handler). The drm_bridge_funcs
+>>> talk a bit about when the clocks and timing signals are supposed to be
+>>> enabled. For example, struct drm_bridge_funcs::atomic_pre_enable() says
+>>> the "display pipe (i.e.  clocks and timing signals) feeding this bridge
+>>> will not yet be running when this callback is called". And struct
+>>> drm_bridge_funcs::atomic_enable() says "this callback must enable the
+>>> display link feeding the next bridge in the chain if there is one."
+>>>
+>>> That looks to me like link training, i.e. the display link, should
+>>> happen in the enable path and not hpd_notify. It looks like link
+>>> training could fail, but when that happens I believe the driver should
+>>> call drm_connector_set_link_status_property() with
+>>> DRM_MODE_LINK_STATUS_BAD. The two callers of that which exist in the
+>>> tree also call drm_kms_helper_hotplug_event() or
+>>> drm_kms_helper_connector_hotplug_event() after updating the link so that
+>>> userspace knows to try again.
+>>>
+>>> It would be nice if there was some drm_bridge_set_link_status_bad() API
+>>> that bridge drivers could use to signal that the link status is bad and
+>>> call the hotplug helper. Maybe it could also record some diagnostics
+>>> about which bridge failed to setup the link and stop the atomic_enable()
+>>> chain for that connector.
 >>
->> Expose xhci_stop_endpoint_sync() which is a synchronous variant of
->> xhci_queue_stop_endpoint().  This is useful for client drivers that are
->> using the secondary interrupters, and need to stop/clean up the current
->> session.  The stop endpoint command handler will also take care of 
->> cleaning
->> up the ring.
+>> Doing link training when we get hpd instead of atomic_enable() is a
+>> design choice we have been following for a while because for the case
+>> when link training fails in atomic_enable() and setting the link status
+>> property as you mentioned, the compositor needs to be able to handle
+>> that and also needs to try with a different resolution or take some
+>> other corrective action. We have seen many compositors not able to
+>> handle this complexity.
+> 
+> The chrome compositor handles this case[1]. If the link status is set to
+> bad and there are non-zero number of modes on a connected connector it
+> resets the status to good to try again.
+> 
+
+Thanks for the link. Just resetting the property alone and trying again 
+is going to lead to the same failure again. So that alone is 
+insufficient and doesn't sound right.
+
+As documented here:
+
+https://www.kernel.org/doc/html/latest/gpu/drm-kms.html#standard-connector-properties
+
+"When user-space receives the hotplug uevent and detects a "BAD" 
+link-status, the sink doesn't receive pixels anymore (e.g. the screen 
+becomes completely black). The list of available modes may have changed. 
+User-space is expected to pick a new mode if the current one has 
+disappeared and perform a new modeset with link-status set to "GOOD" to 
+re-enable the connector."
+
+Picking a different mode is a reasonable attempt to try again but even 
+that might fail again if it picks a mode which falls in the same link rate.
+
+Thats why, to re-iterate what i mentioned, we need to see if some sort 
+of a handshake fallback exists or can be implemented. It will need 
+compositor support as well as driver change to maybe remove that mode etc.
+
+We prioritized user experience here to make sure display_enable() wont 
+fail otherwise the user might keep waiting for the screen to come up 
+forever. With the driver ensuring link is trained and then reporting to 
+usermode, its a safer option as the driver will train with the highest 
+link rate / lane combination supported and also remove modes which dont 
+fall in this bucket in dp_bridge_mode_valid.
+
+Till we validate this, I would prefer to keep this change out of this 
+series.
+
+>> So the design sends the hotplug to usermode only
+>> after link training succeeds.
+> 
+> I suspect this is why my trogdor device turns off after rebooting when I
+> apply a ChromeOS update with the lid closed and DP connected. Userspace
+> wants to know that a display is connected, but this driver is still link
+> training by the time userspace boots up so we don't see any drm
+> connector indicating status is connected. No drm connectors connected
+> means the OS should shutdown.
+> 
+
+Interesting use case but I am not sure if thats whats happening till we 
+debug that. Why should OS shutdown if connectors are not in "connected" 
+state? Agreed, display will be off. But shouldnt compositor be alive in 
+case it receives hotplug? The user (in this case you) never turned the 
+device off so why should the OS shutdown?
+
 >>
->> Modifications to repurpose the new API into existing stop endpoint
->> sequences was implemented by Wesley Cheng.
->>
->> Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
->> Co-developed-by: Wesley Cheng <quic_wcheng@quicinc.com>
->> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
->> ---
->>   drivers/usb/host/xhci-hub.c | 29 +++---------------
->>   drivers/usb/host/xhci.c     | 60 +++++++++++++++++++++++++++----------
->>   drivers/usb/host/xhci.h     |  2 ++
->>   3 files changed, 50 insertions(+), 41 deletions(-)
->>
->> diff --git a/drivers/usb/host/xhci-hub.c b/drivers/usb/host/xhci-hub.c
->> index 0054d02239e2..2f7309bdc922 100644
->> --- a/drivers/usb/host/xhci-hub.c
->> +++ b/drivers/usb/host/xhci-hub.c
->> @@ -489,7 +489,6 @@ EXPORT_SYMBOL_GPL(xhci_find_slot_id_by_port);
->>   static int xhci_stop_device(struct xhci_hcd *xhci, int slot_id, int 
->> suspend)
->>   {
->>       struct xhci_virt_device *virt_dev;
->> -    struct xhci_command *cmd;
->>       unsigned long flags;
->>       int ret;
->>       int i;
->> @@ -501,10 +500,6 @@ static int xhci_stop_device(struct xhci_hcd 
->> *xhci, int slot_id, int suspend)
->>       trace_xhci_stop_device(virt_dev);
->> -    cmd = xhci_alloc_command(xhci, true, GFP_NOIO);
->> -    if (!cmd)
->> -        return -ENOMEM;
->> -
->>       spin_lock_irqsave(&xhci->lock, flags);
->>       for (i = LAST_EP_INDEX; i > 0; i--) {
->>           if (virt_dev->eps[i].ring && virt_dev->eps[i].ring->dequeue) {
->> @@ -521,7 +516,7 @@ static int xhci_stop_device(struct xhci_hcd *xhci, 
->> int slot_id, int suspend)
->>               if (!command) {
->>                   spin_unlock_irqrestore(&xhci->lock, flags);
->>                   ret = -ENOMEM;
->> -                goto cmd_cleanup;
->> +                goto out;
->>               }
->>               ret = xhci_queue_stop_endpoint(xhci, command, slot_id,
->> @@ -529,30 +524,14 @@ static int xhci_stop_device(struct xhci_hcd 
->> *xhci, int slot_id, int suspend)
->>               if (ret) {
->>                   spin_unlock_irqrestore(&xhci->lock, flags);
->>                   xhci_free_command(xhci, command);
->> -                goto cmd_cleanup;
->> +                goto out;
->>               }
->>           }
->>       }
->> -    ret = xhci_queue_stop_endpoint(xhci, cmd, slot_id, 0, suspend);
->> -    if (ret) {
->> -        spin_unlock_irqrestore(&xhci->lock, flags);
->> -        goto cmd_cleanup;
->> -    }
->> -
->> -    xhci_ring_cmd_db(xhci);
->>       spin_unlock_irqrestore(&xhci->lock, flags);
->> +    ret = xhci_stop_endpoint_sync(xhci, &virt_dev->eps[0], suspend);
+>> I do not think we should change this design unless prototyped with an
+>> existing compositor such as chrome or android at this point.
 > 
-> I didn't take this new xhci_stop_endpoint_sync() helper into use as it 
-> causes an extra
-> xhci spinlock release and reacquire here.
-> 
-> Also the memory allocation flags differ, GFP_NOIO is turned into 
-> GFP_KERNEL after this change.
+> Is this driver used with android?
 > 
 
-Thanks for the review.  I agree with the points made.  I wasn't sure if 
-the extra unlock/lock would cause issues if we've already queued the 
-stop ep for the other eps used by the device.
+There are some internal efforts ongoing with prototyping this but I 
+cannot comment more on this right now.
 
-I think addressing the flags might be straightforward, we can just pass 
-it in as an argument.  At least for this change in particular, is the 
-concern that there could be another XHCI command queued before the stop 
-endpoint command is?
-
->> -    /* Wait for last stop endpoint command to finish */
->> -    wait_for_completion(cmd->completion);
->> -
->> -    if (cmd->status == COMP_COMMAND_ABORTED ||
->> -        cmd->status == COMP_COMMAND_RING_STOPPED) {
->> -        xhci_warn(xhci, "Timeout while waiting for stop endpoint 
->> command\n");
->> -        ret = -ETIME;
->> -    }
->> -
->> -cmd_cleanup:
->> -    xhci_free_command(xhci, cmd);
->> +out:
->>       return ret;
->>   }
->> diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
->> index 3fd2b58ee1d3..163d533d6200 100644
->> --- a/drivers/usb/host/xhci.c
->> +++ b/drivers/usb/host/xhci.c
->> @@ -2758,6 +2758,46 @@ static int xhci_reserve_bandwidth(struct 
->> xhci_hcd *xhci,
->>       return -ENOMEM;
->>   }
->> +/*
->> + * Synchronous XHCI stop endpoint helper.  Issues the stop endpoint 
->> command and
->> + * waits for the command completion before returning.
->> + */
->> +int xhci_stop_endpoint_sync(struct xhci_hcd *xhci, struct 
->> xhci_virt_ep *ep, int suspend)
->> +{
->> +    struct xhci_command *command;
->> +    unsigned long flags;
->> +    int ret;
->> +
->> +    command = xhci_alloc_command(xhci, true, GFP_KERNEL);
->> +    if (!command)
->> +        return -ENOMEM;
->> +
->> +    spin_lock_irqsave(&xhci->lock, flags);
->> +    ret = xhci_queue_stop_endpoint(xhci, command, ep->vdev->slot_id,
->> +                       ep->ep_index, suspend);
->> +    if (ret < 0) {
->> +        spin_unlock_irqrestore(&xhci->lock, flags);
->> +        goto out;
->> +    }
->> +
->> +    xhci_ring_cmd_db(xhci);
->> +    spin_unlock_irqrestore(&xhci->lock, flags);
->> +
->> +    ret = wait_for_completion_timeout(command->completion, 
->> msecs_to_jiffies(3000));
->> +    if (!ret)
->> +        xhci_warn(xhci, "%s: Unable to stop endpoint.\n",
->> +                __func__);
->> +
->> +    if (command->status == COMP_COMMAND_ABORTED ||
->> +        command->status == COMP_COMMAND_RING_STOPPED) {
->> +        xhci_warn(xhci, "Timeout while waiting for stop endpoint 
->> command\n");
->> +        ret = -ETIME;
->> +    }
->> +out:
->> +    xhci_free_command(xhci, command);
->> +
->> +    return ret;
->> +}
->>   /* Issue a configure endpoint command or evaluate context command
->>    * and wait for it to finish.
->> @@ -3078,7 +3118,7 @@ static void xhci_endpoint_reset(struct usb_hcd 
->> *hcd,
->>       struct xhci_virt_device *vdev;
->>       struct xhci_virt_ep *ep;
->>       struct xhci_input_control_ctx *ctrl_ctx;
->> -    struct xhci_command *stop_cmd, *cfg_cmd;
->> +    struct xhci_command *cfg_cmd;
->>       unsigned int ep_index;
->>       unsigned long flags;
->>       u32 ep_flag;
->> @@ -3118,10 +3158,6 @@ static void xhci_endpoint_reset(struct usb_hcd 
->> *hcd,
->>       if (ep_flag == SLOT_FLAG || ep_flag == EP0_FLAG)
->>           return;
->> -    stop_cmd = xhci_alloc_command(xhci, true, GFP_NOWAIT);
->> -    if (!stop_cmd)
->> -        return;
->> -
->>       cfg_cmd = xhci_alloc_command_with_ctx(xhci, true, GFP_NOWAIT);
->>       if (!cfg_cmd)
->>           goto cleanup;
->> @@ -3144,23 +3180,16 @@ static void xhci_endpoint_reset(struct usb_hcd 
->> *hcd,
->>           goto cleanup;
->>       }
->> -    err = xhci_queue_stop_endpoint(xhci, stop_cmd, udev->slot_id,
->> -                    ep_index, 0);
->> +    spin_unlock_irqrestore(&xhci->lock, flags);
->> +
-> 
-> Same here, extra unlock -> lock, and GFP flags differ.
-> 
-> 
-
-My intention here (minus the GFP flags) was that the locking was mainly 
-for setting the EP state flag -- EP_SOFT_CLEAR_TOGGLE.  If that was set, 
-then new TD queues are blocked.  Seems like that was why there is a 
-check like this afterwards:
-
-if (!list_empty(&ep->ring->td_list)) {
-
-So I believed that releasing the lock here was going to be ok, because 
-by that point since the flag is set, nothing would be able to be added 
-to the td_list.
-
-Thanks
-Wesley Cheng
-
+> [1] https://source.chromium.org/chromium/chromium/src/+/main:ui/ozone/platform/drm/gpu/hardware_display_plane_manager_atomic.cc;l=114;drc=67520ac99db89395b10f2ab728b540eef0da8292
