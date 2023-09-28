@@ -2,65 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 08FB27B2248
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 18:26:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 39FFB7B2323
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 19:04:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230420AbjI1Q0Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Sep 2023 12:26:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35240 "EHLO
+        id S231285AbjI1REI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Sep 2023 13:04:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229903AbjI1Q0X (ORCPT
+        with ESMTP id S231310AbjI1REI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Sep 2023 12:26:23 -0400
+        Thu, 28 Sep 2023 13:04:08 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C15B5193
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 09:26:21 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C5FEC433C7;
-        Thu, 28 Sep 2023 16:26:18 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77DD9BF;
+        Thu, 28 Sep 2023 10:04:05 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1FBCC433C7;
+        Thu, 28 Sep 2023 17:04:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1695918381;
-        bh=3YeoBmK77jwkAjttNPSPgV+qKPQsMz8vnZFqGk3ImLs=;
+        s=k20201202; t=1695920645;
+        bh=jE9tXKJu50DRo7zgYMe7bHQgTESkYh7mtAmR3OQEMpg=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=sZ56fdBgcURX00o1ZZmaGGdUnHUY6dKGvUSkcSKbUVjHScyxvqbPHU2YIHK1srHCL
-         Eut7bPwZQGzF4GN6DFKZb0ufLBgDi8xQW+vTP8+J2O5Z0wM5htOA8W1BtZ7bMLSvsy
-         k6hC3nfM2PgmSowlc2z1Z475cKLQL1l6tiBD2EnmcxNtf6fJQ9WA+mTaFLsovNTPIF
-         uYhcVlU10SQZh9zcqO4xRYoYq1rXSxAPRvKVMJmfSAGJ9Y14UIZSC2ePtMKT5B7qWj
-         /cDsqoV/d+3jeISLzu3lKvLNn7QLfsD5BPXL1X1OR1f5Fb2ltrwVq4+E/lp6dj+2q8
-         IsX370NPzEvpQ==
-Received: (nullmailer pid 811759 invoked by uid 1000);
-        Thu, 28 Sep 2023 16:26:17 -0000
-Date:   Thu, 28 Sep 2023 11:26:17 -0500
+        b=UlsIKJ7TuQZmmFT8Wjami1xXfBlzop3WKPQT6HsEijfovQ3Urvv0e33AUvrhlz+/U
+         vjS88aYIuJq3cWfdrTZ4DhUo6In1syyXbSCHe4BToSuwslHkZH7dPQo8Ti78ycDuw9
+         3fwBzw6aX2QFDYQ5S3JMRJHen/AQWkQaA7g0wuh4NjOCwaPN1epyjLOhIPyLFfqkil
+         FuKjAn/kVXUYWOaX+r1TGiVoeeMAI/eSwXLNgkbvDMvXuDXWag5T/Hh5ZassG1vO10
+         SuYQ0LBGWi6qnRLBg/uHUo5Kcpp0lRCzvnezd5rzufzlNRPRiKJGBxfnhzLWRBq7am
+         s0emOKO5muLiw==
+Received: (nullmailer pid 854231 invoked by uid 1000);
+        Thu, 28 Sep 2023 17:04:02 -0000
+Date:   Thu, 28 Sep 2023 12:04:02 -0500
 From:   Rob Herring <robh@kernel.org>
-To:     Richard Acayan <mailingradian@gmail.com>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Robert Foss <rfoss@kernel.org>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Liu Shixin <liushixin2@huawei.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        freedreno@lists.freedesktop.org, Andy Gross <agross@kernel.org>,
-        Ryan McCann <quic_rmccann@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>,
-        David Airlie <airlied@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>
-Subject: Re: [PATCH 2/6] dt-bindings: display/msm: sdm845-dpu: Describe SDM670
-Message-ID: <169591837694.811719.16275751393760332189.robh@kernel.org>
-References: <20230925232625.846666-9-mailingradian@gmail.com>
- <20230925232625.846666-11-mailingradian@gmail.com>
+To:     Nitin Rawat <quic_nitirawa@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        mani@kernel.org, alim.akhtar@samsung.com, bvanassche@acm.org,
+        avri.altman@wdc.com, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, cros-qcom-dts-watchers@chromium.org,
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH V3 4/4] dt-bindings: ufs: qcom: Align clk binding
+ property for Qualcomm UFS
+Message-ID: <20230928170402.GA852313-robh@kernel.org>
+References: <20230927082700.17593-1-quic_nitirawa@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230925232625.846666-11-mailingradian@gmail.com>
+In-Reply-To: <20230927082700.17593-1-quic_nitirawa@quicinc.com>
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -70,17 +55,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Sep 27, 2023 at 01:57:00PM +0530, Nitin Rawat wrote:
+> Align the binding property for clock such that "clocks" property
+> comes first followed by "clock-names" property.
 
-On Mon, 25 Sep 2023 19:26:29 -0400, Richard Acayan wrote:
-> The SDM670 display controller has the same requirements as the SDM845
-> display controller, despite having distinct properties as described in
-> the catalog. Add the compatible for SDM670 to the SDM845 controller.
+Why do we care?
+
 > 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
 > ---
->  .../devicetree/bindings/display/msm/qcom,sdm845-dpu.yaml      | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
+>  .../devicetree/bindings/ufs/qcom,ufs.yaml        | 16 ++++++++--------
+>  1 file changed, 8 insertions(+), 8 deletions(-)
 > 
-
-Acked-by: Rob Herring <robh@kernel.org>
-
+> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> index 802640efa956..d17bdc4e934f 100644
+> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> @@ -295,14 +295,6 @@ examples:
+>                              <&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_UFS_MEM_CFG>;
+>              interconnect-names = "ufs-ddr", "cpu-ufs";
+> 
+> -            clock-names = "core_clk",
+> -                          "bus_aggr_clk",
+> -                          "iface_clk",
+> -                          "core_clk_unipro",
+> -                          "ref_clk",
+> -                          "tx_lane0_sync_clk",
+> -                          "rx_lane0_sync_clk",
+> -                          "rx_lane1_sync_clk";
+>              clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
+>                       <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
+>                       <&gcc GCC_UFS_PHY_AHB_CLK>,
+> @@ -311,6 +303,14 @@ examples:
+>                       <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
+>                       <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
+>                       <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
+> +            clock-names = "core_clk",
+> +                          "bus_aggr_clk",
+> +                          "iface_clk",
+> +                          "core_clk_unipro",
+> +                          "ref_clk",
+> +                          "tx_lane0_sync_clk",
+> +                          "rx_lane0_sync_clk",
+> +                          "rx_lane1_sync_clk";
+>              freq-table-hz = <75000000 300000000>,
+>                              <0 0>,
+>                              <0 0>,
+> --
+> 2.17.1
+> 
