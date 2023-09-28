@@ -2,70 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 444D97B1EE0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 15:46:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C38D17B1EF2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 15:50:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231966AbjI1Nqp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Sep 2023 09:46:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42446 "EHLO
+        id S231902AbjI1NuC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Sep 2023 09:50:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231871AbjI1Nqp (ORCPT
+        with ESMTP id S232312AbjI1NuB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Sep 2023 09:46:45 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2538B11F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 06:46:43 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-9ad8d47ef2fso1635075366b.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 06:46:43 -0700 (PDT)
+        Thu, 28 Sep 2023 09:50:01 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2962F18F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 06:50:00 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-9ad810be221so1703989366b.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 06:50:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695908801; x=1696513601; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695908998; x=1696513798; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=5prnC0xekZLUIdAIGR+O/njuKh1qKyD4Z08lsS5xD/Y=;
-        b=ZiiaPkqrSuQEPPb2oZi9wOyqROug+N0NhukGAtovEMokxztICxbkV6YrQE0F58UrhQ
-         fD5+bGSVwrE1AW9YCgUf7/yJ0MzZXtNeafsX79xtn7xbrOQxrD39q4edaLuwrMzxtyl1
-         X7/z9v1iDDeVKNfGbYWlIa46912P5k+EHZjhEQFCWpL3JZCmHMP8EV1/TOO5SxIri3wP
-         3eHfFwsXqUbvZ12SNWYkLFq0w8bt9T328wZ/Al+AXdnytJRM8LPvs9O2H8AnS1Y4NMgV
-         XznRor0bvkNqQMwfqmXtugfOAn7rVJUpFI7Em5SwOqlruPDaZAjXAfeJL/S0UreXPyi8
-         4f7w==
+        bh=ERWmf/V3m+cXcXn0HK3/jARY5OTfOy6vNIa/4soHS/8=;
+        b=PsWFgNWbh8fmYDlLU/HmZ7bfhd446gCfYWfgEX8MgikAc4mwLlXuZcCFTVPLAojabW
+         ix/G9cXklVPCNu69kZGrbVYf7xDrCpgu9tbqkpHkmgVELrddqnd4R9PsaTDDBBe2dQTK
+         6JXFZvnWOxIU0i+cyvD2BzibD7dv7s6uqxvpf/tq0KrDsswpoHEtEMnM3HUuxQpHqEtw
+         31206nBtkO7N2/0S7H4JhsELMTrs4U/y92IMMRUlfEhhCOo2+ylIF5Yo1kdTr4fsNgci
+         flWlxBBNr5ibO0aWj1qftAO197p0cu8/R3Dcn6xyO2guYm9660uoyywA862hfNfdBTgg
+         7ffw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695908801; x=1696513601;
+        d=1e100.net; s=20230601; t=1695908998; x=1696513798;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5prnC0xekZLUIdAIGR+O/njuKh1qKyD4Z08lsS5xD/Y=;
-        b=azk0NlJD+CQx/IF30ND37mbKgLTh1+l2L7rt0EU6ImbzFdatbhtjeFyjEVM2vKiifo
-         Bgm52DSVNoc4sglUbFMepYJrYwQh1NxnCOPgobxHWlKJHVxMvw0ybgNWUb1oXYueiOsG
-         QlbLI3UuY7btweqekl8FsmLnmWTjjigf9+lrG+8CxaAUOclllhtME27sF61vMHWBwvZi
-         RR6jZmCyA103RVUTLC8E1tDiwNf39NUOaA+xCmFXu9WZnhmh0En17gVPR5w4ZQzyF1fb
-         3Qbq38MX12I2KOE0w7F/pcUlDVYjbzOhCDc/wqEneX+suVkg4CxTTq6gvYy9rclZkb09
-         ezzA==
-X-Gm-Message-State: AOJu0Yzm6lJeNf+Du67dLqF+l9UhXODXqscmLYeTVZdfO4St3l1+cicq
-        Q7mYgYMaO1vt8iokdMIk0+n48A==
-X-Google-Smtp-Source: AGHT+IGIHJE5t2kSD7jVdHBJjmf6prRowOPg/0X5XcPyJ06xcH7rbLd5xgm3yq0GRA4ErAW4OY0ksA==
-X-Received: by 2002:a17:906:2249:b0:9a3:faf:7aaa with SMTP id 9-20020a170906224900b009a30faf7aaamr1208832ejr.15.1695908801547;
-        Thu, 28 Sep 2023 06:46:41 -0700 (PDT)
+        bh=ERWmf/V3m+cXcXn0HK3/jARY5OTfOy6vNIa/4soHS/8=;
+        b=a2qHGomxEFIVNl7YSwvE3XlBEc8nQe7HfBbXV76qRWElU+l/+OrWKhp/nMDCEFEXfo
+         SqBXfsLI/EBdKFuM0w24OujKqfdqgeMdQN4jPqTwSAqjnmus8bqfjlqtYXmmmJh8bve1
+         /f8R5fNppxsEiU28L+wWDDN9ReebLXGb9S8gRwyMQg3k2XVIwU8UxyqyVkjsjRgeAhUo
+         Qrf8HWtSuBPC+R5QKkQRTfyKKSuZ7ciFyA9m55afRtFZeHSwvUviTHJ4oCm124Q6dCjO
+         FmkX9cMIRwIIxREd7ZHCzk6dNSNM6jwFg8mjPwVemzkd40xBKkGhuzm619oJVyO6s0cC
+         RZEw==
+X-Gm-Message-State: AOJu0Yybyb/p1SvWXJYEH4xaTH0iIyy6LCbC3/uqQ+GTzMONIjTjsMnt
+        Y4bzTglL0q4noPZBYxR0R7luJg==
+X-Google-Smtp-Source: AGHT+IFiYWKiEzbw7h8jh7Aw9G6sA8Dj38Bqz3u2ShmLpz5vragyrpAPQkSPOsznrEXhDsvDOSO83A==
+X-Received: by 2002:a17:906:cc15:b0:9ad:a86b:2337 with SMTP id ml21-20020a170906cc1500b009ada86b2337mr1354498ejb.23.1695908998631;
+        Thu, 28 Sep 2023 06:49:58 -0700 (PDT)
 Received: from [192.168.33.189] (178235177217.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.217])
-        by smtp.gmail.com with ESMTPSA id j19-20020a170906051300b009937e7c4e54sm10959533eja.39.2023.09.28.06.46.40
+        by smtp.gmail.com with ESMTPSA id zg22-20020a170907249600b009a5f1d15642sm10888337ejb.158.2023.09.28.06.49.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Sep 2023 06:46:41 -0700 (PDT)
-Message-ID: <661bd908-a056-4d46-97a3-d3b12b14c050@linaro.org>
-Date:   Thu, 28 Sep 2023 15:46:39 +0200
+        Thu, 28 Sep 2023 06:49:58 -0700 (PDT)
+Message-ID: <ee788240-cd58-4720-8a78-2dd462d16ff2@linaro.org>
+Date:   Thu, 28 Sep 2023 15:49:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: qcm6490: Add qcm6490 dts file
+Subject: Re: [PATCH v6 35/36] ARM: dts: qcom: ipq8064: drop qcom, prefix from
+ SSBI node name
 Content-Language: en-US
-To:     Komal Bajaj <quic_kbajaj@quicinc.com>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
-References: <20230928133312.11371-1-quic_kbajaj@quicinc.com>
- <20230928133312.11371-3-quic_kbajaj@quicinc.com>
+        linux-input@vger.kernel.org
+References: <20230928110309.1212221-1-dmitry.baryshkov@linaro.org>
+ <20230928110309.1212221-36-dmitry.baryshkov@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -102,7 +102,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230928133312.11371-3-quic_kbajaj@quicinc.com>
+In-Reply-To: <20230928110309.1212221-36-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -114,214 +114,13 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28.09.2023 15:33, Komal Bajaj wrote:
-> Add qcm6490 devicetree file for QCM6490 SoC and QCM6490 IDP
-> platform. QCM6490 is derived from SC7280 meant for various
-> form factor including IoT.
+On 28.09.2023 13:03, Dmitry Baryshkov wrote:
+> Device tree node names should not use vendor prefix, they contain a
+> generic name of the device. Drop the qcom, prefix from the SSBI node
+> name.
 > 
-> Supported features are, as of now:
-> * Debug UART
-> * eMMC
-> * USB
-> 
-> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-[...]
-
-> +/ {
-> +	model = "Qualcomm Technologies, Inc. QCM6490 IDP platform";
-Isomething Development Platform platform?
-
-> +	compatible = "qcom,qcm6490-idp", "qcom,qcm6490";
-> +
-> +	aliases {
-> +		serial0 = &uart5;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0:115200n8";
-> +	};
-> +
-> +};
-Stray newline above
-
-> +
-> +&apps_rsc {
-> +	regulators-0 {
-> +		compatible = "qcom,pm7325-rpmh-regulators";
-> +		qcom,pmic-id = "b";
-> +
-> +		vreg_s1b_1p8: smps1 {
-> +			regulator-min-microvolt = <1856000>;
-> +			regulator-max-microvolt = <2040000>;
-Hm, you didn't specify regulator-initial-mode on any vregs
-
-[...]
-
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/qcm6490.dtsi
-> @@ -0,0 +1,137 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include "sc7280.dtsi"
-> +
-> +/*
-> + * Delete sc7280 lpass related nodes as qcm6490 intends to move away from
-> + * bypass configuration
-> + */
-> +/delete-node/ &lpass_ag_noc;
-> +/delete-node/ &lpass_aon;
-> +/delete-node/ &lpass_audiocc;
-> +/delete-node/ &lpass_core;
-> +/delete-node/ &lpass_cpu;
-> +/delete-node/ &lpass_hm;
-> +/delete-node/ &lpass_rx_macro;
-> +/delete-node/ &lpass_tx_macro;
-> +/delete-node/ &lpass_va_macro;
-> +/delete-node/ &lpass_tlmm;
-> +/delete-node/ &lpasscc;
-> +/delete-node/ &swr0;
-> +/delete-node/ &swr1;
-That's very unnecessary, most of these nodes are in use even
-when routing audio through ADSP.
-
-Ones that are not, are set to status = "reserved" and some
-will need more work to function based on the configuration.
-
-There was once a series from somebody at qc to introduce ADSP
-audio on 7280, but it was full of hacks and NAKed
-
-
-> +
-> +/*
-> + * Delete unused sc7280 memory nodes and define the memory regions
-> + * required by qcm6490
-> + */
-That's specific to your board.
-
-> +/delete-node/ &rmtfs_mem;
-> +/delete-node/ &wlan_ce_mem;
-> +
-> +/{
-> +	reserved-memory {
-> +		secdata_apss_mem: secdata-apss@808ff000 {
-> +			reg = <0x0 0x808ff000 0x0 0x1000>;
-> +			no-map;
-> +		};
-This is identical to the entry in sc7280.dtsi.
-
-> +
-> +		cdsp_secure_heap_mem: cdsp-secure-heap@81800000 {
-> +			reg = <0x0 0x81800000 0x0 0x1e00000>;
-> +			no-map;
-> +		};
-> +
-> +		camera_mem: camera@84300000 {
-> +			reg = <0x0 0x84300000 0x0 0x500000>;
-> +			no-map;
-> +		};
-> +
-> +		adsp_mem: adsp@86100000 {
-> +			reg = <0x0 0x86100000 0x0 0x2800000>;
-> +			no-map;
-> +		};
-> +
-> +		cdsp_mem: cdsp@88900000 {
-> +			reg = <0x0 0x88900000 0x0 0x1e00000>;
-> +			no-map;
-> +		};
-> +
-> +		cvp_mem: cvp@8ac00000 {
-> +			reg = <0x0 0x8ac00000 0x0 0x500000>;
-> +			no-map;
-> +		};
-> +
-> +		ipa_gsi_mem: ipa-gsi@8b110000 {
-> +			reg = <0x0 0x8b110000 0x0 0xa000>;
-> +			no-map;
-> +		};
-> +
-> +		gpu_microcode_mem: gpu-microcode@8b11a000 {
-> +			reg = <0x0 0x8b11a000 0x0 0x2000>;
-> +			no-map;
-> +		};
-> +
-> +		mpss_mem: mpss@8b800000 {
-> +			reg = <0x0 0x8b800000 0x0 0xf600000>;
-> +			no-map;
-> +		};
-> +
-> +		wpss_mem: wpss@9ae00000 {
-> +			reg = <0x0 0x9ae00000 0x0 0x1900000>;
-> +			no-map;
-> +		};
-This entry is in both chrome-common and fairphone (meaning all boards
-use it), perhaps this one could be moved to 7280.dtsi
-
-> +
-> +		tz_stat_mem: tz-stat@c0000000 {
-> +			reg = <0x0 0xc0000000 0x0 0x100000>;
-> +			no-map;
-> +		};
-> +
-> +		tags_mem: tags@c0100000 {
-> +			reg = <0x0 0xc0100000 0x0 0x1200000>;
-> +			no-map;
-> +		};
-> +
-> +		qtee_mem: qtee@c1300000 {
-> +			reg = <0x0 0xc1300000 0x0 0x500000>;
-> +			no-map;
-> +		};
-> +
-> +		trusted_apps_mem: trusted_apps@c1800000 {
-> +			reg = <0x0 0xc1800000 0x0 0x3900000>;
-> +			no-map;
-> +		};
-> +	};
-> +};
-> +
-> +&hyp_mem {
-> +	reg = <0x0 0x80000000 0x0 0x600000>;
-This is identical to the entry in sc7280.dtsi.
-
-> +};
-> +
-> +&mpss_mem {
-> +	reg = <0x0 0x8b800000 0x0 0xf600000>;
-You're defining it here and overwriting it with an identical
-value.
-
-Looks like CrOS folks don't boot up the modem on non-LTE SKUs.
-Weird. Normally it would host some more software..
-
-> +};
-> +
-> +&remoteproc_mpss {
-> +	memory-region = <&mpss_mem>;
-This is identical to the entry in sc7280.dtsi.
-
-> +};
-> +
-> +&video_mem {
-> +	reg = <0x0 0x8a700000 0x0 0x500000>;
-> +};
-> +
-> +&wifi {
-> +	memory-region = <&wlan_fw_mem>;
-No CE region?
-
-> +};
-> +
-> +&wlan_fw_mem {
-> +	reg = <0x0 0x80c00000 0x0 0xc00000>;
-This is identical to the entry in sc7280.dtsi.
-
-
-The memory map generally looks quite different to both chrome
-and fairphone.. are you sure it's all correct?
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
