@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 517D67B18E0
+	by mail.lfdr.de (Postfix) with ESMTP id AD8437B18E1
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 13:03:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231676AbjI1LDS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S231770AbjI1LDS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Thu, 28 Sep 2023 07:03:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35898 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231770AbjI1LDQ (ORCPT
+        with ESMTP id S231246AbjI1LDR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Sep 2023 07:03:16 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E76419D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 04:03:14 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-503397ee920so20297148e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 04:03:14 -0700 (PDT)
+        Thu, 28 Sep 2023 07:03:17 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F1A9191
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 04:03:15 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-50433d8385cso20015568e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 04:03:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695898992; x=1696503792; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695898994; x=1696503794; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ii+ERiIP/+rN5/93TQF2YXZBm9/0F6AmtInKGYg6uG8=;
-        b=PLGjVH2QWxag2sLOYzAGk/+jOpB8mgK5Otm+Mn7CeccL8IYQg05iSw7L5GzCa4RXxM
-         nvh6e5NjpZYNMyzJRu9le+sXtNrdmLf0ux2yUl+V9gqEH0/Cc67TKFrpcZL9jHrQNs5q
-         eLlOQP6uMWcbZ+KFv/VLT5irECgnI5cofEDKaR+zFu1VdlyzDdSiLbNgkzocaMjbgcZK
-         N7fZdglDefyawujpQiBLDS6+2HbmZLQWP1z0PgvdwAiAykInwlC6t9CyquJ0RXFCntU6
-         DI91RRZGDvL4+cloCiLav15f+xhyoQNMQB7fofAWNEJaYyr9xkSXoT+SO8sBy3+8Q40k
-         q/WQ==
+        bh=u1RH0IG0rrFXei9V7mpYpuNzaTfiQ9cfBSSJRkGF8B0=;
+        b=hhvuaPH0t3P3kiBp0VgfoDBShes+t/Qmg9nO3txzmYdnUaYV7DzEL9UFbIhc/b6+l8
+         cMPi7qxbGFZL5VIZ3cWT22IgS76E7wHIn//Pr5SHVGMD9cyLD6aOufg01rT/i4vczSwT
+         8izhRGw2jUbExUPFPuuYXGX2CcWK4cgbldG5LcnhRSAEhjj+55SgDNABn2T4G7Wb4KDi
+         AHf047rMipq5mxDpcbC0+ldGdkpKaU3/NyESwft9SOrnf0g1Q4ocohVrz5YMBMjww2lS
+         U7g4MfwKZVJlEty6iVbuaM28BNQU1NCDdoNQaQ50YzoNt/pp8cTpYeUiG3b0BzOBvF63
+         xpOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695898992; x=1696503792;
+        d=1e100.net; s=20230601; t=1695898994; x=1696503794;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ii+ERiIP/+rN5/93TQF2YXZBm9/0F6AmtInKGYg6uG8=;
-        b=I/sh8/Ad6zQdghUYDMe8Siru4SLxj1Bz3y6ywUJ+tIapds23vF9JKuZmJ6qJ2mC3o0
-         KBafngDHwh3cef6c0BaXj33sPoFRCuGIYu5lbfC5tsxr87bOoqcMfjfvzSHGM8Der3kd
-         fZK+lZWgC1af4iSpLRt0spuu0a2IgqFeMFHw1gYzkoPFA6SnjHQUWPPkBCCUg3o3Fd15
-         P2rBlOT+alZK5A9arDS3pWk5EltgBwfe5ISPwLVy9zd2ZFPr9JP58AJNyXtP2notVRGo
-         nijeR81VGcpPVx/KYlwCCeRDU84VvoGb/slrKei4379FtfOt6cEibUlZuPwoNmA9WMJS
-         hmWQ==
-X-Gm-Message-State: AOJu0YwdazcjWele8YJaZHRWxndYD1cfw2tdbEARmX4OhNaRTQ4rMWrH
-        ZH1SZOvRsnvdzfg/h+uqOvsWiw==
-X-Google-Smtp-Source: AGHT+IHNrn2EtnUKBrXbRiybzq8QCMr4nO/YDKdfTDD9zcnzAwHsVUeR/ROIkM9JHMYx9P4tlQ/GCQ==
-X-Received: by 2002:a19:8c47:0:b0:500:9524:f733 with SMTP id i7-20020a198c47000000b005009524f733mr801481lfj.20.1695898992533;
-        Thu, 28 Sep 2023 04:03:12 -0700 (PDT)
+        bh=u1RH0IG0rrFXei9V7mpYpuNzaTfiQ9cfBSSJRkGF8B0=;
+        b=kaZE4dNDkR9kcXpY9W6cW8opRfpJL7VNmcMy6V5KO+WldLM1GWGi5gaB6LIn1ZSf84
+         GYxBbmZxT8gvHHlUZqQ7Vs3QnaaWzf+2C7tWXnyoJnO8A9B9W3+rZ8EFzoXmFaoJGLjM
+         mclrm8lp8UvjknHeKK1CDYztljbKGOOe3ys3jDwBqqABC/oOWi9+zsaodm0HZDfzuR0S
+         rI/i32k7UdilFg25LXHVgbTZemAzsNX/3oE4M7Bdjpm4KHbPHWMLQUGvK7IgDMrOy49e
+         6hV5LCxsX0F8NjKV6dJA2GfQagG2FGD8n/uudv37k54k2n8h2fLcty3trjIZBsb1LBeT
+         zf7Q==
+X-Gm-Message-State: AOJu0Yz/F1k7z4HYPYJi503+dlaB2m9cCUZI22E3iOpvwVcZiwqbt7UB
+        aoV4CntL5DkieNsAPCVapWmU9g==
+X-Google-Smtp-Source: AGHT+IGrRoRGtPuCtJBOskAPI9wCavV58Yv/t35IclZOVuVpmFubBREmxbPeoszsSVM9edkvn/pK5g==
+X-Received: by 2002:a19:8c46:0:b0:4fe:551:3d3c with SMTP id i6-20020a198c46000000b004fe05513d3cmr842972lfj.36.1695898993540;
+        Thu, 28 Sep 2023 04:03:13 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id u2-20020a056512040200b005030a35019dsm3052953lfk.178.2023.09.28.04.03.11
+        by smtp.gmail.com with ESMTPSA id u2-20020a056512040200b005030a35019dsm3052953lfk.178.2023.09.28.04.03.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Sep 2023 04:03:11 -0700 (PDT)
+        Thu, 28 Sep 2023 04:03:12 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -58,9 +58,9 @@ To:     Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-input@vger.kernel.org
-Subject: [PATCH v6 03/36] ARM: dts: qcom: msm8960: introduce label for PMIC keypad
-Date:   Thu, 28 Sep 2023 14:02:36 +0300
-Message-Id: <20230928110309.1212221-4-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v6 04/36] ARM: dts: qcom: msm8660-surf: use keypad label directly
+Date:   Thu, 28 Sep 2023 14:02:37 +0300
+Message-Id: <20230928110309.1212221-5-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230928110309.1212221-1-dmitry.baryshkov@linaro.org>
 References: <20230928110309.1212221-1-dmitry.baryshkov@linaro.org>
@@ -75,59 +75,76 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-To simplify MSM8960 CDP board file, add label to PMIC keypad node.
+Directly use pm8058_keypad to declare keypad properties instead of
+referencing pm8058 top-level node.
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm/boot/dts/qcom/qcom-msm8960-cdp.dts | 20 +++++++++-----------
- arch/arm/boot/dts/qcom/qcom-msm8960.dtsi    |  2 +-
- 2 files changed, 10 insertions(+), 12 deletions(-)
+ arch/arm/boot/dts/qcom/qcom-msm8660-surf.dts | 50 ++++++++++----------
+ 1 file changed, 24 insertions(+), 26 deletions(-)
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8960-cdp.dts b/arch/arm/boot/dts/qcom/qcom-msm8960-cdp.dts
-index 6c1bc3818883..4641b4f2195d 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8960-cdp.dts
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8960-cdp.dts
-@@ -88,17 +88,15 @@ clk-pins {
- 	};
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8660-surf.dts b/arch/arm/boot/dts/qcom/qcom-msm8660-surf.dts
+index be18f1be29a1..86fbb6dfdc2a 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8660-surf.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8660-surf.dts
+@@ -34,32 +34,30 @@ &gsbi12_serial {
+ 	status = "okay";
  };
  
--&pmicintc {
+-&pm8058 {
 -	keypad@148 {
 -		linux,keymap = <
--			MATRIX_KEY(0, 0, KEY_VOLUMEUP)
--			MATRIX_KEY(0, 1, KEY_VOLUMEDOWN)
--			MATRIX_KEY(0, 2, KEY_CAMERA_FOCUS)
--			MATRIX_KEY(0, 3, KEY_CAMERA)
+-			MATRIX_KEY(0, 0, KEY_FN_F1)
+-			MATRIX_KEY(0, 1, KEY_UP)
+-			MATRIX_KEY(0, 2, KEY_LEFT)
+-			MATRIX_KEY(0, 3, KEY_VOLUMEUP)
+-			MATRIX_KEY(1, 0, KEY_FN_F2)
+-			MATRIX_KEY(1, 1, KEY_RIGHT)
+-			MATRIX_KEY(1, 2, KEY_DOWN)
+-			MATRIX_KEY(1, 3, KEY_VOLUMEDOWN)
+-			MATRIX_KEY(2, 3, KEY_ENTER)
+-			MATRIX_KEY(4, 0, KEY_CAMERA_FOCUS)
+-			MATRIX_KEY(4, 1, KEY_UP)
+-			MATRIX_KEY(4, 2, KEY_LEFT)
+-			MATRIX_KEY(4, 3, KEY_HOME)
+-			MATRIX_KEY(4, 4, KEY_FN_F3)
+-			MATRIX_KEY(5, 0, KEY_CAMERA)
+-			MATRIX_KEY(5, 1, KEY_RIGHT)
+-			MATRIX_KEY(5, 2, KEY_DOWN)
+-			MATRIX_KEY(5, 3, KEY_BACK)
+-			MATRIX_KEY(5, 4, KEY_MENU)
 -			>;
--		keypad,num-rows = <1>;
+-		keypad,num-rows = <6>;
 -		keypad,num-columns = <5>;
 -	};
-+&pm8921_keypad {
++&pm8058_keypad {
 +	linux,keymap = <
-+		MATRIX_KEY(0, 0, KEY_VOLUMEUP)
-+		MATRIX_KEY(0, 1, KEY_VOLUMEDOWN)
-+		MATRIX_KEY(0, 2, KEY_CAMERA_FOCUS)
-+		MATRIX_KEY(0, 3, KEY_CAMERA)
++		MATRIX_KEY(0, 0, KEY_FN_F1)
++		MATRIX_KEY(0, 1, KEY_UP)
++		MATRIX_KEY(0, 2, KEY_LEFT)
++		MATRIX_KEY(0, 3, KEY_VOLUMEUP)
++		MATRIX_KEY(1, 0, KEY_FN_F2)
++		MATRIX_KEY(1, 1, KEY_RIGHT)
++		MATRIX_KEY(1, 2, KEY_DOWN)
++		MATRIX_KEY(1, 3, KEY_VOLUMEDOWN)
++		MATRIX_KEY(2, 3, KEY_ENTER)
++		MATRIX_KEY(4, 0, KEY_CAMERA_FOCUS)
++		MATRIX_KEY(4, 1, KEY_UP)
++		MATRIX_KEY(4, 2, KEY_LEFT)
++		MATRIX_KEY(4, 3, KEY_HOME)
++		MATRIX_KEY(4, 4, KEY_FN_F3)
++		MATRIX_KEY(5, 0, KEY_CAMERA)
++		MATRIX_KEY(5, 1, KEY_RIGHT)
++		MATRIX_KEY(5, 2, KEY_DOWN)
++		MATRIX_KEY(5, 3, KEY_BACK)
++		MATRIX_KEY(5, 4, KEY_MENU)
 +		>;
-+	keypad,num-rows = <1>;
++	keypad,num-rows = <6>;
 +	keypad,num-columns = <5>;
  };
  
- &rpm {
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi
-index d13080fcbeea..a34fda93d6a4 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi
-@@ -283,7 +283,7 @@ pwrkey@1c {
- 					pull-up;
- 				};
- 
--				keypad@148 {
-+				pm8921_keypad: keypad@148 {
- 					compatible = "qcom,pm8921-keypad";
- 					reg = <0x148>;
- 					interrupt-parent = <&pmicintc>;
+ /* eMMC */
 -- 
 2.39.2
 
