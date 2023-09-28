@@ -2,125 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 223557B28EE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 01:42:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3AD857B290C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 01:53:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232203AbjI1XmP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Sep 2023 19:42:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37380 "EHLO
+        id S231542AbjI1XxY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Sep 2023 19:53:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231542AbjI1XmO (ORCPT
+        with ESMTP id S229654AbjI1XxY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Sep 2023 19:42:14 -0400
-Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75033195
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 16:42:12 -0700 (PDT)
-Received: by mail-oo1-xc35.google.com with SMTP id 006d021491bc7-57b574c6374so5771968eaf.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 16:42:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1695944532; x=1696549332; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3RV2WVrYFvmUIy/kF4sgLaI/igSwAmnqnqr5+CNVDt8=;
-        b=eIm0Tr3UrWUjzJ4jN6/2IK7vGtk83w/aM+dkwIMq+AwB2ci1Gu09xf9F9GMwaILj70
-         n4QvEnSrxRKunYK7/hD7XS4qnfKHiKUaPe20ZtTX7CsoKDMIVZZO8CFpNReTVXNSUq67
-         RXlmxi/OVy4WJv6gtNUzW8faa2GmV5dV2N214=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695944532; x=1696549332;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3RV2WVrYFvmUIy/kF4sgLaI/igSwAmnqnqr5+CNVDt8=;
-        b=W2EQ7iCn9JCi36pzNM0CDd9sAZ3gNXWuXYHNPu6cza8BhurvQSPqRXjNHh23kBjAe/
-         09NezDe6yijrexZ1prvccqvjQXdFhhg226YIptciWcrubpagdv6BYir0fMIq3w1rr873
-         LIH2GhKP9sB6VylfMAsPs9dydU0Fug4UFwNNrsRtfvbWFhwraJYTDM63IJy50RLzkAAa
-         /rdRlOK7uhO/M8YS//Wd2lxeKkPgsj8Aka/h2RFgSmokJIuesIEcCb4JCbN86pFgcdIG
-         dKo7l4PW+yAOwYuHgvHtOSmxLa+EoqwTKYRw8BSJJHmzxQHodz0OBZJ2+R0RwMy5PN+s
-         f0/A==
-X-Gm-Message-State: AOJu0YyiVSl8TXwEr+5QoWjbg5hCvLNQxNBSQTHnAopisszeNtGgjvEk
-        1QgQqOYRV+wYiaotpRadCquJyg==
-X-Google-Smtp-Source: AGHT+IHBsCldxysDZTajanQY+g4dIkq4a5ohe3XveIhxwgWt0zJyzNyJaoBdNbO8ZXRuiDiGJefhMw==
-X-Received: by 2002:a05:6358:2808:b0:13e:ea2a:40aa with SMTP id k8-20020a056358280800b0013eea2a40aamr1895209rwb.8.1695944531707;
-        Thu, 28 Sep 2023 16:42:11 -0700 (PDT)
-Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id t6-20020a639546000000b0057a868900a9sm13316234pgn.67.2023.09.28.16.42.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Sep 2023 16:42:10 -0700 (PDT)
-Date:   Thu, 28 Sep 2023 16:42:09 -0700
-From:   Kees Cook <keescook@chromium.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Tudor Ambarus <tudor.ambarus@linaro.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Zhou Wang <wangzhou1@hisilicon.com>,
-        Jie Hai <haijie1@huawei.com>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Green Wan <green.wan@sifive.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Patrice Chotard <patrice.chotard@foss.st.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Laxman Dewangan <ldewangan@nvidia.com>,
-        Jon Hunter <jonathanh@nvidia.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Yu Kuai <yukuai3@huawei.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jordy Zomer <jordy@pwning.systems>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Tom Rix <trix@redhat.com>, linux-kernel@vger.kernel.org,
-        asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-        dmaengine@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-tegra@vger.kernel.org, llvm@lists.linux.dev,
-        linux-hardening@vger.kernel.org
-Subject: Re: [PATCH 00/21] dmaengine: Annotate with __counted_by
-Message-ID: <202309281641.47911CC@keescook>
-References: <20230817235428.never.111-kees@kernel.org>
- <169590216841.152265.1942803099201042070.b4-ty@kernel.org>
+        Thu, 28 Sep 2023 19:53:24 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D223199;
+        Thu, 28 Sep 2023 16:53:22 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13C74C433C8;
+        Thu, 28 Sep 2023 23:53:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1695945202;
+        bh=LgHeWUx0JGY5CAGIQsUbCEJNxNMNHJ6aWxCT60chWhs=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=ugY856GiT71C7tZvaYRtjifR7PXC7IzDlj//CbKQSWKBPCdrLnOdSVGEIN6/GYdAQ
+         G82ungix+sKip9fdsSTLvkHlkWsbG9jeyjTu6geZBya3De199c8BRzoNuwG6ZoYOcY
+         BlD3EGCUwslgVptUqiyGWfWXbSbgp9VZW+Ct8do87kBqTNozN9pfoi2sZmsmO7nLMN
+         hrPt1KNjBFldaHrvhLnbU2Tlzj3fNlN4k0/KqV+GOPP/8eCNe2LvEGeoEd6FgeqRwb
+         hvX21G+6jXMD8iu6TSG1XzF0V99CjmUehxzWtPbTfOiFb5G+YW/NGZRa3P0neO40H9
+         OcodqH8pMwcvg==
+Message-ID: <be6ec178bec389ee9094dc62692b7b07.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <169590216841.152265.1942803099201042070.b4-ty@kernel.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <b6ded7b6-1818-402f-8826-2ab1ecd05056@linaro.org>
+References: <20230913175612.8685-1-danila@jiaxyga.com> <539752971c7a61ce7a5deddc1478686a.sboyd@kernel.org> <b6ded7b6-1818-402f-8826-2ab1ecd05056@linaro.org>
+Subject: Re: [PATCH] clk: qcom: gcc-sm8150: Fix gcc_sdcc2_apps_clk_src
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     adomerlee@gmail.com, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+To:     Danila Tikhonov <danila@jiaxyga.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>, agross@kernel.org,
+        andersson@kernel.org, dkatraga@codeaurora.org,
+        mturquette@baylibre.com, quic_tdas@quicinc.com, vkoul@kernel.org
+Date:   Thu, 28 Sep 2023 16:53:19 -0700
+User-Agent: alot/0.10
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 28, 2023 at 05:26:08PM +0530, Vinod Koul wrote:
-> 
-> On Thu, 17 Aug 2023 16:58:37 -0700, Kees Cook wrote:
-> > This annotates several structures with the coming __counted_by attribute
-> > for bounds checking of flexible arrays at run-time. For more details, see
-> > commit dd06e72e68bc ("Compiler Attributes: Add __counted_by macro").
-> > 
-> > Thanks!
-> > 
-> > -Kees
-> > 
-> > [...]
-> 
-> Applied, thanks!
+Quoting Konrad Dybcio (2023-09-15 05:04:41)
+> On 14.09.2023 18:20, Stephen Boyd wrote:
+> > Quoting Danila Tikhonov (2023-09-13 10:56:11)
+> >> Set .flags =3D CLK_OPS_PARENT_ENABLE to fix "gcc_sdcc2_apps_clk_src: r=
+cg
+> >> didn't update its configuration" error.
+> >>
+> >> Fixes: 2a1d7eb854bb ("clk: qcom: gcc: Add global clock controller driv=
+er for SM8150")
+> >> Tested-by: Arseniy Velikanov <adomerlee@gmail.com>
+> >> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+> >> ---
+> >>  drivers/clk/qcom/gcc-sm8150.c | 2 +-
+> >>  1 file changed, 1 insertion(+), 1 deletion(-)
+> >>
+> >> diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm81=
+50.c
+> >> index 41ab210875fb..05d115c52dfe 100644
+> >> --- a/drivers/clk/qcom/gcc-sm8150.c
+> >> +++ b/drivers/clk/qcom/gcc-sm8150.c
+> >> @@ -774,7 +774,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src =3D {
+> >>                 .name =3D "gcc_sdcc2_apps_clk_src",
+> >>                 .parent_data =3D gcc_parents_6,
+> >>                 .num_parents =3D ARRAY_SIZE(gcc_parents_6),
+> >> -               .flags =3D CLK_SET_RATE_PARENT,
+> >> +               .flags =3D CLK_OPS_PARENT_ENABLE,
+> >>                 .ops =3D &clk_rcg2_floor_ops,
+> >=20
+> > In what case are we getting the rcg stuck? I thought that you could
+> > write the rcg registers while the parent was off and switch to that
+> > parent if the parent isn't enabled and it wouldn't get stuck.
+> I think the better question here would be "why isn't
+> OPS_PARENT_ENABLE the default for all qc clocks on all
+> platforms" :/
+>=20
 
-Thanks! I've dropped them from my tree. :)
+We don't need that flag because of how the hardware works and how the
+clk framework moves the enable of the parent from the old parent to the
+new parent when changing rates. The RCGs only get stuck if we change the
+parent of an RCG to a disabled parent when the current parent is enabled
+and the RCG is enabled. Otherwise we're free to change the parent of the
+RCG because it isn't trying to do a glitch free switch of clk frequency.
 
-Also, I found 1 more, which I'll send separately.
-
--Kees
-
--- 
-Kees Cook
+Is it possible that the clk is running out of boot on a parent that
+is enabled in the hardware but doesn't look enabled to the clk framework
+because of how we fail to hand off enable state? Maybe the mmc driver
+then calls clk_set_rate() to change the rate (rcg is still off) and that
+causes problems?
