@@ -2,92 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 77F567B287F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 00:36:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A9A7C7B2894
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 00:49:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231446AbjI1WgX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Sep 2023 18:36:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48830 "EHLO
+        id S232443AbjI1Wtk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Sep 2023 18:49:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230325AbjI1WgW (ORCPT
+        with ESMTP id S232507AbjI1Wtj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Sep 2023 18:36:22 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5F4419D;
-        Thu, 28 Sep 2023 15:36:20 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38SLYRRB023964;
-        Thu, 28 Sep 2023 22:35:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=0oLww7t8NDTz6izW9MTTTB5935394WQk9q/qSKmqzyc=;
- b=Ts92vjeVu9hrV6OvcFfsTQ6n19jahFEaBO1FxeOMc4eHXNNTkskYJjhanq81fnWvB0LG
- YwMxsxo+zlf1rPtfVMlvzyJ5SG1PNztSKusr5LGho7G5SmX9Rjh0ow5akA47tnxlgcaj
- EhU0/RlWNu1Xxds2algjTGI7OXJoy3Fb84eRECKKjrqQzGD0mJDNeBKmkgzCx6wAdCeR
- 5pEfcFy74YM+H8dTFyJYAFhKMUk7HyfbJ5BpFPkWgmq+nBdWI8VaUOGmwt9/stmKn+Wt
- v+o8DzbBZSALETLo3vgw/rK+r6toBSflsrEVUB+K3wT/O2z4xq2HkLbighr1haVoqMQE aw== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tcpkguvc4-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 28 Sep 2023 22:35:55 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38SMZsD0031313
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 28 Sep 2023 22:35:54 GMT
-Received: from [10.110.70.158] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Thu, 28 Sep
- 2023 15:35:51 -0700
-Message-ID: <15ccacce-c20b-5fe2-5d89-a0627bd4a9e0@quicinc.com>
-Date:   Thu, 28 Sep 2023 15:35:49 -0700
+        Thu, 28 Sep 2023 18:49:39 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49289180;
+        Thu, 28 Sep 2023 15:49:37 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7121DC433C8;
+        Thu, 28 Sep 2023 22:49:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1695941376;
+        bh=v0+vkpTY/RLF/EzpXIGRgfx86rBxRuba+sYAoF7Bu6o=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=vDn45AGf7UUATdgrquYxTLTtfAYRwT9ECykm29dys80QWEZpoK8fo+Mc3967A/80B
+         eevEiwNOq8PS2CR6w5O1Qa1HYkDRl9M672vmPmvmoUSJ7VlL4ckAp4ZVEDgS2ybbDx
+         9unC1GEdi56xrp7dbPqt4HS7YbTXDLOZNmolHs2IFVbRq6BnRF0ewbXvtzAgqW/05+
+         y83SekigV4O86uf2yqMrbo3Kix8xTGbe/riK30NA4ikxGPAqUzjY39M3RiH5v3Dlom
+         j/ceddyaqdPwjDaHl4kMq3r4+1AKRF9V5bQqXNAjiFAmp/ENfic0ICK1ahr/ywoG7I
+         jy6TVRmfCG/zQ==
+Received: (nullmailer pid 1490249 invoked by uid 1000);
+        Thu, 28 Sep 2023 22:49:33 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v3 6/7] drm/msm/dp: add
- pm_runtime_force_suspend()/resume()
-Content-Language: en-US
-To:     Stephen Boyd <swboyd@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>
-CC:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <dianders@chromium.org>, <vkoul@kernel.org>,
-        <daniel@ffwll.ch>, <airlied@gmail.com>, <agross@kernel.org>,
-        <andersson@kernel.org>, <quic_jesszhan@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1694813901-26952-1-git-send-email-quic_khsieh@quicinc.com>
- <1694813901-26952-7-git-send-email-quic_khsieh@quicinc.com>
- <CAA8EJpqPXoFX4LXyXYgfh07Vpxg-KgD8VBR6x5bXf4GOJmbOtw@mail.gmail.com>
- <2f98d5f1-57c1-d9fe-cb1c-b975db057287@quicinc.com>
- <CAA8EJpr2wRq6Txi7YAQpJKa_9UGqH_nmHzvVOaAPkwOrtDg4Tw@mail.gmail.com>
- <CAE-0n53dqHONzMTd_ZC-fKWTzDVq6Wqwo4OFZMUcghZ5SD5RhA@mail.gmail.com>
- <65566a68-3510-2e5f-7d57-e4dba08c008c@quicinc.com>
- <CAE-0n51Ep4zBx6bswL4Yb+F0+8dW+L2kaKQaZBi-91jsVqm_9Q@mail.gmail.com>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAE-0n51Ep4zBx6bswL4Yb+F0+8dW+L2kaKQaZBi-91jsVqm_9Q@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: V3j7udvTMQzgURdnq_tEUPI5YIRroyh7
-X-Proofpoint-ORIG-GUID: V3j7udvTMQzgURdnq_tEUPI5YIRroyh7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-09-28_22,2023-09-28_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- bulkscore=0 phishscore=0 spamscore=0 malwarescore=0 impostorscore=0
- mlxlogscore=999 suspectscore=0 lowpriorityscore=0 adultscore=0
- clxscore=1015 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2309280193
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+From:   Rob Herring <robh@kernel.org>
+To:     Robert Marko <robimarko@gmail.com>
+Cc:     robh+dt@kernel.org, nm@ti.com, rafael@kernel.org,
+        vireshk@kernel.org, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, devicetree@vger.kernel.org,
+        conor+dt@kernel.org, Christian Marangi <ansuelsmth@gmail.com>,
+        konrad.dybcio@linaro.org, ilia.lin@kernel.org, sboyd@kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        agross@kernel.org, linux-arm-msm@vger.kernel.org
+In-Reply-To: <20230928210525.1265958-2-robimarko@gmail.com>
+References: <20230928210525.1265958-1-robimarko@gmail.com>
+ <20230928210525.1265958-2-robimarko@gmail.com>
+Message-Id: <169594137337.1490220.6287570268277812840.robh@kernel.org>
+Subject: Re: [PATCH v4 2/4] dt-bindings: opp: opp-v2-kryo-cpu: Document
+ named opp-microvolt property
+Date:   Thu, 28 Sep 2023 17:49:33 -0500
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -95,108 +58,50 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-
-On 9/27/2023 2:41 PM, Stephen Boyd wrote:
-> Quoting Abhinav Kumar (2023-09-22 18:35:27)
->> On 9/22/2023 2:54 PM, Stephen Boyd wrote:
->>> Quoting Dmitry Baryshkov (2023-09-19 02:50:12)
->>>>
->>>> This should be hpd_notify, who starts link training, not some event.
->>>
->>> I think this driver should train the link during atomic_enable(), not
->>> hpd_notify() (or directly from the irq handler). The drm_bridge_funcs
->>> talk a bit about when the clocks and timing signals are supposed to be
->>> enabled. For example, struct drm_bridge_funcs::atomic_pre_enable() says
->>> the "display pipe (i.e.  clocks and timing signals) feeding this bridge
->>> will not yet be running when this callback is called". And struct
->>> drm_bridge_funcs::atomic_enable() says "this callback must enable the
->>> display link feeding the next bridge in the chain if there is one."
->>>
->>> That looks to me like link training, i.e. the display link, should
->>> happen in the enable path and not hpd_notify. It looks like link
->>> training could fail, but when that happens I believe the driver should
->>> call drm_connector_set_link_status_property() with
->>> DRM_MODE_LINK_STATUS_BAD. The two callers of that which exist in the
->>> tree also call drm_kms_helper_hotplug_event() or
->>> drm_kms_helper_connector_hotplug_event() after updating the link so that
->>> userspace knows to try again.
->>>
->>> It would be nice if there was some drm_bridge_set_link_status_bad() API
->>> that bridge drivers could use to signal that the link status is bad and
->>> call the hotplug helper. Maybe it could also record some diagnostics
->>> about which bridge failed to setup the link and stop the atomic_enable()
->>> chain for that connector.
->>
->> Doing link training when we get hpd instead of atomic_enable() is a
->> design choice we have been following for a while because for the case
->> when link training fails in atomic_enable() and setting the link status
->> property as you mentioned, the compositor needs to be able to handle
->> that and also needs to try with a different resolution or take some
->> other corrective action. We have seen many compositors not able to
->> handle this complexity.
+On Thu, 28 Sep 2023 23:04:05 +0200, Robert Marko wrote:
+> From: Christian Marangi <ansuelsmth@gmail.com>
 > 
-> The chrome compositor handles this case[1]. If the link status is set to
-> bad and there are non-zero number of modes on a connected connector it
-> resets the status to good to try again.
+> Document named opp-microvolt property for opp-v2-kryo-cpu schema.
+> This property is used to declare multiple voltage ranges selected on the
+> different values read from efuses. The selection is done based on the
+> speed pvs values and the named opp-microvolt property is selected by the
+> qcom-cpufreq-nvmem driver.
+> 
+> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> ---
+> Changes in v4:
+> * Describe PVS
+> * Add description for opp-microvolt entries
+> ---
+>  .../bindings/opp/opp-v2-kryo-cpu.yaml         | 38 +++++++++++++++++++
+>  1 file changed, 38 insertions(+)
 > 
 
-Thanks for the link. Just resetting the property alone and trying again 
-is going to lead to the same failure again. So that alone is 
-insufficient and doesn't sound right.
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-As documented here:
+yamllint warnings/errors:
 
-https://www.kernel.org/doc/html/latest/gpu/drm-kms.html#standard-connector-properties
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml: patternProperties:^opp-?[0-9]+$:patternProperties:^opp-microvolt-speed[0-9]+-pvs[0-9]+$: {'description': 'Named opp-microvolt property following the same generic\nbinding for named opp-microvolt.\n\nThe correct voltage range is selected based on the values\nin the efuse for the speed and the pvs (power variable\nscaling).\n', 'minItems': 1, 'maxItems': 4, 'items': [{'description': 'nominal voltage'}, {'description': 'minimum voltage'}, {'description': 'maximum voltage'}]} should not be valid under {'required': ['maxItems']}
+	hint: "maxItems" is not needed with an "items" list
+	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
 
-"When user-space receives the hotplug uevent and detects a "BAD" 
-link-status, the sink doesn't receive pixels anymore (e.g. the screen 
-becomes completely black). The list of available modes may have changed. 
-User-space is expected to pick a new mode if the current one has 
-disappeared and perform a new modeset with link-status set to "GOOD" to 
-re-enable the connector."
+doc reference errors (make refcheckdocs):
 
-Picking a different mode is a reasonable attempt to try again but even 
-that might fail again if it picks a mode which falls in the same link rate.
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230928210525.1265958-2-robimarko@gmail.com
 
-Thats why, to re-iterate what i mentioned, we need to see if some sort 
-of a handshake fallback exists or can be implemented. It will need 
-compositor support as well as driver change to maybe remove that mode etc.
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
 
-We prioritized user experience here to make sure display_enable() wont 
-fail otherwise the user might keep waiting for the screen to come up 
-forever. With the driver ensuring link is trained and then reporting to 
-usermode, its a safer option as the driver will train with the highest 
-link rate / lane combination supported and also remove modes which dont 
-fall in this bucket in dp_bridge_mode_valid.
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
 
-Till we validate this, I would prefer to keep this change out of this 
-series.
+pip3 install dtschema --upgrade
 
->> So the design sends the hotplug to usermode only
->> after link training succeeds.
-> 
-> I suspect this is why my trogdor device turns off after rebooting when I
-> apply a ChromeOS update with the lid closed and DP connected. Userspace
-> wants to know that a display is connected, but this driver is still link
-> training by the time userspace boots up so we don't see any drm
-> connector indicating status is connected. No drm connectors connected
-> means the OS should shutdown.
-> 
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
-Interesting use case but I am not sure if thats whats happening till we 
-debug that. Why should OS shutdown if connectors are not in "connected" 
-state? Agreed, display will be off. But shouldnt compositor be alive in 
-case it receives hotplug? The user (in this case you) never turned the 
-device off so why should the OS shutdown?
-
->>
->> I do not think we should change this design unless prototyped with an
->> existing compositor such as chrome or android at this point.
-> 
-> Is this driver used with android?
-> 
-
-There are some internal efforts ongoing with prototyping this but I 
-cannot comment more on this right now.
-
-> [1] https://source.chromium.org/chromium/chromium/src/+/main:ui/ozone/platform/drm/gpu/hardware_display_plane_manager_atomic.cc;l=114;drc=67520ac99db89395b10f2ab728b540eef0da8292
