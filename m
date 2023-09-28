@@ -2,83 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D63757B223C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 18:25:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A5A57B2244
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 18:26:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231285AbjI1QZn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Sep 2023 12:25:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36650 "EHLO
+        id S229946AbjI1Q0H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Sep 2023 12:26:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231263AbjI1QZm (ORCPT
+        with ESMTP id S231437AbjI1Q0F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Sep 2023 12:25:42 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B0AAEB;
-        Thu, 28 Sep 2023 09:25:41 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38SFfLq1015805;
-        Thu, 28 Sep 2023 16:25:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=dvWWXdVXiGWDkgySuet7W6R6F3UF6xZSLY4i8jRlvQw=;
- b=JgCKJs7XQcEwcC8ZZ0h3BYHmwikscgfyeQDjb4kRQWlFzdVFmoOWBlmfbMsT23MWgJKd
- yoUSx5quzHOBGJHVA/bFSYYTZnhUz5EBuqcka9xq3oSafWH7sP7t59miUmnSXqz94C45
- i74iRjN14i3kYHtCre4mAICsJg/C+GHMMJSURVcayygqOky9tx+W6ODAs/SrxxsGSjYR
- sby8+7f0PEiRUqy6gD/m6dwWcYJ4H4/fyIvQb5v+W8NuDPoMUFrPm1NsnubSbJyotboE
- iYL7jQLMDl/GgVetwvlfFkgBKsJgDjr5lp2FBhSV0KccEDR3yUsCPmKt32Zh0dZuFpGY DA== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3td8wdrp6x-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 28 Sep 2023 16:25:00 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38SGOxeI002522
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 28 Sep 2023 16:24:59 GMT
-Received: from [10.110.102.158] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Thu, 28 Sep
- 2023 09:24:56 -0700
-Message-ID: <a0456690-1917-4d82-877a-f23d871049b5@quicinc.com>
-Date:   Thu, 28 Sep 2023 09:24:55 -0700
+        Thu, 28 Sep 2023 12:26:05 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BD7E194
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 09:26:04 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C143FC433C8;
+        Thu, 28 Sep 2023 16:26:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1695918363;
+        bh=qBwpoROPKOA1G8tWAKHC0Qyx+Q3++807z1IAA1w0icU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=FOve22FScEYTglztVPTZ/zdWTck9y+1xwFqEWHNTY84L6mwYPEoTtFWIdZuHLGMUm
+         XH1D7gv5sToPdwkwkOfOO8vp56m9TCF6KMR8YsCw2thBIx/J3gBZJgDc+vWOTzLR6x
+         HkZqXFRjbUMsYMMgsTHFCH4hj8kvEiqkkwEW+7T2nmOi/KOavPyHYiJM/EF4xGQRUb
+         S+JREpe1eYaKmTxf/g28WpteM0brL+Fl146uGvonw0zNSDXyAWLOApgqlXLAqw9clU
+         4rBAas/zvZ39kfT4JM46bYfUw9HN/D8hJJVoYnR6/RzzbDI0ja2gDzmWVN2DLGqhRd
+         aU34FrlfSEZuw==
+Received: (nullmailer pid 811391 invoked by uid 1000);
+        Thu, 28 Sep 2023 16:26:00 -0000
+Date:   Thu, 28 Sep 2023 11:26:00 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Richard Acayan <mailingradian@gmail.com>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        Ryan McCann <quic_rmccann@quicinc.com>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Liu Shixin <liushixin2@huawei.com>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 3/6] dt-bindings: display: msm: Add SDM670 MDSS
+Message-ID: <20230928162600.GA759245-robh@kernel.org>
+References: <20230925232625.846666-9-mailingradian@gmail.com>
+ <20230925232625.846666-12-mailingradian@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/2] Avoid spurious freezer wakeups
-Content-Language: en-US
-To:     Peter Zijlstra <peterz@infradead.org>,
-        Carlos Llamas <cmllamas@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC:     Ingo Molnar <mingo@redhat.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Pavel Machek <pavel@ucw.cz>,
-        Thomas Gleixner <tglx@linutronix.de>, <kernel@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>,
-        "Prakash Viswalingam" <quic_prakashv@quicinc.com>
-References: <20230908-avoid-spurious-freezer-wakeups-v4-0-6155aa3dafae@quicinc.com>
- <ZRMEHb3_0Ku1UuK_@google.com>
- <20230926200238.GB13828@noisy.programming.kicks-ass.net>
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <20230926200238.GB13828@noisy.programming.kicks-ass.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: voW2hM9_I6oH-E1B9Ahh6aw547ZEEFqW
-X-Proofpoint-GUID: voW2hM9_I6oH-E1B9Ahh6aw547ZEEFqW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-09-28_16,2023-09-28_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- mlxlogscore=784 malwarescore=0 lowpriorityscore=0 impostorscore=0
- phishscore=0 mlxscore=0 clxscore=1015 suspectscore=0 bulkscore=0
- adultscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2309280142
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230925232625.846666-12-mailingradian@gmail.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,34 +71,105 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Peter,
-
-On 9/26/2023 1:02 PM, Peter Zijlstra wrote:
-> On Tue, Sep 26, 2023 at 04:17:33PM +0000, Carlos Llamas wrote:
->> On Fri, Sep 08, 2023 at 03:49:14PM -0700, Elliot Berman wrote:
->>> After commit f5d39b020809 ("freezer,sched: Rewrite core freezer logic"),
->>> tasks that transition directly from TASK_FREEZABLE to TASK_FROZEN  are
->>> always woken up on the thaw path. Prior to that commit, tasks could ask
->>> freezer to consider them "frozen enough" via freezer_do_not_count(). The
->>> commit replaced freezer_do_not_count() with a TASK_FREEZABLE state which
->>> allows freezer to immediately mark the task as TASK_FROZEN without
->>> waking up the task.  This is efficient for the suspend path, but on the
->>> thaw path, the task is always woken up even if the task didn't need to
->>> wake up and goes back to its TASK_(UN)INTERRUPTIBLE state. Although
->>> these tasks are capable of handling of the wakeup, we can observe a
->>> power/perf impact from the extra wakeup.
->>
->> This issue is hurting the performance of our stable 6.1 releases. Does
->> it make sense to backport these patches into stable branches once they
->> land in mainline? I would assume we want to fix the perf regression
->> there too?
+On Mon, Sep 25, 2023 at 07:26:30PM -0400, Richard Acayan wrote:
+> Add documentation for the SDM670 display subsystem, adapted from the
+> SDM845 and SM6125 documentation.
 > 
-> Note that these patches are in tip/sched/core, slated for the next merge
-> window.
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> ---
+>  .../display/msm/qcom,sdm670-mdss.yaml         | 280 ++++++++++++++++++
+>  1 file changed, 280 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sdm670-mdss.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sdm670-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sdm670-mdss.yaml
+> new file mode 100644
+> index 000000000000..839b372759ed
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/display/msm/qcom,sdm670-mdss.yaml
+> @@ -0,0 +1,280 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/display/msm/qcom,sdm670-mdss.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm SDM670 Display MDSS
+> +
+> +maintainers:
+> +  - Richard Acayan <mailingradian@gmail.com>
+> +
+> +description:
+> +  SDM670 MSM Mobile Display Subsystem (MDSS), which encapsulates sub-blocks
+> +  like DPU display controller, DSI and DP interfaces etc.
+> +
+> +$ref: /schemas/display/msm/mdss-common.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sdm670-mdss
+> +
+> +  clocks:
+> +    items:
+> +      - description: Display AHB clock from gcc
+> +      - description: Display core clock
+> +
+> +  clock-names:
+> +    items:
+> +      - const: iface
+> +      - const: core
+> +
+> +  iommus:
+> +    maxItems: 2
+> +
+> +  interconnects:
+> +    maxItems: 2
+> +
+> +  interconnect-names:
+> +    maxItems: 2
+> +
+> +patternProperties:
+> +  "^display-controller@[0-9a-f]+$":
+> +    type: object
 
-Can the changes be scheduled for the next 6.6-rc? I'd like to get the
-changes backported to stable sooner since we observed the regression on
-real systems.
+       additionalProperties: true
 
-Thanks,
-Elliot
+Same for the rest. I've sent a patch doing this for all the existing 
+ones.
+
+> +    properties:
+> +      compatible:
+> +        const: qcom,sdm670-dpu
+> +
+> +  "^displayport-controller@[0-9a-f]+$":
+> +    type: object
+> +    properties:
+> +      compatible:
+> +        const: qcom,sdm670-dp
+> +
+> +  "^dsi@[0-9a-f]+$":
+> +    type: object
+> +    properties:
+> +      compatible:
+> +        items:
+> +          - const: qcom,sdm670-dsi-ctrl
+> +          - const: qcom,mdss-dsi-ctrl
+
+No need to be exact here because the full schema will be. Just contains 
+is fine here:
+
+compatible
+  contains:
+    const: qcom,sdm670-dsi-ctrl
+
+> +
+> +  "^phy@[0-9a-f]+$":
+> +    type: object
+> +    properties:
+> +      compatible:
+> +        const: qcom,dsi-phy-10nm
+> +
+> +required:
+> +  - compatible
+> +
+> +unevaluatedProperties: false
+> +
