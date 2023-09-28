@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F17F7B1B33
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 13:35:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA6617B1B36
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Sep 2023 13:36:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232174AbjI1Lf6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Sep 2023 07:35:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34168 "EHLO
+        id S232005AbjI1Lf7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Sep 2023 07:35:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231927AbjI1Lf4 (ORCPT
+        with ESMTP id S231952AbjI1Lf4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 28 Sep 2023 07:35:56 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33F881A3
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F122A193
         for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 04:35:40 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-5048156976cso4672190e87.2
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-50306b2920dso15273629e87.0
         for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 04:35:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695900938; x=1696505738; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1695900939; x=1696505739; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NAgwmDYSEumxdHOz03qqC77Wc8/BmRIQnaYQ3alh34M=;
-        b=Nj/A6Sd3ywpyTGlCILvGEZzS+RoeiaI42RFOeceeNoK34YTjKwZR1unIUVJ72b0Ita
-         l7wJTO2daqAeKCK+uCyDjTrpSn1uI4/S94RpLh9JVT1q4wAR8tFAFfqWJ2FNaVOpsWKe
-         r8g6PnTSckMETKYa5bXLU57efjxuA0arSKvtI5pYbSTJGfYHrb22pI9Q9hKz0jYqiurf
-         jI8Cn1bB+u8jhcQwcBYvhJIEX2qYGyFE/lxGtc5ZicPZ0zzbYk2EOZ7reKwuL34I79Sq
-         P7HPL6mdhCZbyt2+JZfThb5ma1TUHzluZTGgwWES7WyLvPymrcAozB+ggcV5ifyctqdt
-         +dZA==
+        bh=6mwojS2vRgU0By0A79lo56wad98V4s7w+Z/gFSHxlY0=;
+        b=d7E8ae6DNkAKNGymBsxxdd0v8MOKO2B0C+5h91xjpy8CQV7szQ0cQA1vG96DUU/ejo
+         3n57/Cu52+cwr1nS3riws2zTrAvqpEZnSLFP5cn0X7LeQT3JG45kvo09pjIHPsfFUI9k
+         8PtW4rPqTM96M/miDYmxm0T/jkzpfrmRPZIwsOsVNs82xveAtNrDT9BCaDjXD1T6PbZV
+         gZJ0wztJAMYum38BSfsfOeM8mU8lD0St0Ja3pZNepIugqlr1Fu6/GR5drp5yceJRAm9/
+         Hxdh7UGA/FWgyrm0iz4VHl+UAlbdXufEag/wKiB7PhorXrBMnPIv+mH6DnRbpaFYxtKH
+         LCdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695900938; x=1696505738;
+        d=1e100.net; s=20230601; t=1695900939; x=1696505739;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NAgwmDYSEumxdHOz03qqC77Wc8/BmRIQnaYQ3alh34M=;
-        b=Fdc08MHlszvRSZgG3XoTU56v6yhEcjMCNYvziB4TvwOpcoy/9JY8fVyN+1BzrKWaBX
-         DLaum3lhZNbDbRJzAjpRw+FYyXFQIOVPPI3gkHaPRG2osPDEhpJgFf7D+iTxoL7u7Nfk
-         alwpRnbkwfckXfd0CgeUk2bXeEEtvZhuhxmk4WmDA/16PS2KYRP+rkLJNe2REbDlqv/+
-         Lt5ELPndDus4Prek1c0bZ+gmql0W6pPD0Z6R9vN7KjIVbvexggptDz5MQu6qe1SsYy9l
-         gM+dl0pwWLxmoeGM0mt9+T7y9ZkBzwDSwmBcb8g7wG29/nWNUiAyLiXKdaEoQwa4lLmw
-         /jKQ==
-X-Gm-Message-State: AOJu0YywoM5sZX/Wlsi+u3ocHKWGm/ohwJyhvuaYIbrj09x4zl8eMPJQ
-        2zoXMeH63yvRCjx6erL6+dbqMw==
-X-Google-Smtp-Source: AGHT+IFWa4lOq/RH6ekC+d9SDuQzdJV19CgPIBvotr5aSSznaLJHkEocII3osyAz87VI01x0kZ0NDA==
-X-Received: by 2002:a05:6512:2521:b0:4f8:6abe:5249 with SMTP id be33-20020a056512252100b004f86abe5249mr859962lfb.3.1695900938521;
-        Thu, 28 Sep 2023 04:35:38 -0700 (PDT)
+        bh=6mwojS2vRgU0By0A79lo56wad98V4s7w+Z/gFSHxlY0=;
+        b=obXgxavwJwNFYGgIhoCTgVVlBaz+34ZEsQBQSlAsDRL1IrZedq6HgVJNl7BALgkdBn
+         U/fkOHg/07uwq7TwU1K+xpzmQhvi9TS23I+tNrNKGs1nSlqpOBzazF05rFkdTUbuZscQ
+         3BuyAICa2Mq4GRUrT+iU06L+EV6S9++KxPLNkXx61iFFmk99FXUdapxq8YMMkTOl7rf3
+         F/yz4tG+UKYwhvPcUlEOCt/qa2WzgjAV3FaqKc2NvXPEZEI2VFNcdE+hkr4vePZnzUrw
+         56PzNDSiQ30njIJOfYmWnQ2rJpNq30vhViMRO5giy9CvQGaKqMyAog5CAYZ2iLPGstS1
+         zfRg==
+X-Gm-Message-State: AOJu0YxZ+pY/hoFLAeHIdgzZ/s/i5PLlBKjqsivdEuB6FgG+U7QDVdc3
+        HRHgHEK53js2wHdQrkW5kIk8LQ==
+X-Google-Smtp-Source: AGHT+IHvXf5uuypVZ4LAbgpB3n1z9XFnN75tDbFJjU9l5WICLaMnfHsa2E/yVUF65Vdt1MyquEL71Q==
+X-Received: by 2002:a05:6512:3714:b0:503:2567:c42f with SMTP id z20-20020a056512371400b005032567c42fmr681831lfr.0.1695900939293;
+        Thu, 28 Sep 2023 04:35:39 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id k14-20020a0565123d8e00b00504816564c7sm704327lfv.104.2023.09.28.04.35.37
+        by smtp.gmail.com with ESMTPSA id k14-20020a0565123d8e00b00504816564c7sm704327lfv.104.2023.09.28.04.35.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Sep 2023 04:35:37 -0700 (PDT)
+        Thu, 28 Sep 2023 04:35:38 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -59,12 +59,10 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v3 2/6] dt-bindings: display/msm: Add reg bus and rotator interconnects
-Date:   Thu, 28 Sep 2023 14:35:31 +0300
-Message-Id: <20230928113535.1217613-3-dmitry.baryshkov@linaro.org>
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v3 3/6] drm/msm/mdss: switch mdss to use devm_of_icc_get()
+Date:   Thu, 28 Sep 2023 14:35:32 +0300
+Message-Id: <20230928113535.1217613-4-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230928113535.1217613-1-dmitry.baryshkov@linaro.org>
 References: <20230928113535.1217613-1-dmitry.baryshkov@linaro.org>
@@ -79,44 +77,61 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Stop using hand-written reset function for ICC release, use
+devm_of_icc_get() instead.
 
-Apart from the already handled data bus (MAS_MDP_Pn<->DDR), there are
-other connection paths:
-- a path that connects rotator block to the DDR.
-- a path that needs to be handled to ensure MDSS register access
-  functions properly, namely the "reg bus", a.k.a the CPU-MDSS CFG
-  interconnect.
-
-Describe these paths bindings to allow using them in device trees and in
-the driver
-
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- Documentation/devicetree/bindings/display/msm/mdss-common.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/msm/msm_mdss.c | 16 ++--------------
+ 1 file changed, 2 insertions(+), 14 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/mdss-common.yaml b/Documentation/devicetree/bindings/display/msm/mdss-common.yaml
-index f69196e4cc76..6b4ce08a60dc 100644
---- a/Documentation/devicetree/bindings/display/msm/mdss-common.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/mdss-common.yaml
-@@ -66,12 +66,14 @@ properties:
-     items:
-       - description: Interconnect path from mdp0 (or a single mdp) port to the data bus
-       - description: Interconnect path from mdp1 port to the data bus
-+      - description: Interconnect path from CPU to the reg bus
+diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+index 2e87dd6cb17b..75ec5e89894d 100644
+--- a/drivers/gpu/drm/msm/msm_mdss.c
++++ b/drivers/gpu/drm/msm/msm_mdss.c
+@@ -50,14 +50,14 @@ static int msm_mdss_parse_data_bus_icc_path(struct device *dev,
+ 	struct icc_path *path0;
+ 	struct icc_path *path1;
  
-   interconnect-names:
-     minItems: 1
-     items:
-       - const: mdp0-mem
-       - const: mdp1-mem
-+      - const: cpu-cfg
+-	path0 = of_icc_get(dev, "mdp0-mem");
++	path0 = devm_of_icc_get(dev, "mdp0-mem");
+ 	if (IS_ERR_OR_NULL(path0))
+ 		return PTR_ERR_OR_ZERO(path0);
  
-   resets:
-     items:
+ 	msm_mdss->path[0] = path0;
+ 	msm_mdss->num_paths = 1;
+ 
+-	path1 = of_icc_get(dev, "mdp1-mem");
++	path1 = devm_of_icc_get(dev, "mdp1-mem");
+ 	if (!IS_ERR_OR_NULL(path1)) {
+ 		msm_mdss->path[1] = path1;
+ 		msm_mdss->num_paths++;
+@@ -66,15 +66,6 @@ static int msm_mdss_parse_data_bus_icc_path(struct device *dev,
+ 	return 0;
+ }
+ 
+-static void msm_mdss_put_icc_path(void *data)
+-{
+-	struct msm_mdss *msm_mdss = data;
+-	int i;
+-
+-	for (i = 0; i < msm_mdss->num_paths; i++)
+-		icc_put(msm_mdss->path[i]);
+-}
+-
+ static void msm_mdss_icc_request_bw(struct msm_mdss *msm_mdss, unsigned long bw)
+ {
+ 	int i;
+@@ -391,9 +382,6 @@ static struct msm_mdss *msm_mdss_init(struct platform_device *pdev, bool is_mdp5
+ 	dev_dbg(&pdev->dev, "mapped mdss address space @%pK\n", msm_mdss->mmio);
+ 
+ 	ret = msm_mdss_parse_data_bus_icc_path(&pdev->dev, msm_mdss);
+-	if (ret)
+-		return ERR_PTR(ret);
+-	ret = devm_add_action_or_reset(&pdev->dev, msm_mdss_put_icc_path, msm_mdss);
+ 	if (ret)
+ 		return ERR_PTR(ret);
+ 
 -- 
 2.39.2
 
