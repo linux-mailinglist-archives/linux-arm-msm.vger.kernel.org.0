@@ -2,83 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A6817B372F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 17:45:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1EEC97B374A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 17:52:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233141AbjI2PpQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Sep 2023 11:45:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41572 "EHLO
+        id S233736AbjI2Pw1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Sep 2023 11:52:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233257AbjI2PpP (ORCPT
+        with ESMTP id S233714AbjI2Pw0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Sep 2023 11:45:15 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B0D4B4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 08:45:13 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CF5EC433C8;
-        Fri, 29 Sep 2023 15:45:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1696002313;
-        bh=0hDyT9MUh8730O65k81LE+Nwv/GSPLBC8hZOSfjcJio=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=L89p6HObshK63IiZfGBnFLEiyJRV5qx5Ylk0YL8Em55VwmFMHeCK2rH3SCRf+qpHc
-         r+1rMwkT+ur98q+lKztETgV8XwMUJBrwY9LDe++xxAjkVQp3i2KOzh2+7VepJnf/jx
-         jBQ65yqRLTapKyLmIucukAd5W70gfCcaz060PYGVONOjzpLkz+AclAREjr8nC3sZE7
-         bkSxXw6SOnJ88nPHQkfTl/nhjvPRicb369IojHETjWINtL9Awbi031+LrxTVoE5Dr4
-         uv+UfTKKyEw489m3VNPwVWM3ttRZtrMVISqRNSEOcNgHQKgxs50+wQHICadF9X5G/D
-         fH2LHeuhwIsww==
-Date:   Fri, 29 Sep 2023 16:45:07 +0100
-From:   Will Deacon <will@kernel.org>
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        dri-devel@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Heidelberg <david@ixit.cz>
-Subject: Re: [PATCH] drm/msm/a6xx: don't set IO_PGTABLE_QUIRK_ARM_OUTER_WBWA
- with coherent SMMU
-Message-ID: <20230929154507.GA30764@willie-the-truck>
-References: <20230410185226.3240336-1-dmitry.baryshkov@linaro.org>
- <b1434fe7-3128-f390-7b13-3d460378e231@arm.com>
+        Fri, 29 Sep 2023 11:52:26 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4114E195
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 08:52:23 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-405497850dbso123105275e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 08:52:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1696002742; x=1696607542; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=IrS+nzD68lxpKLinSVXhSEs3fVhjvM8TXqXpQevNJBs=;
+        b=Sn3Ed8UGv5mdqPn4PA4bd7aTXYIJAfdgINOxGcha/NsfEnt1fkuvcyE8rZZS+K1pCe
+         e98JNYxp+IchJaQCx/+a3/hlB3AV+lkfrw3gWELwGc8y2l4c3AsCPpm7MxoKatG+5t5y
+         GrcQ11DSQSJutU2L5ZevyVdRum0BJvPzzHRyDMKQ6zFWXYKtQg4uRBADgay+fus0fNxy
+         Jqh+aHf5wF3Mm+vgkJXf4OU+6a5DpSCReWfp57vreLtoQiqvZGYVTGuwzK8/xcLDEG8T
+         fQoaaoZfo5mGZx9DpDa8aY9M9cAgwkXqMDU6vPXvx9NSdlGlzD7Q9ZQ+A4A6G3PWV8Dc
+         KOGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696002742; x=1696607542;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IrS+nzD68lxpKLinSVXhSEs3fVhjvM8TXqXpQevNJBs=;
+        b=nTG+W8feRkLtaiq0HbqqZqOYJC0fkL6RhP6ifrNMupmWAmEMWkQ0o5AhQ9IR3vNAN9
+         8gMcTBIz3cX1lDffv1m0AU9MJRWKztAoMW+9WPb9Ck7Tr4sALtriDsg4eC4HHzubNlMW
+         j6taZFSASlVW+TuYqz7tXbhzZj1mfGG1Dou6rFLrqolXuzvk5WSYXGZiCmf6wPK5Br4z
+         p0vg2E5vYNC1U+lqv1tRYLRbKjA2x7WzDPPYTWbsh/ouuFUtvXyVvFmTID4+LRe5r79f
+         YdR/vlpDiBtWVB+H8sYcHwnYjhjUkkJ1xSWO4oL9cpYYlYDnoJcWVbxAtKZaKIXNPUT+
+         YlpA==
+X-Gm-Message-State: AOJu0Yxfq/cT7Xhte3LQOZ4egrXIvdsHPK4sicbqOdWZuZLbY51hJDqv
+        u/QwNYkeTymBUkwMaFFbYwlcHw==
+X-Google-Smtp-Source: AGHT+IGWszKKxw4TdMa+hddnqsHXs6q8yNQZry/GtgBQM82ugScktA6LHs1ViFFsbX/SAdDuPBryyw==
+X-Received: by 2002:a7b:c8d1:0:b0:405:3b92:2fed with SMTP id f17-20020a7bc8d1000000b004053b922fedmr3953096wml.26.1696002741647;
+        Fri, 29 Sep 2023 08:52:21 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id y19-20020a1c4b13000000b00405bbfd5d16sm1685765wma.7.2023.09.29.08.52.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 Sep 2023 08:52:21 -0700 (PDT)
+Message-ID: <b983e5e4-9a70-4e50-9d32-234cd5c47f66@linaro.org>
+Date:   Fri, 29 Sep 2023 16:52:20 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b1434fe7-3128-f390-7b13-3d460378e231@arm.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sc7280: Add Camera Control
+ Interface busses
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Andi Shyti <andi.shyti@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230929-sc7280-cci-v1-0-16c7d386f062@fairphone.com>
+ <20230929-sc7280-cci-v1-2-16c7d386f062@fairphone.com>
+ <8dd470e5-ce33-3d33-98f1-e66935ca7b56@linaro.org>
+ <1b5bd391-4bb0-44ac-88d1-e326bec4dd7d@nexus-software.ie>
+ <acc606a6-c46c-43f5-86e0-84bf876001dd@linaro.org>
+ <db5d00b5-5d18-4144-88c2-ff6cfb8c176a@linaro.org>
+ <b6f801fc-1d8b-420b-a439-ea0cdd12f7f6@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <b6f801fc-1d8b-420b-a439-ea0cdd12f7f6@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 25, 2023 at 06:54:42PM +0100, Robin Murphy wrote:
-> On 2023-04-10 19:52, Dmitry Baryshkov wrote:
-> > If the Adreno SMMU is dma-coherent, allocation will fail unless we
-> > disable IO_PGTABLE_QUIRK_ARM_OUTER_WBWA. Skip setting this quirk for the
-> > coherent SMMUs (like we have on sm8350 platform).
+On 29/09/2023 16:25, Konrad Dybcio wrote:
+>> Not actually a required clock for the clock controller.
+>>
+>> I suspect the same is true for dispcc and videocc though it would also mean the respective drivers would need to switch on <&gcc DISPx_CAMERA_AHB_CLK> or <&gcc GCC_VIDEO_AHB_CLK> prior to accessing registers inside the ip blocks which may not currently be the case.
+>>
+>> Feels like a bit of a contrary answer but my reading is the GCC_IPBLOCK_AHB_CLK clocks belong in the drivers not the clock controllers..  or at least that's true for sm8250/camcc
+> I believe the idea here would be that registering GCC_IP_AHB_CLK
+> as a pm_clk for the clock controller would make that clock turn
+> on when IPBLOCK_CC is accessed (e.g. when we turn on
+> IPBLOCK_CORE_CLK), so that it doesn't need to be duplicated in
+> each and every end device.
 > 
-> Hmm, but is it right that it should fail in the first place? The fact is
-> that if the SMMU is coherent then walks *will* be outer-WBWA, so I honestly
-> can't see why the io-pgtable code is going out of its way to explicitly
-> reject a request to give them the same attribute it's already giving then
-> anyway :/
-> 
-> Even if the original intent was for the quirk to have an over-specific
-> implication of representing inner-NC as well, that hardly seems useful if
-> what we've ended up with in practice is a nonsensical-looking check in one
-> place and then a weird hacky bodge in another purely to work around it.
-> 
-> Does anyone know a good reason why this is the way it is?
+> Konrad
 
-I think it was mainly because the quick doesn't make sense for a coherent
-page-table walker and we could in theory use that bit for something else
-in that case.
+Yeah I mean I accept the logic - the core AHB clock is effectively gated 
+by the ipblockcc even though they originate from different places in 
+hardware - and _when_ do you want one clock without the other ? Never 
+except at probe() time for the ipblockcc.
 
-Will
+Then again if you can show the clock dependency tree of camera or disp 
+requires GCC_IP_AHB_CLK you could make the argument the dt requires the 
+clock dependency defined in that block.
+
+I'd say we should offline this from Luca's patches tho :) for me anyway 
+the first two are fine.
+
+Agree #3 is verboten. No new empty nodes.
+
+---
+bod
