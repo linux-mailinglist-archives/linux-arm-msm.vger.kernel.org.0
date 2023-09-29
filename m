@@ -2,146 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9CABB7B3875
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 19:17:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C4E47B389A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 19:25:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233239AbjI2RRK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Sep 2023 13:17:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35224 "EHLO
+        id S232878AbjI2RZm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Sep 2023 13:25:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232748AbjI2RRJ (ORCPT
+        with ESMTP id S232954AbjI2RZm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Sep 2023 13:17:09 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6A681AE
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 10:17:06 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-9ad8d47ef2fso1883468666b.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 10:17:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696007825; x=1696612625; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=MCBBShUT4W02J7jpHyBvljZ5v8OF4qTE4nEXAa9+HQo=;
-        b=DaAeUPWNbLAXcSnbKtKx9k8tzmju5BvjLVP25dVmy8l+DFvm76lTKxfAl4T4xtTx3E
-         qsuVXfZC+7cK+JFpbY22SXCCTxMt548VZiL9+4LLDwWNR/oyR9v4Q+yKh0KTlU6s5LpS
-         oHQJSpKiVxdJ7F8OqxY7EKiKlEn5SZjmYWdUG4RIE6w/FE6gyyucPHvQMmfd84a7A8ER
-         qWS5wsIDNrWUjTqU75K0BUbWxKRvaWRuu2VFiNNzO9gN8//VvCLABv7TP6mHnCIkLWiC
-         sqcYpdWFqMG63AofWuj0H2LpUuJhmA9OMgKqAV2MXJ160ZRTw+TmiOTVbCF08fcmy96P
-         aHEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696007825; x=1696612625;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MCBBShUT4W02J7jpHyBvljZ5v8OF4qTE4nEXAa9+HQo=;
-        b=Utw2sL17aAdtlBGHF4f4IjBiTzhItkFUwFVRNFGcPK4FpOrsNSGkzCmZQlyRzmdkXA
-         VbJRngJPnt50gEMBSG16geOst/1l7KaR1WMxwPjL1vqlS0FTcG/+Q/zISXiCmLSTplAA
-         2mfoR25MYuOq8e9gI8h17wJthRrYy0odI3BI8S4NopVMDvJZH/EveHjnJJRpVS1nKmjq
-         l5dCi269ZiuxMxnhoOWWQ+Deg1OaW9Jc+nl9/YpKzDHC+WMxwTucBPIe0MZkU8yYQ9df
-         BRG3/RoFJgf635GMBvF6e7CN4Mn/eynymRDCqICmO8RskSBQ0ESeza7l4Caf5ODm0SZ3
-         s2/g==
-X-Gm-Message-State: AOJu0YzQRmQTvtmq7H0hPfQGPyc1pExSV9TYU4hGn7m97d289Ouky0vm
-        EPZADRK4Ni1myhkbQNolI6uneg==
-X-Google-Smtp-Source: AGHT+IEVlmhe5KkcPsN5ToZ63pYahJO2Raan9LFaPXvJE+ynl/eQtYlDRZyRCc8/A1/gF4lPC1pYmg==
-X-Received: by 2002:a17:907:2cd4:b0:9a1:abae:8d30 with SMTP id hg20-20020a1709072cd400b009a1abae8d30mr3849432ejc.47.1696007825199;
-        Fri, 29 Sep 2023 10:17:05 -0700 (PDT)
-Received: from [192.168.33.189] (178235177217.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.217])
-        by smtp.gmail.com with ESMTPSA id v5-20020a1709064e8500b00993470682e5sm12602370eju.32.2023.09.29.10.17.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Sep 2023 10:17:04 -0700 (PDT)
-Message-ID: <30066188-3787-4277-914e-e06c95fe2e1c@linaro.org>
-Date:   Fri, 29 Sep 2023 19:17:01 +0200
+        Fri, 29 Sep 2023 13:25:42 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 658B9CC9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 10:25:34 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 666101FB;
+        Fri, 29 Sep 2023 10:26:12 -0700 (PDT)
+Received: from [10.1.196.40] (e121345-lin.cambridge.arm.com [10.1.196.40])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B96DD3F59C;
+        Fri, 29 Sep 2023 10:25:32 -0700 (PDT)
+Message-ID: <70d975d0-8ee7-9f08-7fae-4652a18df598@arm.com>
+Date:   Fri, 29 Sep 2023 18:25:21 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] thermal: Introduce Qualcomm Thermal Mitigation Device
- support
-Content-Language: en-US
-To:     Caleb Connolly <caleb.connolly@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bhupesh Sharma <bhupesh.linux@gmail.com>,
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH] drm/msm/a6xx: don't set IO_PGTABLE_QUIRK_ARM_OUTER_WBWA
+ with coherent SMMU
+Content-Language: en-GB
+To:     Will Deacon <will@kernel.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-pm@vger.kernel.org
-References: <20230905-caleb-qmi_cooling-v1-0-5aa39d4164a7@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230905-caleb-qmi_cooling-v1-0-5aa39d4164a7@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+        dri-devel@lists.freedesktop.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Heidelberg <david@ixit.cz>
+References: <20230410185226.3240336-1-dmitry.baryshkov@linaro.org>
+ <b1434fe7-3128-f390-7b13-3d460378e231@arm.com>
+ <20230929154507.GA30764@willie-the-truck>
+From:   Robin Murphy <robin.murphy@arm.com>
+In-Reply-To: <20230929154507.GA30764@willie-the-truck>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29.09.2023 18:16, Caleb Connolly wrote:
-> The Thermal Mitigation Device (TMD) Service is a QMI service that runs
-> on remote subsystems (the modem and DSPs) on Qualcomm SoCs.
-> It exposes various mitigations including passive thermal controls and
-> rail voltage restrictions.
+On 29/09/2023 4:45 pm, Will Deacon wrote:
+> On Mon, Sep 25, 2023 at 06:54:42PM +0100, Robin Murphy wrote:
+>> On 2023-04-10 19:52, Dmitry Baryshkov wrote:
+>>> If the Adreno SMMU is dma-coherent, allocation will fail unless we
+>>> disable IO_PGTABLE_QUIRK_ARM_OUTER_WBWA. Skip setting this quirk for the
+>>> coherent SMMUs (like we have on sm8350 platform).
+>>
+>> Hmm, but is it right that it should fail in the first place? The fact is
+>> that if the SMMU is coherent then walks *will* be outer-WBWA, so I honestly
+>> can't see why the io-pgtable code is going out of its way to explicitly
+>> reject a request to give them the same attribute it's already giving then
+>> anyway :/
+>>
+>> Even if the original intent was for the quirk to have an over-specific
+>> implication of representing inner-NC as well, that hardly seems useful if
+>> what we've ended up with in practice is a nonsensical-looking check in one
+>> place and then a weird hacky bodge in another purely to work around it.
+>>
+>> Does anyone know a good reason why this is the way it is?
 > 
-> This series introduces support for exposing TMDs as cooling devices
-> in the kernel through the thermal framework, using the QMI interface.
-> 
-> Each TMD client is described as a child of the remoteproc node in
-> devicetree. With subnodes for each control.
-> 
-> This series is based on previous work by Bhupesh Sharma which can be
-> found at [1]. I'm sending this as a fresh series as it has been a
-> year since the original version and I have rewritten most of the driver.
-> 
-Since you're adding support for funky hw, it would be appreciated
-if you also linked to a tree that has the dt bits hooked up, the
-schema example may not tell the whole story
+> I think it was mainly because the quick doesn't make sense for a coherent
+> page-table walker and we could in theory use that bit for something else
+> in that case.
 
-Konrad
+Yuck, even if we did want some horrible notion of quirks being 
+conditional on parts of the config rather than just the format, then the 
+users would need to be testing for the same condition as the pagetable 
+code itself (i.e. cfg->coherent_walk), rather than hoping some other 
+property of something else indirectly reflects the right information - 
+e.g. there'd be no hope of backporting this particular bodge before 5.19 
+where the old iommu_capable(IOMMU_CAP_CACHE_COHERENCY) always returned 
+true, and in future we could conceivably support coherent SMMUs being 
+configured for non-coherent walks on a per-domain basis.
+
+Furthermore, if we did overload a flag to have multiple meanings, then 
+we'd have no way of knowing which one the caller was actually expecting, 
+thus the illusion of being able to validate calls in the meantime isn't 
+necessarily as helpful as it seems, particularly in a case where the 
+"wrong" interpretation would be to have no effect anyway. Mostly though 
+I'd hope that if we ever got anywhere near the point of running out of 
+quirk bits we'd have already realised that it's time for a better 
+interface :(
+
+Based on that, I think that when I do get round to needing to touch this 
+code, I'll propose just streamlining the whole quirk.
+
+Cheers,
+Robin.
