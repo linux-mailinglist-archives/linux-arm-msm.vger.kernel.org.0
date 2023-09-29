@@ -2,63 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BA83A7B3A8B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 21:19:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DBD8B7B3A9D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 21:22:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233559AbjI2TTi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Sep 2023 15:19:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38654 "EHLO
+        id S233681AbjI2TWV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Sep 2023 15:22:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233392AbjI2TTh (ORCPT
+        with ESMTP id S233392AbjI2TWU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Sep 2023 15:19:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D353BE7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 12:18:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1696015130;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=WTJNNZR7NVys6FKsRAOqshhBEp+IfsNfsjikkXSkrQI=;
-        b=MahaUCUQRGkASb5sOVmxVBT5pv2Zw/8N+AAkOxHsnEQ4ikjU6Woa+GxIYC+yXdMELUXKRY
-        7SUQFJmNVi7HlhLXOli0tSjG4BIJi2o8MoShdo1GqBgC15bMvHc5c6Hwjka3EqztTTqCGW
-        73Jf3+jnt0Iq2xbs2VSPA40BLJcGSHc=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-99-ha3zmEjlO7-G5CPsOURl7Q-1; Fri, 29 Sep 2023 15:18:48 -0400
-X-MC-Unique: ha3zmEjlO7-G5CPsOURl7Q-1
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7742eeceeacso2136562285a.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 12:18:48 -0700 (PDT)
+        Fri, 29 Sep 2023 15:22:20 -0400
+Received: from mail-vk1-xa2e.google.com (mail-vk1-xa2e.google.com [IPv6:2607:f8b0:4864:20::a2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0F771B4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 12:22:18 -0700 (PDT)
+Received: by mail-vk1-xa2e.google.com with SMTP id 71dfb90a1353d-49ab0641e77so1773939e0c.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 12:22:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1696015337; x=1696620137; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:references:mime-version:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=bKHr/R9x/1NqeTBuXlIluFo+yXauTlrOF4zuHxZuxHw=;
+        b=zEDWHsNKNVPaDP/vTysjiJNmi41GZNg7aPBuBj/r+iZRwSKmASWlGybRzEUqsyIhde
+         u7KnUpej0iluIaEI6hqMdcvdtKjFo8rMz4xZoDx/ZmWI+HQEN8tJO2/iMzaS3nyQb4dg
+         BxLQ9ANnw9wa3DTCYJjnCG072TXQCEN30TzcKGE3oFOrdgV1EJDPYhx3WmY6hiHhqnoY
+         mrmS2l8C2wSBqLbqkvBjkZorQC7V5mmUh6COuDJRpZ/dl339neHhz3tcpSI5Lx+SxYTd
+         eoM2y37AdwvThz9s//f0VQH5Hr8LuuIMQaEerRBAm6vh7wGnEQAgYvlvmZVP4cZmD7Fs
+         eKKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696015128; x=1696619928;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WTJNNZR7NVys6FKsRAOqshhBEp+IfsNfsjikkXSkrQI=;
-        b=BKSI8YD6ewwq8fRkTUNxScNBs4/KQ0/589fLGceACYf8DNmXpY4sSRZW2QyyFfkk6X
-         lOI5LBAcI9GXib7Y4M05LrOmRgTZeZcer4S4rIeutDcu0TSLGkmc/9Ewwlj1PU5GCcUk
-         21aqn0plrPliVlPiqtbLbtMGazGoRKa/Wfja+/1AJA5zbaViopzTxZvmU6KQH1OHYbyi
-         gqacw8qZTcC04k4vm9C38cKBgY++X1qYSJWcNJzwK4tdjqVtMnYFEs5a7tqOlYoWWNMT
-         94tYqnPM+hH/gX74dbUaDwhBOZ/hyQ6IGnVQhzlRE6FX9Yhosp7ygM3Rq3iusEeTTF5o
-         Q+eg==
-X-Gm-Message-State: AOJu0Yz8zOvRFDlvu2HNq6LrHxVazPtXByzcTMkK8ZC4Os7nVk0Gl4I6
-        LHQ9wyS5jdCbweE330435PDPa/hsETfHmO+HmgMdvOf1XSDr1ncYGMFkE5z5bf3yiXx4dz+3o1d
-        qXCHrM7InuWLCSBd+uY6H+PZOVA==
-X-Received: by 2002:a05:620a:2847:b0:768:1572:e9af with SMTP id h7-20020a05620a284700b007681572e9afmr5312128qkp.8.1696015128014;
-        Fri, 29 Sep 2023 12:18:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGDstTs7WAlmA4zsm/5Nhaeb/9hAZkIH2HGZ0P0FFFRqMhid3SaXQpOmfPyQwHi/sd9C7yOAg==
-X-Received: by 2002:a05:620a:2847:b0:768:1572:e9af with SMTP id h7-20020a05620a284700b007681572e9afmr5312115qkp.8.1696015127723;
-        Fri, 29 Sep 2023 12:18:47 -0700 (PDT)
-Received: from fedora ([2600:1700:1ff0:d0e0::37])
-        by smtp.gmail.com with ESMTPSA id d24-20020a05620a159800b0076ef0fb5050sm695265qkk.31.2023.09.29.12.18.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Sep 2023 12:18:47 -0700 (PDT)
-Date:   Fri, 29 Sep 2023 14:18:45 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Bartosz Golaszewski <brgl@bgdev.pl>
+        d=1e100.net; s=20230601; t=1696015337; x=1696620137;
+        h=cc:to:subject:message-id:date:references:mime-version:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bKHr/R9x/1NqeTBuXlIluFo+yXauTlrOF4zuHxZuxHw=;
+        b=m2TyegrrwoVq8BegTHhrVeCPT3keVlkzBdJdgO6xtQRff4804X7LHmBbBTHYYTn/t+
+         urjiXSFK/BygHibQt2xQHBlQZT+bX18sYcuKvK8GgtsDSwT6mzQ02KwJddaks1XDaqnV
+         zEKEJOs8OQjS21StJm7LD7ANCxxMKViNB4dup/Tp50MmZ/Abr493OD8sXXZMYy0FqaoZ
+         qGOOoU5VpEgAtHq9B+pY4Px3RwjEla1ciSBxy3VF67Am/7Lh/w8TP8qocPmhnq0U9r24
+         c8brTb2BDUNPS+Es8JvViLgq23qbREU14xntPY6CNC29TrvEX7UZLxf9qyDISScphbbG
+         oFSQ==
+X-Gm-Message-State: AOJu0Yz21wa0trVvnS9b/IutOO+WYFvCk2yPqBgGQjLwCKlBfsv7Dnt4
+        qY9KQimmth91INFq6lgmtxVpd9ZlTpZb9RIN4Q3XrnKq/F8Bn27l
+X-Google-Smtp-Source: AGHT+IHr/B2JKGg5ZI0AZNA6mEF2ZSibAXy4BcAnwvvXRpgXyDpXREKBArbK2MI+k5JyGCH/9qAwiWbMVTXeOy7/VZ0=
+X-Received: by 2002:a1f:d6c4:0:b0:48f:8e3a:5b83 with SMTP id
+ n187-20020a1fd6c4000000b0048f8e3a5b83mr5546267vkg.14.1696015337610; Fri, 29
+ Sep 2023 12:22:17 -0700 (PDT)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 29 Sep 2023 12:22:16 -0700
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+In-Reply-To: <gwflmag5pq7osprj25l7i4tgyln2nauuqcwdhth2eomareooag@4dw4lwk4vr36>
+MIME-Version: 1.0
+References: <20230928092040.9420-1-brgl@bgdev.pl> <20230928092040.9420-7-brgl@bgdev.pl>
+ <gwflmag5pq7osprj25l7i4tgyln2nauuqcwdhth2eomareooag@4dw4lwk4vr36>
+Date:   Fri, 29 Sep 2023 12:22:16 -0700
+Message-ID: <CAMRc=Mfxt1DLinxMcKivQqqnHvFv5P8WXNnfAwnfrHgoz+q-5w@mail.gmail.com>
+Subject: Re: [PATCH v2 06/11] firmware: qcom: scm: make qcom_scm_pas_init_image()
+ use the SCM allocator
+To:     Andrew Halaney <ahalaney@redhat.com>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
@@ -66,129 +64,121 @@ Cc:     Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         kernel@quicinc.com,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v2 00/11] arm64: qcom: add and enable SHM Bridge support
-Message-ID: <qlu7wposvlgakk6an22asogu65ehjiuutarcatrd5tnqux3jmd@ddkex4fxbqbz>
-References: <20230928092040.9420-1-brgl@bgdev.pl>
- <rb3xf7pumyegck2reyj73sfnpgeyr3sufgcycteozpquah5py4@jpjvcwy5k2kz>
- <CAMRc=Md1upfk8FAWDMYi-+Z4qwVyiFV=PT6-uCrwAMb00NhvvA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMRc=Md1upfk8FAWDMYi-+Z4qwVyiFV=PT6-uCrwAMb00NhvvA@mail.gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 29, 2023 at 08:56:57PM +0200, Bartosz Golaszewski wrote:
-> On Fri, Sep 29, 2023 at 5:29 PM Andrew Halaney <ahalaney@redhat.com> wrote:
-> >
-> > On Thu, Sep 28, 2023 at 11:20:29AM +0200, Bartosz Golaszewski wrote:
-> > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > >
-> > > This is technically the second iteration of the SHM Bridge enablement on
-> > > QCom platforms but in practice it's a complete rewrite.
-> > >
-> > > During the internal discussion with QCom the requirement has been established
-> > > as an SHM Bridge pool manager with the assumption that there will be multiple
-> > > users, each with their own pool. The problem with this is that we don't have
-> > > many potential users of SHM pools upstream at the moment which was rightfully
-> > > pointed out in the reviews under v1 (which even had some unused symbols etc.).
-> > >
-> > > Moreover: after some investigating, it turns out that there simply isn't any
-> > > need for multiple pools as the core SCM only allocates a buffer if given call
-> > > requires more than 4 arguments and there are only a handful of SCM calls that
-> > > need to pass a physical address to a buffer as argument to the trustzone.
-> > >
-> > > Additionally all but one SCM call allocate buffers passed to the TZ only for
-> > > the duration of the call and then free it right aftr it returns. The one
-> > > exception is called once and the buffer it uses can remain in memory until
-> > > released by the user.
-> > >
-> > > This all makes using multiple pools wasteful as most of that memory will be
-> > > reserved but remain unused 99% of the time. What we need is a single pool of
-> > > SCM memory that deals out chunks of suitable format (coherent and
-> > > page-aligned) that fulfills the requirements of all calls.
-> > >
-> > > As not all architectures support SHM bridge, it makes sense to first unify the
-> > > memory operations in SCM calls. All users do some kind of DMA mapping to obtain
-> > > buffers, most using dma_alloc_coherent() which impacts performance.
-> > >
-> > > Genalloc pools are very fast so let's use them instead. Create a custom
-> > > allocator that also deals with the mapping and use it across all SCM calls.
-> > >
-> > > Then once this is done, let's extend the allocator to use the SHM bridge
-> > > functionality if available on the given platform.
-> > >
-> > > While at it: let's create a qcom specific directory in drivers/firmware/ and
-> > > move relevant code in there.
-> > >
-> > > I couldn't test all SCM calls but tested with the inline crypto engine on
-> > > sm8550 and sa8775p that runs most of new code paths (with and without SHM
-> > > bridge). At least qseecom would need some Tested-by.
-> >
-> > I have been playing around with this on my x13s (sc8280xp). It seems
-> > that efivars works ok (and therefore the qseecom stuff I believe), but
-> > with these patches applied I'm getting -22 when loading any firmware.
-> >
-> > I'll try to dig a little more, but thought I'd report that before I
-> > context switch for a little bit.
-> >
-> >     dmesg | grep "firmware\|-22"
-> >     [    0.000000] psci: PSCIv1.1 detected in firmware.
-> >     [    2.351999] qcom_scm firmware:scm: SHM Bridge enabled
-> >     [    2.353002] qcom_scm firmware:scm: qseecom: found qseecom with version 0x1402000
-> >     [    6.727604] systemd[1]: systemd-pcrmachine.service - TPM2 PCR Machine ID Measurement was skipped because of an unmet condition check (ConditionPathExists=/sys/firmware/efi/efivars/StubPcrKernelImage-4a67b082-0a4c-41cf-b6c7-440b29bb8c4f).
-> >     [    8.198381] qcom_q6v5_pas 1b300000.remoteproc: error -22 initializing firmware qcom/sc8280xp/LENOVO/21BX/qccdsp8280.mbn
-> >     [    8.198418] remoteproc remoteproc1: can't start rproc 1b300000.remoteproc: -22
-> >     [    8.407641] qcom_q6v5_pas 3000000.remoteproc: error -22 initializing firmware qcom/sc8280xp/LENOVO/21BX/qcadsp8280.mbn
-> >     [    8.407742] remoteproc remoteproc0: can't start rproc 3000000.remoteproc: -22
-> >     [    8.588496] adreno 3d00000.gpu: error -22 initializing firmware qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn
-> >     [    8.588509] msm_dpu ae01000.display-controller: [drm:adreno_load_gpu [msm]] *ERROR* gpu hw init failed: -22
-> >     [    9.392185] ath11k_pci 0006:01:00.0: fw_version 0x110b196e fw_build_timestamp 2022-12-22 12:54 fw_build_id WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.23
-> >     [   10.229367] adreno 3d00000.gpu: error -22 initializing firmware qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn
-> >     [   10.229383] msm_dpu ae01000.display-controller: [drm:adreno_load_gpu [msm]] *ERROR* gpu hw init failed: -22
-> >     [   11.041385] adreno 3d00000.gpu: error -22 initializing firmware qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn
-> >     [   11.041399] msm_dpu ae01000.display-controller: [drm:adreno_load_gpu [msm]] *ERROR* gpu hw init failed: -22
-> >     [   11.070144] adreno 3d00000.gpu: error -22 initializing firmware qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn
-> >     [   11.070160] msm_dpu ae01000.display-controller: [drm:adreno_load_gpu [msm]] *ERROR* gpu hw init failed: -22
-> >     [   11.321999] adreno 3d00000.gpu: error -22 initializing firmware qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn
-> >     [   11.322015] msm_dpu ae01000.display-controller: [drm:adreno_load_gpu [msm]] *ERROR* gpu hw init failed: -22
-> >     [   11.340989] adreno 3d00000.gpu: error -22 initializing firmware qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn
-> >     [   11.341002] msm_dpu ae01000.display-controller: [drm:adreno_load_gpu [msm]] *ERROR* gpu hw init failed: -22
-> >     [   11.576180] adreno 3d00000.gpu: error -22 initializing firmware qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn
-> >     [   11.576198] msm_dpu ae01000.display-controller: [drm:adreno_load_gpu [msm]] *ERROR* gpu hw init failed: -22
-> >     [   11.593647] adreno 3d00000.gpu: error -22 initializing firmware qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn
-> >     [   11.593661] msm_dpu ae01000.display-controller: [drm:adreno_load_gpu [msm]] *ERROR* gpu hw init failed: -22
-> >     [   11.854212] adreno 3d00000.gpu: error -22 initializing firmware qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn
-> >     [   11.854226] msm_dpu ae01000.display-controller: [drm:adreno_load_gpu [msm]] *ERROR* gpu hw init failed: -22
-> >     [   11.879925] adreno 3d00000.gpu: error -22 initializing firmware qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn
-> >     [   11.879937] msm_dpu ae01000.display-controller: [drm:adreno_load_gpu [msm]] *ERROR* gpu hw init failed: -22
-> >     [   12.157090] adreno 3d00000.gpu: error -22 initializing firmware qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn
-> >     [   12.157106] msm_dpu ae01000.display-controller: [drm:adreno_load_gpu [msm]] *ERROR* gpu hw init failed: -22
-> >     [   12.183074] adreno 3d00000.gpu: error -22 initializing firmware qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn
-> >     [   12.183088] msm_dpu ae01000.display-controller: [drm:adreno_load_gpu [msm]] *ERROR* gpu hw init failed: -22
-> >
-> > Thanks,
-> > Andrew
-> 
-> Huh remoteproc seems to work fine on sm8550. Can you post the full
-> kernel log? Do you know which SCM calls fails?
-> 
-> Bart
+On Fri, 29 Sep 2023 21:16:51 +0200, Andrew Halaney <ahalaney@redhat.com> said:
+> On Thu, Sep 28, 2023 at 11:20:35AM +0200, Bartosz Golaszewski wrote:
+>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>>
+>> Let's use the new SCM memory allocator to obtain a buffer for this call
+>> instead of using dma_alloc_coherent().
+>>
+>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>> ---
+>>  drivers/firmware/qcom/qcom_scm.c | 16 +++++-----------
+>>  1 file changed, 5 insertions(+), 11 deletions(-)
+>>
+>> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+>> index 02a773ba1383..c0eb81069847 100644
+>> --- a/drivers/firmware/qcom/qcom_scm.c
+>> +++ b/drivers/firmware/qcom/qcom_scm.c
+>> @@ -532,7 +532,7 @@ static void qcom_scm_set_download_mode(bool enable)
+>>  int qcom_scm_pas_init_image(u32 peripheral, const void *metadata, size_t size,
+>>  			    struct qcom_scm_pas_metadata *ctx)
+>>  {
+>> -	dma_addr_t mdata_phys;
+>> +	phys_addr_t mdata_phys;
+>
+>>  	void *mdata_buf;
+>>  	int ret;
+>>  	struct qcom_scm_desc desc = {
+>> @@ -544,13 +544,7 @@ int qcom_scm_pas_init_image(u32 peripheral, const void *metadata, size_t size,
+>>  	};
+>>  	struct qcom_scm_res res;
+>>
+>> -	/*
+>> -	 * During the scm call memory protection will be enabled for the meta
+>> -	 * data blob, so make sure it's physically contiguous, 4K aligned and
+>> -	 * non-cachable to avoid XPU violations.
+>> -	 */
+>> -	mdata_buf = dma_alloc_coherent(__scm->dev, size, &mdata_phys,
+>> -				       GFP_KERNEL);
+>> +	mdata_buf = qcom_scm_mem_alloc(size, GFP_KERNEL);
+>
+> mdata_phys is never initialized now, and its what's being shoved into
+> desc.args[1] later, which I believe is what triggered the -EINVAL
+> with qcom_scm_call() that I reported in my cover letter reply this
+> morning.
+>
+> Prior with the DMA API that would have been the device view of the buffer.
+>
 
-See my response on patch 6, and please let me know if you I messed up
-the logic there and need to dig a little more. The log didn't have
-anything useful outside what is shown here unfortunately, but I can
-gather more if you refute that comment on patch 6.
+Gah! Thanks for finding this.
 
-Thanks,
-Andrew
+Can you try the following diff?
 
+diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+index 794388c3212f..b0d4ea237034 100644
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -556,6 +556,7 @@ int qcom_scm_pas_init_image(u32 peripheral, const
+void *metadata, size_t size,
+ 		dev_err(__scm->dev, "Allocation of metadata buffer failed.\n");
+ 		return -ENOMEM;
+ 	}
++	mdata_phys = qcom_scm_mem_to_phys(mdata_buf);
+ 	memcpy(mdata_buf, metadata, size);
+
+ 	ret = qcom_scm_clk_enable();
+@@ -578,7 +579,7 @@ int qcom_scm_pas_init_image(u32 peripheral, const
+void *metadata, size_t size,
+ 		qcom_scm_mem_free(mdata_buf);
+ 	} else if (ctx) {
+ 		ctx->ptr = mdata_buf;
+-		ctx->phys = qcom_scm_mem_to_phys(mdata_buf);
++		ctx->phys = mdata_phys;
+ 		ctx->size = size;
+ 	}
+
+Bart
+
+>>  	if (!mdata_buf) {
+>>  		dev_err(__scm->dev, "Allocation of metadata buffer failed.\n");
+>>  		return -ENOMEM;
+>> @@ -574,10 +568,10 @@ int qcom_scm_pas_init_image(u32 peripheral, const void *metadata, size_t size,
+>>
+>>  out:
+>>  	if (ret < 0 || !ctx) {
+>> -		dma_free_coherent(__scm->dev, size, mdata_buf, mdata_phys);
+>> +		qcom_scm_mem_free(mdata_buf);
+>>  	} else if (ctx) {
+>>  		ctx->ptr = mdata_buf;
+>> -		ctx->phys = mdata_phys;
+>> +		ctx->phys = qcom_scm_mem_to_phys(mdata_buf);
+>>  		ctx->size = size;
+>>  	}
+>>
+>> @@ -594,7 +588,7 @@ void qcom_scm_pas_metadata_release(struct qcom_scm_pas_metadata *ctx)
+>>  	if (!ctx->ptr)
+>>  		return;
+>>
+>> -	dma_free_coherent(__scm->dev, ctx->size, ctx->ptr, ctx->phys);
+>> +	qcom_scm_mem_free(ctx->ptr);
+>>
+>>  	ctx->ptr = NULL;
+>>  	ctx->phys = 0;
+>> --
+>> 2.39.2
+>>
+>
+>
