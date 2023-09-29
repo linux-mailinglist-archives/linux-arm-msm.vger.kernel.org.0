@@ -2,131 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 716B27B3408
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 15:57:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1AB8B7B34A5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 16:15:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233044AbjI2N5n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Sep 2023 09:57:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54418 "EHLO
+        id S233424AbjI2OPh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Sep 2023 10:15:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232932AbjI2N5l (ORCPT
+        with ESMTP id S233443AbjI2OPZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Sep 2023 09:57:41 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 629F41AA
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 06:57:38 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-533edb5ac54so13302460a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 06:57:38 -0700 (PDT)
+        Fri, 29 Sep 2023 10:15:25 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19930CEA
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 07:15:15 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-40566f8a093so110976055e9.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 07:15:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695995856; x=1696600656; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=nexus-software-ie.20230601.gappssmtp.com; s=20230601; t=1695996913; x=1696601713; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=MqvODDBtWBNjtDJNYqGdOzftA4f4uyWFomekAFhFUiE=;
-        b=v7h7vASByDXZ0rTuVo6gxxsnCIlJtQARv4xoo0XSM5KUM1NWn8m4SuyVooTooLCfN5
-         iTi6bbMVuopcE3IiLecEMCqy1yoGxZw2XXOqWLj51qSlX/f08B2ERikIj91fBvpDIoS4
-         T84pIei9Gxhiw69Sl4RFOOR8Y6OkE3mZ1pJ51oRDaH3lcOAZrpjewcYB0hEU9f8bn7qG
-         O9JgaqBww11V/wTVB8zP3HsFraQCS+E/Q/FLlfdGl+NOrCaSTqnKvw67vCM7ncXm2WNu
-         z6xmGTiwmtPFwSl0GXGR5JnuL072mdySsGihrH5CPFgJjFawNwVoQE10nOEyc1hxS7FI
-         oZUw==
+        bh=Fo/ZMhzFTF6G7gZ+jZPeOdnwccHM0rKzSSb1DVm0Tfg=;
+        b=p2glEL5fXsTtp1TuynekPMs2GvwJ289ScEdvRSWwnUCZiMKY7UvVR8Cd4M+VegASna
+         NiFoLbnigJC5/1oYnSoXFfE/hBk3teNcTdB8wWp+buUYT/r0hPyfhTfxxhL82V4hVWwS
+         5tgQPCbZ0Mnh3Q5QdNONzzuXBinAL9NI6Fuj7bKVjgl1j/hxbldugDjF4FmwmPIS/WlL
+         0HQZkD03uThpNKmB00Rjl3+Tv2nKK9MVL+W3lQwyTfkieQtiTCw5LSk+Rp4HbYN/leyc
+         Blk9AsV05zu1PvH21eqtuBS5dX+tTsg4mdBQtmrIdAba8ewANoHcCAAUR2noSBEEbNYi
+         khVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695995856; x=1696600656;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1695996913; x=1696601713;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MqvODDBtWBNjtDJNYqGdOzftA4f4uyWFomekAFhFUiE=;
-        b=lu6P9dFwrVZb2pkAO0rfz9k1rLSQWYZrTREv7VCNdsRhiI0vbY95lKDHaiKx56e7uW
-         AgUrG5YMoxQE+F+asJzQp5N8nXrOnlkmKI19h3qoYGrhl4ssDruWs5fpz1EL/n1dXrRp
-         oWu5S11tKVwd+l6IPWxnA5dGFxmLAe251fx3dflcSkX26eQ5YcwVvotX97XiYhERwa79
-         5XKNADMbVIeVJmBmdDQ+Bps4AssNeKjLry7S2pezl4hL4qjhY+JUdzqar35O73vFyrMn
-         /vt61RcIsgNAInB/eLwv81rq3w9rrkRxL9/oF8sMx/M5sn0Ua7uVnASoDtgQOKbMtahQ
-         PuSA==
-X-Gm-Message-State: AOJu0YyAThhJV1XDbTB7aKzg3FEOVzaLaMoYzK3q3TzN8nhWQFzpzII8
-        IXCBSXMrTZoOX2UzRXRhy5K8Dg==
-X-Google-Smtp-Source: AGHT+IHL45cWVCGHfJIwgYAU+xiijTYw9hrymNHUt70vHNMBwYeV7RFCvC3L4yH2VGQn0Y6xgX6o5g==
-X-Received: by 2002:aa7:c582:0:b0:532:c08a:eac0 with SMTP id g2-20020aa7c582000000b00532c08aeac0mr3756236edq.26.1695995856608;
-        Fri, 29 Sep 2023 06:57:36 -0700 (PDT)
-Received: from [192.168.33.189] (178235177217.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.217])
-        by smtp.gmail.com with ESMTPSA id cy23-20020a0564021c9700b005362c9905b2sm2257462edb.35.2023.09.29.06.57.34
+        bh=Fo/ZMhzFTF6G7gZ+jZPeOdnwccHM0rKzSSb1DVm0Tfg=;
+        b=B+j3hoq+zPvuxPak8hWXRq+PIDnXdOXSOBhk5YVjMvSPm4+COl8ifo8VpMk+eehVcd
+         eJcVJnWf2jiXVbSbEB2F48YfjT1My8DkW1KASUmSVY0PTzWVM0cYyZwI6h4ku3CWEpf1
+         LfWw2XPj2WAmNA/RNqGjb//YLXIZBgva5JLkQtu54A9Q56C6F4y61iOLy+sJ/YuP9/lO
+         k667vfo9UtuCLzfcpW5U85HLvCSf/DkIZ4PRUHsBVj3MQeYJbh0iEvD4x1qicMMlvLG0
+         U9HG/2uRQcCCJI1V220XzHiO4Qz1Z9FkyE/rrOncBRSRZu69Oul9DDmSpeti1Yl+Hby5
+         ygqQ==
+X-Gm-Message-State: AOJu0Yz6o4IXltyrYXe5+hl83GWEw94LBAeutvJVGNuME+gjDZZeKYTF
+        1wtwKX5UjsbQ97wefNmKxUGtJQ==
+X-Google-Smtp-Source: AGHT+IEl78aziYLAgqWttNqnKzEHEnL1N0JwuOtWG4yqhPkHV7j1lZtvyST9tZptWvOWNWme4fhXlw==
+X-Received: by 2002:a05:600c:2113:b0:405:1ba2:4fd1 with SMTP id u19-20020a05600c211300b004051ba24fd1mr4202922wml.24.1695996913089;
+        Fri, 29 Sep 2023 07:15:13 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id g12-20020a5d698c000000b0031c8a43712asm21607937wru.69.2023.09.29.07.15.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Sep 2023 06:57:36 -0700 (PDT)
-Message-ID: <fac9c693-5d50-428d-9ea6-83ebec7239c3@linaro.org>
-Date:   Fri, 29 Sep 2023 15:57:33 +0200
+        Fri, 29 Sep 2023 07:15:12 -0700 (PDT)
+Message-ID: <1b5bd391-4bb0-44ac-88d1-e326bec4dd7d@nexus-software.ie>
+Date:   Fri, 29 Sep 2023 15:15:11 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/4] ARM: dts: qcom: ipq8064: Add CPU OPP table
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sc7280: Add Camera Control
+ Interface busses
 Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>, ilia.lin@kernel.org,
-        vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, agross@kernel.org, andersson@kernel.org,
-        rafael@kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     Christian Marangi <ansuelsmth@gmail.com>
-References: <20230928210525.1265958-1-robimarko@gmail.com>
- <20230928210525.1265958-4-robimarko@gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20230928210525.1265958-4-robimarko@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Andi Shyti <andi.shyti@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230929-sc7280-cci-v1-0-16c7d386f062@fairphone.com>
+ <20230929-sc7280-cci-v1-2-16c7d386f062@fairphone.com>
+ <8dd470e5-ce33-3d33-98f1-e66935ca7b56@linaro.org>
+From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
+In-Reply-To: <8dd470e5-ce33-3d33-98f1-e66935ca7b56@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28.09.2023 23:04, Robert Marko wrote:
-> From: Christian Marangi <ansuelsmth@gmail.com>
+On 29/09/2023 14:35, Konrad Dybcio wrote:
 > 
-> Add CPU OPP table for IPQ8062, IPQ8064 and IPQ8065 SoC.
-> Use opp-supported-hw binding to correctly enable and disable the
-> frequency as IPQ8062 supports up to 1.0Ghz, IPQ8064 supports up to
-> 1.4GHz with 1.2GHz as an additional frequency and IPQ8065 supports
-> 1.7GHZ but doesn't have 1.2GHZ frequency and has to be disabled.
 > 
-> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> ---
-When resending somebody else's patches, you need to add your own
-sign-off at the end.
+> On 9/29/23 10:01, Luca Weiss wrote:
+>> Add the CCI busses found on sc7280 and their pinctrl states.
+>>
+>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sc7280.dtsi | 136 
+>> +++++++++++++++++++++++++++++++++++
+>>   1 file changed, 136 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi 
+>> b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> index 66f1eb83cca7..65550de2e4ff 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> @@ -3793,6 +3793,86 @@ videocc: clock-controller@aaf0000 {
+>>               #power-domain-cells = <1>;
+>>           };
+>> +        cci0: cci@ac4a000 {
+>> +            compatible = "qcom,sc7280-cci", "qcom,msm8996-cci";
+>> +            reg = <0 0x0ac4a000 0 0x1000>;
+>> +            interrupts = <GIC_SPI 460 IRQ_TYPE_EDGE_RISING>;
+>> +            power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>;
+>> +
+>> +            clocks = <&camcc CAM_CC_CAMNOC_AXI_CLK>,
+>> +                 <&camcc CAM_CC_SLOW_AHB_CLK_SRC>,
+>> +                 <&camcc CAM_CC_CPAS_AHB_CLK>,
+>> +                 <&camcc CAM_CC_CCI_0_CLK>,
+>> +                 <&camcc CAM_CC_CCI_0_CLK_SRC>;
+>> +            clock-names = "camnoc_axi",
+>> +                      "slow_ahb_src",
+>> +                      "cpas_ahb",
+>> +                      "cci",
+>> +                      "cci_src";
+> I guess this is more of a question to e.g. Bryan, but are all of these 
+> clocks actually necessary?
+> 
+> Konrad
+Hmm its a good question, we generally take the approach of adopting all 
+of the downstream clocks for these camera interfaces verbatim.
 
-Konrad
+The clock plan for this part only calls out cci_X_clk and cci_x_clk_src 
+for the CCI however we know that to be incomplete since we *absolutely* 
+need to have the AXI for the block clocked to access those registers, 
+same deal with the AHB bus.
+
+AXI: registers
+AHB: data
+
+In the above list the only clock you might conceivably not need is 
+CPAS_AHB_CLK.
+
+Let me zap that clock from sdm845 since I have an rb3 right in front of 
+me and see what happens.
+
+Crash and reset
+
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -4402,13 +4402,11 @@ cci: cci@ac4a000 {
+                         clocks = <&clock_camcc CAM_CC_CAMNOC_AXI_CLK>,
+                                 <&clock_camcc CAM_CC_SOC_AHB_CLK>,
+                                 <&clock_camcc CAM_CC_SLOW_AHB_CLK_SRC>,
+-                               <&clock_camcc CAM_CC_CPAS_AHB_CLK>,
+                                 <&clock_camcc CAM_CC_CCI_CLK>,
+                                 <&clock_camcc CAM_CC_CCI_CLK_SRC>;
+                         clock-names = "camnoc_axi",
+                                 "soc_ahb",
+                                 "slow_ahb_src",
+-                               "cpas_ahb",
+                                 "cci",
+                                 "cci_src";
+
+
+I think the list is good tbh
+
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
