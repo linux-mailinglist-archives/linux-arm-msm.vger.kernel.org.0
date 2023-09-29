@@ -2,245 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C2CAA7B334B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 15:17:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 685C57B3365
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 15:19:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233156AbjI2NRR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Sep 2023 09:17:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36050 "EHLO
+        id S232990AbjI2NT6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Sep 2023 09:19:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232997AbjI2NRQ (ORCPT
+        with ESMTP id S233156AbjI2NT4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Sep 2023 09:17:16 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92CACB7;
-        Fri, 29 Sep 2023 06:17:13 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ED1BC433C7;
-        Fri, 29 Sep 2023 13:17:10 +0000 (UTC)
-Message-ID: <9c38c002-8452-4fb7-a7ee-cc8e9e1b849e@xs4all.nl>
-Date:   Fri, 29 Sep 2023 15:17:08 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 00/53] Add DELETE_BUF ioctl
-Content-Language: en-US, nl
-To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-        mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
-        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
-        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
-        nicolas.dufresne@collabora.com
-Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
-        kernel@collabora.com
-References: <20230927153558.159278-1-benjamin.gaignard@collabora.com>
- <ce043b11-aea9-4127-ba00-6c351651dc1e@xs4all.nl>
- <5cc5a999-e22d-4ef8-c857-ffd77630eeb9@collabora.com>
- <38ec1120-7c92-833b-6e59-35086f4a3c10@collabora.com>
-From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-In-Reply-To: <38ec1120-7c92-833b-6e59-35086f4a3c10@collabora.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        Fri, 29 Sep 2023 09:19:56 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B70871B9;
+        Fri, 29 Sep 2023 06:19:54 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38TAjt7S030869;
+        Fri, 29 Sep 2023 13:19:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=Lf3ex/Z4ddSkjpFJQcTMl0H72jUUcDMMDlMYDUfhLfk=;
+ b=mOA8E1oEJhETDoa2Ae/On8tVC3iceB+TvK/Qf1cU9JUWQdGgC3r7y0uI50mPsVp1dC01
+ 1dizobX2frpYQbkU1D4BNu0Z4RV1AMP+RRu9i3wSsQmzZ1M9l/IlNmBUoBj6EV6C/l3e
+ BaN9R6hNg7SagNOPRXIbAkOdNgwATyffN7dfynHxNeoZJFB5WsxIgqP3R9ORPvT4wTFX
+ Wvd3ylFbe8nlyZYuyx4QSSahYfPU1xHigDBOxro+hj93WBXQmrmuYNFDKx0ZoeE5i0Zg
+ ARiPGkIg9gvGtCIT4sLpaZRECBIBCvDknnOL2wTVwDr7cciEamAvpF+sXAiKr2eBOdFx qQ== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3td3ggbq3v-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 29 Sep 2023 13:19:43 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 38TDJdpK018488;
+        Fri, 29 Sep 2023 13:19:39 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3t9s3m3gcg-1;
+        Fri, 29 Sep 2023 13:19:39 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 38TDJdPX018479;
+        Fri, 29 Sep 2023 13:19:39 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-nitirawa-hyd.qualcomm.com [10.213.109.152])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 38TDJckT018463;
+        Fri, 29 Sep 2023 13:19:39 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2342877)
+        id 365E0571638; Fri, 29 Sep 2023 18:49:38 +0530 (+0530)
+From:   Nitin Rawat <quic_nitirawa@quicinc.com>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        mani@kernel.org, alim.akhtar@samsung.com, bvanassche@acm.org,
+        avri.altman@wdc.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        cros-qcom-dts-watchers@chromium.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Nitin Rawat <quic_nitirawa@quicinc.com>
+Subject: [PATCH V4 0/4] Add UFS host controller and Phy nodes for sc7280
+Date:   Fri, 29 Sep 2023 18:49:32 +0530
+Message-Id: <20230929131936.29421-1-quic_nitirawa@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Jh7fEnqxF92lnkqc_YdicxRbjWyfARva
+X-Proofpoint-ORIG-GUID: Jh7fEnqxF92lnkqc_YdicxRbjWyfARva
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-09-29_11,2023-09-28_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=726
+ priorityscore=1501 bulkscore=0 malwarescore=0 clxscore=1015
+ lowpriorityscore=0 suspectscore=0 mlxscore=0 spamscore=0 adultscore=0
+ phishscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2309180000 definitions=main-2309290114
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/09/2023 13:44, Benjamin Gaignard wrote:
-> 
-> Le 28/09/2023 à 15:16, Benjamin Gaignard a écrit :
->>
->> Le 28/09/2023 à 15:04, Hans Verkuil a écrit :
->>> Hi Benjamin,
->>>
->>> On 27/09/2023 17:35, Benjamin Gaignard wrote:
->>>> Unlike when resolution change on keyframes, dynamic resolution change
->>>> on inter frames doesn't allow to do a stream off/on sequence because
->>>> it is need to keep all previous references alive to decode inter frames.
->>>> This constraint have two main problems:
->>>> - more memory consumption.
->>>> - more buffers in use.
->>>> To solve these issue this series introduce DELETE_BUFS ioctl and remove
->>>> the 32 buffers limit per queue.
->>>>
->>>> VP9 conformance tests using fluster give a score of 210/305.
->>>> The 24 resize inter tests (vp90-2-21-resize_inter_* files) are ok
->>>> but require to use postprocessor.
->>>>
->>>> Kernel branch is available here:
->>>> https://gitlab.collabora.com/benjamin.gaignard/for-upstream/-/commits/remove_vb2_queue_limit_v8
->>>>
->>>> GStreamer branch to use DELETE_BUF ioctl and testing dynamic resolution
->>>> change is here:
->>>> https://gitlab.freedesktop.org/benjamin.gaignard1/gstreamer/-/commits/VP9_drc
->>> I applied patches 1-46 on top of staging and applied patch 1/2 of v4l-utils. I chose
->>> 1-46 since those would be the first batch to be merged.
->>>
->>> I had to apply a small patch on top, since amphion was still using max_allowed_buffers:
->>>
->>> https://git.linuxtv.org/hverkuil/media_tree.git/commit/?h=delbuf&id=fce79aa0239a3a4e5c7634b9b7ffc356057b70b4
->>>
->>> With that change everything compiled cleanly.
->>>
->>> But running the regression tests (test-media script) failed with a kernel oops:
->>>
->>> Buffer ioctls (Input 0):
->>>                  fail: v4l2-test-buffers.cpp(611): q.reqbufs(node, 1)
->>>          test VIDIOC_REQBUFS/CREATE_BUFS/QUERYBUF: FAIL
->>> [   25.309343] general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] PREEMPT SMP DEBUG_PAGEALLOC KASAN
->>> [   25.310067] KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
->>> [   25.310471] CPU: 0 PID: 187 Comm: v4l2-compliance Not tainted 6.6.0-rc3+ #1
->>> [   25.310837] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
->>> [   25.311334] RIP: 0010:__vb2_queue_alloc+0x34c/0xd00 [videobuf2_common]
->>> [   25.311688] Code: 89 f8 48 c1 e8 03 80 3c 18 00 0f 85 0c 07 00 00 49 8b b7 40 01 00 00 44 89 f0 4c 8d 2c c6 41 39 ce 73 18 4c 89 e8 48 c1 e8 03 <80> 3c 18 00 0f 85 d2 08 00 00 49 83 7d 00 00 74 02
->>> 0f 0b 4c 89 e8
->>> [   25.312670] RSP: 0018:ffff88810afef930 EFLAGS: 00010212
->>> [   25.312948] RAX: 0000000000000001 RBX: dffffc0000000000 RCX: 0000000000000040
->>> [   25.313331] RDX: ffff88810ce08814 RSI: 0000000000000000 RDI: ffff88810cfb72e0
->>> [   25.313708] RBP: ffff88810ce08800 R08: 0000000000001800 R09: 0000000000000001
->>> [   25.314097] R10: ffffffff91560b0f R11: ffffffff8f40006a R12: ffff88810afefa74
->>> [   25.314470] R13: 0000000000000008 R14: 0000000000000001 R15: ffff88810cfb71a0
->>> [   25.314854] FS:  00007fa524908440(0000) GS:ffff88811aa00000(0000) knlGS:0000000000000000
->>> [   25.315281] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
->>> [   25.315594] CR2: 0000562855948270 CR3: 0000000109e21000 CR4: 0000000000350ef0
->>> [   25.315982] Call Trace:
->>> [   25.316122]  <TASK>
->>> [   25.316243]  ? die_addr+0x37/0xa0
->>> [   25.316433]  ? exc_general_protection+0x144/0x210
->>> [   25.316693]  ? asm_exc_general_protection+0x22/0x30
->>> [   25.316955]  ? entry_SYSCALL_64_after_hwframe+0x46/0xb0
->>> [   25.317235]  ? __vb2_queue_alloc+0x34c/0xd00 [videobuf2_common]
->>> [   25.317555]  vb2_core_create_bufs+0x5a0/0xce0 [videobuf2_common]
->>> [   25.317879]  ? __vb2_queue_alloc+0xd00/0xd00 [videobuf2_common]
->>> [   25.318213]  vb2_create_bufs+0x680/0x7f0 [videobuf2_v4l2]
->>> [   25.318506]  ? __kasan_kmalloc+0x83/0x90
->>> [   25.318729]  ? __kmalloc+0x5c/0x150
->>> [   25.318924]  ? __video_do_ioctl+0x3a5/0xc20 [videodev]
->>> [   25.319223]  ? __copy_timestamp+0x270/0x270 [videobuf2_v4l2]
->>> [   25.319532]  ? v4l_sanitize_format+0x121/0x340 [videodev]
->>> [   25.319839]  vb2_ioctl_create_bufs+0x280/0x440 [videobuf2_v4l2]
->>> [   25.320162]  ? check_fmt+0x15/0x5e0 [videodev]
->>> [   25.320420]  v4l_create_bufs+0xa8/0x150 [videodev]
->>> [   25.320693]  __video_do_ioctl+0x8d0/0xc20 [videodev]
->>> [   25.320975]  ? v4l_prepare_buf+0xa0/0xa0 [videodev]
->>> [   25.321250]  ? __might_fault+0x112/0x170
->>> [   25.321463]  ? __might_fault+0x112/0x170
->>> [   25.321675]  video_usercopy+0x48c/0xd00 [videodev]
->>> [   25.321949]  ? v4l_prepare_buf+0xa0/0xa0 [videodev]
->>> [   25.322228]  ? v4l_enumstd+0x60/0x60 [videodev]
->>> [   25.322497]  ? selinux_bprm_creds_for_exec+0xa90/0xa90
->>> [   25.322779]  ? rseq_ip_fixup+0x304/0x480
->>> [   25.322995]  ? __up_read+0x10b/0x750
->>> [   25.323201]  ? rseq_get_rseq_cs+0x680/0x680
->>> [   25.323430]  v4l2_ioctl+0x17f/0x1f0 [videodev]
->>> [   25.323689]  __x64_sys_ioctl+0x127/0x190
->>> [   25.323905]  do_syscall_64+0x35/0x80
->>> [   25.324105]  entry_SYSCALL_64_after_hwframe+0x46/0xb0
->>> [   25.324372] RIP: 0033:0x7fa524bf44eb
->>> [   25.324564] Code: 00 48 89 44 24 18 31 c0 48 8d 44 24 60 c7 04 24 10 00 00 00 48 89 44 24 08 48 8d 44 24 20 48 89 44 24 10 b8 10 00 00 00 0f 05 <89> c2 3d 00 f0 ff ff 77 1c 48 8b 44 24 18 64 48 2b
->>> 04 25 28 00 00
->>> [   25.325533] RSP: 002b:00007ffc888efee0 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
->>> [   25.325933] RAX: ffffffffffffffda RBX: 00007ffc888f0350 RCX: 00007fa524bf44eb
->>> [   25.326314] RDX: 00007ffc888effb0 RSI: 00000000c100565c RDI: 0000000000000023
->>> [   25.326702] RBP: 00007ffc888f8550 R08: 0000000000000000 R09: 0000000000000001
->>> [   25.327081] R10: 0000000000000016 R11: 0000000000000246 R12: 0000000000000000
->>> [   25.327468] R13: 0000000000000001 R14: 00007ffc888f8010 R15: 00007ffc888f1790
->>> [   25.327852]  </TASK>
->>> [   25.327979] Modules linked in: vivid videobuf2_dma_contig v4l2_tpg v4l2_dv_timings cec videobuf2_vmalloc videobuf2_memops videobuf2_v4l2 videodev videobuf2_common mc rc_core
->>> [   25.328835] ---[ end trace 0000000000000000 ]---
->>> [   25.329083] RIP: 0010:__vb2_queue_alloc+0x34c/0xd00 [videobuf2_common]
->>> [   25.329434] Code: 89 f8 48 c1 e8 03 80 3c 18 00 0f 85 0c 07 00 00 49 8b b7 40 01 00 00 44 89 f0 4c 8d 2c c6 41 39 ce 73 18 4c 89 e8 48 c1 e8 03 <80> 3c 18 00 0f 85 d2 08 00 00 49 83 7d 00 00 74 02
->>> 0f 0b 4c 89 e8
->>> [   25.330417] RSP: 0018:ffff88810afef930 EFLAGS: 00010212
->>> [   25.330812] RAX: 0000000000000001 RBX: dffffc0000000000 RCX: 0000000000000040
->>> [   25.331194] RDX: ffff88810ce08814 RSI: 0000000000000000 RDI: ffff88810cfb72e0
->>> [   25.331594] RBP: ffff88810ce08800 R08: 0000000000001800 R09: 0000000000000001
->>> [   25.331978] R10: ffffffff91560b0f R11: ffffffff8f40006a R12: ffff88810afefa74
->>> [   25.332360] R13: 0000000000000008 R14: 0000000000000001 R15: ffff88810cfb71a0
->>> [   25.332746] FS:  00007fa524908440(0000) GS:ffff88811aa00000(0000) knlGS:0000000000000000
->>> [   25.333170] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
->>> [   25.333486] CR2: 0000562855948270 CR3: 0000000109e21000 CR4: 0000000000350ef0
->>> [   25.333861] Kernel panic - not syncing: Fatal exception
->>> [   25.334179] Kernel Offset: 0xbe00000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
->>> [   25.334748] Rebooting in 30 seconds..
->>>
->>> I use the build scripts as described here:
->>>
->>> https://lore.kernel.org/linux-media/18989016-6392-a77b-6cf7-1223c9161def@xs4all.nl/
->>>
->>> I use this command to run the regression tests:
->>>
->>> ./build.sh -virtme -virtme-utils-path /usr/local/bin none delbuf
->>>
->>> (delbuf is the name of my branch)
->>>
->>> I don't really want to spend time reviewing this series until this is fixed...
->>
->> Yes that make sense.
->> It will work on it and let you now when I had fix it.
->> Regards,
->> Benjamin
-> 
-> This patch fix the problem:
-> 
-> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
-> index 320f37e46343..0598c1e4e9b5 100644
-> --- a/drivers/media/common/videobuf2/videobuf2-core.c
-> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
-> @@ -428,6 +428,8 @@ static void vb2_queue_add_buffer(struct vb2_queue *q, struct vb2_buffer *vb, uns
->   */
->  static void vb2_queue_remove_buffer(struct vb2_buffer *vb)
->  {
-> +    if (vb->vb2_queue->num_buffers)
-> +        vb->vb2_queue->num_buffers--;
->      vb->vb2_queue->bufs[vb->index] = NULL;
->      vb->vb2_queue = NULL;
->  }
-> @@ -641,8 +643,8 @@ static void __vb2_queue_free(struct vb2_queue *q, unsigned int buffers)
->  #endif
-> 
->      /* Free vb2 buffers */
-> -    for (i = q->max_num_buffers, buffer = 0; i > 0 && buffer < buffers; i--) {
-> -        struct vb2_buffer *vb = vb2_get_buffer(q, buffer);
-> +    for (i = q->max_num_buffers, buffer = 0; i >= 0 && buffer < buffers; i--) {
-> +        struct vb2_buffer *vb = vb2_get_buffer(q, i);
-> 
->          if (!vb)
->              continue;
-> @@ -2541,6 +2543,7 @@ void vb2_core_queue_release(struct vb2_queue *q)
->      __vb2_queue_free(q, q->max_num_buffers);
->      kfree(q->bufs);
->      q->bufs = NULL;
-> +    q->num_buffers = 0;
->      mutex_unlock(&q->mmap_lock);
->  }
->  EXPORT_SYMBOL_GPL(vb2_core_queue_release);
-> 
-> I'm preparing a v9 with this + your patch for Amphion driver:
-> 
-> https://gitlab.collabora.com/benjamin.gaignard/for-upstream/-/commits/remove_vb2_queue_limit_v9
+This patch adds UFS host controller and Phy nodes for Qualcomm sc7280 SOC
+and sc7280 Board.
 
-Even with this patch I still get errors. Did you just test vivid?
+Changes from v3:
+- Addresses Mani comment to include interconnect entry.
 
-Run 'test-media mc' to test it for all virtual drivers. I get both compliance
-failures, a WARN_ON in drivers/media/common/videobuf2/videobuf2-core.c:2489,
-and memory leaks. It currently fails and exists completely with the vimc tests,
-but things may already have gone pear-shaped with the vim2m test.
+Changes from v2:
+- Addressed Konrad comment to update binding qcom,ufs.yaml
+- Addresses mani/konrad comment to align ufs clock entry in devicetree.
 
-I'll mail you the full output from a test run with the build scripts
-separately (it's a bit too big to add here).
+Changes from v1:
+- Addressed mani comment to separate soc and board change.
+- Addressed mani comment to sort ufs node in ascending order.
 
-I don't know if you can run the build script with the -virtme option, instructions
-for that are currently only available for debian 12. If not, then ask Sebastian
-Fricke (he is working on a docker for this), alternatively you can take
-configs/virtme.config from the build scripts git repo and use that as the kernel
-config to test under. This config enables memory leak detection and a whole bunch
-of other debugging stuff.
+Nitin Rawat (4):
+  scsi: ufs: qcom: dt-bindings: Add SC7280 compatible string
+  arm64: dts: qcom: sc7280: Add UFS nodes for sc7280 soc
+  arm64: dts: qcom: sc7280: Add UFS nodes for sc7280 IDP board
+  dt-bindings: ufs: qcom: Align clk binding property for Qualcomm UFS
 
-Regards,
+Nitin Rawat (4):
+  scsi: ufs: qcom: dt-bindings: Add SC7280 compatible string
+  arm64: dts: qcom: sc7280: Add UFS nodes for sc7280 soc
+  arm64: dts: qcom: sc7280: Add UFS nodes for sc7280 IDP board
+  dt-bindings: ufs: qcom: Align clk binding property for Qualcomm UFS
 
-	Hans
+ .../devicetree/bindings/ufs/qcom,ufs.yaml     | 18 ++---
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi      | 19 ++++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          | 66 +++++++++++++++++++
+ 3 files changed, 95 insertions(+), 8 deletions(-)
+
+--
+2.17.1
+
