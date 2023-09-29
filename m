@@ -2,124 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1EEC97B374A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 17:52:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3585A7B376C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 18:03:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233736AbjI2Pw1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Sep 2023 11:52:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50004 "EHLO
+        id S233257AbjI2QDD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Sep 2023 12:03:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233714AbjI2Pw0 (ORCPT
+        with ESMTP id S233141AbjI2QDC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Sep 2023 11:52:26 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4114E195
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 08:52:23 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-405497850dbso123105275e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 08:52:23 -0700 (PDT)
+        Fri, 29 Sep 2023 12:03:02 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F164D1A8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 09:03:00 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-99c3c8adb27so1950515866b.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 09:03:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696002742; x=1696607542; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=IrS+nzD68lxpKLinSVXhSEs3fVhjvM8TXqXpQevNJBs=;
-        b=Sn3Ed8UGv5mdqPn4PA4bd7aTXYIJAfdgINOxGcha/NsfEnt1fkuvcyE8rZZS+K1pCe
-         e98JNYxp+IchJaQCx/+a3/hlB3AV+lkfrw3gWELwGc8y2l4c3AsCPpm7MxoKatG+5t5y
-         GrcQ11DSQSJutU2L5ZevyVdRum0BJvPzzHRyDMKQ6zFWXYKtQg4uRBADgay+fus0fNxy
-         Jqh+aHf5wF3Mm+vgkJXf4OU+6a5DpSCReWfp57vreLtoQiqvZGYVTGuwzK8/xcLDEG8T
-         fQoaaoZfo5mGZx9DpDa8aY9M9cAgwkXqMDU6vPXvx9NSdlGlzD7Q9ZQ+A4A6G3PWV8Dc
-         KOGQ==
+        d=linaro.org; s=google; t=1696003379; x=1696608179; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=dTHdLZvZRtA3Iqqnp6A3lBx/EWxmXoRrCoZvxKDaOvU=;
+        b=WhOnBXgizzvXYWGzxvsJiFJFYEPo0sdZz8JtDw7KnI+yrHi8lCZyKlMo9jTmGpYeZA
+         LAb5LNKXnQi39wmut0wNGaJ0TfqMoIKZGj/24Jow7g0RqbZexEtdzqP7UXiAjbXiPBrv
+         6XIrxFfV7AFJfin83EnjgIIPyGAcjvfmrgCKH4zZN5UL3fSG09F36ZSfSj1LVbVbsEmj
+         7YERpqQiMTYADQIaZfSqn/vwIDT5DPTYwVcpxX0XH3fmRy3NgH7yxUyh64CZ5YwyGwD1
+         Qdwy1iUuyBgHYVCDdF+4hpvXgaEphc5CCZtJsFJRHAsttcDeYu23aWUkP9CCfZzwFCIx
+         NTdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696002742; x=1696607542;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IrS+nzD68lxpKLinSVXhSEs3fVhjvM8TXqXpQevNJBs=;
-        b=nTG+W8feRkLtaiq0HbqqZqOYJC0fkL6RhP6ifrNMupmWAmEMWkQ0o5AhQ9IR3vNAN9
-         8gMcTBIz3cX1lDffv1m0AU9MJRWKztAoMW+9WPb9Ck7Tr4sALtriDsg4eC4HHzubNlMW
-         j6taZFSASlVW+TuYqz7tXbhzZj1mfGG1Dou6rFLrqolXuzvk5WSYXGZiCmf6wPK5Br4z
-         p0vg2E5vYNC1U+lqv1tRYLRbKjA2x7WzDPPYTWbsh/ouuFUtvXyVvFmTID4+LRe5r79f
-         YdR/vlpDiBtWVB+H8sYcHwnYjhjUkkJ1xSWO4oL9cpYYlYDnoJcWVbxAtKZaKIXNPUT+
-         YlpA==
-X-Gm-Message-State: AOJu0Yxfq/cT7Xhte3LQOZ4egrXIvdsHPK4sicbqOdWZuZLbY51hJDqv
-        u/QwNYkeTymBUkwMaFFbYwlcHw==
-X-Google-Smtp-Source: AGHT+IGWszKKxw4TdMa+hddnqsHXs6q8yNQZry/GtgBQM82ugScktA6LHs1ViFFsbX/SAdDuPBryyw==
-X-Received: by 2002:a7b:c8d1:0:b0:405:3b92:2fed with SMTP id f17-20020a7bc8d1000000b004053b922fedmr3953096wml.26.1696002741647;
-        Fri, 29 Sep 2023 08:52:21 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id y19-20020a1c4b13000000b00405bbfd5d16sm1685765wma.7.2023.09.29.08.52.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Sep 2023 08:52:21 -0700 (PDT)
-Message-ID: <b983e5e4-9a70-4e50-9d32-234cd5c47f66@linaro.org>
-Date:   Fri, 29 Sep 2023 16:52:20 +0100
+        d=1e100.net; s=20230601; t=1696003379; x=1696608179;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dTHdLZvZRtA3Iqqnp6A3lBx/EWxmXoRrCoZvxKDaOvU=;
+        b=keAtJ2WBavO1A/dwi/+ZukvkH2D0mRM19DrfFv29v3NYliNfo75BvpQKcegvyTaxNV
+         D9eiQEMOZaQwmeOcnu/zQIHDweB1u3XihDmM9jsDjPsH/7THRnLPz2hNWvuqsy7Yh7fZ
+         2VAJPXTgGdfFdgYsUG0QFMjkX79TV/l70ONbEASLs3p+1HKSTtbFoEW8I1VxIp0T7BGx
+         ClN4UOMu25AxuwY6SY5hb2GvIK6SuJl5qQ9K6u6iMCvqmk8+W0Gvy2WfHlV1Zagnhj08
+         zSnL6PeR8aT0TQCmFBO8M61e+8tZiJHqE6Njvuv+AbxfeJ+6qUWMzp0YuSRzuFiO8mQI
+         jc6w==
+X-Gm-Message-State: AOJu0YxWH+E56AmnoKtXzDytuBl6SgMR26zxhjZbR32JFZqw2uDDFLQD
+        9udvbj5Bs27SzBIlINHdKzhS2w==
+X-Google-Smtp-Source: AGHT+IHlEFZoEPtOotAcO1KkbMwAGgoW7SHy/fG9D21gqt5w7mtThDxvG4U2zeM7HoMLxKlkFCllUQ==
+X-Received: by 2002:a17:906:5dc1:b0:9aa:16c4:be16 with SMTP id p1-20020a1709065dc100b009aa16c4be16mr3898907ejv.57.1696003379099;
+        Fri, 29 Sep 2023 09:02:59 -0700 (PDT)
+Received: from [127.0.1.1] (178235177217.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.217])
+        by smtp.gmail.com with ESMTPSA id v6-20020a170906380600b0099c53c4407dsm12548202ejc.78.2023.09.29.09.02.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 29 Sep 2023 09:02:58 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Date:   Fri, 29 Sep 2023 18:02:57 +0200
+Subject: [PATCH] arm64: dts: qcom: sc8280xp-x13s: Use the correct DP PHY
+ compatible
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: sc7280: Add Camera Control
- Interface busses
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        Andy Gross <agross@kernel.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230929-topic-x13s_edpphy-v1-1-ce59f9eb4226@linaro.org>
+X-B4-Tracking: v=1; b=H4sIADD1FmUC/x3MQQqAIBBA0avErBN0FMquEhFhU87GRCMK6e5Jy
+ 7f4v0CmxJRhaAokujjzESpU24DzS9hJ8FoNKFFLi1acR2QnbqXzTGuM/hGSVIfG9s5ohNrFRBv
+ f/3Oc3vcDIE2DzWMAAAA=
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Andi Shyti <andi.shyti@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230929-sc7280-cci-v1-0-16c7d386f062@fairphone.com>
- <20230929-sc7280-cci-v1-2-16c7d386f062@fairphone.com>
- <8dd470e5-ce33-3d33-98f1-e66935ca7b56@linaro.org>
- <1b5bd391-4bb0-44ac-88d1-e326bec4dd7d@nexus-software.ie>
- <acc606a6-c46c-43f5-86e0-84bf876001dd@linaro.org>
- <db5d00b5-5d18-4144-88c2-ff6cfb8c176a@linaro.org>
- <b6f801fc-1d8b-420b-a439-ea0cdd12f7f6@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <b6f801fc-1d8b-420b-a439-ea0cdd12f7f6@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+        Johan Hovold <johan+linaro@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.13-dev-0438c
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/09/2023 16:25, Konrad Dybcio wrote:
->> Not actually a required clock for the clock controller.
->>
->> I suspect the same is true for dispcc and videocc though it would also mean the respective drivers would need to switch on <&gcc DISPx_CAMERA_AHB_CLK> or <&gcc GCC_VIDEO_AHB_CLK> prior to accessing registers inside the ip blocks which may not currently be the case.
->>
->> Feels like a bit of a contrary answer but my reading is the GCC_IPBLOCK_AHB_CLK clocks belong in the drivers not the clock controllers..  or at least that's true for sm8250/camcc
-> I believe the idea here would be that registering GCC_IP_AHB_CLK
-> as a pm_clk for the clock controller would make that clock turn
-> on when IPBLOCK_CC is accessed (e.g. when we turn on
-> IPBLOCK_CORE_CLK), so that it doesn't need to be duplicated in
-> each and every end device.
-> 
-> Konrad
+The DP PHY needs different settings when an eDP display is used.
+Make sure these apply on the X13s.
 
-Yeah I mean I accept the logic - the core AHB clock is effectively gated 
-by the ipblockcc even though they originate from different places in 
-hardware - and _when_ do you want one clock without the other ? Never 
-except at probe() time for the ipblockcc.
+FWIW
+I could not notice any user-facing change stemming from this commit.
 
-Then again if you can show the clock dependency tree of camera or disp 
-requires GCC_IP_AHB_CLK you could make the argument the dt requires the 
-clock dependency defined in that block.
+Fixes: f48c70b111b4 ("arm64: dts: qcom: sc8280xp-x13s: enable eDP display")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+I have no idea whether DP3 is hardwired to be eDP, like it
+seems to be on the last DP controller of SC7280. In that
+case this would be moved to the SoC DTSI.
+---
+ arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-I'd say we should offline this from Luca's patches tho :) for me anyway 
-the first two are fine.
-
-Agree #3 is verboten. No new empty nodes.
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+index 38edaf51aa34..6a4c6cc19c09 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+@@ -601,6 +601,7 @@ mdss0_dp3_out: endpoint {
+ };
+ 
+ &mdss0_dp3_phy {
++	compatible = "qcom,sc8280xp-edp-phy";
+ 	vdda-phy-supply = <&vreg_l6b>;
+ 	vdda-pll-supply = <&vreg_l3b>;
+ 
 
 ---
-bod
+base-commit: df964ce9ef9fea10cf131bf6bad8658fde7956f6
+change-id: 20230929-topic-x13s_edpphy-0e172498c432
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
