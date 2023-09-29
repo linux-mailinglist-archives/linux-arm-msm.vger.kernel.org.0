@@ -2,134 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1546D7B32EE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 14:57:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 246B17B3302
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 15:00:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232990AbjI2M5p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Sep 2023 08:57:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52034 "EHLO
+        id S233255AbjI2NAx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Sep 2023 09:00:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232803AbjI2M5p (ORCPT
+        with ESMTP id S233253AbjI2NAx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Sep 2023 08:57:45 -0400
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DA30C0;
-        Fri, 29 Sep 2023 05:57:42 -0700 (PDT)
-Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
-        by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38TCoxb4013374;
-        Fri, 29 Sep 2023 12:56:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=QqTTLT9aZkvqLOeMtXOrEvkTt7kMlZSB0+m85iN5u54=;
- b=Och/FWQTgIJwiibkwBGlGRsTVsD/QPfi3WiMg33KXn9WnrnZXGt5r+QaO1ZlNYrQVdaT
- SZTg6yVNXrNvYQDLdurQLzmMP2ZUuqXfqunhs3fQc1zO+9g4+1R27YxA2v0kwNuWERkD
- WTd2iHpODkJjr93yC2xadbFRuQzK/52kK31ggGBQBMR4pGsSaR8NRPQAcvKXrLRVR73N
- r6hVD9QLzsnJyCku33qAZGQMTzQ2kSOVN3XZ+IOLK4P5kZQ+4weW/cW+CJRkWAg4CiiG
- UuuoRmBc+zdjtC7mjHIFQT2LI/KnUWrFjsVqlAwjF+6hltohqQ7NC/+8hYNGgOawKtgY 7w== 
-Received: from pps.reinject (localhost [127.0.0.1])
-        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3tdxxnr3pm-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 29 Sep 2023 12:56:38 +0000
-Received: from m0353726.ppops.net (m0353726.ppops.net [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 38TCpPrI014220;
-        Fri, 29 Sep 2023 12:56:37 GMT
-Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
-        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3tdxxnr3p0-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 29 Sep 2023 12:56:37 +0000
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
-        by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 38TCZGqp008250;
-        Fri, 29 Sep 2023 12:56:36 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
-        by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3tabbnvpnx-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 29 Sep 2023 12:56:36 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com [10.39.53.228])
-        by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 38TCuZgC5243498
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Fri, 29 Sep 2023 12:56:35 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id 4648A5804B;
-        Fri, 29 Sep 2023 12:56:35 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id E78BB58063;
-        Fri, 29 Sep 2023 12:56:30 +0000 (GMT)
-Received: from [9.61.175.8] (unknown [9.61.175.8])
-        by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
-        Fri, 29 Sep 2023 12:56:30 +0000 (GMT)
-Message-ID: <2513a9d4-ac92-2e50-4861-bb65465cf1ae@linux.ibm.com>
-Date:   Fri, 29 Sep 2023 08:56:30 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v13 4/6] iommu/s390: Disable deferred flush for ISM
- devices
-Content-Language: en-US
-To:     Niklas Schnelle <schnelle@linux.ibm.com>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Wenjia Zhang <wenjia@linux.ibm.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Jason Gunthorpe <jgg@ziepe.ca>
-Cc:     Gerd Bayer <gbayer@linux.ibm.com>,
-        Julian Ruess <julianr@linux.ibm.com>,
-        Pierre Morel <pmorel@linux.ibm.com>,
-        Alexandra Winter <wintera@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Sven Schnelle <svens@linux.ibm.com>,
-        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Andy Gross <agross@kernel.org>,
+        Fri, 29 Sep 2023 09:00:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 915161AC
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 06:00:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1695992401;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=fkolkQYQP8wA78QWjAn3k7nmXFE7e3GBg0yVcUVtpGY=;
+        b=Ut4STMkt5ezKKN/Zzch8H2QnJRN6vEBVYvu0Xwnup7aFTW9BnOkYJoChDXPbWP2PVrcj4H
+        fdFHWjw7HL2gdPFjO3ILxxNBE7E01sCALLoVUpnUCiEa1rXWZVYCF+j8s0FUsWMqt9MjJG
+        mzW4efvnZ+JSxciKs/Rfk926EfRGcO8=
+Received: from mail-ot1-f70.google.com (mail-ot1-f70.google.com
+ [209.85.210.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-480-ui-15E-QPfC9GMs5Qbqksg-1; Fri, 29 Sep 2023 09:00:00 -0400
+X-MC-Unique: ui-15E-QPfC9GMs5Qbqksg-1
+Received: by mail-ot1-f70.google.com with SMTP id 46e09a7af769-6c4ed6c64e2so17785741a34.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 06:00:00 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695992399; x=1696597199;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fkolkQYQP8wA78QWjAn3k7nmXFE7e3GBg0yVcUVtpGY=;
+        b=XTp/IkyN58ldzB3qUKj0vCWA41clmcm17fS3yZ5rl6V2QQjuIIoIpYLzyF3g0w3Q1A
+         aUMVJAYxBbb6Gv6V7zUWr3dNlba2lMca0q+ZmQE9/dO7bWSDg9L3mneZvKE7JWE4U4PF
+         QUOh7BBpkHsYp+TA+eaTgkBu83+CjPanLtJih0LKs3v4YQEmNBPO3bN+laNRAmFP9VkA
+         f31qrzEinkd6YkAdMbzV0iqh63W7PSFU17ktzrCkaVYYd/jR56nRvC8IuShbBUjRekGe
+         zMIOmUuddHN2n9SC9ir7joNMSZpozHjcSmO3vZ/nB3+R2aAHBEDb7jHja8xNE5MT5wDc
+         FIUg==
+X-Gm-Message-State: AOJu0YyOWnpxrNB/vAie7KP2wMwP0vSWNnMlw8w5LymzTuKZ8qvgTNyz
+        0NPlWrqkOGHhqZPIIAlT6qhu4Ig2XwiXWSBD8pQ+h119KlBT7YOisJO2OejQGscJRUtQMLx8G0f
+        XWfv1bUXKrDKjwu/2yVYbvnabDZKIJpFV9A==
+X-Received: by 2002:a9d:74d9:0:b0:6c4:897a:31d0 with SMTP id a25-20020a9d74d9000000b006c4897a31d0mr4253072otl.24.1695992399386;
+        Fri, 29 Sep 2023 05:59:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHLY5DCnpt7G3mwAyMbr7IKILwUmspq5W5zRmjj7YDnrzd1R0IGknP2GqFr/Hqk98SQpW2BwA==
+X-Received: by 2002:a9d:74d9:0:b0:6c4:897a:31d0 with SMTP id a25-20020a9d74d9000000b006c4897a31d0mr4253053otl.24.1695992399064;
+        Fri, 29 Sep 2023 05:59:59 -0700 (PDT)
+Received: from halaney-x13s ([2600:1700:1ff0:d0e0::42])
+        by smtp.gmail.com with ESMTPSA id d1-20020a9d5e01000000b006b90b5626desm2996566oti.62.2023.09.29.05.59.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 29 Sep 2023 05:59:58 -0700 (PDT)
+Date:   Fri, 29 Sep 2023 07:59:56 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Johan Hovold <johan+linaro@kernel.org>
+Cc:     Sebastian Reichel <sre@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jonathan Corbet <corbet@lwn.net>, linux-s390@vger.kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        iommu@lists.linux.dev, asahi@lists.linux.dev,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        linux-doc@vger.kernel.org
-References: <20230928-dma_iommu-v13-0-9e5fc4dacc36@linux.ibm.com>
- <20230928-dma_iommu-v13-4-9e5fc4dacc36@linux.ibm.com>
-From:   Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20230928-dma_iommu-v13-4-9e5fc4dacc36@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: uTzj7zKg3b0sQ930cOsKCPRxfgqwTFsD
-X-Proofpoint-GUID: XNXEAeo9ExEttPSRC78HhL_bg28OSuTv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-09-29_10,2023-09-28_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- adultscore=0 mlxlogscore=999 clxscore=1015 suspectscore=0 mlxscore=0
- bulkscore=0 priorityscore=1501 spamscore=0 malwarescore=0 phishscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2309290107
-X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH] power: supply: qcom_battmgr: fix enable request
+ endianness
+Message-ID: <20230929125956.hpcze2brit3ew3et@halaney-x13s>
+References: <20230929101649.20206-1-johan+linaro@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230929101649.20206-1-johan+linaro@kernel.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -137,30 +81,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9/28/23 10:31 AM, Niklas Schnelle wrote:
-> ISM devices are virtual PCI devices used for cross-LPAR communication.
-> Unlike real PCI devices ISM devices do not use the hardware IOMMU but
-> inspects IOMMU translation tables directly on IOTLB flush (s390 RPCIT
-> instruction).
+On Fri, Sep 29, 2023 at 12:16:49PM +0200, Johan Hovold wrote:
+> Add the missing endianness conversion when sending the enable request so
+> that the driver will work also on a hypothetical big-endian machine.
 > 
-> ISM devices keep their DMA allocations static and only very rarely DMA
-> unmap at all. For each IOTLB flush that occurs after unmap the ISM
-> devices will however inspect the area of the IOVA space indicated by the
-> flush. This means that for the global IOTLB flushes used by the flush
-> queue mechanism the entire IOVA space would be inspected. In principle
-> this would be fine, albeit potentially unnecessarily slow, it turns out
-> however that ISM devices are sensitive to seeing IOVA addresses that are
-> currently in use in the IOVA range being flushed. Seeing such in-use
-> IOVA addresses will cause the ISM device to enter an error state and
-> become unusable.
+> This issue was reported by sparse.
 > 
-> Fix this by claiming IOMMU_CAP_DEFERRED_FLUSH only for non-ISM devices.
-> This makes sure IOTLB flushes only cover IOVAs that have been unmapped
-> and also restricts the range of the IOTLB flush potentially reducing
-> latency spikes.
-> 
-> Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+> Fixes: 29e8142b5623 ("power: supply: Introduce Qualcomm PMIC GLINK power supply")
+> Cc: stable@vger.kernel.org      # 6.3
+> Cc: Bjorn Andersson <andersson@kernel.org>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
-Looks like my review tag from v12 got dropped on accident -- no changes since prior version and still looks good to me so
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
 
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
