@@ -2,189 +2,248 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 35E5F7B369D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 17:23:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 739827B36A4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 17:23:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233593AbjI2PXC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Sep 2023 11:23:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34680 "EHLO
+        id S233637AbjI2PX6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Sep 2023 11:23:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233599AbjI2PWa (ORCPT
+        with ESMTP id S233607AbjI2PX5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Sep 2023 11:22:30 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A32EC10D2;
-        Fri, 29 Sep 2023 08:22:26 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38TEPGn0015894;
-        Fri, 29 Sep 2023 15:22:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=LxOVkqV6g+jQpN5bPhd9zKnvwGlEWf0RQgwNMVx6MWg=;
- b=YVd6EteGFCTn7QQVQ/yMizKd2/QWhElH1kjIvu4IFSD0QwNMAv4uUnyQUznDcor8tj/4
- D2yzqO69RH9dIHW0YsxhxIfsnrbqKoV/j224/LS+1uENUO78GqbpgetQj3naKo51Ce1p
- HHyBrfW+0kDlG3ZjcAsiGdE3xPPCeCq3ZJ8IjFx9+pOEiZOrNoXMFJSZITa5w9j2jSig
- S94D0z6dGsbeN0yO5tIm8s516FrxC8fcK4iYMGYfwz9Pvk2EIHH+zZTPXEEJ1Xubo+5Y
- OyMw51JAY8GJA1lwDDrwxbbwKE7I+VTZ1MreAIC3y5Bfn0/OheSo1lAQLGpUxruZvNpo tw== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3te0avr5nq-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 29 Sep 2023 15:22:21 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38TFMK1S025965
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 29 Sep 2023 15:22:20 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Fri, 29 Sep
- 2023 08:22:19 -0700
-Message-ID: <c30c9c68-bfe1-0cc5-c511-218f7d1da92d@quicinc.com>
-Date:   Fri, 29 Sep 2023 09:22:19 -0600
+        Fri, 29 Sep 2023 11:23:57 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 127021B5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 08:23:52 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-5310a63cf7bso17777739a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 08:23:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1696001030; x=1696605830; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2fI3NjIu6ibVXMaxV4978aYW3D2t6y3JPV/QUFnUxmo=;
+        b=ZPQ9VYJ+15VPxsnTR09neqcsHSnXZcCc+Jb6CH0ODjvpUJjoOmlsYG5Hg+gWxvtKRe
+         5N8YtNCWtNJA6dCN4bySrCC7DVuIyUzjfC1ZiPXJs1mq/VEmQP4aOW57QSmiQ6GlL6lx
+         h+ZW6V7TdfkXEqQLlqEi3AoZ9FofWgZj7rEAZPfGkBFXagpsSf/xlnzUvMG/5J7NvC8A
+         umWl+TViQU7DcOm4CDfIx010zT5zQG37LEY7tA/DFl9h8B0sTG0zmb9ndEIr7FviA3V6
+         H92fI7ESikNs/Nxat7/u2Qmcrsz87i41AmsbHGTGQBqvv2D4SKCjuuLqZC1CMJYK7D0e
+         9liA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696001030; x=1696605830;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2fI3NjIu6ibVXMaxV4978aYW3D2t6y3JPV/QUFnUxmo=;
+        b=NB1wPQf3nE/TRes23EUxvb+4NlwDgpETISc79XUfsYJMh5IuT0yUggcbL2CZVV6XJs
+         1BOWIf9eTeeHi49IFJHok+LSjI+HNN4ux1bvHlBTEchRWBGZwFgmjMRvxjk80UCdWBV/
+         hrcr6yzmHOYGWXzO0sdDNDhzczp8UqRAR6vKUT+jJeyln58wX6TXlrcLdmkfTz+oCIlX
+         WUlhePrzNhypOMmGyX8WNnM1GPY9wKi4O0puDtlG6bqnOQUCxa9PShWCynavYqLFHDwH
+         fewyuN+dqgaGHXDzbD29WpH3YKhUeSzbjz/mA/OeaKnMSUtE5dbSx0wOdplRqF/p9LrR
+         4SKg==
+X-Gm-Message-State: AOJu0YwqucghuLnigW/wVe0BuPZH2FjeRA6hPDVlHG3ivEtd5p5PUnqN
+        LgpvsPVfu5Iwx+DaX4wyMHkVBA==
+X-Google-Smtp-Source: AGHT+IHqjsMK8Y/1artQAJrs2qGFuOW/UMoC3/PfEtSCGEWb9tEWh7FxqAROm23llsdyFcJ72ozYwA==
+X-Received: by 2002:a17:906:3117:b0:9b2:be4e:4940 with SMTP id 23-20020a170906311700b009b2be4e4940mr4620126ejx.61.1696001030407;
+        Fri, 29 Sep 2023 08:23:50 -0700 (PDT)
+Received: from [192.168.33.189] (178235177217.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.217])
+        by smtp.gmail.com with ESMTPSA id s2-20020a170906354200b0098ec690e6d7sm12604845eja.73.2023.09.29.08.23.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 Sep 2023 08:23:49 -0700 (PDT)
+Message-ID: <1610f135-f1a0-4c0a-8776-3e56371b58cc@linaro.org>
+Date:   Fri, 29 Sep 2023 17:23:46 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v2 1/2] bus: mhi: host: Add spinlock to protect WP access
- when queueing TREs
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/7] dt-bindings: interconnect: qcom: Introduce
+ qcom,rpm-common
 Content-Language: en-US
-To:     Qiang Yu <quic_qianyu@quicinc.com>, <mani@kernel.org>
-CC:     <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
-        <quic_mrana@quicinc.com>
-References: <1694594861-12691-1-git-send-email-quic_qianyu@quicinc.com>
- <1694594861-12691-2-git-send-email-quic_qianyu@quicinc.com>
- <af4fc816-d75b-997d-6d37-a774f5eb96ae@quicinc.com>
- <dfeb6071-8ae4-38ba-5273-59478ea8e178@quicinc.com>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <dfeb6071-8ae4-38ba-5273-59478ea8e178@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230721-topic-icc_bindings-v2-0-e33d5acbf3bd@linaro.org>
+ <20230721-topic-icc_bindings-v2-1-e33d5acbf3bd@linaro.org>
+ <20230811164814.GA3587580-robh@kernel.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20230811164814.GA3587580-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: XcW2_6Z0OPJGF239HwCIeJQsshMGH5oM
-X-Proofpoint-ORIG-GUID: XcW2_6Z0OPJGF239HwCIeJQsshMGH5oM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-09-29_13,2023-09-28_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- spamscore=0 impostorscore=0 bulkscore=0 mlxscore=0 mlxlogscore=999
- suspectscore=0 adultscore=0 clxscore=1015 malwarescore=0 phishscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2309290132
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9/24/2023 9:10 PM, Qiang Yu wrote:
+On 11.08.2023 18:48, Rob Herring wrote:
+> On Mon, Jul 24, 2023 at 04:06:27PM +0200, Konrad Dybcio wrote:
+>> The current RPM interconnect bindings are messy. Start cleaning them
+>> up with a common include.
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>  .../bindings/interconnect/qcom,qcm2290.yaml        | 18 +++++++-------
+>>  .../bindings/interconnect/qcom,rpm-common.yaml     | 28 ++++++++++++++++++++++
+>>  2 files changed, 36 insertions(+), 10 deletions(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,qcm2290.yaml b/Documentation/devicetree/bindings/interconnect/qcom,qcm2290.yaml
+>> index f65a2fe846de..df89f390a9b0 100644
+>> --- a/Documentation/devicetree/bindings/interconnect/qcom,qcm2290.yaml
+>> +++ b/Documentation/devicetree/bindings/interconnect/qcom,qcm2290.yaml
+>> @@ -13,6 +13,9 @@ description: |
+>>    The Qualcomm QCM2290 interconnect providers support adjusting the
+>>    bandwidth requirements between the various NoC fabrics.
+>>  
+>> +allOf:
+>> +  - $ref: qcom,rpm-common.yaml#
+>> +
+>>  properties:
+>>    reg:
+>>      maxItems: 1
+>> @@ -23,9 +26,6 @@ properties:
+>>        - qcom,qcm2290-cnoc
+>>        - qcom,qcm2290-snoc
+>>  
+>> -  '#interconnect-cells':
+>> -    const: 1
+>> -
+>>    clock-names:
+>>      items:
+>>        - const: bus
+>> @@ -44,6 +44,9 @@ patternProperties:
+>>        The interconnect providers do not have a separate QoS register space,
+>>        but share parent's space.
+>>  
+>> +    allOf:
+>> +      - $ref: qcom,rpm-common.yaml#
+>> +
+>>      properties:
+>>        compatible:
+>>          enum:
+>> @@ -51,9 +54,6 @@ patternProperties:
+>>            - qcom,qcm2290-mmrt-virt
+>>            - qcom,qcm2290-mmnrt-virt
+>>  
+>> -      '#interconnect-cells':
+>> -        const: 1
+>> -
+>>        clock-names:
+>>          items:
+>>            - const: bus
+>> @@ -66,20 +66,18 @@ patternProperties:
+>>  
+>>      required:
+>>        - compatible
+>> -      - '#interconnect-cells'
+>>        - clock-names
+>>        - clocks
+>>  
+>> -    additionalProperties: false
+>> +    unevaluatedProperties: false
+>>  
+>>  required:
+>>    - compatible
+>>    - reg
+>> -  - '#interconnect-cells'
+>>    - clock-names
+>>    - clocks
+>>  
+>> -additionalProperties: false
+>> +unevaluatedProperties: false
+>>  
+>>  examples:
+>>    - |
+>> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,rpm-common.yaml b/Documentation/devicetree/bindings/interconnect/qcom,rpm-common.yaml
+>> new file mode 100644
+>> index 000000000000..1ea52b091609
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/interconnect/qcom,rpm-common.yaml
+>> @@ -0,0 +1,28 @@
+>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/interconnect/qcom,rpm-common.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm RPMh Network-On-Chip Interconnect
+>> +
+>> +maintainers:
+>> +  - Konrad Dybcio <konradybcio@kernel.org>
+>> +
+>> +description:
+>> +  RPM interconnect providers support for managing system bandwidth requirements
+>> +  through manual requests based on either predefined values or as indicated by
+>> +  the bus monitor hardware. Each provider node represents a NoC bus master,
+>> +  driven by a dedicated clock source.
+>> +
+>> +properties:
+>> +  '#interconnect-cells':
+>> +    oneOf:
+>> +      - const: 2
+>> +      - const: 1
+>> +        deprecated: true
 > 
-> On 9/22/2023 10:44 PM, Jeffrey Hugo wrote:
->> On 9/13/2023 2:47 AM, Qiang Yu wrote:
->>> From: Bhaumik Bhatt <bbhatt@codeaurora.org>
->>>
->>> Protect WP accesses such that multiple threads queueing buffers for
->>> incoming data do not race and access the same WP twice. Ensure read and
->>> write locks for the channel are not taken in succession by dropping the
->>> read lock from parse_xfer_event() such that a callback given to client
->>> can potentially queue buffers and acquire the write lock in that 
->>> process.
->>> Any queueing of buffers should be done without channel read lock 
->>> acquired
->>> as it can result in multiple locks and a soft lockup.
->>>
->>> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
->>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
->>> ---
->>>   drivers/bus/mhi/host/main.c | 11 ++++++++++-
->>>   1 file changed, 10 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
->>> index dcf627b..13c4b89 100644
->>> --- a/drivers/bus/mhi/host/main.c
->>> +++ b/drivers/bus/mhi/host/main.c
->>> @@ -642,6 +642,7 @@ static int parse_xfer_event(struct mhi_controller 
->>> *mhi_cntrl,
->>>               mhi_del_ring_element(mhi_cntrl, tre_ring);
->>>               local_rp = tre_ring->rp;
->>>   +            read_unlock_bh(&mhi_chan->lock);
->>
->> This doesn't work due to the write_lock_irqsave(&mhi_chan->lock, 
->> flags); on line 591.
-> Write_lock_irqsave(&mhi_chan->lock, flags) is used in case of ev_code >= 
-> MHI_EV_CC_OOB. We only read_lock/read_unlock the mhi_chan while ev_code 
-> < MHI_EV_CC_OOB.
+> I think this is kind of questionable for a single property. Do you 
+> plan to add more properties here?
+My best answer is "we'll see". Not in the forseeable future, but
+this hardware has a never-ending queue of surprises..
 
-Sorry.  OOB != EOB
+I like this file for the broader description, but ultimately up to you.
 
->>
->> I really don't like that we are unlocking the mhi_chan while still 
->> using it.  It opens up a window where the mhi_chan state can be 
->> updated between here and the client using the callback to queue a buf.
->>
->> Perhaps we need a new lock that just protects the wp, and needs to be 
->> only grabbed while mhi_chan->lock is held?
-> 
-> Since we have employed mhi_chan lock to protect the channel and what we 
-> are concerned here is that client may queue buf to a disabled or stopped 
-> channel, can we check channel state after getting mhi_chan->lock like 
-> line 595.
-> 
-> We can add the check after getting write lock in mhi_gen_tre() and after 
-> getting read lock again here.
+(FWIW Georgi has queued this up for icc-dev (not icc-next) and I'd like
+to flush my icc patch queue, but that's just my lazy €0.05)
 
-I'm not sure that is sufficient.  After you unlock to notify the client, 
-MHI is going to manipulate the packet count and runtime_pm without the 
-lock (648-652).  It seems like that adds additional races which won't be 
-covered by the additional check you propose.
+> Also, if you add a new user of this 
+> schema, then it's going to allow the deprecated case when it could just 
+> start with 2 only.
+I see your point.
 
-> 
->>
->>>               /* notify client */
->>>               mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
->>>   @@ -667,6 +668,7 @@ static int parse_xfer_event(struct 
->>> mhi_controller *mhi_cntrl,
->>>                       kfree(buf_info->cb_buf);
->>>                   }
->>>               }
->>> +            read_lock_bh(&mhi_chan->lock);
->>>           }
->>>           break;
->>>       } /* CC_EOT */
->>> @@ -1204,6 +1206,9 @@ int mhi_gen_tre(struct mhi_controller 
->>> *mhi_cntrl, struct mhi_chan *mhi_chan,
->>>       int eot, eob, chain, bei;
->>>       int ret;
->>>   +    /* Protect accesses for reading and incrementing WP */
->>> +    write_lock_bh(&mhi_chan->lock);
->>> +
->>>       buf_ring = &mhi_chan->buf_ring;
->>>       tre_ring = &mhi_chan->tre_ring;
->>>   @@ -1221,8 +1226,10 @@ int mhi_gen_tre(struct mhi_controller 
->>> *mhi_cntrl, struct mhi_chan *mhi_chan,
->>>         if (!info->pre_mapped) {
->>>           ret = mhi_cntrl->map_single(mhi_cntrl, buf_info);
->>> -        if (ret)
->>> +        if (ret) {
->>> +            write_unlock_bh(&mhi_chan->lock);
->>>               return ret;
->>> +        }
->>>       }
->>>         eob = !!(flags & MHI_EOB);
->>> @@ -1239,6 +1246,8 @@ int mhi_gen_tre(struct mhi_controller 
->>> *mhi_cntrl, struct mhi_chan *mhi_chan,
->>>       mhi_add_ring_element(mhi_cntrl, tre_ring);
->>>       mhi_add_ring_element(mhi_cntrl, buf_ring);
->>>   +    write_unlock_bh(&mhi_chan->lock);
->>> +
->>>       return 0;
->>>   }
->>
+Speaking of this keyword, shouldn't the dt checker start spitting out
+warnings that would urge dts maintainers to update their trees?
 
+Konrad
