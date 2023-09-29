@@ -2,69 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D60137B34EF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 16:30:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E14C7B3672
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 17:14:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233410AbjI2Oaj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Sep 2023 10:30:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55002 "EHLO
+        id S233536AbjI2POE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Sep 2023 11:14:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232834AbjI2Oai (ORCPT
+        with ESMTP id S233454AbjI2POD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Sep 2023 10:30:38 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69F991A4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 07:30:36 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-9b29186e20aso1181506666b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 07:30:36 -0700 (PDT)
+        Fri, 29 Sep 2023 11:14:03 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C50AF7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 08:14:00 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-9b0168a9e05so1619795366b.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 08:14:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695997835; x=1696602635; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1696000439; x=1696605239; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=bei6ZX5STHPl62uE+IU3ZJNYeMwF+H+x6x7EmZkU53M=;
-        b=oDH7YwjID+98ETfG8WlDoCRy0qOKKHp9EjdvO+3Ypljb+AM5ezujVBMN7pMNkwamYY
-         k7eaXtBgWkml4kfKgRnC/YHMqxAf39XO79I90FLZOaEcehlXb8+3Ht5YGFHQbMsH9FRg
-         axhv6F790yoWu2KQ0Nfm6pHtAZCKXtI8RfSg2ant98Z5o/2t4jjXEYuIM6OJFfdoFTP3
-         LKJi57hPI0UUVEIsf3I3v6Ydnr9tZtYDAw1QBA4P/3Nm3K4YqE19PhnA/2JtWJ6kro97
-         YeiFBFCNYFXy40pmGIf1oRinVOY+TP/3zAM3cnhjfQ9XXfjzNqyldRrWutDfxUTwgUop
-         mJUw==
+        bh=em5sbB45SAV00DDfLTUO5kYgHbyzgg4D3eBRHUaog6A=;
+        b=fodf0ZEZ7jOqiBLp5tjfpX4QgBTJgQ20uxOU0em29dUDbuAhl+AedaGirpf59xCq9R
+         pz7aTTXr5L1wYqj4g6yvOZUu8febqe3vXOzBinENfdCZVj/ffPIBrZg1Es4Z1uxAY8rq
+         NFWHvHRtVNH01LPFZHCBAdm6AdGNCxt52lOQ/4TWZE7Bv1cjT8wQfgfathhGFA4o3Hz6
+         4LHX2WeTkcjqPfKYwBE/OhOX1aQx5ArMzmfscqiSfBDgRYH9SSYMhCgJqI8ESQ8EFSC/
+         m4w4uJA8c7W77io5B2IfKpvNyyyKPjXgdLR8uJ2TJINoOEtfIiyIdrrzet8j6hT7Vbgi
+         G4tQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695997835; x=1696602635;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1696000439; x=1696605239;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bei6ZX5STHPl62uE+IU3ZJNYeMwF+H+x6x7EmZkU53M=;
-        b=qmdizCyZwJJ/HQy1odBQE+qRRTBQ64bN88tRF+BHyFWsn5PWZp8qSDtHAyGGqWXtNK
-         AiiCTQ7Bf0aQXJc0/aT2L4QgvuVkZcNyOmAhO0aZXP8PtPC7qzqoSemnj9dXousAq2L3
-         n/A4g3FGgY8w2a2M1coo26A+yDmSK1DVDNId1k5jeYDclfvDodmc0erOcRbGaKbxatKq
-         GRlvvYTBfgqJlyFDlhBQbj5B+L1pRGl2QXrsjixCUw+bqcvZGzfQJUAsJyvJWP7CAOP9
-         FjnO6DWZdsabOp3OKPS+Hj34Nnxrl0Vhh7sIP+5qdEMDbMIzG9wbMo/RC9WV4v7Sj3QX
-         iFGQ==
-X-Gm-Message-State: AOJu0Yxvnsz5znQCuTSd6C07We+oRtAwQBMLfpaF71MO6HEznfxg6JfK
-        HtKPTzyrvnIVRUlrHobZdSRIkw==
-X-Google-Smtp-Source: AGHT+IEihqwzfgDNJ6K79nGPXAShlbp4nMp1E+v24AnEnzCVb/w+jvZReouKkACAjk1Rf3qhHmBBLQ==
-X-Received: by 2002:a17:906:30c7:b0:9b2:b95e:3825 with SMTP id b7-20020a17090630c700b009b2b95e3825mr4070649ejb.39.1695997834829;
-        Fri, 29 Sep 2023 07:30:34 -0700 (PDT)
+        bh=em5sbB45SAV00DDfLTUO5kYgHbyzgg4D3eBRHUaog6A=;
+        b=X+tPz+8MeBpCesWCY3UY8N1hiyJsw78AL1rCCRAkCAZgjfSoShgplt574r9vh7vomO
+         TvIkQdOvJOZqc6g37iFdo1dF+HL8oMkSiQ/1OyY4YBgN4VGk7PDUVFIhUUSKEoKw7OKF
+         Hr3UHQjOfEYXdOcZUKIY/iptxpI36cTAScIirTlRR0kLFWwMRcUJosyZ2zNevQQb+9t1
+         Zs+1U3Eh6D2b9/P6saBiuT+GgBgMM3EzReJ0OFSwb7MehLMeHkavXYRYAoM7Z4zm8j1X
+         LMPSX5ySjktfatTMl1uOxmOnOD29E/ZmI5Tv9th04DDXQ1r26NoVYwUj9JbHXg5OwGib
+         xZxw==
+X-Gm-Message-State: AOJu0Yxcpq58UsT5deVRYNUg0oFTSS3C+KiZvfbS0F1CwLC8J9+sbuvy
+        vg6uP32HtsstN0Wpwt1kupuqvtZIxw2tGG3di3c=
+X-Google-Smtp-Source: AGHT+IE5XI5/WseBQjsLLKmaceAohwE7Hk2FlU+YVrzmYUdwINkgBOq7wsk0jK1k8MB8NfHoDHOVfA==
+X-Received: by 2002:a17:906:8a41:b0:9ae:51c8:ded1 with SMTP id gx1-20020a1709068a4100b009ae51c8ded1mr4351347ejc.50.1696000438763;
+        Fri, 29 Sep 2023 08:13:58 -0700 (PDT)
 Received: from [192.168.33.189] (178235177217.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.217])
-        by smtp.gmail.com with ESMTPSA id j19-20020a170906051300b009937e7c4e54sm12553404eja.39.2023.09.29.07.30.32
+        by smtp.gmail.com with ESMTPSA id b10-20020a056402278a00b0053447d022f9sm5888778ede.18.2023.09.29.08.13.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Sep 2023 07:30:34 -0700 (PDT)
-Message-ID: <b1f097a8-2297-4c6e-aeca-a794d2949054@linaro.org>
-Date:   Fri, 29 Sep 2023 16:30:31 +0200
+        Fri, 29 Sep 2023 08:13:58 -0700 (PDT)
+Message-ID: <8a5297ed-be23-4498-bf8f-27326abc33a8@linaro.org>
+Date:   Fri, 29 Sep 2023 17:13:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: ipq8074: pass QMP PCI PHY PIPE
- clocks to GCC
+Subject: Re: [PATCH v4 00/10] Fix up icc clock rate calculation on some
+ platforms
 Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>, andersson@kernel.org,
-        agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, quic_tdas@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230928211620.1278054-1-robimarko@gmail.com>
- <20230928211620.1278054-2-robimarko@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
+References: <20230726-topic-icc_coeff-v4-0-c04b60caa467@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -101,42 +102,32 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230928211620.1278054-2-robimarko@gmail.com>
+In-Reply-To: <20230726-topic-icc_coeff-v4-0-c04b60caa467@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28.09.2023 23:15, Robert Marko wrote:
-> Pass QMP PCI PHY PIPE clocks to the GCC controller so it does not have to
-> find them by matching globaly by name.
+On 25.08.2023 17:38, Konrad Dybcio wrote:
+> Certain platforms require that some buses (or individual nodes) make
+> some additional changes to the clock rate formula, throwing in some
+> magic, Qualcomm-defined coefficients, to account for "inefficiencies".
 > 
-> If not passed directly, driver maintains backwards compatibility by then
-> falling back to global lookup.
+> Add the framework for it and utilize it on a couple SoCs.
 > 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/ipq8074.dtsi | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> index 643b586c0dec..1f108ee2e8ba 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> @@ -407,8 +407,8 @@ qpic_pins: qpic-state {
->  		gcc: gcc@1800000 {
->  			compatible = "qcom,gcc-ipq8074";
->  			reg = <0x01800000 0x80000>;
-> -			clocks = <&xo>, <&sleep_clk>;
-> -			clock-names = "xo", "sleep_clk";
-> +			clocks = <&xo>, <&sleep_clk>, <&pcie_qmp0>, <&pcie_qmp1>;
-> +			clock-names = "xo", "sleep_clk", "pcie0_pipe", "pcie1_pipe";
-Can you turn this to one-per-line?
+Georgi,
+
+since this has been on the list for quite a while and there
+haven't been major objections, could you please review and
+queue them up?
 
 Konrad
