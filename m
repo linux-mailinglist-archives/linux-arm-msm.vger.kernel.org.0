@@ -2,156 +2,226 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9AF3F7B3ABE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 21:38:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 09D807B3B75
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 22:45:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233058AbjI2Tiw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Sep 2023 15:38:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40476 "EHLO
+        id S229508AbjI2Uo7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Sep 2023 16:44:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232985AbjI2Tiw (ORCPT
+        with ESMTP id S232878AbjI2Uo7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Sep 2023 15:38:52 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E129B9C;
-        Fri, 29 Sep 2023 12:38:49 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75760C433CA;
-        Fri, 29 Sep 2023 19:38:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1696016329;
-        bh=k9t+qS0jO6IW57fA+w7PDdAJNLwGMZjX4+UlxZcE1iI=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=thzcpJk1zqQ7StwfdqGkOrUZdKdNWXnDlm0ebRH+9LRTxIoiBuqjCWqbjk8ZV+wA8
-         mv4GuyYTBpm8rGusGvVa+mj8vH1AIqatGZslz7at8J0jVhPzIohEONlPUiNBVuU6LP
-         ynAqxWSp5LjnhyMORtfRlTuVylzwaJAIZX42wS4+f7K5y24ReKbw/CXgVQUBokimAw
-         sWQqccPxy6QU8/lnF98hHlZ4D2Uf4uB73IOEGvTkGVtfSY389rTKuOPwBuDuWWbZDc
-         zrf0NqwJaW7Zm6AT2bznhp2C09uOMx591Du9TabMSMjWu/wY9WOceHPZ3r7UOAyAuL
-         RdEWGX1z+VP+w==
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-50336768615so23937464e87.0;
-        Fri, 29 Sep 2023 12:38:49 -0700 (PDT)
-X-Gm-Message-State: AOJu0Yzv/xjHZCPyL7JUgyZWynXA+fYJNiX/SzDpt44Qng7LhaMwxYOf
-        InWNX94jF4+nmOY/WisZW5IZBg95Rr38RxC/S20=
-X-Google-Smtp-Source: AGHT+IHVJH5ISVMuU4CdMsvawojJazZ5/9bLi0QZfkSAMKOI+xAU3qaK4DtKDGK6xr8IgiNwi7+S8Dkv/YFTP0ooc1c=
-X-Received: by 2002:a05:6512:3e0d:b0:503:9ea:3a67 with SMTP id
- i13-20020a0565123e0d00b0050309ea3a67mr5290722lfv.26.1696016327575; Fri, 29
- Sep 2023 12:38:47 -0700 (PDT)
+        Fri, 29 Sep 2023 16:44:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 021B2CC1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 13:44:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1696020251;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=Of41jPNPCgpwXY4WEWfM4KiSL4t88scp/gn5GFzCDTs=;
+        b=NtafAULB8kyMhDvapkOdopekXA6p83HkQ/lpravB8xJDfFDmdXg5u7oyQn76jPuLSBGZuz
+        /tWLrBKkpymxtDP265w8cjIvB2/N4gogymS89OaRsh+IFYkBvvvfNUjkok0c7zI/E8Vbqa
+        C7Vi9LC3J8niErb3kF7YBrWT3VJjTUc=
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
+ [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-625-Eg_ssODANYWoXYD7ejKkdw-1; Fri, 29 Sep 2023 16:44:08 -0400
+X-MC-Unique: Eg_ssODANYWoXYD7ejKkdw-1
+Received: by mail-oi1-f199.google.com with SMTP id 5614622812f47-3af64a4c931so4024733b6e.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 13:44:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696020248; x=1696625048;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Of41jPNPCgpwXY4WEWfM4KiSL4t88scp/gn5GFzCDTs=;
+        b=uQOUTDtIOliyfUCrjN2STMjIE7qOYT3rRdX0HTXcplNIDWPJi7jGAxR4rceocK4PqD
+         1pokfqpHiG2ziSzspRRGnRQyLrlr3LlHXG/lGnqShtSPfk/dUW6dPj/NrD6gYE1I0/js
+         U9ragcaX5pt99TBy4CoqN+qdlPqC9FiyDCUJfkxY0/9jg7BRep4cSUkN+X37ksV/UWyo
+         CmaMNCkMlaTefWUR1S8v37lTi9IU1qd15KxW2yheS1LEkVi4w08xuPEexSCSDybixkD8
+         KRAuZ6qTXGTYYNcQtOjX4XsdQm1piHwcOrCN69Cznz3UMttAk6meosENvUv7dr7mhbtO
+         P7+w==
+X-Gm-Message-State: AOJu0Ywkh9eZSWcimHQMQIbdTyWLO3PR4kK8WYEXcYdJ6S22mkRzX8q4
+        gAnqNtKuE3l4SiWFg0sOpMf2uEKTPcELpmdkb8qIt6Jb0wJw976gLUUC5MnGkoL5C70HkoUzf5Y
+        /5l5yh1HxXVWfOfdl/PLcKeGb6w==
+X-Received: by 2002:a05:6808:238c:b0:3a4:ccf:6a63 with SMTP id bp12-20020a056808238c00b003a40ccf6a63mr6663678oib.55.1696020248119;
+        Fri, 29 Sep 2023 13:44:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHUk/GKts6WaixEETQ4pFt9k8G4PbzoP6pnLHRCP45EqYdfX3AreFuRirQYlx916X1j1e6hkQ==
+X-Received: by 2002:a05:6808:238c:b0:3a4:ccf:6a63 with SMTP id bp12-20020a056808238c00b003a40ccf6a63mr6663655oib.55.1696020247823;
+        Fri, 29 Sep 2023 13:44:07 -0700 (PDT)
+Received: from halaney-x13s ([2600:1700:1ff0:d0e0::42])
+        by smtp.gmail.com with ESMTPSA id w5-20020a056808090500b003adedfecfccsm2507956oih.48.2023.09.29.13.44.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 29 Sep 2023 13:44:07 -0700 (PDT)
+Date:   Fri, 29 Sep 2023 15:44:04 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Bartosz Golaszewski <brgl@bgdev.pl>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        kernel@quicinc.com,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v2 06/11] firmware: qcom: scm: make
+ qcom_scm_pas_init_image() use the SCM allocator
+Message-ID: <20230929204404.enzsjanohdqqpmk4@halaney-x13s>
+References: <20230928092040.9420-1-brgl@bgdev.pl>
+ <20230928092040.9420-7-brgl@bgdev.pl>
+ <gwflmag5pq7osprj25l7i4tgyln2nauuqcwdhth2eomareooag@4dw4lwk4vr36>
+ <CAMRc=Mfxt1DLinxMcKivQqqnHvFv5P8WXNnfAwnfrHgoz+q-5w@mail.gmail.com>
 MIME-Version: 1.0
-References: <20230927055954.3755-1-quic_aiquny@quicinc.com>
- <CAMj1kXEh=yQ12v1Ht6=-vgXVe8VCQTPdUD8AowkKcpyDXh_0mg@mail.gmail.com>
- <af59ec04-aa68-5a22-0f3f-f4872cefeb46@quicinc.com> <CAMj1kXEUTOpATv_jbimGktSXBBweyfVNPpqWWJaJNp0U-zvg+w@mail.gmail.com>
- <29bf8f4c-44b8-ab22-aa66-3e3040012ee5@quicinc.com> <22c91d69-328b-8221-f0fa-d6e1663ce074@quicinc.com>
-In-Reply-To: <22c91d69-328b-8221-f0fa-d6e1663ce074@quicinc.com>
-From:   Ard Biesheuvel <ardb@kernel.org>
-Date:   Fri, 29 Sep 2023 19:38:36 +0000
-X-Gmail-Original-Message-ID: <CAMj1kXHKgrJR_pdDV23U_9q5Gft5Sydcus=tmXXM6anKvb7H5w@mail.gmail.com>
-Message-ID: <CAMj1kXHKgrJR_pdDV23U_9q5Gft5Sydcus=tmXXM6anKvb7H5w@mail.gmail.com>
-Subject: Re: [PATCH] ARM: kprobes: Explicitly assign register for local variables
-To:     "Aiqun(Maria) Yu" <quic_aiquny@quicinc.com>
-Cc:     linux@armlinux.org.uk, mhiramat@kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        kernel@quicinc.com, quic_lijuang@quicinc.com,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAMRc=Mfxt1DLinxMcKivQqqnHvFv5P8WXNnfAwnfrHgoz+q-5w@mail.gmail.com>
+X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,
+        RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_NONE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 28 Sept 2023 at 00:46, Aiqun(Maria) Yu <quic_aiquny@quicinc.com> wr=
-ote:
->
-> On 9/28/2023 8:40 AM, Aiqun(Maria) Yu wrote:
-> > On 9/27/2023 6:11 PM, Ard Biesheuvel wrote:
-> >> On Wed, 27 Sept 2023 at 09:44, Aiqun(Maria) Yu
-> >> <quic_aiquny@quicinc.com> wrote:
-> >>>
-> >>> On 9/27/2023 5:26 PM, Ard Biesheuvel wrote:
-> >>>> Hello Maria,
-> >>>>
-> >>>> On Wed, 27 Sept 2023 at 06:00, Maria Yu <quic_aiquny@quicinc.com>
-> >>>> wrote:
-> >>>>>
-> >>>>> Registers r7 is removed in clobber list, so compiler may choose r7 =
-for
-> >>>>> local variables usage, while r7 will be actually updated by the
-> >>>>> inline asm
-> >>>>> code.
-> >>>>
-> >>>> The inline asm does not update R7, it preserves and restores it.
-> >>> That is the asm is updating r7 purposely and compiler still choose r7
-> >>> for the asm local varialbe and use it inside the asm code.
-> >>> So the change is to fix the issue when "r7 is removed from the clobbe=
-r
-> >>> list of current asm code while actually r7 shouldn't be choosed for t=
-he
-> >>> current asm local variables".
-> >>> The issue is only reproducible when ftrace is not enabled, and r7 is
-> >>> removed from the current clobber list.
-> >>>
-> >>> Let me have the assemble code that will make you understand better.
-> >>>
-> >>> --the original code:
-> >>> "mov    r11, r7                 \n\t"
-> >>> ...
-> >>> "ldmia  %[regs], {r0-r7}        \n\t"
-> >>> "blx    %[fn]                   \n\t"
-> >>> ...
-> >>> "mov    r7, r11                 \n\t"
-> >>>
-> >>> --After compile to choose register for [fn] and [regs].
-> >>> mov     r11, r7
-> >>> ldr=E2=80=83=E2=80=83r7, [r1, #16] //r7 used for store asi->insn_fn
-> >>> ...
-> >>> ldmia.w=E2=80=83=E2=80=83ip, {r0, r1, r2, r3, r4, r5, r6, r7}
-> >>> blx r7
-> >>> ...
-> >>> mov r7,r11
-> >>>
-> >>> The current change is to avoid by fix the registers for local variabl=
-e
-> >>> usage and not choose r7 for [fn].
-> >>>
+On Fri, Sep 29, 2023 at 12:22:16PM -0700, Bartosz Golaszewski wrote:
+> On Fri, 29 Sep 2023 21:16:51 +0200, Andrew Halaney <ahalaney@redhat.com> said:
+> > On Thu, Sep 28, 2023 at 11:20:35AM +0200, Bartosz Golaszewski wrote:
+> >> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > >>
-> >> OK, I understand now, thanks.
+> >> Let's use the new SCM memory allocator to obtain a buffer for this call
+> >> instead of using dma_alloc_coherent().
 > >>
-> >> Would it help if we just always enabled frame pointers for this source
-> >> file?
-> The compiler(clang 17 here I am using) will still complain for "inline
-> asm clobber list contains reserved registers" when ftrace enabled.
->
-> More over, the local variable have fixed registers was align with
-> current solution as well. we referenced other asm inlined function
-> inside kprobe folder, like __kprobes functions inside actions-common.c
-> files, it is also have similar solution to fixed register usage for
-> local variables which will be used inside similar inline asm code.
+> >> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >> ---
+> >>  drivers/firmware/qcom/qcom_scm.c | 16 +++++-----------
+> >>  1 file changed, 5 insertions(+), 11 deletions(-)
+> >>
+> >> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+> >> index 02a773ba1383..c0eb81069847 100644
+> >> --- a/drivers/firmware/qcom/qcom_scm.c
+> >> +++ b/drivers/firmware/qcom/qcom_scm.c
+> >> @@ -532,7 +532,7 @@ static void qcom_scm_set_download_mode(bool enable)
+> >>  int qcom_scm_pas_init_image(u32 peripheral, const void *metadata, size_t size,
+> >>  			    struct qcom_scm_pas_metadata *ctx)
+> >>  {
+> >> -	dma_addr_t mdata_phys;
+> >> +	phys_addr_t mdata_phys;
+> >
+> >>  	void *mdata_buf;
+> >>  	int ret;
+> >>  	struct qcom_scm_desc desc = {
+> >> @@ -544,13 +544,7 @@ int qcom_scm_pas_init_image(u32 peripheral, const void *metadata, size_t size,
+> >>  	};
+> >>  	struct qcom_scm_res res;
+> >>
+> >> -	/*
+> >> -	 * During the scm call memory protection will be enabled for the meta
+> >> -	 * data blob, so make sure it's physically contiguous, 4K aligned and
+> >> -	 * non-cachable to avoid XPU violations.
+> >> -	 */
+> >> -	mdata_buf = dma_alloc_coherent(__scm->dev, size, &mdata_phys,
+> >> -				       GFP_KERNEL);
+> >> +	mdata_buf = qcom_scm_mem_alloc(size, GFP_KERNEL);
+> >
+> > mdata_phys is never initialized now, and its what's being shoved into
+> > desc.args[1] later, which I believe is what triggered the -EINVAL
+> > with qcom_scm_call() that I reported in my cover letter reply this
+> > morning.
+> >
+> > Prior with the DMA API that would have been the device view of the buffer.
+> >
+> 
+> Gah! Thanks for finding this.
+> 
+> Can you try the following diff?
+> 
+> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+> index 794388c3212f..b0d4ea237034 100644
+> --- a/drivers/firmware/qcom/qcom_scm.c
+> +++ b/drivers/firmware/qcom/qcom_scm.c
+> @@ -556,6 +556,7 @@ int qcom_scm_pas_init_image(u32 peripheral, const
+> void *metadata, size_t size,
+>  		dev_err(__scm->dev, "Allocation of metadata buffer failed.\n");
+>  		return -ENOMEM;
+>  	}
+> +	mdata_phys = qcom_scm_mem_to_phys(mdata_buf);
+>  	memcpy(mdata_buf, metadata, size);
+> 
+>  	ret = qcom_scm_clk_enable();
+> @@ -578,7 +579,7 @@ int qcom_scm_pas_init_image(u32 peripheral, const
+> void *metadata, size_t size,
+>  		qcom_scm_mem_free(mdata_buf);
+>  	} else if (ctx) {
+>  		ctx->ptr = mdata_buf;
+> -		ctx->phys = qcom_scm_mem_to_phys(mdata_buf);
+> +		ctx->phys = mdata_phys;
+>  		ctx->size = size;
+>  	}
+> 
+> Bart
+> 
 
-I tested the approach below, and it seems to work fine both with
-ftrace enabled and disabled. R7 is no longer selected by the compiler
-as an inline asm argument, but is still in charge of the register
-allocation.
+For some reason that I can't explain that is still not working. It seems
+the SMC call is returning !0 and then we return -EINVAL from there
+with qcom_scm_remap_error().
 
-With your approach, the compiler is still free to use R7, and we have
-had issues in the past where the compiler does not honour the register
-asm ("rX") assignment strictly.
+Here's a really crummy diff of what I hacked in during lunch to debug (don't
+judge my primitive debug skills):
 
-Could you please explain how you produced the "inline asm clobber list
-contains reserved registers" with this change?
+diff --git a/drivers/firmware/qcom/qcom_scm-smc.c b/drivers/firmware/qcom/qcom_scm-smc.c
+index 0d5554df1321..56eab0ae5f3a 100644
+--- a/drivers/firmware/qcom/qcom_scm-smc.c
++++ b/drivers/firmware/qcom/qcom_scm-smc.c
+@@ -162,6 +162,8 @@ int __scm_smc_call(struct device *dev, const struct qcom_scm_desc *desc,
+        struct arm_smccc_res smc_res;
+        struct arm_smccc_args smc = {0};
+ 
++       dev_err(dev, "%s: %d: We are in this function\n", __func__, __LINE__);
++
+        smc.args[0] = ARM_SMCCC_CALL_VAL(
+                smccc_call_type,
+                qcom_smccc_convention,
+@@ -174,6 +176,7 @@ int __scm_smc_call(struct device *dev, const struct qcom_scm_desc *desc,
+        if (unlikely(arglen > SCM_SMC_N_REG_ARGS)) {
+                alloc_len = SCM_SMC_N_EXT_ARGS * sizeof(u64);
+                args_virt = qcom_scm_mem_alloc(PAGE_ALIGN(alloc_len), flag);
++               dev_err(dev, "%s: %d: Hit the unlikely case!\n", __func__, __LINE__);
+ 
+                if (!args_virt)
+                        return -ENOMEM;
+@@ -197,6 +200,7 @@ int __scm_smc_call(struct device *dev, const struct qcom_scm_desc *desc,
+ 
+        /* ret error check follows after args_virt cleanup*/
+        ret = __scm_smc_do(dev, &smc, &smc_res, atomic);
++       dev_err(dev, "%s: %d: ret: %d\n", __func__, __LINE__, ret);
+ 
+        if (ret)
+                return ret;
+@@ -205,8 +209,10 @@ int __scm_smc_call(struct device *dev, const struct qcom_scm_desc *desc,
+                res->result[0] = smc_res.a1;
+                res->result[1] = smc_res.a2;
+                res->result[2] = smc_res.a3;
++               dev_err(dev, "%s: %d: 0: %llu, 1: %llu: 2: %llu\n", __func__, __LINE__, res->result[0], res->result[1], res->result[2]);
+        }
+ 
++       dev_err(dev, "%s: %d: smc_res.a0: %lu\n", __func__, __LINE__, smc_res.a0);
+        return (long)smc_res.a0 ? qcom_scm_remap_error(smc_res.a0) : 0;
 
 
+And that all spams dmesg successfully for most cases, but the
+pas_init_image calls log this out:
 
+[   16.362965] remoteproc remoteproc1: powering up 1b300000.remoteproc
+[   16.364897] remoteproc remoteproc1: Booting fw image qcom/sc8280xp/LENOVO/21BX/qccdsp8280.mbn, size 3575808
+[   16.365009] qcom_scm firmware:scm: __scm_smc_call: 165: We are in this function
+[   16.365251] qcom_scm firmware:scm: __scm_smc_call: 203: ret: 0
+[   16.365256] qcom_scm firmware:scm: __scm_smc_call: 212: 0: 0, 1: 0: 2: 0
+[   16.365261] qcom_scm firmware:scm: __scm_smc_call: 215: smc_res.a0: 4291821558
 
---- a/arch/arm/probes/kprobes/Makefile
-+++ b/arch/arm/probes/kprobes/Makefile
-@@ -8,6 +8,7 @@ test-kprobes-objs               :=3D test-core.o
+At the moment I am unsure why...
 
- ifdef CONFIG_THUMB2_KERNEL
- obj-$(CONFIG_KPROBES)          +=3D actions-thumb.o checkers-thumb.o
-+CFLAGS_actions-thumb.o         +=3D -fno-omit-frame-pointer
- test-kprobes-objs              +=3D test-thumb.o
- else
- obj-$(CONFIG_KPROBES)          +=3D actions-arm.o checkers-arm.o
