@@ -2,199 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ABF737B34BA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 16:19:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D8947B34CB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 16:22:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233276AbjI2OTG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Sep 2023 10:19:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57266 "EHLO
+        id S233405AbjI2OWc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Sep 2023 10:22:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233207AbjI2OTG (ORCPT
+        with ESMTP id S233392AbjI2OWa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Sep 2023 10:19:06 -0400
-Received: from mail-vk1-xa30.google.com (mail-vk1-xa30.google.com [IPv6:2607:f8b0:4864:20::a30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F32D31A8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 07:19:02 -0700 (PDT)
-Received: by mail-vk1-xa30.google.com with SMTP id 71dfb90a1353d-49a319c9e17so3982695e0c.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 07:19:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695997142; x=1696601942; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=aeAmu5zRzHvoDH022+dw4lZnAM1RJWZc8yHpGYazk38=;
-        b=IAR2otZA0wOBAfulY51fm5VEDd7sQpNpQRLsH19GJyrgN0A6mKpe5s2Qg3Qa3eLTTs
-         4xHFLBHn8YT5dPvBfBWVGzsFvHhjZTrVerNAiPu1W0NIhjP75wJAIY/hA3Msh1AxNY+S
-         leUzg5FEf3NT/oUfXEYpIzM2GmA+zKF8DILIK17CKUOv0bov21+mugtYqNRhvCmGv+2s
-         K0olfdhSyI+W669SG5uPpfvA0/dGSdYXYXSXCTU/g5oPrG7Hmjm/KB1WkvbO6eSM/8AV
-         G8TnWG0Crek5TjyPZktdkuVciDMYx888Ii8hH8anI7JlDNU2SxNp0setm1a506+Upfjw
-         SCqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695997142; x=1696601942;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aeAmu5zRzHvoDH022+dw4lZnAM1RJWZc8yHpGYazk38=;
-        b=PzQL4jOXIZKtT7+RAiM+SZRv/Mo7Q1fr3nPG9C32yIKN6HWBuvDTBot6DoMHJhQwXh
-         31YkvL2mzY5mktTz/cIGZi5EG4tGY6TBxOPky7rU8WBFKlsMIaTrmzloKBxqKW7FfXCU
-         NSHSNxb9ZpHRhBh0mQtfv1xiOKJHoj0m9Ih4b4qzesLYJtdwvR+AZRo4GUMmlbx6mUrD
-         oZi3BhprIv1ssiQDVOOg433/UOs6crH7dXugl7N7E+xO+fMfRv+/z+d41aFIIzGM7yCj
-         0UZochzdcu6QjhK7+wXrcEhUM/tgv0/uMCZewC4t7IF2BBT7GJ2ddAVp7jTwSBVwGv6c
-         sJKw==
-X-Gm-Message-State: AOJu0YxzzoDu+7Ia+LNfoncbnyEwQas5kMhYEqfbgRZtiHK+T6yBG5rc
-        K0WCzupmQnV7fCUagcxwW20IRA==
-X-Google-Smtp-Source: AGHT+IG8PNXy1FiVTC84HeixjWp13xFTszyacFLiA9jqmSZuIb0y0MLVqqRjAZo1hAHWMru/kiHa3A==
-X-Received: by 2002:a1f:e641:0:b0:49a:850b:107b with SMTP id d62-20020a1fe641000000b0049a850b107bmr3260039vkh.5.1695997141781;
-        Fri, 29 Sep 2023 07:19:01 -0700 (PDT)
-Received: from [192.168.33.189] (178235177217.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.217])
-        by smtp.gmail.com with ESMTPSA id g27-20020ac5c5db000000b0049d1de0fa44sm102807vkl.28.2023.09.29.07.18.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Sep 2023 07:19:01 -0700 (PDT)
-Message-ID: <acc606a6-c46c-43f5-86e0-84bf876001dd@linaro.org>
-Date:   Fri, 29 Sep 2023 16:18:56 +0200
+        Fri, 29 Sep 2023 10:22:30 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1164B1AC;
+        Fri, 29 Sep 2023 07:22:27 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38T9q4fB011558;
+        Fri, 29 Sep 2023 14:22:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=uel0KbMalDjHMwSQ7GdbifduKXHuQtJEkwaFOppR4OA=;
+ b=bExpVf4++NQPRGlhHJa1C/CT1WlKE0vjhknyaXaM1DYF46odSnz9irIrOEDI918IflLB
+ 66OCrU2hp7oUMZ9kNiD55wyp9/be+fmmpHk7azs32RbRkBHHAg75EbR1+o9eANp5s+/A
+ j1puJeGPskA7jhoD5/Yza0VVz23Z0wWm2MQ4O1FYv/Iul/lKEgDJ16mNTJLJoZ900wIN
+ 5WNVwBK4AHPD9Qn0ZdwL8kBOi4ohetdja5iL8embj0qC+9qqSk6T/OIps2Re5St34K5w
+ vKH0IDDnAsRiG8zqengQokVKfX6xvsJEIxiWMyI7PxHkAqApY8dINW7XrqUTrUlqSvLx nw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3td3ggbv2e-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 29 Sep 2023 14:22:15 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38TEME1W032607
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 29 Sep 2023 14:22:15 GMT
+Received: from [10.218.45.181] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Fri, 29 Sep
+ 2023 07:22:10 -0700
+Message-ID: <162b61dc-6304-353b-e9be-9ff941ab3e9b@quicinc.com>
+Date:   Fri, 29 Sep 2023 19:52:06 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: sc7280: Add Camera Control
- Interface busses
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.2
+Subject: Re: [PATCH V4 3/4] arm64: dts: qcom: sc7280: Add UFS nodes for sc7280
+ IDP board
 Content-Language: en-US
-To:     Bryan O'Donoghue <pure.logic@nexus-software.ie>,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Andi Shyti <andi.shyti@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230929-sc7280-cci-v1-0-16c7d386f062@fairphone.com>
- <20230929-sc7280-cci-v1-2-16c7d386f062@fairphone.com>
- <8dd470e5-ce33-3d33-98f1-e66935ca7b56@linaro.org>
- <1b5bd391-4bb0-44ac-88d1-e326bec4dd7d@nexus-software.ie>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <1b5bd391-4bb0-44ac-88d1-e326bec4dd7d@nexus-software.ie>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <mani@kernel.org>,
+        <alim.akhtar@samsung.com>, <bvanassche@acm.org>,
+        <avri.altman@wdc.com>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <cros-qcom-dts-watchers@chromium.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>
+References: <20230929131936.29421-1-quic_nitirawa@quicinc.com>
+ <20230929131936.29421-4-quic_nitirawa@quicinc.com>
+ <ed61f6a1-a21d-cc23-b995-7692a2e8530a@linaro.org>
+From:   Nitin Rawat <quic_nitirawa@quicinc.com>
+In-Reply-To: <ed61f6a1-a21d-cc23-b995-7692a2e8530a@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 1RUuwAXoNCMWU-LHXJ03zpttm34mrTy7
+X-Proofpoint-ORIG-GUID: 1RUuwAXoNCMWU-LHXJ03zpttm34mrTy7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-09-29_11,2023-09-28_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=470
+ priorityscore=1501 bulkscore=0 malwarescore=0 clxscore=1015
+ lowpriorityscore=0 suspectscore=0 mlxscore=0 spamscore=0 adultscore=0
+ phishscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2309180000 definitions=main-2309290123
+X-Spam-Status: No, score=-6.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29.09.2023 16:15, Bryan O'Donoghue wrote:
-> On 29/09/2023 14:35, Konrad Dybcio wrote:
->>
->>
->> On 9/29/23 10:01, Luca Weiss wrote:
->>> Add the CCI busses found on sc7280 and their pinctrl states.
->>>
->>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>> ---
->>>   arch/arm64/boot/dts/qcom/sc7280.dtsi | 136 +++++++++++++++++++++++++++++++++++
->>>   1 file changed, 136 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->>> index 66f1eb83cca7..65550de2e4ff 100644
->>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->>> @@ -3793,6 +3793,86 @@ videocc: clock-controller@aaf0000 {
->>>               #power-domain-cells = <1>;
->>>           };
->>> +        cci0: cci@ac4a000 {
->>> +            compatible = "qcom,sc7280-cci", "qcom,msm8996-cci";
->>> +            reg = <0 0x0ac4a000 0 0x1000>;
->>> +            interrupts = <GIC_SPI 460 IRQ_TYPE_EDGE_RISING>;
->>> +            power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>;
->>> +
->>> +            clocks = <&camcc CAM_CC_CAMNOC_AXI_CLK>,
->>> +                 <&camcc CAM_CC_SLOW_AHB_CLK_SRC>,
->>> +                 <&camcc CAM_CC_CPAS_AHB_CLK>,
->>> +                 <&camcc CAM_CC_CCI_0_CLK>,
->>> +                 <&camcc CAM_CC_CCI_0_CLK_SRC>;
->>> +            clock-names = "camnoc_axi",
->>> +                      "slow_ahb_src",
->>> +                      "cpas_ahb",
->>> +                      "cci",
->>> +                      "cci_src";
->> I guess this is more of a question to e.g. Bryan, but are all of these clocks actually necessary?
->>
->> Konrad
-> Hmm its a good question, we generally take the approach of adopting all of the downstream clocks for these camera interfaces verbatim.
-> 
-> The clock plan for this part only calls out cci_X_clk and cci_x_clk_src for the CCI however we know that to be incomplete since we *absolutely* need to have the AXI for the block clocked to access those registers, same deal with the AHB bus.
-> 
-> AXI: registers
-> AHB: data
-> 
-> In the above list the only clock you might conceivably not need is CPAS_AHB_CLK.
-> 
-> Let me zap that clock from sdm845 since I have an rb3 right in front of me and see what happens.
-> 
-> Crash and reset
-> 
-> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -4402,13 +4402,11 @@ cci: cci@ac4a000 {
->                         clocks = <&clock_camcc CAM_CC_CAMNOC_AXI_CLK>,
->                                 <&clock_camcc CAM_CC_SOC_AHB_CLK>,
->                                 <&clock_camcc CAM_CC_SLOW_AHB_CLK_SRC>,
-> -                               <&clock_camcc CAM_CC_CPAS_AHB_CLK>,
->                                 <&clock_camcc CAM_CC_CCI_CLK>,
->                                 <&clock_camcc CAM_CC_CCI_CLK_SRC>;
->                         clock-names = "camnoc_axi",
->                                 "soc_ahb",
->                                 "slow_ahb_src",
-> -                               "cpas_ahb",
->                                 "cci",
->                                 "cci_src";
-> 
-> 
-> I think the list is good tbh
-WDYT about camcc consuming ahb, like dispcc does?
-AXI, hmm.. not quite sure what to do with it
 
-Konrad
+
+On 9/29/2023 6:56 PM, Konrad Dybcio wrote:
+> 
+> 
+> On 9/29/23 15:19, Nitin Rawat wrote:
+>> Add UFS host controller and PHY nodes for sc7280 IDP board.
+>>
+>> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+>> Acked-by: Manivannan Sadhasivam <mani@kernel.org>
+>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> Tested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> I did not add these tags to this patch, drop them.
+
+My Apologies.Actually Patch 2 and Patch3 review tag got swapped.
+Will update and send new patchset
+> 
+> Konrad
+
+Thanks,
+Nitin
