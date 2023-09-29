@@ -2,170 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 58BE37B29F1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 02:46:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 31CCF7B2AA9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 05:44:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230246AbjI2Aqk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Sep 2023 20:46:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50764 "EHLO
+        id S232582AbjI2DoL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Sep 2023 23:44:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229653AbjI2Aqj (ORCPT
+        with ESMTP id S229541AbjI2DoK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Sep 2023 20:46:39 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60148B4;
-        Thu, 28 Sep 2023 17:46:38 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38SNvgNl026356;
-        Fri, 29 Sep 2023 00:46:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=afqAn7dGHUrlAfXXYIxYiEc20eODfjmPGA+l2AIO5QA=;
- b=lQCH7OLOzUdEnhZzixzvQz5U/EUMM82fB4kCv8ctjF/XnzOVjKc7wTj7REpsvwunQDbQ
- muVpMkt9FwQbPY3x/DP92fM+jkWSjezxXWS3G997LNu/0eH+kEfQNvleb15T/XQDcj0R
- EDPDYRbHrM0wQWBe992gMUYCB8xXK431197vg2gnebESjYBAnuvVf/poqAvDrc6kfuHv
- yDzTBw9/lJXZDZSpP9y0SvztOii9YipwceqHpKZ9pTzddTZaedespblTWLHKqGiZU+eL
- 5pT4Gc5LP3lnS8LjL6J4YM2xJBPTHob0nC+N4i4qKy5XRntVqvJ6G5ZHs+s6W+1KCGka uQ== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tdfbrrgh3-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 29 Sep 2023 00:46:17 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38T0kGXO005113
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 29 Sep 2023 00:46:16 GMT
-Received: from [10.110.70.158] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Thu, 28 Sep
- 2023 17:46:13 -0700
-Message-ID: <58701008-bb93-e5c6-9ca0-5bc43f9a46f0@quicinc.com>
-Date:   Thu, 28 Sep 2023 17:46:11 -0700
+        Thu, 28 Sep 2023 23:44:10 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76BAC1A1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 20:44:08 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-3231d67aff2so10064218f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Sep 2023 20:44:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1695959047; x=1696563847; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=f4TogETOCk+xUnLHxKgeSQ2bXIzP6bF1+E5N8t7kwTQ=;
+        b=ULCbDuiUqCqev47nQy+9QuXSa+SRY2UvFvLSt492XnLYcOO1q+3HV2m2lHMvT4ZGaJ
+         GP1sTnW43mQG7sbOH6mwFqvJOrSAVxaR/M4VgyDstmPIRvsbl3AnZsYVAWBEoHBvB643
+         2QBnj3YaVw3OQ4VJ1jP4TA9Jtn3sEXPJkUGRhR3CSG1AV+kMvZUSeQesaL/lASTo4G35
+         urw82VeJAjwhLn3r3TsxWcDs2mr8Hp0g/Svex5cfbebzykT5vOxRbohhVP+6Ia3mUTuJ
+         v89O3LgrrGl+9a+8MHFOn93j630eo6taFnKdyBx49DtxdTIHFzqrdsZefDdE6CZmhao1
+         efCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695959047; x=1696563847;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=f4TogETOCk+xUnLHxKgeSQ2bXIzP6bF1+E5N8t7kwTQ=;
+        b=RjMqMZQW9ccz3XqWqFcPv1NEFn4eLeh7AEwqFSZGirqbsjImQPMiwO1D2K7F1KUKaf
+         c+cuM9a5iMqYwo1BW6Kj7fzsuNEHtxMYzNjUJzuzzJeyjBRx6UJbH6YJSzelYQa0GQEz
+         LyzBYBEOPdNf75w9ZFVkw8bpf7ego7EkMBNN36eaw9k7U/OzQGj2oojVHdiBu4m2OPkB
+         /ee/CIA3iY1XdaOOd0YQWNoYxCiSZ4DPLeVqoTQ95UtAze6qwnhCRcOVxVNnHPeqY5ka
+         SU2Z2JS3f7ogQCAFsJ4e2CcDH0yacSuiD4U4lwYXDoRF3/rKu3JoeVqL2WGl6DzQvjy1
+         7jbA==
+X-Gm-Message-State: AOJu0YxkxtzZhzDYg3lCLBJZOs7J3n9hDVbWXuJuH98PqyIqsWamVMyS
+        Eg3sbWoA5VZTrQ6ARW6gWzQ+kQ==
+X-Google-Smtp-Source: AGHT+IGpmAG6fkpT14Ex6tGOcQHHs82ZxMcFTf2OUK4PGyRogEEkYcbfxLlzFKTpKe31H7+LnvYFBA==
+X-Received: by 2002:adf:ea84:0:b0:321:6f5f:78ab with SMTP id s4-20020adfea84000000b003216f5f78abmr2787348wrm.56.1695959046265;
+        Thu, 28 Sep 2023 20:44:06 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id c10-20020a5d4f0a000000b0031f3ad17b2csm20645177wru.52.2023.09.28.20.44.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 Sep 2023 20:44:05 -0700 (PDT)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH v5 0/2] irqchip/qcom-pdc: support v3.2 HW
+Date:   Fri, 29 Sep 2023 05:43:59 +0200
+Message-Id: <20230929-topic-sm8x50-upstream-pdc-ver-v5-0-800111572104@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v3 6/7] drm/msm/dp: add
- pm_runtime_force_suspend()/resume()
-Content-Language: en-US
-To:     Stephen Boyd <swboyd@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>
-CC:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <dianders@chromium.org>, <vkoul@kernel.org>,
-        <daniel@ffwll.ch>, <airlied@gmail.com>, <agross@kernel.org>,
-        <andersson@kernel.org>, <quic_jesszhan@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1694813901-26952-1-git-send-email-quic_khsieh@quicinc.com>
- <1694813901-26952-7-git-send-email-quic_khsieh@quicinc.com>
- <CAA8EJpqPXoFX4LXyXYgfh07Vpxg-KgD8VBR6x5bXf4GOJmbOtw@mail.gmail.com>
- <2f98d5f1-57c1-d9fe-cb1c-b975db057287@quicinc.com>
- <CAA8EJpr2wRq6Txi7YAQpJKa_9UGqH_nmHzvVOaAPkwOrtDg4Tw@mail.gmail.com>
- <CAE-0n53dqHONzMTd_ZC-fKWTzDVq6Wqwo4OFZMUcghZ5SD5RhA@mail.gmail.com>
- <65566a68-3510-2e5f-7d57-e4dba08c008c@quicinc.com>
- <1d9bf80d-0267-937b-4dd9-c57db7a89cb4@quicinc.com>
- <CAE-0n51Hrs66oG4NF5rDETkVO-ocG_6_=Aqc5cE-qPDViSgKyA@mail.gmail.com>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAE-0n51Hrs66oG4NF5rDETkVO-ocG_6_=Aqc5cE-qPDViSgKyA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: f0UFRBg3XnK49yRbyxc7x5Rx8Tc3NF6g
-X-Proofpoint-GUID: f0UFRBg3XnK49yRbyxc7x5Rx8Tc3NF6g
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-09-28_24,2023-09-28_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
- malwarescore=0 impostorscore=0 mlxscore=0 suspectscore=0
- priorityscore=1501 lowpriorityscore=0 mlxlogscore=999 adultscore=0
- clxscore=1015 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2309290004
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAP9HFmUC/43NzY7CIBiF4VsxrOcz/BbqyvswLih8KMlYGqjEi
+ em9D7rRiYvO8j2L59xJwRyxkN3mTjLWWGIaW6ivDXFnO54Qom9NOOWCGs5gTlN0UC7mpihcpzJ
+ ntBeYvIOKGRiTDgepkCGSZkwZQ7w9/cOx9TmWOeWf511lj/W/cmXAoPM6SO97pVm//46jzWmb8
+ ok86MrfOb7G8cYJKtRgvDAm6A9OvHNijRONs1b73g6m4yg/OPnieqrWOAkUguuEcNoHI4c/3LI
+ sv1PV3BO4AQAA
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>
+Cc:     "Maulik Shah (mkshah)" <quic_mkshah@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2375;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=hp7/MUaWObFj4XQkLlCEpU20zP1F2wzCk3sZcwXu3oo=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlFkgEe/N4IU87QFHf1GiPai0/S5qTEmIo0SSbQXwX
+ EqgDs82JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZRZIBAAKCRB33NvayMhJ0bl9EA
+ ClWbZWFmCrHt0MjMMg4/z14o0pR8Bdo7rn5iVIJe4YI+YqJKywi9/9Xz01nOOTSI/GKqRgi1uqABgx
+ 7A4DkUVHrdi177UDA0EBflf+lAvuFBuNWP0hs1GMEL1W0G6GqvqlfpKqRcnMHwltlM6DjtwKlgCokB
+ +7gSmAOOhMcvDIcXO5ZMcSFRuBMtCiyfnY1meaEr3Nqay4b6vIGQoKK1kqwogxbdD+516W+F8Uqhr0
+ uiMEpC0a6pZiBORasjjHZTpKzimiAGBHe10fKMC9DHLXSnlyv0va7OuzpMoxE18l5Yi1V4Y+9ekcKT
+ B6cKuFRn2JCxHoHClR8+jvdOTk17+cUjxfWgrUclBR7NkU9rU6ZzZ1WpNPc/ksn6kCSa+Y4nv46/JE
+ hBuLtddrSxdLHB+jhwDoIz6/iS1ehuzv7OfXM5uU4pHvE0aNDcE1s3nWoWiNHjxw37XWjka94Hk5SM
+ /XzNwMgpdD/H/R6egeV1hQ3BOSjYzgni/j0lMOtztx/KsRVo9W0OTnCgBFpft5IM7EAt2GKQtMBJGi
+ bn3Bwcw6nVfZhPL1xh815eH+2n6n8y/ZQWsjZfmQWGLhxv/DoNGE6fOHCDnFGO9ek/BL1pvNrBpV8L
+ 0xFM3DbcdlHuDKuofGrgIV1/0S5qP4wcUAeIMUsAtwt6dpEkZsGTkowqY6tg==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Starting from HW version 3.2 the IRQ_ENABLE bit has moved to the
+IRQ_i_CFG register and requires a change of the driver to avoid
+writing into an undefined register address.
 
+Get the HW version from registers and set the IRQ_ENABLE bit to the
+correct register depending on the HW version.
 
-On 9/27/2023 3:01 PM, Stephen Boyd wrote:
-> Quoting Kuogee Hsieh (2023-09-25 09:07:18)
->>
->> On 9/22/2023 6:35 PM, Abhinav Kumar wrote:
->>>
->>> Doing link training when we get hpd instead of atomic_enable() is a
->>> design choice we have been following for a while because for the case
->>> when link training fails in atomic_enable() and setting the link
->>> status property as you mentioned, the compositor needs to be able to
->>> handle that and also needs to try with a different resolution or take
->>> some other corrective action. We have seen many compositors not able
->>> to handle this complexity. So the design sends the hotplug to usermode
->>> only after link training succeeds.
->>>
->>> I do not think we should change this design unless prototyped with an
->>> existing compositor such as chrome or android at this point.
->>>
->>> Thanks
->>>
->>> Abhinav
->>
->>
->> We did perform link training at atomic_enable() at eDP case since we can
->> assume link training will always success without link rate or link lane
->> being reduced.
->>
->> However for external DP case, link training can not be guarantee always
->> success without link rate or lane being reduced as Abhinav mentioned.
->>
->> In addition,  CTS (compliance test) it required to complete link
->> training within 10ms after hpd asserted.
-> 
-> Is it possible to change that timeout? I have to look around for the CTS
-> parameters because I'm pretty confused how it can work. What do we do if
-> DP wakes the system from suspend and asserts HPD? We need resume time to
-> be < 10ms?  That's not realistic.
-> 
+Since SM8150 DT uses a too smal PDC reg size, it's required to:
+- fix SM8150 DT
+- extend the PDC reg from the driver if used with old unfixed DT
 
-No, the CTS doesnt say we need to finish link training within 10ms after 
-HPD is asserted. It says it must be completed in 10ms after 
-TRAINING_PATTERN_SET dpcd write.
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v5:
+- Rebased on v6.6-rc1
+- Fixup the SoB chain as pointed out by Ingo on the PR
+- Link to v4: https://lore.kernel.org/r/20230905-topic-sm8x50-upstream-pdc-ver-v4-0-fc633c7df84b@linaro.org
 
-"Wait until the Source DUT writes 00h to the TRAINING_PATTERN_SET byte 
-of Reference Sink DPCD Link Configuration Field to indicate the end of 
-the link training. Stop the link training timer. Verify that link 
-training completed in 10ms or less"
+Changes in v4:
+- Continue Dmitry's serie at https://lore.kernel.org/all/20230829092119.1017194-1-dmitry.baryshkov@linaro.org/
+- Dmitry's changes:
+   - Fix PDC resource size if it is too short instead of setting version to dummy 0 value (Marc).
+   - Squashed the fix into the original patch.
+- Changes requested by Marc on Dmitry's serie:
+   - explicit PDC_VERSION is a reg offset
+   - remove the enum
+   - move the enable_intr to a shared function
+   - add a warning when reg size doesn't match max size
+- Link to v3: https://lore.kernel.org/r/20230823-topic-sm8x50-upstream-pdc-ver-v3-1-aa7d9ab862e4@linaro.org
 
-That needs to be done independent of HPD so we can ignore the CTS point.
+Changes in v3:
+- Simplify qcom_pdc_gic_set_type()
+- Used __assign_bit in pdc_setup_pin_mapping()
+- remove BIT() from IRQ_i_CFG_IRQ_ENABLE to be used with __assign_bit()
+- Add Reviewed-by tag
+- Link to v2: https://lore.kernel.org/r/20230822-topic-sm8x50-upstream-pdc-ver-v2-1-3035b8d388f7@linaro.org
 
->>
->> I am not sure do link training at atomic_enable() can meet this timing
->> requirement.
->>
-> 
-> At least in the DP spec itself it doesn't require the link to be trained
-> within 10ms of HPD being asserted. Instead it simply recommends that the
-> OS start configuring the display promptly after HPD is asserted, e.g.
-> within 100ms. There's some strict timing on IRQ_HPD, so the driver must
-> read DPCD registers within 100ms of IRQ_HPD rising edge; maybe that is
-> what CTS is checking for?
-> 
-> TL;DR: I don't see why CTS should stop us from link training in
-> atomic_enable(). It would be beneficial to do so to make eDP and DP the
-> same. It would also help to report a drm connector being connected
-> _before_ link training so that userspace knows the link itself is the
-> bad part of the equation (and not that the DP connector looks
-> disconnected to userspace when in fact it really is connected and the
-> monitor is asserting HPD, just the link training failed).
+Changes in v2:
+- Changed IRQ_ENABLE handling based on Maulik's comments
+- Link to v1: https://lore.kernel.org/r/20230821-topic-sm8x50-upstream-pdc-ver-v1-1-6d7f4dd95719@linaro.org
 
-Its the corrective action of the userspace when it finds link is bad is 
-the concern as I highlighted in the other response. Just reading and 
-resetting link_status is not enough to recover.
+---
+Dmitry Baryshkov (1):
+      arm64: dts: qcom: sm8150: extend the size of the PDC resource
+
+Neil Armstrong (1):
+      irqchip/qcom-pdc: Add support for v3.2 HW
+
+ arch/arm64/boot/dts/qcom/sm8150.dtsi |  2 +-
+ drivers/irqchip/qcom-pdc.c           | 69 ++++++++++++++++++++++++++----------
+ 2 files changed, 52 insertions(+), 19 deletions(-)
+---
+base-commit: 0bb80ecc33a8fb5a682236443c1e740d5c917d1d
+change-id: 20230821-topic-sm8x50-upstream-pdc-ver-114ceb45e1ee
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+
