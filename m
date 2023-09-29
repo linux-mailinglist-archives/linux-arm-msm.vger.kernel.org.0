@@ -2,83 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0521D7B33BA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 15:36:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F6387B33CE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 15:39:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233306AbjI2NgM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Sep 2023 09:36:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51336 "EHLO
+        id S233445AbjI2NjY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Sep 2023 09:39:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233217AbjI2NgL (ORCPT
+        with ESMTP id S233448AbjI2NjP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Sep 2023 09:36:11 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75EF81A8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 06:36:08 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-9b2a3fd5764so933522666b.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 06:36:08 -0700 (PDT)
+        Fri, 29 Sep 2023 09:39:15 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0E092702
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 06:39:02 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-533d6a8d6b6so14776576a12.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 06:39:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695994566; x=1696599366; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dX3EzbJ03kiWTkjRF5Z0MKioiAU0uGpyTvDAMJfhWR8=;
-        b=mzes1ZywjR/25gy+Ia406hFKM9n0KP+jt1U4BFerJEMcy7hCibiJxUttSNMVn51zj3
-         OcBlBuxjnj+US8oGOtQsiRP/lkN10ukOGYCgeO8M/StEK7ASQr5k0i5L2LfHFtLgFzSG
-         juYrGeKjrPW9mLk3Pq32ZenP3ErYA1TnZGBwyQ46qTbkfWgfAdv8fR4QpzzpX24o5tVQ
-         5O3zqqmfdwkXefovdTx073hGmlG7cf0F5rP8tm8PJadjLwtyOQ/fgHbb4FHkxBMdh5Cy
-         RnTi67WJnH9hYfo827Bghif27oCtpzV4BxqwhpskKCPhur871kHM26RH9kBTVfXVpxp6
-         v8BQ==
+        d=linaro.org; s=google; t=1695994740; x=1696599540; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=N80cnpAhKZAQNAt0LvDi0BgqS0Cl+s+lMzHKGl0eRh4=;
+        b=PB8XYtTt/2Krfplz+H6ZYkl33Gsq3y7RiFEHlwN2Fx5sYwSBaxmZHsI6PzDMLixWuc
+         GimMf2klP1e394MhNDSs9zB2qqgttaiSiqf2pRNMMVdLfs/T0o4TWEvl+3e15n66gzM/
+         CYBpPeMZL19lRhu4wjSNwX0iOpA3o2/IbTBsiddzUsZvETt4vrOknQXJx4bZAn5me3lV
+         2Di6xELuCUHCPdiEHOppLqdr84AcwUTWqpX1TkHSz0T2zca84LRYWdF+7py9tG8Ks7eZ
+         HOr0jX4+V2ZHpEXrR/djBjh1OU7DkUHGxdzSBiy1T5JKFCm63nQOaNWhbAI8QOYL2uWL
+         fSNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695994566; x=1696599366;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dX3EzbJ03kiWTkjRF5Z0MKioiAU0uGpyTvDAMJfhWR8=;
-        b=R2z2OGwVsFvnjxp+AKXRDzU92ZfgMOeQC7IyVSVdtYCOHg99hBiDIA1zROi15CrSgu
-         maKDntzl1G/gkF2XZXcfuCB84+t3nio9OY8n7AlejiooCHQUAsmjxOBHQ+BqngaMD5xq
-         +UCwR2c/DPqC5qT6P6rSaUEqMxOtfuZk50H1c1wKeiIMdYdX5C/2uS2QOp0GqA3qTO0R
-         dpAcjULhEe3eISA0TtnjELG//me17PwI3oE5n9nieh9XIoTtVLKM+ZY3CeweF0fxxkyh
-         PWk0/dnyFsa+Qk/fGc1uEIvEQ6m8I7WPlkzZj7CcPWKK5KNNKQnl6IDpypbKwzrUoHxj
-         0+9g==
-X-Gm-Message-State: AOJu0YyYdwVNXKXG32QB3xjCR2ZvEwqejsu/1HM/vQSkyJNUjHkkVIVJ
-        Fyt2sHqepHZyLy5Gqi5aZuSeFQ==
-X-Google-Smtp-Source: AGHT+IEI3AsAY5gvqlvssgXWfjMGDIL9ozYTysNBuCR2Lsgq307OmkUqGFKI5pXY7nlqcaper59rkw==
-X-Received: by 2002:a17:906:29e:b0:9b0:552c:b36c with SMTP id 30-20020a170906029e00b009b0552cb36cmr4212980ejf.21.1695994566618;
-        Fri, 29 Sep 2023 06:36:06 -0700 (PDT)
-Received: from [192.168.0.123] (178235177217.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.217])
-        by smtp.gmail.com with ESMTPSA id rf19-20020a1709076a1300b009b2c5363ebasm2289902ejc.26.2023.09.29.06.36.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Sep 2023 06:36:04 -0700 (PDT)
-Message-ID: <02eb9847-62ea-e453-0745-6f6ff46f3ad0@linaro.org>
-Date:   Fri, 29 Sep 2023 15:36:06 +0200
+        d=1e100.net; s=20230601; t=1695994740; x=1696599540;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=N80cnpAhKZAQNAt0LvDi0BgqS0Cl+s+lMzHKGl0eRh4=;
+        b=J4Ec9zGbTlj7ItZAj5v4YiexXmusFqPdrC7j+O0IVVcsXbDQLnqk4AGHKQ+nXpU3tM
+         oaUjJTvelG5i1XGXV2U3uO8QIjdImhSw7rIrhSP/qCCSFP3eKC7k56U4xm21xZe8Bpir
+         mtq7vk7vKSTZszgy1TsEGbcbGmRTJLs1J43dUyHEU3j4kdBoLKhGr3udOzteL6v0bbm2
+         c4bIyMUtqxxXclBQT99lzD88u1zBwSsV/QiC7iKHHcT7Hs9qWDXVwY/12uO8kvfqD5/h
+         lG7y8CYFKvSCD5VZSob8jC1/QqdYXWTBA1cV3hxQme0PhHXpoA0MCNsscGREghXrDAd2
+         mDew==
+X-Gm-Message-State: AOJu0YylatVOIt5tecjbLQCMKbX31m94Fb/TWspLoNTKgbqZuDd/X8uo
+        JOftMn1qP/Y6KGbbd+BkoLxab6QDw+Nqpui6hLA=
+X-Google-Smtp-Source: AGHT+IHDZ7g5o9oqgsZvyPyN1QPbuYPFz8FvHA9hu9FRmuuDczT6e2mlFwjshH5KeTJNcUqMM0Qqbg==
+X-Received: by 2002:aa7:c58d:0:b0:530:8d55:9c6f with SMTP id g13-20020aa7c58d000000b005308d559c6fmr3183409edq.2.1695994740560;
+        Fri, 29 Sep 2023 06:39:00 -0700 (PDT)
+Received: from [127.0.1.1] (178235177217.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.217])
+        by smtp.gmail.com with ESMTPSA id cx14-20020a05640222ae00b005362bcc089csm2215701edb.67.2023.09.29.06.38.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 29 Sep 2023 06:39:00 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/2] 8280 display ahb clk fixes
+Date:   Fri, 29 Sep 2023 15:38:51 +0200
+Message-Id: <20230929-topic-8280_ahbdisp-v1-0-72bdc38309b9@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: qcm6490-fairphone-fp5: Enable CCI
- busses
-Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        Andy Gross <agross@kernel.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAGvTFmUC/x3MMQqAMAxA0atIZgMxClqvIiK1Rs1SSysiiHe3O
+ L7h/weSRJUEffFAlEuTHj6jKgtwu/WboC7ZwMQ1GTZ4HkEddtzRZPd50RRQqpaEnOWmYchhiLL
+ q/U+H8X0/pz8Sc2QAAAA=
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Andi Shyti <andi.shyti@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230929-sc7280-cci-v1-0-16c7d386f062@fairphone.com>
- <20230929-sc7280-cci-v1-3-16c7d386f062@fairphone.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230929-sc7280-cci-v1-3-16c7d386f062@fairphone.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Vinod Koul <vkoul@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.13-dev-0438c
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -87,13 +80,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Little fixes to shut down disp ahb clk when dispss is not in use.
 
+If possible, the dt patch should theoretically go in first, but x13s
+worked fine regardless.
 
-On 9/29/23 10:01, Luca Weiss wrote:
-> Enable the CCI busses where sensors are connected to.
-> 
-> Not covered here is the regulator used for pull-up on the I2C busses.
-> This would be pm8008_l6 (L6P).
-Does it make sense to enable non-functional hw then? Or is it on by default?
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (2):
+      arm64: dts: qcom: sc8280xp: Use the correct AHB clock for DISPSS1
+      clk: qcom: gcc-sc8280xp: Don't keep display AHB clocks always-on
 
-Konrad
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 4 ++--
+ drivers/clk/qcom/gcc-sc8280xp.c        | 6 ++----
+ 2 files changed, 4 insertions(+), 6 deletions(-)
+---
+base-commit: df964ce9ef9fea10cf131bf6bad8658fde7956f6
+change-id: 20230929-topic-8280_ahbdisp-e170e0ca2442
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
