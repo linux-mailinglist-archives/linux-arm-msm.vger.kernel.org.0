@@ -2,112 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 812EC7B3320
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 15:12:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38BBE7B332C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 15:14:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233125AbjI2NMr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Sep 2023 09:12:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48478 "EHLO
+        id S233295AbjI2NOu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Sep 2023 09:14:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233062AbjI2NMq (ORCPT
+        with ESMTP id S233283AbjI2NOr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Sep 2023 09:12:46 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7352B1AB
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 06:12:43 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-9ad8bf9bfabso1915717966b.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 06:12:43 -0700 (PDT)
+        Fri, 29 Sep 2023 09:14:47 -0400
+Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82873E7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 06:14:44 -0700 (PDT)
+Received: by mail-yb1-xb30.google.com with SMTP id 3f1490d57ef6-d865db5b4c7so12807103276.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 06:14:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695993162; x=1696597962; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=W+V6aJ381tI2A5gtE2dQcrFHINgoS2cHdZ6PB5Ir1HE=;
-        b=hfBS3KD9GSiK9c4ULe9G3pmoF8MBkXPdWndTICFI2xP+4I4UGdLTTLxFXPylahVkyU
-         pmpJImbF/lAmWZvLOkHcNFbfEJZeihslZPMgDru4QmG3B3Q0kwI2bYIG09zQwNWA5NtU
-         FM8oUs7f1pQ/gvPfkdFg5Omion+W/JNI2YwtJfWJH+g73OcBZCWP0mANbAYE7Z019Srf
-         pReI7yjKZyI1CZ9XW95EfqGOPwys1J0sxEFFHGsWEl2PoqKokyZajmCfgLmQK5X2GJud
-         QgcZcC4E82/ogvxhhM7Pwn/s8pz/4GZn2ziB1fVw4kWHNGH54XP59mNmTaMgvAr3DlMN
-         iG4A==
+        d=linaro.org; s=google; t=1695993283; x=1696598083; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=4yKiuvsvBXQ2k6MWMGjaOCkpUxNJ6ntJ4mxt0PicsU8=;
+        b=peCPbDy1pK6ss4mLp+k4npKlBtgGpvrPDAF50GO7Wn8Ag9hfKG/NFqqlff039CnTWK
+         fNG1/yUeR+3Yt7aJ2+H8OOuOyTITNDFH6njrJTi5oY/uCVQsMSo4BfXJ00K9ZqXYi99s
+         zo+qdJHR+RFPtYVQSAX/mOJvzWOazXMdo0QyAIbdDDQ4ZDPJf+zzkHanDk8CqOP5/00e
+         Z1GzMR89nUJj+Dwatw/nWeLD9cWVnU0HRF2E7Ai2vIamD4JqeitpsuocmvCkVXsdAk02
+         nETyjSmhY67+LcfKnvPV7jx8pdUYrQvaCmScE88q48r8ley/ii6DySh3AJL32/E8PYju
+         9jWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695993162; x=1696597962;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=W+V6aJ381tI2A5gtE2dQcrFHINgoS2cHdZ6PB5Ir1HE=;
-        b=UPTsL+JN09F2FfDigBzmFc9okTYQ+lxnqAGBG/wpEMGDmQvEeFCfn+Va0B7UMitUTo
-         HzIpaNpslBekSLzmggIpMILuYzrocTU9tAfcRs9y7bPZV7QD/E9hhMpvd8+S8UB76J1y
-         FKDOMRFHpLxRlXKlfyw641BsNGosXXKYBgJqqBUWThnHTDPGiHLMNI2tdDmGxUjpWvmE
-         9CMziD4MmiyA2B05cc7OEGiwU3e7USovQpRS7CW+HwAT4oJGxD9eQeONnrRB9l8JE45L
-         b1Celu3mEl7QYe/rcVeFpv8Zrd2pQPn/qi2uorrs81Klvk0Uvc4ayKUnVwQVlIjTvHJP
-         p/Yw==
-X-Gm-Message-State: AOJu0YzMZFKiVDH9+Z8TSOp93hlDftUnw1gORurCrJ0ShCcWY1qmvuDR
-        TIQXGQsMpk8HbH2twVX2mLRHBw==
-X-Google-Smtp-Source: AGHT+IEuvHg+LC2h/UL9ELESKzXJdbw5aHzvCxcQVIdD5DW+GAnoxIHa8/c/fNRjcF1LIqJ4V9Pniw==
-X-Received: by 2002:a17:906:2216:b0:9ad:ef31:6efc with SMTP id s22-20020a170906221600b009adef316efcmr4144816ejs.21.1695993161872;
-        Fri, 29 Sep 2023 06:12:41 -0700 (PDT)
-Received: from [192.168.33.189] (178235177217.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.217])
-        by smtp.gmail.com with ESMTPSA id rh27-20020a17090720fb00b009930c80b87csm12606288ejb.142.2023.09.29.06.12.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Sep 2023 06:12:41 -0700 (PDT)
-Message-ID: <cac1b912-e08b-4643-b081-834fdee30ea7@linaro.org>
-Date:   Fri, 29 Sep 2023 15:12:39 +0200
+        d=1e100.net; s=20230601; t=1695993283; x=1696598083;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4yKiuvsvBXQ2k6MWMGjaOCkpUxNJ6ntJ4mxt0PicsU8=;
+        b=JSESRjPfMzX8sMEgZWcyYmgXQekc/fwZK3I6UB5S14fgZ0w0AWE5FI46AO/oBRFlAn
+         JKrkT3NzqFpvJs1p1Eoj4/edh87qqXGRTTyDvFxDBQa3KL/UWKZ8KQhm3pJMmMrAPT9l
+         6UVCjouaNsCOaKWjnGC1kGKOyVTe+bJRPDn+DlnQQj7RwGYkVnyD7WdXDUv4ChSSOcXJ
+         LVovcG+0dVjpik1mL1bCHwS4nWn1XKeuFxl2bI0+LEq6j5XNCxvLb0oR94CKBroaPhgy
+         r5ORztQaNfIBCBsOenwyFJXGxYZpvikbnqxPO/RxCVIaQrrgFbc2nH4L/XSJ3UdaT/xj
+         dh1g==
+X-Gm-Message-State: AOJu0YzDse0xsV/v48ZkchCLsr1e2AmWOvEO/dTdWyYSL03awraKN029
+        mfNvhlClDc542/VmJP5io9KmNSp2STfDaghE4dCAZQ==
+X-Google-Smtp-Source: AGHT+IGkI0wYi0tK5BnEKfL29yL1UDl78zPwmCcvGx57ym6BKX5A0lSIf7zCcgsIbiFEqKGq5SpAkJfy3C12SBm/Rok=
+X-Received: by 2002:a25:b290:0:b0:d81:2fd4:367e with SMTP id
+ k16-20020a25b290000000b00d812fd4367emr3797524ybj.43.1695993283602; Fri, 29
+ Sep 2023 06:14:43 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: qcm6490-fairphone-fp5: Enable UFS
-Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
+References: <20230912-msm8909-cpufreq-v1-0-767ce66b544b@kernkonzept.com>
+ <20230912-msm8909-cpufreq-v1-1-767ce66b544b@kernkonzept.com>
+ <CAPDyKFq6U-MR4Bd+GmixYseRECDh142RhydtKbiPd3NHV2g6aw@mail.gmail.com> <ZQGqfMigCFZP_HLA@gerhold.net>
+In-Reply-To: <ZQGqfMigCFZP_HLA@gerhold.net>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Fri, 29 Sep 2023 15:14:07 +0200
+Message-ID: <CAPDyKFppdXe1AZo1jm2Bc_ZR18hw5Bmh1x+2P7Obhb_rJ2gc4Q@mail.gmail.com>
+Subject: Re: [PATCH 1/4] cpufreq: qcom-nvmem: Enable virtual power domain devices
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Nitin Rawat <quic_nitirawa@quicinc.com>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230929-fp5-ufs-v1-1-122941e28b06@fairphone.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
- BB/OmIWU6X+LZW6P88ZmHe+KeyABLMP5s1tJNK1j4ntT7mECcWZDzafPWF4F6m4WJOG27kTJ
- HGWdmtO+RvadOVi6CoUDqALsmfS3MUG5Pj2Ne9+0jRg4hEnB92AyF9rW2G3qisFcwPgvatt7
- TXD5E38mLyOPOUyXNj9XpDbt1hNwKQfiidmPh5e7VNAWRnW1iCMMoKqzM1Anzq7e5Afyeifz
- zRcQPLaqrPjnKqZGL2BKQSZDh6NkI5ZLRhhHQf61fkWcUpTp1oDC6jWVfT7hwRVIQLrrNj9G
- MpPzrlN4YuAqKeIer1FMt8cq64ifgTzxHzXsMcUdclzq2LTk2RXaPl6Jg/IXWqUClJHbamSk
- t1bfif3SnmhA6TiNvEpDKPiT3IDs42THU6ygslrBxyROQPWLI9IL1y8S6RtEh8H+NZQWZNzm
- UQ3imZirlPjxZtvz1BtnnBWS06e7x/UEAguj7VHCuymVgpl2Za17d1jj81YN5Rp5L9GXxkV1
- aUEwONM3eCI3qcYm5JNc5X+JthZOWsbIPSC1Rhxz3JmWIwP1udr5E3oNRe9u2LIEq+wH/toH
- kpPDhTeMkvt4KfE5m5ercid9+ZXAqoaYLUL4HCEw+HW0DXcKDwARAQABzShLb25yYWQgRHli
- Y2lvIDxrb25yYWQuZHliY2lvQGxpbmFyby5vcmc+wsGOBBMBCAA4FiEEU24if9oCL2zdAAQV
- R4cBcg5dfFgFAmQ5bqwCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQR4cBcg5dfFjO
- BQ//YQV6fkbqQCceYebGg6TiisWCy8LG77zV7DB0VMIWJv7Km7Sz0QQrHQVzhEr3trNenZrf
- yy+o2tQOF2biICzbLM8oyQPY8B///KJTWI2khoB8IJSJq3kNG68NjPg2vkP6CMltC/X3ohAo
- xL2UgwN5vj74QnlNneOjc0vGbtA7zURNhTz5P/YuTudCqcAbxJkbqZM4WymjQhe0XgwHLkiH
- 5LHSZ31MRKp/+4Kqs4DTXMctc7vFhtUdmatAExDKw8oEz5NbskKbW+qHjW1XUcUIrxRr667V
- GWH6MkVceT9ZBrtLoSzMLYaQXvi3sSAup0qiJiBYszc/VOu3RbIpNLRcXN3KYuxdQAptacTE
- mA+5+4Y4DfC3rUSun+hWLDeac9z9jjHm5rE998OqZnOU9aztbd6zQG5VL6EKgsVXAZD4D3RP
- x1NaAjdA3MD06eyvbOWiA5NSzIcC8UIQvgx09xm7dThCuQYJR4Yxjd+9JPJHI6apzNZpDGvQ
- BBZzvwxV6L1CojUEpnilmMG1ZOTstktWpNzw3G2Gis0XihDUef0MWVsQYJAl0wfiv/0By+XK
- mm2zRR+l/dnzxnlbgJ5pO0imC2w0TVxLkAp0eo0LHw619finad2u6UPQAkZ4oj++iIGrJkt5
- Lkn2XgB+IW8ESflz6nDY3b5KQRF8Z6XLP0+IEdLOOARkOW7yEgorBgEEAZdVAQUBAQdAwmUx
- xrbSCx2ksDxz7rFFGX1KmTkdRtcgC6F3NfuNYkYDAQgHwsF2BBgBCAAgFiEEU24if9oCL2zd
- AAQVR4cBcg5dfFgFAmQ5bvICGwwACgkQR4cBcg5dfFju1Q//Xta1ShwL0MLSC1KL1lXGXeRM
- 8arzfyiB5wJ9tb9U/nZvhhdfilEDLe0jKJY0RJErbdRHsalwQCrtq/1ewQpMpsRxXzAjgfRN
- jc4tgxRWmI+aVTzSRpywNahzZBT695hMz81cVZJoZzaV0KaMTlSnBkrviPz1nIGHYCHJxF9r
- cIu0GSIyUjZ/7xslxdvjpLth16H27JCWDzDqIQMtg61063gNyEyWgt1qRSaK14JIH/DoYRfn
- jfFQSC8bffFjat7BQGFz4ZpRavkMUFuDirn5Tf28oc5ebe2cIHp4/kajTx/7JOxWZ80U70mA
- cBgEeYSrYYnX+UJsSxpzLc/0sT1eRJDEhI4XIQM4ClIzpsCIN5HnVF76UQXh3a9zpwh3dk8i
- bhN/URmCOTH+LHNJYN/MxY8wuukq877DWB7k86pBs5IDLAXmW8v3gIDWyIcgYqb2v8QO2Mqx
- YMqL7UZxVLul4/JbllsQB8F/fNI8AfttmAQL9cwo6C8yDTXKdho920W4WUR9k8NT/OBqWSyk
- bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
- nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
- izWDgYvmBE8=
-In-Reply-To: <20230929-fp5-ufs-v1-1-122941e28b06@fairphone.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        Conor Dooley <conor+dt@kernel.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -116,39 +79,272 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29.09.2023 11:52, Luca Weiss wrote:
-> Enable the UFS phy and controller so that we can access the internal
-> storage of the phone.
-> 
-> At the same time we need to bump the minimum voltage used for UFS VCC,
-> otherwise it doesn't initialize properly. The new range is taken from
-> the vcc-voltage-level property downstream.
-> 
-> See also the following link for more information about the VCCQ/VCCQ2:
-> https://gerrit-public.fairphone.software/plugins/gitiles/kernel/msm-extra/devicetree/+/1590a3739e7dc29d2597307881553236d492f188/fp5/yupik-idp-pm7250b.dtsi#207
-> 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
-> I'm not 100% convinced about the regulator range change. For sure with
-> the original voltage range the UFS fails to initialize, but looking at
-> downstream kernel during runtime (debugfs) we see the VCC voltage
-> switches between 2.4V (idle?) and 2.952V (active?). But even with this
-> change in mainline the regulator would always stay at 2.504V which is
-> for sure lower than the downstream operating voltage of 2.952V. Behavior
-> wise I don't see a difference between ~2.5V and ~2.9V.
-> 
-> Should I just constrain the regulator here to min=max=2.952V? Or just
-> say it's okay as-is?
-> 
-> Depends on: https://lore.kernel.org/linux-arm-msm/20230927081858.15961-1-quic_nitirawa@quicinc.com/
-> ---
-There's a little funny hack inside the driver
+On Wed, 13 Sept 2023 at 14:26, Stephan Gerhold <stephan@gerhold.net> wrote:
+>
+> On Wed, Sep 13, 2023 at 12:56:16PM +0200, Ulf Hansson wrote:
+> > On Tue, 12 Sept 2023 at 11:40, Stephan Gerhold
+> > <stephan.gerhold@kernkonzept.com> wrote:
+> > >
+> > > The genpd core ignores performance state votes from devices that are
+> > > runtime suspended as of commit 5937c3ce2122 ("PM: domains: Drop/restore
+> > > performance state votes for devices at runtime PM").
+> >
+> > I think you are referring to the wrong commit above. Please have a
+> > look at commit 3c5a272202c2 ("PM: domains: Improve runtime PM
+> > performance state handling"), instead.
+> >
+> > I also suggest rephrasing the above into saying that the performance
+> > state vote for a device is cached rather than carried out, if
+> > pm_runtime_suspended() returns true for it.
+> >
+> > Another relevant information in the commit message would be to add
+> > that during device-attach (genpd_dev_pm_attach_by_id()), calls
+> > pm_runtime_enable() the device.
+> >
+>
+> Thanks, I will try to clarify this a bit! I was actually looking at that
+> commit originally but decided to reference the commit that "started the
+> change", since the this commit is marked as fix of the one I referenced.
+> But I think you're right, it would be more clear to reference "PM:
+> domains: Improve runtime PM performance state handling" directly.
+>
+> > > However, at the
+> > > moment nothing ever enables the virtual devices created in
+> > > qcom-cpufreq-nvmem for the cpufreq power domain scaling, so they are
+> > > permanently runtime-suspended.
+> > >
+> > > Fix this by enabling the devices after attaching them and use
+> > > dev_pm_syscore_device() to ensure the power domain also stays on when
+> > > going to suspend. Since it supplies the CPU we can never turn it off
+> > > from Linux. There are other mechanisms to turn it off when needed,
+> > > usually in the RPM firmware or the cpuidle path.
+> > >
+> > > Without this fix performance states votes are silently ignored, and the
+> > > CPU/CPR voltage is never adjusted. This has been broken since 5.14 but
+> > > for some reason no one noticed this on QCS404 so far.
+> > >
+> > > Cc: stable@vger.kernel.org
+> > > Fixes: 1cb8339ca225 ("cpufreq: qcom: Add support for qcs404 on nvmem driver")
+> > > Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+> > > ---
+> > >  drivers/cpufreq/qcom-cpufreq-nvmem.c | 21 ++++++++++++++++++++-
+> > >  1 file changed, 20 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> > > index 84d7033e5efe..17d6ab14c909 100644
+> > > --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> > > +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> > > @@ -25,6 +25,7 @@
+> > >  #include <linux/platform_device.h>
+> > >  #include <linux/pm_domain.h>
+> > >  #include <linux/pm_opp.h>
+> > > +#include <linux/pm_runtime.h>
+> > >  #include <linux/slab.h>
+> > >  #include <linux/soc/qcom/smem.h>
+> > >
+> > > @@ -280,6 +281,7 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+> > >         }
+> > >
+> > >         for_each_possible_cpu(cpu) {
+> > > +               struct device **virt_devs = NULL;
+> > >                 struct dev_pm_opp_config config = {
+> > >                         .supported_hw = NULL,
+> > >                 };
+> > > @@ -300,7 +302,7 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+> > >
+> > >                 if (drv->data->genpd_names) {
+> > >                         config.genpd_names = drv->data->genpd_names;
+> > > -                       config.virt_devs = NULL;
+> > > +                       config.virt_devs = &virt_devs;
+> > >                 }
+> > >
+> > >                 if (config.supported_hw || config.genpd_names) {
+> > > @@ -311,6 +313,23 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+> > >                                 goto free_opp;
+> > >                         }
+> > >                 }
+> > > +
+> > > +               if (virt_devs) {
+> > > +                       const char * const *name = config.genpd_names;
+> > > +                       int i;
+> > > +
+> > > +                       for (i = 0; *name; i++, name++) {
+> > > +                               ret = pm_runtime_resume_and_get(virt_devs[i]);
+> > > +                               if (ret) {
+> > > +                                       dev_err(cpu_dev, "failed to resume %s: %d\n",
+> > > +                                               *name, ret);
+> > > +                                       goto free_opp;
+> > > +                               }
+> >
+> > Shouldn't we restore the usage count at ->remove() too?
+> >
+> > > +
+> > > +                               /* Keep CPU power domain always-on */
+> > > +                               dev_pm_syscore_device(virt_devs[i], true);
+> >
+> > Is this really correct? cpufreq is suspended/resumed by the PM core
+> > during system wide suspend/resume. See dpm_suspend|resume(). Isn't
+> > that sufficient?
+> >
+> > Moreover, it looks like the cpr genpd provider supports genpd's
+> > ->power_on|off() callbacks. Is there something wrong with this, that I
+> > am missing?
+> >
+>
+> I think this question is a quite fundamental one. To explain this
+> properly I will need to delve a bit into the implementation details of
+> the two different GENPD providers that are applicable here:
+>
+> Fundamentally, we are describing the main power supply for the CPU here.
+> Consider a simple regulator with adjustable voltage. From the Linux
+> point of view this regulator should be marked as "regulator-always-on".
+> If we would turn off this regulator, the CPU would be immediately dead
+> without proper shutdown done by firmware or hardware.
+>
+> Representing the regulator as power domain does not change much, except
+> that we now have abstract "performance states" instead of actual voltages.
+> However, for power domains there is currently no generic mechanism like
+> "regulator-always-on" in the DT, only drivers can specify
+> GENPD_FLAG_ALWAYS_ON.
 
-#if defined(CONFIG_SCSI_UFSHCD_QTI)
-                        if (vreg->low_voltage_sup && !vreg->low_voltage_active && on)
-                                min_uV = vreg->max_uV;
-#endif
+We have relied on genpd providers to act on their compatible strings
+to make the correct configuration. If that isn't sufficient, I don't
+see why we couldn't add a new DT property corresponding to
+GENPD_FLAG_ALWAYS_ON.
 
-so, when the ufs is in use, it's pinned to vmax
+>
+> The special situation on MSM8909 is that there are two possible setups
+> for the CPU power supply depending on the PMIC that is used (see
+> "[PATCH 4/4] cpufreq: qcom-nvmem: Add MSM8909"): CPR or RPMPD. Both are
+> GENPD providers so in theory we can just have either
+>
+>   cpu@0 { power-domains = <&cpr>; }; // or
+>   cpu@0 { power-domains = <&rpmpd MSM8909_VDDCX_AO>; };
+>
+> in the DT, without handling this specifically on the cpufreq side.
 
-Konrad
+Looks like it would be nice to get a patch for the MSM8909 DTS too, as
+part of the series, to get a better picture of how this is going to be
+used. Would that be possible for you to provide?
+
+>
+> The two GENPD providers behave quite differently though:
+>
+>  - CPR: CPR is not really a power domain itself. It's more like a monitor
+>    on a power supply line coming from some other regulator. CPR provides
+>    suggestions how to adjust the voltage for best power/stability.
+>
+>    The GENPD .power_off() disables the CPR state machine and forwards
+>    this to the regulator with regulator_disable(). On QCS404 the
+>    regulator is marked regulator-always-on, so it will never be disabled
+>    from Linux. The SAW/SPM hardware component on Qualcomm SoCs will
+>    usually disable the regulator during deep cpuidle states.
+
+Parts of this sound a bit odd to me. The CPR/CPUfreq shouldn't really
+need to vote for the CPU's power-rail(s) from a powered-on/off (CPU
+idle states) point of view, but only from a performance (voltage
+level) point of view.
+
+If the enable/disable voting on the regulator really has an impact on
+some platforms, it sounds like it could prevent deeper CPU idle states
+too. That's probably not what we want, right?
+
+I also had a look at the existing CPR genpd provider's probe
+function/path (cpr_probe()) - and it turns out there is no call to
+regulator_enable(). Whatever that means to us.
+
+>
+>  - RPMPD: This is the generic driver for all the SoC power domains
+>    managed by the RPM firmware. It's not CPU-specific. However, as
+>    special feature each power domain is exposed twice in Linux, e.g.
+>    "MSM8909_VDDCX" and "MSM8909_VDDCX_AO". The _AO ("active-only")
+>    variant tells the RPM firmware that the performance/enable vote only
+>    applies when the CPU is active (not in deep cpuidle state).
+>
+>    The GENPD .power_off() drops all performance state votes and also
+>    releases the "enable" vote for the power domain.
+>
+> Now, imagine what happens during system wide suspend/resume:
+>
+>  - CPR: The CPR state machine gets disabled. The voltage stays as-is.
+>      - With "regulator-always-on": The CPU keeps running until WFI.
+>      - Without: I would expect the CPU is dead immediately(?)
+
+As I indicated above, I am starting to feel that this is a bit upside
+down. CPR/CPUfreq should vote on voltages to scale performance, but
+not for cpu idle states.
+
+Perhaps what is missing is a synchronization point or a notification,
+to inform the CPR driver that its state machine (registers) needs to
+be saved/restored, when the power-rails get turned on/off. In fact, we
+have a couple mechanisms at hand to support this.
+
+>
+>  - RPMPD: The performance/enable vote is dropped. The power domain might
+>    go to minimal voltage or even turn off completely. However, the CPU
+>    actually needs to keep running at the same frequency until WFI!
+>    Worst case, the CPU is dead immediately when the power domain votes
+>    get dropped.
+
+Since RPMPD is managing the voting for both performance and low power
+states for different kinds of devices, this certainly gets a bit more
+complicated.
+
+On the other hand, the CPUfreq driver should really only vote for
+performance states for the CPUs and not for low power states. The
+latter is a job for cpuidle and other consumers of the RPMPD to
+manage, I think.
+
+So, while thinking of this, I just realized that it may not always be
+a good idea for genpd to cache a performance state request, for an
+attached device and for which pm_runtime_suspended() returns true for
+it. As this is the default behaviour in genpd, I am thinking that we
+need a way to make that behaviour configurable for an attached device.
+What do you think about that?
+
+>
+> In case of RPMPD, the votes must remain even during system wide suspend.
+> The special _AO variant of the power domain tells the firmware to
+> release the votes once the CPU has been shut down cleanly. It will also
+> restore them once the CPU wakes up (long before the resume handlers run).
+>
+> My conclusion was that in both cases we want to keep the "power domain"
+> enabled, since the CPU must keep running for a short while even after
+> the system suspend handlers have been called.
+
+It looks to me that the system wide suspend/resume case isn't really
+much different from the runtime suspend/resume case.
+
+It's not CPUfreq's role (by calling pm_runtime_resume_and_get(), for
+example) to prevent the RPMPD from entering a low power state.
+
+>
+> Does this help with understanding the problem? It's a bit complicated. :D
+
+Yes, I think so, thanks!
+
+Although, I am afraid my response made this even more complicated. :-)
+
+>
+> Thanks!
+> Stephan
+>
+> PS: This is essentially just another manifestation of a discussion we
+> had a few times already over the years about where to enable power
+> domains used by cpufreq, e.g. [1, 2, 3, 4]. Apparently I already
+> mentioned back in 2021 already that QCS404 is broken [5] (I forgot
+> about that :')).
+
+Right, I recall these discussions now, thanks for the pointers.
+
+Let's try to get to the bottom of this and figure out a proper solution.
+
+>
+> [1]: https://lore.kernel.org/linux-pm/YLi5N06Qs+gYHgYg@gerhold.net/
+> [2]: https://lore.kernel.org/linux-pm/20200826093328.88268-1-stephan@gerhold.net/
+> [3]: https://lore.kernel.org/linux-pm/20200730080146.25185-1-stephan@gerhold.net/
+> [4]: https://lore.kernel.org/linux-arm-msm/20200426123140.GA190483@gerhold.net/
+> [5]: https://lore.kernel.org/linux-pm/YLoTl7MfMfq2g10h@gerhold.net/
+
+Kind regards
+Uffe
