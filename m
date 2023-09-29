@@ -2,115 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0BA7D7B2EAE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 10:57:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55D567B2EBF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 11:01:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232841AbjI2I5z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Sep 2023 04:57:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56246 "EHLO
+        id S232740AbjI2JBL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Sep 2023 05:01:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232827AbjI2I5x (ORCPT
+        with ESMTP id S232785AbjI2JBK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Sep 2023 04:57:53 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B35B6CC7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 01:57:47 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-9a58dbd5daeso1850077166b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 01:57:47 -0700 (PDT)
+        Fri, 29 Sep 2023 05:01:10 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 978ED1A5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 02:01:02 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-9b0168a9e05so1552447166b.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 02:01:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695977866; x=1696582666; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
+        d=fairphone.com; s=fair; t=1695978061; x=1696582861; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nsBQLJ6Ogoic+1/xmfT0u8ONBi3qeWxubxgbbL3TF8o=;
-        b=sSKLG8DlJQkPzhZ3rUopVPn6OtPZvVVeFDV2Kfu6S5J4o7uX4CaShffB2DAtwYutch
-         KpQCQ4Vy61zO2NC8vmc4nkE0E7Oz1u9wXM+YalPVaeKfq29B5NgyavQ4egg2PZBlnEMl
-         a2e32vEBp3E+3/eCvjPeF/VUcqZOSFzfhpprQQAJvZZh2SQlBs4wpf6eA49QADEieBvV
-         +Bdpk2e5VnLaYlaqxR+a8CBFn7wcgmWxG/YIAh4SX99pMclov7uBbEQ+aUuD62YU3fuW
-         ZH7Xn4MqBM07CvXjMHRH0MNo/W06jDyKuFRwP+9FFwRgV/FJBRdO7cKGC1DG+9aBYCl8
-         gjeQ==
+        bh=jCib+YEJ6+7KaH85hc8Nb8MnFh17rpSkk5Oe5+3Arrc=;
+        b=AUTSRteTyo95zFGGVfWFGl3v8vYxH4Nrnn738GzkQogs6CJJyrteC1PupHgsY9Yb62
+         7WnGA8wfXdvUL6Xa/D1MStfhsB17K/BU32odY0TQvY4q5pEqjqPyOocyoQYrLoDtaakv
+         yHkDccJ6GM1zsAmBEHQ1s9wzyWCXisEvcs4+DGFL1Le9WEV6nix+rcvQEd1UlpBzcdlp
+         auPSSM+j9hXKvMPVt9WiY6sgN20r3qn6fVj3m9HTLLxo3aXH1FOpSCfy1QkyRGgiS+PA
+         or9zXUg/RNB2j/hiI3YgQd+e0SnoEkRRoITO0KzhuUkBQ5VR3OE48tOop7QCujYpYBJN
+         0DQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695977866; x=1696582666;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nsBQLJ6Ogoic+1/xmfT0u8ONBi3qeWxubxgbbL3TF8o=;
-        b=qtKwhUUuHwLO2GKk5RwILn9mNbCiuwxxVYGGDRb8uuJP/Cgq24js61KMjg7uDz0dyq
-         cMUX/SlqO5UMDySzAS8A8Vn4/q5y6pSHitazOjAAKPiDjMPOjQU28DtxUn9foox9zCzZ
-         fnyB4dlUmLfzoC5DBITIgemGnBXDeKGW/wZ/kWt2U7qHM359b1SnvrXoC16GZw/IhjeY
-         68N778+lx0V3vrIKqN4MD/pgz0Ef+XnFOJ3GFHmPApFRi34CdEUqMESR+KQAjUYr71hN
-         ALANRkaC893thof4+eNktfTTbd1aC9M+nNnN0HlU7rxw+5dW3rA8p8IZ0WeNQe3ex/K/
-         s+dw==
-X-Gm-Message-State: AOJu0YxW+bLkJQJHbf3w0tUnj7v7pZR6FGvWmEJv7mN+JWZOqieLTSx0
-        xume43eUPMYP8T0fig4emccnqw==
-X-Google-Smtp-Source: AGHT+IEsrmtSBffKc4/0WejFkmq1arFW3oxGMi3C1GOThUgoHMTSmFySeXvpixD0/kTwmWhaMqbTUQ==
-X-Received: by 2002:a17:906:28e:b0:9b2:b749:ff93 with SMTP id 14-20020a170906028e00b009b2b749ff93mr2957352ejf.24.1695977866113;
-        Fri, 29 Sep 2023 01:57:46 -0700 (PDT)
-Received: from srini-hackbase.lan ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id w27-20020a17090633db00b009a2235ed496sm12339806eja.141.2023.09.29.01.57.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Sep 2023 01:57:45 -0700 (PDT)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     =?utf-8?q?Rafa=C5=82_Mi=C5=82ecki?= <zajec5@gmail.com>
-Cc:     Miquel Raynal <miquel.raynal@bootlin.com>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Vincent Shih <vincent.sunplus@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Evgeniy Polyakov <zbr@ioremap.net>,
-        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
-        asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-rtc@vger.kernel.org,
-        Michael Walle <michael@walle.cc>,
-        =?utf-8?q?Rafa=C5=82_Mi=C5=82ecki?= <rafal@milecki.pl>,
-        Michal Simek <michal.simek@amd.com>
-In-Reply-To: <20230927204446.4231-1-zajec5@gmail.com>
-References: <20230927204446.4231-1-zajec5@gmail.com>
-Subject: Re: [PATCH V5] nvmem: add explicit config option to read old
- syntax fixed OF cells
-Message-Id: <169597786418.99756.8731565742524355843.b4-ty@linaro.org>
-Date:   Fri, 29 Sep 2023 09:57:44 +0100
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.12.2
+        d=1e100.net; s=20230601; t=1695978061; x=1696582861;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=jCib+YEJ6+7KaH85hc8Nb8MnFh17rpSkk5Oe5+3Arrc=;
+        b=oILBQ0NMrCefJb4uBZU64JvSGdjhXlFojWcqgh/pxhsnYRXzRRTRUACqGmvKhHvxH7
+         Uttq7Tl7HBFSHu6wvI1zyUe3vQzpZ+Vv2Bxuc2t/4b0nsG15CTFrl8fo8BBhHI75Q11b
+         81gF+pLQY5qXgN93VQicuxha1b1meIi/a2/cz4//u0lgr6EuRmY1E/zUPl9e+q3HUwth
+         w4lUNKXU+saETR5ip1OMgBcnbi1TXryjG/cQG9Tl0jsyUEC5wmNyWhaaQZR3fxNZESH4
+         Ili+H0ti3AH3jqHjADP+cLAA9muIUnpWHqAzVRWYSFO2EAvgaGbbou4p7jS2n4FYoYYT
+         ecag==
+X-Gm-Message-State: AOJu0YxKsDeZQtqrTMJ+TAX+W5R8m4VShyqg3fiA+WzCOEe4PphnhCBp
+        NEtY95w+uRDZjGK0bZKjHpf33w==
+X-Google-Smtp-Source: AGHT+IF8LpBwznH+qjY6BeKJwXeYUOfJ8dYEkZ+qseK8NDxlpDW8TzadUKBD4uecOioziiIYg5ZmsA==
+X-Received: by 2002:a17:906:3050:b0:9ae:65a5:b6f4 with SMTP id d16-20020a170906305000b009ae65a5b6f4mr3370291ejd.20.1695978060936;
+        Fri, 29 Sep 2023 02:01:00 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id bl19-20020a170906c25300b0099bc8db97bcsm12087256ejb.131.2023.09.29.02.01.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 Sep 2023 02:01:00 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Fri, 29 Sep 2023 11:01:00 +0200
+Message-Id: <CVVA1OVF4W9E.380D6QC1K9GD6@otso>
+Cc:     <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>
+Subject: Re: [PATCH V3 2/4] arm64: dts: qcom: sc7280: Add UFS nodes for
+ sc7280 soc
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Nitin Rawat" <quic_nitirawa@quicinc.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <mani@kernel.org>, <alim.akhtar@samsung.com>, <bvanassche@acm.org>,
+        <avri.altman@wdc.com>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <cros-qcom-dts-watchers@chromium.org>
+X-Mailer: aerc 0.15.2
+References: <20230927081858.15961-1-quic_nitirawa@quicinc.com>
+ <20230927081858.15961-3-quic_nitirawa@quicinc.com>
+In-Reply-To: <20230927081858.15961-3-quic_nitirawa@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -119,23 +80,131 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Nitin,
 
-On Wed, 27 Sep 2023 22:44:46 +0200, Rafał Miłecki wrote:
-> Binding for fixed NVMEM cells defined directly as NVMEM device subnodes
-> has been deprecated. It has been replaced by the "fixed-layout" NVMEM
-> layout binding.
-> 
-> New syntax is meant to be clearer and should help avoiding imprecise
-> bindings.
-> 
-> [...]
+On Wed Sep 27, 2023 at 10:18 AM CEST, Nitin Rawat wrote:
+> Add UFS host controller and PHY nodes for sc7280 soc.
+>
+> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 63 ++++++++++++++++++++++++++++
+>  1 file changed, 63 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/q=
+com/sc7280.dtsi
+> index 66f1eb83cca7..0b50b8557311 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -3353,6 +3353,69 @@
+>  			};
+>  		};
 
-Applied, thanks!
+I think above you should also have this diff:
 
-[1/1] nvmem: add explicit config option to read old syntax fixed OF cells
-      commit: ee73a9fae540adbb432bd2854a82409515c7c892
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -868,11 +868,11 @@ gcc: clock-controller@100000 {
+ 			compatible =3D "qcom,gcc-sc7280";
+ 			reg =3D <0 0x00100000 0 0x1f0000>;
+ 			clocks =3D <&rpmhcc RPMH_CXO_CLK>,
+ 				 <&rpmhcc RPMH_CXO_CLK_A>, <&sleep_clk>,
+ 				 <0>, <&pcie1_lane>,
+-				 <0>, <0>, <0>, <0>;
++				 <&ufs_mem_phy 0>, <&ufs_mem_phy 1>, <&ufs_mem_phy 2>, <0>;
+ 			clock-names =3D "bi_tcxo", "bi_tcxo_ao", "sleep_clk",
+ 				      "pcie_0_pipe_clk", "pcie_1_pipe_clk",
+ 				      "ufs_phy_rx_symbol_0_clk", "ufs_phy_rx_symbol_1_clk",
+ 				      "ufs_phy_tx_symbol_0_clk",
+ 				      "usb3_phy_wrapper_gcc_usb30_pipe_clk";
 
-Best regards,
--- 
-Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>
+> +		ufs_mem_hc: ufs@1d84000 {
+> +			compatible =3D "qcom,sc7280-ufshc", "qcom,ufshc",
+> +				     "jedec,ufs-2.0";
+> +			reg =3D <0x0 0x01d84000 0x0 0x3000>;
+> +			interrupts =3D <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
+> +			phys =3D <&ufs_mem_phy>;
+> +			phy-names =3D "ufsphy";
+> +			lanes-per-direction =3D <2>;
+> +			#reset-cells =3D <1>;
+> +			resets =3D <&gcc GCC_UFS_PHY_BCR>;
+> +			reset-names =3D "rst";
+> +
+> +			power-domains =3D <&gcc GCC_UFS_PHY_GDSC>;
+> +			required-opps =3D <&rpmhpd_opp_nom>;
+> +
+> +			iommus =3D <&apps_smmu 0x80 0x0>;
+> +			dma-coherent;
+> +
+> +			clocks =3D <&gcc GCC_UFS_PHY_AXI_CLK>,
+> +				 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
+> +				 <&gcc GCC_UFS_PHY_AHB_CLK>,
+> +				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
+> +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
+> +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
+> +			clock-names =3D "core_clk",
+> +				      "bus_aggr_clk",
+> +				      "iface_clk",
+> +				      "core_clk_unipro",
+> +				      "ref_clk",
+> +				      "tx_lane0_sync_clk",
+> +				      "rx_lane0_sync_clk",
+> +				      "rx_lane1_sync_clk";
+> +			freq-table-hz =3D
+> +				<75000000 300000000>,
+> +				<0 0>,
+> +				<0 0>,
+> +				<75000000 300000000>,
+> +				<0 0>,
+> +				<0 0>,
+> +				<0 0>,
+> +				<0 0>;
+> +			status =3D "disabled";
+> +		};
+> +
+> +		ufs_mem_phy: phy@1d87000 {
+> +			compatible =3D "qcom,sc7280-qmp-ufs-phy";
+> +			reg =3D <0x0 0x01d87000 0x0 0xe00>;
+> +			clocks =3D <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>,
+> +				 <&gcc GCC_UFS_1_CLKREF_EN>;
+> +			clock-names =3D "ref", "ref_aux", "qref";
+> +
+> +			resets =3D <&ufs_mem_hc 0>;
+> +			reset-names =3D "ufsphy";
+> +
+> +			#clock-cells =3D <1>;
+> +			#phy-cells =3D <0>;
+> +
+> +			status =3D "disabled";
+> +		};
+
+Would you mind adding something like the following at the same time?
+
++		ice: crypto@1d88000 {
++			compatible =3D "qcom,sc7280-inline-crypto-engine",
++				     "qcom,inline-crypto-engine";
++			reg =3D <0 0x01d88000 0 0x8000>;
++			clocks =3D <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
++		};
+
+
+And then link it to the ufs_mem_hc node with qcom,ice =3D <&ice>; ?
+
+Or add it in a followup patch, also fine with me.
+
+Other than that, looks pretty similar to the nodes that I have in my own
+tree which work fine for the most part.
+
+Regards
+Luca
+
+> +
+>  		usb_1_hsphy: phy@88e3000 {
+>  			compatible =3D "qcom,sc7280-usb-hs-phy",
+>  				     "qcom,usb-snps-hs-7nm-phy";
+> --
+> 2.17.1
 
