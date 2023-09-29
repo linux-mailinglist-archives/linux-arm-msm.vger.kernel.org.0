@@ -2,78 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B0067B2FF6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 12:21:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C69247B304E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 12:30:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232800AbjI2KVl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Sep 2023 06:21:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60716 "EHLO
+        id S233197AbjI2Kam (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Sep 2023 06:30:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229687AbjI2KVl (ORCPT
+        with ESMTP id S233220AbjI2K3m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Sep 2023 06:21:41 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98E70C0;
-        Fri, 29 Sep 2023 03:21:39 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29EEEC433C7;
-        Fri, 29 Sep 2023 10:21:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1695982899;
-        bh=+2zBsjqoJzmRSTJwJguyALkmIBOSjgetCm1y/CgYy2M=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=gSOII6snpINNn77ls7lb3TKnyCuss9CPxUksQDwwLC2CWsC+jXCCj5TSvnboufiB8
-         FTtzT1w9gMkzpALX/7zWFNv3K8TdrSRtAt75vUypLImqWCuihAAmtUqjN5EiTU1CPQ
-         3MdsQFbxFTL/V4KIOKdtN6VzogxizI7UZkS9ZtoyM7XKpP8cDujFBKmGmQT7k2hFGe
-         A04ShedLOZKppDuqZ9NKoQa0sgcO9h0tqTC+8Ub+28/Ymx6qpdJstDoSr8z//3nuO7
-         5lzR/0/t+wRhuKBUzte7b7qEMOt6riUeVFkffuQ0Sq2xW2cM71vjZhhZRsHhKUsbav
-         N/08e6O5aDdHw==
-Received: from johan by xi.lan with local (Exim 4.96)
-        (envelope-from <johan@kernel.org>)
-        id 1qmAcs-0005HB-0S;
-        Fri, 29 Sep 2023 12:21:38 +0200
-Date:   Fri, 29 Sep 2023 12:21:38 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Sebastian Reichel <sebastian.reichel@collabora.com>
-Cc:     Sebastian Reichel <sre@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH] power: supply: qcom_battmgr: fix battery_id type
-Message-ID: <ZRalMiem9dcDiYHm@hovoldconsulting.com>
-References: <20230919124222.1155894-1-sebastian.reichel@collabora.com>
- <ZRahE9StzjDMzaCy@hovoldconsulting.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZRahE9StzjDMzaCy@hovoldconsulting.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Fri, 29 Sep 2023 06:29:42 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EAEC19B4;
+        Fri, 29 Sep 2023 03:29:18 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38TA7LfX019893;
+        Fri, 29 Sep 2023 10:29:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=ByGrroXOiJTfy8moAhWOIIoeCJ7aCJ2ajue+54ukm/8=;
+ b=XkBzTPjB7MZ1CkxB48pZT8ZHIZmQcQSdVobXdbS/rLO8jIuk1kHpsnXqyYGdzp6p/rrc
+ XVRSc+oCLoKU4O+PimtV1azUNU9CqiYVwsVqCRJMjYSyk4/At2ltA+zGzoIYNVE6xKqa
+ H/udWGoRI1EkRG1gSszixKgiO3pnvca37sMNhpeLHqpm8kqH0ni6anAiEaFKBJ8bC1ff
+ zY8HZw4FJf5t+yKaBXNvNf7jz20ySygi2U30q3hYK7UihN4famptlD9PZM8YTyp+gUcA
+ lhZGjkI8MwZtsJ0kerKV5dJeGYHc4Ojq8rN5ZDAiIToZHsOQCDqkUwkx1dBDgR7uyn2+ lQ== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tdqmv8kw6-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 29 Sep 2023 10:29:12 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 38TAT9vm021884;
+        Fri, 29 Sep 2023 10:29:09 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3t9s3m2yhp-1;
+        Fri, 29 Sep 2023 10:29:09 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 38TAT9Ub021797;
+        Fri, 29 Sep 2023 10:29:09 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-sartgarg-hyd.qualcomm.com [10.213.105.147])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 38TAT9ui021628;
+        Fri, 29 Sep 2023 10:29:09 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2339771)
+        id 24C4052E7BC; Fri, 29 Sep 2023 15:59:08 +0530 (+0530)
+From:   Sarthak Garg <quic_sartgarg@quicinc.com>
+To:     adrian.hunter@intel.com, ulf.hansson@linaro.org
+Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, quic_rampraka@quicinc.com,
+        quic_pragalla@quicinc.com, quic_sayalil@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_sachgupt@quicinc.com,
+        quic_bhaskarv@quicinc.com, quic_narepall@quicinc.com,
+        Sarthak Garg <quic_sartgarg@quicinc.com>
+Subject: [PATCH V2 0/2] Add partial initialization support
+Date:   Fri, 29 Sep 2023 15:58:29 +0530
+Message-Id: <20230929102831.9702-1-quic_sartgarg@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: pJhYWoxOk-9NFm1COcYThX8roP1T4_z_
+X-Proofpoint-ORIG-GUID: pJhYWoxOk-9NFm1COcYThX8roP1T4_z_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-09-29_07,2023-09-28_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=536 spamscore=0
+ bulkscore=0 mlxscore=0 priorityscore=1501 suspectscore=0 malwarescore=0
+ impostorscore=0 clxscore=1011 adultscore=0 phishscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
+ definitions=main-2309290090
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 29, 2023 at 12:04:04PM +0200, Johan Hovold wrote:
-> On Tue, Sep 19, 2023 at 02:42:22PM +0200, Sebastian Reichel wrote:
-> > qcom_battmgr_update_request.battery_id is written to using cpu_to_le32()
-> > and should be of type __le32, just like all other 32bit integer requests
-> > for qcom_battmgr.
-> > 
-> > Reported-by: kernel test robot <lkp@intel.com>
-> > Closes: https://lore.kernel.org/oe-kbuild-all/202309162149.4owm9iXc-lkp@intel.com/
-> > Fixes: 29e8142b5623 ("power: supply: Introduce Qualcomm PMIC GLINK power supply")
+Add the ability to partially initialize the MMC device by
+using device sleep/awake sequence (CMD5).
+Device will be sent to sleep state during mmc runtime/system suspend
+and will be woken up during mmc runtime/system resume.
+By using this sequence the device doesn't need full initialization
+which gives 25% time reduction in system/runtime resume path.
+Also enable this feature for qualcomm controllers.
 
-I think you should add
+Sarthak Garg (2):
+  mmc: core: Add partial initialization support
+  mmc: sdhci-msm: Enable MMC_CAP2_SLEEP_AWAKE for Qualcomm controllers
 
-Cc: stable@vger.kernel.org      # 6.3
+ drivers/mmc/core/mmc.c       | 162 +++++++++++++++++++++++++++++++++--
+ drivers/mmc/host/sdhci-msm.c |   1 +
+ include/linux/mmc/card.h     |   4 +
+ include/linux/mmc/host.h     |   2 +
+ 4 files changed, 160 insertions(+), 9 deletions(-)
 
-when applying as the robots may run sparse on the stable trees as well.
+--
+2.17.1
 
-> > Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-
-> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-
-Johan
