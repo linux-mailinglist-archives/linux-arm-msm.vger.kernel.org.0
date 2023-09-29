@@ -2,163 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC30E7B2F92
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 11:53:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FCCD7B2FA9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 12:04:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232923AbjI2JxL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Sep 2023 05:53:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35606 "EHLO
+        id S231774AbjI2KEI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Sep 2023 06:04:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232876AbjI2JxK (ORCPT
+        with ESMTP id S232936AbjI2KEH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Sep 2023 05:53:10 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 716991A8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 02:53:06 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-53627feca49so2660468a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 02:53:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1695981185; x=1696585985; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=zcabyV/ntBQljUCLvUhOeWEh6aipQODXnykgj24wk+U=;
-        b=f5AzrhcWu8q2UPT/JgsQlNgE+QNKroGP/TNlZRRC0LWovDx+xhf6Fu7L5mFUou0fWH
-         t4eq72dUMhLN/t2uCv8mTQTTNGWN1I209Gdw7LGAUiNHnocz4rSVxro5kV4g4Sm9oTS/
-         hcl14VHz/gFWKz6TFLTpl6jQpr9cvOIzXp9WiXV6iJb2SY2iDbBZyO7akIaYlNr4AHUR
-         vZptdOUeH/cdOc4fTVIwb4W7Zqb9d1uaqpL0YQpT627rEmg3mNUY+AfYezZmhYGv/l1+
-         kB9GsdoR7/New9AGDQkzVeba8Ie+oZ3DxWvH2F5sEZNv6yEiIEqCrBBWZg9pVMKts0pG
-         /DYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695981185; x=1696585985;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zcabyV/ntBQljUCLvUhOeWEh6aipQODXnykgj24wk+U=;
-        b=blpYWrD0scLtyQGhYouypzwaG1OVyRWh2ncjXsWiTEHFG+YeWjcaBxNGUmLFspGjkg
-         XoUqTesd3P5fIP6VhNB9uzbAn6pOtpP42oCbvZcKkInrJCtbrE+BKlAPk2n2/4QP/M2N
-         DtrnuPUPy4XkFpby7pX1jPRXLwrG4mTixmW12ZkKqoGVhsS/iH2ygMOvrTHroN+r94sy
-         kn2Mq5ZfcnBpogldxB1Y4GBD3Es3ROtlcxY9OU7h6gD780ZyVHP2ko12AiKTOvwsVBPQ
-         dqluc6MDl8vsrP7PMpmoNSAPpppEhu/RnSYk55BVKfH71ZMugf1WreE3fRQnUfbG8Sry
-         8mzQ==
-X-Gm-Message-State: AOJu0YxenbJaENLKHn0FnFqJDYI9clYsDmXiuC48W4yqHwXRuvmTmF+P
-        J2MUWV4vBv9LSStKPUONDKNG8Q==
-X-Google-Smtp-Source: AGHT+IEABpRwvS+iiXrZW7y7gBe7i8X3Nre76cQ+E3KUWZskMC/wFMBqv3YxleUQNJrF7fpO/K9THg==
-X-Received: by 2002:a05:6402:14cb:b0:533:c55f:582a with SMTP id f11-20020a05640214cb00b00533c55f582amr3132986edx.27.1695981184900;
-        Fri, 29 Sep 2023 02:53:04 -0700 (PDT)
-Received: from otso.luca.vpn.lucaweiss.eu (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id cy23-20020a0564021c9700b005362c9905b2sm1967034edb.35.2023.09.29.02.53.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Sep 2023 02:53:04 -0700 (PDT)
-From:   Luca Weiss <luca.weiss@fairphone.com>
-Date:   Fri, 29 Sep 2023 11:52:59 +0200
-Subject: [PATCH] arm64: dts: qcom: qcm6490-fairphone-fp5: Enable UFS
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230929-fp5-ufs-v1-1-122941e28b06@fairphone.com>
-X-B4-Tracking: v=1; b=H4sIAHqeFmUC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI2MDSyNL3bQCU93StGLdVKNkg1Qjw0QDQxMjJaDqgqLUtMwKsEnRsbW1AA7
- SNQRZAAAA
-To:     Andy Gross <agross@kernel.org>,
+        Fri, 29 Sep 2023 06:04:07 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD0451B6;
+        Fri, 29 Sep 2023 03:04:05 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A36EC433C9;
+        Fri, 29 Sep 2023 10:04:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1695981845;
+        bh=sRv8buPbIEC/2+2Qdm20Skddoq4EaMiObQKSQ48/r9Q=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=kjnWjqXhitCgqauUtxVj0MRGszBzWeMGoRidOq0bsgV3dNX/HiVc6+rbeqO9HzLQb
+         S/9L3+gB4Qt3167BA86TSW5wPYTwd7k6gOAdX/uOMTkSJVwbdJlKzq8HpAh0CuMCT2
+         OtPJfa7AvnvW8Yl7RbEyt/1ezfarQF1iUkJTOF9ld3+uRHNnUJFJOJuJ6VylNKLehv
+         XlSLCNnwPgudXR/kHZVBiQL3tjbYA/PfZ4I2MtCQBd0LmxjijFtfWLU0eREm8kNPJ3
+         F2Yko22Wx9TL9TgaFLm+KiQCxRzL5dctNpsh3f1ZyhwruXzW7uxKHwqpbJKKYCb08B
+         8MxeyotwgfsHw==
+Received: from johan by xi.lan with local (Exim 4.96)
+        (envelope-from <johan@kernel.org>)
+        id 1qmALr-0003rX-30;
+        Fri, 29 Sep 2023 12:04:03 +0200
+Date:   Fri, 29 Sep 2023 12:04:03 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Sebastian Reichel <sebastian.reichel@collabora.com>
+Cc:     Sebastian Reichel <sre@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Nitin Rawat <quic_nitirawa@quicinc.com>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.12.3
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kernel test robot <lkp@intel.com>
+Subject: Re: [PATCH] power: supply: qcom_battmgr: fix battery_id type
+Message-ID: <ZRahE9StzjDMzaCy@hovoldconsulting.com>
+References: <20230919124222.1155894-1-sebastian.reichel@collabora.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230919124222.1155894-1-sebastian.reichel@collabora.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the UFS phy and controller so that we can access the internal
-storage of the phone.
+On Tue, Sep 19, 2023 at 02:42:22PM +0200, Sebastian Reichel wrote:
+> qcom_battmgr_update_request.battery_id is written to using cpu_to_le32()
+> and should be of type __le32, just like all other 32bit integer requests
+> for qcom_battmgr.
+> 
+> Reported-by: kernel test robot <lkp@intel.com>
+> Closes: https://lore.kernel.org/oe-kbuild-all/202309162149.4owm9iXc-lkp@intel.com/
+> Fixes: 29e8142b5623 ("power: supply: Introduce Qualcomm PMIC GLINK power supply")
+> Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+> ---
+>  drivers/power/supply/qcom_battmgr.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
+> index de77df97b3a4..a05fd00711f6 100644
+> --- a/drivers/power/supply/qcom_battmgr.c
+> +++ b/drivers/power/supply/qcom_battmgr.c
+> @@ -105,7 +105,7 @@ struct qcom_battmgr_property_request {
+>  
+>  struct qcom_battmgr_update_request {
+>  	struct pmic_glink_hdr hdr;
+> -	u32 battery_id;
+> +	__le32 battery_id;
+>  };
+>  
+>  struct qcom_battmgr_charge_time_request {
 
-At the same time we need to bump the minimum voltage used for UFS VCC,
-otherwise it doesn't initialize properly. The new range is taken from
-the vcc-voltage-level property downstream.
+I can confirm that this addresses the corresponding sparse warnings:
 
-See also the following link for more information about the VCCQ/VCCQ2:
-https://gerrit-public.fairphone.software/plugins/gitiles/kernel/msm-extra/devicetree/+/1590a3739e7dc29d2597307881553236d492f188/fp5/yupik-idp-pm7250b.dtsi#207
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
-I'm not 100% convinced about the regulator range change. For sure with
-the original voltage range the UFS fails to initialize, but looking at
-downstream kernel during runtime (debugfs) we see the VCC voltage
-switches between 2.4V (idle?) and 2.952V (active?). But even with this
-change in mainline the regulator would always stay at 2.504V which is
-for sure lower than the downstream operating voltage of 2.952V. Behavior
-wise I don't see a difference between ~2.5V and ~2.9V.
+I'll send a fix for the remaining warnings...
 
-Should I just constrain the regulator here to min=max=2.952V? Or just
-say it's okay as-is?
-
-Depends on: https://lore.kernel.org/linux-arm-msm/20230927081858.15961-1-quic_nitirawa@quicinc.com/
----
- arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 27 ++++++++++++++++++++--
- 1 file changed, 25 insertions(+), 2 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-index 2de0b8c26c35..fea7639fc0bc 100644
---- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-+++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-@@ -182,8 +182,9 @@ vreg_l6b: ldo6 {
- 		};
- 
- 		vreg_l7b: ldo7 {
--			regulator-min-microvolt = <2400000>;
--			regulator-max-microvolt = <3544000>;
-+			/* Constrained for UFS VCC */
-+			regulator-min-microvolt = <2504000>;
-+			regulator-max-microvolt = <2952000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
-@@ -632,6 +633,28 @@ bluetooth: bluetooth {
- 	};
- };
- 
-+&ufs_mem_hc {
-+	reset-gpios = <&tlmm 175 GPIO_ACTIVE_LOW>;
-+
-+	vcc-supply = <&vreg_l7b>;
-+	vcc-max-microamp = <800000>;
-+	/*
-+	 * Technically l9b enables an eLDO (supplied by s1b) which then powers
-+	 * VCCQ2 of the UFS.
-+	 */
-+	vccq-supply = <&vreg_l9b>;
-+	vccq-max-microamp = <900000>;
-+
-+	status = "okay";
-+};
-+
-+&ufs_mem_phy {
-+	vdda-phy-supply = <&vreg_l10c>;
-+	vdda-pll-supply = <&vreg_l6b>;
-+
-+	status = "okay";
-+};
-+
- &usb_1 {
- 	status = "okay";
- };
-
----
-base-commit: d85348daa4407216e47198ed35a43a66883edab6
-change-id: 20230929-fp5-ufs-e2c0e21a0142
-
-Best regards,
--- 
-Luca Weiss <luca.weiss@fairphone.com>
-
+Johan
