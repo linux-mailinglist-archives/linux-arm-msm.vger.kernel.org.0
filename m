@@ -2,83 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 59BA37B2E4C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 10:44:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2CCA87B2EA2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 10:57:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233051AbjI2Ioj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Sep 2023 04:44:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34928 "EHLO
+        id S231774AbjI2I5i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Sep 2023 04:57:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232915AbjI2IoN (ORCPT
+        with ESMTP id S232835AbjI2I5g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Sep 2023 04:44:13 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFAD610FB
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 01:44:06 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-3248aa5cf4eso1296716f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 01:44:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695977045; x=1696581845; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=b6Qp6y9nYtGfWeIZZkb4YL1o7pvTbfFEpaXOlB4gSy4=;
-        b=Fji4YadnkHqXTKx9dVJVTK2taQY5IfSMYPmyG7Eazl8meAleJBsSLRWkJ5e50ew56w
-         MB74PJtqSb4ZrUp90yJPsoQGHhTzmSYL41zQk+UiRiybHFRcTUv0w8YLNaqq2VXYzCBi
-         m9ZkYGf1eq/+eUcbiU80gyz7If0OnPlS/8aP0oZsH3RzVFEqCDfZO+Bg2iIrj8LF3ufd
-         Dw6BTn3v3GtaM1KBPRzDaI+8Oab4CGZvbe4kYKrnsIDvdYNYyNRbWWIObeYnGRuEzfho
-         /GkF1tE7y+P99ha8n7cuWSya3feMwgllVxiCYoUHPxVGdwhZU5PIWU1GrNhMORbsAOkn
-         UsyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695977045; x=1696581845;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=b6Qp6y9nYtGfWeIZZkb4YL1o7pvTbfFEpaXOlB4gSy4=;
-        b=GetfbigVBoDaJfoploHOlbMvNz6g7zKP+0F/fbm7ta3V6sjOhuJt87JzHIVTqAhhlD
-         oy9kpIt3cNbr4qSioOWrtBmyCZBKg/hnm5Rg0gifA/0Eod+oDOK+T790HKDOGplpEEPm
-         5ThIm5L54GiFt1qn+GTFq6BevCGJ+Aiex4MUnGAgFx1xLIys22VtJLt4lWTyRVeXBPEe
-         d1/UGIAuZd9UF5B6kTceNWttspcI6o1wlczhSte3BxC4ZC1jf0gaSUhN3fzv1II7crqb
-         V1Zw8of0CPD4Hb4+HlmiQ7XWsF+nSzWHVK7PLNGRa3Yzqbmv75Sc570fVnSfFdKopfp3
-         FTyg==
-X-Gm-Message-State: AOJu0YwxmqWApvffoc+swbzLhk3sCBE4XwPG85yfjxrY7/2LJ+GWlZio
-        0dXW8MsbrZCpQ/F3HMipqrxnLA==
-X-Google-Smtp-Source: AGHT+IHUEB1LQYQGWJ4qw3MkH7TU+QOAa6gnK1NDNZI1/qGzE2+ETeE+sqUe+xgafIdK1bdFgFk5cQ==
-X-Received: by 2002:adf:fe42:0:b0:317:5747:b955 with SMTP id m2-20020adffe42000000b003175747b955mr3131037wrs.17.1695977045118;
-        Fri, 29 Sep 2023 01:44:05 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id o11-20020a5d4a8b000000b0031ffb51f6f9sm21113634wrq.30.2023.09.29.01.44.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Sep 2023 01:44:04 -0700 (PDT)
-Message-ID: <686dc4d4-778b-4fd6-93e9-e25fd71fc75a@linaro.org>
-Date:   Fri, 29 Sep 2023 09:44:04 +0100
+        Fri, 29 Sep 2023 04:57:36 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04A201A8;
+        Fri, 29 Sep 2023 01:57:34 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38T7iiO4028762;
+        Fri, 29 Sep 2023 08:57:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : from : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=KQ3u7Qmhp7iKbIJY4O4pne6xiBdvsIY4Nchj4nodMHg=;
+ b=RKroOJxuZznhDQmZKPFtqoKTdxpzS7soxOXFMtUi36wTyWMtOks37pGLqxOeUNXQXxu2
+ Hd2HCCVFFfNnioGs6Yg7yFLZW0fKU00lrrxwKf3P3XxB/a+VLZDk3Gb2xpbIHe6969Y7
+ HvipsGgX76CyUYBbOyVU2UEitn4pdF14w9uRcCMGZpipPb0lYCebi4OVZHcAPjegHv8T
+ LZ6LAM0pr6L7I4eYBpvcjNEhmB5vUaraPkNDM2Cgu8YI4dRzq5cI6elvAaCICdv1t2aq
+ YDMAOpvpDfIaabvwIdrFwaRe0qx/GasY/ILH/c15Bop/XDz/iyehyBxvcmu/nQMWPekN 4g== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3td8wdt9k1-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 29 Sep 2023 08:57:05 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38T8v46U007495
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 29 Sep 2023 08:57:04 GMT
+Received: from [10.216.56.186] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Fri, 29 Sep
+ 2023 01:56:57 -0700
+Message-ID: <4636a990-1044-1f67-dae5-8583f96021be@quicinc.com>
+Date:   Fri, 29 Sep 2023 14:26:53 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: qcm6490-fairphone-fp5: Enable venus
- node
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.0
+Subject: Re: [PATCH V12 2/3] dt-bindings: pwm: add IPQ6018 binding
 Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20230929-sc7280-venus-pas-v1-0-9c6738cf157a@fairphone.com>
- <20230929-sc7280-venus-pas-v1-3-9c6738cf157a@fairphone.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20230929-sc7280-venus-pas-v1-3-9c6738cf157a@fairphone.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+From:   Devi Priya <quic_devipriy@quicinc.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <thierry.reding@gmail.com>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <ndesaulniers@google.com>,
+        <trix@redhat.com>, <baruch@tkos.co.il>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <llvm@lists.linux.dev>
+CC:     <linux-pwm@vger.kernel.org>, <u.kleine-koenig@pengutronix.de>,
+        <nathan@kernel.org>
+References: <20230925065915.3467964-1-quic_devipriy@quicinc.com>
+ <20230925065915.3467964-3-quic_devipriy@quicinc.com>
+ <42338d41-1b90-4f77-958e-479d32e0ce1d@linaro.org>
+ <59c9dbdb-8673-8dc7-ecca-32ff120ccf80@quicinc.com>
+In-Reply-To: <59c9dbdb-8673-8dc7-ecca-32ff120ccf80@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: w7IM-BZdzVl7rNO8FWfDSO_IEViaS47x
+X-Proofpoint-GUID: w7IM-BZdzVl7rNO8FWfDSO_IEViaS47x
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-09-29_07,2023-09-28_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ mlxlogscore=999 malwarescore=0 lowpriorityscore=0 impostorscore=0
+ phishscore=0 mlxscore=0 clxscore=1015 suspectscore=0 bulkscore=0
+ adultscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2309290076
+X-Spam-Status: No, score=-6.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,27 +88,103 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/09/2023 09:38, Luca Weiss wrote:
-> Enable the venus node so that the video encoder/decoder will start
-> working.
+
+
+On 9/29/2023 1:25 PM, Devi Priya wrote:
 > 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
->   arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 5 +++++
->   1 file changed, 5 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> index 2de0b8c26c35..d29f10f822c9 100644
-> --- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> @@ -665,3 +665,8 @@ &usb_1_qmpphy {
->   
->   	status = "okay";
->   };
-> +
-> +&venus {
-> +	firmware-name = "qcom/qcm6490/fairphone5/venus.mbn";
-> +	status = "okay";
-> +};
+> On 9/25/2023 12:41 PM, Krzysztof Kozlowski wrote:
+>> On 25/09/2023 08:59, Devi Priya wrote:
+>>> DT binding for the PWM block in Qualcomm IPQ6018 SoC.
+>>>
+>>> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>>> Co-developed-by: Baruch Siach <baruch.siach@siklu.com>
+>>> Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
+>>> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+>>
+>> ...
+>>
+>>> diff --git a/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml 
+>>> b/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
+>>> new file mode 100644
+>>> index 000000000000..857086ad539e
+>>> --- /dev/null
+>>> +++ b/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
+>>
+>> Filename matching compatible, so qcom,ipq6018-pwm.yaml
+> okay
+We would have other ipq compatibles (ipq9574 & ipq5332) being added to
+the binding in the upcoming series.
+So, shall we rename the binding to qcom,ipq-pwm.yaml
+
+Thanks,
+Devi Priya
+>>
+>>> @@ -0,0 +1,53 @@
+>>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>>> +%YAML 1.2
+>>> +---
+>>> +$id: http://devicetree.org/schemas/pwm/ipq-pwm.yaml#
+>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>> +
+>>> +title: Qualcomm IPQ6018 PWM controller
+>>> +
+>>> +maintainers:
+>>> +  - Baruch Siach <baruch@tkos.co.il>
+>>> +
+>>> +properties:
+>>> +  "#pwm-cells":
+>>> +    const: 2
+>>> +
+>>> +  compatible:
+>>> +    const: qcom,ipq6018-pwm
+>>
+>> compatible is always the first property.
+> okay
+>>
+>>> +
+>>> +  reg:
+>>> +    description: Offset of PWM register in the TCSR block.
+>>> +    maxItems: 1
+>>> +
+>>> +  clocks:
+>>> +    maxItems: 1
+>>> +
+>>> +required:
+>>> +  - compatible
+>>> +  - reg
+>>> +  - clocks
+>>> +  - "#pwm-cells"
+>>
+>> And this order must be the same as in properties.
+> okay
+>>
+>>> +
+>>> +additionalProperties: false
+>>> +
+>>> +examples:
+>>> +  - |
+>>> +    #include <dt-bindings/clock/qcom,gcc-ipq6018.h>
+>>> +
+>>> +    syscon@1937000 {
+>>> +        compatible = "qcom,tcsr-ipq6018", "syscon", "simple-mfd";
+>>> +        reg = <0x01937000 0x21000>;
+>>> +        #address-cells = <1>;
+>>> +        #size-cells = <1>;
+>>> +        ranges = <0 0x1937000 0x21000>;
+>>
+>> Drop this node, not related. The parent binding could have full example,
+>> on the other hand. Additionally, I have doubts that you really tested
+>> the parent binding.
+> Sure, will drop the syscon node
 > 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Thanks,
+> Devi Priya
+>>
+>>> +
+>>> +        pwm: pwm@a010 {
+>>> +            compatible = "qcom,ipq6018-pwm";
+>>
+>> Best regards,
+>> Krzysztof
+>>
