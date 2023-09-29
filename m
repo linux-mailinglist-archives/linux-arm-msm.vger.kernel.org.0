@@ -2,109 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C4357B2CFC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 09:23:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B5D97B2D08
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 09:31:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232774AbjI2HXQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Sep 2023 03:23:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54542 "EHLO
+        id S232663AbjI2Hbu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Sep 2023 03:31:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232663AbjI2HXP (ORCPT
+        with ESMTP id S231774AbjI2Hbt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Sep 2023 03:23:15 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9DEF1A7;
-        Fri, 29 Sep 2023 00:23:13 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38T7IwHe007287;
-        Fri, 29 Sep 2023 07:23:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=7PhJ/1snztbIAvJzVIeW/P7/Qyzopbj/fqKd87GFOjI=;
- b=JvWkNCdmW0gayqaeAt12E5fXacPwzAndTdKfTynixTBsBHnFWCZyPPwQV3k+pkhypmmX
- 3qrN/PDXTwurSuVV2FTK1VHtweOjk9VLjEaP6d8UraQR2W2XEyfbSdArbaLxtQnrDuFX
- EeDwN2RGhebG7NxjrD4VUq5aDtQD4ZJP2f5vkaBKhcbIkSxj9Pi3vpySh6FvYf1hh/Th
- v+m+trK24qBinMSePRJFHl41Hehs0m943rMTHwIv/yyVc1zWr1X+uIXPjGvmqrk59a7g
- jj4njaoE/HDfESOZMFuPJoj2dZWHly+L2zH4KqowAAe8RGs7/3WxDrnY/sKWUZ7m622x Lw== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3td3ggav1k-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 29 Sep 2023 07:23:09 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38T7N8RC026214
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 29 Sep 2023 07:23:08 GMT
-Received: from [10.204.67.150] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Fri, 29 Sep
- 2023 00:23:06 -0700
-Message-ID: <6e9200a1-cf3c-27ca-ceef-7d9b70297530@quicinc.com>
-Date:   Fri, 29 Sep 2023 12:53:02 +0530
+        Fri, 29 Sep 2023 03:31:49 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A93EA1AA
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 00:31:45 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-53636f98538so2177805a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 00:31:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1695972704; x=1696577504; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=rV15ONO1jUP4uYwgWL2R1qvHOr8y3WbaAo1W8izGcdQ=;
+        b=laGBfAL7WcgPorwVnTglqRU0w/mRB9oS2KN7F3zEx79TaDhf8XViEOMHYeANrsxIlp
+         tq8N2zuql5jIfCNxtp2uIYaakbV6MsFuajZkRkHz8whhtSHQIDjuxKBf+z657fw1Xp8W
+         ZRTdiLDAAM3afa4nMdDIIoK2FTYFmEx3TwkiHNZ8Z9dEmXizof/bIyu+V/DXlcpeC3Zv
+         pk15R78kZJBS6uMFTKMqKJ0uh8NZI0z4rKPRi+sS3DGYq3Efotd6n0P/ZBd4cjOfWEcX
+         jDXcoF3p5kbHZXoIJsPHta9mDIhodZza2iBG0YinNTFEBL9mPOZhHwvqAq7ysXMoRNKs
+         D1sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695972704; x=1696577504;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rV15ONO1jUP4uYwgWL2R1qvHOr8y3WbaAo1W8izGcdQ=;
+        b=gM8ZpF02K06suyo2AP03xFFUrsYsSabBbjeyZq9hIyVA/de2GWBv6cirESJ5dTCD6U
+         zmX6q94Z7EBLFJpeKFBleq+Q3l2jO2V527cUk527/aNd9Z3XxTEKMPT68YMUcSQ5MdJ0
+         Z6JQLFc8/9yDpgrdASzzYoTRI4HO2XuX3NDaAxZkYPpPTlQTh/xTqkniW+MapL+7K4GR
+         6Dq+V/46EOIGpVjTfiHrTdrM10ioJbY7DJOmCCEDjp2rYfq3aY/y1gc2XpTJY20uFdd9
+         AfX4w5eny1cf6hxEdbD18HAXEWpgAouDgd+C6TRI8N7mmt6uhvERkjUKZOKr+ocegp0r
+         y6Ag==
+X-Gm-Message-State: AOJu0YzCuQ7uRogGcuygiRiNN8jVne+G4hV+fn+EoPSfkSol4uFWZTQJ
+        Y11qcanO+4501Myg04a55lYTUQ==
+X-Google-Smtp-Source: AGHT+IElgd8TDrBOM4ypykT+b/lbz87g5gXWJ/ODkeUI+dDXsCHZcN5sByXbMgwX2PkFlH8v5Sauaw==
+X-Received: by 2002:aa7:cf0a:0:b0:533:4cee:e52b with SMTP id a10-20020aa7cf0a000000b005334ceee52bmr3335483edy.25.1695972704119;
+        Fri, 29 Sep 2023 00:31:44 -0700 (PDT)
+Received: from otso.luca.vpn.lucaweiss.eu (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id v10-20020aa7cd4a000000b0052ff9bae873sm10724978edw.5.2023.09.29.00.31.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 29 Sep 2023 00:31:43 -0700 (PDT)
+From:   Luca Weiss <luca.weiss@fairphone.com>
+Date:   Fri, 29 Sep 2023 09:31:41 +0200
+Subject: [PATCH] arm64: dts: qcom: sc7280: Add ports subnodes in usb/dp
+ qmpphy node
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v1] misc: fastrpc: Reset metadata buffer to avoid
- incorrect free
-Content-Language: en-US
-To:     Greg KH <gregkh@linuxfoundation.org>
-CC:     <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <ekangupt@qti.qualcomm.com>, <linux-kernel@vger.kernel.org>,
-        <fastrpc.upstream@qti.qualcomm.com>
-References: <1693463723-16937-1-git-send-email-quic_ekangupt@quicinc.com>
- <2023092840-balmy-proved-e337@gregkh>
-From:   Ekansh Gupta <quic_ekangupt@quicinc.com>
-In-Reply-To: <2023092840-balmy-proved-e337@gregkh>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: TRkRo4syH3r5Z65fY3-QKNzkUsm3-fWc
-X-Proofpoint-ORIG-GUID: TRkRo4syH3r5Z65fY3-QKNzkUsm3-fWc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-09-29_05,2023-09-28_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=806
- priorityscore=1501 bulkscore=0 malwarescore=0 clxscore=1015
- lowpriorityscore=0 suspectscore=0 mlxscore=0 spamscore=0 adultscore=0
- phishscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2309180000 definitions=main-2309290061
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Message-Id: <20230929-sc7280-qmpphy-ports-v1-1-7532c11973af@fairphone.com>
+X-B4-Tracking: v=1; b=H4sIAFx9FmUC/x3MTQ5AQAxA4atI15pUSfxcRSxkFF1gTEWIuLuJ5
+ bd47wGToGLQJA8EOdV0WyOyNAE39+skqEM0MHFONddoruSKcF+8n2/0WzgMmfpxKDjjoiSIpQ8
+ y6vVf2+59PwDWwzFlAAAA
+To:     cros-qcom-dts-watchers@chromium.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.12.3
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add the USB3+DP Combo QMP PHY port subnodes in the SC7280 SoC DTSI to
+avoid duplication in the devices DTs.
 
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-On 9/28/2023 6:38 PM, Greg KH wrote:
-> On Thu, Aug 31, 2023 at 12:05:23PM +0530, Ekansh Gupta wrote:
->> Metadata buffer is allocated during get_args for any remote call.
->> This buffer carries buffers, fdlists and other payload information
->> for the call. If the buffer is not reset, put_args might find some
->> garbage FDs in the fdlist which might have an existing mapping in
->> the list. This could result in improper freeing of FD map when DSP
->> might still be using the buffer. Added change to reset the metadata
->> buffer after allocation.
->>
->> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-> 
-> What commit id does this fix?
-> 
-> And you sent 3 patches, but not in a list, what order are they to be
-> applied in?
-> 
-Thanks for reviewing the patches, Greg. I'll send the 3 patches as a 
-patch series for better understanding.
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 66f1eb83cca7..4e34d00e246b 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -3399,6 +3399,32 @@ usb_1_qmpphy: phy@88e8000 {
+ 
+ 			#clock-cells = <1>;
+ 			#phy-cells = <1>;
++
++			ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@0 {
++					reg = <0>;
++
++					usb_dp_qmpphy_out: endpoint {
++					};
++				};
++
++				port@1 {
++					reg = <1>;
++
++					usb_dp_qmpphy_usb_ss_in: endpoint {
++					};
++				};
++
++				port@2 {
++					reg = <2>;
++
++					usb_dp_qmpphy_dp_in: endpoint {
++					};
++				};
++			};
+ 		};
+ 
+ 		usb_2: usb@8cf8800 {
 
--ekansh
-> thanks,
-> 
-> greg k-h
+---
+base-commit: df964ce9ef9fea10cf131bf6bad8658fde7956f6
+change-id: 20230929-sc7280-qmpphy-ports-20afd4212470
+
+Best regards,
+-- 
+Luca Weiss <luca.weiss@fairphone.com>
+
