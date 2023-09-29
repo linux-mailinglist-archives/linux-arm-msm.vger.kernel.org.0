@@ -2,116 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D509B7B29BD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 02:39:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 58BE37B29F1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 02:46:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232521AbjI2Ajq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Sep 2023 20:39:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33362 "EHLO
+        id S230246AbjI2Aqk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Sep 2023 20:46:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232481AbjI2Ajp (ORCPT
+        with ESMTP id S229653AbjI2Aqj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Sep 2023 20:39:45 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10ED319F;
-        Thu, 28 Sep 2023 17:39:42 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38SNun1a019827;
-        Fri, 29 Sep 2023 00:39:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=I9dx6LUsLUJSb1nV43JIBs0f9oI+YdzUawuhRAHsOUw=;
- b=CfhZvQmJJEKv+b7jKpbxzBc8Vs67IaEIk0LUW9aXgcGrKqcI7xCkIDkSntbA9R63KXir
- eq6iK6bHYSS2rWktUd4fo5fVl9zFvQ2mcDrxzll01tm0ECbiVjuHGNTHaMlmPTd0c7ER
- EevtCivlwJVUT5ZK/ZJiO7bAPif+FxN5tqKExkoWwOI9aOqjcASsxjEBSTVdBdMnEngN
- 2DrddXTk6utG7/o/sn3wEbQPdzNlrcW6WKuoyB6xILRmY6g2nVlT7U0/L34PWjGmzIAx
- y3kwusMcE7SvBmXEVXuk2nybRxMiNGeFUHnwVE3tg8vSeLRqENyfLm4SudgichDOfO7P Gg== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tdhru06dt-1
+        Thu, 28 Sep 2023 20:46:39 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60148B4;
+        Thu, 28 Sep 2023 17:46:38 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38SNvgNl026356;
+        Fri, 29 Sep 2023 00:46:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=afqAn7dGHUrlAfXXYIxYiEc20eODfjmPGA+l2AIO5QA=;
+ b=lQCH7OLOzUdEnhZzixzvQz5U/EUMM82fB4kCv8ctjF/XnzOVjKc7wTj7REpsvwunQDbQ
+ muVpMkt9FwQbPY3x/DP92fM+jkWSjezxXWS3G997LNu/0eH+kEfQNvleb15T/XQDcj0R
+ EDPDYRbHrM0wQWBe992gMUYCB8xXK431197vg2gnebESjYBAnuvVf/poqAvDrc6kfuHv
+ yDzTBw9/lJXZDZSpP9y0SvztOii9YipwceqHpKZ9pTzddTZaedespblTWLHKqGiZU+eL
+ 5pT4Gc5LP3lnS8LjL6J4YM2xJBPTHob0nC+N4i4qKy5XRntVqvJ6G5ZHs+s6W+1KCGka uQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tdfbrrgh3-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 29 Sep 2023 00:39:34 +0000
+        Fri, 29 Sep 2023 00:46:17 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38T0dX1I025949
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38T0kGXO005113
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 29 Sep 2023 00:39:33 GMT
-Received: from hu-amelende-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Thu, 28 Sep 2023 17:39:30 -0700
-From:   Anjelique Melendez <quic_amelende@quicinc.com>
-To:     <pavel@ucw.cz>, <lee@kernel.org>, <thierry.reding@gmail.com>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <agross@kernel.org>, <andersson@kernel.org>
-CC:     <luca.weiss@fairphone.com>, <konrad.dybcio@linaro.org>,
-        <u.kleine-koenig@pengutronix.de>, <quic_subbaram@quicinc.com>,
-        <quic_gurus@quicinc.com>, <linux-leds@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pwm@vger.kernel.org>,
-        <kernel@quicinc.com>,
-        Anjelique Melendez <quic_amelende@quicinc.com>
-Subject: [PATCH v5 7/7] leds: rgb: Update PM8350C lpg_data to support two-nvmem PPG Scheme
-Date:   Thu, 28 Sep 2023 17:39:00 -0700
-Message-ID: <20230929003901.15086-8-quic_amelende@quicinc.com>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230929003901.15086-1-quic_amelende@quicinc.com>
-References: <20230929003901.15086-1-quic_amelende@quicinc.com>
+        Fri, 29 Sep 2023 00:46:16 GMT
+Received: from [10.110.70.158] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Thu, 28 Sep
+ 2023 17:46:13 -0700
+Message-ID: <58701008-bb93-e5c6-9ca0-5bc43f9a46f0@quicinc.com>
+Date:   Thu, 28 Sep 2023 17:46:11 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v3 6/7] drm/msm/dp: add
+ pm_runtime_force_suspend()/resume()
+Content-Language: en-US
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>
+CC:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <dianders@chromium.org>, <vkoul@kernel.org>,
+        <daniel@ffwll.ch>, <airlied@gmail.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <quic_jesszhan@quicinc.com>,
+        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1694813901-26952-1-git-send-email-quic_khsieh@quicinc.com>
+ <1694813901-26952-7-git-send-email-quic_khsieh@quicinc.com>
+ <CAA8EJpqPXoFX4LXyXYgfh07Vpxg-KgD8VBR6x5bXf4GOJmbOtw@mail.gmail.com>
+ <2f98d5f1-57c1-d9fe-cb1c-b975db057287@quicinc.com>
+ <CAA8EJpr2wRq6Txi7YAQpJKa_9UGqH_nmHzvVOaAPkwOrtDg4Tw@mail.gmail.com>
+ <CAE-0n53dqHONzMTd_ZC-fKWTzDVq6Wqwo4OFZMUcghZ5SD5RhA@mail.gmail.com>
+ <65566a68-3510-2e5f-7d57-e4dba08c008c@quicinc.com>
+ <1d9bf80d-0267-937b-4dd9-c57db7a89cb4@quicinc.com>
+ <CAE-0n51Hrs66oG4NF5rDETkVO-ocG_6_=Aqc5cE-qPDViSgKyA@mail.gmail.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAE-0n51Hrs66oG4NF5rDETkVO-ocG_6_=Aqc5cE-qPDViSgKyA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: isK-hsiEQbyUlnLMdJ2HS70y2OGzor5j
-X-Proofpoint-GUID: isK-hsiEQbyUlnLMdJ2HS70y2OGzor5j
+X-Proofpoint-ORIG-GUID: f0UFRBg3XnK49yRbyxc7x5Rx8Tc3NF6g
+X-Proofpoint-GUID: f0UFRBg3XnK49yRbyxc7x5Rx8Tc3NF6g
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-09-28_23,2023-09-28_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 lowpriorityscore=0 suspectscore=0 mlxscore=0
- mlxlogscore=999 impostorscore=0 spamscore=0 bulkscore=0 adultscore=0
- clxscore=1015 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2309290002
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+ definitions=2023-09-28_24,2023-09-28_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
+ malwarescore=0 impostorscore=0 mlxscore=0 suspectscore=0
+ priorityscore=1501 lowpriorityscore=0 mlxlogscore=999 adultscore=0
+ clxscore=1015 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2309290004
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update the pm8350c lpg_data struct so that pm8350c devices are treated as
-PWM devices that support two-nvmem PPG scheme.
 
-Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
----
- drivers/leds/rgb/leds-qcom-lpg.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
-index 910c7cf740cc..8962ea13df29 100644
---- a/drivers/leds/rgb/leds-qcom-lpg.c
-+++ b/drivers/leds/rgb/leds-qcom-lpg.c
-@@ -1800,11 +1800,13 @@ static const struct lpg_data pm8150l_lpg_data = {
- static const struct lpg_data pm8350c_pwm_data = {
- 	.triled_base = 0xef00,
- 
-+	.lut_size = 122,
-+
- 	.num_channels = 4,
- 	.channels = (const struct lpg_channel_data[]) {
--		{ .base = 0xe800, .triled_mask = BIT(7) },
--		{ .base = 0xe900, .triled_mask = BIT(6) },
--		{ .base = 0xea00, .triled_mask = BIT(5) },
-+		{ .base = 0xe800, .triled_mask = BIT(7), .sdam_offset = 0x48 },
-+		{ .base = 0xe900, .triled_mask = BIT(6), .sdam_offset = 0x56 },
-+		{ .base = 0xea00, .triled_mask = BIT(5), .sdam_offset = 0x64 },
- 		{ .base = 0xeb00 },
- 	},
- };
--- 
-2.41.0
+On 9/27/2023 3:01 PM, Stephen Boyd wrote:
+> Quoting Kuogee Hsieh (2023-09-25 09:07:18)
+>>
+>> On 9/22/2023 6:35 PM, Abhinav Kumar wrote:
+>>>
+>>> Doing link training when we get hpd instead of atomic_enable() is a
+>>> design choice we have been following for a while because for the case
+>>> when link training fails in atomic_enable() and setting the link
+>>> status property as you mentioned, the compositor needs to be able to
+>>> handle that and also needs to try with a different resolution or take
+>>> some other corrective action. We have seen many compositors not able
+>>> to handle this complexity. So the design sends the hotplug to usermode
+>>> only after link training succeeds.
+>>>
+>>> I do not think we should change this design unless prototyped with an
+>>> existing compositor such as chrome or android at this point.
+>>>
+>>> Thanks
+>>>
+>>> Abhinav
+>>
+>>
+>> We did perform link training at atomic_enable() at eDP case since we can
+>> assume link training will always success without link rate or link lane
+>> being reduced.
+>>
+>> However for external DP case, link training can not be guarantee always
+>> success without link rate or lane being reduced as Abhinav mentioned.
+>>
+>> In addition,  CTS (compliance test) it required to complete link
+>> training within 10ms after hpd asserted.
+> 
+> Is it possible to change that timeout? I have to look around for the CTS
+> parameters because I'm pretty confused how it can work. What do we do if
+> DP wakes the system from suspend and asserts HPD? We need resume time to
+> be < 10ms?  That's not realistic.
+> 
 
+No, the CTS doesnt say we need to finish link training within 10ms after 
+HPD is asserted. It says it must be completed in 10ms after 
+TRAINING_PATTERN_SET dpcd write.
+
+"Wait until the Source DUT writes 00h to the TRAINING_PATTERN_SET byte 
+of Reference Sink DPCD Link Configuration Field to indicate the end of 
+the link training. Stop the link training timer. Verify that link 
+training completed in 10ms or less"
+
+That needs to be done independent of HPD so we can ignore the CTS point.
+
+>>
+>> I am not sure do link training at atomic_enable() can meet this timing
+>> requirement.
+>>
+> 
+> At least in the DP spec itself it doesn't require the link to be trained
+> within 10ms of HPD being asserted. Instead it simply recommends that the
+> OS start configuring the display promptly after HPD is asserted, e.g.
+> within 100ms. There's some strict timing on IRQ_HPD, so the driver must
+> read DPCD registers within 100ms of IRQ_HPD rising edge; maybe that is
+> what CTS is checking for?
+> 
+> TL;DR: I don't see why CTS should stop us from link training in
+> atomic_enable(). It would be beneficial to do so to make eDP and DP the
+> same. It would also help to report a drm connector being connected
+> _before_ link training so that userspace knows the link itself is the
+> bad part of the equation (and not that the DP connector looks
+> disconnected to userspace when in fact it really is connected and the
+> monitor is asserting HPD, just the link training failed).
+
+Its the corrective action of the userspace when it finds link is bad is 
+the concern as I highlighted in the other response. Just reading and 
+resetting link_status is not enough to recover.
