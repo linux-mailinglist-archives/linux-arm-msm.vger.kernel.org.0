@@ -2,75 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B72BC7B33D3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 15:39:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 076307B33E4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 15:41:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233468AbjI2Nj0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Sep 2023 09:39:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47664 "EHLO
+        id S233422AbjI2Nlu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Sep 2023 09:41:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233412AbjI2NjR (ORCPT
+        with ESMTP id S233400AbjI2Nlt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Sep 2023 09:39:17 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F1D81734
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 06:39:05 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-5345a3dfe3bso9743428a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 06:39:05 -0700 (PDT)
+        Fri, 29 Sep 2023 09:41:49 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED3291AB
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 06:41:45 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-533df112914so13435964a12.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 06:41:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695994743; x=1696599543; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QdNtbM8sg5Uv/4iy/PMTp5TjbGaItzuz9a1/F8ZNl8I=;
-        b=dIwD7hUTtN/uX1H3XDBJ0M250A3L6BflRIb94Plhu4s4H1kvLEgcNYhbJcGrtFpw95
-         q9KuUmdYctmK37DEdeI8BU/8+1xPjo+q1OLE4pQyjnhKiyAHp6ofL9jviO98iljmmbkX
-         ncuz9NTxf1Yr/P0zFq6z00eHNe2fDxvp1WCADnh86GBeTOUD7G7+NgzFNiZX833rxYh4
-         9ei2hAxT07B4A7rsiMIZvjF9q0m5X1B/BluhPN18BR7L8pozlYyJ2gZkantPvOF3TQi0
-         1Do0Gy7Tjt4/brjXYLjy0ggsN7tSXfQ5mNFbgY7tjnkDAvIMWATEH67qM9Simq6XNSa+
-         yHbw==
+        d=fairphone.com; s=fair; t=1695994904; x=1696599704; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GJoYmFRIe+RZCfOkQfBp0KCRM2jWqK/EXH4FGkhcIDQ=;
+        b=OgwoGfdE37BlElKKWimDIUOWPTg/ijZxAA+zYKUbrI1WB60tScS/WbWoiDq1I/Iyg0
+         fy3G99rJjmnS5oI0OsL2QdO7jK2qbHqh7CHHIP7SjsgZYijKDtdbnBtCOKyhl9N01IwZ
+         KnjM28FTINA3KeYOD9JqhCLgQNLuRTcIrdqITrLNA5j0t8XHLmSfABUh0nNlAtdWIEYN
+         iwMab6rOUFvls6u1rrQH33nsL8gWNXYSkod7DhGs2ZmATCWY9Df8M7i9OIVi2AkrziZV
+         Y7OKpqBJ1Zuot4adeZDgrwpu0wjZOK3Mz6wEg+fZmbceKNXQZRRKcfPDYhFiceqpw7VA
+         sbdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695994743; x=1696599543;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QdNtbM8sg5Uv/4iy/PMTp5TjbGaItzuz9a1/F8ZNl8I=;
-        b=HJVk6R/c+LExu3B41vp/KPYLM2oAy+b5z3PblwaNRqiaZ4Kd7iU2IVT8LbY9ZS08Hk
-         v6kLA7VzGqJr9fYqv7+6eVXuj5bmQBTcO/XEDLWiQHn6/lrbR+qAqLlZvqbTkoD49e2W
-         cu0a72sLibRcPUcNK6mC1OvLA12rboc7W5J2kJ3MvH2oW57NRnUxa+ujhm0yNa9hEo0x
-         nO0qihJ5D5DfKn8ENqg2eRuRNElzvom6UkuIXTHIcBNMzGudif/WPwLWn8j8XCpQZe5w
-         87qNw4rZCeanzLieEu3Dq8+3+z24bOGb3sBtAH7RweTTneuyELSMjcbaPqEsPESMhTyQ
-         UPLw==
-X-Gm-Message-State: AOJu0YywvyO0/96pvEz2waVfqGQuE/snRJ4FNHNQn4azI3y9NkDYe2ih
-        HnUSkXVh8Jq1+siVHLcf2c0L9w==
-X-Google-Smtp-Source: AGHT+IGpBizH8QZwp7ZPEb3difKlOrS1jonPPKtM6duYEQOku2tgSjMYdiD+m7xCfMaKLJvj2w7g3Q==
-X-Received: by 2002:aa7:c746:0:b0:522:564d:6de with SMTP id c6-20020aa7c746000000b00522564d06demr4285089eds.36.1695994743533;
-        Fri, 29 Sep 2023 06:39:03 -0700 (PDT)
-Received: from [127.0.1.1] (178235177217.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.217])
-        by smtp.gmail.com with ESMTPSA id cx14-20020a05640222ae00b005362bcc089csm2215701edb.67.2023.09.29.06.39.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Sep 2023 06:39:03 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Fri, 29 Sep 2023 15:38:53 +0200
-Subject: [PATCH 2/2] clk: qcom: gcc-sc8280xp: Don't keep display AHB clocks
- always-on
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230929-topic-8280_ahbdisp-v1-2-72bdc38309b9@linaro.org>
-References: <20230929-topic-8280_ahbdisp-v1-0-72bdc38309b9@linaro.org>
-In-Reply-To: <20230929-topic-8280_ahbdisp-v1-0-72bdc38309b9@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.13-dev-0438c
+        d=1e100.net; s=20230601; t=1695994904; x=1696599704;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=GJoYmFRIe+RZCfOkQfBp0KCRM2jWqK/EXH4FGkhcIDQ=;
+        b=fGtCOM3kEPtCoRo6wmeV7obiUy7vbyBbdL10moqxdS5gZjXLVhuZ8AFmHlfbhr1vcp
+         D8s3PD86nLXRmFfsnDdJErIjYZ0GEUU00E/bjHBvlJkBQvZOqA++NHC+Vqo2plom/1Lw
+         W/849G5lf7BR1iVJjLSDWLOCvxBFykfyw29491D214GJ5GqO37hmGym6/7/P7ubFURme
+         zLeIM65FWnuBsiAeO2b/WyOpqMNt7Aw3y24qAimKBUVugZSOXesyArFHobOrGRO8uaMx
+         zJRiZPRo0yQPRAB7Lq0e6D6v1EpIocYDEBobasPZe5TGYb8TqKzTHp8DNBvP1hrQuire
+         DrwQ==
+X-Gm-Message-State: AOJu0YybLY47GhsCIBgaczHrFxF48Y9YdWVtpusDRFX9h4KMiOUEkgCp
+        w7lpvmHEpdpwkHHF/bBUCxq77g==
+X-Google-Smtp-Source: AGHT+IFvqdi7WSBS4qbFiMpFp6n6en80RTIKym9YcKxklvBr9G0fovRfLJsVZmf09Ope8f7XXrSMng==
+X-Received: by 2002:a05:6402:b3a:b0:51d:f5bd:5a88 with SMTP id bo26-20020a0564020b3a00b0051df5bd5a88mr3527607edb.38.1695994904285;
+        Fri, 29 Sep 2023 06:41:44 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id l14-20020aa7cace000000b0053331f9094dsm11185505edt.52.2023.09.29.06.41.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 Sep 2023 06:41:44 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Fri, 29 Sep 2023 15:41:43 +0200
+Message-Id: <CVVG0MQU36EB.17OPE15SGM0HX@otso>
+Cc:     <~postmarketos/upstreaming@lists.sr.ht>,
+        <phone-devel@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: qcm6490-fairphone-fp5: Enable CCI
+ busses
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        "Loic Poulain" <loic.poulain@linaro.org>,
+        "Robert Foss" <rfoss@kernel.org>,
+        "Andi Shyti" <andi.shyti@kernel.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        "Conor Dooley" <conor+dt@kernel.org>,
+        <cros-qcom-dts-watchers@chromium.org>
+X-Mailer: aerc 0.15.2
+References: <20230929-sc7280-cci-v1-0-16c7d386f062@fairphone.com>
+ <20230929-sc7280-cci-v1-3-16c7d386f062@fairphone.com>
+ <02eb9847-62ea-e453-0745-6f6ff46f3ad0@linaro.org>
+In-Reply-To: <02eb9847-62ea-e453-0745-6f6ff46f3ad0@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -81,41 +87,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-These clocks are consumed by the dispcc[01] clock controllers, so there's
-no reason to keep them on from gcc probe. Remove that hack.
+On Fri Sep 29, 2023 at 3:36 PM CEST, Konrad Dybcio wrote:
+>
+>
+> On 9/29/23 10:01, Luca Weiss wrote:
+> > Enable the CCI busses where sensors are connected to.
+> >=20
+> > Not covered here is the regulator used for pull-up on the I2C busses.
+> > This would be pm8008_l6 (L6P).
+> Does it make sense to enable non-functional hw then? Or is it on by defau=
+lt?
 
-Fixes: d65d005f9a6c ("clk: qcom: add sc8280xp GCC driver")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/clk/qcom/gcc-sc8280xp.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+Without the out-of-tree pm8008 driver you cannot talk to any hardware on
+the i2c busses there, so.. I guess you have a point?
 
-diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
-index bfb77931e868..bf95f82a3818 100644
---- a/drivers/clk/qcom/gcc-sc8280xp.c
-+++ b/drivers/clk/qcom/gcc-sc8280xp.c
-@@ -7545,18 +7545,16 @@ static int gcc_sc8280xp_probe(struct platform_device *pdev)
- 
- 	/*
- 	 * Keep the clocks always-ON
--	 * GCC_CAMERA_AHB_CLK, GCC_CAMERA_XO_CLK, GCC_DISP_AHB_CLK,
-+	 * GCC_CAMERA_AHB_CLK, GCC_CAMERA_XO_CLK,
- 	 * GCC_DISP_XO_CLK, GCC_GPU_CFG_AHB_CLK, GCC_VIDEO_AHB_CLK,
--	 * GCC_VIDEO_XO_CLK, GCC_DISP1_AHB_CLK, GCC_DISP1_XO_CLK
-+	 * GCC_VIDEO_XO_CLK, GCC_DISP1_XO_CLK
- 	 */
- 	regmap_update_bits(regmap, 0x26004, BIT(0), BIT(0));
- 	regmap_update_bits(regmap, 0x26020, BIT(0), BIT(0));
--	regmap_update_bits(regmap, 0x27004, BIT(0), BIT(0));
- 	regmap_update_bits(regmap, 0x27028, BIT(0), BIT(0));
- 	regmap_update_bits(regmap, 0x71004, BIT(0), BIT(0));
- 	regmap_update_bits(regmap, 0x28004, BIT(0), BIT(0));
- 	regmap_update_bits(regmap, 0x28028, BIT(0), BIT(0));
--	regmap_update_bits(regmap, 0xbb004, BIT(0), BIT(0));
- 	regmap_update_bits(regmap, 0xbb028, BIT(0), BIT(0));
- 
- 	ret = qcom_cc_register_rcg_dfs(regmap, gcc_dfs_clocks, ARRAY_SIZE(gcc_dfs_clocks));
+A little bird told me this week they're working on a new revision for
+pm8008 so hopefully this is coming at some point.
 
--- 
-2.39.2
+>
+> Konrad
 
