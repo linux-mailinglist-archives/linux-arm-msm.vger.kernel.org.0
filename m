@@ -2,211 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C3897B2DD1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 10:29:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 615737B2DE7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 10:38:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232518AbjI2I3y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Sep 2023 04:29:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34474 "EHLO
+        id S232621AbjI2Iig (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Sep 2023 04:38:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232763AbjI2I3x (ORCPT
+        with ESMTP id S232518AbjI2Iif (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Sep 2023 04:29:53 -0400
-Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DE761A5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 01:29:49 -0700 (PDT)
-Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-5a1d0fee86aso99893177b3.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 01:29:49 -0700 (PDT)
+        Fri, 29 Sep 2023 04:38:35 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 152FA1A8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 01:38:33 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-99357737980so1820068266b.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 01:38:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695976189; x=1696580989; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=AO/uJHLmfHTJFDVuIxPPusBgqH9ox/rasg3E2WmZG1g=;
-        b=dKrxe4IOhWMdnecL3TxzRqEYGGylcXhIGBOC8IJWomqgYY/Cwq0GiDPnpBkTEQTc0Z
-         iqMA9cE2+4SNthocdCCMn97Ou+Uqd9TgmLe9goQvRps8eB0XwCxKEVr5PNOIvkCehEeD
-         N2J+z04wJkLVkD6M8enQ0gM87SmgfFVQs5wl5IVmM+CB6pfaQehZp89wAFDSqwYoXUaz
-         fbFUiJ/kS4jRzVwoabzSUdsc+Q5UYbquwB9PlLsUdR+H27ps1sUG/g7jw3dMuGD34FMy
-         pUWV28W4SQwpFsLLGGIWvAgVQ7qPst7kPtatgc31rKRumBZCm9ISWsMDHNFIIX/72zih
-         J6aQ==
+        d=fairphone.com; s=fair; t=1695976711; x=1696581511; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=91bzG0Gvztxq9AzwDAH8hNYEi4ko/cSP4Liv9cAEuIU=;
+        b=DdRblbFAPurXIUU3F+cpsJB31BK2VR2TiUJd5qijD2gkO6V2FAjVHMq6flca39GuDo
+         Voo3bojKdLA12UeP6IUTduNOylBAw2iMp8pvm/tLkRjQh5yUhcAUYsbV1Nl5y/Iyqmm+
+         3JY9IfjQWtMfaSQcJCGaPnUhdqiYYkNpkVIvXvPz8V/kP8+dgmmxWXMTp3Ywba9U56a7
+         hR4lJBnX+SsfiJZYmRaU2Hv3iZCfQEZgYnXW7B8nxYUHL3yMKu0tfOcqDJ/P5AIs9kCB
+         lVOvqStfxIJdwaWpft4ljxadtUSc1du876WdyQVh7Mbl5LrF7Oz/5KRVT/cGyq1QV4oV
+         Aqfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695976189; x=1696580989;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1695976711; x=1696581511;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=AO/uJHLmfHTJFDVuIxPPusBgqH9ox/rasg3E2WmZG1g=;
-        b=m/q3vyrovIZHMcfFAcITWQ1UudsEVK7wohrainMyByHubd1httJRK28AmzRNfwWCVP
-         RZI38EN4SZ+kNo1gh2CRi1v6+UUEMs8BA8pD29rouYEn1fFdP/AUVWxdQcvG3aPEt3ew
-         T/HpViHYBnxndcybDMx/w0r8i1aPUaGnG1F6z4tSxxmxumQAm0jQ6W20u7amzXQlIV7n
-         QND55JXaK9XofdpMhp+3fCFOIMsMfdbZphwgrfmv/xaRNKqlELVY7IKImwFUR8H9YGVJ
-         NZbHYN/kdI4c9tKPz2pcr5SBKoVjN7G+RngX/Gv7GYd2kAZCNYuXRRDK+nnxMeC3n105
-         soNA==
-X-Gm-Message-State: AOJu0Yy2oUniHww0iQ8FNczfsv1i1EA+OxdkM/nLCCWyIyf/j4h5IOeC
-        vCTkinsMP0dFNqHDwghZG0+1luIi1rvEewW4DzleVQ==
-X-Google-Smtp-Source: AGHT+IEQryF/Jq6ClcrXeNFwkaLrgTZMOGtwSpYsQb1fq1tuW4ZUQrgK4aRlhvqYry4WQ+Zv62sfUNQpqbZP7hNpur0=
-X-Received: by 2002:a0d:d992:0:b0:59e:7fc1:dba0 with SMTP id
- b140-20020a0dd992000000b0059e7fc1dba0mr3269915ywe.44.1695976188816; Fri, 29
- Sep 2023 01:29:48 -0700 (PDT)
+        bh=91bzG0Gvztxq9AzwDAH8hNYEi4ko/cSP4Liv9cAEuIU=;
+        b=iiIKn3I3DelLYrE/6U9pLTNBDKm5G6umEnLqkSkM4ZYJieVOLAfDYcmtIXCWUg4KDh
+         Y7FDey44CLkfF+ra6IYxsH16fscmDf7++2rxA+uBKISrFkP/EFBhoq83xLJYSsZKtOCo
+         NPH+Bw20ntAQWG+gOZCHeOeSlhtOkPFNMQSFV/x6bQ7We9GTid64J91RAKGHtTebORSr
+         M/EDq/sNoGPDFO4x5p8eqQK2QKdtITKnc4bxf+HyTk1Ffxks6RyMMb6M9eE9axSarl64
+         nXlb74K/2yLtMO34+DAUFgBw+wPW4ka/wiTtSgRxv4MebwD38QzqT5kpjRaVNtpLUz/o
+         cJiw==
+X-Gm-Message-State: AOJu0YzyrFNdgWZlPTgsnb6bpKHSw95ROoHDsfZwAcTcY6b4jAfZvIl1
+        pCX+IQHU1lmIqEE/GRs8urWKFg==
+X-Google-Smtp-Source: AGHT+IHLsYBhakgorb9cz9xMHTZREOY3MKxX8RWfDk0MxVttJTRKtifVvOUBTcfVorek5kiIlkefrQ==
+X-Received: by 2002:a17:906:3402:b0:9a1:bb8f:17d0 with SMTP id c2-20020a170906340200b009a1bb8f17d0mr3167830ejb.30.1695976711532;
+        Fri, 29 Sep 2023 01:38:31 -0700 (PDT)
+Received: from otso.luca.vpn.lucaweiss.eu (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id qk8-20020a170906d9c800b009ad89697c86sm12208965ejb.144.2023.09.29.01.38.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 29 Sep 2023 01:38:31 -0700 (PDT)
+From:   Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH 0/3] Enable venus on Fairphone 5 / non-ChromeOS sc7280
+ venus support
+Date:   Fri, 29 Sep 2023 10:38:18 +0200
+Message-Id: <20230929-sc7280-venus-pas-v1-0-9c6738cf157a@fairphone.com>
 MIME-Version: 1.0
-References: <cover.1693996662.git.quic_varada@quicinc.com> <5e3c29df2b42cceb8072b00546a78e1b99b2d374.1693996662.git.quic_varada@quicinc.com>
- <b0508a69-130d-4b05-9dfc-399e482dc2ae@linaro.org> <20230929073216.GB15001@varda-linux.qualcomm.com>
-In-Reply-To: <20230929073216.GB15001@varda-linux.qualcomm.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 29 Sep 2023 11:29:36 +0300
-Message-ID: <CAA8EJprD=zuvCrjOdeinPq=NaFLuATYWad4GDHzBH_PJZnOKHw@mail.gmail.com>
-Subject: Re: [PATCH v1 04/10] clk: qcom: apss-ipq6018: ipq5332: add safe
- source switch for a53pll
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>, ilia.lin@kernel.org,
-        agross@kernel.org, andersson@kernel.org, rafael@kernel.org,
-        viresh.kumar@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        quic_kathirav@quicinc.com, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAPqMFmUC/x3MMQqAMAxA0atIZgM1pWq9ijgUjZqlSoMiSO9uc
+ XzD/y8oJ2GFoXoh8S0qRyxo6grmPcSNUZZiIEPWePKoc0e9wZvjpXgGRQ6+tcaR65yFkp2JV3n
+ +5Tjl/AHEswkEYgAAAA==
+To:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.12.3
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 29 Sept 2023 at 10:33, Varadarajan Narayanan
-<quic_varada@quicinc.com> wrote:
->
-> On Thu, Sep 07, 2023 at 10:31:55AM +0200, Konrad Dybcio wrote:
-> > On 7.09.2023 07:21, Varadarajan Narayanan wrote:
-> > > Stromer Plus PLL found on IPQ53xx doesn't support dynamic
-> > > frequency scaling. To achieve the same, we need to park the APPS
-> > > PLL source to GPLL0, re configure the PLL and then switch the
-> > > source to APSS_PLL_EARLY.
-> > >
-> > > To support this, register a clock notifier to get the PRE_RATE
-> > > and POST_RATE notification. Change the APSS PLL source to GPLL0
-> > > when PRE_RATE notification is received, then configure the PLL
-> > > and then change back the source to APSS_PLL_EARLY.
-> > >
-> > > Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
-> > > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> > > ---
-> > >  drivers/clk/qcom/apss-ipq6018.c | 54 ++++++++++++++++++++++++++++++++++++++++-
-> > >  1 file changed, 53 insertions(+), 1 deletion(-)
-> > >
-> > > diff --git a/drivers/clk/qcom/apss-ipq6018.c b/drivers/clk/qcom/apss-ipq6018.c
-> > > index 4e13a08..ffb6ab5 100644
-> > > --- a/drivers/clk/qcom/apss-ipq6018.c
-> > > +++ b/drivers/clk/qcom/apss-ipq6018.c
-> > > @@ -9,8 +9,11 @@
-> > >  #include <linux/clk-provider.h>
-> > >  #include <linux/regmap.h>
-> > >  #include <linux/module.h>
-> > > +#include <linux/clk.h>
-> > > +#include <linux/soc/qcom/smem.h>
-> > >
-> > >  #include <dt-bindings/clock/qcom,apss-ipq.h>
-> > > +#include <dt-bindings/arm/qcom,ids.h>
-> > >
-> > >  #include "common.h"
-> > >  #include "clk-regmap.h"
-> > > @@ -84,15 +87,64 @@ static const struct qcom_cc_desc apss_ipq6018_desc = {
-> > >     .num_clks = ARRAY_SIZE(apss_ipq6018_clks),
-> > >  };
-> > >
-> > > +static int cpu_clk_notifier_fn(struct notifier_block *nb, unsigned long action,
-> > > +                           void *data)
-> > > +{
-> > > +   u8 index;
-> > > +   int err;
-> > > +
-> > > +   if (action == PRE_RATE_CHANGE)
-> > > +           index = P_GPLL0;
-> > > +   else if (action == POST_RATE_CHANGE)
-> > > +           index = P_APSS_PLL_EARLY;
-> > > +   else
-> > > +           return 0;
-> > > +
-> > > +   err = clk_rcg2_mux_closest_ops.set_parent(&apcs_alias0_clk_src.clkr.hw,
-> > > +                                             index);
-> > Adding a variable for clk_hw within the apcs_alias0 clock would
-> > make this easier to digest, I think.
-> >
-> > And if we wanna be even less error-prone, you can reference the
-> > ops of this clock in an indirect way.
->
-> Will change it as
->
->         struct clk_hw *hw;
->
->         hw = &apcs_alias0_clk_src.clkr.hw;
->         err = hw->init->ops->set_parent(hw, index);
+Devices with Qualcomm firmware (compared to ChromeOS firmware) need some
+changes in the venus driver and dts layout so that venus can initialize.
 
-You can not do this, hw->init is cleared during registration.
+Do these changes, similar to sc7180.
 
->
-> > > +   return notifier_from_errno(err);
-> > > +}
-> > > +
-> > > +static struct notifier_block cpu_clk_notifier = {
-> > > +   .notifier_call = cpu_clk_notifier_fn,
-> > > +};
-> > > +
-> > >  static int apss_ipq6018_probe(struct platform_device *pdev)
-> > >  {
-> > >     struct regmap *regmap;
-> > > +   u32 soc_id;
-> > > +   int ret;
-> > > +
-> > > +   ret = qcom_smem_get_soc_id(&soc_id);
-> > > +   if (ret)
-> > > +           return ret;
-> > >
-> > >     regmap = dev_get_regmap(pdev->dev.parent, NULL);
-> > >     if (!regmap)
-> > >             return -ENODEV;
-> > >
-> > > -   return qcom_cc_really_probe(pdev, &apss_ipq6018_desc, regmap);
-> > > +   ret = qcom_cc_really_probe(pdev, &apss_ipq6018_desc, regmap);
-> > > +   if (ret)
-> > > +           return ret;
-> > > +
-> > > +   switch (soc_id) {
-> > > +   /*
-> > > +    * Only below variants of IPQ53xx support scaling
-> > > +    */
-> > 1. /* Keep this in a 1-line comment */
->
-> Ok
->
-> > 2. why? explain the reasoning in the commit message
->
-> Ok
->
-> Thanks
-> Varada
->
-> > > +   case QCOM_ID_IPQ5332:
-> > > +   case QCOM_ID_IPQ5322:
-> > > +   case QCOM_ID_IPQ5300:
-> > > +           ret = clk_notifier_register(apcs_alias0_clk_src.clkr.hw.clk,
-> > > +                                           &cpu_clk_notifier);
-> > > +           if (ret)
-> > > +                   return ret;
-> > > +           break;
-> > > +   default:
-> > > +           break;
-> > > +   }
-> > > +
-> > > +   return 0;
-> > >  }
-> > >
-> > >  static struct platform_driver apss_ipq6018_driver = {
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Luca Weiss (3):
+      media: venus: core: Set up secure memory ranges for SC7280
+      arm64: dts: qcom: sc7280: Move video-firmware to chrome-common
+      arm64: dts: qcom: qcm6490-fairphone-fp5: Enable venus node
 
+ arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 5 +++++
+ arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi | 8 ++++++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               | 6 ++----
+ drivers/media/platform/qcom/venus/core.c           | 4 ++++
+ 4 files changed, 19 insertions(+), 4 deletions(-)
+---
+base-commit: df964ce9ef9fea10cf131bf6bad8658fde7956f6
+change-id: 20230929-sc7280-venus-pas-ea9630525753
 
-
+Best regards,
 -- 
-With best wishes
-Dmitry
+Luca Weiss <luca.weiss@fairphone.com>
+
