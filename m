@@ -2,59 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 43C347B39D4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 20:16:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 084387B3A04
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 20:27:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233806AbjI2SQm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Sep 2023 14:16:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52240 "EHLO
+        id S233793AbjI2S1n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Sep 2023 14:27:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233538AbjI2SQi (ORCPT
+        with ESMTP id S233552AbjI2S1m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Sep 2023 14:16:38 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9AAD1AE;
-        Fri, 29 Sep 2023 11:16:33 -0700 (PDT)
-Received: from localhost.localdomain (unknown [IPv6:2a02:8010:65b5:0:1ac0:4dff:feee:236a])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: alarumbe)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id C49A66607349;
-        Fri, 29 Sep 2023 19:16:30 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1696011390;
-        bh=DJoaVMy8ENkNzQozP+tziMFSLiEKCxJ8BZ8mfkcAcBE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=IgTDB7VaTVIFK/yXJgy3tq2tI1RvDZ/RInfcINl5Amjr4uecWiS/EbWOxKMc+Aw/m
-         QaaqDnCQElS4qTfkeCFuh7/WuWQUEJK1HEL6H7Wx5I1vhCcaqkCjy5enMbxKycjRA9
-         iiJ6HiUmQUqEgtw5OXVlUwSPa+gVAkHIqPeBx6an+ewWA9IJQg/Xz8PzEXB22No7MD
-         gtUx4Cib0xlnHpX48z6jmlfJew5gTJuOOsXnwyYqL3UrZU4ejMZoyyXsPP1bMwk2/6
-         6NcCAeNSu/uh+sEepmekIRYbn5HjDjXnxSiH8FsgWc2cXduUU6memnuK0DIJptzxnN
-         Xd4pwJ/W4x9ww==
-From:   =?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>
-To:     maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
-        robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        dmitry.baryshkov@linaro.org, sean@poorly.run,
-        marijn.suijten@somainline.org, robh@kernel.org,
-        steven.price@arm.com
-Cc:     adrian.larumbe@collabora.com, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, healych@amazon.com,
-        kernel@collabora.com, tvrtko.ursulin@linux.intel.com,
-        boris.brezillon@collabora.com,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-Subject: [PATCH v8 5/5] drm/panfrost: Implement generic DRM object RSS reporting function
-Date:   Fri, 29 Sep 2023 19:14:31 +0100
-Message-ID: <20230929181616.2769345-6-adrian.larumbe@collabora.com>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230929181616.2769345-1-adrian.larumbe@collabora.com>
-References: <20230929181616.2769345-1-adrian.larumbe@collabora.com>
+        Fri, 29 Sep 2023 14:27:42 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD60B199
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 11:27:40 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-40572aeb73cso115448655e9.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 11:27:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1696012059; x=1696616859; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=LOO9MB9UoF+kx+MfoIki3YD3nQhPAJHsiuL8TjZeK6A=;
+        b=Za7DPoKtBQmrmaotnpRQ7hBdlEhOwnTeVWDupbbHqex3hybhWzK6medB5h+76aRz2C
+         RM/UPv1FxfxNo4mbXjm7IVtp2Cigqn1jB5RyxV7oHbiDmcfipwZZ6PCLoNdyXp6sUS7O
+         CTFK9SGcCity/4nKBgEAiVBuNtk5l3K3Obe6F9f/VHIP45YcRsICH2oV45bt7e6YR0Qt
+         9pvQc6ymuwdlvYb/OHBXm68SXDnCTHkITx91iQkaQ1yI8ig/R89CE+e47UK+S/DI1KVm
+         xsEDhafPplsgnlPOo0SgjiokapNnXJu2Fer3oZaFlufZN4yMm/ddFXcBkHYMOL47ZLcF
+         0dlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696012059; x=1696616859;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LOO9MB9UoF+kx+MfoIki3YD3nQhPAJHsiuL8TjZeK6A=;
+        b=DTpz97z1OzLu/zh0bI++2/lJxlzDGHqJ7eRBe3YJeDZf6ZOFBfpAlf6DI3f8Zt50Jp
+         VfZ/+O9rK9sP8Faxyh3TWnHq28N4oTYWvIE1BehvMFmMqsYFoX1rMUkKuZhWQDLMJvaS
+         yGokfVydxZuzAG4kyNS4qUFjsuL0dW7QLOJ5RrrRvF5FgiBciddCEj9p0PpZbWWAJz5B
+         /rc6qnQD9rX2qDgsAkSqHJDrZqY3CMs1w08UyL8oMX5IuhIsoJmcMiTCwmmV9NcRKS1W
+         wQns70qhRriVFTgndilePhPrMGIGHHrb8F/db2MdBEwGuLXj6Hys7TRcQXwsOJcqafuc
+         2lyQ==
+X-Gm-Message-State: AOJu0YzMLWJq3j21BlmWWEF0SahVm7e69WHusyxxVfyH42XnVno1ETcT
+        uKalqHlUx4YKqHES9WtDSyM3Gg==
+X-Google-Smtp-Source: AGHT+IGIJoT26bLL18e8p7x6DSmd83hCa5cV7XsJzwHzUXDaA2o5A3Im5Csko/R1CGa0vxUpAfvzZQ==
+X-Received: by 2002:a05:600c:3d1a:b0:406:548e:bd51 with SMTP id bh26-20020a05600c3d1a00b00406548ebd51mr3704928wmb.26.1696012059260;
+        Fri, 29 Sep 2023 11:27:39 -0700 (PDT)
+Received: from [192.168.1.8] (host-2-99-112-229.as13285.net. [2.99.112.229])
+        by smtp.gmail.com with ESMTPSA id e21-20020a05600c219500b004055858e7d8sm1958549wme.7.2023.09.29.11.27.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 Sep 2023 11:27:38 -0700 (PDT)
+Message-ID: <378f600a-4fbb-42a0-a6d8-ea2dac0b220d@linaro.org>
+Date:   Fri, 29 Sep 2023 19:27:37 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/4] thermal: Introduce Qualcomm Thermal Mitigation Device
+ support
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bhupesh Sharma <bhupesh.linux@gmail.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-pm@vger.kernel.org
+References: <20230905-caleb-qmi_cooling-v1-0-5aa39d4164a7@linaro.org>
+ <30066188-3787-4277-914e-e06c95fe2e1c@linaro.org>
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+In-Reply-To: <30066188-3787-4277-914e-e06c95fe2e1c@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -64,87 +89,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-BO's RSS is updated every time new pages are allocated on demand and mapped
-for the object at GPU page fault's IRQ handler, but only for heap buffers.
-The reason this is unnecessary for non-heap buffers is that they are mapped
-onto the GPU's VA space and backed by physical memory in their entirety at
-BO creation time.
 
-This calculation is unnecessary for imported PRIME objects, since heap
-buffers cannot be exported by our driver, and the actual BO RSS size is the
-one reported in its attached dmabuf structure.
 
-Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
----
- drivers/gpu/drm/panfrost/panfrost_gem.c | 15 +++++++++++++++
- drivers/gpu/drm/panfrost/panfrost_gem.h |  5 +++++
- drivers/gpu/drm/panfrost/panfrost_mmu.c |  1 +
- 3 files changed, 21 insertions(+)
+On 29/09/2023 18:17, Konrad Dybcio wrote:
+> On 29.09.2023 18:16, Caleb Connolly wrote:
+>> The Thermal Mitigation Device (TMD) Service is a QMI service that runs
+>> on remote subsystems (the modem and DSPs) on Qualcomm SoCs.
+>> It exposes various mitigations including passive thermal controls and
+>> rail voltage restrictions.
+>>
+>> This series introduces support for exposing TMDs as cooling devices
+>> in the kernel through the thermal framework, using the QMI interface.
+>>
+>> Each TMD client is described as a child of the remoteproc node in
+>> devicetree. With subnodes for each control.
+>>
+>> This series is based on previous work by Bhupesh Sharma which can be
+>> found at [1]. I'm sending this as a fresh series as it has been a
+>> year since the original version and I have rewritten most of the driver.
+>>
+> Since you're adding support for funky hw, it would be appreciated
+> if you also linked to a tree that has the dt bits hooked up, the
+> schema example may not tell the whole story
 
-diff --git a/drivers/gpu/drm/panfrost/panfrost_gem.c b/drivers/gpu/drm/panfrost/panfrost_gem.c
-index de238b71b321..0cf64456e29a 100644
---- a/drivers/gpu/drm/panfrost/panfrost_gem.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_gem.c
-@@ -209,6 +209,20 @@ static enum drm_gem_object_status panfrost_gem_status(struct drm_gem_object *obj
- 	return res;
- }
- 
-+static size_t panfrost_gem_rss(struct drm_gem_object *obj)
-+{
-+	struct panfrost_gem_object *bo = to_panfrost_bo(obj);
-+
-+	if (bo->is_heap) {
-+		return bo->heap_rss_size;
-+	} else if (bo->base.pages) {
-+		WARN_ON(bo->heap_rss_size);
-+		return bo->base.base.size;
-+	}
-+
-+	return 0;
-+}
-+
- static const struct drm_gem_object_funcs panfrost_gem_funcs = {
- 	.free = panfrost_gem_free_object,
- 	.open = panfrost_gem_open,
-@@ -221,6 +235,7 @@ static const struct drm_gem_object_funcs panfrost_gem_funcs = {
- 	.vunmap = drm_gem_shmem_object_vunmap,
- 	.mmap = drm_gem_shmem_object_mmap,
- 	.status = panfrost_gem_status,
-+	.rss = panfrost_gem_rss,
- 	.vm_ops = &drm_gem_shmem_vm_ops,
- };
- 
-diff --git a/drivers/gpu/drm/panfrost/panfrost_gem.h b/drivers/gpu/drm/panfrost/panfrost_gem.h
-index ad2877eeeccd..13c0a8149c3a 100644
---- a/drivers/gpu/drm/panfrost/panfrost_gem.h
-+++ b/drivers/gpu/drm/panfrost/panfrost_gem.h
-@@ -36,6 +36,11 @@ struct panfrost_gem_object {
- 	 */
- 	atomic_t gpu_usecount;
- 
-+	/*
-+	 * Object chunk size currently mapped onto physical memory
-+	 */
-+	size_t heap_rss_size;
-+
- 	bool noexec		:1;
- 	bool is_heap		:1;
- };
-diff --git a/drivers/gpu/drm/panfrost/panfrost_mmu.c b/drivers/gpu/drm/panfrost/panfrost_mmu.c
-index d54d4e7b2195..846dd697c410 100644
---- a/drivers/gpu/drm/panfrost/panfrost_mmu.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_mmu.c
-@@ -522,6 +522,7 @@ static int panfrost_mmu_map_fault_addr(struct panfrost_device *pfdev, int as,
- 		   IOMMU_WRITE | IOMMU_READ | IOMMU_NOEXEC, sgt);
- 
- 	bomapping->active = true;
-+	bo->heap_rss_size += SZ_2M;
- 
- 	dev_dbg(pfdev->dev, "mapped page fault @ AS%d %llx", as, addr);
- 
+For sure, you can find a patch with a reference DTS part here
+
+https://git.codelinaro.org/caleb_connolly/kernel/-/commit/9067f80db58bbce81d5f0703aa2fd261e88bc812
+> 
+> Konrad
+
 -- 
-2.42.0
-
+// Caleb (they/them)
