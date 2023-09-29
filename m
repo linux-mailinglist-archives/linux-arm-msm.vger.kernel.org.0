@@ -2,63 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F6387B33CE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 15:39:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A2B67B33D0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Sep 2023 15:39:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233445AbjI2NjY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Sep 2023 09:39:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56746 "EHLO
+        id S233436AbjI2NjZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Sep 2023 09:39:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233448AbjI2NjP (ORCPT
+        with ESMTP id S233438AbjI2NjQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Sep 2023 09:39:15 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0E092702
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 06:39:02 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-533d6a8d6b6so14776576a12.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 06:39:02 -0700 (PDT)
+        Fri, 29 Sep 2023 09:39:16 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1EC32709
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 06:39:03 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-533e7d127d4so13683833a12.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Sep 2023 06:39:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1695994740; x=1696599540; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=N80cnpAhKZAQNAt0LvDi0BgqS0Cl+s+lMzHKGl0eRh4=;
-        b=PB8XYtTt/2Krfplz+H6ZYkl33Gsq3y7RiFEHlwN2Fx5sYwSBaxmZHsI6PzDMLixWuc
-         GimMf2klP1e394MhNDSs9zB2qqgttaiSiqf2pRNMMVdLfs/T0o4TWEvl+3e15n66gzM/
-         CYBpPeMZL19lRhu4wjSNwX0iOpA3o2/IbTBsiddzUsZvETt4vrOknQXJx4bZAn5me3lV
-         2Di6xELuCUHCPdiEHOppLqdr84AcwUTWqpX1TkHSz0T2zca84LRYWdF+7py9tG8Ks7eZ
-         HOr0jX4+V2ZHpEXrR/djBjh1OU7DkUHGxdzSBiy1T5JKFCm63nQOaNWhbAI8QOYL2uWL
-         fSNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695994740; x=1696599540;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1695994742; x=1696599542; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=N80cnpAhKZAQNAt0LvDi0BgqS0Cl+s+lMzHKGl0eRh4=;
-        b=J4Ec9zGbTlj7ItZAj5v4YiexXmusFqPdrC7j+O0IVVcsXbDQLnqk4AGHKQ+nXpU3tM
-         oaUjJTvelG5i1XGXV2U3uO8QIjdImhSw7rIrhSP/qCCSFP3eKC7k56U4xm21xZe8Bpir
-         mtq7vk7vKSTZszgy1TsEGbcbGmRTJLs1J43dUyHEU3j4kdBoLKhGr3udOzteL6v0bbm2
-         c4bIyMUtqxxXclBQT99lzD88u1zBwSsV/QiC7iKHHcT7Hs9qWDXVwY/12uO8kvfqD5/h
-         lG7y8CYFKvSCD5VZSob8jC1/QqdYXWTBA1cV3hxQme0PhHXpoA0MCNsscGREghXrDAd2
-         mDew==
-X-Gm-Message-State: AOJu0YylatVOIt5tecjbLQCMKbX31m94Fb/TWspLoNTKgbqZuDd/X8uo
-        JOftMn1qP/Y6KGbbd+BkoLxab6QDw+Nqpui6hLA=
-X-Google-Smtp-Source: AGHT+IHDZ7g5o9oqgsZvyPyN1QPbuYPFz8FvHA9hu9FRmuuDczT6e2mlFwjshH5KeTJNcUqMM0Qqbg==
-X-Received: by 2002:aa7:c58d:0:b0:530:8d55:9c6f with SMTP id g13-20020aa7c58d000000b005308d559c6fmr3183409edq.2.1695994740560;
-        Fri, 29 Sep 2023 06:39:00 -0700 (PDT)
+        bh=ZdgVOGmpBJUAP+7HbxCX50FnlCzMd0lISLV1dlG15Qw=;
+        b=SNBq/No0QLxGDx62K43Ki+cWsD0/lwGlPSM4vx1bs+P4ELLRQcdu82ap/oetm/Tdjx
+         jHvpXJdu6Xc/mwIdLY0rlq4KUmEUo5RfHsUSO/JMT22NLC65Lv5RMeUpKyGiJ3l853yF
+         aNgRhIqoS+XqVer0GwvoCkvzERqA2Oj3sJU8t5tMGh4fQXDzFLRG679gPGVpwxlt/Wez
+         CPKVMYVNc4iquSimQx0vWwExdo0nHt97o6Hf+/nx/Fz19UoFmlQ1qYQeQ16kyxECUPXh
+         1vDawGQEw25I1HV6ENQw88akiYWcqfV0549mq7M8oAb6flYAMGjmxJZAnoHo+Lc3kyD+
+         Wqtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695994742; x=1696599542;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZdgVOGmpBJUAP+7HbxCX50FnlCzMd0lISLV1dlG15Qw=;
+        b=W7AGxI48xDX9F3vqoMSrL5upuUSP3ItA2gMt4YG31BCvAjzKVcCccO/iSOgRWVD++Z
+         //RQeXYPe7Te2QcjqJVJ5mIxhldgHYwE5uGG/CO5bAkBoCf5oudPHCROmOxqiUwImtHe
+         JS4MYe3dghzLy4xUhSKOFlRwQumid65M3u9k/qbSXAtyG2xajFa5w/o4ruvLSRbkZgHK
+         hMBiB2DC7KHY2qhQsj5Y6n3S/zTT0ovsAaJdUzgY/lXhZ7UKiCdRN4TX9gyjntK6uy++
+         LhuDmaD7mc044A0e3Quu5gnF+9+RFdEHTYUJTZH51rDCYtbbAB277ifr3TjZintEO2Ol
+         VemQ==
+X-Gm-Message-State: AOJu0YyI1S/dE1/HVB/bH9N6pVEckC7AGawr8R/ftZCjL2Hgo7L8pbd8
+        1fM+iukkK2RCS/7Ysfn7UQwu5g==
+X-Google-Smtp-Source: AGHT+IFY+3Mm0DDlSgieB7UJfN1LABvnlHZQG7ZgRzJ2xv3CXHJf+oTuJL/s+erxjFjfOkywa9am6w==
+X-Received: by 2002:aa7:d6d2:0:b0:52f:6641:4ecd with SMTP id x18-20020aa7d6d2000000b0052f66414ecdmr3864911edr.37.1695994742112;
+        Fri, 29 Sep 2023 06:39:02 -0700 (PDT)
 Received: from [127.0.1.1] (178235177217.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.217])
-        by smtp.gmail.com with ESMTPSA id cx14-20020a05640222ae00b005362bcc089csm2215701edb.67.2023.09.29.06.38.59
+        by smtp.gmail.com with ESMTPSA id cx14-20020a05640222ae00b005362bcc089csm2215701edb.67.2023.09.29.06.39.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Sep 2023 06:39:00 -0700 (PDT)
+        Fri, 29 Sep 2023 06:39:01 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH 0/2] 8280 display ahb clk fixes
-Date:   Fri, 29 Sep 2023 15:38:51 +0200
-Message-Id: <20230929-topic-8280_ahbdisp-v1-0-72bdc38309b9@linaro.org>
+Date:   Fri, 29 Sep 2023 15:38:52 +0200
+Subject: [PATCH 1/2] arm64: dts: qcom: sc8280xp: Use the correct AHB clock
+ for DISPSS1
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAGvTFmUC/x3MMQqAMAxA0atIZgMxClqvIiK1Rs1SSysiiHe3O
- L7h/weSRJUEffFAlEuTHj6jKgtwu/WboC7ZwMQ1GTZ4HkEddtzRZPd50RRQqpaEnOWmYchhiLL
- q/U+H8X0/pz8Sc2QAAAA=
+Message-Id: <20230929-topic-8280_ahbdisp-v1-1-72bdc38309b9@linaro.org>
+References: <20230929-topic-8280_ahbdisp-v1-0-72bdc38309b9@linaro.org>
+In-Reply-To: <20230929-topic-8280_ahbdisp-v1-0-72bdc38309b9@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -80,25 +81,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Little fixes to shut down disp ahb clk when dispss is not in use.
+SC8280XP has two instances of the display subsystem. Make sure it uses
+the correct clocks.
 
-If possible, the dt patch should theoretically go in first, but x13s
-worked fine regardless.
-
+Fixes: 57d6ef683a15 ("arm64: dts: qcom: sc8280xp: Define some of the display blocks")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
-Konrad Dybcio (2):
-      arm64: dts: qcom: sc8280xp: Use the correct AHB clock for DISPSS1
-      clk: qcom: gcc-sc8280xp: Don't keep display AHB clocks always-on
-
  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 4 ++--
- drivers/clk/qcom/gcc-sc8280xp.c        | 6 ++----
- 2 files changed, 4 insertions(+), 6 deletions(-)
----
-base-commit: df964ce9ef9fea10cf131bf6bad8658fde7956f6
-change-id: 20230929-topic-8280_ahbdisp-e170e0ca2442
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Best regards,
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+index cad59af7ccef..92bcbb1770ea 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+@@ -4562,7 +4562,7 @@ mdss1: display-subsystem@22000000 {
+ 			reg = <0 0x22000000 0 0x1000>;
+ 			reg-names = "mdss";
+ 
+-			clocks = <&gcc GCC_DISP_AHB_CLK>,
++			clocks = <&gcc GCC_DISP1_AHB_CLK>,
+ 				 <&dispcc1 DISP_CC_MDSS_AHB_CLK>,
+ 				 <&dispcc1 DISP_CC_MDSS_MDP_CLK>;
+ 			clock-names = "iface",
+@@ -5002,7 +5002,7 @@ dispcc1: clock-controller@22100000 {
+ 			compatible = "qcom,sc8280xp-dispcc1";
+ 			reg = <0 0x22100000 0 0x20000>;
+ 
+-			clocks = <&gcc GCC_DISP_AHB_CLK>,
++			clocks = <&gcc GCC_DISP1_AHB_CLK>,
+ 				 <&rpmhcc RPMH_CXO_CLK>,
+ 				 <0>,
+ 				 <&mdss1_dp0_phy 0>,
+
 -- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
+2.39.2
 
