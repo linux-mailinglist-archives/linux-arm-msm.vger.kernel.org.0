@@ -2,43 +2,46 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BDC6C7B446A
+	by mail.lfdr.de (Postfix) with ESMTP id 48A547B4468
 	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Oct 2023 00:19:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232641AbjI3WTg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Sep 2023 18:19:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35862 "EHLO
+        id S233994AbjI3WTf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Sep 2023 18:19:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231259AbjI3WTe (ORCPT
+        with ESMTP id S232641AbjI3WTe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Sat, 30 Sep 2023 18:19:34 -0400
-X-Greylist: delayed 354 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 30 Sep 2023 15:19:31 PDT
-Received: from out-200.mta0.migadu.com (out-200.mta0.migadu.com [91.218.175.200])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8295CDD
+Received: from out-204.mta0.migadu.com (out-204.mta0.migadu.com [91.218.175.204])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9944F9
         for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 15:19:31 -0700 (PDT)
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ansari.sh; s=key1;
-        t=1696112012;
+        t=1696112019;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=IQtLpN/lGvFKa62keccBQlCiMRFzl9uuLDsEFrnDd3s=;
-        b=R/rzKaAGKHI13R/ACYAWNSpDaCIxlVN3yCK/AWg7Y3mhDof1UybCwE/7sFWBx3TYKFjHqh
-        w05svhyspJx5LKV7dnrFtA4Ey+0WNKOFf6KPmyEiUekmHQwHCCoWwKt9O/Z1jrLx8L7zXz
-        H5AUzwk5ZNT+CL7H8hbGWu4CeqL93lI=
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=2+imvZevtdeyWbERrADU6uxT9kurAQz3gVjIdweK2A4=;
+        b=MRVZoPFasgFFhYXOz/HqTRKJf3g7eJTbQWK3dJh/ltHHTRY3X25mryPvw4DjUq1w9pwhic
+        VsGtduBVpPlCndVh1sPk8Rju+U7mImCvCC96RxtLNR7MZ78ule8la5kZmGXeRWwVTZCIb9
+        PVNnK9oxstx61Rr7VONAjPXf1c2ENd8=
 From:   Rayyan Ansari <rayyan@ansari.sh>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         Rayyan Ansari <rayyan@ansari.sh>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
-Subject: [PATCH v3 0/6] Initial support for MSM8x26 Lumias
-Date:   Sat, 30 Sep 2023 23:07:55 +0100
-Message-ID: <20230930221323.101289-1-rayyan@ansari.sh>
+Subject: [PATCH v3 1/6] dt-bindings: arm: qcom: Document MSM8x26-based Lumia phones
+Date:   Sat, 30 Sep 2023 23:07:56 +0100
+Message-ID: <20230930221323.101289-2-rayyan@ansari.sh>
+In-Reply-To: <20230930221323.101289-1-rayyan@ansari.sh>
+References: <20230930221323.101289-1-rayyan@ansari.sh>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
@@ -51,51 +54,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
+Document MSM8226 and MSM8926 Lumias.
 
-The following patches: 
-- Add device tree files for Nokia/Microsoft Lumia phones based around
-  the MSM8x26 family of Qualcomm chipsets, utilising a common tree 
-- Document this support
+Signed-off-by: Rayyan Ansari <rayyan@ansari.sh>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ Documentation/devicetree/bindings/arm/qcom.yaml | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-v1: https://lore.kernel.org/linux-arm-msm/20230811213728.23726-1-rayyan@ansari.sh/
-v2: https://lore.kernel.org/linux-arm-msm/20230813152623.64989-1-rayyan@ansari.sh/
-
-Changes in v2:
-- Fix style issues and CHECK_DTBS warnings
-- Squash common dt commit with a device commit
-- Use both msm8926 and msm8226 compatibles for msm8926 devices
-
-Changes in v3:
-- Fix commit tags
-- More style fixes
-- Delete by label instead of path
-
-Rayyan Ansari (6):
-  dt-bindings: arm: qcom: Document MSM8x26-based Lumia phones
-  ARM: dts: qcom: add common dt for MSM8x26 Lumias along with Nokia
-    Lumia 630
-  ARM: dts: qcom: add device tree for Microsoft Lumia 640
-  ARM: dts: qcom: add device tree for Microsoft Lumia 640 XL
-  ARM: dts: qcom: add device tree for Nokia Lumia 735
-  ARM: dts: qcom: add device tree for Nokia Lumia 830
-
- .../devicetree/bindings/arm/qcom.yaml         |  10 +
- arch/arm/boot/dts/qcom/Makefile               |   5 +
- .../qcom/qcom-msm8226-microsoft-common.dtsi   | 327 ++++++++++++++++++
- .../qcom/qcom-msm8226-microsoft-dempsey.dts   |  17 +
- .../qcom/qcom-msm8226-microsoft-makepeace.dts |  17 +
- .../qcom-msm8226-microsoft-moneypenny.dts     |  23 ++
- .../qcom-msm8926-microsoft-superman-lte.dts   |  53 +++
- .../dts/qcom/qcom-msm8926-microsoft-tesla.dts |  67 ++++
- 8 files changed, 519 insertions(+)
- create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8226-microsoft-common.dtsi
- create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8226-microsoft-dempsey.dts
- create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8226-microsoft-makepeace.dts
- create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8226-microsoft-moneypenny.dts
- create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8926-microsoft-superman-lte.dts
- create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8926-microsoft-tesla.dts
-
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index adbfaea32343..2a607b1595c9 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -184,9 +184,19 @@ properties:
+ 
+       - items:
+           - enum:
++              - microsoft,dempsey
++              - microsoft,makepeace
++              - microsoft,moneypenny
+               - samsung,s3ve3g
+           - const: qcom,msm8226
+ 
++      - items:
++          - enum:
++              - microsoft,superman-lte
++              - microsoft,tesla
++          - const: qcom,msm8926
++          - const: qcom,msm8226
++
+       - items:
+           - enum:
+               - samsung,a7
 -- 
 2.42.0
 
