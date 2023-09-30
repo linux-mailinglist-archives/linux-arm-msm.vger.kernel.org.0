@@ -2,59 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B3B947B40C2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Sep 2023 16:16:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DAA8C7B40C6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Sep 2023 16:16:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234235AbjI3OQD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Sep 2023 10:16:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48236 "EHLO
+        id S234231AbjI3OQr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Sep 2023 10:16:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234218AbjI3OQC (ORCPT
+        with ESMTP id S231364AbjI3OQq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Sep 2023 10:16:02 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53698C6
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 07:15:59 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-9ad810be221so2083687666b.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 07:15:59 -0700 (PDT)
+        Sat, 30 Sep 2023 10:16:46 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20B13E6
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 07:16:43 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-99357737980so2043890466b.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 07:16:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696083358; x=1696688158; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696083401; x=1696688201; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=m6qCIpSm+6JVcJ+fHCZ4I+fQrJPlPj+kz7Di3jl1By8=;
-        b=caaPlvUh0hcRHMsgUXG4AQB3OLRPuxsV/H5vow+81AhfgJZ1Dy7euirPRw3Ybr0ynf
-         qVEMNsaNvU2EFpNCPUkfAeHFcgH74Yh+u14fWC8wtQNcqPRyIvHnUw0nDPrEMe74WGJY
-         risMZfgjwUOX2JkhfmUOF8l6q+0wZUlQiFGq0/QNg+PDhQPpTeFya2yfzNQn37dMeS+9
-         N7C6szxZWbJXIUqX+8HPieZts8bHx0KLn0WTnMn3BjqALT86lMs8mcYp/s8PeABO4icE
-         6IoLthtrlGqy/dNTxd9wDojvuaSx5dkHy7lTDz03CKc/hqE+Eoc2Kft+StQPRkyvMiZw
-         rq4w==
+        bh=k64lT6XcmO9jhd+S65sRgmcaNSP3mGxzbdernJf40vs=;
+        b=KvOChHtJAFvEykZbuMQPOun/rr/f4L1c9Cx1s83kQyyLW3am0l4o+BiYV9T8MiVR02
+         o2g/DR2/VWT1+hC923AlmIrPqYW4Df+7eL6tlKYbxyLcjl+kfvcO39nvLFquHi28X1ST
+         4NHbLi5WrnUai1OVHicioMP7AqsXFHjTEafNimLAHMGyun4FZWx3V4wA/V8E5zq4nmZn
+         BDOzvZG7QbcJagTHdaaFzUxcINsSt3JkcsH/sgQw3ReCKwW+8c8vkY3VrBJ9Oet4yTIO
+         M3s30dcDTa2FIGJ15XE4LhFE9q3TfyNw3WAk1/LtF0o2CEQU5KQw7FGoysa6bJodFbPF
+         nerg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696083358; x=1696688158;
+        d=1e100.net; s=20230601; t=1696083401; x=1696688201;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=m6qCIpSm+6JVcJ+fHCZ4I+fQrJPlPj+kz7Di3jl1By8=;
-        b=i+e7IBNFGXUjDq5Od2tL7euxFYP0Kqx7Sq6nSCgybbGvPOHY03e2aC2Rw9GVugQbOH
-         Pu/dQJbBs0qDflR0lJyMKC2XxDC0NaahmR4/GkLzYAjpidT+GlEbd0nv8yCnfE9gKEzB
-         e/mzN6FFnJ/TalvAx3htAaDoCRzalwibpyV6F1NCQ21p433XDAdxqN1jXcufX0eoLFhu
-         6lWs29vDrBVwACk9qo0t09IA+pgp1iPpbqDplKYPLuLqI9R0ZS8zlFmAXnLs82AUVWYJ
-         3tpcWQ0KKahgPynJsR1tlJdA5sKtRLTIFtd/bq8kLwt0Eppez5tSg1QIsLH3RgjefLPO
-         v6yg==
-X-Gm-Message-State: AOJu0YwT417d8i10ULeSJdslEYnFOf8jQk71AAJn9yO358Qym83TqR7T
-        zLX0QzQO35/S5MLPaw7E/z/9Mw==
-X-Google-Smtp-Source: AGHT+IEk5Nm13dNeGNOTla7qm2LBA5zF98j1XnAPaFHoe7AIXpnptLIteJKo8SPBMie9LMqbnKZZ8w==
-X-Received: by 2002:a17:906:210a:b0:9ae:6ad0:f6db with SMTP id 10-20020a170906210a00b009ae6ad0f6dbmr6095028ejt.71.1696083357690;
-        Sat, 30 Sep 2023 07:15:57 -0700 (PDT)
+        bh=k64lT6XcmO9jhd+S65sRgmcaNSP3mGxzbdernJf40vs=;
+        b=gvmBhL/osbvYwQp/a7I6PH851gWHL1d5pnKYIfkkDbXfYj46ViwngcoPT349Hd9NdH
+         XGscLovdVwyV4ITB/BqQvR420hi65DkGBpW0oHLGz3IT1nzb/406fdsf9DhSSLcgds1J
+         P0Tq6+C/SHk+vblQIwO6VT6mdvZUQ6VRPpvFSovR9+0q45i+OP04+Re2nbN/LQdTE29h
+         k4pDen1YuApjgXGH/0KEQ4RZuK980CxG0tf0HSPCJwZLbChoQauCDgOdUbQH9NSsJE30
+         2wmd/oaj7wF0fOsCQYC83fZ8rQHFUUIhMbiiryN7dg2pJ0c/Om1g9xANzXPsE9GCH3Fp
+         EfCQ==
+X-Gm-Message-State: AOJu0YwTYuIYpqqBQqRrVSKD7zGVS29PbOE7+zHypsOEPq2GdbVGHzVx
+        uDISvnVaYXLYhfHmhmhoK30uvA==
+X-Google-Smtp-Source: AGHT+IFr9xsZjfwDvTwBHGcVgTtLEI1GBBuRSzh3T+EF65VyTJhSbUA2w2LFjVOaI7CnEiC14aVecQ==
+X-Received: by 2002:a17:906:6a19:b0:9a1:c0e9:58ff with SMTP id qw25-20020a1709066a1900b009a1c0e958ffmr8131293ejc.11.1696083401570;
+        Sat, 30 Sep 2023 07:16:41 -0700 (PDT)
 Received: from [192.168.8.76] ([88.154.47.206])
-        by smtp.gmail.com with ESMTPSA id d2-20020a17090694c200b00977cad140a8sm13939590ejy.218.2023.09.30.07.15.50
+        by smtp.gmail.com with ESMTPSA id d2-20020a17090694c200b00977cad140a8sm13939590ejy.218.2023.09.30.07.16.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 30 Sep 2023 07:15:57 -0700 (PDT)
-Message-ID: <d4beb98e-df9e-43a9-9a4b-85962214274d@linaro.org>
-Date:   Sat, 30 Sep 2023 16:15:50 +0200
+        Sat, 30 Sep 2023 07:16:41 -0700 (PDT)
+Message-ID: <58ceee36-538c-4427-adf5-2014abfb3fed@linaro.org>
+Date:   Sat, 30 Sep 2023 16:16:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/5] dt-bindings: clock: Add SM8550 CAMCC yaml
+Subject: Re: [PATCH v2 5/5] arm64: boot: dts: qcom: sc8280xp: Add in CAMCC for
+ sc8280xp
 Content-Language: en-US
 To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
         andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org,
@@ -65,7 +66,7 @@ To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20230930134114.1816590-1-bryan.odonoghue@linaro.org>
- <20230930134114.1816590-3-bryan.odonoghue@linaro.org>
+ <20230930134114.1816590-6-bryan.odonoghue@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -111,13 +112,12 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20230930134114.1816590-3-bryan.odonoghue@linaro.org>
+In-Reply-To: <20230930134114.1816590-6-bryan.odonoghue@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -125,14 +125,13 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 30/09/2023 15:41, Bryan O'Donoghue wrote:
-> The SM8550 should have its own yaml description file, not be listed as a
-> compatible string of the SM8450 CAMCC driver since SM8450 and SM8550
-> have separate CAMCC drivers.
+> Add in CAMCC for sc8280xp. The sc8280xp Camera Clock Controller looks
+> similar to most of the sdmX, smX and now scX controllers.
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-Linux driver architecture does not shape bindings. If devices are
-similar, it does not matter that you have two drivers. It was never a
-valid reason to split bindings.
-
+Subject prefix - drop boot:
+arm64: dts: qcom: .........
 
 Best regards,
 Krzysztof
