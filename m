@@ -2,77 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EBF87B4386
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Sep 2023 22:28:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BDC6C7B446A
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Oct 2023 00:19:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231996AbjI3U2b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Sep 2023 16:28:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57690 "EHLO
+        id S232641AbjI3WTg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Sep 2023 18:19:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232072AbjI3U2a (ORCPT
+        with ESMTP id S231259AbjI3WTe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Sep 2023 16:28:30 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C93E7DD;
-        Sat, 30 Sep 2023 13:28:28 -0700 (PDT)
-Received: from mercury (unknown [185.254.75.28])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits))
-        (No client certificate requested)
-        (Authenticated sender: sre)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 9AF316607285;
-        Sat, 30 Sep 2023 21:28:27 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1696105707;
-        bh=vlw+MU72LdeuMNv4Xr4xD9ANXCuO7W9In6kKp8wW2+8=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=lACjukiV3Y01SqBP4euzWvY+HG0tbEAkZxBjR2C6xQB+69F4wY0uutYgFHQTWVFjk
-         weW5ehZlEQPA00ZEdUzBXi+Tq8QU045Emjs3dyu8t2PE0e55344F/z++pnDN/f3O3n
-         mAIbwsGBpam506y8ZgFUhl5IXO57VYp4dV8nCGF+KQtZeEroqvBK7U37hAu2iyix0T
-         1HP+ksVaylcvpnEJqeVxdNo6jyLTYqKIpPBFbXrmvi4SBlOn7Qmuk3oBqs2F9Kv4n5
-         XA8vPmFDVEiCWIzlHWknNdFn80WYDeUJ8nmS+h+4P4JBwHYYprrTG9zQZJWuoKH/mX
-         tPF7NBBHcqrbg==
-Received: by mercury (Postfix, from userid 1000)
-        id A9BC310603F9; Sat, 30 Sep 2023 22:28:25 +0200 (CEST)
-From:   Sebastian Reichel <sebastian.reichel@collabora.com>
-To:     Sebastian Reichel <sre@kernel.org>, Andy Gross <agross@kernel.org>,
+        Sat, 30 Sep 2023 18:19:34 -0400
+X-Greylist: delayed 354 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 30 Sep 2023 15:19:31 PDT
+Received: from out-200.mta0.migadu.com (out-200.mta0.migadu.com [91.218.175.200])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8295CDD
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 15:19:31 -0700 (PDT)
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ansari.sh; s=key1;
+        t=1696112012;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=IQtLpN/lGvFKa62keccBQlCiMRFzl9uuLDsEFrnDd3s=;
+        b=R/rzKaAGKHI13R/ACYAWNSpDaCIxlVN3yCK/AWg7Y3mhDof1UybCwE/7sFWBx3TYKFjHqh
+        w05svhyspJx5LKV7dnrFtA4Ey+0WNKOFf6KPmyEiUekmHQwHCCoWwKt9O/Z1jrLx8L7zXz
+        H5AUzwk5ZNT+CL7H8hbGWu4CeqL93lI=
+From:   Rayyan Ansari <rayyan@ansari.sh>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        Rayyan Ansari <rayyan@ansari.sh>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Sebastian Reichel <sebastian.reichel@collabora.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kernel test robot <lkp@intel.com>
-In-Reply-To: <20230919124222.1155894-1-sebastian.reichel@collabora.com>
-References: <20230919124222.1155894-1-sebastian.reichel@collabora.com>
-Subject: Re: [PATCH] power: supply: qcom_battmgr: fix battery_id type
-Message-Id: <169610570565.215050.3005870455155927918.b4-ty@collabora.com>
-Date:   Sat, 30 Sep 2023 22:28:25 +0200
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
+Subject: [PATCH v3 0/6] Initial support for MSM8x26 Lumias
+Date:   Sat, 30 Sep 2023 23:07:55 +0100
+Message-ID: <20230930221323.101289-1-rayyan@ansari.sh>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.12.3
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hello,
 
-On Tue, 19 Sep 2023 14:42:22 +0200, Sebastian Reichel wrote:
-> qcom_battmgr_update_request.battery_id is written to using cpu_to_le32()
-> and should be of type __le32, just like all other 32bit integer requests
-> for qcom_battmgr.
-> 
-> 
+The following patches: 
+- Add device tree files for Nokia/Microsoft Lumia phones based around
+  the MSM8x26 family of Qualcomm chipsets, utilising a common tree 
+- Document this support
 
-Applied, thanks!
+v1: https://lore.kernel.org/linux-arm-msm/20230811213728.23726-1-rayyan@ansari.sh/
+v2: https://lore.kernel.org/linux-arm-msm/20230813152623.64989-1-rayyan@ansari.sh/
 
-[1/1] power: supply: qcom_battmgr: fix battery_id type
-      commit: 383eba9f9a7f4cd639d367ea5daa6df2be392c54
+Changes in v2:
+- Fix style issues and CHECK_DTBS warnings
+- Squash common dt commit with a device commit
+- Use both msm8926 and msm8226 compatibles for msm8926 devices
 
-Best regards,
+Changes in v3:
+- Fix commit tags
+- More style fixes
+- Delete by label instead of path
+
+Rayyan Ansari (6):
+  dt-bindings: arm: qcom: Document MSM8x26-based Lumia phones
+  ARM: dts: qcom: add common dt for MSM8x26 Lumias along with Nokia
+    Lumia 630
+  ARM: dts: qcom: add device tree for Microsoft Lumia 640
+  ARM: dts: qcom: add device tree for Microsoft Lumia 640 XL
+  ARM: dts: qcom: add device tree for Nokia Lumia 735
+  ARM: dts: qcom: add device tree for Nokia Lumia 830
+
+ .../devicetree/bindings/arm/qcom.yaml         |  10 +
+ arch/arm/boot/dts/qcom/Makefile               |   5 +
+ .../qcom/qcom-msm8226-microsoft-common.dtsi   | 327 ++++++++++++++++++
+ .../qcom/qcom-msm8226-microsoft-dempsey.dts   |  17 +
+ .../qcom/qcom-msm8226-microsoft-makepeace.dts |  17 +
+ .../qcom-msm8226-microsoft-moneypenny.dts     |  23 ++
+ .../qcom-msm8926-microsoft-superman-lte.dts   |  53 +++
+ .../dts/qcom/qcom-msm8926-microsoft-tesla.dts |  67 ++++
+ 8 files changed, 519 insertions(+)
+ create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8226-microsoft-common.dtsi
+ create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8226-microsoft-dempsey.dts
+ create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8226-microsoft-makepeace.dts
+ create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8226-microsoft-moneypenny.dts
+ create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8926-microsoft-superman-lte.dts
+ create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8926-microsoft-tesla.dts
+
 -- 
-Sebastian Reichel <sebastian.reichel@collabora.com>
+2.42.0
 
