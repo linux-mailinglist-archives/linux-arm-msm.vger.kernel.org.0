@@ -2,237 +2,460 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C9617B3E5F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Sep 2023 07:09:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 597BD7B3E6D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Sep 2023 07:25:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233965AbjI3FJt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Sep 2023 01:09:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60458 "EHLO
+        id S230112AbjI3FZv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Sep 2023 01:25:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233906AbjI3FJs (ORCPT
+        with ESMTP id S229929AbjI3FZu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Sep 2023 01:09:48 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.65])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A24951B2;
-        Fri, 29 Sep 2023 22:09:44 -0700 (PDT)
+        Sat, 30 Sep 2023 01:25:50 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7917B9;
+        Fri, 29 Sep 2023 22:25:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1696050584; x=1727586584;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=qswovL8KxKdf3oMfZOvKErO4KUB0d6/EYbBFUBi2r2Q=;
-  b=GMj/nOVca4nVT38iRXkVb3HoyKO2+pZ7Q+Y1X/uix5yrJVwSunZNclFu
-   EMlDBHCzenhEFQ1BPrR9Aq788vJZjJoaktJRxWiJFU2HgciwijCN1tepF
-   nGd82BxO5Q4bVza1gMdkgRfgQUCgeGyDLjfTePexMZZpe1Diohb1PkOxS
-   2zBYV0RdfBMflCLgqY6ASAKUZPQdDWmzQ2B5cI/sORzCREW2gglaRiZFK
-   hpc14fEK60Riiy/mteZY9T8AbyFeRKsl0TnLKfaY/iTRhTtGTOjGKb8Sd
-   cFzZA93ynjIFGVGtyxXZfN5oaHbcvaQadIcYUOIYgc+M8Q4cua3VR+syE
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10848"; a="386291874"
+  t=1696051545; x=1727587545;
+  h=date:from:to:cc:subject:message-id;
+  bh=ikTuE2ISJ5c7tnVrMfL47uksRUpDiXItJyB89nyxGAo=;
+  b=LACvjXOEH9i5Qk2u6AgjdLiaC62KA8JrxmjVlDX4rsSuSSZzGCKNah0S
+   bZ4uSZQ0ORwO26Q5L2MkRIT73KbeLziqSu5TkSW/+2lGpfrXnKs7xh9wJ
+   BG+6Lea9XBabkwMDRwffHQawMqz/0pfbbPIvTd/4wa4nWnRPvSvn0apBx
+   7uJdigwxgSxyBD0q4h6ri99j+ASocUGHPPfaLw1NPLurcvKLDzVQXPC4T
+   gw8CDJCI2OjoUFcDej3jyhk6YyWe/kTOcmJwrbk7FGc9JqjfGRL1ZB7TG
+   7Nlpqwwdry/Y1r/RtHDzbF6hK346tsWUtHQeT5Fb5IaSCTqzxG9D0RZa3
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10848"; a="379706805"
 X-IronPort-AV: E=Sophos;i="6.03,189,1694761200"; 
-   d="scan'208";a="386291874"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Sep 2023 22:09:43 -0700
+   d="scan'208";a="379706805"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Sep 2023 22:25:44 -0700
 X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10848"; a="726782987"
 X-IronPort-AV: E=Sophos;i="6.03,189,1694761200"; 
-   d="scan'208";a="1057982"
+   d="scan'208";a="726782987"
 Received: from lkp-server02.sh.intel.com (HELO c3b01524d57c) ([10.239.97.151])
-  by fmviesa001.fm.intel.com with ESMTP; 29 Sep 2023 22:09:40 -0700
+  by orsmga006.jf.intel.com with ESMTP; 29 Sep 2023 22:25:40 -0700
 Received: from kbuild by c3b01524d57c with local (Exim 4.96)
         (envelope-from <lkp@intel.com>)
-        id 1qmSES-0003jB-2R;
-        Sat, 30 Sep 2023 05:09:36 +0000
-Date:   Sat, 30 Sep 2023 13:09:34 +0800
+        id 1qmSTy-0003k4-0R;
+        Sat, 30 Sep 2023 05:25:38 +0000
+Date:   Sat, 30 Sep 2023 13:25:34 +0800
 From:   kernel test robot <lkp@intel.com>
-To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-        mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
-        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
-        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
-        hverkuil-cisco@xs4all.nl, nicolas.dufresne@collabora.com
-Cc:     oe-kbuild-all@lists.linux.dev, linux-media@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
-        kernel@collabora.com,
-        Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Subject: Re: [PATCH v8 50/53] media: core: Free range of buffers
-Message-ID: <202309301247.Y0hH4pjx-lkp@intel.com>
-References: <20230927153558.159278-51-benjamin.gaignard@collabora.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230927153558.159278-51-benjamin.gaignard@collabora.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+To:     Andrew Morton <akpm@linux-foundation.org>
+Cc:     Linux Memory Management List <linux-mm@kvack.org>,
+        alsa-devel@alsa-project.org, amd-gfx@lists.freedesktop.org,
+        bpf@vger.kernel.org, intel-wired-lan@lists.osuosl.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+        linux-hardening@vger.kernel.org, patches@opensource.cirrus.com
+Subject: [linux-next:master] BUILD REGRESSION
+ df964ce9ef9fea10cf131bf6bad8658fde7956f6
+Message-ID: <202309301308.d22sJdaF-lkp@intel.com>
+User-Agent: s-nail v14.9.24
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Benjamin,
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git master
+branch HEAD: df964ce9ef9fea10cf131bf6bad8658fde7956f6  Add linux-next specific files for 20230929
 
-kernel test robot noticed the following build errors:
+Error/Warning reports:
 
-[auto build test ERROR on media-tree/master]
-[also build test ERROR on sunxi/sunxi/for-next dtor-input/next linus/master v6.6-rc3]
-[cannot apply to dtor-input/for-linus next-20230929]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+https://lore.kernel.org/oe-kbuild-all/202309122047.cRi9yJrq-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202309130213.mSR7X2jZ-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202309192154.NJNpFIy5-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202309192314.VBsjiIm5-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202309212121.cul1pTRa-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202309212339.hxhBu2F1-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202309290750.bYBcf6Q2-lkp@intel.com
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Benjamin-Gaignard/media-videobuf2-Rework-offset-cookie-encoding-pattern/20230928-003247
-base:   git://linuxtv.org/media_tree.git master
-patch link:    https://lore.kernel.org/r/20230927153558.159278-51-benjamin.gaignard%40collabora.com
-patch subject: [PATCH v8 50/53] media: core: Free range of buffers
-config: powerpc64-randconfig-001-20230930 (https://download.01.org/0day-ci/archive/20230930/202309301247.Y0hH4pjx-lkp@intel.com/config)
-compiler: powerpc64-linux-gcc (GCC) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20230930/202309301247.Y0hH4pjx-lkp@intel.com/reproduce)
+Error/Warning: (recently discovered and may have been fixed)
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202309301247.Y0hH4pjx-lkp@intel.com/
+aarch64-linux-ld: ice_dpll.c:(.text+0x1124): undefined reference to `ice_cgu_get_pin_type'
+aarch64-linux-ld: ice_dpll.c:(.text+0x122c): undefined reference to `ice_cgu_get_pin_freq_supp'
+aarch64-linux-ld: ice_dpll.c:(.text+0xaa0): undefined reference to `ice_cgu_get_pin_name'
+aarch64-linux-ld: ice_dpll.c:(.text+0xab4): undefined reference to `ice_cgu_get_pin_type'
+aarch64-linux-ld: ice_lib.c:(.text+0x6064): undefined reference to `ice_is_cgu_present'
+aarch64-linux-ld: ice_lib.c:(.text+0x6070): undefined reference to `ice_is_clock_mux_present_e810t'
+arc-elf-ld: xfrm_algo.c:(.text+0x46c): undefined reference to `crypto_has_aead'
+arm-linux-gnueabi-ld: drivers/net/ethernet/intel/ice/ice_dpll.c:1647:(.text+0x34a4): undefined reference to `ice_cgu_get_pin_type'
+arm-linux-gnueabi-ld: drivers/net/ethernet/intel/ice/ice_dpll.c:1666:(.text+0x3704): undefined reference to `ice_cgu_get_pin_freq_supp'
+arm-linux-gnueabi-ld: drivers/net/ethernet/intel/ice/ice_lib.c:3998:(.text+0x166b0): undefined reference to `ice_is_cgu_present'
+arm-linux-gnueabi-ld: drivers/net/ethernet/intel/ice/ice_lib.c:4000:(.text+0x16734): undefined reference to `ice_is_clock_mux_present_e810t'
+drivers/cpufreq/sti-cpufreq.c:215:50: warning: '%d' directive output may be truncated writing between 1 and 10 bytes into a region of size 2 [-Wformat-truncation=]
+drivers/gpu/drm/amd/amdgpu/../display/dc/core/dc.c:3928: warning: Function parameter or member 'srf_updates' not described in 'could_mpcc_tree_change_for_active_pipes'
+drivers/net/ethernet/intel/idpf/idpf_singleq_txrx.c:194:29: warning: variable 'tx_buf' set but not used [-Wunused-but-set-variable]
+fs/bcachefs/bcachefs_format.h:215:25: warning: 'p' offset 3 in 'struct bkey' isn't aligned to 4 [-Wpacked-not-aligned]
+fs/bcachefs/bcachefs_format.h:217:25: warning: 'version' offset 27 in 'struct bkey' isn't aligned to 4 [-Wpacked-not-aligned]
+ice_dpll.c:(.text+0x1104): undefined reference to `ice_cgu_get_pin_name'
+ice_dpll.c:(.text+0x15b4): undefined reference to `ice_get_cgu_state'
+ice_dpll.c:(.text+0x1ea0): undefined reference to `ice_get_cgu_rclk_pin_info'
+ice_dpll.c:(.text+0x2754): undefined reference to `ice_get_cgu_rclk_pin_info'
+ice_dpll.c:(.text+0xa64): undefined reference to `ice_cgu_get_pin_freq_supp'
+ice_dpll.c:(.text+0xe84): undefined reference to `ice_get_cgu_state'
+ice_lib.c:(.text+0x604c): undefined reference to `ice_is_phy_rclk_present'
+include/linux/fortify-string.h:57:33: warning: writing 8 bytes into a region of size 0 [-Wstringop-overflow=]
+kernel/bpf/helpers.c:1906:19: warning: no previous declaration for 'bpf_percpu_obj_new_impl' [-Wmissing-declarations]
+kernel/bpf/helpers.c:1942:18: warning: no previous declaration for 'bpf_percpu_obj_drop_impl' [-Wmissing-declarations]
+kernel/bpf/helpers.c:2477:18: warning: no previous declaration for 'bpf_throw' [-Wmissing-declarations]
+ld.lld: error: undefined symbol: crypto_has_aead
+ld: drivers/net/ethernet/intel/ice/ice_dpll.c:1647: undefined reference to `ice_cgu_get_pin_type'
+riscv64-linux-ld: drivers/net/ethernet/intel/ice/ice_dpll.c:1062:(.text+0x1236): undefined reference to `ice_get_cgu_state'
+riscv64-linux-ld: drivers/net/ethernet/intel/ice/ice_dpll.c:1667:(.text+0xdea): undefined reference to `ice_cgu_get_pin_name'
+riscv64-linux-ld: drivers/net/ethernet/intel/ice/ice_dpll.c:1777:(.text+0x24aa): undefined reference to `ice_get_cgu_rclk_pin_info'
+sound/pci/hda/cirrus_scodec_test.c:151:60: error: initializer element is not a compile-time constant
+sound/soc/mediatek/mt2701/mt2701-afe-clock-ctrl.c:44:50: warning: '%d' directive output may be truncated writing between 1 and 11 bytes into a region of size 10 [-Wformat-truncation=]
+xfrm_algo.c:(.text+0x46c): undefined reference to `crypto_has_aead'
 
-All errors (new ones prefixed by >>):
+Unverified Error/Warning (likely false positive, please contact us if interested):
 
-   drivers/media/common/videobuf2/videobuf2-core.c:39:2: error: #error Expected PAGE_SHIFT to be 12
-      39 | #error Expected PAGE_SHIFT to be 12
-         |  ^~~~~
-   drivers/media/common/videobuf2/videobuf2-core.c: In function '__vb2_queue_free':
->> drivers/media/common/videobuf2/videobuf2-core.c:596:14: error: 'buffer' undeclared (first use in this function)
-     596 |         for (buffer = 0; buffer < q->max_num_buffers; buffer++) {
-         |              ^~~~~~
-   drivers/media/common/videobuf2/videobuf2-core.c:596:14: note: each undeclared identifier is reported only once for each function it appears in
+Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml:
+mm/shrinker.c:100:1-7: preceding lock on line 83
+sound/pci/hda/cs35l41_hda.c:1559 cs35l41_hda_probe() warn: passing zero to 'dev_err_probe'
+{standard input}:1247: Error: unknown pseudo-op: `.sho'
+{standard input}:1468: Error: unknown .loc sub-directive `is_'
 
+Error/Warning ids grouped by kconfigs:
 
-vim +/buffer +596 drivers/media/common/videobuf2/videobuf2-core.c
+gcc_recent_errors
+|-- alpha-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- arc-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- arc-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- arc-defconfig
+|   |-- arc-elf-ld:xfrm_algo.c:(.text):undefined-reference-to-crypto_has_aead
+|   `-- xfrm_algo.c:(.text):undefined-reference-to-crypto_has_aead
+|-- arm-allmodconfig
+|   |-- drivers-cpufreq-sti-cpufreq.c:warning:d-directive-output-may-be-truncated-writing-between-and-bytes-into-a-region-of-size
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   `-- sound-soc-mediatek-mt2701-mt2701-afe-clock-ctrl.c:warning:d-directive-output-may-be-truncated-writing-between-and-bytes-into-a-region-of-size
+|-- arm-allyesconfig
+|   |-- drivers-cpufreq-sti-cpufreq.c:warning:d-directive-output-may-be-truncated-writing-between-and-bytes-into-a-region-of-size
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   `-- sound-soc-mediatek-mt2701-mt2701-afe-clock-ctrl.c:warning:d-directive-output-may-be-truncated-writing-between-and-bytes-into-a-region-of-size
+|-- arm-randconfig-r012-20220815
+|   |-- arm-linux-gnueabi-ld:drivers-net-ethernet-intel-ice-ice_dpll.c:(.text):undefined-reference-to-ice_cgu_get_pin_freq_supp
+|   |-- arm-linux-gnueabi-ld:drivers-net-ethernet-intel-ice-ice_dpll.c:(.text):undefined-reference-to-ice_cgu_get_pin_type
+|   |-- arm-linux-gnueabi-ld:drivers-net-ethernet-intel-ice-ice_lib.c:(.text):undefined-reference-to-ice_is_cgu_present
+|   `-- arm-linux-gnueabi-ld:drivers-net-ethernet-intel-ice-ice_lib.c:(.text):undefined-reference-to-ice_is_clock_mux_present_e810t
+|-- arm64-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- include-linux-fortify-string.h:warning:writing-bytes-into-a-region-of-size
+|   `-- sound-soc-mediatek-mt2701-mt2701-afe-clock-ctrl.c:warning:d-directive-output-may-be-truncated-writing-between-and-bytes-into-a-region-of-size
+|-- arm64-randconfig-001-20230929
+|   |-- aarch64-linux-ld:ice_dpll.c:(.text):undefined-reference-to-ice_cgu_get_pin_name
+|   |-- aarch64-linux-ld:ice_dpll.c:(.text):undefined-reference-to-ice_cgu_get_pin_type
+|   |-- aarch64-linux-ld:ice_lib.c:(.text):undefined-reference-to-ice_is_cgu_present
+|   |-- aarch64-linux-ld:ice_lib.c:(.text):undefined-reference-to-ice_is_clock_mux_present_e810t
+|   |-- ice_dpll.c:(.text):undefined-reference-to-ice_cgu_get_pin_freq_supp
+|   |-- ice_dpll.c:(.text):undefined-reference-to-ice_get_cgu_rclk_pin_info
+|   |-- ice_dpll.c:(.text):undefined-reference-to-ice_get_cgu_state
+|   `-- ice_lib.c:(.text):undefined-reference-to-ice_is_phy_rclk_present
+|-- arm64-randconfig-002-20230927
+|   |-- aarch64-linux-ld:ice_dpll.c:(.text):undefined-reference-to-ice_cgu_get_pin_freq_supp
+|   |-- aarch64-linux-ld:ice_dpll.c:(.text):undefined-reference-to-ice_cgu_get_pin_type
+|   |-- ice_dpll.c:(.text):undefined-reference-to-ice_cgu_get_pin_name
+|   |-- ice_dpll.c:(.text):undefined-reference-to-ice_get_cgu_rclk_pin_info
+|   `-- ice_dpll.c:(.text):undefined-reference-to-ice_get_cgu_state
+|-- csky-allmodconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- csky-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- i386-allmodconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- i386-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- i386-buildonly-randconfig-005-20230929
+|   |-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_percpu_obj_drop_impl
+|   |-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_percpu_obj_new_impl
+|   `-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_throw
+|-- i386-randconfig-006-20230929
+|   |-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_percpu_obj_drop_impl
+|   |-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_percpu_obj_new_impl
+|   `-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_throw
+|-- i386-randconfig-a014-20211211
+|   `-- ld:drivers-net-ethernet-intel-ice-ice_dpll.c:undefined-reference-to-ice_cgu_get_pin_type
+|-- loongarch-allmodconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- loongarch-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- loongarch-defconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- loongarch-randconfig-001-20230929
+|   |-- Documentation-devicetree-bindings-mfd-qcom-pm8xxx.yaml:
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- loongarch-randconfig-002-20230929
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- m68k-allmodconfig
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- m68k-allyesconfig
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- microblaze-allmodconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- microblaze-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- mips-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- mips-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- openrisc-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- openrisc-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- parisc-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- parisc-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- powerpc-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   |-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- include-linux-fortify-string.h:warning:writing-bytes-into-a-region-of-size
+|-- powerpc-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   |-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- include-linux-fortify-string.h:warning:writing-bytes-into-a-region-of-size
+|-- powerpc-randconfig-001-20230929
+|   |-- drivers-net-ethernet-intel-idpf-idpf_singleq_txrx.c:warning:variable-tx_buf-set-but-not-used
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- powerpc-randconfig-003-20230929
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- riscv-allmodconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- riscv-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- riscv-buildonly-randconfig-r001-20221205
+|   |-- riscv64-linux-ld:drivers-net-ethernet-intel-ice-ice_dpll.c:(.text):undefined-reference-to-ice_cgu_get_pin_name
+|   |-- riscv64-linux-ld:drivers-net-ethernet-intel-ice-ice_dpll.c:(.text):undefined-reference-to-ice_get_cgu_rclk_pin_info
+|   `-- riscv64-linux-ld:drivers-net-ethernet-intel-ice-ice_dpll.c:(.text):undefined-reference-to-ice_get_cgu_state
+|-- s390-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   |-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- include-linux-fortify-string.h:warning:writing-bytes-into-a-region-of-size
+|-- s390-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   |-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- include-linux-fortify-string.h:warning:writing-bytes-into-a-region-of-size
+|-- sh-randconfig-r011-20230418
+|   `-- standard-input:Error:unknown-pseudo-op:sho
+|-- sh-randconfig-r032-20230410
+|   `-- standard-input:Error:unknown-.loc-sub-directive-is_
+|-- sparc-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- sparc-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- sparc-randconfig-001-20230929
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- sparc64-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- sparc64-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- sparc64-randconfig-002-20230929
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- x86_64-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   `-- include-linux-fortify-string.h:warning:writing-bytes-into-a-region-of-size
+|-- x86_64-buildonly-randconfig-005-20230929
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- x86_64-randconfig-015-20230929
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- x86_64-randconfig-071-20230929
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- x86_64-randconfig-076-20230929
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- x86_64-randconfig-103-20230927
+|   `-- mm-shrinker.c:preceding-lock-on-line
+|-- x86_64-randconfig-161-20230929
+|   `-- sound-pci-hda-cs35l41_hda.c-cs35l41_hda_probe()-warn:passing-zero-to-dev_err_probe
+`-- xtensa-randconfig-002-20230929
+    `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+clang_recent_errors
+|-- arm-ep93xx_defconfig
+|   `-- ld.lld:error:undefined-symbol:crypto_has_aead
+`-- hexagon-allmodconfig
+    `-- sound-pci-hda-cirrus_scodec_test.c:error:initializer-element-is-not-a-compile-time-constant
 
-e23ccc0ad92586 drivers/media/video/videobuf2-core.c            Pawel Osciak          2010-10-11  540  
-2a87af6ba1b9df drivers/media/v4l2-core/videobuf2-core.c        Mauro Carvalho Chehab 2017-11-27  541  /*
-de4be4166a32b9 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  542   * __vb2_queue_free() - free count buffers from start index of the queue - video memory and
-2d86401c2cbfce drivers/media/video/videobuf2-core.c            Guennadi Liakhovetski 2011-09-28  543   * related information, if no buffers are left return the queue to an
-2d86401c2cbfce drivers/media/video/videobuf2-core.c            Guennadi Liakhovetski 2011-09-28  544   * uninitialized state. Might be called even if the queue has already been freed.
-e23ccc0ad92586 drivers/media/video/videobuf2-core.c            Pawel Osciak          2010-10-11  545   */
-de4be4166a32b9 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  546  static void __vb2_queue_free(struct vb2_queue *q, unsigned int start, unsigned int count)
-e23ccc0ad92586 drivers/media/video/videobuf2-core.c            Pawel Osciak          2010-10-11  547  {
-de4be4166a32b9 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  548  	unsigned int i;
-e23ccc0ad92586 drivers/media/video/videobuf2-core.c            Pawel Osciak          2010-10-11  549  
-01cb370ff6c5ab drivers/media/common/videobuf2/videobuf2-core.c Hans Verkuil          2022-11-30  550  	lockdep_assert_held(&q->mmap_lock);
-63faabfd89f4db drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2013-12-13  551  
-e23ccc0ad92586 drivers/media/video/videobuf2-core.c            Pawel Osciak          2010-10-11  552  	/* Call driver-provided cleanup function for each buffer, if provided */
-de4be4166a32b9 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  553  	for (i = start; i < q->max_num_buffers && i < start + count; i++) {
-6e57b95def5189 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  554  		struct vb2_buffer *vb = vb2_get_buffer(q, i);
-256f3162c17595 drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  555  
-6e57b95def5189 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  556  		if (!vb)
-6e57b95def5189 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  557  			continue;
-de4be4166a32b9 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  558  		if (vb->planes[0].mem_priv)
-a1d36d8c705e10 drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-03-17  559  			call_void_vb_qop(vb, buf_cleanup, vb);
-e23ccc0ad92586 drivers/media/video/videobuf2-core.c            Pawel Osciak          2010-10-11  560  	}
-e23ccc0ad92586 drivers/media/video/videobuf2-core.c            Pawel Osciak          2010-10-11  561  
-e23ccc0ad92586 drivers/media/video/videobuf2-core.c            Pawel Osciak          2010-10-11  562  	/* Release video buffer memory */
-de4be4166a32b9 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  563  	__vb2_free_mem(q, start, count);
-e23ccc0ad92586 drivers/media/video/videobuf2-core.c            Pawel Osciak          2010-10-11  564  
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  565  #ifdef CONFIG_VIDEO_ADV_DEBUG
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  566  	/*
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  567  	 * Check that all the calls were balanced during the life-time of this
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  568  	 * queue. If not then dump the counters to the kernel log.
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  569  	 */
-6e57b95def5189 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  570  	if (vb2_get_num_buffers(q)) {
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  571  		bool unbalanced = q->cnt_start_streaming != q->cnt_stop_streaming ||
-a10b2153257403 drivers/media/common/videobuf2/videobuf2-core.c Hans Verkuil          2022-06-22  572  				  q->cnt_prepare_streaming != q->cnt_unprepare_streaming ||
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  573  				  q->cnt_wait_prepare != q->cnt_wait_finish;
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  574  
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  575  		if (unbalanced) {
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  576  			pr_info("unbalanced counters for queue %p:\n", q);
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  577  			if (q->cnt_start_streaming != q->cnt_stop_streaming)
-2e33dbb06da407 drivers/media/common/videobuf/videobuf2-core.c  Mauro Carvalho Chehab 2017-12-28  578  				pr_info("     setup: %u start_streaming: %u stop_streaming: %u\n",
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  579  					q->cnt_queue_setup, q->cnt_start_streaming,
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  580  					q->cnt_stop_streaming);
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  581  			if (q->cnt_prepare_streaming != q->cnt_unprepare_streaming)
-a10b2153257403 drivers/media/common/videobuf2/videobuf2-core.c Hans Verkuil          2022-06-22  582  				pr_info("     prepare_streaming: %u unprepare_streaming: %u\n",
-a10b2153257403 drivers/media/common/videobuf2/videobuf2-core.c Hans Verkuil          2022-06-22  583  					q->cnt_prepare_streaming, q->cnt_unprepare_streaming);
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  584  			if (q->cnt_wait_prepare != q->cnt_wait_finish)
-2e33dbb06da407 drivers/media/common/videobuf/videobuf2-core.c  Mauro Carvalho Chehab 2017-12-28  585  				pr_info("     wait_prepare: %u wait_finish: %u\n",
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  586  					q->cnt_wait_prepare, q->cnt_wait_finish);
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  587  		}
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  588  		q->cnt_queue_setup = 0;
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  589  		q->cnt_wait_prepare = 0;
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  590  		q->cnt_wait_finish = 0;
-a10b2153257403 drivers/media/common/videobuf2/videobuf2-core.c Hans Verkuil          2022-06-22  591  		q->cnt_prepare_streaming = 0;
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  592  		q->cnt_start_streaming = 0;
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  593  		q->cnt_stop_streaming = 0;
-a10b2153257403 drivers/media/common/videobuf2/videobuf2-core.c Hans Verkuil          2022-06-22  594  		q->cnt_unprepare_streaming = 0;
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  595  	}
-6e57b95def5189 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27 @596  	for (buffer = 0; buffer < q->max_num_buffers; buffer++) {
-145085ced318ad drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  597  		struct vb2_buffer *vb = vb2_get_buffer(q, buffer);
-145085ced318ad drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  598  		bool unbalanced;
-145085ced318ad drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  599  
-145085ced318ad drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  600  		if (!vb)
-145085ced318ad drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  601  			continue;
-145085ced318ad drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  602  
-145085ced318ad drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  603  		unbalanced = vb->cnt_mem_alloc != vb->cnt_mem_put ||
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  604  			     vb->cnt_mem_prepare != vb->cnt_mem_finish ||
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  605  			     vb->cnt_mem_get_userptr != vb->cnt_mem_put_userptr ||
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  606  			     vb->cnt_mem_attach_dmabuf != vb->cnt_mem_detach_dmabuf ||
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  607  			     vb->cnt_mem_map_dmabuf != vb->cnt_mem_unmap_dmabuf ||
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  608  			     vb->cnt_buf_queue != vb->cnt_buf_done ||
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  609  			     vb->cnt_buf_prepare != vb->cnt_buf_finish ||
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  610  			     vb->cnt_buf_init != vb->cnt_buf_cleanup;
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  611  
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  612  		if (unbalanced) {
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  613  			pr_info("unbalanced counters for queue %p, buffer %d:\n",
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  614  				q, buffer);
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  615  			if (vb->cnt_buf_init != vb->cnt_buf_cleanup)
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  616  				pr_info("     buf_init: %u buf_cleanup: %u\n",
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  617  					vb->cnt_buf_init, vb->cnt_buf_cleanup);
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  618  			if (vb->cnt_buf_prepare != vb->cnt_buf_finish)
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  619  				pr_info("     buf_prepare: %u buf_finish: %u\n",
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  620  					vb->cnt_buf_prepare, vb->cnt_buf_finish);
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  621  			if (vb->cnt_buf_queue != vb->cnt_buf_done)
-28d77c21cbeb2c drivers/media/common/videobuf2/videobuf2-core.c Hans Verkuil          2019-01-16  622  				pr_info("     buf_out_validate: %u buf_queue: %u buf_done: %u buf_request_complete: %u\n",
-28d77c21cbeb2c drivers/media/common/videobuf2/videobuf2-core.c Hans Verkuil          2019-01-16  623  					vb->cnt_buf_out_validate, vb->cnt_buf_queue,
-28d77c21cbeb2c drivers/media/common/videobuf2/videobuf2-core.c Hans Verkuil          2019-01-16  624  					vb->cnt_buf_done, vb->cnt_buf_request_complete);
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  625  			if (vb->cnt_mem_alloc != vb->cnt_mem_put)
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  626  				pr_info("     alloc: %u put: %u\n",
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  627  					vb->cnt_mem_alloc, vb->cnt_mem_put);
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  628  			if (vb->cnt_mem_prepare != vb->cnt_mem_finish)
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  629  				pr_info("     prepare: %u finish: %u\n",
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  630  					vb->cnt_mem_prepare, vb->cnt_mem_finish);
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  631  			if (vb->cnt_mem_get_userptr != vb->cnt_mem_put_userptr)
-2e33dbb06da407 drivers/media/common/videobuf/videobuf2-core.c  Mauro Carvalho Chehab 2017-12-28  632  				pr_info("     get_userptr: %u put_userptr: %u\n",
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  633  					vb->cnt_mem_get_userptr, vb->cnt_mem_put_userptr);
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  634  			if (vb->cnt_mem_attach_dmabuf != vb->cnt_mem_detach_dmabuf)
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  635  				pr_info("     attach_dmabuf: %u detach_dmabuf: %u\n",
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  636  					vb->cnt_mem_attach_dmabuf, vb->cnt_mem_detach_dmabuf);
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  637  			if (vb->cnt_mem_map_dmabuf != vb->cnt_mem_unmap_dmabuf)
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  638  				pr_info("     map_dmabuf: %u unmap_dmabuf: %u\n",
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  639  					vb->cnt_mem_map_dmabuf, vb->cnt_mem_unmap_dmabuf);
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  640  			pr_info("     get_dmabuf: %u num_users: %u\n",
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  641  				vb->cnt_mem_get_dmabuf,
-14700b816b3d49 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  642  				vb->cnt_mem_num_users);
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  643  		}
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  644  	}
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  645  #endif
-b5b4541eef8eac drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-01-29  646  
-3e947c36af524b drivers/media/common/videobuf2/videobuf2-core.c Hans Verkuil          2022-08-10  647  	/* Free vb2 buffers */
-de4be4166a32b9 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  648  	for (i = start; i < q->max_num_buffers && i < start + count; i++) {
-de4be4166a32b9 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  649  		struct vb2_buffer *vb = vb2_get_buffer(q, i);
-145085ced318ad drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  650  
-145085ced318ad drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  651  		if (!vb)
-145085ced318ad drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  652  			continue;
-145085ced318ad drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  653  
-145085ced318ad drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  654  		vb2_queue_remove_buffer(vb);
-145085ced318ad drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  655  		kfree(vb);
-e23ccc0ad92586 drivers/media/video/videobuf2-core.c            Pawel Osciak          2010-10-11  656  	}
-e23ccc0ad92586 drivers/media/video/videobuf2-core.c            Pawel Osciak          2010-10-11  657  
-6e57b95def5189 drivers/media/common/videobuf2/videobuf2-core.c Benjamin Gaignard     2023-09-27  658  	if (!vb2_get_num_buffers(q)) {
-ce4686702f8f56 drivers/media/common/videobuf/videobuf2-core.c  Satendra Singh Thakur 2017-12-28  659  		q->memory = VB2_MEMORY_UNKNOWN;
-bd50d999d4d4f3 drivers/media/video/videobuf2-core.c            Marek Szyprowski      2011-10-25  660  		INIT_LIST_HEAD(&q->queued_list);
-a7afcaccfab2fb drivers/media/v4l2-core/videobuf2-core.c        Hans Verkuil          2014-02-24  661  	}
-e23ccc0ad92586 drivers/media/video/videobuf2-core.c            Pawel Osciak          2010-10-11  662  }
-e23ccc0ad92586 drivers/media/video/videobuf2-core.c            Pawel Osciak          2010-10-11  663  
+elapsed time: 1457m
+
+configs tested: 134
+configs skipped: 2
+
+tested configs:
+alpha                             allnoconfig   gcc  
+alpha                            allyesconfig   gcc  
+alpha                               defconfig   gcc  
+arc                              allmodconfig   gcc  
+arc                               allnoconfig   gcc  
+arc                              allyesconfig   gcc  
+arc                                 defconfig   gcc  
+arc                   randconfig-001-20230929   gcc  
+arm                              allmodconfig   gcc  
+arm                               allnoconfig   gcc  
+arm                              allyesconfig   gcc  
+arm                                 defconfig   gcc  
+arm                   randconfig-001-20230929   gcc  
+arm64                             allnoconfig   gcc  
+arm64                            allyesconfig   gcc  
+arm64                               defconfig   gcc  
+csky                             allmodconfig   gcc  
+csky                              allnoconfig   gcc  
+csky                             allyesconfig   gcc  
+csky                                defconfig   gcc  
+i386                             allmodconfig   gcc  
+i386                              allnoconfig   gcc  
+i386                             allyesconfig   gcc  
+i386         buildonly-randconfig-001-20230929   gcc  
+i386         buildonly-randconfig-002-20230929   gcc  
+i386         buildonly-randconfig-003-20230929   gcc  
+i386         buildonly-randconfig-004-20230929   gcc  
+i386         buildonly-randconfig-005-20230929   gcc  
+i386         buildonly-randconfig-006-20230929   gcc  
+i386                              debian-10.3   gcc  
+i386                                defconfig   gcc  
+i386                  randconfig-001-20230929   gcc  
+i386                  randconfig-002-20230929   gcc  
+i386                  randconfig-003-20230929   gcc  
+i386                  randconfig-004-20230929   gcc  
+i386                  randconfig-005-20230929   gcc  
+i386                  randconfig-006-20230929   gcc  
+i386                  randconfig-011-20230929   gcc  
+i386                  randconfig-012-20230929   gcc  
+i386                  randconfig-013-20230929   gcc  
+i386                  randconfig-014-20230929   gcc  
+i386                  randconfig-015-20230929   gcc  
+i386                  randconfig-016-20230929   gcc  
+loongarch                        allmodconfig   gcc  
+loongarch                         allnoconfig   gcc  
+loongarch                        allyesconfig   gcc  
+loongarch                           defconfig   gcc  
+loongarch             randconfig-001-20230929   gcc  
+m68k                             allmodconfig   gcc  
+m68k                              allnoconfig   gcc  
+m68k                             allyesconfig   gcc  
+m68k                                defconfig   gcc  
+microblaze                       allmodconfig   gcc  
+microblaze                        allnoconfig   gcc  
+microblaze                       allyesconfig   gcc  
+microblaze                          defconfig   gcc  
+mips                             allmodconfig   gcc  
+mips                              allnoconfig   gcc  
+mips                             allyesconfig   gcc  
+nios2                            allmodconfig   gcc  
+nios2                             allnoconfig   gcc  
+nios2                            allyesconfig   gcc  
+nios2                               defconfig   gcc  
+openrisc                         allmodconfig   gcc  
+openrisc                          allnoconfig   gcc  
+openrisc                         allyesconfig   gcc  
+openrisc                            defconfig   gcc  
+parisc                           allmodconfig   gcc  
+parisc                            allnoconfig   gcc  
+parisc                           allyesconfig   gcc  
+parisc                              defconfig   gcc  
+parisc64                            defconfig   gcc  
+powerpc                          allmodconfig   gcc  
+powerpc                           allnoconfig   gcc  
+powerpc                          allyesconfig   gcc  
+riscv                            allmodconfig   gcc  
+riscv                             allnoconfig   gcc  
+riscv                            allyesconfig   gcc  
+riscv                               defconfig   gcc  
+riscv                 randconfig-001-20230929   gcc  
+riscv                          rv32_defconfig   gcc  
+s390                             allmodconfig   gcc  
+s390                              allnoconfig   gcc  
+s390                             allyesconfig   gcc  
+s390                                defconfig   gcc  
+s390                  randconfig-001-20230929   gcc  
+sh                               allmodconfig   gcc  
+sh                                allnoconfig   gcc  
+sh                               allyesconfig   gcc  
+sh                                  defconfig   gcc  
+sparc                            allmodconfig   gcc  
+sparc                             allnoconfig   gcc  
+sparc                            allyesconfig   gcc  
+sparc                               defconfig   gcc  
+sparc                 randconfig-001-20230929   gcc  
+sparc64                          allmodconfig   gcc  
+sparc64                          allyesconfig   gcc  
+sparc64                             defconfig   gcc  
+um                               allmodconfig   clang
+um                                allnoconfig   clang
+um                               allyesconfig   clang
+um                                  defconfig   gcc  
+um                             i386_defconfig   gcc  
+um                           x86_64_defconfig   gcc  
+x86_64                            allnoconfig   gcc  
+x86_64                           allyesconfig   gcc  
+x86_64       buildonly-randconfig-001-20230929   gcc  
+x86_64       buildonly-randconfig-002-20230929   gcc  
+x86_64       buildonly-randconfig-003-20230929   gcc  
+x86_64       buildonly-randconfig-004-20230929   gcc  
+x86_64       buildonly-randconfig-005-20230929   gcc  
+x86_64       buildonly-randconfig-006-20230929   gcc  
+x86_64                              defconfig   gcc  
+x86_64                randconfig-001-20230929   gcc  
+x86_64                randconfig-002-20230929   gcc  
+x86_64                randconfig-003-20230929   gcc  
+x86_64                randconfig-004-20230929   gcc  
+x86_64                randconfig-005-20230929   gcc  
+x86_64                randconfig-006-20230929   gcc  
+x86_64                randconfig-011-20230929   gcc  
+x86_64                randconfig-012-20230929   gcc  
+x86_64                randconfig-013-20230929   gcc  
+x86_64                randconfig-014-20230929   gcc  
+x86_64                randconfig-015-20230929   gcc  
+x86_64                randconfig-016-20230929   gcc  
+x86_64                randconfig-071-20230929   gcc  
+x86_64                randconfig-072-20230929   gcc  
+x86_64                randconfig-073-20230929   gcc  
+x86_64                randconfig-074-20230929   gcc  
+x86_64                randconfig-075-20230929   gcc  
+x86_64                randconfig-076-20230929   gcc  
+x86_64                          rhel-8.3-rust   clang
+x86_64                               rhel-8.3   gcc  
+xtensa                            allnoconfig   gcc  
 
 -- 
 0-DAY CI Kernel Test Service
