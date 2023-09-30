@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CBA187B4115
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Sep 2023 16:43:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 13C537B411C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Sep 2023 16:45:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234312AbjI3Onf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Sep 2023 10:43:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40400 "EHLO
+        id S234321AbjI3Opc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Sep 2023 10:45:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234308AbjI3One (ORCPT
+        with ESMTP id S234285AbjI3Opb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Sep 2023 10:43:34 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58CF21A5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 07:43:31 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-9a9f139cd94so1960230466b.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 07:43:31 -0700 (PDT)
+        Sat, 30 Sep 2023 10:45:31 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81420F9
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 07:45:28 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-533c8f8f91dso16506409a12.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 07:45:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696085010; x=1696689810; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696085127; x=1696689927; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Xh7c7EGiZ0BQcZv66qKV13L3PEzyzLwVIC7DuUgOOU8=;
-        b=p4r90zxPE4pqoUZXLJ5shnO/uwzZ4G0TmUp/OlgngEWZ7FEfJ+Q1CrTrR6o94AkirM
-         MbPhnol3BqiM5GSTT9yi+zDfUCqLHgIp1PpINe2DOLxOjbMEw7lJu+4m+oi38n5QkUJo
-         igVCCKOROKxzEazvYCNTGP+UxaIqOTq0M4DP4rYfJrBXVGNMRJLoSjbJ/tEaoG2J59mk
-         I88BTEaWqkKANlGcaK4laGSnE5TYi3a0u23qWoBuhb+a1+tLAaZKcKba65eoV5dorY3m
-         DKhl23dvOgS4tySiWSvR+/8ynf+I72q/SgV2YhvEt1x8jZyPCti52y7Bu7nVdANhmU/4
-         JhlQ==
+        bh=U0aXx8azADvAAzDnt7rzoNegb07dJt2q3hiW+HGl1iM=;
+        b=c7tx/iakebWhxKTEqWDh55AGTRKEzjqDCklZ82SYzQN+fnfr9QKrlpoHt+Te40gk5x
+         spYnBDpPc9yJbUTxcShbjXJNTG/JxqK7+ugsdgnoUOhQTaz7tGx2gWsNWsAE2Dco+FjD
+         DpZFwrB9hKSCf7vPnLbtAW15c6FEbQ3BqIRBERaUjjC+R6n3Ohmjz8KaDrjtGIVVmND5
+         5COhAHVynoYjVBnGLYIz2O0zST1LXrqkm8I1JWqxXBktjuYf8bYUhyP5cqVFGM2lxy4h
+         c8ZFKr5VX+2l5OGGx0wuVuKkRBQ6NPK/bxgP3+KseNk7JzFOoebUAow2oDd8o6N2M3E+
+         0FGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696085010; x=1696689810;
+        d=1e100.net; s=20230601; t=1696085127; x=1696689927;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Xh7c7EGiZ0BQcZv66qKV13L3PEzyzLwVIC7DuUgOOU8=;
-        b=w5HXHal8968/OFL9szBr+3Cq8lOFFOfDz5ORci525Gm3PrOneH4RluXyj2gLI54QVC
-         sDbPPJV69/9NY0M5UK2gi6ZKOlS6iBLPxNA5LzhaXT5/sncu7S63fjLe0qCdLJ/XemQr
-         GoeAcNVuYSKl0BvE9jSoJ3Vvm2urJg/sZpCnHKmGKVQF8RYgDRbfAfJgHOmK6i1oJs9C
-         GMKhrZOCswFUyxlqH0NDIr0SIrtAaCT3FW2kp7zQJ3jl/V8SBpakO50opWvqaXICYl1F
-         30qCouAe/hbv6SabYSnS7h/a177sqEiNz5yggErnqg6eW2iTIZtmbCHKBGl7KS5O+xHH
-         PwMg==
-X-Gm-Message-State: AOJu0Yw/C9RQHKSCxdYptuCUBfwIEWXB9mXpijzZ6/Fx9BocgF+CrNh7
-        0VwWSA5Y+P7TbjSov/Fr2T6WAA==
-X-Google-Smtp-Source: AGHT+IHtAyiIQSUQcuQRPXRDh5ZYjr/+7WFdiZ3Tbq7Fme0VUi91Efw1NaWeuWb3LPT5M07Kgtxw+A==
-X-Received: by 2002:a17:906:73dc:b0:9ae:696c:2c47 with SMTP id n28-20020a17090673dc00b009ae696c2c47mr6881087ejl.28.1696085009758;
-        Sat, 30 Sep 2023 07:43:29 -0700 (PDT)
+        bh=U0aXx8azADvAAzDnt7rzoNegb07dJt2q3hiW+HGl1iM=;
+        b=geJLHEeEWRXJqaiY6Vgb4c29LYOl+jDOBwEbFoKs/LGkgiNnrbjXHeNV5AuL/CP5k3
+         TdMTj6OxgJYKV7wYwt0DHtsOvMrI/sSNF9hfgvVAHTUknWEMqGih8czkoAEBvFBjOyq7
+         kCD4rL+h5WfAxFToh+7Alant4wXPETIVpsyJCVO1DrLuORe3502U8w2fJRCkBeTMBltL
+         5F2PlNSbF1FRwM9SkTGAxtDOTFCl0xxzDOtuu7/VC0o8DI2x9wNBaiE+2cIqWBT4mF45
+         EqGF3xT7Ocp3w7PmYcZu9URljtKg78axZZion9jP8qfV4/6qxzunMe2DHyz15NUDhkh7
+         E+KA==
+X-Gm-Message-State: AOJu0YwS6An1GOp7DHjg9xsLYG81o0Crn4kccStN4jcy4EuN+ZuBWaDU
+        cZvQNZ7829mRR0wD4NIegM2Zqg==
+X-Google-Smtp-Source: AGHT+IGZkR7p9Tij35GSY32P5zCxYz3IJ1bYDDVySnI/vt42uRlLTRv6GtIOwYwiU6qbqlA2wz+qgQ==
+X-Received: by 2002:aa7:d846:0:b0:533:5e56:bef2 with SMTP id f6-20020aa7d846000000b005335e56bef2mr6983344eds.10.1696085126864;
+        Sat, 30 Sep 2023 07:45:26 -0700 (PDT)
 Received: from [192.168.8.76] ([88.154.47.206])
-        by smtp.gmail.com with ESMTPSA id fi3-20020a170906da0300b009a1fef32ce6sm14208942ejb.177.2023.09.30.07.43.24
+        by smtp.gmail.com with ESMTPSA id a2-20020aa7cf02000000b005232ea6a330sm12832304edy.2.2023.09.30.07.45.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 30 Sep 2023 07:43:29 -0700 (PDT)
-Message-ID: <e46ec21c-3500-468e-9362-2e986c3f0c77@linaro.org>
-Date:   Sat, 30 Sep 2023 16:43:23 +0200
+        Sat, 30 Sep 2023 07:45:26 -0700 (PDT)
+Message-ID: <28260226-f1ec-4404-a684-4ca89106ad05@linaro.org>
+Date:   Sat, 30 Sep 2023 16:45:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 1/4] scsi: ufs: qcom: dt-bindings: Add SC7280
- compatible string
+Subject: Re: [PATCH V4 4/4] dt-bindings: ufs: qcom: Align clk binding property
+ for Qualcomm UFS
 Content-Language: en-US
 To:     Nitin Rawat <quic_nitirawa@quicinc.com>, agross@kernel.org,
         andersson@kernel.org, konrad.dybcio@linaro.org, mani@kernel.org,
@@ -65,7 +65,7 @@ To:     Nitin Rawat <quic_nitirawa@quicinc.com>, agross@kernel.org,
 Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
 References: <20230929131936.29421-1-quic_nitirawa@quicinc.com>
- <20230929131936.29421-2-quic_nitirawa@quicinc.com>
+ <20230929131936.29421-5-quic_nitirawa@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -111,7 +111,7 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20230929131936.29421-2-quic_nitirawa@quicinc.com>
+In-Reply-To: <20230929131936.29421-5-quic_nitirawa@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -125,26 +125,20 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 29/09/2023 15:19, Nitin Rawat wrote:
-> Document the compatible string for the UFS found on SC7280.
-> 
-> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-> Acked-by: Manivannan Sadhasivam <mani@kernel.org>
+> Align the binding property for clock such that "clocks" property
+> comes first followed by "clock-names" property.
 
 This is a friendly reminder during the review process.
 
-It looks like you received a tag and forgot to add it.
+It seems my previous comments were not fully addressed. Maybe my
+feedback got lost between the quotes, maybe you just forgot to apply it.
+Please go back to the previous discussion and either implement all
+requested changes or keep discussing them.
 
-If you do not know the process, here is a short explanation:
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions, under or above your Signed-off-by tag. Tag is "received", when
-provided in a message replied to you on the mailing list. Tools like b4
-can help here. However, there's no need to repost patches *only* to add
-the tags. The upstream maintainer will do that for tags received on the
-version they apply.
+Thank you.
 
-https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
-
-If a tag was not added on purpose, please state why and what changed.
+Since you also ignored tags or added them wrong, let's be clear here:
+NAK till you solve all the issues.
 
 Best regards,
 Krzysztof
