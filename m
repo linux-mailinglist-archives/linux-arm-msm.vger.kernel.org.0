@@ -2,53 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B80427B446D
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Oct 2023 00:19:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6849B7B4485
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Oct 2023 01:01:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233997AbjI3WTh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Sep 2023 18:19:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35910 "EHLO
+        id S234030AbjI3Wxh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Sep 2023 18:53:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234005AbjI3WTf (ORCPT
+        with ESMTP id S233924AbjI3Wxg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Sep 2023 18:19:35 -0400
-Received: from out-204.mta0.migadu.com (out-204.mta0.migadu.com [IPv6:2001:41d0:1004:224b::cc])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AA0710D
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 15:19:32 -0700 (PDT)
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ansari.sh; s=key1;
-        t=1696112058;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=K8PpjHqxnCO1TKXu1Y9W7JM/e8rCQ40nYFn9Vma7VkA=;
-        b=Eo1bP8butstNCjYbF5824tVmBdlxK1L+zWcxpuGOH2akC+y1XzzMDmIjElV+S8Lf4RUEww
-        9FMqdLjOdTDUHdbKrQgQbKk4CJ+ELrBRzfexuEWGgIB2kbTJ99HBK34h6vGV6cAvz5sGlw
-        5UMnXSN6/LSGiMC9U0Q09REDJe6rI7k=
-From:   Rayyan Ansari <rayyan@ansari.sh>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        Rayyan Ansari <rayyan@ansari.sh>,
-        Dominik Kobinski <dominikkobinski314@gmail.com>,
-        Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>,
-        Jack Matthews <jm5112356@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
-Subject: [PATCH v3 6/6] ARM: dts: qcom: add device tree for Nokia Lumia 830
-Date:   Sat, 30 Sep 2023 23:08:01 +0100
-Message-ID: <20230930221323.101289-7-rayyan@ansari.sh>
-In-Reply-To: <20230930221323.101289-1-rayyan@ansari.sh>
-References: <20230930221323.101289-1-rayyan@ansari.sh>
+        Sat, 30 Sep 2023 18:53:36 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22E9AE1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 15:53:33 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-32320381a07so10955290f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 15:53:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1696114411; x=1696719211; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mlBxctbB9FTcE/uWPk2Y2YEJ+iBtqk0tDnwZVGzZTPg=;
+        b=CQlWxRzhpYeC5cfeXXFAVRNh1F/zkPTKC+ALBbflUCMAuXG/2x7l5U0qVBSois5o3/
+         UJyCjsnxUJHUBvtbjObtIy9Lm/yFpyCT/eHwvdcQOaWzcUvDH47ExZ7KNzof7j3binOs
+         fTTk4eVcmMHhHcrYkQ+QKqOIVc1na/6iYYpX8/MyoYNowxsRZYdY2s9sIA6k2TSpGL6n
+         sZwtgNY/g18hoCCaSRpKchVVPlcIhckJqRCx2tOKw4zAJY8X6LFBTN2vmfWa8O+udA/T
+         dp6R170AWO2oLYNXbFspOUgSPJYjPaV1VeqN+yO79hYDY0Va2eBUqUQ8BqsDV7P+UMsM
+         IgLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696114411; x=1696719211;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mlBxctbB9FTcE/uWPk2Y2YEJ+iBtqk0tDnwZVGzZTPg=;
+        b=uF0cV4gbu99cF81jr6Hrn6jAoXcpn9Z8SJRkU6bjnNsUC9sEa2mV02bo6IUeF5uXJc
+         2DppyoOX/N7aoj6lGzdGq7QdMzFkkPjt4S1NTXMDwDjWaLziAPecnAB6OTMmmV0Z0yJd
+         o434v/f57NsSKU7ZxB4hRyJ1RoBvqimQUdepU1kNJfLYzAtPTzlTLMQXBTXfb3daBYTN
+         u84Ui8JwSVh8FJ4a3pCZB5UkyFFFIDxkBQfad0pLL0zKDUAukaKdkO2CoemlDMzM0cRl
+         PDVjDNVbt3z9MnI24FJgVqezIHnGj8jFUphiJ1ZkZDb6E8+n4OrzU4Fa9iBiL87tsSDF
+         2kbg==
+X-Gm-Message-State: AOJu0YyB+ECb/z3DnWXQqFBe1+Z9ys/P0/bDvecXBXiwFCyXl65SX833
+        wFF+uXz/jisrVRQYrJkT+KAFQVOOb+Pywfl+VPG4aw==
+X-Google-Smtp-Source: AGHT+IE5hOVQVvMUhlW0QZGl9DnHrDheRfvw3wBLkVUUq9oMZKmKX3MibXuhOcdGuZqMIJkAkPKzbg==
+X-Received: by 2002:adf:fd47:0:b0:31f:fa38:425f with SMTP id h7-20020adffd47000000b0031ffa38425fmr8260573wrs.9.1696114411331;
+        Sat, 30 Sep 2023 15:53:31 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id x17-20020a5d6511000000b0031fd849e797sm24550153wru.105.2023.09.30.15.53.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 30 Sep 2023 15:53:30 -0700 (PDT)
+Message-ID: <ec8a0350-aac8-443e-854a-652179a5d6bb@linaro.org>
+Date:   Sat, 30 Sep 2023 23:53:29 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/5] clk: qcom: camcc-sc8280xp: Add sc8280xp CAMCC
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        andersson@kernel.org, agross@kernel.org, mturquette@baylibre.com,
+        sboyd@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        jonathan@marek.ca, quic_tdas@quicinc.com,
+        vladimir.zapolskiy@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230930134114.1816590-1-bryan.odonoghue@linaro.org>
+ <20230930134114.1816590-5-bryan.odonoghue@linaro.org>
+ <ba0399d3-c3a5-0458-3668-e734fafe2f1a@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <ba0399d3-c3a5-0458-3668-e734fafe2f1a@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -57,107 +82,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add an initial device tree for the Nokia Lumia 830, codenamed
-"tesla".
+On 30/09/2023 17:39, Konrad Dybcio wrote:
+> 
+>> +static struct clk_branch camcc_gdsc_clk = {
+>> +    .halt_reg = 0xc1e4,
+>> +    .halt_check = BRANCH_HALT,
+>> +    .clkr = {
+>> +        .enable_reg = 0xc1e4,
+>> +        .enable_mask = BIT(0),
+>> +        .hw.init = &(struct clk_init_data){
+>> +            .name = "camcc_gdsc_clk",
+>> +            .parent_hws = (const struct clk_hw*[]){
+>> +                &camcc_xo_clk_src.clkr.hw,
+>> +            },
+>> +            .num_parents = 1,
+>> +            .flags = CLK_IS_CRITICAL | CLK_SET_RATE_PARENT,
+> "meh"
+> 
+> Is this clock only necessary for the GDSC to turn on?
 
-Co-developed-by: Dominik Kobinski <dominikkobinski314@gmail.com>
-Signed-off-by: Dominik Kobinski <dominikkobinski314@gmail.com>
-Co-developed-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-Signed-off-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-Co-developed-by: Jack Matthews <jm5112356@gmail.com>
-Signed-off-by: Jack Matthews <jm5112356@gmail.com>
-Signed-off-by: Rayyan Ansari <rayyan@ansari.sh>
+Most of this code is autogenerated in downstream as I understand it a 
+script is run against some definition the RTL one would hope.
+
+I think that is probably how the gdsc clocks for the camcc are marked 
+like this upstream already too.
+
+grep CRITICAL drivers/clk/qcom/*camcc*
+drivers/clk/qcom/camcc-sc7280.c:			.flags = CLK_IS_CRITICAL | 
+CLK_SET_RATE_PARENT,
+drivers/clk/qcom/camcc-sm8250.c:			.flags = CLK_IS_CRITICAL | 
+CLK_SET_RATE_PARENT,
+drivers/clk/qcom/camcc-sm8450.c:			.flags = CLK_IS_CRITICAL | 
+CLK_SET_RATE_PARENT,
+
+I can tell you what clocks this clock but I can't tell you where that 
+clock routes too, so the best/only source of information I have is the 
+flag that comes from the autogenerated downstream code.
+
+I think the safe thing to do is to leave the flag as is TBH.
+
 ---
- arch/arm/boot/dts/qcom/Makefile               |  1 +
- .../dts/qcom/qcom-msm8926-microsoft-tesla.dts | 67 +++++++++++++++++++
- 2 files changed, 68 insertions(+)
- create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8926-microsoft-tesla.dts
-
-diff --git a/arch/arm/boot/dts/qcom/Makefile b/arch/arm/boot/dts/qcom/Makefile
-index 7982620ec9f9..a3d293e40820 100644
---- a/arch/arm/boot/dts/qcom/Makefile
-+++ b/arch/arm/boot/dts/qcom/Makefile
-@@ -33,6 +33,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
- 	qcom-msm8916-samsung-grandmax.dtb \
- 	qcom-msm8916-samsung-serranove.dtb \
- 	qcom-msm8926-microsoft-superman-lte.dtb \
-+	qcom-msm8926-microsoft-tesla.dtb \
- 	qcom-msm8960-cdp.dtb \
- 	qcom-msm8960-samsung-expressatt.dtb \
- 	qcom-msm8974-lge-nexus5-hammerhead.dtb \
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-microsoft-tesla.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-microsoft-tesla.dts
-new file mode 100644
-index 000000000000..53a6d4e85959
---- /dev/null
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8926-microsoft-tesla.dts
-@@ -0,0 +1,67 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2023, Jack Matthews <jm5112356@gmail.com>
-+ * Copyright (c) 2023, Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-+ * Copyright (c) 2023, Dominik Kobinski <dominikkobinski314@gmail.com>
-+ * Copyright (c) 2023, Rayyan Ansari <rayyan@ansari.sh>
-+ */
-+
-+/dts-v1/;
-+
-+#include "qcom-msm8226-microsoft-common.dtsi"
-+
-+/* This device has touchscreen on i2c1 instead */
-+/delete-node/ &touchscreen;
-+
-+/ {
-+	model = "Nokia Lumia 830";
-+	compatible = "microsoft,tesla", "qcom,msm8926", "qcom,msm8226";
-+	chassis-type = "handset";
-+};
-+
-+&blsp1_i2c1 {
-+	status = "okay";
-+
-+	touchscreen: touchscreen@4b {
-+		compatible = "syna,rmi4-i2c";
-+		reg = <0x4b>;
-+
-+		interrupts-extended = <&tlmm 17 IRQ_TYPE_EDGE_FALLING>;
-+		vdd-supply = <&pm8226_l15>;
-+		vio-supply = <&pm8226_l6>;
-+
-+		pinctrl-0 = <&touchscreen_default>;
-+		pinctrl-names = "default";
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		rmi4-f01@1 {
-+			reg = <0x01>;
-+			syna,nosleep-mode = <1>;
-+		};
-+
-+		rmi4-f12@12 {
-+			reg = <0x12>;
-+			syna,sensor-type = <1>;
-+		};
-+	};
-+};
-+
-+&blsp1_i2c5 {
-+	status = "disabled";
-+};
-+
-+&gpio_keys {
-+	key-camera-snapshot {
-+		label = "Camera Snapshot";
-+		gpios = <&tlmm 107 GPIO_ACTIVE_LOW>;
-+		linux,code = <KEY_CAMERA>;
-+	};
-+
-+	key-camera-focus {
-+		label = "Camera Focus";
-+		gpios = <&tlmm 108 GPIO_ACTIVE_LOW>;
-+		linux,code = <KEY_CAMERA_FOCUS>;
-+	};
-+};
--- 
-2.42.0
-
+bod
