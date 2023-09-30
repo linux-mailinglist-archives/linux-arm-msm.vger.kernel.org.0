@@ -2,109 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C0E647B4269
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Sep 2023 18:59:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 039707B428C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Sep 2023 19:13:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234576AbjI3Q7W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Sep 2023 12:59:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48792 "EHLO
+        id S234606AbjI3RND (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Sep 2023 13:13:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229788AbjI3Q7W (ORCPT
+        with ESMTP id S234461AbjI3RNC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Sep 2023 12:59:22 -0400
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.50])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E2C5DA;
-        Sat, 30 Sep 2023 09:59:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1696093152; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=dKfB3rzlSTaQ5lAnhYw5ZHc/GAKC0tzXbAa3YUlecJOVdi+dyOCi+ZLi3FzGNebZAr
-    lI3EU01JzTm75CsgAVJF/bAj16kjAbzOHPGr0ZIC29n6k+6DiatXQW9xYboJqWETuUWX
-    LNlf0ZBH30Ip9RL8CP1DRkIYgevpw8LBG5lYICpepHfMfr/VOdD2rqSAVgaFDpxZwV1X
-    coRLWxKus6qmi4NB5In3smlMxEXENOP+5Df+ssVkJe62ItcKPLyPwtspHDCi87dJj3pM
-    lDlBnf8pfBaOab2RO1KExe1uJsOEYRcxVUCBYU+UHIBdEfMVf8kGuVAnZmodoQbJ8QCp
-    +ZZQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1696093152;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=TU2Xrc/bzSKmZicBoMMbvWmVhTF3do+bM2vLEZ56zHI=;
-    b=XlUdQCIZn+wCPXLfRkD5GGML/kgWlJh+9uj8w9kbWtnU124iNllfNTQ6pl9M7krPSX
-    3vZ9YPPwnGVFg9h8Ghga5ILuLuGORKH2Hx+f0hbZQnQGhDtzl4qoxLv9ldgwvfM0XK1u
-    WgyDfE3ZaU/rI8f56535Q/oa9EaiL5ETx9YY+vdfXIc/2yLPQWnLmoPBQhe67TfLPI3Q
-    5RifrHEsMkAap/lH8e9vs/alPwVONTc1X3UMVjkGHTy3z/h3Fagx87c7rqRsIhsWYYo6
-    7IU2ehtD6HKp5wrhPIfkNOgNh7FGA1OJZfo2FHdKUdhRNqGsr0b+OBPHSV9E2aBeU8ST
-    Fl5A==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1696093152;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=TU2Xrc/bzSKmZicBoMMbvWmVhTF3do+bM2vLEZ56zHI=;
-    b=IxNrK7RvW0zN+V4yN/8HaDf2gNQRvktawhCuJYW7M3tBhO9CdkGZRMm/LQCfp7wgGj
-    6XtQWcZWRQQpq/bzCIu5CFpL7soxovEc60WRZYpft23IMsK5vWUf4phWfn4qdRhJrbpo
-    GXeMSVIqpsHU5Qp34UnJw8CcO2geyCNa16lN1neL3smi5tBYz9QIDpb0IBe7P/jgEizd
-    /RiP02vR4XuwfAp0P79+SFuqBCB7f7nIRqC4FOEZh0ggVI9WtlI7n6jZaWiGqmVzwKJ6
-    xPN26fJJCK5v9Cd93Ry5S/coXU4u8AGLWP4Fb6PSjoaL8O7sQbFrY3+CETWt7R2AfqaQ
-    plZg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1696093152;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=TU2Xrc/bzSKmZicBoMMbvWmVhTF3do+bM2vLEZ56zHI=;
-    b=mi98OHSv1laQUGcpQjULy+EDwplTrI0le7dgliKxerfPaFLUlEFFYVQzmfvFgRbQKt
-    sN1W2UFjixI6rt7WSeAQ==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8paF1A=="
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.8.2 DYNA|AUTH)
-    with ESMTPSA id R04c57z8UGxBtdR
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Sat, 30 Sep 2023 18:59:11 +0200 (CEST)
-Date:   Sat, 30 Sep 2023 18:59:04 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Nikita Travkin <nikita@trvn.ru>
-Subject: Re: [PATCH 09/13] arm64: dts: qcom: msm8916-longcheer-l8150: Add
- sound and modem
-Message-ID: <ZRhT2PRwAoB39J_0@gerhold.net>
-References: <20230926-msm8916-modem-v1-0-398eec74bac9@gerhold.net>
- <20230926-msm8916-modem-v1-9-398eec74bac9@gerhold.net>
- <14262938-4150-429f-a730-df1b2fadd9ff@linaro.org>
+        Sat, 30 Sep 2023 13:13:02 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86ECADA;
+        Sat, 30 Sep 2023 10:12:57 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38UGauPZ009468;
+        Sat, 30 Sep 2023 17:12:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=QpsScOf9/QJkhluz9qVoVCK0j/moMriR7Sl3NGMbTqE=;
+ b=EhlmSxeFEYjU7A8Zy0jlaGqyqX/JpRsDz8gHGC/tv/pIfv+s8Nuc0QXCvRdHvh77r5Rh
+ iksq5zeUPOkSQKShZ0Jj3Lzrota4OAcjbAXxBj4q+uUfg1O9oV1bZIW6XttlKnnyso0E
+ xGquum6hHQEaFc+PjhRNeHdczXjlXJE8T46Xv54V/G4HLKeV+37Ij5vj9Phmv/UqOz6O
+ m1yTIAvZHdw4k5shKwLp6ro4HYot3i2aUoZTp7i7DyOROmHqXt7lv4oqLmMjlPSlUJev
+ swHiGV4fcDoPiv85FCES3blnpK0h4RBW3jhv7QSDlbkKCXxfPVBwBwaeOBzSXuUUPe+F ZQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3teaperuh6-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 30 Sep 2023 17:12:27 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38UHCQKG011720
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 30 Sep 2023 17:12:26 GMT
+Received: from [10.216.56.186] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Sat, 30 Sep
+ 2023 10:12:20 -0700
+Message-ID: <012936e8-48dd-4f10-735a-9dcfafb49915@quicinc.com>
+Date:   Sat, 30 Sep 2023 22:42:16 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <14262938-4150-429f-a730-df1b2fadd9ff@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.0
+Subject: Re: [PATCH V12 2/3] dt-bindings: pwm: add IPQ6018 binding
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <thierry.reding@gmail.com>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <ndesaulniers@google.com>,
+        <trix@redhat.com>, <baruch@tkos.co.il>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <llvm@lists.linux.dev>
+CC:     <linux-pwm@vger.kernel.org>, <u.kleine-koenig@pengutronix.de>,
+        <nathan@kernel.org>
+References: <20230925065915.3467964-1-quic_devipriy@quicinc.com>
+ <20230925065915.3467964-3-quic_devipriy@quicinc.com>
+ <42338d41-1b90-4f77-958e-479d32e0ce1d@linaro.org>
+ <59c9dbdb-8673-8dc7-ecca-32ff120ccf80@quicinc.com>
+ <4636a990-1044-1f67-dae5-8583f96021be@quicinc.com>
+ <175d9803-8ad7-4c70-ad8c-b2d661828b61@linaro.org>
+From:   Devi Priya <quic_devipriy@quicinc.com>
+In-Reply-To: <175d9803-8ad7-4c70-ad8c-b2d661828b61@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: I3rGPngaB39L4wh4X_n3QP85oXCDkKE_
+X-Proofpoint-GUID: I3rGPngaB39L4wh4X_n3QP85oXCDkKE_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-09-30_15,2023-09-28_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
+ adultscore=0 clxscore=1015 mlxlogscore=797 lowpriorityscore=0
+ suspectscore=0 priorityscore=1501 impostorscore=0 phishscore=0 mlxscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2309300141
+X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 26, 2023 at 08:59:52PM +0200, Konrad Dybcio wrote:
-> On 26.09.2023 18:51, Stephan Gerhold wrote:
-> > From: Nikita Travkin <nikita@trvn.ru>
-> > 
-> > Enable sound and modem for the Longcheer L8150 (e.g. Wileyfox Swift).
-> e.g. -> i.e., or is that thing sold under many labels?
-> 
 
-Yes, "e.g." is indeed correct here. AFAIK the MSM8916-based Android One
-devices (aka "google-seed") are also based on the Longcheer L8150. They
-are available under names like "Cherry Mobile One G1", "i-mobile IQ II",
-and "General Mobile 4G". They are also covered by this device tree.
+
+On 9/30/2023 9:02 PM, Krzysztof Kozlowski wrote:
+> On 29/09/2023 10:56, Devi Priya wrote:
+> 
+>>>>> diff --git a/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
+>>>>> b/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
+>>>>> new file mode 100644
+>>>>> index 000000000000..857086ad539e
+>>>>> --- /dev/null
+>>>>> +++ b/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
+>>>>
+>>>> Filename matching compatible, so qcom,ipq6018-pwm.yaml
+>>> okay
+>> We would have other ipq compatibles (ipq9574 & ipq5332) being added to
+>> the binding in the upcoming series.
+>> So, shall we rename the binding to qcom,ipq-pwm.yaml
+> 
+> I prefer not.
+> 
+Sure, okay
 
 Thanks,
-Stephan
+Devi Priya
+> Best regards,
+> Krzysztof
+> 
