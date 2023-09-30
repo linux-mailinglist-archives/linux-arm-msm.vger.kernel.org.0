@@ -2,77 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A3D447B40D3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Sep 2023 16:22:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CBA187B4115
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Sep 2023 16:43:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234259AbjI3OWU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Sep 2023 10:22:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57490 "EHLO
+        id S234312AbjI3Onf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Sep 2023 10:43:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234225AbjI3OWU (ORCPT
+        with ESMTP id S234308AbjI3One (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Sep 2023 10:22:20 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94066E5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 07:22:16 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-406618d0991so12220145e9.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 07:22:16 -0700 (PDT)
+        Sat, 30 Sep 2023 10:43:34 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58CF21A5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 07:43:31 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-9a9f139cd94so1960230466b.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 07:43:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696083735; x=1696688535; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696085010; x=1696689810; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=tmWoBEvDsZo+e0om3qRJkcAT9R6+73QWglFrdYXAq8Q=;
-        b=abwEmbI4X7kocLwgSnqgpPOYSmR7K9dr0eVU9ORPgkTYMAzxufw6EGjYlCxFLbc+Sg
-         df5FSXwmzRWGHo+V523+Wgc3/P5y2SE3sdVHDyJ6OmM5xZmwdwIyLlNwxCjh6Cv6gK9J
-         Bi1mois5inNmiFUniKtXdeuxdHuap8pHnAuzYhc6Hyb7HJRjNAqcitRXnWArIhZpWeM2
-         CZsZglbmP3Bum42rfJ0LyBukgBLQO3R1OauwETRoj+dImXmSZbZGf/EIPm936Mr+eyfS
-         eOf68TVuBVvlga3SeX8Jk2pVNKtUUEtkkA58u+Wm9UJ6gNr1dmC/FiEaBcpmabAZq+/i
-         1cBQ==
+        bh=Xh7c7EGiZ0BQcZv66qKV13L3PEzyzLwVIC7DuUgOOU8=;
+        b=p4r90zxPE4pqoUZXLJ5shnO/uwzZ4G0TmUp/OlgngEWZ7FEfJ+Q1CrTrR6o94AkirM
+         MbPhnol3BqiM5GSTT9yi+zDfUCqLHgIp1PpINe2DOLxOjbMEw7lJu+4m+oi38n5QkUJo
+         igVCCKOROKxzEazvYCNTGP+UxaIqOTq0M4DP4rYfJrBXVGNMRJLoSjbJ/tEaoG2J59mk
+         I88BTEaWqkKANlGcaK4laGSnE5TYi3a0u23qWoBuhb+a1+tLAaZKcKba65eoV5dorY3m
+         DKhl23dvOgS4tySiWSvR+/8ynf+I72q/SgV2YhvEt1x8jZyPCti52y7Bu7nVdANhmU/4
+         JhlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696083735; x=1696688535;
+        d=1e100.net; s=20230601; t=1696085010; x=1696689810;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tmWoBEvDsZo+e0om3qRJkcAT9R6+73QWglFrdYXAq8Q=;
-        b=turik8StI0JKQCUgxQIR63Bn9KFQjuZiy9DM29G3WBAOSbXb2//HqCtqQJahfYt0z+
-         KM3As6EbD6JYAqYaFWMV9OjG9NrwHUqX23K2QthQsYwcDXc1qF7GcQ96hkFVzG2cza9O
-         QZY5v5sSTY5LFofSIMWA0Z8t9AI3Km20U+9q4Xyw2u0HAzWKm+r3vGdoYRfFI7QQV8Hm
-         dDA1LucX+cAWcipaoAcCWft0gVzps5b/puBxmAsA8IAXI12Yb6g4iPvaONPxGxe738Ce
-         pmmUC1qLgNuojA6F/yK3PgURKQIqfAfMvFHT+425deECWD4XpDABOSuxsy4lsybwDnjQ
-         jMSA==
-X-Gm-Message-State: AOJu0YwzR4cf2A6id1YachVFGxcEnoWJv6pBkDSRcg9Oz9Vi9T1WQoJx
-        G37fr75yxVsST1tSMZagAyLibA==
-X-Google-Smtp-Source: AGHT+IEeOLZjQRlPTA2YJ4zNm6tK9BdP1lPn6tu9mG+qkL95RPggeetZ4BN4mEQD6tyVTR9TnnAd5Q==
-X-Received: by 2002:a1c:7211:0:b0:405:367d:4656 with SMTP id n17-20020a1c7211000000b00405367d4656mr6670092wmc.29.1696083734983;
-        Sat, 30 Sep 2023 07:22:14 -0700 (PDT)
+        bh=Xh7c7EGiZ0BQcZv66qKV13L3PEzyzLwVIC7DuUgOOU8=;
+        b=w5HXHal8968/OFL9szBr+3Cq8lOFFOfDz5ORci525Gm3PrOneH4RluXyj2gLI54QVC
+         sDbPPJV69/9NY0M5UK2gi6ZKOlS6iBLPxNA5LzhaXT5/sncu7S63fjLe0qCdLJ/XemQr
+         GoeAcNVuYSKl0BvE9jSoJ3Vvm2urJg/sZpCnHKmGKVQF8RYgDRbfAfJgHOmK6i1oJs9C
+         GMKhrZOCswFUyxlqH0NDIr0SIrtAaCT3FW2kp7zQJ3jl/V8SBpakO50opWvqaXICYl1F
+         30qCouAe/hbv6SabYSnS7h/a177sqEiNz5yggErnqg6eW2iTIZtmbCHKBGl7KS5O+xHH
+         PwMg==
+X-Gm-Message-State: AOJu0Yw/C9RQHKSCxdYptuCUBfwIEWXB9mXpijzZ6/Fx9BocgF+CrNh7
+        0VwWSA5Y+P7TbjSov/Fr2T6WAA==
+X-Google-Smtp-Source: AGHT+IHtAyiIQSUQcuQRPXRDh5ZYjr/+7WFdiZ3Tbq7Fme0VUi91Efw1NaWeuWb3LPT5M07Kgtxw+A==
+X-Received: by 2002:a17:906:73dc:b0:9ae:696c:2c47 with SMTP id n28-20020a17090673dc00b009ae696c2c47mr6881087ejl.28.1696085009758;
+        Sat, 30 Sep 2023 07:43:29 -0700 (PDT)
 Received: from [192.168.8.76] ([88.154.47.206])
-        by smtp.gmail.com with ESMTPSA id p14-20020adfe60e000000b003197b85bad2sm23963175wrm.79.2023.09.30.07.22.08
+        by smtp.gmail.com with ESMTPSA id fi3-20020a170906da0300b009a1fef32ce6sm14208942ejb.177.2023.09.30.07.43.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 30 Sep 2023 07:22:14 -0700 (PDT)
-Message-ID: <c5753cf5-044c-4494-b58e-0c133e7a4a42@linaro.org>
-Date:   Sat, 30 Sep 2023 16:22:08 +0200
+        Sat, 30 Sep 2023 07:43:29 -0700 (PDT)
+Message-ID: <e46ec21c-3500-468e-9362-2e986c3f0c77@linaro.org>
+Date:   Sat, 30 Sep 2023 16:43:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: i2c: qcom-cci: Document SC7280
- compatible
+Subject: Re: [PATCH V4 1/4] scsi: ufs: qcom: dt-bindings: Add SC7280
+ compatible string
 Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Andi Shyti <andi.shyti@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230929-sc7280-cci-v1-0-16c7d386f062@fairphone.com>
- <20230929-sc7280-cci-v1-1-16c7d386f062@fairphone.com>
+To:     Nitin Rawat <quic_nitirawa@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, mani@kernel.org,
+        alim.akhtar@samsung.com, bvanassche@acm.org, avri.altman@wdc.com,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, cros-qcom-dts-watchers@chromium.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20230929131936.29421-1-quic_nitirawa@quicinc.com>
+ <20230929131936.29421-2-quic_nitirawa@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -118,11 +111,11 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20230929-sc7280-cci-v1-1-16c7d386f062@fairphone.com>
+In-Reply-To: <20230929131936.29421-2-quic_nitirawa@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -131,25 +124,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/09/2023 10:01, Luca Weiss wrote:
-> Document the compatible for the CCI block found on SC7280 SoC.
+On 29/09/2023 15:19, Nitin Rawat wrote:
+> Document the compatible string for the UFS found on SC7280.
 > 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
->  Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
-> index 042d4dc636ee..158588236749 100644
-> --- a/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
-> +++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
-> @@ -25,6 +25,7 @@ properties:
->  
->        - items:
+> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> Acked-by: Manivannan Sadhasivam <mani@kernel.org>
 
-This is not enough.
+This is a friendly reminder during the review process.
 
-You miss constraining clocks.
+It looks like you received a tag and forgot to add it.
+
+If you do not know the process, here is a short explanation:
+Please add Acked-by/Reviewed-by/Tested-by tags when posting new
+versions, under or above your Signed-off-by tag. Tag is "received", when
+provided in a message replied to you on the mailing list. Tools like b4
+can help here. However, there's no need to repost patches *only* to add
+the tags. The upstream maintainer will do that for tags received on the
+version they apply.
+
+https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
+
+If a tag was not added on purpose, please state why and what changed.
 
 Best regards,
 Krzysztof
