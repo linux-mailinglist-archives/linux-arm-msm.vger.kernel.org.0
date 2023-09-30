@@ -2,130 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C8547B42BA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Sep 2023 19:27:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 361777B4387
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Sep 2023 22:28:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234650AbjI3R1l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Sep 2023 13:27:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39088 "EHLO
+        id S231351AbjI3U2b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Sep 2023 16:28:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234656AbjI3R1l (ORCPT
+        with ESMTP id S232105AbjI3U2a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Sep 2023 13:27:41 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD050E1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 10:27:38 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-504b84d59cbso5439376e87.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 10:27:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696094857; x=1696699657; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1esDqgq5T+kok5ueaCGLW9C7Tb/ZQUvYJBezpRqqynU=;
-        b=iFS1+XVjx/MRL0qSa545fvWlrHYxf84NPHkqGeHPUWR4gy+BbXZYLA1u4q33f/Wd/Q
-         abtFzF0SiKlUa1ht0PQ75Q0opB2fZPp979qHS4zdSNFCuGdbTnmPiiq7tdEQMNDA9T18
-         ql7A5dun1jjfQvJrQj/Kw8AuqN6X1dvuR392ZZWv1THlfppQ8oSokw0JY5OmKlP3rG/s
-         yWnF1/Tje1BnSxHfqOMAFaVH23v0zfG8iNQSEYatmlWDnUiJaW9NUJqhkgQmaiu09RV9
-         srpssoZHPzvl1A+CU1WhQoijSbt5pOfhNzsrjaYq1vwzyQWm4+GljFSU+/IcsGUSro08
-         +Hng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696094857; x=1696699657;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1esDqgq5T+kok5ueaCGLW9C7Tb/ZQUvYJBezpRqqynU=;
-        b=I9ZEXb2PbAG1TTKZPsYEzGfbBDLlxBXrEPaioIPSLoAqLmfqMVQ8oxbtc3L4rN8umD
-         VZTQvfDb3sOaxZRbxkmivfrN62WZRo6QlqVjipVmXBVnsCi0ZuqmEsDLxQqTI57og0CN
-         Khzdf6Ga+9078Vy0ANP09ffE2V2DDS+sERIEpTfkJmhWA2QShuBIgqSErBAqr8xdUAal
-         JAG0oy5Ov16DSHd2I0AhtW50JID5/bjalslLp7AR8FJFhGgpsv4wsdhUjSGIF1JvUr5M
-         WeN1Pv6UTotI5v3k6Pxsijn23Da5Tx9+D4am9GzU0AxoGZ+wW0DHVGQIzouY4VaYt36d
-         losg==
-X-Gm-Message-State: AOJu0YzCsgtKaNFphu2n/CfBr8JwZ1uNqd8rFs8Kbct86UwwzOLbvy30
-        RvDIijeV+ywRA+3oC3vQ93x9eXfSyTGN3rUmrb+5WQ==
-X-Google-Smtp-Source: AGHT+IGW8pBqaaoPrjB/MmYzrMfiR0lUdFnOEoGcH/Kv0byQNThkUo9CXJPl8eHVnzwlIQ2tH11BeA==
-X-Received: by 2002:a05:6512:3902:b0:505:7113:1d12 with SMTP id a2-20020a056512390200b0050571131d12mr3223204lfu.3.1696094857086;
-        Sat, 30 Sep 2023 10:27:37 -0700 (PDT)
-Received: from [192.168.246.189] (85-76-98-178-nat.elisa-mobile.fi. [85.76.98.178])
-        by smtp.gmail.com with ESMTPSA id z8-20020ac25de8000000b00500ba43a43asm3994414lfq.86.2023.09.30.10.27.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 30 Sep 2023 10:27:36 -0700 (PDT)
-Message-ID: <cc6e2145-ee6f-4872-9c47-8f618b47dc27@linaro.org>
-Date:   Sat, 30 Sep 2023 20:27:33 +0300
+        Sat, 30 Sep 2023 16:28:30 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9783F9;
+        Sat, 30 Sep 2023 13:28:28 -0700 (PDT)
+Received: from mercury (unknown [185.254.75.28])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits))
+        (No client certificate requested)
+        (Authenticated sender: sre)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id A09F16607295;
+        Sat, 30 Sep 2023 21:28:27 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1696105707;
+        bh=5H7NbrsgqULN82SuDa6zSGealrTVrOF+2Ikbmj0ec6U=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=jJYWVNPkUmKZ2usi5PEOqnrSdjkJB6ZmaU+jEsvH0zV09bN6sO30gcON49Y7sQ4VI
+         ND+czJgr02BKj6bX4RWFC7GTyY3n3jw1JEnHXpvXjWmBFWqP8+UfIkmsYPA1hQut/N
+         nTBlwBwPrNNgObz/Y4s1p9V73SJ5OKj7G3vBE7loDf8CohHpyPBwXFmy6rK+3LRLLI
+         kmBeKhpldjglQ/kDdmxiTzOv9OUCeljMIORdnxoAXNURJQf25gqGA8eed4RAX53sIz
+         To9TXAsg2ZIGATPFGuxlusSP6b4ZGY8w8apDUd9izWos8L6Gi0apGsodoN3ASy+BmI
+         eXgjjXqJdGpgQ==
+Received: by mercury (Postfix, from userid 1000)
+        id AE0C210605D7; Sat, 30 Sep 2023 22:28:25 +0200 (CEST)
+From:   Sebastian Reichel <sebastian.reichel@collabora.com>
+To:     Sebastian Reichel <sre@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org
+In-Reply-To: <20230929101649.20206-1-johan+linaro@kernel.org>
+References: <20230929101649.20206-1-johan+linaro@kernel.org>
+Subject: Re: [PATCH] power: supply: qcom_battmgr: fix enable request
+ endianness
+Message-Id: <169610570570.215050.7442025506091281047.b4-ty@collabora.com>
+Date:   Sat, 30 Sep 2023 22:28:25 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/8] arm64: dts: qcom: ipq5332: Add Super-Speed UNIPHY in
- USB node
-Content-Language: en-GB
-To:     Praveenkumar I <quic_ipkumar@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
-        kishon@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        gregkh@linuxfoundation.org, catalin.marinas@arm.com,
-        will@kernel.org, p.zabel@pengutronix.de, geert+renesas@glider.be,
-        arnd@arndb.de, neil.armstrong@linaro.org, nfraprado@collabora.com,
-        u-kumar1@ti.com, peng.fan@nxp.com, quic_wcheng@quicinc.com,
-        quic_varada@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Cc:     quic_kathirav@quicinc.com, quic_nsekar@quicinc.com,
-        quic_srichara@quicinc.com
-References: <20230929084209.3033093-1-quic_ipkumar@quicinc.com>
- <20230929084209.3033093-7-quic_ipkumar@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230929084209.3033093-7-quic_ipkumar@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.12.3
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/09/2023 11:42, Praveenkumar I wrote:
-> Add UNIPHY node in USB to support Super-speed. As the SS PHY has
-> pipe clock, removed "qcom,select-utmi-as-pipe-clk" flag.
+
+On Fri, 29 Sep 2023 12:16:49 +0200, Johan Hovold wrote:
+> Add the missing endianness conversion when sending the enable request so
+> that the driver will work also on a hypothetical big-endian machine.
 > 
-> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> ---
->   arch/arm64/boot/dts/qcom/ipq5332.dtsi | 6 ++----
->   1 file changed, 2 insertions(+), 4 deletions(-)
+> This issue was reported by sparse.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> index 1813b9fa4bb5..8fe4e45bfc18 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> @@ -349,8 +349,6 @@ usb: usb@8af8800 {
->   
->   			resets = <&gcc GCC_USB_BCR>;
->   
-> -			qcom,select-utmi-as-pipe-clk;
-> -
->   			#address-cells = <1>;
->   			#size-cells = <1>;
->   			ranges;
-> @@ -363,8 +361,8 @@ usb_dwc: usb@8a00000 {
->   				clocks = <&gcc GCC_USB0_MOCK_UTMI_CLK>;
->   				clock-names = "ref";
->   				interrupts = <GIC_SPI 64 IRQ_TYPE_LEVEL_HIGH>;
-> -				phy-names = "usb2-phy";
-> -				phys = <&usbphy0>;
-> +				phy-names = "usb2-phy", "usb3-phy";
-> +				phys = <&usbphy0>, <&usbphy1>;
+> 
 
-Ah, I see now. Maybe usbphy_ss_0 or something like that would be a 
-better label for this PHY. I'd expect usbphy1 to be used for other host 
-than usbphy0.
+Applied, thanks!
 
->   				tx-fifo-resize;
->   				snps,is-utmi-l1-suspend;
->   				snps,hird-threshold = /bits/ 8 <0x0>;
+[1/1] power: supply: qcom_battmgr: fix enable request endianness
+      commit: 8894b432548851f705f72ff135d3dcbd442a18d1
 
+Best regards,
 -- 
-With best wishes
-Dmitry
+Sebastian Reichel <sebastian.reichel@collabora.com>
 
