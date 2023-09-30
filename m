@@ -2,76 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A8977B4154
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Sep 2023 16:59:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BEF7D7B4174
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Sep 2023 17:07:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234368AbjI3O7P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Sep 2023 10:59:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34936 "EHLO
+        id S234402AbjI3PHD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Sep 2023 11:07:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234355AbjI3O7P (ORCPT
+        with ESMTP id S234393AbjI3PHC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Sep 2023 10:59:15 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE3A892
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 07:59:12 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-99bdeae1d0aso2080642966b.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 07:59:12 -0700 (PDT)
+        Sat, 30 Sep 2023 11:07:02 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B0EAC5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 08:07:00 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-9936b3d0286so2071664066b.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 08:07:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696085951; x=1696690751; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696086418; x=1696691218; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=E9B2kQ3iq7p4VksKg+DkVqKQqg7HQD9C40iD0MzBios=;
-        b=TjSW2LIEfbZZvkgS8jo/F8yVBIY8SzyrkboP8EyM3o2pH01Iugoc2ymhdTWNZ9mWzb
-         nuaZBH3F3dHZ1Bi3ynPE7UOePWwLWPXA/nvLdQtYI0n1f98pi4jauWfDG2PO+OLUFUVn
-         H0GKiDBiaq8QvDlvpFI30boa1rsKgM3V5q11nikN7owXTbBY891J47/KEiKDfWbPdOP1
-         jlb6WqTQQSEq01CqlVH//FkY0/jyC6o1H9RNZzw43WTjocBGS2p5roeWg9qb2xdx4BgA
-         CgbCPwsubCilGAYdnC03RSXtHnIywai/HCjii+7qOYs03iDB0UPPoa8nT8iDvIx28ggt
-         D55A==
+        bh=Ef6ofW/oLc2ffyJnK1NNo/MXFqngd8nEGVn9ytemU3s=;
+        b=JkXyQ7pl4P25daot1fRaSxWf6aD3NQIw1cbCVcbYrvkQkyf89qov21owuoUxlhszf9
+         Fgg4lq1DwNaMa0v1scoeaoV63RZGCK9rrWp2hRRm0n/CHCfoA5TMckCxnHGnh4oiHoHJ
+         vSEEth4qS6wSCNNk75afgl+SuKWPEkktpgOGVwvfJO9Eq4HENJ2D7yx3m7/Ph5AyXNZa
+         Mqwi1fKjRVRW01e/wtkLqdxbcCV4U3dHZF8+IdYEduErj6WsCl0+5limOgol+rlfETUh
+         sxZZWPZ9u57sA1sxUxF2/kABLMpE+ma5X6r8LkexDP0hbRLVsbERAd33jNXSHkaP/JFa
+         CsxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696085951; x=1696690751;
+        d=1e100.net; s=20230601; t=1696086418; x=1696691218;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=E9B2kQ3iq7p4VksKg+DkVqKQqg7HQD9C40iD0MzBios=;
-        b=kRxzxzD4sm0RGXZXrlZP0iXQnmhvqzWwIFofPfPuJB9WiY2ux+9IOZIP9kDin2staH
-         RFyTQFjz9vFQHIshqqsBHzrBkWUbHsiwbtDrU7RjkC9STNTeEGKiDGRXv27gT4zh8919
-         SyzNo4xxvW2rksZ134fZeODkZ/o9q6twON8gSN1OAxEmNpKbKBzAd/QmDiLyaFS/fhgc
-         UWY7cukwBeKtUhN5svvxqftxq5kNXa5FQm1OImlyf+9TqWfH082oq200+NytiaU5JzAz
-         wr/nREnlRmGkif5hHdrquGDCK8lzfeGeeGXuR7VKDXFPmOFKHJtIktcBO0lNrvQvw05Q
-         okpg==
-X-Gm-Message-State: AOJu0Ywq42ippl4f6GJYlFQDgMAVDU/fH+epgh0UT1f44fn//uEMzxeO
-        SBEfjwu3XfA4r1aafqaE/8T2Fw==
-X-Google-Smtp-Source: AGHT+IH8axa7dnIe/xIWnpxdeRWUiiB26wu/xYmyDnj8UsBBSyQfBUqmeJcpXQ3QelVnDtcM41ngvg==
-X-Received: by 2002:a17:906:8a7a:b0:9ae:3d75:4c83 with SMTP id hy26-20020a1709068a7a00b009ae3d754c83mr6332082ejc.0.1696085951513;
-        Sat, 30 Sep 2023 07:59:11 -0700 (PDT)
+        bh=Ef6ofW/oLc2ffyJnK1NNo/MXFqngd8nEGVn9ytemU3s=;
+        b=IhRrT6y4r7IofFEg+ohwt9qOqrbZaHIbS5ddJVx1pqcbN1Dr8nFvkcPJ7qtMZU8CFj
+         uYv1BCHno4oKpxEd7Bz5q026Kss092jVr3EsuwzU0/Emutm8opgHeVguTl3TT8yU3+zn
+         kvNE3k8czkJMZ6KWKCA5JtDC7YNTPBXQLSgatrplWnjJdprp7jgkKQSGKUpJotbJnwWE
+         9qJHc96XK/LC+FnmKhJgz5IbevE7fPqYfJWlMo9fY9qseYyCCkRtJOEO00LdJFgd37Nr
+         HF09XdZJZtJGAeiLOfPSaKM1w5xyC4DzyJ/o8P0u5Y55JXBugu1pUxy3KyrxC6fipd1M
+         NwqA==
+X-Gm-Message-State: AOJu0YzIeUdavLJovA435bva11RYgPvFqUu3gws6brKEYXKjJv50hwjE
+        ye+G2/MNo0u74Z7LO4V4/sIAaA==
+X-Google-Smtp-Source: AGHT+IGeHQFHMHIlUcGkLHq9UFGUfgWL0tlhVN9RKYDKj4t2UH+JFt6pJ98G1TVeHcvGQpNGQt1fBg==
+X-Received: by 2002:a17:907:c241:b0:99c:b0c9:4ec0 with SMTP id tj1-20020a170907c24100b0099cb0c94ec0mr6428061ejc.30.1696086418554;
+        Sat, 30 Sep 2023 08:06:58 -0700 (PDT)
 Received: from [192.168.8.76] ([88.154.47.206])
-        by smtp.gmail.com with ESMTPSA id qk7-20020a1709077f8700b009b2b4385db7sm5662953ejc.92.2023.09.30.07.59.00
+        by smtp.gmail.com with ESMTPSA id f5-20020aa7d845000000b005364b54a4basm3073473eds.80.2023.09.30.08.06.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 30 Sep 2023 07:59:11 -0700 (PDT)
-Message-ID: <99fa3e43-2202-44d4-ae45-0b47568a5758@linaro.org>
-Date:   Sat, 30 Sep 2023 16:59:00 +0200
+        Sat, 30 Sep 2023 08:06:58 -0700 (PDT)
+Message-ID: <510d6407-8033-4f2e-aabf-bd3fb84875a9@linaro.org>
+Date:   Sat, 30 Sep 2023 17:06:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/8] arm64: defconfig: Enable qcom USB UNIPHY driver
+Subject: Re: [PATCH 1/2] dt-bindings: mfd: qcom,spmi-pmic: Update gpio example
 Content-Language: en-US
-To:     Praveenkumar I <quic_ipkumar@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
-        kishon@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        gregkh@linuxfoundation.org, catalin.marinas@arm.com,
-        will@kernel.org, p.zabel@pengutronix.de, geert+renesas@glider.be,
-        arnd@arndb.de, neil.armstrong@linaro.org, nfraprado@collabora.com,
-        u-kumar1@ti.com, peng.fan@nxp.com, quic_wcheng@quicinc.com,
-        quic_varada@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Cc:     quic_kathirav@quicinc.com, quic_nsekar@quicinc.com,
-        quic_srichara@quicinc.com
-References: <20230929084209.3033093-1-quic_ipkumar@quicinc.com>
- <20230929084209.3033093-9-quic_ipkumar@quicinc.com>
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230929-pm7250b-gpio-fixup-v1-0-ef68543c1d3b@fairphone.com>
+ <20230929-pm7250b-gpio-fixup-v1-1-ef68543c1d3b@fairphone.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -117,43 +114,43 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20230929084209.3033093-9-quic_ipkumar@quicinc.com>
+In-Reply-To: <20230929-pm7250b-gpio-fixup-v1-1-ef68543c1d3b@fairphone.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/09/2023 10:42, Praveenkumar I wrote:
-> Enable USB UNIPHY driver present in Qualcomm IPQ5332.
+On 29/09/2023 10:17, Luca Weiss wrote:
+> As per commit ea25d61b448a ("arm64: dts: qcom: Use plural _gpios node
+> label for PMIC gpios") all dts files now use the plural _gpios instead
+> of the singular _gpio as label. Update the schema example also to match.
 > 
-> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 > ---
+>  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> index 55e931ba5b47..e4842e1fbd65 100644
+> --- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> @@ -245,7 +245,7 @@ examples:
+>              #address-cells = <1>;
+>              #size-cells = <0>;
+>  
+> -            pmi8998_gpio: gpio@c000 {
+> +            pmi8998_gpios: gpio@c000 
 
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-
----
-
-This is an automated instruction, just in case, because many review tags
-are being ignored. If you know the process, you can skip it (please do
-not feel offended by me posting it here - no bad intentions intended).
-If you do not know the process, here is a short explanation:
-
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions, under or above your Signed-off-by tag. Tag is "received", when
-provided in a message replied to you on the mailing list. Tools like b4
-can help here. However, there's no need to repost patches *only* to add
-the tags. The upstream maintainer will do that for tags received on the
-version they apply.
-
-https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
+This does no make sense... you update label only here, but not in any
+user of it which proves that label is not used. If it is not used, it
+should be dropped, not changed...
 
 Best regards,
 Krzysztof
