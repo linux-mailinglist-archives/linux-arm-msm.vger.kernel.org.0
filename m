@@ -2,123 +2,215 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 953417B409C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Sep 2023 15:41:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B1DCC7B40BD
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Sep 2023 16:15:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234219AbjI3Nlc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Sep 2023 09:41:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38228 "EHLO
+        id S234193AbjI3OPB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Sep 2023 10:15:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234199AbjI3Nla (ORCPT
+        with ESMTP id S231364AbjI3OPB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Sep 2023 09:41:30 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45F51CC0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 06:41:26 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-40566f89f6eso123637685e9.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 06:41:26 -0700 (PDT)
+        Sat, 30 Sep 2023 10:15:01 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94278B3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 07:14:58 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-98377c5d53eso1975630966b.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 07:14:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696081284; x=1696686084; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ob3ZO09IJVP3lc8Sqc/svAT3F+GaUvuno74Y0tUjZPs=;
-        b=uRL47zh4ltsZTD2/mLBEkpEuh9RE2+QuTvNKyXXS1QeLkBBcwgByJgtQQtm2ClO3fP
-         9HgNVqkWr/Qn24qUewYG16m+61qnaMjM19+Rm/Jv17R1ni5E/S+7TNB85JyEwRRVirYm
-         jLDuJUZQ4bhpTYEyzs+zvMhiZCqdoMaB+VTlfgvEansvCfH2puh0Gm2TYlLLgTq6r7bB
-         gwOFdcsAF8EH+xfcaSCmH43pkyc5SSNBWQfIdpwZ+nkbRiZcyh8P2v1+drlwIDcvgeTF
-         NjnHvB9O20BoD1kSpg+QmCUOJj4g6AVQ1a0iPuDo1Mwhw5gPqqBvVFKmuIetvHGmmVaI
-         WtMg==
+        d=linaro.org; s=google; t=1696083296; x=1696688096; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=UPLUBx2g7DiAOAHNsyhC+pLV3bCH0Ca8LQmdjAxHeBY=;
+        b=gS7A+S1ftQ6NtA9yVkuOyp9/TK52mJaEWmvatOD3p69qB5eAJDOR9GO0bdeuXHvslo
+         Er6+0tQhrYKfDFnBicpF1w2UvIiTxr3VMTyRGVM9cyoWYKDrjGLP1BGUlwxhZm+6g9OP
+         bUqz/vc191Z+cDFyYCZabM+tS0iLIeyuxFMy7dpRkDpdA6iO1RsOUgbBE5qbRrSKd01c
+         W/PV1vUIsEPfWx0s6wYKpi2YXIa6jc2WGibYm7S8hyE/gomCN39Ds1VJMt1PcZPxip4g
+         t3xX/cRYo/Ihaf88t76KfSElC2Q+XfogO35UA1CvlFK+MBhCRRIPNktU+9uL0bjCDWWR
+         YrLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696081284; x=1696686084;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Ob3ZO09IJVP3lc8Sqc/svAT3F+GaUvuno74Y0tUjZPs=;
-        b=sHqWMfj4eDmX81rTdUjwDHUHDowXgZooYojTmmzH8dUbNU1mLaOVLz2+wQESCeYN9w
-         2MHQqcbRW01hSBYPaf9ONU7aU3mHD+yzJw/rdhjawoFqt8/FjngORFkWqmbOdSYs1mcU
-         iPxcWinqKDNNOMJvNXlRn9OABpMHvtRPw2EOikwAX9vpC1s3KwaLkC/Jk076wDLyVSTH
-         rJHN4cBWbhvGUhkMAbOYzHfVkzFsbAge/V0DzFaeOLY4D9HxSnvEHOGFWir0tPYB/46c
-         DxRtjCnltlMT4QeLVbrY1vmcvivYGcLdhKsCk1tePbjAH8fECAZYoseAvM8q821RLc5v
-         qXVg==
-X-Gm-Message-State: AOJu0Yxd+4DvtaE1zpfpEzZZzHa0fOgAI1dfcMenfKk7eeLAt+5oh79Q
-        59B2vS2IR4NlC9mB6WJNP8nlcQ==
-X-Google-Smtp-Source: AGHT+IEK2bVhax5ff+Obe4qs55fcg29wlRqsn4HOd9i2311layUjNRRLgWw1Wu5rV0SCWh+yijGWtA==
-X-Received: by 2002:a05:600c:acd:b0:405:37bb:d940 with SMTP id c13-20020a05600c0acd00b0040537bbd940mr6377448wmr.0.1696081284776;
-        Sat, 30 Sep 2023 06:41:24 -0700 (PDT)
-Received: from x13s-linux.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id 11-20020a05600c020b00b003fe2b081661sm3408261wmi.30.2023.09.30.06.41.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 Sep 2023 06:41:24 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org,
+        d=1e100.net; s=20230601; t=1696083296; x=1696688096;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UPLUBx2g7DiAOAHNsyhC+pLV3bCH0Ca8LQmdjAxHeBY=;
+        b=E5S/iHDLYe8Zk74W3ujhlgK6pHnHRPd4frEHR1XE8OT+ZVJpIBsS+jkh15KrcLQ+Xb
+         QuAuch3uWZaVq+lKkU+mkEyhOrViux8wTUNixNvFDXPspzoZc1L9yW+ATkScNXig3v5m
+         UXt70skio7kf6P+52B+qiqOeDG/M5IlmxZz2r0cyIqj8y+WXnaTCdmhrnvPex5rHFeEq
+         K0xejQAkTg+N+0fSCTucA4fEGfxJDIFQ2r3BPajhWtKKbD/yqUIT90AcB+UFLoYHAmTE
+         NzzjrHs8NFtf2Vxp+2KhVBML+hOBA4STWeZe5bichsuTHK17cccOnCzII6V4E1SJ4JU0
+         lpYQ==
+X-Gm-Message-State: AOJu0YzZSkneszLoi18S+/xH2TJpYxfHxoOATQkqY22pnD8no2paWtTW
+        qEvj3LtW1lueBCpppNC8a7VnQcleDh9CeGQzttByuA==
+X-Google-Smtp-Source: AGHT+IGTmtcOhCXbQH2ItSg1JWeUX1FceFXgDV/bSy9qAQpOW8c4mAVRPIslFCKEzw6PqIReA2/liQ==
+X-Received: by 2002:a17:906:24d:b0:9ae:5db5:149 with SMTP id 13-20020a170906024d00b009ae5db50149mr7390823ejl.35.1696083296519;
+        Sat, 30 Sep 2023 07:14:56 -0700 (PDT)
+Received: from [192.168.8.76] ([88.154.47.206])
+        by smtp.gmail.com with ESMTPSA id d2-20020a17090694c200b00977cad140a8sm13939590ejy.218.2023.09.30.07.14.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 30 Sep 2023 07:14:56 -0700 (PDT)
+Message-ID: <3b6bf468-cb76-46fb-90be-85a2475cec0e@linaro.org>
+Date:   Sat, 30 Sep 2023 16:14:46 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/5] dt-bindings: clock: qcom,camcc-common.yaml: Add a
+ common file for camcc
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org,
         mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
         jonathan@marek.ca, quic_tdas@quicinc.com,
         vladimir.zapolskiy@linaro.org
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        bryan.odonoghue@linaro.org
-Subject: [PATCH v2 5/5] arm64: boot: dts: qcom: sc8280xp: Add in CAMCC for sc8280xp
-Date:   Sat, 30 Sep 2023 14:41:14 +0100
-Message-Id: <20230930134114.1816590-6-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230930134114.1816590-1-bryan.odonoghue@linaro.org>
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20230930134114.1816590-1-bryan.odonoghue@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+ <20230930134114.1816590-2-bryan.odonoghue@linaro.org>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20230930134114.1816590-2-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add in CAMCC for sc8280xp. The sc8280xp Camera Clock Controller looks
-similar to most of the sdmX, smX and now scX controllers.
+On 30/09/2023 15:41, Bryan O'Donoghue wrote:
+> Various of the camcc bindings are repeated serially. Aggregate the
+> common defintions into one place declaring common required in one place
+> also.
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  .../bindings/clock/qcom,camcc-common.yaml     | 44 +++++++++++++++++++
+>  .../bindings/clock/qcom,camcc-sm8250.yaml     | 32 ++------------
+>  .../bindings/clock/qcom,sc7180-camcc.yaml     | 23 ++--------
+>  .../bindings/clock/qcom,sc7280-camcc.yaml     | 23 ++--------
+>  .../bindings/clock/qcom,sdm845-camcc.yaml     | 23 ++--------
+>  .../bindings/clock/qcom,sm6350-camcc.yaml     | 13 ++----
+>  .../bindings/clock/qcom,sm8450-camcc.yaml     | 33 ++------------
+>  7 files changed, 67 insertions(+), 124 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,camcc-common.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,camcc-common.yaml b/Documentation/devicetree/bindings/clock/qcom,camcc-common.yaml
+> new file mode 100644
+> index 000000000000..ce0140985fe7
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,camcc-common.yaml
+> @@ -0,0 +1,44 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,camcc-common.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Camera Clock & Reset Controller common properties
+> +
+> +maintainers:
+> +  - Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> +
+> +description: |
+> +  Qualcomm camera clock control module provides the clocks, resets and power
+> +  domains on Qualcomm SoCs.
+> +
+> +allOf:
+> +  - $ref: qcom,gcc.yaml#
+> +
+> +properties:
+> +  compatible: true
 
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+Drop, not needed.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index cad59af7ccef..ca43d038578b 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -8,6 +8,7 @@
- #include <dt-bindings/clock/qcom,gcc-sc8280xp.h>
- #include <dt-bindings/clock/qcom,gpucc-sc8280xp.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
-+#include <dt-bindings/clock/qcom,sc8280xp-camcc.h>
- #include <dt-bindings/clock/qcom,sc8280xp-lpasscc.h>
- #include <dt-bindings/interconnect/qcom,osm-l3.h>
- #include <dt-bindings/interconnect/qcom,sc8280xp.h>
-@@ -3450,6 +3451,21 @@ usb_1_role_switch: endpoint {
- 			};
- 		};
- 
-+		camcc: clock-controller@ad00000 {
-+			compatible = "qcom,sc8280xp-camcc";
-+			reg = <0 0x0ad00000 0 0x20000>;
-+			clocks = <&gcc GCC_CAMERA_AHB_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK_A>,
-+				 <&sleep_clk>;
-+			clock-names = "iface", "bi_tcxo", "bi_tcxo_ao", "sleep_clk";
-+			power-domains = <&rpmhpd SC8280XP_MMCX>;
-+			required-opps = <&rpmhpd_opp_low_svs>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 		mdss0: display-subsystem@ae00000 {
- 			compatible = "qcom,sc8280xp-mdss";
- 			reg = <0 0x0ae00000 0 0x1000>;
--- 
-2.40.1
+> +
+> +  clocks:
+> +    minItems: 1
+> +    maxItems: 4
+
+No real benefit of these in common schema. It's still not precise :/
+
+> +
+> +  clock-names:
+> +    minItems: 1
+> +    maxItems: 4
+
+The same.
+
+> +
+> +  power-domains:
+> +    maxItems: 1
+> +    description:
+> +      A phandle and PM domain specifier for the MMCX power domain.
+
+Not all bindings have it, so again not much benefits to have it in
+common place.
+
+> +
+> +  required-opps:
+> +    maxItems: 1
+> +    description:
+> +      OPP node describing required MMCX performance point.
+> +
+> +required:
+> +  - compatible
+
+Drop
+
+> +  - clocks
+
+As well... so this leads us to almost empty common binding. That's why I
+suggested to use qcom,gcc.yaml.
+
+
+Best regards,
+Krzysztof
 
