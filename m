@@ -2,105 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E90F47B3F88
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Sep 2023 10:57:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 684C47B3FBD
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Sep 2023 11:39:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230092AbjI3I46 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Sep 2023 04:56:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47894 "EHLO
+        id S233926AbjI3JjJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Sep 2023 05:39:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229489AbjI3I46 (ORCPT
+        with ESMTP id S234004AbjI3JjJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Sep 2023 04:56:58 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F01141AE
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 01:56:54 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-9b275afb6abso321752666b.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Sep 2023 01:56:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696064213; x=1696669013; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=rxuoM/kpV0tc8vVOuxVi7rkGgp9aY1zjapqbLz/fcu0=;
-        b=nwAgJiUTWmPD1tFHXacVerfkY3k3FyqSgBCdIL4JmOP1uDUVUMLRWUDXrRoVt/FpLZ
-         HHMvzy3Xw/2g+G/PLaldhMrqoMf5YROx6fL3txFkvV07mMPitbkpqMaNbURzmyc42rRp
-         lR1AEFrqlCGnGuePTWUYdJCKIa7gxndk6e+FxTvxgqZURHClFyMiAimOTsvW+c00aUQS
-         D7PZl+GFVbvBJVydkFHi5CID7YOaHDcq8szdZvSnfDMMUDRRvd4DMA9BpkxxjrYIqsjm
-         8Qj81SO8LCebUgO2ja7m3NcpyfBTHFANiuRAGKSDgnLazE1mtyi7QAKrpZn7HeRRtykk
-         vDDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696064213; x=1696669013;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rxuoM/kpV0tc8vVOuxVi7rkGgp9aY1zjapqbLz/fcu0=;
-        b=FDMTOPM1mPRv3mT9NXslI3f388mjLy4Ry8jEDQbRGwP7F3CgLBo4tVqPFav6YpIYMC
-         4ByvI/ud/YJYTFGoGexqz9KMnCL7w37AGKCIani0ZjuYOrqsyWCHz0dbKLu77lZY4M99
-         FDGbnZBCivxTcCqjuBFnxU1SKmFcV3jCUTlttxZaV0LVwoUyS2gS6PVhYPERN6p71NJF
-         3wakFUwPvzq0jLqHm1kkdwB5z0c8WBJ23qezQB7QVtg0ZNw+GELW0WJKbhjzoMXl7WmZ
-         Y9hk5S2z5D7f1mGgZPS4BkgPDXSjZsNWIJs3cXPRjjgr4jPwpmoHfi5wjCBUXvRkamcR
-         J6Ow==
-X-Gm-Message-State: AOJu0Yw+YuLpMvl12LJUWBRgHPgdFVnwgs/teUgjeoD8QYNF7jkFd1Yk
-        pfOHPEEh4eMu4y9es0zqJ4b1
-X-Google-Smtp-Source: AGHT+IHZcicP/DlSYvvIIHPd/xN62G3u/iDeTlnMmDiUFbMeZEGgo9YeZZn7dYTfbYQeSWkbSUg6Pw==
-X-Received: by 2002:a17:906:7695:b0:9b2:b15b:383d with SMTP id o21-20020a170906769500b009b2b15b383dmr6873787ejm.11.1696064213321;
-        Sat, 30 Sep 2023 01:56:53 -0700 (PDT)
-Received: from thinkpad ([88.128.88.98])
-        by smtp.gmail.com with ESMTPSA id mh2-20020a170906eb8200b00992b2c55c67sm13702594ejb.156.2023.09.30.01.56.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 Sep 2023 01:56:52 -0700 (PDT)
-Date:   Sat, 30 Sep 2023 10:56:50 +0200
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Bjorn Helgaas <helgaas@kernel.org>
-Cc:     lpieralisi@kernel.org, kw@linux.com, andersson@kernel.org,
-        konrad.dybcio@linaro.org, bhelgaas@google.com,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, abel.vesa@linaro.org
-Subject: Re: [PATCH v3 2/3] PCI: qcom-ep: Make use of PCIE_SPEED2MBS_ENC()
- macro for encoding link speed
-Message-ID: <20230930085650.GA3564@thinkpad>
-References: <20230928184808.GA12574@thinkpad>
- <20230928212757.GA502911@bhelgaas>
+        Sat, 30 Sep 2023 05:39:09 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 438CA1A5;
+        Sat, 30 Sep 2023 02:39:07 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3F32C433C8;
+        Sat, 30 Sep 2023 09:39:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1696066746;
+        bh=Q0JZczSYb8IZ3ZaIjrDmyo/SCG/lFxNpe9cqL4DbR9M=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=g+k2A1eNMfAUeB5DhoWwL0EcXnfvkO3LYkHPCNZ6AaOWavJXdXi9qgXvIrPkgG4TH
+         Lm2oItzKRv/D3E1Des2qSA4uhu7blxdjCoTGBA1YT+Chx+jqKS8/rBqbH6Cnb2WPol
+         bg4eVvmc6tGtD4BhUy2dM5ivJHif4D72tG5Y7ZHpI/xz8V177BZacFljJPmCwfXDhf
+         sLyuLxt8gVz7pohq8ri9EJj6b4IW9VxMOaDz4VEZVnKvmWiI0k0hY8iX2DEknPwaaa
+         ahPmvj+62FRuaRb0pqCLVsnpo5I49mnRT5vysMOrRHaQDKporyTcHWpg1tBpshN4mH
+         tqBED0oKI406w==
+Received: from johan by xi.lan with local (Exim 4.96)
+        (envelope-from <johan@kernel.org>)
+        id 1qmWRI-0001Ou-0P;
+        Sat, 30 Sep 2023 11:39:08 +0200
+Date:   Sat, 30 Sep 2023 11:39:08 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH 2/2] clk: qcom: gcc-sc8280xp: Don't keep display AHB
+ clocks always-on
+Message-ID: <ZRfsvAJIdlmOWjf2@hovoldconsulting.com>
+References: <20230929-topic-8280_ahbdisp-v1-0-72bdc38309b9@linaro.org>
+ <20230929-topic-8280_ahbdisp-v1-2-72bdc38309b9@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230928212757.GA502911@bhelgaas>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230929-topic-8280_ahbdisp-v1-2-72bdc38309b9@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 28, 2023 at 04:27:57PM -0500, Bjorn Helgaas wrote:
-> On Thu, Sep 28, 2023 at 08:48:08PM +0200, Manivannan Sadhasivam wrote:
-> > On Wed, Sep 27, 2023 at 12:55:42PM -0500, Bjorn Helgaas wrote:
-> > > On Wed, Sep 27, 2023 at 05:46:02PM +0200, Manivannan Sadhasivam wrote:
-> > > > Instead of hardcoding the link speed in MBps, let's make use of the
-> > > > existing PCIE_SPEED2MBS_ENC() macro that does the encoding of the
-> > > > link speed for us. Also, let's Wrap it with QCOM_PCIE_LINK_SPEED_TO_BW()
-> > > > macro to do the conversion to ICC speed.
+On Fri, Sep 29, 2023 at 03:38:53PM +0200, Konrad Dybcio wrote:
+> These clocks are consumed by the dispcc[01] clock controllers, so there's
+> no reason to keep them on from gcc probe. Remove that hack.
+
+Eh, how did you test this patch?
+
+The GCC_DISP_AHB_CLK clocks are not modelled by the clock driver
+currently so nothing is guaranteeing them to be enabled if we were to
+apply this patch. They just happen to be left on by the bootloader on
+some machines currently (well at least one of them is on one machine).
+
+So this series is broken and should not be applied.
+
+NAK.
+
+Also, please CC me on sc8280xp and X13s related patches.
+ 
+> Fixes: d65d005f9a6c ("clk: qcom: add sc8280xp GCC driver")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  drivers/clk/qcom/gcc-sc8280xp.c | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
 > 
-> > > > -	ret = icc_set_bw(pcie_ep->icc_mem, 0, MBps_to_icc(PCIE_GEN1_BW_MBPS));
-> > > > +	ret = icc_set_bw(pcie_ep->icc_mem, 0, QCOM_PCIE_LINK_SPEED_TO_BW(1));
-> > > 
-> > > "1" is not very informative here.  Maybe PCIE_SPEED_2_5GT?  (I didn't
-> > > completely verify that this is equivalent.)
-> > 
-> > No. PCIE_SPEED_2_5GT is defined as 0x14 in pci.h. And I do not want to add a
-> > macro for just "1" here.
-> 
-> Is there no other existing macro that contains the 2.5GT/s hint?
+> diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
+> index bfb77931e868..bf95f82a3818 100644
+> --- a/drivers/clk/qcom/gcc-sc8280xp.c
+> +++ b/drivers/clk/qcom/gcc-sc8280xp.c
+> @@ -7545,18 +7545,16 @@ static int gcc_sc8280xp_probe(struct platform_device *pdev)
+>  
+>  	/*
+>  	 * Keep the clocks always-ON
+> -	 * GCC_CAMERA_AHB_CLK, GCC_CAMERA_XO_CLK, GCC_DISP_AHB_CLK,
+> +	 * GCC_CAMERA_AHB_CLK, GCC_CAMERA_XO_CLK,
+>  	 * GCC_DISP_XO_CLK, GCC_GPU_CFG_AHB_CLK, GCC_VIDEO_AHB_CLK,
+> -	 * GCC_VIDEO_XO_CLK, GCC_DISP1_AHB_CLK, GCC_DISP1_XO_CLK
+> +	 * GCC_VIDEO_XO_CLK, GCC_DISP1_XO_CLK
+>  	 */
+>  	regmap_update_bits(regmap, 0x26004, BIT(0), BIT(0));
+>  	regmap_update_bits(regmap, 0x26020, BIT(0), BIT(0));
+> -	regmap_update_bits(regmap, 0x27004, BIT(0), BIT(0));
+>  	regmap_update_bits(regmap, 0x27028, BIT(0), BIT(0));
+>  	regmap_update_bits(regmap, 0x71004, BIT(0), BIT(0));
+>  	regmap_update_bits(regmap, 0x28004, BIT(0), BIT(0));
+>  	regmap_update_bits(regmap, 0x28028, BIT(0), BIT(0));
+> -	regmap_update_bits(regmap, 0xbb004, BIT(0), BIT(0));
+>  	regmap_update_bits(regmap, 0xbb028, BIT(0), BIT(0));
 
-I couldn't find any :/
-
-Adding a new macro would collide with the existing one IMO.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+Johan
