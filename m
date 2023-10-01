@@ -2,108 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B97C7B4819
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Oct 2023 16:40:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ACD297B487B
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Oct 2023 17:57:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233590AbjJAOkk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 1 Oct 2023 10:40:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47824 "EHLO
+        id S235167AbjJAP5X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 1 Oct 2023 11:57:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235107AbjJAOkj (ORCPT
+        with ESMTP id S235152AbjJAP5X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 1 Oct 2023 10:40:39 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67D3092
-        for <linux-arm-msm@vger.kernel.org>; Sun,  1 Oct 2023 07:40:35 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-99bf3f59905so2155525066b.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 01 Oct 2023 07:40:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696171234; x=1696776034; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9WSXGXHBURPzmrW9bvhy9NXhgUHoIYOxdiOp4oYI05E=;
-        b=OWazHkrQFi9ydc6GKaSXUKtcIMn/ouoM6uD5imB8I8P7g2YbEL3BxkFm/bPBD0TPI7
-         VAdQ2P/OAp/TnqMkfWhKN/gDmla63KtoUHoBWSzrIcsN14lm7T1eeBnR0TRQ3HjK+nHe
-         nsMKTmpN9z1bn77QnGQryXGH61o8JM/66lFxT1QT0NjsxjuMIcuBXGfoq+eTItpcb1qW
-         6g5kMeUQBgQOrcZealJjQwpCyWUXv1kGYm/CwLEuvsyOz3R2MZUvBUBBrpfOefpLhKx4
-         nQ4GzQzXBg+3vOTe6ua3MiCJ5FfGz59IjB1NqwdIjHwMllHffwcMMUNQf1TV9x5a2j60
-         A+cQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696171234; x=1696776034;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9WSXGXHBURPzmrW9bvhy9NXhgUHoIYOxdiOp4oYI05E=;
-        b=ovOGQN5npxo2G3PXJirVw9xP4VSqULWmvAgOsKVTgbeHMjfpfZEGqZAI2xQV6djL28
-         NVaXbuS3DoIRrixqegBubzVJ7/ev8fmVuGKEgRH6HaitKVkhUIvdQ3P+zsCDdf3A6Iqk
-         Sys0RuYRou0AGNOJg2ae42igF9LhS8/kYiNwannWD1l+yZ1+x/96Q9WJFfbJ36q4/ED3
-         +gc1QuMA/c/CGQWaryby7hMlo9XpFlzN15BQOdBzm11HGRMmJd8krTe1x3eOy4P85Peu
-         L/UvJJeIR8orbdj82EhF2xwZBW4oNWqdtZt3oVAcxutkxD7SvynU7hI2PeU5BS1C1N45
-         d0Pg==
-X-Gm-Message-State: AOJu0YzCuWa84mnSj6jujAFtiSKDpYzoNlstoSAgeFg+TwfBOAFkLFb6
-        E8W1NMSYiEMj+vAGT2ez2BotKTpufvz4bnfoN9ezqg==
-X-Google-Smtp-Source: AGHT+IFeKziBiDxciXW7IYU9GXRpZ7Acba6SrW2fNPJ0lVgwpU/JeOc+jSOevgpbrnpxGuOEWPRqkw==
-X-Received: by 2002:a17:906:6a19:b0:9a1:c0e9:58ff with SMTP id qw25-20020a1709066a1900b009a1c0e958ffmr10773602ejc.11.1696171233722;
-        Sun, 01 Oct 2023 07:40:33 -0700 (PDT)
-Received: from [192.168.1.23] (host-2-99-112-229.as13285.net. [2.99.112.229])
-        by smtp.gmail.com with ESMTPSA id z3-20020a05600c220300b00406443c8b4fsm5378881wml.19.2023.10.01.07.40.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 01 Oct 2023 07:40:33 -0700 (PDT)
-Message-ID: <230ca044-99c7-45df-9947-4605b8c0d295@linaro.org>
-Date:   Sun, 1 Oct 2023 15:40:30 +0100
+        Sun, 1 Oct 2023 11:57:23 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BAF3D3;
+        Sun,  1 Oct 2023 08:57:21 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FE8AC433C7;
+        Sun,  1 Oct 2023 15:57:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1696175838;
+        bh=sCovQZwExo44oQAqhqDPGoISPRpG+C8reMc7OEyCOXY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=BtKEt3E76UzpTLf5SYgOHMPnuM9hGikPj+SBjDplOal6PvPDG61/dZuoKnIWIfcV/
+         c7Gn7oRXGV0CTPji+zy/KVq5ZTTbUurFzpfWNJeNiANrTSci1FC8LOSNztr67HQG8f
+         zxkXb2FUW0G3w+2lzDgISRAWAcsOPU9c0/mirdUcUpbByuPiYJU7K+QbSALwqHXJfH
+         CM+IDcbEpvke6eVjQ5ojcVqaCwFRsNhP15XcPQCIejj5b2xutWZu5fgsMsSZP739GJ
+         Z64PuthHnxiacO7qE5fJPjC/GfK734diyZa8NP13R6BjodgAmtTyGfe/kiE+Rwc5Y2
+         7RfFb9TXs9RAQ==
+Date:   Sun, 1 Oct 2023 21:27:01 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Caleb Connolly <caleb.connolly@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bhupesh Sharma <bhupesh.linux@gmail.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH 0/4] thermal: Introduce Qualcomm Thermal Mitigation
+ Device support
+Message-ID: <20231001155701.GA53767@thinkpad>
+References: <20230905-caleb-qmi_cooling-v1-0-5aa39d4164a7@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 0/3] Add fixes for FastRPC driver
-Content-Language: en-US
-To:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
-        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org
-Cc:     ekangupt@qti.qualcomm.com, gregkh@linuxfoundation.org,
-        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com
-References: <1695973360-14369-1-git-send-email-quic_ekangupt@quicinc.com>
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <1695973360-14369-1-git-send-email-quic_ekangupt@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230905-caleb-qmi_cooling-v1-0-5aa39d4164a7@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 29/09/2023 08:42, Ekansh Gupta wrote:
-> This patchset carries the following fixes.
-> - Reset metadata buffer to avoid incorrect fd getting freed
-> - Free DMA handles for remote calls with no arguments
-> - Clean buffers on remote call failures
-
-Bit of a nit pick here, but you should try and use the cover letter to 
-explain the necessary context and justification for your series. An 
-overview of the commits is already included below by b4 or git-send-email.
-
-It would be good to establish if these fixes are all related in some way 
-(ie to enable a specific usecase), or if it's just a few random things 
-that folks have discovered. Although it's almost always useful for 
-maintainers to know how these issues where discovered as it could expose 
-a gap in testing.
-
-Regards,
-
+On Fri, Sep 29, 2023 at 05:16:16PM +0100, Caleb Connolly wrote:
+> The Thermal Mitigation Device (TMD) Service is a QMI service that runs
+> on remote subsystems (the modem and DSPs) on Qualcomm SoCs.
+> It exposes various mitigations including passive thermal controls and
+> rail voltage restrictions.
 > 
-> Ekansh Gupta (3):
->    misc: fastrpc: Reset metadata buffer to avoid incorrect free
->    misc: fastrpc: Free DMA handles for RPC calls with no arguments
->    misc: fastrpc: Clean buffers on remote invocation failures
+> This series introduces support for exposing TMDs as cooling devices
+> in the kernel through the thermal framework, using the QMI interface.
 > 
->   drivers/misc/fastrpc.c | 26 ++++++++++++--------------
->   1 file changed, 12 insertions(+), 14 deletions(-)
+> Each TMD client is described as a child of the remoteproc node in
+> devicetree. With subnodes for each control.
+> 
+
+Daniel expressed concerns in the past aganist representing TMD driver as a
+cooling device since it is not tied to thermal zones and the governors cannot
+use it. Instead he suggested to represent it as a powercap device with thermal
+constraints.
+
+So please look into that approach.
+
+- Mani
+
+> This series is based on previous work by Bhupesh Sharma which can be
+> found at [1]. I'm sending this as a fresh series as it has been a
+> year since the original version and I have rewritten most of the driver.
+> 
+> [1]: https://lore.kernel.org/linux-arm-msm/20220912085049.3517140-1-bhupesh.sharma@linaro.org/
+> 
+> ---
+> Caleb Connolly (4):
+>       remoteproc: qcom: probe all child devices
+>       dt-bindings: thermal: Add qcom,qmi-cooling yaml bindings
+>       thermal: qcom: add qmi-cooling driver
+>       MAINTAINERS: Add entry for Qualcomm Cooling Driver
+> 
+>  .../bindings/remoteproc/qcom,msm8996-mss-pil.yaml  |  13 +
+>  .../bindings/remoteproc/qcom,pas-common.yaml       |   6 +
+>  .../bindings/thermal/qcom,qmi-cooling.yaml         | 168 +++++++
+>  MAINTAINERS                                        |   8 +
+>  drivers/remoteproc/qcom_q6v5.c                     |   4 +
+>  drivers/remoteproc/qcom_q6v5_mss.c                 |   8 -
+>  drivers/thermal/qcom/Kconfig                       |  13 +
+>  drivers/thermal/qcom/Makefile                      |   1 +
+>  drivers/thermal/qcom/qmi-cooling.c                 | 520 +++++++++++++++++++++
+>  drivers/thermal/qcom/qmi-cooling.h                 | 428 +++++++++++++++++
+>  10 files changed, 1161 insertions(+), 8 deletions(-)
+> ---
+> base-commit: 9067f80db58bbce81d5f0703aa2fd261e88bc812
+> 
+> // Caleb (they/them)
 > 
 
 -- 
-// Caleb (they/them)
+மணிவண்ணன் சதாசிவம்
