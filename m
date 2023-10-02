@@ -2,120 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E1F8A7B584C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 18:57:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 682577B591D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 19:42:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238480AbjJBQxa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Oct 2023 12:53:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40906 "EHLO
+        id S238595AbjJBRAg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Oct 2023 13:00:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238493AbjJBQx3 (ORCPT
+        with ESMTP id S238609AbjJBRAe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Oct 2023 12:53:29 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A40CBB8
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 09:53:25 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id d9443c01a7336-1bd9b4f8e0eso103015ad.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 09:53:25 -0700 (PDT)
+        Mon, 2 Oct 2023 13:00:34 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 707ADE1;
+        Mon,  2 Oct 2023 10:00:29 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-31f71b25a99so10506f8f.2;
+        Mon, 02 Oct 2023 10:00:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1696265605; x=1696870405; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=zPrUH5J+k/nTCuPqHTvyGlvTCCkInD9EOwhmWD637e8=;
-        b=f16iptU4NGHN2Gshz+newGrq9CO5Bcs/ufv6XeLLZ85fOMW1YLhZQmOVWTQIY8rt+8
-         ON2yqMF+f1r0+7a+TlMkpnSLafnmqIBYGJ6Fi7JT2SlM9MOgZdAqte8NUOzgnc7Q5swn
-         FDoEZ/qC4MC8IeDPukdjDGGFpV+b/aIrxufN8=
+        d=gmail.com; s=20230601; t=1696266028; x=1696870828; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=64nOEqf6/mjPbfcle6tVHCIMmPQhDPH56TTUSyH+RFM=;
+        b=aIy3mFuvz7Llw1SYC1etGsUvvRuSbgA+XCSNe/qA2KbH5XEL9RKE681JAilNrpjglj
+         NqBw8RIf8Gf94stoft6I95EPZTDYvikUxyWFOGd08bLo7qjvZJKm3231bTPxyeaD9GUs
+         skwxsrsyZFHMIhu3NjRIgpAZLZM4+TlxSoIFijLzOpUT/lOcauVE9i3Xm5e41tM//TC9
+         PVY1NZOjK9BEpdE64s3GWDHchGbN4IYi6Mr4vdViPUxdFhjVdNEXn6Gjvficre3Wjuzs
+         GItko1Mgla/0aZvR8P1K6n9KIbWxbjZ6kwmRK60ZjX2B0r8/a4oJeTx60DELQ/zm8VaT
+         snGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696265605; x=1696870405;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zPrUH5J+k/nTCuPqHTvyGlvTCCkInD9EOwhmWD637e8=;
-        b=cQV1Is7asMZGDi6+PUMi7ZSNGXLr7w1RppQVFeUq5N9fMYcWPqL2D+cvYnJ+BuH2vZ
-         nJJFA6fmJ6qqFLeMAdd2wZ56r4+TP/+5o5mpektGYOfzxxPJCTjFqP7iTGXWFefKB8a6
-         PlSvq4X4INjy0hRXzpNcr1fH+/2irsEOxoi11wuNmj6b9en3OjqmsRnlf//7uc2pWbT7
-         18Vh/ZVqQYR1SOrBdBb1WY5o1xktAHDho0VCSlzv9no1nnlZYWT+LfDAJbyTKTxMzk9n
-         VbSPmWUMe2YuEZiMjoWccaCqzmKVHpWd2xpd63uzFDGhbqqs9mKIeIaS4qbFAheEF4FO
-         2DAA==
-X-Gm-Message-State: AOJu0YzHF7wOY4CgSbI+ZWeP1xoxUbBQGYSsMuS6VOLr9EIJDm1dYEmV
-        BANRiI+yiCXNjnL5YI0iRrRDnO9o8wN5XcSK+pE=
-X-Google-Smtp-Source: AGHT+IFfbFaeQO9242udM1wOdI7Nv+81OlhqJQIxio/cgMdcj4JL3Y+uRVoQhZuEb4vC1HVU7rLNZA==
-X-Received: by 2002:a17:902:ec8d:b0:1c6:1fc3:6857 with SMTP id x13-20020a170902ec8d00b001c61fc36857mr13017401plg.27.1696265605046;
-        Mon, 02 Oct 2023 09:53:25 -0700 (PDT)
-Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id h6-20020a170902f54600b001c74876f032sm6638850plf.162.2023.10.02.09.53.23
+        d=1e100.net; s=20230601; t=1696266028; x=1696870828;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=64nOEqf6/mjPbfcle6tVHCIMmPQhDPH56TTUSyH+RFM=;
+        b=EB+Id5sVIhrMr69hEqU9+i0qcOu2It2Em2zBjgN7H7B7TGDxhunoJWiQnIzYNoTyd5
+         5p7Qum/3ajqMTv4PJA1aklmUnF2AZhrzf+4vKFFx09A9YCbVDDFucb6X8bm93HghKCFV
+         xiMaA7HYMH4yU47jJsaeiqNGe9Q8qLsRDI53I93HLrBX2KJIJCgqlR6seiGK5LASf2Ed
+         sNKAcnTXK7vo8pJvf3ZwlZN65/0xfPtzE2s5hI9h3SrGfBfmm2NQDjB5iuN8otg6L9ZT
+         bQDisYuenswv9QdG2FXwltOOH0Tt5sfzw2ln6QNm8PNfDxi59MAYkAkrGsYaZbJsxDJc
+         v1dw==
+X-Gm-Message-State: AOJu0YyP5ezAIU5NGBqnuVEf0wlSYvKzlZrW1RW3+6avt1RVM3NH5Hn4
+        Yusw7051YKmyL6MwQJRTKsQ=
+X-Google-Smtp-Source: AGHT+IHpcMlgO+FESOdL7EI4eJDVfSdlQRwVtLaTvR3QI4UuoRJ/vT5SXk3mgLz5PVu1tjXbHe3UIQ==
+X-Received: by 2002:adf:e912:0:b0:31a:d8c0:cb8b with SMTP id f18-20020adfe912000000b0031ad8c0cb8bmr10447917wrm.25.1696266027424;
+        Mon, 02 Oct 2023 10:00:27 -0700 (PDT)
+Received: from archlinux.local (BC249365.dsl.pool.telekom.hu. [188.36.147.101])
+        by smtp.gmail.com with ESMTPSA id s16-20020a05640217d000b0053420e55616sm11338426edy.75.2023.10.02.10.00.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Oct 2023 09:53:24 -0700 (PDT)
-Date:   Mon, 2 Oct 2023 09:53:21 -0700
-From:   Kees Cook <keescook@chromium.org>
-To:     Alex Deucher <alexdeucher@gmail.com>
-Cc:     Christian =?iso-8859-1?Q?K=F6nig?= 
-        <ckoenig.leichtzumerken@gmail.com>,
-        David Airlie <airlied@gmail.com>,
-        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
-        Karol Herbst <kherbst@redhat.com>, Tom Rix <trix@redhat.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        dri-devel@lists.freedesktop.org,
-        Chris Wilson <chris@chris-wilson.co.uk>,
-        Prike Liang <Prike.Liang@amd.com>,
-        Huang Rui <ray.huang@amd.com>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Matthew Brost <matthew.brost@intel.com>,
-        Evan Quan <evan.quan@amd.com>, Emma Anholt <emma@anholt.net>,
-        amd-gfx@lists.freedesktop.org,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Lijo Lazar <lijo.lazar@amd.com>,
-        VMware Graphics Reviewers 
-        <linux-graphics-maintainer@vmware.com>,
-        Ben Skeggs <bskeggs@redhat.com>,
-        Andi Shyti <andi.shyti@linux.intel.com>,
-        nouveau@lists.freedesktop.org, David Airlie <airlied@redhat.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Chia-I Wu <olvaffe@gmail.com>, llvm@lists.linux.dev,
-        Yifan Zhang <yifan1.zhang@amd.com>,
-        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        Kevin Wang <kevin1.wang@amd.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Nathan Chancellor <nathan@kernel.org>, Le Ma <le.ma@amd.com>,
-        Gurchetan Singh <gurchetansingh@chromium.org>,
-        Maxime Ripard <mripard@kernel.org>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        virtualization@lists.linux-foundation.org,
-        Sean Paul <sean@poorly.run>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Xiaojian Du <Xiaojian.Du@amd.com>, Lang Yu <Lang.Yu@amd.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Tejas Upadhyay <tejas.upadhyay@intel.com>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        linux-kernel@vger.kernel.org,
-        Hawking Zhang <Hawking.Zhang@amd.com>,
-        Rob Clark <robdclark@gmail.com>, Melissa Wen <mwen@igalia.com>,
-        John Harrison <john.c.harrison@intel.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Nirmoy Das <nirmoy.das@intel.com>,
-        freedreno@lists.freedesktop.org,
-        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
-        Zack Rusin <zackr@vmware.com>, linux-hardening@vger.kernel.org
-Subject: Re: [PATCH 0/9] drm: Annotate structs with __counted_by
-Message-ID: <202310020952.E7DE0948C0@keescook>
-References: <20230922173110.work.084-kees@kernel.org>
- <169601600138.3014939.8511343741428844249.b4-ty@chromium.org>
- <83cd056c-52ae-01dd-7576-42d41da64c26@gmail.com>
- <CADnq5_Ma2CrLYggJHKFEObsNmUoqJwb2p1xai5DfL=m43U6zEA@mail.gmail.com>
+        Mon, 02 Oct 2023 10:00:26 -0700 (PDT)
+From:   =?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <trabarni@gmail.com>
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     =?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <trabarni@gmail.com>
+Subject: [PATCH] clk: qcom: gcc-msm8953: fix stuck gcc_usb30_master_clk
+Date:   Mon,  2 Oct 2023 19:00:21 +0200
+Message-ID: <20231002170021.192740-1-trabarni@gmail.com>
+X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CADnq5_Ma2CrLYggJHKFEObsNmUoqJwb2p1xai5DfL=m43U6zEA@mail.gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -123,81 +74,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 02, 2023 at 11:06:19AM -0400, Alex Deucher wrote:
-> On Mon, Oct 2, 2023 at 5:20 AM Christian König
-> <ckoenig.leichtzumerken@gmail.com> wrote:
-> >
-> > Am 29.09.23 um 21:33 schrieb Kees Cook:
-> > > On Fri, 22 Sep 2023 10:32:05 -0700, Kees Cook wrote:
-> > >> This is a batch of patches touching drm for preparing for the coming
-> > >> implementation by GCC and Clang of the __counted_by attribute. Flexible
-> > >> array members annotated with __counted_by can have their accesses
-> > >> bounds-checked at run-time checking via CONFIG_UBSAN_BOUNDS (for array
-> > >> indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family functions).
-> > >>
-> > >> As found with Coccinelle[1], add __counted_by to structs that would
-> > >> benefit from the annotation.
-> > >>
-> > >> [...]
-> > > Since this got Acks, I figure I should carry it in my tree. Let me know
-> > > if this should go via drm instead.
-> > >
-> > > Applied to for-next/hardening, thanks!
-> > >
-> > > [1/9] drm/amd/pm: Annotate struct smu10_voltage_dependency_table with __counted_by
-> > >        https://git.kernel.org/kees/c/a6046ac659d6
-> >
-> > STOP! In a follow up discussion Alex and I figured out that this won't work.
+According to downstream dwc3-msm source this clock has FSM dependency on
+gcc_pcnoc_usb30_clk so enabling it would fail if latter isn't enabled.
+This patch add works around this issue by changing parent of
+gcc_usb30_master_clk to gcc_pcnoc_usb30_clk. This is acceptable because
+both clocks have same parent and are branches/gates.
 
-I'm so confused; from the discussion I saw that Alex said both instances
-were false positives?
+Signed-off-by: Barnabás Czémán <trabarni@gmail.com>
+---
+ drivers/clk/qcom/gcc-msm8953.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> >
-> > The value in the structure is byte swapped based on some firmware
-> > endianness which not necessary matches the CPU endianness.
-> 
-> SMU10 is APU only so the endianess of the SMU firmware and the CPU
-> will always match.
-
-Which I think is what is being said here?
-
-> > Please revert that one from going upstream if it's already on it's way.
-> >
-> > And because of those reasons I strongly think that patches like this
-> > should go through the DRM tree :)
-
-Sure, that's fine -- please let me know. It was others Acked/etc. Who
-should carry these patches?
-
-Thanks!
-
--Kees
-
-
-> >
-> > Regards,
-> > Christian.
-> >
-> > > [2/9] drm/amdgpu/discovery: Annotate struct ip_hw_instance with __counted_by
-> > >        https://git.kernel.org/kees/c/4df33089b46f
-> > > [3/9] drm/i915/selftests: Annotate struct perf_series with __counted_by
-> > >        https://git.kernel.org/kees/c/ffd3f823bdf6
-> > > [4/9] drm/msm/dpu: Annotate struct dpu_hw_intr with __counted_by
-> > >        https://git.kernel.org/kees/c/2de35a989b76
-> > > [5/9] drm/nouveau/pm: Annotate struct nvkm_perfdom with __counted_by
-> > >        https://git.kernel.org/kees/c/188aeb08bfaa
-> > > [6/9] drm/vc4: Annotate struct vc4_perfmon with __counted_by
-> > >        https://git.kernel.org/kees/c/59a54dc896c3
-> > > [7/9] drm/virtio: Annotate struct virtio_gpu_object_array with __counted_by
-> > >        https://git.kernel.org/kees/c/5cd476de33af
-> > > [8/9] drm/vmwgfx: Annotate struct vmw_surface_dirty with __counted_by
-> > >        https://git.kernel.org/kees/c/b426f2e5356a
-> > > [9/9] drm/v3d: Annotate struct v3d_perfmon with __counted_by
-> > >        https://git.kernel.org/kees/c/dc662fa1b0e4
-> > >
-> > > Take care,
-> > >
-> >
-
+diff --git a/drivers/clk/qcom/gcc-msm8953.c b/drivers/clk/qcom/gcc-msm8953.c
+index 3e5a8cb14d4d..20639340e8a6 100644
+--- a/drivers/clk/qcom/gcc-msm8953.c
++++ b/drivers/clk/qcom/gcc-msm8953.c
+@@ -3645,7 +3645,7 @@ static struct clk_branch gcc_usb30_master_clk = {
+ 		.hw.init = &(struct clk_init_data) {
+ 			.name = "gcc_usb30_master_clk",
+ 			.parent_hws = (const struct clk_hw*[]){
+-				&usb30_master_clk_src.clkr.hw,
++				&gcc_pcnoc_usb3_axi_clk.clkr.hw,
+ 			},
+ 			.num_parents = 1,
+ 			.ops = &clk_branch2_ops,
 -- 
-Kees Cook
+2.42.0
+
