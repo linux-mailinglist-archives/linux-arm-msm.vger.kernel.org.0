@@ -2,194 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6EB467B5A1D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 20:34:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51B657B5A4D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 20:42:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238763AbjJBSW3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Oct 2023 14:22:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49800 "EHLO
+        id S238764AbjJBSfM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Oct 2023 14:35:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235799AbjJBSW2 (ORCPT
+        with ESMTP id S238788AbjJBSfM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Oct 2023 14:22:28 -0400
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F4180C6
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 11:22:24 -0700 (PDT)
-Received: by mail-pg1-x535.google.com with SMTP id 41be03b00d2f7-578a62c088cso2389955a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 11:22:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1696270944; x=1696875744; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=6vMwsjYrlAei3Hxc6ZjjNt+EO9kZEbPnxPSvxjTe6qw=;
-        b=cPlNc38yrERG6xjKCfIraTaao/KlIj/KqDXcZ+eR8xsGpq4GvIIuW7ZTHzSlBJ3q5i
-         lys/rxdMdSAT2eV3/DTnuqfKOJ6NGaYGWxFaM45hSNrzbZg55INaSB4qnqonvuv9rajl
-         KfeUJlJhYhno4DOltLrXaFX8GBxNs3VhyvXXk=
+        Mon, 2 Oct 2023 14:35:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54608AB
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 11:34:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1696271662;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=moRj567UqOl/iY2WCPLyt7FFc0+jEQjRNpNCUARYnqs=;
+        b=Q8hQfX5rgXJGmaYdq4xnBmLDPMUzn1z7vJqGbSse1dpTaKNeOoleKxZ6dEOE3Z9NGTiwLA
+        qtk/Pou9xzKRrtmsulK2axE2QvmCxZQ7kOmcGXwuTlL1ycS/uCgByA2TFKuT1SspAmYg7Q
+        qPLTHsm9AwbDdPNEjgvj1QQCOxG2W30=
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-459-7Zo2TNuUNC2mCFsWWCNkzQ-1; Mon, 02 Oct 2023 14:34:10 -0400
+X-MC-Unique: 7Zo2TNuUNC2mCFsWWCNkzQ-1
+Received: by mail-yw1-f197.google.com with SMTP id 00721157ae682-59f7d109926so1300967b3.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 11:34:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696270944; x=1696875744;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6vMwsjYrlAei3Hxc6ZjjNt+EO9kZEbPnxPSvxjTe6qw=;
-        b=hgD6P6fLR3CCgLlmcT3tRTDkru5KWtJaREfCjMDidrAkJ6DUQNm0lP7GfkQsa+H7WD
-         JDNfEU8dSh1SCnixJtL0ifVuvx94+mzEotQzy/w1rExi9C3TOrO+LBHV2qgWpIU2b1U8
-         NoylHLkNuOg340Z/s2Li2+hZ65vrtRugsbGChrZSiNH9VFlYWTNBt8p4iUjV728FQu8n
-         0bj6bwZNqs3FQ84R8Lt0to6zOw4q9Js1dktbSYRgA+RKfMn+ui9SRA/iUGQlwJsglkRd
-         mYVQWcM2CK1lznjzam9sLM1Gu8R62lq7S9Hl03TPWZii3xu02lMTRYcSVpL9Q89O5urT
-         ZQlw==
-X-Gm-Message-State: AOJu0YzktgN+PABGsQf10vieVN7Gigkr3JLoEjAc189H7aJhLR0d59qc
-        1kDkdISQFMqrA24xwNXKIrhLEw==
-X-Google-Smtp-Source: AGHT+IFN44X3NT3rmon5KyimO6IH657T1P2k+qKM5XXdV6IMP4cnvC0Xx05CvgoaqkelMPJSCwLVWA==
-X-Received: by 2002:a17:90b:4414:b0:274:cf7e:f11c with SMTP id hx20-20020a17090b441400b00274cf7ef11cmr529470pjb.19.1696270944438;
-        Mon, 02 Oct 2023 11:22:24 -0700 (PDT)
-Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id ml24-20020a17090b361800b00262e485156esm6569943pjb.57.2023.10.02.11.22.23
+        d=1e100.net; s=20230601; t=1696271649; x=1696876449;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=moRj567UqOl/iY2WCPLyt7FFc0+jEQjRNpNCUARYnqs=;
+        b=meMygAgKEfRAA85ptkKCWQIxoM4E4L5VJpH3s87ls/z23mHEWmtVbs/n1hcLHtczGM
+         wMBO6eM5uryQF+vV3vfJqAVOeackAbnbG9EavrEbjbuPlkBc/QkhDoxuCpqvnRzt8hiS
+         VFdmGwMJD4fdmizOwZGtYhoWqbGQ6fGfiS7rQran5r+O7pF7a3kx++aytxusSTWK5txR
+         WB0o2PcC4YnAAsTcSGLDdF81tZ7e4o1dYTYFdJ/Bo2a2OuoWBBVDjGBQW13CxnHvYulb
+         L4zBNMDQk+Hpui5XyvtzQsqUNkCudBwvlz/gRQS8qdoe88TOcVon62Ju10y3NXhWK+4E
+         oyVA==
+X-Gm-Message-State: AOJu0YzI/Vy7hZ1wQwBW6HjhkdxZQ5C3m4CnCQP7QhhLL9OLSrP1uNQu
+        YVEkrQ5IdY1L39yacXkvJLHICy41UtDi1GmsPF/+lehI1Q7b1ZeH8JjSLj4DENuQozxk4cd/bVK
+        HuqSU8istcrBM58JIbiSuKHGnVw==
+X-Received: by 2002:a81:7c43:0:b0:58f:c78e:5918 with SMTP id x64-20020a817c43000000b0058fc78e5918mr10407288ywc.52.1696271649275;
+        Mon, 02 Oct 2023 11:34:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG6SP8Aiv3+xZec2xqHGrrNExMp/Wx6XTpZH0dl31Z6Rq6TSaKxSXmvluaLgNmK0B792p3syQ==
+X-Received: by 2002:a81:7c43:0:b0:58f:c78e:5918 with SMTP id x64-20020a817c43000000b0058fc78e5918mr10407270ywc.52.1696271648909;
+        Mon, 02 Oct 2023 11:34:08 -0700 (PDT)
+Received: from brian-x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
+        by smtp.gmail.com with ESMTPSA id a14-20020a81bb4e000000b00579e5c4982fsm7865199ywl.36.2023.10.02.11.34.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Oct 2023 11:22:23 -0700 (PDT)
-Date:   Mon, 2 Oct 2023 11:22:22 -0700
-From:   Kees Cook <keescook@chromium.org>
-To:     Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>
-Cc:     Christian =?iso-8859-1?Q?K=F6nig?= 
-        <ckoenig.leichtzumerken@gmail.com>,
-        Alex Deucher <alexdeucher@gmail.com>,
-        David Airlie <airlied@gmail.com>,
-        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
-        Karol Herbst <kherbst@redhat.com>, Tom Rix <trix@redhat.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        dri-devel@lists.freedesktop.org,
-        Chris Wilson <chris@chris-wilson.co.uk>,
-        Prike Liang <Prike.Liang@amd.com>,
-        Huang Rui <ray.huang@amd.com>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Matthew Brost <matthew.brost@intel.com>,
-        Evan Quan <evan.quan@amd.com>, Emma Anholt <emma@anholt.net>,
-        amd-gfx@lists.freedesktop.org,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Lijo Lazar <lijo.lazar@amd.com>,
-        VMware Graphics Reviewers 
-        <linux-graphics-maintainer@vmware.com>,
-        Ben Skeggs <bskeggs@redhat.com>,
-        Andi Shyti <andi.shyti@linux.intel.com>,
-        nouveau@lists.freedesktop.org, David Airlie <airlied@redhat.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Chia-I Wu <olvaffe@gmail.com>, llvm@lists.linux.dev,
-        Yifan Zhang <yifan1.zhang@amd.com>,
-        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        Kevin Wang <kevin1.wang@amd.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Nathan Chancellor <nathan@kernel.org>, Le Ma <le.ma@amd.com>,
-        Gurchetan Singh <gurchetansingh@chromium.org>,
-        Maxime Ripard <mripard@kernel.org>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        virtualization@lists.linux-foundation.org,
-        Sean Paul <sean@poorly.run>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Xiaojian Du <Xiaojian.Du@amd.com>, Lang Yu <Lang.Yu@amd.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Tejas Upadhyay <tejas.upadhyay@intel.com>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        linux-kernel@vger.kernel.org,
-        Hawking Zhang <Hawking.Zhang@amd.com>,
-        Rob Clark <robdclark@gmail.com>, Melissa Wen <mwen@igalia.com>,
-        John Harrison <john.c.harrison@intel.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Nirmoy Das <nirmoy.das@intel.com>,
-        freedreno@lists.freedesktop.org, Zack Rusin <zackr@vmware.com>,
-        linux-hardening@vger.kernel.org
-Subject: Re: [PATCH 0/9] drm: Annotate structs with __counted_by
-Message-ID: <202310021122.B6DA850FB0@keescook>
-References: <20230922173110.work.084-kees@kernel.org>
- <169601600138.3014939.8511343741428844249.b4-ty@chromium.org>
- <83cd056c-52ae-01dd-7576-42d41da64c26@gmail.com>
- <CADnq5_Ma2CrLYggJHKFEObsNmUoqJwb2p1xai5DfL=m43U6zEA@mail.gmail.com>
- <202310020952.E7DE0948C0@keescook>
- <10644b5f-b0a7-85ef-0658-2353ee14df0d@gmail.com>
- <202310021107.9BB46FB8E@keescook>
- <0be2dfa4-b6c1-f62a-66e1-615da7aa3c76@amd.com>
+        Mon, 02 Oct 2023 11:34:08 -0700 (PDT)
+Date:   Mon, 2 Oct 2023 14:34:06 -0400
+From:   Brian Masney <bmasney@redhat.com>
+To:     Nikunj Kela <quic_nkela@quicinc.com>
+Cc:     sudeep.holla@arm.com, cristian.marussi@arm.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v4 4/4] firmware: arm_scmi: Add qcom hvc/shmem transport
+ support
+Message-ID: <ZRsNHnuUdGl+vuqz@brian-x1>
+References: <20230718160833.36397-1-quic_nkela@quicinc.com>
+ <20230911194359.27547-1-quic_nkela@quicinc.com>
+ <20230911194359.27547-5-quic_nkela@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <0be2dfa4-b6c1-f62a-66e1-615da7aa3c76@amd.com>
+In-Reply-To: <20230911194359.27547-5-quic_nkela@quicinc.com>
+User-Agent: Mutt/2.2.9 (2022-11-12)
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 02, 2023 at 08:11:41PM +0200, Christian König wrote:
-> Am 02.10.23 um 20:08 schrieb Kees Cook:
-> > On Mon, Oct 02, 2023 at 08:01:57PM +0200, Christian König wrote:
-> > > Am 02.10.23 um 18:53 schrieb Kees Cook:
-> > > > On Mon, Oct 02, 2023 at 11:06:19AM -0400, Alex Deucher wrote:
-> > > > > On Mon, Oct 2, 2023 at 5:20 AM Christian König
-> > > > > <ckoenig.leichtzumerken@gmail.com> wrote:
-> > > > > > Am 29.09.23 um 21:33 schrieb Kees Cook:
-> > > > > > > On Fri, 22 Sep 2023 10:32:05 -0700, Kees Cook wrote:
-> > > > > > > > This is a batch of patches touching drm for preparing for the coming
-> > > > > > > > implementation by GCC and Clang of the __counted_by attribute. Flexible
-> > > > > > > > array members annotated with __counted_by can have their accesses
-> > > > > > > > bounds-checked at run-time checking via CONFIG_UBSAN_BOUNDS (for array
-> > > > > > > > indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family functions).
-> > > > > > > > 
-> > > > > > > > As found with Coccinelle[1], add __counted_by to structs that would
-> > > > > > > > benefit from the annotation.
-> > > > > > > > 
-> > > > > > > > [...]
-> > > > > > > Since this got Acks, I figure I should carry it in my tree. Let me know
-> > > > > > > if this should go via drm instead.
-> > > > > > > 
-> > > > > > > Applied to for-next/hardening, thanks!
-> > > > > > > 
-> > > > > > > [1/9] drm/amd/pm: Annotate struct smu10_voltage_dependency_table with __counted_by
-> > > > > > >          https://git.kernel.org/kees/c/a6046ac659d6
-> > > > > > STOP! In a follow up discussion Alex and I figured out that this won't work.
-> > > > I'm so confused; from the discussion I saw that Alex said both instances
-> > > > were false positives?
-> > > > 
-> > > > > > The value in the structure is byte swapped based on some firmware
-> > > > > > endianness which not necessary matches the CPU endianness.
-> > > > > SMU10 is APU only so the endianess of the SMU firmware and the CPU
-> > > > > will always match.
-> > > > Which I think is what is being said here?
-> > > > 
-> > > > > > Please revert that one from going upstream if it's already on it's way.
-> > > > > > 
-> > > > > > And because of those reasons I strongly think that patches like this
-> > > > > > should go through the DRM tree :)
-> > > > Sure, that's fine -- please let me know. It was others Acked/etc. Who
-> > > > should carry these patches?
-> > > Probably best if the relevant maintainer pick them up individually.
-> > > 
-> > > Some of those structures are filled in by firmware/hardware and only the
-> > > maintainers can judge if that value actually matches what the compiler
-> > > needs.
-> > > 
-> > > We have cases where individual bits are used as flags or when the size is
-> > > byte swapped etc...
-> > > 
-> > > Even Alex and I didn't immediately say how and where that field is actually
-> > > used and had to dig that up. That's where the confusion came from.
-> > Okay, I've dropped them all from my tree. Several had Acks/Reviews, so
-> > hopefully those can get picked up for the DRM tree?
+On Mon, Sep 11, 2023 at 12:43:59PM -0700, Nikunj Kela wrote:
+> This change adds the support for SCMI message exchange on Qualcomm
+> virtual platforms.
 > 
-> I will pick those up to go through drm-misc-next.
+> The hypervisor associates an object-id also known as capability-id
+> with each hvc doorbell object. The capability-id is used to identify the
+> doorbell from the VM's capability namespace, similar to a file-descriptor.
 > 
-> Going to ping maintainers once more when I'm not sure if stuff is correct or
-> not.
+> The hypervisor, in addition to the function-id, expects the capability-id
+> to be passed in x1 register when HVC call is invoked.
+> 
+> The function-id & capability-id are allocated by the hypervisor on bootup
+> and are stored in the shmem region by the firmware before starting Linux.
+> 
+> Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
+> ---
+>  drivers/firmware/arm_scmi/driver.c |  1 +
+>  drivers/firmware/arm_scmi/smc.c    | 47 ++++++++++++++++++++++++++----
+>  2 files changed, 43 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
+> index 87383c05424b..ea344bc6ae49 100644
+> --- a/drivers/firmware/arm_scmi/driver.c
+> +++ b/drivers/firmware/arm_scmi/driver.c
+> @@ -2915,6 +2915,7 @@ static const struct of_device_id scmi_of_match[] = {
+>  #ifdef CONFIG_ARM_SCMI_TRANSPORT_SMC
+>  	{ .compatible = "arm,scmi-smc", .data = &scmi_smc_desc},
+>  	{ .compatible = "arm,scmi-smc-param", .data = &scmi_smc_desc},
+> +	{ .compatible = "qcom,scmi-hvc-shmem", .data = &scmi_smc_desc},
+>  #endif
+>  #ifdef CONFIG_ARM_SCMI_TRANSPORT_VIRTIO
+>  	{ .compatible = "arm,scmi-virtio", .data = &scmi_virtio_desc},
+> diff --git a/drivers/firmware/arm_scmi/smc.c b/drivers/firmware/arm_scmi/smc.c
+> index 0a0b7e401159..94ec07fdc14a 100644
+> --- a/drivers/firmware/arm_scmi/smc.c
+> +++ b/drivers/firmware/arm_scmi/smc.c
+> @@ -50,6 +50,9 @@
+>   * @func_id: smc/hvc call function id
+>   * @param_page: 4K page number of the shmem channel
+>   * @param_offset: Offset within the 4K page of the shmem channel
+> + * @cap_id: hvc doorbell's capability id to be used on Qualcomm virtual
+> + *	    platforms
+> + * @qcom_xport: Flag to indicate the transport on Qualcomm virtual platforms
+>   */
+>  
+>  struct scmi_smc {
+> @@ -63,6 +66,8 @@ struct scmi_smc {
+>  	u32 func_id;
+>  	u32 param_page;
+>  	u32 param_offset;
+> +	u64 cap_id;
+> +	bool qcom_xport;
+>  };
 
-Sounds great; thanks!
+[snip]
 
--Kees
+>  static irqreturn_t smc_msg_done_isr(int irq, void *data)
+> @@ -129,6 +134,7 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
+>  	struct resource res;
+>  	struct device_node *np;
+>  	u32 func_id;
+> +	u64 cap_id;
+>  	int ret;
 
--- 
-Kees Cook
+[snip]
+
+> +		func_id = readl((void __iomem *)(scmi_info->shmem) + size - 16);
+> +#ifdef CONFIG_ARM64
+> +		cap_id = readq((void __iomem *)(scmi_info->shmem) + size - 8);
+> +#else
+> +		/* capability-id is 32 bit wide on 32bit machines */
+> +		cap_id = readl((void __iomem *)(scmi_info->shmem) + size - 8);
+> +#endif
+
+The 32 bit case is defined as a u64 in two places above.
+
+> +
+> +		/* The func-id & capability-id are kept in last 16 bytes of shmem.
+> +		 *     +-------+
+> +		 *     |       |
+> +		 *     | shmem |
+> +		 *     |       |
+> +		 *     |       |
+> +		 *     +-------+ <-- (size - 16)
+> +		 *     | funcId|
+> +		 *     +-------+ <-- (size - 8)
+> +		 *     | capId |
+> +		 *     +-------+ <-- size
+> +		 */
+
+Personally I'd add one more space to the right side of the table after
+funcId.
+
+> -	arm_smccc_1_1_invoke(scmi_info->func_id, page, offset, 0, 0, 0, 0, 0,
+> -			     &res);
+> +	if (scmi_info->qcom_xport)
+> +		arm_smccc_1_1_hvc(scmi_info->func_id, cap_id, 0, 0, 0, 0, 0, 0,
+> +				  &res);
+> +	else
+> +		arm_smccc_1_1_invoke(scmi_info->func_id, page, offset, 0, 0, 0,
+> +				     0, 0, &res);
+
+Does it make sense to call this variable qcom_xport? Would hvc_xport be
+a more appropriate name?
+
+Brian
+
