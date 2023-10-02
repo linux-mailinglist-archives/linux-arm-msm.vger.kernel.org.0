@@ -2,200 +2,202 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 69F3F7B5880
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 18:57:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E1F8A7B584C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 18:57:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237812AbjJBQdy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Oct 2023 12:33:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39488 "EHLO
+        id S238480AbjJBQxa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Oct 2023 12:53:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237799AbjJBQdx (ORCPT
+        with ESMTP id S238493AbjJBQx3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Oct 2023 12:33:53 -0400
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B48A3B3;
-        Mon,  2 Oct 2023 09:33:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1696264426; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=pzk0U+B64dl6gOW8iAE8z12BypQO2ykpNryEa2X+KEMjVDRNfrIGJWF/defESIa2DR
-    2fy0xqnQRJ6erba9rMaiJh709cFPhm5BacSbK1l9rLcLvyLE55VFCbJlCpetMZtEwh89
-    vPKq/dkw6J3iL2fn5LnYMMrRmu5N9mSPGdE9VJUBysPr57MhZnOEabWo1HVRubmB6EQl
-    8w99pk0LogdpxdXy6WEY12/wiszENnCV4wjgs5V8GCN8Am2oWdGIslktvltjPrHsk9SO
-    /yI4cXIXLTGSqqlUfiR072+2EaommcagaA855TksOYF8dssgOk1Bfp4X0C75NG5qtfCO
-    pVeg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1696264426;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=N/48FahJ9clZ0OY5lyL8EtmUvzfT96fJTVA/eqGBPDI=;
-    b=aSRaFa6V9fLb1zBC25cD/e2EZdDKn4T+s8JlSS/9L8MA+fI4EW5Pqg6Xl6BiTDiRgB
-    Qvvep9x0KFIXKRMMUbAqbjbo9g2p1F8kzSyt+AMmRN+lgNKJZ5Kl+2vLaowi3ak+DTPE
-    EXyaY0tRngjmH77PtBnxcnI98iiem6AdJbDB8f3fum+5bscr1MFVqszX01BKvmzkPivA
-    uTyfx6vWNov4p67ZeonXrpQTYxVCOFZn5xvfCMgp3RZevUU9LE31cmGlKaQfFVqk9D5w
-    h8iOvw7H8u5ESM+3YW8QGLs6FKoVOKT1nViBCVfT/TeqJx6R/sJspVKpdIiPSJ+KGOgq
-    vQ2w==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1696264426;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=N/48FahJ9clZ0OY5lyL8EtmUvzfT96fJTVA/eqGBPDI=;
-    b=IMxh7fOfJBhDi6NQMOC6gwCuS8n6JIf5wsnC0SrVY7zJWYt3iKWluAo9a1KRf0nkcl
-    LG/+BkRBihVJ8tWV2cM3kuMPQgInXQAac6Dkkn45WZdNqVe1yJjWN671q81Jyw0LLk5X
-    fhSDjkfYEIjfpziK9dQQApm0+GTprDN750VDQ0e5gQb7yrx4I7homqZsIY826UATlYv8
-    yCXnr2kuEvONl9OnalR7wQuMuLZXc/sVVnk4Y/squcXK8f3JbJMutbSsEZmwj1CJNmI+
-    dmL9FCgFge4Si4amw+qjMU3MVmIANyziGhVZ3gMPkhSkgHpS6mnRBLMo9af8RVathuqJ
-    zr8w==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1696264426;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=N/48FahJ9clZ0OY5lyL8EtmUvzfT96fJTVA/eqGBPDI=;
-    b=CU5/vTzBZuWK7VevwzB+9FMfWczW1tKb05HwZCMa9ObKkAhCTKEqLr8kPMQ06MvEZs
-    icgoeF9P+56vjBP6cHCA==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8paF1A=="
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.8.2 DYNA|AUTH)
-    with ESMTPSA id R04c57z92GXj0fR
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Mon, 2 Oct 2023 18:33:45 +0200 (CEST)
-Date:   Mon, 2 Oct 2023 18:33:39 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Subject: Re: [PATCH 03/13] arm64: dts: qcom: msm8916: Add common
- msm8916-modem-qdsp6.dtsi
-Message-ID: <ZRrv0edZ3lf4wxYx@gerhold.net>
-References: <20230926-msm8916-modem-v1-0-398eec74bac9@gerhold.net>
- <20230926-msm8916-modem-v1-3-398eec74bac9@gerhold.net>
- <45665b43-3be9-4f27-aa88-12cdef56346d@linaro.org>
- <ZRMrqsZ0QeDNFHFj@gerhold.net>
- <1be747ae-1d80-4ebc-9841-c0e98e64a0d1@linaro.org>
- <ZRM8XzmAz8RAqkUg@gerhold.net>
- <86c130a3-4231-a363-f064-a637d599b936@linaro.org>
+        Mon, 2 Oct 2023 12:53:29 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A40CBB8
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 09:53:25 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id d9443c01a7336-1bd9b4f8e0eso103015ad.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 09:53:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1696265605; x=1696870405; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=zPrUH5J+k/nTCuPqHTvyGlvTCCkInD9EOwhmWD637e8=;
+        b=f16iptU4NGHN2Gshz+newGrq9CO5Bcs/ufv6XeLLZ85fOMW1YLhZQmOVWTQIY8rt+8
+         ON2yqMF+f1r0+7a+TlMkpnSLafnmqIBYGJ6Fi7JT2SlM9MOgZdAqte8NUOzgnc7Q5swn
+         FDoEZ/qC4MC8IeDPukdjDGGFpV+b/aIrxufN8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696265605; x=1696870405;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zPrUH5J+k/nTCuPqHTvyGlvTCCkInD9EOwhmWD637e8=;
+        b=cQV1Is7asMZGDi6+PUMi7ZSNGXLr7w1RppQVFeUq5N9fMYcWPqL2D+cvYnJ+BuH2vZ
+         nJJFA6fmJ6qqFLeMAdd2wZ56r4+TP/+5o5mpektGYOfzxxPJCTjFqP7iTGXWFefKB8a6
+         PlSvq4X4INjy0hRXzpNcr1fH+/2irsEOxoi11wuNmj6b9en3OjqmsRnlf//7uc2pWbT7
+         18Vh/ZVqQYR1SOrBdBb1WY5o1xktAHDho0VCSlzv9no1nnlZYWT+LfDAJbyTKTxMzk9n
+         VbSPmWUMe2YuEZiMjoWccaCqzmKVHpWd2xpd63uzFDGhbqqs9mKIeIaS4qbFAheEF4FO
+         2DAA==
+X-Gm-Message-State: AOJu0YzHF7wOY4CgSbI+ZWeP1xoxUbBQGYSsMuS6VOLr9EIJDm1dYEmV
+        BANRiI+yiCXNjnL5YI0iRrRDnO9o8wN5XcSK+pE=
+X-Google-Smtp-Source: AGHT+IFfbFaeQO9242udM1wOdI7Nv+81OlhqJQIxio/cgMdcj4JL3Y+uRVoQhZuEb4vC1HVU7rLNZA==
+X-Received: by 2002:a17:902:ec8d:b0:1c6:1fc3:6857 with SMTP id x13-20020a170902ec8d00b001c61fc36857mr13017401plg.27.1696265605046;
+        Mon, 02 Oct 2023 09:53:25 -0700 (PDT)
+Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
+        by smtp.gmail.com with ESMTPSA id h6-20020a170902f54600b001c74876f032sm6638850plf.162.2023.10.02.09.53.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Oct 2023 09:53:24 -0700 (PDT)
+Date:   Mon, 2 Oct 2023 09:53:21 -0700
+From:   Kees Cook <keescook@chromium.org>
+To:     Alex Deucher <alexdeucher@gmail.com>
+Cc:     Christian =?iso-8859-1?Q?K=F6nig?= 
+        <ckoenig.leichtzumerken@gmail.com>,
+        David Airlie <airlied@gmail.com>,
+        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
+        Karol Herbst <kherbst@redhat.com>, Tom Rix <trix@redhat.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        dri-devel@lists.freedesktop.org,
+        Chris Wilson <chris@chris-wilson.co.uk>,
+        Prike Liang <Prike.Liang@amd.com>,
+        Huang Rui <ray.huang@amd.com>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Matthew Brost <matthew.brost@intel.com>,
+        Evan Quan <evan.quan@amd.com>, Emma Anholt <emma@anholt.net>,
+        amd-gfx@lists.freedesktop.org,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Lijo Lazar <lijo.lazar@amd.com>,
+        VMware Graphics Reviewers 
+        <linux-graphics-maintainer@vmware.com>,
+        Ben Skeggs <bskeggs@redhat.com>,
+        Andi Shyti <andi.shyti@linux.intel.com>,
+        nouveau@lists.freedesktop.org, David Airlie <airlied@redhat.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Chia-I Wu <olvaffe@gmail.com>, llvm@lists.linux.dev,
+        Yifan Zhang <yifan1.zhang@amd.com>,
+        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        Kevin Wang <kevin1.wang@amd.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Nathan Chancellor <nathan@kernel.org>, Le Ma <le.ma@amd.com>,
+        Gurchetan Singh <gurchetansingh@chromium.org>,
+        Maxime Ripard <mripard@kernel.org>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        virtualization@lists.linux-foundation.org,
+        Sean Paul <sean@poorly.run>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Xiaojian Du <Xiaojian.Du@amd.com>, Lang Yu <Lang.Yu@amd.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Tejas Upadhyay <tejas.upadhyay@intel.com>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        linux-kernel@vger.kernel.org,
+        Hawking Zhang <Hawking.Zhang@amd.com>,
+        Rob Clark <robdclark@gmail.com>, Melissa Wen <mwen@igalia.com>,
+        John Harrison <john.c.harrison@intel.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Nirmoy Das <nirmoy.das@intel.com>,
+        freedreno@lists.freedesktop.org,
+        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
+        Zack Rusin <zackr@vmware.com>, linux-hardening@vger.kernel.org
+Subject: Re: [PATCH 0/9] drm: Annotate structs with __counted_by
+Message-ID: <202310020952.E7DE0948C0@keescook>
+References: <20230922173110.work.084-kees@kernel.org>
+ <169601600138.3014939.8511343741428844249.b4-ty@chromium.org>
+ <83cd056c-52ae-01dd-7576-42d41da64c26@gmail.com>
+ <CADnq5_Ma2CrLYggJHKFEObsNmUoqJwb2p1xai5DfL=m43U6zEA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <86c130a3-4231-a363-f064-a637d599b936@linaro.org>
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CADnq5_Ma2CrLYggJHKFEObsNmUoqJwb2p1xai5DfL=m43U6zEA@mail.gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 02, 2023 at 11:59:21AM +0200, Konrad Dybcio wrote:
-> 
-> 
-> On 9/26/23 22:17, Stephan Gerhold wrote:
-> > On Tue, Sep 26, 2023 at 10:01:21PM +0200, Konrad Dybcio wrote:
-> > > On 26.09.2023 21:06, Stephan Gerhold wrote:
-> > > > On Tue, Sep 26, 2023 at 08:49:24PM +0200, Konrad Dybcio wrote:
-> > > > > On 26.09.2023 18:51, Stephan Gerhold wrote:
-> > > > > > Most MSM8916/MSM8939 devices use very similar setups for the modem,
-> > > > > > because most of the device-specific details are abstracted by the modem
-> > > > > > firmware. There are several definitions (status switches, DAI links
-> > > > > > etc) that will be exactly the same for every board.
-> > > > > > 
-> > > > > > Introduce a common msm8916-modem-qdsp6.dtsi include that can be used to
-> > > > > > simplify enabling the modem for such devices. By default the
-> > > > > > digital/analog codec in the SoC/PMIC is used, but boards can define
-> > > > > > additional codecs using the templates for Secondary and Quaternary
-> > > > > > MI2S.
-> > > > > > 
-> > > > > > Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> > > > > > ---
-> > > > > I'd rather see at least one usage so that you aren't introducing
-> > > > > effectively non-compiled code..
-> > > > > 
-> > > > 
-> > > > There are 10 usages in the rest of the patch series.
-> > > > Is that enough? :D
-> > > > 
-> > > > IMHO it doesn't make sense to squash this with one of the device
-> > > > patches, especially considering several of them are primarily authored
-> > > > by others.
-> > > I see..
-> > > 
-> > > Well, I guess I don't have better counter-arguments, but please
-> > > consider this the next time around.
-> > > 
-> > 
-> > Will do!
-> > 
-> > > [...]
-> > > 
-> > > > > > +&lpass_codec {
-> > > > > > +	status = "okay";
-> > > > > > +};
-> > > > > Any reason for it to stay disabled?
-> > > > > 
-> > > > 
-> > > > You mean in msm8916.dtsi?
-> > > Yes
-> > > 
-> > > > For the SoC dtsi we don't make assumptions
-> > > > what devices use or not. There could be devices that ignore the internal
-> > > > codec entirely. If there is nothing connected to the codec lpass_codec
-> > > > should not be enabled (e.g. the msm8916-ufi.dtsi devices).
-> > > See my reply to patch 5
-> > > 
-> > > [...]
-> > > 
-> > 
-> > Let's continue discussing that there I guess. :D
-> > 
-> > > > > > +	sound_dai_secondary: mi2s-secondary-dai-link {
-> > > > > > +		link-name = "Secondary MI2S";
-> > > > > > +		status = "disabled"; /* Needs extra codec configuration */
-> > > > > Hmm.. Potential good user of /omit-if-no-ref/?
-> > > > > 
-> > > > 
-> > > > AFAICT /omit-if-no-ref/ is for phandle references only. Basically it
-> > > > would only work if you would somewhere reference the phandle:
-> > > > 
-> > > > 	list-of-sound-dais = <&sound_dai_primary &sound_dai_secondary>;
-> > > > 
-> > > > But this doesn't exist so /omit-if-no-ref/ cannot be used here.
-> > > Ahh right, this is the one we don't reference.. Too bad,
-> > > would be a nice fit :/
-> > > 
-> > > I only see one usage of it though (patch 7), perhaps it could
-> > > be kept local to that one?
-> > > 
-> > 
-> > This patch series just contains the initial set of
-> > msm8916-modem-qdsp6.dtsi users (for devices which are already upstream).
-> > We probably have like 20 more that still need to be upstreamed. :D
-> > 
-> > sound_dai_secondary is fairly rare, but there is at least one more user
-> > that will probably end up upstream soon.
-> 2 users don't sound particularly great in a devicetree included by 20 other
-> non-users
-> 
-> > I think the overhead of these template notes is absolutely negligible
-> > compared to all the (potentially) unused SoC nodes we have. :D
-> Yes, however the unused SoC nodes are mostly standardized and could be used
-> as-they-are on a vast majority of devices
-> 
+On Mon, Oct 02, 2023 at 11:06:19AM -0400, Alex Deucher wrote:
+> On Mon, Oct 2, 2023 at 5:20 AM Christian König
+> <ckoenig.leichtzumerken@gmail.com> wrote:
+> >
+> > Am 29.09.23 um 21:33 schrieb Kees Cook:
+> > > On Fri, 22 Sep 2023 10:32:05 -0700, Kees Cook wrote:
+> > >> This is a batch of patches touching drm for preparing for the coming
+> > >> implementation by GCC and Clang of the __counted_by attribute. Flexible
+> > >> array members annotated with __counted_by can have their accesses
+> > >> bounds-checked at run-time checking via CONFIG_UBSAN_BOUNDS (for array
+> > >> indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family functions).
+> > >>
+> > >> As found with Coccinelle[1], add __counted_by to structs that would
+> > >> benefit from the annotation.
+> > >>
+> > >> [...]
+> > > Since this got Acks, I figure I should carry it in my tree. Let me know
+> > > if this should go via drm instead.
+> > >
+> > > Applied to for-next/hardening, thanks!
+> > >
+> > > [1/9] drm/amd/pm: Annotate struct smu10_voltage_dependency_table with __counted_by
+> > >        https://git.kernel.org/kees/c/a6046ac659d6
+> >
+> > STOP! In a follow up discussion Alex and I figured out that this won't work.
 
-To be fair we're talking about 152 bytes difference here, in a DTB that
-is like 60,000 bytes total. But I can't think of enough compelling
-arguments for my "template node" approach, so I will try to rework this
-in v2. Let's see if I can get rid of the unused nodes without too much
-mess. :)
+I'm so confused; from the discussion I saw that Alex said both instances
+were false positives?
 
-Thanks,
-Stephan
+> >
+> > The value in the structure is byte swapped based on some firmware
+> > endianness which not necessary matches the CPU endianness.
+> 
+> SMU10 is APU only so the endianess of the SMU firmware and the CPU
+> will always match.
+
+Which I think is what is being said here?
+
+> > Please revert that one from going upstream if it's already on it's way.
+> >
+> > And because of those reasons I strongly think that patches like this
+> > should go through the DRM tree :)
+
+Sure, that's fine -- please let me know. It was others Acked/etc. Who
+should carry these patches?
+
+Thanks!
+
+-Kees
+
+
+> >
+> > Regards,
+> > Christian.
+> >
+> > > [2/9] drm/amdgpu/discovery: Annotate struct ip_hw_instance with __counted_by
+> > >        https://git.kernel.org/kees/c/4df33089b46f
+> > > [3/9] drm/i915/selftests: Annotate struct perf_series with __counted_by
+> > >        https://git.kernel.org/kees/c/ffd3f823bdf6
+> > > [4/9] drm/msm/dpu: Annotate struct dpu_hw_intr with __counted_by
+> > >        https://git.kernel.org/kees/c/2de35a989b76
+> > > [5/9] drm/nouveau/pm: Annotate struct nvkm_perfdom with __counted_by
+> > >        https://git.kernel.org/kees/c/188aeb08bfaa
+> > > [6/9] drm/vc4: Annotate struct vc4_perfmon with __counted_by
+> > >        https://git.kernel.org/kees/c/59a54dc896c3
+> > > [7/9] drm/virtio: Annotate struct virtio_gpu_object_array with __counted_by
+> > >        https://git.kernel.org/kees/c/5cd476de33af
+> > > [8/9] drm/vmwgfx: Annotate struct vmw_surface_dirty with __counted_by
+> > >        https://git.kernel.org/kees/c/b426f2e5356a
+> > > [9/9] drm/v3d: Annotate struct v3d_perfmon with __counted_by
+> > >        https://git.kernel.org/kees/c/dc662fa1b0e4
+> > >
+> > > Take care,
+> > >
+> >
+
+-- 
+Kees Cook
