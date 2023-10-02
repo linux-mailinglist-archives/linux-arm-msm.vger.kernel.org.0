@@ -2,114 +2,303 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1152B7B551F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 16:32:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA23B7B551E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 16:32:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237695AbjJBOUl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Oct 2023 10:20:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38938 "EHLO
+        id S237762AbjJBOX2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Oct 2023 10:23:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237744AbjJBOUh (ORCPT
+        with ESMTP id S237742AbjJBOX1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Oct 2023 10:20:37 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6175AE1
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 07:20:34 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-5347e657a11so11714815a12.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 07:20:34 -0700 (PDT)
+        Mon, 2 Oct 2023 10:23:27 -0400
+Received: from mail-vs1-xe29.google.com (mail-vs1-xe29.google.com [IPv6:2607:f8b0:4864:20::e29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B2DBB7
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 07:23:23 -0700 (PDT)
+Received: by mail-vs1-xe29.google.com with SMTP id ada2fe7eead31-454529a2deeso3920033137.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 07:23:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1696256432; x=1696861232; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=q5zIgA66kGCbchY/Ojg8H7iySCE0A8qr1NX3eo7f44c=;
-        b=1lWWqahTP3gORKGiaZ8FZz7o2kLTESUJjkAIci0gU12uDu/IFMeMlaQLXmeAABy3X+
-         Cxo7KXg+aaBZlGGZWjpYvAotclV+xpXuECjAx0bgmlnQFMVb3Sh4jeKjK56c1s6G2W1M
-         k4M89kG68EG98Td4xVF39xAOg9ceT3i52CNw6PqcXGs5DX0vOMInmXcZPftADSiTNtqM
-         L0Ri8NMboj4J4RtM0EsKAD8skPqGxjgWi0qImLljKBVDsLQ2786l8xiI+T++oYX3ePdm
-         v6U8MAr79HPkmIVJLmVxTqZTivCjFBfNG/lNzKrXyrTpP7E2c2UYCTwc17VQ5wZ1uu32
-         VbCw==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1696256602; x=1696861402; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uxPjHX8lOdg5VlveiL5SkCXpx+vPkDUf+Tm1mFqI5VM=;
+        b=qMJQM4jP5TmU5Tj262qA7kPKWAq3tzEhXHVM0mHzQ6gKYh997GFEVg0u3IjfaS12cI
+         natHDYF4rJN/5J/sbf+hHuf4rZjXHkSI2QotJ8FaD4feAXguchODcUvF6pqy0JqcLiVP
+         51r5me4Y/jCg0P1My3XO20Bq7GwpqjgWa0AMtA1deDC5sAgXd7cWOIim8tN/8btsAI4c
+         2EkSVEvdvYoddhAzZi3F779t/S4coPhZ5Nx8M4zBFVLiFls1FLYdpCsQyMyHpppkEVA4
+         4+IZVHFFZVHfK78cDX5wQ5QAjCio/mz7BGCi1K1yO3HtKIqvXpnVmkSFRHsy2q1Q54J9
+         1I/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696256432; x=1696861232;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1696256602; x=1696861402;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=q5zIgA66kGCbchY/Ojg8H7iySCE0A8qr1NX3eo7f44c=;
-        b=IVDgD0XOeiZ1jRxqfmr3GKQwx5DFB5tcXCKHRIE6yxiiojtR29yBNLh5vvEAtA2B/Y
-         onOjpMJTgzs3ajkgqnivDKKS2wjv+fqLz0khFvQ+1BI/9W7GWjk41Gl0KsjSkdC5OM6a
-         iVjaE1H/pU6r3y0bD/hjEuOxYYbauymVIGWP2nAJ/w1sHVS8HZgfqjAAbsVImq/MJ4Nr
-         Xn7pnrDYdqD7Tu4QA/UoP2/cCxaN71B9FkpkzS5W3AlHYh3ObdDiUaz55KDJWoaGcu0G
-         ZmhM4KFvtmzf2m4tBHX54Gg0H34SwNDxiN0BMSBC9Kd56ZMEP3asLW57jliUwSrW3k3B
-         Ufmw==
-X-Gm-Message-State: AOJu0YxVVOThTZPzpaRs2FvujoqhjZYLKVTE+KV3yplIik7glooPxGM6
-        DE4HMGwbMOBatFTfi6gv2QGBPw==
-X-Google-Smtp-Source: AGHT+IH/w7klNPEPn1wR9ywDnQbRqtXeMxEtpPTO2LVbdWvlh6Z4nUdXEHcA+EM+SbMdTweqx3hP2Q==
-X-Received: by 2002:aa7:c24d:0:b0:530:9b94:96e with SMTP id y13-20020aa7c24d000000b005309b94096emr9420553edo.41.1696256432713;
-        Mon, 02 Oct 2023 07:20:32 -0700 (PDT)
-Received: from otso.luca.vpn.lucaweiss.eu (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id w10-20020aa7dcca000000b005309eb7544fsm15583356edu.45.2023.10.02.07.20.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Oct 2023 07:20:32 -0700 (PDT)
-From:   Luca Weiss <luca.weiss@fairphone.com>
-Date:   Mon, 02 Oct 2023 16:20:31 +0200
-Subject: [PATCH v2 3/3] arm64: dts: qcom: qcm6490-fairphone-fp5: Enable
- venus node
+        bh=uxPjHX8lOdg5VlveiL5SkCXpx+vPkDUf+Tm1mFqI5VM=;
+        b=fhTQS3LMheo7fvf6Tt1ye8ULdp91bPr9kKchUK8fYCpqjVsfChtK+/cFTmG9WueMP+
+         V741w0FLRCKbKBmki9VGt64Br2hTkzaGQW/pXUsPWzFLV86Luw1dZs1i94kchBG28pEn
+         7LKww+Z7QJaUMSDNRdHfudCCS4amfHKwaoQzEbA6d0CAkEPm5uv7f6JhOWCP9xJe5HOD
+         a54Q4/dDk8Xz5PLaYVr42gCZokKHTAk9u20AkVtyWc9PN+/PF97pisxw1AqqL84adZKB
+         F7KIW/1bG2zLuqYTQ/ESVnuY/FJ9L4nAn3IrvkvtI3RJf/9qYExyJr8rCMxSsXUyb2GC
+         bfpQ==
+X-Gm-Message-State: AOJu0YxCI1n1Y5YfBv+tMV+zOrDj/AfaYr8gm3dWm7cCZNyk5IWREhZL
+        UkYN/FlVns6LwsTgiAGiaBQqxCt26n1V0CCLoR6+jg==
+X-Google-Smtp-Source: AGHT+IH+Qwl344hqarvnFgd7d9muanbsUuF8KD20GSUMYmpmcxR4p8pJ6Y9KSS6MqhaEBbPWRRCXGOcQUYELCjahEBQ=
+X-Received: by 2002:a05:6102:1cb:b0:452:9ccb:fac6 with SMTP id
+ s11-20020a05610201cb00b004529ccbfac6mr9453083vsq.32.1696256602101; Mon, 02
+ Oct 2023 07:23:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231002-sc7280-venus-pas-v2-3-bd2408891317@fairphone.com>
-References: <20231002-sc7280-venus-pas-v2-0-bd2408891317@fairphone.com>
-In-Reply-To: <20231002-sc7280-venus-pas-v2-0-bd2408891317@fairphone.com>
-To:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+References: <20230928092040.9420-1-brgl@bgdev.pl> <20230928092040.9420-7-brgl@bgdev.pl>
+ <gwflmag5pq7osprj25l7i4tgyln2nauuqcwdhth2eomareooag@4dw4lwk4vr36>
+ <CAMRc=Mfxt1DLinxMcKivQqqnHvFv5P8WXNnfAwnfrHgoz+q-5w@mail.gmail.com>
+ <20230929204404.enzsjanohdqqpmk4@halaney-x13s> <2539186e-e0ec-4eba-9d6a-d966e00f0eb9@quicinc.com>
+ <5puhrnpw2rww6kawt77krges6aj4re6nfblqkomuw5njtwydya@cuarfakzv62i> <6wt36wqcnvzp5znasldeu7txcscslydpxn7fcanzt3e77xcaju@ufbolnewsqwl>
+In-Reply-To: <6wt36wqcnvzp5znasldeu7txcscslydpxn7fcanzt3e77xcaju@ufbolnewsqwl>
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+Date:   Mon, 2 Oct 2023 16:23:11 +0200
+Message-ID: <CAMRc=McxX6q12gKry-8xy8Qmhs1vfNCO1iV3zGSC1He7S1YDZA@mail.gmail.com>
+Subject: Re: [PATCH v2 06/11] firmware: qcom: scm: make qcom_scm_pas_init_image()
+ use the SCM allocator
+To:     Andrew Halaney <ahalaney@redhat.com>
+Cc:     Elliot Berman <quic_eberman@quicinc.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.12.3
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        kernel@quicinc.com,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the venus node so that the video encoder/decoder will start
-working.
+On Mon, Oct 2, 2023 at 4:15=E2=80=AFPM Andrew Halaney <ahalaney@redhat.com>=
+ wrote:
+>
+> On Mon, Oct 02, 2023 at 08:24:09AM -0500, Andrew Halaney wrote:
+> > On Fri, Sep 29, 2023 at 03:48:37PM -0700, Elliot Berman wrote:
+> > > Hi Andrew,
+> > >
+> > > On 9/29/2023 1:44 PM, Andrew Halaney wrote:
+> > > > On Fri, Sep 29, 2023 at 12:22:16PM -0700, Bartosz Golaszewski wrote=
+:
+> > > >> On Fri, 29 Sep 2023 21:16:51 +0200, Andrew Halaney <ahalaney@redha=
+t.com> said:
+> > > >>> On Thu, Sep 28, 2023 at 11:20:35AM +0200, Bartosz Golaszewski wro=
+te:
+> > > >>>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > > >>>>
+> > > >>>> Let's use the new SCM memory allocator to obtain a buffer for th=
+is call
+> > > >>>> instead of using dma_alloc_coherent().
+> > > >>>>
+> > > >>>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.o=
+rg>
+> > > >>>> ---
+> > > >>>>  drivers/firmware/qcom/qcom_scm.c | 16 +++++-----------
+> > > >>>>  1 file changed, 5 insertions(+), 11 deletions(-)
+> > > >>>>
+> > > >>>> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware=
+/qcom/qcom_scm.c
+> > > >>>> index 02a773ba1383..c0eb81069847 100644
+> > > >>>> --- a/drivers/firmware/qcom/qcom_scm.c
+> > > >>>> +++ b/drivers/firmware/qcom/qcom_scm.c
+> > > >>>> @@ -532,7 +532,7 @@ static void qcom_scm_set_download_mode(bool =
+enable)
+> > > >>>>  int qcom_scm_pas_init_image(u32 peripheral, const void *metadat=
+a, size_t size,
+> > > >>>>                            struct qcom_scm_pas_metadata *ctx)
+> > > >>>>  {
+> > > >>>> -      dma_addr_t mdata_phys;
+> > > >>>> +      phys_addr_t mdata_phys;
+> > > >>>
+> > > >>>>        void *mdata_buf;
+> > > >>>>        int ret;
+> > > >>>>        struct qcom_scm_desc desc =3D {
+> > > >>>> @@ -544,13 +544,7 @@ int qcom_scm_pas_init_image(u32 peripheral,=
+ const void *metadata, size_t size,
+> > > >>>>        };
+> > > >>>>        struct qcom_scm_res res;
+> > > >>>>
+> > > >>>> -      /*
+> > > >>>> -       * During the scm call memory protection will be enabled =
+for the meta
+> > > >>>> -       * data blob, so make sure it's physically contiguous, 4K=
+ aligned and
+> > > >>>> -       * non-cachable to avoid XPU violations.
+> > > >>>> -       */
+> > > >>>> -      mdata_buf =3D dma_alloc_coherent(__scm->dev, size, &mdata=
+_phys,
+> > > >>>> -                                     GFP_KERNEL);
+> > > >>>> +      mdata_buf =3D qcom_scm_mem_alloc(size, GFP_KERNEL);
+> > > >>>
+> > > >>> mdata_phys is never initialized now, and its what's being shoved =
+into
+> > > >>> desc.args[1] later, which I believe is what triggered the -EINVAL
+> > > >>> with qcom_scm_call() that I reported in my cover letter reply thi=
+s
+> > > >>> morning.
+> > > >>>
+> > > >>> Prior with the DMA API that would have been the device view of th=
+e buffer.
+> > > >>>
+> > > >>
+> > > >> Gah! Thanks for finding this.
+> > > >>
+> > > >> Can you try the following diff?
+> > > >>
+> > > >> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/q=
+com/qcom_scm.c
+> > > >> index 794388c3212f..b0d4ea237034 100644
+> > > >> --- a/drivers/firmware/qcom/qcom_scm.c
+> > > >> +++ b/drivers/firmware/qcom/qcom_scm.c
+> > > >> @@ -556,6 +556,7 @@ int qcom_scm_pas_init_image(u32 peripheral, co=
+nst
+> > > >> void *metadata, size_t size,
+> > > >>                  dev_err(__scm->dev, "Allocation of metadata buffe=
+r failed.\n");
+> > > >>                  return -ENOMEM;
+> > > >>          }
+> > > >> +        mdata_phys =3D qcom_scm_mem_to_phys(mdata_buf);
+> > > >>          memcpy(mdata_buf, metadata, size);
+> > > >>
+> > > >>          ret =3D qcom_scm_clk_enable();
+> > > >> @@ -578,7 +579,7 @@ int qcom_scm_pas_init_image(u32 peripheral, co=
+nst
+> > > >> void *metadata, size_t size,
+> > > >>                  qcom_scm_mem_free(mdata_buf);
+> > > >>          } else if (ctx) {
+> > > >>                  ctx->ptr =3D mdata_buf;
+> > > >> -                ctx->phys =3D qcom_scm_mem_to_phys(mdata_buf);
+> > > >> +                ctx->phys =3D mdata_phys;
+> > > >>                  ctx->size =3D size;
+> > > >>          }
+> > > >>
+> > > >> Bart
+> > > >>
+> > > >
+> > > > For some reason that I can't explain that is still not working. It =
+seems
+> > > > the SMC call is returning !0 and then we return -EINVAL from there
+> > > > with qcom_scm_remap_error().
+> > > >
+> > > > Here's a really crummy diff of what I hacked in during lunch to deb=
+ug (don't
+> > > > judge my primitive debug skills):
+> > > >
+> > >
+> > > I don't know what you're talking about :-)
+> > >
+> > > > diff --git a/drivers/firmware/qcom/qcom_scm-smc.c b/drivers/firmwar=
+e/qcom/qcom_scm-smc.c
+> > > > index 0d5554df1321..56eab0ae5f3a 100644
+> > > > --- a/drivers/firmware/qcom/qcom_scm-smc.c
+> > > > +++ b/drivers/firmware/qcom/qcom_scm-smc.c
+> > > > @@ -162,6 +162,8 @@ int __scm_smc_call(struct device *dev, const st=
+ruct qcom_scm_desc *desc,
+> > > >         struct arm_smccc_res smc_res;
+> > > >         struct arm_smccc_args smc =3D {0};
+> > > >
+> > > > +       dev_err(dev, "%s: %d: We are in this function\n", __func__,=
+ __LINE__);
+> > > > +
+> > > >         smc.args[0] =3D ARM_SMCCC_CALL_VAL(
+> > > >                 smccc_call_type,
+> > > >                 qcom_smccc_convention,
+> > > > @@ -174,6 +176,7 @@ int __scm_smc_call(struct device *dev, const st=
+ruct qcom_scm_desc *desc,
+> > > >         if (unlikely(arglen > SCM_SMC_N_REG_ARGS)) {
+> > > >                 alloc_len =3D SCM_SMC_N_EXT_ARGS * sizeof(u64);
+> > > >                 args_virt =3D qcom_scm_mem_alloc(PAGE_ALIGN(alloc_l=
+en), flag);
+> > > > +               dev_err(dev, "%s: %d: Hit the unlikely case!\n", __=
+func__, __LINE__);
+> > > >
+> > > >                 if (!args_virt)
+> > > >                         return -ENOMEM;
+> > > > @@ -197,6 +200,7 @@ int __scm_smc_call(struct device *dev, const st=
+ruct qcom_scm_desc *desc,
+> > > >
+> > > >         /* ret error check follows after args_virt cleanup*/
+> > > >         ret =3D __scm_smc_do(dev, &smc, &smc_res, atomic);
+> > > > +       dev_err(dev, "%s: %d: ret: %d\n", __func__, __LINE__, ret);
+> > > >
+> > > >         if (ret)
+> > > >                 return ret;
+> > > > @@ -205,8 +209,10 @@ int __scm_smc_call(struct device *dev, const s=
+truct qcom_scm_desc *desc,
+> > > >                 res->result[0] =3D smc_res.a1;
+> > > >                 res->result[1] =3D smc_res.a2;
+> > > >                 res->result[2] =3D smc_res.a3;
+> > > > +               dev_err(dev, "%s: %d: 0: %llu, 1: %llu: 2: %llu\n",=
+ __func__, __LINE__, res->result[0], res->result[1], res->result[2]);
+> > > >         }
+> > > >
+> > > > +       dev_err(dev, "%s: %d: smc_res.a0: %lu\n", __func__, __LINE_=
+_, smc_res.a0);
+> > > >         return (long)smc_res.a0 ? qcom_scm_remap_error(smc_res.a0) =
+: 0;
+> > > >
+> > > >
+> > > > And that all spams dmesg successfully for most cases, but the
+> > > > pas_init_image calls log this out:
+> > > >
+> > > > [   16.362965] remoteproc remoteproc1: powering up 1b300000.remotep=
+roc
+> > > > [   16.364897] remoteproc remoteproc1: Booting fw image qcom/sc8280=
+xp/LENOVO/21BX/qccdsp8280.mbn, size 3575808
+> > > > [   16.365009] qcom_scm firmware:scm: __scm_smc_call: 165: We are i=
+n this function
+> > > > [   16.365251] qcom_scm firmware:scm: __scm_smc_call: 203: ret: 0
+> > > > [   16.365256] qcom_scm firmware:scm: __scm_smc_call: 212: 0: 0, 1:=
+ 0: 2: 0
+> > > > [   16.365261] qcom_scm firmware:scm: __scm_smc_call: 215: smc_res.=
+a0: 4291821558
+> > > >
+> > > > At the moment I am unsure why...
+> > > >
+> > > Does the issue appear right after taking patch 6 or does it only appe=
+ar after taking
+> > > the whole series? If it's just to this patch, then maybe something wr=
+ong with
+> > > the refactor: shm bridge isn't enabled at this point in the series.
+> > >
+> >
+> > I've only been testing the series as a whole on top of a 6.6 based
+> > branch, I'm going to try and test some more today to see if just the
+> > allocator bits (but not the SHM bridge enablement) works alright for
+> > me.
+> >
+>
+> After testing a little more with the fix Bart sent above,
+> the allocator refactor seems to work well.
+> With "firmware: qcom: scm: enable SHM bridge" applied is when I see the
+> errors I pointed out above. All prior patches cause no problems on boot
+> for me.
+>
+> For patches 1-9 (with the fix sent here for patch 6) please feel free
+> to add:
+>
+>     Tested-by: Andrew Halaney <ahalaney@redhat.com> # sc8280xp-lenovo-thi=
+nkpad-x13s
+>
+> If anyone has suggestions for debugging why the switch to using
+> SHM bridge is breaking firmware loading for me, I'm willing to give
+> that a try.
+>
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 5 +++++
- 1 file changed, 5 insertions(+)
+Is it possible that sc8280xp doesn't support SHM bridge but for some
+reason __qcom_scm_is_call_available() returns true when checking if it
+does?
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-index 2de0b8c26c35..d29f10f822c9 100644
---- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-+++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-@@ -665,3 +665,8 @@ &usb_1_qmpphy {
- 
- 	status = "okay";
- };
-+
-+&venus {
-+	firmware-name = "qcom/qcm6490/fairphone5/venus.mbn";
-+	status = "okay";
-+};
+That's the only thing that comes to my mind ATM.
 
--- 
-2.42.0
-
+Bart
