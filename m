@@ -2,82 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 52B9D7B4EC6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 11:14:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C5437B4ECE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 11:15:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235972AbjJBJOn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Oct 2023 05:14:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49100 "EHLO
+        id S230062AbjJBJPs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Oct 2023 05:15:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235965AbjJBJOn (ORCPT
+        with ESMTP id S236002AbjJBJPr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Oct 2023 05:14:43 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05C6291
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 02:14:40 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-50437c618b4so22592829e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 02:14:39 -0700 (PDT)
+        Mon, 2 Oct 2023 05:15:47 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C41BA4
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 02:15:43 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-5041335fb9cso24958414e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 02:15:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696238078; x=1696842878; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696238142; x=1696842942; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=hegxgNO6/eJmMi3xYv5xPqS6nCUbQPuKqJAOsVw9YZU=;
-        b=exODTJckfjOSaiP0BD1SXvH0KxA+TQrsM2Rjzu+cjpjTmb5f3S46nXUzjzQAFoVfMr
-         roPw3hrJN1P7VrOjTQ5pDeprwdI4PumNichevxqtioAPKeIFCuTMm6td/o7lZctdHRJg
-         GNg/dHhvn819wXHNIQ8KttSgeWG6q7wwy5apTx7BKQWyTM768XU800qJNmoIxX8Ka1xy
-         rnNpNMvsfSmtKiF/ZeLqVHLivmTVrx5IHOyqJNlirbmgTAQSbfpXXVg6ItkEFb2P6gbV
-         mOwXOK6NfwNMPfORUybfYFVjOGPscuzUnWxlMXJn/ZF77/2iMseuHBbb4m3NN0cPm79r
-         Ncbw==
+        bh=XKFgAZi/L0N2kp9XV6Gn5/hvFVeYhucp7Px8g6ewoQo=;
+        b=fNGkKexhuzgLEeVpkFKN8w0ybe47T9Jsz8vWB1GNOkG0zW3Cb/a+oTk9uGbY9C09rx
+         2qzZxWIg2JDpJy0+S9h6DKUcpIb3whVQBl70/qVodKP5NE/X6TLSLYeQVgwW+TCIzwBm
+         NKXw+A9yUtONRBG3pa9SvqF4DzWxxMBVjSddaAHS/5jeXzge1XdHIopORf2g8AN5PiUo
+         9oTZyP8oqjSY1kvOlMgHBPGdLZ+iyJeE60wkYik+PVfZ+PJYqWaWgmnZbFqLgy+bK/Zb
+         iQabvdG1MUx2Bj7LGS/bKfRKX3uDj988zHonbqn4z3g1hZc26D10FXAQPD9JAuoRhCSw
+         bEdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696238078; x=1696842878;
+        d=1e100.net; s=20230601; t=1696238142; x=1696842942;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hegxgNO6/eJmMi3xYv5xPqS6nCUbQPuKqJAOsVw9YZU=;
-        b=KzWHVOB2MtfcycceUkBS5H2FueF0iKeRnkS3zPqWYLANE0ihw0d/F2t8Cg7J2/FP1D
-         THD5ctklo5RmhXWbQClQJItkAX+XqpEf8T+Hv10uIuUmMgLJFe/ko2SN4Br/JErGXJcL
-         12u7DpfNReGUcS05IN9UWRuxAdABGBJO9KQVkSjB05snfJO97thH562/LW2zJe+YFadX
-         I7K1pdTUBe0hbClTb8+h0tdG+V1aZadlJ4mL5uRjPeSMe6eM6RZewCAISsSS3R5Z8uyn
-         V/oi2FL5IbLDS06bEoDwZiJAvujeibi/+chDHujeY9uU0/j+zol9D1tvb8vQGYeVtzww
-         8DEg==
-X-Gm-Message-State: AOJu0YzezZZ/O++MS6CWt51HmQ5N7vqyaCUmv0d/EAYfJkBBN3NTQ14b
-        jSFu3D2Cndo9qsoq2kF12KUSzw==
-X-Google-Smtp-Source: AGHT+IHhbJ4Zq+s+rSs8FNu7KDcaBBB/nMuvHKF9xaETSqN4qzFpE0HCxDNLu5zink+hPe+tNdEDjA==
-X-Received: by 2002:a05:6512:693:b0:4ff:7e80:4f1d with SMTP id t19-20020a056512069300b004ff7e804f1dmr11149698lfe.57.1696238078052;
-        Mon, 02 Oct 2023 02:14:38 -0700 (PDT)
+        bh=XKFgAZi/L0N2kp9XV6Gn5/hvFVeYhucp7Px8g6ewoQo=;
+        b=fIxI65AWtsAn/gJ7Z0Z5HqDeqKS54CCclurDqL0dw9zoK91pjRT+vszvyFZMSuycHV
+         Q2WwrAm2PntX+F0lDADrDboBX3Xzn99yXYlwir/NbBMaujiUZn2v73BvHSnJzQS06CHw
+         t97TpI0ky1kdwylh+bAE83eGO5XEktLRd9ZONwmXtqjmrTheDJiW7ddoun8q1Y69AKhx
+         S0ewzkZYxsphjxnUoHcOZZLUBPUlbP+Lq4booR/DiGSZHXm3gl2A6JZmp0dJ/sj4edi/
+         l/fWf/BvfklXz1b1WftJKXAAJDk0jBJzcY/BpYdzjyuYdjJmhlc8nFNU0TzdO9KPAGqF
+         CFVA==
+X-Gm-Message-State: AOJu0Yx0dJCto5eUMVMMZZ+qzWgWfqVLZJ3l9KDGdjqCA6fLi6SZbRza
+        VM2we0ahlN+dtHozr4jawV8v5g==
+X-Google-Smtp-Source: AGHT+IGa14XP+UqD8pYmtIu92W58oS/MZa2G9p8QeeBfIWcQQPykrUqAviYI11e1nL5dRWwmQFPPGQ==
+X-Received: by 2002:ac2:5453:0:b0:4fe:8c4:44fb with SMTP id d19-20020ac25453000000b004fe08c444fbmr9238541lfn.38.1696238141849;
+        Mon, 02 Oct 2023 02:15:41 -0700 (PDT)
 Received: from [172.30.204.164] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id j5-20020a05651231c500b0050482d4727fsm2210852lfe.233.2023.10.02.02.14.37
+        by smtp.gmail.com with ESMTPSA id w21-20020ac24435000000b0050307304a80sm4674723lfl.205.2023.10.02.02.15.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Oct 2023 02:14:37 -0700 (PDT)
-Message-ID: <3267eb4b-7154-200a-ec10-d795acc029f1@linaro.org>
-Date:   Mon, 2 Oct 2023 11:14:36 +0200
+        Mon, 02 Oct 2023 02:15:41 -0700 (PDT)
+Message-ID: <5864a318-f45f-49c7-0680-de50fa2b9f31@linaro.org>
+Date:   Mon, 2 Oct 2023 11:15:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
  Thunderbird/102.15.1
-Subject: Re: [PATCH] arm64: dts: qcom: qcm6490-fairphone-fp5: Enable UFS
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sdm845-oneplus: enable flash LED
 Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
+To:     Caleb Connolly <caleb.connolly@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Nitin Rawat <quic_nitirawa@quicinc.com>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230929-fp5-ufs-v1-1-122941e28b06@fairphone.com>
- <cac1b912-e08b-4643-b081-834fdee30ea7@linaro.org>
- <CVXREP4FCX4E.3M77P8JP1T27M@otso>
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+References: <20231001-b4-sdm845-flash-dts-v1-0-275a3abb0b10@linaro.org>
+ <20231001-b4-sdm845-flash-dts-v1-1-275a3abb0b10@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CVXREP4FCX4E.3M77P8JP1T27M@otso>
+In-Reply-To: <20231001-b4-sdm845-flash-dts-v1-1-275a3abb0b10@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -86,51 +83,11 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 10/2/23 09:02, Luca Weiss wrote:
-> On Fri Sep 29, 2023 at 3:12 PM CEST, Konrad Dybcio wrote:
->> On 29.09.2023 11:52, Luca Weiss wrote:
->>> Enable the UFS phy and controller so that we can access the internal
->>> storage of the phone.
->>>
->>> At the same time we need to bump the minimum voltage used for UFS VCC,
->>> otherwise it doesn't initialize properly. The new range is taken from
->>> the vcc-voltage-level property downstream.
->>>
->>> See also the following link for more information about the VCCQ/VCCQ2:
->>> https://gerrit-public.fairphone.software/plugins/gitiles/kernel/msm-extra/devicetree/+/1590a3739e7dc29d2597307881553236d492f188/fp5/yupik-idp-pm7250b.dtsi#207
->>>
->>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>> ---
->>> I'm not 100% convinced about the regulator range change. For sure with
->>> the original voltage range the UFS fails to initialize, but looking at
->>> downstream kernel during runtime (debugfs) we see the VCC voltage
->>> switches between 2.4V (idle?) and 2.952V (active?). But even with this
->>> change in mainline the regulator would always stay at 2.504V which is
->>> for sure lower than the downstream operating voltage of 2.952V. Behavior
->>> wise I don't see a difference between ~2.5V and ~2.9V.
->>>
->>> Should I just constrain the regulator here to min=max=2.952V? Or just
->>> say it's okay as-is?
->>>
->>> Depends on: https://lore.kernel.org/linux-arm-msm/20230927081858.15961-1-quic_nitirawa@quicinc.com/
->>> ---
->> There's a little funny hack inside the driver
->>
->> #if defined(CONFIG_SCSI_UFSHCD_QTI)
->>                          if (vreg->low_voltage_sup && !vreg->low_voltage_active && on)
->>                                  min_uV = vreg->max_uV;
->> #endif
->>
->> so, when the ufs is in use, it's pinned to vmax
+On 10/1/23 19:19, Caleb Connolly wrote:
+> Both the 6 and 6T feature a dual tone flash, enable it.
 > 
-> Hi Konrad,
-> 
-> Are you implying I *should* or *should not* pin the voltage range to
-> 2.952V-2.952V for mainline?
-Neither, voltage scaling should be implemented :P
-
-But for now, pinning it to 2.952 const is the right temporary
-solution, as having working UFS is generally better than one
-that can only idle in a stable manner :D
+> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
