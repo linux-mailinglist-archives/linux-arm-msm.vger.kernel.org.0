@@ -2,123 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BEA1E7B4FE8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 12:10:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D60DB7B5014
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 12:20:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236258AbjJBKKm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Oct 2023 06:10:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60936 "EHLO
+        id S236438AbjJBKUg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Oct 2023 06:20:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231153AbjJBKKl (ORCPT
+        with ESMTP id S236435AbjJBKUg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Oct 2023 06:10:41 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 193FBB0
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 03:10:39 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70F3DC433C7;
-        Mon,  2 Oct 2023 10:10:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1696241438;
-        bh=VuU6DqtVO4nBU2yJ2rp1XU31YLvfaorg9TJX6ZIVBbc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=CgEIElYPdQaQZwrle5dYtgDrMvD3XH/9IKv7n+6YVqMdQaTYBthOHHSt5PmsLvnGj
-         2lOcXFLRnKAgahZXCiV7fUhLibj6m4SeKUMzl256EQB/RJT4dw/ao5Dcxo4i0ScdrC
-         QuIJ3XPJbT7sgEnIyyEsEiyXXp2yu1viwypwdrlOhF9MoLWHK9/o3DeF2wE3gAzNIi
-         HPz4f0zqF3v7pPR4zEUnvxhDISy0mxaQpISh8WMGFZQ92D8hQRnwfqjq96zvMOGvi0
-         urds0zWAohSLITJMokdZ1ZLItjYnX19kaES9J3YdGZxAym777tCvnI8lXD0CLxATAO
-         mP9VKHrODW8uw==
-Date:   Mon, 2 Oct 2023 11:10:32 +0100
-From:   Will Deacon <will@kernel.org>
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        dri-devel@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Heidelberg <david@ixit.cz>
-Subject: Re: [PATCH] drm/msm/a6xx: don't set IO_PGTABLE_QUIRK_ARM_OUTER_WBWA
- with coherent SMMU
-Message-ID: <20231002101032.GA1079@willie-the-truck>
-References: <20230410185226.3240336-1-dmitry.baryshkov@linaro.org>
- <b1434fe7-3128-f390-7b13-3d460378e231@arm.com>
- <20230929154507.GA30764@willie-the-truck>
- <70d975d0-8ee7-9f08-7fae-4652a18df598@arm.com>
+        Mon, 2 Oct 2023 06:20:36 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 468B2B3
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 03:20:32 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-405417465aaso154865905e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 03:20:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1696242031; x=1696846831; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pfv0AtlnvNa/E/C0wmR1XzkqLMulzABmbQ9znMd60Gs=;
+        b=sf3/WjS6YXUi2Sfrp8k42vnphJfnnf/LtGYvI433cW28zbBmHPd58q3UqLU8BqI0H6
+         aX9ZEbdkkZCxh2lzsJCXN4qUayN3Kz65ooMF9Nk2xos4ps3KVNCAAq+deePnt1nn/70X
+         MSaYeGarT/K+hcbjwp1kx8g4WaeGC2kS7ROwLIJm9tWJk+yXk/+ikDsLZUHqZF/T9hQD
+         czvZQKQ2NFy92yGs/h16GdVH/fbCvfooz6kC+yZqGma4pWwhNuxwqlBLy17EIDxn850d
+         VX9yTSD9/Hp0dvNNKYo1FPW/NNdo8eraaSaHgCO94U/zHaOHh+15Tipik4XUpZHFN6P5
+         2JNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696242031; x=1696846831;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pfv0AtlnvNa/E/C0wmR1XzkqLMulzABmbQ9znMd60Gs=;
+        b=Jejy3iT6pcX2Iy2AZPKk3pkB9LkR3p/Hd7R6ftfl2Tq7x6C/LekBXwiqqzzhC+HTts
+         6ay29YD3Y/h07oqNGFziJ6OGNZUVTVm8fuGWxwoehso26PPgGSe4tMT1WqqmtvYg8Dmj
+         F+sJBsBBnrBEBX3WMy5UbGKSYGVfkhXMubPnwu6Amm8H+ZpH2JaVkIbs2XbCBemCnxo4
+         h5fvi0FS6PPxMFSzgdjh2l/eKKGCJEypYTR6+umx0I4QWA6WCkSJ2Q31LPtX1Qn07gDB
+         nGYVvJBzczBngjvxmyh+p6Le+H9HgoE7Wp0f3rub6XFNz2ROKZHxQwUk4Y9ajJLQZC4w
+         kMNA==
+X-Gm-Message-State: AOJu0YyNPMUTbkH6E5r68KZ7qZJ16qestMVg+ZX3Wk1ew3EZYSMCwGZ4
+        1BnQ+IqW2JQfMgf+speNiMuiAQ==
+X-Google-Smtp-Source: AGHT+IHKQKBc27yWRnJvsnCQnRfbEPhbVYRxX4qMkNLc/yNshIM4n70R/iHPUBBLejbfbmWcStSkGw==
+X-Received: by 2002:a05:600c:2609:b0:405:34e4:e756 with SMTP id h9-20020a05600c260900b0040534e4e756mr9115752wma.36.1696242030644;
+        Mon, 02 Oct 2023 03:20:30 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id g18-20020a5d5552000000b003196b1bb528sm27822901wrw.64.2023.10.02.03.20.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Oct 2023 03:20:30 -0700 (PDT)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH v2 0/4] arm64: qcom: sm8550: retrieve USB-C port
+ orientation from gpio
+Date:   Mon, 02 Oct 2023 12:20:20 +0200
+Message-Id: <20231002-topic-sm8550-upstream-type-c-orientation-v2-0-125410d3ff95@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <70d975d0-8ee7-9f08-7fae-4652a18df598@arm.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAGSZGmUC/52NTQ6CMBBGr0K6dkyh8hNX3sOwKO0Ak0jbtJVIC
+ Hd35Ah+u/ct3ttFwkiYxL3YRcSVEnnHUF0KYWbtJgSyzKKSlZKdvEH2gQykpatrCe+QckS9QN4
+ CggHPLpd1ZgnIgacaadXYCtaFiCN9ztSzZ54pZR+3s7yWv/ePyFqCBNVYq9CiaYfx8SKno7/6O
+ In+OI4vlPwx1+EAAAA=
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2113;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=Qo0f5HDypComny9WssJzstEih7AYlhet2I248Twlt+M=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlGplqbypaeMI7QPoC/3sxqXx+ye2lh9NHkExQ2cJx
+ WmorGX2JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZRqZagAKCRB33NvayMhJ0bNhEA
+ CVbMRdn6P21VLUf44cwkzQqo1lYjaXsYYdSdPfwWQsZUIStSyQXM0NgZAE6bdLgzwPCVNXQSQU5GJm
+ Vfia1K6beM16pmdzcn/xH3SQIcW8hBPQn5gU1HVFfbAsT2l9J2qcdQi3vE88wdKOUlIvsctPehHwug
+ xGtKNNY5soumjqrWVfclKgN6kD86X6KS1lFxWpl3T+LRvzDuqrdJf/oWQRnxpFIKk771INk+u+lGu+
+ nAPURX/CIk6/z/Tl57qGid/Cwr/0Llb5Q1JniIpFfp+ulKVGY6YeCuDLEi89NFE9/QQUooo+/GEkFQ
+ pAPgpMxjGMt26/LzvdaRR4rrT0BS5tzT1VSInoncJAcwivrHQonenbpJDs/N+DRQfzFw45Va2kjGus
+ V5th/H1lIRqm2bTFcaqPhiAaykKojfTb646ud7lhAKqWvTIZUDr+EnkLOW5iFLA6fx5dfnd3an7gzH
+ QQZxT/+WUtYedNPLPiWrfDGWgz3a+NPKB7uqOr56zqvuAUSnRIrFZg4J+6quc0njXTUb2uKXD/Sxip
+ NQUaO8hI7S4oCx/Uj8nx/9PNDO1FFM9qvhGCrFfyYiFcFRGR06FKUNfr9+ONbYhH8Q1hWbQWgoYbZX
+ RyEFfusjjRJzhvs6aepmktan+/wEeHEXaf7zQgr5J9oix/mO0e8xrnzwi8kA==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 29, 2023 at 06:25:21PM +0100, Robin Murphy wrote:
-> On 29/09/2023 4:45 pm, Will Deacon wrote:
-> > On Mon, Sep 25, 2023 at 06:54:42PM +0100, Robin Murphy wrote:
-> > > On 2023-04-10 19:52, Dmitry Baryshkov wrote:
-> > > > If the Adreno SMMU is dma-coherent, allocation will fail unless we
-> > > > disable IO_PGTABLE_QUIRK_ARM_OUTER_WBWA. Skip setting this quirk for the
-> > > > coherent SMMUs (like we have on sm8350 platform).
-> > > 
-> > > Hmm, but is it right that it should fail in the first place? The fact is
-> > > that if the SMMU is coherent then walks *will* be outer-WBWA, so I honestly
-> > > can't see why the io-pgtable code is going out of its way to explicitly
-> > > reject a request to give them the same attribute it's already giving then
-> > > anyway :/
-> > > 
-> > > Even if the original intent was for the quirk to have an over-specific
-> > > implication of representing inner-NC as well, that hardly seems useful if
-> > > what we've ended up with in practice is a nonsensical-looking check in one
-> > > place and then a weird hacky bodge in another purely to work around it.
-> > > 
-> > > Does anyone know a good reason why this is the way it is?
-> > 
-> > I think it was mainly because the quick doesn't make sense for a coherent
-> > page-table walker and we could in theory use that bit for something else
-> > in that case.
-> 
-> Yuck, even if we did want some horrible notion of quirks being conditional
-> on parts of the config rather than just the format, then the users would
-> need to be testing for the same condition as the pagetable code itself (i.e.
-> cfg->coherent_walk), rather than hoping some other property of something
-> else indirectly reflects the right information - e.g. there'd be no hope of
-> backporting this particular bodge before 5.19 where the old
-> iommu_capable(IOMMU_CAP_CACHE_COHERENCY) always returned true, and in future
-> we could conceivably support coherent SMMUs being configured for
-> non-coherent walks on a per-domain basis.
+This patchset is derived from [1], with only the GPIO orientation.
 
-That doesn't sound like an insurmountable problem to me. Either a bunch of
-other stuff has to be backported as well, or the msm_iommu driver can fish
-the pgtable configuration out of the SMMU, like it already does elsewhere.
+On the SM8550 platform, the PMIC Glink firmware doesn't emit
+ALTMODE events for all USB-C port changes like it was done
+for older platforms (like SM8450).
+This means we only have a valid orientation when an Altmode
+compliant device is inserted, but not for all the other devices,
+including USB cables, dongles and non-altmode Hubs.
 
-> Furthermore, if we did overload a flag to have multiple meanings, then we'd
-> have no way of knowing which one the caller was actually expecting, thus the
-> illusion of being able to validate calls in the meantime isn't necessarily
-> as helpful as it seems, particularly in a case where the "wrong"
-> interpretation would be to have no effect anyway. Mostly though I'd hope
-> that if we ever got anywhere near the point of running out of quirk bits
-> we'd have already realised that it's time for a better interface :(
+But the actual orientation is shared by the PM8550B by
+a signal called CC_OUT which can be read on a gpio of the SM8550
+SoC.
 
-Although I agree that practically I can't see us reusing quirk bits, I do
-much prefer that we reject quirks that don't make sense. Yes, in this case
-it happens that the quirk is expressing something which is already true
-for the coherent walker, but that feels like a special case to me rather
-than something which is likely to be true in general, for example, the
-system cache quirk proposed by Qualcomm to expose the unused
-inner-NC-outer-WBWRA MAIR configuration.
+Let's add support for this feature by using the UCSI PMIC
+Glink driver events to read and dispatch the orientation
+to the USB-C connector devices on the DT graph.
 
-Implicitly accepting quirks also makes it more difficult if we wanted to
-change the default configuration in future; for example if we wanted to
-adjust the default allocation hints.
+While everybody would prefer having a proper PMIC Glink event
+for an orientation change, this is not implemented and not
+planned for future platforms either.
 
-So I'd prefer to leave the page-table code as-is.
+[1] https://lore.kernel.org/all/20230601-topic-sm8550-upstream-type-c-v3-0-22c9973012b6@linaro.org/
 
-Will
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v2:
+- Update bindings property description to describe how multi-port is handled
+- Link to v1: https://lore.kernel.org/r/20230804-topic-sm8550-upstream-type-c-orientation-v1-0-36dd3edec7bf@linaro.org
+
+---
+Neil Armstrong (4):
+      dt-bindings: soc: qcom: qcom,pmic-glink: add a gpio used to determine the Type-C port plug orientation
+      usb: ucsi: glink: use the connector orientation GPIO to provide switch events
+      arm64: dts: qcom: sm8550-mtp: add orientation gpio
+      arm64: dts: qcom: sm8550-qrd: add orientation gpio
+
+ .../bindings/soc/qcom/qcom,pmic-glink.yaml         | 19 ++++++++
+ arch/arm64/boot/dts/qcom/sm8550-mtp.dts            |  1 +
+ arch/arm64/boot/dts/qcom/sm8550-qrd.dts            |  1 +
+ drivers/usb/typec/ucsi/ucsi_glink.c                | 54 +++++++++++++++++++++-
+ 4 files changed, 74 insertions(+), 1 deletion(-)
+---
+base-commit: df964ce9ef9fea10cf131bf6bad8658fde7956f6
+change-id: 20230804-topic-sm8550-upstream-type-c-orientation-0bbbb360d3f7
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+
