@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C10C27B5017
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 12:20:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B9A8F7B5025
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 12:20:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236443AbjJBKUi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Oct 2023 06:20:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46476 "EHLO
+        id S236525AbjJBKUt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Oct 2023 06:20:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236377AbjJBKUh (ORCPT
+        with ESMTP id S236464AbjJBKUo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Oct 2023 06:20:37 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FC82D9
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 03:20:33 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-503397ee920so24809317e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 03:20:33 -0700 (PDT)
+        Mon, 2 Oct 2023 06:20:44 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73E30BD
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 03:20:34 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id ffacd0b85a97d-32488a22810so3655121f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 03:20:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1696242032; x=1696846832; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ICWvHuFsaFLK5szrah3dwwdrzpV6FfDaZOz40gAcqqk=;
-        b=WGFbRrcyqw9reHfV5SCfD92CLMNthhPXKKJhjP6YFL1jx++/cQ0j4OjypXW8Hb4Zxn
-         QpNuroBc5tasNahgSCaLuFK6lMNcpSuBeELgdpyT2h9xrxcTM3UwRZJGWt1BEnVAKbqF
-         RBKqFK/wooUEjHOs0gJlHeRV2TEsE+heWsshb1g64j+U02j7DdIGLbs/rKbFM4qCoEzT
-         hqi1AbvHy7lZwcublbi960ZTMqqpFkyFoIRqKiNeVJwr7zFO6UboaYx8YiGIwerz1LgF
-         gsELyGJ4e/xYtnLnbLbZjODfyPWLWUJnn/Je7SXYaj+Gu2ML5uNtoF8QbQod0a7lvaOJ
-         hF1A==
+        bh=fvPQtc3n+AQ43mIboHGUgEC6liC/yfr/8rGlBJbQd4M=;
+        b=i8cVf5/Sgrtwqj9B4+mwRdMn3KaA7Da8yK4N8w9jP9oLYeS2vz2Z/TDn+zezi6kTT3
+         r2osTCRZ0J9Q1w3IznBpxq8gTQ5A27n9ZjaYTeAsJaORuEHI7BScaeKr3kzBEC5Ln4x0
+         boke+BNufRNNCiSNLamzgob2eajTSOHQT/yEJMWXwNnhkvaBuxSyG7Xj34gv44e2+AsZ
+         kYTqHcibwUGdszNdcu5UG4SOXU8UMfWo+XSATW9ifXiIXDSk29roT8QmWtSTfaMBqVNS
+         OhGzb/YCycwr2oBKnSzDQTwbiEMLB99b8kZZNetHJ8Tx2xbUi6BEbdspHzslDFhs3VYs
+         8iPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1696242032; x=1696846832;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ICWvHuFsaFLK5szrah3dwwdrzpV6FfDaZOz40gAcqqk=;
-        b=LEWWr8WtmM0pp798sT/XR+P96Yaec/Soyxq1EBfc1u6LTJVh+kQGo72Ohv9cclDvlh
-         0sJDEZ/gaBmpAZC0LRv9V38oVndzRXdC4CoFfAAaAO24NSfFAIsN8PIk8SgXFUYrWkYP
-         8bidlRMj9ESCJwHy8V45vAaDud4x1+QB5Zc+qwVPRC02W0txrAbvdT8Hk4gcdzl4fhwR
-         bypXZiwHOxnq8/XC6rl+Bw85QMxen8OCVWdL2bg5lv3JKonNlE5XFzZdO9qyT6/h+6lZ
-         D+GZvx8U45fHVoI40qkUY/t6sqS606vJIhurLXWVYEHkmhSRh3xSTZCaVVf9ElIm5u0w
-         vSKA==
-X-Gm-Message-State: AOJu0Yy0F2HuD+qUTEVXTF/KhRKymG2gGhEiv4IEBjRtonscX3qfa1NX
-        G5xVeNidxNGJJQ/bhcJM+5/hXA==
-X-Google-Smtp-Source: AGHT+IHH9AffhbFDJfNzTdURfoi9bsKLkCyvLukcnhRxhhPNC/iBQ2DUCRD0oBggM3uwEdeYac88SQ==
-X-Received: by 2002:a05:6512:4019:b0:503:2683:ec7b with SMTP id br25-20020a056512401900b005032683ec7bmr11113056lfb.33.1696242031604;
-        Mon, 02 Oct 2023 03:20:31 -0700 (PDT)
+        bh=fvPQtc3n+AQ43mIboHGUgEC6liC/yfr/8rGlBJbQd4M=;
+        b=Szm5qJ0P1gALdnmkc/XhfGaXL9mLu1DPwd5cKMfnxZJ2+7P/qJ3DgXa1D0yLX7PwS6
+         weMaUHxdyjh/PBpnkfaT6B7u/0jfjCjVVGsx0dS596B7aC3aYiejlVvGdylWMmo6kLRl
+         oexmus2xPFvxe0BWR7AzkdY9UTT4qQ/lbOzJWsu0WLYkMZLbqHnX/5H8gKLBGVIaLhbc
+         tdk3kIK7nRNliJb7Z4kM21uB9xG2XR4uN72XW0hiMhNA9FKnMPnwVdME61lrRZerRf6E
+         MyedMr5ndmhP/Hj6W2deDt/TKqqhPcdPozNB2yufKyGS7OCVBBYJsMM00fQ9ypAKvNti
+         CHvw==
+X-Gm-Message-State: AOJu0YyEr2Dz4bpqeFoGxIz3d4X9kqfozB3YeQHPTGj2NS+jacvPucaJ
+        RsJ3ABgeClq5lUVFSPJCY9pzGQ==
+X-Google-Smtp-Source: AGHT+IECdLWreIbmHwEsopXALpa+60ZA82MQQlaUknSlKDWOENDphq45rofB8R530GJjKBCe1dToJw==
+X-Received: by 2002:a5d:5944:0:b0:313:e971:53af with SMTP id e4-20020a5d5944000000b00313e97153afmr9057173wri.32.1696242032607;
+        Mon, 02 Oct 2023 03:20:32 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id g18-20020a5d5552000000b003196b1bb528sm27822901wrw.64.2023.10.02.03.20.30
+        by smtp.gmail.com with ESMTPSA id g18-20020a5d5552000000b003196b1bb528sm27822901wrw.64.2023.10.02.03.20.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Oct 2023 03:20:31 -0700 (PDT)
+        Mon, 02 Oct 2023 03:20:32 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Mon, 02 Oct 2023 12:20:21 +0200
-Subject: [PATCH v2 1/4] dt-bindings: soc: qcom: qcom,pmic-glink: add a gpio
- used to determine the Type-C port plug orientation
+Date:   Mon, 02 Oct 2023 12:20:22 +0200
+Subject: [PATCH v2 2/4] usb: ucsi: glink: use the connector orientation
+ GPIO to provide switch events
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231002-topic-sm8550-upstream-type-c-orientation-v2-1-125410d3ff95@linaro.org>
+Message-Id: <20231002-topic-sm8550-upstream-type-c-orientation-v2-2-125410d3ff95@linaro.org>
 References: <20231002-topic-sm8550-upstream-type-c-orientation-v2-0-125410d3ff95@linaro.org>
 In-Reply-To: <20231002-topic-sm8550-upstream-type-c-orientation-v2-0-125410d3ff95@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -72,79 +72,144 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
         Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1747;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3618;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=L7UnCblZqCaCfW4IrZ58Z/ALtSFo6Rtxp79suaPVa+c=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlGplrkqZV/Tmlq7jEKIw/ICGOw1HdwAoPaffkBJCT
- u+mNY6CJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZRqZawAKCRB33NvayMhJ0SSWEA
- CQqVMykzVIbnYm3WSgupWHnT+di0HYfk1Y7rw0Y8BgStNrBNTndgtHxdON1IPN3lVC/cPM+J6Xl1t8
- pCKP0o8HZidzHv6RD9PF2v1DZpf6AmwKRRcFxqNMxi7nVBkAJTNaGzPIV7w+d8fArKsDdaEQ7fwyN0
- 5XBDDRnqyqUUS0andHcKg00hxF6ulleTOAHz79jsTby/kD4vg6213txvMzDeKQOqWlpcnjvt3JS43/
- dkG7EMr2atvs+YbRr5+0y4AIOzgUa7j+6Zi7MO7ORd58ujpSDQbAxMzuKcWc/9jieSSrX06VjfJfD/
- Bj3c7kYvl65k1tmTrk8D1Sw57TguhfveGuxfTvlpS4DhI3EVBW2DwRB7Cs1rXfqsU6m2Kbjz0NH1zh
- gb0eY23NQnVi/vbDU1sPJ6IyzqRAU05vq6EjUbXejb4pmXune3uVNOHvl5dWVEJDovq97CdyOg5S9e
- jqc2UgeEacN8s5lXJmk1cbwtSqFnLOpwCoU+4oHI7vwphYo4itQqogsKVCF0jpsm0/LgVDoqx5bltX
- qMFcxOewcic3wDRqC6HWbL7iW3iwYfUxsgGI7c4yE+hlKNeoGobh4Fzd7J7G3wlnEUzxDPEzTg/OnT
- XJPsc8QtY7PbxvWh9NuLQLIbPwH7BSeMsVJcZ7rD4UdYbbcOA1cAZmNtnNaA==
+ bh=2Yx8kmPz9CwCyctqse+y5FCFBBh71PuYcaSNl/C5414=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlGplsF7+Dg78ioO42z+RuUb9rBfP5QAdO7swu1U+v
+ EZHsKOaJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZRqZbAAKCRB33NvayMhJ0aDdD/
+ sHvCQ54Ei75dbWMtkUnD2MA9Hd4JvdfmCEBHJGZoMKSPHM6IcIxOLSXVgZViCk7+XT4p1oxnRHg6Gx
+ YlGdsQ9TkgbvxXJ9BHlIh0++1GgO7wwHT07Fm7nxly3kKCgcEM+wszHLBPlp/8xCyNGHRYjN1d59MI
+ p6mzWy9ssA2/bBq9ZF8JA8RyKQPAzOjQ0RiGBWOnUdPg5Aqr1vDbm0XwR5hEdeO+6driVpx761Lykv
+ JZtwsNZNCqWgpWvrRRBhjaN6P4n4ei0higGOeva7YIl6UFomKOZiGgUk5Mi5Q3jacS/t4dia5H/sf0
+ 25bhM/QFfHbqCu/T0xmE2xOBF+vTvPBFN8uX98FMPk+fUQHSEy24ajC3XLf1ZbUauuF9ob3o3uRuvv
+ 6Pu8M5OyZ2IwoDqLrUuRPMFYEgX/ly6Aqmx+x717asxvIssUa+NmsI9WpyxGMyAMeF/VxkTb/wpdfV
+ bYoD9OZpRfJ9Eae9pUdGzNd6E6vlyaAf2Nh5XLBWgKplvy9/K/xLhZ6Val2kh8KsWZgKtuiyAOipvB
+ rFFAU0ab9UrXBuunBnH/3ZezOavkzblQ6eKkBNqJiTEPMGrR81gSKsKwtef9Mqi2jkLB0vjPFy7XkC
+ b84pfO+COAb8Vr1cXoVOaeXuq2SzVrhQlA6K0arHujksBAD0TtYC2EkFK+tA==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On SM8450 and SM8550 based platforms, the Type-C plug orientation is given on a
-GPIO line for each connector which are set by the PMIC(s).
+On SM8550, the non-altmode orientation is not given anymore within
+altmode events, even with USB SVIDs events.
 
-Document this optional Type-C connector property, and take the
-assumption an active level represents an inverted/flipped orientation.
+On the other side, the Type-C connector orientation is correctly
+reported by a signal from the PMIC.
 
+Take this gpio signal when we detect some Type-C port activity
+to notify any Type-C switches tied to the Type-C port connectors.
+
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- .../devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/usb/typec/ucsi/ucsi_glink.c | 54 ++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 53 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml
-index bceb479f74c5..422921cf1f82 100644
---- a/Documentation/devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml
-@@ -35,6 +35,12 @@ properties:
-   '#size-cells':
-     const: 0
+diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
+index bb1854b3311d..db6e248f8208 100644
+--- a/drivers/usb/typec/ucsi/ucsi_glink.c
++++ b/drivers/usb/typec/ucsi/ucsi_glink.c
+@@ -8,9 +8,13 @@
+ #include <linux/mutex.h>
+ #include <linux/property.h>
+ #include <linux/soc/qcom/pdr.h>
++#include <linux/usb/typec_mux.h>
++#include <linux/gpio/consumer.h>
+ #include <linux/soc/qcom/pmic_glink.h>
+ #include "ucsi.h"
  
-+  orientation-gpios:
-+    description: Array of input gpios for the Type-C connector orientation indication.
-+      The GPIO indication is used to detect the orientation of the Type-C connector.
-+      The array should contain a gpio entry for each PMIC Glink connector, in reg order.
-+      It is defined that GPIO active level means "CC2" or Reversed/Flipped orientation.
++#define PMIC_GLINK_MAX_PORTS	2
 +
- patternProperties:
-   '^connector@\d$':
-     $ref: /schemas/connector/usb-connector.yaml#
-@@ -44,6 +50,19 @@ patternProperties:
- required:
-   - compatible
+ #define UCSI_BUF_SIZE                   48
  
-+allOf:
-+  - if:
-+      not:
-+        properties:
-+          compatible:
-+            contains:
-+              enum:
-+                - qcom,sm8450-pmic-glink
-+                - qcom,sm8550-pmic-glink
-+    then:
-+      properties:
-+        orientation-gpios: false
+ #define MSG_TYPE_REQ_RESP               1
+@@ -52,6 +56,9 @@ struct ucsi_notify_ind_msg {
+ struct pmic_glink_ucsi {
+ 	struct device *dev;
+ 
++	struct gpio_desc *port_orientation[PMIC_GLINK_MAX_PORTS];
++	struct typec_switch *port_switch[PMIC_GLINK_MAX_PORTS];
 +
- additionalProperties: false
+ 	struct pmic_glink_client *client;
  
- examples:
+ 	struct ucsi *ucsi;
+@@ -220,8 +227,20 @@ static void pmic_glink_ucsi_notify(struct work_struct *work)
+ 	}
+ 
+ 	con_num = UCSI_CCI_CONNECTOR(cci);
+-	if (con_num)
++	if (con_num) {
++		if (con_num < PMIC_GLINK_MAX_PORTS &&
++		    ucsi->port_orientation[con_num - 1]) {
++			int orientation = gpiod_get_value(ucsi->port_orientation[con_num - 1]);
++
++			if (orientation >= 0) {
++				typec_switch_set(ucsi->port_switch[con_num - 1],
++						 orientation ? TYPEC_ORIENTATION_REVERSE
++							     : TYPEC_ORIENTATION_NORMAL);
++			}
++		}
++
+ 		ucsi_connector_change(ucsi->ucsi, con_num);
++	}
+ 
+ 	if (ucsi->sync_pending && cci & UCSI_CCI_BUSY) {
+ 		ucsi->sync_val = -EBUSY;
+@@ -282,6 +301,7 @@ static int pmic_glink_ucsi_probe(struct auxiliary_device *adev,
+ {
+ 	struct pmic_glink_ucsi *ucsi;
+ 	struct device *dev = &adev->dev;
++	struct fwnode_handle *fwnode;
+ 	int ret;
+ 
+ 	ucsi = devm_kzalloc(dev, sizeof(*ucsi), GFP_KERNEL);
+@@ -309,6 +329,38 @@ static int pmic_glink_ucsi_probe(struct auxiliary_device *adev,
+ 
+ 	ucsi_set_drvdata(ucsi->ucsi, ucsi);
+ 
++	device_for_each_child_node(dev, fwnode) {
++		struct gpio_desc *desc;
++		u32 port;
++
++		ret = fwnode_property_read_u32(fwnode, "reg", &port);
++		if (ret < 0) {
++			dev_err(dev, "missing reg property of %pOFn\n", fwnode);
++			return ret;
++		}
++
++		if (port >= PMIC_GLINK_MAX_PORTS) {
++			dev_warn(dev, "invalid connector number, ignoring\n");
++			continue;
++		}
++
++		desc = devm_gpiod_get_index_optional(&adev->dev, "orientation", port, GPIOD_IN);
++
++		/* If GPIO isn't found, continue */
++		if (!desc)
++			continue;
++
++		if (IS_ERR(desc))
++			return dev_err_probe(dev, PTR_ERR(desc),
++					     "unable to acquire orientation gpio\n");
++		ucsi->port_orientation[port] = desc;
++
++		ucsi->port_switch[port] = fwnode_typec_switch_get(fwnode);
++		if (IS_ERR(ucsi->port_switch[port]))
++			return dev_err_probe(dev, PTR_ERR(ucsi->port_switch[port]),
++					"failed to acquire orientation-switch\n");
++	}
++
+ 	ucsi->client = devm_pmic_glink_register_client(dev,
+ 						       PMIC_GLINK_OWNER_USBC,
+ 						       pmic_glink_ucsi_callback,
 
 -- 
 2.34.1
