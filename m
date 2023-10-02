@@ -2,248 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E2607B5A26
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 20:34:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1ADFB7B5A1C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 20:34:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229628AbjJBSMG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Oct 2023 14:12:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42426 "EHLO
+        id S238756AbjJBSS4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Oct 2023 14:18:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229604AbjJBSMF (ORCPT
+        with ESMTP id S238745AbjJBSSz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Oct 2023 14:12:05 -0400
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2041.outbound.protection.outlook.com [40.107.244.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00C2C9E;
-        Mon,  2 Oct 2023 11:12:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=bo9ZjW4p171Pn1odSXiJqs3EhSNaWxD9ppJ6+fNnxObDklteU23MPBU2gR57lmG3c5CBYARZp2nM82FXYpuxIecZwrqninKtschi483kn3jnA1VnJLhPyeDybPCWgA1eZFdEocASLS9cnrlFlxi5sk2OxSSo8GYoMBbNvklflRpBARypcQtJ0SosQ6i2EZIOajagFHWISinbUDEEwvueqL13AqUOghNasIWMY95KgL6buASrAyby+rTn5IJRqPYSxLb6vSFRcQK7jkuJc7eeN7+iADbBlL+Ar/YBjtRvpSODCzKaNlJmPJD3O/BGP2uWWQHbRUiGoDZwn6bmImnzrA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Dboc2kaAWdDgZjafVKfXS7ikUFOoB5caDxTGfAB0CRg=;
- b=FO2cxkHHIhXwqPGaZEv3+ZLof66UT8eaFzKJPAmxWRhiEl9MO0ehF+7b7Kpm/RQ1YcYpJxkFy2Poh9uB9WKLD3Fbhw6btB74g6qcDro2S1j5OxN/3ARAxMppa8X5k10RqPFwgB1KArblKbXv9JO9PMYvIMRRc5cjLltGocfu69yeCNDM7IFnxNYTpy5V1DuKSiDww29QmYUWlezsgB8StmQJOiObgHVJoffCT+7Y8/Wv1D+g8xrY+Zml4U7ZSB5ieq4dXG7AvYogU4LBQAEOhsOMkKwMVIR1xNDnUOEKkpLWdr8lu6JFoy5OF6H303eZgbdB4FCYkOpIn7HN92yvxA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Dboc2kaAWdDgZjafVKfXS7ikUFOoB5caDxTGfAB0CRg=;
- b=ce24og4hJBrP4UMRkdBV9++5CYBL0ORVRxioYcDBFmJ0WoPgzTyVANKIqbT8eNZ7kKvsBSKK94FDanbE2Miss4dVJQfw40cGiAa18nuEG8vOTbs5rZoEJkMVMoe/DB8Broqkz507Wxvqv3pW8DX3E/OzhWQUvfYhSqU1JTwTsvA=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from BN8PR12MB3587.namprd12.prod.outlook.com (2603:10b6:408:43::13)
- by BL1PR12MB5141.namprd12.prod.outlook.com (2603:10b6:208:309::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6838.31; Mon, 2 Oct
- 2023 18:11:57 +0000
-Received: from BN8PR12MB3587.namprd12.prod.outlook.com
- ([fe80::a7fa:4411:67a3:131d]) by BN8PR12MB3587.namprd12.prod.outlook.com
- ([fe80::a7fa:4411:67a3:131d%4]) with mapi id 15.20.6838.027; Mon, 2 Oct 2023
- 18:11:57 +0000
-Message-ID: <0be2dfa4-b6c1-f62a-66e1-615da7aa3c76@amd.com>
-Date:   Mon, 2 Oct 2023 20:11:41 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 0/9] drm: Annotate structs with __counted_by
-Content-Language: en-US
-To:     Kees Cook <keescook@chromium.org>,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <ckoenig.leichtzumerken@gmail.com>
-Cc:     Alex Deucher <alexdeucher@gmail.com>,
-        David Airlie <airlied@gmail.com>,
-        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
-        Karol Herbst <kherbst@redhat.com>, Tom Rix <trix@redhat.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        dri-devel@lists.freedesktop.org,
-        Chris Wilson <chris@chris-wilson.co.uk>,
-        Prike Liang <Prike.Liang@amd.com>,
-        Huang Rui <ray.huang@amd.com>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Matthew Brost <matthew.brost@intel.com>,
-        Evan Quan <evan.quan@amd.com>, Emma Anholt <emma@anholt.net>,
-        amd-gfx@lists.freedesktop.org,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Lijo Lazar <lijo.lazar@amd.com>,
-        VMware Graphics Reviewers 
-        <linux-graphics-maintainer@vmware.com>,
-        Ben Skeggs <bskeggs@redhat.com>,
-        Andi Shyti <andi.shyti@linux.intel.com>,
-        nouveau@lists.freedesktop.org, David Airlie <airlied@redhat.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Chia-I Wu <olvaffe@gmail.com>, llvm@lists.linux.dev,
-        Yifan Zhang <yifan1.zhang@amd.com>,
-        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        Kevin Wang <kevin1.wang@amd.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Nathan Chancellor <nathan@kernel.org>, Le Ma <le.ma@amd.com>,
-        Gurchetan Singh <gurchetansingh@chromium.org>,
-        Maxime Ripard <mripard@kernel.org>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        virtualization@lists.linux-foundation.org,
-        Sean Paul <sean@poorly.run>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Xiaojian Du <Xiaojian.Du@amd.com>, Lang Yu <Lang.Yu@amd.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Tejas Upadhyay <tejas.upadhyay@intel.com>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        linux-kernel@vger.kernel.org,
-        Hawking Zhang <Hawking.Zhang@amd.com>,
-        Rob Clark <robdclark@gmail.com>, Melissa Wen <mwen@igalia.com>,
-        John Harrison <john.c.harrison@intel.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Nirmoy Das <nirmoy.das@intel.com>,
-        freedreno@lists.freedesktop.org, Zack Rusin <zackr@vmware.com>,
-        linux-hardening@vger.kernel.org
-References: <20230922173110.work.084-kees@kernel.org>
- <169601600138.3014939.8511343741428844249.b4-ty@chromium.org>
- <83cd056c-52ae-01dd-7576-42d41da64c26@gmail.com>
- <CADnq5_Ma2CrLYggJHKFEObsNmUoqJwb2p1xai5DfL=m43U6zEA@mail.gmail.com>
- <202310020952.E7DE0948C0@keescook>
- <10644b5f-b0a7-85ef-0658-2353ee14df0d@gmail.com>
- <202310021107.9BB46FB8E@keescook>
-From:   =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>
-In-Reply-To: <202310021107.9BB46FB8E@keescook>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: FR3P281CA0125.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:94::7) To BN8PR12MB3587.namprd12.prod.outlook.com
- (2603:10b6:408:43::13)
+        Mon, 2 Oct 2023 14:18:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2488AA9
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 11:18:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1696270686;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=JTHelUlse8IqAMEkn3+OwaSpVuDEvR+XOh2gu1M9D5c=;
+        b=NAE03PTak9OCw/qUqieFOvDzGxQLGcSqI08e7sucC8ApT6jjSkYWCta3KEDuyTCSUTS/yb
+        K0wp5OS0n7lHA0csJ2BLHtPPhNCy2g3amORZzr/J7AUXGSxOINDKaZrgIN5t6sEcd4mwns
+        zVMsk+fNMEwUa5I/X9FwsK7iCj4rKro=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-269-nlPig_G1PL6ZOBaxA6FkTA-1; Mon, 02 Oct 2023 14:18:05 -0400
+X-MC-Unique: nlPig_G1PL6ZOBaxA6FkTA-1
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-774294bde69so901585a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 11:18:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696270684; x=1696875484;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JTHelUlse8IqAMEkn3+OwaSpVuDEvR+XOh2gu1M9D5c=;
+        b=fjOOAAytSNIDkGBBe1P6zuamqx0E9yU7cHPY6U/H2P8eNouKfCyeisLDz0shXbf79y
+         qfqrrgJlixY7Fi/avy+dtaIS6OdQM2RyyesLhTytW3jn3r4a/LJz653tR+Yua0EOxmzS
+         dnhkbd4UAL90WFy3euUmp3/jp0y324z7QaU/BmB5upa1BkryyUAUK7dsUPHLQnP23or0
+         d9aVppXC+HeQhSdtMWsgDrVi4ad1kGBILljs4znoOP5kpdc/ZBQ2K3WDyCZqqCDI89fi
+         vV6L/0BBEJ5YbybZz+dWPHJE7tok/tTqa2I5cHc8sNGRd8EbPXMZUsU3qJPglD4s49QW
+         kzRg==
+X-Gm-Message-State: AOJu0Yxz2m2hDxLr/EoFi+lSv9bl+KGBj9CqS2/UMjEQPD+1d1rnKJyf
+        u1M+0/co4QmSZYTRCSLpk9Zn5vkxxkRfqCGhAKSwHuaB1wCN4QU9P6YnIhOUjAXpIjg2LIG1B9k
+        subAKLZ7fYbr0PhjV4b2ET8UwuXjs6prTIg==
+X-Received: by 2002:a05:620a:4090:b0:76c:ae1f:201e with SMTP id f16-20020a05620a409000b0076cae1f201emr539274qko.27.1696270684166;
+        Mon, 02 Oct 2023 11:18:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFjEc7izGr0GyD8cKh/uiIXCkEVxKgvtniJXa7m5bt13+TPqrNIMC8w/At/Vr4WizGwvTagDA==
+X-Received: by 2002:a05:620a:4090:b0:76c:ae1f:201e with SMTP id f16-20020a05620a409000b0076cae1f201emr539250qko.27.1696270683850;
+        Mon, 02 Oct 2023 11:18:03 -0700 (PDT)
+Received: from brian-x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
+        by smtp.gmail.com with ESMTPSA id ld7-20020a056214418700b0065d89f4d537sm3313105qvb.45.2023.10.02.11.18.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Oct 2023 11:18:02 -0700 (PDT)
+Date:   Mon, 2 Oct 2023 14:18:01 -0400
+From:   Brian Masney <bmasney@redhat.com>
+To:     Nikunj Kela <quic_nkela@quicinc.com>
+Cc:     sudeep.holla@arm.com, cristian.marussi@arm.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v4 1/4] firmware: arm_scmi: Add polling support for
+ completion in smc
+Message-ID: <ZRsJWdZVMc+F5ZgF@brian-x1>
+References: <20230718160833.36397-1-quic_nkela@quicinc.com>
+ <20230911194359.27547-1-quic_nkela@quicinc.com>
+ <20230911194359.27547-2-quic_nkela@quicinc.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN8PR12MB3587:EE_|BL1PR12MB5141:EE_
-X-MS-Office365-Filtering-Correlation-Id: f72f9241-70ee-45cd-0f82-08dbc37310a7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: NyIMkowZqJLx2lUCb5LFN2+2JcZEpqP8vpo/LFAYCGF8owQlNHezvm8tqMbLJBbD2CYXDVESU9AK1iMLReITkiPhwWVamefxgM7evNCbRHXj2uf3Noa6fXqu0eIgXM+hiKxJ57b/5uOlFFk0DjKSn9fiojzoGORzt6wXqqQDMu80K6ild4kCSVP0gQlxSzUZyVFSfictrhm7J2EIaOBq40y9IRDK2Pw0d73sEsvmF0pz/CAqF5CXw+4Ef1DooEceBEKfBK68Eu/D2NjpIf7ZTofyx54UKBzYixGHggnS5g1pI4IitgF4GTuqEdU/+weTTPyXNlWH25Gmf/q1fGD1R133O878jpd0HlzI3r6bZi0nKBcWd9SPwpE7J14gI6aBQTxgXdoGw5vm7EaGFslVokJwBRg7wPEHdEeV4vkw+PJo261d5dvtJ64tVtjSAtoDG+4oHKjLEgavg6BgqIxtcIsVnmob55cEoqzGp3p3ZOqKCenf2/pXhPk9+DsorzynKXB65w/mgi2coR6rEDNhaklCGycKVdSuPB+BQfJNZay188PaiIRnw66oNa3a1EzgXq6Ngyg8AjQl9IzJ7b4fMcBPwhhabkVh5EdOsBWPt+YY4pLzOdWjJKejNdZ2V8GDzSJgp1wpbm2XygaGRrh7UA==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN8PR12MB3587.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(346002)(136003)(376002)(396003)(39860400002)(366004)(230922051799003)(64100799003)(186009)(1800799009)(451199024)(2616005)(26005)(66574015)(36756003)(83380400001)(6512007)(6506007)(6486002)(966005)(478600001)(6666004)(53546011)(31686004)(38100700002)(316002)(110136005)(66476007)(66946007)(41300700001)(66556008)(54906003)(8676002)(8936002)(4326008)(5660300002)(7416002)(7406005)(31696002)(86362001)(2906002)(45980500001)(43740500002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?T2tEOW02aGdqQ3FNTzJKZk5CemRkdnZna0c5T0lMMlk1VnAzNmZCZS9GcUNu?=
- =?utf-8?B?M2VjL2VtZ3A2MFdsZUhHV3JFZVAyYVNmM3h1QzFmd2lsc2plZmI1bWNDakNp?=
- =?utf-8?B?dFAyc2tFWkgwdW93TnJSaFZkeG0vemRWYVJ1QXYrNS9QSURmM0o3bzdwY2lX?=
- =?utf-8?B?bTU4ZlM2bzkzQktWa2IrdmdrdHlGaWNJZ1NZeFcrbG9NUzhDVCs2QVZuRFVm?=
- =?utf-8?B?ZDRDamJvdnZBY1VaSEpkVXRFblNCN1RhUk9kUFE3L05rckdyZlVFbWV1bUt4?=
- =?utf-8?B?V1ZDSitaUVVpN3c1V3A3TmJ6UWpTMFdId3V0ZHcvTHE0WVVLOWZuNy9CWUIr?=
- =?utf-8?B?c0tsdVVqcUsrNXdvWitobi9nTkNsNHZ4YWtscjZkRlFaOHErQkNkNkxUTzlZ?=
- =?utf-8?B?NmREZjFxeVdVd1RuZXB6MjFGTktQbXN6aS90aXBzZkFSMFEvRytFenBsQzJj?=
- =?utf-8?B?MUZ3c0xFQXJvOHI4clZUVmpHV3hQaVBYV0VvRFJyZUM1WUY0ZU95WUJSZmFR?=
- =?utf-8?B?REpHdDlXVU5aZzQ2SkhDWjFCNHVjZ0VrZEdpdFFhS2liZndlQm11VVhRTXl6?=
- =?utf-8?B?L2hhT3cybmNTRGs3WTJ0enVHNWx6TlpQMXhSL2RrbmpDeVF5TjU4Z1I0VHBB?=
- =?utf-8?B?Q2htalpNZVVYbkJwaDdEbGYwTEd0UXlPZTN5NFFlRjQ1L1paSlFjak54YU1h?=
- =?utf-8?B?NCtaVExHYWs3RHFjSWJsVXFoNklzcE54blZwT3diNXY3U2xkd1FMTklnSElN?=
- =?utf-8?B?dGw4YkhYWlFDaTZmWXhibGFCNXZNTDdDZCthVU5zaUFRTEJGbk5sQnAxY09P?=
- =?utf-8?B?S3UybUR1cS9rT0RrbGVvb2w3eEFFa2ovaUIwcnpBWENUOFNXT0dZY2dYRW5o?=
- =?utf-8?B?UTF4bUJmbTF2dzlvMnB1Um5NOG9pRWs0K2dRSGJ0cW1HRmxqTUZKYWdGcE1G?=
- =?utf-8?B?dDQzeTI4enVJcjl5c2wwR0pRcDRqek5iY0RscitaOG9MSExFMVhBRGI0bEs2?=
- =?utf-8?B?RHJpN3F0RzFyRmM1SXhmOHlSWE5NY25jVk85elUzV205d2NUeGhQdE85b29P?=
- =?utf-8?B?cDd4UnlYY1g3aU15K0dTWmJUNlR4NnQrak0xelFkM0F4MjdQYjlWUlpwOWlC?=
- =?utf-8?B?Y2NCemdVZzEzRVRHUi9BUGNHcmoySVRYT1JrU2MwWVVpUk9CWEhtRHVsdlA3?=
- =?utf-8?B?UkZGdndpV3NnT0JXbWI2SDBmeG80emdESWpZdDY2dDRTNThQVll1d2FxTUtC?=
- =?utf-8?B?aytSSEpVL2lYeE0yeGxlZzRJcGFBb3ViZlJ6NTdoTkxPNlVURkNWamN6S3cz?=
- =?utf-8?B?RXJsVGNtYk1MNW45c0NWc3JBcHdPNjdBQWRaZWU3ZHZwYXVveWIxQ2FCdjRj?=
- =?utf-8?B?aHlibVNGZlpoNkt0VHhwUG8vY2ZrbFlpSW00bE5lbmR5T0pTSnZQaEdLNmVF?=
- =?utf-8?B?WHRSN0Z4ZVVzYkowTHF1RDV2YlRJUWlCVi9BNkliZ1BzTXJiOW5nQU42TzJM?=
- =?utf-8?B?ZU5kTXVGR3hUK3NSLzdxRmxvU0Z1VUdFdk1EcWwwQWlRL05yWFd0Wnp1eWwr?=
- =?utf-8?B?bkhqejFLeE9mNHM1bmNheGhCeHZ4aUxESlRoSVNObm41Y01nNm1QMG9NQzk3?=
- =?utf-8?B?T0N5SUtpZllScGJ4NlVqMUkwUWVJTHYyWnpGS0ZCVXpEdHNudG5pRmd2Q0Fs?=
- =?utf-8?B?R203RXRSVU9LYTY4dWhZUXdKTEEwMUhKUWJQVWZ6czc0QW56SkovdUdrL0Np?=
- =?utf-8?B?djBGWGh1SDhnb3JsaFhTTERFaGVuckg5d1V5bHg0SjFyNFFSOXh1Q05LeDhm?=
- =?utf-8?B?L2NqSkxyVVJpdzFvd2Zzc2tlTzdkZ1JBNFYzbE53ZTJPZkxGeVFKMWtaOExx?=
- =?utf-8?B?RlRJSHRxelBoZzBTSGRMendycGsrRTJVTFdldks0VHI1NmZTWCtyc2J1L2E3?=
- =?utf-8?B?ejFBUlZJaDByRjdZaXc2czJjd3pNZGJDeDBnVThKdkxXMldEMitabGxVaGRK?=
- =?utf-8?B?WlJuTTdoa0RvTkJLenRuV2hBTlA3aHZ6Q1ZENVFCNG5kbXFqTnRVZlp5RVNN?=
- =?utf-8?B?QVZyeFZ2MzhpNGF0K0tPdUVqa2FRZnVIZ3lXcnl4WDdCdi9QZmdWcXEySGI4?=
- =?utf-8?Q?6tdA=3D?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f72f9241-70ee-45cd-0f82-08dbc37310a7
-X-MS-Exchange-CrossTenant-AuthSource: BN8PR12MB3587.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Oct 2023 18:11:57.3035
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: OwJHfZXZXoIs9c88dAz50jEfSrfhNl+TrieykBw8uPuZ38pOysWtjZRh7aaOb+oF
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5141
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
-        NICE_REPLY_A,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,
-        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230911194359.27547-2-quic_nkela@quicinc.com>
+User-Agent: Mutt/2.2.9 (2022-11-12)
+X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_WEB,SPF_HELO_NONE,
+        SPF_NONE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Am 02.10.23 um 20:08 schrieb Kees Cook:
-> On Mon, Oct 02, 2023 at 08:01:57PM +0200, Christian König wrote:
->> Am 02.10.23 um 18:53 schrieb Kees Cook:
->>> On Mon, Oct 02, 2023 at 11:06:19AM -0400, Alex Deucher wrote:
->>>> On Mon, Oct 2, 2023 at 5:20 AM Christian König
->>>> <ckoenig.leichtzumerken@gmail.com> wrote:
->>>>> Am 29.09.23 um 21:33 schrieb Kees Cook:
->>>>>> On Fri, 22 Sep 2023 10:32:05 -0700, Kees Cook wrote:
->>>>>>> This is a batch of patches touching drm for preparing for the coming
->>>>>>> implementation by GCC and Clang of the __counted_by attribute. Flexible
->>>>>>> array members annotated with __counted_by can have their accesses
->>>>>>> bounds-checked at run-time checking via CONFIG_UBSAN_BOUNDS (for array
->>>>>>> indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family functions).
->>>>>>>
->>>>>>> As found with Coccinelle[1], add __counted_by to structs that would
->>>>>>> benefit from the annotation.
->>>>>>>
->>>>>>> [...]
->>>>>> Since this got Acks, I figure I should carry it in my tree. Let me know
->>>>>> if this should go via drm instead.
->>>>>>
->>>>>> Applied to for-next/hardening, thanks!
->>>>>>
->>>>>> [1/9] drm/amd/pm: Annotate struct smu10_voltage_dependency_table with __counted_by
->>>>>>          https://git.kernel.org/kees/c/a6046ac659d6
->>>>> STOP! In a follow up discussion Alex and I figured out that this won't work.
->>> I'm so confused; from the discussion I saw that Alex said both instances
->>> were false positives?
->>>
->>>>> The value in the structure is byte swapped based on some firmware
->>>>> endianness which not necessary matches the CPU endianness.
->>>> SMU10 is APU only so the endianess of the SMU firmware and the CPU
->>>> will always match.
->>> Which I think is what is being said here?
->>>
->>>>> Please revert that one from going upstream if it's already on it's way.
->>>>>
->>>>> And because of those reasons I strongly think that patches like this
->>>>> should go through the DRM tree :)
->>> Sure, that's fine -- please let me know. It was others Acked/etc. Who
->>> should carry these patches?
->> Probably best if the relevant maintainer pick them up individually.
->>
->> Some of those structures are filled in by firmware/hardware and only the
->> maintainers can judge if that value actually matches what the compiler
->> needs.
->>
->> We have cases where individual bits are used as flags or when the size is
->> byte swapped etc...
->>
->> Even Alex and I didn't immediately say how and where that field is actually
->> used and had to dig that up. That's where the confusion came from.
-> Okay, I've dropped them all from my tree. Several had Acks/Reviews, so
-> hopefully those can get picked up for the DRM tree?
+On Mon, Sep 11, 2023 at 12:43:56PM -0700, Nikunj Kela wrote:
+> Currently, the return from the smc call assumes the completion of
+> the scmi request. However this may not be true in virtual platforms
+> that are using hvc doorbell.
+> 
+> This change adds a Kconfig to enable the polling for the request
+> completion.
+> 
+> Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
+> ---
+>  drivers/firmware/arm_scmi/Kconfig | 14 ++++++++++++++
+>  drivers/firmware/arm_scmi/smc.c   | 15 ++++++++++++++-
+>  2 files changed, 28 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/firmware/arm_scmi/Kconfig b/drivers/firmware/arm_scmi/Kconfig
+> index ea0f5083ac47..771d60f8319f 100644
+> --- a/drivers/firmware/arm_scmi/Kconfig
+> +++ b/drivers/firmware/arm_scmi/Kconfig
+> @@ -125,6 +125,20 @@ config ARM_SCMI_TRANSPORT_SMC_ATOMIC_ENABLE
+>  	  in atomic context too, at the price of using a number of busy-waiting
+>  	  primitives all over instead. If unsure say N.
+>  
+> +config ARM_SCMI_TRANSPORT_SMC_POLL_COMPLETION
+> +	bool "Enable polling support for SCMI SMC transport"
+> +	depends on ARM_SCMI_TRANSPORT_SMC
+> +	help
+> +	  Enable completion polling support for SCMI SMC based transport.
+> +
+> +	  If you want the SCMI SMC based transport to poll for the completion,
+> +	  answer Y.
+> +	  Enabling completion polling might be desired in the absence of the a2p
+> +	  irq when the return from smc/hvc call doesn't indicate the completion
+> +	  of the SCMI requests. This might be useful for instances used in
+> +	  virtual platforms.
+> +	  If unsure say N.
+> +
+>  config ARM_SCMI_TRANSPORT_VIRTIO
+>  	bool "SCMI transport based on VirtIO"
+>  	depends on VIRTIO=y || VIRTIO=ARM_SCMI_PROTOCOL
+> diff --git a/drivers/firmware/arm_scmi/smc.c b/drivers/firmware/arm_scmi/smc.c
+> index c193516a254d..0a0b7e401159 100644
+> --- a/drivers/firmware/arm_scmi/smc.c
+> +++ b/drivers/firmware/arm_scmi/smc.c
+> @@ -250,6 +250,16 @@ static void smc_mark_txdone(struct scmi_chan_info *cinfo, int ret,
+>  	smc_channel_lock_release(scmi_info);
+>  }
+>  
+> +#ifdef CONFIG_ARM_SCMI_TRANSPORT_SMC_POLL_COMPLETION
+> +static bool
+> +smc_poll_done(struct scmi_chan_info *cinfo, struct scmi_xfer *xfer)
+> +{
+> +	struct scmi_smc *scmi_info = cinfo->transport_info;
+> +
+> +	return shmem_poll_done(scmi_info->shmem, xfer);
+> +}
+> +#endif
+> +
+>  static const struct scmi_transport_ops scmi_smc_ops = {
+>  	.chan_available = smc_chan_available,
+>  	.chan_setup = smc_chan_setup,
+> @@ -257,6 +267,9 @@ static const struct scmi_transport_ops scmi_smc_ops = {
+>  	.send_message = smc_send_message,
+>  	.mark_txdone = smc_mark_txdone,
+>  	.fetch_response = smc_fetch_response,
+> +#ifdef CONFIG_ARM_SCMI_TRANSPORT_SMC_POLL_COMPLETION
+> +	.poll_done = smc_poll_done,
+> +#endif
+>  };
+>  
+>  const struct scmi_desc scmi_smc_desc = {
+> @@ -272,6 +285,6 @@ const struct scmi_desc scmi_smc_desc = {
+>  	 * for the issued command will be immmediately ready to be fetched
+>  	 * from the shared memory area.
+>  	 */
+> -	.sync_cmds_completed_on_ret = true,
+> +	.sync_cmds_completed_on_ret = !IS_ENABLED(CONFIG_ARM_SCMI_TRANSPORT_SMC_POLL_COMPLETION),
+>  	.atomic_enabled = IS_ENABLED(CONFIG_ARM_SCMI_TRANSPORT_SMC_ATOMIC_ENABLE),
 
-I will pick those up to go through drm-misc-next.
+From a Linux distributor viewpoint, it would be nice if this was
+determined at runtime, rather than at compile time. We generate a single
+kernel binary that's used on systems from multiple hardware
+manufacturers. We'd run into an issue if one company required this, but
+another one didn't. We may potentially run into this same type of issue
+with the upstream arm64 defconfig.
 
-Going to ping maintainers once more when I'm not sure if stuff is 
-correct or not.
-
-Christian.
-
->
-> Thanks!
->
-> -Kees
->
+Brian
 
