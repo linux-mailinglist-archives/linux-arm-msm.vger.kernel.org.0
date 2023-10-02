@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 48E027B5497
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 16:10:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 27C027B54B2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 16:10:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237573AbjJBNzB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Oct 2023 09:55:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44224 "EHLO
+        id S237606AbjJBNzQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Oct 2023 09:55:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237585AbjJBNzA (ORCPT
+        with ESMTP id S237643AbjJBNzO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Oct 2023 09:55:00 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 731CDDA
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 06:54:57 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id 4fb4d7f45d1cf-533e7d127d4so17989224a12.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 06:54:57 -0700 (PDT)
+        Mon, 2 Oct 2023 09:55:14 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC09BD3
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 06:55:10 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-5345a3dfe3bso14010131a12.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 06:55:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696254896; x=1696859696; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696254909; x=1696859709; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=7TPy5OXdxGXkOF5NkG2BaNgpvs7RNm3dPQYOlkwRqQI=;
-        b=eS2qCZhILxliwOX2FjdrETgUbbYrnTqEQz89T+Y/ZgmQ4WxTJ4jUIakdkldei8OH2y
-         I+oCGfX9SMwKUqxE8lX17vgDUkQaAxegF/X/2QY3b+Xl/frBIUYDSiQ9GjsctMV9Jqud
-         SqgFi6FpbqdY3JcNxDL391GBL3BlvSioxRIb2R2pu9PFxyj+3OJJPwW4+JarV4ZuhHOA
-         SFegaE3gi5YtL6edlMmDGeG1+DbtsSl9QjfABe0ZXtC40AB+0gHnmhs6+CBf+cxU8e8C
-         WMPCxiQP7HnauXEjGk02dU4w6e1jKJyx7kxeVsBCqtI9q1JoNuUXvkiZFc3w07JKCF7t
-         8WRw==
+        bh=P4oGRIOJHwsvztTn+KtyVwe/+1HiPAMc/eEBTN/eirk=;
+        b=ZrDKwyyQ2UJdVX0Sgilr15AjucG4Ogc6ayYxQPtEZ406pVzpdDFTqSdvpafWPAAN4+
+         G0Ly2YaQHNwJl+EkSjWw430Oah1Q6qYkIyhPMPoEmX98Cb3otqA95uyvMlqP6srShix1
+         K4nOTr6TeWnBWYKp8Kw79bMmxevBXV7s5iZA+a2MISRajVqOoW7PvnzEq0pdLUrRlkPN
+         2cIZVHbGLlL5eh3l0IiW/7W3HliRTQI11uG5/R86Pkskg3cpjC0eAHjDTUP9VXydExGm
+         bp/xBhi/+4v2vnApyfuMOt5J7WTYEBHF4U2QXmP+Ad29gJn5LsEAIFOPNsoT3H+E3ubr
+         McAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696254896; x=1696859696;
+        d=1e100.net; s=20230601; t=1696254909; x=1696859709;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7TPy5OXdxGXkOF5NkG2BaNgpvs7RNm3dPQYOlkwRqQI=;
-        b=rsfzo7k72PHgNgzYgHTCIg1gVSc0JpldrvlMc5Hvyv2wNx20pJRfY00b4V4LKjiiK3
-         OoijlJcBP0STo3M3e1XKfHechZtT5qPhglP7+2xHK+4mEsNPL+3qm9GfQD8WrYZqVY0q
-         qf5zFCxxUbDrvh9oX/j2HK2OM0b6Qe6vQwrMHFHvHBbp/fOhxmpgJq1FHa2x8U7gqW85
-         l+ejMQ7QgkP3XdN1Cf2LesqDUO9B6DhnxPdPKrTn+kCwFEmVuvb3uoJSWvWyHOC1zOx0
-         B/ua97azs7z1EuZ5Aj2I8jG4/SRBStuMm5PecyvrYYz4iTIeZO+3rf8HgoSJruOYElNv
-         TxUA==
-X-Gm-Message-State: AOJu0YxTrbNwZYvYvblv1X7US/yxncgA6HmUgC3hq0++zQf8ssHPzaru
-        RDG8WJsnQeZ/qbMKGtqOHUYyrg==
-X-Google-Smtp-Source: AGHT+IHQtXACmY84x7mDj9zOmBhv/fzHfqzmzgeiuNL1je7vJF86OELXC9DhMZEvCwCIH1y4xxNTvA==
-X-Received: by 2002:a17:907:2711:b0:9b2:a7e1:3708 with SMTP id w17-20020a170907271100b009b2a7e13708mr10092419ejk.21.1696254895955;
-        Mon, 02 Oct 2023 06:54:55 -0700 (PDT)
+        bh=P4oGRIOJHwsvztTn+KtyVwe/+1HiPAMc/eEBTN/eirk=;
+        b=VmRoGQWi7/VW02OcSUf83eHaKRMWNIQRAhzhHLyz2WvWPPV77LmAIMWFejFdhO6nHi
+         DWpiGgyXPzN3n+oagLg/5ztr+I5ffRMIskpMNK7U3b2d8atUMfEwd+btllVVOwCbxVkJ
+         tjNuM8i/OybYWzzKxT3bqg6N4aRIU4u6NBN+X5Cn4+Ok1hRR2GigSA6lCiSIXKf2rF+i
+         tOhus+Bb9b+XdTllyfwuwGMGfPh5NBhNEBfbdtjxGvJknYm4QsD5AvB5FNGb+/6dB2ue
+         Yl4LwaDkjaSyzbhZ1g1Fnaj8kha1/jsajbmJzGpdn9VGg4KlyGVwRkI2JdZAeqEA8gRU
+         mQ1w==
+X-Gm-Message-State: AOJu0YxWPzcES5/r/pZk2WMvg9eVB6dFkTrUcQs/1q6hQ1G/ROti6K1N
+        VZ4CO9unr4/Gp/7khdsJtGsv8w==
+X-Google-Smtp-Source: AGHT+IFFXi2zi4w4ei1WqFevjlLzADfTcf3seFf6c6vLVrnFo5/Pb/IFzxzzFp2nwHZmo0d4B1Zozw==
+X-Received: by 2002:a17:906:845b:b0:9ae:6538:643b with SMTP id e27-20020a170906845b00b009ae6538643bmr11196501ejy.38.1696254909162;
+        Mon, 02 Oct 2023 06:55:09 -0700 (PDT)
 Received: from [192.168.1.197] (5-157-101-10.dyn.eolo.it. [5.157.101.10])
-        by smtp.gmail.com with ESMTPSA id bn23-20020a170906c0d700b0099cd1c0cb21sm17019317ejb.129.2023.10.02.06.54.54
+        by smtp.gmail.com with ESMTPSA id bn23-20020a170906c0d700b0099cd1c0cb21sm17019317ejb.129.2023.10.02.06.55.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Oct 2023 06:54:55 -0700 (PDT)
-Message-ID: <856c87b4-7c7c-4a62-8013-5afd75535ae5@linaro.org>
-Date:   Mon, 2 Oct 2023 15:54:53 +0200
+        Mon, 02 Oct 2023 06:55:08 -0700 (PDT)
+Message-ID: <d1ae1564-b639-4bc2-a8e9-1113ae04c34c@linaro.org>
+Date:   Mon, 2 Oct 2023 15:55:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] dt-bindings: mfd: qcom,spmi-pmic: Drop unused
- labels from examples
+Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: pm7250b: Use correct node name
+ for gpios
 Content-Language: en-US
 To:     Luca Weiss <luca.weiss@fairphone.com>,
         Andy Gross <agross@kernel.org>,
@@ -69,7 +69,7 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20231002-pm7250b-gpio-fixup-v2-0-debb8b599989@fairphone.com>
- <20231002-pm7250b-gpio-fixup-v2-1-debb8b599989@fairphone.com>
+ <20231002-pm7250b-gpio-fixup-v2-2-debb8b599989@fairphone.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -115,11 +115,11 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231002-pm7250b-gpio-fixup-v2-1-debb8b599989@fairphone.com>
+In-Reply-To: <20231002-pm7250b-gpio-fixup-v2-2-debb8b599989@fairphone.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -129,18 +129,12 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 02/10/2023 09:00, Luca Weiss wrote:
-> There's not much point in having unused labels in the binding example,
-> so drop them.
-> 
-> This patch was originally motivated by ea25d61b448a ("arm64: dts: qcom:
-> Use plural _gpios node label for PMIC gpios") updating all dts files to
-> use the plural _gpios label instead of the singular _gpio as label but
-> this example wasn't updated. But since we should just drop the label
-> alltogether, do that.
+> Use gpio@ instead of pinctrl@ as that's the name expected by the
+> qcom,spmi-pmic.yaml schema. Update it to fix dt validation.
 > 
 > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
