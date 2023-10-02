@@ -2,253 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 85AC07B4BD8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 08:55:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1510B7B4BF3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 09:00:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235587AbjJBGzt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Oct 2023 02:55:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58848 "EHLO
+        id S235600AbjJBG77 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Oct 2023 02:59:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235616AbjJBGzr (ORCPT
+        with ESMTP id S235580AbjJBG77 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Oct 2023 02:55:47 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCB6F193
-        for <linux-arm-msm@vger.kernel.org>; Sun,  1 Oct 2023 23:55:38 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id 4fb4d7f45d1cf-5347e657a11so10907491a12.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 01 Oct 2023 23:55:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1696229737; x=1696834537; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CLUF0/a7PdgNt6u9Pw5UnwojPsRQiGDOxDcNhly3Luw=;
-        b=QWjeYU1Of290RGkt5rXqZrsegGBEwMXrs1wsqAMDq8fMDKbhsJ2bX46PdlTH3fsMUi
-         H86NLXevjPr5vIoPMbXDBK25TaCAJ1tN164lRdgs3U43/D42udyv7Mtxo6ClTLWviifT
-         rFvCP7CEoj9I4v07jYg93YfMumdu8aaMSU22/Ubd3vJ5vYxS8hYf+oaCuNid9B5LZcPu
-         YE8y0RglHgxfQUOztnMXg4G01uAEytz4P77UoA7EDVqfH5WiIs32U40O4sUy9mqk7vg9
-         I15HnVHhs5dh9tPeRmYHAfAFT2tHKrgACLUTTkeVIFuZV0ZLNQ8/Djz/iz/6xx0lBy2F
-         tpYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696229737; x=1696834537;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CLUF0/a7PdgNt6u9Pw5UnwojPsRQiGDOxDcNhly3Luw=;
-        b=Lv9cZE/5wC5OneoViEe9DPVL9W+NRtcs++L0Q8tWoQe6zGlQxTi8UexfDj2ibWs9MP
-         vspHLEBPdK6x6hxR7giEHXpshbUZpHwCrRxE7KDk4c0sIFLFGgJkwDumJYFyY5KuW/5F
-         gnf714L2T9cVf+8Q70ctVYSp4+ypTP6B0yUKKYsZLNCO+3nxDEQ0KsB84R4hDA/1A9mj
-         MiiALFUOjqQrha00IJC8S1ye+MsF1BuQUjLZpvKbRn/xjbEtwCgXzdDFOct4kK25RgDN
-         Ivm4sfm+ugdACPf9Z6vU1xGIrXf0oGliT798l9vZ1WpbOK6ibfmI3drPXr+adrkc42Ip
-         bboA==
-X-Gm-Message-State: AOJu0YyhgEtMBlrKs/xtdlTojU6pAsTH78GqUa538OEkU/69efY7YXls
-        zIO6mgH94pSedBdBs+pGUQShlA==
-X-Google-Smtp-Source: AGHT+IEvPypp8fZTob08fjR9qOqeRPvfVW8GbTB3iOc2doKjnm7+JLd5MoVpJ/Ej47EE5oKwpDVpaA==
-X-Received: by 2002:a05:6402:2694:b0:530:dd97:fe78 with SMTP id w20-20020a056402269400b00530dd97fe78mr12220249edd.7.1696229737219;
-        Sun, 01 Oct 2023 23:55:37 -0700 (PDT)
-Received: from otso.luca.vpn.lucaweiss.eu (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id m7-20020a056402050700b00537f44827a8sm4095557edv.64.2023.10.01.23.55.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Oct 2023 23:55:37 -0700 (PDT)
-From:   Luca Weiss <luca.weiss@fairphone.com>
-Date:   Mon, 02 Oct 2023 08:55:31 +0200
-Subject: [PATCH v2 2/2] arm64: dts: qcom: sc7280: Add Camera Control
- Interface busses
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231002-sc7280-cci-v2-2-9333fda4612a@fairphone.com>
-References: <20231002-sc7280-cci-v2-0-9333fda4612a@fairphone.com>
-In-Reply-To: <20231002-sc7280-cci-v2-0-9333fda4612a@fairphone.com>
-To:     Andy Gross <agross@kernel.org>,
+        Mon, 2 Oct 2023 02:59:59 -0400
+Received: from mail.8bytes.org (mail.8bytes.org [IPv6:2a01:238:42d9:3f00:e505:6202:4f0c:f051])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C1175A4;
+        Sun,  1 Oct 2023 23:59:55 -0700 (PDT)
+Received: from 8bytes.org (pd9fe9df8.dip0.t-ipconnect.de [217.254.157.248])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mail.8bytes.org (Postfix) with ESMTPSA id ECDA51A2626;
+        Mon,  2 Oct 2023 08:59:53 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
+        s=default; t=1696229994;
+        bh=AIFVwF7V2yCwhyWe75DvT7fYSBhwm/fBmqB8nOMomrQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=qpnLCwzk2x1keRMkLPeYurvT7r9OO8YOJ6/7Vx/qRYBDxYBtaFczM0bl0X3CwM+Z8
+         JjZ2S2KL1yCjIcyOYKVBFX3TnYJH3DgXndhq33RdOr06+/f4P6g8ed5YusHJpPxKBf
+         /cC8uVfAa/rk6Wr3PPtDNHTnxEpzpMy8C+fcOb8G29mwxCh4jTTbUwvHTKVDKKREHN
+         XKS42S0qW6PWzXZYxLGalC73IDOoglQpj2vweIfb/B9jDLMPy04LKeueQ7Vtaof2m0
+         /U/pjbpVoAN9ULRqOfwjMT62szxrFLqy3anLaW4GIZc388p9f5N34fWI0GM1KG2Gfs
+         vlKBpUHgqfWmA==
+Date:   Mon, 2 Oct 2023 08:59:52 +0200
+From:   Joerg Roedel <joro@8bytes.org>
+To:     Niklas Schnelle <schnelle@linux.ibm.com>
+Cc:     Matthew Rosato <mjrosato@linux.ibm.com>,
+        Will Deacon <will@kernel.org>,
+        Wenjia Zhang <wenjia@linux.ibm.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Jason Gunthorpe <jgg@ziepe.ca>,
+        Gerd Bayer <gbayer@linux.ibm.com>,
+        Julian Ruess <julianr@linux.ibm.com>,
+        Pierre Morel <pmorel@linux.ibm.com>,
+        Alexandra Winter <wintera@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Sven Schnelle <svens@linux.ibm.com>,
+        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Lu Baolu <baolu.lu@linux.intel.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Andi Shyti <andi.shyti@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-X-Mailer: b4 0.12.3
+        Yong Wu <yong.wu@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jonathan Corbet <corbet@lwn.net>, linux-s390@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        iommu@lists.linux.dev, asahi@lists.linux.dev,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+        linux-doc@vger.kernel.org
+Subject: Re: [PATCH v13 0/6] iommu/dma: s390 DMA API conversion and optimized
+ IOTLB flushing
+Message-ID: <ZRpqaJEQLRDp5b1L@8bytes.org>
+References: <20230928-dma_iommu-v13-0-9e5fc4dacc36@linux.ibm.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230928-dma_iommu-v13-0-9e5fc4dacc36@linux.ibm.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the CCI busses found on sc7280 and their pinctrl states.
+On Thu, Sep 28, 2023 at 04:31:34PM +0200, Niklas Schnelle wrote:
+> Niklas Schnelle (6):
+>       iommu: Allow .iotlb_sync_map to fail and handle s390's -ENOMEM return
+>       s390/pci: prepare is_passed_through() for dma-iommu
+>       s390/pci: Use dma-iommu layer
+>       iommu/s390: Disable deferred flush for ISM devices
+>       iommu/dma: Allow a single FQ in addition to per-CPU FQs
+>       iommu/dma: Use a large flush queue and timeout for shadow_on_flush
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 136 +++++++++++++++++++++++++++++++++++
- 1 file changed, 136 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 66f1eb83cca7..65550de2e4ff 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -3793,6 +3793,86 @@ videocc: clock-controller@aaf0000 {
- 			#power-domain-cells = <1>;
- 		};
- 
-+		cci0: cci@ac4a000 {
-+			compatible = "qcom,sc7280-cci", "qcom,msm8996-cci";
-+			reg = <0 0x0ac4a000 0 0x1000>;
-+			interrupts = <GIC_SPI 460 IRQ_TYPE_EDGE_RISING>;
-+			power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>;
-+
-+			clocks = <&camcc CAM_CC_CAMNOC_AXI_CLK>,
-+				 <&camcc CAM_CC_SLOW_AHB_CLK_SRC>,
-+				 <&camcc CAM_CC_CPAS_AHB_CLK>,
-+				 <&camcc CAM_CC_CCI_0_CLK>,
-+				 <&camcc CAM_CC_CCI_0_CLK_SRC>;
-+			clock-names = "camnoc_axi",
-+				      "slow_ahb_src",
-+				      "cpas_ahb",
-+				      "cci",
-+				      "cci_src";
-+			pinctrl-0 = <&cci0_default &cci1_default>;
-+			pinctrl-1 = <&cci0_sleep &cci1_sleep>;
-+			pinctrl-names = "default", "sleep";
-+
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			status = "disabled";
-+
-+			cci0_i2c0: i2c-bus@0 {
-+				reg = <0>;
-+				clock-frequency = <1000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+			};
-+
-+			cci0_i2c1: i2c-bus@1 {
-+				reg = <1>;
-+				clock-frequency = <1000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+			};
-+		};
-+
-+		cci1: cci@ac4b000 {
-+			compatible = "qcom,sc7280-cci", "qcom,msm8996-cci";
-+			reg = <0 0x0ac4b000 0 0x1000>;
-+			interrupts = <GIC_SPI 271 IRQ_TYPE_EDGE_RISING>;
-+			power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>;
-+
-+			clocks = <&camcc CAM_CC_CAMNOC_AXI_CLK>,
-+				 <&camcc CAM_CC_SLOW_AHB_CLK_SRC>,
-+				 <&camcc CAM_CC_CPAS_AHB_CLK>,
-+				 <&camcc CAM_CC_CCI_1_CLK>,
-+				 <&camcc CAM_CC_CCI_1_CLK_SRC>;
-+			clock-names = "camnoc_axi",
-+				      "slow_ahb_src",
-+				      "cpas_ahb",
-+				      "cci",
-+				      "cci_src";
-+			pinctrl-0 = <&cci2_default &cci3_default>;
-+			pinctrl-1 = <&cci2_sleep &cci3_sleep>;
-+			pinctrl-names = "default", "sleep";
-+
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			status = "disabled";
-+
-+			cci1_i2c0: i2c-bus@0 {
-+				reg = <0>;
-+				clock-frequency = <1000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+			};
-+
-+			cci1_i2c1: i2c-bus@1 {
-+				reg = <1>;
-+				clock-frequency = <1000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+			};
-+		};
-+
- 		camcc: clock-controller@ad00000 {
- 			compatible = "qcom,sc7280-camcc";
- 			reg = <0 0x0ad00000 0 0x10000>;
-@@ -4298,6 +4378,62 @@ tlmm: pinctrl@f100000 {
- 			gpio-ranges = <&tlmm 0 0 175>;
- 			wakeup-parent = <&pdc>;
- 
-+			cci0_default: cci0-default-state {
-+				pins = "gpio69", "gpio70";
-+				function = "cci_i2c";
-+				drive-strength = <2>;
-+				bias-pull-up;
-+			};
-+
-+			cci0_sleep: cci0-sleep-state {
-+				pins = "gpio69", "gpio70";
-+				function = "cci_i2c";
-+				drive-strength = <2>;
-+				bias-pull-down;
-+			};
-+
-+			cci1_default: cci1-default-state {
-+				pins = "gpio71", "gpio72";
-+				function = "cci_i2c";
-+				drive-strength = <2>;
-+				bias-pull-up;
-+			};
-+
-+			cci1_sleep: cci1-sleep-state {
-+				pins = "gpio71", "gpio72";
-+				function = "cci_i2c";
-+				drive-strength = <2>;
-+				bias-pull-down;
-+			};
-+
-+			cci2_default: cci2-default-state {
-+				pins = "gpio73", "gpio74";
-+				function = "cci_i2c";
-+				drive-strength = <2>;
-+				bias-pull-up;
-+			};
-+
-+			cci2_sleep: cci2-sleep-state {
-+				pins = "gpio73", "gpio74";
-+				function = "cci_i2c";
-+				drive-strength = <2>;
-+				bias-pull-down;
-+			};
-+
-+			cci3_default: cci3-default-state {
-+				pins = "gpio75", "gpio76";
-+				function = "cci_i2c";
-+				drive-strength = <2>;
-+				bias-pull-up;
-+			};
-+
-+			cci3_sleep: cci3-sleep-state {
-+				pins = "gpio75", "gpio76";
-+				function = "cci_i2c";
-+				drive-strength = <2>;
-+				bias-pull-down;
-+			};
-+
- 			dp_hot_plug_det: dp-hot-plug-det-state {
- 				pins = "gpio47";
- 				function = "dp_hot";
-
--- 
-2.42.0
-
+Applied, thanks Niklas.
