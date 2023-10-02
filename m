@@ -2,103 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 954F87B5A54
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 20:42:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5CB707B5A99
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 20:55:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238725AbjJBSkQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Oct 2023 14:40:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59182 "EHLO
+        id S238818AbjJBSml (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Oct 2023 14:42:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229644AbjJBSkP (ORCPT
+        with ESMTP id S232711AbjJBSmk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Oct 2023 14:40:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 100379B
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 11:39:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1696271963;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=WYt6bra2fRdXu2dkXwuYoSR3Jxl4VEKHXbPW5NpZljc=;
-        b=Qp52Orbjx+Rhx3zH++KoxZkye5HABQlNRHBLlOiKO3j333RwVWN1J3Wwo2zE5FRZKe1I2W
-        mdKKJ7yrpL8qzp1Y6hlsuXR3JHMt7Hzl5E4ByRM5CjNEoPk3OVzrA7wgd0VZGAjwcKSQmk
-        YBuBiK4QsELJT7yvN/FXIAzDiior3TQ=
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-658-7eBjfyrjPua_7e_BUAT3Nw-1; Mon, 02 Oct 2023 14:39:12 -0400
-X-MC-Unique: 7eBjfyrjPua_7e_BUAT3Nw-1
-Received: by mail-yw1-f197.google.com with SMTP id 00721157ae682-5a213b4d0efso1232817b3.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 11:39:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696271951; x=1696876751;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WYt6bra2fRdXu2dkXwuYoSR3Jxl4VEKHXbPW5NpZljc=;
-        b=I5Cl6N8NBVwQ7eABSQr5CbmIwFzbNgOrbtx01GbzRpGc1s4Lw7Gp0wCyTSjNHurtrX
-         GJWiflvhT0WBUJZXUqi5QQCz9TnCCEHxDUHjX5W4pufc5gfznVPyCnIXGQn+Ui+UJcga
-         Rs/t2zmVLp7QcPUoo+dXJV3B/e+8cIPLTrCGEJg/JsSAgot5hfDKs5iFB7hhUodJqcrc
-         bi/Sq6rRPZuLb7Ah8HtTWYlh2qOcU517rqOK04gJCxIYx0j8e9VryEmsroz7j2ZySpMv
-         FId5NIaH8XDLjvKWCd1kbcg4VOqjZtu/VcLaLPD/Lsq9Z2Kquw6v4HzYKZ2uyVmQiPTb
-         PqoQ==
-X-Gm-Message-State: AOJu0YyXRBvDqpd1h/1lv4MgaYpYSboM3Kiud8GJPicRxX/6ODdzJIP2
-        Ww2+xzMQjDYfBjrqXZtgtW1Vf2BMk3Y5DTuF/41KUoxcssoLyu8dflmhPNFskBMXxs59xKavFXM
-        gfEax6PnnwtIPAVJDyzbB9z6dfQ==
-X-Received: by 2002:a25:8603:0:b0:d32:f2e7:7786 with SMTP id y3-20020a258603000000b00d32f2e77786mr10996411ybk.56.1696271951089;
-        Mon, 02 Oct 2023 11:39:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFOWEC4ny8KWu3fUPvQKn4wRh0cjkvr8hu/5wFhvnGe0yZ1IUYjTdLH/xTEiyfLSuO18WFTAQ==
-X-Received: by 2002:a25:8603:0:b0:d32:f2e7:7786 with SMTP id y3-20020a258603000000b00d32f2e77786mr10996398ybk.56.1696271950763;
-        Mon, 02 Oct 2023 11:39:10 -0700 (PDT)
-Received: from brian-x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
-        by smtp.gmail.com with ESMTPSA id n5-20020a5b0485000000b00d911680fd10sm236158ybp.50.2023.10.02.11.39.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Oct 2023 11:39:10 -0700 (PDT)
-Date:   Mon, 2 Oct 2023 14:39:08 -0400
-From:   Brian Masney <bmasney@redhat.com>
-To:     Nikunj Kela <quic_nkela@quicinc.com>
-Cc:     sudeep.holla@arm.com, cristian.marussi@arm.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+        Mon, 2 Oct 2023 14:42:40 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 800999B;
+        Mon,  2 Oct 2023 11:42:37 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 392GrjwF023515;
+        Mon, 2 Oct 2023 18:42:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Dw6cRiyD4ij6FFvALmSO0YkJH8axhbYkwEimPioPBPM=;
+ b=ZBGshLzSSiNC6Xgh727AyySBQx9K71UUom7uDB94DmT8qJFrGxlNQ1+j+e0w4MCB+K73
+ +aAb7wzyL+hgIJymnY5d38cHLIIaoru7n+1EB4qbPnLT/vLD6lJBbtIKiDxANdpJyUlB
+ QRcRPtpgKMGDd7Pz9R7hkuzTIZoQ/KbCHv5RafQXldMM7hIWojJL8vuDiKo6V6YemR3Y
+ KNG14lWuwi8gGcn9zYEz6JfrH/5dKQX0kURSFNCoSmsHmgOX4r41SX9l8qpmLLQ2iD/c
+ C0QIcPZyA8fmQqDXWQToDVx2cJG0lLnd/LwMpUOKZhPjRo/+ohXkVIfRUGdFH5TFl+Gs Ag== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3teamxmjkg-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 02 Oct 2023 18:42:24 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 392IgNaB032091
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 2 Oct 2023 18:42:23 GMT
+Received: from [10.110.71.113] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 2 Oct
+ 2023 11:42:22 -0700
+Message-ID: <9684a5fc-f981-bc4b-5d3a-3cd539bdb421@quicinc.com>
+Date:   Mon, 2 Oct 2023 11:42:22 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
 Subject: Re: [PATCH v4 4/4] firmware: arm_scmi: Add qcom hvc/shmem transport
  support
-Message-ID: <ZRsOTH//BZ74mU6P@brian-x1>
+Content-Language: en-US
+To:     Brian Masney <bmasney@redhat.com>
+CC:     <sudeep.holla@arm.com>, <cristian.marussi@arm.com>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <linux-arm-kernel@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
 References: <20230718160833.36397-1-quic_nkela@quicinc.com>
  <20230911194359.27547-1-quic_nkela@quicinc.com>
- <20230911194359.27547-5-quic_nkela@quicinc.com>
- <ZRsNHnuUdGl+vuqz@brian-x1>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+ <20230911194359.27547-5-quic_nkela@quicinc.com> <ZRsNHnuUdGl+vuqz@brian-x1>
+From:   Nikunj Kela <quic_nkela@quicinc.com>
 In-Reply-To: <ZRsNHnuUdGl+vuqz@brian-x1>
-User-Agent: Mutt/2.2.9 (2022-11-12)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: sYkcnUooeMierLCqgb0nxDz_t0mZlT6I
+X-Proofpoint-ORIG-GUID: sYkcnUooeMierLCqgb0nxDz_t0mZlT6I
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-02_13,2023-10-02_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
+ impostorscore=0 spamscore=0 phishscore=0 adultscore=0 clxscore=1015
+ lowpriorityscore=0 malwarescore=0 priorityscore=1501 bulkscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310020145
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 02, 2023 at 02:34:06PM -0400, Brian Masney wrote:
+
+On 10/2/2023 11:34 AM, Brian Masney wrote:
 > On Mon, Sep 11, 2023 at 12:43:59PM -0700, Nikunj Kela wrote:
-> > +		func_id = readl((void __iomem *)(scmi_info->shmem) + size - 16);
-> > +#ifdef CONFIG_ARM64
-> > +		cap_id = readq((void __iomem *)(scmi_info->shmem) + size - 8);
-> > +#else
-> > +		/* capability-id is 32 bit wide on 32bit machines */
-> > +		cap_id = readl((void __iomem *)(scmi_info->shmem) + size - 8);
-> > +#endif
-> 
+>> This change adds the support for SCMI message exchange on Qualcomm
+>> virtual platforms.
+>>
+>> The hypervisor associates an object-id also known as capability-id
+>> with each hvc doorbell object. The capability-id is used to identify the
+>> doorbell from the VM's capability namespace, similar to a file-descriptor.
+>>
+>> The hypervisor, in addition to the function-id, expects the capability-id
+>> to be passed in x1 register when HVC call is invoked.
+>>
+>> The function-id & capability-id are allocated by the hypervisor on bootup
+>> and are stored in the shmem region by the firmware before starting Linux.
+>>
+>> Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
+>> ---
+>>   drivers/firmware/arm_scmi/driver.c |  1 +
+>>   drivers/firmware/arm_scmi/smc.c    | 47 ++++++++++++++++++++++++++----
+>>   2 files changed, 43 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
+>> index 87383c05424b..ea344bc6ae49 100644
+>> --- a/drivers/firmware/arm_scmi/driver.c
+>> +++ b/drivers/firmware/arm_scmi/driver.c
+>> @@ -2915,6 +2915,7 @@ static const struct of_device_id scmi_of_match[] = {
+>>   #ifdef CONFIG_ARM_SCMI_TRANSPORT_SMC
+>>   	{ .compatible = "arm,scmi-smc", .data = &scmi_smc_desc},
+>>   	{ .compatible = "arm,scmi-smc-param", .data = &scmi_smc_desc},
+>> +	{ .compatible = "qcom,scmi-hvc-shmem", .data = &scmi_smc_desc},
+>>   #endif
+>>   #ifdef CONFIG_ARM_SCMI_TRANSPORT_VIRTIO
+>>   	{ .compatible = "arm,scmi-virtio", .data = &scmi_virtio_desc},
+>> diff --git a/drivers/firmware/arm_scmi/smc.c b/drivers/firmware/arm_scmi/smc.c
+>> index 0a0b7e401159..94ec07fdc14a 100644
+>> --- a/drivers/firmware/arm_scmi/smc.c
+>> +++ b/drivers/firmware/arm_scmi/smc.c
+>> @@ -50,6 +50,9 @@
+>>    * @func_id: smc/hvc call function id
+>>    * @param_page: 4K page number of the shmem channel
+>>    * @param_offset: Offset within the 4K page of the shmem channel
+>> + * @cap_id: hvc doorbell's capability id to be used on Qualcomm virtual
+>> + *	    platforms
+>> + * @qcom_xport: Flag to indicate the transport on Qualcomm virtual platforms
+>>    */
+>>   
+>>   struct scmi_smc {
+>> @@ -63,6 +66,8 @@ struct scmi_smc {
+>>   	u32 func_id;
+>>   	u32 param_page;
+>>   	u32 param_offset;
+>> +	u64 cap_id;
+>> +	bool qcom_xport;
+>>   };
+> [snip]
+>
+>>   static irqreturn_t smc_msg_done_isr(int irq, void *data)
+>> @@ -129,6 +134,7 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
+>>   	struct resource res;
+>>   	struct device_node *np;
+>>   	u32 func_id;
+>> +	u64 cap_id;
+>>   	int ret;
+> [snip]
+>
+>> +		func_id = readl((void __iomem *)(scmi_info->shmem) + size - 16);
+>> +#ifdef CONFIG_ARM64
+>> +		cap_id = readq((void __iomem *)(scmi_info->shmem) + size - 8);
+>> +#else
+>> +		/* capability-id is 32 bit wide on 32bit machines */
+>> +		cap_id = readl((void __iomem *)(scmi_info->shmem) + size - 8);
+>> +#endif
 > The 32 bit case is defined as a u64 in two places above.
 
-Also should the 32 bit case be 'size - 4' instead of 'size - 8'? Sorry
-I just noticed that as soon as I pressed send.
+That is done to make sure the size of the structure in memory is not 
+architecture dependent. This was recommended in one of the previous 
+version of this patch.
 
-Brian
 
+>
+>> +
+>> +		/* The func-id & capability-id are kept in last 16 bytes of shmem.
+>> +		 *     +-------+
+>> +		 *     |       |
+>> +		 *     | shmem |
+>> +		 *     |       |
+>> +		 *     |       |
+>> +		 *     +-------+ <-- (size - 16)
+>> +		 *     | funcId|
+>> +		 *     +-------+ <-- (size - 8)
+>> +		 *     | capId |
+>> +		 *     +-------+ <-- size
+>> +		 */
+> Personally I'd add one more space to the right side of the table after
+> funcId.
+
+I could do that but then in 32bit case, you would want one more space 
+right after cap-id since it is 32 bit on 32 bit platform. If it helps, I 
+can have two lay out one for 32bit and one for 64 bit.
+
+
+>> -	arm_smccc_1_1_invoke(scmi_info->func_id, page, offset, 0, 0, 0, 0, 0,
+>> -			     &res);
+>> +	if (scmi_info->qcom_xport)
+>> +		arm_smccc_1_1_hvc(scmi_info->func_id, cap_id, 0, 0, 0, 0, 0, 0,
+>> +				  &res);
+>> +	else
+>> +		arm_smccc_1_1_invoke(scmi_info->func_id, page, offset, 0, 0, 0,
+>> +				     0, 0, &res);
+> Does it make sense to call this variable qcom_xport? Would hvc_xport be
+> a more appropriate name?
+>
+> Brian
+
+Cap-id is QCOM specific ABI parameter not HVC.
+
+>
