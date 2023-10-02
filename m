@@ -2,110 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 69B777B5A86
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 20:55:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 146457B5ACD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 21:04:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238825AbjJBSpb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Oct 2023 14:45:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35156 "EHLO
+        id S238487AbjJBS7c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Oct 2023 14:59:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232711AbjJBSpb (ORCPT
+        with ESMTP id S229586AbjJBS7b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Oct 2023 14:45:31 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75A69AB;
-        Mon,  2 Oct 2023 11:45:28 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 392DeOKH026344;
-        Mon, 2 Oct 2023 18:45:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=3wU1MhJWEST554d4LwEyoTXgt68gsjdDbD2JetUjQM8=;
- b=ojqjVNAFqGp+MwaBu0JqubNoVWfJCdwXKmM+V6invskDGrk10KD1JlrUc8nBQvgvWPYm
- Kd0AySVNqtTSY82CHgCgpykdWge/ryeh8Xh1IzZuRNe0XRhFCUbb17KCIvA6dNf1NFfX
- vJZGs4stpMEy/yeAqDqEBQLg5V2+FVWJp+74vdK5oMjEkXxndiDr3eqs/ACiJfSCQzK1
- 39plRYLZvpL5doAASt4SM3SKWB8uGdB2CcLiqxo7cGzIH0xZr/RFhDHnlacy7Y0BoTLu
- duJlgZ4P/O5Idv3IMd4iZjbDJ3cn7r6N5N8conTPlVv4CwvaBopI/XeNOtN86MSyNp8N 6Q== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3teapev7n3-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 02 Oct 2023 18:45:15 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 392IjEAo017149
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 2 Oct 2023 18:45:14 GMT
-Received: from [10.110.71.113] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 2 Oct
- 2023 11:45:13 -0700
-Message-ID: <6220ce37-dd39-5664-b5fe-5279d81ed228@quicinc.com>
-Date:   Mon, 2 Oct 2023 11:45:12 -0700
+        Mon, 2 Oct 2023 14:59:31 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99C77D8
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 11:59:27 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-504427aae4fso4244693e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 11:59:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1696273166; x=1696877966; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zrszV3+CYmj+tM+SxyXe+ws7+sNss2kpTTuRI9TMO44=;
+        b=l3THzC0+4/nrU4EP2J4xY6OB+QgWZUNuga2KKWD9KABHiC58aXpg/Y2h4r/PRmlHpR
+         rh0RvFmZ9bFeVIxDGjkcESx5RJUPSjZLNp/luWJ7RPmJKLq+Aih+upuwgykrhedsMIZj
+         QwRIQoea8sPvlVEuhrzwSsCwwJicPjf53k6EnS7haeC04EK6UNqLaeX9W04NNBUFtXHC
+         mKnTKvwqu6qQPOkH0sbjyM3CfE0JF9o+s5d2PsWl4G+U3/qUO9QxIvpImw6n0HmCHqQ4
+         ziq1Jf4xh0Og6mg5knVrIzxd4bezPPWC+zl01K3fSJNxjVvHJ1rq2uX+hak4t7zLua2B
+         vUkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696273166; x=1696877966;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zrszV3+CYmj+tM+SxyXe+ws7+sNss2kpTTuRI9TMO44=;
+        b=VYLj95GVyFoBgkqbwaD7z4kqwctP1UPwxb5jEm6RfgbZUGY8kwB+eCAkZoSimm4M/L
+         YYSgmKUZ9g3pxHVCAYJ/9PUfWXXc5WEPnDNlxTMKKQcqqnFbKMzXq+kpCM+LeYnddVrI
+         455YVcgTOS0S9lHQ5wXh70QBNVMoHk4bBPDUaQXTNoNVmOBtQ49eHqpbFy1DsPMc6EKT
+         y8q6nNqCcop1JTtcMobkQZCcM3rc3TOE5lj2ncE6PpQnPyYMg8VdAZGKneOLx1L3n9xW
+         kXkEToiNnbJc6Uet0QFIcGAMfQeThWm5IbX/aTFQK1wOp+YulA9gbzN0bxoANEFgTgjd
+         0Jmw==
+X-Gm-Message-State: AOJu0YzvoGhSA/UMoZ1pgf+uelh6icT35zV8UmcQ7szDfX4SQosH8dX7
+        BHvOs+b0wjntXxhCXYU2kIWQgw==
+X-Google-Smtp-Source: AGHT+IHnqtPBC6A3QMAunGAelevOOZeI9rfO1gpamLiLaCS5CYls3Ko+5rNhEhIuK2FGN5DT8MUPWw==
+X-Received: by 2002:ac2:520e:0:b0:503:cca:e535 with SMTP id a14-20020ac2520e000000b005030ccae535mr375866lfl.12.1696273165667;
+        Mon, 02 Oct 2023 11:59:25 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id j26-20020a19f51a000000b0050420eff124sm2081352lfb.152.2023.10.02.11.59.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 Oct 2023 11:59:25 -0700 (PDT)
+Message-ID: <3276666c-8331-490f-be79-c626bd275287@linaro.org>
+Date:   Mon, 2 Oct 2023 21:59:24 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v4 4/4] firmware: arm_scmi: Add qcom hvc/shmem transport
- support
-To:     Brian Masney <bmasney@redhat.com>
-CC:     <sudeep.holla@arm.com>, <cristian.marussi@arm.com>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <linux-arm-kernel@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20230718160833.36397-1-quic_nkela@quicinc.com>
- <20230911194359.27547-1-quic_nkela@quicinc.com>
- <20230911194359.27547-5-quic_nkela@quicinc.com> <ZRsNHnuUdGl+vuqz@brian-x1>
- <ZRsOTH//BZ74mU6P@brian-x1>
-Content-Language: en-US
-From:   Nikunj Kela <quic_nkela@quicinc.com>
-In-Reply-To: <ZRsOTH//BZ74mU6P@brian-x1>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 5/6] cpufreq: qcom-nvmem: provide separate
+ configuration data for apq8064
+Content-Language: en-GB
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        Stephan Gerhold <stephan@gerhold.net>
+References: <20230827032803.934819-1-dmitry.baryshkov@linaro.org>
+ <20230827032803.934819-6-dmitry.baryshkov@linaro.org>
+ <8a7af8ce-3ff4-4520-b4e2-dd39570ca796@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <8a7af8ce-3ff4-4520-b4e2-dd39570ca796@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Tz2vkXRfvlTs3vQKf5BCdakYE2UF3KTL
-X-Proofpoint-GUID: Tz2vkXRfvlTs3vQKf5BCdakYE2UF3KTL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-02_12,2023-10-02_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
- adultscore=0 clxscore=1015 mlxlogscore=732 lowpriorityscore=0
- suspectscore=0 priorityscore=1501 impostorscore=0 phishscore=0 mlxscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310020144
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 28/08/2023 14:04, Konrad Dybcio wrote:
+> On 27.08.2023 05:28, Dmitry Baryshkov wrote:
+>> APQ8064 can scale core voltage according to the frequency needs. Rather
+>> than reusing the A/B format multiplexer, use a simple fuse parsing
+>> function and configure required regulator.
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   drivers/cpufreq/qcom-cpufreq-nvmem.c | 49 ++++++++++++++++++++++++++--
+>>   1 file changed, 47 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+>> index 81c080b854fe..35e2610c9526 100644
+>> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
+>> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+>> @@ -26,6 +26,7 @@
+>>   #include <linux/platform_device.h>
+>>   #include <linux/pm_domain.h>
+>>   #include <linux/pm_opp.h>
+>> +#include <linux/regulator/consumer.h>
+>>   #include <linux/slab.h>
+>>   #include <linux/soc/qcom/smem.h>
+>>   
+>> @@ -39,6 +40,7 @@ struct qcom_cpufreq_match_data {
+>>   			   char **pvs_name,
+>>   			   struct qcom_cpufreq_drv *drv);
+>>   	const char **genpd_names;
+>> +	const char * const *regulator_names;
+>>   };
+>>   
+>>   struct qcom_cpufreq_drv {
+>> @@ -203,6 +205,34 @@ static int qcom_cpufreq_krait_name_version(struct device *cpu_dev,
+>>   	return ret;
+>>   }
+>>   
+>> +static int qcom_cpufreq_apq8064_name_version(struct device *cpu_dev,
+>> +					     struct nvmem_cell *speedbin_nvmem,
+>> +					     char **pvs_name,
+>> +					     struct qcom_cpufreq_drv *drv)
+>> +{
+>> +	int speed = 0, pvs = 0;
+>> +	u8 *speedbin;
+>> +	size_t len;
+>> +	int ret = 0;
+> Unused, just return 0
+> 
+>> +
+>> +	speedbin = nvmem_cell_read(speedbin_nvmem, &len);
+>> +	if (IS_ERR(speedbin))
+>> +		return PTR_ERR(speedbin);
+>> +
+>> +	if (len != 4)
+>> +		return -EINVAL;
+>> +
+>> +	get_krait_bin_format_a(cpu_dev, &speed, &pvs, speedbin);
+>> +
+>> +	snprintf(*pvs_name, sizeof("speedXX-pvsXX"), "speed%d-pvs%d",
+>> +		 speed, pvs);
+> speed and pvs are both one hex digit long at best (see masking in
+> get_krait_bin_format_a)
 
-On 10/2/2023 11:39 AM, Brian Masney wrote:
-> On Mon, Oct 02, 2023 at 02:34:06PM -0400, Brian Masney wrote:
->> On Mon, Sep 11, 2023 at 12:43:59PM -0700, Nikunj Kela wrote:
->>> +		func_id = readl((void __iomem *)(scmi_info->shmem) + size - 16);
->>> +#ifdef CONFIG_ARM64
->>> +		cap_id = readq((void __iomem *)(scmi_info->shmem) + size - 8);
->>> +#else
->>> +		/* capability-id is 32 bit wide on 32bit machines */
->>> +		cap_id = readl((void __iomem *)(scmi_info->shmem) + size - 8);
->>> +#endif
->> The 32 bit case is defined as a u64 in two places above.
-> Also should the 32 bit case be 'size - 4' instead of 'size - 8'? Sorry
-> I just noticed that as soon as I pressed send.
->
-> Brian
+One hex translates to two decimal digits (0xf = 15).
 
-I already addressed this in one of your previous comments. We are 
-keeping last 16 bytes reserved for these two parameters regardless of 
-the architecture.
+> 
+> Konrad
 
+-- 
+With best wishes
+Dmitry
 
