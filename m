@@ -2,76 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 28A197B4F84
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 11:51:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5363A7B4FA0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 11:56:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236252AbjJBJvd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Oct 2023 05:51:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56012 "EHLO
+        id S236112AbjJBJ4M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Oct 2023 05:56:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236244AbjJBJvZ (ORCPT
+        with ESMTP id S236278AbjJBJ4M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Oct 2023 05:51:25 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E7AF9E
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 02:51:21 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-50585357903so798833e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 02:51:21 -0700 (PDT)
+        Mon, 2 Oct 2023 05:56:12 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75EF78E
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 02:56:07 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-5045cb9c091so18818947e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 02:56:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696240279; x=1696845079; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696240566; x=1696845366; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=JLs1VktsLlk8jSlnRreaZgQ/QeUwdA55Dkd4Kqx1630=;
-        b=BHtwBdkxkL7W1WgGrLta0pVAoOEjgWTOWh+BBejwMR9JGzoGXydElJAZ43tN+KUYH+
-         H0Cd6l4UMBImAsIutTmywKSBWzScrylM2/pD+drsDMXucffDFJojuXu4ZNm3ozrqbeyL
-         sB7KEZn+ULgUP3atPyknsMYt24lRXOszT0LfkXmBMRGlR1ElNPfkv10HfdTE3p2WpbbL
-         ZDXqIW0i5sXgJqzczRFhw9T6btwcQStbn8S4C50OX7uTzoKmudPFI0aWIp1vf0+Nok5a
-         +Ejj4JST8ps0svZ7Jen0igygXwXr+o0fIyIfsO/YklVAjMCXtqHpq9q3/x+y8Y1uUOyz
-         w3NQ==
+        bh=VI6ALURCYFTZzB2n0KbkvH0CnC/yIlDD9PmeGJooHMM=;
+        b=kMWAElZ1iknV5CgzRu9hpyJO+jTSMH8408YtG+t/fVy0KnKWByRIG4+FGr0D/tX3y/
+         SrBBcw+9CDWoOdXLv0oNnwy66IrlnssODrwmw7THAEbNXzuij75V/YuKG2n4tJYmGofh
+         QR3lbWWcIAmv9tPkPlDazuqRTyeLyIEy5XbNWxKTqfLb3hTv7rBpZq+OFuTeN+ofQgKf
+         764B7Qx+N5XGFwLLGhz3w43c0GUVVeliiGdqoKbm5GI4byHCrtqA195up+IGWv1+/7kB
+         +0+PwNpi/+OVfExZhmRnGZnFJjBxdvsLmiiHqrfqSeB/Cx6BJ4hLGoD20AYNY3mkNa68
+         9yiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696240279; x=1696845079;
+        d=1e100.net; s=20230601; t=1696240566; x=1696845366;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JLs1VktsLlk8jSlnRreaZgQ/QeUwdA55Dkd4Kqx1630=;
-        b=ovey8uK/z4xAoyZyjhguvYLtQxF+poVDlS1ysPRY/sF8uOeBvQD29ANQs8UC4AHLCD
-         UlDM4nkl1bueXoVzCViyOdTy4/R8FIKQMAadnc3g4Oz2r4v9efIYm+ebXlLTMOV3UOSF
-         0m2Mvj3nrPS1fAJv7oRhWpXPC4kAeqGLeGHeYppM/PTOaLcpzYFbQ+5rnxD3C1myP+pk
-         iVIKavJqg/Ig1/Kd4s9wihEXCiwfceA9YHQxDt/NihTBa/xTVF23V8XJDRJXodP7hMwI
-         9NgqDovXILOd4KOrDwVJ7U4KQKY5BWUASeL9DI2Bi8Wk5y1wyMFab4VMPFkn6suVxBiK
-         eNAQ==
-X-Gm-Message-State: AOJu0YwLP83jaVcESMohr61IujTG4XmP/My0EHbIyesSzq0ANmyHbaSM
-        zVCdhkzwT0QfYXc0NNiGw5pWpg==
-X-Google-Smtp-Source: AGHT+IFOVOzVdjRKpbSkAlo6qh4MyGHDzKp2cGIoMm270v1GTGrFuVJwWEg8an2N9lHrz99nrbSpnw==
-X-Received: by 2002:a05:6512:23a4:b0:500:c765:bbe with SMTP id c36-20020a05651223a400b00500c7650bbemr11447285lfv.0.1696240279333;
-        Mon, 02 Oct 2023 02:51:19 -0700 (PDT)
+        bh=VI6ALURCYFTZzB2n0KbkvH0CnC/yIlDD9PmeGJooHMM=;
+        b=M1XiPGoRTRxzyqHyFrsD28GNIUAmT4Bllxwt1f2HAz1tx0/2v+7DaeOTeVz1n9cDS4
+         N8ynCz2tgYZv+B+/3A+EPBfObW5tjKkJjZkpjJ9R3UJCQdqWhsfS8mP2ETwDPvqis0/0
+         CoRGFi4jSegY2+LUPNoBFnrUCxLBsZar9i7adopAvPeyf55eDwyvDfDgD+bhFzMue7OW
+         bt0eGXv7oW7/QQtud+ln/voM9ZNeBO0tkh4o67oJ6/kNvXiD7qF9sTHi3JjwIBXPljdo
+         P4E0wv156fT9ber66KxRZ5zRcYJxXfOCrfV2/OZ3408/SO5KSkzSA+7OnuBt34ZOeYvA
+         0RXw==
+X-Gm-Message-State: AOJu0YxqZzrzDgpPfjMbH5/oTcWwv1X4d+RHb8h2QmDXhDCvGSIU+xgz
+        f8M7/CX3rlPisxM/odwv5fSoltYDoboKwd7KBRY=
+X-Google-Smtp-Source: AGHT+IEyPY2VWrXaKI4eQ9fWZwqFimDpZkQ+STvWpRTjmOVGlI4ZzlEncK2E1RdAljpCJEvp4OTGQw==
+X-Received: by 2002:a05:6512:485b:b0:503:3707:66ed with SMTP id ep27-20020a056512485b00b00503370766edmr8580902lfb.34.1696240565714;
+        Mon, 02 Oct 2023 02:56:05 -0700 (PDT)
 Received: from [172.30.204.164] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id a16-20020a056512021000b0050315aa36fbsm4685416lfo.282.2023.10.02.02.51.18
+        by smtp.gmail.com with ESMTPSA id f8-20020ac25328000000b004fe37339f8esm4687715lfh.149.2023.10.02.02.56.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Oct 2023 02:51:18 -0700 (PDT)
-Message-ID: <5f3c8a66-aba3-cef0-8df9-f897487f1098@linaro.org>
-Date:   Mon, 2 Oct 2023 11:51:17 +0200
+        Mon, 02 Oct 2023 02:56:05 -0700 (PDT)
+Message-ID: <36e790a6-a9e8-bca9-226c-48339fefffb1@linaro.org>
+Date:   Mon, 2 Oct 2023 11:56:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
  Thunderbird/102.15.1
-Subject: Re: [PATCH 4/5] phy: qcom: edp: Introduce support for DisplayPort
+Subject: Re: [PATCH v2 5/5] arm64: boot: dts: qcom: sc8280xp: Add in CAMCC for
+ sc8280xp
 Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        quic_jesszhan@quicinc.com
-References: <20220810040745.3582985-1-bjorn.andersson@linaro.org>
- <20220810040745.3582985-5-bjorn.andersson@linaro.org>
- <ZRqIHSetajQf7Um1@hovoldconsulting.com>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        andersson@kernel.org, agross@kernel.org, mturquette@baylibre.com,
+        sboyd@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        jonathan@marek.ca, quic_tdas@quicinc.com,
+        vladimir.zapolskiy@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230930134114.1816590-1-bryan.odonoghue@linaro.org>
+ <20230930134114.1816590-6-bryan.odonoghue@linaro.org>
+ <449cd202-a7d8-4d20-3a41-17a3ba1355cb@linaro.org>
+ <ec28c662-8065-4bfc-bd5e-af0b9f3e87ac@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <ZRqIHSetajQf7Um1@hovoldconsulting.com>
+In-Reply-To: <ec28c662-8065-4bfc-bd5e-af0b9f3e87ac@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS
@@ -84,68 +86,56 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 10/2/23 11:06, Johan Hovold wrote:
-> On Tue, Aug 09, 2022 at 09:07:44PM -0700, Bjorn Andersson wrote:
->> The eDP phy can be used to drive either eDP or DP output, with some
->> minor variations in some of the configuration and seemingly a need for
->> implementing swing and pre_emphasis calibration.
+On 10/1/23 01:01, Bryan O'Donoghue wrote:
+> On 30/09/2023 17:41, Konrad Dybcio wrote:
 >>
->> Introduce a config object, indicating if the phy is operating in eDP or
->> DP mode and swing/pre-emphasis calibration to support this.
 >>
->> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->> ---
->>   drivers/phy/qualcomm/phy-qcom-edp.c | 80 +++++++++++++++++++++++++++--
->>   1 file changed, 76 insertions(+), 4 deletions(-)
+>> On 9/30/23 15:41, Bryan O'Donoghue wrote:
+>>> Add in CAMCC for sc8280xp. The sc8280xp Camera Clock Controller looks
+>>> similar to most of the sdmX, smX and now scX controllers.
+>>>
+>>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 16 ++++++++++++++++
+>>>   1 file changed, 16 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi 
+>>> b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>>> index cad59af7ccef..ca43d038578b 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>>> @@ -8,6 +8,7 @@
+>>>   #include <dt-bindings/clock/qcom,gcc-sc8280xp.h>
+>>>   #include <dt-bindings/clock/qcom,gpucc-sc8280xp.h>
+>>>   #include <dt-bindings/clock/qcom,rpmh.h>
+>>> +#include <dt-bindings/clock/qcom,sc8280xp-camcc.h>
+>>>   #include <dt-bindings/clock/qcom,sc8280xp-lpasscc.h>
+>>>   #include <dt-bindings/interconnect/qcom,osm-l3.h>
+>>>   #include <dt-bindings/interconnect/qcom,sc8280xp.h>
+>>> @@ -3450,6 +3451,21 @@ usb_1_role_switch: endpoint {
+>>>               };
+>>>           };
+>>> +        camcc: clock-controller@ad00000 {
+>>> +            compatible = "qcom,sc8280xp-camcc";
+>>> +            reg = <0 0x0ad00000 0 0x20000>;
+>>> +            clocks = <&gcc GCC_CAMERA_AHB_CLK>,
+>>> +                 <&rpmhcc RPMH_CXO_CLK>,
+>>> +                 <&rpmhcc RPMH_CXO_CLK_A>,
+>>> +                 <&sleep_clk>;
+>>> +            clock-names = "iface", "bi_tcxo", "bi_tcxo_ao", 
+>>> "sleep_clk";
+>> clock-names is now redundant :)
 >>
->> diff --git a/drivers/phy/qualcomm/phy-qcom-edp.c b/drivers/phy/qualcomm/phy-qcom-edp.c
->> index 32614fb838b5..301ac422d2fe 100644
->> --- a/drivers/phy/qualcomm/phy-qcom-edp.c
->> +++ b/drivers/phy/qualcomm/phy-qcom-edp.c
->> @@ -70,8 +70,19 @@
->>   
->>   #define TXn_TRAN_DRVR_EMP_EN                    0x0078
->>   
->> +struct qcom_edp_cfg {
->> +	bool is_dp;
->> +
->> +	/* DP PHY swing and pre_emphasis tables */
->> +	const u8 (*swing_hbr_rbr)[4][4];
->> +	const u8 (*swing_hbr3_hbr2)[4][4];
->> +	const u8 (*pre_emphasis_hbr_rbr)[4][4];
->> +	const u8 (*pre_emphasis_hbr3_hbr2)[4][4];
->> +};
->   
->>   static int qcom_edp_configure_ssc(const struct qcom_edp *edp)
->> @@ -315,7 +381,9 @@ static int qcom_edp_set_vco_div(const struct qcom_edp *edp)
->>   static int qcom_edp_phy_power_on(struct phy *phy)
->>   {
->>   	const struct qcom_edp *edp = phy_get_drvdata(phy);
->> +	const struct qcom_edp_cfg *cfg = edp->cfg;
->>   	u32 bias0_en, drvr0_en, bias1_en, drvr1_en;
->> +	u8 ldo_config;
->>   	int timeout;
->>   	int ret;
->>   	u32 val;
->> @@ -332,8 +400,11 @@ static int qcom_edp_phy_power_on(struct phy *phy)
->>   	if (timeout)
->>   		return timeout;
->>   
->> -	writel(0x01, edp->tx0 + TXn_LDO_CONFIG);
->> -	writel(0x01, edp->tx1 + TXn_LDO_CONFIG);
->> +
->> +	ldo_config = (cfg && cfg->is_dp) ? 0x1 : 0x0;
->> +
->> +	writel(ldo_config, edp->tx0 + TXn_LDO_CONFIG);
->> +	writel(ldo_config, edp->tx1 + TXn_LDO_CONFIG);
+>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>
+>> Konrad
 > 
-> When reviewing a patch from Konrad which will start using the eDP
-> configuration on the X13s, I noticed that this patch inverted these bits
-> for older SoCs (e.g. sc7280 and sc8180xp). They used to be set to 1,
-> but after this patch they will be set to 0.
+> BTW.
 > 
-> Was that intentional even if it was never mentioned in the commit
-> message? Or was it a mistake that should be fixed?
-+Abhinav, Jessica
+> Looking at the block diagram for the Camera, I see why Cam_CC_AHB is 
+> included in this list. Its not called out as a dependency in the clock 
+> tree but when you look at the block diagram you can see it gates the AHB 
+> bus to the CAM_CC block.
+Yep, that's why using is as pm_clk for the clock controller makes sense
 
 Konrad
