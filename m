@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8593E7B4D52
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 10:34:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E063E7B4E43
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 10:58:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235857AbjJBId7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Oct 2023 04:33:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41006 "EHLO
+        id S236095AbjJBI6B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Oct 2023 04:58:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230039AbjJBId7 (ORCPT
+        with ESMTP id S236102AbjJBI5y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Oct 2023 04:33:59 -0400
+        Mon, 2 Oct 2023 04:57:54 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 927DD9F;
-        Mon,  2 Oct 2023 01:33:55 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30DF0C433CC;
-        Mon,  2 Oct 2023 08:33:55 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1ADD830D5;
+        Mon,  2 Oct 2023 01:54:50 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67249C433C8;
+        Mon,  2 Oct 2023 08:54:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1696235635;
-        bh=rrrMa7nz3whAggXNqFbdIoDxf26fpbhOB3UDgI26A8Y=;
+        s=k20201202; t=1696236890;
+        bh=mY7V5HpyJPC8BlHMafAISBNk/3kEqWunRznr/2Tfk3E=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=XnYXux6be/fbot4Sk370rY7pwtyVH7C+57xeMNOGXvwrFCH46RsZ1JHgJfMYLIdOQ
-         VREs+go9LwZeU+luk2OzSML/H1pt/jM0yPc+T1dfn4uio4UXn4FPcd0epqOslab2WX
-         Ex9zo9b0wbNm/AhlEVrJff4CzvLRBdZTjlZGv1c1x0vVEOQSIHw1bf2ELNPXEYK+Pl
-         TcMf76YP78VvhINN2TryzvHR9qVKKEPhKjlhnIlRSAHK3kwQIAZy8al/0UINDwl8aU
-         1aDAW18226pNw4E8R8WYiJJo0nem5V1K/dMz9o87csJaj7ez0XIwas6h3NXLlkCDhB
-         1kW8unWkkzRSw==
+        b=OipTIeg3+nGvXaWjN+6iARoJvRvz3G8QwnLJ/o9uYn13LOPWEs0WBfV+s1KK4o2Pb
+         bu/jacqCEImLQszaTUgOf5wFYzaQZMDwNSDVPtkQHg3TsgjR0xMiJ6U1EEQ5clySi2
+         SsmRHN8y3nHaKNmRCweEOGaN9Nsd3HC/9N5K7h65qq6tCFEx4zM33qKPzo6e3OZ/Yb
+         eRSidAB3ekvpJ7k1x6E5JhmjBxGlpeQXkAJl7iQl4gZAJPFLfHhSreIeXulkm4Xv95
+         CAU/izHn0X1q0Rv2FmP+aAvIOgOvQcY869Y8RKjbxI+Kvb9TmgO6JjFpmuvh9iAJbK
+         DIGlQZMUH12OQ==
 Received: from johan by xi.lan with local (Exim 4.96)
         (envelope-from <johan@kernel.org>)
-        id 1qnENO-0007kc-0Y;
-        Mon, 02 Oct 2023 10:34:02 +0200
-Date:   Mon, 2 Oct 2023 10:34:02 +0200
+        id 1qnEhd-0004bV-2m;
+        Mon, 02 Oct 2023 10:54:57 +0200
+Date:   Mon, 2 Oct 2023 10:54:57 +0200
 From:   Johan Hovold <johan@kernel.org>
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -39,21 +39,17 @@ Cc:     Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH 2/2] clk: qcom: gcc-sc8280xp: Don't keep display AHB
- clocks always-on
-Message-ID: <ZRqAel1pwLom-h45@hovoldconsulting.com>
-References: <20230929-topic-8280_ahbdisp-v1-0-72bdc38309b9@linaro.org>
- <20230929-topic-8280_ahbdisp-v1-2-72bdc38309b9@linaro.org>
- <ZRfsvAJIdlmOWjf2@hovoldconsulting.com>
- <43473e04-ac33-179e-4343-e5c78eef3faf@linaro.org>
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-x13s: Use the correct DP PHY
+ compatible
+Message-ID: <ZRqFYWtEcuSCauCf@hovoldconsulting.com>
+References: <20230929-topic-x13s_edpphy-v1-1-ce59f9eb4226@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <43473e04-ac33-179e-4343-e5c78eef3faf@linaro.org>
+In-Reply-To: <20230929-topic-x13s_edpphy-v1-1-ce59f9eb4226@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -64,38 +60,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Sep 30, 2023 at 06:44:47PM +0200, Konrad Dybcio wrote:
-> On 9/30/23 11:39, Johan Hovold wrote:
-> > On Fri, Sep 29, 2023 at 03:38:53PM +0200, Konrad Dybcio wrote:
-> >> These clocks are consumed by the dispcc[01] clock controllers, so there's
-> >> no reason to keep them on from gcc probe. Remove that hack.
-> > 
-> > Eh, how did you test this patch?
+On Fri, Sep 29, 2023 at 06:02:57PM +0200, Konrad Dybcio wrote:
+> The DP PHY needs different settings when an eDP display is used.
+> Make sure these apply on the X13s.
 
-> Oehh you're right, I didn't notice that I still had clk_ignore_unused :/
+Good catch. This looks to be more in line with what Bjorn intended.
 
-That doesn't matter since these clocks are never even registered with
-the clock framework.
+You should fix up sc8280xp-crd and sa8295p-adp.dts as well however.
 
-But you'd notice that if you try to verify the clock state by looking at
-/sys/kernel/debug/clk/clk_summary for example.
+> FWIW
+> I could not notice any user-facing change stemming from this commit.
 
-> > The GCC_DISP_AHB_CLK clocks are not modelled by the clock driver
-> > currently so nothing is guaranteeing them to be enabled if we were to
-> > apply this patch. They just happen to be left on by the bootloader on
-> > some machines currently (well at least one of them is on one machine).
+I've seen some infrequent link-training failures (e.g. on resume) even if
+it's been a while since last time now.
 
-> What fooled me is that despite not being modeled by the clock driver, it 
-> is defined in bindings and referenced in the device tree.
+> Fixes: f48c70b111b4 ("arm64: dts: qcom: sc8280xp-x13s: enable eDP display")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+> I have no idea whether DP3 is hardwired to be eDP, like it
+> seems to be on the last DP controller of SC7280. In that
+> case this would be moved to the SoC DTSI.
+
+sa8295p-adp appears to use mdss[01]_dp[23] for eDP.
+
+> ---
+>  arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> Another thing I'll fix up!
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> index 38edaf51aa34..6a4c6cc19c09 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> @@ -601,6 +601,7 @@ mdss0_dp3_out: endpoint {
+>  };
+>  
+>  &mdss0_dp3_phy {
+> +	compatible = "qcom,sc8280xp-edp-phy";
 
-Right, a number of Qualcomm SoCs apparently fail to register these
-clocks. You should start by determining why that is as I assume (hope)
-it was done for a reason.
+Nit: Can you add a newline here after the compatible, please?
 
-Then the Qualcomm drivers use sloppy bulk clock look-up and enable so
-that an integrator would never even notice when clocks are missing. Once
-the clocks are registered, that could be tightened up as well.
+>  	vdda-phy-supply = <&vreg_l6b>;
+>  	vdda-pll-supply = <&vreg_l3b>;
 
 Johan
