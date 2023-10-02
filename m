@@ -2,102 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 682577B591D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 19:42:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5C4A7B58D7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 19:42:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238595AbjJBRAg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Oct 2023 13:00:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43418 "EHLO
+        id S238620AbjJBRDa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Oct 2023 13:03:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238609AbjJBRAe (ORCPT
+        with ESMTP id S238594AbjJBRDa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Oct 2023 13:00:34 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 707ADE1;
-        Mon,  2 Oct 2023 10:00:29 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-31f71b25a99so10506f8f.2;
-        Mon, 02 Oct 2023 10:00:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696266028; x=1696870828; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=64nOEqf6/mjPbfcle6tVHCIMmPQhDPH56TTUSyH+RFM=;
-        b=aIy3mFuvz7Llw1SYC1etGsUvvRuSbgA+XCSNe/qA2KbH5XEL9RKE681JAilNrpjglj
-         NqBw8RIf8Gf94stoft6I95EPZTDYvikUxyWFOGd08bLo7qjvZJKm3231bTPxyeaD9GUs
-         skwxsrsyZFHMIhu3NjRIgpAZLZM4+TlxSoIFijLzOpUT/lOcauVE9i3Xm5e41tM//TC9
-         PVY1NZOjK9BEpdE64s3GWDHchGbN4IYi6Mr4vdViPUxdFhjVdNEXn6Gjvficre3Wjuzs
-         GItko1Mgla/0aZvR8P1K6n9KIbWxbjZ6kwmRK60ZjX2B0r8/a4oJeTx60DELQ/zm8VaT
-         snGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696266028; x=1696870828;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=64nOEqf6/mjPbfcle6tVHCIMmPQhDPH56TTUSyH+RFM=;
-        b=EB+Id5sVIhrMr69hEqU9+i0qcOu2It2Em2zBjgN7H7B7TGDxhunoJWiQnIzYNoTyd5
-         5p7Qum/3ajqMTv4PJA1aklmUnF2AZhrzf+4vKFFx09A9YCbVDDFucb6X8bm93HghKCFV
-         xiMaA7HYMH4yU47jJsaeiqNGe9Q8qLsRDI53I93HLrBX2KJIJCgqlR6seiGK5LASf2Ed
-         sNKAcnTXK7vo8pJvf3ZwlZN65/0xfPtzE2s5hI9h3SrGfBfmm2NQDjB5iuN8otg6L9ZT
-         bQDisYuenswv9QdG2FXwltOOH0Tt5sfzw2ln6QNm8PNfDxi59MAYkAkrGsYaZbJsxDJc
-         v1dw==
-X-Gm-Message-State: AOJu0YyP5ezAIU5NGBqnuVEf0wlSYvKzlZrW1RW3+6avt1RVM3NH5Hn4
-        Yusw7051YKmyL6MwQJRTKsQ=
-X-Google-Smtp-Source: AGHT+IHpcMlgO+FESOdL7EI4eJDVfSdlQRwVtLaTvR3QI4UuoRJ/vT5SXk3mgLz5PVu1tjXbHe3UIQ==
-X-Received: by 2002:adf:e912:0:b0:31a:d8c0:cb8b with SMTP id f18-20020adfe912000000b0031ad8c0cb8bmr10447917wrm.25.1696266027424;
-        Mon, 02 Oct 2023 10:00:27 -0700 (PDT)
-Received: from archlinux.local (BC249365.dsl.pool.telekom.hu. [188.36.147.101])
-        by smtp.gmail.com with ESMTPSA id s16-20020a05640217d000b0053420e55616sm11338426edy.75.2023.10.02.10.00.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Oct 2023 10:00:26 -0700 (PDT)
-From:   =?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <trabarni@gmail.com>
-To:     Bjorn Andersson <andersson@kernel.org>,
+        Mon, 2 Oct 2023 13:03:30 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9221EAB;
+        Mon,  2 Oct 2023 10:03:27 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB023C433C7;
+        Mon,  2 Oct 2023 17:03:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1696266207;
+        bh=eTPkDa6a/QY4l/amWClioZkJAZkSQGjRiz057XQ/UYw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=aCy6+hI5eNsm3aL4CMUwUls8d64SXntTTk626CotTyBSXXABXchdii7bUkfTJQ3Pl
+         6NZwzqmBiblpP2gp0NO3RwVrcj+UhCsBkrb//iSMR/4D7SYQVPkGV3m59e7O56s60h
+         GuS1teww0a6KQN1jIouDyPArYnt+i+u82LI3fWYEPN4Q/BB6HE5xZCu3gcAhFX3wut
+         MMZ1HHDwp0wd3/aqZ6fBfgX9yfFtc+SGYBWi/pqjNqCsqB8JYvWqVAUdygD/n6eViX
+         oRzDlVnSnqWc6/JY46787qdZSvuqo47KMILclhGZ56Egiq1DhAy/HV3KRDDrOZDZTw
+         87gK0CQ7F1wqw==
+Received: (nullmailer pid 1941416 invoked by uid 1000);
+        Mon, 02 Oct 2023 17:03:24 -0000
+Date:   Mon, 2 Oct 2023 12:03:24 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Luca Weiss <luca.weiss@fairphone.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     =?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <trabarni@gmail.com>
-Subject: [PATCH] clk: qcom: gcc-msm8953: fix stuck gcc_usb30_master_clk
-Date:   Mon,  2 Oct 2023 19:00:21 +0200
-Message-ID: <20231002170021.192740-1-trabarni@gmail.com>
-X-Mailer: git-send-email 2.42.0
+        Lee Jones <lee@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: mfd: qcom,spmi-pmic: Update gpio example
+Message-ID: <20231002170324.GA1934850-robh@kernel.org>
+References: <20230929-pm7250b-gpio-fixup-v1-0-ef68543c1d3b@fairphone.com>
+ <20230929-pm7250b-gpio-fixup-v1-1-ef68543c1d3b@fairphone.com>
+ <510d6407-8033-4f2e-aabf-bd3fb84875a9@linaro.org>
+ <CVXQXI5E053J.386OVO28LNSYT@otso>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <CVXQXI5E053J.386OVO28LNSYT@otso>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-According to downstream dwc3-msm source this clock has FSM dependency on
-gcc_pcnoc_usb30_clk so enabling it would fail if latter isn't enabled.
-This patch add works around this issue by changing parent of
-gcc_usb30_master_clk to gcc_pcnoc_usb30_clk. This is acceptable because
-both clocks have same parent and are branches/gates.
+On Mon, Oct 02, 2023 at 08:40:10AM +0200, Luca Weiss wrote:
+> On Sat Sep 30, 2023 at 5:06 PM CEST, Krzysztof Kozlowski wrote:
+> > On 29/09/2023 10:17, Luca Weiss wrote:
+> > > As per commit ea25d61b448a ("arm64: dts: qcom: Use plural _gpios node
+> > > label for PMIC gpios") all dts files now use the plural _gpios instead
+> > > of the singular _gpio as label. Update the schema example also to match.
+> > > 
+> > > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> > > ---
+> > >  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 4 ++--
+> > >  1 file changed, 2 insertions(+), 2 deletions(-)
+> > > 
+> > > diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> > > index 55e931ba5b47..e4842e1fbd65 100644
+> > > --- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> > > +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> > > @@ -245,7 +245,7 @@ examples:
+> > >              #address-cells = <1>;
+> > >              #size-cells = <0>;
+> > >  
+> > > -            pmi8998_gpio: gpio@c000 {
+> > > +            pmi8998_gpios: gpio@c000 
+> >
+> > This does no�make sense... you update label only here, but not in any
+> > user of it which proves that label is not used. If it is not used, it
+> > should be dropped, not changed...
+> 
+> Okay, I will drop the label instead of updating it in v2.
 
-Signed-off-by: Barnabás Czémán <trabarni@gmail.com>
----
- drivers/clk/qcom/gcc-msm8953.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Or just drop the patch and skip the trivial changes. If you want to fix 
+unused labels, fix it for the whole subsystem (mfd) or treewide.
 
-diff --git a/drivers/clk/qcom/gcc-msm8953.c b/drivers/clk/qcom/gcc-msm8953.c
-index 3e5a8cb14d4d..20639340e8a6 100644
---- a/drivers/clk/qcom/gcc-msm8953.c
-+++ b/drivers/clk/qcom/gcc-msm8953.c
-@@ -3645,7 +3645,7 @@ static struct clk_branch gcc_usb30_master_clk = {
- 		.hw.init = &(struct clk_init_data) {
- 			.name = "gcc_usb30_master_clk",
- 			.parent_hws = (const struct clk_hw*[]){
--				&usb30_master_clk_src.clkr.hw,
-+				&gcc_pcnoc_usb3_axi_clk.clkr.hw,
- 			},
- 			.num_parents = 1,
- 			.ops = &clk_branch2_ops,
--- 
-2.42.0
-
+Rob
