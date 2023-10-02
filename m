@@ -2,148 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4890A7B5494
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 16:10:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4A3B7B54BA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 16:10:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237479AbjJBNtU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Oct 2023 09:49:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45042 "EHLO
+        id S237584AbjJBNuQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Oct 2023 09:50:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236712AbjJBNtT (ORCPT
+        with ESMTP id S237525AbjJBNuJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Oct 2023 09:49:19 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDBF09E
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 06:49:16 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-9a9f139cd94so2208273066b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 06:49:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696254555; x=1696859355; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Xty2hjrI0rUBwt6hciFpO785hSratICpEH6GmITOrmY=;
-        b=nPWvEbWi24k3iMR8R3oNeK4iqMOQupp8pTY55DrOmqycxcb3cS2gknlMQH6l6mYjgH
-         N380taxuo6eoP1qiDbofBFRDysilmnuZLYmxbEqJTfn+YLLDpWDFJ19m52M5G5XKREq7
-         DRyGCNrEkA/y57dqd5aHH7zJq3QfJHYHtyJ2183ZanZPMmnvnTa+utcDedebpy7/0st4
-         qqQn5W2CTjfxZI/BxmLIhVT4MoowuXOQfLbEHHPi6DUewrqUtH2xsHKPGmJsoKEkAVhb
-         IueyTikHEN0SyG/+/3M7LnkgKbXTPMyL8cHkSXvFus3NpoYiHeyB9JZ5PwDVZGdBWRbA
-         PVAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696254555; x=1696859355;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Xty2hjrI0rUBwt6hciFpO785hSratICpEH6GmITOrmY=;
-        b=nmr3ExbYvsj5Ab9z0GHTtlE4tDt9dUiARHsCWdAjlgbhovqwcZUjdjSxfjVauJbVs6
-         2ZJdEdt8nbz2BYQ1j7cClyQUeyLQxpWfCxLe5fKu9w+7sCm/hC66QbNmfQq/DQjalscr
-         lB8WDfXUdjhXP6ZMpBcE84RyuqmMICci5ISUJV51N0XQbQXWkrEs/CVBZt1Qts0A8uWL
-         Vx8zMBLi9P4N9THCC0AnVDx5PFP/HhExD4gvswNYqUq1Md9lXwqTzCTz7uBSBG3UUBRC
-         JlQcvlzEg3eOMKP0pb9xeUtQvsjDzw+p4Nl5mnakikGPX3bYteizZRq/LhQ9I+ePd6g+
-         wTrA==
-X-Gm-Message-State: AOJu0Yz2wM9rYzE/2HJ2aGvdU8TMMKcSiKG7dkGYBe1/ZRDg/sO4d/jQ
-        cuDojCzdSx6SYArSLOyLJLaKjA==
-X-Google-Smtp-Source: AGHT+IETS5hDzPJJ8t+72ICyq1R9SLNSuaLJXKC/3tvPE/8bRhg8x7jridIpwkTKhuCdTCrqni9G+w==
-X-Received: by 2002:a17:907:770d:b0:9ae:5370:81d5 with SMTP id kw13-20020a170907770d00b009ae537081d5mr10086083ejc.41.1696254555327;
-        Mon, 02 Oct 2023 06:49:15 -0700 (PDT)
-Received: from [192.168.1.197] (5-157-101-10.dyn.eolo.it. [5.157.101.10])
-        by smtp.gmail.com with ESMTPSA id h13-20020a170906584d00b00992b8d56f3asm17008467ejs.105.2023.10.02.06.49.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Oct 2023 06:49:14 -0700 (PDT)
-Message-ID: <9f09757e-1ab6-4e5f-8c70-fbb9acd179e8@linaro.org>
-Date:   Mon, 2 Oct 2023 15:49:12 +0200
+        Mon, 2 Oct 2023 09:50:09 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19F9BEE;
+        Mon,  2 Oct 2023 06:49:52 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1566C433C8;
+        Mon,  2 Oct 2023 13:49:47 +0000 (UTC)
+Message-ID: <71d5e43f-fab8-49ea-b5d1-441beb6cf351@xs4all.nl>
+Date:   Mon, 2 Oct 2023 15:49:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] dt-bindings: i2c: qcom-cci: Document SC7280
- compatible
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Andi Shyti <andi.shyti@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-References: <20231002-sc7280-cci-v2-0-9333fda4612a@fairphone.com>
- <20231002-sc7280-cci-v2-1-9333fda4612a@fairphone.com>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231002-sc7280-cci-v2-1-9333fda4612a@fairphone.com>
+Subject: Re: [PATCH v8 13/53] media: Report the maximum possible number of
+ buffers for the queue
+Content-Language: en-US, nl
+To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+        mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
+        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
+        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
+        nicolas.dufresne@collabora.com
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
+        kernel@collabora.com
+References: <20230927153558.159278-1-benjamin.gaignard@collabora.com>
+ <20230927153558.159278-14-benjamin.gaignard@collabora.com>
+ <cf73025e-0bb0-44c2-9ab3-e426c09bebd8@xs4all.nl>
+ <2f1d1983-6038-c216-e362-d08a05c344fc@collabora.com>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+In-Reply-To: <2f1d1983-6038-c216-e362-d08a05c344fc@collabora.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/10/2023 08:55, Luca Weiss wrote:
-> Document the compatible for the CCI block found on SC7280 SoC.
+On 02/10/2023 15:46, Benjamin Gaignard wrote:
 > 
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
+> Le 02/10/2023 à 15:37, Hans Verkuil a écrit :
+>> On 27/09/2023 17:35, Benjamin Gaignard wrote:
+>>> Use one of the struct v4l2_create_buffers reserved bytes to report
+>>> the maximum possible number of buffers for the queue.
+>>> V4l2 framework set V4L2_BUF_CAP_SUPPORTS_SET_MAX_BUFS flags in queue
+>>> capabilities so userland can know when the field is valid.
+>>>
+>>> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+>>> ---
+>>>   .../userspace-api/media/v4l/vidioc-create-bufs.rst       | 8 ++++++--
+>>>   Documentation/userspace-api/media/v4l/vidioc-reqbufs.rst | 1 +
+>>>   drivers/media/common/videobuf2/videobuf2-v4l2.c          | 9 +++++++--
+>>>   drivers/media/v4l2-core/v4l2-ioctl.c                     | 4 ++--
+>>>   include/uapi/linux/videodev2.h                           | 7 ++++++-
+>>>   5 files changed, 22 insertions(+), 7 deletions(-)
+>>>
+>>> diff --git a/Documentation/userspace-api/media/v4l/vidioc-create-bufs.rst b/Documentation/userspace-api/media/v4l/vidioc-create-bufs.rst
+>>> index a048a9f6b7b6..1a46549e7462 100644
+>>> --- a/Documentation/userspace-api/media/v4l/vidioc-create-bufs.rst
+>>> +++ b/Documentation/userspace-api/media/v4l/vidioc-create-bufs.rst
+>>> @@ -116,9 +116,13 @@ than the number requested.
+>>>         - ``flags``
+>>>         - Specifies additional buffer management attributes.
+>>>       See :ref:`memory-flags`.
+>>> -
+>>>       * - __u32
+>>> -      - ``reserved``\ [6]
+>>> +      - ``max_buffers``
+>>> +      - If V4L2_BUF_CAP_SUPPORTS_SET_MAX_BUFS capability flag is set
+>>> +        this field indicate the maximum possible number of buffers
+>>> +        for this queue.
+>>> +    * - __u32
+>>> +      - ``reserved``\ [5]
+>>>         - A place holder for future extensions. Drivers and applications
+>>>       must set the array to zero.
+>>>   diff --git a/Documentation/userspace-api/media/v4l/vidioc-reqbufs.rst b/Documentation/userspace-api/media/v4l/vidioc-reqbufs.rst
+>>> index 099fa6695167..0395187e1a5a 100644
+>>> --- a/Documentation/userspace-api/media/v4l/vidioc-reqbufs.rst
+>>> +++ b/Documentation/userspace-api/media/v4l/vidioc-reqbufs.rst
+>>> @@ -120,6 +120,7 @@ aborting or finishing any DMA in progress, an implicit
+>>>   .. _V4L2-BUF-CAP-SUPPORTS-ORPHANED-BUFS:
+>>>   .. _V4L2-BUF-CAP-SUPPORTS-M2M-HOLD-CAPTURE-BUF:
+>>>   .. _V4L2-BUF-CAP-SUPPORTS-MMAP-CACHE-HINTS:
+>>> +.. _V4L2-BUF-CAP-SUPPORTS-SET-MAX-BUFS:
+>>>     .. raw:: latex
+>>>   diff --git a/drivers/media/common/videobuf2/videobuf2-v4l2.c b/drivers/media/common/videobuf2/videobuf2-v4l2.c
+>>> index 278ea1107b01..655133f1ae2b 100644
+>>> --- a/drivers/media/common/videobuf2/videobuf2-v4l2.c
+>>> +++ b/drivers/media/common/videobuf2/videobuf2-v4l2.c
+>>> @@ -686,6 +686,7 @@ EXPORT_SYMBOL(vb2_querybuf);
+>>>   static void fill_buf_caps(struct vb2_queue *q, u32 *caps)
+>>>   {
+>>>       *caps = V4L2_BUF_CAP_SUPPORTS_ORPHANED_BUFS;
+>>> +    *caps |= V4L2_BUF_CAP_SUPPORTS_SET_MAX_BUFS;
+>>>       if (q->io_modes & VB2_MMAP)
+>>>           *caps |= V4L2_BUF_CAP_SUPPORTS_MMAP;
+>>>       if (q->io_modes & VB2_USERPTR)
+>>> @@ -767,9 +768,13 @@ int vb2_create_bufs(struct vb2_queue *q, struct v4l2_create_buffers *create)
+>>>         fill_buf_caps(q, &create->capabilities);
+>>>       validate_memory_flags(q, create->memory, &create->flags);
+>>> -    create->index = q->num_buffers;
+>>> -    if (create->count == 0)
+>>> +
+>>> +    create->max_buffers = q->max_num_buffers;
+>>> +
+>>> +    if (create->count == 0) {
+>>> +        create->index = vb2_get_num_buffers(q);
+>> This breaks git bisect: this function isn't introduced until patch 21/53.
+>>
+>> Note: with the build scripts you can just run it with:
+>>
+>> ./build.sh -patches 53 ...
+>>
+>> and it will apply each patch in sequence and attempt to compile it.
+> 
+> It should  be create->index = q->num_buffers;
+> The error is also in v9...
 
-Thanks, looks good now.
+Sorry, I meant to reply to the v9 patch, so yes, it is also in v9 :-)
 
+	Hans
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
+> 
+>>
+>> Regards,
+>>
+>>     Hans
+>>
+>>>           return ret != -EBUSY ? ret : 0;
+>>> +    }
+>>>         switch (f->type) {
+>>>       case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
+>>> diff --git a/drivers/media/v4l2-core/v4l2-ioctl.c b/drivers/media/v4l2-core/v4l2-ioctl.c
+>>> index f4d9d6279094..700db197e371 100644
+>>> --- a/drivers/media/v4l2-core/v4l2-ioctl.c
+>>> +++ b/drivers/media/v4l2-core/v4l2-ioctl.c
+>>> @@ -483,9 +483,9 @@ static void v4l_print_create_buffers(const void *arg, bool write_only)
+>>>   {
+>>>       const struct v4l2_create_buffers *p = arg;
+>>>   -    pr_cont("index=%d, count=%d, memory=%s, capabilities=0x%08x, ",
+>>> +    pr_cont("index=%d, count=%d, memory=%s, capabilities=0x%08x, max buffers=%u",
+>>>           p->index, p->count, prt_names(p->memory, v4l2_memory_names),
+>>> -        p->capabilities);
+>>> +        p->capabilities, p->max_buffers);
+>>>       v4l_print_format(&p->format, write_only);
+>>>   }
+>>>   diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
+>>> index 78260e5d9985..b0dbb1be728c 100644
+>>> --- a/include/uapi/linux/videodev2.h
+>>> +++ b/include/uapi/linux/videodev2.h
+>>> @@ -1034,6 +1034,7 @@ struct v4l2_requestbuffers {
+>>>   #define V4L2_BUF_CAP_SUPPORTS_ORPHANED_BUFS        (1 << 4)
+>>>   #define V4L2_BUF_CAP_SUPPORTS_M2M_HOLD_CAPTURE_BUF    (1 << 5)
+>>>   #define V4L2_BUF_CAP_SUPPORTS_MMAP_CACHE_HINTS        (1 << 6)
+>>> +#define V4L2_BUF_CAP_SUPPORTS_SET_MAX_BUFS        (1 << 7)
+>>>     /**
+>>>    * struct v4l2_plane - plane info for multi-planar buffers
+>>> @@ -2604,6 +2605,9 @@ struct v4l2_dbg_chip_info {
+>>>    * @flags:    additional buffer management attributes (ignored unless the
+>>>    *        queue has V4L2_BUF_CAP_SUPPORTS_MMAP_CACHE_HINTS capability
+>>>    *        and configured for MMAP streaming I/O).
+>>> + * @max_buffers: if V4L2_BUF_CAP_SUPPORTS_SET_MAX_BUFS capability flag is set
+>>> + *         this field indicate the maximum possible number of buffers
+>>> + *         for this queue.
+>>>    * @reserved:    future extensions
+>>>    */
+>>>   struct v4l2_create_buffers {
+>>> @@ -2613,7 +2617,8 @@ struct v4l2_create_buffers {
+>>>       struct v4l2_format    format;
+>>>       __u32            capabilities;
+>>>       __u32            flags;
+>>> -    __u32            reserved[6];
+>>> +    __u32            max_buffers;
+>>> +    __u32            reserved[5];
+>>>   };
+>>>     /*
+>>
 
