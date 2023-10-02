@@ -2,105 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A0557B4BFC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 09:00:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A7327B4C1A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 09:02:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235640AbjJBHA1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Oct 2023 03:00:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48724 "EHLO
+        id S235669AbjJBHCr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Oct 2023 03:02:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235635AbjJBHA0 (ORCPT
+        with ESMTP id S235620AbjJBHCo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Oct 2023 03:00:26 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27A19D9
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 00:00:22 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-40675f06f1fso1503695e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 00:00:22 -0700 (PDT)
+        Mon, 2 Oct 2023 03:02:44 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF828101
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 00:02:40 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-9b29186e20aso1512735866b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 00:02:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696230020; x=1696834820; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=65UjR/BYH4sgNp7jAQsrOIIv1FTbyb0+YEnzQHZ9wXU=;
-        b=zeZp9NMgkD/4p3TJ/451XAOQJLJpYoG/MYqlf4W2Wsw+/dlV84uO0o2sS2bxKDK+zv
-         DcHRUSiS6suKajcO39w8J3aLX7EEyXZVYhzIwdCdt5+e7aVPRNR3mvzUY9srtaXwakkc
-         mkV+K4ktRP2gokHLz/g/43+iBewESkzDsM2XeIO6sZnbMbntLoQSGx0poFcFwyEBu2DD
-         glpIyeEibfs6ZA18/KFMoWmDkthaEK97ZQ4UmzIAhn9iJBm+J4zSuh9Qq1+l1jfebu7i
-         VE/7Lh+Rh/hpGAroONtNwSXA8Lu3lRmPgyGObFUEez/OC1fOvn1G7UKQXKGXCBEx26sL
-         t2SQ==
+        d=fairphone.com; s=fair; t=1696230159; x=1696834959; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PeSmx0D2O0/a7oNGI2vszLu5YKBAPoxdy4aY0mQYyUI=;
+        b=gBee/ib04lb8Su5dE1/csNqk7QhGlcoWLm257hjst94+6JplyfreEF1J7Pg0azyqtG
+         semeU2l/YR+vdQg3JxOEAYI+fB9O4moXqGQBRChnyAvz2gFnI/J7mcLgB5O1PjWVyldf
+         zJIzZ64zzvZCxAN8QY3USX5+Nm3FWWM15VaYzvniOuyrDQZA+EWUcoavvVOa/BR5W2lV
+         D0OIVcLiXVAvbWxiYPOU5b8DDLSP4Iq3WG1jLzUtp9q0B0WB0cuQjoFm9qdmjfxg5jfG
+         MAaE0o/lWmynDU4sCCkLl5yMG86qwApHeT1k84pHBYV+MiwcJIPUigXNIasznIYsTFHD
+         0rpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696230020; x=1696834820;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=65UjR/BYH4sgNp7jAQsrOIIv1FTbyb0+YEnzQHZ9wXU=;
-        b=Hyv+2m436xGOtPRwKcI6pu3uvyjTdopQa2IZ85tOp9ZM7/U/wZeeiMIwnN5jvA8JgT
-         ccS5VbBMquTfyPOpkADZJzSp7Ds6sgmpl6/JKiWYhKEpy3789KdPLEGWSL+Co1yf+/6B
-         TvERwJ+lDPQ3BAY2KuTewjEL3bC4qUNDon80wLDrKAoivHvpLJ9VZn/EdmjRYBNpe675
-         q9x/fKF44GbV8FvIATeuYgEKUyG1e6af4g0G1pbtcQ8KMZTFfcwqGiWcAaWXOBqPietO
-         9W9U5p6a3oJ+vAQl+1Rv5z55+W/QYFK3e+FcxUEib6JApgZ7PCLI32Gq3jy84RJoegLL
-         zLDw==
-X-Gm-Message-State: AOJu0YxVq+EoR3vj1LMcxfo5weiruai5YLO5ZW22sJfvG5dKNmULWzu4
-        SHh8+R3hnbqsAy91UjIbXQlRkw==
-X-Google-Smtp-Source: AGHT+IE2F7pfcHOX2OqOjdf/8yC0R+rXJgV623odj8DkbTqz9V9NQ2wG4qE6yedpKCypg3IborH+mQ==
-X-Received: by 2002:a05:6000:114b:b0:30e:56b3:60fe with SMTP id d11-20020a056000114b00b0030e56b360femr8811358wrx.4.1696230020459;
-        Mon, 02 Oct 2023 00:00:20 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:b653:7e47:ffdd:9340? ([2a01:e0a:982:cbb0:b653:7e47:ffdd:9340])
-        by smtp.gmail.com with ESMTPSA id d11-20020adff84b000000b0031980783d78sm12200252wrq.54.2023.10.02.00.00.19
+        d=1e100.net; s=20230601; t=1696230159; x=1696834959;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=PeSmx0D2O0/a7oNGI2vszLu5YKBAPoxdy4aY0mQYyUI=;
+        b=q56b+f7IDo6IpWhzG4yi2ZgGauBGTnN5hpjaRvMW1xJFGIYt8p46gXsAWdU6cqWQj8
+         NHq6RWUeTT9yBRtqbNKuZ6WSniYWtDchXIAc7fVjHpHyYRuoB5o0rkOOgcfqx/KFiBIo
+         gacQJ/9xzOv1rKa7KLGMIJbrfi2v+tQC3rA3EkPIBQnhQpx8CQM1UzB+muoaWJ6+J4VV
+         RquLUC814BGEgb0R6li6NovBU3+eYtccRZrVob22eMm2Zby4YBsR68GRB2WBAMZzG7RS
+         kC5jmzewIwbQllSnQpNtUvZPIfKf3cVlCoyKKtleerImGjMgSXTRieTl82D28Q9C4wIU
+         ogBQ==
+X-Gm-Message-State: AOJu0YyCp6ZDm2mx2sPjkkT4buQVXvHhTz4/VuyL/JVusREdoq7fXGh2
+        r/RPwOwLloqzA8qJxcWiYQG03w==
+X-Google-Smtp-Source: AGHT+IH37QpKi/pRabAVwX8WI7qczpBr3LGNV8QJIAxW4evWS9WWvOYpM3vfLk1f8Jvg8ql7AlYMlA==
+X-Received: by 2002:a17:906:76d1:b0:9ae:729c:f651 with SMTP id q17-20020a17090676d100b009ae729cf651mr9070622ejn.17.1696230159028;
+        Mon, 02 Oct 2023 00:02:39 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id t15-20020a170906608f00b009a9fbeb15f2sm16459798ejj.62.2023.10.02.00.02.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Oct 2023 00:00:19 -0700 (PDT)
-Message-ID: <7d157f25-a25d-41c2-9ff5-624721efcb92@linaro.org>
-Date:   Mon, 2 Oct 2023 09:00:18 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From:   neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH] MAINTAINERS: drm/ci: add entries for xfail files
-Content-Language: en-US, fr
-To:     Helen Koike <helen.koike@collabora.com>,
-        dri-devel@lists.freedesktop.org
-Cc:     robdclark@gmail.com, linux-arm-msm@vger.kernel.org,
-        linux-amlogic@lists.infradead.org, p.zabel@pengutronix.de,
-        linux-mediatek@lists.infradead.org, heiko@sntech.de,
-        jani.nikula@linux.intel.com, intel-gfx@lists.freedesktop.org,
-        alexander.deucher@amd.com, amd-gfx@lists.freedesktop.org,
-        airlied@redhat.com, daniel@ffwll.ch, mripard@kernel.org,
-        michel.daenzer@mailbox.org, daniel@fooishbar.org,
-        linux-kernel@vger.kernel.org
-References: <20230919182249.153499-1-helen.koike@collabora.com>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <20230919182249.153499-1-helen.koike@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Mon, 02 Oct 2023 00:02:38 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Mon, 02 Oct 2023 09:02:38 +0200
+Message-Id: <CVXREP4FCX4E.3M77P8JP1T27M@otso>
+Cc:     <~postmarketos/upstreaming@lists.sr.ht>,
+        <phone-devel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: qcm6490-fairphone-fp5: Enable UFS
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        "Conor Dooley" <conor+dt@kernel.org>,
+        "Nitin Rawat" <quic_nitirawa@quicinc.com>
+X-Mailer: aerc 0.15.2
+References: <20230929-fp5-ufs-v1-1-122941e28b06@fairphone.com>
+ <cac1b912-e08b-4643-b081-834fdee30ea7@linaro.org>
+In-Reply-To: <cac1b912-e08b-4643-b081-834fdee30ea7@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -108,79 +80,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/09/2023 20:22, Helen Koike wrote:
-> DRM CI keeps track of which tests are failing, flaking or being skipped
-> by the ci in the expectations files. Add entries for those files to the
-> corresponding driver maintainer, so they can be notified when they
-> change.
-> 
-> Signed-off-by: Helen Koike <helen.koike@collabora.com>
-> ---
-> 
-> For reference: https://www.mail-archive.com/dri-devel@lists.freedesktop.org/msg463165.html
-> 
->   MAINTAINERS | 7 +++++++
->   1 file changed, 7 insertions(+)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 90f13281d297..740a2ce2689c 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -6614,6 +6614,7 @@ S:	Maintained
->   B:	https://gitlab.freedesktop.org/drm/msm/-/issues
->   T:	git https://gitlab.freedesktop.org/drm/msm.git
->   F:	Documentation/devicetree/bindings/display/msm/
-> +F:	drivers/gpu/drm/ci/xfails/msm*
->   F:	drivers/gpu/drm/msm/
->   F:	include/uapi/drm/msm_drm.h
->   
-> @@ -6886,6 +6887,7 @@ T:	git git://anongit.freedesktop.org/drm/drm-misc
->   F:	Documentation/devicetree/bindings/display/amlogic,meson-dw-hdmi.yaml
->   F:	Documentation/devicetree/bindings/display/amlogic,meson-vpu.yaml
->   F:	Documentation/gpu/meson.rst
-> +F:	drivers/gpu/drm/ci/xfails/meson*
->   F:	drivers/gpu/drm/meson/
->   
->   DRM DRIVERS FOR ATMEL HLCDC
-> @@ -6994,6 +6996,7 @@ L:	dri-devel@lists.freedesktop.org
->   L:	linux-mediatek@lists.infradead.org (moderated for non-subscribers)
->   S:	Supported
->   F:	Documentation/devicetree/bindings/display/mediatek/
-> +F:	drivers/gpu/drm/ci/xfails/mediatek*
->   F:	drivers/gpu/drm/mediatek/
->   F:	drivers/phy/mediatek/phy-mtk-dp.c
->   F:	drivers/phy/mediatek/phy-mtk-hdmi*
-> @@ -7034,6 +7037,7 @@ L:	dri-devel@lists.freedesktop.org
->   S:	Maintained
->   T:	git git://anongit.freedesktop.org/drm/drm-misc
->   F:	Documentation/devicetree/bindings/display/rockchip/
-> +F:	drivers/gpu/drm/ci/xfails/rockchip*
->   F:	drivers/gpu/drm/rockchip/
->   
->   DRM DRIVERS FOR STI
-> @@ -10476,6 +10480,7 @@ C:	irc://irc.oftc.net/intel-gfx
->   T:	git git://anongit.freedesktop.org/drm-intel
->   F:	Documentation/ABI/testing/sysfs-driver-intel-i915-hwmon
->   F:	Documentation/gpu/i915.rst
-> +F:	drivers/gpu/drm/ci/xfails/i915*
->   F:	drivers/gpu/drm/i915/
->   F:	include/drm/i915*
->   F:	include/uapi/drm/i915_drm.h
-> @@ -17862,6 +17867,7 @@ C:	irc://irc.oftc.net/radeon
->   T:	git https://gitlab.freedesktop.org/agd5f/linux.git
->   F:	Documentation/gpu/amdgpu/
->   F:	drivers/gpu/drm/amd/
-> +F:	drivers/gpu/drm/ci/xfails/amd*
->   F:	drivers/gpu/drm/radeon/
->   F:	include/uapi/drm/amdgpu_drm.h
->   F:	include/uapi/drm/radeon_drm.h
-> @@ -22846,6 +22852,7 @@ L:	dri-devel@lists.freedesktop.org
->   L:	virtualization@lists.linux-foundation.org
->   S:	Maintained
->   T:	git git://anongit.freedesktop.org/drm/drm-misc
-> +F:	drivers/gpu/drm/ci/xfails/virtio*
->   F:	drivers/gpu/drm/virtio/
->   F:	include/uapi/linux/virtio_gpu.h
->   
+On Fri Sep 29, 2023 at 3:12 PM CEST, Konrad Dybcio wrote:
+> On 29.09.2023 11:52, Luca Weiss wrote:
+> > Enable the UFS phy and controller so that we can access the internal
+> > storage of the phone.
+> >=20
+> > At the same time we need to bump the minimum voltage used for UFS VCC,
+> > otherwise it doesn't initialize properly. The new range is taken from
+> > the vcc-voltage-level property downstream.
+> >=20
+> > See also the following link for more information about the VCCQ/VCCQ2:
+> > https://gerrit-public.fairphone.software/plugins/gitiles/kernel/msm-ext=
+ra/devicetree/+/1590a3739e7dc29d2597307881553236d492f188/fp5/yupik-idp-pm72=
+50b.dtsi#207
+> >=20
+> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> > ---
+> > I'm not 100% convinced about the regulator range change. For sure with
+> > the original voltage range the UFS fails to initialize, but looking at
+> > downstream kernel during runtime (debugfs) we see the VCC voltage
+> > switches between 2.4V (idle?) and 2.952V (active?). But even with this
+> > change in mainline the regulator would always stay at 2.504V which is
+> > for sure lower than the downstream operating voltage of 2.952V. Behavio=
+r
+> > wise I don't see a difference between ~2.5V and ~2.9V.
+> >=20
+> > Should I just constrain the regulator here to min=3Dmax=3D2.952V? Or ju=
+st
+> > say it's okay as-is?
+> >=20
+> > Depends on: https://lore.kernel.org/linux-arm-msm/20230927081858.15961-=
+1-quic_nitirawa@quicinc.com/
+> > ---
+> There's a little funny hack inside the driver
+>
+> #if defined(CONFIG_SCSI_UFSHCD_QTI)
+>                         if (vreg->low_voltage_sup && !vreg->low_voltage_a=
+ctive && on)
+>                                 min_uV =3D vreg->max_uV;
+> #endif
+>
+> so, when the ufs is in use, it's pinned to vmax
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Hi Konrad,
+
+Are you implying I *should* or *should not* pin the voltage range to
+2.952V-2.952V for mainline?
+
+Regards
+Luca
+
+>
+> Konrad
+
