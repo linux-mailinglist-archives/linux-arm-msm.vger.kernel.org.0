@@ -2,102 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 94FE97B4FCB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 12:00:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 747A47B4FDA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 12:04:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236454AbjJBKAL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Oct 2023 06:00:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44876 "EHLO
+        id S236196AbjJBKE4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Oct 2023 06:04:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236439AbjJBJ76 (ORCPT
+        with ESMTP id S231153AbjJBKEy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Oct 2023 05:59:58 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A79FE1BD
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 02:59:54 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2c124adf469so256397961fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 02:59:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696240792; x=1696845592; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gncSwMFcnYXO7+yoToF5ZtSRBM43wttJi1puoOarBO8=;
-        b=PttmKga6TolJPvDy0ubLRZSyRqdEMzisAvJSNECvgZPvoIO2E0ny9Z/3/aErH0lWd9
-         0oywHwqEXW4TnupH9uCN/gDZJxJt6z1bPWxef/FNInN7pcOS3R9nXMb3y1a+VjSKLBon
-         Kyhh/2QNyipkTfOuLznl/GhY2vzlkYuFJceYqmx5uQYlORC/hXtiLqt8mzvVQl6ofe9w
-         Gv2NYUndhKQu/fJltp6vYcGasnDvldI2UCqcTalk5GtZxeBRayEDJMRDfTNYqgn8qWHw
-         ZiSQXIjoAM7slZLg2Bk0Yq+NOs7fuMK9pyjKA4pFTfMYiMi2Rcs7pC/gdlo7sh+xbgwW
-         s6bw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696240792; x=1696845592;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gncSwMFcnYXO7+yoToF5ZtSRBM43wttJi1puoOarBO8=;
-        b=E2JUDyX2+HSDcK3aaNHtjfKdeBMtBF1DPc/EfNv+Z6Ap8dssR2VQnWZ5Jf9EkrpLBM
-         VEQFXLhdcGqYvTlwCGMISYO+NV4uvz2Mc3QPfTQIwO59ej6HAIs56UwcB17kSYiy4SlJ
-         Svasq4Pu0b/3Psua/2O5nc4Wvkso8F/yGsnwrA88nX5yQBO32q9wxNzZAqvDwTHbFpZh
-         R9lOfwrAqMjyH1wlbzzXpvsvZEr+8D+NDgs9v/MJnmHkhAk3UlPmdpqSZdCmmR6rUhpo
-         oEHLWCBSCmNaqIy3wrL7y84cKGxVCPgU3DSYaDK3DnaB9AawfLifigGMnxHIwcsOZS8u
-         ya1g==
-X-Gm-Message-State: AOJu0Ywij/MkzmX1WeYVK+RrKv3ralgAdxMs84YZQNs0j4CVAeGWnkQ6
-        s+TfPhRDvWVyFD1jzTZ/COzN7Q==
-X-Google-Smtp-Source: AGHT+IFz07CTiTCLL4SudGLfq1adSM4kx0/HChfGtNHaieGodNY70bP9DLTgXQIlbFpVa3dWg4MuFw==
-X-Received: by 2002:a2e:9cd5:0:b0:2c0:afd:e7ed with SMTP id g21-20020a2e9cd5000000b002c00afde7edmr9715892ljj.10.1696240792512;
-        Mon, 02 Oct 2023 02:59:52 -0700 (PDT)
-Received: from [172.30.204.164] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id k25-20020a2e2419000000b002b9f1214394sm5226754ljk.13.2023.10.02.02.59.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Oct 2023 02:59:52 -0700 (PDT)
-Message-ID: <a1dda0c5-e394-a66a-327f-77f534590134@linaro.org>
-Date:   Mon, 2 Oct 2023 11:59:50 +0200
+        Mon, 2 Oct 2023 06:04:54 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 773599F;
+        Mon,  2 Oct 2023 03:04:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1696241090; x=1727777090;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=5D4U+LA+ZgnEx7OwERb3YlJnlwrY5TKHb6buSPufX1M=;
+  b=JY7WR9JxRzqWzhS5ZAW3pKjqDJWwQP57BmjJGr9WqWSOQ6DLUqclBLy0
+   jm102MTGhiGUeQKLntxh72w13jp65MA7qMf3W1euZVPG3hdyZK8lPPbUR
+   k1hfvWNumurpmFPv9QpaOSB1VvAwj871GFRF7fvm0mKzCuw2wctxwdA8H
+   PDF1c1GITvISGX9CB/5sRPz47DDh9VT9Gqm7AQLfmJYJUitE9FOmFZNe/
+   SjvpiwxHCccHYInDYOyb8fwmtPWF+4Xkj2O+ZXR19v9EYeJ606c3w24PA
+   WceTSP73vUtGZCViOKcEAMujz24cwqlmSQ0QA2uiYCvp+e34vuK9eHS1n
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10850"; a="381497171"
+X-IronPort-AV: E=Sophos;i="6.03,194,1694761200"; 
+   d="scan'208";a="381497171"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Oct 2023 03:04:49 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10850"; a="820843587"
+X-IronPort-AV: E=Sophos;i="6.03,194,1694761200"; 
+   d="scan'208";a="820843587"
+Received: from lkp-server02.sh.intel.com (HELO c3b01524d57c) ([10.239.97.151])
+  by fmsmga004.fm.intel.com with ESMTP; 02 Oct 2023 03:04:45 -0700
+Received: from kbuild by c3b01524d57c with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qnFnA-0005w5-2B;
+        Mon, 02 Oct 2023 10:04:44 +0000
+Date:   Mon, 2 Oct 2023 18:04:07 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Neil Armstrong <neil.armstrong@linaro.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Cc:     oe-kbuild-all@lists.linux.dev, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bastien Nocera <hadess@hadess.net>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Henrik Rydberg <rydberg@bitmath.org>,
+        Jeff LaBundy <jeff@labundy.com>, linux-input@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v7 3/4] Input: goodix-berlin - add I2C support for Goodix
+ Berlin Touchscreen IC
+Message-ID: <202310021730.epucKAC1-lkp@intel.com>
+References: <20231002-topic-goodix-berlin-upstream-initial-v7-3-792fb91f5e88@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 09/13] arm64: dts: qcom: msm8916-longcheer-l8150: Add
- sound and modem
-Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Nikita Travkin <nikita@trvn.ru>
-References: <20230926-msm8916-modem-v1-0-398eec74bac9@gerhold.net>
- <20230926-msm8916-modem-v1-9-398eec74bac9@gerhold.net>
- <14262938-4150-429f-a730-df1b2fadd9ff@linaro.org>
- <ZRhT2PRwAoB39J_0@gerhold.net>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <ZRhT2PRwAoB39J_0@gerhold.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231002-topic-goodix-berlin-upstream-initial-v7-3-792fb91f5e88@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Neil,
+
+kernel test robot noticed the following build errors:
+
+[auto build test ERROR on 6465e260f48790807eef06b583b38ca9789b6072]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Neil-Armstrong/dt-bindings-input-document-Goodix-Berlin-Touchscreen-IC/20231002-145648
+base:   6465e260f48790807eef06b583b38ca9789b6072
+patch link:    https://lore.kernel.org/r/20231002-topic-goodix-berlin-upstream-initial-v7-3-792fb91f5e88%40linaro.org
+patch subject: [PATCH v7 3/4] Input: goodix-berlin - add I2C support for Goodix Berlin Touchscreen IC
+config: nios2-allmodconfig (https://download.01.org/0day-ci/archive/20231002/202310021730.epucKAC1-lkp@intel.com/config)
+compiler: nios2-linux-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231002/202310021730.epucKAC1-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202310021730.epucKAC1-lkp@intel.com/
+
+All error/warnings (new ones prefixed by >>):
+
+   drivers/input/touchscreen/goodix_berlin_core.c: In function 'goodix_berlin_checksum_valid':
+>> drivers/input/touchscreen/goodix_berlin_core.c:50:16: error: implicit declaration of function 'FIELD_GET' [-Werror=implicit-function-declaration]
+      50 |         return FIELD_GET(GOODIX_BERLIN_COOR_DATA_CHECKSUM_MASK, cal_checksum) == r_checksum;
+         |                ^~~~~~~~~
+   drivers/input/touchscreen/goodix_berlin_core.c: In function 'goodix_berlin_get_ic_info':
+>> drivers/input/touchscreen/goodix_berlin_core.c:284:1: warning: the frame size of 1140 bytes is larger than 1024 bytes [-Wframe-larger-than=]
+     284 | }
+         | ^
+   cc1: some warnings being treated as errors
 
 
-On 9/30/23 18:59, Stephan Gerhold wrote:
-> On Tue, Sep 26, 2023 at 08:59:52PM +0200, Konrad Dybcio wrote:
->> On 26.09.2023 18:51, Stephan Gerhold wrote:
->>> From: Nikita Travkin <nikita@trvn.ru>
->>>
->>> Enable sound and modem for the Longcheer L8150 (e.g. Wileyfox Swift).
->> e.g. -> i.e., or is that thing sold under many labels?
->>
-> 
-> Yes, "e.g." is indeed correct here. AFAIK the MSM8916-based Android One
-> devices (aka "google-seed") are also based on the Longcheer L8150. They
-> are available under names like "Cherry Mobile One G1", "i-mobile IQ II",
-> and "General Mobile 4G". They are also covered by this device tree.
-Oh wow.. That's surely fun
+vim +/FIELD_GET +50 drivers/input/touchscreen/goodix_berlin_core.c
 
-Konrad
+3fd649a6bbd95d Neil Armstrong 2023-10-02  15  
+3fd649a6bbd95d Neil Armstrong 2023-10-02  16  /*
+3fd649a6bbd95d Neil Armstrong 2023-10-02  17   * Goodix "Berlin" Touchscreen ID driver
+3fd649a6bbd95d Neil Armstrong 2023-10-02  18   *
+3fd649a6bbd95d Neil Armstrong 2023-10-02  19   * This driver is distinct from goodix.c since hardware interface
+3fd649a6bbd95d Neil Armstrong 2023-10-02  20   * is different enough to require a new driver.
+3fd649a6bbd95d Neil Armstrong 2023-10-02  21   * None of the register address or data structure are close enough
+3fd649a6bbd95d Neil Armstrong 2023-10-02  22   * to the previous generations.
+3fd649a6bbd95d Neil Armstrong 2023-10-02  23   *
+3fd649a6bbd95d Neil Armstrong 2023-10-02  24   * Currently only handles Multitouch events with already
+3fd649a6bbd95d Neil Armstrong 2023-10-02  25   * programmed firmware and "config" for "Revision D" Berlin IC.
+3fd649a6bbd95d Neil Armstrong 2023-10-02  26   *
+3fd649a6bbd95d Neil Armstrong 2023-10-02  27   * Support is missing for:
+3fd649a6bbd95d Neil Armstrong 2023-10-02  28   * - ESD Management
+3fd649a6bbd95d Neil Armstrong 2023-10-02  29   * - Firmware update/flashing
+3fd649a6bbd95d Neil Armstrong 2023-10-02  30   * - "Config" update/flashing
+3fd649a6bbd95d Neil Armstrong 2023-10-02  31   * - Stylus Events
+3fd649a6bbd95d Neil Armstrong 2023-10-02  32   * - Gesture Events
+3fd649a6bbd95d Neil Armstrong 2023-10-02  33   * - Support for older revisions (A & B)
+3fd649a6bbd95d Neil Armstrong 2023-10-02  34   */
+3fd649a6bbd95d Neil Armstrong 2023-10-02  35  
+3fd649a6bbd95d Neil Armstrong 2023-10-02  36  static bool goodix_berlin_checksum_valid(const u8 *data, int size)
+3fd649a6bbd95d Neil Armstrong 2023-10-02  37  {
+3fd649a6bbd95d Neil Armstrong 2023-10-02  38  	u32 cal_checksum = 0;
+3fd649a6bbd95d Neil Armstrong 2023-10-02  39  	u16 r_checksum;
+3fd649a6bbd95d Neil Armstrong 2023-10-02  40  	u32 i;
+3fd649a6bbd95d Neil Armstrong 2023-10-02  41  
+3fd649a6bbd95d Neil Armstrong 2023-10-02  42  	if (size < GOODIX_BERLIN_COOR_DATA_CHECKSUM_SIZE)
+3fd649a6bbd95d Neil Armstrong 2023-10-02  43  		return false;
+3fd649a6bbd95d Neil Armstrong 2023-10-02  44  
+3fd649a6bbd95d Neil Armstrong 2023-10-02  45  	for (i = 0; i < size - GOODIX_BERLIN_COOR_DATA_CHECKSUM_SIZE; i++)
+3fd649a6bbd95d Neil Armstrong 2023-10-02  46  		cal_checksum += data[i];
+3fd649a6bbd95d Neil Armstrong 2023-10-02  47  
+3fd649a6bbd95d Neil Armstrong 2023-10-02  48  	r_checksum = get_unaligned_le16(&data[i]);
+3fd649a6bbd95d Neil Armstrong 2023-10-02  49  
+3fd649a6bbd95d Neil Armstrong 2023-10-02 @50  	return FIELD_GET(GOODIX_BERLIN_COOR_DATA_CHECKSUM_MASK, cal_checksum) == r_checksum;
+3fd649a6bbd95d Neil Armstrong 2023-10-02  51  }
+3fd649a6bbd95d Neil Armstrong 2023-10-02  52  
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
