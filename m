@@ -2,102 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 08FB97B595A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 19:43:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A21F27B58F2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 19:42:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229463AbjJBR0f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Oct 2023 13:26:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40390 "EHLO
+        id S231683AbjJBRcH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Oct 2023 13:32:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229546AbjJBR0e (ORCPT
+        with ESMTP id S231610AbjJBRcG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Oct 2023 13:26:34 -0400
-Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E381BD
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 10:26:31 -0700 (PDT)
-Received: by mail-yb1-xb31.google.com with SMTP id 3f1490d57ef6-d81f35511e6so4204158276.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 10:26:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696267591; x=1696872391; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=cWIcP9wX0mT1aYX41AeZZPoQ0U59y7qnUZSn5QwnCXg=;
-        b=KpBC4mKlNPmqoL/3NXbFUrF4WjyZoOQuqaPC2/NtMWHZcdum1LR2u1PN5anOAr2K0F
-         DH/bacF/gV15eYLhZqzVsTMzyKuFUsGrbdykJOVN9z3e4VeTGq/1K59fzcwd85aD1bPu
-         a1dW4y1ithLa3Y2gICai9X1bDfRuRJwqPafrnmrtBVWG6RQzPvELXet88ZZhRuO0/QPn
-         EHxEk8310syqMqvtOzVz8s9OwBxXGQJP4s/BaDd+dlMe451r/325mERSLFuGACZ3XzNi
-         QetBsB4U4vgQGLlRSOPUv3nfFjON4u9asyRXMrT8Psxo+/4vjbr6uxB+D10u7qH1vrIN
-         7Vxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696267591; x=1696872391;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cWIcP9wX0mT1aYX41AeZZPoQ0U59y7qnUZSn5QwnCXg=;
-        b=iSfKYZDbW0v2NAZQ/m90nJPBCbQbfWumjPZQxST/JbSDK9eUXmhF4kKgwzOSTAkDk1
-         bHx3OSssuQaYUSgaDzbb6YuO/bQ2AP37q0F6V94Z506ZYQJ8GOtqnHrOcRlZUPI3kk74
-         ggqxvyQ5sROPmar6RKKsYg6216gGz1PoiKW1kL2rfCmUGBEtzkkJEIeQNeiRJfH+c7Lh
-         zHFYZEi8TtBWoqV1yl/6oGbX+AM0DShW1XnmqKjOHMojoItQ3PYm4eM1fRnwPjj9swkH
-         zPz70web1Tn6Q5YdZz2uy48BzGdL48M0xxzGZHHtre9tP3RjP28mU29K9RfrbhRuvsgq
-         Gj2g==
-X-Gm-Message-State: AOJu0Yxp5Vf0qMQ3PbsBIc7hms01MXIgqnPUXgUHTvr6IMo1lJ7YVPh8
-        YCoblil/HhPpX5WUROU5eRHPgYkvFdeICFauN4f6RQ==
-X-Google-Smtp-Source: AGHT+IFssR1DQ3n6Ot+X24EoXCpTIhEqGvK257G4k1IeGTBppDIe2H1NqvRflZMEtb/Ibet2AS3AiXbvBb2Iw7TdOb0=
-X-Received: by 2002:a25:6903:0:b0:cb2:7e6:191c with SMTP id
- e3-20020a256903000000b00cb207e6191cmr287905ybc.20.1696267590732; Mon, 02 Oct
- 2023 10:26:30 -0700 (PDT)
+        Mon, 2 Oct 2023 13:32:06 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACDB494;
+        Mon,  2 Oct 2023 10:32:03 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 392GmiMl029262;
+        Mon, 2 Oct 2023 17:31:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=p2VU07VW0j7CLsz+/d+8HTh3nDeofti/dtnqmepD624=;
+ b=jfV+RugfkH84cHiPJdaXdgCPgL6TiqUDKjDfaPnkOD5nb7Av39LC6oHq6fz0Tv51u+3j
+ WuoqjuWK+rv8wclBEk4jjsJmkrDe8SkCgIDazTX5Uqtb9JXyAWaCMD1wr/53mJJf+JG3
+ xdiTvcsFWELXD6CeZPKEF9AY9HVcdBDwkHeJLIjyCn2eFuSEMvsgrb9Ly4dQH8THyBiW
+ NamzEP13l0uKlPfI10Jawdm4naD/tXIBQYprO/expXErmd2g05uGjP+qDdLzW4aVkOS0
+ 7BcxyaEik5JloYUIJ1W/Q3s7HC4JpqYGpYVNAkJk6yTrOhMm3vREBzkNX+nFkLoPPfpC XA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3te9cmmgwj-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 02 Oct 2023 17:31:45 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 392HVjYt014078
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 2 Oct 2023 17:31:45 GMT
+Received: from [10.110.71.113] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 2 Oct
+ 2023 10:31:44 -0700
+Message-ID: <74725381-bb13-2550-efd3-224e51af49d2@quicinc.com>
+Date:   Mon, 2 Oct 2023 10:31:27 -0700
 MIME-Version: 1.0
-References: <20231002-topic-sm8550-upstream-type-c-orientation-v2-0-125410d3ff95@linaro.org>
- <20231002-topic-sm8550-upstream-type-c-orientation-v2-2-125410d3ff95@linaro.org>
-In-Reply-To: <20231002-topic-sm8550-upstream-type-c-orientation-v2-2-125410d3ff95@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 2 Oct 2023 20:26:19 +0300
-Message-ID: <CAA8EJpp2_eW+YukTq3eAFGXxtZ+YWYVkzEP9Qhs20TxoXy-v7A@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] usb: ucsi: glink: use the connector orientation
- GPIO to provide switch events
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v4 0/4] Add qcom hvc/shmem transport support
+To:     Sudeep Holla <sudeep.holla@arm.com>,
+        Brian Masney <bmasney@redhat.com>
+CC:     "cristian.marussi@arm.com" <cristian.marussi@arm.com>,
+        "robh+dt@kernel.org" <robh+dt@kernel.org>,
+        "krzysztof.kozlowski+dt@linaro.org" 
+        <krzysztof.kozlowski+dt@linaro.org>,
+        "conor+dt@kernel.org" <conor+dt@kernel.org>,
+        "andersson@kernel.org" <andersson@kernel.org>,
+        "konrad.dybcio@linaro.org" <konrad.dybcio@linaro.org>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
+References: <20230718160833.36397-1-quic_nkela@quicinc.com>
+ <20230911194359.27547-1-quic_nkela@quicinc.com>
+ <0efe305e-031b-bdf5-0268-ca1c6d562653@quicinc.com>
+ <20230918151552.n3jvw2qqi5tmyfbb@bogus> <ZQhysWhFtR68iVMa@brian-x1>
+ <20230919085612.gdmpze6c6stvammg@bogus>
+Content-Language: en-US
+From:   Nikunj Kela <quic_nkela@quicinc.com>
+In-Reply-To: <20230919085612.gdmpze6c6stvammg@bogus>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: S5wDj1sQVnzaFZDD8F1Yurru0f_aDLQk
+X-Proofpoint-ORIG-GUID: S5wDj1sQVnzaFZDD8F1Yurru0f_aDLQk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-02_12,2023-10-02_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
+ lowpriorityscore=0 adultscore=0 suspectscore=0 bulkscore=0 impostorscore=0
+ mlxlogscore=698 priorityscore=1501 mlxscore=0 malwarescore=0 clxscore=1011
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310020136
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 2 Oct 2023 at 13:21, Neil Armstrong <neil.armstrong@linaro.org> wrote:
->
-> On SM8550, the non-altmode orientation is not given anymore within
-> altmode events, even with USB SVIDs events.
->
-> On the other side, the Type-C connector orientation is correctly
-> reported by a signal from the PMIC.
->
-> Take this gpio signal when we detect some Type-C port activity
-> to notify any Type-C switches tied to the Type-C port connectors.
 
-Have you checked, which UCSI version is implemented on SM8550?
-Is there any chance of GET_CONNECTOR_STATUS / bit 86 actually
-reflecting the correct orientation?
-
+On 9/19/2023 1:56 AM, Sudeep Holla wrote:
+> On Mon, Sep 18, 2023 at 11:54:25AM -0400, Brian Masney wrote:
+>> On Mon, Sep 18, 2023 at 04:15:52PM +0100, Sudeep Holla wrote:
+>>> On Mon, Sep 18, 2023 at 08:01:26AM -0700, Nikunj Kela wrote:
+>>>> Gentle Ping!
+>>>>
+>>> I will take a look at this later this week. That said, I am unable be
+>>> gauge the urgency based on you ping here. You have shown the same urgency
+>>> last time for a feature that I queued promptly just to know that it was
+>>> abandon within couple of days. So I don't want to rush here simply based
+>>> on the number of pings here. I need to understand that it is really that
+>>> important. For now, I am thinking of skipping even v6.7 just to allow
+>>> some time for Qcom to make up its mind and be absolutely sure this is what
+>>> they *really* want this time.
+>> Hi Sudeep,
+>>
+>> Red Hat is interested in this patch set. Qualcomm is moving one of their
+>> automotive platforms over to use SCMI and this will appear in that
+>> product.
+>>
+> Thanks Brian, I trust Redhat over Qcom 😄. I will try to review and enable
+> progress later this week. We can try to target next merge window.
 >
-> Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
-
-
--- 
-With best wishes
-Dmitry
+> --
+> Regards,
+> Sudeep
+Gentle Ping...
