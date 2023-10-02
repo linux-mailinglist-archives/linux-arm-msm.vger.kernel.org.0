@@ -2,74 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D65517B4F4B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 11:44:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D8C07B4F63
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 11:48:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236218AbjJBJoA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Oct 2023 05:44:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45716 "EHLO
+        id S231174AbjJBJsC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Oct 2023 05:48:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236211AbjJBJn7 (ORCPT
+        with ESMTP id S236129AbjJBJsA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Oct 2023 05:43:59 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 019F3F0
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 02:43:55 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-5333fb34be3so21530122a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 02:43:55 -0700 (PDT)
+        Mon, 2 Oct 2023 05:48:00 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37528AB
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 02:47:56 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2bff936e10fso34600081fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 02:47:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696239834; x=1696844634; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696240074; x=1696844874; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=IDJtwog5v/98wuUqpM1mH1LIS964L7ubTthALakV0lQ=;
-        b=QpFFy1fCY0AvFtBmacSvXhIVTd10puHwKiPtpqF0aNnbk3cjBiGVfszgltLar4PCM8
-         2AMFyPcxt0McTcSIgUXwcFqYYyo2xu+wluHRw8UTv/MRmlVrwxX310dRqs02OKxo4BLG
-         kISbD+A6oO7XwYOZtPeAEWTE09wxUcMV9Eub3r7ICDePX7XQDBIxvMryc4cXEqi9wAzb
-         5tyWB3OZAJUZdYrhWBQNzfqe1qcJhTKcbvtZkOf11UaqdXSnWwWXBAwgnfHNUnoLAhjk
-         7s41olLh9pT3XEN9CP4+yYfzGAvinqbhNWCF0fD/DkCuvMMB9O8nIxv0ZN+wnOyWKIJA
-         XMfQ==
+        bh=68CSLoMUk/xsQxJmYczMbK1aUNl1yG9wbG7lfg9/RhI=;
+        b=SCYcD/sE2mB21crD+Wt5cGyZCLkx4C+qtO8wxTiXs51VJHY17soV9+pamfHdUlWuhL
+         NTgdtp/rhNdIuMF0wHYiuyAg2vrTNBDt/1s/Wzfr44KaloVGG5L++8hbpkd/TitsZhDP
+         UnQlqR911izMMhEwi4AvAVknbPOB2ANeG42QtuehJxy0rdnA3aWB0xmfQIvCuk7/60me
+         NDimCOrrjX3+s1Gz1KWHMWMy5Ia2/+aNmczc51UJVenvi1qoUh60P/QNoWUwJ/FB+1AJ
+         gGiUylI4iKXdYWFF5Zlwxdk9QhUkUBO5AgwX/XMzFoU7BupKmnNCcKxmQb9m8A7fl3aA
+         shdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696239834; x=1696844634;
+        d=1e100.net; s=20230601; t=1696240074; x=1696844874;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IDJtwog5v/98wuUqpM1mH1LIS964L7ubTthALakV0lQ=;
-        b=DuTuVylS97cAwNn6CmxU2fNzuiry7XSDU1idsstD0oouuSdxcRk4HqkLsi7UsiqxV9
-         AE5GExwHv0Q0CglrKV1TTxyyxOXGKAU7ighDwtc/oqEbgu2WcjMJ6sO0ajXaloGx4V5h
-         bO1rquzf6QuKPWyUUxp/iQHcUEMYctLhuD/xUHRDfkcBYh+PrUhp0SGJWAiwRMYZzvc0
-         XuRQhS5WgGjzIliN54v14AA5RebBSV9oDZ2JtrMbe+czfx+Anvqv18uNrgWnflPsB1DI
-         sa62vmT+GhiKXl8kgDZnLv4bTkymSxJeBHzdifXosUOGQeLIXUY5F7L45W5//sxpE4OM
-         MfXQ==
-X-Gm-Message-State: AOJu0Yy2MceISSJMckB/q7xuD/wfbm4aJwloo0kFPKkNSO3Su9wxziW1
-        Q3ZGrPDvajELx0K5siUclnwQ6g==
-X-Google-Smtp-Source: AGHT+IFDJ1pdz7d3aCdpPH84bhsr5wOgC+8mqxYbO63RQaT7bDlIIb68+ozW/YpcSpe7iV47HAyRRw==
-X-Received: by 2002:aa7:d51a:0:b0:522:30cc:a1f4 with SMTP id y26-20020aa7d51a000000b0052230cca1f4mr10020005edq.0.1696239834278;
-        Mon, 02 Oct 2023 02:43:54 -0700 (PDT)
-Received: from [192.168.86.24] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id j6-20020aa7ca46000000b0052889d090bfsm15286001edt.79.2023.10.02.02.43.53
+        bh=68CSLoMUk/xsQxJmYczMbK1aUNl1yG9wbG7lfg9/RhI=;
+        b=YeOrliSl53QADEO+ShIvqjvIk/hFOAY9Rh51EoR9ySvAD+XLyMoFL+TVVopExEnX/v
+         SQK/wOW0NgYnjaykdlEfVvyK9xm/LdNql3Bq+W1PlOIxmRT94XNAEsTgmyGeoPNDCOuo
+         P3UqxKvKB1AyFKdvHTnu4qBGS0wknB+lDM62GhU5oc8f5uebO61tKbnW4Z+E2tl8vIxI
+         qRHbEa+jb0Bjfuuo/pfOvDskqpmu8kOHrtr0u/75cb04hnaEh7NFBwwTXNQ1hWtJrXyX
+         oxeUXWKBuyZQtv3Yb5n0GYAOulvow7XJoH5IDN7lj2OPfZnH8U2gMBeoWIQy4q8K++Wv
+         p/Dg==
+X-Gm-Message-State: AOJu0Yx1tGn0BvxDQa1K/x9yndlF7zcGqOs0OOWMq+dqc0KO7o8DrHyX
+        zolaw6EJH3kg+/UgM05Zjs+BIg==
+X-Google-Smtp-Source: AGHT+IFB6wUw1P1R09s+FBtCrJG65I4cwdpFA9MfqSjU6aDZA99s8Ne+18Wsp42LniSmzSCz4sF4yA==
+X-Received: by 2002:a2e:9d50:0:b0:2c0:1eea:d9c0 with SMTP id y16-20020a2e9d50000000b002c01eead9c0mr7066747ljj.25.1696240074339;
+        Mon, 02 Oct 2023 02:47:54 -0700 (PDT)
+Received: from [172.30.204.164] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id x20-20020a2e7c14000000b002b6c61bac2esm5253876ljc.92.2023.10.02.02.47.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Oct 2023 02:43:53 -0700 (PDT)
-Message-ID: <d57e4cc3-7ecb-bff2-f0e7-1d2ddbfa35fe@linaro.org>
-Date:   Mon, 2 Oct 2023 10:43:52 +0100
+        Mon, 02 Oct 2023 02:47:53 -0700 (PDT)
+Message-ID: <77eff01f-082e-d7a7-2d6c-2abcc8665c59@linaro.org>
+Date:   Mon, 2 Oct 2023 11:47:52 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
  Thunderbird/102.15.1
-Subject: Re: [PATCH v2 1/5] misc: fastrpc: Add CRC support for remote buffers
+Subject: Re: [PATCH v11 13/13] arm64: dts: qcom: sa8540-ride: Enable first
+ port of tertiary usb controller
 Content-Language: en-US
-To:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     ekangupt@qti.qualcomm.com, gregkh@linuxfoundation.org,
-        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com
-References: <1695205890-21018-1-git-send-email-quic_ekangupt@quicinc.com>
- <1695205890-21018-2-git-send-email-quic_ekangupt@quicinc.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <1695205890-21018-2-git-send-email-quic_ekangupt@quicinc.com>
+To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Johan Hovold <johan@kernel.org>,
+        Mathias Nyman <mathias.nyman@intel.com>
+Cc:     linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
+        quic_jackp@quicinc.com, ahalaney@redhat.com,
+        quic_shazhuss@quicinc.com
+References: <20230828133033.11988-1-quic_kriskura@quicinc.com>
+ <20230828133033.11988-14-quic_kriskura@quicinc.com>
+ <f19fa545-0ccb-4670-af77-7c034b1016ef@linaro.org>
+ <e7bd3aa9-b8ee-4b8a-2354-e786f9a9ff47@quicinc.com>
+ <3920bc96-fe58-4e3b-96ab-706f00edb2ee@linaro.org>
+ <e7e4fc1e-661a-fd62-e8b1-1e173cbfcd3e@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <e7e4fc1e-661a-fd62-e8b1-1e173cbfcd3e@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,73 +95,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Ekansh,
-Thankyou for the patch,
 
-Looks like this series depends on Multi Mode series, can you include 
-them together.
 
---srini
-
-On 20/09/2023 11:31, Ekansh Gupta wrote:
-> CRC check for input and output argument helps in ensuring data
-> consistency over a remote call. If user intends to enable CRC check,
-> first local user CRC is calculated at user end and a CRC buffer is
-> passed to DSP to capture remote CRC values. DSP is expected to
-> write to the remote CRC buffer which is then compared at user level
-> with the local CRC values.
+On 9/14/23 17:45, Krishna Kurapati PSSNV wrote:
 > 
-> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-> ---
->   drivers/misc/fastrpc.c | 10 +++++++++-
->   1 file changed, 9 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 04eaf6c..337ec1f 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -610,6 +610,7 @@ static struct fastrpc_invoke_ctx *fastrpc_context_alloc(
->   	/* Released in fastrpc_context_put() */
->   	fastrpc_channel_ctx_get(cctx);
->   
-> +	ctx->crc = (u32 *)(uintptr_t)invoke->crc;
->   	ctx->sc = sc;
->   	ctx->retval = -1;
->   	ctx->pid = current->pid;
-> @@ -1063,6 +1064,7 @@ static int fastrpc_put_args(struct fastrpc_invoke_ctx *ctx,
->   	struct fastrpc_invoke_buf *list;
->   	struct fastrpc_phy_page *pages;
->   	u64 *fdlist;
-> +	u32 *crclist;
->   	int i, inbufs, outbufs, handles;
->   
->   	inbufs = REMOTE_SCALARS_INBUFS(ctx->sc);
-> @@ -1070,7 +1072,8 @@ static int fastrpc_put_args(struct fastrpc_invoke_ctx *ctx,
->   	handles = REMOTE_SCALARS_INHANDLES(ctx->sc) + REMOTE_SCALARS_OUTHANDLES(ctx->sc);
->   	list = fastrpc_invoke_buf_start(rpra, ctx->nscalars);
->   	pages = fastrpc_phy_page_start(list, ctx->nscalars);
-> -	fdlist = (uint64_t *)(pages + inbufs + outbufs + handles);
-> +	fdlist = (u64 *)(pages + inbufs + outbufs + handles);
-> +	crclist = (u32 *)(fdlist + FASTRPC_MAX_FDLIST);
->   
->   	for (i = inbufs; i < ctx->nbufs; ++i) {
->   		if (!ctx->maps[i]) {
-> @@ -1094,6 +1097,10 @@ static int fastrpc_put_args(struct fastrpc_invoke_ctx *ctx,
->   			fastrpc_map_put(mmap);
->   	}
->   
-> +	if (ctx->crc && crclist && rpra) {
-> +		if (copy_to_user((void __user *)ctx->crc, crclist, FASTRPC_MAX_CRCLIST * sizeof(u32)))
-> +			return -EFAULT;
-> +	}
->   	return 0;
->   }
->   
-> @@ -1706,6 +1713,7 @@ static int fastrpc_multimode_invoke(struct fastrpc_user *fl, char __user *argp)
->   
->   	switch (invoke.req) {
->   	case FASTRPC_INVOKE:
-> +	case FASTRPC_INVOKE_ENHANCED:
->   		/* nscalars is truncated here to max supported value */
->   		if (copy_from_user(&einv, (void __user *)(uintptr_t)invoke.invparam,
->   				   invoke.size))
+> On 9/13/2023 5:40 PM, Konrad Dybcio wrote:
+>> On 7.09.2023 05:36, Krishna Kurapati PSSNV wrote:
+>>>
+>>>
+>>>> Is there any benefit to removing the other ports?
+>>>>
+>>>> i.e. are ports 1-3 not parked properly by the dwc3 driver if
+>>>> they're never connected to anything?
+>>>>
+>>> Hi Konrad,
+>>>
+>>>   Whether or not the phy is connected to a port, the controller would 
+>>> modify the GUSB2PHYCFG/GUSB3PIPECTL registers. But if we don't 
+>>> specify only one phy and let phys from base DTSI take effect (4 HS / 
+>>> 2 SS), we would end up initializing and powering on phy's which are 
+>>> never connected to a port. To avoid that we need to specify only one 
+>>> phy for this platform.
+>> And does that have any major effect on power use?
+>>
+>> Do these PHYs not have some dormant/low power mode?
+>>
+> Hi Konrad,
+> 
+>   I believe there will be some minimal power use. IMO its best to keep 
+> only one phy enabled for this variant instead of giving all and 
+> initializing/powering-on all 4 of them.
+Okay let's not waste power..
+
+Konrad
