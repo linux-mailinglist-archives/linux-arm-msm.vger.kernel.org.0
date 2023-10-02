@@ -2,64 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 22BDA7B59AF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 20:11:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A9E497B59BD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 20:11:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231499AbjJBSCK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Oct 2023 14:02:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40598 "EHLO
+        id S235928AbjJBSI1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Oct 2023 14:08:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229600AbjJBSCI (ORCPT
+        with ESMTP id S235804AbjJBSIW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Oct 2023 14:02:08 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A2979B;
-        Mon,  2 Oct 2023 11:02:05 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-32320381a07so93577f8f.0;
-        Mon, 02 Oct 2023 11:02:05 -0700 (PDT)
+        Mon, 2 Oct 2023 14:08:22 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D0D5B7
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 11:08:19 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id d2e1a72fcca58-690f7d73a3aso56153b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 11:08:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696269724; x=1696874524; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zam6JpvTJFSRB7Mf1N6WASAM0s+ax1vMTASmJwGp/GQ=;
-        b=QS6ZD+uMxiya5EGaWSBQVsdE5heWfEHr1m/rv5WkvePRRelpkxM927XwulTiV9BJPc
-         iBzmZkl5SqqUE6/iOW2hAKLxibUcx2nrT1fjTVFRVUYaipBkaDCT/j/x8OPCuY6BX6ma
-         WO+OsLpZjijQ22stG2uIOD8nqJpGXdte4/u6PSrgjEBWkc9wlTUjxXuM9vxhm39n8oqr
-         HlAUhuCmZaSJo/LquYHldKttpEW8Cpx5uxgOKMAlU8IM9IN+XWbKSp7H8w31rfmmR2od
-         IaoxiPNuKfWVHKabRIrAs1YDDXtu45ctjjd9iVBLSWjI95MfvlVn3jTxqTpsf/mfnfh3
-         udKA==
+        d=chromium.org; s=google; t=1696270099; x=1696874899; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=muC7B8fW75NQ6UziQ28q/q7hcKRLv9QhdzwxKJUqnpg=;
+        b=G3NlaP3YaI91sck9zFTD2dJRDN4xk7xGcgoHcgRQhJHyFfSZmQlKFpPJM8vaz1/OlL
+         oRhGvuP3GCZ1FyiPv/a4GIA1NR2EIjtUaYPqVINl3afdPjiZtnLB7jOikks+iJiGf7xl
+         3wFxZrZDLPUypijXkv0SantcFE4TXC9L5QHVo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696269724; x=1696874524;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1696270099; x=1696874899;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zam6JpvTJFSRB7Mf1N6WASAM0s+ax1vMTASmJwGp/GQ=;
-        b=r2K3f4IV6g2P9bhQdB4lFjNtAodm4Iydg9DKwzB2XDNOnS29xThjZ8wNfXINcBr4Hz
-         TMLly3qVf6LYx1Vf53mTbv29OgEjgKNrdKcSMtBELc2MdPF4SbtahM2BGMJqGV53FkeC
-         uRpiaAuBrgeNvYn49grGnzZq1gQ2QNpjD9d8Rc072H2POr49m1E3qPaITMPv/QL+I/mv
-         +HtShjksG1JQX/sYvNym2KjCm6LZZEuZFrbmjpNse/j86BeHRQNV5gOvCeoQaOSYFZHE
-         jbgC/TM3v3s+Hy3T06y4QZxZQTDL8jsxU+5Fv4O+28p9MslYLqCSNKPchD4vWgkqCmYQ
-         Vvtg==
-X-Gm-Message-State: AOJu0Yw5B3yi/lDz8qCMB8AU7XkVXw81DEMqnWyfi8rhmufRDX1fT9vK
-        u0pAEXZRUUc18bcfgJoSHAY=
-X-Google-Smtp-Source: AGHT+IHXROz9dJDWlLZd0E9oyaIxp9J/Vso2ikdsfsbdxkJUFVX9OGXOEmAj9p/hMQ4gi+RMtS0pLQ==
-X-Received: by 2002:adf:d4c2:0:b0:317:ddd3:1aed with SMTP id w2-20020adfd4c2000000b00317ddd31aedmr10422745wrk.68.1696269723540;
-        Mon, 02 Oct 2023 11:02:03 -0700 (PDT)
-Received: from [10.254.108.106] (munvpn.amd.com. [165.204.72.6])
-        by smtp.gmail.com with ESMTPSA id g16-20020adfa490000000b003232380ffd5sm20650839wrb.106.2023.10.02.11.01.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Oct 2023 11:02:02 -0700 (PDT)
-Message-ID: <10644b5f-b0a7-85ef-0658-2353ee14df0d@gmail.com>
-Date:   Mon, 2 Oct 2023 20:01:57 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 0/9] drm: Annotate structs with __counted_by
-Content-Language: en-US
-To:     Kees Cook <keescook@chromium.org>,
-        Alex Deucher <alexdeucher@gmail.com>
-Cc:     David Airlie <airlied@gmail.com>,
+        bh=muC7B8fW75NQ6UziQ28q/q7hcKRLv9QhdzwxKJUqnpg=;
+        b=T8B+I2DDLvwx05YMycb/KjKxBtiISYAZlsS6GUS1SvUgP/EhtPukMGa8orzWG+A31+
+         9Usqe1Qb5mwDInkduLqIQA3qNUz0LEYL0UuFA2hXgXF8CzNk2dJ1bCRbjZa1Xmcumb2O
+         +9r5m4DKavsXGTjuTlXNPPWNms21Kxd+4en8FxYsgcnWYbxqndDENGH3Udb+dnzpweSP
+         bAWLfCs0DeLYn7qLXlu4qmXtA/pBcu1+uTJff+zdTi/m1uoP28Uq4uWa0aop3wjsBUCi
+         nmdoww6tVV9XUVxL80KFC8ajl3D5CEkWs0DRxyYPn6JhR/MdG/2UMtD8pEuDYcQHPsI4
+         Q6nA==
+X-Gm-Message-State: AOJu0Yzea72zY/P4AlDceM5w472miTYd0m5CIwO6zfN2WIcPrn4fwrUg
+        5JWFYumjXSOr+DVMw6Fu+xyyig==
+X-Google-Smtp-Source: AGHT+IGK/e2oSlCojI587t74YMxVHXLqvaWj0VPyFJA0HDYydaNO3UN+zUcs2ZUYssbDXqdQDti0TQ==
+X-Received: by 2002:a05:6a21:6d90:b0:162:d056:9f52 with SMTP id wl16-20020a056a216d9000b00162d0569f52mr13164891pzb.14.1696270098813;
+        Mon, 02 Oct 2023 11:08:18 -0700 (PDT)
+Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
+        by smtp.gmail.com with ESMTPSA id 22-20020aa79216000000b0068fb8e18971sm19824611pfo.130.2023.10.02.11.08.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Oct 2023 11:08:18 -0700 (PDT)
+Date:   Mon, 2 Oct 2023 11:08:16 -0700
+From:   Kees Cook <keescook@chromium.org>
+To:     Christian =?iso-8859-1?Q?K=F6nig?= 
+        <ckoenig.leichtzumerken@gmail.com>
+Cc:     Alex Deucher <alexdeucher@gmail.com>,
+        David Airlie <airlied@gmail.com>,
         "Pan, Xinhui" <Xinhui.Pan@amd.com>,
         Karol Herbst <kherbst@redhat.com>, Tom Rix <trix@redhat.com>,
         Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
@@ -107,108 +100,89 @@ Cc:     David Airlie <airlied@gmail.com>,
         Alex Deucher <alexander.deucher@amd.com>,
         Nirmoy Das <nirmoy.das@intel.com>,
         freedreno@lists.freedesktop.org,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
+        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
         Zack Rusin <zackr@vmware.com>, linux-hardening@vger.kernel.org
+Subject: Re: [PATCH 0/9] drm: Annotate structs with __counted_by
+Message-ID: <202310021107.9BB46FB8E@keescook>
 References: <20230922173110.work.084-kees@kernel.org>
  <169601600138.3014939.8511343741428844249.b4-ty@chromium.org>
  <83cd056c-52ae-01dd-7576-42d41da64c26@gmail.com>
  <CADnq5_Ma2CrLYggJHKFEObsNmUoqJwb2p1xai5DfL=m43U6zEA@mail.gmail.com>
  <202310020952.E7DE0948C0@keescook>
-From:   =?UTF-8?Q?Christian_K=c3=b6nig?= <ckoenig.leichtzumerken@gmail.com>
-In-Reply-To: <202310020952.E7DE0948C0@keescook>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <10644b5f-b0a7-85ef-0658-2353ee14df0d@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <10644b5f-b0a7-85ef-0658-2353ee14df0d@gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Am 02.10.23 um 18:53 schrieb Kees Cook:
-> On Mon, Oct 02, 2023 at 11:06:19AM -0400, Alex Deucher wrote:
->> On Mon, Oct 2, 2023 at 5:20 AM Christian König
->> <ckoenig.leichtzumerken@gmail.com> wrote:
->>> Am 29.09.23 um 21:33 schrieb Kees Cook:
->>>> On Fri, 22 Sep 2023 10:32:05 -0700, Kees Cook wrote:
->>>>> This is a batch of patches touching drm for preparing for the coming
->>>>> implementation by GCC and Clang of the __counted_by attribute. Flexible
->>>>> array members annotated with __counted_by can have their accesses
->>>>> bounds-checked at run-time checking via CONFIG_UBSAN_BOUNDS (for array
->>>>> indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family functions).
->>>>>
->>>>> As found with Coccinelle[1], add __counted_by to structs that would
->>>>> benefit from the annotation.
->>>>>
->>>>> [...]
->>>> Since this got Acks, I figure I should carry it in my tree. Let me know
->>>> if this should go via drm instead.
->>>>
->>>> Applied to for-next/hardening, thanks!
->>>>
->>>> [1/9] drm/amd/pm: Annotate struct smu10_voltage_dependency_table with __counted_by
->>>>         https://git.kernel.org/kees/c/a6046ac659d6
->>> STOP! In a follow up discussion Alex and I figured out that this won't work.
-> I'm so confused; from the discussion I saw that Alex said both instances
-> were false positives?
->
->>> The value in the structure is byte swapped based on some firmware
->>> endianness which not necessary matches the CPU endianness.
->> SMU10 is APU only so the endianess of the SMU firmware and the CPU
->> will always match.
-> Which I think is what is being said here?
->
->>> Please revert that one from going upstream if it's already on it's way.
->>>
->>> And because of those reasons I strongly think that patches like this
->>> should go through the DRM tree :)
-> Sure, that's fine -- please let me know. It was others Acked/etc. Who
-> should carry these patches?
+On Mon, Oct 02, 2023 at 08:01:57PM +0200, Christian König wrote:
+> Am 02.10.23 um 18:53 schrieb Kees Cook:
+> > On Mon, Oct 02, 2023 at 11:06:19AM -0400, Alex Deucher wrote:
+> > > On Mon, Oct 2, 2023 at 5:20 AM Christian König
+> > > <ckoenig.leichtzumerken@gmail.com> wrote:
+> > > > Am 29.09.23 um 21:33 schrieb Kees Cook:
+> > > > > On Fri, 22 Sep 2023 10:32:05 -0700, Kees Cook wrote:
+> > > > > > This is a batch of patches touching drm for preparing for the coming
+> > > > > > implementation by GCC and Clang of the __counted_by attribute. Flexible
+> > > > > > array members annotated with __counted_by can have their accesses
+> > > > > > bounds-checked at run-time checking via CONFIG_UBSAN_BOUNDS (for array
+> > > > > > indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family functions).
+> > > > > > 
+> > > > > > As found with Coccinelle[1], add __counted_by to structs that would
+> > > > > > benefit from the annotation.
+> > > > > > 
+> > > > > > [...]
+> > > > > Since this got Acks, I figure I should carry it in my tree. Let me know
+> > > > > if this should go via drm instead.
+> > > > > 
+> > > > > Applied to for-next/hardening, thanks!
+> > > > > 
+> > > > > [1/9] drm/amd/pm: Annotate struct smu10_voltage_dependency_table with __counted_by
+> > > > >         https://git.kernel.org/kees/c/a6046ac659d6
+> > > > STOP! In a follow up discussion Alex and I figured out that this won't work.
+> > I'm so confused; from the discussion I saw that Alex said both instances
+> > were false positives?
+> > 
+> > > > The value in the structure is byte swapped based on some firmware
+> > > > endianness which not necessary matches the CPU endianness.
+> > > SMU10 is APU only so the endianess of the SMU firmware and the CPU
+> > > will always match.
+> > Which I think is what is being said here?
+> > 
+> > > > Please revert that one from going upstream if it's already on it's way.
+> > > > 
+> > > > And because of those reasons I strongly think that patches like this
+> > > > should go through the DRM tree :)
+> > Sure, that's fine -- please let me know. It was others Acked/etc. Who
+> > should carry these patches?
+> 
+> Probably best if the relevant maintainer pick them up individually.
+> 
+> Some of those structures are filled in by firmware/hardware and only the
+> maintainers can judge if that value actually matches what the compiler
+> needs.
+> 
+> We have cases where individual bits are used as flags or when the size is
+> byte swapped etc...
+> 
+> Even Alex and I didn't immediately say how and where that field is actually
+> used and had to dig that up. That's where the confusion came from.
 
-Probably best if the relevant maintainer pick them up individually.
+Okay, I've dropped them all from my tree. Several had Acks/Reviews, so
+hopefully those can get picked up for the DRM tree?
 
-Some of those structures are filled in by firmware/hardware and only the 
-maintainers can judge if that value actually matches what the compiler 
-needs.
+Thanks!
 
-We have cases where individual bits are used as flags or when the size 
-is byte swapped etc...
+-Kees
 
-Even Alex and I didn't immediately say how and where that field is 
-actually used and had to dig that up. That's where the confusion came from.
-
-Regards,
-Christian.
-
->
-> Thanks!
->
-> -Kees
->
->
->>> Regards,
->>> Christian.
->>>
->>>> [2/9] drm/amdgpu/discovery: Annotate struct ip_hw_instance with __counted_by
->>>>         https://git.kernel.org/kees/c/4df33089b46f
->>>> [3/9] drm/i915/selftests: Annotate struct perf_series with __counted_by
->>>>         https://git.kernel.org/kees/c/ffd3f823bdf6
->>>> [4/9] drm/msm/dpu: Annotate struct dpu_hw_intr with __counted_by
->>>>         https://git.kernel.org/kees/c/2de35a989b76
->>>> [5/9] drm/nouveau/pm: Annotate struct nvkm_perfdom with __counted_by
->>>>         https://git.kernel.org/kees/c/188aeb08bfaa
->>>> [6/9] drm/vc4: Annotate struct vc4_perfmon with __counted_by
->>>>         https://git.kernel.org/kees/c/59a54dc896c3
->>>> [7/9] drm/virtio: Annotate struct virtio_gpu_object_array with __counted_by
->>>>         https://git.kernel.org/kees/c/5cd476de33af
->>>> [8/9] drm/vmwgfx: Annotate struct vmw_surface_dirty with __counted_by
->>>>         https://git.kernel.org/kees/c/b426f2e5356a
->>>> [9/9] drm/v3d: Annotate struct v3d_perfmon with __counted_by
->>>>         https://git.kernel.org/kees/c/dc662fa1b0e4
->>>>
->>>> Take care,
->>>>
-
+-- 
+Kees Cook
