@@ -2,172 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1ADFB7B5A1C
+	by mail.lfdr.de (Postfix) with ESMTP id 6EB467B5A1D
 	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 20:34:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238756AbjJBSS4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Oct 2023 14:18:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43086 "EHLO
+        id S238763AbjJBSW3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Oct 2023 14:22:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238745AbjJBSSz (ORCPT
+        with ESMTP id S235799AbjJBSW2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Oct 2023 14:18:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2488AA9
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 11:18:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1696270686;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=JTHelUlse8IqAMEkn3+OwaSpVuDEvR+XOh2gu1M9D5c=;
-        b=NAE03PTak9OCw/qUqieFOvDzGxQLGcSqI08e7sucC8ApT6jjSkYWCta3KEDuyTCSUTS/yb
-        K0wp5OS0n7lHA0csJ2BLHtPPhNCy2g3amORZzr/J7AUXGSxOINDKaZrgIN5t6sEcd4mwns
-        zVMsk+fNMEwUa5I/X9FwsK7iCj4rKro=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-269-nlPig_G1PL6ZOBaxA6FkTA-1; Mon, 02 Oct 2023 14:18:05 -0400
-X-MC-Unique: nlPig_G1PL6ZOBaxA6FkTA-1
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-774294bde69so901585a.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 11:18:05 -0700 (PDT)
+        Mon, 2 Oct 2023 14:22:28 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F4180C6
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Oct 2023 11:22:24 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id 41be03b00d2f7-578a62c088cso2389955a12.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Oct 2023 11:22:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1696270944; x=1696875744; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=6vMwsjYrlAei3Hxc6ZjjNt+EO9kZEbPnxPSvxjTe6qw=;
+        b=cPlNc38yrERG6xjKCfIraTaao/KlIj/KqDXcZ+eR8xsGpq4GvIIuW7ZTHzSlBJ3q5i
+         lys/rxdMdSAT2eV3/DTnuqfKOJ6NGaYGWxFaM45hSNrzbZg55INaSB4qnqonvuv9rajl
+         KfeUJlJhYhno4DOltLrXaFX8GBxNs3VhyvXXk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696270684; x=1696875484;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JTHelUlse8IqAMEkn3+OwaSpVuDEvR+XOh2gu1M9D5c=;
-        b=fjOOAAytSNIDkGBBe1P6zuamqx0E9yU7cHPY6U/H2P8eNouKfCyeisLDz0shXbf79y
-         qfqrrgJlixY7Fi/avy+dtaIS6OdQM2RyyesLhTytW3jn3r4a/LJz653tR+Yua0EOxmzS
-         dnhkbd4UAL90WFy3euUmp3/jp0y324z7QaU/BmB5upa1BkryyUAUK7dsUPHLQnP23or0
-         d9aVppXC+HeQhSdtMWsgDrVi4ad1kGBILljs4znoOP5kpdc/ZBQ2K3WDyCZqqCDI89fi
-         vV6L/0BBEJ5YbybZz+dWPHJE7tok/tTqa2I5cHc8sNGRd8EbPXMZUsU3qJPglD4s49QW
-         kzRg==
-X-Gm-Message-State: AOJu0Yxz2m2hDxLr/EoFi+lSv9bl+KGBj9CqS2/UMjEQPD+1d1rnKJyf
-        u1M+0/co4QmSZYTRCSLpk9Zn5vkxxkRfqCGhAKSwHuaB1wCN4QU9P6YnIhOUjAXpIjg2LIG1B9k
-        subAKLZ7fYbr0PhjV4b2ET8UwuXjs6prTIg==
-X-Received: by 2002:a05:620a:4090:b0:76c:ae1f:201e with SMTP id f16-20020a05620a409000b0076cae1f201emr539274qko.27.1696270684166;
-        Mon, 02 Oct 2023 11:18:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFjEc7izGr0GyD8cKh/uiIXCkEVxKgvtniJXa7m5bt13+TPqrNIMC8w/At/Vr4WizGwvTagDA==
-X-Received: by 2002:a05:620a:4090:b0:76c:ae1f:201e with SMTP id f16-20020a05620a409000b0076cae1f201emr539250qko.27.1696270683850;
-        Mon, 02 Oct 2023 11:18:03 -0700 (PDT)
-Received: from brian-x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
-        by smtp.gmail.com with ESMTPSA id ld7-20020a056214418700b0065d89f4d537sm3313105qvb.45.2023.10.02.11.18.02
+        d=1e100.net; s=20230601; t=1696270944; x=1696875744;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6vMwsjYrlAei3Hxc6ZjjNt+EO9kZEbPnxPSvxjTe6qw=;
+        b=hgD6P6fLR3CCgLlmcT3tRTDkru5KWtJaREfCjMDidrAkJ6DUQNm0lP7GfkQsa+H7WD
+         JDNfEU8dSh1SCnixJtL0ifVuvx94+mzEotQzy/w1rExi9C3TOrO+LBHV2qgWpIU2b1U8
+         NoylHLkNuOg340Z/s2Li2+hZ65vrtRugsbGChrZSiNH9VFlYWTNBt8p4iUjV728FQu8n
+         0bj6bwZNqs3FQ84R8Lt0to6zOw4q9Js1dktbSYRgA+RKfMn+ui9SRA/iUGQlwJsglkRd
+         mYVQWcM2CK1lznjzam9sLM1Gu8R62lq7S9Hl03TPWZii3xu02lMTRYcSVpL9Q89O5urT
+         ZQlw==
+X-Gm-Message-State: AOJu0YzktgN+PABGsQf10vieVN7Gigkr3JLoEjAc189H7aJhLR0d59qc
+        1kDkdISQFMqrA24xwNXKIrhLEw==
+X-Google-Smtp-Source: AGHT+IFN44X3NT3rmon5KyimO6IH657T1P2k+qKM5XXdV6IMP4cnvC0Xx05CvgoaqkelMPJSCwLVWA==
+X-Received: by 2002:a17:90b:4414:b0:274:cf7e:f11c with SMTP id hx20-20020a17090b441400b00274cf7ef11cmr529470pjb.19.1696270944438;
+        Mon, 02 Oct 2023 11:22:24 -0700 (PDT)
+Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
+        by smtp.gmail.com with ESMTPSA id ml24-20020a17090b361800b00262e485156esm6569943pjb.57.2023.10.02.11.22.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Oct 2023 11:18:02 -0700 (PDT)
-Date:   Mon, 2 Oct 2023 14:18:01 -0400
-From:   Brian Masney <bmasney@redhat.com>
-To:     Nikunj Kela <quic_nkela@quicinc.com>
-Cc:     sudeep.holla@arm.com, cristian.marussi@arm.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 1/4] firmware: arm_scmi: Add polling support for
- completion in smc
-Message-ID: <ZRsJWdZVMc+F5ZgF@brian-x1>
-References: <20230718160833.36397-1-quic_nkela@quicinc.com>
- <20230911194359.27547-1-quic_nkela@quicinc.com>
- <20230911194359.27547-2-quic_nkela@quicinc.com>
+        Mon, 02 Oct 2023 11:22:23 -0700 (PDT)
+Date:   Mon, 2 Oct 2023 11:22:22 -0700
+From:   Kees Cook <keescook@chromium.org>
+To:     Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>
+Cc:     Christian =?iso-8859-1?Q?K=F6nig?= 
+        <ckoenig.leichtzumerken@gmail.com>,
+        Alex Deucher <alexdeucher@gmail.com>,
+        David Airlie <airlied@gmail.com>,
+        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
+        Karol Herbst <kherbst@redhat.com>, Tom Rix <trix@redhat.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        dri-devel@lists.freedesktop.org,
+        Chris Wilson <chris@chris-wilson.co.uk>,
+        Prike Liang <Prike.Liang@amd.com>,
+        Huang Rui <ray.huang@amd.com>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Matthew Brost <matthew.brost@intel.com>,
+        Evan Quan <evan.quan@amd.com>, Emma Anholt <emma@anholt.net>,
+        amd-gfx@lists.freedesktop.org,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Lijo Lazar <lijo.lazar@amd.com>,
+        VMware Graphics Reviewers 
+        <linux-graphics-maintainer@vmware.com>,
+        Ben Skeggs <bskeggs@redhat.com>,
+        Andi Shyti <andi.shyti@linux.intel.com>,
+        nouveau@lists.freedesktop.org, David Airlie <airlied@redhat.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Chia-I Wu <olvaffe@gmail.com>, llvm@lists.linux.dev,
+        Yifan Zhang <yifan1.zhang@amd.com>,
+        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        Kevin Wang <kevin1.wang@amd.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Nathan Chancellor <nathan@kernel.org>, Le Ma <le.ma@amd.com>,
+        Gurchetan Singh <gurchetansingh@chromium.org>,
+        Maxime Ripard <mripard@kernel.org>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        virtualization@lists.linux-foundation.org,
+        Sean Paul <sean@poorly.run>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Xiaojian Du <Xiaojian.Du@amd.com>, Lang Yu <Lang.Yu@amd.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Tejas Upadhyay <tejas.upadhyay@intel.com>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        linux-kernel@vger.kernel.org,
+        Hawking Zhang <Hawking.Zhang@amd.com>,
+        Rob Clark <robdclark@gmail.com>, Melissa Wen <mwen@igalia.com>,
+        John Harrison <john.c.harrison@intel.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Nirmoy Das <nirmoy.das@intel.com>,
+        freedreno@lists.freedesktop.org, Zack Rusin <zackr@vmware.com>,
+        linux-hardening@vger.kernel.org
+Subject: Re: [PATCH 0/9] drm: Annotate structs with __counted_by
+Message-ID: <202310021122.B6DA850FB0@keescook>
+References: <20230922173110.work.084-kees@kernel.org>
+ <169601600138.3014939.8511343741428844249.b4-ty@chromium.org>
+ <83cd056c-52ae-01dd-7576-42d41da64c26@gmail.com>
+ <CADnq5_Ma2CrLYggJHKFEObsNmUoqJwb2p1xai5DfL=m43U6zEA@mail.gmail.com>
+ <202310020952.E7DE0948C0@keescook>
+ <10644b5f-b0a7-85ef-0658-2353ee14df0d@gmail.com>
+ <202310021107.9BB46FB8E@keescook>
+ <0be2dfa4-b6c1-f62a-66e1-615da7aa3c76@amd.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230911194359.27547-2-quic_nkela@quicinc.com>
-User-Agent: Mutt/2.2.9 (2022-11-12)
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <0be2dfa4-b6c1-f62a-66e1-615da7aa3c76@amd.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_WEB,SPF_HELO_NONE,
-        SPF_NONE autolearn=no autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 11, 2023 at 12:43:56PM -0700, Nikunj Kela wrote:
-> Currently, the return from the smc call assumes the completion of
-> the scmi request. However this may not be true in virtual platforms
-> that are using hvc doorbell.
+On Mon, Oct 02, 2023 at 08:11:41PM +0200, Christian König wrote:
+> Am 02.10.23 um 20:08 schrieb Kees Cook:
+> > On Mon, Oct 02, 2023 at 08:01:57PM +0200, Christian König wrote:
+> > > Am 02.10.23 um 18:53 schrieb Kees Cook:
+> > > > On Mon, Oct 02, 2023 at 11:06:19AM -0400, Alex Deucher wrote:
+> > > > > On Mon, Oct 2, 2023 at 5:20 AM Christian König
+> > > > > <ckoenig.leichtzumerken@gmail.com> wrote:
+> > > > > > Am 29.09.23 um 21:33 schrieb Kees Cook:
+> > > > > > > On Fri, 22 Sep 2023 10:32:05 -0700, Kees Cook wrote:
+> > > > > > > > This is a batch of patches touching drm for preparing for the coming
+> > > > > > > > implementation by GCC and Clang of the __counted_by attribute. Flexible
+> > > > > > > > array members annotated with __counted_by can have their accesses
+> > > > > > > > bounds-checked at run-time checking via CONFIG_UBSAN_BOUNDS (for array
+> > > > > > > > indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family functions).
+> > > > > > > > 
+> > > > > > > > As found with Coccinelle[1], add __counted_by to structs that would
+> > > > > > > > benefit from the annotation.
+> > > > > > > > 
+> > > > > > > > [...]
+> > > > > > > Since this got Acks, I figure I should carry it in my tree. Let me know
+> > > > > > > if this should go via drm instead.
+> > > > > > > 
+> > > > > > > Applied to for-next/hardening, thanks!
+> > > > > > > 
+> > > > > > > [1/9] drm/amd/pm: Annotate struct smu10_voltage_dependency_table with __counted_by
+> > > > > > >          https://git.kernel.org/kees/c/a6046ac659d6
+> > > > > > STOP! In a follow up discussion Alex and I figured out that this won't work.
+> > > > I'm so confused; from the discussion I saw that Alex said both instances
+> > > > were false positives?
+> > > > 
+> > > > > > The value in the structure is byte swapped based on some firmware
+> > > > > > endianness which not necessary matches the CPU endianness.
+> > > > > SMU10 is APU only so the endianess of the SMU firmware and the CPU
+> > > > > will always match.
+> > > > Which I think is what is being said here?
+> > > > 
+> > > > > > Please revert that one from going upstream if it's already on it's way.
+> > > > > > 
+> > > > > > And because of those reasons I strongly think that patches like this
+> > > > > > should go through the DRM tree :)
+> > > > Sure, that's fine -- please let me know. It was others Acked/etc. Who
+> > > > should carry these patches?
+> > > Probably best if the relevant maintainer pick them up individually.
+> > > 
+> > > Some of those structures are filled in by firmware/hardware and only the
+> > > maintainers can judge if that value actually matches what the compiler
+> > > needs.
+> > > 
+> > > We have cases where individual bits are used as flags or when the size is
+> > > byte swapped etc...
+> > > 
+> > > Even Alex and I didn't immediately say how and where that field is actually
+> > > used and had to dig that up. That's where the confusion came from.
+> > Okay, I've dropped them all from my tree. Several had Acks/Reviews, so
+> > hopefully those can get picked up for the DRM tree?
 > 
-> This change adds a Kconfig to enable the polling for the request
-> completion.
+> I will pick those up to go through drm-misc-next.
 > 
-> Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
-> ---
->  drivers/firmware/arm_scmi/Kconfig | 14 ++++++++++++++
->  drivers/firmware/arm_scmi/smc.c   | 15 ++++++++++++++-
->  2 files changed, 28 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/firmware/arm_scmi/Kconfig b/drivers/firmware/arm_scmi/Kconfig
-> index ea0f5083ac47..771d60f8319f 100644
-> --- a/drivers/firmware/arm_scmi/Kconfig
-> +++ b/drivers/firmware/arm_scmi/Kconfig
-> @@ -125,6 +125,20 @@ config ARM_SCMI_TRANSPORT_SMC_ATOMIC_ENABLE
->  	  in atomic context too, at the price of using a number of busy-waiting
->  	  primitives all over instead. If unsure say N.
->  
-> +config ARM_SCMI_TRANSPORT_SMC_POLL_COMPLETION
-> +	bool "Enable polling support for SCMI SMC transport"
-> +	depends on ARM_SCMI_TRANSPORT_SMC
-> +	help
-> +	  Enable completion polling support for SCMI SMC based transport.
-> +
-> +	  If you want the SCMI SMC based transport to poll for the completion,
-> +	  answer Y.
-> +	  Enabling completion polling might be desired in the absence of the a2p
-> +	  irq when the return from smc/hvc call doesn't indicate the completion
-> +	  of the SCMI requests. This might be useful for instances used in
-> +	  virtual platforms.
-> +	  If unsure say N.
-> +
->  config ARM_SCMI_TRANSPORT_VIRTIO
->  	bool "SCMI transport based on VirtIO"
->  	depends on VIRTIO=y || VIRTIO=ARM_SCMI_PROTOCOL
-> diff --git a/drivers/firmware/arm_scmi/smc.c b/drivers/firmware/arm_scmi/smc.c
-> index c193516a254d..0a0b7e401159 100644
-> --- a/drivers/firmware/arm_scmi/smc.c
-> +++ b/drivers/firmware/arm_scmi/smc.c
-> @@ -250,6 +250,16 @@ static void smc_mark_txdone(struct scmi_chan_info *cinfo, int ret,
->  	smc_channel_lock_release(scmi_info);
->  }
->  
-> +#ifdef CONFIG_ARM_SCMI_TRANSPORT_SMC_POLL_COMPLETION
-> +static bool
-> +smc_poll_done(struct scmi_chan_info *cinfo, struct scmi_xfer *xfer)
-> +{
-> +	struct scmi_smc *scmi_info = cinfo->transport_info;
-> +
-> +	return shmem_poll_done(scmi_info->shmem, xfer);
-> +}
-> +#endif
-> +
->  static const struct scmi_transport_ops scmi_smc_ops = {
->  	.chan_available = smc_chan_available,
->  	.chan_setup = smc_chan_setup,
-> @@ -257,6 +267,9 @@ static const struct scmi_transport_ops scmi_smc_ops = {
->  	.send_message = smc_send_message,
->  	.mark_txdone = smc_mark_txdone,
->  	.fetch_response = smc_fetch_response,
-> +#ifdef CONFIG_ARM_SCMI_TRANSPORT_SMC_POLL_COMPLETION
-> +	.poll_done = smc_poll_done,
-> +#endif
->  };
->  
->  const struct scmi_desc scmi_smc_desc = {
-> @@ -272,6 +285,6 @@ const struct scmi_desc scmi_smc_desc = {
->  	 * for the issued command will be immmediately ready to be fetched
->  	 * from the shared memory area.
->  	 */
-> -	.sync_cmds_completed_on_ret = true,
-> +	.sync_cmds_completed_on_ret = !IS_ENABLED(CONFIG_ARM_SCMI_TRANSPORT_SMC_POLL_COMPLETION),
->  	.atomic_enabled = IS_ENABLED(CONFIG_ARM_SCMI_TRANSPORT_SMC_ATOMIC_ENABLE),
+> Going to ping maintainers once more when I'm not sure if stuff is correct or
+> not.
 
-From a Linux distributor viewpoint, it would be nice if this was
-determined at runtime, rather than at compile time. We generate a single
-kernel binary that's used on systems from multiple hardware
-manufacturers. We'd run into an issue if one company required this, but
-another one didn't. We may potentially run into this same type of issue
-with the upstream arm64 defconfig.
+Sounds great; thanks!
 
-Brian
+-Kees
 
+-- 
+Kees Cook
