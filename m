@@ -2,114 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 481507B499E
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Oct 2023 22:57:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C1C67B4B8E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Oct 2023 08:40:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235346AbjJAU5t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 1 Oct 2023 16:57:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50334 "EHLO
+        id S235544AbjJBGkR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Oct 2023 02:40:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231727AbjJAU5t (ORCPT
+        with ESMTP id S235530AbjJBGkR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 1 Oct 2023 16:57:49 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F19F4BD;
-        Sun,  1 Oct 2023 13:57:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1696193867; x=1727729867;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=758DrSEcuFaG2JVSDrnKrxCHgbC5DHZC/ey5mhM5Dx0=;
-  b=H2OOruPZnha5kZzTjWSDW+Sww0gesDJ5HRLRSeCpJ5xjuNN6zCME5UPY
-   LbxgUlQt4JEm6o75jKa9u4/N5b4v1YfwBw+OC8PNAsHWAle2XiuF6HhXv
-   MVW4niMxRq4Jlxfufrjq+olMU/ANIa9/E41qjr+LKNUlrTNvcnYKbRqt1
-   BIeUcintNMIGdqd1ydQc1363DlaYZckHgmS/uvFqSCJnRQeEwxrrVJ9qJ
-   SqFG0EAZGcqWDBK067Swv7vFWp10W/+ZPFZs4XTsDMnGrhJVZoKYUFEdH
-   Pe9ikdSOxbrWQT1weQ9QsZsfLRiy6/20fNCuHEvd0WjIrg6ix4Dm2BoOt
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10850"; a="372902409"
-X-IronPort-AV: E=Sophos;i="6.03,191,1694761200"; 
-   d="scan'208";a="372902409"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Oct 2023 13:57:46 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10850"; a="785612314"
-X-IronPort-AV: E=Sophos;i="6.03,191,1694761200"; 
-   d="scan'208";a="785612314"
-Received: from lkp-server02.sh.intel.com (HELO c3b01524d57c) ([10.239.97.151])
-  by orsmga001.jf.intel.com with ESMTP; 01 Oct 2023 13:57:43 -0700
-Received: from kbuild by c3b01524d57c with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1qn3VT-0005Ow-0Z;
-        Sun, 01 Oct 2023 20:57:39 +0000
-Date:   Mon, 2 Oct 2023 04:56:33 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        dmitry.baryshkov@linaro.org
-Cc:     oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Rohit Agarwal <quic_rohiagar@quicinc.com>
-Subject: Re: [PATCH v2 1/3] arm64: dts: qcom: Add interconnect nodes for SDX75
-Message-ID: <202310020405.aU033fMG-lkp@intel.com>
-References: <1695720564-2978-2-git-send-email-quic_rohiagar@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1695720564-2978-2-git-send-email-quic_rohiagar@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+        Mon, 2 Oct 2023 02:40:17 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F3A1B4
+        for <linux-arm-msm@vger.kernel.org>; Sun,  1 Oct 2023 23:40:13 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-9b27bc8b65eso1617863366b.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 01 Oct 2023 23:40:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1696228812; x=1696833612; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zc23Ml6s281iYcprl/tAvfX+YAKmlfawnLlUSvbGAsw=;
+        b=a9aI1P6cq7Ijpu1/FDHEklBYUmNXr3T7UGImQIyyMhbvVWCeILBsLX9eY2XXb5fODg
+         SWFxzRH3i+ycc50g9+QEai8wNguZm4zAcd/B9O/zvggFkSfphnAyF++6s0+CavagEX5g
+         6knrqzB9C9ZpvZ3ReACWO7yhli9cpAC5cotlYOqprWqUzqfo5yrNH0giZ2VOlzAULXj9
+         UFgksZzSmzZVXnu81TfwhF40BXOZqd12vn7xJOyNXnj15glQpsgVbTiOW51lePFRCXty
+         elzJs4CadfuzxGUaUqk3Mu7TqdNrIfduy8PdqQeHgpNVrHl2+C/QNxhQZbjG+QRQtlqp
+         mtUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696228812; x=1696833612;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=zc23Ml6s281iYcprl/tAvfX+YAKmlfawnLlUSvbGAsw=;
+        b=qH1xNo/9NAvl3UoeLQ1v1N6hHwSvjCFqfu70ZCZ96vAzpQK54vl3WZudDMD0rS81KI
+         FKxCDz8RPg5omm3qncbGKc0K/L3d3SQE+NYeLuJxpyk6DB8wsJWj5Qys8mvQcWuQ8fdw
+         PqS0i6FTVR0lh5kygqvRXQXsjF2yTFo2o24XmoGwUY5XOMyK45Z4voSiZq4dzi+Oqf3e
+         G/7k5QgrTd6a5pRgbHfYYm0yqCpiBQJkn18sZuGT/DckusTkuna+Rxo3yv+K77ZpLmDG
+         Sdgbf/WXhnoxvnhQMzeMmLrW5/5Kr4+21Xs1myYYtcCwPRiP7a8mINgtCDiRFqnSaBrA
+         s6Uw==
+X-Gm-Message-State: AOJu0YyuBWZP4KPA1SKk+ZgbtrrSTO2zurH+eIH/Z3b6gkIeYQ4IK6P3
+        NmGOzW4O0rKcVSn8kRQjTRVQFw==
+X-Google-Smtp-Source: AGHT+IEbfMSd1KQGutXy0/VQkgg3rL0bTo/Rz41LYjg+kFwRNU61ZSgXer1jAT8aCtRG/RaEmdxrSw==
+X-Received: by 2002:a17:906:311b:b0:9a2:28dc:4168 with SMTP id 27-20020a170906311b00b009a228dc4168mr8602028ejx.61.1696228811729;
+        Sun, 01 Oct 2023 23:40:11 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id kg28-20020a17090776fc00b0099b921de301sm16491457ejc.159.2023.10.01.23.40.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 01 Oct 2023 23:40:11 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Mon, 02 Oct 2023 08:40:10 +0200
+Message-Id: <CVXQXI5E053J.386OVO28LNSYT@otso>
+Cc:     <~postmarketos/upstreaming@lists.sr.ht>,
+        <phone-devel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 1/2] dt-bindings: mfd: qcom,spmi-pmic: Update gpio
+ example
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
+        "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        "Lee Jones" <lee@kernel.org>, "Rob Herring" <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        "Conor Dooley" <conor+dt@kernel.org>,
+        "Stephen Boyd" <sboyd@kernel.org>
+X-Mailer: aerc 0.15.2
+References: <20230929-pm7250b-gpio-fixup-v1-0-ef68543c1d3b@fairphone.com>
+ <20230929-pm7250b-gpio-fixup-v1-1-ef68543c1d3b@fairphone.com>
+ <510d6407-8033-4f2e-aabf-bd3fb84875a9@linaro.org>
+In-Reply-To: <510d6407-8033-4f2e-aabf-bd3fb84875a9@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rohit,
+On Sat Sep 30, 2023 at 5:06 PM CEST, Krzysztof Kozlowski wrote:
+> On 29/09/2023 10:17, Luca Weiss wrote:
+> > As per commit ea25d61b448a ("arm64: dts: qcom: Use plural _gpios node
+> > label for PMIC gpios") all dts files now use the plural _gpios instead
+> > of the singular _gpio as label. Update the schema example also to match=
+.
+> >=20
+> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> > ---
+> >  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
+> >=20
+> > diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml =
+b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> > index 55e931ba5b47..e4842e1fbd65 100644
+> > --- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> > +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> > @@ -245,7 +245,7 @@ examples:
+> >              #address-cells =3D <1>;
+> >              #size-cells =3D <0>;
+> > =20
+> > -            pmi8998_gpio: gpio@c000 {
+> > +            pmi8998_gpios: gpio@c000=20
+>
+> This does no=C2=A0make sense... you update label only here, but not in an=
+y
+> user of it which proves that label is not used. If it is not used, it
+> should be dropped, not changed...
 
-kernel test robot noticed the following build errors:
+Okay, I will drop the label instead of updating it in v2.
 
-[auto build test ERROR on robh/for-next]
-[also build test ERROR on linus/master v6.6-rc3 next-20230929]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Regards
+Luca
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Rohit-Agarwal/arm64-dts-qcom-Add-interconnect-nodes-for-SDX75/20230926-173336
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-patch link:    https://lore.kernel.org/r/1695720564-2978-2-git-send-email-quic_rohiagar%40quicinc.com
-patch subject: [PATCH v2 1/3] arm64: dts: qcom: Add interconnect nodes for SDX75
-config: arm64-randconfig-002-20230930 (https://download.01.org/0day-ci/archive/20231002/202310020405.aU033fMG-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231002/202310020405.aU033fMG-lkp@intel.com/reproduce)
+>
+> Best regards,
+> Krzysztof
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202310020405.aU033fMG-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   In file included from arch/arm64/boot/dts/qcom/sdx75-idp.dts:9:
->> arch/arm64/boot/dts/qcom/sdx75.dtsi:11:10: fatal error: dt-bindings/interconnect/qcom,sdx75.h: No such file or directory
-      11 | #include <dt-bindings/interconnect/qcom,sdx75.h>
-         |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   compilation terminated.
-
-
-vim +11 arch/arm64/boot/dts/qcom/sdx75.dtsi
-
-  > 11	#include <dt-bindings/interconnect/qcom,sdx75.h>
-    12	#include <dt-bindings/interrupt-controller/arm-gic.h>
-    13	#include <dt-bindings/power/qcom,rpmhpd.h>
-    14	#include <dt-bindings/power/qcom-rpmpd.h>
-    15	#include <dt-bindings/soc/qcom,rpmh-rsc.h>
-    16	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
