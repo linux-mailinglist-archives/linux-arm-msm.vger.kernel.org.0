@@ -2,104 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AC2B37B6442
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 10:34:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ECB807B6466
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 10:38:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230439AbjJCIeZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Oct 2023 04:34:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33744 "EHLO
+        id S230330AbjJCIiq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Oct 2023 04:38:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230330AbjJCIeY (ORCPT
+        with ESMTP id S230259AbjJCIip (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Oct 2023 04:34:24 -0400
-Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0B8EA3
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 01:34:21 -0700 (PDT)
-Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-59bc956b029so7989697b3.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 01:34:21 -0700 (PDT)
+        Tue, 3 Oct 2023 04:38:45 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B69797
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 01:38:41 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-40535597f01so5948675e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 01:38:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696322061; x=1696926861; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=bitTTBesOlX5jNs0WrntjlIVBf0r6k8vUqdJl07s2a4=;
-        b=Nnyho37JLe/shXs59RWxP0LFbzenNiR7+5J+u4OAHOuBBKhQn1bK3OeFbKaCNYd6z+
-         ve2ZdPw882VgiWs9bqNMe7MmlrKBvyPeaFeU+Y6HmdCxarKB+Y6yMgCFv1mv9R6lnP8h
-         G8SBMa316LXAo4KbAezbxDHhVuZfO/O7ohK5Vjd8qld5xA3ea604mL/48FE5FeUNJ6le
-         YW6TQz4u89BmIde+aETFaEPCSvhUNfD1xzrcE9riCiWQIZbnLsDzWqTgcgFE4wLV+CQx
-         XfLYhOsNt57SLwhwyA41vZ2pmtff3203+Hq/OZnPPuJNbUl1iX1V2bJK9JvCtnTzs8et
-         O+wg==
+        d=linaro.org; s=google; t=1696322320; x=1696927120; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=8DsmPwmdbvUQU1M3M1OlojdLb5jD3QCY1+hcT64UcVY=;
+        b=SJx/l7zfmBP43ul1LyThtUdBcomyoYtPUlisz6LDgJyMAxcJNyVBFDRURbIVzAo1mR
+         TqEsMZjAPbLCVrZ9aAI3Sh2y5pxXfG669QI54hTCGkVpSa+cH9hTPp9uuLzsKWQBAvFB
+         G0in5tCOvPOVBHGTFYNEM0UW/87ySVnwP+FZaJvg31PyVMXz3h7mLSgMuKvuT8VnAKu6
+         gtNWU7bJ6ucAE+olHNcp/zS1t+0vsOnwmK2xg5uIONRE0sJWMvam5MYHmqHVcK6Qavmw
+         Xh3WyvNQwQBM1gORFQV8r0M2WQEDQI9VQ8qQc+wjiE5/I2nSuUz2mIm3n/y4/qDCPpfK
+         3xCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696322061; x=1696926861;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1696322320; x=1696927120;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=bitTTBesOlX5jNs0WrntjlIVBf0r6k8vUqdJl07s2a4=;
-        b=d2Mg9c22z7BvWQJAOu4HBmIQOjG53w+vpAWJtkEnh+V2Qi4sB+hiOElSkP5VZ/cW3I
-         bjXRLsgsGbUMRDtfG06l2batnlspwwZZTLZfjPpejV6IbGaLMOJ4rEXRfrLfFZoto8fJ
-         L5KZUoBiU0a26231OcWNMKf4Rrysr/vgnf+cpBwkKpgnwzjTpV17tUkUPLv5hxQr7y54
-         eK1j4LoqG4hBF+IVn02hXesnkKA6o0GRBA6CxXiU8bJSlXPInI8LdSYohHsrEfibOy10
-         bpwISIOysqg1F0shyLSF6HSrruMnpO9notMhahdQI/FCKcLjzPo0L4Ntbuz0On4naSQY
-         B6Vw==
-X-Gm-Message-State: AOJu0YxbLIEnnsAP65MY/P8jawESRtH8UsBCSFgCPPVYWzOtgymkpdcU
-        XS4CcCHCZKkXWALP+6jvt9egAgsRrVeL3HXHK9ZSvw==
-X-Google-Smtp-Source: AGHT+IFDzIQLW0laXGE7JKd6lbdhFAMnDeThlxxmtoO8UChMspJgCI8sx/aRikQspuJgbcSRJHW6nrx+DUBW3F7ngjs=
-X-Received: by 2002:a0d:f685:0:b0:59e:8f6d:92e with SMTP id
- g127-20020a0df685000000b0059e8f6d092emr14665847ywf.49.1696322060718; Tue, 03
- Oct 2023 01:34:20 -0700 (PDT)
+        bh=8DsmPwmdbvUQU1M3M1OlojdLb5jD3QCY1+hcT64UcVY=;
+        b=Vs5nq5u7tlFS+J5bmbWFjebCM45kCayOsfJG7rT8T7gxEHBgWKcQSaL06+4sjkRAC/
+         0ihSJFbyT2FRNbLQ9pDBAGYiDXjy8+bLbymLD+btwSKUhr3NEUzxNLlzZvuYV0IHfOBm
+         3qVf30UvZMHosK6s102SObQDYUpVyIWV7iGP0iQZPy6Y7hzAZjuGDrdGNONNf2Q5BLk8
+         uvsAEY1c9jixEtBN+mgKyP4GIkQgKWBVH5nbZIPIfbUpWDbWJG18MFPCkfWqYvJzC2dQ
+         HBfuF0tuYUWwattC5uJbZ2rxa2Qx6nWrnlxei3yZvL0R8ITNbG7+Jcx+LHjdKiVqSzDJ
+         s7fw==
+X-Gm-Message-State: AOJu0YwIiy6YlkYK6ZALWP8N3VSRit+q0w8b5EWWcr4q6XSv31eJ17Pg
+        qOXc/cF0yF2WlERAZuccjpXCYw==
+X-Google-Smtp-Source: AGHT+IE8zNBvMqGDnHxXWC4124C+zApQkL4b+H1sXTC+yJbR4zZMeRQ5EwqKQARBeYdi6ZGDYQLPag==
+X-Received: by 2002:a7b:cb89:0:b0:405:3455:e1a3 with SMTP id m9-20020a7bcb89000000b004053455e1a3mr13173127wmi.17.1696322320003;
+        Tue, 03 Oct 2023 01:38:40 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id m23-20020a7bca57000000b00405323d47fdsm733597wml.21.2023.10.03.01.38.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Oct 2023 01:38:39 -0700 (PDT)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH v8 0/4] Input: add initial support for Goodix Berlin
+ touchscreen IC
+Date:   Tue, 03 Oct 2023 10:38:32 +0200
+Message-Id: <20231003-topic-goodix-berlin-upstream-initial-v8-0-171606102ed6@linaro.org>
 MIME-Version: 1.0
-References: <0-v8-81230027b2fa+9d-iommu_all_defdom_jgg@nvidia.com>
- <20-v8-81230027b2fa+9d-iommu_all_defdom_jgg@nvidia.com> <CAA8EJprz7VVmBG68U9zLuqPd0UdSRHYoLDJSP6tCj6H6qanuTQ@mail.gmail.com>
- <20231002230000.GA682044@nvidia.com>
-In-Reply-To: <20231002230000.GA682044@nvidia.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 3 Oct 2023 11:34:08 +0300
-Message-ID: <CAA8EJpr-CpgTVipd_t1uj7iHHq6__pj3mrm4Mn-pdZwhpS8aDA@mail.gmail.com>
-Subject: Re: [PATCH v8 20/24] iommu: Require a default_domain for all iommu drivers
-To:     Jason Gunthorpe <jgg@nvidia.com>
-Cc:     Rob Clark <robdclark@gmail.com>, Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Christophe Leroy <christophe.leroy@csgroup.eu>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Kevin Tian <kevin.tian@intel.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
-        linuxppc-dev@lists.ozlabs.org,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Jerry Snitselaar <jsnitsel@redhat.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Nicolin Chen <nicolinc@nvidia.com>,
-        Niklas Schnelle <schnelle@linux.ibm.com>,
-        Steven Price <steven.price@arm.com>,
-        Thierry Reding <treding@nvidia.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAjTG2UC/53RwW6EIBAG4FfZcC4NIAj01PdoegAclMSKQddss
+ /HdO+6hm8aL9fhPyPcPmTuZoCSYyNvlTgosaUp5wGBeLiR0bmiBpgYzEUxUrGY1nfOYAm1zbtK
+ Neih9Guh1nOYC7oumIc3J9dQ7q8FAMFEGgpR3E1Bf3BA6xIZr3+NwLBDT7dH98Ym5S9Ocy/djl
+ YVv03+2LpwyKh3TknvjIDbv+MyV/JpLS7aGRZxRBaqi9vgZ4GAZ7NTqjFqhGpnSOoBrNLM7VZ5
+ RJarMSh2ksR643qnqqRrGD6pqU7UVSthKKVvt1PqpWi4OqjWqXkKITtro7f5a+lfljB1VNaq4K
+ oI8KjDmj7qu6w8DfjOv8gIAAA==
+To:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        linux-input@vger.kernel.org
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bastien Nocera <hadess@hadess.net>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Henrik Rydberg <rydberg@bitmath.org>,
+        Jeff LaBundy <jeff@labundy.com>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Rob Herring <robh@kernel.org>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4736;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=i2ZbGFYQgpJbzpu15MKmnfJz8X1iofBc5kNU563O7DA=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlG9MMFKuqZlpuHS3P1LNvBHcSF/4XSqyXKYJT3KUj
+ GDQngzWJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZRvTDAAKCRB33NvayMhJ0VRVEA
+ Cru4ZuvP8h7cyPC6eC1fDjhubKnL/IWXLz6DgQG4LsKc1NxsgvIAUFVok+TPbbptB7sKniAHvNxawA
+ okR2c6qA4zJNkt1f3lZrjwOYrQHnvk1HFwlI47AxqF0J8JRoOETWQ/2ZCqhAOjCojkAdcZXzPh5l2I
+ fSNtN5DLLKLHexN0hX5l6OjMOq8rrdORTq16hcd9/cxK/YqrmCJzj63tLSFCuyElprnqBH3B7aWrWp
+ MGJX7z6TQzPGg+GCgMcA3lDMO2mCE38UvMtMTavnnUmz+I7YB+zXFe+T6OLHeTzsEUA51dVGXPqCDi
+ vZtkcj8y7U7ZXc3nvtFxpDneMCiPPdq7em4TMahT/801UUE7FyIHPZHV/MhaEGuvIOo58HSDd/32Ce
+ db+PdPUl/qODm3IwFBqmZNyQFv1sQWgtnF5In2bBbPJ4nDliU5+f399CKw3veBmViyY5aQQhIt5XAM
+ VxIXn3JtAPipGJUtdEMhnOtq2+dsL4tgI3aOr2OKki4GfeUWpPUEXbkUGnQZwz63wA5KWm4cb6jfG+
+ aKkCHk+pfJ/BuihunS567jZDucr80xMZ/AS8yOcwRocynpQXn8GRcghKQMI3rNjh21UCQ0U2P06cKZ
+ 1bXIYAXU9+bCL4obQ0CjziIjJDE7Z43roHyJGtn7eAh550SMx9/wB3nC3tTw==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -107,65 +101,119 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 3 Oct 2023 at 02:00, Jason Gunthorpe <jgg@nvidia.com> wrote:
->
-> On Tue, Oct 03, 2023 at 12:21:59AM +0300, Dmitry Baryshkov wrote:
-> > On Wed, 13 Sept 2023 at 16:45, Jason Gunthorpe <jgg@nvidia.com> wrote:
-> > >
-> > > At this point every iommu driver will cause a default_domain to be
-> > > selected, so we can finally remove this gap from the core code.
-> > >
-> > > The following table explains what each driver supports and what the
-> > > resulting default_domain will be:
-> > >
-> > >                                         ops->defaut_domain
-> > >                     IDENTITY   DMA  PLATFORM    v      ARM32          dma-iommu  ARCH
-> > > amd/iommu.c             Y       Y                       N/A             either
-> > > apple-dart.c            Y       Y                       N/A             either
-> > > arm-smmu.c              Y       Y                       IDENTITY        either
-> > > qcom_iommu.c            G       Y                       IDENTITY        either
-> > > arm-smmu-v3.c           Y       Y                       N/A             either
-> > > exynos-iommu.c          G       Y                       IDENTITY        either
-> > > fsl_pamu_domain.c                       Y       Y       N/A             N/A     PLATFORM
-> > > intel/iommu.c           Y       Y                       N/A             either
-> > > ipmmu-vmsa.c            G       Y                       IDENTITY        either
-> > > msm_iommu.c             G                               IDENTITY        N/A
-> >
-> > Unfortunately this patch breaks msm_iommu platforms. This driver
-> > doesn't select ARM_DMA_USE_IOMMU, so iommu_get_default_domain_type()
-> > returns 0, bus_iommu_probe() fails with -ENODEV.
-> > If I make MSM_IOMMU select ARM_DMA_USE_IOMMU, then GPU probing fails
-> > with -EBUSY.
->
-> Oh, OK.
->
-> Does this fix it?
+These touchscreen ICs support SPI, I2C and I3C interface, up to
+10 finger touch, stylus and gestures events.
 
-It indeed fixes the issue, so could you please post it, adding:
-Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+This initial driver is derived from the Goodix goodix_ts_berlin
+available at [1] and [2] and only supports the GT9916 IC
+present on the Qualcomm SM8550 MTP & QRD touch panel.
 
-> diff --git a/drivers/iommu/msm_iommu.c b/drivers/iommu/msm_iommu.c
-> index cdc7b730192a35..f7ef081c33dcb2 100644
-> --- a/drivers/iommu/msm_iommu.c
-> +++ b/drivers/iommu/msm_iommu.c
-> @@ -685,10 +685,16 @@ irqreturn_t msm_iommu_fault_handler(int irq, void *dev_id)
->         return 0;
->  }
->
-> +static int msm_iommu_def_domain_type(struct device *dev)
-> +{
-> +       return IOMMU_DOMAIN_IDENTITY;
-> +}
-> +
->  static struct iommu_ops msm_iommu_ops = {
->         .identity_domain = &msm_iommu_identity_domain,
->         .domain_alloc_paging = msm_iommu_domain_alloc_paging,
->         .probe_device = msm_iommu_probe_device,
-> +       .def_domain_type = msm_iommu_def_domain_type,
->         .device_group = generic_device_group,
->         .pgsize_bitmap = MSM_IOMMU_PGSIZES,
->         .of_xlate = qcom_iommu_of_xlate,
+The current implementation only supports BerlinD, aka GT9916.
 
+Support for advanced features like:
+- Firmware & config update
+- Stylus events
+- Gestures events
+- Previous revisions support (BerlinA or BerlinB)
+is not included in current version.
+
+The current support will work with currently flashed firmware
+and config, and bail out if firmware or config aren't flashed yet.
+
+[1] https://github.com/goodix/goodix_ts_berlin
+[2] https://git.codelinaro.org/clo/la/platform/vendor/opensource/touch-drivers
+
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v8:
+- Add missing bitfield.h include in core
+- Link to v7: https://lore.kernel.org/r/20231002-topic-goodix-berlin-upstream-initial-v7-0-792fb91f5e88@linaro.org
+
+Changes in v7:
+- rebased on v6.6-rc3
+- Link to v6: https://lore.kernel.org/r/20230912-topic-goodix-berlin-upstream-initial-v6-0-b4ecfa49fb9d@linaro.org
+
+Changes in v6:
+- rebased on v6.6-rc1
+- changed commit message prefix to match the other Input commits
+- Link to v5: https://lore.kernel.org/r/20230801-topic-goodix-berlin-upstream-initial-v5-0-079252935593@linaro.org
+
+Changes in v5:
+- rebased on next-20230801
+- Link to v4: https://lore.kernel.org/r/20230606-topic-goodix-berlin-upstream-initial-v4-0-0947c489be17@linaro.org
+
+Changes in v4:
+- Core updates:
+ - drop kconfig depends, deps will be handled by _SPI and _I2C
+ - change power_on() error labels
+ - print errors on all dev_err() prints
+ - remove useless default variable initialization
+ - switch irq touch checksum error to dev_err()
+ - add Jeff's review tag
+- I2C changes
+ - change REGMAP_I2C Kconfig from depends to select
+ - add Jeff's review tag
+- SPI changes
+ - add select REGMAP to Kconfig
+ - added GOODIX_BERLIN_ prefix to defines
+ - switched from ret to error
+ - add Jeff's review tag
+- Link to v3: https://lore.kernel.org/r/20230606-topic-goodix-berlin-upstream-initial-v3-0-f0577cead709@linaro.org
+
+Changes in v3:
+- Another guge cleanups after Jeff's review:
+ - appended goodix_berlin_ before all defines
+ - removed some unused defines
+ - removed retries on most of read functions, can be added back later
+ - added __le to ic_info structures
+ - reworked and simplified irq handling, dropped enum and ts_event structs
+ - added struct for touch data
+ - simplified and cleaned goodix_berlin_check_checksum & goodix_berlin_is_dummy_data
+ - moved touch_data_addr to the end of the main code_data
+ - reworked probe to get_irq last and right before setip input device
+ - cleaned probe by removing the "cd->dev"
+ - added short paragraph to justify new driver for berlin devices
+ - defined all offsets & masks
+- Added bindings review tag
+- Link to v2: https://lore.kernel.org/r/20230606-topic-goodix-berlin-upstream-initial-v2-0-26bc8fe1e90e@linaro.org
+
+Changes in v2:
+- Huge cleanups after Jeff's review:
+ - switch to error instead of ret
+ - drop dummy vendor/product ids
+ - drop unused defined/enums
+ - drop unused ic_info and only keep needes values
+ - cleanup namings and use goodix_berlin_ everywhere
+ - fix regulator setup
+ - fix default variables value when assigned afterwars
+ - removed indirections
+ - dropped debugfs
+ - cleaned input_dev setup
+ - dropped _remove()
+ - sync'ed i2c and spi drivers
+- fixed yaml bindings
+- Link to v1: https://lore.kernel.org/r/20230606-topic-goodix-berlin-upstream-initial-v1-0-4a0741b8aefd@linaro.org
+
+---
+Neil Armstrong (4):
+      dt-bindings: input: document Goodix Berlin Touchscreen IC
+      Input: add core support for Goodix Berlin Touchscreen IC
+      Input: goodix-berlin - add I2C support for Goodix Berlin Touchscreen IC
+      Input: goodix-berlin - add SPI support for Goodix Berlin Touchscreen IC
+
+ .../bindings/input/touchscreen/goodix,gt9916.yaml  |  95 ++++
+ drivers/input/touchscreen/Kconfig                  |  31 ++
+ drivers/input/touchscreen/Makefile                 |   3 +
+ drivers/input/touchscreen/goodix_berlin.h          | 159 ++++++
+ drivers/input/touchscreen/goodix_berlin_core.c     | 582 +++++++++++++++++++++
+ drivers/input/touchscreen/goodix_berlin_i2c.c      |  69 +++
+ drivers/input/touchscreen/goodix_berlin_spi.c      | 173 ++++++
+ 7 files changed, 1112 insertions(+)
+---
+base-commit: 6465e260f48790807eef06b583b38ca9789b6072
+change-id: 20230606-topic-goodix-berlin-upstream-initial-ba97e8ec8f4c
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Neil Armstrong <neil.armstrong@linaro.org>
+
