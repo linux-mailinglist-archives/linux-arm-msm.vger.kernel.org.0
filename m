@@ -2,155 +2,218 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 85F997B677F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 13:14:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 864A67B67BB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 13:19:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239987AbjJCLOR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Oct 2023 07:14:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50200 "EHLO
+        id S239926AbjJCLTW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Oct 2023 07:19:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240020AbjJCLON (ORCPT
+        with ESMTP id S239900AbjJCLTW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Oct 2023 07:14:13 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4B77D3
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 04:13:54 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-1c77449a6daso6521535ad.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 04:13:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696331634; x=1696936434; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tI6Pcdke+ZCMScqm6RYMcPg5JywhhOVA13YJD5+toLE=;
-        b=xoE6GTnxtzOmBtrU0nbXMWzbjbfv2qlqXZLcvRabXNAmvnTCBKdY9rf7QY559wMji1
-         zE6Mp8OL8VGPoHruuOMbUoWcace46RhjLn0gN9cEw984LpnBP0mecrRuKa9Aq/YdYcAj
-         DrasvAGWqzO8RT2iXre3EkajAAdFbgrZYT+boVAmtvfb8gNHl2+cZfkxMvzIGk/dd0dV
-         oxPgKq9/xSxURUtYsfxT3fgOTTVhrcLIOUNU3QMgdkVnw4pF+XCoabjeDCtUjsAecoFA
-         GdHooBvmKSc2ZjCnMs8a+8iepR5gNos1DkJ6Psqo8WgcwtpObhD7ZNJMvXn9r0P9PoxP
-         berA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696331634; x=1696936434;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tI6Pcdke+ZCMScqm6RYMcPg5JywhhOVA13YJD5+toLE=;
-        b=OlLHT/z2WivuLehs9sEvInxP1waQrv7dYrgvVs4vQ5YgqFzRngN1kvMEBfooz3s9zX
-         3a5Yt7/GwMOxoKXqbWH3OM7Q/aveuTAn67RsK14EccMp9Wlq4tJciC8NY3W7Qk4oTVOS
-         LnkkD1snbeBA5IpN8UgPoyB2Ly4+c9/5Ob3e3/h39oKdMJdONUA40bQOxNGvsumotXoe
-         tv7YdCoAVfndjeJc+b/9RK50uBEzlhyvmGj8/2ur9G+xlh2ttHP/Z0ODnTVhF3YgnxTq
-         Rjq4cehTZDCUzTFlcU1yOttXgr+DRw54xPxwOJdLT9MCML7bjduHHlkoJqeV7M6nziED
-         Ul4A==
-X-Gm-Message-State: AOJu0Yz2J2UR9C5QI4+x5VRNDIIuMY56VkU3XrnGZYTZoiTAQAiuE7e5
-        AhTmjK57njyCNPUTKmndXIKm
-X-Google-Smtp-Source: AGHT+IHXjGAwqaAR8iuZgLaLIJrFx9daiXcUrzw8Sxbliq+GRtrvjzxn10oK6FBXsg9SgUjmX2+rlA==
-X-Received: by 2002:a17:902:ed54:b0:1c6:2d13:5b79 with SMTP id y20-20020a170902ed5400b001c62d135b79mr13850679plb.47.1696331633859;
-        Tue, 03 Oct 2023 04:13:53 -0700 (PDT)
-Received: from localhost.localdomain ([117.217.185.220])
-        by smtp.gmail.com with ESMTPSA id d9-20020a170903230900b001ab2b4105ddsm1250328plh.60.2023.10.03.04.13.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Oct 2023 04:13:53 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
-        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
-        cw00.choi@samsung.com, andersson@kernel.org,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        Tue, 3 Oct 2023 07:19:22 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 0D1899E;
+        Tue,  3 Oct 2023 04:19:19 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 41F69C15;
+        Tue,  3 Oct 2023 04:19:57 -0700 (PDT)
+Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3FB283F762;
+        Tue,  3 Oct 2023 04:19:17 -0700 (PDT)
+Date:   Tue, 3 Oct 2023 12:19:14 +0100
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Nikunj Kela <quic_nkela@quicinc.com>
+Cc:     cristian.marussi@arm.com, robh+dt@kernel.org,
+        Sudeep Holla <sudeep.holla@arm.com>,
         krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        jejb@linux.ibm.com, martin.petersen@oracle.com
-Cc:     alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
-        linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
-        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
-        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
-        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
-        bmasney@redhat.com, krzysztof.kozlowski@linaro.org,
-        linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v4 6/6] arm64: dts: qcom: sm8250: Add OPP table support to UFSHC
-Date:   Tue,  3 Oct 2023 16:42:32 +0530
-Message-Id: <20231003111232.42663-7-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20231003111232.42663-1-manivannan.sadhasivam@linaro.org>
-References: <20231003111232.42663-1-manivannan.sadhasivam@linaro.org>
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v4 4/4] firmware: arm_scmi: Add qcom hvc/shmem transport
+ support
+Message-ID: <20231003111914.63z35sn3r3k7drtp@bogus>
+References: <20230718160833.36397-1-quic_nkela@quicinc.com>
+ <20230911194359.27547-1-quic_nkela@quicinc.com>
+ <20230911194359.27547-5-quic_nkela@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230911194359.27547-5-quic_nkela@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-UFS host controller, when scaling gears, should choose appropriate
-performance state of RPMh power domain controller along with clock
-frequency. So let's add the OPP table support to specify both clock
-frequency and RPMh performance states replacing the old "freq-table-hz"
-property.
+On Mon, Sep 11, 2023 at 12:43:59PM -0700, Nikunj Kela wrote:
+> This change adds the support for SCMI message exchange on Qualcomm
+> virtual platforms.
+> 
+> The hypervisor associates an object-id also known as capability-id
+> with each hvc doorbell object. The capability-id is used to identify the
+> doorbell from the VM's capability namespace, similar to a file-descriptor.
+> 
+> The hypervisor, in addition to the function-id, expects the capability-id
+> to be passed in x1 register when HVC call is invoked.
+> 
+> The function-id & capability-id are allocated by the hypervisor on bootup
+> and are stored in the shmem region by the firmware before starting Linux.
+> 
+> Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
+> ---
+>  drivers/firmware/arm_scmi/driver.c |  1 +
+>  drivers/firmware/arm_scmi/smc.c    | 47 ++++++++++++++++++++++++++----
+>  2 files changed, 43 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
+> index 87383c05424b..ea344bc6ae49 100644
+> --- a/drivers/firmware/arm_scmi/driver.c
+> +++ b/drivers/firmware/arm_scmi/driver.c
+> @@ -2915,6 +2915,7 @@ static const struct of_device_id scmi_of_match[] = {
+>  #ifdef CONFIG_ARM_SCMI_TRANSPORT_SMC
+>  	{ .compatible = "arm,scmi-smc", .data = &scmi_smc_desc},
+>  	{ .compatible = "arm,scmi-smc-param", .data = &scmi_smc_desc},
+> +	{ .compatible = "qcom,scmi-hvc-shmem", .data = &scmi_smc_desc},
+>  #endif
+>  #ifdef CONFIG_ARM_SCMI_TRANSPORT_VIRTIO
+>  	{ .compatible = "arm,scmi-virtio", .data = &scmi_virtio_desc},
+> diff --git a/drivers/firmware/arm_scmi/smc.c b/drivers/firmware/arm_scmi/smc.c
+> index 0a0b7e401159..94ec07fdc14a 100644
+> --- a/drivers/firmware/arm_scmi/smc.c
+> +++ b/drivers/firmware/arm_scmi/smc.c
+> @@ -50,6 +50,9 @@
+>   * @func_id: smc/hvc call function id
+>   * @param_page: 4K page number of the shmem channel
+>   * @param_offset: Offset within the 4K page of the shmem channel
+> + * @cap_id: hvc doorbell's capability id to be used on Qualcomm virtual
+> + *	    platforms
+> + * @qcom_xport: Flag to indicate the transport on Qualcomm virtual platforms
+>   */
+>  
+>  struct scmi_smc {
+> @@ -63,6 +66,8 @@ struct scmi_smc {
+>  	u32 func_id;
+>  	u32 param_page;
+>  	u32 param_offset;
+> +	u64 cap_id;
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 39 +++++++++++++++++++++-------
- 1 file changed, 30 insertions(+), 9 deletions(-)
+Can it be unsigned long instead so that it just works for both 32 and 64 bit.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index a4e58ad731c3..33abd84aae53 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2198,21 +2198,42 @@ ufs_mem_hc: ufshc@1d84000 {
- 				<&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
- 				<&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
- 				<&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
--			freq-table-hz =
--				<37500000 300000000>,
--				<0 0>,
--				<0 0>,
--				<37500000 300000000>,
--				<0 0>,
--				<0 0>,
--				<0 0>,
--				<0 0>;
-+
-+			operating-points-v2 = <&ufs_opp_table>;
- 
- 			interconnects = <&aggre1_noc MASTER_UFS_MEM 0 &mc_virt SLAVE_EBI_CH0 0>,
- 					<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_UFS_MEM_CFG 0>;
- 			interconnect-names = "ufs-ddr", "cpu-ufs";
- 
- 			status = "disabled";
-+
-+			ufs_opp_table: opp-table {
-+				compatible = "operating-points-v2";
-+
-+				opp-37500000 {
-+					opp-hz = /bits/ 64 <37500000>,
-+						 /bits/ 64 <0>,
-+						 /bits/ 64 <0>,
-+						 /bits/ 64 <37500000>,
-+						 /bits/ 64 <0>,
-+						 /bits/ 64 <0>,
-+						 /bits/ 64 <0>,
-+						 /bits/ 64 <0>;
-+					required-opps = <&rpmhpd_opp_low_svs>;
-+				};
-+
-+				opp-300000000 {
-+					opp-hz = /bits/ 64 <300000000>,
-+						 /bits/ 64 <0>,
-+						 /bits/ 64 <0>,
-+						 /bits/ 64 <300000000>,
-+						 /bits/ 64 <0>,
-+						 /bits/ 64 <0>,
-+						 /bits/ 64 <0>,
-+						 /bits/ 64 <0>;
-+					required-opps = <&rpmhpd_opp_nom>;
-+				};
-+			};
- 		};
- 
- 		ufs_mem_phy: phy@1d87000 {
+> +	bool qcom_xport;
+
+Do we really need this ?
+
+>  };
+>  
+>  static irqreturn_t smc_msg_done_isr(int irq, void *data)
+> @@ -129,6 +134,7 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
+>  	struct resource res;
+>  	struct device_node *np;
+>  	u32 func_id;
+> +	u64 cap_id;
+
+Ditto..
+
+>  	int ret;
+>  
+>  	if (!tx)
+> @@ -158,9 +164,34 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
+>  		return -EADDRNOTAVAIL;
+>  	}
+>  
+> -	ret = of_property_read_u32(dev->of_node, "arm,smc-id", &func_id);
+> -	if (ret < 0)
+> -		return ret;
+> +	if (of_device_is_compatible(dev->of_node, "qcom,scmi-hvc-shmem")) {
+> +		scmi_info->qcom_xport = true;
+> +
+> +		/* The func-id & capability-id are kept in last 16 bytes of shmem.
+> +		 *     +-------+
+> +		 *     |       |
+> +		 *     | shmem |
+> +		 *     |       |
+> +		 *     |       |
+> +		 *     +-------+ <-- (size - 16)
+> +		 *     | funcId|
+> +		 *     +-------+ <-- (size - 8)
+> +		 *     | capId |
+> +		 *     +-------+ <-- size
+> +		 */
+> +
+> +		func_id = readl((void __iomem *)(scmi_info->shmem) + size - 16);
+
+So unlike 'arm,scmi-smc', you don't want 'arm,smc-id' in the DT ? Any
+particular reason ? Just to get both FID and cap ID from shmem ?
+
+> +#ifdef CONFIG_ARM64
+
+I would rather make this arch agnostic using CONFIG_64BIT
+
+> +		cap_id = readq((void __iomem *)(scmi_info->shmem) + size - 8);
+
+Do you need __iomem typecast here ? Is scmi_info->shmem not already __iomem ?
+Also scmi_info->shmem is ioremapped just few steps above and you are using
+read* here, is that safe ?
+
+> +#else
+> +		/* capability-id is 32 bit wide on 32bit machines */
+> +		cap_id = rieadl((void __iomem *)(scmi_info->shmem) + size - 8);
+
+Other thought once you move for u64 to unsigned long you need not have
+#ifdeffery, just do copy of sizeof(unsigned long)
+
+> +#endif
+> +	} else {
+> +		ret = of_property_read_u32(dev->of_node, "arm,smc-id", &func_id);
+> +		if (ret < 0)
+> +			return ret;
+> +	}
+>  
+>  	if (of_device_is_compatible(dev->of_node, "arm,scmi-smc-param")) {
+>  		scmi_info->param_page = SHMEM_PAGE(res.start);
+> @@ -184,6 +215,7 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
+>  	}
+>  
+>  	scmi_info->func_id = func_id;
+> +	scmi_info->cap_id = cap_id;
+>  	scmi_info->cinfo = cinfo;
+>  	smc_channel_lock_init(scmi_info);
+>  	cinfo->transport_info = scmi_info;
+> @@ -213,6 +245,7 @@ static int smc_send_message(struct scmi_chan_info *cinfo,
+>  	struct arm_smccc_res res;
+>  	unsigned long page = scmi_info->param_page;
+>  	unsigned long offset = scmi_info->param_offset;
+> +	unsigned long cap_id = (unsigned long)scmi_info->cap_id;
+>  
+>  	/*
+>  	 * Channel will be released only once response has been
+> @@ -222,8 +255,12 @@ static int smc_send_message(struct scmi_chan_info *cinfo,
+>  
+>  	shmem_tx_prepare(scmi_info->shmem, xfer, cinfo);
+>  
+> -	arm_smccc_1_1_invoke(scmi_info->func_id, page, offset, 0, 0, 0, 0, 0,
+> -			     &res);
+> +	if (scmi_info->qcom_xport)
+
+Just make sure cap_id is set only for qcom and just use that as your flag.
+No point in setting always true scmi_info->qcom_xport and using it here.
+
+> +		arm_smccc_1_1_hvc(scmi_info->func_id, cap_id, 0, 0, 0, 0, 0, 0,
+> +				  &res);
+> +	else
+> +		arm_smccc_1_1_invoke(scmi_info->func_id, page, offset, 0, 0, 0,
+> +				     0, 0, &res);
+>  
+>  	/* Only SMCCC_RET_NOT_SUPPORTED is valid error code */
+>  	if (res.a0) {
+> -- 
+> 2.17.1
+> 
+
 -- 
-2.25.1
-
+Regards,
+Sudeep
