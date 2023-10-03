@@ -2,187 +2,235 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 635D77B660F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 12:06:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ED6247B6673
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 12:31:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239830AbjJCKGO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Oct 2023 06:06:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50666 "EHLO
+        id S231161AbjJCKb6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Oct 2023 06:31:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230392AbjJCKGO (ORCPT
+        with ESMTP id S230384AbjJCKb5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Oct 2023 06:06:14 -0400
-Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 969E5B8
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 03:06:10 -0700 (PDT)
-Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-59c268676a9so9099157b3.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 03:06:10 -0700 (PDT)
+        Tue, 3 Oct 2023 06:31:57 -0400
+Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A718A3
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 03:31:53 -0700 (PDT)
+Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-59f4f80d084so8572427b3.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 03:31:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696327570; x=1696932370; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696329113; x=1696933913; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=kYY6vWSNKTYmeOsWDutWjp0Dy6WB1jcBj72iJmFRNeI=;
-        b=hZv12M4ax010irFg/GAeEbYpI9KBMLl/iReEqiqjnnuVEYDJ5qYu3R5pPF7m1hY1pt
-         PehaCD1R/44YP1gNdmgoE0VBS4NDm8KhWSLm5kUp/NgRV5q5EpObPvLsqqx5qsBFnjwe
-         EgrfojmlndaxafuF5byfLRg1BC7GKGk5nwTw/zQchbxkx9OiZIwOytjEHlA0qNsAlyui
-         /OA54p7pXDtW85Y7K7YB0y/wbQ3kWwPAx9tPrkNk58/iE2zw7HkDdkQMsrZQgqxb+ht1
-         nYitg7jHrm2wld0ZB8GQ0XagVjKg9ORJfLO7qCgMyd2TBU344PCigckVqHP6w/mMvxkH
-         tepg==
+        bh=/lF9B+2dpTS8/Po6eS2skpxFPjbGsje6xB3H5xe9qeo=;
+        b=QPX5dY5A13DHebvAVc4bzMzwSXF1DKShHk5JYX/z3um+355FACGxAtTH82dYd5Pygh
+         Bji5Tx9LLKb2fgFPdFX460NVSWY17CL4OpqLVV1hNBlztsWaDNDCdXta0MnORJ76l9wL
+         mudQ7CqcFgpR9cIoD9WGmDMVhIsi9uWg4rKfbEcuGzTwghsm7o11v9btnbO29it0d/1b
+         SIJ2yfpq2kM6zlvSdC4lCCppfzharxP35oTiSwPaUpAnKdzNG7+uRi4OVbo9kZLbJNgf
+         AwcgbFpXgO34tBGiuZVzY5ez1ESXY6K1clu40COmvKxzKhNoDIUPrVh7c1iVNuJSARPr
+         WV7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696327570; x=1696932370;
+        d=1e100.net; s=20230601; t=1696329113; x=1696933913;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=kYY6vWSNKTYmeOsWDutWjp0Dy6WB1jcBj72iJmFRNeI=;
-        b=PYgwoZPzbr/OLCceGicUfA5oEhA9OqvV8ID6iJ8ez+L8jFdl6wjCheqoaiD9u8VhDu
-         GVI4qsYz7nXfGsGOFsbNcJxcbBNVudP/uPdK1ynAMal/yn/LxG0tBIccE++WH58Ln2dI
-         YfFEeEh6DIPQx4qIwTj4ayhxkZLas6KtwhNhNKTjsJBBnhRqMW9dG8q+lY/JLcMbtglV
-         RvdfYETWq8qKoGbtKM2da3GvjPbKl08axFm8rBpJkxemNRt0p9VtQqbDpHZ/REcZhHkh
-         uEUPfSAX9DZKAqIFEyf06XO80Dcvxi564jRNBWlM5/k2EkfwSnbFijhlc90tSGDrlxgD
-         cqZQ==
-X-Gm-Message-State: AOJu0YwiCJEYINDaygt6Y0FcWv/TiVBAU0URsbZgU1tg0fBeBnQJHdS8
-        jedlfrU0XlQoLrkDeDZ75vjN0d5wiinIgH6LjqIpkw==
-X-Google-Smtp-Source: AGHT+IEDEkigzAbnvMlvaSmR+AEMY+sHV+2ys05HA/+WcAgzhebgJvzC/TVDaIgh0Bvv8g81P7mvrJdNShphvBDncwU=
-X-Received: by 2002:a25:a545:0:b0:d62:6838:74b9 with SMTP id
- h63-20020a25a545000000b00d62683874b9mr12769755ybi.55.1696327569696; Tue, 03
- Oct 2023 03:06:09 -0700 (PDT)
+        bh=/lF9B+2dpTS8/Po6eS2skpxFPjbGsje6xB3H5xe9qeo=;
+        b=TcWt1r3Xy71v8dh4/A+qgNaIFVuZm480a9ybVXL6UMjw/521yzuOumrDOZ8e11pw5F
+         scLs8M7aSdpNHrTcOOV2+PAvQ7uA8M5tNB0x3ReW6ZowIBGbt2GIx8Iywi5AaaR9z7NS
+         09d4d3G8QP4nJEhmztOfpEiq04pse6137nlMzRRXMxIxEGmbGfxGKwBu8Yvrq6TNO6Zs
+         OYSuMz3VK/aIw5cKTCb6DldbsfcDH1B3Hhq2ONXevFlrF3Lil32ERo/61RGCAev59Exu
+         1cuI0ASuiQD8q0it/box+eMUPningo1KHfuVPu89eb2uD/qVYp9qFGa+rv75uNQ7pjGy
+         1AIQ==
+X-Gm-Message-State: AOJu0YwEhLLrAQpvgbWbOVZqG15puNXv4M+f9SNrxUrIUkOjujGm2zXw
+        AytgFGdzVHqSUY2h3B2pJzLWmoGUx3X1Z1EXW89/Nw==
+X-Google-Smtp-Source: AGHT+IFElae2Chizu09rbxtsGekkDJqYVsUMzlbpa3Ag9xBlODTikxqoTX1U/6YW+bG8ZRBAEjRX06W8BzrJ3AzuxAs=
+X-Received: by 2002:a81:8356:0:b0:59f:519e:3e7c with SMTP id
+ t83-20020a818356000000b0059f519e3e7cmr14992115ywf.24.1696329112725; Tue, 03
+ Oct 2023 03:31:52 -0700 (PDT)
 MIME-Version: 1.0
-References: <1696327472-21776-1-git-send-email-quic_rohiagar@quicinc.com> <1696327472-21776-2-git-send-email-quic_rohiagar@quicinc.com>
-In-Reply-To: <1696327472-21776-2-git-send-email-quic_rohiagar@quicinc.com>
+References: <20231003012119.857198-9-mailingradian@gmail.com>
+ <20231003012119.857198-12-mailingradian@gmail.com> <fa926d91-f748-4886-ae6d-f55541e40f5c@linaro.org>
+In-Reply-To: <fa926d91-f748-4886-ae6d-f55541e40f5c@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 3 Oct 2023 13:05:58 +0300
-Message-ID: <CAA8EJpp0+8FBtrmC7MGRkAdiavGSBUH7oAcQ0rN1OzLCWnsk8Q@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] arm64: dts: qcom: Add interconnect nodes for SDX75
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Date:   Tue, 3 Oct 2023 13:31:41 +0300
+Message-ID: <CAA8EJpqPP=X8-jD_mwSmO8OMaxb_0Yo3j-b9chyChORDyvdWAQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/6] dt-bindings: display: msm: Add SDM670 MDSS
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Richard Acayan <mailingradian@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        Ryan McCann <quic_rmccann@quicinc.com>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Liu Shixin <liushixin2@huawei.com>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 3 Oct 2023 at 13:04, Rohit Agarwal <quic_rohiagar@quicinc.com> wrote:
+On Tue, 3 Oct 2023 at 11:48, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
 >
-> Add interconnect nodes to support interconnects on SDX75.
-> Also parallely add the interconnect property for UART required
-> so that the bootup to shell does not break with interconnects
-> in place.
+> On 03/10/2023 03:21, Richard Acayan wrote:
+> > Add documentation for the SDM670 display subsystem, adapted from the
+> > SDM845 and SM6125 documentation.
+> >
+> > Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> > ---
+> >  .../display/msm/qcom,sdm670-mdss.yaml         | 287 ++++++++++++++++++
+> >  1 file changed, 287 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sdm670-mdss.yaml
+> >
+> > diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sdm670-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sdm670-mdss.yaml
+> > new file mode 100644
+> > index 000000000000..9995b018cd9e
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/display/msm/qcom,sdm670-mdss.yaml
+> > @@ -0,0 +1,287 @@
+> > +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/display/msm/qcom,sdm670-mdss.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Qualcomm SDM670 Display MDSS
+> > +
+> > +maintainers:
+> > +  - Richard Acayan <mailingradian@gmail.com>
+> > +
+> > +description:
+> > +  SDM670 MSM Mobile Display Subsystem (MDSS), which encapsulates sub-blocks
+> > +  like DPU display controller, DSI and DP interfaces etc.
+> > +
+> > +$ref: /schemas/display/msm/mdss-common.yaml#
+> > +
+> > +properties:
+> > +  compatible:
+> > +    const: qcom,sdm670-mdss
+> > +
+> > +  clocks:
+> > +    items:
+> > +      - description: Display AHB clock from gcc
+> > +      - description: Display core clock
+> > +
+> > +  clock-names:
+> > +    items:
+> > +      - const: iface
+> > +      - const: core
+> > +
+> > +  iommus:
+> > +    maxItems: 2
+> > +
+> > +  interconnects:
+> > +    maxItems: 2
+> > +
+> > +  interconnect-names:
+> > +    maxItems: 2
+> > +
+> > +patternProperties:
+> > +  "^display-controller@[0-9a-f]+$":
+> > +    type: object
+> > +    additionalProperties: true
+> > +
+> > +    properties:
+> > +      compatible:
+> > +        const: qcom,sdm670-dpu
+> > +
+> > +  "^displayport-controller@[0-9a-f]+$":
+> > +    type: object
+> > +    additionalProperties: true
+> > +
+> > +    properties:
+> > +      compatible:
+> > +        const: qcom,sdm670-dp
+> > +
+> > +  "^dsi@[0-9a-f]+$":
+> > +    type: object
+> > +    additionalProperties: true
+> > +
+> > +    properties:
+> > +      compatible:
+> > +        contains:
+> > +          const: qcom,sdm670-dsi-ctrl
+> > +
+> > +  "^phy@[0-9a-f]+$":
+> > +    type: object
+> > +    additionalProperties: true
+> > +
+> > +    properties:
+> > +      compatible:
+> > +        const: qcom,dsi-phy-10nm
 >
-> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sdx75.dtsi | 52 +++++++++++++++++++++++++++++++++++++
->  1 file changed, 52 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sdx75.dtsi b/arch/arm64/boot/dts/qcom/sdx75.dtsi
-> index e180aa4..ac0b785 100644
-> --- a/arch/arm64/boot/dts/qcom/sdx75.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdx75.dtsi
-> @@ -8,6 +8,8 @@
->
->  #include <dt-bindings/clock/qcom,rpmh.h>
->  #include <dt-bindings/clock/qcom,sdx75-gcc.h>
-> +#include <dt-bindings/interconnect/qcom,icc.h>
-> +#include <dt-bindings/interconnect/qcom,sdx75.h>
->  #include <dt-bindings/interrupt-controller/arm-gic.h>
->  #include <dt-bindings/power/qcom,rpmhpd.h>
->  #include <dt-bindings/power/qcom-rpmpd.h>
-> @@ -197,6 +199,19 @@
->                 };
->         };
->
-> +       clk_virt: interconnect-0 {
-> +               compatible = "qcom,sdx75-clk-virt";
-> +               #interconnect-cells = <2>;
-> +               qcom,bcm-voters = <&apps_bcm_voter>;
-> +               clocks = <&rpmhcc RPMH_QPIC_CLK>;
-> +       };
-> +
-> +       mc_virt: interconnect-1 {
-> +               compatible = "qcom,sdx75-mc-virt";
-> +               #interconnect-cells = <2>;
-> +               qcom,bcm-voters = <&apps_bcm_voter>;
-> +       };
+> This does not look right. Why the compatible is generic, not SoC-specific?
 
-Interconnect comes after firmware, 'i' > 'f'.
+Because for 10nm DSI PHY we don't have SoC-specific compatibles other
+than the ugly 8998 compat string.
 
-> +
->         firmware {
->                 scm: scm {
->                         compatible = "qcom,scm-sdx75", "qcom,scm";
-> @@ -434,6 +449,9 @@
->                         clock-names = "m-ahb",
->                                       "s-ahb";
->                         iommus = <&apps_smmu 0xe3 0x0>;
-> +                       interconnects = <&clk_virt MASTER_QUP_CORE_0 QCOM_ICC_TAG_ALWAYS
-> +                                        &clk_virt SLAVE_QUP_CORE_0 QCOM_ICC_TAG_ALWAYS>;
-> +                       interconnect-names = "qup-core";
->                         #address-cells = <2>;
->                         #size-cells = <2>;
->                         ranges;
-> @@ -444,6 +462,12 @@
->                                 reg = <0x0 0x00984000 0x0 0x4000>;
->                                 clocks = <&gcc GCC_QUPV3_WRAP0_S1_CLK>;
->                                 clock-names = "se";
-> +                               interconnects = <&clk_virt MASTER_QUP_CORE_0 QCOM_ICC_TAG_ALWAYS
-> +                                                &clk_virt SLAVE_QUP_CORE_0 QCOM_ICC_TAG_ALWAYS>,
-> +                                               <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
-> +                                                &system_noc SLAVE_QUP_0 QCOM_ICC_TAG_ALWAYS>;
-> +                               interconnect-names = "qup-core",
-> +                                                    "qup-config";
->                                 interrupts = <GIC_SPI 338 IRQ_TYPE_LEVEL_HIGH>;
->                                 pinctrl-0 = <&qupv3_se1_2uart_active>;
->                                 pinctrl-1 = <&qupv3_se1_2uart_sleep>;
-> @@ -453,6 +477,20 @@
->                         };
->                 };
 >
-> +               system_noc: interconnect@1640000 {
-> +                       compatible = "qcom,sdx75-system-noc";
-> +                       reg = <0x0 0x01640000 0x0 0x4b400>;
-> +                       #interconnect-cells = <2>;
-> +                       qcom,bcm-voters = <&apps_bcm_voter>;
-> +               };
-> +
-> +               pcie_anoc: interconnect@16c0000 {
-> +                       compatible = "qcom,sdx75-pcie-anoc";
-> +                       reg = <0x0 0x016c0000 0x0 0x14200>;
-> +                       #interconnect-cells = <2>;
-> +                       qcom,bcm-voters = <&apps_bcm_voter>;
-> +               };
-> +
->                 tcsr_mutex: hwlock@1f40000 {
->                         compatible = "qcom,tcsr-mutex";
->                         reg = <0x0 0x01f40000 0x0 0x40000>;
-> @@ -733,6 +771,20 @@
->                         #freq-domain-cells = <1>;
->                         #clock-cells = <1>;
->                 };
-> +
-> +               dc_noc: interconnect@190e0000 {
-> +                       compatible = "qcom,sdx75-dc-noc";
-> +                       reg = <0x0 0x190e0000 0x0 0x8200>;
-> +                       #interconnect-cells = <2>;
-> +                       qcom,bcm-voters = <&apps_bcm_voter>;
-> +               };
-> +
-> +               gem_noc: interconnect@19100000 {
-> +                       compatible = "qcom,sdx75-gem-noc";
-> +                       reg = <0x0 0x19100000 0x0 0x34080>;
-> +                       #interconnect-cells = <2>;
-> +                       qcom,bcm-voters = <&apps_bcm_voter>;
-> +               };
->         };
+> > +
+> > +required:
+> > +  - compatible
+> > +
+> > +unevaluatedProperties: false
+> > +
+> > +examples:
+> > +  - |
+> > +    #include <dt-bindings/clock/qcom,dispcc-sdm845.h>
+> > +    #include <dt-bindings/clock/qcom,gcc-sdm845.h>
+> > +    #include <dt-bindings/clock/qcom,rpmh.h>
+> > +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> > +    #include <dt-bindings/power/qcom-rpmpd.h>
+> > +
+> > +    display-subsystem@ae00000 {
+> > +        compatible = "qcom,sdm670-mdss";
+> > +        reg = <0x0ae00000 0x1000>;
+> > +        reg-names = "mdss";
+> > +        power-domains = <&dispcc MDSS_GDSC>;
+> > +
+> > +        clocks = <&gcc GCC_DISP_AHB_CLK>,
+> > +                 <&dispcc DISP_CC_MDSS_MDP_CLK>;
+> > +        clock-names = "iface", "core";
+> > +
+> > +        interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
+> > +        interrupt-controller;
+> > +        #interrupt-cells = <1>;
+> > +
 >
->         timer {
-> --
-> 2.7.4
+> Please add interconnects. They do not have to be 100% exact with DTS
+> (unless interconnect header is not merged?). This is just an example.
+>
+> > +        iommus = <&apps_smmu 0x880 0x8>,
+> > +                 <&apps_smmu 0xc80 0x8>;
+>
+> > +
+> > +        #address-cells = <1>;
+> > +        #size-cells = <1>;
+> > +        ranges;
+> > +
+>
+> Best regards,
+> Krzysztof
 >
 
 
