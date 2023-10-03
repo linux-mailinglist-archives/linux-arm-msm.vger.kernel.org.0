@@ -2,145 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 27B5F7B6948
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 14:44:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 113DA7B69B1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 15:02:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230329AbjJCMo5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Oct 2023 08:44:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42218 "EHLO
+        id S232494AbjJCNCG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Oct 2023 09:02:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230300AbjJCMo5 (ORCPT
+        with ESMTP id S232517AbjJCNCF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Oct 2023 08:44:57 -0400
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37E08B0
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 05:44:53 -0700 (PDT)
-Received: by mail-qk1-x72a.google.com with SMTP id af79cd13be357-77432add7caso61261585a.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 05:44:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696337092; x=1696941892; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=xDj1q+Ee+ORzJ70hRtintqC5xZdcBaiRQa5S4Cdho10=;
-        b=WRfTQWpvQp3+AMJ84YUZSAUj2gNVc7Hi3P+fItsZqVcekiIBUL/TLW2hha/Z/y+qYx
-         Ypz9th/0xCyj6J6TKhiJptrUgz+mVs8MQ4tpUzYmrtFMab05nANMLSS2wniw43cvALkD
-         YzobMSnDKQbJu66dv0HcEZZh/EKJXkIJ3i9/2MzSnNj3IDtBy2dYvSX+8ziIWkN0RQ8Q
-         QY3s/UkAvX8CSk/OPGQSjxEVuNzAmagoVfcfiIlC4SBNpZRSjN5GwdXoZBcUCVIALz/t
-         M45H8D9ECJKh0ku7Z+xyGPWKOWPliBb7OexwYMGZcHn/7CsQ3uWdIcB3ZKWy2ixoXqlx
-         8+CQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696337092; x=1696941892;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xDj1q+Ee+ORzJ70hRtintqC5xZdcBaiRQa5S4Cdho10=;
-        b=qlaNZoX40USGN7Rw+KsbL/53gZAvanVkwkjjUUlfPguWBPuwaz4uc0nwivX+0Tu8uv
-         r1Ewy7L3mLJoLLbN51yxfQG/n31naDOVb8uPgdE0mzc2aN3pfh7SwG2HyU+mJJFi+BOq
-         WAZiVtWbfthZsgN8gPlreZdUClDU1L+rj2pQh5ei1wNPPotjZUDfVFMVAEBorHjp/aLX
-         viw4amDr++uYSswYZiDQc2IaLNpF/2OkMniqQF0iycW4ggirPFeU75xTmQHT4xLAT9OA
-         sUgYJfwUv20pqbfwkQSPlhJtFTlZNy1YvgBJaXRBL1ND4qdXVG6fktqZPDCDUVPtcV1Q
-         /WUQ==
-X-Gm-Message-State: AOJu0YxqERfJ0aXaFPYWfzw5Pz1rLYsQRbIepWIb/FeYEecVEcwLgEO2
-        VC7/O6+EVDzlt02nxWdqoZmr
-X-Google-Smtp-Source: AGHT+IEbRFcGxZgw52UjDfv1LBZdcZLdSA4iZ7N+WH5lAbH4U4/cWa8LNP/L/IMXn2BWS/8z2N+zyQ==
-X-Received: by 2002:a05:620a:4007:b0:775:9bc3:c492 with SMTP id h7-20020a05620a400700b007759bc3c492mr9066667qko.7.1696337092194;
-        Tue, 03 Oct 2023 05:44:52 -0700 (PDT)
-Received: from thinkpad ([117.217.185.220])
-        by smtp.gmail.com with ESMTPSA id d15-20020a05620a136f00b007756d233fbdsm425442qkl.37.2023.10.03.05.44.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Oct 2023 05:44:51 -0700 (PDT)
-Date:   Tue, 3 Oct 2023 18:14:35 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     quic_narepall@quicinc.com, bmasney@redhat.com,
-        krzysztof.kozlowski+dt@linaro.org, quic_nitirawa@quicinc.com,
-        vireshk@kernel.org, quic_asutoshd@quicinc.com,
-        quic_bhaskarv@quicinc.com, avri.altman@wdc.com,
-        krzysztof.kozlowski@linaro.org, alim.akhtar@samsung.com,
-        robh+dt@kernel.org, quic_cang@quicinc.com,
-        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
-        jejb@linux.ibm.com, cw00.choi@samsung.com, andersson@kernel.org,
-        bvanassche@acm.org, conor+dt@kernel.org, kyungmin.park@samsung.com,
-        martin.petersen@oracle.com, nm@ti.com,
-        linux-kernel@vger.kernel.org, quic_richardp@quicinc.com,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-scsi@vger.kernel.org, myungjoo.ham@samsung.com,
-        konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
-        sboyd@kernel.org
-Subject: Re: [PATCH v4 1/6] dt-bindings: ufs: common: add OPP table
-Message-ID: <20231003124435.GA44736@thinkpad>
-References: <20231003111232.42663-1-manivannan.sadhasivam@linaro.org>
- <20231003111232.42663-2-manivannan.sadhasivam@linaro.org>
- <169633539510.282606.1450427416869008072.robh@kernel.org>
+        Tue, 3 Oct 2023 09:02:05 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C194BB;
+        Tue,  3 Oct 2023 06:01:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1696338115; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=K6+CPrYO0ApXPmGEp8FHGc+LNByfwIPuVTAHxEoBcg3p1DPvvdaFdYoCc6+z5oheCX
+    4XhaCyB/anVeeFCU4fiEAIKQaf0rsXmxTEdowb/1Fe87XMGw8xNEJPq6nYqId02gfuJh
+    w2/pSpLl9eyeim+LQRAIf0EFAqZt9hzFmIhrhrSUKO/GoSTl3Hta3s7e5nNONzNFLEM9
+    Dj9xSkF1/aK8m2UOCGT0fT2dHdQ6F2Q9MJC0okdJ/MadBvdPem4hD8i7pLbJXr5f7s/5
+    D/xPSzLwMAPuSgfZULd0SjLT3xcpsebVy3MpzFU71aKpQQFV2VDCcFS3bogGtIW2HyIB
+    Cosg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1696338115;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=AvW+X7TnuvQSmOQWBDMXpfLpHp0X0rQYKQIMVG8JkH8=;
+    b=kbLGHLsDn9OOxnyTXp0jYcGCyAPdSCJ9d+sZFfH7x1Y/LJQKusCj9ub35aJmZo5cNF
+    W/XULx9gJooj2VjmMFWRabVW8Byp9FsjM3VJl9VDxPPrU9LArjL+NIPCMiJFQ8jvjBxi
+    Txybm1d6reFAAllbpxGD9syLdSvsBvjQaNyuwTZnDkhO1XSXUNa9uKPjpoMG1ZYLOx7i
+    u5YMnVdNs5iTiFxIQcPspTUj+/E650yscVX8PfTc1MxP/tJYzAF1NNhbKTtLNAFWv6T1
+    hdpTC6j8SrS+vZ4n7Jj+eZWlypQsnizLTTF+HoS8b401aMEkS4CFq+aufQE6yYS8x4nI
+    Dfvw==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1696338115;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=AvW+X7TnuvQSmOQWBDMXpfLpHp0X0rQYKQIMVG8JkH8=;
+    b=feZ+cqNwotdO3KEoXEawSFD/lJNElCylDGN5F+Y64jbK5AUmxzqcr/g18yj5oRxrQP
+    kyJ87Qykgwge5XYZMa92W/gkuFI5UkdSyNvmozR9XDBz2xTP8CTz5OzhencnFSU2TM8L
+    rjPtsHF9amIEQa2mT8DIgjGZJDf3aHqgxXZfvZimkiJISsjE/93UtjQ0GuZXdyBTuQyB
+    +v1V7hEOAKgrhbNZ54/MsjDEBiT69igvSeXChDgNTk1s4SVyziy4Cg46SLAN3h8K7FTO
+    Gr0CfYOvywQcR8hBQuGOmLZg9TIgCkbDsnYL7N5rEy1aqfFPL3aFopY+kFK5Q9vGK3uC
+    3zWQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1696338115;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=AvW+X7TnuvQSmOQWBDMXpfLpHp0X0rQYKQIMVG8JkH8=;
+    b=GdV0/i8ao1XAWoe0l249j8oEISXEw5v65hSiDlVEhuGGCJUf32aObuXz+mYZvz2NW/
+    TYxc0BZ2JH0N7bBJuBDw==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8paF1A=="
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.8.2 DYNA|AUTH)
+    with ESMTPSA id R04c57z93D1s2Me
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Tue, 3 Oct 2023 15:01:54 +0200 (CEST)
+Date:   Tue, 3 Oct 2023 15:01:48 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Nishanth Menon <nm@ti.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Christian Marangi <ansuelsmth@gmail.com>
+Subject: Re: [PATCH v4 05/23] interconnect: icc-clk: add support for scaling
+ using OPP
+Message-ID: <ZRwQvP_GbvwvLAn8@gerhold.net>
+References: <20230827115033.935089-1-dmitry.baryshkov@linaro.org>
+ <20230827115033.935089-6-dmitry.baryshkov@linaro.org>
+ <493aff10d698c9ca5bdbeae45250f5fe.sboyd@kernel.org>
+ <7312633f-3b53-43a1-b6e3-010513c2a1e2@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <169633539510.282606.1450427416869008072.robh@kernel.org>
+In-Reply-To: <7312633f-3b53-43a1-b6e3-010513c2a1e2@linaro.org>
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 03, 2023 at 07:16:35AM -0500, Rob Herring wrote:
+On Tue, Oct 03, 2023 at 11:30:28AM +0300, Dmitry Baryshkov wrote:
+> On 28/08/2023 21:09, Stephen Boyd wrote:
+> > Quoting Dmitry Baryshkov (2023-08-27 04:50:15)
+> > > diff --git a/drivers/interconnect/icc-clk.c b/drivers/interconnect/icc-clk.c
+> > > index d787f2ea36d9..45ffb068979d 100644
+> > > --- a/drivers/interconnect/icc-clk.c
+> > > +++ b/drivers/interconnect/icc-clk.c
+> > > @@ -25,12 +28,16 @@ struct icc_clk_provider {
+> > >   static int icc_clk_set(struct icc_node *src, struct icc_node *dst)
+> > >   {
+> > >          struct icc_clk_node *qn = src->data;
+> > > +       unsigned long rate = icc_units_to_bps(src->peak_bw);
+> > >          int ret;
+> > >          if (!qn || !qn->clk)
+> > >                  return 0;
+> > > -       if (!src->peak_bw) {
+> > > +       if (qn->opp)
+> > > +               return dev_pm_opp_set_rate(qn->dev, rate);
+> > 
+> > Just curious how does lockdep do with this? Doesn't OPP call into
+> > interconnect code, so lockdep will complain about ABBA?
 > 
-> On Tue, 03 Oct 2023 16:42:27 +0530, Manivannan Sadhasivam wrote:
-> > From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > 
-> > Except scaling UFS and bus clocks, it's necessary to scale also the
-> > voltages of regulators or power domain performance state levels.  Adding
-> > Operating Performance Points table allows to adjust power domain
-> > performance state, depending on the UFS clock speed.
-> > 
-> > OPPv2 deprecates previous property limited to clock scaling:
-> > freq-table-hz.
-> > 
-> > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > Reviewed-by: Rob Herring <robh@kernel.org>
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  .../devicetree/bindings/ufs/ufs-common.yaml   | 36 ++++++++++++++++---
-> >  1 file changed, 32 insertions(+), 4 deletions(-)
-> > 
-> 
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
-> 
-> yamllint warnings/errors:
-> ./Documentation/devicetree/bindings/ufs/ufs-common.yaml:90:20: [error] string value is redundantly quoted with any quotes (quoted-strings)
-> ./Documentation/devicetree/bindings/ufs/ufs-common.yaml:91:26: [error] string value is redundantly quoted with any quotes (quoted-strings)
-> ./Documentation/devicetree/bindings/ufs/ufs-common.yaml:91:36: [error] string value is redundantly quoted with any quotes (quoted-strings)
+> Unfortunately it does. It seems, the icc-clk is not a proper way to go here.
+> I will take a look at reusing set_required_opps for this case.
 > 
 
-Oops! I ran the check on wrong binding file :/ Will fix it in next version.
+Could you elaborate a bit which locks exactly cause trouble here?
+I'm probably missing something here.
 
-- Mani
+From a quick look at the OPP code I don't see a global lock taken there
+for the entire OPP switch sequence, so I'm not sure how this could cause
+an ABBA deadlock.
 
-> dtschema/dtc warnings/errors:
-> 
-> doc reference errors (make refcheckdocs):
-> 
-> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20231003111232.42663-2-manivannan.sadhasivam@linaro.org
-> 
-> The base for the series is generally the latest rc1. A different dependency
-> should be noted in *this* patch.
-> 
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
-> 
-> pip3 install dtschema --upgrade
-> 
-> Please check and re-submit after running the above command yourself. Note
-> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-> your schema. However, it must be unset to test all examples with your schema.
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+Thanks,
+Stephan
