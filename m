@@ -2,424 +2,229 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 039287B5E9B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 03:21:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FB157B5EB2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 03:33:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229965AbjJCBV5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Oct 2023 21:21:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48328 "EHLO
+        id S229945AbjJCBdU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Oct 2023 21:33:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238973AbjJCBV4 (ORCPT
+        with ESMTP id S229875AbjJCBdT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Oct 2023 21:21:56 -0400
-Received: from mail-qv1-xf2d.google.com (mail-qv1-xf2d.google.com [IPv6:2607:f8b0:4864:20::f2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78444CC;
-        Mon,  2 Oct 2023 18:21:53 -0700 (PDT)
-Received: by mail-qv1-xf2d.google.com with SMTP id 6a1803df08f44-65d0da28fa8so2662516d6.0;
-        Mon, 02 Oct 2023 18:21:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696296112; x=1696900912; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TmawSKDHPmLbOIorFdlooZUH4qEwSf/uQjkWv2LDI2o=;
-        b=mi5EnenUknMscHuytAPiBFK5WXLboXRAKDarKVZ5U+XgiQamuDa7Wu9aRTk0gjLTJI
-         nmMIyc31oeBokNHF5Rlk/tA7W0MufIifk8AarK7lpT6dWpGzJmKRFnjFpDBNSgOh1uyx
-         ky7qL4nO9GwFGHZMDu+YPPo0N5NA3o4lS6uBuL7miwmPunMOhZ3EDsJBLIS+J4eKsOxQ
-         9MZvNDSUZF+ZOrbpQmSV6iBykjlMdpVwt4nAPV1BviwiMIKj/GMe39xeSvqnTfv4H3AR
-         J8B+Hx7nBTSGeDRSiKTZGLqvmg1dA9Y4JZGCgQYBkndVeSwiOM+VNybKcUlwU4N81hNx
-         ktqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696296112; x=1696900912;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=TmawSKDHPmLbOIorFdlooZUH4qEwSf/uQjkWv2LDI2o=;
-        b=cnhA1WGHRNOLzljzPcKVc1jGb20rzUD5Ir8dwwNk5J+/dfNQ/jtwHfm0qYQKapQYXL
-         OXnZaQGbkWvXcfBiyd2lRP96rZtXyuPCLUshBvy3cQGrWVTmP9C/fKlBPHzbv7ZMZ0yV
-         jCGKcJN1TfKu5U6+L1fqiBWZA+qQ7T/ZDS/wkxDvzoulQnxe8JN4KIDgvqgvHMP6lL1X
-         scbv+PaEXPtxzNwAVh1t9djwXgd5a3rktUUk1lYJeUGdKRmmXOEIT5iVJda+ZhaDcZJ+
-         Lm+LI7C63iVbeAVSwwOlW2BZNlOstUUd18bnbJ76tgqkqRSjiaK0/iD33rZiKAUW+thk
-         yhUQ==
-X-Gm-Message-State: AOJu0Yz4gxY7BNAIVM91AOY0S4ZkTGGnXqtgx+R3eQV723c6FGkMkW+n
-        BV+SLciFDo7r/45ox8bl3g0=
-X-Google-Smtp-Source: AGHT+IG7S3j/uW/56XVWyVKQgd1db64YFHpCKslUxZEaqKsOrCOxD1qEivzGSfvFL6Sno8OWG/g9hw==
-X-Received: by 2002:a0c:b312:0:b0:65d:6665:b422 with SMTP id s18-20020a0cb312000000b0065d6665b422mr10236666qve.33.1696296112570;
-        Mon, 02 Oct 2023 18:21:52 -0700 (PDT)
-Received: from localhost ([2607:fea8:529e:7800::efbe])
-        by smtp.gmail.com with ESMTPSA id d9-20020a0cf0c9000000b00646e0411e8csm56779qvl.30.2023.10.02.18.21.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Oct 2023 18:21:52 -0700 (PDT)
-From:   Richard Acayan <mailingradian@gmail.com>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
-        Ryan McCann <quic_rmccann@quicinc.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Liu Shixin <liushixin2@huawei.com>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH v2 6/6] arm64: dts: qcom: sdm670: add display subsystem
-Date:   Mon,  2 Oct 2023 21:21:27 -0400
-Message-ID: <20231003012119.857198-15-mailingradian@gmail.com>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231003012119.857198-9-mailingradian@gmail.com>
-References: <20231003012119.857198-9-mailingradian@gmail.com>
+        Mon, 2 Oct 2023 21:33:19 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D405A9E;
+        Mon,  2 Oct 2023 18:33:15 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3930kbZF031647;
+        Tue, 3 Oct 2023 01:32:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=eQzTMLkI/SRnx3s8MUN9c1/X05zKDhSPiiowucxwbdc=;
+ b=njecMQ/jKOtuFgJ/7DfaiOJvutb63oEelRpFLy4ORPirH8Z8N4YQTmMZQJEyuyy3cwAJ
+ 0wpBCvqm6mrNtlPCOXGavPoD5iTCKrSqziOTxChaMwEgD7bSFk2Ol1luOpmxCRghC7xI
+ 0g8dsM3fWCJnJ1V64Du9VgzzAqrPNuHaap+njjeT2cVhbvBcmXtkP1zoVqhP3XaGeqpO
+ oo9N7CaJiGRZGsmxAkdjW+treslP57HQTybG8EdArpTCH5/aX8KW0EtGCQ5lX3ZJO6UA
+ PxXzRw907iHEOLS3PmaR93pn6ohErQKa/hHGxA8xsL5KyhiTosV1B5ln4xNiqQWabLNy SQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tg1v38yea-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 03 Oct 2023 01:32:53 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3931WqWG008541
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 3 Oct 2023 01:32:52 GMT
+Received: from [10.110.1.90] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 2 Oct
+ 2023 18:32:49 -0700
+Message-ID: <b9bd5423-f6e3-e511-613c-b6535c27b205@quicinc.com>
+Date:   Mon, 2 Oct 2023 18:32:47 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v3 6/7] drm/msm/dp: add
+ pm_runtime_force_suspend()/resume()
+Content-Language: en-US
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>
+CC:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <dianders@chromium.org>, <vkoul@kernel.org>,
+        <daniel@ffwll.ch>, <airlied@gmail.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <quic_jesszhan@quicinc.com>,
+        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1694813901-26952-1-git-send-email-quic_khsieh@quicinc.com>
+ <1694813901-26952-7-git-send-email-quic_khsieh@quicinc.com>
+ <CAA8EJpqPXoFX4LXyXYgfh07Vpxg-KgD8VBR6x5bXf4GOJmbOtw@mail.gmail.com>
+ <2f98d5f1-57c1-d9fe-cb1c-b975db057287@quicinc.com>
+ <CAA8EJpr2wRq6Txi7YAQpJKa_9UGqH_nmHzvVOaAPkwOrtDg4Tw@mail.gmail.com>
+ <CAE-0n53dqHONzMTd_ZC-fKWTzDVq6Wqwo4OFZMUcghZ5SD5RhA@mail.gmail.com>
+ <65566a68-3510-2e5f-7d57-e4dba08c008c@quicinc.com>
+ <1d9bf80d-0267-937b-4dd9-c57db7a89cb4@quicinc.com>
+ <CAE-0n51Hrs66oG4NF5rDETkVO-ocG_6_=Aqc5cE-qPDViSgKyA@mail.gmail.com>
+ <58701008-bb93-e5c6-9ca0-5bc43f9a46f0@quicinc.com>
+ <CAE-0n50N6hXM7qQZzccKy2X-kcru9n7Nvgn_V4tOHTnLn64qjw@mail.gmail.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAE-0n50N6hXM7qQZzccKy2X-kcru9n7Nvgn_V4tOHTnLn64qjw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: FEktAmGvqznxNRqtU58vxTDLwBAln3xk
+X-Proofpoint-ORIG-GUID: FEktAmGvqznxNRqtU58vxTDLwBAln3xk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-02_16,2023-10-02_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ phishscore=0 mlxscore=0 mlxlogscore=999 suspectscore=0 bulkscore=0
+ clxscore=1015 spamscore=0 impostorscore=0 priorityscore=1501 adultscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310030011
+X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Snapdragon 670 has a display subsystem for controlling and
-outputting to the display. Add support for it in the device tree.
 
-Signed-off-by: Richard Acayan <mailingradian@gmail.com>
----
- arch/arm64/boot/dts/qcom/sdm670.dtsi | 294 +++++++++++++++++++++++++++
- 1 file changed, 294 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-index 84cd2e39266f..427415ed4e4a 100644
---- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-@@ -6,6 +6,7 @@
-  * Copyright (c) 2022, Richard Acayan. All rights reserved.
-  */
- 
-+#include <dt-bindings/clock/qcom,dispcc-sdm845.h>
- #include <dt-bindings/clock/qcom,gcc-sdm845.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
- #include <dt-bindings/dma/qcom-gpi.h>
-@@ -400,6 +401,30 @@ cpu6_opp10: opp-1996800000 {
- 		};
- 	};
- 
-+	dsi_opp_table: opp-table-dsi {
-+		compatible = "operating-points-v2";
-+
-+		opp-19200000 {
-+			opp-hz = /bits/ 64 <19200000>;
-+			required-opps = <&rpmhpd_opp_min_svs>;
-+		};
-+
-+		opp-180000000 {
-+			opp-hz = /bits/ 64 <180000000>;
-+			required-opps = <&rpmhpd_opp_low_svs>;
-+		};
-+
-+		opp-275000000 {
-+			opp-hz = /bits/ 64 <275000000>;
-+			required-opps = <&rpmhpd_opp_svs>;
-+		};
-+
-+		opp-358000000 {
-+			opp-hz = /bits/ 64 <358000000>;
-+			required-opps = <&rpmhpd_opp_svs_l1>;
-+		};
-+	};
-+
- 	psci {
- 		compatible = "arm,psci-1.0";
- 		method = "smc";
-@@ -1352,6 +1377,275 @@ spmi_bus: spmi@c440000 {
- 			#interrupt-cells = <4>;
- 		};
- 
-+		mdss: display-subsystem@ae00000 {
-+			compatible = "qcom,sdm670-mdss";
-+			reg = <0 0x0ae00000 0 0x1000>;
-+			reg-names = "mdss";
-+
-+			power-domains = <&dispcc MDSS_GDSC>;
-+
-+			clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+				 <&dispcc DISP_CC_MDSS_MDP_CLK>;
-+			clock-names = "iface", "core";
-+
-+			interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-controller;
-+			#interrupt-cells = <1>;
-+
-+			interconnects = <&mmss_noc MASTER_MDP_PORT0 0 &mem_noc SLAVE_EBI_CH0 0>,
-+					<&mmss_noc MASTER_MDP_PORT1 0 &mem_noc SLAVE_EBI_CH0 0>;
-+			interconnect-names = "mdp0-mem", "mdp1-mem";
-+
-+			iommus = <&apps_smmu 0x880 0x8>,
-+				 <&apps_smmu 0xc80 0x8>;
-+
-+			status = "disabled";
-+
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			ranges;
-+
-+			mdss_mdp: display-controller@ae01000 {
-+				compatible = "qcom,sdm670-dpu";
-+				reg = <0 0x0ae01000 0 0x8f000>,
-+				      <0 0x0aeb0000 0 0x2008>;
-+				reg-names = "mdp", "vbif";
-+
-+				clocks = <&gcc GCC_DISP_AXI_CLK>,
-+					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+					 <&dispcc DISP_CC_MDSS_AXI_CLK>,
-+					 <&dispcc DISP_CC_MDSS_MDP_CLK>,
-+					 <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-+				clock-names = "gcc-bus", "iface", "bus", "core", "vsync";
-+
-+				assigned-clocks = <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-+				assigned-clock-rates = <19200000>;
-+				operating-points-v2 = <&mdp_opp_table>;
-+				power-domains = <&rpmhpd SDM670_CX>;
-+
-+				interrupt-parent = <&mdss>;
-+				interrupts = <0>;
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+						dpu_intf0_out: endpoint {
-+							remote-endpoint = <&mdss_dsi0_in>;
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+						dpu_intf1_out: endpoint {
-+							remote-endpoint = <&mdss_dsi1_in>;
-+						};
-+					};
-+				};
-+
-+				mdp_opp_table: opp-table {
-+					compatible = "operating-points-v2";
-+
-+					opp-19200000 {
-+						opp-hz = /bits/ 64 <19200000>;
-+						required-opps = <&rpmhpd_opp_min_svs>;
-+					};
-+
-+					opp-171428571 {
-+						opp-hz = /bits/ 64 <171428571>;
-+						required-opps = <&rpmhpd_opp_low_svs>;
-+					};
-+
-+					opp-358000000 {
-+						opp-hz = /bits/ 64 <358000000>;
-+						required-opps = <&rpmhpd_opp_svs_l1>;
-+					};
-+
-+					opp-430000000 {
-+						opp-hz = /bits/ 64 <430000000>;
-+						required-opps = <&rpmhpd_opp_nom>;
-+					};
-+				};
-+			};
-+
-+			mdss_dsi0: dsi@ae94000 {
-+				compatible = "qcom,sdm670-dsi-ctrl",
-+					     "qcom,mdss-dsi-ctrl";
-+				reg = <0 0x0ae94000 0 0x400>;
-+				reg-names = "dsi_ctrl";
-+
-+				interrupt-parent = <&mdss>;
-+				interrupts = <4>;
-+
-+				clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
-+					 <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
-+					 <&dispcc DISP_CC_MDSS_PCLK0_CLK>,
-+					 <&dispcc DISP_CC_MDSS_ESC0_CLK>,
-+					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+					 <&dispcc DISP_CC_MDSS_AXI_CLK>;
-+				clock-names = "byte",
-+					      "byte_intf",
-+					      "pixel",
-+					      "core",
-+					      "iface",
-+					      "bus";
-+				assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK_SRC>,
-+						  <&dispcc DISP_CC_MDSS_PCLK0_CLK_SRC>;
-+				assigned-clock-parents = <&mdss_dsi0_phy 0>,
-+							 <&mdss_dsi0_phy 1>;
-+
-+				operating-points-v2 = <&dsi_opp_table>;
-+				power-domains = <&rpmhpd SDM670_CX>;
-+
-+				phys = <&mdss_dsi0_phy>;
-+				phy-names = "dsi";
-+
-+				status = "disabled";
-+
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+						mdss_dsi0_in: endpoint {
-+							remote-endpoint = <&dpu_intf0_out>;
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+						mdss_dsi0_out: endpoint {
-+						};
-+					};
-+				};
-+			};
-+
-+			mdss_dsi0_phy: phy@ae94400 {
-+				compatible = "qcom,dsi-phy-10nm";
-+				reg = <0 0x0ae94400 0 0x200>,
-+				      <0 0x0ae94600 0 0x280>,
-+				      <0 0x0ae94a00 0 0x1e0>;
-+				reg-names = "dsi_phy",
-+					    "dsi_phy_lane",
-+					    "dsi_pll";
-+
-+				#clock-cells = <1>;
-+				#phy-cells = <0>;
-+
-+				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+					 <&rpmhcc RPMH_CXO_CLK>;
-+				clock-names = "iface", "ref";
-+
-+				status = "disabled";
-+			};
-+
-+			mdss_dsi1: dsi@ae96000 {
-+				compatible = "qcom,sdm670-dsi-ctrl",
-+					     "qcom,mdss-dsi-ctrl";
-+				reg = <0 0x0ae96000 0 0x400>;
-+				reg-names = "dsi_ctrl";
-+
-+				interrupt-parent = <&mdss>;
-+				interrupts = <5>;
-+
-+				clocks = <&dispcc DISP_CC_MDSS_BYTE1_CLK>,
-+					 <&dispcc DISP_CC_MDSS_BYTE1_INTF_CLK>,
-+					 <&dispcc DISP_CC_MDSS_PCLK1_CLK>,
-+					 <&dispcc DISP_CC_MDSS_ESC1_CLK>,
-+					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+					 <&dispcc DISP_CC_MDSS_AXI_CLK>;
-+				clock-names = "byte",
-+					      "byte_intf",
-+					      "pixel",
-+					      "core",
-+					      "iface",
-+					      "bus";
-+				assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE1_CLK_SRC>,
-+						  <&dispcc DISP_CC_MDSS_PCLK1_CLK_SRC>;
-+				assigned-clock-parents = <&mdss_dsi1_phy 0>, <&mdss_dsi1_phy 1>;
-+
-+				operating-points-v2 = <&dsi_opp_table>;
-+				power-domains = <&rpmhpd SDM670_CX>;
-+
-+				phys = <&mdss_dsi1_phy>;
-+				phy-names = "dsi";
-+
-+				status = "disabled";
-+
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+						mdss_dsi1_in: endpoint {
-+							remote-endpoint = <&dpu_intf1_out>;
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+						mdss_dsi1_out: endpoint {
-+						};
-+					};
-+				};
-+			};
-+
-+			mdss_dsi1_phy: phy@ae96400 {
-+				compatible = "qcom,dsi-phy-10nm";
-+				reg = <0 0x0ae96400 0 0x200>,
-+				      <0 0x0ae96600 0 0x280>,
-+				      <0 0x0ae96a00 0 0x10e>;
-+				reg-names = "dsi_phy",
-+					    "dsi_phy_lane",
-+					    "dsi_pll";
-+
-+				#clock-cells = <1>;
-+				#phy-cells = <0>;
-+
-+				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+					 <&rpmhcc RPMH_CXO_CLK>;
-+				clock-names = "iface", "ref";
-+
-+				status = "disabled";
-+			};
-+		};
-+
-+		dispcc: clock-controller@af00000 {
-+			compatible = "qcom,sdm845-dispcc";
-+			reg = <0 0x0af00000 0 0x10000>;
-+			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+				 <&gcc GCC_DISP_GPLL0_CLK_SRC>,
-+				 <&gcc GCC_DISP_GPLL0_DIV_CLK_SRC>,
-+				 <&mdss_dsi0_phy 0>,
-+				 <&mdss_dsi0_phy 1>,
-+				 <&mdss_dsi1_phy 0>,
-+				 <&mdss_dsi1_phy 1>,
-+				 <0>,
-+				 <0>;
-+			clock-names = "bi_tcxo",
-+				      "gcc_disp_gpll0_clk_src",
-+				      "gcc_disp_gpll0_div_clk_src",
-+				      "dsi0_phy_pll_out_byteclk",
-+				      "dsi0_phy_pll_out_dsiclk",
-+				      "dsi1_phy_pll_out_byteclk",
-+				      "dsi1_phy_pll_out_dsiclk",
-+				      "dp_link_clk_divsel_ten",
-+				      "dp_vco_divided_clk_src_mux";
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 		apps_smmu: iommu@15000000 {
- 			compatible = "qcom,sdm670-smmu-500", "qcom,smmu-500", "arm,mmu-500";
- 			reg = <0 0x15000000 0 0x80000>;
--- 
-2.42.0
+On 10/2/2023 3:58 PM, Stephen Boyd wrote:
+> Quoting Abhinav Kumar (2023-09-28 17:46:11)
+>> On 9/27/2023 3:01 PM, Stephen Boyd wrote:
+>>> Quoting Kuogee Hsieh (2023-09-25 09:07:18)
+>>>>
+>>>> However for external DP case, link training can not be guarantee always
+>>>> success without link rate or lane being reduced as Abhinav mentioned.
+>>>>
+>>>> In addition,  CTS (compliance test) it required to complete link
+>>>> training within 10ms after hpd asserted.
+>>>
+>>> Is it possible to change that timeout? I have to look around for the CTS
+>>> parameters because I'm pretty confused how it can work. What do we do if
+>>> DP wakes the system from suspend and asserts HPD? We need resume time to
+>>> be < 10ms?  That's not realistic.
+>>>
+>>
+>> No, the CTS doesnt say we need to finish link training within 10ms after
+>> HPD is asserted. It says it must be completed in 10ms after
+>> TRAINING_PATTERN_SET dpcd write.
+>>
+>> "Wait until the Source DUT writes 00h to the TRAINING_PATTERN_SET byte
+>> of Reference Sink DPCD Link Configuration Field to indicate the end of
+>> the link training. Stop the link training timer. Verify that link
+>> training completed in 10ms or less"
+>>
+>> That needs to be done independent of HPD so we can ignore the CTS point.
+> 
+> Great!
+> 
+>>
+>>>>
+>>>> I am not sure do link training at atomic_enable() can meet this timing
+>>>> requirement.
+> 
+> Why? It's putting some time bound on link training in general to only
+> take 10ms, right?
+> 
 
+Like I said, CTS is mentioning 10ms to finish link training after the 
+DUT writes 00h to the TRAINING_PATTERN_SET byte. So for this discussion 
+lets leave out CTS for now.
+
+>>>>
+>>>
+>>> At least in the DP spec itself it doesn't require the link to be trained
+>>> within 10ms of HPD being asserted. Instead it simply recommends that the
+>>> OS start configuring the display promptly after HPD is asserted, e.g.
+>>> within 100ms. There's some strict timing on IRQ_HPD, so the driver must
+>>> read DPCD registers within 100ms of IRQ_HPD rising edge; maybe that is
+>>> what CTS is checking for?
+>>>
+>>> TL;DR: I don't see why CTS should stop us from link training in
+>>> atomic_enable(). It would be beneficial to do so to make eDP and DP the
+>>> same. It would also help to report a drm connector being connected
+>>> _before_ link training so that userspace knows the link itself is the
+>>> bad part of the equation (and not that the DP connector looks
+>>> disconnected to userspace when in fact it really is connected and the
+>>> monitor is asserting HPD, just the link training failed).
+>>
+>> Its the corrective action of the userspace when it finds link is bad is
+>> the concern as I highlighted in the other response. Just reading and
+>> resetting link_status is not enough to recover.
+> 
+> What needs to be done to recover? Userspace will try to set a mode on
+> the connector again if the link status is bad and there were some modes
+> available. If there are zero modes and the link is bad, then it ignores
+> the connector. I'm not sure what else could be done to recover besides
+> try again and stop trying if no modes exist.
+> 
+
+Let me re-explain if I didnt make this clear last time.
+
+You are right. Thats all the "userspace" can do which is basically retry 
+the mode. And like I said, its again only going to fail. All the 
+corrective actions you mentioned below like ignoring the connector 
+entirely or consider that the display has link training problems are not 
+something we decided to go with on a commercial device where we expect 
+things to be more reliable.
+
+Let me re-explain what I explained in the prev response.
+
+If driver issues hot-plug after link-training:
+
+It would have implemented all the link training mechanisms such as 
+trying lower rates/number of lanes and made sure that when the usermode 
+queries the list of modes, only the modes which fit into the link rate 
+which was link trained successfully will be exposed and the chances of a 
+user ending up with a blank screen on connection are pretty high.
+
+This reduces the dependency on usermodes to be smart enough to implement 
+such policies and we would rather not depend on those unless we have 
+some reference to a compositor which is more sturdy. I do not think the 
+CrOS code you have pointed to is more sturdy than the driver mechanism 
+explained above.
+
+As opposed to this, if we just issue hotplug without any of this, 
+usermode does not know which mode to retry as we do not remove or edit 
+the mode list once link training fails.
+
+> Acting like the connector isn't connected makes the situation worse for
+> ChromeOS because userspace thinks there's nothing there so it can't try
+> to retrain the link again. Instead, userspace has to rely on the kernel
+> driver to train the link again. The kernel should just tell userspace
+> the link is bad so userspace can implement the policy to either ignore
+> the connector entirely or to consider it a display that is having link
+> training problems.
+> 
+
+What gain will it give if it retries the same mode blindly as opposed to 
+the safer option I have explained above. None of the policies you have 
+highlighted seem like something an end user will be satisfied with.
+
+> So again, I see no reason why the kernel driver thinks it can implement
+> a policy to train the link before indicating the drm connector is
+> connected. It should stop doing that. Instead it should tell userspace
+> that the connector is connected and then train the link when there's a
+> modeset. If the modeset fails then userspace can take action to either
+> figure out that the link is bad, or notify the user that the cable is
+> bad, or to try replugging or power cycle the monitor, etc. None of that
+> can be done if the kernel lies about the state of the connector because
+> the link training failed.
+
+Usermode is unable to take the corrective action without proper support 
+from the kernel like removing unsupported modes etc and I dont see other 
+drivers taking an action like that. Kernel is not lying. Its delaying 
+the status to a point where usermode can safely handle.
+
+Please explain to me how any of the policies you have explained usermode 
+can take are safer and have more chance of success than what we have now.
