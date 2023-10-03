@@ -2,242 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 111177B6304
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 10:01:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D12F47B631C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 10:04:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231328AbjJCIBN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Oct 2023 04:01:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34556 "EHLO
+        id S239220AbjJCIEq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Oct 2023 04:04:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230515AbjJCIBM (ORCPT
+        with ESMTP id S239205AbjJCIEm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Oct 2023 04:01:12 -0400
-Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF4DF90
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 01:01:08 -0700 (PDT)
-Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-5a21ea6baccso7831897b3.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 01:01:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696320068; x=1696924868; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z8UNK8jjHO3j+XhJ8hgifUB4wEZkucPxPTntH8sr6bo=;
-        b=SEYCFJcAiJDRnXHARaPMiRX+1OiFkj9POytTw9u25xpV74i6o7P1Eu/n9jp+vfM/0B
-         7Aa6YHO/5FKuticWu4Tg7ZhlgCNSDhl5igPUcbDrrECdHSZcVm3eztzevkifGQc+GX+F
-         ZCBBiKiM+oQXE65qO7V8ZR1seG1ZdZGlZ48XSpdPH/0tIVGa+TZj8P0ftNdp4Ea4cJIR
-         q8mXSL7eGSBwt1lEENecIHHQrhdoWsWV9OHbZYeAte+fn2Fmu0vTYAqo+PULPPHtlvXV
-         V90HpdLxYfaN4+IEv5lQsv/J3w/tbNzp8SjEPlTDgJYgflo+RAfYkJsDUCZBGD0jzcfM
-         BbOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696320068; x=1696924868;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Z8UNK8jjHO3j+XhJ8hgifUB4wEZkucPxPTntH8sr6bo=;
-        b=NDw2tWj4v97gU4whmPTSD6EghgfyDCOBGSa+RFUIZur7Ak5EtL9oajzj3ycbOTYEwP
-         ePc4A2k8VcIew0KVBNMRQZjvM6qwbN32BMn4wyEU0BLY0DmhXA/jTmJaUVyUq07M/p64
-         uNIRTcqsSWMxgmarCdbTaY7+me2ydHGlUMAIPq1s/1yTUI+wZJLH5Y0lbCNAZ3FVOZyP
-         yLIRyL7FKHLvNjlhD90WxomkFj07xNLqlyBWBwz1Yf6fMR+L5955md1Em12P7Mdi4Ppu
-         7tvsgQ4JUNjI2yJ0mVDoClELmiXcH673EIQOsuqs7Oe7mIyTQ33OGxJPxe4QxQyR3Fuo
-         nSKw==
-X-Gm-Message-State: AOJu0YwovxDnVG1IBPGCVqoEt9428FzIJjCIrldFqyPy0VE7cpGqh6qd
-        /X9F1cd+VlmfFWe86wove1ZADTtLYO5HTsGLWjd1bg==
-X-Google-Smtp-Source: AGHT+IE+/CazD7WPLFjjvYPVPNhuviavjNh2ISOII73m27jele67HS6ZBQ1QSauV1lTmIrRGFsiwTD4brCHFPK6dMhg=
-X-Received: by 2002:a81:72c5:0:b0:59b:2458:f612 with SMTP id
- n188-20020a8172c5000000b0059b2458f612mr13268838ywc.28.1696320067941; Tue, 03
- Oct 2023 01:01:07 -0700 (PDT)
+        Tue, 3 Oct 2023 04:04:42 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DC2FA3;
+        Tue,  3 Oct 2023 01:04:39 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3937UXkH029952;
+        Tue, 3 Oct 2023 08:04:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=/VgCu5h1nT1rdcGyJuB5n5ilmO0Vmv6JYljZEWurec0=;
+ b=Dy3D6+GWlqV0MLxGJJwCA/glEYktMe5ihNFbs6SAnoUI9iSpIMuL+oeTpsNOJj2tu+Q/
+ ktxJiZOxMB2WMEog/UYmYH2aUsy+n5qQ4p1sWvJTnrzt+mTJN5DeAp+6A1BpUUP41UTf
+ LPsl2anTHYoeS1eWY61Gy+WdGIHA9EHCcjHd/eFiKolAniOJ4Kmz+Ljo4sGTTjdlYgVQ
+ wjrQ1j6Y3bx/Gl/vL8oUpfjNGA1F9etvFd8JDeOMU4CopjEYwTccUdLSFhCFAffY166r
+ kZ3Y3OoYQWFIHolzc/8CSbD6N92fCVtXn3UIckeqHjD28ctZlk+/Z2BFdmY6rDci8pID 0Q== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tgbjgrd21-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 03 Oct 2023 08:04:31 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39384UjL025473
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 3 Oct 2023 08:04:30 GMT
+Received: from [10.214.66.58] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 3 Oct
+ 2023 01:04:26 -0700
+Message-ID: <5d99708e-95a0-401b-b636-4f535fdd5905@quicinc.com>
+Date:   Tue, 3 Oct 2023 13:34:23 +0530
 MIME-Version: 1.0
-References: <1694813901-26952-1-git-send-email-quic_khsieh@quicinc.com>
- <1694813901-26952-7-git-send-email-quic_khsieh@quicinc.com>
- <CAA8EJpqPXoFX4LXyXYgfh07Vpxg-KgD8VBR6x5bXf4GOJmbOtw@mail.gmail.com>
- <2f98d5f1-57c1-d9fe-cb1c-b975db057287@quicinc.com> <CAA8EJpr2wRq6Txi7YAQpJKa_9UGqH_nmHzvVOaAPkwOrtDg4Tw@mail.gmail.com>
- <CAE-0n53dqHONzMTd_ZC-fKWTzDVq6Wqwo4OFZMUcghZ5SD5RhA@mail.gmail.com>
- <65566a68-3510-2e5f-7d57-e4dba08c008c@quicinc.com> <1d9bf80d-0267-937b-4dd9-c57db7a89cb4@quicinc.com>
- <CAE-0n51Hrs66oG4NF5rDETkVO-ocG_6_=Aqc5cE-qPDViSgKyA@mail.gmail.com>
- <58701008-bb93-e5c6-9ca0-5bc43f9a46f0@quicinc.com> <CAE-0n50N6hXM7qQZzccKy2X-kcru9n7Nvgn_V4tOHTnLn64qjw@mail.gmail.com>
- <b9bd5423-f6e3-e511-613c-b6535c27b205@quicinc.com>
-In-Reply-To: <b9bd5423-f6e3-e511-613c-b6535c27b205@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 3 Oct 2023 11:00:56 +0300
-Message-ID: <CAA8EJprK8W5qysWGD5pv=6A6mqnEZqPAF0DDpDgF0pa+=do-yg@mail.gmail.com>
-Subject: Re: [PATCH v3 6/7] drm/msm/dp: add pm_runtime_force_suspend()/resume()
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, dianders@chromium.org, vkoul@kernel.org,
-        daniel@ffwll.ch, airlied@gmail.com, agross@kernel.org,
-        andersson@kernel.org, quic_jesszhan@quicinc.com,
-        quic_sbillaka@quicinc.com, marijn.suijten@somainline.org,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] arm64: dts: qcom: Add interconnect nodes for SDX75
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <dmitry.baryshkov@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1695720564-2978-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1695720564-2978-2-git-send-email-quic_rohiagar@quicinc.com>
+ <35703a29-5c5a-47a8-9a4b-04953dc3faba@linaro.org>
+Content-Language: en-US
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+In-Reply-To: <35703a29-5c5a-47a8-9a4b-04953dc3faba@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: voej0zTun7aGK_ecJJ7QpyWL5kctmoBL
+X-Proofpoint-GUID: voej0zTun7aGK_ecJJ7QpyWL5kctmoBL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-03_04,2023-10-02_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 spamscore=0 priorityscore=1501 adultscore=0
+ suspectscore=0 bulkscore=0 impostorscore=0 mlxlogscore=694 phishscore=0
+ malwarescore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310030056
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 3 Oct 2023 at 04:33, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->
->
->
-> On 10/2/2023 3:58 PM, Stephen Boyd wrote:
-> > Quoting Abhinav Kumar (2023-09-28 17:46:11)
-> >> On 9/27/2023 3:01 PM, Stephen Boyd wrote:
-> >>> Quoting Kuogee Hsieh (2023-09-25 09:07:18)
-> >>>>
-> >>>> However for external DP case, link training can not be guarantee always
-> >>>> success without link rate or lane being reduced as Abhinav mentioned.
-> >>>>
-> >>>> In addition,  CTS (compliance test) it required to complete link
-> >>>> training within 10ms after hpd asserted.
-> >>>
-> >>> Is it possible to change that timeout? I have to look around for the CTS
-> >>> parameters because I'm pretty confused how it can work. What do we do if
-> >>> DP wakes the system from suspend and asserts HPD? We need resume time to
-> >>> be < 10ms?  That's not realistic.
-> >>>
-> >>
-> >> No, the CTS doesnt say we need to finish link training within 10ms after
-> >> HPD is asserted. It says it must be completed in 10ms after
-> >> TRAINING_PATTERN_SET dpcd write.
-> >>
-> >> "Wait until the Source DUT writes 00h to the TRAINING_PATTERN_SET byte
-> >> of Reference Sink DPCD Link Configuration Field to indicate the end of
-> >> the link training. Stop the link training timer. Verify that link
-> >> training completed in 10ms or less"
-> >>
-> >> That needs to be done independent of HPD so we can ignore the CTS point.
-> >
-> > Great!
-> >
-> >>
-> >>>>
-> >>>> I am not sure do link training at atomic_enable() can meet this timing
-> >>>> requirement.
-> >
-> > Why? It's putting some time bound on link training in general to only
-> > take 10ms, right?
-> >
->
-> Like I said, CTS is mentioning 10ms to finish link training after the
-> DUT writes 00h to the TRAINING_PATTERN_SET byte. So for this discussion
-> lets leave out CTS for now.
->
-> >>>>
-> >>>
-> >>> At least in the DP spec itself it doesn't require the link to be trained
-> >>> within 10ms of HPD being asserted. Instead it simply recommends that the
-> >>> OS start configuring the display promptly after HPD is asserted, e.g.
-> >>> within 100ms. There's some strict timing on IRQ_HPD, so the driver must
-> >>> read DPCD registers within 100ms of IRQ_HPD rising edge; maybe that is
-> >>> what CTS is checking for?
-> >>>
-> >>> TL;DR: I don't see why CTS should stop us from link training in
-> >>> atomic_enable(). It would be beneficial to do so to make eDP and DP the
-> >>> same. It would also help to report a drm connector being connected
-> >>> _before_ link training so that userspace knows the link itself is the
-> >>> bad part of the equation (and not that the DP connector looks
-> >>> disconnected to userspace when in fact it really is connected and the
-> >>> monitor is asserting HPD, just the link training failed).
-> >>
-> >> Its the corrective action of the userspace when it finds link is bad is
-> >> the concern as I highlighted in the other response. Just reading and
-> >> resetting link_status is not enough to recover.
-> >
-> > What needs to be done to recover? Userspace will try to set a mode on
-> > the connector again if the link status is bad and there were some modes
-> > available. If there are zero modes and the link is bad, then it ignores
-> > the connector. I'm not sure what else could be done to recover besides
-> > try again and stop trying if no modes exist.
-> >
->
-> Let me re-explain if I didnt make this clear last time.
->
-> You are right. Thats all the "userspace" can do which is basically retry
-> the mode. And like I said, its again only going to fail. All the
-> corrective actions you mentioned below like ignoring the connector
-> entirely or consider that the display has link training problems are not
-> something we decided to go with on a commercial device where we expect
-> things to be more reliable.
 
-I have had link training issues with one of my laptops (x86) and USB-C
-dock. Usually switching to lower resolution works in such cases.
-Moreover, in some cases after switching to low res, I can successfully
-switch to high res.
+On 9/27/2023 4:17 PM, Konrad Dybcio wrote:
+> On 26.09.2023 11:29, Rohit Agarwal wrote:
+>> Add interconnect nodes to support interconnects on SDX75.
+>> Also parallely add the interconnect property for UART required
+>> so that the bootup to shell does not break with interconnects
+>> in place.
+>>
+>> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+>> ---
+> [...]
+>
+>>   		scm: scm {
+>>   			compatible = "qcom,scm-sdx75", "qcom,scm";
+>> @@ -434,6 +448,8 @@
+>>   			clock-names = "m-ahb",
+>>   				      "s-ahb";
+>>   			iommus = <&apps_smmu 0xe3 0x0>;
+>> +			interconnects = <&clk_virt MASTER_QUP_CORE_0 0 &clk_virt SLAVE_QUP_CORE_0 0>;
+> 0 -> QCOM_ICC_TAG_ALWAYS (dt-bindings/interconnect/qcom,icc.h)
+Ok, Let me update this.
 
+Thanks,
+Rohit.
 >
-> Let me re-explain what I explained in the prev response.
->
-> If driver issues hot-plug after link-training:
->
-> It would have implemented all the link training mechanisms such as
-> trying lower rates/number of lanes and made sure that when the usermode
-> queries the list of modes, only the modes which fit into the link rate
-> which was link trained successfully will be exposed and the chances of a
-> user ending up with a blank screen on connection are pretty high.
->
-> This reduces the dependency on usermodes to be smart enough to implement
-> such policies and we would rather not depend on those unless we have
-> some reference to a compositor which is more sturdy. I do not think the
-> CrOS code you have pointed to is more sturdy than the driver mechanism
-> explained above.
->
-> As opposed to this, if we just issue hotplug without any of this,
-> usermode does not know which mode to retry as we do not remove or edit
-> the mode list once link training fails.
-
-I think we are trying to be overprotective here. From my point of
-view, there are two kinds of issues:
-1) We know that some modes can not be supported (e.g. because of the
-amount of lanes available or because of the board link rate
-limitations).
-Of course the kernel should not present these modes to userspace
-
-2) Modes that pass known limitations, but can not be set e.g. because
-of the bad cable or dirty connector.
-Neither kernel nor userspace have control here. Judging from my
-experience with x86, we should pass all these modes to userspace. Then
-the user can select what seems to be working.
-
->
-> > Acting like the connector isn't connected makes the situation worse for
-> > ChromeOS because userspace thinks there's nothing there so it can't try
-> > to retrain the link again. Instead, userspace has to rely on the kernel
-> > driver to train the link again. The kernel should just tell userspace
-> > the link is bad so userspace can implement the policy to either ignore
-> > the connector entirely or to consider it a display that is having link
-> > training problems.
-> >
->
-> What gain will it give if it retries the same mode blindly as opposed to
-> the safer option I have explained above. None of the policies you have
-> highlighted seem like something an end user will be satisfied with.
->
-> > So again, I see no reason why the kernel driver thinks it can implement
-> > a policy to train the link before indicating the drm connector is
-> > connected. It should stop doing that. Instead it should tell userspace
-> > that the connector is connected and then train the link when there's a
-> > modeset. If the modeset fails then userspace can take action to either
-> > figure out that the link is bad, or notify the user that the cable is
-> > bad, or to try replugging or power cycle the monitor, etc. None of that
-> > can be done if the kernel lies about the state of the connector because
-> > the link training failed.
->
-> Usermode is unable to take the corrective action without proper support
-> from the kernel like removing unsupported modes etc and I dont see other
-> drivers taking an action like that. Kernel is not lying. Its delaying
-> the status to a point where usermode can safely handle.
->
-> Please explain to me how any of the policies you have explained usermode
-> can take are safer and have more chance of success than what we have now.
-
-
-
--- 
-With best wishes
-Dmitry
+> Konrad
