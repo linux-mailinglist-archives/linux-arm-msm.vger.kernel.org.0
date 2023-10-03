@@ -2,274 +2,369 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 886C67B6E2D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 18:16:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7089D7B6E6E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 18:27:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232014AbjJCQQp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Oct 2023 12:16:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36882 "EHLO
+        id S232066AbjJCQ1R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Oct 2023 12:27:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231464AbjJCQQp (ORCPT
+        with ESMTP id S232157AbjJCQ1Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Oct 2023 12:16:45 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E13129E;
-        Tue,  3 Oct 2023 09:16:41 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 393FdGIN018635;
-        Tue, 3 Oct 2023 16:16:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=douq6YaXrLgHHXN8AuyJXl6X3+hQetlgxqwpw4Dy7+I=;
- b=Aqc87l97RSof+Q00WtFw4N9AF1cl8dWcklNH0bt9Kzc3vUyrVh8t+1rL6uxx/5tsP9Jv
- 8bVHjhcYRAGEwMi2WllpeBx+wZR6oSHqXWJE9Y0QvDivCxvAJ1fqmkzUQmHr4cDo8zDR
- vcQLNz5xZDv5raPnUM668+piC+R+aQhT/hKiey5zjOgHo2OoLoSzDUJQUUIeUq5lsyXD
- 8PPJv2pGPBVRtnktjShRd1oP6TW6qYjlE1wL7pp3HcuVZIKUWVr4hzGVMNAhBspth9Lf
- 7UWdGw6yYpfLPdpSknXI+F7xVaDSllXj5V7b0EIPjcI03tOFxiFTTY9mYqxpCNybJjDT aw== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tgbjj9j9b-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 03 Oct 2023 16:16:29 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 393GGS5q020111
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 3 Oct 2023 16:16:28 GMT
-Received: from [10.110.20.163] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 3 Oct
- 2023 09:16:28 -0700
-Message-ID: <6246714a-3b40-e1b6-640e-560ba55b6436@quicinc.com>
-Date:   Tue, 3 Oct 2023 09:16:27 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v4 4/4] firmware: arm_scmi: Add qcom hvc/shmem transport
- support
-Content-Language: en-US
-To:     Sudeep Holla <sudeep.holla@arm.com>
-CC:     <cristian.marussi@arm.com>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20230718160833.36397-1-quic_nkela@quicinc.com>
- <20230911194359.27547-1-quic_nkela@quicinc.com>
- <20230911194359.27547-5-quic_nkela@quicinc.com>
- <20231003111914.63z35sn3r3k7drtp@bogus>
-From:   Nikunj Kela <quic_nkela@quicinc.com>
-In-Reply-To: <20231003111914.63z35sn3r3k7drtp@bogus>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: vFVXyVfHUSut4knD7meNZuZ0yPNxnPMk
-X-Proofpoint-ORIG-GUID: vFVXyVfHUSut4knD7meNZuZ0yPNxnPMk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-03_13,2023-10-02_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
- clxscore=1015 impostorscore=0 phishscore=0 malwarescore=0
- priorityscore=1501 mlxlogscore=999 adultscore=0 suspectscore=0 bulkscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310030123
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Tue, 3 Oct 2023 12:27:16 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C0EFD7;
+        Tue,  3 Oct 2023 09:27:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1696350432; x=1727886432;
+  h=date:from:to:cc:subject:message-id;
+  bh=l9UdjBKN9yue3ajt6IHFcmXyQRF44I1x/rrvo2Y6S/Y=;
+  b=U9EDoT/DAijcFXp9FdWythjIaIIxbJdo/E9PxTGYzjFVVBn/mfD60XNn
+   JnebMZInsL4p4A95aDbrKdIQFEfNJ1QbhSpS+pqzvgkBBM+ah6rn+HrOL
+   JNIjYL83Trr3aW6t2bm0u/qHkNYo2Q4Zg2REhz+XaS4OYv0rWI893bwCI
+   Hw2SxtpF/T8FWm8Dr5qQxKfbp3fsxiANASVRCEtXDJOYyTU4PBRqRpTKH
+   fTQ+WhATnUwlQP3FsWlTBBIiSLg8capJjr7/k8zOr4IVSa76eVKEytinN
+   R/nKrIUazHycX2tfTIkPu7z1bS5Pcz4Bex0eDhXKhzXlFqMfemy5KJzJF
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10852"; a="373259523"
+X-IronPort-AV: E=Sophos;i="6.03,197,1694761200"; 
+   d="scan'208";a="373259523"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Oct 2023 09:27:11 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10852"; a="841412235"
+X-IronPort-AV: E=Sophos;i="6.03,197,1694761200"; 
+   d="scan'208";a="841412235"
+Received: from lkp-server02.sh.intel.com (HELO c3b01524d57c) ([10.239.97.151])
+  by FMSMGA003.fm.intel.com with ESMTP; 03 Oct 2023 09:27:08 -0700
+Received: from kbuild by c3b01524d57c with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qniEk-0007Qf-1g;
+        Tue, 03 Oct 2023 16:27:06 +0000
+Date:   Wed, 04 Oct 2023 00:26:28 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Andrew Morton <akpm@linux-foundation.org>
+Cc:     Linux Memory Management List <linux-mm@kvack.org>,
+        amd-gfx@lists.freedesktop.org, bpf@vger.kernel.org,
+        linux-arch@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org, linux-hardening@vger.kernel.org
+Subject: [linux-next:master] BUILD REGRESSION
+ c9f2baaa18b5ea8f006a2b3a616da9597c71d15e
+Message-ID: <202310040009.HOWj2ngq-lkp@intel.com>
+User-Agent: s-nail v14.9.24
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git master
+branch HEAD: c9f2baaa18b5ea8f006a2b3a616da9597c71d15e  Add linux-next specific files for 20231003
 
-On 10/3/2023 4:19 AM, Sudeep Holla wrote:
-> On Mon, Sep 11, 2023 at 12:43:59PM -0700, Nikunj Kela wrote:
->> This change adds the support for SCMI message exchange on Qualcomm
->> virtual platforms.
->>
->> The hypervisor associates an object-id also known as capability-id
->> with each hvc doorbell object. The capability-id is used to identify the
->> doorbell from the VM's capability namespace, similar to a file-descriptor.
->>
->> The hypervisor, in addition to the function-id, expects the capability-id
->> to be passed in x1 register when HVC call is invoked.
->>
->> The function-id & capability-id are allocated by the hypervisor on bootup
->> and are stored in the shmem region by the firmware before starting Linux.
->>
->> Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
->> ---
->>   drivers/firmware/arm_scmi/driver.c |  1 +
->>   drivers/firmware/arm_scmi/smc.c    | 47 ++++++++++++++++++++++++++----
->>   2 files changed, 43 insertions(+), 5 deletions(-)
->>
->> diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
->> index 87383c05424b..ea344bc6ae49 100644
->> --- a/drivers/firmware/arm_scmi/driver.c
->> +++ b/drivers/firmware/arm_scmi/driver.c
->> @@ -2915,6 +2915,7 @@ static const struct of_device_id scmi_of_match[] = {
->>   #ifdef CONFIG_ARM_SCMI_TRANSPORT_SMC
->>   	{ .compatible = "arm,scmi-smc", .data = &scmi_smc_desc},
->>   	{ .compatible = "arm,scmi-smc-param", .data = &scmi_smc_desc},
->> +	{ .compatible = "qcom,scmi-hvc-shmem", .data = &scmi_smc_desc},
->>   #endif
->>   #ifdef CONFIG_ARM_SCMI_TRANSPORT_VIRTIO
->>   	{ .compatible = "arm,scmi-virtio", .data = &scmi_virtio_desc},
->> diff --git a/drivers/firmware/arm_scmi/smc.c b/drivers/firmware/arm_scmi/smc.c
->> index 0a0b7e401159..94ec07fdc14a 100644
->> --- a/drivers/firmware/arm_scmi/smc.c
->> +++ b/drivers/firmware/arm_scmi/smc.c
->> @@ -50,6 +50,9 @@
->>    * @func_id: smc/hvc call function id
->>    * @param_page: 4K page number of the shmem channel
->>    * @param_offset: Offset within the 4K page of the shmem channel
->> + * @cap_id: hvc doorbell's capability id to be used on Qualcomm virtual
->> + *	    platforms
->> + * @qcom_xport: Flag to indicate the transport on Qualcomm virtual platforms
->>    */
->>   
->>   struct scmi_smc {
->> @@ -63,6 +66,8 @@ struct scmi_smc {
->>   	u32 func_id;
->>   	u32 param_page;
->>   	u32 param_offset;
->> +	u64 cap_id;
-> Can it be unsigned long instead so that it just works for both 32 and 64 bit.
+Error/Warning reports:
 
-My first version of this patch was ulong but Bjorn suggested to make 
-this structure size fixed i.e. architecture independent. Hence changed 
-it to u64. If you are ok with ulong, I can change it back to ulong.
+https://lore.kernel.org/oe-kbuild-all/202309122047.cRi9yJrq-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202309130213.mSR7X2jZ-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202309192314.VBsjiIm5-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202309212121.cul1pTRa-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202309212339.hxhBu2F1-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202310032158.OvfQjd58-lkp@intel.com
 
+Error/Warning: (recently discovered and may have been fixed)
 
->
->> +	bool qcom_xport;
-> Do we really need this ?
+aarch64-linux-ld: ice_lib.c:(.text+0x7b94): undefined reference to `ice_is_cgu_present'
+aarch64-linux-ld: ice_lib.c:(.text+0x7bac): undefined reference to `ice_is_clock_mux_present_e810t'
+csky-linux-ld: include/asm-generic/bitops/instrumented-atomic.h:30:(.text+0x5be8): undefined reference to `ice_is_cgu_present'
+csky-linux-ld: include/asm-generic/bitops/instrumented-atomic.h:30:(.text+0x5bec): undefined reference to `ice_is_clock_mux_present_e810t'
+drivers/cpufreq/sti-cpufreq.c:215:50: warning: '%d' directive output may be truncated writing between 1 and 10 bytes into a region of size 2 [-Wformat-truncation=]
+drivers/gpu/drm/amd/amdgpu/../display/dc/core/dc.c:3928: warning: Function parameter or member 'srf_updates' not described in 'could_mpcc_tree_change_for_active_pipes'
+fs/bcachefs/bcachefs_format.h:215:25: warning: 'p' offset 3 in 'struct bkey' isn't aligned to 4 [-Wpacked-not-aligned]
+fs/bcachefs/bcachefs_format.h:217:25: warning: 'version' offset 27 in 'struct bkey' isn't aligned to 4 [-Wpacked-not-aligned]
+include/asm-generic/bitops/instrumented-atomic.h:30:(.text+0x5bdc): undefined reference to `ice_is_phy_rclk_present'
+include/linux/fortify-string.h:57:33: warning: writing 8 bytes into a region of size 0 [-Wstringop-overflow=]
+include/net/bluetooth/bluetooth.h:364:16: warning: 'memcmp' specified bound 6 exceeds source size 0 [-Wstringop-overread]
+kernel/bpf/helpers.c:1906:19: warning: no previous declaration for 'bpf_percpu_obj_new_impl' [-Wmissing-declarations]
+kernel/bpf/helpers.c:1942:18: warning: no previous declaration for 'bpf_percpu_obj_drop_impl' [-Wmissing-declarations]
+kernel/bpf/helpers.c:2477:18: warning: no previous declaration for 'bpf_throw' [-Wmissing-declarations]
+xtensa-linux-ld: ice_dpll.c:(.text+0x584): undefined reference to `ice_cgu_get_pin_type'
+xtensa-linux-ld: ice_dpll.c:(.text+0x588): undefined reference to `ice_cgu_get_pin_freq_supp'
+xtensa-linux-ld: ice_dpll.c:(.text+0x5e0): undefined reference to `ice_cgu_get_pin_name'
+xtensa-linux-ld: ice_dpll.c:(.text+0xfb2): undefined reference to `ice_get_cgu_rclk_pin_info'
 
-Not if we initialize it with a negative value since 0 is a valid value 
-for cap-id.
+Unverified Error/Warning (likely false positive, please contact us if interested):
 
+Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml:
+{standard input}:1162: Error: expected comma after name `mp' in .size directive
 
->
->>   };
->>   
->>   static irqreturn_t smc_msg_done_isr(int irq, void *data)
->> @@ -129,6 +134,7 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
->>   	struct resource res;
->>   	struct device_node *np;
->>   	u32 func_id;
->> +	u64 cap_id;
-> Ditto..
+Error/Warning ids grouped by kconfigs:
 
-Answered in earlier comment.
+gcc_recent_errors
+|-- alpha-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- arc-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- arc-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- arm-allmodconfig
+|   |-- drivers-cpufreq-sti-cpufreq.c:warning:d-directive-output-may-be-truncated-writing-between-and-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- arm-allyesconfig
+|   |-- drivers-cpufreq-sti-cpufreq.c:warning:d-directive-output-may-be-truncated-writing-between-and-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- arm64-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   `-- include-linux-fortify-string.h:warning:writing-bytes-into-a-region-of-size
+|-- arm64-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   `-- include-linux-fortify-string.h:warning:writing-bytes-into-a-region-of-size
+|-- arm64-randconfig-003-20231003
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- arm64-randconfig-r002-20230421
+|   `-- include-net-bluetooth-bluetooth.h:warning:memcmp-specified-bound-exceeds-source-size
+|-- arm64-randconfig-r013-20230308
+|   |-- aarch64-linux-ld:ice_lib.c:(.text):undefined-reference-to-ice_is_cgu_present
+|   `-- aarch64-linux-ld:ice_lib.c:(.text):undefined-reference-to-ice_is_clock_mux_present_e810t
+|-- csky-allmodconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- csky-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- csky-randconfig-r025-20230628
+|   |-- csky-linux-ld:include-asm-generic-bitops-instrumented-atomic.h:(.text):undefined-reference-to-ice_is_cgu_present
+|   |-- csky-linux-ld:include-asm-generic-bitops-instrumented-atomic.h:(.text):undefined-reference-to-ice_is_clock_mux_present_e810t
+|   `-- include-asm-generic-bitops-instrumented-atomic.h:(.text):undefined-reference-to-ice_is_phy_rclk_present
+|-- i386-allmodconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- i386-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- i386-buildonly-randconfig-001-20231003
+|   |-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_percpu_obj_drop_impl
+|   |-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_percpu_obj_new_impl
+|   `-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_throw
+|-- i386-buildonly-randconfig-005-20231003
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- i386-buildonly-randconfig-006-20231003
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- loongarch-allmodconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- loongarch-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- loongarch-defconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- loongarch-randconfig-001-20231003
+|   `-- Documentation-devicetree-bindings-mfd-qcom-pm8xxx.yaml:
+|-- m68k-allmodconfig
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- m68k-allyesconfig
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- microblaze-allmodconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- microblaze-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- mips-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- mips-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- openrisc-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- openrisc-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- parisc-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- parisc-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- powerpc-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   |-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- include-linux-fortify-string.h:warning:writing-bytes-into-a-region-of-size
+|-- powerpc-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   |-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- include-linux-fortify-string.h:warning:writing-bytes-into-a-region-of-size
+|-- powerpc-randconfig-002-20231003
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- powerpc64-randconfig-001-20231003
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- riscv-allmodconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- riscv-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|-- s390-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   |-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- include-linux-fortify-string.h:warning:writing-bytes-into-a-region-of-size
+|-- s390-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   |-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- include-linux-fortify-string.h:warning:writing-bytes-into-a-region-of-size
+|-- sh-randconfig-r014-20220820
+|   `-- standard-input:Error:expected-comma-after-name-mp-in-.size-directive
+|-- sparc-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- sparc-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- sparc64-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- sparc64-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- x86_64-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:Function-parameter-or-member-srf_updates-not-described-in-could_mpcc_tree_change_for_active_pipes
+|   `-- include-linux-fortify-string.h:warning:writing-bytes-into-a-region-of-size
+`-- xtensa-randconfig-r004-20220323
+    |-- xtensa-linux-ld:ice_dpll.c:(.text):undefined-reference-to-ice_cgu_get_pin_freq_supp
+    |-- xtensa-linux-ld:ice_dpll.c:(.text):undefined-reference-to-ice_cgu_get_pin_name
+    |-- xtensa-linux-ld:ice_dpll.c:(.text):undefined-reference-to-ice_cgu_get_pin_type
+    `-- xtensa-linux-ld:ice_dpll.c:(.text):undefined-reference-to-ice_get_cgu_rclk_pin_info
 
+elapsed time: 726m
 
->>   	int ret;
->>   
->>   	if (!tx)
->> @@ -158,9 +164,34 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
->>   		return -EADDRNOTAVAIL;
->>   	}
->>   
->> -	ret = of_property_read_u32(dev->of_node, "arm,smc-id", &func_id);
->> -	if (ret < 0)
->> -		return ret;
->> +	if (of_device_is_compatible(dev->of_node, "qcom,scmi-hvc-shmem")) {
->> +		scmi_info->qcom_xport = true;
->> +
->> +		/* The func-id & capability-id are kept in last 16 bytes of shmem.
->> +		 *     +-------+
->> +		 *     |       |
->> +		 *     | shmem |
->> +		 *     |       |
->> +		 *     |       |
->> +		 *     +-------+ <-- (size - 16)
->> +		 *     | funcId|
->> +		 *     +-------+ <-- (size - 8)
->> +		 *     | capId |
->> +		 *     +-------+ <-- size
->> +		 */
->> +
->> +		func_id = readl((void __iomem *)(scmi_info->shmem) + size - 16);
-> So unlike 'arm,scmi-smc', you don't want 'arm,smc-id' in the DT ? Any
-> particular reason ? Just to get both FID and cap ID from shmem ?
+configs tested: 107
+configs skipped: 2
 
-I could use smc-id binding for func-id, it's just two parameters will 
-come from two different places so thought of keeping everything at one 
-place to maintain consistency.  Since DT can't take cap-id, I decided to 
-move func-id. I am fine if you want me to use smc-id binding.
+tested configs:
+alpha                             allnoconfig   gcc  
+alpha                            allyesconfig   gcc  
+alpha                               defconfig   gcc  
+arc                              allmodconfig   gcc  
+arc                               allnoconfig   gcc  
+arc                              allyesconfig   gcc  
+arc                                 defconfig   gcc  
+arc                   randconfig-001-20231003   gcc  
+arm                              allmodconfig   gcc  
+arm                               allnoconfig   gcc  
+arm                              allyesconfig   gcc  
+arm                                 defconfig   gcc  
+arm                   randconfig-001-20231003   gcc  
+arm64                            allmodconfig   gcc  
+arm64                             allnoconfig   gcc  
+arm64                            allyesconfig   gcc  
+arm64                               defconfig   gcc  
+csky                             allmodconfig   gcc  
+csky                              allnoconfig   gcc  
+csky                             allyesconfig   gcc  
+csky                                defconfig   gcc  
+i386                             allmodconfig   gcc  
+i386                              allnoconfig   gcc  
+i386                             allyesconfig   gcc  
+i386         buildonly-randconfig-001-20231003   gcc  
+i386         buildonly-randconfig-002-20231003   gcc  
+i386         buildonly-randconfig-003-20231003   gcc  
+i386         buildonly-randconfig-004-20231003   gcc  
+i386         buildonly-randconfig-005-20231003   gcc  
+i386         buildonly-randconfig-006-20231003   gcc  
+i386                              debian-10.3   gcc  
+i386                                defconfig   gcc  
+i386                  randconfig-001-20231003   gcc  
+i386                  randconfig-002-20231003   gcc  
+i386                  randconfig-003-20231003   gcc  
+i386                  randconfig-004-20231003   gcc  
+i386                  randconfig-005-20231003   gcc  
+i386                  randconfig-006-20231003   gcc  
+loongarch                        allmodconfig   gcc  
+loongarch                         allnoconfig   gcc  
+loongarch                        allyesconfig   gcc  
+loongarch                           defconfig   gcc  
+loongarch             randconfig-001-20231003   gcc  
+m68k                             allmodconfig   gcc  
+m68k                              allnoconfig   gcc  
+m68k                             allyesconfig   gcc  
+m68k                                defconfig   gcc  
+microblaze                       allmodconfig   gcc  
+microblaze                        allnoconfig   gcc  
+microblaze                       allyesconfig   gcc  
+microblaze                          defconfig   gcc  
+mips                             allmodconfig   gcc  
+mips                              allnoconfig   gcc  
+mips                             allyesconfig   gcc  
+nios2                            allmodconfig   gcc  
+nios2                             allnoconfig   gcc  
+nios2                            allyesconfig   gcc  
+nios2                               defconfig   gcc  
+openrisc                         allmodconfig   gcc  
+openrisc                          allnoconfig   gcc  
+openrisc                         allyesconfig   gcc  
+openrisc                            defconfig   gcc  
+parisc                           allmodconfig   gcc  
+parisc                            allnoconfig   gcc  
+parisc                           allyesconfig   gcc  
+parisc                              defconfig   gcc  
+parisc64                            defconfig   gcc  
+powerpc                          allmodconfig   gcc  
+powerpc                           allnoconfig   gcc  
+powerpc                          allyesconfig   gcc  
+riscv                            allmodconfig   gcc  
+riscv                             allnoconfig   gcc  
+riscv                            allyesconfig   gcc  
+riscv                               defconfig   gcc  
+riscv                          rv32_defconfig   gcc  
+s390                             allmodconfig   gcc  
+s390                              allnoconfig   gcc  
+s390                             allyesconfig   gcc  
+s390                                defconfig   gcc  
+sh                               allmodconfig   gcc  
+sh                                allnoconfig   gcc  
+sh                               allyesconfig   gcc  
+sh                                  defconfig   gcc  
+sparc                            allmodconfig   gcc  
+sparc                             allnoconfig   gcc  
+sparc                            allyesconfig   gcc  
+sparc                               defconfig   gcc  
+sparc64                          allmodconfig   gcc  
+sparc64                          allyesconfig   gcc  
+sparc64                             defconfig   gcc  
+um                               allmodconfig   clang
+um                                allnoconfig   clang
+um                               allyesconfig   clang
+um                                  defconfig   gcc  
+um                             i386_defconfig   gcc  
+um                           x86_64_defconfig   gcc  
+x86_64                            allnoconfig   gcc  
+x86_64                           allyesconfig   gcc  
+x86_64                              defconfig   gcc  
+x86_64                randconfig-001-20231003   gcc  
+x86_64                randconfig-002-20231003   gcc  
+x86_64                randconfig-003-20231003   gcc  
+x86_64                randconfig-004-20231003   gcc  
+x86_64                randconfig-005-20231003   gcc  
+x86_64                randconfig-006-20231003   gcc  
+x86_64                          rhel-8.3-rust   clang
+x86_64                               rhel-8.3   gcc  
 
-
->> +#ifdef CONFIG_ARM64
-> I would rather make this arch agnostic using CONFIG_64BIT
-ok.
->
->> +		cap_id = readq((void __iomem *)(scmi_info->shmem) + size - 8);
-> Do you need __iomem typecast here ? Is scmi_info->shmem not already __iomem ?
-> Also scmi_info->shmem is ioremapped just few steps above and you are using
-> read* here, is that safe ?
-
-I saw some compilation warnings without __iomem. I will use ioread* API 
-instead of read*.
-
-
->
->> +#else
->> +		/* capability-id is 32 bit wide on 32bit machines */
->> +		cap_id = rieadl((void __iomem *)(scmi_info->shmem) + size - 8);
-> Other thought once you move for u64 to unsigned long you need not have
-> #ifdeffery, just do copy of sizeof(unsigned long)
-Right, my first version was like that only.
->
->> +#endif
->> +	} else {
->> +		ret = of_property_read_u32(dev->of_node, "arm,smc-id", &func_id);
->> +		if (ret < 0)
->> +			return ret;
->> +	}
->>   
->>   	if (of_device_is_compatible(dev->of_node, "arm,scmi-smc-param")) {
->>   		scmi_info->param_page = SHMEM_PAGE(res.start);
->> @@ -184,6 +215,7 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
->>   	}
->>   
->>   	scmi_info->func_id = func_id;
->> +	scmi_info->cap_id = cap_id;
->>   	scmi_info->cinfo = cinfo;
->>   	smc_channel_lock_init(scmi_info);
->>   	cinfo->transport_info = scmi_info;
->> @@ -213,6 +245,7 @@ static int smc_send_message(struct scmi_chan_info *cinfo,
->>   	struct arm_smccc_res res;
->>   	unsigned long page = scmi_info->param_page;
->>   	unsigned long offset = scmi_info->param_offset;
->> +	unsigned long cap_id = (unsigned long)scmi_info->cap_id;
->>   
->>   	/*
->>   	 * Channel will be released only once response has been
->> @@ -222,8 +255,12 @@ static int smc_send_message(struct scmi_chan_info *cinfo,
->>   
->>   	shmem_tx_prepare(scmi_info->shmem, xfer, cinfo);
->>   
->> -	arm_smccc_1_1_invoke(scmi_info->func_id, page, offset, 0, 0, 0, 0, 0,
->> -			     &res);
->> +	if (scmi_info->qcom_xport)
-> Just make sure cap_id is set only for qcom and just use that as your flag.
-> No point in setting always true scmi_info->qcom_xport and using it here.
-ok, I can remove that. Though 0 is a valid value for cap-id so will have 
-to init cap-id with a negative value.
->
->> +		arm_smccc_1_1_hvc(scmi_info->func_id, cap_id, 0, 0, 0, 0, 0, 0,
->> +				  &res);
->> +	else
->> +		arm_smccc_1_1_invoke(scmi_info->func_id, page, offset, 0, 0, 0,
->> +				     0, 0, &res);
->>   
->>   	/* Only SMCCC_RET_NOT_SUPPORTED is valid error code */
->>   	if (res.a0) {
->> -- 
->> 2.17.1
->>
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
