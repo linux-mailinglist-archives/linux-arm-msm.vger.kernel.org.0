@@ -2,163 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D5A0F7B6D09
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 17:25:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DFBB7B6D17
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 17:29:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232319AbjJCPZk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Oct 2023 11:25:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39334 "EHLO
+        id S232439AbjJCP3i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Oct 2023 11:29:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230338AbjJCPZi (ORCPT
+        with ESMTP id S231394AbjJCP3i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Oct 2023 11:25:38 -0400
-Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5B16B4
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 08:25:34 -0700 (PDT)
-Received: by mail-yb1-xb32.google.com with SMTP id 3f1490d57ef6-d90da64499cso1109571276.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 08:25:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696346734; x=1696951534; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=pGVoL3ekhfgR5Li2+FLv1BzUDvf3zy7Wq5DWcyBdbUU=;
-        b=WDC2/YcOqOniJIvVAev2kD5+N8BOqvh0iSj2BU3c8ZT/3+1YXSZiIYEsbaM6R3VWd2
-         zi0eeoDNBe6LEtF2CAxPXfgdO2jE5FtahMTycF9M7rOPu1MFuFsgPe/N0i2uADHxXItD
-         IASDEKvLCssIhYWUtePBkzbLfg3zTHZXN6aq3yUwgnObN6+1xisuYLMto7C1fV9T8oax
-         Byv2KVJkf4SQfDu/GoKopwQGcBGbzvLFtFVHmW8V3jkqaLYAsa2k62WpXi8wvXYgNTl1
-         0dGfsGVUjvBsF117P5oZWKMSZLfL5VpSY/xf8p3LJFxKjtbrvNek7VWE+NWY0WLYAOaX
-         dBSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696346734; x=1696951534;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pGVoL3ekhfgR5Li2+FLv1BzUDvf3zy7Wq5DWcyBdbUU=;
-        b=GSDWsVHizFHnNLyuW5PmGPmjWCYuDfCDEO/Sz3ZJXZBJZInyGKawFCZgjmagGs47Wt
-         6njRWirkm14utGWJiKEQoLIsFkcZpmWxRpzuwWzceMURIfbQnWYR50uE5THhAfpCzAjh
-         T7u9gjETqbWWTG/JHA+YticLeI9QrIJ+q9Ej4Xv4gBkUr0NSwfVTF6NF7VOKfepm4ETC
-         U9TB20hsgeCbaTSSyPy4C7P44V+ix1Um/hfnLrm7s7871yG0GsOfpfy3WNESNT2s493I
-         t/lKKlciabepl4hBE76kSmc9rp4rxWTl8fKkxLqtA+rCePu2jg4VWbC+SVlzzd1K6m9Z
-         ujIw==
-X-Gm-Message-State: AOJu0Yzagx3Vl6yyby4sN4RMs43kilYQeibOYKlZHe4Pp3v+AufqhPE0
-        w/6ZERha15x27lL3F3wgVkAwqIUI+lVHFpcabZU4ZQ==
-X-Google-Smtp-Source: AGHT+IHBCWgvfAHbcGjjccmTpSVhnByEgwm/tEgNLZP140ckpYMr/fckGC2+3rb/UBI5wvFTHimxcVKC8uoXZflpXQM=
-X-Received: by 2002:a25:e013:0:b0:d86:57ff:210c with SMTP id
- x19-20020a25e013000000b00d8657ff210cmr15084071ybg.17.1696346734044; Tue, 03
- Oct 2023 08:25:34 -0700 (PDT)
+        Tue, 3 Oct 2023 11:29:38 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52CC6A6;
+        Tue,  3 Oct 2023 08:29:35 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E65F8C433C9;
+        Tue,  3 Oct 2023 15:29:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1696346975;
+        bh=jdmFvf1XK1R60wkH3BVlLhkwT3ffaOVJ5+VG7EPRU/Q=;
+        h=From:To:Cc:Subject:Date:From;
+        b=nScQhqAfb8exmyHDZCRDCAh4Kc/h1bJD52yBDwzQXgJWiB8YlfAdFUItN66FcVrPM
+         oQmJKlGXZv+qvaR4wNyN7MVhT9NfMM4UIGJJKGFwLlNRUo0tIR7XliTkGibNdFmfA6
+         PbvQ6o/EXt3jOvAc8KzhSK3lcm9FKWa/QVLrgihJxXIOCCM4UFEE0BmzoGEhwODbRF
+         yuWLivvlVdcEVUocYA3/ZtrcjMVDRmfQ1qjM/9bb/g/GzgIPGbLpuD8RMGAuyzzlzE
+         f++Ao8rzPBns1iRvalw1O57dpwegOvy7HuZ6svo3HDB5fxPoDkir82nqm49bxiQwGg
+         ApDflH2yoEQ9A==
+Received: from johan by xi.lan with local (Exim 4.96)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1qnhLF-0003uJ-1z;
+        Tue, 03 Oct 2023 17:29:45 +0200
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Lee Jones <lee@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 0/5] mfd: qcom-spmi-pmic: fix revid implementation
+Date:   Tue,  3 Oct 2023 17:29:22 +0200
+Message-ID: <20231003152927.15000-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-References: <20231003111232.42663-1-manivannan.sadhasivam@linaro.org> <20231003111232.42663-7-manivannan.sadhasivam@linaro.org>
-In-Reply-To: <20231003111232.42663-7-manivannan.sadhasivam@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 3 Oct 2023 18:25:22 +0300
-Message-ID: <CAA8EJppOuAnVsnV0tYLyGqyJy3xVt2ToTZ+r9hyNd=VgK1Ez8Q@mail.gmail.com>
-Subject: Re: [PATCH v4 6/6] arm64: dts: qcom: sm8250: Add OPP table support to UFSHC
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
-        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
-        cw00.choi@samsung.com, andersson@kernel.org,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        jejb@linux.ibm.com, martin.petersen@oracle.com,
-        alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
-        linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
-        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
-        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
-        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
-        bmasney@redhat.com, krzysztof.kozlowski@linaro.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 3 Oct 2023 at 14:16, Manivannan Sadhasivam
-<manivannan.sadhasivam@linaro.org> wrote:
->
-> UFS host controller, when scaling gears, should choose appropriate
-> performance state of RPMh power domain controller along with clock
-> frequency. So let's add the OPP table support to specify both clock
-> frequency and RPMh performance states replacing the old "freq-table-hz"
-> property.
->
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8250.dtsi | 39 +++++++++++++++++++++-------
->  1 file changed, 30 insertions(+), 9 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> index a4e58ad731c3..33abd84aae53 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> @@ -2198,21 +2198,42 @@ ufs_mem_hc: ufshc@1d84000 {
->                                 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
->                                 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
->                                 <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
-> -                       freq-table-hz =
-> -                               <37500000 300000000>,
-> -                               <0 0>,
-> -                               <0 0>,
-> -                               <37500000 300000000>,
-> -                               <0 0>,
-> -                               <0 0>,
-> -                               <0 0>,
-> -                               <0 0>;
-> +
-> +                       operating-points-v2 = <&ufs_opp_table>;
->
->                         interconnects = <&aggre1_noc MASTER_UFS_MEM 0 &mc_virt SLAVE_EBI_CH0 0>,
->                                         <&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_UFS_MEM_CFG 0>;
->                         interconnect-names = "ufs-ddr", "cpu-ufs";
->
->                         status = "disabled";
-> +
-> +                       ufs_opp_table: opp-table {
-> +                               compatible = "operating-points-v2";
-> +
-> +                               opp-37500000 {
-> +                                       opp-hz = /bits/ 64 <37500000>,
-> +                                                /bits/ 64 <0>,
-> +                                                /bits/ 64 <0>,
-> +                                                /bits/ 64 <37500000>,
-> +                                                /bits/ 64 <0>,
-> +                                                /bits/ 64 <0>,
-> +                                                /bits/ 64 <0>,
-> +                                                /bits/ 64 <0>;
+The Qualcomm SPMI PMIC revid implementation is broken in multiple ways
+that can lead to resource leaks and crashes. This series reworks the
+implementation so that can be used safely.
 
-I must say I still consider this to be uglier than hard coding clock
-names in the driver.
+Included is also a rename of the SPMI device lookup helper which can
+hopefully help prevent similar leaks from being reintroduced.
 
-> +                                       required-opps = <&rpmhpd_opp_low_svs>;
-> +                               };
-> +
-> +                               opp-300000000 {
-> +                                       opp-hz = /bits/ 64 <300000000>,
-> +                                                /bits/ 64 <0>,
-> +                                                /bits/ 64 <0>,
-> +                                                /bits/ 64 <300000000>,
-> +                                                /bits/ 64 <0>,
-> +                                                /bits/ 64 <0>,
-> +                                                /bits/ 64 <0>,
-> +                                                /bits/ 64 <0>;
-> +                                       required-opps = <&rpmhpd_opp_nom>;
-> +                               };
-> +                       };
->                 };
->
->                 ufs_mem_phy: phy@1d87000 {
-> --
-> 2.25.1
->
+Johan
 
+
+Johan Hovold (5):
+  mfd: qcom-spmi-pmic: fix reference leaks in revid helper
+  mfd: qcom-spmi-pmic: fix revid implementation
+  mfd: qcom-spmi-pmic: switch to EXPORT_SYMBOL_GPL()
+  spmi: document spmi_device_from_of() refcounting
+  spmi: rename spmi device lookup helper
+
+ drivers/mfd/qcom-spmi-pmic.c | 103 +++++++++++++++++++++++++----------
+ drivers/spmi/spmi.c          |   9 ++-
+ include/linux/spmi.h         |   2 +-
+ 3 files changed, 80 insertions(+), 34 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.41.0
+
