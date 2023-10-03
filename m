@@ -2,73 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C9517B625F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 09:16:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C95E47B629F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 09:40:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230335AbjJCHQ7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Oct 2023 03:16:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44270 "EHLO
+        id S231638AbjJCHkV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Oct 2023 03:40:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230235AbjJCHQ6 (ORCPT
+        with ESMTP id S231563AbjJCHkU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Oct 2023 03:16:58 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18118AB
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 00:16:55 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-32320381a07so665891f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 00:16:55 -0700 (PDT)
+        Tue, 3 Oct 2023 03:40:20 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E80BBAF
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 00:40:15 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id ffacd0b85a97d-3231df68584so617821f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 00:40:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696317413; x=1696922213; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696318814; x=1696923614; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :references:cc:to:content-language:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=QpUUFq9QU9L0qfPCVG8CBY0uJ76VkGAs+iJNl+MP9Es=;
-        b=sJhBBrN3GaeDcqOU+p77oBSarlc6PW3ioar4bWxsoAoFz2GosjbFvVd25SNEx2THqm
-         Z18tTBadB0XBAw5jXl90yLV5Nah1ALSenD8NNDynn/u3AbxzWu9ljdGBxSr6GpsZCw4b
-         E7Lk16MRF99QK7UNjHFHsj1DfQRAXXqCGOeO4StrX+1IcrC0K46Xg4enrKldlw/3EVUz
-         BFTKq5VlEKfJYO12wLFBpMvqeS5vDAtUcHauPqpKEB7Wrru5b5xOaCVq/+4bPgoYTB0R
-         6NabZIh696r1vfgxAZHwf78A243fIqtRPbsjkLOF8n8gaqQV7RmS6JFIjLm7wOdA3V68
-         d3dA==
+        bh=2wvbK6s7OvtDcWmvoxppQzOHIcOTeHzaR32GGWBnZZE=;
+        b=lh9y51WUNYm1CGs+W104ittaZvFXbG08u2DX5U4LuiW9OOQ+I7B1q+N3tnnmlZ0Wkv
+         3qzwcynjLhCjbcujptSrzbjZCTyWRJR0C68QQUbD5w/GXPTZLG9wn1vHVsydCN3Z1uRA
+         rq2KJtvFgGHuh8nHTsQ4ch5wb/6TSgPSaUe0yKHHlfJwJnePRhtfQNgXq26ZQTFc1oL2
+         r5QoLel64pylGxYXr7S2mn4suX0XQ1Sad+5wlusa6PZM16Wq3XlmPCzBJn/LqxgQkS19
+         vmJKPGcKbF//0b/3U6YqFWEfRgy9OU/sJ0WscLEoHp+oqu6IhI4sTds6qh/llkgFaSLh
+         jnNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696317413; x=1696922213;
+        d=1e100.net; s=20230601; t=1696318814; x=1696923614;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :references:cc:to:content-language:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=QpUUFq9QU9L0qfPCVG8CBY0uJ76VkGAs+iJNl+MP9Es=;
-        b=jnPVj/yfh1fQkytJIOYlKH7CsxTrWexrpUrtRwvkiC1tRapbI+8qvTXUSyYLavQt/s
-         woRapOu25lxuLVOtDRWZlO77ooXW7O7oBxC9MDVrn6DrztFRBpypyYe5he0wIk29oEYM
-         5FFUBaxts3VybXeZg05Iv37oSxkwTY319H1LUAlZpqrjYrGofzgsdYPOy4oSHnVED9SC
-         P4wFGY/Ep9BZ0dOFkGInE/AdA6r+QFW21hddwRQnO+7Cqbs6ooSYC4psdpqcZq98z+DX
-         D2QGTD/pbFDHJntnPmzYQEHDQjemVnvV6OyMwgdXhACCxjJ6Npra4pJwbrLy6Q+YrMkR
-         HiYw==
-X-Gm-Message-State: AOJu0Yx+9ygf9Ymb1J81ilUsdggeY2MMM3RGVmJZO9vSBM0ZWCYriqwq
-        X0HugSNQvfFVofntlm7xKbnr6Q==
-X-Google-Smtp-Source: AGHT+IEWu0xac32pksXzwZMIWt3brB8UIquOiYKnIp7HkLnrNNbaheTXCpeC2KPbOOWCbiefqofD8A==
-X-Received: by 2002:adf:ed02:0:b0:321:6936:c217 with SMTP id a2-20020adfed02000000b003216936c217mr12497257wro.14.1696317413483;
-        Tue, 03 Oct 2023 00:16:53 -0700 (PDT)
+        bh=2wvbK6s7OvtDcWmvoxppQzOHIcOTeHzaR32GGWBnZZE=;
+        b=Kg8LShoXPLHPI3E6pMXZ3rTKSmnmpmARrbasmPFjjGC2TeGC3x9CkkuO0C6kBHCycw
+         vEwenuK1Rywo7jRT54ssITzQoFrX9DZjVWy9rI31zsR9PAapnpUbZWoQCo3whhwmUyr0
+         KVOJq47prMZhiZ+ZzmWTW9NYJZijM2udKsG45RW/keOwECgz8zeB+eklNuw6ZkA71q4x
+         tqoZVhfRVvSlbmUOLW2obUWJvmXMqe+zxicg7WwMF5eQ4rfFV6nZJNpT+CF36c4oAvOs
+         ujbLW43U/Nz8y9OxDXPUtJoY4QAlzi/dW1GOefqmm3LGzpu7gufDx9KZVMW/ktUgUAFA
+         vk8A==
+X-Gm-Message-State: AOJu0YyqvXKtH9AIjA4zaR3/TLSMPuMYlv17v6nY2cLf+eSpqY9FTn4e
+        5pzpdIG+uuu+YjojwWzEoculrg==
+X-Google-Smtp-Source: AGHT+IEpIvjpG2kKdpSMfKhuVOJyQlosAaPrtTQ17ctuZLYtHvqlbO1nckJJyR4yES1hfLCC0GkUOQ==
+X-Received: by 2002:a05:6000:1005:b0:319:7b66:7800 with SMTP id a5-20020a056000100500b003197b667800mr10795957wrx.55.1696318814255;
+        Tue, 03 Oct 2023 00:40:14 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:982:cbb0:e31a:fe1c:e925:9858? ([2a01:e0a:982:cbb0:e31a:fe1c:e925:9858])
-        by smtp.gmail.com with ESMTPSA id j16-20020a056000125000b00326f5d0ce0asm852877wrx.21.2023.10.03.00.16.52
+        by smtp.gmail.com with ESMTPSA id l7-20020a05600012c700b0031c52e81490sm884647wrx.72.2023.10.03.00.40.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Oct 2023 00:16:52 -0700 (PDT)
-Message-ID: <c6a974ce-511c-47f8-b6cb-baeec5283af9@linaro.org>
-Date:   Tue, 3 Oct 2023 09:16:50 +0200
+        Tue, 03 Oct 2023 00:40:13 -0700 (PDT)
+Message-ID: <7c18a0f6-48a9-4ec9-90d0-3fe7268e93ad@linaro.org>
+Date:   Tue, 3 Oct 2023 09:40:10 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From:   neil.armstrong@linaro.org
+From:   Neil Armstrong <neil.armstrong@linaro.org>
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v3 3/3] clk: qcom: add SM8550 DISPCC driver
+Subject: Re: [PATCH V2] dt-bindings: nvmem: move deprecated cells binding to
+ its own file
 Content-Language: en-US, fr
-To:     Sophon Wu <wuxilin123@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>, andersson@kernel.org,
-        devicetree@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+To:     =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mturquette@baylibre.com,
-        Rob Herring <robh+dt@kernel.org>, sboyd@kernel.org
-References: <CAEPPPKu=yxS6SgdLZiuhbF2DRURKVUBNgNbUQ96LxHHbtsJ6Sg@mail.gmail.com>
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Miquel Raynal <miquel.raynal@bootlin.com>,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Vincent Shih <vincent.sunplus@gmail.com>,
+        Alessandro Zummo <a.zummo@towertech.it>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        Anson Huang <Anson.Huang@nxp.com>,
+        Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
+        Lala Lin <lala.lin@mediatek.com>,
+        Komal Bajaj <quic_kbajaj@quicinc.com>,
+        Kumar Thella <sthella@codeaurora.org>,
+        Keiji Hayashibara <hayashibara.keiji@socionext.com>,
+        linux-mtd@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-amlogic@lists.infradead.org, asahi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org,
+        linux-rtc@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>
+References: <20231003064018.7502-1-zajec5@gmail.com>
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
  GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
@@ -94,11 +132,11 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro Developer Services
-In-Reply-To: <CAEPPPKu=yxS6SgdLZiuhbF2DRURKVUBNgNbUQ96LxHHbtsJ6Sg@mail.gmail.com>
+In-Reply-To: <20231003064018.7502-1-zajec5@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -107,167 +145,308 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 03/10/2023 08:40, Rafał Miłecki wrote:
+> From: Rafał Miłecki <rafal@milecki.pl>
+> 
+> Support for old NVMEM fixed cells was deprecated in favour of
+> "fixed-layout". It's still part of the nvmem.yaml though and may be
+> unknowingly used by new bindings added without much of analyze.
+> 
+> To make it more difficult to accidentally support old syntax move its
+> binding to separated file with "deprecated" in its name.
+> 
+> Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+> ---
+> V2: Fix path to nvmem-deprecated-cells.yaml in amlogic,meson6-rtc.yaml
+> 
+>   .../devicetree/bindings/mtd/mtd.yaml          |  7 ++++-
+>   .../bindings/mtd/partitions/nvmem-cells.yaml  |  1 +
+>   .../nvmem/amlogic,meson-gxbb-efuse.yaml       |  1 +
+>   .../bindings/nvmem/amlogic,meson6-efuse.yaml  |  1 +
 
-On 03/10/2023 04:17, Sophon Wu wrote:
-> On 09/01/2023 16:47, Neil Armstrong wrote:
-> 
->> Add support for the display clock controller found in SM8550
->> based devices.
-> 
->> This clock controller feeds the Multimedia Display SubSystem (MDSS).
->> This driver is based on the SM8450 support.
-> 
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
-> 
-> Hi Neil,
-> 
-> I'm trying to enable display on SM8550 but having trouble with clocks. Do you
-> have any idea on this maybe? Full dmesg here: https://bpa.st/7E6Q
+For Amlogic/Meson bindings:
+Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-You may need to remove the cont-splash memory zone and the simple-framebuffer,
-if you leave the cont-splash the bootloader will leave the MDSS on and Linux
-will fail to take over and initialize the clocks.
-
-This is known issue, and for now we re-initialize everything from Linux after
-ABL disables the display subsystem entirely.
-
-Neil
-
+>   .../bindings/nvmem/apple,efuses.yaml          |  1 +
+>   .../devicetree/bindings/nvmem/imx-ocotp.yaml  |  1 +
+>   .../bindings/nvmem/mediatek,efuse.yaml        |  1 +
+>   .../nvmem/microchip,sama7g5-otpc.yaml         |  1 +
+>   .../devicetree/bindings/nvmem/mxs-ocotp.yaml  |  1 +
+>   .../nvmem/nvmem-deprecated-cells.yaml         | 28 +++++++++++++++++++
+>   .../devicetree/bindings/nvmem/nvmem.yaml      |  9 ------
+>   .../bindings/nvmem/qcom,qfprom.yaml           |  1 +
+>   .../bindings/nvmem/qcom,sec-qfprom.yaml       |  1 +
+>   .../bindings/nvmem/qcom,spmi-sdam.yaml        |  1 +
+>   .../bindings/nvmem/rockchip,otp.yaml          |  1 +
+>   .../bindings/nvmem/rockchip-efuse.yaml        |  1 +
+>   .../nvmem/socionext,uniphier-efuse.yaml       |  1 +
+>   .../bindings/nvmem/sunplus,sp7021-ocotp.yaml  |  1 +
+>   .../bindings/rtc/amlogic,meson6-rtc.yaml      |  1 +
+>   19 files changed, 50 insertions(+), 10 deletions(-)
+>   create mode 100644 Documentation/devicetree/bindings/nvmem/nvmem-deprecated-cells.yaml
 > 
-> Regards,
-> Xilin
-> 
->   ------------[ cut here ]------------
->   disp_cc_mdss_mdp_clk_src: rcg didn't update its configuration.
->   WARNING: CPU: 4 PID: 73 at drivers/clk/qcom/clk-rcg2.c:133
-> update_config+0xd4/0xf0
->   Modules linked in:
->   CPU: 4 PID: 73 Comm: kworker/u16:2 Tainted: G S
-> 6.6.0-rc3-next-20230929-00006-g019d41d2e78e-dirty #252
-> d692e32c53d7001f1537e28f80b45291db95a48f
->   Hardware name: AYN Odin 2 (DT)
->   Workqueue: events_unbound deferred_probe_work_func
->   pstate: 614000c5 (nZCv daIF +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
->   pc : update_config+0xd4/0xf0
->   lr : update_config+0xd4/0xf0
->   sp : ffff8000861435d0
->   x29: ffff8000861435d0 x28: 0000000000000000 x27: 0000000000000000
->   x26: ffff0008011da0f4 x25: 0000000000000000 x24: 0000000000000000
->   x23: 0000000000000004 x22: ffff000804f0eac0 x21: ffff800082395f68
->   x20: ffff800085109c20 x19: 0000000000000000 x18: 0000000000000014
->   x17: 0000000043567dcd x16: 00000000c6ba16a0 x15: 0000000040b16970
->   x14: 0000000000000001 x13: 2e6e6f6974617275 x12: 6769666e6f632073
->   x11: 7469206574616470 x10: 752074276e646964 x9 : ffff8000801bfc5c
->   x8 : 2073746920657461 x7 : 6470752074276e64 x6 : 0000000000000010
->   x5 : 40000000ffff0254 x4 : ffff8000848907d0 x3 : 00000000ffffffff
->   x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff000801320000
->   Call trace:
->    update_config+0xd4/0xf0
->    clk_rcg2_shared_enable+0x58/0x98
->    clk_core_enable+0x78/0x1f8
->    clk_core_enable+0x58/0x1f8
->    clk_enable+0x34/0x60
->    clk_bulk_enable+0x54/0xe8
->    msm_mdss_enable+0xac/0x250
->    mdss_runtime_resume+0x3c/0x58
->    pm_generic_runtime_resume+0x34/0x58
->    __genpd_runtime_resume+0x38/0x90
->    genpd_runtime_resume+0x11c/0x2b0
->    __rpm_callback+0x50/0x1f0
->    rpm_callback+0x74/0x88
->    rpm_resume+0x534/0x760
->    __pm_runtime_resume+0x64/0xc0
->    __device_attach+0x8c/0x1c0
->    device_initial_probe+0x1c/0x30
->    bus_probe_device+0xb4/0xc0
->    device_add+0x64c/0x848
->    of_device_add+0x4c/0x70
->    of_platform_device_create_pdata+0x94/0x130
->    of_platform_bus_create+0x188/0x4c8
->    of_platform_populate+0x60/0x160
->    mdss_probe+0x278/0x398
->    platform_probe+0x70/0xd8
->    really_probe+0x190/0x3d8
->    __driver_probe_device+0x84/0x180
->    driver_probe_device+0x44/0x120
->    __device_attach_driver+0xc4/0x168
->    bus_for_each_drv+0x8c/0xf0
->    __device_attach+0xa4/0x1c0
->    device_initial_probe+0x1c/0x30
->    bus_probe_device+0xb4/0xc0
->    deferred_probe_work_func+0xbc/0x118
->    process_one_work+0x154/0x3c8
->    worker_thread+0x2bc/0x3e0
->    kthread+0x118/0x128
->    ret_from_fork+0x10/0x20
->   ---[ end trace 0000000000000000 ]---
->   Failed to enable clk '(null)': -16
->   msm-mdss ae00000.display-subsystem: clock enable failed, ret:-16
->   ------------[ cut here ]------------
->   disp_cc_mdss_ahb_clk status stuck at 'off'
->   WARNING: CPU: 4 PID: 73 at drivers/clk/qcom/clk-branch.c:86
-> clk_branch_wait+0x148/0x168
->   Modules linked in:
->   CPU: 4 PID: 73 Comm: kworker/u16:2 Tainted: G S      W
-> 6.6.0-rc3-next-20230929-00006-g019d41d2e78e-dirty #252
-> d692e32c53d7001f1537e28f80b45291db95a48f
->   Hardware name: AYN Odin 2 (DT)
->   Workqueue: events_unbound deferred_probe_work_func
->   pstate: 614000c5 (nZCv daIF +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
->   pc : clk_branch_wait+0x148/0x168
->   lr : clk_branch_wait+0x148/0x168
->   sp : ffff800086143650
->   x29: ffff800086143650 x28: 0000000000000000 x27: 0000000000000000
->   x26: 0000000000000000 x25: ffff000a7e7b50d8 x24: ffff80008517ac90
->   x23: ffff800082395ed0 x22: 0000000000000001 x21: ffff800080bb09f0
->   x20: 0000000000000000 x19: ffff8000851094d0 x18: 0000000000000006
->   x17: 0000000000000000 x16: 0000000000000020 x15: 0000000000000002
->   x14: 0000000000000001 x13: 0000000000000004 x12: 0000000000000000
->   x11: 0000000000000000 x10: 0000000000000020 x9 : ffff8000801bfc5c
->   x8 : 0000000000000020 x7 : 00000000ffffffff x6 : 0000000000000000
->   x5 : 0000000000000050 x4 : ffff800083df7e80 x3 : 00000000ffffffff
->   x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff000801320000
->   Call trace:
->    clk_branch_wait+0x148/0x168
->    clk_branch2_enable+0x38/0x50
->    clk_core_enable+0x78/0x1f8
->    clk_enable+0x34/0x60
->    dsi_phy_enable_resource+0x98/0xb8
->    dsi_phy_driver_probe+0x26c/0x408
->    platform_probe+0x70/0xd8
->    really_probe+0x190/0x3d8
->    __driver_probe_device+0x84/0x180
->    driver_probe_device+0x44/0x120
->    __device_attach_driver+0xc4/0x168
->    bus_for_each_drv+0x8c/0xf0
->    __device_attach+0xa4/0x1c0
->    device_initial_probe+0x1c/0x30
->    bus_probe_device+0xb4/0xc0
->    device_add+0x64c/0x848
->    of_device_add+0x4c/0x70
->    of_platform_device_create_pdata+0x94/0x130
->    of_platform_bus_create+0x188/0x4c8
->    of_platform_populate+0x60/0x160
->    mdss_probe+0x278/0x398
->    platform_probe+0x70/0xd8
->    really_probe+0x190/0x3d8
->    __driver_probe_device+0x84/0x180
->    driver_probe_device+0x44/0x120
->    __device_attach_driver+0xc4/0x168
->    bus_for_each_drv+0x8c/0xf0
->    __device_attach+0xa4/0x1c0
->    device_initial_probe+0x1c/0x30
->    bus_probe_device+0xb4/0xc0
->    deferred_probe_work_func+0xbc/0x118
->    process_one_work+0x154/0x3c8
->    worker_thread+0x2bc/0x3e0
->    kthread+0x118/0x128
->    ret_from_fork+0x10/0x20
->   ---[ end trace 0000000000000000 ]---
->   msm_dsi_phy ae97000.phy: [drm:dsi_phy_enable_resource] *ERROR*
-> dsi_phy_enable_resource: can't enable ahb clk, -16
->   msm_dsi_phy: probe of ae97000.phy failed with error -16
+> diff --git a/Documentation/devicetree/bindings/mtd/mtd.yaml b/Documentation/devicetree/bindings/mtd/mtd.yaml
+> index b82ca03e969c..f322290ee516 100644
+> --- a/Documentation/devicetree/bindings/mtd/mtd.yaml
+> +++ b/Documentation/devicetree/bindings/mtd/mtd.yaml
+> @@ -43,7 +43,12 @@ patternProperties:
+>       deprecated: true
+>   
+>     "^otp(-[0-9]+)?$":
+> -    $ref: ../nvmem/nvmem.yaml#
+> +    type: object
+> +
+> +    allOf:
+> +      - $ref: ../nvmem/nvmem.yaml#
+> +      - $ref: ../nvmem/nvmem-deprecated-cells.yaml#
+> +
+>       unevaluatedProperties: false
+>   
+>       description: |
+> diff --git a/Documentation/devicetree/bindings/mtd/partitions/nvmem-cells.yaml b/Documentation/devicetree/bindings/mtd/partitions/nvmem-cells.yaml
+> index 5474d63268dc..9518281007af 100644
+> --- a/Documentation/devicetree/bindings/mtd/partitions/nvmem-cells.yaml
+> +++ b/Documentation/devicetree/bindings/mtd/partitions/nvmem-cells.yaml
+> @@ -19,6 +19,7 @@ maintainers:
+>   allOf:
+>     - $ref: /schemas/mtd/partitions/partition.yaml#
+>     - $ref: /schemas/nvmem/nvmem.yaml#
+> +  - $ref: /schemas/nvmem/nvmem-deprecated-cells.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/nvmem/amlogic,meson-gxbb-efuse.yaml b/Documentation/devicetree/bindings/nvmem/amlogic,meson-gxbb-efuse.yaml
+> index e49c2754ff55..9801fe6f91b5 100644
+> --- a/Documentation/devicetree/bindings/nvmem/amlogic,meson-gxbb-efuse.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/amlogic,meson-gxbb-efuse.yaml
+> @@ -11,6 +11,7 @@ maintainers:
+>   
+>   allOf:
+>     - $ref: nvmem.yaml#
+> +  - $ref: nvmem-deprecated-cells.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/nvmem/amlogic,meson6-efuse.yaml b/Documentation/devicetree/bindings/nvmem/amlogic,meson6-efuse.yaml
+> index 84b3dfd21e09..b5cf740f96fa 100644
+> --- a/Documentation/devicetree/bindings/nvmem/amlogic,meson6-efuse.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/amlogic,meson6-efuse.yaml
+> @@ -12,6 +12,7 @@ maintainers:
+>   
+>   allOf:
+>     - $ref: nvmem.yaml#
+> +  - $ref: nvmem-deprecated-cells.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/nvmem/apple,efuses.yaml b/Documentation/devicetree/bindings/nvmem/apple,efuses.yaml
+> index e0860b6b85f3..d3abdafdbca0 100644
+> --- a/Documentation/devicetree/bindings/nvmem/apple,efuses.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/apple,efuses.yaml
+> @@ -16,6 +16,7 @@ maintainers:
+>   
+>   allOf:
+>     - $ref: nvmem.yaml#
+> +  - $ref: nvmem-deprecated-cells.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/nvmem/imx-ocotp.yaml b/Documentation/devicetree/bindings/nvmem/imx-ocotp.yaml
+> index 99e60d713dac..be1314454bec 100644
+> --- a/Documentation/devicetree/bindings/nvmem/imx-ocotp.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/imx-ocotp.yaml
+> @@ -16,6 +16,7 @@ description: |
+>   
+>   allOf:
+>     - $ref: nvmem.yaml#
+> +  - $ref: nvmem-deprecated-cells.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/nvmem/mediatek,efuse.yaml b/Documentation/devicetree/bindings/nvmem/mediatek,efuse.yaml
+> index 7ec2988b597e..cf5f9e22bb7e 100644
+> --- a/Documentation/devicetree/bindings/nvmem/mediatek,efuse.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/mediatek,efuse.yaml
+> @@ -16,6 +16,7 @@ maintainers:
+>   
+>   allOf:
+>     - $ref: nvmem.yaml#
+> +  - $ref: nvmem-deprecated-cells.yaml#
+>   
+>   properties:
+>     $nodename:
+> diff --git a/Documentation/devicetree/bindings/nvmem/microchip,sama7g5-otpc.yaml b/Documentation/devicetree/bindings/nvmem/microchip,sama7g5-otpc.yaml
+> index a296d348adb4..cc25f2927682 100644
+> --- a/Documentation/devicetree/bindings/nvmem/microchip,sama7g5-otpc.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/microchip,sama7g5-otpc.yaml
+> @@ -16,6 +16,7 @@ description: |
+>   
+>   allOf:
+>     - $ref: nvmem.yaml#
+> +  - $ref: nvmem-deprecated-cells.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml b/Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml
+> index a9b822aeaa7e..f43186f98607 100644
+> --- a/Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml
+> @@ -11,6 +11,7 @@ maintainers:
+>   
+>   allOf:
+>     - $ref: nvmem.yaml#
+> +  - $ref: nvmem-deprecated-cells.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/nvmem/nvmem-deprecated-cells.yaml b/Documentation/devicetree/bindings/nvmem/nvmem-deprecated-cells.yaml
+> new file mode 100644
+> index 000000000000..951af28bbfb3
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/nvmem/nvmem-deprecated-cells.yaml
+> @@ -0,0 +1,28 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/nvmem/nvmem-deprecated-cells.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: NVMEM old syntax for fixed cells
+> +
+> +maintainers:
+> +  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> +
+> +description: |
+> +  Before introducing NVMEM layouts all NVMEM (fixed) cells were defined
+> +  as direct device subnodes. That syntax was replaced by "fixed-layout"
+> +  and is deprecated now. No new bindings should use it.
+> +
+> +patternProperties:
+> +  "@[0-9a-f]+(,[0-7])?$":
+> +    type: object
+> +    allOf:
+> +      - $ref: layouts/fixed-cell.yaml
+> +      - properties:
+> +          compatible: false
+> +    deprecated: true
+> +
+> +additionalProperties: true
+> +
+> +...
+> diff --git a/Documentation/devicetree/bindings/nvmem/nvmem.yaml b/Documentation/devicetree/bindings/nvmem/nvmem.yaml
+> index 9f921d940142..4fd015d402ce 100644
+> --- a/Documentation/devicetree/bindings/nvmem/nvmem.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/nvmem.yaml
+> @@ -46,15 +46,6 @@ properties:
+>         container may reference more advanced (dynamic) layout
+>         parsers.
+>   
+> -patternProperties:
+> -  "@[0-9a-f]+(,[0-7])?$":
+> -    type: object
+> -    allOf:
+> -      - $ref: layouts/fixed-cell.yaml
+> -      - properties:
+> -          compatible: false
+> -    deprecated: true
+> -
+>   additionalProperties: true
+>   
+>   examples:
+> diff --git a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+> index 8740938c32eb..8c8f05d9eaf1 100644
+> --- a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+> @@ -11,6 +11,7 @@ maintainers:
+>   
+>   allOf:
+>     - $ref: nvmem.yaml#
+> +  - $ref: nvmem-deprecated-cells.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/nvmem/qcom,sec-qfprom.yaml b/Documentation/devicetree/bindings/nvmem/qcom,sec-qfprom.yaml
+> index 9b133f783d29..2ada2099946d 100644
+> --- a/Documentation/devicetree/bindings/nvmem/qcom,sec-qfprom.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/qcom,sec-qfprom.yaml
+> @@ -16,6 +16,7 @@ description:
+>   
+>   allOf:
+>     - $ref: nvmem.yaml#
+> +  - $ref: nvmem-deprecated-cells.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml b/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
+> index cd980def97b8..068bedf5dbc9 100644
+> --- a/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
+> @@ -16,6 +16,7 @@ description: |
+>   
+>   allOf:
+>     - $ref: nvmem.yaml#
+> +  - $ref: nvmem-deprecated-cells.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/nvmem/rockchip,otp.yaml b/Documentation/devicetree/bindings/nvmem/rockchip,otp.yaml
+> index 9c6eff788928..a44d44b32809 100644
+> --- a/Documentation/devicetree/bindings/nvmem/rockchip,otp.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/rockchip,otp.yaml
+> @@ -49,6 +49,7 @@ required:
+>   
+>   allOf:
+>     - $ref: nvmem.yaml#
+> +  - $ref: nvmem-deprecated-cells.yaml#
+>   
+>     - if:
+>         properties:
+> diff --git a/Documentation/devicetree/bindings/nvmem/rockchip-efuse.yaml b/Documentation/devicetree/bindings/nvmem/rockchip-efuse.yaml
+> index c5403e149080..b80fd8d1ae5b 100644
+> --- a/Documentation/devicetree/bindings/nvmem/rockchip-efuse.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/rockchip-efuse.yaml
+> @@ -11,6 +11,7 @@ maintainers:
+>   
+>   allOf:
+>     - $ref: nvmem.yaml#
+> +  - $ref: nvmem-deprecated-cells.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/nvmem/socionext,uniphier-efuse.yaml b/Documentation/devicetree/bindings/nvmem/socionext,uniphier-efuse.yaml
+> index efccc5aacbe0..e27cbae2d63a 100644
+> --- a/Documentation/devicetree/bindings/nvmem/socionext,uniphier-efuse.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/socionext,uniphier-efuse.yaml
+> @@ -12,6 +12,7 @@ maintainers:
+>   
+>   allOf:
+>     - $ref: nvmem.yaml#
+> +  - $ref: nvmem-deprecated-cells.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/nvmem/sunplus,sp7021-ocotp.yaml b/Documentation/devicetree/bindings/nvmem/sunplus,sp7021-ocotp.yaml
+> index da3f1de7d281..af97eeb8316c 100644
+> --- a/Documentation/devicetree/bindings/nvmem/sunplus,sp7021-ocotp.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/sunplus,sp7021-ocotp.yaml
+> @@ -12,6 +12,7 @@ maintainers:
+>   
+>   allOf:
+>     - $ref: nvmem.yaml#
+> +  - $ref: nvmem-deprecated-cells.yaml#
+>   
+>   properties:
+>     compatible:
+> diff --git a/Documentation/devicetree/bindings/rtc/amlogic,meson6-rtc.yaml b/Documentation/devicetree/bindings/rtc/amlogic,meson6-rtc.yaml
+> index 8bf7d3a9be98..3a4551253e3e 100644
+> --- a/Documentation/devicetree/bindings/rtc/amlogic,meson6-rtc.yaml
+> +++ b/Documentation/devicetree/bindings/rtc/amlogic,meson6-rtc.yaml
+> @@ -13,6 +13,7 @@ maintainers:
+>   allOf:
+>     - $ref: rtc.yaml#
+>     - $ref: /schemas/nvmem/nvmem.yaml#
+> +  - $ref: /schemas/nvmem/nvmem-deprecated-cells.yaml#
+>   
+>   properties:
+>     compatible:
 
