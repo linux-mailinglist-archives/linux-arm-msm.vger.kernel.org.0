@@ -2,72 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 338917B6C81
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 16:56:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A0EF7B6CCE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 17:16:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240292AbjJCO4b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Oct 2023 10:56:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43836 "EHLO
+        id S230449AbjJCPQK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Oct 2023 11:16:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240638AbjJCO4R (ORCPT
+        with ESMTP id S230238AbjJCPQJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Oct 2023 10:56:17 -0400
-Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FD611FF2
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 07:54:55 -0700 (PDT)
-Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-59b5484fbe6so12405607b3.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 07:54:55 -0700 (PDT)
+        Tue, 3 Oct 2023 11:16:09 -0400
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FC2283
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 08:16:03 -0700 (PDT)
+Received: by mail-oi1-x22e.google.com with SMTP id 5614622812f47-3af603da0f0so668435b6e.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 08:16:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696344894; x=1696949694; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696346162; x=1696950962; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ssiq5+nUb5tk+njmXyusvMPmk3vvCvKa/6ALKcbA4us=;
-        b=soM7zb3NrsuXZ8ePr4b8N7VXIOHEjshwQHVckcEX+IIzy0Zxer5OEUACmECvviNzNf
-         1qBgtkQmkSQ1hAiC5dpMzMenwtcupQPGywtWU6UbJXlyeOosQ9Bulol/ZeSpHvog77re
-         giFarXHIeQObEc7HYto4saN7kRDM0sJyLcBhyUbKX6anI11mgK33fk2WegLj520kFors
-         lcIjz8uXj2lyYMoi0JftNyTS/za5FMcJ3YFSBk0stOsBI9umzXTn82/61Ct36IrfBozj
-         foSA1osRyZfTKcJudaOP8gFgu6sNG/sYziOeQedzz6BOiwe3rv7HH1Pni9Tphr6H49/c
-         OJ3g==
+        bh=pE6Uob1qUrl/8e+wUGqgR8VjacWMRkVbdY4sfkzHBEE=;
+        b=kWYklJWjumJLFYq2mjTGzINOx7I4wuBYYsDhfAKfiSHaW5rh5CUSKsdQZTE4hv/YJW
+         XJbYHq+9z+kbn5nF/Thu19KZN2r+ldAVVFewQXpLbiXWDrKzjylKR+1qTme0j6vOkXn9
+         H/gUUyiLEtnO1CLQIm65cJtjQLB3Bf7a6gAx6IM1b1aYdMU+/mDupksgG02qH8wOyTzh
+         37T8Jw278QCj8Vo/PrvUqZ7bRg0baRHRsz8EGqcRaHVHTNKqC4tV0rac3yBIW9aw9/cE
+         +GrClhZSrioNFDxUu8/5q/rRlPNM5TY7vdt2+loxPlr1+OAUlyVhxAOU/nI0Q96N/CbS
+         A8lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696344894; x=1696949694;
+        d=1e100.net; s=20230601; t=1696346162; x=1696950962;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Ssiq5+nUb5tk+njmXyusvMPmk3vvCvKa/6ALKcbA4us=;
-        b=WLyEe2H4hSpJF0KGLTxaVZv2MsCrrQdIF4F3Jtemf0Sm4Nq4hTFtBXXmK2MVPYxC81
-         qpuqoEJjd96/+rZqQJzp2uhWXheTt/Y4nRrxO4nEpQpvV2fJJI/4RUp4wf5IKFj0x9XA
-         5vNmq9PmLb9rzCKfRQ6tkCtfyyib1tCq9S29CF088SYea0Igz1qU1FHl75PPoxufh4k1
-         tWnEyQ7WwAMACOyumvkgeWMpPfVXNEV22pQfsAjLf1KmCoS//vrXX6zdZbctL7xPXKIl
-         reN2wb8BqX5quNjVAWwt4Agg+MJ+Z5zH4lAUZT0Ei+jk/9WS9R2GFgKu9Z5Y2xj2BaHF
-         psrA==
-X-Gm-Message-State: AOJu0Yw4Hz9OuYgNfHjOFt3RFMs8JKaO1N9TO1MK51dWtfbGpt6fEn/g
-        rveuw8w+VQPCZmUlwBX1A+Bzy+eTvb/hOaEv+ze83Q==
-X-Google-Smtp-Source: AGHT+IE7Tm0+TOjAqbRf3K+J648pOlmhjcx6LMgVgwylE1FTXpvtTVrh5k3zwCUdGOKzzHN3/AU/Q/UGpVey3g+73X8=
-X-Received: by 2002:a81:65d6:0:b0:589:f41c:bc63 with SMTP id
- z205-20020a8165d6000000b00589f41cbc63mr13912123ywb.39.1696344894263; Tue, 03
- Oct 2023 07:54:54 -0700 (PDT)
+        bh=pE6Uob1qUrl/8e+wUGqgR8VjacWMRkVbdY4sfkzHBEE=;
+        b=PloGdMx7HfcFjSJhBC4VCyLah3Jk+dmkHJcK1m0qVeBA73Go8nCTm2q1fXzWasCYDT
+         09sZmfuoTgKfV64Liddj9AtWh4lo9ubu7iuXOpCVmmDwGwH2KSrwbNZ9lFHzvrOuawjX
+         bwpYmKWDM6pIVFe3SkauJ35lYk1YhKSPG9BtQoPLV725YoJ+BfnR1lZ8XIqmZG5og737
+         lUdPoCJX2c8GSj/HI4LjAVQVm8wyLiNVqQd9EJjkg7odcXgC2ozBRxhzGkpYZQziN6bU
+         LqKg6L95Fb6qYd1MP6ne/PGoMWqKYlTsQySAb1QDc/J7MzlSoE3mBm2nAqwNfSMochlf
+         N6uw==
+X-Gm-Message-State: AOJu0YzeuQ+RTlTDowapJ1YiGi4qF0K7Rkqnz2OBQXZ43eewH12nhX90
+        0MiNhjbORmtubyBnwfl5lAXsdExan2cDJYvbEr2CwA==
+X-Google-Smtp-Source: AGHT+IEqhmLmT0s+0uqq+EnaJP5NNo5ifYJD5F0JGVCmiLNmZF2EtNn2buV1AsI4hN0t+AOJuIOnz/JFUhFdHzQ7x/o=
+X-Received: by 2002:a05:6808:1407:b0:3ae:251f:923f with SMTP id
+ w7-20020a056808140700b003ae251f923fmr20306144oiv.28.1696346162306; Tue, 03
+ Oct 2023 08:16:02 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230929084209.3033093-1-quic_ipkumar@quicinc.com>
- <20230929084209.3033093-3-quic_ipkumar@quicinc.com> <412492d1-fcc9-481c-9d28-b208a644ba1d@linaro.org>
- <7975c638-29cf-45ce-9d76-b8a93d750eb7@quicinc.com>
-In-Reply-To: <7975c638-29cf-45ce-9d76-b8a93d750eb7@quicinc.com>
+References: <20231003120846.28626-1-quic_nsekar@quicinc.com> <20231003120846.28626-4-quic_nsekar@quicinc.com>
+In-Reply-To: <20231003120846.28626-4-quic_nsekar@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 3 Oct 2023 17:54:42 +0300
-Message-ID: <CAA8EJprhQz_Tj0Bhv6zhGa7h37Ug-Fp6Tof9tNscTFyZzkbJvw@mail.gmail.com>
-Subject: Re: [PATCH 2/8] phy: qcom: Introduce Super-Speed USB UNIPHY driver
-To:     Praveenkumar I <quic_ipkumar@quicinc.com>
+Date:   Tue, 3 Oct 2023 18:15:50 +0300
+Message-ID: <CAA8EJpqz+abgiOjYukVvzmz_c-wuQMfDpLYfxnRTsVN8J1Smkg@mail.gmail.com>
+Subject: Re: [PATCH 3/6] phy: qcom: Introduce PCIe UNIPHY 28LP driver
+To:     Nitheesh Sekar <quic_nsekar@quicinc.com>
 Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        gregkh@linuxfoundation.org, catalin.marinas@arm.com,
-        will@kernel.org, p.zabel@pengutronix.de, geert+renesas@glider.be,
-        arnd@arndb.de, neil.armstrong@linaro.org, nfraprado@collabora.com,
-        u-kumar1@ti.com, peng.fan@nxp.com, quic_wcheng@quicinc.com,
-        quic_varada@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, quic_kathirav@quicinc.com,
-        quic_nsekar@quicinc.com, quic_srichara@quicinc.com
+        lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
+        bhelgaas@google.com, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, vkoul@kernel.org, kishon@kernel.org,
+        mani@kernel.org, p.zabel@pengutronix.de, quic_srichara@quicinc.com,
+        quic_varada@quicinc.com, quic_ipkumar@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-phy@lists.infradead.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
@@ -79,92 +74,441 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 3 Oct 2023 at 17:22, Praveenkumar I <quic_ipkumar@quicinc.com> wrote:
+On Tue, 3 Oct 2023 at 15:09, Nitheesh Sekar <quic_nsekar@quicinc.com> wrote:
 >
+> Add Qualcomm PCIe UNIPHY 28LP driver support present
+> in Qualcomm IPQ5018 SoC and the phy init sequence.
 >
+> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
+> ---
+>  drivers/phy/qualcomm/Kconfig                  |  12 +
+>  drivers/phy/qualcomm/Makefile                 |   1 +
+>  .../phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c  | 336 ++++++++++++++++++
+>  3 files changed, 349 insertions(+)
+>  create mode 100644 drivers/phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c
 >
-> On 9/30/2023 10:48 PM, Dmitry Baryshkov wrote:
-> > On 29/09/2023 11:42, Praveenkumar I wrote:
-> >> Adds Qualcomm 22ull Super-Speed USB UNIPHY driver support which
-> >> is present in Qualcomm IPQ5332 SoC. This PHY is interfaced with
-> >> SNPS DWC3 USB and SNPS DWC PCIe. Either one of the interface
-> >> can use the it and selection is done via mux present in TCSR
-> >> register. This driver selects the PHY for DWC3 USB and handles
-> >> the reset, clocks and regulator.
-> >>
-> >> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> >> ---
-> >>   drivers/phy/qualcomm/Kconfig               |  11 +
-> >>   drivers/phy/qualcomm/Makefile              |   1 +
-> >>   drivers/phy/qualcomm/phy-qcom-uniphy-usb.c | 322 +++++++++++++++++++++
-> >>   3 files changed, 334 insertions(+)
-> >>   create mode 100644 drivers/phy/qualcomm/phy-qcom-uniphy-usb.c
-> >>
-> >> diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
-> >> index d891058b7c39..7257c8455c53 100644
-> >> --- a/drivers/phy/qualcomm/Kconfig
-> >> +++ b/drivers/phy/qualcomm/Kconfig
-> >> @@ -154,6 +154,17 @@ config PHY_QCOM_M31_USB
-> >>         management. This driver is required even for peripheral only or
-> >>         host only mode configurations.
-> >>   +config PHY_QCOM_UNIPHY_USB
-> >> +    tristate "Qualcomm USB Super-Speed UNIPHY driver"
-> >
-> > Can we please have more specific driver name? As I wrote earlier,
-> > there are two other (different) kinds of Qualcomm UNI PHY devices:
-> > - DSI / HDMI UNIPHY on apq8064 / msm8974 / msm8960 (?)
-> > - USB QMP UNI PHY drivers
-> >
-> > Adding a driver called UNIPHY, which is not related to those two kinds
-> > sounds pretty confusing to me.
-> This UNIPHY is different from above mentioned ones. This a custom
-> version for 22nm on Qualcomm IPQ5332.
-> Can we name the driver as phy-qcom-uniphy-usb-ss-22ull.c /
-> phy-qcom-usb-ss-22ull.c ?
+> diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
+> index d891058b7c39..b7d37cd98f02 100644
+> --- a/drivers/phy/qualcomm/Kconfig
+> +++ b/drivers/phy/qualcomm/Kconfig
+> @@ -154,6 +154,18 @@ config PHY_QCOM_M31_USB
+>           management. This driver is required even for peripheral only or
+>           host only mode configurations.
+>
+> +config PHY_QCOM_UNIPHY_PCIE_28LP
+> +       bool "PCIE UNIPHY 28LP PHY driver"
+> +       depends on ARCH_QCOM
+> +       depends on HAS_IOMEM
+> +       depends on OF
+> +       select GENERIC_PHY
+> +       help
+> +         Enable this to support the PCIe UNIPHY 28LP phy transceiver that
+> +         is used with PCIe controllers on Qualcomm IPQ5018 chips. It
+> +         handles PHY initialization, clock management required after
+> +         resetting the hardware and power management.
+> +
+>  config PHY_QCOM_USB_HS
+>         tristate "Qualcomm USB HS PHY module"
+>         depends on USB_ULPI_BUS
+> diff --git a/drivers/phy/qualcomm/Makefile b/drivers/phy/qualcomm/Makefile
+> index ffd609ac6233..31105cd17bc9 100644
+> --- a/drivers/phy/qualcomm/Makefile
+> +++ b/drivers/phy/qualcomm/Makefile
+> @@ -17,6 +17,7 @@ obj-$(CONFIG_PHY_QCOM_QMP_USB_LEGACY) += phy-qcom-qmp-usb-legacy.o
+>  obj-$(CONFIG_PHY_QCOM_QUSB2)           += phy-qcom-qusb2.o
+>  obj-$(CONFIG_PHY_QCOM_SNPS_EUSB2)      += phy-qcom-snps-eusb2.o
+>  obj-$(CONFIG_PHY_QCOM_EUSB2_REPEATER)  += phy-qcom-eusb2-repeater.o
+> +obj-$(CONFIG_PHY_QCOM_UNIPHY_PCIE_28LP)        += phy-qcom-uniphy-pcie-28lp.o
+>  obj-$(CONFIG_PHY_QCOM_USB_HS)          += phy-qcom-usb-hs.o
+>  obj-$(CONFIG_PHY_QCOM_USB_HSIC)        += phy-qcom-usb-hsic.o
+>  obj-$(CONFIG_PHY_QCOM_USB_HS_28NM)     += phy-qcom-usb-hs-28nm.o
+> diff --git a/drivers/phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c b/drivers/phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c
+> new file mode 100644
+> index 000000000000..5ef6ae7276cf
+> --- /dev/null
+> +++ b/drivers/phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c
+> @@ -0,0 +1,336 @@
+> +// SPDX-License-Identifier: GPL-2.0+
+> +/*
+> + * Copyright (c) 2023, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#include <linux/clk.h>
+> +#include <linux/clk-provider.h>
+> +#include <linux/err.h>
+> +#include <linux/io.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/phy/phy.h>
+> +#include <linux/reset.h>
+> +#include <linux/of_device.h>
+> +#include <linux/delay.h>
+> +#include <linux/mfd/syscon.h>
+> +#include <linux/regmap.h>
+> +
+> +#define PIPE_CLK_DELAY_MIN_US                  5000
+> +#define PIPE_CLK_DELAY_MAX_US                  5100
+> +#define CDR_CTRL_REG_1         0x80
+> +#define CDR_CTRL_REG_2         0x84
+> +#define CDR_CTRL_REG_3         0x88
+> +#define CDR_CTRL_REG_4         0x8C
+> +#define CDR_CTRL_REG_5         0x90
+> +#define CDR_CTRL_REG_6         0x94
+> +#define CDR_CTRL_REG_7         0x98
+> +#define SSCG_CTRL_REG_1                0x9c
+> +#define SSCG_CTRL_REG_2                0xa0
+> +#define SSCG_CTRL_REG_3                0xa4
+> +#define SSCG_CTRL_REG_4                0xa8
+> +#define SSCG_CTRL_REG_5                0xac
+> +#define SSCG_CTRL_REG_6                0xb0
+> +#define PCS_INTERNAL_CONTROL_2 0x2d8
+> +
+> +#define PHY_MODE_FIXED         0x1
+> +
+> +enum qcom_uniphy_pcie_type {
+> +       PHY_TYPE_PCIE = 1,
+> +       PHY_TYPE_PCIE_GEN2,
+> +       PHY_TYPE_PCIE_GEN3,
+> +};
+> +
+> +struct uniphy_regs {
+> +       unsigned int offset;
+> +       unsigned int val;
+> +};
+> +
+> +struct uniphy_pcie_data {
 
-usb-ss-22ull sounds better. Or maybe usb-ipq-ss
+Please stick to a single symbol/struct prefix.
 
-> >
-> >> +    depends on USB && (ARCH_QCOM || COMPILE_TEST)
-> >> +    select GENERIC_PHY
-> >> +    help
-> >> +      Enable this to support the Qualcomm USB Super-Speed UNIPHY
-> >> transceiver
-> >> +      with DWC3 USB core. It handles PHY initialization, clock
-> >> +      management required after resetting the hardware and power
-> >> +      management. This driver is required even for peripheral only or
-> >> +      host only mode configurations.
-> >> +
-> >>   config PHY_QCOM_USB_HS
-> >>       tristate "Qualcomm USB HS PHY module"
-> >>       depends on USB_ULPI_BUS
-> >> diff --git a/drivers/phy/qualcomm/Makefile
-> >> b/drivers/phy/qualcomm/Makefile
-> >> index ffd609ac6233..c3e0112a7a70 100644
-> >> --- a/drivers/phy/qualcomm/Makefile
-> >> +++ b/drivers/phy/qualcomm/Makefile
-> >> @@ -17,6 +17,7 @@ obj-$(CONFIG_PHY_QCOM_QMP_USB_LEGACY)    +=
-> >> phy-qcom-qmp-usb-legacy.o
-> >>   obj-$(CONFIG_PHY_QCOM_QUSB2)        += phy-qcom-qusb2.o
-> >>   obj-$(CONFIG_PHY_QCOM_SNPS_EUSB2)    += phy-qcom-snps-eusb2.o
-> >>   obj-$(CONFIG_PHY_QCOM_EUSB2_REPEATER)    += phy-qcom-eusb2-repeater.o
-> >> +obj-$(CONFIG_PHY_QCOM_UNIPHY_USB)    += phy-qcom-uniphy-usb.o
-> >>   obj-$(CONFIG_PHY_QCOM_USB_HS)         += phy-qcom-usb-hs.o
-> >>   obj-$(CONFIG_PHY_QCOM_USB_HSIC)     += phy-qcom-usb-hsic.o
-> >>   obj-$(CONFIG_PHY_QCOM_USB_HS_28NM)    += phy-qcom-usb-hs-28nm.o
-> >> diff --git a/drivers/phy/qualcomm/phy-qcom-uniphy-usb.c
-> >> b/drivers/phy/qualcomm/phy-qcom-uniphy-usb.c
-> >> new file mode 100644
-> >> index 000000000000..fdfc9c225995
-> >> --- /dev/null
-> >> +++ b/drivers/phy/qualcomm/phy-qcom-uniphy-usb.c
-> >
-> > So, is it a USB PHY or UNI PHY (where I would expect that it handles
-> > USB and PCIe?)
-> It is a USB PHY and the PHY name is UNIPHY. Added the usb in the file
-> name to differentiate it.
-> >
+> +       int lanes;
+> +       /* 2nd lane offset */
+> +       int lane_offset;
+> +       unsigned int phy_type;
+> +       const struct uniphy_regs *init_seq;
+> +       unsigned int init_seq_num;
+> +};
+> +
+> +struct qcom_uniphy_pcie {
+> +       struct phy phy;
+> +       struct device *dev;
+> +       const struct uniphy_pcie_data *data;
+> +       struct clk_bulk_data *clks;
+> +       int num_clks;
+> +       struct reset_control *resets;
+> +       void __iomem *base;
+> +};
+> +
+> +#define        phy_to_dw_phy(x)        container_of((x), struct qca_uni_pcie_phy, phy)
+> +
+> +static const struct uniphy_regs ipq5018_regs[] = {
+> +       {
+> +               .offset = SSCG_CTRL_REG_4,
+> +               .val = 0x1cb9,
+> +       },
+> +       {
 
--- 
+"}, {", on the same line.
+
+> +               .offset = SSCG_CTRL_REG_5,
+> +               .val = 0x023a,
+> +       },
+> +       {
+> +               .offset = SSCG_CTRL_REG_3,
+> +               .val = 0xd360,
+> +       },
+> +       {
+> +               .offset = SSCG_CTRL_REG_1,
+> +               .val = 0x1,
+> +       },
+> +       {
+> +               .offset = SSCG_CTRL_REG_2,
+> +               .val = 0xeb,
+> +       },
+> +       {
+> +               .offset = CDR_CTRL_REG_4,
+> +               .val = 0x3f9,
+> +       },
+> +       {
+> +               .offset = CDR_CTRL_REG_5,
+> +               .val = 0x1c9,
+> +       },
+> +       {
+> +               .offset = CDR_CTRL_REG_2,
+> +               .val = 0x419,
+> +       },
+> +       {
+> +               .offset = CDR_CTRL_REG_1,
+> +               .val = 0x200,
+> +       },
+> +       {
+> +               .offset = PCS_INTERNAL_CONTROL_2,
+> +               .val = 0xf101,
+> +       },
+> +};
+> +
+> +static const struct uniphy_pcie_data ipq5018_2x2_data = {
+> +       .lanes          = 2,
+> +       .lane_offset    = 0x800,
+> +       .phy_type       = PHY_TYPE_PCIE_GEN2,
+> +       .init_seq       = ipq5018_regs,
+> +       .init_seq_num   = ARRAY_SIZE(ipq5018_regs),
+> +};
+> +
+> +static void qcom_uniphy_pcie_init(struct qcom_uniphy_pcie *phy)
+> +{
+> +       const struct uniphy_pcie_data *data = phy->data;
+> +       const struct uniphy_regs *init_seq;
+> +       void __iomem *base = phy->base;
+> +       int lane = 0;
+> +       int i;
+> +
+> +       while (lane != data->lanes) {
+
+for (lane = 0; ...)
+
+> +               init_seq = data->init_seq;
+> +
+> +               for (i = 0; i < data->init_seq_num; i++, init_seq++)
+> +                       writel(init_seq->val, base + init_seq->offset);
+> +
+> +               if (data->lanes == 2)
+> +                       base = base + data->lane_offset;
+
+Drop the if(). Use +=.
+
+> +
+> +               lane++;
+> +       }
+> +}
+> +
+> +static int qcom_uniphy_pcie_power_off(struct phy *x)
+> +{
+> +       struct qcom_uniphy_pcie *phy = phy_get_drvdata(x);
+> +
+> +       reset_control_assert(phy->resets);
+> +
+> +       clk_bulk_disable_unprepare(phy->num_clks, phy->clks);
+
+Judging from power_on(), the order should be opposite.
+
+> +
+> +       return 0;
+> +}
+> +
+> +static int qcom_uniphy_pcie_power_on(struct phy *x)
+> +{
+> +       int ret;
+> +       struct qcom_uniphy_pcie *phy = phy_get_drvdata(x);
+> +
+> +       ret = reset_control_assert(phy->resets);
+> +       if (ret) {
+> +               dev_err(phy->dev, "reset assert failed (%d)\n", ret);
+> +               return ret;
+> +       }
+> +
+> +       /*
+> +        * Delay periods before and after reset deassert are working values
+> +        * from downstream Codeaurora kernel
+> +        */
+> +       usleep_range(100, 150);
+> +
+> +       ret = reset_control_deassert(phy->resets);
+> +       if (ret) {
+> +               dev_err(phy->dev, "reset deassert failed (%d)\n", ret);
+> +               return ret;
+> +       }
+> +
+> +       usleep_range(PIPE_CLK_DELAY_MIN_US, PIPE_CLK_DELAY_MAX_US);
+> +
+> +       ret = clk_bulk_prepare_enable(phy->num_clks, phy->clks);
+> +       if (ret) {
+> +               dev_err(phy->dev, "clk prepare and enable failed %d\n", ret);
+> +               return ret;
+
+Shouldn't the reset be asserted again?
+
+> +       }
+> +
+> +       usleep_range(30, 50);
+
+In the same function you have one usleep_range with the defined
+constants and another one using plain numbers. Could you please stick
+to the uniform scheme?
+
+> +
+> +       qcom_uniphy_pcie_init(phy);
+> +       return 0;
+> +}
+> +
+> +static int qcom_uniphy_pcie_get_resources(struct platform_device *pdev,
+> +                                         struct qcom_uniphy_pcie *phy)
+
+inline it
+
+> +{
+> +       struct resource *res;
+> +
+> +       res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> +       phy->base = devm_ioremap_resource(phy->dev, res);
+
+devm_platform_get_and_ioremap_resource()
+
+> +       if (IS_ERR(phy->base)) {
+> +               dev_err(phy->dev, "cannot get phy registers\n");
+> +               return PTR_ERR(phy->base);
+> +       }
+> +
+> +       phy->num_clks = devm_clk_bulk_get_all(phy->dev, &phy->clks);
+> +       if (phy->num_clks < 0)
+> +               return phy->num_clks;
+> +
+> +       phy->resets = devm_reset_control_array_get_exclusive(phy->dev);
+> +       if (IS_ERR(phy->resets))
+> +               return PTR_ERR(phy->resets);
+> +
+> +       return 0;
+> +}
+> +
+> +/*
+> + * Register a fixed rate pipe clock.
+> + *
+> + * The <s>_pipe_clksrc generated by PHY goes to the GCC that gate
+> + * controls it. The <s>_pipe_clk coming out of the GCC is requested
+> + * by the PHY driver for its operations.
+> + * We register the <s>_pipe_clksrc here. The gcc driver takes care
+> + * of assigning this <s>_pipe_clksrc as parent to <s>_pipe_clk.
+> + * Below picture shows this relationship.
+> + *
+> + *         +---------------+
+> + *         |   PHY block   |<<---------------------------------------+
+> + *         |               |                                         |
+> + *         |   +-------+   |                   +-----+               |
+> + *   I/P---^-->|  PLL  |---^--->pipe_clksrc--->| GCC |--->pipe_clk---+
+> + *    clk  |   +-------+   |                   +-----+
+> + *         +---------------+
+> + */
+> +static int phy_pipe_clk_register(struct qcom_uniphy_pcie  *phy,
+> +                                struct device_node *np)
+> +{
+> +       struct clk_fixed_rate *fixed;
+> +       struct clk_init_data init = { };
+> +       int ret;
+> +
+> +       ret = of_property_read_string(np, "clock-output-names", &init.name);
+> +       if (ret) {
+> +               dev_err(phy->dev, "%pOFn: No clock-output-names\n", np);
+> +               return ret;
+> +       }
+
+Can we drop clock-output-names please.
+
+> +
+> +       fixed = devm_kzalloc(phy->dev, sizeof(*fixed), GFP_KERNEL);
+> +       if (!fixed)
+> +               return -ENOMEM;
+> +
+> +       init.ops = &clk_fixed_rate_ops;
+> +       fixed->fixed_rate = 125000000;
+> +       fixed->hw.init = &init;
+> +
+> +       ret = devm_clk_hw_register(phy->dev, &fixed->hw);
+> +       if (ret)
+> +               return ret;
+
+devm_clk_hw_register_fixed_rate().  Then the whole function can be inlined.
+
+> +
+> +       ret = devm_of_clk_add_hw_provider(phy->dev, of_clk_hw_simple_get,
+> +                                         &fixed->hw);
+> +       if (ret)
+> +               return ret;
+> +
+> +       return 0;
+> +}
+> +
+> +static const struct of_device_id qcom_uniphy_pcie_id_table[] = {
+> +       {
+> +               .compatible = "qcom,ipq5018-uniphy-pcie-gen2x2",
+
+Bindings describe both 2x1 and 2x2 PHYs, but the driver supports only
+2x2. Either of that should be fixed.
+
+
+> +               .data = &ipq5018_2x2_data,
+> +       },
+> +       { /* Sentinel */ },
+> +};
+> +MODULE_DEVICE_TABLE(of, qcom_uniphy_pcie_id_table);
+> +
+> +static const struct phy_ops pcie_ops = {
+> +       .power_on       = qcom_uniphy_pcie_power_on,
+> +       .power_off      = qcom_uniphy_pcie_power_off,
+> +       .owner          = THIS_MODULE,
+> +};
+> +
+> +static int qcom_uniphy_pcie_probe(struct platform_device *pdev)
+> +{
+> +       struct qcom_uniphy_pcie *phy;
+> +       int ret;
+> +       struct phy *generic_phy;
+> +       struct phy_provider *phy_provider;
+> +       struct device *dev = &pdev->dev;
+> +       struct device_node *np = of_node_get(dev->of_node);
+> +
+> +       phy = devm_kzalloc(&pdev->dev, sizeof(*phy), GFP_KERNEL);
+> +       if (!phy)
+> +               return -ENOMEM;
+> +
+> +       platform_set_drvdata(pdev, phy);
+> +       phy->dev = &pdev->dev;
+> +
+> +       phy->data = of_device_get_match_data(dev);
+> +       if (!phy->data)
+> +               return -EINVAL;
+> +
+> +       ret = qcom_uniphy_pcie_get_resources(pdev, phy);
+> +       if (ret < 0) {
+> +               dev_err(&pdev->dev, "failed to get resources: %d\n", ret);
+> +               return ret;
+> +       }
+> +
+> +       ret = phy_pipe_clk_register(phy, np);
+> +       if (ret)
+> +               dev_err(&pdev->dev, "failed to register phy pipe clk\n");
+> +
+> +       generic_phy = devm_phy_create(phy->dev, NULL, &pcie_ops);
+> +       if (IS_ERR(generic_phy))
+> +               return PTR_ERR(generic_phy);
+> +
+> +       phy_set_drvdata(generic_phy, phy);
+> +       phy_provider = devm_of_phy_provider_register(phy->dev,
+> +                                                    of_phy_simple_xlate);
+> +       if (IS_ERR(phy_provider))
+> +               return PTR_ERR(phy_provider);
+> +
+> +       return 0;
+> +}
+> +
+> +static struct platform_driver qcom_uniphy_pcie_driver = {
+> +       .probe          = qcom_uniphy_pcie_probe,
+> +       .driver         = {
+> +               .name   = "qcom-uniphy-pcie",
+> +               .owner  = THIS_MODULE,
+> +               .of_match_table = qcom_uniphy_pcie_id_table,
+> +       },
+> +};
+> +
+> +module_platform_driver(qcom_uniphy_pcie_driver);
+> +
+> +MODULE_ALIAS("platform:qcom-uniphy-pcie");
+> +MODULE_LICENSE("Dual BSD/GPL");
+> +MODULE_DESCRIPTION("PCIE QCOM UNIPHY driver");
+> --
+> 2.17.1
+>
+
+
+--
 With best wishes
 Dmitry
