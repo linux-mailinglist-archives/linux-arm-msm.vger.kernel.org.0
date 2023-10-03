@@ -2,169 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5ABAB7B6735
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 13:07:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 588997B6757
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 13:12:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231363AbjJCLHt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Oct 2023 07:07:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37008 "EHLO
+        id S239896AbjJCLMy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Oct 2023 07:12:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231292AbjJCLHs (ORCPT
+        with ESMTP id S230341AbjJCLMx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Oct 2023 07:07:48 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B4C7A1;
-        Tue,  3 Oct 2023 04:07:44 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3939SCNL016483;
-        Tue, 3 Oct 2023 11:07:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=D4oUZ8kfQKPTdcqTl4WRNkRlvKVgbbEpc84zKOpgbNI=;
- b=jLNKXJRxSkUXQNnmmyGbBCFs3BCCoEoS5P9y2N0mLOZqE/y6aAVXtBEAkS/Stvr1kWpl
- emXm+hWCNroYgdhcIyzPZzGYiLtD2k3jkgbmejHgatVmx2g9ilQLXEIeLaTuGHS+MWQu
- G8SRMF+LfwcwtLml9d+s75DuqyqQq/BGy44WxYlja5xQDAVXxO+tXM8r3X7BEwx+hywz
- m5GEMt+9xgfIgXqBMFbM2+pRurkX7Orrlb557Q5kUjzV8xzevnm4jFK7oAkUJ74SS0pp
- QLhN/8St/2N582uaIiM7MXKBbXZs/dvKd3ljtHi1tNaG2MlWkc6O4NKnaUn+MWy90udw 2w== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tg77es4dp-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 03 Oct 2023 11:07:37 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 393B7aCO012337
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 3 Oct 2023 11:07:36 GMT
-Received: from [10.204.67.150] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 3 Oct
- 2023 04:07:34 -0700
-Message-ID: <856929f7-7e6e-8dd5-a12f-9f4de524ce61@quicinc.com>
-Date:   Tue, 3 Oct 2023 16:37:30 +0530
+        Tue, 3 Oct 2023 07:12:53 -0400
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3C2FA1
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 04:12:49 -0700 (PDT)
+Received: by mail-pl1-x633.google.com with SMTP id d9443c01a7336-1c737d61a00so5663175ad.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 04:12:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1696331569; x=1696936369; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9tBABO7GPyJwZw3Nk8JykIKdvU51HhvEtWXYIL3h5YI=;
+        b=PgHhF3Sdw9k3XNoVvq2aN22cVzV+dotmdsIJfOMyVWL16ZstbTSeiMCiVTkHhsrocc
+         WQHs6RdXnHZv+w0Fep/WQPM4Gkls3mJh8Qa66x25yK/SgPEIvE5XPvTqxBSZUcWAtUfz
+         +8vkxO0+i5KldeIffnIDVOkhqsn54N1FpKtErNBORz8FHt9SJm6RGrG3MjAfIV8tZ9QH
+         men/1PgZ+mKutOw55lCn32r1b7yoXEMfzgfgmAT7GU7T4RqSzWAMLIMnJT78bR0I7umQ
+         FQOMvFZjna5oqVbG6jMgHQDqq7hOm62dsHIEkgKHQeL5W97qrcM16Pl/iGuJpf4D+zSb
+         iTYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696331569; x=1696936369;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9tBABO7GPyJwZw3Nk8JykIKdvU51HhvEtWXYIL3h5YI=;
+        b=ukpT47/A/zXRuc57eNzKqvRcVATLFQsR/xZzkazW8SHi8+p3S0yTbI5Y0sXuqKVyx6
+         dEp/RfWBm9/T2Z9aiVi32TN5KVGCyDGIK10DCqtWsJJ/3gcnm+5zf7GghfA6Br1XfiAi
+         aQJ/CPd6Prsv6mjW5iho/uZSNUX+b1YiFJNf4RnmiPcR5N4C8Dyd23pUI7EumeCO4aY/
+         XUOJEUCpwF/ZJpXWtUAa+3e6wPj4yjZX17R6iFNB0HrrZZ+3MmUMFb8EZIhRYgPxTlmw
+         WD7FNlp3wVhwHO8k1GC9b44aoVAGo3inPM9yOmYwU0hDqJW0IQCEBU1bl6fMgUtOMv1n
+         5eaQ==
+X-Gm-Message-State: AOJu0Yx3+vhyumj1cedwQnZCVcBYBu1imZqqCjFDsBzISok0t0AVSZju
+        lbr0CTSPAp4q5XC5sarBb62A
+X-Google-Smtp-Source: AGHT+IHzp+SOMu/BZxx+P/nC6osmYhEk82BGK9A+pP8pfPwut57hIo4DZE6nffFz8+zx+Z9d247D5w==
+X-Received: by 2002:a17:902:c948:b0:1c4:4c73:94e6 with SMTP id i8-20020a170902c94800b001c44c7394e6mr16668612pla.51.1696331569220;
+        Tue, 03 Oct 2023 04:12:49 -0700 (PDT)
+Received: from localhost.localdomain ([117.217.185.220])
+        by smtp.gmail.com with ESMTPSA id d9-20020a170903230900b001ab2b4105ddsm1250328plh.60.2023.10.03.04.12.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Oct 2023 04:12:48 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
+        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
+        cw00.choi@samsung.com, andersson@kernel.org,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        jejb@linux.ibm.com, martin.petersen@oracle.com
+Cc:     alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
+        linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
+        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
+        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
+        bmasney@redhat.com, krzysztof.kozlowski@linaro.org,
+        linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v4 0/6] UFS: Add OPP support
+Date:   Tue,  3 Oct 2023 16:42:26 +0530
+Message-Id: <20231003111232.42663-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v1 2/3] misc: fastrpc: Free DMA handles for RPC calls with
- no arguments
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>
-CC:     <ekangupt@qti.qualcomm.com>, <gregkh@linuxfoundation.org>,
-        <linux-kernel@vger.kernel.org>,
-        <fastrpc.upstream@qti.qualcomm.com>, stable <stable@kernel.org>
-References: <1695973360-14369-1-git-send-email-quic_ekangupt@quicinc.com>
- <1695973360-14369-3-git-send-email-quic_ekangupt@quicinc.com>
- <92db4a0d-c416-6a1c-ad71-15c2156d59aa@linaro.org>
-Content-Language: en-US
-From:   Ekansh Gupta <quic_ekangupt@quicinc.com>
-In-Reply-To: <92db4a0d-c416-6a1c-ad71-15c2156d59aa@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: JqGyO4giKgrIVUUtVZwsksOA_ciFTEtr
-X-Proofpoint-GUID: JqGyO4giKgrIVUUtVZwsksOA_ciFTEtr
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-03_08,2023-10-02_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 impostorscore=0
- mlxscore=0 bulkscore=0 clxscore=1015 malwarescore=0 suspectscore=0
- spamscore=0 priorityscore=1501 mlxlogscore=999 phishscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310030079
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
+This series adds OPP (Operating Points) support to UFSHCD driver.
 
-On 10/2/2023 3:00 PM, Srinivas Kandagatla wrote:
-> 
-> 
-> On 29/09/2023 08:42, Ekansh Gupta wrote:
->> The FDs for DMA handles to be freed is updated in fdlist by DSP over
->> a remote call. This holds true even for remote calls with no
->> arguments. To handle this, get_args and put_args are needed to
->> be called for remote calls with no arguments also as fdlist
->> is allocated in get_args and FDs updated in fdlist is freed
->> in put_args.
->>
->> Fixes: 8f6c1d8c4f0c ("misc: fastrpc: Add fdlist implementation")
->> Cc: stable <stable@kernel.org>
->> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
->> ---
->>   drivers/misc/fastrpc.c | 23 ++++++++++-------------
->>   1 file changed, 10 insertions(+), 13 deletions(-)
->>
->> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
->> index fb92197..a52701c 100644
->> --- a/drivers/misc/fastrpc.c
->> +++ b/drivers/misc/fastrpc.c
->> @@ -1091,6 +1091,7 @@ static int fastrpc_put_args(struct 
->> fastrpc_invoke_ctx *ctx,
->>           }
->>       }
->> +    /* Clean up fdlist which is updated by DSP */
->>       for (i = 0; i < FASTRPC_MAX_FDLIST; i++) {
->>           if (!fdlist[i])
->>               break;
->> @@ -1157,11 +1158,9 @@ static int fastrpc_internal_invoke(struct 
->> fastrpc_user *fl,  u32 kernel,
->>       if (IS_ERR(ctx))
->>           return PTR_ERR(ctx);
-> <---
->> -    if (ctx->nscalars) {
->> -        err = fastrpc_get_args(kernel, ctx);
->> -        if (err)
->> -            goto bail;
->> -    }
->> +    err = fastrpc_get_args(kernel, ctx);
->> +    if (err)
->> +        goto bail;
-> -->
-> I dont see any point of the above change as fastrpc_internal_invoke will 
-> be called from kernel with nscalars always set.
-> 
-> do you see a path that does not set this?
-> 
-The context specific rpra buffer is allocated as part of 
-fastrpc_get_args and there is a possibility that the DSP intends to 
-update fdlist for a call with 0 nscalars. In that scenario, the driver 
-needs to ensure that the rpra is allocated which will carry the fdlist. 
-The same can be extended to crc and dsp perf memory(to be added, patches 
-shared for missing features) for remote calls with 0 nscalars.
+Motivation behind adding OPP support is to scale both clocks as well as
+regulators/performance state dynamically. Currently, UFSHCD just scales
+clock frequency during runtime with the help of "freq-table-hz" property
+defined in devicetree. With the addition of OPP tables in devicetree (as
+done for Qcom SDM845 and SM8250 SoCs in this series) UFSHCD can now scale
+both clocks and performance state of power domain which helps in power
+saving.
 
-Thanks for taking your time to review the patches Srini, please let me 
-know if you have more queries.
+For the addition of OPP support to UFSHCD, there are changes required to
+the OPP framework and devfreq drivers. The OPP framework changes are already
+merged and the devfreq change is added in this series.
 
--ekansh
-> --srini
->>       /* make sure that all CPU memory writes are seen by DSP */
->>       dma_wmb();
->> @@ -1185,14 +1184,12 @@ static int fastrpc_internal_invoke(struct 
->> fastrpc_user *fl,  u32 kernel,
->>       if (err)
->>           goto bail;
->> -    if (ctx->nscalars) {
->> -        /* make sure that all memory writes by DSP are seen by CPU */
->> -        dma_rmb();
->> -        /* populate all the output buffers with results */
->> -        err = fastrpc_put_args(ctx, kernel);
->> -        if (err)
->> -            goto bail;
->> -    }
->> +    /* make sure that all memory writes by DSP are seen by CPU */
->> +    dma_rmb();
->> +    /* populate all the output buffers with results */
->> +    err = fastrpc_put_args(ctx, kernel);
->> +    if (err)
->> +        goto bail;
->>   bail:
->>       if (err != -ERESTARTSYS && err != -ETIMEDOUT) {
+Credits
+=======
+
+This series is a continuation of previous work by Krzysztof Kozlowski [1].
+
+Testing
+=======
+
+This series is tested on 96Boards RB3 (SDM845 SoC) and RB5 (SM8250 SoC)
+development boards.
+
+Merging Strategy
+================
+
+Since the devfreq patch got an Ack from the maintainer, either it can be merged
+to scsi tree with rest of the patches or merged separately through devfreq tree.
+
+Thanks,
+Mani
+
+[1] https://lore.kernel.org/all/20220513061347.46480-1-krzysztof.kozlowski@linaro.org/
+
+Changes in v4:
+
+* Rebased on top of v6.6-rc3
+
+Changes in v3:
+
+* Rebased on top of linux-next/master tag: next-20230731
+* Dropped the already applied patches (dts, opp binding and framework)
+* Moved the interconnect patches to a separate series:
+  https://lore.kernel.org/linux-scsi/20230731145020.41262-1-manivannan.sadhasivam@linaro.org/
+* Moved ufshcd_opp_config_clks() API to ufshcd.c to fix the build failure
+  reported by Kbuild bot: https://lore.kernel.org/all/202307210542.KoLHRbU6-lkp@intel.com/
+* Collected Acks
+* v2: https://lore.kernel.org/all/20230720054100.9940-1-manivannan.sadhasivam@linaro.org/
+
+Changes in v2:
+
+* Added more description to the bindings patch 2/15
+* Fixed dev_pm_opp_put() usage in patch 10/15
+* Added a new patch for adding enums for UFS lanes 14/15
+* Changed the icc variables to mem_bw and cfg_bw and used
+  the enums for gears and lanes in bw_table
+* Collected review tags
+* Added SCSI list and folks
+* Removed duplicate patches
+
+Krzysztof Kozlowski (2):
+  dt-bindings: ufs: common: add OPP table
+  arm64: dts: qcom: sdm845: Add OPP table support to UFSHC
+
+Manivannan Sadhasivam (4):
+  PM / devfreq: Switch to dev_pm_opp_find_freq_{ceil/floor}_indexed()
+    APIs
+  scsi: ufs: core: Add OPP support for scaling clocks and regulators
+  scsi: ufs: host: Add support for parsing OPP
+  arm64: dts: qcom: sm8250: Add OPP table support to UFSHC
+
+ .../devicetree/bindings/ufs/ufs-common.yaml   |  36 +++-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  42 +++-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |  39 +++-
+ drivers/devfreq/devfreq.c                     |  14 +-
+ drivers/ufs/core/ufshcd.c                     | 179 ++++++++++++++----
+ drivers/ufs/host/ufshcd-pltfrm.c              |  78 ++++++++
+ include/ufs/ufshcd.h                          |   7 +
+ 7 files changed, 332 insertions(+), 63 deletions(-)
+
+-- 
+2.25.1
+
