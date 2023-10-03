@@ -2,73 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BCC47B6D86
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 17:57:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9ACA67B6DBC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 18:00:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231979AbjJCP5V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Oct 2023 11:57:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51808 "EHLO
+        id S240267AbjJCQAH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Oct 2023 12:00:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231422AbjJCP5U (ORCPT
+        with ESMTP id S240341AbjJCQAD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Oct 2023 11:57:20 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C2F29E
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 08:57:16 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-40651a72807so10845225e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 08:57:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696348635; x=1696953435; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=U4ci3PGm2LPgLVtRlA44jOoVtYu71qTPmz8qC5gmhz4=;
-        b=nnevNyOyD7fOj0X/cLRdrEf69etCVnC0xjF6vTrNuURucHw7KzmgunlYciE/+MSydk
-         Pq7FHIwlKsNQYECfpgfqXhio7O+dngy6DCjkYSfn4RP2ZabZY089oSYGKDwjeScTKpoi
-         cIvy41ZDLWWIbauJiMY7Ea9hCECOm/QUyKSnXZeSFtk+Z3q7F8frBi+QTp0AieN1iy9k
-         5a11MYSXOIjhskUvkAmXYxWDn2Zkn6WitU3mWWXqXqBvH/1KDmypI9+g0G2KbftrMNlV
-         Oawubbl65ASNRJIdao5oW+LwjaC4r7kApxNoqSL+3ZYZuwCW/Hc8ZNlM1GnV4DrKpd0e
-         6t6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696348635; x=1696953435;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=U4ci3PGm2LPgLVtRlA44jOoVtYu71qTPmz8qC5gmhz4=;
-        b=cuazbHt3kyjoCLD3uACgS5WwkwVxUEFg37AtamuxKGWyidJvAWjgXFg7EqzjBksTfP
-         vzjP8uQyH4y5TAjIONlngmA8zR1cmh283FJo+woyIyMoE3sKsOVFUH2LHtrZOGBNjnhY
-         2foX4j9L2osbMHoH9o1IMnK5rTtTsPhLd92qggY+RzN9iY7Lp5JJzoH22oPyPHvEsXz8
-         TTyv7CpVeNq065TI4dMkjVWWaw0AK9mV/eMMGA0LEgB2GBuHqTF/ssbypNjnWACzY+yI
-         3f7dd9g3Ygywm2KciwCS2h+nrpe0Y8YAl9aoclpiJh+heedun+C0zCQuDYaln/VGsQtT
-         tOOA==
-X-Gm-Message-State: AOJu0YwoDaHvyfkGr+4b8f/kx+xKUwQI7uTnO5mBZiBv/hObnpUcGi9V
-        n1PuRH4kdpzjUpqUFI0zmpGzxw==
-X-Google-Smtp-Source: AGHT+IEFJi5eQZLDZbHuP8V3eVbhyktNfPfTMEhybWz6RcKN42IxH4JbcBGARfmxvNdpB/suD8I8Qg==
-X-Received: by 2002:a05:600c:2199:b0:401:bf56:8ba6 with SMTP id e25-20020a05600c219900b00401bf568ba6mr11984354wme.28.1696348634720;
-        Tue, 03 Oct 2023 08:57:14 -0700 (PDT)
-Received: from [192.168.1.8] (host-2-99-112-229.as13285.net. [2.99.112.229])
-        by smtp.gmail.com with ESMTPSA id i5-20020adffdc5000000b0031fb91f23e9sm1885885wrs.43.2023.10.03.08.57.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Oct 2023 08:57:14 -0700 (PDT)
-Message-ID: <dee25d93-28a0-40ee-9ab8-f86c89428dbd@linaro.org>
-Date:   Tue, 3 Oct 2023 16:57:13 +0100
+        Tue, 3 Oct 2023 12:00:03 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2C51114;
+        Tue,  3 Oct 2023 08:59:58 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 393Dtihq014212;
+        Tue, 3 Oct 2023 15:59:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=ADaA/9nF9XWLSlIH/V1+7qMot+xDTDjD4TBk10pSGI0=;
+ b=DWL+1lhiby6lsHUzhFN+3eiWLLkHmFPnxn1CZYV/hkpFAGYQg33qauXpj3c0CczXqc8i
+ Sy+771zoE6r9oF5jQEWtsIgHQhDgJ2sBcV9MMt8M6kKhsNf2QkSWo5ErbIBbIW3bPeD3
+ pF49BtILMs63wJnmcemMy7niXpYGqNasPjXhQWxqB3siJ6QsBi9Ebh5TOcNk3GapMrGS
+ p71xpK7QktDhi1SVfGkNDFzyfeFxmifoNVTgb77vzICZKXi3evPct0UHA1tzcD/JGIQb
+ LR1oUbCsgbhqUGiHwB1Ix5OskmPHPY4jdnu/qBV3MfuJd0XWXiy4JxQEm6TDtcv0bfYX vw== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tg98rhsbx-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 03 Oct 2023 15:59:47 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 393FxkvX000946
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 3 Oct 2023 15:59:46 GMT
+Received: from [10.110.20.163] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 3 Oct
+ 2023 08:59:45 -0700
+Message-ID: <7c871b23-5544-6604-257d-f0c8fd5afd06@quicinc.com>
+Date:   Tue, 3 Oct 2023 08:59:45 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] mfd: qcom-spmi-pmic: fix revid implementation
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v4 3/4] dt-bindings: arm: Add new compatible for smc/hvc
+ transport for SCMI
 Content-Language: en-US
-To:     Johan Hovold <johan+linaro@kernel.org>, Lee Jones <lee@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20231003152927.15000-1-johan+linaro@kernel.org>
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <20231003152927.15000-1-johan+linaro@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+To:     Sudeep Holla <sudeep.holla@arm.com>
+CC:     <cristian.marussi@arm.com>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20230718160833.36397-1-quic_nkela@quicinc.com>
+ <20230911194359.27547-1-quic_nkela@quicinc.com>
+ <20230911194359.27547-4-quic_nkela@quicinc.com>
+ <20231003104404.o7yxg3y7dn7uhrq4@bogus>
+From:   Nikunj Kela <quic_nkela@quicinc.com>
+In-Reply-To: <20231003104404.o7yxg3y7dn7uhrq4@bogus>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: LCfrz6QFLV8u2SOKqyuHcQWBXIMu85DO
+X-Proofpoint-GUID: LCfrz6QFLV8u2SOKqyuHcQWBXIMu85DO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-03_12,2023-10-02_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ suspectscore=0 bulkscore=0 adultscore=0 impostorscore=0 lowpriorityscore=0
+ clxscore=1015 spamscore=0 mlxscore=0 malwarescore=0 phishscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310030119
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,35 +87,66 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+On 10/3/2023 3:44 AM, Sudeep Holla wrote:
+> On Mon, Sep 11, 2023 at 12:43:58PM -0700, Nikunj Kela wrote:
+>> Introduce compatible "qcom,scmi-hvc-shmem" for SCMI smc/hvc
+>> transport channel for Qualcomm virtual platforms.
+>> The compatible mandates a shared memory channel.
+>>
+>> Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
+>> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>   .../devicetree/bindings/firmware/arm,scmi.yaml       | 12 ++++++++++++
+>>   1 file changed, 12 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/firmware/arm,scmi.yaml b/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
+>> index 8d54ea768d38..4090240f45b1 100644
+>> --- a/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
+>> +++ b/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
+>> @@ -45,6 +45,9 @@ properties:
+>>         - description: SCMI compliant firmware with OP-TEE transport
+>>           items:
+>>             - const: linaro,scmi-optee
+>> +      - description: SCMI compliant firmware with Qualcomm hvc/shmem transport
+>> +        items:
+>> +          - const: qcom,scmi-hvc-shmem
+> Can it be simply "qcom,scmi-smc" for 2 reasons ?
+> 1. We don't support SMC/HVC without shmem, so what is your argument to add
+>     '-shmem' in the compatible here ?
 
-On 03/10/2023 16:29, Johan Hovold wrote:
-> The Qualcomm SPMI PMIC revid implementation is broken in multiple ways
-> that can lead to resource leaks and crashes. This series reworks the
-> implementation so that can be used safely.
-> 
-> Included is also a rename of the SPMI device lookup helper which can
-> hopefully help prevent similar leaks from being reintroduced.
-> 
-> Johan
+In our platforms, there are multiple ways to allocate memory. One is 
+preallocated shmem as used here, another is dynamically by hypervisor 
+APIs. shmem was to just to indicate it is preallocated.
 
-This is.. definitely a major improvement. Thanks for cleaning up my mess
 
-fwiw
-Acked-by: Caleb Connolly <caleb.connolly@linaro.org>
-> 
-> 
-> Johan Hovold (5):
->   mfd: qcom-spmi-pmic: fix reference leaks in revid helper
->   mfd: qcom-spmi-pmic: fix revid implementation
->   mfd: qcom-spmi-pmic: switch to EXPORT_SYMBOL_GPL()
->   spmi: document spmi_device_from_of() refcounting
->   spmi: rename spmi device lookup helper
-> 
->  drivers/mfd/qcom-spmi-pmic.c | 103 +++++++++++++++++++++++++----------
->  drivers/spmi/spmi.c          |   9 ++-
->  include/linux/spmi.h         |   2 +-
->  3 files changed, 80 insertions(+), 34 deletions(-)
-> 
+> 2. The exact conduit(SMC/HVC) used is detected runtime, so I prefer to keep
+>    '-smc' instead of '-hvc' in the compatible just to avoid giving an illusion
+>    that HVC is the conduit chosen here based on the compatible. It can be true
+>    for other reason but I don't want to mislead here by using HVC.
 
--- 
-// Caleb (they/them)
+IUUC, currently, conduit comes from PSCI dt node. We have been using smc 
+for PSCI but want to use hvc here. That being said, I am fine to explore 
+if we can change PSCI to use hvc too.
+
+
+>>     interrupts:
+>>       description:
+>> @@ -320,6 +323,15 @@ allOf:
+>>         required:
+>>           - linaro,optee-channel-id
+>>   
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          contains:
+>> +            const: qcom,scmi-hvc-shmem
+>> +    then:
+>> +      required:
+>> +        - shmem
+>> +
+>>   examples:
+>>     - |
+>>       firmware {
+>> -- 
+>> 2.17.1
+>>
