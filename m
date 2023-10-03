@@ -2,84 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 30C307B6FAC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 19:25:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8EFBB7B6FC1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 19:30:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240501AbjJCRZT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Oct 2023 13:25:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54880 "EHLO
+        id S230420AbjJCRac (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Oct 2023 13:30:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240580AbjJCRZT (ORCPT
+        with ESMTP id S240712AbjJCRa1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Oct 2023 13:25:19 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90FD19B;
-        Tue,  3 Oct 2023 10:25:15 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 393H7oRR005038;
-        Tue, 3 Oct 2023 17:25:06 GMT
+        Tue, 3 Oct 2023 13:30:27 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9323AB7;
+        Tue,  3 Oct 2023 10:30:24 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 393H72aO017586;
+        Tue, 3 Oct 2023 17:29:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=ccZZHBINvKRglVotQHLxIkXLICZDXeFhlcScJlmx1ho=;
- b=ha6kIWFd6uDUNE6TFpXlVc+DWqUBzFCCVtaB49BPg++iQEKXKRvZ7yBGskxFg7L0oy1I
- 2US5WJApwmYdUtdqNvfOJoOKwhFJxCeVeExnCcKQnQzK/zB17p0gDSwjOsOinRToZRRl
- tzcsr++JYaqFpKiH5ndr2kQsrYf5wiD2S74K/6GAaikTgGlXXJi1dIMVyx8JbpFDFcYW
- +W4jjUSXpma+yQ4k25cAzl5jh7p7gmfOTehZgcwiyma7oJVNbdinohuMiXvIyqkwfDIt
- gyIS52lajvGNTiWnw+1+Zch5+7Lidt03ryh1StAyRbCEEwL++cRSwSJK++dSudxqMUvO Jw== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tec2epr19-1
+ bh=jgeKjkDTDlV1euYjkhGRGv0noKADub9qxWJVNSkF6LE=;
+ b=PWUdW3Yeeiv8PiZRCpayjO/HF9ZQk3pLo6QZTFLfVuabcT9dla8soq/pTnELMRa7lUJW
+ pQv3/sjAg64fIKfj155R+7QjaLIg1bNM7iemZQVm9lcKxbRXXHKNDDJIzl/PvY7/tuO8
+ UoXujhOphkyrVh1aVGphQAQgv4zaIihxml/+3eqx95tvH25Jyv/WcXNxxG2IhJl5jPVU
+ aKtuMx4NqeYUt5QnbFsYwpiLOHCvQ2kCPBVdvPxjmzGbv5T54hjDlvw5K3Sseeg7oqTm
+ RZOGgtuLUS2ZZRTpICcLGPoxopvYOSzNiiIhWZ4+ADDdAIVI7x1Lpj7BwvqY/SfjLIaa WQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tg1v3b10m-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 03 Oct 2023 17:25:05 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 393HP4Rn012900
+        Tue, 03 Oct 2023 17:29:59 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 393HTwOo003057
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 3 Oct 2023 17:25:04 GMT
-Received: from [10.110.36.217] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+        Tue, 3 Oct 2023 17:29:58 GMT
+Received: from [10.50.44.150] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 3 Oct
- 2023 10:25:01 -0700
-Message-ID: <2d8d4354-6dbb-e810-6efb-ca6b31f71b45@quicinc.com>
-Date:   Tue, 3 Oct 2023 10:25:00 -0700
+ 2023 10:29:51 -0700
+Message-ID: <da76b7ad-3157-4dbe-8987-5a7796dd71dc@quicinc.com>
+Date:   Tue, 3 Oct 2023 22:59:47 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v4 8/8] drm/msm/dp: move of_dp_aux_populate_bus() to eDP
- probe()
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/6] arm64: dts: qcom: ipq5018: Add PCIe related nodes
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1695848028-18023-1-git-send-email-quic_khsieh@quicinc.com>
- <1695848028-18023-9-git-send-email-quic_khsieh@quicinc.com>
- <CAA8EJprfjt7w+3YJAieBabuMso=-obRXss7-9Jrif23WmOJw5w@mail.gmail.com>
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <CAA8EJprfjt7w+3YJAieBabuMso=-obRXss7-9Jrif23WmOJw5w@mail.gmail.com>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <lpieralisi@kernel.org>,
+        <kw@linux.com>, <robh@kernel.org>, <bhelgaas@google.com>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <vkoul@kernel.org>, <kishon@kernel.org>, <mani@kernel.org>,
+        <p.zabel@pengutronix.de>, <quic_srichara@quicinc.com>,
+        <quic_varada@quicinc.com>, <quic_ipkumar@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>
+References: <20231003120846.28626-1-quic_nsekar@quicinc.com>
+ <20231003120846.28626-6-quic_nsekar@quicinc.com>
+ <CAA8EJpoKq4TVzNHKLjgezTk9je-3OPv4g852anr7SnECJNw2xQ@mail.gmail.com>
+From:   Nitheesh Sekar <quic_nsekar@quicinc.com>
+In-Reply-To: <CAA8EJpoKq4TVzNHKLjgezTk9je-3OPv4g852anr7SnECJNw2xQ@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: PZS0XwnQzerWinOmsPQH8rJ1kTlfQ0Ql
-X-Proofpoint-ORIG-GUID: PZS0XwnQzerWinOmsPQH8rJ1kTlfQ0Ql
+X-Proofpoint-GUID: ujHLPWB4OACxx4f6zdep-vdRGxssbWVR
+X-Proofpoint-ORIG-GUID: ujHLPWB4OACxx4f6zdep-vdRGxssbWVR
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-10-03_15,2023-10-02_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
- adultscore=0 priorityscore=1501 malwarescore=0 suspectscore=0
- mlxlogscore=999 spamscore=0 bulkscore=0 clxscore=1015 lowpriorityscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310030132
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ phishscore=0 mlxscore=0 mlxlogscore=922 suspectscore=0 bulkscore=0
+ clxscore=1011 spamscore=0 impostorscore=0 priorityscore=1501 adultscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310030133
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
         SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,240 +88,102 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 9/27/2023 2:57 PM, Dmitry Baryshkov wrote:
-> On Wed, 27 Sept 2023 at 23:54, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
->> Currently eDP population is done at msm_dp_modeset_init() which happen
->> at binding time. Move eDP population to be done at display probe time
->> so that probe deferral cases can be handled effectively.
->> wait_for_hpd_asserted callback is added during drm_dp_aux_init()
->> to ensure eDP's HPD is up before proceeding eDP population.
+On 10/3/2023 8:53 PM, Dmitry Baryshkov wrote:
+> On Tue, 3 Oct 2023 at 15:10, Nitheesh Sekar <quic_nsekar@quicinc.com> wrote:
+>> Add phy and controller nodes for PCIe_x2 and PCIe_x1.
+>> PCIe_x2 is 2-lane Gen2 and PCIe_x1 is 1-lane Gen2.
 >>
->> Changes in v4:
->> -- delete duplicate initialize code to dp_aux before drm_dp_aux_register()
->> -- delete of_get_child_by_name(dev->of_node, "aux-bus") and inline the function
->> -- not initialize rc = 0
->>
->> Changes in v3:
->> -- add done_probing callback into devm_of_dp_aux_populate_bus()
->>
->> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
 >> ---
->>   drivers/gpu/drm/msm/dp/dp_aux.c     | 34 ++++++++++++++----
->>   drivers/gpu/drm/msm/dp/dp_display.c | 69 ++++++++++++++++++-------------------
->>   2 files changed, 60 insertions(+), 43 deletions(-)
+>>   arch/arm64/boot/dts/qcom/ipq5018.dtsi | 186 +++++++++++++++++++++++++-
+>>   1 file changed, 184 insertions(+), 2 deletions(-)
 >>
->> diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c b/drivers/gpu/drm/msm/dp/dp_aux.c
->> index 22eb774..425b5c5 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_aux.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_aux.c
->> @@ -480,7 +480,6 @@ void dp_aux_deinit(struct drm_dp_aux *dp_aux)
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+>> index 38ffdc3cbdcd..0818fdd1e693 100644
+>> --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+>> @@ -8,6 +8,7 @@
+>>   #include <dt-bindings/interrupt-controller/arm-gic.h>
+>>   #include <dt-bindings/clock/qcom,gcc-ipq5018.h>
+>>   #include <dt-bindings/reset/qcom,gcc-ipq5018.h>
+>> +#include <dt-bindings/gpio/gpio.h>
 >>
->>   int dp_aux_register(struct drm_dp_aux *dp_aux)
->>   {
->> -       struct dp_aux_private *aux;
->>          int ret;
+>>   / {
+>>          interrupt-parent = <&intc>;
+>> @@ -94,6 +95,38 @@
+>>                  #size-cells = <1>;
+>>                  ranges = <0 0 0 0xffffffff>;
 >>
->>          if (!dp_aux) {
->> @@ -488,12 +487,7 @@ int dp_aux_register(struct drm_dp_aux *dp_aux)
->>                  return -EINVAL;
->>          }
->>
->> -       aux = container_of(dp_aux, struct dp_aux_private, dp_aux);
->> -
->> -       aux->dp_aux.name = "dpu_dp_aux";
->> -       aux->dp_aux.dev = aux->dev;
->> -       aux->dp_aux.transfer = dp_aux_transfer;
->> -       ret = drm_dp_aux_register(&aux->dp_aux);
->> +       ret = drm_dp_aux_register(dp_aux);
->>          if (ret) {
->>                  DRM_ERROR("%s: failed to register drm aux: %d\n", __func__,
->>                                  ret);
->> @@ -508,6 +502,21 @@ void dp_aux_unregister(struct drm_dp_aux *dp_aux)
->>          drm_dp_aux_unregister(dp_aux);
->>   }
->>
->> +static int dp_wait_hpd_asserted(struct drm_dp_aux *dp_aux,
->> +                                unsigned long wait_us)
->> +{
->> +       int ret;
->> +       struct dp_aux_private *aux;
+>> +               pcie_x1phy: phy@7e000{
+>> +                       compatible = "qcom,ipq5018-uniphy-pcie-gen2x1";
+>> +                       reg = <0x0007e000 0x800>;
+>> +                       #phy-cells = <0>;
+>> +                       #clock-cells = <0>;
+>> +                       clocks = <&gcc GCC_PCIE1_PIPE_CLK>;
+>> +                       clock-names = "pipe_clk";
+>> +                       clock-output-names = "pcie1_pipe_clk";
+>> +                       assigned-clocks = <&gcc GCC_PCIE1_PIPE_CLK>;
+>> +                       assigned-clock-rates = <125000000>;
+>> +                       resets = <&gcc GCC_PCIE1_PHY_BCR>,
+>> +                                <&gcc GCC_PCIE1PHY_PHY_BCR>;
+>> +                       reset-names = "phy", "phy_phy";
+>> +                       status = "disabled";
+>> +               };
 >> +
->> +       aux = container_of(dp_aux, struct dp_aux_private, dp_aux);
->> +
->> +       pm_runtime_get_sync(aux->dev);
->> +       ret = dp_catalog_aux_wait_for_hpd_connect_state(aux->catalog);
->> +       pm_runtime_put_sync(aux->dev);
-> Ok, so here you have used put_sync instead of autosuspend. Can we have
-> some uniformity? (I'd prefer to see put_sync or just put everywhere)
-
-
-my point is,
-
-since display is user interface,
-
-if there has any inputs before timer expire then there is no reason to 
-execute  pm_runtime_suspend().
-
-otherwise pm_runtime_suspend() should be executed.
-
-Therefore I used autosuspend  at aux_transfer() an 
-ddp_bridge_atomic_post_disable().
-
-here is not related to user interface so that i use put_sysn() directly.
-
-is my point make sense?
-
-  or should I drop all autosuspend and replace them with put_sync()?
-
-
+>> +               pcie_x2phy: phy@86000{
+>> +                       compatible = "qcom,ipq5018-uniphy-pcie-gen2x2";
+>> +                       reg = <0x00086000 0x800>;
+>> +                       #phy-cells = <0>;
+>> +                       #clock-cells = <0>;
+>> +                       clocks = <&gcc GCC_PCIE0_PIPE_CLK>;
+>> +                       clock-names = "pipe_clk";
+>> +                       clock-output-names = "pcie0_pipe_clk";
+>> +                       assigned-clocks = <&gcc GCC_PCIE0_PIPE_CLK>;
+>> +                       assigned-clock-rates = <125000000>;
+> Can this go into the PHY driver?
+Sure. Will check and update.
 >
+>> +                       resets = <&gcc GCC_PCIE0_PHY_BCR>,
+>> +                                <&gcc GCC_PCIE0PHY_PHY_BCR>;
+>> +                       reset-names = "phy", "phy_phy";
+>> +                       status = "disabled";
+>> +               };
 >> +
->> +       return ret;
->> +}
+>>                  tlmm: pinctrl@1000000 {
+>>                          compatible = "qcom,ipq5018-tlmm";
+>>                          reg = <0x01000000 0x300000>;
+>> @@ -117,8 +150,8 @@
+>>                          reg = <0x01800000 0x80000>;
+>>                          clocks = <&xo_board_clk>,
+>>                                   <&sleep_clk>,
+>> -                                <0>,
+>> -                                <0>,
+>> +                                <&pcie_x2phy>,
+>> +                                <&pcie_x1phy>,
+>>                                   <0>,
+>>                                   <0>,
+>>                                   <0>,
+>> @@ -246,6 +279,155 @@
+>>                                  status = "disabled";
+>>                          };
+>>                  };
 >> +
->>   struct drm_dp_aux *dp_aux_get(struct device *dev, struct dp_catalog *catalog,
->>                                bool is_edp)
->>   {
->> @@ -531,6 +540,17 @@ struct drm_dp_aux *dp_aux_get(struct device *dev, struct dp_catalog *catalog,
->>          aux->catalog = catalog;
->>          aux->retry_cnt = 0;
->>
->> +       /*
->> +        * Use the drm_dp_aux_init() to use the aux adapter
->> +        * before registering aux with the DRM device so that
->> +        * msm edp panel can be detected by generic_dep_panel_probe().
-> eDP, AUX, generic_edp_panel_probe().
+>> +               pcie_x1: pci@80000000 {
+>> +                       compatible = "qcom,pcie-ipq5018";
+>> +                       reg =  <0x80000000 0xf1d
+> Each address/size tuple should be a separate <> entry.
+Sure. will update it.
 >
->> +        */
->> +       aux->dp_aux.name = "dpu_dp_aux";
->> +       aux->dp_aux.dev = dev;
->> +       aux->dp_aux.transfer = dp_aux_transfer;
->> +       aux->dp_aux.wait_hpd_asserted = dp_wait_hpd_asserted;
->> +       drm_dp_aux_init(&aux->dp_aux);
->> +
->>          return &aux->dp_aux;
->>   }
->>
->> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
->> index 711d262..9a2b403 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_display.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->> @@ -1203,6 +1203,28 @@ static const struct msm_dp_desc *dp_display_get_desc(struct platform_device *pde
->>          return NULL;
->>   }
->>
->> +static int dp_auxbus_done_probe(struct drm_dp_aux *aux)
->> +{
->> +       int rc;
->> +
->> +       rc = component_add(aux->dev, &dp_display_comp_ops);
->> +       if (rc)
->> +               DRM_ERROR("eDP component add failed, rc=%d\n", rc);
-> drop.
+>> +                               0x80000F20 0xa8
+> lowercase
+Sure. Will update.
 >
->> +
->> +       return rc;
->> +}
->> +
->> +static inline int dp_display_auxbus_population(struct dp_display_private *dp)
-> It's not `population`. It is just `populate`.
->
-> Also please inline this function.
->
->
->> +{
->> +       int ret;
->> +
->> +       ret = devm_of_dp_aux_populate_bus(dp->aux, dp_auxbus_done_probe);
->> +       if (ret == -ENODEV)
->> +               DRM_ERROR("aux-bus not found\n");
->> +
->> +       return ret;
->> +}
->> +
->>   static int dp_display_probe(struct platform_device *pdev)
->>   {
->>          int rc = 0;
->> @@ -1271,10 +1293,16 @@ static int dp_display_probe(struct platform_device *pdev)
->>          if (rc)
->>                  return rc;
->>
->> -       rc = component_add(&pdev->dev, &dp_display_comp_ops);
->> -       if (rc) {
->> -               DRM_ERROR("component add failed, rc=%d\n", rc);
->> -               dp_display_deinit_sub_modules(dp);
->> +       if (dp->dp_display.is_edp) {
->> +               rc = dp_display_auxbus_population(dp);
->> +               if (rc)
->> +                       DRM_ERROR("eDP auxbus population failed, rc=%d\n", rc);
->> +       } else {
->> +               rc = component_add(&pdev->dev, &dp_display_comp_ops);
->> +               if (rc) {
->> +                       DRM_ERROR("component add failed, rc=%d\n", rc);
->> +                       dp_display_deinit_sub_modules(dp);
->> +               }
->>          }
->>
->>          return rc;
->> @@ -1285,8 +1313,6 @@ static int dp_display_remove(struct platform_device *pdev)
->>          struct dp_display_private *dp = dev_get_dp_display_private(&pdev->dev);
->>
->>          component_del(&pdev->dev, &dp_display_comp_ops);
->> -       dp_display_deinit_sub_modules(dp);
->> -
->>          platform_set_drvdata(pdev, NULL);
->>
->>          dp_display_deinit_sub_modules(dp);
->> @@ -1385,29 +1411,8 @@ static int dp_display_get_next_bridge(struct msm_dp *dp)
->>   {
->>          int rc;
->>          struct dp_display_private *dp_priv;
->> -       struct device_node *aux_bus;
->> -       struct device *dev;
->>
->>          dp_priv = container_of(dp, struct dp_display_private, dp_display);
->> -       dev = &dp_priv->pdev->dev;
->> -       aux_bus = of_get_child_by_name(dev->of_node, "aux-bus");
->> -
->> -       if (aux_bus && dp->is_edp) {
->> -               /*
->> -                * The code below assumes that the panel will finish probing
->> -                * by the time devm_of_dp_aux_populate_ep_devices() returns.
->> -                * This isn't a great assumption since it will fail if the
->> -                * panel driver is probed asynchronously but is the best we
->> -                * can do without a bigger driver reorganization.
->> -                */
->> -               rc = of_dp_aux_populate_bus(dp_priv->aux, NULL);
->> -               of_node_put(aux_bus);
->> -               if (rc)
->> -                       goto error;
->> -       } else if (dp->is_edp) {
->> -               DRM_ERROR("eDP aux_bus not found\n");
->> -               return -ENODEV;
->> -       }
->>
->>          /*
->>           * External bridges are mandatory for eDP interfaces: one has to
->> @@ -1420,17 +1425,9 @@ static int dp_display_get_next_bridge(struct msm_dp *dp)
->>          if (!dp->is_edp && rc == -ENODEV)
->>                  return 0;
->>
->> -       if (!rc) {
->> +       if (!rc)
->>                  dp->next_bridge = dp_priv->parser->next_bridge;
->> -               return 0;
->> -       }
->>
->> -error:
->> -       if (dp->is_edp) {
->> -               of_dp_aux_depopulate_bus(dp_priv->aux);
->> -               dp_display_host_phy_exit(dp_priv);
->> -               dp_display_host_deinit(dp_priv);
->> -       }
->>          return rc;
->>   }
->>
->> --
->> 2.7.4
->>
->
+>> +                               0x80001000 0x1000
+>> +                               0x78000 0x3000
+> Would you notice why this line stands away from the rest of entries here?
+
+Sure. Will pad it Zeros.
+
+Thanks,
+Nitheesh
+
