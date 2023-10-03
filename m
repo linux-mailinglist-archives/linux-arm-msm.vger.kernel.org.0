@@ -2,349 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F38257B704B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 19:53:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8044B7B7058
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 19:55:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240668AbjJCRxR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Oct 2023 13:53:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39504 "EHLO
+        id S231782AbjJCRz3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Oct 2023 13:55:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232148AbjJCRxR (ORCPT
+        with ESMTP id S240690AbjJCRz3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Oct 2023 13:53:17 -0400
-Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5517891
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 10:53:13 -0700 (PDT)
-Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-59f7f46b326so14113747b3.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 10:53:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696355592; x=1696960392; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=SAUepoFu9L8vltI42kIH0cOCmyvQnjbpVelI6+9prD4=;
-        b=NkcxeYs5v3NgGhWVQsFXpnKE5H7McQqf6sDWhDAD/dt9/oa1w51pFahGb+po2r+Xxn
-         QAGnbbnW5kV96KqO1pmn5Tv4zbnwEyWqgrdXiTMrPQIdFMPtOI5Oi5YUIuqpgEH3wJsK
-         9ENaEKG41U2inauPyXx0RtdPx+Rc1B5pxoklegNKocx5+pGZjtMflNK4XXoXNKUlSjsa
-         dpFLR18cW6M96BsxfsaH56G+PuBA/9wH56esSxavYbH7SrRamrknLifo31K7iqlq21jf
-         R3WCC1nmCtp4frm1IyfEKWO9ah32ivvx83SC6wZFwS31ZpJYx7KXPBUzvNRsIM7Jntn6
-         fd0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696355592; x=1696960392;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=SAUepoFu9L8vltI42kIH0cOCmyvQnjbpVelI6+9prD4=;
-        b=fIWuL9aewqCNc+GVrzv4QxJQKHvrYyK3VmOQTKxsb1/sRmAYZ9BffjKsS9ApqDFfS7
-         6yWlVKawII2IC9JOJcKYNsynbZBD0z9/UHJwBtUi5u65ZMn4lHxccDV8oG6KxZlfLy08
-         zKxplZB9JeIF6GYsxbzv785JMlLIuSvBv2yHb+T8KZWn+NgDXGTCHXNo+C0mD/BeYqjb
-         EkdqJLUZ/XriuCOyl+4PiFL/mKvYCPZUG4DXUirbqDsqLpH2vUM7MRC/h8MyJ9sydAQU
-         iYp8Q/72V47gGH5rwo9cLMPHYP1t9gFpH8N80yusoql43Zepfyt3jyIsW+gaeKYJKTS1
-         0I0w==
-X-Gm-Message-State: AOJu0YygnOAUoBpIv8CqXrAZiUJuYR51pBL8mare1lJm6I8Vgbh7JqJk
-        2gfay0IZddmRxI4kua0wUP9sWxgKcCkXfT1QaVoyUA==
-X-Google-Smtp-Source: AGHT+IGvS6JEqP4m2KjowsM6eXcroZ/1Zh2LzpceIoObs2BtiYUXKZiyIvTcKOvrAnFrqPY4upJvZAJqkzGRsKhBn/4=
-X-Received: by 2002:a81:6c0a:0:b0:5a0:e86e:fd5c with SMTP id
- h10-20020a816c0a000000b005a0e86efd5cmr374878ywc.0.1696355592457; Tue, 03 Oct
- 2023 10:53:12 -0700 (PDT)
+        Tue, 3 Oct 2023 13:55:29 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3F2A8E;
+        Tue,  3 Oct 2023 10:55:25 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 393H9OwH015207;
+        Tue, 3 Oct 2023 17:55:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=+cz+LlEr52AqHuf54G35IVE21OrcflfU9vDjzPgDp+U=;
+ b=VixWiaFro2aHiAoKafxjd+zkQwHPZ4M8kP9mZctyzp7MPH1VAcKrJwQ0mJ8PdR1Wq6Wd
+ A5JRko9nhNPc5DorReCXRKtOJwKZlsXn/3v7cMXYB9vomS53RkiTOPQnlRlwuFZ9bJYN
+ wdPHMsA1IsWuNHvqlNdesNtqKUb2HaQ/YiGESVrHNp7bZjDB3HccAXct+6UMoE7psGph
+ WRzx4h3hVD3T0pJpgDdhzcwLKafC3tbGVcRjuKZX98b1X70TcZ1Y8olTxB7T3dpcPgRM
+ vXBGoBNz5ByoueN1yMQf/FSptRSstFyY5lineck5qlX/r7vbWBUiejCB5taUHwBh3MQw CA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tgbjgsune-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 03 Oct 2023 17:55:17 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 393HtGOK001947
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 3 Oct 2023 17:55:16 GMT
+Received: from hu-kbajaj-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.36; Tue, 3 Oct 2023 10:55:12 -0700
+From:   Komal Bajaj <quic_kbajaj@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <luca.weiss@fairphone.com>,
+        Komal Bajaj <quic_kbajaj@quicinc.com>
+Subject: [PATCH v3 0/2] Initial support for the QCM6490 IDP
+Date:   Tue, 3 Oct 2023 23:24:53 +0530
+Message-ID: <20231003175456.14774-1-quic_kbajaj@quicinc.com>
+X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
-References: <1695848028-18023-1-git-send-email-quic_khsieh@quicinc.com>
- <1695848028-18023-8-git-send-email-quic_khsieh@quicinc.com>
- <CAA8EJpor3WEYmN=hQJQPFyjZGdr4j8F-XAB=2BDVRFCTNioEiA@mail.gmail.com> <e72ae247-459d-9f23-0583-ce6da1a30336@quicinc.com>
-In-Reply-To: <e72ae247-459d-9f23-0583-ce6da1a30336@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 3 Oct 2023 20:53:01 +0300
-Message-ID: <CAA8EJppGg4+Rrf+1HBYYgvFtGWU2xRTGK6tP6xMefFsv-vyEiQ@mail.gmail.com>
-Subject: Re: [PATCH v4 7/8] drm/msm/dp: add pm_runtime_force_suspend()/resume()
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, andersson@kernel.org, quic_abhinavk@quicinc.com,
-        quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
-        marijn.suijten@somainline.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 9hIzwYCDhkEs2WsJi0qes2llQvMGn7LI
+X-Proofpoint-GUID: 9hIzwYCDhkEs2WsJi0qes2llQvMGn7LI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-03_15,2023-10-02_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 spamscore=0 priorityscore=1501 adultscore=0
+ suspectscore=0 bulkscore=0 impostorscore=0 mlxlogscore=726 phishscore=0
+ malwarescore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310030135
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 3 Oct 2023 at 19:44, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
->
->
-> On 9/27/2023 3:00 PM, Dmitry Baryshkov wrote:
-> > On Wed, 27 Sept 2023 at 23:54, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
-> >> After incorporated pm_runtime framework into eDP/DP driver, the
-> > incorporating
-> >
-> >
-> >> original dp_pm_suspend() to handle power off both DP phy and
-> >> controller during suspend and dp_pm_resume() to handle power on
-> >> both DP phy and controller during resume are not necessary since
-> >> those function are replaced by dp_pm_runtime_suspend() and
-> >> dp_pm_runtime_resume() through pm runtime framework.
-> >> Therefore add pm framework provides functions,
-> >> pm_runtime_force_suspend()/resume() to complete incorporating pm
-> >> runtime framework into DP driver.
-> >>
-> >> Changes in v4:
-> >> -- drop both dp_pm_prepare() and dp_pm_compete() from this change
-> >> -- delete ST_SUSPENDED state
-> >> -- rewording commit text to add more details regrading the purpose
-> >>     of this change
-> >>
-> >> Changes in v3:
-> >> -- replace dp_pm_suspend() with pm_runtime_force_suspend()
-> >> -- replace dp_pm_resume() with pm_runtime_force_resume()
-> >>
-> >> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> >> ---
-> >>   drivers/gpu/drm/msm/dp/dp_display.c | 113 ++----------------------------------
-> >>   1 file changed, 5 insertions(+), 108 deletions(-)
-> >>
-> >> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> >> index 9158a2c..711d262 100644
-> >> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> >> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> >> @@ -49,7 +49,6 @@ enum {
-> >>          ST_CONNECTED,
-> >>          ST_DISCONNECT_PENDING,
-> >>          ST_DISPLAY_OFF,
-> >> -       ST_SUSPENDED,
-> >>   };
-> >>
-> >>   enum {
-> >> @@ -560,7 +559,7 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
-> >>          drm_dbg_dp(dp->drm_dev, "Before, type=%d hpd_state=%d\n",
-> >>                          dp->dp_display.connector_type, state);
-> >>
-> >> -       if (state == ST_DISPLAY_OFF || state == ST_SUSPENDED) {
-> >> +       if (state == ST_DISPLAY_OFF) {
-> >>                  mutex_unlock(&dp->event_mutex);
-> >>                  return 0;
-> >>          }
-> >> @@ -674,7 +673,7 @@ static int dp_irq_hpd_handle(struct dp_display_private *dp, u32 data)
-> >>          drm_dbg_dp(dp->drm_dev, "Before, type=%d hpd_state=%d\n",
-> >>                          dp->dp_display.connector_type, state);
-> >>
-> >> -       if (state == ST_DISPLAY_OFF || state == ST_SUSPENDED) {
-> >> +       if (state == ST_DISPLAY_OFF) {
-> >>                  mutex_unlock(&dp->event_mutex);
-> >>                  return 0;
-> >>          }
-> >> @@ -1321,110 +1320,10 @@ static int dp_pm_runtime_resume(struct device *dev)
-> >>          return 0;
-> >>   }
-> >>
-> >> -static int dp_pm_resume(struct device *dev)
-> >> -{
-> >> -       struct platform_device *pdev = to_platform_device(dev);
-> >> -       struct msm_dp *dp_display = platform_get_drvdata(pdev);
-> >> -       struct dp_display_private *dp;
-> >> -       int sink_count = 0;
-> >> -
-> >> -       dp = container_of(dp_display, struct dp_display_private, dp_display);
-> >> -
-> >> -       mutex_lock(&dp->event_mutex);
-> >> -
-> >> -       drm_dbg_dp(dp->drm_dev,
-> >> -               "Before, type=%d core_inited=%d phy_inited=%d power_on=%d\n",
-> >> -               dp->dp_display.connector_type, dp->core_initialized,
-> >> -               dp->phy_initialized, dp_display->power_on);
-> >> -
-> >> -       /* start from disconnected state */
-> >> -       dp->hpd_state = ST_DISCONNECTED;
-> >> -
-> >> -       /* turn on dp ctrl/phy */
-> >> -       dp_display_host_init(dp);
-> >> -
-> >> -       if (dp_display->is_edp)
-> >> -               dp_catalog_ctrl_hpd_enable(dp->catalog);
-> >> -
-> >> -       if (dp_catalog_link_is_connected(dp->catalog)) {
-> >> -               /*
-> >> -                * set sink to normal operation mode -- D0
-> >> -                * before dpcd read
-> >> -                */
-> >> -               dp_display_host_phy_init(dp);
-> >> -               dp_link_psm_config(dp->link, &dp->panel->link_info, false);
-> >> -               sink_count = drm_dp_read_sink_count(dp->aux);
-> >> -               if (sink_count < 0)
-> >> -                       sink_count = 0;
-> >> -
-> >> -               dp_display_host_phy_exit(dp);
-> >> -       }
-> >> -
-> >> -       dp->link->sink_count = sink_count;
-> >> -       /*
-> >> -        * can not declared display is connected unless
-> >> -        * HDMI cable is plugged in and sink_count of
-> >> -        * dongle become 1
-> >> -        * also only signal audio when disconnected
-> >> -        */
-> >> -       if (dp->link->sink_count) {
-> >> -               dp->dp_display.link_ready = true;
-> >> -       } else {
-> >> -               dp->dp_display.link_ready = false;
-> >> -               dp_display_handle_plugged_change(dp_display, false);
-> >> -       }
-> >> -
-> >> -       drm_dbg_dp(dp->drm_dev,
-> >> -               "After, type=%d sink=%d conn=%d core_init=%d phy_init=%d power=%d\n",
-> >> -               dp->dp_display.connector_type, dp->link->sink_count,
-> >> -               dp->dp_display.link_ready, dp->core_initialized,
-> >> -               dp->phy_initialized, dp_display->power_on);
-> >> -
-> >> -       mutex_unlock(&dp->event_mutex);
-> >> -
-> >> -       return 0;
-> >> -}
-> >> -
-> >> -static int dp_pm_suspend(struct device *dev)
-> >> -{
-> >> -       struct platform_device *pdev = to_platform_device(dev);
-> >> -       struct msm_dp *dp_display = platform_get_drvdata(pdev);
-> >> -       struct dp_display_private *dp;
-> >> -
-> >> -       dp = container_of(dp_display, struct dp_display_private, dp_display);
-> >> -
-> >> -       mutex_lock(&dp->event_mutex);
-> >> -
-> >> -       drm_dbg_dp(dp->drm_dev,
-> >> -               "Before, type=%d core_inited=%d  phy_inited=%d power_on=%d\n",
-> >> -               dp->dp_display.connector_type, dp->core_initialized,
-> >> -               dp->phy_initialized, dp_display->power_on);
-> >> -
-> >> -       /* mainlink enabled */
-> >> -       if (dp_power_clk_status(dp->power, DP_CTRL_PM))
-> >> -               dp_ctrl_off_link_stream(dp->ctrl);
-> >> -
-> >> -       dp_display_host_phy_exit(dp);
-> > I was under the impression that dp_pm_runtime_suspend / _resume
-> > functions perform phy init/exit only in eDP cases. Can we really drop
-> > the main suspend/resume functions?
->
-> yes on eDP case since it is embedded.
+Add dt-binding and devicetree files for QCM6490 IDP.
 
-Let me ask the same question in a different way:
+This patch depends-on:
+https://lore.kernel.org/lkml/20230919-fp5-initial-v2-0-14bb7cedadf5@fairphone.com/
 
-dp_pm_suspend() / dp_pm_resume() functions contain several calls to DP
-functions. Why can we drop them now? Maybe they had to be dropped in
-one of the previous patches, when you have added proper runtime PM
-support?
+----
+Changes from v2:
+* Sorted nodes alphabetically
+* Link to v2: https://lore.kernel.org/all/20231003055655.30994-1-quic_kbajaj@quicinc.com/
 
-Could you please confirm that after each patch the DP driver is
-working, that there are no hidden dependencies between patches?
+Changes from v1:
+* Dropped suffix platform from model name
+* Removed few nodes as they were identical to ones in sc7280
+* Specified regulator-initial-mode property to vregs
+* Dropped deletion of lpass and swr nodes
+* Link to v1: https://lore.kernel.org/lkml/20230928133312.11371-1-quic_kbajaj@quicinc.com/
 
-> for external DP case, there are two steps
->
-> step 1: enable DP controller's  hpd block and start waiting for hpd
-> interrupts at dp_display_hpd_enable()
+---
+Komal Bajaj (2):
+  dt-bindings: arm: qcom: Add QCM6490 IDP board
+  arm64: dts: qcom: qcm6490: Add qcm6490 dts file
 
-Step 1 should be optional. DP should be functional even if the
-.hpd_enable was not called. Have you tested this usecase?
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ arch/arm64/boot/dts/qcom/qcm6490-idp.dts      | 335 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/qcm6490.dtsi         |  94 +++++
+ 4 files changed, 431 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/qcm6490.dtsi
 
->
-> step 2:  at plugin interrupts,  dp_display_host_phy_init()
->
-> step 3: at unplug interrupt: dp_bridge_atomic_post_disable()
-> dp_display_host_phy_exi()
->
-> at runtime, there is loop between step 2 and step 3
->
-> step  4: disable DP controller's  hpd block
->
-> >
-> >> -
-> >> -       /* host_init will be called at pm_resume */
-> >> -       dp_display_host_deinit(dp);
-> >> -
-> >> -       dp->hpd_state = ST_SUSPENDED;
-> >> -
-> >> -       drm_dbg_dp(dp->drm_dev,
-> >> -               "After, type=%d core_inited=%d phy_inited=%d power_on=%d\n",
-> >> -               dp->dp_display.connector_type, dp->core_initialized,
-> >> -               dp->phy_initialized, dp_display->power_on);
-> >> -
-> >> -       mutex_unlock(&dp->event_mutex);
-> >> -
-> >> -       return 0;
-> >> -}
-> >> -
-> >>   static const struct dev_pm_ops dp_pm_ops = {
-> >>          SET_RUNTIME_PM_OPS(dp_pm_runtime_suspend, dp_pm_runtime_resume, NULL)
-> >> -       .suspend = dp_pm_suspend,
-> >> -       .resume =  dp_pm_resume,
-> >> +       SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
-> >> +                                pm_runtime_force_resume)
-> >>   };
-> >>
-> >>   static struct platform_driver dp_display_driver = {
-> >> @@ -1658,9 +1557,6 @@ void dp_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
-> >>
-> >>          dp_display = container_of(dp, struct dp_display_private, dp_display);
-> >>
-> >> -       if (dp->is_edp)
-> >> -               dp_hpd_unplug_handle(dp_display, 0);
-> > Why?
->
-> dp_hpd_unplug_handle() does not tear down phy.
->
-> Therefore eDP does not need to call unplug handle.
+--
+2.42.0
 
-I don't fully understand your argument here. Could you please
-describe, why this function call was necessary beforehand and what is
-being changed now, so that it becomes unnecessary?
-
->
->
->
-> >> -
-> >>          mutex_lock(&dp_display->event_mutex);
-> >>
-> >>          state = dp_display->hpd_state;
-> >> @@ -1748,6 +1644,7 @@ void dp_bridge_hpd_disable(struct drm_bridge *bridge)
-> >>          dp_catalog_ctrl_hpd_disable(dp->catalog);
-> >>
-> >>          dp_display->internal_hpd = false;
-> >> +       dp->hpd_state = ST_DISCONNECTED;
-> > Why? We have only disabled sending of the HPD events. The dongle might
-> > still be connected.
->
-> dp_bridge_hpd_disable() disable dp controller hpd block (no more hpd
-> interrupt will be received).
->
-> dp_bridge_hpd_disable() should happen after DP main link had been teared
-> down already.
-
-No, this assumption is incorrect. hpd_disable can happen at any point
-during runtime.
-It merely disables HPD interrupt generation, it has nothing to do with
-the DP block being enabled or not.
-
-> Therefore hpd_state need to be in default state so that next plugin
-> handle will be start with correct state.
->
->
-> >
-> >>          pm_runtime_mark_last_busy(&dp->pdev->dev);
-> >>          pm_runtime_put_autosuspend(&dp->pdev->dev);
-> >> --
-> >> 2.7.4
-> >>
-> >
-> > --
-> > With best wishes
-> >
-> > Dmitry
-
-
-
--- 
-With best wishes
-Dmitry
