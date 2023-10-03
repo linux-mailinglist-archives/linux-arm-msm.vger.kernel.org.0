@@ -2,122 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BC6AA7B62E6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 09:57:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 111177B6304
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 10:01:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230451AbjJCH5b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Oct 2023 03:57:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44350 "EHLO
+        id S231328AbjJCIBN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Oct 2023 04:01:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230515AbjJCH5a (ORCPT
+        with ESMTP id S230515AbjJCIBM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Oct 2023 03:57:30 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CEC690
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 00:57:27 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id 4fb4d7f45d1cf-5384975e34cso942178a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 00:57:27 -0700 (PDT)
+        Tue, 3 Oct 2023 04:01:12 -0400
+Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF4DF90
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 01:01:08 -0700 (PDT)
+Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-5a21ea6baccso7831897b3.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 01:01:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696319846; x=1696924646; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=MWlkaXeNko3n0auDNJafiCj/5bUoXapb+FKqffNqLyM=;
-        b=imnidsKVBxWpWxH9Bmr8cGGKJ1EKiEG/CZYDNNiE2QhDLUpTHAIiJkklfZdih7ISv/
-         pTkVqiVMsq8wUS7U6QyClsoNPL2jnZh2ujIDMRhdazCoelm/Ykmxz9O/FpvALeI4bt+I
-         NDtCSaF7wTX0XpBcnMDc22MylfK96/Gf96BYZiM+Vwow4h5QEvnnrgnjWd1oWWQDgJhl
-         Bkq05ukJ9T1OD0DKxeLUvLEoBG2lp6RxBgcEZsC0CFr6L3aowT2V5UnKPJ6LdoD4QyfC
-         1YXmk02oomw2NaRMrMPsI9iaoxFzW+ljU26C9oRaIYRoR2hFQ1G8nYT8akyYSALryudJ
-         gG1g==
+        d=linaro.org; s=google; t=1696320068; x=1696924868; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Z8UNK8jjHO3j+XhJ8hgifUB4wEZkucPxPTntH8sr6bo=;
+        b=SEYCFJcAiJDRnXHARaPMiRX+1OiFkj9POytTw9u25xpV74i6o7P1Eu/n9jp+vfM/0B
+         7Aa6YHO/5FKuticWu4Tg7ZhlgCNSDhl5igPUcbDrrECdHSZcVm3eztzevkifGQc+GX+F
+         ZCBBiKiM+oQXE65qO7V8ZR1seG1ZdZGlZ48XSpdPH/0tIVGa+TZj8P0ftNdp4Ea4cJIR
+         q8mXSL7eGSBwt1lEENecIHHQrhdoWsWV9OHbZYeAte+fn2Fmu0vTYAqo+PULPPHtlvXV
+         V90HpdLxYfaN4+IEv5lQsv/J3w/tbNzp8SjEPlTDgJYgflo+RAfYkJsDUCZBGD0jzcfM
+         BbOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696319846; x=1696924646;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MWlkaXeNko3n0auDNJafiCj/5bUoXapb+FKqffNqLyM=;
-        b=SlgkaAsvSbIBe+xd1wdyhWcBS5NYWaG1xkivvoJVLls1evDZmxE1Ih1epGXYVxFQz5
-         q8+9BUbl2jkr/y3mEX3JykHrkI9w/nxp5bBpc6OTpru0rONLCISzYOKtwEkem+oHgIyO
-         q4p2n8AbCHbyzZbpX2jBNhucngZzA8C80yAfo2VPsAvbX3hufxww7+chzVYDQTrLlVtg
-         oJu9mAJDvQ/C/ehnE4VC4DMVmwo+KeXq/ONZuhJCRQDyWa0aYqBW2d+RzkHjOvVgfQ8C
-         zIvRUp52YawoguKjGOpYIHBE7Tn2Z5Z52AjrsOl4DXt+K9+EuuxpdcGTXZ86r06140Xi
-         kZUw==
-X-Gm-Message-State: AOJu0YxKIuAgRqwQh4d7NTJTNuuWMHWTTVS8SD7VaoHqKA3DgWYpX80b
-        ifewZrQsiyC+SNklIUmAT59joA==
-X-Google-Smtp-Source: AGHT+IErH8TByzPPwJrh5m5R0R+ZZSzLYgZeMW9v938AwJQ/4YWEXa+5zaf15q5N6CRbWduRUML5Cg==
-X-Received: by 2002:a05:6402:504:b0:530:c34b:8277 with SMTP id m4-20020a056402050400b00530c34b8277mr10366324edv.6.1696319845856;
-        Tue, 03 Oct 2023 00:57:25 -0700 (PDT)
-Received: from [192.168.1.197] (5-157-101-10.dyn.eolo.it. [5.157.101.10])
-        by smtp.gmail.com with ESMTPSA id ay16-20020a056402203000b005361fadef32sm437174edb.23.2023.10.03.00.57.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Oct 2023 00:57:25 -0700 (PDT)
-Message-ID: <84c38073-a56f-4404-bb8c-7cb434b49d94@linaro.org>
-Date:   Tue, 3 Oct 2023 09:57:23 +0200
+        d=1e100.net; s=20230601; t=1696320068; x=1696924868;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Z8UNK8jjHO3j+XhJ8hgifUB4wEZkucPxPTntH8sr6bo=;
+        b=NDw2tWj4v97gU4whmPTSD6EghgfyDCOBGSa+RFUIZur7Ak5EtL9oajzj3ycbOTYEwP
+         ePc4A2k8VcIew0KVBNMRQZjvM6qwbN32BMn4wyEU0BLY0DmhXA/jTmJaUVyUq07M/p64
+         uNIRTcqsSWMxgmarCdbTaY7+me2ydHGlUMAIPq1s/1yTUI+wZJLH5Y0lbCNAZ3FVOZyP
+         yLIRyL7FKHLvNjlhD90WxomkFj07xNLqlyBWBwz1Yf6fMR+L5955md1Em12P7Mdi4Ppu
+         7tvsgQ4JUNjI2yJ0mVDoClELmiXcH673EIQOsuqs7Oe7mIyTQ33OGxJPxe4QxQyR3Fuo
+         nSKw==
+X-Gm-Message-State: AOJu0YwovxDnVG1IBPGCVqoEt9428FzIJjCIrldFqyPy0VE7cpGqh6qd
+        /X9F1cd+VlmfFWe86wove1ZADTtLYO5HTsGLWjd1bg==
+X-Google-Smtp-Source: AGHT+IE+/CazD7WPLFjjvYPVPNhuviavjNh2ISOII73m27jele67HS6ZBQ1QSauV1lTmIrRGFsiwTD4brCHFPK6dMhg=
+X-Received: by 2002:a81:72c5:0:b0:59b:2458:f612 with SMTP id
+ n188-20020a8172c5000000b0059b2458f612mr13268838ywc.28.1696320067941; Tue, 03
+ Oct 2023 01:01:07 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/11] firmware: qcom: move Qualcomm code into its own
- directory
-To:     Bartosz Golaszewski <brgl@bgdev.pl>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Maximilian Luz <luzmaximilian@gmail.com>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        kernel@quicinc.com,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20230928092040.9420-1-brgl@bgdev.pl>
- <20230928092040.9420-2-brgl@bgdev.pl>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20230928092040.9420-2-brgl@bgdev.pl>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <1694813901-26952-1-git-send-email-quic_khsieh@quicinc.com>
+ <1694813901-26952-7-git-send-email-quic_khsieh@quicinc.com>
+ <CAA8EJpqPXoFX4LXyXYgfh07Vpxg-KgD8VBR6x5bXf4GOJmbOtw@mail.gmail.com>
+ <2f98d5f1-57c1-d9fe-cb1c-b975db057287@quicinc.com> <CAA8EJpr2wRq6Txi7YAQpJKa_9UGqH_nmHzvVOaAPkwOrtDg4Tw@mail.gmail.com>
+ <CAE-0n53dqHONzMTd_ZC-fKWTzDVq6Wqwo4OFZMUcghZ5SD5RhA@mail.gmail.com>
+ <65566a68-3510-2e5f-7d57-e4dba08c008c@quicinc.com> <1d9bf80d-0267-937b-4dd9-c57db7a89cb4@quicinc.com>
+ <CAE-0n51Hrs66oG4NF5rDETkVO-ocG_6_=Aqc5cE-qPDViSgKyA@mail.gmail.com>
+ <58701008-bb93-e5c6-9ca0-5bc43f9a46f0@quicinc.com> <CAE-0n50N6hXM7qQZzccKy2X-kcru9n7Nvgn_V4tOHTnLn64qjw@mail.gmail.com>
+ <b9bd5423-f6e3-e511-613c-b6535c27b205@quicinc.com>
+In-Reply-To: <b9bd5423-f6e3-e511-613c-b6535c27b205@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 3 Oct 2023 11:00:56 +0300
+Message-ID: <CAA8EJprK8W5qysWGD5pv=6A6mqnEZqPAF0DDpDgF0pa+=do-yg@mail.gmail.com>
+Subject: Re: [PATCH v3 6/7] drm/msm/dp: add pm_runtime_force_suspend()/resume()
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, dianders@chromium.org, vkoul@kernel.org,
+        daniel@ffwll.ch, airlied@gmail.com, agross@kernel.org,
+        andersson@kernel.org, quic_jesszhan@quicinc.com,
+        quic_sbillaka@quicinc.com, marijn.suijten@somainline.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -125,18 +81,163 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/09/2023 11:20, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> We're getting more and more qcom specific .c files in drivers/firmware/
-> and about to get even more. Create a separate directory for Qualcomm
-> firmware drivers and move existing sources in there.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Tue, 3 Oct 2023 at 04:33, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>
+>
+>
+> On 10/2/2023 3:58 PM, Stephen Boyd wrote:
+> > Quoting Abhinav Kumar (2023-09-28 17:46:11)
+> >> On 9/27/2023 3:01 PM, Stephen Boyd wrote:
+> >>> Quoting Kuogee Hsieh (2023-09-25 09:07:18)
+> >>>>
+> >>>> However for external DP case, link training can not be guarantee always
+> >>>> success without link rate or lane being reduced as Abhinav mentioned.
+> >>>>
+> >>>> In addition,  CTS (compliance test) it required to complete link
+> >>>> training within 10ms after hpd asserted.
+> >>>
+> >>> Is it possible to change that timeout? I have to look around for the CTS
+> >>> parameters because I'm pretty confused how it can work. What do we do if
+> >>> DP wakes the system from suspend and asserts HPD? We need resume time to
+> >>> be < 10ms?  That's not realistic.
+> >>>
+> >>
+> >> No, the CTS doesnt say we need to finish link training within 10ms after
+> >> HPD is asserted. It says it must be completed in 10ms after
+> >> TRAINING_PATTERN_SET dpcd write.
+> >>
+> >> "Wait until the Source DUT writes 00h to the TRAINING_PATTERN_SET byte
+> >> of Reference Sink DPCD Link Configuration Field to indicate the end of
+> >> the link training. Stop the link training timer. Verify that link
+> >> training completed in 10ms or less"
+> >>
+> >> That needs to be done independent of HPD so we can ignore the CTS point.
+> >
+> > Great!
+> >
+> >>
+> >>>>
+> >>>> I am not sure do link training at atomic_enable() can meet this timing
+> >>>> requirement.
+> >
+> > Why? It's putting some time bound on link training in general to only
+> > take 10ms, right?
+> >
+>
+> Like I said, CTS is mentioning 10ms to finish link training after the
+> DUT writes 00h to the TRAINING_PATTERN_SET byte. So for this discussion
+> lets leave out CTS for now.
+>
+> >>>>
+> >>>
+> >>> At least in the DP spec itself it doesn't require the link to be trained
+> >>> within 10ms of HPD being asserted. Instead it simply recommends that the
+> >>> OS start configuring the display promptly after HPD is asserted, e.g.
+> >>> within 100ms. There's some strict timing on IRQ_HPD, so the driver must
+> >>> read DPCD registers within 100ms of IRQ_HPD rising edge; maybe that is
+> >>> what CTS is checking for?
+> >>>
+> >>> TL;DR: I don't see why CTS should stop us from link training in
+> >>> atomic_enable(). It would be beneficial to do so to make eDP and DP the
+> >>> same. It would also help to report a drm connector being connected
+> >>> _before_ link training so that userspace knows the link itself is the
+> >>> bad part of the equation (and not that the DP connector looks
+> >>> disconnected to userspace when in fact it really is connected and the
+> >>> monitor is asserting HPD, just the link training failed).
+> >>
+> >> Its the corrective action of the userspace when it finds link is bad is
+> >> the concern as I highlighted in the other response. Just reading and
+> >> resetting link_status is not enough to recover.
+> >
+> > What needs to be done to recover? Userspace will try to set a mode on
+> > the connector again if the link status is bad and there were some modes
+> > available. If there are zero modes and the link is bad, then it ignores
+> > the connector. I'm not sure what else could be done to recover besides
+> > try again and stop trying if no modes exist.
+> >
+>
+> Let me re-explain if I didnt make this clear last time.
+>
+> You are right. Thats all the "userspace" can do which is basically retry
+> the mode. And like I said, its again only going to fail. All the
+> corrective actions you mentioned below like ignoring the connector
+> entirely or consider that the display has link training problems are not
+> something we decided to go with on a commercial device where we expect
+> things to be more reliable.
+
+I have had link training issues with one of my laptops (x86) and USB-C
+dock. Usually switching to lower resolution works in such cases.
+Moreover, in some cases after switching to low res, I can successfully
+switch to high res.
+
+>
+> Let me re-explain what I explained in the prev response.
+>
+> If driver issues hot-plug after link-training:
+>
+> It would have implemented all the link training mechanisms such as
+> trying lower rates/number of lanes and made sure that when the usermode
+> queries the list of modes, only the modes which fit into the link rate
+> which was link trained successfully will be exposed and the chances of a
+> user ending up with a blank screen on connection are pretty high.
+>
+> This reduces the dependency on usermodes to be smart enough to implement
+> such policies and we would rather not depend on those unless we have
+> some reference to a compositor which is more sturdy. I do not think the
+> CrOS code you have pointed to is more sturdy than the driver mechanism
+> explained above.
+>
+> As opposed to this, if we just issue hotplug without any of this,
+> usermode does not know which mode to retry as we do not remove or edit
+> the mode list once link training fails.
+
+I think we are trying to be overprotective here. From my point of
+view, there are two kinds of issues:
+1) We know that some modes can not be supported (e.g. because of the
+amount of lanes available or because of the board link rate
+limitations).
+Of course the kernel should not present these modes to userspace
+
+2) Modes that pass known limitations, but can not be set e.g. because
+of the bad cable or dirty connector.
+Neither kernel nor userspace have control here. Judging from my
+experience with x86, we should pass all these modes to userspace. Then
+the user can select what seems to be working.
+
+>
+> > Acting like the connector isn't connected makes the situation worse for
+> > ChromeOS because userspace thinks there's nothing there so it can't try
+> > to retrain the link again. Instead, userspace has to rely on the kernel
+> > driver to train the link again. The kernel should just tell userspace
+> > the link is bad so userspace can implement the policy to either ignore
+> > the connector entirely or to consider it a display that is having link
+> > training problems.
+> >
+>
+> What gain will it give if it retries the same mode blindly as opposed to
+> the safer option I have explained above. None of the policies you have
+> highlighted seem like something an end user will be satisfied with.
+>
+> > So again, I see no reason why the kernel driver thinks it can implement
+> > a policy to train the link before indicating the drm connector is
+> > connected. It should stop doing that. Instead it should tell userspace
+> > that the connector is connected and then train the link when there's a
+> > modeset. If the modeset fails then userspace can take action to either
+> > figure out that the link is bad, or notify the user that the cable is
+> > bad, or to try replugging or power cycle the monitor, etc. None of that
+> > can be done if the kernel lies about the state of the connector because
+> > the link training failed.
+>
+> Usermode is unable to take the corrective action without proper support
+> from the kernel like removing unsupported modes etc and I dont see other
+> drivers taking an action like that. Kernel is not lying. Its delaying
+> the status to a point where usermode can safely handle.
+>
+> Please explain to me how any of the policies you have explained usermode
+> can take are safer and have more chance of success than what we have now.
 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Best regards,
-Krzysztof
-
+-- 
+With best wishes
+Dmitry
