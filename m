@@ -2,94 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA0AF7B6246
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 09:11:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1EC777B624E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 09:13:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239362AbjJCHLF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Oct 2023 03:11:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45452 "EHLO
+        id S230526AbjJCHNK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Oct 2023 03:13:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239187AbjJCHKi (ORCPT
+        with ESMTP id S230484AbjJCHNK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Oct 2023 03:10:38 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C21EA4
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 00:10:34 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-50435a9f800so633644e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 00:10:33 -0700 (PDT)
+        Tue, 3 Oct 2023 03:13:10 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C829D9
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 00:13:05 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-32003aae100so2348709f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 00:13:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696317032; x=1696921832; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1696317183; x=1696921983; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=dFSd4fSB4DzPMdE39OUqbklHCe7VB7SI126p8m3GbCs=;
-        b=UTkUM5o6CxHj8sm0k+oYOYnLdkHtwVGVpMcn+abKxbmaK5DiENML4FKFcIWzqCV4S4
-         rIqh99963a/0gkew3peZNx9hCRUfLLVDenFXDQddIJDmZdkMG/O6T1AEUvHhjptfYrzF
-         iS915G+v8c39VKhXWeR9I/RdxUR49HNKAGuYCt45LI+Cn5Uh7ZoZ8VDSQHuUaBp5mHDc
-         mLzCSSErOqn3XG37kSdJwyXU6k3iwkdrbD73RMDyknacHrSMLg4/Z/B1qG0Y7dQtlmZF
-         rD7gzyxtmp+uyq96fsQSR9JRNA1fqjHBSm8Q+cNkx1k/xPCwDQIuQVRecSQcFyc8OPsW
-         TMuA==
+        bh=3V6H7E6MABzUSTnDXLzcRuuIcpD2rL4vp8HMUWli4Q0=;
+        b=yoi/kt4HxM2Vv413Jhn5v+7ciYTyti1koX29voNxl6QOj7YircK7KvEDQ4F3rTq5T4
+         CVc/Tvm9R2zZnFQH4VPljz8I9IUGo4h5XyjMvpdAQNs1Mij7Ncqrmj7mEGSlbxRyagOA
+         vjY6f3T4TKmsc0nfOA+VGbTS/fbDQxTJDiJanqmqOSlS/8Qwm3hRMacwpy8vbRaRDlot
+         Er+r8eylP/so7RLMeT2XCz//RGy+tP1P3W5MkT+N/FYEaMf3ix288BKeN1qjgNK8J0yX
+         idf9ASsR/u9DQhkLVMfeTXOM8WHCjdUDovGKtiW/bfKyTZW0rL6C9U6J+XNNNepNy7Hg
+         pvyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696317032; x=1696921832;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dFSd4fSB4DzPMdE39OUqbklHCe7VB7SI126p8m3GbCs=;
-        b=l53jXQubY2m7d1cP9F5Wi4pvIpxSpuGHt99MUebbqNYknYpN+l0993rhRkMa59DVUc
-         2pLnqC4cTMZCAdB8Cnvi6HHLTBK2SzF3MQ7c9VyZNbIVoiT2+UIiC1Qtv9Z808yugoAJ
-         9MGRKnxraLNTFe1inQs9JMOsROZJBNGDupsAoN4gjN1KdID7Siwc7G+i/+O6pL4wLJr7
-         8+Ao1R2xdTEIbnMOynrM9awIxP7uXL4Uc4oDp53/KBKHwH2eFVrQDzxlqdBrZzKldiCX
-         H7mJAcBylMVLqWEEWzYWzr9bd2L6zOYsUQaDqejyuEbhy1dDiIz9mCzd+BKGTfI9mg7A
-         DlYg==
-X-Gm-Message-State: AOJu0YzjiP4u7ntTBnND5mcJe4Zvx3apwbGxJaBxUq59SDlALm5m4nX+
-        I+vQ8/mUlLSNvS8Jx2jaDw0YMw==
-X-Google-Smtp-Source: AGHT+IHArH/IjYooLEDj4lVd7xFtDtmqV3QPFk/s89/iJNy+nBeFn/Ipd5FQHYlE9WpZeYEL/p9lZw==
-X-Received: by 2002:a05:6512:3137:b0:4fb:889c:c53d with SMTP id p23-20020a056512313700b004fb889cc53dmr10381624lfd.10.1696317032279;
-        Tue, 03 Oct 2023 00:10:32 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id k2-20020a05600c1c8200b004065d72ab19sm8746652wms.0.2023.10.03.00.10.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Oct 2023 00:10:31 -0700 (PDT)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Tue, 03 Oct 2023 09:10:23 +0200
-Subject: [PATCH v4 5/5] arm64: dts: qcom: sm8450: add TRNG node
+        d=1e100.net; s=20230601; t=1696317183; x=1696921983;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=3V6H7E6MABzUSTnDXLzcRuuIcpD2rL4vp8HMUWli4Q0=;
+        b=L3uHqIFupYAZTB2Z55g2omp+VTAOyp3tSzwiEw05B7sCR6iSux2cKzOepFgHvqO/RQ
+         F83Igvhr10BFIOO7KI72fn89k6u6aXZbFazSXudXy0l9BeMlalPvwWAsWhMgXW8y/hyN
+         e9LVqT+Blk0Z0jTDqHbI9QUUbQeznLrprdU6ZDY29U9FlQuZNgeMyPmEPkFH/7Lnr1AU
+         3HSMRsv1yr2J4GISlfpygUlxduM0Tzj6DJ+JXTcCYVUFNYpFDLQ+PeSdFM31dP5yH7tz
+         DK8CXCEH0HmusDR6JsQFJrspbyl5wtk5H2ZbCGqagRJbOimdZ35RvjIUOEnGLZq+6kY0
+         +tMA==
+X-Gm-Message-State: AOJu0YwRTx+7OGqXiZ1XApQ5wdd72UNjRjzZiRhIleeRP1I4cAI+tP+a
+        9WcNWI7HWXOgGOGuYHDMUZDTWQ==
+X-Google-Smtp-Source: AGHT+IFojXzmGEY/9CK9lLL0H6XZ+p11DjOHaCyqO/FQBv127Syoxxzgqnh2F0dB/m2WdRetgkj7TQ==
+X-Received: by 2002:adf:f643:0:b0:316:fc03:3c66 with SMTP id x3-20020adff643000000b00316fc033c66mr1279236wrp.3.1696317183478;
+        Tue, 03 Oct 2023 00:13:03 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:e31a:fe1c:e925:9858? ([2a01:e0a:982:cbb0:e31a:fe1c:e925:9858])
+        by smtp.gmail.com with ESMTPSA id o16-20020adfead0000000b003266ece0fe2sm832373wrn.98.2023.10.03.00.13.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Oct 2023 00:13:02 -0700 (PDT)
+Message-ID: <a30c60f0-1710-405a-bb18-813ce30d975b@linaro.org>
+Date:   Tue, 3 Oct 2023 09:13:00 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231003-topic-sm8550-rng-v4-5-255e4d0ba08e@linaro.org>
-References: <20231003-topic-sm8550-rng-v4-0-255e4d0ba08e@linaro.org>
-In-Reply-To: <20231003-topic-sm8550-rng-v4-0-255e4d0ba08e@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla Thunderbird
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v2 2/4] usb: ucsi: glink: use the connector orientation
+ GPIO to provide switch events
+Content-Language: en-US, fr
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=826;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=Hm1MPLKUH9tBWMMNXkinW+xDa10cw2ZXd53LQwFFR9I=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlG75hsFIRN6yFE7mxKY45ckp6XvVNthN2ptfbZHI5
- 4iKfr7KJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZRu+YQAKCRB33NvayMhJ0QWDD/
- 9QrGGccCEgDyyppdwR4TS4pJdlMQNZRHKb8vK9uQcqHYGmPSDQK4j2MsfKiqeCTeXL4lxDNCxcTvE6
- XjQ4wEI+9pyuH/CBEmP8EhF3ZGhgdhc3vdQoYYFI/JTH9Hm/moe9tzG4WpTag7hYUzFk5b7bLnuyqI
- IcGOhcYpKZj4uGYlgm/xu7P47NF0Yg1AYocEscgRVKW/Pcw/AgRbUPw9mxx6ak3eqPfwQD7YJNyo/R
- VBuT4TVvgKQvwwgN9Z8qnoaXdzq5uj48x5Z6W7TBpFiSEJwYooGMH6OOmyH3h74pNPMaH5DSwe+o+p
- ZfKyPFzNBtrjSQmHnawuy2GT83Wft7iEtenO3xpZpEvnQLcoJehTqLPkUDja75N5Pl5C7DfKm4nmPo
- legR/tmbwI9gv3YqE3UE9TlfEP9zZN4n+Qc57j/fGp3aLXvDU+FaPYrG4FSUOCYjTzYlese+ihyQL+
- 8X4BZMtOFdyi/4S5Wi75+A6xbuGlLFleJUTDMLvjyokuJijq8Uf11ULUAavtKyY2jKMDs9PGIAR6E5
- sf9RdOJZvECdTaBLsHmBawefi04pS3qb+LNuwZnl5Vp95O7KlcCtrvST95DW51JMslpY08XkvOaYfV
- WZLQ2Pcf3QY2HCK/DIMTav/OGmB4JJgqSqJXmgpMJyQtXtGi5YbgislKYCBw==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
+References: <20231002-topic-sm8550-upstream-type-c-orientation-v2-0-125410d3ff95@linaro.org>
+ <20231002-topic-sm8550-upstream-type-c-orientation-v2-2-125410d3ff95@linaro.org>
+ <CAA8EJpp2_eW+YukTq3eAFGXxtZ+YWYVkzEP9Qhs20TxoXy-v7A@mail.gmail.com>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <CAA8EJpp2_eW+YukTq3eAFGXxtZ+YWYVkzEP9Qhs20TxoXy-v7A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -98,32 +113,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SM8450 SoC has a True Random Number Generator, add the node with
-the correct compatible set.
+On 02/10/2023 19:26, Dmitry Baryshkov wrote:
+> On Mon, 2 Oct 2023 at 13:21, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+>>
+>> On SM8550, the non-altmode orientation is not given anymore within
+>> altmode events, even with USB SVIDs events.
+>>
+>> On the other side, the Type-C connector orientation is correctly
+>> reported by a signal from the PMIC.
+>>
+>> Take this gpio signal when we detect some Type-C port activity
+>> to notify any Type-C switches tied to the Type-C port connectors.
+> 
+> Have you checked, which UCSI version is implemented on SM8550?
+> Is there any chance of GET_CONNECTOR_STATUS / bit 86 actually
+> reflecting the correct orientation?
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 5 +++++
- 1 file changed, 5 insertions(+)
+I checked, and no, the UCSI implementation is based on the UCSI 1.x spec,
+and doesn't have the UCSI 2.x new bits.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 1783fa78bdbc..bde9c1093384 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -1739,6 +1739,11 @@ spi14: spi@a98000 {
- 			};
- 		};
- 
-+		rng: rng@10c3000 {
-+			compatible = "qcom,sm8450-trng", "qcom,trng";
-+			reg = <0 0x010c3000 0 0x1000>;
-+		};
-+
- 		pcie0: pci@1c00000 {
- 			compatible = "qcom,pcie-sm8450-pcie0";
- 			reg = <0 0x01c00000 0 0x3000>,
+Neil
 
--- 
-2.34.1
+> 
+>>
+>> Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+> 
+> 
 
