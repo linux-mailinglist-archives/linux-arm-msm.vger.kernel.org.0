@@ -2,188 +2,349 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8EFBB7B6FC1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 19:30:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F38257B704B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 19:53:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230420AbjJCRac (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Oct 2023 13:30:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45348 "EHLO
+        id S240668AbjJCRxR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Oct 2023 13:53:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240712AbjJCRa1 (ORCPT
+        with ESMTP id S232148AbjJCRxR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Oct 2023 13:30:27 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9323AB7;
-        Tue,  3 Oct 2023 10:30:24 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 393H72aO017586;
-        Tue, 3 Oct 2023 17:29:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=jgeKjkDTDlV1euYjkhGRGv0noKADub9qxWJVNSkF6LE=;
- b=PWUdW3Yeeiv8PiZRCpayjO/HF9ZQk3pLo6QZTFLfVuabcT9dla8soq/pTnELMRa7lUJW
- pQv3/sjAg64fIKfj155R+7QjaLIg1bNM7iemZQVm9lcKxbRXXHKNDDJIzl/PvY7/tuO8
- UoXujhOphkyrVh1aVGphQAQgv4zaIihxml/+3eqx95tvH25Jyv/WcXNxxG2IhJl5jPVU
- aKtuMx4NqeYUt5QnbFsYwpiLOHCvQ2kCPBVdvPxjmzGbv5T54hjDlvw5K3Sseeg7oqTm
- RZOGgtuLUS2ZZRTpICcLGPoxopvYOSzNiiIhWZ4+ADDdAIVI7x1Lpj7BwvqY/SfjLIaa WQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tg1v3b10m-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 03 Oct 2023 17:29:59 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 393HTwOo003057
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 3 Oct 2023 17:29:58 GMT
-Received: from [10.50.44.150] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 3 Oct
- 2023 10:29:51 -0700
-Message-ID: <da76b7ad-3157-4dbe-8987-5a7796dd71dc@quicinc.com>
-Date:   Tue, 3 Oct 2023 22:59:47 +0530
+        Tue, 3 Oct 2023 13:53:17 -0400
+Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5517891
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 10:53:13 -0700 (PDT)
+Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-59f7f46b326so14113747b3.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 10:53:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1696355592; x=1696960392; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=SAUepoFu9L8vltI42kIH0cOCmyvQnjbpVelI6+9prD4=;
+        b=NkcxeYs5v3NgGhWVQsFXpnKE5H7McQqf6sDWhDAD/dt9/oa1w51pFahGb+po2r+Xxn
+         QAGnbbnW5kV96KqO1pmn5Tv4zbnwEyWqgrdXiTMrPQIdFMPtOI5Oi5YUIuqpgEH3wJsK
+         9ENaEKG41U2inauPyXx0RtdPx+Rc1B5pxoklegNKocx5+pGZjtMflNK4XXoXNKUlSjsa
+         dpFLR18cW6M96BsxfsaH56G+PuBA/9wH56esSxavYbH7SrRamrknLifo31K7iqlq21jf
+         R3WCC1nmCtp4frm1IyfEKWO9ah32ivvx83SC6wZFwS31ZpJYx7KXPBUzvNRsIM7Jntn6
+         fd0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696355592; x=1696960392;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SAUepoFu9L8vltI42kIH0cOCmyvQnjbpVelI6+9prD4=;
+        b=fIWuL9aewqCNc+GVrzv4QxJQKHvrYyK3VmOQTKxsb1/sRmAYZ9BffjKsS9ApqDFfS7
+         6yWlVKawII2IC9JOJcKYNsynbZBD0z9/UHJwBtUi5u65ZMn4lHxccDV8oG6KxZlfLy08
+         zKxplZB9JeIF6GYsxbzv785JMlLIuSvBv2yHb+T8KZWn+NgDXGTCHXNo+C0mD/BeYqjb
+         EkdqJLUZ/XriuCOyl+4PiFL/mKvYCPZUG4DXUirbqDsqLpH2vUM7MRC/h8MyJ9sydAQU
+         iYp8Q/72V47gGH5rwo9cLMPHYP1t9gFpH8N80yusoql43Zepfyt3jyIsW+gaeKYJKTS1
+         0I0w==
+X-Gm-Message-State: AOJu0YygnOAUoBpIv8CqXrAZiUJuYR51pBL8mare1lJm6I8Vgbh7JqJk
+        2gfay0IZddmRxI4kua0wUP9sWxgKcCkXfT1QaVoyUA==
+X-Google-Smtp-Source: AGHT+IGvS6JEqP4m2KjowsM6eXcroZ/1Zh2LzpceIoObs2BtiYUXKZiyIvTcKOvrAnFrqPY4upJvZAJqkzGRsKhBn/4=
+X-Received: by 2002:a81:6c0a:0:b0:5a0:e86e:fd5c with SMTP id
+ h10-20020a816c0a000000b005a0e86efd5cmr374878ywc.0.1696355592457; Tue, 03 Oct
+ 2023 10:53:12 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/6] arm64: dts: qcom: ipq5018: Add PCIe related nodes
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <lpieralisi@kernel.org>,
-        <kw@linux.com>, <robh@kernel.org>, <bhelgaas@google.com>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <vkoul@kernel.org>, <kishon@kernel.org>, <mani@kernel.org>,
-        <p.zabel@pengutronix.de>, <quic_srichara@quicinc.com>,
-        <quic_varada@quicinc.com>, <quic_ipkumar@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>
-References: <20231003120846.28626-1-quic_nsekar@quicinc.com>
- <20231003120846.28626-6-quic_nsekar@quicinc.com>
- <CAA8EJpoKq4TVzNHKLjgezTk9je-3OPv4g852anr7SnECJNw2xQ@mail.gmail.com>
-From:   Nitheesh Sekar <quic_nsekar@quicinc.com>
-In-Reply-To: <CAA8EJpoKq4TVzNHKLjgezTk9je-3OPv4g852anr7SnECJNw2xQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ujHLPWB4OACxx4f6zdep-vdRGxssbWVR
-X-Proofpoint-ORIG-GUID: ujHLPWB4OACxx4f6zdep-vdRGxssbWVR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-03_15,2023-10-02_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- phishscore=0 mlxscore=0 mlxlogscore=922 suspectscore=0 bulkscore=0
- clxscore=1011 spamscore=0 impostorscore=0 priorityscore=1501 adultscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310030133
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <1695848028-18023-1-git-send-email-quic_khsieh@quicinc.com>
+ <1695848028-18023-8-git-send-email-quic_khsieh@quicinc.com>
+ <CAA8EJpor3WEYmN=hQJQPFyjZGdr4j8F-XAB=2BDVRFCTNioEiA@mail.gmail.com> <e72ae247-459d-9f23-0583-ce6da1a30336@quicinc.com>
+In-Reply-To: <e72ae247-459d-9f23-0583-ce6da1a30336@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 3 Oct 2023 20:53:01 +0300
+Message-ID: <CAA8EJppGg4+Rrf+1HBYYgvFtGWU2xRTGK6tP6xMefFsv-vyEiQ@mail.gmail.com>
+Subject: Re: [PATCH v4 7/8] drm/msm/dp: add pm_runtime_force_suspend()/resume()
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, andersson@kernel.org, quic_abhinavk@quicinc.com,
+        quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
+        marijn.suijten@somainline.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 10/3/2023 8:53 PM, Dmitry Baryshkov wrote:
-> On Tue, 3 Oct 2023 at 15:10, Nitheesh Sekar <quic_nsekar@quicinc.com> wrote:
->> Add phy and controller nodes for PCIe_x2 and PCIe_x1.
->> PCIe_x2 is 2-lane Gen2 and PCIe_x1 is 1-lane Gen2.
->>
->> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/ipq5018.dtsi | 186 +++++++++++++++++++++++++-
->>   1 file changed, 184 insertions(+), 2 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
->> index 38ffdc3cbdcd..0818fdd1e693 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
->> @@ -8,6 +8,7 @@
->>   #include <dt-bindings/interrupt-controller/arm-gic.h>
->>   #include <dt-bindings/clock/qcom,gcc-ipq5018.h>
->>   #include <dt-bindings/reset/qcom,gcc-ipq5018.h>
->> +#include <dt-bindings/gpio/gpio.h>
->>
->>   / {
->>          interrupt-parent = <&intc>;
->> @@ -94,6 +95,38 @@
->>                  #size-cells = <1>;
->>                  ranges = <0 0 0 0xffffffff>;
->>
->> +               pcie_x1phy: phy@7e000{
->> +                       compatible = "qcom,ipq5018-uniphy-pcie-gen2x1";
->> +                       reg = <0x0007e000 0x800>;
->> +                       #phy-cells = <0>;
->> +                       #clock-cells = <0>;
->> +                       clocks = <&gcc GCC_PCIE1_PIPE_CLK>;
->> +                       clock-names = "pipe_clk";
->> +                       clock-output-names = "pcie1_pipe_clk";
->> +                       assigned-clocks = <&gcc GCC_PCIE1_PIPE_CLK>;
->> +                       assigned-clock-rates = <125000000>;
->> +                       resets = <&gcc GCC_PCIE1_PHY_BCR>,
->> +                                <&gcc GCC_PCIE1PHY_PHY_BCR>;
->> +                       reset-names = "phy", "phy_phy";
->> +                       status = "disabled";
->> +               };
->> +
->> +               pcie_x2phy: phy@86000{
->> +                       compatible = "qcom,ipq5018-uniphy-pcie-gen2x2";
->> +                       reg = <0x00086000 0x800>;
->> +                       #phy-cells = <0>;
->> +                       #clock-cells = <0>;
->> +                       clocks = <&gcc GCC_PCIE0_PIPE_CLK>;
->> +                       clock-names = "pipe_clk";
->> +                       clock-output-names = "pcie0_pipe_clk";
->> +                       assigned-clocks = <&gcc GCC_PCIE0_PIPE_CLK>;
->> +                       assigned-clock-rates = <125000000>;
-> Can this go into the PHY driver?
-Sure. Will check and update.
+On Tue, 3 Oct 2023 at 19:44, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
 >
->> +                       resets = <&gcc GCC_PCIE0_PHY_BCR>,
->> +                                <&gcc GCC_PCIE0PHY_PHY_BCR>;
->> +                       reset-names = "phy", "phy_phy";
->> +                       status = "disabled";
->> +               };
->> +
->>                  tlmm: pinctrl@1000000 {
->>                          compatible = "qcom,ipq5018-tlmm";
->>                          reg = <0x01000000 0x300000>;
->> @@ -117,8 +150,8 @@
->>                          reg = <0x01800000 0x80000>;
->>                          clocks = <&xo_board_clk>,
->>                                   <&sleep_clk>,
->> -                                <0>,
->> -                                <0>,
->> +                                <&pcie_x2phy>,
->> +                                <&pcie_x1phy>,
->>                                   <0>,
->>                                   <0>,
->>                                   <0>,
->> @@ -246,6 +279,155 @@
->>                                  status = "disabled";
->>                          };
->>                  };
->> +
->> +               pcie_x1: pci@80000000 {
->> +                       compatible = "qcom,pcie-ipq5018";
->> +                       reg =  <0x80000000 0xf1d
-> Each address/size tuple should be a separate <> entry.
-Sure. will update it.
 >
->> +                               0x80000F20 0xa8
-> lowercase
-Sure. Will update.
+> On 9/27/2023 3:00 PM, Dmitry Baryshkov wrote:
+> > On Wed, 27 Sept 2023 at 23:54, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+> >> After incorporated pm_runtime framework into eDP/DP driver, the
+> > incorporating
+> >
+> >
+> >> original dp_pm_suspend() to handle power off both DP phy and
+> >> controller during suspend and dp_pm_resume() to handle power on
+> >> both DP phy and controller during resume are not necessary since
+> >> those function are replaced by dp_pm_runtime_suspend() and
+> >> dp_pm_runtime_resume() through pm runtime framework.
+> >> Therefore add pm framework provides functions,
+> >> pm_runtime_force_suspend()/resume() to complete incorporating pm
+> >> runtime framework into DP driver.
+> >>
+> >> Changes in v4:
+> >> -- drop both dp_pm_prepare() and dp_pm_compete() from this change
+> >> -- delete ST_SUSPENDED state
+> >> -- rewording commit text to add more details regrading the purpose
+> >>     of this change
+> >>
+> >> Changes in v3:
+> >> -- replace dp_pm_suspend() with pm_runtime_force_suspend()
+> >> -- replace dp_pm_resume() with pm_runtime_force_resume()
+> >>
+> >> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> >> ---
+> >>   drivers/gpu/drm/msm/dp/dp_display.c | 113 ++----------------------------------
+> >>   1 file changed, 5 insertions(+), 108 deletions(-)
+> >>
+> >> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> >> index 9158a2c..711d262 100644
+> >> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> >> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> >> @@ -49,7 +49,6 @@ enum {
+> >>          ST_CONNECTED,
+> >>          ST_DISCONNECT_PENDING,
+> >>          ST_DISPLAY_OFF,
+> >> -       ST_SUSPENDED,
+> >>   };
+> >>
+> >>   enum {
+> >> @@ -560,7 +559,7 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
+> >>          drm_dbg_dp(dp->drm_dev, "Before, type=%d hpd_state=%d\n",
+> >>                          dp->dp_display.connector_type, state);
+> >>
+> >> -       if (state == ST_DISPLAY_OFF || state == ST_SUSPENDED) {
+> >> +       if (state == ST_DISPLAY_OFF) {
+> >>                  mutex_unlock(&dp->event_mutex);
+> >>                  return 0;
+> >>          }
+> >> @@ -674,7 +673,7 @@ static int dp_irq_hpd_handle(struct dp_display_private *dp, u32 data)
+> >>          drm_dbg_dp(dp->drm_dev, "Before, type=%d hpd_state=%d\n",
+> >>                          dp->dp_display.connector_type, state);
+> >>
+> >> -       if (state == ST_DISPLAY_OFF || state == ST_SUSPENDED) {
+> >> +       if (state == ST_DISPLAY_OFF) {
+> >>                  mutex_unlock(&dp->event_mutex);
+> >>                  return 0;
+> >>          }
+> >> @@ -1321,110 +1320,10 @@ static int dp_pm_runtime_resume(struct device *dev)
+> >>          return 0;
+> >>   }
+> >>
+> >> -static int dp_pm_resume(struct device *dev)
+> >> -{
+> >> -       struct platform_device *pdev = to_platform_device(dev);
+> >> -       struct msm_dp *dp_display = platform_get_drvdata(pdev);
+> >> -       struct dp_display_private *dp;
+> >> -       int sink_count = 0;
+> >> -
+> >> -       dp = container_of(dp_display, struct dp_display_private, dp_display);
+> >> -
+> >> -       mutex_lock(&dp->event_mutex);
+> >> -
+> >> -       drm_dbg_dp(dp->drm_dev,
+> >> -               "Before, type=%d core_inited=%d phy_inited=%d power_on=%d\n",
+> >> -               dp->dp_display.connector_type, dp->core_initialized,
+> >> -               dp->phy_initialized, dp_display->power_on);
+> >> -
+> >> -       /* start from disconnected state */
+> >> -       dp->hpd_state = ST_DISCONNECTED;
+> >> -
+> >> -       /* turn on dp ctrl/phy */
+> >> -       dp_display_host_init(dp);
+> >> -
+> >> -       if (dp_display->is_edp)
+> >> -               dp_catalog_ctrl_hpd_enable(dp->catalog);
+> >> -
+> >> -       if (dp_catalog_link_is_connected(dp->catalog)) {
+> >> -               /*
+> >> -                * set sink to normal operation mode -- D0
+> >> -                * before dpcd read
+> >> -                */
+> >> -               dp_display_host_phy_init(dp);
+> >> -               dp_link_psm_config(dp->link, &dp->panel->link_info, false);
+> >> -               sink_count = drm_dp_read_sink_count(dp->aux);
+> >> -               if (sink_count < 0)
+> >> -                       sink_count = 0;
+> >> -
+> >> -               dp_display_host_phy_exit(dp);
+> >> -       }
+> >> -
+> >> -       dp->link->sink_count = sink_count;
+> >> -       /*
+> >> -        * can not declared display is connected unless
+> >> -        * HDMI cable is plugged in and sink_count of
+> >> -        * dongle become 1
+> >> -        * also only signal audio when disconnected
+> >> -        */
+> >> -       if (dp->link->sink_count) {
+> >> -               dp->dp_display.link_ready = true;
+> >> -       } else {
+> >> -               dp->dp_display.link_ready = false;
+> >> -               dp_display_handle_plugged_change(dp_display, false);
+> >> -       }
+> >> -
+> >> -       drm_dbg_dp(dp->drm_dev,
+> >> -               "After, type=%d sink=%d conn=%d core_init=%d phy_init=%d power=%d\n",
+> >> -               dp->dp_display.connector_type, dp->link->sink_count,
+> >> -               dp->dp_display.link_ready, dp->core_initialized,
+> >> -               dp->phy_initialized, dp_display->power_on);
+> >> -
+> >> -       mutex_unlock(&dp->event_mutex);
+> >> -
+> >> -       return 0;
+> >> -}
+> >> -
+> >> -static int dp_pm_suspend(struct device *dev)
+> >> -{
+> >> -       struct platform_device *pdev = to_platform_device(dev);
+> >> -       struct msm_dp *dp_display = platform_get_drvdata(pdev);
+> >> -       struct dp_display_private *dp;
+> >> -
+> >> -       dp = container_of(dp_display, struct dp_display_private, dp_display);
+> >> -
+> >> -       mutex_lock(&dp->event_mutex);
+> >> -
+> >> -       drm_dbg_dp(dp->drm_dev,
+> >> -               "Before, type=%d core_inited=%d  phy_inited=%d power_on=%d\n",
+> >> -               dp->dp_display.connector_type, dp->core_initialized,
+> >> -               dp->phy_initialized, dp_display->power_on);
+> >> -
+> >> -       /* mainlink enabled */
+> >> -       if (dp_power_clk_status(dp->power, DP_CTRL_PM))
+> >> -               dp_ctrl_off_link_stream(dp->ctrl);
+> >> -
+> >> -       dp_display_host_phy_exit(dp);
+> > I was under the impression that dp_pm_runtime_suspend / _resume
+> > functions perform phy init/exit only in eDP cases. Can we really drop
+> > the main suspend/resume functions?
 >
->> +                               0x80001000 0x1000
->> +                               0x78000 0x3000
-> Would you notice why this line stands away from the rest of entries here?
+> yes on eDP case since it is embedded.
 
-Sure. Will pad it Zeros.
+Let me ask the same question in a different way:
 
-Thanks,
-Nitheesh
+dp_pm_suspend() / dp_pm_resume() functions contain several calls to DP
+functions. Why can we drop them now? Maybe they had to be dropped in
+one of the previous patches, when you have added proper runtime PM
+support?
 
+Could you please confirm that after each patch the DP driver is
+working, that there are no hidden dependencies between patches?
+
+> for external DP case, there are two steps
+>
+> step 1: enable DP controller's  hpd block and start waiting for hpd
+> interrupts at dp_display_hpd_enable()
+
+Step 1 should be optional. DP should be functional even if the
+.hpd_enable was not called. Have you tested this usecase?
+
+>
+> step 2:  at plugin interrupts,  dp_display_host_phy_init()
+>
+> step 3: at unplug interrupt: dp_bridge_atomic_post_disable()
+> dp_display_host_phy_exi()
+>
+> at runtime, there is loop between step 2 and step 3
+>
+> step  4: disable DP controller's  hpd block
+>
+> >
+> >> -
+> >> -       /* host_init will be called at pm_resume */
+> >> -       dp_display_host_deinit(dp);
+> >> -
+> >> -       dp->hpd_state = ST_SUSPENDED;
+> >> -
+> >> -       drm_dbg_dp(dp->drm_dev,
+> >> -               "After, type=%d core_inited=%d phy_inited=%d power_on=%d\n",
+> >> -               dp->dp_display.connector_type, dp->core_initialized,
+> >> -               dp->phy_initialized, dp_display->power_on);
+> >> -
+> >> -       mutex_unlock(&dp->event_mutex);
+> >> -
+> >> -       return 0;
+> >> -}
+> >> -
+> >>   static const struct dev_pm_ops dp_pm_ops = {
+> >>          SET_RUNTIME_PM_OPS(dp_pm_runtime_suspend, dp_pm_runtime_resume, NULL)
+> >> -       .suspend = dp_pm_suspend,
+> >> -       .resume =  dp_pm_resume,
+> >> +       SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
+> >> +                                pm_runtime_force_resume)
+> >>   };
+> >>
+> >>   static struct platform_driver dp_display_driver = {
+> >> @@ -1658,9 +1557,6 @@ void dp_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
+> >>
+> >>          dp_display = container_of(dp, struct dp_display_private, dp_display);
+> >>
+> >> -       if (dp->is_edp)
+> >> -               dp_hpd_unplug_handle(dp_display, 0);
+> > Why?
+>
+> dp_hpd_unplug_handle() does not tear down phy.
+>
+> Therefore eDP does not need to call unplug handle.
+
+I don't fully understand your argument here. Could you please
+describe, why this function call was necessary beforehand and what is
+being changed now, so that it becomes unnecessary?
+
+>
+>
+>
+> >> -
+> >>          mutex_lock(&dp_display->event_mutex);
+> >>
+> >>          state = dp_display->hpd_state;
+> >> @@ -1748,6 +1644,7 @@ void dp_bridge_hpd_disable(struct drm_bridge *bridge)
+> >>          dp_catalog_ctrl_hpd_disable(dp->catalog);
+> >>
+> >>          dp_display->internal_hpd = false;
+> >> +       dp->hpd_state = ST_DISCONNECTED;
+> > Why? We have only disabled sending of the HPD events. The dongle might
+> > still be connected.
+>
+> dp_bridge_hpd_disable() disable dp controller hpd block (no more hpd
+> interrupt will be received).
+>
+> dp_bridge_hpd_disable() should happen after DP main link had been teared
+> down already.
+
+No, this assumption is incorrect. hpd_disable can happen at any point
+during runtime.
+It merely disables HPD interrupt generation, it has nothing to do with
+the DP block being enabled or not.
+
+> Therefore hpd_state need to be in default state so that next plugin
+> handle will be start with correct state.
+>
+>
+> >
+> >>          pm_runtime_mark_last_busy(&dp->pdev->dev);
+> >>          pm_runtime_put_autosuspend(&dp->pdev->dev);
+> >> --
+> >> 2.7.4
+> >>
+> >
+> > --
+> > With best wishes
+> >
+> > Dmitry
+
+
+
+-- 
+With best wishes
+Dmitry
