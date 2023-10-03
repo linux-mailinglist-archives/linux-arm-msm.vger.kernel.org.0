@@ -2,415 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 98B817B60E6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 08:40:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 600DE7B6229
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 09:10:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229453AbjJCGkh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Oct 2023 02:40:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54926 "EHLO
+        id S230253AbjJCHKd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Oct 2023 03:10:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239181AbjJCGkd (ORCPT
+        with ESMTP id S230235AbjJCHKc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Oct 2023 02:40:33 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 106528E;
-        Mon,  2 Oct 2023 23:40:29 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-51e28cac164so8492251a12.1;
-        Mon, 02 Oct 2023 23:40:28 -0700 (PDT)
+        Tue, 3 Oct 2023 03:10:32 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04E85AB
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 00:10:29 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-405524e6769so2809805e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 00:10:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696315227; x=1696920027; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=uye/HSI1wQAdkgUnSG3A2VWR7SagBYCfdMDY+nvLJco=;
-        b=Re0lYPomd2SowzDTCoOa79JngY6ii5uIR8QECWlOnl9m3uq0AuBx2xnIGvq3fSY+ZX
-         CMEGejbw0j0IathH1UM4zQxtKZK5Hof9XX0l8QzQ5+0SAXwLbzgT0F+2RF1xJnYnoxVZ
-         CoeTs3bwZ5NCp7fG8hCR2dv+biwtumTJW+7Alhy8uSqp4EGvKpWuHtbx6FbKNwx8F9cP
-         XmgW+Xvro+Pv/SPp9H1BxY76dta4+KGdnMkiLDmxF0w8TSX+ND1kFIOlMucGmkEcoH/g
-         wJMXDe9zE7bIpz9OWVMJpx9OteTbEN+TnztaF4Jq1kMgO3A6ZqHb5iA9cY8u8G8tIQXQ
-         oU2w==
+        d=linaro.org; s=google; t=1696317027; x=1696921827; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=s7hzBfBC1HHO38BV7omUifYbwC6NG9LeJwnsUI6sbYM=;
+        b=ZMXJk7u5+LYYY5DkcIw7V4s1HvdOkF0SZpcspkvIuhwmgJ8yZIjDEMbWNSrbIIKQ65
+         2fNSlpcUdcVcnVNclev265pEhGCnxb0FRsGXEBFXFvX/qVUSjZYcL+xKxXq4rjNrYq6U
+         gJu9ac8F2cmtqYjRfhuZO5ZUsFaQt2urHfWbxgmR26pM+bLS7xeImVtKU+dBQsfK6YAE
+         K+PW73QiFMsHMnf75VnLS4ZB/I1Ix1SP4hnyX2jWs5TXtig7CsLy8WsuZ8967vFC6dk7
+         Gv+D6EQI2iSF5V/rShH7YZZHoMpcSst+WXCWVdP3MNRMl1wQuU6Kh2oapwrBvSI5SGIe
+         usGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696315227; x=1696920027;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1696317027; x=1696921827;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=uye/HSI1wQAdkgUnSG3A2VWR7SagBYCfdMDY+nvLJco=;
-        b=Jtq9UlQwxlPM0Cg1MtqgNmmWG099UA5ygbt4/BePZci6x+0EbdTRTleTRZW9G1O5bq
-         zYwT7EfC6g2Pmoy9FGfU9JlpRei6vxAfOURo4xqpzlHvZS+HkCPMR06AeR4urItfnsXc
-         r4/f02X8nAJn9187YSHQ4D3IQQ07GaPilTtZKuCawJo8l0GOgFXwnHj+nkID6h8Tw8ze
-         WqgFy6zWVg6zLhbkrZ4tQ4GfghUymjH6pX2PiQnTQmiyPMj7MSzEqLeA7CLCLR0ryow0
-         YKZQ8/DANFhf48Un+IhYIBrJ2xkQ2iorPM/hFrfOcN1epGCeYefAQPkY6nVcjtkg0ZU0
-         vMxA==
-X-Gm-Message-State: AOJu0YySCMn7BdcC47nwvNRe6ZSlPRMB90yfbfIB0knUuBeiasoYYECN
-        OI8C9Xis1fhezp6O0bPPxvE=
-X-Google-Smtp-Source: AGHT+IHweMDUKStFAHIR/AP7EtRQ6ait6aFeVzWpmfMtUeYCHmbVmgvoJIyZ/NHXrrxki+Xg0r1cUQ==
-X-Received: by 2002:a17:907:7fa4:b0:9a9:405b:26d1 with SMTP id qk36-20020a1709077fa400b009a9405b26d1mr1758019ejc.5.1696315227064;
-        Mon, 02 Oct 2023 23:40:27 -0700 (PDT)
-Received: from localhost.lan (031011218106.poznan.vectranet.pl. [31.11.218.106])
-        by smtp.gmail.com with ESMTPSA id h22-20020a17090634d600b009a1fef32ce6sm504324ejb.177.2023.10.02.23.40.24
+        bh=s7hzBfBC1HHO38BV7omUifYbwC6NG9LeJwnsUI6sbYM=;
+        b=lR4pOO2bXWBgZ5itZzASb2+0ysuGwS3RJ0EnU/JMNh56pnLpprgW6FfoeegagEIp76
+         C6IaS8PsaMekGWajexo1XrFlTrBJoCxnoL9TJfE1bLIvDYsbKLDG3q5WwwZwdjxp5P+Y
+         GqfWXeJAFxrA8RJDTObV0f0GC0e4hGmfqHSZpjMZLK135q5D2lNlOhIrJWLExWhXUiaB
+         hX4RE26bI6AGUQj/oTVIE5a9tQN69SlQu8Gi53k1KIRGN5npthD/tyKcrzWlTfNu8ngr
+         89RoVCAmvRXRmT4Ff5TZOpPTPxHBLPtnkhv0Hb+VpewXTWuhJicLb8vwBxk0u69eM98I
+         ekIw==
+X-Gm-Message-State: AOJu0YxyTZWPvcy+j6SXsY0sGHfr9ImtWvatYzNhXZe0Mv7+cbHS0oEW
+        ayIPCvFiGBuFOwKmZRD2C8xWcg==
+X-Google-Smtp-Source: AGHT+IF7jiPhps88XqeDvcRH8mvXO3iykVwEjmlOZw4xbbw2PDPYg/oOaAFEIAwSIfAT+Rd34KKokg==
+X-Received: by 2002:a05:600c:ac4:b0:405:784a:d53e with SMTP id c4-20020a05600c0ac400b00405784ad53emr1129083wmr.20.1696317026704;
+        Tue, 03 Oct 2023 00:10:26 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id k2-20020a05600c1c8200b004065d72ab19sm8746652wms.0.2023.10.03.00.10.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Oct 2023 23:40:26 -0700 (PDT)
-From:   =?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <zajec5@gmail.com>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Miquel Raynal <miquel.raynal@bootlin.com>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-        Andy Gross <agross@kernel.org>,
+        Tue, 03 Oct 2023 00:10:26 -0700 (PDT)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH v4 0/5] arm64: qcom: sm8x50: enable RNG
+Date:   Tue, 03 Oct 2023 09:10:18 +0200
+Message-Id: <20231003-topic-sm8550-rng-v4-0-255e4d0ba08e@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFq+G2UC/33NTQ6CMBCG4auYrq3pD6WjK+9hXJQyQBOlpCWNh
+ nB3CyuMxOX7JfPMRCIGh5FcDhMJmFx0vs9RHA/EdqZvkbo6NxFMSAZC0NEPztL4BKUYDX1LLUh
+ eCA0SBSP5bAjYuNdK3u65OxdHH97rh8SX9Q+WOGUUkDOmFC9Vza8P15vgTz60ZNGS2ArFjiCyU
+ DfWNFXFSyPxR5BbAXYEmQVtWKnBGn0G+BLmef4AXcLoITUBAAA=
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Vincent Shih <vincent.sunplus@gmail.com>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Anson Huang <Anson.Huang@nxp.com>,
-        Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
-        Lala Lin <lala.lin@mediatek.com>,
-        Komal Bajaj <quic_kbajaj@quicinc.com>,
-        Kumar Thella <sthella@codeaurora.org>,
-        Keiji Hayashibara <hayashibara.keiji@socionext.com>,
-        linux-mtd@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org, asahi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org,
-        linux-rtc@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        =?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>
-Subject: [PATCH V2] dt-bindings: nvmem: move deprecated cells binding to its own file
-Date:   Tue,  3 Oct 2023 08:40:18 +0200
-Message-Id: <20231003064018.7502-1-zajec5@gmail.com>
-X-Mailer: git-send-email 2.35.3
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S. Miller" <davem@davemloft.net>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Om Prakash Singh <quic_omprsing@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3627;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=o7ZtrVsBXseXklDoypnZAvHP19ICMUjgfxdMDlPEwBQ=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlG75euNE22zGyPZDuMSouTlgu9lYUBKwY6N1yb0q/
+ xUrwAriJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZRu+XgAKCRB33NvayMhJ0aO/EA
+ DAcrGAbWSGsdg9uSAUNUKsC5djHfy3D4WrX2BsZ64rUYzG9fQqR800TPYxJphXotIUJOcUOyNf/0mO
+ HPkv0PjVegY0tLu1/CZRLCaRLQ3DLV75GpQG7qpWsttiYMzbHLTgYrOYWSQmKc0IgaQ3AaQnLkWiVH
+ ODhnKCVEfxkwNhLNrbozIz3oI57xCvVLjwhbibYvKZMGVHEAMvTE4UPQKh2gbW9T+TalaepbpQWFWa
+ cJZeUVu6cR77TkWyqRFw3CMQpwora3I6/vPSQLfc8/0vZ9diMmTe22ofsKLzc72WdfDe7y8kYDpMcO
+ JvyI03aJxLzrRuJYkeq5NVKQ756QQ9to3CHsJCqEkXjJjMYwDodc5GK2rnufA3Z2MgwndUMbhttSGf
+ OlfoKy6FOsO3Z/JDu8nbvHgn39ONbffCdPPItIpvH4EMJastQ8JFSHzBNoYoW2n+IPnUnVBGQMhftw
+ H8OtdTcFIfpHGEzLzgs0AyyRMk0hrJ8xRk04MQRtEitgI+trPrkkhBVJuPJVr349MJ3z1TJxrNgXNs
+ U3h7sbX90mf/6G037rspEbv4aFGS/tGVHC3ErYhE0mphBKFVHrcTqPVhmoZxFtay4mEqPmnjCTAuc2
+ YPKhB55BflZFxj+ZOKpUSJryE3gKHuHLHzlgP8sS11KGVuyMvm0grJF4VO3w==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rafał Miłecki <rafal@milecki.pl>
+Enable RNG on SM8550 & SM8450 by reverting the PRNG bindings & DT
+for SM8450 and correctly document it as a True Random Number Generator.
 
-Support for old NVMEM fixed cells was deprecated in favour of
-"fixed-layout". It's still part of the nvmem.yaml though and may be
-unknowingly used by new bindings added without much of analyze.
+- SM8550 QRD test run:
 
-To make it more difficult to accidentally support old syntax move its
-binding to separated file with "deprecated" in its name.
+smccc_trng qcom_hwrng 
 
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+qcom_hwrng
+
+rngtest 6.15
+Copyright (c) 2004 by Henrique de Moraes Holschuh
+This is free software; see the source for copying conditions.  There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+rngtest: starting FIPS tests...
+rngtest: bits received from input: 209420032
+rngtest: FIPS 140-2 successes: 10461
+rngtest: FIPS 140-2 failures: 10
+rngtest: FIPS 140-2(2001-10-10) Monobit: 1
+rngtest: FIPS 140-2(2001-10-10) Poker: 2
+rngtest: FIPS 140-2(2001-10-10) Runs: 3
+rngtest: FIPS 140-2(2001-10-10) Long run: 4
+rngtest: FIPS 140-2(2001-10-10) Continuous run: 0
+rngtest: input channel speed: (min=9.219; avg=63.879; max=19073.486)Mibits/s
+rngtest: FIPS tests speed: (min=24.965; avg=29.093; max=118.469)Mibits/s
+rngtest: Program run time: 10002827 microseconds
+
+- SM8450 HDK test run:
+
+qcom_hwrng
+
+rngtest 6.15
+Copyright (c) 2004 by Henrique de Moraes Holschuh
+This is free software; see the source for copying conditions.  There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+rngtest: starting FIPS tests...
+rngtest: bits received from input: 420580032
+rngtest: FIPS 140-2 successes: 21014
+rngtest: FIPS 140-2 failures: 15
+rngtest: FIPS 140-2(2001-10-10) Monobit: 2
+rngtest: FIPS 140-2(2001-10-10) Poker: 0
+rngtest: FIPS 140-2(2001-10-10) Runs: 7
+rngtest: FIPS 140-2(2001-10-10) Long run: 6
+rngtest: FIPS 140-2(2001-10-10) Continuous run: 0
+rngtest: input channel speed: (min=15.711; avg=50.033; max=32.493)Mibits/s
+rngtest: FIPS tests speed: (min=136.239; avg=203.833; max=227.065)Mibits/s
+rngtest: Program run time: 10000978 microseconds
+
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
-V2: Fix path to nvmem-deprecated-cells.yaml in amlogic,meson6-rtc.yaml
+Changes in v4:
+- changed to an enum in first bindings patch to simplify sm8550 change
+- integrate Om's patch from (https://lore.kernel.org/all/20230926102005.3277045-1-quic_omprsing@quicinc.com)
+  to simplify maintainer's life
+- rebased on next-20230929
+- dropped already applied revert
+- Link to v3: https://lore.kernel.org/r/20230828-topic-sm8550-rng-v3-0-7a0678ca7988@linaro.org
 
- .../devicetree/bindings/mtd/mtd.yaml          |  7 ++++-
- .../bindings/mtd/partitions/nvmem-cells.yaml  |  1 +
- .../nvmem/amlogic,meson-gxbb-efuse.yaml       |  1 +
- .../bindings/nvmem/amlogic,meson6-efuse.yaml  |  1 +
- .../bindings/nvmem/apple,efuses.yaml          |  1 +
- .../devicetree/bindings/nvmem/imx-ocotp.yaml  |  1 +
- .../bindings/nvmem/mediatek,efuse.yaml        |  1 +
- .../nvmem/microchip,sama7g5-otpc.yaml         |  1 +
- .../devicetree/bindings/nvmem/mxs-ocotp.yaml  |  1 +
- .../nvmem/nvmem-deprecated-cells.yaml         | 28 +++++++++++++++++++
- .../devicetree/bindings/nvmem/nvmem.yaml      |  9 ------
- .../bindings/nvmem/qcom,qfprom.yaml           |  1 +
- .../bindings/nvmem/qcom,sec-qfprom.yaml       |  1 +
- .../bindings/nvmem/qcom,spmi-sdam.yaml        |  1 +
- .../bindings/nvmem/rockchip,otp.yaml          |  1 +
- .../bindings/nvmem/rockchip-efuse.yaml        |  1 +
- .../nvmem/socionext,uniphier-efuse.yaml       |  1 +
- .../bindings/nvmem/sunplus,sp7021-ocotp.yaml  |  1 +
- .../bindings/rtc/amlogic,meson6-rtc.yaml      |  1 +
- 19 files changed, 50 insertions(+), 10 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/nvmem/nvmem-deprecated-cells.yaml
+Changes in v3:
+- Removed invalid character in commit msg
+- Added review tags
+- Removed applied patch 1
+- Link to v2: https://lore.kernel.org/r/20230824-topic-sm8550-rng-v2-0-dfcafbb16a3e@linaro.org
 
-diff --git a/Documentation/devicetree/bindings/mtd/mtd.yaml b/Documentation/devicetree/bindings/mtd/mtd.yaml
-index b82ca03e969c..f322290ee516 100644
---- a/Documentation/devicetree/bindings/mtd/mtd.yaml
-+++ b/Documentation/devicetree/bindings/mtd/mtd.yaml
-@@ -43,7 +43,12 @@ patternProperties:
-     deprecated: true
- 
-   "^otp(-[0-9]+)?$":
--    $ref: ../nvmem/nvmem.yaml#
-+    type: object
-+
-+    allOf:
-+      - $ref: ../nvmem/nvmem.yaml#
-+      - $ref: ../nvmem/nvmem-deprecated-cells.yaml#
-+
-     unevaluatedProperties: false
- 
-     description: |
-diff --git a/Documentation/devicetree/bindings/mtd/partitions/nvmem-cells.yaml b/Documentation/devicetree/bindings/mtd/partitions/nvmem-cells.yaml
-index 5474d63268dc..9518281007af 100644
---- a/Documentation/devicetree/bindings/mtd/partitions/nvmem-cells.yaml
-+++ b/Documentation/devicetree/bindings/mtd/partitions/nvmem-cells.yaml
-@@ -19,6 +19,7 @@ maintainers:
- allOf:
-   - $ref: /schemas/mtd/partitions/partition.yaml#
-   - $ref: /schemas/nvmem/nvmem.yaml#
-+  - $ref: /schemas/nvmem/nvmem-deprecated-cells.yaml#
- 
- properties:
-   compatible:
-diff --git a/Documentation/devicetree/bindings/nvmem/amlogic,meson-gxbb-efuse.yaml b/Documentation/devicetree/bindings/nvmem/amlogic,meson-gxbb-efuse.yaml
-index e49c2754ff55..9801fe6f91b5 100644
---- a/Documentation/devicetree/bindings/nvmem/amlogic,meson-gxbb-efuse.yaml
-+++ b/Documentation/devicetree/bindings/nvmem/amlogic,meson-gxbb-efuse.yaml
-@@ -11,6 +11,7 @@ maintainers:
- 
- allOf:
-   - $ref: nvmem.yaml#
-+  - $ref: nvmem-deprecated-cells.yaml#
- 
- properties:
-   compatible:
-diff --git a/Documentation/devicetree/bindings/nvmem/amlogic,meson6-efuse.yaml b/Documentation/devicetree/bindings/nvmem/amlogic,meson6-efuse.yaml
-index 84b3dfd21e09..b5cf740f96fa 100644
---- a/Documentation/devicetree/bindings/nvmem/amlogic,meson6-efuse.yaml
-+++ b/Documentation/devicetree/bindings/nvmem/amlogic,meson6-efuse.yaml
-@@ -12,6 +12,7 @@ maintainers:
- 
- allOf:
-   - $ref: nvmem.yaml#
-+  - $ref: nvmem-deprecated-cells.yaml#
- 
- properties:
-   compatible:
-diff --git a/Documentation/devicetree/bindings/nvmem/apple,efuses.yaml b/Documentation/devicetree/bindings/nvmem/apple,efuses.yaml
-index e0860b6b85f3..d3abdafdbca0 100644
---- a/Documentation/devicetree/bindings/nvmem/apple,efuses.yaml
-+++ b/Documentation/devicetree/bindings/nvmem/apple,efuses.yaml
-@@ -16,6 +16,7 @@ maintainers:
- 
- allOf:
-   - $ref: nvmem.yaml#
-+  - $ref: nvmem-deprecated-cells.yaml#
- 
- properties:
-   compatible:
-diff --git a/Documentation/devicetree/bindings/nvmem/imx-ocotp.yaml b/Documentation/devicetree/bindings/nvmem/imx-ocotp.yaml
-index 99e60d713dac..be1314454bec 100644
---- a/Documentation/devicetree/bindings/nvmem/imx-ocotp.yaml
-+++ b/Documentation/devicetree/bindings/nvmem/imx-ocotp.yaml
-@@ -16,6 +16,7 @@ description: |
- 
- allOf:
-   - $ref: nvmem.yaml#
-+  - $ref: nvmem-deprecated-cells.yaml#
- 
- properties:
-   compatible:
-diff --git a/Documentation/devicetree/bindings/nvmem/mediatek,efuse.yaml b/Documentation/devicetree/bindings/nvmem/mediatek,efuse.yaml
-index 7ec2988b597e..cf5f9e22bb7e 100644
---- a/Documentation/devicetree/bindings/nvmem/mediatek,efuse.yaml
-+++ b/Documentation/devicetree/bindings/nvmem/mediatek,efuse.yaml
-@@ -16,6 +16,7 @@ maintainers:
- 
- allOf:
-   - $ref: nvmem.yaml#
-+  - $ref: nvmem-deprecated-cells.yaml#
- 
- properties:
-   $nodename:
-diff --git a/Documentation/devicetree/bindings/nvmem/microchip,sama7g5-otpc.yaml b/Documentation/devicetree/bindings/nvmem/microchip,sama7g5-otpc.yaml
-index a296d348adb4..cc25f2927682 100644
---- a/Documentation/devicetree/bindings/nvmem/microchip,sama7g5-otpc.yaml
-+++ b/Documentation/devicetree/bindings/nvmem/microchip,sama7g5-otpc.yaml
-@@ -16,6 +16,7 @@ description: |
- 
- allOf:
-   - $ref: nvmem.yaml#
-+  - $ref: nvmem-deprecated-cells.yaml#
- 
- properties:
-   compatible:
-diff --git a/Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml b/Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml
-index a9b822aeaa7e..f43186f98607 100644
---- a/Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml
-+++ b/Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml
-@@ -11,6 +11,7 @@ maintainers:
- 
- allOf:
-   - $ref: nvmem.yaml#
-+  - $ref: nvmem-deprecated-cells.yaml#
- 
- properties:
-   compatible:
-diff --git a/Documentation/devicetree/bindings/nvmem/nvmem-deprecated-cells.yaml b/Documentation/devicetree/bindings/nvmem/nvmem-deprecated-cells.yaml
-new file mode 100644
-index 000000000000..951af28bbfb3
---- /dev/null
-+++ b/Documentation/devicetree/bindings/nvmem/nvmem-deprecated-cells.yaml
-@@ -0,0 +1,28 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/nvmem/nvmem-deprecated-cells.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: NVMEM old syntax for fixed cells
-+
-+maintainers:
-+  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-+
-+description: |
-+  Before introducing NVMEM layouts all NVMEM (fixed) cells were defined
-+  as direct device subnodes. That syntax was replaced by "fixed-layout"
-+  and is deprecated now. No new bindings should use it.
-+
-+patternProperties:
-+  "@[0-9a-f]+(,[0-7])?$":
-+    type: object
-+    allOf:
-+      - $ref: layouts/fixed-cell.yaml
-+      - properties:
-+          compatible: false
-+    deprecated: true
-+
-+additionalProperties: true
-+
-+...
-diff --git a/Documentation/devicetree/bindings/nvmem/nvmem.yaml b/Documentation/devicetree/bindings/nvmem/nvmem.yaml
-index 9f921d940142..4fd015d402ce 100644
---- a/Documentation/devicetree/bindings/nvmem/nvmem.yaml
-+++ b/Documentation/devicetree/bindings/nvmem/nvmem.yaml
-@@ -46,15 +46,6 @@ properties:
-       container may reference more advanced (dynamic) layout
-       parsers.
- 
--patternProperties:
--  "@[0-9a-f]+(,[0-7])?$":
--    type: object
--    allOf:
--      - $ref: layouts/fixed-cell.yaml
--      - properties:
--          compatible: false
--    deprecated: true
--
- additionalProperties: true
- 
- examples:
-diff --git a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
-index 8740938c32eb..8c8f05d9eaf1 100644
---- a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
-+++ b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
-@@ -11,6 +11,7 @@ maintainers:
- 
- allOf:
-   - $ref: nvmem.yaml#
-+  - $ref: nvmem-deprecated-cells.yaml#
- 
- properties:
-   compatible:
-diff --git a/Documentation/devicetree/bindings/nvmem/qcom,sec-qfprom.yaml b/Documentation/devicetree/bindings/nvmem/qcom,sec-qfprom.yaml
-index 9b133f783d29..2ada2099946d 100644
---- a/Documentation/devicetree/bindings/nvmem/qcom,sec-qfprom.yaml
-+++ b/Documentation/devicetree/bindings/nvmem/qcom,sec-qfprom.yaml
-@@ -16,6 +16,7 @@ description:
- 
- allOf:
-   - $ref: nvmem.yaml#
-+  - $ref: nvmem-deprecated-cells.yaml#
- 
- properties:
-   compatible:
-diff --git a/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml b/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
-index cd980def97b8..068bedf5dbc9 100644
---- a/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
-+++ b/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
-@@ -16,6 +16,7 @@ description: |
- 
- allOf:
-   - $ref: nvmem.yaml#
-+  - $ref: nvmem-deprecated-cells.yaml#
- 
- properties:
-   compatible:
-diff --git a/Documentation/devicetree/bindings/nvmem/rockchip,otp.yaml b/Documentation/devicetree/bindings/nvmem/rockchip,otp.yaml
-index 9c6eff788928..a44d44b32809 100644
---- a/Documentation/devicetree/bindings/nvmem/rockchip,otp.yaml
-+++ b/Documentation/devicetree/bindings/nvmem/rockchip,otp.yaml
-@@ -49,6 +49,7 @@ required:
- 
- allOf:
-   - $ref: nvmem.yaml#
-+  - $ref: nvmem-deprecated-cells.yaml#
- 
-   - if:
-       properties:
-diff --git a/Documentation/devicetree/bindings/nvmem/rockchip-efuse.yaml b/Documentation/devicetree/bindings/nvmem/rockchip-efuse.yaml
-index c5403e149080..b80fd8d1ae5b 100644
---- a/Documentation/devicetree/bindings/nvmem/rockchip-efuse.yaml
-+++ b/Documentation/devicetree/bindings/nvmem/rockchip-efuse.yaml
-@@ -11,6 +11,7 @@ maintainers:
- 
- allOf:
-   - $ref: nvmem.yaml#
-+  - $ref: nvmem-deprecated-cells.yaml#
- 
- properties:
-   compatible:
-diff --git a/Documentation/devicetree/bindings/nvmem/socionext,uniphier-efuse.yaml b/Documentation/devicetree/bindings/nvmem/socionext,uniphier-efuse.yaml
-index efccc5aacbe0..e27cbae2d63a 100644
---- a/Documentation/devicetree/bindings/nvmem/socionext,uniphier-efuse.yaml
-+++ b/Documentation/devicetree/bindings/nvmem/socionext,uniphier-efuse.yaml
-@@ -12,6 +12,7 @@ maintainers:
- 
- allOf:
-   - $ref: nvmem.yaml#
-+  - $ref: nvmem-deprecated-cells.yaml#
- 
- properties:
-   compatible:
-diff --git a/Documentation/devicetree/bindings/nvmem/sunplus,sp7021-ocotp.yaml b/Documentation/devicetree/bindings/nvmem/sunplus,sp7021-ocotp.yaml
-index da3f1de7d281..af97eeb8316c 100644
---- a/Documentation/devicetree/bindings/nvmem/sunplus,sp7021-ocotp.yaml
-+++ b/Documentation/devicetree/bindings/nvmem/sunplus,sp7021-ocotp.yaml
-@@ -12,6 +12,7 @@ maintainers:
- 
- allOf:
-   - $ref: nvmem.yaml#
-+  - $ref: nvmem-deprecated-cells.yaml#
- 
- properties:
-   compatible:
-diff --git a/Documentation/devicetree/bindings/rtc/amlogic,meson6-rtc.yaml b/Documentation/devicetree/bindings/rtc/amlogic,meson6-rtc.yaml
-index 8bf7d3a9be98..3a4551253e3e 100644
---- a/Documentation/devicetree/bindings/rtc/amlogic,meson6-rtc.yaml
-+++ b/Documentation/devicetree/bindings/rtc/amlogic,meson6-rtc.yaml
-@@ -13,6 +13,7 @@ maintainers:
- allOf:
-   - $ref: rtc.yaml#
-   - $ref: /schemas/nvmem/nvmem.yaml#
-+  - $ref: /schemas/nvmem/nvmem-deprecated-cells.yaml#
- 
- properties:
-   compatible:
+Changes in v2:
+- Revert SM8450 DT & bindings
+- Add new qcom,trng compatible and use it for SM8450 & SM8550
+- Explicitly didn't collect the Reviewed-by tags due to the compatible change
+- Link to v1: https://lore.kernel.org/r/20230822-topic-sm8550-rng-v1-0-8e10055165d1@linaro.org
+
+---
+Neil Armstrong (4):
+      dt-bindings: crypto: qcom,prng: document that RNG on SM8450 is a TRNG
+      dt-bindings: crypto: qcom,prng: document SM8550
+      arm64: dts: qcom: sm8550: add TRNG node
+      arm64: dts: qcom: sm8450: add TRNG node
+
+Om Prakash Singh (1):
+      crypto: qcom-rng - Add hw_random interface support
+
+ .../devicetree/bindings/crypto/qcom,prng.yaml      | 26 +++++++--
+ arch/arm64/boot/dts/qcom/sm8450.dtsi               |  5 ++
+ arch/arm64/boot/dts/qcom/sm8550.dtsi               |  5 ++
+ drivers/crypto/qcom-rng.c                          | 65 +++++++++++++++++++---
+ 4 files changed, 89 insertions(+), 12 deletions(-)
+---
+base-commit: df964ce9ef9fea10cf131bf6bad8658fde7956f6
+change-id: 20230822-topic-sm8550-rng-c83142783e20
+
+Best regards,
 -- 
-2.35.3
+Neil Armstrong <neil.armstrong@linaro.org>
 
