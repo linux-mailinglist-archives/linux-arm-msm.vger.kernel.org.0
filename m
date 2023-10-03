@@ -2,84 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BFCF27B6D6E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 17:53:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5BCC47B6D86
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 17:57:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231417AbjJCPxk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Oct 2023 11:53:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45978 "EHLO
+        id S231979AbjJCP5V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Oct 2023 11:57:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231206AbjJCPxk (ORCPT
+        with ESMTP id S231422AbjJCP5U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Oct 2023 11:53:40 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97C859E;
-        Tue,  3 Oct 2023 08:53:37 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 393EM5rc032204;
-        Tue, 3 Oct 2023 15:53:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=k/hSMubV2CSZSBSLDKar3QNIq194wMLgReotx7drAPA=;
- b=gJUJ7NE2RTwH24kjjoOL9M0H5zAgGZdaYZ5OVNIIb8nLb/Kr6p/LGgA3JkAjxGG5xZTw
- yMzxppy7yExprEApenFSkDLoJBuSctrWr/lCofdyi6/GY3TTPrr0bx0MzEB+CFPU4km4
- vAdqZmT6Su7McBxP5Hc9LEFv5dYwFqrUWtlpoGYIJsrfDm93bKNWGAlV66BIVwWBwnY9
- o7Dfue17VQ7FAGDxtjclIdLsSchVnzscH7syqqbvZBS6zx38OmpfY+0eqUkIt3H4RDM5
- zT3EQ7SWgGIdsUXSCEENb9TnnfYf5kQQt4//OrNq11TEOi35m32SXXZBpTBSizQXCwcB +Q== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tgbjj9f2j-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 03 Oct 2023 15:53:22 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 393FrMdc031729
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 3 Oct 2023 15:53:22 GMT
-Received: from [10.110.20.163] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 3 Oct
- 2023 08:53:21 -0700
-Message-ID: <1c58a05b-1337-0287-225f-5a73b4c6828e@quicinc.com>
-Date:   Tue, 3 Oct 2023 08:53:20 -0700
+        Tue, 3 Oct 2023 11:57:20 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C2F29E
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 08:57:16 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-40651a72807so10845225e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 08:57:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1696348635; x=1696953435; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=U4ci3PGm2LPgLVtRlA44jOoVtYu71qTPmz8qC5gmhz4=;
+        b=nnevNyOyD7fOj0X/cLRdrEf69etCVnC0xjF6vTrNuURucHw7KzmgunlYciE/+MSydk
+         Pq7FHIwlKsNQYECfpgfqXhio7O+dngy6DCjkYSfn4RP2ZabZY089oSYGKDwjeScTKpoi
+         cIvy41ZDLWWIbauJiMY7Ea9hCECOm/QUyKSnXZeSFtk+Z3q7F8frBi+QTp0AieN1iy9k
+         5a11MYSXOIjhskUvkAmXYxWDn2Zkn6WitU3mWWXqXqBvH/1KDmypI9+g0G2KbftrMNlV
+         Oawubbl65ASNRJIdao5oW+LwjaC4r7kApxNoqSL+3ZYZuwCW/Hc8ZNlM1GnV4DrKpd0e
+         6t6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696348635; x=1696953435;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=U4ci3PGm2LPgLVtRlA44jOoVtYu71qTPmz8qC5gmhz4=;
+        b=cuazbHt3kyjoCLD3uACgS5WwkwVxUEFg37AtamuxKGWyidJvAWjgXFg7EqzjBksTfP
+         vzjP8uQyH4y5TAjIONlngmA8zR1cmh283FJo+woyIyMoE3sKsOVFUH2LHtrZOGBNjnhY
+         2foX4j9L2osbMHoH9o1IMnK5rTtTsPhLd92qggY+RzN9iY7Lp5JJzoH22oPyPHvEsXz8
+         TTyv7CpVeNq065TI4dMkjVWWaw0AK9mV/eMMGA0LEgB2GBuHqTF/ssbypNjnWACzY+yI
+         3f7dd9g3Ygywm2KciwCS2h+nrpe0Y8YAl9aoclpiJh+heedun+C0zCQuDYaln/VGsQtT
+         tOOA==
+X-Gm-Message-State: AOJu0YwoDaHvyfkGr+4b8f/kx+xKUwQI7uTnO5mBZiBv/hObnpUcGi9V
+        n1PuRH4kdpzjUpqUFI0zmpGzxw==
+X-Google-Smtp-Source: AGHT+IEFJi5eQZLDZbHuP8V3eVbhyktNfPfTMEhybWz6RcKN42IxH4JbcBGARfmxvNdpB/suD8I8Qg==
+X-Received: by 2002:a05:600c:2199:b0:401:bf56:8ba6 with SMTP id e25-20020a05600c219900b00401bf568ba6mr11984354wme.28.1696348634720;
+        Tue, 03 Oct 2023 08:57:14 -0700 (PDT)
+Received: from [192.168.1.8] (host-2-99-112-229.as13285.net. [2.99.112.229])
+        by smtp.gmail.com with ESMTPSA id i5-20020adffdc5000000b0031fb91f23e9sm1885885wrs.43.2023.10.03.08.57.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Oct 2023 08:57:14 -0700 (PDT)
+Message-ID: <dee25d93-28a0-40ee-9ab8-f86c89428dbd@linaro.org>
+Date:   Tue, 3 Oct 2023 16:57:13 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v4 1/4] firmware: arm_scmi: Add polling support for
- completion in smc
-To:     Sudeep Holla <sudeep.holla@arm.com>
-CC:     <cristian.marussi@arm.com>, <robh+dt@kernel.org>,
-        Brian Masney <bmasney@redhat.com>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20230718160833.36397-1-quic_nkela@quicinc.com>
- <20230911194359.27547-1-quic_nkela@quicinc.com>
- <20230911194359.27547-2-quic_nkela@quicinc.com>
- <20231003103317.pjfmf6uisahowmom@bogus>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] mfd: qcom-spmi-pmic: fix revid implementation
 Content-Language: en-US
-From:   Nikunj Kela <quic_nkela@quicinc.com>
-In-Reply-To: <20231003103317.pjfmf6uisahowmom@bogus>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Johan Hovold <johan+linaro@kernel.org>, Lee Jones <lee@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20231003152927.15000-1-johan+linaro@kernel.org>
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+In-Reply-To: <20231003152927.15000-1-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 4MX0BOBsUn_jb1OK_dO6Y06XJ-gFn0XA
-X-Proofpoint-ORIG-GUID: 4MX0BOBsUn_jb1OK_dO6Y06XJ-gFn0XA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-03_12,2023-10-02_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
- clxscore=1015 impostorscore=0 phishscore=0 malwarescore=0
- priorityscore=1501 mlxlogscore=865 adultscore=0 suspectscore=0 bulkscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310030119
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,31 +77,35 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 10/3/2023 3:33 AM, Sudeep Holla wrote:
-> On Mon, Sep 11, 2023 at 12:43:56PM -0700, Nikunj Kela wrote:
->> Currently, the return from the smc call assumes the completion of
->> the scmi request. However this may not be true in virtual platforms
->> that are using hvc doorbell.
->>
-> Hmm, it is expectation from SMCCC for the fast calls. Is you HVC FID
-> not a fast call. AFAIK, only TOS use yielding calls. Are you using them
-> here ? If not, this must complete when the SMC/HVC returns. We added
-> support for platforms indicating the same via interrupt.
->
-> I would like to avoid adding this build config. Why does it require polling ?
-> Broken firmware ? I would add a compatible for that. Or if the qcom always
-> wants to do this way, just make it specific to the qcom compatible.
->
-> I would avoid a config flag as it needs to be always enabled for single
-> image and affects other platforms as well. So please drop this change.
-> If this is absolutely needed, just add additional property which DT
-> maintainers may not like as it is more like a policy or just make it
-> compatible specific.
->
-> --
-> Regards,
-> Sudeep
-We are using Fast call FID. We are using completion IRQ for all the scmi 
-instances except one where we need to communicate with the server when 
-GIC is in suspended state in HLOS. We will need to poll the channel for 
-completion in that use case. I am open to suggestions.
+
+On 03/10/2023 16:29, Johan Hovold wrote:
+> The Qualcomm SPMI PMIC revid implementation is broken in multiple ways
+> that can lead to resource leaks and crashes. This series reworks the
+> implementation so that can be used safely.
+> 
+> Included is also a rename of the SPMI device lookup helper which can
+> hopefully help prevent similar leaks from being reintroduced.
+> 
+> Johan
+
+This is.. definitely a major improvement. Thanks for cleaning up my mess
+
+fwiw
+Acked-by: Caleb Connolly <caleb.connolly@linaro.org>
+> 
+> 
+> Johan Hovold (5):
+>   mfd: qcom-spmi-pmic: fix reference leaks in revid helper
+>   mfd: qcom-spmi-pmic: fix revid implementation
+>   mfd: qcom-spmi-pmic: switch to EXPORT_SYMBOL_GPL()
+>   spmi: document spmi_device_from_of() refcounting
+>   spmi: rename spmi device lookup helper
+> 
+>  drivers/mfd/qcom-spmi-pmic.c | 103 +++++++++++++++++++++++++----------
+>  drivers/spmi/spmi.c          |   9 ++-
+>  include/linux/spmi.h         |   2 +-
+>  3 files changed, 80 insertions(+), 34 deletions(-)
+> 
+
+-- 
+// Caleb (they/them)
