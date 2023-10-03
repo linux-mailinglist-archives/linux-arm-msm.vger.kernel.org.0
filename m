@@ -2,91 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 34D1F7B6EA0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 18:34:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E37B37B6ECE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 18:44:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240593AbjJCQel (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Oct 2023 12:34:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40146 "EHLO
+        id S230212AbjJCQoW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Oct 2023 12:44:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240584AbjJCQek (ORCPT
+        with ESMTP id S230207AbjJCQoU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Oct 2023 12:34:40 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50B5CAF;
-        Tue,  3 Oct 2023 09:34:37 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 393Erddk013142;
-        Tue, 3 Oct 2023 16:34:06 GMT
+        Tue, 3 Oct 2023 12:44:20 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CAB49E;
+        Tue,  3 Oct 2023 09:44:17 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 393E0d8V010510;
+        Tue, 3 Oct 2023 16:44:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=FF73pH/SYbmbjDDOjovosivE4VxvLNDlhTfVVV+K1bM=;
- b=B7bHcW7RReBs1ljd7qMkUPf9w6CBSvDNz93NOjt9t9BNJJteUMM4WuByNLMCKQYgTkWc
- Z68I1dE8jSXy5sLmxFdDc/tZ6zE6l2Vz8ucaTSSXzMleB5RE26AlU6xa6W9ykPJmA4oC
- b3vEU0GjDaFjKhP7EztMl4nkp5YqWdV0TUwfTA3OUxL+kxpHPo38mu93J+j1dvVNSTNo
- L9pnWNYrZBrEl7WkAbZ+wxLv1/hj6p0lril4sYH+XMrB46p0WGhPYVXJBycoGqs07ddY
- zT/b4+N7717LCB7J2XgOP1LU1eOPyuh5Fn5coJtdurjNikHp7kFdD5L/ICvwWhSj1i6O bg== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tg98rhx6u-1
+ bh=M3EgibbGHl0JH+WCJCAweVGyoXe1yl9zM3upiIVq4Ko=;
+ b=fpiNDDNf2s9mXq7LS8sRhASOQoVClpk8yvqMdzeEQW3VTW3OKK0lzBs96a204EfZFH+j
+ IHRxfem/s5OLI8YNwlOe3N2DfedqSZq6WMZm7xEH3QTABw+C6eBuR61LcZPdd8yXnOCr
+ tVkqp85MZ0BBdLdrJsr5nYW/8LCvVikhaJbCGfQ0kNhjH0RWND0sIn+dh1DNqOJvsr7y
+ LVgVJcBMCvDdPVsDjYEBOOSAG62fMKQKDxhweFXA34BGgfCV3etmfsq8UyiefS3PXlCC
+ 0HCcBerHK09IrAKov47aEQBlPgaDfy62ftVFEXjbm/aFyaTLm4q5tJ+c/CGSRpm365dF /w== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tgaw5hmwm-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 03 Oct 2023 16:34:06 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 393GY50m030027
+        Tue, 03 Oct 2023 16:44:00 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 393Ghw9K029764
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 3 Oct 2023 16:34:05 GMT
-Received: from [10.216.32.208] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 3 Oct
- 2023 09:33:55 -0700
-Message-ID: <a44fcc7b-0a79-4755-87a1-1d1704fd3e58@quicinc.com>
-Date:   Tue, 3 Oct 2023 22:03:51 +0530
+        Tue, 3 Oct 2023 16:43:58 GMT
+Received: from [10.110.36.217] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 3 Oct
+ 2023 09:43:57 -0700
+Message-ID: <e72ae247-459d-9f23-0583-ce6da1a30336@quicinc.com>
+Date:   Tue, 3 Oct 2023 09:43:56 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/8] phy: qcom: Introduce Super-Speed USB UNIPHY driver
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v4 7/8] drm/msm/dp: add
+ pm_runtime_force_suspend()/resume()
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <gregkh@linuxfoundation.org>, <catalin.marinas@arm.com>,
-        <will@kernel.org>, <p.zabel@pengutronix.de>,
-        <geert+renesas@glider.be>, <arnd@arndb.de>,
-        <neil.armstrong@linaro.org>, <nfraprado@collabora.com>,
-        <u-kumar1@ti.com>, <peng.fan@nxp.com>, <quic_wcheng@quicinc.com>,
-        <quic_varada@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <quic_kathirav@quicinc.com>, <quic_nsekar@quicinc.com>,
-        <quic_srichara@quicinc.com>
-References: <20230929084209.3033093-1-quic_ipkumar@quicinc.com>
- <20230929084209.3033093-3-quic_ipkumar@quicinc.com>
- <412492d1-fcc9-481c-9d28-b208a644ba1d@linaro.org>
- <7975c638-29cf-45ce-9d76-b8a93d750eb7@quicinc.com>
- <CAA8EJprhQz_Tj0Bhv6zhGa7h37Ug-Fp6Tof9tNscTFyZzkbJvw@mail.gmail.com>
-From:   Praveenkumar I <quic_ipkumar@quicinc.com>
-In-Reply-To: <CAA8EJprhQz_Tj0Bhv6zhGa7h37Ug-Fp6Tof9tNscTFyZzkbJvw@mail.gmail.com>
+CC:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
+        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1695848028-18023-1-git-send-email-quic_khsieh@quicinc.com>
+ <1695848028-18023-8-git-send-email-quic_khsieh@quicinc.com>
+ <CAA8EJpor3WEYmN=hQJQPFyjZGdr4j8F-XAB=2BDVRFCTNioEiA@mail.gmail.com>
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <CAA8EJpor3WEYmN=hQJQPFyjZGdr4j8F-XAB=2BDVRFCTNioEiA@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: KukSnE5ys9HRpl3qozM40BtNCj8Gai-o
-X-Proofpoint-GUID: KukSnE5ys9HRpl3qozM40BtNCj8Gai-o
+X-Proofpoint-ORIG-GUID: CVmUA8p3xgoxXVsAwGnwwaugMs5z2RGd
+X-Proofpoint-GUID: CVmUA8p3xgoxXVsAwGnwwaugMs5z2RGd
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-10-03_13,2023-10-02_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- suspectscore=0 bulkscore=0 adultscore=0 impostorscore=0 lowpriorityscore=0
- clxscore=1015 spamscore=0 mlxscore=0 malwarescore=0 phishscore=0
- mlxlogscore=554 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310030125
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
+ phishscore=0 priorityscore=1501 clxscore=1015 impostorscore=0 mlxscore=0
+ lowpriorityscore=0 mlxlogscore=999 adultscore=0 spamscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
+ definitions=main-2310030125
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
         SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -95,88 +88,244 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-
-On 10/3/2023 8:24 PM, Dmitry Baryshkov wrote:
-> On Tue, 3 Oct 2023 at 17:22, Praveenkumar I <quic_ipkumar@quicinc.com> wrote:
->>
->>
->> On 9/30/2023 10:48 PM, Dmitry Baryshkov wrote:
->>> On 29/09/2023 11:42, Praveenkumar I wrote:
->>>> Adds Qualcomm 22ull Super-Speed USB UNIPHY driver support which
->>>> is present in Qualcomm IPQ5332 SoC. This PHY is interfaced with
->>>> SNPS DWC3 USB and SNPS DWC PCIe. Either one of the interface
->>>> can use the it and selection is done via mux present in TCSR
->>>> register. This driver selects the PHY for DWC3 USB and handles
->>>> the reset, clocks and regulator.
->>>>
->>>> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
->>>> ---
->>>>    drivers/phy/qualcomm/Kconfig               |  11 +
->>>>    drivers/phy/qualcomm/Makefile              |   1 +
->>>>    drivers/phy/qualcomm/phy-qcom-uniphy-usb.c | 322 +++++++++++++++++++++
->>>>    3 files changed, 334 insertions(+)
->>>>    create mode 100644 drivers/phy/qualcomm/phy-qcom-uniphy-usb.c
->>>>
->>>> diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
->>>> index d891058b7c39..7257c8455c53 100644
->>>> --- a/drivers/phy/qualcomm/Kconfig
->>>> +++ b/drivers/phy/qualcomm/Kconfig
->>>> @@ -154,6 +154,17 @@ config PHY_QCOM_M31_USB
->>>>          management. This driver is required even for peripheral only or
->>>>          host only mode configurations.
->>>>    +config PHY_QCOM_UNIPHY_USB
->>>> +    tristate "Qualcomm USB Super-Speed UNIPHY driver"
->>> Can we please have more specific driver name? As I wrote earlier,
->>> there are two other (different) kinds of Qualcomm UNI PHY devices:
->>> - DSI / HDMI UNIPHY on apq8064 / msm8974 / msm8960 (?)
->>> - USB QMP UNI PHY drivers
->>>
->>> Adding a driver called UNIPHY, which is not related to those two kinds
->>> sounds pretty confusing to me.
->> This UNIPHY is different from above mentioned ones. This a custom
->> version for 22nm on Qualcomm IPQ5332.
->> Can we name the driver as phy-qcom-uniphy-usb-ss-22ull.c /
->> phy-qcom-usb-ss-22ull.c ?
-> usb-ss-22ull sounds better. Or maybe usb-ipq-ss
-Sure, will rename it to phy-qcom-usb-ss-22ull.c
+On 9/27/2023 3:00 PM, Dmitry Baryshkov wrote:
+> On Wed, 27 Sept 2023 at 23:54, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+>> After incorporated pm_runtime framework into eDP/DP driver, the
+> incorporating
 >
->>>> +    depends on USB && (ARCH_QCOM || COMPILE_TEST)
->>>> +    select GENERIC_PHY
->>>> +    help
->>>> +      Enable this to support the Qualcomm USB Super-Speed UNIPHY
->>>> transceiver
->>>> +      with DWC3 USB core. It handles PHY initialization, clock
->>>> +      management required after resetting the hardware and power
->>>> +      management. This driver is required even for peripheral only or
->>>> +      host only mode configurations.
->>>> +
->>>>    config PHY_QCOM_USB_HS
->>>>        tristate "Qualcomm USB HS PHY module"
->>>>        depends on USB_ULPI_BUS
->>>> diff --git a/drivers/phy/qualcomm/Makefile
->>>> b/drivers/phy/qualcomm/Makefile
->>>> index ffd609ac6233..c3e0112a7a70 100644
->>>> --- a/drivers/phy/qualcomm/Makefile
->>>> +++ b/drivers/phy/qualcomm/Makefile
->>>> @@ -17,6 +17,7 @@ obj-$(CONFIG_PHY_QCOM_QMP_USB_LEGACY)    +=
->>>> phy-qcom-qmp-usb-legacy.o
->>>>    obj-$(CONFIG_PHY_QCOM_QUSB2)        += phy-qcom-qusb2.o
->>>>    obj-$(CONFIG_PHY_QCOM_SNPS_EUSB2)    += phy-qcom-snps-eusb2.o
->>>>    obj-$(CONFIG_PHY_QCOM_EUSB2_REPEATER)    += phy-qcom-eusb2-repeater.o
->>>> +obj-$(CONFIG_PHY_QCOM_UNIPHY_USB)    += phy-qcom-uniphy-usb.o
->>>>    obj-$(CONFIG_PHY_QCOM_USB_HS)         += phy-qcom-usb-hs.o
->>>>    obj-$(CONFIG_PHY_QCOM_USB_HSIC)     += phy-qcom-usb-hsic.o
->>>>    obj-$(CONFIG_PHY_QCOM_USB_HS_28NM)    += phy-qcom-usb-hs-28nm.o
->>>> diff --git a/drivers/phy/qualcomm/phy-qcom-uniphy-usb.c
->>>> b/drivers/phy/qualcomm/phy-qcom-uniphy-usb.c
->>>> new file mode 100644
->>>> index 000000000000..fdfc9c225995
->>>> --- /dev/null
->>>> +++ b/drivers/phy/qualcomm/phy-qcom-uniphy-usb.c
->>> So, is it a USB PHY or UNI PHY (where I would expect that it handles
->>> USB and PCIe?)
->> It is a USB PHY and the PHY name is UNIPHY. Added the usb in the file
->> name to differentiate it.
---
-Thanks,
-Praveenkumar
+>
+>> original dp_pm_suspend() to handle power off both DP phy and
+>> controller during suspend and dp_pm_resume() to handle power on
+>> both DP phy and controller during resume are not necessary since
+>> those function are replaced by dp_pm_runtime_suspend() and
+>> dp_pm_runtime_resume() through pm runtime framework.
+>> Therefore add pm framework provides functions,
+>> pm_runtime_force_suspend()/resume() to complete incorporating pm
+>> runtime framework into DP driver.
+>>
+>> Changes in v4:
+>> -- drop both dp_pm_prepare() and dp_pm_compete() from this change
+>> -- delete ST_SUSPENDED state
+>> -- rewording commit text to add more details regrading the purpose
+>>     of this change
+>>
+>> Changes in v3:
+>> -- replace dp_pm_suspend() with pm_runtime_force_suspend()
+>> -- replace dp_pm_resume() with pm_runtime_force_resume()
+>>
+>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/dp/dp_display.c | 113 ++----------------------------------
+>>   1 file changed, 5 insertions(+), 108 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+>> index 9158a2c..711d262 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+>> @@ -49,7 +49,6 @@ enum {
+>>          ST_CONNECTED,
+>>          ST_DISCONNECT_PENDING,
+>>          ST_DISPLAY_OFF,
+>> -       ST_SUSPENDED,
+>>   };
+>>
+>>   enum {
+>> @@ -560,7 +559,7 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
+>>          drm_dbg_dp(dp->drm_dev, "Before, type=%d hpd_state=%d\n",
+>>                          dp->dp_display.connector_type, state);
+>>
+>> -       if (state == ST_DISPLAY_OFF || state == ST_SUSPENDED) {
+>> +       if (state == ST_DISPLAY_OFF) {
+>>                  mutex_unlock(&dp->event_mutex);
+>>                  return 0;
+>>          }
+>> @@ -674,7 +673,7 @@ static int dp_irq_hpd_handle(struct dp_display_private *dp, u32 data)
+>>          drm_dbg_dp(dp->drm_dev, "Before, type=%d hpd_state=%d\n",
+>>                          dp->dp_display.connector_type, state);
+>>
+>> -       if (state == ST_DISPLAY_OFF || state == ST_SUSPENDED) {
+>> +       if (state == ST_DISPLAY_OFF) {
+>>                  mutex_unlock(&dp->event_mutex);
+>>                  return 0;
+>>          }
+>> @@ -1321,110 +1320,10 @@ static int dp_pm_runtime_resume(struct device *dev)
+>>          return 0;
+>>   }
+>>
+>> -static int dp_pm_resume(struct device *dev)
+>> -{
+>> -       struct platform_device *pdev = to_platform_device(dev);
+>> -       struct msm_dp *dp_display = platform_get_drvdata(pdev);
+>> -       struct dp_display_private *dp;
+>> -       int sink_count = 0;
+>> -
+>> -       dp = container_of(dp_display, struct dp_display_private, dp_display);
+>> -
+>> -       mutex_lock(&dp->event_mutex);
+>> -
+>> -       drm_dbg_dp(dp->drm_dev,
+>> -               "Before, type=%d core_inited=%d phy_inited=%d power_on=%d\n",
+>> -               dp->dp_display.connector_type, dp->core_initialized,
+>> -               dp->phy_initialized, dp_display->power_on);
+>> -
+>> -       /* start from disconnected state */
+>> -       dp->hpd_state = ST_DISCONNECTED;
+>> -
+>> -       /* turn on dp ctrl/phy */
+>> -       dp_display_host_init(dp);
+>> -
+>> -       if (dp_display->is_edp)
+>> -               dp_catalog_ctrl_hpd_enable(dp->catalog);
+>> -
+>> -       if (dp_catalog_link_is_connected(dp->catalog)) {
+>> -               /*
+>> -                * set sink to normal operation mode -- D0
+>> -                * before dpcd read
+>> -                */
+>> -               dp_display_host_phy_init(dp);
+>> -               dp_link_psm_config(dp->link, &dp->panel->link_info, false);
+>> -               sink_count = drm_dp_read_sink_count(dp->aux);
+>> -               if (sink_count < 0)
+>> -                       sink_count = 0;
+>> -
+>> -               dp_display_host_phy_exit(dp);
+>> -       }
+>> -
+>> -       dp->link->sink_count = sink_count;
+>> -       /*
+>> -        * can not declared display is connected unless
+>> -        * HDMI cable is plugged in and sink_count of
+>> -        * dongle become 1
+>> -        * also only signal audio when disconnected
+>> -        */
+>> -       if (dp->link->sink_count) {
+>> -               dp->dp_display.link_ready = true;
+>> -       } else {
+>> -               dp->dp_display.link_ready = false;
+>> -               dp_display_handle_plugged_change(dp_display, false);
+>> -       }
+>> -
+>> -       drm_dbg_dp(dp->drm_dev,
+>> -               "After, type=%d sink=%d conn=%d core_init=%d phy_init=%d power=%d\n",
+>> -               dp->dp_display.connector_type, dp->link->sink_count,
+>> -               dp->dp_display.link_ready, dp->core_initialized,
+>> -               dp->phy_initialized, dp_display->power_on);
+>> -
+>> -       mutex_unlock(&dp->event_mutex);
+>> -
+>> -       return 0;
+>> -}
+>> -
+>> -static int dp_pm_suspend(struct device *dev)
+>> -{
+>> -       struct platform_device *pdev = to_platform_device(dev);
+>> -       struct msm_dp *dp_display = platform_get_drvdata(pdev);
+>> -       struct dp_display_private *dp;
+>> -
+>> -       dp = container_of(dp_display, struct dp_display_private, dp_display);
+>> -
+>> -       mutex_lock(&dp->event_mutex);
+>> -
+>> -       drm_dbg_dp(dp->drm_dev,
+>> -               "Before, type=%d core_inited=%d  phy_inited=%d power_on=%d\n",
+>> -               dp->dp_display.connector_type, dp->core_initialized,
+>> -               dp->phy_initialized, dp_display->power_on);
+>> -
+>> -       /* mainlink enabled */
+>> -       if (dp_power_clk_status(dp->power, DP_CTRL_PM))
+>> -               dp_ctrl_off_link_stream(dp->ctrl);
+>> -
+>> -       dp_display_host_phy_exit(dp);
+> I was under the impression that dp_pm_runtime_suspend / _resume
+> functions perform phy init/exit only in eDP cases. Can we really drop
+> the main suspend/resume functions?
+
+yes on eDP case since it is embedded.
+
+for external DP case, there are two steps
+
+step 1: enable DP controller's  hpd block and start waiting for hpd 
+interrupts at dp_display_hpd_enable()
+
+step 2:  at plugin interrupts,  dp_display_host_phy_init()
+
+step 3: at unplug interrupt: dp_bridge_atomic_post_disable() 
+dp_display_host_phy_exi()
+
+at runtime, there is loop between step 2 and step 3
+
+step  4: disable DP controller's  hpd block
+
+>
+>> -
+>> -       /* host_init will be called at pm_resume */
+>> -       dp_display_host_deinit(dp);
+>> -
+>> -       dp->hpd_state = ST_SUSPENDED;
+>> -
+>> -       drm_dbg_dp(dp->drm_dev,
+>> -               "After, type=%d core_inited=%d phy_inited=%d power_on=%d\n",
+>> -               dp->dp_display.connector_type, dp->core_initialized,
+>> -               dp->phy_initialized, dp_display->power_on);
+>> -
+>> -       mutex_unlock(&dp->event_mutex);
+>> -
+>> -       return 0;
+>> -}
+>> -
+>>   static const struct dev_pm_ops dp_pm_ops = {
+>>          SET_RUNTIME_PM_OPS(dp_pm_runtime_suspend, dp_pm_runtime_resume, NULL)
+>> -       .suspend = dp_pm_suspend,
+>> -       .resume =  dp_pm_resume,
+>> +       SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
+>> +                                pm_runtime_force_resume)
+>>   };
+>>
+>>   static struct platform_driver dp_display_driver = {
+>> @@ -1658,9 +1557,6 @@ void dp_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
+>>
+>>          dp_display = container_of(dp, struct dp_display_private, dp_display);
+>>
+>> -       if (dp->is_edp)
+>> -               dp_hpd_unplug_handle(dp_display, 0);
+> Why?
+
+dp_hpd_unplug_handle() does not tear down phy.
+
+Therefore eDP does not need to call unplug handle.
+
+
+
+>> -
+>>          mutex_lock(&dp_display->event_mutex);
+>>
+>>          state = dp_display->hpd_state;
+>> @@ -1748,6 +1644,7 @@ void dp_bridge_hpd_disable(struct drm_bridge *bridge)
+>>          dp_catalog_ctrl_hpd_disable(dp->catalog);
+>>
+>>          dp_display->internal_hpd = false;
+>> +       dp->hpd_state = ST_DISCONNECTED;
+> Why? We have only disabled sending of the HPD events. The dongle might
+> still be connected.
+
+dp_bridge_hpd_disable() disable dp controller hpd block (no more hpd 
+interrupt will be received).
+
+dp_bridge_hpd_disable() should happen after DP main link had been teared 
+down already.
+
+Therefore hpd_state need to be in default state so that next plugin 
+handle will be start with correct state.
+
+
+>
+>>          pm_runtime_mark_last_busy(&dp->pdev->dev);
+>>          pm_runtime_put_autosuspend(&dp->pdev->dev);
+>> --
+>> 2.7.4
+>>
+>
+> --
+> With best wishes
+>
+> Dmitry
