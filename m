@@ -2,113 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DE297B68B5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 14:10:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54B407B68D2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 14:16:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232131AbjJCMKU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Oct 2023 08:10:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52178 "EHLO
+        id S232449AbjJCMQq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Oct 2023 08:16:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232324AbjJCMKT (ORCPT
+        with ESMTP id S232371AbjJCMQp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Oct 2023 08:10:19 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21457DD;
-        Tue,  3 Oct 2023 05:10:11 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 393BMavx030260;
-        Tue, 3 Oct 2023 12:09:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : subject
- : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=qInbbyy+IM8JPT5ZOTFZZKq+bJNItdIFiJ1d8D+MZ2E=;
- b=ZetMMeJML4OJcaXnVaWTo6xyrPGabRySvzEgIGtZeKmnC7H56Vp4hdzMA5PuO9x+Ekv/
- 753paeHMVm30PbkLhSiKKXZjFcvUzUO+BYwdD3u2jK1Zxj3kdwtQztatwm5pxYeBJONd
- 8bsRIR56Bah7Z3pESOQQ/UBaVPLuXxiTAy0M241Rb1shfGb5/DUL4dmP2LYWxAtgIbTg
- 9Q1/V+h5sFFUNwo1U9mqjd0co2FG4ghyHQ0UWwcECbF6ICu8cCPcL45uiWoq8vqojUyc
- LpdKCyCq7QRX2DmEyiNeKt+vfVXK5yCpR1pWRiqUzD8O146MMk3rXnQem5Nk1jWtuB+6 3g== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tg9hds3fj-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 03 Oct 2023 12:09:58 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 393C9vid011389
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 3 Oct 2023 12:09:57 GMT
-Received: from nsekar-linux.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Tue, 3 Oct 2023 05:09:50 -0700
-From:   Nitheesh Sekar <quic_nsekar@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <lpieralisi@kernel.org>,
-        <kw@linux.com>, <robh@kernel.org>, <bhelgaas@google.com>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <vkoul@kernel.org>, <kishon@kernel.org>, <mani@kernel.org>,
-        <p.zabel@pengutronix.de>, <quic_nsekar@quicinc.com>,
-        <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>,
-        <quic_ipkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>
-Subject: [PATCH 6/6] arm64: dts: qcom: ipq5018: Enable PCIe
-Date:   Tue, 3 Oct 2023 17:38:46 +0530
-Message-ID: <20231003120846.28626-7-quic_nsekar@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20231003120846.28626-1-quic_nsekar@quicinc.com>
-References: <20231003120846.28626-1-quic_nsekar@quicinc.com>
+        Tue, 3 Oct 2023 08:16:45 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29B64AF;
+        Tue,  3 Oct 2023 05:16:41 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D63D5C433C7;
+        Tue,  3 Oct 2023 12:16:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1696335400;
+        bh=HOMiDWufZS8RdGpxw7PziOf8wnBkhbZbrB+flX6wANQ=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=FXcS12JQDypAcLO2+RuZJymMiJLGw4aAALOhEi0MZt+Ft2rZWejpbEshkDj3Gp1nH
+         hu45WqKRqFhK7B2l2e51FzopfWdKbLDGuJyUSYp0tcAaf8IudgMStT/xymuBGMzvwm
+         jAv2hczSB68xiTnsnfzFNn2PoOu4rmLxvBjy4tNLh4cv4hYMMyu8EPGnsjEgYg1sDe
+         99VMzye2SB+bf6GDfpUsx2jx9aoMy+mL+xruZVTvd2rb0kwFKmu3UmA209CB1iRzZR
+         UPCJkvxI1xgMfdJ1LTI18ov9qbUEYyMfA21F7tozPBotila4H3dE8K/JZqlMFBIkgR
+         PX0PH+SDv2dfQ==
+Received: (nullmailer pid 282697 invoked by uid 1000);
+        Tue, 03 Oct 2023 12:16:35 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 35N3MwkT51rMOeebxzeuzucnm1PWmg2s
-X-Proofpoint-GUID: 35N3MwkT51rMOeebxzeuzucnm1PWmg2s
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-03_08,2023-10-02_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- lowpriorityscore=0 phishscore=0 clxscore=1015 mlxscore=0 suspectscore=0
- impostorscore=0 mlxlogscore=704 malwarescore=0 spamscore=0
- priorityscore=1501 bulkscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2309180000 definitions=main-2310030087
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+From:   Rob Herring <robh@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     quic_narepall@quicinc.com, bmasney@redhat.com,
+        krzysztof.kozlowski+dt@linaro.org, quic_nitirawa@quicinc.com,
+        vireshk@kernel.org, quic_asutoshd@quicinc.com,
+        quic_bhaskarv@quicinc.com, avri.altman@wdc.com,
+        krzysztof.kozlowski@linaro.org, alim.akhtar@samsung.com,
+        robh+dt@kernel.org, quic_cang@quicinc.com,
+        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
+        jejb@linux.ibm.com, cw00.choi@samsung.com, andersson@kernel.org,
+        bvanassche@acm.org, conor+dt@kernel.org, kyungmin.park@samsung.com,
+        martin.petersen@oracle.com, nm@ti.com,
+        linux-kernel@vger.kernel.org, quic_richardp@quicinc.com,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-scsi@vger.kernel.org, myungjoo.ham@samsung.com,
+        konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
+        sboyd@kernel.org
+In-Reply-To: <20231003111232.42663-2-manivannan.sadhasivam@linaro.org>
+References: <20231003111232.42663-1-manivannan.sadhasivam@linaro.org>
+ <20231003111232.42663-2-manivannan.sadhasivam@linaro.org>
+Message-Id: <169633539510.282606.1450427416869008072.robh@kernel.org>
+Subject: Re: [PATCH v4 1/6] dt-bindings: ufs: common: add OPP table
+Date:   Tue, 03 Oct 2023 07:16:35 -0500
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the PCIe controller and PHY nodes for RDP 432-c2.
 
-Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
----
- arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts | 9 +++++++++
- 1 file changed, 9 insertions(+)
+On Tue, 03 Oct 2023 16:42:27 +0530, Manivannan Sadhasivam wrote:
+> From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> Except scaling UFS and bus clocks, it's necessary to scale also the
+> voltages of regulators or power domain performance state levels.  Adding
+> Operating Performance Points table allows to adjust power domain
+> performance state, depending on the UFS clock speed.
+> 
+> OPPv2 deprecates previous property limited to clock scaling:
+> freq-table-hz.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  .../devicetree/bindings/ufs/ufs-common.yaml   | 36 ++++++++++++++++---
+>  1 file changed, 32 insertions(+), 4 deletions(-)
+> 
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
-index e636a1cb9b77..be7d92700517 100644
---- a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
-@@ -28,6 +28,15 @@
- 	status = "okay";
- };
- 
-+&pcie_x2 {
-+	status = "ok";
-+	perst-gpios = <&tlmm 15 GPIO_ACTIVE_LOW>;
-+};
-+
-+&pcie_x2phy {
-+	status = "ok";
-+};
-+
- &sdhc_1 {
- 	pinctrl-0 = <&sdc_default_state>;
- 	pinctrl-names = "default";
--- 
-2.17.1
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
+
+yamllint warnings/errors:
+./Documentation/devicetree/bindings/ufs/ufs-common.yaml:90:20: [error] string value is redundantly quoted with any quotes (quoted-strings)
+./Documentation/devicetree/bindings/ufs/ufs-common.yaml:91:26: [error] string value is redundantly quoted with any quotes (quoted-strings)
+./Documentation/devicetree/bindings/ufs/ufs-common.yaml:91:36: [error] string value is redundantly quoted with any quotes (quoted-strings)
+
+dtschema/dtc warnings/errors:
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20231003111232.42663-2-manivannan.sadhasivam@linaro.org
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
