@@ -2,320 +2,274 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F6397B6DF5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 18:05:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 886C67B6E2D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Oct 2023 18:16:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239218AbjJCQFG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Oct 2023 12:05:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48600 "EHLO
+        id S232014AbjJCQQp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Oct 2023 12:16:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232066AbjJCQFF (ORCPT
+        with ESMTP id S231464AbjJCQQp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Oct 2023 12:05:05 -0400
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 219BAAF;
-        Tue,  3 Oct 2023 09:04:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1696349096; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=S6ff578BowUfZj+1y4YbL9FMxYk8NpzCFUvB9oK9VrY2LRwfWN0H+JiPRjJ4vqUlka
-    iOmqvtuPsen7sk+XYwr+qRrEK2qO0l7P712+nsYuVzR7fiDxZCAMLyLhIu/11WRyYo9s
-    Ps7BjssuNp42/9q/Wv9cGcu+MIWphYnXuNxHurj45fet0hZeVhiUhErq5EzilPy9//Nl
-    So4N4V6aa4NdHvMZwCShnFVTDNhKehKfWNJPHan2Vw5IKQQnl6+ccR10bHhzo0GZnl5E
-    mAd1mJDd9uQZ3ePUrH32fQySnR5IaEAXpRhh5aqLwJuUvm+GWVuXygbesURm5V59Pqg6
-    UZZg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1696349096;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=Fm0HbIGZeonJjTsTuZTF1RqPernihQA9D5wXeryyyjA=;
-    b=ZEqlEC1vDYbAaheXC+lj6aM7qPqno1r2AZn5vE2nlYCv9mASeoYbkPf4bIyjPGFI7x
-    ey8Lgr8kOcPyvcZupFZav0u37x9EVT7+H+n63tSQP+9/UG6lVYcRoxRW04YszF3o+h7x
-    edD5Am0apPhkqbPYuIt3nkRHH6oAOURZiHVTOH7f8XSYZZ3K/I1VJQTyf01vYX48OKGR
-    +0oGvFTQQunvcwjwo+exgfl7asj2UyYE+LJkICZ2L/VnPZE+gJ7WQJgpQC1MfRMqaZCD
-    8U6cF9og/J6rzqVzZ1zmzKT5NKWl+VHeayQIj869iSlXcqflGQBF+Y0bTJQmbBSRNzNf
-    bfRQ==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1696349096;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=Fm0HbIGZeonJjTsTuZTF1RqPernihQA9D5wXeryyyjA=;
-    b=eZOLwXZ/heVgjvqGk3RLwOtgM1AkmobM3dqBjEQlhLtdlAlNiiTNyNe73y9Ref9yO9
-    1AoIUwpyzXwbvxQWSnJqLNX7Sr9GLwXu9uimGBZqlXye2JTEMVk/7TpNYTDeNO7DPx9d
-    rs3Yabvu5KmRWCStOeGxjxv3aXfsKc6xsGy7GyL5hOlotcMoDlHJrpLyttTCVEQf7+hc
-    o8az18aPbKvoQ7JCTqwhWwF0AuB/ql3k2K+jM54GEHIsSvrF24I6evLlBW8LCil7BDwo
-    JpExuz/TekkdtIOuRg+5H9ylqP6YqOqqnXz8e+wpA58hjQbxqoU2tV7S6+eu1F20r4L2
-    KkNw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1696349096;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=Fm0HbIGZeonJjTsTuZTF1RqPernihQA9D5wXeryyyjA=;
-    b=aWQH+0CSM5uZCY8uleo4ZcdHXJNeCnXKqTRK5jDTIy+zlCA9x+9eD0bQ0mbCAjCaBA
-    1XJUpSbKAwNAqjJ1UFDw==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8paF1A=="
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.8.2 DYNA|AUTH)
-    with ESMTPSA id R04c57z93G4t2dD
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Tue, 3 Oct 2023 18:04:55 +0200 (CEST)
-Date:   Tue, 3 Oct 2023 18:04:48 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Nishanth Menon <nm@ti.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Christian Marangi <ansuelsmth@gmail.com>
-Subject: Re: [PATCH v4 05/23] interconnect: icc-clk: add support for scaling
- using OPP
-Message-ID: <ZRw7oL-7FcTX461o@gerhold.net>
-References: <20230827115033.935089-1-dmitry.baryshkov@linaro.org>
- <20230827115033.935089-6-dmitry.baryshkov@linaro.org>
- <493aff10d698c9ca5bdbeae45250f5fe.sboyd@kernel.org>
- <7312633f-3b53-43a1-b6e3-010513c2a1e2@linaro.org>
- <ZRwQvP_GbvwvLAn8@gerhold.net>
- <CAA8EJpr9WH+MQdOJQ5yockg9TsUnDcenGbs=dq4Nt0SSBaK=0A@mail.gmail.com>
- <ZRwia2_imBfRfv7X@gerhold.net>
- <CAA8EJppK6Qm22r0RhFJS6tSc=g-bLxOwDuxLCScRxS0MiZq3sA@mail.gmail.com>
+        Tue, 3 Oct 2023 12:16:45 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E13129E;
+        Tue,  3 Oct 2023 09:16:41 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 393FdGIN018635;
+        Tue, 3 Oct 2023 16:16:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=douq6YaXrLgHHXN8AuyJXl6X3+hQetlgxqwpw4Dy7+I=;
+ b=Aqc87l97RSof+Q00WtFw4N9AF1cl8dWcklNH0bt9Kzc3vUyrVh8t+1rL6uxx/5tsP9Jv
+ 8bVHjhcYRAGEwMi2WllpeBx+wZR6oSHqXWJE9Y0QvDivCxvAJ1fqmkzUQmHr4cDo8zDR
+ vcQLNz5xZDv5raPnUM668+piC+R+aQhT/hKiey5zjOgHo2OoLoSzDUJQUUIeUq5lsyXD
+ 8PPJv2pGPBVRtnktjShRd1oP6TW6qYjlE1wL7pp3HcuVZIKUWVr4hzGVMNAhBspth9Lf
+ 7UWdGw6yYpfLPdpSknXI+F7xVaDSllXj5V7b0EIPjcI03tOFxiFTTY9mYqxpCNybJjDT aw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tgbjj9j9b-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 03 Oct 2023 16:16:29 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 393GGS5q020111
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 3 Oct 2023 16:16:28 GMT
+Received: from [10.110.20.163] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Tue, 3 Oct
+ 2023 09:16:28 -0700
+Message-ID: <6246714a-3b40-e1b6-640e-560ba55b6436@quicinc.com>
+Date:   Tue, 3 Oct 2023 09:16:27 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJppK6Qm22r0RhFJS6tSc=g-bLxOwDuxLCScRxS0MiZq3sA@mail.gmail.com>
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v4 4/4] firmware: arm_scmi: Add qcom hvc/shmem transport
+ support
+Content-Language: en-US
+To:     Sudeep Holla <sudeep.holla@arm.com>
+CC:     <cristian.marussi@arm.com>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20230718160833.36397-1-quic_nkela@quicinc.com>
+ <20230911194359.27547-1-quic_nkela@quicinc.com>
+ <20230911194359.27547-5-quic_nkela@quicinc.com>
+ <20231003111914.63z35sn3r3k7drtp@bogus>
+From:   Nikunj Kela <quic_nkela@quicinc.com>
+In-Reply-To: <20231003111914.63z35sn3r3k7drtp@bogus>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: vFVXyVfHUSut4knD7meNZuZ0yPNxnPMk
+X-Proofpoint-ORIG-GUID: vFVXyVfHUSut4knD7meNZuZ0yPNxnPMk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-03_13,2023-10-02_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
+ clxscore=1015 impostorscore=0 phishscore=0 malwarescore=0
+ priorityscore=1501 mlxlogscore=999 adultscore=0 suspectscore=0 bulkscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310030123
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 03, 2023 at 06:31:27PM +0300, Dmitry Baryshkov wrote:
-> On Tue, 3 Oct 2023 at 17:17, Stephan Gerhold <stephan@gerhold.net> wrote:
-> > On Tue, Oct 03, 2023 at 04:36:11PM +0300, Dmitry Baryshkov wrote:
-> > > On Tue, 3 Oct 2023 at 16:02, Stephan Gerhold <stephan@gerhold.net> wrote:
-> > > > On Tue, Oct 03, 2023 at 11:30:28AM +0300, Dmitry Baryshkov wrote:
-> > > > > On 28/08/2023 21:09, Stephen Boyd wrote:
-> > > > > > Quoting Dmitry Baryshkov (2023-08-27 04:50:15)
-> > > > > > > diff --git a/drivers/interconnect/icc-clk.c b/drivers/interconnect/icc-clk.c
-> > > > > > > index d787f2ea36d9..45ffb068979d 100644
-> > > > > > > --- a/drivers/interconnect/icc-clk.c
-> > > > > > > +++ b/drivers/interconnect/icc-clk.c
-> > > > > > > @@ -25,12 +28,16 @@ struct icc_clk_provider {
-> > > > > > >   static int icc_clk_set(struct icc_node *src, struct icc_node *dst)
-> > > > > > >   {
-> > > > > > >          struct icc_clk_node *qn = src->data;
-> > > > > > > +       unsigned long rate = icc_units_to_bps(src->peak_bw);
-> > > > > > >          int ret;
-> > > > > > >          if (!qn || !qn->clk)
-> > > > > > >                  return 0;
-> > > > > > > -       if (!src->peak_bw) {
-> > > > > > > +       if (qn->opp)
-> > > > > > > +               return dev_pm_opp_set_rate(qn->dev, rate);
-> > > > > >
-> > > > > > Just curious how does lockdep do with this? Doesn't OPP call into
-> > > > > > interconnect code, so lockdep will complain about ABBA?
-> > > > >
-> > > > > Unfortunately it does. It seems, the icc-clk is not a proper way to go here.
-> > > > > I will take a look at reusing set_required_opps for this case.
-> > > > >
-> > > >
-> > > > Could you elaborate a bit which locks exactly cause trouble here?
-> > > > I'm probably missing something here.
-> > > >
-> > > > From a quick look at the OPP code I don't see a global lock taken there
-> > > > for the entire OPP switch sequence, so I'm not sure how this could cause
-> > > > an ABBA deadlock.
-> > >
-> > > For example:
-> > >
-> > > [    7.680041] Chain exists of:
-> > > [    7.680041]   icc_bw_lock --> regulator_ww_class_acquire --> fs_reclaim
-> > > [    7.680041]
-> > > [    7.687955]  Possible unsafe locking scenario:
-> > > [    7.687955]
-> > > [    7.699039]        CPU0                    CPU1
-> > > [    7.704752]        ----                    ----
-> > > [    7.709266]   lock(fs_reclaim);
-> > > [    7.713779]                                lock(regulator_ww_class_acquire);
-> > > [    7.716919]                                lock(fs_reclaim);
-> > > [    7.724204]   lock(icc_bw_lock);
-> > >
-> >
-> > Hm, I'm not entirely sure how to interpret this. Is there really a
-> > connection between OPP and ICC here? It looks more like ICC <->
-> > regulator and somehow related to memory allocations (the fs_reclaim).
-> >
-> > Was there more output around this?
-> 
-> [    7.362902] ======================================================
-> [    7.363447] WARNING: possible circular locking dependency detected
-> [    7.369434] 6.6.0-rc3-next-20230929-08870-g49503b4b9f55 #129 Not tainted
-> [    7.375604] ------------------------------------------------------
-> [    7.382453] swapper/0/1 is trying to acquire lock:
-> [    7.388437] c143445c (icc_bw_lock){+.+.}-{3:3}, at: icc_init+0x0/0x104
-> [    7.393225]
-> [    7.393225] but task is already holding lock:
-> [    7.399730] c1397444 (fs_reclaim){+.+.}-{0:0}, at: icc_init+0x18/0x104
-> [    7.405547]
-> [    7.405547] which lock already depends on the new lock.
-> [    7.405547]
-> [    7.412077]
-> [    7.412077] the existing dependency chain (in reverse order) is:
-> [    7.420310]
-> [    7.420310] -> #2 (fs_reclaim){+.+.}-{0:0}:
-> [    7.427767]        fs_reclaim_acquire+0x60/0x94
-> [    7.433492]        __kmem_cache_alloc_node+0x30/0x2b4
-> [    7.437742]        __kmalloc_node_track_caller+0x48/0x244
-> [    7.442954]        kstrdup+0x30/0x58
-> [    7.448325]        create_regulator+0x70/0x2b8
-> [    7.451981]        regulator_resolve_supply+0x3bc/0x7f4
-> [    7.456234]        regulator_register+0x9b0/0xb50
-> [    7.461352]        devm_regulator_register+0x50/0x8c
-> [    7.466216]        rpm_reg_probe+0xf4/0x1a0
-> [    7.471244]        platform_probe+0x5c/0xb0
-> [    7.475157]        really_probe+0xc8/0x2d8
-> [    7.479318]        __driver_probe_device+0x88/0x1a0
-> [    7.483488]        driver_probe_device+0x30/0x108
-> [    7.488262]        __driver_attach_async_helper+0x4c/0xa0
-> [    7.493133]        async_run_entry_fn+0x24/0xb0
-> [    7.498504]        process_one_work+0x208/0x5e4
-> [    7.502844]        worker_thread+0x1e0/0x4a4
-> [    7.507356]        kthread+0x100/0x120
-> [    7.511874]        ret_from_fork+0x14/0x28
-> [    7.515428]
-> [    7.515428] -> #1 (regulator_ww_class_acquire){+.+.}-{0:0}:
-> [    7.519528]        lock_release+0x164/0x340
-> [    7.526713]        __mutex_unlock_slowpath+0x3c/0x2fc
-> [    7.530626]        regulator_lock_dependent+0x1a4/0x298
-> [    7.535839]        regulator_set_voltage+0x30/0xfc
-> [    7.540866]        krait_l2_set_one_supply+0x28/0x84
-> [    7.545729]        krait_l2_config_regulators+0x90/0x1c4
-> [    7.550851]        _set_opp+0xf0/0x438
-> [    7.556144]        dev_pm_opp_set_rate+0x118/0x224
-> [    7.559703]        icc_node_add+0xe8/0x15c
-> [    7.564474]        icc_clk_register+0x150/0x208
-> [    7.568556]        krait_l2_probe+0x100/0x114
-> [    7.572988]        platform_probe+0x5c/0xb0
-> [    7.577495]        really_probe+0xc8/0x2d8
-> [    7.581487]        __driver_probe_device+0x88/0x1a0
-> [    7.585658]        driver_probe_device+0x30/0x108
-> [    7.590433]        __device_attach_driver+0x94/0x10c
-> [    7.595300]        bus_for_each_drv+0x84/0xd8
-> [    7.600326]        __device_attach+0xac/0x1a8
-> [    7.604580]        bus_probe_device+0x8c/0x90
-> [    7.608919]        device_add+0x5c8/0x7a4
-> [    7.613265]        of_platform_device_create_pdata+0x90/0xbc
-> [    7.617260]        qcom_cpufreq_init+0xa8/0x130
-> [    7.622984]        do_one_initcall+0x68/0x2d8
-> [    7.627235]        kernel_init_freeable+0x1ac/0x208
-> [    7.631752]        kernel_init+0x18/0x12c
-> [    7.636441]        ret_from_fork+0x14/0x28
-> [    7.640602]
-> [    7.640602] -> #0 (icc_bw_lock){+.+.}-{3:3}:
-> [    7.644607]        __lock_acquire+0x1530/0x28fc
-> [    7.650413]        lock_acquire+0x10c/0x33c
-> [    7.654757]        icc_init+0x40/0x104
-> [    7.658917]        do_one_initcall+0x68/0x2d8
-> [    7.662740]        kernel_init_freeable+0x1ac/0x208
-> [    7.667168]        kernel_init+0x18/0x12c
-> [    7.671855]        ret_from_fork+0x14/0x28
-> [    7.676018]
-> [    7.676018] other info that might help us debug this:
-> [    7.676018]
-> [    7.680041] Chain exists of:
-> [    7.680041]   icc_bw_lock --> regulator_ww_class_acquire --> fs_reclaim
-> [    7.680041]
-> [    7.687955]  Possible unsafe locking scenario:
-> [    7.687955]
-> [    7.699039]        CPU0                    CPU1
-> [    7.704752]        ----                    ----
-> [    7.709266]   lock(fs_reclaim);
-> [    7.713779]                                lock(regulator_ww_class_acquire);
-> [    7.716919]                                lock(fs_reclaim);
-> [    7.724204]   lock(icc_bw_lock);
-> [    7.729833]
-> [    7.729833]  *** DEADLOCK ***
-> [    7.729833]
-> [    7.733071] 1 lock held by swapper/0/1:
-> [    7.738691]  #0: c1397444 (fs_reclaim){+.+.}-{0:0}, at: icc_init+0x18/0x104
-> [    7.742528]
-> [    7.742528] stack backtrace:
-> [    7.749463] CPU: 3 PID: 1 Comm: swapper/0 Not tainted
-> 6.6.0-rc3-next-20230929-08870-g49503b4b9f55 #129
-> [    7.754010] Hardware name: Generic DT based system
-> [    7.763183]  unwind_backtrace from show_stack+0x10/0x14
-> [    7.767957]  show_stack from dump_stack_lvl+0x60/0x90
-> [    7.773082]  dump_stack_lvl from check_noncircular+0x174/0x18c
-> [    7.778288]  check_noncircular from __lock_acquire+0x1530/0x28fc
-> [    7.784018]  __lock_acquire from lock_acquire+0x10c/0x33c
-> [    7.790178]  lock_acquire from icc_init+0x40/0x104
-> [    7.795475]  icc_init from do_one_initcall+0x68/0x2d8
-> [    7.800159]  do_one_initcall from kernel_init_freeable+0x1ac/0x208
-> [    7.805286]  kernel_init_freeable from kernel_init+0x18/0x12c
-> [    7.811361]  kernel_init from ret_from_fork+0x14/0x28
-> [    7.817177] Exception stack(0xf081dfb0 to 0xf081dff8)
-> 
 
-Thanks! I assume you haven't noticed an actual deadlock (i.e. cpufreq
-not progressing) without lockdep?
+On 10/3/2023 4:19 AM, Sudeep Holla wrote:
+> On Mon, Sep 11, 2023 at 12:43:59PM -0700, Nikunj Kela wrote:
+>> This change adds the support for SCMI message exchange on Qualcomm
+>> virtual platforms.
+>>
+>> The hypervisor associates an object-id also known as capability-id
+>> with each hvc doorbell object. The capability-id is used to identify the
+>> doorbell from the VM's capability namespace, similar to a file-descriptor.
+>>
+>> The hypervisor, in addition to the function-id, expects the capability-id
+>> to be passed in x1 register when HVC call is invoked.
+>>
+>> The function-id & capability-id are allocated by the hypervisor on bootup
+>> and are stored in the shmem region by the firmware before starting Linux.
+>>
+>> Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
+>> ---
+>>   drivers/firmware/arm_scmi/driver.c |  1 +
+>>   drivers/firmware/arm_scmi/smc.c    | 47 ++++++++++++++++++++++++++----
+>>   2 files changed, 43 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
+>> index 87383c05424b..ea344bc6ae49 100644
+>> --- a/drivers/firmware/arm_scmi/driver.c
+>> +++ b/drivers/firmware/arm_scmi/driver.c
+>> @@ -2915,6 +2915,7 @@ static const struct of_device_id scmi_of_match[] = {
+>>   #ifdef CONFIG_ARM_SCMI_TRANSPORT_SMC
+>>   	{ .compatible = "arm,scmi-smc", .data = &scmi_smc_desc},
+>>   	{ .compatible = "arm,scmi-smc-param", .data = &scmi_smc_desc},
+>> +	{ .compatible = "qcom,scmi-hvc-shmem", .data = &scmi_smc_desc},
+>>   #endif
+>>   #ifdef CONFIG_ARM_SCMI_TRANSPORT_VIRTIO
+>>   	{ .compatible = "arm,scmi-virtio", .data = &scmi_virtio_desc},
+>> diff --git a/drivers/firmware/arm_scmi/smc.c b/drivers/firmware/arm_scmi/smc.c
+>> index 0a0b7e401159..94ec07fdc14a 100644
+>> --- a/drivers/firmware/arm_scmi/smc.c
+>> +++ b/drivers/firmware/arm_scmi/smc.c
+>> @@ -50,6 +50,9 @@
+>>    * @func_id: smc/hvc call function id
+>>    * @param_page: 4K page number of the shmem channel
+>>    * @param_offset: Offset within the 4K page of the shmem channel
+>> + * @cap_id: hvc doorbell's capability id to be used on Qualcomm virtual
+>> + *	    platforms
+>> + * @qcom_xport: Flag to indicate the transport on Qualcomm virtual platforms
+>>    */
+>>   
+>>   struct scmi_smc {
+>> @@ -63,6 +66,8 @@ struct scmi_smc {
+>>   	u32 func_id;
+>>   	u32 param_page;
+>>   	u32 param_offset;
+>> +	u64 cap_id;
+> Can it be unsigned long instead so that it just works for both 32 and 64 bit.
 
-FWIW I'm not fully convinced that this deadlock can actually happen in
-practice for your particular limited use case (i.e. that it is not a
-false positive).
+My first version of this patch was ulong but Bjorn suggested to make 
+this structure size fixed i.e. architecture independent. Hence changed 
+it to u64. If you are ok with ulong, I can change it back to ulong.
 
-> > In general, I would expect that adjusting a regulator from an
-> > interconnect driver should be made possible somehow. Just because the
-> > RPM firmware or similar typically handles this internally on Qualcomm
-> > platforms doesn't mean no one else will ever need to do this. If you
-> > have a higher bandwidth requests, need to increase the clock, which
-> > again depends on a higher voltage, then you need to be able to do the
-> > regulator_set_voltage() from the ICC driver somehow.
-> 
-> This kind of dependency is handled by the consumer, not by the ICC
-> driver. Usually we explicitly put them to the opp tables, matching
-> rates and volage.
-> 
 
-Right, but I'm talking about the voltage requirements of the aggregated
-bus clock. The rate for that is calculated from the different bandwidth
-requirements from all the consumers and not just a single one. From the
-kernel perspective, the interconnect driver is the consumer of that
-clock. On Qualcomm SMD RPM platforms the voltage adjustment for those is
-handled behind the scenes by the RPM firmware (no idea about RPMH and
-RPM-old).
+>
+>> +	bool qcom_xport;
+> Do we really need this ?
 
-But one could easily think of a (non-Qualcomm) SoC without RPM, where
-the interconnect driver calculates a particular bus rate for multiple
-consumers and then needs to vote for a power domain or regulator to be
-able to generate that clock safely.
+Not if we initialize it with a negative value since 0 is a valid value 
+for cap-id.
 
-> I think I'll still check the required-opps approach. It will require
-> manually aggregating the L2 rate requirements, but then we will be
-> safe from such kinds of interdependencies. And maybe then we can also
-> rewrite msm8996 to use required-opps too.
-> 
 
-Sure, thanks! I think at the moment the required-opps implementation is
-somewhat entangled with power domains/genpd but perhaps it's easy enough
-to refactor that to be more general.
+>
+>>   };
+>>   
+>>   static irqreturn_t smc_msg_done_isr(int irq, void *data)
+>> @@ -129,6 +134,7 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
+>>   	struct resource res;
+>>   	struct device_node *np;
+>>   	u32 func_id;
+>> +	u64 cap_id;
+> Ditto..
 
-Thanks,
-Stephan
+Answered in earlier comment.
+
+
+>>   	int ret;
+>>   
+>>   	if (!tx)
+>> @@ -158,9 +164,34 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
+>>   		return -EADDRNOTAVAIL;
+>>   	}
+>>   
+>> -	ret = of_property_read_u32(dev->of_node, "arm,smc-id", &func_id);
+>> -	if (ret < 0)
+>> -		return ret;
+>> +	if (of_device_is_compatible(dev->of_node, "qcom,scmi-hvc-shmem")) {
+>> +		scmi_info->qcom_xport = true;
+>> +
+>> +		/* The func-id & capability-id are kept in last 16 bytes of shmem.
+>> +		 *     +-------+
+>> +		 *     |       |
+>> +		 *     | shmem |
+>> +		 *     |       |
+>> +		 *     |       |
+>> +		 *     +-------+ <-- (size - 16)
+>> +		 *     | funcId|
+>> +		 *     +-------+ <-- (size - 8)
+>> +		 *     | capId |
+>> +		 *     +-------+ <-- size
+>> +		 */
+>> +
+>> +		func_id = readl((void __iomem *)(scmi_info->shmem) + size - 16);
+> So unlike 'arm,scmi-smc', you don't want 'arm,smc-id' in the DT ? Any
+> particular reason ? Just to get both FID and cap ID from shmem ?
+
+I could use smc-id binding for func-id, it's just two parameters will 
+come from two different places so thought of keeping everything at one 
+place to maintain consistency.  Since DT can't take cap-id, I decided to 
+move func-id. I am fine if you want me to use smc-id binding.
+
+
+>> +#ifdef CONFIG_ARM64
+> I would rather make this arch agnostic using CONFIG_64BIT
+ok.
+>
+>> +		cap_id = readq((void __iomem *)(scmi_info->shmem) + size - 8);
+> Do you need __iomem typecast here ? Is scmi_info->shmem not already __iomem ?
+> Also scmi_info->shmem is ioremapped just few steps above and you are using
+> read* here, is that safe ?
+
+I saw some compilation warnings without __iomem. I will use ioread* API 
+instead of read*.
+
+
+>
+>> +#else
+>> +		/* capability-id is 32 bit wide on 32bit machines */
+>> +		cap_id = rieadl((void __iomem *)(scmi_info->shmem) + size - 8);
+> Other thought once you move for u64 to unsigned long you need not have
+> #ifdeffery, just do copy of sizeof(unsigned long)
+Right, my first version was like that only.
+>
+>> +#endif
+>> +	} else {
+>> +		ret = of_property_read_u32(dev->of_node, "arm,smc-id", &func_id);
+>> +		if (ret < 0)
+>> +			return ret;
+>> +	}
+>>   
+>>   	if (of_device_is_compatible(dev->of_node, "arm,scmi-smc-param")) {
+>>   		scmi_info->param_page = SHMEM_PAGE(res.start);
+>> @@ -184,6 +215,7 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
+>>   	}
+>>   
+>>   	scmi_info->func_id = func_id;
+>> +	scmi_info->cap_id = cap_id;
+>>   	scmi_info->cinfo = cinfo;
+>>   	smc_channel_lock_init(scmi_info);
+>>   	cinfo->transport_info = scmi_info;
+>> @@ -213,6 +245,7 @@ static int smc_send_message(struct scmi_chan_info *cinfo,
+>>   	struct arm_smccc_res res;
+>>   	unsigned long page = scmi_info->param_page;
+>>   	unsigned long offset = scmi_info->param_offset;
+>> +	unsigned long cap_id = (unsigned long)scmi_info->cap_id;
+>>   
+>>   	/*
+>>   	 * Channel will be released only once response has been
+>> @@ -222,8 +255,12 @@ static int smc_send_message(struct scmi_chan_info *cinfo,
+>>   
+>>   	shmem_tx_prepare(scmi_info->shmem, xfer, cinfo);
+>>   
+>> -	arm_smccc_1_1_invoke(scmi_info->func_id, page, offset, 0, 0, 0, 0, 0,
+>> -			     &res);
+>> +	if (scmi_info->qcom_xport)
+> Just make sure cap_id is set only for qcom and just use that as your flag.
+> No point in setting always true scmi_info->qcom_xport and using it here.
+ok, I can remove that. Though 0 is a valid value for cap-id so will have 
+to init cap-id with a negative value.
+>
+>> +		arm_smccc_1_1_hvc(scmi_info->func_id, cap_id, 0, 0, 0, 0, 0, 0,
+>> +				  &res);
+>> +	else
+>> +		arm_smccc_1_1_invoke(scmi_info->func_id, page, offset, 0, 0, 0,
+>> +				     0, 0, &res);
+>>   
+>>   	/* Only SMCCC_RET_NOT_SUPPORTED is valid error code */
+>>   	if (res.a0) {
+>> -- 
+>> 2.17.1
+>>
