@@ -2,123 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3BC7D7B7846
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Oct 2023 08:59:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 099147B7875
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Oct 2023 09:13:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241453AbjJDG7t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Oct 2023 02:59:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55618 "EHLO
+        id S241372AbjJDHNr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Oct 2023 03:13:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237746AbjJDG7s (ORCPT
+        with ESMTP id S241375AbjJDHNq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Oct 2023 02:59:48 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E6D1AF
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 23:59:45 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-98377c5d53eso309797866b.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 23:59:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696402784; x=1697007584; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=thrSc5rKrJp9MHTbS/L/Xu/dKYxXxvLXx/M6k3LPsYU=;
-        b=WwQuYQTGL+P6HFEZxdds0eUXOPjRhqptY1XYGtuoYUPsQsKiM9/SebBRehwNZf4x6Q
-         NdPGaVfKUfLMFZx8tbxZMenuJ2sjG1VybhfyFKmGPUn+ha3mPS68pOmqsfmMt2bQM0Qg
-         EfHfkIpO5p05oHz6YOI4KZNYNtVrICyhGQOLk5jiu8mGkGzvfy78yuosv2IAQV27n0sx
-         PKr8znnA80/2PsdE7yY3548WH5ZOHCWVzlJvvYfjIEYN1ZVuwzbS8hLwrcZauoCwINT/
-         UOenckgZi4P/CYfEAlCmVw0fGk40iFjMMsXmttw8SY3XcgdZ9RtBaxRCkLFbKmxw+SoM
-         iDWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696402784; x=1697007584;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=thrSc5rKrJp9MHTbS/L/Xu/dKYxXxvLXx/M6k3LPsYU=;
-        b=Mj0aboOt7o+Oot0N+QV0BJv+5YujIlq8/dre+IRICbI5qNuhrthbhrzkx6jCvd47Ir
-         MDWYVj5G2/8j9wYHG7btUplE6hAPlbdADnY4ZBdECH4TotL0dbUqSkm0Y7YzPpqn3zwD
-         r0k3mtTyVrqq3Gtd7psnDaksXbzgaW6lXMDOgZh714DNHpU0qUJbBlE1T+VanH61h2yl
-         AC9snI0Z7AU2C7Pxbsp9Fs6AgiJzoFshP8BOo7clWKtnWZlPy3McUBHefl5iezbVYLfS
-         REnaSnFaqjpP+0HHU/k63nRAulJ/Nn6HKKzmoYh0nQWzofZXw00EUYJm5fKgOuC5gVZC
-         3DaA==
-X-Gm-Message-State: AOJu0YybmLGJJKDib7zR9oE31XGH7OVakj3rJ3tmK3Nb0M4/4ntWqljS
-        LIRIB2OBi7Pm8J5qJGS/4vvl0w==
-X-Google-Smtp-Source: AGHT+IGfIY0O71410pxZ9HzYqgSmZTnCmsDyWFAtPGIDwsnSL1OkI/mbzdGJH0K5EVZ3WLZsVuTAgQ==
-X-Received: by 2002:a17:907:75cf:b0:9a1:b144:30f0 with SMTP id jl15-20020a17090775cf00b009a1b14430f0mr1070360ejc.53.1696402783629;
-        Tue, 03 Oct 2023 23:59:43 -0700 (PDT)
-Received: from [192.168.1.197] (5-157-101-10.dyn.eolo.it. [5.157.101.10])
-        by smtp.gmail.com with ESMTPSA id j11-20020a170906410b00b00982a92a849asm2239079ejk.91.2023.10.03.23.59.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Oct 2023 23:59:43 -0700 (PDT)
-Message-ID: <b56d9d8f-c893-46b9-9f1c-bdcd50c63209@linaro.org>
-Date:   Wed, 4 Oct 2023 08:59:41 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/6] dt-bindings: PCI: qcom: Add IPQ5108 SoC
-Content-Language: en-US
-To:     Nitheesh Sekar <quic_nsekar@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
-        bhelgaas@google.com, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, vkoul@kernel.org, kishon@kernel.org,
-        mani@kernel.org, p.zabel@pengutronix.de, quic_srichara@quicinc.com,
-        quic_varada@quicinc.com, quic_ipkumar@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        Wed, 4 Oct 2023 03:13:46 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E03DCB7;
+        Wed,  4 Oct 2023 00:13:41 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 867FDC433C7;
+        Wed,  4 Oct 2023 07:13:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1696403621;
+        bh=slTWOyAU1ZBbYv/JtLRY8Y7iFRGILVvZKFfcQRK6mjU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=SFB/MuUtKtRQlI+MlBjIu76Wg/9CWWZCq098e2vitg2omxQz5qn3UE4ZUrfY/35FJ
+         LgF6gT4VCSaymC9cZ3j5PiHnPcupI0nL5LsWb4ycLcNyWEnA3FRjfSbwJColtsvO6v
+         0oHI5TYuwd1LWmKvmbejzDOwSMmCL9SFFV0Cdqx0QOMnUEvJJgQ9whChh1wSWFS25Y
+         uRNbhcglC2j8bl5Us4pWA9bNRDvB6vY21MAhpb2SDFkmYRVo652LB4Zo5VsU3G6YVJ
+         zWjeHW41UsSiqFrg05HBCBakP6j2GrLMk5iZdDvAGoiT2uaCfkYzy6DEZgl2Mu9CLp
+         OZwc0e/sikbFw==
+Date:   Wed, 4 Oct 2023 12:43:37 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S. Miller" <davem@davemloft.net>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org
-References: <20231003120846.28626-1-quic_nsekar@quicinc.com>
- <20231003120846.28626-3-quic_nsekar@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231003120846.28626-3-quic_nsekar@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        Om Prakash Singh <quic_omprsing@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>
+Subject: Re: [PATCH v4 0/5] arm64: qcom: sm8x50: enable RNG
+Message-ID: <ZR0QoUiVPJP8WXJY@matsya>
+References: <20231003-topic-sm8550-rng-v4-0-255e4d0ba08e@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231003-topic-sm8550-rng-v4-0-255e4d0ba08e@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -126,30 +60,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/10/2023 14:08, Nitheesh Sekar wrote:
-> Add support for the PCIe controller on the Qualcomm
-> IPQ5108 SoC to the bindings.
+On 03-10-23, 09:10, Neil Armstrong wrote:
+> Enable RNG on SM8550 & SM8450 by reverting the PRNG bindings & DT
+> for SM8450 and correctly document it as a True Random Number Generator.
 > 
+> - SM8550 QRD test run:
+> 
+> smccc_trng qcom_hwrng 
+> 
+> qcom_hwrng
+> 
+> rngtest 6.15
+> Copyright (c) 2004 by Henrique de Moraes Holschuh
+> This is free software; see the source for copying conditions.  There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+> 
+> rngtest: starting FIPS tests...
+> rngtest: bits received from input: 209420032
+> rngtest: FIPS 140-2 successes: 10461
+> rngtest: FIPS 140-2 failures: 10
+> rngtest: FIPS 140-2(2001-10-10) Monobit: 1
+> rngtest: FIPS 140-2(2001-10-10) Poker: 2
+> rngtest: FIPS 140-2(2001-10-10) Runs: 3
+> rngtest: FIPS 140-2(2001-10-10) Long run: 4
+> rngtest: FIPS 140-2(2001-10-10) Continuous run: 0
+> rngtest: input channel speed: (min=9.219; avg=63.879; max=19073.486)Mibits/s
+> rngtest: FIPS tests speed: (min=24.965; avg=29.093; max=118.469)Mibits/s
+> rngtest: Program run time: 10002827 microseconds
+> 
+> - SM8450 HDK test run:
+> 
+> qcom_hwrng
+> 
+> rngtest 6.15
+> Copyright (c) 2004 by Henrique de Moraes Holschuh
+> This is free software; see the source for copying conditions.  There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+> 
+> rngtest: starting FIPS tests...
+> rngtest: bits received from input: 420580032
+> rngtest: FIPS 140-2 successes: 21014
+> rngtest: FIPS 140-2 failures: 15
+> rngtest: FIPS 140-2(2001-10-10) Monobit: 2
+> rngtest: FIPS 140-2(2001-10-10) Poker: 0
+> rngtest: FIPS 140-2(2001-10-10) Runs: 7
+> rngtest: FIPS 140-2(2001-10-10) Long run: 6
+> rngtest: FIPS 140-2(2001-10-10) Continuous run: 0
+> rngtest: input channel speed: (min=15.711; avg=50.033; max=32.493)Mibits/s
+> rngtest: FIPS tests speed: (min=136.239; avg=203.833; max=227.065)Mibits/s
+> rngtest: Program run time: 10000978 microseconds
 
+Acked-by: Vinod Koul <vkoul@kernel.org>
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
----
-
-This is an automated instruction, just in case, because many review tags
-are being ignored. If you know the process, you can skip it (please do
-not feel offended by me posting it here - no bad intentions intended).
-If you do not know the process, here is a short explanation:
-
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions, under or above your Signed-off-by tag. Tag is "received", when
-provided in a message replied to you on the mailing list. Tools like b4
-can help here. However, there's no need to repost patches *only* to add
-the tags. The upstream maintainer will do that for tags received on the
-version they apply.
-
-https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
-
-Best regards,
-Krzysztof
-
+-- 
+~Vinod
