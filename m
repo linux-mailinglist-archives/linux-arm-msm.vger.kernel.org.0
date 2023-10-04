@@ -2,47 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E0367B847D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Oct 2023 18:06:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9526D7B84AD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Oct 2023 18:12:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243027AbjJDQGj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Oct 2023 12:06:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43316 "EHLO
+        id S233853AbjJDQME (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Oct 2023 12:12:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233451AbjJDQGi (ORCPT
+        with ESMTP id S243313AbjJDQMA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Oct 2023 12:06:38 -0400
+        Wed, 4 Oct 2023 12:12:00 -0400
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id ADE3EC9;
-        Wed,  4 Oct 2023 09:06:34 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id E08141703;
+        Wed,  4 Oct 2023 09:11:44 -0700 (PDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 11DB2C15;
-        Wed,  4 Oct 2023 09:07:13 -0700 (PDT)
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id EA334C15;
+        Wed,  4 Oct 2023 09:12:22 -0700 (PDT)
 Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id E57103F762;
-        Wed,  4 Oct 2023 09:06:32 -0700 (PDT)
-Date:   Wed, 4 Oct 2023 17:06:30 +0100
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id AB2543F762;
+        Wed,  4 Oct 2023 09:11:42 -0700 (PDT)
+Date:   Wed, 4 Oct 2023 17:11:40 +0100
 From:   Sudeep Holla <sudeep.holla@arm.com>
 To:     Nikunj Kela <quic_nkela@quicinc.com>
 Cc:     cristian.marussi@arm.com, robh+dt@kernel.org,
         Sudeep Holla <sudeep.holla@arm.com>,
+        Brian Masney <bmasney@redhat.com>,
         krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
         andersson@kernel.org, konrad.dybcio@linaro.org,
         linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 4/4] firmware: arm_scmi: Add qcom hvc/shmem transport
- support
-Message-ID: <20231004160630.pxspafszlt6o7oj6@bogus>
+Subject: Re: [PATCH v4 1/4] firmware: arm_scmi: Add polling support for
+ completion in smc
+Message-ID: <20231004161140.uzqb4eapyo6gd7xm@bogus>
 References: <20230718160833.36397-1-quic_nkela@quicinc.com>
  <20230911194359.27547-1-quic_nkela@quicinc.com>
- <20230911194359.27547-5-quic_nkela@quicinc.com>
- <20231003111914.63z35sn3r3k7drtp@bogus>
- <6246714a-3b40-e1b6-640e-560ba55b6436@quicinc.com>
+ <20230911194359.27547-2-quic_nkela@quicinc.com>
+ <20231003103317.pjfmf6uisahowmom@bogus>
+ <1c58a05b-1337-0287-225f-5a73b4c6828e@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6246714a-3b40-e1b6-640e-560ba55b6436@quicinc.com>
+In-Reply-To: <1c58a05b-1337-0287-225f-5a73b4c6828e@quicinc.com>
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
         autolearn_force=no version=3.4.6
@@ -52,186 +52,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 03, 2023 at 09:16:27AM -0700, Nikunj Kela wrote:
+On Tue, Oct 03, 2023 at 08:53:20AM -0700, Nikunj Kela wrote:
 > 
-> On 10/3/2023 4:19 AM, Sudeep Holla wrote:
-> > On Mon, Sep 11, 2023 at 12:43:59PM -0700, Nikunj Kela wrote:
-> > > This change adds the support for SCMI message exchange on Qualcomm
-> > > virtual platforms.
+> On 10/3/2023 3:33 AM, Sudeep Holla wrote:
+> > On Mon, Sep 11, 2023 at 12:43:56PM -0700, Nikunj Kela wrote:
+> > > Currently, the return from the smc call assumes the completion of
+> > > the scmi request. However this may not be true in virtual platforms
+> > > that are using hvc doorbell.
 > > > 
-> > > The hypervisor associates an object-id also known as capability-id
-> > > with each hvc doorbell object. The capability-id is used to identify the
-> > > doorbell from the VM's capability namespace, similar to a file-descriptor.
-> > > 
-> > > The hypervisor, in addition to the function-id, expects the capability-id
-> > > to be passed in x1 register when HVC call is invoked.
-> > > 
-> > > The function-id & capability-id are allocated by the hypervisor on bootup
-> > > and are stored in the shmem region by the firmware before starting Linux.
-> > > 
-> > > Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
-> > > ---
-> > >   drivers/firmware/arm_scmi/driver.c |  1 +
-> > >   drivers/firmware/arm_scmi/smc.c    | 47 ++++++++++++++++++++++++++----
-> > >   2 files changed, 43 insertions(+), 5 deletions(-)
-> > > 
-> > > diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-> > > index 87383c05424b..ea344bc6ae49 100644
-> > > --- a/drivers/firmware/arm_scmi/driver.c
-> > > +++ b/drivers/firmware/arm_scmi/driver.c
-> > > @@ -2915,6 +2915,7 @@ static const struct of_device_id scmi_of_match[] = {
-> > >   #ifdef CONFIG_ARM_SCMI_TRANSPORT_SMC
-> > >   	{ .compatible = "arm,scmi-smc", .data = &scmi_smc_desc},
-> > >   	{ .compatible = "arm,scmi-smc-param", .data = &scmi_smc_desc},
-> > > +	{ .compatible = "qcom,scmi-hvc-shmem", .data = &scmi_smc_desc},
-> > >   #endif
-> > >   #ifdef CONFIG_ARM_SCMI_TRANSPORT_VIRTIO
-> > >   	{ .compatible = "arm,scmi-virtio", .data = &scmi_virtio_desc},
-> > > diff --git a/drivers/firmware/arm_scmi/smc.c b/drivers/firmware/arm_scmi/smc.c
-> > > index 0a0b7e401159..94ec07fdc14a 100644
-> > > --- a/drivers/firmware/arm_scmi/smc.c
-> > > +++ b/drivers/firmware/arm_scmi/smc.c
-> > > @@ -50,6 +50,9 @@
-> > >    * @func_id: smc/hvc call function id
-> > >    * @param_page: 4K page number of the shmem channel
-> > >    * @param_offset: Offset within the 4K page of the shmem channel
-> > > + * @cap_id: hvc doorbell's capability id to be used on Qualcomm virtual
-> > > + *	    platforms
-> > > + * @qcom_xport: Flag to indicate the transport on Qualcomm virtual platforms
-> > >    */
-> > >   struct scmi_smc {
-> > > @@ -63,6 +66,8 @@ struct scmi_smc {
-> > >   	u32 func_id;
-> > >   	u32 param_page;
-> > >   	u32 param_offset;
-> > > +	u64 cap_id;
-> > Can it be unsigned long instead so that it just works for both 32 and 64 bit.
-> 
-> My first version of this patch was ulong but Bjorn suggested to make this
-> structure size fixed i.e. architecture independent. Hence changed it to u64.
-> If you are ok with ulong, I can change it back to ulong.
->
-
-SMCCC pre-v1.2 used the common structure in that way. I don't see any issue
-with that. I haven't followed Bjorn suggestions/comments though.
-
-> 
+> > Hmm, it is expectation from SMCCC for the fast calls. Is you HVC FID
+> > not a fast call. AFAIK, only TOS use yielding calls. Are you using them
+> > here ? If not, this must complete when the SMC/HVC returns. We added
+> > support for platforms indicating the same via interrupt.
 > > 
-> > > +	bool qcom_xport;
-> > Do we really need this ?
-> 
-> Not if we initialize it with a negative value since 0 is a valid value for
-> cap-id.
->
-
-Fine with negative value(-EINVAL may be).
-
-> > >   	int ret;
-> > >   	if (!tx)
-> > > @@ -158,9 +164,34 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
-> > >   		return -EADDRNOTAVAIL;
-> > >   	}
-> > > -	ret = of_property_read_u32(dev->of_node, "arm,smc-id", &func_id);
-> > > -	if (ret < 0)
-> > > -		return ret;
-> > > +	if (of_device_is_compatible(dev->of_node, "qcom,scmi-hvc-shmem")) {
-> > > +		scmi_info->qcom_xport = true;
-> > > +
-> > > +		/* The func-id & capability-id are kept in last 16 bytes of shmem.
-> > > +		 *     +-------+
-> > > +		 *     |       |
-> > > +		 *     | shmem |
-> > > +		 *     |       |
-> > > +		 *     |       |
-> > > +		 *     +-------+ <-- (size - 16)
-> > > +		 *     | funcId|
-> > > +		 *     +-------+ <-- (size - 8)
-> > > +		 *     | capId |
-> > > +		 *     +-------+ <-- size
-> > > +		 */
-> > > +
-> > > +		func_id = readl((void __iomem *)(scmi_info->shmem) + size - 16);
-> > So unlike 'arm,scmi-smc', you don't want 'arm,smc-id' in the DT ? Any
-> > particular reason ? Just to get both FID and cap ID from shmem ?
->
-
-I am fine either way. If you use from DT(via arm,smc-id), then "qcom,scmi"
-can be just addition compatible that expects you to read cap-id from the
-shmem. May need adjustment in the binding as you allow both
-"qcom,scmi-smc", "arm,scmi-smc". I will leave the details to you.
-
-> I could use smc-id binding for func-id, it's just two parameters will come
-> from two different places so thought of keeping everything at one place to
-> maintain consistency.  Since DT can't take cap-id, I decided to move
-> func-id. I am fine if you want me to use smc-id binding.
->
-
-Up to you. If you want to make "qcom,scmi-smc" and "arm,scmi-smc"
-compatible in way in that way or you can keep it incompatible as you have
-proposed in this patch set.
-
-> 
-> > > +#ifdef CONFIG_ARM64
-> > I would rather make this arch agnostic using CONFIG_64BIT
-> ok.
+> > I would like to avoid adding this build config. Why does it require polling ?
+> > Broken firmware ? I would add a compatible for that. Or if the qcom always
+> > wants to do this way, just make it specific to the qcom compatible.
 > > 
-> > > +		cap_id = readq((void __iomem *)(scmi_info->shmem) + size - 8);
-> > Do you need __iomem typecast here ? Is scmi_info->shmem not already __iomem ?
-> > Also scmi_info->shmem is ioremapped just few steps above and you are using
-> > read* here, is that safe ?
-> 
-> I saw some compilation warnings without __iomem. I will use ioread* API
-> instead of read*.
->
-
-That was the clue that you were using __iomem with read* calls IMO.
-
-> 
+> > I would avoid a config flag as it needs to be always enabled for single
+> > image and affects other platforms as well. So please drop this change.
+> > If this is absolutely needed, just add additional property which DT
+> > maintainers may not like as it is more like a policy or just make it
+> > compatible specific.
 > > 
-> > > +#else
-> > > +		/* capability-id is 32 bit wide on 32bit machines */
-> > > +		cap_id = rieadl((void __iomem *)(scmi_info->shmem) + size - 8);
-> > Other thought once you move for u64 to unsigned long you need not have
-> > #ifdeffery, just do copy of sizeof(unsigned long)
-> Right, my first version was like that only.
+> > --
+> > Regards,
+> > Sudeep
+> We are using Fast call FID. We are using completion IRQ for all the scmi
+> instances except one where we need to communicate with the server when GIC
+> is in suspended state in HLOS. We will need to poll the channel for
+> completion in that use case. I am open to suggestions.
 
-OK
+IIUC, for the sake of that one corner case, you have added the polling
+Kconfig and will be enabled for all the case and even on other platforms
+in a single Image. I think we could be something better, no ?
 
-> > 
-> > > +#endif
-> > > +	} else {
-> > > +		ret = of_property_read_u32(dev->of_node, "arm,smc-id", &func_id);
-> > > +		if (ret < 0)
-> > > +			return ret;
-> > > +	}
-> > >   	if (of_device_is_compatible(dev->of_node, "arm,scmi-smc-param")) {
-> > >   		scmi_info->param_page = SHMEM_PAGE(res.start);
-> > > @@ -184,6 +215,7 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
-> > >   	}
-> > >   	scmi_info->func_id = func_id;
-> > > +	scmi_info->cap_id = cap_id;
-> > >   	scmi_info->cinfo = cinfo;
-> > >   	smc_channel_lock_init(scmi_info);
-> > >   	cinfo->transport_info = scmi_info;
-> > > @@ -213,6 +245,7 @@ static int smc_send_message(struct scmi_chan_info *cinfo,
-> > >   	struct arm_smccc_res res;
-> > >   	unsigned long page = scmi_info->param_page;
-> > >   	unsigned long offset = scmi_info->param_offset;
-> > > +	unsigned long cap_id = (unsigned long)scmi_info->cap_id;
-> > >   	/*
-> > >   	 * Channel will be released only once response has been
-> > > @@ -222,8 +255,12 @@ static int smc_send_message(struct scmi_chan_info *cinfo,
-> > >   	shmem_tx_prepare(scmi_info->shmem, xfer, cinfo);
-> > > -	arm_smccc_1_1_invoke(scmi_info->func_id, page, offset, 0, 0, 0, 0, 0,
-> > > -			     &res);
-> > > +	if (scmi_info->qcom_xport)
-> > Just make sure cap_id is set only for qcom and just use that as your flag.
-> > No point in setting always true scmi_info->qcom_xport and using it here.
-> ok, I can remove that. Though 0 is a valid value for cap-id so will have to
-> init cap-id with a negative value.
+Please share details on that one corner case.
+Is it in the scmi drivers already ? If so, specifics please.
+If no, again provide details on how you plan to use. We do have ways
+to make a polling call, but haven't mixed it with interrupt based calls
+for a reason, but we can revisit if it makes sense.
 
-Yes as mentioned above.
-
--- 
+--
 Regards,
 Sudeep
