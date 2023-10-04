@@ -2,189 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FC1C7B77C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Oct 2023 08:25:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C4B87B782C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Oct 2023 08:53:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241298AbjJDGZh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Oct 2023 02:25:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59574 "EHLO
+        id S232775AbjJDGxX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Oct 2023 02:53:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231894AbjJDGZg (ORCPT
+        with ESMTP id S232744AbjJDGxW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Oct 2023 02:25:36 -0400
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07EB5B7
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 23:25:32 -0700 (PDT)
-Received: by mail-pf1-x42e.google.com with SMTP id d2e1a72fcca58-6907e44665bso1353002b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 23:25:31 -0700 (PDT)
+        Wed, 4 Oct 2023 02:53:22 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84B38AD
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 23:53:19 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-9b2a3fd5764so307757766b.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 23:53:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696400731; x=1697005531; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=f0giunb9BhnZYuBT/MmDlnRVSxHXgyke+1Gd+H5zheI=;
-        b=qwOPWgC7ZX8ZZ6Za/SHn7TEjABBj52petaMyVmRZ5nOkr+Kn0U+CZNNMJf/eJq/TnG
-         uhKLX7F1xVhoC4IYzfRPj0/BZnelmiK2M6cJeHumqG+2Y06DdEPlmfd65Q17CKuDVZks
-         58nOOFx82aYKFpo9FXa/qHEh3/xUON6bgEByLh7+kD2fPCFLqOrCZa17c69r6R+6F8Ml
-         foXwRVtkn6Lx/KeI3VMftvX7eszgIcTeynyXmwXMb/A7uhAQcu0eUH9quzGGw6Wjv6+m
-         T20TQAlhWYJ0DHEKxkFSIIWv8VUT0Z9n74fwii6BrgUCV3iwt5up51rQiqn3RFyUGXSh
-         R/1A==
+        d=linaro.org; s=google; t=1696402398; x=1697007198; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6saMWO7TgNokXNDXrhUb1HLu6N9s90/jr2fFq1LcqJU=;
+        b=QDVqd3Z+iYPh1jP4J+0GNMrvUHcilkMedXvRTRQjyYRgA9sfME+Ty0nzdJl/NmqEVg
+         rJTRQ6vhjToVZikvSjhSbnHDYW+E/XcDCrVOIevIsno/9KwxrJh4TH/xgQ0Knif/CXJt
+         k5H9xMzjx5aHiMWUylTgz9zqSwOE99+3IuunoQzsIHIHeywPLH3o/Hb3CUis+hhmkkrV
+         hPwmmwRmbbEYv1HOQDCzj4B0AsvPS3xzmqe59JV6u+rLML4Xs1tjNZ8Ux1JAWojLAT2G
+         TymlNZigAHOBrF/kRu4akCXY+LMG2K25KWsSBSTr76DQCY+aEO3wInl7kpA4GAVkQrYW
+         GibQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696400731; x=1697005531;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1696402398; x=1697007198;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=f0giunb9BhnZYuBT/MmDlnRVSxHXgyke+1Gd+H5zheI=;
-        b=lr+K3cYwz0X/pLk0Ba66DmthtVGoo8EC4NtUrW8KahZJysvJ+eJvFEmVGc1Av9eU6H
-         fzUoxwJ6ZGaNlwrhBzWMrrsVBZqUj8eOozVjFlhsCKy/eGl3aIcLl1TLOKBtkwn/fscb
-         g2OVqPGbpf3a+x4STNuZylMZ3GnNMcIEfkfUslQ4XVxIogbGqGx3VKrCWrb9LD3l9Xv9
-         FKAg4NsLIQK66d0Ia9GxXG7WY68Xb5p223x0fRnIFFZw36GibNOZk/KpbAlvJ1U+FeFL
-         QkO7qBa6FEoTtoy2vCQ8v6G60h535/a3bEtVe3KljjMmgfxAjuv43Bfa7m4LU+0eWAgv
-         wBcQ==
-X-Gm-Message-State: AOJu0YyN+MFeP8y7p1JU4pTb4AH3tZO8jqxpOpIphRRDUos6Mx25TMyT
-        lFIv5/1UM7RnKYYy8kcf6xR3
-X-Google-Smtp-Source: AGHT+IHI7kawFl5SaCr7XhbcdTB8XLLp7rEonsye5ookJXsWWivhaTNtQoYoPX3mKjNafQz3TbUA8g==
-X-Received: by 2002:a05:6a20:6a25:b0:163:f945:42da with SMTP id p37-20020a056a206a2500b00163f94542damr1749678pzk.48.1696400731277;
-        Tue, 03 Oct 2023 23:25:31 -0700 (PDT)
-Received: from thinkpad ([117.217.185.220])
-        by smtp.gmail.com with ESMTPSA id c1-20020a170903234100b001c728609574sm2756459plh.6.2023.10.03.23.25.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Oct 2023 23:25:30 -0700 (PDT)
-Date:   Wed, 4 Oct 2023 11:55:18 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
-        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
-        cw00.choi@samsung.com, andersson@kernel.org,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        jejb@linux.ibm.com, martin.petersen@oracle.com,
-        alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
-        linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
-        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
-        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
-        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
-        bmasney@redhat.com, krzysztof.kozlowski@linaro.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 6/6] arm64: dts: qcom: sm8250: Add OPP table support
- to UFSHC
-Message-ID: <20231004062518.GB7298@thinkpad>
-References: <20231003111232.42663-1-manivannan.sadhasivam@linaro.org>
- <20231003111232.42663-7-manivannan.sadhasivam@linaro.org>
- <CAA8EJppOuAnVsnV0tYLyGqyJy3xVt2ToTZ+r9hyNd=VgK1Ez8Q@mail.gmail.com>
+        bh=6saMWO7TgNokXNDXrhUb1HLu6N9s90/jr2fFq1LcqJU=;
+        b=iALI46LRp0Ari0Ws5X1gXmSBKrFHYqChVXUa9DEjxgqwbBojgH8cpv2nkK6yNC3bof
+         Yjh13tzxNTHQ6P7vi4+UeW32Wy4R+oYESL0fhowT0LPJEyo80djBZzLq6fWf3mcfxcoI
+         3yRxgSiXaRqclQarCAOac6tZUnAQsYY4UQWhuLrFwDBuplZrUM5FWMwcrfYsCKTcXre6
+         IZo7DbaDXGxSHkB9yJPK+Kajjz09RH0ek1kY570CpnR34hPh52VCJt+5vg2ykD0rQpr/
+         vRarpODGyyVvhBQLoqul/QQn9vEWdtNKv6Te4ZEaczcyhpbZQb6Ubgv4c4XNzNWf6x68
+         QcDg==
+X-Gm-Message-State: AOJu0Yx3t5E6CrFaXpSR7ewlym6z/GYj8MNZ2qCwYObshKnMR7gpo1mM
+        TLrFY2K5YDvOOac14RU1QH4QSg==
+X-Google-Smtp-Source: AGHT+IFtlohT+D2AkuNNMw02jPf9mIFfBUh9ekSChstiQW1eBOhRD1OqJEwQdbvykgm2yNxLcW/pNA==
+X-Received: by 2002:a17:906:8a49:b0:9ae:5202:e611 with SMTP id gx9-20020a1709068a4900b009ae5202e611mr1111876ejc.14.1696402397946;
+        Tue, 03 Oct 2023 23:53:17 -0700 (PDT)
+Received: from [192.168.1.197] (5-157-101-10.dyn.eolo.it. [5.157.101.10])
+        by smtp.gmail.com with ESMTPSA id g6-20020a170906348600b009829d2e892csm2291040ejb.15.2023.10.03.23.53.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Oct 2023 23:53:17 -0700 (PDT)
+Message-ID: <378efb2b-c423-44d0-97bc-43c8870cef6f@linaro.org>
+Date:   Wed, 4 Oct 2023 08:53:15 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAA8EJppOuAnVsnV0tYLyGqyJy3xVt2ToTZ+r9hyNd=VgK1Ez8Q@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: qcm6490: Add qcm6490 dts file
+Content-Language: en-US
+To:     Komal Bajaj <quic_kbajaj@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, luca.weiss@fairphone.com
+References: <20231003175456.14774-1-quic_kbajaj@quicinc.com>
+ <20231003175456.14774-3-quic_kbajaj@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20231003175456.14774-3-quic_kbajaj@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 03, 2023 at 06:25:22PM +0300, Dmitry Baryshkov wrote:
-> On Tue, 3 Oct 2023 at 14:16, Manivannan Sadhasivam
-> <manivannan.sadhasivam@linaro.org> wrote:
-> >
-> > UFS host controller, when scaling gears, should choose appropriate
-> > performance state of RPMh power domain controller along with clock
-> > frequency. So let's add the OPP table support to specify both clock
-> > frequency and RPMh performance states replacing the old "freq-table-hz"
-> > property.
-> >
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sm8250.dtsi | 39 +++++++++++++++++++++-------
-> >  1 file changed, 30 insertions(+), 9 deletions(-)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> > index a4e58ad731c3..33abd84aae53 100644
-> > --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> > @@ -2198,21 +2198,42 @@ ufs_mem_hc: ufshc@1d84000 {
-> >                                 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
-> >                                 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
-> >                                 <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
-> > -                       freq-table-hz =
-> > -                               <37500000 300000000>,
-> > -                               <0 0>,
-> > -                               <0 0>,
-> > -                               <37500000 300000000>,
-> > -                               <0 0>,
-> > -                               <0 0>,
-> > -                               <0 0>,
-> > -                               <0 0>;
-> > +
-> > +                       operating-points-v2 = <&ufs_opp_table>;
-> >
-> >                         interconnects = <&aggre1_noc MASTER_UFS_MEM 0 &mc_virt SLAVE_EBI_CH0 0>,
-> >                                         <&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_UFS_MEM_CFG 0>;
-> >                         interconnect-names = "ufs-ddr", "cpu-ufs";
-> >
-> >                         status = "disabled";
-> > +
-> > +                       ufs_opp_table: opp-table {
-> > +                               compatible = "operating-points-v2";
-> > +
-> > +                               opp-37500000 {
-> > +                                       opp-hz = /bits/ 64 <37500000>,
-> > +                                                /bits/ 64 <0>,
-> > +                                                /bits/ 64 <0>,
-> > +                                                /bits/ 64 <37500000>,
-> > +                                                /bits/ 64 <0>,
-> > +                                                /bits/ 64 <0>,
-> > +                                                /bits/ 64 <0>,
-> > +                                                /bits/ 64 <0>;
+On 03/10/2023 19:54, Komal Bajaj wrote:
+> Add qcm6490 devicetree file for QCM6490 SoC and QCM6490 IDP
+> platform. QCM6490 is derived from SC7280 meant for various
+> form factor including IoT.
 > 
-> I must say I still consider this to be uglier than hard coding clock
-> names in the driver.
+> Supported features are, as of now:
+> * Debug UART
+> * eMMC
+> * USB
 > 
+> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+> ---
 
-It is all about choosing the less uglier one... First of all, it is not a good
-practice to hardcode clk names in the driver as the driver has to trust what is
-being supplied from DT. Also, the OPP support is added in the generic
-"ufshcd-platfrm" driver. Now for getting the clk names, I need to introduce a
-method to pass the names from the vendor drivers. There are already many such
-methods going between these two drivers making it messy and adding one more
-would only add up the worse.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-So I'd like to stick to this approach.
+Best regards,
+Krzysztof
 
-- Mani
-
-> > +                                       required-opps = <&rpmhpd_opp_low_svs>;
-> > +                               };
-> > +
-> > +                               opp-300000000 {
-> > +                                       opp-hz = /bits/ 64 <300000000>,
-> > +                                                /bits/ 64 <0>,
-> > +                                                /bits/ 64 <0>,
-> > +                                                /bits/ 64 <300000000>,
-> > +                                                /bits/ 64 <0>,
-> > +                                                /bits/ 64 <0>,
-> > +                                                /bits/ 64 <0>,
-> > +                                                /bits/ 64 <0>;
-> > +                                       required-opps = <&rpmhpd_opp_nom>;
-> > +                               };
-> > +                       };
-> >                 };
-> >
-> >                 ufs_mem_phy: phy@1d87000 {
-> > --
-> > 2.25.1
-> >
-> 
-> 
-> -- 
-> With best wishes
-> Dmitry
-
--- 
-மணிவண்ணன் சதாசிவம்
