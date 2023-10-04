@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 52D967B7B7D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Oct 2023 11:14:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C53807B7BC4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Oct 2023 11:20:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232881AbjJDJOG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Oct 2023 05:14:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54670 "EHLO
+        id S232774AbjJDJUR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Oct 2023 05:20:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232913AbjJDJOF (ORCPT
+        with ESMTP id S232763AbjJDJUP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Oct 2023 05:14:05 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E45C4B8
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Oct 2023 02:14:01 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-99c3c8adb27so353999466b.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Oct 2023 02:14:01 -0700 (PDT)
+        Wed, 4 Oct 2023 05:20:15 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85B56A7
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Oct 2023 02:20:12 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-99bf3f59905so334764766b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Oct 2023 02:20:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696410840; x=1697015640; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=vPa+lbffoUXNnc8jh5vJbxqB5Khhmntmi+tlYpNI8aE=;
-        b=mboJdouXITs70Q9AEQqOALZsXwsyCryymQgWvdvCzzUnUhq9c1fDD6u4jNRjKOvmuU
-         5TxIw6X5KYKuTf9wld9/ogwiyV8mXYUT9BD7jCOp5q28zDSKfQ7KfOTwAgcdj3h/EIdd
-         ei79gVnTtXPWPWH48MlyGnCwPa1AwziyX9I9T4l/dh9tpND2ysTXZeOXSAqSIELFezXe
-         2w3OtaJTuPep2RnLDq3m04xaFeO9NC3FEp6hf2469cAp2Isls77R+MON/NC6BS6zxanT
-         0Xy1NBIY9EvK4/CJiSZ805vFs511vsrfk8KD5PoNIvbARFlvfeZ7pv9wT7WEv3vdG5uu
-         CBhw==
+        d=linaro.org; s=google; t=1696411211; x=1697016011; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=3Yqai+Q7U5ay16Eb2jvAfZfgJGhV4t41ugn9yWAYt1I=;
+        b=uQQ75jLM9jXU5p4wuld8VkUup+eyKBB2vFwP4zRz5aY3pYo5xm2DRRFPtSQP/eoNxE
+         xwLVTs8R9YFOiBvIiFJtfaaV5v84ldiCUqXeaYeX49hcGkvtMXxfcOLUBXmaGReyKfKj
+         hTOsESh4Wh9qw3aMsVZzlrqDV4c6i0hZ2xcLpWVmSKSuAN61Xp5IweEzqSsvkqEKPDbA
+         wV0S4ElJppMyTDyY7ZkuShF1LwYAJJMucyfzZ7beFi5Q0dtrP2/Qs57/QNqUsicDbidm
+         wYzKyXIisNvaFbGaK0jOZQpQHbPTKTYKBvKNfmhhqFcrW5b7I+trO2AhaSY1ZCdKbL+g
+         ccgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696410840; x=1697015640;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vPa+lbffoUXNnc8jh5vJbxqB5Khhmntmi+tlYpNI8aE=;
-        b=VliPRd45QR9P3paGeCI/U+aSBcijeMhcJ+cIjXcfUEa9mVKCsVDM6QwvUrnLQtHsnq
-         dGgToUEyZjD6BrNTP1DBlpONNJEdGj0IscIsBPKrNZRQ4fhJ6p9TlNF/kSd7FEnbaRZd
-         SlAyBZLtqGXw/908EsSHE3LCemfn4Xx0YAJ/Q8k6NLsxdnGq7U31RRnXhs1orj/N93De
-         xWCWO8u92wDOvC70V/JjD2rwGa4CKF+Iclugn//TT7p7zTIbliBb3Vd7QewHgomPEPo0
-         0l0q10Pbz/jY28QD1/lGbrWoghsBK1TfdOiF0a0Uv+1E5DznKEZ29mC6jnrwv39TzqIk
-         TzZQ==
-X-Gm-Message-State: AOJu0YzBEUBlIfOGxG3W56dT9U2hU3p17NbsTNCzIixI2FKHH3N8CyCq
-        MgDHfqcIbFFguF1s0vha6/Lwxw==
-X-Google-Smtp-Source: AGHT+IGfov53whH4ljfxIcn/lmMVSSbY/VQQQ9pmAvzChOul4XDACFrQ5QaM4Ld6tqgDZZ265cJ0dw==
-X-Received: by 2002:a17:907:7897:b0:9b2:bcd5:8d2b with SMTP id ku23-20020a170907789700b009b2bcd58d2bmr1490315ejc.29.1696410840373;
-        Wed, 04 Oct 2023 02:14:00 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1696411211; x=1697016011;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3Yqai+Q7U5ay16Eb2jvAfZfgJGhV4t41ugn9yWAYt1I=;
+        b=OE3qvM8VuYIBc/vr/5C7e3oSXoP4CitQqcBfi4uR3yIxO7b42QcJGSvZpdKqUE98KQ
+         5LNgUvOG8Y0xY3kB2r41oAYn7lPtH11dePUMoyafloJXFg8hsk7XSgok2d5EOlFj2oK8
+         8tPlQF1mRvXPKXtpq543sowRdcAU4oOo6TmBWTgVTcIbzIdhyNL7JAbWUmO+Vb9c8YeL
+         7uPl377CKTMINWbpEhcSpfpuShs3hLcVr6z9hMSIA82tp1os4jiSAO1kfBF0hYqkFICH
+         4x+OO5ynh1sYT/kvFHCixIxKqmNt4gZFwYeZXNepklunaJ8T8CqklHVGzzg3s+h4CXq/
+         96MQ==
+X-Gm-Message-State: AOJu0YwQ3TSYPyXNIj4KLmR7PmqQ11ofYc5uADm1ju1CotHUJTQva8H9
+        qhLMyEyzN6iITglBq8/9E2BA5A==
+X-Google-Smtp-Source: AGHT+IGwItFXn0vwCaLEFwOWZQ2aLf/Ju1XDzngBp/NF4SJnKMLpyrtAfpiGAzwta1TRPHvVN3g/fQ==
+X-Received: by 2002:a17:907:77c7:b0:9b2:b152:b0f2 with SMTP id kz7-20020a17090777c700b009b2b152b0f2mr1463348ejc.10.1696411210961;
+        Wed, 04 Oct 2023 02:20:10 -0700 (PDT)
 Received: from [192.168.1.197] (5-157-101-10.dyn.eolo.it. [5.157.101.10])
-        by smtp.gmail.com with ESMTPSA id sa18-20020a170906edb200b009adc77330ebsm2486069ejb.199.2023.10.04.02.13.58
+        by smtp.gmail.com with ESMTPSA id z23-20020a170906945700b0099b921de301sm2442428ejx.159.2023.10.04.02.20.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Oct 2023 02:13:59 -0700 (PDT)
-Message-ID: <449ebc20-9436-411e-b727-15a186c502bd@linaro.org>
-Date:   Wed, 4 Oct 2023 11:13:57 +0200
+        Wed, 04 Oct 2023 02:20:10 -0700 (PDT)
+Message-ID: <60da3633-61f6-49c1-b656-2804c35d3e82@linaro.org>
+Date:   Wed, 4 Oct 2023 11:20:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V13 2/4] dt-bindings: pwm: add IPQ6018 binding
+Subject: Re: [PATCH V13 3/4] dt-bindings: mfd: qcom,tcsr: Add simple-mfd
+ support for IPQ6018
+Content-Language: en-US
 To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
         andersson@kernel.org, konrad.dybcio@linaro.org, lee@kernel.org,
         robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
@@ -64,8 +65,7 @@ To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, llvm@lists.linux.dev
 References: <20231004090449.256229-1-quic_devipriy@quicinc.com>
- <20231004090449.256229-3-quic_devipriy@quicinc.com>
-Content-Language: en-US
+ <20231004090449.256229-4-quic_devipriy@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -111,13 +111,13 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231004090449.256229-3-quic_devipriy@quicinc.com>
+In-Reply-To: <20231004090449.256229-4-quic_devipriy@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -125,17 +125,81 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 04/10/2023 11:04, Devi Priya wrote:
-> DT binding for the PWM block in Qualcomm IPQ6018 SoC.
+> Update the binding to include pwm as the child node to TCSR block and
+> add simple-mfd support for IPQ6018.
 > 
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Co-developed-by: Baruch Siach <baruch.siach@siklu.com>
-> Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
 > Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> ---
+
+Thank you for your patch. There is something to discuss/improve.
 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>    reg:
+>      maxItems: 1
+>  
+> +  ranges: true
+> +
+> +  "#address-cells":
+> +    const: 1
+> +
+> +  "#size-cells":
+> +    const: 1
+> +
+> +patternProperties:
+> +  "pwm@[a-f0-9]+$":
 
-(Although please wait with applying a few hours for Rob's bot to check it)
+type: object
+
+> +    $ref: ../pwm/qcom,ipq6018-pwm.yaml
+
+This should be full patch, so:
+$ref: /schemas/pwm/qcom.......
+
+
+> +
+>  required:
+>    - compatible
+>    - reg
+
+After required (but before additionalProperties), please add:
+
+allOf:if:then: for other compatible (so use keyword "not:") which will
+disallow pwm for them. Disallowing is via:
+
+    patternProperties:
+      "pwm@[a-f0-9]+$": false
+
+See   Documentation/devicetree/bindings/interconnect/qcom,rpm.yaml
+around line 240. We need something similar.
+
+
+> @@ -57,8 +74,29 @@ required:
+>  additionalProperties: false
+>  
+>  examples:
+> +  # Example 1 - Syscon node found on MSM8960
+>    - |
+>      syscon@1a400000 {
+>          compatible = "qcom,tcsr-msm8960", "syscon";
+>          reg = <0x1a400000 0x100>;
+>      };
+> +  # Example 2 - Syscon node found on IPQ6018
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-ipq6018.h>
+> +
+> +    syscon@1937000 {
+> +        compatible = "qcom,tcsr-ipq6018", "syscon", "simple-mfd";
+> +        reg = <0x01937000 0x21000>;
+> +        #address-cells = <1>;
+> +        #size-cells = <1>;
+> +        ranges = <0 0x1937000 0x21000>;
+
+Please put ranges just after reg.
+
+> +
+> +        pwm: pwm@a010 {
+> +            compatible = "qcom,ipq6018-pwm";
+> +            reg = <0xa010 0x20>;
 
 Best regards,
 Krzysztof
