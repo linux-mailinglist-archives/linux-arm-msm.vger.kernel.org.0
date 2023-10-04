@@ -2,254 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 388F17B86F1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Oct 2023 19:49:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D44147B870E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Oct 2023 19:57:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233826AbjJDRtl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Oct 2023 13:49:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58202 "EHLO
+        id S233946AbjJDR50 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Oct 2023 13:57:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233397AbjJDRtl (ORCPT
+        with ESMTP id S243633AbjJDR5Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Oct 2023 13:49:41 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73DF5A6;
-        Wed,  4 Oct 2023 10:49:37 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 394HnNqA020720;
-        Wed, 4 Oct 2023 17:49:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=6sduqsr5oXTzBTQDKRgYapCkA4vfCqnwzQ5prHBGo2w=;
- b=Gd6TQhznc6BXPX2N0hrZhIid7bP0Vj2s6mdggoiYLuGiPpBQv3JYJ9ZU/ZwSK43j186N
- vQGmKWt4FEU2NMLQYRhAPem/ViNXRKJxpAPrIvqY1T4FFTIOJzvp/n/7XDXQM/kJ+D09
- RBnLmOMqjUaafDeJkzeL6Nx14SRGbqS9FdDAVcPr0dstidyVlzwIFRRkoy/UUgZwtDiu
- mVX4Kodbnjm62j48eFM9hBN4FXEJ2P5DJ9TxoqUVNX0tvHUIxfyKKXxI5E+wuBztQ+eI
- 3rkX8t7xtUU1PR0yHkFE3YyF7zo4KLZa1PqExkyedk6rZdZC78Q8CiOVritOrK3HICCz Bw== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tgynha12b-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 04 Oct 2023 17:49:23 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 394HmxX7019347
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 4 Oct 2023 17:48:59 GMT
-Received: from [10.110.20.163] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 4 Oct
- 2023 10:48:59 -0700
-Message-ID: <d22b0da7-fc52-549f-20ad-3829379dccff@quicinc.com>
-Date:   Wed, 4 Oct 2023 10:48:58 -0700
+        Wed, 4 Oct 2023 13:57:25 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20929A7
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Oct 2023 10:57:20 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-502e7d66c1eso139970e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Oct 2023 10:57:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1696442238; x=1697047038; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/zKg7f6kpVshrRISQ4xbKZAM7kHw6RbXQvKDo5fo5gI=;
+        b=VMgZPNYvioKdG5vqdYipCQ3eFg+L/N1J4h+ajNTj/xq92mNG0oR1SoM8usHjxZq907
+         eNt+EFiD7brd8yvPqZAoWbbvn0e+9nb5VTbzxOP7QU9XKh99ICnX++6IrWyQCt0PBx/R
+         BGjHuKNj8MBMoQkX7+NtZhXKbImXRDJW7ZA1R+/lNNh9fP4fD/4Y6rG2Uzxl0hjpwk3w
+         Zun5QSsgW29HvPAfM8cVaxFlupV2v5t5lO2bAH3fAG+fO5z+5sEWtkaHRrOBJvZjIplc
+         b8DI51ncUyZYntjhqrQa5h4VQEDTsKMUZy5p4Q3JbRiBeWpskuqn7OjIVJXYvQtD80LH
+         ER/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696442238; x=1697047038;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/zKg7f6kpVshrRISQ4xbKZAM7kHw6RbXQvKDo5fo5gI=;
+        b=rDRLsoLNyFHCgMfRdw5ponoXa/FxBOR4oQEf1QA3e8nRr8WwrhAE+xe35Xyo91VUav
+         P0qCmRsP0Y6hLQSTSI/wceKJJBcrhjGmKAHUbUHfySoEJwXnN1F3+7/muH0WvkiZ1OuG
+         SEcJ7a2A3HmztANJvSVTXiHPaFsUXmPoNuHbdoOrdd+3gREeT66oEp5QntUXcrHxwriC
+         yyfIaY7NumKx9PX5rTTQNncHQ2oouxVSZ6Zt1j9FqC1EdoYm51Fck6N+4l1GgqEP81L5
+         c6NlbvZXVh9QzIrIict5hyIPSwQndyRf8/zQ9SuhHdBxQ6UrI6aQAR6TBUexGkLFJW7c
+         L6dA==
+X-Gm-Message-State: AOJu0YzEhTfxSEllOnh9s43SRLnZJ9aFla+S/1xlivH303uaPanN8Acn
+        YeIfDcgz8f+mg9h8mTYUhfKOww==
+X-Google-Smtp-Source: AGHT+IECOXMOL4C0XYUOKmTR5hKYMMj/PCobgcCBBRPWv6ENacPOxkFttgRQ8wL39jthck2CPNQxcg==
+X-Received: by 2002:a05:6512:3190:b0:500:d8d6:fc5a with SMTP id i16-20020a056512319000b00500d8d6fc5amr3960473lfe.37.1696442238325;
+        Wed, 04 Oct 2023 10:57:18 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id r14-20020ac252ae000000b00505723e56acsm679513lfm.273.2023.10.04.10.57.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 Oct 2023 10:57:17 -0700 (PDT)
+Message-ID: <7e28c09b-f2fd-4a42-b4f3-a337ec31a073@linaro.org>
+Date:   Wed, 4 Oct 2023 20:57:16 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v4 4/4] firmware: arm_scmi: Add qcom hvc/shmem transport
- support
-To:     Sudeep Holla <sudeep.holla@arm.com>
-CC:     <cristian.marussi@arm.com>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20230718160833.36397-1-quic_nkela@quicinc.com>
- <20230911194359.27547-1-quic_nkela@quicinc.com>
- <20230911194359.27547-5-quic_nkela@quicinc.com>
- <20231003111914.63z35sn3r3k7drtp@bogus>
- <6246714a-3b40-e1b6-640e-560ba55b6436@quicinc.com>
- <20231004160630.pxspafszlt6o7oj6@bogus>
-Content-Language: en-US
-From:   Nikunj Kela <quic_nkela@quicinc.com>
-In-Reply-To: <20231004160630.pxspafszlt6o7oj6@bogus>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 1/2] clk: qcom: implement RCG2 'parked' clock support
+Content-Language: en-GB
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>
+References: <20231004003125.2289613-1-dmitry.baryshkov@linaro.org>
+ <20231004003125.2289613-2-dmitry.baryshkov@linaro.org>
+ <f129633e-4df7-4984-a19e-c16e6c7c8f3f@linaro.org>
+ <CAA8EJprGfS5x89FOWhjPCdLzSNbEK-U1h8qVmfiLc6+4NjEiNA@mail.gmail.com>
+ <e96499ff-76ec-482b-b18c-ee293259b8a7@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <e96499ff-76ec-482b-b18c-ee293259b8a7@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: BzcCYttomuGoeF3sGiC5z1TYPZ3xocJP
-X-Proofpoint-ORIG-GUID: BzcCYttomuGoeF3sGiC5z1TYPZ3xocJP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-04_10,2023-10-02_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
- priorityscore=1501 impostorscore=0 malwarescore=0 mlxscore=0
- mlxlogscore=999 clxscore=1015 adultscore=0 lowpriorityscore=0 bulkscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310040129
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 04/10/2023 15:52, Bryan O'Donoghue wrote:
+> On 04/10/2023 13:08, Dmitry Baryshkov wrote:
+>> On Wed, 4 Oct 2023 at 12:27, Bryan O'Donoghue
+>> <bryan.odonoghue@linaro.org> wrote:
+>>>
+>>> On 04/10/2023 01:31, Dmitry Baryshkov wrote:
+>>>> clk_rcg2_shared_ops implements support for the case of the RCG which
+>>>> must not be completely turned off. However its design has one major
+>>>> drawback: it doesn't allow us to properly implement the is_enabled
+>>>> callback, which causes different kinds of misbehaviour from the CCF.
+>>>>
+>>>> Follow the idea behind clk_regmap_phy_mux_ops and implement the new
+>>>> clk_rcg2_parked_ops. It also targets the clocks which must not be fully
+>>>> switched off (and shared most of the implementation with
+>>>> clk_rcg2_shared_ops). The major difference is that it requires that the
+>>>> parent map doesn't conain the safe (parked) clock source. Instead if 
+>>>> the
+>>>> CFG_REG register points to the safe source, the clock is considered to
+>>>> be disabled.
+>>>
+>>> Why not have a new bit in .flags ?
+>>>
+>>> Instead of lying about the clock being off, mark the clock as "parked",
+>>> or "safe parked" or whatever term we choose for it ?
+>>
+>> The main problem with adding flags doesn't fully scale. From the CCF
+>> perspective, what should be the difference between parked and disabled
+>> clocks? How should it treat the parked one?
+> 
+> Exactly the same as a disabled clock, except you get a "parked" instead 
+> of a "disabled" when looking up its state and you don't have to
+> 
+> -    { .fw_name = "bi_tcxo" },
+> 
+> Also you can then flag for branch2 clocks the same thing - so parking 
+> would be done at a higher level in the CCF.
 
-On 10/4/2023 9:06 AM, Sudeep Holla wrote:
-> On Tue, Oct 03, 2023 at 09:16:27AM -0700, Nikunj Kela wrote:
->> On 10/3/2023 4:19 AM, Sudeep Holla wrote:
->>> On Mon, Sep 11, 2023 at 12:43:59PM -0700, Nikunj Kela wrote:
->>>> This change adds the support for SCMI message exchange on Qualcomm
->>>> virtual platforms.
->>>>
->>>> The hypervisor associates an object-id also known as capability-id
->>>> with each hvc doorbell object. The capability-id is used to identify the
->>>> doorbell from the VM's capability namespace, similar to a file-descriptor.
->>>>
->>>> The hypervisor, in addition to the function-id, expects the capability-id
->>>> to be passed in x1 register when HVC call is invoked.
->>>>
->>>> The function-id & capability-id are allocated by the hypervisor on bootup
->>>> and are stored in the shmem region by the firmware before starting Linux.
->>>>
->>>> Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
->>>> ---
->>>>    drivers/firmware/arm_scmi/driver.c |  1 +
->>>>    drivers/firmware/arm_scmi/smc.c    | 47 ++++++++++++++++++++++++++----
->>>>    2 files changed, 43 insertions(+), 5 deletions(-)
->>>>
->>>> diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
->>>> index 87383c05424b..ea344bc6ae49 100644
->>>> --- a/drivers/firmware/arm_scmi/driver.c
->>>> +++ b/drivers/firmware/arm_scmi/driver.c
->>>> @@ -2915,6 +2915,7 @@ static const struct of_device_id scmi_of_match[] = {
->>>>    #ifdef CONFIG_ARM_SCMI_TRANSPORT_SMC
->>>>    	{ .compatible = "arm,scmi-smc", .data = &scmi_smc_desc},
->>>>    	{ .compatible = "arm,scmi-smc-param", .data = &scmi_smc_desc},
->>>> +	{ .compatible = "qcom,scmi-hvc-shmem", .data = &scmi_smc_desc},
->>>>    #endif
->>>>    #ifdef CONFIG_ARM_SCMI_TRANSPORT_VIRTIO
->>>>    	{ .compatible = "arm,scmi-virtio", .data = &scmi_virtio_desc},
->>>> diff --git a/drivers/firmware/arm_scmi/smc.c b/drivers/firmware/arm_scmi/smc.c
->>>> index 0a0b7e401159..94ec07fdc14a 100644
->>>> --- a/drivers/firmware/arm_scmi/smc.c
->>>> +++ b/drivers/firmware/arm_scmi/smc.c
->>>> @@ -50,6 +50,9 @@
->>>>     * @func_id: smc/hvc call function id
->>>>     * @param_page: 4K page number of the shmem channel
->>>>     * @param_offset: Offset within the 4K page of the shmem channel
->>>> + * @cap_id: hvc doorbell's capability id to be used on Qualcomm virtual
->>>> + *	    platforms
->>>> + * @qcom_xport: Flag to indicate the transport on Qualcomm virtual platforms
->>>>     */
->>>>    struct scmi_smc {
->>>> @@ -63,6 +66,8 @@ struct scmi_smc {
->>>>    	u32 func_id;
->>>>    	u32 param_page;
->>>>    	u32 param_offset;
->>>> +	u64 cap_id;
->>> Can it be unsigned long instead so that it just works for both 32 and 64 bit.
->> My first version of this patch was ulong but Bjorn suggested to make this
->> structure size fixed i.e. architecture independent. Hence changed it to u64.
->> If you are ok with ulong, I can change it back to ulong.
->>
-> SMCCC pre-v1.2 used the common structure in that way. I don't see any issue
-> with that. I haven't followed Bjorn suggestions/comments though.
-Ok.
->>>> +	bool qcom_xport;
->>> Do we really need this ?
->> Not if we initialize it with a negative value since 0 is a valid value for
->> cap-id.
->>
-> Fine with negative value(-EINVAL may be).
-Ok.
->>>>    	int ret;
->>>>    	if (!tx)
->>>> @@ -158,9 +164,34 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
->>>>    		return -EADDRNOTAVAIL;
->>>>    	}
->>>> -	ret = of_property_read_u32(dev->of_node, "arm,smc-id", &func_id);
->>>> -	if (ret < 0)
->>>> -		return ret;
->>>> +	if (of_device_is_compatible(dev->of_node, "qcom,scmi-hvc-shmem")) {
->>>> +		scmi_info->qcom_xport = true;
->>>> +
->>>> +		/* The func-id & capability-id are kept in last 16 bytes of shmem.
->>>> +		 *     +-------+
->>>> +		 *     |       |
->>>> +		 *     | shmem |
->>>> +		 *     |       |
->>>> +		 *     |       |
->>>> +		 *     +-------+ <-- (size - 16)
->>>> +		 *     | funcId|
->>>> +		 *     +-------+ <-- (size - 8)
->>>> +		 *     | capId |
->>>> +		 *     +-------+ <-- size
->>>> +		 */
->>>> +
->>>> +		func_id = readl((void __iomem *)(scmi_info->shmem) + size - 16);
->>> So unlike 'arm,scmi-smc', you don't want 'arm,smc-id' in the DT ? Any
->>> particular reason ? Just to get both FID and cap ID from shmem ?
-> I am fine either way. If you use from DT(via arm,smc-id), then "qcom,scmi"
-> can be just addition compatible that expects you to read cap-id from the
-> shmem. May need adjustment in the binding as you allow both
-> "qcom,scmi-smc", "arm,scmi-smc". I will leave the details to you.
-Ok.
->> I could use smc-id binding for func-id, it's just two parameters will come
->> from two different places so thought of keeping everything at one place to
->> maintain consistency.  Since DT can't take cap-id, I decided to move
->> func-id. I am fine if you want me to use smc-id binding.
->>
-> Up to you. If you want to make "qcom,scmi-smc" and "arm,scmi-smc"
-> compatible in way in that way or you can keep it incompatible as you have
-> proposed in this patch set.
-Ok.
->>>> +#ifdef CONFIG_ARM64
->>> I would rather make this arch agnostic using CONFIG_64BIT
->> ok.
->>>> +		cap_id = readq((void __iomem *)(scmi_info->shmem) + size - 8);
->>> Do you need __iomem typecast here ? Is scmi_info->shmem not already __iomem ?
->>> Also scmi_info->shmem is ioremapped just few steps above and you are using
->>> read* here, is that safe ?
->> I saw some compilation warnings without __iomem. I will use ioread* API
->> instead of read*.
->>
-> That was the clue that you were using __iomem with read* calls IMO.
-Ok.
->>>> +#else
->>>> +		/* capability-id is 32 bit wide on 32bit machines */
->>>> +		cap_id = rieadl((void __iomem *)(scmi_info->shmem) + size - 8);
->>> Other thought once you move for u64 to unsigned long you need not have
->>> #ifdeffery, just do copy of sizeof(unsigned long)
->> Right, my first version was like that only.
-> OK
->
->>>> +#endif
->>>> +	} else {
->>>> +		ret = of_property_read_u32(dev->of_node, "arm,smc-id", &func_id);
->>>> +		if (ret < 0)
->>>> +			return ret;
->>>> +	}
->>>>    	if (of_device_is_compatible(dev->of_node, "arm,scmi-smc-param")) {
->>>>    		scmi_info->param_page = SHMEM_PAGE(res.start);
->>>> @@ -184,6 +215,7 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
->>>>    	}
->>>>    	scmi_info->func_id = func_id;
->>>> +	scmi_info->cap_id = cap_id;
->>>>    	scmi_info->cinfo = cinfo;
->>>>    	smc_channel_lock_init(scmi_info);
->>>>    	cinfo->transport_info = scmi_info;
->>>> @@ -213,6 +245,7 @@ static int smc_send_message(struct scmi_chan_info *cinfo,
->>>>    	struct arm_smccc_res res;
->>>>    	unsigned long page = scmi_info->param_page;
->>>>    	unsigned long offset = scmi_info->param_offset;
->>>> +	unsigned long cap_id = (unsigned long)scmi_info->cap_id;
->>>>    	/*
->>>>    	 * Channel will be released only once response has been
->>>> @@ -222,8 +255,12 @@ static int smc_send_message(struct scmi_chan_info *cinfo,
->>>>    	shmem_tx_prepare(scmi_info->shmem, xfer, cinfo);
->>>> -	arm_smccc_1_1_invoke(scmi_info->func_id, page, offset, 0, 0, 0, 0, 0,
->>>> -			     &res);
->>>> +	if (scmi_info->qcom_xport)
->>> Just make sure cap_id is set only for qcom and just use that as your flag.
->>> No point in setting always true scmi_info->qcom_xport and using it here.
->> ok, I can remove that. Though 0 is a valid value for cap-id so will have to
->> init cap-id with a negative value.
-> Yes as mentioned above.
-Ok.
->
+Without this removal there is no easy way to identify if the clock is 
+parked to XO or if it is reparented to that clock.
+
+
+-- 
+With best wishes
+Dmitry
+
