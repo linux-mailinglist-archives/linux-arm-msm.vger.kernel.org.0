@@ -2,46 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 58FEB7B843B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Oct 2023 17:53:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E0367B847D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Oct 2023 18:06:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242974AbjJDPxS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Oct 2023 11:53:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40898 "EHLO
+        id S243027AbjJDQGj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Oct 2023 12:06:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233661AbjJDPxR (ORCPT
+        with ESMTP id S233451AbjJDQGi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Oct 2023 11:53:17 -0400
+        Wed, 4 Oct 2023 12:06:38 -0400
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 5880CA6;
-        Wed,  4 Oct 2023 08:53:14 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id ADE3EC9;
+        Wed,  4 Oct 2023 09:06:34 -0700 (PDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B0F11C15;
-        Wed,  4 Oct 2023 08:53:52 -0700 (PDT)
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 11DB2C15;
+        Wed,  4 Oct 2023 09:07:13 -0700 (PDT)
 Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8C5B23F762;
-        Wed,  4 Oct 2023 08:53:12 -0700 (PDT)
-Date:   Wed, 4 Oct 2023 16:53:10 +0100
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id E57103F762;
+        Wed,  4 Oct 2023 09:06:32 -0700 (PDT)
+Date:   Wed, 4 Oct 2023 17:06:30 +0100
 From:   Sudeep Holla <sudeep.holla@arm.com>
 To:     Nikunj Kela <quic_nkela@quicinc.com>
 Cc:     cristian.marussi@arm.com, robh+dt@kernel.org,
+        Sudeep Holla <sudeep.holla@arm.com>,
         krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        Sudeep Holla <sudeep.holla@arm.com>, andersson@kernel.org,
-        konrad.dybcio@linaro.org, linux-arm-kernel@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 3/4] dt-bindings: arm: Add new compatible for smc/hvc
- transport for SCMI
-Message-ID: <20231004155310.zqwlj6boy65atoyq@bogus>
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v4 4/4] firmware: arm_scmi: Add qcom hvc/shmem transport
+ support
+Message-ID: <20231004160630.pxspafszlt6o7oj6@bogus>
 References: <20230718160833.36397-1-quic_nkela@quicinc.com>
  <20230911194359.27547-1-quic_nkela@quicinc.com>
- <20230911194359.27547-4-quic_nkela@quicinc.com>
- <20231003104404.o7yxg3y7dn7uhrq4@bogus>
- <7c871b23-5544-6604-257d-f0c8fd5afd06@quicinc.com>
+ <20230911194359.27547-5-quic_nkela@quicinc.com>
+ <20231003111914.63z35sn3r3k7drtp@bogus>
+ <6246714a-3b40-e1b6-640e-560ba55b6436@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <7c871b23-5544-6604-257d-f0c8fd5afd06@quicinc.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6246714a-3b40-e1b6-640e-560ba55b6436@quicinc.com>
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
         autolearn_force=no version=3.4.6
@@ -51,59 +52,185 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 03, 2023 at 08:59:45AM -0700, Nikunj Kela wrote:
+On Tue, Oct 03, 2023 at 09:16:27AM -0700, Nikunj Kela wrote:
 > 
-> On 10/3/2023 3:44 AM, Sudeep Holla wrote:
-> > On Mon, Sep 11, 2023 at 12:43:58PM -0700, Nikunj Kela wrote:
-> > > Introduce compatible "qcom,scmi-hvc-shmem" for SCMI smc/hvc
-> > > transport channel for Qualcomm virtual platforms.
-> > > The compatible mandates a shared memory channel.
+> On 10/3/2023 4:19 AM, Sudeep Holla wrote:
+> > On Mon, Sep 11, 2023 at 12:43:59PM -0700, Nikunj Kela wrote:
+> > > This change adds the support for SCMI message exchange on Qualcomm
+> > > virtual platforms.
+> > > 
+> > > The hypervisor associates an object-id also known as capability-id
+> > > with each hvc doorbell object. The capability-id is used to identify the
+> > > doorbell from the VM's capability namespace, similar to a file-descriptor.
+> > > 
+> > > The hypervisor, in addition to the function-id, expects the capability-id
+> > > to be passed in x1 register when HVC call is invoked.
+> > > 
+> > > The function-id & capability-id are allocated by the hypervisor on bootup
+> > > and are stored in the shmem region by the firmware before starting Linux.
 > > > 
 > > > Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
-> > > Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > > > ---
-> > >   .../devicetree/bindings/firmware/arm,scmi.yaml       | 12 ++++++++++++
-> > >   1 file changed, 12 insertions(+)
+> > >   drivers/firmware/arm_scmi/driver.c |  1 +
+> > >   drivers/firmware/arm_scmi/smc.c    | 47 ++++++++++++++++++++++++++----
+> > >   2 files changed, 43 insertions(+), 5 deletions(-)
 > > > 
-> > > diff --git a/Documentation/devicetree/bindings/firmware/arm,scmi.yaml b/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
-> > > index 8d54ea768d38..4090240f45b1 100644
-> > > --- a/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
-> > > +++ b/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
-> > > @@ -45,6 +45,9 @@ properties:
-> > >         - description: SCMI compliant firmware with OP-TEE transport
-> > >           items:
-> > >             - const: linaro,scmi-optee
-> > > +      - description: SCMI compliant firmware with Qualcomm hvc/shmem transport
-> > > +        items:
-> > > +          - const: qcom,scmi-hvc-shmem
-> > Can it be simply "qcom,scmi-smc" for 2 reasons ?
-> > 1. We don't support SMC/HVC without shmem, so what is your argument to add
-> >     '-shmem' in the compatible here ?
+> > > diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
+> > > index 87383c05424b..ea344bc6ae49 100644
+> > > --- a/drivers/firmware/arm_scmi/driver.c
+> > > +++ b/drivers/firmware/arm_scmi/driver.c
+> > > @@ -2915,6 +2915,7 @@ static const struct of_device_id scmi_of_match[] = {
+> > >   #ifdef CONFIG_ARM_SCMI_TRANSPORT_SMC
+> > >   	{ .compatible = "arm,scmi-smc", .data = &scmi_smc_desc},
+> > >   	{ .compatible = "arm,scmi-smc-param", .data = &scmi_smc_desc},
+> > > +	{ .compatible = "qcom,scmi-hvc-shmem", .data = &scmi_smc_desc},
+> > >   #endif
+> > >   #ifdef CONFIG_ARM_SCMI_TRANSPORT_VIRTIO
+> > >   	{ .compatible = "arm,scmi-virtio", .data = &scmi_virtio_desc},
+> > > diff --git a/drivers/firmware/arm_scmi/smc.c b/drivers/firmware/arm_scmi/smc.c
+> > > index 0a0b7e401159..94ec07fdc14a 100644
+> > > --- a/drivers/firmware/arm_scmi/smc.c
+> > > +++ b/drivers/firmware/arm_scmi/smc.c
+> > > @@ -50,6 +50,9 @@
+> > >    * @func_id: smc/hvc call function id
+> > >    * @param_page: 4K page number of the shmem channel
+> > >    * @param_offset: Offset within the 4K page of the shmem channel
+> > > + * @cap_id: hvc doorbell's capability id to be used on Qualcomm virtual
+> > > + *	    platforms
+> > > + * @qcom_xport: Flag to indicate the transport on Qualcomm virtual platforms
+> > >    */
+> > >   struct scmi_smc {
+> > > @@ -63,6 +66,8 @@ struct scmi_smc {
+> > >   	u32 func_id;
+> > >   	u32 param_page;
+> > >   	u32 param_offset;
+> > > +	u64 cap_id;
+> > Can it be unsigned long instead so that it just works for both 32 and 64 bit.
 > 
-> In our platforms, there are multiple ways to allocate memory. One is
-> preallocated shmem as used here, another is dynamically by hypervisor APIs.
-> shmem was to just to indicate it is preallocated.
+> My first version of this patch was ulong but Bjorn suggested to make this
+> structure size fixed i.e. architecture independent. Hence changed it to u64.
+> If you are ok with ulong, I can change it back to ulong.
 >
 
-Let us keep it without shmem. If it is dynamically allocated, you must not
-need another compatible as you can check it at the runtime.
+SMCCC pre-v1.2 used the common structure in that way. I don't see any issue
+with that. I haven't followed Bjorn suggestions/comments though.
 
 > 
-> > 2. The exact conduit(SMC/HVC) used is detected runtime, so I prefer to keep
-> >    '-smc' instead of '-hvc' in the compatible just to avoid giving an illusion
-> >    that HVC is the conduit chosen here based on the compatible. It can be true
-> >    for other reason but I don't want to mislead here by using HVC.
+> > 
+> > > +	bool qcom_xport;
+> > Do we really need this ?
 > 
-> IUUC, currently, conduit comes from PSCI dt node. We have been using smc for
-> PSCI but want to use hvc here. That being said, I am fine to explore if we
-> can change PSCI to use hvc too.
+> Not if we initialize it with a negative value since 0 is a valid value for
+> cap-id.
 >
 
-I think only OPTEE has explicit conduit other than PSCI and it is continued
-for legacy/compatibility reasons IIUC and IIRC. Anything else depends on
-the conduit used by PSCI to be consistent. So yes you need to use what the
-PSCI conduit is and you don't need the extra information from the DT either
-as new property or in the compatible.
+Fine with negative value(-EINVAL may be).
+
+> > >   	int ret;
+> > >   	if (!tx)
+> > > @@ -158,9 +164,34 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
+> > >   		return -EADDRNOTAVAIL;
+> > >   	}
+> > > -	ret = of_property_read_u32(dev->of_node, "arm,smc-id", &func_id);
+> > > -	if (ret < 0)
+> > > -		return ret;
+> > > +	if (of_device_is_compatible(dev->of_node, "qcom,scmi-hvc-shmem")) {
+> > > +		scmi_info->qcom_xport = true;
+> > > +
+> > > +		/* The func-id & capability-id are kept in last 16 bytes of shmem.
+> > > +		 *     +-------+
+> > > +		 *     |       |
+> > > +		 *     | shmem |
+> > > +		 *     |       |
+> > > +		 *     |       |
+> > > +		 *     +-------+ <-- (size - 16)
+> > > +		 *     | funcId|
+> > > +		 *     +-------+ <-- (size - 8)
+> > > +		 *     | capId |
+> > > +		 *     +-------+ <-- size
+> > > +		 */
+> > > +
+> > > +		func_id = readl((void __iomem *)(scmi_info->shmem) + size - 16);
+> > So unlike 'arm,scmi-smc', you don't want 'arm,smc-id' in the DT ? Any
+> > particular reason ? Just to get both FID and cap ID from shmem ?
+>
+
+I am fine either way. If you use from DT(via arm,smc-id), then "qcom,scmi"
+can be just addition compatible that expects you to read cap-id from the
+shmem. May need adjustment in the binding as you allow both
+"qcom,scmi-smc", "arm,scmi-smc". I will leave the details to you.
+
+> I could use smc-id binding for func-id, it's just two parameters will come
+> from two different places so thought of keeping everything at one place to
+> maintain consistency.  Since DT can't take cap-id, I decided to move
+> func-id. I am fine if you want me to use smc-id binding.
+>
+
+Up to you. If you want to make "qcom,scmi-smc" and "arm,scmi-smc"
+compatible in way in that way or you can keep it incompatible as you have
+proposed in this patch set.
+
+> 
+> > > +#ifdef CONFIG_ARM64
+> > I would rather make this arch agnostic using CONFIG_64BIT
+> ok.
+> > 
+> > > +		cap_id = readq((void __iomem *)(scmi_info->shmem) + size - 8);
+> > Do you need __iomem typecast here ? Is scmi_info->shmem not already __iomem ?
+> > Also scmi_info->shmem is ioremapped just few steps above and you are using
+> > read* here, is that safe ?
+> 
+> I saw some compilation warnings without __iomem. I will use ioread* API
+> instead of read*.
+>
+
+That was the clue that you were using __iomem with read* calls IMO.
+
+> 
+> > 
+> > > +#else
+> > > +		/* capability-id is 32 bit wide on 32bit machines */
+> > > +		cap_id = rieadl((void __iomem *)(scmi_info->shmem) + size - 8);
+> > Other thought once you move for u64 to unsigned long you need not have
+> > #ifdeffery, just do copy of sizeof(unsigned long)
+> Right, my first version was like that only.
+
+OK
+
+> > 
+> > > +#endif
+> > > +	} else {
+> > > +		ret = of_property_read_u32(dev->of_node, "arm,smc-id", &func_id);
+> > > +		if (ret < 0)
+> > > +			return ret;
+> > > +	}
+> > >   	if (of_device_is_compatible(dev->of_node, "arm,scmi-smc-param")) {
+> > >   		scmi_info->param_page = SHMEM_PAGE(res.start);
+> > > @@ -184,6 +215,7 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
+> > >   	}
+> > >   	scmi_info->func_id = func_id;
+> > > +	scmi_info->cap_id = cap_id;
+> > >   	scmi_info->cinfo = cinfo;
+> > >   	smc_channel_lock_init(scmi_info);
+> > >   	cinfo->transport_info = scmi_info;
+> > > @@ -213,6 +245,7 @@ static int smc_send_message(struct scmi_chan_info *cinfo,
+> > >   	struct arm_smccc_res res;
+> > >   	unsigned long page = scmi_info->param_page;
+> > >   	unsigned long offset = scmi_info->param_offset;
+> > > +	unsigned long cap_id = (unsigned long)scmi_info->cap_id;
+> > >   	/*
+> > >   	 * Channel will be released only once response has been
+> > > @@ -222,8 +255,12 @@ static int smc_send_message(struct scmi_chan_info *cinfo,
+> > >   	shmem_tx_prepare(scmi_info->shmem, xfer, cinfo);
+> > > -	arm_smccc_1_1_invoke(scmi_info->func_id, page, offset, 0, 0, 0, 0, 0,
+> > > -			     &res);
+> > > +	if (scmi_info->qcom_xport)
+> > Just make sure cap_id is set only for qcom and just use that as your flag.
+> > No point in setting always true scmi_info->qcom_xport and using it here.
+> ok, I can remove that. Though 0 is a valid value for cap-id so will have to
+> init cap-id with a negative value.
+
+Yes as mentioned above.
 
 -- 
 Regards,
