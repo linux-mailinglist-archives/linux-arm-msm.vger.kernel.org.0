@@ -2,265 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 50C467B7A7E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Oct 2023 10:46:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F3E507B7AD6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Oct 2023 10:56:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241814AbjJDIqD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Oct 2023 04:46:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38428 "EHLO
+        id S241856AbjJDI4D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Oct 2023 04:56:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241828AbjJDIqB (ORCPT
+        with ESMTP id S241844AbjJDI4C (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Oct 2023 04:46:01 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 697FEB4;
-        Wed,  4 Oct 2023 01:45:58 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3945gWi6010655;
-        Wed, 4 Oct 2023 08:45:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=bUTwAgBTkAW73VZQU7ly3NnRTsZxNPhoaf8XJA07n7A=;
- b=RhLv9DYh6Lh1lkkoXcoa72jFr9Xidwf36//xZU1zkOpEK5FYVeoh4t/2u9J0JfPA55rk
- +ojyZnAjO1GOcLftxRxsJ9/NCJdoviFJfeTP7InZaxdeOwnfQri/6CXQe27IaWE/MO2x
- +Kt02QhORC2DQjYR/OHcVuULbS/yMdQBN1fEc7VCmGyfDOpE0+lqSW+QX33vHRHi45Jb
- 7ucdN7UjUbvCluDekCx63sWJIBh3C4uU1Opn42UDWlB4RTnJ0lx/OmxPZ5vvaUuMk1J4
- jrRUVGhk3D0Vt8mm5rTmZw84qRQqZQ5534wT1846hhnKQJQbEoty/DsiNIPj8PLtj949 dw== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3th1cy0cyp-1
+        Wed, 4 Oct 2023 04:56:02 -0400
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2831CA6;
+        Wed,  4 Oct 2023 01:55:58 -0700 (PDT)
+Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
+        by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3947iwHF012341;
+        Wed, 4 Oct 2023 08:55:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : subject :
+ from : to : cc : date : in-reply-to : references : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=G3eu+o+jYD03B/2vSJeSyHMaPAmhLz8sTDvwliqmwig=;
+ b=nrDyw1lemn6qjWyVMj3sPDfdFNS9l7wW/iKCjClC7OUsa6+ht2ViFRM8NGyb9gcdm2//
+ blnHtikqM0XjxwPNAT2iessUtljLlrysFBeKvvUUarAYKOMzkLKSWKCBLgxxglF3pTTy
+ FGjYxK8svlZEBvT3aB+ns6eDfy1v8+xdb/tusDYFgSjIWOZ0cWjVcu3fKofAfRjxubVJ
+ 3lIvgwdbeRqBOnJKkA3u2/M3L4WSD1qkXlS2xmjALMcSHdLiS12Q4YwDX/i+veXLzrt2
+ jh35/Bej0beB3jfo2p+W4AeivIvNZZAIbipIuNgSrwiItrO3JfM54xctCClt6bCrcFNB 9A== 
+Received: from pps.reinject (localhost [127.0.0.1])
+        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3th3f4aejd-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 04 Oct 2023 08:45:45 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3948jiPB021039
+        Wed, 04 Oct 2023 08:55:07 +0000
+Received: from m0353722.ppops.net (m0353722.ppops.net [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 39480Iv9021327;
+        Wed, 4 Oct 2023 08:55:06 GMT
+Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3th3f4aehx-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 4 Oct 2023 08:45:44 GMT
-Received: from [10.218.47.181] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Wed, 4 Oct
- 2023 01:45:39 -0700
-Message-ID: <23dd01f1-a772-475f-aa0b-cb4cf34f39e3@quicinc.com>
-Date:   Wed, 4 Oct 2023 14:15:36 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/5] crypto: qcom-rng - Add hw_random interface support
-Content-Language: en-US
-To:     <neil.armstrong@linaro.org>, Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
+        Wed, 04 Oct 2023 08:55:06 +0000
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+        by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 3948oUL2025047;
+        Wed, 4 Oct 2023 08:55:05 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+        by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3texcyad4s-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 04 Oct 2023 08:55:04 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com [10.20.54.101])
+        by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 3948t17r7471696
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Wed, 4 Oct 2023 08:55:01 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id AA9A62004B;
+        Wed,  4 Oct 2023 08:55:01 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id E8AA820040;
+        Wed,  4 Oct 2023 08:54:58 +0000 (GMT)
+Received: from [9.171.77.142] (unknown [9.171.77.142])
+        by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+        Wed,  4 Oct 2023 08:54:58 +0000 (GMT)
+Message-ID: <dec2767815f6f765c452a025ccec1ce6d3635cdd.camel@linux.ibm.com>
+Subject: Re: [PATCH v13 0/6] iommu/dma: s390 DMA API conversion and
+ optimized IOTLB flushing
+From:   Niklas Schnelle <schnelle@linux.ibm.com>
+To:     Joerg Roedel <joro@8bytes.org>
+Cc:     Matthew Rosato <mjrosato@linux.ibm.com>,
+        Will Deacon <will@kernel.org>,
+        Wenjia Zhang <wenjia@linux.ibm.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Jason Gunthorpe <jgg@ziepe.ca>,
+        Gerd Bayer <gbayer@linux.ibm.com>,
+        Julian Ruess <julianr@linux.ibm.com>,
+        Pierre Morel <pmorel@linux.ibm.com>,
+        Alexandra Winter <wintera@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Sven Schnelle <svens@linux.ibm.com>,
+        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Lu Baolu <baolu.lu@linux.intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-crypto@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>
-References: <20231003-topic-sm8550-rng-v4-0-255e4d0ba08e@linaro.org>
- <20231003-topic-sm8550-rng-v4-3-255e4d0ba08e@linaro.org>
-From:   Om Prakash Singh <quic_omprsing@quicinc.com>
-In-Reply-To: <20231003-topic-sm8550-rng-v4-3-255e4d0ba08e@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Sb9CQg0oKJwqCZuG5s89SYkHX-DMCkJT
-X-Proofpoint-GUID: Sb9CQg0oKJwqCZuG5s89SYkHX-DMCkJT
+        Yong Wu <yong.wu@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jonathan Corbet <corbet@lwn.net>, linux-s390@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        iommu@lists.linux.dev, asahi@lists.linux.dev,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+        linux-doc@vger.kernel.org
+Date:   Wed, 04 Oct 2023 10:54:58 +0200
+In-Reply-To: <ZRpqaJEQLRDp5b1L@8bytes.org>
+References: <20230928-dma_iommu-v13-0-9e5fc4dacc36@linux.ibm.com>
+         <ZRpqaJEQLRDp5b1L@8bytes.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.48.4 (3.48.4-1.fc38) 
+MIME-Version: 1.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: -eMPc60Y5y2woUrjzjpWax0AtUM-alm0
+X-Proofpoint-GUID: ubAyYZVvTV1Zj6WBmrCFf5U92Rsidz7u
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-10-04_01,2023-10-02_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- clxscore=1015 malwarescore=0 phishscore=0 adultscore=0 bulkscore=0
- lowpriorityscore=0 mlxlogscore=999 suspectscore=0 spamscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310040061
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 spamscore=0 phishscore=0 mlxlogscore=501 mlxscore=0
+ adultscore=0 lowpriorityscore=0 malwarescore=0 suspectscore=0
+ impostorscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2309180000 definitions=main-2310040049
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, 2023-10-02 at 08:59 +0200, Joerg Roedel wrote:
+> On Thu, Sep 28, 2023 at 04:31:34PM +0200, Niklas Schnelle wrote:
+> > Niklas Schnelle (6):
+> >       iommu: Allow .iotlb_sync_map to fail and handle s390's -ENOMEM re=
+turn
+> >       s390/pci: prepare is_passed_through() for dma-iommu
+> >       s390/pci: Use dma-iommu layer
+> >       iommu/s390: Disable deferred flush for ISM devices
+> >       iommu/dma: Allow a single FQ in addition to per-CPU FQs
+> >       iommu/dma: Use a large flush queue and timeout for shadow_on_flus=
+h
+>=20
+> Applied, thanks Niklas.
+>=20
 
+Thank you Joerg. During some more testing I've found a minor issue
+where resetting the debug statistics still used the now obsolete
+counters that should have been removed. So I'll send a follow up patch,
+sorry for not noticing this sooner.
 
-On 10/3/2023 12:40 PM, neil.armstrong@linaro.org wrote:
-> From: Om Prakash Singh <quic_omprsing@quicinc.com>
-> 
-> Add hw_random interface support in qcom-rng driver as new IP block
-> in Qualcomm SoC has inbuilt NIST SP800 90B compliant entropic source
-> to generate true random number.
-> 
-> Keeping current rng_alg interface as well for random number generation
-> using Kernel Crypto API.
-> 
-> Signed-off-by: Om Prakash Singh <quic_omprsing@quicinc.com>
-> Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
-
-Acked-by: Om Prakash Singh <quic_omprsing@quicinc.com>
-
->   drivers/crypto/qcom-rng.c | 65 ++++++++++++++++++++++++++++++++++++++++++-----
->   1 file changed, 58 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/crypto/qcom-rng.c b/drivers/crypto/qcom-rng.c
-> index 825a729f205e..8b506abb934c 100644
-> --- a/drivers/crypto/qcom-rng.c
-> +++ b/drivers/crypto/qcom-rng.c
-> @@ -7,6 +7,7 @@
->   #include <linux/acpi.h>
->   #include <linux/clk.h>
->   #include <linux/crypto.h>
-> +#include <linux/hw_random.h>
->   #include <linux/io.h>
->   #include <linux/iopoll.h>
->   #include <linux/kernel.h>
-> @@ -28,17 +29,25 @@
->   
->   #define WORD_SZ			4
->   
-> +#define QCOM_TRNG_QUALITY	1024
-> +
->   struct qcom_rng {
->   	struct mutex lock;
->   	void __iomem *base;
->   	struct clk *clk;
-> -	unsigned int skip_init;
-> +	struct hwrng hwrng;
-> +	struct qcom_rng_of_data *of_data;
->   };
->   
->   struct qcom_rng_ctx {
->   	struct qcom_rng *rng;
->   };
->   
-> +struct qcom_rng_of_data {
-> +	bool skip_init;
-> +	bool hwrng_support;
-> +};
-> +
->   static struct qcom_rng *qcom_rng_dev;
->   
->   static int qcom_rng_read(struct qcom_rng *rng, u8 *data, unsigned int max)
-> @@ -66,11 +75,11 @@ static int qcom_rng_read(struct qcom_rng *rng, u8 *data, unsigned int max)
->   		} else {
->   			/* copy only remaining bytes */
->   			memcpy(data, &val, max - currsize);
-> -			break;
-> +			currsize = max;
->   		}
->   	} while (currsize < max);
->   
-> -	return 0;
-> +	return currsize;
->   }
->   
->   static int qcom_rng_generate(struct crypto_rng *tfm,
-> @@ -92,6 +101,9 @@ static int qcom_rng_generate(struct crypto_rng *tfm,
->   	mutex_unlock(&rng->lock);
->   	clk_disable_unprepare(rng->clk);
->   
-> +	if (ret >= 0)
-> +		ret = 0;
-> +
->   	return ret;
->   }
->   
-> @@ -101,6 +113,13 @@ static int qcom_rng_seed(struct crypto_rng *tfm, const u8 *seed,
->   	return 0;
->   }
->   
-> +static int qcom_hwrng_read(struct hwrng *hwrng, void *data, size_t max, bool wait)
-> +{
-> +	struct qcom_rng *qrng = container_of(hwrng, struct qcom_rng, hwrng);
-> +
-> +	return qcom_rng_read(qrng, data, max);
-> +}
-> +
->   static int qcom_rng_enable(struct qcom_rng *rng)
->   {
->   	u32 val;
-> @@ -136,7 +155,7 @@ static int qcom_rng_init(struct crypto_tfm *tfm)
->   
->   	ctx->rng = qcom_rng_dev;
->   
-> -	if (!ctx->rng->skip_init)
-> +	if (!ctx->rng->of_data->skip_init)
->   		return qcom_rng_enable(ctx->rng);
->   
->   	return 0;
-> @@ -177,15 +196,31 @@ static int qcom_rng_probe(struct platform_device *pdev)
->   	if (IS_ERR(rng->clk))
->   		return PTR_ERR(rng->clk);
->   
-> -	rng->skip_init = (unsigned long)device_get_match_data(&pdev->dev);
-> +	rng->of_data = (struct qcom_rng_of_data *)of_device_get_match_data(&pdev->dev);
->   
->   	qcom_rng_dev = rng;
->   	ret = crypto_register_rng(&qcom_rng_alg);
->   	if (ret) {
->   		dev_err(&pdev->dev, "Register crypto rng failed: %d\n", ret);
->   		qcom_rng_dev = NULL;
-> +		return ret;
-> +	}
-> +
-> +	if (rng->of_data->hwrng_support) {
-> +		rng->hwrng.name = "qcom_hwrng";
-> +		rng->hwrng.read = qcom_hwrng_read;
-> +		rng->hwrng.quality = QCOM_TRNG_QUALITY;
-> +		ret = devm_hwrng_register(&pdev->dev, &rng->hwrng);
-> +		if (ret) {
-> +			dev_err(&pdev->dev, "Register hwrng failed: %d\n", ret);
-> +			qcom_rng_dev = NULL;
-> +			goto fail;
-> +		}
->   	}
->   
-> +	return ret;
-> +fail:
-> +	crypto_unregister_rng(&qcom_rng_alg);
->   	return ret;
->   }
->   
-> @@ -198,6 +233,21 @@ static int qcom_rng_remove(struct platform_device *pdev)
->   	return 0;
->   }
->   
-> +struct qcom_rng_of_data qcom_prng_of_data = {
-> +	.skip_init = false,
-> +	.hwrng_support = false,
-> +};
-> +
-> +struct qcom_rng_of_data qcom_prng_ee_of_data = {
-> +	.skip_init = true,
-> +	.hwrng_support = false,
-> +};
-> +
-> +struct qcom_rng_of_data qcom_trng_of_data = {
-> +	.skip_init = true,
-> +	.hwrng_support = true,
-> +};
-> +
->   static const struct acpi_device_id __maybe_unused qcom_rng_acpi_match[] = {
->   	{ .id = "QCOM8160", .driver_data = 1 },
->   	{}
-> @@ -205,8 +255,9 @@ static const struct acpi_device_id __maybe_unused qcom_rng_acpi_match[] = {
->   MODULE_DEVICE_TABLE(acpi, qcom_rng_acpi_match);
->   
->   static const struct of_device_id __maybe_unused qcom_rng_of_match[] = {
-> -	{ .compatible = "qcom,prng", .data = (void *)0},
-> -	{ .compatible = "qcom,prng-ee", .data = (void *)1},
-> +	{ .compatible = "qcom,prng", .data = &qcom_prng_of_data },
-> +	{ .compatible = "qcom,prng-ee", .data = &qcom_prng_ee_of_data },
-> +	{ .compatible = "qcom,trng", .data = &qcom_trng_of_data },
->   	{}
->   };
->   MODULE_DEVICE_TABLE(of, qcom_rng_of_match);
-> 
+Thanks,
+Niklas
