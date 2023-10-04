@@ -2,54 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A03B7B75E5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Oct 2023 02:31:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E74B7B763B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Oct 2023 03:23:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239265AbjJDAbe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Oct 2023 20:31:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36194 "EHLO
+        id S239674AbjJDBXQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Oct 2023 21:23:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239275AbjJDAbd (ORCPT
+        with ESMTP id S239384AbjJDBXP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Oct 2023 20:31:33 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02852AF
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 17:31:30 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-406402933edso14897325e9.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 17:31:29 -0700 (PDT)
+        Tue, 3 Oct 2023 21:23:15 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8335AB
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 18:23:11 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-50307759b65so1792453e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 18:23:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696379488; x=1696984288; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aLl0HwSpebHQPe1HZIMtv8j9E/LK6fVYcwfGDJYdmX8=;
-        b=kw3HLBqWKvrAs6IYP2qx3IgcVgn52FNA1LpzanjIptz9x1zKHZrPdlVZdT+e3M9JMR
-         J7IThKbZntaz+LO8WZxOcYNURStxpfZ4el14h5t40UQM9GkHvYUAcuL2nVIVuGQRAFwE
-         n003Lo9rhZlaNxKC8OrSkQZVnjFL7a6XIXldStiLUOZrtYsZuGBgX06nHhB4WgF1uMl3
-         cw3VSujifEE0AOEeb693iuCOwup8k5GEBlyJRUEddKE2Ho+fwuBq9b0KtyMo3eZf5b6d
-         KpG5ZCQ4sjAI28p72sDv43WMURL9kq0i7+vt65sihMs6fFnQ3JSpcJK7XPHzNm26nAyQ
-         XP1g==
+        d=linaro.org; s=google; t=1696382590; x=1696987390; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zZOGHdiWccaH+lI+d4c46L7IxfGyvf8H8j4Ss2u6XUM=;
+        b=TBRGA4Yp9FS21O3zyHFbn/8MSIXusOs61P5q5+KmnqsoHUgQMkp0lKoHVrjdQrCuZx
+         ib96chpw89K5A3f6m7dqRaYkuwz4wgMH/kGD9x/FSVw+8DQXsssvnmxAM9hgaO3Nwd9e
+         JARCqCRX7jJnU6qo+mqCpfSHzkYVdx7pZ3RF+VipBvXoWWT8LSoXNiOA2I9KXcTovZx+
+         0p/kvo9BGl00xn4HtfRKj60gFaGuH+pjMUFYA8IcTyargw2WqXgLznTBvDnF98SEQS22
+         fcdW4dCkPe6BdDBCcwBPWPa9sAf4u7Rqj1UcPN+Y2wFTWNM9zZidyWi95HnZW9RFkqYL
+         Wyrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696379488; x=1696984288;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aLl0HwSpebHQPe1HZIMtv8j9E/LK6fVYcwfGDJYdmX8=;
-        b=CrBLxHiXc0bSfwDaIEpWFBNCKpvEGOmEKWL203vSPZhYBEMcfV6vK2ox/DoO4athDa
-         bdWNoZDebn7Ylz89/FXXJ2D4aBn2L4kVEP7GxKy8Ci2LkRdy/R1OAoSsKSTu74AbeZOX
-         cj1VDjxImnbHp08hMl4v0K9RrBdXrCYOCavMrDVyFIKs8Ofl9/ki/nL8iw1zCtzf+FRh
-         O0L06Q1+AWV4mQxpS8WoxaiHLuMwluUYXU/XaMRLOBJW65YSj2dHIvouTXpoLnWw5vjW
-         4rnt/qydhBcPtYLEVeBRTWZA0nG+a2f9B97jeXT00cOqdq3DPrIRg9bFuBipGez1A9kI
-         ZZbw==
-X-Gm-Message-State: AOJu0YwTkeu9uj0zQklv72V5cbR8F1SWu5+8om0bwJPw25tW/hIshral
-        RoDJkmJov5EOke6CYbK/fTyi1w==
-X-Google-Smtp-Source: AGHT+IGd0wiDCW72fyJSci0cDwyaeDLNNsCxDImCmLd2d9uiLe8TptjX5U3tzlSjXQIbCu490pQpww==
-X-Received: by 2002:a7b:cb8c:0:b0:405:3f19:fc49 with SMTP id m12-20020a7bcb8c000000b004053f19fc49mr935957wmi.34.1696379488521;
-        Tue, 03 Oct 2023 17:31:28 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1696382590; x=1696987390;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zZOGHdiWccaH+lI+d4c46L7IxfGyvf8H8j4Ss2u6XUM=;
+        b=QWGlC5TWszo1vDgvLw5qdHjrMJavR/JzEtCh7YScuynticLDIzAwKmx3eHqrCc/cIv
+         QudEzvVhtMeVPaKBiE/C4XQuRgl3t95Oaeee8RJxTA7AvRb+j5BRNMYQ+exh/727ts4i
+         iS//WA+VuQBlt7RxejRgBnjB2tnamcJn0MHWKFGHvWrnfzrG1653po/mQsKBTZH0btcc
+         6GEYhk9Y86jKffrip/rHtNJkj6aCcaPFuamby3E+YssN4AUk/HpdD04yVeVS32qn1lCs
+         BHeWfcPnVhbLCbPIRVwqoidFGmORMvYV6uVXG0a9AOJwttnp1QvrPqIam23qeUh+Y8pz
+         Zrdg==
+X-Gm-Message-State: AOJu0YyD2KIhShqotxEZtm/gtrSgnrke9nMPgiSOMviBRAEH1W+5daOE
+        Bm10YjQ3glwERQpKUzte/Aqiog==
+X-Google-Smtp-Source: AGHT+IG+sf42x5UqgX6/tUnADMw8ywfyluNYFJxrjCn5F89fxCcebmJvXrjI2e0zvbIZZXO7gGVTKg==
+X-Received: by 2002:a05:6512:b1a:b0:500:9a29:bcb8 with SMTP id w26-20020a0565120b1a00b005009a29bcb8mr785860lfu.4.1696382590028;
+        Tue, 03 Oct 2023 18:23:10 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id u15-20020a056512094f00b005056e8bebb8sm366937lft.124.2023.10.03.17.31.27
+        by smtp.gmail.com with ESMTPSA id w17-20020ac24431000000b004fdbb36a677sm381979lfl.288.2023.10.03.18.23.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Oct 2023 17:31:28 -0700 (PDT)
+        Tue, 03 Oct 2023 18:23:09 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -59,90 +58,47 @@ To:     Andy Gross <agross@kernel.org>,
         Taniya Das <quic_tdas@quicinc.com>
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>
-Subject: [RFC PATCH 2/2] clk: qcom: dispcc-sm8250: switch to clk_rcg2_parked_ops
-Date:   Wed,  4 Oct 2023 03:31:25 +0300
-Message-Id: <20231004003125.2289613-3-dmitry.baryshkov@linaro.org>
+Subject: [RFC PATCH v2 0/3] clk: qcom: provide alternative 'parked' RCG
+Date:   Wed,  4 Oct 2023 04:23:05 +0300
+Message-Id: <20231004012308.2305273-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20231004003125.2289613-1-dmitry.baryshkov@linaro.org>
-References: <20231004003125.2289613-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Switch MDP, AHB and ROT clocks to the clk_rcg2_parked_ops so that the
-CCF can properly determine if the clock is enabled or disabled.
+Implement an alternative for the clk_rcg2_shared_ops, which also
+implements a proper is_enabled callback. Note, to use
+clk_rcg2_parked_ops one must remove XO (safe source) from the
+parent_data, parent_map and freq_table.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/clk/qcom/dispcc-sm8250.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+Changes since v1:
+- Replaced a call to clk_rcg2_is_enabled() with check of the CFG_ROOT_EN
+  field (Stephen Boyd).
+- Added the init function, reading the default clock configuration and
+  then defaulting to the lowest supported freq / parent if the clock was
+  not configured at all (Stephen Boyd).
+- Dropped P_BI_TCXO from freq_tables too.
 
-diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-sm8250.c
-index e17bb8b543b5..229d32aee431 100644
---- a/drivers/clk/qcom/dispcc-sm8250.c
-+++ b/drivers/clk/qcom/dispcc-sm8250.c
-@@ -144,12 +144,10 @@ static const struct clk_parent_data disp_cc_parent_data_2[] = {
- };
- 
- static const struct parent_map disp_cc_parent_map_3[] = {
--	{ P_BI_TCXO, 0 },
- 	{ P_DISP_CC_PLL1_OUT_MAIN, 4 },
- };
- 
- static const struct clk_parent_data disp_cc_parent_data_3[] = {
--	{ .fw_name = "bi_tcxo" },
- 	{ .hw = &disp_cc_pll1.clkr.hw },
- };
- 
-@@ -166,13 +164,11 @@ static const struct clk_parent_data disp_cc_parent_data_4[] = {
- };
- 
- static const struct parent_map disp_cc_parent_map_5[] = {
--	{ P_BI_TCXO, 0 },
- 	{ P_DISP_CC_PLL0_OUT_MAIN, 1 },
- 	{ P_DISP_CC_PLL1_OUT_MAIN, 4 },
- };
- 
- static const struct clk_parent_data disp_cc_parent_data_5[] = {
--	{ .fw_name = "bi_tcxo" },
- 	{ .hw = &disp_cc_pll0.clkr.hw },
- 	{ .hw = &disp_cc_pll1.clkr.hw },
- };
-@@ -219,7 +215,7 @@ static struct clk_rcg2 disp_cc_mdss_ahb_clk_src = {
- 		.parent_data = disp_cc_parent_data_3,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_3),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_parked_ops,
- 	},
- };
- 
-@@ -565,7 +561,7 @@ static struct clk_rcg2 disp_cc_mdss_mdp_clk_src = {
- 		.parent_data = disp_cc_parent_data_5,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_5),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_parked_ops,
- 	},
- };
- 
-@@ -617,7 +613,7 @@ static struct clk_rcg2 disp_cc_mdss_rot_clk_src = {
- 		.parent_data = disp_cc_parent_data_5,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_5),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_parked_ops,
- 	},
- };
- 
+Dmitry Baryshkov (3):
+  clk: qcom: add helper to map parent source to cfg value
+  clk: qcom: implement RCG2 'parked' clock support
+  clk: qcom: dispcc-sm8250: switch to clk_rcg2_parked_ops
+
+ drivers/clk/qcom/clk-rcg.h       |  1 +
+ drivers/clk/qcom/clk-rcg2.c      | 56 ++++++++++++++++++++++++++++++++
+ drivers/clk/qcom/common.c        | 12 +++++++
+ drivers/clk/qcom/common.h        |  2 ++
+ drivers/clk/qcom/dispcc-sm8250.c | 13 ++------
+ 5 files changed, 74 insertions(+), 10 deletions(-)
+
 -- 
 2.39.2
 
