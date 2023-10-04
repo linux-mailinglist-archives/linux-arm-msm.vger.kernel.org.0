@@ -2,77 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BC7D7B7D98
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Oct 2023 12:58:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76A537B7DC8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Oct 2023 13:06:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233016AbjJDK6l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Oct 2023 06:58:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56620 "EHLO
+        id S233079AbjJDLGM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Oct 2023 07:06:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232814AbjJDK6l (ORCPT
+        with ESMTP id S233001AbjJDLGL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Oct 2023 06:58:41 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E7ADA1;
-        Wed,  4 Oct 2023 03:58:38 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39469Q9j013823;
-        Wed, 4 Oct 2023 10:58:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=2rmV/ARSRJlBfpZHJp2o0ucha4GQrOhHYJw/fdsnWAY=;
- b=Zy2xVcNkYmafw2P37d19rimvP//dPRK98kM7nasrwKN6tGjz681pAGmbVBV/Hg5F/pjr
- EvgoGvTyD3IwOTYZ19CpyCUe3bnaeZB25X0F3NGY8fS4PGO+bBejasUoWjQn8h9KWYk/
- HCTp6B7eJTcxmI8NVHdqlxsCP9UKzRlsTYh/NCbgCGHWmx63UJR+k/q3dcFNkQZD6e9w
- ozIM0MYv8JUBzhMp1oyqskQBdGHLGbQgmAopKc00p0k+ngH2Pxu4MReH1LSVrHWlFr8H
- gndy5OgaDMupO+ZVbYHIcdC5qPx80evUZZMQJj++76zcjDiG+qMQyHfKOYrMhyfnd3Zw ww== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3th2gq0huq-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 04 Oct 2023 10:58:33 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 394AwWat026777
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 4 Oct 2023 10:58:32 GMT
-Received: from [10.217.218.207] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Wed, 4 Oct
- 2023 03:58:28 -0700
-Message-ID: <44bb2149-1c12-41f0-bd39-1458528aecdf@quicinc.com>
-Date:   Wed, 4 Oct 2023 16:28:25 +0530
+        Wed, 4 Oct 2023 07:06:11 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6355AB0;
+        Wed,  4 Oct 2023 04:06:06 -0700 (PDT)
+Received: from localhost (unknown [IPv6:2a01:e0a:2c:6930:5cf4:84a1:2763:fe0d])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: bbrezillon)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 2FC0D6607038;
+        Wed,  4 Oct 2023 12:06:04 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1696417564;
+        bh=sCoRUm/yErIinRg3cxNQnIzO1owQHzL0i3WFVtdDzXI=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=BSFw6URRG5wWAbJKZMDyBO1alEaelaRms8/qCzOc0XZ81ii5h2033ILbzJTt+JnOD
+         2pqX2xlMWsQ73sthZiakVGejXXN5J5+AjVU050hoq2EppEhYV7wNTmx1JP37y82aYb
+         7Ob4uY2EHpjDLembhJcjjk+xICMFXlLoHzTyeP45r3iV71tO+uqWkqC4fkmySYWE1W
+         xcuEyjfolhNZ2abRNsnHPP+LUt613FisRCpbxg4Mv3kzRdThp/hB0val8ovd6J5qpA
+         rn84bv6cCDI7lkMPFDXKFQgtkEGarXTJgwEvuZTyEorlOUK3WEpf9LT7+j1jAzxNvu
+         wG6fWN+AzjWIQ==
+Date:   Wed, 4 Oct 2023 13:06:01 +0200
+From:   Boris Brezillon <boris.brezillon@collabora.com>
+To:     =?UTF-8?B?QWRyacOhbg==?= Larumbe <adrian.larumbe@collabora.com>
+Cc:     maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
+        robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run,
+        marijn.suijten@somainline.org, robh@kernel.org,
+        steven.price@arm.com, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, healych@amazon.com,
+        kernel@collabora.com, tvrtko.ursulin@linux.intel.com
+Subject: Re: [PATCH v8 0/5]  Add fdinfo support to Panfrost
+Message-ID: <20231004130601.60239c7f@collabora.com>
+In-Reply-To: <20230929181616.2769345-1-adrian.larumbe@collabora.com>
+References: <20230929181616.2769345-1-adrian.larumbe@collabora.com>
+Organization: Collabora
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 0/2] Add partial initialization support
-Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        <adrian.hunter@intel.com>, <ulf.hansson@linaro.org>
-CC:     <linux-mmc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <quic_rampraka@quicinc.com>,
-        <quic_pragalla@quicinc.com>, <quic_sayalil@quicinc.com>,
-        <quic_nitirawa@quicinc.com>, <quic_sachgupt@quicinc.com>,
-        <quic_bhaskarv@quicinc.com>, <quic_narepall@quicinc.com>
-References: <20230929102831.9702-1-quic_sartgarg@quicinc.com>
- <f6e4413b-eac1-4c0d-9ecd-ff28138617ff@linaro.org>
-From:   Sarthak Garg <quic_sartgarg@quicinc.com>
-In-Reply-To: <f6e4413b-eac1-4c0d-9ecd-ff28138617ff@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: SgM0_mnGSbbwP6wjjRblvTs5sGkg2iLp
-X-Proofpoint-ORIG-GUID: SgM0_mnGSbbwP6wjjRblvTs5sGkg2iLp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-04_01,2023-10-02_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- lowpriorityscore=0 phishscore=0 mlxlogscore=705 mlxscore=0 impostorscore=0
- malwarescore=0 suspectscore=0 clxscore=1011 bulkscore=0 adultscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310040079
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
@@ -83,44 +63,130 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, 29 Sep 2023 19:14:26 +0100
+Adri=C3=A1n Larumbe <adrian.larumbe@collabora.com> wrote:
 
-On 9/29/2023 6:38 PM, Bryan O'Donoghue wrote:
-> On 29/09/2023 11:28, Sarthak Garg wrote:
->> Add the ability to partially initialize the MMC device by
->> using device sleep/awake sequence (CMD5).
->> Device will be sent to sleep state during mmc runtime/system suspend
->> and will be woken up during mmc runtime/system resume.
->> By using this sequence the device doesn't need full initialization
->> which gives 25% time reduction in system/runtime resume path.
->> Also enable this feature for qualcomm controllers.
->>
->> Sarthak Garg (2):
->>    mmc: core: Add partial initialization support
->>    mmc: sdhci-msm: Enable MMC_CAP2_SLEEP_AWAKE for Qualcomm controllers
->>
->>   drivers/mmc/core/mmc.c       | 162 +++++++++++++++++++++++++++++++++--
->>   drivers/mmc/host/sdhci-msm.c |   1 +
->>   include/linux/mmc/card.h     |   4 +
->>   include/linux/mmc/host.h     |   2 +
->>   4 files changed, 160 insertions(+), 9 deletions(-)
->>
->> -- 
->> 2.17.1
->>
->
-> A terrible nit pick on my part however, you should include the name of 
-> the subsystem/driver in the title of the series.
->
-> "mmc: Do this awesome new thing"
->
-> ---
-> bod
+> This patch series adds fdinfo support to the Panfrost DRM driver. It will
+> display a series of key:value pairs under /proc/pid/fdinfo/fd for render
+> processes that open the Panfrost DRM file.
+>=20
+> The pairs contain basic drm gpu engine and memory region information that
+> can either be cat by a privileged user or accessed with IGT's gputop
+> utility.
+>=20
+> Changelog:
+>=20
+> v1: https://lore.kernel.org/lkml/bb52b872-e41b-3894-285e-b52cfc849782@arm=
+.com/T/
+>=20
+> v2: https://lore.kernel.org/lkml/20230901084457.5bc1ad69@collabora.com/T/
+>  - Changed the way gpu cycles and engine time are calculated, using GPU
+>    registers and taking into account potential resets.
+>  - Split render engine values into fragment and vertex/tiler ones.
+>  - Added more fine-grained calculation of RSS size for BO's.
+>  - Implemente selection of drm-memory region size units.
+>  - Removed locking of shrinker's mutex in GEM obj status function.
+>=20
+> v3: https://lore.kernel.org/lkml/20230905184533.959171-1-adrian.larumbe@c=
+ollabora.com/
+>  - Changed fdinfo engine names to something more descriptive.;
+>  - Mentioned GPU cycle counts aren't an exact measure.
+>  - Handled the case when job->priv might be NULL.
+>  - Handled 32 bit overflow of cycle register.
+>  - Kept fdinfo drm memory stats size unit display within 10k times the
+>    previous multiplier for more accurate BO size numbers.
+>  - Removed special handling of Prime imported BO RSS.
+>  - Use rss_size only for heap objects.
+>  - Use bo->base.madv instead of specific purgeable flag.
+>  - Fixed kernel test robot warnings.
+>=20
+> v4: https://lore.kernel.org/lkml/20230912084044.955864-1-adrian.larumbe@c=
+ollabora.com/
+>  - Move cycle counter get and put to panfrost_job_hw_submit and
+>    panfrost_job_handle_{err,done} for more accuracy.
+>  - Make sure cycle counter refs are released in reset path
+>  - Drop the model param for toggling cycle counting and do
+>    leave it down to the debugfs file.
+>  - Don't disable cycle counter when togglint debugfs file,
+>    let refcounting logic handle it instead.
+>  - Remove fdinfo data nested structure definion and 'names' field
+>  - When incrementing BO RSS size in GPU MMU page fault IRQ handler, assume
+>    granuality of 2MiB for every successful mapping.
+>  - drm-file picks an fdinfo memory object size unit that doesn't lose pre=
+cision.
+>=20
+> v5: https://lore.kernel.org/lkml/20230914223928.2374933-1-adrian.larumbe@=
+collabora.com/
+>  - Removed explicit initialisation of atomic variable for profiling mode,
+>    as it's allocated with kzalloc.
+>  - Pass engine utilisation structure to jobs rather than the file context=
+, to avoid
+>    future misusage of the latter.
+>  - Remove double reading of cycle counter register and ktime in job deqeu=
+eue function,
+>    as the scheduler will make sure these values are read over in case of =
+requeuing.
+>  - Moved putting of cycle counting refcnt into panfrost job dequeue.
+>    function to avoid repetition.
+>=20
+> v6: https://lore.kernel.org/lkml/c73ad42b-a8db-23c2-86c7-1a2939dba044@lin=
+ux.intel.com/T/
+>  - Fix wrong swapped-round engine time and cycle values in fdinfo
+>    drm print statements.
+>=20
+> v7: https://lore.kernel.org/lkml/20230927213133.1651169-6-adrian.larumbe@=
+collabora.com/T/
+>  - Make sure an object's actual RSS size is added to the overall fdinfo's=
+ purgeable
+>    and active size tally when it's both resident and purgeable or active.
+>  - Create a drm/panfrost.rst documentation file with meaning of fdinfo st=
+rings.
+>  - BUILD_BUG_ON checking the engine name array size for fdinfo.
+>  - Added copyright notices for Amazon in Panfrost's new debugfs files.
+>  - Discarded fdinfo memory stats unit size selection patch.
+>=20
+> v8:
+>  - Style improvements and addressing nitpicks.        =20
+>=20
+> Adri=C3=A1n Larumbe (5):
+>   drm/panfrost: Add cycle count GPU register definitions
+>   drm/panfrost: Add fdinfo support GPU load metrics
+>   drm/panfrost: Add fdinfo support for memory stats
+>   drm/drm_file: Add DRM obj's RSS reporting function for fdinfo
+>   drm/panfrost: Implement generic DRM object RSS reporting function
 
+Queued to drm-misc-next.
 
-Thanks for the comment will take care in V3.
+Thanks!
 
-Thanks,
-Sarthak
+Boris
 
-
+>=20
+>  Documentation/gpu/drm-usage-stats.rst       |  1 +
+>  Documentation/gpu/panfrost.rst              | 38 +++++++++++++
+>  drivers/gpu/drm/drm_file.c                  |  8 +--
+>  drivers/gpu/drm/panfrost/Makefile           |  2 +
+>  drivers/gpu/drm/panfrost/panfrost_debugfs.c | 21 ++++++++
+>  drivers/gpu/drm/panfrost/panfrost_debugfs.h | 14 +++++
+>  drivers/gpu/drm/panfrost/panfrost_devfreq.c |  8 +++
+>  drivers/gpu/drm/panfrost/panfrost_devfreq.h |  3 ++
+>  drivers/gpu/drm/panfrost/panfrost_device.c  |  2 +
+>  drivers/gpu/drm/panfrost/panfrost_device.h  | 13 +++++
+>  drivers/gpu/drm/panfrost/panfrost_drv.c     | 60 ++++++++++++++++++++-
+>  drivers/gpu/drm/panfrost/panfrost_gem.c     | 30 +++++++++++
+>  drivers/gpu/drm/panfrost/panfrost_gem.h     |  5 ++
+>  drivers/gpu/drm/panfrost/panfrost_gpu.c     | 41 ++++++++++++++
+>  drivers/gpu/drm/panfrost/panfrost_gpu.h     |  4 ++
+>  drivers/gpu/drm/panfrost/panfrost_job.c     | 24 +++++++++
+>  drivers/gpu/drm/panfrost/panfrost_job.h     |  5 ++
+>  drivers/gpu/drm/panfrost/panfrost_mmu.c     |  1 +
+>  drivers/gpu/drm/panfrost/panfrost_regs.h    |  5 ++
+>  include/drm/drm_gem.h                       |  9 ++++
+>  20 files changed, 290 insertions(+), 4 deletions(-)
+>  create mode 100644 Documentation/gpu/panfrost.rst
+>  create mode 100644 drivers/gpu/drm/panfrost/panfrost_debugfs.c
+>  create mode 100644 drivers/gpu/drm/panfrost/panfrost_debugfs.h
+>=20
+>=20
+> base-commit: f45acf7acf75921c0409d452f0165f51a19a74fd
 
