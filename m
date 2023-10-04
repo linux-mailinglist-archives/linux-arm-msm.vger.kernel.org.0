@@ -2,49 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9526D7B84AD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Oct 2023 18:12:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 74D197B84CC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Oct 2023 18:19:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233853AbjJDQME (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Oct 2023 12:12:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44522 "EHLO
+        id S243276AbjJDQTD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Oct 2023 12:19:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243313AbjJDQMA (ORCPT
+        with ESMTP id S243261AbjJDQTC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Oct 2023 12:12:00 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id E08141703;
-        Wed,  4 Oct 2023 09:11:44 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id EA334C15;
-        Wed,  4 Oct 2023 09:12:22 -0700 (PDT)
-Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id AB2543F762;
-        Wed,  4 Oct 2023 09:11:42 -0700 (PDT)
-Date:   Wed, 4 Oct 2023 17:11:40 +0100
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Nikunj Kela <quic_nkela@quicinc.com>
-Cc:     cristian.marussi@arm.com, robh+dt@kernel.org,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Brian Masney <bmasney@redhat.com>,
+        Wed, 4 Oct 2023 12:19:02 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FC6DC0
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Oct 2023 09:18:58 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id ffacd0b85a97d-32799639a2aso28454f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Oct 2023 09:18:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1696436336; x=1697041136; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=uuhFTaij8CkxaSGCgau6p1wn4p1PnkPS9KDREkl6rjc=;
+        b=ZayGJP+ZhmEiA3zNvK+8+ghjkd6PvkF3uHCimw6y8ryhAV3fnokNQGvbWRJc8633n9
+         FBIrRPlfplC3tsjoH87sWBDnwSNW6SzCqH5WikRKJVsPkvRY1GGzeZz+5G53Z9Hf2hRX
+         ctI8BiBmoaoHlcaBPler3iDy8H4v7sbIZBMbkD3ayhZyJLUawFDlo1UP0CJI6CockDT+
+         jFreGaypcgHJD2AvbNpcy9kdrOZEXp9ldcleI5//9J4apXWYB6pogrfvLuDF1nfeNcbM
+         W100JsbOQ5Yp6OtLb4J1QdnVqbVQoNRx8puc6cy8h+X3nlK6jAZLtvE1MJAQsuWKWXqZ
+         IFEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696436336; x=1697041136;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uuhFTaij8CkxaSGCgau6p1wn4p1PnkPS9KDREkl6rjc=;
+        b=pSFKVrIGIHtNz9Pj6+fPd98TmALbWkGZGptYilpaanyB6+9hnO+SpYSY8WGtVt83OT
+         9nwYQ7+1Cj/ifHAxrJOkEwYZrsD1HuVlBTy1c1wEmAgjHOgFP9PVRwHh8RkBKgmRxAZp
+         wzKr3ATBXtrFQgXX2NBpCT1iFWhGMBheBWIBKul5wz0KjywyXuTTtAv5y1C/5VmJvAhH
+         /EzG33xw/p59Dlq2mQ1iQLYAWUUfnemfrYIksSYGZCH4AAQ8KCpGHegD9NLAfrxQo6/y
+         6glSpHKCO4l7Mlkzjyz3VQP1gfG7SmcJuCMv99fPzkug+/J1ZIH5w1RCrQwAEd74Fj5R
+         2mrw==
+X-Gm-Message-State: AOJu0YxpF+o+B7C3edfTVAxkIgniuS6l0/Ikxg15JE2ter9NViYLb9qL
+        4XLyiFN+ovdqRBeFcu/nJTNSPA==
+X-Google-Smtp-Source: AGHT+IFpplTkgGRp8rnQ4WsOfy9Dx9PpGwm+77I2uJ5Zk67hlVkVh4dJWT4ntcpviQe7xU/SEXHitA==
+X-Received: by 2002:a5d:45c9:0:b0:323:1f49:de96 with SMTP id b9-20020a5d45c9000000b003231f49de96mr2419310wrs.49.1696436336364;
+        Wed, 04 Oct 2023 09:18:56 -0700 (PDT)
+Received: from x13s-linux.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id r5-20020adfe685000000b003177074f830sm4366940wrm.59.2023.10.04.09.18.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Oct 2023 09:18:55 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        dmitry.baryshkov@linaro.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 1/4] firmware: arm_scmi: Add polling support for
- completion in smc
-Message-ID: <20231004161140.uzqb4eapyo6gd7xm@bogus>
-References: <20230718160833.36397-1-quic_nkela@quicinc.com>
- <20230911194359.27547-1-quic_nkela@quicinc.com>
- <20230911194359.27547-2-quic_nkela@quicinc.com>
- <20231003103317.pjfmf6uisahowmom@bogus>
- <1c58a05b-1337-0287-225f-5a73b4c6828e@quicinc.com>
+        jonathan@marek.ca, quic_tdas@quicinc.com,
+        vladimir.zapolskiy@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bryan.odonoghue@linaro.org
+Subject: [PATCH v3 0/4] Add sc8280xp CAMCC bindings and driver
+Date:   Wed,  4 Oct 2023 17:18:49 +0100
+Message-Id: <20231004161853.86382-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1c58a05b-1337-0287-225f-5a73b4c6828e@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -52,47 +75,88 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 03, 2023 at 08:53:20AM -0700, Nikunj Kela wrote:
-> 
-> On 10/3/2023 3:33 AM, Sudeep Holla wrote:
-> > On Mon, Sep 11, 2023 at 12:43:56PM -0700, Nikunj Kela wrote:
-> > > Currently, the return from the smc call assumes the completion of
-> > > the scmi request. However this may not be true in virtual platforms
-> > > that are using hvc doorbell.
-> > > 
-> > Hmm, it is expectation from SMCCC for the fast calls. Is you HVC FID
-> > not a fast call. AFAIK, only TOS use yielding calls. Are you using them
-> > here ? If not, this must complete when the SMC/HVC returns. We added
-> > support for platforms indicating the same via interrupt.
-> > 
-> > I would like to avoid adding this build config. Why does it require polling ?
-> > Broken firmware ? I would add a compatible for that. Or if the qcom always
-> > wants to do this way, just make it specific to the qcom compatible.
-> > 
-> > I would avoid a config flag as it needs to be always enabled for single
-> > image and affects other platforms as well. So please drop this change.
-> > If this is absolutely needed, just add additional property which DT
-> > maintainers may not like as it is more like a policy or just make it
-> > compatible specific.
-> > 
-> > --
-> > Regards,
-> > Sudeep
-> We are using Fast call FID. We are using completion IRQ for all the scmi
-> instances except one where we need to communicate with the server when GIC
-> is in suspended state in HLOS. We will need to poll the channel for
-> completion in that use case. I am open to suggestions.
+This patch depends-on:
+https://lore.kernel.org/linux-arm-msm/20230923112105.18102-4-quic_luoj@quicinc.com
 
-IIUC, for the sake of that one corner case, you have added the polling
-Kconfig and will be enabled for all the case and even on other platforms
-in a single Image. I think we could be something better, no ?
+V3:
+- Resolves CLK_CRITICAL camcc_gdsc_clk by making camcc_gdsc_clk
+  always-on and dropping the CLK_CRITICAL flag.
+  We want camcc_gdsc_clk for retention, however CLK_CRITICAL is not
+  compatible with pm_runtime suspend and power collapse. - Konrad, Bod
 
-Please share details on that one corner case.
-Is it in the scmi drivers already ? If so, specifics please.
-If no, again provide details on how you plan to use. We do have ways
-to make a polling call, but haven't mixed it with interrupt based calls
-for a reason, but we can revisit if it makes sense.
+- Uses gcc.yaml instead of camcc-common.yaml - Krzysztof
 
---
-Regards,
-Sudeep
+- Drops fix for 8550, TBH I didn't know use for socname-ip.yaml
+  with compat strings for different drivers was OK, so long as the
+  content of the yaml was compliant for both. - Krzysztof
+
+- Drops clock-names, adds RB as indicated - Konrad
+
+- Reworks "really_probe" to account for patch from Lou Jie which
+  is RB from Stephen Boyd but not in any -next tree I can point to right
+  now. - Konrad, Bod
+
+- :g/CAM_CC/s//CAMCC/g - Bod
+
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/commits/clk-for-6.7-camcc-sc8280xp-v3
+ 
+V2:
+
+I've expanded the scope of this series to include some fixups for the
+camcc.yaml in general.
+
+- Adds qcom,camcc-common.yaml
+  There are a number of repeated patterns in the various camcc yaml
+  files which we can contain in a common camcc .yaml instead.
+  I used gcc.yaml as a base per Krzysztof's suggestion.
+
+- Adding the common values file I noticed that sm8450 and sm8550 were
+  both listed as compatible strings in qcom,sm8450-camcc.yaml.
+
+  This appears to be in error though since sm8450 and sm8550 are
+  not compat strings of the same driver but different drivers entirely.
+
+- Switches to indexing, instead of fw_name for clocks - Konrad
+
+- Adds the GCC AHB to the clock index - Bod/Konrad
+
+- Changes reference "cam_cc" to "camcc" throughout camcc-sc8280xp.c
+
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-26-10-23-sc8280xp-camcc-v2
+
+V1:
+This is a bog-standard series to add in the CAMCC for 8280xp.
+As a precursor to adding in sc8280xp I thought a bit of tidy up on the
+existing yaml for the camcc controllers in general would be worthwhile.
+
+As a result there's a precursor patch which aggregates the various camcc
+yaml files into one location.
+
+The sc8280xp looks like sdm845 with more blocks. Similar to sc8280xp we
+park GDSC to CXO. Thanks to Dmitry for the suggestion the GDSC parking.
+
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-23-09-23-sc8280xp-camcc
+
+Bryan O'Donoghue (4):
+  dt-bindings: clock: Use gcc.yaml for common clock properties
+  dt-bindings: clock: Add SC8280XP CAMCC
+  clk: qcom: camcc-sc8280xp: Add sc8280xp CAMCC
+  arm64: dts: qcom: sc8280xp: Add in CAMCC for sc8280xp
+
+ .../bindings/clock/qcom,camcc-sm8250.yaml     |   18 +-
+ .../bindings/clock/qcom,sc7180-camcc.yaml     |   18 +-
+ .../bindings/clock/qcom,sc7280-camcc.yaml     |   18 +-
+ .../bindings/clock/qcom,sdm845-camcc.yaml     |   18 +-
+ .../bindings/clock/qcom,sm8450-camcc.yaml     |   20 +-
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi        |   15 +
+ drivers/clk/qcom/Kconfig                      |    9 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/camcc-sc8280xp.c             | 3048 +++++++++++++++++
+ .../dt-bindings/clock/qcom,sc8280xp-camcc.h   |  179 +
+ 10 files changed, 3274 insertions(+), 70 deletions(-)
+ create mode 100644 drivers/clk/qcom/camcc-sc8280xp.c
+ create mode 100644 include/dt-bindings/clock/qcom,sc8280xp-camcc.h
+
+-- 
+2.40.1
+
