@@ -2,67 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C4B87B782C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Oct 2023 08:53:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 731267B783F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Oct 2023 08:58:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232775AbjJDGxX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Oct 2023 02:53:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40672 "EHLO
+        id S241457AbjJDG6B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Oct 2023 02:58:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232744AbjJDGxW (ORCPT
+        with ESMTP id S232775AbjJDG6A (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Oct 2023 02:53:22 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84B38AD
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 23:53:19 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-9b2a3fd5764so307757766b.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 23:53:19 -0700 (PDT)
+        Wed, 4 Oct 2023 02:58:00 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADBCEAF
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 23:57:56 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-9a58dbd5daeso313172266b.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 23:57:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696402398; x=1697007198; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1696402675; x=1697007475; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=6saMWO7TgNokXNDXrhUb1HLu6N9s90/jr2fFq1LcqJU=;
-        b=QDVqd3Z+iYPh1jP4J+0GNMrvUHcilkMedXvRTRQjyYRgA9sfME+Ty0nzdJl/NmqEVg
-         rJTRQ6vhjToVZikvSjhSbnHDYW+E/XcDCrVOIevIsno/9KwxrJh4TH/xgQ0Knif/CXJt
-         k5H9xMzjx5aHiMWUylTgz9zqSwOE99+3IuunoQzsIHIHeywPLH3o/Hb3CUis+hhmkkrV
-         hPwmmwRmbbEYv1HOQDCzj4B0AsvPS3xzmqe59JV6u+rLML4Xs1tjNZ8Ux1JAWojLAT2G
-         TymlNZigAHOBrF/kRu4akCXY+LMG2K25KWsSBSTr76DQCY+aEO3wInl7kpA4GAVkQrYW
-         GibQ==
+        bh=CF4RDfNCn+9e+cjFufKsFSZHZrUim5RqQgYIMHa5ioI=;
+        b=Qb0R4h8tCI4Vnxv7W2d7IbaY1CqGHVIuVfaysp8N2QPt6YDglvqj0b1d0FDFQpIzUN
+         0ek7vWPH5nRY0jQewhvBuWGyXcjcrvgsJ6oC321HhJou9PlKB0Nc5N0B4FowM3ZCGuXQ
+         J55AXmXzxJSHeHclL8KuXKslmQ8a0fqX5/tvNwsHgJdzG9vh3Pli19tsjDb1otzaycf3
+         U0wUB5uGcADGRutwYOp5N8oIdu06zQJJSv9WIChBE3ZPbD0HW73W54s/D3mt7qrSGXFh
+         oBSPuhp+lORUumuBd5v9/1Z1E1W6zzufLdiaNIZV80nE3vE942XNRAfjALn9OeF4Zujw
+         bF4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696402398; x=1697007198;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1696402675; x=1697007475;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6saMWO7TgNokXNDXrhUb1HLu6N9s90/jr2fFq1LcqJU=;
-        b=iALI46LRp0Ari0Ws5X1gXmSBKrFHYqChVXUa9DEjxgqwbBojgH8cpv2nkK6yNC3bof
-         Yjh13tzxNTHQ6P7vi4+UeW32Wy4R+oYESL0fhowT0LPJEyo80djBZzLq6fWf3mcfxcoI
-         3yRxgSiXaRqclQarCAOac6tZUnAQsYY4UQWhuLrFwDBuplZrUM5FWMwcrfYsCKTcXre6
-         IZo7DbaDXGxSHkB9yJPK+Kajjz09RH0ek1kY570CpnR34hPh52VCJt+5vg2ykD0rQpr/
-         vRarpODGyyVvhBQLoqul/QQn9vEWdtNKv6Te4ZEaczcyhpbZQb6Ubgv4c4XNzNWf6x68
-         QcDg==
-X-Gm-Message-State: AOJu0Yx3t5E6CrFaXpSR7ewlym6z/GYj8MNZ2qCwYObshKnMR7gpo1mM
-        TLrFY2K5YDvOOac14RU1QH4QSg==
-X-Google-Smtp-Source: AGHT+IFtlohT+D2AkuNNMw02jPf9mIFfBUh9ekSChstiQW1eBOhRD1OqJEwQdbvykgm2yNxLcW/pNA==
-X-Received: by 2002:a17:906:8a49:b0:9ae:5202:e611 with SMTP id gx9-20020a1709068a4900b009ae5202e611mr1111876ejc.14.1696402397946;
-        Tue, 03 Oct 2023 23:53:17 -0700 (PDT)
+        bh=CF4RDfNCn+9e+cjFufKsFSZHZrUim5RqQgYIMHa5ioI=;
+        b=annFVprXbrSzw1hc/IJdwvgRfJmR81OKBEVIYqCJFPiqVu7Nf3ZT+FVdFGi9cbB4iA
+         fdABdwbE5lNpS5YbLBqSfTrSVbji798ROoRTj8EBu1TaOfumpXNWGnexE7TPPB47jxSp
+         cnPF3kzXgSXPDTY+XZyeHi4Yuaoy+2ypTCgiFqUrZ5ZHcjNWIGXt26rH3Z1VbtnlVU1x
+         ODlgNUoT4vEdODlFl7SkZxc5ouTkKhrW/CUVOLZHSkdiOfWPHHl4eRD5IhmoK3eJU6CR
+         6p7hqBE9tiIW393e5ZGOtaW87Zr3kcwsxpTkr0GwcNRgby13WIG8DLoaOlZsumBEm4Q+
+         aLGg==
+X-Gm-Message-State: AOJu0Yz+BAYKKrO6MGP2B5D34tEblLnvyxoMVde/sqJpIBwm7YjnuE2J
+        ogSSzaq0si2X+FZWC5KX1MI0Uw==
+X-Google-Smtp-Source: AGHT+IGvPWefRX5GARibwaZdS5nMYXVCAuJNaKgUnSAc3Se8Io0NhobmVCEIi+yTOToBHoWkjTTInw==
+X-Received: by 2002:a17:906:6a19:b0:9a5:a0c6:9e8e with SMTP id qw25-20020a1709066a1900b009a5a0c69e8emr1576297ejc.31.1696402675070;
+        Tue, 03 Oct 2023 23:57:55 -0700 (PDT)
 Received: from [192.168.1.197] (5-157-101-10.dyn.eolo.it. [5.157.101.10])
-        by smtp.gmail.com with ESMTPSA id g6-20020a170906348600b009829d2e892csm2291040ejb.15.2023.10.03.23.53.16
+        by smtp.gmail.com with ESMTPSA id b25-20020a170906195900b0099cc3c7ace2sm2274362eje.140.2023.10.03.23.57.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Oct 2023 23:53:17 -0700 (PDT)
-Message-ID: <378efb2b-c423-44d0-97bc-43c8870cef6f@linaro.org>
-Date:   Wed, 4 Oct 2023 08:53:15 +0200
+        Tue, 03 Oct 2023 23:57:54 -0700 (PDT)
+Message-ID: <4bc021c1-0198-41a4-aa73-bf0cf0c0420a@linaro.org>
+Date:   Wed, 4 Oct 2023 08:57:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: qcm6490: Add qcm6490 dts file
+Subject: Re: [PATCH 1/6] dt-bindings: phy: qcom,uniphy-pcie: Document PCIe
+ uniphy
 Content-Language: en-US
-To:     Komal Bajaj <quic_kbajaj@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, luca.weiss@fairphone.com
-References: <20231003175456.14774-1-quic_kbajaj@quicinc.com>
- <20231003175456.14774-3-quic_kbajaj@quicinc.com>
+To:     Nitheesh Sekar <quic_nsekar@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
+        bhelgaas@google.com, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, vkoul@kernel.org, kishon@kernel.org,
+        mani@kernel.org, p.zabel@pengutronix.de, quic_srichara@quicinc.com,
+        quic_varada@quicinc.com, quic_ipkumar@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-phy@lists.infradead.org
+References: <20231003120846.28626-1-quic_nsekar@quicinc.com>
+ <20231003120846.28626-2-quic_nsekar@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -108,33 +114,95 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231003175456.14774-3-quic_kbajaj@quicinc.com>
+In-Reply-To: <20231003120846.28626-2-quic_nsekar@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/10/2023 19:54, Komal Bajaj wrote:
-> Add qcm6490 devicetree file for QCM6490 SoC and QCM6490 IDP
-> platform. QCM6490 is derived from SC7280 meant for various
-> form factor including IoT.
+On 03/10/2023 14:08, Nitheesh Sekar wrote:
+> Document the Qualcomm UNIPHY PCIe 28LP present in IPQ5018.
 > 
-> Supported features are, as of now:
-> * Debug UART
-> * eMMC
-> * USB
-> 
-> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
-> ---
+> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Thank you for your patch. There is something to discuss/improve.
+
+
+> ---
+>  .../bindings/phy/qcom,uniphy-pcie-28lp.yaml   | 77 +++++++++++++++++++
+>  1 file changed, 77 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,uniphy-pcie-28lp.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,uniphy-pcie-28lp.yaml b/Documentation/devicetree/bindings/phy/qcom,uniphy-pcie-28lp.yaml
+> new file mode 100644
+> index 000000000000..6b2574f9532e
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/qcom,uniphy-pcie-28lp.yaml
+
+Filename should match compatibles and they do not use 28lp.
+
+> @@ -0,0 +1,77 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/phy/qcom,uniphy-pcie-28lp.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm UNIPHY PCIe 28LP PHY driver
+
+Driver as Linux driver? Drop. Describe the hardware instead.
+
+> +
+> +maintainers:
+> +  - Nitheesh Sekar <quic_nsekar@quicinc.com>
+> +  - Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,ipq5018-uniphy-pcie-gen2x1
+> +      - qcom,ipq5018-uniphy-pcie-gen2x2
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    maxItems: 1
+> +
+> +  clock-names:
+> +    items:
+> +      - const: pipe_clk
+
+Drop _clk... or even drop entire clock-names. Not needed for one entry.
+
+> +
+> +  resets:
+> +    maxItems: 2
+> +
+> +  reset-names:
+> +    items:
+> +      - const: phy
+> +      - const: phy_phy
+
+These are absolutely terrible names. If you have third one, it would be
+"phy_phy_phy"? Drop or provide something useful.
+
+> +
+> +  "#phy-cells":
+> +    const: 0
+> +
+> +  "#clock-cells":
+> +    const: 0
+> +
+> +  clock-output-names:
+> +    maxItems: 1
 
 Best regards,
 Krzysztof
