@@ -2,171 +2,221 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FEEE7B7642
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Oct 2023 03:23:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3079B7B76D6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Oct 2023 05:19:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239772AbjJDBXT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Oct 2023 21:23:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54894 "EHLO
+        id S230045AbjJDDTL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Oct 2023 23:19:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239730AbjJDBXS (ORCPT
+        with ESMTP id S229530AbjJDDTK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Oct 2023 21:23:18 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4530DAB
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 18:23:14 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-5044dd5b561so1781682e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 18:23:14 -0700 (PDT)
+        Tue, 3 Oct 2023 23:19:10 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0C00AF
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Oct 2023 20:19:06 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2c17de836fbso19119391fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Oct 2023 20:19:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696382592; x=1696987392; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=R3yJCB/evHgpBk1/GnjoencE6NFEjBAI7Qfq764GKC4=;
-        b=L6w1DvOI4DaxdeMsY4hgo7amf2YE73eo1Wr+2Kfs8Bxz36xeC4VBIPiTDNNuzBTgyS
-         ubLB1mnPEFAoG4/Clf7lvHrS7H4admtswaOLRhNnD/zh8aRzSwBNqj+/+4RtrCDkQ+KA
-         G3s8ANP070kREHghysr6krJrskNhWzraZYQguEp/7voHFhaq0dsYm9dKmT8kDbaAFtuj
-         5fw9Ci+fLF+aD21WvsNABSMFVbOSBHKfSjrgOM5BDqMDFRT83PHQcUcYnoUnmsRvDXj7
-         rKldIg4Pej9KDUzVle9UUTJJSbuDVQOCrR09hEHVPU1zNuS27qo5+ZGwxLg6iK7Qg91Q
-         00mQ==
+        d=linaro.org; s=google; t=1696389545; x=1696994345; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=KSjHWoNUjbUR/rr+07ACORIedYYwRMMYATHihCLCO58=;
+        b=tSczmbbqo1RA17C/NrMZI7R+j6NLtBcYDEvOMTh7ceWrBm0zzMdmX8i7XA+hOnrqXf
+         FkzaTRiHGsGr9KQjFKBQfY9dLB/smC6rVgAYfQwa6CCbFYgvezZe0Cu5AtcdNsEDe3DN
+         K77ECz9BcGaoUx9aCBBdXcpt5CM9b5zgWuviEwgBma/Fagz6/i0yiBJ+sMDwSrtFvqP2
+         h58eLL8ewxoXxg7sI5RHiJG/5QIuGDCRa5tBz074P26goAMLvpwO6Q1X+KGPfNo0O2wN
+         hbV4xGwJXYl/7doiSBoNWictqlpmlUgUs5ir07Zo/GsoStG0kwMxr/TQ5jqbYtlaANdL
+         6/lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696382592; x=1696987392;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=R3yJCB/evHgpBk1/GnjoencE6NFEjBAI7Qfq764GKC4=;
-        b=V80WoJpLrvETRbJmtrN25oNJ9w6IN9LjvfmxiceAoRad0PNQQahCgv8hRlxIxE/L2K
-         MP9dCzL9fo/yXbaxlAAoDvLViTM25qfuaGJDBDRgiRepK5di6fH20lWUdRFFv7nxTc1F
-         pIS06WY3su4hnvXaKijQ03wYD6Pm6j5X3+SU+VUQSRwtZQBMMYeK97qCHLjgqlJc3CAN
-         rvRKuyyypAiyDK1Wmg0gVEGffussGx2QT7hQvail16/ucwTIrmf1qQy60N3n0u7vQwMb
-         UnV/vVwCt1mWOrSrfoPI19f1o5o3/X5iLbi6fETPWTGeXLQSyiE0NS1lNQfBdXygKbQA
-         OdkQ==
-X-Gm-Message-State: AOJu0YyB4zIVoIj8qnXBToo9W18gEJOIKj6vmJ6CFV1XTpig2+8epeHs
-        yUVRulS+py+QrMnAqm1MVOvk4Q==
-X-Google-Smtp-Source: AGHT+IE+6F5tywq+UhxdC+/gyRjLKKJwbtKcNQW+FLXAvKoGyCRIbU3YbA7vOdXkHylL73+L5u8WhA==
-X-Received: by 2002:a19:9148:0:b0:504:2d54:b4d0 with SMTP id y8-20020a199148000000b005042d54b4d0mr705374lfj.19.1696382592634;
-        Tue, 03 Oct 2023 18:23:12 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id w17-20020ac24431000000b004fdbb36a677sm381979lfl.288.2023.10.03.18.23.12
+        d=1e100.net; s=20230601; t=1696389545; x=1696994345;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KSjHWoNUjbUR/rr+07ACORIedYYwRMMYATHihCLCO58=;
+        b=swAomPP56/bwXKqoDk/lPD7o7jqffl15ZVchF1LvatmBDjkjNg+4LWXFcnfTGqf3VG
+         7V5amY5QLHmqIWQGjsqimxna4RoQ+qZUe9g0dzbztxFaTcHKHT+2R5n3VYcmVJ1x3zrk
+         cleSoZQYcEihKfCWQwtnfYO+dNrTHgmm7e0idCvJeXY4FzwIWQ0kTRTlFcOk7ftL7QhM
+         qnsDKQqMm3pliQ4sUNycrCt+kTvW6m5xf63Sb41gBbqdDiAz+Lccqfk9wh9VBj7Kq3Gm
+         O08s/4LFMw5l9MANmXXkZPZ5zrXSiHzD35gr5uWQBWhX2E2usJ5CCij6LdjL6d7OYUt9
+         xfww==
+X-Gm-Message-State: AOJu0YzkFr4wBImf1b7qIJFJc2LFxQdRaU3M0DLykfkxCH2Q05ulXv7V
+        8E7z8o89k1r84+/BZmCrcwMI1+EY4r1IwzWWGSk=
+X-Google-Smtp-Source: AGHT+IH/Sdf+B1sajD57r6zMUeuPKXAWSRNbLwR7DAfh6Nlk3TZKfhlJ6SqduGFUzTUkAWzyFH+uBg==
+X-Received: by 2002:a2e:7d15:0:b0:2bb:b01a:9226 with SMTP id y21-20020a2e7d15000000b002bbb01a9226mr903948ljc.7.1696389544953;
+        Tue, 03 Oct 2023 20:19:04 -0700 (PDT)
+Received: from eriador.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id l5-20020a2e8685000000b002bffa125afesm486056lji.48.2023.10.03.20.19.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Oct 2023 18:23:12 -0700 (PDT)
+        Tue, 03 Oct 2023 20:19:04 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>
-Subject: [RFC PATCH v2 3/3] clk: qcom: dispcc-sm8250: switch to clk_rcg2_parked_ops
-Date:   Wed,  4 Oct 2023 04:23:08 +0300
-Message-Id: <20231004012308.2305273-4-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20231004012308.2305273-1-dmitry.baryshkov@linaro.org>
-References: <20231004012308.2305273-1-dmitry.baryshkov@linaro.org>
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH] drm/msm/dpu: drop MSM_ENC_VBLANK support
+Date:   Wed,  4 Oct 2023 06:19:03 +0300
+Message-Id: <20231004031903.518223-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Switch MDP, AHB and ROT clocks to the clk_rcg2_parked_ops so that the
-CCF can properly determine if the clock is enabled or disabled.
+There are no in-kernel users of MSM_ENC_VBLANK wait type. Drop it
+together with the corresponding wait_for_vblank callback.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/clk/qcom/dispcc-sm8250.c | 13 +++----------
- 1 file changed, 3 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   |  3 --
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  1 -
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 28 -------------------
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  |  9 +++---
+ drivers/gpu/drm/msm/msm_drv.h                 |  2 --
+ 5 files changed, 4 insertions(+), 39 deletions(-)
 
-diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-sm8250.c
-index e17bb8b543b5..2ce7ec864a5b 100644
---- a/drivers/clk/qcom/dispcc-sm8250.c
-+++ b/drivers/clk/qcom/dispcc-sm8250.c
-@@ -144,12 +144,10 @@ static const struct clk_parent_data disp_cc_parent_data_2[] = {
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index d34e684a4178..83045aa8ba01 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -2429,9 +2429,6 @@ int dpu_encoder_wait_for_event(struct drm_encoder *drm_enc,
+ 		case MSM_ENC_TX_COMPLETE:
+ 			fn_wait = phys->ops.wait_for_tx_complete;
+ 			break;
+-		case MSM_ENC_VBLANK:
+-			fn_wait = phys->ops.wait_for_vblank;
+-			break;
+ 		default:
+ 			DPU_ERROR_ENC(dpu_enc, "unknown wait event %d\n",
+ 					event);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+index d48558ede488..c6cccab3bb6d 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+@@ -106,7 +106,6 @@ struct dpu_encoder_phys_ops {
+ 	int (*control_vblank_irq)(struct dpu_encoder_phys *enc, bool enable);
+ 	int (*wait_for_commit_done)(struct dpu_encoder_phys *phys_enc);
+ 	int (*wait_for_tx_complete)(struct dpu_encoder_phys *phys_enc);
+-	int (*wait_for_vblank)(struct dpu_encoder_phys *phys_enc);
+ 	void (*prepare_for_kickoff)(struct dpu_encoder_phys *phys_enc);
+ 	void (*handle_post_kickoff)(struct dpu_encoder_phys *phys_enc);
+ 	void (*trigger_start)(struct dpu_encoder_phys *phys_enc);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+index df88358e7037..285246837b73 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+@@ -690,33 +690,6 @@ static int dpu_encoder_phys_cmd_wait_for_commit_done(
+ 	return _dpu_encoder_phys_cmd_wait_for_ctl_start(phys_enc);
+ }
+ 
+-static int dpu_encoder_phys_cmd_wait_for_vblank(
+-		struct dpu_encoder_phys *phys_enc)
+-{
+-	int rc = 0;
+-	struct dpu_encoder_phys_cmd *cmd_enc;
+-	struct dpu_encoder_wait_info wait_info;
+-
+-	cmd_enc = to_dpu_encoder_phys_cmd(phys_enc);
+-
+-	/* only required for master controller */
+-	if (!dpu_encoder_phys_cmd_is_master(phys_enc))
+-		return rc;
+-
+-	wait_info.wq = &cmd_enc->pending_vblank_wq;
+-	wait_info.atomic_cnt = &cmd_enc->pending_vblank_cnt;
+-	wait_info.timeout_ms = KICKOFF_TIMEOUT_MS;
+-
+-	atomic_inc(&cmd_enc->pending_vblank_cnt);
+-
+-	rc = dpu_encoder_helper_wait_for_irq(phys_enc,
+-			phys_enc->irq[INTR_IDX_RDPTR],
+-			dpu_encoder_phys_cmd_te_rd_ptr_irq,
+-			&wait_info);
+-
+-	return rc;
+-}
+-
+ static void dpu_encoder_phys_cmd_handle_post_kickoff(
+ 		struct dpu_encoder_phys *phys_enc)
+ {
+@@ -745,7 +718,6 @@ static void dpu_encoder_phys_cmd_init_ops(
+ 	ops->wait_for_commit_done = dpu_encoder_phys_cmd_wait_for_commit_done;
+ 	ops->prepare_for_kickoff = dpu_encoder_phys_cmd_prepare_for_kickoff;
+ 	ops->wait_for_tx_complete = dpu_encoder_phys_cmd_wait_for_tx_complete;
+-	ops->wait_for_vblank = dpu_encoder_phys_cmd_wait_for_vblank;
+ 	ops->trigger_start = dpu_encoder_phys_cmd_trigger_start;
+ 	ops->needs_single_flush = dpu_encoder_phys_cmd_needs_single_flush;
+ 	ops->irq_control = dpu_encoder_phys_cmd_irq_control;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+index c2189e58de6a..94521f6d7f70 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+@@ -444,7 +444,7 @@ static void dpu_encoder_phys_vid_destroy(struct dpu_encoder_phys *phys_enc)
+ 	kfree(phys_enc);
+ }
+ 
+-static int dpu_encoder_phys_vid_wait_for_vblank(
++static int dpu_encoder_phys_vid_wait_for_tx_complete(
+ 		struct dpu_encoder_phys *phys_enc)
+ {
+ 	struct dpu_encoder_wait_info wait_info;
+@@ -558,7 +558,7 @@ static void dpu_encoder_phys_vid_disable(struct dpu_encoder_phys *phys_enc)
+ 	 * scanout buffer) don't latch properly..
+ 	 */
+ 	if (dpu_encoder_phys_vid_is_master(phys_enc)) {
+-		ret = dpu_encoder_phys_vid_wait_for_vblank(phys_enc);
++		ret = dpu_encoder_phys_vid_wait_for_tx_complete(phys_enc);
+ 		if (ret) {
+ 			atomic_set(&phys_enc->pending_kickoff_cnt, 0);
+ 			DRM_ERROR("wait disable failed: id:%u intf:%d ret:%d\n",
+@@ -578,7 +578,7 @@ static void dpu_encoder_phys_vid_disable(struct dpu_encoder_phys *phys_enc)
+ 		spin_lock_irqsave(phys_enc->enc_spinlock, lock_flags);
+ 		dpu_encoder_phys_inc_pending(phys_enc);
+ 		spin_unlock_irqrestore(phys_enc->enc_spinlock, lock_flags);
+-		ret = dpu_encoder_phys_vid_wait_for_vblank(phys_enc);
++		ret = dpu_encoder_phys_vid_wait_for_tx_complete(phys_enc);
+ 		if (ret) {
+ 			atomic_set(&phys_enc->pending_kickoff_cnt, 0);
+ 			DRM_ERROR("wait disable failed: id:%u intf:%d ret:%d\n",
+@@ -684,8 +684,7 @@ static void dpu_encoder_phys_vid_init_ops(struct dpu_encoder_phys_ops *ops)
+ 	ops->destroy = dpu_encoder_phys_vid_destroy;
+ 	ops->control_vblank_irq = dpu_encoder_phys_vid_control_vblank_irq;
+ 	ops->wait_for_commit_done = dpu_encoder_phys_vid_wait_for_commit_done;
+-	ops->wait_for_vblank = dpu_encoder_phys_vid_wait_for_vblank;
+-	ops->wait_for_tx_complete = dpu_encoder_phys_vid_wait_for_vblank;
++	ops->wait_for_tx_complete = dpu_encoder_phys_vid_wait_for_tx_complete;
+ 	ops->irq_control = dpu_encoder_phys_vid_irq_control;
+ 	ops->prepare_for_kickoff = dpu_encoder_phys_vid_prepare_for_kickoff;
+ 	ops->handle_post_kickoff = dpu_encoder_phys_vid_handle_post_kickoff;
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index 02fd6c7d0bb7..182543c92770 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -78,12 +78,10 @@ enum msm_dsi_controller {
+  * enum msm_event_wait - type of HW events to wait for
+  * @MSM_ENC_COMMIT_DONE - wait for the driver to flush the registers to HW
+  * @MSM_ENC_TX_COMPLETE - wait for the HW to transfer the frame to panel
+- * @MSM_ENC_VBLANK - wait for the HW VBLANK event (for driver-internal waiters)
+  */
+ enum msm_event_wait {
+ 	MSM_ENC_COMMIT_DONE = 0,
+ 	MSM_ENC_TX_COMPLETE,
+-	MSM_ENC_VBLANK,
  };
  
- static const struct parent_map disp_cc_parent_map_3[] = {
--	{ P_BI_TCXO, 0 },
- 	{ P_DISP_CC_PLL1_OUT_MAIN, 4 },
- };
- 
- static const struct clk_parent_data disp_cc_parent_data_3[] = {
--	{ .fw_name = "bi_tcxo" },
- 	{ .hw = &disp_cc_pll1.clkr.hw },
- };
- 
-@@ -166,13 +164,11 @@ static const struct clk_parent_data disp_cc_parent_data_4[] = {
- };
- 
- static const struct parent_map disp_cc_parent_map_5[] = {
--	{ P_BI_TCXO, 0 },
- 	{ P_DISP_CC_PLL0_OUT_MAIN, 1 },
- 	{ P_DISP_CC_PLL1_OUT_MAIN, 4 },
- };
- 
- static const struct clk_parent_data disp_cc_parent_data_5[] = {
--	{ .fw_name = "bi_tcxo" },
- 	{ .hw = &disp_cc_pll0.clkr.hw },
- 	{ .hw = &disp_cc_pll1.clkr.hw },
- };
-@@ -202,7 +198,6 @@ static const struct clk_parent_data disp_cc_parent_data_7[] = {
- };
- 
- static const struct freq_tbl ftbl_disp_cc_mdss_ahb_clk_src[] = {
--	F(19200000, P_BI_TCXO, 1, 0, 0),
- 	F(37500000, P_DISP_CC_PLL1_OUT_MAIN, 16, 0, 0),
- 	F(75000000, P_DISP_CC_PLL1_OUT_MAIN, 8, 0, 0),
- 	{ }
-@@ -219,7 +214,7 @@ static struct clk_rcg2 disp_cc_mdss_ahb_clk_src = {
- 		.parent_data = disp_cc_parent_data_3,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_3),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_parked_ops,
- 	},
- };
- 
-@@ -543,7 +538,6 @@ static struct clk_rcg2 disp_cc_mdss_esc1_clk_src = {
- };
- 
- static const struct freq_tbl ftbl_disp_cc_mdss_mdp_clk_src[] = {
--	F(19200000, P_BI_TCXO, 1, 0, 0),
- 	F(85714286, P_DISP_CC_PLL1_OUT_MAIN, 7, 0, 0),
- 	F(100000000, P_DISP_CC_PLL1_OUT_MAIN, 6, 0, 0),
- 	F(150000000, P_DISP_CC_PLL1_OUT_MAIN, 4, 0, 0),
-@@ -565,7 +559,7 @@ static struct clk_rcg2 disp_cc_mdss_mdp_clk_src = {
- 		.parent_data = disp_cc_parent_data_5,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_5),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_parked_ops,
- 	},
- };
- 
-@@ -598,7 +592,6 @@ static struct clk_rcg2 disp_cc_mdss_pclk1_clk_src = {
- };
- 
- static const struct freq_tbl ftbl_disp_cc_mdss_rot_clk_src[] = {
--	F(19200000, P_BI_TCXO, 1, 0, 0),
- 	F(200000000, P_DISP_CC_PLL1_OUT_MAIN, 3, 0, 0),
- 	F(300000000, P_DISP_CC_PLL1_OUT_MAIN, 2, 0, 0),
- 	F(345000000, P_DISP_CC_PLL0_OUT_MAIN, 4, 0, 0),
-@@ -617,7 +610,7 @@ static struct clk_rcg2 disp_cc_mdss_rot_clk_src = {
- 		.parent_data = disp_cc_parent_data_5,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_5),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_parked_ops,
- 	},
- };
- 
+ /**
 -- 
-2.39.2
+2.40.1
 
