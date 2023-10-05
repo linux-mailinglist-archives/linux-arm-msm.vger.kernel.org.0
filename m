@@ -2,80 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 73DFB7BA3AA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Oct 2023 17:58:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB3367BA235
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Oct 2023 17:21:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238013AbjJEP6J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Oct 2023 11:58:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50908 "EHLO
+        id S230059AbjJEPVS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Oct 2023 11:21:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234355AbjJEP44 (ORCPT
+        with ESMTP id S232405AbjJEPUU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Oct 2023 11:56:56 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF6FA5BB2;
-        Thu,  5 Oct 2023 06:55:04 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1FF0C43215;
-        Thu,  5 Oct 2023 13:55:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1696514104;
-        bh=ruPafLxqiqN5GVxCe5nkJ2euYsptGUelC3r4B7yxjts=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=WQz4G4yYnAdDDEo1AaWaMUeq+Ut8JXdSfJlNQcrG0O9WNOg2EptQ/FY/ZcdWUvTMG
-         i3Fngj/gkp6CClxwXXLKWH+0xKI/IGpm3cg8WCvtLWM5xwmNt7wx0TAOKFJOzC/928
-         VoNPrNPKCDAoqctzmVPhaRbjgre0dB7d0bpKvb/u3rDa+5EfIF1vSjUzFCthlVqHQz
-         bdPlYV7e1P2sDeS7IAYcqyxA3hUL7NH1diuUHIAM/xis2VRjtNvljpYzVTwnjkzSC5
-         IVmC/vjFvY+q0nmbauREp932iuThtGgzHx/YVkUKsQqFHfF6R2y3+FtDwQG6DrKYlZ
-         on2FyWwL/MOmw==
-From:   Lee Jones <lee@kernel.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Luca Weiss <luca.weiss@fairphone.com>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-In-Reply-To: <20231002-pm7250b-gpio-fixup-v2-1-debb8b599989@fairphone.com>
-References: <20231002-pm7250b-gpio-fixup-v2-0-debb8b599989@fairphone.com>
- <20231002-pm7250b-gpio-fixup-v2-1-debb8b599989@fairphone.com>
-Subject: Re: (subset) [PATCH v2 1/2] dt-bindings: mfd: qcom,spmi-pmic: Drop
- unused labels from examples
-Message-Id: <169651410138.777767.3255528451615557124.b4-ty@kernel.org>
-Date:   Thu, 05 Oct 2023 14:55:01 +0100
+        Thu, 5 Oct 2023 11:20:20 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C99B17ECB;
+        Thu,  5 Oct 2023 06:56:17 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3959wOMw017759;
+        Thu, 5 Oct 2023 13:56:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : from : to : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=mhWtRwSrCBHkhnh4SbONgAeq/8iY4hKQg3DZnXzzILU=;
+ b=Pa3Fhy6wrqBsyY+/r23GuMzat9EhPFHmiOSQTEhM/9BMsTNjRW1SQKYCW4FrAeIGt6YL
+ bSPS//umUmspE9u+83VcTvsZneHAj37bVSImZiwFf7G4Y8cMxD28NcUHhmVWn2PQGt9a
+ hINy/PtN5PV7Sx/UN5PrySNEMgxBvBPpnFmB3dPUR6bgoeyAOjbdC1nWpXdQXvo9yJvp
+ Lz48KIgF17hDu9+x/SBwohHSmz3Vkmbhz6JYTJ9+e5UhJm1oHKDavYDFlzwGvEILNomm
+ EHqot3mja+0uCMJC3Vdim4yDsGj+CTqqpQ14wwVHfFbT3L+37XT/m4cHAwRTMAa/FbAR Ag== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3thnfa90b9-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 05 Oct 2023 13:56:10 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 395Du9rs004252
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 5 Oct 2023 13:56:09 GMT
+Received: from [10.216.12.172] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Thu, 5 Oct
+ 2023 06:56:04 -0700
+Message-ID: <416692f7-ffeb-419b-9a05-24909ab13de9@quicinc.com>
+Date:   Thu, 5 Oct 2023 19:25:59 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: ipq5018: add QUP1 SPI controller
+Content-Language: en-US
+From:   Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+To:     Robert Marko <robimarko@gmail.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20231004191303.331055-1-robimarko@gmail.com>
+ <6dcb61f6-9be4-4feb-a7dd-44d606fcc480@quicinc.com>
+In-Reply-To: <6dcb61f6-9be4-4feb-a7dd-44d606fcc480@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.12.2
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: hGgLs-_VgMRTSWpTO1lae4jKgHpvkrLA
+X-Proofpoint-ORIG-GUID: hGgLs-_VgMRTSWpTO1lae4jKgHpvkrLA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-05_08,2023-10-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ lowpriorityscore=0 mlxlogscore=991 malwarescore=0 bulkscore=0 spamscore=0
+ impostorscore=0 clxscore=1015 adultscore=0 phishscore=0 mlxscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310050108
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 02 Oct 2023 09:00:11 +0200, Luca Weiss wrote:
-> There's not much point in having unused labels in the binding example,
-> so drop them.
-> 
-> This patch was originally motivated by ea25d61b448a ("arm64: dts: qcom:
-> Use plural _gpios node label for PMIC gpios") updating all dts files to
-> use the plural _gpios label instead of the singular _gpio as label but
-> this example wasn't updated. But since we should just drop the label
-> alltogether, do that.
-> 
-> [...]
 
-Applied, thanks!
+On 10/5/2023 7:18 PM, Kathiravan Thirumoorthy wrote:
+>
+> On 10/5/2023 12:42 AM, Robert Marko wrote:
+>> Add the required BAM and QUP nodes for the QUP1 SPI controller on 
+>> IPQ5018.
+>>
+>> Signed-off-by: Robert Marko <robimarko@gmail.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/ipq5018.dtsi | 24 ++++++++++++++++++++++++
+>>   1 file changed, 24 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi 
+>> b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+>> index 38ffdc3cbdcd..484034e65f4f 100644
+>> --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+>> @@ -146,6 +146,16 @@ sdhc_1: mmc@7804000 {
+>>               status = "disabled";
+>>           };
+>>   +        blsp_dma: dma-controller@7884000 {
+>> +            compatible = "qcom,bam-v1.7.0";
+>> +            reg = <0x07884000 0x1d000>;
+>> +            interrupts = <GIC_SPI 238 IRQ_TYPE_LEVEL_HIGH>;
+>> +            clocks = <&gcc GCC_BLSP1_AHB_CLK>;
+>> +            clock-names = "bam_clk";
+>> +            #dma-cells = <1>;
+>> +            qcom,ee = <0>;
+>> +        };
+>> +
+>>           blsp1_uart1: serial@78af000 {
+>>               compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
+>>               reg = <0x078af000 0x200>;
+>> @@ -156,6 +166,20 @@ blsp1_uart1: serial@78af000 {
+>>               status = "disabled";
+>>           };
+>>   +        blsp1_spi1: spi@78b5000 {
+>> +            compatible = "qcom,spi-qup-v2.2.1";
+>> +            #address-cells = <1>;
+>> +            #size-cells = <0>;
+>> +            reg = <0x78b5000 0x600>;
+>
+>
+> Please pad the address part to 8 hex digits with leading zeroes. With 
+> that,
+>
+> Reviewed-by: Kathiravan T <quic_kathirav@quicinc.com>
 
-[1/2] dt-bindings: mfd: qcom,spmi-pmic: Drop unused labels from examples
-      commit: cac94656ff2b16827d7cd455f0d3746280cf3138
+Once again, missed to spell out last name...
 
---
-Lee Jones [李琼斯]
+Reviewed-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
 
+
+>
+>
+>> +            interrupts = <GIC_SPI 95 IRQ_TYPE_LEVEL_HIGH>;
+>> +            clocks = <&gcc GCC_BLSP1_QUP1_SPI_APPS_CLK>,
+>> +                 <&gcc GCC_BLSP1_AHB_CLK>;
+>> +            clock-names = "core", "iface";
+>> +            dmas = <&blsp_dma 4>, <&blsp_dma 5>;
+>> +            dma-names = "tx", "rx";
+>> +            status = "disabled";
+>> +        };
+>> +
+>>           intc: interrupt-controller@b000000 {
+>>               compatible = "qcom,msm-qgic2";
+>>               reg = <0x0b000000 0x1000>,  /* GICD */
