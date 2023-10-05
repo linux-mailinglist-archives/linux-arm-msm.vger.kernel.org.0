@@ -2,66 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 00FD27BA252
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Oct 2023 17:29:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 490DF7BA253
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Oct 2023 17:30:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233137AbjJEP3g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Oct 2023 11:29:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44442 "EHLO
+        id S229544AbjJEPaB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Oct 2023 11:30:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230416AbjJEP3E (ORCPT
+        with ESMTP id S231441AbjJEP30 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Oct 2023 11:29:04 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C56D19BE
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Oct 2023 07:47:28 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-9b1ebc80d0aso194685466b.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Oct 2023 07:47:27 -0700 (PDT)
+        Thu, 5 Oct 2023 11:29:26 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF84B2B8BB
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Oct 2023 07:48:50 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-98377c5d53eso192886466b.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Oct 2023 07:48:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696517239; x=1697122039; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696517320; x=1697122120; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=tto9wm0ISeNf3UAV1j04gWVxq8Y6ATztYCHyVAlk2ck=;
-        b=WfLfAI5vR+N0KK4/t6+u4YcDYOaEF9H24Fju6K/gKUqS87u904XYjRZJ8VxNlWxt64
-         NM02c1OpbBmm5Lj/fJXso/4EA5zh+vKCThZYw34lEiHq0V04SAneWrH19IfdEKNIkMJR
-         D0tm8jsyZzSS4NQlyu+/GksmglKGjdhB47nUrow/1EsOVPeH3BsgLCqepGArxUd5Ef4s
-         PMVIbsiVAng3ULBkFeCBRnivaY+Kia4NC+oOYWA5zCp5NGiHCe7y5z45wKB7TbUPJHaw
-         dmBovW/DZXql5xPd2O5crkjRxANM717E3nlXS9Ii5bOeZXu/Quc+8WqHm4Tz7VU/PAhY
-         DTfg==
+        bh=AFTRJ9LOdKz1pzzjgzvYEInNLg2aiS47P3gxQj2muZ8=;
+        b=IOdN25LSRDwkawAca9pwETDeZu8gPJZeK5pUFJg6Jhe1BtK9THg/FREjyiDQuGazbu
+         dRLEDCdz6+NVUXw+hXJyF1RZDHv7N8oTeFEqCt/U8jcSuD5egrXstTjsJu6wXFc7s65F
+         8CvUFWn2dx16fRuhk0GkmHMFa8HeSvbIIETCZCxv7GKDvlyS8V1NPgu4u4QA8+5jGsPc
+         vI+wEJdH4zg3hR/9g53TjceNRCHx6wV/GC5A7rzt2839a3tN6TN1Y0Rkvc3reUmaqc3v
+         CTKwXR9jcd6PWfBjHbJ59LJQfHnGJguHhM+t/PNXJzxxzpc6KGIxmT4kI0ydyTixZn8t
+         RqrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696517239; x=1697122039;
+        d=1e100.net; s=20230601; t=1696517320; x=1697122120;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tto9wm0ISeNf3UAV1j04gWVxq8Y6ATztYCHyVAlk2ck=;
-        b=dAzWOzOMw4p338yD8gMywX5qw8f8alrDCT11uTrJkhJxYAWk8DxvSkuPofEpt1n1Fn
-         m7p8AB/i3X4s4/ZoiIfH2ivrX/iMzJHci6bVo+NcHmxwEaTyjome6HUI4Mbvd6aWWtII
-         LQXMFkjw54hcVMI6q0qaqseWIhV8+EJjW9A3kszFB7zIBdhLLX22vTKCV4w0tX6sGSPz
-         RaqMFn7Lw7hwk2yA9lkEYydh+oG9mTaNm8KNCCsNxRlfnWbsevMG01mtIHHMmjwzLBiy
-         aO5DJ4kJ6gs1iHwLYl3qjx1nBRaocuMjRsuxxNPh4ErBeg8vxfPPwYI+CXiiCjNtJNJY
-         eMUg==
-X-Gm-Message-State: AOJu0YyOpU4rOwz/F0VH0TWBBBPxf5x2UOLPIaBa/0dnxhE09KEd07Iz
-        2O1WyoLMMNwNRnvPDCZQU3m4Iw==
-X-Google-Smtp-Source: AGHT+IEYMdYdBDatF6FUjnfb0aSJK8uDfND6VplT6CfUa8ZFlH+RIhraTBeoAMIrXVmCEe8Gb2XT3A==
-X-Received: by 2002:a17:907:760f:b0:9ad:78b7:29ea with SMTP id jx15-20020a170907760f00b009ad78b729eamr5082967ejc.44.1696517239146;
-        Thu, 05 Oct 2023 07:47:19 -0700 (PDT)
+        bh=AFTRJ9LOdKz1pzzjgzvYEInNLg2aiS47P3gxQj2muZ8=;
+        b=w9jFPoK64xtOvu/sqSbY46FsOtELZnQH7VnkfMAK//oRVKXqqt4/ExmAapnU0wT5fr
+         IAZ3+D/2h//VviFB20SvmpBAEE9hCF72aY6PlTTgwX/uZpP3yhkPsNdn470TjmVWEW7B
+         CUakEOoqR12+giRDdC0dFGBjiSU0Mn0EcLX0xe/Gjvhtsp0cCI/hG0cuh9pXBTexzRU7
+         XH2ls7naJj5v5ykqbfGORv3DUVCTA3rpACKGMN7TFBrRmqqyhWuCdNp3bQvf1sSrzDHA
+         s2M7rlO+SxLcwP0FLVLlotfDgkD9AIu7e6AKsbwyllKPfw81fTwiEa5oOdcukyWUV+5F
+         bTqg==
+X-Gm-Message-State: AOJu0Yx2HXV649xhNIhxvaJy3dDFDWcbOm1HFBeQf4/isZaqShIGrf/G
+        wouL/9RmvNBOTu0zA5ZpmW/3Mw==
+X-Google-Smtp-Source: AGHT+IELsNwmTzXQstm3rM2DoxIYAP4LMhTWlDdPyqUzM1Cky8jhsE+Tzt7ve/JJ6eUvfarm0Rcn8g==
+X-Received: by 2002:a17:906:3f04:b0:9ae:5568:b6a8 with SMTP id c4-20020a1709063f0400b009ae5568b6a8mr5583845ejj.10.1696517320270;
+        Thu, 05 Oct 2023 07:48:40 -0700 (PDT)
 Received: from [192.168.1.197] (5-157-101-10.dyn.eolo.it. [5.157.101.10])
-        by smtp.gmail.com with ESMTPSA id dc4-20020a170906c7c400b0098e34446464sm1312776ejb.25.2023.10.05.07.47.17
+        by smtp.gmail.com with ESMTPSA id dc4-20020a170906c7c400b0098e34446464sm1312776ejb.25.2023.10.05.07.48.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Oct 2023 07:47:18 -0700 (PDT)
-Message-ID: <e21ff000-2f6c-4e1e-865e-047377db6978@linaro.org>
-Date:   Thu, 5 Oct 2023 16:47:15 +0200
+        Thu, 05 Oct 2023 07:48:39 -0700 (PDT)
+Message-ID: <b017d65e-35cc-4415-a5a1-ccf7d56bb3c7@linaro.org>
+Date:   Thu, 5 Oct 2023 16:48:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Add Xiaomi Mi 9
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: Add device tree for Xiaomi Mi 9
 Content-Language: en-US
 To:     ZeYan Li <qaz6750@outlook.com>, andersson@kernel.org,
         agross@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <SY7P282MB37876D9914F4E7016DB84723B2CAA@SY7P282MB3787.AUSP282.PROD.OUTLOOK.COM>
+References: <SY7P282MB3787E3A1FE3DA22CC6701BFBB2CAA@SY7P282MB3787.AUSP282.PROD.OUTLOOK.COM>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -107,11 +107,11 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <SY7P282MB37876D9914F4E7016DB84723B2CAA@SY7P282MB3787.AUSP282.PROD.OUTLOOK.COM>
+In-Reply-To: <SY7P282MB3787E3A1FE3DA22CC6701BFBB2CAA@SY7P282MB3787.AUSP282.PROD.OUTLOOK.COM>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -121,31 +121,122 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 05/10/2023 16:31, ZeYan Li wrote:
-> Add a compatible for Xiaomi Mi 9.
+> This commit adds initial support for the Xiaomi Mi 9.
 > 
 > Signed-off-by: ZeYan Li <qaz6750@outlook.com>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>  .../boot/dts/qcom/sm8150-xiaomi-cepheus.dts   | 610 ++++++++++++++++++
+>  2 files changed, 611 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sm8150-xiaomi-cepheus.dts
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index d6cb840b7050..75e9657d7d57 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -214,6 +214,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-microsoft-surface-duo.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-mtp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-sony-xperia-kumano-bahamut.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-sony-xperia-kumano-griffin.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-xiaomi-cepheus.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-hdk.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-mtp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-sony-xperia-edo-pdx203.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sm8150-xiaomi-cepheus.dts b/arch/arm64/boot/dts/qcom/sm8150-xiaomi-cepheus.dts
+> new file mode 100644
+> index 000000000000..bc4f3533455a
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sm8150-xiaomi-cepheus.dts
+> @@ -0,0 +1,610 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2023, Zeyan Li <qaz6750@outlook.com>
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include <dt-bindings/gpio/gpio.h>
+> +#include <dt-bindings/input/input.h>
+> +#include <dt-bindings/input/gpio-keys.h>
+> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> +#include "sm8150.dtsi"
+> +#include "pm8150.dtsi"
+> +#include "pm8150b.dtsi"
+> +#include "pm8150l.dtsi"
+> +
+> +/*
+> + * Delete following upstream (sm8150.dtsi) reserved
+> + * memory mappings which are different in this device.
+> + */
+> +/delete-node/ &tz_mem;      /* same address but larger, no place for rmtfs_mem! */
+> +/delete-node/ &rmtfs_mem;   /* moved to completely different address */
+> +/delete-node/ &adsp_mem;    /* same start address, but larger size */
+> +/delete-node/ &mpss_mem;    /* same size, shifted higher, due to larger adsp_mem */
+> +/delete-node/ &venus_mem;   /* same size, shifted higher */
+> +/delete-node/ &slpi_mem;    /* same size, shifted higher */
+> +/delete-node/ &ipa_fw_mem;  /* same size, shifted higher */
+> +/delete-node/ &ipa_gsi_mem; /* same size, shifted higher */
+> +/delete-node/ &gpu_mem;     /* same size, shifted higher */
+> +/delete-node/ &spss_mem;    /* same size, shifted higher */
+> +/delete-node/ &cdsp_mem;    /* same size, shifted higher */
+> +
+> +/ {
+> +	model = "xiaomi Mi 9";
+> +	compatible = "xiaomi,cepheus", "qcom,sm8150";
+> +	chassis-type = "handset";
+> +	/* Required for bootloader to select correct board */
+> +	qcom,board-id = <37 0>;
+> +
+> +	aliases {
+> +		serial0 = &uart2;
+> +		display0 = &framebuffer;
+> +	};
+> +
+> +	chosen {
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+> +		ranges;
+> +
+> +		framebuffer: framebuffer@9c000000 {
+> +			compatible = "simple-framebuffer";
+> +			reg = <0 0x9c000000 0 0x2400000>;
+> +			status = "okay";
+> +			width = <1080>;
+> +			height = <2340>;
+> +			stride = <(1080 * 4)>;
+> +			format = "a8r8g8b8";
+> +			/*
+> +			 * That's (going to be) a lot of clocks, but it's necessary due
+> +			 * to unused clk cleanup & no panel driver yet (& no dispcc either)..
+> +			 */
+> +			clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
+> +				 <&gcc GCC_DISP_SF_AXI_CLK>;
+> +		};
+> +	};
+> +
+> +	gpio_keys {
 
-Your patch threading is missing. Use b4 or send everything in one batch.
+No underscores in node names.
 
+gpio-keys
+> +		compatible = "gpio-keys";
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&ai_key_pin_a &vol_up_pin_a>;
+> +
+> +		vol_up {
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+It does not look like you tested the DTS against bindings. Please run
+`make dtbs_check W=1` (see
+Documentation/devicetree/bindings/writing-schema.rst or
+https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
+for instructions).
 
+No, do not upstream junky DTS from some vendor stuff. That's not how it
+works. You must choose decent, latest DTS and customize it per your
+needs. There is little point to review and ask the same bugs we fixed
+months or years ago.
 
----
-
-This is an automated instruction, just in case, because many review tags
-are being ignored. If you know the process, you can skip it (please do
-not feel offended by me posting it here - no bad intentions intended).
-If you do not know the process, here is a short explanation:
-
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions, under or above your Signed-off-by tag. Tag is "received", when
-provided in a message replied to you on the mailing list. Tools like b4
-can help here. However, there's no need to repost patches *only* to add
-the tags. The upstream maintainer will do that for tags received on the
-version they apply.
-
-https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
 
 Best regards,
 Krzysztof
