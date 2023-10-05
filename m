@@ -2,71 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C17F7B9F9A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Oct 2023 16:26:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CE7E7B9F7B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Oct 2023 16:25:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234097AbjJEOZ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Oct 2023 10:25:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39974 "EHLO
+        id S232708AbjJEOYy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Oct 2023 10:24:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234734AbjJEOXe (ORCPT
+        with ESMTP id S233558AbjJEOXE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Oct 2023 10:23:34 -0400
-Received: from mail-vs1-xe2b.google.com (mail-vs1-xe2b.google.com [IPv6:2607:f8b0:4864:20::e2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBE79769F
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Oct 2023 00:12:54 -0700 (PDT)
-Received: by mail-vs1-xe2b.google.com with SMTP id ada2fe7eead31-45260b91a29so320558137.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Oct 2023 00:12:54 -0700 (PDT)
+        Thu, 5 Oct 2023 10:23:04 -0400
+Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F78C7A89
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Oct 2023 00:20:02 -0700 (PDT)
+Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-59f55c276c3so6866947b3.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Oct 2023 00:20:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1696489974; x=1697094774; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OogRoZfS+KCs50xXFrJ7TjK5qXdEjTWJkgAZyfQ+l0g=;
-        b=ugxIEeSad8acpJHqII7iFa5Ktdh8QZ4oecWcCFQ5y/hbHFJlvFqMJv9iDmGt4Lxh7+
-         dV/841iTvGfLm8FvRAx8S7S5p7nYC56uJN1YDkyKU/ud46bJsV1RgWc3492DQaeg2DYp
-         3t6IkJM00/YebzlpF6adezg4P+8qiyBHPT/Icq/LZFEEmm8UKqHKdR7SAs7KFkznDpXs
-         av3ai7azrNNoyDelT8THXPsTjxJN8X8hZm04cdaerDShut4ju0/5yS9Nwxw1MPFE2UH/
-         O7B6Zssgee84pSqnmFGfnxCJci3XH/xzTE8qqjQh8DGV8dD/aTVqZi+Fc1SZToXRgQuH
-         WO8g==
+        d=linaro.org; s=google; t=1696490401; x=1697095201; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=fhD+4AkRggrUFVCRueZ0EP4NvrMyL09uoQLrgXFHCqg=;
+        b=iKX7e05y5+jAEWh+swf+m1bczWFfBdxrL8viyG20sGbM5iifMvSvrH4oB5FdL7xNPT
+         oXk/RAQxERIvCe6QjawiiieR/wNljWLRbIDLymCbaVarIFEu/Nq56mni3jXnUdFUNvtH
+         mw3NzW0Cpomx7uI8FRlFZmD7TI11/dM0srCfzgW7l1XLDB7w/pPykluZXvzDs/RrqOQS
+         vQw7yC/cgu+XjjjbKd9Nyo4CoPW01JbLm62SMX4S37wM3GCEsDKoMvh5IrVVKjZ6C7iD
+         TS/1AndgFbEvxokgXEgtjwKA2JYU4qeT2gmxfjlTMwNKV91cWmzXrA3maHVen0/1fI/4
+         sg6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696489974; x=1697094774;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OogRoZfS+KCs50xXFrJ7TjK5qXdEjTWJkgAZyfQ+l0g=;
-        b=pBcJdFYO0x5t2YPN8ZKsALcPjiPsDbNrOgweEIzqeRO5ju097W2NC7IdZSaomvZ5iw
-         SxR3E/rUIrnLPJoUFjPMVarI9b+lAbjgDqagORec9h+7QYk2bu6zNdc0qPi8zNHrJJeN
-         /S2KhlOyyXdJyYGJaeFbymoskp+wubNQyEqzqhfOqRGmQ0G+f9hHBsLWZ7QUy3rTRhHm
-         OEnxbDO6rbqJU4tF9OqmkuPtr3TygUnPxU5nXS28+fdBm9DPqOgS5vHP4Hh//bIUHTgM
-         n/Tpll/ZkTTXDb9bv8XQyEtrwbxLTFq7lEA1+YSGEBL+HmnXe2QQzOjPqr9rRQFwQuUt
-         RndQ==
-X-Gm-Message-State: AOJu0YwDk4ANXCSQx0D4ev8IKgwc0uoBnvd4Ywd6vKeyivnFz1q49zdI
-        6vJKg5h5RRL3iv0F3WHQJ3yobrPihLCGUyccmxqrCg==
-X-Google-Smtp-Source: AGHT+IEkTEShELFzLmOYm9pZifwz8zN1dpxg4FkFmg/0S8ndh86LLvirqKPTBfa+qn+UdVEXq6k6eCTWXmQPRTJ8jPE=
-X-Received: by 2002:a05:6102:354d:b0:450:fcad:ff23 with SMTP id
- e13-20020a056102354d00b00450fcadff23mr3890408vss.32.1696489973920; Thu, 05
- Oct 2023 00:12:53 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1696490401; x=1697095201;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fhD+4AkRggrUFVCRueZ0EP4NvrMyL09uoQLrgXFHCqg=;
+        b=FneSS4jM9RdSs8Zu4hUQmmeybdipvepAGd+4zdBw144khrB65Ajy+TV6vAF58UNX8x
+         0izC4bgdyGtPb6/S5qn1e7Mp6DDmsB103ri+nVMA63FZn/H/jWU/AFljry50VE9evYi0
+         dX64hEE5lPkZiQLClFRlrCSyB6YVZt153bqVeFwEeGXa/XeUqgTboEgriv3SWmM3g9cs
+         FM16+gtvBM2r8ZGDWKBnRI66XYaHPBPwDq5+QY5ZOXIIiTv07CqrnGQYW9u84gTHav0S
+         u0+b3xqkx4QCbMzT9/obJIlu7SsmCIbs9hVQBzNYl9yaiacPVhDJtn1kz32cWmjscLCZ
+         664A==
+X-Gm-Message-State: AOJu0YxswVgz7RaTsNSQq/cdSuYyqZ1QHg3GJ4eQs0glE90de2nXWmqm
+        HgnMwxe/pvwX+XdP0RwBeRq5kOTAqVE2wy5dtZpQAQ==
+X-Google-Smtp-Source: AGHT+IGesqMfmj1nxg+O0YSuQ3VFwBsQSZOi0zTeQfQZtjxFFMjQOoclKS4KUAPCE2zcA4w9XSSdPLdR4QyfVe1uahU=
+X-Received: by 2002:a0d:cc44:0:b0:59f:7d6b:ea42 with SMTP id
+ o65-20020a0dcc44000000b0059f7d6bea42mr4835211ywd.23.1696490400983; Thu, 05
+ Oct 2023 00:20:00 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230928092040.9420-1-brgl@bgdev.pl> <20230928092040.9420-12-brgl@bgdev.pl>
- <4ab66f17-4686-411f-b829-74eab3489568@gmail.com>
-In-Reply-To: <4ab66f17-4686-411f-b829-74eab3489568@gmail.com>
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-Date:   Thu, 5 Oct 2023 09:12:42 +0200
-Message-ID: <CAMRc=MebkzaLUtTn20V9f0FU1PbGrUGSHAJR+j3nVpc6wdJnsQ@mail.gmail.com>
-Subject: Re: [PATCH v2 11/11] firmware: qcom: scm: enable SHM bridge
-To:     Maximilian Luz <luzmaximilian@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        kernel@quicinc.com,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20230825091234.32713-1-quic_devipriy@quicinc.com>
+ <20230825091234.32713-6-quic_devipriy@quicinc.com> <CAA8EJpr+Wwgot-PDRtj-LVi79aD13B9WVREmjTXiR-8XEEx-rQ@mail.gmail.com>
+ <652b55cc-87dd-46d1-e480-e25f5f22b8d8@quicinc.com> <a4c9baae-f328-22b5-48d7-fc7df0b62a79@quicinc.com>
+ <CAA8EJpq0uawrOBHA8XHygEpGYF--HyxJWxKG44iiFdAZZz7O2w@mail.gmail.com>
+ <45f96567-553c-9214-eb7e-c75c6e09d78b@quicinc.com> <65b030c6-6fab-53ea-2774-48698905dd96@quicinc.com>
+In-Reply-To: <65b030c6-6fab-53ea-2774-48698905dd96@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 5 Oct 2023 10:19:49 +0300
+Message-ID: <CAA8EJprSw4MGQKh01mZ5x5rBcRpgD7t4ph2617RhpR2Qg5SB=g@mail.gmail.com>
+Subject: Re: [PATCH V2 5/7] clk: qcom: Add NSS clock Controller driver for IPQ9574
+To:     Devi Priya <quic_devipriy@quicinc.com>
+Cc:     andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
+        richardcochran@gmail.com, arnd@arndb.de, geert+renesas@glider.be,
+        nfraprado@collabora.com, rafal@milecki.pl, peng.fan@nxp.com,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, netdev@vger.kernel.org,
+        quic_saahtoma@quicinc.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=ham
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,113 +79,166 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 5, 2023 at 12:24=E2=80=AFAM Maximilian Luz <luzmaximilian@gmail=
-.com> wrote:
+On Thu, 5 Oct 2023 at 09:26, Devi Priya <quic_devipriy@quicinc.com> wrote:
 >
-> On 9/28/23 11:20, Bartosz Golaszewski wrote:
-> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>
+>
+> On 9/22/2023 5:31 PM, Devi Priya wrote:
 > >
-> > Extens the SCM memory allocator with using the SHM Bridge feature if
-> > available on the platform. This makes the trustzone only use dedicated
-> > buffers for SCM calls. We map the entire SCM genpool as a bridge.
 > >
-> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > On 9/20/2023 1:50 PM, Dmitry Baryshkov wrote:
+> >> On Wed, 20 Sept 2023 at 09:39, Devi Priya <quic_devipriy@quicinc.com>
+> >> wrote:
+> >>>
+> >>>
+> >>>
+> >>> On 9/12/2023 7:38 PM, Devi Priya wrote:
+> >>>>
+> >>>>
+> >>>> On 8/25/2023 5:14 PM, Dmitry Baryshkov wrote:
+> >>>>> On Fri, 25 Aug 2023 at 12:15, Devi Priya <quic_devipriy@quicinc.com>
+> >>>>> wrote:
+> >>>>>>
+> >>>>>> Add Networking Sub System Clock Controller(NSSCC) driver for ipq9574
+> >>>>>> based
+> >>>>>> devices.
+> >>>>>>
+> >>>>>> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> >>>>>> ---
+> >>>>>>    Changes in V2:
+> >>>>>>           - Added depends on ARM64 || COMPILE_TEST in Kconfig
+> >>>>>>           - Added module_platform_driver
+> >>>>>>           - Dropped patch [2/6] - clk: qcom: gcc-ipq9574: Mark nssnoc
+> >>>>>> clocks as critical
+> >>>>>>              & added pm_clk for nssnoc clocks
+> >>>>>>           - Updated the uniphy clock names
+> >>>>>>
+> >>>>>>    drivers/clk/qcom/Kconfig         |    7 +
+> >>>>>>    drivers/clk/qcom/Makefile        |    1 +
+> >>>>>>    drivers/clk/qcom/nsscc-ipq9574.c | 3109
+> >>>>>> ++++++++++++++++++++++++++++++
+> >>>>>>    3 files changed, 3117 insertions(+)
+> >>>>>>    create mode 100644 drivers/clk/qcom/nsscc-ipq9574.c
+> >>>>>>
+> >>>>>> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+> >>>>>> index bd9bfb11b328..3ecc11e2c8e3 100644
+> >>>>>> --- a/drivers/clk/qcom/Kconfig
+> >>>>>> +++ b/drivers/clk/qcom/Kconfig
+> >>>>>> @@ -203,6 +203,13 @@ config IPQ_GCC_9574
+> >>>>>>             i2c, USB, SD/eMMC, etc. Select this for the root clock
+> >>>>>>             of ipq9574.
+> >>>>>>
+> >>>>>> +config IPQ_NSSCC_9574
+> >>>>>> +       tristate "IPQ9574 NSS Clock Controller"
+> >>>>>> +       depends on ARM64 || COMPILE_TEST
+> >>>>>> +       depends on IPQ_GCC_9574
+> >>>>>> +       help
+> >>>>>> +         Support for NSS clock controller on ipq9574 devices.
+> >>>>>> +
+> >>>>>>    config MSM_GCC_8660
+> >>>>>>           tristate "MSM8660 Global Clock Controller"
+> >>>>>>           depends on ARM || COMPILE_TEST
+> >>>>>> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
+> >>>>>> index 4790c8cca426..3f084928962e 100644
+> >>>>>> --- a/drivers/clk/qcom/Makefile
+> >>>>>> +++ b/drivers/clk/qcom/Makefile
+> >>>>>> @@ -30,6 +30,7 @@ obj-$(CONFIG_IPQ_GCC_6018) += gcc-ipq6018.o
+> >>>>>>    obj-$(CONFIG_IPQ_GCC_806X) += gcc-ipq806x.o
+> >>>>>>    obj-$(CONFIG_IPQ_GCC_8074) += gcc-ipq8074.o
+> >>>>>>    obj-$(CONFIG_IPQ_GCC_9574) += gcc-ipq9574.o
+> >>>>>> +obj-$(CONFIG_IPQ_NSSCC_9574)   += nsscc-ipq9574.o
+> >>>>>>    obj-$(CONFIG_IPQ_LCC_806X) += lcc-ipq806x.o
+> >>>>>>    obj-$(CONFIG_MDM_GCC_9607) += gcc-mdm9607.o
+> >>>>>>    obj-$(CONFIG_MDM_GCC_9615) += gcc-mdm9615.o
+> >>>>>> diff --git a/drivers/clk/qcom/nsscc-ipq9574.c
+> >>>>>> b/drivers/clk/qcom/nsscc-ipq9574.c
+> >>>>>> new file mode 100644
+> >>>>>> index 000000000000..65bdb449ae5f
+> >>>>>> --- /dev/null
+> >>>>>> +++ b/drivers/clk/qcom/nsscc-ipq9574.c
+> >>>>>> @@ -0,0 +1,3109 @@
+> >>>>>> +// SPDX-License-Identifier: GPL-2.0-only
+> >>>>>> +/*
+> >>>>>> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> >>>>>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights
+> >>>>>> reserved.
+> >>>>>> + */
+> >>>>>> +
+> >>>>>> +#include <linux/clk-provider.h>
+> >>>>>> +#include <linux/err.h>
+> >>>>>> +#include <linux/kernel.h>
+> >>>>>> +#include <linux/module.h>
+> >>>>>> +#include <linux/of.h>
+> >>>>>> +#include <linux/of_device.h>
+> >>>>>> +#include <linux/regmap.h>
+> >>>>>> +#include <linux/pm_clock.h>
+> >>>>>> +#include <linux/pm_runtime.h>
+> >>>>>> +
+> >>>>>> +#include <dt-bindings/clock/qcom,ipq9574-nsscc.h>
+> >>>>>> +#include <dt-bindings/reset/qcom,ipq9574-nsscc.h>
+> >>>>>> +
+> >>>>>> +#include "clk-alpha-pll.h"
+> >>>>>> +#include "clk-branch.h"
+> >>>>>> +#include "clk-pll.h"
+> >>>>>> +#include "clk-rcg.h"
+> >>>>>> +#include "clk-regmap.h"
+> >>>>>> +#include "clk-regmap-divider.h"
+> >>>>>> +#include "clk-regmap-mux.h"
+> >>>>>> +#include "common.h"
+> >>>>>> +#include "reset.h"
+> >>>>>> +
+> >>>>>> +/* Need to match the order of clocks in DT binding */
+> >>>>>> +enum {
+> >>>>>> +       DT_NSSNOC_NSSCC_CLK,
+> >>>>>> +       DT_NSSNOC_SNOC_CLK,
+> >>>>>> +       DT_NSSNOC_SNOC_1_CLK,
+> >>>>>
+> >>>>> Not using the index makes it seem that these clocks are not used,
+> >>>>> until one scrolls down to pm_clks.
+> >>>> Okay, got it
+> >>>>>
+> >>>>> BTW: The NSSNOC_SNOC clocks make it look like there is an interconnect
+> >>>>> here (not a simple NIU).
+> >>>>
+> >>>> Hi Dmitry, We are exploring on the ICC driver. In the meantime to
+> >>>> unblock PCIe/NSS changes getting merged, shall we use
+> >>>> regmap_update_bits
+> >>>> and turn on the critical NSSNOC clocks, ANOC & SNOC pcie clocks in the
+> >>>> probe function of the gcc driver itself as like sm8550 driver to get
+> >>>> the
+> >>>> changes merged?
+> >>>>
+> >>>> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/clk/qcom/gcc-sm8550.c#n3347
+> >>>
+> >>> Hi Dmitry,
+> >>> Just curious to know if we could send out the next series with the
+> >>> proposed approach if that holds good.
+> >>
+> >> The answer really depends on the structure of your hardware. The issue
+> >> is that once you commit the device bindings,you have to support them
+> >> forever. So, if you commit the NSS clock support without interconnects
+> >> in place, you have to keep this ANOC/SNOC/etc code forever, even after
+> >> you land the interconnect. So I'd suggest landing the icc driver first
+> >> (or at least implementing and sending to the mailing list), so that we
+> >> can see how all these pieces fit together.
+> >
+> > Hi Dmitry,
+> > Unlike MSM chipsets, IPQ chipsets does not have any use case wherein the
+> > NOC clocks have to be scaled. So if these clocks can be enabled in the
+> > probe, there is no need for an interconnect driver at all. The same
+> > applies to both ipq9574 and ipq5332 SoCs.
+> >
 >
-> This patch breaks something in early boot on my Surface Pro X (sc8180x).
-> Unfortunately I can't provide many details at the moment because the
-> only thing I can see are RCU stalls, and the traces from them are quite
-> useless.
->
-> Without this patch, the rest of the series (with the fix you posted on
-> patch 6 applied) seems to work fine. Including both RFT qseecom patches.
->
-> I plan to have a closer look at this once I have some more time though.
->
+> Hi Dmitry,
+> Just curious to know if we can go ahead with the proposed solution of
+> enabling the NOC clocks in the probe as these clocks need not be scaled
+> in IPQ chipsets & hence there would be no need for an ICC driver in
+> ipq9574 & ipq5332 targets.
 
-Can it be the PAS image loading? This is something Andrew reported and
-I have it fixed for v3.
+In the probe of which driver?
 
-Bart
 
-> Regards,
-> Max
->
-> > ---
-> >   drivers/firmware/qcom/qcom_scm-mem.c | 42 ++++++++++++++++++++++++++-=
--
-> >   1 file changed, 39 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/drivers/firmware/qcom/qcom_scm-mem.c b/drivers/firmware/qc=
-om/qcom_scm-mem.c
-> > index eafecbe23770..12b12b15f46f 100644
-> > --- a/drivers/firmware/qcom/qcom_scm-mem.c
-> > +++ b/drivers/firmware/qcom/qcom_scm-mem.c
-> > @@ -16,6 +16,8 @@
-> >
-> >   #include "qcom_scm.h"
-> >
-> > +#define QCOM_SHM_BRIDGE_NUM_VM_SHIFT 9
-> > +
-> >   static size_t qcom_scm_mem_pool_size =3D SZ_2M;
-> >   module_param_named(qcom_scm_mem_pool_size, qcom_scm_mem_pool_size,
-> >                  ulong, 0400);
-> > @@ -108,8 +110,24 @@ phys_addr_t qcom_scm_mem_to_phys(void *vaddr)
-> >       return chunk->paddr;
-> >   }
-> >
-> > +static int qcom_scm_mem_shm_bridge_create(void)
-> > +{
-> > +     uint64_t pfn_and_ns_perm, ipfn_and_s_perm, size_and_flags, ns_per=
-ms;
-> > +
-> > +     ns_perms =3D (QCOM_SCM_PERM_WRITE | QCOM_SCM_PERM_READ);
-> > +     pfn_and_ns_perm =3D (u64)qcom_scm_mem.pbase | ns_perms;
-> > +     ipfn_and_s_perm =3D (u64)qcom_scm_mem.pbase | ns_perms;
-> > +     size_and_flags =3D qcom_scm_mem.size | (1 << QCOM_SHM_BRIDGE_NUM_=
-VM_SHIFT);
-> > +
-> > +     return qcom_scm_create_shm_bridge(qcom_scm_mem.dev, pfn_and_ns_pe=
-rm,
-> > +                                       ipfn_and_s_perm, size_and_flags=
-,
-> > +                                       QCOM_SCM_VMID_HLOS);
-> > +}
-> > +
-> >   int qcom_scm_mem_enable(struct device *dev)
-> >   {
-> > +     int ret;
-> > +
-> >       INIT_RADIX_TREE(&qcom_scm_mem.chunks, GFP_ATOMIC);
-> >       spin_lock_init(&qcom_scm_mem.lock);
-> >       qcom_scm_mem.dev =3D dev;
-> > @@ -128,7 +146,25 @@ int qcom_scm_mem_enable(struct device *dev)
-> >
-> >       gen_pool_set_algo(qcom_scm_mem.pool, gen_pool_best_fit, NULL);
-> >
-> > -     return gen_pool_add_virt(qcom_scm_mem.pool,
-> > -                              (unsigned long)qcom_scm_mem.vbase,
-> > -                              qcom_scm_mem.pbase, qcom_scm_mem.size, -=
-1);
-> > +     ret =3D gen_pool_add_virt(qcom_scm_mem.pool,
-> > +                             (unsigned long)qcom_scm_mem.vbase,
-> > +                             qcom_scm_mem.pbase, qcom_scm_mem.size, -1=
-);
-> > +     if (ret)
-> > +             return ret;
-> > +
-> > +     ret =3D qcom_scm_enable_shm_bridge();
-> > +     if (ret) {
-> > +             if (ret =3D=3D EOPNOTSUPP)
-> > +                     dev_info(dev, "SHM Bridge not supported\n");
-> > +             else
-> > +                     return ret;
-> > +     } else {
-> > +             ret =3D qcom_scm_mem_shm_bridge_create();
-> > +             if (ret)
-> > +                     return ret;
-> > +
-> > +             dev_info(dev, "SHM Bridge enabled\n");
-> > +     }
-> > +
-> > +     return 0;
-> >   }
+
+-- 
+With best wishes
+Dmitry
