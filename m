@@ -2,292 +2,401 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5CA1A7BA769
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Oct 2023 19:14:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 379A67BAA41
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Oct 2023 21:36:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231889AbjJEROV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Oct 2023 13:14:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39222 "EHLO
+        id S230193AbjJETgY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Oct 2023 15:36:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230508AbjJERN1 (ORCPT
+        with ESMTP id S229573AbjJETgY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Oct 2023 13:13:27 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A3B119D;
-        Thu,  5 Oct 2023 10:03:50 -0700 (PDT)
+        Thu, 5 Oct 2023 15:36:24 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE3F6DB;
+        Thu,  5 Oct 2023 12:36:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1696525430; x=1728061430;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=jhekV1Te52jzHcPHzuEyyPysifIs0kcosnjo4YGqqRA=;
-  b=jl+k1h1s55R/0Z/xIwsxvt63R3wpnNTaRb3dGGm6fOYzby8gsJhg1wNI
-   +yWn1nuS0arS+deF+snsuuhuEuhkYpA1Y8kChp3J0jZV1VigQtg87riCo
-   xAWuu4AfKI3QeGWa/uYgT88WlqEg7YJtI6wpZ1kU5azPb5oVbEmvS1bP6
-   7LazvCxTC3x1kJ2h/bdWHDnv4vDww2NP6M3EAlAKSs03PohwnDAWHbPia
-   nbmN0jWNduUcsVo56caotDQfq2gb296vvXleXH8I4Yqs0v0JJIaE6pu5Z
-   zq2anHAg+hLhRdsGVcM7IHfgTU/MEWUKsERQ3rGaFGEiauG1arQvu/yR0
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10854"; a="373912266"
+  t=1696534579; x=1728070579;
+  h=date:from:to:cc:subject:message-id;
+  bh=O7t8WCFgng//NcKf5qtV6wBZy0Py6B/isH81y3b1+j8=;
+  b=W9LMPOSaosNY/RGHckvjLckUR0bDZfBrhGsQJUwCmduuavsEucbhX34c
+   SeymF+jOd2qy/m2JmeCt12uolBccso85pCk/fALioRgNuTAaFZQMH+YOT
+   FFhSJPLcys7n7iBFQRjIxRMPN9xzXuHfFjt5z7GnawATuThzC61vO1Wa6
+   WtbkQ/VPuFpMvpXXi55C/NltwxaOCnJpsEmZSxhEJoRjkIjInVDho/+Of
+   49bJvwAjrSw8r6BG1xe31d4cZRVEKMJwpaHxKkydJlSohH9/Ha17ChSI7
+   5fJOn3Qw/BN+HihQ+ebIXHAbQiaHPSt3xDyeThXg31wJgsihNVtoaTzO+
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10854"; a="2201542"
 X-IronPort-AV: E=Sophos;i="6.03,203,1694761200"; 
-   d="scan'208";a="373912266"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Oct 2023 10:03:46 -0700
+   d="scan'208";a="2201542"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Oct 2023 12:36:18 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10854"; a="745528483"
+X-IronPort-AV: E=McAfee;i="6600,9927,10854"; a="895571961"
 X-IronPort-AV: E=Sophos;i="6.03,203,1694761200"; 
-   d="scan'208";a="745528483"
+   d="scan'208";a="895571961"
 Received: from lkp-server02.sh.intel.com (HELO c3b01524d57c) ([10.239.97.151])
-  by orsmga007.jf.intel.com with ESMTP; 05 Oct 2023 10:03:41 -0700
+  by fmsmga001.fm.intel.com with ESMTP; 05 Oct 2023 12:34:44 -0700
 Received: from kbuild by c3b01524d57c with local (Exim 4.96)
         (envelope-from <lkp@intel.com>)
-        id 1qoRlD-000Lgi-1l;
-        Thu, 05 Oct 2023 17:03:39 +0000
-Date:   Fri, 6 Oct 2023 01:02:55 +0800
+        id 1qoU8q-000LpK-0U;
+        Thu, 05 Oct 2023 19:36:12 +0000
+Date:   Fri, 06 Oct 2023 03:35:24 +0800
 From:   kernel test robot <lkp@intel.com>
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Masami Hiramatsu <mhiramat@kernel.org>
-Cc:     oe-kbuild-all@lists.linux.dev, linux-kernel@vger.kernel.org,
-        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-trace-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
-        quic_ramkri@quicinc.com, quic_nitegupt@quicinc.com,
-        quic_skananth@quicinc.com, quic_parass@quicinc.com,
-        Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Subject: Re: [PATCH] bus: mhi: host: Add tracing support
-Message-ID: <202310060033.Z0Ojejxe-lkp@intel.com>
-References: <20231005-ftrace_support-v1-1-23a2f394fa49@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231005-ftrace_support-v1-1-23a2f394fa49@quicinc.com>
+To:     Andrew Morton <akpm@linux-foundation.org>
+Cc:     Linux Memory Management List <linux-mm@kvack.org>,
+        amd-gfx@lists.freedesktop.org, bpf@vger.kernel.org,
+        gfs2@lists.linux.dev, intel-gfx@lists.freedesktop.org,
+        kunit-dev@googlegroups.com, kvm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+        linux-hardening@vger.kernel.org, linux-kbuild@vger.kernel.org,
+        linux-kselftest@vger.kernel.org, ntfs3@lists.linux.dev
+Subject: [linux-next:master] BUILD REGRESSION
+ 7d730f1bf6f39ece2d9f3ae682f12e5b593d534d
+Message-ID: <202310060305.T8zECtq5-lkp@intel.com>
+User-Agent: s-nail v14.9.24
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
+        SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krishna,
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git master
+branch HEAD: 7d730f1bf6f39ece2d9f3ae682f12e5b593d534d  Add linux-next specific files for 20231005
 
-kernel test robot noticed the following build warnings:
+Error/Warning reports:
 
-[auto build test WARNING on 3006adf3be79cde4d14b1800b963b82b6e5572e0]
+https://lore.kernel.org/oe-kbuild-all/202309122047.cRi9yJrq-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202309192314.VBsjiIm5-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202309212121.cul1pTRa-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202309212339.hxhBu2F1-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202309221945.uwcQ56zg-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202310041744.d34gIv9V-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202310042215.w9PG3Rqs-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202310051547.40nm4Sif-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202310052201.AnVbpgPr-lkp@intel.com
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Krishna-chaitanya-chundru/bus-mhi-host-Add-tracing-support/20231005-231430
-base:   3006adf3be79cde4d14b1800b963b82b6e5572e0
-patch link:    https://lore.kernel.org/r/20231005-ftrace_support-v1-1-23a2f394fa49%40quicinc.com
-patch subject: [PATCH] bus: mhi: host: Add tracing support
-config: m68k-allyesconfig (https://download.01.org/0day-ci/archive/20231006/202310060033.Z0Ojejxe-lkp@intel.com/config)
-compiler: m68k-linux-gcc (GCC) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231006/202310060033.Z0Ojejxe-lkp@intel.com/reproduce)
+Error/Warning: (recently discovered and may have been fixed)
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202310060033.Z0Ojejxe-lkp@intel.com/
+Documentation/gpu/amdgpu/thermal:43: ./drivers/gpu/drm/amd/pm/amdgpu_pm.c:988: WARNING: Unexpected indentation.
+arch/x86/include/asm/string_32.h:150:25: warning: '__builtin_memcpy' writing 3 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+drivers/cpufreq/sti-cpufreq.c:215:50: warning: '%d' directive output may be truncated writing between 1 and 10 bytes into a region of size 2 [-Wformat-truncation=]
+drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c:274: warning: Function parameter or member 'gart_placement' not described in 'amdgpu_gmc_gart_location'
+fs/bcachefs/bcachefs_format.h:215:25: warning: 'p' offset 3 in 'struct bkey' isn't aligned to 4 [-Wpacked-not-aligned]
+fs/bcachefs/bcachefs_format.h:217:25: warning: 'version' offset 27 in 'struct bkey' isn't aligned to 4 [-Wpacked-not-aligned]
+fs/gfs2/inode.c:1876:14: sparse:    struct gfs2_glock *
+fs/gfs2/inode.c:1876:14: sparse:    struct gfs2_glock [noderef] __rcu *
+fs/gfs2/super.c:1543:17: sparse:    struct gfs2_glock *
+fs/gfs2/super.c:1543:17: sparse:    struct gfs2_glock [noderef] __rcu *
+include/linux/fortify-string.h:57:33: warning: writing 8 bytes into a region of size 0 [-Wstringop-overflow=]
+kernel/bpf/helpers.c:1906:19: warning: no previous declaration for 'bpf_percpu_obj_new_impl' [-Wmissing-declarations]
+kernel/bpf/helpers.c:1942:18: warning: no previous declaration for 'bpf_percpu_obj_drop_impl' [-Wmissing-declarations]
+kernel/bpf/helpers.c:2477:18: warning: no previous declaration for 'bpf_throw' [-Wmissing-declarations]
 
-All warnings (new ones prefixed by >>):
+Unverified Error/Warning (likely false positive, please contact us if interested):
 
-   drivers/bus/mhi/host/main.c: In function 'mhi_process_ctrl_ev_ring':
->> drivers/bus/mhi/host/main.c:834:74: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
-     834 |                 trace_mhi_process_ctrl_ev_ring(mhi_cntrl->mhi_dev->name, (u64)(local_rp),
-         |                                                                          ^
-   drivers/bus/mhi/host/main.c: In function 'mhi_gen_tre':
-   drivers/bus/mhi/host/main.c:1245:69: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
-    1245 |         trace_mhi_gen_tre(mhi_cntrl->mhi_dev->name, mhi_chan->chan, (u64)(mhi_tre),
-         |                                                                     ^
---
-   drivers/bus/mhi/host/pm.c: In function 'mhi_pm_st_worker':
->> drivers/bus/mhi/host/pm.c:758:24: warning: unused variable 'dev' [-Wunused-variable]
-     758 |         struct device *dev = &mhi_cntrl->mhi_dev->dev;
-         |                        ^~~
+Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml:
+arch/x86/kvm/x86.c:8891 x86_emulate_instruction() warn: missing error code? 'r'
+drivers/gpu/drm/amd/amdgpu/amdgpu_mca.c:209 amdgpu_mca_smu_get_mca_entry() warn: variable dereferenced before check 'mca_funcs' (see line 200)
+drivers/gpu/drm/i915/display/intel_psr.c:3185 i915_psr_sink_status_show() error: uninitialized symbol 'error_status'.
+drivers/gpu/drm/i915/display/intel_tc.c:327 mtl_tc_port_get_max_lane_count() error: uninitialized symbol 'pin_mask'.
+fs/exfat/namei.c:393 exfat_find_empty_entry() error: uninitialized symbol 'last_clu'.
+fs/ntfs3/bitmap.c:663 wnd_init() warn: Please consider using kvcalloc instead of kvmalloc_array
+fs/ntfs3/super.c:466:23: sparse: sparse: unknown escape sequence: '\%'
+lib/kunit/executor_test.c:39 parse_filter_test() error: double free of 'filter.suite_glob'
+lib/kunit/executor_test.c:40 parse_filter_test() error: double free of 'filter.test_glob'
+scripts/mod/modpost.c:1437:14: warning: passing 'typeof (rela->r_offset) *' (aka 'const unsigned long *') to parameter of type 'void *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+scripts/mod/modpost.c:1440:11: warning: passing 'typeof (rela->r_addend) *' (aka 'const long *') to parameter of type 'void *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+scripts/mod/modpost.c:1472:14: warning: passing 'typeof (rel->r_offset) *' (aka 'const unsigned long *') to parameter of type 'void *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+{standard input}:1127: Error: unknown .loc sub-directive `is_stm'
 
+Error/Warning ids grouped by kconfigs:
 
-vim +834 drivers/bus/mhi/host/main.c
+gcc_recent_errors
+|-- arc-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- arc-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- arm-allmodconfig
+|   `-- drivers-cpufreq-sti-cpufreq.c:warning:d-directive-output-may-be-truncated-writing-between-and-bytes-into-a-region-of-size
+|-- arm-allyesconfig
+|   `-- drivers-cpufreq-sti-cpufreq.c:warning:d-directive-output-may-be-truncated-writing-between-and-bytes-into-a-region-of-size
+|-- arm64-allmodconfig
+|   `-- include-linux-fortify-string.h:warning:writing-bytes-into-a-region-of-size
+|-- arm64-allyesconfig
+|   `-- include-linux-fortify-string.h:warning:writing-bytes-into-a-region-of-size
+|-- i386-buildonly-randconfig-004-20231005
+|   `-- arch-x86-include-asm-string_32.h:warning:__builtin_memcpy-writing-bytes-into-a-region-of-size-overflows-the-destination
+|-- i386-randconfig-003-20231005
+|   |-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_percpu_obj_drop_impl
+|   |-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_percpu_obj_new_impl
+|   `-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_throw
+|-- i386-randconfig-005-20231005
+|   |-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_percpu_obj_drop_impl
+|   |-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_percpu_obj_new_impl
+|   `-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_throw
+|-- i386-randconfig-061-20231005
+|   |-- fs-file.c:sparse:sparse:incorrect-type-in-argument-(different-address-spaces)-expected-struct-atomic_t-usertype-v-got-struct-atomic_t-noderef-__rcu
+|   |-- fs-file.c:sparse:sparse:incorrect-type-in-argument-(different-address-spaces)-expected-struct-file-got-struct-file-noderef-__rcu-file
+|   |-- fs-file.c:sparse:sparse:incorrect-type-in-assignment-(different-address-spaces)-expected-struct-file-noderef-__rcu-file-got-struct-file
+|   |-- fs-file.c:sparse:sparse:incorrect-type-in-assignment-(different-address-spaces)-expected-struct-file-noderef-__rcu-file_reloaded-got-struct-file
+|   |-- fs-file.c:sparse:sparse:incorrect-type-in-return-expression-(different-address-spaces)-expected-struct-file-got-struct-file-noderef-__rcu-file_reloaded
+|   |-- fs-gfs2-inode.c:sparse:sparse:incompatible-types-in-comparison-expression-(different-address-spaces):
+|   |-- fs-gfs2-inode.c:sparse:struct-gfs2_glock
+|   |-- fs-gfs2-inode.c:sparse:struct-gfs2_glock-noderef-__rcu
+|   |-- fs-gfs2-super.c:sparse:sparse:incompatible-types-in-comparison-expression-(different-address-spaces):
+|   |-- fs-gfs2-super.c:sparse:struct-gfs2_glock
+|   |-- fs-gfs2-super.c:sparse:struct-gfs2_glock-noderef-__rcu
+|   `-- fs-ntfs3-super.c:sparse:sparse:unknown-escape-sequence:
+|-- i386-randconfig-062-20231005
+|   |-- fs-file.c:sparse:sparse:incorrect-type-in-argument-(different-address-spaces)-expected-struct-atomic_t-usertype-v-got-struct-atomic_t-noderef-__rcu
+|   |-- fs-file.c:sparse:sparse:incorrect-type-in-argument-(different-address-spaces)-expected-struct-file-got-struct-file-noderef-__rcu-file
+|   |-- fs-file.c:sparse:sparse:incorrect-type-in-assignment-(different-address-spaces)-expected-struct-file-noderef-__rcu-file-got-struct-file
+|   |-- fs-file.c:sparse:sparse:incorrect-type-in-assignment-(different-address-spaces)-expected-struct-file-noderef-__rcu-file_reloaded-got-struct-file
+|   |-- fs-file.c:sparse:sparse:incorrect-type-in-return-expression-(different-address-spaces)-expected-struct-file-got-struct-file-noderef-__rcu-file_reloaded
+|   |-- fs-gfs2-inode.c:sparse:sparse:incompatible-types-in-comparison-expression-(different-address-spaces):
+|   |-- fs-gfs2-inode.c:sparse:struct-gfs2_glock
+|   |-- fs-gfs2-inode.c:sparse:struct-gfs2_glock-noderef-__rcu
+|   |-- fs-gfs2-super.c:sparse:sparse:incompatible-types-in-comparison-expression-(different-address-spaces):
+|   |-- fs-gfs2-super.c:sparse:struct-gfs2_glock
+|   |-- fs-gfs2-super.c:sparse:struct-gfs2_glock-noderef-__rcu
+|   `-- fs-ntfs3-super.c:sparse:sparse:unknown-escape-sequence:
+|-- i386-randconfig-063-20231005
+|   |-- fs-file.c:sparse:sparse:incorrect-type-in-argument-(different-address-spaces)-expected-struct-atomic_t-usertype-v-got-struct-atomic_t-noderef-__rcu
+|   |-- fs-file.c:sparse:sparse:incorrect-type-in-argument-(different-address-spaces)-expected-struct-file-got-struct-file-noderef-__rcu-file
+|   |-- fs-file.c:sparse:sparse:incorrect-type-in-assignment-(different-address-spaces)-expected-struct-file-noderef-__rcu-file-got-struct-file
+|   |-- fs-file.c:sparse:sparse:incorrect-type-in-assignment-(different-address-spaces)-expected-struct-file-noderef-__rcu-file_reloaded-got-struct-file
+|   |-- fs-file.c:sparse:sparse:incorrect-type-in-return-expression-(different-address-spaces)-expected-struct-file-got-struct-file-noderef-__rcu-file_reloaded
+|   |-- fs-gfs2-inode.c:sparse:sparse:incompatible-types-in-comparison-expression-(different-address-spaces):
+|   |-- fs-gfs2-inode.c:sparse:struct-gfs2_glock
+|   |-- fs-gfs2-inode.c:sparse:struct-gfs2_glock-noderef-__rcu
+|   |-- fs-gfs2-super.c:sparse:sparse:incompatible-types-in-comparison-expression-(different-address-spaces):
+|   |-- fs-gfs2-super.c:sparse:struct-gfs2_glock
+|   |-- fs-gfs2-super.c:sparse:struct-gfs2_glock-noderef-__rcu
+|   `-- fs-ntfs3-super.c:sparse:sparse:unknown-escape-sequence:
+|-- i386-randconfig-s002-20211104
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- loongarch-randconfig-001-20231005
+|   `-- Documentation-devicetree-bindings-mfd-qcom-pm8xxx.yaml:
+|-- m68k-allmodconfig
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- m68k-allyesconfig
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- microblaze-allmodconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- microblaze-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- mips-allmodconfig
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- mips-allyesconfig
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- openrisc-allyesconfig
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- parisc-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- parisc-allyesconfig
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- powerpc-allmodconfig
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   |-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- include-linux-fortify-string.h:warning:writing-bytes-into-a-region-of-size
+|-- powerpc-allyesconfig
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   |-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- include-linux-fortify-string.h:warning:writing-bytes-into-a-region-of-size
+|-- s390-allmodconfig
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   |-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- include-linux-fortify-string.h:warning:writing-bytes-into-a-region-of-size
+|-- s390-allyesconfig
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   |-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- include-linux-fortify-string.h:warning:writing-bytes-into-a-region-of-size
+|-- sh-randconfig-r015-20230501
+|   `-- standard-input:Error:unknown-.loc-sub-directive-is_stm
+|-- sparc-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- sparc-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- sparc64-allmodconfig
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- sparc64-allyesconfig
+|   |-- fs-bcachefs-bcachefs_format.h:warning:p-offset-in-struct-bkey-isn-t-aligned-to
+|   `-- fs-bcachefs-bcachefs_format.h:warning:version-offset-in-struct-bkey-isn-t-aligned-to
+|-- x86_64-allnoconfig
+|   `-- Documentation-gpu-amdgpu-thermal:.-drivers-gpu-drm-amd-pm-amdgpu_pm.c:WARNING:Unexpected-indentation.
+|-- x86_64-allyesconfig
+|   `-- include-linux-fortify-string.h:warning:writing-bytes-into-a-region-of-size
+|-- x86_64-randconfig-103-20231005
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+`-- x86_64-randconfig-161-20231005
+    |-- arch-x86-kvm-x86.c-x86_emulate_instruction()-warn:missing-error-code-r
+    |-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+    |-- drivers-gpu-drm-amd-amdgpu-amdgpu_mca.c-amdgpu_mca_smu_get_mca_entry()-warn:variable-dereferenced-before-check-mca_funcs-(see-line-)
+    |-- drivers-gpu-drm-i915-display-intel_dsb.c-_intel_dsb_commit()-warn:always-true-condition-(dewake_scanline-)-(-u32max-)
+    |-- drivers-gpu-drm-i915-display-intel_psr.c-i915_psr_sink_status_show()-error:uninitialized-symbol-error_status-.
+    |-- drivers-gpu-drm-i915-display-intel_tc.c-mtl_tc_port_get_max_lane_count()-error:uninitialized-symbol-pin_mask-.
+    |-- fs-exfat-namei.c-exfat_find_empty_entry()-error:uninitialized-symbol-last_clu-.
+    |-- fs-ntfs3-bitmap.c-wnd_init()-warn:Please-consider-using-kvcalloc-instead-of-kvmalloc_array
+    |-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_percpu_obj_drop_impl
+    |-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_percpu_obj_new_impl
+    |-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_throw
+    |-- lib-kunit-executor_test.c-parse_filter_test()-error:double-free-of-filter.suite_glob
+    `-- lib-kunit-executor_test.c-parse_filter_test()-error:double-free-of-filter.test_glob
+clang_recent_errors
+`-- s390-alldefconfig
+    |-- scripts-mod-modpost.c:warning:passing-typeof-(rel-r_offset)-(aka-const-unsigned-long-)-to-parameter-of-type-void-discards-qualifiers
+    |-- scripts-mod-modpost.c:warning:passing-typeof-(rela-r_addend)-(aka-const-long-)-to-parameter-of-type-void-discards-qualifiers
+    `-- scripts-mod-modpost.c:warning:passing-typeof-(rela-r_offset)-(aka-const-unsigned-long-)-to-parameter-of-type-void-discards-qualifiers
 
-   799	
-   800	int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
-   801				     struct mhi_event *mhi_event,
-   802				     u32 event_quota)
-   803	{
-   804		struct mhi_ring_element *dev_rp, *local_rp;
-   805		struct mhi_ring *ev_ring = &mhi_event->ring;
-   806		struct mhi_event_ctxt *er_ctxt =
-   807			&mhi_cntrl->mhi_ctxt->er_ctxt[mhi_event->er_index];
-   808		struct mhi_chan *mhi_chan;
-   809		struct device *dev = &mhi_cntrl->mhi_dev->dev;
-   810		u32 chan;
-   811		int count = 0;
-   812		dma_addr_t ptr = le64_to_cpu(er_ctxt->rp);
-   813	
-   814		/*
-   815		 * This is a quick check to avoid unnecessary event processing
-   816		 * in case MHI is already in error state, but it's still possible
-   817		 * to transition to error state while processing events
-   818		 */
-   819		if (unlikely(MHI_EVENT_ACCESS_INVALID(mhi_cntrl->pm_state)))
-   820			return -EIO;
-   821	
-   822		if (!is_valid_ring_ptr(ev_ring, ptr)) {
-   823			dev_err(&mhi_cntrl->mhi_dev->dev,
-   824				"Event ring rp points outside of the event ring\n");
-   825			return -EIO;
-   826		}
-   827	
-   828		dev_rp = mhi_to_virtual(ev_ring, ptr);
-   829		local_rp = ev_ring->rp;
-   830	
-   831		while (dev_rp != local_rp) {
-   832			enum mhi_pkt_type type = MHI_TRE_GET_EV_TYPE(local_rp);
-   833	
- > 834			trace_mhi_process_ctrl_ev_ring(mhi_cntrl->mhi_dev->name, (u64)(local_rp),
-   835						       local_rp->ptr, local_rp->dword[0],
-   836						       local_rp->dword[1],
-   837						       mhi_state_str(MHI_TRE_GET_EV_STATE(local_rp)));
-   838	
-   839			switch (type) {
-   840			case MHI_PKT_TYPE_BW_REQ_EVENT:
-   841			{
-   842				struct mhi_link_info *link_info;
-   843	
-   844				link_info = &mhi_cntrl->mhi_link_info;
-   845				write_lock_irq(&mhi_cntrl->pm_lock);
-   846				link_info->target_link_speed =
-   847					MHI_TRE_GET_EV_LINKSPEED(local_rp);
-   848				link_info->target_link_width =
-   849					MHI_TRE_GET_EV_LINKWIDTH(local_rp);
-   850				write_unlock_irq(&mhi_cntrl->pm_lock);
-   851				dev_dbg(dev, "Received BW_REQ event\n");
-   852				mhi_cntrl->status_cb(mhi_cntrl, MHI_CB_BW_REQ);
-   853				break;
-   854			}
-   855			case MHI_PKT_TYPE_STATE_CHANGE_EVENT:
-   856			{
-   857				enum mhi_state new_state;
-   858	
-   859				new_state = MHI_TRE_GET_EV_STATE(local_rp);
-   860	
-   861				dev_dbg(dev, "State change event to state: %s\n",
-   862					mhi_state_str(new_state));
-   863	
-   864				switch (new_state) {
-   865				case MHI_STATE_M0:
-   866					mhi_pm_m0_transition(mhi_cntrl);
-   867					break;
-   868				case MHI_STATE_M1:
-   869					mhi_pm_m1_transition(mhi_cntrl);
-   870					break;
-   871				case MHI_STATE_M3:
-   872					mhi_pm_m3_transition(mhi_cntrl);
-   873					break;
-   874				case MHI_STATE_SYS_ERR:
-   875				{
-   876					enum mhi_pm_state pm_state;
-   877	
-   878					dev_dbg(dev, "System error detected\n");
-   879					write_lock_irq(&mhi_cntrl->pm_lock);
-   880					pm_state = mhi_tryset_pm_state(mhi_cntrl,
-   881								MHI_PM_SYS_ERR_DETECT);
-   882					write_unlock_irq(&mhi_cntrl->pm_lock);
-   883					if (pm_state == MHI_PM_SYS_ERR_DETECT)
-   884						mhi_pm_sys_err_handler(mhi_cntrl);
-   885					break;
-   886				}
-   887				default:
-   888					dev_err(dev, "Invalid state: %s\n",
-   889						mhi_state_str(new_state));
-   890				}
-   891	
-   892				break;
-   893			}
-   894			case MHI_PKT_TYPE_CMD_COMPLETION_EVENT:
-   895				mhi_process_cmd_completion(mhi_cntrl, local_rp);
-   896				break;
-   897			case MHI_PKT_TYPE_EE_EVENT:
-   898			{
-   899				enum dev_st_transition st = DEV_ST_TRANSITION_MAX;
-   900				enum mhi_ee_type event = MHI_TRE_GET_EV_EXECENV(local_rp);
-   901	
-   902				dev_dbg(dev, "Received EE event: %s\n",
-   903					TO_MHI_EXEC_STR(event));
-   904				switch (event) {
-   905				case MHI_EE_SBL:
-   906					st = DEV_ST_TRANSITION_SBL;
-   907					break;
-   908				case MHI_EE_WFW:
-   909				case MHI_EE_AMSS:
-   910					st = DEV_ST_TRANSITION_MISSION_MODE;
-   911					break;
-   912				case MHI_EE_FP:
-   913					st = DEV_ST_TRANSITION_FP;
-   914					break;
-   915				case MHI_EE_RDDM:
-   916					mhi_cntrl->status_cb(mhi_cntrl, MHI_CB_EE_RDDM);
-   917					write_lock_irq(&mhi_cntrl->pm_lock);
-   918					mhi_cntrl->ee = event;
-   919					write_unlock_irq(&mhi_cntrl->pm_lock);
-   920					wake_up_all(&mhi_cntrl->state_event);
-   921					break;
-   922				default:
-   923					dev_err(dev,
-   924						"Unhandled EE event: 0x%x\n", type);
-   925				}
-   926				if (st != DEV_ST_TRANSITION_MAX)
-   927					mhi_queue_state_transition(mhi_cntrl, st);
-   928	
-   929				break;
-   930			}
-   931			case MHI_PKT_TYPE_TX_EVENT:
-   932				chan = MHI_TRE_GET_EV_CHID(local_rp);
-   933	
-   934				WARN_ON(chan >= mhi_cntrl->max_chan);
-   935	
-   936				/*
-   937				 * Only process the event ring elements whose channel
-   938				 * ID is within the maximum supported range.
-   939				 */
-   940				if (chan < mhi_cntrl->max_chan) {
-   941					mhi_chan = &mhi_cntrl->mhi_chan[chan];
-   942					if (!mhi_chan->configured)
-   943						break;
-   944					parse_xfer_event(mhi_cntrl, local_rp, mhi_chan);
-   945				}
-   946				break;
-   947			default:
-   948				dev_err(dev, "Unhandled event type: %d\n", type);
-   949				break;
-   950			}
-   951	
-   952			mhi_recycle_ev_ring_element(mhi_cntrl, ev_ring);
-   953			local_rp = ev_ring->rp;
-   954	
-   955			ptr = le64_to_cpu(er_ctxt->rp);
-   956			if (!is_valid_ring_ptr(ev_ring, ptr)) {
-   957				dev_err(&mhi_cntrl->mhi_dev->dev,
-   958					"Event ring rp points outside of the event ring\n");
-   959				return -EIO;
-   960			}
-   961	
-   962			dev_rp = mhi_to_virtual(ev_ring, ptr);
-   963			count++;
-   964		}
-   965	
-   966		read_lock_bh(&mhi_cntrl->pm_lock);
-   967	
-   968		/* Ring EV DB only if there is any pending element to process */
-   969		if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)) && count)
-   970			mhi_ring_er_db(mhi_event);
-   971		read_unlock_bh(&mhi_cntrl->pm_lock);
-   972	
-   973		return count;
-   974	}
-   975	
+elapsed time: 875m
+
+configs tested: 120
+configs skipped: 2
+
+tested configs:
+alpha                             allnoconfig   gcc  
+alpha                            allyesconfig   gcc  
+alpha                               defconfig   gcc  
+arc                              allmodconfig   gcc  
+arc                               allnoconfig   gcc  
+arc                              allyesconfig   gcc  
+arc                          axs101_defconfig   gcc  
+arc                                 defconfig   gcc  
+arc                 nsimosci_hs_smp_defconfig   gcc  
+arc                   randconfig-001-20231005   gcc  
+arm                              allmodconfig   gcc  
+arm                               allnoconfig   gcc  
+arm                              allyesconfig   gcc  
+arm                                 defconfig   gcc  
+arm                         orion5x_defconfig   clang
+arm                          pxa168_defconfig   clang
+arm                   randconfig-001-20231005   gcc  
+arm                         vf610m4_defconfig   gcc  
+arm64                            allmodconfig   gcc  
+arm64                             allnoconfig   gcc  
+arm64                            allyesconfig   gcc  
+arm64                               defconfig   gcc  
+csky                             allmodconfig   gcc  
+csky                              allnoconfig   gcc  
+csky                             allyesconfig   gcc  
+csky                                defconfig   gcc  
+i386                             allmodconfig   gcc  
+i386                              allnoconfig   gcc  
+i386                             allyesconfig   gcc  
+i386         buildonly-randconfig-001-20231005   gcc  
+i386         buildonly-randconfig-002-20231005   gcc  
+i386         buildonly-randconfig-003-20231005   gcc  
+i386         buildonly-randconfig-004-20231005   gcc  
+i386         buildonly-randconfig-005-20231005   gcc  
+i386         buildonly-randconfig-006-20231005   gcc  
+i386                              debian-10.3   gcc  
+i386                                defconfig   gcc  
+i386                  randconfig-001-20231005   gcc  
+i386                  randconfig-002-20231005   gcc  
+i386                  randconfig-003-20231005   gcc  
+i386                  randconfig-004-20231005   gcc  
+i386                  randconfig-005-20231005   gcc  
+i386                  randconfig-006-20231005   gcc  
+loongarch                        allmodconfig   gcc  
+loongarch                         allnoconfig   gcc  
+loongarch                        allyesconfig   gcc  
+loongarch                           defconfig   gcc  
+loongarch             randconfig-001-20231005   gcc  
+m68k                             allmodconfig   gcc  
+m68k                              allnoconfig   gcc  
+m68k                             allyesconfig   gcc  
+m68k                                defconfig   gcc  
+microblaze                       allmodconfig   gcc  
+microblaze                        allnoconfig   gcc  
+microblaze                       allyesconfig   gcc  
+microblaze                          defconfig   gcc  
+mips                             allmodconfig   gcc  
+mips                              allnoconfig   gcc  
+mips                             allyesconfig   gcc  
+mips                           ip28_defconfig   clang
+nios2                            allmodconfig   gcc  
+nios2                             allnoconfig   gcc  
+nios2                            allyesconfig   gcc  
+nios2                               defconfig   gcc  
+openrisc                         allmodconfig   gcc  
+openrisc                          allnoconfig   gcc  
+openrisc                         allyesconfig   gcc  
+openrisc                            defconfig   gcc  
+parisc                           allmodconfig   gcc  
+parisc                            allnoconfig   gcc  
+parisc                           allyesconfig   gcc  
+parisc                              defconfig   gcc  
+parisc64                            defconfig   gcc  
+powerpc                          allmodconfig   gcc  
+powerpc                           allnoconfig   gcc  
+powerpc                          allyesconfig   gcc  
+powerpc                      bamboo_defconfig   gcc  
+powerpc                      ep88xc_defconfig   gcc  
+powerpc                     mpc512x_defconfig   clang
+powerpc                  storcenter_defconfig   gcc  
+riscv                            allmodconfig   gcc  
+riscv                             allnoconfig   gcc  
+riscv                            allyesconfig   gcc  
+riscv                               defconfig   gcc  
+riscv                          rv32_defconfig   gcc  
+s390                             alldefconfig   clang
+s390                             allmodconfig   gcc  
+s390                              allnoconfig   gcc  
+s390                             allyesconfig   gcc  
+s390                                defconfig   gcc  
+sh                               allmodconfig   gcc  
+sh                                allnoconfig   gcc  
+sh                               allyesconfig   gcc  
+sh                                  defconfig   gcc  
+sh                          sdk7780_defconfig   gcc  
+sparc                            allmodconfig   gcc  
+sparc                             allnoconfig   gcc  
+sparc                            allyesconfig   gcc  
+sparc                               defconfig   gcc  
+sparc                       sparc32_defconfig   gcc  
+sparc64                          allmodconfig   gcc  
+sparc64                          allyesconfig   gcc  
+sparc64                             defconfig   gcc  
+um                               allmodconfig   clang
+um                                allnoconfig   clang
+um                               allyesconfig   clang
+um                                  defconfig   gcc  
+um                             i386_defconfig   gcc  
+um                           x86_64_defconfig   gcc  
+x86_64                            allnoconfig   gcc  
+x86_64                           allyesconfig   gcc  
+x86_64                              defconfig   gcc  
+x86_64                randconfig-001-20231005   gcc  
+x86_64                randconfig-002-20231005   gcc  
+x86_64                randconfig-003-20231005   gcc  
+x86_64                randconfig-004-20231005   gcc  
+x86_64                randconfig-005-20231005   gcc  
+x86_64                randconfig-006-20231005   gcc  
+x86_64                          rhel-8.3-rust   clang
+x86_64                               rhel-8.3   gcc  
 
 -- 
 0-DAY CI Kernel Test Service
