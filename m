@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 12A127BABEE
+	by mail.lfdr.de (Postfix) with ESMTP id 66D887BABEF
 	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Oct 2023 23:27:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230228AbjJEV1M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S231286AbjJEV1M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Thu, 5 Oct 2023 17:27:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41258 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231286AbjJEV1K (ORCPT
+        with ESMTP id S230140AbjJEV1K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 5 Oct 2023 17:27:10 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 500ADFC
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC0EAE9
         for <linux-arm-msm@vger.kernel.org>; Thu,  5 Oct 2023 14:27:08 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-5041bb9ce51so1831241e87.1
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-5045cb9c091so1900519e87.3
         for <linux-arm-msm@vger.kernel.org>; Thu, 05 Oct 2023 14:27:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696541226; x=1697146026; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696541227; x=1697146027; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JVSxUdjIBQxl4IWkjBdyrRVfXjQ7QAoxqXdadvE+vvo=;
-        b=S0uRzztQu6W7i3Adc1Qpz+7kRNEVK/vGvNC5fN0eyPLRNtzdGmrfgS5xGXPNg7zuNz
-         DHGgr5w4CKzKpvlxF3EwrcaLOTVjwvJb5oD1mK0vPZ661exDZddTYevCS765vDCKbMTX
-         MT4pSBP42hwwKxi452uRvCNptmjCYpazaXDxdLHHGI+EotJtxVelgnuO//c4hWHuhaSP
-         uX5m8pUHLfvVbXC830Uwj/K47UgkYM2zFpDthJU3giOJBdmHcwJaZMqoABMW3d1r7x8Y
-         AHwV3z+KQre6wa0MeSIFxZ8FBrOD078VFiTFnVqh1LwWDO5Jx2lCQ5jZ1w5x4az9AvCr
-         TxlQ==
+        bh=tZMJe6X8u60cMvU2jFs6enjcN/KR/gdA1100QLjk/OA=;
+        b=Kv92donhwKvQ2dcdSb/hjcx9KTTKhHoWaAC3ezEbQySrw12w541+NRxoXXuVIvZGnJ
+         x98YYoAN/prCOtPHc/TjQi5GX4uuaoMiFrDq0h8CDGMXXBsLmfOt/Og/Lexi0JGkneGz
+         OPJdLUiEeTjevWzTsWi78Rh9Zll07r7B56mVrh2jnVLwRrP1WAqc120pH3rw1l5AL7DO
+         /Hi9RRk2ckiBETGOvnG3sr1Dxy3twQA6HzpqJcgTxwlsffrRARnAdvD/df7DWGL6CWfb
+         Ln0bpj5OZEaZN2jaXKCZOddkVqUb0kswVpiBCDJELrPEGyGqETesmyQGW2bxXj46xj1w
+         7kbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696541226; x=1697146026;
+        d=1e100.net; s=20230601; t=1696541227; x=1697146027;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JVSxUdjIBQxl4IWkjBdyrRVfXjQ7QAoxqXdadvE+vvo=;
-        b=JB4ll5Od/GDwbR5kPnTB3BDhu6jbn1+e4g2eqAfhN1dxXbE62QU6GTSPUA85ubTVJ8
-         CLexdukuEqH0bQ93k74WjdLSGBQuV2G/cHFwsLO+j9YCH2aXC2+tCUA+LOF3svb2T3kj
-         G5ns3V39fVQIncG459AVHEXkRUzmTy4I5CsJMDjGW8w4uFZto79CE7FGcTEGPStm2RSy
-         Os8Z7Xp3qwKUujCc0GdlHWd9i96HsYRYDOUS5CWJUtauK0nNnmXe271DJ10Jq26FzyjC
-         cxX+KmWRtYp0MFVHspBi4n3/OG1780JjlUPWBIyJCJ6qcpMd3AtMI3nJ9wxCwcs+yYQP
-         q2lA==
-X-Gm-Message-State: AOJu0Yw5zKZSj8vOD7Sp3/DmG5crv6QC/jBG3Jimux0GhjubpLx9F9kz
-        93O1SRcKi/sZ3sBwPcwr5HN5kA==
-X-Google-Smtp-Source: AGHT+IEk3aq1Y5Gh14/DcU8XtCM3Ug9+PuF9VJ7ldvkp1LbWI3M4FQlBqjc4ZiDdbZOwHjQ//p9hvg==
-X-Received: by 2002:a05:6512:3b28:b0:500:7de4:300e with SMTP id f40-20020a0565123b2800b005007de4300emr7082797lfv.58.1696541226398;
-        Thu, 05 Oct 2023 14:27:06 -0700 (PDT)
+        bh=tZMJe6X8u60cMvU2jFs6enjcN/KR/gdA1100QLjk/OA=;
+        b=RiZ3fy25XXPUBXadeqBqXG8aNbDSzKv4vH6fPXiMK85qo3jBfpqcTkUSRL0uwWOyKZ
+         pO/nbm4ZfHQCvqRWEMoXdzA92gYyMHG4ozgR0BMaruwF3YQ3aSqwcfGRajZW0xHyfJT+
+         5EPsbRc9RnPL3OajRPSFo6JHeqT8qG9oxHETraNza3a+Yp8btc4WQI5hDoRVRJA0bG9p
+         fyA6IuNfwu+hOVSp7NnJeeeJHLJhSFZt8z8qAI/ZGHy8ml5Tzz6CVZPtIqA6PdRWsgmT
+         wkYwv1t3fsIukvP4vw6XQ+bbus6GIHT/mb+aSTTH2P1FnOvhjam3EY0fBIhbBveG7KkH
+         pIXQ==
+X-Gm-Message-State: AOJu0Yy5n6oeb8z13Jawm/kd4cUmMbKZa1EHbw5lOmJaAVoP+AMRnBsO
+        eFJtfMzQ4pp1m0fGsyWm3uASuiGeaSr8Ff8gk6M=
+X-Google-Smtp-Source: AGHT+IExpGG+CFWBn8WnlaDmqMCCaOXCJP7jepjJpn+Xx/nsWBGa72UxVEeN+//jzi/BTGHYMMPo4A==
+X-Received: by 2002:ac2:5f71:0:b0:4ff:8f71:9713 with SMTP id c17-20020ac25f71000000b004ff8f719713mr5406388lfc.42.1696541227098;
+        Thu, 05 Oct 2023 14:27:07 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id a6-20020a19f806000000b00500b3157ec6sm8435lff.143.2023.10.05.14.27.05
+        by smtp.gmail.com with ESMTPSA id a6-20020a19f806000000b00500b3157ec6sm8435lff.143.2023.10.05.14.27.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Oct 2023 14:27:05 -0700 (PDT)
+        Thu, 05 Oct 2023 14:27:06 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,9 +60,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v5 03/10] drm/msm/dpu: Drop unused qseed_type from catalog dpu_caps
-Date:   Fri,  6 Oct 2023 00:26:56 +0300
-Message-Id: <20231005212703.2400237-4-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v5 04/10] drm/msm/dpu: drop the `id' field from DPU_HW_SUBBLK_INFO
+Date:   Fri,  6 Oct 2023 00:26:57 +0300
+Message-Id: <20231005212703.2400237-5-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20231005212703.2400237-1-dmitry.baryshkov@linaro.org>
 References: <20231005212703.2400237-1-dmitry.baryshkov@linaro.org>
@@ -78,224 +78,251 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Marijn Suijten <marijn.suijten@somainline.org>
+The field `id' is not used for subblocks. The handling code usually
+knows, which sub-block it is now looking at. Drop the field completely.
 
-The SSPP scaler subblk is responsible for reporting its version (via the
-.id field, feature bits on the parent SSPP block, and since recently
-also from reading a register to supersede a read-but-unset version field
-in the catalog), leaving this global qseed_type field logically unused.
-Remove this dead code to lighten the catalog and bringup-overhead.
-
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h  | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h   | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h   | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h  | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h   | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h   | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h   | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h   | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h   | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h   | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h   | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h   | 1 -
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h   | 1 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h           | 2 --
- 15 files changed, 16 deletions(-)
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 76 +++++++++----------
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  2 -
+ 2 files changed, 36 insertions(+), 42 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-index 43c47a19cd94..ff83bf694fee 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-@@ -10,7 +10,6 @@
- static const struct dpu_caps msm8998_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.max_mixer_blendstages = 0x7,
--	.qseed_type = DPU_SSPP_SCALER_QSEED3,
- 	.has_src_split = true,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-index 88a5177dfdb7..05f71f04b8ac 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-@@ -10,7 +10,6 @@
- static const struct dpu_caps sdm845_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.max_mixer_blendstages = 0xb,
--	.qseed_type = DPU_SSPP_SCALER_QSEED3,
- 	.has_src_split = true,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-index f0c3804f4258..cbe4d0ce230b 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-@@ -10,7 +10,6 @@
- static const struct dpu_caps sm8150_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.max_mixer_blendstages = 0xb,
--	.qseed_type = DPU_SSPP_SCALER_QSEED3,
- 	.has_src_split = true,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-index 3ec954722a8e..71207d7222de 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-@@ -10,7 +10,6 @@
- static const struct dpu_caps sc8180x_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.max_mixer_blendstages = 0xb,
--	.qseed_type = DPU_SSPP_SCALER_QSEED3,
- 	.has_src_split = true,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-index 5f9b437b82a6..8982ec228f3d 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-@@ -10,7 +10,6 @@
- static const struct dpu_caps sm8250_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.max_mixer_blendstages = 0xb,
--	.qseed_type = DPU_SSPP_SCALER_QSEED4,
- 	.has_src_split = true,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
-index d030c08636b4..18e2e48e2b7c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
-@@ -10,7 +10,6 @@
- static const struct dpu_caps sc7180_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.max_mixer_blendstages = 0x9,
--	.qseed_type = DPU_SSPP_SCALER_QSEED4,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
- 	.max_linewidth = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
-index 7e6000167ef0..cde131a922fe 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
-@@ -10,7 +10,6 @@
- static const struct dpu_caps sm6115_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_LINE_WIDTH,
- 	.max_mixer_blendstages = 0x4,
--	.qseed_type = DPU_SSPP_SCALER_QSEED4,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
- 	.max_linewidth = 2160,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
-index cf5db6f296bd..3aba274faeec 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
-@@ -11,7 +11,6 @@
- static const struct dpu_caps sm6350_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.max_mixer_blendstages = 0x7,
--	.qseed_type = DPU_SSPP_SCALER_QSEED4,
- 	.has_src_split = true,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
-index a327e21c90fb..8afb8a8072b0 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
-@@ -11,7 +11,6 @@
- static const struct dpu_caps sm6375_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_LINE_WIDTH,
- 	.max_mixer_blendstages = 0x4,
--	.qseed_type = DPU_SSPP_SCALER_QSEED4,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
- 	.max_linewidth = 2160,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-index f8d16f9bf528..5435e5fdab52 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-@@ -10,7 +10,6 @@
- static const struct dpu_caps sm8350_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.max_mixer_blendstages = 0xb,
--	.qseed_type = DPU_SSPP_SCALER_QSEED4,
- 	.has_src_split = true,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-index 3b5061c4402a..da8b7e46237c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-@@ -10,7 +10,6 @@
- static const struct dpu_caps sc7280_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.max_mixer_blendstages = 0x7,
--	.qseed_type = DPU_SSPP_SCALER_QSEED4,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
- 	.max_linewidth = 2400,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-index 58f5e25679b1..29cb4dd90980 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-@@ -10,7 +10,6 @@
- static const struct dpu_caps sc8280xp_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.max_mixer_blendstages = 11,
--	.qseed_type = DPU_SSPP_SCALER_QSEED4,
- 	.has_src_split = true,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-index 3aed290a4111..dbb77144364a 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-@@ -10,7 +10,6 @@
- static const struct dpu_caps sm8450_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.max_mixer_blendstages = 0xb,
--	.qseed_type = DPU_SSPP_SCALER_QSEED4,
- 	.has_src_split = true,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-index 7bed819dfc39..e60427f54b27 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-@@ -10,7 +10,6 @@
- static const struct dpu_caps sm8550_dpu_caps = {
- 	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.max_mixer_blendstages = 0xb,
--	.qseed_type = DPU_SSPP_SCALER_QSEED4,
- 	.has_src_split = true,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index 77d09f961d86..ed7458991509 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -253,17 +253,15 @@ static const uint32_t wb2_formats[] = {
+ #define SSPP_SCALER_VER(maj, min) (((maj) << 16) | (min))
+ 
+ /* SSPP common configuration */
+-#define _VIG_SBLK(sdma_pri, qseed_ver, scaler_ver) \
++#define _VIG_SBLK(sdma_pri, scaler_ver) \
+ 	{ \
+ 	.maxdwnscale = MAX_DOWNSCALE_RATIO, \
+ 	.maxupscale = MAX_UPSCALE_RATIO, \
+ 	.smart_dma_priority = sdma_pri, \
+ 	.scaler_blk = {.name = "scaler", \
+-		.id = qseed_ver, \
+ 		.version = scaler_ver, \
+ 		.base = 0xa00, .len = 0xa0,}, \
+ 	.csc_blk = {.name = "csc", \
+-		.id = DPU_SSPP_CSC_10BIT, \
+ 		.base = 0x1a00, .len = 0x100,}, \
+ 	.format_list = plane_formats_yuv, \
+ 	.num_formats = ARRAY_SIZE(plane_formats_yuv), \
+@@ -272,17 +270,15 @@ static const uint32_t wb2_formats[] = {
+ 	.rotation_cfg = NULL, \
+ 	}
+ 
+-#define _VIG_SBLK_ROT(sdma_pri, qseed_ver, scaler_ver, rot_cfg) \
++#define _VIG_SBLK_ROT(sdma_pri, scaler_ver, rot_cfg) \
+ 	{ \
+ 	.maxdwnscale = MAX_DOWNSCALE_RATIO, \
+ 	.maxupscale = MAX_UPSCALE_RATIO, \
+ 	.smart_dma_priority = sdma_pri, \
+ 	.scaler_blk = {.name = "scaler", \
+-		.id = qseed_ver, \
+ 		.version = scaler_ver, \
+ 		.base = 0xa00, .len = 0xa0,}, \
+ 	.csc_blk = {.name = "csc", \
+-		.id = DPU_SSPP_CSC_10BIT, \
+ 		.base = 0x1a00, .len = 0x100,}, \
+ 	.format_list = plane_formats_yuv, \
+ 	.num_formats = ARRAY_SIZE(plane_formats_yuv), \
+@@ -303,16 +299,16 @@ static const uint32_t wb2_formats[] = {
+ 	}
+ 
+ static const struct dpu_sspp_sub_blks msm8998_vig_sblk_0 =
+-				_VIG_SBLK(0, DPU_SSPP_SCALER_QSEED3,
++				_VIG_SBLK(0,
+ 					  SSPP_SCALER_VER(1, 2));
+ static const struct dpu_sspp_sub_blks msm8998_vig_sblk_1 =
+-				_VIG_SBLK(0, DPU_SSPP_SCALER_QSEED3,
++				_VIG_SBLK(0,
+ 					  SSPP_SCALER_VER(1, 2));
+ static const struct dpu_sspp_sub_blks msm8998_vig_sblk_2 =
+-				_VIG_SBLK(0, DPU_SSPP_SCALER_QSEED3,
++				_VIG_SBLK(0,
+ 					  SSPP_SCALER_VER(1, 2));
+ static const struct dpu_sspp_sub_blks msm8998_vig_sblk_3 =
+-				_VIG_SBLK(0, DPU_SSPP_SCALER_QSEED3,
++				_VIG_SBLK(0,
+ 					  SSPP_SCALER_VER(1, 2));
+ 
+ static const struct dpu_rotation_cfg dpu_rot_sc7280_cfg_v2 = {
+@@ -322,29 +318,29 @@ static const struct dpu_rotation_cfg dpu_rot_sc7280_cfg_v2 = {
+ };
+ 
+ static const struct dpu_sspp_sub_blks sdm845_vig_sblk_0 =
+-				_VIG_SBLK(5, DPU_SSPP_SCALER_QSEED3,
++				_VIG_SBLK(5,
+ 					  SSPP_SCALER_VER(1, 3));
+ static const struct dpu_sspp_sub_blks sdm845_vig_sblk_1 =
+-				_VIG_SBLK(6, DPU_SSPP_SCALER_QSEED3,
++				_VIG_SBLK(6,
+ 					  SSPP_SCALER_VER(1, 3));
+ static const struct dpu_sspp_sub_blks sdm845_vig_sblk_2 =
+-				_VIG_SBLK(7, DPU_SSPP_SCALER_QSEED3,
++				_VIG_SBLK(7,
+ 					  SSPP_SCALER_VER(1, 3));
+ static const struct dpu_sspp_sub_blks sdm845_vig_sblk_3 =
+-				_VIG_SBLK(8, DPU_SSPP_SCALER_QSEED3,
++				_VIG_SBLK(8,
+ 					  SSPP_SCALER_VER(1, 3));
+ 
+ static const struct dpu_sspp_sub_blks sm8150_vig_sblk_0 =
+-				_VIG_SBLK(5, DPU_SSPP_SCALER_QSEED3,
++				_VIG_SBLK(5,
+ 					  SSPP_SCALER_VER(1, 4));
+ static const struct dpu_sspp_sub_blks sm8150_vig_sblk_1 =
+-				_VIG_SBLK(6, DPU_SSPP_SCALER_QSEED3,
++				_VIG_SBLK(6,
+ 					  SSPP_SCALER_VER(1, 4));
+ static const struct dpu_sspp_sub_blks sm8150_vig_sblk_2 =
+-				_VIG_SBLK(7, DPU_SSPP_SCALER_QSEED3,
++				_VIG_SBLK(7,
+ 					  SSPP_SCALER_VER(1, 4));
+ static const struct dpu_sspp_sub_blks sm8150_vig_sblk_3 =
+-				_VIG_SBLK(8, DPU_SSPP_SCALER_QSEED3,
++				_VIG_SBLK(8,
+ 					  SSPP_SCALER_VER(1, 4));
+ 
+ static const struct dpu_sspp_sub_blks sdm845_dma_sblk_0 = _DMA_SBLK(1);
+@@ -353,59 +349,59 @@ static const struct dpu_sspp_sub_blks sdm845_dma_sblk_2 = _DMA_SBLK(3);
+ static const struct dpu_sspp_sub_blks sdm845_dma_sblk_3 = _DMA_SBLK(4);
+ 
+ static const struct dpu_sspp_sub_blks sc7180_vig_sblk_0 =
+-				_VIG_SBLK(4, DPU_SSPP_SCALER_QSEED4,
++				_VIG_SBLK(4,
+ 					  SSPP_SCALER_VER(3, 0));
+ 
+ static const struct dpu_sspp_sub_blks sc7280_vig_sblk_0 =
+-			_VIG_SBLK_ROT(4, DPU_SSPP_SCALER_QSEED4,
++			_VIG_SBLK_ROT(4,
+ 				      SSPP_SCALER_VER(3, 0),
+ 				      &dpu_rot_sc7280_cfg_v2);
+ 
+ static const struct dpu_sspp_sub_blks sm6115_vig_sblk_0 =
+-				_VIG_SBLK(2, DPU_SSPP_SCALER_QSEED4,
++				_VIG_SBLK(2,
+ 					  SSPP_SCALER_VER(3, 0));
+ 
+ static const struct dpu_sspp_sub_blks sm6125_vig_sblk_0 =
+-				_VIG_SBLK(3, DPU_SSPP_SCALER_QSEED3LITE,
++				_VIG_SBLK(3,
+ 					  SSPP_SCALER_VER(2, 4));
+ 
+ static const struct dpu_sspp_sub_blks sm8250_vig_sblk_0 =
+-				_VIG_SBLK(5, DPU_SSPP_SCALER_QSEED4,
++				_VIG_SBLK(5,
+ 					  SSPP_SCALER_VER(3, 0));
+ static const struct dpu_sspp_sub_blks sm8250_vig_sblk_1 =
+-				_VIG_SBLK(6, DPU_SSPP_SCALER_QSEED4,
++				_VIG_SBLK(6,
+ 					  SSPP_SCALER_VER(3, 0));
+ static const struct dpu_sspp_sub_blks sm8250_vig_sblk_2 =
+-				_VIG_SBLK(7, DPU_SSPP_SCALER_QSEED4,
++				_VIG_SBLK(7,
+ 					  SSPP_SCALER_VER(3, 0));
+ static const struct dpu_sspp_sub_blks sm8250_vig_sblk_3 =
+-				_VIG_SBLK(8, DPU_SSPP_SCALER_QSEED4,
++				_VIG_SBLK(8,
+ 					  SSPP_SCALER_VER(3, 0));
+ 
+ static const struct dpu_sspp_sub_blks sm8450_vig_sblk_0 =
+-				_VIG_SBLK(5, DPU_SSPP_SCALER_QSEED4,
++				_VIG_SBLK(5,
+ 					  SSPP_SCALER_VER(3, 1));
+ static const struct dpu_sspp_sub_blks sm8450_vig_sblk_1 =
+-				_VIG_SBLK(6, DPU_SSPP_SCALER_QSEED4,
++				_VIG_SBLK(6,
+ 					  SSPP_SCALER_VER(3, 1));
+ static const struct dpu_sspp_sub_blks sm8450_vig_sblk_2 =
+-				_VIG_SBLK(7, DPU_SSPP_SCALER_QSEED4,
++				_VIG_SBLK(7,
+ 					  SSPP_SCALER_VER(3, 1));
+ static const struct dpu_sspp_sub_blks sm8450_vig_sblk_3 =
+-				_VIG_SBLK(8, DPU_SSPP_SCALER_QSEED4,
++				_VIG_SBLK(8,
+ 					  SSPP_SCALER_VER(3, 1));
+ 
+ static const struct dpu_sspp_sub_blks sm8550_vig_sblk_0 =
+-				_VIG_SBLK(7, DPU_SSPP_SCALER_QSEED4,
++				_VIG_SBLK(7,
+ 					  SSPP_SCALER_VER(3, 2));
+ static const struct dpu_sspp_sub_blks sm8550_vig_sblk_1 =
+-				_VIG_SBLK(8, DPU_SSPP_SCALER_QSEED4,
++				_VIG_SBLK(8,
+ 					  SSPP_SCALER_VER(3, 2));
+ static const struct dpu_sspp_sub_blks sm8550_vig_sblk_2 =
+-				_VIG_SBLK(9, DPU_SSPP_SCALER_QSEED4,
++				_VIG_SBLK(9,
+ 					  SSPP_SCALER_VER(3, 2));
+ static const struct dpu_sspp_sub_blks sm8550_vig_sblk_3 =
+-				_VIG_SBLK(10, DPU_SSPP_SCALER_QSEED4,
++				_VIG_SBLK(10,
+ 					  SSPP_SCALER_VER(3, 2));
+ static const struct dpu_sspp_sub_blks sm8550_dma_sblk_4 = _DMA_SBLK(5);
+ static const struct dpu_sspp_sub_blks sm8550_dma_sblk_5 = _DMA_SBLK(6);
+@@ -474,12 +470,12 @@ static const struct dpu_lm_sub_blks qcm2290_lm_sblk = {
+  * DSPP sub blocks config
+  *************************************************************/
+ static const struct dpu_dspp_sub_blks msm8998_dspp_sblk = {
+-	.pcc = {.name = "pcc", .id = DPU_DSPP_PCC, .base = 0x1700,
++	.pcc = {.name = "pcc", .base = 0x1700,
+ 		.len = 0x90, .version = 0x10007},
+ };
+ 
+ static const struct dpu_dspp_sub_blks sdm845_dspp_sblk = {
+-	.pcc = {.name = "pcc", .id = DPU_DSPP_PCC, .base = 0x1700,
++	.pcc = {.name = "pcc", .base = 0x1700,
+ 		.len = 0x90, .version = 0x40000},
+ };
+ 
+@@ -487,19 +483,19 @@ static const struct dpu_dspp_sub_blks sdm845_dspp_sblk = {
+  * PINGPONG sub blocks config
+  *************************************************************/
+ static const struct dpu_pingpong_sub_blks sdm845_pp_sblk_te = {
+-	.te2 = {.name = "te2", .id = DPU_PINGPONG_TE2, .base = 0x2000, .len = 0x0,
++	.te2 = {.name = "te2", .base = 0x2000, .len = 0x0,
+ 		.version = 0x1},
+-	.dither = {.name = "dither", .id = DPU_PINGPONG_DITHER, .base = 0x30e0,
++	.dither = {.name = "dither", .base = 0x30e0,
+ 		.len = 0x20, .version = 0x10000},
+ };
+ 
+ static const struct dpu_pingpong_sub_blks sdm845_pp_sblk = {
+-	.dither = {.name = "dither", .id = DPU_PINGPONG_DITHER, .base = 0x30e0,
++	.dither = {.name = "dither", .base = 0x30e0,
+ 		.len = 0x20, .version = 0x10000},
+ };
+ 
+ static const struct dpu_pingpong_sub_blks sc7280_pp_sblk = {
+-	.dither = {.name = "dither", .id = DPU_PINGPONG_DITHER, .base = 0xe0,
++	.dither = {.name = "dither", .base = 0xe0,
+ 	.len = 0x20, .version = 0x20000},
+ };
+ 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-index 3f82d84bd1c9..9e7750c47cd0 100644
+index 9e7750c47cd0..c47969ba7ed5 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-@@ -346,7 +346,6 @@ struct dpu_rotation_cfg {
-  * @max_mixer_width    max layer mixer line width support.
-  * @max_mixer_blendstages max layer mixer blend stages or
-  *                       supported z order
-- * @qseed_type         qseed2 or qseed3 support.
-  * @has_src_split      source split feature status
-  * @has_dim_layer      dim layer feature status
-  * @has_idle_pc        indicate if idle power collapse feature is supported
-@@ -359,7 +358,6 @@ struct dpu_rotation_cfg {
- struct dpu_caps {
- 	u32 max_mixer_width;
- 	u32 max_mixer_blendstages;
--	u32 qseed_type;
- 	bool has_src_split;
- 	bool has_dim_layer;
- 	bool has_idle_pc;
+@@ -255,14 +255,12 @@ enum {
+ /**
+  * MACRO DPU_HW_SUBBLK_INFO - information of HW sub-block inside DPU
+  * @name:              string name for debug purposes
+- * @id:                enum identifying this sub-block
+  * @base:              offset of this sub-block relative to the block
+  *                     offset
+  * @len                register block length of this sub-block
+  */
+ #define DPU_HW_SUBBLK_INFO \
+ 	char name[DPU_HW_BLK_NAME_LEN]; \
+-	u32 id; \
+ 	u32 base; \
+ 	u32 len
+ 
 -- 
 2.39.2
 
