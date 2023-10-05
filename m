@@ -2,79 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 573377B9FBD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Oct 2023 16:29:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B0497B9FFC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Oct 2023 16:33:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233344AbjJEO3G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Oct 2023 10:29:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48818 "EHLO
+        id S234099AbjJEOcv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Oct 2023 10:32:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234026AbjJEO1H (ORCPT
+        with ESMTP id S235087AbjJEOb2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Oct 2023 10:27:07 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBEF9A240;
-        Thu,  5 Oct 2023 02:12:34 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-4064867903cso6733395e9.2;
-        Thu, 05 Oct 2023 02:12:34 -0700 (PDT)
+        Thu, 5 Oct 2023 10:31:28 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5245BAD3D;
+        Thu,  5 Oct 2023 02:42:46 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-4065f29e933so7125545e9.1;
+        Thu, 05 Oct 2023 02:42:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696497153; x=1697101953; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KP0pc042qUQSPL3OpD/4Lvbv3aJsdJMyDgYbeSgql4g=;
-        b=PIKYQ7j8I8L02UF+zKyqsExalrJ7G4GU4SvbFNrm1XgbGwbRxoIQvb+eQtNg1se5O2
-         R/+eINnz+mvNQQVHN467Kw0rL0d/FL183O/epVQ3Ea5AiIG6Q1rgKjGuj/v+cIHYMVHz
-         Jm36Yzn9KbAYP+OvwSMC6T+almAs2KCWMLphT+w4b/6HSyDG6QYp6w2JuFwHSLkkCTZo
-         Ek5RAdMjlXHztr6G1BtQrdIH7GGAB/AIO/uheIXX3l20r6tHs20mfdO0QygfU/blUPlh
-         XJlME4f0JJlhlMd++KJnDZk0SJjSKud5RGnKNBQhk898qhGX16adiaBR5/E6tqrWy0Rg
-         34aw==
+        d=gmail.com; s=20230601; t=1696498964; x=1697103764; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=693KH3zKhYevDlo1VF7tZiOPFyQxum49fs5ILYx5v8c=;
+        b=KlQlCCxaDdbdM/77MV3aYSCaAMJZrf5XTckHj73GAqe+taEDYD3GgYGNm4ne8WslZw
+         zs5yuTG0s8twzf52YDk9LE+CEkWflQkuE7RbyBiYaenJQoyAspvC+W/UazfKRTHC9ZSc
+         sgWKy/TQdSqfMd1LM0fEUxLLD3+yEfZNdaQ2FhwhtrslxIm4YfMQIQLvYg68D/4aGW+C
+         evYxsuBqEuiGkj/XxCdhQygvB45uNMM8VHQGroxqeQCX0TY1i/ZdI2dwBUqFpsc4F4sl
+         NHWJooTwrPJgK4bgYDS4cfNsGM7FNaFynLaUBHkwhpKMio0zO9vCncwe4mpunDTosVNq
+         2VrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696497153; x=1697101953;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=KP0pc042qUQSPL3OpD/4Lvbv3aJsdJMyDgYbeSgql4g=;
-        b=lt3RJPiXH6LJmc/kphgfkh5whbRs6XWndc/NG6aImkp1PJej0onfOqsv+1GLN1OESe
-         JVkhV0ZtK7D9tkD9X08Fs1pZiVzPbIjeikVTu1M1N8rj2mRiKOr7sb00AaE7N7sS+IYr
-         pgAKQVLkbJIFbJFtkYENqce0Fa33O9Tnw7f0E0o+/BP9J6Rj9dgh+kl8dDxu9GBlFJZQ
-         Ib3V4zfpJdYhGBAPjBaBk4yPBudDHFYBlYdoG+q7pyNnVyEkv4znTHaCw5ploXiZOgmV
-         zmH9388lmCfdxfM8UHQR4GE9z/MWAQqy3xx5PAUnz5MyDzRDej5qRfX6Kqd7aqdUIAdt
-         6H0A==
-X-Gm-Message-State: AOJu0Yz4MZ7JqsUcXbY+vh0+DZti6lV1lanAFImzxYrC5743UIprO2Pn
-        bFeBNEUT3GPDgrfF3R+RL54=
-X-Google-Smtp-Source: AGHT+IH2W7hDeL1wkq3JWgO81DAp+hriGDli4ACMJ99sLnJI/m466JSxws9TxT8fh61MWmyN1ZwKYg==
-X-Received: by 2002:adf:eac3:0:b0:322:dbc6:8cf7 with SMTP id o3-20020adfeac3000000b00322dbc68cf7mr4361473wrn.16.1696497153115;
-        Thu, 05 Oct 2023 02:12:33 -0700 (PDT)
-Received: from [10.126.144.131] (ufr-132-230-194-172.eduroam-nat.uni-freiburg.de. [132.230.194.172])
-        by smtp.gmail.com with ESMTPSA id d7-20020adfe887000000b00326dd5486dcsm1302013wrm.107.2023.10.05.02.12.32
+        d=1e100.net; s=20230601; t=1696498964; x=1697103764;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=693KH3zKhYevDlo1VF7tZiOPFyQxum49fs5ILYx5v8c=;
+        b=VVl01rZ3FOaurFpIqNOlWRYmDSMc6TZT8uHqtDBPk3bwV+8z2338YLpqHB4gM9gngx
+         U1p3QyGwiIxFueqqf0gHj1W61FEG0Q9mvkB8D172omUEeHmD51EIuek2Whbirkw6JzER
+         Cpynt9uTRjjgcr16dRIpuUgP0nAiQWi8FsCPlKKNjbac9+P34ErJZylU2AZKF4xyoNBb
+         35bXl5sENinyB0UK1gq9Lar3ckYwVs3kjuZ12reebz7iu2nle2RbtYquDpD3mO2fnvqG
+         UUDTTmBjYhBWhx/p7fhmcKTqaRVnxd5D1N4ggrAj6d62L6FcKDxCSIqJsQ6b5nx/J4OF
+         zvrA==
+X-Gm-Message-State: AOJu0YzQed3IkYwB5N2ZTg4tL3zLzGLV6CVZw/cMRau9bJTNcd3MAFt1
+        C93Jox82061++sdxvYY8Dyw=
+X-Google-Smtp-Source: AGHT+IEqCjtTNseNA7LGC5Lm5Y9+taQvSKRx7vpW4rapsxY7APIyKIIa0O5eElHs85P9+NWErlFwBw==
+X-Received: by 2002:a05:600c:c9:b0:405:3dee:3515 with SMTP id u9-20020a05600c00c900b004053dee3515mr4625492wmm.27.1696498964439;
+        Thu, 05 Oct 2023 02:42:44 -0700 (PDT)
+Received: from [10.254.108.106] (munvpn.amd.com. [165.204.72.6])
+        by smtp.gmail.com with ESMTPSA id w21-20020a05600c015500b0040535648639sm1103836wmm.36.2023.10.05.02.42.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Oct 2023 02:12:32 -0700 (PDT)
-Message-ID: <ab49da90-d1bf-88d7-9fa2-c8c8882e23b6@gmail.com>
-Date:   Thu, 5 Oct 2023 11:12:33 +0200
+        Thu, 05 Oct 2023 02:42:43 -0700 (PDT)
+Message-ID: <d58bbe17-efa7-4548-9c7d-bf0310d31ef5@gmail.com>
+Date:   Thu, 5 Oct 2023 11:42:38 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v2 11/11] firmware: qcom: scm: enable SHM bridge
-To:     Bartosz Golaszewski <brgl@bgdev.pl>
-Cc:     Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/9] drm: Annotate structs with __counted_by
+To:     Kees Cook <keescook@chromium.org>,
+        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
+Cc:     Alex Deucher <alexdeucher@gmail.com>,
+        David Airlie <airlied@gmail.com>,
+        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
+        Karol Herbst <kherbst@redhat.com>, Tom Rix <trix@redhat.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        dri-devel@lists.freedesktop.org,
+        Chris Wilson <chris@chris-wilson.co.uk>,
+        Prike Liang <Prike.Liang@amd.com>,
+        Huang Rui <ray.huang@amd.com>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Matthew Brost <matthew.brost@intel.com>,
+        Evan Quan <evan.quan@amd.com>, Emma Anholt <emma@anholt.net>,
+        amd-gfx@lists.freedesktop.org,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Lijo Lazar <lijo.lazar@amd.com>,
+        VMware Graphics Reviewers 
+        <linux-graphics-maintainer@vmware.com>,
+        Ben Skeggs <bskeggs@redhat.com>,
+        Andi Shyti <andi.shyti@linux.intel.com>,
+        nouveau@lists.freedesktop.org, David Airlie <airlied@redhat.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Chia-I Wu <olvaffe@gmail.com>, llvm@lists.linux.dev,
+        Yifan Zhang <yifan1.zhang@amd.com>,
+        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        Kevin Wang <kevin1.wang@amd.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Nathan Chancellor <nathan@kernel.org>, Le Ma <le.ma@amd.com>,
+        Gurchetan Singh <gurchetansingh@chromium.org>,
+        Maxime Ripard <mripard@kernel.org>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        virtualization@lists.linux-foundation.org,
+        Sean Paul <sean@poorly.run>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Xiaojian Du <Xiaojian.Du@amd.com>, Lang Yu <Lang.Yu@amd.com>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        kernel@quicinc.com,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20230928092040.9420-1-brgl@bgdev.pl>
- <20230928092040.9420-12-brgl@bgdev.pl>
- <4ab66f17-4686-411f-b829-74eab3489568@gmail.com>
- <CAMRc=MebkzaLUtTn20V9f0FU1PbGrUGSHAJR+j3nVpc6wdJnsQ@mail.gmail.com>
-From:   Maximilian Luz <luzmaximilian@gmail.com>
-In-Reply-To: <CAMRc=MebkzaLUtTn20V9f0FU1PbGrUGSHAJR+j3nVpc6wdJnsQ@mail.gmail.com>
+        Tejas Upadhyay <tejas.upadhyay@intel.com>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        linux-kernel@vger.kernel.org,
+        Hawking Zhang <Hawking.Zhang@amd.com>,
+        Rob Clark <robdclark@gmail.com>, Melissa Wen <mwen@igalia.com>,
+        John Harrison <john.c.harrison@intel.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Nirmoy Das <nirmoy.das@intel.com>,
+        freedreno@lists.freedesktop.org, Zack Rusin <zackr@vmware.com>,
+        linux-hardening@vger.kernel.org
+References: <20230922173110.work.084-kees@kernel.org>
+ <169601600138.3014939.8511343741428844249.b4-ty@chromium.org>
+ <83cd056c-52ae-01dd-7576-42d41da64c26@gmail.com>
+ <CADnq5_Ma2CrLYggJHKFEObsNmUoqJwb2p1xai5DfL=m43U6zEA@mail.gmail.com>
+ <202310020952.E7DE0948C0@keescook>
+ <10644b5f-b0a7-85ef-0658-2353ee14df0d@gmail.com>
+ <202310021107.9BB46FB8E@keescook>
+ <0be2dfa4-b6c1-f62a-66e1-615da7aa3c76@amd.com>
+ <202310021122.B6DA850FB0@keescook>
+Content-Language: en-US
+From:   =?UTF-8?Q?Christian_K=C3=B6nig?= <ckoenig.leichtzumerken@gmail.com>
+In-Reply-To: <202310021122.B6DA850FB0@keescook>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-6.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,111 +131,79 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Am 05/10/2023 um 09:12 schrieb Bartosz Golaszewski:
-> On Thu, Oct 5, 2023 at 12:24 AM Maximilian Luz <luzmaximilian@gmail.com> wrote:
+Am 02.10.23 um 20:22 schrieb Kees Cook:
+> On Mon, Oct 02, 2023 at 08:11:41PM +0200, Christian König wrote:
+>> Am 02.10.23 um 20:08 schrieb Kees Cook:
+>>> On Mon, Oct 02, 2023 at 08:01:57PM +0200, Christian König wrote:
+>>>> Am 02.10.23 um 18:53 schrieb Kees Cook:
+>>>>> On Mon, Oct 02, 2023 at 11:06:19AM -0400, Alex Deucher wrote:
+>>>>>> On Mon, Oct 2, 2023 at 5:20 AM Christian König
+>>>>>> <ckoenig.leichtzumerken@gmail.com> wrote:
+>>>>>>> Am 29.09.23 um 21:33 schrieb Kees Cook:
+>>>>>>>> On Fri, 22 Sep 2023 10:32:05 -0700, Kees Cook wrote:
+>>>>>>>>> This is a batch of patches touching drm for preparing for the coming
+>>>>>>>>> implementation by GCC and Clang of the __counted_by attribute. Flexible
+>>>>>>>>> array members annotated with __counted_by can have their accesses
+>>>>>>>>> bounds-checked at run-time checking via CONFIG_UBSAN_BOUNDS (for array
+>>>>>>>>> indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family functions).
+>>>>>>>>>
+>>>>>>>>> As found with Coccinelle[1], add __counted_by to structs that would
+>>>>>>>>> benefit from the annotation.
+>>>>>>>>>
+>>>>>>>>> [...]
+>>>>>>>> Since this got Acks, I figure I should carry it in my tree. Let me know
+>>>>>>>> if this should go via drm instead.
+>>>>>>>>
+>>>>>>>> Applied to for-next/hardening, thanks!
+>>>>>>>>
+>>>>>>>> [1/9] drm/amd/pm: Annotate struct smu10_voltage_dependency_table with __counted_by
+>>>>>>>>           https://git.kernel.org/kees/c/a6046ac659d6
+>>>>>>> STOP! In a follow up discussion Alex and I figured out that this won't work.
+>>>>> I'm so confused; from the discussion I saw that Alex said both instances
+>>>>> were false positives?
+>>>>>
+>>>>>>> The value in the structure is byte swapped based on some firmware
+>>>>>>> endianness which not necessary matches the CPU endianness.
+>>>>>> SMU10 is APU only so the endianess of the SMU firmware and the CPU
+>>>>>> will always match.
+>>>>> Which I think is what is being said here?
+>>>>>
+>>>>>>> Please revert that one from going upstream if it's already on it's way.
+>>>>>>>
+>>>>>>> And because of those reasons I strongly think that patches like this
+>>>>>>> should go through the DRM tree :)
+>>>>> Sure, that's fine -- please let me know. It was others Acked/etc. Who
+>>>>> should carry these patches?
+>>>> Probably best if the relevant maintainer pick them up individually.
+>>>>
+>>>> Some of those structures are filled in by firmware/hardware and only the
+>>>> maintainers can judge if that value actually matches what the compiler
+>>>> needs.
+>>>>
+>>>> We have cases where individual bits are used as flags or when the size is
+>>>> byte swapped etc...
+>>>>
+>>>> Even Alex and I didn't immediately say how and where that field is actually
+>>>> used and had to dig that up. That's where the confusion came from.
+>>> Okay, I've dropped them all from my tree. Several had Acks/Reviews, so
+>>> hopefully those can get picked up for the DRM tree?
+>> I will pick those up to go through drm-misc-next.
 >>
->> On 9/28/23 11:20, Bartosz Golaszewski wrote:
->>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>>
->>> Extens the SCM memory allocator with using the SHM Bridge feature if
->>> available on the platform. This makes the trustzone only use dedicated
->>> buffers for SCM calls. We map the entire SCM genpool as a bridge.
->>>
->>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>
->> This patch breaks something in early boot on my Surface Pro X (sc8180x).
->> Unfortunately I can't provide many details at the moment because the
->> only thing I can see are RCU stalls, and the traces from them are quite
->> useless.
->>
->> Without this patch, the rest of the series (with the fix you posted on
->> patch 6 applied) seems to work fine. Including both RFT qseecom patches.
->>
->> I plan to have a closer look at this once I have some more time though.
->>
-> 
-> Can it be the PAS image loading? This is something Andrew reported and
-> I have it fixed for v3.
+>> Going to ping maintainers once more when I'm not sure if stuff is correct or
+>> not.
+> Sounds great; thanks!
 
-That is my current suspicion, but I haven't had the time to properly
-check it yet.
+I wasn't 100% sure for the VC4 patch, but pushed the whole set to 
+drm-misc-next anyway.
 
-Regards,
-Max
+This also means that the patches are now auto merged into the drm-tip 
+integration branch and should any build or unit test go boom we should 
+notice immediately and can revert it pretty easily.
 
-> Bart
-> 
->> Regards,
->> Max
->>
->>> ---
->>>    drivers/firmware/qcom/qcom_scm-mem.c | 42 ++++++++++++++++++++++++++--
->>>    1 file changed, 39 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/drivers/firmware/qcom/qcom_scm-mem.c b/drivers/firmware/qcom/qcom_scm-mem.c
->>> index eafecbe23770..12b12b15f46f 100644
->>> --- a/drivers/firmware/qcom/qcom_scm-mem.c
->>> +++ b/drivers/firmware/qcom/qcom_scm-mem.c
->>> @@ -16,6 +16,8 @@
->>>
->>>    #include "qcom_scm.h"
->>>
->>> +#define QCOM_SHM_BRIDGE_NUM_VM_SHIFT 9
->>> +
->>>    static size_t qcom_scm_mem_pool_size = SZ_2M;
->>>    module_param_named(qcom_scm_mem_pool_size, qcom_scm_mem_pool_size,
->>>                   ulong, 0400);
->>> @@ -108,8 +110,24 @@ phys_addr_t qcom_scm_mem_to_phys(void *vaddr)
->>>        return chunk->paddr;
->>>    }
->>>
->>> +static int qcom_scm_mem_shm_bridge_create(void)
->>> +{
->>> +     uint64_t pfn_and_ns_perm, ipfn_and_s_perm, size_and_flags, ns_perms;
->>> +
->>> +     ns_perms = (QCOM_SCM_PERM_WRITE | QCOM_SCM_PERM_READ);
->>> +     pfn_and_ns_perm = (u64)qcom_scm_mem.pbase | ns_perms;
->>> +     ipfn_and_s_perm = (u64)qcom_scm_mem.pbase | ns_perms;
->>> +     size_and_flags = qcom_scm_mem.size | (1 << QCOM_SHM_BRIDGE_NUM_VM_SHIFT);
->>> +
->>> +     return qcom_scm_create_shm_bridge(qcom_scm_mem.dev, pfn_and_ns_perm,
->>> +                                       ipfn_and_s_perm, size_and_flags,
->>> +                                       QCOM_SCM_VMID_HLOS);
->>> +}
->>> +
->>>    int qcom_scm_mem_enable(struct device *dev)
->>>    {
->>> +     int ret;
->>> +
->>>        INIT_RADIX_TREE(&qcom_scm_mem.chunks, GFP_ATOMIC);
->>>        spin_lock_init(&qcom_scm_mem.lock);
->>>        qcom_scm_mem.dev = dev;
->>> @@ -128,7 +146,25 @@ int qcom_scm_mem_enable(struct device *dev)
->>>
->>>        gen_pool_set_algo(qcom_scm_mem.pool, gen_pool_best_fit, NULL);
->>>
->>> -     return gen_pool_add_virt(qcom_scm_mem.pool,
->>> -                              (unsigned long)qcom_scm_mem.vbase,
->>> -                              qcom_scm_mem.pbase, qcom_scm_mem.size, -1);
->>> +     ret = gen_pool_add_virt(qcom_scm_mem.pool,
->>> +                             (unsigned long)qcom_scm_mem.vbase,
->>> +                             qcom_scm_mem.pbase, qcom_scm_mem.size, -1);
->>> +     if (ret)
->>> +             return ret;
->>> +
->>> +     ret = qcom_scm_enable_shm_bridge();
->>> +     if (ret) {
->>> +             if (ret == EOPNOTSUPP)
->>> +                     dev_info(dev, "SHM Bridge not supported\n");
->>> +             else
->>> +                     return ret;
->>> +     } else {
->>> +             ret = qcom_scm_mem_shm_bridge_create();
->>> +             if (ret)
->>> +                     return ret;
->>> +
->>> +             dev_info(dev, "SHM Bridge enabled\n");
->>> +     }
->>> +
->>> +     return 0;
->>>    }
+Thanks,
+Christian.
+
+>
+> -Kees
+>
+
