@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 06BB67BABF1
+	by mail.lfdr.de (Postfix) with ESMTP id 5A2E97BABF2
 	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Oct 2023 23:27:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229750AbjJEV1N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Oct 2023 17:27:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41300 "EHLO
+        id S230174AbjJEV1O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Oct 2023 17:27:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230174AbjJEV1L (ORCPT
+        with ESMTP id S231128AbjJEV1M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Oct 2023 17:27:11 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEBC89E
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Oct 2023 14:27:10 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-50308217223so1791881e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Oct 2023 14:27:10 -0700 (PDT)
+        Thu, 5 Oct 2023 17:27:12 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C50095
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Oct 2023 14:27:11 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-505748580ceso1812678e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Oct 2023 14:27:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1696541229; x=1697146029; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2hPtVzzZO9pBznL56T6VYtPDn+5rPWC88sELbHece2w=;
-        b=ANdQcTP1JlpxhhtGpVF79ZfprXbVtEY1vCIHVVnMzBUzMy95+B/jGjMmLr5SqHwJyH
-         +odA8ODm2GAgmy9CpoliN29IkYTT2WPPn0eIe6kILehQgQ1ZWnzk91lp7rO2f0VsNMb2
-         +0S9jdD8wBVhLxfuwlt9GHqye0zVWBDw4tupvohKNRoDJKYXcRQWuNJUL4Y07oDDiD60
-         nSobcKHAX8DWJ7Mi/HgdlayZaRQkplExZo02+5LSIw8PFeGTlymCOBXyLdo+N9zxFg1G
-         Wke+Sq1r05M4K50f+FBI5p/Ij49zaFVQO5hbHhGuUKoQw6ZCeHLQ2/l3CVn7DlmX17Pw
-         GH8Q==
+        bh=HqxEMpUKQ/G8V5waQaP2laENlyhCdS/+wJeXJU7A8oM=;
+        b=EN0K3ljHk3kR1nB/osNxcorTQX5476yEYKSgwMYa4O3TBXEowD2krajdwBz9kY+chW
+         mE0FSiErTu1jMeSrhcYNKQHOHv9talhTZm6RiQIJ9QAlAtwossknkPZnxfj3Mssf6G+s
+         G9Yd2BbToXwjjwh3HMnKLYgRjF2kuNihamv2Mtt2ejNfKh1o1Hv4zuqGzgxFAZc8V46A
+         1u0Kidd7q7A+krAfNn2ZzFCy/9vXfBwDbOZnLp/B1U1rLuQBcuFdUto7G7ABIKXqgTcH
+         0Kljv+u2ynlNKzR28FTb5oJx4a6BB7CY7dUEbldXAbxTR1NYnD+2Xklod4zGTxZIRG+x
+         NHhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1696541229; x=1697146029;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2hPtVzzZO9pBznL56T6VYtPDn+5rPWC88sELbHece2w=;
-        b=mMECcoeHHkMmAqrFVjzUQEMdaZcL0CqR3pFT56gr/IbaBHuWlN3D+kMhaniVG376WX
-         myyit7gjeRzm2tsa2HQDRYl9UpB9ocl7iK7BF7J4TszHmdjAeTyNN+BtVz/R6DaogDPi
-         9/dj5lhaFKiDuKdVIn3N6pPH4QGebiKvjc+3K2j9oENxJblSlVt/hp0miLw+YgvxMjnD
-         +y4o0z69MNaNGb3mP+gYRs7VvJvuePGrk6n+9dizKpszqcGMI+eRk74snv63IC9VqvJS
-         j10d7PXx/2nxOUkpDcx14FOg3w8sdVBrVW5ngI76H8ChQYKpDt6RelUMYt6G7qiQsnQI
-         tb4w==
-X-Gm-Message-State: AOJu0YwGCX/xpx81E2OLxNJ2vpNClQ723dmJbWrDmyd4N78qfe8VPzl1
-        3TsDNaRLuucn9hS2V5p8pvBvuk7ctz2MUi0r00A=
-X-Google-Smtp-Source: AGHT+IHyWaHI/ccMpMsiZJmgLT39m4mhrH8iEHE1/oJOIFRMc9jb/U/tw82wSvsr5Nrd2WpxJ9ZDFQ==
-X-Received: by 2002:a19:910d:0:b0:501:ba04:f34b with SMTP id t13-20020a19910d000000b00501ba04f34bmr5308420lfd.44.1696541229128;
+        bh=HqxEMpUKQ/G8V5waQaP2laENlyhCdS/+wJeXJU7A8oM=;
+        b=RnmHOEZhWX+rn+HzUAWXWknlKOdDuc9cLXmed/P17VGopopY0cV4dfy3EbppLvAkXR
+         BleC1Ke5UFc66nb2owMenfcw5449bdpCHN7xa1XHceb/yuZ9WtXBIMtJ4H4hHXXBkJfh
+         q/NxqepccVS0iniZq2ccXcIUbn5VUA8qNaR1m2omJBPM+axBLFmAtPR2uOFPqva0DbFE
+         hPbQfB+3SWeXa+iQzV6Fvs1zNJWj0TKvF8fnmUgSGtRLxGLSu2O4p11PK0u2AnM0vV28
+         udOpco5zRssUqrMCxVKrZ/ODtlS0dbsM+uTE9K3H6wpfIb4fx9VYyy+n2WmA4R7OGqHa
+         aCWw==
+X-Gm-Message-State: AOJu0YyRYu8KqkajmJNcklLIpGIGVX+GJs9d8ZCl0UIj+mYuNMQZi8vt
+        N55YPDIX0BfkOy4oQKF+H36r+g==
+X-Google-Smtp-Source: AGHT+IE61WKg2qEsPtNBH3ocjcXEL1yByatl5Bf/fVU2tmLzVIv4CUpC2bT2hPMSBX7xXOUfBnHq0A==
+X-Received: by 2002:a05:6512:1242:b0:500:a378:db71 with SMTP id fb2-20020a056512124200b00500a378db71mr6845000lfb.57.1696541229714;
         Thu, 05 Oct 2023 14:27:09 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id a6-20020a19f806000000b00500b3157ec6sm8435lff.143.2023.10.05.14.27.08
+        by smtp.gmail.com with ESMTPSA id a6-20020a19f806000000b00500b3157ec6sm8435lff.143.2023.10.05.14.27.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Oct 2023 14:27:08 -0700 (PDT)
+        Thu, 05 Oct 2023 14:27:09 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,9 +60,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v5 07/10] drm/msm/dpu: drop DPU_HW_SUBBLK_INFO macro
-Date:   Fri,  6 Oct 2023 00:27:00 +0300
-Message-Id: <20231005212703.2400237-8-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v5 08/10] drm/msm/dpu: rewrite scaler and CSC presense checks
+Date:   Fri,  6 Oct 2023 00:27:01 +0300
+Message-Id: <20231005212703.2400237-9-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20231005212703.2400237-1-dmitry.baryshkov@linaro.org>
 References: <20231005212703.2400237-1-dmitry.baryshkov@linaro.org>
@@ -78,90 +78,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As the subblock info is now mostly gone, inline and drop the macro
-DPU_HW_SUBBLK_INFO.
+In order to check whether the SSPP block has scaler and CSC subblocks
+the funcion dpu_plane_atomic_check_pipe() uses macros which enumerate
+all possible scaler and CSC features. Replace those checks with the
+scaler and CSC subblock length checks in order to be able to drop those
+two macros.
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Suggested-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    | 40 ++++++++++---------
- 1 file changed, 21 insertions(+), 19 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h | 15 ---------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   |  4 ++--
+ 2 files changed, 2 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-index 19ab36ae6765..fc5027b0123a 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-@@ -252,49 +252,51 @@ enum {
- 	u32 len; \
- 	unsigned long features
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+index ca02f86c94ed..d1480ff2574a 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+@@ -21,21 +21,6 @@ struct dpu_hw_sspp;
+ #define DPU_SSPP_ROT_90			BIT(3)
+ #define DPU_SSPP_SOLID_FILL		BIT(4)
  
 -/**
-- * MACRO DPU_HW_SUBBLK_INFO - information of HW sub-block inside DPU
-- * @name:              string name for debug purposes
-- * @base:              offset of this sub-block relative to the block
-- *                     offset
-- * @len                register block length of this sub-block
+- * Define all scaler feature bits in catalog
 - */
--#define DPU_HW_SUBBLK_INFO \
--	char name[DPU_HW_BLK_NAME_LEN]; \
--	u32 base; \
--	u32 len
+-#define DPU_SSPP_SCALER (BIT(DPU_SSPP_SCALER_RGB) | \
+-			 BIT(DPU_SSPP_SCALER_QSEED2) | \
+-			 BIT(DPU_SSPP_SCALER_QSEED3) | \
+-			 BIT(DPU_SSPP_SCALER_QSEED3LITE) | \
+-			 BIT(DPU_SSPP_SCALER_QSEED4))
+-
+-/*
+- * Define all CSC feature bits in catalog
+- */
+-#define DPU_SSPP_CSC_ANY (BIT(DPU_SSPP_CSC) | \
+-			  BIT(DPU_SSPP_CSC_10BIT))
 -
  /**
-  * struct dpu_scaler_blk: Scaler information
-- * @info:   HW register and features supported by this sub-blk
-+ * @name: string name for debug purposes
-+ * @base: offset of this sub-block relative to the block offset
-+ * @len: register block length of this sub-block
-  * @version: qseed block revision, on QSEED3+ platforms this is the value of
-  *           scaler_blk.base + QSEED3_HW_VERSION registers.
+  * Component indices
   */
- struct dpu_scaler_blk {
--	DPU_HW_SUBBLK_INFO;
-+	char name[DPU_HW_BLK_NAME_LEN];
-+	u32 base;
-+	u32 len;
- 	u32 version;
- };
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index c2aaaded07ed..43135894263c 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -740,8 +740,8 @@ static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
+ 	min_src_size = DPU_FORMAT_IS_YUV(fmt) ? 2 : 1;
  
- struct dpu_csc_blk {
--	DPU_HW_SUBBLK_INFO;
-+	char name[DPU_HW_BLK_NAME_LEN];
-+	u32 base;
-+	u32 len;
- };
- 
- /**
-  * struct dpu_pp_blk : Pixel processing sub-blk information
-- * @info:   HW register and features supported by this sub-blk
-+ * @name: string name for debug purposes
-+ * @base: offset of this sub-block relative to the block offset
-+ * @len: register block length of this sub-block
-  * @version: HW Algorithm version
-  */
- struct dpu_pp_blk {
--	DPU_HW_SUBBLK_INFO;
-+	char name[DPU_HW_BLK_NAME_LEN];
-+	u32 base;
-+	u32 len;
- 	u32 version;
- };
- 
- /**
-  * struct dpu_dsc_blk - DSC Encoder sub-blk information
-- * @info:   HW register and features supported by this sub-blk
-+ * @name: string name for debug purposes
-+ * @base: offset of this sub-block relative to the block offset
-+ * @len: register block length of this sub-block
-  */
- struct dpu_dsc_blk {
--	DPU_HW_SUBBLK_INFO;
-+	char name[DPU_HW_BLK_NAME_LEN];
-+	u32 base;
-+	u32 len;
- };
- 
- /**
+ 	if (DPU_FORMAT_IS_YUV(fmt) &&
+-	    (!(pipe->sspp->cap->features & DPU_SSPP_SCALER) ||
+-	     !(pipe->sspp->cap->features & DPU_SSPP_CSC_ANY))) {
++	    (!pipe->sspp->cap->sblk->scaler_blk.len ||
++	     !pipe->sspp->cap->sblk->csc_blk.len)) {
+ 		DPU_DEBUG_PLANE(pdpu,
+ 				"plane doesn't have scaler/csc for yuv\n");
+ 		return -EINVAL;
 -- 
 2.39.2
 
