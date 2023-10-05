@@ -2,208 +2,187 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B0497B9FFC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Oct 2023 16:33:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E11397BA17D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Oct 2023 16:53:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234099AbjJEOcv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Oct 2023 10:32:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38924 "EHLO
+        id S238324AbjJEOnk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Oct 2023 10:43:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235087AbjJEOb2 (ORCPT
+        with ESMTP id S238539AbjJEOkk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Oct 2023 10:31:28 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5245BAD3D;
-        Thu,  5 Oct 2023 02:42:46 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-4065f29e933so7125545e9.1;
-        Thu, 05 Oct 2023 02:42:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696498964; x=1697103764; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=693KH3zKhYevDlo1VF7tZiOPFyQxum49fs5ILYx5v8c=;
-        b=KlQlCCxaDdbdM/77MV3aYSCaAMJZrf5XTckHj73GAqe+taEDYD3GgYGNm4ne8WslZw
-         zs5yuTG0s8twzf52YDk9LE+CEkWflQkuE7RbyBiYaenJQoyAspvC+W/UazfKRTHC9ZSc
-         sgWKy/TQdSqfMd1LM0fEUxLLD3+yEfZNdaQ2FhwhtrslxIm4YfMQIQLvYg68D/4aGW+C
-         evYxsuBqEuiGkj/XxCdhQygvB45uNMM8VHQGroxqeQCX0TY1i/ZdI2dwBUqFpsc4F4sl
-         NHWJooTwrPJgK4bgYDS4cfNsGM7FNaFynLaUBHkwhpKMio0zO9vCncwe4mpunDTosVNq
-         2VrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696498964; x=1697103764;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=693KH3zKhYevDlo1VF7tZiOPFyQxum49fs5ILYx5v8c=;
-        b=VVl01rZ3FOaurFpIqNOlWRYmDSMc6TZT8uHqtDBPk3bwV+8z2338YLpqHB4gM9gngx
-         U1p3QyGwiIxFueqqf0gHj1W61FEG0Q9mvkB8D172omUEeHmD51EIuek2Whbirkw6JzER
-         Cpynt9uTRjjgcr16dRIpuUgP0nAiQWi8FsCPlKKNjbac9+P34ErJZylU2AZKF4xyoNBb
-         35bXl5sENinyB0UK1gq9Lar3ckYwVs3kjuZ12reebz7iu2nle2RbtYquDpD3mO2fnvqG
-         UUDTTmBjYhBWhx/p7fhmcKTqaRVnxd5D1N4ggrAj6d62L6FcKDxCSIqJsQ6b5nx/J4OF
-         zvrA==
-X-Gm-Message-State: AOJu0YzQed3IkYwB5N2ZTg4tL3zLzGLV6CVZw/cMRau9bJTNcd3MAFt1
-        C93Jox82061++sdxvYY8Dyw=
-X-Google-Smtp-Source: AGHT+IEqCjtTNseNA7LGC5Lm5Y9+taQvSKRx7vpW4rapsxY7APIyKIIa0O5eElHs85P9+NWErlFwBw==
-X-Received: by 2002:a05:600c:c9:b0:405:3dee:3515 with SMTP id u9-20020a05600c00c900b004053dee3515mr4625492wmm.27.1696498964439;
-        Thu, 05 Oct 2023 02:42:44 -0700 (PDT)
-Received: from [10.254.108.106] (munvpn.amd.com. [165.204.72.6])
-        by smtp.gmail.com with ESMTPSA id w21-20020a05600c015500b0040535648639sm1103836wmm.36.2023.10.05.02.42.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Oct 2023 02:42:43 -0700 (PDT)
-Message-ID: <d58bbe17-efa7-4548-9c7d-bf0310d31ef5@gmail.com>
-Date:   Thu, 5 Oct 2023 11:42:38 +0200
+        Thu, 5 Oct 2023 10:40:40 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ACA477644;
+        Thu,  5 Oct 2023 07:12:58 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3958A1lg012152;
+        Thu, 5 Oct 2023 09:57:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=TULmcO8l188rP5vtjqFrkpttdGmBezWswKLwM6tqT+k=;
+ b=Qj7I3eeKQbICxxNLcDf5mcOHdj3UtQIdHYHW2wnUCyZU6x6xlHzHPqqBsPyfiY3rOw9A
+ 0b03WbvtDQ3foBmuYteEiAO4in9C/+s9ZBh/4D9ICpLfNdRljEkkN1OEanDWjzgsel8z
+ iOS/6pFb3Tdht6vV4XSmSWp91aKKZos440p/+oTTJhIDQ6VMhhgAjtNNq1oHIqIk6B93
+ iCfHE3/F6fwZpB8mi7iRyRs86dQGDqc7MSmKTViYighBvUG19YiOAhqV5cliyTt0oYKD
+ GJau/y+OshTswMi4sZMfaI8RLcyJCpK5o6/k7tgysj3CB8AbYw8FLeVcE9qd5TKZmyPv mA== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3th8e1teue-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 05 Oct 2023 09:57:56 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3959vtAJ028265
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 5 Oct 2023 09:57:55 GMT
+Received: from varda-linux.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.36; Thu, 5 Oct 2023 02:57:49 -0700
+Date:   Thu, 5 Oct 2023 15:27:45 +0530
+From:   Varadarajan Narayanan <quic_varada@quicinc.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     <ilia.lin@kernel.org>, <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <rafael@kernel.org>,
+        <viresh.kumar@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <quic_kathirav@quicinc.com>, <linux-pm@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>
+Subject: Re: [PATCH v1 07/10] arm64: dts: qcom: ipq5332: populate the opp
+ table based on the eFuse
+Message-ID: <20231005095744.GA29795@varda-linux.qualcomm.com>
+References: <cover.1693996662.git.quic_varada@quicinc.com>
+ <a6d12e3b253d6a55d85f66979ba8b7d9c9ff6072.1693996662.git.quic_varada@quicinc.com>
+ <CAA8EJppNsgUNgwadq9oM0_KyORNR5PBZGVZukN6MzAm2KPzC9g@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/9] drm: Annotate structs with __counted_by
-To:     Kees Cook <keescook@chromium.org>,
-        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
-Cc:     Alex Deucher <alexdeucher@gmail.com>,
-        David Airlie <airlied@gmail.com>,
-        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
-        Karol Herbst <kherbst@redhat.com>, Tom Rix <trix@redhat.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        dri-devel@lists.freedesktop.org,
-        Chris Wilson <chris@chris-wilson.co.uk>,
-        Prike Liang <Prike.Liang@amd.com>,
-        Huang Rui <ray.huang@amd.com>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Matthew Brost <matthew.brost@intel.com>,
-        Evan Quan <evan.quan@amd.com>, Emma Anholt <emma@anholt.net>,
-        amd-gfx@lists.freedesktop.org,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Lijo Lazar <lijo.lazar@amd.com>,
-        VMware Graphics Reviewers 
-        <linux-graphics-maintainer@vmware.com>,
-        Ben Skeggs <bskeggs@redhat.com>,
-        Andi Shyti <andi.shyti@linux.intel.com>,
-        nouveau@lists.freedesktop.org, David Airlie <airlied@redhat.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Chia-I Wu <olvaffe@gmail.com>, llvm@lists.linux.dev,
-        Yifan Zhang <yifan1.zhang@amd.com>,
-        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        Kevin Wang <kevin1.wang@amd.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Nathan Chancellor <nathan@kernel.org>, Le Ma <le.ma@amd.com>,
-        Gurchetan Singh <gurchetansingh@chromium.org>,
-        Maxime Ripard <mripard@kernel.org>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        virtualization@lists.linux-foundation.org,
-        Sean Paul <sean@poorly.run>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Xiaojian Du <Xiaojian.Du@amd.com>, Lang Yu <Lang.Yu@amd.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Tejas Upadhyay <tejas.upadhyay@intel.com>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        linux-kernel@vger.kernel.org,
-        Hawking Zhang <Hawking.Zhang@amd.com>,
-        Rob Clark <robdclark@gmail.com>, Melissa Wen <mwen@igalia.com>,
-        John Harrison <john.c.harrison@intel.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Nirmoy Das <nirmoy.das@intel.com>,
-        freedreno@lists.freedesktop.org, Zack Rusin <zackr@vmware.com>,
-        linux-hardening@vger.kernel.org
-References: <20230922173110.work.084-kees@kernel.org>
- <169601600138.3014939.8511343741428844249.b4-ty@chromium.org>
- <83cd056c-52ae-01dd-7576-42d41da64c26@gmail.com>
- <CADnq5_Ma2CrLYggJHKFEObsNmUoqJwb2p1xai5DfL=m43U6zEA@mail.gmail.com>
- <202310020952.E7DE0948C0@keescook>
- <10644b5f-b0a7-85ef-0658-2353ee14df0d@gmail.com>
- <202310021107.9BB46FB8E@keescook>
- <0be2dfa4-b6c1-f62a-66e1-615da7aa3c76@amd.com>
- <202310021122.B6DA850FB0@keescook>
-Content-Language: en-US
-From:   =?UTF-8?Q?Christian_K=C3=B6nig?= <ckoenig.leichtzumerken@gmail.com>
-In-Reply-To: <202310021122.B6DA850FB0@keescook>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <CAA8EJppNsgUNgwadq9oM0_KyORNR5PBZGVZukN6MzAm2KPzC9g@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: oIcgO5TZ66_7muH1tFN8rHdOi-fpZKDV
+X-Proofpoint-ORIG-GUID: oIcgO5TZ66_7muH1tFN8rHdOi-fpZKDV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-05_06,2023-10-02_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
+ adultscore=0 priorityscore=1501 mlxscore=0 lowpriorityscore=0 spamscore=0
+ bulkscore=0 mlxlogscore=999 malwarescore=0 impostorscore=0 clxscore=1015
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
+ definitions=main-2310050077
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Am 02.10.23 um 20:22 schrieb Kees Cook:
-> On Mon, Oct 02, 2023 at 08:11:41PM +0200, Christian König wrote:
->> Am 02.10.23 um 20:08 schrieb Kees Cook:
->>> On Mon, Oct 02, 2023 at 08:01:57PM +0200, Christian König wrote:
->>>> Am 02.10.23 um 18:53 schrieb Kees Cook:
->>>>> On Mon, Oct 02, 2023 at 11:06:19AM -0400, Alex Deucher wrote:
->>>>>> On Mon, Oct 2, 2023 at 5:20 AM Christian König
->>>>>> <ckoenig.leichtzumerken@gmail.com> wrote:
->>>>>>> Am 29.09.23 um 21:33 schrieb Kees Cook:
->>>>>>>> On Fri, 22 Sep 2023 10:32:05 -0700, Kees Cook wrote:
->>>>>>>>> This is a batch of patches touching drm for preparing for the coming
->>>>>>>>> implementation by GCC and Clang of the __counted_by attribute. Flexible
->>>>>>>>> array members annotated with __counted_by can have their accesses
->>>>>>>>> bounds-checked at run-time checking via CONFIG_UBSAN_BOUNDS (for array
->>>>>>>>> indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family functions).
->>>>>>>>>
->>>>>>>>> As found with Coccinelle[1], add __counted_by to structs that would
->>>>>>>>> benefit from the annotation.
->>>>>>>>>
->>>>>>>>> [...]
->>>>>>>> Since this got Acks, I figure I should carry it in my tree. Let me know
->>>>>>>> if this should go via drm instead.
->>>>>>>>
->>>>>>>> Applied to for-next/hardening, thanks!
->>>>>>>>
->>>>>>>> [1/9] drm/amd/pm: Annotate struct smu10_voltage_dependency_table with __counted_by
->>>>>>>>           https://git.kernel.org/kees/c/a6046ac659d6
->>>>>>> STOP! In a follow up discussion Alex and I figured out that this won't work.
->>>>> I'm so confused; from the discussion I saw that Alex said both instances
->>>>> were false positives?
->>>>>
->>>>>>> The value in the structure is byte swapped based on some firmware
->>>>>>> endianness which not necessary matches the CPU endianness.
->>>>>> SMU10 is APU only so the endianess of the SMU firmware and the CPU
->>>>>> will always match.
->>>>> Which I think is what is being said here?
->>>>>
->>>>>>> Please revert that one from going upstream if it's already on it's way.
->>>>>>>
->>>>>>> And because of those reasons I strongly think that patches like this
->>>>>>> should go through the DRM tree :)
->>>>> Sure, that's fine -- please let me know. It was others Acked/etc. Who
->>>>> should carry these patches?
->>>> Probably best if the relevant maintainer pick them up individually.
->>>>
->>>> Some of those structures are filled in by firmware/hardware and only the
->>>> maintainers can judge if that value actually matches what the compiler
->>>> needs.
->>>>
->>>> We have cases where individual bits are used as flags or when the size is
->>>> byte swapped etc...
->>>>
->>>> Even Alex and I didn't immediately say how and where that field is actually
->>>> used and had to dig that up. That's where the confusion came from.
->>> Okay, I've dropped them all from my tree. Several had Acks/Reviews, so
->>> hopefully those can get picked up for the DRM tree?
->> I will pick those up to go through drm-misc-next.
->>
->> Going to ping maintainers once more when I'm not sure if stuff is correct or
->> not.
-> Sounds great; thanks!
-
-I wasn't 100% sure for the VC4 patch, but pushed the whole set to 
-drm-misc-next anyway.
-
-This also means that the patches are now auto merged into the drm-tip 
-integration branch and should any build or unit test go boom we should 
-notice immediately and can revert it pretty easily.
-
-Thanks,
-Christian.
-
+On Thu, Sep 07, 2023 at 04:59:28PM +0300, Dmitry Baryshkov wrote:
+> On Thu, 7 Sept 2023 at 08:23, Varadarajan Narayanan
+> <quic_varada@quicinc.com> wrote:
+> >
+> > IPQ53xx have different OPPs available for the CPU based on
+> > SoC variant. This can be determined through use of an eFuse
+> > register present in the silicon.
+> >
+> > Add support to read the eFuse and populate the OPPs based on it.
+> >
+> > Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/ipq5332.dtsi | 34 +++++++++++++++++++++++++++++++---
+> >  1 file changed, 31 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+> > index 82761ae..3ca3f34 100644
+> > --- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+> > @@ -91,11 +91,34 @@
+> >         };
+> >
+> >         cpu_opp_table: opp-table-cpu {
+> > -               compatible = "operating-points-v2";
+> > +               compatible = "operating-points-v2-kryo-cpu";
+> >                 opp-shared;
+> > +               nvmem-cells = <&cpu_speed_bin>;
+> > +               nvmem-cell-names = "speed_bin";
+> > +
+> > +               /*
+> > +                * Listed all supported CPU frequencies and opp-supported-hw
+> > +                * values to select CPU frequencies based on the limits fused.
+> > +                * ------------------------------------------------------------
+> > +                * Frequency     BIT3   BIT2   BIT1    BIT0    opp-supported-hw
+> > +                *              1.0GHz 1.2GHz 1.5GHz No Limit
+> > +                * ------------------------------------------------------------
+> > +                * 1100000000     1      1      1       1            0xF
+> > +                * 1500000000     0      0      1       1            0x3
+> > +                * -----------------------------------------------------------
+> > +                */
 >
-> -Kees
->
+> This can probably go to the commit message instead.
 
+Ok
+
+> > +
+> > +               opp-1100000000 {
+> > +                       opp-hz = /bits/ 64 <1100000000>;
+>
+> But your table shows 1.0 GHz and 1.2 GHz instead of 1.1 GHz
+
+Will update it.
+
+> > +                       opp-microvolt = <850000>;
+> > +                       opp-supported-hw = <0xF>;
+> > +                       clock-latency-ns = <200000>;
+> > +               };
+> >
+> > -               opp-1488000000 {
+> > -                       opp-hz = /bits/ 64 <1488000000>;
+> > +               opp-1500000000 {
+> > +                       opp-hz = /bits/ 64 <1500000000>;
+>
+> So, 1.488 GHz or 1.5 GHz?
+
+1.5 GHz
+
+> > +                       opp-microvolt = <950000>;
+>
+> Which regulator is controlled by this microvolt?
+
+Based on the SKU, the XBL sets up the regulator to provide 950000uV
+on CPUs capable of running 1.5G and 850000uV on other SKUs. Linux
+doesn't control it.
+
+Thanks
+Varada
+> > +                       opp-supported-hw = <0x3>;
+> >                         clock-latency-ns = <200000>;
+> >                 };
+> >         };
+> > @@ -150,6 +173,11 @@
+> >                         reg = <0x000a4000 0x721>;
+> >                         #address-cells = <1>;
+> >                         #size-cells = <1>;
+> > +
+> > +                       cpu_speed_bin: cpu_speed_bin@1d {
+> > +                               reg = <0x1d 0x2>;
+> > +                               bits = <7 2>;
+> > +                       };
+> >                 };
+> >
+> >                 rng: rng@e3000 {
+> > --
+> > 2.7.4
+> >
+>
+>
+> --
+> With best wishes
+> Dmitry
