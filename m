@@ -2,181 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D779D7BA5E3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Oct 2023 18:21:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 386687BA61C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Oct 2023 18:28:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242309AbjJEQUs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Oct 2023 12:20:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36106 "EHLO
+        id S233562AbjJEQ1m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Oct 2023 12:27:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242451AbjJEQSB (ORCPT
+        with ESMTP id S236195AbjJEQWi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Oct 2023 12:18:01 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6E8D3F025;
-        Thu,  5 Oct 2023 09:06:56 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 395CsRur015464;
-        Thu, 5 Oct 2023 16:06:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=NSi6brrY0QDAZ3HzHxPaf2hgz27vKeKX8LZRRHNWQWc=;
- b=bhnUe3rjnlfJlfGglxvqihGmTNQCt2GnP9fbZBkIsYd0LKp5VGtAlA0IYUcwsiTLb7RK
- zTJfR/Llub7KabA70G7qxopCKO0GgBFRq3Xhug1Nnrpr08qcHCrAOSuS16i8viiv5tE/
- Lrn3/Dj59DKIWaBWzrTmI5pK0eLkK0nAPYsTjv03eE8JFtw3M0lHrMQdjuwtpNE7ivjl
- CCkahl9YDirevdy+EdeBg17dBw4R3t/qo+3tDzom1COe5knM5DIJI79fxqY1ueFFOM6D
- D5mVEsufaOcEQFeLv3y7PtEsPTmWdyN2PCiU8GpFFz6KH8iJLyhzHc6o5pItDDupV1EG uQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3thn059cyw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 05 Oct 2023 16:06:41 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 395G6dfE025540
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 5 Oct 2023 16:06:40 GMT
-Received: from hu-devipriy-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Thu, 5 Oct 2023 09:06:34 -0700
-From:   Devi Priya <quic_devipriy@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <lee@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <thierry.reding@gmail.com>, <ndesaulniers@google.com>,
-        <trix@redhat.com>, <baruch@tkos.co.il>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <llvm@lists.linux.dev>
-CC:     <linux-pwm@vger.kernel.org>, <u.kleine-koenig@pengutronix.de>,
-        <nathan@kernel.org>
-Subject: [PATCH V15 4/4] arm64: dts: qcom: ipq6018: add pwm node
-Date:   Thu, 5 Oct 2023 21:35:50 +0530
-Message-ID: <20231005160550.2423075-5-quic_devipriy@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231005160550.2423075-1-quic_devipriy@quicinc.com>
-References: <20231005160550.2423075-1-quic_devipriy@quicinc.com>
+        Thu, 5 Oct 2023 12:22:38 -0400
+Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3293130F2
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Oct 2023 09:16:24 -0700 (PDT)
+Received: by mail-pf1-x42c.google.com with SMTP id d2e1a72fcca58-690f7bf73ddso906458b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Oct 2023 09:16:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1696522583; x=1697127383; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=xpZu6lqlyEvAN7T4WQyZZbFvUnbP262xmkxGmbRAMgI=;
+        b=GgnioRLSfuHluJcKeRVhJg2pJrRhq/2PX+jbibkiDkTO+pmOZPLczBLmEoTGyR4DDg
+         LlgTMxnlBMFBrGT02fujhcmCmtkMhjWuZcWex/BjFg7Sg9mwI/m5KGMPx/VcPdwlI01B
+         uC/TKlTqDRBhG/u3NYIC7Jo8xud5BAOa9vN7g=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696522583; x=1697127383;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xpZu6lqlyEvAN7T4WQyZZbFvUnbP262xmkxGmbRAMgI=;
+        b=JLMLIzGYhgEYfmc2dgFVE+Ug+muN+F+hEi+VnSpNPqTv94qRN7SB6jdWCR6ue9LwXu
+         k3/I09nF06ezaYbi71zc3vSZvbCZ9QOmU4mgfd6QqtB6sGRoVwSqt5lPVdtzIZgq3Eep
+         C4Ou+ZGD+BQ9uUIxWmHYAY+Lwi8gJu/sWn8RT/RtpCHNkiEATyPlQTFhrPRJWOPCAqdi
+         dDE9vQ+8v/+E8xJVtFzB06yft+7scLxcRudS5GYEgi0juHBT9gQxcWhqffS1n+vM1tOT
+         +TaKMJc5AbJ1msPY1EZHNkMUhZrtc9GqCs2QGoQIL6FUk4kkDFm95anVG6CWIUF9RbqE
+         NwXg==
+X-Gm-Message-State: AOJu0Yyc4d7Qj41PO6mOTqltauu+9f0U22cgEH4F2MyIMZaBR0qtUFeQ
+        XYIG6/8zTNwYVoxFqIz+IUcYKQ==
+X-Google-Smtp-Source: AGHT+IE6Ak6UYgEgJauQ6Y1uxdTD0V7hmNR5oIggJNBHvibyJu+tgYd9HJ0fF4GhOMQzLDOwnBAQAw==
+X-Received: by 2002:a05:6a20:7d84:b0:15c:b7ba:9137 with SMTP id v4-20020a056a207d8400b0015cb7ba9137mr6912555pzj.2.1696522583080;
+        Thu, 05 Oct 2023 09:16:23 -0700 (PDT)
+Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
+        by smtp.gmail.com with ESMTPSA id e4-20020a170902d38400b001bc675068e2sm1903597pld.111.2023.10.05.09.16.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Oct 2023 09:16:22 -0700 (PDT)
+Date:   Thu, 5 Oct 2023 09:16:21 -0700
+From:   Kees Cook <keescook@chromium.org>
+To:     Christian =?iso-8859-1?Q?K=F6nig?= 
+        <ckoenig.leichtzumerken@gmail.com>
+Cc:     Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
+        Alex Deucher <alexdeucher@gmail.com>,
+        David Airlie <airlied@gmail.com>,
+        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
+        Karol Herbst <kherbst@redhat.com>, Tom Rix <trix@redhat.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        dri-devel@lists.freedesktop.org,
+        Chris Wilson <chris@chris-wilson.co.uk>,
+        Prike Liang <Prike.Liang@amd.com>,
+        Huang Rui <ray.huang@amd.com>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Matthew Brost <matthew.brost@intel.com>,
+        Evan Quan <evan.quan@amd.com>, Emma Anholt <emma@anholt.net>,
+        amd-gfx@lists.freedesktop.org,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Lijo Lazar <lijo.lazar@amd.com>,
+        VMware Graphics Reviewers 
+        <linux-graphics-maintainer@vmware.com>,
+        Ben Skeggs <bskeggs@redhat.com>,
+        Andi Shyti <andi.shyti@linux.intel.com>,
+        nouveau@lists.freedesktop.org, David Airlie <airlied@redhat.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Chia-I Wu <olvaffe@gmail.com>, llvm@lists.linux.dev,
+        Yifan Zhang <yifan1.zhang@amd.com>,
+        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        Kevin Wang <kevin1.wang@amd.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Nathan Chancellor <nathan@kernel.org>, Le Ma <le.ma@amd.com>,
+        Gurchetan Singh <gurchetansingh@chromium.org>,
+        Maxime Ripard <mripard@kernel.org>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        virtualization@lists.linux-foundation.org,
+        Sean Paul <sean@poorly.run>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Xiaojian Du <Xiaojian.Du@amd.com>, Lang Yu <Lang.Yu@amd.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Tejas Upadhyay <tejas.upadhyay@intel.com>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        linux-kernel@vger.kernel.org,
+        Hawking Zhang <Hawking.Zhang@amd.com>,
+        Rob Clark <robdclark@gmail.com>, Melissa Wen <mwen@igalia.com>,
+        John Harrison <john.c.harrison@intel.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Nirmoy Das <nirmoy.das@intel.com>,
+        freedreno@lists.freedesktop.org, Zack Rusin <zackr@vmware.com>,
+        linux-hardening@vger.kernel.org
+Subject: Re: [PATCH 0/9] drm: Annotate structs with __counted_by
+Message-ID: <202310050915.ABB0419C@keescook>
+References: <20230922173110.work.084-kees@kernel.org>
+ <169601600138.3014939.8511343741428844249.b4-ty@chromium.org>
+ <83cd056c-52ae-01dd-7576-42d41da64c26@gmail.com>
+ <CADnq5_Ma2CrLYggJHKFEObsNmUoqJwb2p1xai5DfL=m43U6zEA@mail.gmail.com>
+ <202310020952.E7DE0948C0@keescook>
+ <10644b5f-b0a7-85ef-0658-2353ee14df0d@gmail.com>
+ <202310021107.9BB46FB8E@keescook>
+ <0be2dfa4-b6c1-f62a-66e1-615da7aa3c76@amd.com>
+ <202310021122.B6DA850FB0@keescook>
+ <d58bbe17-efa7-4548-9c7d-bf0310d31ef5@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: pbCgYn8v-0OpdxaoHvIbH76mglvWkJsO
-X-Proofpoint-GUID: pbCgYn8v-0OpdxaoHvIbH76mglvWkJsO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-05_11,2023-10-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 suspectscore=0
- impostorscore=0 bulkscore=0 spamscore=0 mlxlogscore=999 priorityscore=1501
- mlxscore=0 malwarescore=0 lowpriorityscore=0 phishscore=0 clxscore=1015
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
- definitions=main-2310050125
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+In-Reply-To: <d58bbe17-efa7-4548-9c7d-bf0310d31ef5@gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Describe the PWM block on IPQ6018.
+On Thu, Oct 05, 2023 at 11:42:38AM +0200, Christian König wrote:
+> Am 02.10.23 um 20:22 schrieb Kees Cook:
+> > On Mon, Oct 02, 2023 at 08:11:41PM +0200, Christian König wrote:
+> > > Am 02.10.23 um 20:08 schrieb Kees Cook:
+> > > > On Mon, Oct 02, 2023 at 08:01:57PM +0200, Christian König wrote:
+> > > > > Am 02.10.23 um 18:53 schrieb Kees Cook:
+> > > > > > On Mon, Oct 02, 2023 at 11:06:19AM -0400, Alex Deucher wrote:
+> > > > > > > On Mon, Oct 2, 2023 at 5:20 AM Christian König
+> > > > > > > <ckoenig.leichtzumerken@gmail.com> wrote:
+> > > > > > > > Am 29.09.23 um 21:33 schrieb Kees Cook:
+> > > > > > > > > On Fri, 22 Sep 2023 10:32:05 -0700, Kees Cook wrote:
+> > > > > > > > > > This is a batch of patches touching drm for preparing for the coming
+> > > > > > > > > > implementation by GCC and Clang of the __counted_by attribute. Flexible
+> > > > > > > > > > array members annotated with __counted_by can have their accesses
+> > > > > > > > > > bounds-checked at run-time checking via CONFIG_UBSAN_BOUNDS (for array
+> > > > > > > > > > indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family functions).
+> > > > > > > > > > 
+> > > > > > > > > > As found with Coccinelle[1], add __counted_by to structs that would
+> > > > > > > > > > benefit from the annotation.
+> > > > > > > > > > 
+> > > > > > > > > > [...]
+> > > > > > > > > Since this got Acks, I figure I should carry it in my tree. Let me know
+> > > > > > > > > if this should go via drm instead.
+> > > > > > > > > 
+> > > > > > > > > Applied to for-next/hardening, thanks!
+> > > > > > > > > 
+> > > > > > > > > [1/9] drm/amd/pm: Annotate struct smu10_voltage_dependency_table with __counted_by
+> > > > > > > > >           https://git.kernel.org/kees/c/a6046ac659d6
+> > > > > > > > STOP! In a follow up discussion Alex and I figured out that this won't work.
+> > > > > > I'm so confused; from the discussion I saw that Alex said both instances
+> > > > > > were false positives?
+> > > > > > 
+> > > > > > > > The value in the structure is byte swapped based on some firmware
+> > > > > > > > endianness which not necessary matches the CPU endianness.
+> > > > > > > SMU10 is APU only so the endianess of the SMU firmware and the CPU
+> > > > > > > will always match.
+> > > > > > Which I think is what is being said here?
+> > > > > > 
+> > > > > > > > Please revert that one from going upstream if it's already on it's way.
+> > > > > > > > 
+> > > > > > > > And because of those reasons I strongly think that patches like this
+> > > > > > > > should go through the DRM tree :)
+> > > > > > Sure, that's fine -- please let me know. It was others Acked/etc. Who
+> > > > > > should carry these patches?
+> > > > > Probably best if the relevant maintainer pick them up individually.
+> > > > > 
+> > > > > Some of those structures are filled in by firmware/hardware and only the
+> > > > > maintainers can judge if that value actually matches what the compiler
+> > > > > needs.
+> > > > > 
+> > > > > We have cases where individual bits are used as flags or when the size is
+> > > > > byte swapped etc...
+> > > > > 
+> > > > > Even Alex and I didn't immediately say how and where that field is actually
+> > > > > used and had to dig that up. That's where the confusion came from.
+> > > > Okay, I've dropped them all from my tree. Several had Acks/Reviews, so
+> > > > hopefully those can get picked up for the DRM tree?
+> > > I will pick those up to go through drm-misc-next.
+> > > 
+> > > Going to ping maintainers once more when I'm not sure if stuff is correct or
+> > > not.
+> > Sounds great; thanks!
+> 
+> I wasn't 100% sure for the VC4 patch, but pushed the whole set to
+> drm-misc-next anyway.
+> 
+> This also means that the patches are now auto merged into the drm-tip
+> integration branch and should any build or unit test go boom we should
+> notice immediately and can revert it pretty easily.
 
-The PWM is in the TCSR area. Make &tcsr "simple-mfd" compatible, and add
-&pwm as child of &tcsr.
+Thanks very much; I'll keep an eye out for any reports.
 
-Add also ipq6018 specific compatible string.
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Co-developed-by: Baruch Siach <baruch.siach@siklu.com>
-Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
-Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
----
-v15:
-
-  Fixed the indentation of pwm node
-
-v14:
-
-  Moved ranges just after reg as suggested by Krzysztof
-
-  Picked up the R-b tag
-
-v13:
-
-  No change
-
-v12: 
-
-  No change
-
-v11:
-
-  No change
-
-v10:
-
-  No change
-
-v9:
-
-  Add 'ranges' property (Rob)
-
-v8:
-
-  Add size cell to 'reg' (Rob)
-
-v7:
-
-  Use 'reg' instead of 'offset' (Rob)
-
-  Add qcom,tcsr-ipq6018 (Rob)
-
-  Drop clock-names (Bjorn)
-
-v6:
-
-  Make the PWM node child of TCSR (Rob Herring)
-
-  Add assigned-clocks/assigned-clock-rates (Uwe Kleine-König)
-
-v5: Use qcom,pwm-regs for TCSR phandle instead of direct regs
-
-v3: s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
-
- arch/arm64/boot/dts/qcom/ipq6018.dtsi | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-index e59b9df96c7e..18f9fffba08b 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -390,8 +390,21 @@ tcsr_mutex: hwlock@1905000 {
- 		};
- 
- 		tcsr: syscon@1937000 {
--			compatible = "qcom,tcsr-ipq6018", "syscon";
-+			compatible = "qcom,tcsr-ipq6018", "syscon", "simple-mfd";
- 			reg = <0x0 0x01937000 0x0 0x21000>;
-+			ranges = <0x0 0x0 0x01937000 0x21000>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+
-+			pwm: pwm@a010 {
-+				compatible = "qcom,ipq6018-pwm";
-+				reg = <0xa010 0x20>;
-+				clocks = <&gcc GCC_ADSS_PWM_CLK>;
-+				assigned-clocks = <&gcc GCC_ADSS_PWM_CLK>;
-+				assigned-clock-rates = <100000000>;
-+				#pwm-cells = <2>;
-+				status = "disabled";
-+			};
- 		};
- 
- 		usb2: usb@70f8800 {
 -- 
-2.34.1
-
+Kees Cook
