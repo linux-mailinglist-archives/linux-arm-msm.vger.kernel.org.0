@@ -2,174 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B79AA7BAA4B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Oct 2023 21:40:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5AE9F7BABD3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Oct 2023 23:10:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229809AbjJETkL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Oct 2023 15:40:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52870 "EHLO
+        id S231351AbjJEVKB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Oct 2023 17:10:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229601AbjJETkK (ORCPT
+        with ESMTP id S231779AbjJEVKA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Oct 2023 15:40:10 -0400
-Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 412C7E4
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Oct 2023 12:40:07 -0700 (PDT)
-Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-5a1d0fee86aso16282797b3.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Oct 2023 12:40:07 -0700 (PDT)
+        Thu, 5 Oct 2023 17:10:00 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3540493
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Oct 2023 14:09:59 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-5042bfb4fe9so1834717e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Oct 2023 14:09:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696534806; x=1697139606; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=q79nbusY6yMg4gDn1/PKHAl0Q1+I2dNo50xbdZnueF8=;
-        b=EMlT6CvJsklF2WEqt6wm9epStnvXaFht8+bWiqX78LUHr+KdXu2AhXMZAZD9KXH1ys
-         Mml3ay1Ju9ht5NDB1Bh3LbnjqgE+7FB6/6tt85tO3TYuPCyUhBkliQYd+M2cwbkhF9Xq
-         mnX4db0kpUVj39MolXfyM76XqF7fMWBciqy/tgOGjUCduoSAgwpmQMk0zBk4jVFTXkV4
-         UnAZmbsvcNB5sBG8IOmcsn3qWW0m9O4Vluuiy5G6cY4SuZVw7J4CpTlpD5ao6bMG0wuU
-         vHW3QP/eNWooS27pZ2KYMC50R9bNmkWpa+4fRr5gr7VTXCmMlwKPZhZq9ELSNf5uHOQF
-         ypwQ==
+        d=linaro.org; s=google; t=1696540197; x=1697144997; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=4l+rmSaO9D8iSzAn40goBP/fmnV3QN4/WS3vTxGlc4Q=;
+        b=ix+tsZVPDoOq2VeIVVsLNiOycG6dliA2Lfpvp1NcA7sU90HM1YX1xclyzjb88JaFds
+         NFcMo7SMrVFL09aOyprKdB39wSN5q/2uDGehuji1S7otE9kSyy1aSa0aIb8hKvFhdPlT
+         KsujJkAqyflXy6ajSInes/grPZXdBcvLA5zRtDngymSbhc7rxjsYGLT51AfvCQDvCRcL
+         RZhZJmrmOwR2CL30lwFDfNO06nM+TT8KZuCXg1vq88qDEpuUgn1Y8S6YTgtf5sh8yRep
+         iJcqiJSzpi2o5JjGmWGpRidLPtVYuDKWxnVb4EG6QpkUHxGdApOVw6ru0MZhBQe5ZSof
+         zUpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696534806; x=1697139606;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1696540197; x=1697144997;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=q79nbusY6yMg4gDn1/PKHAl0Q1+I2dNo50xbdZnueF8=;
-        b=hDsOESGI/FAVvU9+dW3hDybCY4n1ky7cXidonss3shEjyH8rrEomlDOtYAz6PbWOLw
-         mEhsYQc7XeOmBw4ZWWCau7AGgD7jHxhy3Zu60yVDjHIO//A7EqQVxcNKO3dbDu1S/5X4
-         WcLqds7lAj2Scj3YMoMETS2WTVqri07RiHRVftiycA3wxEQRWJM3CzgTNE3n2062Jy6m
-         ny4R+x0vVbufwIAeWgt8rAVoancVkdlm95EmzJdOezVa4iayrYSBOS8kNOiBCZ6s/7oM
-         axDpw73qy7gJb4EvxYCX4Z5FYUkBAdiz+jklbAof5u2n7E0mVKZ/1JBJGIBdQfrJqvVw
-         Ig0g==
-X-Gm-Message-State: AOJu0YxOqDBDR1CC4Ekjjw6ZsTjDPw4cVv8WUkJyYd2yZlSICi+jy1cc
-        /qOpTH2RMBdMddmABmTw6WAPIqVCzBDvup6W0othIQ==
-X-Google-Smtp-Source: AGHT+IFQShC1tZUtbtXYspI53MZzv01Vvxe437wz4HHjxC/g/pKFfZTjUpOAcpf9EJqb/h4w/1xXBZOUxuhbwDFl0zU=
-X-Received: by 2002:a81:fd03:0:b0:59b:ce0b:7829 with SMTP id
- g3-20020a81fd03000000b0059bce0b7829mr5687917ywn.35.1696534806426; Thu, 05 Oct
- 2023 12:40:06 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover.1693996662.git.quic_varada@quicinc.com> <a6d12e3b253d6a55d85f66979ba8b7d9c9ff6072.1693996662.git.quic_varada@quicinc.com>
- <CAA8EJppNsgUNgwadq9oM0_KyORNR5PBZGVZukN6MzAm2KPzC9g@mail.gmail.com>
- <20231005095744.GA29795@varda-linux.qualcomm.com> <CAA8EJpr124fymnbZ1bO=Dbbxavn3Z=1xOPmFRPnfSp-UB3p6OQ@mail.gmail.com>
- <20231005144205.GB29795@varda-linux.qualcomm.com>
-In-Reply-To: <20231005144205.GB29795@varda-linux.qualcomm.com>
+        bh=4l+rmSaO9D8iSzAn40goBP/fmnV3QN4/WS3vTxGlc4Q=;
+        b=c7t1EkiJBy2Z+rDhz6YbU3yYaB+voYDv5t0FqC+M/2Pi6VDuvSl4bCXCHWzXwcLsPD
+         2eAEVStJSKF3/acTJJtUF25L7M7K9YkMWCzFl9sUBfB+49a7gtzZxQAB7OthF8An2WRI
+         nQQFxRcTK9kx5KG6INAtjnxDhTb4df0HbbsaHrgoTXT3KSatPyX2lg4nlLd6CVZlBNWO
+         NUi3vwDEdcNiHWv36JWIr1ITELL+hcyEChyrkZhNk7Zv4bxTl0+fzHPxoDLEkOhahlIZ
+         EOToIvNOctZru7BPs2lzIzVGrTADkaqZRdnpTJB/Bk7IYMuoX/DsRT0G2TRjRNHvq1On
+         diJQ==
+X-Gm-Message-State: AOJu0Yyz6srWRzye8UJEamw0L8PymLnPZ0+RSiQu4AOK2FzSe2aPbfdz
+        87iE3nTMAIKp78giTmVimLpU5w==
+X-Google-Smtp-Source: AGHT+IEYVg+CSuQrNBKI48gPbxx4BwvxFlxcmM6lxBSIw2BuJU+k4acAlh6XKoVSZnul4P6Nst19Dw==
+X-Received: by 2002:a19:2d56:0:b0:505:8075:7c17 with SMTP id t22-20020a192d56000000b0050580757c17mr5077413lft.22.1696540197311;
+        Thu, 05 Oct 2023 14:09:57 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id l4-20020ac24304000000b0050481c400e9sm3440lfh.287.2023.10.05.14.09.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Oct 2023 14:09:56 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 5 Oct 2023 22:39:55 +0300
-Message-ID: <CAA8EJppJVzjyKjggkmi8uHGSPaHJ2ChsUV4Bfd0yNNDu3R+Kow@mail.gmail.com>
-Subject: Re: [PATCH v1 07/10] arm64: dts: qcom: ipq5332: populate the opp
- table based on the eFuse
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc:     ilia.lin@kernel.org, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, rafael@kernel.org,
-        viresh.kumar@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        quic_kathirav@quicinc.com, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+To:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH] drm/atomic-helper: rename drm_atomic_helper_check_wb_encoder_state
+Date:   Fri,  6 Oct 2023 00:09:56 +0300
+Message-Id: <20231005210956.2393366-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 5 Oct 2023 at 17:42, Varadarajan Narayanan
-<quic_varada@quicinc.com> wrote:
->
-> On Thu, Oct 05, 2023 at 02:39:43PM +0300, Dmitry Baryshkov wrote:
-> > On Thu, 5 Oct 2023 at 12:58, Varadarajan Narayanan
-> > <quic_varada@quicinc.com> wrote:
-> > >
-> > > On Thu, Sep 07, 2023 at 04:59:28PM +0300, Dmitry Baryshkov wrote:
-> > > > On Thu, 7 Sept 2023 at 08:23, Varadarajan Narayanan
-> > > > <quic_varada@quicinc.com> wrote:
-> > > > >
-> > > > > IPQ53xx have different OPPs available for the CPU based on
-> > > > > SoC variant. This can be determined through use of an eFuse
-> > > > > register present in the silicon.
-> > > > >
-> > > > > Add support to read the eFuse and populate the OPPs based on it.
-> > > > >
-> > > > > Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
-> > > > > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> > > > > ---
-> > > > >  arch/arm64/boot/dts/qcom/ipq5332.dtsi | 34 +++++++++++++++++++++++++++++++---
-> > > > >  1 file changed, 31 insertions(+), 3 deletions(-)
-> > > > >
-> > > > > diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> > > > > index 82761ae..3ca3f34 100644
-> > > > > --- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> > > > > +++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> > > > > @@ -91,11 +91,34 @@
-> > > > >         };
-> > > > >
-> > > > >         cpu_opp_table: opp-table-cpu {
-> > > > > -               compatible = "operating-points-v2";
-> > > > > +               compatible = "operating-points-v2-kryo-cpu";
-> > > > >                 opp-shared;
-> > > > > +               nvmem-cells = <&cpu_speed_bin>;
-> > > > > +               nvmem-cell-names = "speed_bin";
-> > > > > +
-> > > > > +               /*
-> > > > > +                * Listed all supported CPU frequencies and opp-supported-hw
-> > > > > +                * values to select CPU frequencies based on the limits fused.
-> > > > > +                * ------------------------------------------------------------
-> > > > > +                * Frequency     BIT3   BIT2   BIT1    BIT0    opp-supported-hw
-> > > > > +                *              1.0GHz 1.2GHz 1.5GHz No Limit
-> > > > > +                * ------------------------------------------------------------
-> > > > > +                * 1100000000     1      1      1       1            0xF
-> > > > > +                * 1500000000     0      0      1       1            0x3
-> > > > > +                * -----------------------------------------------------------
-> > > > > +                */
-> > > >
-> > > > This can probably go to the commit message instead.
-> > >
-> > > Ok
-> > >
-> > > > > +
-> > > > > +               opp-1100000000 {
-> > > > > +                       opp-hz = /bits/ 64 <1100000000>;
-> > > >
-> > > > But your table shows 1.0 GHz and 1.2 GHz instead of 1.1 GHz
-> > >
-> > > Will update it.
-> > >
-> > > > > +                       opp-microvolt = <850000>;
-> > > > > +                       opp-supported-hw = <0xF>;
-> > > > > +                       clock-latency-ns = <200000>;
-> > > > > +               };
-> > > > >
-> > > > > -               opp-1488000000 {
-> > > > > -                       opp-hz = /bits/ 64 <1488000000>;
-> > > > > +               opp-1500000000 {
-> > > > > +                       opp-hz = /bits/ 64 <1500000000>;
-> > > >
-> > > > So, 1.488 GHz or 1.5 GHz?
-> > >
-> > > 1.5 GHz
-> > >
-> > > > > +                       opp-microvolt = <950000>;
-> > > >
-> > > > Which regulator is controlled by this microvolt?
-> > >
-> > > Based on the SKU, the XBL sets up the regulator to provide 950000uV
-> > > on CPUs capable of running 1.5G and 850000uV on other SKUs. Linux
-> > > doesn't control it.
-> >
-> > Then why do you need this property here in the first place?
->
-> I get these errors without this property
->
-> [    1.018065] cpu cpu0: opp_parse_microvolt: opp-microvolt missing although OPP managing regulators
+The drm_atomic_helper_check_wb_encoder_state() function doesn't use
+encoder for anything other than getting the drm_device instance. The
+function's description talks about checking the writeback connector
+state, not the encoder state. Moreover, there is no such thing as an
+encoder state, encoders generally do not have a state on their own.
 
-But you have said that "Linux doesn't control it" [the regulator]!
+Drop the first argument and rename the function to
+drm_atomic_helper_check_wb_connector_state().
 
-> [    1.018074] cpu cpu0: _of_add_opp_table_v2: Failed to add OPP, -22
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
 
+Abhinav at [1] pointed me to this function as one of the reasons to keep
+WB check state in the encoder part of the MSM driver. However after a
+second glance, it looks like this function isn't really concerned with
+the encoder state and checks the connector state. Let's rename it to
+make this more clear.
+
+[1] https://lore.kernel.org/dri-devel/9a2e3ab2-a95f-3dee-b89c-aa69ffd9387e@quicinc.com/
+
+---
+ drivers/gpu/drm/drm_atomic_helper.c   | 10 ++++------
+ drivers/gpu/drm/vkms/vkms_writeback.c |  2 +-
+ include/drm/drm_atomic_helper.h       |  3 +--
+ 3 files changed, 6 insertions(+), 9 deletions(-)
+
+diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
+index 71d399397107..f32bf0212453 100644
+--- a/drivers/gpu/drm/drm_atomic_helper.c
++++ b/drivers/gpu/drm/drm_atomic_helper.c
+@@ -786,8 +786,7 @@ drm_atomic_helper_check_modeset(struct drm_device *dev,
+ EXPORT_SYMBOL(drm_atomic_helper_check_modeset);
+ 
+ /**
+- * drm_atomic_helper_check_wb_encoder_state() - Check writeback encoder state
+- * @encoder: encoder state to check
++ * drm_atomic_helper_check_wb_connector_state() - Check writeback connector state
+  * @conn_state: connector state to check
+  *
+  * Checks if the writeback connector state is valid, and returns an error if it
+@@ -797,8 +796,7 @@ EXPORT_SYMBOL(drm_atomic_helper_check_modeset);
+  * Zero for success or -errno
+  */
+ int
+-drm_atomic_helper_check_wb_encoder_state(struct drm_encoder *encoder,
+-					 struct drm_connector_state *conn_state)
++drm_atomic_helper_check_wb_connector_state(struct drm_connector_state *conn_state)
+ {
+ 	struct drm_writeback_job *wb_job = conn_state->writeback_job;
+ 	struct drm_property_blob *pixel_format_blob;
+@@ -818,11 +816,11 @@ drm_atomic_helper_check_wb_encoder_state(struct drm_encoder *encoder,
+ 		if (fb->format->format == formats[i])
+ 			return 0;
+ 
+-	drm_dbg_kms(encoder->dev, "Invalid pixel format %p4cc\n", &fb->format->format);
++	drm_dbg_kms(conn_state->connector->dev, "Invalid pixel format %p4cc\n", &fb->format->format);
+ 
+ 	return -EINVAL;
+ }
+-EXPORT_SYMBOL(drm_atomic_helper_check_wb_encoder_state);
++EXPORT_SYMBOL(drm_atomic_helper_check_wb_connector_state);
+ 
+ /**
+  * drm_atomic_helper_check_plane_state() - Check plane state for validity
+diff --git a/drivers/gpu/drm/vkms/vkms_writeback.c b/drivers/gpu/drm/vkms/vkms_writeback.c
+index d7e63aa14663..56edec6f1634 100644
+--- a/drivers/gpu/drm/vkms/vkms_writeback.c
++++ b/drivers/gpu/drm/vkms/vkms_writeback.c
+@@ -48,7 +48,7 @@ static int vkms_wb_encoder_atomic_check(struct drm_encoder *encoder,
+ 		return -EINVAL;
+ 	}
+ 
+-	ret = drm_atomic_helper_check_wb_encoder_state(encoder, conn_state);
++	ret = drm_atomic_helper_check_wb_connector_state(conn_state);
+ 	if (ret < 0)
+ 		return ret;
+ 
+diff --git a/include/drm/drm_atomic_helper.h b/include/drm/drm_atomic_helper.h
+index 536a0b0091c3..742ccbcd7809 100644
+--- a/include/drm/drm_atomic_helper.h
++++ b/include/drm/drm_atomic_helper.h
+@@ -50,8 +50,7 @@ struct drm_private_state;
+ int drm_atomic_helper_check_modeset(struct drm_device *dev,
+ 				struct drm_atomic_state *state);
+ int
+-drm_atomic_helper_check_wb_encoder_state(struct drm_encoder *encoder,
+-					 struct drm_connector_state *conn_state);
++drm_atomic_helper_check_wb_connector_state(struct drm_connector_state *conn_state);
+ int drm_atomic_helper_check_plane_state(struct drm_plane_state *plane_state,
+ 					const struct drm_crtc_state *crtc_state,
+ 					int min_scale,
 -- 
-With best wishes
-Dmitry
+2.39.2
+
