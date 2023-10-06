@@ -2,107 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BD637BB9E1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 15:59:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F3607BBAC9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 16:49:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232482AbjJFN7C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Oct 2023 09:59:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40970 "EHLO
+        id S232611AbjJFOtb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Oct 2023 10:49:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232447AbjJFN7B (ORCPT
+        with ESMTP id S232506AbjJFOtb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Oct 2023 09:59:01 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89E2BD6;
-        Fri,  6 Oct 2023 06:58:59 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D68CC433B6;
-        Fri,  6 Oct 2023 13:58:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1696600739;
-        bh=B+nSMcPQ6Dfl5BlciIkViTGxDzdj1bYUxQNg0HS+Vlw=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=k04UhtoGjZnMPVLw1q7zv7NSaXAEqjNHtEAZ6QQwW/wQXu3UXIRE53/OhcfRygQFj
-         8cfsn5qYN4SUe7gTGM6NtQ62xmxxbk7ejeFoTRi0UcOK+hVT4hbRAI5F+EgOUNlATV
-         JHD0CgF5uFi8/RCs+vAvITjxJq8Skzhm0jKgIJxAgi6w4sucOptQ+o+ISnCw7H27n4
-         imMHSuXHOAZGEn5xUkU9kPd9xFmqJaM0XhfLbaIKlmszJmQP3IPgSCx0F+k8/zBZ5S
-         Zq0GKUfvRS/g1WPl1/rrZ7qJgDt2JWQUNrEI6SK33mpZ1g7xoyM/qT7lEyIR461a5k
-         BzNlNQjyw1sAA==
-Received: (nullmailer pid 3776809 invoked by uid 1000);
-        Fri, 06 Oct 2023 13:58:51 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+        Fri, 6 Oct 2023 10:49:31 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71463CE;
+        Fri,  6 Oct 2023 07:49:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1696603770; x=1728139770;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Ls4VkimTOVrFvW0MKJV3HoKVItCCEU0Bs2/H222NV1k=;
+  b=aw8A+YF9SdIuYrB/idzYxJ4jICz8EtYCLjrOrbhSVnVD2YSdh+of1/OW
+   n5hDgKE4koWUJJ0+P5CdschyjoC4khV/WD5I8+i1wHB4PINI3C3QC3oFk
+   cCY8X3D7BltBxgWmTFhM9BOp+yDafAU2p+DNY7jp4nnQTN9pOK9xNUQDt
+   NVOgZpH+ZFPQvtHvLR2yINYcy7BAKkaUp92PwHsSm2vukTZoJ0PWRME73
+   UeEuSz5Wmn+68J+dYknrb19wHqdm72Sif7qlASLXEN7c/BukaE19EDLWs
+   /HomrpcoGmF+3nW6vtNapn3OLTw6jjrtlSSCOoLn9u4SHjklvi2IZyHKC
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10855"; a="386589922"
+X-IronPort-AV: E=Sophos;i="6.03,204,1694761200"; 
+   d="scan'208";a="386589922"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Oct 2023 07:49:29 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10855"; a="842853647"
+X-IronPort-AV: E=Sophos;i="6.03,204,1694761200"; 
+   d="scan'208";a="842853647"
+Received: from lkp-server01.sh.intel.com (HELO 8a3a91ad4240) ([10.239.97.150])
+  by FMSMGA003.fm.intel.com with ESMTP; 06 Oct 2023 07:49:27 -0700
+Received: from kbuild by 8a3a91ad4240 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qom8q-0001SH-2Q;
+        Fri, 06 Oct 2023 14:49:24 +0000
+Date:   Fri, 6 Oct 2023 22:48:12 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Komal Bajaj <quic_kbajaj@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc:     oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        luca.weiss@fairphone.com, Komal Bajaj <quic_kbajaj@quicinc.com>
+Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: qcm6490: Add qcm6490 dts file
+Message-ID: <202310062256.LQAdaNZV-lkp@intel.com>
+References: <20231003175456.14774-3-quic_kbajaj@quicinc.com>
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     konrad.dybcio@linaro.org, andi.shyti@kernel.org,
-        mchehab@kernel.org, conor+dt@kernel.org, linux-i2c@vger.kernel.org,
-        andersson@kernel.org, linux-media@vger.kernel.org,
-        rfoss@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, loic.poulain@linaro.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        todor.too@gmail.com, agross@kernel.org, devicetree@vger.kernel.org
-In-Reply-To: <20231006120159.3413789-5-bryan.odonoghue@linaro.org>
-References: <20231006120159.3413789-1-bryan.odonoghue@linaro.org>
- <20231006120159.3413789-5-bryan.odonoghue@linaro.org>
-Message-Id: <169660073123.3776792.1207909917818505118.robh@kernel.org>
-Subject: Re: [PATCH 4/5] media: dt-bindings: media: camss: Add
- qcom,sc8280xp-camss binding
-Date:   Fri, 06 Oct 2023 08:58:51 -0500
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231003175456.14774-3-quic_kbajaj@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Komal,
 
-On Fri, 06 Oct 2023 13:01:58 +0100, Bryan O'Donoghue wrote:
-> Add bindings for qcom,sc8280xp-camss in order to support the camera
-> subsystem for sc8280xp as found in the Lenovo x13s Laptop.
-> 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->  .../bindings/media/qcom,sc8280xp-camss.yaml   | 598 ++++++++++++++++++
->  1 file changed, 598 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
-> 
+kernel test robot noticed the following build errors:
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+[auto build test ERROR on next-20231003]
+[cannot apply to robh/for-next v6.6-rc4 v6.6-rc3 v6.6-rc2 linus/master v6.6-rc4]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-yamllint warnings/errors:
+url:    https://github.com/intel-lab-lkp/linux/commits/Komal-Bajaj/dt-bindings-arm-qcom-Add-QCM6490-IDP-board/20231004-015725
+base:   next-20231003
+patch link:    https://lore.kernel.org/r/20231003175456.14774-3-quic_kbajaj%40quicinc.com
+patch subject: [PATCH v3 2/2] arm64: dts: qcom: qcm6490: Add qcm6490 dts file
+config: arm64-defconfig (https://download.01.org/0day-ci/archive/20231006/202310062256.LQAdaNZV-lkp@intel.com/config)
+compiler: aarch64-linux-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231006/202310062256.LQAdaNZV-lkp@intel.com/reproduce)
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml: properties:power-domain-names:items: 'oneOf' conditional failed, one must be fixed:
-	[{'description': 'ife0'}, {'description': 'ife1'}, {'description': 'ife2'}, {'description': 'ife3'}, {'description': 'top'}] is not of type 'object'
-	Additional properties are not allowed ('description' was unexpected)
-	from schema $id: http://devicetree.org/meta-schemas/string-array.yaml#
-Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.example.dts:26:18: fatal error: dt-bindings/clock/qcom,sc8280xp-camcc.h: No such file or directory
-   26 |         #include <dt-bindings/clock/qcom,sc8280xp-camcc.h>
-      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-compilation terminated.
-make[2]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.example.dtb] Error 1
-make[2]: *** Waiting for unfinished jobs....
-make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1427: dt_binding_check] Error 2
-make: *** [Makefile:234: __sub-make] Error 2
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202310062256.LQAdaNZV-lkp@intel.com/
 
-doc reference errors (make refcheckdocs):
+All errors (new ones prefixed by >>):
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20231006120159.3413789-5-bryan.odonoghue@linaro.org
+>> Error: arch/arm64/boot/dts/qcom/pm7325.dtsi:9.11-33.3 Label or path spmi_bus not found
+>> Error: arch/arm64/boot/dts/qcom/pm7325.dtsi:35.1-15 Label or path thermal_zones not found
+>> Error: arch/arm64/boot/dts/qcom/pm8350c.dtsi:9.1-10 Label or path spmi_bus not found
+>> Error: arch/arm64/boot/dts/qcom/pmk8350.dtsi:26.1-10 Label or path spmi_bus not found
+>> Error: arch/arm64/boot/dts/qcom/qcm6490-idp.dts:249.1-13 Label or path pm8350c_pwm not found
+   FATAL ERROR: Syntax error parsing input tree
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
