@@ -2,107 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D8A497BBF9F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 21:14:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9BBD37BC001
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 22:09:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233344AbjJFTO1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Oct 2023 15:14:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60898 "EHLO
+        id S233318AbjJFUJB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Oct 2023 16:09:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233284AbjJFTO1 (ORCPT
+        with ESMTP id S233306AbjJFUJB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Oct 2023 15:14:27 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 475D1A2
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 12:14:25 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-532c81b9adbso4455311a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 12:14:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1696619662; x=1697224462; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wmhUWZX30hXfIU80TyRy7axZSi3Eoh4Vptrv5M6pTXM=;
-        b=WAt53QfLhYdq5q3IXyvQFKpgMsTDLGTwRlR0hwPEN5/zAQdr6PeGW78lH1017x3hoG
-         8rF6do7ptSLKNdZi6ul3t2s4eGbPXpqmILZz4AqROBsUb7ahXiy3ipdtNRnJZS5gYu6f
-         drFYOIN4cKTZN91IhObQxqJBwLJ44aJyoGjAc=
+        Fri, 6 Oct 2023 16:09:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 629EBBD
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 13:08:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1696622892;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=lpCwVK4YdUU2xA1XEQ+cf6KoEZIaM/xayFYhSIqPSJg=;
+        b=WN/SGYqd1mfRlehuqMYjP+McTRT/TV+v1pWj+maa11SigIBdogsnGACCZSm3sG0a5MOfyH
+        jxS2vsZLHwD/zNdgaQzrMoOiTjxV7EdczLvFls+cD8eV6yUOvOatQ6DltAQzk9G2APaTy7
+        mg4jspWJNKB0rjOxCvI4kaZcFuvg7r8=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-659-9cJXUEJOPs6EQItsbgMimw-1; Fri, 06 Oct 2023 16:08:10 -0400
+X-MC-Unique: 9cJXUEJOPs6EQItsbgMimw-1
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-65b23c40cefso23631896d6.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 13:08:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696619662; x=1697224462;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1696622889; x=1697227689;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=wmhUWZX30hXfIU80TyRy7axZSi3Eoh4Vptrv5M6pTXM=;
-        b=W6aTgL5sY18lUyMuD7lZJojmIuRBZtd95dXQLplhmQleC5t8aN+Z8ae/IRUJSmc4Bx
-         tNJLjVXCvV1EJF1aKkrDH1YRJdSh/7LJ5iv6scCeh/FxC/tlf1xMTKGJxOLMNSpElpgi
-         4WMllhtMyfDSgY8sE5jVhK+IP3IkVLpicrSEgdVtQ13EBDeYKmSnd39GT3a8ndT7ggcc
-         PltPNdGjAmwtlvxOwIRt+5wnn08dosk4EkDNnpvA97IbWwWcBmsIv+EXr5rmIxvLbcX1
-         010KnZ9LcEvULgLXkxkvqzzwwimIZ37XECQde9B8td9MEKaDbT227D0IywlVGs1EmFv3
-         6yiQ==
-X-Gm-Message-State: AOJu0Yx6mvbtxpcxghu25U8xKw4ydPT6FXidVMM0sv7MXyjug+VCnTXX
-        4uLI5775Ioc2Sb3JMYDTXOiSZFl/QlOylgndVVlsycqi
-X-Google-Smtp-Source: AGHT+IFyxyLBjOHS7zVpHf6weJComB/EYhlIcRt0hR/1EZNXiRFsJy3wpQGsIWQxYx1u7ZIX1HhU5Q==
-X-Received: by 2002:aa7:dad2:0:b0:533:5e56:bef2 with SMTP id x18-20020aa7dad2000000b005335e56bef2mr8292799eds.10.1696619662137;
-        Fri, 06 Oct 2023 12:14:22 -0700 (PDT)
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com. [209.85.208.43])
-        by smtp.gmail.com with ESMTPSA id h14-20020aa7de0e000000b00532eba07773sm2989960edv.25.2023.10.06.12.14.21
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Oct 2023 12:14:21 -0700 (PDT)
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-537f07dfe8eso2317a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 12:14:21 -0700 (PDT)
-X-Received: by 2002:a50:9b1d:0:b0:525:573c:643b with SMTP id
- o29-20020a509b1d000000b00525573c643bmr232878edi.7.1696619660110; Fri, 06 Oct
- 2023 12:14:20 -0700 (PDT)
+        bh=lpCwVK4YdUU2xA1XEQ+cf6KoEZIaM/xayFYhSIqPSJg=;
+        b=f0z7ns6Ify3JEFYzTUjuoeElB/mosb1ORFAIAKrTVwl+JUp1/o+ofpEVvpAfQ1jDsH
+         d3wRUkBbmUate8Et9wDPTVnkfSb00Gsjv3JzyCgZzlHoKvAEkKrd2piH+T0mLMp8d9B7
+         61YhUL/8m8T5ufnxZ2KEHL9qTpt6l5MN/dhW6qh3ge0oGFXgBfeJuXRxDh9FCRHthT3l
+         J5AJR12NGNN6ioSfD3J/qRvxOiyRfi/TwX7gdcs8o8MriQt40uIjDw/i68gqwXkyxot0
+         MwwAZFxZJPVQMHCJR9pM3cW+4OQ3jOvEqekaDsdC8YJ3wdRnKV7RqUI3YNGPoUoR8zvR
+         rveQ==
+X-Gm-Message-State: AOJu0YyI+DnFfIeVA2qAsdgur9aPeLQMl8ogjl+vqpEopaRrc1R8J2Lb
+        u78Rwu+Y3LGpVCCjR8BhJsw2NwYt3dJDfbA2pReNTotAjfeDDp6hnapnKOfL0tB35RS3j6ajon/
+        GXp1qRGU69ZyR79hcWACq3Y8t/Zupzrxx6w==
+X-Received: by 2002:a05:6214:440d:b0:636:afa1:345d with SMTP id oj13-20020a056214440d00b00636afa1345dmr9486280qvb.17.1696622889422;
+        Fri, 06 Oct 2023 13:08:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEtIR+NwYLWDaMKa7uZ2+P63aN2xD3Bov3ZVMEy/nvU1rz9LawJvySc/NGWRrS0Nqml9Zmq/Q==
+X-Received: by 2002:a05:6214:440d:b0:636:afa1:345d with SMTP id oj13-20020a056214440d00b00636afa1345dmr9486265qvb.17.1696622889140;
+        Fri, 06 Oct 2023 13:08:09 -0700 (PDT)
+Received: from brian-x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
+        by smtp.gmail.com with ESMTPSA id w9-20020a0cb549000000b0065b14fcfca6sm1654528qvd.118.2023.10.06.13.08.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Oct 2023 13:08:08 -0700 (PDT)
+Date:   Fri, 6 Oct 2023 16:08:06 -0400
+From:   Brian Masney <bmasney@redhat.com>
+To:     Nikunj Kela <quic_nkela@quicinc.com>
+Cc:     sudeep.holla@arm.com, cristian.marussi@arm.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v5 1/2] dt-bindings: arm: Add new compatible for smc/hvc
+ transport for SCMI
+Message-ID: <ZSBpJkrsLxly2jTr@brian-x1>
+References: <20230718160833.36397-1-quic_nkela@quicinc.com>
+ <20231006164206.40710-1-quic_nkela@quicinc.com>
+ <20231006164206.40710-2-quic_nkela@quicinc.com>
 MIME-Version: 1.0
-References: <1696614170-18969-1-git-send-email-quic_vnivarth@quicinc.com>
-In-Reply-To: <1696614170-18969-1-git-send-email-quic_vnivarth@quicinc.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 6 Oct 2023 12:14:03 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Ua-bDMvSj-FRWKxCm3oS4U-rqzd--g4UX_TBDF65rb5A@mail.gmail.com>
-Message-ID: <CAD=FV=Ua-bDMvSj-FRWKxCm3oS4U-rqzd--g4UX_TBDF65rb5A@mail.gmail.com>
-Subject: Re: [PATCH] spi: spi-geni-qcom: Rename the label unmap_if_dma
-To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_msavaliy@quicinc.com, mka@chromium.org, swboyd@chromium.org,
-        quic_vtanuku@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231006164206.40710-2-quic_nkela@quicinc.com>
+User-Agent: Mutt/2.2.9 (2022-11-12)
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Fri, Oct 06, 2023 at 09:42:05AM -0700, Nikunj Kela wrote:
+> Introduce compatible "qcom,scmi-smc" for SCMI smc/hvc transport channel for
+> Qualcomm virtual platforms.
+> 
+> This compatible mandates populating an additional parameter 'capability-id'
+> from the last 8 bytes of the shmem channel.
+> 
+> Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
 
-On Fri, Oct 6, 2023 at 10:43=E2=80=AFAM Vijaya Krishna Nivarthi
-<quic_vnivarth@quicinc.com> wrote:
->
-> The code at unmap_if_dma label doesn't contain unmapping dma anymore but
-> has only fsm reset.
->
-> Rename it to reset_if_dma accordingly.
->
-> No functional change.
->
-> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-> ---
->  drivers/spi/spi-geni-qcom.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+Reviewed-by: Brian Masney <bmasney@redhat.com>
 
-I guess perhaps technically this could have:
-
-Fixes: 3a76c7ca9e77 ("spi: spi-geni-qcom: Do not do DMA map/unmap
-inside driver, use framework instead")
-
-...since before that commit it _did_ do the unmap, right? ;-)
-
-In any case, this seems good to me:
-
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
