@@ -2,124 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1EE17BAEF5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 00:49:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F8E77BB0FA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 06:53:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230313AbjJEWtv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Oct 2023 18:49:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52126 "EHLO
+        id S230017AbjJFExw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Oct 2023 00:53:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229527AbjJEWtv (ORCPT
+        with ESMTP id S229918AbjJFExv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Oct 2023 18:49:51 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16E69CE
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Oct 2023 15:49:45 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-532c81b9adbso2690470a12.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Oct 2023 15:49:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696546183; x=1697150983; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ruHF2qY6fIMsnHXSXu/O5UBGCOEh6ZYhOkBWuKb5maU=;
-        b=gPArKHX4H0i621D7XhZaVbZlAs3auE7T10PlNB7v1yKaXPm1YioaF+d1Rqsv9yA5Kh
-         5TiY9aGGsYeRlQE3DpwEd+HraKbwpGCs+0ThDDm99p2ks1ABxnnK4HDJf+2uqT5Xwb27
-         x+Vb5CPO3KGyjmVCJltxdAoLfdfSMor9aB2giN6VgnxIJOfh4/+t1ub3cbiEbCtvSQfx
-         3dn+ZuYPrgHzL9/40EyouxfZQ/dgreBSBS6IgDPXpgESaKVz5WVHkCSA4DOsPRbHTiqP
-         dRclu5hxI1VWsgrk73dsvYQ1ZoXbKjv3PK8va2u6yBBanqEL8LeQxPUFgT0bL8ZkMN/S
-         PxeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696546183; x=1697150983;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ruHF2qY6fIMsnHXSXu/O5UBGCOEh6ZYhOkBWuKb5maU=;
-        b=svBOivk13xvwT2cjSd0woIbHOPFXxGDW3Vl0AR66pqWIFLXT8G93K8RS7T1XhTDLgH
-         uFgB/KEVhyf7GeE5ZM6TX63fPTHB65+1jwh1uqY0gnmpsbdVvyHIAr4sUwDx90hARYRr
-         kydF5EMoypW1uA68XjY4q8/8cpC3OADt1mjf27kRf8qIEAnXjdGdgspHbs2DV+FFfhHu
-         LfXg55zmL2DNACoo3ugNO4YlZxeAu1W2WOvlzy96Qzmhug/vKCkLun6K52L4Dd3RlArU
-         r8Fg46Ipk73VbHbegkL/zVQGlGXiyWSx6t3CdWbNEdjb0Nj1pc5yY4Xth19dw6CK2U4D
-         iy0Q==
-X-Gm-Message-State: AOJu0YxZK3O1dw0DCLYICxjYaQV6r0TMt6ZI2vg4n4GCt4KLQBsEZsvx
-        dIKha7rWxa/gObclT1FjLDvguXG1cfEksK/yA1c=
-X-Google-Smtp-Source: AGHT+IEaPo1RQwkwbado7ahDJti9JqEe1+NqsIklGIQLHN+kXVQ7cUg7odehdVdsbOarTJ1lMbCsCv9jOV+26I2ZaJw=
-X-Received: by 2002:aa7:c991:0:b0:536:e5f7:b329 with SMTP id
- c17-20020aa7c991000000b00536e5f7b329mr6086237edt.33.1696546183113; Thu, 05
- Oct 2023 15:49:43 -0700 (PDT)
+        Fri, 6 Oct 2023 00:53:51 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53595DB;
+        Thu,  5 Oct 2023 21:53:50 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3964e3Cx010052;
+        Fri, 6 Oct 2023 04:53:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : subject
+ : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=9GFh1YS01daGYvKQdXjTgJDCh+b5kd4B1nYLfCB+O6A=;
+ b=fraDxTfSIS/64oiZuUlhNQ6mqMAtb+Xwb0iw5ZaXq80ec8d4x9L6G4vHXgTJAwO94Nm0
+ lR5cvV6/Zg94am4PZz/R/BSwFhRcvZD0lJBZXJffR3lPwhG1qrX1gq6Ijw//t5rRBkou
+ Yclt7MGMI0WX57SRwq+iJ1tIN1kBRr5RZD57CNL5mHsExAwIsCmWlYoQ56WiuDJMyDxu
+ ncfe+ir+2JWeHuB0qidR6YojYUbgeA33f2zqyd+tPFAgagjKpvrQoGokGHMpjmKIXU6Z
+ cAxCr5Fq5Ck7VtlcpfNXnh0FFvjOC2G0m2Yb0Xm8/P/kZQA8nKpoSRh2IOqtpAolkpXD /w== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3thn05am04-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 06 Oct 2023 04:53:37 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3964rahf006966
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 6 Oct 2023 04:53:36 GMT
+Received: from hu-devipriy-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.36; Thu, 5 Oct 2023 21:53:31 -0700
+From:   Devi Priya <quic_devipriy@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <lee@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <thierry.reding@gmail.com>, <baruch@tkos.co.il>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <u.kleine-koenig@pengutronix.de>,
+        <linux-pwm@vger.kernel.org>
+Subject: [PATCH 0/4] Enable pwm support for IPQ5332 & IPQ9574 SoCs
+Date:   Fri, 6 Oct 2023 10:23:13 +0530
+Message-ID: <20231006045317.1056625-1-quic_devipriy@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20230908030521.236309-1-dmitry.baryshkov@linaro.org> <20230908030521.236309-2-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230908030521.236309-2-dmitry.baryshkov@linaro.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 5 Oct 2023 15:49:31 -0700
-Message-ID: <CAF6AEGvThK5L-UTAsHwH1_xH5R0zNT+dL6DHvBQUYm3hq9uBdQ@mail.gmail.com>
-Subject: Re: [PATCH 1/5] drm/atomic: add private obj state to state dump
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: dhqULUY4BVT7scxAlZMb_OrYfPUQUecf
+X-Proofpoint-GUID: dhqULUY4BVT7scxAlZMb_OrYfPUQUecf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-06_01,2023-10-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 suspectscore=0
+ impostorscore=0 bulkscore=0 spamscore=0 mlxlogscore=549 priorityscore=1501
+ mlxscore=0 malwarescore=0 lowpriorityscore=0 phishscore=0 clxscore=1015
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
+ definitions=main-2310060036
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 7, 2023 at 8:05=E2=80=AFPM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> The drm_atomic_print_new_state() already prints private object state via
-> drm_atomic_private_obj_print_state(). Add private object state dumping
-> to __drm_state_dump(), so that it is also included into drm_state_dump()
-> output and into debugfs/dri/N/state file.
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Enable pwm support for IPQ5332 & IPQ9574 SoCs and document the
+pwm compatibles.
+While at it, use qcom,ipq6018-pwm as the fallback compatible and extend the
+simple-mfd support for ipq5332 & ipq9574 targets.
 
-Reviewed-by: Rob Clark <robdclark@gmail.com>
+This series depends on the below series which adds support
+for the PWM driver on IPQ targets:
+https://lore.kernel.org/linux-arm-msm/20231005160550.2423075-1-quic_devipriy@quicinc.com/
 
-> ---
->  drivers/gpu/drm/drm_atomic.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
->
-> diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
-> index c277b198fa3f..9543e284dc15 100644
-> --- a/drivers/gpu/drm/drm_atomic.c
-> +++ b/drivers/gpu/drm/drm_atomic.c
-> @@ -1773,6 +1773,7 @@ static void __drm_state_dump(struct drm_device *dev=
-, struct drm_printer *p,
->         struct drm_crtc *crtc;
->         struct drm_connector *connector;
->         struct drm_connector_list_iter conn_iter;
-> +       struct drm_private_obj *obj;
->
->         if (!drm_drv_uses_atomic_modeset(dev))
->                 return;
-> @@ -1801,6 +1802,14 @@ static void __drm_state_dump(struct drm_device *de=
-v, struct drm_printer *p,
->         if (take_locks)
->                 drm_modeset_unlock(&dev->mode_config.connection_mutex);
->         drm_connector_list_iter_end(&conn_iter);
-> +
-> +       list_for_each_entry(obj, &config->privobj_list, head) {
-> +               if (take_locks)
-> +                       drm_modeset_lock(&obj->lock, NULL);
-> +               drm_atomic_private_obj_print_state(p, obj->state);
-> +               if (take_locks)
-> +                       drm_modeset_unlock(&obj->lock);
-> +       }
->  }
->
->  /**
-> --
-> 2.39.2
->
+Devi Priya (4):
+  dt-bindings: pwm: Document the pwm compatible for ipq5332 & ipq9574
+  dt-bindings: mfd: qcom,tcsr: Extend simple-mfd & pwm support for IPQ
+    targets
+  arm64: dts: qcom: ipq9574: Add pwm support
+  arm64: dts: qcom: ipq5332: Add pwm support
+
+ .../devicetree/bindings/mfd/qcom,tcsr.yaml        |  9 ++++++---
+ .../devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml |  9 ++++++++-
+ arch/arm64/boot/dts/qcom/ipq5332.dtsi             | 15 ++++++++++++++-
+ arch/arm64/boot/dts/qcom/ipq9574-rdp418.dts       | 12 ++++++++++++
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi             | 15 ++++++++++++++-
+ 5 files changed, 54 insertions(+), 6 deletions(-)
+
+-- 
+2.34.1
+
