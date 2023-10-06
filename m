@@ -2,91 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9815A7BB74C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 14:05:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F7817BB798
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 14:30:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232177AbjJFMFd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Oct 2023 08:05:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39468 "EHLO
+        id S231651AbjJFMaC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Oct 2023 08:30:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232154AbjJFMFc (ORCPT
+        with ESMTP id S231817AbjJFM36 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Oct 2023 08:05:32 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C452C2
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 05:05:30 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2bffc55af02so24194011fa.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 05:05:30 -0700 (PDT)
+        Fri, 6 Oct 2023 08:29:58 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B935DE9
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 05:29:55 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-533c8f8f91dso3717143a12.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 05:29:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696593928; x=1697198728; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uKGN/3KNoOHL+3DdMSpq20pMTcvXAuH1Oi51FJKpSEM=;
-        b=jJWyLAsplODZJVUOjAii29bVfK417SBEd2TxoT5ZCAVLtJ0bFE+fDbKgl9cEvtaqP0
-         a94ftPKIHv8PPVkfRGd3oiZm1eZ09nTRHXADyBdVBH/Q7G9U5nSNpC8N58vyybUg+vOw
-         3D7lOAiwfZa9GZYNuQBI7FI5fXBwhg4wuNd7jkDDzB1hL3zbTPncxImvFprVJ1sXYnSA
-         3l4SOc1JHJayrLLIoRokaptFSKBxAYACJkQWfH3vbBG+7EkP8COlyfT9Sl6iMIQoT2s/
-         PIeK3gO8vd8BAe5534pjwYCU/0KNDrZaQUksyLCUPr9w3/2rXvSVc3xDFyzoZXJh0nyQ
-         u7gQ==
+        d=linaro.org; s=google; t=1696595394; x=1697200194; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=KSPOq6GPySdwGSInmYuZudkJs+/ss1/t1gFD1Bmsqj0=;
+        b=WuLwpVEMNObtFu/9BVndCtt+4t3zIxfDiQx1f2ExiQk8lVtDZKGCL2HP6xeKMEjK7Y
+         7bWaXVrNrQO4fsg7jovQff/8tl9tq+NoNE9fIczhH/L84cZ/hy/il6YoWWaf67xi1nKB
+         HDNTPIT2EaBujHJ/78boJ/wmWS7YtoH1SN7vbIS2R3wC9t8wLalvLmI0yQ73HSd2n2J+
+         VXuhdtUyolLTsp+CEqd0czhzTxH7B9WcSjOsY7xPgB52fESX39H5LOgZQdsey4pGN7Cd
+         57Bmdp3bi9P3QXX1cnQrFaIZBzYw4/t/AA8SHI/k0T/FdmjtgGoO7itwSpd33ZpbJdnc
+         4hxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696593928; x=1697198728;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uKGN/3KNoOHL+3DdMSpq20pMTcvXAuH1Oi51FJKpSEM=;
-        b=v7/exZBBWh4Yx1E5UIMH/Ayq863pCG4bC74nd/oPisE5Duzdpur9Nnwz/CHyoxxDle
-         wQUTU4cKh9XLsLPtZRAdfEXYpvOuoBk3m59LaGM+qdDptirI54K8v+gbGA5RfMf5gGGC
-         XpnQ+go+ySeDmlyKYHRh6KlR/ju6bLWYJAllK2/mDxBoXZuKstZh1cLeV3g140Cv3o/0
-         x6khpd+4cbZkbC+RDrpQoqyxJickWj8hzpDzznnV7tHX/awLh6fn4VAsTG0RtVphgkGP
-         25z53zaZGRvPPP6fhRIVDscxRdfYLNzKgT+xUvekxzWs2EiRpr8f/L+bQfkGtzyLI9nj
-         6uZw==
-X-Gm-Message-State: AOJu0YyIzX2G+NHditUAG9z/SKE6B5PdNecvltYlHY4EhTCzzTQz4NZ/
-        hq66is0nCN6UYtrYYO+eVY54jg==
-X-Google-Smtp-Source: AGHT+IECuUQ1H0FgTSbhY4if5apHz6Rb38ge6HTlR9+uTU5/EPh9bJoZXwl/lGgH/f8r2p/xwrIIUg==
-X-Received: by 2002:a2e:8883:0:b0:2ba:8127:a2c3 with SMTP id k3-20020a2e8883000000b002ba8127a2c3mr6847215lji.34.1696593928337;
-        Fri, 06 Oct 2023 05:05:28 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id z13-20020a2e8e8d000000b002b702dfb510sm753373ljk.39.2023.10.06.05.05.27
+        d=1e100.net; s=20230601; t=1696595394; x=1697200194;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KSPOq6GPySdwGSInmYuZudkJs+/ss1/t1gFD1Bmsqj0=;
+        b=bPKiQNcnv2kcK/4WXhOSEbQfe4pW2YoK27EB3nv9Fspmz4NUj7QkT5Y8IprsooJAbR
+         jHGSQhkKJu27awInI/ofPa9kNwrUUkKSozo9jUr1PAs41EOPIk77kzbOIp2pileYOJ6Q
+         K21Hbl18HbJThwHoB60vhaYWvFWOH9nlR9lvpaYE0vSY9naCWYYqSjHsUGR1dcGyx1th
+         +YSuHvh4sgF768Cayf/fuyv8GtvOD73QUpM9i879i8SHZy/ZJ7lqx1QQs+WufO92wYNJ
+         3zYJXE3WKRSM/WzjrRPbfLi4LCNkOEnFLyd47MeJEx5f5wnBTaCCIa4/tpUxk27HraAN
+         RhIA==
+X-Gm-Message-State: AOJu0Yx9fNVHSGZyVNVWgM2XdzcH7xHm//FYvTyJqF3NvnyPS/UNU3SD
+        mJ2owAbgfF0TQ/Znh8RPlC2mpQ==
+X-Google-Smtp-Source: AGHT+IHIJYhzfMfqm5jJJJdMb0s4l/rwMkhsc+9gNrP1kQScSjKUMoJCGdv7FY5EQIzpAw8Chi6DOw==
+X-Received: by 2002:a50:ee84:0:b0:531:9c1:8276 with SMTP id f4-20020a50ee84000000b0053109c18276mr7646714edr.4.1696595393667;
+        Fri, 06 Oct 2023 05:29:53 -0700 (PDT)
+Received: from [192.168.1.197] (5-157-101-10.dyn.eolo.it. [5.157.101.10])
+        by smtp.gmail.com with ESMTPSA id u1-20020a05640207c100b005311e934765sm2519564edy.27.2023.10.06.05.29.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Oct 2023 05:05:27 -0700 (PDT)
-Message-ID: <a2085853-8793-4ea0-96f7-4bdf9972d0d1@linaro.org>
-Date:   Fri, 6 Oct 2023 15:05:26 +0300
+        Fri, 06 Oct 2023 05:29:53 -0700 (PDT)
+Message-ID: <9e7a5316-ade2-45c7-8c72-e99f9ce21f25@linaro.org>
+Date:   Fri, 6 Oct 2023 14:29:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/6] arm64: dts: qcom: sdm670: add display subsystem
-Content-Language: en-GB
-To:     Richard Acayan <mailingradian@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
-        Ryan McCann <quic_rmccann@quicinc.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Liu Shixin <liushixin2@huawei.com>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-References: <20231003012119.857198-9-mailingradian@gmail.com>
- <20231003012119.857198-15-mailingradian@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20231003012119.857198-15-mailingradian@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH 1/5] dt-bindings: i2c: qcom-cci: Document sc8280xp
+ compatible
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        loic.poulain@linaro.org, rfoss@kernel.org, andi.shyti@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, todor.too@gmail.com, mchehab@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20231006120159.3413789-1-bryan.odonoghue@linaro.org>
+ <20231006120159.3413789-2-bryan.odonoghue@linaro.org>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20231006120159.3413789-2-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -95,348 +126,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/10/2023 04:21, Richard Acayan wrote:
-> The Snapdragon 670 has a display subsystem for controlling and
-> outputting to the display. Add support for it in the device tree.
+On 06/10/2023 14:01, Bryan O'Donoghue wrote:
+> Add sc8280xp compatible consistent with recent CAMSS CCI interfaces.
 > 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> ---
->   arch/arm64/boot/dts/qcom/sdm670.dtsi | 294 +++++++++++++++++++++++++++
->   1 file changed, 294 insertions(+)
-
-Two minor issues below. With them fixed:
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
 
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-> index 84cd2e39266f..427415ed4e4a 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-> @@ -6,6 +6,7 @@
->    * Copyright (c) 2022, Richard Acayan. All rights reserved.
->    */
->   
-> +#include <dt-bindings/clock/qcom,dispcc-sdm845.h>
->   #include <dt-bindings/clock/qcom,gcc-sdm845.h>
->   #include <dt-bindings/clock/qcom,rpmh.h>
->   #include <dt-bindings/dma/qcom-gpi.h>
-> @@ -400,6 +401,30 @@ cpu6_opp10: opp-1996800000 {
->   		};
->   	};
->   
-> +	dsi_opp_table: opp-table-dsi {
-> +		compatible = "operating-points-v2";
-> +
-> +		opp-19200000 {
-> +			opp-hz = /bits/ 64 <19200000>;
-> +			required-opps = <&rpmhpd_opp_min_svs>;
-> +		};
-> +
-> +		opp-180000000 {
-> +			opp-hz = /bits/ 64 <180000000>;
-> +			required-opps = <&rpmhpd_opp_low_svs>;
-> +		};
-> +
-> +		opp-275000000 {
-> +			opp-hz = /bits/ 64 <275000000>;
-> +			required-opps = <&rpmhpd_opp_svs>;
-> +		};
-> +
-> +		opp-358000000 {
-> +			opp-hz = /bits/ 64 <358000000>;
-> +			required-opps = <&rpmhpd_opp_svs_l1>;
-> +		};
-> +	};
-> +
->   	psci {
->   		compatible = "arm,psci-1.0";
->   		method = "smc";
-> @@ -1352,6 +1377,275 @@ spmi_bus: spmi@c440000 {
->   			#interrupt-cells = <4>;
->   		};
->   
-> +		mdss: display-subsystem@ae00000 {
-> +			compatible = "qcom,sdm670-mdss";
-> +			reg = <0 0x0ae00000 0 0x1000>;
-> +			reg-names = "mdss";
-> +
-> +			power-domains = <&dispcc MDSS_GDSC>;
-> +
-> +			clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +				 <&dispcc DISP_CC_MDSS_MDP_CLK>;
-> +			clock-names = "iface", "core";
-> +
-> +			interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <1>;
-> +
-> +			interconnects = <&mmss_noc MASTER_MDP_PORT0 0 &mem_noc SLAVE_EBI_CH0 0>,
-> +					<&mmss_noc MASTER_MDP_PORT1 0 &mem_noc SLAVE_EBI_CH0 0>;
-> +			interconnect-names = "mdp0-mem", "mdp1-mem";
-> +
-> +			iommus = <&apps_smmu 0x880 0x8>,
-> +				 <&apps_smmu 0xc80 0x8>;
-> +
-> +			status = "disabled";
-> +
-> +			#address-cells = <2>;
-> +			#size-cells = <2>;
-> +			ranges;
-> +
-> +			mdss_mdp: display-controller@ae01000 {
-> +				compatible = "qcom,sdm670-dpu";
-> +				reg = <0 0x0ae01000 0 0x8f000>,
-> +				      <0 0x0aeb0000 0 0x2008>;
-> +				reg-names = "mdp", "vbif";
-> +
-> +				clocks = <&gcc GCC_DISP_AXI_CLK>,
-> +					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +					 <&dispcc DISP_CC_MDSS_AXI_CLK>,
-> +					 <&dispcc DISP_CC_MDSS_MDP_CLK>,
-> +					 <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-> +				clock-names = "gcc-bus", "iface", "bus", "core", "vsync";
-> +
-> +				assigned-clocks = <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-> +				assigned-clock-rates = <19200000>;
-> +				operating-points-v2 = <&mdp_opp_table>;
-> +				power-domains = <&rpmhpd SDM670_CX>;
-> +
-> +				interrupt-parent = <&mdss>;
-> +				interrupts = <0>;
-> +
-> +				ports {
-> +					#address-cells = <1>;
-> +					#size-cells = <0>;
-> +
-> +					port@0 {
-> +						reg = <0>;
-> +						dpu_intf0_out: endpoint {
-> +							remote-endpoint = <&mdss_dsi0_in>;
-> +						};
-> +					};
-> +
-> +					port@1 {
-> +						reg = <1>;
-> +						dpu_intf1_out: endpoint {
-> +							remote-endpoint = <&mdss_dsi1_in>;
-> +						};
-> +					};
-> +				};
-> +
-> +				mdp_opp_table: opp-table {
-> +					compatible = "operating-points-v2";
-> +
-> +					opp-19200000 {
-> +						opp-hz = /bits/ 64 <19200000>;
-> +						required-opps = <&rpmhpd_opp_min_svs>;
-> +					};
-> +
-> +					opp-171428571 {
-> +						opp-hz = /bits/ 64 <171428571>;
-> +						required-opps = <&rpmhpd_opp_low_svs>;
-> +					};
-> +
-> +					opp-358000000 {
-> +						opp-hz = /bits/ 64 <358000000>;
-> +						required-opps = <&rpmhpd_opp_svs_l1>;
-> +					};
-> +
-> +					opp-430000000 {
-> +						opp-hz = /bits/ 64 <430000000>;
-> +						required-opps = <&rpmhpd_opp_nom>;
-> +					};
-> +				};
-> +			};
-> +
-> +			mdss_dsi0: dsi@ae94000 {
-> +				compatible = "qcom,sdm670-dsi-ctrl",
-> +					     "qcom,mdss-dsi-ctrl";
-> +				reg = <0 0x0ae94000 0 0x400>;
-> +				reg-names = "dsi_ctrl";
-> +
-> +				interrupt-parent = <&mdss>;
-> +				interrupts = <4>;
-> +
-> +				clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
-> +					 <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
-> +					 <&dispcc DISP_CC_MDSS_PCLK0_CLK>,
-> +					 <&dispcc DISP_CC_MDSS_ESC0_CLK>,
-> +					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +					 <&dispcc DISP_CC_MDSS_AXI_CLK>;
-> +				clock-names = "byte",
-> +					      "byte_intf",
-> +					      "pixel",
-> +					      "core",
-> +					      "iface",
-> +					      "bus";
-> +				assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK_SRC>,
-> +						  <&dispcc DISP_CC_MDSS_PCLK0_CLK_SRC>;
-> +				assigned-clock-parents = <&mdss_dsi0_phy 0>,
-> +							 <&mdss_dsi0_phy 1>;
-> +
-> +				operating-points-v2 = <&dsi_opp_table>;
-> +				power-domains = <&rpmhpd SDM670_CX>;
-> +
-> +				phys = <&mdss_dsi0_phy>;
-> +				phy-names = "dsi";
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Not necessary anymore
-
-> +
-> +				status = "disabled";
-> +
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +
-> +				ports {
-> +					#address-cells = <1>;
-> +					#size-cells = <0>;
-> +
-> +					port@0 {
-> +						reg = <0>;
-> +						mdss_dsi0_in: endpoint {
-> +							remote-endpoint = <&dpu_intf0_out>;
-> +						};
-> +					};
-> +
-> +					port@1 {
-> +						reg = <1>;
-> +						mdss_dsi0_out: endpoint {
-> +						};
-> +					};
-> +				};
-> +			};
-> +
-> +			mdss_dsi0_phy: phy@ae94400 {
-> +				compatible = "qcom,dsi-phy-10nm";
-> +				reg = <0 0x0ae94400 0 0x200>,
-> +				      <0 0x0ae94600 0 0x280>,
-> +				      <0 0x0ae94a00 0 0x1e0>;
-> +				reg-names = "dsi_phy",
-> +					    "dsi_phy_lane",
-> +					    "dsi_pll";
-> +
-> +				#clock-cells = <1>;
-> +				#phy-cells = <0>;
-> +
-> +				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +					 <&rpmhcc RPMH_CXO_CLK>;
-> +				clock-names = "iface", "ref";
-> +
-> +				status = "disabled";
-> +			};
-> +
-> +			mdss_dsi1: dsi@ae96000 {
-> +				compatible = "qcom,sdm670-dsi-ctrl",
-> +					     "qcom,mdss-dsi-ctrl";
-> +				reg = <0 0x0ae96000 0 0x400>;
-> +				reg-names = "dsi_ctrl";
-> +
-> +				interrupt-parent = <&mdss>;
-> +				interrupts = <5>;
-> +
-> +				clocks = <&dispcc DISP_CC_MDSS_BYTE1_CLK>,
-> +					 <&dispcc DISP_CC_MDSS_BYTE1_INTF_CLK>,
-> +					 <&dispcc DISP_CC_MDSS_PCLK1_CLK>,
-> +					 <&dispcc DISP_CC_MDSS_ESC1_CLK>,
-> +					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +					 <&dispcc DISP_CC_MDSS_AXI_CLK>;
-> +				clock-names = "byte",
-> +					      "byte_intf",
-> +					      "pixel",
-> +					      "core",
-> +					      "iface",
-> +					      "bus";
-> +				assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE1_CLK_SRC>,
-> +						  <&dispcc DISP_CC_MDSS_PCLK1_CLK_SRC>;
-> +				assigned-clock-parents = <&mdss_dsi1_phy 0>, <&mdss_dsi1_phy 1>;
-> +
-> +				operating-points-v2 = <&dsi_opp_table>;
-> +				power-domains = <&rpmhpd SDM670_CX>;
-> +
-> +				phys = <&mdss_dsi1_phy>;
-> +				phy-names = "dsi";
-
-Not necessary anymore
-
-> +
-> +				status = "disabled";
-> +
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +
-> +				ports {
-> +					#address-cells = <1>;
-> +					#size-cells = <0>;
-> +
-> +					port@0 {
-> +						reg = <0>;
-> +						mdss_dsi1_in: endpoint {
-> +							remote-endpoint = <&dpu_intf1_out>;
-> +						};
-> +					};
-> +
-> +					port@1 {
-> +						reg = <1>;
-> +						mdss_dsi1_out: endpoint {
-> +						};
-> +					};
-> +				};
-> +			};
-> +
-> +			mdss_dsi1_phy: phy@ae96400 {
-> +				compatible = "qcom,dsi-phy-10nm";
-> +				reg = <0 0x0ae96400 0 0x200>,
-> +				      <0 0x0ae96600 0 0x280>,
-> +				      <0 0x0ae96a00 0 0x10e>;
-> +				reg-names = "dsi_phy",
-> +					    "dsi_phy_lane",
-> +					    "dsi_pll";
-> +
-> +				#clock-cells = <1>;
-> +				#phy-cells = <0>;
-> +
-> +				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +					 <&rpmhcc RPMH_CXO_CLK>;
-> +				clock-names = "iface", "ref";
-> +
-> +				status = "disabled";
-> +			};
-> +		};
-> +
-> +		dispcc: clock-controller@af00000 {
-> +			compatible = "qcom,sdm845-dispcc";
-> +			reg = <0 0x0af00000 0 0x10000>;
-> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
-> +				 <&gcc GCC_DISP_GPLL0_CLK_SRC>,
-> +				 <&gcc GCC_DISP_GPLL0_DIV_CLK_SRC>,
-> +				 <&mdss_dsi0_phy 0>,
-> +				 <&mdss_dsi0_phy 1>,
-> +				 <&mdss_dsi1_phy 0>,
-> +				 <&mdss_dsi1_phy 1>,
-> +				 <0>,
-> +				 <0>;
-> +			clock-names = "bi_tcxo",
-> +				      "gcc_disp_gpll0_clk_src",
-> +				      "gcc_disp_gpll0_div_clk_src",
-> +				      "dsi0_phy_pll_out_byteclk",
-> +				      "dsi0_phy_pll_out_dsiclk",
-> +				      "dsi1_phy_pll_out_byteclk",
-> +				      "dsi1_phy_pll_out_dsiclk",
-> +				      "dp_link_clk_divsel_ten",
-> +				      "dp_vco_divided_clk_src_mux";
-> +			#clock-cells = <1>;
-> +			#reset-cells = <1>;
-> +			#power-domain-cells = <1>;
-> +		};
-> +
->   		apps_smmu: iommu@15000000 {
->   			compatible = "qcom,sdm670-smmu-500", "qcom,smmu-500", "arm,mmu-500";
->   			reg = <0 0x15000000 0 0x80000>;
-
--- 
-With best wishes
-Dmitry
+Best regards,
+Krzysztof
 
