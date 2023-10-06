@@ -2,68 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1FA77BC321
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Oct 2023 01:53:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1EDD77BC326
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Oct 2023 01:58:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233910AbjJFXxJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Oct 2023 19:53:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38994 "EHLO
+        id S233864AbjJFX6D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Oct 2023 19:58:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233696AbjJFXxI (ORCPT
+        with ESMTP id S233692AbjJFX6D (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Oct 2023 19:53:08 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFCDBBD
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 16:53:07 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-50481a0eee7so4656261e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 16:53:07 -0700 (PDT)
+        Fri, 6 Oct 2023 19:58:03 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB4B1BD
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 16:58:00 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-50435ad51bbso3302650e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 16:58:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696636386; x=1697241186; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696636679; x=1697241479; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=gJSF+rSDIlW5dw07z7hvSiQv1M4NCa3XilpwKJ4jGCA=;
-        b=vVopbIMQSNDDQ1RpljYcWOLosYgYYpMhvXdBGhgabp0WtWdU5BoOs5GU7z2PQv91TU
-         7iFTQ5qS9yKRffRV4p4ufJFXNJ38pracn4LeSMef/rZ4HLpNDcGl1gwBwtregv3Q3AhB
-         t8E0NsJrxCGoMXN4SsvLGSjPAq4z4mrvbnI1WOpwRZRU6KyI4i7oSdo8YDLbFysfQ9ff
-         UXwburvyutcdkdnu8Sgh3Mb91Jjkr5bLzb0qeZHivNRx4JFb6qA/lq11kC9gkWYd+R0c
-         MldzT4hwU6Lt4wAPiGXS8u4XMTyT2pr/pMy6YLUWA1IxO8a+UtUQJ9cF+MWcdrTcTHMF
-         2GiQ==
+        bh=QYPUh/Q1TeqvQIJLjORqLOAktxS2uLnBNCEX1Cyn064=;
+        b=zpskxg21IQAXhF7HFise0OMsHUIE7755v9Y8ch0X8YtGraz3sHDIkV4bBNTTSQu4AY
+         zOHA/v2ph+iWUjNJwmHG5OW7lD73V0ghqnjJsTRROYGS78ZvYDAzuA/bp3qgHTw9yUEB
+         K6xkYQ1ne+YPJLhmDnFx6+VRF7TArbQ7V+eAgu879P/f0Pymp/ki9yteRzwk6gT6FihD
+         xd70meDFT4l/pdWToH52pu3ZEZG8sh+VRYEuEDqnpDX3vuefDJjBkjP+WfeZtt82hWxk
+         QxgdL9OUzJODr6j5RlPKWRgedKiCqUl/9lnAZsBlqaxqYNiqGmvkRBsKVJlyJbEcISLd
+         KjRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696636386; x=1697241186;
+        d=1e100.net; s=20230601; t=1696636679; x=1697241479;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gJSF+rSDIlW5dw07z7hvSiQv1M4NCa3XilpwKJ4jGCA=;
-        b=OhrrCjfkgtNAf80MVkhJsOUSlojAtTRKabdrn1ZjoGMNEYtr/ieA5o6OzYmSYiUHr4
-         AHWpQRZqSdURQplDjtE2C+/n1Q/heJhuVibUc44FeDmChLw5F0/FiiZMyQ4JJ5rouN6g
-         bg6F/p5u1G0h/hJi87ebXgN/bOPKg3M1KB4fKzPebOPuVaCBzRDIO7B2nGQRp6yHe7Ww
-         Rcvg0UYAB/G83Mtdrt7/KkSuNh94Fbhdzp1QG2zVLZThlJZSKmPLjUPJUD4hMNZLqfUW
-         APTDTB/EHAA48iEO8yWCfK+9PdLR7ooKsazUTk0NZp3pva+qzsJHF0pLz3SBDCqe+rK7
-         q7GQ==
-X-Gm-Message-State: AOJu0YycVb0KAkhuhMK2zRhW5zI2tXY7AGAujDdZ4nUGCJXiuhxHijxx
-        Krj46W8Qfk2we2qFhGBy7lPzmQ==
-X-Google-Smtp-Source: AGHT+IGVKkRb676YRl8mxq9mqxkZPi6M8h188997Ryr3aLNf+tUbNpzzV65oVeTF//5PsAcJ9sYLOw==
-X-Received: by 2002:a05:6512:3414:b0:506:8b41:7e31 with SMTP id i20-20020a056512341400b005068b417e31mr1687637lfr.6.1696636385980;
-        Fri, 06 Oct 2023 16:53:05 -0700 (PDT)
+        bh=QYPUh/Q1TeqvQIJLjORqLOAktxS2uLnBNCEX1Cyn064=;
+        b=UMZVXOaBAROgI8ZH22fCgSXL32Acr8avQsQCKpCLmppGFwNkTGDe84mpgjziDHpS8c
+         S7zJcQ/FdwGWX98tRMm9XLDV6P3FqyXsrdlaR7QJWo11OVyiPykpWGi6/llJJjtV5RfE
+         kMsUsyyOCPHzX5B/af6onR0uAmFEbNz9cpbM91YOxagmwxJHNboDJ5uFN5vRNehBqHqb
+         ykIr3K4gLo1sLT07scqlTbZ+0D+UxUb7sMuez1JrX2hpXm4UoLPpmai5Q4jZqjAfzq1p
+         UsqJwyvVbFxOnMdXFBA8z6nQ8T06StHiKM/+R/4Jd925lr7jVA2N20ITV1TtsxXeKr0d
+         xw7Q==
+X-Gm-Message-State: AOJu0Yzdp+quLZZi4A0qYy6FcnfoJOcAgZiq12E2Y/7z5ryh4JeaMGKg
+        +x1xPs6OuARW1YLRp0BBngdKEg==
+X-Google-Smtp-Source: AGHT+IHOhwlTfxO0gtbu5R3YxSSzux1ir1D0+XV9LoycquxOEKv33Uk9S1akXB8MDf7rtMqWeM4CXg==
+X-Received: by 2002:a05:6512:39c8:b0:4f8:7513:8cac with SMTP id k8-20020a05651239c800b004f875138cacmr11087219lfu.48.1696636679204;
+        Fri, 06 Oct 2023 16:57:59 -0700 (PDT)
 Received: from [192.168.200.173] (178235177147.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.147])
-        by smtp.gmail.com with ESMTPSA id d8-20020ac244c8000000b004fbc82dd1a5sm486319lfm.13.2023.10.06.16.53.04
+        by smtp.gmail.com with ESMTPSA id w21-20020a19c515000000b00502e0ea7174sm479791lfe.186.2023.10.06.16.57.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Oct 2023 16:53:05 -0700 (PDT)
-Message-ID: <54f78669-c7ad-4019-b911-be7431f549c2@linaro.org>
-Date:   Sat, 7 Oct 2023 01:53:03 +0200
+        Fri, 06 Oct 2023 16:57:58 -0700 (PDT)
+Message-ID: <0007b5ff-34d4-44c0-80bd-8277d5842c01@linaro.org>
+Date:   Sat, 7 Oct 2023 01:57:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] mfd: qcom-spmi-pmic: switch to EXPORT_SYMBOL_GPL()
+Subject: Re: [PATCH 2/8] phy: qcom: Introduce Super-Speed USB UNIPHY driver
 Content-Language: en-US
-To:     Johan Hovold <johan+linaro@kernel.org>, Lee Jones <lee@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Caleb Connolly <caleb.connolly@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231003152927.15000-1-johan+linaro@kernel.org>
- <20231003152927.15000-4-johan+linaro@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Praveenkumar I <quic_ipkumar@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, vkoul@kernel.org,
+        kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        gregkh@linuxfoundation.org, catalin.marinas@arm.com,
+        will@kernel.org, p.zabel@pengutronix.de, geert+renesas@glider.be,
+        arnd@arndb.de, neil.armstrong@linaro.org, nfraprado@collabora.com,
+        u-kumar1@ti.com, peng.fan@nxp.com, quic_wcheng@quicinc.com,
+        quic_varada@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, quic_kathirav@quicinc.com,
+        quic_nsekar@quicinc.com, quic_srichara@quicinc.com
+References: <20230929084209.3033093-1-quic_ipkumar@quicinc.com>
+ <20230929084209.3033093-3-quic_ipkumar@quicinc.com>
+ <412492d1-fcc9-481c-9d28-b208a644ba1d@linaro.org>
+ <7975c638-29cf-45ce-9d76-b8a93d750eb7@quicinc.com>
+ <CAA8EJprhQz_Tj0Bhv6zhGa7h37Ug-Fp6Tof9tNscTFyZzkbJvw@mail.gmail.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -100,25 +111,67 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231003152927.15000-4-johan+linaro@kernel.org>
+In-Reply-To: <CAA8EJprhQz_Tj0Bhv6zhGa7h37Ug-Fp6Tof9tNscTFyZzkbJvw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3.10.2023 17:29, Johan Hovold wrote:
-> Switch to using EXPORT_SYMBOL_GPL() for the revid helper as there is no
-> reason not to use it.
+On 3.10.2023 16:54, Dmitry Baryshkov wrote:
+> On Tue, 3 Oct 2023 at 17:22, Praveenkumar I <quic_ipkumar@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 9/30/2023 10:48 PM, Dmitry Baryshkov wrote:
+>>> On 29/09/2023 11:42, Praveenkumar I wrote:
+>>>> Adds Qualcomm 22ull Super-Speed USB UNIPHY driver support which
+>>>> is present in Qualcomm IPQ5332 SoC. This PHY is interfaced with
+>>>> SNPS DWC3 USB and SNPS DWC PCIe. Either one of the interface
+>>>> can use the it and selection is done via mux present in TCSR
+>>>> register. This driver selects the PHY for DWC3 USB and handles
+>>>> the reset, clocks and regulator.
+>>>>
+>>>> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+>>>> ---
+>>>>   drivers/phy/qualcomm/Kconfig               |  11 +
+>>>>   drivers/phy/qualcomm/Makefile              |   1 +
+>>>>   drivers/phy/qualcomm/phy-qcom-uniphy-usb.c | 322 +++++++++++++++++++++
+>>>>   3 files changed, 334 insertions(+)
+>>>>   create mode 100644 drivers/phy/qualcomm/phy-qcom-uniphy-usb.c
+>>>>
+>>>> diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
+>>>> index d891058b7c39..7257c8455c53 100644
+>>>> --- a/drivers/phy/qualcomm/Kconfig
+>>>> +++ b/drivers/phy/qualcomm/Kconfig
+>>>> @@ -154,6 +154,17 @@ config PHY_QCOM_M31_USB
+>>>>         management. This driver is required even for peripheral only or
+>>>>         host only mode configurations.
+>>>>   +config PHY_QCOM_UNIPHY_USB
+>>>> +    tristate "Qualcomm USB Super-Speed UNIPHY driver"
+>>>
+>>> Can we please have more specific driver name? As I wrote earlier,
+>>> there are two other (different) kinds of Qualcomm UNI PHY devices:
+>>> - DSI / HDMI UNIPHY on apq8064 / msm8974 / msm8960 (?)
+>>> - USB QMP UNI PHY drivers
+>>>
+>>> Adding a driver called UNIPHY, which is not related to those two kinds
+>>> sounds pretty confusing to me.
+>> This UNIPHY is different from above mentioned ones. This a custom
+>> version for 22nm on Qualcomm IPQ5332.
+>> Can we name the driver as phy-qcom-uniphy-usb-ss-22ull.c /
+>> phy-qcom-usb-ss-22ull.c ?
 > 
-> Cc: Caleb Connolly <caleb.connolly@linaro.org>
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> usb-ss-22ull sounds better. Or maybe usb-ipq-ss
+usb-ipq-ss is as safe as usb-msm-ss
+
+We can not rely on the hardware never ever changing down the
+product line :D
 
 Konrad
