@@ -2,73 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A97BA7BB73E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 14:03:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9815A7BB74C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 14:05:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232278AbjJFMC2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Oct 2023 08:02:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57742 "EHLO
+        id S232177AbjJFMFd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Oct 2023 08:05:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232225AbjJFMCZ (ORCPT
+        with ESMTP id S232154AbjJFMFc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Oct 2023 08:02:25 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F22AFB
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 05:02:14 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-40535597f01so18201115e9.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 05:02:14 -0700 (PDT)
+        Fri, 6 Oct 2023 08:05:32 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C452C2
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 05:05:30 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2bffc55af02so24194011fa.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 05:05:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696593732; x=1697198532; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VzQ8FzGWz9UGdc1ySLgVdxhzuhMHOwHYsPZV42fXu+Y=;
-        b=qVV8Xs9G415c6UCN8gq8/4Ug+bCG/Qqq58ORP4d/EDp1LfhoQcA7Z0HzGGKnoenI/L
-         tTUtLki4L4hShQpB/TR5h2SwibiR2Tp0yIlnDgKDw/+QICKCGVoltiv4fOD3d5YXGmrc
-         QbxOG+jOXcAkFWK1b0DkmmE6lxAnaiT+L5oyAiuV1e6yZ+2GTObQ8s6pPeH88WUi+t1f
-         7IR+PLjxHYs3JqAxGtgFgCN+F7e04CPPoZrmDOExQFqRnUWCg7EB1wXCVCLn9s8Pxc93
-         MMx+s6/XeLQqUDzD0UzDNh1K2Yl/QsBg8zQjf3XxCqGdDP76h7h9LP8UD2hGK5QICp7P
-         +fYw==
+        d=linaro.org; s=google; t=1696593928; x=1697198728; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=uKGN/3KNoOHL+3DdMSpq20pMTcvXAuH1Oi51FJKpSEM=;
+        b=jJWyLAsplODZJVUOjAii29bVfK417SBEd2TxoT5ZCAVLtJ0bFE+fDbKgl9cEvtaqP0
+         a94ftPKIHv8PPVkfRGd3oiZm1eZ09nTRHXADyBdVBH/Q7G9U5nSNpC8N58vyybUg+vOw
+         3D7lOAiwfZa9GZYNuQBI7FI5fXBwhg4wuNd7jkDDzB1hL3zbTPncxImvFprVJ1sXYnSA
+         3l4SOc1JHJayrLLIoRokaptFSKBxAYACJkQWfH3vbBG+7EkP8COlyfT9Sl6iMIQoT2s/
+         PIeK3gO8vd8BAe5534pjwYCU/0KNDrZaQUksyLCUPr9w3/2rXvSVc3xDFyzoZXJh0nyQ
+         u7gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696593732; x=1697198532;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VzQ8FzGWz9UGdc1ySLgVdxhzuhMHOwHYsPZV42fXu+Y=;
-        b=rsF0slfegu8T1lho3PM0fhLR/vhhD5zC+FyHaoYIJJGepFGhi8J/H9/LpJD6c01AEe
-         y6O0PY37g1IoSqYn/njg0dZeeXvjwXyjMunH0WxS+4fL3iCg1A9SzNitoomQEDs7IqrA
-         s3F34Ke04cDyMXEaBYiwOmvMQQFFiy+z6Ou4notuNv18BfWHF0MW4KMI//aqklZ3uKha
-         TX+7pmkAvvHkDpvIPINAfhXDdBJdP9wTpnMO9WgAmslA98snYLU9tM0UmR8VZcBhBsw8
-         Egk9quzt6jLZJbc435tRakPzI2Kg0QpdVIM2nlIZoMK0tTMenBb6txfUv6/CrdF63ZkM
-         M4Qg==
-X-Gm-Message-State: AOJu0Yw2J70ODqIMXAVGY6r5/VjC74X2ADkbF93KucHRkanYlqv0ua6t
-        k5AQ5nTHLFSOMkQDFt38ToNuIw==
-X-Google-Smtp-Source: AGHT+IG41E6NxIP4y7G4cwVFBPLIHvoy0I6ts1jaF4npY0v497e9iBogM3a0cg/7PIZPYe0eDxcYxQ==
-X-Received: by 2002:a5d:6909:0:b0:317:70da:abdd with SMTP id t9-20020a5d6909000000b0031770daabddmr7396117wru.59.1696593731765;
-        Fri, 06 Oct 2023 05:02:11 -0700 (PDT)
-Received: from x13s-linux.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id m8-20020a056000180800b00321773bb933sm1491061wrh.77.2023.10.06.05.02.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Oct 2023 05:02:11 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        loic.poulain@linaro.org, rfoss@kernel.org, andi.shyti@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, todor.too@gmail.com, mchehab@kernel.org,
-        bryan.odonoghue@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 5/5] arm64: dts: qcom: sc8280xp: camss: Add CAMSS block definition
-Date:   Fri,  6 Oct 2023 13:01:59 +0100
-Message-Id: <20231006120159.3413789-6-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20231006120159.3413789-1-bryan.odonoghue@linaro.org>
-References: <20231006120159.3413789-1-bryan.odonoghue@linaro.org>
+        d=1e100.net; s=20230601; t=1696593928; x=1697198728;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uKGN/3KNoOHL+3DdMSpq20pMTcvXAuH1Oi51FJKpSEM=;
+        b=v7/exZBBWh4Yx1E5UIMH/Ayq863pCG4bC74nd/oPisE5Duzdpur9Nnwz/CHyoxxDle
+         wQUTU4cKh9XLsLPtZRAdfEXYpvOuoBk3m59LaGM+qdDptirI54K8v+gbGA5RfMf5gGGC
+         XpnQ+go+ySeDmlyKYHRh6KlR/ju6bLWYJAllK2/mDxBoXZuKstZh1cLeV3g140Cv3o/0
+         x6khpd+4cbZkbC+RDrpQoqyxJickWj8hzpDzznnV7tHX/awLh6fn4VAsTG0RtVphgkGP
+         25z53zaZGRvPPP6fhRIVDscxRdfYLNzKgT+xUvekxzWs2EiRpr8f/L+bQfkGtzyLI9nj
+         6uZw==
+X-Gm-Message-State: AOJu0YyIzX2G+NHditUAG9z/SKE6B5PdNecvltYlHY4EhTCzzTQz4NZ/
+        hq66is0nCN6UYtrYYO+eVY54jg==
+X-Google-Smtp-Source: AGHT+IECuUQ1H0FgTSbhY4if5apHz6Rb38ge6HTlR9+uTU5/EPh9bJoZXwl/lGgH/f8r2p/xwrIIUg==
+X-Received: by 2002:a2e:8883:0:b0:2ba:8127:a2c3 with SMTP id k3-20020a2e8883000000b002ba8127a2c3mr6847215lji.34.1696593928337;
+        Fri, 06 Oct 2023 05:05:28 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id z13-20020a2e8e8d000000b002b702dfb510sm753373ljk.39.2023.10.06.05.05.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Oct 2023 05:05:27 -0700 (PDT)
+Message-ID: <a2085853-8793-4ea0-96f7-4bdf9972d0d1@linaro.org>
+Date:   Fri, 6 Oct 2023 15:05:26 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 6/6] arm64: dts: qcom: sdm670: add display subsystem
+Content-Language: en-GB
+To:     Richard Acayan <mailingradian@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        Ryan McCann <quic_rmccann@quicinc.com>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Liu Shixin <liushixin2@huawei.com>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+References: <20231003012119.857198-9-mailingradian@gmail.com>
+ <20231003012119.857198-15-mailingradian@gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20231003012119.857198-15-mailingradian@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -77,319 +95,348 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add CAMSS block definition for sc8280xp.
+On 03/10/2023 04:21, Richard Acayan wrote:
+> The Snapdragon 670 has a display subsystem for controlling and
+> outputting to the display. Add support for it in the device tree.
+> 
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> ---
+>   arch/arm64/boot/dts/qcom/sdm670.dtsi | 294 +++++++++++++++++++++++++++
+>   1 file changed, 294 insertions(+)
 
-This drop contains definitions for the following components on sc8280xp:
+Two minor issues below. With them fixed:
 
-VFE * 4
-VFE Lite * 4
-CSID * 4
-CSIPHY * 4
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-This dtsi definition has been developed and validated on a Lenovo X13s
-laptop.
 
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 285 +++++++++++++++++++++++++
- 1 file changed, 285 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
+> index 84cd2e39266f..427415ed4e4a 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
+> @@ -6,6 +6,7 @@
+>    * Copyright (c) 2022, Richard Acayan. All rights reserved.
+>    */
+>   
+> +#include <dt-bindings/clock/qcom,dispcc-sdm845.h>
+>   #include <dt-bindings/clock/qcom,gcc-sdm845.h>
+>   #include <dt-bindings/clock/qcom,rpmh.h>
+>   #include <dt-bindings/dma/qcom-gpi.h>
+> @@ -400,6 +401,30 @@ cpu6_opp10: opp-1996800000 {
+>   		};
+>   	};
+>   
+> +	dsi_opp_table: opp-table-dsi {
+> +		compatible = "operating-points-v2";
+> +
+> +		opp-19200000 {
+> +			opp-hz = /bits/ 64 <19200000>;
+> +			required-opps = <&rpmhpd_opp_min_svs>;
+> +		};
+> +
+> +		opp-180000000 {
+> +			opp-hz = /bits/ 64 <180000000>;
+> +			required-opps = <&rpmhpd_opp_low_svs>;
+> +		};
+> +
+> +		opp-275000000 {
+> +			opp-hz = /bits/ 64 <275000000>;
+> +			required-opps = <&rpmhpd_opp_svs>;
+> +		};
+> +
+> +		opp-358000000 {
+> +			opp-hz = /bits/ 64 <358000000>;
+> +			required-opps = <&rpmhpd_opp_svs_l1>;
+> +		};
+> +	};
+> +
+>   	psci {
+>   		compatible = "arm,psci-1.0";
+>   		method = "smc";
+> @@ -1352,6 +1377,275 @@ spmi_bus: spmi@c440000 {
+>   			#interrupt-cells = <4>;
+>   		};
+>   
+> +		mdss: display-subsystem@ae00000 {
+> +			compatible = "qcom,sdm670-mdss";
+> +			reg = <0 0x0ae00000 0 0x1000>;
+> +			reg-names = "mdss";
+> +
+> +			power-domains = <&dispcc MDSS_GDSC>;
+> +
+> +			clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +				 <&dispcc DISP_CC_MDSS_MDP_CLK>;
+> +			clock-names = "iface", "core";
+> +
+> +			interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <1>;
+> +
+> +			interconnects = <&mmss_noc MASTER_MDP_PORT0 0 &mem_noc SLAVE_EBI_CH0 0>,
+> +					<&mmss_noc MASTER_MDP_PORT1 0 &mem_noc SLAVE_EBI_CH0 0>;
+> +			interconnect-names = "mdp0-mem", "mdp1-mem";
+> +
+> +			iommus = <&apps_smmu 0x880 0x8>,
+> +				 <&apps_smmu 0xc80 0x8>;
+> +
+> +			status = "disabled";
+> +
+> +			#address-cells = <2>;
+> +			#size-cells = <2>;
+> +			ranges;
+> +
+> +			mdss_mdp: display-controller@ae01000 {
+> +				compatible = "qcom,sdm670-dpu";
+> +				reg = <0 0x0ae01000 0 0x8f000>,
+> +				      <0 0x0aeb0000 0 0x2008>;
+> +				reg-names = "mdp", "vbif";
+> +
+> +				clocks = <&gcc GCC_DISP_AXI_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_AXI_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_MDP_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
+> +				clock-names = "gcc-bus", "iface", "bus", "core", "vsync";
+> +
+> +				assigned-clocks = <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
+> +				assigned-clock-rates = <19200000>;
+> +				operating-points-v2 = <&mdp_opp_table>;
+> +				power-domains = <&rpmhpd SDM670_CX>;
+> +
+> +				interrupt-parent = <&mdss>;
+> +				interrupts = <0>;
+> +
+> +				ports {
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
+> +
+> +					port@0 {
+> +						reg = <0>;
+> +						dpu_intf0_out: endpoint {
+> +							remote-endpoint = <&mdss_dsi0_in>;
+> +						};
+> +					};
+> +
+> +					port@1 {
+> +						reg = <1>;
+> +						dpu_intf1_out: endpoint {
+> +							remote-endpoint = <&mdss_dsi1_in>;
+> +						};
+> +					};
+> +				};
+> +
+> +				mdp_opp_table: opp-table {
+> +					compatible = "operating-points-v2";
+> +
+> +					opp-19200000 {
+> +						opp-hz = /bits/ 64 <19200000>;
+> +						required-opps = <&rpmhpd_opp_min_svs>;
+> +					};
+> +
+> +					opp-171428571 {
+> +						opp-hz = /bits/ 64 <171428571>;
+> +						required-opps = <&rpmhpd_opp_low_svs>;
+> +					};
+> +
+> +					opp-358000000 {
+> +						opp-hz = /bits/ 64 <358000000>;
+> +						required-opps = <&rpmhpd_opp_svs_l1>;
+> +					};
+> +
+> +					opp-430000000 {
+> +						opp-hz = /bits/ 64 <430000000>;
+> +						required-opps = <&rpmhpd_opp_nom>;
+> +					};
+> +				};
+> +			};
+> +
+> +			mdss_dsi0: dsi@ae94000 {
+> +				compatible = "qcom,sdm670-dsi-ctrl",
+> +					     "qcom,mdss-dsi-ctrl";
+> +				reg = <0 0x0ae94000 0 0x400>;
+> +				reg-names = "dsi_ctrl";
+> +
+> +				interrupt-parent = <&mdss>;
+> +				interrupts = <4>;
+> +
+> +				clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_PCLK0_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_ESC0_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_AXI_CLK>;
+> +				clock-names = "byte",
+> +					      "byte_intf",
+> +					      "pixel",
+> +					      "core",
+> +					      "iface",
+> +					      "bus";
+> +				assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK_SRC>,
+> +						  <&dispcc DISP_CC_MDSS_PCLK0_CLK_SRC>;
+> +				assigned-clock-parents = <&mdss_dsi0_phy 0>,
+> +							 <&mdss_dsi0_phy 1>;
+> +
+> +				operating-points-v2 = <&dsi_opp_table>;
+> +				power-domains = <&rpmhpd SDM670_CX>;
+> +
+> +				phys = <&mdss_dsi0_phy>;
+> +				phy-names = "dsi";
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index 199b112da295..58bea7617666 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -3615,6 +3615,291 @@ cci3_i2c1: i2c-bus@1 {
- 			};
- 		};
- 
-+		camss: camss@ac5a000 {
-+			compatible = "qcom,sc8280xp-camss";
-+
-+			reg = <0 0x0ac5a000 0 0x2000>,
-+			      <0 0x0ac5c000 0 0x2000>,
-+			      <0 0x0ac65000 0 0x2000>,
-+			      <0 0x0ac67000 0 0x2000>,
-+			      <0 0x0acaf000 0 0x4000>,
-+			      <0 0x0acb3000 0 0x1000>,
-+			      <0 0x0acb6000 0 0x4000>,
-+			      <0 0x0acba000 0 0x1000>,
-+			      <0 0x0acbd000 0 0x4000>,
-+			      <0 0x0acc1000 0 0x1000>,
-+			      <0 0x0acc4000 0 0x4000>,
-+			      <0 0x0acc8000 0 0x1000>,
-+			      <0 0x0accb000 0 0x4000>,
-+			      <0 0x0accf000 0 0x1000>,
-+			      <0 0x0acd2000 0 0x4000>,
-+			      <0 0x0acd6000 0 0x1000>,
-+			      <0 0x0acd9000 0 0x4000>,
-+			      <0 0x0acdd000 0 0x1000>,
-+			      <0 0x0ace0000 0 0x4000>,
-+			      <0 0x0ace4000 0 0x1000>;
-+
-+			reg-names = "csiphy2",
-+				    "csiphy3",
-+				    "csiphy0",
-+				    "csiphy1",
-+				    "vfe0",
-+				    "csid0",
-+				    "vfe1",
-+				    "csid1",
-+				    "vfe2",
-+				    "csid2",
-+				    "vfe_lite0",
-+				    "csid0_lite",
-+				    "vfe_lite1",
-+				    "csid1_lite",
-+				    "vfe_lite2",
-+				    "csid2_lite",
-+				    "vfe_lite3",
-+				    "csid3_lite",
-+				    "vfe3",
-+				    "csid3";
-+
-+			interrupts = <GIC_SPI 359 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 360 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 448 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 464 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 465 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 466 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 467 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 468 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 469 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 477 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 478 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 479 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 640 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 641 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 758 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 759 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 760 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 761 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 762 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 764 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			interrupt-names = "csid1_lite",
-+					  "vfe_lite1",
-+					  "csiphy3",
-+					  "csid0",
-+					  "vfe0",
-+					  "csid1",
-+					  "vfe1",
-+					  "csid0_lite",
-+					  "vfe_lite0",
-+					  "csiphy0",
-+					  "csiphy1",
-+					  "csiphy2",
-+					  "csid2",
-+					  "vfe2",
-+					  "csid3_lite",
-+					  "csid2_lite",
-+					  "vfe_lite3",
-+					  "vfe_lite2",
-+					  "csid3",
-+					  "vfe3";
-+
-+			power-domains = <&camcc IFE_0_GDSC>,
-+					<&camcc IFE_1_GDSC>,
-+					<&camcc IFE_2_GDSC>,
-+					<&camcc IFE_3_GDSC>,
-+					<&camcc TITAN_TOP_GDSC>;
-+
-+			power-domain-names = "ife0",
-+					     "ife1",
-+					     "ife2",
-+					     "ife3",
-+					     "top";
-+
-+			clocks = <&camcc CAMCC_CAMNOC_AXI_CLK>,
-+				 <&camcc CAMCC_CAMNOC_AXI_CLK_SRC>,
-+				 <&camcc CAMCC_CPAS_AHB_CLK>,
-+				 <&camcc CAMCC_CPHY_RX_CLK_SRC>,
-+				 <&camcc CAMCC_CSIPHY0_CLK>,
-+				 <&camcc CAMCC_CSI0PHYTIMER_CLK_SRC>,
-+				 <&camcc CAMCC_CSI0PHYTIMER_CLK>,
-+				 <&camcc CAMCC_CSIPHY1_CLK>,
-+				 <&camcc CAMCC_CSI1PHYTIMER_CLK_SRC>,
-+				 <&camcc CAMCC_CSI1PHYTIMER_CLK>,
-+				 <&camcc CAMCC_CSIPHY2_CLK>,
-+				 <&camcc CAMCC_CSI2PHYTIMER_CLK_SRC>,
-+				 <&camcc CAMCC_CSI2PHYTIMER_CLK>,
-+				 <&camcc CAMCC_CSIPHY3_CLK>,
-+				 <&camcc CAMCC_CSI3PHYTIMER_CLK_SRC>,
-+				 <&camcc CAMCC_CSI3PHYTIMER_CLK>,
-+				 <&camcc CAMCC_IFE_0_AXI_CLK>,
-+				 <&camcc CAMCC_IFE_0_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_0_CLK>,
-+				 <&camcc CAMCC_IFE_0_CPHY_RX_CLK>,
-+				 <&camcc CAMCC_IFE_0_CSID_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_0_CSID_CLK>,
-+				 <&camcc CAMCC_IFE_1_AXI_CLK>,
-+				 <&camcc CAMCC_IFE_1_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_1_CLK>,
-+				 <&camcc CAMCC_IFE_1_CPHY_RX_CLK>,
-+				 <&camcc CAMCC_IFE_1_CSID_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_1_CSID_CLK>,
-+				 <&camcc CAMCC_IFE_2_AXI_CLK>,
-+				 <&camcc CAMCC_IFE_2_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_2_CLK>,
-+				 <&camcc CAMCC_IFE_2_CPHY_RX_CLK>,
-+				 <&camcc CAMCC_IFE_2_CSID_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_2_CSID_CLK>,
-+				 <&camcc CAMCC_IFE_3_AXI_CLK>,
-+				 <&camcc CAMCC_IFE_3_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_3_CLK>,
-+				 <&camcc CAMCC_IFE_3_CPHY_RX_CLK>,
-+				 <&camcc CAMCC_IFE_3_CSID_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_3_CSID_CLK>,
-+				 <&camcc CAMCC_IFE_LITE_0_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_LITE_0_CLK>,
-+				 <&camcc CAMCC_IFE_LITE_0_CPHY_RX_CLK>,
-+				 <&camcc CAMCC_IFE_LITE_0_CSID_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_LITE_0_CSID_CLK>,
-+				 <&camcc CAMCC_IFE_LITE_1_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_LITE_1_CLK>,
-+				 <&camcc CAMCC_IFE_LITE_1_CPHY_RX_CLK>,
-+				 <&camcc CAMCC_IFE_LITE_1_CSID_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_LITE_1_CSID_CLK>,
-+				 <&camcc CAMCC_IFE_LITE_2_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_LITE_2_CLK>,
-+				 <&camcc CAMCC_IFE_LITE_2_CPHY_RX_CLK>,
-+				 <&camcc CAMCC_IFE_LITE_2_CSID_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_LITE_2_CSID_CLK>,
-+				 <&camcc CAMCC_IFE_LITE_3_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_LITE_3_CLK>,
-+				 <&camcc CAMCC_IFE_LITE_3_CPHY_RX_CLK>,
-+				 <&camcc CAMCC_IFE_LITE_3_CSID_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_LITE_3_CSID_CLK>,
-+				 <&gcc GCC_CAMERA_HF_AXI_CLK>,
-+				 <&gcc GCC_CAMERA_SF_AXI_CLK>,
-+				 <&camcc CAMCC_SLOW_AHB_CLK_SRC>;
-+
-+			clock-names = "camnoc_axi",
-+				      "camnoc_axi_src",
-+				      "cpas_ahb",
-+				      "cphy_rx_src",
-+				      "csiphy0",
-+				      "csiphy0_timer_src",
-+				      "csiphy0_timer",
-+				      "csiphy1",
-+				      "csiphy1_timer_src",
-+				      "csiphy1_timer",
-+				      "csiphy2",
-+				      "csiphy2_timer_src",
-+				      "csiphy2_timer",
-+				      "csiphy3",
-+				      "csiphy3_timer_src",
-+				      "csiphy3_timer",
-+				      "vfe0_axi",
-+				      "vfe0_src",
-+				      "vfe0",
-+				      "vfe0_cphy_rx",
-+				      "vfe0_csid_src",
-+				      "vfe0_csid",
-+				      "vfe1_axi",
-+				      "vfe1_src",
-+				      "vfe1",
-+				      "vfe1_cphy_rx",
-+				      "vfe1_csid_src",
-+				      "vfe1_csid",
-+				      "vfe2_axi",
-+				      "vfe2_src",
-+				      "vfe2",
-+				      "vfe2_cphy_rx",
-+				      "vfe2_csid_src",
-+				      "vfe2_csid",
-+				      "vfe3_axi",
-+				      "vfe3_src",
-+				      "vfe3",
-+				      "vfe3_cphy_rx",
-+				      "vfe3_csid_src",
-+				      "vfe3_csid",
-+				      "vfe_lite0_src",
-+				      "vfe_lite0",
-+				      "vfe_lite0_cphy_rx",
-+				      "vfe_lite0_csid_src",
-+				      "vfe_lite0_csid",
-+				      "vfe_lite1_src",
-+				      "vfe_lite1",
-+				      "vfe_lite1_cphy_rx",
-+				      "vfe_lite1_csid_src",
-+				      "vfe_lite1_csid",
-+				      "vfe_lite2_src",
-+				      "vfe_lite2",
-+				      "vfe_lite2_cphy_rx",
-+				      "vfe_lite2_csid_src",
-+				      "vfe_lite2_csid",
-+				      "vfe_lite3_src",
-+				      "vfe_lite3",
-+				      "vfe_lite3_cphy_rx",
-+				      "vfe_lite3_csid_src",
-+				      "vfe_lite3_csid",
-+				      "gcc_axi_hf",
-+				      "gcc_axi_sf",
-+				      "slow_ahb_src";
-+
-+			iommus = <&apps_smmu 0x2000 0x4e0>,
-+				 <&apps_smmu 0x2020 0x4e0>,
-+				 <&apps_smmu 0x2040 0x4e0>,
-+				 <&apps_smmu 0x2060 0x4e0>,
-+				 <&apps_smmu 0x2080 0x4e0>,
-+				 <&apps_smmu 0x20e0 0x4e0>,
-+				 <&apps_smmu 0x20c0 0x4e0>,
-+				 <&apps_smmu 0x20a0 0x4e0>,
-+				 <&apps_smmu 0x2400 0x4e0>,
-+				 <&apps_smmu 0x2420 0x4e0>,
-+				 <&apps_smmu 0x2440 0x4e0>,
-+				 <&apps_smmu 0x2460 0x4e0>,
-+				 <&apps_smmu 0x2480 0x4e0>,
-+				 <&apps_smmu 0x24e0 0x4e0>,
-+				 <&apps_smmu 0x24c0 0x4e0>,
-+				 <&apps_smmu 0x24a0 0x4e0>;
-+
-+			interconnects = <&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_CAMERA_CFG 0>,
-+					<&mmss_noc MASTER_CAMNOC_HF 0 &mc_virt SLAVE_EBI1 0>,
-+					<&mmss_noc MASTER_CAMNOC_SF 0 &mc_virt SLAVE_EBI1 0>,
-+					<&mmss_noc MASTER_CAMNOC_ICP 0 &mc_virt SLAVE_EBI1 0>;
-+			interconnect-names = "cam_ahb",
-+					     "cam_hf_mnoc",
-+					     "cam_sf_mnoc",
-+					     "cam_sf_icp_mnoc";
-+
-+			status = "disabled";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+				};
-+
-+				port@3 {
-+					reg = <3>;
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+				};
-+			};
-+		};
-+
- 		camcc: clock-controller@ad00000 {
- 			compatible = "qcom,sc8280xp-camcc";
- 			reg = <0 0x0ad00000 0 0x20000>;
+Not necessary anymore
+
+> +
+> +				status = "disabled";
+> +
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				ports {
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
+> +
+> +					port@0 {
+> +						reg = <0>;
+> +						mdss_dsi0_in: endpoint {
+> +							remote-endpoint = <&dpu_intf0_out>;
+> +						};
+> +					};
+> +
+> +					port@1 {
+> +						reg = <1>;
+> +						mdss_dsi0_out: endpoint {
+> +						};
+> +					};
+> +				};
+> +			};
+> +
+> +			mdss_dsi0_phy: phy@ae94400 {
+> +				compatible = "qcom,dsi-phy-10nm";
+> +				reg = <0 0x0ae94400 0 0x200>,
+> +				      <0 0x0ae94600 0 0x280>,
+> +				      <0 0x0ae94a00 0 0x1e0>;
+> +				reg-names = "dsi_phy",
+> +					    "dsi_phy_lane",
+> +					    "dsi_pll";
+> +
+> +				#clock-cells = <1>;
+> +				#phy-cells = <0>;
+> +
+> +				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +					 <&rpmhcc RPMH_CXO_CLK>;
+> +				clock-names = "iface", "ref";
+> +
+> +				status = "disabled";
+> +			};
+> +
+> +			mdss_dsi1: dsi@ae96000 {
+> +				compatible = "qcom,sdm670-dsi-ctrl",
+> +					     "qcom,mdss-dsi-ctrl";
+> +				reg = <0 0x0ae96000 0 0x400>;
+> +				reg-names = "dsi_ctrl";
+> +
+> +				interrupt-parent = <&mdss>;
+> +				interrupts = <5>;
+> +
+> +				clocks = <&dispcc DISP_CC_MDSS_BYTE1_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_BYTE1_INTF_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_PCLK1_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_ESC1_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_AXI_CLK>;
+> +				clock-names = "byte",
+> +					      "byte_intf",
+> +					      "pixel",
+> +					      "core",
+> +					      "iface",
+> +					      "bus";
+> +				assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE1_CLK_SRC>,
+> +						  <&dispcc DISP_CC_MDSS_PCLK1_CLK_SRC>;
+> +				assigned-clock-parents = <&mdss_dsi1_phy 0>, <&mdss_dsi1_phy 1>;
+> +
+> +				operating-points-v2 = <&dsi_opp_table>;
+> +				power-domains = <&rpmhpd SDM670_CX>;
+> +
+> +				phys = <&mdss_dsi1_phy>;
+> +				phy-names = "dsi";
+
+Not necessary anymore
+
+> +
+> +				status = "disabled";
+> +
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				ports {
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
+> +
+> +					port@0 {
+> +						reg = <0>;
+> +						mdss_dsi1_in: endpoint {
+> +							remote-endpoint = <&dpu_intf1_out>;
+> +						};
+> +					};
+> +
+> +					port@1 {
+> +						reg = <1>;
+> +						mdss_dsi1_out: endpoint {
+> +						};
+> +					};
+> +				};
+> +			};
+> +
+> +			mdss_dsi1_phy: phy@ae96400 {
+> +				compatible = "qcom,dsi-phy-10nm";
+> +				reg = <0 0x0ae96400 0 0x200>,
+> +				      <0 0x0ae96600 0 0x280>,
+> +				      <0 0x0ae96a00 0 0x10e>;
+> +				reg-names = "dsi_phy",
+> +					    "dsi_phy_lane",
+> +					    "dsi_pll";
+> +
+> +				#clock-cells = <1>;
+> +				#phy-cells = <0>;
+> +
+> +				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +					 <&rpmhcc RPMH_CXO_CLK>;
+> +				clock-names = "iface", "ref";
+> +
+> +				status = "disabled";
+> +			};
+> +		};
+> +
+> +		dispcc: clock-controller@af00000 {
+> +			compatible = "qcom,sdm845-dispcc";
+> +			reg = <0 0x0af00000 0 0x10000>;
+> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&gcc GCC_DISP_GPLL0_CLK_SRC>,
+> +				 <&gcc GCC_DISP_GPLL0_DIV_CLK_SRC>,
+> +				 <&mdss_dsi0_phy 0>,
+> +				 <&mdss_dsi0_phy 1>,
+> +				 <&mdss_dsi1_phy 0>,
+> +				 <&mdss_dsi1_phy 1>,
+> +				 <0>,
+> +				 <0>;
+> +			clock-names = "bi_tcxo",
+> +				      "gcc_disp_gpll0_clk_src",
+> +				      "gcc_disp_gpll0_div_clk_src",
+> +				      "dsi0_phy_pll_out_byteclk",
+> +				      "dsi0_phy_pll_out_dsiclk",
+> +				      "dsi1_phy_pll_out_byteclk",
+> +				      "dsi1_phy_pll_out_dsiclk",
+> +				      "dp_link_clk_divsel_ten",
+> +				      "dp_vco_divided_clk_src_mux";
+> +			#clock-cells = <1>;
+> +			#reset-cells = <1>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+>   		apps_smmu: iommu@15000000 {
+>   			compatible = "qcom,sdm670-smmu-500", "qcom,smmu-500", "arm,mmu-500";
+>   			reg = <0 0x15000000 0 0x80000>;
+
 -- 
-2.40.1
+With best wishes
+Dmitry
 
