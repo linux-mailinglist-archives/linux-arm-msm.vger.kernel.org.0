@@ -2,89 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F0AF47BB718
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 14:00:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A563E7BB725
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 14:02:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232156AbjJFMAS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Oct 2023 08:00:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60642 "EHLO
+        id S232186AbjJFMCJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Oct 2023 08:02:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232143AbjJFMAR (ORCPT
+        with ESMTP id S232169AbjJFMCH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Oct 2023 08:00:17 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 690B1C6
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 05:00:16 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-5044dd5b561so2537369e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 05:00:16 -0700 (PDT)
+        Fri, 6 Oct 2023 08:02:07 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4980BED
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 05:02:04 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-406619b53caso18052945e9.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 05:02:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696593615; x=1697198415; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gcUqK1NW/dA5bg/50jl0q11SkwovBNOgvNnB+Ups9ZQ=;
-        b=w25afzsl0dMFz97tc0TuC5qGuvCxyJbX0i1REMJuSBA6q1W0SEsxn3XVqC4qTDXPET
-         BJNwXMqr1GNAJNV11HOohXBTfyN2KIPF/Y2TMr5toa+Uj2rvQwiWu0H8CzMrI3UROQRV
-         FT5syL62AD5pq3VKTuTpOyd84ENGYiaoIlqnMpB+Elw1C8pOAAFPx+/XiJK4SuONdgwv
-         tnt3Gg7HUmpxbK/qU+u+t45yqg48rUj7xt7HKUUSCGX9L52AYKnxF8DS6jlcMrZO70Gs
-         qD9r8LkzlwN+eG6fn8/wOvP5WFw/qC/Wd+lVKIK44JoQFwrp17TC+0UXxm2WUF/5jvlV
-         u1Vw==
+        d=linaro.org; s=google; t=1696593723; x=1697198523; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+tRRmk02RPImBRLbLRoEQCQTLQJvcEiVX7dpADSsWwY=;
+        b=KMlXqqIzMD3qffk4zdBFWxAfoXDXaJ6mL2JkEMGvfkKqRF6AU5fDkTJLTAHXqNkg4N
+         y2kGGJ9kf+rcYGDJ6ARz103QELqlBCyXqt7trbppT3fLtqD5bAjBMRZ2g4GayVZiasjs
+         Zu0Jdr3UOagj3bXm8PHWnuQi3n/lL8a+wPIgaIt7e4IqcJyRhLrk8RJh62OsjIIIsi4w
+         T87OWmIrpLk718pAP/ijirTFjdqZJcB60zqROxUQ00afvDpQRE498E25mZZ9a5jJVV2m
+         1irsi+zJSHZMh2mM0KWlS8u/iVr0/G7Ed8ankSeetQCFXWq0DgoWEM2nCzpm/YrsvTTP
+         a4CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696593615; x=1697198415;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gcUqK1NW/dA5bg/50jl0q11SkwovBNOgvNnB+Ups9ZQ=;
-        b=VGRIoC0/Oo9xs58mFy291LQ5IdKLbgf1caHunLg0K9yK0KLRzv7zC80yR+2vBMKF8H
-         r/ddrv3MAek0yZJND75e5vKdpJm1nYLfUqQTAHrJ0BjF3VgB+PN7uWHbKVkwx/rIGHSN
-         z0xNnYXBaxWf+WObsMFZXUyRM8kN9hc0DSqTTocnz11rpCa5Au9jCcxyuXIgGv83rKjj
-         z40wqvVnR6zBKkFRCqWCt53XXd3UqPYkHK5zPaYi/MBj3GJ1pvjolp1Rd9DdpojQAo0l
-         cniR1CHb1oD0AWgJyXKosMb84M166qFjC2dDpCKSYsQa4ac8A5ZbqWpSGZcKvA7nQ7hm
-         5tBw==
-X-Gm-Message-State: AOJu0Ywe4qPzC3YA/q8wTYKms+v+HH1enukk9j3Ky8O6zKSpll7k/iom
-        OWlujCiI04JtHXFu6k2LJffkJg==
-X-Google-Smtp-Source: AGHT+IFJWJNl4YXCaP30ZQCTHcwBJawdDelacTX9CWxRzhZbAxlknHF5JhucrQH8GQCOvS2QSU/D6Q==
-X-Received: by 2002:a05:6512:e9f:b0:500:d960:8b6d with SMTP id bi31-20020a0565120e9f00b00500d9608b6dmr8796566lfb.33.1696593614656;
-        Fri, 06 Oct 2023 05:00:14 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id t9-20020a19ad09000000b00503fb2e5594sm275387lfc.211.2023.10.06.05.00.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Oct 2023 05:00:14 -0700 (PDT)
-Message-ID: <5eb8fac4-36f1-4515-ac83-0051cce275f5@linaro.org>
-Date:   Fri, 6 Oct 2023 15:00:13 +0300
+        d=1e100.net; s=20230601; t=1696593723; x=1697198523;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+tRRmk02RPImBRLbLRoEQCQTLQJvcEiVX7dpADSsWwY=;
+        b=YH541GuCUCPrGwT320R09+sFW4TgoEnf/JC4vtSEumqPZ1woxO9dZ4sjk3+zJpJNdB
+         FE/sAERYPtxofyhZPkLGJjpOo5zZ/3FiRc0KNxEQWpIqoog6ackPXw82Jy5xHlT7a6Fg
+         Y8rAwikV8wLADtmaJqbob9CE12MrEu0FoB0Cp68hFYwXFD6JGDGTc4hEbgUKjxzplvyR
+         /tpxK54ISbpldinUdyzPMyXG9/Jl6eQEFNC1psCMT+FwAypt2xbifSYo/ce3uflXv5Ht
+         qgF15xHo4RjHQr1hdFGaSE2WoRJu98adt/Ocp0o5JexKETGHPJeahlbSR1GOwJQMyABo
+         twcg==
+X-Gm-Message-State: AOJu0YzN7PLtJkCwARXkvlRuH8zhNHGt4M91tIzAbQp5sCLs94C3kdjl
+        biI0bBtESaO5f76ERs2krOl7iw==
+X-Google-Smtp-Source: AGHT+IF5RYEvEKl+xS0P6/d0XseRZ9B+HxnqsobCALycXlaL8VL62NI/pH6Es1GVdJS7/sv7tNcNbA==
+X-Received: by 2002:a05:600c:3b20:b0:406:847a:2934 with SMTP id m32-20020a05600c3b2000b00406847a2934mr6432197wms.28.1696593722608;
+        Fri, 06 Oct 2023 05:02:02 -0700 (PDT)
+Received: from x13s-linux.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id m8-20020a056000180800b00321773bb933sm1491061wrh.77.2023.10.06.05.02.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Oct 2023 05:02:02 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        loic.poulain@linaro.org, rfoss@kernel.org, andi.shyti@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, todor.too@gmail.com, mchehab@kernel.org,
+        bryan.odonoghue@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 0/5] Add sc8280xp CCI and CAMSS core dtsi
+Date:   Fri,  6 Oct 2023 13:01:54 +0100
+Message-Id: <20231006120159.3413789-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/6] drm/msm: mdss: add support for SDM670
-Content-Language: en-GB
-To:     Richard Acayan <mailingradian@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
-        Ryan McCann <quic_rmccann@quicinc.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Liu Shixin <liushixin2@huawei.com>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-References: <20231003012119.857198-9-mailingradian@gmail.com>
- <20231003012119.857198-13-mailingradian@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20231003012119.857198-13-mailingradian@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -95,17 +74,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/10/2023 04:21, Richard Acayan wrote:
-> Add support for the MDSS block on the SDM670 platform.
-> 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> ---
->   drivers/gpu/drm/msm/msm_mdss.c | 7 +++++++
->   1 file changed, 7 insertions(+)
+The sc8280xp provides a standard Camera Control Interface and Camera
+SubSystem hardware interface similar to antecedent parts sdm845 and
+sm8250.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Per the target segments for this part, sc8280xp has more of everything.
+More CCI, VFE, CSIPHY and therefore more interrupt lines and clocks to
+declare.
+
+CCI x 4
+CSIPHY x 4
+VFE x 4
+VFE Lite x 4
+CSID x 4
+
+Bootable 6.5.y x13s:
+https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/lenovo-x13s-linux-6.5.y
+
+Linux next:
+https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-23-10-06-sc8280xp-camss
+
+This patch depends-on:
+https://lore.kernel.org/lkml/20231004161853.86382-2-bryan.odonoghue@linaro.org/T/
+
+Bryan O'Donoghue (5):
+  dt-bindings: i2c: qcom-cci: Document sc8280xp compatible
+  i2c: qcom-cci: Add sc8280xp compatible
+  arm64: dts: qcom: sc8280xp: camss: Add CCI definitions
+  media: dt-bindings: media: camss: Add qcom,sc8280xp-camss binding
+  arm64: dts: qcom: sc8280xp: camss: Add CAMSS block definition
+
+ .../devicetree/bindings/i2c/qcom,i2c-cci.yaml |   2 +
+ .../bindings/media/qcom,sc8280xp-camss.yaml   | 598 +++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi        | 608 ++++++++++++++++++
+ drivers/i2c/busses/i2c-qcom-cci.c             |   1 +
+ 4 files changed, 1209 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
 
 -- 
-With best wishes
-Dmitry
+2.40.1
 
