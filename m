@@ -2,126 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF3CB7BBDE5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 19:43:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 857C57BBE1B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 19:56:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232906AbjJFRnG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Oct 2023 13:43:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55582 "EHLO
+        id S233093AbjJFR4s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Oct 2023 13:56:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232552AbjJFRnG (ORCPT
+        with ESMTP id S233090AbjJFR4r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Oct 2023 13:43:06 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58DDAAD;
-        Fri,  6 Oct 2023 10:43:05 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 396HQidc011774;
-        Fri, 6 Oct 2023 17:43:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id; s=qcppdkim1;
- bh=w9D5zFiE5Fk89khSJXhALG58nv+79xh2VzKC33OnWMg=;
- b=WcpGaMnASCpvYFByZ2x/lpO8iNhURKjSvGgQL9aZcK0eWoljDPFLAFmk5g5ciM+4vpMT
- kyAfO5a81qjHd6HC9Q3TY21iTSsPMohCkhs9AYnP/8/Hrtx5vJBYZ7J10u6xY1p21Cxd
- 24kWy1TAyMDYb3c4/oXeiK/xRp4xHof/q0rR0gK1o+AHK+bbuf5AeZ4wlA+/V3E4axsW
- MyzXuiIG1jPLg7Ec82fjXZto5KGzKcRtniFh2CGKL6LYENJi7h9DwHlQ/OhrVIY/SZpA
- sgabUNcQjgVKQjNMqhwiy1OON3xMnq5A5vwuYUepFyRstQ1G2GRWzjFWzGYJh5AIp81F GQ== 
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tjgc691qd-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 06 Oct 2023 17:43:00 +0000
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 396HgtZB009715;
-        Fri, 6 Oct 2023 17:42:55 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3tecrm81td-1;
-        Fri, 06 Oct 2023 17:42:55 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 396HgtFE009710;
-        Fri, 6 Oct 2023 17:42:55 GMT
-Received: from hu-sgudaval-hyd.qualcomm.com (hu-vnivarth-hyd.qualcomm.com [10.213.111.166])
-        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 396Hgt6Z009708;
-        Fri, 06 Oct 2023 17:42:55 +0000
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3994820)
-        id 680AB3FEC; Fri,  6 Oct 2023 23:12:54 +0530 (+0530)
-From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
-        swboyd@chromium.org, quic_vtanuku@quicinc.com,
-        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Subject: [PATCH] spi: spi-geni-qcom: Rename the label unmap_if_dma
-Date:   Fri,  6 Oct 2023 23:12:50 +0530
-Message-Id: <1696614170-18969-1-git-send-email-quic_vnivarth@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: KOlDzzKuiDLgQvqTndcrOZQkhU1USYlI
-X-Proofpoint-GUID: KOlDzzKuiDLgQvqTndcrOZQkhU1USYlI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-06_13,2023-10-06_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- lowpriorityscore=0 malwarescore=0 bulkscore=0 priorityscore=1501
- mlxlogscore=643 impostorscore=0 adultscore=0 spamscore=0 phishscore=0
- mlxscore=0 clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310060131
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=no
-        autolearn_force=no version=3.4.6
+        Fri, 6 Oct 2023 13:56:47 -0400
+Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46892DB
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 10:56:46 -0700 (PDT)
+Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-5a2379a8b69so29113027b3.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 10:56:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1696615003; x=1697219803; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=KSCSizx6FgkyRIW0X32uY+4ZXkb204qdp7z+rYedcrk=;
+        b=MTcjX+Ke6n3HSn3oK09WFhilSMt4myjWE/DRirbQquDHxdiKquS1ir45OiaHI3nxzt
+         zmdAcjuhRrVYlY4SmZnKzq4+NvDlm0QsDfwrT9kUlccAm9Pp7oXWoP0uPzDd1x4FKiI5
+         Rfa4CnBCU6lEz9Vc7eDGWZ3MJ9ET8jKFvjzy/sJpdqD5ZNUB/zjj+oIfT3CikTQkHpyd
+         cszn6kqKIVTFRsA13qcuyxnpnlwrVk1xxB3qbM0P2fYtltWg9apxjFAZKZK4SuX63Wca
+         MEpbZeMSIOdMYqzGBEMOWJK3YyNen/Gu7ZsB3o25ZTTUuw9S7KkNWDGwa5+ltiubV0UL
+         xjyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696615003; x=1697219803;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KSCSizx6FgkyRIW0X32uY+4ZXkb204qdp7z+rYedcrk=;
+        b=DVuLZi8YYHScFhlR3dLFUkKfKGumEnxbl52oWjKEg7n/8Nwy288Q3/SQMICsWJlWvw
+         Hwbe23tshs2eVTr9rLXFAHr5/XxPJEDRXPq62zOB5uSIPW1rX/vqg5NeRqL8NhxnwSFy
+         tWHfsQEm2hjunZSMbJMZk1X+ZoSLDNDn8BKJq6o3iba0jppn5jzqIwwqweJKQ/FySUlB
+         P4enw0PaaK8TQDWM6CpIxloex2yOYkj9tRE2jcqOquTl9nKPqJpssQ5bXBvrMXBjuB4s
+         6otV3L7MFZbsFEomHxbLHZkWcku9Dz9KBOvsMSTh+zECw773wV45AdHj7uHLGGbbnMF3
+         tNPQ==
+X-Gm-Message-State: AOJu0Yyk/E5x6N8zEMmGmRz88mF9APnXGEyd3xaF2OKjXJTdpLFfli9r
+        Tw2kYrCirwhGBjwuWStV9iyb1ytOvAk1ZGUg42D36A==
+X-Google-Smtp-Source: AGHT+IFginRxo8IyMdo5XT8uPhfon+vST76i33p+mAlSB+loxSygqvparl4usE/bieB3hvzQ+T43mG/e0PrIrtMO1wU=
+X-Received: by 2002:a0d:d611:0:b0:577:1560:9e17 with SMTP id
+ y17-20020a0dd611000000b0057715609e17mr9380421ywd.35.1696615002833; Fri, 06
+ Oct 2023 10:56:42 -0700 (PDT)
+MIME-Version: 1.0
+References: <1696436821-14261-1-git-send-email-quic_khsieh@quicinc.com> <1696436821-14261-6-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <1696436821-14261-6-git-send-email-quic_khsieh@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 6 Oct 2023 20:56:31 +0300
+Message-ID: <CAA8EJprAQqNUvY8CMkKbUNEWo1vO1ZkgZzk4zhvAsuLc46KeXg@mail.gmail.com>
+Subject: Re: [PATCH v5 5/7] drm/msm/dp: incorporate pm_runtime framework into
+ DP driver
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, andersson@kernel.org, quic_abhinavk@quicinc.com,
+        quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
+        marijn.suijten@somainline.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The code at unmap_if_dma label doesn't contain unmapping dma anymore but
-has only fsm reset.
+On Wed, 4 Oct 2023 at 19:27, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+>
+> Currently DP driver is executed independent of PM runtime framework.
+> This leads msm eDP panel can not being detected by edp_panel driver during
+> generic_edp_panel_probe() due to AUX DPCD read failed at edp panel driver.
+> Incorporate PM runtime framework into DP driver so that host controller's
+> power and clocks are enable/disable through PM runtime mechanism.
+> Once PM runtime framework is incorporated into DP driver, waking up device
+> from power up path is not necessary. Hence remove it.
+>
+> After incorporating pm_runtime framework into eDP/DP driver, dp_pm_suspend()
+> to handle power off both DP phy and controller during suspend and
+> dp_pm_resume() to handle power on both DP phy and controller during resume
+> are not necessary. Therefore both dp_pm_suspend() and dp_pm_resume() are
+> dropped and replace with dp_pm_runtime_suspend() and dp_pm_runtime_resume()
+> respectively.
+>
+> Changes in v5:
+> -- remove pm_runtime_put_autosuspend feature, use pm_runtime_put_sync() directly
+> -- squash add pm_runtime_force_suspend()/resume() patch into this patch
+>
+> Changes in v4:
+> -- reworded commit text to explain why pm_framework is required for edp panel
+> -- reworded commit text to explain autosuspend is choiced
+> -- delete EV_POWER_PM_GET and PM_EV_POWER_PUT from changes #3
+> -- delete dp_display_pm_get() and dp_display_pm_Put() from changes #3
+> -- return value from pm_runtime_resume_and_get() directly
+> -- check return value of devm_pm_runtime_enable()
+> -- delete pm_runtime_xxx from dp_display_remove()
+> -- drop dp_display_host_init() from EV_HPD_INIT_SETUP
+> -- drop both dp_pm_prepare() and dp_pm_compete() from this change
+> -- delete ST_SUSPENDED state
+> -- rewording commit text to add more details regrading the purpose
+>    of this change
+>
+> Changes in v3:
+> -- incorporate removing pm_runtime_xx() from dp_pwer.c to this patch
+> -- use pm_runtime_resume_and_get() instead of pm_runtime_get()
+> -- error checking pm_runtime_resume_and_get() return value
+> -- add EV_POWER_PM_GET and PM_EV_POWER_PUT to handle HPD_GPIO case
+> -- replace dp_pm_suspend() with pm_runtime_force_suspend()
+> -- replace dp_pm_resume() with pm_runtime_force_resume()
+>
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> Reported-by: kernel test robot <lkp@intel.com>
+> ---
+>  drivers/gpu/drm/msm/dp/dp_aux.c     |   5 ++
+>  drivers/gpu/drm/msm/dp/dp_display.c | 166 ++++++++++++------------------------
+>  drivers/gpu/drm/msm/dp/dp_power.c   |  16 ----
+>  drivers/gpu/drm/msm/dp/dp_power.h   |  11 ---
+>  4 files changed, 59 insertions(+), 139 deletions(-)
 
-Rename it to reset_if_dma accordingly.
+[skipped]
 
-No functional change.
+> @@ -1702,6 +1638,12 @@ void dp_bridge_hpd_enable(struct drm_bridge *bridge)
+>         struct dp_display_private *dp = container_of(dp_display, struct dp_display_private, dp_display);
+>
+>         mutex_lock(&dp->event_mutex);
+> +       if (pm_runtime_resume_and_get(&dp->pdev->dev)) {
+> +               DRM_ERROR("failed to start power\n");
 
-Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
----
- drivers/spi/spi-geni-qcom.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+It was in the previous review comment:
 
-diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index f4f376a..b956a32 100644
---- a/drivers/spi/spi-geni-qcom.c
-+++ b/drivers/spi/spi-geni-qcom.c
-@@ -166,7 +166,7 @@ static void handle_se_timeout(struct spi_master *spi,
- 		 * doesn`t support CMD Cancel sequnece
- 		 */
- 		spin_unlock_irq(&mas->lock);
--		goto unmap_if_dma;
-+		goto reset_if_dma;
- 	}
- 
- 	reinit_completion(&mas->cancel_done);
-@@ -175,7 +175,7 @@ static void handle_se_timeout(struct spi_master *spi,
- 
- 	time_left = wait_for_completion_timeout(&mas->cancel_done, HZ);
- 	if (time_left)
--		goto unmap_if_dma;
-+		goto reset_if_dma;
- 
- 	spin_lock_irq(&mas->lock);
- 	reinit_completion(&mas->abort_done);
-@@ -193,7 +193,7 @@ static void handle_se_timeout(struct spi_master *spi,
- 		mas->abort_failed = true;
- 	}
- 
--unmap_if_dma:
-+reset_if_dma:
- 	if (mas->cur_xfer_mode == GENI_SE_DMA) {
- 		if (xfer) {
- 			if (xfer->tx_buf) {
+"failed to resume".
+
+> +               mutex_unlock(&dp->event_mutex);
+> +               return;
+> +       }
+> +
+
 -- 
-2.7.4
-
+With best wishes
+Dmitry
