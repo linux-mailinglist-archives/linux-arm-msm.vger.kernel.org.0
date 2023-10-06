@@ -2,278 +2,593 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 351357BC154
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 23:41:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D17BC7BC153
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 23:41:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233798AbjJFVjn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Oct 2023 17:39:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39308 "EHLO
+        id S233761AbjJFVkk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Oct 2023 17:40:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233773AbjJFVjh (ORCPT
+        with ESMTP id S233763AbjJFVkb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Oct 2023 17:39:37 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB226DF;
-        Fri,  6 Oct 2023 14:39:13 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 396LJa0V003534;
-        Fri, 6 Oct 2023 21:39:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=9ezHvZQ8I7r8pIP7Me8FbPw5MGxYw1hrgCfM/Pq2rzA=;
- b=I6eRW1c2ScZYASvW5hZOjCwdFLIwXldqrIzDR/K8N2KKoETcMEkAUN9fidL0mwWHYPT2
- 7LK3YN1PGMVp5ELJpRI0XMnKqMUsjpK0QyytO1HtmXFuq+j+QUXJIHLVQJYwf6CwY8h+
- fbeW0ttjyaQQAgEgpkG6ggtMOrrbP15qeKXIiQzgY2nXUpHtnAIhE1t319QniOwthNo9
- Q3OMhnMjriAUD1M0obRvTod5wP5tbzxLwuFVifylTeabRWF0C4xKSO36TkwgsV4JF94n
- B588eksmKveE64pSjgqqubvGxsE25p/d7Y7MPpFDmoonCA87NULYwY74rtw4wRIL29RY qQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tj38nau6f-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 06 Oct 2023 21:39:00 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 396LcxcM029421
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 6 Oct 2023 21:38:59 GMT
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Fri, 6 Oct 2023 14:38:58 -0700
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <andersson@kernel.org>
-CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v6 7/7] drm/msm/dp: move of_dp_aux_populate_bus() to eDP probe()
-Date:   Fri, 6 Oct 2023 14:38:38 -0700
-Message-ID: <1696628318-15095-8-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1696628318-15095-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1696628318-15095-1-git-send-email-quic_khsieh@quicinc.com>
+        Fri, 6 Oct 2023 17:40:31 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C378D62;
+        Fri,  6 Oct 2023 14:40:09 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46CFBC433C9;
+        Fri,  6 Oct 2023 21:40:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1696628408;
+        bh=U+v1bDX876I+IqgVMBfBBhar56/4ZmnjiDESPdx1WkY=;
+        h=From:To:Cc:Subject:Date:From;
+        b=Yxd8EXS7TQ31GKHO6UP24p+vYelfNwyO9jV3wuL9tiw+orNn21Csfp3/QWT8qOzAT
+         2MxzMhcuhpnButRi1ZFpb6FPpDVs/RoABodd0WD6P6T9s9p8tLUga6d8MeJhwznU43
+         wzIvF6nxCiyhD06hBuGOgwGhI7smf2ViJYaSgsu2veEGc6T8l5zDPOLmr0YPj/NSYe
+         jtNMI4d7XmvTu/W7ufclp9pgyE2jxq5mGXx2t8w7myPF1OBlrLoCd/iMFATYNK4S14
+         lMDXLwN1kbWSlkCK5AMa9bmuzL4G6XskFEgbPelwpGLvhJOo/WqBluxjzW6QSadits
+         A0F3BOe+aUWQw==
+Received: (nullmailer pid 334605 invoked by uid 1000);
+        Fri, 06 Oct 2023 21:40:05 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Charles Keepax <ckeepax@opensource.cirrus.com>,
+        Richard Fitzgerald <rf@opensource.cirrus.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        David Lechner <david@lechnology.com>,
+        Sekhar Nori <nsekhar@ti.com>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Tero Kristo <kristo@kernel.org>
+Cc:     patches@opensource.cirrus.com, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-rockchip@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-omap@vger.kernel.org
+Subject: [PATCH] clk: Use device_get_match_data()
+Date:   Fri,  6 Oct 2023 16:39:58 -0500
+Message-Id: <20231006213959.334439-1-robh@kernel.org>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: vMlWVRUGTMxNODNYO_WBHtynQM8QecFF
-X-Proofpoint-GUID: vMlWVRUGTMxNODNYO_WBHtynQM8QecFF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-06_15,2023-10-06_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- mlxlogscore=999 mlxscore=0 suspectscore=0 impostorscore=0 adultscore=0
- spamscore=0 clxscore=1015 malwarescore=0 priorityscore=1501 phishscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310060166
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently eDP population is done at msm_dp_modeset_init() which happen
-at binding time. Move eDP population to be done at display probe time
-so that probe deferral cases can be handled effectively.
-wait_for_hpd_asserted callback is added during drm_dp_aux_init()
-to ensure eDP's HPD is up before proceeding eDP population.
+Use preferred device_get_match_data() instead of of_match_device() to
+get the driver match data. With this, adjust the includes to explicitly
+include the correct headers.
 
-Changes in v5:
--- inline dp_display_auxbus_population() and delete it
-
-Changes in v4:
--- delete duplicate initialize code to dp_aux before drm_dp_aux_register()
--- delete of_get_child_by_name(dev->of_node, "aux-bus") and inline the function
--- not initialize rc = 0
-
-Changes in v3:
--- add done_probing callback into devm_of_dp_aux_populate_bus()
-
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Rob Herring <robh@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_aux.c     | 34 ++++++++++++++++-----
- drivers/gpu/drm/msm/dp/dp_display.c | 59 +++++++++++++++----------------------
- 2 files changed, 51 insertions(+), 42 deletions(-)
+ drivers/clk/clk-lochnagar.c             |  9 ++-------
+ drivers/clk/davinci/da8xx-cfgchip.c     |  8 +++-----
+ drivers/clk/davinci/pll.c               | 10 +++-------
+ drivers/clk/davinci/psc.c               | 10 +++-------
+ drivers/clk/qcom/gcc-msm8960.c          | 13 +++++--------
+ drivers/clk/qcom/gcc-msm8974.c          | 10 +++-------
+ drivers/clk/qcom/kpss-xcc.c             |  9 ++-------
+ drivers/clk/qcom/krait-cc.c             | 14 +++++---------
+ drivers/clk/qcom/mmcc-msm8960.c         | 16 +++++-----------
+ drivers/clk/qcom/mmcc-sdm660.c          |  8 ++------
+ drivers/clk/rockchip/clk-rk3399.c       |  9 ++-------
+ drivers/clk/samsung/clk-exynos-clkout.c |  8 +++-----
+ drivers/clk/ti/adpll.c                  | 14 ++++----------
+ 13 files changed, 42 insertions(+), 96 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c b/drivers/gpu/drm/msm/dp/dp_aux.c
-index 10b6eeb..03f4951 100644
---- a/drivers/gpu/drm/msm/dp/dp_aux.c
-+++ b/drivers/gpu/drm/msm/dp/dp_aux.c
-@@ -479,7 +479,6 @@ void dp_aux_deinit(struct drm_dp_aux *dp_aux)
+diff --git a/drivers/clk/clk-lochnagar.c b/drivers/clk/clk-lochnagar.c
+index db468a62c8d7..5561a2c66b69 100644
+--- a/drivers/clk/clk-lochnagar.c
++++ b/drivers/clk/clk-lochnagar.c
+@@ -12,8 +12,8 @@
+ #include <linux/device.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+-#include <linux/of_device.h>
+ #include <linux/platform_device.h>
++#include <linux/property.h>
+ #include <linux/regmap.h>
  
- int dp_aux_register(struct drm_dp_aux *dp_aux)
+ #include <linux/mfd/lochnagar1_regs.h>
+@@ -242,22 +242,17 @@ static int lochnagar_clk_probe(struct platform_device *pdev)
+ 	};
+ 	struct device *dev = &pdev->dev;
+ 	struct lochnagar_clk_priv *priv;
+-	const struct of_device_id *of_id;
+ 	struct lochnagar_clk *lclk;
+ 	struct lochnagar_config *conf;
+ 	int ret, i;
+ 
+-	of_id = of_match_device(lochnagar_of_match, dev);
+-	if (!of_id)
+-		return -EINVAL;
+-
+ 	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
+ 	if (!priv)
+ 		return -ENOMEM;
+ 
+ 	priv->dev = dev;
+ 	priv->regmap = dev_get_regmap(dev->parent, NULL);
+-	conf = (struct lochnagar_config *)of_id->data;
++	conf = (struct lochnagar_config *)device_get_match_data(dev);
+ 
+ 	memcpy(priv->lclks, conf->clks, sizeof(priv->lclks));
+ 
+diff --git a/drivers/clk/davinci/da8xx-cfgchip.c b/drivers/clk/davinci/da8xx-cfgchip.c
+index e5b2cdfe88ce..ad2d0df43dc6 100644
+--- a/drivers/clk/davinci/da8xx-cfgchip.c
++++ b/drivers/clk/davinci/da8xx-cfgchip.c
+@@ -11,10 +11,10 @@
+ #include <linux/init.h>
+ #include <linux/mfd/da8xx-cfgchip.h>
+ #include <linux/mfd/syscon.h>
+-#include <linux/of_device.h>
+ #include <linux/of.h>
+ #include <linux/platform_data/clk-da8xx-cfgchip.h>
+ #include <linux/platform_device.h>
++#include <linux/property.h>
+ #include <linux/regmap.h>
+ #include <linux/slab.h>
+ 
+@@ -744,15 +744,13 @@ static int da8xx_cfgchip_probe(struct platform_device *pdev)
  {
--	struct dp_aux_private *aux;
+ 	struct device *dev = &pdev->dev;
+ 	struct da8xx_cfgchip_clk_platform_data *pdata = dev->platform_data;
+-	const struct of_device_id *of_id;
+ 	da8xx_cfgchip_init clk_init = NULL;
+ 	struct regmap *regmap = NULL;
+ 
+-	of_id = of_match_device(da8xx_cfgchip_of_match, dev);
+-	if (of_id) {
++	clk_init = device_get_match_data(dev);
++	if (clk_init) {
+ 		struct device_node *parent;
+ 
+-		clk_init = of_id->data;
+ 		parent = of_get_parent(dev->of_node);
+ 		regmap = syscon_node_to_regmap(parent);
+ 		of_node_put(parent);
+diff --git a/drivers/clk/davinci/pll.c b/drivers/clk/davinci/pll.c
+index 87bdf8879045..5bbbb3a66477 100644
+--- a/drivers/clk/davinci/pll.c
++++ b/drivers/clk/davinci/pll.c
+@@ -18,11 +18,10 @@
+ #include <linux/kernel.h>
+ #include <linux/mfd/syscon.h>
+ #include <linux/notifier.h>
+-#include <linux/of_address.h>
+-#include <linux/of_device.h>
+ #include <linux/of.h>
+ #include <linux/platform_data/clk-davinci-pll.h>
+ #include <linux/platform_device.h>
++#include <linux/property.h>
+ #include <linux/regmap.h>
+ #include <linux/slab.h>
+ #include <linux/types.h>
+@@ -892,14 +891,11 @@ static int davinci_pll_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+ 	struct davinci_pll_platform_data *pdata;
+-	const struct of_device_id *of_id;
+ 	davinci_pll_init pll_init = NULL;
+ 	void __iomem *base;
+ 
+-	of_id = of_match_device(davinci_pll_of_match, dev);
+-	if (of_id)
+-		pll_init = of_id->data;
+-	else if (pdev->id_entry)
++	pll_init = device_get_match_data(dev);
++	if (!pll_init && pdev->id_entry)
+ 		pll_init = (void *)pdev->id_entry->driver_data;
+ 
+ 	if (!pll_init) {
+diff --git a/drivers/clk/davinci/psc.c b/drivers/clk/davinci/psc.c
+index cd85d9f158b0..355d1be0b5d8 100644
+--- a/drivers/clk/davinci/psc.c
++++ b/drivers/clk/davinci/psc.c
+@@ -18,10 +18,9 @@
+ #include <linux/clk/davinci.h>
+ #include <linux/clkdev.h>
+ #include <linux/err.h>
+-#include <linux/of_address.h>
+-#include <linux/of_device.h>
+ #include <linux/of.h>
+ #include <linux/platform_device.h>
++#include <linux/property.h>
+ #include <linux/pm_clock.h>
+ #include <linux/pm_domain.h>
+ #include <linux/regmap.h>
+@@ -517,15 +516,12 @@ static const struct platform_device_id davinci_psc_id_table[] = {
+ static int davinci_psc_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+-	const struct of_device_id *of_id;
+ 	const struct davinci_psc_init_data *init_data = NULL;
+ 	void __iomem *base;
  	int ret;
  
- 	if (!dp_aux) {
-@@ -487,12 +486,7 @@ int dp_aux_register(struct drm_dp_aux *dp_aux)
+-	of_id = of_match_device(davinci_psc_of_match, dev);
+-	if (of_id)
+-		init_data = of_id->data;
+-	else if (pdev->id_entry)
++	init_data = device_get_match_data(dev);
++	if (!init_data && pdev->id_entry)
+ 		init_data = (void *)pdev->id_entry->driver_data;
+ 
+ 	if (!init_data) {
+diff --git a/drivers/clk/qcom/gcc-msm8960.c b/drivers/clk/qcom/gcc-msm8960.c
+index dbc7093ab9cc..6236a458e4eb 100644
+--- a/drivers/clk/qcom/gcc-msm8960.c
++++ b/drivers/clk/qcom/gcc-msm8960.c
+@@ -7,9 +7,10 @@
+ #include <linux/bitops.h>
+ #include <linux/err.h>
+ #include <linux/platform_device.h>
++#include <linux/property.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+-#include <linux/of_device.h>
++#include <linux/of_platform.h>
+ #include <linux/clk-provider.h>
+ #include <linux/regmap.h>
+ #include <linux/reset-controller.h>
+@@ -3716,14 +3717,10 @@ MODULE_DEVICE_TABLE(of, gcc_msm8960_match_table);
+ static int gcc_msm8960_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+-	const struct of_device_id *match;
+ 	struct platform_device *tsens;
++	const struct qcom_cc_desc *desc = device_get_match_data(dev);
+ 	int ret;
+ 
+-	match = of_match_device(gcc_msm8960_match_table, &pdev->dev);
+-	if (!match)
+-		return -EINVAL;
+-
+ 	ret = qcom_cc_register_board_clk(dev, "cxo_board", "cxo", 19200000);
+ 	if (ret)
+ 		return ret;
+@@ -3732,11 +3729,11 @@ static int gcc_msm8960_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = qcom_cc_probe(pdev, match->data);
++	ret = qcom_cc_probe(pdev, desc);
+ 	if (ret)
+ 		return ret;
+ 
+-	if (match->data == &gcc_apq8064_desc) {
++	if (desc == &gcc_apq8064_desc) {
+ 		hfpll1.d = &hfpll1_8064_data;
+ 		hfpll_l2.d = &hfpll_l2_8064_data;
+ 	}
+diff --git a/drivers/clk/qcom/gcc-msm8974.c b/drivers/clk/qcom/gcc-msm8974.c
+index 0231c1efd286..b32e66714951 100644
+--- a/drivers/clk/qcom/gcc-msm8974.c
++++ b/drivers/clk/qcom/gcc-msm8974.c
+@@ -7,9 +7,9 @@
+ #include <linux/bitops.h>
+ #include <linux/err.h>
+ #include <linux/platform_device.h>
++#include <linux/property.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+-#include <linux/of_device.h>
+ #include <linux/clk-provider.h>
+ #include <linux/regmap.h>
+ #include <linux/reset-controller.h>
+@@ -2875,14 +2875,10 @@ static int gcc_msm8974_probe(struct platform_device *pdev)
+ {
+ 	int ret;
+ 	struct device *dev = &pdev->dev;
+-	const struct of_device_id *id;
+-
+-	id = of_match_device(gcc_msm8974_match_table, dev);
+-	if (!id)
+-		return -ENODEV;
++	const void *data = device_get_match_data(dev);
+ 
+ 	if (!of_device_is_compatible(dev->of_node, "qcom,gcc-msm8974")) {
+-		if (id->data == &gcc_msm8226_desc)
++		if (data == &gcc_msm8226_desc)
+ 			msm8226_clock_override();
+ 		else
+ 			msm8974_pro_clock_override();
+diff --git a/drivers/clk/qcom/kpss-xcc.c b/drivers/clk/qcom/kpss-xcc.c
+index 97358c98c6c9..23b0b11f0007 100644
+--- a/drivers/clk/qcom/kpss-xcc.c
++++ b/drivers/clk/qcom/kpss-xcc.c
+@@ -5,10 +5,10 @@
+ #include <linux/init.h>
+ #include <linux/module.h>
+ #include <linux/platform_device.h>
++#include <linux/property.h>
+ #include <linux/err.h>
+ #include <linux/io.h>
+ #include <linux/of.h>
+-#include <linux/of_device.h>
+ #include <linux/clk.h>
+ #include <linux/clk-provider.h>
+ 
+@@ -32,20 +32,15 @@ MODULE_DEVICE_TABLE(of, kpss_xcc_match_table);
+ static int kpss_xcc_driver_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+-	const struct of_device_id *id;
+ 	void __iomem *base;
+ 	struct clk_hw *hw;
+ 	const char *name;
+ 
+-	id = of_match_device(kpss_xcc_match_table, dev);
+-	if (!id)
+-		return -ENODEV;
+-
+ 	base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(base))
+ 		return PTR_ERR(base);
+ 
+-	if (id->data) {
++	if (device_get_match_data(&pdev->dev)) {
+ 		if (of_property_read_string_index(dev->of_node,
+ 						  "clock-output-names",
+ 						  0, &name))
+diff --git a/drivers/clk/qcom/krait-cc.c b/drivers/clk/qcom/krait-cc.c
+index 410ae8390f1c..ae325f4e1047 100644
+--- a/drivers/clk/qcom/krait-cc.c
++++ b/drivers/clk/qcom/krait-cc.c
+@@ -5,10 +5,10 @@
+ #include <linux/init.h>
+ #include <linux/module.h>
+ #include <linux/platform_device.h>
++#include <linux/property.h>
+ #include <linux/err.h>
+ #include <linux/io.h>
+ #include <linux/of.h>
+-#include <linux/of_device.h>
+ #include <linux/clk.h>
+ #include <linux/clk-provider.h>
+ #include <linux/slab.h>
+@@ -347,22 +347,18 @@ MODULE_DEVICE_TABLE(of, krait_cc_match_table);
+ static int krait_cc_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+-	const struct of_device_id *id;
+ 	unsigned long cur_rate, aux_rate;
+ 	int cpu;
+ 	struct clk_hw *mux, *l2_pri_mux;
+ 	struct clk *clk, **clks;
+-
+-	id = of_match_device(krait_cc_match_table, dev);
+-	if (!id)
+-		return -ENODEV;
++	bool unique_aux = !!device_get_match_data(dev);
+ 
+ 	/* Rate is 1 because 0 causes problems for __clk_mux_determine_rate */
+ 	clk = clk_register_fixed_rate(dev, "qsb", NULL, 0, 1);
+ 	if (IS_ERR(clk))
+ 		return PTR_ERR(clk);
+ 
+-	if (!id->data) {
++	if (!unique_aux) {
+ 		clk = clk_register_fixed_factor(dev, "acpu_aux",
+ 						"gpll0_vote", 0, 1, 2);
+ 		if (IS_ERR(clk))
+@@ -375,13 +371,13 @@ static int krait_cc_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
+ 
+ 	for_each_possible_cpu(cpu) {
+-		mux = krait_add_clks(dev, cpu, id->data);
++		mux = krait_add_clks(dev, cpu, unique_aux);
+ 		if (IS_ERR(mux))
+ 			return PTR_ERR(mux);
+ 		clks[cpu] = mux->clk;
+ 	}
+ 
+-	l2_pri_mux = krait_add_clks(dev, -1, id->data);
++	l2_pri_mux = krait_add_clks(dev, -1, unique_aux);
+ 	if (IS_ERR(l2_pri_mux))
+ 		return PTR_ERR(l2_pri_mux);
+ 	clks[l2_mux] = l2_pri_mux->clk;
+diff --git a/drivers/clk/qcom/mmcc-msm8960.c b/drivers/clk/qcom/mmcc-msm8960.c
+index 6bf908a51f53..50638ab341ec 100644
+--- a/drivers/clk/qcom/mmcc-msm8960.c
++++ b/drivers/clk/qcom/mmcc-msm8960.c
+@@ -8,9 +8,9 @@
+ #include <linux/err.h>
+ #include <linux/delay.h>
+ #include <linux/platform_device.h>
++#include <linux/property.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+-#include <linux/of_device.h>
+ #include <linux/clk.h>
+ #include <linux/clk-provider.h>
+ #include <linux/regmap.h>
+@@ -3105,30 +3105,24 @@ MODULE_DEVICE_TABLE(of, mmcc_msm8960_match_table);
+ 
+ static int mmcc_msm8960_probe(struct platform_device *pdev)
+ {
+-	const struct of_device_id *match;
+ 	struct regmap *regmap;
+-	bool is_8064;
+ 	struct device *dev = &pdev->dev;
++	const struct qcom_cc_desc *desc = device_get_match_data(dev);
+ 
+-	match = of_match_device(mmcc_msm8960_match_table, dev);
+-	if (!match)
+-		return -EINVAL;
+-
+-	is_8064 = of_device_is_compatible(dev->of_node, "qcom,mmcc-apq8064");
+-	if (is_8064) {
++	if (desc == &mmcc_apq8064_desc) {
+ 		gfx3d_src.freq_tbl = clk_tbl_gfx3d_8064;
+ 		gfx3d_src.clkr.hw.init = &gfx3d_8064_init;
+ 		gfx3d_src.s[0].parent_map = mmcc_pxo_pll8_pll2_pll15_map;
+ 		gfx3d_src.s[1].parent_map = mmcc_pxo_pll8_pll2_pll15_map;
+ 	}
+ 
+-	regmap = qcom_cc_map(pdev, match->data);
++	regmap = qcom_cc_map(pdev, desc);
+ 	if (IS_ERR(regmap))
+ 		return PTR_ERR(regmap);
+ 
+ 	clk_pll_configure_sr(&pll15, regmap, &pll15_config, false);
+ 
+-	return qcom_cc_really_probe(pdev, match->data, regmap);
++	return qcom_cc_really_probe(pdev, desc, regmap);
+ }
+ 
+ static struct platform_driver mmcc_msm8960_driver = {
+diff --git a/drivers/clk/qcom/mmcc-sdm660.c b/drivers/clk/qcom/mmcc-sdm660.c
+index bc19a23e13f8..996bd01fb9ac 100644
+--- a/drivers/clk/qcom/mmcc-sdm660.c
++++ b/drivers/clk/qcom/mmcc-sdm660.c
+@@ -9,9 +9,9 @@
+ #include <linux/bitops.h>
+ #include <linux/err.h>
+ #include <linux/platform_device.h>
++#include <linux/property.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+-#include <linux/of_device.h>
+ #include <linux/clk-provider.h>
+ #include <linux/regmap.h>
+ #include <linux/reset-controller.h>
+@@ -2828,14 +2828,10 @@ static void sdm630_clock_override(void)
+ 
+ static int mmcc_660_probe(struct platform_device *pdev)
+ {
+-	const struct of_device_id *id;
+ 	struct regmap *regmap;
+ 	bool is_sdm630;
+ 
+-	id = of_match_device(mmcc_660_match_table, &pdev->dev);
+-	if (!id)
+-		return -ENODEV;
+-	is_sdm630 = !!(id->data);
++	is_sdm630 = !!device_get_match_data(&pdev->dev);
+ 
+ 	regmap = qcom_cc_map(pdev, &mmcc_660_desc);
+ 	if (IS_ERR(regmap))
+diff --git a/drivers/clk/rockchip/clk-rk3399.c b/drivers/clk/rockchip/clk-rk3399.c
+index 9ebd6c451b3d..9316e5c8a0ea 100644
+--- a/drivers/clk/rockchip/clk-rk3399.c
++++ b/drivers/clk/rockchip/clk-rk3399.c
+@@ -9,8 +9,8 @@
+ #include <linux/io.h>
+ #include <linux/of.h>
+ #include <linux/of_address.h>
+-#include <linux/of_device.h>
+ #include <linux/platform_device.h>
++#include <linux/property.h>
+ #include <linux/regmap.h>
+ #include <dt-bindings/clock/rk3399-cru.h>
+ #include "clk.h"
+@@ -1634,14 +1634,9 @@ static const struct of_device_id clk_rk3399_match_table[] = {
+ static int __init clk_rk3399_probe(struct platform_device *pdev)
+ {
+ 	struct device_node *np = pdev->dev.of_node;
+-	const struct of_device_id *match;
+ 	const struct clk_rk3399_inits *init_data;
+ 
+-	match = of_match_device(clk_rk3399_match_table, &pdev->dev);
+-	if (!match || !match->data)
+-		return -EINVAL;
+-
+-	init_data = match->data;
++	init_data = device_get_match_data(&pdev->dev);
+ 	if (init_data->inits)
+ 		init_data->inits(np);
+ 
+diff --git a/drivers/clk/samsung/clk-exynos-clkout.c b/drivers/clk/samsung/clk-exynos-clkout.c
+index 72b6cf83aff4..3484e6cc80ad 100644
+--- a/drivers/clk/samsung/clk-exynos-clkout.c
++++ b/drivers/clk/samsung/clk-exynos-clkout.c
+@@ -13,9 +13,9 @@
+ #include <linux/io.h>
+ #include <linux/of.h>
+ #include <linux/of_address.h>
+-#include <linux/of_device.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm.h>
++#include <linux/property.h>
+ 
+ #define EXYNOS_CLKOUT_NR_CLKS		1
+ #define EXYNOS_CLKOUT_PARENTS		32
+@@ -84,19 +84,17 @@ MODULE_DEVICE_TABLE(of, exynos_clkout_ids);
+ static int exynos_clkout_match_parent_dev(struct device *dev, u32 *mux_mask)
+ {
+ 	const struct exynos_clkout_variant *variant;
+-	const struct of_device_id *match;
+ 
+ 	if (!dev->parent) {
+ 		dev_err(dev, "not instantiated from MFD\n");
  		return -EINVAL;
  	}
  
--	aux = container_of(dp_aux, struct dp_aux_private, dp_aux);
--
--	aux->dp_aux.name = "dpu_dp_aux";
--	aux->dp_aux.dev = aux->dev;
--	aux->dp_aux.transfer = dp_aux_transfer;
--	ret = drm_dp_aux_register(&aux->dp_aux);
-+	ret = drm_dp_aux_register(dp_aux);
- 	if (ret) {
- 		DRM_ERROR("%s: failed to register drm aux: %d\n", __func__,
- 				ret);
-@@ -507,6 +501,21 @@ void dp_aux_unregister(struct drm_dp_aux *dp_aux)
- 	drm_dp_aux_unregister(dp_aux);
- }
- 
-+static int dp_wait_hpd_asserted(struct drm_dp_aux *dp_aux,
-+				 unsigned long wait_us)
-+{
-+	int ret;
-+	struct dp_aux_private *aux;
-+
-+	aux = container_of(dp_aux, struct dp_aux_private, dp_aux);
-+
-+	pm_runtime_get_sync(aux->dev);
-+	ret = dp_catalog_aux_wait_for_hpd_connect_state(aux->catalog);
-+	pm_runtime_put_sync(aux->dev);
-+
-+	return ret;
-+}
-+
- struct drm_dp_aux *dp_aux_get(struct device *dev, struct dp_catalog *catalog,
- 			      bool is_edp)
- {
-@@ -530,6 +539,17 @@ struct drm_dp_aux *dp_aux_get(struct device *dev, struct dp_catalog *catalog,
- 	aux->catalog = catalog;
- 	aux->retry_cnt = 0;
- 
-+	/*
-+	 * Use the drm_dp_aux_init() to use the aux adapter
-+	 * before registering AUX with the DRM device so that
-+	 * msm eDP panel can be detected by generic_dep_panel_probe().
-+	 */
-+	aux->dp_aux.name = "dpu_dp_aux";
-+	aux->dp_aux.dev = dev;
-+	aux->dp_aux.transfer = dp_aux_transfer;
-+	aux->dp_aux.wait_hpd_asserted = dp_wait_hpd_asserted;
-+	drm_dp_aux_init(&aux->dp_aux);
-+
- 	return &aux->dp_aux;
- }
- 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index c843758..f5ca8ec 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -1206,6 +1206,17 @@ static const struct msm_dp_desc *dp_display_get_desc(struct platform_device *pde
- 	return NULL;
- }
- 
-+static int dp_auxbus_done_probe(struct drm_dp_aux *aux)
-+{
-+	int rc;
-+
-+	rc = component_add(aux->dev, &dp_display_comp_ops);
-+	if (rc)
-+		DRM_ERROR("eDP component add failed, rc=%d\n", rc);
-+
-+	return rc;
-+}
-+
- static int dp_display_probe(struct platform_device *pdev)
- {
- 	int rc = 0;
-@@ -1271,10 +1282,18 @@ static int dp_display_probe(struct platform_device *pdev)
- 	if (rc)
- 		goto err;
- 
--	rc = component_add(&pdev->dev, &dp_display_comp_ops);
--	if (rc) {
--		DRM_ERROR("component add failed, rc=%d\n", rc);
--		goto err;
-+	if (dp->dp_display.is_edp) {
-+		rc = devm_of_dp_aux_populate_bus(dp->aux, dp_auxbus_done_probe);
-+		if (rc) {
-+			DRM_ERROR("eDP auxbus population failed, rc=%d\n", rc);
-+			goto err;
-+		}
-+	} else {
-+		rc = component_add(&pdev->dev, &dp_display_comp_ops);
-+		if (rc) {
-+			DRM_ERROR("component add failed, rc=%d\n", rc);
-+			goto err;
-+		}
+-	match = of_match_device(exynos_clkout_ids, dev->parent);
+-	if (!match) {
++	variant = device_get_match_data(dev->parent);
++	if (!variant) {
+ 		dev_err(dev, "cannot match parent device\n");
+ 		return -EINVAL;
  	}
+-	variant = match->data;
  
- 	return rc;
-@@ -1290,7 +1309,6 @@ static int dp_display_remove(struct platform_device *pdev)
+ 	*mux_mask = variant->mux_mask;
  
- 	component_del(&pdev->dev, &dp_display_comp_ops);
- 	dp_display_deinit_sub_modules(dp);
--
- 	platform_set_drvdata(pdev, NULL);
+diff --git a/drivers/clk/ti/adpll.c b/drivers/clk/ti/adpll.c
+index ff42ea75cb43..6121020b4b38 100644
+--- a/drivers/clk/ti/adpll.c
++++ b/drivers/clk/ti/adpll.c
+@@ -8,7 +8,9 @@
+ #include <linux/io.h>
+ #include <linux/math64.h>
+ #include <linux/module.h>
+-#include <linux/of_device.h>
++#include <linux/of.h>
++#include <linux/platform_device.h>
++#include <linux/property.h>
+ #include <linux/string.h>
  
- 	return 0;
-@@ -1390,29 +1408,8 @@ static int dp_display_get_next_bridge(struct msm_dp *dp)
+ #define ADPLL_PLLSS_MMR_LOCK_OFFSET	0x00	/* Managed by MPPULL */
+@@ -860,24 +862,16 @@ static int ti_adpll_probe(struct platform_device *pdev)
  {
- 	int rc;
- 	struct dp_display_private *dp_priv;
--	struct device_node *aux_bus;
--	struct device *dev;
+ 	struct device_node *node = pdev->dev.of_node;
+ 	struct device *dev = &pdev->dev;
+-	const struct of_device_id *match;
+-	const struct ti_adpll_platform_data *pdata;
+ 	struct ti_adpll_data *d;
+ 	struct resource *res;
+ 	int err;
  
- 	dp_priv = container_of(dp, struct dp_display_private, dp_display);
--	dev = &dp_priv->pdev->dev;
--	aux_bus = of_get_child_by_name(dev->of_node, "aux-bus");
--
--	if (aux_bus && dp->is_edp) {
--		/*
--		 * The code below assumes that the panel will finish probing
--		 * by the time devm_of_dp_aux_populate_ep_devices() returns.
--		 * This isn't a great assumption since it will fail if the
--		 * panel driver is probed asynchronously but is the best we
--		 * can do without a bigger driver reorganization.
--		 */
--		rc = of_dp_aux_populate_bus(dp_priv->aux, NULL);
--		of_node_put(aux_bus);
--		if (rc)
--			goto error;
--	} else if (dp->is_edp) {
--		DRM_ERROR("eDP aux_bus not found\n");
+-	match = of_match_device(ti_adpll_match, dev);
+-	if (match)
+-		pdata = match->data;
+-	else
 -		return -ENODEV;
--	}
- 
- 	/*
- 	 * External bridges are mandatory for eDP interfaces: one has to
-@@ -1425,17 +1422,9 @@ static int dp_display_get_next_bridge(struct msm_dp *dp)
- 	if (!dp->is_edp && rc == -ENODEV)
- 		return 0;
- 
--	if (!rc) {
-+	if (!rc)
- 		dp->next_bridge = dp_priv->parser->next_bridge;
--		return 0;
--	}
- 
--error:
--	if (dp->is_edp) {
--		of_dp_aux_depopulate_bus(dp_priv->aux);
--		dp_display_host_phy_exit(dp_priv);
--		dp_display_host_deinit(dp_priv);
--	}
- 	return rc;
- }
+-
+ 	d = devm_kzalloc(dev, sizeof(*d), GFP_KERNEL);
+ 	if (!d)
+ 		return -ENOMEM;
+ 	d->dev = dev;
+ 	d->np = node;
+-	d->c = pdata;
++	d->c = device_get_match_data(dev);
+ 	dev_set_drvdata(d->dev, d);
+ 	spin_lock_init(&d->lock);
  
 -- 
-2.7.4
+2.40.1
 
