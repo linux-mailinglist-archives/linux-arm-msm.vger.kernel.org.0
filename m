@@ -2,159 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 095F97BB5B4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 12:56:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E6A657BB672
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 13:31:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231820AbjJFKz7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Oct 2023 06:55:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33262 "EHLO
+        id S232006AbjJFLbe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Oct 2023 07:31:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231458AbjJFKz5 (ORCPT
+        with ESMTP id S231147AbjJFLbd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Oct 2023 06:55:57 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B392583;
-        Fri,  6 Oct 2023 03:55:50 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3969brZF000871;
-        Fri, 6 Oct 2023 10:55:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=16WOAwcA//F2X32qWbJ0h5M8hDxQBzrHlKiLEKtagog=;
- b=YGtYwH+dCXSTCb2WZIehATyp3Cw4AM95fmjA8UxvHNexAq0pnUCVZUKSnjVNspKor2Vg
- 15e0F2BptnB+FZyESSQ52stIPHOiazavjs/YZxLl0APjjh/VU7mIeSg5l47pVNFAfSTm
- kO4ebQVQP0c5UsCqjmT8srbz8tWkjB+8x5GCoQubnAsHk3PgnGHvX9Sf98KJigTQAexN
- LPt4Fu+2dMaw2Y+0ceKMK3deUMPlqcYo3SilnTU3LxCSKfoI6b4YBWzdhNuqGMUeOCzO
- 48zgNsJmtH50KXo030AWYcc4faIjphOCPNHwY29PTl3CFT+JofHmIGXJ1gQDhemLEBqY ng== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tj0fphyp9-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 06 Oct 2023 10:55:18 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 396AtHK3032401
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 6 Oct 2023 10:55:17 GMT
-Received: from [10.217.217.202] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Fri, 6 Oct
- 2023 03:55:10 -0700
-Message-ID: <28bf111f-b965-4d38-884b-bc3a0b68a6cc@quicinc.com>
-Date:   Fri, 6 Oct 2023 16:24:59 +0530
+        Fri, 6 Oct 2023 07:31:33 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E47AAC5
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 04:31:31 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2c135cf2459so23792981fa.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 04:31:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1696591890; x=1697196690; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5KXF1BPtCc4Qnp06IeKWmuYEI/cvy2qSDqKPkYcCjtk=;
+        b=yRqVVhGCHPo7a93lWNRQ6gmx62V62HSzpyjAYi8bmBG0BCHdIXpRBKDZpDey5Gpyoz
+         Fg/1nLhEXrds6bAPD1NzVz6ukXJgbUdBDJThGzAZDz736gtLTwBIr9OY7OxELEEe+7bs
+         QENoOhrJRLGJK2j9tTeqih4kKb2quT7o/oX5Iq9ZuNv+bQEf64pftvDePQL8T5HW71p/
+         mNEFFR483hEp29w+aplH8gpUBc+u4KVXpWZ4ZJ7/qfGyb1OWy42KToBk3Qdtbh/IORKa
+         rZuWJz/74EiV54eStElGl6wbPTeYEtjGBHYYyj/5+BUqN2hvNo7Pn0+3lxu9yuYGo8gw
+         JfDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696591890; x=1697196690;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5KXF1BPtCc4Qnp06IeKWmuYEI/cvy2qSDqKPkYcCjtk=;
+        b=Ry+yc65eqmxzvEndXu4SpkmIizUYMuw9o9jXRMFjMy4UWy767zipbU928qrTbn3TCH
+         t86bL/VcJQ2NZ4U2PRe4jN4uEnZwtF8uM/gqgL9bbch7eH2mG9Kyb058pahCKwCDDfB+
+         aCB5SZ7nkAM7VIFbMlVCdwOcbmzucwyQowzECXemOPWK1PBUFwluV2RlX6SjhcxYyYw4
+         GbnFu8qJ4FLQPze65F+qqNxpXxRdzCE24u92c3GyWMETrq5zlEPbwYO5qde8Asq6AC6j
+         8joakotPplHjUWXO2lv8dUF2iY8yJY+ytkSGH2m0SebcfkK6rpOF6ZwixKqu6P7nzkqz
+         ay9w==
+X-Gm-Message-State: AOJu0Yy8tdLeO429AGNEmO/tqNfU+1VKnmXfipvAspdV3Wnrlb01MzMn
+        pZbAC5+8rlMAtpUQZsmYLnyDrQ==
+X-Google-Smtp-Source: AGHT+IFnb4SzgNnqN1744K1drSFI1lxMxH0rmjdh00B4/aRtrjljwPbT5PoXIyoAxOYKsWxiAGDzgA==
+X-Received: by 2002:a2e:96c6:0:b0:2bc:ce85:2de2 with SMTP id d6-20020a2e96c6000000b002bcce852de2mr7283181ljj.37.1696591889169;
+        Fri, 06 Oct 2023 04:31:29 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id r6-20020a2e9946000000b002bce3123639sm743777ljj.98.2023.10.06.04.31.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Oct 2023 04:31:28 -0700 (PDT)
+Message-ID: <f9a97fe6-89d1-40d7-8e13-c756f341bf39@linaro.org>
+Date:   Fri, 6 Oct 2023 14:31:27 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/5] dt-bindings: PCI: qcom-ep: Add support for SA8775P
- SoC
-To:     Rob Herring <robh@kernel.org>,
-        Mrinmay Sarkar <quic_msarkar@quicinc.com>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <konrad.dybcio@linaro.org>, <mani@kernel.org>,
-        <quic_nitegupt@quicinc.com>, <quic_ramkri@quicinc.com>,
-        <quic_nayiluri@quicinc.com>, <quic_krichai@quicinc.com>,
-        <quic_vbadigan@quicinc.com>, <quic_parass@quicinc.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        "Lorenzo Pieralisi" <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, <linux-pci@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <mhi@lists.linux.dev>,
-        <linux-phy@lists.infradead.org>
-References: <1695218113-31198-1-git-send-email-quic_msarkar@quicinc.com>
- <1695218113-31198-2-git-send-email-quic_msarkar@quicinc.com>
- <20230921183850.GA762694-robh@kernel.org>
-Content-Language: en-US
-From:   Shazad Hussain <quic_shazhuss@quicinc.com>
-In-Reply-To: <20230921183850.GA762694-robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Subject: Re: [PATCH v5 1/7] drm/msm/dp: tie dp_display_irq_handler() with dp
+ driver
+Content-Language: en-GB
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, andersson@kernel.org
+Cc:     quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com,
+        quic_sbillaka@quicinc.com, marijn.suijten@somainline.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1696436821-14261-1-git-send-email-quic_khsieh@quicinc.com>
+ <1696436821-14261-2-git-send-email-quic_khsieh@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <1696436821-14261-2-git-send-email-quic_khsieh@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: XJETY3Fy8CUSuy_YoKF88CqC2RiHzOzy
-X-Proofpoint-GUID: XJETY3Fy8CUSuy_YoKF88CqC2RiHzOzy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-06_08,2023-10-06_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
- priorityscore=1501 impostorscore=0 spamscore=0 clxscore=1011
- lowpriorityscore=0 adultscore=0 mlxscore=0 mlxlogscore=934 phishscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310060080
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 9/22/2023 12:08 AM, Rob Herring wrote:
-> On Wed, Sep 20, 2023 at 07:25:08PM +0530, Mrinmay Sarkar wrote:
->> Add devicetree bindings support for SA8775P SoC.
->> Define reg and interrupt per platform.
->>
->> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
->> ---
->>   .../devicetree/bindings/pci/qcom,pcie-ep.yaml      | 130 +++++++++++++++++----
->>   1 file changed, 108 insertions(+), 22 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
->> index a223ce0..e860e8f 100644
->> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
->> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
->> @@ -13,6 +13,7 @@ properties:
->>     compatible:
->>       oneOf:
->>         - enum:
->> +          - qcom,sa8775p-pcie-ep
->>             - qcom,sdx55-pcie-ep
->>             - qcom,sm8450-pcie-ep
->>         - items:
->> @@ -20,29 +21,19 @@ properties:
->>             - const: qcom,sdx55-pcie-ep
->>   
->>     reg:
->> -    items:
->> -      - description: Qualcomm-specific PARF configuration registers
->> -      - description: DesignWare PCIe registers
->> -      - description: External local bus interface registers
->> -      - description: Address Translation Unit (ATU) registers
->> -      - description: Memory region used to map remote RC address space
->> -      - description: BAR memory region
->> +    minItems: 6
->> +    maxItems: 7
->>   
->>     reg-names:
->> -    items:
->> -      - const: parf
->> -      - const: dbi
->> -      - const: elbi
->> -      - const: atu
->> -      - const: addr_space
->> -      - const: mmio
->> +    minItems: 6
->> +    maxItems: 7
+On 04/10/2023 19:26, Kuogee Hsieh wrote:
+> Currently the dp_display_request_irq() is executed at msm_dp_modeset_init()
+> which ties irq registering to the DPU device's life cycle, while depending on
+> resources that are released as the DP device is torn down. Move register DP
+> driver irq handler to dp_display_probe() to have dp_display_irq_handler()
+> IRQ tied with DP device. In addition, use platform_get_irq() to retrieve irq
+> number from platform device directly.
 > 
-> Don't move these into if/then schemas. Then we are duplicating the
-> names, and there is no reason to keep them aligned for new compatibles.
+> Changes in v5:
+> -- reworded commit text as review comments at change #4
+> -- tear down component if failed at dp_display_request_irq()
 > 
-> Rob
+> Changes in v4:
+> -- delete dp->irq check at dp_display_request_irq()
+> 
+> Changes in v3:
+> -- move calling dp_display_irq_handler() to probe
+> 
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/dp/dp_display.c | 32 +++++++++++++-------------------
+>   drivers/gpu/drm/msm/dp/dp_display.h |  1 -
+>   2 files changed, 13 insertions(+), 20 deletions(-)
 
-Hi Rob,
-As we have one extra reg property (dma) required for sa8775p-pcie-ep,
-isn't it expected to be moved in if/then as per number of regs
-required. Anyways we would have duplication of some properties for new
-compatibles where the member numbers differs for a property.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Are you suggesting to add the extra reg property (dma) in the existing 
-reg and reg-names list, and add minItems/maxItems for all compatibles 
-present in this file ?
 
--Shazad
+-- 
+With best wishes
+Dmitry
+
