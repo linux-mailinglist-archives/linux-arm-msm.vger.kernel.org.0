@@ -2,67 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B3D0F7BC2F7
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Oct 2023 01:33:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 604DA7BC305
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Oct 2023 01:43:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233878AbjJFXdx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Oct 2023 19:33:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42914 "EHLO
+        id S233794AbjJFXna (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Oct 2023 19:43:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233754AbjJFXdx (ORCPT
+        with ESMTP id S233648AbjJFXn3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Oct 2023 19:33:53 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8D439F
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 16:33:50 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-50481a0eee7so4645195e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 16:33:50 -0700 (PDT)
+        Fri, 6 Oct 2023 19:43:29 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86111BE
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 16:43:28 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2bff776fe0bso33570181fa.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 16:43:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696635229; x=1697240029; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696635807; x=1697240607; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=pa72JkqvdyerMIx4i9hSaFdLukU2v6g8BtUv9GryEdY=;
-        b=ZPXNbm60u0GwujtnY2wW3g41q8NStWmU4WHzOPZ8wqkyE1RwkUpt1i4SrhIfWAEVP8
-         zlQ9bu7u8BPBGe5pVVfJ6Xz7d3D9UeL0woG5JUOB8aYO9sUm3J1ds5CX4FhC9TwOQBqi
-         x0rt1dvh0pLq+ia/+8I0uwvg6/aP0SOGko6jX0VNGjMO2AT1ArpqoQqrsGkRsix4FWeH
-         Ua1t6hPBRvgRwpjFOzMya05UksjSD19rhBkOOHjGCwG6cVWWuuHf4lD9VT5//Xa0ceoL
-         lX8Cl7fJKpKAB7wvcbsyo8cT590M/XpEziLJ8zQu9J/ra9Hujy0PCXyqi+Tf+mEvWeW0
-         gbpA==
+        bh=Udnrsdga7Lt6ZHJT3xgzhh6kpUlzceS9OuIqPLo71jo=;
+        b=bjJmOF+/Cc7bU/y1JhSkVUzQ7EOowqGXWBMSjkJBR3/wi9Z/hn0+1SuLhYN7kj+Ci2
+         gSCZQd8XHqpnw6HoWi3P61rStRXH6njZb87iUl0wWOVpcYEjj79/6UOUp2ZoKf9xyUQa
+         xH8YsxbqMVcdJ5eGQNv/9kpeC7h+xNyGEy7c90z2eE/Z4mHPOyQmB84pOlYAPgLsZKe3
+         Bs9DABDpFBUAO6hM+dx56MktooihaqVemGq9lqh1f9SHbF8RLg9vA9ytSNM7AGYRwFAK
+         YEoj8qS3OoNxtPszXJfp/HRqH8GUoazNWJGIyiTSx+0aKaqF5s/SXGf0R9VVgYm3gPGX
+         VOYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696635229; x=1697240029;
+        d=1e100.net; s=20230601; t=1696635807; x=1697240607;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pa72JkqvdyerMIx4i9hSaFdLukU2v6g8BtUv9GryEdY=;
-        b=fW5fCUJLxfgLoBWrd9N1nlJplUPA3pTii/tmKFOWCZWf9v0ZZjqG2oQBECNY3LRFGO
-         jN+cXcaY8EAaHGP8s2E8HqwaCFu5Hlp8v7qzNMFRgf3QO/07yZKDvTlhnusPqB+BEsxs
-         R7bbY0HswXVpcjMWywvjQ2tjxxBseqnMMIfluT6uykGfQOGdi962IqZpbheWl/DEVEu9
-         PRVFRAmC3gT7KHtr252+5yV7oZn2g0gn1Ttp/tKSgZjOr9QnQs7SVJP5S/FXG3y8JD/L
-         00IAA2tpXO854/XFEdhY0m+4tNW5GFumhtcbuiS12kJhKSAB/Ju6KduZ3a6JPlTahfEX
-         7Cow==
-X-Gm-Message-State: AOJu0YwbAR8wUL7gCaG0PfLCbazGwSarAfHoyQ64Mx8Qpd7KcrQYBF/C
-        YmraeJplKFVXfrGgfuosk8bv/g==
-X-Google-Smtp-Source: AGHT+IF9yMic69bNVAU3zyM2RZxOUpl5UsHxffjScvMW0oCIDfjL0U7HFi+W2ibgjl8JHSS6o8L/pQ==
-X-Received: by 2002:a05:6512:202d:b0:4fb:8938:48ab with SMTP id s13-20020a056512202d00b004fb893848abmr5210895lfs.16.1696635229012;
-        Fri, 06 Oct 2023 16:33:49 -0700 (PDT)
+        bh=Udnrsdga7Lt6ZHJT3xgzhh6kpUlzceS9OuIqPLo71jo=;
+        b=p8YusTY9w1/fmMqZl+5SXIdvPnzJHIytgxIJt01F8jGcGmrlhhZ1nlEdqeHnKbMiYu
+         0BfV/21sWij4lObPczXzJ1v89/KddzYq3C2tvj/P/ij/Xx17MNECX9P6mirqNP6gewjB
+         NsPHYwcJkY1QL6wtgiuKeqKw1PfEAVDlRIiRXeZQEorP9UaLXv+yqpL26l71MUvFQPR1
+         76H0FjpyhKGYsDKSDCRi5i6Vh0BpTz8qG28EQ5FVXVfq6hK2FjnnjJ9bF2pab9SIkniM
+         IoWKCdlhHB8vFXqzuBXwBUohCpU2Sev/CkWFqXkFxZPMzetnrAVDo/7AX7pjOlk6wN9J
+         onjQ==
+X-Gm-Message-State: AOJu0YxpSjHO4O7VnJq9aWsIDOlmSrxHPi0mzmPhiNt5w2Hypbo7eMVR
+        m2vNQFjKav+1nA3RpEfbe0OVSQ==
+X-Google-Smtp-Source: AGHT+IFNm6POimBbxfQ6AKW5ME67I3mh1BugiJD2TjFUpgdXgwNVpV4jx3AJ6wUAoOzUktremiP2Kg==
+X-Received: by 2002:a2e:8816:0:b0:2bc:db99:1775 with SMTP id x22-20020a2e8816000000b002bcdb991775mr8246099ljh.26.1696635806802;
+        Fri, 06 Oct 2023 16:43:26 -0700 (PDT)
 Received: from [192.168.200.173] (178235177147.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.147])
-        by smtp.gmail.com with ESMTPSA id z6-20020ac24186000000b00502e2ab7118sm473280lfh.50.2023.10.06.16.33.47
+        by smtp.gmail.com with ESMTPSA id q2-20020a2e9682000000b002b9ef00b10csm980621lji.2.2023.10.06.16.43.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Oct 2023 16:33:48 -0700 (PDT)
-Message-ID: <e846215b-faba-4af6-a108-bae9b1deb2be@linaro.org>
-Date:   Sat, 7 Oct 2023 01:33:47 +0200
+        Fri, 06 Oct 2023 16:43:26 -0700 (PDT)
+Message-ID: <abc36c33-bfd9-4451-80ab-a631492044de@linaro.org>
+Date:   Sat, 7 Oct 2023 01:43:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: qcm6490: Add qcm6490 dts file
+Subject: Re: [RFC PATCH 1/2] clk: qcom: implement RCG2 'parked' clock support
 Content-Language: en-US
-To:     Komal Bajaj <quic_kbajaj@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, luca.weiss@fairphone.com
-References: <20231003175456.14774-1-quic_kbajaj@quicinc.com>
- <20231003175456.14774-3-quic_kbajaj@quicinc.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>
+References: <20231004003125.2289613-1-dmitry.baryshkov@linaro.org>
+ <20231004003125.2289613-2-dmitry.baryshkov@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -99,70 +102,34 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231003175456.14774-3-quic_kbajaj@quicinc.com>
+In-Reply-To: <20231004003125.2289613-2-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3.10.2023 19:54, Komal Bajaj wrote:
-> Add qcm6490 devicetree file for QCM6490 SoC and QCM6490 IDP
-> platform. QCM6490 is derived from SC7280 meant for various
-> form factor including IoT.
+On 4.10.2023 02:31, Dmitry Baryshkov wrote:
+> clk_rcg2_shared_ops implements support for the case of the RCG which
+> must not be completely turned off. However its design has one major
+> drawback: it doesn't allow us to properly implement the is_enabled
+> callback, which causes different kinds of misbehaviour from the CCF.
 > 
-> Supported features are, as of now:
-> * Debug UART
-> * eMMC
-> * USB
+> Follow the idea behind clk_regmap_phy_mux_ops and implement the new
+> clk_rcg2_parked_ops. It also targets the clocks which must not be fully
+> switched off (and shared most of the implementation with
+> clk_rcg2_shared_ops). The major difference is that it requires that the
+> parent map doesn't conain the safe (parked) clock source. Instead if the
+> CFG_REG register points to the safe source, the clock is considered to
+> be disabled.
 > 
-> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/Makefile        |   1 +
->  arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 333 +++++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/qcm6490.dtsi    |  94 +++++++
->  3 files changed, 428 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/qcm6490-idp.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/qcm6490.dtsi
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 73c3be0f8872..3a2d9dbaacce 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -82,6 +82,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-sony-xperia-yoshino-maple.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-sony-xperia-yoshino-poplar.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-xiaomi-sagit.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-fairphone-fp5.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-idp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-> new file mode 100644
-> index 000000000000..d81a7810fd5a
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-> @@ -0,0 +1,333 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include <dt-bindings/iio/qcom,spmi-adc7-pmk8350.h>
-> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> +#include "pm7325.dtsi"
-> +#include "pm8350c.dtsi"
-> +#include "pmk8350.dtsi"
-> +#include "qcm6490.dtsi"
-As the kernel robot pointed out, this has clearly not even been
-compile-tested..
+Would the intention here be to replace all usages of _shared_?
 
 Konrad
