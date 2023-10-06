@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EBFE87BB15C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 08:08:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FF7E7BB162
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 08:09:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230150AbjJFGIm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Oct 2023 02:08:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35950 "EHLO
+        id S230163AbjJFGJV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Oct 2023 02:09:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230138AbjJFGIl (ORCPT
+        with ESMTP id S230147AbjJFGJU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Oct 2023 02:08:41 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E213890
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Oct 2023 23:08:39 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-9b2f73e3af3so302450766b.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Oct 2023 23:08:39 -0700 (PDT)
+        Fri, 6 Oct 2023 02:09:20 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7746BE4
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Oct 2023 23:09:18 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-53447d0241eso3181397a12.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Oct 2023 23:09:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696572518; x=1697177318; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696572557; x=1697177357; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=5vFbwc3aQvK87jpuWY7pm+1nX5E8U1Ytf/nqIz1BPRk=;
-        b=ZXem6kZLCn0cUMeT9Igrf2lLGjp3B3t8PDIwKy7Pk0Kjd5QVbCALfs7/D89qnTkz90
-         M92zOTc62QcLAFh2YCkAXc90NB2djBXNht9XXKuKLzV1ptAi7iEst014zcEoVKINagU4
-         N0TsfqTdYA7WRljUV9S5K/UqnW7UgZ+gmwn0fsXRjJNF8/lmle5UcVvZUx0KNREnWMBq
-         aAj2P49IhOrFoh4q1bK/dwPaBs8Epez+kj9g+k1aJCSmUOGr4sjUBXT2XBNXeaw5BHnY
-         uK9TES5na0HEzuPVcqIct20w6LQ3kCkqK9JIG+ydKLXdgA6P23rbZ1tJ8qSbrBiPRDmB
-         fbUg==
+        bh=19QME2bflRaQm5QEZq8rQwwoqsz/+9FXXPsulbeHO+8=;
+        b=ByhaQ/HjAVSobbPNUipxzDyYg9Ec7FhDVDbFv5XxWXoXtEaGj54nh5BkuucvqEcwrE
+         dp3XvRNJ8NjTucTq/2PT8WgFr0BXkgYWYSTjWP4ZWs4vIlGWfn8Xb7r8fzjnqN7MdloM
+         rmJIJtDwL3nqK9iXmW6iREyhNk+m1sI1yMiYvyVGma3RsmiAs5mU2nZ4tSGtWLCUWVP3
+         0277Z6t+/BL7d+GSl/Tvl9WyUYckvPFeobKEtI6LPwmVRkaqfSU2+6LmvUbfTAfmUBPM
+         lX4wlaEJdCWAmMN9KhCroiRHb7YUlreYodx8ZmcE8WNtC9+gsFEs0ycugomVNIltEsf0
+         u0hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696572518; x=1697177318;
+        d=1e100.net; s=20230601; t=1696572557; x=1697177357;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5vFbwc3aQvK87jpuWY7pm+1nX5E8U1Ytf/nqIz1BPRk=;
-        b=ZiDKp4MQXsv2BNJoqlp26RvtiusJvcTtg1wYmHLT8Rp9uH4wJRrIZOwXiEKZ+DUPII
-         KK4WD1VS839R/7dTlzrxjuw8h6+3f2ghyhsuljeXCfzL6CSQkuYiKgAl0s9t2QQ8AAlf
-         4/RJIrmEmozFnU5Lsh2ry/SzAokKakkQuhE22bPHq65cR2CflfsLrWs40/u8HsO5Hqbc
-         rZEzzjM+pFnKENg/eC6fNYoNzSICwNoerXP2exbZfzKuc50cnoCHSICgBG2yD8oyJzcm
-         zpk+Ezu1F5b5hyotcrX76hn+153L05hLmQpbQwGK7nOjoD3AY8XlWLZk/42PAiSR4Qlw
-         KR7Q==
-X-Gm-Message-State: AOJu0Yxk5B+Ug2cOWuc29clCXwQ4wuKFVgOFmELeK/961Gn+fwD8lKZJ
-        CO84iD3ZF4dQEmbBDxZTv2EOGg==
-X-Google-Smtp-Source: AGHT+IGcty9PiVMfqIU+kz1AY7veqhcY/IYvF3GpU4CCu4sropeldCGUgE353T3cXn3LB0IE3hOP5A==
-X-Received: by 2002:a17:906:301a:b0:9a5:b814:8254 with SMTP id 26-20020a170906301a00b009a5b8148254mr6631924ejz.24.1696572517800;
-        Thu, 05 Oct 2023 23:08:37 -0700 (PDT)
+        bh=19QME2bflRaQm5QEZq8rQwwoqsz/+9FXXPsulbeHO+8=;
+        b=tZHUoptT0SiZ5Ma2HOIvDtyg0QFKGzdaaIr3gjsGyDfmbIvik7e5wHANJyMfvC/+z8
+         KjJyPYgHLHP5oHYW8TASZ+c4P56WHlLJYu/tVPs+IeqtuBbSX3MTZ+svKxjymr7MAQUU
+         11Kv9taYl2Fa91tg3XJ/ZF58yWtAOQcG7oJaltCKcktM2euc2nKiP9iQuihLNpoBV1m0
+         Vt5DnVeAaHztmQ8NoUrQWuii6qp9vwYWmqpNrLbHDNONtUYRuNjLJuwpFTPVUzLLbsLO
+         KyyuFtLq73He0GD3TzE138wcZxphSSGaJKgModQk8yGChmKCUF1hhSMiespB10bwf8XE
+         tD2Q==
+X-Gm-Message-State: AOJu0YzLUyccvfjTeJZxZHEoO3wJFpdxNLFnoj0uTWLBcAQcvRXVH4rx
+        fxNxrF9Se64TdKbb5nga44AXSw==
+X-Google-Smtp-Source: AGHT+IH9nZgd6uHyX8XepXcD1ny6grp3D59tk7XxdlQvFNTVA4T3DppQelLM9br+sx8CYKovg9Jy2g==
+X-Received: by 2002:a17:907:2cd5:b0:9b2:7449:c734 with SMTP id hg21-20020a1709072cd500b009b27449c734mr6334358ejc.22.1696572556997;
+        Thu, 05 Oct 2023 23:09:16 -0700 (PDT)
 Received: from [192.168.1.197] (5-157-101-10.dyn.eolo.it. [5.157.101.10])
-        by smtp.gmail.com with ESMTPSA id z11-20020a170906074b00b00988f168811bsm2336410ejb.135.2023.10.05.23.08.36
+        by smtp.gmail.com with ESMTPSA id z11-20020a170906074b00b00988f168811bsm2336410ejb.135.2023.10.05.23.09.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Oct 2023 23:08:37 -0700 (PDT)
-Message-ID: <f5c0563b-65a3-4e1d-b840-188410764490@linaro.org>
-Date:   Fri, 6 Oct 2023 08:08:35 +0200
+        Thu, 05 Oct 2023 23:09:16 -0700 (PDT)
+Message-ID: <723e76ad-8525-4584-bcd1-c2f4800f7a94@linaro.org>
+Date:   Fri, 6 Oct 2023 08:09:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] dt-bindings: pwm: Document the pwm compatible for
- ipq5332 & ipq9574
+Subject: Re: [PATCH 2/4] dt-bindings: mfd: qcom,tcsr: Extend simple-mfd & pwm
+ support for IPQ targets
 Content-Language: en-US
 To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
         andersson@kernel.org, konrad.dybcio@linaro.org, lee@kernel.org,
@@ -65,7 +65,7 @@ To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
         linux-kernel@vger.kernel.org, u.kleine-koenig@pengutronix.de,
         linux-pwm@vger.kernel.org
 References: <20231006045317.1056625-1-quic_devipriy@quicinc.com>
- <20231006045317.1056625-2-quic_devipriy@quicinc.com>
+ <20231006045317.1056625-3-quic_devipriy@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -111,12 +111,13 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231006045317.1056625-2-quic_devipriy@quicinc.com>
+In-Reply-To: <20231006045317.1056625-3-quic_devipriy@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -124,13 +125,11 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 06/10/2023 06:53, Devi Priya wrote:
-> Use ipq6018 as the fallback for ipq5332 & ipq9574 and document its compatibles.
+> Extend simple-mfd and pwm support for IPQ5332 & IPQ9574 SoCs.
 > 
 > Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
 > ---
->  .../devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml        | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
-> 
+
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
