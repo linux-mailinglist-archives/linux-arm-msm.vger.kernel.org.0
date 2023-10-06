@@ -2,69 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3966B7BC0F8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 23:08:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 12AD17BC0FE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 23:11:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233648AbjJFVIq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Oct 2023 17:08:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60194 "EHLO
+        id S233587AbjJFVLz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Oct 2023 17:11:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233646AbjJFVIp (ORCPT
+        with ESMTP id S233534AbjJFVLy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Oct 2023 17:08:45 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E254BBD
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 14:08:43 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-9b29186e20aso454517966b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 14:08:43 -0700 (PDT)
+        Fri, 6 Oct 2023 17:11:54 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D659BE
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 14:11:53 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2b9d07a8d84so31689391fa.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 14:11:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696626522; x=1697231322; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=/eZ+baChX62/XFQYAtL7KxuFGmIsac+98wOC92qP+Vo=;
-        b=AVelWM3G8DTl1US9TwU+M/f0KazfVUqFLqm3qI93zxfY4qIasxISJmPzoonMYtx4Zw
-         3V+AbPM7zL3MA8QS+JjqQGNmBW4EbKvfm0JGAHlGz2v94YpH8ERwJdfurFWXA0EJBijf
-         vCmVLaKEOX4uQ5yUSMp9IsWfjkTcNPUF4DaSklELH5jX0wuR31bXXd9+8BoRQsYVVnCW
-         YP3jQmLe7xn5fqL0PQPyjcr/NUtvgZG369vGFbjkdocLhnzugi/0ZE75WG8S8OpZF6nI
-         Rdu5p+5QIwLC0aN1i0jAnxSci3/Jm/p61m51Ed5Ck5CDSfOOyt/5joFfmb2rn5No5L1D
-         cGoQ==
+        d=linaro.org; s=google; t=1696626711; x=1697231511; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+mtIQs92L5Wk31EKsK+xNGb3G5c+wYVuR2u3blviMog=;
+        b=B7KXEkt6AyrIk0OInRo//f+sg/9srl1ZG5JccOyRtqzaI1f/c1HiOY5bQvl3exFeH1
+         JChygW7zVaR2Nf7GSfqrp1ztjgjapHhO5gA/BYO1+IINXfKcjC1MzQ4LmLJEm3lBRjVs
+         0uca2C9oX5H8zan4/EAHUrMwuerO3DHZGyHBFC85ir9r+i4b0HgnKgFvGqP2vJc3lS4Z
+         A7LSVoosnL0UrNutidggocZaTt/ZydYdD4sh5OgCjGpL7wf+NwC8hpcf+iVeP9Ra0erO
+         ey1FKu+INclI6f0mxH5SM9wLmaobXItyya0gaTQ3CnBUK/39MwJg3IrXdcZwUgZF17vo
+         a/TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696626522; x=1697231322;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/eZ+baChX62/XFQYAtL7KxuFGmIsac+98wOC92qP+Vo=;
-        b=FYjIte2OjL3K3HJPbCuGtgD6n8vnyYlg3sCn3viDEqefjVeJzkceYEWEQvaU8flb2B
-         Dz0EWdJGT4nOdRraAb8U5xOC6stoYhml7pFoXk+Iw661EKfydJ3f4IVlah7Mb2rSAXWY
-         UlBHf1W96Fss0/POmqRMOsOCsEjv6DZcqbCdmLPgvm5BEfaVgo/ocoVp4L93Z7QSD7B/
-         5xE83xITultk80OHyFzHZvivKjyVV4XRlNDbybMaEUEZI13R0KwXfnzcAeXJA01Q+6Or
-         owAOR2Y8f9RdgBmHdie0X5vupg3DsRhUxg5Ek6NTjVOz98xADHm3gMAd70dFYDkKhcq4
-         f6PQ==
-X-Gm-Message-State: AOJu0YzzY9qgHzjguee5FCpyf05icG2I/rsScDg9YEcbXLIUNhTwcxQK
-        UgrbgXqz0Ws3TboLWqWpu4EW3FdZnNPBvZlXTGQ=
-X-Google-Smtp-Source: AGHT+IG8Yms6t5wo23tONA1+PCuYA6/OoOa7XwEE5xoFjtOeUUmAYpssGeokoXvEAN23wjKXUB8KHw==
-X-Received: by 2002:a17:906:535e:b0:9ae:42da:803c with SMTP id j30-20020a170906535e00b009ae42da803cmr7412194ejo.48.1696626522211;
-        Fri, 06 Oct 2023 14:08:42 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1696626711; x=1697231511;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+mtIQs92L5Wk31EKsK+xNGb3G5c+wYVuR2u3blviMog=;
+        b=okP643muk67lK+o3+Latai5L/K+nh9QWPyeKziGcRR4AGwlBvkPUTOWEvHtWC7oNK1
+         Ys8iUiiYet8INQ9M8Dij0d6WfOMWzo7o+SDvFpsohl3FXF0XNB5QwW6VQuYhr4hsomOS
+         03ZWlJfuvG3zJfEuR5/q67hRLk6m5psiRp9NxbE4Isx0iD6+siEU+fLtqwHvJwh4Z6T0
+         WopUC4QmUSevDalWc9NCCok+vPsScStVgS+BgrWQfKkbClNKvQnOxZ5VVgDdjE219KJl
+         vIjT+VBLCtB5Pr6mnH9zQrCR4Ezxe9EvFWBU0lAtRt4qe957sidG0iFyQOtZYCzYuh9H
+         t1bw==
+X-Gm-Message-State: AOJu0YybG3C++nmAOUmvWmFbSPFhg54H2rMEex4eYuddk6h8sZPcJCEV
+        obqylG73wpWzo7eJS3wW6rd5WsVkJMYWrxadkUY=
+X-Google-Smtp-Source: AGHT+IFL69SO2l1xyAyTIwulLcXZAuAdP65Ry6oh3AErOFZHRz3jQ3SObXxmcFkmLuqMsktrVDPfUQ==
+X-Received: by 2002:a05:6512:34c8:b0:503:3913:c2c9 with SMTP id w8-20020a05651234c800b005033913c2c9mr7265743lfr.40.1696626711118;
+        Fri, 06 Oct 2023 14:11:51 -0700 (PDT)
 Received: from [192.168.200.140] (178235177147.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.147])
-        by smtp.gmail.com with ESMTPSA id p11-20020a1709061b4b00b0097404f4a124sm3450228ejg.2.2023.10.06.14.08.40
+        by smtp.gmail.com with ESMTPSA id l21-20020ac24315000000b00500a4679148sm440802lfh.20.2023.10.06.14.11.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Oct 2023 14:08:41 -0700 (PDT)
-Message-ID: <bc8fa799-aa64-4b69-97ce-8f1872c8eb11@linaro.org>
-Date:   Fri, 6 Oct 2023 23:08:39 +0200
+        Fri, 06 Oct 2023 14:11:50 -0700 (PDT)
+Message-ID: <9b78cab5-d72f-469a-816d-6b3f86aecada@linaro.org>
+Date:   Fri, 6 Oct 2023 23:11:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] clk: qcom: smd: Disable unused clocks
-To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Stephan Gerhold <stephan@gerhold.net>
-References: <20231004-clk-qcom-smd-rpm-unused-v2-1-9a5281f324dc@kernkonzept.com>
+Subject: Re: [PATCH RFC 1/2] regulator: core: Disable unused regulators with
+ unknown status
 Content-Language: en-US
+To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Mark Brown <broonie@kernel.org>
+Cc:     Liam Girdwood <lgirdwood@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Stephan Gerhold <stephan@gerhold.net>
+References: <20231004-reg-smd-unused-v1-0-5d682493d555@kernkonzept.com>
+ <20231004-reg-smd-unused-v1-1-5d682493d555@kernkonzept.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -101,7 +102,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231004-clk-qcom-smd-rpm-unused-v2-1-9a5281f324dc@kernkonzept.com>
+In-Reply-To: <20231004-reg-smd-unused-v1-1-5d682493d555@kernkonzept.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -113,47 +114,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4.10.2023 14:10, Stephan Gerhold wrote:
-> At the moment, clk-smd-rpm forces all clocks on at probe time (for
-> "handoff"). However, it does not make the clk core aware of that.
+On 4.10.2023 16:17, Stephan Gerhold wrote:
+> Some regulator drivers do not provide a way to check if the regulator is
+> currently enabled or not. That does not necessarily mean that the
+> regulator is always-on. For example, the regulators managed by the RPM
+> firmware on Qualcomm platforms can be either on or off during boot but
+> the initial state is not known. To sync the state the regulator should
+> get either explicitly enabled or explicitly disabled.
 > 
-> This means that the clocks stay enabled forever if they are not used
-> by anything. We can easily disable them again after bootup has been
-> completed, by making the clk core aware of the state. This is
-> implemented by returning the current state of the clock in
-> is_prepared().
+> Enabling all regulators unconditionally is not safe, because we might
+> not know which voltages are safe. The devices supplied by those
+> regulators might also require a special power-up sequence where the
+> regulators are turned on in a certain order or with specific delay.
 > 
-> Checking the SPMI clock registers reveals that this allows the RPM to
-> disable unused BB/RF clocks. This reduces the power consumption quite
-> significantly and is also needed to allow entering low-power states.
+> Disabling all unused regulators is safer. If the regulator is already
+> off it will just stay that way. If the regulator is on, disabling it
+> explicitly allows the firmware to turn it off for reduced power
+> consumption.
 > 
-> As of commit d6edc31f3a68 ("clk: qcom: smd-rpm: Separate out
-> interconnect bus clocks") the interconnect-related clocks are no longer
-> managed/exposed by clk-smd-rpm. Also the BI_TCXO_AO clock is now
-> critical (and never disabled).
+> The regulator core already has functionality for disabling unused
+> regulators. However, at the moment it assumes that all regulators where
+> the .is_enabled() callback fails are actually off. There is no way to
+> return a special value for the "unknown" state to explicitly ask for
+> disabling those regulators.
 > 
-> There is still a slight chance that this change will break boot on some
-> devices. However, this will be most likely caused by actual mistakes in
-> the device tree (where required clocks were not actually specified).
-Precisely this, and solely as a consequence of the interconnect driver
-not covering all the required clocks (usually named GCC_SOME_NOC_XYZ_CLK,
-but there's quite a lot more).
+> Some drivers (e.g. qcom-rpmh-regulator.c) return -EINVAL for the case
+> where the initial status is unknown. Use that return code to assume the
+> initial status is unknown and try to explicitly disable the regulator
+> in that case.
+> 
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+> ---
+> Instead of -EINVAL we could also use a different return code to indicate
+> the initial status is unknown. Or maybe there is some other option that
+> would be easier? This is working for me but I'm sending it as RFC to get
+> more feedback. :)
+-EOPNOTSUPP for "doesn't support getting is_enabled state"?
 
-For platforms without an interconnect driver, breaking stuff this **MOST
-LIKELY** means that Linux uses some hw that isn't voted for (e.g. missing
-crypto clock under scm or something).
+I think this looks really good.. And will definitely help finding
+power hogs!
 
-For those with an interconnect driver, this will uncover issues that were
-previously hidden because of the smd-rpm interconnect being essentially
-broken for most of its existence. I can smell 660 breaking from however
-many miles you are away from me, but it's "good", as we were relying on
-(board specific) magic..
-
-I've been carrying an equivalent patch in my tree for over half a year now
-and IIRC 8996 was mostly fine. It's also a good idea to test suspend
-(echo mem > /sys/power/state) and wakeup.
-
-For reasons that I don't fully recall, I do have both .is_prepared and
-.is_enabled though..
+At the cost of breaking booting with broken DTs. But as the name by
+which I referred to them suggests, this was never really destined to
+work..
 
 Konrad
