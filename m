@@ -2,95 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C9C047BB81B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 14:53:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BB6E7BB8B3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 15:14:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231334AbjJFMxB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Oct 2023 08:53:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45142 "EHLO
+        id S232310AbjJFNO5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Oct 2023 09:14:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231817AbjJFMxB (ORCPT
+        with ESMTP id S232159AbjJFNO4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Oct 2023 08:53:01 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A54BFDB
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 05:52:57 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-9b29186e20aso366581566b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 05:52:57 -0700 (PDT)
+        Fri, 6 Oct 2023 09:14:56 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B259283
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 06:14:53 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-5043a01ee20so2629346e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 06:14:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20230601.gappssmtp.com; s=20230601; t=1696596776; x=1697201576; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Cwqsii98peqhVJoK4VIxWSTkPTgnYf80VbctBQv6Fvc=;
-        b=jaUK7riIqOMdRoc+PAPVEDMON96UZ3HLUoJNze+qNwyAvLubc0n7Hgjbg2/ESsb2mQ
-         KerW+rI5tdfxN06MYBjjYn/5YQ62/gtAZXsews/genGsUFhPU7ZwsH2JKaFcMe6V4nW3
-         tXRoGlBaOSa0/ubXCGXZEX8S6lz62q3g0Eh9Q815Y08pEYe4Mjz83M448XkTiQsK2GMJ
-         UpaJsEK1ARRoDzTf/CtRc3CwG/mUn//qm+FSLXDAwIg25psVmDAlbHoko3N5ijHcDI7B
-         jpoiQM7W3Sdh6FYDRRgUleu6vqWVsvVDflMWlw8SYMfxiwtg8q3zG66rZfPfem9oXhi3
-         d02A==
+        d=linaro.org; s=google; t=1696598092; x=1697202892; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=itYPcSWRtAATpzEiTYMgzBqAA5lAMODL1AvBzjtdwpA=;
+        b=dqfRHcPFwA+8RJhStz9wKnOSal33rJRhkPeeI83r/iUNXxWUh8qaQ1ILA9UdSkw5px
+         1K4Ur37dDJan3OY/92Vv5i7rbihTn1ZwwMyiTHWsxrMS6222rOb6Qh4QPkV5QLb3w86l
+         ek2b+gMxvYIB7J+X9/gBQVzjzVBIs9bQb6eFTaM3KVI3Slj66cg718fOQxeccs+wNpec
+         MFh/W9fBsgB5fC4jwE7g+65mhRBKkEwfYNtywl5kF0acuIvZdFccnH6rO5Epq+h9Jia+
+         Ichhy8tgAMDAbFgbxeyBY55Vew17iVUvnPOUEReKlTIBq+eMfLZV0CI6suaxk1blG5ki
+         B5Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696596776; x=1697201576;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Cwqsii98peqhVJoK4VIxWSTkPTgnYf80VbctBQv6Fvc=;
-        b=RR6ffhNxHPurp6OhLYC8uIalUrNtPzUU/VSDrxuN2RijQOhZkDy4T209ryMxf1ERED
-         5K5WvikYQy42O98iQFD1ZqZ7qsgpcXc9ZmJys8HQvfHbnj03yryz1Ff7eJuuCSeALErn
-         Uxc5rctwlK1VoLBPytYhkJ4JVXV+7LXuNZ/lCbNADVUnlSv4tnJbZ4FXopg8RWuQBaYN
-         /vv8FENQZTHIRRg7J9FmbptDM6SAOuRy8p8YT6b67UTtaaQH7euNoGDqm7B8jFWB4kxq
-         /tb3puIbzJR3B9jjt4MMHquOjUmakXAOwog3pary+ASqeAprvzGyItryEdqrh8YvzTWJ
-         eQRw==
-X-Gm-Message-State: AOJu0YwWO+Qci8l6RMIH9ZFQYEore8m/+YuMNfRPqayNIOJqBUPRkfT6
-        Ch8zsMYG+BbHuS66QJ27jXvzbA==
-X-Google-Smtp-Source: AGHT+IFB2jTPlqF+QJCHbtvihw8H2Qw/ZlMn8tXyBNhZ+xQvO86DXco10Nkex1qT7Hqi67YGHbT0cw==
-X-Received: by 2002:a17:907:77c7:b0:9ae:1872:d01a with SMTP id kz7-20020a17090777c700b009ae1872d01amr6510332ejc.76.1696596775820;
-        Fri, 06 Oct 2023 05:52:55 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id l1-20020a5d4bc1000000b00323287186b2sm1607954wrt.29.2023.10.06.05.52.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Oct 2023 05:52:55 -0700 (PDT)
-Message-ID: <661e3701-9a26-451a-8851-f1d1b2355f80@nexus-software.ie>
-Date:   Fri, 6 Oct 2023 13:52:54 +0100
+        d=1e100.net; s=20230601; t=1696598092; x=1697202892;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=itYPcSWRtAATpzEiTYMgzBqAA5lAMODL1AvBzjtdwpA=;
+        b=mMic6bFeFqJNl4azfnlHzMrKA75dut9CbtE7KrYPOmLfHJ4Np9e3CNdBSE+7ylcFzM
+         K6j5OjQE3nwliD0jVhR4UxHjzPBNkrW7/2562M+jo22hAb9z+rwqK54VRdzUmPBE2ia+
+         lV2nGH46tyBUfyoLPYO/y+sy+xC2oYHJE/VaajIlzIdEvOMJf8M5AVARrkZGI256JfHj
+         HJyOA0uOrRDvUa7A/l+c9uyAB3+5laMCf1fVSMArt4oxHEIzS9GRgi9PpDhbQmjtHbS+
+         +DyYKqXd3ba26ZC7OyoGAnL8qIKg0IPAhDYB8kfclsbkjM2zV5ERgfghCLJ7qN5r0erl
+         s1tA==
+X-Gm-Message-State: AOJu0Yzcs3siyduKjTL+l6EaST/O9lQP3fpMI2Rvp7Q/T6vZI8pz+Fq8
+        fulZpPxY+9CVEVI6JQn82si9iw==
+X-Google-Smtp-Source: AGHT+IHbq76vq4MURTNm9Y5LCqyAQE07bF27ciPppI8aHjPFl4y5DPbVytYX/AkjdLIJxDGOFvlztg==
+X-Received: by 2002:ac2:4e6a:0:b0:501:c779:b3bb with SMTP id y10-20020ac24e6a000000b00501c779b3bbmr6332687lfs.60.1696598091881;
+        Fri, 06 Oct 2023 06:14:51 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id g9-20020a19ee09000000b004fbb011c9bcsm301285lfb.161.2023.10.06.06.14.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Oct 2023 06:14:51 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v6 00/10] drm/msm/dpu: simplify DPU sub-blocks info
+Date:   Fri,  6 Oct 2023 16:14:40 +0300
+Message-Id: <20231006131450.2436688-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] media: dt-bindings: media: camss: Add
- qcom,sc8280xp-camss binding
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        loic.poulain@linaro.org, rfoss@kernel.org, andi.shyti@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, todor.too@gmail.com, mchehab@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20231006120159.3413789-1-bryan.odonoghue@linaro.org>
- <20231006120159.3413789-5-bryan.odonoghue@linaro.org>
- <ace84d7f-d332-4598-a95d-634c1d17f852@linaro.org>
-From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <ace84d7f-d332-4598-a95d-634c1d17f852@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/10/2023 13:33, Krzysztof Kozlowski wrote:
->> +      port@3:
->> +        $ref: /schemas/graph.yaml#/$defs/port-base
->> +        unevaluatedProperties: false
->> +        description:
->> +          Input port for receiving CSI data.
-> No output ports to some ISP?
+The handling code also usually knows, which sub-block it is now looking
+at. Drop unused 'id' field and arguments and merge some of sub-block
+declarations.
 
-Not for the moment anyway. Its a raw dump of bayer data to userspace.
+While we are at it, also fix all VIG subblocks to contain correct scaler
+block version and drop the becoming unused QSEED-related feature bits.
 
----
-bod
+Changes since v5:
+- Fixed the rogue vig_qseed3_noscale sblk. There is no qseed3 in the
+  noscale VIG blocks.
+
+Changes since v4:
+- Renamed dpu_vig_sblk_x_y to dpu_vig_sblk_qseed3_1_2 (Abhinav)
+  Note: I've choosen _qseed3_ instead of the suggested _scaler_, as
+  there are other scaler types which might have their own versioning
+  scheme
+- Dropped the DPU_SSPP_SCALER and DPU_SSPP_CSC_ANY defines (Abhinav)
+
+Changes since v3:
+- Proprely describe dpu_scaler_blk::version field as the register value
+  (Marijn)
+- Picked up Marijn's prior art patches (sorry, missed them while
+  preparing v3) (Marijn)
+
+Changes since v2:
+- Reworked the VIG SBLK definitions to set the scaler version (Marijn,
+  Abhinav)
+- Rebased the reset of the patches on top of this (intrusive) change.
+- Folded QSEED3LITE and QSEED4 feature bits into QSEED3
+
+Dmitry Baryshkov (8):
+  drm/msm/dpu: populate SSPP scaler block version
+  drm/msm/dpu: drop the `id' field from DPU_HW_SUBBLK_INFO
+  drm/msm/dpu: drop the `smart_dma_priority' field from struct
+    dpu_sspp_sub_blks
+  drm/msm/dpu: deduplicate some (most) of SSPP sub-blocks
+  drm/msm/dpu: drop DPU_HW_SUBBLK_INFO macro
+  drm/msm/dpu: rewrite scaler and CSC presense checks
+  drm/msm/dpu: merge DPU_SSPP_SCALER_QSEED3, QSEED3LITE, QSEED4
+  drm/msm/gpu: drop duplicating VIG feature masks
+
+Marijn Suijten (2):
+  drm/msm/dpu: Drop unused get_scaler_ver callback from SSPP
+  drm/msm/dpu: Drop unused qseed_type from catalog dpu_caps
+
+ .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   |  17 +-
+ .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    |  17 +-
+ .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    |  17 +-
+ .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |  17 +-
+ .../msm/disp/dpu1/catalog/dpu_5_4_sm6125.h    |   8 +-
+ .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    |  25 ++-
+ .../msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    |  11 +-
+ .../msm/disp/dpu1/catalog/dpu_6_3_sm6115.h    |   7 +-
+ .../msm/disp/dpu1/catalog/dpu_6_4_sm6350.h    |  11 +-
+ .../msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h   |   4 +-
+ .../msm/disp/dpu1/catalog/dpu_6_9_sm6375.h    |   7 +-
+ .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |  25 ++-
+ .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    |   9 +-
+ .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  |  25 ++-
+ .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  25 ++-
+ .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  29 ++--
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 145 +++++++-----------
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  55 +++----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c   |  20 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h   |  21 ---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c   |   6 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h   |   3 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     |   7 +-
+ 23 files changed, 201 insertions(+), 310 deletions(-)
+
+-- 
+2.39.2
+
