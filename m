@@ -2,74 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BFB07BC30C
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Oct 2023 01:46:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C26367BC310
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Oct 2023 01:47:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233897AbjJFXqF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Oct 2023 19:46:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36482 "EHLO
+        id S233754AbjJFXru (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Oct 2023 19:47:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233861AbjJFXqB (ORCPT
+        with ESMTP id S231381AbjJFXrt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Oct 2023 19:46:01 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76450BD
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 16:45:59 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2c038a1e2e6so31151851fa.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 16:45:59 -0700 (PDT)
+        Fri, 6 Oct 2023 19:47:49 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22DF9C2
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 16:47:47 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-4053c6f0db8so24052195e9.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 16:47:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696635958; x=1697240758; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696636065; x=1697240865; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=rvelsamPvTxHOBaQ+6PwUaQ1Qg42PthwNqUIdGwRmec=;
-        b=yafTray5yDq6S2ktDnDvRPELPpPUNCqZyrG/hmxPCx/OUzDZy2d9mCfi6piGpQVj5p
-         eBe2DtmLGLhQZ7+DP1/nck3i3BvTHtSOYn6E2nCFOqhDnPxnlKqodZ/NsNb3R4yRGM7g
-         EFJyXnHOnRNpPyjNdD2rrLQrPMA2qiZnZUMcrksseVABdFqMoR8omoERaNhRFnLEFF1p
-         H0hn1GnTz/0R8V60zFeZCPjUFXEcGyfpZOHzySmu9v2w6u/zBO90D60OboIW/+XI6/ot
-         y8WHI0Sxw6w+0aHqjFEfUhhWucW2xamx29Y36CTYyLTi40cQFe0ZuxJIQeCmBQu4yX4W
-         36/w==
+        bh=XjGK0/6qgtKOqmSnRUWSkBW57qXKO6wGZP23q42Isck=;
+        b=r8pQsvcsmW4f41SJoVGoUtvSUSw0AXMUb8bx1Vw1g5ABYgP7bXY6nD1Lxcoq/0XqwQ
+         uFUVvmmiatFINpp4Cuf4oSTZdjjyqT6ftsbkUrw8GkonqaMLBr53fl+oE5NgIKc8NcfI
+         bZ2hS7HPsPCR68PwiiD8ik/XJb5lscLaYyAQzBfcCC+6x60Ipj6ZUHrj+zVHvOz83Aoo
+         p3HEDhWcudX91eLU6GQMEFaBckBFDccmOvVz/O/3D6vZ4cmG+bCXyXhdiwCtLNIo0QQe
+         TmGFBlu0t3gDIvYV6j2NElYD8hluO97NBJJB0GIxndXFWx5cyamV5cjLRSuOIDobmCpK
+         8edw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696635958; x=1697240758;
+        d=1e100.net; s=20230601; t=1696636065; x=1697240865;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rvelsamPvTxHOBaQ+6PwUaQ1Qg42PthwNqUIdGwRmec=;
-        b=QJ+LBJHrzYcvCb63m/DCa2tV6M4soZSPVfVpk9v0v2wiqXLy/kaNUuPnI/JChBEx2n
-         zCpNihR+ClbBKFSkhZYBJM9/R7jLQblZu1pNrshhO/cFFCKn8vOi/Xdoc+9r/kGIqahe
-         QoCzhG29ZKm5dSrWAc4Pn1H0JeI/PPzjolxzxhnj0zoAYfhbj1+ON1PKEwiRKco9QKq7
-         HwzjrmF2UvAREoH2brUYgIl8aXG0DkcAo48DGilSLhywt6uzRdYpqS7K7Wq44vMqnu3Q
-         axtjEqxaNirfV4zOtaujPVeVR4toGfVKk+dg64pW8B7nmhlAWPqp7K0XYNOiJ/DwRuzP
-         a/Ug==
-X-Gm-Message-State: AOJu0YxyzNVDtVBmIAmY6YZg9HZLFKjz288Sv5BdgO/FH1KsTRcpYJNn
-        mO8/HhV8mU6ohPM5d0Ap/vkPhA==
-X-Google-Smtp-Source: AGHT+IEOCKgJL1qXywn2BuU9lbIJOiEjNMxQKYK7ZaGD8BuwIfJdzhbeeoXSG95n92rY5lguCXZOAw==
-X-Received: by 2002:a2e:9f08:0:b0:2c0:300a:82ed with SMTP id u8-20020a2e9f08000000b002c0300a82edmr7787668ljk.7.1696635957713;
-        Fri, 06 Oct 2023 16:45:57 -0700 (PDT)
+        bh=XjGK0/6qgtKOqmSnRUWSkBW57qXKO6wGZP23q42Isck=;
+        b=u88DSUHP3Gusl0Nr6hOm9xOpHg2j87diEvwyvzOa3ovzpGhKwQhMVMyHJnry+ngp1Z
+         GVoNTFcRRo7ryNKEBL56BdGwjjE5GnOPFiBul7kdxsrfZqs2fFLD4wyXB0LeMCywILpR
+         vwCArM0fpZKYbeVzhQSacJP+uX/4ATLmhPyYxLFRToOF1iYrKjtKl6OEzCt5ncCRLgLp
+         qxDl9GdzN11/CEnF3YgoufYs95ccCQiOmPdtdSkY+hCaegNu6Uj2u6hp0vQGkpGGnSx8
+         tU28LQ0qKSoaklCxaSQEZI4FvOXjI0y9Q8m0WQr86nqM7UZZUbyFHFbjgo7tvBRncqFq
+         wEhg==
+X-Gm-Message-State: AOJu0YxRjLSHdgMCePUXRTL1wFJpDhSmJdnv8qR1gtvjlrcHFF2xg1As
+        XYug8mcdM98+4xZ2kRQ0HsEqjQ==
+X-Google-Smtp-Source: AGHT+IGClN/2krp5lfgxqpF0EZe557a6/RY6T3XZ1telHabNqYg3yLAf1JuScCUqZ/MwBWu6WQdkMw==
+X-Received: by 2002:a5d:6311:0:b0:320:4cf:5b50 with SMTP id i17-20020a5d6311000000b0032004cf5b50mr8499282wru.5.1696636064916;
+        Fri, 06 Oct 2023 16:47:44 -0700 (PDT)
 Received: from [192.168.200.173] (178235177147.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.147])
-        by smtp.gmail.com with ESMTPSA id l16-20020a2ea310000000b002b6ce8b0dd6sm976572lje.75.2023.10.06.16.45.55
+        by smtp.gmail.com with ESMTPSA id 1-20020a05651c00c100b002bfec05a693sm981733ljr.22.2023.10.06.16.47.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Oct 2023 16:45:57 -0700 (PDT)
-Message-ID: <55293371-9d7c-404b-a969-81248bf55e24@linaro.org>
-Date:   Sat, 7 Oct 2023 01:45:55 +0200
+        Fri, 06 Oct 2023 16:47:44 -0700 (PDT)
+Message-ID: <56db233f-1488-4725-9253-b4d6246fd5b7@linaro.org>
+Date:   Sat, 7 Oct 2023 01:47:42 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/2] clk: qcom: implement RCG2 'parked' clock support
+Subject: Re: [PATCH v3 3/3] clk: qcom: add SM8550 DISPCC driver
 Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
+To:     neil.armstrong@linaro.org, Sophon Wu <wuxilin123@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>, andersson@kernel.org,
+        devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>
-References: <20231004003125.2289613-1-dmitry.baryshkov@linaro.org>
- <20231004003125.2289613-2-dmitry.baryshkov@linaro.org>
- <f129633e-4df7-4984-a19e-c16e6c7c8f3f@linaro.org>
- <CAA8EJprGfS5x89FOWhjPCdLzSNbEK-U1h8qVmfiLc6+4NjEiNA@mail.gmail.com>
- <e96499ff-76ec-482b-b18c-ee293259b8a7@linaro.org>
+        linux-kernel@vger.kernel.org, mturquette@baylibre.com,
+        Rob Herring <robh+dt@kernel.org>, sboyd@kernel.org
+References: <CAEPPPKu=yxS6SgdLZiuhbF2DRURKVUBNgNbUQ96LxHHbtsJ6Sg@mail.gmail.com>
+ <c6a974ce-511c-47f8-b6cb-baeec5283af9@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -106,7 +101,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <e96499ff-76ec-482b-b18c-ee293259b8a7@linaro.org>
+In-Reply-To: <c6a974ce-511c-47f8-b6cb-baeec5283af9@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -119,47 +114,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4.10.2023 14:52, Bryan O'Donoghue wrote:
-> On 04/10/2023 13:08, Dmitry Baryshkov wrote:
->> On Wed, 4 Oct 2023 at 12:27, Bryan O'Donoghue
->> <bryan.odonoghue@linaro.org> wrote:
->>>
->>> On 04/10/2023 01:31, Dmitry Baryshkov wrote:
->>>> clk_rcg2_shared_ops implements support for the case of the RCG which
->>>> must not be completely turned off. However its design has one major
->>>> drawback: it doesn't allow us to properly implement the is_enabled
->>>> callback, which causes different kinds of misbehaviour from the CCF.
->>>>
->>>> Follow the idea behind clk_regmap_phy_mux_ops and implement the new
->>>> clk_rcg2_parked_ops. It also targets the clocks which must not be fully
->>>> switched off (and shared most of the implementation with
->>>> clk_rcg2_shared_ops). The major difference is that it requires that the
->>>> parent map doesn't conain the safe (parked) clock source. Instead if the
->>>> CFG_REG register points to the safe source, the clock is considered to
->>>> be disabled.
->>>
->>> Why not have a new bit in .flags ?
->>>
->>> Instead of lying about the clock being off, mark the clock as "parked",
->>> or "safe parked" or whatever term we choose for it ?
->>
->> The main problem with adding flags doesn't fully scale. From the CCF
->> perspective, what should be the difference between parked and disabled
->> clocks? How should it treat the parked one?
+On 3.10.2023 09:16, neil.armstrong@linaro.org wrote:
+> Hi,
 > 
-> Exactly the same as a disabled clock, except you get a "parked" instead of a "disabled" when looking up its state and you don't have to
-The thing is that currently there's only the notion of "enabled"
-or "not enabled".. Introducing a third state here would be the
-jump from boolean to quantum logic!
+> On 03/10/2023 04:17, Sophon Wu wrote:
+>> On 09/01/2023 16:47, Neil Armstrong wrote:
+>>
+>>> Add support for the display clock controller found in SM8550
+>>> based devices.
+>>
+>>> This clock controller feeds the Multimedia Display SubSystem (MDSS).
+>>> This driver is based on the SM8450 support.
+>>
+>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>> ---
+>>
+>> Hi Neil,
+>>
+>> I'm trying to enable display on SM8550 but having trouble with clocks. Do you
+>> have any idea on this maybe? Full dmesg here: https://bpa.st/7E6Q
+> 
+> You may need to remove the cont-splash memory zone and the simple-framebuffer,
+> if you leave the cont-splash the bootloader will leave the MDSS on and Linux
+> will fail to take over and initialize the clocks.
+Huh???
 
-I think that abstracting this information away from Linux is not
-an issue.. These clocks "can't be any more off", or the SoC will
-explode badly and Linux will be unusable..
-
-Think of it like CPUs with a hypervisor, you shut them down, but
-the physical number crunchers on the host CPU may not actually
-get cut off from their power source, but there's no reason for
-the VM to know that. That's probably what happens on our little
-virtualized snapdragons anyway..
+Does the bootloader poke at the devicetree to check for its presence
+on this board!?
 
 Konrad
