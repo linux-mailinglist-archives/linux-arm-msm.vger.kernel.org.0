@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 43C107BB966
+	by mail.lfdr.de (Postfix) with ESMTP id 91D747BB967
 	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 15:43:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232335AbjJFNnu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Oct 2023 09:43:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53780 "EHLO
+        id S232277AbjJFNnv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Oct 2023 09:43:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232277AbjJFNnt (ORCPT
+        with ESMTP id S232329AbjJFNnt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 6 Oct 2023 09:43:49 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4DABAD
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 06:43:46 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-503f39d3236so2641897e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 06:43:46 -0700 (PDT)
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B848B6
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 06:43:47 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-503056c8195so2793859e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 06:43:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696599825; x=1697204625; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696599826; x=1697204626; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EvfgdcC+N+bxn156eZfyryk37piRJwxBmUJN/q9CMHE=;
-        b=nqfvCB79FLXq9vjw4kKMcnOw9o1q/8lEOrPDm46n1YM3aagAmyEidwy/bHz/j1lxit
-         rqyDbAcz/+cHvlZBjG6S5j3n2AglfjDFzlg5lLJYrILTycnYdCQwDCl4LnbpKqYjJqLj
-         836NY0aNRAGlK5pNwBal3CtKbLTHCQsecqrKPEJPjAWaVDmvhwGUhAoa2ZPBFSxwlDme
-         AZ6JqV5LNA8Db718/ZCFUGfOhvjogd8aUivpmecpGq9iQGERActB5ddU8IhS9BK5103N
-         yLex6la1vaYWJvJv5PPLV+0bNrFuIoCx0LQipiHIDmR2QRyD4vhcE9B7bpD3QtYH/q03
-         8XvA==
+        bh=72BhhzORFfZXaM297PVx6sR/rdLvCAjoh+sh6obLztM=;
+        b=k3dQfyutey/PmXCVxRwK03wj1o2CCuqnA3iEjqDc74gIQh86rdlDM9MNdtKT5M1/+q
+         RwccFXwjDpKFE55YLEmdWLAqqCetXa54kxCGTjms9kxv7mLkLVmdH5wbJkMuy+KpgdrF
+         7sExuqFh2skhoF5AiUnl4PDIPRr/hOFAvknmEhfksTiouxQEwXRvBvpMgmgGChekDQfX
+         dxu2mg2FKZ5u4hBmQa/ei/NhlGZol11japz2HThGAfot46gmVpaLs48BG+y9MPsTzzg3
+         Ig7MX7ecxjhNP7ujWBmcarh9CUiH/22q9GKYIp6sA7H859EZsCQ3VuLv0UgkrltvH5qI
+         mD1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696599825; x=1697204625;
+        d=1e100.net; s=20230601; t=1696599826; x=1697204626;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=EvfgdcC+N+bxn156eZfyryk37piRJwxBmUJN/q9CMHE=;
-        b=Pg+Hs7kKruNRIJmjSHSqbAnXqC9QyFZFQuR0w0JIotA1Sq2AuzaWkJtPr10pNRnHl2
-         Fph0IYYR7UmkLWlfdZ93toeluW+OcWSZek6e3u67Yehn7mmk5QrxOZR9Hmr+/7GlX4Xh
-         XeBDBbJSGD9759G9zjrphhnWcCJPRpvxWAyMsFHr9Fz76VL77sggEoGHjhzXqf+92T9v
-         4bSJlVxd8fmm47WOiBO/Ltu5IWAdl1m48xj4c2ZqUhGg2un+4rwBo0FkZwh+iBruin+9
-         c9FgxMkMYLNMEU2VgVvRyZznEDxCy8eWOSG3QtTlG2Nxez00gV4fFUe51/gJSRy0B1jX
-         UpRg==
-X-Gm-Message-State: AOJu0YwXrbd0P7/muqxAkkporPLjiRifNSFXIRH7us4SVRlD4IDgvaJz
-        RiXFd32p5sBQgAWroV5VMpcxNQ==
-X-Google-Smtp-Source: AGHT+IHdAG3s81IqqNB1xo3Ah59R2VUcnfGxs9oQFTh1JIlGXZ/NmofCJkJ1MouFWshZr4ejL4YS1Q==
-X-Received: by 2002:a05:6512:3190:b0:500:d8d6:fc5a with SMTP id i16-20020a056512319000b00500d8d6fc5amr9948275lfe.37.1696599825053;
+        bh=72BhhzORFfZXaM297PVx6sR/rdLvCAjoh+sh6obLztM=;
+        b=Fc6ZXYySkHqT3r27d2sdxrMaysoOzZyTxiU5YsiVuD/0d1XYXDDlLYpRnqBcut2kGb
+         6koxzv1qRFcSwcHm6a/1kH8UNHxsKQLPnFv/bOf3XrFe1vPQ1cgsBcIjWYLPvH4FpLJZ
+         Aon7lw3fz/wKzHSML0vp28YPYBnN4qlGzSUgaKEWOblnXm5iFDGe4EePrSCSlfIow4B4
+         Se55qdDpVSrTvh6gDp69lz5uwkCz67tROwT/AVknAHGW+E9aKRFl1CgY9IvI5vIIdDMY
+         Ne5OcvQVwvw+FRE3gt5byZrFjbBhsakK8G+/UpbRdhMOSCtakEfOF8AtKIgK7f6hBTQO
+         ksKg==
+X-Gm-Message-State: AOJu0YzYKnA7YUDRsdywcLZbyM7vQzPpUCA2X4CS2iWBQauW86jOlFRl
+        I3lFFDTsL3fwWuDW0C+UzlRc0w==
+X-Google-Smtp-Source: AGHT+IHdEjLInXA5ua4KKxCP6yGRXx69a7ppJeC8wKf+ATVqOIyCAU2Xu7hwoAVPWHoPcl11a14xfQ==
+X-Received: by 2002:a05:6512:3686:b0:500:b14a:cc63 with SMTP id d6-20020a056512368600b00500b14acc63mr6057212lfs.12.1696599825747;
         Fri, 06 Oct 2023 06:43:45 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id b15-20020ac2562f000000b005009d4a5e6fsm315505lff.22.2023.10.06.06.43.44
+        by smtp.gmail.com with ESMTPSA id b15-20020ac2562f000000b005009d4a5e6fsm315505lff.22.2023.10.06.06.43.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Oct 2023 06:43:44 -0700 (PDT)
+        Fri, 06 Oct 2023 06:43:45 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,9 +60,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, Luca Weiss <luca@z3ntu.xyz>
-Subject: [RFC PATCH v2 1/3] drm/msm/dpu: add support for MSM8953
-Date:   Fri,  6 Oct 2023 16:43:41 +0300
-Message-Id: <20231006134343.2472493-2-dmitry.baryshkov@linaro.org>
+Subject: [RFC PATCH v2 2/3] drm/msm/dpu: add support for MSM8937
+Date:   Fri,  6 Oct 2023 16:43:42 +0300
+Message-Id: <20231006134343.2472493-3-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20231006134343.2472493-1-dmitry.baryshkov@linaro.org>
 References: <20231006134343.2472493-1-dmitry.baryshkov@linaro.org>
@@ -77,35 +77,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Experimental support for MSM8953, which has MDP5 v1.16. It looks like
+Experimental support for MSM8937, which has MDP5 v1.14. It looks like
 trimmed down version of MSM8996. Less SSPP, LM and PP blocks. No DSC,
 etc.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- .../msm/disp/dpu1/catalog/dpu_1_16_msm8953.h  | 221 ++++++++++++++++++
- .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  12 +
+ .../msm/disp/dpu1/catalog/dpu_1_14_msm8937.h  | 213 ++++++++++++++++++
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |   1 +
  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   1 +
  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   1 +
  drivers/gpu/drm/msm/msm_drv.c                 |   1 +
- 5 files changed, 236 insertions(+)
- create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h
+ 5 files changed, 217 insertions(+)
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h
 new file mode 100644
-index 000000000000..6944bfa4568a
+index 000000000000..1018d38f8ace
 --- /dev/null
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h
-@@ -0,0 +1,221 @@
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h
+@@ -0,0 +1,213 @@
 +/* SPDX-License-Identifier: GPL-2.0-only */
 +/*
 + * Copyright (c) 2023, Linaro Limited
 + */
 +
-+#ifndef _DPU_1_16_MSM8953_H
-+#define _DPU_1_16_MSM8953_H
++#ifndef _DPU_1_14_MSM8937_H
++#define _DPU_1_14_MSM8937_H
 +
-+static const struct dpu_caps msm8953_dpu_caps = {
++static const struct dpu_caps msm8937_dpu_caps = {
 +	.max_mixer_width = DEFAULT_DPU_LINE_WIDTH,
 +	.max_mixer_blendstages = 0x4,
 +	.max_linewidth = DEFAULT_DPU_LINE_WIDTH,
@@ -114,7 +114,7 @@ index 000000000000..6944bfa4568a
 +	.max_vdeci_exp = MAX_VERT_DECIMATION,
 +};
 +
-+static const struct dpu_mdp_cfg msm8953_mdp[] = {
++static const struct dpu_mdp_cfg msm8937_mdp[] = {
 +	{
 +		.name = "top_0",
 +		.base = 0x0, .len = 0x454,
@@ -129,7 +129,7 @@ index 000000000000..6944bfa4568a
 +	},
 +};
 +
-+static const struct dpu_ctl_cfg msm8953_ctl[] = {
++static const struct dpu_ctl_cfg msm8937_ctl[] = {
 +	{
 +		.name = "ctl_0", .id = CTL_0,
 +		.base = 0x1000, .len = 0x64,
@@ -145,7 +145,7 @@ index 000000000000..6944bfa4568a
 +	},
 +};
 +
-+static const struct dpu_sspp_cfg msm8953_sspp[] = {
++static const struct dpu_sspp_cfg msm8937_sspp[] = {
 +	{
 +		.name = "sspp_0", .id = SSPP_VIG0,
 +		.base = 0x4000, .len = 0x150,
@@ -181,7 +181,7 @@ index 000000000000..6944bfa4568a
 +	},
 +};
 +
-+static const struct dpu_lm_cfg msm8953_lm[] = {
++static const struct dpu_lm_cfg msm8937_lm[] = {
 +	{
 +		.name = "lm_0", .id = LM_0,
 +		.base = 0x44000, .len = 0x320,
@@ -198,7 +198,7 @@ index 000000000000..6944bfa4568a
 +	},
 +};
 +
-+static const struct dpu_pingpong_cfg msm8953_pp[] = {
++static const struct dpu_pingpong_cfg msm8937_pp[] = {
 +	{
 +		.name = "pingpong_0", .id = PINGPONG_0,
 +		.base = 0x70000, .len = 0xd4,
@@ -216,7 +216,7 @@ index 000000000000..6944bfa4568a
 +	},
 +};
 +
-+static const struct dpu_dspp_cfg msm8953_dspp[] = {
++static const struct dpu_dspp_cfg msm8937_dspp[] = {
 +	{
 +		.name = "dspp_0", .id = DSPP_0,
 +		.base = 0x54000, .len = 0x1800,
@@ -225,16 +225,8 @@ index 000000000000..6944bfa4568a
 +	},
 +};
 +
-+static const struct dpu_intf_cfg msm8953_intf[] = {
++static const struct dpu_intf_cfg msm8937_intf[] = {
 +	{
-+		.name = "intf_0", .id = INTF_0,
-+		.base = 0x6a000, .len = 0x268,
-+		.type = INTF_NONE,
-+		.prog_fetch_lines_worst_case = 14,
-+		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
-+		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25),
-+		.intr_tear_rd_ptr = -1,
-+	}, {
 +		.name = "intf_1", .id = INTF_1,
 +		.base = 0x6a800, .len = 0x268,
 +		.type = INTF_DSI,
@@ -255,9 +247,9 @@ index 000000000000..6944bfa4568a
 +	},
 +};
 +
-+static const struct dpu_perf_cfg msm8953_perf_data = {
-+	.max_bw_low = 3400000,
-+	.max_bw_high = 3400000,
++static const struct dpu_perf_cfg msm8937_perf_data = {
++	.max_bw_low = 3100000,
++	.max_bw_high = 3100000,
 +	.min_core_ib = 2400000,
 +	.min_llcc_ib = 0, /* No LLCC on this SoC */
 +	.min_dram_ib = 800000,
@@ -291,113 +283,81 @@ index 000000000000..6944bfa4568a
 +	.bw_inefficiency_factor = 120,
 +};
 +
-+static const struct dpu_mdss_version msm8953_mdss_ver = {
++static const struct dpu_mdss_version msm8937_mdss_ver = {
 +	.core_major_ver = 1,
-+	.core_minor_ver = 16,
++	.core_minor_ver = 14,
 +};
 +
-+const struct dpu_mdss_cfg dpu_msm8953_cfg = {
-+	.mdss_ver = &msm8953_mdss_ver,
-+	.caps = &msm8953_dpu_caps,
-+	.mdp = msm8953_mdp,
-+	.ctl_count = ARRAY_SIZE(msm8953_ctl),
-+	.ctl = msm8953_ctl,
-+	.sspp_count = ARRAY_SIZE(msm8953_sspp),
-+	.sspp = msm8953_sspp,
-+	.mixer_count = ARRAY_SIZE(msm8953_lm),
-+	.mixer = msm8953_lm,
-+	.dspp_count = ARRAY_SIZE(msm8953_dspp),
-+	.dspp = msm8953_dspp,
-+	.pingpong_count = ARRAY_SIZE(msm8953_pp),
-+	.pingpong = msm8953_pp,
-+	.intf_count = ARRAY_SIZE(msm8953_intf),
-+	.intf = msm8953_intf,
++const struct dpu_mdss_cfg dpu_msm8937_cfg = {
++	.mdss_ver = &msm8937_mdss_ver,
++	.caps = &msm8937_dpu_caps,
++	.mdp = msm8937_mdp,
++	.ctl_count = ARRAY_SIZE(msm8937_ctl),
++	.ctl = msm8937_ctl,
++	.sspp_count = ARRAY_SIZE(msm8937_sspp),
++	.sspp = msm8937_sspp,
++	.mixer_count = ARRAY_SIZE(msm8937_lm),
++	.mixer = msm8937_lm,
++	.dspp_count = ARRAY_SIZE(msm8937_dspp),
++	.dspp = msm8937_dspp,
++	.pingpong_count = ARRAY_SIZE(msm8937_pp),
++	.pingpong = msm8937_pp,
++	.intf_count = ARRAY_SIZE(msm8937_intf),
++	.intf = msm8937_intf,
 +	.vbif_count = ARRAY_SIZE(msm8996_vbif),
 +	.vbif = msm8996_vbif,
-+	.perf = &msm8953_perf_data,
++	.perf = &msm8937_perf_data,
 +};
 +
 +#endif
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 0669d4cb0b15..4234fc2acfcc 100644
+index 4234fc2acfcc..e7e4df3a5ca4 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -21,6 +21,11 @@
- 	(VIG_BASE_MASK | \
- 	BIT(DPU_SSPP_CSC_10BIT))
- 
-+#define VIG_MSM8953_MASK \
-+	(BIT(DPU_SSPP_QOS) |\
-+	 BIT(DPU_SSPP_SCALER_QSEED2) |\
-+	 BIT(DPU_SSPP_CSC))
-+
- #define VIG_MSM8996_MASK \
- 	(BIT(DPU_SSPP_QOS) | BIT(DPU_SSPP_CDP) |\
- 	 BIT(DPU_SSPP_TS_PREFILL) | BIT(DPU_SSPP_SCALER_QSEED2) |\
-@@ -37,6 +42,9 @@
- 
- #define VIG_QCM2290_MASK (VIG_BASE_MASK | BIT(DPU_SSPP_QOS_8LVL))
- 
-+#define DMA_MSM8953_MASK \
-+	(BIT(DPU_SSPP_QOS))
-+
- #define DMA_MSM8996_MASK \
- 	(BIT(DPU_SSPP_QOS) | BIT(DPU_SSPP_TS_PREFILL) | BIT(DPU_SSPP_CDP))
- 
-@@ -71,6 +79,9 @@
- #define DMA_CURSOR_MSM8998_MASK \
- 	(DMA_MSM8998_MASK | BIT(DPU_SSPP_CURSOR))
- 
-+#define RGB_MSM8953_MASK \
-+	(BIT(DPU_SSPP_QOS))
-+
- #define RGB_MSM8996_MASK \
- 	(BIT(DPU_SSPP_QOS) | BIT(DPU_SSPP_CDP) |\
- 	 BIT(DPU_SSPP_TS_PREFILL) | BIT(DPU_SSPP_SCALER_RGB))
-@@ -705,6 +716,7 @@ static const struct dpu_qos_lut_entry sc7180_qos_nrt[] = {
+@@ -716,6 +716,7 @@ static const struct dpu_qos_lut_entry sc7180_qos_nrt[] = {
   *************************************************************/
  
  #include "catalog/dpu_1_7_msm8996.h"
-+#include "catalog/dpu_1_16_msm8953.h"
++#include "catalog/dpu_1_14_msm8937.h"
+ #include "catalog/dpu_1_16_msm8953.h"
  
  #include "catalog/dpu_3_0_msm8998.h"
- #include "catalog/dpu_3_2_sdm660.h"
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-index 8c3c6cd2a186..58891a19d2b0 100644
+index 58891a19d2b0..a9a12580c8c6 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
 @@ -822,6 +822,7 @@ struct dpu_mdss_cfg {
  	const struct dpu_format_extended *vig_formats;
  };
  
-+extern const struct dpu_mdss_cfg dpu_msm8953_cfg;
++extern const struct dpu_mdss_cfg dpu_msm8937_cfg;
+ extern const struct dpu_mdss_cfg dpu_msm8953_cfg;
  extern const struct dpu_mdss_cfg dpu_msm8996_cfg;
  extern const struct dpu_mdss_cfg dpu_msm8998_cfg;
- extern const struct dpu_mdss_cfg dpu_sdm630_cfg;
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 3dae0b994463..0026208bf80d 100644
+index 0026208bf80d..1df00356078e 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
 @@ -1413,6 +1413,7 @@ static const struct dev_pm_ops dpu_pm_ops = {
  };
  
  static const struct of_device_id dpu_dt_match[] = {
-+	{ .compatible = "qcom,msm8953-mdp5", .data = &dpu_msm8953_cfg, },
++	{ .compatible = "qcom,msm8937-mdp5", .data = &dpu_msm8937_cfg, },
+ 	{ .compatible = "qcom,msm8953-mdp5", .data = &dpu_msm8953_cfg, },
  	{ .compatible = "qcom,msm8996-mdp5", .data = &dpu_msm8996_cfg, },
  	{ .compatible = "qcom,msm8998-dpu", .data = &dpu_msm8998_cfg, },
- 	{ .compatible = "qcom,qcm2290-dpu", .data = &dpu_qcm2290_cfg, },
 diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 27b0cd46a59e..199935386a38 100644
+index 199935386a38..a0854c20945b 100644
 --- a/drivers/gpu/drm/msm/msm_drv.c
 +++ b/drivers/gpu/drm/msm/msm_drv.c
 @@ -1200,6 +1200,7 @@ module_param(prefer_mdp5, bool, 0444);
  
  /* list all platforms supported by both mdp5 and dpu drivers */
  static const char *const msm_mdp5_dpu_migration[] = {
-+	"qcom,msm8953-mdp5",
++	"qcom,msm8937-mdp5",
+ 	"qcom,msm8953-mdp5",
  	"qcom,msm8996-mdp5",
  	"qcom,sdm630-mdp5",
- 	"qcom,sdm660-mdp5",
 -- 
 2.39.2
 
