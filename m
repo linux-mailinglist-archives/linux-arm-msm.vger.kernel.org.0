@@ -2,60 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E6A657BB672
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 13:31:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F38E57BB676
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 13:31:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232006AbjJFLbe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Oct 2023 07:31:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34968 "EHLO
+        id S232036AbjJFLbw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Oct 2023 07:31:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231147AbjJFLbd (ORCPT
+        with ESMTP id S232017AbjJFLbw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Oct 2023 07:31:33 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E47AAC5
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 04:31:31 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2c135cf2459so23792981fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 04:31:31 -0700 (PDT)
+        Fri, 6 Oct 2023 07:31:52 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC40CE4
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 04:31:50 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2c1854bebf5so24484141fa.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 04:31:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696591890; x=1697196690; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696591909; x=1697196709; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=5KXF1BPtCc4Qnp06IeKWmuYEI/cvy2qSDqKPkYcCjtk=;
-        b=yRqVVhGCHPo7a93lWNRQ6gmx62V62HSzpyjAYi8bmBG0BCHdIXpRBKDZpDey5Gpyoz
-         Fg/1nLhEXrds6bAPD1NzVz6ukXJgbUdBDJThGzAZDz736gtLTwBIr9OY7OxELEEe+7bs
-         QENoOhrJRLGJK2j9tTeqih4kKb2quT7o/oX5Iq9ZuNv+bQEf64pftvDePQL8T5HW71p/
-         mNEFFR483hEp29w+aplH8gpUBc+u4KVXpWZ4ZJ7/qfGyb1OWy42KToBk3Qdtbh/IORKa
-         rZuWJz/74EiV54eStElGl6wbPTeYEtjGBHYYyj/5+BUqN2hvNo7Pn0+3lxu9yuYGo8gw
-         JfDA==
+        bh=a0TWF593bNTpaB3Tqqlr8JM3XLOkBPwK4clHQVWNSyM=;
+        b=rRtqyDZq4uvb1I/6/wcOhenRfOOQOHROI2RecQqcZxR/LoWwTUySqtTSgXFMrqq0QM
+         3LxuhfnpSgJc/dYR2Q7KWWYDZO4/Ebl4uSJBMap3+6ordFRdX5pzV1LnL+9tcsmCE0I6
+         v2sX0WdBZ8rzAL+/XDGJpJoc8wTY27slMjEOXaJCyhgXhlPsX2dFCs78YFU12fyKmUec
+         s4SIZS6JzGKOPiELvPHhwfLPSeB9nOy6mcoS3X4732/CsUGWZa+2RNb/5BNgJirAMeJb
+         Uz8jSAY3lPYhn2NuW9uPPBDTy/HkQw6SnTLUUrB6SE4hOmFRFLj6LyXWMNPDoPImrVtk
+         BYDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696591890; x=1697196690;
+        d=1e100.net; s=20230601; t=1696591909; x=1697196709;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5KXF1BPtCc4Qnp06IeKWmuYEI/cvy2qSDqKPkYcCjtk=;
-        b=Ry+yc65eqmxzvEndXu4SpkmIizUYMuw9o9jXRMFjMy4UWy767zipbU928qrTbn3TCH
-         t86bL/VcJQ2NZ4U2PRe4jN4uEnZwtF8uM/gqgL9bbch7eH2mG9Kyb058pahCKwCDDfB+
-         aCB5SZ7nkAM7VIFbMlVCdwOcbmzucwyQowzECXemOPWK1PBUFwluV2RlX6SjhcxYyYw4
-         GbnFu8qJ4FLQPze65F+qqNxpXxRdzCE24u92c3GyWMETrq5zlEPbwYO5qde8Asq6AC6j
-         8joakotPplHjUWXO2lv8dUF2iY8yJY+ytkSGH2m0SebcfkK6rpOF6ZwixKqu6P7nzkqz
-         ay9w==
-X-Gm-Message-State: AOJu0Yy8tdLeO429AGNEmO/tqNfU+1VKnmXfipvAspdV3Wnrlb01MzMn
-        pZbAC5+8rlMAtpUQZsmYLnyDrQ==
-X-Google-Smtp-Source: AGHT+IFnb4SzgNnqN1744K1drSFI1lxMxH0rmjdh00B4/aRtrjljwPbT5PoXIyoAxOYKsWxiAGDzgA==
-X-Received: by 2002:a2e:96c6:0:b0:2bc:ce85:2de2 with SMTP id d6-20020a2e96c6000000b002bcce852de2mr7283181ljj.37.1696591889169;
-        Fri, 06 Oct 2023 04:31:29 -0700 (PDT)
+        bh=a0TWF593bNTpaB3Tqqlr8JM3XLOkBPwK4clHQVWNSyM=;
+        b=irblol7tU+eTLBEogpNQ4roxofSro3T64/7zvu2zZTWk7PteePEBOVbm3IsUimFCpf
+         mptz2u7qswsf0mJcuYzM9YGqBkdeVgov3lWnauz3RE4gbpI+djX1+NiH7hmhV3XhlMGq
+         GCxJCP2M1Pk2GwpflCX97PFrr+HQ22xE9p5zAL+Wu2eP0XxLNCErL6+I2DiRDGAuJQt9
+         aOaLZLZgW3xEvfjzEtvIp7SZWBJDHV8bANgZ9HgKnSQTmSl9VT6z8/0OF63twHsr7CmT
+         ylM1E5NrE9OMIka/1I95CzKzcWp/bdMIkmH3hFzLA0jQ+dMa2IJUctCX5MRUzRd/vLOY
+         IVdw==
+X-Gm-Message-State: AOJu0Yx61iafW2FT6nfYARIhI2ADjrVEn3wtzDp5u8yCw8byX8D88+1g
+        /ZXFM9q7jN1O9xjJK3MlFq9MFQ==
+X-Google-Smtp-Source: AGHT+IEgFCEHn504tuKBVWYl0xhU1uiPtRBx27WqGJbL9nyuJRS1cbMMw8HuP1zpHgEZaEYk0xzkcg==
+X-Received: by 2002:a2e:8256:0:b0:2b6:e958:5700 with SMTP id j22-20020a2e8256000000b002b6e9585700mr6751826ljh.4.1696591909007;
+        Fri, 06 Oct 2023 04:31:49 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id r6-20020a2e9946000000b002bce3123639sm743777ljj.98.2023.10.06.04.31.28
+        by smtp.gmail.com with ESMTPSA id r6-20020a2e9946000000b002bce3123639sm743777ljj.98.2023.10.06.04.31.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Oct 2023 04:31:28 -0700 (PDT)
-Message-ID: <f9a97fe6-89d1-40d7-8e13-c756f341bf39@linaro.org>
-Date:   Fri, 6 Oct 2023 14:31:27 +0300
+        Fri, 06 Oct 2023 04:31:48 -0700 (PDT)
+Message-ID: <dce265a6-12af-4374-a156-7bceffd5e2ea@linaro.org>
+Date:   Fri, 6 Oct 2023 14:31:48 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/7] drm/msm/dp: tie dp_display_irq_handler() with dp
- driver
+Subject: Re: [PATCH v5 2/7] drm/msm/dp: rename is_connected with link_ready
 Content-Language: en-GB
 To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
         dri-devel@lists.freedesktop.org, robdclark@gmail.com,
@@ -67,9 +66,9 @@ Cc:     quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com,
         freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <1696436821-14261-1-git-send-email-quic_khsieh@quicinc.com>
- <1696436821-14261-2-git-send-email-quic_khsieh@quicinc.com>
+ <1696436821-14261-3-git-send-email-quic_khsieh@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1696436821-14261-2-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <1696436821-14261-3-git-send-email-quic_khsieh@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,28 +81,24 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 04/10/2023 19:26, Kuogee Hsieh wrote:
-> Currently the dp_display_request_irq() is executed at msm_dp_modeset_init()
-> which ties irq registering to the DPU device's life cycle, while depending on
-> resources that are released as the DP device is torn down. Move register DP
-> driver irq handler to dp_display_probe() to have dp_display_irq_handler()
-> IRQ tied with DP device. In addition, use platform_get_irq() to retrieve irq
-> number from platform device directly.
+> The is_connected flag is set to true after DP mainlink successfully
+> finishes link training to enter into ST_MAINLINK_READY state rather
+> than being set after the DP dongle is connected. Rename the
+> is_connected flag with link_ready flag to match the state of DP
+> driver's state machine.
 > 
 > Changes in v5:
-> -- reworded commit text as review comments at change #4
-> -- tear down component if failed at dp_display_request_irq()
+> -- reworded commit text according to review comments from change #4
 > 
 > Changes in v4:
-> -- delete dp->irq check at dp_display_request_irq()
-> 
-> Changes in v3:
-> -- move calling dp_display_irq_handler() to probe
+> -- reworded commit text
 > 
 > Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/dp/dp_display.c | 32 +++++++++++++-------------------
->   drivers/gpu/drm/msm/dp/dp_display.h |  1 -
->   2 files changed, 13 insertions(+), 20 deletions(-)
+>   drivers/gpu/drm/msm/dp/dp_display.c | 19 +++++++++----------
+>   drivers/gpu/drm/msm/dp/dp_display.h |  2 +-
+>   drivers/gpu/drm/msm/dp/dp_drm.c     | 14 +++++++-------
+>   3 files changed, 17 insertions(+), 18 deletions(-)
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
