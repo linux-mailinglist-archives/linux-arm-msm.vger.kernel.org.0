@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B6B6D7BB932
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 15:37:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 993A17BB933
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 15:37:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232082AbjJFNh3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Oct 2023 09:37:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45424 "EHLO
+        id S232310AbjJFNha (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Oct 2023 09:37:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232300AbjJFNh2 (ORCPT
+        with ESMTP id S232302AbjJFNh2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 6 Oct 2023 09:37:28 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71E1C9F
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 06:37:25 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-505748580ceso2717603e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 06:37:25 -0700 (PDT)
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 272C5AC
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 06:37:26 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-5042bfb4fe9so2707595e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 06:37:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1696599444; x=1697204244; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gyJMLPywgfD3zTWmrTHppa2YLQ4qubiZc1LQVFl5178=;
-        b=MARFraXJ0KAJi4G1ypouasEtaY3MxHdQANrlDSZ/wZemcF2ACY6oTc8SiLKTCKFlUX
-         K0KQBz+Iwvui6oK0NJB0d2W/ibDTiMUwzgYh1/DXDGO9BpB9IJXa+VEkYB0rFjbmqYMA
-         KCyTRXMhg6NXaSDeMD7eI2HJTfj9aeTUK8I9dmL85Cgw1+IU65HJjXtSUWWpJQ/cjF1W
-         GBXLcW9/lw8/pfzoSz8LWTFIRFDxAdogf7hAy4RuJiBASAu7hc/gi8P8sfDLCWjMY/o5
-         OYjuUR+Q9ZH3MHXUeW+DOBg5hd77oqy1yiGUwBp5c84OK13NF383vagLTlfVDUrImtqR
-         aCwQ==
+        bh=UsG04MB61AcPFLo9jh85AgVd9+bf4jS79HdCjouk2Ig=;
+        b=fUZSOfc8EmG8klng3tuWBTMlKzEYMsDEwUHtVZqwyZNDHR2VOB+/JqLPFYBlYEIpMG
+         Sm2aSZYUklO3ZibS4yY+/LwHB/NXEXzCt/MEKqVV/dIPWorkvbDNWs+tEZmbuUPTYHtn
+         wXkJF0LFXWcZg0T8rzMWIpGWASPpsPtz07XPX+TCJPFTM1jqgH1Iii5KbE0Y7k9A2PBy
+         +A/HqenRxKl+LuBj7UfkgRL+SVVO0FtuNicAOIN8wi/4tFHJPJA74U1iRocj6YtQMB2f
+         1dUrhLbPJAdUhrM0/TrMgQzpGnzBTIVMYZYfKlSK1jOYMzHAFmbF2VbBtChzhZzQr5tg
+         Hw8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1696599444; x=1697204244;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=gyJMLPywgfD3zTWmrTHppa2YLQ4qubiZc1LQVFl5178=;
-        b=iunm3LBrzs7KryGRJ7W9Hb4wKFh1kzDXAFdDQvWFAiX/O8a6mWO/NYixqUxruPRn/4
-         Cu3Z+B5qGMAJuDoBMnocnChnIxzHUw7uX4dm4xMz8e24Nc5UxP75UrV9mZgWID6qhr+w
-         8tytGTmGIvmyE8/WHHABcikv3koUjC3PWM7k82p5mHPXJcctX68lQuuR/IVEWsK1dyh2
-         cfxgxU2KaUCgFwJ8gUW+qRXIF2kUzXIBTBndD1j/PLGyuJafqi83NyXbXRoXuVCnylH2
-         6wJRdz1foY35NVwxfZeToHZNYIAnW9GjvmQFPrALNRagHsGKu55hMU7fNTcNNpisWShm
-         Sn1Q==
-X-Gm-Message-State: AOJu0Yyg+gGUGYBT8+u/VWuH2jnUg0r8+cqiZUX49CDgivoeeR0lwSUx
-        0rWJBrCf5JFhIwjGeFBWA9aINg==
-X-Google-Smtp-Source: AGHT+IH6c2ZYwGnOkl33KIei9yXzOw5rsLB1ZiighPCughyBVaqBkrAqKQdB+hxQZ9tpdW15OCtWnw==
-X-Received: by 2002:a05:6512:ba7:b0:500:a3be:1ab6 with SMTP id b39-20020a0565120ba700b00500a3be1ab6mr8799100lfv.6.1696599443728;
-        Fri, 06 Oct 2023 06:37:23 -0700 (PDT)
+        bh=UsG04MB61AcPFLo9jh85AgVd9+bf4jS79HdCjouk2Ig=;
+        b=qE2hqSeqTe0D4rN6DECoBWyjUa5IZ4Rd5PGe9a+cX0KrdjFCSbWO9wY8s4SLbceSKI
+         bzjxg6jT21KgrH6wVCxHw02z07+ffkOFuM+WM5aor5joFJnq8Kjh4PdUBn7U7hT50EoG
+         4jmlUBs3WY539nHQg5BaA9yTvSRfmX2fvYImnHKTJzqfjACRlxAj9rfr4BEvsaFIkg2r
+         PeIb6bN2qgzX7FqqZyYD2IGnwCy78HhiUq7YIwFQ2/dt40K5pO453kU39eMMwh+FqJ7G
+         SgZS6UQk1lDL293rQfVk5o+MHNspRZsiyMsqvpCryqiA4ykdPWhihwjMm+AedmXMKw55
+         e9Dw==
+X-Gm-Message-State: AOJu0YwZR19DX6hFOfCmuo0fX+LerLfeGq6gEZWAqXtfn/5qv4Cg63ZT
+        79US6n7A2Pcd2JhKzhbdcFOXsg==
+X-Google-Smtp-Source: AGHT+IHmMFllJQ4Gbd55HIJP4+c8nrE8MPtqw2WnmqQGRVe1tEgur/O5cwtZSYRjwhgBTc+hljL8zg==
+X-Received: by 2002:a05:6512:39c8:b0:4f8:7513:8cac with SMTP id k8-20020a05651239c800b004f875138cacmr9392174lfu.48.1696599444442;
+        Fri, 06 Oct 2023 06:37:24 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
         by smtp.gmail.com with ESMTPSA id m27-20020a056512015b00b0050567cdb8f6sm303534lfo.239.2023.10.06.06.37.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Oct 2023 06:37:23 -0700 (PDT)
+        Fri, 06 Oct 2023 06:37:24 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,9 +60,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v2 2/5] drm/msm/dpu: support binding to the mdp5 devices
-Date:   Fri,  6 Oct 2023 16:37:17 +0300
-Message-Id: <20231006133720.2471770-3-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 3/5] drm/msm: add a kernel param to select between MDP5 and DPU drivers
+Date:   Fri,  6 Oct 2023 16:37:18 +0300
+Message-Id: <20231006133720.2471770-4-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20231006133720.2471770-1-dmitry.baryshkov@linaro.org>
 References: <20231006133720.2471770-1-dmitry.baryshkov@linaro.org>
@@ -77,183 +77,105 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Existing MDP5 devices have slightly different bindings. The main
-register region is called `mdp_phys' instead of `mdp'. Also vbif
-register regions are a part of the parent, MDSS device. Add support for
-handling this binding differences.
+For some of the platforms (e.g. SDM660, SDM630, MSM8996, etc.) it is
+possible to support this platform via the DPU driver (e.g. to provide
+support for DP, multirect, etc). Add a modparam to be able to switch
+between these two drivers.
 
+All platforms supported by both drivers are by default handled by the
+MDP5 driver. To let them be handled by the DPU driver pass the
+`msm.prefer_mdp5=false` kernel param.
+
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 88 ++++++++++++++++++++-----
- drivers/gpu/drm/msm/msm_drv.h           |  3 +
- drivers/gpu/drm/msm/msm_io_utils.c      | 13 ++++
- 3 files changed, 86 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  |  3 +++
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c |  3 +++
+ drivers/gpu/drm/msm/msm_drv.c            | 31 ++++++++++++++++++++++++
+ drivers/gpu/drm/msm/msm_drv.h            |  1 +
+ 4 files changed, 38 insertions(+)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 82381d12414d..20ba03e9c936 100644
+index 20ba03e9c936..c8d85a64e16c 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -1054,37 +1054,53 @@ unsigned long dpu_kms_get_clk_rate(struct dpu_kms *dpu_kms, char *clock_name)
+@@ -1351,6 +1351,9 @@ static int dpu_kms_init(struct drm_device *ddev)
  
- #define	DPU_PERF_DEFAULT_MAX_CORE_CLK_RATE	412500000
- 
--static int dpu_kms_hw_init(struct msm_kms *kms)
-+static int dpu_kms_mmap_mdp5(struct dpu_kms *dpu_kms)
+ static int dpu_dev_probe(struct platform_device *pdev)
  {
--	struct dpu_kms *dpu_kms;
--	struct drm_device *dev;
--	int i, rc = -EINVAL;
--	unsigned long max_core_clk_rate;
--	u32 core_rev;
-+	struct platform_device *mdss_dev;
-+	int rc;
- 
--	if (!kms) {
--		DPU_ERROR("invalid kms\n");
-+	mdss_dev = to_platform_device(dpu_kms->pdev->dev.parent);
++	if (!msm_disp_drv_should_bind(&pdev->dev, true))
++		return -ENODEV;
 +
-+	dpu_kms->mmio = msm_ioremap(dpu_kms->pdev, "mdp_phys");
-+	if (IS_ERR(dpu_kms->mmio)) {
-+		rc = PTR_ERR(dpu_kms->mmio);
-+		DPU_ERROR("mdp register memory map failed: %d\n", rc);
-+		dpu_kms->mmio = NULL;
- 		return rc;
- 	}
-+	DRM_DEBUG("mapped dpu address space @%pK\n", dpu_kms->mmio);
- 
--	dpu_kms = to_dpu_kms(kms);
--	dev = dpu_kms->dev;
-+	dpu_kms->vbif[VBIF_RT] = msm_ioremap_mdss(mdss_dev,
-+						  dpu_kms->pdev,
-+						  "vbif_phys");
-+	if (IS_ERR(dpu_kms->vbif[VBIF_RT])) {
-+		rc = PTR_ERR(dpu_kms->vbif[VBIF_RT]);
-+		DPU_ERROR("vbif register memory map failed: %d\n", rc);
-+		dpu_kms->vbif[VBIF_RT] = NULL;
-+		return rc;
-+	}
- 
--	dev->mode_config.cursor_width = 512;
--	dev->mode_config.cursor_height = 512;
-+	dpu_kms->vbif[VBIF_NRT] = msm_ioremap_mdss(mdss_dev,
-+						   dpu_kms->pdev,
-+						   "vbif_nrt_phys");
-+	if (IS_ERR(dpu_kms->vbif[VBIF_NRT])) {
-+		dpu_kms->vbif[VBIF_NRT] = NULL;
-+		DPU_DEBUG("VBIF NRT is not defined");
-+	}
- 
--	rc = dpu_kms_global_obj_init(dpu_kms);
--	if (rc)
--		return rc;
-+	return 0;
-+}
- 
--	atomic_set(&dpu_kms->bandwidth_ref, 0);
-+static int dpu_kms_mmap_dpu(struct dpu_kms *dpu_kms)
-+{
-+	int rc;
- 
- 	dpu_kms->mmio = msm_ioremap(dpu_kms->pdev, "mdp");
- 	if (IS_ERR(dpu_kms->mmio)) {
- 		rc = PTR_ERR(dpu_kms->mmio);
- 		DPU_ERROR("mdp register memory map failed: %d\n", rc);
- 		dpu_kms->mmio = NULL;
--		goto error;
-+		return rc;
- 	}
- 	DRM_DEBUG("mapped dpu address space @%pK\n", dpu_kms->mmio);
- 
-@@ -1093,14 +1109,50 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
- 		rc = PTR_ERR(dpu_kms->vbif[VBIF_RT]);
- 		DPU_ERROR("vbif register memory map failed: %d\n", rc);
- 		dpu_kms->vbif[VBIF_RT] = NULL;
--		goto error;
-+		return rc;
- 	}
-+
- 	dpu_kms->vbif[VBIF_NRT] = msm_ioremap_quiet(dpu_kms->pdev, "vbif_nrt");
- 	if (IS_ERR(dpu_kms->vbif[VBIF_NRT])) {
- 		dpu_kms->vbif[VBIF_NRT] = NULL;
- 		DPU_DEBUG("VBIF NRT is not defined");
- 	}
- 
-+	return 0;
-+}
-+
-+static int dpu_kms_hw_init(struct msm_kms *kms)
-+{
-+	struct dpu_kms *dpu_kms;
-+	struct drm_device *dev;
-+	int i, rc = -EINVAL;
-+	unsigned long max_core_clk_rate;
-+	u32 core_rev;
-+
-+	if (!kms) {
-+		DPU_ERROR("invalid kms\n");
-+		return rc;
-+	}
-+
-+	dpu_kms = to_dpu_kms(kms);
-+	dev = dpu_kms->dev;
-+
-+	dev->mode_config.cursor_width = 512;
-+	dev->mode_config.cursor_height = 512;
-+
-+	rc = dpu_kms_global_obj_init(dpu_kms);
-+	if (rc)
-+		return rc;
-+
-+	atomic_set(&dpu_kms->bandwidth_ref, 0);
-+
-+	if (of_device_is_compatible(dpu_kms->pdev->dev.of_node, "qcom,mdp5"))
-+		rc = dpu_kms_mmap_mdp5(dpu_kms);
-+	else
-+		rc = dpu_kms_mmap_dpu(dpu_kms);
-+	if (rc)
-+		return rc;
-+
- 	dpu_kms_parse_data_bus_icc_path(dpu_kms);
- 
- 	rc = pm_runtime_resume_and_get(&dpu_kms->pdev->dev);
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index e2fc56f161b5..6eeb3517c3e4 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -485,6 +485,9 @@ void __iomem *msm_ioremap(struct platform_device *pdev, const char *name);
- void __iomem *msm_ioremap_size(struct platform_device *pdev, const char *name,
- 		phys_addr_t *size);
- void __iomem *msm_ioremap_quiet(struct platform_device *pdev, const char *name);
-+void __iomem *msm_ioremap_mdss(struct platform_device *mdss_pdev,
-+			       struct platform_device *dev,
-+			       const char *name);
- 
- struct icc_path *msm_icc_get(struct device *dev, const char *name);
- 
-diff --git a/drivers/gpu/drm/msm/msm_io_utils.c b/drivers/gpu/drm/msm/msm_io_utils.c
-index 59d2788c4510..afedd61c3e28 100644
---- a/drivers/gpu/drm/msm/msm_io_utils.c
-+++ b/drivers/gpu/drm/msm/msm_io_utils.c
-@@ -50,6 +50,19 @@ struct clk *msm_clk_get(struct platform_device *pdev, const char *name)
- 	return clk;
+ 	return msm_drv_probe(&pdev->dev, dpu_kms_init);
  }
  
-+void __iomem *msm_ioremap_mdss(struct platform_device *mdss_pdev,
-+			       struct platform_device *pdev,
-+			       const char *name)
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+index 8a7b44376bc6..b37ebb068dce 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+@@ -935,6 +935,9 @@ static int mdp5_dev_probe(struct platform_device *pdev)
+ 
+ 	DBG("");
+ 
++	if (!msm_disp_drv_should_bind(&pdev->dev, false))
++		return -ENODEV;
++
+ 	ret = mdp5_setup_interconnect(pdev);
+ 	if (ret)
+ 		return ret;
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index 05fe32c3a4b4..3f6d884c90e0 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -1186,6 +1186,37 @@ static int add_components_mdp(struct device *master_dev,
+ 	return 0;
+ }
+ 
++#if !IS_REACHABLE(CONFIG_DRM_MSM_MDP5) || !IS_REACHABLE(CONFIG_DRM_MSM_DPU)
++bool msm_disp_drv_should_bind(struct device *dev, bool mdp5_driver)
 +{
-+	struct resource *res;
-+
-+	res = platform_get_resource_byname(mdss_pdev, IORESOURCE_MEM, name);
-+	if (!res)
-+		return ERR_PTR(-EINVAL);
-+
-+	return devm_ioremap_resource(&pdev->dev, res);
++	/* If just a single driver is enabled, use it no matter what */
++	return true;
 +}
++#else
 +
- static void __iomem *_msm_ioremap(struct platform_device *pdev, const char *name,
- 				  bool quiet, phys_addr_t *psize)
- {
++static bool prefer_mdp5 = true;
++MODULE_PARM_DESC(prefer_mdp5, "Select whether MDP5 or DPU driver should be preferred");
++module_param(prefer_mdp5, bool, 0444);
++
++/* list all platforms supported by both mdp5 and dpu drivers */
++static const char *const msm_mdp5_dpu_migration[] = {
++	NULL,
++};
++
++bool msm_disp_drv_should_bind(struct device *dev, bool dpu_driver)
++{
++	/* If it is not an MDP5 device, do not try MDP5 driver */
++	if (!of_device_is_compatible(dev->of_node, "qcom,mdp5"))
++		return dpu_driver;
++
++	/* If it is not in the migration list, use MDP5 */
++	if (!of_device_compatible_match(dev->of_node, msm_mdp5_dpu_migration))
++		return !dpu_driver;
++
++	return prefer_mdp5 ? !dpu_driver : dpu_driver;
++}
++#endif
++
+ /*
+  * We don't know what's the best binding to link the gpu with the drm device.
+  * Fow now, we just hunt for all the possible gpus that we support, and add them
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index 6eeb3517c3e4..4fee19549cc8 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -571,5 +571,6 @@ int msm_drv_probe(struct device *dev,
+ 	int (*kms_init)(struct drm_device *dev));
+ void msm_drv_shutdown(struct platform_device *pdev);
+ 
++bool msm_disp_drv_should_bind(struct device *dev, bool dpu_driver);
+ 
+ #endif /* __MSM_DRV_H__ */
 -- 
 2.39.2
 
