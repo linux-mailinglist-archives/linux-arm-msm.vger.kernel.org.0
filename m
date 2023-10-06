@@ -2,69 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 558F87BC104
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 23:15:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E98C37BC109
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 23:17:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233585AbjJFVPr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Oct 2023 17:15:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33974 "EHLO
+        id S233625AbjJFVRZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Oct 2023 17:17:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233639AbjJFVPq (ORCPT
+        with ESMTP id S233626AbjJFVRY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Oct 2023 17:15:46 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E026DBE
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 14:15:43 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-9b2cee55056so481489966b.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 14:15:43 -0700 (PDT)
+        Fri, 6 Oct 2023 17:17:24 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D402BF
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 14:17:22 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-9a645e54806so464332266b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 14:17:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696626942; x=1697231742; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696627041; x=1697231841; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=pguxjsrE6r696sdJh+EBa8vjPrUgEjJuICEkTOaYc5c=;
-        b=BlFg37eXaJ4W3JAHhpCGjwGrbrwoLLDh9/StfM/F3xTopS/wFXVjsKk1JDuwVzh4EX
-         GDViO64VGtVvq0LJK3619+U8gybsdmAu/z3whOb42AP3o6IQNYpyn65ZWkcherpRCUrK
-         FtZkrkajJeVOQsgjr5HDecIALplDklYgWyQLE9xJo8Q6fyw+xpXuSoArz6dgG97bk9KH
-         HRfMgDByyJ2Lg8YxceACQMDM2KtW06kEnYcdNKIb9WO4YfN1kirPIbJt4yDRR/mNiuHZ
-         24YNEgHcsnIxm6+WuABoH3X/22GFk+O9BxfQ61mI3G6FT8fTdq2dJ6nTayD2qQHhfk/8
-         2LXw==
+        bh=Wfo4YqiJevFxT2ANmYz9EDuFHXzL9pI4Z9ll56yG/84=;
+        b=FbGoBOTLgCodvlX9rJMGaVOF9zvtIJcApEkWtVpyjh4fXWM4tT1x9DsrqhnbrEOChl
+         +6u1jONlYpBjxv8FJ3jO+PP4Fn9r2GJutoLTadtjvntD6JWilT1bEZjWvW6PE0SeDKln
+         pT04Fn/W8vhR+WNoHZndM81BFN7wkaJwtBd+Ar0GNmAJ2MjbunZusTprUaQd3PFzxfO+
+         yokD8Ll5qCM6sxXLH2mpi3b2rRFrGZ4r25EE2OuCx+KkbHg+1juv+OYN5fZVJuqDEhWO
+         mkA5br80agm4nRWrsk7HbYue0lC3kVg1lGNqlFsD3DIIPeCK9tCrPhh6dlwlhDkxfrYB
+         P1TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696626942; x=1697231742;
+        d=1e100.net; s=20230601; t=1696627041; x=1697231841;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pguxjsrE6r696sdJh+EBa8vjPrUgEjJuICEkTOaYc5c=;
-        b=teZVHdsC1qlGDJQF6R7wWSbD+lL9nWLVqho6fr2zdW0o4BOGyUDTkE6qCpZOZHXXmb
-         2irrk0bwbCrVLR62076sILSu6Q1uo8FeqZhpzZCFjXtSiur4/eIQ6JIvHqfLURZmMtrW
-         Ch06H1xG8q9ZRhbzw3qOYb+xRpF1O726/lDTn8F9ljqupkGDZHJoigZg6J/24crGQ+Uy
-         iUfbOKJNKfX900Y1VvUkB+NAsmEIHRV826lZz9JLekfK8gF0Rx+lKJH8LOuoDQOXGsfK
-         ndUDiErQjk7ZVWlSYAu3r6cGTe7zsRbgI4SlrblJZDNv8PmkW8gopohTxrEvW4hig0Mz
-         uC8A==
-X-Gm-Message-State: AOJu0YyeXz52leT40yPn1pGP9H5Po5tKHxMxY8HrMFpt47ckfTHiN6Ue
-        FQPeCUY8IEHbjF+v8R4fAeHxBw==
-X-Google-Smtp-Source: AGHT+IHUo9wMeHL6vBi7PW9BifONMemPhh1IyuNZLiN170MfDjC4smWxHLZyGtiOcXlO6nb1TCoNFw==
-X-Received: by 2002:a17:906:73d8:b0:9ae:53af:c57f with SMTP id n24-20020a17090673d800b009ae53afc57fmr9471702ejl.65.1696626942359;
-        Fri, 06 Oct 2023 14:15:42 -0700 (PDT)
+        bh=Wfo4YqiJevFxT2ANmYz9EDuFHXzL9pI4Z9ll56yG/84=;
+        b=SY85fMGPZLdAtkx+Vbq4wgJD7bOwC4duToKQXTl6dUgK0GlYKxogEwjs43cXZ4bHEV
+         I46i4sUUTfRiSIxyC6rZs20H+eSQNv0cKkA+uXdJkvdFoS6xopG3GYodY8+719eQmw3z
+         Gj+vOPm11kiuRGxUctU39OSu70kLTm6T7EuX6Y5nYLy31CxTzf5vglIo3ud4setEtFJr
+         b1d5sPzpm1chvOL2W/ssgE/O9sYcP63mZzxlrHoexknd8WOFZP3GVYIJKDSbGRE7BLss
+         dquSFFvbn6PhpCtiYdrQWhIoqJ6x1K1h8cviGg6iu5Hah1NwJn1HxLhkfe+tnj4a/rfU
+         yKzA==
+X-Gm-Message-State: AOJu0YxNntJjXBfnA8rAoIGryHCi4HuCcqKLAbHqHnuXihuh9jUjdYwQ
+        Svdb6/Ce5lnBY6LVt0txKnSFehnpC6F7OXlokx0=
+X-Google-Smtp-Source: AGHT+IFz7Exggb0Hk5ZqcIG41am7jZ1Zh8hXBRSO86I47AJeQN9uZz7BLF/6xZNFBNRzUhW+/WrjIg==
+X-Received: by 2002:a17:906:ef90:b0:9b8:8f9e:1827 with SMTP id ze16-20020a170906ef9000b009b88f9e1827mr7268312ejb.74.1696627040881;
+        Fri, 06 Oct 2023 14:17:20 -0700 (PDT)
 Received: from [192.168.200.140] (178235177147.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.147])
-        by smtp.gmail.com with ESMTPSA id ca9-20020a170906a3c900b009ae587ce128sm3414983ejb.216.2023.10.06.14.15.41
+        by smtp.gmail.com with ESMTPSA id ca9-20020a170906a3c900b009ae587ce128sm3414983ejb.216.2023.10.06.14.17.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Oct 2023 14:15:41 -0700 (PDT)
-Message-ID: <9b7744bf-d42c-4922-85e8-ca4777f313a7@linaro.org>
-Date:   Fri, 6 Oct 2023 23:15:40 +0200
+        Fri, 06 Oct 2023 14:17:20 -0700 (PDT)
+Message-ID: <45982c83-07d5-4ffa-8f29-5e6a379b222c@linaro.org>
+Date:   Fri, 6 Oct 2023 23:17:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 2/2] regulator: qcom_smd: Disable unused regulators
+Subject: Re: [PATCH v4 1/3] PCI: qcom: Use PCIE_SPEED2MBS_ENC() macro for
+ encoding link speed
 Content-Language: en-US
-To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
-        Mark Brown <broonie@kernel.org>
-Cc:     Liam Girdwood <lgirdwood@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Stephan Gerhold <stephan@gerhold.net>
-References: <20231004-reg-smd-unused-v1-0-5d682493d555@kernkonzept.com>
- <20231004-reg-smd-unused-v1-2-5d682493d555@kernkonzept.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        lpieralisi@kernel.org, kw@linux.com
+Cc:     andersson@kernel.org, bhelgaas@google.com,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, abel.vesa@linaro.org
+References: <20231004164430.39662-1-manivannan.sadhasivam@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -101,7 +99,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231004-reg-smd-unused-v1-2-5d682493d555@kernkonzept.com>
+In-Reply-To: <20231004164430.39662-1-manivannan.sadhasivam@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -114,41 +112,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4.10.2023 16:17, Stephan Gerhold wrote:
-> The RPM firmware on Qualcomm platforms does not provide a way to check
-> if a regulator is on during boot using the SMD interface. If the
-> regulators are already on during boot and Linux does not make use of
-> them they will currently stay enabled forever. The regulator core does
-> not know these regulators are on and cannot clean them up together with
-> the other unused regulators.
+On 4.10.2023 18:44, Manivannan Sadhasivam wrote:
+> Instead of hardcoding the link speed in MBps, use existing
+> PCIE_SPEED2MBS_ENC() macro that does the encoding of the link speed for us.
+> Also, let's Wrap it with QCOM_PCIE_LINK_SPEED_TO_BW() macro to do the
+> conversion to ICC speed.
 > 
-> Fix this by setting the initial enable state to -EINVAL similar to
-> qcom-rpmh-regulator.c. The regulator core will then also explicitly
-> disable all unused regulators with unknown status.
+> This eliminates the need for a switch case in qcom_pcie_icc_update() and
+> also works for future Gen speeds without any code modifications.
 > 
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+> Suggested-by: Bjorn Helgaas <bhelgaas@google.com>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
-> NOTE: This has a slight potential of breaking boards that rely on having
-> unused regulators permanently enabled (without regulator-always-on).
-> However, this is always a mistake in the device tree so it's probably
-> better to risk some breakage now, add the missing regulators and avoid
-> this problem for all future boards.
-> ---
->  drivers/regulator/qcom_smd-regulator.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
-> index f53ada076252..0bbfba2e17ff 100644
-> --- a/drivers/regulator/qcom_smd-regulator.c
-> +++ b/drivers/regulator/qcom_smd-regulator.c
-> @@ -53,14 +53,14 @@ static int rpm_reg_write_active(struct qcom_rpm_reg *vreg)
->  		reqlen++;
->  	}
->  
-> -	if (vreg->uv_updated && vreg->is_enabled) {
-> +	if (vreg->uv_updated && vreg->is_enabled > 0) {
-At a quick glance, are there any states for this value, other
-than 0 and 1? This is not the regulator_ops->is_enabled, but
-qcom_rpm_reg->is_enabled.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
