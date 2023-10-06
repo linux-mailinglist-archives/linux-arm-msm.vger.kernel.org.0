@@ -2,76 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 129497BC115
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 23:21:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE4BC7BC139
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Oct 2023 23:39:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233522AbjJFVVw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Oct 2023 17:21:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58486 "EHLO
+        id S233692AbjJFVjF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Oct 2023 17:39:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233426AbjJFVVw (ORCPT
+        with ESMTP id S233696AbjJFVjD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Oct 2023 17:21:52 -0400
-Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 546A1BD
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 14:21:50 -0700 (PDT)
-Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-5a200028437so32305307b3.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 14:21:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696627309; x=1697232109; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=T4ChuHX9Ob071qInr4wxaM7NUlx3XF/xti/7NEFhsNI=;
-        b=zBiYODHO8iRYAeISS7f26r7ZuBxCdvXPXm+NtRC4ZjVC8nfl9M/NyOV9Lf/GKmCfeD
-         ZANbY+EmwqeATqBEjIDiGqh+i7xe00FtJ+QFtf/twI8Qe7B7QP7/OYWaXQJTA6zewrVG
-         x86eAhB8mRtDQ5765Dq1fdnconJNOk0nt/JJzgtNkCRVUpQHF+CVPQgq3fLY3b3hMtUn
-         01w37Gt2v2sQimteaMEMcv++ATnsC4936fUY/GBpyqbHWK0HRJfbJu5fKLec/hDYQQPo
-         ZzXX5KqOEhikY4dz3iPyxUMxblKb6IyKjBCVpNdmGmV9+k8B4hMSUzPPLI4tIiFBZTIG
-         Kvhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696627309; x=1697232109;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=T4ChuHX9Ob071qInr4wxaM7NUlx3XF/xti/7NEFhsNI=;
-        b=Pq8YkUCzfCQyysMZHzbiY4rE4c2zG/S8lZkq8gbp1ccKyf0oDIqw6AFOD5WRw3x/0E
-         difnJybk0Z75UvwOjfBrV8KPlsh7cWbf4NogFchSL2vRq2YSjghqQ6V72gj0bPsLRV1F
-         mnhWCf7BMvGYzY5pKdgi4M04GF0CwZaFDoMPwrliawVGsT2CiXOYa5mfvQJJiDBQziZ+
-         znsSxLBVNnNPkX/0F1T++JhYK//hd7nJJyQgZjBhDwKzLhxj4n4Dj8ZP4YuVTjo2s4iT
-         o8IgbordSfRX68tm441xD10QQKrsB9QKlOo43u60kc10V5QQpL9+P3aEGQxWWYMNfhhf
-         H5QA==
-X-Gm-Message-State: AOJu0YxWs45x7uSywcXzrpIemrZ+b2VAbPr+r38+75nr1xNtiAEac+0e
-        lmkKxQBD8SHTaM0sUKCBCSaR3vVwMerc9E3PRBSNfg==
-X-Google-Smtp-Source: AGHT+IFu0Uz4vNYYVIAQ7YBqzeP3hYcW1lgde8NHhjHsjXqajig+fqhW8r8e0hxBb0+/iWjuHnkmRklr6+1ndbU3y5c=
-X-Received: by 2002:a81:6c13:0:b0:576:93f1:d118 with SMTP id
- h19-20020a816c13000000b0057693f1d118mr9808606ywc.2.1696627309483; Fri, 06 Oct
- 2023 14:21:49 -0700 (PDT)
+        Fri, 6 Oct 2023 17:39:03 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C71D6F4;
+        Fri,  6 Oct 2023 14:39:01 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 396L7Je4018334;
+        Fri, 6 Oct 2023 21:38:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=cLamHiseiKqgJ457eYhm61noU3jj8kTfINBfQYfEYQw=;
+ b=GfRwGTBKsXyIcNS00dZQEbD9N47LTfpHTKrPHa7qqxxBRMQtoMnSMDCRGG9mKy6WL3C3
+ 5FxMaHLwp2JaK4W26c+qEK3oV9JsKL28rs+5Ryb2U4EXKhJEaX5xSW4i8bttUq3+c1aa
+ i7RocF/LVQgiz0mKl613tMm6wWUTdrhxC9r9eh+dXwi+S2cN7NVRKPabt45Qx8gLs6gG
+ Cr7Zzd4tvM78ftXMPWguDP+eqWI4u9AMeWBThAPRrupdGQuDCC9uz1AQG5ALYmEYJgVG
+ WC5CN+XVauLXuUQ5M/JqoMlQq3irlb/BdSKDkZkCMXtSIGg0Xb0HQ32ACg266F7vqRWJ JQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tjgc69fmy-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 06 Oct 2023 21:38:49 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 396Lcmik014597
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 6 Oct 2023 21:38:48 GMT
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.36; Fri, 6 Oct 2023 14:38:47 -0700
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <andersson@kernel.org>
+CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
+        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v6 0/7] incorporate pm runtime framework and eDP clean up
+Date:   Fri, 6 Oct 2023 14:38:31 -0700
+Message-ID: <1696628318-15095-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-References: <20230825091234.32713-1-quic_devipriy@quicinc.com>
- <20230825091234.32713-6-quic_devipriy@quicinc.com> <CAA8EJpr+Wwgot-PDRtj-LVi79aD13B9WVREmjTXiR-8XEEx-rQ@mail.gmail.com>
- <652b55cc-87dd-46d1-e480-e25f5f22b8d8@quicinc.com> <a4c9baae-f328-22b5-48d7-fc7df0b62a79@quicinc.com>
- <CAA8EJpq0uawrOBHA8XHygEpGYF--HyxJWxKG44iiFdAZZz7O2w@mail.gmail.com>
- <45f96567-553c-9214-eb7e-c75c6e09d78b@quicinc.com> <65b030c6-6fab-53ea-2774-48698905dd96@quicinc.com>
- <CAA8EJprSw4MGQKh01mZ5x5rBcRpgD7t4ph2617RhpR2Qg5SB=g@mail.gmail.com> <43aee0f9-3a83-3b90-5e3d-13a935f41b47@quicinc.com>
-In-Reply-To: <43aee0f9-3a83-3b90-5e3d-13a935f41b47@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 7 Oct 2023 00:21:37 +0300
-Message-ID: <CAA8EJppabK8j9T40waMv=t-1aksXfqJibWuS41GhruzLhpatrg@mail.gmail.com>
-Subject: Re: [PATCH V2 5/7] clk: qcom: Add NSS clock Controller driver for IPQ9574
-To:     Devi Priya <quic_devipriy@quicinc.com>
-Cc:     andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
-        richardcochran@gmail.com, arnd@arndb.de, geert+renesas@glider.be,
-        nfraprado@collabora.com, rafal@milecki.pl, peng.fan@nxp.com,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, netdev@vger.kernel.org,
-        quic_saahtoma@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: V9YwkkGC-DilBJ-zewEcK7DFs9sgWcqt
+X-Proofpoint-GUID: V9YwkkGC-DilBJ-zewEcK7DFs9sgWcqt
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-06_15,2023-10-06_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ lowpriorityscore=0 malwarescore=0 bulkscore=0 priorityscore=1501
+ mlxlogscore=762 impostorscore=0 adultscore=0 spamscore=0 phishscore=0
+ mlxscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310060166
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,183 +79,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 5 Oct 2023 at 12:56, Devi Priya <quic_devipriy@quicinc.com> wrote:
->
->
->
-> On 10/5/2023 12:49 PM, Dmitry Baryshkov wrote:
-> > On Thu, 5 Oct 2023 at 09:26, Devi Priya <quic_devipriy@quicinc.com> wrote:
-> >>
-> >>
-> >>
-> >> On 9/22/2023 5:31 PM, Devi Priya wrote:
-> >>>
-> >>>
-> >>> On 9/20/2023 1:50 PM, Dmitry Baryshkov wrote:
-> >>>> On Wed, 20 Sept 2023 at 09:39, Devi Priya <quic_devipriy@quicinc.com>
-> >>>> wrote:
-> >>>>>
-> >>>>>
-> >>>>>
-> >>>>> On 9/12/2023 7:38 PM, Devi Priya wrote:
-> >>>>>>
-> >>>>>>
-> >>>>>> On 8/25/2023 5:14 PM, Dmitry Baryshkov wrote:
-> >>>>>>> On Fri, 25 Aug 2023 at 12:15, Devi Priya <quic_devipriy@quicinc.com>
-> >>>>>>> wrote:
-> >>>>>>>>
-> >>>>>>>> Add Networking Sub System Clock Controller(NSSCC) driver for ipq9574
-> >>>>>>>> based
-> >>>>>>>> devices.
-> >>>>>>>>
-> >>>>>>>> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
-> >>>>>>>> ---
-> >>>>>>>>     Changes in V2:
-> >>>>>>>>            - Added depends on ARM64 || COMPILE_TEST in Kconfig
-> >>>>>>>>            - Added module_platform_driver
-> >>>>>>>>            - Dropped patch [2/6] - clk: qcom: gcc-ipq9574: Mark nssnoc
-> >>>>>>>> clocks as critical
-> >>>>>>>>               & added pm_clk for nssnoc clocks
-> >>>>>>>>            - Updated the uniphy clock names
-> >>>>>>>>
-> >>>>>>>>     drivers/clk/qcom/Kconfig         |    7 +
-> >>>>>>>>     drivers/clk/qcom/Makefile        |    1 +
-> >>>>>>>>     drivers/clk/qcom/nsscc-ipq9574.c | 3109
-> >>>>>>>> ++++++++++++++++++++++++++++++
-> >>>>>>>>     3 files changed, 3117 insertions(+)
-> >>>>>>>>     create mode 100644 drivers/clk/qcom/nsscc-ipq9574.c
-> >>>>>>>>
-> >>>>>>>> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-> >>>>>>>> index bd9bfb11b328..3ecc11e2c8e3 100644
-> >>>>>>>> --- a/drivers/clk/qcom/Kconfig
-> >>>>>>>> +++ b/drivers/clk/qcom/Kconfig
-> >>>>>>>> @@ -203,6 +203,13 @@ config IPQ_GCC_9574
-> >>>>>>>>              i2c, USB, SD/eMMC, etc. Select this for the root clock
-> >>>>>>>>              of ipq9574.
-> >>>>>>>>
-> >>>>>>>> +config IPQ_NSSCC_9574
-> >>>>>>>> +       tristate "IPQ9574 NSS Clock Controller"
-> >>>>>>>> +       depends on ARM64 || COMPILE_TEST
-> >>>>>>>> +       depends on IPQ_GCC_9574
-> >>>>>>>> +       help
-> >>>>>>>> +         Support for NSS clock controller on ipq9574 devices.
-> >>>>>>>> +
-> >>>>>>>>     config MSM_GCC_8660
-> >>>>>>>>            tristate "MSM8660 Global Clock Controller"
-> >>>>>>>>            depends on ARM || COMPILE_TEST
-> >>>>>>>> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-> >>>>>>>> index 4790c8cca426..3f084928962e 100644
-> >>>>>>>> --- a/drivers/clk/qcom/Makefile
-> >>>>>>>> +++ b/drivers/clk/qcom/Makefile
-> >>>>>>>> @@ -30,6 +30,7 @@ obj-$(CONFIG_IPQ_GCC_6018) += gcc-ipq6018.o
-> >>>>>>>>     obj-$(CONFIG_IPQ_GCC_806X) += gcc-ipq806x.o
-> >>>>>>>>     obj-$(CONFIG_IPQ_GCC_8074) += gcc-ipq8074.o
-> >>>>>>>>     obj-$(CONFIG_IPQ_GCC_9574) += gcc-ipq9574.o
-> >>>>>>>> +obj-$(CONFIG_IPQ_NSSCC_9574)   += nsscc-ipq9574.o
-> >>>>>>>>     obj-$(CONFIG_IPQ_LCC_806X) += lcc-ipq806x.o
-> >>>>>>>>     obj-$(CONFIG_MDM_GCC_9607) += gcc-mdm9607.o
-> >>>>>>>>     obj-$(CONFIG_MDM_GCC_9615) += gcc-mdm9615.o
-> >>>>>>>> diff --git a/drivers/clk/qcom/nsscc-ipq9574.c
-> >>>>>>>> b/drivers/clk/qcom/nsscc-ipq9574.c
-> >>>>>>>> new file mode 100644
-> >>>>>>>> index 000000000000..65bdb449ae5f
-> >>>>>>>> --- /dev/null
-> >>>>>>>> +++ b/drivers/clk/qcom/nsscc-ipq9574.c
-> >>>>>>>> @@ -0,0 +1,3109 @@
-> >>>>>>>> +// SPDX-License-Identifier: GPL-2.0-only
-> >>>>>>>> +/*
-> >>>>>>>> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
-> >>>>>>>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights
-> >>>>>>>> reserved.
-> >>>>>>>> + */
-> >>>>>>>> +
-> >>>>>>>> +#include <linux/clk-provider.h>
-> >>>>>>>> +#include <linux/err.h>
-> >>>>>>>> +#include <linux/kernel.h>
-> >>>>>>>> +#include <linux/module.h>
-> >>>>>>>> +#include <linux/of.h>
-> >>>>>>>> +#include <linux/of_device.h>
-> >>>>>>>> +#include <linux/regmap.h>
-> >>>>>>>> +#include <linux/pm_clock.h>
-> >>>>>>>> +#include <linux/pm_runtime.h>
-> >>>>>>>> +
-> >>>>>>>> +#include <dt-bindings/clock/qcom,ipq9574-nsscc.h>
-> >>>>>>>> +#include <dt-bindings/reset/qcom,ipq9574-nsscc.h>
-> >>>>>>>> +
-> >>>>>>>> +#include "clk-alpha-pll.h"
-> >>>>>>>> +#include "clk-branch.h"
-> >>>>>>>> +#include "clk-pll.h"
-> >>>>>>>> +#include "clk-rcg.h"
-> >>>>>>>> +#include "clk-regmap.h"
-> >>>>>>>> +#include "clk-regmap-divider.h"
-> >>>>>>>> +#include "clk-regmap-mux.h"
-> >>>>>>>> +#include "common.h"
-> >>>>>>>> +#include "reset.h"
-> >>>>>>>> +
-> >>>>>>>> +/* Need to match the order of clocks in DT binding */
-> >>>>>>>> +enum {
-> >>>>>>>> +       DT_NSSNOC_NSSCC_CLK,
-> >>>>>>>> +       DT_NSSNOC_SNOC_CLK,
-> >>>>>>>> +       DT_NSSNOC_SNOC_1_CLK,
-> >>>>>>>
-> >>>>>>> Not using the index makes it seem that these clocks are not used,
-> >>>>>>> until one scrolls down to pm_clks.
-> >>>>>> Okay, got it
-> >>>>>>>
-> >>>>>>> BTW: The NSSNOC_SNOC clocks make it look like there is an interconnect
-> >>>>>>> here (not a simple NIU).
-> >>>>>>
-> >>>>>> Hi Dmitry, We are exploring on the ICC driver. In the meantime to
-> >>>>>> unblock PCIe/NSS changes getting merged, shall we use
-> >>>>>> regmap_update_bits
-> >>>>>> and turn on the critical NSSNOC clocks, ANOC & SNOC pcie clocks in the
-> >>>>>> probe function of the gcc driver itself as like sm8550 driver to get
-> >>>>>> the
-> >>>>>> changes merged?
-> >>>>>>
-> >>>>>> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/clk/qcom/gcc-sm8550.c#n3347
-> >>>>>
-> >>>>> Hi Dmitry,
-> >>>>> Just curious to know if we could send out the next series with the
-> >>>>> proposed approach if that holds good.
-> >>>>
-> >>>> The answer really depends on the structure of your hardware. The issue
-> >>>> is that once you commit the device bindings,you have to support them
-> >>>> forever. So, if you commit the NSS clock support without interconnects
-> >>>> in place, you have to keep this ANOC/SNOC/etc code forever, even after
-> >>>> you land the interconnect. So I'd suggest landing the icc driver first
-> >>>> (or at least implementing and sending to the mailing list), so that we
-> >>>> can see how all these pieces fit together.
-> >>>
-> >>> Hi Dmitry,
-> >>> Unlike MSM chipsets, IPQ chipsets does not have any use case wherein the
-> >>> NOC clocks have to be scaled. So if these clocks can be enabled in the
-> >>> probe, there is no need for an interconnect driver at all. The same
-> >>> applies to both ipq9574 and ipq5332 SoCs.
-> >>>
-> >>
-> >> Hi Dmitry,
-> >> Just curious to know if we can go ahead with the proposed solution of
-> >> enabling the NOC clocks in the probe as these clocks need not be scaled
-> >> in IPQ chipsets & hence there would be no need for an ICC driver in
-> >> ipq9574 & ipq5332 targets.
-> >
-> > In the probe of which driver?
-> GCC driver of ipq9574 & ipq5332 targets.
+The purpose of this patch series is to incorporate pm runtime framework
+into MSM eDP/DP driver so that eDP panel can be detected by DRM eDP panel
+driver during system probe time. During incorporating procedure, original
+customized pm realted fucntions, such as dp_pm_prepare(), dp_pm_suspend(),
+dp_pm_resume() and dp_pm_prepare(), are removed and replaced with functions
+provided by pm runtiem framework such as pm_runtime_force_suspend() and
+pm_runtime_force_resume(). In addition, both eDP aux-bus and irq handler
+are bound at system probe time too.
 
-Would you need to handle these clocks additionally in the
-suspend/resume path? Will this increase the power consumption of the
-board?
+Kuogee Hsieh (7):
+  drm/msm/dp: tie dp_display_irq_handler() with dp driver
+  drm/msm/dp: rename is_connected with link_ready
+  drm/msm/dp: use drm_bridge_hpd_notify() to report HPD status changes
+  drm/msm/dp: move parser->parse() and dp_power_client_init() to probe
+  drm/msm/dp: incorporate pm_runtime framework into DP driver
+  drm/msm/dp: delete EV_HPD_INIT_SETUP
+  drm/msm/dp: move of_dp_aux_populate_bus() to eDP probe()
 
-Generally, I'd say this looks like a bad idea. Consider all the
-troubles we are undergoing now while sorting out the NIU clocks on RPM
-and RPMH platforms.
-So, unless you are 100% sure that this is a permanent solution (like
-AHB clocks being always on), I'd kindly suggest implementing the NoC
-attachment properly. In the end, other Qualcomm platforms use ICC
-drivers, so by following this pattern we will have more common code
-paths.
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c |   4 -
+ drivers/gpu/drm/msm/dp/dp_aux.c         |  39 +++-
+ drivers/gpu/drm/msm/dp/dp_display.c     | 319 +++++++++++---------------------
+ drivers/gpu/drm/msm/dp/dp_display.h     |   3 +-
+ drivers/gpu/drm/msm/dp/dp_drm.c         |  14 +-
+ drivers/gpu/drm/msm/dp/dp_power.c       |  16 --
+ drivers/gpu/drm/msm/dp/dp_power.h       |  11 --
+ drivers/gpu/drm/msm/msm_drv.h           |   5 -
+ 8 files changed, 147 insertions(+), 264 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.7.4
+
