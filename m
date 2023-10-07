@@ -2,75 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CADAC7BC331
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Oct 2023 02:02:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A66097BC346
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Oct 2023 02:25:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233879AbjJGAB6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Oct 2023 20:01:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37162 "EHLO
+        id S233934AbjJGAZk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Oct 2023 20:25:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233696AbjJGAB5 (ORCPT
+        with ESMTP id S233914AbjJGAZj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Oct 2023 20:01:57 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61A4BBF
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 17:01:55 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-504a7f9204eso3305890e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 17:01:55 -0700 (PDT)
+        Fri, 6 Oct 2023 20:25:39 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBA82C5
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Oct 2023 17:25:36 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2bfea381255so31815871fa.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Oct 2023 17:25:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696636913; x=1697241713; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1696638335; x=1697243135; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=vxBb/fEacQHB9wWPR/CpHe2sp5nl5oUFXbr6032DRc0=;
-        b=E0Y7ENeUyh3G4UF0x2h0Ge0U7B3KpdAa29nXhHlXAYzuEiKbsrmvQjssXSEIYWrOEB
-         p7OfiIue2tdmhWFOk8PdHX+FtnyiEAzfSDVUnFwk3me8kCZt6neaQX5gD12/aQT7Gna1
-         Z5cGVvMGUlz5VZFkYyTBhGAQCe5i8a5EPEIYVgmg2ggtUmIWukHseL/S+TD3DeJxp+WT
-         DZk3movrxL0Mh0O2EbCDZcFwrZnd8vX4i4oj22yqWhrq0GUbvpUJnP5i/KB917fXzywk
-         65q7jJaKGxB5H53XV1bGvOYMt2WukjIp5WVk+KbMVSlkAaGQDvioF2n6M0TXlv+rQNDF
-         USRg==
+        bh=WpRLrgCkogJnOQeDSxOWTaQXWFu0n6LSuhwjIbXl4Dg=;
+        b=inJNCSNqZBIqUjUN7P49MTBj3XCdeSQljf8AC9ZY8+A6pFImGXkstlz4aaY1ChrKzi
+         SCVMTTyjba6DhQXBzceEJO2XxbBrmtiXOUNq7jTOrzMUZupTsehm6ujgmTe/THG5oMxY
+         4ewboNZ+ysLxDQuODc3p/CsllrgLPxAdhAMQk7zHCRlLu3DiJ8Y7Hl5uGFjjZgrOh+r/
+         MC3QQXH611YaeTqa3bUFblK7Gh3K3FgT88L8zm75WQbTXruG6Iros57jG5vWLJmEPxtt
+         2SafMBKXeX2IL/tAdi4Tim/zrv7lLui1MvkQI/6e4bH6BhcTZ2iqkczSS3s/k5GWMHd7
+         /7wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696636913; x=1697241713;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1696638335; x=1697243135;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vxBb/fEacQHB9wWPR/CpHe2sp5nl5oUFXbr6032DRc0=;
-        b=DGm0kx9lkU/9sajPm2azRWsvGu31EzpPIMEgdEKEtrc8gHJjqaZBujkKQY65BIUkAu
-         nvzZQefCofyM/7G6Er/Kz62OGQRm31Yi/GVlEtqhRlqYbo3wZVOC2zWHHfStCeL5cBsZ
-         kSSuogYwNi4jZnJ93ck5zNGdnFe9Hulj8te3uNcEHslHruaXYtYPidyRWD3HRrU4PygR
-         uTb4F5U2HlrqLksANYO2bqjvS8D+JcGWcR0DqiAK7XSyqvLZGw7UVNdG+CnxizjkzUt8
-         OQL7eOX5uaUEE4gS1bmQw12U4qkaOJYf5NIczD7olVhoM1gV5W/Tc65vc8k85kXNDrbE
-         9y3Q==
-X-Gm-Message-State: AOJu0Yx5sAEJro38LQT+o2BqGaER4xl0zOOaBOufGKiIXvWO1l5WdwoV
-        voR22sEygAlixuTUrqdMT8IwXA==
-X-Google-Smtp-Source: AGHT+IHAEf2yoq/ewBVbR7rd/U7LE53ZFo8um+Ru4U3sr/d4iwC2DVJ6OZ5Ld2siYgTEFcBVVOV+Kg==
-X-Received: by 2002:a05:6512:3256:b0:4fd:c715:5667 with SMTP id c22-20020a056512325600b004fdc7155667mr6889212lfr.20.1696636913647;
-        Fri, 06 Oct 2023 17:01:53 -0700 (PDT)
+        bh=WpRLrgCkogJnOQeDSxOWTaQXWFu0n6LSuhwjIbXl4Dg=;
+        b=MlthgX943O9NL2owG9krF5YlPDaGq9NSOaiQE73boWVxwXCUXEi6Y4gt5WAIzelkx2
+         Bw9J6fGmlnPKLS6yWS6b/cynSwl8VIDOqYRIMpdljAo+b8ke5bZG26G7Tp16tm6DP0Dz
+         9L/0e3MmGuryy4Z+AGif5PilBmaYcNl+9qhepkXcYYvtR67Y8x7R1Bl8tih3FEzNGK0y
+         vD4QHyQ50ghkesmCBcCqLWy0H8pcWxP59xLoAbxMrJeUflJXorpbaxfrTqK9bvNdi0Gx
+         GjHUpzuYUoYylhMNsEbsXzt1D31I2wU7/EfijP2lqIvztdTKv7KyuS/k6995ezjRUeBS
+         9Qbg==
+X-Gm-Message-State: AOJu0YwVKYG0OztT8FA5jIhJwXBXGiSUcQmBdQpn0lGGH/Qe4YpZVwBg
+        qx4ZOcLXZn9FDxqqeDGhymbk0Q==
+X-Google-Smtp-Source: AGHT+IHCOIS0v55XWXNrxUE/JZh8wD4IyW0TFEJayt8WRillwe6P5vxbqNzcFrvOkfoExfHdUla+Gw==
+X-Received: by 2002:a2e:a281:0:b0:2bf:7905:12c3 with SMTP id k1-20020a2ea281000000b002bf790512c3mr6929264lja.40.1696638334926;
+        Fri, 06 Oct 2023 17:25:34 -0700 (PDT)
 Received: from [192.168.200.173] (178235177147.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.147])
-        by smtp.gmail.com with ESMTPSA id r3-20020a056512102300b005009c4ba3f0sm480526lfr.72.2023.10.06.17.01.50
+        by smtp.gmail.com with ESMTPSA id e17-20020a2e8ed1000000b002c128e45245sm992168ljl.23.2023.10.06.17.25.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Oct 2023 17:01:53 -0700 (PDT)
-Message-ID: <1d6f2ea9-d2bf-472d-98eb-1b711211ab59@linaro.org>
-Date:   Sat, 7 Oct 2023 02:01:50 +0200
+        Fri, 06 Oct 2023 17:25:34 -0700 (PDT)
+Message-ID: <123f7c9a-587c-410f-a3fe-545f10bd3d09@linaro.org>
+Date:   Sat, 7 Oct 2023 02:25:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V14 3/4] dt-bindings: mfd: qcom,tcsr: Add simple-mfd
- support for IPQ6018
+Subject: Re: [PATCH 2/6] dt-bindings: PCI: qcom: Add IPQ5108 SoC
 Content-Language: en-US
-To:     Devi Priya <quic_devipriy@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        agross@kernel.org, andersson@kernel.org, lee@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, thierry.reding@gmail.com,
-        ndesaulniers@google.com, trix@redhat.com, baruch@tkos.co.il,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, llvm@lists.linux.dev
-Cc:     linux-pwm@vger.kernel.org, u.kleine-koenig@pengutronix.de,
-        nathan@kernel.org
-References: <20231005033053.2626465-1-quic_devipriy@quicinc.com>
- <20231005033053.2626465-4-quic_devipriy@quicinc.com>
- <cfbc4805-c2e8-4dee-92bc-14d805dc2320@linaro.org>
- <cc5fef7a-d4d1-d725-36a5-86183bacc5a0@quicinc.com>
+To:     Nitheesh Sekar <quic_nsekar@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, lpieralisi@kernel.org, kw@linux.com,
+        robh@kernel.org, bhelgaas@google.com,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        vkoul@kernel.org, kishon@kernel.org, mani@kernel.org,
+        p.zabel@pengutronix.de, quic_srichara@quicinc.com,
+        quic_varada@quicinc.com, quic_ipkumar@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-phy@lists.infradead.org
+References: <20231003120846.28626-1-quic_nsekar@quicinc.com>
+ <20231003120846.28626-3-quic_nsekar@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -107,7 +104,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <cc5fef7a-d4d1-d725-36a5-86183bacc5a0@quicinc.com>
+In-Reply-To: <20231003120846.28626-3-quic_nsekar@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -120,23 +117,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5.10.2023 09:36, Devi Priya wrote:
+On 3.10.2023 14:08, Nitheesh Sekar wrote:
+> Add support for the PCIe controller on the Qualcomm
+> IPQ5108 SoC to the bindings.
 > 
-> 
-> On 10/5/2023 1:04 PM, Krzysztof Kozlowski wrote:
->> On 05/10/2023 05:30, Devi Priya wrote:
->>> Update the binding to include pwm as the child node to TCSR block and
->>> add simple-mfd support for IPQ6018.
->>>
->>> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
->>
->> Why did you send it twice? It's just brings confusion...
-> 
-> Sorry, kindly ignore. As the patches were not delivered to the list,
-> tried sending it again.
-In such cases, you should include RESEND in the subjects, like
-this:
+> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
+> ---
+[...]
 
-[RESEND PATCH v6 17/17] media: qcom: camss: Comment CSID dt_id field
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,pcie-ipq5018
+> +    then:
+> +      properties:
+> +        clocks:
+> +          minItems: 6
+> +          maxItems: 6
+> +        clock-names:
+> +          items:
+> +            - const: iface # PCIe to SysNOC BIU clock
+What's a BIU?
 
 Konrad
