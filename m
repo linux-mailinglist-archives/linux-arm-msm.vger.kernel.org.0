@@ -2,102 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 872167BC731
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Oct 2023 13:35:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F3DBA7BC814
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Oct 2023 16:01:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233669AbjJGLfE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 7 Oct 2023 07:35:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51048 "EHLO
+        id S1343929AbjJGOBC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 7 Oct 2023 10:01:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233662AbjJGLfD (ORCPT
+        with ESMTP id S1343627AbjJGOBB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 7 Oct 2023 07:35:03 -0400
-Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46B76109
-        for <linux-arm-msm@vger.kernel.org>; Sat,  7 Oct 2023 04:34:59 -0700 (PDT)
-Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-59f4f80d084so34639997b3.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Oct 2023 04:34:59 -0700 (PDT)
+        Sat, 7 Oct 2023 10:01:01 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 702DEB6;
+        Sat,  7 Oct 2023 07:01:00 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-406650da82bso27725625e9.3;
+        Sat, 07 Oct 2023 07:01:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696678498; x=1697283298; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=jSGXM9PaTj8Iqla8u7waxHlJMDX8neA9/CvBL3oU1vs=;
-        b=BZ0n+EIsozhQJCo+1e4QkR8gcdJOuLEovFba0HMuDHb/5c3CZXx9iYo4rSBeeYPHfN
-         9Jvi3SjDpj2j/H1B3ngDnMcsoml3nYZbKW/Jqz/MnTVFmcUcx28Jo+QVwxI4Nu1i8JW+
-         SN84x+oo0ZJa2FYf/A+EzK9Cw6IAzYqZYk/uBlWDKJfORR2jFs05C3xAkKFpjXzpz+oG
-         8YPSGBMElaLrCHs8hd/fSLLA2s6kZlPUyFmNweUoScWr74kySQ+4NzX849Cpkg7C3S1u
-         fncsSmAAUk4IQvPYu0FrVXnKXUNb+rOz5ZEKPZNquIZLi6lzrJVG862ButOYtxNCG+N0
-         7F2A==
+        d=gmail.com; s=20230601; t=1696687258; x=1697292058; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=JA8pNS1sjO+SvOcd9f6aWXsYXEvGmALJgnPRfN+5ZZI=;
+        b=UDnIXIB++NvBHV9SoQCxqfjMq56DJVSBM5z50WqruSFt0D/CpePQzTycSdXcn56RY9
+         yb0Pda6b8xa8ocvBAyV2onRN+4BkIfHmQs8KC56PExjaSekwU5dqcShBBlBLhfPfsDbZ
+         KD2/tNFdxSlyYrtiC4tZ9zknfNalf8Q3Ju3DyAQNCmZOtvtGTq/rpxvS+vlAU9Wu1ulz
+         mu/dTgJ/KMV3ax1Yoce5WqItvlX1Cz1wIwPnAyDoOy7OnPNly/6J27fac88phZlj40hy
+         1BsAfFggVIx1adAsOnDRgOsn+atTXIVoaAlOsOL1N7aTnw3PV+SylLuvOEhYz0GUwdR/
+         YyyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696678498; x=1697283298;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1696687258; x=1697292058;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=jSGXM9PaTj8Iqla8u7waxHlJMDX8neA9/CvBL3oU1vs=;
-        b=pDckIyM6Sxg0fWK0nkfgJmx3UTjHHtRijIvLyNZ3yDJ8SyJ5714/KsKT2/ChJaw2fu
-         +5JwhGoB7y8yWa7ldzBPdNGC49buJkktiaG/0Aikxcr8+Vqt2vjIqFUqVVhw8Q4ebN52
-         LPM0VNn9E5g31OpxJ+ESphZH+LV11o0A4hmjIq303EaXbLC9tTB3p8swKPmuvQLBPoJC
-         NNRSCpUc+h60qH6zJS35lH8hqqqybGg3OOGFDzZ9SMyixQ0wVie2TgBu399+0K1qjqiV
-         ckTYfVD2Xbv5SET/gMiy0XKxfa0OCj4BDZWI+LS8Nrv7TSXVLzSByMth/rG+zTGcdx9Y
-         fuDg==
-X-Gm-Message-State: AOJu0YzIG7NyChdAyQhxeVhDV8mAvxwJP6EZP51QDV9989H8vu8k0ttz
-        nvWv2JelILx3riiDMZy9/v/UwRkz5MFeVQ5Hj1D10evlEVS4oYaF4xpxPZF6
-X-Google-Smtp-Source: AGHT+IHKG97Lbeo+UsrdR1nmTFCgOqLGW2T7I5kZ+QxpgcEZM+JxKgbJ1VtzfFGONuwMVUMAzhcrWeC5dW14K+7atQ8=
-X-Received: by 2002:a81:7b8a:0:b0:59b:c805:de60 with SMTP id
- w132-20020a817b8a000000b0059bc805de60mr10110241ywc.45.1696678498310; Sat, 07
- Oct 2023 04:34:58 -0700 (PDT)
+        bh=JA8pNS1sjO+SvOcd9f6aWXsYXEvGmALJgnPRfN+5ZZI=;
+        b=U4HMmMIdFacu88IWGUoxvISys3ipvr0/rIhG++8yoSnhLMFtuD8g2MVSiwtmFhM9Cf
+         yfI7Z/qvx7eqnqbdbaW22O0NpA7CS4nbDvJi+85FjAQw6i81AHQ7nNvNvGGGhlnvsQf9
+         e2R+YHTz1ORL523Ry+AAsKqJyiqFRdPzA3GvT7DwGqnbKmlDTKxLxc/aIAAvfHxS8xLU
+         +9wWE7AQZsaw6rDg4lNRww+siNIVdz7ZT6rgghcputP38D4bH8tODqTYkrYzbRTNA8q+
+         TnQBxgRAgc08nnuj8IzeAkhijomH9tkEak353pVg/ex/yTKxI/J53Hh7DYCFxZhCAxcq
+         sSfQ==
+X-Gm-Message-State: AOJu0Yx/8z8FXZR5jcMYAdTuCe2r1ECjBb8RzJlVbA/ryrn0ycWod5Pu
+        o6rYt/pB5AsjUO2Yb1ie4UM=
+X-Google-Smtp-Source: AGHT+IGw5xKTNOEryOEGkm2GmWpAQMQ7XWxlFiwFmem0T2DEt25XxN9BwEq7jE9+BmH9cReNhqOUuQ==
+X-Received: by 2002:a1c:4c09:0:b0:401:b204:3b97 with SMTP id z9-20020a1c4c09000000b00401b2043b97mr10662857wmf.4.1696687258088;
+        Sat, 07 Oct 2023 07:00:58 -0700 (PDT)
+Received: from david-ryuzu.fritz.box ([77.22.112.104])
+        by smtp.googlemail.com with ESMTPSA id q8-20020a05600000c800b0032415213a6fsm4332043wrx.87.2023.10.07.07.00.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 07 Oct 2023 07:00:57 -0700 (PDT)
+From:   David Wronek <davidwronek@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Joe Mason <buddyjojo06@outlook.com>
+Cc:     cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-phy@lists.infradead.org, linux-scsi@vger.kernel.org,
+        hexdump0815@googlemail.com, ~postmarketos/upstreaming@lists.sr.ht,
+        phone-devel@vger.kernel.org, David Wronek <davidwronek@gmail.com>
+Subject: [PATCH 0/7] Add UFS support for SC7180/SM7125
+Date:   Sat,  7 Oct 2023 15:58:24 +0200
+Message-ID: <20231007140053.1731245-1-davidwronek@gmail.com>
+X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
-References: <1696632910-21942-1-git-send-email-quic_khsieh@quicinc.com> <1696632910-21942-5-git-send-email-quic_khsieh@quicinc.com>
-In-Reply-To: <1696632910-21942-5-git-send-email-quic_khsieh@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 7 Oct 2023 14:34:47 +0300
-Message-ID: <CAA8EJpocnfaoJ9syC8YahfwgRad7sCEhJx_njEVpkY66HSMvOA@mail.gmail.com>
-Subject: Re: [PATCH v7 4/7] drm/msm/dp: move parser->parse() and
- dp_power_client_init() to probe
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, andersson@kernel.org, quic_abhinavk@quicinc.com,
-        quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
-        marijn.suijten@somainline.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 7 Oct 2023 at 01:55, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
->
-> Original both parser->parse() and dp_power_client_init() are done at
-> dp_display_bind() since eDP population is done at binding time.
-> In the preparation of having eDP population done at probe() time,
-> move both function from dp_display_bind() to dp_display_probe().
->
-> Changes in v6:
-> -- move dp_power_client_deinit() to remove()
->
-> Changes in v5:
-> -- explain why parser->parse() and dp_power_client_init() are moved to
->    probe time
-> -- tear down sub modules if failed
->
-> Changes in v4:
-> -- split this patch out of "incorporate pm_runtime framework into DP
->    driver" patch
->
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/dp/dp_display.c | 24 +++++++++++++-----------
->  1 file changed, 13 insertions(+), 11 deletions(-)
+This patchset introduces UFS storage support for SC7180 and SM7125, as
+well as support for the Xiaomi Redmi Note 9S.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+David Wronek (6):
+  dt-bindings: ufs: qcom: Add SC7180 compatible string
+  dt-bindings: phy: Add QMP UFS PHY compatible for SC7180
+  dt-bindings: arm: qcom: Add Xiaomi Redmi Note 9S
+  phy: qcom: qmp-ufs: Add SC7180 support
+  arm64: dts: qcom: sc7180: Add UFS nodes
+  arm64: dts: qcom: sm7125-xiaomi-common: Add UFS nodes
+
+Joe Mason (1):
+  arm64: dts: qcom: Add support for Xiaomi Redmi Note 9S
+
+ .../devicetree/bindings/arm/qcom.yaml         |  1 +
+ .../phy/qcom,sc8280xp-qmp-ufs-phy.yaml        |  1 +
+ .../devicetree/bindings/ufs/qcom,ufs.yaml     |  2 +
+ arch/arm64/boot/dts/qcom/Makefile             |  1 +
+ arch/arm64/boot/dts/qcom/sc7180.dtsi          | 70 +++++++++++++++++++
+ .../boot/dts/qcom/sm7125-xiaomi-common.dtsi   | 16 +++++
+ .../boot/dts/qcom/sm7125-xiaomi-curtana.dts   | 16 +++++
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c       |  3 +
+ 8 files changed, 110 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sm7125-xiaomi-curtana.dts
 
 -- 
-With best wishes
-Dmitry
+2.42.0
+
