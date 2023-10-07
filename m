@@ -2,112 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0BA747BC6A5
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Oct 2023 12:09:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA8257BC72B
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Oct 2023 13:34:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343733AbjJGKJD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 7 Oct 2023 06:09:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37654 "EHLO
+        id S1343891AbjJGLej (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 7 Oct 2023 07:34:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234180AbjJGKJC (ORCPT
+        with ESMTP id S1343876AbjJGLee (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 7 Oct 2023 06:09:02 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE85593
-        for <linux-arm-msm@vger.kernel.org>; Sat,  7 Oct 2023 03:09:00 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-50325ce89e9so3824134e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Oct 2023 03:09:00 -0700 (PDT)
+        Sat, 7 Oct 2023 07:34:34 -0400
+Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E110CB9
+        for <linux-arm-msm@vger.kernel.org>; Sat,  7 Oct 2023 04:34:31 -0700 (PDT)
+Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-59e77e4f707so36887737b3.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Oct 2023 04:34:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696673339; x=1697278139; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KWGnWC1nRItaPmklKxpuYvpPobvm6bbDsTmyxg2t6ZQ=;
-        b=FB0urXCoJOUCihbq5Qa3FiZ2LBXgzEYnREC5SL9ujYOCl+XeI+v9UtS6uEvxThZlM6
-         aSvkFFXQkq4YrEMce2n4g5vHBJnsKj7vjaE9SlIYe+b7MoCifM5Uy85RjR7kV7CFA6S3
-         MNVuJ3VLl6kjpD6NrWUirMMk47zaDKK9frtknUNPP6v0CA4ezQi0x7ATVojfmZl2K32X
-         1ybAcSiVKedbMkgXYaUWzetWsAzATLmLK4bgUgwfzWRBkn835xglqaDnTRzjilDQnUI3
-         J44v6LFhjHhOuJiktw+zZ1bKT1e0txxgCJlzo5HVfqmUkK9rvydFODoXcSaMBrn4+Cem
-         Doiw==
+        d=linaro.org; s=google; t=1696678471; x=1697283271; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=BUL9y8tZlO44flYbnwVHExhq5hSpJ5SL0h4EKu3o8eg=;
+        b=AvYSkdEmvb7wNAaXpP39ClBhIPQCFsQdhUoi4STBjpqic9DaPo2XToXOTnrrUBNYEE
+         a0zF9J1V/xBTtoopgQ1f5YOkvLqGev66LuFLAMe6CbbSBn7Cpolu/Vp+msWJss5yyeRQ
+         ouKAcbLSDdI5qcWvx8T2eDVRC/XMzlOCOcGJpxm/gsApP03EQpsnOya6jTu1SaLBAI88
+         cHHdOC+SWjB1B319EWFDftBDsYkqRN9AheuEjFYnF7rvd/E9iA1nPf63dIA0PTC9IG9A
+         oTpwY9rd19ZuMpwTNFLHrlJtxzlmdvQfmwI9ZoTLCvxUd8es9w+VqV183MEH+2K96EXH
+         wX3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696673339; x=1697278139;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KWGnWC1nRItaPmklKxpuYvpPobvm6bbDsTmyxg2t6ZQ=;
-        b=TtbGd8YCnhRRJEPS9BpNRwq28W42M3YU2N9IMU2Vl/h7GV8oCXsik1TOwPyCXi+rpu
-         O6YydBFhu/SDQlCeczYqxA1DoWbzODj75kO0DVvWWB+zRR1ts//LLJ0uyEVz8XdTIeFS
-         ZVttmNj26fieaQ1e3rpKaNJ+EvVV3YldKu3LIUd6cvY11JuotarzGABbyjtZqTHFe/Un
-         RVqf809JV2Iv5lRThkFEl1TE72xMaLCHwDvJH6aDAjGm7M3gOGjHaz7fjE5GPgcYiADp
-         RLt1r1s+N9NDyISQ8eRPO86L6Dp9RbLPsTlvTgTD6rP6JP9dw/aF0SAdfBhNB94EBOxJ
-         Gmcg==
-X-Gm-Message-State: AOJu0Yx0heRRz2TCS2Vc9Ma57fOpbEPI3IWXI4M610x3TaolokA9wO41
-        J3fL5sUUDA5BD7JwiG4eCwY3TQ==
-X-Google-Smtp-Source: AGHT+IG0CVCgqlPv2wxsTilLt17MBMEobW1SOqaRN9HJEasIJ3z9GUosQp+zA7kkduMp8d0uOJsWaA==
-X-Received: by 2002:ac2:5e33:0:b0:502:9c4e:d46a with SMTP id o19-20020ac25e33000000b005029c4ed46amr6837138lfg.32.1696673338827;
-        Sat, 07 Oct 2023 03:08:58 -0700 (PDT)
-Received: from [172.20.10.4] (82-132-213-54.dab.02.net. [82.132.213.54])
-        by smtp.gmail.com with ESMTPSA id v7-20020adfedc7000000b003197efd1e7bsm3796811wro.114.2023.10.07.03.08.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Oct 2023 03:08:58 -0700 (PDT)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        =?utf-8?q?Rafa=C5=82_Mi=C5=82ecki?= <zajec5@gmail.com>
-Cc:     Miquel Raynal <miquel.raynal@bootlin.com>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Vincent Shih <vincent.sunplus@gmail.com>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Anson Huang <Anson.Huang@nxp.com>,
-        Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
-        Lala Lin <lala.lin@mediatek.com>,
-        Komal Bajaj <quic_kbajaj@quicinc.com>,
-        Kumar Thella <sthella@codeaurora.org>,
-        Keiji Hayashibara <hayashibara.keiji@socionext.com>,
-        linux-mtd@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org, asahi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org,
-        linux-rtc@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        =?utf-8?q?Rafa=C5=82_Mi=C5=82ecki?= <rafal@milecki.pl>
-In-Reply-To: <20231003064018.7502-1-zajec5@gmail.com>
-References: <20231003064018.7502-1-zajec5@gmail.com>
-Subject: Re: [PATCH V2] dt-bindings: nvmem: move deprecated cells binding
- to its own file
-Message-Id: <169667333484.74178.7121029453685069845.b4-ty@linaro.org>
-Date:   Sat, 07 Oct 2023 11:08:54 +0100
+        d=1e100.net; s=20230601; t=1696678471; x=1697283271;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BUL9y8tZlO44flYbnwVHExhq5hSpJ5SL0h4EKu3o8eg=;
+        b=B87SPFserECBByWfNTJXkW5nBBtdZ8w5VQegYLjXmtb6sDe3fcVrhjACjbfk8Kom9n
+         dnXP2ijbWPFOSgCEUFcAYsCdjqEs4Xlv9CVpPnwN6r98Iaw7TG+yTeJOJkYi1AsIr+LV
+         QBbDC6jcYnAFKhTFDjVZNd0u3fcV+KgJE+YGa40uP9h6rOWCaFVKAZtjIs5GSCrMJSE+
+         S0aAHSSRMqf3ozbR7O6ma71WX+Fvtxp7yTt5XqSKDLpVjlH3chU5RpTSihGVHaE9Qyal
+         creLwaFud/FWkW76dg57StinaZJ50drr1R5sLll0PjZRMTN9gob5hMqB76nXx5NyFp7i
+         f/ZQ==
+X-Gm-Message-State: AOJu0YyRB+Bbk7GfdfXwnsk7RSkhD+/zCl0UJBSmGFUl+TTu0djKl1wV
+        9WnpWXs2Zvh7Prvyl1ox8UeVN9zVlFTWYoEORsLavg==
+X-Google-Smtp-Source: AGHT+IED+W2CNRXknXxq1mbD1Zkyw3ORxCtJvNCcoL7lGlHItYDcn2L3EFqtw8GT5LNES0wEU6OG7NRtCXEl27Tj7+Q=
+X-Received: by 2002:a81:c24a:0:b0:589:f995:eb9f with SMTP id
+ t10-20020a81c24a000000b00589f995eb9fmr11364646ywg.45.1696678471076; Sat, 07
+ Oct 2023 04:34:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.12.2
+References: <1696632910-21942-1-git-send-email-quic_khsieh@quicinc.com> <1696632910-21942-6-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <1696632910-21942-6-git-send-email-quic_khsieh@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sat, 7 Oct 2023 14:34:18 +0300
+Message-ID: <CAA8EJpq=hCfPv0VgOYm5jXL98ncqwuwrTG7jBB2EgXYrY2C6qw@mail.gmail.com>
+Subject: Re: [PATCH v7 5/7] drm/msm/dp: incorporate pm_runtime framework into
+ DP driver
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, andersson@kernel.org, quic_abhinavk@quicinc.com,
+        quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
+        marijn.suijten@somainline.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -116,23 +73,76 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Sat, 7 Oct 2023 at 01:55, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+>
+> Currently DP driver is executed independent of PM runtime framework.
+> This leads msm eDP panel can not being detected by edp_panel driver
+> during generic_edp_panel_probe() due to AUX DPCD read failed at
+> edp panel driver. Incorporate PM runtime framework into DP driver so
+> that host controller's power and clocks are enable/disable through
+> PM runtime mechanism.  Once PM runtime framework is incorporated into
+> DP driver, waking up device from power up path is not necessary. Hence
+> remove it.
+>
+> After incorporating pm_runtime framework into eDP/DP driver,
+> dp_pm_suspend() to handle power off both DP phy and controller during
+> suspend and dp_pm_resume() to handle power on both DP phy and controller
+> during resume are not necessary. Therefore both dp_pm_suspend() and
+> dp_pm_resume() are dropped and replace with dp_pm_runtime_suspend() and
+> dp_pm_runtime_resume() respectively.
+>
+> Changes in v7:
+> -- add comments to dp_pm_runtime_resume()
+> -- add comments to dp_bridge_hpd_enable()
+> -- delete dp->hpd_state = ST_DISCONNECTED from dp_bridge_hpd_notify()
+>
+> Changes in v6:
+> -- delete dp_power_client_deinit(dp->power);
+> -- remove if (!dp->dp_display.is_edp) condition checkout at plug_handle()
+> -- remove if (!dp->dp_display.is_edp) condition checkout at unplug_handle()
+> -- add IRQF_NO_AUTOEN to devm_request_irq()
+> -- add enable_irq() and disable_irq() to pm_runtime_resume()/suspend()
+> -- del dp->hpd_state = ST_DISCONNECTED from dp_bridge_hpd_disable()
+>
+> Changes in v5:
+> -- remove pm_runtime_put_autosuspend feature, use pm_runtime_put_sync()
+> -- squash add pm_runtime_force_suspend()/resume() patch into this patch
+>
+> Changes in v4:
+> -- reworded commit text to explain why pm_framework is required for
+>    edp panel
+> -- reworded commit text to explain autosuspend is choiced
+> -- delete EV_POWER_PM_GET and PM_EV_POWER_PUT from changes #3
+> -- delete dp_display_pm_get() and dp_display_pm_Put() from changes #3
+> -- return value from pm_runtime_resume_and_get() directly
+> -- check return value of devm_pm_runtime_enable()
+> -- delete pm_runtime_xxx from dp_display_remove()
+> -- drop dp_display_host_init() from EV_HPD_INIT_SETUP
+> -- drop both dp_pm_prepare() and dp_pm_compete() from this change
+> -- delete ST_SUSPENDED state
+> -- rewording commit text to add more details regrading the purpose
+>    of this change
+>
+> Changes in v3:
+> -- incorporate removing pm_runtime_xx() from dp_pwer.c to this patch
+> -- use pm_runtime_resume_and_get() instead of pm_runtime_get()
+> -- error checking pm_runtime_resume_and_get() return value
+> -- add EV_POWER_PM_GET and PM_EV_POWER_PUT to handle HPD_GPIO case
+> -- replace dp_pm_suspend() with pm_runtime_force_suspend()
+> -- replace dp_pm_resume() with pm_runtime_force_resume()
+>
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 
-On Tue, 03 Oct 2023 08:40:18 +0200, Rafał Miłecki wrote:
-> Support for old NVMEM fixed cells was deprecated in favour of
-> "fixed-layout". It's still part of the nvmem.yaml though and may be
-> unknowingly used by new bindings added without much of analyze.
-> 
-> To make it more difficult to accidentally support old syntax move its
-> binding to separated file with "deprecated" in its name.
-> 
-> [...]
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Applied, thanks!
+> ---
+>  drivers/gpu/drm/msm/dp/dp_aux.c     |   5 +
+>  drivers/gpu/drm/msm/dp/dp_display.c | 177 ++++++++++++++----------------------
+>  drivers/gpu/drm/msm/dp/dp_power.c   |  16 ----
+>  drivers/gpu/drm/msm/dp/dp_power.h   |  11 ---
+>  4 files changed, 72 insertions(+), 137 deletions(-)
 
-[1/1] dt-bindings: nvmem: move deprecated cells binding to its own file
-      commit: 6d25308bb9deb10ae62bdeefdf2362072a5a4836
 
-Best regards,
 -- 
-Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-
+With best wishes
+Dmitry
