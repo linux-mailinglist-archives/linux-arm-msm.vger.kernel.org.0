@@ -2,71 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 260D87BCEB0
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Oct 2023 16:01:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A12C57BCEAE
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Oct 2023 16:01:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344827AbjJHOB2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S230332AbjJHOB2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Sun, 8 Oct 2023 10:01:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55438 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234334AbjJHOB1 (ORCPT
+        with ESMTP id S234336AbjJHOB1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Sun, 8 Oct 2023 10:01:27 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 295BA8F
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3769FC5
         for <linux-arm-msm@vger.kernel.org>; Sun,  8 Oct 2023 07:01:26 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2b9d07a8d84so46472081fa.3
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-50308217223so4611883e87.3
         for <linux-arm-msm@vger.kernel.org>; Sun, 08 Oct 2023 07:01:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696773683; x=1697378483; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696773684; x=1697378484; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=apniIjixKvqckL9Sm3hOvmNcpwUz/iON/HgK/A5yGAU=;
-        b=m5LZQ3Nn/NjXmbY5zQAGGoroZvU75CHl3WA4n8WZMOjPXUTqw1JDXGHOY9x7S2RvrB
-         v8M+RPLeu4SlJ3xm6Z2rUlBvJsG+XCVlCxLHn5QEnNNQE4EHpz116v7T1AbfwkIvVV1v
-         pP64DtLzBEn5q8IJ2iJqnhNAtADwUb25uG9zxGr4tKWZ7D6yTDO/5pChJUgrNpjJ6jn8
-         uFIYJomxi2wzlT+6mbNZkXJzNyklcHtSRBK3gi9V4GUKjHbfJEbRCRgXCaqVUHmori+2
-         BYJ3KGw8SbfXppPooeeN5MGRgp4Hh8Bdq9VWBzSC0vDNuHVf8hf15R/pD4cTtFLRghs6
-         qjlQ==
+        bh=zrbe2OEAhJijEGyQK+85gEV7qQdJqrY99QKDYQ+rxHc=;
+        b=Up2jrWKjPOqC92NI3lGibxGVRTjBckMgxtJiMYmlkgjKbuwGojczECZXAkNTurtnn8
+         cLOh2M373or1/r71b7u3QAfONZKyhYaPnF1tWr2TxMGNqmaTexZQ8j6srY0OTqSVAi0H
+         WlWA5LN5AQPWqXUJP98ghGN/SNJDw2FPdAgt59GL+nsVahv4CfaKLT0X5GOH5It5aWuJ
+         Xh+YNUOf4E8/wEzY14gD20dVsg0Zp8E7LIY4agC3w2L7wZI1BnEZWSTqQ8XgbuQ1HCUS
+         fM8WU2ZxZhEHEtpxxZiIHBCYXHiKyFNziCS7ZMFwXQkNDeIkk5waeyIgqJd5GWd12lcS
+         pwhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696773683; x=1697378483;
+        d=1e100.net; s=20230601; t=1696773684; x=1697378484;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=apniIjixKvqckL9Sm3hOvmNcpwUz/iON/HgK/A5yGAU=;
-        b=jioPX7Y7wvX1cQKxYAWv14Migr8i4h5eJ4z1Q34matXAYD/ftjKQ77bbyRQ5c3CkXK
-         0ANvIZiYhjsCJBkGWj6gffgx3ovM1XASCjq+YlBWTf3yGH/ikiCRtFVcA2sH51mzIPwU
-         bB8symGOaGU0trty+voD12tkJysZy45X2x2zp5MMK60ISsXqeT2NA+fJMphKOaP0/Mpj
-         M/2W5qjoqbd0k0qAMccsY6qRRoIaoRIZE2YA5tkLVPMKqF+zi/9uZK6xZDXXlkaG6xDB
-         UkkkKFotE+BGv/q/pvhLr4uS2AuSEXhNwl1+p0fmjP+I5EGSiikx07vdchHsb5HBDZyC
-         1teg==
-X-Gm-Message-State: AOJu0Yxb+DFm/ce36vF3slCql1e57EOL3EZGBkHnkGe8HS7oAQgbJNha
-        szEE7WTDWVS00khdOcDWOGulfw==
-X-Google-Smtp-Source: AGHT+IEyDzFGaiYy77HWqEHLP2FOooiZCpC/5v+tlr+lfavdl6lZ5i/lgD4uei9YtKP+WFzkew4kVA==
-X-Received: by 2002:a05:6512:32cd:b0:4fa:f96c:745f with SMTP id f13-20020a05651232cd00b004faf96c745fmr12756503lfg.38.1696773683615;
-        Sun, 08 Oct 2023 07:01:23 -0700 (PDT)
+        bh=zrbe2OEAhJijEGyQK+85gEV7qQdJqrY99QKDYQ+rxHc=;
+        b=RcTKRpVkITLb+MsnEbzgZNZNSnm9+RQteE06+q3GpK1nrLRWmyXSSmmDJzXgAo60No
+         bG1NOkfVWwQJhKla7arqc4c91ue/Yk1soIDYnA2v21+WxtDyJ5wr0M/IlIcz1/L5ixCh
+         n0u0V1QfL9nrTqjvDm66yPxFB2fblWufju1ysNp89oDXI2SLPfOl3iHF79KPpu0BOhf0
+         M80l2DQRuewh9P+3hife7zvjgaVvZyZveNiNwq/wQR95v4/DjD9snhq7gRtWJ7xqr9Av
+         GZH38AuznetdBQReh3ayWvzAVK6c3qNVPoRDXwI1XkgNdftSjPfgTae/B7J2sOJyHGQp
+         Z1aQ==
+X-Gm-Message-State: AOJu0YzyVOdS7nogBTeEnrxTK+HtZjbGORrIoZZCHwLEx6I81ibUQoZl
+        fgUwBGASptX7udsV2STL/CBuDw==
+X-Google-Smtp-Source: AGHT+IGhX63ME4hP/QjxMFDzFKLGVSIH9lhaSoXMWQNHOUIpoqTqxSJVWPkVFp9aDX3v7yMASthgLQ==
+X-Received: by 2002:a05:6512:2082:b0:503:2561:adbc with SMTP id t2-20020a056512208200b005032561adbcmr9582392lfr.64.1696773684439;
+        Sun, 08 Oct 2023 07:01:24 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id q14-20020ac24a6e000000b00504211d2a73sm1080455lfp.230.2023.10.08.07.01.22
+        by smtp.gmail.com with ESMTPSA id q14-20020ac24a6e000000b00504211d2a73sm1080455lfp.230.2023.10.08.07.01.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sun, 08 Oct 2023 07:01:23 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+To:     dri-devel@lists.freedesktop.org,
+        Jani Nikula <jani.nikula@intel.com>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Marijn Suijten <marijn.suijten@somainline.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v5 0/8] drm/msm/dpu: change interrupts code to make 0 be the no IRQ
-Date:   Sun,  8 Oct 2023 17:01:14 +0300
-Message-Id: <169677306919.2570646.15759097589934726278.b4-ty@linaro.org>
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>
+Subject: Re: [PATCH] drm/msm/dp: skip validity check for DP CTS EDID checksum
+Date:   Sun,  8 Oct 2023 17:01:15 +0300
+Message-Id: <169677306905.2570646.10307218692711830426.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230802100426.4184892-1-dmitry.baryshkov@linaro.org>
-References: <20230802100426.4184892-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230901142034.580802-1-jani.nikula@intel.com>
+References: <20230901142034.580802-1-jani.nikula@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -80,33 +78,21 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Wed, 02 Aug 2023 13:04:18 +0300, Dmitry Baryshkov wrote:
-> Having an explicit init of interrupt fields to -1 for not existing IRQs
-> makes it easier to forget and/or miss such initialisation, resulting in
-> a wrong interrupt definition.
+On Fri, 01 Sep 2023 17:20:34 +0300, Jani Nikula wrote:
+> The DP CTS test for EDID last block checksum expects the checksum for
+> the last block, invalid or not. Skip the validity check.
 > 
-> Instead shift all IRQ indices to turn '0' to be the non-existing IRQ.
-> 
-> Dependencies: [1]
+> For the most part (*), the EDIDs returned by drm_get_edid() will be
+> valid anyway, and there's the CTS workaround to get the checksum for
+> completely invalid EDIDs. See commit 7948fe12d47a ("drm/msm/dp: return
+> correct edid checksum after corrupted edid checksum read").
 > 
 > [...]
 
 Applied, thanks!
 
-[2/8] drm/msm/dpu: remove irq_idx argument from IRQ callbacks
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/a437d2ad57cd
-[3/8] drm/msm/dpu: extract dpu_core_irq_is_valid() helper
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/bd4c87f01ed9
-[4/8] drm/msm/dpu: add helper to get IRQ-related data
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/c22014a4f9d4
-[5/8] drm/msm/dpu: make the irq table size static
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/88910969b897
-[6/8] drm/msm/dpu: stop using raw IRQ indices in the kernel output
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/e44535d80deb
-[7/8] drm/msm/dpu: stop using raw IRQ indices in the kernel traces
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/4961180f7420
-[8/8] drm/msm/dpu: shift IRQ indices by 1
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/2ebf933742ec
+[1/1] drm/msm/dp: skip validity check for DP CTS EDID checksum
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/22e96e73182c
 
 Best regards,
 -- 
