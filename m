@@ -2,112 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A7FE7BD0E4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 00:26:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F41E7BD0FD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 00:46:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344789AbjJHW0Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Oct 2023 18:26:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57004 "EHLO
+        id S1344896AbjJHWqD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 Oct 2023 18:46:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344825AbjJHW0X (ORCPT
+        with ESMTP id S1344886AbjJHWqC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 Oct 2023 18:26:23 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BBC1CA
-        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Oct 2023 15:26:21 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-40566f89f6eso39048525e9.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Oct 2023 15:26:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696803979; x=1697408779; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=E5F6Ic134Yi1iysyJ6K232qeqhgAgSXNQ9anlaFp7+o=;
-        b=vp/BtA35HUCXhFv1symXXPDLhdZ6mZOEsEXQPQzAt0n8aoWbQTWQ+z0dsZ6Bx9a3lf
-         Hy7PDKdvA4/U3JDpqrUBJ11wb1LGd66K/1lLXkJvYLf5Hgwg+mEf1UPKEb6rxpFFQane
-         TwWi+ziNH/baQdFbYT061V4+kjplDeh8XWNJF9UNHbCiwSowvS/b3kvvtdr11qb5Sv6Q
-         O25CLXjSyoWEdMIPN+sUT7ouKLINxgj1xrFyLxqBoSm0AJgaTYvb5FOf2Px2/NhIIj1M
-         NF9bNY54zS8zyvYBaVQ82ov9XvPceTfubMhDBw16DDVXREaiqOjXp2Z5/Mn8oYhgxzwH
-         DVcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696803979; x=1697408779;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=E5F6Ic134Yi1iysyJ6K232qeqhgAgSXNQ9anlaFp7+o=;
-        b=i7zvDA8Qf66FnyP9Jcx+8sAseamzHbwNeYItVXHQTJgAuDAI6npDpfit8SMGNTeoI4
-         aq00gXtuyh6RHtZGrZnvu+8r/7FSrr5cpr/ABbI49XBB+4ydsX3hs1aIjEm8pFRHKUSk
-         TFyDCT5E1qZhiTVH1gS7uq/+HjXa+MbdL9NLtnfX9vR3viQfEnlCEngiA09xCHxqVijM
-         lKjUhC9b5zR8zHCV45BBhGLYD/u3GNPS3Z5EOI9NJhM3lWww8HJGYFLLF2McEcObmERs
-         WCF77cnCRc8jVVKdN9GFc2kEsFWbBvFjqWa7ng1/HcO70mXfGphJTNir8wAMyIletyan
-         YMDg==
-X-Gm-Message-State: AOJu0YzGYg+zLpJHz2IX23rUGhTmQ5ZUWPfk1VwkW6zxgWSLwb3auSjl
-        Wlk3aLNaJkHqWUfEVc3P7vM5A2zuhHVHzieE97lOHg==
-X-Google-Smtp-Source: AGHT+IE5Bwgw8Sv4XEbdHISWjLI6mywdMuzfaBhCFQkF9GkEp3SmKfDb1yrC+EDJeeO0eM6jYnFsqw==
-X-Received: by 2002:a05:600c:468d:b0:407:4944:76dc with SMTP id p13-20020a05600c468d00b00407494476dcmr1947380wmo.20.1696803979357;
-        Sun, 08 Oct 2023 15:26:19 -0700 (PDT)
-Received: from [192.168.100.102] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id n5-20020a05600c294500b003fc02e8ea68sm11615535wmd.13.2023.10.08.15.26.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 08 Oct 2023 15:26:18 -0700 (PDT)
-Message-ID: <18716c6a-93ea-43d5-ab55-43b3b86920ce@linaro.org>
-Date:   Sun, 8 Oct 2023 23:26:17 +0100
+        Sun, 8 Oct 2023 18:46:02 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1181AA3;
+        Sun,  8 Oct 2023 15:46:01 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A95C433C7;
+        Sun,  8 Oct 2023 22:45:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1696805160;
+        bh=kotJJ9gsZkQcnHWqrlxm2deUqRwlycTaO/tg2RqNNko=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=n2k3nv66A7YBlXrB+jn/PMmf6Kbwu1QoO5H+tphBlky4GMOjW4R7XqmXs/eNXcmr1
+         hk4vuH7fVWuNoawxFa3MyQCO871yng630/NymD5hLqsIbrp6D6U5byi4+F97ZINg2V
+         6rwvVDTbqifL2wF/faMWkaLEFQvPfkqhB7m77IVtYb2pBeU0Npu3q40mrz5lvuaYRr
+         ciqDwM3eNE/Z38lx+7CXnXA1RETJDcJ/4mJyLEVgCupZjXLLslt/Q8DNTQqzPn6s0q
+         YSCaeMuriz9y7ylXS8teEJ8gv2AsaNeXUzW2Q63zlLa7mMVD3MahYpIz2qXMGaxGzh
+         lVqAk/rR2bYFQ==
+Message-ID: <729f0d44-7db9-46d2-bdee-9a58022d9229@kernel.org>
+Date:   Mon, 9 Oct 2023 07:45:55 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] i2c: qcom-cci: Add sc8280xp compatible
+Subject: Re: [PATCH] clk: Use device_get_match_data()
+To:     Rob Herring <robh@kernel.org>,
+        Charles Keepax <ckeepax@opensource.cirrus.com>,
+        Richard Fitzgerald <rf@opensource.cirrus.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        David Lechner <david@lechnology.com>,
+        Sekhar Nori <nsekhar@ti.com>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Tero Kristo <kristo@kernel.org>
+Cc:     patches@opensource.cirrus.com, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-rockchip@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-omap@vger.kernel.org
+References: <20231006213959.334439-1-robh@kernel.org>
+From:   Chanwoo Choi <chanwoo@kernel.org>
 Content-Language: en-US
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     Andi Shyti <andi.shyti@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     agross@kernel.org, andersson@kernel.org, loic.poulain@linaro.org,
-        rfoss@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        todor.too@gmail.com, mchehab@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20231006120159.3413789-1-bryan.odonoghue@linaro.org>
- <20231006120159.3413789-3-bryan.odonoghue@linaro.org>
- <b8f2d7f1-16e2-4e6a-9c84-37da393f74a3@linaro.org>
- <20231008212824.cs6e6hc7zur67v6k@zenone.zhora.eu>
- <4fdfd283-234b-4c14-8db1-3feaf1fa8618@linaro.org>
-In-Reply-To: <4fdfd283-234b-4c14-8db1-3feaf1fa8618@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <20231006213959.334439-1-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/10/2023 23:13, Bryan O'Donoghue wrote:
-> On 08/10/2023 22:28, Andi Shyti wrote:
->> Hi Konrad,
->>
->>>> Add sc8280xp compatible with cci_v2_data parameters.
->>>>
->>>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>>> ---
->>> Drop this patch, it adds nothing useful
->>
->> what about the rest of the series?
->>
->> Could you please be a bit more explicative?
->>
->> Thanks,
->> Andi
+On 23. 10. 7. 06:39, Rob Herring wrote:
+> Use preferred device_get_match_data() instead of of_match_device() to
+> get the driver match data. With this, adjust the includes to explicitly
+> include the correct headers.
 > 
-> I think he means I can use the sm8250 or sm8450 compat string, which is 
-> true.
-> 
+> Signed-off-by: Rob Herring <robh@kernel.org>
 > ---
-> bod
+>  drivers/clk/clk-lochnagar.c             |  9 ++-------
+>  drivers/clk/davinci/da8xx-cfgchip.c     |  8 +++-----
+>  drivers/clk/davinci/pll.c               | 10 +++-------
+>  drivers/clk/davinci/psc.c               | 10 +++-------
+>  drivers/clk/qcom/gcc-msm8960.c          | 13 +++++--------
+>  drivers/clk/qcom/gcc-msm8974.c          | 10 +++-------
+>  drivers/clk/qcom/kpss-xcc.c             |  9 ++-------
+>  drivers/clk/qcom/krait-cc.c             | 14 +++++---------
+>  drivers/clk/qcom/mmcc-msm8960.c         | 16 +++++-----------
+>  drivers/clk/qcom/mmcc-sdm660.c          |  8 ++------
+>  drivers/clk/rockchip/clk-rk3399.c       |  9 ++-------
+>  drivers/clk/samsung/clk-exynos-clkout.c |  8 +++-----
+>  drivers/clk/ti/adpll.c                  | 14 ++++----------
+>  13 files changed, 42 insertions(+), 96 deletions(-)
+> 
 
-Tested, compat sm8250 works fine.
+For samsung exynos,
+Acked-by: Chanwoo Choi <cw00.choi@samsung.com>
 
----
-bod
+-- 
+Best Regards,
+Samsung Electronics
+Chanwoo Choi
+
