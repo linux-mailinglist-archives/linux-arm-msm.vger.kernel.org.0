@@ -2,74 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B8B087BCEB8
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Oct 2023 16:01:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D9B67BCEB9
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Oct 2023 16:01:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344842AbjJHOBd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Oct 2023 10:01:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55502 "EHLO
+        id S1344849AbjJHOBf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 Oct 2023 10:01:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344836AbjJHOBb (ORCPT
+        with ESMTP id S1344838AbjJHOBb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Sun, 8 Oct 2023 10:01:31 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A661CF
-        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Oct 2023 07:01:28 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-50567477b29so4785430e87.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Oct 2023 07:01:28 -0700 (PDT)
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E467D8
+        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Oct 2023 07:01:29 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-5043a01ee20so4420643e87.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Oct 2023 07:01:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696773686; x=1697378486; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696773687; x=1697378487; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PSMUdpgtTg04OpFZxfxSUvT4pwJGZAYPeTOexRIr+Ds=;
-        b=ZaF7WLvaSTRCyOqPouUAV/H36xzPfWUriPc01EHczkl4v1Dj/+6MKx/9Bsxl0LIJAZ
-         +oF2jlhvAJgw+J9jyipad4J090HJTUq1MfOlFM5dpf4IRnxlksS+GsfaSLj9VDoMaXlz
-         IW/eKNdCmjMMaRSTRF3f7E/oVAl2pmhNb7lTIOY4pb3w7grcNrNxsMDQLbPdvb+N9Igr
-         868V70ZH7LgZCw8z83IJxNjoh+UfnCQThZmDk4qApOog9VX53pq2oAL/J5+qieeurVgf
-         vRIcodLPxA7qZIaV0sNbXKSTN+2TBw3xpPUaAtA8MjELvxM/e6W3gB8XTe4+gLjuRVio
-         P9kg==
+         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zxakH265LpATzSTaf30OW9So30zUQfcE2yrNl/MhWDo=;
+        b=dU3x9p4iOX75EpYEqgQ37wy734/yJbCHn/7k5zGHeyOwquq/6Ip9SQoxWsEhlOvw1d
+         i9Xkb044JdQT3z/7Wwh4FY0OCZfcoW2jVHcagOhSR+7a2jZjzLqfmJp6P7kWEZe1x7JW
+         9Bb7wj/sednYz8K5bIkHrqJidBZVajOix86PmLCCMw7MBYKjGxm2xEDNiNP2gYVosH1R
+         HcxYpLqrqI6w9Q9gNo1GKDJMmkVjE0ur4n4kXfMfAN2Ht9koA6Vq0JU5QrbkThi2xzDq
+         il3T+hSVMzJBaZw4tcNEKoeysNez8vPJwqyvMWekikI40sFGIyhY3MqI4ze+3WrWXiGP
+         em+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696773686; x=1697378486;
+        d=1e100.net; s=20230601; t=1696773687; x=1697378487;
         h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=PSMUdpgtTg04OpFZxfxSUvT4pwJGZAYPeTOexRIr+Ds=;
-        b=o+I4+A4Yj6gRxEudL7ShNIsDU9vIT9q84Ez2gY6y8yibd0nXSIxsmkX5y9GBJ0/Efc
-         EMYrL8vFzK/vAO9BPS9kLngBPy5jZyA7zJqtrUYJUVHYmmq0irPxvtNmz66Iwx4gsisL
-         dB14+NybXb2jUen6HmbBww3A/HIdfkzI6mJgalE4GTiY7aYUvWPlJp8bEZ74UJL9QoqZ
-         L0tMQuXGj2/korJnD3yMRhKg0LyGVEiVxmdyWkT9f4LyQIkXt3FCmZL1Udfvq72fLu1P
-         3dGmY9/puk6qNk1Xm1n8N3zeb+bAeDHGamjXzDCcWiT37cAP1mMwannMRuhavedr7Cgd
-         mDRg==
-X-Gm-Message-State: AOJu0YxU+R0sWBpR03R1ouN+TnzJXlpfJV5BcDD5Yuy8em/iPEZVt59u
-        4MarKgnTHZJeODDsiENAkpX/SQ==
-X-Google-Smtp-Source: AGHT+IGxfVDd6z3b4aL3PVKq8C7Mjb21gUGAEM9IbcbsGG5OCtfSfwwara4kEgcUl8RPGr9RfAl4FA==
-X-Received: by 2002:ac2:4a81:0:b0:4fb:8585:eefe with SMTP id l1-20020ac24a81000000b004fb8585eefemr9557457lfp.57.1696773686418;
-        Sun, 08 Oct 2023 07:01:26 -0700 (PDT)
+        bh=zxakH265LpATzSTaf30OW9So30zUQfcE2yrNl/MhWDo=;
+        b=SUq3d4H3izkAiCqTApMupTZow/MBYPqrNqBs+gVNgReKPXoKRLdOsER2TAGQCexEo7
+         0L1DtZw48tGs+kpzj5WKfQbr+h5RGlwUj+rRVcfnmUHeoJNWvqBB6ldMXCj7lFkCA+mw
+         rUtEH9549r6RB0EBSSmMnWI5jyMJO9AOm8K+0XUD+6HFwpYbEzGlDrHPbtCgrNxviPnl
+         flCZ1ykjWBe1ZwNPuZp9urCg0WrvF3B7Xn6MGem17ygsN1mpTjxirT0pVKtHRvwvFQAs
+         sh2EpulOYbSs06/NwaSPPX1/54HI7XfPIBgppyhwTF8EGdwH3f55fd0Kjn+9iakcvqEl
+         B+uA==
+X-Gm-Message-State: AOJu0YxEnk2gDQhPMAavDapTApSgtVyUsUrMurkSYQYcaKDVJrO4mvwp
+        1VMYBHfsMJ8mNl1OOi//44sJeg==
+X-Google-Smtp-Source: AGHT+IEZhcTkbfnDMA0TmtMUY6GUYhyBTjDeQoEWBa7c/RqNiiO7pOQy12FcGXqIQaqK7WTV5qhK2g==
+X-Received: by 2002:a19:910c:0:b0:501:c1d4:cf68 with SMTP id t12-20020a19910c000000b00501c1d4cf68mr9460445lfd.15.1696773687355;
+        Sun, 08 Oct 2023 07:01:27 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id q14-20020ac24a6e000000b00504211d2a73sm1080455lfp.230.2023.10.08.07.01.25
+        by smtp.gmail.com with ESMTPSA id q14-20020ac24a6e000000b00504211d2a73sm1080455lfp.230.2023.10.08.07.01.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Oct 2023 07:01:25 -0700 (PDT)
+        Sun, 08 Oct 2023 07:01:26 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Rob Herring <robh@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: display: msm: Add missing unevaluatedProperties on child node schemas
-Date:   Sun,  8 Oct 2023 17:01:17 +0300
-Message-Id: <169677325602.2570975.10339984139706350311.b4-ty@linaro.org>
+To:     Felix.Kuehling@amd.com, alexander.deucher@amd.com,
+        christian.koenig@amd.com, Xinhui.Pan@amd.com, airlied@gmail.com,
+        daniel@ffwll.ch, harry.wentland@amd.com, sunpeng.li@amd.com,
+        Rodrigo.Siqueira@amd.com, maarten.lankhorst@linux.intel.com,
+        mripard@kernel.org, tzimmermann@suse.de, inki.dae@samsung.com,
+        sw0312.kim@samsung.com, kyungmin.park@samsung.com,
+        krzysztof.kozlowski@linaro.org, alim.akhtar@samsung.com,
+        robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run,
+        marijn.suijten@somainline.org, bskeggs@redhat.com,
+        kherbst@redhat.com, lyude@redhat.com, kraxel@redhat.com,
+        gurchetansingh@chromium.org, olvaffe@gmail.com,
+        paulo.miguel.almeida.rodenas@gmail.com, wenjing.liu@amd.com,
+        haoping.liu@amd.com, Charlene.Liu@amd.com, chiahsuan.chung@amd.com,
+        george.shen@amd.com, sancchen@amd.com, tony.tascioglu@amd.com,
+        jaehyun.chung@amd.com, tales.aparecida@gmail.com, drv@mailo.com,
+        aurabindo.pillai@amd.com, quic_vpolimer@quicinc.com,
+        jiasheng@iscas.ac.cn, noralf@tronnes.org,
+        jose.exposito89@gmail.com, javierm@redhat.com,
+        mairacanal@riseup.net, davidgow@google.com,
+        arthurgrillo@riseup.net, amd-gfx@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        virtualization@lists.linux-foundation.org,
+        Ruan Jinjie <ruanjinjie@huawei.com>
+Subject: Re: [PATCH -next 0/7] drm: Remove many unnecessary NULL values
+Date:   Sun,  8 Oct 2023 17:01:18 +0300
+Message-Id: <169677306919.2570646.8217027380730287216.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230925212434.1972368-1-robh@kernel.org>
-References: <20230925212434.1972368-1-robh@kernel.org>
+In-Reply-To: <20230809034445.434902-1-ruanjinjie@huawei.com>
+References: <20230809034445.434902-1-ruanjinjie@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -84,20 +97,27 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Mon, 25 Sep 2023 16:24:24 -0500, Rob Herring wrote:
-> Just as unevaluatedProperties or additionalProperties are required at
-> the top level of schemas, they should (and will) also be required for
-> child node schemas. That ensures only documented properties are
-> present for any node.
+On Wed, 09 Aug 2023 11:44:38 +0800, Ruan Jinjie wrote:
+> The NULL initialization of the pointers assigned by kzalloc() or
+> kunit_kzalloc() first is not necessary, because if the kzalloc() or
+> kunit_kzalloc() failed, the pointers will be assigned NULL, otherwise
+> it works as usual. so remove it.
 > 
+> Ruan Jinjie (7):
+>   drm/amdkfd: Remove unnecessary NULL values
+>   drm/amd/display: Remove unnecessary NULL values
+>   drm/msm: Remove unnecessary NULL values
+>   drm/radeon: Remove unnecessary NULL values
+>   drm/virtio: Remove an unnecessary NULL value
+>   drm/format-helper: Remove unnecessary NULL values
+>   drm: Remove unnecessary NULL values
 > 
+> [...]
 
 Applied, thanks!
 
-[1/2] dt-bindings: display: msm: Add missing unevaluatedProperties on child node schemas
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/08bf97ab16f3
-[2/2] dt-bindings: display: msm: Make "additionalProperties: true" explicit
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/55bbcadccdec
+[3/7] drm/msm: Remove unnecessary NULL values
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/92a48b6ed510
 
 Best regards,
 -- 
