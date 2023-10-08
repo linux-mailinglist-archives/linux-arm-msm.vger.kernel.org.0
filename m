@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10F507BCE8E
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Oct 2023 15:23:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F2A27BCE90
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Oct 2023 15:23:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344784AbjJHNX2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Oct 2023 09:23:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48932 "EHLO
+        id S1344800AbjJHNXa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 Oct 2023 09:23:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344778AbjJHNX2 (ORCPT
+        with ESMTP id S1344778AbjJHNX3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 Oct 2023 09:23:28 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B6C5C5
-        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Oct 2023 06:23:24 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2c131ddfeb8so41659841fa.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Oct 2023 06:23:24 -0700 (PDT)
+        Sun, 8 Oct 2023 09:23:29 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 301F2C6
+        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Oct 2023 06:23:27 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2c2907ff9fcso44060111fa.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Oct 2023 06:23:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696771403; x=1697376203; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=2idug8K8OwT9Hkyo7LhZdc3aUSwi5P2oZ6NFnNiB8oo=;
-        b=Gq88azTzEQOH6F18BBj1HYQzM0i6o7teHenFuPOjigQqSkww/6QZRKiMJWlcmnvM6v
-         6+qH0pywQ7s3+YzzOCNvNhyl7CU3mDf7+tFhcVGvZsHvanXwUBpaQ2Xy2enKcWPvSgI9
-         FFWO8duTO17XZPfR9KE62baTEqw7pL8tFpcIJMki7+CSEqc8JzVffkrx6BZnqj+/ENT5
-         +Zf2blhhLQNEEfB7J/yNAJlFV+0zpXHNjMwwvnBIHrNvdhz323kXk3ry6a4ZQjWWgvo4
-         D4xjVPMqrqsOSfpBIX8zR8W/MhY82W0A6r8kaThOlO4WfscNUgDt+Ly+rGcEV58yhq5x
-         4MFA==
+        d=linaro.org; s=google; t=1696771405; x=1697376205; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ws+BeoAofrb1fd3S6dPoIhO1T8QAsaqdvZDhz+j1aGM=;
+        b=XkkIZ14E6Y1hIR16KmhQwCbdnay0hZqT85pGiYj7C495K/fT0j4EJoFU5mlXZCDDFE
+         Ypryk5ukK7ePwck6NtlIauo0ZhXLM5BW0cKRLG5Tx3fbig16wwoUCroiv0IWT0OY+YfF
+         B9tunA76Towm4njx6NxqAXDS39DK8r3MwNG0LbL6P6GNX5Sgexyor4ERIoP39yO8zHSy
+         LOWYVEVVMMqZQO5vPWnK6npRUv92dI0XbMN7G9I0S6yE8gNKwbcRpZ5U5dofAF5N9COT
+         XcXYa3fNkbhAvadpsvevqrCteHTnPlbREvReAWoAOXvMcxBbDrv0OAoCTYhFohGwTy9L
+         a0iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696771403; x=1697376203;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2idug8K8OwT9Hkyo7LhZdc3aUSwi5P2oZ6NFnNiB8oo=;
-        b=UsMfs+bDD9WD9SeZBRM87OyAovlp/7TmJZABwy5OoS882TGE25nC1sTRXtrnb/afNf
-         GusCOw1POk5LrIGE3HZbDvOhtAuu5Pzri018OkbHDAlV0qxd7NpwKqcYJj0AMgxF3vkY
-         92ykZCY4HombRIKR2mAHrA+oSV5M5iQlH75ait1895TQW7F9X6Yds/SXM1mfrClEstMK
-         0AVaEMyl9nMnH5MdRAHoY4q3gR6P19PAAhxGwhA9SCpLNCXJeUjqi9pqsKJCKgvWyPHI
-         CiKduTar+p7A7pNjF1hL26W9DGjVGIIG1JvRgWUs0Y0lmPsfZkTgBmq3dmiaPc4uD6xy
-         q1PQ==
-X-Gm-Message-State: AOJu0Yx7uADDS92jI4cL0iOa77ibjoc8veWLEr64apPtiKaX0BxEon0T
-        IHSWaQnGsLsK3qXv3N6HDa//gg==
-X-Google-Smtp-Source: AGHT+IHx14cJCtO/hU+EHIKoCHvXz2+uwXHhfV805Hh9E7uMBZQVVQWt2RfyIdHXS1b0gOOtFmV5Fg==
-X-Received: by 2002:a05:6512:531:b0:4fd:fabf:b6ee with SMTP id o17-20020a056512053100b004fdfabfb6eemr10670377lfc.9.1696771403150;
-        Sun, 08 Oct 2023 06:23:23 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1696771405; x=1697376205;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Ws+BeoAofrb1fd3S6dPoIhO1T8QAsaqdvZDhz+j1aGM=;
+        b=UciidxXD7VcLP883mFqKr//JbYDAbDPxRqPpSRIguOYSDiLjediVEAKl574dd+lVKi
+         7mWiIAZME4fEH8PdHlyH00tuDgQHnb57D8y+dznMe6wg7jbC9FPO5HmF5VUPzOxWAABp
+         LDzJAyv7OLd+I7K4XmqYX0nISuBgAAqDkmrvf3qhIMPZX9GXi8dhqY/DX9/O/mf2tstN
+         uM8xNcsNt8ihh9p0aUdxJ2O1jIZ5PQWawJfwonUZvSKxl/EuYzVXb+K0IeJa5c67msXt
+         xQp5j90HdPwwtErMJELsE4xjSHOwTxpvl9eZy+74gQ+6R8bvj+ouJBLu7si8FFxG7Y3z
+         Ix7Q==
+X-Gm-Message-State: AOJu0Yx+Y+taXm6MiHDm3+Puael/gtdV1m6Gc1Ldr72LHTarUoCE8tT3
+        +diK1T4j5m27UF9FhPGMZOwUVg==
+X-Google-Smtp-Source: AGHT+IHnhandwGXzx8Ood+cxwN4KlSrHrc7gTvLxTHyVDXlge8YIbuzN827mRZBFbSmQ6qN3Li+XFw==
+X-Received: by 2002:a19:644a:0:b0:502:9a2c:f766 with SMTP id b10-20020a19644a000000b005029a2cf766mr10356743lfj.30.1696771404911;
+        Sun, 08 Oct 2023 06:23:24 -0700 (PDT)
 Received: from eriador.lumag.spb.ru ([188.170.82.148])
-        by smtp.gmail.com with ESMTPSA id c28-20020ac244bc000000b005046bf37bebsm1083219lfm.57.2023.10.08.06.23.21
+        by smtp.gmail.com with ESMTPSA id c28-20020ac244bc000000b005046bf37bebsm1083219lfm.57.2023.10.08.06.23.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Oct 2023 06:23:22 -0700 (PDT)
+        Sun, 08 Oct 2023 06:23:24 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Thierry Reding <thierry.reding@gmail.com>,
         Sam Ravnborg <sam@ravnborg.org>,
@@ -61,10 +62,12 @@ Cc:     Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         linux-arm-msm@vger.kernel.org
-Subject: [PATCH 1/2] drm/ci: pick up -external-fixes from the merge target repo
-Date:   Sun,  8 Oct 2023 16:23:19 +0300
-Message-Id: <20231008132320.762542-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 2/2] drm/ci: force-enable CONFIG_MSM_MMCC_8996 as built-in
+Date:   Sun,  8 Oct 2023 16:23:20 +0300
+Message-Id: <20231008132320.762542-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20231008132320.762542-1-dmitry.baryshkov@linaro.org>
+References: <20231008132320.762542-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -76,38 +79,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In case of the merge requests it might be useful to push repo-specific
-fixes which have not yet propagated to the -external-fixes branch in the
-main UPSTREAM_REPO. For example, in case of drm/msm development, we are
-staging fixes locally for testing, before pushing them to the drm/drm
-repo. Thus, if the CI run was triggered by merge request, also pick up
-the -external fixes basing on the the CI_MERGE target repo / and branch.
+Enable CONFIG_MSM_MMCC_8996, the multimedia clock controller on Qualcomm
+MSM8996 to prevent the the board from hitting the probe deferral
+timeouts in CI run.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/ci/build.sh | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/ci/arm64.config | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/ci/build.sh b/drivers/gpu/drm/ci/build.sh
-index 7b014287a041..20a6ba8a7b04 100644
---- a/drivers/gpu/drm/ci/build.sh
-+++ b/drivers/gpu/drm/ci/build.sh
-@@ -64,10 +64,15 @@ if [ "$(git ls-remote --exit-code --heads ${UPSTREAM_REPO} ${TARGET_BRANCH}-exte
- fi
- 
- # Try to merge fixes from local repo if this isn't a merge request
-+# otherwise try merging the fixes from the merge target
- if [ -z "$CI_MERGE_REQUEST_PROJECT_PATH" ]; then
-     if [ "$(git ls-remote --exit-code --heads origin ${TARGET_BRANCH}-external-fixes)" ]; then
-         git pull origin ${TARGET_BRANCH}-external-fixes
-     fi
-+else
-+    if [ "$(git ls-remote --exit-code --heads ${CI_MERGE_REQUEST_PROJECT_URL} ${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}-external-fixes)" ]; then
-+        git pull ${CI_MERGE_REQUEST_PROJECT_URL} ${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}-external-fixes
-+    fi
- fi
- 
- for opt in $ENABLE_KCONFIGS; do
+diff --git a/drivers/gpu/drm/ci/arm64.config b/drivers/gpu/drm/ci/arm64.config
+index 45f9deb7c4f6..b4f653417883 100644
+--- a/drivers/gpu/drm/ci/arm64.config
++++ b/drivers/gpu/drm/ci/arm64.config
+@@ -62,6 +62,7 @@ CONFIG_PHY_QCOM_QUSB2=y
+ CONFIG_PHY_QCOM_QMP=y
+ CONFIG_MSM_GCC_8996=y
+ CONFIG_QCOM_CLK_APCC_MSM8996=y
++CONFIG_MSM_MMCC_8996=y
+ CONFIG_QCOM_LLCC=y
+ CONFIG_QCOM_LMH=y
+ CONFIG_QCOM_SPMI_TEMP_ALARM=y
 -- 
 2.40.1
 
