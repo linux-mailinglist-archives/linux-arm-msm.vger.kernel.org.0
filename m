@@ -2,61 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D50957BCDF6
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Oct 2023 13:09:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 655A47BCDFC
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Oct 2023 13:11:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344667AbjJHLJe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Oct 2023 07:09:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52680 "EHLO
+        id S234320AbjJHLLb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 Oct 2023 07:11:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231831AbjJHLJe (ORCPT
+        with ESMTP id S230424AbjJHLLa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 Oct 2023 07:09:34 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1638C5
-        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Oct 2023 04:09:31 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-40684f53ef3so35097185e9.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Oct 2023 04:09:31 -0700 (PDT)
+        Sun, 8 Oct 2023 07:11:30 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AE08BA
+        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Oct 2023 04:11:27 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-406619b53caso33111595e9.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Oct 2023 04:11:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696763370; x=1697368170; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=1vYilIHh7UzhsRZJbXWjITmqBr2heFnggTX8eCFXyBY=;
-        b=DDDN+wLs/RjIeuNroo8Un1QZAPrp0GAHtdOAZu07f6g67AgGQQ3UT5ERYG/lRbH5P/
-         uXtPiTmokHoqg5gUOo8F/Fn9L2qucJG9nkKm/OsCRrWu8WMSsVjyLNgHBGggcuTAkfB6
-         iIXs8k206BHV2XmoumqhxOsRWDZuFav54OY/IULIz2CXl0B1TQxb5mF/ub5/w+PaE7JJ
-         pdGtKiPdv+i4TkV6osNivyTg5sDvTmbJam8VUkRa1OYlfVjSfO/LrJHJ37WQnNI/k9SL
-         E8A63gF/l7kf1b3wIQIc74RsBWqE++Ab5f8cmGOWFRekjZUkJq7CJQ+Z4ZkuQmhLp8Bw
-         4Ojg==
+        d=linaro.org; s=google; t=1696763486; x=1697368286; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=h0ggOVpvUQv8NkC88/n6MZoR06mA1BXuSXgo1ymVDqE=;
+        b=DSo7RCeTAQBEo8rXj7Dds7BH0Lbr5MIJ4KW13xfsE8KGJPlcHffNwCAbZn9ckXb5Kh
+         UoI2Ju9TKE6CJ1ZbE5jBmeOcM3nLGd8HVJZJ0+2euHL4fW287bZ3Fu4T/ZvHfyi/zONx
+         h0BNM69OT/prYrPd2AalexpBy7HyA9VwR/cs2AxPA41CpYvKlgyUkL0YpV5owTaizFP2
+         uNt3wNG6FPVCFZ9GAOvRqTnQ9lNDBd+ANc7zmpG0w2XXLU/3VF68rFR9Rdjm0eiy/bbQ
+         nBTRgVscCSt6fHttQHMcXWsnpGARQ0qUMxkIutd98KOIYNJ3WZK1PmAiBipDbjWXtGJW
+         OcGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696763370; x=1697368170;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1vYilIHh7UzhsRZJbXWjITmqBr2heFnggTX8eCFXyBY=;
-        b=KX/vZHB0xttwHtO8DEWpbnVBzvr546mvOFaPslIboGe2rWhOSLpFChK2QVYP0JDQKC
-         qJxYPKcyOEbTLaZY3j4+HjL4WphSYJOEODJ/ALUlXqPjNT0VkybvSmtJAjoc+uuM5xS7
-         j6Vd1kYFeN3fRobJ2z3Eiee3ZNr2F8KvwTAoIjh7ePIrtxANs5UapNyvgdhOgSWI5IFg
-         03X93v3+QrSlHWc8J/F4GlPlHENwpoGTyaFp9yjrqPV9hRYSoQyuniNMIFIMVzSKLwSx
-         1ULibjPS4ax0tmsKo1Xz96K78tfrW6wMg2qSYjUm8rG51sq3t/nW3F/DxjZx0M8Hb7Qk
-         dtog==
-X-Gm-Message-State: AOJu0YzJKGhNPHpmK5fNOicb08jFIwSG6VwCXL0WI33Et8mwIUsVF2dd
-        4OzjOu5VnbEnqufm/3ajG+l1Ig==
-X-Google-Smtp-Source: AGHT+IFXweF/ld2Qv2xYsyJL9P6LEsivjWo+qBqwnSsGKfkAMTTy7nrrLVXlGvF7aGgjvpNWe0YSLA==
-X-Received: by 2002:a05:600c:2242:b0:401:2fab:43e8 with SMTP id a2-20020a05600c224200b004012fab43e8mr10982958wmm.15.1696763370076;
-        Sun, 08 Oct 2023 04:09:30 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1696763486; x=1697368286;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=h0ggOVpvUQv8NkC88/n6MZoR06mA1BXuSXgo1ymVDqE=;
+        b=LW2fCbyGvuKR4amMCeSRGulRF3voSNChDs15ggCMSepmlqIDlSEOKLQZa9hqHPMw1Q
+         C/+5S92Jsf9UpX/yrDB/MhEE1A2nLohfbtF+mq6oi1mVpv3IS18d7IuonYoFa4KOazfy
+         oRwqYjO6+hd8lcLQMU2vjXNhjL5O26RF6km0eg6O4fx/5jb9FdJx/YZJ2qZZBimg4D7G
+         imNXunZHDf2YoDQu4TuDisJPPJ8aLVtZl1Y9w1FpNzKvo0xiYxgdJwrzbR0yZUNVR1oD
+         8GeRExBtEZD2xTahMP+Sif5EcyydaLP3N+uDroPdlBmjwef3Ap6NFevSWksydo9ExCwX
+         oZYg==
+X-Gm-Message-State: AOJu0YzLiUHZ7Rcutbtmw8U1+pcb1fbcjWO7mZmiiLa6eBBKJvKFUM7K
+        F8O0FzuA6rC3veA2aX3cmttzpw==
+X-Google-Smtp-Source: AGHT+IEb3/fS52nBeRgFV4fDMB5ioFubPXhpnpu53t9n0o4b9Lgu8Ytp25XlDQ98wRyOVbvH6hksWw==
+X-Received: by 2002:a05:600c:20b:b0:406:177e:5de8 with SMTP id 11-20020a05600c020b00b00406177e5de8mr11454485wmi.35.1696763485872;
+        Sun, 08 Oct 2023 04:11:25 -0700 (PDT)
 Received: from [192.168.1.197] (5-157-101-10.dyn.eolo.it. [5.157.101.10])
-        by smtp.gmail.com with ESMTPSA id k14-20020a05600c0b4e00b003fe1fe56202sm8301853wmr.33.2023.10.08.04.09.28
+        by smtp.gmail.com with ESMTPSA id c16-20020a5d4f10000000b00324ae863ac1sm6546893wru.35.2023.10.08.04.11.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 08 Oct 2023 04:09:29 -0700 (PDT)
-Message-ID: <a17782be-6c77-4e1f-b991-2015ee216c68@linaro.org>
-Date:   Sun, 8 Oct 2023 13:09:27 +0200
+        Sun, 08 Oct 2023 04:11:25 -0700 (PDT)
+Message-ID: <e0a7dcaf-9303-4ddd-9a75-dd56165698f9@linaro.org>
+Date:   Sun, 8 Oct 2023 13:11:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 00/10] Add multiport support for DWC3 controllers
-To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
+Subject: Re: [PATCH v13 08/10] arm64: dts: qcom: sc8280xp: Add multiport
+ controller node for SC8280
+Content-Language: en-US
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>,
         Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Philipp Zabel <p.zabel@pengutronix.de>,
@@ -74,9 +75,7 @@ Cc:     linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
         quic_jackp@quicinc.com, ahalaney@redhat.com,
         quic_shazhuss@quicinc.com
 References: <20231007154806.605-1-quic_kriskura@quicinc.com>
- <d4663197-8295-4967-a4f5-6cc91638fc0d@linaro.org>
- <75db183e-3c47-48e4-ad29-fea785826109@quicinc.com>
-Content-Language: en-US
+ <20231007154806.605-9-quic_kriskura@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -122,63 +121,42 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <75db183e-3c47-48e4-ad29-fea785826109@quicinc.com>
+In-Reply-To: <20231007154806.605-9-quic_kriskura@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/10/2023 13:01, Krishna Kurapati PSSNV wrote:
+On 07/10/2023 17:48, Krishna Kurapati wrote:
+> Add USB and DWC3 node for tertiary port of SC8280 along with multiport
+> IRQ's and phy's. This will be used as a base for SA8295P and SA8295-Ride
+> platforms.
 > 
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 84 ++++++++++++++++++++++++++
+>  1 file changed, 84 insertions(+)
 > 
-> On 10/8/2023 4:13 PM, Krzysztof Kozlowski wrote:
->> On 07/10/2023 17:47, Krishna Kurapati wrote:
->>> Currently the DWC3 driver supports only single port controller which
->>> requires at most two PHYs ie HS and SS PHYs. There are SoCs that has
->>> DWC3 controller with multiple ports that can operate in host mode.
->>> Some of the port supports both SS+HS and other port supports only HS
->>> mode.
->>>
->>> This change primarily refactors the Phy logic in core driver to allow
->>> multiport support with Generic Phy's.
->>>
->>> Changes have been tested on  QCOM SoC SA8295P which has 4 ports (2
->>> are HS+SS capable and 2 are HS only capable).
->>>
->>
->> I think I said it few times on the lists to Qualcomm folks, although I
->> cannot remember whether exactly in this patchset. Please split DTS from
->> USB, because Greg prefers to grab everything and DTS *should go* via
->> Qualcomm SoC.
->>
-> Hi Krzyztof,
-> 
-> Apologies !
-> 
-> Do you mean to send the DTS just to linux-arm-msm list and not linux-usb 
-> list ? 
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> index cad59af7ccef..5f64f75b07db 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> @@ -3330,6 +3330,90 @@ system-cache-controller@9200000 {
+>  			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
+>  		};
+>  
+> +		usb_2: usb@a4f8800 {
+> +			compatible = "qcom,sc8280xp-dwc3-mp", "qcom,dwc3";
 
-
-Not entirely, I meant to create separate patchsets. One for USB drivers
-and other one for Qualcomm SoC. The DTS patchset should have link to
-lore to USB drivers patchset. You send each of the patchsets to
-respective maintainer, lists and everyone necessary using b4 or
-scripts/get_maintainers.pl.
-
-
-I don't think it was posted on this series and I am not on
-> linux-arm-msm mailing list, so missed that comment. Sorry for that. I 
-> saw some series where DT, Driver and bindings were sent as one set to 
-> linux-usb list as well and so wanted to follow suite. Will make sure to 
-> send DT just to linux-arm-msm list from now on. Thanks for the comments :-)
-
+There is no such compatible. Scrolling through 3 pages of cover letter,
+I did not find dependency listed. I did not scroll more - dependency is
+the most important piece, so I would assume it is in the top-part.
 
 Best regards,
 Krzysztof
