@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D08FA7BEF29
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 01:34:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A72C7BEF2C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 01:34:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379075AbjJIXeC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Oct 2023 19:34:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41540 "EHLO
+        id S1379077AbjJIXeF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Oct 2023 19:34:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379080AbjJIXeB (ORCPT
+        with ESMTP id S1379068AbjJIXeE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Oct 2023 19:34:01 -0400
-Received: from mail-ua1-x934.google.com (mail-ua1-x934.google.com [IPv6:2607:f8b0:4864:20::934])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D365B4;
-        Mon,  9 Oct 2023 16:33:59 -0700 (PDT)
-Received: by mail-ua1-x934.google.com with SMTP id a1e0cc1a2514c-7b3828115bcso1497899241.1;
-        Mon, 09 Oct 2023 16:33:59 -0700 (PDT)
+        Mon, 9 Oct 2023 19:34:04 -0400
+Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3044ECC;
+        Mon,  9 Oct 2023 16:34:02 -0700 (PDT)
+Received: by mail-qk1-x72f.google.com with SMTP id af79cd13be357-77433e7a876so335398985a.3;
+        Mon, 09 Oct 2023 16:34:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696894438; x=1697499238; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=24TAuM3cmLFZcuAvvlbYcV7E7zxrlJcR+LOIybCTopM=;
-        b=GrJuVW3fdlSx9STO/Kf1UYK4g1YxirFE2IkHHmmrlCBvY11tHhakyZti1StXsbgyQk
-         5wOvr9NJ57Ved6kUgOjlf1jhL6YVFwOyMgZfsSvLouMIgJdGy+KkIq5+USpsyYZbc7lR
-         UPwA0SkpLdwk0h9sniDKUR2ZOXaQb9UkO1XG83T/m9uxiwo51lcZEE84QqxWYHhPF6Pb
-         aKej5MCLd+YSykblDAa2ugN3hl0TPBcpwdTLK/vBDNrJokkh8tcbUupaEsTuMTp6oZUJ
-         eCxcN88rKlwPU2YBKPIYiaZzn3sZvfJLgRZwZXhKf3l7neqJW7EO7be+PBhaVSzPQ1wz
-         DAew==
+        d=gmail.com; s=20230601; t=1696894441; x=1697499241; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3/FjPGL9FZLD3HPQhfLZqhNvGFa7zL77tDFLRHXNnA8=;
+        b=EkP7NmTsQPg1Ocm8yGieB2MYqY15MCHnUg0qv7scnlzQAYgAQFScB+sCKjMoOGo7uV
+         t0HMIXvmQiolJaYkIC1efe+aoKMK3BW99gqKVaGZvLNkvBeHsBRDhOpdTgGsOcEmLjJ7
+         M5giNc2FngAues6Rd3n+DA79jhujTXVDe+sFr491qzGUwDiPHptt7TARDunqsiYG8otM
+         WluGq1Q6CgxXtSw/Kq60WGZjTpqozWusMWcqFfc9tFDd4EDFUqYNvFSwmMfc6xpdIvQG
+         p81B6mFUU56amQSHA+mFWME2B/QLDQy5l2z2UuEc0UD0AuimuWL1ZGFmhsZwGnSKMX6M
+         X/fA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696894438; x=1697499238;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=24TAuM3cmLFZcuAvvlbYcV7E7zxrlJcR+LOIybCTopM=;
-        b=UYs0Jo8voFKuhEzsFtcgh1vFlk0DpK07ZyhGzmpr8JjUgApV8nLeIy0xEfen2HNmx8
-         eB/87xRD4SQTFHyPBYhbN37y4IkyhbJebneOX/0xQagAl2nzDuGZgVkD8hJlJXSXVucf
-         QivdmVbKhnQYLYoEYksDVzVVz0OkiZl+RYOQYtx/JjoT2Yseufyr8/LteyGcBCG+mu5v
-         VuJli86iJMFPr2ENVEAX5MThnImaYHIiTgjzPw9MuRsCcX03RkIvNUka+NWB2inAeFwp
-         6eYJjU7V6Qn6tFVKKWUd3SEVHPv2LVeIM9JHeV31F+RntD5LtjpM1eOIPf4tcO8htwU0
-         eBYg==
-X-Gm-Message-State: AOJu0Yxp2r7pI68h8JnIsJxYU/qUIZ2ePpxm8wjaNyr8uD/HExAR+LBx
-        dScUB5fZj7/kYVWbZBbKqEo=
-X-Google-Smtp-Source: AGHT+IG4nZoYJfg9tcP7e2IgjNp0p7tfVw76OSdCMUhH2QkyRSVgv8kkdhMc105Ag9fnC3Hkn+8wNA==
-X-Received: by 2002:a67:eacf:0:b0:44d:47c2:7471 with SMTP id s15-20020a67eacf000000b0044d47c27471mr13340465vso.27.1696894438567;
-        Mon, 09 Oct 2023 16:33:58 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1696894441; x=1697499241;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3/FjPGL9FZLD3HPQhfLZqhNvGFa7zL77tDFLRHXNnA8=;
+        b=e844r8nkX+J46yrePMbjkxn3u0aGEpXAE4rqfoItrev1X/09Ft2oWmcKPveZXVoGkm
+         r9H+h1GjfCNmDtAkmNKRdshMYxvKKAJy+LS2ocEb/3Nk92QbklbhWt0r77liu1q8gHet
+         NbqIF0TBJzSHMHtpylI5PvLXhvDAYDC4TRNHHsOiUonoB+q99bqYYM7KZgW0XKapvkPP
+         +PBMkB7IH7c3/aE92rSp0bENdD4x7murx78APlfO12DWo7KYSPndgPoNAb9Hu1wxq4y6
+         OzXONRzFqYvXBi9H8rDnNOhwekN75dT1ZXFMyXp/CYwSdsuvyTVNeAPYcmJ3iczAJGoW
+         3ZAw==
+X-Gm-Message-State: AOJu0YxAhr9NAxQCuBSw5QdcFuwAGvlW+gyA6ccI5KcrZiodkFdT3y/E
+        MXERbMVnuwXUWUiH6S0jTd8=
+X-Google-Smtp-Source: AGHT+IG6BjRJbCm0Sewo/jxXjinU+q5QQp1XciLBTnEAbkm31qvhNlKnd6xUDDPQGtJ35BU9VjPT4w==
+X-Received: by 2002:a05:620a:4312:b0:775:a534:c010 with SMTP id u18-20020a05620a431200b00775a534c010mr18904176qko.57.1696894441162;
+        Mon, 09 Oct 2023 16:34:01 -0700 (PDT)
 Received: from localhost ([2607:fea8:529e:7800::1d3d])
-        by smtp.gmail.com with ESMTPSA id l19-20020a0ce513000000b006616fbcc077sm4289486qvm.129.2023.10.09.16.33.56
+        by smtp.gmail.com with ESMTPSA id ow10-20020a05620a820a00b0076f35d17d06sm3878553qkn.69.2023.10.09.16.34.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Oct 2023 16:33:57 -0700 (PDT)
+        Mon, 09 Oct 2023 16:34:00 -0700 (PDT)
 From:   Richard Acayan <mailingradian@gmail.com>
 To:     Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -74,15 +75,17 @@ To:     Rob Clark <robdclark@gmail.com>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
 Cc:     Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH v3 0/6] SDM670 display subsystem support
-Date:   Mon,  9 Oct 2023 19:33:38 -0400
-Message-ID: <20231009233337.485054-8-mailingradian@gmail.com>
+Subject: [PATCH v3 1/6] dt-bindings: display/msm: dsi-controller-main: add SDM670 compatible
+Date:   Mon,  9 Oct 2023 19:33:39 -0400
+Message-ID: <20231009233337.485054-9-mailingradian@gmail.com>
 X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20231009233337.485054-8-mailingradian@gmail.com>
+References: <20231009233337.485054-8-mailingradian@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLY,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=no
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -90,48 +93,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Changes since v2 (20231003012119.857198-9-mailingradian@gmail.com):
- - rebase on series and reference generic sblk definitions (5/6)
- - add interconnects properties in example (3/6)
- - remove phy-names properties from dtsi (6/6)
- - accumulate review tags (4/6, 6/6)
+The SDM670 has DSI ports. Add the compatible for the controller.
 
-Changes since v1 (20230925232625.846666-9-mailingradian@gmail.com):
- - prefix dsi1 labels with `mdss_` in example dts (3/6)
- - make all parts of catalog entry const (5/6)
- - add spaces before closing brackets on same line (5/6)
- - join opening and closing braces on the same line in dsc array (5/6)
+Acked-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+---
+ .../devicetree/bindings/display/msm/dsi-controller-main.yaml     | 1 +
+ 1 file changed, 1 insertion(+)
 
-This series adds support for the display subsystem on the Snapdragon
-670. It is based on an earlier patch a few versions back, which had
-missing device tree bindings and device tree changes.
-
-There is a separate IOMMU patch which adds the MDSS compatible to a
-workaround.
-
-This series depends on https://patchwork.freedesktop.org/series/119804/.
-
-Richard Acayan (6):
-  dt-bindings: display/msm: dsi-controller-main: add SDM670 compatible
-  dt-bindings: display/msm: sdm845-dpu: Describe SDM670
-  dt-bindings: display: msm: Add SDM670 MDSS
-  drm/msm: mdss: add support for SDM670
-  drm/msm/dpu: Add hw revision 4.1 (SDM670)
-  arm64: dts: qcom: sdm670: add display subsystem
-
- .../display/msm/dsi-controller-main.yaml      |   1 +
- .../display/msm/qcom,sdm670-mdss.yaml         | 292 ++++++++++++++++++
- .../bindings/display/msm/qcom,sdm845-dpu.yaml |   4 +-
- arch/arm64/boot/dts/qcom/sdm670.dtsi          | 292 ++++++++++++++++++
- .../msm/disp/dpu1/catalog/dpu_4_1_sdm670.h    | 104 +++++++
- .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |   1 +
- .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   1 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   1 +
- drivers/gpu/drm/msm/msm_mdss.c                |   7 +
- 9 files changed, 702 insertions(+), 1 deletion(-)
- create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sdm670-mdss.yaml
- create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h
-
+diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+index c6dbab65d5f7..887c7dcaf438 100644
+--- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
++++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+@@ -25,6 +25,7 @@ properties:
+               - qcom,sc7180-dsi-ctrl
+               - qcom,sc7280-dsi-ctrl
+               - qcom,sdm660-dsi-ctrl
++              - qcom,sdm670-dsi-ctrl
+               - qcom,sdm845-dsi-ctrl
+               - qcom,sm6115-dsi-ctrl
+               - qcom,sm6125-dsi-ctrl
 -- 
 2.42.0
 
