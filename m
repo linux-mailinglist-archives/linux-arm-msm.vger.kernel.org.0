@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CC5D7BE4E1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 17:34:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CCD8D7BE4E4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 17:35:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376862AbjJIPe5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Oct 2023 11:34:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41888 "EHLO
+        id S1377096AbjJIPfG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Oct 2023 11:35:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377005AbjJIPey (ORCPT
+        with ESMTP id S1377057AbjJIPey (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 9 Oct 2023 11:34:54 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58A6591
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 08:34:47 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id ffacd0b85a97d-3232be274a0so3475163f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Oct 2023 08:34:47 -0700 (PDT)
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94A51CA
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 08:34:48 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-3231d67aff2so4680561f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Oct 2023 08:34:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1696865686; x=1697470486; darn=vger.kernel.org;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1696865687; x=1697470487; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GC/5cw5j4gsHJ9iomK+6pv+kPUVJjLbCpiT9I+Feyy0=;
-        b=BnxYVHWCYr5SIblnT1QwjfogTZQYHEBw4fakD7vpch1J+1jg8r4YxWreFnPKqfxwCC
-         /pkacj5HgSLU9UP0IRsEvOyZY5DodAP/OhXWn5NQaqi+R7yGKTlNaEf/RViL7ZLKxINX
-         gm5XPxNjDtjiLhLsNtiqyq2Mh2fFjvtH+en2dPIV4naBdthUxYgQz9wyo1EQaop0IHma
-         hx/YgfzcTL3M5GkmMvvN4mbUdtKTJg12NXpDrjpDVJD1SHFmi7++hFNnJcoWLM9Dmsfv
-         Vkt2KTtKP2ORyUTIltUgUpkk6/AZeHehzP686MFxTVITVEL5E4m2uLjwGwfWRbkcDNQs
-         ampw==
+        bh=UnwTp4Lw3p1rKX5DDWLu+LDu8u+Ycx0lOsGSllntXJo=;
+        b=l3zlqMcCBQGt9fTe36WjB/AfJTjo3wM4HYMIaG9x2GFKMXxBK0dsSWbDk6x/dm6zxF
+         ervLPreUI0a3HgZWWiJZJ3wW4h2i9hopap3FdNr2TlwHU/tY/AiT5uXKtmO4qrQU7RSb
+         h66J43wMZtvTSe8khKuB6kRMkk/yHKOABhAy5EhSkwGau2EwZyrSDo2Zoizvh6vzRGh7
+         v8UciTn2byfRHJbZvU9jDvVSfaYkHehohMSDWC0GZBJ/FCAV/0Sfr+5mDrhjg54j6VKv
+         wFJ8pvA2BRuGzIoTIC8pdn5oVLAi0tlx/pZoJPlh+COls8vNaff/ekzRVEHaqGdtYwTX
+         k6Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696865686; x=1697470486;
+        d=1e100.net; s=20230601; t=1696865687; x=1697470487;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=GC/5cw5j4gsHJ9iomK+6pv+kPUVJjLbCpiT9I+Feyy0=;
-        b=TwBZ13Ds8EPA73byC076Ypk+FbD3Jwmt6sdiRG/C/97ZCCXxYDCfXLOuMRyPJyru38
-         R2edJALNATe0xnh1sp/NZ1BiidD2v1SyRl7ImQmf8l0u1YWXoRrZJDiACht3ld/F0Sss
-         9JCkcgS0bvwbmfenALYsta+0Qaxk+jIZqKoTiOlPuVh5ril1KOIRP3WjyErYcqE3k8Zf
-         JGWSiY0Eq81+4bk2iUe+ZBNUHJaJpzCKm6qmnTXRiPjbcqHUN/hu57IVefQaIyogOzrN
-         /uHSMJ/cZwyQobUc0dCKJOaRyYORI0SbqtkvmRi6Sf0tM0K3V8E5+gd657V6eSGdRbIx
-         xrLQ==
-X-Gm-Message-State: AOJu0YzA+S+b0q9vaNc2VRz//5oEE32A9IftCLzTTmsTqWo9PUh29Ec8
-        6CpZhKlR5iTaWlSMufYqRBqNsQ==
-X-Google-Smtp-Source: AGHT+IE+HfAWUS8EXGsF6LOscm1uEzgc8ZH16XyVcqAUjQDAcQSh1QPeM3HmQfHBXNvqVn6joVLStQ==
-X-Received: by 2002:a5d:428b:0:b0:323:3b45:c452 with SMTP id k11-20020a5d428b000000b003233b45c452mr9526845wrq.14.1696865685819;
-        Mon, 09 Oct 2023 08:34:45 -0700 (PDT)
+        bh=UnwTp4Lw3p1rKX5DDWLu+LDu8u+Ycx0lOsGSllntXJo=;
+        b=tqg7m+4IWM8R0zBIkgkvzIiA2VfyYdrdh/qrouSByZDxOeynbMD1fpWKF8c6b0UZMJ
+         YK6Cv751a3o4Bn85FZ/T+GaESgrAk3hTYCUdvIoMr11waAgVtOLT2HWIdKFfg6Kk140c
+         FXdhm2H2IpLL7eAXqtVYVJh3/u0ZkJQg+00Dv9YntOlzsXW/ZqXqnhx4/67SIfK7XLAX
+         IpDQKPNaX1jcwJRHSsXwwnN2Z0l3ZH2V7IRXuefQD551wHGXeO+WNtnUlQx/DzqeZ//9
+         XRGVqoRUHrkQzMt6oTtxKqoxVoDNEU230Ci7bY37/06m/9p+IAOfLPxh9KhZxh7Sb/kI
+         1VAQ==
+X-Gm-Message-State: AOJu0YyMurMezmuUdwIzpnQfsI5w9/cuePjuGMEcHB5hPKjXmNz0XXP4
+        VDjpTD1Y5KosTvoig/iH+BLWSA==
+X-Google-Smtp-Source: AGHT+IGLjnHniMAjzx5YA9kSNp3FSmqF7ZGnRmOAQ4To9QUDJhLfsrlElrqxtpxfypXNLeKa+MM9Iw==
+X-Received: by 2002:adf:f452:0:b0:31f:fed4:d79d with SMTP id f18-20020adff452000000b0031ffed4d79dmr14359230wrp.30.1696865686884;
+        Mon, 09 Oct 2023 08:34:46 -0700 (PDT)
 Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:f20d:2959:7545:e99f])
-        by smtp.gmail.com with ESMTPSA id b3-20020adff243000000b0031431fb40fasm10016521wrp.89.2023.10.09.08.34.44
+        by smtp.gmail.com with ESMTPSA id b3-20020adff243000000b0031431fb40fasm10016521wrp.89.2023.10.09.08.34.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Oct 2023 08:34:45 -0700 (PDT)
+        Mon, 09 Oct 2023 08:34:46 -0700 (PDT)
 From:   Bartosz Golaszewski <brgl@bgdev.pl>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -64,17 +64,17 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, kernel@quicinc.com,
         Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH v3 05/15] firmware: qcom: scm: enable the TZ mem allocator
-Date:   Mon,  9 Oct 2023 17:34:17 +0200
-Message-Id: <20231009153427.20951-6-brgl@bgdev.pl>
+Subject: [PATCH v3 06/15] firmware: qcom: scm: smc: switch to using the SCM allocator
+Date:   Mon,  9 Oct 2023 17:34:18 +0200
+Message-Id: <20231009153427.20951-7-brgl@bgdev.pl>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20231009153427.20951-1-brgl@bgdev.pl>
 References: <20231009153427.20951-1-brgl@bgdev.pl>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -83,83 +83,133 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Select the TrustZone memory allocator in Kconfig and create a pool of
-memory shareable with the TrustZone when probing the SCM driver.
+We need to allocate, map and pass a buffer to the trustzone if we have
+more than 4 arguments for a given SCM calls. Let's use the new TrustZone
+allocator for that memory and shrink the code in process.
 
-This will allow a gradual conversion of all relevant SCM calls to using
-the dedicated allocator.
+As this code lives in a different compilation unit than the rest of the
+SCM code, we need to provide a helper in the form of
+qcom_scm_get_tzmem_pool() that allows the SMC low-level routines to
+access the SCM memory pool.
 
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
- drivers/firmware/qcom/Kconfig    |  1 +
- drivers/firmware/qcom/qcom_scm.c | 16 ++++++++++++++++
- 2 files changed, 17 insertions(+)
+ drivers/firmware/qcom/qcom_scm-smc.c | 28 ++++++++--------------------
+ drivers/firmware/qcom/qcom_scm.c     |  5 +++++
+ drivers/firmware/qcom/qcom_scm.h     |  3 +++
+ 3 files changed, 16 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/firmware/qcom/Kconfig b/drivers/firmware/qcom/Kconfig
-index b80269a28224..237da40de832 100644
---- a/drivers/firmware/qcom/Kconfig
-+++ b/drivers/firmware/qcom/Kconfig
-@@ -7,6 +7,7 @@
- menu "Qualcomm firmware drivers"
+diff --git a/drivers/firmware/qcom/qcom_scm-smc.c b/drivers/firmware/qcom/qcom_scm-smc.c
+index 16cf88acfa8e..1a423d1cba6c 100644
+--- a/drivers/firmware/qcom/qcom_scm-smc.c
++++ b/drivers/firmware/qcom/qcom_scm-smc.c
+@@ -2,6 +2,7 @@
+ /* Copyright (c) 2015,2019 The Linux Foundation. All rights reserved.
+  */
  
- config QCOM_SCM
-+	select QCOM_TZMEM
- 	tristate
- 
- config QCOM_TZMEM
-diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-index 520de9b5633a..0d4c028be0c1 100644
---- a/drivers/firmware/qcom/qcom_scm.c
-+++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -8,8 +8,10 @@
- #include <linux/completion.h>
- #include <linux/cpumask.h>
- #include <linux/dma-mapping.h>
-+#include <linux/err.h>
- #include <linux/export.h>
++#include <linux/cleanup.h>
+ #include <linux/io.h>
+ #include <linux/errno.h>
+ #include <linux/delay.h>
+@@ -9,6 +10,7 @@
+ #include <linux/slab.h>
+ #include <linux/types.h>
  #include <linux/firmware/qcom/qcom_scm.h>
 +#include <linux/firmware/qcom/qcom_tzmem.h>
- #include <linux/init.h>
- #include <linux/interconnect.h>
- #include <linux/interrupt.h>
-@@ -20,9 +22,11 @@
- #include <linux/of_platform.h>
- #include <linux/platform_device.h>
- #include <linux/reset-controller.h>
-+#include <linux/sizes.h>
- #include <linux/types.h>
+ #include <linux/arm-smccc.h>
+ #include <linux/dma-mapping.h>
  
- #include "qcom_scm.h"
-+#include "qcom_tzmem.h"
+@@ -150,11 +152,10 @@ int __scm_smc_call(struct device *dev, const struct qcom_scm_desc *desc,
+ 		   enum qcom_scm_convention qcom_convention,
+ 		   struct qcom_scm_res *res, bool atomic)
+ {
++	struct qcom_tzmem_pool *mempool = qcom_scm_get_tzmem_pool();
+ 	int arglen = desc->arginfo & 0xf;
+ 	int i, ret;
+-	dma_addr_t args_phys = 0;
+-	void *args_virt = NULL;
+-	size_t alloc_len;
++	void *args_virt __free(qcom_tzmem) = NULL;
+ 	gfp_t flag = atomic ? GFP_ATOMIC : GFP_KERNEL;
+ 	u32 smccc_call_type = atomic ? ARM_SMCCC_FAST_CALL : ARM_SMCCC_STD_CALL;
+ 	u32 qcom_smccc_convention = (qcom_convention == SMC_CONVENTION_ARM_32) ?
+@@ -172,9 +173,9 @@ int __scm_smc_call(struct device *dev, const struct qcom_scm_desc *desc,
+ 		smc.args[i + SCM_SMC_FIRST_REG_IDX] = desc->args[i];
  
- static bool download_mode = IS_ENABLED(CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT);
- module_param(download_mode, bool, 0);
-@@ -41,6 +45,8 @@ struct qcom_scm {
- 	int scm_vote_count;
+ 	if (unlikely(arglen > SCM_SMC_N_REG_ARGS)) {
+-		alloc_len = SCM_SMC_N_EXT_ARGS * sizeof(u64);
+-		args_virt = kzalloc(PAGE_ALIGN(alloc_len), flag);
+-
++		args_virt = qcom_tzmem_alloc(mempool,
++					     SCM_SMC_N_EXT_ARGS * sizeof(u64),
++					     flag);
+ 		if (!args_virt)
+ 			return -ENOMEM;
  
- 	u64 dload_mode_addr;
+@@ -192,25 +193,12 @@ int __scm_smc_call(struct device *dev, const struct qcom_scm_desc *desc,
+ 						      SCM_SMC_FIRST_EXT_IDX]);
+ 		}
+ 
+-		args_phys = dma_map_single(dev, args_virt, alloc_len,
+-					   DMA_TO_DEVICE);
+-
+-		if (dma_mapping_error(dev, args_phys)) {
+-			kfree(args_virt);
+-			return -ENOMEM;
+-		}
+-
+-		smc.args[SCM_SMC_LAST_REG_IDX] = args_phys;
++		smc.args[SCM_SMC_LAST_REG_IDX] = qcom_tzmem_to_phys(args_virt);
+ 	}
+ 
+ 	/* ret error check follows after args_virt cleanup*/
+ 	ret = __scm_smc_do(dev, &smc, &smc_res, atomic);
+ 
+-	if (args_virt) {
+-		dma_unmap_single(dev, args_phys, alloc_len, DMA_TO_DEVICE);
+-		kfree(args_virt);
+-	}
+-
+ 	if (ret)
+ 		return ret;
+ 
+diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+index 0d4c028be0c1..71e98b666391 100644
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -201,6 +201,11 @@ static void qcom_scm_bw_disable(void)
+ enum qcom_scm_convention qcom_scm_convention = SMC_CONVENTION_UNKNOWN;
+ static DEFINE_SPINLOCK(scm_query_lock);
+ 
++struct qcom_tzmem_pool *qcom_scm_get_tzmem_pool(void)
++{
++	return __scm->mempool;
++}
 +
-+	struct qcom_tzmem_pool *mempool;
- };
+ static enum qcom_scm_convention __get_convention(void)
+ {
+ 	unsigned long flags;
+diff --git a/drivers/firmware/qcom/qcom_scm.h b/drivers/firmware/qcom/qcom_scm.h
+index 4532907e8489..aa7d06939f8e 100644
+--- a/drivers/firmware/qcom/qcom_scm.h
++++ b/drivers/firmware/qcom/qcom_scm.h
+@@ -5,6 +5,7 @@
+ #define __QCOM_SCM_INT_H
  
- struct qcom_scm_current_perm_info {
-@@ -1887,6 +1893,16 @@ static int qcom_scm_probe(struct platform_device *pdev)
- 	if (of_property_read_bool(pdev->dev.of_node, "qcom,sdi-enabled"))
- 		qcom_scm_disable_sdi();
+ struct device;
++struct qcom_tzmem_pool;
  
-+	ret = qcom_tzmem_enable(__scm->dev);
-+	if (ret)
-+		return dev_err_probe(__scm->dev, ret,
-+				     "Failed to enable the TrustZone memory allocator\n");
+ enum qcom_scm_convention {
+ 	SMC_CONVENTION_UNKNOWN,
+@@ -78,6 +79,8 @@ int scm_legacy_call_atomic(struct device *dev, const struct qcom_scm_desc *desc,
+ int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
+ 		    struct qcom_scm_res *res);
+ 
++struct qcom_tzmem_pool *qcom_scm_get_tzmem_pool(void);
 +
-+	__scm->mempool = devm_qcom_tzmem_pool_new(__scm->dev, SZ_256K);
-+	if (IS_ERR(__scm->mempool))
-+		return dev_err_probe(__scm->dev, PTR_ERR(__scm->mempool),
-+				     "Failed to create the SCM memory pool\n");
-+
- 	/*
- 	 * Initialize the QSEECOM interface.
- 	 *
+ #define QCOM_SCM_SVC_BOOT		0x01
+ #define QCOM_SCM_BOOT_SET_ADDR		0x01
+ #define QCOM_SCM_BOOT_TERMINATE_PC	0x02
 -- 
 2.39.2
 
