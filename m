@@ -2,67 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 95B857BD6DE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 11:24:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BCC247BD6C7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 11:23:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346071AbjJIJYa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Oct 2023 05:24:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38958 "EHLO
+        id S1345838AbjJIJXJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Oct 2023 05:23:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346096AbjJIJX6 (ORCPT
+        with ESMTP id S1345836AbjJIJW5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Oct 2023 05:23:58 -0400
+        Mon, 9 Oct 2023 05:22:57 -0400
 Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E04B10CE
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 02:23:15 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC239F7
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 02:22:44 -0700 (PDT)
 Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
         by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <ukl@pengutronix.de>)
-        id 1qpmTE-0006sS-FJ; Mon, 09 Oct 2023 11:22:36 +0200
+        id 1qpmTF-0006uV-Pq; Mon, 09 Oct 2023 11:22:37 +0200
 Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
         by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
         (Exim 4.94.2)
         (envelope-from <ukl@pengutronix.de>)
-        id 1qpmTB-000NWK-WD; Mon, 09 Oct 2023 11:22:34 +0200
+        id 1qpmTF-000NXG-Cw; Mon, 09 Oct 2023 11:22:37 +0200
 Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
         (envelope-from <ukl@pengutronix.de>)
-        id 1qpmTB-00C4om-Lw; Mon, 09 Oct 2023 11:22:33 +0200
+        id 1qpmTF-00C4pj-3q; Mon, 09 Oct 2023 11:22:37 +0200
 From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
         <u.kleine-koenig@pengutronix.de>
 To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Tony Lindgren <tony@atomide.com>,
-        Haojian Zhuang <haojian.zhuang@linaro.org>,
-        linux-arm-kernel@lists.infradead.org, linux-omap@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Yangtao Li <frank.li@vivo.com>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        linux-stm32@st-md-mailman.stormreply.com,
-        Charles Keepax <ckeepax@opensource.cirrus.com>,
-        Richard Fitzgerald <rf@opensource.cirrus.com>,
-        alsa-devel@alsa-project.org, patches@opensource.cirrus.com,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        Andy Shevchenko <andy@kernel.org>,
-        Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-        Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-        Jesper Nilsson <jesper.nilsson@axis.com>,
-        Lars Persson <lars.persson@axis.com>,
-        linux-arm-kernel@axis.com, Heiko Stuebner <heiko@sntech.de>,
-        linux-rockchip@lists.infradead.org, Andy Gross <agross@kernel.org>,
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        linux-renesas-soc@vger.kernel.org
-Subject: [PATCH 00/20] pinctrl: Convert to platform remove callback returning void
-Date:   Mon,  9 Oct 2023 10:38:36 +0200
-Message-Id: <20231009083856.222030-1-u.kleine-koenig@pengutronix.de>
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 15/20] pinctrl: qcom: spmi-gpio: Convert to platform remove callback returning void
+Date:   Mon,  9 Oct 2023 10:38:51 +0200
+Message-Id: <20231009083856.222030-16-u.kleine-koenig@pengutronix.de>
 X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20231009083856.222030-1-u.kleine-koenig@pengutronix.de>
+References: <20231009083856.222030-1-u.kleine-koenig@pengutronix.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3496; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=pt9OZIbEVRO7CYphejzNzNKVBdTQOuLMQfjMm/xdSsg=; b=owGbwMvMwMXY3/A7olbonx/jabUkhlTl3b98hd42/517xHB/gviiPU/9MqwUZ0mXf7uieqT57 e1Tr4s5OxmNWRgYuRhkxRRZ7BvXZFpVyUV2rv13GWYQKxPIFAYuTgGYiNF79n9mT5b+PJ2R+ikl wLMnduL/rK7Z79ojXnBnnL3QVfV6IeOf7r+yDxdeUQ/VNbcoUj9/TSL8bE71Y7sDqxerpXI6VEs /1P97Z0YuT218uWOkw/O0NY6abDVGc6fHL8n96l+lGaq7OrdAK4Ax5VjhrnRrd5OA6peWBvlTb3 AyXvpSMPXrLx65FXyMmsnHnqZ+uvjL8HBZBXOtsu7S3Jpkh9r2xaYef+NnftHqsljaMnF9yufEf 1E6pW1rZr69u0fZs2RLfUdYQdgLp/hzIZpzmerWsjlmfmDdx9Wlc7RYWop3kxrz7+18KXNuV655 FaFwVYNlX9ml35+UxAPLrx9fo8B+cpJOMQ9zsGQi0zFOAA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1785; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=iUS4SwEkb7r81ttsiZuCAWGZ8BPSgfZwboQcZSPLTn8=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlI7wQMOny6ci1vflQLeBPNgnGEOvIztvOzj2IO go4zjz8LpGJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZSO8EAAKCRCPgPtYfRL+ TqlWB/4icqIp1ueWLdYJ0x2M3biO6YlUZ53y9wFVw/r0HWXI3KfVN2PuVBFCBgXpHxAcQ/8x746 yw1fM8SiMBH/xSuk4oJIqkenN3SNZo1LdJRh1D9DcAV550NqhNOY+cS2Psv5VeSxT9BYb/BqEKl EnLZSSIG2lqHuv7eZKZDewzkP0tsLOJBoIQqoEQIps7nrfgwokxfv6AH05yCxDY4P7e75IARECZ eaBLe8Ybr9RrvVOp69tdQ6SDnYACvUbgFYRQDsGYfJlgg8oWaEsY3PWNCSmJV1c0II1djf9W4F5 7ux4ZDhGCgaDR90Gg1HoHUKVrS5yyFDBWkm8x+Ami2TztYzH
 X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
@@ -70,7 +52,7 @@ X-SA-Exim-Mail-From: ukl@pengutronix.de
 X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
 X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,78 +60,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
-after three minor improvements/simplifications this series converts all
-platform_drivers below drivers/pinctrl to .remove_new().
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-See commit 5c5a7680e67b ("platform: Provide a remove callback that
-returns no value") for an extended explanation and the eventual goal.
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-The only interdependencies in this series are the patches that touch a
-single driver (that is (1, 13), (2, 12), (3, 20)). As there are still
-quite a few drivers to convert, I'm happy about every patch that makes
-it in. So even if there is a merge conflict with one patch until you
-apply (or a different concern that doesn't apply to all patches), please
-apply the remainder of this series anyhow. I'll come back to the part
-that you (maybe) skipped at a later point.
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+---
+ drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-Best regards
-Uwe
-
-Uwe Kleine-König (20):
-  pinctrl: stmfx: Improve error message in .remove()'s error path
-  pinctrl: single: Drop if block with always false condition
-  pinctrl: ti: ti-iodelay: Drop if block with always false condition
-  pinctrl: cirrus: madera-core: Convert to platform remove callback
-    returning void
-  pinctrl: intel: cherryview: Convert to platform remove callback
-    returning void
-  pinctrl: intel: lynxpoint: Convert to platform remove callback
-    returning void
-  pinctrl: nomadik: abx500: Convert to platform remove callback
-    returning void
-  pinctrl: amd: Convert to platform remove callback returning void
-  pinctrl: artpec6: Convert to platform remove callback returning void
-  pinctrl: as3722: Convert to platform remove callback returning void
-  pinctrl: rockchip: Convert to platform remove callback returning void
-  pinctrl: single: Convert to platform remove callback returning void
-  pinctrl: stmfx: Convert to platform remove callback returning void
-  pinctrl: tb10x: Convert to platform remove callback returning void
-  pinctrl: qcom: spmi-gpio: Convert to platform remove callback
-    returning void
-  pinctrl: qcom: spmi-mpp: Convert to platform remove callback returning
-    void
-  pinctrl: qcom: ssbi-gpio: Convert to platform remove callback
-    returning void
-  pinctrl: qcom: ssbi-mpp: Convert to platform remove callback returning
-    void
-  pinctrl: renesas: rzn1: Convert to platform remove callback returning
-    void
-  pinctrl: ti: ti-iodelay: Convert to platform remove callback returning
-    void
-
- drivers/pinctrl/cirrus/pinctrl-madera-core.c |  6 ++----
- drivers/pinctrl/intel/pinctrl-cherryview.c   |  6 ++----
- drivers/pinctrl/intel/pinctrl-lynxpoint.c    |  5 ++---
- drivers/pinctrl/nomadik/pinctrl-abx500.c     |  5 ++---
- drivers/pinctrl/pinctrl-amd.c                |  6 ++----
- drivers/pinctrl/pinctrl-artpec6.c            |  6 ++----
- drivers/pinctrl/pinctrl-as3722.c             |  5 ++---
- drivers/pinctrl/pinctrl-rockchip.c           |  6 ++----
- drivers/pinctrl/pinctrl-single.c             |  9 ++-------
- drivers/pinctrl/pinctrl-stmfx.c              | 16 ++++++++++------
- drivers/pinctrl/pinctrl-tb10x.c              |  6 ++----
- drivers/pinctrl/qcom/pinctrl-spmi-gpio.c     |  5 ++---
- drivers/pinctrl/qcom/pinctrl-spmi-mpp.c      |  5 ++---
- drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c     |  6 ++----
- drivers/pinctrl/qcom/pinctrl-ssbi-mpp.c      |  6 ++----
- drivers/pinctrl/renesas/pinctrl-rzn1.c       |  6 ++----
- drivers/pinctrl/ti/pinctrl-ti-iodelay.c      | 11 ++---------
- 17 files changed, 42 insertions(+), 73 deletions(-)
-
-
-base-commit: 0bb80ecc33a8fb5a682236443c1e740d5c917d1d
+diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+index deded9c6fd7d..f4e2c88a7c82 100644
+--- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
++++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+@@ -1185,12 +1185,11 @@ static int pmic_gpio_probe(struct platform_device *pdev)
+ 	return ret;
+ }
+ 
+-static int pmic_gpio_remove(struct platform_device *pdev)
++static void pmic_gpio_remove(struct platform_device *pdev)
+ {
+ 	struct pmic_gpio_state *state = platform_get_drvdata(pdev);
+ 
+ 	gpiochip_remove(&state->chip);
+-	return 0;
+ }
+ 
+ static const struct of_device_id pmic_gpio_of_match[] = {
+@@ -1265,7 +1264,7 @@ static struct platform_driver pmic_gpio_driver = {
+ 		   .of_match_table = pmic_gpio_of_match,
+ 	},
+ 	.probe	= pmic_gpio_probe,
+-	.remove = pmic_gpio_remove,
++	.remove_new = pmic_gpio_remove,
+ };
+ 
+ module_platform_driver(pmic_gpio_driver);
 -- 
 2.40.1
 
