@@ -2,82 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C110B7BEC3A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 23:04:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 877307BEC46
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 23:05:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377082AbjJIVEE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Oct 2023 17:04:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39802 "EHLO
+        id S1377975AbjJIVFL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Oct 2023 17:05:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378200AbjJIVDy (ORCPT
+        with ESMTP id S1378207AbjJIVFI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Oct 2023 17:03:54 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84343EA
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 14:03:49 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2bff776fe0bso63780751fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Oct 2023 14:03:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696885427; x=1697490227; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=43JczQhR06svhP3+MFO67a4XDgSpc7xK7wWPqbVY3mc=;
-        b=Tf09s6ZuTFQ61khnhibD7Law+sJmp194b8dKjNVEczJTXEhSz/iVrQ/og+vR7IueXD
-         iPeRaN50OUwiiJwg3v5pn9mrFTc1IBPzFhe/41h9cogtoH64juBQPq7CPoMyd1ux+nfT
-         TsvA3ttggXKCHyvvNk2XEnqpYC38TW8Jg0kOUB2zIw0sGUGwVUMnbMz/UohfBJQqT9Ua
-         XwikSQjW3z7gF5C+sh5o18UHRX0BYYQRMSaXwMZybOf7wWaYhC8ejAYBrBm/BV5Pcgft
-         15l42CY0jrN8qqG5NVelUakkdT0BdfXGJxcpjPvuaRv2qKoRXShg27SwaHAv43H2ZeXJ
-         Sw8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696885427; x=1697490227;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=43JczQhR06svhP3+MFO67a4XDgSpc7xK7wWPqbVY3mc=;
-        b=OYvGZj2XdMimUDn6m5/p9RrYqQ0JtdSpR6VeyK4A6tiOLycH3cYj9gwYB5fBW1OxPB
-         Ct0ej7u1vJUZYeyQvoS7TP0KU5DRukR+2LZ1/lX7fvZQNKSRl6W328lge1o0N6dN8EhT
-         ytBiWNnpcudM68uHNg8aSG0GkI7Bya2cDfASXz5+9I5ND6GidsYGN1HEOWIm33GR9nud
-         +TjZrWQIuHUPTetqlNDzDagx7uF26J30b0FsrHyylpe7hwGxSybbQhlYTJ6lz39A8TFa
-         F8nTN5Ftf7f1ckgub4xoYw8R+pssJMmgaHJyGj4pK48PBmdYZQAqxcyAhIB+mHxRvHi7
-         q0cA==
-X-Gm-Message-State: AOJu0Yy7ek9gb3aI8sfi8uTBBUEEfb6g0Xmp0nQwbzq0es07QRo+rV1a
-        0YRsqKLlD3rWx+aiCAiQKSo3RWHca7VIk4ahVrbY9A==
-X-Google-Smtp-Source: AGHT+IFMY7QqUdgo8VEEaNfc3AJxOGVDc5LmcHQuYLgMIPjPJlsAadiflZalp6ZB8QmqLruGsgB5CQ==
-X-Received: by 2002:a05:651c:104:b0:2c0:240:b564 with SMTP id a4-20020a05651c010400b002c00240b564mr13779157ljb.15.1696885427576;
-        Mon, 09 Oct 2023 14:03:47 -0700 (PDT)
-Received: from [172.30.204.90] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id a19-20020a05651c011300b002bff365c7bfsm2155195ljb.35.2023.10.09.14.03.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Oct 2023 14:03:47 -0700 (PDT)
-Message-ID: <0a039a5a-46c8-4f63-a9e4-fd5b197340ab@linaro.org>
-Date:   Mon, 9 Oct 2023 23:03:45 +0200
+        Mon, 9 Oct 2023 17:05:08 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46C599E
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 14:05:04 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 399L0CKE001360;
+        Mon, 9 Oct 2023 21:04:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=ChMcju+pTifVyziqoNB0tRDKzIbAvwByZj4c6UGk4Qk=;
+ b=joPsYxsgbl+Hanz95iRRL83pNE/Lhmj8KNy4O4IMkjDmuzslfEDKGUhskJK14vu80gCK
+ elQ5yqNpXZDXVMd7BKrVOlZuzu2U0IIy2HwDiEj2xczO8htRHDym++GaCTbbCxQx/wXl
+ GlMKjp1oKZv1WUv881UDJOH0MD4tHnlin5W7nIEgIglEJ7/yblayynwW9k7M9Y3vI9yw
+ cgpB+r+4IjeYo4wJS1Efux2XiKm+b2PLkFRAwgjD6jqDvKUqDlZO2igPd45uKEDvS+1M
+ vyt/aZfyNVbPzIrWNv91tsZho9Eh2/dRUurJGhOdWb7XhML61To7GCTt6riLxVNOsVHl Qw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tkhx2kf4d-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 09 Oct 2023 21:04:53 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 399L4qFR029232
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 9 Oct 2023 21:04:52 GMT
+Received: from [10.110.90.239] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 9 Oct
+ 2023 14:04:52 -0700
+Message-ID: <836a86ea-4a91-c649-fd3d-a9848eb8ecae@quicinc.com>
+Date:   Mon, 9 Oct 2023 14:04:51 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/2] dt-bindings: arm: Add new compatible for smc/hvc
- transport for SCMI
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [Freedreno] [PATCH v2 02/13] drm/msm/hdmi: switch to
+ devm_drm_bridge_add()
 Content-Language: en-US
-To:     Nikunj Kela <quic_nkela@quicinc.com>,
-        Sudeep Holla <sudeep.holla@arm.com>
-Cc:     cristian.marussi@arm.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        andersson@kernel.org, linux-arm-kernel@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230718160833.36397-1-quic_nkela@quicinc.com>
- <20231006164206.40710-1-quic_nkela@quicinc.com>
- <20231006164206.40710-2-quic_nkela@quicinc.com>
- <20231009144154.vfx5caqxtyezulxx@bogus>
- <b1c9ad08-5aad-ccbd-247c-a5b2aaa42b5b@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <b1c9ad08-5aad-ccbd-247c-a5b2aaa42b5b@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Level: *
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+CC:     <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@gmail.com>
+References: <20231009181040.2743847-1-dmitry.baryshkov@linaro.org>
+ <20231009181040.2743847-3-dmitry.baryshkov@linaro.org>
+ <d56daed9-35ac-0ee3-a0b4-f8596b0490fc@quicinc.com>
+ <aafb04ea-fde3-4c1b-aae4-5e7e50a945d6@linaro.org>
+ <8ef34ba0-f30a-45b0-991e-0a7eb573956d@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <8ef34ba0-f30a-45b0-991e-0a7eb573956d@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: awhEC9PUCDlYHrPFusMd7QQ71VObzRdU
+X-Proofpoint-ORIG-GUID: awhEC9PUCDlYHrPFusMd7QQ71VObzRdU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-09_19,2023-10-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ impostorscore=0 malwarescore=0 mlxscore=0 lowpriorityscore=0 phishscore=0
+ bulkscore=0 adultscore=0 priorityscore=1501 spamscore=0 mlxlogscore=853
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310090168
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -86,39 +91,88 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 10/9/23 16:52, Nikunj Kela wrote:
-> 
-> On 10/9/2023 7:41 AM, Sudeep Holla wrote:
->> On Fri, Oct 06, 2023 at 09:42:05AM -0700, Nikunj Kela wrote:
->>> Introduce compatible "qcom,scmi-smc" for SCMI smc/hvc transport 
->>> channel for
->>> Qualcomm virtual platforms.
+On 10/9/2023 1:53 PM, Dmitry Baryshkov wrote:
+> On 09/10/2023 22:21, Dmitry Baryshkov wrote:
+>> On 09/10/2023 22:19, Abhinav Kumar wrote:
 >>>
->>> This compatible mandates populating an additional parameter 
->>> 'capability-id'
->>> from the last 8 bytes of the shmem channel.
 >>>
->> While I am happy with the simplification here, I am also bit nervous how
->> long before Qualcomm abandons this. I hope this is adopted as is in all
->> internal and downstream code without any modifications and this is not
->> just a push for upstreaming some change to minimise delta with internal/
->> downstream code.
+>>> On 10/9/2023 11:10 AM, Dmitry Baryshkov wrote:
+>>>> Make MSM HDMI driver use devm_drm_bridge_add() instead of plain
+>>>> drm_bridge_add(). As the driver doesn't require any additional cleanup,
+>>>> stop adding created bridge to the priv->bridges array.
+>>>>
+>>>> Reviewed-by: Rob Clark <robdclark@gmail.com>
+>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>> ---
+>>>>   drivers/gpu/drm/msm/hdmi/hdmi.c        | 22 +++++--------------
+>>>>   drivers/gpu/drm/msm/hdmi/hdmi.h        |  5 ++---
+>>>>   drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 30 
+>>>> ++++++++------------------
+>>>>   drivers/gpu/drm/msm/hdmi/hdmi_hpd.c    |  3 +--
+>>>>   4 files changed, 17 insertions(+), 43 deletions(-)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c 
+>>>> b/drivers/gpu/drm/msm/hdmi/hdmi.c
+>>>> index b6bcb9f675fe..c8ebd75176bb 100644
+>>>> --- a/drivers/gpu/drm/msm/hdmi/hdmi.c
+>>>> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+>>>> @@ -160,24 +160,16 @@ static int msm_hdmi_init(struct hdmi *hdmi)
+>>>>   int msm_hdmi_modeset_init(struct hdmi *hdmi,
+>>>>           struct drm_device *dev, struct drm_encoder *encoder)
+>>>>   {
+>>>> -    struct msm_drm_private *priv = dev->dev_private;
+>>>>       int ret;
+>>>> -    if (priv->num_bridges == ARRAY_SIZE(priv->bridges)) {
+>>>> -        DRM_DEV_ERROR(dev->dev, "too many bridges\n");
+>>>> -        return -ENOSPC;
+>>>> -    }
+>>>> -
+>>>>       hdmi->dev = dev;
+>>>>       hdmi->encoder = encoder;
+>>>>       hdmi_audio_infoframe_init(&hdmi->audio.infoframe);
+>>>> -    hdmi->bridge = msm_hdmi_bridge_init(hdmi);
+>>>> -    if (IS_ERR(hdmi->bridge)) {
+>>>> -        ret = PTR_ERR(hdmi->bridge);
+>>>> +    ret = msm_hdmi_bridge_init(hdmi);
+>>>> +    if (ret) {
+>>>>           DRM_DEV_ERROR(dev->dev, "failed to create HDMI bridge: 
+>>>> %d\n", ret);
+>>>> -        hdmi->bridge = NULL;
+>>>>           goto fail;
+>>>>       }
+>>>> @@ -215,16 +207,9 @@ int msm_hdmi_modeset_init(struct hdmi *hdmi,
+>>>>           goto fail;
+>>>>       }
+>>>> -    priv->bridges[priv->num_bridges++]       = hdmi->bridge;
+>>>> -
+>>>>       return 0;
+>>>>   fail:
+>>>> -    /* bridge is normally destroyed by drm: */
+>>>> -    if (hdmi->bridge) {
+>>>> -        msm_hdmi_bridge_destroy(hdmi->bridge);
+>>>> -        hdmi->bridge = NULL;
+>>>> -    }
+>>>>       if (hdmi->connector) {
+>>>>           hdmi->connector->funcs->destroy(hdmi->connector);
+>>>>           hdmi->connector = NULL;
+>>>> @@ -395,6 +380,9 @@ static void msm_hdmi_unbind(struct device *dev, 
+>>>> struct device *master,
+>>>>           if (priv->hdmi->audio_pdev)
+>>>>               platform_device_unregister(priv->hdmi->audio_pdev);
+>>>> +        if (priv->hdmi->bridge)
+>>>> +            msm_hdmi_hpd_disable(priv->hdmi);
+>>>> +
+>>>
+>>> Now is this the only place where hdmi->bridge is used?
+>>>
+>>> Why cant we just keep msm_hdmi_hpd_disable(priv->hdmi) here since its 
+>>> anyway protected by if (priv->hdmi) and drop hdmi->bridge completely?
 >>
->> -- 
->> Regards,
->> Sudeep
+>> Sure, sounds like a good idea, same followup as for the DSI.
 > 
-> Qualcomm is using patch on all the virtual auto platforms using 
-> shmem/doorbell as scmi channel. This is already being used without any 
-> modifications in our downstream code. No delta for this patch series. 
-> Thanks!
-AFAICT Sudeep is looking for a solid guarantee that it will continue to 
-be used as-is, on more than one platform and on more than one BSP version.
+> I was wrong here. hdmi::bridge is used by the driver (e.g. for HPD 
+> reporting).
+> 
 
-There have been cases where such firmware interfaces had silent ABI 
-breaks (or were replaced altogether) between qc downstream branches and 
-this would be unacceptable. Understandably, having a unified means of 
-communication for *all* Qualcomm chips (i.e. not only auto) going 
-forward would likely be expected..
-
-Konrad
+hmmm, I thought HPD module uses hdmi_bridge->hdmi. here we are talking 
+about hdmi->bridge?
