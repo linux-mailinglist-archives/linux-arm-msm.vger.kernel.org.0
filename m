@@ -2,137 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EBAB17BE865
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 19:40:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB6FF7BE86C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 19:40:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233250AbjJIRka (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Oct 2023 13:40:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42090 "EHLO
+        id S1377908AbjJIRkz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Oct 2023 13:40:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232860AbjJIRk3 (ORCPT
+        with ESMTP id S1377935AbjJIRkx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Oct 2023 13:40:29 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25B9CAF
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 10:40:28 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-533f193fc8dso8420617a12.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Oct 2023 10:40:28 -0700 (PDT)
+        Mon, 9 Oct 2023 13:40:53 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21E3C94
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 10:40:51 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2c1854bebf5so59928521fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Oct 2023 10:40:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696873226; x=1697478026; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=W0Hg74zU6ESH8XSh7ezPeKEnzmx/gMQe+/lsq3fFNmM=;
-        b=OZ2qBJTIcTv8zryK3leWRiSTOZxW4hQTglqrFGV1qCwT6qbS1kSSv6VW77hR7yBdqc
-         +CANlwg6LG7PgUVcsu9KCLtmGL8xFAuuZNvgfTH/0aUHcWGGIkKiZ3Adla9D0Aw+YFz9
-         9y07O04SlZNyXdBNW50jm4oAY3aMSYTKbBxSGEBxm7ItTyPmxpcKsA9SxzT1kzZpN7kC
-         +EAdylVYvxre/OehQDpSlH9A3KoLYqUTG35KwKznpXM+IbQJXeCcA2Ram21doa3fFUbz
-         i96BtEjrl7jKaC5DG3iaLz3/bGXQVmkwQgB6aEzbpHwLrmMC6TKPfSLiPu6FpQr/Skka
-         gTpg==
+        d=linaro.org; s=google; t=1696873249; x=1697478049; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=AVumlMvgURvTABPGEb+yEOR7ydtBlb2XaUShMA2Jpso=;
+        b=iiCjnnVANQjOENWFFIIywqsc/TzMBMoBUJP4NtkuyRXOF/JsBxmkzPrp6kxPdhxNkn
+         UY8G03h/yVZx0zdATS2+DZQL+FtpRCm1XT+iw2Q/ndmmxA/GMVtr50uKcZbCdilFUkYv
+         Pg9M7tWTKlO1qnKa7IgtWHfgBHlbmAY9uGxU0VnR+WrbOh3v3ae1KkTGrHt2q3uk6qPn
+         ghKLR5PYoFPFDtahQkr6FN90YIkR3pWUKtwurYglWS2jysjYBe2+8N8xXrW8bzIwPET6
+         x/p5f7xqRZ3jlVUpHPTIv6kH8bV77HS3Zl8Hrcw7+tHfbHmpKfW+0shtwU3bdtANUwly
+         2XUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696873226; x=1697478026;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=W0Hg74zU6ESH8XSh7ezPeKEnzmx/gMQe+/lsq3fFNmM=;
-        b=FXDtqYDexzhC6BTppZQRiXBs6JGqRc1bAiKX8f4oRFG8Vtg5Nx5KRud8ijQyA1VYC0
-         p/I787mU3VrqVaiYxM2d/nw7rDCTblOFj5UZZcV66roF1X2PvfEcd2Fgq+DE/D82Wwta
-         bVf6oOOfvKq1ZkaR+S4kmc6H+o8Rs0C+CEpiig0dspyZZNx2cbE9uhqxSULUYVPAKqAs
-         FFcnxWNpzgILs7b8Cxt6GVVpT5deJLrsEYOHHwcfG/1ycFhyiPBR73waSQ5jFFpiLH+T
-         EwYCM1IT3UBwJb5rQGAFR7Zzqcpx6SOtyxrOSlnWTBgzAVMFWML2xqR9zsoKzWix2D+K
-         VlQw==
-X-Gm-Message-State: AOJu0YwWK65UDbnj1kYlcEOz23f9UuqEJgfZZEDbxy/vPOtG82G3q9AT
-        1/csRt+SfirHHmqNDouarJagjiv3FOwpmh+hCqvkUuHb
-X-Google-Smtp-Source: AGHT+IEsjuGbN899zDjU9g+Ja6nOILX/d8R6MyZMLqwXE7TZqyeBrzEE089Layp1ZBdFnj1gZy4x69oWN2wfKnmsCPo=
-X-Received: by 2002:aa7:d1d7:0:b0:52f:a42a:85a3 with SMTP id
- g23-20020aa7d1d7000000b0052fa42a85a3mr13979430edp.0.1696873226254; Mon, 09
- Oct 2023 10:40:26 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230703003745.34239-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230703003745.34239-1-dmitry.baryshkov@linaro.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 9 Oct 2023 10:40:13 -0700
-Message-ID: <CAF6AEGs-Ar0+gRrsEg_LuAXmsAhFg7MKZ=kLpQ=jZKTfdXBtOQ@mail.gmail.com>
-Subject: Re: [PATCH 00/13] drm/msm: move KMS code from msm_drv.c
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Stephen Boyd <swboyd@chromium.org>,
+        d=1e100.net; s=20230601; t=1696873249; x=1697478049;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AVumlMvgURvTABPGEb+yEOR7ydtBlb2XaUShMA2Jpso=;
+        b=Pernt+BSEt4SjOF753UuFEkAWLhqYFJK/Igq0QboDEfdNV/grSzIioUcsT2q8YmR88
+         MwTr+85aQa8KNtcE0WGVwZN/VPe3nik2o6EchIcufXkG3lanaKNTUIrJQx2Hq8ce5QNr
+         dP19c8yOPxowYIE9oCmGM6IvFWavjSzJCTmDo7nIxSx/E03AgUTCuBLZSbpv+spf38tb
+         BiMLeFW/Imt9zI5MoqhqKsF6gRnRDQ0JQPwaiRAUmuf9Eo406+1nENZB/SefkeC1mcUq
+         IChp/hZ+BgPpmNhQ1x4h5f6qTJtzCh+lAcY9jGzIMfuQg2PRq7QQDS+zE0tw5tZHgw7N
+         YS0w==
+X-Gm-Message-State: AOJu0YzPlYBEvNjbHXvSwxhSdchpo90YwsoBtTn49lcGKVrKs8XYITsN
+        sN8F6xGp96L9ItRgPfNa+wokKA==
+X-Google-Smtp-Source: AGHT+IHU1ZtC1U9QIDj0DA0FvUiZGB5mZ/YjYMp0hB0XPdzaikqfzWD/AfIvyIaceBBsA6KeQPDGrg==
+X-Received: by 2002:a2e:8744:0:b0:2bf:ff53:556e with SMTP id q4-20020a2e8744000000b002bfff53556emr13590224ljj.23.1696873249322;
+        Mon, 09 Oct 2023 10:40:49 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id z5-20020a2e3505000000b002bcbae4c21fsm2128988ljz.50.2023.10.09.10.40.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Oct 2023 10:40:48 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
         David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Simon Ser <contact@emersion.fr>, Janne Grunau <j@jannau.net>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-usb@vger.kernel.org
+Subject: [PATCH v7 0/3 RESEND] drm/bridge_connector: implement OOB HPD handling
+Date:   Mon,  9 Oct 2023 20:40:45 +0300
+Message-Id: <20231009174048.2695981-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jul 2, 2023 at 5:37=E2=80=AFPM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> Currently both msm_drm_init() and msm_drm_uninit() functions are trying
-> to handle both normal and headless Adreno cases. This results in a
-> suboptimal code, since headless case still gets modesetting and atomic
-> interfaces enabled. Two mentioned functions are a spaghetti of
-> `if (priv->kms)' conditional code.
->
-> Move all KMS-related code (not limiting the init / teardown path) from
-> msm_drv.c to msm_kms.c, making it more self-contained. This also
-> disables ATOMIC and MODESET features for the headless case.
->
-> Dependencies: [1]
-> [1] https://patchwork.freedesktop.org/series/105392/
->
-> Dmitry Baryshkov (13):
->   drm/msm/dsi: switch to devm_drm_bridge_add()
->   drm/msm/hdmi: switch to devm_drm_bridge_add()
->   drm/msm/dp: move pdev from struct dp_display_private to struct msm_dp
->   drm/msm/dp: switch to devm_drm_bridge_add()
->   drm/msm: remove msm_drm_private::bridges field
->   drm/msm: drop pm ops from the headless msm driver
->   drm/msm: rename msm_pm_prepare/complete to note the KMS nature
->   drm/msm: remove shutdown callback from msm_platform_driver
->   drm/msm: rename msm_drv_shutdown() to msm_kms_shutdown()
->   drm/msm: switch to drmm_mode_config_init()
->   drm/msm: only register 'kms' debug file if KMS is used
->   drm/msm: make fb debugfs file available only in KMS case
->   drm/msm: carve out KMS code from msm_drv.c
+This is a resend, since the previous submission got no responses. The
+patches have been reviewed/acked by several maintainers. Can we please
+gain some attention and either get it merged or understand what should
+be changed / improved. This series is required to delivere HPD events
+from altmode driver to the MSM DP driver in the sane way.
 
-Reviewed-by: Rob Clark <robdclark@gmail.com>
 
->
->  drivers/gpu/drm/msm/Makefile             |   1 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  |   6 +-
->  drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c |   6 +-
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c |   6 +-
->  drivers/gpu/drm/msm/dp/dp_display.c      |  34 +--
->  drivers/gpu/drm/msm/dp/dp_display.h      |   1 +
->  drivers/gpu/drm/msm/dp/dp_drm.c          |  21 +-
->  drivers/gpu/drm/msm/dp/dp_drm.h          |   2 +-
->  drivers/gpu/drm/msm/dsi/dsi.c            |  28 +-
->  drivers/gpu/drm/msm/dsi/dsi.h            |   3 +-
->  drivers/gpu/drm/msm/dsi/dsi_manager.c    |  30 +-
->  drivers/gpu/drm/msm/hdmi/hdmi.c          |  22 +-
->  drivers/gpu/drm/msm/hdmi/hdmi.h          |   5 +-
->  drivers/gpu/drm/msm/hdmi/hdmi_bridge.c   |  30 +-
->  drivers/gpu/drm/msm/hdmi/hdmi_hpd.c      |   3 +-
->  drivers/gpu/drm/msm/msm_debugfs.c        |  12 +-
->  drivers/gpu/drm/msm/msm_drv.c            | 363 ++---------------------
->  drivers/gpu/drm/msm/msm_drv.h            |   9 +-
->  drivers/gpu/drm/msm/msm_kms.c            | 345 +++++++++++++++++++++
->  drivers/gpu/drm/msm/msm_kms.h            |   3 +
->  20 files changed, 452 insertions(+), 478 deletions(-)
->  create mode 100644 drivers/gpu/drm/msm/msm_kms.c
->
-> --
-> 2.39.2
->
+Note, numbering for this series starts from v5, since there were several
+revisions for this patchset under a different series title ([1]).
+
+USB altmodes code would send OOB notifications to the drm_connector
+specified in the device tree. However as the MSM DP driver uses
+drm_bridge_connector, there is no way to receive these event directly.
+Implement a bridge between oob_hotplug_event and drm_bridge's
+hpd_notify.
+
+Merge strategy: since this series touches i915 code, it might make sense
+to merge all three patches through drm-intel.
+
+[1] https://patchwork.freedesktop.org/series/103449/
+
+Changes since v6:
+- Rebased on top of linux-next. Fixed the freshly added
+  new drm_connector_oob_hotplug_event() call.
+
+Changes since v5:
+- Fixed checkpatch warning in the first patch (noted by intel-gfx CI).
+
+Changes since v4:
+- Picked up the patchset
+- Dropped msm-specific patches
+- Changed drm_bridge_connector_oob_hotplug_event to call connector's HPD
+  callback directly, rather than going through the last bridge's
+  hpd_notify
+- Added proper fwnode for the drm_bridge_connector
+
+Bjorn Andersson (1):
+  drm: Add HPD state to drm_connector_oob_hotplug_event()
+
+Dmitry Baryshkov (2):
+  drm/bridge_connector: stop filtering events in
+    drm_bridge_connector_hpd_cb()
+  drm/bridge_connector: implement oob_hotplug_event
+
+ drivers/gpu/drm/drm_bridge_connector.c        | 36 ++++++++++++++-----
+ drivers/gpu/drm/drm_connector.c               |  6 ++--
+ .../gpu/drm/i915/display/intel_display_core.h |  3 ++
+ drivers/gpu/drm/i915/display/intel_dp.c       | 17 +++++++--
+ drivers/usb/typec/altmodes/displayport.c      | 17 ++++-----
+ include/drm/drm_connector.h                   |  6 ++--
+ 6 files changed, 62 insertions(+), 23 deletions(-)
+
+-- 
+2.39.2
+
