@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AEFBE7BE8E7
+	by mail.lfdr.de (Postfix) with ESMTP id 0F33A7BE8E5
 	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 20:10:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377454AbjJISKu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Oct 2023 14:10:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38764 "EHLO
+        id S1376898AbjJISKt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Oct 2023 14:10:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377450AbjJISKs (ORCPT
+        with ESMTP id S1377454AbjJISKs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 9 Oct 2023 14:10:48 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FC3994
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 11:10:46 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-5068692b0d9so3841932e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Oct 2023 11:10:46 -0700 (PDT)
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 829AB9D
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 11:10:47 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-50437c618b4so6012183e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Oct 2023 11:10:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696875045; x=1697479845; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696875046; x=1697479846; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6/ggZZmOOvUZ/jHV96y3poAAIRXv6qRJqOXl/4SuAQc=;
-        b=D1CB2eyrVs+Wse8pmQ0bVqZgLfFrzXyEhlC6ipbBNLimW+Of/zLJ/NQUG6eMoGoK55
-         QgAt4JB5RYjEQ24sKAwRX6p/D3+4v7CILK1XxJCzPrLqU+fYxY2jw0tq2Z0XNBcocnRh
-         RinkSIyqylpHOwaMuUtj0puOEKqC3zZ5SjtEjC/dkBVvojl0F/s1u0N3pCZxk4EcG9OM
-         yAusOdxK7tyhFKqjQYfSCgMMfdZ166Zx4QTKShXSLipaJOXyfal830I7BniIWEwPIPfH
-         UxalKqxbsQmqIQPpW1R2EaPVb2mUHMbncp7lCqVwAqHRoqHPk9V52a+xb9ZZ2wQiXg6f
-         XDjw==
+        bh=PDffGe9s39I6J3ue64oALa7ElHnsr/uXc2xUK2PVAIo=;
+        b=jo1Op/TkgJ4i6JTZljwbeCufS3aAK1ulikfayUF4O+pB7MtyOJhglx8SFRFs/wlLgi
+         zxUJfvVkv0u2e91zKnpgss0fF12/LGPWAkvlAnj0Ut2/oYsC/wCqOn+jJOVRUy401TGQ
+         QFETQdMGVMJAChczBkhKVUNzCxiOdLMMxLInqy6+RVFMVIrodWXi5VvsU7WIhngdz1mk
+         C/61OEbiJp79krZo8Qr6n3/ztproJfnsryDg0LG48Kfc5D8EefG9/0v1ezSQxQdFo3UI
+         WIbVMe+0Nb0XX29NBU6WEquC6evnnEtqUZS4FQigYgKH5KBTSrgqMw1lRmzm3o5PR5Jd
+         clCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696875045; x=1697479845;
+        d=1e100.net; s=20230601; t=1696875046; x=1697479846;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=6/ggZZmOOvUZ/jHV96y3poAAIRXv6qRJqOXl/4SuAQc=;
-        b=mIIi4tAyaOTuNT0pNMgDaw1hNA+tiun/d6mqzS/3oED3K6fbqVZQi92HTP6V72mnAP
-         BpSrByRtq2u1fPrpSTVDkTSADZ1U+FiLUu+Egh+nZce087h6T8dymvXG/1MqNiLIeDkG
-         exvktZgZ5AIzxCPReOFMhdlKEq9+IdMrtdnc8kAOwVrLLcgqmFBihCe/GMjn44hz68cH
-         hmKZfxpjSlkAo2y4ql/gpvJbpVZ9TBvnjjufWOMC5Ui/6390IVsQFEfu9hrW+qbiuJEQ
-         TY9x1PxwHyLe1gHbwwizE/eFUuqd5Z4W5wURteqCKxvHgUw7GRn5Sa5h9OWFTpa3fWKm
-         QSOw==
-X-Gm-Message-State: AOJu0Yzrg0STUTw5how+RL97aBlv32OjNZDWG/r1+2EO0dzmVgICmsbK
-        uTNJju1EMZ1+vE86bH9rmcNL5A==
-X-Google-Smtp-Source: AGHT+IEkZphNwAOKp9JtA7qMk7prsRuhaPwpf+e6gDGlK1W+jDqKLj+YRJsuImLEuWVeqkYOfEBCIg==
-X-Received: by 2002:a05:6512:3b9a:b0:503:18c5:6833 with SMTP id g26-20020a0565123b9a00b0050318c56833mr17676101lfv.61.1696875044954;
-        Mon, 09 Oct 2023 11:10:44 -0700 (PDT)
+        bh=PDffGe9s39I6J3ue64oALa7ElHnsr/uXc2xUK2PVAIo=;
+        b=Niqw7r/lpaSAC8vyt8CTaZ/tJX9iTfGmnuljTX7A2SUbH3BYLILV9d+rIgrN1FCwtG
+         fR/u9nLUy5MAuahZ680Y0QAjeUVVT5QSCZAFX/SqDPiGcpTcsE+7uFThB3zWb8Se8rti
+         WEcDantiXn/7YkoaW4jqQNIAIFPR94tF2iYeOkdoex0PMcAwyC2IKaRmM8hRfIWcmJR7
+         hlFAeWZRfWzuoZWTmi5/EqqxeLMo5pmN8G+fyqaf55ozz7Qjuk2HvnQLNtcG7t7878hg
+         V7q1en8O2QNr80Flpc6WhTDqJ+9TTs2xaqvnW46VogTUBHWYG6QohmrXfGkH7HNCCA7h
+         SMGg==
+X-Gm-Message-State: AOJu0Yzz239D2z3mMvDQlhyMekS3SP0BEKLpRRsmVTZGEpMX1Shvk4lM
+        RjvAJmfGJc2bezIZOsZFbh3y1w==
+X-Google-Smtp-Source: AGHT+IEoGY8TGh+MeEfY49+EpGtxtl6bqUGlHjpkO9fRAkDexHyvI42sNQOanvPNMbrl/GeB9/SU9g==
+X-Received: by 2002:a05:6512:159d:b0:503:1722:9c5a with SMTP id bp29-20020a056512159d00b0050317229c5amr19024534lfb.3.1696875045806;
+        Mon, 09 Oct 2023 11:10:45 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id d6-20020ac25446000000b00505677e7a99sm1506963lfn.139.2023.10.09.11.10.44
+        by smtp.gmail.com with ESMTPSA id d6-20020ac25446000000b00505677e7a99sm1506963lfn.139.2023.10.09.11.10.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Oct 2023 11:10:44 -0700 (PDT)
+        Mon, 09 Oct 2023 11:10:45 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,9 +60,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v2 04/13] drm/msm/dp: switch to devm_drm_bridge_add()
-Date:   Mon,  9 Oct 2023 21:10:31 +0300
-Message-Id: <20231009181040.2743847-5-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 05/13] drm/msm: remove msm_drm_private::bridges field
+Date:   Mon,  9 Oct 2023 21:10:32 +0300
+Message-Id: <20231009181040.2743847-6-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20231009181040.2743847-1-dmitry.baryshkov@linaro.org>
 References: <20231009181040.2743847-1-dmitry.baryshkov@linaro.org>
@@ -77,124 +77,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Make MSM DP driver use devm_drm_bridge_add() instead of plain
-drm_bridge_add(). As the driver doesn't require any additional cleanup,
-stop adding created bridge to the priv->bridges array.
+As all output devices have switched to devm_drm_bridge_add(), we can
+drop the bridges array from struct msm_drm_private.
 
 Reviewed-by: Rob Clark <robdclark@gmail.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/dp/dp_display.c |  9 ++-------
- drivers/gpu/drm/msm/dp/dp_drm.c     | 21 +++++++++++++--------
- drivers/gpu/drm/msm/dp/dp_drm.h     |  2 +-
- 3 files changed, 16 insertions(+), 16 deletions(-)
+ drivers/gpu/drm/msm/msm_drv.c | 4 ----
+ drivers/gpu/drm/msm/msm_drv.h | 3 ---
+ 2 files changed, 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 172daa5ad004..e329e03e068d 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -1530,7 +1530,6 @@ static int dp_display_get_next_bridge(struct msm_dp *dp)
- int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
- 			struct drm_encoder *encoder)
- {
--	struct msm_drm_private *priv = dev->dev_private;
- 	struct dp_display_private *dp_priv;
- 	int ret;
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index 5b937c3879af..7617c456475a 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -240,10 +240,6 @@ static int msm_drm_uninit(struct device *dev)
  
-@@ -1548,17 +1547,13 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
- 	if (ret)
- 		return ret;
+ 	drm_mode_config_cleanup(ddev);
  
--	dp_display->bridge = dp_bridge_init(dp_display, dev, encoder);
--	if (IS_ERR(dp_display->bridge)) {
--		ret = PTR_ERR(dp_display->bridge);
-+	ret = dp_bridge_init(dp_display, dev, encoder);
-+	if (ret) {
- 		DRM_DEV_ERROR(dev->dev,
- 			"failed to create dp bridge: %d\n", ret);
--		dp_display->bridge = NULL;
- 		return ret;
- 	}
- 
--	priv->bridges[priv->num_bridges++] = dp_display->bridge;
+-	for (i = 0; i < priv->num_bridges; i++)
+-		drm_bridge_remove(priv->bridges[i]);
+-	priv->num_bridges = 0;
 -
- 	dp_display->connector = dp_drm_connector_init(dp_display, encoder);
- 	if (IS_ERR(dp_display->connector)) {
- 		ret = PTR_ERR(dp_display->connector);
-diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
-index 785d76639497..284ff7df058a 100644
---- a/drivers/gpu/drm/msm/dp/dp_drm.c
-+++ b/drivers/gpu/drm/msm/dp/dp_drm.c
-@@ -272,7 +272,7 @@ static const struct drm_bridge_funcs edp_bridge_ops = {
- 	.atomic_check = edp_bridge_atomic_check,
- };
+ 	if (kms) {
+ 		pm_runtime_get_sync(dev);
+ 		msm_irq_uninstall(ddev);
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index 80085d644c1e..a6a29093bbe5 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -206,9 +206,6 @@ struct msm_drm_private {
  
--struct drm_bridge *dp_bridge_init(struct msm_dp *dp_display, struct drm_device *dev,
-+int dp_bridge_init(struct msm_dp *dp_display, struct drm_device *dev,
- 			struct drm_encoder *encoder)
- {
- 	int rc;
-@@ -281,7 +281,7 @@ struct drm_bridge *dp_bridge_init(struct msm_dp *dp_display, struct drm_device *
+ 	struct msm_drm_thread event_thread[MAX_CRTCS];
  
- 	dp_bridge = devm_kzalloc(dev->dev, sizeof(*dp_bridge), GFP_KERNEL);
- 	if (!dp_bridge)
--		return ERR_PTR(-ENOMEM);
-+		return -ENOMEM;
- 
- 	dp_bridge->dp_display = dp_display;
- 
-@@ -307,14 +307,18 @@ struct drm_bridge *dp_bridge_init(struct msm_dp *dp_display, struct drm_device *
- 			DRM_BRIDGE_OP_MODES;
- 	}
- 
--	drm_bridge_add(bridge);
-+	rc = devm_drm_bridge_add(&dp_display->pdev->dev, bridge);
-+	if (rc) {
-+		DRM_ERROR("failed to add bridge, rc=%d\n", rc);
-+
-+		return rc;
-+	}
- 
- 	rc = drm_bridge_attach(encoder, bridge, NULL, DRM_BRIDGE_ATTACH_NO_CONNECTOR);
- 	if (rc) {
- 		DRM_ERROR("failed to attach bridge, rc=%d\n", rc);
--		drm_bridge_remove(bridge);
- 
--		return ERR_PTR(rc);
-+		return rc;
- 	}
- 
- 	if (dp_display->next_bridge) {
-@@ -323,12 +327,13 @@ struct drm_bridge *dp_bridge_init(struct msm_dp *dp_display, struct drm_device *
- 					DRM_BRIDGE_ATTACH_NO_CONNECTOR);
- 		if (rc < 0) {
- 			DRM_ERROR("failed to attach panel bridge: %d\n", rc);
--			drm_bridge_remove(bridge);
--			return ERR_PTR(rc);
-+			return rc;
- 		}
- 	}
- 
--	return bridge;
-+	dp_display->bridge = bridge;
-+
-+	return 0;
- }
- 
- /* connector initialization */
-diff --git a/drivers/gpu/drm/msm/dp/dp_drm.h b/drivers/gpu/drm/msm/dp/dp_drm.h
-index afe79b85e183..b3d684db2383 100644
---- a/drivers/gpu/drm/msm/dp/dp_drm.h
-+++ b/drivers/gpu/drm/msm/dp/dp_drm.h
-@@ -20,7 +20,7 @@ struct msm_dp_bridge {
- #define to_dp_bridge(x)     container_of((x), struct msm_dp_bridge, bridge)
- 
- struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display, struct drm_encoder *encoder);
--struct drm_bridge *dp_bridge_init(struct msm_dp *dp_display, struct drm_device *dev,
-+int dp_bridge_init(struct msm_dp *dp_display, struct drm_device *dev,
- 			struct drm_encoder *encoder);
- 
- void dp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
+-	unsigned int num_bridges;
+-	struct drm_bridge *bridges[MAX_BRIDGES];
+-
+ 	/* VRAM carveout, used when no IOMMU: */
+ 	struct {
+ 		unsigned long size;
 -- 
 2.39.2
 
