@@ -2,279 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 415257BEC1F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 22:57:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 310037BEC2B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 23:00:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378102AbjJIU5i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Oct 2023 16:57:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40024 "EHLO
+        id S1378145AbjJIVAR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Oct 2023 17:00:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378097AbjJIU5h (ORCPT
+        with ESMTP id S1378132AbjJIVAQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Oct 2023 16:57:37 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 184F292
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 13:57:35 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-5041bb9ce51so6240857e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Oct 2023 13:57:35 -0700 (PDT)
+        Mon, 9 Oct 2023 17:00:16 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8CA8A6
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 14:00:13 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-50585357903so6562728e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Oct 2023 14:00:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696885053; x=1697489853; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ArTNHECreYuQA115CCTpUIP9lX7NmDsLaxdoYp/EqZs=;
-        b=VWqUM2KZd1ro0RcTCDIjWaF+e7XTJMFTIWuvdDAqtjeGitiN7QpYBzMq5bQR/aTr5a
-         uMJdmCajpSGim467s2DHSiGfCCY184cbCsTR6LLjTxIjpJxP43Zpfn+89lFnrG0q3MgI
-         ZJEieBTisL4XudIIXvDY8khSiA4jMVthpxS6piKeyqXqe9zc7ba7al6dwujy5WFlsZdP
-         9E1JxfQZCWuFZcUCBX89CxjT59Hr1jP9sjmvfTZN+GnAucLZPgoj8MZaBK2OE/bTMeAE
-         AleFSpMzJTLX6nc2yd15rUf9Gbb8+Iz84de/tMeoXI2uoaHvPabXN3eLYKm6iILXTjGP
-         0Ilw==
+        d=linaro.org; s=google; t=1696885212; x=1697490012; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=FFZIXmEw2tc1DnjJYwLf5gJO4LbvSj649aUqBUfNLtE=;
+        b=GIpsBT1PNjglUUx1tEs06IKZcM/j20vbudwWVNfVA1hNdA2LTqw/D/QncZ3vtH1IEf
+         aBvPIGlHw0QeIdwLarG7HbdEfUfmJRlLH3nym+Qlv+LlbjpLnh8VqUQGqW3rlS2K/ew3
+         YBbzZWyYrA+Yv9B7s3xtGNjacBTM+yljyBBCaoZPlfopONGbDbLJvN9FNKEtmGAy6jz7
+         vh9NFTgh+cmBJlEoZBpPuFqMJZBTJREhCfWZJEjwg/Xh+Op0MzC98rGSuE7gRf1x6I2T
+         rCT5v/bBYuXBIEKs0+n2E6LkS4mhWXsvkKGlaFpjPtR0g43WLdpv4HGt++5MRHACPpqM
+         AszA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696885053; x=1697489853;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ArTNHECreYuQA115CCTpUIP9lX7NmDsLaxdoYp/EqZs=;
-        b=jNnyZA3zkxRZOe1qA4GDRm7lPXgrO+Pnw2qYiE1NmRWtBe8NIn6U0hQsrxOTS9SbSP
-         q+hyhamEb57/sqErViTL/CO80XUgAtKvujZqCVbZwDKn8Fkr94TGA46ePvQ0/EEH2jIr
-         oe11/rB9lAZd3UQQN3pJGFb16uEgb4aEdKh0t2d209mVcqYPQi6uX+X4Ba8+8+PpFQ9+
-         fwp4F9qmwpdJBbIMHWvE/Ak2ZxEndug/uQMk25mcHelw00QR4khIRDDqbkEKAbxWXz6M
-         k/TWn5lePOAN/gGvJ0R4Pi3cAmU4Oe4oHM7QhyS+MwrIli7GujiJQLgjTQSBJNCST/sE
-         3tlw==
-X-Gm-Message-State: AOJu0YzrSUsj3cGGRasbn/HWBLmn/zc3go289WgdALwZNOGfJXJNSwEW
-        sVGjA/be7x7siLqZ4rNA1zTDTg==
-X-Google-Smtp-Source: AGHT+IFtjkuBxGl/3Nes/WDrdrp39PAnSs0zIGl0jOFF7dz7VMinE6ZC8w+igb8Uj57ZYYH5paVm0g==
-X-Received: by 2002:a19:f015:0:b0:503:3654:37bd with SMTP id p21-20020a19f015000000b00503365437bdmr12804812lfc.45.1696885053426;
-        Mon, 09 Oct 2023 13:57:33 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id f5-20020ac251a5000000b0050300e013f3sm1540844lfk.254.2023.10.09.13.57.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Oct 2023 13:57:32 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH 5/5] drm/msm/mdp5: drop split display support
-Date:   Mon,  9 Oct 2023 23:57:27 +0300
-Message-Id: <20231009205727.2781802-6-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20231009205727.2781802-1-dmitry.baryshkov@linaro.org>
-References: <20231009205727.2781802-1-dmitry.baryshkov@linaro.org>
+        d=1e100.net; s=20230601; t=1696885212; x=1697490012;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FFZIXmEw2tc1DnjJYwLf5gJO4LbvSj649aUqBUfNLtE=;
+        b=WgZhqTf7Kugil1sNjpa9dyzyrooanJNMtf9UsHJQsKV4O9C3B9udi0v6vkvS9Q7zKC
+         LHxjwz5+MG+nkzq/9QgTMZlMdW1l6KfsFvGQX9+9CBdd8AjSzt6hH2PvSavJ1n1fnKN4
+         GQXXr4yXV8QHXrtfPjUERVFyG88TUwhg5klaY2RvEPHnZoQXetKzvHxtsNJiM5xtOYXo
+         6oTicbJplp77t2dUosaHbDLpKbCaWjPrWTjERZPuFadMdpK5ExkYmJEW0wJvU03uu38s
+         o0rgkJw875EvMXRlI+PXiAkOuId4Mf61iIH1Ej6zqFTgaU2LkcqFKslitwDtd8u3dAs2
+         5qWQ==
+X-Gm-Message-State: AOJu0YzkWRMx1DtPjVhcY53Iiwx0JoIuu9uYSaIP/iwLBCVVLDFopzov
+        Uvf2st2TV7wsvwqh0st1Pyhalw==
+X-Google-Smtp-Source: AGHT+IFiDYWQz4SXKOH5uGqzuFUrpdOqp33jcUV1BQQub9Nial0VFpPgIQC2f+dCF8FwCKzKQYD9pg==
+X-Received: by 2002:a05:6512:200e:b0:503:183c:1223 with SMTP id a14-20020a056512200e00b00503183c1223mr12684061lfb.7.1696885211793;
+        Mon, 09 Oct 2023 14:00:11 -0700 (PDT)
+Received: from [172.30.204.90] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id d16-20020ac24c90000000b004fe5608e412sm1545004lfl.170.2023.10.09.14.00.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Oct 2023 14:00:11 -0700 (PDT)
+Message-ID: <52bf96e4-f8eb-4f3b-ae2e-3c33d314b09c@linaro.org>
+Date:   Mon, 9 Oct 2023 23:00:07 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 2/2] regulator: qcom_smd: Disable unused regulators
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Mark Brown <broonie@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20231004-reg-smd-unused-v1-0-5d682493d555@kernkonzept.com>
+ <20231004-reg-smd-unused-v1-2-5d682493d555@kernkonzept.com>
+ <9b7744bf-d42c-4922-85e8-ca4777f313a7@linaro.org>
+ <ZSRhTIqYX7hQ0_lc@gerhold.net>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <ZSRhTIqYX7hQ0_lc@gerhold.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The MSM DSI driver has dropped support for calling
-mdp_kms_funcs::set_split_display() callback. Drop corresponding callback
-from the mdp5 driver together with the rest of the infrastructure.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- .../gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c  | 42 -------------------
- drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c  | 42 -------------------
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c      | 14 -------
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h      |  9 ----
- drivers/gpu/drm/msm/msm_kms.h                 |  4 --
- 5 files changed, 111 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c
-index a640af22eafc..e5662412db9b 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c
-@@ -158,46 +158,4 @@ void mdp5_cmd_encoder_enable(struct drm_encoder *encoder)
- 
- 	mdp5_cmd_enc->enabled = true;
- }
--
--int mdp5_cmd_encoder_set_split_display(struct drm_encoder *encoder,
--				       struct drm_encoder *slave_encoder)
--{
--	struct mdp5_encoder *mdp5_cmd_enc = to_mdp5_encoder(encoder);
--	struct mdp5_kms *mdp5_kms;
--	struct device *dev;
--	int intf_num;
--	u32 data = 0;
--
--	if (!encoder || !slave_encoder)
--		return -EINVAL;
--
--	mdp5_kms = get_kms(encoder);
--	intf_num = mdp5_cmd_enc->intf->num;
--
--	/* Switch slave encoder's trigger MUX, to use the master's
--	 * start signal for the slave encoder
--	 */
--	if (intf_num == 1)
--		data |= MDP5_SPLIT_DPL_UPPER_INTF2_SW_TRG_MUX;
--	else if (intf_num == 2)
--		data |= MDP5_SPLIT_DPL_UPPER_INTF1_SW_TRG_MUX;
--	else
--		return -EINVAL;
--
--	/* Smart Panel, Sync mode */
--	data |= MDP5_SPLIT_DPL_UPPER_SMART_PANEL;
--
--	dev = &mdp5_kms->pdev->dev;
--
--	/* Make sure clocks are on when connectors calling this function. */
--	pm_runtime_get_sync(dev);
--	mdp5_write(mdp5_kms, REG_MDP5_SPLIT_DPL_UPPER, data);
--
--	mdp5_write(mdp5_kms, REG_MDP5_SPLIT_DPL_LOWER,
--		   MDP5_SPLIT_DPL_LOWER_SMART_PANEL);
--	mdp5_write(mdp5_kms, REG_MDP5_SPLIT_DPL_EN, 1);
--	pm_runtime_put_sync(dev);
--
--	return 0;
--}
- #endif /* CONFIG_DRM_MSM_DSI */
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c
-index 79d67c495780..7c2092ca4040 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c
-@@ -274,48 +274,6 @@ u32 mdp5_encoder_get_framecount(struct drm_encoder *encoder)
- 	return mdp5_read(mdp5_kms, REG_MDP5_INTF_FRAME_COUNT(intf));
- }
- 
--int mdp5_vid_encoder_set_split_display(struct drm_encoder *encoder,
--				       struct drm_encoder *slave_encoder)
--{
--	struct mdp5_encoder *mdp5_encoder = to_mdp5_encoder(encoder);
--	struct mdp5_encoder *mdp5_slave_enc = to_mdp5_encoder(slave_encoder);
--	struct mdp5_kms *mdp5_kms;
--	struct device *dev;
--	int intf_num;
--	u32 data = 0;
--
--	if (!encoder || !slave_encoder)
--		return -EINVAL;
--
--	mdp5_kms = get_kms(encoder);
--	intf_num = mdp5_encoder->intf->num;
--
--	/* Switch slave encoder's TimingGen Sync mode,
--	 * to use the master's enable signal for the slave encoder.
--	 */
--	if (intf_num == 1)
--		data |= MDP5_SPLIT_DPL_LOWER_INTF2_TG_SYNC;
--	else if (intf_num == 2)
--		data |= MDP5_SPLIT_DPL_LOWER_INTF1_TG_SYNC;
--	else
--		return -EINVAL;
--
--	dev = &mdp5_kms->pdev->dev;
--	/* Make sure clocks are on when connectors calling this function. */
--	pm_runtime_get_sync(dev);
--
--	/* Dumb Panel, Sync mode */
--	mdp5_write(mdp5_kms, REG_MDP5_SPLIT_DPL_UPPER, 0);
--	mdp5_write(mdp5_kms, REG_MDP5_SPLIT_DPL_LOWER, data);
--	mdp5_write(mdp5_kms, REG_MDP5_SPLIT_DPL_EN, 1);
--
--	mdp5_ctl_pair(mdp5_encoder->ctl, mdp5_slave_enc->ctl, true);
--
--	pm_runtime_put_sync(dev);
--
--	return 0;
--}
--
- void mdp5_encoder_set_intf_mode(struct drm_encoder *encoder, bool cmd_mode)
- {
- 	struct mdp5_encoder *mdp5_encoder = to_mdp5_encoder(encoder);
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-index 11d9fc2c6bf5..22f2d2ec4a9c 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-@@ -190,19 +190,6 @@ static void mdp5_complete_commit(struct msm_kms *kms, unsigned crtc_mask)
- 		mdp5_smp_complete_commit(mdp5_kms->smp, &global_state->smp);
- }
- 
--static int mdp5_set_split_display(struct msm_kms *kms,
--		struct drm_encoder *encoder,
--		struct drm_encoder *slave_encoder,
--		bool is_cmd_mode)
--{
--	if (is_cmd_mode)
--		return mdp5_cmd_encoder_set_split_display(encoder,
--							slave_encoder);
--	else
--		return mdp5_vid_encoder_set_split_display(encoder,
--							  slave_encoder);
--}
--
- static void mdp5_destroy(struct mdp5_kms *mdp5_kms);
- 
- static void mdp5_kms_destroy(struct msm_kms *kms)
-@@ -275,7 +262,6 @@ static const struct mdp_kms_funcs kms_funcs = {
- 		.wait_flush      = mdp5_wait_flush,
- 		.complete_commit = mdp5_complete_commit,
- 		.get_format      = mdp_get_format,
--		.set_split_display = mdp5_set_split_display,
- 		.destroy         = mdp5_kms_destroy,
- #ifdef CONFIG_DEBUG_FS
- 		.debugfs_init    = mdp5_kms_debugfs_init,
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h
-index 29bf11f08601..ee68e9913f8c 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h
-@@ -291,8 +291,6 @@ struct drm_crtc *mdp5_crtc_init(struct drm_device *dev,
- 
- struct drm_encoder *mdp5_encoder_init(struct drm_device *dev,
- 		struct mdp5_interface *intf, struct mdp5_ctl *ctl);
--int mdp5_vid_encoder_set_split_display(struct drm_encoder *encoder,
--				       struct drm_encoder *slave_encoder);
- void mdp5_encoder_set_intf_mode(struct drm_encoder *encoder, bool cmd_mode);
- int mdp5_encoder_get_linecount(struct drm_encoder *encoder);
- u32 mdp5_encoder_get_framecount(struct drm_encoder *encoder);
-@@ -303,8 +301,6 @@ void mdp5_cmd_encoder_mode_set(struct drm_encoder *encoder,
- 			       struct drm_display_mode *adjusted_mode);
- void mdp5_cmd_encoder_disable(struct drm_encoder *encoder);
- void mdp5_cmd_encoder_enable(struct drm_encoder *encoder);
--int mdp5_cmd_encoder_set_split_display(struct drm_encoder *encoder,
--				       struct drm_encoder *slave_encoder);
- #else
- static inline void mdp5_cmd_encoder_mode_set(struct drm_encoder *encoder,
- 					     struct drm_display_mode *mode,
-@@ -317,11 +313,6 @@ static inline void mdp5_cmd_encoder_disable(struct drm_encoder *encoder)
- static inline void mdp5_cmd_encoder_enable(struct drm_encoder *encoder)
- {
- }
--static inline int mdp5_cmd_encoder_set_split_display(
--	struct drm_encoder *encoder, struct drm_encoder *slave_encoder)
--{
--	return -EINVAL;
--}
- #endif
- 
- #endif /* __MDP5_KMS_H__ */
-diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
-index 44aa435d68ce..0641f6111b93 100644
---- a/drivers/gpu/drm/msm/msm_kms.h
-+++ b/drivers/gpu/drm/msm/msm_kms.h
-@@ -105,10 +105,6 @@ struct msm_kms_funcs {
- 	/* misc: */
- 	long (*round_pixclk)(struct msm_kms *kms, unsigned long rate,
- 			struct drm_encoder *encoder);
--	int (*set_split_display)(struct msm_kms *kms,
--			struct drm_encoder *encoder,
--			struct drm_encoder *slave_encoder,
--			bool is_cmd_mode);
- 	/* cleanup: */
- 	void (*destroy)(struct msm_kms *kms);
- 
--- 
-2.39.2
+On 10/9/23 22:23, Stephan Gerhold wrote:
+> On Fri, Oct 06, 2023 at 11:15:40PM +0200, Konrad Dybcio wrote:
+>> On 4.10.2023 16:17, Stephan Gerhold wrote:
+>>> The RPM firmware on Qualcomm platforms does not provide a way to check
+>>> if a regulator is on during boot using the SMD interface. If the
+>>> regulators are already on during boot and Linux does not make use of
+>>> them they will currently stay enabled forever. The regulator core does
+>>> not know these regulators are on and cannot clean them up together with
+>>> the other unused regulators.
+>>>
+>>> Fix this by setting the initial enable state to -EINVAL similar to
+>>> qcom-rpmh-regulator.c. The regulator core will then also explicitly
+>>> disable all unused regulators with unknown status.
+>>>
+>>> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+>>> ---
+>>> NOTE: This has a slight potential of breaking boards that rely on having
+>>> unused regulators permanently enabled (without regulator-always-on).
+>>> However, this is always a mistake in the device tree so it's probably
+>>> better to risk some breakage now, add the missing regulators and avoid
+>>> this problem for all future boards.
+>>> ---
+>>>   drivers/regulator/qcom_smd-regulator.c | 5 +++--
+>>>   1 file changed, 3 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
+>>> index f53ada076252..0bbfba2e17ff 100644
+>>> --- a/drivers/regulator/qcom_smd-regulator.c
+>>> +++ b/drivers/regulator/qcom_smd-regulator.c
+>>> @@ -53,14 +53,14 @@ static int rpm_reg_write_active(struct qcom_rpm_reg *vreg)
+>>>   		reqlen++;
+>>>   	}
+>>>   
+>>> -	if (vreg->uv_updated && vreg->is_enabled) {
+>>> +	if (vreg->uv_updated && vreg->is_enabled > 0) {
+>> At a quick glance, are there any states for this value, other
+>> than 0 and 1? This is not the regulator_ops->is_enabled, but
+>> qcom_rpm_reg->is_enabled.
+>>
+> 
+> Yes, I initially assign vreg->is_enabled = -EINVAL (for use with PATCH
+> 1/2). It's in the part of the patch that you trimmed in your reply. :D
+> 
+> Thanks,
+> Stephan
+Oh, right ^^
 
+Konrad
