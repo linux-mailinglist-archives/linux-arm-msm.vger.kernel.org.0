@@ -2,182 +2,261 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BA577BEA14
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 20:50:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 912187BEA1E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 20:51:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378180AbjJISu6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Oct 2023 14:50:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45118 "EHLO
+        id S1378172AbjJISvr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Oct 2023 14:51:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377383AbjJISu6 (ORCPT
+        with ESMTP id S1378139AbjJISvq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Oct 2023 14:50:58 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA8D5B4
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 11:50:53 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-503065c4b25so6447869e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Oct 2023 11:50:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696877452; x=1697482252; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FJl8C6IXpPDsexf1/6XSUISrlVEE9TRaYydcmDxqvy4=;
-        b=vH0zo/hebtiv50SG/ztfBA94Wd4vr3TMtA52yr4holcdpdt0GqywvKEdTWfv+H3bev
-         ULiM/4wgrtwfo2yWoQJWz93ybldX+8p6+lKA8raPuhkg758ehqoGrtjXZgk1QOGaL2ZG
-         wAWgi+rfmLMVEssODC5bzhCnXDffh6vcqGFpOpRE/i6wPZRg1BQgBszcs6hTKwhZHezx
-         wb4P4TDiNNvJme/SnElPzWvbtf6h6VtumxcqsWDl/pl8APXDRxBQ+cm64vG1yogXrKVU
-         A03Drxy5X1XAmjzIvtI3rb4JUGvZP4dbluY8XngjMf7Nk3ne03kEEsNOKx2+/L0a4e/8
-         74Og==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696877452; x=1697482252;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FJl8C6IXpPDsexf1/6XSUISrlVEE9TRaYydcmDxqvy4=;
-        b=AWadNlhiGN88VTooSmSrN4yjJwtJW5INX4T3+Y5lv14mA67VbvCG40Hj9XK2EkCBU2
-         JQUuartsoui8+aHHBWflvnUnw/79o5O81iOqMuSHKpDzVGz+Er1KMsUJ4BC2+8HSMam4
-         Hu+i1VgdfuaLHpwSNR/IJxZQgRHAZjwNs0f0hoK09kJIF3WLTnb2k8y1o6MFPNb3yJlq
-         YesUZ3bvIu1PybEh3tvX74OsjlkzeYQPk9IRlzA66yU8HlBMUlY2BnCzuXpcPYFGXGg7
-         bNhJfVBCZE2l5CSZuZ4StZWNRU4skAmrXcQEsoEJuosaqLVDqGm0+UI9++2AD7gdqkHS
-         MRiA==
-X-Gm-Message-State: AOJu0YxnYpdwC1opUOW7OV1CK5NJG6EayW94f3nd++TgloUPNVDZypyU
-        vqMJureSpy/0lx7ZRElG4BoFwQ==
-X-Google-Smtp-Source: AGHT+IGoylA7fdS9Jxzk9pg6DYBL1YPVHt1uyV4wEaPH95vEW5x7eyzqz91b+mbkdC+++yNVfr8cvw==
-X-Received: by 2002:a19:9153:0:b0:503:2089:d3b8 with SMTP id y19-20020a199153000000b005032089d3b8mr12591134lfj.8.1696877452021;
-        Mon, 09 Oct 2023 11:50:52 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id u7-20020a056512040700b00501ce0cacb6sm1529262lfk.188.2023.10.09.11.50.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Oct 2023 11:50:51 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
+        Mon, 9 Oct 2023 14:51:46 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01737AC
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 11:51:44 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 399EiUgn003163;
+        Mon, 9 Oct 2023 18:51:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=emj3nK1Q6f+KnPtyRGL/3a6IOCTANRWXePViQYc/iYo=;
+ b=WoI9Yn2PPn+dHQwKzzaMdEyNr8mXo/Y7bls5/EO9nchmHoqWTMtA4W7WDsZ7QMxoT3y2
+ ez6u5vpJwFZOa3OCW9likT+vFJWA43gYZySQxTSDLUSrm1ooJAAYMak6lopQHOAfxQrb
+ iPzIOTmVdDI9HqcfkI0i4hlwlms9iE6EzUWyG8B5IxuySCtgkauiKMPs+us8+wDlbMEG
+ if08GtT6u2CxbYw+GOKWPAjMn1L14XIRGjbZ73NuM72NDS2SKXaqXL7HxgsXKK8PxBVs
+ SNNZ7rgGV6rdLG6a9SGlMG+9PrPf615J9X0Hm6ibwsViZdI+eFP0Ck+Ktj2U9VUXwgUL sw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tmj2prsrk-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 09 Oct 2023 18:51:35 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 399IpYiK012529
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 9 Oct 2023 18:51:34 GMT
+Received: from [10.110.90.239] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 9 Oct
+ 2023 11:51:33 -0700
+Message-ID: <e3208975-84cb-5c44-2397-c6b31103659b@quicinc.com>
+Date:   Mon, 9 Oct 2023 11:51:32 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v2 01/13] drm/msm/dsi: switch to devm_drm_bridge_add()
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+CC:     Stephen Boyd <swboyd@chromium.org>,
         David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH v2 3/3] drm/msm/dpu: move encoder status to standard encoder debugfs dir
-Date:   Mon,  9 Oct 2023 21:50:48 +0300
-Message-Id: <20231009185048.2758954-4-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20231009185048.2758954-1-dmitry.baryshkov@linaro.org>
-References: <20231009185048.2758954-1-dmitry.baryshkov@linaro.org>
-MIME-Version: 1.0
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20231009181040.2743847-1-dmitry.baryshkov@linaro.org>
+ <20231009181040.2743847-2-dmitry.baryshkov@linaro.org>
+ <9cd7fcd1-19c3-ed9b-568d-4b67b3649e86@quicinc.com>
+ <0b201558-d794-4675-a20f-58d00a8b1a53@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <0b201558-d794-4675-a20f-58d00a8b1a53@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 5CpM0PTN19yz_z69mU-0yGnGOPl2I87l
+X-Proofpoint-GUID: 5CpM0PTN19yz_z69mU-0yGnGOPl2I87l
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-09_17,2023-10-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ adultscore=0 impostorscore=0 clxscore=1015 phishscore=0 malwarescore=0
+ priorityscore=1501 mlxscore=0 spamscore=0 bulkscore=0 suspectscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310090154
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Now as we have standard per-encoder debugfs directory, move DPU encoder
-status file to that directory.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 45 +++------------------
- 1 file changed, 6 insertions(+), 39 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 1cf7ff6caff4..498983e62f7e 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -184,7 +184,6 @@ struct dpu_encoder_virt {
- 	struct drm_crtc *crtc;
- 	struct drm_connector *connector;
- 
--	struct dentry *debugfs_root;
- 	struct mutex enc_lock;
- 	DECLARE_BITMAP(frame_busy_mask, MAX_PHYS_ENCODERS_PER_VIRTUAL);
- 	void (*crtc_frame_event_cb)(void *, u32 event);
-@@ -2108,7 +2107,8 @@ void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys *phys_enc)
- #ifdef CONFIG_DEBUG_FS
- static int _dpu_encoder_status_show(struct seq_file *s, void *data)
- {
--	struct dpu_encoder_virt *dpu_enc = s->private;
-+	struct drm_encoder *drm_enc = s->private;
-+	struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
- 	int i;
- 
- 	mutex_lock(&dpu_enc->enc_lock);
-@@ -2130,48 +2130,16 @@ static int _dpu_encoder_status_show(struct seq_file *s, void *data)
- 
- DEFINE_SHOW_ATTRIBUTE(_dpu_encoder_status);
- 
--static int _dpu_encoder_init_debugfs(struct drm_encoder *drm_enc)
-+static void dpu_encoder_debugfs_init(struct drm_encoder *drm_enc, struct dentry *root)
- {
--	struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
--
--	char name[12];
--
--	if (!drm_enc->dev) {
--		DPU_ERROR("invalid encoder or kms\n");
--		return -EINVAL;
--	}
--
--	snprintf(name, sizeof(name), "encoder%u", drm_enc->base.id);
--
--	/* create overall sub-directory for the encoder */
--	dpu_enc->debugfs_root = debugfs_create_dir(name,
--			drm_enc->dev->primary->debugfs_root);
--
- 	/* don't error check these */
- 	debugfs_create_file("status", 0600,
--		dpu_enc->debugfs_root, dpu_enc, &_dpu_encoder_status_fops);
--
--	return 0;
-+			    root, drm_enc, &_dpu_encoder_status_fops);
- }
- #else
--static int _dpu_encoder_init_debugfs(struct drm_encoder *drm_enc)
--{
--	return 0;
--}
-+#define dpu_encoder_debugfs_init NULL
- #endif
- 
--static int dpu_encoder_late_register(struct drm_encoder *encoder)
--{
--	return _dpu_encoder_init_debugfs(encoder);
--}
--
--static void dpu_encoder_early_unregister(struct drm_encoder *encoder)
--{
--	struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(encoder);
--
--	debugfs_remove_recursive(dpu_enc->debugfs_root);
--}
--
- static int dpu_encoder_virt_add_phys_encs(
- 		struct msm_display_info *disp_info,
- 		struct dpu_encoder_virt *dpu_enc,
-@@ -2355,8 +2323,7 @@ static const struct drm_encoder_helper_funcs dpu_encoder_helper_funcs = {
- 
- static const struct drm_encoder_funcs dpu_encoder_funcs = {
- 		.destroy = dpu_encoder_destroy,
--		.late_register = dpu_encoder_late_register,
--		.early_unregister = dpu_encoder_early_unregister,
-+		.debugfs_init = dpu_encoder_debugfs_init,
- };
- 
- struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
--- 
-2.39.2
+On 10/9/2023 11:46 AM, Dmitry Baryshkov wrote:
+> On 09/10/2023 21:39, Abhinav Kumar wrote:
+>>
+>>
+>> On 10/9/2023 11:10 AM, Dmitry Baryshkov wrote:
+>>> Make MSM DSI driver use devm_drm_bridge_add() instead of plain
+>>> drm_bridge_add(). As the driver doesn't require any additional cleanup,
+>>> stop adding created bridge to the priv->bridges array.
+>>>
+>>> Reviewed-by: Rob Clark <robdclark@gmail.com>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>   drivers/gpu/drm/msm/dsi/dsi.c         | 28 +++++--------------------
+>>>   drivers/gpu/drm/msm/dsi/dsi.h         |  3 +--
+>>>   drivers/gpu/drm/msm/dsi/dsi_manager.c | 30 +++++++++------------------
+>>>   3 files changed, 16 insertions(+), 45 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/dsi/dsi.c 
+>>> b/drivers/gpu/drm/msm/dsi/dsi.c
+>>> index d45e43024802..47f327e68471 100644
+>>> --- a/drivers/gpu/drm/msm/dsi/dsi.c
+>>> +++ b/drivers/gpu/drm/msm/dsi/dsi.c
+>>> @@ -215,20 +215,14 @@ void __exit msm_dsi_unregister(void)
+>>>   int msm_dsi_modeset_init(struct msm_dsi *msm_dsi, struct drm_device 
+>>> *dev,
+>>>                struct drm_encoder *encoder)
+>>>   {
+>>> -    struct msm_drm_private *priv = dev->dev_private;
+>>>       int ret;
+>>> -    if (priv->num_bridges == ARRAY_SIZE(priv->bridges)) {
+>>> -        DRM_DEV_ERROR(dev->dev, "too many bridges\n");
+>>> -        return -ENOSPC;
+>>> -    }
+>>> -
+>>>       msm_dsi->dev = dev;
+>>>       ret = msm_dsi_host_modeset_init(msm_dsi->host, dev);
+>>>       if (ret) {
+>>>           DRM_DEV_ERROR(dev->dev, "failed to modeset init host: 
+>>> %d\n", ret);
+>>> -        goto fail;
+>>> +        return ret;
+>>>       }
+>>>       if (msm_dsi_is_bonded_dsi(msm_dsi) &&
+>>> @@ -242,32 +236,20 @@ int msm_dsi_modeset_init(struct msm_dsi 
+>>> *msm_dsi, struct drm_device *dev,
+>>>       msm_dsi->encoder = encoder;
+>>> -    msm_dsi->bridge = msm_dsi_manager_bridge_init(msm_dsi->id);
+>>> -    if (IS_ERR(msm_dsi->bridge)) {
+>>> -        ret = PTR_ERR(msm_dsi->bridge);
+>>> +    ret = msm_dsi_manager_bridge_init(msm_dsi);
+>>> +    if (ret) {
+>>>           DRM_DEV_ERROR(dev->dev, "failed to create dsi bridge: 
+>>> %d\n", ret);
+>>> -        msm_dsi->bridge = NULL;
+>>> -        goto fail;
+>>> +        return ret;
+>>>       }
+>>>       ret = msm_dsi_manager_ext_bridge_init(msm_dsi->id);
+>>>       if (ret) {
+>>>           DRM_DEV_ERROR(dev->dev,
+>>>               "failed to create dsi connector: %d\n", ret);
+>>> -        goto fail;
+>>> +        return ret;
+>>>       }
+>>> -    priv->bridges[priv->num_bridges++]       = msm_dsi->bridge;
+>>> -
+>>>       return 0;
+>>> -fail:
+>>> -    /* bridge/connector are normally destroyed by drm: */
+>>> -    if (msm_dsi->bridge) {
+>>> -        msm_dsi_manager_bridge_destroy(msm_dsi->bridge);
+>>> -        msm_dsi->bridge = NULL;
+>>> -    }
+>>
+>> We can drop msm_dsi_manager_bridge_destroy() now but dont we need to 
+>> keep the part to reset msm_dsi->bridge to NULL in the fail tag if 
+>> msm_dsi_manager_ext_bridge_init() fails?
+> 
+> What for? This field is not read in the error /unbinding path.
+> I'll send a followup that drops msm_dsi->bridge completely.
+> 
 
+Not used in the error path. The behavior before this patch was, if 
+msm_dsi_manager_ext_bridge_init failed, it was marking msm_dsi->bridge 
+as NULL. Thats what I thought you would want to retain till you drop the 
+msm_dsi->bridge.
+
+OR you can even add that line in the if (ret) of 
+msm_dsi_manager_ext_bridge_init(msm_dsi->id); failure.
+
+>>
+>>> -
+>>> -    return ret;
+>>>   }
+>>>   void msm_dsi_snapshot(struct msm_disp_state *disp_state, struct 
+>>> msm_dsi *msm_dsi)
+>>> diff --git a/drivers/gpu/drm/msm/dsi/dsi.h 
+>>> b/drivers/gpu/drm/msm/dsi/dsi.h
+>>> index d21867da78b8..a01c326774a6 100644
+>>> --- a/drivers/gpu/drm/msm/dsi/dsi.h
+>>> +++ b/drivers/gpu/drm/msm/dsi/dsi.h
+>>> @@ -56,8 +56,7 @@ struct msm_dsi {
+>>>   };
+>>>   /* dsi manager */
+>>> -struct drm_bridge *msm_dsi_manager_bridge_init(u8 id);
+>>> -void msm_dsi_manager_bridge_destroy(struct drm_bridge *bridge);
+>>> +int msm_dsi_manager_bridge_init(struct msm_dsi *msm_dsi);
+>>>   int msm_dsi_manager_ext_bridge_init(u8 id);
+>>>   int msm_dsi_manager_cmd_xfer(int id, const struct mipi_dsi_msg *msg);
+>>>   bool msm_dsi_manager_cmd_xfer_trigger(int id, u32 dma_base, u32 len);
+>>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c 
+>>> b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+>>> index 28b8012a21f2..17aa19bb6510 100644
+>>> --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
+>>> +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+>>> @@ -466,9 +466,8 @@ static const struct drm_bridge_funcs 
+>>> dsi_mgr_bridge_funcs = {
+>>>   };
+>>>   /* initialize bridge */
+>>> -struct drm_bridge *msm_dsi_manager_bridge_init(u8 id)
+>>> +int msm_dsi_manager_bridge_init(struct msm_dsi *msm_dsi)
+>>>   {
+>>> -    struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
+>>>       struct drm_bridge *bridge = NULL;
+>>>       struct dsi_bridge *dsi_bridge;
+>>>       struct drm_encoder *encoder;
+>>> @@ -476,31 +475,27 @@ struct drm_bridge 
+>>> *msm_dsi_manager_bridge_init(u8 id)
+>>>       dsi_bridge = devm_kzalloc(msm_dsi->dev->dev,
+>>>                   sizeof(*dsi_bridge), GFP_KERNEL);
+>>> -    if (!dsi_bridge) {
+>>> -        ret = -ENOMEM;
+>>> -        goto fail;
+>>> -    }
+>>> +    if (!dsi_bridge)
+>>> +        return -ENOMEM;
+>>> -    dsi_bridge->id = id;
+>>> +    dsi_bridge->id = msm_dsi->id;
+>>>       encoder = msm_dsi->encoder;
+>>>       bridge = &dsi_bridge->base;
+>>>       bridge->funcs = &dsi_mgr_bridge_funcs;
+>>> -    drm_bridge_add(bridge);
+>>> +    ret = devm_drm_bridge_add(&msm_dsi->pdev->dev, bridge);
+>>> +    if (ret)
+>>> +        return ret;
+>>>       ret = drm_bridge_attach(encoder, bridge, NULL, 0);
+>>>       if (ret)
+>>> -        goto fail;
+>>> +        return ret;
+>>> -    return bridge;
+>>> +    msm_dsi->bridge = bridge;
+>>> -fail:
+>>> -    if (bridge)
+>>> -        msm_dsi_manager_bridge_destroy(bridge);
+>>> -
+>>> -    return ERR_PTR(ret);
+>>> +    return 0;
+>>>   }
+>>>   int msm_dsi_manager_ext_bridge_init(u8 id)
+>>> @@ -557,11 +552,6 @@ int msm_dsi_manager_ext_bridge_init(u8 id)
+>>>       return 0;
+>>>   }
+>>> -void msm_dsi_manager_bridge_destroy(struct drm_bridge *bridge)
+>>> -{
+>>> -    drm_bridge_remove(bridge);
+>>> -}
+>>> -
+>>>   int msm_dsi_manager_cmd_xfer(int id, const struct mipi_dsi_msg *msg)
+>>>   {
+>>>       struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
+> 
