@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF0877BE89A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 19:48:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BFC97BE89B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 19:48:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377065AbjJIRsr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1377059AbjJIRsr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 9 Oct 2023 13:48:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47480 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377059AbjJIRsq (ORCPT
+        with ESMTP id S1377064AbjJIRsr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Oct 2023 13:48:46 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7162F9D
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 10:48:44 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-503065c4b25so6366002e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Oct 2023 10:48:44 -0700 (PDT)
+        Mon, 9 Oct 2023 13:48:47 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3263091
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 10:48:45 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-505748580ceso6003553e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Oct 2023 10:48:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1696873723; x=1697478523; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=i/chvZNkOAPCM4yUDgRtU7R4U+Xkrk2E5nKrKDhgris=;
-        b=q4HrSb57C0RbAiF7dWSRudwplAFZXEdFoGMLHgyyObq20/XmoviHyAz8v5r475Ax3B
-         w2WKpdMW50wGL55SHrF0tnoKR4bnEAYE3GI0ezGDFmwPEdaiAmF7aiv4IZdubeMw5Aag
-         Q6K1JYCLcFoU2UiYLiq1UOMb+THNmlUU2UTR5YwKDjnDNrktNMU4zrxQ7oOtwseq46B4
-         azhmxjTFyPU47Vs+cJtYY49F4QRg2l266WirTOs/fmzJn4IKMlhOFIAN3b9mh+ErJZO0
-         Q1frsyJbYUgSOvV5E6LXYMTwDXSjr4wYYsAOQU3DFHVykTN3LG12UyBqijXFFpAZVff5
-         KsCg==
+        bh=/l++4rL4XecTw0084NzypTs/OyWZ9YQbmVr6dxqDns8=;
+        b=gQcd0xBILs6wi1aIMZt9PavuNkWldB+hLXaRC/hP4leoxTS2/Cm/+oHqCLKFDQRaje
+         u8zg6yQQE1RIi007+unJUmGj6EiCNr3IFtYsbT0s/UnsuE7TwZsFZ2IzQfYEQHyQ/Svv
+         g8lwPr7gncqctbkHwe+/Y3TjmN6s3mbPrz5rOwyCM/YA3Zo48ll0nu7hiMQtT4hXzpaB
+         NjhszWsO6KajAVYMxeh0fSykwup7MzPFxx0b/Nig3YsL6kkG296qD99Qu6NwZ7Kczh+0
+         YWz1dRAimoQ97jHqSTodnmY5hkLboOFtSl+sT1upntZL+R62mA5brpBeRpRynviIT2YI
+         D+jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1696873723; x=1697478523;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=i/chvZNkOAPCM4yUDgRtU7R4U+Xkrk2E5nKrKDhgris=;
-        b=tK4vE2fdaBcySrgFUAfRjDI4Q9ALCAqcG51+ZanF5cTM3W7Sy1o+Vlidh1bgrZ+lMF
-         5ZgMIAmQy7/Gq6nU0uP9BpCSh5c0+MKlww/w1VoxOe2DP6NLSDYrO7FV/NsYFEqjCNsC
-         J0B2GHl3g+OpFPQSYZmecmykM5uMv6IPvjAgocWat/q9JzbhD5++Nt3xNvTRilWq4KDb
-         dDVcePUKbvNRIS2UL4KQh9rwrLKdYtbVBRkBdU88Haqn3jymGIxnKfXwO5ZMD0fH6r+D
-         3qEGoqtBHIkPLUmWrWh4GL+VdCbA/pRlcsvslYbllBWDODEDHggvcvsJ96ZNkrINaX+9
-         KY5A==
-X-Gm-Message-State: AOJu0YxpHX5B0gAenew2gAu6VrnCMMaBkq3fwo1TBgtiGQ13se4K6pfK
-        yo1Hea4+J7EX485fJNOUFCevhQ==
-X-Google-Smtp-Source: AGHT+IGbrnH3yesbV/VzvO4GbUuJ8UBZAlHmq0Fkq+JpJvbFTplTvZ9bTDTRA43WqOxhbloSrgcO4g==
-X-Received: by 2002:a05:6512:39d0:b0:504:51e9:89a2 with SMTP id k16-20020a05651239d000b0050451e989a2mr20666577lfu.32.1696873722805;
-        Mon, 09 Oct 2023 10:48:42 -0700 (PDT)
+        bh=/l++4rL4XecTw0084NzypTs/OyWZ9YQbmVr6dxqDns8=;
+        b=bvTlETU2UewdmyDizjktJ9OPf59WDlAC1MQllw36j8asVa271QZ/lEqqRx3om/s8Xp
+         u0Tf0eAQc8hZmJtzbFW7x9/YeklWIIb7pP1o6Q7c1RZ5LZ+kkv6VvoKNrZqnCs3umjv/
+         2ztf0UPejQOl/SRm1z1af8hqOZ+ViMGRQjDuqR/bvub6munYZVmDBcbObqIhUEDeKAfp
+         KSczSzBB3Mz3e3T84kT8NI6WRXVNmjENyDLzjqo5MB9S23aZqzf+9l7NHy8en5w/Bmai
+         SJdJa/4lJGV6k9a/w/QH8ywcb9YjrJRovyW0m79Yrt8araRST89ck4VhjNh+2nSHGpvZ
+         W8Tg==
+X-Gm-Message-State: AOJu0YxUjAgZ5+JXvWq1VNYzRm0+HgHBRnQ86qk0x2SKSZDRb0vOZqs0
+        Fr033jZ6fa5iV1aTrl13fdQvvw==
+X-Google-Smtp-Source: AGHT+IFr+V//dps6ByBx5GuZ/rNQl7CcNW8Nb5WWC31PYVzPKhNmW+78kSg/S5Vqp/p2ljgU39nvNg==
+X-Received: by 2002:a05:6512:e96:b0:500:b3fe:916e with SMTP id bi22-20020a0565120e9600b00500b3fe916emr18247595lfb.2.1696873723425;
+        Mon, 09 Oct 2023 10:48:43 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
         by smtp.gmail.com with ESMTPSA id m23-20020ac24257000000b0050420eff124sm1495927lfl.152.2023.10.09.10.48.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Oct 2023 10:48:42 -0700 (PDT)
+        Mon, 09 Oct 2023 10:48:43 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,16 +60,16 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v5 2/4] drm/msm/dpu: move resource allocation to the _probe function
-Date:   Mon,  9 Oct 2023 20:48:38 +0300
-Message-Id: <20231009174840.2726861-3-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v5 3/4] drm/msm/mdp4: move resource allocation to the _probe function
+Date:   Mon,  9 Oct 2023 20:48:39 +0300
+Message-Id: <20231009174840.2726861-4-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20231009174840.2726861-1-dmitry.baryshkov@linaro.org>
 References: <20231009174840.2726861-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,206 +82,178 @@ unavailable, move resource allocattion from kms_init directly to the
 probe callback. While we are at it, replace irq_of_parse_and_map() with
 platform_get_irq().
 
-This also drops devm_iounmap() calls. It is too early to have them
-_dpu_kms_hw_destroy() (or it will break if for some reason DPU device is
-rebound into the composite device) and it doesn't make sense to have
-them in dpu_dev_remove (as everything will be torn down by the devres
-anyway after the device is unbound from the driver).
-
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Reviewed-by: Rob Clark <robdclark@gmail.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 133 +++++++++++-------------
- 1 file changed, 61 insertions(+), 72 deletions(-)
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c | 106 +++++++++++------------
+ 1 file changed, 51 insertions(+), 55 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 41bd57597381..12d604b6b7e0 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -389,8 +389,7 @@ static int dpu_kms_parse_data_bus_icc_path(struct dpu_kms *dpu_kms)
- {
- 	struct icc_path *path0;
- 	struct icc_path *path1;
--	struct drm_device *dev = dpu_kms->dev;
--	struct device *dpu_dev = dev->dev;
-+	struct device *dpu_dev = &dpu_kms->pdev->dev;
+diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
+index 807ca3961c5f..18735bbaf798 100644
+--- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
++++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
+@@ -135,8 +135,6 @@ static void mdp4_destroy(struct msm_kms *kms)
+ 		pm_runtime_disable(dev);
  
- 	path0 = msm_icc_get(dpu_dev, "mdp0-mem");
- 	path1 = msm_icc_get(dpu_dev, "mdp1-mem");
-@@ -829,21 +828,9 @@ static void _dpu_kms_hw_destroy(struct dpu_kms *dpu_kms)
- 
- 	dpu_kms->catalog = NULL;
- 
--	if (dpu_kms->vbif[VBIF_NRT])
--		devm_iounmap(&dpu_kms->pdev->dev, dpu_kms->vbif[VBIF_NRT]);
--	dpu_kms->vbif[VBIF_NRT] = NULL;
+ 	mdp_kms_destroy(&mdp4_kms->base);
 -
--	if (dpu_kms->vbif[VBIF_RT])
--		devm_iounmap(&dpu_kms->pdev->dev, dpu_kms->vbif[VBIF_RT]);
--	dpu_kms->vbif[VBIF_RT] = NULL;
--
- 	if (dpu_kms->hw_mdp)
- 		dpu_hw_mdp_destroy(dpu_kms->hw_mdp);
- 	dpu_kms->hw_mdp = NULL;
--
--	if (dpu_kms->mmio)
--		devm_iounmap(&dpu_kms->pdev->dev, dpu_kms->mmio);
--	dpu_kms->mmio = NULL;
+-	kfree(mdp4_kms);
  }
  
- static void dpu_kms_destroy(struct msm_kms *kms)
-@@ -1079,30 +1066,6 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
+ static const struct mdp_kms_funcs kms_funcs = {
+@@ -380,56 +378,27 @@ static int mdp4_kms_init(struct drm_device *dev)
+ {
+ 	struct platform_device *pdev = to_platform_device(dev->dev);
+ 	struct msm_drm_private *priv = dev->dev_private;
+-	struct mdp4_kms *mdp4_kms;
++	struct mdp4_kms *mdp4_kms = to_mdp4_kms(to_mdp_kms(priv->kms));
+ 	struct msm_kms *kms = NULL;
+ 	struct msm_mmu *mmu;
+ 	struct msm_gem_address_space *aspace;
+-	int irq, ret;
++	int ret;
+ 	u32 major, minor;
+ 	unsigned long max_clk;
  
- 	atomic_set(&dpu_kms->bandwidth_ref, 0);
+ 	/* TODO: Chips that aren't apq8064 have a 200 Mhz max_clk */
+ 	max_clk = 266667000;
  
--	dpu_kms->mmio = msm_ioremap(dpu_kms->pdev, "mdp");
--	if (IS_ERR(dpu_kms->mmio)) {
--		rc = PTR_ERR(dpu_kms->mmio);
--		DPU_ERROR("mdp register memory map failed: %d\n", rc);
--		dpu_kms->mmio = NULL;
--		goto error;
--	}
--	DRM_DEBUG("mapped dpu address space @%pK\n", dpu_kms->mmio);
--
--	dpu_kms->vbif[VBIF_RT] = msm_ioremap(dpu_kms->pdev, "vbif");
--	if (IS_ERR(dpu_kms->vbif[VBIF_RT])) {
--		rc = PTR_ERR(dpu_kms->vbif[VBIF_RT]);
--		DPU_ERROR("vbif register memory map failed: %d\n", rc);
--		dpu_kms->vbif[VBIF_RT] = NULL;
--		goto error;
--	}
--	dpu_kms->vbif[VBIF_NRT] = msm_ioremap_quiet(dpu_kms->pdev, "vbif_nrt");
--	if (IS_ERR(dpu_kms->vbif[VBIF_NRT])) {
--		dpu_kms->vbif[VBIF_NRT] = NULL;
--		DPU_DEBUG("VBIF NRT is not defined");
--	}
--
--	dpu_kms_parse_data_bus_icc_path(dpu_kms);
--
- 	rc = pm_runtime_resume_and_get(&dpu_kms->pdev->dev);
- 	if (rc < 0)
- 		goto error;
-@@ -1241,33 +1204,11 @@ static int dpu_kms_init(struct drm_device *ddev)
- 	struct msm_drm_private *priv = ddev->dev_private;
- 	struct device *dev = ddev->dev;
- 	struct platform_device *pdev = to_platform_device(dev);
--	struct dpu_kms *dpu_kms;
--	int irq;
-+	struct dpu_kms *dpu_kms = to_dpu_kms(priv->kms);
- 	struct dev_pm_opp *opp;
- 	int ret = 0;
- 	unsigned long max_freq = ULONG_MAX;
- 
--	dpu_kms = devm_kzalloc(&pdev->dev, sizeof(*dpu_kms), GFP_KERNEL);
--	if (!dpu_kms)
+-	mdp4_kms = kzalloc(sizeof(*mdp4_kms), GFP_KERNEL);
+-	if (!mdp4_kms) {
+-		DRM_DEV_ERROR(dev->dev, "failed to allocate kms\n");
 -		return -ENOMEM;
--
--	ret = devm_pm_opp_set_clkname(dev, "core");
--	if (ret)
--		return ret;
--	/* OPP table is optional */
--	ret = devm_pm_opp_of_add_table(dev);
--	if (ret && ret != -ENODEV) {
--		dev_err(dev, "invalid OPP table in device tree\n");
--		return ret;
 -	}
 -
--	ret = devm_clk_bulk_get_all(&pdev->dev, &dpu_kms->clocks);
--	if (ret < 0) {
--		DPU_ERROR("failed to parse clocks, ret=%d\n", ret);
--		return ret;
--	}
--	dpu_kms->num_clocks = ret;
--
- 	opp = dev_pm_opp_find_freq_floor(dev, &max_freq);
- 	if (!IS_ERR(opp))
- 		dev_pm_opp_put(opp);
-@@ -1280,26 +1221,74 @@ static int dpu_kms_init(struct drm_device *ddev)
- 		return ret;
+ 	ret = mdp_kms_init(&mdp4_kms->base, &kms_funcs);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(dev->dev, "failed to init kms\n");
+ 		goto fail;
  	}
- 	dpu_kms->dev = ddev;
--	dpu_kms->pdev = pdev;
  
- 	pm_runtime_enable(&pdev->dev);
- 	dpu_kms->rpm_enabled = true;
+-	priv->kms = &mdp4_kms->base.base;
+ 	kms = priv->kms;
  
--	priv->kms = &dpu_kms->base;
--
--	irq = irq_of_parse_and_map(dpu_kms->pdev->dev.of_node, 0);
--	if (!irq) {
--		DPU_ERROR("failed to get irq\n");
--		return -EINVAL;
+ 	mdp4_kms->dev = dev;
+ 
+-	mdp4_kms->mmio = msm_ioremap(pdev, NULL);
+-	if (IS_ERR(mdp4_kms->mmio)) {
+-		ret = PTR_ERR(mdp4_kms->mmio);
+-		goto fail;
 -	}
--	dpu_kms->base.irq = irq;
 -
- 	return 0;
- }
+-	irq = platform_get_irq(pdev, 0);
+-	if (irq < 0) {
+-		ret = irq;
+-		goto fail;
+-	}
+-
+-	kms->irq = irq;
+-
+-	/* NOTE: driver for this regulator still missing upstream.. use
+-	 * _get_exclusive() and ignore the error if it does not exist
+-	 * (and hope that the bootloader left it on for us)
+-	 */
+-	mdp4_kms->vdd = devm_regulator_get_exclusive(&pdev->dev, "vdd");
+-	if (IS_ERR(mdp4_kms->vdd))
+-		mdp4_kms->vdd = NULL;
+-
+ 	if (mdp4_kms->vdd) {
+ 		ret = regulator_enable(mdp4_kms->vdd);
+ 		if (ret) {
+@@ -438,24 +407,6 @@ static int mdp4_kms_init(struct drm_device *dev)
+ 		}
+ 	}
  
- static int dpu_dev_probe(struct platform_device *pdev)
+-	mdp4_kms->clk = devm_clk_get(&pdev->dev, "core_clk");
+-	if (IS_ERR(mdp4_kms->clk)) {
+-		DRM_DEV_ERROR(dev->dev, "failed to get core_clk\n");
+-		ret = PTR_ERR(mdp4_kms->clk);
+-		goto fail;
+-	}
+-
+-	mdp4_kms->pclk = devm_clk_get(&pdev->dev, "iface_clk");
+-	if (IS_ERR(mdp4_kms->pclk))
+-		mdp4_kms->pclk = NULL;
+-
+-	mdp4_kms->axi_clk = devm_clk_get(&pdev->dev, "bus_clk");
+-	if (IS_ERR(mdp4_kms->axi_clk)) {
+-		DRM_DEV_ERROR(dev->dev, "failed to get axi_clk\n");
+-		ret = PTR_ERR(mdp4_kms->axi_clk);
+-		goto fail;
+-	}
+-
+ 	clk_set_rate(mdp4_kms->clk, max_clk);
+ 
+ 	read_mdp_hw_revision(mdp4_kms, &major, &minor);
+@@ -470,10 +421,9 @@ static int mdp4_kms_init(struct drm_device *dev)
+ 	mdp4_kms->rev = minor;
+ 
+ 	if (mdp4_kms->rev >= 2) {
+-		mdp4_kms->lut_clk = devm_clk_get(&pdev->dev, "lut_clk");
+-		if (IS_ERR(mdp4_kms->lut_clk)) {
++		if (!mdp4_kms->lut_clk) {
+ 			DRM_DEV_ERROR(dev->dev, "failed to get lut_clk\n");
+-			ret = PTR_ERR(mdp4_kms->lut_clk);
++			ret = -ENODEV;
+ 			goto fail;
+ 		}
+ 		clk_set_rate(mdp4_kms->lut_clk, max_clk);
+@@ -557,7 +507,53 @@ static const struct dev_pm_ops mdp4_pm_ops = {
+ 
+ static int mdp4_probe(struct platform_device *pdev)
  {
--	return msm_drv_probe(&pdev->dev, dpu_kms_init, NULL);
+-	return msm_drv_probe(&pdev->dev, mdp4_kms_init, NULL);
 +	struct device *dev = &pdev->dev;
-+	struct dpu_kms *dpu_kms;
++	struct mdp4_kms *mdp4_kms;
 +	int irq;
-+	int ret = 0;
 +
-+	dpu_kms = devm_kzalloc(dev, sizeof(*dpu_kms), GFP_KERNEL);
-+	if (!dpu_kms)
-+		return -ENOMEM;
++	mdp4_kms = devm_kzalloc(dev, sizeof(*mdp4_kms), GFP_KERNEL);
++	if (!mdp4_kms)
++		return dev_err_probe(dev, -ENOMEM, "failed to allocate kms\n");
 +
-+	dpu_kms->pdev = pdev;
-+
-+	ret = devm_pm_opp_set_clkname(dev, "core");
-+	if (ret)
-+		return ret;
-+	/* OPP table is optional */
-+	ret = devm_pm_opp_of_add_table(dev);
-+	if (ret && ret != -ENODEV)
-+		return dev_err_probe(dev, ret, "invalid OPP table in device tree\n");
-+
-+	ret = devm_clk_bulk_get_all(&pdev->dev, &dpu_kms->clocks);
-+	if (ret < 0)
-+		return dev_err_probe(dev, ret, "failed to parse clocks\n");
-+
-+	dpu_kms->num_clocks = ret;
++	mdp4_kms->mmio = msm_ioremap(pdev, NULL);
++	if (IS_ERR(mdp4_kms->mmio))
++		return PTR_ERR(mdp4_kms->mmio);
 +
 +	irq = platform_get_irq(pdev, 0);
 +	if (irq < 0)
 +		return dev_err_probe(dev, irq, "failed to get irq\n");
 +
-+	dpu_kms->base.irq = irq;
++	mdp4_kms->base.base.irq = irq;
 +
-+	dpu_kms->mmio = msm_ioremap(pdev, "mdp");
-+	if (IS_ERR(dpu_kms->mmio)) {
-+		ret = PTR_ERR(dpu_kms->mmio);
-+		DPU_ERROR("mdp register memory map failed: %d\n", ret);
-+		dpu_kms->mmio = NULL;
-+		return ret;
-+	}
-+	DRM_DEBUG("mapped dpu address space @%pK\n", dpu_kms->mmio);
++	/* NOTE: driver for this regulator still missing upstream.. use
++	 * _get_exclusive() and ignore the error if it does not exist
++	 * (and hope that the bootloader left it on for us)
++	 */
++	mdp4_kms->vdd = devm_regulator_get_exclusive(&pdev->dev, "vdd");
++	if (IS_ERR(mdp4_kms->vdd))
++		mdp4_kms->vdd = NULL;
 +
-+	dpu_kms->vbif[VBIF_RT] = msm_ioremap(pdev, "vbif");
-+	if (IS_ERR(dpu_kms->vbif[VBIF_RT])) {
-+		ret = PTR_ERR(dpu_kms->vbif[VBIF_RT]);
-+		DPU_ERROR("vbif register memory map failed: %d\n", ret);
-+		dpu_kms->vbif[VBIF_RT] = NULL;
-+		return ret;
-+	}
++	mdp4_kms->clk = devm_clk_get(&pdev->dev, "core_clk");
++	if (IS_ERR(mdp4_kms->clk))
++		return dev_err_probe(dev, PTR_ERR(mdp4_kms->clk), "failed to get core_clk\n");
 +
-+	dpu_kms->vbif[VBIF_NRT] = msm_ioremap_quiet(pdev, "vbif_nrt");
-+	if (IS_ERR(dpu_kms->vbif[VBIF_NRT])) {
-+		dpu_kms->vbif[VBIF_NRT] = NULL;
-+		DPU_DEBUG("VBIF NRT is not defined");
-+	}
++	mdp4_kms->pclk = devm_clk_get(&pdev->dev, "iface_clk");
++	if (IS_ERR(mdp4_kms->pclk))
++		mdp4_kms->pclk = NULL;
 +
-+	ret = dpu_kms_parse_data_bus_icc_path(dpu_kms);
-+	if (ret)
-+		return ret;
++	mdp4_kms->axi_clk = devm_clk_get(&pdev->dev, "bus_clk");
++	if (IS_ERR(mdp4_kms->axi_clk))
++		return dev_err_probe(dev, PTR_ERR(mdp4_kms->axi_clk), "failed to get axi_clk\n");
 +
-+	return msm_drv_probe(&pdev->dev, dpu_kms_init, &dpu_kms->base);
++	/*
++	 * This is required for revn >= 2. Handle errors here and let the kms
++	 * init bail out if the clock is not provided.
++	 */
++	mdp4_kms->lut_clk = devm_clk_get_optional(&pdev->dev, "lut_clk");
++	if (IS_ERR(mdp4_kms->lut_clk))
++		return dev_err_probe(dev, PTR_ERR(mdp4_kms->lut_clk), "failed to get lut_clk\n");
++
++	return msm_drv_probe(&pdev->dev, mdp4_kms_init, &mdp4_kms->base.base);
  }
  
- static void dpu_dev_remove(struct platform_device *pdev)
+ static void mdp4_remove(struct platform_device *pdev)
 -- 
 2.39.2
 
