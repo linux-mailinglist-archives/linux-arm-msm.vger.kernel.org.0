@@ -2,110 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 11B817BE4F6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 17:36:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 741257BE64C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 18:25:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377758AbjJIPf4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Oct 2023 11:35:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44264 "EHLO
+        id S1377179AbjJIQZS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Oct 2023 12:25:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377757AbjJIPfb (ORCPT
+        with ESMTP id S1376889AbjJIQZS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Oct 2023 11:35:31 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41981139
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 08:35:00 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-32320381a07so4642325f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Oct 2023 08:35:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1696865698; x=1697470498; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ICq8xSC80Kt4obE0o4+sSt1jGbe7ldZCyofAgnJ+E2Q=;
-        b=jQ0ZKIZlzGyLX63Hd6C7dK8bEhUkd9OIc8rYtcT7RwTGzPxoaMcKraCSrPhbYelP7i
-         SVm1aSneTNSxj/N5rWi2XIboQzi6ucXjckXWQhjR9WCQKLym2aLHX5J4WsyFa55Ctpx+
-         WZpRf8ZyvJXJDV/bAZameAjywUToqs5L4rzbdfKv4+KdduUOF/mJwL28vAQB1OAoEv4U
-         OXGmMHo66mb7sfWN90GB8NaWBx3L4rXg1Qan1pBiC7u8DNC2QGlkK9ucDma6uNrqsynY
-         hRu04rz3J6tzROeWULJjAnFXf+cKcqJl/jBoSX26Lg4IhdxyOjyRT0K5Be+N0Pjc+w/L
-         pl9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696865698; x=1697470498;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ICq8xSC80Kt4obE0o4+sSt1jGbe7ldZCyofAgnJ+E2Q=;
-        b=QnI/dllxjN6XuN++tuU5NTvSA4YKDQuIBjF+Yo9OH1oKP9jMXI/uQwGyOEChNhhoZ/
-         Li/d1OV/0Df3VyMKXsbF6ViQk8D8+SBkkjbSgT5glFWVYwiP6s2oTcUINiRvV4N+ojMY
-         K4Mz/muTjwbPkWm0HzIaR6MEINwwmfnC1HLW0WeX9mEplg9HyFMRMxeR7qrM9f7b/XXU
-         8qQLOviUwyNmJ5URPjnA8fdAvmU3e5/gaPWD02Xc24gbel3W4DtlEWiEJBX3eyxVu589
-         MnTUo0fv2WbpA4bN6gBlqKDJduoR1DUdieLWD0LzgvF8JRcWfAH/HKfbaa/ewWO7zYgW
-         +2bg==
-X-Gm-Message-State: AOJu0YzGGYlMl7SfGljuzVOtPz1d79Uueb6100nYOO4OKQqNm0Odw3mS
-        sD0PRVQIXtgNxDv66QkOTW4z+A==
-X-Google-Smtp-Source: AGHT+IGSVNNDH76sRB3Lqa5m+uNOKv1cgVjk/f2Eil+mLsb6i7DQTO49NsVCo55KWQXwRnMHeDJ5SQ==
-X-Received: by 2002:adf:f08f:0:b0:318:f7a:e3c8 with SMTP id n15-20020adff08f000000b003180f7ae3c8mr15642287wro.57.1696865698736;
-        Mon, 09 Oct 2023 08:34:58 -0700 (PDT)
-Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:f20d:2959:7545:e99f])
-        by smtp.gmail.com with ESMTPSA id b3-20020adff243000000b0031431fb40fasm10016521wrp.89.2023.10.09.08.34.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Oct 2023 08:34:58 -0700 (PDT)
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Mon, 9 Oct 2023 12:25:18 -0400
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7E7EAC
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 09:25:16 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qpt4E-0004ia-Os; Mon, 09 Oct 2023 18:25:14 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qpt4D-000SWR-Bk; Mon, 09 Oct 2023 18:25:13 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qpt4D-00CPkO-1I; Mon, 09 Oct 2023 18:25:13 +0200
+From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Andrew Halaney <ahalaney@redhat.com>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        Alex Elder <elder@linaro.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, kernel@quicinc.com,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH v3 15/15] arm64: defconfig: enable SHM Bridge support for the TZ memory allocator
-Date:   Mon,  9 Oct 2023 17:34:27 +0200
-Message-Id: <20231009153427.20951-16-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20231009153427.20951-1-brgl@bgdev.pl>
-References: <20231009153427.20951-1-brgl@bgdev.pl>
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Damien Le Moal <dlemoal@kernel.org>,
+        Emil Renner Berthing <emil.renner.berthing@canonical.com>,
+        Rob Herring <robh@kernel.org>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 0/3] pinctrl: Convert to platform remove callback returning void (take #2)
+Date:   Mon,  9 Oct 2023 18:25:07 +0200
+Message-Id: <20231009162510.335208-1-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4501; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=JxIPMg2bWrbp83bWwlVAFt/7G8Urf648YFEyVeKjvmw=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlJClg+CpJczmoJOko34yjEtBpG5p/L2au9hjZn Os1Sxi4SEOJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZSQpYAAKCRCPgPtYfRL+ TtSBCACr+aaLf6s5OU7WxWuefySN6eDQM+r3ozaakqeWIKsGZl/tiLsPU4D8KdAzbiERQh1kf03 ce34WCUwqaY7es/fPjvj4hgELmHTJvhO4LTx0JzWlLtTanDR7R8TEbUxmFYC15ZIqKtoRtDlXvM KeH+HuWVOcO2qzZYNUzHMvkQS4HdjsuoYlGXzvu109N+SumTUQxAk8R0ADKu1+hefbrPNrxU1uV RMb6RnI4/AxlG4H3xbBHRxb5TfGVsufCa1E8FPvi25G6cFu9HXAcODLldjnnb8e9LNmq+b5W6iN qqbuj1lRFezYlfJQyluf91ozBk/nX2qZA/VrzrYMUvAB5pAE
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Hello,
 
-Enable SHM Bridge support in the Qualcomm TrustZone allocator by default
-as even on architectures that don't support it, we automatically fall
-back to the default behavior.
+when I sent out
+https://lore.kernel.org/linux-gpio/20231009083856.222030-1-u.kleine-koenig@pengutronix.de
+earlier today, I claimed this would convert all drivers below
+drivers/pinctrl to .remove_new(). I just noticed that this was a lie and
+there are a few more drivers that my coccinelle script just missed to
+convert (because the remove function is implemented in a different file
+than the struct platform_driver making use of .remove).
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+So here come three more patches ...
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 07011114eef8..ebe97fec6e33 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -255,6 +255,7 @@ CONFIG_INTEL_STRATIX10_RSU=m
- CONFIG_EFI_CAPSULE_LOADER=y
- CONFIG_IMX_SCU=y
- CONFIG_IMX_SCU_PD=y
-+CONFIG_QCOM_TZMEM_MODE_SHMBRIDGE=y
- CONFIG_GNSS=m
- CONFIG_GNSS_MTK_SERIAL=m
- CONFIG_MTD=y
+Best regards
+Uwe
+
+Uwe Kleine-König (3):
+  pinctrl: qcom/lpi: Convert to platform remove callback returning void
+  pinctrl: qcom/msm: Convert to platform remove callback returning void
+  pinctrl: sprd-sc9860: Convert to platform remove callback returning
+    void
+
+ drivers/pinctrl/qcom/pinctrl-apq8064.c            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-apq8084.c            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-ipq4019.c            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-ipq5018.c            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-ipq5332.c            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-ipq6018.c            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-ipq8064.c            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-ipq8074.c            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-ipq9574.c            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-lpass-lpi.c          | 4 +---
+ drivers/pinctrl/qcom/pinctrl-lpass-lpi.h          | 2 +-
+ drivers/pinctrl/qcom/pinctrl-mdm9607.c            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-mdm9615.c            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-msm.c                | 4 +---
+ drivers/pinctrl/qcom/pinctrl-msm.h                | 2 +-
+ drivers/pinctrl/qcom/pinctrl-msm8226.c            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-msm8660.c            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-msm8909.c            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-msm8916.c            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-msm8953.c            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-msm8960.c            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-msm8976.c            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-msm8994.c            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-msm8996.c            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-msm8998.c            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-msm8x74.c            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-qcm2290.c            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-qcs404.c             | 2 +-
+ drivers/pinctrl/qcom/pinctrl-qdf2xxx.c            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-qdu1000.c            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sa8775p.c            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sc7180.c             | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c   | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sc7280.c             | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sc8180x.c            | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sc8280xp-lpass-lpi.c | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sc8280xp.c           | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sdm660.c             | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sdm670.c             | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sdm845.c             | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sdx55.c              | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sdx65.c              | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sdx75.c              | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sm6115-lpass-lpi.c   | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sm6115.c             | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sm6125.c             | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sm6350.c             | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sm6375.c             | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sm7150.c             | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sm8150.c             | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c   | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sm8250.c             | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sm8350-lpass-lpi.c   | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sm8350.c             | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sm8450-lpass-lpi.c   | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sm8450.c             | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sm8550-lpass-lpi.c   | 2 +-
+ drivers/pinctrl/qcom/pinctrl-sm8550.c             | 2 +-
+ drivers/pinctrl/sprd/pinctrl-sprd-sc9860.c        | 2 +-
+ drivers/pinctrl/sprd/pinctrl-sprd.c               | 3 +--
+ drivers/pinctrl/sprd/pinctrl-sprd.h               | 2 +-
+ 61 files changed, 61 insertions(+), 66 deletions(-)
+
+
+base-commit: 0bb80ecc33a8fb5a682236443c1e740d5c917d1d
 -- 
-2.39.2
+2.40.1
 
