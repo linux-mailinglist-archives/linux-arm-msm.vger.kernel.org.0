@@ -2,73 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3BC5A7BD304
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 08:04:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 961F47BD332
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 08:16:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345157AbjJIGE0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Oct 2023 02:04:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49826 "EHLO
+        id S1345206AbjJIGQL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Oct 2023 02:16:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345162AbjJIGEZ (ORCPT
+        with ESMTP id S1345193AbjJIGQK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Oct 2023 02:04:25 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAA77C6
-        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Oct 2023 23:04:23 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-4053c6f0db8so37726785e9.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Oct 2023 23:04:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696831462; x=1697436262; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3D1j0XtgOvX30/gRp4DtEdqnCV/Zs7HHjT6PoWoSaoE=;
-        b=IZx9twKQtlC37eBirIc9TTcS262kze3QC+mcQnsVLBw5U838/hPO5EzyDbQd774pMn
-         wKfFxkcVPBdBymIp/DWnxQcxJNfAnrICUGiV36UBvZVNOuBpNsajWEKTUnb8aUminLqi
-         1hi6QRI9W8i6V9HU5e1TBsJupB7rO3iOvY4g9ltnnaps4HxaLnWx/dy/CJphfHALNhRt
-         yeH5gHo1w2hk7Oiv6K4WR4+dSNRFluLjH38i6Ugqt7CtfML34iyUamMaD0dEFtZQ4IRq
-         K9yK/DwlMJBiGQYBUey/MqBFy+YRVL0OYjTxz2+I8/dgx0vM5AoBcWZv4y2TpWBVAKRW
-         yQ/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696831462; x=1697436262;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3D1j0XtgOvX30/gRp4DtEdqnCV/Zs7HHjT6PoWoSaoE=;
-        b=WdLcR622rgYkZDexJVo2QwJZ8/ncn5hphPywTOrA6hNRiCxTXXSqJgHJiSMtBaxb10
-         Zkg9co4EWGwR2sIz/kybxYdnDJXr6265aYD3baaUEft8D2YlpPSDd31a1rjlN1gEhftk
-         kuR9nm+ebBAhy8mI+7MxcSCpT2Y2k6xz2yMLqgm3YdkByj2Tyx4avcOgtzctMQBL5kX7
-         ZtBEohDpDYuPDRo5B5Cb5jm54moKzhjvSVpeozCRZepwl+U6iCZ3Wc+UkfQIR80vclwd
-         LoaHxTXIPROYdeovAaKy0Mt2hwnj5SfBgzNWct+3plC5mmrhVsSL4GVj8vt5Ch2XpLNK
-         jP9g==
-X-Gm-Message-State: AOJu0YxVmO1SJGp/NyUGakTAf3+FrKGDtdVC0HdsVH0bh95YWx8gTuwN
-        LkLQUvdZzEDz2aVcgkDHIZFB/w==
-X-Google-Smtp-Source: AGHT+IGc8hYTsUAn6ulIBTm07wFW1aZr0ZIs5AL4Jljrdrj8xadtrAEDNqL34RipbyyssQg/l3ofJw==
-X-Received: by 2002:a05:600c:2299:b0:3fe:1232:93fa with SMTP id 25-20020a05600c229900b003fe123293famr12404659wmf.22.1696831462066;
-        Sun, 08 Oct 2023 23:04:22 -0700 (PDT)
-Received: from srini-hackbase.lan ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id k7-20020a5d66c7000000b0031fd849e797sm8495088wrw.105.2023.10.08.23.04.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Oct 2023 23:04:21 -0700 (PDT)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     linux-arm-msm@vger.kernel.org,
-        Ekansh Gupta <quic_ekangupt@quicinc.com>
-Cc:     ekangupt@qti.qualcomm.com, gregkh@linuxfoundation.org,
-        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com
-In-Reply-To: <1695973360-14369-1-git-send-email-quic_ekangupt@quicinc.com>
-References: <1695973360-14369-1-git-send-email-quic_ekangupt@quicinc.com>
-Subject: Re: [PATCH v1 0/3] Add fixes for FastRPC driver
-Message-Id: <169683145891.96669.12483948623386373916.b4-ty@linaro.org>
-Date:   Mon, 09 Oct 2023 07:04:18 +0100
+        Mon, 9 Oct 2023 02:16:10 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADCCA9E;
+        Sun,  8 Oct 2023 23:16:08 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 399381Uf008612;
+        Mon, 9 Oct 2023 06:15:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=9xnVisqg50meGti2HSYLDC8UjxUYc57KFi5Pop78p1k=;
+ b=gUKlDjsIfftvMEtMneRE2nDEYXIMWKgG5SQ078XvvAZhXpJgvkRQVA6HSoHY06SMkVxC
+ lRvQHuzveCxpaJI6Yfwous5aT+Lg2zzf+rKaiT0yybgOjgD2jwOL9tKMLMGK8poze/36
+ 1PPFXMdJsXq9YE04lKnCznHblswSyaax8w0yalZtz36Oithw07C243QVQKEtJUNRf5pG
+ yCXNd7+X/7H4GVZaNJuE4brq8Qfx+xEl/5OO6/EvmYF6ywySoxZ4DOj3pwQ78xMTTSnM
+ 7J+xuF/uLS5vBkU6IqAfxfDHstk2AynHEvRUhpv3mzBkYnve12rkvKDBiRG0LQZnDwzX 9A== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tkh3s1nc3-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 09 Oct 2023 06:15:40 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3996FdEJ013455
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 9 Oct 2023 06:15:39 GMT
+Received: from [10.201.200.63] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Sun, 8 Oct
+ 2023 23:15:32 -0700
+Message-ID: <3492bff2-5d81-4bd4-a53c-b46513c40b5a@quicinc.com>
+Date:   Mon, 9 Oct 2023 11:45:25 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6/6] arm64: dts: qcom: ipq5018: Enable PCIe
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <lpieralisi@kernel.org>, <kw@linux.com>,
+        <robh@kernel.org>, <bhelgaas@google.com>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <vkoul@kernel.org>, <kishon@kernel.org>, <mani@kernel.org>,
+        <p.zabel@pengutronix.de>, <quic_srichara@quicinc.com>,
+        <quic_varada@quicinc.com>, <quic_ipkumar@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>
+References: <20231003120846.28626-1-quic_nsekar@quicinc.com>
+ <20231003120846.28626-7-quic_nsekar@quicinc.com>
+ <54ed2500-1d06-4f36-b2c5-418b878e9de4@linaro.org>
+From:   Nitheesh Sekar <quic_nsekar@quicinc.com>
+In-Reply-To: <54ed2500-1d06-4f36-b2c5-418b878e9de4@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.12.2
-X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: XFJUgqDogRhEwILorPzdADmtqwqn8Fgx
+X-Proofpoint-ORIG-GUID: XFJUgqDogRhEwILorPzdADmtqwqn8Fgx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-09_04,2023-10-06_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 malwarescore=0 mlxscore=0 spamscore=0 adultscore=0
+ suspectscore=0 phishscore=0 mlxlogscore=619 bulkscore=0 impostorscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310090053
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Level: *
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -76,29 +87,34 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Fri, 29 Sep 2023 13:12:37 +0530, Ekansh Gupta wrote:
-> This patchset carries the following fixes.
-> - Reset metadata buffer to avoid incorrect fd getting freed
-> - Free DMA handles for remote calls with no arguments
-> - Clean buffers on remote call failures
-> 
-> Ekansh Gupta (3):
->   misc: fastrpc: Reset metadata buffer to avoid incorrect free
->   misc: fastrpc: Free DMA handles for RPC calls with no arguments
->   misc: fastrpc: Clean buffers on remote invocation failures
-> 
-> [...]
+On 10/7/2023 5:57 AM, Konrad Dybcio wrote:
+> On 3.10.2023 14:08, Nitheesh Sekar wrote:
+>> Enable the PCIe controller and PHY nodes for RDP 432-c2.
+>>
+>> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts | 9 +++++++++
+>>   1 file changed, 9 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
+>> index e636a1cb9b77..be7d92700517 100644
+>> --- a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
+>> +++ b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
+>> @@ -28,6 +28,15 @@
+>>   	status = "okay";
+>>   };
+>>   
+>> +&pcie_x2 {
+>> +	status = "ok";
+> "okay" is preferred
+>
+> It's also preferred to keep status as the last property within
+> a node.
+>
+> Konrad
 
-Applied, thanks!
+Sure. will update.
 
-[1/3] misc: fastrpc: Reset metadata buffer to avoid incorrect free
-      commit: c44e396924d307ba11974b5f131e956b789a6844
-[2/3] misc: fastrpc: Free DMA handles for RPC calls with no arguments
-      commit: 3f01aaeb9fd387108c04c4803b949b8cd84d43ff
-[3/3] misc: fastrpc: Clean buffers on remote invocation failures
-      commit: 9fffb8240581927a71ed0ae46a5e269dbc0f3e3f
-
-Best regards,
--- 
-Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Thanks,
+Nitheesh
 
