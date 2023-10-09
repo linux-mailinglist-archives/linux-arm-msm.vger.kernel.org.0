@@ -2,88 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E3B37BEA6E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 21:16:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BDD77BEA76
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 21:19:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378334AbjJITQ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Oct 2023 15:16:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59340 "EHLO
+        id S1377179AbjJITTm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Oct 2023 15:19:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377745AbjJITQ1 (ORCPT
+        with ESMTP id S1377046AbjJITTm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Oct 2023 15:16:27 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED2C9B4;
-        Mon,  9 Oct 2023 12:16:22 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 399H8kdC006579;
-        Mon, 9 Oct 2023 19:16:12 GMT
+        Mon, 9 Oct 2023 15:19:42 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAB598E
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 12:19:40 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 399IpNPg009834;
+        Mon, 9 Oct 2023 19:19:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=XPhZWD6On+YuTJWF6V7tT4FLfVhogrwSdPXMFYDDgNU=;
- b=OQy7RGi4tcEwI5Jh2mp+rAwCu33n8CO9r/2Dzx+HaVgGmM4r+9ueEZVH/19SaShV8Ba3
- GcnsvnB8bz0tN1L5NjoSdKSDL7Zh6Rp9MihAZZFwORDeONmEvbxN96LwS834YL940dn9
- gTB1qQgszYneVPi3vMPty3LP04FcM+5k3WA9fSibNUdd74H5KVPVutBjroRenktompR7
- mYRO95gIevEZXtiIz2+A2r2JDS6naR/Hy3XMgvOqyYtajuyZ9Ub35xlIEYyqXTK4YsgK
- C4Ll/CRkulfZmsp+1hkQ4T5mr6xCzczecN0ubchAo3YBMZaF/wdVhI7eOTXa9K/KO6of VQ== 
+ bh=YCEYwxxSux2FA/q8fyoFbnE0uD5tkmAqJrzGr6lrwR0=;
+ b=VSp2KEj0mZsBfzQr3PKyFLM/3S4UVdn8b90WbKoX0ewtYKzdjo4jhVqjt9UNFfVkCmNp
+ JYPuHwmmm7rEVewDx9HFzlg9Q97f7TMJGrjulSYUIV9mh8vMZ1014LfmdrW5aqS01OSB
+ NvDVLU3U1m38Ajuh1TGN4UvBieR0Ho97iSEJGnz2zfojWxlISnPWTDPfP0Nugy8/eWVm
+ blyS51mZHx/6zeTi1TmDUNI6T2387n8uwbjv2jkDwyjuh+c0xrBvY91VonrcuAJVLzh6
+ 3vmZ0ec8HxWS2c45b/QNIumk8Kd5QDyOp9HS3FGoRJYlNVUk907yjWOHbhrJ1i9rGBMC RA== 
 Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tmj0d8tjx-1
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tkhj13b0d-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 09 Oct 2023 19:16:11 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 399JGBa7008944
+        Mon, 09 Oct 2023 19:19:31 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 399JJTPv011626
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 9 Oct 2023 19:16:11 GMT
-Received: from [10.110.87.129] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 9 Oct
- 2023 12:16:10 -0700
-Message-ID: <fa9cf828-ae82-8145-c60a-4b15c340de86@quicinc.com>
-Date:   Mon, 9 Oct 2023 12:16:10 -0700
+        Mon, 9 Oct 2023 19:19:30 GMT
+Received: from [10.110.90.239] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 9 Oct
+ 2023 12:19:29 -0700
+Message-ID: <d56daed9-35ac-0ee3-a0b4-f8596b0490fc@quicinc.com>
+Date:   Mon, 9 Oct 2023 12:19:28 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v5 2/2] firmware: arm_scmi: Add qcom smc/hvc transport
- support
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v2 02/13] drm/msm/hdmi: switch to devm_drm_bridge_add()
 Content-Language: en-US
-To:     Sudeep Holla <sudeep.holla@arm.com>
-CC:     <cristian.marussi@arm.com>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20230718160833.36397-1-quic_nkela@quicinc.com>
- <20231006164206.40710-1-quic_nkela@quicinc.com>
- <20231006164206.40710-3-quic_nkela@quicinc.com>
- <20231009144744.yi44ljq4llaxjsb7@bogus>
- <e6d9fbbb-eb61-0736-aa7b-a5e5d1a91db1@quicinc.com>
- <20231009152952.dww3fgh5q7fqysps@bogus>
- <535bbc68-74bb-21e8-0e72-8de1df9cfc99@quicinc.com>
- <20231009190800.ydkmmt2hgieazgfl@bogus>
-From:   Nikunj Kela <quic_nkela@quicinc.com>
-In-Reply-To: <20231009190800.ydkmmt2hgieazgfl@bogus>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20231009181040.2743847-1-dmitry.baryshkov@linaro.org>
+ <20231009181040.2743847-3-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20231009181040.2743847-3-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: RLkhnCk4oWR9ySV4Z0D4DvpSY274-k_T
-X-Proofpoint-ORIG-GUID: RLkhnCk4oWR9ySV4Z0D4DvpSY274-k_T
+X-Proofpoint-ORIG-GUID: 2aAaO2hkmo8Ws0BjaljXRFUGLpW4cG-g
+X-Proofpoint-GUID: 2aAaO2hkmo8Ws0BjaljXRFUGLpW4cG-g
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-10-09_17,2023-10-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- adultscore=0 spamscore=0 mlxscore=0 mlxlogscore=999 clxscore=1015
- priorityscore=1501 malwarescore=0 impostorscore=0 bulkscore=0
- suspectscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 adultscore=0 bulkscore=0 priorityscore=1501
+ impostorscore=0 mlxscore=0 malwarescore=0 spamscore=0 suspectscore=0
+ mlxlogscore=964 phishscore=0 classifier=spam adjust=0 reason=mlx
  scancount=1 engine=8.12.0-2309180000 definitions=main-2310090157
-X-Spam-Status: No, score=-6.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -91,49 +86,183 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 10/9/2023 12:08 PM, Sudeep Holla wrote:
-> On Mon, Oct 09, 2023 at 10:49:44AM -0700, Nikunj Kela wrote:
->> On 10/9/2023 8:29 AM, Sudeep Holla wrote:
->>> On Mon, Oct 09, 2023 at 07:59:08AM -0700, Nikunj Kela wrote:
->>>> On 10/9/2023 7:47 AM, Sudeep Holla wrote:
->>>>> On Fri, Oct 06, 2023 at 09:42:06AM -0700, Nikunj Kela wrote:
->>>>>> This change adds the support for SCMI message exchange on Qualcomm
->>>>>> virtual platforms.
->>>>>>
->>>>>> The hypervisor associates an object-id also known as capability-id
->>>>>> with each smc/hvc doorbell object. The capability-id is used to
->>>>>> identify the doorbell from the VM's capability namespace, similar
->>>>>> to a file-descriptor.
->>>>>>
->>>>>> The hypervisor, in addition to the function-id, expects the capability-id
->>>>>> to be passed in x1 register when SMC/HVC call is invoked.
->>>>>>
->>>>>> The capability-id is allocated by the hypervisor on bootup and is stored in
->>>>>> the shmem region by the firmware before starting Linux.
->>>>>>
->>>>> Since you are happy to move to signed value, I assume you are happy to loose
->>>>> upper half of the range values ?
->>>>>
->>>>> Anyways after Bjorn pointed out inconsistency, I am thinking of moving
->>>>> all the values to unsigned long to work with both 32bit and 64bit.
->>>>>
->>>>> Does the below delta on top of this patch works for you and makes sense?
->>>> This looks good to me. Will do some testing and float v6 with the changes
->>>> you suggested below. Thanks
->>>>
->>> Please refer or use the patch from [1] when reposting. I rebased on my
->>> patch[2] that I posted few minutes back. I am trying to finalise the branch
->>> and send PR in next couple of days, so please test and post sooner. Sorry
->>> for the rush.
->> Validated the patch from [1] below on Qualcomm ARM64 virtual platform using
->> SMC64 convention. Thanks!
->>
-> Thanks, since I have patched a bit, it is better if you post them so that
-> we have a link for the exact patch on the list. Just pick up the patches
-> from the branch[1] and post them as v6 with a change log so that all the
-> details are captured for reference purposes.
 
-v6 on its way, thanks!
+On 10/9/2023 11:10 AM, Dmitry Baryshkov wrote:
+> Make MSM HDMI driver use devm_drm_bridge_add() instead of plain
+> drm_bridge_add(). As the driver doesn't require any additional cleanup,
+> stop adding created bridge to the priv->bridges array.
+> 
+> Reviewed-by: Rob Clark <robdclark@gmail.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/hdmi/hdmi.c        | 22 +++++--------------
+>   drivers/gpu/drm/msm/hdmi/hdmi.h        |  5 ++---
+>   drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 30 ++++++++------------------
+>   drivers/gpu/drm/msm/hdmi/hdmi_hpd.c    |  3 +--
+>   4 files changed, 17 insertions(+), 43 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> index b6bcb9f675fe..c8ebd75176bb 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi.c
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> @@ -160,24 +160,16 @@ static int msm_hdmi_init(struct hdmi *hdmi)
+>   int msm_hdmi_modeset_init(struct hdmi *hdmi,
+>   		struct drm_device *dev, struct drm_encoder *encoder)
+>   {
+> -	struct msm_drm_private *priv = dev->dev_private;
+>   	int ret;
+>   
+> -	if (priv->num_bridges == ARRAY_SIZE(priv->bridges)) {
+> -		DRM_DEV_ERROR(dev->dev, "too many bridges\n");
+> -		return -ENOSPC;
+> -	}
+> -
+>   	hdmi->dev = dev;
+>   	hdmi->encoder = encoder;
+>   
+>   	hdmi_audio_infoframe_init(&hdmi->audio.infoframe);
+>   
+> -	hdmi->bridge = msm_hdmi_bridge_init(hdmi);
+> -	if (IS_ERR(hdmi->bridge)) {
+> -		ret = PTR_ERR(hdmi->bridge);
+> +	ret = msm_hdmi_bridge_init(hdmi);
+> +	if (ret) {
+>   		DRM_DEV_ERROR(dev->dev, "failed to create HDMI bridge: %d\n", ret);
+> -		hdmi->bridge = NULL;
+>   		goto fail;
+>   	}
+>   
+> @@ -215,16 +207,9 @@ int msm_hdmi_modeset_init(struct hdmi *hdmi,
+>   		goto fail;
+>   	}
+>   
+> -	priv->bridges[priv->num_bridges++]       = hdmi->bridge;
+> -
+>   	return 0;
+>   
+>   fail:
+> -	/* bridge is normally destroyed by drm: */
+> -	if (hdmi->bridge) {
+> -		msm_hdmi_bridge_destroy(hdmi->bridge);
+> -		hdmi->bridge = NULL;
+> -	}
+>   	if (hdmi->connector) {
+>   		hdmi->connector->funcs->destroy(hdmi->connector);
+>   		hdmi->connector = NULL;
+> @@ -395,6 +380,9 @@ static void msm_hdmi_unbind(struct device *dev, struct device *master,
+>   		if (priv->hdmi->audio_pdev)
+>   			platform_device_unregister(priv->hdmi->audio_pdev);
+>   
+> +		if (priv->hdmi->bridge)
+> +			msm_hdmi_hpd_disable(priv->hdmi);
+> +
 
+Now is this the only place where hdmi->bridge is used?
 
->
+Why cant we just keep msm_hdmi_hpd_disable(priv->hdmi) here since its 
+anyway protected by if (priv->hdmi) and drop hdmi->bridge completely?
+
+>   		msm_hdmi_destroy(priv->hdmi);
+>   		priv->hdmi = NULL;
+>   	}
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.h b/drivers/gpu/drm/msm/hdmi/hdmi.h
+> index e8dbee50637f..ec5786440391 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi.h
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.h
+> @@ -224,14 +224,13 @@ void msm_hdmi_audio_set_sample_rate(struct hdmi *hdmi, int rate);
+>    * hdmi bridge:
+>    */
+>   
+> -struct drm_bridge *msm_hdmi_bridge_init(struct hdmi *hdmi);
+> -void msm_hdmi_bridge_destroy(struct drm_bridge *bridge);
+> +int msm_hdmi_bridge_init(struct hdmi *hdmi);
+>   
+>   void msm_hdmi_hpd_irq(struct drm_bridge *bridge);
+>   enum drm_connector_status msm_hdmi_bridge_detect(
+>   		struct drm_bridge *bridge);
+>   int msm_hdmi_hpd_enable(struct drm_bridge *bridge);
+> -void msm_hdmi_hpd_disable(struct hdmi_bridge *hdmi_bridge);
+> +void msm_hdmi_hpd_disable(struct hdmi *hdmi);
+>   
+>   /*
+>    * i2c adapter for ddc:
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+> index 9b1391d27ed3..0b7a6a56677e 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+> @@ -11,14 +11,6 @@
+>   #include "msm_kms.h"
+>   #include "hdmi.h"
+>   
+> -void msm_hdmi_bridge_destroy(struct drm_bridge *bridge)
+> -{
+> -	struct hdmi_bridge *hdmi_bridge = to_hdmi_bridge(bridge);
+> -
+> -	msm_hdmi_hpd_disable(hdmi_bridge);
+> -	drm_bridge_remove(bridge);
+> -}
+> -
+>   static void msm_hdmi_power_on(struct drm_bridge *bridge)
+>   {
+>   	struct drm_device *dev = bridge->dev;
+> @@ -317,7 +309,7 @@ msm_hdmi_hotplug_work(struct work_struct *work)
+>   }
+>   
+>   /* initialize bridge */
+> -struct drm_bridge *msm_hdmi_bridge_init(struct hdmi *hdmi)
+> +int msm_hdmi_bridge_init(struct hdmi *hdmi)
+>   {
+>   	struct drm_bridge *bridge = NULL;
+>   	struct hdmi_bridge *hdmi_bridge;
+> @@ -325,10 +317,8 @@ struct drm_bridge *msm_hdmi_bridge_init(struct hdmi *hdmi)
+>   
+>   	hdmi_bridge = devm_kzalloc(hdmi->dev->dev,
+>   			sizeof(*hdmi_bridge), GFP_KERNEL);
+> -	if (!hdmi_bridge) {
+> -		ret = -ENOMEM;
+> -		goto fail;
+> -	}
+> +	if (!hdmi_bridge)
+> +		return -ENOMEM;
+>   
+>   	hdmi_bridge->hdmi = hdmi;
+>   	INIT_WORK(&hdmi_bridge->hpd_work, msm_hdmi_hotplug_work);
+> @@ -341,17 +331,15 @@ struct drm_bridge *msm_hdmi_bridge_init(struct hdmi *hdmi)
+>   		DRM_BRIDGE_OP_DETECT |
+>   		DRM_BRIDGE_OP_EDID;
+>   
+> -	drm_bridge_add(bridge);
+> +	ret = devm_drm_bridge_add(&hdmi->pdev->dev, bridge);
+> +	if (ret)
+> +		return ret;
+>   
+>   	ret = drm_bridge_attach(hdmi->encoder, bridge, NULL, DRM_BRIDGE_ATTACH_NO_CONNECTOR);
+>   	if (ret)
+> -		goto fail;
+> +		return ret;
+>   
+> -	return bridge;
+> +	hdmi->bridge = bridge;
+>   
+> -fail:
+> -	if (bridge)
+> -		msm_hdmi_bridge_destroy(bridge);
+> -
+> -	return ERR_PTR(ret);
+> +	return 0;
+>   }
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_hpd.c b/drivers/gpu/drm/msm/hdmi/hdmi_hpd.c
+> index bfa827b47989..9ce0ffa35417 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi_hpd.c
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_hpd.c
+> @@ -147,9 +147,8 @@ int msm_hdmi_hpd_enable(struct drm_bridge *bridge)
+>   	return ret;
+>   }
+>   
+> -void msm_hdmi_hpd_disable(struct hdmi_bridge *hdmi_bridge)
+> +void msm_hdmi_hpd_disable(struct hdmi *hdmi)
+>   {
+> -	struct hdmi *hdmi = hdmi_bridge->hdmi;
+>   	const struct hdmi_platform_config *config = hdmi->config;
+>   	struct device *dev = &hdmi->pdev->dev;
+>   	int ret;
