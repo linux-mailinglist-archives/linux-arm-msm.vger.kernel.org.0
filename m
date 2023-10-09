@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BDAD7BEC1D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 22:57:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 415257BEC1F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 22:57:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378034AbjJIU5g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Oct 2023 16:57:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40010 "EHLO
+        id S1378102AbjJIU5i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Oct 2023 16:57:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378097AbjJIU5g (ORCPT
+        with ESMTP id S1378097AbjJIU5h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Oct 2023 16:57:36 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32725A3
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 13:57:34 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-50435ad51bbso5977361e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Oct 2023 13:57:34 -0700 (PDT)
+        Mon, 9 Oct 2023 16:57:37 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 184F292
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 13:57:35 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-5041bb9ce51so6240857e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Oct 2023 13:57:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696885052; x=1697489852; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696885053; x=1697489853; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7cxLmiRyrS5kt0J5ZzxaEvq9+FAU6cjTlCuQBf1xxyA=;
-        b=fbgfeB3JolgQkJuQ/AoQ1AZY72hdTk79+zw0gdv2o2sgRPyCpR5ml+X91zGwjqKTU6
-         QJIxy2GFJynGBoqErubIwOptE9SmRGekKgEf/mamsd5hFZan7HkV/caRGBLiomvJ30eb
-         TjomayEiPdYY3M7YKkCaWUWUNAJ/jBuxYDGWAjxQhdG2OdXTxl69N9GluZHFS7UzOKCh
-         HUxcy8xnsCgBGskLn3mxK0FAYdWKjONLaT2Dc4eeLCJtR2277nFPKCJhTjHU4E8YB/e3
-         /HPQ1waHf5SplzI0ZINzjpy55jblpjbZAWP5NqKR61Yea8Dm1iDB+5XGVRI6hlUNOQj4
-         aHaw==
+        bh=ArTNHECreYuQA115CCTpUIP9lX7NmDsLaxdoYp/EqZs=;
+        b=VWqUM2KZd1ro0RcTCDIjWaF+e7XTJMFTIWuvdDAqtjeGitiN7QpYBzMq5bQR/aTr5a
+         uMJdmCajpSGim467s2DHSiGfCCY184cbCsTR6LLjTxIjpJxP43Zpfn+89lFnrG0q3MgI
+         ZJEieBTisL4XudIIXvDY8khSiA4jMVthpxS6piKeyqXqe9zc7ba7al6dwujy5WFlsZdP
+         9E1JxfQZCWuFZcUCBX89CxjT59Hr1jP9sjmvfTZN+GnAucLZPgoj8MZaBK2OE/bTMeAE
+         AleFSpMzJTLX6nc2yd15rUf9Gbb8+Iz84de/tMeoXI2uoaHvPabXN3eLYKm6iILXTjGP
+         0Ilw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696885052; x=1697489852;
+        d=1e100.net; s=20230601; t=1696885053; x=1697489853;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7cxLmiRyrS5kt0J5ZzxaEvq9+FAU6cjTlCuQBf1xxyA=;
-        b=pANj6qbRYtRMnFZuJDQCagJ7EfdRlJE+PKvXggp2g32jkiAX7hWQSR3LuvCeH2Dy8w
-         4jtYqpCHtlMzOEXnPKllGSWsp7YYHmV7ADgrHumCSXf1+B+7Z3xZgp/fnoglUG0VTnuv
-         b3Xq83k4Ffg+LPEZ4cTRDj/8QQe8jCJ0nIjYCv7KWmMONI6T6aWBk2L/oMMnn4vfNcqx
-         VREghwH5HIhNth1sMXq9IZDbCeF71R4GiY25Nkk2mrBaeMNkkpJydl5oR3woBXeo4N04
-         q4bC03TC6AlXlS9144upR27R98zlsFQeLrmJpKyKngBn9tZwIWa2GiFJK8VK50Chb1GS
-         ydKg==
-X-Gm-Message-State: AOJu0Yx4xyij5SA89AbiMd6qL24U4FjtvBFNFiWZ9jiMOmuNwBdZvqpX
-        jEkznDDSIjdTMBFhBBkGETA5DW+izxmwMkppd70=
-X-Google-Smtp-Source: AGHT+IFJ0l95lvmXQn6PFCYDow3HNy1sWNmEoh9lJjjaVhxV6tR3ePILoLD2bJjoLJgZj8uok8/bAA==
-X-Received: by 2002:a05:6512:3095:b0:503:2a53:7480 with SMTP id z21-20020a056512309500b005032a537480mr16398675lfd.49.1696885052428;
-        Mon, 09 Oct 2023 13:57:32 -0700 (PDT)
+        bh=ArTNHECreYuQA115CCTpUIP9lX7NmDsLaxdoYp/EqZs=;
+        b=jNnyZA3zkxRZOe1qA4GDRm7lPXgrO+Pnw2qYiE1NmRWtBe8NIn6U0hQsrxOTS9SbSP
+         q+hyhamEb57/sqErViTL/CO80XUgAtKvujZqCVbZwDKn8Fkr94TGA46ePvQ0/EEH2jIr
+         oe11/rB9lAZd3UQQN3pJGFb16uEgb4aEdKh0t2d209mVcqYPQi6uX+X4Ba8+8+PpFQ9+
+         fwp4F9qmwpdJBbIMHWvE/Ak2ZxEndug/uQMk25mcHelw00QR4khIRDDqbkEKAbxWXz6M
+         k/TWn5lePOAN/gGvJ0R4Pi3cAmU4Oe4oHM7QhyS+MwrIli7GujiJQLgjTQSBJNCST/sE
+         3tlw==
+X-Gm-Message-State: AOJu0YzrSUsj3cGGRasbn/HWBLmn/zc3go289WgdALwZNOGfJXJNSwEW
+        sVGjA/be7x7siLqZ4rNA1zTDTg==
+X-Google-Smtp-Source: AGHT+IFtjkuBxGl/3Nes/WDrdrp39PAnSs0zIGl0jOFF7dz7VMinE6ZC8w+igb8Uj57ZYYH5paVm0g==
+X-Received: by 2002:a19:f015:0:b0:503:3654:37bd with SMTP id p21-20020a19f015000000b00503365437bdmr12804812lfc.45.1696885053426;
+        Mon, 09 Oct 2023 13:57:33 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id f5-20020ac251a5000000b0050300e013f3sm1540844lfk.254.2023.10.09.13.57.31
+        by smtp.gmail.com with ESMTPSA id f5-20020ac251a5000000b0050300e013f3sm1540844lfk.254.2023.10.09.13.57.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Oct 2023 13:57:31 -0700 (PDT)
+        Mon, 09 Oct 2023 13:57:32 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,16 +60,16 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH 4/5] drm/msm/dsi: remove msm_dsi::encoder
-Date:   Mon,  9 Oct 2023 23:57:26 +0300
-Message-Id: <20231009205727.2781802-5-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 5/5] drm/msm/mdp5: drop split display support
+Date:   Mon,  9 Oct 2023 23:57:27 +0300
+Message-Id: <20231009205727.2781802-6-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20231009205727.2781802-1-dmitry.baryshkov@linaro.org>
 References: <20231009205727.2781802-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,88 +77,204 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is no need anymore to stop the drm_encoder instance in struct
-msm_dsi. Remove corresponding field.
+The MSM DSI driver has dropped support for calling
+mdp_kms_funcs::set_split_display() callback. Drop corresponding callback
+from the mdp5 driver together with the rest of the infrastructure.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi.c         | 4 +---
- drivers/gpu/drm/msm/dsi/dsi.h         | 6 ++----
- drivers/gpu/drm/msm/dsi/dsi_manager.c | 8 +++-----
- 3 files changed, 6 insertions(+), 12 deletions(-)
+ .../gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c  | 42 -------------------
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c  | 42 -------------------
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c      | 14 -------
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h      |  9 ----
+ drivers/gpu/drm/msm/msm_kms.h                 |  4 --
+ 5 files changed, 111 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
-index c6d53cccb9ae..33c3437b09de 100644
---- a/drivers/gpu/drm/msm/dsi/dsi.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi.c
-@@ -235,9 +235,7 @@ int msm_dsi_modeset_init(struct msm_dsi *msm_dsi, struct drm_device *dev,
- 		return 0;
- 	}
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c
+index a640af22eafc..e5662412db9b 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c
+@@ -158,46 +158,4 @@ void mdp5_cmd_encoder_enable(struct drm_encoder *encoder)
  
--	msm_dsi->encoder = encoder;
+ 	mdp5_cmd_enc->enabled = true;
+ }
 -
--	bridge = msm_dsi_manager_bridge_init(msm_dsi);
-+	bridge = msm_dsi_manager_bridge_init(msm_dsi, encoder);
- 	if (IS_ERR(bridge)) {
- 		ret = PTR_ERR(bridge);
- 		DRM_DEV_ERROR(dev->dev, "failed to create dsi bridge: %d\n", ret);
-diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
-index 525c7ba22227..d3380326d449 100644
---- a/drivers/gpu/drm/msm/dsi/dsi.h
-+++ b/drivers/gpu/drm/msm/dsi/dsi.h
-@@ -41,14 +41,12 @@ struct msm_dsi {
- 	struct device *phy_dev;
- 	bool phy_enabled;
- 
--	/* the encoder we are hooked to (outside of dsi block) */
--	struct drm_encoder *encoder;
+-int mdp5_cmd_encoder_set_split_display(struct drm_encoder *encoder,
+-				       struct drm_encoder *slave_encoder)
+-{
+-	struct mdp5_encoder *mdp5_cmd_enc = to_mdp5_encoder(encoder);
+-	struct mdp5_kms *mdp5_kms;
+-	struct device *dev;
+-	int intf_num;
+-	u32 data = 0;
 -
- 	int id;
- };
+-	if (!encoder || !slave_encoder)
+-		return -EINVAL;
+-
+-	mdp5_kms = get_kms(encoder);
+-	intf_num = mdp5_cmd_enc->intf->num;
+-
+-	/* Switch slave encoder's trigger MUX, to use the master's
+-	 * start signal for the slave encoder
+-	 */
+-	if (intf_num == 1)
+-		data |= MDP5_SPLIT_DPL_UPPER_INTF2_SW_TRG_MUX;
+-	else if (intf_num == 2)
+-		data |= MDP5_SPLIT_DPL_UPPER_INTF1_SW_TRG_MUX;
+-	else
+-		return -EINVAL;
+-
+-	/* Smart Panel, Sync mode */
+-	data |= MDP5_SPLIT_DPL_UPPER_SMART_PANEL;
+-
+-	dev = &mdp5_kms->pdev->dev;
+-
+-	/* Make sure clocks are on when connectors calling this function. */
+-	pm_runtime_get_sync(dev);
+-	mdp5_write(mdp5_kms, REG_MDP5_SPLIT_DPL_UPPER, data);
+-
+-	mdp5_write(mdp5_kms, REG_MDP5_SPLIT_DPL_LOWER,
+-		   MDP5_SPLIT_DPL_LOWER_SMART_PANEL);
+-	mdp5_write(mdp5_kms, REG_MDP5_SPLIT_DPL_EN, 1);
+-	pm_runtime_put_sync(dev);
+-
+-	return 0;
+-}
+ #endif /* CONFIG_DRM_MSM_DSI */
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c
+index 79d67c495780..7c2092ca4040 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c
+@@ -274,48 +274,6 @@ u32 mdp5_encoder_get_framecount(struct drm_encoder *encoder)
+ 	return mdp5_read(mdp5_kms, REG_MDP5_INTF_FRAME_COUNT(intf));
+ }
  
- /* dsi manager */
--struct drm_bridge *msm_dsi_manager_bridge_init(struct msm_dsi *msm_dsi);
-+struct drm_bridge *msm_dsi_manager_bridge_init(struct msm_dsi *msm_dsi,
-+					       struct drm_encoder *encoder);
- int msm_dsi_manager_ext_bridge_init(u8 id, struct drm_bridge *int_bridge);
- int msm_dsi_manager_cmd_xfer(int id, const struct mipi_dsi_msg *msg);
- bool msm_dsi_manager_cmd_xfer_trigger(int id, u32 dma_base, u32 len);
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-index 8eb73287dffb..101e79a6e281 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-@@ -431,11 +431,11 @@ static const struct drm_bridge_funcs dsi_mgr_bridge_funcs = {
- };
- 
- /* initialize bridge */
--struct drm_bridge *msm_dsi_manager_bridge_init(struct msm_dsi *msm_dsi)
-+struct drm_bridge *msm_dsi_manager_bridge_init(struct msm_dsi *msm_dsi,
-+					       struct drm_encoder *encoder)
+-int mdp5_vid_encoder_set_split_display(struct drm_encoder *encoder,
+-				       struct drm_encoder *slave_encoder)
+-{
+-	struct mdp5_encoder *mdp5_encoder = to_mdp5_encoder(encoder);
+-	struct mdp5_encoder *mdp5_slave_enc = to_mdp5_encoder(slave_encoder);
+-	struct mdp5_kms *mdp5_kms;
+-	struct device *dev;
+-	int intf_num;
+-	u32 data = 0;
+-
+-	if (!encoder || !slave_encoder)
+-		return -EINVAL;
+-
+-	mdp5_kms = get_kms(encoder);
+-	intf_num = mdp5_encoder->intf->num;
+-
+-	/* Switch slave encoder's TimingGen Sync mode,
+-	 * to use the master's enable signal for the slave encoder.
+-	 */
+-	if (intf_num == 1)
+-		data |= MDP5_SPLIT_DPL_LOWER_INTF2_TG_SYNC;
+-	else if (intf_num == 2)
+-		data |= MDP5_SPLIT_DPL_LOWER_INTF1_TG_SYNC;
+-	else
+-		return -EINVAL;
+-
+-	dev = &mdp5_kms->pdev->dev;
+-	/* Make sure clocks are on when connectors calling this function. */
+-	pm_runtime_get_sync(dev);
+-
+-	/* Dumb Panel, Sync mode */
+-	mdp5_write(mdp5_kms, REG_MDP5_SPLIT_DPL_UPPER, 0);
+-	mdp5_write(mdp5_kms, REG_MDP5_SPLIT_DPL_LOWER, data);
+-	mdp5_write(mdp5_kms, REG_MDP5_SPLIT_DPL_EN, 1);
+-
+-	mdp5_ctl_pair(mdp5_encoder->ctl, mdp5_slave_enc->ctl, true);
+-
+-	pm_runtime_put_sync(dev);
+-
+-	return 0;
+-}
+-
+ void mdp5_encoder_set_intf_mode(struct drm_encoder *encoder, bool cmd_mode)
  {
- 	struct drm_bridge *bridge;
- 	struct dsi_bridge *dsi_bridge;
--	struct drm_encoder *encoder;
- 	int ret;
+ 	struct mdp5_encoder *mdp5_encoder = to_mdp5_encoder(encoder);
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+index 11d9fc2c6bf5..22f2d2ec4a9c 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+@@ -190,19 +190,6 @@ static void mdp5_complete_commit(struct msm_kms *kms, unsigned crtc_mask)
+ 		mdp5_smp_complete_commit(mdp5_kms->smp, &global_state->smp);
+ }
  
- 	dsi_bridge = devm_kzalloc(msm_dsi->dev->dev,
-@@ -445,8 +445,6 @@ struct drm_bridge *msm_dsi_manager_bridge_init(struct msm_dsi *msm_dsi)
- 
- 	dsi_bridge->id = msm_dsi->id;
- 
--	encoder = msm_dsi->encoder;
+-static int mdp5_set_split_display(struct msm_kms *kms,
+-		struct drm_encoder *encoder,
+-		struct drm_encoder *slave_encoder,
+-		bool is_cmd_mode)
+-{
+-	if (is_cmd_mode)
+-		return mdp5_cmd_encoder_set_split_display(encoder,
+-							slave_encoder);
+-	else
+-		return mdp5_vid_encoder_set_split_display(encoder,
+-							  slave_encoder);
+-}
 -
- 	bridge = &dsi_bridge->base;
- 	bridge->funcs = &dsi_mgr_bridge_funcs;
+ static void mdp5_destroy(struct mdp5_kms *mdp5_kms);
  
-@@ -474,7 +472,7 @@ int msm_dsi_manager_ext_bridge_init(u8 id, struct drm_bridge *int_bridge)
- 	if (IS_ERR(ext_bridge))
- 		return PTR_ERR(ext_bridge);
+ static void mdp5_kms_destroy(struct msm_kms *kms)
+@@ -275,7 +262,6 @@ static const struct mdp_kms_funcs kms_funcs = {
+ 		.wait_flush      = mdp5_wait_flush,
+ 		.complete_commit = mdp5_complete_commit,
+ 		.get_format      = mdp_get_format,
+-		.set_split_display = mdp5_set_split_display,
+ 		.destroy         = mdp5_kms_destroy,
+ #ifdef CONFIG_DEBUG_FS
+ 		.debugfs_init    = mdp5_kms_debugfs_init,
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h
+index 29bf11f08601..ee68e9913f8c 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h
+@@ -291,8 +291,6 @@ struct drm_crtc *mdp5_crtc_init(struct drm_device *dev,
  
--	encoder = msm_dsi->encoder;
-+	encoder = int_bridge->encoder;
+ struct drm_encoder *mdp5_encoder_init(struct drm_device *dev,
+ 		struct mdp5_interface *intf, struct mdp5_ctl *ctl);
+-int mdp5_vid_encoder_set_split_display(struct drm_encoder *encoder,
+-				       struct drm_encoder *slave_encoder);
+ void mdp5_encoder_set_intf_mode(struct drm_encoder *encoder, bool cmd_mode);
+ int mdp5_encoder_get_linecount(struct drm_encoder *encoder);
+ u32 mdp5_encoder_get_framecount(struct drm_encoder *encoder);
+@@ -303,8 +301,6 @@ void mdp5_cmd_encoder_mode_set(struct drm_encoder *encoder,
+ 			       struct drm_display_mode *adjusted_mode);
+ void mdp5_cmd_encoder_disable(struct drm_encoder *encoder);
+ void mdp5_cmd_encoder_enable(struct drm_encoder *encoder);
+-int mdp5_cmd_encoder_set_split_display(struct drm_encoder *encoder,
+-				       struct drm_encoder *slave_encoder);
+ #else
+ static inline void mdp5_cmd_encoder_mode_set(struct drm_encoder *encoder,
+ 					     struct drm_display_mode *mode,
+@@ -317,11 +313,6 @@ static inline void mdp5_cmd_encoder_disable(struct drm_encoder *encoder)
+ static inline void mdp5_cmd_encoder_enable(struct drm_encoder *encoder)
+ {
+ }
+-static inline int mdp5_cmd_encoder_set_split_display(
+-	struct drm_encoder *encoder, struct drm_encoder *slave_encoder)
+-{
+-	return -EINVAL;
+-}
+ #endif
  
- 	/*
- 	 * Try first to create the bridge without it creating its own
+ #endif /* __MDP5_KMS_H__ */
+diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
+index 44aa435d68ce..0641f6111b93 100644
+--- a/drivers/gpu/drm/msm/msm_kms.h
++++ b/drivers/gpu/drm/msm/msm_kms.h
+@@ -105,10 +105,6 @@ struct msm_kms_funcs {
+ 	/* misc: */
+ 	long (*round_pixclk)(struct msm_kms *kms, unsigned long rate,
+ 			struct drm_encoder *encoder);
+-	int (*set_split_display)(struct msm_kms *kms,
+-			struct drm_encoder *encoder,
+-			struct drm_encoder *slave_encoder,
+-			bool is_cmd_mode);
+ 	/* cleanup: */
+ 	void (*destroy)(struct msm_kms *kms);
+ 
 -- 
 2.39.2
 
