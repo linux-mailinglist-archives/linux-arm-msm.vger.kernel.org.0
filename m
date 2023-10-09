@@ -2,63 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A9627BD19B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 03:03:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5DAF47BD277
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 06:01:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229845AbjJIBDj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Oct 2023 21:03:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48468 "EHLO
+        id S229560AbjJIEB2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Oct 2023 00:01:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229704AbjJIBDi (ORCPT
+        with ESMTP id S229477AbjJIEB1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 Oct 2023 21:03:38 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 377C9AB;
-        Sun,  8 Oct 2023 18:03:36 -0700 (PDT)
-Received: from [192.168.0.206] (unknown [179.221.49.143])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: koike)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 4A3CF660708F;
-        Mon,  9 Oct 2023 02:03:32 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1696813415;
-        bh=35nrW3gO/6HnAGH/9ZbIoMBKqyABKYke37kZEOGECPw=;
-        h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-        b=MWgvA4fPTMiJ8XcYVwh/DLS7FU9hQXlyHE4dJXuNACbckkLlDRQYceu18dvlYnFJy
-         zAUZd4TSSDFVxdMHjisTWWkHKg0bIv9RYS8HSYVYVTqeQuhOGZGqACQ2rCp+hXY0pB
-         sb0Q5tuoEPO+6OzYbb9hkwXRECy/Om6ll3OEN4HxpVDKdCWCctM9+kvw3W23p5e+JT
-         M91PF14Jg7BIqIRES7SfwCE5xP9KmpZswbtqGWkHEX4JZoOVdmbEjpehVxHYu7a8hw
-         fICgJpMHHraWGcfk1K+6Xd5w94zUt7ODAVw4LIwXqrxEEu/ZWEr82sPRE80HlEqG2q
-         b+kmCGWF1zcfw==
-Message-ID: <a8feac7b-11aa-495a-837c-e6083ac8fa03@collabora.com>
-Date:   Sun, 8 Oct 2023 22:03:27 -0300
+        Mon, 9 Oct 2023 00:01:27 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B268ABA;
+        Sun,  8 Oct 2023 21:01:24 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3992v5gj005208;
+        Mon, 9 Oct 2023 04:01:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=UPoBV0tpYtp00Iktwt7jFaHAr2exDNPVIF7CAnnrWt4=;
+ b=e33XdJcL23YGaTK8eNexYBcsN6K6ITcApxHbqWcQcPINN2xZ4gsarPuNq20CDzOmULMR
+ 09nLDl0WidIQXq/ElS9mPvS4ivgvma0mnCzyJ1KD3gMorik5z0/tZ1lwlWSGlnFfm4nQ
+ wJGPPR/1Ff+cnPUOXhE2ju7K4Qu49ro5QYb5X3ymDfS9e3w5kx96YQcQEKL/KVI4JCv0
+ AJvPOoSP/apxpKLW3ZLdd55/ju/S83DVqsMEQw0y6t7/Aggara3+J7DWiE37gIEOf2+R
+ PL49A2KZpiyVECSUYjvu/sgZmOcirSBsJskjF5uX1tAuxOik0pViD+1rgrNfRtvV1pkK hQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tkh8d1fgv-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 09 Oct 2023 04:01:10 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 399419Zh014243
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 9 Oct 2023 04:01:09 GMT
+Received: from [10.239.154.73] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Sun, 8 Oct
+ 2023 21:01:05 -0700
+Message-ID: <8697d115-9aa7-2a1c-4d96-25b15adb5cca@quicinc.com>
+Date:   Mon, 9 Oct 2023 12:01:03 +0800
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/ci: Uprev IGT to pull in fixes
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [RESEND PATCH v6 3/3] input: pm8xxx-vibrator: add new SPMI
+ vibrator support
 Content-Language: en-US
-From:   Helen Koike <helen.koike@collabora.com>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Rob Clark <robdclark@chromium.org>, linux-arm-msm@vger.kernel.org,
-        open list <linux-kernel@vger.kernel.org>,
-        dri-devel@lists.freedesktop.org,
-        "open list:ARM/Rockchip SoC support" 
-        <linux-rockchip@lists.infradead.org>,
-        "moderated list:ARM/Rockchip SoC support" 
-        <linux-arm-kernel@lists.infradead.org>,
-        Daniel Stone <daniels@collabora.com>
-References: <20230920180526.137369-1-robdclark@gmail.com>
- <CAF6AEGvUOX-D+-vwov-FDp46rJdo8wq1Do-9Gj3k5v313wVJhA@mail.gmail.com>
- <2ec320ca-d768-89ec-200f-695839e48538@collabora.com>
- <CAF6AEGvhav3kX0fRpjeGbJYqQ_J5gonng-wYjZUeRunOBuUC1A@mail.gmail.com>
- <7318d141-12b7-eab7-52dd-8953305d85c6@collabora.com>
-In-Reply-To: <7318d141-12b7-eab7-52dd-8953305d85c6@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Dmitry Torokhov <dmitry.torokhov@gmail.com>
+CC:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <robh+dt@kernel.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        <linux-input@vger.kernel.org>, <quic_collinsd@quicinc.com>,
+        <quic_subbaram@quicinc.com>, <quic_kamalw@quicinc.com>,
+        <jestar@qti.qualcomm.com>, Luca Weiss <luca.weiss@fairphone.com>
+References: <20230922083801.3056724-1-quic_fenglinw@quicinc.com>
+ <20230922083801.3056724-4-quic_fenglinw@quicinc.com>
+ <CAA8EJpoW8DJOTVHBu9_+BQs5DtxyJu3xrCfDNyYHn2MeHZHV4w@mail.gmail.com>
+ <12887370-0ada-359b-8a4f-18a28495c69a@quicinc.com>
+ <ZRhKAWYBLcBZHc73@google.com>
+From:   Fenglin Wu <quic_fenglinw@quicinc.com>
+In-Reply-To: <ZRhKAWYBLcBZHc73@google.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 3Bzj844m0xToZHbAj8XtUbVmAwHNCio7
+X-Proofpoint-ORIG-GUID: 3Bzj844m0xToZHbAj8XtUbVmAwHNCio7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-09_02,2023-10-06_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=759 lowpriorityscore=0 malwarescore=0 impostorscore=0
+ priorityscore=1501 bulkscore=0 clxscore=1011 mlxscore=0 spamscore=0
+ adultscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310090034
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -67,247 +92,60 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 20/09/2023 20:22, Helen Koike wrote:
-> 
-> 
-> On 20/09/2023 16:44, Rob Clark wrote:
->> On Wed, Sep 20, 2023 at 11:53 AM Helen Koike 
->> <helen.koike@collabora.com> wrote:
->>>
->>> Hi Rob,
->>>
->>> Thanks for the patch.
->>>
->>> On 20/09/2023 15:10, Rob Clark wrote:
->>>> On Wed, Sep 20, 2023 at 11:06 AM Rob Clark <robdclark@gmail.com> wrote:
->>>>>
->>>>> From: Rob Clark <robdclark@chromium.org>
->>>>>
->>>>> There have been a few igt test fixes compared to the commit that we 
->>>>> were
->>>>> currently using.  Pull in a newer igt and update expectations.
->>>>>
->>>>> Signed-off-by: Rob Clark <robdclark@chromium.org>
->>>>> ---
->>>
->>> Could you send here the url of a pipeline run with this change?
+On 10/1/2023 12:17 AM, Dmitry Torokhov wrote:
+> On Mon, Sep 25, 2023 at 10:54:45AM +0800, Fenglin Wu wrote:
 >>
->> https://gitlab.freedesktop.org/drm/msm/-/pipelines/989913
-> 
-> Thanks, lgtm.
-> 
-> Acked-by: Helen Koike <helen.koike@collabora.com>
-
-Dear maintainers,
-
-I talked with Rob, after his igt patch got merged, we made a few fixes 
-and updates to the xfails, so we are dropping this patch in favor of the 
-series:
-
-	[PATCH 0/9] drm/ci: fixes and improvements
-
-https://lists.freedesktop.org/archives/dri-devel/2023-October/425909.html
-
-Thanks,
-Helen
-
-> 
 >>
->> That was before I wrote a proper commit msg so you can ignore the
->> checkpatch job.. and there is an unrelated issue with the sdm845
->> runners not booting w/ v6.6-rc2, which still needs to be tracked down.
+>> On 9/24/2023 3:07 AM, Dmitry Baryshkov wrote:
+>>>> +
+>>>> +       switch (vib->data->hw_type) {
+>>>> +       case SSBI_VIB:
+>>>>                   mask = SSBI_VIB_DRV_LEVEL_MASK;
+>>>>                   shift = SSBI_VIB_DRV_SHIFT;
+>>>> +               break;
+>>>> +       case SPMI_VIB:
+>>>> +               mask = SPMI_VIB_DRV_LEVEL_MASK;
+>>>> +               shift = SPMI_VIB_DRV_SHIFT;
+>>>> +               break;
+>>>> +       case SPMI_VIB_GEN2:
+>>>> +               mask = SPMI_VIB_GEN2_DRV_MASK;
+>>>> +               shift = SPMI_VIB_GEN2_DRV_SHIFT;
+>>>> +               break;
+>>>> +       default:
+>>>> +               return -EINVAL;
+>>> Could you please move the switch to the previous patch? Then it would
+>>> be more obvious that you are just adding the SPMI_VIB_GEN2 here.
+>>>
+>>> Other than that LGTM.
 >>
->> BR,
->> -R
->>
->>>>>    drivers/gpu/drm/ci/gitlab-ci.yml               |  2 +-
->>>>>    .../gpu/drm/ci/xfails/amdgpu-stoney-fails.txt  |  4 ++--
->>>>>    drivers/gpu/drm/ci/xfails/i915-apl-fails.txt   | 11 -----------
->>>>>    drivers/gpu/drm/ci/xfails/i915-cml-fails.txt   |  2 +-
->>>>>    drivers/gpu/drm/ci/xfails/i915-tgl-fails.txt   |  1 -
->>>>>    drivers/gpu/drm/ci/xfails/msm-sc7180-skips.txt | 18 
->>>>> +-----------------
->>>>>    .../drm/ci/xfails/rockchip-rk3288-fails.txt    |  2 ++
->>>>>    7 files changed, 7 insertions(+), 33 deletions(-)
->>>>>
->>>>> diff --git a/drivers/gpu/drm/ci/gitlab-ci.yml 
->>>>> b/drivers/gpu/drm/ci/gitlab-ci.yml
->>>>> index 2c4df53f5dfe..3ecb5879e80f 100644
->>>>> --- a/drivers/gpu/drm/ci/gitlab-ci.yml
->>>>> +++ b/drivers/gpu/drm/ci/gitlab-ci.yml
->>>>> @@ -5,7 +5,7 @@ variables:
->>>>>      UPSTREAM_REPO: git://anongit.freedesktop.org/drm/drm
->>>>>      TARGET_BRANCH: drm-next
->>>>>
->>>>> -  IGT_VERSION: 471bfababd070e1dac0ebb87470ac4f2ae85e663
->>>>> +  IGT_VERSION: 2517e42d612e0c1ca096acf8b5f6177f7ef4bce7
->>>>>
->>>>>      DEQP_RUNNER_GIT_URL: 
->>>>> https://gitlab.freedesktop.org/anholt/deqp-runner.git
->>>>>      DEQP_RUNNER_GIT_TAG: v0.15.0
->>>>> diff --git a/drivers/gpu/drm/ci/xfails/amdgpu-stoney-fails.txt 
->>>>> b/drivers/gpu/drm/ci/xfails/amdgpu-stoney-fails.txt
->>>>> index bd9392536e7c..bab21930a0d4 100644
->>>>> --- a/drivers/gpu/drm/ci/xfails/amdgpu-stoney-fails.txt
->>>>> +++ b/drivers/gpu/drm/ci/xfails/amdgpu-stoney-fails.txt
->>>>> @@ -1,7 +1,6 @@
->>>>>    kms_addfb_basic@bad-pitch-65536,Fail
->>>>>    kms_addfb_basic@bo-too-small,Fail
->>>>>    kms_async_flips@invalid-async-flip,Fail
->>>>> -kms_atomic@plane-immutable-zpos,Fail
->>>>>    kms_atomic_transition@plane-toggle-modeset-transition,Fail
->>>>>    kms_bw@linear-tiling-1-displays-2560x1440p,Fail
->>>>>    kms_bw@linear-tiling-1-displays-3840x2160p,Fail
->>>>> @@ -11,9 +10,10 @@ kms_color@degamma,Fail
->>>>>    kms_cursor_crc@cursor-size-change,Fail
->>>>>    kms_cursor_crc@pipe-A-cursor-size-change,Fail
->>>>>    kms_cursor_crc@pipe-B-cursor-size-change,Fail
->>>>> -kms_cursor_legacy@forked-move,Fail
->>>>>    kms_hdr@bpc-switch,Fail
->>>>>    kms_hdr@bpc-switch-dpms,Fail
->>>>>    kms_plane_multiple@atomic-pipe-A-tiling-none,Fail
->>>>>    kms_rmfb@close-fd,Fail
->>>>>    kms_rotation_crc@primary-rotation-180,Fail
->>>>> +kms_flip@flip-vs-modeset-vs-hang,Fail
->>>>> +kms_flip@flip-vs-panning-vs-hang,Fail
->>>>> diff --git a/drivers/gpu/drm/ci/xfails/i915-apl-fails.txt 
->>>>> b/drivers/gpu/drm/ci/xfails/i915-apl-fails.txt
->>>>> index 46397ce38d5a..2e3b7c5dac3c 100644
->>>>> --- a/drivers/gpu/drm/ci/xfails/i915-apl-fails.txt
->>>>> +++ b/drivers/gpu/drm/ci/xfails/i915-apl-fails.txt
->>>>> @@ -8,13 +8,6 @@ kms_bw@linear-tiling-3-displays-3840x2160p,Fail
->>>>>    kms_bw@linear-tiling-4-displays-1920x1080p,Fail
->>>>>    kms_bw@linear-tiling-4-displays-2560x1440p,Fail
->>>>>    kms_bw@linear-tiling-4-displays-3840x2160p,Fail
->>>>> -kms_color@ctm-0-25,Fail
->>>>> -kms_color@ctm-0-50,Fail
->>>>> -kms_color@ctm-0-75,Fail
->>>>> -kms_color@ctm-max,Fail
->>>>> -kms_color@ctm-negative,Fail
->>>>> -kms_color@ctm-red-to-blue,Fail
->>>>> -kms_color@ctm-signed,Fail
->>>>>    
->>>>> kms_flip_scaled_crc@flip-32bpp-linear-to-64bpp-linear-downscaling,Fail
->>>>>    
->>>>> kms_flip_scaled_crc@flip-32bpp-linear-to-64bpp-linear-upscaling,Fail
->>>>>    
->>>>> kms_flip_scaled_crc@flip-32bpp-xtile-to-64bpp-xtile-downscaling,Fail
->>>>> @@ -38,8 +31,6 @@ 
->>>>> kms_flip_scaled_crc@flip-64bpp-ytile-to-32bpp-ytile-upscaling,Fail
->>>>>    
->>>>> kms_flip_scaled_crc@flip-64bpp-ytile-to-32bpp-ytilegen12rcccs-upscaling,Fail
->>>>>    
->>>>> kms_flip_scaled_crc@flip-64bpp-ytile-to-32bpp-ytilercccs-downscaling,Fail
->>>>>    
->>>>> kms_flip_scaled_crc@flip-64bpp-ytile-to-32bpp-ytilercccs-upscaling,Fail
->>>>> -kms_hdmi_inject@inject-4k,Timeout
->>>>> -kms_plane@plane-position-hole,Timeout
->>>>>    kms_plane_alpha_blend@alpha-basic,Fail
->>>>>    kms_plane_alpha_blend@alpha-opaque-fb,Fail
->>>>>    kms_plane_alpha_blend@alpha-transparent-fb,Fail
->>>>> @@ -53,6 +44,4 @@ kms_plane_alpha_blend@pipe-B-constant-alpha-max,Fail
->>>>>    kms_plane_alpha_blend@pipe-C-alpha-opaque-fb,Fail
->>>>>    kms_plane_alpha_blend@pipe-C-alpha-transparent-fb,Fail
->>>>>    kms_plane_alpha_blend@pipe-C-constant-alpha-max,Fail
->>>>> -kms_plane_multiple@tiling-y,Timeout
->>>>> -kms_pwrite_crc,Timeout
->>>>>    kms_sysfs_edid_timing,Fail
->>>>> diff --git a/drivers/gpu/drm/ci/xfails/i915-cml-fails.txt 
->>>>> b/drivers/gpu/drm/ci/xfails/i915-cml-fails.txt
->>>>> index 6139b410e767..13c0a25fc627 100644
->>>>> --- a/drivers/gpu/drm/ci/xfails/i915-cml-fails.txt
->>>>> +++ b/drivers/gpu/drm/ci/xfails/i915-cml-fails.txt
->>>>> @@ -1,4 +1,3 @@
->>>>> -kms_color@ctm-0-25,Fail
->>>>>    
->>>>> kms_flip_scaled_crc@flip-32bpp-linear-to-64bpp-linear-downscaling,Fail
->>>>>    
->>>>> kms_flip_scaled_crc@flip-32bpp-linear-to-64bpp-linear-upscaling,Fail
->>>>>    
->>>>> kms_flip_scaled_crc@flip-32bpp-xtile-to-64bpp-xtile-downscaling,Fail
->>>>> @@ -16,3 +15,4 @@ kms_plane_alpha_blend@alpha-basic,Fail
->>>>>    kms_plane_alpha_blend@alpha-opaque-fb,Fail
->>>>>    kms_plane_alpha_blend@alpha-transparent-fb,Fail
->>>>>    kms_plane_alpha_blend@constant-alpha-max,Fail
->>>>> +kms_async_flips@crc,Fail
->>>>> diff --git a/drivers/gpu/drm/ci/xfails/i915-tgl-fails.txt 
->>>>> b/drivers/gpu/drm/ci/xfails/i915-tgl-fails.txt
->>>>> index a6da5544e198..27bfca1c6f2c 100644
->>>>> --- a/drivers/gpu/drm/ci/xfails/i915-tgl-fails.txt
->>>>> +++ b/drivers/gpu/drm/ci/xfails/i915-tgl-fails.txt
->>>>> @@ -8,7 +8,6 @@ kms_bw@linear-tiling-4-displays-3840x2160p,Fail
->>>>>    kms_bw@linear-tiling-5-displays-1920x1080p,Fail
->>>>>    kms_bw@linear-tiling-5-displays-2560x1440p,Fail
->>>>>    kms_bw@linear-tiling-5-displays-3840x2160p,Fail
->>>>> -kms_color@ctm-0-25,Fail
->>>>>    kms_flip@flip-vs-panning-vs-hang,Timeout
->>>>>    
->>>>> kms_flip_scaled_crc@flip-32bpp-linear-to-64bpp-linear-downscaling,Fail
->>>>>    
->>>>> kms_flip_scaled_crc@flip-32bpp-linear-to-64bpp-linear-upscaling,Fail
->>>>> diff --git a/drivers/gpu/drm/ci/xfails/msm-sc7180-skips.txt 
->>>>> b/drivers/gpu/drm/ci/xfails/msm-sc7180-skips.txt
->>>>> index 410e0eeb3161..e59a2fddfde0 100644
->>>>> --- a/drivers/gpu/drm/ci/xfails/msm-sc7180-skips.txt
->>>>> +++ b/drivers/gpu/drm/ci/xfails/msm-sc7180-skips.txt
->>>>
->>>> Side note, I noticed for sc7180-skips (and a lot of other boards) we 
->>>> have:
->>>>
->>>> # Suspend to RAM seems to be broken on this machine
->>>> .*suspend.*
->>>>
->>>> Locally I've not had problems with the suspend tests, I'm guessing the
->>>> actual issue is usb-ethernet vs nfsroot.  But maybe the filesys for
->>>> igt jobs is small enough that we can do initramfs instead?  Someone
->>>> should probably confirm what the root issue is and update the
->>>> comments, so developers aren't thinking that suspend is something that
->>>> needs to be debugged
->>>
->>> Agreed.
->>>
->>> Regards,
->>> Helen
->>>
->>>>
->>>> BR,
->>>> -R
->>>>
->>>>
->>>>> @@ -4,20 +4,4 @@
->>>>>    # Test incorrectly assumes that CTM support implies gamma/degamma
->>>>>    # LUT support.  None of the subtests handle the case of only having
->>>>>    # CTM support
->>>>> -kms_color.*
->>>>> -
->>>>> -# 4k@60 is not supported on this hw, but driver doesn't handle it
->>>>> -# too gracefully.. https://gitlab.freedesktop.org/drm/msm/-/issues/15
->>>>> -kms_bw@linear-tiling-.*-displays-3840x2160p
->>>>> -
->>>>> -# Until igt fix lands: 
->>>>> https://patchwork.freedesktop.org/patch/493175/
->>>>> -kms_bw@linear-tiling-2.*
->>>>> -kms_bw@linear-tiling-3.*
->>>>> -kms_bw@linear-tiling-4.*
->>>>> -kms_bw@linear-tiling-5.*
->>>>> -kms_bw@linear-tiling-6.*
->>>>> -
->>>>> -# igt fix posted: https://patchwork.freedesktop.org/patch/499926/
->>>>> -# failure mode is flakey due to randomization but fails frequently
->>>>> -# enough to be detected as a Crash or occasionally UnexpectedPass.
->>>>> -kms_plane_multiple@atomic-pipe-A-tiling-none
->>>>> +#kms_color.*
->>>>> diff --git a/drivers/gpu/drm/ci/xfails/rockchip-rk3288-fails.txt 
->>>>> b/drivers/gpu/drm/ci/xfails/rockchip-rk3288-fails.txt
->>>>> index 2a1baa948e12..15ac861a58bf 100644
->>>>> --- a/drivers/gpu/drm/ci/xfails/rockchip-rk3288-fails.txt
->>>>> +++ b/drivers/gpu/drm/ci/xfails/rockchip-rk3288-fails.txt
->>>>> @@ -46,3 +46,5 @@ kms_properties@connector-properties-legacy,Crash
->>>>>    kms_properties@get_properties-sanity-atomic,Crash
->>>>>    kms_properties@get_properties-sanity-non-atomic,Crash
->>>>>    kms_setmode@invalid-clone-single-crtc,Crash
->>>>> +kms_flip@flip-vs-modeset-vs-hang,Crash
->>>>> +kms_flip@flip-vs-panning-vs-hang,Crash
->>>>> -- 
->>>>> 2.41.0
->>>>>
+>> Sure, I can move the switch to the previous refactoring patch.
+> 
+> Actually, the idea of having a const "reg" or "chip", etc. structure is
+> to avoid this kind of runtime checks based on hardware type and instead
+> use common computation. I believe you need to move mask and shift into
+> the chip-specific structure and avoid defining hw_type.
+> 
+
+Actually, the main motivation for adding 'hw_type' is to avoid reading 
+'reg_base' from DT for SSBI_VIB. It can also help to simplify the 
+'pm8xxx_vib_data' structure and make following code logic more 
+straightforward and easier to understand(check hw_type instead of 
+checking specific constant reg/mask value), it has been used in 
+following places:
+
+   1) Avoid reading 'reg_base' from DT for SSBI_VIB.
+   2) Only do manual-mode-mask-write for SSBI_VIB. Previously, it was 
+achieved by giving a valid 'drv_en_manual_mask' value only for SSBI_VIB, 
+having hw_type make it more straightforward.
+   3) Not writing VIB_EN register for SSBI_VIB. A similar strategy was 
+used previously, only write VIB_EN register when 'enable_mask' is valid, 
+  checking hw_type make it more straightforward.
+   4) To achieve different drive step size for SPMI_VIB （100mV per step) 
+and SPMI_VIB_GEN2 (1mV per step).
+   5) Do different VIB_DRV mask and shift assignment for SPMI_VIB and 
+SPMI_VIB_GEN2
+   6) Only write VIB_DRV2 for SPMI_VIB_GEN2.
+
+
+> Thanks.
+> 
