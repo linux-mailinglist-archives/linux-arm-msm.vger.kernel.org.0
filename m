@@ -2,76 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6756D7BE765
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 19:10:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F98D7BE76A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 19:11:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377236AbjJIRKM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Oct 2023 13:10:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41794 "EHLO
+        id S1377162AbjJIRLP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Oct 2023 13:11:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376772AbjJIRKL (ORCPT
+        with ESMTP id S1376797AbjJIRLO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Oct 2023 13:10:11 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2E6594
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 10:10:09 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2c16757987fso59363441fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Oct 2023 10:10:09 -0700 (PDT)
+        Mon, 9 Oct 2023 13:11:14 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D21C94
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 10:11:13 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-504a7f9204eso5704207e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Oct 2023 10:11:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696871408; x=1697476208; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=lYoCwAiR4inAijqUaMCL87UoY8rv8b+1tyeGpKKu09k=;
-        b=PyPvSmxcfAv9ivXy4cY5YLrAxfbrPU0NCSeBJly5pc9QU74FT21gxOX5cR7Oe2C8NP
-         pzTBmOen/RKpQxP8v9N4hluzRHl+MdX1bvd2oM+9wBvu4BI/2aQcTHdimKfo1rM/GrSL
-         G+RuRWSWpK3c1mmqZjlfR9V+8pM//KAAaeOCRM72GSTw733jV/1RvC25i22DE41komL7
-         BoerYAyubztj8IR4DHFGDC1MUueXulYvNUDxFFyhjeYHXvWGkW1u2LMiXy1RIjzW3ZlQ
-         2R1JA65sIgj4rc85WY3Y5nak40X26wraWPfjPnGjBXj4NsHT++8VbFOZqvnqtd1cImfv
-         jRkg==
+        d=linaro.org; s=google; t=1696871472; x=1697476272; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=30KcEZ4SIICqQVAYj3z91SvH9mOrlLfmUCguTSfxTSk=;
+        b=kvuOzWmGUuof4IlpbJfoRFeb5+y4H+M41jiw0lHvEDK6LtBqpbbHPilZkWPBdltC0V
+         WxoObFfF/mUm9ee/BbIs0biW6uvwn1mqPIJwvFpxw0b9ZEYu3Eig3+ItdSlpbiMSxiZo
+         p3/eB9owmcwG9rKnOMzpkvFTI3t63/EpT7VVy9PNnjzZcyIL6EIxgiuTscODEcjBdFVl
+         5c70gzv4P6P9J36BKNX4AYlSyXLeOmDBFWAfbNsOXIBV4L9PKMr7cT+upfoDtlYedn73
+         Kr56hePQtEVWaAHuTzhZwYWu5ZzaeZQrZwYHr3LCFQqkyDbef8aIBbbgzUrBrv3sGLb2
+         c7mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696871408; x=1697476208;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lYoCwAiR4inAijqUaMCL87UoY8rv8b+1tyeGpKKu09k=;
-        b=wPkQaR07GHbygtU2jRpQyrqnXcMFgrsLuP3UgLZOez+z2agaicaAtc4qtPMh2IOxBQ
-         HaaHr1uLwLz2jXi8yifdwurLpNaoRj9Fzzj/XG2EjiD9pkloX1/zfhLTZgd7CV6kCygP
-         mqpIokfHPnQxLo9yWxVSRl/xp06frYxtsLJw3oUhJbkyCJOKiHHyCQr81Rrb7CuUaJsP
-         qbjW0yPotoi810A5WTXEb9lwqbcoIYBIWWGr0tAV6QqB7GjNSPuWktV5mjEpe5ZHvdB7
-         YodsJiD1sMdTtKrpdJs4ODOmyLxdm6rkA27hCBo0Z8CSE2XnRwC7reLIz9BoxFupxSe4
-         SDeQ==
-X-Gm-Message-State: AOJu0YxM31QBI+QZO4QARmI+OuU7QMU+/FZJyReh5hZ5IsLK5umh4SFR
-        2y0xExixiYmc936h5pHkGNCVNA==
-X-Google-Smtp-Source: AGHT+IGjIv5lRo3XdQegUZ6LOT8XiXCUx78FtqE80vN6nQNNSwkxg99L9GQkF4GuQxN8sfVQJ+uvtw==
-X-Received: by 2002:a2e:b2d1:0:b0:2bf:f599:be63 with SMTP id 17-20020a2eb2d1000000b002bff599be63mr13449013ljz.41.1696871408005;
-        Mon, 09 Oct 2023 10:10:08 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id a19-20020a05651c011300b002bff365c7bfsm2098383ljb.35.2023.10.09.10.10.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Oct 2023 10:10:07 -0700 (PDT)
-Message-ID: <7eecc9af-3d4f-43ba-8262-e58858bbe417@linaro.org>
-Date:   Mon, 9 Oct 2023 20:10:06 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 5/5] drm/msm: dpu1: sm8550: move split clock controls
- to sspp entries
-Content-Language: en-GB
-To:     Neil Armstrong <neil.armstrong@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20231009-topic-sm8550-graphics-sspp-split-clk-v1-0-806c0dee4e43@linaro.org>
- <20231009-topic-sm8550-graphics-sspp-split-clk-v1-5-806c0dee4e43@linaro.org>
+        d=1e100.net; s=20230601; t=1696871472; x=1697476272;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=30KcEZ4SIICqQVAYj3z91SvH9mOrlLfmUCguTSfxTSk=;
+        b=U4SjFmnQBl7/C9ppn7sMftkShXETZCMQAdNOeoxqr9952mEuV9RckveXhsmcCom0W1
+         wl+qdQjLXXpZlGiFmr4W2TSK4Fvjr6Lq43rvh+sENRzDt0T8qGqswS5I70bynnuW8P10
+         pJjnwXoUpJPNrcJa1VK3e0j4FIGEL2rb6MsJ8/b0cLVH0djFltD3jFvlXuuuF5eWm+NK
+         wv3BBFjC9SEAKoNxX2wiDHfcw88zVEt6Fw7F9cEMlTwMtcg8CIaROLplFrJMt9NH+FFI
+         YVXN8EiOXGCYc0aPy2EICPn+CJtpkhgoEXpqzdW9MzMpVxvGHHTjWWhlYeBc68Quof0t
+         CbOg==
+X-Gm-Message-State: AOJu0Yz30owY2abeY/hPL9ktFgud0+XUx3e6kpvoyYz4V0HgIrihvZn/
+        fGcj/Y11tR1hcJKUokJ4/6Ls8Q==
+X-Google-Smtp-Source: AGHT+IEBq766UMuWA+eeA5D2k84fHEbIsahHIHEvGO6Kg7wtTj42eDj0TYj1mQSbBwp3s1gqb2Niog==
+X-Received: by 2002:a19:6456:0:b0:503:442:5957 with SMTP id b22-20020a196456000000b0050304425957mr12147556lfj.41.1696871471681;
+        Mon, 09 Oct 2023 10:11:11 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id x14-20020a19f60e000000b00502e0388846sm1475991lfe.244.2023.10.09.10.11.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Oct 2023 10:11:11 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20231009-topic-sm8550-graphics-sspp-split-clk-v1-5-806c0dee4e43@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH 0/3] drm/msm/dpu: enable writeback on several platforms
+Date:   Mon,  9 Oct 2023 20:11:07 +0300
+Message-Id: <20231009171110.2691115-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -81,150 +74,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/10/2023 19:36, Neil Armstrong wrote:
-> The SM8550 has the SSPP clk_ctrl in the SSPP registers, move them
-> out of the MDP top.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h | 35 ++++++++++------------
->   1 file changed, 15 insertions(+), 20 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> index 7bed819dfc39..527ec020fba4 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> @@ -24,16 +24,6 @@ static const struct dpu_mdp_cfg sm8550_mdp = {
->   	.base = 0, .len = 0x494,
->   	.features = BIT(DPU_MDP_PERIPH_0_REMOVED),
->   	.clk_ctrls = {
-> -		[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x4330, .bit_off = 0 },
-> -		[DPU_CLK_CTRL_VIG1] = { .reg_off = 0x6330, .bit_off = 0 },
-> -		[DPU_CLK_CTRL_VIG2] = { .reg_off = 0x8330, .bit_off = 0 },
-> -		[DPU_CLK_CTRL_VIG3] = { .reg_off = 0xa330, .bit_off = 0 },
-> -		[DPU_CLK_CTRL_DMA0] = { .reg_off = 0x24330, .bit_off = 0 },
-> -		[DPU_CLK_CTRL_DMA1] = { .reg_off = 0x26330, .bit_off = 0 },
-> -		[DPU_CLK_CTRL_DMA2] = { .reg_off = 0x28330, .bit_off = 0 },
-> -		[DPU_CLK_CTRL_DMA3] = { .reg_off = 0x2a330, .bit_off = 0 },
-> -		[DPU_CLK_CTRL_DMA4] = { .reg_off = 0x2c330, .bit_off = 0 },
-> -		[DPU_CLK_CTRL_DMA5] = { .reg_off = 0x2e330, .bit_off = 0 },
->   		[DPU_CLK_CTRL_REG_DMA] = { .reg_off = 0x2bc, .bit_off = 20 },
+This enables writeback on several platforms where I could actually test
+it.
 
-Hmm, interesting. I even double-checked this. SSPP and WB have their own 
-clock registers now. But the REG_DMA uses the main area (0x2bc).
+Dmitry Baryshkov (3):
+  drm/msm/dpu: enable writeback on SDM845
+  drm/msm/dpu: enable writeback on SM8350
+  drm/msm/dpu: enable writeback on SM8450
 
->   	},
->   };
-> @@ -73,6 +63,11 @@ static const struct dpu_ctl_cfg sm8550_ctl[] = {
->   	},
->   };
->   
-> +static const struct dpu_clk_ctrl_reg sm8550_sspp_clk_ctrl = {
-> +	.reg_off = 0x330,
-> +	.bit_off = 0
-> +};
-
-I don't think we even need this outside of dpu_hw_sspp. You can use 
-core_major_rev to check whether the driver should use global clocks or 
-per-SSPP / per-WB clocks register instead.
-
-> +
->   static const struct dpu_sspp_cfg sm8550_sspp[] = {
->   	{
->   		.name = "sspp_0", .id = SSPP_VIG0,
-> @@ -81,7 +76,7 @@ static const struct dpu_sspp_cfg sm8550_sspp[] = {
->   		.sblk = &sm8550_vig_sblk_0,
->   		.xin_id = 0,
->   		.type = SSPP_TYPE_VIG,
-> -		.clk_ctrl = DPU_CLK_CTRL_VIG0,
-> +		.clk_ctrl_reg = &sm8550_sspp_clk_ctrl,
->   	}, {
->   		.name = "sspp_1", .id = SSPP_VIG1,
->   		.base = 0x6000, .len = 0x344,
-> @@ -89,7 +84,7 @@ static const struct dpu_sspp_cfg sm8550_sspp[] = {
->   		.sblk = &sm8550_vig_sblk_1,
->   		.xin_id = 4,
->   		.type = SSPP_TYPE_VIG,
-> -		.clk_ctrl = DPU_CLK_CTRL_VIG1,
-> +		.clk_ctrl_reg = &sm8550_sspp_clk_ctrl,
->   	}, {
->   		.name = "sspp_2", .id = SSPP_VIG2,
->   		.base = 0x8000, .len = 0x344,
-> @@ -97,7 +92,7 @@ static const struct dpu_sspp_cfg sm8550_sspp[] = {
->   		.sblk = &sm8550_vig_sblk_2,
->   		.xin_id = 8,
->   		.type = SSPP_TYPE_VIG,
-> -		.clk_ctrl = DPU_CLK_CTRL_VIG2,
-> +		.clk_ctrl_reg = &sm8550_sspp_clk_ctrl,
->   	}, {
->   		.name = "sspp_3", .id = SSPP_VIG3,
->   		.base = 0xa000, .len = 0x344,
-> @@ -105,7 +100,7 @@ static const struct dpu_sspp_cfg sm8550_sspp[] = {
->   		.sblk = &sm8550_vig_sblk_3,
->   		.xin_id = 12,
->   		.type = SSPP_TYPE_VIG,
-> -		.clk_ctrl = DPU_CLK_CTRL_VIG3,
-> +		.clk_ctrl_reg = &sm8550_sspp_clk_ctrl,
->   	}, {
->   		.name = "sspp_8", .id = SSPP_DMA0,
->   		.base = 0x24000, .len = 0x344,
-> @@ -113,7 +108,7 @@ static const struct dpu_sspp_cfg sm8550_sspp[] = {
->   		.sblk = &sdm845_dma_sblk_0,
->   		.xin_id = 1,
->   		.type = SSPP_TYPE_DMA,
-> -		.clk_ctrl = DPU_CLK_CTRL_DMA0,
-> +		.clk_ctrl_reg = &sm8550_sspp_clk_ctrl,
->   	}, {
->   		.name = "sspp_9", .id = SSPP_DMA1,
->   		.base = 0x26000, .len = 0x344,
-> @@ -121,7 +116,7 @@ static const struct dpu_sspp_cfg sm8550_sspp[] = {
->   		.sblk = &sdm845_dma_sblk_1,
->   		.xin_id = 5,
->   		.type = SSPP_TYPE_DMA,
-> -		.clk_ctrl = DPU_CLK_CTRL_DMA1,
-> +		.clk_ctrl_reg = &sm8550_sspp_clk_ctrl,
->   	}, {
->   		.name = "sspp_10", .id = SSPP_DMA2,
->   		.base = 0x28000, .len = 0x344,
-> @@ -129,7 +124,7 @@ static const struct dpu_sspp_cfg sm8550_sspp[] = {
->   		.sblk = &sdm845_dma_sblk_2,
->   		.xin_id = 9,
->   		.type = SSPP_TYPE_DMA,
-> -		.clk_ctrl = DPU_CLK_CTRL_DMA2,
-> +		.clk_ctrl_reg = &sm8550_sspp_clk_ctrl,
->   	}, {
->   		.name = "sspp_11", .id = SSPP_DMA3,
->   		.base = 0x2a000, .len = 0x344,
-> @@ -137,7 +132,7 @@ static const struct dpu_sspp_cfg sm8550_sspp[] = {
->   		.sblk = &sdm845_dma_sblk_3,
->   		.xin_id = 13,
->   		.type = SSPP_TYPE_DMA,
-> -		.clk_ctrl = DPU_CLK_CTRL_DMA3,
-> +		.clk_ctrl_reg = &sm8550_sspp_clk_ctrl,
->   	}, {
->   		.name = "sspp_12", .id = SSPP_DMA4,
->   		.base = 0x2c000, .len = 0x344,
-> @@ -145,7 +140,7 @@ static const struct dpu_sspp_cfg sm8550_sspp[] = {
->   		.sblk = &sm8550_dma_sblk_4,
->   		.xin_id = 14,
->   		.type = SSPP_TYPE_DMA,
-> -		.clk_ctrl = DPU_CLK_CTRL_DMA4,
-> +		.clk_ctrl_reg = &sm8550_sspp_clk_ctrl,
->   	}, {
->   		.name = "sspp_13", .id = SSPP_DMA5,
->   		.base = 0x2e000, .len = 0x344,
-> @@ -153,7 +148,7 @@ static const struct dpu_sspp_cfg sm8550_sspp[] = {
->   		.sblk = &sm8550_dma_sblk_5,
->   		.xin_id = 15,
->   		.type = SSPP_TYPE_DMA,
-> -		.clk_ctrl = DPU_CLK_CTRL_DMA5,
-> +		.clk_ctrl_reg = &sm8550_sspp_clk_ctrl,
->   	},
->   };
->   
-> 
+ .../drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h | 18 ++++++++++++++++++
+ .../drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h | 18 ++++++++++++++++++
+ .../drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h | 18 ++++++++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  6 ++++--
+ 4 files changed, 58 insertions(+), 2 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.39.2
 
