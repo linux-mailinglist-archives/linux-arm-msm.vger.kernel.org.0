@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 84E4D7BE8E4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 20:10:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AEFBE7BE8E7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 20:10:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377449AbjJISKs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Oct 2023 14:10:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38744 "EHLO
+        id S1377454AbjJISKu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Oct 2023 14:10:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377383AbjJISKr (ORCPT
+        with ESMTP id S1377450AbjJISKs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Oct 2023 14:10:47 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24955A3
+        Mon, 9 Oct 2023 14:10:48 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FC3994
         for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 11:10:46 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-5041335fb9cso6074694e87.0
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-5068692b0d9so3841932e87.1
         for <linux-arm-msm@vger.kernel.org>; Mon, 09 Oct 2023 11:10:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696875044; x=1697479844; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696875045; x=1697479845; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0zhzV+U7efpSn+723yIcdjzHoi8KO2DqRUVlFbifyeE=;
-        b=cBO7lgzdum5LV3MwilEMZgV4CjDQRLVv5fyj2f/8LFXenCBZRpFM17C5SBQKTw+5ch
-         i0AEQ9i1VQQW2nyMcKiOaOLXMSDxAtTwxPZAFN0hN9rSV8dQOTU6GJ35w5Nzu/noV7Vw
-         cIJ6/9POwaI7tlwP2HU41Q3KbA2EHfHgJtB7WjnXznEMhUo08Cjzt7OCr+I+ELqw6Myx
-         DbthH8LZsjkdJUSq7w9BsAGXtfNh80VFWTo2Jz9Na1qlCvgfbUn07Lb225mwlN6zYcbh
-         ija11ZZCMMyl2oCawmwgfg7IFu9TMEKYPUDG2ri8me4iYG2NF+24odhEZs/J7EBVefx3
-         Z/vw==
+        bh=6/ggZZmOOvUZ/jHV96y3poAAIRXv6qRJqOXl/4SuAQc=;
+        b=D1CB2eyrVs+Wse8pmQ0bVqZgLfFrzXyEhlC6ipbBNLimW+Of/zLJ/NQUG6eMoGoK55
+         QgAt4JB5RYjEQ24sKAwRX6p/D3+4v7CILK1XxJCzPrLqU+fYxY2jw0tq2Z0XNBcocnRh
+         RinkSIyqylpHOwaMuUtj0puOEKqC3zZ5SjtEjC/dkBVvojl0F/s1u0N3pCZxk4EcG9OM
+         yAusOdxK7tyhFKqjQYfSCgMMfdZ166Zx4QTKShXSLipaJOXyfal830I7BniIWEwPIPfH
+         UxalKqxbsQmqIQPpW1R2EaPVb2mUHMbncp7lCqVwAqHRoqHPk9V52a+xb9ZZ2wQiXg6f
+         XDjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696875044; x=1697479844;
+        d=1e100.net; s=20230601; t=1696875045; x=1697479845;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=0zhzV+U7efpSn+723yIcdjzHoi8KO2DqRUVlFbifyeE=;
-        b=KFxXFkkhFvVoi96obEXmYYxp1UNMVE3qrI142TvimaIVTunQVioxMYTUhqvHUl66ty
-         xyD7HurNpQOHvlvU4/drWO/nRLHPIaVWISHvJxp94eXQQivoUmLdfNcDEkzFzhWPOGxI
-         gbsA8kLhb+X7vB7HkXd77xRfB0jXhn2aA8MfzOBL+XDLySBUJC4kOmwne3lscB+ALXj+
-         KMzKRihOqAVvwr2IJT3p1J+W6shKdozZbGkO0drZXNSNeIZCV6VZlATKJXEHR84lJ+Yp
-         L4ZLLEULpu6vmvniDYcoc0dugM7WmnMo0wZW0QYl/187xQMgQVdbLoiUc2F5EEQF/n0G
-         9f/A==
-X-Gm-Message-State: AOJu0YztkB/HFWViks96irrndcK1X2kp7HBxrfnIMwymMcFif+2/aipq
-        cQYn27ZQsMy7aQKf0Yza7j/haQ==
-X-Google-Smtp-Source: AGHT+IFmAdS1VzsJrY2RA16X9ZJRDThy7A/HeUgUe2JXph2AZoOw6bfFNxw2VxE5AJ+5etFYOBTxSg==
-X-Received: by 2002:ac2:4c4b:0:b0:503:cca:e52f with SMTP id o11-20020ac24c4b000000b005030ccae52fmr17520979lfk.51.1696875044264;
+        bh=6/ggZZmOOvUZ/jHV96y3poAAIRXv6qRJqOXl/4SuAQc=;
+        b=mIIi4tAyaOTuNT0pNMgDaw1hNA+tiun/d6mqzS/3oED3K6fbqVZQi92HTP6V72mnAP
+         BpSrByRtq2u1fPrpSTVDkTSADZ1U+FiLUu+Egh+nZce087h6T8dymvXG/1MqNiLIeDkG
+         exvktZgZ5AIzxCPReOFMhdlKEq9+IdMrtdnc8kAOwVrLLcgqmFBihCe/GMjn44hz68cH
+         hmKZfxpjSlkAo2y4ql/gpvJbpVZ9TBvnjjufWOMC5Ui/6390IVsQFEfu9hrW+qbiuJEQ
+         TY9x1PxwHyLe1gHbwwizE/eFUuqd5Z4W5wURteqCKxvHgUw7GRn5Sa5h9OWFTpa3fWKm
+         QSOw==
+X-Gm-Message-State: AOJu0Yzrg0STUTw5how+RL97aBlv32OjNZDWG/r1+2EO0dzmVgICmsbK
+        uTNJju1EMZ1+vE86bH9rmcNL5A==
+X-Google-Smtp-Source: AGHT+IEkZphNwAOKp9JtA7qMk7prsRuhaPwpf+e6gDGlK1W+jDqKLj+YRJsuImLEuWVeqkYOfEBCIg==
+X-Received: by 2002:a05:6512:3b9a:b0:503:18c5:6833 with SMTP id g26-20020a0565123b9a00b0050318c56833mr17676101lfv.61.1696875044954;
         Mon, 09 Oct 2023 11:10:44 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id d6-20020ac25446000000b00505677e7a99sm1506963lfn.139.2023.10.09.11.10.43
+        by smtp.gmail.com with ESMTPSA id d6-20020ac25446000000b00505677e7a99sm1506963lfn.139.2023.10.09.11.10.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Oct 2023 11:10:43 -0700 (PDT)
+        Mon, 09 Oct 2023 11:10:44 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,16 +60,16 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v2 03/13] drm/msm/dp: move pdev from struct dp_display_private to struct msm_dp
-Date:   Mon,  9 Oct 2023 21:10:30 +0300
-Message-Id: <20231009181040.2743847-4-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 04/13] drm/msm/dp: switch to devm_drm_bridge_add()
+Date:   Mon,  9 Oct 2023 21:10:31 +0300
+Message-Id: <20231009181040.2743847-5-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20231009181040.2743847-1-dmitry.baryshkov@linaro.org>
 References: <20231009181040.2743847-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,145 +77,124 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The dp_drm needs accessing the DP's platform device. Move pdev to the
-public structure.
+Make MSM DP driver use devm_drm_bridge_add() instead of plain
+drm_bridge_add(). As the driver doesn't require any additional cleanup,
+stop adding created bridge to the priv->bridges array.
 
 Reviewed-by: Rob Clark <robdclark@gmail.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/dp/dp_display.c | 25 ++++++++++++-------------
- drivers/gpu/drm/msm/dp/dp_display.h |  1 +
- 2 files changed, 13 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_display.c |  9 ++-------
+ drivers/gpu/drm/msm/dp/dp_drm.c     | 21 +++++++++++++--------
+ drivers/gpu/drm/msm/dp/dp_drm.h     |  2 +-
+ 3 files changed, 16 insertions(+), 16 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 0e1afff491af..172daa5ad004 100644
+index 172daa5ad004..e329e03e068d 100644
 --- a/drivers/gpu/drm/msm/dp/dp_display.c
 +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -88,7 +88,6 @@ struct dp_display_private {
- 	bool audio_supported;
- 
- 	struct drm_device *drm_dev;
--	struct platform_device *pdev;
- 	struct dentry *root;
- 
- 	struct dp_parser  *parser;
-@@ -595,7 +594,7 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
- 		return 0;
- 	}
- 
--	ret = dp_display_usbpd_configure_cb(&dp->pdev->dev);
-+	ret = dp_display_usbpd_configure_cb(&dp->dp_display.pdev->dev);
- 	if (ret) {	/* link train failed */
- 		dp->hpd_state = ST_DISCONNECTED;
- 	} else {
-@@ -643,7 +642,7 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
- 		if (dp->link->sink_count == 0) {
- 			dp_display_host_phy_exit(dp);
- 		}
--		dp_display_notify_disconnect(&dp->pdev->dev);
-+		dp_display_notify_disconnect(&dp->dp_display.pdev->dev);
- 		mutex_unlock(&dp->event_mutex);
- 		return 0;
- 	} else if (state == ST_DISCONNECT_PENDING) {
-@@ -653,7 +652,7 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
- 		dp_ctrl_off_link(dp->ctrl);
- 		dp_display_host_phy_exit(dp);
- 		dp->hpd_state = ST_DISCONNECTED;
--		dp_display_notify_disconnect(&dp->pdev->dev);
-+		dp_display_notify_disconnect(&dp->dp_display.pdev->dev);
- 		mutex_unlock(&dp->event_mutex);
- 		return 0;
- 	}
-@@ -662,7 +661,7 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
- 	 * We don't need separate work for disconnect as
- 	 * connect/attention interrupts are disabled
- 	 */
--	dp_display_notify_disconnect(&dp->pdev->dev);
-+	dp_display_notify_disconnect(&dp->dp_display.pdev->dev);
- 
- 	if (state == ST_DISPLAY_OFF) {
- 		dp->hpd_state = ST_DISCONNECTED;
-@@ -704,7 +703,7 @@ static int dp_irq_hpd_handle(struct dp_display_private *dp, u32 data)
- 		return 0;
- 	}
- 
--	dp_display_usbpd_attention_cb(&dp->pdev->dev);
-+	dp_display_usbpd_attention_cb(&dp->dp_display.pdev->dev);
- 
- 	drm_dbg_dp(dp->drm_dev, "After, type=%d hpd_state=%d\n",
- 			dp->dp_display.connector_type, state);
-@@ -725,12 +724,12 @@ static void dp_display_deinit_sub_modules(struct dp_display_private *dp)
- static int dp_init_sub_modules(struct dp_display_private *dp)
+@@ -1530,7 +1530,6 @@ static int dp_display_get_next_bridge(struct msm_dp *dp)
+ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+ 			struct drm_encoder *encoder)
  {
- 	int rc = 0;
--	struct device *dev = &dp->pdev->dev;
-+	struct device *dev = &dp->dp_display.pdev->dev;
- 	struct dp_panel_in panel_in = {
- 		.dev = dev,
- 	};
+-	struct msm_drm_private *priv = dev->dev_private;
+ 	struct dp_display_private *dp_priv;
+ 	int ret;
  
--	dp->parser = dp_parser_get(dp->pdev);
-+	dp->parser = dp_parser_get(dp->dp_display.pdev);
- 	if (IS_ERR(dp->parser)) {
- 		rc = PTR_ERR(dp->parser);
- 		DRM_ERROR("failed to initialize parser, rc = %d\n", rc);
-@@ -791,7 +790,7 @@ static int dp_init_sub_modules(struct dp_display_private *dp)
- 		goto error_ctrl;
+@@ -1548,17 +1547,13 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+ 	if (ret)
+ 		return ret;
+ 
+-	dp_display->bridge = dp_bridge_init(dp_display, dev, encoder);
+-	if (IS_ERR(dp_display->bridge)) {
+-		ret = PTR_ERR(dp_display->bridge);
++	ret = dp_bridge_init(dp_display, dev, encoder);
++	if (ret) {
+ 		DRM_DEV_ERROR(dev->dev,
+ 			"failed to create dp bridge: %d\n", ret);
+-		dp_display->bridge = NULL;
+ 		return ret;
  	}
  
--	dp->audio = dp_audio_get(dp->pdev, dp->panel, dp->catalog);
-+	dp->audio = dp_audio_get(dp->dp_display.pdev, dp->panel, dp->catalog);
- 	if (IS_ERR(dp->audio)) {
- 		rc = PTR_ERR(dp->audio);
- 		pr_err("failed to initialize audio, rc = %d\n", rc);
-@@ -1197,7 +1196,7 @@ int dp_display_request_irq(struct msm_dp *dp_display)
+-	priv->bridges[priv->num_bridges++] = dp_display->bridge;
+-
+ 	dp_display->connector = dp_drm_connector_init(dp_display, encoder);
+ 	if (IS_ERR(dp_display->connector)) {
+ 		ret = PTR_ERR(dp_display->connector);
+diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
+index 785d76639497..284ff7df058a 100644
+--- a/drivers/gpu/drm/msm/dp/dp_drm.c
++++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+@@ -272,7 +272,7 @@ static const struct drm_bridge_funcs edp_bridge_ops = {
+ 	.atomic_check = edp_bridge_atomic_check,
+ };
  
- 	dp = container_of(dp_display, struct dp_display_private, dp_display);
- 
--	dp->irq = irq_of_parse_and_map(dp->pdev->dev.of_node, 0);
-+	dp->irq = irq_of_parse_and_map(dp->dp_display.pdev->dev.of_node, 0);
- 	if (!dp->irq) {
- 		DRM_ERROR("failed to get irq\n");
- 		return -EINVAL;
-@@ -1253,7 +1252,7 @@ static int dp_display_probe(struct platform_device *pdev)
- 	if (!desc)
- 		return -EINVAL;
- 
--	dp->pdev = pdev;
-+	dp->dp_display.pdev = pdev;
- 	dp->name = "drm_dp";
- 	dp->id = desc->id;
- 	dp->dp_display.connector_type = desc->connector_type;
-@@ -1459,7 +1458,7 @@ void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
+-struct drm_bridge *dp_bridge_init(struct msm_dp *dp_display, struct drm_device *dev,
++int dp_bridge_init(struct msm_dp *dp_display, struct drm_device *dev,
+ 			struct drm_encoder *encoder)
+ {
  	int rc;
+@@ -281,7 +281,7 @@ struct drm_bridge *dp_bridge_init(struct msm_dp *dp_display, struct drm_device *
  
- 	dp = container_of(dp_display, struct dp_display_private, dp_display);
--	dev = &dp->pdev->dev;
-+	dev = &dp->dp_display.pdev->dev;
+ 	dp_bridge = devm_kzalloc(dev->dev, sizeof(*dp_bridge), GFP_KERNEL);
+ 	if (!dp_bridge)
+-		return ERR_PTR(-ENOMEM);
++		return -ENOMEM;
  
- 	dp->debug = dp_debug_get(dev, dp->panel,
- 					dp->link, dp->dp_display.connector,
-@@ -1479,7 +1478,7 @@ static int dp_display_get_next_bridge(struct msm_dp *dp)
- 	struct device *dev;
+ 	dp_bridge->dp_display = dp_display;
  
- 	dp_priv = container_of(dp, struct dp_display_private, dp_display);
--	dev = &dp_priv->pdev->dev;
-+	dev = &dp_priv->dp_display.pdev->dev;
- 	aux_bus = of_get_child_by_name(dev->of_node, "aux-bus");
+@@ -307,14 +307,18 @@ struct drm_bridge *dp_bridge_init(struct msm_dp *dp_display, struct drm_device *
+ 			DRM_BRIDGE_OP_MODES;
+ 	}
  
- 	if (aux_bus && dp->is_edp) {
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
-index 1e9415ab15d8..f66cdbc35785 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.h
-+++ b/drivers/gpu/drm/msm/dp/dp_display.h
-@@ -12,6 +12,7 @@
+-	drm_bridge_add(bridge);
++	rc = devm_drm_bridge_add(&dp_display->pdev->dev, bridge);
++	if (rc) {
++		DRM_ERROR("failed to add bridge, rc=%d\n", rc);
++
++		return rc;
++	}
  
- struct msm_dp {
- 	struct drm_device *drm_dev;
-+	struct platform_device *pdev;
- 	struct device *codec_dev;
- 	struct drm_bridge *bridge;
- 	struct drm_connector *connector;
+ 	rc = drm_bridge_attach(encoder, bridge, NULL, DRM_BRIDGE_ATTACH_NO_CONNECTOR);
+ 	if (rc) {
+ 		DRM_ERROR("failed to attach bridge, rc=%d\n", rc);
+-		drm_bridge_remove(bridge);
+ 
+-		return ERR_PTR(rc);
++		return rc;
+ 	}
+ 
+ 	if (dp_display->next_bridge) {
+@@ -323,12 +327,13 @@ struct drm_bridge *dp_bridge_init(struct msm_dp *dp_display, struct drm_device *
+ 					DRM_BRIDGE_ATTACH_NO_CONNECTOR);
+ 		if (rc < 0) {
+ 			DRM_ERROR("failed to attach panel bridge: %d\n", rc);
+-			drm_bridge_remove(bridge);
+-			return ERR_PTR(rc);
++			return rc;
+ 		}
+ 	}
+ 
+-	return bridge;
++	dp_display->bridge = bridge;
++
++	return 0;
+ }
+ 
+ /* connector initialization */
+diff --git a/drivers/gpu/drm/msm/dp/dp_drm.h b/drivers/gpu/drm/msm/dp/dp_drm.h
+index afe79b85e183..b3d684db2383 100644
+--- a/drivers/gpu/drm/msm/dp/dp_drm.h
++++ b/drivers/gpu/drm/msm/dp/dp_drm.h
+@@ -20,7 +20,7 @@ struct msm_dp_bridge {
+ #define to_dp_bridge(x)     container_of((x), struct msm_dp_bridge, bridge)
+ 
+ struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display, struct drm_encoder *encoder);
+-struct drm_bridge *dp_bridge_init(struct msm_dp *dp_display, struct drm_device *dev,
++int dp_bridge_init(struct msm_dp *dp_display, struct drm_device *dev,
+ 			struct drm_encoder *encoder);
+ 
+ void dp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
 -- 
 2.39.2
 
