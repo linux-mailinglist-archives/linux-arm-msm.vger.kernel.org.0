@@ -2,56 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 868467BE842
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 19:33:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EBAB17BE865
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 19:40:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378101AbjJIRdn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Oct 2023 13:33:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44606 "EHLO
+        id S233250AbjJIRka (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Oct 2023 13:40:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378105AbjJIRdb (ORCPT
+        with ESMTP id S232860AbjJIRk3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Oct 2023 13:33:31 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F219196;
-        Mon,  9 Oct 2023 10:33:18 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08B3CC433CA;
-        Mon,  9 Oct 2023 17:33:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1696872797;
-        bh=1Xy85/xXimMqCtgvlZEslnktYuoZiVcVI5H+ZlnTwFw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=pE/Dt50KFxYzY2M4D8PTeTLL8C9HZhH4LuIDFsGzo+KG4Ao6kQpTH/zN87uDOUGLN
-         kIZ2K/iD8wLc4BHX0noAgRJdS3oJ/Eqth5Da6Aww6yufEhiyWqWJM5yOzjDVfhdF7X
-         TATNsb92bYdrvFs37C+96SkjCC4N+kKWOZFeChpU+lfetgfwGrUnHAfkIjUuy8AVzQ
-         4RZwLX4TqH/5YsvFjm6xnwdpI9u72yf8v15ZTP2/+DJdvf7nJTe+0mMWJpNavHv1v8
-         eqo715BofvZAZh7DIZVvhfXcSpQfD40fCKSYrm1h3iO4hUPacU3VcK3SY50FQcZdSw
-         6zlCa5dLYch0g==
-Date:   Mon, 9 Oct 2023 23:02:59 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Nitheesh Sekar <quic_nsekar@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
-        bhelgaas@google.com, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, vkoul@kernel.org, kishon@kernel.org,
-        p.zabel@pengutronix.de, quic_srichara@quicinc.com,
-        quic_varada@quicinc.com, quic_ipkumar@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org,
-        Anusha Rao <quic_anusha@quicinc.com>,
-        Devi Priya <quic_devipriy@quicinc.com>
-Subject: Re: [PATCH 4/6] PCI: qcom: Add support for IPQ5018
-Message-ID: <20231009173259.GC31623@thinkpad>
-References: <20231003120846.28626-1-quic_nsekar@quicinc.com>
- <20231003120846.28626-5-quic_nsekar@quicinc.com>
+        Mon, 9 Oct 2023 13:40:29 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25B9CAF
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 10:40:28 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-533f193fc8dso8420617a12.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Oct 2023 10:40:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1696873226; x=1697478026; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=W0Hg74zU6ESH8XSh7ezPeKEnzmx/gMQe+/lsq3fFNmM=;
+        b=OZ2qBJTIcTv8zryK3leWRiSTOZxW4hQTglqrFGV1qCwT6qbS1kSSv6VW77hR7yBdqc
+         +CANlwg6LG7PgUVcsu9KCLtmGL8xFAuuZNvgfTH/0aUHcWGGIkKiZ3Adla9D0Aw+YFz9
+         9y07O04SlZNyXdBNW50jm4oAY3aMSYTKbBxSGEBxm7ItTyPmxpcKsA9SxzT1kzZpN7kC
+         +EAdylVYvxre/OehQDpSlH9A3KoLYqUTG35KwKznpXM+IbQJXeCcA2Ram21doa3fFUbz
+         i96BtEjrl7jKaC5DG3iaLz3/bGXQVmkwQgB6aEzbpHwLrmMC6TKPfSLiPu6FpQr/Skka
+         gTpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696873226; x=1697478026;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=W0Hg74zU6ESH8XSh7ezPeKEnzmx/gMQe+/lsq3fFNmM=;
+        b=FXDtqYDexzhC6BTppZQRiXBs6JGqRc1bAiKX8f4oRFG8Vtg5Nx5KRud8ijQyA1VYC0
+         p/I787mU3VrqVaiYxM2d/nw7rDCTblOFj5UZZcV66roF1X2PvfEcd2Fgq+DE/D82Wwta
+         bVf6oOOfvKq1ZkaR+S4kmc6H+o8Rs0C+CEpiig0dspyZZNx2cbE9uhqxSULUYVPAKqAs
+         FFcnxWNpzgILs7b8Cxt6GVVpT5deJLrsEYOHHwcfG/1ycFhyiPBR73waSQ5jFFpiLH+T
+         EwYCM1IT3UBwJb5rQGAFR7Zzqcpx6SOtyxrOSlnWTBgzAVMFWML2xqR9zsoKzWix2D+K
+         VlQw==
+X-Gm-Message-State: AOJu0YwWK65UDbnj1kYlcEOz23f9UuqEJgfZZEDbxy/vPOtG82G3q9AT
+        1/csRt+SfirHHmqNDouarJagjiv3FOwpmh+hCqvkUuHb
+X-Google-Smtp-Source: AGHT+IEsjuGbN899zDjU9g+Ja6nOILX/d8R6MyZMLqwXE7TZqyeBrzEE089Layp1ZBdFnj1gZy4x69oWN2wfKnmsCPo=
+X-Received: by 2002:aa7:d1d7:0:b0:52f:a42a:85a3 with SMTP id
+ g23-20020aa7d1d7000000b0052fa42a85a3mr13979430edp.0.1696873226254; Mon, 09
+ Oct 2023 10:40:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20231003120846.28626-5-quic_nsekar@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+References: <20230703003745.34239-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230703003745.34239-1-dmitry.baryshkov@linaro.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Mon, 9 Oct 2023 10:40:13 -0700
+Message-ID: <CAF6AEGs-Ar0+gRrsEg_LuAXmsAhFg7MKZ=kLpQ=jZKTfdXBtOQ@mail.gmail.com>
+Subject: Re: [PATCH 00/13] drm/msm: move KMS code from msm_drv.c
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -60,102 +76,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 03, 2023 at 05:38:44PM +0530, Nitheesh Sekar wrote:
-> Added a new compatible 'qcom,pcie-ipq5018' and modified
-> get_resources of 'ops 2_9_0' to get the clocks from the
-> device-tree.
-> 
+On Sun, Jul 2, 2023 at 5:37=E2=80=AFPM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> Currently both msm_drm_init() and msm_drm_uninit() functions are trying
+> to handle both normal and headless Adreno cases. This results in a
+> suboptimal code, since headless case still gets modesetting and atomic
+> interfaces enabled. Two mentioned functions are a spaghetti of
+> `if (priv->kms)' conditional code.
+>
+> Move all KMS-related code (not limiting the init / teardown path) from
+> msm_drv.c to msm_kms.c, making it more self-contained. This also
+> disables ATOMIC and MODESET features for the headless case.
+>
+> Dependencies: [1]
+> [1] https://patchwork.freedesktop.org/series/105392/
+>
+> Dmitry Baryshkov (13):
+>   drm/msm/dsi: switch to devm_drm_bridge_add()
+>   drm/msm/hdmi: switch to devm_drm_bridge_add()
+>   drm/msm/dp: move pdev from struct dp_display_private to struct msm_dp
+>   drm/msm/dp: switch to devm_drm_bridge_add()
+>   drm/msm: remove msm_drm_private::bridges field
+>   drm/msm: drop pm ops from the headless msm driver
+>   drm/msm: rename msm_pm_prepare/complete to note the KMS nature
+>   drm/msm: remove shutdown callback from msm_platform_driver
+>   drm/msm: rename msm_drv_shutdown() to msm_kms_shutdown()
+>   drm/msm: switch to drmm_mode_config_init()
+>   drm/msm: only register 'kms' debug file if KMS is used
+>   drm/msm: make fb debugfs file available only in KMS case
+>   drm/msm: carve out KMS code from msm_drv.c
 
-As per Documentation/process/submitting-patches.rst:
+Reviewed-by: Rob Clark <robdclark@gmail.com>
 
-Describe your changes in imperative mood, e.g. "make xyzzy do frotz"
-instead of "[This patch] makes xyzzy do frotz" or "[I] changed xyzzy
-to do frotz", as if you are giving orders to the codebase to change
-its behaviour.
-
-Also, please elaborate your change in a detailed manner. For instance, saying
-that you modified "get_resources of 'ops 2_9_0' to get the clocks from the
-devicetree" is not sufficient since all clocks are being parsed based on the
-devicetree info only.
-
-- Mani
-
-> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
-> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
-> Co-developed-by: Devi Priya <quic_devipriy@quicinc.com>
-> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
-> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 22 ++++++++--------------
->  1 file changed, 8 insertions(+), 14 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index e2f29404c84e..bb0717190920 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -197,10 +197,10 @@ struct qcom_pcie_resources_2_7_0 {
->  	struct reset_control *rst;
->  };
->  
-> -#define QCOM_PCIE_2_9_0_MAX_CLOCKS		5
->  struct qcom_pcie_resources_2_9_0 {
-> -	struct clk_bulk_data clks[QCOM_PCIE_2_9_0_MAX_CLOCKS];
-> +	struct clk_bulk_data *clks;
->  	struct reset_control *rst;
-> +	int num_clks;
->  };
->  
->  union qcom_pcie_resources {
-> @@ -1048,17 +1048,10 @@ static int qcom_pcie_get_resources_2_9_0(struct qcom_pcie *pcie)
->  	struct qcom_pcie_resources_2_9_0 *res = &pcie->res.v2_9_0;
->  	struct dw_pcie *pci = pcie->pci;
->  	struct device *dev = pci->dev;
-> -	int ret;
->  
-> -	res->clks[0].id = "iface";
-> -	res->clks[1].id = "axi_m";
-> -	res->clks[2].id = "axi_s";
-> -	res->clks[3].id = "axi_bridge";
-> -	res->clks[4].id = "rchng";
-> -
-> -	ret = devm_clk_bulk_get(dev, ARRAY_SIZE(res->clks), res->clks);
-> -	if (ret < 0)
-> -		return ret;
-> +	res->num_clks = devm_clk_bulk_get_all(dev, &res->clks);
-> +	if (res->num_clks < 0)
-> +		return res->num_clks;
->  
->  	res->rst = devm_reset_control_array_get_exclusive(dev);
->  	if (IS_ERR(res->rst))
-> @@ -1071,7 +1064,7 @@ static void qcom_pcie_deinit_2_9_0(struct qcom_pcie *pcie)
->  {
->  	struct qcom_pcie_resources_2_9_0 *res = &pcie->res.v2_9_0;
->  
-> -	clk_bulk_disable_unprepare(ARRAY_SIZE(res->clks), res->clks);
-> +	clk_bulk_disable_unprepare(res->num_clks, res->clks);
->  }
->  
->  static int qcom_pcie_init_2_9_0(struct qcom_pcie *pcie)
-> @@ -1100,7 +1093,7 @@ static int qcom_pcie_init_2_9_0(struct qcom_pcie *pcie)
->  
->  	usleep_range(2000, 2500);
->  
-> -	return clk_bulk_prepare_enable(ARRAY_SIZE(res->clks), res->clks);
-> +	return clk_bulk_prepare_enable(res->num_clks, res->clks);
->  }
->  
->  static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
-> @@ -1605,6 +1598,7 @@ static const struct of_device_id qcom_pcie_match[] = {
->  	{ .compatible = "qcom,pcie-apq8064", .data = &cfg_2_1_0 },
->  	{ .compatible = "qcom,pcie-apq8084", .data = &cfg_1_0_0 },
->  	{ .compatible = "qcom,pcie-ipq4019", .data = &cfg_2_4_0 },
-> +	{ .compatible = "qcom,pcie-ipq5018", .data = &cfg_2_9_0 },
->  	{ .compatible = "qcom,pcie-ipq6018", .data = &cfg_2_9_0 },
->  	{ .compatible = "qcom,pcie-ipq8064", .data = &cfg_2_1_0 },
->  	{ .compatible = "qcom,pcie-ipq8064-v2", .data = &cfg_2_1_0 },
-> -- 
-> 2.17.1
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+>
+>  drivers/gpu/drm/msm/Makefile             |   1 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  |   6 +-
+>  drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c |   6 +-
+>  drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c |   6 +-
+>  drivers/gpu/drm/msm/dp/dp_display.c      |  34 +--
+>  drivers/gpu/drm/msm/dp/dp_display.h      |   1 +
+>  drivers/gpu/drm/msm/dp/dp_drm.c          |  21 +-
+>  drivers/gpu/drm/msm/dp/dp_drm.h          |   2 +-
+>  drivers/gpu/drm/msm/dsi/dsi.c            |  28 +-
+>  drivers/gpu/drm/msm/dsi/dsi.h            |   3 +-
+>  drivers/gpu/drm/msm/dsi/dsi_manager.c    |  30 +-
+>  drivers/gpu/drm/msm/hdmi/hdmi.c          |  22 +-
+>  drivers/gpu/drm/msm/hdmi/hdmi.h          |   5 +-
+>  drivers/gpu/drm/msm/hdmi/hdmi_bridge.c   |  30 +-
+>  drivers/gpu/drm/msm/hdmi/hdmi_hpd.c      |   3 +-
+>  drivers/gpu/drm/msm/msm_debugfs.c        |  12 +-
+>  drivers/gpu/drm/msm/msm_drv.c            | 363 ++---------------------
+>  drivers/gpu/drm/msm/msm_drv.h            |   9 +-
+>  drivers/gpu/drm/msm/msm_kms.c            | 345 +++++++++++++++++++++
+>  drivers/gpu/drm/msm/msm_kms.h            |   3 +
+>  20 files changed, 452 insertions(+), 478 deletions(-)
+>  create mode 100644 drivers/gpu/drm/msm/msm_kms.c
+>
+> --
+> 2.39.2
+>
