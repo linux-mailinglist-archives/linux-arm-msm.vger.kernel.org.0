@@ -2,133 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D612A7BE8AE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 19:50:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B180F7BE8DF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 20:10:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377097AbjJIRt7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Oct 2023 13:49:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46040 "EHLO
+        id S1377350AbjJISKq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Oct 2023 14:10:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233372AbjJIRt6 (ORCPT
+        with ESMTP id S1376898AbjJISKo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Oct 2023 13:49:58 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BAE0AF;
-        Mon,  9 Oct 2023 10:49:57 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 399Hitmx010618;
-        Mon, 9 Oct 2023 17:49:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=IPuLfY1co6cd9F2y/mCmzIMjZ4Z5GLyj7fCatcrQ81c=;
- b=fy6p6D7aWklBtBaHFs50UakU4q3uh7K5dW9U75uWpS7PboE6ia5j+WcpvVgvMYt+4p1X
- 7nt1Dr0lC8Xw0DMWza4G0R8F4hiE0jTA6cPKXGbMohd79wCdUW22eYMKsVBJIUhI1kPg
- j8jkxcAb5j8gK5SoLrVSf9i8BWwvtr8IoL1FnG17WOplGbTyUaBphTlT4E4kj4ZWqxca
- nr5mtXDrssHcEKfV9Dw0O2KNixeVHuHj5VVjKhMIyI9BL843Et3X7lrgXQvuLqvjd6m9
- WPJbW1Don7nPOIvijRiEPA8A5s/BV516cawPA0JNWrXB0M86ano/IcR85eCRdGtaqx0N Gg== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tkh4tb6yj-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 09 Oct 2023 17:49:46 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 399Hnjso017405
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 9 Oct 2023 17:49:45 GMT
-Received: from [10.110.87.129] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Mon, 9 Oct
- 2023 10:49:44 -0700
-Message-ID: <535bbc68-74bb-21e8-0e72-8de1df9cfc99@quicinc.com>
-Date:   Mon, 9 Oct 2023 10:49:44 -0700
+        Mon, 9 Oct 2023 14:10:44 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6612A93
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 11:10:43 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-50435a9f800so6218296e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Oct 2023 11:10:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1696875041; x=1697479841; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Cf3Eadkqm6Sq6Z7urOC8V+yKfv/PCxBmCl4bdQV2+XQ=;
+        b=G6h+q2zojkg7WARNxyJFb5z6imJvlmBxNRpTjmanrPRVapiHSA5WgvXExRtfCvn3Lu
+         O9oSVnpKScjbDUbuoLOqtdlxQ2Wp34qNs9beErcD4pweKP9lSDjKqWle7Af+BVirywSw
+         rTqR5PtZ0qEGB2C8Z4cNFnbzpEccERM+pWHxgOM0cSAvzjRsGsI8g8UQ3Mc/DebiSwh6
+         5H7LzYF82VEJbDxdDkFwiTeelgNRPoPqEWBLPAoI6Cm3bcuznZgZeRf6E6EkP0QUwnIf
+         NlXjmC154Ec/KM+em8YSzTjMgaDnWI/MILoAse6VOPWF+dsVTauXe9e5NSPRLzYPAYtW
+         T4qA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696875041; x=1697479841;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Cf3Eadkqm6Sq6Z7urOC8V+yKfv/PCxBmCl4bdQV2+XQ=;
+        b=m1JMIT184L521UiMRBu+XTtIEyCAe1enJvPWoNKXYtnZaROO/W5Nz0HOPDMxVyqE3e
+         xQ2wZdW0p3I6mI0wsMBDttmkiHtVsZZL2gJ/m/ZvIP8XJE4P4BfoZRFaIs8uNDPG9Ck/
+         bzzyygF2CcAg6zu9vVwBAHLwDw6uPGuIgirC/FVMawQSPCwgsTkGKq5jGc+yD5rGu37L
+         +JGB86h7oGwr2MKRgwTjc8c2pvdNn/UnF9EEi/lT4/nUDw4TvO5VJ1yNmD5u/SkbnhpZ
+         N6RiSmZ718aRvCurvCZoRuZNmYKlQFTJZecBhFx7y2TkvhbRlgnIz8mvaPt+WA8FM19n
+         3/6w==
+X-Gm-Message-State: AOJu0YxC6toxscu1arpxtcUgPhz6bfFc0wM4v0xqQDE56C1czEaPcK8l
+        ZTEsjddIP3l1BcnRMh+GHgnbvw==
+X-Google-Smtp-Source: AGHT+IEK23tBwzVPwBfjqxe7yhl9FWdLr7i7xfW87bmEbQPI3jGg+3emkhmQPpGKruvAUsHPjglIpw==
+X-Received: by 2002:a19:4f0c:0:b0:4fb:7675:1c16 with SMTP id d12-20020a194f0c000000b004fb76751c16mr11472469lfb.49.1696875041633;
+        Mon, 09 Oct 2023 11:10:41 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id d6-20020ac25446000000b00505677e7a99sm1506963lfn.139.2023.10.09.11.10.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Oct 2023 11:10:41 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v2 00/13] drm/msm: move KMS code from msm_drv.c
+Date:   Mon,  9 Oct 2023 21:10:27 +0300
+Message-Id: <20231009181040.2743847-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v5 2/2] firmware: arm_scmi: Add qcom smc/hvc transport
- support
-To:     Sudeep Holla <sudeep.holla@arm.com>
-CC:     <cristian.marussi@arm.com>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20230718160833.36397-1-quic_nkela@quicinc.com>
- <20231006164206.40710-1-quic_nkela@quicinc.com>
- <20231006164206.40710-3-quic_nkela@quicinc.com>
- <20231009144744.yi44ljq4llaxjsb7@bogus>
- <e6d9fbbb-eb61-0736-aa7b-a5e5d1a91db1@quicinc.com>
- <20231009152952.dww3fgh5q7fqysps@bogus>
-Content-Language: en-US
-From:   Nikunj Kela <quic_nkela@quicinc.com>
-In-Reply-To: <20231009152952.dww3fgh5q7fqysps@bogus>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: c2_Uf1AAKfw4Lwo-4eIWLZmNsYEu5aDS
-X-Proofpoint-ORIG-GUID: c2_Uf1AAKfw4Lwo-4eIWLZmNsYEu5aDS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-09_15,2023-10-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- priorityscore=1501 lowpriorityscore=0 phishscore=0 clxscore=1015
- spamscore=0 impostorscore=0 bulkscore=0 malwarescore=0 adultscore=0
- suspectscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310090146
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Currently both msm_drm_init() and msm_drm_uninit() functions are trying
+to handle both normal and headless Adreno cases. This results in a
+suboptimal code, since headless case still gets modesetting and atomic
+interfaces enabled. Two mentioned functions are a spaghetti of
+`if (priv->kms)' conditional code.
 
-On 10/9/2023 8:29 AM, Sudeep Holla wrote:
-> On Mon, Oct 09, 2023 at 07:59:08AM -0700, Nikunj Kela wrote:
->> On 10/9/2023 7:47 AM, Sudeep Holla wrote:
->>> On Fri, Oct 06, 2023 at 09:42:06AM -0700, Nikunj Kela wrote:
->>>> This change adds the support for SCMI message exchange on Qualcomm
->>>> virtual platforms.
->>>>
->>>> The hypervisor associates an object-id also known as capability-id
->>>> with each smc/hvc doorbell object. The capability-id is used to
->>>> identify the doorbell from the VM's capability namespace, similar
->>>> to a file-descriptor.
->>>>
->>>> The hypervisor, in addition to the function-id, expects the capability-id
->>>> to be passed in x1 register when SMC/HVC call is invoked.
->>>>
->>>> The capability-id is allocated by the hypervisor on bootup and is stored in
->>>> the shmem region by the firmware before starting Linux.
->>>>
->>> Since you are happy to move to signed value, I assume you are happy to loose
->>> upper half of the range values ?
->>>
->>> Anyways after Bjorn pointed out inconsistency, I am thinking of moving
->>> all the values to unsigned long to work with both 32bit and 64bit.
->>>
->>> Does the below delta on top of this patch works for you and makes sense?
->> This looks good to me. Will do some testing and float v6 with the changes
->> you suggested below. Thanks
->>
-> Please refer or use the patch from [1] when reposting. I rebased on my
-> patch[2] that I posted few minutes back. I am trying to finalise the branch
-> and send PR in next couple of days, so please test and post sooner. Sorry
-> for the rush.
+Move all KMS-related code (not limiting the init / teardown path) from
+msm_drv.c to msm_kms.c, making it more self-contained. This also
+disables ATOMIC and MODESET features for the headless case.
 
-Validated the patch from [1] below on Qualcomm ARM64 virtual platform 
-using SMC64 convention. Thanks!
+Dependencies: [1]
+[1] https://patchwork.freedesktop.org/series/105392/
 
+Changes since v1:
 
->
-> --
-> Regards,
-> Sudeep
-> [1] https://git.kernel.org/sudeep.holla/h/for-next/scmi/updates
-> [2] https://lore.kernel.org/r/20231009152049.1428872-1-sudeep.holla@arm.com
+- Rebased on top of linux-next / updated version of [1]
+
+Dmitry Baryshkov (13):
+  drm/msm/dsi: switch to devm_drm_bridge_add()
+  drm/msm/hdmi: switch to devm_drm_bridge_add()
+  drm/msm/dp: move pdev from struct dp_display_private to struct msm_dp
+  drm/msm/dp: switch to devm_drm_bridge_add()
+  drm/msm: remove msm_drm_private::bridges field
+  drm/msm: drop pm ops from the headless msm driver
+  drm/msm: rename msm_pm_prepare/complete to note the KMS nature
+  drm/msm: remove shutdown callback from msm_platform_driver
+  drm/msm: rename msm_drv_shutdown() to msm_kms_shutdown()
+  drm/msm: switch to drmm_mode_config_init()
+  drm/msm: only register 'kms' debug file if KMS is used
+  drm/msm: make fb debugfs file available only in KMS case
+  drm/msm: carve out KMS code from msm_drv.c
+
+ drivers/gpu/drm/msm/Makefile             |   1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  |   6 +-
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c |   6 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c |   6 +-
+ drivers/gpu/drm/msm/dp/dp_display.c      |  34 +--
+ drivers/gpu/drm/msm/dp/dp_display.h      |   1 +
+ drivers/gpu/drm/msm/dp/dp_drm.c          |  21 +-
+ drivers/gpu/drm/msm/dp/dp_drm.h          |   2 +-
+ drivers/gpu/drm/msm/dsi/dsi.c            |  28 +-
+ drivers/gpu/drm/msm/dsi/dsi.h            |   3 +-
+ drivers/gpu/drm/msm/dsi/dsi_manager.c    |  30 +-
+ drivers/gpu/drm/msm/hdmi/hdmi.c          |  22 +-
+ drivers/gpu/drm/msm/hdmi/hdmi.h          |   5 +-
+ drivers/gpu/drm/msm/hdmi/hdmi_bridge.c   |  30 +-
+ drivers/gpu/drm/msm/hdmi/hdmi_hpd.c      |   3 +-
+ drivers/gpu/drm/msm/msm_debugfs.c        |  12 +-
+ drivers/gpu/drm/msm/msm_drv.c            | 362 ++---------------------
+ drivers/gpu/drm/msm/msm_drv.h            |   9 +-
+ drivers/gpu/drm/msm/msm_kms.c            | 345 +++++++++++++++++++++
+ drivers/gpu/drm/msm/msm_kms.h            |   3 +
+ 20 files changed, 451 insertions(+), 478 deletions(-)
+ create mode 100644 drivers/gpu/drm/msm/msm_kms.c
+
+-- 
+2.39.2
+
