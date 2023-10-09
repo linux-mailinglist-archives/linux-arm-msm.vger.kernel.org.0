@@ -2,145 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 96F1F7BEB91
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 22:23:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A2087BEC16
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Oct 2023 22:55:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378589AbjJIUXp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Oct 2023 16:23:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57974 "EHLO
+        id S1378131AbjJIUzw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Oct 2023 16:55:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378520AbjJIUXp (ORCPT
+        with ESMTP id S1378238AbjJIUxy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Oct 2023 16:23:45 -0400
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [81.169.146.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01CA29E;
-        Mon,  9 Oct 2023 13:23:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1696883022; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=rMbT6c826GkSWoyGW21+7pebzEAf3PIproWGGx/TfE2I6+qt8IV9piryhuehChz62u
-    kozbIlgSL8UMmcSAPS3fPCN6TC/OGEuyTS84u0omMOF2PuACtf6ubb3/gMvT8F2myffa
-    jZyakQvv+2w0qNPliB4xQv3d7uHLAp+CbC5naSuDnsa0o6wLWG/lqyrW7cTNoPsOtZpO
-    C2meYAkEYNjhbBIYY1vyMKCXgkhCcu8EKRQTjh90uQFHuhOLFuLdM/qGKvobgvIQJsHR
-    ekeYLR264nABH2E3Un48QvzwWKA066WQ/KUs4UYIqsZ6oKFuOWdnUzOHvks6ZX1craVJ
-    2E2A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1696883022;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=0LE16Y3s0lp+JxctX/Ykew2sWggFRhtwCau0rpkKVRY=;
-    b=QZRT8lBGinSMJ86e2EvD3BXX6ptNaRujh8+TbhCXVFTOygIY5qYeoxrnOJpY+ySjXt
-    s1wx7EUB25nWOE5x5pDdET85dUJ3xV7e7iEk96RnEj9WFkKBkdRn/9htD0/qtxZgjwhR
-    LIrYWlF8mboaztBvp2oHhfRdleA3zVzyfseeWRCVBjZIlOCCmmopulL2AGDq7rIQ5XGO
-    C6hBKTgXi2sV6N8mQVkMsdczL9hGRnwLcqYD9GepgbAtGNlU0PFMuUP9/AX/c5nw8djo
-    3sNSUWc43CRuEVVbQhFJ3webNwZP5o2ovHoZ9YQGUZpbszHClJUfdqCslb8WmqJVd5+p
-    aASA==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo02
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1696883022;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=0LE16Y3s0lp+JxctX/Ykew2sWggFRhtwCau0rpkKVRY=;
-    b=Ad7mH5eJORTzZzLFOeGCJJbECL/fIObNpDEb0wiZSvEuVQCWbCQxhTgIsvv+7NXVqE
-    qq3jvGX6EgzxST9tdrcizyqJSInPL1+jcTlUVnCSCQkSQ6UdoVQNbY0xc5wWLliqwTiJ
-    QTiHq6NldlKVVj92OH/Ni/6GiRsJmbBdYn+AphqXEwgBRCZUOPAdPNyWQ2bI4nv0QqB7
-    LecFqCI7p+WYNHoAcyDQ9cigIs2ff6pw6YrUsu/mNW8lVvupVjKuGQQTBXWsDh5z6eWo
-    EphXWn/PUEz0TxkjNtjJ49EFQgDZTDws3DEe8BDRUN8pf+t7AOtCqV7njG1aBnveXtXo
-    3qCQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1696883022;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=0LE16Y3s0lp+JxctX/Ykew2sWggFRhtwCau0rpkKVRY=;
-    b=5qq9AEjdZJhI9q1aeOF7+OEt7bxVMWgbk6Zz/EvZL1uQjKj4tXQaqZo45Cu116WRei
-    Ck/+aDqeFMnJneHUfABg==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA+p3h"
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.8.2 DYNA|AUTH)
-    with ESMTPSA id R04c57z99KNgQC5
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Mon, 9 Oct 2023 22:23:42 +0200 (CEST)
-Date:   Mon, 9 Oct 2023 22:23:40 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
-        Mark Brown <broonie@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH RFC 2/2] regulator: qcom_smd: Disable unused regulators
-Message-ID: <ZSRhTIqYX7hQ0_lc@gerhold.net>
-References: <20231004-reg-smd-unused-v1-0-5d682493d555@kernkonzept.com>
- <20231004-reg-smd-unused-v1-2-5d682493d555@kernkonzept.com>
- <9b7744bf-d42c-4922-85e8-ca4777f313a7@linaro.org>
+        Mon, 9 Oct 2023 16:53:54 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31AE0F0
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 13:53:47 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2c17de836fbso62703631fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Oct 2023 13:53:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1696884825; x=1697489625; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+NsT8wiOulucIWx22N4JZ3mBmzzP+oqgix2ms+capXo=;
+        b=sVSr1XkQNLCt/IuViN61/RLjw+I41zFh3NuzGQJeXyK1IysSbCUsuj+c5x85UU5hIf
+         58iQkFy9S6vAhge7x8WGTZ9UOl7uD36KtMdwfV1WrcVqkYRRR8cyEyaueTYqFFOHdAuf
+         YwRF9klTnvoxBVmFTuAOu34fVKxfOYUBjG8SPL/UuememwPs5Lkd626PQ7nwv3Z+Xa1e
+         BuOjte/Ns2mKyUBotf7EpQgXBY/kbSVAHBJTt1TdfjHb9awtNMmTNtR/2Z9fnhozhWMF
+         5sUiB3L+WjERl+1Jcu5e+00fbEqlMKmuxAs0pX4rwmwDCcWKjUzwa1lbna8FlAFf/eMj
+         H+bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696884825; x=1697489625;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+NsT8wiOulucIWx22N4JZ3mBmzzP+oqgix2ms+capXo=;
+        b=An0ZFeRELQcaxqL+nxUv/JzF7ACv+B0khyQ2A1ny7rItairXXV+5tjiE17aFw8pL6l
+         TyBuWQ9U287Di93CuLI0wYdeeRGnQjRU5AVag5zrJDt6KHCz/Xfh7FqU8Aq79zfTmxiv
+         tCQViLNnLughAf17SWupZ0AVhD3Gcst1/r6xxgHcctwvW4WT0fS04FG8+D+ut0rTPT4C
+         vDi5pnECInGnCM+1LhxZKupoZfHXqw/p1u1W9ss9QmfLqJQPFaQuistefIB5KTLoPanS
+         egZrGXYKswFboMZBw6lV2MOf1DckMdEXvr+Lfx47hXUFnwWozSs2yLTXYTS10FtepDY7
+         AoiQ==
+X-Gm-Message-State: AOJu0YyIC084EFkCLR0yGEN9VZhS4IY/benPtCddxjQn86IqT2BkKtDs
+        p9rPHURBTt2d6jU3T3NRr8rA4w==
+X-Google-Smtp-Source: AGHT+IExWiGWcZpJT182d6s2keHa1ddzZaoRcYRDgsEC2X/7DnYTgcW15uIwZa3T7mY58M0PcbCPNQ==
+X-Received: by 2002:a05:651c:87:b0:2bb:b626:5044 with SMTP id 7-20020a05651c008700b002bbb6265044mr13302731ljq.6.1696884825287;
+        Mon, 09 Oct 2023 13:53:45 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id k19-20020a2e2413000000b002bcdeeecd11sm2091722ljk.66.2023.10.09.13.53.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Oct 2023 13:53:44 -0700 (PDT)
+Message-ID: <8ef34ba0-f30a-45b0-991e-0a7eb573956d@linaro.org>
+Date:   Mon, 9 Oct 2023 23:53:43 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9b7744bf-d42c-4922-85e8-ca4777f313a7@linaro.org>
-Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 02/13] drm/msm/hdmi: switch to devm_drm_bridge_add()
+Content-Language: en-GB
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20231009181040.2743847-1-dmitry.baryshkov@linaro.org>
+ <20231009181040.2743847-3-dmitry.baryshkov@linaro.org>
+ <d56daed9-35ac-0ee3-a0b4-f8596b0490fc@quicinc.com>
+ <aafb04ea-fde3-4c1b-aae4-5e7e50a945d6@linaro.org>
+In-Reply-To: <aafb04ea-fde3-4c1b-aae4-5e7e50a945d6@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 06, 2023 at 11:15:40PM +0200, Konrad Dybcio wrote:
-> On 4.10.2023 16:17, Stephan Gerhold wrote:
-> > The RPM firmware on Qualcomm platforms does not provide a way to check
-> > if a regulator is on during boot using the SMD interface. If the
-> > regulators are already on during boot and Linux does not make use of
-> > them they will currently stay enabled forever. The regulator core does
-> > not know these regulators are on and cannot clean them up together with
-> > the other unused regulators.
-> > 
-> > Fix this by setting the initial enable state to -EINVAL similar to
-> > qcom-rpmh-regulator.c. The regulator core will then also explicitly
-> > disable all unused regulators with unknown status.
-> > 
-> > Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-> > ---
-> > NOTE: This has a slight potential of breaking boards that rely on having
-> > unused regulators permanently enabled (without regulator-always-on).
-> > However, this is always a mistake in the device tree so it's probably
-> > better to risk some breakage now, add the missing regulators and avoid
-> > this problem for all future boards.
-> > ---
-> >  drivers/regulator/qcom_smd-regulator.c | 5 +++--
-> >  1 file changed, 3 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
-> > index f53ada076252..0bbfba2e17ff 100644
-> > --- a/drivers/regulator/qcom_smd-regulator.c
-> > +++ b/drivers/regulator/qcom_smd-regulator.c
-> > @@ -53,14 +53,14 @@ static int rpm_reg_write_active(struct qcom_rpm_reg *vreg)
-> >  		reqlen++;
-> >  	}
-> >  
-> > -	if (vreg->uv_updated && vreg->is_enabled) {
-> > +	if (vreg->uv_updated && vreg->is_enabled > 0) {
-> At a quick glance, are there any states for this value, other
-> than 0 and 1? This is not the regulator_ops->is_enabled, but
-> qcom_rpm_reg->is_enabled.
+On 09/10/2023 22:21, Dmitry Baryshkov wrote:
+> On 09/10/2023 22:19, Abhinav Kumar wrote:
+>>
+>>
+>> On 10/9/2023 11:10 AM, Dmitry Baryshkov wrote:
+>>> Make MSM HDMI driver use devm_drm_bridge_add() instead of plain
+>>> drm_bridge_add(). As the driver doesn't require any additional cleanup,
+>>> stop adding created bridge to the priv->bridges array.
+>>>
+>>> Reviewed-by: Rob Clark <robdclark@gmail.com>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>   drivers/gpu/drm/msm/hdmi/hdmi.c        | 22 +++++--------------
+>>>   drivers/gpu/drm/msm/hdmi/hdmi.h        |  5 ++---
+>>>   drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 30 ++++++++------------------
+>>>   drivers/gpu/drm/msm/hdmi/hdmi_hpd.c    |  3 +--
+>>>   4 files changed, 17 insertions(+), 43 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c 
+>>> b/drivers/gpu/drm/msm/hdmi/hdmi.c
+>>> index b6bcb9f675fe..c8ebd75176bb 100644
+>>> --- a/drivers/gpu/drm/msm/hdmi/hdmi.c
+>>> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+>>> @@ -160,24 +160,16 @@ static int msm_hdmi_init(struct hdmi *hdmi)
+>>>   int msm_hdmi_modeset_init(struct hdmi *hdmi,
+>>>           struct drm_device *dev, struct drm_encoder *encoder)
+>>>   {
+>>> -    struct msm_drm_private *priv = dev->dev_private;
+>>>       int ret;
+>>> -    if (priv->num_bridges == ARRAY_SIZE(priv->bridges)) {
+>>> -        DRM_DEV_ERROR(dev->dev, "too many bridges\n");
+>>> -        return -ENOSPC;
+>>> -    }
+>>> -
+>>>       hdmi->dev = dev;
+>>>       hdmi->encoder = encoder;
+>>>       hdmi_audio_infoframe_init(&hdmi->audio.infoframe);
+>>> -    hdmi->bridge = msm_hdmi_bridge_init(hdmi);
+>>> -    if (IS_ERR(hdmi->bridge)) {
+>>> -        ret = PTR_ERR(hdmi->bridge);
+>>> +    ret = msm_hdmi_bridge_init(hdmi);
+>>> +    if (ret) {
+>>>           DRM_DEV_ERROR(dev->dev, "failed to create HDMI bridge: 
+>>> %d\n", ret);
+>>> -        hdmi->bridge = NULL;
+>>>           goto fail;
+>>>       }
+>>> @@ -215,16 +207,9 @@ int msm_hdmi_modeset_init(struct hdmi *hdmi,
+>>>           goto fail;
+>>>       }
+>>> -    priv->bridges[priv->num_bridges++]       = hdmi->bridge;
+>>> -
+>>>       return 0;
+>>>   fail:
+>>> -    /* bridge is normally destroyed by drm: */
+>>> -    if (hdmi->bridge) {
+>>> -        msm_hdmi_bridge_destroy(hdmi->bridge);
+>>> -        hdmi->bridge = NULL;
+>>> -    }
+>>>       if (hdmi->connector) {
+>>>           hdmi->connector->funcs->destroy(hdmi->connector);
+>>>           hdmi->connector = NULL;
+>>> @@ -395,6 +380,9 @@ static void msm_hdmi_unbind(struct device *dev, 
+>>> struct device *master,
+>>>           if (priv->hdmi->audio_pdev)
+>>>               platform_device_unregister(priv->hdmi->audio_pdev);
+>>> +        if (priv->hdmi->bridge)
+>>> +            msm_hdmi_hpd_disable(priv->hdmi);
+>>> +
+>>
+>> Now is this the only place where hdmi->bridge is used?
+>>
+>> Why cant we just keep msm_hdmi_hpd_disable(priv->hdmi) here since its 
+>> anyway protected by if (priv->hdmi) and drop hdmi->bridge completely?
 > 
+> Sure, sounds like a good idea, same followup as for the DSI.
 
-Yes, I initially assign vreg->is_enabled = -EINVAL (for use with PATCH
-1/2). It's in the part of the patch that you trimmed in your reply. :D
+I was wrong here. hdmi::bridge is used by the driver (e.g. for HPD 
+reporting).
 
-Thanks,
-Stephan
+-- 
+With best wishes
+Dmitry
 
-@@ -1377,6 +1377,7 @@ static int rpm_regulator_init_vreg(struct qcom_rpm_reg *vreg, struct device *dev
- 	vreg->rpm	= rpm;
- 	vreg->type	= rpm_data->type;
- 	vreg->id	= rpm_data->id;
-+	vreg->is_enabled = -EINVAL;
- 
- 	memcpy(&vreg->desc, rpm_data->desc, sizeof(vreg->desc));
- 	vreg->desc.name = rpm_data->name;
