@@ -2,114 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 98A2E7C0198
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 18:27:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DDFA7C019E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 18:29:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232572AbjJJQ1r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Oct 2023 12:27:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38784 "EHLO
+        id S231682AbjJJQ3v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Oct 2023 12:29:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229998AbjJJQ1r (ORCPT
+        with ESMTP id S231231AbjJJQ3u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Oct 2023 12:27:47 -0400
+        Tue, 10 Oct 2023 12:29:50 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D69FA99;
-        Tue, 10 Oct 2023 09:27:44 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B793C433C7;
-        Tue, 10 Oct 2023 16:27:42 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B6BE93;
+        Tue, 10 Oct 2023 09:29:48 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7414FC433C7;
+        Tue, 10 Oct 2023 16:29:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1696955264;
-        bh=uWXn+ySubgsLikSzKdVOCQoQctLYGPs6WUFA/M9wNbo=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=ChpBcrZz6NosHeHHlQuDmUftzhWGCTXcX/+RJ1wUGSZ0jy6Lnos9nwoRZ3XpyoVQ4
-         DJScejQpFrbGdanfXgrcMWBZeH9pVwgoS4sMGcCYD1OKI3JpakLHtTrRlxGmIUtP+I
-         yThkpXhXPZ+zXmVqVU4Nlc2b/FAD3IduCzFmwU2Ga1K0iJQZ5CrNlQnHf2/AZrYPT0
-         fRgK0YAiDmMAJ7HUEujdE0ZMJ4g+PI2P/N6BG2LnMw7mp21EWop7HjURp9/HJOIIJm
-         JAcr36VtaypWggAN3Aufrc75svyinUT7QO/G3HbZvL8OatWoN6/iVTb19eVT5PjgAH
-         Aoi+lRBx65nZw==
-Received: (nullmailer pid 1012903 invoked by uid 1000);
-        Tue, 10 Oct 2023 16:27:41 -0000
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+        s=k20201202; t=1696955387;
+        bh=2yjmYeF5BHJBKV8W3tqM5P5MMJUgXgPBqJIgjiDA92w=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=Nr6M0O3MHp7l6KVRca4pqzSgQ+Ik2CGxx12mR4Xa+AAprnubSwBbyPYlwiAdwqcoS
+         qYAPsmTgG8I8i7V35I9x8sPwKP2BMxe2TsbmDjBmFO3BeNvobB2kceq+XoV4xEfm+N
+         I0tMDULKeTSQLoViAi5Nq2NHZUgqbqjOGRwVZ496JPB7jQ8quHHID2Rwik7wyWWKR2
+         2SqVLYWH19rZXyYwWjaGbYVf5TZvT9V/6L2v9vulZnTh3aiF5xFxg3SCsirGh0VKdp
+         2rbwDlmfhWuXy/pgJU6oOcLBuOmtdYd+s04fpHUhZvp5GsXpeEVyJTZUTeBBx2S/Ph
+         7G9GFOLmF8lZw==
+Date:   Tue, 10 Oct 2023 11:29:45 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com,
+        robh@kernel.org, gustavo.pimentel@synopsys.com,
+        jingoohan1@gmail.com, andersson@kernel.org,
+        konrad.dybcio@linaro.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] PCI: qcom: Enable ASPM for platforms supporting
+ 1.9.0 ops
+Message-ID: <20231010162945.GA978270@bhelgaas>
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Maramaina Naresh <quic_mnaresh@quicinc.com>
-Cc:     linux-scsi@vger.kernel.org, Avri Altman <avri.altman@wdc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        quic_nguyenb@quicinc.com, Manivannan Sadhasivam <mani@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Bart Van Assche <bvanassche@acm.org>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        quic_cang@quicinc.com
-In-Reply-To: <1696952947-18062-2-git-send-email-quic_mnaresh@quicinc.com>
-References: <1696952947-18062-1-git-send-email-quic_mnaresh@quicinc.com>
- <1696952947-18062-2-git-send-email-quic_mnaresh@quicinc.com>
-Message-Id: <169695526157.1012881.14879634429567807944.robh@kernel.org>
-Subject: Re: [PATCH V1 1/4] dt-bindings: ufs: qcom: Add qos property
-Date:   Tue, 10 Oct 2023 11:27:41 -0500
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231010155914.9516-3-manivannan.sadhasivam@linaro.org>
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, Oct 10, 2023 at 09:29:14PM +0530, Manivannan Sadhasivam wrote:
+> ASPM is supported by Qcom host controllers/bridges on most of the recent
+> platforms and so the devices tested so far. But for enabling ASPM by
+> default (without Kconfig/cmdline/sysfs), BIOS has to enable ASPM on both
+> host bridge and downstream devices during boot. Unfortunately, none of the
+> BIOS available on Qcom platforms enables ASPM.
 
-On Tue, 10 Oct 2023 21:19:04 +0530, Maramaina Naresh wrote:
-> Add bindings for per-cpu QoS for QCOM UFS. This improves random io
-> performance by 20% for QCOM UFS.
+I think this covers over a PCI core defect.  If the devices advertise
+ASPM support, which both the qcom host controller and the endpoint
+devices do, the PCI core should be able to enable it without being
+prodded as this patch does.
+
+We had a long conversation about this at [1], but never came to a good
+resolution.  Since we don't know how to fix the PCI core issue, I
+guess we have no choice but to do things like this patch, at least for
+now.
+
+If/when we ever *do* fix the PCI core issue, it would likely result in
+enabling ASPM (if advertised by both ends of the link) for *all* qcom
+controllers, not just the 1.9.0 ones.
+
+And I think that even today, users can enable ASPM on non-1.9.0
+controllers via sysfs.  So if you are concerned about ASPM not being
+tested on those controllers, you may want to make them not advertise
+ASPM support.
+
+Even with this patch, I guess hot-added devices don't get ASPM
+enabled?  That's basically what [1] is about.
+
+Bjorn
+
+[1] https://lore.kernel.org/linux-pci/20230615070421.1704133-1-kai.heng.feng@canonical.com/
+
+> Due to this, the platforms
+> making use of Qcom SoCs draw high power during runtime.
 > 
-> Signed-off-by: Maramaina Naresh <quic_mnaresh@quicinc.com>
+> To fix this power issue, users/distros have to enable ASPM using configs
+> such as (Kconfig/cmdline/sysfs) or the BIOS has to start enabling ASPM.
+> The latter may happen in the future, but that won't address the issue on
+> current platforms. Also, asking users/distros to enable a feature to get
+> the power management right would provide an unpleasant out-of-the-box
+> experience.
+> 
+> So the apt solution is to enable ASPM in the controller driver itself. And
+> this is being accomplished by calling pci_enable_link_state() in the newly
+> introduced host_post_init() callback for all the devices connected to the
+> bus. This function enables all supported link low power states for both
+> host bridge and the downstream devices.
+> 
+> Due to limited testing, ASPM is only enabled for platforms making use of
+> ops_1_9_0 callbacks.
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
->  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 16 ++++++++++++++++
->  1 file changed, 16 insertions(+)
+>  drivers/pci/controller/dwc/pcie-qcom.c | 28 ++++++++++++++++++++++++++
+>  1 file changed, 28 insertions(+)
 > 
-
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
-
-yamllint warnings/errors:
-./Documentation/devicetree/bindings/ufs/qcom,ufs.yaml:83:6: [warning] wrong indentation: expected 6 but found 5 (indentation)
-./Documentation/devicetree/bindings/ufs/qcom,ufs.yaml:85:6: [warning] wrong indentation: expected 6 but found 5 (indentation)
-
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml: properties:qos: 'anyOf' conditional failed, one must be fixed:
-	'cpumask' is not one of ['$ref', 'additionalItems', 'additionalProperties', 'allOf', 'anyOf', 'const', 'contains', 'default', 'dependencies', 'dependentRequired', 'dependentSchemas', 'deprecated', 'description', 'else', 'enum', 'exclusiveMaximum', 'exclusiveMinimum', 'items', 'if', 'minItems', 'minimum', 'maxItems', 'maximum', 'multipleOf', 'not', 'oneOf', 'pattern', 'patternProperties', 'properties', 'required', 'then', 'typeSize', 'unevaluatedProperties', 'uniqueItems']
-	'type' was expected
-	from schema $id: http://devicetree.org/meta-schemas/keywords.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml: properties:qos: 'anyOf' conditional failed, one must be fixed:
-	'vote' is not one of ['$ref', 'additionalItems', 'additionalProperties', 'allOf', 'anyOf', 'const', 'contains', 'default', 'dependencies', 'dependentRequired', 'dependentSchemas', 'deprecated', 'description', 'else', 'enum', 'exclusiveMaximum', 'exclusiveMinimum', 'items', 'if', 'minItems', 'minimum', 'maxItems', 'maximum', 'multipleOf', 'not', 'oneOf', 'pattern', 'patternProperties', 'properties', 'required', 'then', 'typeSize', 'unevaluatedProperties', 'uniqueItems']
-	'type' was expected
-	from schema $id: http://devicetree.org/meta-schemas/keywords.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml: qos: missing type definition
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/ufs/qcom,ufs.example.dtb: ufs@1d84000: Unevaluated properties are not allowed ('qos0', 'qos1' were unexpected)
-	from schema $id: http://devicetree.org/schemas/ufs/qcom,ufs.yaml#
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/1696952947-18062-2-git-send-email-quic_mnaresh@quicinc.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 367acb419a2b..c324c3daaa5a 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -222,6 +222,7 @@ struct qcom_pcie_ops {
+>  	int (*get_resources)(struct qcom_pcie *pcie);
+>  	int (*init)(struct qcom_pcie *pcie);
+>  	int (*post_init)(struct qcom_pcie *pcie);
+> +	void (*host_post_init)(struct qcom_pcie *pcie);
+>  	void (*deinit)(struct qcom_pcie *pcie);
+>  	void (*ltssm_enable)(struct qcom_pcie *pcie);
+>  	int (*config_sid)(struct qcom_pcie *pcie);
+> @@ -967,6 +968,22 @@ static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
+>  	return 0;
+  }
+>  
+> +static int qcom_pcie_enable_aspm(struct pci_dev *pdev, void *userdata)
+> +{
+> +	/* Downstream devices need to be in D0 state before enabling PCI PM substates */
+> +	pci_set_power_state(pdev, PCI_D0);
+> +	pci_enable_link_state(pdev, PCIE_LINK_STATE_ALL);
+> +
+> +	return 0;
+> +}
+> +
+> +static void qcom_pcie_host_post_init_2_7_0(struct qcom_pcie *pcie)
+> +{
+> +	struct dw_pcie_rp *pp = &pcie->pci->pp;
+> +
+> +	pci_walk_bus(pp->bridge->bus, qcom_pcie_enable_aspm, NULL);
+> +}
+> +
+>  static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
+>  {
+>  	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
+> @@ -1219,9 +1236,19 @@ static void qcom_pcie_host_deinit(struct dw_pcie_rp *pp)
+>  	pcie->cfg->ops->deinit(pcie);
+>  }
+>  
+> +static void qcom_pcie_host_post_init(struct dw_pcie_rp *pp)
+> +{
+> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> +	struct qcom_pcie *pcie = to_qcom_pcie(pci);
+> +
+> +	if (pcie->cfg->ops->host_post_init)
+> +		pcie->cfg->ops->host_post_init(pcie);
+> +}
+> +
+>  static const struct dw_pcie_host_ops qcom_pcie_dw_ops = {
+>  	.host_init	= qcom_pcie_host_init,
+>  	.host_deinit	= qcom_pcie_host_deinit,
+> +	.host_post_init	= qcom_pcie_host_post_init,
+>  };
+>  
+>  /* Qcom IP rev.: 2.1.0	Synopsys IP rev.: 4.01a */
+> @@ -1283,6 +1310,7 @@ static const struct qcom_pcie_ops ops_1_9_0 = {
+>  	.get_resources = qcom_pcie_get_resources_2_7_0,
+>  	.init = qcom_pcie_init_2_7_0,
+>  	.post_init = qcom_pcie_post_init_2_7_0,
+> +	.host_post_init = qcom_pcie_host_post_init_2_7_0,
+>  	.deinit = qcom_pcie_deinit_2_7_0,
+>  	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
+>  	.config_sid = qcom_pcie_config_sid_1_9_0,
+> -- 
+> 2.25.1
+> 
