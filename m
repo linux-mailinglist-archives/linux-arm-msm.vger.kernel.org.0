@@ -2,100 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 932077C43C6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 00:25:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D3C27C43D1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 00:26:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229835AbjJJWZP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Oct 2023 18:25:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52904 "EHLO
+        id S231496AbjJJW0E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Oct 2023 18:26:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229769AbjJJWZO (ORCPT
+        with ESMTP id S229769AbjJJW0C (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Oct 2023 18:25:14 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3985AC
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 15:25:11 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-323ef9a8b59so5885829f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 15:25:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696976710; x=1697581510; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=NeNBxG8cx8l82M9jSYOd85ZbB8rCa8c/Jq+U7184yFk=;
-        b=S5SQskA9ABRG0dDXhy6Gx7nBdCHs1pv1tDkKgteOlp8L3Qz8iqsTSLWFivlPPEWBT9
-         n5kTWMM0teXCXnNonvbRNxB0N+9ANxMF3mFX597d9pO0Z7VVU0ST+f8qQx17OjOABdRr
-         0RjeeJaqBUSuFjzB9pFG7mnAeCE8FaSyI3yrjdBoLF+SLpux9YMlA9eq9MFYieC9N56S
-         6W7slgA3MklyPwtSfz4LBYQzswIXvTMJE9tmYKo4WCg8ORF5P6BK4HrFex7Idk/13MFf
-         eydxOOaGXGQr/bHOmMSDzCwEu4JM6XJiMCgtrhXVQ1cjx6nGtjQCPZzEtFrPR3eKl7Wj
-         1bUA==
+        Tue, 10 Oct 2023 18:26:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFD4098
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 15:25:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1696976717;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=S425dUFU+lNt5RhPxUUHdrBo8GRV+oDgKvT6OmMk34I=;
+        b=UzZ/2bCwvMmA66clcLee5yS/UMuZz0mxqdP7ntHV5h7LLMF0qyJ895TeymMAK94LcBZdfu
+        zvubE2doNKH47LlqOqSXXzqA7s2espSpJ/uAq1+l6pqekzVrdAo/yDZ7mN/5gmgFmMVdEs
+        +fyoqDRrEVefczWI9neqbrDyzKFGErM=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-344-fZBQckbVNZCDowQEHGhCyQ-1; Tue, 10 Oct 2023 18:25:15 -0400
+X-MC-Unique: fZBQckbVNZCDowQEHGhCyQ-1
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-774292d71e3so706620085a.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 15:25:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696976710; x=1697581510;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NeNBxG8cx8l82M9jSYOd85ZbB8rCa8c/Jq+U7184yFk=;
-        b=uRGrDKPElizNjwdjsavu5TNJ3thljC335j3Lr1JgBzcb4vYs0G4dBjJ9uy/wsIBASc
-         t5dOQsG62j4Sx9IZjvWh0OeHhcgAROuhdgzmD/jbzKq429SpsumHGY7PRWWO6s7smoz7
-         0iYn+sHT6nyy06Vx04cbac3w6+mwq5TYg0Wt6XjnLvFe9SSxhf1ZsCky5IGXznQDaj5N
-         DAJkz60lQEu7F+BzgFdqcgBISiatOag/YSVSImw3pKx+6lKV5XCescMAxpC7CNsK7z4T
-         95LmniQzJVNLGg6qusbgV5nWuQq3svnLBnjlfXSAAncLLegYcjy5Ri9ffKyPSewJF5JK
-         b1/g==
-X-Gm-Message-State: AOJu0Yw4I0tL7Dw4HvaY4yltymTpAeMQJTisyNFtnMYRi9ESS7TE5OJh
-        GZ21C04kR5gKfvaa65ucget05g==
-X-Google-Smtp-Source: AGHT+IHEuN5PvxZFSfB7Vg7qUsAC5xOyLico4McU8PvylCjZQ+dpzhndsn+K3J3VxezRxLJ+ps/4iw==
-X-Received: by 2002:adf:f48c:0:b0:317:e025:5a5c with SMTP id l12-20020adff48c000000b00317e0255a5cmr16832072wro.48.1696976710127;
-        Tue, 10 Oct 2023 15:25:10 -0700 (PDT)
-Received: from [192.168.100.102] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id c6-20020adfed86000000b003279518f51dsm13806929wro.2.2023.10.10.15.25.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Oct 2023 15:25:09 -0700 (PDT)
-Message-ID: <767bc246-a0a0-4dad-badc-81ed50573832@linaro.org>
-Date:   Tue, 10 Oct 2023 23:25:08 +0100
+        d=1e100.net; s=20230601; t=1696976715; x=1697581515;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=S425dUFU+lNt5RhPxUUHdrBo8GRV+oDgKvT6OmMk34I=;
+        b=jHjDqX9UJPKFhYJ04PgEIu1XGQU9Ceggm+8VAOox4WWCjNYrzxlQUc4sL8/6Q1T1FE
+         Zy4BqW7hfsVcQgGbrLPKWW6u2VedDBa7gNFWAw8SLg+ppmNMBHBAJCc1LucIwb2sgsSb
+         zT/ILipqn7+ZjBJVLyev3SvwZLSj9htS9wdb5O6bl+vAmlxYqnFoIdRySlZwnXQwlXxE
+         f74OrYrV8SPnLMp/JJsmXBnjdy+ma52gsnV/zQ3DxugR3SiRf4eoJ3cahJLXTOikxs//
+         HB9xK9akp4dR0r/blMzs7vFXquCd19N5jxQviL3M7yjKSq6Ip/vHMBbAfdVOz4MuoNNU
+         vxew==
+X-Gm-Message-State: AOJu0YxzQIiGfnAjf3JDD7KoZOQS5LEXQsjpfp4tvNWEyBNmZakpDXGd
+        pibJk+pyVYd+/5jhyGTvZNTFBfQqfIFkzd62yjWOokjN1dgVpIH9J2wmAWtWRyfDT0EaQHOssDn
+        60VE1TL4OkIizoiKH1DE8hpO9zQ==
+X-Received: by 2002:a05:620a:44cb:b0:775:6dfb:874b with SMTP id y11-20020a05620a44cb00b007756dfb874bmr25482813qkp.51.1696976715114;
+        Tue, 10 Oct 2023 15:25:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHI2h5JSeTuSkej2aFal1eyjZSAByC9WQ/SOyg9W3nCMiojVwl/alCxSWV1QIPawodHclsh1A==
+X-Received: by 2002:a05:620a:44cb:b0:775:6dfb:874b with SMTP id y11-20020a05620a44cb00b007756dfb874bmr25482790qkp.51.1696976714835;
+        Tue, 10 Oct 2023 15:25:14 -0700 (PDT)
+Received: from fedora ([2600:1700:1ff0:d0e0::37])
+        by smtp.gmail.com with ESMTPSA id z4-20020a05620a100400b007726002d69esm4703643qkj.10.2023.10.10.15.25.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Oct 2023 15:25:14 -0700 (PDT)
+Date:   Tue, 10 Oct 2023 17:25:12 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Bartosz Golaszewski <brgl@bgdev.pl>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        Alex Elder <elder@linaro.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, kernel@quicinc.com,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v3 08/15] firmware: qcom: scm: make
+ qcom_scm_ice_set_key() use the TZ allocator
+Message-ID: <25rend34es2ayrgbyawoz6tfpweba3drvdrwgiflxhkd7lipma@lj6xolgwwjpt>
+References: <20231009153427.20951-1-brgl@bgdev.pl>
+ <20231009153427.20951-9-brgl@bgdev.pl>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] dt-bindings: i2c: qcom-cci: Document sc8280xp
- compatible
-Content-Language: en-US
-To:     Wolfram Sang <wsa@kernel.org>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        loic.poulain@linaro.org, rfoss@kernel.org, andi.shyti@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, todor.too@gmail.com, mchehab@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20231006120159.3413789-1-bryan.odonoghue@linaro.org>
- <20231006120159.3413789-2-bryan.odonoghue@linaro.org>
- <ZSWpm/7xnoFkUn31@shikoro>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <ZSWpm/7xnoFkUn31@shikoro>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231009153427.20951-9-brgl@bgdev.pl>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/10/2023 20:44, Wolfram Sang wrote:
-> On Fri, Oct 06, 2023 at 01:01:55PM +0100, Bryan O'Donoghue wrote:
->> Add sc8280xp compatible consistent with recent CAMSS CCI interfaces.
->>
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+On Mon, Oct 09, 2023 at 05:34:20PM +0200, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> Applied to for-next, thanks!
+> Let's use the new TZ memory allocator to obtain a buffer for this call
+> instead of using dma_alloc_coherent().
+> 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> ---
+>  drivers/firmware/qcom/qcom_scm.c | 21 +++++----------------
+>  1 file changed, 5 insertions(+), 16 deletions(-)
+> 
+> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+> index 754f6056b99f..31071a714cf1 100644
+> --- a/drivers/firmware/qcom/qcom_scm.c
+> +++ b/drivers/firmware/qcom/qcom_scm.c
+> @@ -1197,32 +1197,21 @@ int qcom_scm_ice_set_key(u32 index, const u8 *key, u32 key_size,
+>  		.args[4] = data_unit_size,
+>  		.owner = ARM_SMCCC_OWNER_SIP,
+>  	};
+> -	void *keybuf;
+> -	dma_addr_t key_phys;
+> +
+>  	int ret;
+>  
+> -	/*
+> -	 * 'key' may point to vmalloc()'ed memory, but we need to pass a
+> -	 * physical address that's been properly flushed.  The sanctioned way to
+> -	 * do this is by using the DMA API.  But as is best practice for crypto
+> -	 * keys, we also must wipe the key after use.  This makes kmemdup() +
+> -	 * dma_map_single() not clearly correct, since the DMA API can use
+> -	 * bounce buffers.  Instead, just use dma_alloc_coherent().  Programming
+> -	 * keys is normally rare and thus not performance-critical.
+> -	 */
+> -
+> -	keybuf = dma_alloc_coherent(__scm->dev, key_size, &key_phys,
+> -				    GFP_KERNEL);
+> +	void *keybuf __free(qcom_tzmem) = qcom_tzmem_alloc(__scm->mempool,
+> +							   key_size,
+> +							   GFP_KERNEL);
+
+At the risk of sounding like a broken record, the same nit about
+declaration being moved, I'll just mention that one last time here in
+the series and then accept the outcome of that discussion across the
+series :) Also a bummer to lose that comment, but I guess oh well.
+
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+
+>  	if (!keybuf)
+>  		return -ENOMEM;
+>  	memcpy(keybuf, key, key_size);
+> -	desc.args[1] = key_phys;
+> +	desc.args[1] = qcom_tzmem_to_phys(keybuf);
+>  
+>  	ret = qcom_scm_call(__scm->dev, &desc, NULL);
+>  
+>  	memzero_explicit(keybuf, key_size);
+>  
+> -	dma_free_coherent(__scm->dev, key_size, keybuf, key_phys);
+>  	return ret;
+>  }
+>  EXPORT_SYMBOL_GPL(qcom_scm_ice_set_key);
+> -- 
+> 2.39.2
 > 
 
-Hey Wolfram.
-
-This patch was superseded could you please drop ?
-
-https://lore.kernel.org/linux-arm-msm/20231010122539.1768825-1-bryan.odonoghue@linaro.org/
-
----
-bod
