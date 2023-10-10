@@ -2,89 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DDFA7C019E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 18:29:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 792D27C01BB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 18:34:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231682AbjJJQ3v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Oct 2023 12:29:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37230 "EHLO
+        id S232356AbjJJQeD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Oct 2023 12:34:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231231AbjJJQ3u (ORCPT
+        with ESMTP id S233852AbjJJQd7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Oct 2023 12:29:50 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B6BE93;
-        Tue, 10 Oct 2023 09:29:48 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7414FC433C7;
-        Tue, 10 Oct 2023 16:29:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1696955387;
-        bh=2yjmYeF5BHJBKV8W3tqM5P5MMJUgXgPBqJIgjiDA92w=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=Nr6M0O3MHp7l6KVRca4pqzSgQ+Ik2CGxx12mR4Xa+AAprnubSwBbyPYlwiAdwqcoS
-         qYAPsmTgG8I8i7V35I9x8sPwKP2BMxe2TsbmDjBmFO3BeNvobB2kceq+XoV4xEfm+N
-         I0tMDULKeTSQLoViAi5Nq2NHZUgqbqjOGRwVZ496JPB7jQ8quHHID2Rwik7wyWWKR2
-         2SqVLYWH19rZXyYwWjaGbYVf5TZvT9V/6L2v9vulZnTh3aiF5xFxg3SCsirGh0VKdp
-         2rbwDlmfhWuXy/pgJU6oOcLBuOmtdYd+s04fpHUhZvp5GsXpeEVyJTZUTeBBx2S/Ph
-         7G9GFOLmF8lZw==
-Date:   Tue, 10 Oct 2023 11:29:45 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com,
-        robh@kernel.org, gustavo.pimentel@synopsys.com,
-        jingoohan1@gmail.com, andersson@kernel.org,
-        konrad.dybcio@linaro.org, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+        Tue, 10 Oct 2023 12:33:59 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EE2F93
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 09:33:57 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-503f39d3236so7059476e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 09:33:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1696955636; x=1697560436; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rXgMbtQ30IMvVzvJ3cAQCAXyb8GEmNBTLVRPEsln6kw=;
+        b=Nd5RPLV5ptrXnsWQP+VThclwRYQ1puUYCEK2wlz8Q2SaYbrnYM6h2RgFQC19DKwC8D
+         6poYCG4XgLMFSi6ZITU5mGFv/sJ4Sr07BpLzPn9b6roHCaM+YYxKuQ5XdOh3xo5xt5GM
+         SdUwKt6mJcnWm8XY4DNfPTr9mEqRy3PFUirYCKvmnbSNYzhXeOQvu4o/demCTjMyzOWK
+         JoFm1bthGBbriLfhOrD191FpQi/z8ID39UkoqfmMRD1lfAhBfDIJH7Nuisa5uOXkF07n
+         oVSFIU1e5zK5OICvvh/CFa8uC5vixFEngjVhra2DsiOoyTrgKsUZ0aje+E00DCe2/y+y
+         vm/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696955636; x=1697560436;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rXgMbtQ30IMvVzvJ3cAQCAXyb8GEmNBTLVRPEsln6kw=;
+        b=WBtQf5IHg1BKBt6QrHS4ckqi9dwSrQXoL7GpaHQQjvY64UUXbdyFOClITM7qkSTmh9
+         jerL8JDO+YeEWoL1ucX71NaZQI+fGl+5jMCerQX5U3SC6bJ7xMxvkWDIZM9FusMmx5U+
+         GwwhIGX+cUG70QKK0MpXfj1E8yc7PmwbtRJ35GNQhTDrXI7REikbBoVRqo65ZsNbjifo
+         X4eCwowXMQvcqunPYVv4LXieBVz0kwt2S+2AISCxy4P7Hg+wtCijzrmsa0AkIXaZmrLQ
+         fJiziVDbYwBPvgrtDcHLNQw5hZq33ugvDoXw9RHK4ksnNAr2KNKrA5xjV32GGdPh99Ce
+         P3UQ==
+X-Gm-Message-State: AOJu0Yxggk3kHLfJdrIFikRXaaiUv74dSbkcdkKfJ/jt85Y7fxhdzeru
+        PxRLFDdSaKHANgPhzdd7M27oKQ==
+X-Google-Smtp-Source: AGHT+IESpyT1izX4PfA0LwaqoijzKYBsw71W/205De2O5PI8KaLqN4jdxF7iKF2LBA+HTl5dZmIgPw==
+X-Received: by 2002:a05:6512:ac5:b0:503:2eaf:1659 with SMTP id n5-20020a0565120ac500b005032eaf1659mr20896855lfu.41.1696955634875;
+        Tue, 10 Oct 2023 09:33:54 -0700 (PDT)
+Received: from [172.30.204.182] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id b10-20020ac2410a000000b004fe432108absm1877755lfi.182.2023.10.10.09.33.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Oct 2023 09:33:54 -0700 (PDT)
+Message-ID: <e6d22992-e3aa-480c-8def-00a447951a02@linaro.org>
+Date:   Tue, 10 Oct 2023 18:33:52 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 2/2] PCI: qcom: Enable ASPM for platforms supporting
  1.9.0 ops
-Message-ID: <20231010162945.GA978270@bhelgaas>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Language: en-US
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com
+Cc:     robh@kernel.org, gustavo.pimentel@synopsys.com,
+        jingoohan1@gmail.com, andersson@kernel.org,
+        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20231010155914.9516-1-manivannan.sadhasivam@linaro.org>
+ <20231010155914.9516-3-manivannan.sadhasivam@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 In-Reply-To: <20231010155914.9516-3-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 10, 2023 at 09:29:14PM +0530, Manivannan Sadhasivam wrote:
+
+
+On 10/10/23 17:59, Manivannan Sadhasivam wrote:
 > ASPM is supported by Qcom host controllers/bridges on most of the recent
 > platforms and so the devices tested so far. But for enabling ASPM by
 > default (without Kconfig/cmdline/sysfs), BIOS has to enable ASPM on both
 > host bridge and downstream devices during boot. Unfortunately, none of the
-> BIOS available on Qcom platforms enables ASPM.
-
-I think this covers over a PCI core defect.  If the devices advertise
-ASPM support, which both the qcom host controller and the endpoint
-devices do, the PCI core should be able to enable it without being
-prodded as this patch does.
-
-We had a long conversation about this at [1], but never came to a good
-resolution.  Since we don't know how to fix the PCI core issue, I
-guess we have no choice but to do things like this patch, at least for
-now.
-
-If/when we ever *do* fix the PCI core issue, it would likely result in
-enabling ASPM (if advertised by both ends of the link) for *all* qcom
-controllers, not just the 1.9.0 ones.
-
-And I think that even today, users can enable ASPM on non-1.9.0
-controllers via sysfs.  So if you are concerned about ASPM not being
-tested on those controllers, you may want to make them not advertise
-ASPM support.
-
-Even with this patch, I guess hot-added devices don't get ASPM
-enabled?  That's basically what [1] is about.
-
-Bjorn
-
-[1] https://lore.kernel.org/linux-pci/20230615070421.1704133-1-kai.heng.feng@canonical.com/
-
-> Due to this, the platforms
+> BIOS available on Qcom platforms enables ASPM. Due to this, the platforms
 > making use of Qcom SoCs draw high power during runtime.
 > 
 > To fix this power issue, users/distros have to enable ASPM using configs
@@ -105,72 +108,20 @@ Bjorn
 > 
 > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 28 ++++++++++++++++++++++++++
->  1 file changed, 28 insertions(+)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 367acb419a2b..c324c3daaa5a 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -222,6 +222,7 @@ struct qcom_pcie_ops {
->  	int (*get_resources)(struct qcom_pcie *pcie);
->  	int (*init)(struct qcom_pcie *pcie);
->  	int (*post_init)(struct qcom_pcie *pcie);
-> +	void (*host_post_init)(struct qcom_pcie *pcie);
->  	void (*deinit)(struct qcom_pcie *pcie);
->  	void (*ltssm_enable)(struct qcom_pcie *pcie);
->  	int (*config_sid)(struct qcom_pcie *pcie);
-> @@ -967,6 +968,22 @@ static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
->  	return 0;
-  }
->  
+[...]
+
 > +static int qcom_pcie_enable_aspm(struct pci_dev *pdev, void *userdata)
 > +{
 > +	/* Downstream devices need to be in D0 state before enabling PCI PM substates */
 > +	pci_set_power_state(pdev, PCI_D0);
 > +	pci_enable_link_state(pdev, PCIE_LINK_STATE_ALL);
+Do we not care about retval here?
+
 > +
 > +	return 0;
 > +}
 > +
 > +static void qcom_pcie_host_post_init_2_7_0(struct qcom_pcie *pcie)
-> +{
-> +	struct dw_pcie_rp *pp = &pcie->pci->pp;
-> +
-> +	pci_walk_bus(pp->bridge->bus, qcom_pcie_enable_aspm, NULL);
-> +}
-> +
->  static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
->  {
->  	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
-> @@ -1219,9 +1236,19 @@ static void qcom_pcie_host_deinit(struct dw_pcie_rp *pp)
->  	pcie->cfg->ops->deinit(pcie);
->  }
->  
-> +static void qcom_pcie_host_post_init(struct dw_pcie_rp *pp)
-> +{
-> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> +	struct qcom_pcie *pcie = to_qcom_pcie(pci);
-> +
-> +	if (pcie->cfg->ops->host_post_init)
-> +		pcie->cfg->ops->host_post_init(pcie);
-> +}
-> +
->  static const struct dw_pcie_host_ops qcom_pcie_dw_ops = {
->  	.host_init	= qcom_pcie_host_init,
->  	.host_deinit	= qcom_pcie_host_deinit,
-> +	.host_post_init	= qcom_pcie_host_post_init,
->  };
->  
->  /* Qcom IP rev.: 2.1.0	Synopsys IP rev.: 4.01a */
-> @@ -1283,6 +1310,7 @@ static const struct qcom_pcie_ops ops_1_9_0 = {
->  	.get_resources = qcom_pcie_get_resources_2_7_0,
->  	.init = qcom_pcie_init_2_7_0,
->  	.post_init = qcom_pcie_post_init_2_7_0,
-> +	.host_post_init = qcom_pcie_host_post_init_2_7_0,
->  	.deinit = qcom_pcie_deinit_2_7_0,
->  	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
->  	.config_sid = qcom_pcie_config_sid_1_9_0,
-> -- 
-> 2.25.1
-> 
+post_init_enable_aspm?
+
+Konrad
