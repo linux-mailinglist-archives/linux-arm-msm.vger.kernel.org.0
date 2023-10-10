@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D3C27C43D1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 00:26:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E24417C4405
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 00:28:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231496AbjJJW0E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Oct 2023 18:26:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56142 "EHLO
+        id S234761AbjJJW2B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Oct 2023 18:28:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229769AbjJJW0C (ORCPT
+        with ESMTP id S234654AbjJJW1q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Oct 2023 18:26:02 -0400
+        Tue, 10 Oct 2023 18:27:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFD4098
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 15:25:17 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC7F0E5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 15:26:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1696976717;
+        s=mimecast20190719; t=1696976809;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
          in-reply-to:in-reply-to:references:references;
-        bh=S425dUFU+lNt5RhPxUUHdrBo8GRV+oDgKvT6OmMk34I=;
-        b=UzZ/2bCwvMmA66clcLee5yS/UMuZz0mxqdP7ntHV5h7LLMF0qyJ895TeymMAK94LcBZdfu
-        zvubE2doNKH47LlqOqSXXzqA7s2espSpJ/uAq1+l6pqekzVrdAo/yDZ7mN/5gmgFmMVdEs
-        +fyoqDRrEVefczWI9neqbrDyzKFGErM=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+        bh=tdmK2PJpm7tFVM+sD/0UEMZcITp4E1l/E4NAmoPnMSg=;
+        b=haNpw279RRLuu4dASACeEYg8/ZPrHUYNVGopx1EOeCVnzUHZ70aWhIcCp/tcCyhpEVK5kC
+        0nsrcLgsAjv2glcu17G4VVJf6aqxVsaT+aSaiOhTaGa322xKSOpymRdMCHboIcvN3OSApK
+        6a0tbB9CHWeAuzcyRwTJQS+9DiqTFB4=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-344-fZBQckbVNZCDowQEHGhCyQ-1; Tue, 10 Oct 2023 18:25:15 -0400
-X-MC-Unique: fZBQckbVNZCDowQEHGhCyQ-1
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-774292d71e3so706620085a.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 15:25:15 -0700 (PDT)
+ us-mta-628-FDXkJkCvOSmCMK-IjOpHhA-1; Tue, 10 Oct 2023 18:26:48 -0400
+X-MC-Unique: FDXkJkCvOSmCMK-IjOpHhA-1
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-66d03dcdc6bso2637276d6.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 15:26:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696976715; x=1697581515;
+        d=1e100.net; s=20230601; t=1696976808; x=1697581608;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=S425dUFU+lNt5RhPxUUHdrBo8GRV+oDgKvT6OmMk34I=;
-        b=jHjDqX9UJPKFhYJ04PgEIu1XGQU9Ceggm+8VAOox4WWCjNYrzxlQUc4sL8/6Q1T1FE
-         Zy4BqW7hfsVcQgGbrLPKWW6u2VedDBa7gNFWAw8SLg+ppmNMBHBAJCc1LucIwb2sgsSb
-         zT/ILipqn7+ZjBJVLyev3SvwZLSj9htS9wdb5O6bl+vAmlxYqnFoIdRySlZwnXQwlXxE
-         f74OrYrV8SPnLMp/JJsmXBnjdy+ma52gsnV/zQ3DxugR3SiRf4eoJ3cahJLXTOikxs//
-         HB9xK9akp4dR0r/blMzs7vFXquCd19N5jxQviL3M7yjKSq6Ip/vHMBbAfdVOz4MuoNNU
-         vxew==
-X-Gm-Message-State: AOJu0YxzQIiGfnAjf3JDD7KoZOQS5LEXQsjpfp4tvNWEyBNmZakpDXGd
-        pibJk+pyVYd+/5jhyGTvZNTFBfQqfIFkzd62yjWOokjN1dgVpIH9J2wmAWtWRyfDT0EaQHOssDn
-        60VE1TL4OkIizoiKH1DE8hpO9zQ==
-X-Received: by 2002:a05:620a:44cb:b0:775:6dfb:874b with SMTP id y11-20020a05620a44cb00b007756dfb874bmr25482813qkp.51.1696976715114;
-        Tue, 10 Oct 2023 15:25:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHI2h5JSeTuSkej2aFal1eyjZSAByC9WQ/SOyg9W3nCMiojVwl/alCxSWV1QIPawodHclsh1A==
-X-Received: by 2002:a05:620a:44cb:b0:775:6dfb:874b with SMTP id y11-20020a05620a44cb00b007756dfb874bmr25482790qkp.51.1696976714835;
-        Tue, 10 Oct 2023 15:25:14 -0700 (PDT)
+        bh=tdmK2PJpm7tFVM+sD/0UEMZcITp4E1l/E4NAmoPnMSg=;
+        b=OOaxHWyyMbtXXlsNYRZ7iyB+oilqcmwUoFzxIjtY2DSrbCTgGckGV0P6cp+W4FlNjo
+         Q4F+xDd3gwgBN1l5+dWSJ6bmdIAP02icJqiEptovIQQbkpYdFFwELLca8qH6oalPWHOo
+         nOeORfAsrmk4mu8lEu20MBfJTFP5L/KfAhJjsiMYGEmqXMR5IlDQ8+eZh3CbVI1vgO37
+         rC7YmU9pYhF6E4643AVwYlK79C2zA9e9FeKo1C9ZkZ5MjU+n+iGborbjy5XBBthMkKz5
+         Nue5v6kDj6L1/rfv0kGQAr6r54oCS++JiXK1ZOM2R8xcFOVgjA0OZfiezamnEvcQrOfM
+         zLYA==
+X-Gm-Message-State: AOJu0YyP8nC/sskOphVdyweLXl6IwoIjLvlGX8lpojjiwaMYGPGVZ5RM
+        oGFmsDbVGk+cLXwcUQkJKRkhJ1Xbs/fRP6zUfku9scuqKg56Xqc/2LmmyJrf3+AZQKyNzbBNrU6
+        aDhOoBMKSejMeOG+7HWhYnmXQLQ==
+X-Received: by 2002:a0c:aa9a:0:b0:65b:771:f2ea with SMTP id f26-20020a0caa9a000000b0065b0771f2eamr14687799qvb.53.1696976808082;
+        Tue, 10 Oct 2023 15:26:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG7/58KgO3b18HaxHhOjODoHl5A2u5oh0qL5aQngVtqkyqSQ0+wZCRK4G1WOlb/PoQfZ3Ro/g==
+X-Received: by 2002:a0c:aa9a:0:b0:65b:771:f2ea with SMTP id f26-20020a0caa9a000000b0065b0771f2eamr14687781qvb.53.1696976807826;
+        Tue, 10 Oct 2023 15:26:47 -0700 (PDT)
 Received: from fedora ([2600:1700:1ff0:d0e0::37])
-        by smtp.gmail.com with ESMTPSA id z4-20020a05620a100400b007726002d69esm4703643qkj.10.2023.10.10.15.25.13
+        by smtp.gmail.com with ESMTPSA id p6-20020a0ce186000000b0065b0e724f83sm5117109qvl.6.2023.10.10.15.26.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Oct 2023 15:25:14 -0700 (PDT)
-Date:   Tue, 10 Oct 2023 17:25:12 -0500
+        Tue, 10 Oct 2023 15:26:47 -0700 (PDT)
+Date:   Tue, 10 Oct 2023 17:26:45 -0500
 From:   Andrew Halaney <ahalaney@redhat.com>
 To:     Bartosz Golaszewski <brgl@bgdev.pl>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -70,86 +70,76 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, kernel@quicinc.com,
         Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v3 08/15] firmware: qcom: scm: make
- qcom_scm_ice_set_key() use the TZ allocator
-Message-ID: <25rend34es2ayrgbyawoz6tfpweba3drvdrwgiflxhkd7lipma@lj6xolgwwjpt>
+Subject: Re: [PATCH v3 09/15] firmware: qcom: scm: make qcom_scm_lmh_dcvsh()
+ use the TZ allocator
+Message-ID: <vggxx4dqzlg2k443oo34opkkwr7goqmkjsorcarbibeqz3oqbc@6hpy36jd2tow>
 References: <20231009153427.20951-1-brgl@bgdev.pl>
- <20231009153427.20951-9-brgl@bgdev.pl>
+ <20231009153427.20951-10-brgl@bgdev.pl>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231009153427.20951-9-brgl@bgdev.pl>
+In-Reply-To: <20231009153427.20951-10-brgl@bgdev.pl>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 09, 2023 at 05:34:20PM +0200, Bartosz Golaszewski wrote:
+On Mon, Oct 09, 2023 at 05:34:21PM +0200, Bartosz Golaszewski wrote:
 > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
 > Let's use the new TZ memory allocator to obtain a buffer for this call
 > instead of using dma_alloc_coherent().
 > 
 > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
->  drivers/firmware/qcom/qcom_scm.c | 21 +++++----------------
->  1 file changed, 5 insertions(+), 16 deletions(-)
-> 
-> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-> index 754f6056b99f..31071a714cf1 100644
-> --- a/drivers/firmware/qcom/qcom_scm.c
-> +++ b/drivers/firmware/qcom/qcom_scm.c
-> @@ -1197,32 +1197,21 @@ int qcom_scm_ice_set_key(u32 index, const u8 *key, u32 key_size,
->  		.args[4] = data_unit_size,
->  		.owner = ARM_SMCCC_OWNER_SIP,
->  	};
-> -	void *keybuf;
-> -	dma_addr_t key_phys;
-> +
->  	int ret;
->  
-> -	/*
-> -	 * 'key' may point to vmalloc()'ed memory, but we need to pass a
-> -	 * physical address that's been properly flushed.  The sanctioned way to
-> -	 * do this is by using the DMA API.  But as is best practice for crypto
-> -	 * keys, we also must wipe the key after use.  This makes kmemdup() +
-> -	 * dma_map_single() not clearly correct, since the DMA API can use
-> -	 * bounce buffers.  Instead, just use dma_alloc_coherent().  Programming
-> -	 * keys is normally rare and thus not performance-critical.
-> -	 */
-> -
-> -	keybuf = dma_alloc_coherent(__scm->dev, key_size, &key_phys,
-> -				    GFP_KERNEL);
-> +	void *keybuf __free(qcom_tzmem) = qcom_tzmem_alloc(__scm->mempool,
-> +							   key_size,
-> +							   GFP_KERNEL);
-
-At the risk of sounding like a broken record, the same nit about
-declaration being moved, I'll just mention that one last time here in
-the series and then accept the outcome of that discussion across the
-series :) Also a bummer to lose that comment, but I guess oh well.
 
 Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
 
->  	if (!keybuf)
+> ---
+>  drivers/firmware/qcom/qcom_scm.c | 9 ++++-----
+>  1 file changed, 4 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+> index 31071a714cf1..11638daa2fe5 100644
+> --- a/drivers/firmware/qcom/qcom_scm.c
+> +++ b/drivers/firmware/qcom/qcom_scm.c
+> @@ -1340,8 +1340,6 @@ EXPORT_SYMBOL_GPL(qcom_scm_lmh_profile_change);
+>  int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
+>  		       u64 limit_node, u32 node_id, u64 version)
+>  {
+> -	dma_addr_t payload_phys;
+> -	u32 *payload_buf;
+>  	int ret, payload_size = 5 * sizeof(u32);
+>  
+>  	struct qcom_scm_desc desc = {
+> @@ -1356,7 +1354,9 @@ int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
+>  		.owner = ARM_SMCCC_OWNER_SIP,
+>  	};
+>  
+> -	payload_buf = dma_alloc_coherent(__scm->dev, payload_size, &payload_phys, GFP_KERNEL);
+> +	u32 *payload_buf __free(qcom_tzmem) = qcom_tzmem_alloc(__scm->mempool,
+> +							       payload_size,
+> +							       GFP_KERNEL);
+>  	if (!payload_buf)
 >  		return -ENOMEM;
->  	memcpy(keybuf, key, key_size);
-> -	desc.args[1] = key_phys;
-> +	desc.args[1] = qcom_tzmem_to_phys(keybuf);
+>  
+> @@ -1366,11 +1366,10 @@ int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
+>  	payload_buf[3] = 1;
+>  	payload_buf[4] = payload_val;
+>  
+> -	desc.args[0] = payload_phys;
+> +	desc.args[0] = qcom_tzmem_to_phys(payload_buf);
 >  
 >  	ret = qcom_scm_call(__scm->dev, &desc, NULL);
 >  
->  	memzero_explicit(keybuf, key_size);
->  
-> -	dma_free_coherent(__scm->dev, key_size, keybuf, key_phys);
+> -	dma_free_coherent(__scm->dev, payload_size, payload_buf, payload_phys);
 >  	return ret;
 >  }
->  EXPORT_SYMBOL_GPL(qcom_scm_ice_set_key);
+>  EXPORT_SYMBOL_GPL(qcom_scm_lmh_dcvsh);
 > -- 
 > 2.39.2
 > 
