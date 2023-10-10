@@ -2,220 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E5827C450D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 00:51:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 87DB87C4514
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 00:52:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229865AbjJJWva (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Oct 2023 18:51:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54988 "EHLO
+        id S233161AbjJJWwe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Oct 2023 18:52:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344419AbjJJWur (ORCPT
+        with ESMTP id S234090AbjJJWwe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Oct 2023 18:50:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3950DC
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 15:49:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1696978195;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=Cb0ffsa2ZMdKBtsL7Ay09Q93KCT+/I1vCSqafr4Bsa8=;
-        b=i//K4VgfmKv73DrIy7QweT9wyIbYOikuZYzwh1qoyzYxpIYsRnjxdxk6xkboXCg0Rotlqk
-        ssxgLMeXJcyJx46OUGB+tWfy7ZtbXNp5GTJcvmU5+0fc8ocB6+4MATXEtigBinVG3JP426
-        XiATuE++8QhXvO+SiXE7LqtFAQWoUjY=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-656-rCH4n_wEPmONoTRLeHW_hQ-1; Tue, 10 Oct 2023 18:49:53 -0400
-X-MC-Unique: rCH4n_wEPmONoTRLeHW_hQ-1
-Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-65b0d19bfd0so73812316d6.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 15:49:53 -0700 (PDT)
+        Tue, 10 Oct 2023 18:52:34 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AA1192
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 15:52:32 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-50325ce89e9so8155893e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 15:52:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1696978351; x=1697583151; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xH3JTlYLfu1lrgQDYNOeSk2pxNRl1vKQGAR++5/WjFk=;
+        b=b+yaOhBRlgPLbhti2xRCxgMMzaF2tksXksIgfu7gnwNrKuluv4+PuiunBKJUkMaJsS
+         in5X6bctIDAiEckRbol7E+dkAK9F94YFn8k2vCCShr53/LUiNrJLGHENM0rYxhZR7utZ
+         WqP0E2PuunBkU1ctTkX8LfQNJTQQFaw8LEJZGUCCgO/tZRRmrS8YbGNlPEUda2bqRi5r
+         TN3XOeLMoT6oLiSL9aC7dUAdXtxTddKWswSD5kq3Whb5VGIikIgzxcshNLKDkPNWy+16
+         lPQchnUOo/sZxi0+Vi+N2mHsAdUnjqHVmwQeDEZANciIvT3Olw/gQbB3tJXLEKjsqI9Y
+         G0Lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696978193; x=1697582993;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Cb0ffsa2ZMdKBtsL7Ay09Q93KCT+/I1vCSqafr4Bsa8=;
-        b=g+RppFvULoi9PdICkNAcZGinGzYfQgiJyI/un0wkkkbG/aIwM4PnXPuFegzfMhQeM6
-         Bx/7iKneOnrjQ0ppT8D562LuRH4ewF7riCzeRqVzBl3ODdEOmzjC+vFrF0Zl3nqDExYM
-         Ta1Mc/GM7DtpBXNsTJCoopFXukASOk2q95fA+an/L39tjsTxbckAfvw+Q6IducLLNP0j
-         EXkWoMY3muaoInIuRd+ZNVgWPARjbb1Q0Sv9rXNCS158pBHFs4XpD/qf2hXO5x6Pd1q4
-         I1dK9ZfLYHPRXm8MSDqQE06OHgeVOwOawdbmrlzY4UWMXt8kUe5KzLpEhMau3yQEQtJf
-         yyYw==
-X-Gm-Message-State: AOJu0YxZpZOAfuPhaKCa0DGrmk6cMt/ccuQCQMkuQ08ZdnWke/QPtp49
-        Z2514VYeNwG4EMJSUBZXEmQONiUNOcogoi8g9iEaXtLP4XhedHBx6L96aN+cgzKocGAvWmdNTJU
-        rFOomsqYAQFnjZdDN9DCrvdvjnQ==
-X-Received: by 2002:a0c:c543:0:b0:66c:fc47:46b7 with SMTP id y3-20020a0cc543000000b0066cfc4746b7mr2407017qvi.16.1696978193304;
-        Tue, 10 Oct 2023 15:49:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEAX4sHPUZ1sj/c/iglb3GQvKcOnNHGycBBbOTg8o/hIRciCX9+6emo2NlFUDRtk0Tifxswrw==
-X-Received: by 2002:a0c:c543:0:b0:66c:fc47:46b7 with SMTP id y3-20020a0cc543000000b0066cfc4746b7mr2406996qvi.16.1696978193022;
-        Tue, 10 Oct 2023 15:49:53 -0700 (PDT)
-Received: from fedora ([2600:1700:1ff0:d0e0::37])
-        by smtp.gmail.com with ESMTPSA id z19-20020a0cda93000000b0065b31dfdf70sm5147823qvj.11.2023.10.10.15.49.51
+        d=1e100.net; s=20230601; t=1696978351; x=1697583151;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xH3JTlYLfu1lrgQDYNOeSk2pxNRl1vKQGAR++5/WjFk=;
+        b=WL5WIdJZ447VTvOhldizD6goWkHq6md7LUQdAX+SW8DQ+H8ifiqmc3Wi17zlhibXYQ
+         rDU74GS5GXyKQznXX940KANTpprhA8boh8uhoLT7onMwxvuKCkjkd6UuBUp17If8BWdd
+         1v2G4CzDlWeMn7++Dum4LfDr4FJdONnuF5A8KRbCmA7y/1qo5Kfc3EER5lIulrqYW8cj
+         zFOk1GELIHaFne30X0DnztLVasLhC3E7/6W2lMXmX2Bd+drHmE7+LZ84yUwG+eVKJz5C
+         pTO8exzrd5wLy7ofGc0x3xCicAqjsEvXbviFFwnYL803CEtvU7le/4DXOxLCtGqBAXwm
+         D0HA==
+X-Gm-Message-State: AOJu0Yw7oUct93FKlqDIupbIN6w1fYFgAXExbniBgQPtsJyXGHRvai1v
+        bTFR67kvhu6hgdTHyK2NWjDB1g==
+X-Google-Smtp-Source: AGHT+IHfk6VCKksN4Igx3bmkbaZopWpKwJo0WHSqUsFC/05mZuF8oO3Ub7CcEBTaWPPWuQrXUtGzRA==
+X-Received: by 2002:a19:ca17:0:b0:500:9b7d:ee3c with SMTP id a23-20020a19ca17000000b005009b7dee3cmr14696545lfg.7.1696978350783;
+        Tue, 10 Oct 2023 15:52:30 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id a22-20020a19f816000000b00501ccebeaf6sm1974481lff.88.2023.10.10.15.52.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Oct 2023 15:49:52 -0700 (PDT)
-Date:   Tue, 10 Oct 2023 17:49:50 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Bartosz Golaszewski <brgl@bgdev.pl>
-Cc:     Andy Gross <agross@kernel.org>,
+        Tue, 10 Oct 2023 15:52:30 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        Alex Elder <elder@linaro.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, kernel@quicinc.com,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v3 11/15] firmware: qcom: qseecom: convert to using the
- TZ allocator
-Message-ID: <y5otsuzhc27xeay6js4nkqss2bo5bsmygwdjuhqpdzce4yffxk@gkkh522s5e3b>
-References: <20231009153427.20951-1-brgl@bgdev.pl>
- <20231009153427.20951-12-brgl@bgdev.pl>
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Simon Ser <contact@emersion.fr>
+Subject: [PATCH] soc: qcom: pmic_glink: fix connector type to be DisplayPort
+Date:   Wed, 11 Oct 2023 01:52:29 +0300
+Message-Id: <20231010225229.77027-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231009153427.20951-12-brgl@bgdev.pl>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 09, 2023 at 05:34:23PM +0200, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> Drop the DMA mapping operations from qcom_scm_qseecom_app_send() and
-> convert all users of it in the qseecom module to using the TZ allocator
-> for creating SCM call buffers. Together with using the cleanup macros,
-> it has the added benefit of a significant code shrink. As this is
-> largely a module separate from the SCM driver, let's use a separate
-> memory pool.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+As it was pointed out by Simon Ser, the DRM_MODE_CONNECTOR_USB connector
+is reserved for the GUD devices. Other drivers (i915, amdgpu) use
+DRM_MODE_CONNECTOR_DisplayPort even if the DP stream is handled by the
+USB-C altmode. While we are still working on implementing the proper way
+to let userspace know that the DP is wrapped into USB-C, change
+connector type to be DRM_MODE_CONNECTOR_DisplayPort.
 
-<snip>
+Fixes: 080b4e24852b ("soc: qcom: pmic_glink: Introduce altmode support")
+Cc: Simon Ser <contact@emersion.fr>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/soc/qcom/pmic_glink_altmode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> @@ -567,20 +529,14 @@ static efi_status_t qsee_uefi_get_next_variable(struct qcuefi_client *qcuefi,
->  		return EFI_INVALID_PARAMETER;
->  
->  	status = qcom_qseecom_app_send(qcuefi->client, req_data, req_size, rsp_data, rsp_size);
-> -	if (status) {
-> -		efi_status = EFI_DEVICE_ERROR;
-> -		goto out_free;
-> -	}
-> +	if (status)
-> +		return EFI_DEVICE_ERROR;
->  
-> -	if (rsp_data->command_id != QSEE_CMD_UEFI_GET_NEXT_VARIABLE) {
-> -		efi_status = EFI_DEVICE_ERROR;
-> -		goto out_free;
-> -	}
-> +	if (rsp_data->command_id != QSEE_CMD_UEFI_GET_NEXT_VARIABLE)
-> +		return EFI_DEVICE_ERROR;
->  
-> -	if (rsp_data->length < sizeof(*rsp_data)) {
-> -		efi_status = EFI_DEVICE_ERROR;
-> -		goto out_free;
-> -	}
-> +	if (rsp_data->length < sizeof(*rsp_data))
-> +		return EFI_DEVICE_ERROR;
->  
->  	if (rsp_data->status) {
->  		dev_dbg(qcuefi_dev(qcuefi), "%s: uefisecapp error: 0x%x\n",
-> @@ -595,77 +551,59 @@ static efi_status_t qsee_uefi_get_next_variable(struct qcuefi_client *qcuefi,
->  		if (efi_status == EFI_BUFFER_TOO_SMALL)
->  			*name_size = rsp_data->name_size;
->  
-> -		goto out_free;
-> +		return efi_status;
->  	}
->  
-> -	if (rsp_data->length > rsp_size) {
-> -		efi_status = EFI_DEVICE_ERROR;
-> -		goto out_free;
-> -	}
-> +	if (rsp_data->length > rsp_size)
-> +		return EFI_DEVICE_ERROR;
->  
-> -	if (rsp_data->name_offset + rsp_data->name_size > rsp_data->length) {
-> -		efi_status = EFI_DEVICE_ERROR;
-> -		goto out_free;
-> -	}
-> +	if (rsp_data->name_offset + rsp_data->name_size > rsp_data->length)
-> +		return EFI_DEVICE_ERROR;
->  
-> -	if (rsp_data->guid_offset + rsp_data->guid_size > rsp_data->length) {
-> -		efi_status = EFI_DEVICE_ERROR;
-> -		goto out_free;
-> -	}
-> +	if (rsp_data->guid_offset + rsp_data->guid_size > rsp_data->length)
-> +		return EFI_DEVICE_ERROR;
->  
->  	if (rsp_data->name_size > *name_size) {
->  		*name_size = rsp_data->name_size;
-> -		efi_status = EFI_BUFFER_TOO_SMALL;
-> -		goto out_free;
-> +		return EFI_BUFFER_TOO_SMALL;
->  	}
->  
-> -	if (rsp_data->guid_size != sizeof(*guid)) {
-> -		efi_status = EFI_DEVICE_ERROR;
-> -		goto out_free;
-> -	}
-> +	if (rsp_data->guid_size != sizeof(*guid))
-> +		return EFI_DEVICE_ERROR;
->  
->  	memcpy(guid, ((void *)rsp_data) + rsp_data->guid_offset, rsp_data->guid_size);
->  	status = ucs2_strscpy(name, ((void *)rsp_data) + rsp_data->name_offset,
->  			      rsp_data->name_size / sizeof(*name));
->  	*name_size = rsp_data->name_size;
->  
-> -	if (status < 0) {
-> +	if (status < 0)
->  		/*
->  		 * Return EFI_DEVICE_ERROR here because the buffer size should
->  		 * have already been validated above, causing this function to
->  		 * bail with EFI_BUFFER_TOO_SMALL.
->  		 */
->  		return EFI_DEVICE_ERROR;
-> -	}
-
-Personally (no idea what the actual style guide says) leaving braces
-around the multiline if statement would be nice.... that being said,
-that's my opinion :)
-
-<snip>
-> @@ -704,12 +635,7 @@ static efi_status_t qsee_uefi_query_variable_info(struct qcuefi_client *qcuefi,
->  	if (max_variable_size)
->  		*max_variable_size = rsp_data->max_variable_size;
->  
-> -out_free:
-> -	kfree(rsp_data);
-> -out_free_req:
-> -	kfree(req_data);
-> -out:
-> -	return efi_status;
-> +	return EFI_SUCCESS;
->  }
->  
->  /* -- Global efivar interface. ---------------------------------------------- */
-> @@ -838,6 +764,10 @@ static int qcom_uefisecapp_probe(struct auxiliary_device *aux_dev,
->  	if (status)
->  		qcuefi_set_reference(NULL);
->  
-> +	qcuefi->mempool = devm_qcom_tzmem_pool_new(&aux_dev->dev, SZ_256K);
-
-Any particular reason for this size? Just curious, it was (one) of the
-reasons I had not marked patch 4 yet (it looks good, but I wanted to get
-through the series to digest the Kconfig as well).
-
-Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+diff --git a/drivers/soc/qcom/pmic_glink_altmode.c b/drivers/soc/qcom/pmic_glink_altmode.c
+index 9569d999391d..6f8b2f7ae3cc 100644
+--- a/drivers/soc/qcom/pmic_glink_altmode.c
++++ b/drivers/soc/qcom/pmic_glink_altmode.c
+@@ -467,7 +467,7 @@ static int pmic_glink_altmode_probe(struct auxiliary_device *adev,
+ 		alt_port->bridge.funcs = &pmic_glink_altmode_bridge_funcs;
+ 		alt_port->bridge.of_node = to_of_node(fwnode);
+ 		alt_port->bridge.ops = DRM_BRIDGE_OP_HPD;
+-		alt_port->bridge.type = DRM_MODE_CONNECTOR_USB;
++		alt_port->bridge.type = DRM_MODE_CONNECTOR_DisplayPort;
+ 
+ 		ret = devm_drm_bridge_add(dev, &alt_port->bridge);
+ 		if (ret) {
+-- 
+2.39.2
 
