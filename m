@@ -2,181 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 61EE07BF8E2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 12:43:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D94177BF8F5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 12:47:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231200AbjJJKm7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Oct 2023 06:42:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58674 "EHLO
+        id S230237AbjJJKrF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Oct 2023 06:47:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231202AbjJJKm7 (ORCPT
+        with ESMTP id S229945AbjJJKrF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Oct 2023 06:42:59 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 0F3CFB7;
-        Tue, 10 Oct 2023 03:42:57 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 874F31FB;
-        Tue, 10 Oct 2023 03:43:37 -0700 (PDT)
-Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4D05F3F762;
-        Tue, 10 Oct 2023 03:42:55 -0700 (PDT)
-Date:   Tue, 10 Oct 2023 11:42:52 +0100
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Nikunj Kela <quic_nkela@quicinc.com>
-Cc:     cristian.marussi@arm.com, robh+dt@kernel.org,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v6 2/2] firmware: arm_scmi: Add qcom smc/hvc transport
- support
-Message-ID: <20231010104252.dwix4xg766uk2y44@bogus>
-References: <20230718160833.36397-1-quic_nkela@quicinc.com>
- <20231009191437.27926-1-quic_nkela@quicinc.com>
- <20231009191437.27926-3-quic_nkela@quicinc.com>
+        Tue, 10 Oct 2023 06:47:05 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5438D9E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 03:47:02 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-40651a72807so53227945e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 03:47:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1696934821; x=1697539621; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Gq1BYoY0fEgX7YMzga5nr/sZhevfBzjj86K1zkzaKh0=;
+        b=sPiF3p5guXGIr+Ne6Z77Xt3XTQAX3NZhegj5HBJBDgXPG5Y2ftVB6QgpkLBgvDSYev
+         8aO7PrBnUSyqHY/ldwZ1Z8uG4sDHLCL3jWRsO7dxVTsGP+qG/yO+Rbxc508sbhECoh2I
+         KlKEWq4rCMq8fYpmoTTAv+X00dS6Cvy96sHFbu95SwR8/r4xn/WVVw+V+PpjpyXEQOHg
+         7KOqu1Pny5hNq15aIjOOLXUn0gJ91/kdPMH0TdU8E0FTyYe+4lXGAr32JEdkC8nRcm8Z
+         luAgFb0nzWNROuI1TjcXSpxdamVHOKgzZ+e38eK41lM2rwwIo55isRua96MyiEK+jxV/
+         MM8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696934821; x=1697539621;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Gq1BYoY0fEgX7YMzga5nr/sZhevfBzjj86K1zkzaKh0=;
+        b=tI1Pf1I5EFNTTZrhW0EdijKV/9DyUmoA/YXde3XCJ4EBuRYkxagl5rBkA5OSsYaCj6
+         /FDQ3nNXIcdob2TpgA7Y8NHtJXv9YuEfsVi28meD6ZAAyL0WqPfdw1wEIv1STP7/qmcZ
+         z1LcvFulYWG7WU8TfY//IkavyM8rKm3+uik67x/mGNIZxiDSJ7aBQUCCSSc6wWTHCz0t
+         KuSkgZ8MKfppT6Sycf+gkiW9k3IL21VNF7IsZO1IVzLKxJO8H1OO6To2NvuKspBsmJgV
+         TPHbdIr9zxxCveQDrJ9f5sCgQB2EkolcJHUPzqz+i9gsC3p3+4wEgcVgJqxSyQqsfuq0
+         Rn5A==
+X-Gm-Message-State: AOJu0YwKEtq5hKK9KDPVwnFbOfQCovA8b/OKcQ9qSXJkx0abKSc/8zwt
+        eMn3TWEcAqccqviL1J1/MZW5QA==
+X-Google-Smtp-Source: AGHT+IGb3B9BhnFU58qupYbMtpSWUS5mfaVGu5BpQm6+XWvyJe+bvBx/EGxe8tPG/RqPTM4sHEHZEw==
+X-Received: by 2002:a05:600c:2946:b0:405:4daa:6e3d with SMTP id n6-20020a05600c294600b004054daa6e3dmr15662827wmd.39.1696934820737;
+        Tue, 10 Oct 2023 03:47:00 -0700 (PDT)
+Received: from lion.localdomain (host-2-99-112-229.as13285.net. [2.99.112.229])
+        by smtp.gmail.com with ESMTPSA id q5-20020a7bce85000000b0040596352951sm16134857wmj.5.2023.10.10.03.47.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Oct 2023 03:47:00 -0700 (PDT)
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+Date:   Tue, 10 Oct 2023 11:46:58 +0100
+Subject: [PATCH] arm64: dts: qcom: qrb4210-rb2: don't force usb peripheral
+ mode
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231009191437.27926-3-quic_nkela@quicinc.com>
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20231010-caleb-rb2-host-mode-v1-1-b057d443cd62@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAKErJWUC/x2NQQrCMBAAv1L27EISKxa/Ih42ycYEYiK7VYTSv
+ zd4nIFhNlCWwgq3aQPhb9HS2wB7miBkak/GEgeDM+5sjTUYqLJH8Q5z1xVfPTLOlC4xLQtfHcE
+ oPSmjF2ohj7Z9ah3yLZzK77+6P/b9AAie87N6AAAA
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Caleb Connolly <caleb.connolly@linaro.org>
+X-Mailer: b4 0.13-dev-46309
+X-Developer-Signature: v=1; a=openpgp-sha256; l=876;
+ i=caleb.connolly@linaro.org; h=from:subject:message-id;
+ bh=HJi6LkHa8+ZIeTakG3fyqvNsTnEKTCGu/fzarKLGhlg=;
+ b=owGbwMvMwCFYaeA6f6eBkTjjabUkhlRV7cVp+dvzhWN0pkfbds1hfDazoDziqX3Um8Ov7K0KG
+ oyjZN91lLIwCHIwyIopsoifWGbZtPayvcb2BRdg5rAygQxh4OIUgIks+MjIsP50VOPqkKfKdtL3
+ 733/quX6o0ws5s2Bs1pnpC/y26q/b2P4n2Ncf1dd7PJ6p393D02pKFa79PnRXhXW+xO7XnFeutL
+ Cyg8A
+X-Developer-Key: i=caleb.connolly@linaro.org; a=openpgp;
+ fpr=83B24DA7FE145076BC38BB250CD904EB673A7C47
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 09, 2023 at 12:14:37PM -0700, Nikunj Kela wrote:
-> This change adds the support for SCMI message exchange on Qualcomm
-> virtual platforms.
-> 
-> The hypervisor associates an object-id also known as capability-id
-> with each smc/hvc doorbell object. The capability-id is used to
-> identify the doorbell from the VM's capability namespace, similar
-> to a file-descriptor.
-> 
-> The hypervisor, in addition to the function-id, expects the capability-id
-> to be passed in x1 register when SMC/HVC call is invoked.
-> 
-> The capability-id is allocated by the hypervisor on bootup and is stored in
-> the shmem region by the firmware before starting Linux.
-> 
-> Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
-> Reviewed-by: Brian Masney <bmasney@redhat.com>
-> Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+The rb2 only has a single USB controller, it can be switched between a
+type-c port and an internal USB hub via a DIP switch. Until dynamic
+role switching is available it's preferable to put the USB controller
+in host mode so that the type-A ports and ethernet are available.
 
-FYI for the next time. When posting on the list, the senders sign-off must
-be the last. The only reason I signed off is because it is needed as part
-of committer in the git repo. You should have ideally dropped it in this case.
-If there was some other author/co-developer of the patch, then your signoff
-will be always at the end as you are sending the patch.
+Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+---
+base-commit: 6465e260f48790807eef06b583b38ca9789b6072
 
-Refer "Sign your work - the Developer's Certificate of Origin" section
-in Documentation/process/submitting-patches.rst
+// Caleb (they/them)
+---
+ arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 1 -
+ 1 file changed, 1 deletion(-)
 
-> ---
->  drivers/firmware/arm_scmi/driver.c |  1 +
->  drivers/firmware/arm_scmi/smc.c    | 27 +++++++++++++++++++++++++--
->  2 files changed, 26 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-> index 87383c05424b..09371f40d61f 100644
-> --- a/drivers/firmware/arm_scmi/driver.c
-> +++ b/drivers/firmware/arm_scmi/driver.c
-> @@ -2915,6 +2915,7 @@ static const struct of_device_id scmi_of_match[] = {
->  #ifdef CONFIG_ARM_SCMI_TRANSPORT_SMC
->  	{ .compatible = "arm,scmi-smc", .data = &scmi_smc_desc},
->  	{ .compatible = "arm,scmi-smc-param", .data = &scmi_smc_desc},
-> +	{ .compatible = "qcom,scmi-smc", .data = &scmi_smc_desc},
->  #endif
->  #ifdef CONFIG_ARM_SCMI_TRANSPORT_VIRTIO
->  	{ .compatible = "arm,scmi-virtio", .data = &scmi_virtio_desc},
-> diff --git a/drivers/firmware/arm_scmi/smc.c b/drivers/firmware/arm_scmi/smc.c
-> index 8eba60a41975..7611e9665038 100644
-> --- a/drivers/firmware/arm_scmi/smc.c
-> +++ b/drivers/firmware/arm_scmi/smc.c
-> @@ -15,6 +15,7 @@
->  #include <linux/of.h>
->  #include <linux/of_address.h>
->  #include <linux/of_irq.h>
-> +#include <linux/limits.h>
->  #include <linux/processor.h>
->  #include <linux/slab.h>
->  
-> @@ -50,6 +51,8 @@
->   * @func_id: smc/hvc call function id
->   * @param_page: 4K page number of the shmem channel
->   * @param_offset: Offset within the 4K page of the shmem channel
-> + * @cap_id: smc/hvc doorbell's capability id to be used on Qualcomm virtual
-> + *	    platforms
->   */
->  
->  struct scmi_smc {
-> @@ -63,6 +66,7 @@ struct scmi_smc {
->  	unsigned long func_id;
->  	unsigned long param_page;
->  	unsigned long param_offset;
-> +	unsigned long cap_id;
->  };
->  
->  static irqreturn_t smc_msg_done_isr(int irq, void *data)
-> @@ -124,6 +128,7 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
->  			  bool tx)
->  {
->  	struct device *cdev = cinfo->dev;
-> +	unsigned long cap_id = ULONG_MAX;
->  	struct scmi_smc *scmi_info;
->  	resource_size_t size;
->  	struct resource res;
-> @@ -162,6 +167,18 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
->  	if (ret < 0)
->  		return ret;
->  
-> +	if (of_device_is_compatible(dev->of_node, "qcom,scmi-smc")) {
-> +		void __iomem *ptr = (void __iomem *)scmi_info->shmem + size - 8;
-> +		/* The capability-id is kept in last 8 bytes of shmem.
-> +		 *     +-------+ <-- 0
-> +		 *     | shmem |
-> +		 *     +-------+ <-- size - 8
-> +		 *     | capId |
-> +		 *     +-------+ <-- size
-> +		 */
-> +		memcpy_fromio(&cap_id, ptr, sizeof(cap_id));
-> +	}
-> +
->  	if (of_device_is_compatible(dev->of_node, "arm,scmi-smc-param")) {
->  		scmi_info->param_page = SHMEM_PAGE(res.start);
->  		scmi_info->param_offset = SHMEM_OFFSET(res.start);
-> @@ -184,6 +201,7 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
->  	}
->  
->  	scmi_info->func_id = func_id;
-> +	scmi_info->cap_id = cap_id;
->  	scmi_info->cinfo = cinfo;
->  	smc_channel_lock_init(scmi_info);
->  	cinfo->transport_info = scmi_info;
-> @@ -220,8 +238,13 @@ static int smc_send_message(struct scmi_chan_info *cinfo,
->  
->  	shmem_tx_prepare(scmi_info->shmem, xfer, cinfo);
->  
-> -	arm_smccc_1_1_invoke(scmi_info->func_id, scmi_info->param_page,
-> -			     scmi_info->param_offset, 0, 0, 0, 0, 0, &res);
-> +	if (scmi_info->cap_id != ULONG_MAX)
-> +		arm_smccc_1_1_invoke(scmi_info->func_id, scmi_info->cap_id, 0,
-> +				     0, 0, 0, 0, 0, &res);
-> +	else
-> +		arm_smccc_1_1_invoke(scmi_info->func_id, scmi_info->param_page,
-> +				     scmi_info->param_offset, 0, 0, 0, 0, 0,
-> +				     &res);
->  
->  	/* Only SMCCC_RET_NOT_SUPPORTED is valid error code */
->  	if (res.a0) {
-> -- 
-> 2.17.1
-> 
+diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+index a7278a9472ed..9738c0dacd58 100644
+--- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
++++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+@@ -518,7 +518,6 @@ &usb {
+ 
+ &usb_dwc3 {
+ 	maximum-speed = "super-speed";
+-	dr_mode = "peripheral";
+ };
+ 
+ &usb_hsphy {
 
--- 
-Regards,
-Sudeep
