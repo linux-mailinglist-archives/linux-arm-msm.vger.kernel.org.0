@@ -2,120 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 523C67BFEDD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 16:15:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C240E7BFFFA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 17:09:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232788AbjJJOPe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Oct 2023 10:15:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34044 "EHLO
+        id S233251AbjJJPJd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Oct 2023 11:09:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232782AbjJJOPd (ORCPT
+        with ESMTP id S233493AbjJJPJZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Oct 2023 10:15:33 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38992C6;
-        Tue, 10 Oct 2023 07:15:31 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-405361bb94eso58351385e9.0;
-        Tue, 10 Oct 2023 07:15:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696947329; x=1697552129; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=P5isVXg9lzMhXFoyFy+8mWJrz6qew5JiLkShGec5vJc=;
-        b=cIEB9tM7A4qeWisgatdUalKC57G+HJia/jQQs9bhWRFdEPC8JaO7/VXOBsIt2zl1fh
-         N1CW9ddHAsn4SZvJ+qiI5+sU6+fo4mP5h9fINXWHV4CrSHjORfUq0ZhaQBGCnqQJVC6L
-         jaJEviP8GxJwsuSVC/Pp+rtXwlohHz589GnymyextdYPruoMsO00/VQVN/+wRMOJia/u
-         LPcNVZtyOCZ+Z2iTHCBO/xWMf/LygLrkT7UtTKYn0RuctlOe3WpEzxLpKjLHVfzMGqoS
-         D9aLhGkB/J9ct/DgFUez/fsSxqLYzRI47hoqdO17qjbbYKdLCkKO3pqrTig+ARlXCj3t
-         Bujw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696947329; x=1697552129;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=P5isVXg9lzMhXFoyFy+8mWJrz6qew5JiLkShGec5vJc=;
-        b=uY0zEYxBeMcylVIz3tF0pBpF+0XAj42pTLAvzcB/RgMlpQTDKJJepyO75RkCCyWV45
-         0UY32qVu4cIUbeMZfOTTfcEepBsErdvZjbvYAuw8Vm1tSM04r5mD3hUKImTFvp013uOo
-         K79lu+MBpUjJzsgT80ePtXSldTwrf2BbFBxYX+HLrSHOcmmZTvRkOeFVSjt5f53lDU5D
-         nH6HND//rBSOU6f/ADUoKyFOrDsruHcGBzA/1HJAg1R5vgmss4kHQqRqXKKLr7a8slnE
-         a+nZ3C0zmKQR1kINc/hY6iZL7WXNrpDLkyxHoVT1D0Vi+MbQZGtTX/o0qZHNKcRG3PY0
-         /9Xg==
-X-Gm-Message-State: AOJu0YzO0aQqfnr/yGS3CX06wHvbYU5iqdrRFbrLXQ1cr8EmQEnk+DAd
-        GJOysrQ2mEL2d8HGqgCIkJjLVHx+XvxX/g==
-X-Google-Smtp-Source: AGHT+IElqAelb44dzmendgb/GJEYBDTka4QOYwofMc9QMo4cJicO++fSzWjTQOs3hVBxf4rU5sELXA==
-X-Received: by 2002:a05:600c:296:b0:405:3d04:5f4c with SMTP id 22-20020a05600c029600b004053d045f4cmr16774846wmk.38.1696947329504;
-        Tue, 10 Oct 2023 07:15:29 -0700 (PDT)
-Received: from Ansuel-xps. (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
-        by smtp.gmail.com with ESMTPSA id hn8-20020a05600ca38800b00405959bbf4fsm14231905wmb.19.2023.10.10.07.15.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Oct 2023 07:15:29 -0700 (PDT)
-Message-ID: <65255c81.050a0220.141f8.7b8f@mx.google.com>
-X-Google-Original-Message-ID: <ZSVcf8gprpILpc5l@Ansuel-xps.>
-Date:   Tue, 10 Oct 2023 16:15:27 +0200
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Robert Marko <robimarko@gmail.com>, ilia.lin@kernel.org,
-        vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, agross@kernel.org, andersson@kernel.org,
-        rafael@kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v5 4/4] ARM: dts: qcom: ipq8064: Add CPU OPP table
-References: <20230930102218.229613-1-robimarko@gmail.com>
- <20230930102218.229613-4-robimarko@gmail.com>
- <e255dcbd-6342-49e6-9bfe-17a47b2a3c8a@linaro.org>
+        Tue, 10 Oct 2023 11:09:25 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1096BFB;
+        Tue, 10 Oct 2023 08:09:23 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36685C433C7;
+        Tue, 10 Oct 2023 15:09:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1696950562;
+        bh=1uN/KLzs4PFdrgQTDRe2eEIkgMT5dQZdcIQwi5D+gc8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=oixMLmUWvcoZqKAd0YyTCPl+qX0MbfO0IIYO59lqHm3TgBr/xwc6UrurG2TsU0jR9
+         Lx57wflgKgOs3tDTdmO3iVwMwG4mX/AymBWRtuiaTbBIue7VA6Yq/R3c1YOSHFdHxQ
+         e6oYGK9XlgiFUt2WQlFPbWhf+vkH2fcnduTfFLciqsfFODI07lVo1v5IYIVSDuEs4z
+         aplswO1O9mhBCPV1ZsS4zg2EzwQUbqO9Toi2W06I/zePioJQgdOTA7Pk8TywXuIVUb
+         ghzcfyw6aXqi1ofFVFkJbWNS9zGYdy7xtEbxhiTCjfn6aQfEb//pCGt/ESNECfz+Dj
+         hHHz40TtD5ULQ==
+Received: (nullmailer pid 884024 invoked by uid 1000);
+        Tue, 10 Oct 2023 15:09:20 -0000
+Date:   Tue, 10 Oct 2023 10:09:20 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Bryan O'Donoghue <pure.logic@nexus-software.ie>
+Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        konrad.dybcio@linaro.org, devicetree@vger.kernel.org,
+        conor+dt@kernel.org, jonathan@marek.ca, andersson@kernel.org,
+        quic_tdas@quicinc.com, linux-clk@vger.kernel.org,
+        agross@kernel.org, linux-kernel@vger.kernel.org, sboyd@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, vladimir.zapolskiy@linaro.org,
+        linux-arm-msm@vger.kernel.org, dmitry.baryshkov@linaro.org,
+        mturquette@baylibre.com
+Subject: Re: [PATCH v2 2/3] media: dt-bindings: media: camss: Add
+ qcom,sc8280xp-camss binding
+Message-ID: <20231010150920.GA870095-robh@kernel.org>
+References: <20231010122539.1768825-1-bryan.odonoghue@linaro.org>
+ <20231010122539.1768825-3-bryan.odonoghue@linaro.org>
+ <169694433325.625737.10533845261157845416.robh@kernel.org>
+ <04374506-023d-4680-9f0f-77d6893288c4@nexus-software.ie>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <e255dcbd-6342-49e6-9bfe-17a47b2a3c8a@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <04374506-023d-4680-9f0f-77d6893288c4@nexus-software.ie>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 10, 2023 at 03:40:32PM +0200, Konrad Dybcio wrote:
-> 
-> 
-> On 9/30/23 12:21, Robert Marko wrote:
-> > From: Christian Marangi <ansuelsmth@gmail.com>
+On Tue, Oct 10, 2023 at 02:56:56PM +0100, Bryan O'Donoghue wrote:
+> On 10/10/2023 14:25, Rob Herring wrote:
 > > 
-> > Add CPU OPP table for IPQ8062, IPQ8064 and IPQ8065 SoC.
-> > Use opp-supported-hw binding to correctly enable and disable the
-> > frequency as IPQ8062 supports up to 1.0Ghz, IPQ8064 supports up to
-> > 1.4GHz with 1.2GHz as an additional frequency and IPQ8065 supports
-> > 1.7GHZ but doesn't have 1.2GHZ frequency and has to be disabled.
+> > On Tue, 10 Oct 2023 13:25:38 +0100, Bryan O'Donoghue wrote:
+> > > Add bindings for qcom,sc8280xp-camss in order to support the camera
+> > > subsystem for sc8280xp as found in the Lenovo x13s Laptop.
+> > > 
+> > > Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> > > ---
+> > >   .../bindings/media/qcom,sc8280xp-camss.yaml   | 582 ++++++++++++++++++
+> > >   1 file changed, 582 insertions(+)
+> > >   create mode 100644 Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
+> > > 
 > > 
-> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> > Signed-off-by: Robert Marko <robimarko@gmail.com>
-> > ---
-> Christian/Robert, can you provide a downstream source for this?
+> > My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+> > on your patch (DT_CHECKER_FLAGS is new in v5.13):
+> > 
+> > yamllint warnings/errors:
+> > 
+> > dtschema/dtc warnings/errors:
+> > Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.example.dts:26:18: fatal error: dt-bindings/clock/qcom,sc8280xp-camcc.h: No such file or directory
+> >     26 |         #include <dt-bindings/clock/qcom,sc8280xp-camcc.h>
+> >        |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 > 
+> I guess I should be embedding this
+> 
+> 
+> This patch depends-on:
+> https://lore.kernel.org/lkml/20231004161853.86382-2-bryan.odonoghue@linaro.org/T/
+> 
+> or
+> 
+> 
+> This patch depends-on:
+> https://lore.kernel.org/lkml/20231004161853.86382-2-bryan.odonoghue@linaro.org/T/#mc33be3fef01bffe892f72bd5e567dba6a047283b
+> 
+> below the "---" in this patch directly, instead of in the series description
+> ?
 
-Sure, consider that everything is with +/-5%.
+I preferred in the patch itself, but now it doesn't really matter as far 
+as getting a report goes. They go out now without my review. So you get 
+them faster, but I can't handle dependencies unless there's a standard 
+way a script can. There's 'base-commit' but I don't think that's used 
+enough to rely on and it doesn't work if the dependency is not yet 
+applied and in linux-next.
 
-Qsdk ships with these values but I will link a more secure source that
-is from a very old qsdk source where march-msm was still used instead of
-dt.
+I'd still put the dependency here, so it's quoted in the report.
 
-Here the source [1]. Confirmed by internal verification and also other
-qsdk. At first view you might be scared by confusion but...
-
-- _lite = ipq8062
-- nothing = ipq8064
-- tn_3 = ipq8065
-
-and the psv are both in number and slow, nominal, fast and faster and
-they all reflect efuse values.
-
-There is on the left frequency and on the right voltage.
-
-[1] https://github.com/Getnear/R7800/blob/master/git_home/linux.git/sourcecode/arch/arm/mach-msm/acpuclock-ipq806x.c
-
--- 
-	Ansuel
+Rob
