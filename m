@@ -2,72 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 914737C01D4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 18:40:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C16C47C01DA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 18:41:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232526AbjJJQkB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Oct 2023 12:40:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58820 "EHLO
+        id S233819AbjJJQlo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Oct 2023 12:41:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233734AbjJJQkA (ORCPT
+        with ESMTP id S233281AbjJJQln (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Oct 2023 12:40:00 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 751EDB7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 09:39:58 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2c124adf469so67660141fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 09:39:58 -0700 (PDT)
+        Tue, 10 Oct 2023 12:41:43 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8E9AA4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 09:41:41 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2c038a1e2e6so70235791fa.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 09:41:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696955996; x=1697560796; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696956100; x=1697560900; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=hBAWc80HIYF1UAoqOKYikAPW+Uj9N8HcMer/MGjoSq4=;
-        b=O3dZx92wbkcZ/v+95ZVefI43nPdOoc0hZBmeq15+R+NYyNdzKdDcEhInkIhnVHwmKj
-         uruCQXZ6P1Otknv7KcjmVFLP2Px0deynmmctID+sATPcpyp6GvbYpnCRQ2fcJgS6v3vL
-         /Z9z6LJ+3XLUsiiowjDOvKXAXYzVqMBJ/7iDwRbNcEB157/h8GuxQyC/Gz6FqRhXqjUl
-         GLOzLMgI3d+pBSavhmqy1zBQrgIsXlR9hGStVge4gm4uqkXU4v7lTIuy6G3Sqwp8T3uu
-         7lVbl/4A1A25WuFWUUIKsYX6l56igC3wIN711RyY1r+s/Irhq11w3srUGfar47ea69DW
-         Lw/w==
+        bh=7eXnEfxjvluj2ls7P91GLCGn8R1ORvibeOsisML1eFU=;
+        b=NjdDDmyBTCjygBZJAU+NRwRzl3ex6HJG9YfrfrTpOYoShqxdPuZtOqtlmxin+mbOJ3
+         u4fFmpaTvK8xF11J3mTcfcw133QmdBBryJoDVYRZ8G6P5DWiLLpYwfu+2wp/DuybIxiQ
+         YVLoGoQtW8eMQVJ4eTl/kizr1DnWqa9iLdWpwvQHw99Xxj2hOzFB+7H4C65pFmAS/4qo
+         KnzQYJe2EJsybQQ/Y7Fk2d/oQmL0mD1PhQdx+1p4EXCIVTpTL2JMlJeCiWrZkkHApHzY
+         sut2SG5fl20NC0Fg2fCHYZ9v1khyrylm95+ZifXftj3hYvddu5VIG4Dja0GyQfzribKb
+         DdWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696955996; x=1697560796;
+        d=1e100.net; s=20230601; t=1696956100; x=1697560900;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hBAWc80HIYF1UAoqOKYikAPW+Uj9N8HcMer/MGjoSq4=;
-        b=Xv62AyeReyjmXpnhhtpjMJdYWaUUAtvnNq2gnNJHewnf8Y2U6r4JnWmQuZe0AKLFSu
-         NcvdCuYli0bpzmCuXOSJmE6orC2GQIip5DLn36qWKspIROa6sfbbCv483W6WHudXaTa1
-         s/LRoSSls70EI/GgiLirwz5pneDE3+4BhAYgoEWowQ8LPk+RpdTzhpVDrCsMTAwHQ6Xl
-         NGuLT6yhuWfg9RCKQzSK/5Zh9bLvCPkcsKY75z00SlpOf9zpf3k5atPsVRle5CXZUaPt
-         vh9YkdhDfE4UNSh9aXtPEZx6++M8cWusJP/9xIG4GUYfCKV89a9J9AMjOMYY1IbsPjQ2
-         CrCA==
-X-Gm-Message-State: AOJu0YyRa6mDbBfcGyjluQv3X7RpsuP2y8mLI+cJFrbux4mfXgiFTJiM
-        1OD0xFVRjTkXp42MUqvxLAexaO9IqOb4L4BYMlY=
-X-Google-Smtp-Source: AGHT+IFVDTHjOPqqbq5QIlF4ISYN6N4U+VKelAKaTIDnpNQ0UzQcS+aDmvycqldIVjgvzih4drSCwA==
-X-Received: by 2002:a2e:9d50:0:b0:2c0:18b8:9656 with SMTP id y16-20020a2e9d50000000b002c018b89656mr13708968ljj.24.1696955996606;
-        Tue, 10 Oct 2023 09:39:56 -0700 (PDT)
+        bh=7eXnEfxjvluj2ls7P91GLCGn8R1ORvibeOsisML1eFU=;
+        b=O3t9naYNANwbToUfOJlXFdWsDdmLw/ul7z16RI5iGHTGZhWnruABySMA4bndCXzxjK
+         1HXw5wbEeZnbbkX1YBjpUqiziPcbfF/rbIvCv3ecgZbEoM3WRMRTFYMq0qiSGhhuwg/J
+         wbnnrc5pP1i9zxJivBDfG2gSqhdcaJT45s6yuJUbyB9SBxWIKaqIXfR7JStyoeqAZxMQ
+         MQHvF0McK5/F9aut/0tG2vdhQHtFYhR3SVjb3w+RPam7J2u7J5srMpXB12x95mdxoMBC
+         ZQXC2yx9+jSkfFr6wXpPwpSMWGaJE+f6RRaPLy2O+0yMpizSseNwjZsXehvYXHqJOcWn
+         6IVA==
+X-Gm-Message-State: AOJu0Yy+N6M3HzqOATSS226u0UO07JLU36WVzDnAMAfwxq2b2p3vVPxT
+        ibZp48LW6gceOnpWZNUQKDFQjg==
+X-Google-Smtp-Source: AGHT+IHOV7TgUKuKP3wlsPK+xePcD91eowpwyzmYcOf3UNIyI6vjz4PdeVrDSdYUNwTDPfkjwi7i9A==
+X-Received: by 2002:ac2:5dd0:0:b0:506:926c:9b0d with SMTP id x16-20020ac25dd0000000b00506926c9b0dmr7597643lfq.20.1696956100067;
+        Tue, 10 Oct 2023 09:41:40 -0700 (PDT)
 Received: from [172.30.204.182] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id v6-20020a2e9f46000000b002b9358f5088sm2482543ljk.53.2023.10.10.09.39.55
+        by smtp.gmail.com with ESMTPSA id y10-20020ac2420a000000b004fe2a7a2ee2sm1866668lfh.160.2023.10.10.09.41.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Oct 2023 09:39:56 -0700 (PDT)
-Message-ID: <81e4c504-fad4-4cbf-b17e-a8b9f323f1c2@linaro.org>
-Date:   Tue, 10 Oct 2023 18:39:55 +0200
+        Tue, 10 Oct 2023 09:41:39 -0700 (PDT)
+Message-ID: <855e5504-0571-4f8c-9644-21ceb40e1132@linaro.org>
+Date:   Tue, 10 Oct 2023 18:41:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sm8550: Add download mode support
+Subject: Re: [PATCH V1 3/4] ufs: ufs-qcom: Add per-cpu PM QoS vote support for
+ ufs
 Content-Language: en-US
-To:     Mukesh Ojha <quic_mojha@quicinc.com>,
+To:     Maramaina Naresh <quic_mnaresh@quicinc.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1696954157-16327-1-git-send-email-quic_mojha@quicinc.com>
- <1696954157-16327-3-git-send-email-quic_mojha@quicinc.com>
+        Conor Dooley <conor+dt@kernel.org>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>
+Cc:     Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_cang@quicinc.com, quic_nguyenb@quicinc.com
+References: <1696952947-18062-1-git-send-email-quic_mnaresh@quicinc.com>
+ <1696952947-18062-4-git-send-email-quic_mnaresh@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <1696954157-16327-3-git-send-email-quic_mojha@quicinc.com>
+In-Reply-To: <1696952947-18062-4-git-send-email-quic_mnaresh@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,12 +91,24 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 10/10/23 18:09, Mukesh Ojha wrote:
-> Refer TCSR phandle from scm node, so that it can be used by
-> SCM driver for setting download mode.
+On 10/10/23 17:49, Maramaina Naresh wrote:
+> PM QoS per-cpu framework provides performance requirements for each cpu.
 > 
-> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> The per-cpu PM QoS framework will provide the corresponding interface to
+> collect the resume_latency request of the specified device and provide
+> it to the runtime PM. When suspending the device, it will consider this
+> requirement and decide whether to suspend the device.
+> 
+> Voting will follow below sequence.
+> 1. Vote for maximum latency S32_MAX in driver init.
+> 2. Schedule a vote of PERF when a transfer request is received.
+> 3. Update the vote to S32_MAX during clock gating.
+> 
+> Signed-off-by: Asutosh Das <quic_asutoshd@quicinc.com>
+> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> Signed-off-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
+> Signed-off-by: Maramaina Naresh <quic_mnaresh@quicinc.com>
 > ---
-Please improve the commit message, like in 2/3
+Is this the same patch as 2/4?
 
 Konrad
