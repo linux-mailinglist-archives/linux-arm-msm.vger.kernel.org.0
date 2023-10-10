@@ -2,113 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C16C47C01DA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 18:41:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C192A7C0306
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 19:53:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233819AbjJJQlo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Oct 2023 12:41:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47152 "EHLO
+        id S1343490AbjJJRxQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Oct 2023 13:53:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233281AbjJJQln (ORCPT
+        with ESMTP id S234056AbjJJRxQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Oct 2023 12:41:43 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8E9AA4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 09:41:41 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2c038a1e2e6so70235791fa.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 09:41:41 -0700 (PDT)
+        Tue, 10 Oct 2023 13:53:16 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 795A5A4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 10:53:13 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id ffacd0b85a97d-3296b3f03e5so3958184f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 10:53:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696956100; x=1697560900; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7eXnEfxjvluj2ls7P91GLCGn8R1ORvibeOsisML1eFU=;
-        b=NjdDDmyBTCjygBZJAU+NRwRzl3ex6HJG9YfrfrTpOYoShqxdPuZtOqtlmxin+mbOJ3
-         u4fFmpaTvK8xF11J3mTcfcw133QmdBBryJoDVYRZ8G6P5DWiLLpYwfu+2wp/DuybIxiQ
-         YVLoGoQtW8eMQVJ4eTl/kizr1DnWqa9iLdWpwvQHw99Xxj2hOzFB+7H4C65pFmAS/4qo
-         KnzQYJe2EJsybQQ/Y7Fk2d/oQmL0mD1PhQdx+1p4EXCIVTpTL2JMlJeCiWrZkkHApHzY
-         sut2SG5fl20NC0Fg2fCHYZ9v1khyrylm95+ZifXftj3hYvddu5VIG4Dja0GyQfzribKb
-         DdWQ==
+        d=linaro.org; s=google; t=1696960392; x=1697565192; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
+         :references:cc:to:content-language:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HSrhS+Y5NUbiKTwTH1nhAVKAr59WAJLwtFf78qIT2sM=;
+        b=UwtTN9jmuLy6PPgQmomxJXiv0Z9cIYxKahHvW60N8kXi3N048mPOrhdmWvPj2xCJTu
+         ALqzx73/7w1blocD3M49+u0omYxtfz0HxZI8H0Y7diUJ7ijuyJeoLu1dvI2iayhpoue3
+         s9T3H1t45XRBDPUZC6uHBlZBx+RiSMMgyBW6GwbKP9ngoHHkyQZsjVvTmrrRD8tF3bMA
+         e7oPzdiiTU45PXDTF3euYPHCdZQF6vl10d51xEjQm8eleh1tdSJtu0C1ZqRCXaazbewP
+         nwBMAt1str7Qcu9zb1HbOjzLeZsqh3UegGwy6WBCmcodlAZNIJnhA5tt1t+iLy2uJiQH
+         d0+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696956100; x=1697560900;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7eXnEfxjvluj2ls7P91GLCGn8R1ORvibeOsisML1eFU=;
-        b=O3t9naYNANwbToUfOJlXFdWsDdmLw/ul7z16RI5iGHTGZhWnruABySMA4bndCXzxjK
-         1HXw5wbEeZnbbkX1YBjpUqiziPcbfF/rbIvCv3ecgZbEoM3WRMRTFYMq0qiSGhhuwg/J
-         wbnnrc5pP1i9zxJivBDfG2gSqhdcaJT45s6yuJUbyB9SBxWIKaqIXfR7JStyoeqAZxMQ
-         MQHvF0McK5/F9aut/0tG2vdhQHtFYhR3SVjb3w+RPam7J2u7J5srMpXB12x95mdxoMBC
-         ZQXC2yx9+jSkfFr6wXpPwpSMWGaJE+f6RRaPLy2O+0yMpizSseNwjZsXehvYXHqJOcWn
-         6IVA==
-X-Gm-Message-State: AOJu0Yy+N6M3HzqOATSS226u0UO07JLU36WVzDnAMAfwxq2b2p3vVPxT
-        ibZp48LW6gceOnpWZNUQKDFQjg==
-X-Google-Smtp-Source: AGHT+IHOV7TgUKuKP3wlsPK+xePcD91eowpwyzmYcOf3UNIyI6vjz4PdeVrDSdYUNwTDPfkjwi7i9A==
-X-Received: by 2002:ac2:5dd0:0:b0:506:926c:9b0d with SMTP id x16-20020ac25dd0000000b00506926c9b0dmr7597643lfq.20.1696956100067;
-        Tue, 10 Oct 2023 09:41:40 -0700 (PDT)
-Received: from [172.30.204.182] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id y10-20020ac2420a000000b004fe2a7a2ee2sm1866668lfh.160.2023.10.10.09.41.38
+        d=1e100.net; s=20230601; t=1696960392; x=1697565192;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
+         :references:cc:to:content-language:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=HSrhS+Y5NUbiKTwTH1nhAVKAr59WAJLwtFf78qIT2sM=;
+        b=QrKNdfBsenZGqWn3PEvQLlCyFX4Lk4MIYp4bRdevKQHdohPYbAsnUOlhvpuYV+qcA9
+         KKaFa8lcYfBGZYV9uNtVgeqGdIJsz0zhBkvPPh9h279QBR06++upfyCI+LQI9LUkWPBR
+         c9N6cixe1UReckxWYmT9gnjRpmL6G7PXraQcEqIDrIRZjpYLrD+ipzio94yVZD9mu+SH
+         wOsLfs04yFhsM5U4Pcku8tShwgATS4my9vaVvDTMbCce/KBpYuoGXtG/RGNjBzUMYRaZ
+         KqsQ59F0J9FikP2S6VGES42+fm/0Iwfua1NKV/44/p+1QeZBOGC/njmSFW2PqoKvHRvY
+         vS2w==
+X-Gm-Message-State: AOJu0Yxx1/7Ovq9M5qFOq41j5JKuyesuRrxOlZe5xg68p4d2fCVVe5hC
+        vgb0JKcA3ikUVIEG+g8I4rf+vA==
+X-Google-Smtp-Source: AGHT+IHzVMxGmaidcZD69WfVQvYZd9PD5NW75Sycsq+x2li8H1LirkVsUZqgDcmzrQFjcBXeDNIpHw==
+X-Received: by 2002:a5d:45c2:0:b0:317:5bb2:aeca with SMTP id b2-20020a5d45c2000000b003175bb2aecamr16129536wrs.16.1696960391790;
+        Tue, 10 Oct 2023 10:53:11 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:dc16:42a:1d87:57c1? ([2a01:e0a:982:cbb0:dc16:42a:1d87:57c1])
+        by smtp.gmail.com with ESMTPSA id i10-20020adff30a000000b0031f8a59dbeasm13222309wro.62.2023.10.10.10.53.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Oct 2023 09:41:39 -0700 (PDT)
-Message-ID: <855e5504-0571-4f8c-9644-21ceb40e1132@linaro.org>
-Date:   Tue, 10 Oct 2023 18:41:38 +0200
+        Tue, 10 Oct 2023 10:53:11 -0700 (PDT)
+Message-ID: <8ccbeb04-9671-4414-810e-70d4c3690e0c@linaro.org>
+Date:   Tue, 10 Oct 2023 19:53:10 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1 3/4] ufs: ufs-qcom: Add per-cpu PM QoS vote support for
- ufs
-Content-Language: en-US
-To:     Maramaina Naresh <quic_mnaresh@quicinc.com>,
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 1/3] dt-bindings: mfd: qcom,tcsr: Add compatible for
+ sm8{2|3|5}50
+Content-Language: en-US, fr
+To:     Mukesh Ojha <quic_mojha@quicinc.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>
-Cc:     Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_cang@quicinc.com, quic_nguyenb@quicinc.com
-References: <1696952947-18062-1-git-send-email-quic_mnaresh@quicinc.com>
- <1696952947-18062-4-git-send-email-quic_mnaresh@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <1696952947-18062-4-git-send-email-quic_mnaresh@quicinc.com>
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1696954157-16327-1-git-send-email-quic_mojha@quicinc.com>
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <1696954157-16327-1-git-send-email-quic_mojha@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
-X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 10/10/23 17:49, Maramaina Naresh wrote:
-> PM QoS per-cpu framework provides performance requirements for each cpu.
+On 10/10/2023 18:09, Mukesh Ojha wrote:
+> Document the compatible for sm8{2|3|5}50 SoCs.
 > 
-> The per-cpu PM QoS framework will provide the corresponding interface to
-> collect the resume_latency request of the specified device and provide
-> it to the runtime PM. When suspending the device, it will consider this
-> requirement and decide whether to suspend the device.
-> 
-> Voting will follow below sequence.
-> 1. Vote for maximum latency S32_MAX in driver init.
-> 2. Schedule a vote of PERF when a transfer request is received.
-> 3. Update the vote to S32_MAX during clock gating.
-> 
-> Signed-off-by: Asutosh Das <quic_asutoshd@quicinc.com>
-> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-> Signed-off-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
-> Signed-off-by: Maramaina Naresh <quic_mnaresh@quicinc.com>
+> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
 > ---
-Is this the same patch as 2/4?
+>   Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml | 3 +++
+>   1 file changed, 3 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+> index 33c3d023a106..f328ddd6c566 100644
+> --- a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+> +++ b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+> @@ -29,7 +29,10 @@ properties:
+>             - qcom,sdx65-tcsr
+>             - qcom,sm4450-tcsr
+>             - qcom,sm8150-tcsr
+> +          - qcom,sm8250-tcsr
+> +          - qcom,sm8350-tcsr
+>             - qcom,sm8450-tcsr
+> +          - qcom,sm8550-tcsr
 
-Konrad
+This is already documented in:
+Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml
+
+>             - qcom,tcsr-apq8064
+>             - qcom,tcsr-apq8084
+>             - qcom,tcsr-ipq5332
+
