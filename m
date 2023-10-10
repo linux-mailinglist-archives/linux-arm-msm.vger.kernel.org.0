@@ -2,97 +2,220 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 844A37C447B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 00:45:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E5827C450D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 00:51:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231926AbjJJWpm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Oct 2023 18:45:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50962 "EHLO
+        id S229865AbjJJWva (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Oct 2023 18:51:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229887AbjJJWpl (ORCPT
+        with ESMTP id S1344419AbjJJWur (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Oct 2023 18:45:41 -0400
-Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C38C098
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 15:45:36 -0700 (PDT)
-Received: by mail-yb1-xb32.google.com with SMTP id 3f1490d57ef6-d9a3d737d66so2162653276.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 15:45:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696977936; x=1697582736; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=4BcNjIN5yyvXH7jNvnKhk6MkOtMW2fYf7l89Mz36KW0=;
-        b=zH9lOrziZ8l5ovPyjy2lQKhNTGfGBJDParcbeqoiDREihMfNAdKKLtfoUMb4bSVDpp
-         6AHH1jahGa8Oy1KsHssAR2Fh5lNiWjrd8qXCssSdfTct0oHxPmCS0cAaIOst5FHGA1LK
-         4KUFn/whwrsi89vEewQccohsQ7UneoE3mFi5pO5TfURVRx4qga0F5Fr88bf8tS98qy1k
-         65C1lSO1MFU0/t6jLiM6h8GDpv0zt1vVSKqks+Y1ZMZIioCjYEK+YDj/9TpBVpw0TZCv
-         426MExNewwFfxOyVmFQcvCKXLFB07gQRBf3hqu65CswzVVk2QGx/fzTghAAy/vI/YHEW
-         qLAg==
+        Tue, 10 Oct 2023 18:50:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3950DC
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 15:49:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1696978195;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=Cb0ffsa2ZMdKBtsL7Ay09Q93KCT+/I1vCSqafr4Bsa8=;
+        b=i//K4VgfmKv73DrIy7QweT9wyIbYOikuZYzwh1qoyzYxpIYsRnjxdxk6xkboXCg0Rotlqk
+        ssxgLMeXJcyJx46OUGB+tWfy7ZtbXNp5GTJcvmU5+0fc8ocB6+4MATXEtigBinVG3JP426
+        XiATuE++8QhXvO+SiXE7LqtFAQWoUjY=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-656-rCH4n_wEPmONoTRLeHW_hQ-1; Tue, 10 Oct 2023 18:49:53 -0400
+X-MC-Unique: rCH4n_wEPmONoTRLeHW_hQ-1
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-65b0d19bfd0so73812316d6.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 15:49:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696977936; x=1697582736;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4BcNjIN5yyvXH7jNvnKhk6MkOtMW2fYf7l89Mz36KW0=;
-        b=N315e5q62VX4iJ0jZQvTSb829YxrkBjCgyr+5kMlIHjPKGkP7hfTo7IfeoYjF4ZRRh
-         odMTC1/Uxvr5ayOMum3zvyMA5ImmuEoXepTGEa7hb53ynMu+aUpgFbM4X0v+NQOyjULQ
-         eJ0Mww8ia4WaQPriEoxCIlB9hBY8+A+cME2tj8+0H2Q8d4roz4MiwYRHkUYDwe167w1G
-         LAx+Y/8pySh8/XQc22JLY5ItLyHxENLhTYuDm++bWcCXGEYnWflaMM2pbcnAyL7H/GS6
-         hhNdD7AZq31wRwV7MQKx3ZHnTmby7CXY3s7KQ+vxSBlYe2gTVD+AeCHEIs0IbwbbO15s
-         j2aQ==
-X-Gm-Message-State: AOJu0YzoDzomTkEZXLx67FY0Zsm5vrtZwhKXvSzwT+z4umG7gLLvFG6n
-        LT8mXhR1pKzCI1NLfHH1S8ClEpFNXkeds8K5xP3D4A==
-X-Google-Smtp-Source: AGHT+IE5kL5P5u+6fKchLXqkW+KwVtqyl81vixb70xS3IzE/CbXHiUtyr2tWiR9tiCfCkSW7qWH2PtCXGy2w4zoVe5s=
-X-Received: by 2002:a25:6086:0:b0:d81:41b1:448c with SMTP id
- u128-20020a256086000000b00d8141b1448cmr17195067ybb.43.1696977935928; Tue, 10
- Oct 2023 15:45:35 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230908-topic-sm8550-upstream-pdcharge-ulog-v1-1-d1b16b02ced2@linaro.org>
-In-Reply-To: <20230908-topic-sm8550-upstream-pdcharge-ulog-v1-1-d1b16b02ced2@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 11 Oct 2023 01:45:24 +0300
-Message-ID: <CAA8EJppLD56DCfij=BdeqEiYqaw+9hzN9r5qCKRU8utCdaiRiw@mail.gmail.com>
-Subject: Re: [PATCH] soc: qcom: add ADSP PDCharger ULOG driver
-To:     Neil Armstrong <neil.armstrong@linaro.org>
+        d=1e100.net; s=20230601; t=1696978193; x=1697582993;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Cb0ffsa2ZMdKBtsL7Ay09Q93KCT+/I1vCSqafr4Bsa8=;
+        b=g+RppFvULoi9PdICkNAcZGinGzYfQgiJyI/un0wkkkbG/aIwM4PnXPuFegzfMhQeM6
+         Bx/7iKneOnrjQ0ppT8D562LuRH4ewF7riCzeRqVzBl3ODdEOmzjC+vFrF0Zl3nqDExYM
+         Ta1Mc/GM7DtpBXNsTJCoopFXukASOk2q95fA+an/L39tjsTxbckAfvw+Q6IducLLNP0j
+         EXkWoMY3muaoInIuRd+ZNVgWPARjbb1Q0Sv9rXNCS158pBHFs4XpD/qf2hXO5x6Pd1q4
+         I1dK9ZfLYHPRXm8MSDqQE06OHgeVOwOawdbmrlzY4UWMXt8kUe5KzLpEhMau3yQEQtJf
+         yyYw==
+X-Gm-Message-State: AOJu0YxZpZOAfuPhaKCa0DGrmk6cMt/ccuQCQMkuQ08ZdnWke/QPtp49
+        Z2514VYeNwG4EMJSUBZXEmQONiUNOcogoi8g9iEaXtLP4XhedHBx6L96aN+cgzKocGAvWmdNTJU
+        rFOomsqYAQFnjZdDN9DCrvdvjnQ==
+X-Received: by 2002:a0c:c543:0:b0:66c:fc47:46b7 with SMTP id y3-20020a0cc543000000b0066cfc4746b7mr2407017qvi.16.1696978193304;
+        Tue, 10 Oct 2023 15:49:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEAX4sHPUZ1sj/c/iglb3GQvKcOnNHGycBBbOTg8o/hIRciCX9+6emo2NlFUDRtk0Tifxswrw==
+X-Received: by 2002:a0c:c543:0:b0:66c:fc47:46b7 with SMTP id y3-20020a0cc543000000b0066cfc4746b7mr2406996qvi.16.1696978193022;
+        Tue, 10 Oct 2023 15:49:53 -0700 (PDT)
+Received: from fedora ([2600:1700:1ff0:d0e0::37])
+        by smtp.gmail.com with ESMTPSA id z19-20020a0cda93000000b0065b31dfdf70sm5147823qvj.11.2023.10.10.15.49.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Oct 2023 15:49:52 -0700 (PDT)
+Date:   Tue, 10 Oct 2023 17:49:50 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Bartosz Golaszewski <brgl@bgdev.pl>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        Alex Elder <elder@linaro.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, kernel@quicinc.com,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v3 11/15] firmware: qcom: qseecom: convert to using the
+ TZ allocator
+Message-ID: <y5otsuzhc27xeay6js4nkqss2bo5bsmygwdjuhqpdzce4yffxk@gkkh522s5e3b>
+References: <20231009153427.20951-1-brgl@bgdev.pl>
+ <20231009153427.20951-12-brgl@bgdev.pl>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231009153427.20951-12-brgl@bgdev.pl>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 8 Sept 2023 at 13:53, Neil Armstrong <neil.armstrong@linaro.org> wrote:
->
-> The Qualcomm PMIC PDCharger ULOG driver provides access to logs of
-> the ADSP firmware PDCharger module in charge of Battery and Power
-> Delivery on modern systems.
->
-> Implement trace events as a simple rpmsg driver with an 1s interval
-> to retrieve the messages.
->
-> The interface allows filtering the messages by subsystem and priority
-> level, this could be implemented later on.
->
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+On Mon, Oct 09, 2023 at 05:34:23PM +0200, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> Drop the DMA mapping operations from qcom_scm_qseecom_app_send() and
+> convert all users of it in the qseecom module to using the TZ allocator
+> for creating SCM call buffers. Together with using the cleanup macros,
+> it has the added benefit of a significant code shrink. As this is
+> largely a module separate from the SCM driver, let's use a separate
+> memory pool.
+> 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+<snip>
 
-> ---
->  drivers/soc/qcom/Kconfig               |  12 +++
->  drivers/soc/qcom/Makefile              |   1 +
->  drivers/soc/qcom/pmic_pdcharger_ulog.c | 166 +++++++++++++++++++++++++++++++++
->  drivers/soc/qcom/pmic_pdcharger_ulog.h |  36 +++++++
->  4 files changed, 215 insertions(+)
+> @@ -567,20 +529,14 @@ static efi_status_t qsee_uefi_get_next_variable(struct qcuefi_client *qcuefi,
+>  		return EFI_INVALID_PARAMETER;
+>  
+>  	status = qcom_qseecom_app_send(qcuefi->client, req_data, req_size, rsp_data, rsp_size);
+> -	if (status) {
+> -		efi_status = EFI_DEVICE_ERROR;
+> -		goto out_free;
+> -	}
+> +	if (status)
+> +		return EFI_DEVICE_ERROR;
+>  
+> -	if (rsp_data->command_id != QSEE_CMD_UEFI_GET_NEXT_VARIABLE) {
+> -		efi_status = EFI_DEVICE_ERROR;
+> -		goto out_free;
+> -	}
+> +	if (rsp_data->command_id != QSEE_CMD_UEFI_GET_NEXT_VARIABLE)
+> +		return EFI_DEVICE_ERROR;
+>  
+> -	if (rsp_data->length < sizeof(*rsp_data)) {
+> -		efi_status = EFI_DEVICE_ERROR;
+> -		goto out_free;
+> -	}
+> +	if (rsp_data->length < sizeof(*rsp_data))
+> +		return EFI_DEVICE_ERROR;
+>  
+>  	if (rsp_data->status) {
+>  		dev_dbg(qcuefi_dev(qcuefi), "%s: uefisecapp error: 0x%x\n",
+> @@ -595,77 +551,59 @@ static efi_status_t qsee_uefi_get_next_variable(struct qcuefi_client *qcuefi,
+>  		if (efi_status == EFI_BUFFER_TOO_SMALL)
+>  			*name_size = rsp_data->name_size;
+>  
+> -		goto out_free;
+> +		return efi_status;
+>  	}
+>  
+> -	if (rsp_data->length > rsp_size) {
+> -		efi_status = EFI_DEVICE_ERROR;
+> -		goto out_free;
+> -	}
+> +	if (rsp_data->length > rsp_size)
+> +		return EFI_DEVICE_ERROR;
+>  
+> -	if (rsp_data->name_offset + rsp_data->name_size > rsp_data->length) {
+> -		efi_status = EFI_DEVICE_ERROR;
+> -		goto out_free;
+> -	}
+> +	if (rsp_data->name_offset + rsp_data->name_size > rsp_data->length)
+> +		return EFI_DEVICE_ERROR;
+>  
+> -	if (rsp_data->guid_offset + rsp_data->guid_size > rsp_data->length) {
+> -		efi_status = EFI_DEVICE_ERROR;
+> -		goto out_free;
+> -	}
+> +	if (rsp_data->guid_offset + rsp_data->guid_size > rsp_data->length)
+> +		return EFI_DEVICE_ERROR;
+>  
+>  	if (rsp_data->name_size > *name_size) {
+>  		*name_size = rsp_data->name_size;
+> -		efi_status = EFI_BUFFER_TOO_SMALL;
+> -		goto out_free;
+> +		return EFI_BUFFER_TOO_SMALL;
+>  	}
+>  
+> -	if (rsp_data->guid_size != sizeof(*guid)) {
+> -		efi_status = EFI_DEVICE_ERROR;
+> -		goto out_free;
+> -	}
+> +	if (rsp_data->guid_size != sizeof(*guid))
+> +		return EFI_DEVICE_ERROR;
+>  
+>  	memcpy(guid, ((void *)rsp_data) + rsp_data->guid_offset, rsp_data->guid_size);
+>  	status = ucs2_strscpy(name, ((void *)rsp_data) + rsp_data->name_offset,
+>  			      rsp_data->name_size / sizeof(*name));
+>  	*name_size = rsp_data->name_size;
+>  
+> -	if (status < 0) {
+> +	if (status < 0)
+>  		/*
+>  		 * Return EFI_DEVICE_ERROR here because the buffer size should
+>  		 * have already been validated above, causing this function to
+>  		 * bail with EFI_BUFFER_TOO_SMALL.
+>  		 */
+>  		return EFI_DEVICE_ERROR;
+> -	}
 
--- 
-With best wishes
-Dmitry
+Personally (no idea what the actual style guide says) leaving braces
+around the multiline if statement would be nice.... that being said,
+that's my opinion :)
+
+<snip>
+> @@ -704,12 +635,7 @@ static efi_status_t qsee_uefi_query_variable_info(struct qcuefi_client *qcuefi,
+>  	if (max_variable_size)
+>  		*max_variable_size = rsp_data->max_variable_size;
+>  
+> -out_free:
+> -	kfree(rsp_data);
+> -out_free_req:
+> -	kfree(req_data);
+> -out:
+> -	return efi_status;
+> +	return EFI_SUCCESS;
+>  }
+>  
+>  /* -- Global efivar interface. ---------------------------------------------- */
+> @@ -838,6 +764,10 @@ static int qcom_uefisecapp_probe(struct auxiliary_device *aux_dev,
+>  	if (status)
+>  		qcuefi_set_reference(NULL);
+>  
+> +	qcuefi->mempool = devm_qcom_tzmem_pool_new(&aux_dev->dev, SZ_256K);
+
+Any particular reason for this size? Just curious, it was (one) of the
+reasons I had not marked patch 4 yet (it looks good, but I wanted to get
+through the series to digest the Kconfig as well).
+
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+
