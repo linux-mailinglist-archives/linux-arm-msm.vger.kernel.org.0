@@ -2,382 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5EE0B7BF5D0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 10:27:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E3087BF6E4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 11:11:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1442814AbjJJI1y convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Oct 2023 04:27:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48292 "EHLO
+        id S229679AbjJJJLb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Oct 2023 05:11:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1442889AbjJJI1r (ORCPT
+        with ESMTP id S229516AbjJJJLa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Oct 2023 04:27:47 -0400
-Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA421113;
-        Tue, 10 Oct 2023 01:27:44 -0700 (PDT)
-Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-6c646b5028dso3582646a34.3;
-        Tue, 10 Oct 2023 01:27:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696926464; x=1697531264;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/zfNOCTD86KDageC9tnVSGx5PVRXsfy+xz/8lH/noCQ=;
-        b=OuTKmouMTXtjdSCxpNFEgD7Qh+M6qcTeeaffzO2Xdp5zMbxgypCdjh6rYq24U1J8Ed
-         tMnmfjb93U87UK5PYyPnOws7odqQI8cuyYaQccRpy4qfzYmBOFVzRolB8D/wCXkWl4lR
-         523AaO/blizbomFc7y5xVef/FbVCeJ31sHY0zYw5QGDkctDUewU8WrYxu3i8tB3oM73+
-         DUuzC9BtJxvSe/BUA6tCSb9yDsKwFMieEQfNSYZiJn/Ch/PweL8Jhn/gLe+i3ATPucXP
-         922OsJACF7HHrRXvMv5FwcSUJTrklsX1IghALpTxydOefJmHlAiuXGIkqolviYSt6nio
-         3INg==
-X-Gm-Message-State: AOJu0YxNq2Cac3JR1qjbT6aWi6a8nsxc77DBISHh4iGJb3CdTQlF9Mvq
-        uVBcnizWJ7o7+7jVJWB21GXH7XJs5jnAtErd
-X-Google-Smtp-Source: AGHT+IGuGLW0fV9Fz/HXBt7oYw1TX2pq0YesetmbphMjW+Ur2Y2OGRj8pQEf7qljZm/M+sOy7DAK/A==
-X-Received: by 2002:a05:6830:22cb:b0:6bb:1629:ab44 with SMTP id q11-20020a05683022cb00b006bb1629ab44mr18634525otc.7.1696926463655;
-        Tue, 10 Oct 2023 01:27:43 -0700 (PDT)
-Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com. [209.85.161.48])
-        by smtp.gmail.com with ESMTPSA id f6-20020a056830204600b006af913c1044sm1714375otp.16.2023.10.10.01.27.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Oct 2023 01:27:41 -0700 (PDT)
-Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-57e3c2adbf0so2951688eaf.2;
-        Tue, 10 Oct 2023 01:27:41 -0700 (PDT)
-X-Received: by 2002:a05:6358:1a9e:b0:164:8d78:257f with SMTP id
- gm30-20020a0563581a9e00b001648d78257fmr5713722rwb.17.1696926460916; Tue, 10
- Oct 2023 01:27:40 -0700 (PDT)
-MIME-Version: 1.0
-References: <20231009211356.3242037-3-robh@kernel.org>
-In-Reply-To: <20231009211356.3242037-3-robh@kernel.org>
-Reply-To: wens@csie.org
-From:   Chen-Yu Tsai <wens@csie.org>
-Date:   Tue, 10 Oct 2023 16:27:29 +0800
-X-Gmail-Original-Message-ID: <CAGb2v66ZHD8mMMNVwp+sTYT6DAFDUrP8ydeTo7KW+uUtBRM3bQ@mail.gmail.com>
-Message-ID: <CAGb2v66ZHD8mMMNVwp+sTYT6DAFDUrP8ydeTo7KW+uUtBRM3bQ@mail.gmail.com>
-Subject: Re: [PATCH] mfd: Use device_get_match_data()
-To:     Rob Herring <robh@kernel.org>
-Cc:     Lee Jones <lee@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
+        Tue, 10 Oct 2023 05:11:30 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7E509E;
+        Tue, 10 Oct 2023 02:11:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1696929088; x=1728465088;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=KboUvh1F7MxQgYzc8J1O7LouQyFbLpf8jGfEUnsK3H8=;
+  b=ZwB8OT0w9SeFkwf069/j3wQIFixCbA1RfRtIWH9aGRm7La8O+OpucKHI
+   Hsqn4yM+VMSltEu4Cfj4eTMDGBEbeIyMFKCQPbQbmX3v8x8N70HkaGMTF
+   ZmzjLEPxcoSCoGm6v5vi0mmo3GbHvqWZQTJYf0lvA0se9MUEEuH+fxlOM
+   WcLASCMNd1rw89jTG7A2LiXBj1QvVQ7RoU46N5/OeClTrdZpGeBLUMLyW
+   9Enelm+8y4OZgk76XQDP1w7cOC3wY4bxs+rCIzeH8i4N7vfzEIxzVVLzL
+   HxogZHfiO5E9JgzOodUp7zFNq/BFENA8DIkh7LFmf/othdz57TdS3KF9v
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10858"; a="363695404"
+X-IronPort-AV: E=Sophos;i="6.03,212,1694761200"; 
+   d="scan'208";a="363695404"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Oct 2023 02:11:28 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10858"; a="819164498"
+X-IronPort-AV: E=Sophos;i="6.03,212,1694761200"; 
+   d="scan'208";a="819164498"
+Received: from lkp-server02.sh.intel.com (HELO f64821696465) ([10.239.97.151])
+  by fmsmga008.fm.intel.com with ESMTP; 10 Oct 2023 02:11:24 -0700
+Received: from kbuild by f64821696465 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qq8ln-0000E0-0m;
+        Tue, 10 Oct 2023 09:11:15 +0000
+Date:   Tue, 10 Oct 2023 17:11:06 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Bartosz Golaszewski <brgl@bgdev.pl>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Tony Lindgren <tony@atomide.com>, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-omap@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Andrew Halaney <ahalaney@redhat.com>,
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        Alex Elder <elder@linaro.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        kernel@quicinc.com,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v3 05/15] firmware: qcom: scm: enable the TZ mem allocator
+Message-ID: <202310101720.hVVWyJf3-lkp@intel.com>
+References: <20231009153427.20951-6-brgl@bgdev.pl>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231009153427.20951-6-brgl@bgdev.pl>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 10, 2023 at 5:14 AM Rob Herring <robh@kernel.org> wrote:
->
-> Use preferred device_get_match_data() instead of of_match_device() to
-> get the driver match data. With this, adjust the includes to explicitly
-> include the correct headers.
->
-> Signed-off-by: Rob Herring <robh@kernel.org>
-> ---
->  drivers/mfd/axp20x.c           | 22 +++-------------------
+Hi Bartosz,
 
-I'd keep the error message, but otherwise for axp20x,
+kernel test robot noticed the following build warnings:
 
-Reviewed-by: Chen-Yu Tsai <wens@csie.org>
+[auto build test WARNING on next-20231009]
+[cannot apply to arm64/for-next/core krzk-dt/for-next linus/master v6.6-rc5 v6.6-rc4 v6.6-rc3 v6.6-rc5]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
->  drivers/mfd/hi6421-pmic-core.c |  9 +++------
->  drivers/mfd/mxs-lradc.c        |  9 ++-------
->  drivers/mfd/qcom-spmi-pmic.c   |  6 ++++--
->  drivers/mfd/qcom_rpm.c         |  8 ++++----
->  drivers/mfd/tps65910.c         | 11 ++---------
->  drivers/mfd/twl4030-power.c    |  9 +++------
->  drivers/mfd/twl6030-irq.c      | 10 +++++-----
->  8 files changed, 26 insertions(+), 58 deletions(-)
->
-> diff --git a/drivers/mfd/axp20x.c b/drivers/mfd/axp20x.c
-> index d93189b0230d..deaa969bab4e 100644
-> --- a/drivers/mfd/axp20x.c
-> +++ b/drivers/mfd/axp20x.c
-> @@ -22,7 +22,8 @@
->  #include <linux/mfd/axp20x.h>
->  #include <linux/mfd/core.h>
->  #include <linux/module.h>
-> -#include <linux/of_device.h>
-> +#include <linux/of.h>
-> +#include <linux/property.h>
->  #include <linux/reboot.h>
->  #include <linux/regmap.h>
->  #include <linux/regulator/consumer.h>
-> @@ -1131,27 +1132,10 @@ static int axp20x_power_off(struct sys_off_data *data)
->  int axp20x_match_device(struct axp20x_dev *axp20x)
->  {
->         struct device *dev = axp20x->dev;
-> -       const struct acpi_device_id *acpi_id;
-> -       const struct of_device_id *of_id;
->         const struct mfd_cell *cells_no_irq = NULL;
->         int nr_cells_no_irq = 0;
->
-> -       if (dev->of_node) {
-> -               of_id = of_match_device(dev->driver->of_match_table, dev);
-> -               if (!of_id) {
-> -                       dev_err(dev, "Unable to match OF ID\n");
-> -                       return -ENODEV;
-> -               }
-> -               axp20x->variant = (long)of_id->data;
-> -       } else {
-> -               acpi_id = acpi_match_device(dev->driver->acpi_match_table, dev);
-> -               if (!acpi_id || !acpi_id->driver_data) {
-> -                       dev_err(dev, "Unable to match ACPI ID and data\n");
-> -                       return -ENODEV;
-> -               }
-> -               axp20x->variant = (long)acpi_id->driver_data;
-> -       }
-> -
-> +       axp20x->variant = (long)device_get_match_data(dev);
->         switch (axp20x->variant) {
->         case AXP152_ID:
->                 axp20x->nr_cells = ARRAY_SIZE(axp152_cells);
-> diff --git a/drivers/mfd/hi6421-pmic-core.c b/drivers/mfd/hi6421-pmic-core.c
-> index a6a890537a1e..5af24a438329 100644
-> --- a/drivers/mfd/hi6421-pmic-core.c
-> +++ b/drivers/mfd/hi6421-pmic-core.c
-> @@ -15,8 +15,9 @@
->  #include <linux/mfd/core.h>
->  #include <linux/mfd/hi6421-pmic.h>
->  #include <linux/module.h>
-> -#include <linux/of_device.h>
-> +#include <linux/of.h>
->  #include <linux/platform_device.h>
-> +#include <linux/property.h>
->  #include <linux/regmap.h>
->
->  static const struct mfd_cell hi6421_devs[] = {
-> @@ -50,16 +51,12 @@ MODULE_DEVICE_TABLE(of, of_hi6421_pmic_match);
->  static int hi6421_pmic_probe(struct platform_device *pdev)
->  {
->         struct hi6421_pmic *pmic;
-> -       const struct of_device_id *id;
->         const struct mfd_cell *subdevs;
->         enum hi6421_type type;
->         void __iomem *base;
->         int n_subdevs, ret;
->
-> -       id = of_match_device(of_hi6421_pmic_match, &pdev->dev);
-> -       if (!id)
-> -               return -EINVAL;
-> -       type = (uintptr_t)id->data;
-> +       type = (uintptr_t)device_get_match_data(&pdev->dev);
->
->         pmic = devm_kzalloc(&pdev->dev, sizeof(*pmic), GFP_KERNEL);
->         if (!pmic)
-> diff --git a/drivers/mfd/mxs-lradc.c b/drivers/mfd/mxs-lradc.c
-> index 21f3033d6eb5..ec1b356562b9 100644
-> --- a/drivers/mfd/mxs-lradc.c
-> +++ b/drivers/mfd/mxs-lradc.c
-> @@ -16,8 +16,8 @@
->  #include <linux/mfd/mxs-lradc.h>
->  #include <linux/module.h>
->  #include <linux/of.h>
-> -#include <linux/of_device.h>
->  #include <linux/platform_device.h>
-> +#include <linux/property.h>
->  #include <linux/slab.h>
->
->  #define ADC_CELL               0
-> @@ -125,7 +125,6 @@ MODULE_DEVICE_TABLE(of, mxs_lradc_dt_ids);
->
->  static int mxs_lradc_probe(struct platform_device *pdev)
->  {
-> -       const struct of_device_id *of_id;
->         struct device *dev = &pdev->dev;
->         struct device_node *node = dev->of_node;
->         struct mxs_lradc *lradc;
-> @@ -138,11 +137,7 @@ static int mxs_lradc_probe(struct platform_device *pdev)
->         if (!lradc)
->                 return -ENOMEM;
->
-> -       of_id = of_match_device(mxs_lradc_dt_ids, &pdev->dev);
-> -       if (!of_id)
-> -               return -EINVAL;
-> -
-> -       lradc->soc = (uintptr_t)of_id->data;
-> +       lradc->soc = (enum mxs_lradc_id)device_get_match_data(&pdev->dev);
->
->         lradc->clk = devm_clk_get(&pdev->dev, NULL);
->         if (IS_ERR(lradc->clk)) {
-> diff --git a/drivers/mfd/qcom-spmi-pmic.c b/drivers/mfd/qcom-spmi-pmic.c
-> index 7e2cd79d17eb..4899af64bf10 100644
-> --- a/drivers/mfd/qcom-spmi-pmic.c
-> +++ b/drivers/mfd/qcom-spmi-pmic.c
-> @@ -8,10 +8,12 @@
->  #include <linux/gfp.h>
->  #include <linux/kernel.h>
->  #include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/of_device.h>
-> +#include <linux/of_platform.h>
->  #include <linux/spmi.h>
->  #include <linux/types.h>
->  #include <linux/regmap.h>
-> -#include <linux/of_platform.h>
->  #include <soc/qcom/qcom-spmi-pmic.h>
->
->  #define PMIC_REV2              0x101
-> @@ -236,7 +238,7 @@ static int pmic_spmi_probe(struct spmi_device *sdev)
->         if (!ctx)
->                 return -ENOMEM;
->
-> -       ctx->num_usids = (uintptr_t)of_device_get_match_data(&sdev->dev);
-> +       ctx->num_usids = (uintptr_t)device_get_match_data(&sdev->dev);
->
->         /* Only the first slave id for a PMIC contains this information */
->         if (sdev->usid % ctx->num_usids == 0) {
-> diff --git a/drivers/mfd/qcom_rpm.c b/drivers/mfd/qcom_rpm.c
-> index 086611322874..27446f43e3f3 100644
-> --- a/drivers/mfd/qcom_rpm.c
-> +++ b/drivers/mfd/qcom_rpm.c
-> @@ -7,6 +7,8 @@
->
->  #include <linux/module.h>
->  #include <linux/platform_device.h>
-> +#include <linux/property.h>
-> +#include <linux/of.h>
->  #include <linux/of_platform.h>
->  #include <linux/io.h>
->  #include <linux/interrupt.h>
-> @@ -528,7 +530,6 @@ static irqreturn_t qcom_rpm_wakeup_interrupt(int irq, void *dev)
->
->  static int qcom_rpm_probe(struct platform_device *pdev)
->  {
-> -       const struct of_device_id *match;
->         struct device_node *syscon_np;
->         struct qcom_rpm *rpm;
->         u32 fw_version[3];
-> @@ -570,10 +571,9 @@ static int qcom_rpm_probe(struct platform_device *pdev)
->         if (irq_wakeup < 0)
->                 return irq_wakeup;
->
-> -       match = of_match_device(qcom_rpm_of_match, &pdev->dev);
-> -       if (!match)
-> +       rpm->data = device_get_match_data(&pdev->dev);
-> +       if (!rpm->data)
->                 return -ENODEV;
-> -       rpm->data = match->data;
->
->         rpm->status_regs = devm_platform_get_and_ioremap_resource(pdev, 0, NULL);
->         if (IS_ERR(rpm->status_regs))
-> diff --git a/drivers/mfd/tps65910.c b/drivers/mfd/tps65910.c
-> index 41408df1712f..dce6ad668dbf 100644
-> --- a/drivers/mfd/tps65910.c
-> +++ b/drivers/mfd/tps65910.c
-> @@ -19,7 +19,7 @@
->  #include <linux/regmap.h>
->  #include <linux/mfd/tps65910.h>
->  #include <linux/of.h>
-> -#include <linux/of_device.h>
-> +#include <linux/property.h>
->
->  static const struct resource rtc_resources[] = {
->         {
-> @@ -374,16 +374,9 @@ static struct tps65910_board *tps65910_parse_dt(struct i2c_client *client,
->         struct device_node *np = client->dev.of_node;
->         struct tps65910_board *board_info;
->         unsigned int prop;
-> -       const struct of_device_id *match;
->         int ret;
->
-> -       match = of_match_device(tps65910_of_match, &client->dev);
-> -       if (!match) {
-> -               dev_err(&client->dev, "Failed to find matching dt id\n");
-> -               return NULL;
-> -       }
-> -
-> -       *chip_id  = (unsigned long)match->data;
-> +       *chip_id  = (unsigned long)device_get_match_data(&client->dev);
->
->         board_info = devm_kzalloc(&client->dev, sizeof(*board_info),
->                         GFP_KERNEL);
-> diff --git a/drivers/mfd/twl4030-power.c b/drivers/mfd/twl4030-power.c
-> index e35b0f788c50..1595e9c76132 100644
-> --- a/drivers/mfd/twl4030-power.c
-> +++ b/drivers/mfd/twl4030-power.c
-> @@ -27,8 +27,8 @@
->  #include <linux/pm.h>
->  #include <linux/mfd/twl.h>
->  #include <linux/platform_device.h>
-> +#include <linux/property.h>
->  #include <linux/of.h>
-> -#include <linux/of_device.h>
->
->  #include <asm/mach-types.h>
->
-> @@ -883,7 +883,6 @@ static int twl4030_power_probe(struct platform_device *pdev)
->  {
->         const struct twl4030_power_data *pdata = dev_get_platdata(&pdev->dev);
->         struct device_node *node = pdev->dev.of_node;
-> -       const struct of_device_id *match;
->         int err = 0;
->         int err2 = 0;
->         u8 val;
-> @@ -904,10 +903,8 @@ static int twl4030_power_probe(struct platform_device *pdev)
->                 return err;
->         }
->
-> -       match = of_match_device(of_match_ptr(twl4030_power_of_match),
-> -                               &pdev->dev);
-> -       if (match && match->data)
-> -               pdata = match->data;
-> +       if (node)
-> +               pdata = device_get_match_data(&pdev->dev);
->
->         if (pdata) {
->                 err = twl4030_power_configure_scripts(pdata);
-> diff --git a/drivers/mfd/twl6030-irq.c b/drivers/mfd/twl6030-irq.c
-> index 3c03681c124c..f9fce8408c2c 100644
-> --- a/drivers/mfd/twl6030-irq.c
-> +++ b/drivers/mfd/twl6030-irq.c
-> @@ -24,10 +24,10 @@
->  #include <linux/kthread.h>
->  #include <linux/mfd/twl.h>
->  #include <linux/platform_device.h>
-> +#include <linux/property.h>
->  #include <linux/suspend.h>
->  #include <linux/of.h>
->  #include <linux/irqdomain.h>
-> -#include <linux/of_device.h>
->
->  #include "twl-core.h"
->
-> @@ -368,10 +368,10 @@ int twl6030_init_irq(struct device *dev, int irq_num)
->         int                     nr_irqs;
->         int                     status;
->         u8                      mask[3];
-> -       const struct of_device_id *of_id;
-> +       const int               *irq_tbl;
->
-> -       of_id = of_match_device(twl6030_of_match, dev);
-> -       if (!of_id || !of_id->data) {
-> +       irq_tbl = device_get_match_data(dev);
-> +       if (!irq_tbl) {
->                 dev_err(dev, "Unknown TWL device model\n");
->                 return -EINVAL;
->         }
-> @@ -409,7 +409,7 @@ int twl6030_init_irq(struct device *dev, int irq_num)
->
->         twl6030_irq->pm_nb.notifier_call = twl6030_irq_pm_notifier;
->         atomic_set(&twl6030_irq->wakeirqs, 0);
-> -       twl6030_irq->irq_mapping_tbl = of_id->data;
-> +       twl6030_irq->irq_mapping_tbl = irq_tbl;
->
->         twl6030_irq->irq_domain =
->                 irq_domain_add_linear(node, nr_irqs,
-> --
-> 2.42.0
->
+url:    https://github.com/intel-lab-lkp/linux/commits/Bartosz-Golaszewski/firmware-qcom-move-Qualcomm-code-into-its-own-directory/20231009-233826
+base:   next-20231009
+patch link:    https://lore.kernel.org/r/20231009153427.20951-6-brgl%40bgdev.pl
+patch subject: [PATCH v3 05/15] firmware: qcom: scm: enable the TZ mem allocator
+config: arc-randconfig-001-20231010 (https://download.01.org/0day-ci/archive/20231010/202310101720.hVVWyJf3-lkp@intel.com/config)
+compiler: arc-elf-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231010/202310101720.hVVWyJf3-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202310101720.hVVWyJf3-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/firmware/qcom/qcom_tzmem.c:72: warning: Function parameter or member 'size' not described in 'qcom_tzmem_pool_new'
+
+
+vim +72 drivers/firmware/qcom/qcom_tzmem.c
+
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   59  
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   60  /**
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   61   * qcom_tzmem_pool_new() - Create a new TZ memory pool.
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   62   * @size - Size of the new pool in bytes.
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   63   *
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   64   * Create a new pool of memory suitable for sharing with the TrustZone.
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   65   *
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   66   * Must not be used in atomic context.
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   67   *
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   68   * Returns:
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   69   * New memory pool address or ERR_PTR() on error.
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   70   */
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   71  struct qcom_tzmem_pool *qcom_tzmem_pool_new(size_t size)
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09  @72  {
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   73  	struct qcom_tzmem_pool *pool;
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   74  	int ret = -ENOMEM;
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   75  
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   76  	if (!size)
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   77  		return ERR_PTR(-EINVAL);
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   78  
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   79  	size = PAGE_ALIGN(size);
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   80  
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   81  	pool = kzalloc(sizeof(*pool), GFP_KERNEL);
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   82  	if (!pool)
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   83  		return ERR_PTR(-ENOMEM);
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   84  
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   85  	pool->size = size;
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   86  
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   87  	pool->vbase = dma_alloc_coherent(qcom_tzmem_dev, size, &pool->pbase,
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   88  					 GFP_KERNEL);
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   89  	if (!pool->vbase)
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   90  		goto err_kfree_pool;
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   91  
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   92  	pool->pool = gen_pool_create(PAGE_SHIFT, -1);
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   93  	if (!pool)
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   94  		goto err_dma_free;
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   95  
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   96  	gen_pool_set_algo(pool->pool, gen_pool_best_fit, NULL);
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   97  
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   98  	ret = gen_pool_add_virt(pool->pool, (unsigned long)pool->vbase,
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09   99  				pool->pbase, size, -1);
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09  100  	if (ret)
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09  101  		goto err_destroy_genpool;
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09  102  
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09  103  	ret = qcom_tzmem_init_pool(pool);
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09  104  	if (ret)
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09  105  		goto err_destroy_genpool;
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09  106  
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09  107  	return pool;
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09  108  
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09  109  err_destroy_genpool:
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09  110  	gen_pool_destroy(pool->pool);
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09  111  err_dma_free:
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09  112  	dma_free_coherent(qcom_tzmem_dev, size, pool->vbase, pool->pbase);
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09  113  err_kfree_pool:
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09  114  	kfree(pool);
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09  115  	return ERR_PTR(ret);
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09  116  }
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09  117  EXPORT_SYMBOL_GPL(qcom_tzmem_pool_new);
+2e798cd92c1686 Bartosz Golaszewski 2023-10-09  118  
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
