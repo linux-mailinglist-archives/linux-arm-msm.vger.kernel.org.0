@@ -2,57 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D9777BFD59
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 15:25:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF9277BFD8E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 15:34:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232024AbjJJNZm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Oct 2023 09:25:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34820 "EHLO
+        id S232328AbjJJNeL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Oct 2023 09:34:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232040AbjJJNZl (ORCPT
+        with ESMTP id S232339AbjJJNeL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Oct 2023 09:25:41 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DC65C4;
-        Tue, 10 Oct 2023 06:25:36 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56C2AC433C7;
-        Tue, 10 Oct 2023 13:25:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1696944335;
-        bh=CjZnlq6PzXFC5yUfCHTOpCZbP5ACEIMB0ADocMWjz+4=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=WkmlMgVhyK4Z5ScLp/rxBvroVpyPiPi6jgW6x26BZjj0OEp32n5JneyAUoDv3/UEi
-         UDxopoID5WnVuDh7FMjZf4KiVVWg2FJzuJYaRLbZm9YSz4gpt8PMxcQnFt7qVP72D8
-         IeKVCuVzxFA3MvJrUL217toLRGYnaa2v8qFC+rZb2U0RWPne91dlZm2V42PXURK42m
-         0JeT4vo1lqC7HtZFiK0H0JzGYacy7Hbu6yakmBxUTbC0KGi+fxcnmlVYg/8aQ6bf3g
-         XRrIIw8aIQlrs/+UEAOv8TfEVL2PAxRVAzMBPo5lyDReR30YTnM2v4UrMXQZhKd52n
-         S1WPZb87bI3ug==
-Received: (nullmailer pid 625805 invoked by uid 1000);
-        Tue, 10 Oct 2023 13:25:33 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+        Tue, 10 Oct 2023 09:34:11 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0D61B7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 06:34:08 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2c3e23a818bso26801981fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 06:34:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1696944847; x=1697549647; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=u3ufIXJTPDUi37xaLcqz/JBb6qC8rajJx6bDQbsS0J0=;
+        b=ElIIARZi+gjhG5QuyVguoYsd8Apv1+991gibzG3e6XtnvwBQuWni0ctTDtF6P6IfKX
+         cMKIMdMeM7Fa0o1qLt6UaqufAcFtIgB137r4MDUNZLoWQ0ctgenGWe9rg6jQrcDvnCvC
+         +XVUpaejSva0sR3d7+3IKq9XygWUpSe8TyEPHTv27I4E3ci4Z/+LNfowWDxQ16oacQDJ
+         GSbIMNEXIjNLaEy1b10MKpKhnaEmdSO97bqmE8JgzmVvBYmgM/xTrJme2bFR/ChnKqqK
+         6ysJrjPjs+8thv7pb7Es4RLCuJf42jZVDfuCjXRGLPqZZn6aJ/JbVzKB5ihDge5BHdu3
+         mO1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696944847; x=1697549647;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=u3ufIXJTPDUi37xaLcqz/JBb6qC8rajJx6bDQbsS0J0=;
+        b=F0EhzeOvcxhdxB2UEbTh3VjyeWktl6NO079IbMiWVMK1JivCtcM+zYoOLl/T+wcrnR
+         gcJGgoa519YmYMLm1YmT1SwpWXx9uJoNnkP4S9E79ibWj0V8jCosbXLWsOMP0mrJeooF
+         0rV4bmQT1EvexJgAs+GQ7h9F7Cj7pCxGzMlgbvAqu0wV+U6pr6484rBSQOp0Jbv3Ut9t
+         /lHB30O52nGghH2zT7Tws4QZ6QpalIU2PkuHmBotWdk0t7t/CTLyI7o+9MlXWlSdwu5a
+         sEI++wx5u48cH/zvjtBzEIUy7pzotGVrLoDlGJSn9UEzXgpZJsDyg5hkLcVecBf53MEk
+         rd4A==
+X-Gm-Message-State: AOJu0YzLN/Yq4UkWX2knoE11GYk0z4+Ra1HcT+1X7vozEdmlYrOF64w+
+        5YATcfssP7Y98vqQX44krEuk3A==
+X-Google-Smtp-Source: AGHT+IHVlEd6wxtkukWJ4E28XaOUeg+7a2DayqjOWtQGYvIOrLbjENhKkn7cfLUU3G4liOCJKbax5w==
+X-Received: by 2002:a2e:90c3:0:b0:2c0:172b:dc2b with SMTP id o3-20020a2e90c3000000b002c0172bdc2bmr11490692ljg.14.1696944846944;
+        Tue, 10 Oct 2023 06:34:06 -0700 (PDT)
+Received: from [172.30.204.192] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id e9-20020a2e8189000000b002c12630e4d3sm2452017ljg.127.2023.10.10.06.34.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Oct 2023 06:34:06 -0700 (PDT)
+Message-ID: <d0714c75-e827-4bbc-a854-59004cab2563@linaro.org>
+Date:   Tue, 10 Oct 2023 15:34:02 +0200
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     konrad.dybcio@linaro.org, devicetree@vger.kernel.org,
-        conor+dt@kernel.org, jonathan@marek.ca, andersson@kernel.org,
-        quic_tdas@quicinc.com, robh+dt@kernel.org,
-        linux-clk@vger.kernel.org, agross@kernel.org,
-        linux-kernel@vger.kernel.org, sboyd@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, vladimir.zapolskiy@linaro.org,
-        linux-arm-msm@vger.kernel.org, dmitry.baryshkov@linaro.org,
-        mturquette@baylibre.com
-In-Reply-To: <20231010122539.1768825-3-bryan.odonoghue@linaro.org>
-References: <20231010122539.1768825-1-bryan.odonoghue@linaro.org>
- <20231010122539.1768825-3-bryan.odonoghue@linaro.org>
-Message-Id: <169694433325.625737.10533845261157845416.robh@kernel.org>
-Subject: Re: [PATCH v2 2/3] media: dt-bindings: media: camss: Add
- qcom,sc8280xp-camss binding
-Date:   Tue, 10 Oct 2023 08:25:33 -0500
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 1/4] cpufreq: qcom-nvmem: add support for IPQ8074
+Content-Language: en-US
+To:     Robert Marko <robimarko@gmail.com>, ilia.lin@kernel.org,
+        vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, agross@kernel.org, andersson@kernel.org,
+        rafael@kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20230930102218.229613-1-robimarko@gmail.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230930102218.229613-1-robimarko@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -60,46 +80,49 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Tue, 10 Oct 2023 13:25:38 +0100, Bryan O'Donoghue wrote:
-> Add bindings for qcom,sc8280xp-camss in order to support the camera
-> subsystem for sc8280xp as found in the Lenovo x13s Laptop.
+
+On 9/30/23 12:21, Robert Marko wrote:
+> IPQ8074 comes in 2 families:
+> * IPQ8070A/IPQ8071A (Acorn) up to 1.4GHz
+> * IPQ8072A/IPQ8074A/IPQ8076A/IPQ8078A (Hawkeye) up to 2.2GHz
 > 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> So, in order to be able to share one OPP table lets add support for IPQ8074
+> family based of SMEM SoC ID-s as speedbin fuse is always 0 on IPQ8074.
+> 
+> IPQ8074 compatible is blacklisted from DT platdev as the cpufreq device
+> will get created by NVMEM CPUFreq driver.
+> 
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
 > ---
->  .../bindings/media/qcom,sc8280xp-camss.yaml   | 582 ++++++++++++++++++
->  1 file changed, 582 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
+> Changes in v4:
+> * Add support for IPQ8174 (Oak) family
 > 
+> Changes in v3:
+> * Use enum for SoC versions
+> 
+> Changes in v2:
+> * Print an error if SMEM ID is not part of the IPQ8074 family
+> and restrict the speed to Acorn variant (1.4GHz)
+> 
+>   drivers/cpufreq/cpufreq-dt-platdev.c |  1 +
+>   drivers/cpufreq/qcom-cpufreq-nvmem.c | 45 ++++++++++++++++++++++++++++
+>   2 files changed, 46 insertions(+)
+> 
+> diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c b/drivers/cpufreq/cpufreq-dt-platdev.c
+> index 2016d47889c0..157c91b9962c 100644
+> --- a/drivers/cpufreq/cpufreq-dt-platdev.c
+> +++ b/drivers/cpufreq/cpufreq-dt-platdev.c
+> @@ -180,6 +180,7 @@ static const struct of_device_id blocklist[] __initconst = {
+>   	{ .compatible = "ti,am62a7", },
+>   
+>   	{ .compatible = "qcom,ipq8064", },
+> +	{ .compatible = "qcom,ipq8074", },
+>   	{ .compatible = "qcom,apq8064", },
+>   	{ .compatible = "qcom,msm8974", },
+>   	{ .compatible = "qcom,msm8960", },
+Generally this lands in a separate commit, but I guess since Viresh 
+takes changes to both of the files, it's even better..
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.example.dts:26:18: fatal error: dt-bindings/clock/qcom,sc8280xp-camcc.h: No such file or directory
-   26 |         #include <dt-bindings/clock/qcom,sc8280xp-camcc.h>
-      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-compilation terminated.
-make[2]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.example.dtb] Error 1
-make[2]: *** Waiting for unfinished jobs....
-make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1427: dt_binding_check] Error 2
-make: *** [Makefile:234: __sub-make] Error 2
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20231010122539.1768825-3-bryan.odonoghue@linaro.org
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+Konrad
