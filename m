@@ -2,101 +2,201 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B0EC7C0449
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 21:19:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D6B07C0494
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 21:26:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233975AbjJJTTX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Oct 2023 15:19:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46260 "EHLO
+        id S1343501AbjJJT0y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Oct 2023 15:26:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230236AbjJJTTX (ORCPT
+        with ESMTP id S231320AbjJJT0x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Oct 2023 15:19:23 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51F1CA7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 12:19:21 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-5046bf37daeso7888663e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 12:19:21 -0700 (PDT)
+        Tue, 10 Oct 2023 15:26:53 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A00B110
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 12:26:46 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-5068dab8c00so4819918e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 12:26:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1696965559; x=1697570359; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=AvjZzz7pnTqNFU2kq8efpY866MOjCfg9gpj/PxH4/+k=;
-        b=n+XQu0m7VOoFw+XDKPQpK4CUKt+osR1RtzWJXf7Wybv2DOD4r5L0z4wq9kS4a/ETU/
-         6EALYpL1haL1aHsfwhDWB5zZDkXkHlkX3fMULi+UKyJ8A6rUQWCHEyLSBF3VUS7HOAb7
-         96TS5IKMIMbRHnWwhEMn57T21loh755ezwwZI=
+        d=linaro.org; s=google; t=1696966005; x=1697570805; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=M+6rfPIT5Qs4nYSzMA/UOS/nCpICENl2aTb8ca8T/Zc=;
+        b=oszXq2R5PF4Sxmjfoec91fhXte2lRaPiyRiMvo3KuDlapP3Kdpa0dAEvuxPlN1ckB4
+         azPDc7pk7Bz6V48ObIgnfNkxmpJPBI3LRQP5bruvcjRX5se/7TbYHagb0A2f8FV013Hd
+         zm+bGO8wM9QJ6S62RjX9T3ShF9dbZAYivXGGdfZwwsArkk0TiWVuLUUtPihQgnXGqguu
+         72ONN+bCadOA/eSZ4BnTCYCyqHMVrKKE2xjTzb9U46NgiKcghIFvAFVhugY9AoefME5H
+         9CwVs9kVUbmNRlH/zpu1cpnMDpbUIwR+vzod6qCcTfzFQqi777nLFf2vV2DRnvglovqo
+         bayQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696965559; x=1697570359;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AvjZzz7pnTqNFU2kq8efpY866MOjCfg9gpj/PxH4/+k=;
-        b=f/xKvXBlMorMRXyCL7vCb8L2jfN6JkHCxXywTBCDPrdU1jw9K+j15QZRc0ctaEpST9
-         ugbGcAqLst6D3Mfz35kqNEJ7BAdA++KuO7QDSsU28wCtP6e7zfe8zap6ibtZAEJEU7Z9
-         Ma1jet/gci3ZfVrW1QY50ea0GGjSKhdg1b/eDHQM5bhsr5KbmzX7J3HSGepVwdTOAcsu
-         wyN0pexqya/+1qbX6JQ4PW5VEwSx/uUFyhYBiRotHtzLfab26vwet/6e4tjjBYLvS6DB
-         ns/V70ihRPnQDJoEfjkvwNPr8CRd/cX59YUm0rf5AwreTQWx0FJ7Gbexw6hl3SY8B+2O
-         WeMg==
-X-Gm-Message-State: AOJu0YzI5CnrKKdW8elvjDk8Xru0bfrBzLH+D5wE99z9B9r5Uewa0YMh
-        CI/ICR5OHx2JSER79om/FQ+tDk0Qb1WobdSlBXT8Jg==
-X-Google-Smtp-Source: AGHT+IFq1y8usHuuOq0+zCRJnPaJsNG4I0nxxNL8AuiMb1KSaafC1SKCCoNyc4Vky58f9BXOh0ClpevLdtstLOMN0FI=
-X-Received: by 2002:a05:6512:ac5:b0:500:8f66:5941 with SMTP id
- n5-20020a0565120ac500b005008f665941mr19661687lfu.50.1696965559028; Tue, 10
- Oct 2023 12:19:19 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 10 Oct 2023 19:19:18 +0000
+        d=1e100.net; s=20230601; t=1696966005; x=1697570805;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=M+6rfPIT5Qs4nYSzMA/UOS/nCpICENl2aTb8ca8T/Zc=;
+        b=BrnLx+YF/8HK6wuJlCaVMY4ShA9L3wt1gw/JnXphz+j3DGv0isyhFvPYCFZJ0Nn2pW
+         ptuOZdKGwPiG0WkF8evjdv0ojQCDJzENCCfrd3W/I3owcH91a3B3b9kmqAV9Pc9KN1P1
+         rWCxA6m0R6uqVdkg9CZFURfPi4mCqUEC5IotoZ5j/UErWSvZFsXk9FW5c92SBKI7J0Qw
+         lz8cOiN8hVOVYqMFv+K9MOCUGyju8zpglmY3Lz9WThlYSa6qgfVYDBOGcO+yXTKvbl6R
+         /niAqMD1e4w9LK/rDhdu3X8AAtzmrKaH4z5N8U9egTKNJW73w7vO0QeUYQiF/DCFauH3
+         n5SQ==
+X-Gm-Message-State: AOJu0Yx+vQjNjt5/sr6hT6ywVwnGRrQUi1BUDWi7W1E303cpQvIJnOQ1
+        PkBIA31vLd3rE/kB2QL6eZxHoA==
+X-Google-Smtp-Source: AGHT+IFF5XFoH7IUXUg0uaL+/UGO9fbuPocNcepcEnAF4sm6ZJjbyl2BcOi6WWoOG40yH+aowuLq5Q==
+X-Received: by 2002:ac2:5f90:0:b0:505:6fcd:dc41 with SMTP id r16-20020ac25f90000000b005056fcddc41mr13709463lfe.43.1696966004612;
+        Tue, 10 Oct 2023 12:26:44 -0700 (PDT)
+Received: from [172.30.204.182] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id d4-20020ac24c84000000b0050567a8b36esm1927443lfl.251.2023.10.10.12.26.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Oct 2023 12:26:44 -0700 (PDT)
+Message-ID: <017265ae-c9d5-4ea0-94eb-9090945cbc91@linaro.org>
+Date:   Tue, 10 Oct 2023 21:26:40 +0200
 MIME-Version: 1.0
-In-Reply-To: <1696632910-21942-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1696632910-21942-1-git-send-email-quic_khsieh@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Tue, 10 Oct 2023 19:19:18 +0000
-Message-ID: <CAE-0n50GR2YXpZVANQEns4W5TEFoR7n80PFuoyMOs8vo=MDkgw@mail.gmail.com>
-Subject: Re: [PATCH v7 0/7] incorporate pm runtime framework and eDP clean up
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
-        airlied@gmail.com, andersson@kernel.org, daniel@ffwll.ch,
-        dianders@chromium.org, dmitry.baryshkov@linaro.org,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, vkoul@kernel.org
-Cc:     quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com,
-        quic_sbillaka@quicinc.com, marijn.suijten@somainline.org,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 3/4] cpufreq: qcom-nvmem: add support for IPQ8064
+Content-Language: en-US
+To:     Christian Marangi <ansuelsmth@gmail.com>
+Cc:     Robert Marko <robimarko@gmail.com>, ilia.lin@kernel.org,
+        vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, agross@kernel.org, andersson@kernel.org,
+        rafael@kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20230930102218.229613-1-robimarko@gmail.com>
+ <20230930102218.229613-3-robimarko@gmail.com>
+ <5b57e0e0-490e-464d-bdc8-5823ad8da2d8@linaro.org>
+ <65255add.df0a0220.ff2f9.021d@mx.google.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <65255add.df0a0220.ff2f9.021d@mx.google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2023-10-06 15:55:03)
-> The purpose of this patch series is to incorporate pm runtime framework
-> into MSM eDP/DP driver so that eDP panel can be detected by DRM eDP panel
-> driver during system probe time. During incorporating procedure, original
-> customized pm realted fucntions, such as dp_pm_prepare(), dp_pm_suspend(),
-> dp_pm_resume() and dp_pm_prepare(), are removed and replaced with functions
-> provided by pm runtiem framework such as pm_runtime_force_suspend() and
-> pm_runtime_force_resume(). In addition, both eDP aux-bus and irq handler
-> are bound at system probe time too.
->
-> Kuogee Hsieh (7):
->   drm/msm/dp: tie dp_display_irq_handler() with dp driver
->   drm/msm/dp: rename is_connected with link_ready
->   drm/msm/dp: use drm_bridge_hpd_notify() to report HPD status changes
->   drm/msm/dp: move parser->parse() and dp_power_client_init() to probe
->   drm/msm/dp: incorporate pm_runtime framework into DP driver
->   drm/msm/dp: delete EV_HPD_INIT_SETUP
->   drm/msm/dp: move of_dp_aux_populate_bus() to eDP probe()
->
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c |   4 -
->  drivers/gpu/drm/msm/dp/dp_aux.c         |  39 +++-
->  drivers/gpu/drm/msm/dp/dp_display.c     | 333 ++++++++++++--------------------
 
-Tested-by: Stephen Boyd <swboyd@chromium.org> # Trogdor.Lazor
 
-I ran some suspend cycles too with the lid open and closed.
+On 10/10/23 16:08, Christian Marangi wrote:
+> On Tue, Oct 10, 2023 at 03:39:54PM +0200, Konrad Dybcio wrote:
+>>
+>>
+>> On 9/30/23 12:21, Robert Marko wrote:
+>>> From: Christian Marangi <ansuelsmth@gmail.com>
+>>>
+>>> IPQ8064 comes in 3 families:
+>>> * IPQ8062 up to 1.0GHz
+>>> * IPQ8064/IPQ8066/IPQ8068 up to 1.4GHz
+>>> * IPQ8065/IPQ8069 up to 1.7Ghz
+>>>
+>>> So, in order to be able to support one OPP table, add support for
+>>> IPQ8064 family based of SMEM SoC ID-s and correctly set the version so
+>>> opp-supported-hw can be correctly used.
+>>>
+>>> Bit are set with the following logic:
+>>> * IPQ8062 BIT 0
+>>> * IPQ8064/IPQ8066/IPQ8068 BIT 1
+>>> * IPQ8065/IPQ8069 BIT 2
+>>>
+>>> speed is never fused, only pvs values are fused.
+>>>
+>>> IPQ806x SoC doesn't have pvs_version so we drop and we use the new
+>>> pattern:
+>>> opp-microvolt-speed0-pvs<PSV_VALUE>
+>>>
+>>> Example:
+>>> - for ipq8062 psv2
+>>>     opp-microvolt-speed0-pvs2 = < 925000 878750 971250>
+>>>
+>>> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+>>> Signed-off-by: Robert Marko <robimarko@gmail.com>
+>>> ---
+>> [...]
+>>
+>>> +{
+>>> +	int speed = 0, pvs = 0, pvs_ver = 0;
+>>> +	int msm_id, ret = 0;
+>>> +	u8 *speedbin;
+>>> +	size_t len;
+>>> +
+>>> +	speedbin = nvmem_cell_read(speedbin_nvmem, &len);
+>>> +
+>>> +	if (IS_ERR(speedbin))
+>> The stray newline above this line triggers my OCD :D
+>>
+>>> +		return PTR_ERR(speedbin);
+>>> +
+>>> +	if (len != 4) {
+>>> +		dev_err(cpu_dev, "Unable to read nvmem data. Defaulting to 0!\n");
+>>> +		kfree(speedbin);
+>>> +		return -ENODEV;
+>>> +	}
+>>> +
+>>> +	get_krait_bin_format_a(cpu_dev, &speed, &pvs, &pvs_ver, speedbin);
+>>> +
+>>> +	ret = qcom_smem_get_soc_id(&msm_id);
+>>> +	if (ret)
+>>> +		return ret;
+>> speedbin leaks here
+>>
+>> you can free it right after the get_krait.. call
+>>> +
+>>> +	switch (msm_id) {
+>>> +	case QCOM_ID_IPQ8062:
+>>> +		drv->versions = BIT(IPQ8062_VERSION);
+>>> +		break;
+>>> +	case QCOM_ID_IPQ8064:
+>>> +	case QCOM_ID_IPQ8066:
+>>> +	case QCOM_ID_IPQ8068:
+>>> +		drv->versions = BIT(IPQ8064_VERSION);
+>>> +		break;
+>>> +	case QCOM_ID_IPQ8065:
+>>> +	case QCOM_ID_IPQ8069:
+>>> +		drv->versions = BIT(IPQ8065_VERSION);
+>>> +		break;
+>>> +	default:
+>>> +		dev_err(cpu_dev,
+>>> +			"SoC ID %u is not part of IPQ8064 family, limiting to 1.0GHz!\n",
+>>> +			msm_id);
+>>> +		drv->versions = BIT(IPQ8062_VERSION);
+>>> +		break;
+>>> +	}
+>>> +
+>>> +	/* IPQ8064 speed is never fused. Only pvs values are fused. */
+>>> +	snprintf(*pvs_name, sizeof("speedXX-pvsXX"), "speed%d-pvs%d",
+>>> +		 speed, pvs);
+>> Then drop the format for `speed` and just throw in a zero!
+>>
+>> [...]
+>>
+>>> -	{ .compatible = "qcom,ipq8064", .data = &match_data_krait },
+>>> +	{ .compatible = "qcom,ipq8064", .data = &match_data_ipq8064 },
+>> This change demands a Fixes tag, because you're essentially saying "the
+>> support for this SoC was supposedly there, but it could have never worked
+>> and was broken all along".
+>>
+> 
+> Mhhh actually no. We are just changing the opp binding and introducing
+> hardcoded versions. But the thing worked and actually it's what was used
+> before this change in openwrt. Also current ipq806x dtsi doesn't have
+> any opp definition so no regression there. (and also 99% downstream either
+> use openwrt or use qcom sdk where this implementation is not used at
+> all)
+> 
+> Given these thing should we still add a fixes tag referencing the commit
+> that introduced the compatible for qcom,ipq8064? It's quite problematic
+> as this depends on qcom_smem_get_soc_id().
+Fixes only hints auto backports, you shouldn't be worried about putting 
+fixes on commits that fix bugs.
+
+I see this as a "didnt work" -> "works" commit, which in my eyes 
+qualifies as a fix.
+
+Konrad
