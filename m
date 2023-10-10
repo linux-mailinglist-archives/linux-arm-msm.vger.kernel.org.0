@@ -2,80 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 89DB37BFE94
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 15:57:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F0DC7BFEC8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 16:08:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232081AbjJJN5C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Oct 2023 09:57:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52304 "EHLO
+        id S232605AbjJJOIg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Oct 2023 10:08:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232545AbjJJN5B (ORCPT
+        with ESMTP id S231997AbjJJOIe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Oct 2023 09:57:01 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15262C4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 06:57:00 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-40566f8a093so52541815e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 06:57:00 -0700 (PDT)
+        Tue, 10 Oct 2023 10:08:34 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B87DA7;
+        Tue, 10 Oct 2023 07:08:32 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id ffacd0b85a97d-3247cefa13aso5205661f8f.1;
+        Tue, 10 Oct 2023 07:08:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20230601.gappssmtp.com; s=20230601; t=1696946218; x=1697551018; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=NYWciwUfzF59aHppIFLCZXbAD7SKQWPGWbHHZOCCLvs=;
-        b=wfN99QRgDjjm2iGMpo3oWU9i3lUsAAhm/YBsddPpXjMWfLu0kCIfJqToljQSsvj58z
-         QK5eQ+FrojKspVLIv7zv5egDon7dfv5FGNCdECC+Nohtu6Tniwy2kDR3JSgldruhNbnN
-         C2oUE8JK0UxkNetAyEax4/wlysI72nvcEqJlMZ02wZ1W3gyeNkfDoKgT7khWuQUsk4XO
-         YSWIQkvC+Z1m95g+fNgqn2TdHzC+kKD5sgm8rAYRBmWvOejaSmfg3gx4g6fT9G1Hmn91
-         zKFTsiYMsnbU9NyTaGbLbl/DjQiFtcHcxjHCc+N7cxJGGYff4IlUYq5v69LD0iOpJbn5
-         nleg==
+        d=gmail.com; s=20230601; t=1696946910; x=1697551710; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=k2Very6RldBCzTfWE3kixTMSpP7cmdjStMj9exgkPjU=;
+        b=Mm9LKzgi7b7on3KUTrVv0icEuH1SSqkAlKz4x3vMBzIwqRmwyyOkyzhES3J4Wu0CUU
+         jOk+/w3jK48w4IFlTgbAQX4bS5m1fvjiJJCVvKV5j5xZ4ImbPwLEBgb7ayi+N+pSych4
+         tAS9Lz/HL4QxVAZXND6Tg6bBPSeJBQqm+ezizyvto1NsffLskhR3reHJ6vf799hrhKPU
+         v0ZvFTHQEBq3RgVZiZkJV6tp1HZ5SjPx1ARh4sjCWAW1HEDW6VraigYkxENWnt24zBXD
+         zLGq05CdkFlpBlxipe90GcMIMu4z61z8o+x5W95YG08QrgmkW8FYV1Cy26TeFMJsdjTU
+         bAog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696946218; x=1697551018;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NYWciwUfzF59aHppIFLCZXbAD7SKQWPGWbHHZOCCLvs=;
-        b=RdyK2aRsAhH7NqkdUSgnMlA85e92loojXkJnm6yekBvDIy98uzBqQ+p4AJ4FGgi64y
-         12/E1b4HFtjLoY+wEyzC1pimSav3bKsAcIodECnr9984CzlFGGcDkBZXtEBUwO2O6lhm
-         v++QfJuV3Q1S0yybWzQ9un0wJEes6oKFUBWS2zKqkd0BX3U9cVttRyolKhVFumOYl3b5
-         2w+3uNV9MZLKS8qBsJfj3c7eQQP8EFbn0h60BtPdPVVHxXYXvRf+MmK0tL6hCjVMviRj
-         uLDMmyLSjTGhUbj+ute21P5VHa2V3HwHAO5bSOhZRA4+kcIwpgpOIB4T//BQCfbw7P7r
-         ct8Q==
-X-Gm-Message-State: AOJu0YzwUNCaqlysY0QHara2nbgJUaH/DA4zltbsusDGA8DTVZdErK3B
-        90fYKWKzit0TA5Qhh16BlpWIPA==
-X-Google-Smtp-Source: AGHT+IE+vnxzSyo9AaWe7ZgaXykbBDq6JHcYIoNKc0hMWYtSIGkzVrq3qNRcxiIk6PFrwBLg+2Ku8g==
-X-Received: by 2002:a05:600c:3781:b0:405:1bfb:ff14 with SMTP id o1-20020a05600c378100b004051bfbff14mr15183186wmr.9.1696946218169;
-        Tue, 10 Oct 2023 06:56:58 -0700 (PDT)
-Received: from [192.168.100.102] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id n26-20020a05600c3b9a00b004068def185asm14420554wms.28.2023.10.10.06.56.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Oct 2023 06:56:57 -0700 (PDT)
-Message-ID: <04374506-023d-4680-9f0f-77d6893288c4@nexus-software.ie>
-Date:   Tue, 10 Oct 2023 14:56:56 +0100
+        d=1e100.net; s=20230601; t=1696946910; x=1697551710;
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=k2Very6RldBCzTfWE3kixTMSpP7cmdjStMj9exgkPjU=;
+        b=gkjqLEYnbiYMR9SNGI4bCtowoCgEkMtNLkINfRdbWxlIdXxDKyXhoBqVWiSq2OzCrd
+         zDmCkkmgkj7fBb7/en0ZxGozy5PfQ7CxHBQhCLg+qzrFG5oB4rksHL7HiiOhdjvsCXql
+         Rp1KG7p8W9qIDiOwC9DyTVYUUAA0tfzNWAT0STgYH+euOYPYPxQFJpEi+2nIVOZZ6KK1
+         5608MsjBMkj4xjCxCrtUjBAvCOYcd4hR2JAubDsj468vmMk58dyS0jkcSktiFL3K01vp
+         qGM21poHliBLjkhEf5KTsf9m/O2QWYa5+50Ns7To0XpQaprUD5R6yQmnQtbHRPDjmsyL
+         yk4g==
+X-Gm-Message-State: AOJu0Yw0bE/faD5n/iZ37rvWQGMeTImH/9w3GKXZSz7oNrF9lsheFc6c
+        J6dIOE3zxcIDmo+N2mtKz1c=
+X-Google-Smtp-Source: AGHT+IGK8a/xY8dx9qijIprNgPtnjeeEi8L86iN5hElkw2DXb8x4UZqPCWmnz2E26uesS3W4ykeRVA==
+X-Received: by 2002:a5d:6a4c:0:b0:31f:8a6d:e527 with SMTP id t12-20020a5d6a4c000000b0031f8a6de527mr16864437wrw.45.1696946910316;
+        Tue, 10 Oct 2023 07:08:30 -0700 (PDT)
+Received: from Ansuel-xps. (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
+        by smtp.gmail.com with ESMTPSA id s13-20020adfeccd000000b003198a9d758dsm12801549wro.78.2023.10.10.07.08.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Oct 2023 07:08:29 -0700 (PDT)
+Message-ID: <65255add.df0a0220.ff2f9.021d@mx.google.com>
+X-Google-Original-Message-ID: <ZSVa3JfmUmLRBkda@Ansuel-xps.>
+Date:   Tue, 10 Oct 2023 16:08:28 +0200
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Robert Marko <robimarko@gmail.com>, ilia.lin@kernel.org,
+        vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, agross@kernel.org, andersson@kernel.org,
+        rafael@kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v5 3/4] cpufreq: qcom-nvmem: add support for IPQ8064
+References: <20230930102218.229613-1-robimarko@gmail.com>
+ <20230930102218.229613-3-robimarko@gmail.com>
+ <5b57e0e0-490e-464d-bdc8-5823ad8da2d8@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] media: dt-bindings: media: camss: Add
- qcom,sc8280xp-camss binding
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     konrad.dybcio@linaro.org, devicetree@vger.kernel.org,
-        conor+dt@kernel.org, jonathan@marek.ca, andersson@kernel.org,
-        quic_tdas@quicinc.com, robh+dt@kernel.org,
-        linux-clk@vger.kernel.org, agross@kernel.org,
-        linux-kernel@vger.kernel.org, sboyd@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, vladimir.zapolskiy@linaro.org,
-        linux-arm-msm@vger.kernel.org, dmitry.baryshkov@linaro.org,
-        mturquette@baylibre.com
-References: <20231010122539.1768825-1-bryan.odonoghue@linaro.org>
- <20231010122539.1768825-3-bryan.odonoghue@linaro.org>
- <169694433325.625737.10533845261157845416.robh@kernel.org>
-From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <169694433325.625737.10533845261157845416.robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5b57e0e0-490e-464d-bdc8-5823ad8da2d8@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,43 +79,114 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/10/2023 14:25, Rob Herring wrote:
+On Tue, Oct 10, 2023 at 03:39:54PM +0200, Konrad Dybcio wrote:
 > 
-> On Tue, 10 Oct 2023 13:25:38 +0100, Bryan O'Donoghue wrote:
->> Add bindings for qcom,sc8280xp-camss in order to support the camera
->> subsystem for sc8280xp as found in the Lenovo x13s Laptop.
->>
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> ---
->>   .../bindings/media/qcom,sc8280xp-camss.yaml   | 582 ++++++++++++++++++
->>   1 file changed, 582 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
->>
 > 
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
+> On 9/30/23 12:21, Robert Marko wrote:
+> > From: Christian Marangi <ansuelsmth@gmail.com>
+> > 
+> > IPQ8064 comes in 3 families:
+> > * IPQ8062 up to 1.0GHz
+> > * IPQ8064/IPQ8066/IPQ8068 up to 1.4GHz
+> > * IPQ8065/IPQ8069 up to 1.7Ghz
+> > 
+> > So, in order to be able to support one OPP table, add support for
+> > IPQ8064 family based of SMEM SoC ID-s and correctly set the version so
+> > opp-supported-hw can be correctly used.
+> > 
+> > Bit are set with the following logic:
+> > * IPQ8062 BIT 0
+> > * IPQ8064/IPQ8066/IPQ8068 BIT 1
+> > * IPQ8065/IPQ8069 BIT 2
+> > 
+> > speed is never fused, only pvs values are fused.
+> > 
+> > IPQ806x SoC doesn't have pvs_version so we drop and we use the new
+> > pattern:
+> > opp-microvolt-speed0-pvs<PSV_VALUE>
+> > 
+> > Example:
+> > - for ipq8062 psv2
+> >    opp-microvolt-speed0-pvs2 = < 925000 878750 971250>
+> > 
+> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> > Signed-off-by: Robert Marko <robimarko@gmail.com>
+> > ---
+> [...]
 > 
-> yamllint warnings/errors:
+> > +{
+> > +	int speed = 0, pvs = 0, pvs_ver = 0;
+> > +	int msm_id, ret = 0;
+> > +	u8 *speedbin;
+> > +	size_t len;
+> > +
+> > +	speedbin = nvmem_cell_read(speedbin_nvmem, &len);
+> > +
+> > +	if (IS_ERR(speedbin))
+> The stray newline above this line triggers my OCD :D
 > 
-> dtschema/dtc warnings/errors:
-> Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.example.dts:26:18: fatal error: dt-bindings/clock/qcom,sc8280xp-camcc.h: No such file or directory
->     26 |         #include <dt-bindings/clock/qcom,sc8280xp-camcc.h>
->        |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> > +		return PTR_ERR(speedbin);
+> > +
+> > +	if (len != 4) {
+> > +		dev_err(cpu_dev, "Unable to read nvmem data. Defaulting to 0!\n");
+> > +		kfree(speedbin);
+> > +		return -ENODEV;
+> > +	}
+> > +
+> > +	get_krait_bin_format_a(cpu_dev, &speed, &pvs, &pvs_ver, speedbin);
+> > +
+> > +	ret = qcom_smem_get_soc_id(&msm_id);
+> > +	if (ret)
+> > +		return ret;
+> speedbin leaks here
+> 
+> you can free it right after the get_krait.. call
+> > +
+> > +	switch (msm_id) {
+> > +	case QCOM_ID_IPQ8062:
+> > +		drv->versions = BIT(IPQ8062_VERSION);
+> > +		break;
+> > +	case QCOM_ID_IPQ8064:
+> > +	case QCOM_ID_IPQ8066:
+> > +	case QCOM_ID_IPQ8068:
+> > +		drv->versions = BIT(IPQ8064_VERSION);
+> > +		break;
+> > +	case QCOM_ID_IPQ8065:
+> > +	case QCOM_ID_IPQ8069:
+> > +		drv->versions = BIT(IPQ8065_VERSION);
+> > +		break;
+> > +	default:
+> > +		dev_err(cpu_dev,
+> > +			"SoC ID %u is not part of IPQ8064 family, limiting to 1.0GHz!\n",
+> > +			msm_id);
+> > +		drv->versions = BIT(IPQ8062_VERSION);
+> > +		break;
+> > +	}
+> > +
+> > +	/* IPQ8064 speed is never fused. Only pvs values are fused. */
+> > +	snprintf(*pvs_name, sizeof("speedXX-pvsXX"), "speed%d-pvs%d",
+> > +		 speed, pvs);
+> Then drop the format for `speed` and just throw in a zero!
+> 
+> [...]
+> 
+> > -	{ .compatible = "qcom,ipq8064", .data = &match_data_krait },
+> > +	{ .compatible = "qcom,ipq8064", .data = &match_data_ipq8064 },
+> This change demands a Fixes tag, because you're essentially saying "the
+> support for this SoC was supposedly there, but it could have never worked
+> and was broken all along".
+>
 
-I guess I should be embedding this
+Mhhh actually no. We are just changing the opp binding and introducing
+hardcoded versions. But the thing worked and actually it's what was used
+before this change in openwrt. Also current ipq806x dtsi doesn't have
+any opp definition so no regression there. (and also 99% downstream either
+use openwrt or use qcom sdk where this implementation is not used at
+all)
 
+Given these thing should we still add a fixes tag referencing the commit
+that introduced the compatible for qcom,ipq8064? It's quite problematic
+as this depends on qcom_smem_get_soc_id().
 
-This patch depends-on:
-https://lore.kernel.org/lkml/20231004161853.86382-2-bryan.odonoghue@linaro.org/T/
-
-or
-
-
-This patch depends-on:
-https://lore.kernel.org/lkml/20231004161853.86382-2-bryan.odonoghue@linaro.org/T/#mc33be3fef01bffe892f72bd5e567dba6a047283b
-
-below the "---" in this patch directly, instead of in the series 
-description ?
-
----
-bod
+-- 
+	Ansuel
