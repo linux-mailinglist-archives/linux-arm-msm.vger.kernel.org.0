@@ -2,64 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 958977BFA20
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 13:44:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CE6D7BFA81
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 13:59:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231455AbjJJLo4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Oct 2023 07:44:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42736 "EHLO
+        id S231588AbjJJL7n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Oct 2023 07:59:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231244AbjJJLoz (ORCPT
+        with ESMTP id S231567AbjJJL7l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Oct 2023 07:44:55 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEAFE9D;
-        Tue, 10 Oct 2023 04:44:52 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57613C433C9;
-        Tue, 10 Oct 2023 11:44:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1696938292;
-        bh=VC+x3Y/F4Qrg2tx3eHXgksT4LBINTp7diDgIAns//EE=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=tLfERQnEFbPfemzTphhNmBNQ/alGED5ET/yZctDg3dKrzyqNcu6UJXB8OFe2W67Fp
-         aHIaHszIrQztKk8QJmLUlWNPqNFoPLpnYQDdkTa+NCmuHbihGRYUSWx2jVcVL0dj4j
-         Yoyl3jVWIVkUMuzkZtmcDQAsOZAgI0I0lz83N3hWluEKwzWVHYEPSWeT/57lugaQVq
-         kAQlfHwAMTRRxua90XxwY1m5WvrHUGnGUlBE8K7PkicU30DH5CcgVKaK/t4NbjMs+B
-         JO1fvPNu8WGWqq0w1mpNTTQoEXyq2xLI9n729i3Zgi2SkK3oSMyUp2gIhWpaQ74Zhh
-         5wFGG461dGQbw==
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-504427aae4fso8074084e87.1;
-        Tue, 10 Oct 2023 04:44:52 -0700 (PDT)
-X-Gm-Message-State: AOJu0YyQ794ifvUiHM4x7iqTbbNG9+Dft1qtFSOBxIwQUAs00IZmQga9
-        OicUkZDRtrqJlCx6DDb/5Mn5/wL/spubplsiRg==
-X-Google-Smtp-Source: AGHT+IGAClhimcIf+YAzz2GCzR0wdzr7YTMHCXm3mvTiQBxYs/lkyUsWdSQuybb0savjSn2f8QaT9SjgK+8co/BPV8g=
-X-Received: by 2002:ac2:5a10:0:b0:503:224f:9c55 with SMTP id
- q16-20020ac25a10000000b00503224f9c55mr12742893lfn.8.1696938290524; Tue, 10
- Oct 2023 04:44:50 -0700 (PDT)
+        Tue, 10 Oct 2023 07:59:41 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E7BC9D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 04:59:38 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-4066692ad35so51831935e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 04:59:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nexus-software-ie.20230601.gappssmtp.com; s=20230601; t=1696939177; x=1697543977; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Ij+DjJh1Cv+/0xPPGQ3pr7Ec12kvcxyGu0/MP2I6gEY=;
+        b=WxL/1dmbLbcHbia5KHXkoPZDkqJiNNtDad/laM6Wub2XnSOkrrBpLy2vbC47hKG5p9
+         hXB67OaCsc90x53qyJVrpQ0sH8m+ZHvCDxNHXad8O4CmzWVD0eKSZMw8+Zb6jcvjgSEt
+         GjQgD2XbHJiRTeUA49Gevw4ZMMc/04OqjE7QCkYeh12bbHB5veX3d67hzAfks5ltlpqA
+         WF75Gs2WUcv152YNNGUG6Najf8Hyj/gzCpNMSFxSG6qP1nYP6WY2WVd6B2YDQ7dAsiOH
+         XnUpCAoPHuJUA4fJ0/7hiPbsE6oLd5uk0nqTvEtcFez0LYzZR4C+1tdsIsuhk1DXnNE7
+         V5gA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696939177; x=1697543977;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ij+DjJh1Cv+/0xPPGQ3pr7Ec12kvcxyGu0/MP2I6gEY=;
+        b=mcIThOa4b2kkNb3DBdygaszr0BDA1pf7CEfU5PH0F0Ca5yEzX8mBJIvEYwBY7AUj7b
+         jgMfa7DpI+oGm9m7RfQCpTYeE0x5m1kOdfimqVO2P8IC9Zg42DUV878jyf3+uIVB8RK3
+         ANUvT0bo7K/SRhNKTM0MegwYeAvuQf26og6lxwgWiwpa2xJqdfRtCekje6UO3G5XJskL
+         n6fz7yT55El7qqHWTHe1AEQkujuWTDZgMHFTrcTm/HUakrzN4ndbMlZCLtCl7tTqfxKb
+         fqh2Q/ay4HvXkWavh/+OTCn8iWu4kFFF7uTs26IIy6Qiq79TIzl24pdWvC+Xslcal6i+
+         lJWQ==
+X-Gm-Message-State: AOJu0YzwPtR89IzMZhaBH+lqeu7G0t1EIvYzxbE76YZmKzzyY2OQozvo
+        8rJowZZnTj5Pqf2WDc+Og8by8w==
+X-Google-Smtp-Source: AGHT+IHFA86yg5RxNmYmm2h7/cVQ1VgFwmfHjOd0f6IUSrUdWBNY1qh2/GmlHtkcXrQFXHRv4MZuDw==
+X-Received: by 2002:adf:e383:0:b0:314:3e77:f210 with SMTP id e3-20020adfe383000000b003143e77f210mr15862043wrm.59.1696939176895;
+        Tue, 10 Oct 2023 04:59:36 -0700 (PDT)
+Received: from [192.168.100.102] ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id x8-20020adfcc08000000b003296bb21c77sm11912247wrh.80.2023.10.10.04.59.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Oct 2023 04:59:36 -0700 (PDT)
+Message-ID: <deb0e97c-2874-4388-80ce-7b2076c66e32@nexus-software.ie>
+Date:   Tue, 10 Oct 2023 12:59:35 +0100
 MIME-Version: 1.0
-References: <20231009211356.3242037-3-robh@kernel.org> <CAGb2v66ZHD8mMMNVwp+sTYT6DAFDUrP8ydeTo7KW+uUtBRM3bQ@mail.gmail.com>
-In-Reply-To: <CAGb2v66ZHD8mMMNVwp+sTYT6DAFDUrP8ydeTo7KW+uUtBRM3bQ@mail.gmail.com>
-From:   Rob Herring <robh@kernel.org>
-Date:   Tue, 10 Oct 2023 06:44:38 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqJ4yCNnvg=CfY6_NbcgED9FuExK6SDTxDERFHK7Hp9-+g@mail.gmail.com>
-Message-ID: <CAL_JsqJ4yCNnvg=CfY6_NbcgED9FuExK6SDTxDERFHK7Hp9-+g@mail.gmail.com>
-Subject: Re: [PATCH] mfd: Use device_get_match_data()
-To:     wens@csie.org
-Cc:     Lee Jones <lee@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: qrb4210-rb2: don't force usb peripheral
+ mode
+Content-Language: en-US
+To:     Caleb Connolly <caleb.connolly@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Tony Lindgren <tony@atomide.com>, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-omap@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20231010-caleb-rb2-host-mode-v1-1-b057d443cd62@linaro.org>
+From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
+In-Reply-To: <20231010-caleb-rb2-host-mode-v1-1-b057d443cd62@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -67,26 +80,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 10, 2023 at 3:27=E2=80=AFAM Chen-Yu Tsai <wens@csie.org> wrote:
->
-> On Tue, Oct 10, 2023 at 5:14=E2=80=AFAM Rob Herring <robh@kernel.org> wro=
-te:
-> >
-> > Use preferred device_get_match_data() instead of of_match_device() to
-> > get the driver match data. With this, adjust the includes to explicitly
-> > include the correct headers.
-> >
-> > Signed-off-by: Rob Herring <robh@kernel.org>
-> > ---
-> >  drivers/mfd/axp20x.c           | 22 +++-------------------
->
-> I'd keep the error message, but otherwise for axp20x,
+On 10/10/2023 11:46, Caleb Connolly wrote:
+> The rb2 only has a single USB controller, it can be switched between a
+> type-c port and an internal USB hub via a DIP switch. Until dynamic
+> role switching is available it's preferable to put the USB controller
+> in host mode so that the type-A ports and ethernet are available.
+> 
+> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+> ---
+> base-commit: 6465e260f48790807eef06b583b38ca9789b6072
+> 
+> // Caleb (they/them)
+> ---
+>   arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 1 -
+>   1 file changed, 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> index a7278a9472ed..9738c0dacd58 100644
+> --- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> +++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> @@ -518,7 +518,6 @@ &usb {
+>   
+>   &usb_dwc3 {
+>   	maximum-speed = "super-speed";
+> -	dr_mode = "peripheral";
+>   };
+>   
+>   &usb_hsphy {
+> 
 
-Why? It can't happen. We already matched successfully in order to
-probe, so matching again in probe is redundant and won't fail.
+No fixes tag ?
 
-> Reviewed-by: Chen-Yu Tsai <wens@csie.org>
-
-Thanks.
-
-Rob
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
