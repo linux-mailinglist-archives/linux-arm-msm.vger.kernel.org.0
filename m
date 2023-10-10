@@ -2,158 +2,188 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EED597BF562
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 10:12:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA4EB7BF5C7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 10:26:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1442549AbjJJIMb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Oct 2023 04:12:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54098 "EHLO
+        id S1442798AbjJJI0x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Oct 2023 04:26:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378097AbjJJIM3 (ORCPT
+        with ESMTP id S1442833AbjJJI0t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Oct 2023 04:12:29 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40FFCA4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 01:12:28 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id ffacd0b85a97d-32d3755214dso180009f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 01:12:28 -0700 (PDT)
+        Tue, 10 Oct 2023 04:26:49 -0400
+Received: from mail-ua1-x92d.google.com (mail-ua1-x92d.google.com [IPv6:2607:f8b0:4864:20::92d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 068C1B9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 01:26:46 -0700 (PDT)
+Received: by mail-ua1-x92d.google.com with SMTP id a1e0cc1a2514c-7abb93528e2so2160505241.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 01:26:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696925546; x=1697530346; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7w5ncK3ZGR6hn3gQth0yAs2IU5AJ9lM29YZdM7MiT5k=;
-        b=zVrsmYFJBJcTOWDRtTpVV3SPPbdGybN8P+vFD0blH92io0WYM5h+Ab3vWRZUQsAhc7
-         qdUpipqYxWaY5GWsdCzCJjnMCuXCgpvQd/7wRKoPc7NZyPftm4ZjkDnF/WoAoopvKMJK
-         Q+sPS7HTT0emLFQWiQ842MuQEiTc6lNXTuRXK6xLrh9PLu6niPSME/8EzDC7CkTFi36E
-         sjcPVmmavBvsfz4H3+TGfaegVnzEIhuxb0b76xIMoVUgeVnelpxH3+pqK+HcK1MK+2dU
-         rRdexPJQ8/FWNDajf3sQJdFO81i4CdB7LiZkzO5zIab6Tw/yiqAF0o+ygpaCZJ7GmjLk
-         +1Pw==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1696926405; x=1697531205; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gxYD0mht6wRxqJ6sAAYMTrwPyt4IIpZM7FRAYXZukGA=;
+        b=nBUjMMNmyUb4L2dvCS3vsqezt5sA84YZt440bhEbSqrQ75FrEdpzj5c8qMFaUA4DfN
+         XdHwygX6evrq4tGkSsmSFF1OCxXKVrrYQfXHQAYRTTKJMHIL5LgtS6Q0m0NK4VOdqKpA
+         kCb1K/BuLa1eqXi0DFHcRIURJsf/a1CKjz6fvOGZb2vzywrPLZ3L2he+gjX7ET2hxlqY
+         6Kr+wLJf348dX5MwlesSK07yDNZrB4tqSo7wnjtdBa3i2ibJVAlIDGJirIKcbuS8ft4t
+         xQDeklb8SebSQRdVIKJNlsdY+fiCxL4n04phHaBoPQsx+wGl6Uln5j4K87vMycLKDPVa
+         RjdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696925546; x=1697530346;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=7w5ncK3ZGR6hn3gQth0yAs2IU5AJ9lM29YZdM7MiT5k=;
-        b=whrxj8+BfOizuPyvMACfF0CfuKRzkA2ogtZs00MbLdAocg2u0S+vs3P2Bheb3L5Se9
-         pzRvbhyeGpFLUwJ7KwgsZdekJFXO3WoCBcB6iaTKbh2Y/g/abLmhlomiMZbZsfniiqHS
-         uVcbfHDMdojeIWBBgOVhWwKH3e2b9VcwHoZfLzQqGwMFhWd/dRy3na0VpTetdUfFc76A
-         zzpH4Sy9yXCEJrjIIIo0sFGJ/ErL75i2/I6c0WVmRGtloV+oj3L2+mkSowz0bDANSzYr
-         ZkMw9NZq6/MF9zoex+hqb893i2HdQ4+J9TaDOOEMgV9I7OIQj0K32AawSqaAdxfuKez4
-         180A==
-X-Gm-Message-State: AOJu0YwBUIiWJXHd2eAoKUlJXKLzfmlu0k01yXrTxVsDy2g9hXQibRsu
-        1SR8gRrOK6hfr7z+fLN8HVW5Rg==
-X-Google-Smtp-Source: AGHT+IGChbVUIQ32HuRaG9qe+y5bIYwF/hH4ZD5e2kuk6uI613nNful+o/eFf29+lVKWZwenjHG0+Q==
-X-Received: by 2002:adf:db50:0:b0:327:d08a:1fb3 with SMTP id f16-20020adfdb50000000b00327d08a1fb3mr15699165wrj.35.1696925546377;
-        Tue, 10 Oct 2023 01:12:26 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:2eac:5b51:e0a4:4807? ([2a01:e0a:982:cbb0:2eac:5b51:e0a4:4807])
-        by smtp.gmail.com with ESMTPSA id v11-20020a5d6b0b000000b00324853fc8adsm11818176wrw.104.2023.10.10.01.12.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Oct 2023 01:12:25 -0700 (PDT)
-Message-ID: <e7413bc9-6964-4fe2-9eb7-2f4d81548fb1@linaro.org>
-Date:   Tue, 10 Oct 2023 10:12:25 +0200
+        d=1e100.net; s=20230601; t=1696926405; x=1697531205;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gxYD0mht6wRxqJ6sAAYMTrwPyt4IIpZM7FRAYXZukGA=;
+        b=vpLoO9cJ4s9LvtgfAq8kFrbAKKClBRS76RFITjd9fqVB93oj9GAiavKJFpiOFnzOII
+         m7eL8fEDYLH+/b41S0aKKfcqq8FhL8WlMq+MKs/D8bAZW16rPIn5Fwsh2fpJklCXnOjn
+         44x9UBReJ3kpO7BDZGtsDrwx0jwhIeblw8IVJ1PINkIVtW+ghjkckR7Ul557GAf8YKlD
+         vjlrPDWuzMZZ89b3I6j9hMiPhTb5pxcrDGb+BwbrR85/sWfDQ1rM1/Z6W2ZLacCvvZLg
+         vuWxnUVjHaOoqDPPhq8croOK5HoDLdedih8TrVMH/QsrJrD/WwHQSDX/W+w8bcH6RIWd
+         L7Zg==
+X-Gm-Message-State: AOJu0Yz6cpPByZf278dquhvQUcRjmRBG6svpAiJRr+0F3BmBm5+odowo
+        7NJ1bv+f+x/8IcIOvg/VmHCiH5NXjsG1aMfsZN17Ug==
+X-Google-Smtp-Source: AGHT+IFcDu4LtIP7KaKGrAUc0zTd4azAJy7agJfsjzpEk9oLdnmqY+dI5RDlVWlr2xTgVei3zkeuLIM714LJsVyHzFE=
+X-Received: by 2002:a05:6122:17a6:b0:4a0:6fd4:4332 with SMTP id
+ o38-20020a05612217a600b004a06fd44332mr5461577vkf.14.1696926405065; Tue, 10
+ Oct 2023 01:26:45 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH RFC 0/5] drm/msm: dpu1: correctly implement SSPP & WB
- Clock Control Split
-Content-Language: en-US, fr
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-References: <20231009-topic-sm8550-graphics-sspp-split-clk-v1-0-806c0dee4e43@linaro.org>
- <dxcfxhqesrauyo5bscwwj5ejrlulsndiewwfahmnhhztj4gil5@vowdkbp5bsqj>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <dxcfxhqesrauyo5bscwwj5ejrlulsndiewwfahmnhhztj4gil5@vowdkbp5bsqj>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+References: <20231009153427.20951-1-brgl@bgdev.pl> <20231009153427.20951-5-brgl@bgdev.pl>
+ <f6jspdoeyv6ntcrl6qndy2ud3mcdkoxxcnzqm3qpbtcd3ztdpi@7iw5f5og7is2>
+In-Reply-To: <f6jspdoeyv6ntcrl6qndy2ud3mcdkoxxcnzqm3qpbtcd3ztdpi@7iw5f5og7is2>
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+Date:   Tue, 10 Oct 2023 10:26:34 +0200
+Message-ID: <CAMRc=MchBQrpSqHHs-cD0RmOdSoKt2SLd76a97E8mSmHYGUCUg@mail.gmail.com>
+Subject: Re: [PATCH v3 04/15] firmware: qcom: add a dedicated TrustZone buffer allocator
+To:     Andrew Halaney <ahalaney@redhat.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        Alex Elder <elder@linaro.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, kernel@quicinc.com,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/10/2023 10:10, Marijn Suijten wrote:
-> On 2023-10-09 18:36:11, Neil Armstrong wrote:
->> Starting with the SM8550 platform, the SSPP & WB Clock Controls are
->> no more in the MDP TOP registers, but in the SSPP & WB register space.
->>
->> Add the corresponding SSPP & WB ops and use them from the vbif QoS
->> and OT limit setup functions.
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->> Neil Armstrong (5):
->>        drm/msm: dpu1: create a dpu_hw_clk_force_ctrl() helper
->>        drm/msm: dpu1: add setup_clk_force_ctrl() op to sspp & wb
->>        drm/msm: dpu1: vbif: add dpu_vbif_setup_clk_force_ctrl() helper
->>        drm/msm: dpu1: call wb & sspp clk_force_ctrl op if split clock control
->>        drm/msm: dpu1: sm8550: move split clock controls to sspp entries
-> 
-> Fyi we're all using drm/msm/dpu: now :)
+On Mon, Oct 9, 2023 at 11:28=E2=80=AFPM Andrew Halaney <ahalaney@redhat.com=
+> wrote:
+>
+> On Mon, Oct 09, 2023 at 05:34:16PM +0200, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > We have several SCM calls that require passing buffers to the TrustZone
+> > on top of the SMC core which allocates memory for calls that require
+> > more than 4 arguments.
+> >
+> > Currently every user does their own thing which leads to code
+> > duplication. Many users call dma_alloc_coherent() for every call which
+> > is terribly unperformant (speed- and size-wise).
+> >
+> > Provide a set of library functions for creating and managing pool of
+> > memory which is suitable for sharing with the TrustZone, that is:
+> > page-aligned, contiguous and non-cachable as well as provides a way of
+> > mapping of kernel virtual addresses to physical space.
+> >
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > ---
 
-Ack, thx, will change for v2
+[snip]
 
-> 
-> - Marijn
-> 
->>
->>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h | 35 +++++++++-----------
->>   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c    |  4 +--
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |  4 +++
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c        |  9 +++++
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h        |  9 +++++
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c         | 23 +------------
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c        | 21 ++++++++++++
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h        |  4 +++
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c          |  9 +++++
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h          |  4 +++
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c          |  9 +++--
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c           | 38 +++++++++++++++++-----
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.h           | 12 ++++---
->>   13 files changed, 120 insertions(+), 61 deletions(-)
->> ---
->> base-commit: 9119cf579b4432b36be9d33a92f4331922067d92
->> change-id: 20231009-topic-sm8550-graphics-sspp-split-clk-43c32e37b6aa
->>
->> Best regards,
->> -- 
->> Neil Armstrong <neil.armstrong@linaro.org>
->>
+>
+> I got these warnings with this series:
+>
+>     ahalaney@fedora ~/git/linux-next (git)-[7204cc6c3d73] % ARCH=3Darm64 =
+CROSS_COMPILE=3Daarch64-linux-gnu- make W=3D1 C=3D2 drivers/firmware/qcom/
+>     drivers/firmware/qcom/qcom_tzmem.c:137: warning: Function parameter o=
+r member 'size' not described in 'qcom_tzmem_pool_new'
+>       CHECK   drivers/firmware/qcom/qcom_tzmem.c
+>     drivers/firmware/qcom/qcom_tzmem.c:204:17: warning: incorrect type in=
+ assignment (different address spaces)
+>     drivers/firmware/qcom/qcom_tzmem.c:204:17:    expected void **slot
+>     drivers/firmware/qcom/qcom_tzmem.c:204:17:    got void [noderef] __rc=
+u **
+>     drivers/firmware/qcom/qcom_tzmem.c:204:17: warning: incorrect type in=
+ assignment (different address spaces)
+>     drivers/firmware/qcom/qcom_tzmem.c:204:17:    expected void **slot
+>     drivers/firmware/qcom/qcom_tzmem.c:204:17:    got void [noderef] __rc=
+u **
+>     drivers/firmware/qcom/qcom_tzmem.c:204:17: warning: incorrect type in=
+ argument 1 (different address spaces)
+>     drivers/firmware/qcom/qcom_tzmem.c:204:17:    expected void [noderef]=
+ __rcu **slot
+>     drivers/firmware/qcom/qcom_tzmem.c:204:17:    got void **slot
+>     drivers/firmware/qcom/qcom_tzmem.c:204:17: warning: incorrect type in=
+ assignment (different address spaces)
+>     drivers/firmware/qcom/qcom_tzmem.c:204:17:    expected void **slot
+>     drivers/firmware/qcom/qcom_tzmem.c:204:17:    got void [noderef] __rc=
+u **
+>     drivers/firmware/qcom/qcom_tzmem.c:339:13: warning: context imbalance=
+ in 'qcom_tzmem_to_phys' - wrong count at exit
 
+I fixed the other ones but this one I think comes from CHECK not
+dealing correctly with the spinlock guard.
+
+>
+>
+> All are confusing me, size seems described, I don't know much about
+> radix tree usage / rcu, and the locking in qcom_tzmem_to_phys seems sane
+> to me but I'm still grappling with the new syntax.
+>
+> For the one address space one, I _think_ maybe a diff like this is in
+> order?
+>
+>     diff --git a/drivers/firmware/qcom/qcom_tzmem.c b/drivers/firmware/qc=
+om/qcom_tzmem.c
+>     index b3137844fe43..5b409615198d 100644
+>     --- a/drivers/firmware/qcom/qcom_tzmem.c
+>     +++ b/drivers/firmware/qcom/qcom_tzmem.c
+>     @@ -193,7 +193,7 @@ void qcom_tzmem_pool_free(struct qcom_tzmem_pool =
+*pool)
+>             struct qcom_tzmem_chunk *chunk;
+>             struct radix_tree_iter iter;
+>             bool non_empty =3D false;
+>     -       void **slot;
+>     +       void __rcu **slot;
+>
+>             if (!pool)
+>                     return;
+>     @@ -202,7 +202,7 @@ void qcom_tzmem_pool_free(struct qcom_tzmem_pool =
+*pool)
+>
+>             scoped_guard(spinlock_irqsave, &qcom_tzmem_chunks_lock) {
+>                     radix_tree_for_each_slot(slot, &qcom_tzmem_chunks, &i=
+ter, 0) {
+>     -                       chunk =3D *slot;
+>     +                       chunk =3D radix_tree_deref_slot_protected(slo=
+t, &qcom_tzmem_chunks_lock);
+
+We need to keep the lock taken for the duration of the looping so we
+can use the regular radix_tree_deref_slot().
+
+Bart
+
+>
+>                             if (chunk->owner =3D=3D pool)
+>                                     non_empty =3D true;
+>
+>
+> Still planning on reviewing/testing the rest, but got tripped up there
+> so thought I'd highlight it before doing the rest.
+>
+> Thanks,
+> Andrew
+>
