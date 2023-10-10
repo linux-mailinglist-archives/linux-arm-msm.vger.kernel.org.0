@@ -2,49 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 82BC07BFB32
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 14:21:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54EF67BFB4C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 14:25:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231775AbjJJMVc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Oct 2023 08:21:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39590 "EHLO
+        id S231633AbjJJMZI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Oct 2023 08:25:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231637AbjJJMVb (ORCPT
+        with ESMTP id S231371AbjJJMZH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Oct 2023 08:21:31 -0400
+        Tue, 10 Oct 2023 08:25:07 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC5CA99;
-        Tue, 10 Oct 2023 05:21:29 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FBE5C433C7;
-        Tue, 10 Oct 2023 12:21:26 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC3D99D;
+        Tue, 10 Oct 2023 05:25:05 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A470C433C7;
+        Tue, 10 Oct 2023 12:24:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1696940489;
-        bh=Yej9bVPXe3Yn3VuZSMy7tR2lCorR7YuG7/gHIvWhSps=;
+        s=k20201202; t=1696940705;
+        bh=omFIqKia3wy7Xbwqgl3lEDlQS0jMr0mlUIHVa8ZY/jQ=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=LnkFxwRGButXSwjFV9YJqgfe/gHEZ5zf1Pf8vukA8jB+DXk1OiCCacoqLk844x5Te
-         ktVllChcD+0a31UVSv4aH2SSYW1Gw7ACD+6AZJEVX8llNNEViwVbASpUv/IDvqB/fD
-         RU6g2iAxhNNCF2YBOXCmASbuLePa1mW3a8/vCw97fnhqQG4VvIWsHgnUJUv3xnR5Mn
-         YZUNJiTCoart30dZshRKI6TU9V+63kY6M7rOVaRwf+eKJcePo6zSE/8ZiqYhBVFNOW
-         dDbcy+qMbGJw8pOJpkBd0NgddKk2YsSqVi1nv2v2CVayomsNkwTIjbGK20LRTMO3AY
-         vUkWFxpfdgDJQ==
-Date:   Tue, 10 Oct 2023 17:51:16 +0530
+        b=RB9t1Xi6C6UY8MEAUWcmpc14/Xjsaa4NraUXJX6ziZ6S77LJRYcw5jPz1uuO9fARo
+         r+70AQEjYZjsYmbjTpHHdqjp8Q80rxgQpZNdtZkrZKZcaUuCSZhzMFM0MMNJLrc6OO
+         35nHg0XtxoELdzajsUHQF2HW6wg85SteBC9WdymQikpsZTy+65jjOvwVI54Sdk2amZ
+         Lkqar4AL7Hfzm2z7jAXAIytZOxyGCV9QxKa26KqGzt8mWu84II+BDaG6/plyWnLrtv
+         7QZeOUeSd0dC8DTMW1o2gSOzVWOCJq+FICgRYyiBeTUz9OvqK6CGJZ9BvKe7kn7HHm
+         aWmLRQoVsbMDg==
+Date:   Tue, 10 Oct 2023 17:54:47 +0530
 From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Dan Carpenter <dan.carpenter@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bhupesh Sharma <bhupesh.linux@gmail.com>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        kernel-janitors@vger.kernel.org
-Subject: Re: [PATCH] scsi: ufs: qcom: remove unnecessary check
-Message-ID: <20231010122116.GI4884@thinkpad>
-References: <fe3b8fcd-64a7-4887-bddd-32239a88a6a3@moroto.mountain>
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH 0/4] thermal: Introduce Qualcomm Thermal Mitigation
+ Device support
+Message-ID: <20231010122447.GJ4884@thinkpad>
+References: <20230905-caleb-qmi_cooling-v1-0-5aa39d4164a7@linaro.org>
+ <20231001155701.GA53767@thinkpad>
+ <cefe711b-d274-4d83-9dda-01f33b342387@linaro.org>
+ <20231002145239.GA12041@thinkpad>
+ <CAA8EJppn-f6R3ObGvagqkg1_KtXGgtNAgRn-LQiN3ORSHQY3-Q@mail.gmail.com>
+ <20231002155814.GB12041@thinkpad>
+ <CAA8EJpowGjnecOjr9h4r3=UXSrE4VdptoLADpQq3gDv_W9D3OQ@mail.gmail.com>
+ <20231002161308.GC12041@thinkpad>
+ <20231005023658.GE3553829@hu-bjorande-lv.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <fe3b8fcd-64a7-4887-bddd-32239a88a6a3@moroto.mountain>
+In-Reply-To: <20231005023658.GE3553829@hu-bjorande-lv.qualcomm.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -55,48 +75,79 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 02, 2023 at 10:03:35AM +0300, Dan Carpenter wrote:
-> The "attr" pointer points to an offset into the "host" struct so it
-> can't be NULL.  Delete the if statement and pull the code in a tab.
+On Wed, Oct 04, 2023 at 07:36:58PM -0700, Bjorn Andersson wrote:
+> On Mon, Oct 02, 2023 at 09:43:08PM +0530, Manivannan Sadhasivam wrote:
+> > On Mon, Oct 02, 2023 at 07:00:27PM +0300, Dmitry Baryshkov wrote:
+> > > On Mon, 2 Oct 2023 at 18:58, Manivannan Sadhasivam <mani@kernel.org> wrote:
+> > > >
+> > > > On Mon, Oct 02, 2023 at 06:00:37PM +0300, Dmitry Baryshkov wrote:
+> > > > > On Mon, 2 Oct 2023 at 17:52, Manivannan Sadhasivam <mani@kernel.org> wrote:
+> > > > > >
+> > > > > > On Sun, Oct 01, 2023 at 06:26:14PM +0100, Caleb Connolly wrote:
+> > > > > > >
+> > > > > > >
+> > > > > > > On 01/10/2023 16:57, Manivannan Sadhasivam wrote:
+> > > > > > > > On Fri, Sep 29, 2023 at 05:16:16PM +0100, Caleb Connolly wrote:
+> > > > > > > > > The Thermal Mitigation Device (TMD) Service is a QMI service that runs
+> > > > > > > > > on remote subsystems (the modem and DSPs) on Qualcomm SoCs.
+> > > > > > > > > It exposes various mitigations including passive thermal controls and
+> > > > > > > > > rail voltage restrictions.
+> > > > > > > > >
+> > > > > > > > > This series introduces support for exposing TMDs as cooling devices
+> > > > > > > > > in the kernel through the thermal framework, using the QMI interface.
+> > > > > > > > >
+> > > > > > > > > Each TMD client is described as a child of the remoteproc node in
+> > > > > > > > > devicetree. With subnodes for each control.
+> > > > > > > > >
+> > > > > > > >
+> > > > > > > > Daniel expressed concerns in the past aganist representing TMD driver as a
+> > > > > > > > cooling device since it is not tied to thermal zones and the governors cannot
+> > > > > > > > use it. Instead he suggested to represent it as a powercap device with thermal
+> > > > > > > > constraints.
+> > > > > > >
+> > > > > > > Hi Mani,
+> > > > > > >
+> > > > > > > Forgive me as I'm not yet super familiar with the thermal subsystem.
+> > > > > > >
+> > > > > > > As I understand it, the DT layout here enables each control to be referenced
+> > > > > > > under the thermal zones, at least this is the approach taken in CAF 4.9.
+> > > > > > >
+> > > > > > > Maybe I don't quite understand what you mean, are you saying that using
+> > > > > > > thermal zones is the wrong approach?
+> > > > > >
+> > > > > > Thermal framework expects each thermal zone represented in DT to have atleast
+> > > > > > one corresponding thermal sensor defined using "thermal-sensors" property. But
+> > > > > > with TMD, there is no thermal sensor AFAIK.
+> > > > >
+> > > > > As far as I understand, no. It is perfectly fine to have 'cooling'
+> > > > > devices, which react to external thermal monitoring events. I might be
+> > > > > mistaken, but I think that is the case here, isn't it?
+> > > > >
+> > > >
+> > > > Yes it is represented as cooling device(s). But I do not see any cognizant way
+> > > > to plug it with thermal zones i.e., unless TMD itself reports temperature of the
+> > > > modem, using it as a cooling device for external temperature events doesn't
+> > > > sound good to me.
+> > > 
+> > > Why? We have compute, q6, wlan tsens sensors. So it seems natural to
+> > > tell CDSP to slow down if compute sensor reports overheating.
+> > > 
+> > 
+> > TMD is for external devices such as PCIe modems as well. Is there a temperature
+> > sensor for that?
+> > 
 > 
-> Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+> According to the schematics for the SC8280XP CRD sys_therm5 would be the
+> sensor you're looking for.
+> 
 
-Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Hmm, then it seems fine from my end as long we have the correct sensor data to
+hook up these cooling devices.
 
 - Mani
 
-> ---
->  drivers/ufs/host/ufs-qcom.c | 14 +++++---------
->  1 file changed, 5 insertions(+), 9 deletions(-)
-> 
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index 2128db0293b5..96cb8b5b4e66 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -1447,15 +1447,11 @@ static int ufs_qcom_clk_scale_up_pre_change(struct ufs_hba *hba)
->  	if (!ufs_qcom_cap_qunipro(host))
->  		return 0;
->  
-> -	if (attr) {
-> -		ret = ufs_qcom_cfg_timers(hba, attr->gear_rx,
-> -					attr->pwr_rx, attr->hs_rate,
-> -					false, true);
-> -		if (ret) {
-> -			dev_err(hba->dev, "%s ufs cfg timer failed\n",
-> -						__func__);
-> -			return ret;
-> -		}
-> +	ret = ufs_qcom_cfg_timers(hba, attr->gear_rx, attr->pwr_rx,
-> +				  attr->hs_rate, false, true);
-> +	if (ret) {
-> +		dev_err(hba->dev, "%s ufs cfg timer failed\n", __func__);
-> +		return ret;
->  	}
->  	/* set unipro core clock attributes and clear clock divider */
->  	return ufs_qcom_set_core_clk_ctrl(hba, true);
-> -- 
-> 2.39.2
-> 
+> Regards,
+> Bjorn
 
 -- 
 மணிவண்ணன் சதாசிவம்
