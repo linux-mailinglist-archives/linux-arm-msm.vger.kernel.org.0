@@ -2,395 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A7217BFB5C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 14:26:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D01C67BFCF1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 15:10:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231811AbjJJMZx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Oct 2023 08:25:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45124 "EHLO
+        id S231580AbjJJNKf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Oct 2023 09:10:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231854AbjJJMZv (ORCPT
+        with ESMTP id S231400AbjJJNKe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Oct 2023 08:25:51 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 760F2AF
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 05:25:48 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-3296a998234so3582888f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 05:25:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696940747; x=1697545547; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nweWobJWJBf+E3jMJor/bM09luKRlFeXTfeRgH/BAFs=;
-        b=D4PvFZXR2ibaBfNFdybIDiuCgo+yAyAluLL2GYyfmGwYn1O62ggS41+EGiVci2xIt2
-         hPR5XWken+tPdelDY7P8O6dIFMac1EJ62G4fLNLLie/qNnrQ0iahcqQkY5pp1c0H32HU
-         ozX2cCA0Fn15t6TC7hb/oE8FYdzKs2UUG0DzK18PYWtXMiFCsYEPtQSh5n5o0qWAn+di
-         jXK00fBYkiPwRqAY4oeEGIo3xP/9tTKaLmesMPk1Mq37cJVwK4RgqjlwCWt2zFDgqme9
-         wVE7x2dEwkroU+ZRD/uXSv/cX1U97HtKa1aJ3oy7OrcmwF2/Qfe97h9/o/DCt7i1n6g6
-         ZjvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696940747; x=1697545547;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nweWobJWJBf+E3jMJor/bM09luKRlFeXTfeRgH/BAFs=;
-        b=O/trAwUP/kkWdrhgQMuTi6OCAB3z3D96HNUuYL79I9+0DOkvY4JQQEYWWPwSLA2TuQ
-         NeX5iBKPxq+rW7gKJplhwY2ACwAAs+bxFwGLELTrmvxPmZrUgo0AQh5m4bNAgrRWGe5d
-         E28G0GzuRQfPK4wBSI+jt7u1CSvcTdQ3F/3XpSeHtxkJgWt2i3i1ks0MFvFygsDMWyeb
-         //i7r3ypRLMTcJ+XJARXar6Z24tTUqsEs1rpqGrKhld6slxp/8KRvqXYuADxWxAbNwIs
-         NTbBUwBTAkTg9e70cF1FbKct+/Pt5UNIVmaQHHrLy92npsMKngoCt5k7gL0FtibbL87b
-         DGZQ==
-X-Gm-Message-State: AOJu0Yxs3EJd6M8KVRokAdelv0PbRAIvq9xLXy8YYLI6D1FEb2mSD0cI
-        lC1pmIDbT2q4JPJeqNfX2YZoCQ==
-X-Google-Smtp-Source: AGHT+IERp62NtYcGcBBVV7zdLksq60picU/u7zF9cqiiFbkoDxv0pBp0nW4BRDlmlhIzlNEx49APjQ==
-X-Received: by 2002:a5d:664d:0:b0:320:3fa:945 with SMTP id f13-20020a5d664d000000b0032003fa0945mr14209510wrw.24.1696940746516;
-        Tue, 10 Oct 2023 05:25:46 -0700 (PDT)
-Received: from x13s-linux.nxsw.local ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id bv28-20020a0560001f1c00b0032d402f816csm1404316wrb.98.2023.10.10.05.25.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Oct 2023 05:25:46 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        dmitry.baryshkov@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        jonathan@marek.ca, quic_tdas@quicinc.com,
-        vladimir.zapolskiy@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        bryan.odonoghue@linaro.org
-Subject: [PATCH v2 3/3] arm64: dts: qcom: sc8280xp: camss: Add CAMSS block definition
-Date:   Tue, 10 Oct 2023 13:25:39 +0100
-Message-Id: <20231010122539.1768825-4-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20231010122539.1768825-1-bryan.odonoghue@linaro.org>
-References: <20231010122539.1768825-1-bryan.odonoghue@linaro.org>
+        Tue, 10 Oct 2023 09:10:34 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EECB1AC
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 06:10:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1696943431; x=1728479431;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=LfvkyWWgd3eiHj7mOmx4QZJ3G+O2ECJyREGq8SLfUKo=;
+  b=MgTpigNlv7moRGIYCRXGSHNnwgKacpf4Rsx30U/K0wrqRsfTOGiP43eE
+   qTO1DIgo8PY8NBo3BccF2UMbYCOtmPlDd0J+bfXvcbNK/Z/Ys6F4adOUR
+   mkI9qVHfHuiKgyfw2sn5b9Nvc9X8lkbpHEwawhMlvOiFSbPRUYoojjTcq
+   xgbaynVK+bybXhizt1s0vmMpr6Kub0GmlS6HERuk+qjDfx4SpEUZ1iDOI
+   kcEzbRN7ccv0Keeh7ctVHQTO2Knb6Cx4oWRnODeSyakhBKYHEk1GHdlYv
+   6B6FMC8ZNuGVQAU7qJwhsKpOcdZACy/vCnhne0RdpUcNRIyIGOUgLsW85
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10859"; a="470651152"
+X-IronPort-AV: E=Sophos;i="6.03,212,1694761200"; 
+   d="scan'208";a="470651152"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Oct 2023 06:08:25 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10859"; a="897186185"
+X-IronPort-AV: E=Sophos;i="6.03,212,1694761200"; 
+   d="scan'208";a="897186185"
+Received: from lkp-server02.sh.intel.com (HELO f64821696465) ([10.239.97.151])
+  by fmsmga001.fm.intel.com with ESMTP; 10 Oct 2023 06:06:40 -0700
+Received: from kbuild by f64821696465 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qqCTC-0000SW-2x;
+        Tue, 10 Oct 2023 13:08:19 +0000
+Date:   Tue, 10 Oct 2023 21:08:15 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>, quic_ajitpals@quicinc.com,
+        quic_carlv@quicinc.com, quic_pkanojiy@quicinc.com,
+        stanislaw.gruszka@linux.intel.com, ogabbay@kernel.org
+Cc:     oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH 1/2] accel/qaic: Add support for periodic timesync
+Message-ID: <202310102021.xKVfIhRT-lkp@intel.com>
+References: <20231006163210.21319-2-quic_jhugo@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231006163210.21319-2-quic_jhugo@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add CAMSS block definition for sc8280xp.
+Hi Jeffrey,
 
-This drop contains definitions for the following components on sc8280xp:
+kernel test robot noticed the following build errors:
 
-VFE * 4
-VFE Lite * 4
-CSID * 4
-CSIPHY * 4
+[auto build test ERROR on drm-misc/drm-misc-next]
+[also build test ERROR on next-20231010]
+[cannot apply to linus/master v6.6-rc5]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-This dtsi definition has been developed and validated on a Lenovo X13s
-laptop.
+url:    https://github.com/intel-lab-lkp/linux/commits/Jeffrey-Hugo/accel-qaic-Add-support-for-periodic-timesync/20231007-003324
+base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
+patch link:    https://lore.kernel.org/r/20231006163210.21319-2-quic_jhugo%40quicinc.com
+patch subject: [PATCH 1/2] accel/qaic: Add support for periodic timesync
+config: powerpc-randconfig-003-20231010 (https://download.01.org/0day-ci/archive/20231010/202310102021.xKVfIhRT-lkp@intel.com/config)
+compiler: powerpc-linux-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231010/202310102021.xKVfIhRT-lkp@intel.com/reproduce)
 
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 285 +++++++++++++++++++++++++
- 1 file changed, 285 insertions(+)
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202310102021.xKVfIhRT-lkp@intel.com/
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index 22e9671af0e9..c1fac3e872f4 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -3615,6 +3615,291 @@ cci3_i2c1: i2c-bus@1 {
- 			};
- 		};
- 
-+		camss: camss@ac5a000 {
-+			compatible = "qcom,sc8280xp-camss";
-+
-+			reg = <0 0x0ac5a000 0 0x2000>,
-+			      <0 0x0ac5c000 0 0x2000>,
-+			      <0 0x0ac65000 0 0x2000>,
-+			      <0 0x0ac67000 0 0x2000>,
-+			      <0 0x0acaf000 0 0x4000>,
-+			      <0 0x0acb3000 0 0x1000>,
-+			      <0 0x0acb6000 0 0x4000>,
-+			      <0 0x0acba000 0 0x1000>,
-+			      <0 0x0acbd000 0 0x4000>,
-+			      <0 0x0acc1000 0 0x1000>,
-+			      <0 0x0acc4000 0 0x4000>,
-+			      <0 0x0acc8000 0 0x1000>,
-+			      <0 0x0accb000 0 0x4000>,
-+			      <0 0x0accf000 0 0x1000>,
-+			      <0 0x0acd2000 0 0x4000>,
-+			      <0 0x0acd6000 0 0x1000>,
-+			      <0 0x0acd9000 0 0x4000>,
-+			      <0 0x0acdd000 0 0x1000>,
-+			      <0 0x0ace0000 0 0x4000>,
-+			      <0 0x0ace4000 0 0x1000>;
-+
-+			reg-names = "csiphy2",
-+				    "csiphy3",
-+				    "csiphy0",
-+				    "csiphy1",
-+				    "vfe0",
-+				    "csid0",
-+				    "vfe1",
-+				    "csid1",
-+				    "vfe2",
-+				    "csid2",
-+				    "vfe_lite0",
-+				    "csid0_lite",
-+				    "vfe_lite1",
-+				    "csid1_lite",
-+				    "vfe_lite2",
-+				    "csid2_lite",
-+				    "vfe_lite3",
-+				    "csid3_lite",
-+				    "vfe3",
-+				    "csid3";
-+
-+			interrupts = <GIC_SPI 359 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 360 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 448 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 464 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 465 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 466 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 467 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 468 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 469 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 477 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 478 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 479 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 640 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 641 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 758 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 759 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 760 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 761 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 762 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 764 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			interrupt-names = "csid1_lite",
-+					  "vfe_lite1",
-+					  "csiphy3",
-+					  "csid0",
-+					  "vfe0",
-+					  "csid1",
-+					  "vfe1",
-+					  "csid0_lite",
-+					  "vfe_lite0",
-+					  "csiphy0",
-+					  "csiphy1",
-+					  "csiphy2",
-+					  "csid2",
-+					  "vfe2",
-+					  "csid3_lite",
-+					  "csid2_lite",
-+					  "vfe_lite3",
-+					  "vfe_lite2",
-+					  "csid3",
-+					  "vfe3";
-+
-+			power-domains = <&camcc IFE_0_GDSC>,
-+					<&camcc IFE_1_GDSC>,
-+					<&camcc IFE_2_GDSC>,
-+					<&camcc IFE_3_GDSC>,
-+					<&camcc TITAN_TOP_GDSC>;
-+
-+			power-domain-names = "ife0",
-+					     "ife1",
-+					     "ife2",
-+					     "ife3",
-+					     "top";
-+
-+			clocks = <&camcc CAMCC_CAMNOC_AXI_CLK>,
-+				 <&camcc CAMCC_CAMNOC_AXI_CLK_SRC>,
-+				 <&camcc CAMCC_CPAS_AHB_CLK>,
-+				 <&camcc CAMCC_CPHY_RX_CLK_SRC>,
-+				 <&camcc CAMCC_CSIPHY0_CLK>,
-+				 <&camcc CAMCC_CSI0PHYTIMER_CLK_SRC>,
-+				 <&camcc CAMCC_CSI0PHYTIMER_CLK>,
-+				 <&camcc CAMCC_CSIPHY1_CLK>,
-+				 <&camcc CAMCC_CSI1PHYTIMER_CLK_SRC>,
-+				 <&camcc CAMCC_CSI1PHYTIMER_CLK>,
-+				 <&camcc CAMCC_CSIPHY2_CLK>,
-+				 <&camcc CAMCC_CSI2PHYTIMER_CLK_SRC>,
-+				 <&camcc CAMCC_CSI2PHYTIMER_CLK>,
-+				 <&camcc CAMCC_CSIPHY3_CLK>,
-+				 <&camcc CAMCC_CSI3PHYTIMER_CLK_SRC>,
-+				 <&camcc CAMCC_CSI3PHYTIMER_CLK>,
-+				 <&camcc CAMCC_IFE_0_AXI_CLK>,
-+				 <&camcc CAMCC_IFE_0_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_0_CLK>,
-+				 <&camcc CAMCC_IFE_0_CPHY_RX_CLK>,
-+				 <&camcc CAMCC_IFE_0_CSID_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_0_CSID_CLK>,
-+				 <&camcc CAMCC_IFE_1_AXI_CLK>,
-+				 <&camcc CAMCC_IFE_1_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_1_CLK>,
-+				 <&camcc CAMCC_IFE_1_CPHY_RX_CLK>,
-+				 <&camcc CAMCC_IFE_1_CSID_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_1_CSID_CLK>,
-+				 <&camcc CAMCC_IFE_2_AXI_CLK>,
-+				 <&camcc CAMCC_IFE_2_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_2_CLK>,
-+				 <&camcc CAMCC_IFE_2_CPHY_RX_CLK>,
-+				 <&camcc CAMCC_IFE_2_CSID_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_2_CSID_CLK>,
-+				 <&camcc CAMCC_IFE_3_AXI_CLK>,
-+				 <&camcc CAMCC_IFE_3_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_3_CLK>,
-+				 <&camcc CAMCC_IFE_3_CPHY_RX_CLK>,
-+				 <&camcc CAMCC_IFE_3_CSID_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_3_CSID_CLK>,
-+				 <&camcc CAMCC_IFE_LITE_0_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_LITE_0_CLK>,
-+				 <&camcc CAMCC_IFE_LITE_0_CPHY_RX_CLK>,
-+				 <&camcc CAMCC_IFE_LITE_0_CSID_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_LITE_0_CSID_CLK>,
-+				 <&camcc CAMCC_IFE_LITE_1_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_LITE_1_CLK>,
-+				 <&camcc CAMCC_IFE_LITE_1_CPHY_RX_CLK>,
-+				 <&camcc CAMCC_IFE_LITE_1_CSID_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_LITE_1_CSID_CLK>,
-+				 <&camcc CAMCC_IFE_LITE_2_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_LITE_2_CLK>,
-+				 <&camcc CAMCC_IFE_LITE_2_CPHY_RX_CLK>,
-+				 <&camcc CAMCC_IFE_LITE_2_CSID_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_LITE_2_CSID_CLK>,
-+				 <&camcc CAMCC_IFE_LITE_3_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_LITE_3_CLK>,
-+				 <&camcc CAMCC_IFE_LITE_3_CPHY_RX_CLK>,
-+				 <&camcc CAMCC_IFE_LITE_3_CSID_CLK_SRC>,
-+				 <&camcc CAMCC_IFE_LITE_3_CSID_CLK>,
-+				 <&gcc GCC_CAMERA_HF_AXI_CLK>,
-+				 <&gcc GCC_CAMERA_SF_AXI_CLK>,
-+				 <&camcc CAMCC_SLOW_AHB_CLK_SRC>;
-+
-+			clock-names = "camnoc_axi",
-+				      "camnoc_axi_src",
-+				      "cpas_ahb",
-+				      "cphy_rx_src",
-+				      "csiphy0",
-+				      "csiphy0_timer_src",
-+				      "csiphy0_timer",
-+				      "csiphy1",
-+				      "csiphy1_timer_src",
-+				      "csiphy1_timer",
-+				      "csiphy2",
-+				      "csiphy2_timer_src",
-+				      "csiphy2_timer",
-+				      "csiphy3",
-+				      "csiphy3_timer_src",
-+				      "csiphy3_timer",
-+				      "vfe0_axi",
-+				      "vfe0_src",
-+				      "vfe0",
-+				      "vfe0_cphy_rx",
-+				      "vfe0_csid_src",
-+				      "vfe0_csid",
-+				      "vfe1_axi",
-+				      "vfe1_src",
-+				      "vfe1",
-+				      "vfe1_cphy_rx",
-+				      "vfe1_csid_src",
-+				      "vfe1_csid",
-+				      "vfe2_axi",
-+				      "vfe2_src",
-+				      "vfe2",
-+				      "vfe2_cphy_rx",
-+				      "vfe2_csid_src",
-+				      "vfe2_csid",
-+				      "vfe3_axi",
-+				      "vfe3_src",
-+				      "vfe3",
-+				      "vfe3_cphy_rx",
-+				      "vfe3_csid_src",
-+				      "vfe3_csid",
-+				      "vfe_lite0_src",
-+				      "vfe_lite0",
-+				      "vfe_lite0_cphy_rx",
-+				      "vfe_lite0_csid_src",
-+				      "vfe_lite0_csid",
-+				      "vfe_lite1_src",
-+				      "vfe_lite1",
-+				      "vfe_lite1_cphy_rx",
-+				      "vfe_lite1_csid_src",
-+				      "vfe_lite1_csid",
-+				      "vfe_lite2_src",
-+				      "vfe_lite2",
-+				      "vfe_lite2_cphy_rx",
-+				      "vfe_lite2_csid_src",
-+				      "vfe_lite2_csid",
-+				      "vfe_lite3_src",
-+				      "vfe_lite3",
-+				      "vfe_lite3_cphy_rx",
-+				      "vfe_lite3_csid_src",
-+				      "vfe_lite3_csid",
-+				      "gcc_axi_hf",
-+				      "gcc_axi_sf",
-+				      "slow_ahb_src";
-+
-+			iommus = <&apps_smmu 0x2000 0x4e0>,
-+				 <&apps_smmu 0x2020 0x4e0>,
-+				 <&apps_smmu 0x2040 0x4e0>,
-+				 <&apps_smmu 0x2060 0x4e0>,
-+				 <&apps_smmu 0x2080 0x4e0>,
-+				 <&apps_smmu 0x20e0 0x4e0>,
-+				 <&apps_smmu 0x20c0 0x4e0>,
-+				 <&apps_smmu 0x20a0 0x4e0>,
-+				 <&apps_smmu 0x2400 0x4e0>,
-+				 <&apps_smmu 0x2420 0x4e0>,
-+				 <&apps_smmu 0x2440 0x4e0>,
-+				 <&apps_smmu 0x2460 0x4e0>,
-+				 <&apps_smmu 0x2480 0x4e0>,
-+				 <&apps_smmu 0x24e0 0x4e0>,
-+				 <&apps_smmu 0x24c0 0x4e0>,
-+				 <&apps_smmu 0x24a0 0x4e0>;
-+
-+			interconnects = <&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_CAMERA_CFG 0>,
-+					<&mmss_noc MASTER_CAMNOC_HF 0 &mc_virt SLAVE_EBI1 0>,
-+					<&mmss_noc MASTER_CAMNOC_SF 0 &mc_virt SLAVE_EBI1 0>,
-+					<&mmss_noc MASTER_CAMNOC_ICP 0 &mc_virt SLAVE_EBI1 0>;
-+			interconnect-names = "cam_ahb",
-+					     "cam_hf_mnoc",
-+					     "cam_sf_mnoc",
-+					     "cam_sf_icp_mnoc";
-+
-+			status = "disabled";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+				};
-+
-+				port@3 {
-+					reg = <3>;
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+				};
-+			};
-+		};
-+
- 		camcc: clock-controller@ad00000 {
- 			compatible = "qcom,sc8280xp-camcc";
- 			reg = <0 0x0ad00000 0 0x20000>;
+All errors (new ones prefixed by >>):
+
+   drivers/accel/qaic/qaic_timesync.c: In function 'qaic_timesync_timer':
+>> drivers/accel/qaic/qaic_timesync.c:125:25: error: implicit declaration of function 'readq'; did you mean 'readl'? [-Werror=implicit-function-declaration]
+     125 |         device_qtimer = readq(mqtsdev->qtimer_addr);
+         |                         ^~~~~
+         |                         readl
+   cc1: some warnings being treated as errors
+
+
+vim +125 drivers/accel/qaic/qaic_timesync.c
+
+   102	
+   103	static void qaic_timesync_timer(struct timer_list *t)
+   104	{
+   105		struct mqts_dev *mqtsdev = from_timer(mqtsdev, t, timer);
+   106		struct qts_host_time_sync_msg_data *sync_msg;
+   107		u64 device_qtimer_us;
+   108		u64 device_qtimer;
+   109		u64 host_time_us;
+   110		u64 offset_us;
+   111		u64 host_sec;
+   112		int ret;
+   113	
+   114		if (atomic_read(&mqtsdev->buff_in_use)) {
+   115			dev_dbg(mqtsdev->dev, "%s buffer not free, schedule next cycle\n", __func__);
+   116			goto mod_timer;
+   117		}
+   118		atomic_set(&mqtsdev->buff_in_use, 1);
+   119	
+   120		sync_msg = mqtsdev->sync_msg;
+   121		sync_msg->header.signature = cpu_to_le16(QAIC_TIMESYNC_SIGNATURE);
+   122		sync_msg->header.msg_type = QAIC_TS_SYNC_REQ;
+   123		/* Read host UTC time and convert to uS*/
+   124		host_time_us = div_u64(ktime_get_real_ns(), NSEC_PER_USEC);
+ > 125		device_qtimer = readq(mqtsdev->qtimer_addr);
+   126		device_qtimer_us = QAIC_CONV_QTIMER_TO_US(device_qtimer);
+   127		/* Offset between host UTC and device time */
+   128		offset_us = host_time_us - device_qtimer_us;
+   129	
+   130		host_sec = div_u64(offset_us, USEC_PER_SEC);
+   131		sync_msg->data.tv_usec = cpu_to_le64(offset_us - host_sec * USEC_PER_SEC);
+   132		sync_msg->data.tv_sec = cpu_to_le64(host_sec);
+   133		ret = mhi_queue_buf(mqtsdev->mhi_dev, DMA_TO_DEVICE, sync_msg, sizeof(*sync_msg), MHI_EOT);
+   134		if (ret && (ret != -EAGAIN)) {
+   135			dev_err(mqtsdev->dev, "%s unable to queue to mhi:%d\n", __func__, ret);
+   136			return;
+   137		} else if (ret == -EAGAIN) {
+   138			atomic_set(&mqtsdev->buff_in_use, 0);
+   139		}
+   140	
+   141	mod_timer:
+   142		ret = mod_timer(t, jiffies + msecs_to_jiffies(timesync_delay_ms));
+   143		if (ret)
+   144			dev_err(mqtsdev->dev, "%s mod_timer error:%d\n", __func__, ret);
+   145	}
+   146	
+
 -- 
-2.40.1
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
