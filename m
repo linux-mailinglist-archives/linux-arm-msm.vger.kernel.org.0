@@ -2,78 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 37C047C014A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 18:10:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7BAF17C0180
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 18:23:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232239AbjJJQKF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Oct 2023 12:10:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49462 "EHLO
+        id S231204AbjJJQXQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Oct 2023 12:23:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233742AbjJJQKE (ORCPT
+        with ESMTP id S231231AbjJJQXP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Oct 2023 12:10:04 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F5A2CF;
-        Tue, 10 Oct 2023 09:10:02 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39AFLdiQ008891;
-        Tue, 10 Oct 2023 16:09:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=EI4I9X8T5aX1nBBDfXXfPGCjKSmLWCmiwvbuvfZQ1+g=;
- b=Q10yUD8aAS3CgXoPoQjPIrJ+kmipjBS0Dm3KWRQ3eH9Riop71BChiZDJMaIesux3sd73
- T8GFcpeqiT3GVUCfUYwaAv5YRAbfb/oMdV5rbsMLP7o6BOc2Fojwmfm0Z1dPnZE8A6hK
- JW0tL4pof/T88EB/0Wy9HuPOHpwCXTpnaRC0IgCukqjw0Gj6772FZSEDhRlkvH2ywNs5
- GyWEBb8Ohm/j8FqMgrT2B5rlpeE0iJja3xLOHx0hdvAk3xyzkYP0Wpcnq2AYIgT4AP0T
- HSJD8kTdTadUO4VnNFs5Avetdhqsz/OsOvgQrSG7/xe6z3IzHHMwz9KEGIz0pMtroRwB 7A== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tn492rvqa-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 10 Oct 2023 16:09:56 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39AG9uT5029578
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 10 Oct 2023 16:09:56 GMT
-Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Tue, 10 Oct 2023 09:09:52 -0700
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
+        Tue, 10 Oct 2023 12:23:15 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A347DE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 09:23:11 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-503c7767348so1599060e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Oct 2023 09:23:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1696954989; x=1697559789; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zGxdskynZq38kn996amRvHGUp58nLQDbuPG7+yxVYHk=;
+        b=RjKH9wc4DYVG5kRtgu83t8mJYXDdFoJeN//M90qvdrhZ77a/+Y0zbK2yrMvhBK5eCH
+         T3TLzjI5by3CeTqncv+coRdF2ae5XsCzRJPYnnN/gHD5xfSyM+mEWHC6HXTfNn5ncRuv
+         EZKx6Gavr3vay2hKpz5CzrlAOWi2DoAV73H4AViu4iavZ1Q5lC8BMEl/OWi6Cp6gZ+lc
+         RobhIa+J424Vy150O87Z/YWaGs2a1d4GKKreNbiMf+mtHAekos/nfYcab2Dq1MK9Wnxi
+         hyA4v6cD44RDRtOI9Y9NQtdYgh0nEBFmvbvBtho5KDKutyohQT/ouvv81TWEpZgvpxga
+         ZR8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696954989; x=1697559789;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zGxdskynZq38kn996amRvHGUp58nLQDbuPG7+yxVYHk=;
+        b=XfCbgYbKnEuzGl7FHlD4FDm16JkPbuGhnLI4K8tFS276Vxccp/kR9QL/I4iaO4y/rj
+         SfsO7gKPBV/QGNSSSo1Y5KZnauX+3xJugJNSof/C1vzZSdR+te4boBMqCNrI8eT9YwmH
+         nBqd+UQcJZLfCI99RQNaVdxgmUiS3o/9wPPGamiCYk0H9lV3WH1ZSDqH1jBdP+ED8jA/
+         y1IikLpXvOI2D3/AbU0LXDCKjPcLihle3JTP4wtgahBkr56lKrE02fbCuyu9Ruri1NdX
+         Lolw4++13ZnkReLwVAgUsKxfGXoOxkyWuc0L2jQGm1DT4vZXVnxoE/4OFYM3DhX2+jj1
+         XyXw==
+X-Gm-Message-State: AOJu0YzHjXrzAvPvT7LmGTeVePSgu+Vnj9rGRou2LX6u4OVP81wRBDIq
+        NTZBRUIbYk+gp5iRAg+qm+sZjg==
+X-Google-Smtp-Source: AGHT+IFTE6eOdZXoi8YRtnGanq+t9ep6GtcNWqfxr1sWycbErleyJS5/yW9eIoIOCZNMnyP4cC3QXA==
+X-Received: by 2002:ac2:55a9:0:b0:502:af44:21c2 with SMTP id y9-20020ac255a9000000b00502af4421c2mr15010256lfg.5.1696954989429;
+        Tue, 10 Oct 2023 09:23:09 -0700 (PDT)
+Received: from [192.168.1.102] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id t17-20020ac24c11000000b004fdde1db756sm1887519lfq.26.2023.10.10.09.23.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Oct 2023 09:23:09 -0700 (PDT)
+Message-ID: <8d51e471-916e-e132-3f56-75804379c6cd@linaro.org>
+Date:   Tue, 10 Oct 2023 19:23:01 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.0.2
+Subject: Re: [PATCH] arm64: dts: qcom: qrb4210-rb2: don't force usb peripheral
+ mode
+Content-Language: en-US
+To:     Caleb Connolly <caleb.connolly@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lee Jones <lee@kernel.org>, "Rob Herring" <robh+dt@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Mukesh Ojha <quic_mojha@quicinc.com>
-Subject: [PATCH 3/3] arm64: dts: qcom: sm8550: Add download mode support
-Date:   Tue, 10 Oct 2023 21:39:17 +0530
-Message-ID: <1696954157-16327-3-git-send-email-quic_mojha@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1696954157-16327-1-git-send-email-quic_mojha@quicinc.com>
-References: <1696954157-16327-1-git-send-email-quic_mojha@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: D0rAxZzfRezrX5BQZ1GyLnpipaqNZCyD
-X-Proofpoint-ORIG-GUID: D0rAxZzfRezrX5BQZ1GyLnpipaqNZCyD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-10_12,2023-10-10_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=930
- impostorscore=0 mlxscore=0 phishscore=0 adultscore=0 suspectscore=0
- spamscore=0 priorityscore=1501 malwarescore=0 clxscore=1015 bulkscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310100120
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20231010-caleb-rb2-host-mode-v1-1-b057d443cd62@linaro.org>
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20231010-caleb-rb2-host-mode-v1-1-b057d443cd62@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -82,26 +81,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Refer TCSR phandle from scm node, so that it can be used by
-SCM driver for setting download mode.
+On 10/10/23 13:46, Caleb Connolly wrote:
+> The rb2 only has a single USB controller, it can be switched between a
+> type-c port and an internal USB hub via a DIP switch. Until dynamic
+> role switching is available it's preferable to put the USB controller
+> in host mode so that the type-A ports and ethernet are available.
+> 
+> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+> ---
+> base-commit: 6465e260f48790807eef06b583b38ca9789b6072
+> 
+> // Caleb (they/them)
+> ---
+>   arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 1 -
+>   1 file changed, 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> index a7278a9472ed..9738c0dacd58 100644
+> --- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> +++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> @@ -518,7 +518,6 @@ &usb {
+>   
+>   &usb_dwc3 {
+>   	maximum-speed = "super-speed";
+> -	dr_mode = "peripheral";
+>   };
+>   
+>   &usb_hsphy {
+> 
 
-Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index 7b9ddde0b2c9..2c65b40f6059 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -324,6 +324,7 @@
- 	firmware {
- 		scm: scm {
- 			compatible = "qcom,scm-sm8550", "qcom,scm";
-+			qcom,dload-mode = <&tcsr 0x13000>;
- 			interconnects = <&aggre2_noc MASTER_CRYPTO 0 &mc_virt SLAVE_EBI1 0>;
- 		};
- 	};
--- 
-2.7.4
+Thank you for the fix!
 
+--
+Best wishes,
+Vladimir
