@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A2EC7BF274
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 07:49:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E0DD7BF282
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Oct 2023 07:54:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1442155AbjJJFtZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Oct 2023 01:49:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39050 "EHLO
+        id S1379421AbjJJFya (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Oct 2023 01:54:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1442152AbjJJFtZ (ORCPT
+        with ESMTP id S1379414AbjJJFy3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Oct 2023 01:49:25 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02A0492
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 22:49:24 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2c15463ddd4so59301041fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Oct 2023 22:49:23 -0700 (PDT)
+        Tue, 10 Oct 2023 01:54:29 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51DC99D
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Oct 2023 22:54:28 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-50444e756deso7055070e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Oct 2023 22:54:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696916962; x=1697521762; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696917266; x=1697522066; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=CFbHOAgZVXSg1kKOflBZaq1B31YfZJPkEFEvk9ENnLs=;
-        b=Hc4FFnwiu9BEi/kRDVEv4JfVV0hu0K3BJk6KavC46+EzQBuwlUMjVmm8Ry96hQ0U/9
-         y+yMDK4vGjZ5NovTfQgdBBNzPvMLfC1/3Htf/kmkJZJjDaLlesuudTpUke1IrZ+aUDhn
-         EnHZg0DEAGiwCBjaLHQ6fsghvoVIVhU2Vu5WhUMCJL6ZN9E2KaxdJ6MyZy4fi6buOv/5
-         PFE+lNt9rz5J0ofyZ/+T3kmXXTTPqVnYb7By/XCOkJ1Gl6Lr1ms1oly122ehSmGRu22I
-         /JhbjqNxtD9snZ/HZrYStP4M+Cf/k8rxwwxJS0H/DKEPGBuoo3FDlVNpIgJJPj4SeVMU
-         hXPQ==
+        bh=QEUI7WElxyrFqo5uc28jvvLJFsc02bWiPPqj3cviB+U=;
+        b=gH0RrYTIo1+peu54pKnsYvr+vQ9hhC+f2pP33D+eoNiz0fS/1PExqQFDuUwBCyaCVs
+         ar+C0a3gkM+VqwRrsslNUni8Zn+P+sTjYASH7rODvNKL8gW6x0HEZm+04hvskEhvsAaW
+         llAhYwfd7LjGm5hDlxVhoAGh+zz1WwZOwpi7KoUP9A/NE/WfLJYRdluj9hg/OcPfTSiT
+         odZywCcg7PnMQp5pQmqOwo82IfXUaIUlBTFufuPtG0jPmsoE2FLr4k+/rmPUAkM9As0e
+         4r/W2dlqpJ55twShDAharR0iXNvMbOgvF3QTv3c+9jvIxA4qjxwiCgwibAhNrXhL1nzd
+         aM8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696916962; x=1697521762;
+        d=1e100.net; s=20230601; t=1696917266; x=1697522066;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=CFbHOAgZVXSg1kKOflBZaq1B31YfZJPkEFEvk9ENnLs=;
-        b=Es3OVJmElgk0ooMrR83j3bcVG0SwoQDCavhL3QvtnQ5uASvte8oxbYQlxQ52dZ9JWw
-         pePZ2TaltcBhFarReCj6eA+IYX9YnIl0rmERPELrJ+uoLg06dmy49+icEwmx4GEnwYU9
-         WNZygs1AgtZ8VQ1rZfJ4u19b1lcKNTVYGdpfFeF9UL7tJBWx5LNoCqLp5BFboBvT0+2S
-         h1LZJ7XxMMGLr2aqYoG/yce949i/KLXSRPCIJps3CEcnApM8aAxfNLANC4Z48uSdlSBE
-         IZ+rJVUV9YGOwLcOViTQrbIg7LtZ8lyHhcscfP7kmeVD2opoGEjUAVc8Nu3CRg6A8g82
-         RSHw==
-X-Gm-Message-State: AOJu0Yx5ySByWs6Qycb29IacullOuipjE5E7WAU1t5KERhzCoB6G5pdR
-        LT1AtYBaeXerxi+c3Lpt58XYhA==
-X-Google-Smtp-Source: AGHT+IFJ0hwFexb/Jn2jlVn3hI6Fio1n0bEXN8vdVrCP2YpJpdTs8EeiniK6yetHCXyfssGsOUG1oA==
-X-Received: by 2002:a2e:7310:0:b0:2bc:fd50:573a with SMTP id o16-20020a2e7310000000b002bcfd50573amr14953125ljc.6.1696916962099;
-        Mon, 09 Oct 2023 22:49:22 -0700 (PDT)
+        bh=QEUI7WElxyrFqo5uc28jvvLJFsc02bWiPPqj3cviB+U=;
+        b=kJDi33JtLnBzkzYh980OtAAoVMnae2l5jscQgAItUwaWRTsKF0QvhJGf0IVhlAfVFo
+         549AUInmzdneH0IBX8W9wNp2tK3LIGLkzHpDstskoS7QihBrMx8lZX48JIVoMovdOQ7e
+         4xoDRzSudojKgqGbPKmk8MrQVQWwj/GH8EnUGmdsfZc0TcqkiAswXT/pH5pWJMxjdL0D
+         PxrKuwIqrqlJhTOugQIGMUNwSA6c/MKEq9IdRIRJFaN3K8gwAhTzLy2crUE9ahz0m+j1
+         PwVH4/j0SqHM1n5AqzTehIbFFHsZeTCBez29qXY+dCuM/rXym90s0vF1swFmqWp4afYe
+         U07g==
+X-Gm-Message-State: AOJu0YwPiMvIHdekmMBkttSfnJJF+EH4Vf1kQD/++QQmEj9859+xixHu
+        vf8dwd/RzbZi3an2b6NDLNTunw==
+X-Google-Smtp-Source: AGHT+IGieqVKjLlnVHtcDymyKdRInCVinttJ4Uwo0Ld2tiGJ7uOdN5rtYPVDF6+cDspnRVciNuzVWg==
+X-Received: by 2002:a05:6512:758:b0:503:59d:fbff with SMTP id c24-20020a056512075800b00503059dfbffmr6273168lfs.2.1696917266417;
+        Mon, 09 Oct 2023 22:54:26 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id w22-20020a2e8216000000b002bba9a4f715sm2280398ljg.11.2023.10.09.22.49.21
+        by smtp.gmail.com with ESMTPSA id v2-20020ac25582000000b004fe1f1c0ee4sm1668371lfg.82.2023.10.09.22.54.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Oct 2023 22:49:21 -0700 (PDT)
+        Mon, 09 Oct 2023 22:54:26 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -58,10 +58,10 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, kernel test robot <lkp@intel.com>
-Subject: [PATCH] drm/msm: fix fault injection support
-Date:   Tue, 10 Oct 2023 08:49:20 +0300
-Message-Id: <20231010054920.2821140-1-dmitry.baryshkov@linaro.org>
+        freedreno@lists.freedesktop.org
+Subject: [PATCH] drm/msm: don't create GPU-related debugfs files with no GPU present
+Date:   Tue, 10 Oct 2023 08:54:25 +0300
+Message-Id: <20231010055425.2851776-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -75,29 +75,102 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Readd the header that was erroneously dropped during KMS code
-refactoring.
+If there is no GPU present, skip creation of the GPU-related debugfs
+files, making the MSM's debugfs more usable.
 
-Fixes: 506efcba3129 ("drm/msm: carve out KMS code from msm_drv.c")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202310100836.6E6zjEcE-lkp@intel.com/
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/msm_drv.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/msm/msm_debugfs.c | 41 +++++++++++++++++++------------
+ drivers/gpu/drm/msm/msm_rd.c      |  3 +++
+ 2 files changed, 28 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 93c026d79aea..2aae7d107f33 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -6,6 +6,7 @@
-  */
+diff --git a/drivers/gpu/drm/msm/msm_debugfs.c b/drivers/gpu/drm/msm/msm_debugfs.c
+index 04d304eed223..4494f6d1c7cb 100644
+--- a/drivers/gpu/drm/msm/msm_debugfs.c
++++ b/drivers/gpu/drm/msm/msm_debugfs.c
+@@ -304,36 +304,21 @@ int msm_debugfs_late_init(struct drm_device *dev)
+ 	return ret;
+ }
  
- #include <linux/dma-mapping.h>
-+#include <linux/fault-inject.h>
- #include <linux/of_address.h>
- #include <linux/uaccess.h>
+-void msm_debugfs_init(struct drm_minor *minor)
++static void msm_debugfs_gpu_init(struct drm_minor *minor)
+ {
+ 	struct drm_device *dev = minor->dev;
+ 	struct msm_drm_private *priv = dev->dev_private;
+ 	struct dentry *gpu_devfreq;
  
+-	drm_debugfs_create_files(msm_debugfs_list,
+-				 ARRAY_SIZE(msm_debugfs_list),
+-				 minor->debugfs_root, minor);
+-
+ 	debugfs_create_file("gpu", S_IRUSR, minor->debugfs_root,
+ 		dev, &msm_gpu_fops);
+ 
+-	if (priv->kms) {
+-		drm_debugfs_create_files(msm_kms_debugfs_list,
+-					 ARRAY_SIZE(msm_kms_debugfs_list),
+-					 minor->debugfs_root, minor);
+-		debugfs_create_file("kms", S_IRUSR, minor->debugfs_root,
+-				    dev, &msm_kms_fops);
+-	}
+-
+ 	debugfs_create_u32("hangcheck_period_ms", 0600, minor->debugfs_root,
+ 		&priv->hangcheck_period);
+ 
+ 	debugfs_create_bool("disable_err_irq", 0600, minor->debugfs_root,
+ 		&priv->disable_err_irq);
+ 
+-	debugfs_create_file("shrink", S_IRWXU, minor->debugfs_root,
+-		dev, &shrink_fops);
+-
+ 	gpu_devfreq = debugfs_create_dir("devfreq", minor->debugfs_root);
+ 
+ 	debugfs_create_bool("idle_clamp",0600, gpu_devfreq,
+@@ -344,6 +329,30 @@ void msm_debugfs_init(struct drm_minor *minor)
+ 
+ 	debugfs_create_u32("downdifferential",0600, gpu_devfreq,
+ 			   &priv->gpu_devfreq_config.downdifferential);
++}
++
++void msm_debugfs_init(struct drm_minor *minor)
++{
++	struct drm_device *dev = minor->dev;
++	struct msm_drm_private *priv = dev->dev_private;
++
++	drm_debugfs_create_files(msm_debugfs_list,
++				 ARRAY_SIZE(msm_debugfs_list),
++				 minor->debugfs_root, minor);
++
++	if (priv->gpu_pdev)
++		msm_debugfs_gpu_init(minor);
++
++	if (priv->kms) {
++		drm_debugfs_create_files(msm_kms_debugfs_list,
++					 ARRAY_SIZE(msm_kms_debugfs_list),
++					 minor->debugfs_root, minor);
++		debugfs_create_file("kms", S_IRUSR, minor->debugfs_root,
++				    dev, &msm_kms_fops);
++	}
++
++	debugfs_create_file("shrink", S_IRWXU, minor->debugfs_root,
++		dev, &shrink_fops);
+ 
+ 	if (priv->kms && priv->kms->funcs->debugfs_init)
+ 		priv->kms->funcs->debugfs_init(priv->kms, minor);
+diff --git a/drivers/gpu/drm/msm/msm_rd.c b/drivers/gpu/drm/msm/msm_rd.c
+index 5adc51f7ab59..ca44fd291c5b 100644
+--- a/drivers/gpu/drm/msm/msm_rd.c
++++ b/drivers/gpu/drm/msm/msm_rd.c
+@@ -270,6 +270,9 @@ int msm_rd_debugfs_init(struct drm_minor *minor)
+ 	struct msm_rd_state *rd;
+ 	int ret;
+ 
++	if (!priv->gpu_pdev)
++		return 0;
++
+ 	/* only create on first minor: */
+ 	if (priv->rd)
+ 		return 0;
 -- 
 2.39.2
 
