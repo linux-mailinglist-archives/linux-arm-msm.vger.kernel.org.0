@@ -2,228 +2,255 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 084A47C603D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 00:18:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 420307C60A6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 00:55:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231927AbjJKWSf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Oct 2023 18:18:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45320 "EHLO
+        id S233761AbjJKWz6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Oct 2023 18:55:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235183AbjJKWSe (ORCPT
+        with ESMTP id S233397AbjJKWz5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Oct 2023 18:18:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9366C91
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 15:17:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1697062663;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=HOBDG3xKzKr8T8oX4JN9DRdb/jGhMmbUwbMpuegARt0=;
-        b=PRwTX6X05KWYuBl7AKer0kTvIxRZcEKf25kJO/h6NmxhgHhDKqq0rasR0EAFRQvF1em9nn
-        TIu61dx4M2PJZkN7XWinIuvNgD0nUaTNGzki6tOxQimxfS1wdDjferYAZtuJMWHfZ38mfs
-        2LsfUDrwpfa+m8EPHJxKvXgkBbYK7QA=
-Received: from mail-yb1-f197.google.com (mail-yb1-f197.google.com
- [209.85.219.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-361-nTcQ9wlxMwK1D0odLc-zRw-1; Wed, 11 Oct 2023 18:17:42 -0400
-X-MC-Unique: nTcQ9wlxMwK1D0odLc-zRw-1
-Received: by mail-yb1-f197.google.com with SMTP id 3f1490d57ef6-d8b2eec15d3so422162276.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 15:17:42 -0700 (PDT)
+        Wed, 11 Oct 2023 18:55:57 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64450B7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 15:55:54 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-503056c8195so513624e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 15:55:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1697064952; x=1697669752; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ijktYp/nC46J+ODjUsZ6HxJVtpF7dTRIW8vGjhqz+nI=;
+        b=EbXDuDwnoZt8992tPcZ/rV8RBzHxseQfKvlQ28G5/Gfbn4hhqtlfho6pyQpYygEV9S
+         +Ip/J6idAY1yYwkNORlkDmi0tA6JzualVsKqBhY/eBZ+4cVAJTufYd8a93HQG9NlGMOW
+         NtuX2HNy0wm94eONRHf5X5Gbz4UmND+WK4N6B3weMmWREmn32DuiPsrXlqmkz9WFWzPy
+         blJ3MrHHsSJ8x9K1qlS7Z4pL3MDJQEIm5IPsp+n+e7tilzmjJ1jcjgAIUV4ARbHYV+l7
+         SicfOc+PWC5BdY570YogvrKMlK4HY+OTVUHI635fZxi/4bfgYcxdfrQzBSRh/wvWQftJ
+         tGJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697062662; x=1697667462;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HOBDG3xKzKr8T8oX4JN9DRdb/jGhMmbUwbMpuegARt0=;
-        b=dMLJSUY8X4AtuP+eA/WFKBjE3R1WiD0/u0gJJhLb9cEzyd7PRYQ3vtON0Kx9mXEwM+
-         Uipgpsjmh6ltxmVuFMpDI9XDGHBpTdPMATl9nx6an9ZKRCzhfhWnkkwA31sL47rYAElk
-         Rwur/UnJXw1G2Vr4bG9bIO5BDc1N4dUnB5Cw19qsp92iRKqM9DgHEdXOPwec2j3CrEqE
-         HpsyWB76aUBYvwiIJtB81RRPEz+JkiWKWcS1/u4fT1eO/RznZ0y/I7KezlmaTXArsMxf
-         lt7WlkEsTe+lUPfaWuBOCqCbI9iDIpedRdSf3ID+QKb1QSeM7n9dYrJEG36sGUX+01Vf
-         M7vg==
-X-Gm-Message-State: AOJu0YzVL0V6BCX4WDL2VRouBQlfgwED7jul3d0CuVXH7h+3t1CH70CL
-        Nmh+Vrt8WndCP9OF/VEEYYa/NkDarDpxUPbHw9FHLDPGE4CLcPpetEaX/SBLeVOAsanSVubLvh9
-        LMG6rtSL7Ll1FRVrGpLEkSvjdig==
-X-Received: by 2002:a25:a346:0:b0:d62:d6c5:f5ee with SMTP id d64-20020a25a346000000b00d62d6c5f5eemr21254611ybi.58.1697062661943;
-        Wed, 11 Oct 2023 15:17:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHB/WjZnlk4wnVo1njse5BQo14v078PToJ3YVKAolzEvbngE/7Trey8T7IuLzo8Styd6XAAmA==
-X-Received: by 2002:a25:a346:0:b0:d62:d6c5:f5ee with SMTP id d64-20020a25a346000000b00d62d6c5f5eemr21254593ybi.58.1697062661608;
-        Wed, 11 Oct 2023 15:17:41 -0700 (PDT)
-Received: from fedora ([2600:1700:1ff0:d0e0::37])
-        by smtp.gmail.com with ESMTPSA id w9-20020a0cb549000000b0065b14fcfca6sm6060095qvd.118.2023.10.11.15.17.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Oct 2023 15:17:40 -0700 (PDT)
-Date:   Wed, 11 Oct 2023 17:17:38 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Bartosz Golaszewski <brgl@bgdev.pl>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        Alex Elder <elder@linaro.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, kernel@quicinc.com,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v3 13/15] firmware: qcom: tzmem: enable SHM Bridge support
-Message-ID: <j543teo2apaugbq25to3un7f7iyh45tfxenmhj7vb3vwqd52i3@434do3lfdzq4>
-References: <20231009153427.20951-1-brgl@bgdev.pl>
- <20231009153427.20951-14-brgl@bgdev.pl>
- <fr4jwbacvcheqtxy6php2u6wr72mqm5hgat6xwmxhijee7j6sk@azlu42eod6b4>
+        d=1e100.net; s=20230601; t=1697064952; x=1697669752;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ijktYp/nC46J+ODjUsZ6HxJVtpF7dTRIW8vGjhqz+nI=;
+        b=OBMTVmb0/e1Bu5s0dctFiHenBd+OPlXtu1A8j1QNprZzKd0i0OKeEIMu/RXQ1B9Cvo
+         9BNA5ADghI3TD/aCBuhx0iEjlBlZPhJxLrNOrMYJYYNxen4jWCAWyOUySTajGDCiSrmM
+         wN58MHV9Mlz80oVtb6AIxUlJIdP29VES3nz1IJH3jVZvqjRB3wAH6iXUm8ljJcoAEfzi
+         vol282aA5lsP08k8+LwL//UlWMPgTKumYTA8Q7zF+wgC0FJ+DvMLXG1GoF/rPThl3/Cv
+         NW7pEDTwRsREl7pBGgKGDfCxtY4abD1O+An/ybjl/5yTQ843AmVZ01j7mA4G5XjnOYon
+         rdvQ==
+X-Gm-Message-State: AOJu0YzHHBf0KDmYsprE4Es5uLXhVEKIzWNBhhWl+9qOCyQ1JcwLg1l/
+        lKqMNwNOjAsiNFA+vRPES7fhpw==
+X-Google-Smtp-Source: AGHT+IE8QG9gNYHxFuZpnI7fjbHdUn6PGHJKfTpVe7Ctj62vJjepX/kK4X1+z2eQk2pxUisSS70AYw==
+X-Received: by 2002:a05:6512:3d93:b0:502:d743:8a6c with SMTP id k19-20020a0565123d9300b00502d7438a6cmr20706181lfv.9.1697064952374;
+        Wed, 11 Oct 2023 15:55:52 -0700 (PDT)
+Received: from [172.30.204.102] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id w6-20020a19c506000000b0050333b7b29asm2471249lfe.240.2023.10.11.15.55.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Oct 2023 15:55:51 -0700 (PDT)
+Message-ID: <8ee2f72b-fcf4-4278-97b4-906046b40c6b@linaro.org>
+Date:   Thu, 12 Oct 2023 00:55:49 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <fr4jwbacvcheqtxy6php2u6wr72mqm5hgat6xwmxhijee7j6sk@azlu42eod6b4>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: qcm6490: Add qcm6490 dts file
+To:     Mukesh Ojha <quic_mojha@quicinc.com>,
+        Komal Bajaj <quic_kbajaj@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, luca.weiss@fairphone.com
+References: <20231003175456.14774-1-quic_kbajaj@quicinc.com>
+ <20231003175456.14774-3-quic_kbajaj@quicinc.com>
+ <5da2ba4f-5bf7-46ff-8204-0c169042dbfa@linaro.org>
+ <3fd31aaa-f6bf-8440-6b08-fca2803171d9@quicinc.com>
+ <dba83334-3971-46e9-9342-1344c5858be8@linaro.org>
+ <442ac3d6-adcd-dbb7-96bb-de46023ec18e@quicinc.com>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <442ac3d6-adcd-dbb7-96bb-de46023ec18e@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 11, 2023 at 04:14:32PM -0500, Andrew Halaney wrote:
-> On Mon, Oct 09, 2023 at 05:34:25PM +0200, Bartosz Golaszewski wrote:
-> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > 
-> > Add a new Kconfig option for selecting the SHM Bridge mode of operation
-> > for the TrustZone memory allocator.
-> > 
-> > If enabled at build-time, it will still be checked for availability at
-> > run-time. If the architecture doesn't support SHM Bridge, the allocator
-> > will work just like in the default mode.
-> > 
-> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > ---
-> >  drivers/firmware/qcom/Kconfig      | 10 +++++
-> >  drivers/firmware/qcom/qcom_tzmem.c | 67 +++++++++++++++++++++++++++++-
-> >  2 files changed, 76 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/firmware/qcom/Kconfig b/drivers/firmware/qcom/Kconfig
-> > index 237da40de832..e01407e31ae4 100644
-> > --- a/drivers/firmware/qcom/Kconfig
-> > +++ b/drivers/firmware/qcom/Kconfig
-> > @@ -27,6 +27,16 @@ config QCOM_TZMEM_MODE_DEFAULT
-> >  	  Use the default allocator mode. The memory is page-aligned, non-cachable
-> >  	  and contiguous.
-> >  
-> > +config QCOM_TZMEM_MODE_SHMBRIDGE
-> > +	bool "SHM Bridge"
-> > +	help
-> > +	  Use Qualcomm Shared Memory Bridge. The memory has the same alignment as
-> > +	  in the 'Default' allocator but is also explicitly marked as an SHM Bridge
-> > +	  buffer.
-> > +
-> > +	  With this selected, all buffers passed to the TrustZone must be allocated
-> > +	  using the TZMem allocator or else the TrustZone will refuse to use them.
-> > +
-> >  endchoice
-> >  
-> >  config QCOM_SCM_DOWNLOAD_MODE_DEFAULT
-> > diff --git a/drivers/firmware/qcom/qcom_tzmem.c b/drivers/firmware/qcom/qcom_tzmem.c
-> > index eee51fed756e..b3137844fe43 100644
-> > --- a/drivers/firmware/qcom/qcom_tzmem.c
-> > +++ b/drivers/firmware/qcom/qcom_tzmem.c
-> > @@ -55,7 +55,72 @@ static void qcom_tzmem_cleanup_pool(struct qcom_tzmem_pool *pool)
-> >  
-> >  }
-> >  
-> > -#endif /* CONFIG_QCOM_TZMEM_MODE_DEFAULT */
-> > +#elif IS_ENABLED(CONFIG_QCOM_TZMEM_MODE_SHMBRIDGE)
-> > +
-> > +#include <linux/firmware/qcom/qcom_scm.h>
-> > +
-> > +#define QCOM_SHM_BRIDGE_NUM_VM_SHIFT 9
-> > +
-> > +static bool qcom_tzmem_using_shm_bridge;
-> > +
-> > +static int qcom_tzmem_init(void)
-> > +{
-> > +	int ret;
-> > +
-> > +	ret = qcom_scm_shm_bridge_enable();
-> > +	if (ret == -EOPNOTSUPP) {
-> > +		dev_info(qcom_tzmem_dev, "SHM Bridge not supported\n");
-> > +		ret = 0;
-> > +	}
-> > +
-> > +	if (!ret)
-> > +		qcom_tzmem_using_shm_bridge = true;
-> 
-> Does the qcom_scm_shm_bridge_enable() returning -EOPNOTSUPP case make
-> sense? Setting ret to 0 and then claiming we're using shm_bridge seems
-> wrong to me.
-> 
-> > +
-> > +	return ret;
-> > +}
-> > +
-> > +static int qcom_tzmem_init_pool(struct qcom_tzmem_pool *pool)
-> > +{
-> > +	u64 pfn_and_ns_perm, ipfn_and_s_perm, size_and_flags, ns_perms, *handle;
-> > +	int ret;
-> > +
-> > +	if (!qcom_tzmem_using_shm_bridge)
-> > +		return 0;
-> > +
-> > +	ns_perms = (QCOM_SCM_PERM_WRITE | QCOM_SCM_PERM_READ);
-> > +	pfn_and_ns_perm = (u64)pool->pbase | ns_perms;
-> > +	ipfn_and_s_perm = (u64)pool->pbase | ns_perms;
-> > +	size_and_flags = pool->size | (1 << QCOM_SHM_BRIDGE_NUM_VM_SHIFT);
-> 
-> Is there any sanity checking that can be done here? I assume bits 0-11 are all
-> flag fields (or at least unrelated to size which I assume at a minimum
-> must be 4k aka bit 12).
 
-I guess qcom_tzmem_pool_new's PAGE_ALIGN would make sure this is
-probably ok for all future users, but I do think some sanity would be
-nice to indicate the size's allowed for SHM bridge.
 
+On 10/11/23 15:40, Mukesh Ojha wrote:
 > 
-> > +
-> > +	handle = kzalloc(sizeof(*handle), GFP_KERNEL);
 > 
-> Consider __free(kfree) + return_ptr() usage?
-> 
-> > +	if (!handle)
-> > +		return -ENOMEM;
-> > +
-> > +	ret = qcom_scm_shm_bridge_create(qcom_tzmem_dev, pfn_and_ns_perm,
-> > +					 ipfn_and_s_perm, size_and_flags,
-> > +					 QCOM_SCM_VMID_HLOS, handle);
-> > +	if (ret) {
-> > +		kfree(handle);
-> > +		return ret;
-> > +	}
-> > +
-> > +	pool->priv = handle;
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static void qcom_tzmem_cleanup_pool(struct qcom_tzmem_pool *pool)
-> > +{
-> > +	u64 *handle = pool->priv;
-> > +
-> > +	if (!qcom_tzmem_using_shm_bridge)
-> > +		return;
-> > +
-> > +	qcom_scm_shm_bridge_delete(qcom_tzmem_dev, *handle);
-> > +	kfree(handle);
-> > +}
-> > +
-> > +#endif /* CONFIG_QCOM_TZMEM_MODE_SHMBRIDGE */
-> >  
-> >  /**
-> >   * qcom_tzmem_pool_new() - Create a new TZ memory pool.
-> > -- 
-> > 2.39.2
-> > 
+> On 10/11/2023 3:17 PM, Konrad Dybcio wrote:
+>>
+>>
+>> On 10/11/23 07:40, Mukesh Ojha wrote:
+>>>
+>>>
+>>> On 10/7/2023 5:02 AM, Konrad Dybcio wrote:
+>>>> On 3.10.2023 19:54, Komal Bajaj wrote:
+>>>>> Add qcm6490 devicetree file for QCM6490 SoC and QCM6490 IDP
+>>>>> platform. QCM6490 is derived from SC7280 meant for various
+>>>>> form factor including IoT.
+>>>>>
+>>>>> Supported features are, as of now:
+>>>>> * Debug UART
+>>>>> * eMMC
+>>>>> * USB
+>>>>>
+>>>>> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+>>>>> ---
+>>>> [...]
+>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/qcm6490.dtsi 
+>>>>> b/arch/arm64/boot/dts/qcom/qcm6490.dtsi
+>>>>> new file mode 100644
+>>>>> index 000000000000..b93270cae9ae
+>>>>> --- /dev/null
+>>>>> +++ b/arch/arm64/boot/dts/qcom/qcm6490.dtsi
+>>>>> @@ -0,0 +1,94 @@
+>>>>> +// SPDX-License-Identifier: BSD-3-Clause
+>>>>> +/*
+>>>>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights 
+>>>>> reserved.
+>>>>> + */
+>>>>> +
+>>>>> +#include "sc7280.dtsi"
+>>>>> +
+>>>>> +/*
+>>>>> + * Delete unused sc7280 memory nodes and define the memory regions
+>>>>> + * required by qcm6490
+>>>>> + */
+>>>>> +/delete-node/ &rmtfs_mem;
+>>>>> +/delete-node/ &wlan_ce_mem;
+>>>>> +
+>>>>> +/{
+>>>>> +    reserved-memory {
+>>>>> +        cdsp_secure_heap_mem: cdsp-secure-heap@81800000 {
+>>>>> +            reg = <0x0 0x81800000 0x0 0x1e00000>;
+>>>>> +            no-map;
+>>>>> +        };
+>>>>> +
+>>>>> +        camera_mem: camera@84300000 {
+>>>> Uhh.. this is totally not the same memory map that I have on a
+>>>> random msm-5.4 source+devicetree drop (which does in turn align
+>>>> with the one on QCM6490 Fairphone 5, as it should because it's
+>>>> a rebadged reference device for the most part)..
+>>>>
+>>>> Did you guys *really* redo it between software releases?
+>>>
+>>> QCM6490 fairphone is special case where same SOC is used for mobile
+>>> product and it uses sc7280 memory map.
+>>>
+>>> Current patch adds support for the same SOC marketed for IOT segment
+>>> [1] and very active in the development and soon going to freeze its
+>>> memory map, so we are deriving memory map from sc7280 and creating
+>>> a new memory map for all IOT product with qcm6490.dtsi .
+>> Stop reinventing the wheel. I'm not going to accept patches that are 
+>> supposed to define ABI for products that are still in development.
+>> Not unless Qualcomm changes their attitude towards unilaterally 
+>> breaking things for no good reason.
+>>
+>>>
+>>> [1]
+>>> https://www.qualcomm.com/products/internet-of-things/industrial/building-enterprise/qcm6490
+>>>
+>>>>
+>>>> This SoC family has been on the market for quite some time,
+>>>> breaking software expectations like that is not cool, especially
+>>>> on a product with a promised lifespan of 10 years or whatever!
+>>>
+>>> I agree, but we are not changing anything for product which are there
+>>> in the market instead defining a new memory map what is going to come
+>>> with qcm6490.dtsi for IOT.
+>> Why would the OS care about the market segment you're targeting?
+>> Why would the firmware you're building care about the market segment 
+>> you're targeting? The LE vs LA vs LU vs WP vs whatever split is so 
+>> unnecessary and arbitrary on the firmware/kernel side..
+First of all, I vented off on you very heavily in response to seeing 
+something I don't like, even though you didn't have anything to do with 
+it. Please accept my apology.
 
+There are some difficulties with integrating certain things upstream to 
+work out on a broader scale, but me screaming at engineers in public 
+won't help much with that.
+
+> Forgive me, if i ask some very basic question, just trying to put my
+> thought,
+> 
+> I agree, OS should not worry about the market segment, but through the
+> DT firmware, we can better optimize memory to either give more memory to
+> user or give more memory to certain DSP's to enable certain feature 
+> through the firmware like some logging infra etc., and due to which
+> certain gaps can get created where certain memory region need to be
+> move up or down due to increase in the carve-out.
+This is totally fine from a generic standpoint, however Qualcomm has a 
+history (and you can see that in most SoC DTSIs) of having a common (or 
+almost common) memory map on the vast majority of devices based on a 
+given family of SoCs. We've been steadily taking advantage of that for 
+quite some time.
+
+Here, we have an established compute SoC (7280-Chrome) with a memory 
+setup that roughly matches its mobile counterpart (6490-LA or 778G or 
+whatever different derivatives).
+
+IIUC you're tweaking the software for the "new IoT BSP" and resizing 
+some regions resulted in many differences (as PIL regions tend to be 
+contiguous one-to-another). The real issue here is that if we express 
+this changed memory map in qcm6490.dtsi, all devices that have already 
+shipped with the older-than-"new IoT BSP" software will differ rather 
+significantly.
+
+You mentioned that there are going to be multiple users of *this new* 
+configuration, perhaps qcm6490-iot-common.dtsi (similar to 
+sc7280-chrome-common.dtsi) could facilitate the new bsp changes instead, 
+making it less ambiguous.
+> 
+> Let's say X Soc released with some memory map, any derivative SoC Y
+> should follow X's memory map if it is including X dtsi ? and the reason 
+> why Y want to include X is solely the work done for X and most of 
+> peripheral memory addresses is matching.
+> 
+> But 'Y' could be different product, right? and it could have different
+> firmware and it is not like 'X' firmware will run on 'Y' ?
+Right, historically that hasn't happened very often but it could be like 
+that.
+
+> Now a days, most of our firmware are relocatable.
+And we should totally take advantage of that. Stephan Gerhold has 
+submitted some improvements that made it possible to dynamically 
+allocate memory regions on 8916, this should probably be reused and 
+expanded for other SoCs.  Would it be possible for you to try out 
+dynamic PIL region allocation on this board? See [1] for example.
+
+
+And the last thing is, I would like for you to give us some sort of a 
+stability promise for this. You mentioned this SoC spin is "very active 
+in the development", which makes me worried for DT compatibility with 
+future METAs. We have unfortunately historically had to deal with 
+different firmware packages behaving in divergent ways, and not always 
+consistently between devices (but the last point may be just vendor 
+modifications).
+
+We are supposed to be able to boot any future version of Linux with this 
+initial devicetree, unless there's some fatal flaw that needs 
+retroactive fixing (like when we tried to express LLCC as a contiguous 
+region instead of a set of slices up until 8550 release or so). Please 
+have that in mind, we've tried so hard to keep this ABI-like.
+
+And the last-last (I promise..) question, is this the final SoC silicon 
+revision? And is it any different from the QCM6490 that has landed in 
+some Android devices physically? Or does it simply ship with a different 
+sw stack?
+
+Konrad
+
+[1] 
+https://lore.kernel.org/linux-arm-msm/20230911-msm8916-rmem-v1-4-b7089ec3e3a1@gerhold.net/#t
