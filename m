@@ -2,131 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 715257C5497
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 14:57:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A3C17C54A2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 14:59:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235009AbjJKM5Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Oct 2023 08:57:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46252 "EHLO
+        id S232196AbjJKM7j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Oct 2023 08:59:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346983AbjJKM5C (ORCPT
+        with ESMTP id S234889AbjJKM7h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Oct 2023 08:57:02 -0400
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15471F4;
-        Wed, 11 Oct 2023 05:56:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1697028992; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=WCRuTYLUEcAnpp0CXxv8KXehZDqpwssQF8PEeHpO47pfiUmmOsqiAnyeKjyJ8fqwaL
-    SiyT4HwaTJhMUYKGWZdpHVVPziRte1YAgck+kb77F9fWJK4JV/lj8GvZiRcdm9XGEcXG
-    pXHGLFHeZ1jBY/Z6QQTuNTo2ZJPnkM5vN3c/YkZWD9yY3KL147tI9csfZj8YmMaltbbM
-    7biXqGbPtmqGkhadrgw8mq1LQWQZyQzmW95rC6XWiElOuOu30JRSaboDscbg9ve9Fg1N
-    JqHFCgZpjIMO48yzYdkrIRtNBNXMxbobqdhS5pj0T/v6NZZmySyMnVH9vUQLzU49zCib
-    iuuA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1697028992;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=a0Cq3cklZ8DPohKTz6lL/A6gM1hpQm6XBeiqBwsDqSM=;
-    b=PqwTd1KCJsdz80gHRE2lxVs4Dxaq+F0c3/daZ5mx1O22X38hlsA7HzvZrf71JsEqB7
-    U/MCnb4qnBXk6zRtdfgftS7EIg3WBE1ugUPuYjPUwNPmWTJkO7WDJ6VYRBO1BaRkJOo2
-    0E7L4bAe46JJrliYMKzplBckiEhLaDM78sL7uqXJ0zKvxA2PzCZGkYqDPzyvHNOf5UUz
-    uzB3wdKjn9o5vFxzxtpsjfW5nVdaeP63VfZoZkkilqdOjfa6DlcMTQtleMMN85LQv53P
-    BvqogjXHiPSogIIoDUJ27lfhFc+wdKH8wrtFdMAkTbv7TpzlwAnNo1FPOWZSgMLroD5a
-    kFWA==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1697028992;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=a0Cq3cklZ8DPohKTz6lL/A6gM1hpQm6XBeiqBwsDqSM=;
-    b=S1T7mLX1H7VphJUbDePNC7ik6IaNOOu/q51okJXOWJL08Tfe6B15zrwuAfem/7pJIL
-    UanZud/F71muEKzmyMqUTNV3YDwKCXem9Y/9X0nvt7Wc3x9l5fy/plBtmfXDokckNOEk
-    zHNYN37PzpzDJfKS8tdN4cZIuwbt9oVFtl1f3BoF58LHYgbQMRgtlQSae9wJVIqZv4OG
-    8AhK+d9z2o4LcKq+AcopWqFzQJtNzQw6y1uZ6zaR+pIeIX6JV7eLH7KO5GA/eS0bTyvl
-    2jtVN2qZxmXUwxWdYEXXoX1AOQ2do5knqJrjKI3/kOtEurc/DEUkQPtYzVHGqix2ffro
-    5bNw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1697028992;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=a0Cq3cklZ8DPohKTz6lL/A6gM1hpQm6XBeiqBwsDqSM=;
-    b=7CujSOxBGrtX2Mdm9YmtFgeduCVQNbh1ryZKnZcBr1XvJYKp/cij7x8/ExPw/WiJm7
-    uRP/sWQEKBiNVbYqo7Bw==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8p+L1A=="
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.8.2 DYNA|AUTH)
-    with ESMTPSA id R04c57z9BCuVXkA
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Wed, 11 Oct 2023 14:56:31 +0200 (CEST)
-Date:   Wed, 11 Oct 2023 14:56:24 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Wed, 11 Oct 2023 08:59:37 -0400
+Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 026749E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 05:59:33 -0700 (PDT)
+Received: by mail-yb1-xb32.google.com with SMTP id 3f1490d57ef6-d865685f515so804816276.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 05:59:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1697029172; x=1697633972; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1EaY0sE2Pei5NhN4+5VkCTT2XVv3gRIOvmlCGAn/8ks=;
+        b=QbLC9nt7HqpCz8+Wga+dCd0EDL4TUoIsoDqy07go+wlutRaBW+hv31jV+3hFaOHqoc
+         KKPvhIv7XhoRGb+wFFun9F3xyLXAdMzAw/B+IP9iS6gpsjxXTG0wJhGZ+gAyFonc6O11
+         KHk2VPxOvFH0FjvOxdoWmGWnWOnBXndf+QCErgw/Ure3JyfqftMV/NYmZx8WTDYXamjB
+         6qmsnde2JhBGg2rYq0QX6E694FI5nwIottUxK/z2frw1IgLy4sHfzdKhqPXZKXfvYHM/
+         0YiubrW84bDyXy+JKt3+ZQpJMu33gYvmvCbX6/sJezTJquU1hPDHhQEBoMA1IB8C4OZl
+         d3vA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697029172; x=1697633972;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1EaY0sE2Pei5NhN4+5VkCTT2XVv3gRIOvmlCGAn/8ks=;
+        b=Iisd0VHEHErYq1PFOnWcYRJ2eL4cwRldN/i/Kce30AAV2UalvUC60Vc9xDNPnpIPrg
+         jhdmwpsdTJzZTUMQYqS37X2HzERtyrwyjYOPz9Lm+qQ+7b9Jjgldx0tkXS39Dgoxnyc7
+         ieJHudkG+VDMKjnitp3Ez93/7pxji4ljquSf9XNTDRu8zKeCMuTCfcpXZ4cvnNfQF5np
+         /3S1q+q8KaX8wdFb5mJTKHV4H/ra3Gp8T67d9X1E1hF7AGAr85WTgQSK9mTlzKGlJsMA
+         vOUP6oUzEqnvuFdEJ1hrtNcm9oxbMSTFV8EHXGp+xajG2TYBWB/ZTBuCICHTEQRXoNwh
+         a7ng==
+X-Gm-Message-State: AOJu0YzDN8/c1eFjI1Hi2yDem2usDzWesrsbhqpPG6YZgJIaC25RA2p7
+        jtyTgGvcWjHq+8eEZ8M1adrc00Tjfrq3kH9vO8e0rA==
+X-Google-Smtp-Source: AGHT+IHK3TsRkckFS5x9fV4NSgNoHc3y3+i7/whwE2O1SG/00B7HMp4A/4j1w/7wk6qdfTsknd318X6DKYpMZIoJHxE=
+X-Received: by 2002:a25:1e43:0:b0:d4b:a962:76a3 with SMTP id
+ e64-20020a251e43000000b00d4ba96276a3mr11483916ybe.29.1697029172104; Wed, 11
+ Oct 2023 05:59:32 -0700 (PDT)
+MIME-Version: 1.0
+References: <20231011112726.166052-1-dmitry.baryshkov@linaro.org> <CAL_Jsq+HdceLczej4_q-wjg2870v3y-e_E+jEq0xbetDguaXAw@mail.gmail.com>
+In-Reply-To: <CAL_Jsq+HdceLczej4_q-wjg2870v3y-e_E+jEq0xbetDguaXAw@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 11 Oct 2023 15:59:21 +0300
+Message-ID: <CAA8EJppCO-q=swYOH+O2fOdUDbNzd1yz9ZoTEBswV7RmvFJifA@mail.gmail.com>
+Subject: Re: [PATCH] of: export of_find_next_cache_node() for modules
+To:     Rob Herring <robh+dt@kernel.org>
+Cc:     Frank Rowand <frowand.list@gmail.com>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: pad sa8155p-adp DTB file
-Message-ID: <ZSabeBrfhFf8T8yM@gerhold.net>
-References: <20231011111936.165581-1-dmitry.baryshkov@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231011111936.165581-1-dmitry.baryshkov@linaro.org>
-Content-Transfer-Encoding: 7bit
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 11, 2023 at 02:19:36PM +0300, Dmitry Baryshkov wrote:
-> On sa8155p-adp platfor the bootloader (ABL) fails to reserve enough
-> memory for updating the DTB:
-> 
-> Cmdline:  console=tty0 console=ttyMSM0,115200n8 androidboot.verifiedbootstate
-> Error adding node
-> Error carving out UEFI memory: FFFFFFFF
-> 
-> Adding `--pad 1024' to DTC_FLAGS for this board fixes the issue by
-> providing enough empty space for node creation.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-> 
-> This replaces my previous attempt, which added DTC_FLAGS globally ([1]),
-> which was rejected.
-> 
-> [1] https://lore.kernel.org/linux-arm-msm/20231009172717.2695854-1-dmitry.baryshkov@linaro.org/
-> 
+On Wed, 11 Oct 2023 at 15:52, Rob Herring <robh+dt@kernel.org> wrote:
+>
+> On Wed, Oct 11, 2023 at 6:27=E2=80=AFAM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > The qcom-cpufreq-nvmem module uses of_find_next_cache_node() function,
+> > so export it to be available to the modules.
+>
+> You really should be using the cacheinfo API which has already parsed
+> the cache nodes.
+>
+> Also, why do you need a platform_device? I don't see a driver.
+> cacheinfo already creates a struct device, so kind of weird to have 2
+> devices.
 
-Thanks for making this specific to sa8155p-adp. I completely agree that
-this workaround might be needed for devices that are locked down (with
-no way to update the bootloader).
+The driver is pending as a part of the series at [1]. We need to scale
+the L2 supplies and clock frequency following the core frequency
+changes.
 
-But is this really the case here? As far as I understand, the SA8155P
-ADP is the "Automotive Development Platform", i.e. a developer board
-where I would expect that secure boot is not enabled (just like on the
-DragonBoards and RoboticBoards).
+[1] https://lore.kernel.org/linux-arm-msm/20230827115033.935089-9-dmitry.ba=
+ryshkov@linaro.org/
 
-Fixing this properly in the bootloader would be very easy, you just need
-to increase the DTB_PAD_SIZE I linked [1] by 1024 like in this patch.
-This would fix the issue properly, with no change needed in Linux. And
-if you have some way to communicate/contribute this back to Qualcomm
-somehow we could reduce the chance to see this problem on actually
-locked down devices in the future.
-
-Thanks,
-Stephan
-
-[1]: https://git.codelinaro.org/clo/la/abl/tianocore/edk2/-/blob/LA.AU.1.4.1.r2-05100-sa8155.0/QcomModulePkg/Include/Library/LocateDeviceTree.h#L59
+--=20
+With best wishes
+Dmitry
