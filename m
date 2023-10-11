@@ -2,125 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 588697C4DF7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 11:01:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E77A87C4E85
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 11:25:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346164AbjJKJBr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Oct 2023 05:01:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52100 "EHLO
+        id S231271AbjJKJZf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Oct 2023 05:25:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345992AbjJKJBV (ORCPT
+        with ESMTP id S230500AbjJKJZe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Oct 2023 05:01:21 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C588EFD;
-        Wed, 11 Oct 2023 02:01:15 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39B7eRcw007655;
-        Wed, 11 Oct 2023 09:01:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=twDtchG+/R75fbDoRiyiuTcAio91V8MdtWGBxzqo184=;
- b=WBae53SuOVghA/+RdxEjb06Lt+n63qrj579Jezt4jB9qkW9otCSPgkzyyLSHPeBYcZN2
- J6Y8x7UixZmQStUszA7e5otFNhgRh6c1oKz6AQ7xIOfJqtuVnzyaCLRAeH4ZNPkoh+R+
- PLMGJjLCXtG4sLcC4ftaC4YQ1qfvXd7+OqZ8WxUrM5CVHyBN0HtSxww7AUVvu3rsESnk
- YAzgkI4R21AuiF8vMu0nsYYEJKJblrtF3ZCRcCA9bXN0el9hUdpAi94p85FmK0TOrgxB
- +5E5rlPiVYV5YLkJgj+LHJtQZzIDRFPIiG3rbsOhJvXK0Sc+A0nCs/r3eviZ83TXFKmw uA== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tnqh1g5e4-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 11 Oct 2023 09:01:07 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39B916ix020759
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 11 Oct 2023 09:01:06 GMT
-Received: from hu-imrashai-hyd.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Wed, 11 Oct 2023 02:01:01 -0700
-From:   Imran Shaik <quic_imrashai@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC:     Taniya Das <quic_tdas@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>
-Subject: [PATCH V2 4/4] arm64: dts: qcom: qdu1000: Add ECPRI clock controller
-Date:   Wed, 11 Oct 2023 14:30:28 +0530
-Message-ID: <20231011090028.1706653-5-quic_imrashai@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20231011090028.1706653-1-quic_imrashai@quicinc.com>
-References: <20231011090028.1706653-1-quic_imrashai@quicinc.com>
+        Wed, 11 Oct 2023 05:25:34 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92028CC;
+        Wed, 11 Oct 2023 02:25:31 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE44C433C7;
+        Wed, 11 Oct 2023 09:25:27 +0000 (UTC)
+Message-ID: <69334bb8-c9e5-4387-b3c5-adc66ed9f825@xs4all.nl>
+Date:   Wed, 11 Oct 2023 11:25:25 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: pmcnEh9TIUO2K5qlXHQBhYVcAIiE_In_
-X-Proofpoint-ORIG-GUID: pmcnEh9TIUO2K5qlXHQBhYVcAIiE_In_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-11_06,2023-10-10_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
- spamscore=0 bulkscore=0 clxscore=1015 lowpriorityscore=0 mlxlogscore=812
- mlxscore=0 priorityscore=1501 adultscore=0 malwarescore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
- definitions=main-2310110079
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 00/54] Add DELETE_BUF ioctl
+Content-Language: en-US, nl
+To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+        mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
+        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
+        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
+        nicolas.dufresne@collabora.com
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
+        kernel@collabora.com
+References: <20231003080704.43911-1-benjamin.gaignard@collabora.com>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+In-Reply-To: <20231003080704.43911-1-benjamin.gaignard@collabora.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device node for ECPRI clock controller on qcom QDU1000
-and QRU1000 SoCs.
+Hi Benjamin,
 
-Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qdu1000.dtsi | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+On 03/10/2023 10:06, Benjamin Gaignard wrote:
+> Unlike when resolution change on keyframes, dynamic resolution change
+> on inter frames doesn't allow to do a stream off/on sequence because
+> it is need to keep all previous references alive to decode inter frames.
+> This constraint have two main problems:
+> - more memory consumption.
+> - more buffers in use.
+> To solve these issue this series introduce DELETE_BUFS ioctl and remove
+> the 32 buffers limit per queue.
+> 
+> VP9 conformance tests using fluster give a score of 210/305.
+> The 24 resize inter tests (vp90-2-21-resize_inter_* files) are ok
+> but require to use postprocessor.
+> 
+> Kernel branch is available here:
+> https://gitlab.collabora.com/benjamin.gaignard/for-upstream/-/commits/remove_vb2_queue_limit_v10
+> 
+> GStreamer branch to use DELETE_BUF ioctl and testing dynamic resolution
+> change is here:
+> https://gitlab.freedesktop.org/benjamin.gaignard1/gstreamer/-/commits/VP9_drc
+> 
 
-diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
-index 1c0e5d271e91..1552b5c119bb 100644
---- a/arch/arm64/boot/dts/qcom/qdu1000.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
-@@ -381,6 +381,20 @@ gcc: clock-controller@80000 {
- 			#power-domain-cells = <1>;
- 		};
- 
-+		ecpricc: clock-controller@280000 {
-+			compatible = "qcom,qdu1000-ecpricc";
-+			reg = <0x0 0x00280000 0x0 0x31c00>;
-+			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+				 <&gcc GCC_ECPRI_CC_GPLL0_CLK_SRC>,
-+				 <&gcc GCC_ECPRI_CC_GPLL1_EVEN_CLK_SRC>,
-+				 <&gcc GCC_ECPRI_CC_GPLL2_EVEN_CLK_SRC>,
-+				 <&gcc GCC_ECPRI_CC_GPLL3_CLK_SRC>,
-+				 <&gcc GCC_ECPRI_CC_GPLL4_CLK_SRC>,
-+				 <&gcc GCC_ECPRI_CC_GPLL5_EVEN_CLK_SRC>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+		};
-+
- 		gpi_dma0: dma-controller@900000  {
- 			compatible = "qcom,qdu1000-gpi-dma", "qcom,sm6350-gpi-dma";
- 			reg = <0x0 0x900000 0x0 0x60000>;
--- 
-2.25.1
+<snip>
+
+I'm a bit unhappy about the order of these patches.
+
+It mixes core and driver patches, making it hard to follow. Also, the
+driver patches are missing CCs to the driver maintainers.
+
+There are two types of driver patches:
+
+1) switch to vb2_get_buffer()
+2) switch to vb2_get_num_buffers(), or stop using num_buffers altogether.
+
+I am not counting the patches for verisilicon and the test drivers that
+add support for max_num_buffers, those are separate.
+
+In order to support more than 32 buffers the first phase is to fix the
+drivers.
+
+I would suggest the following:
+
+1) start with a videobuf2-core.h patch adding vb2_get_num_buffers()
+   (so just the header part of patch 21/54).
+2) then add all driver patches switching to vb2_get_buffer/vb2_get_num_buffers(),
+   grouped by driver (so e.g. the two amphion patches are placed together).
+
+Also add CCs to the driver maintainers for each driver patch, allowing them
+to review the code.
+
+Also include patches 10/54 and 22/54 (dvb-core).
+
+The remaining patches for vb2 etc. and for drivers patches adding support for
+the new features should be posted as a separate series on top of this.
+
+I want to get the driver changes in first. That will greatly simplify the
+remaining work.
+
+What will also be very helpful if this approach is taken is that it should
+be no problem to merge the initial patch adding the new vb2_get_num_buffers
+function for v6.7. That makes it easier to convert drivers in phases, if
+needed. And new upcoming drivers can start to use this function as well.
+
+Regards,
+
+	Hans
+
+> Benjamin Gaignard (54):
+>   media: videobuf2: Rework offset 'cookie' encoding pattern
+>   media: videobuf2: Stop spamming kernel log with all queue counter
+>   media: videobuf2: Use vb2_buffer instead of index
+>   media: amphion: Use vb2_get_buffer() instead of directly access to
+>     buffers array
+>   media: mediatek: jpeg: Use vb2_get_buffer() instead of directly access
+>     to buffers array
+>   media: mediatek: vdec: Remove useless loop
+>   media: sti: hva: Use vb2_get_buffer() instead of directly access to
+>     buffers array
+>   media: visl: Use vb2_get_buffer() instead of directly access to
+>     buffers array
+>   media: atomisp: Use vb2_get_buffer() instead of directly access to
+>     buffers array
+>   media: dvb-core: Use vb2_get_buffer() instead of directly access to
+>     buffers array
+>   media: videobuf2: Access vb2_queue bufs array through helper functions
+>   media: videobuf2: Be more flexible on the number of queue stored
+>     buffers
+>   media: Report the maximum possible number of buffers for the queue
+>   media: test-drivers: vivid: Increase max supported buffers for capture
+>     queues
+>   media: test-drivers: vicodec: Increase max supported capture queue
+>     buffers
+>   media: verisilicon: Refactor postprocessor to store more buffers
+>   media: verisilicon: Store chroma and motion vectors offset
+>   media: verisilicon: g2: Use common helpers to compute chroma and mv
+>     offsets
+>   media: verisilicon: vp9: Allow to change resolution while streaming
+>   media: Remove duplicated index vs q->num_buffers check
+>   media: core: Add helper to get queue number of buffers
+>   media: dvb-core: Do not initialize twice queue num_buffer field
+>   media: dvb-frontends: rtl2832_srd: Use queue min_buffers_needed field
+>   media: video-i2c: Set min_buffers_needed to 2
+>   media: pci: cx18: Set correct value to min_buffers_needed field
+>   media: pci: dt3155: Remove useless check
+>   media: pci: netup_unidvb: Remove useless number of buffers check
+>   media: pci: tw68: Stop direct calls to queue num_buffers field
+>   media: pci: tw686x: Set min_buffers_needed to 3
+>   media: amphion: Stop direct calls to queue num_buffers field
+>   media: coda: Stop direct calls to queue num_buffers field
+>   media: mediatek: vcodec: Stop direct calls to queue num_buffers field
+>   media: nxp: Stop direct calls to queue num_buffers field
+>   media: renesas: Set min_buffers_needed to 16
+>   media: ti: Use queue min_buffers_needed field to set the min number of
+>     buffers
+>   media: verisilicon: Stop direct calls to queue num_buffers field
+>   media: test-drivers: Stop direct calls to queue num_buffers field
+>   media: usb: airspy: Set min_buffers_needed to 8
+>   media: usb: cx231xx: Set min_buffers_needed to CX231XX_MIN_BUF
+>   media: usb: hackrf: Set min_buffers_needed to 8
+>   media: usb: usbtv: Set min_buffers_needed to 2
+>   media: atomisp: Stop direct calls to queue num_buffers field
+>   media: imx: Stop direct calls to queue num_buffers field
+>   media: meson: vdec: Stop direct calls to queue num_buffers field
+>   touchscreen: sur40: Stop direct calls to queue num_buffers field
+>   sample: v4l: Stop direct calls to queue num_buffers field
+>   media: cedrus: Stop direct calls to queue num_buffers field
+>   media: nuvoton: Stop direct calls to queue num_buffers field
+>   media: core: Rework how create_buf index returned value is computed
+>   media: core: Add bitmap manage bufs array entries
+>   media: core: Free range of buffers
+>   media: v4l2: Add DELETE_BUFS ioctl
+>   media: v4l2: Add mem2mem helpers for DELETE_BUFS ioctl
+>   media: test-drivers: Use helper for DELETE_BUFS ioctl
+
 
