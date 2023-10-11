@@ -2,156 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B6627C53EE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 14:27:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C9AD7C542E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 14:41:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346963AbjJKM1O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Oct 2023 08:27:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51512 "EHLO
+        id S234658AbjJKMlR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Oct 2023 08:41:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235066AbjJKM1D (ORCPT
+        with ESMTP id S231327AbjJKMlQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Oct 2023 08:27:03 -0400
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71C88E6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 05:26:46 -0700 (PDT)
-Received: by mail-oi1-x22e.google.com with SMTP id 5614622812f47-3af8b498d30so3967962b6e.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 05:26:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697027206; x=1697632006; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tI6Pcdke+ZCMScqm6RYMcPg5JywhhOVA13YJD5+toLE=;
-        b=xiB08aJWmTQEGnvzhz5pPu8qt8JoW6dCUAvJvnrWo/TrbiaHVCU+vXmhhFFaJHjdmm
-         Tzk9hSsXeXRTQHbuKvZGK2H0kR1yHPQklnqWlIVEq/bTI08bM6kUV7DnGeLH59tgQQwR
-         hlKZRBzA3bViY9D86L/3ahW0cnPo/86bXAw5VofUnqQLHmqNzqnxGhnD+HMwXY6wdDRy
-         SJzDAZMjkpZo5zVO7BTm9vCg9FZ9zQzedW+S/rsgr/HviODPs9qaiftC5D4tqRelGUDs
-         +BF/AumhQgm6hmBi8dJ3bzdv3okwoq1vT7qSDTEAJVqfNjinEKTcyjdnv30u0b7Zrk6K
-         KnBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697027206; x=1697632006;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tI6Pcdke+ZCMScqm6RYMcPg5JywhhOVA13YJD5+toLE=;
-        b=MemqhaAA6B3+g9B2t/RSO14Sp7Y9GIDWHvnCIDivSTvjiL/h2KjWha2nqC5oJ3Glar
-         rC8/84fj/Y1+8Ty6YDSvYemR6BQFMSYNHKTomlKmsD5yYXvmCBCGHfDRbK6aEuXK2mCy
-         EJVeU9tDnqkLAtdV2ZKXwZ+KFbGim3rOeg/vdKQ8MlG0ORgDNhOVVaP6Eef6N+IqmZXU
-         ztrSrEE+ymXzOUZKyU/sxt/3dQsgt9taP5EJjVJSriasBfKOcYL4Vb6HDpE2S7iRA0hx
-         UVfCginF7xb+Phpr4G4vXQPCY/Yx9wvT7RN/eIUHicEhfdlYxa57ENSm2VyCNJd7aUgQ
-         mj8w==
-X-Gm-Message-State: AOJu0Yzr2nBCG7OomxgblYloMIrJ9AeajtL6vZpqYEuOB8+URZprsbNZ
-        Awvb790MbiOYpnh29IBn/YCz
-X-Google-Smtp-Source: AGHT+IFzX2n92dmWtsRn4w44dCrNNn/zihF5BV5HsH403pLPK2+SDKSQw+T1dY3G2OYpb96IjZtv5A==
-X-Received: by 2002:a05:6358:42a6:b0:148:1a09:2469 with SMTP id s38-20020a05635842a600b001481a092469mr11954985rwc.25.1697027205702;
-        Wed, 11 Oct 2023 05:26:45 -0700 (PDT)
-Received: from localhost.localdomain ([120.138.12.180])
-        by smtp.gmail.com with ESMTPSA id a19-20020aa78653000000b0068fb8080939sm9953620pfo.65.2023.10.11.05.26.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Oct 2023 05:26:45 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
-        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
-        cw00.choi@samsung.com, andersson@kernel.org,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        jejb@linux.ibm.com, martin.petersen@oracle.com
-Cc:     alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
-        linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
-        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
-        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
-        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
-        bmasney@redhat.com, krzysztof.kozlowski@linaro.org,
-        linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v5 5/5] arm64: dts: qcom: sm8250: Add OPP table support to UFSHC
-Date:   Wed, 11 Oct 2023 17:55:43 +0530
-Message-Id: <20231011122543.11922-6-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20231011122543.11922-1-manivannan.sadhasivam@linaro.org>
-References: <20231011122543.11922-1-manivannan.sadhasivam@linaro.org>
+        Wed, 11 Oct 2023 08:41:16 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D054491;
+        Wed, 11 Oct 2023 05:41:14 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39BCOpTH024354;
+        Wed, 11 Oct 2023 12:40:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=UZpYFbzXOrXENSAWmRlHpKkAEdevo6eS+r/KdkhBvk4=;
+ b=lDPWi64w5irorUuxteH6raNoS9ZNXTmDjRWJybaI9r8HDaPuHJbyxLAlMP7Sv0n04WKt
+ 7X2FnzSnSENqQEbP6qV879MJfI1MNjVlQMj3yP1yD0ecoJfsHWmmFoho/g3Ey58w8ub0
+ omb1kQHB3ENs6iTsZn5aSbqK0gzrjw+929QQ7gwizQB1YK9kAoOlq/DaOg1+wvC0fsYH
+ a+IkAwmFATZaHOvBEN/8p7JhcukYJD8VLhzYAc/NJ3eCk6dSAWuxmhvqbA9URZ2NyQjf
+ NS431fZmcrzTkhRCTzkd9aNtyPFn9ulw/sH79oxv2luembky03RTkNnC60sBeiHWyKbI vA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tnmds90nn-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 11 Oct 2023 12:40:59 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39BCewWw022591
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 11 Oct 2023 12:40:58 GMT
+Received: from [10.253.39.162] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Wed, 11 Oct
+ 2023 05:40:54 -0700
+Message-ID: <c3914104-e2eb-44c1-4d5f-304c51b89c1a@quicinc.com>
+Date:   Wed, 11 Oct 2023 20:40:52 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v9 4/4] clk: qcom: add clock controller driver for
+ qca8386/qca8084
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        <andersson@kernel.org>, <agross@kernel.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <catalin.marinas@arm.com>,
+        <will@kernel.org>, <p.zabel@pengutronix.de>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_srichara@quicinc.com>
+References: <20230923112105.18102-1-quic_luoj@quicinc.com>
+ <20230923112105.18102-5-quic_luoj@quicinc.com>
+ <10bcb0cc-19db-4914-bbc4-ef79c238a70d@linaro.org>
+ <49c8a8ff-bdb9-a523-9587-d2a46d401e41@quicinc.com>
+ <f97d167e-688e-428d-8463-5b315b9a9593@linaro.org>
+From:   Jie Luo <quic_luoj@quicinc.com>
+In-Reply-To: <f97d167e-688e-428d-8463-5b315b9a9593@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: CYuis6oZakva4pExzS48HlWBAcD-Sq5-
+X-Proofpoint-GUID: CYuis6oZakva4pExzS48HlWBAcD-Sq5-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-11_09,2023-10-11_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 bulkscore=0 lowpriorityscore=0 adultscore=0 suspectscore=0
+ clxscore=1015 spamscore=0 phishscore=0 impostorscore=0 mlxlogscore=802
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310110111
+X-Spam-Status: No, score=-6.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-UFS host controller, when scaling gears, should choose appropriate
-performance state of RPMh power domain controller along with clock
-frequency. So let's add the OPP table support to specify both clock
-frequency and RPMh performance states replacing the old "freq-table-hz"
-property.
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 39 +++++++++++++++++++++-------
- 1 file changed, 30 insertions(+), 9 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index a4e58ad731c3..33abd84aae53 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2198,21 +2198,42 @@ ufs_mem_hc: ufshc@1d84000 {
- 				<&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
- 				<&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
- 				<&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
--			freq-table-hz =
--				<37500000 300000000>,
--				<0 0>,
--				<0 0>,
--				<37500000 300000000>,
--				<0 0>,
--				<0 0>,
--				<0 0>,
--				<0 0>;
-+
-+			operating-points-v2 = <&ufs_opp_table>;
- 
- 			interconnects = <&aggre1_noc MASTER_UFS_MEM 0 &mc_virt SLAVE_EBI_CH0 0>,
- 					<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_UFS_MEM_CFG 0>;
- 			interconnect-names = "ufs-ddr", "cpu-ufs";
- 
- 			status = "disabled";
-+
-+			ufs_opp_table: opp-table {
-+				compatible = "operating-points-v2";
-+
-+				opp-37500000 {
-+					opp-hz = /bits/ 64 <37500000>,
-+						 /bits/ 64 <0>,
-+						 /bits/ 64 <0>,
-+						 /bits/ 64 <37500000>,
-+						 /bits/ 64 <0>,
-+						 /bits/ 64 <0>,
-+						 /bits/ 64 <0>,
-+						 /bits/ 64 <0>;
-+					required-opps = <&rpmhpd_opp_low_svs>;
-+				};
-+
-+				opp-300000000 {
-+					opp-hz = /bits/ 64 <300000000>,
-+						 /bits/ 64 <0>,
-+						 /bits/ 64 <0>,
-+						 /bits/ 64 <300000000>,
-+						 /bits/ 64 <0>,
-+						 /bits/ 64 <0>,
-+						 /bits/ 64 <0>,
-+						 /bits/ 64 <0>;
-+					required-opps = <&rpmhpd_opp_nom>;
-+				};
-+			};
- 		};
- 
- 		ufs_mem_phy: phy@1d87000 {
--- 
-2.25.1
+On 10/11/2023 7:32 PM, Konrad Dybcio wrote:
+> 
+> 
+> On 10/11/23 13:26, Jie Luo wrote:
+>>
+>>
+>> On 10/11/2023 6:25 PM, Bryan O'Donoghue wrote:
+>>> On 23/09/2023 12:21, Luo Jie wrote:
+>>>> The clock controller driver of qca8386/qca8084 is registered
+>>>> as the MDIO device, the hardware register is accessed by MDIO bus
+>>>> that is normally used to access general PHY device, which is
+>>>> different from the current existed qcom clock controller drivers
+>>>> using ioremap to access hardware clock registers.
+>>>
+>>> "nsscc-qca8k is accessed via an MDIO bus"
+>>>
+>>>> MDIO bus is common utilized by both qca8386/qca8084 and other
+>>>
+>>> commonly
+>>>
+>>>> PHY devices, so the mutex lock mdio_bus->mdio_lock should be
+>>>> used instead of using the mutex lock of remap.
+>>>>
+>>>> To access the hardware clock registers of qca8386/qca8084, there
+>>>> is special MDIO frame sequence(three MDIO read/write operations)
+>>>> need to be sent to device.
+>>>
+>>> "there is a special MDIO frame sequence"
+>>>
+>>> "which needs to be sent to the device"
+>>
+>> I will update the comments, thanks Bryan.
+>>
+>>>
+>>> the following indentation splat from checkpatch
+>>>
+>>> CHECK: Alignment should match open parenthesis
+>>> #2071: FILE: drivers/clk/qcom/nsscc-qca8k.c:2004:
+>>> +        ret = __mdiobus_write(bus, switch_phy_id, (reg | 
+>>> QCA8K_REG_DATA_UPPER_16_BITS),
+>>> +                upper_16_bits(val));
+>>>
+>>> CHECK: Alignment should match open parenthesis
+>>> #2131: FILE: drivers/clk/qcom/nsscc-qca8k.c:2064:
+>>> +static int qca8k_regmap_update_bits(void *context, unsigned int 
+>>> regaddr,
+>>> +        unsigned int mask, unsigned int value)
+>>>
+>>> total: 0 errors, 1 warnings, 2 checks, 2162 lines checked
+>>>
+>>> NOTE: For some of the reported defects, checkpatch may be able to
+>>>        mechanically convert to the typical style using --fix or 
+>>> --fix-inplace.
+>>>
+>>> 0004-clk-qcom-add-clock-controller-driver-for-qca8386-qca.patch has 
+>>> style problems, please review.
+>>
+>> Thanks Bryan for the review. The code line mentioned by CHECK is more 
+>> than 100 columns, so i separate the lines.
+> Please read what checkpatch tells you.
+> 
+> It asks you to change
+> 
+> very_long_func_name(arg1, arg2,
+>      arg3);
+> 
+> to
+> 
+> very_long_func_name(arg1, arg2,
+>              arg3);
+> 
+> (remember tab len is 8 for the linux kernel)
+> 
+> Konrad
 
+Got it, thanks Konrad for the reminder.
