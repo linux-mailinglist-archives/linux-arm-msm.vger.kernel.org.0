@@ -2,125 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C7E87C5F07
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 23:21:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5920A7C5F18
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 23:28:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233481AbjJKVVl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Oct 2023 17:21:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45748 "EHLO
+        id S233339AbjJKV2o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Oct 2023 17:28:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233369AbjJKVVj (ORCPT
+        with ESMTP id S233483AbjJKV2n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Oct 2023 17:21:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84019B6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 14:20:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1697059250;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=c2JKpLabPU19Z4PY1/R2zyWSv93z5Bntvht7KzYGyrY=;
-        b=hpNCj/SOb4UMt2bbD2gYA5n95kVy5pbNk8gI7wB9pqhZ7FjOaV9vcuJjJGqibNPrVy61PV
-        1yxk6ruIvYsixD7XbyVnPeAclfj5VLCIa04CHhx7QDcLdEq4jClZ3oMf/atETVAxz/BTdK
-        PjVAyuTlYub/SScF8YeTarUnkcBwFk4=
-Received: from mail-oi1-f198.google.com (mail-oi1-f198.google.com
- [209.85.167.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-692-IVUAGepoOLut-ORvE-MsIA-1; Wed, 11 Oct 2023 17:20:49 -0400
-X-MC-Unique: IVUAGepoOLut-ORvE-MsIA-1
-Received: by mail-oi1-f198.google.com with SMTP id 5614622812f47-3af5b5d80d9so351027b6e.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 14:20:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697059249; x=1697664049;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=c2JKpLabPU19Z4PY1/R2zyWSv93z5Bntvht7KzYGyrY=;
-        b=VxMseeY+VXxLbqb6+cSIGEtqc5ttlro6Z/osD0y89WKbMz1IREBbfzL+O3Hxan785X
-         EN/8Uxmi3eO7V/p2vyoxgw5NXaBMZc+CjvQ2qnbcLnuST2Tn67aA51PHP61ZXyPlmJxQ
-         7v2FQyD430qoDSl0pIAfnUf+cVNoPHFzQgCzVJgknr3VsLJ7Kj2qGlWiVITBnqk0+/VN
-         4uIhe0mChZPTsL7S6VvXmp6mvqjMvn01giHEpC7AGeTe/BZHnRcB403/cWWMgLfxWB16
-         PcYhK4E5QNtUOriZubtSZ1RPB5q6OpWi3nP1Vj6E4Jkmr6R1tHTy37+Sb6BcW6O+e5VS
-         y2zQ==
-X-Gm-Message-State: AOJu0YyfJmSLFfSElAj0t1MlADuCP2n70iKy6qp6/+ztAlqR6EecCY0Z
-        fLD1cUivrn76NlQzIzrWao+vXRiknBpPiW5dw3I5PpLEUuBbBnY8avqmE3+CtKzYLgmp+fYho4q
-        5NAJCBOlk0Dg1IdlPntAl2BAJOw==
-X-Received: by 2002:a05:6808:1b14:b0:3a8:3d5b:aad6 with SMTP id bx20-20020a0568081b1400b003a83d5baad6mr28232895oib.55.1697059248998;
-        Wed, 11 Oct 2023 14:20:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE2flRVYhqCmKvMACeu6gSf5Yfu7K+cr6BQF49KWiE2ZPbvDYiSc1FkfiNPw1mUZvZs/4a71g==
-X-Received: by 2002:a05:6808:1b14:b0:3a8:3d5b:aad6 with SMTP id bx20-20020a0568081b1400b003a83d5baad6mr28232878oib.55.1697059248764;
-        Wed, 11 Oct 2023 14:20:48 -0700 (PDT)
-Received: from fedora ([2600:1700:1ff0:d0e0::37])
-        by smtp.gmail.com with ESMTPSA id o16-20020ac841d0000000b004195faf1e2csm5627854qtm.97.2023.10.11.14.20.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Oct 2023 14:20:48 -0700 (PDT)
-Date:   Wed, 11 Oct 2023 16:20:45 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Bartosz Golaszewski <brgl@bgdev.pl>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        Alex Elder <elder@linaro.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, kernel@quicinc.com,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>
-Subject: Re: [PATCH v3 15/15] arm64: defconfig: enable SHM Bridge support for
- the TZ memory allocator
-Message-ID: <vovuloeqzoshlyybypzjyni4cfxtz46rp4pqh4duftai5jhgzr@ked3hl35kx2o>
-References: <20231009153427.20951-1-brgl@bgdev.pl>
- <20231009153427.20951-16-brgl@bgdev.pl>
+        Wed, 11 Oct 2023 17:28:43 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F13E4A9;
+        Wed, 11 Oct 2023 14:28:39 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39BLLorF026505;
+        Wed, 11 Oct 2023 21:28:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=YV+V1QT7WH4TWPolqZP1tvIu4h5bgrG/c8p+KKr0FoQ=;
+ b=Nol6CFDoHUzR4MONkVTbjPlDGX8jVqu+DqjvbqlByQojNsd+P5PUQji3uQkMkNyEx/2S
+ 5L8blqit0HWXQxoVAeP1EZs/iVACZdp8Ta+QIe4RPdY1umbSFP4kGotR6AFmcncynZnk
+ oahwPh5qBb7S4BzteERSwdbC/8Soe6MKEqc2CmEUyU6jDd1k8Mdxoo8bWCuklBuUdBKI
+ MKvabTmCS2Bar6e2adlK6oMnL8Nu2Q5voYPAzqGKGnn1TDISOEWh4O5m1zsSzp63XONF
+ xJj0JAeOIR0GtT+EEmgyj8qGZxecN8tjDe4nkXpSULibMPnY9zLne8cR6F9A6iGBgU/y Ig== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tnsmq1nmr-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 11 Oct 2023 21:28:14 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39BLSC9L011144
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 11 Oct 2023 21:28:13 GMT
+Received: from [10.71.115.198] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Wed, 11 Oct
+ 2023 14:28:12 -0700
+Message-ID: <a9b172cd-1840-2949-2244-9a75d2bb7990@quicinc.com>
+Date:   Wed, 11 Oct 2023 14:28:07 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231009153427.20951-16-brgl@bgdev.pl>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v8 25/34] ASoC: dt-bindings: Update example for enabling
+ USB offload on SM8250
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>
+CC:     <bgoswami@quicinc.com>, <lgirdwood@gmail.com>,
+        <broonie@kernel.org>, <gregkh@linuxfoundation.org>,
+        <robh+dt@kernel.org>, <konrad.dybcio@linaro.org>,
+        <conor+dt@kernel.org>, <linux-usb@vger.kernel.org>,
+        <andersson@kernel.org>, <Thinh.Nguyen@synopsys.com>,
+        <srinivas.kandagatla@linaro.org>, <linux-kernel@vger.kernel.org>,
+        <agross@kernel.org>, <mathias.nyman@intel.com>,
+        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
+        <perex@perex.cz>, <tiwai@suse.com>,
+        <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20231011002146.1821-1-quic_wcheng@quicinc.com>
+ <20231011002146.1821-26-quic_wcheng@quicinc.com>
+ <169699146438.2560961.3220166947763848754.robh@kernel.org>
+From:   Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <169699146438.2560961.3220166947763848754.robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Mx5Ycg9ohRBABrFQFgGJzpQmgg0YzsHa
+X-Proofpoint-ORIG-GUID: Mx5Ycg9ohRBABrFQFgGJzpQmgg0YzsHa
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-11_16,2023-10-11_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ mlxlogscore=999 lowpriorityscore=0 adultscore=0 priorityscore=1501
+ impostorscore=0 spamscore=0 bulkscore=0 clxscore=1015 mlxscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310110189
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 09, 2023 at 05:34:27PM +0200, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> Enable SHM Bridge support in the Qualcomm TrustZone allocator by default
-> as even on architectures that don't support it, we automatically fall
-> back to the default behavior.
+Hi Rob,
 
-Can you give some motivation for the Kconfig? It seems like what you've
-wrote should just fallback to the non SHM bridge allocated memory, so I
-don't see what having the option to exclude that at build time gives us.
+On 10/10/2023 7:31 PM, Rob Herring wrote:
+> 
+> On Tue, 10 Oct 2023 17:21:37 -0700, Wesley Cheng wrote:
+>> Add an example on enabling of USB offload for the Q6DSP.  The routing can
+>> be done by the mixer, which can pass the multimedia stream to the USB
+>> backend.
+>>
+>> Acked-by: Rob Herring <robh@kernel.org>
+>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+>> ---
+>>   .../devicetree/bindings/sound/qcom,sm8250.yaml    | 15 +++++++++++++++
+>>   1 file changed, 15 insertions(+)
+>>
+> 
+> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+> on your patch (DT_CHECKER_FLAGS is new in v5.13):
+> 
+> yamllint warnings/errors:
+> 
+> dtschema/dtc warnings/errors:
+> Error: Documentation/devicetree/bindings/sound/qcom,sm8250.example.dts:97.44-45 syntax error
+> FATAL ERROR: Unable to parse input tree
+> make[2]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/sound/qcom,sm8250.example.dtb] Error 1
+> make[2]: *** Waiting for unfinished jobs....
+> make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1427: dt_binding_check] Error 2
+> make: *** [Makefile:234: __sub-make] Error 2
+> 
+> doc reference errors (make refcheckdocs):
+> 
+> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20231011002146.1821-26-quic_wcheng@quicinc.com
+> 
+> The base for the series is generally the latest rc1. A different dependency
+> should be noted in *this* patch.
+> 
+> If you already ran 'make dt_binding_check' and didn't see the above
+> error(s), then make sure 'yamllint' is installed and dt-schema is up to
+> date:
+> 
+> pip3 install dtschema --upgrade
+> 
+> Please check and re-submit after running the above command yourself. Note
+> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+> your schema. However, it must be unset to test all examples with your schema.
+> 
 
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
->  arch/arm64/configs/defconfig | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> index 07011114eef8..ebe97fec6e33 100644
-> --- a/arch/arm64/configs/defconfig
-> +++ b/arch/arm64/configs/defconfig
-> @@ -255,6 +255,7 @@ CONFIG_INTEL_STRATIX10_RSU=m
->  CONFIG_EFI_CAPSULE_LOADER=y
->  CONFIG_IMX_SCU=y
->  CONFIG_IMX_SCU_PD=y
-> +CONFIG_QCOM_TZMEM_MODE_SHMBRIDGE=y
->  CONFIG_GNSS=m
->  CONFIG_GNSS_MTK_SERIAL=m
->  CONFIG_MTD=y
-> -- 
-> 2.39.2
-> 
+Would you happen to know what the error is in this case?  I made sure I 
+was running the latest dtschema (v2023.9) and had yamllint installed as 
+well.  When I took a look at the DTB and DTS output it looked ok...
 
+             usb-dai-link {
+                 link-name = "USB Playback";
+                 cpu {
+                     sound-dai = <&q6afedai USB_RX>;//--->syntax error?
+                 };
+
+                 codec {
+                     sound-dai = <&usbdai USB_RX>;
+                 };
+
+                 platform {
+                     sound-dai = <&q6routing>;
+                 };
+             };
+
+I didn't make any changes to this in between v7 and v8, but v7 passed:
+https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230921214843.18450-25-quic_wcheng@quicinc.com/
+
+Thanks
+Wesley Cheng
