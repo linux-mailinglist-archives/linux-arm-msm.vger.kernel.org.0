@@ -2,83 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EDD77C4960
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 07:46:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6611D7C4A8D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 08:28:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229471AbjJKFqj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Oct 2023 01:46:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45404 "EHLO
+        id S1344315AbjJKG2W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Oct 2023 02:28:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229940AbjJKFqi (ORCPT
+        with ESMTP id S1345378AbjJKG2O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Oct 2023 01:46:38 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 498B88E;
-        Tue, 10 Oct 2023 22:46:35 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39B4K2Yc016645;
-        Wed, 11 Oct 2023 05:46:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=SWeQep/DffQOk2u0MlJYTQgqm5T1/Izn8jXn4Psf6eQ=;
- b=hY3M71cZkqk+tBAcZWJp2kNx2+rUy6YWvBfZGyIEx7ToKzD7M5vbYBdw2kE+s//OEiMP
- //f6VKmpFy/In0JXAGeaYnEQfFAr3i0mWJDILwi5MkxcJaaFEYIxf0msTQijdMZhwWrr
- QrMU036j7/51WxJKRmigeGT1Msn1f3vr3o/lLo+VkmB+SmL6Bwh0100wMVZIXnNfxMOH
- 2AJP+WU3r33r1OkOlFkA1mPX4HuZwpXdbotyzX5gigjpXTnEXE8EV8p0vhJmTFHhbZhk
- Ui8odK/Czo6q51JhwAbHU6IzaFAtf1thH8+L6vGWpSsYXJLeumb+IbGCv1DPi5CylGhe Rg== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tn4he24ye-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 11 Oct 2023 05:46:31 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39B5k3nF014284
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 11 Oct 2023 05:46:03 GMT
-Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Tue, 10 Oct
- 2023 22:46:00 -0700
-Message-ID: <c23be999-e7fb-5a31-2b99-013626067e79@quicinc.com>
-Date:   Wed, 11 Oct 2023 11:15:57 +0530
+        Wed, 11 Oct 2023 02:28:14 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14B6698;
+        Tue, 10 Oct 2023 23:28:12 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DB5FC433C7;
+        Wed, 11 Oct 2023 06:28:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1697005691;
+        bh=QgnMl9B4zUXQNgtEeKROdc7SjfMgtaTbXTJLtuTkjJ0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=OOjy724LOL/g2rMFhztMd/U097sJw5/ITAB9dZdP+71mDWrQPUKwztmxLASmN3Ajs
+         4g5izeRdz3ZIYwn6sfEGHUaTQ23jz8FFLOPdALZ2kUab53JVkXKj4H8ZEI8FM6JRdi
+         rtYEBfbvlDmSzJil+MdEd93bhPzb/f768ti3Gydj9BO1vgueHx3o4VDT5haRFzPu53
+         TRkherYFcFfrSyGKVSteNaarn1jf9+s2IBEzCrfjrEcZ1g3Lhz7gvKnNYV8llpjdYa
+         FCityEoH4kF8qCb37hot67eDTute00tpg29JSbJAoEuXxxs3tyMUHDHfEQ9zFyo5B1
+         0SkIxMFvMcdLg==
+Date:   Wed, 11 Oct 2023 08:28:05 +0200
+From:   Wolfram Sang <wsa@kernel.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        loic.poulain@linaro.org, rfoss@kernel.org, andi.shyti@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, todor.too@gmail.com, mchehab@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/5] dt-bindings: i2c: qcom-cci: Document sc8280xp
+ compatible
+Message-ID: <ZSZAdfJ8IgFE/cO9@shikoro>
+Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        loic.poulain@linaro.org, rfoss@kernel.org, andi.shyti@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, todor.too@gmail.com, mchehab@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20231006120159.3413789-1-bryan.odonoghue@linaro.org>
+ <20231006120159.3413789-2-bryan.odonoghue@linaro.org>
+ <ZSWpm/7xnoFkUn31@shikoro>
+ <767bc246-a0a0-4dad-badc-81ed50573832@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 1/3] dt-bindings: mfd: qcom,tcsr: Add compatible for
- sm8{2|3|5}50
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1696954157-16327-1-git-send-email-quic_mojha@quicinc.com>
- <f189b1e9-e1cb-4bbb-a138-b10322684b09@linaro.org>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <f189b1e9-e1cb-4bbb-a138-b10322684b09@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: -WZwJl7_CQ9Q4YFc-zS9neztlA5TOXef
-X-Proofpoint-ORIG-GUID: -WZwJl7_CQ9Q4YFc-zS9neztlA5TOXef
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-11_03,2023-10-10_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=527
- suspectscore=0 mlxscore=0 lowpriorityscore=0 spamscore=0 adultscore=0
- impostorscore=0 phishscore=0 clxscore=1015 bulkscore=0 malwarescore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310110051
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="+zFGQa6cKiry5TnQ"
+Content-Disposition: inline
+In-Reply-To: <767bc246-a0a0-4dad-badc-81ed50573832@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -86,16 +68,34 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+--+zFGQa6cKiry5TnQ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On 10/10/2023 10:07 PM, Konrad Dybcio wrote:
-> 
-> 
-> On 10/10/23 18:09, Mukesh Ojha wrote:
->> Document the compatible for sm8{2|3|5}50 SoCs.
-> sm8[235]0 would work as well ;)
 
-Sure, Thanks.
+> https://lore.kernel.org/linux-arm-msm/20231010122539.1768825-1-bryan.odonoghue@linaro.org/
 
--Mukesh
-> 
-> Konrad
+Sure, I'll revert it. Thanks for the heads up!
+
+
+--+zFGQa6cKiry5TnQ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmUmQHIACgkQFA3kzBSg
+KbbOHw//fgu3AlcwV0nymLzbLIhx4OwYcBZr4Fj1qVTdU6wwQjJn2ZLJTxQddxbx
+xqHN+s+5hCbBi91FYjvJ/PdZmtKHJeXIDvfY1gbFUWY1qaCgn4gQrxi3wrbT2FtM
+wYPspQ3CdWIZWzMkknW3yyt5z5ASsCi2gywjsQimIEMUn8Y6N5kWMI4NEbPDDL3Q
+TvG2ee+6LNIGesvBXQ53lTXjwF6eSeovSuFYPORovXRDAIgIMHy+Mqh8NXBr/Xhq
+m6yFG2rc9NTeyxJm/WFbqUeGh4mjowfeCOJQSsBa+kZ3Az/IXo7c9krfvUGVwOFH
+tfVNWt5mk5G3iGZZbaf19mU/XPmKwsrQutz6zRqJwFp+TRSBvlXbFAjeUo65YvyP
+cTtNjVoWPiVrz/sWPDLWX1rH5pZWh4hEdXCwXlvVl5YMQPUNf/M+YbgzWmwO4Px+
+FxukBxn9occAHRWCAniQmBXA5djUxUMJNHZYy/DJWwmKPO/+jEsfR1R1zEY4R0Wj
+KJeZcsXvDGVu9EjLeRU/YfTKVVq3Im/2N1N9NXEAErTopoc8ozzw4T3OZAiu37Eb
+vjYKgu1wqEJW6lij6CuETeKp4J7+mDsHuNws+CiDlmFGSFjVhEat2z6bfM1vpqv+
+ZIhC7j5jP4BdTOBCpSHjP0TumOjX448KqYL3jxfWFLWM/yb0vTo=
+=hqBp
+-----END PGP SIGNATURE-----
+
+--+zFGQa6cKiry5TnQ--
