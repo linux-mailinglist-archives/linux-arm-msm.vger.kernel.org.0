@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 598A57C5DF7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 22:01:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D72BB7C5E08
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 22:09:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233308AbjJKUBp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Oct 2023 16:01:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58880 "EHLO
+        id S233217AbjJKUJR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Oct 2023 16:09:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233103AbjJKUBo (ORCPT
+        with ESMTP id S231226AbjJKUJQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Oct 2023 16:01:44 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3498BA9;
-        Wed, 11 Oct 2023 13:01:42 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-31f71b25a99so203403f8f.2;
-        Wed, 11 Oct 2023 13:01:42 -0700 (PDT)
+        Wed, 11 Oct 2023 16:09:16 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CF4494;
+        Wed, 11 Oct 2023 13:09:13 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-40651a72807so3208795e9.1;
+        Wed, 11 Oct 2023 13:09:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697054500; x=1697659300; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=gmail.com; s=20230601; t=1697054951; x=1697659751; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=vJroCQ5f7MWlIlaijqfjlzkCzCi0InBWPA+64vhHzGc=;
-        b=IE40i2pL4u0LhBFcVQOHdK8moClhihC6wbzg12+hRTBgW8tbS0Z7M8qfUMjj78mJD2
-         aXt8i1SqBAfn1VY4rOzMZIc/+9tPotXQReXW32UdxWgjB8Be0sjGpLbzHEaq7VFxHtPW
-         8x32W3J0ZWIVk0+QX5vKT22oF4bYA+Rne7/Aayb9nI1mMZhY2t/YtjOdMRM+dzYjIlbj
-         bbrcevldr7UbOKtvxkmV4YelIv0ocyuNQG+tJTonF4OPRqH05S/UAKs94k9Jbh3PZNGm
-         UKO/wWhxniv3wYsI27vW5jQF3d1vEXhCZ62GC4CQ9rEb4Q9TmwwoQi0fSuyh1jT2cxsx
-         edLA==
+        bh=fwMSS1JcFEDXpZyiEnSO8zQlyidEp0jlGR2nVT4Z3G4=;
+        b=EOAPy+LmMySnjmRtcRZtBIXcPX6yU7S1nxviLZrIcuR82GL1ZChE0p9ip0mZ3ifHbQ
+         U8BSlE4QFQtQEFf6fjFG/vuvhQjD3bhbbFOyEa4V9MRR/G5acq0fCAm3l9giFWCctdO8
+         46Ibslf/TQ7Y3cup1I/ElXLeJZIfMvYyLJUwFhyr7Es/c4TTbWmNWVKld5oPA36MuglA
+         LyRWXCGJcA0O7hTym9USHX9be3YYqzdNRLmFiD3BS5Z8J5hMAQkS5iD/FCd2RsTWaWzx
+         WzdUQKzzcWBiba3ILzpCr7H1dp9g4yHotsVUZFdZtuvvaqkNwlilPpsGiwVErfiSINGx
+         sWlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697054500; x=1697659300;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1697054951; x=1697659751;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vJroCQ5f7MWlIlaijqfjlzkCzCi0InBWPA+64vhHzGc=;
-        b=GUvDBOHIrdjpIYfHfsJjEgJWqkrVZjW0KQW4k52IL2OMuQbLCYuQirWZ31+OpBLKhl
-         GWo9Ppq8rFo9GLsWrfX7vt3gNg4ML5S9ClMFA9ae1GbGJ/EVmKjFL7tEuFnMo9SDHcj8
-         yhrKovkr+jdS9ck9di1e7iyR3NJzT72QodNARwQaedfZPSbIkfw8CPt+0/Xbpn9oTcqx
-         n0b36y/7HWfpv7TOX2GPbLyNA8rcNyV/e5mU2CZRUufzi0AdCcP3CWWUZC6tJKtpb5Sx
-         Ku4LqAv7VOcsEfWKVLdmIWbv7ykud12I2FVgTx9WK5nM19AQyGMENbnRqbry9ZVGT0Nf
-         FjTQ==
-X-Gm-Message-State: AOJu0Yy7tSHQpOhwzQxRavS7iXbRtBgnr6QNH7qQfpASYY80kBERBgKl
-        0ngjTA9a6ElkUiX5OuYv/rwwKkrWwns=
-X-Google-Smtp-Source: AGHT+IEYYG1g8e0+HZgSWRaku+rRsiOSJnc04Ze6VUY+cqtVVM63VjUX6K7a9c5dGy9q/VUE9K3TJA==
-X-Received: by 2002:adf:dd8f:0:b0:313:f45f:74a1 with SMTP id x15-20020adfdd8f000000b00313f45f74a1mr20263516wrl.51.1697054500257;
-        Wed, 11 Oct 2023 13:01:40 -0700 (PDT)
+        bh=fwMSS1JcFEDXpZyiEnSO8zQlyidEp0jlGR2nVT4Z3G4=;
+        b=SO5NAnSapBrnQ788BqygoeafeZznOpngHMrMm+C55ZjUlPXQYREhkdOcTFZmn18WeM
+         EqZzg4Xiyo0ixT1wJK2CmVXbpmRYZ0dcvvOd6mZoOcWhiELlrb6eQ3BAWRHVI8HSZ4UG
+         /MVheSIEQeYhZ0545d8687ZOi20QSxgSNLasMRhPWGrZczYosWCi/8aCup7ZKw5cNa3K
+         aPhCIrM2aBp892OJ+Ems5Y2TQugDvStNsYIFy48Z2Nq1ZjSsURQwB1AEmLL36En/mBLS
+         a4e9QcGTm3imAxgJ+PivE3ql7k1R4NrHUqytwhvp7FtNaIRqmn3RkiOBVs+oqgH7whLQ
+         e2FQ==
+X-Gm-Message-State: AOJu0YzBcdcjMbAJVPfXi93Js+wH9y0wavew17vYXZwCWht66ulkR4Rt
+        h/KyN0Unz43zhXY8pNW+GHI=
+X-Google-Smtp-Source: AGHT+IEva7HvAg6ZLZr8d9XAqhBhRtyp1e9dGG3r81TKlDeAiiMwyzrF9woYU5uAeGS4EgS67jD8bQ==
+X-Received: by 2002:a1c:720a:0:b0:401:b6f6:d90c with SMTP id n10-20020a1c720a000000b00401b6f6d90cmr20364429wmc.35.1697054950809;
+        Wed, 11 Oct 2023 13:09:10 -0700 (PDT)
 Received: from ?IPV6:2a02:8071:b783:140:927c:82ba:d32d:99c1? ([2a02:8071:b783:140:927c:82ba:d32d:99c1])
-        by smtp.gmail.com with ESMTPSA id j15-20020a5d604f000000b003259b068ba6sm16437370wrt.7.2023.10.11.13.01.38
+        by smtp.gmail.com with ESMTPSA id bd5-20020a05600c1f0500b004030e8ff964sm20163058wmb.34.2023.10.11.13.09.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Oct 2023 13:01:39 -0700 (PDT)
-Message-ID: <1388bb68-dc55-489d-bb3c-517ffcf4443d@gmail.com>
-Date:   Wed, 11 Oct 2023 22:01:36 +0200
+        Wed, 11 Oct 2023 13:09:10 -0700 (PDT)
+Message-ID: <765d393c-4cfe-4f61-a7b4-7fef8c6bf70f@gmail.com>
+Date:   Wed, 11 Oct 2023 22:09:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 01/15] firmware: qcom: move Qualcomm code into its own
- directory
+Subject: Re: [PATCH v3 10/15] firmware: qcom: scm: make
+ qcom_scm_qseecom_app_get_id() use the TZ allocator
+Content-Language: en-US
 To:     Bartosz Golaszewski <brgl@bgdev.pl>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -70,10 +71,9 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, kernel@quicinc.com,
         Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 References: <20231009153427.20951-1-brgl@bgdev.pl>
- <20231009153427.20951-2-brgl@bgdev.pl>
-Content-Language: en-US
+ <20231009153427.20951-11-brgl@bgdev.pl>
 From:   Maximilian Luz <luzmaximilian@gmail.com>
-In-Reply-To: <20231009153427.20951-2-brgl@bgdev.pl>
+In-Reply-To: <20231009153427.20951-11-brgl@bgdev.pl>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -89,245 +89,68 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On 10/9/23 17:34, Bartosz Golaszewski wrote:
 > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> We're getting more and more qcom specific .c files in drivers/firmware/
-> and about to get even more. Create a separate directory for Qualcomm
-> firmware drivers and move existing sources in there.
+> Let's use the new TZ memory allocator to obtain a buffer for this call
+> instead of manually kmalloc()ing it and then mapping to physical space.
 > 
 > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> Acked-by: Elliot Berman <quic_eberman@quicinc.com>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Reviewed-by: Maximilian Luz <luzmaximilian@gmail.com>
+Tested-by: Maximilian Luz <luzmaximilian@gmail.com>
+
+I've tested the whole series with both QCOM_TZMEM_MODE_DEFAULT and
+QCOM_TZMEM_MODE_SHMBRIDGE. Everything seems to work fine on my Surface
+Pro X (sc8180x), but I've only really tested the qseecom-related parts
+(hence my TB only for those).
+
+I'll try to do a proper review of the two qseecom patches in the next
+couple of days.
 
 > ---
->   MAINTAINERS                                   |  4 +-
->   drivers/firmware/Kconfig                      | 48 +---------------
->   drivers/firmware/Makefile                     |  5 +-
->   drivers/firmware/qcom/Kconfig                 | 56 +++++++++++++++++++
->   drivers/firmware/qcom/Makefile                |  9 +++
->   drivers/firmware/{ => qcom}/qcom_qseecom.c    |  0
->   .../{ => qcom}/qcom_qseecom_uefisecapp.c      |  0
->   drivers/firmware/{ => qcom}/qcom_scm-legacy.c |  0
->   drivers/firmware/{ => qcom}/qcom_scm-smc.c    |  0
->   drivers/firmware/{ => qcom}/qcom_scm.c        |  0
->   drivers/firmware/{ => qcom}/qcom_scm.h        |  0
->   11 files changed, 69 insertions(+), 53 deletions(-)
->   create mode 100644 drivers/firmware/qcom/Kconfig
->   create mode 100644 drivers/firmware/qcom/Makefile
->   rename drivers/firmware/{ => qcom}/qcom_qseecom.c (100%)
->   rename drivers/firmware/{ => qcom}/qcom_qseecom_uefisecapp.c (100%)
->   rename drivers/firmware/{ => qcom}/qcom_scm-legacy.c (100%)
->   rename drivers/firmware/{ => qcom}/qcom_scm-smc.c (100%)
->   rename drivers/firmware/{ => qcom}/qcom_scm.c (100%)
->   rename drivers/firmware/{ => qcom}/qcom_scm.h (100%)
+>   drivers/firmware/qcom/qcom_scm.c | 18 ++++--------------
+>   1 file changed, 4 insertions(+), 14 deletions(-)
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index c934244acc31..0d032572cce0 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -17930,13 +17930,13 @@ QUALCOMM QSEECOM DRIVER
->   M:	Maximilian Luz <luzmaximilian@gmail.com>
->   L:	linux-arm-msm@vger.kernel.org
->   S:	Maintained
-> -F:	drivers/firmware/qcom_qseecom.c
-> +F:	drivers/firmware/qcom/qcom_qseecom.c
+> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+> index 11638daa2fe5..3a6cefb4eb2e 100644
+> --- a/drivers/firmware/qcom/qcom_scm.c
+> +++ b/drivers/firmware/qcom/qcom_scm.c
+> @@ -1525,37 +1525,27 @@ int qcom_scm_qseecom_app_get_id(const char *app_name, u32 *app_id)
+>   	unsigned long app_name_len = strlen(app_name);
+>   	struct qcom_scm_desc desc = {};
+>   	struct qcom_scm_qseecom_resp res = {};
+> -	dma_addr_t name_buf_phys;
+> -	char *name_buf;
+>   	int status;
 >   
->   QUALCOMM QSEECOM UEFISECAPP DRIVER
->   M:	Maximilian Luz <luzmaximilian@gmail.com>
->   L:	linux-arm-msm@vger.kernel.org
->   S:	Maintained
-> -F:	drivers/firmware/qcom_qseecom_uefisecapp.c
-> +F:	drivers/firmware/qcom/qcom_qseecom_uefisecapp.c
+>   	if (app_name_len >= name_buf_size)
+>   		return -EINVAL;
 >   
->   QUALCOMM RMNET DRIVER
->   M:	Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>
-> diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
-> index 817e011a8945..74d00b0c83fe 100644
-> --- a/drivers/firmware/Kconfig
-> +++ b/drivers/firmware/Kconfig
-> @@ -188,53 +188,6 @@ config MTK_ADSP_IPC
->   	  ADSP exists on some mtk processors.
->   	  Client might use shared memory to exchange information with ADSP.
+> -	name_buf = kzalloc(name_buf_size, GFP_KERNEL);
+> +	char *name_buf __free(qcom_tzmem) = qcom_tzmem_alloc(__scm->mempool,
+> +							     name_buf_size,
+> +							     GFP_KERNEL);
+>   	if (!name_buf)
+>   		return -ENOMEM;
 >   
-> -config QCOM_SCM
-> -	tristate
+>   	memcpy(name_buf, app_name, app_name_len);
+>   
+> -	name_buf_phys = dma_map_single(__scm->dev, name_buf, name_buf_size, DMA_TO_DEVICE);
+> -	status = dma_mapping_error(__scm->dev, name_buf_phys);
+> -	if (status) {
+> -		kfree(name_buf);
+> -		dev_err(__scm->dev, "qseecom: failed to map dma address\n");
+> -		return status;
+> -	}
 > -
-> -config QCOM_SCM_DOWNLOAD_MODE_DEFAULT
-> -	bool "Qualcomm download mode enabled by default"
-> -	depends on QCOM_SCM
-> -	help
-> -	  A device with "download mode" enabled will upon an unexpected
-> -	  warm-restart enter a special debug mode that allows the user to
-> -	  "download" memory content over USB for offline postmortem analysis.
-> -	  The feature can be enabled/disabled on the kernel command line.
-> -
-> -	  Say Y here to enable "download mode" by default.
-> -
-> -config QCOM_QSEECOM
-> -	bool "Qualcomm QSEECOM interface driver"
-> -	depends on QCOM_SCM=y
-> -	select AUXILIARY_BUS
-> -	help
-> -	  Various Qualcomm SoCs have a Secure Execution Environment (SEE) running
-> -	  in the Trust Zone. This module provides an interface to that via the
-> -	  QSEECOM mechanism, using SCM calls.
-> -
-> -	  The QSEECOM interface allows, among other things, access to applications
-> -	  running in the SEE. An example of such an application is 'uefisecapp',
-> -	  which is required to access UEFI variables on certain systems. If
-> -	  selected, the interface will also attempt to detect and register client
-> -	  devices for supported applications.
-> -
-> -	  Select Y here to enable the QSEECOM interface driver.
-> -
-> -config QCOM_QSEECOM_UEFISECAPP
-> -	bool "Qualcomm SEE UEFI Secure App client driver"
-> -	depends on QCOM_QSEECOM
-> -	depends on EFI
-> -	help
-> -	  Various Qualcomm SoCs do not allow direct access to EFI variables.
-> -	  Instead, these need to be accessed via the UEFI Secure Application
-> -	  (uefisecapp), residing in the Secure Execution Environment (SEE).
-> -
-> -	  This module provides a client driver for uefisecapp, installing efivar
-> -	  operations to allow the kernel accessing EFI variables, and via that also
-> -	  provide user-space with access to EFI variables via efivarfs.
-> -
-> -	  Select Y here to provide access to EFI variables on the aforementioned
-> -	  platforms.
-> -
->   config SYSFB
->   	bool
->   	select BOOT_VESA_SUPPORT
-> @@ -320,6 +273,7 @@ source "drivers/firmware/efi/Kconfig"
->   source "drivers/firmware/imx/Kconfig"
->   source "drivers/firmware/meson/Kconfig"
->   source "drivers/firmware/psci/Kconfig"
-> +source "drivers/firmware/qcom/Kconfig"
->   source "drivers/firmware/smccc/Kconfig"
->   source "drivers/firmware/tegra/Kconfig"
->   source "drivers/firmware/xilinx/Kconfig"
-> diff --git a/drivers/firmware/Makefile b/drivers/firmware/Makefile
-> index cb18fd8882dc..5f9dab82e1a0 100644
-> --- a/drivers/firmware/Makefile
-> +++ b/drivers/firmware/Makefile
-> @@ -17,10 +17,6 @@ obj-$(CONFIG_FIRMWARE_MEMMAP)	+= memmap.o
->   obj-$(CONFIG_MTK_ADSP_IPC)	+= mtk-adsp-ipc.o
->   obj-$(CONFIG_RASPBERRYPI_FIRMWARE) += raspberrypi.o
->   obj-$(CONFIG_FW_CFG_SYSFS)	+= qemu_fw_cfg.o
-> -obj-$(CONFIG_QCOM_SCM)		+= qcom-scm.o
-> -qcom-scm-objs += qcom_scm.o qcom_scm-smc.o qcom_scm-legacy.o
-> -obj-$(CONFIG_QCOM_QSEECOM)	+= qcom_qseecom.o
-> -obj-$(CONFIG_QCOM_QSEECOM_UEFISECAPP) += qcom_qseecom_uefisecapp.o
->   obj-$(CONFIG_SYSFB)		+= sysfb.o
->   obj-$(CONFIG_SYSFB_SIMPLEFB)	+= sysfb_simplefb.o
->   obj-$(CONFIG_TI_SCI_PROTOCOL)	+= ti_sci.o
-> @@ -36,6 +32,7 @@ obj-$(CONFIG_GOOGLE_FIRMWARE)	+= google/
->   obj-y				+= efi/
->   obj-y				+= imx/
->   obj-y				+= psci/
-> +obj-y				+= qcom/
->   obj-y				+= smccc/
->   obj-y				+= tegra/
->   obj-y				+= xilinx/
-> diff --git a/drivers/firmware/qcom/Kconfig b/drivers/firmware/qcom/Kconfig
-> new file mode 100644
-> index 000000000000..3f05d9854ddf
-> --- /dev/null
-> +++ b/drivers/firmware/qcom/Kconfig
-> @@ -0,0 +1,56 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
-> +#
-> +# For a description of the syntax of this configuration file,
-> +# see Documentation/kbuild/kconfig-language.rst.
-> +#
-> +
-> +menu "Qualcomm firmware drivers"
-> +
-> +config QCOM_SCM
-> +	tristate
-> +
-> +config QCOM_SCM_DOWNLOAD_MODE_DEFAULT
-> +	bool "Qualcomm download mode enabled by default"
-> +	depends on QCOM_SCM
-> +	help
-> +	  A device with "download mode" enabled will upon an unexpected
-> +	  warm-restart enter a special debug mode that allows the user to
-> +	  "download" memory content over USB for offline postmortem analysis.
-> +	  The feature can be enabled/disabled on the kernel command line.
-> +
-> +	  Say Y here to enable "download mode" by default.
-> +
-> +config QCOM_QSEECOM
-> +	bool "Qualcomm QSEECOM interface driver"
-> +	depends on QCOM_SCM=y
-> +	select AUXILIARY_BUS
-> +	help
-> +	  Various Qualcomm SoCs have a Secure Execution Environment (SEE) running
-> +	  in the Trust Zone. This module provides an interface to that via the
-> +	  QSEECOM mechanism, using SCM calls.
-> +
-> +	  The QSEECOM interface allows, among other things, access to applications
-> +	  running in the SEE. An example of such an application is 'uefisecapp',
-> +	  which is required to access UEFI variables on certain systems. If
-> +	  selected, the interface will also attempt to detect and register client
-> +	  devices for supported applications.
-> +
-> +	  Select Y here to enable the QSEECOM interface driver.
-> +
-> +config QCOM_QSEECOM_UEFISECAPP
-> +	bool "Qualcomm SEE UEFI Secure App client driver"
-> +	depends on QCOM_QSEECOM
-> +	depends on EFI
-> +	help
-> +	  Various Qualcomm SoCs do not allow direct access to EFI variables.
-> +	  Instead, these need to be accessed via the UEFI Secure Application
-> +	  (uefisecapp), residing in the Secure Execution Environment (SEE).
-> +
-> +	  This module provides a client driver for uefisecapp, installing efivar
-> +	  operations to allow the kernel accessing EFI variables, and via that also
-> +	  provide user-space with access to EFI variables via efivarfs.
-> +
-> +	  Select Y here to provide access to EFI variables on the aforementioned
-> +	  platforms.
-> +
-> +endmenu
-> diff --git a/drivers/firmware/qcom/Makefile b/drivers/firmware/qcom/Makefile
-> new file mode 100644
-> index 000000000000..c9f12ee8224a
-> --- /dev/null
-> +++ b/drivers/firmware/qcom/Makefile
-> @@ -0,0 +1,9 @@
-> +# SPDX-License-Identifier: GPL-2.0
-> +#
-> +# Makefile for the linux kernel.
-> +#
-> +
-> +obj-$(CONFIG_QCOM_SCM)		+= qcom-scm.o
-> +qcom-scm-objs += qcom_scm.o qcom_scm-smc.o qcom_scm-legacy.o
-> +obj-$(CONFIG_QCOM_QSEECOM)	+= qcom_qseecom.o
-> +obj-$(CONFIG_QCOM_QSEECOM_UEFISECAPP) += qcom_qseecom_uefisecapp.o
-> diff --git a/drivers/firmware/qcom_qseecom.c b/drivers/firmware/qcom/qcom_qseecom.c
-> similarity index 100%
-> rename from drivers/firmware/qcom_qseecom.c
-> rename to drivers/firmware/qcom/qcom_qseecom.c
-> diff --git a/drivers/firmware/qcom_qseecom_uefisecapp.c b/drivers/firmware/qcom/qcom_qseecom_uefisecapp.c
-> similarity index 100%
-> rename from drivers/firmware/qcom_qseecom_uefisecapp.c
-> rename to drivers/firmware/qcom/qcom_qseecom_uefisecapp.c
-> diff --git a/drivers/firmware/qcom_scm-legacy.c b/drivers/firmware/qcom/qcom_scm-legacy.c
-> similarity index 100%
-> rename from drivers/firmware/qcom_scm-legacy.c
-> rename to drivers/firmware/qcom/qcom_scm-legacy.c
-> diff --git a/drivers/firmware/qcom_scm-smc.c b/drivers/firmware/qcom/qcom_scm-smc.c
-> similarity index 100%
-> rename from drivers/firmware/qcom_scm-smc.c
-> rename to drivers/firmware/qcom/qcom_scm-smc.c
-> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-> similarity index 100%
-> rename from drivers/firmware/qcom_scm.c
-> rename to drivers/firmware/qcom/qcom_scm.c
-> diff --git a/drivers/firmware/qcom_scm.h b/drivers/firmware/qcom/qcom_scm.h
-> similarity index 100%
-> rename from drivers/firmware/qcom_scm.h
-> rename to drivers/firmware/qcom/qcom_scm.h
+>   	desc.owner = QSEECOM_TZ_OWNER_QSEE_OS;
+>   	desc.svc = QSEECOM_TZ_SVC_APP_MGR;
+>   	desc.cmd = QSEECOM_TZ_CMD_APP_LOOKUP;
+>   	desc.arginfo = QCOM_SCM_ARGS(2, QCOM_SCM_RW, QCOM_SCM_VAL);
+> -	desc.args[0] = name_buf_phys;
+> +	desc.args[0] = qcom_tzmem_to_phys(name_buf);
+>   	desc.args[1] = app_name_len;
+>   
+>   	status = qcom_scm_qseecom_call(&desc, &res);
+> -	dma_unmap_single(__scm->dev, name_buf_phys, name_buf_size, DMA_TO_DEVICE);
+> -	kfree(name_buf);
+>   
+>   	if (status)
+>   		return status;
