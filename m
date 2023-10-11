@@ -2,72 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 61C1F7C5B7E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 20:44:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C1ACC7C5D21
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 20:55:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233061AbjJKSoo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Oct 2023 14:44:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43328 "EHLO
+        id S233202AbjJKSzt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Oct 2023 14:55:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232496AbjJKSoo (ORCPT
+        with ESMTP id S233213AbjJKSzs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Oct 2023 14:44:44 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9772B90;
-        Wed, 11 Oct 2023 11:44:42 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30B94C433C7;
-        Wed, 11 Oct 2023 18:44:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1697049882;
-        bh=ylZaV++7ZjN3KRW2Z9BOD+W2D0KBhJmDzQo5TNXOUz0=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=JW9UJMdnJP6H8H/q8Dj1f5eVyX+Y+4ZQfxQbAe0rcC8eVXFG84HbGc9UF6eOB0JO6
-         DxwHkAqyYPf1GCL2P3UCIwfwUVxBOt1Zvpawrjc2Bn1EZB79gNUunOYNO3tQX/9eCE
-         4Nae+4bymCM1AVhRPs1zFZ8qKs7JvoT7pwmb2Sm/TP1HTCo4DrUALjfLL9/VS3a3gy
-         XQS3qg76/K5QV93d8anhBnA7fQCbsJSlbKkyAhN2yZmoVo+MCH8LmkYEJ1wOmyYoMn
-         mbKPUPWKEAPs6e08lgsJXvrP1VpM65JzaYajRbzvHKrEJrhAjKHhs5rqQpzrCWLKi9
-         N6Y0RraE2U9tg==
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2c16757987fso1592841fa.3;
-        Wed, 11 Oct 2023 11:44:42 -0700 (PDT)
-X-Gm-Message-State: AOJu0YypKuPdXxLyCxRL4HGUlbWj+7ZplFRNKn1kCHTPEERQy+7XwkNU
-        YjEhlZ+ldOQrttdlcnLrBbgPtHviFFH3leYPtg==
-X-Google-Smtp-Source: AGHT+IHfqb7aFDsjOrYahLvU3eH/O1zPin1Cajj+w1qOGsVcidBGVG/Uikeb8o7GgWW95EG5nLlMEsWEH3Q6ghDENck=
-X-Received: by 2002:a05:6512:e99:b0:500:86b4:5282 with SMTP id
- bi25-20020a0565120e9900b0050086b45282mr21166230lfb.34.1697049880370; Wed, 11
- Oct 2023 11:44:40 -0700 (PDT)
+        Wed, 11 Oct 2023 14:55:48 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C885A4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 11:55:45 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-405361bb9f7so2328335e9.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 11:55:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1697050543; x=1697655343; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=b18JSG/gE5pF19poGgo0WtqeEPHBkEaz7XetM6ld2MU=;
+        b=da1gYhmBNeZo4doTEz/K/NLUTpZV6F8kDBypaxeqTBOMSAfLpHYSNEbKalzxRaC7n7
+         mbFaevGxxwGcBX24/M9YXh7VBUEY8M9ZyFptPMjcf5yoOTXyukwfmRN04hmBPcEXfbXJ
+         8d5GcM1hpvx7pbNK4gjuj+AsRfSTakKwxEbUSSFq0Mf/7DuoMbb6fAf5Ql3kogyQzhJH
+         pyeSO4Krne/qekNHSsltQSrK0z2LWvM41cvTbSjS9sKkyMVJaITeBY3btRkoi1UjB8K6
+         Scv/yUZh1y/epGNjqAxl+l749QssQiIVMcTrBUHn2nCkWtSthxFUwZyikqdr1OLrjEK8
+         ymPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697050543; x=1697655343;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=b18JSG/gE5pF19poGgo0WtqeEPHBkEaz7XetM6ld2MU=;
+        b=S7CYbEjWOmALAqVblU+zK858Xf9+vm9QFybh6pSIN28MKDj1RSviamwu2d2hU19Dnu
+         FoWFluMlQaln2Fc9FKSvLjzdKYSl0loF48Sp/sc4yzrb0c1J7idYYiNicoA5dxhmrn8b
+         Ka+bxKfgCLeqp/TCVnHXivbTJRzGoMmk6Z7Eqj5QUeJBaZnX/nYBp52nhgnUWNxHCPY2
+         sTXzUTzTcLfNvafk/h7uGZRGEoueYGvTIY/vmeqdRNV3W2qOUF5QUc/mT0te7LXlMT/0
+         dfQWVekH3ppqgX629lPyLku9aMkkEfpTblNhFeNAeVNusO+XSqmpDuSYWfzaFNpwYShH
+         ygkA==
+X-Gm-Message-State: AOJu0YxSIUC2KG8BbQZ+stIaUS2XlT0C0e7+GGfekfS3QPA7cObG6ePp
+        VqYiRGLBAg79Urqd768cRrLVHg==
+X-Google-Smtp-Source: AGHT+IGBwWbpnBz8UGPlE37JYSwSN5Vabh/delGPT+w/bUyZq/8/UYqL1fPkOEbt+Tg8dAb5Ov5Pzw==
+X-Received: by 2002:a05:600c:3ba1:b0:406:872d:7725 with SMTP id n33-20020a05600c3ba100b00406872d7725mr18712930wms.1.1697050543639;
+        Wed, 11 Oct 2023 11:55:43 -0700 (PDT)
+Received: from x13s-linux.nxsw.local ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id n22-20020a7bcbd6000000b004060f0a0fdbsm19928294wmi.41.2023.10.11.11.55.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Oct 2023 11:55:43 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        dmitry.baryshkov@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        jonathan@marek.ca, quic_tdas@quicinc.com,
+        vladimir.zapolskiy@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bryan.odonoghue@linaro.org
+Subject: [PATCH v3 0/4] Add sc8280xp CCI and CAMSS core dtsi
+Date:   Wed, 11 Oct 2023 19:55:36 +0100
+Message-Id: <20231011185540.2282975-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-References: <20230827115033.935089-1-dmitry.baryshkov@linaro.org>
- <20230827115033.935089-9-dmitry.baryshkov@linaro.org> <20231011154935.GA785564-robh@kernel.org>
- <CAA8EJpqf4Q7wh657==C45Ka8YmmyopkCQnyEFcXkaoRwnCRZLQ@mail.gmail.com>
-In-Reply-To: <CAA8EJpqf4Q7wh657==C45Ka8YmmyopkCQnyEFcXkaoRwnCRZLQ@mail.gmail.com>
-From:   Rob Herring <robh@kernel.org>
-Date:   Wed, 11 Oct 2023 13:44:28 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqKwWyoPdt3C0FdsgN087xK0jGyp3PVgiCaETZK9FX2JdQ@mail.gmail.com>
-Message-ID: <CAL_JsqKwWyoPdt3C0FdsgN087xK0jGyp3PVgiCaETZK9FX2JdQ@mail.gmail.com>
-Subject: Re: [PATCH v4 08/23] soc: qcom: Add driver for Qualcomm Krait L2
- cache scaling
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Stephan Gerhold <stephan@gerhold.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,74 +75,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 11, 2023 at 1:20=E2=80=AFPM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Wed, 11 Oct 2023 at 18:49, Rob Herring <robh@kernel.org> wrote:
-> >
-> > On Sun, Aug 27, 2023 at 02:50:18PM +0300, Dmitry Baryshkov wrote:
-> > > Add a simple driver that handles scaling of L2 frequency and voltages=
-.
-> > >
-> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > ---
-> >
-> > [...]
-> >
-> > > +static const struct of_device_id krait_l2_match_table[] =3D {
-> > > +     { .compatible =3D "qcom,krait-l2-cache" },
-> > > +     {}
-> > > +};
-> > > +MODULE_DEVICE_TABLE(of, krait_l2_match_table);
-> > > +
-> > > +static struct platform_driver krait_l2_driver =3D {
-> > > +     .probe =3D krait_l2_probe,
-> > > +     .remove =3D krait_l2_remove,
-> > > +     .driver =3D {
-> > > +             .name =3D "qcom-krait-l2",
-> > > +             .of_match_table =3D krait_l2_match_table,
-> > > +             .sync_state =3D icc_sync_state,
-> > > +     },
-> > > +};
-> >
-> > As I mentioned in the other thread, cache devices already have a struct
-> > device. Specifically, they have a struct device (no subclass) on the
-> > cpu_subsys bus type. So there should be no need for a platform device
-> > and second struct device.
-> >
-> > See drivers/acpi/processor_driver.c for an example. Or grep any use of
-> > "cpu_subsys".
->
-> Most likely you mean drivers/base/cacheinfo.c. I saw this code, I
-> don't think it makes a good fit here. The cacheinfo devices provide
-> information only, they are not tied to DT nodes in any way.
+V3:
+- Expands description of ports to clarify mapping of port to CSIPHY
+  Rob
 
-They are completely tied to DT nodes beyond L1.
+- Adds the dependency link into the commit log of patch #3 - bod
 
->  cpu_subsys
-> doesn't provide a way to match drivers with subsys devices in the
-> non-ACPI case, etc.
+V2:
+- Drops specific sc8280xp-cci compat - Konrad
+- Drops minItems where maxItems are equal - Krzysztof
+- Uses suggested description for CAMSS - Krzysztof
+- Leaves indentation of ports/properties - Rob
+- NoISP. Supports bayer encoded upstream currently only - Krzysztof
+- Endpoint. Adds an example endpoint - Krzysztof
 
-That's a 2 line addition to add DT support.
+Link next:
+https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-23-10-10-sc8280xp-camss-v2
 
-> Moreover, the whole cacheinfo subsys is
-> non-existing on arm32, there is no cacheinfo implementation there,
-> thanks to the overall variety of architectures.
+V1:
+The sc8280xp provides a standard Camera Control Interface and Camera
+SubSystem hardware interface similar to antecedent parts sdm845 and
+sm8250.
 
-Humm, well I don't think it would be too hard to add, but I won't ask
-you to do that. All the info comes from DT or can come from DT, so it
-should be just a matter of arm32 calling the cacheinfo init.
+Per the target segments for this part, sc8280xp has more of everything.
+More CCI, VFE, CSIPHY and therefore more interrupt lines and clocks to
+declare.
 
-> Thus said, I don't think cacheinfo makes a good fit for the case of
-> scaling L2 cache.
+CCI x 4
+CSIPHY x 4
+VFE x 4
+VFE Lite x 4
+CSID x 4
 
-I still disagree. It's not really cacheinfo. That is what creates the
-devices, but it's the cpu_subsys bus type. Why do you care that it is
-platform bus vs. cpu_subsys?
+Bootable 6.5.y x13s:
+https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/lenovo-x13s-linux-6.5.y
 
-On a separate issue, I'd propose you move this to drivers/cache/
-instead of the dumping ground that is drivers/soc/. It's nothing more
-than a location to collect cache related drivers ATM because we seem
-to be accumulating more of them.
+Linux next:
+https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-23-10-06-sc8280xp-camss
 
-Rob
+This patch depends-on:
+https://lore.kernel.org/lkml/20231004161853.86382-2-bryan.odonoghue@linaro.org/T/
+
+Bryan O'Donoghue (4):
+  arm64: dts: qcom: sc8280xp: Add in CAMCC for sc8280xp
+  arm64: dts: qcom: sc8280xp: camss: Add CCI definitions
+  media: dt-bindings: media: camss: Add qcom,sc8280xp-camss binding
+  arm64: dts: qcom: sc8280xp: camss: Add CAMSS block definition
+
+ .../bindings/media/qcom,sc8280xp-camss.yaml   | 582 ++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi        | 624 ++++++++++++++++++
+ 2 files changed, 1206 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
+
+-- 
+2.40.1
+
