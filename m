@@ -2,99 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 382E37C47CA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 04:31:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE16D7C483A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 05:15:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344777AbjJKCbL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Oct 2023 22:31:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46192 "EHLO
+        id S1344935AbjJKDPH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Oct 2023 23:15:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343759AbjJKCbL (ORCPT
+        with ESMTP id S1344915AbjJKDPG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Oct 2023 22:31:11 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88AAD92;
-        Tue, 10 Oct 2023 19:31:07 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 598FBC433C8;
-        Wed, 11 Oct 2023 02:31:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1696991467;
-        bh=2kt6GpEYEc8TWPUIQauHW2cC+U9TC95GtdTD5AMuWXM=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=sxdTmUcfddQMbjHtHzygFI7iHhQppaRc61TRTTgLg79FG3XdyZLUmkIhmx2sDGmrE
-         bI6yKgT1rXtFEa1tH31L0zuSO6PN7iQDP7v3lwOuPXeJmQNycI4APPH69ReNufSXNq
-         BhRyZeWo8EP11u4ndChfI0HpAsxzYtUevHR7wzzrg+hL7CrugQrSq9/UICShEK82W3
-         kbPc4w5w5bG85yIXh4KZQ4x1hQMv1el5VFbuJA5FnSMZQXEitnoLcoZz7PTZ1cTtFf
-         y0+WECKdKwL4wP/rJYK4sAi9AQOac2YvTFr6rKCNQkxWV0d/9J/6YLFv0fiEX5Qrie
-         ptfsmbNPUWo6Q==
-Received: (nullmailer pid 2560993 invoked by uid 1000);
-        Wed, 11 Oct 2023 02:31:04 -0000
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+        Tue, 10 Oct 2023 23:15:06 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1235691;
+        Tue, 10 Oct 2023 20:15:05 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39B1HL0b013325;
+        Wed, 11 Oct 2023 03:14:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=HtORdbKx2SBUhvrj4Xa1+ldf1twR5jrAv/+9dZMZjTw=;
+ b=ByvjL0kueDA5AAeCnE5GUamw9WVquI29mWKg5b4JWGQn3huZ15etqxN/P46p/hmNVIOK
+ Q4W/VKWvIccl7YX+56ublyBTgv6sfytFAeYgeW1D8jHKI4k8YCBVIvgrGV6EqxehqoaG
+ w/c5O1EqY9mVtFpqeot8svh6YfWKvoHIrz/9bbLqvkE0OkzIBKwCPRI+x9VQjgL3XwQM
+ dXqKBZzOG9SfFsBKg9L8bRnEAy4x6XZsBpSW9t8GDUm1S5ZDNi8XA4N+Z4Ch5Mtmmo5W
+ taZ3gF6q49f8LCVD4E0Nkx/u4DsXQrchmF3dXPwnW7hrWN4ZMQY6pqDfuU+kxRIqi8bz JA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tna9c92wq-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 11 Oct 2023 03:14:50 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39B3EnC2031795
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 11 Oct 2023 03:14:49 GMT
+Received: from tengfan2-gv.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.36; Tue, 10 Oct 2023 20:14:41 -0700
+From:   Tengfei Fan <quic_tengfan@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <geert+renesas@glider.be>,
+        <arnd@arndb.de>, <neil.armstrong@linaro.org>,
+        <nfraprado@collabora.com>, <u-kumar1@ti.com>, <peng.fa@nxp.com>,
+        <quic_tsoni@quicinc.com>, <quic_shashim@quicinc.com>,
+        <quic_kaushalk@quicinc.com>, <quic_tdas@quicinc.com>,
+        <quic_tingweiz@quicinc.com>, <quic_aiquny@quicinc.com>,
+        <kernel@quicinc.com>, Tengfei Fan <quic_tengfan@quicinc.com>
+Subject: [PATCH v5 RESEND 0/7] soc: qcom: Add uart console support for SM4450
+Date:   Wed, 11 Oct 2023 11:14:08 +0800
+Message-ID: <20231011031415.3360-1-quic_tengfan@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Wesley Cheng <quic_wcheng@quicinc.com>
-Cc:     konrad.dybcio@linaro.org, agross@kernel.org,
-        devicetree@vger.kernel.org, bgoswami@quicinc.com,
-        broonie@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        lgirdwood@gmail.com, gregkh@linuxfoundation.org,
-        andersson@kernel.org, conor+dt@kernel.org,
-        linux-usb@vger.kernel.org, mathias.nyman@intel.com, perex@perex.cz,
-        tiwai@suse.com, robh+dt@kernel.org, Thinh.Nguyen@synopsys.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        alsa-devel@alsa-project.org, srinivas.kandagatla@linaro.org
-In-Reply-To: <20231011002146.1821-15-quic_wcheng@quicinc.com>
-References: <20231011002146.1821-1-quic_wcheng@quicinc.com>
- <20231011002146.1821-15-quic_wcheng@quicinc.com>
-Message-Id: <169699146356.2560906.8654324582682669209.robh@kernel.org>
-Subject: Re: [PATCH v8 14/34] dt-bindings: usb: dwc3: Limit
- num-hc-interrupters definition
-Date:   Tue, 10 Oct 2023 21:31:04 -0500
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: B5AsBB3mcQvFwLpphjKJtNOz0tBrb-ay
+X-Proofpoint-ORIG-GUID: B5AsBB3mcQvFwLpphjKJtNOz0tBrb-ay
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-10_19,2023-10-10_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ bulkscore=0 spamscore=0 malwarescore=0 mlxscore=0 phishscore=0
+ lowpriorityscore=0 impostorscore=0 clxscore=1011 mlxlogscore=565
+ suspectscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2309180000 definitions=main-2310110027
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This series add base description of UART, TLMM, RPMHCC, GCC and RPMh PD
+nodes which helps SM4450 boot to shell with console on boards with this
+SoC.
 
-On Tue, 10 Oct 2023 17:21:26 -0700, Wesley Cheng wrote:
-> Ensure that the number of XHCI secondary interrupters defined for a DWC3
-> based implementation is limited to 8.  XHCI in general can potentially
-> support up to 1024 interrupters.
-> 
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/usb/snps,dwc3.yaml | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
+Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+---
+Resend this patch series for get more review.
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+This patch series depends on below patch series:
+"[PATCH v2 0/4] clk: qcom: Add support for GCC and RPMHCC on SM4450"
+https://lore.kernel.org/linux-arm-msm/20230909123431.1725728-1-quic_ajipan@quicinc.com/
+"[PATCH v4 0/2] pinctl: qcom: Add SM4450 pinctrl driver"
+https://lore.kernel.org/linux-arm-msm/20230920082102.5744-1-quic_tengfan@quicinc.com/
 
-yamllint warnings/errors:
+v4 -> v5:
+  - separate reserved gpios setting from enable UART console patch
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/usb/snps,dwc3.yaml: num-hc-interrupters: missing type definition
+v3 -> v4:
+  - adjustment the sequence of property and property-names
+  - update 0 to 0x0 for reg params
+  - remove unrelated change
+  - separate SoC change and board change
 
-doc reference errors (make refcheckdocs):
+v2 -> v3:
+  - fix dtbs_check warning
+  - remove interconnect, iommu, scm and tcsr related code
+  - rearrangement dt node
+  - remove smmu, scm and tcsr related documentation update
+  - enable CONFIG_SM_GCC_4450 in defconfig related patch
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20231011002146.1821-15-quic_wcheng@quicinc.com
+v1 -> v2:
+  - setting "qcom,rpmh-rsc" compatible to the first property
+  - keep order by unit address
+  - move tlmm node into soc node
+  - update arm,smmu.yaml
+  - add enable pinctrl and interconnect defconfig patches
+  - remove blank line
+  - redo dtbs_check check
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
+previous discussion here:
+[1] v4: https://lore.kernel.org/linux-arm-msm/20230922081026.2799-1-quic_tengfan@quicinc.com
+[2] v3: https://lore.kernel.org/linux-arm-msm/20230920082102.5744-1-quic_tengfan@quicinc.com
+[3] v2: https://lore.kernel.org/linux-arm-msm/20230915021509.25773-1-quic_tengfan@quicinc.com
+[4] v1: https://lore.kernel.org/linux-arm-msm/20230908065847.28382-1-quic_tengfan@quicinc.com
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+Ajit Pandey (1):
+  arm64: dts: qcom: sm4450: Add apps_rsc and cmd_db node
 
-pip3 install dtschema --upgrade
+Tengfei Fan (6):
+  dt-bindings: interrupt-controller: qcom,pdc: document qcom,sm4450-pdc
+  arm64: dts: qcom: sm4450: Add RPMH and Global clock
+  arm64: dts: qcom: add uart console support for SM4450
+  arm64: dts: qcom: sm4450-qrd: add QRD4450 uart support
+  arm64: dts: qcom: sm4450-qrd: mark QRD4450 reserved gpios
+  arm64: defconfig: enable clock controller and pinctrl
 
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+ .../interrupt-controller/qcom,pdc.yaml        |   1 +
+ arch/arm64/boot/dts/qcom/sm4450-qrd.dts       |  19 +++-
+ arch/arm64/boot/dts/qcom/sm4450.dtsi          | 107 ++++++++++++++++++
+ arch/arm64/configs/defconfig                  |   2 +
+ 4 files changed, 127 insertions(+), 2 deletions(-)
+
+
+base-commit: 940fcc189c51032dd0282cbee4497542c982ac59
+-- 
+2.17.1
 
