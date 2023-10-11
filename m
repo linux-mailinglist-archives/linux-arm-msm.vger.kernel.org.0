@@ -2,207 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 07CB47C52CE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 14:00:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D8B157C53D0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 14:26:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234864AbjJKMAx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Oct 2023 08:00:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54668 "EHLO
+        id S234931AbjJKM0S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Oct 2023 08:26:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346226AbjJKMAs (ORCPT
+        with ESMTP id S234921AbjJKM0H (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Oct 2023 08:00:48 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35E619E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 05:00:44 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-53dd3f169d8so1161837a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 05:00:44 -0700 (PDT)
+        Wed, 11 Oct 2023 08:26:07 -0400
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 306A5E7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 05:26:04 -0700 (PDT)
+Received: by mail-pf1-x431.google.com with SMTP id d2e1a72fcca58-692b2bdfce9so6056119b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 05:26:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697025642; x=1697630442; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=aVTN0BqqtO5MKlfxI7sXoH95j77MBJ0QiNgQ07twsNg=;
-        b=juCqbqQItQ0Mvjrv5Ps0hBNTLHa6owH9cKZzz8o5R7WO8hLuj2aLKWr5zCepXUxi2h
-         eMBi47RNxYZq+FeZ38rVJHtBBJ/RDVRdZIV5qXHJU4n1CDdyUpNnYQaRhzUf5ShJ+VlR
-         tJL0G7iYlsC2dzQyA27+8FGO/4mUV+iQGgSn0GHjmYoQpkuT/Gz3ccgDwGpm6C3+bz02
-         shrR5+FuqsSc7L123q0ucyPxZ9v5m/du25OeG8PbFwsW/VkbUq6pJFbQ7Sq7ilhfgv8D
-         /ho8iV8NMQARmP/wxwOEEmFKQDO3GAV+yV+JcmP4OUwzFwwYpqmfj91wpXhKvdBYT3Qh
-         1tWw==
+        d=linaro.org; s=google; t=1697027163; x=1697631963; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=uv/rlRYitJnK0DrpOEwxamLSxws/97bJsaf1Cey2fBE=;
+        b=ypOpv9MTQSM/x9I87a53UyCxwB6tAdg1RxsJvh5M8Dd1Hi7sWLmIrJrpCv/YaFScXg
+         J/kwzjFtI+cPGnFaNP1TYRA/r8315yK4SfIAVxhrYP1oqXarshmmSpNcPFKYpm+0Mozz
+         1q12WiXOG5YxhL+H30kJWg1d8PXiXVjlIoAQFxALMWKKmc+t8ULLpBqHZlFUmVOd2TuA
+         FJvTUETUrzWwUddY/aLL7jOcGcvg7dEikmfkQv3W1GGFkB8i+LaBZd4O13O0Lb97ZvBk
+         CnKYgjfzQ6CQndPr59kdSs4U+34WxMuHrFUbx3TCHHZctcIWxbC6tiZskLfa0kXb1XrF
+         aqJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697025642; x=1697630442;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1697027163; x=1697631963;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=aVTN0BqqtO5MKlfxI7sXoH95j77MBJ0QiNgQ07twsNg=;
-        b=SQZ6oCrFY1veS2s5oL9DMG8FdoaJRgBdbZjDgFLNtnLzQWb0qHecCpUDQdta8def75
-         t7ke1lFDMwUrdVvSc1wLutqB3KPWZw6Y7Q3oh1HDD9AByFTLCMcVuZTVxdlnD1Nh+6tz
-         TJF1Lv6YHwX4HRA/6YEyXSZu27PPcPmw855xZIgnSbvy/hoFRlR/A3WplrBA7cXz8LA/
-         uDx8oxsMatdr9L1jhOFUuee307fKNeDqavGjqKlwtmSYQR92hwhJxPXu+m0VVpM9O5XQ
-         PyamDRaj5ztPvdo3zvM6fH8+67mihH67zspP0GJ7XvjRAI9IbbR11tw7MLMExCD6Z6mm
-         VUwA==
-X-Gm-Message-State: AOJu0Yw75Q834t2rnL+lV3ZT33Qh/Vq4HJi/EQqtXY7KwKfriR3fIMnJ
-        4Q2k3DRz2g8ksNhM/lfnSBn9kJTsu6qKEfXkjkeVUw==
-X-Google-Smtp-Source: AGHT+IFKnbdS+liyq5BOO9m8ERjMSQL8biVjydd35Z2zaMUPssKf5QQkaQtgJ+ughRnn6bk/oM/oer9yveoYwYchCJs=
-X-Received: by 2002:a17:906:19b:b0:9b6:e6ff:b20b with SMTP id
- 27-20020a170906019b00b009b6e6ffb20bmr17472854ejb.8.1697025642572; Wed, 11 Oct
- 2023 05:00:42 -0700 (PDT)
-MIME-Version: 1.0
-References: <1697023109-23671-1-git-send-email-quic_msarkar@quicinc.com>
- <1697023109-23671-3-git-send-email-quic_msarkar@quicinc.com>
- <CAA8EJpoLxeSvxjcyq1BMR9XuAffrxLmO-eaBYJ+Fhnb4zYmxUQ@mail.gmail.com> <6531b333-b978-6b97-5cb4-59562d775ac3@quicinc.com>
-In-Reply-To: <6531b333-b978-6b97-5cb4-59562d775ac3@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 11 Oct 2023 15:00:29 +0300
-Message-ID: <CAA8EJpoidaW8x3CAwNLWGcq2fz+x49kQWan2GXkgODUUypzKOQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] phy: qcom-qmp-pcie: add endpoint support for sa8775p
-To:     Mrinmay Sarkar <quic_msarkar@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org,
+        bh=uv/rlRYitJnK0DrpOEwxamLSxws/97bJsaf1Cey2fBE=;
+        b=E/yIW4uK6z2raAgJOYveAdWVZZaeTGaYkIGI0sJDuogVaPltuN0U5VBIQoIUpVr4J8
+         Gg/Lyst4l/oT7hRXGasDY1LDEEmixjT4ktR1oieVs+mlxSLcljtQU1CUlsCUMdyf/OVt
+         NqJPXrw3pSMTEs0ml0gUbp1O86kKju7YkGgOJ8bkUTarzOoBRmkr0/Mk+9Ho4ANQv14S
+         sHaTF7Zg175qHpi4EK9jMvhI2XZc329kZ1fluZIOz89umPWUxJZ4fuGrBDkVAX8Sh3n+
+         NRHdkP2y6hXUlrCuidk0wHHo2Fn7ZMjxHwfz1//Xel6ftHRFVWkVv3qME5peFgE//J8M
+         Y3bQ==
+X-Gm-Message-State: AOJu0YxrL4vOLHttmDoPbS0Xej8mnbcw8m/INCC0s1Ddt7EkoUW9lEA2
+        ttC3A9BadTuHSN1ZWv8fYKr+
+X-Google-Smtp-Source: AGHT+IHMgFvyP/ZNlgH1hd7LaMJ22CwW7IVsks4SREGW/bKUOs8S5+Yani2sRPyVQFYaval6GFImcQ==
+X-Received: by 2002:a05:6a00:2d23:b0:690:c5cf:91f4 with SMTP id fa35-20020a056a002d2300b00690c5cf91f4mr23872761pfb.12.1697027163274;
+        Wed, 11 Oct 2023 05:26:03 -0700 (PDT)
+Received: from localhost.localdomain ([120.138.12.180])
+        by smtp.gmail.com with ESMTPSA id a19-20020aa78653000000b0068fb8080939sm9953620pfo.65.2023.10.11.05.25.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Oct 2023 05:26:02 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
+        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
+        cw00.choi@samsung.com, andersson@kernel.org,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        konrad.dybcio@linaro.org, mani@kernel.org,
-        quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
-        quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
-        robh@kernel.org, quic_krichai@quicinc.com,
-        quic_vbadigan@quicinc.com, quic_parass@quicinc.com,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
-        linux-phy@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
+        jejb@linux.ibm.com, martin.petersen@oracle.com
+Cc:     alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
+        linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
+        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
+        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
+        bmasney@redhat.com, krzysztof.kozlowski@linaro.org,
+        linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v5 0/5] UFS: Add OPP support
+Date:   Wed, 11 Oct 2023 17:55:38 +0530
+Message-Id: <20231011122543.11922-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 11 Oct 2023 at 14:56, Mrinmay Sarkar <quic_msarkar@quicinc.com> wrote:
->
->
-> On 10/11/2023 5:06 PM, Dmitry Baryshkov wrote:
-> > On Wed, 11 Oct 2023 at 14:19, Mrinmay Sarkar <quic_msarkar@quicinc.com> wrote:
-> >> Add support for dual lane end point mode PHY found on sa8755p platform.
-> >>
-> >> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-> >> ---
-> >>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c   | 41 ++++++++++++++++++++++++++++++
-> >>   drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h |  2 ++
-> >>   2 files changed, 43 insertions(+)
-> > Two minor questions.
-> >
-> >> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> >> index a63ca74..962b4a1 100644
-> >> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> >> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> >> @@ -2147,6 +2147,38 @@ static const struct qmp_phy_init_tbl sa8775p_qmp_gen4x4_pcie_rc_serdes_alt_tbl[]
-> >>          QMP_PHY_INIT_CFG(QSERDES_V5_COM_CLK_SELECT, 0x34),
-> >>   };
-> >>
-> >> +static const struct qmp_phy_init_tbl sa8775p_qmp_gen4x2_pcie_ep_serdes_alt_tbl[] = {
-> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_BG_TIMER, 0x02),
-> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_SYS_CLK_CTRL, 0x07),
-> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_CP_CTRL_MODE0, 0x27),
-> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_CP_CTRL_MODE1, 0x0a),
-> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_RCTRL_MODE0, 0x17),
-> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_RCTRL_MODE1, 0x19),
-> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_CCTRL_MODE0, 0x00),
-> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_CCTRL_MODE1, 0x03),
-> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_SYSCLK_EN_SEL, 0x00),
-> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_INTEGLOOP_GAIN0_MODE0, 0xfb),
-> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_INTEGLOOP_GAIN1_MODE0, 0x01),
-> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_INTEGLOOP_GAIN0_MODE1, 0xfb),
-> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_INTEGLOOP_GAIN1_MODE1, 0x01),
-> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_CMN_MODE, 0x14),
-> > I should check whether we miss QSERDES_V5_COM_CMN_MODE in
-> > sm8450_qmp_gen4x2_pcie_ep_serdes_tbl, which is otherwise nearly
-> > identical.
-> > Also do you need to set QSERDES_V5_COM_CORE_CLK_EN here?
-> QSERDES_V5_COM_CORE_CLK_EN is common for both RC and EP
-> so we are using it in sa8775p_qmp_gen4x2_pcie_serdes_alt_tbl
->
-> -Mrinmay
-> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP1_MODE0, 0xff),
-> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP2_MODE0, 0x04),
-> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP1_MODE1, 0xff),
-> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP2_MODE1, 0x09),
-> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_DEC_START_MODE0, 0x19),
-> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_DEC_START_MODE1, 0x28),
-> >> +};
-> >> +
-> >> +static const struct qmp_phy_init_tbl sa8775p_qmp_gen4_pcie_ep_pcs_misc_tbl[] = {
-> >> +       QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_PCIE_OSC_DTCT_MODE2_CONFIG5, 0x08),
-> >> +};
-> > This is the same as sm8450_qmp_gen4x2_pcie_ep_pcs_misc_tbl
->
-> so you want me to use sm8450_qmp_gen4x2_pcie_ep_pcs_misc_tbl
-> instead of creating new one for sa8775?
+Hi,
 
-If you don't see a problem with that, yes.
+This series adds OPP (Operating Points) support to UFSHCD driver.
 
->
-> -Mrinmay
->
-> >> +
-> >> +static const struct qmp_phy_init_tbl sa8775p_qmp_gen4x2_pcie_ep_pcs_alt_tbl[] = {
-> >> +       QMP_PHY_INIT_CFG(QPHY_V5_PCS_INSIG_MX_CTRL7, 0x00),
-> >> +       QMP_PHY_INIT_CFG(QPHY_V5_PCS_INSIG_SW_CTRL7, 0x00),
-> >> +};
-> > Could you please confirm that these registers belong to the V5
-> > namespace rather than V5_20 one?
-> may I know difference between V5 and V5_20 namespace
-> can't we use V5 namespace here?
+Motivation behind adding OPP support is to scale both clocks as well as
+regulators/performance state dynamically. Currently, UFSHCD just scales
+clock frequency during runtime with the help of "freq-table-hz" property
+defined in devicetree. With the addition of OPP tables in devicetree (as
+done for Qcom SDM845 and SM8250 SoCs in this series) UFSHCD can now scale
+both clocks and performance state of power domain which helps in power
+saving.
 
-Register names are different, see existing v5 vs v5.20 and v4 vs v4.20
-headers. So, I'd kindly ask to use the appropriate namespace.
+For the addition of OPP support to UFSHCD, there are changes required to
+the OPP framework and devfreq drivers. The OPP framework changes are already
+merged and the devfreq change is added in this series.
 
->
-> -Mrinmay
-> >> +
-> >>   struct qmp_pcie_offsets {
-> >>          u16 serdes;
-> >>          u16 pcs;
-> >> @@ -3043,6 +3075,15 @@ static const struct qmp_phy_cfg sa8775p_qmp_gen4x2_pciephy_cfg = {
-> >>                  .pcs_misc_num   = ARRAY_SIZE(sa8775p_qmp_gen4_pcie_rc_pcs_misc_tbl),
-> >>          },
-> >>
-> >> +       .tbls_ep = &(const struct qmp_phy_cfg_tbls) {
-> >> +               .serdes         = sa8775p_qmp_gen4x2_pcie_ep_serdes_alt_tbl,
-> >> +               .serdes_num     = ARRAY_SIZE(sa8775p_qmp_gen4x2_pcie_ep_serdes_alt_tbl),
-> >> +               .pcs_misc       = sa8775p_qmp_gen4_pcie_ep_pcs_misc_tbl,
-> >> +               .pcs_misc_num   = ARRAY_SIZE(sa8775p_qmp_gen4_pcie_ep_pcs_misc_tbl),
-> >> +               .pcs            = sa8775p_qmp_gen4x2_pcie_ep_pcs_alt_tbl,
-> >> +               .pcs_num        = ARRAY_SIZE(sa8775p_qmp_gen4x2_pcie_ep_pcs_alt_tbl),
-> >> +       },
-> >> +
-> >>          .reset_list             = sdm845_pciephy_reset_l,
-> >>          .num_resets             = ARRAY_SIZE(sdm845_pciephy_reset_l),
-> >>          .vreg_list              = qmp_phy_vreg_l,
-> >> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h
-> >> index 36cc80b..6ee1c33 100644
-> >> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h
-> >> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h
-> >> @@ -11,6 +11,8 @@
-> >>   #define QPHY_V5_PCS_PCS_STATUS1                                0x014
-> >>   #define QPHY_V5_PCS_POWER_DOWN_CONTROL                 0x040
-> >>   #define QPHY_V5_PCS_START_CONTROL                      0x044
-> >> +#define QPHY_V5_PCS_INSIG_SW_CTRL7                     0x060
-> >> +#define QPHY_V5_PCS_INSIG_MX_CTRL7                     0x07c
-> >>   #define QPHY_V5_PCS_LOCK_DETECT_CONFIG1                        0x0c4
-> >>   #define QPHY_V5_PCS_LOCK_DETECT_CONFIG2                        0x0c8
-> >>   #define QPHY_V5_PCS_LOCK_DETECT_CONFIG3                        0x0cc
-> >> --
-> >> 2.7.4
-> >>
-> >
+Credits
+=======
 
+This series is a continuation of previous work by Krzysztof Kozlowski [1].
 
+Testing
+=======
+
+This series is tested on 96Boards RB3 (SDM845 SoC) and RB5 (SM8250 SoC)
+development boards.
+
+Merging Strategy
+================
+
+Since the devfreq patch got an Ack from the maintainer, either it can be merged
+to scsi tree with rest of the patches or merged separately through devfreq tree.
+
+Thanks,
+Mani
+
+[1] https://lore.kernel.org/all/20220513061347.46480-1-krzysztof.kozlowski@linaro.org/
+
+Changes in v5:
+
+* Dropped the devfreq patch since it got applied
+* Fixed the bindings issue reported by DT bot
+* Rebased on top of mkp/scsi/for-next
+
+Changes in v4:
+
+* Rebased on top of v6.6-rc3
+
+Changes in v3:
+
+* Rebased on top of linux-next/master tag: next-20230731
+* Dropped the already applied patches (dts, opp binding and framework)
+* Moved the interconnect patches to a separate series:
+  https://lore.kernel.org/linux-scsi/20230731145020.41262-1-manivannan.sadhasivam@linaro.org/
+* Moved ufshcd_opp_config_clks() API to ufshcd.c to fix the build failure
+  reported by Kbuild bot: https://lore.kernel.org/all/202307210542.KoLHRbU6-lkp@intel.com/
+* Collected Acks
+* v2: https://lore.kernel.org/all/20230720054100.9940-1-manivannan.sadhasivam@linaro.org/
+
+Changes in v2:
+
+* Added more description to the bindings patch 2/15
+* Fixed dev_pm_opp_put() usage in patch 10/15
+* Added a new patch for adding enums for UFS lanes 14/15
+* Changed the icc variables to mem_bw and cfg_bw and used
+  the enums for gears and lanes in bw_table
+* Collected review tags
+* Added SCSI list and folks
+* Removed duplicate patches
+
+Krzysztof Kozlowski (2):
+  dt-bindings: ufs: common: add OPP table
+  arm64: dts: qcom: sdm845: Add OPP table support to UFSHC
+
+Manivannan Sadhasivam (3):
+  scsi: ufs: core: Add OPP support for scaling clocks and regulators
+  scsi: ufs: host: Add support for parsing OPP
+  arm64: dts: qcom: sm8250: Add OPP table support to UFSHC
+
+ .../devicetree/bindings/ufs/ufs-common.yaml   |  35 +++-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  42 +++-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |  39 +++-
+ drivers/ufs/core/ufshcd.c                     | 179 ++++++++++++++----
+ drivers/ufs/host/ufshcd-pltfrm.c              |  78 ++++++++
+ include/ufs/ufshcd.h                          |   7 +
+ 6 files changed, 325 insertions(+), 55 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.25.1
+
