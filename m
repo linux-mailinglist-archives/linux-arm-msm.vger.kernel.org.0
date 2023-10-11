@@ -2,75 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FB957C4F8F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 12:06:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 613A17C4FE3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 12:18:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232444AbjJKKGT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Oct 2023 06:06:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34878 "EHLO
+        id S231503AbjJKKSA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Oct 2023 06:18:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231571AbjJKKGR (ORCPT
+        with ESMTP id S231468AbjJKKR7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Oct 2023 06:06:17 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B017392
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 03:06:14 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-307d58b3efbso5854220f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 03:06:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697018773; x=1697623573; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language:subject
-         :references:cc:to:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fub0OLah+ZMrfmMWsVbsLKTM47lsXgX5eYB01m9XKeg=;
-        b=lNcMUYxSa29cIYJBrzq/qq9ttz3a931rjwd1IbHtGxgKOfE1jzieGw8fRmQU3jImwN
-         uh9yHYhOhrgHkd87r8bzxPeWKXdys5+w592YKb+ZEAZMUvix3szbkrntlv6LKkhRgh5j
-         0BKCcwi9BQKEFAtTy7LxduhVBjNtHs/AeKM+HLK0jQUsI/tTzj+ZXRaxsx+7xNmafhCi
-         SBcmABTzi8qb3hxQj9j9YSRzd3ssRwVuL8IbZ+FJWrer6Ia4QDCfgybNvGqeDF6Bee3g
-         RE/nM0+kWU1EqgKwaUG2G1tEs+4nG1uTQ6lL7683k2ONPKxJQvMMJb6oIqzpNhKz74MV
-         yCdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697018773; x=1697623573;
-        h=content-transfer-encoding:in-reply-to:from:content-language:subject
-         :references:cc:to:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fub0OLah+ZMrfmMWsVbsLKTM47lsXgX5eYB01m9XKeg=;
-        b=HVG/3R2iz28t3jrNewDQ1ptAgx7xIF4LpzdvigaxEvB8ZJm7Xfs0knz3VT4Tvea9yu
-         DB0TF80X2AjuRJOt7/4YQNNWs+Ojrz85u+LZVpUqrb075uSGDtkOjS+rziqNnHbA0f56
-         0jTspNTurstl1VzyXT+XR5r+9udiPLZugh5otg+SHC9GX06OMXx6IHqenUt+cIts42wi
-         sS5xrViduYPiRlo4x91ttY+XYJBb32E+3a8ezTIHir4VNsq1tm51QIbZDT/w+YpLgHGN
-         tTOZpBluV2/vbGgsk4Pk05XzRruUIMzq8QUwBVxoH1RZ/0cweFB6ccxfnCAOLLVrb7JQ
-         5Xag==
-X-Gm-Message-State: AOJu0YzkQo3zBPYLetM91fuGDUK6vdWPEihhdosFsI+zytUxJEhf6Dfy
-        pYtiRbIkfCZ1cDK3Fkz5u+M6IQ==
-X-Google-Smtp-Source: AGHT+IGt3zAFGhPUYx7XidslsZDz+pqj1w2FqJtNDcptwK+tW2l0dBINQjidP+IuFvFen9VS1DII3Q==
-X-Received: by 2002:a5d:67c9:0:b0:321:5211:8e20 with SMTP id n9-20020a5d67c9000000b0032152118e20mr17369654wrw.59.1697018773010;
-        Wed, 11 Oct 2023 03:06:13 -0700 (PDT)
-Received: from [192.168.100.102] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id x11-20020adff0cb000000b00323293bd023sm15155625wro.6.2023.10.11.03.06.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Oct 2023 03:06:12 -0700 (PDT)
-Message-ID: <abf17440-bddf-4289-a951-bb3fd3951be1@linaro.org>
-Date:   Wed, 11 Oct 2023 11:06:11 +0100
+        Wed, 11 Oct 2023 06:17:59 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2964592;
+        Wed, 11 Oct 2023 03:17:58 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39B5pEVH012416;
+        Wed, 11 Oct 2023 10:17:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : to : from : subject : content-type :
+ content-transfer-encoding; s=qcppdkim1;
+ bh=7eNL33mKoqTiLtcr0W1Yjo3k+nMvanQo5/8WLcWHPJU=;
+ b=KyWrKA7JFEcg/16ewmvd7joO6GQkx5y4BGhFvsqCh8RiMkQ64lpcDorpsbTd1bHmJHN/
+ 2+7oz4JfUwiVin8kwsQvZyTmGDfcAZDA+Kv6nCEGZiES/NfpaIQU66sbiubMnslHoeK4
+ Munz0bY/c4CCGeL0Ns8uAThfQBQXghpnKB7ggfBd4w9DAudaZDog3L5JJHexnF56OwbL
+ TxhG+nTCVBZnZRgcEV5H3apxtPlhxEDIyQ+zClwNd5xY4pNHUSGzs/5fB+AxhxyDASNh
+ kpuws5M2RlGxJds/RtquuwlbW7ShgQ41FVGr5MqZhfXHcx9EzArDRveGbrBhzt0h4O+U Xg== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tnkwngrg0-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 11 Oct 2023 10:17:56 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39BAHtM2009457
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 11 Oct 2023 10:17:55 GMT
+Received: from [10.239.155.136] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Wed, 11 Oct
+ 2023 03:17:54 -0700
+Message-ID: <fc4189f4-8907-8a08-d7be-ffcb2425940a@quicinc.com>
+Date:   Wed, 11 Oct 2023 18:17:51 +0800
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To:     quic_luoj@quicinc.com
-Cc:     agross@kernel.org, andersson@kernel.org, catalin.marinas@arm.com,
-        conor+dt@kernel.org, devicetree@vger.kernel.org,
-        konrad.dybcio@linaro.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mturquette@baylibre.com,
-        p.zabel@pengutronix.de, quic_srichara@quicinc.com,
-        robh+dt@kernel.org, sboyd@kernel.org, will@kernel.org
-References: <20230923112105.18102-4-quic_luoj@quicinc.com>
-Subject: Re: [PATCH v9 3/4] clk: qcom: common: commonize qcom_cc_really_probe
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
 Content-Language: en-US
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20230923112105.18102-4-quic_luoj@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To:     Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>
+From:   Ziqi Chen <quic_ziqichen@quicinc.com>
+Subject: Does the branch 6.1 6.2 6.3 and 6.4 still accept bug fix now
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: iBd6bSg0gdkRAYsSK0jQeYSJpmZMB-Xr
+X-Proofpoint-GUID: iBd6bSg0gdkRAYsSK0jQeYSJpmZMB-Xr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-11_07,2023-10-11_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=729
+ lowpriorityscore=0 bulkscore=0 mlxscore=0 suspectscore=0 phishscore=0
+ priorityscore=1501 malwarescore=0 impostorscore=0 adultscore=0 spamscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310110090
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,5 +78,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> # Lenovo x13s
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Dear maintainers,
+
+on the branch before 6.5, There is race condition between UFS clock 
+scaling and ufshcd_ungate_work() would cause that host_self_block 
+mismatch to scsi_block_reqs_cnt.
+
+Case 1:
+
+UFS driver didn’t call ufshcd_hold() before calling 
+ufshcd_scsi_block_requests() from devfreq_monitor path:
+
+--> Race condition happened between ufshcd_clock_scaling_prepare () and 
+ufshcd_ungate_work().
+
+--> host_self_blocked was not set to 1 after ufshcd_clock_scaling_prepare().
+
+--> Requests keep being dispatched to UFS driver and be sent out after 
+entering H8.
+
+
+
+Case 2:
+
+UFS driver has called  ufshcd_hold() before calling 
+ufshcd_scsi_block_requests() from ufs calkscal enable/disable sysfs path:
+
+--> The  ufshcd_ungate_work()  was running and already set UIC link 
+status to ACTIVE before the ufshcd_hold() be invoked.
+
+--> The ufshcd_hold() would not flush ufshcd_ungate_work() if  the link 
+status already been set to ACTIVE.
+
+--> Race condition happened between ufshcd_clock_scaling_prepare () and 
+ufshcd_ungate_work().
+
+--> host_self_blocked was not set to 1 after ufshcd_clock_scaling_prepare().
+
+--> Requests keep being dispatched to UFS driver and be sent out after 
+entering H8.
+
+
+Since branch 6.5 , we would not see this issue as the 
+ufshcd_scsi_block/unblock_requests() has been removed from ufshcd_hold() 
+and ufshcd_ungate_work due to below commit.
+
+So can we know if the branch 6.1 6.2 6.3 and 6.4 accept bug fix now?
+
+
+
+scsi: ufs: Ungate the clock synchronously
+
+Ungating the clock asynchronously causes ufshcd_queuecommand() to return
+SCSI_MLQUEUE_HOST_BUSY and hence causes commands to be requeued.  This is
+suboptimal. Allow ufshcd_queuecommand() to sleep such that clock ungating
+does not trigger command requeuing. Remove the ufshcd_scsi_block_requests()
+and ufshcd_scsi_unblock_requests() calls because these are no longer
+needed. The flush_work(&hba->clk_gating.ungate_work) call is sufficient to
+make the SCSI core wait for clock ungating to complete.
+
+
+
+Best Regards,
+Ziqi
