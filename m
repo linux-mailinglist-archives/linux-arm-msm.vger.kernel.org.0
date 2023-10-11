@@ -2,163 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5920A7C5F18
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 23:28:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 29E277C5F43
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 23:47:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233339AbjJKV2o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Oct 2023 17:28:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60938 "EHLO
+        id S233552AbjJKVrM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Oct 2023 17:47:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233483AbjJKV2n (ORCPT
+        with ESMTP id S233451AbjJKVrL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Oct 2023 17:28:43 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F13E4A9;
-        Wed, 11 Oct 2023 14:28:39 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39BLLorF026505;
-        Wed, 11 Oct 2023 21:28:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=YV+V1QT7WH4TWPolqZP1tvIu4h5bgrG/c8p+KKr0FoQ=;
- b=Nol6CFDoHUzR4MONkVTbjPlDGX8jVqu+DqjvbqlByQojNsd+P5PUQji3uQkMkNyEx/2S
- 5L8blqit0HWXQxoVAeP1EZs/iVACZdp8Ta+QIe4RPdY1umbSFP4kGotR6AFmcncynZnk
- oahwPh5qBb7S4BzteERSwdbC/8Soe6MKEqc2CmEUyU6jDd1k8Mdxoo8bWCuklBuUdBKI
- MKvabTmCS2Bar6e2adlK6oMnL8Nu2Q5voYPAzqGKGnn1TDISOEWh4O5m1zsSzp63XONF
- xJj0JAeOIR0GtT+EEmgyj8qGZxecN8tjDe4nkXpSULibMPnY9zLne8cR6F9A6iGBgU/y Ig== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tnsmq1nmr-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 11 Oct 2023 21:28:14 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39BLSC9L011144
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 11 Oct 2023 21:28:13 GMT
-Received: from [10.71.115.198] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Wed, 11 Oct
- 2023 14:28:12 -0700
-Message-ID: <a9b172cd-1840-2949-2244-9a75d2bb7990@quicinc.com>
-Date:   Wed, 11 Oct 2023 14:28:07 -0700
+        Wed, 11 Oct 2023 17:47:11 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 378939E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 14:47:08 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-505748580ceso433294e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 14:47:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1697060826; x=1697665626; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1jda2D1FroH1trufxsMIX87ohZOTaWYuCvDgRQ06mQE=;
+        b=Ku2a+B/JfZLq2jhIPWmAPslqdieHCvxoTftQPhBiTBQcJ4DVP7koW4wk+0arMbVHy3
+         juObqe/0+QjP9EmNbz841PpgEH/j6PORIesPlW04doQU50JSG7nEKtdC93x1RVDdIcJJ
+         oN+spwbh5g3g7gPWD/6ztUokf0SL/+4iCt6t2HF315Gml9dE3xKLT0gkw8h7e3hDPNpD
+         /1HPJ1s4TVVh8Zw42SEZxtgz9IngV0nXUVCT4/09hxx270be+pTxNZGdEiwB7fOS3hwQ
+         nB65JQ95Ip7atEC1hn7vhR80pVnXtVJxufyzJOcGLskJ76PFqXgBV2LTCZ5hdDMknn+1
+         An3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697060826; x=1697665626;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1jda2D1FroH1trufxsMIX87ohZOTaWYuCvDgRQ06mQE=;
+        b=CsdiqFLlcDQki9PuhmL9SYBMoJfMYT71HlhiZUd7o6Q6WYBhJ2WnUoDtzr7SeEwAxO
+         /pm50qs/m2SQhQzNIhPXa5tT9rOKSHxEcGHRPpnMgEL4+YRDSDpyvi6ycFtJdxU1mkHH
+         HvNefH4AFWQEjzgSZ8Rw4i6woi9sVrUq/aoPliwvu6IbJdABss4GMqBRahMxRUsXqIDJ
+         03cZz2hPM5RWI5ZgfrFGUllCJSZQzFtxON35tjg3mYg1GNoWji32IRvPjC1kUI7qPvlx
+         MDwkZnBz0rs8cwKtdLlabjzWVv4cq/idKSRbwd+DBkq/53ZnlJCyH+AvtzWAXI+w9Kwy
+         xZlg==
+X-Gm-Message-State: AOJu0Yy33iATwbZbUDEyxYeNBGnNk8QL5IzQ8njPH4DTNmVlLWPv4Vtb
+        wT+angE94eVV2/ijEYs4JWNZ8Q==
+X-Google-Smtp-Source: AGHT+IGoo9DRhumkDzWgM8EBl7tb7r7m6oANYB86B4Ru1+K3Ll/N23FGwa0RmGn40xMWCHI1xB4rUg==
+X-Received: by 2002:ac2:550f:0:b0:500:a5af:86a4 with SMTP id j15-20020ac2550f000000b00500a5af86a4mr18430162lfk.43.1697060826330;
+        Wed, 11 Oct 2023 14:47:06 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id o15-20020a056512050f00b004fbab80ecefsm2452485lfb.145.2023.10.11.14.47.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Oct 2023 14:47:05 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH 0/3] drm/msm: use correct lifetime devices for devm_drm_bridge_add
+Date:   Thu, 12 Oct 2023 00:47:02 +0300
+Message-Id: <20231011214705.375738-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v8 25/34] ASoC: dt-bindings: Update example for enabling
- USB offload on SM8250
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-CC:     <bgoswami@quicinc.com>, <lgirdwood@gmail.com>,
-        <broonie@kernel.org>, <gregkh@linuxfoundation.org>,
-        <robh+dt@kernel.org>, <konrad.dybcio@linaro.org>,
-        <conor+dt@kernel.org>, <linux-usb@vger.kernel.org>,
-        <andersson@kernel.org>, <Thinh.Nguyen@synopsys.com>,
-        <srinivas.kandagatla@linaro.org>, <linux-kernel@vger.kernel.org>,
-        <agross@kernel.org>, <mathias.nyman@intel.com>,
-        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
-        <perex@perex.cz>, <tiwai@suse.com>,
-        <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20231011002146.1821-1-quic_wcheng@quicinc.com>
- <20231011002146.1821-26-quic_wcheng@quicinc.com>
- <169699146438.2560961.3220166947763848754.robh@kernel.org>
-From:   Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <169699146438.2560961.3220166947763848754.robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Mx5Ycg9ohRBABrFQFgGJzpQmgg0YzsHa
-X-Proofpoint-ORIG-GUID: Mx5Ycg9ohRBABrFQFgGJzpQmgg0YzsHa
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-11_16,2023-10-11_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
- mlxlogscore=999 lowpriorityscore=0 adultscore=0 priorityscore=1501
- impostorscore=0 spamscore=0 bulkscore=0 clxscore=1015 mlxscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310110189
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+While reworking the drm/msm driver to use devm_drm_bridge_add() I didn't
+notice that the drm_bridge instances are allocated with the drm_device
+used as a lifetime parameter instead of corresponding platform_device.
+This mostly works fine, in rare cases of device reprobing resulting in
+the oops such as the following:
 
-On 10/10/2023 7:31 PM, Rob Herring wrote:
-> 
-> On Tue, 10 Oct 2023 17:21:37 -0700, Wesley Cheng wrote:
->> Add an example on enabling of USB offload for the Q6DSP.  The routing can
->> be done by the mixer, which can pass the multimedia stream to the USB
->> backend.
->>
->> Acked-by: Rob Herring <robh@kernel.org>
->> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
->> ---
->>   .../devicetree/bindings/sound/qcom,sm8250.yaml    | 15 +++++++++++++++
->>   1 file changed, 15 insertions(+)
->>
-> 
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
-> 
-> yamllint warnings/errors:
-> 
-> dtschema/dtc warnings/errors:
-> Error: Documentation/devicetree/bindings/sound/qcom,sm8250.example.dts:97.44-45 syntax error
-> FATAL ERROR: Unable to parse input tree
-> make[2]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/sound/qcom,sm8250.example.dtb] Error 1
-> make[2]: *** Waiting for unfinished jobs....
-> make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1427: dt_binding_check] Error 2
-> make: *** [Makefile:234: __sub-make] Error 2
-> 
-> doc reference errors (make refcheckdocs):
-> 
-> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20231011002146.1821-26-quic_wcheng@quicinc.com
-> 
-> The base for the series is generally the latest rc1. A different dependency
-> should be noted in *this* patch.
-> 
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
-> 
-> pip3 install dtschema --upgrade
-> 
-> Please check and re-submit after running the above command yourself. Note
-> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-> your schema. However, it must be unset to test all examples with your schema.
-> 
+Call trace:
+ of_drm_find_bridge+0x54/0xa4
+ drm_of_find_panel_or_bridge+0xb8/0xdc
+ devm_drm_of_get_bridge+0x3c/0x8c
+ msm_dsi_manager_ext_bridge_init+0x4c/0x19c
+ msm_dsi_modeset_init+0x70/0x118
+ _dpu_kms_drm_obj_init+0xec/0x6f0
+ dpu_kms_hw_init+0x310/0x458
+ msm_drm_kms_init+0x84/0x328
+ msm_drm_bind+0x230/0x43c
+ try_to_bring_up_aggregate_device+0x164/0x1d0
+ __component_add+0xa8/0x170
+ component_add+0x14/0x20
+ dsi_dev_attach+0x20/0x2c
+ dsi_host_attach+0x9c/0x144
+ devm_mipi_dsi_attach+0x34/0xb4
+ lt9611uxc_attach_dsi.isra.0+0x84/0xfc
+ lt9611uxc_probe+0x5ac/0x66c
+ i2c_device_probe+0x148/0x290
+ really_probe+0x148/0x2ac
+ __driver_probe_device+0x78/0x12c
+ driver_probe_device+0x3c/0x160
+ __device_attach_driver+0xb8/0x138
+ bus_for_each_drv+0x80/0xdc
+ __device_attach+0x9c/0x188
+ device_initial_probe+0x14/0x20
+ bus_probe_device+0xac/0xb0
+ deferred_probe_work_func+0x8c/0xc8
+ process_one_work+0x1ec/0x51c
+ worker_thread+0x1ec/0x3e4
+ kthread+0x120/0x124
+ ret_from_fork+0x10/0x20
 
-Would you happen to know what the error is in this case?  I made sure I 
-was running the latest dtschema (v2023.9) and had yamllint installed as 
-well.  When I took a look at the DTB and DTS output it looked ok...
+Dmitry Baryshkov (3):
+  drm/msm/dsi: use correct lifetime device for devm_drm_bridge_add
+  drm/msm/hdmi: use correct lifetime device for devm_drm_bridge_add
+  drm/msm/dp: use correct lifetime device for devm_drm_bridge_add
 
-             usb-dai-link {
-                 link-name = "USB Playback";
-                 cpu {
-                     sound-dai = <&q6afedai USB_RX>;//--->syntax error?
-                 };
+ drivers/gpu/drm/msm/dp/dp_drm.c        | 2 +-
+ drivers/gpu/drm/msm/dsi/dsi_manager.c  | 2 +-
+ drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-                 codec {
-                     sound-dai = <&usbdai USB_RX>;
-                 };
+-- 
+2.39.2
 
-                 platform {
-                     sound-dai = <&q6routing>;
-                 };
-             };
-
-I didn't make any changes to this in between v7 and v8, but v7 passed:
-https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230921214843.18450-25-quic_wcheng@quicinc.com/
-
-Thanks
-Wesley Cheng
