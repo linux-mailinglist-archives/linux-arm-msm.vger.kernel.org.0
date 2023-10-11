@@ -2,59 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 088E17C501A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 12:29:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9998F7C5020
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 12:30:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231590AbjJKK27 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Oct 2023 06:28:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44094 "EHLO
+        id S231615AbjJKKaf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Oct 2023 06:30:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346131AbjJKK2y (ORCPT
+        with ESMTP id S1345779AbjJKKae (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Oct 2023 06:28:54 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE591C6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 03:28:51 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-505748580ceso8422272e87.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 03:28:51 -0700 (PDT)
+        Wed, 11 Oct 2023 06:30:34 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B5609E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 03:30:31 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2bfea381255so82039111fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 03:30:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697020130; x=1697624930; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1697020230; x=1697625030; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ht5utTuG5wW1wq2rrU2pauj363H+uTmJt1GixQr1DSM=;
-        b=EVRtXE67gk+LC0mXBwljVYzi7ZwnklKR9lIwbViIMLS3LuACZ2Ry91HKub8sBBvcuJ
-         RkRbXaFKh5xJZypm8mBJf53ajuE+YprOBiwkDheoECB3fBFAxDffEIgfC/svXUpyBfPj
-         qfBGh6SeTRH42VEABkdZrlk5pud2VkPC9Z3wbbGwqWg5VJyjGrLq8HWkXltiiObQ83Pm
-         0XA3JuhDADijpZMLFoEQaN7adtiB9nl8nENDKH1k35upik1KfHMPW5Y5kD9uPyk8w0S6
-         mWAxFA6jriXiW3sFn+uYXhdc/QiYGadLly1xxn3kMJsHV1+R3N4AE8Ww0QOVVu8cEurV
-         LPAw==
+        bh=xzHKCgjb8/zw/flLxHNtdD2jh+riVKfmw0ipQhtOwLE=;
+        b=pqfTt118gv/2PLnUGZUncLjgvEzV3FvIdVs5DF6QNEp9JxMDSL16mzP44q+5XJJfji
+         DPQa8VUBr4PnWejYa40KeTLKFgJu8dMv5VWSBSFQezceQ1WUhw9d0Wzk1cwMqDHUMpKX
+         YwvOCExdX+ZChSFuhv5AuHGE0PJKpZsI+JFmP8DmMJBO++9E8799dUUljHLMWp1K6FRG
+         tcE+1mrmcCxpVVHbnXQUPkevDayDxTeIV6+BOP4qp+BZEV6GHhgJ1fhSz/8EKmdFcoTC
+         Q+m5SC/bD3mpmo/Xd4gWktc3hXZoFyymdCDI/Hv3Ki5GnZEjUV8/W70CwN6uxQN6wYZb
+         J+Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697020130; x=1697624930;
+        d=1e100.net; s=20230601; t=1697020230; x=1697625030;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ht5utTuG5wW1wq2rrU2pauj363H+uTmJt1GixQr1DSM=;
-        b=DAA/8FvahU12oQ+B7QLW0itvy//EiAG1vBNZkOM5m6bx+o3rBna7DAYukvtHMOBJHd
-         AbLYKwXDfvtWKDHqvnUnlRP8iLl5nkVhwPSxt7C1e4xdqRhdRbV5QwJMW9r4FJ4zZxrX
-         XWPfpc8m71b5MKhkRLWGiGcPa74dT7FtSwi8uVHvjOTNzrj3N9T2YoTe36OxOz+dI7q7
-         +QhMpJT0Vt1CAOskdOsjO2BQUQh7BnMVWr2DqjcSmgozc1lppsneeiIhgbvualm1zeVn
-         IiMTIaHs1sLDZLykFY9Dkso71op/A6O2L0upvjysyqDXHHyeh5EKz1+u+PdWKx20M0Kk
-         usIw==
-X-Gm-Message-State: AOJu0Ywal5/b3DnZwTSTsgX5ZlDsYKekvhfc271C4LYxFhxh9UPakyht
-        76N5jd3Fmv49lUKejWYlSzRvLg==
-X-Google-Smtp-Source: AGHT+IF/+tcyWJy167xh1iz46cHV+3zXA/HdYlUn1jZqjis4ijk83UImTqPXKpAuX5ROU8uJiy4E0w==
-X-Received: by 2002:a05:6512:34c8:b0:503:200f:47a9 with SMTP id w8-20020a05651234c800b00503200f47a9mr14500380lfr.15.1697020129912;
-        Wed, 11 Oct 2023 03:28:49 -0700 (PDT)
+        bh=xzHKCgjb8/zw/flLxHNtdD2jh+riVKfmw0ipQhtOwLE=;
+        b=rKjQkVrZ04k1bQJMw1MQfE4b3uD6HjJenolY99HEQSnJwHg1xkXfG0oJjTQAaUCBKf
+         aTOFP53FhDAph8Q1gORxcKuWup8U9aVY8mRV8GZFGdQdf+pocU5pp4g1wDwtD0oigxHW
+         HfrEiRCeMMdPTCX29jmc9PbvHK4DGV6/RoF3eo5Y+Nn0wG28BYzIsar9G+hXZVyl7yui
+         9ogY1qG5ele8bSG7SiRP0tKQCC6Ho++dlgO19DD+pC4XI6q5BGcHjCumlirJdta6m1ct
+         tAu+4FoQdNJb3joXV+s8o0KN0/38YsrVLhnoXVTarsk8BnEgEJ1lUE87oK8K71kCLVYb
+         2ajA==
+X-Gm-Message-State: AOJu0Yxsnp+NBXXdyiPL4OPar5unu0BBKXVRdoPsDXYU9+sJ6IdwudYQ
+        /gc4lp0dnihrjxer54DCR64XTA==
+X-Google-Smtp-Source: AGHT+IEaw7rwDtUJYy85sJqrAFyVJ8Sl98KLuplFuXyA7yQPW41U0XXgksBo+0yN9rEAMltSVET/gA==
+X-Received: by 2002:a05:6512:457:b0:503:35af:3058 with SMTP id y23-20020a056512045700b0050335af3058mr15408059lfk.52.1697020229684;
+        Wed, 11 Oct 2023 03:30:29 -0700 (PDT)
 Received: from [87.246.221.93] (netpanel-87-246-221-93.pol.akademiki.lublin.pl. [87.246.221.93])
-        by smtp.gmail.com with ESMTPSA id v1-20020a056512096100b0050480e8a676sm2213434lft.268.2023.10.11.03.28.48
+        by smtp.gmail.com with ESMTPSA id v1-20020a056512096100b0050480e8a676sm2213434lft.268.2023.10.11.03.30.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Oct 2023 03:28:49 -0700 (PDT)
-Message-ID: <427980eb-3235-4d63-bb8f-3af06978a3eb@linaro.org>
-Date:   Wed, 11 Oct 2023 12:28:48 +0200
+        Wed, 11 Oct 2023 03:30:29 -0700 (PDT)
+Message-ID: <3c7115dc-f9b4-42ab-8923-098d96b75e86@linaro.org>
+Date:   Wed, 11 Oct 2023 12:30:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 0/4] Add support for Qualcomm ECPRI clock controller
+Subject: Re: [PATCH V2 3/4] clk: qcom: Add ECPRICC driver support for QDU1000
+ and QRU1000
 Content-Language: en-US
 To:     Imran Shaik <quic_imrashai@quicinc.com>,
         Andy Gross <agross@kernel.org>,
@@ -70,8 +71,9 @@ Cc:     Taniya Das <quic_tdas@quicinc.com>, linux-arm-msm@vger.kernel.org,
         Ajit Pandey <quic_ajipan@quicinc.com>,
         Jagadeesh Kona <quic_jkona@quicinc.com>
 References: <20231011090028.1706653-1-quic_imrashai@quicinc.com>
+ <20231011090028.1706653-4-quic_imrashai@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231011090028.1706653-1-quic_imrashai@quicinc.com>
+In-Reply-To: <20231011090028.1706653-4-quic_imrashai@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,22 +89,17 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 10/11/23 11:00, Imran Shaik wrote:
-> The ECPRI clock controller support for QDU1000 and QRU1000. The clock
-> controller has a special branch which requires an additional memory to
-> be enabled/disabled before the branch ops.
+> Add ECPRI Clock Controller (ECPRICC) support for QDU1000 and QRU1000 SoCs.
 > 
-> Changes since v1:
->   - Updated the dt-bindings
->   - Modified mem ops logic as per the review comments
->   - Update all the hex values to lowercase
->   - Aligned the clock entries in DT as per the review comment
-> 
-> Previous series:
-> v1 - https://patchwork.kernel.org/project/linux-arm-msm/list/?series=774092
-That link is gone by now, as patchwork is periodically purged.
+> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
+> ---
+[...]
 
-Please use lore links instead.
-
-https://lore.kernel.org/linux-arm-msm/20230808051407.647395-1-quic_imrashai@quicinc.com/
+> +static int __init ecpri_cc_qdu1000_init(void)
+> +{
+> +	return platform_driver_register(&ecpri_cc_qdu1000_driver);
+> +}
+> +subsys_initcall(ecpri_cc_qdu1000_init);
+module_platform_driver?
 
 Konrad
