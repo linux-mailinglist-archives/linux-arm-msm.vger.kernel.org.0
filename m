@@ -2,90 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 57DD47C52B6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 13:59:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 07CB47C52CE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 14:00:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231678AbjJKL7n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Oct 2023 07:59:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39960 "EHLO
+        id S234864AbjJKMAx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Oct 2023 08:00:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346445AbjJKL7l (ORCPT
+        with ESMTP id S1346226AbjJKMAs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Oct 2023 07:59:41 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF3C28F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 04:59:39 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-3214cdb4b27so6394217f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 04:59:39 -0700 (PDT)
+        Wed, 11 Oct 2023 08:00:48 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35E619E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 05:00:44 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-53dd3f169d8so1161837a12.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 05:00:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697025578; x=1697630378; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ypZLjFj/yUIWoitz4PcHioQX4LRMOTCvJjVyG9KPkRY=;
-        b=z6sTqRVZct2aoK4ypVviHgJouaCKUmaJU4WzLjRRIFJAdKplZlJHLe+4omfw/+op11
-         tLh1Wfgmy9WPHadlVpx5oCXGlYcttoC6rUJ+i2qf5tpZHO2uzJgmaoyI2maEHbcvA1ih
-         3P5H92Tdd8BSgqQfU4iFAQxyMHq6HGWfTpM99JNZ11qDqRO0gpqZFhpX+ZJzdDS1jsZG
-         VBOg+xcu0vsKXOrEuocrkHyWUdlTgk6lRcme6mDhp2FYiCaR86jZwSB9D3gTiuXLgvnc
-         1KLiAqbt4kuDBaWwZS4xMt125VrbCU2WirgITnt20OZk0KopOIg5NjS/nQCe/SZy0q86
-         1eOg==
+        d=linaro.org; s=google; t=1697025642; x=1697630442; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=aVTN0BqqtO5MKlfxI7sXoH95j77MBJ0QiNgQ07twsNg=;
+        b=juCqbqQItQ0Mvjrv5Ps0hBNTLHa6owH9cKZzz8o5R7WO8hLuj2aLKWr5zCepXUxi2h
+         eMBi47RNxYZq+FeZ38rVJHtBBJ/RDVRdZIV5qXHJU4n1CDdyUpNnYQaRhzUf5ShJ+VlR
+         tJL0G7iYlsC2dzQyA27+8FGO/4mUV+iQGgSn0GHjmYoQpkuT/Gz3ccgDwGpm6C3+bz02
+         shrR5+FuqsSc7L123q0ucyPxZ9v5m/du25OeG8PbFwsW/VkbUq6pJFbQ7Sq7ilhfgv8D
+         /ho8iV8NMQARmP/wxwOEEmFKQDO3GAV+yV+JcmP4OUwzFwwYpqmfj91wpXhKvdBYT3Qh
+         1tWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697025578; x=1697630378;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ypZLjFj/yUIWoitz4PcHioQX4LRMOTCvJjVyG9KPkRY=;
-        b=Vd5FmuPuHzd4Gq35/ytwahMs5K3dEE26ur2i1vT/9fRhBCmFWrS7x0ajjBEROa5mn6
-         1LRdkx7+UmLyx5MmelDAO0aDI/UC8r27U6gbEOmWEQzuV4KeSpT9XAlWPuVM27+KCNFI
-         4sJwEBZLBlMy58EvpXtXkhMzo462zbThq26G9koplsrfNXcIGd3PHscm6+P9flAMfFEm
-         slcIVCAfieGNT1rtCb3+/FBWt6EAo5/QLNvIB2X4wKbNZ51wDfZvN4xpfNzWTzPoKb54
-         wLHpka84Dy6kSie0kH9i5H8yojN8E8erCyPfUN3QWjNpdQn39xC7ONA/NCp5Kl2lMdOx
-         OiQA==
-X-Gm-Message-State: AOJu0YyLHRAbEaRq6SOtY7QwO2ZIaBcTdtZb6aq9WwA4ly1ykzpoyG+Q
-        /w9Jm1/e6mQ6G9LtOP+TE64H9w==
-X-Google-Smtp-Source: AGHT+IE0vOD/HhyJPdT0M4nw8HCtJo7Zf9XCJa/sS9OTv2kgb5THxDzUlz5laR9Zjiw9C23idmj2yg==
-X-Received: by 2002:adf:ef4a:0:b0:317:5b32:b2c3 with SMTP id c10-20020adfef4a000000b003175b32b2c3mr16726202wrp.6.1697025578249;
-        Wed, 11 Oct 2023 04:59:38 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id x11-20020adff0cb000000b00323293bd023sm15447805wro.6.2023.10.11.04.59.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Oct 2023 04:59:37 -0700 (PDT)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Wed, 11 Oct 2023 13:59:25 +0200
-Subject: [PATCH v2 5/5] drm/msm/dpu: enable writeback on SM8550
+        d=1e100.net; s=20230601; t=1697025642; x=1697630442;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=aVTN0BqqtO5MKlfxI7sXoH95j77MBJ0QiNgQ07twsNg=;
+        b=SQZ6oCrFY1veS2s5oL9DMG8FdoaJRgBdbZjDgFLNtnLzQWb0qHecCpUDQdta8def75
+         t7ke1lFDMwUrdVvSc1wLutqB3KPWZw6Y7Q3oh1HDD9AByFTLCMcVuZTVxdlnD1Nh+6tz
+         TJF1Lv6YHwX4HRA/6YEyXSZu27PPcPmw855xZIgnSbvy/hoFRlR/A3WplrBA7cXz8LA/
+         uDx8oxsMatdr9L1jhOFUuee307fKNeDqavGjqKlwtmSYQR92hwhJxPXu+m0VVpM9O5XQ
+         PyamDRaj5ztPvdo3zvM6fH8+67mihH67zspP0GJ7XvjRAI9IbbR11tw7MLMExCD6Z6mm
+         VUwA==
+X-Gm-Message-State: AOJu0Yw75Q834t2rnL+lV3ZT33Qh/Vq4HJi/EQqtXY7KwKfriR3fIMnJ
+        4Q2k3DRz2g8ksNhM/lfnSBn9kJTsu6qKEfXkjkeVUw==
+X-Google-Smtp-Source: AGHT+IFKnbdS+liyq5BOO9m8ERjMSQL8biVjydd35Z2zaMUPssKf5QQkaQtgJ+ughRnn6bk/oM/oer9yveoYwYchCJs=
+X-Received: by 2002:a17:906:19b:b0:9b6:e6ff:b20b with SMTP id
+ 27-20020a170906019b00b009b6e6ffb20bmr17472854ejb.8.1697025642572; Wed, 11 Oct
+ 2023 05:00:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231011-topic-sm8550-graphics-sspp-split-clk-v2-5-b219c945df53@linaro.org>
-References: <20231011-topic-sm8550-graphics-sspp-split-clk-v2-0-b219c945df53@linaro.org>
-In-Reply-To: <20231011-topic-sm8550-graphics-sspp-split-clk-v2-0-b219c945df53@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1443;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=JhqMYcLj+uN+4eIp2Decg5MnbJ4iLpGbOzwcBZr1/B0=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlJo4jyU+gKZPPaw85852PeLjRN6/jgbXJby90/CHB
- oKwbALuJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZSaOIwAKCRB33NvayMhJ0Y1DEA
- DITK6IPeKYg9ocdqRsLNjJk1h+x6xT7bCrHA8A9kJS0p1qmRPtr5jdA/Q9S8+ZLAl8gzJoA3Fc+oWR
- rQlgwPDSaMCZhB9zwl3A7MJzLoNO7zTilG34snzkE2s9SnpUXSeBzkLXsTk1YstCg7GKrwcq7X64tI
- IU+I7EifSWN6dhVexpSSMkVLux1XFweVhZYrI7ApewMH0IKwsuDsA26hImzw9KyAjKYBD811pPb7rg
- UucxL0+Uta/6RUfcFaCBx79f/p3seWSVk0+GjJ65iYZQd5OIX2L87Pda9ot4r687L1gpWF3pp7mlQ0
- nzyl1CAIoqAEupZJ5TdmMNdivDKwyHsGKIpS4R5DoD1BKCQk+hNlHttEBkiToQnPShFwdsxrLx0+mQ
- hTrmz3M15G1lLC1L7qwSpgmKps3QVLQiadT6UM8MKnr7r1aOZAmHrvvKlpKPuFHTuF+oWihY/LJsA0
- DeQVz1mjyyPpGYjzOxdOxDWw8ePgkM88pOLPocYX/6MgaN1Qr2YE7EnF+4SwxoBB8zmlpeMJmbwBLo
- S8PdoXyEch5gQ5V1NtKpRaivYbOTf1O0vwWiM10WsA2B0nLKI0socV/mFqmtVqdsxSVHbqSHze1ZAe
- IoCh971pcBsmdoxWiFXVyVCzOHpSbXV0inImFHo3+h3PLB7+iHkMvKF4jmHA==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+References: <1697023109-23671-1-git-send-email-quic_msarkar@quicinc.com>
+ <1697023109-23671-3-git-send-email-quic_msarkar@quicinc.com>
+ <CAA8EJpoLxeSvxjcyq1BMR9XuAffrxLmO-eaBYJ+Fhnb4zYmxUQ@mail.gmail.com> <6531b333-b978-6b97-5cb4-59562d775ac3@quicinc.com>
+In-Reply-To: <6531b333-b978-6b97-5cb4-59562d775ac3@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 11 Oct 2023 15:00:29 +0300
+Message-ID: <CAA8EJpoidaW8x3CAwNLWGcq2fz+x49kQWan2GXkgODUUypzKOQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] phy: qcom-qmp-pcie: add endpoint support for sa8775p
+To:     Mrinmay Sarkar <quic_msarkar@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        konrad.dybcio@linaro.org, mani@kernel.org,
+        quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
+        robh@kernel.org, quic_krichai@quicinc.com,
+        quic_vbadigan@quicinc.com, quic_parass@quicinc.com,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
+        linux-phy@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
@@ -96,48 +82,127 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable WB2 hardware block, enabling writeback support on this platform.
+On Wed, 11 Oct 2023 at 14:56, Mrinmay Sarkar <quic_msarkar@quicinc.com> wrote:
+>
+>
+> On 10/11/2023 5:06 PM, Dmitry Baryshkov wrote:
+> > On Wed, 11 Oct 2023 at 14:19, Mrinmay Sarkar <quic_msarkar@quicinc.com> wrote:
+> >> Add support for dual lane end point mode PHY found on sa8755p platform.
+> >>
+> >> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+> >> ---
+> >>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c   | 41 ++++++++++++++++++++++++++++++
+> >>   drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h |  2 ++
+> >>   2 files changed, 43 insertions(+)
+> > Two minor questions.
+> >
+> >> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> >> index a63ca74..962b4a1 100644
+> >> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> >> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> >> @@ -2147,6 +2147,38 @@ static const struct qmp_phy_init_tbl sa8775p_qmp_gen4x4_pcie_rc_serdes_alt_tbl[]
+> >>          QMP_PHY_INIT_CFG(QSERDES_V5_COM_CLK_SELECT, 0x34),
+> >>   };
+> >>
+> >> +static const struct qmp_phy_init_tbl sa8775p_qmp_gen4x2_pcie_ep_serdes_alt_tbl[] = {
+> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_BG_TIMER, 0x02),
+> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_SYS_CLK_CTRL, 0x07),
+> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_CP_CTRL_MODE0, 0x27),
+> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_CP_CTRL_MODE1, 0x0a),
+> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_RCTRL_MODE0, 0x17),
+> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_RCTRL_MODE1, 0x19),
+> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_CCTRL_MODE0, 0x00),
+> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_CCTRL_MODE1, 0x03),
+> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_SYSCLK_EN_SEL, 0x00),
+> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_INTEGLOOP_GAIN0_MODE0, 0xfb),
+> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_INTEGLOOP_GAIN1_MODE0, 0x01),
+> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_INTEGLOOP_GAIN0_MODE1, 0xfb),
+> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_INTEGLOOP_GAIN1_MODE1, 0x01),
+> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_CMN_MODE, 0x14),
+> > I should check whether we miss QSERDES_V5_COM_CMN_MODE in
+> > sm8450_qmp_gen4x2_pcie_ep_serdes_tbl, which is otherwise nearly
+> > identical.
+> > Also do you need to set QSERDES_V5_COM_CORE_CLK_EN here?
+> QSERDES_V5_COM_CORE_CLK_EN is common for both RC and EP
+> so we are using it in sa8775p_qmp_gen4x2_pcie_serdes_alt_tbl
+>
+> -Mrinmay
+> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP1_MODE0, 0xff),
+> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP2_MODE0, 0x04),
+> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP1_MODE1, 0xff),
+> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP2_MODE1, 0x09),
+> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_DEC_START_MODE0, 0x19),
+> >> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_DEC_START_MODE1, 0x28),
+> >> +};
+> >> +
+> >> +static const struct qmp_phy_init_tbl sa8775p_qmp_gen4_pcie_ep_pcs_misc_tbl[] = {
+> >> +       QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_PCIE_OSC_DTCT_MODE2_CONFIG5, 0x08),
+> >> +};
+> > This is the same as sm8450_qmp_gen4x2_pcie_ep_pcs_misc_tbl
+>
+> so you want me to use sm8450_qmp_gen4x2_pcie_ep_pcs_misc_tbl
+> instead of creating new one for sa8775?
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+If you don't see a problem with that, yes.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-index 4590a01c1252..d83a68a2cc0a 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-@@ -321,6 +321,20 @@ static const struct dpu_dsc_cfg sm8550_dsc[] = {
- 	},
- };
- 
-+static const struct dpu_wb_cfg sm8550_wb[] = {
-+	{
-+		.name = "wb_2", .id = WB_2,
-+		.base = 0x65000, .len = 0x2c8,
-+		.features = WB_SM8250_MASK,
-+		.format_list = wb2_formats,
-+		.num_formats = ARRAY_SIZE(wb2_formats),
-+		.xin_id = 6,
-+		.vbif_idx = VBIF_RT,
-+		.maxlinewidth = 4096,
-+		.intr_wb_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 4),
-+	},
-+};
-+
- static const struct dpu_intf_cfg sm8550_intf[] = {
- 	{
- 		.name = "intf_0", .id = INTF_0,
-@@ -418,6 +432,8 @@ const struct dpu_mdss_cfg dpu_sm8550_cfg = {
- 	.dsc = sm8550_dsc,
- 	.merge_3d_count = ARRAY_SIZE(sm8550_merge_3d),
- 	.merge_3d = sm8550_merge_3d,
-+	.wb_count = ARRAY_SIZE(sm8550_wb),
-+	.wb = sm8550_wb,
- 	.intf_count = ARRAY_SIZE(sm8550_intf),
- 	.intf = sm8550_intf,
- 	.vbif_count = ARRAY_SIZE(sm8550_vbif),
+>
+> -Mrinmay
+>
+> >> +
+> >> +static const struct qmp_phy_init_tbl sa8775p_qmp_gen4x2_pcie_ep_pcs_alt_tbl[] = {
+> >> +       QMP_PHY_INIT_CFG(QPHY_V5_PCS_INSIG_MX_CTRL7, 0x00),
+> >> +       QMP_PHY_INIT_CFG(QPHY_V5_PCS_INSIG_SW_CTRL7, 0x00),
+> >> +};
+> > Could you please confirm that these registers belong to the V5
+> > namespace rather than V5_20 one?
+> may I know difference between V5 and V5_20 namespace
+> can't we use V5 namespace here?
+
+Register names are different, see existing v5 vs v5.20 and v4 vs v4.20
+headers. So, I'd kindly ask to use the appropriate namespace.
+
+>
+> -Mrinmay
+> >> +
+> >>   struct qmp_pcie_offsets {
+> >>          u16 serdes;
+> >>          u16 pcs;
+> >> @@ -3043,6 +3075,15 @@ static const struct qmp_phy_cfg sa8775p_qmp_gen4x2_pciephy_cfg = {
+> >>                  .pcs_misc_num   = ARRAY_SIZE(sa8775p_qmp_gen4_pcie_rc_pcs_misc_tbl),
+> >>          },
+> >>
+> >> +       .tbls_ep = &(const struct qmp_phy_cfg_tbls) {
+> >> +               .serdes         = sa8775p_qmp_gen4x2_pcie_ep_serdes_alt_tbl,
+> >> +               .serdes_num     = ARRAY_SIZE(sa8775p_qmp_gen4x2_pcie_ep_serdes_alt_tbl),
+> >> +               .pcs_misc       = sa8775p_qmp_gen4_pcie_ep_pcs_misc_tbl,
+> >> +               .pcs_misc_num   = ARRAY_SIZE(sa8775p_qmp_gen4_pcie_ep_pcs_misc_tbl),
+> >> +               .pcs            = sa8775p_qmp_gen4x2_pcie_ep_pcs_alt_tbl,
+> >> +               .pcs_num        = ARRAY_SIZE(sa8775p_qmp_gen4x2_pcie_ep_pcs_alt_tbl),
+> >> +       },
+> >> +
+> >>          .reset_list             = sdm845_pciephy_reset_l,
+> >>          .num_resets             = ARRAY_SIZE(sdm845_pciephy_reset_l),
+> >>          .vreg_list              = qmp_phy_vreg_l,
+> >> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h
+> >> index 36cc80b..6ee1c33 100644
+> >> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h
+> >> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h
+> >> @@ -11,6 +11,8 @@
+> >>   #define QPHY_V5_PCS_PCS_STATUS1                                0x014
+> >>   #define QPHY_V5_PCS_POWER_DOWN_CONTROL                 0x040
+> >>   #define QPHY_V5_PCS_START_CONTROL                      0x044
+> >> +#define QPHY_V5_PCS_INSIG_SW_CTRL7                     0x060
+> >> +#define QPHY_V5_PCS_INSIG_MX_CTRL7                     0x07c
+> >>   #define QPHY_V5_PCS_LOCK_DETECT_CONFIG1                        0x0c4
+> >>   #define QPHY_V5_PCS_LOCK_DETECT_CONFIG2                        0x0c8
+> >>   #define QPHY_V5_PCS_LOCK_DETECT_CONFIG3                        0x0cc
+> >> --
+> >> 2.7.4
+> >>
+> >
+
+
 
 -- 
-2.34.1
-
+With best wishes
+Dmitry
