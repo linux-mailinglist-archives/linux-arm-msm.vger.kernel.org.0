@@ -2,71 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E4EDB7C5445
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 14:46:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B2DB7C5455
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 14:52:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234859AbjJKMqm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Oct 2023 08:46:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50730 "EHLO
+        id S231906AbjJKMwu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Oct 2023 08:52:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234894AbjJKMql (ORCPT
+        with ESMTP id S231758AbjJKMwt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Oct 2023 08:46:41 -0400
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F5FBB7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 05:46:40 -0700 (PDT)
-Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-d849df4f1ffso7150109276.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 05:46:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697028399; x=1697633199; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=dW3F0jw6hSYsieT6t+VsgmR8dZ8/32cVIfl7zOoZNLc=;
-        b=qhi8mix547qoXELVrKlDLfC5LFVB9vxyFkquYgAQDuzaa+NxgpEn3fCnHb8Fx1JX8G
-         hNin9MCfg4G0XzLkfkWsoJ8hUI0JoRuQMdIIg7WL1t1MDx9TAbFaKtUaT2yS779dQYRh
-         gqGgRuBxSoCVtFJd+8e5zjtai1lUnB+HP0It46L1HbsK2jg4vTx0foU81rjpt+EdW52G
-         4i3LODRmflXfAHnHYFii0iRLCG7Xbs1bqftil6ic5KhWj2qL44u/TAPZBUp2rAgPrPRm
-         S0Nf51fmln64NcadRIQXXk4x4TRO86/eczOzOhy5pIBT9D0ZkdgTRFKRw6x8KOv2tH7p
-         MH7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697028399; x=1697633199;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dW3F0jw6hSYsieT6t+VsgmR8dZ8/32cVIfl7zOoZNLc=;
-        b=Hwjh4ot05UqUQb0dRg7hT8/fkPzqlNZZwy2Ig5dwxV29qzH5Q8fu4ZNqFX2QjfYT1l
-         YdjBoC6LcE+GZKfdoOpuSHMrsGQfFCnDZ98ONYsRShA4y2+VUA0O87Dcqm405FjkxIKa
-         S3HxZgPCMYmjY2j5CP01lfZF/ywpnhRX3X7Yk9g7+w1TrjTMtqDDymEf8qP3YmYI52J9
-         r8z09AHRY6VsLrYwVOLivQ7qKtf1ZyFVl03zWBUzjZFhBvUcA02PhWZlwU09tjC/ibg6
-         2NPieLvlVVxd5X2L6M5MtUByiaJHtovneNU2lE5OdGM0xf0+Rkpiief+NX/NDSRzm9wY
-         uWtA==
-X-Gm-Message-State: AOJu0Yyn4/Gb2NdtS9gGc+mFge/66C3ycszkqHnyhstwph70VKxZcvbT
-        +pk6D3A4vBV7GLRAiBayMNuQ6kPeLuvD2xcWubnF3w==
-X-Google-Smtp-Source: AGHT+IEXxUHgahb5Rv9YlVarko7XshACSDpKCpE2aXKyLar9E29Gzcw5Kx2vRU/DIhKX6Un2J5Ca5vqy10fCukWUVV4=
-X-Received: by 2002:a25:3d81:0:b0:d9a:52ee:6080 with SMTP id
- k123-20020a253d81000000b00d9a52ee6080mr5293824yba.37.1697028399177; Wed, 11
- Oct 2023 05:46:39 -0700 (PDT)
+        Wed, 11 Oct 2023 08:52:49 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28137A4;
+        Wed, 11 Oct 2023 05:52:48 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ADCAC433C7;
+        Wed, 11 Oct 2023 12:52:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1697028767;
+        bh=7nNHhTFSnvsctexULERMu++eP5boExVclBtDAh2DWK8=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=byiSFe85ODvmEz8k8cS0xJ3/08MXWJB2WtfGGMACCLtPca+YyLQ1GAhI6j1huUlgS
+         qSXhG7H7mgi+XQ+w9Kj4wNTexSEsVDczEkr5XH5PN3gvbMYRJn4Okbj9lSVWGriM0F
+         8CRNOtHbWd4DZ7HjYZUNmo37wMRSZnlIeldFwsksj9nVxKp/ae5E+to7Y02A206M5i
+         YwBAavrgIqIxw7KgDFVHJ0jE7Xk2uQkBEN2r86OToVJq5JsiUDpv8YRGALYAa4gv4f
+         PGJehCdMzCclMdLyYRRvxB0Fv3i4X5npEXjowsy19UyVltjoHm60R2DAKA5+mEvyTM
+         GBoPKfEzPEKVg==
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5068dab8c00so5746503e87.0;
+        Wed, 11 Oct 2023 05:52:47 -0700 (PDT)
+X-Gm-Message-State: AOJu0Yyy/cOf6oGXwA2UrUnIHUIQafmwO2KlpeP4MeT1gpaJ66xTNcLg
+        ZF7sMPvvhwRtAzsGCImeg7zm1Lh3Y8Dda3IZiA==
+X-Google-Smtp-Source: AGHT+IH/9CIDym2+ooxw52sokSgt93JvGLmPMXG8mQ+BYLgc6mr8q1Zja1fo33uvxZMXbJuLjTuECww1Pj/VshNPtQk=
+X-Received: by 2002:a19:6456:0:b0:503:442:5957 with SMTP id
+ b22-20020a196456000000b0050304425957mr16044041lfj.41.1697028765631; Wed, 11
+ Oct 2023 05:52:45 -0700 (PDT)
 MIME-Version: 1.0
-References: <20231011-topic-sm8550-graphics-sspp-split-clk-v2-0-b219c945df53@linaro.org>
- <20231011-topic-sm8550-graphics-sspp-split-clk-v2-5-b219c945df53@linaro.org>
-In-Reply-To: <20231011-topic-sm8550-graphics-sspp-split-clk-v2-5-b219c945df53@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 11 Oct 2023 15:46:28 +0300
-Message-ID: <CAA8EJpoGXEFisVAde3whLAC8Tt1EL1DqOsi-kfbzMU+MtbK4Vg@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] drm/msm/dpu: enable writeback on SM8550
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
+References: <20231011112726.166052-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20231011112726.166052-1-dmitry.baryshkov@linaro.org>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Wed, 11 Oct 2023 07:52:32 -0500
+X-Gmail-Original-Message-ID: <CAL_Jsq+HdceLczej4_q-wjg2870v3y-e_E+jEq0xbetDguaXAw@mail.gmail.com>
+Message-ID: <CAL_Jsq+HdceLczej4_q-wjg2870v3y-e_E+jEq0xbetDguaXAw@mail.gmail.com>
+Subject: Re: [PATCH] of: export of_find_next_cache_node() for modules
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Frank Rowand <frowand.list@gmail.com>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,58 +65,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 11 Oct 2023 at 14:59, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+On Wed, Oct 11, 2023 at 6:27=E2=80=AFAM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
 >
-> Enable WB2 hardware block, enabling writeback support on this platform.
->
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> The qcom-cpufreq-nvmem module uses of_find_next_cache_node() function,
+> so export it to be available to the modules.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+You really should be using the cacheinfo API which has already parsed
+the cache nodes.
 
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h | 16 ++++++++++++++++
->  1 file changed, 16 insertions(+)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> index 4590a01c1252..d83a68a2cc0a 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> @@ -321,6 +321,20 @@ static const struct dpu_dsc_cfg sm8550_dsc[] = {
->         },
->  };
->
-> +static const struct dpu_wb_cfg sm8550_wb[] = {
-> +       {
-> +               .name = "wb_2", .id = WB_2,
-> +               .base = 0x65000, .len = 0x2c8,
-> +               .features = WB_SM8250_MASK,
-> +               .format_list = wb2_formats,
-> +               .num_formats = ARRAY_SIZE(wb2_formats),
-> +               .xin_id = 6,
-> +               .vbif_idx = VBIF_RT,
-> +               .maxlinewidth = 4096,
-> +               .intr_wb_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 4),
-> +       },
-> +};
-> +
->  static const struct dpu_intf_cfg sm8550_intf[] = {
->         {
->                 .name = "intf_0", .id = INTF_0,
-> @@ -418,6 +432,8 @@ const struct dpu_mdss_cfg dpu_sm8550_cfg = {
->         .dsc = sm8550_dsc,
->         .merge_3d_count = ARRAY_SIZE(sm8550_merge_3d),
->         .merge_3d = sm8550_merge_3d,
-> +       .wb_count = ARRAY_SIZE(sm8550_wb),
-> +       .wb = sm8550_wb,
->         .intf_count = ARRAY_SIZE(sm8550_intf),
->         .intf = sm8550_intf,
->         .vbif_count = ARRAY_SIZE(sm8550_vbif),
->
-> --
-> 2.34.1
->
+Also, why do you need a platform_device? I don't see a driver.
+cacheinfo already creates a struct device, so kind of weird to have 2
+devices.
 
-
--- 
-With best wishes
-Dmitry
+Rob
