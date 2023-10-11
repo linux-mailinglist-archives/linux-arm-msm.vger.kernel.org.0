@@ -2,126 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C9F67C55BA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 15:42:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 610707C55EB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 15:55:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234976AbjJKNmt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Oct 2023 09:42:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36108 "EHLO
+        id S232122AbjJKNzZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Oct 2023 09:55:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232091AbjJKNms (ORCPT
+        with ESMTP id S231879AbjJKNzZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Oct 2023 09:42:48 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F10DF98;
-        Wed, 11 Oct 2023 06:42:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1697031767; x=1728567767;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=7YfsHhsopKCCqEyes/Zq8paien7jAELVx6130kYHaq0=;
-  b=auYk2Z/NX3U1qGvG+HR+IS68IAOAG9+3F03wBJ8sDDj0Ss4P97BLFxPG
-   bPwRgK3ke0Ruo3gmOcUIuQO4CG1/TSp2ZFltGDMSrFrnEKxJeqmNDm53b
-   xN8E0smmM/nO/8jCBnsPwLJCy0/LllMkWoQd8gzp/zJSRkOVZrfgIwHTT
-   8thl1eamT6h8FMBHs5GGQgOBRwz1vh2JrxmmWCnBqEqPbtQAaNUFZIOw3
-   tqUSF9GheXxqnsOpF/xVrRvKOQd6SSXgYp+WSVQdY9bEBUUsRN7w7cCBY
-   VKIoNZJenM9UxuBGcoZxiJrxNPMQX5jPmT3PZSFGeQX8Ytb+21p+gA7Ys
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10860"; a="448864022"
-X-IronPort-AV: E=Sophos;i="6.03,216,1694761200"; 
-   d="scan'208";a="448864022"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Oct 2023 06:42:46 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10860"; a="753823924"
-X-IronPort-AV: E=Sophos;i="6.03,216,1694761200"; 
-   d="scan'208";a="753823924"
-Received: from lkp-server02.sh.intel.com (HELO f64821696465) ([10.239.97.151])
-  by orsmga002.jf.intel.com with ESMTP; 11 Oct 2023 06:42:39 -0700
-Received: from kbuild by f64821696465 with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1qqZTq-0002Fv-2r;
-        Wed, 11 Oct 2023 13:42:32 +0000
-Date:   Wed, 11 Oct 2023 21:42:13 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Mrinmay Sarkar <quic_msarkar@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, konrad.dybcio@linaro.org, mani@kernel.org
-Cc:     oe-kbuild-all@lists.linux.dev, quic_shazhuss@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_ramkri@quicinc.com,
-        quic_nayiluri@quicinc.com, dmitry.baryshkov@linaro.org,
-        robh@kernel.org, quic_krichai@quicinc.com,
-        quic_vbadigan@quicinc.com, quic_parass@quicinc.com,
-        Mrinmay Sarkar <quic_msarkar@quicinc.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <helgaas@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
-        linux-phy@lists.infradead.org
-Subject: Re: [PATCH v2 3/4] PCI: epf-mhi: Add support for SA8775P
-Message-ID: <202310112157.VcDgcECw-lkp@intel.com>
-References: <1697023109-23671-4-git-send-email-quic_msarkar@quicinc.com>
+        Wed, 11 Oct 2023 09:55:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C44EE92
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 06:54:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1697032477;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=xrlMJK0HKaF7VGhnGhdLQ/tjhSDJ2FSBz3+97dLCK6s=;
+        b=NzdY454wySF6Ds4PSUSqJCD54NGiZVtRw5iEYiaX/js1rQsi75sT15ECKhtstBwmqrWZig
+        oOYplMS0o0MWVgKPx2l2r7SKCkpLhhlKj7p44ahkODlxDSPEQp0SY/ShOFAKX7TD/0mCI0
+        25pd9D3UQSeXTegwhSHp6JIwGXg2FnQ=
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-643-LqngZNR0MfK65-nBmpJ4bA-1; Wed, 11 Oct 2023 09:54:35 -0400
+X-MC-Unique: LqngZNR0MfK65-nBmpJ4bA-1
+Received: by mail-yw1-f197.google.com with SMTP id 00721157ae682-5a7d1816bccso20794037b3.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 06:54:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697032475; x=1697637275;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xrlMJK0HKaF7VGhnGhdLQ/tjhSDJ2FSBz3+97dLCK6s=;
+        b=rA7ERYI7RYY6W5eqlGL8Xwj3gDUrlmEviyqCwKxVnav9MCOYrmuO8P8wyN4EQdIuc2
+         +urNB0+s9546MDOWiuqk4kgCIw9Z5Csu8ShfOOCOXzr7qsKavIX6HHFwgZewz57D0j+z
+         7szsBwd1P727XDy77qOK/G9WYKb4CjsQFKPhl9IvuUKZ3P8OOmmC/95sc0sXcmcA5wzi
+         diKoUWOVmCqno2Zl+lI+HTwAo8W5YL/VF5j6jIXhBbhjN+1CAOW7WOcI+kIjUvntmSuP
+         w/H2+ZTqwHupjX1IuG8OVXj1pw0y+cj+1jp7RBIZPkodT9i+4zOhV8O7a42NoIq1yqiN
+         G3Mg==
+X-Gm-Message-State: AOJu0YyV4SUuRmYK41CYxIkhpFfXNF2LcIN5wdW9YlkMXHd6e2fhTL9v
+        sry1lDgrJA9PL5LKNLHkNTdbMN1oub9VV6X6L3J+zMqqPM/hpSuDIcSY8VcdiqRFUk64hdNKl6a
+        XpFtrgCn56zzB5c9LzuA+aZ6g+Q==
+X-Received: by 2002:a25:8d82:0:b0:d06:4f8a:53d5 with SMTP id o2-20020a258d82000000b00d064f8a53d5mr19381117ybl.1.1697032475247;
+        Wed, 11 Oct 2023 06:54:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEO44bCWKWio9yPI2XTbX7B/vxj+w0gjchXofCDSYpbleULrpuMqiXhrHxbDgDlWiqm5rLIKw==
+X-Received: by 2002:a25:8d82:0:b0:d06:4f8a:53d5 with SMTP id o2-20020a258d82000000b00d064f8a53d5mr19381105ybl.1.1697032474945;
+        Wed, 11 Oct 2023 06:54:34 -0700 (PDT)
+Received: from fedora ([2600:1700:1ff0:d0e0::37])
+        by smtp.gmail.com with ESMTPSA id bu15-20020ad455ef000000b0066d04196c39sm735289qvb.81.2023.10.11.06.54.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Oct 2023 06:54:34 -0700 (PDT)
+Date:   Wed, 11 Oct 2023 08:54:32 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Bartosz Golaszewski <brgl@bgdev.pl>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        Alex Elder <elder@linaro.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, kernel@quicinc.com,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v3 07/15] firmware: qcom: scm: make qcom_scm_assign_mem()
+ use the TZ allocator
+Message-ID: <nq6m3v2wflhv5qgxtllympnzqtbtcn7d7ihgw5rdpvqjugv2xs@4vpuzoopkeic>
+References: <20231009153427.20951-1-brgl@bgdev.pl>
+ <20231009153427.20951-8-brgl@bgdev.pl>
+ <v5ty4xeshodjlpyatqlrjipqejazamuhqhauorujveyqzpikoq@rftlvk6354yx>
+ <CAMRc=MdGABGa_bc3_ug+iSKtMg9pcKe40F7zv9Ff2C0ed8i2=Q@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1697023109-23671-4-git-send-email-quic_msarkar@quicinc.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMRc=MdGABGa_bc3_ug+iSKtMg9pcKe40F7zv9Ff2C0ed8i2=Q@mail.gmail.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mrinmay,
+On Wed, Oct 11, 2023 at 09:41:49AM +0200, Bartosz Golaszewski wrote:
+> On Wed, Oct 11, 2023 at 12:19 AM Andrew Halaney <ahalaney@redhat.com> wrote:
+> >
+> > On Mon, Oct 09, 2023 at 05:34:19PM +0200, Bartosz Golaszewski wrote:
+> > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > >
+> > > Let's use the new TZ memory allocator to obtain a buffer for this call
+> > > instead of using dma_alloc_coherent().
+> > >
+> > > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > > ---
+> > >  drivers/firmware/qcom/qcom_scm.c | 10 ++++++----
+> > >  1 file changed, 6 insertions(+), 4 deletions(-)
+> > >
+> > > diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+> > > index 71e98b666391..754f6056b99f 100644
+> > > --- a/drivers/firmware/qcom/qcom_scm.c
+> > > +++ b/drivers/firmware/qcom/qcom_scm.c
+> > > @@ -4,6 +4,7 @@
+> > >   */
+> > >
+> > >  #include <linux/arm-smccc.h>
+> > > +#include <linux/cleanup.h>
+> > >  #include <linux/clk.h>
+> > >  #include <linux/completion.h>
+> > >  #include <linux/cpumask.h>
+> > > @@ -998,14 +999,13 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
+> > >       struct qcom_scm_mem_map_info *mem_to_map;
+> > >       phys_addr_t mem_to_map_phys;
+> > >       phys_addr_t dest_phys;
+> > > -     dma_addr_t ptr_phys;
+> > > +     phys_addr_t ptr_phys;
+> > >       size_t mem_to_map_sz;
+> > >       size_t dest_sz;
+> > >       size_t src_sz;
+> > >       size_t ptr_sz;
+> > >       int next_vm;
+> > >       __le32 *src;
+> > > -     void *ptr;
+> >
+> > nit: couldn't you keep this up here?
+> >
+> 
+> This still needs to make its way into the coding style guide but I got
+> yelled at by Linus Torvalds personally for not declaring the managed
+> variables where they are initialized. So this is the correct approach.
 
-kernel test robot noticed the following build warnings:
+I'm being a stick in the mud, but couldn't you initialize to NULL and
+keep them all up top? That seems more in line with the current "declare
+all variables at the start of function" guideline the kernel follows.
 
-[auto build test WARNING on pci/next]
-[also build test WARNING on pci/for-linus robh/for-next linus/master v6.6-rc5 next-20231011]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Not a big deal... yours call! but /me shrugs
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Mrinmay-Sarkar/dt-bindings-PCI-qcom-ep-Add-support-for-SA8775P-SoC/20231011-192329
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git next
-patch link:    https://lore.kernel.org/r/1697023109-23671-4-git-send-email-quic_msarkar%40quicinc.com
-patch subject: [PATCH v2 3/4] PCI: epf-mhi: Add support for SA8775P
-config: alpha-allyesconfig (https://download.01.org/0day-ci/archive/20231011/202310112157.VcDgcECw-lkp@intel.com/config)
-compiler: alpha-linux-gcc (GCC) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231011/202310112157.VcDgcECw-lkp@intel.com/reproduce)
+> 
+> Bart
+> 
+> > Otherwise,
+> >
+> > Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+> >
+> > >       int ret, i, b;
+> > >       u64 srcvm_bits = *srcvm;
+> > >
+> > > @@ -1015,10 +1015,13 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
+> > >       ptr_sz = ALIGN(src_sz, SZ_64) + ALIGN(mem_to_map_sz, SZ_64) +
+> > >                       ALIGN(dest_sz, SZ_64);
+> > >
+> > > -     ptr = dma_alloc_coherent(__scm->dev, ptr_sz, &ptr_phys, GFP_KERNEL);
+> > > +     void *ptr __free(qcom_tzmem) = qcom_tzmem_alloc(__scm->mempool,
+> > > +                                                     ptr_sz, GFP_KERNEL);
+> > >       if (!ptr)
+> > >               return -ENOMEM;
+> > >
+> > > +     ptr_phys = qcom_tzmem_to_phys(ptr);
+> > > +
+> > >       /* Fill source vmid detail */
+> > >       src = ptr;
+> > >       i = 0;
+> > > @@ -1047,7 +1050,6 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
+> > >
+> > >       ret = __qcom_scm_assign_mem(__scm->dev, mem_to_map_phys, mem_to_map_sz,
+> > >                                   ptr_phys, src_sz, dest_phys, dest_sz);
+> > > -     dma_free_coherent(__scm->dev, ptr_sz, ptr, ptr_phys);
+> > >       if (ret) {
+> > >               dev_err(__scm->dev,
+> > >                       "Assign memory protection call failed %d\n", ret);
+> > > --
+> > > 2.39.2
+> > >
+> >
+> 
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202310112157.VcDgcECw-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> drivers/pci/endpoint/functions/pci-epf-mhi.c:126:23: warning: initialization discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
-     126 |         .epf_header = &sa8775p_header,
-         |                       ^
-
-
-vim +/const +126 drivers/pci/endpoint/functions/pci-epf-mhi.c
-
-   123	
-   124	static const struct pci_epf_mhi_ep_info sa8775p_info = {
-   125		.config = &mhi_v1_config,
- > 126		.epf_header = &sa8775p_header,
-   127		.bar_num = BAR_0,
-   128		.epf_flags = PCI_BASE_ADDRESS_MEM_TYPE_32,
-   129		.msi_count = 32,
-   130		.mru = 0x8000,
-   131	};
-   132	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
