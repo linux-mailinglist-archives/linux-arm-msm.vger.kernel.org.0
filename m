@@ -2,60 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 420307C60A6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 00:55:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D4F8D7C60AF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 00:58:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233761AbjJKWz6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Oct 2023 18:55:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49166 "EHLO
+        id S233277AbjJKW6E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Oct 2023 18:58:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233397AbjJKWz5 (ORCPT
+        with ESMTP id S230108AbjJKW6D (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Oct 2023 18:55:57 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64450B7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 15:55:54 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-503056c8195so513624e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 15:55:54 -0700 (PDT)
+        Wed, 11 Oct 2023 18:58:03 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF90AA4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 15:58:01 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-5042bfb4fe9so511900e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 15:58:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697064952; x=1697669752; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1697065080; x=1697669880; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ijktYp/nC46J+ODjUsZ6HxJVtpF7dTRIW8vGjhqz+nI=;
-        b=EbXDuDwnoZt8992tPcZ/rV8RBzHxseQfKvlQ28G5/Gfbn4hhqtlfho6pyQpYygEV9S
-         +Ip/J6idAY1yYwkNORlkDmi0tA6JzualVsKqBhY/eBZ+4cVAJTufYd8a93HQG9NlGMOW
-         NtuX2HNy0wm94eONRHf5X5Gbz4UmND+WK4N6B3weMmWREmn32DuiPsrXlqmkz9WFWzPy
-         blJ3MrHHsSJ8x9K1qlS7Z4pL3MDJQEIm5IPsp+n+e7tilzmjJ1jcjgAIUV4ARbHYV+l7
-         SicfOc+PWC5BdY570YogvrKMlK4HY+OTVUHI635fZxi/4bfgYcxdfrQzBSRh/wvWQftJ
-         tGJg==
+        bh=rl55h7C3SyZnNy+O71KrsWqYJTZ+/tLu3QsiXHqMENQ=;
+        b=cx5FoHWQwoDmo4aoVgZ/r24lAERsFtFrXStHows8HA1tBpDGOBrlkfQQ6l9EMhGLIy
+         q5fMnvA4NQRiaM/hhqJNRFs/3KfeBDhRpt3TLoEmINlvx58X0aBaVxiE56RI1GKpdJzH
+         /fek0ihMXYYmIX1o7gHFmV5k0mqwOZj9MbyuB+m1Ix7zQdOZBFgNde7aMNzLiI+TV/Qe
+         d7fjXypwSSekoBlMc9qUG01mExBy1R6CfP64XkYZ0mbaIwDmhXJegZD2QTWR7eO5Hxk6
+         i6TSas42r/6uXMjI+jd2Fs8oU9rFUtX3o/Im7xak/wIjEGYTajTHLMaV6Rmgu7GlW9Yn
+         8Ppw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697064952; x=1697669752;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1697065080; x=1697669880;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ijktYp/nC46J+ODjUsZ6HxJVtpF7dTRIW8vGjhqz+nI=;
-        b=OBMTVmb0/e1Bu5s0dctFiHenBd+OPlXtu1A8j1QNprZzKd0i0OKeEIMu/RXQ1B9Cvo
-         9BNA5ADghI3TD/aCBuhx0iEjlBlZPhJxLrNOrMYJYYNxen4jWCAWyOUySTajGDCiSrmM
-         wN58MHV9Mlz80oVtb6AIxUlJIdP29VES3nz1IJH3jVZvqjRB3wAH6iXUm8ljJcoAEfzi
-         vol282aA5lsP08k8+LwL//UlWMPgTKumYTA8Q7zF+wgC0FJ+DvMLXG1GoF/rPThl3/Cv
-         NW7pEDTwRsREl7pBGgKGDfCxtY4abD1O+An/ybjl/5yTQ843AmVZ01j7mA4G5XjnOYon
-         rdvQ==
-X-Gm-Message-State: AOJu0YzHHBf0KDmYsprE4Es5uLXhVEKIzWNBhhWl+9qOCyQ1JcwLg1l/
-        lKqMNwNOjAsiNFA+vRPES7fhpw==
-X-Google-Smtp-Source: AGHT+IE8QG9gNYHxFuZpnI7fjbHdUn6PGHJKfTpVe7Ctj62vJjepX/kK4X1+z2eQk2pxUisSS70AYw==
-X-Received: by 2002:a05:6512:3d93:b0:502:d743:8a6c with SMTP id k19-20020a0565123d9300b00502d7438a6cmr20706181lfv.9.1697064952374;
-        Wed, 11 Oct 2023 15:55:52 -0700 (PDT)
+        bh=rl55h7C3SyZnNy+O71KrsWqYJTZ+/tLu3QsiXHqMENQ=;
+        b=pMSjC2blLp5Urs+kE2sLTy7F3moMoH3jimTANSxSBSP7C3pWEq7rzG8IkqIVWuH0gq
+         Zj1d5Bjf9y8IZZbZxtWexq6oL1Y43VaINnZQSVFCf/PcclupzPR84UvzmCFGVr730++s
+         Zb74fLGH90R6GxHsPeBOP/VSlsF/fEc1h8KJahwD5ZbOOuL7TKRk5qBPCYwd2BPTE6+L
+         mxVwOJiLH7HRZfmTOydIYsSKuVnRrL8jeK/Jj+AU7aNeieHEgr1O5V0d+X2ZFzewa8SF
+         FlmdFvfi6+7E2f4QQ6XwKNDKnZkS0L6IQjxN1/fYj6qL9mZLY4wYRgL5+orJ4kuEyoYY
+         yxBQ==
+X-Gm-Message-State: AOJu0YzSRlYy3OCTzpvNLUj3t3LjqGIv2RiurbTXK4UDBnj1cwpKulRQ
+        XCOHEuhTz/OufA9HhNdm66dVpHjo8rJqcvPEymE=
+X-Google-Smtp-Source: AGHT+IHHqCfRObisz/7qoLWP+tfTpeZpdEFKBHfRQVj/YsZMwVwnRuy2ankQ+Gac264p415ytkSyCA==
+X-Received: by 2002:ac2:4431:0:b0:503:258d:643c with SMTP id w17-20020ac24431000000b00503258d643cmr17413387lfl.21.1697065079860;
+        Wed, 11 Oct 2023 15:57:59 -0700 (PDT)
 Received: from [172.30.204.102] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id w6-20020a19c506000000b0050333b7b29asm2471249lfe.240.2023.10.11.15.55.51
+        by smtp.gmail.com with ESMTPSA id w5-20020ac25985000000b0050579c4d0d5sm2464180lfn.133.2023.10.11.15.57.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Oct 2023 15:55:51 -0700 (PDT)
-Message-ID: <8ee2f72b-fcf4-4278-97b4-906046b40c6b@linaro.org>
-Date:   Thu, 12 Oct 2023 00:55:49 +0200
+        Wed, 11 Oct 2023 15:57:59 -0700 (PDT)
+Message-ID: <5c4f1bb0-eaa0-4ed9-81aa-9755c033c832@linaro.org>
+Date:   Thu, 12 Oct 2023 00:57:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: qcm6490: Add qcm6490 dts file
-To:     Mukesh Ojha <quic_mojha@quicinc.com>,
+Content-Language: en-US
+To:     Trilok Soni <quic_tsoni@quicinc.com>,
+        Mukesh Ojha <quic_mojha@quicinc.com>,
         Komal Bajaj <quic_kbajaj@quicinc.com>, agross@kernel.org,
         andersson@kernel.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
@@ -66,14 +68,13 @@ References: <20231003175456.14774-1-quic_kbajaj@quicinc.com>
  <5da2ba4f-5bf7-46ff-8204-0c169042dbfa@linaro.org>
  <3fd31aaa-f6bf-8440-6b08-fca2803171d9@quicinc.com>
  <dba83334-3971-46e9-9342-1344c5858be8@linaro.org>
- <442ac3d6-adcd-dbb7-96bb-de46023ec18e@quicinc.com>
-Content-Language: en-US
+ <01c7a346-1e8b-1767-7594-c8adcd4823c3@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <442ac3d6-adcd-dbb7-96bb-de46023ec18e@quicinc.com>
+In-Reply-To: <01c7a346-1e8b-1767-7594-c8adcd4823c3@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Level: *
@@ -85,10 +86,8 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 10/11/23 15:40, Mukesh Ojha wrote:
-> 
-> 
-> On 10/11/2023 3:17 PM, Konrad Dybcio wrote:
+On 10/11/23 19:35, Trilok Soni wrote:
+> On 10/11/2023 2:47 AM, Konrad Dybcio wrote:
 >>
 >>
 >> On 10/11/23 07:40, Mukesh Ojha wrote:
@@ -109,8 +108,7 @@ On 10/11/23 15:40, Mukesh Ojha wrote:
 >>>>> ---
 >>>> [...]
 >>>>
->>>>> diff --git a/arch/arm64/boot/dts/qcom/qcm6490.dtsi 
->>>>> b/arch/arm64/boot/dts/qcom/qcm6490.dtsi
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/qcm6490.dtsi b/arch/arm64/boot/dts/qcom/qcm6490.dtsi
 >>>>> new file mode 100644
 >>>>> index 000000000000..b93270cae9ae
 >>>>> --- /dev/null
@@ -118,8 +116,7 @@ On 10/11/23 15:40, Mukesh Ojha wrote:
 >>>>> @@ -0,0 +1,94 @@
 >>>>> +// SPDX-License-Identifier: BSD-3-Clause
 >>>>> +/*
->>>>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights 
->>>>> reserved.
+>>>>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
 >>>>> + */
 >>>>> +
 >>>>> +#include "sc7280.dtsi"
@@ -153,10 +150,8 @@ On 10/11/23 15:40, Mukesh Ojha wrote:
 >>> [1] and very active in the development and soon going to freeze its
 >>> memory map, so we are deriving memory map from sc7280 and creating
 >>> a new memory map for all IOT product with qcm6490.dtsi .
->> Stop reinventing the wheel. I'm not going to accept patches that are 
->> supposed to define ABI for products that are still in development.
->> Not unless Qualcomm changes their attitude towards unilaterally 
->> breaking things for no good reason.
+>> Stop reinventing the wheel. I'm not going to accept patches that are supposed to define ABI for products that are still in development.
+>> Not unless Qualcomm changes their attitude towards unilaterally breaking things for no good reason.
 >>
 >>>
 >>> [1]
@@ -171,86 +166,25 @@ On 10/11/23 15:40, Mukesh Ojha wrote:
 >>> in the market instead defining a new memory map what is going to come
 >>> with qcm6490.dtsi for IOT.
 >> Why would the OS care about the market segment you're targeting?
->> Why would the firmware you're building care about the market segment 
->> you're targeting? The LE vs LA vs LU vs WP vs whatever split is so 
->> unnecessary and arbitrary on the firmware/kernel side..
-First of all, I vented off on you very heavily in response to seeing 
-something I don't like, even though you didn't have anything to do with 
-it. Please accept my apology.
-
-There are some difficulties with integrating certain things upstream to 
-work out on a broader scale, but me screaming at engineers in public 
-won't help much with that.
-
-> Forgive me, if i ask some very basic question, just trying to put my
-> thought,
+>> Why would the firmware you're building care about the market segment you're targeting? The LE vs LA vs LU vs WP vs whatever split is so unnecessary and arbitrary on the firmware/kernel side..
+>>
+>> The firmware should either be fully relocatable (so that dynamic memory reservation can be used), unified so that there's no changes or better yet stored in separate memory so that q6 cores don't steal the RAM that the user paid for and you can do whatever ugly magic you please in there.
+>>
+>> This arbitrary segmentation makes it impossible to have a common base, or to explain what device should go where to a newcomer.
 > 
-> I agree, OS should not worry about the market segment, but through the
-> DT firmware, we can better optimize memory to either give more memory to
-> user or give more memory to certain DSP's to enable certain feature 
-> through the firmware like some logging infra etc., and due to which
-> certain gaps can get created where certain memory region need to be
-> move up or down due to increase in the carve-out.
-This is totally fine from a generic standpoint, however Qualcomm has a 
-history (and you can see that in most SoC DTSIs) of having a common (or 
-almost common) memory map on the vast majority of devices based on a 
-given family of SoCs. We've been steadily taking advantage of that for 
-quite some time.
-
-Here, we have an established compute SoC (7280-Chrome) with a memory 
-setup that roughly matches its mobile counterpart (6490-LA or 778G or 
-whatever different derivatives).
-
-IIUC you're tweaking the software for the "new IoT BSP" and resizing 
-some regions resulted in many differences (as PIL regions tend to be 
-contiguous one-to-another). The real issue here is that if we express 
-this changed memory map in qcm6490.dtsi, all devices that have already 
-shipped with the older-than-"new IoT BSP" software will differ rather 
-significantly.
-
-You mentioned that there are going to be multiple users of *this new* 
-configuration, perhaps qcm6490-iot-common.dtsi (similar to 
-sc7280-chrome-common.dtsi) could facilitate the new bsp changes instead, 
-making it less ambiguous.
+> Konrad it is possible to use the same SOC with the multiple segments w/ the different memory maps.
 > 
-> Let's say X Soc released with some memory map, any derivative SoC Y
-> should follow X's memory map if it is including X dtsi ? and the reason 
-> why Y want to include X is solely the work done for X and most of 
-> peripheral memory addresses is matching.
+> Memory map here is how you organize the DDR and give it to various S/W and DSP regions etc;
 > 
-> But 'Y' could be different product, right? and it could have different
-> firmware and it is not like 'X' firmware will run on 'Y' ?
-Right, historically that hasn't happened very often but it could be like 
-that.
+> Also these SOCs are around for sometime and it is possible that new segments may use it. We can't solve
+> or know all the new segments need when the SOCs come out. Memory maps does provide that flexibility
+> and they don't change often. OEMs has also some flexibility to change the memory map if needed to optimize.
+> 
+> This SOC is around for quite sometime new usecases are expected to emerge. I don't see it as
+> way to stop us from taking these contributions into the linux-arm-msm.
+Yes I was way too harsh *and* didn't even clearly say what made me 
+upset, please see my reply at:
 
-> Now a days, most of our firmware are relocatable.
-And we should totally take advantage of that. Stephan Gerhold has 
-submitted some improvements that made it possible to dynamically 
-allocate memory regions on 8916, this should probably be reused and 
-expanded for other SoCs.  Would it be possible for you to try out 
-dynamic PIL region allocation on this board? See [1] for example.
-
-
-And the last thing is, I would like for you to give us some sort of a 
-stability promise for this. You mentioned this SoC spin is "very active 
-in the development", which makes me worried for DT compatibility with 
-future METAs. We have unfortunately historically had to deal with 
-different firmware packages behaving in divergent ways, and not always 
-consistently between devices (but the last point may be just vendor 
-modifications).
-
-We are supposed to be able to boot any future version of Linux with this 
-initial devicetree, unless there's some fatal flaw that needs 
-retroactive fixing (like when we tried to express LLCC as a contiguous 
-region instead of a set of slices up until 8550 release or so). Please 
-have that in mind, we've tried so hard to keep this ABI-like.
-
-And the last-last (I promise..) question, is this the final SoC silicon 
-revision? And is it any different from the QCM6490 that has landed in 
-some Android devices physically? Or does it simply ship with a different 
-sw stack?
+https://lore.kernel.org/linux-arm-msm/01c7a346-1e8b-1767-7594-c8adcd4823c3@quicinc.com/T/#m717a0f6f6759606870a1f8c1383bc65408d8de07
 
 Konrad
-
-[1] 
-https://lore.kernel.org/linux-arm-msm/20230911-msm8916-rmem-v1-4-b7089ec3e3a1@gerhold.net/#t
