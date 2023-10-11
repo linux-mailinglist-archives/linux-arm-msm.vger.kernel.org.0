@@ -2,97 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 36FBD7C522A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 13:33:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DE7487C522F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 13:35:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346382AbjJKLdb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Oct 2023 07:33:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45910 "EHLO
+        id S230274AbjJKLfK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Oct 2023 07:35:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346340AbjJKLda (ORCPT
+        with ESMTP id S234778AbjJKLfJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Oct 2023 07:33:30 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B8DF9E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 04:33:28 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-4066241289bso63441575e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 04:33:28 -0700 (PDT)
+        Wed, 11 Oct 2023 07:35:09 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F0D5B0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 04:35:07 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2bff776fe0bso87288991fa.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 04:35:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697024007; x=1697628807; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1697024106; x=1697628906; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=NZzIfsUIMKmIPZuNBx7E7QsUZucBviLZv516iI+4Ocg=;
-        b=XI0cRoLaEk0gElbpQX2B2oKaOHoLEPNWsFPXilKB56OVnnnhxp7U8TJSTwrhAoNiSy
-         CkR7DBeSD3WPuzb0DC+fiS16GD28nmp/q8y79L3ACQ6sywwIUTaIaEldJ10LX2Z4hg6G
-         ySeiOn2MTA/0f0WRK8PMdxow0BvLdhsH6bdxspc8KDbLi+2JEoUJNTT/UwnZzvJRVCdL
-         m1yT9vjcdDqqcKgmsGgjqYfxgwOUvepF2f5+10Ga/tTv5JYyJN4xY3PMWm4x/wDgTEtC
-         zqrQ5erlbRS8cVLqeQBl0tJtP2a7GIHGx9W8qmrvS9vMXh3F4lTHSr/muM4yHWtU+j+F
-         eEgA==
+        bh=/Qapw6Vwkgw3j/x2kavvMeUiB4u4WXfkqK2WO2XBHoI=;
+        b=JIVG3Drt2z4AnTJ3x0xy7WyfBYoiidfhfy2Y+m3CDu/qK4SJFhTiJLW7ibElrsF4Yk
+         CVucgTkIS0LunzZZzb4kYO8KdcqcS4bfU9H3UkGa4N/BKepGUGPpbmsJKVg7TNr8+vB5
+         VmEos5nVcLmmjTb1uDm9XlfiQrzI8DB0eTb4qEtR9ytDIuBeCRsnDFao2AQ16TFH/mNT
+         15jRwCGmv6mYo8yUFcmr2Id/x9QNLPPRmiFbHHCMkJVkTqq//QJ5HTQf2wj24u3pnS2i
+         VIUYyahktkcCg6N7YYRZcuEiWpQWtSkOWMgWzzVRgrlrRgW6elIfYpbcH2BEUzzaxgUB
+         UtTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697024007; x=1697628807;
+        d=1e100.net; s=20230601; t=1697024106; x=1697628906;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NZzIfsUIMKmIPZuNBx7E7QsUZucBviLZv516iI+4Ocg=;
-        b=vOjoJ+2sJIhxt0y+9R7a5OTQw1oFEhWOdfQHoge1UpoRwyj2Bvn7sKPbvm6UESyJY2
-         CMzrs9DF6JkLwRLKipGYJdqO+cvwS+Qv+br0+mrmq8M7zjifywRJpF100Hb6HkrzVVj2
-         LS7OkyRAQo39oUPVB8/YxZz+jBHueZrtVCIYiJDsLDw6AqrE6ZJzuQKZC1ZQSAi5u9+r
-         gCvC8guVT4vjFRUpOEBJCFmtqKPzpJKe+YW+ar5F+tCYBoNuekEiS9yh+pgKPxZ+Hunb
-         Ly8zLqCYeMydpvywhctaS707ntN9MM7OFb3kjAcehzN9hTqdbUfzd3WQ92MC/tHOIv4g
-         CTAw==
-X-Gm-Message-State: AOJu0YwGvu7U08ZBl1UKC/9KmBt/kBvkN1LQXongevTh8wlCraqKRVTo
-        AjTLWhNcjzVELLMLBZmOAoS2Hw==
-X-Google-Smtp-Source: AGHT+IHlFqTVAI33hYFedRn8qsiDw/z0zk+fcz9qZApVa3GB0mCrn5UsiF2BvKhEkad1pfHh4TclxQ==
-X-Received: by 2002:a7b:ce19:0:b0:405:3e9a:f1e3 with SMTP id m25-20020a7bce19000000b004053e9af1e3mr18935659wmc.11.1697024006816;
-        Wed, 11 Oct 2023 04:33:26 -0700 (PDT)
-Received: from [192.168.100.102] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id u6-20020a05600c00c600b00402ff8d6086sm16479381wmm.18.2023.10.11.04.33.25
+        bh=/Qapw6Vwkgw3j/x2kavvMeUiB4u4WXfkqK2WO2XBHoI=;
+        b=UCNfLuyvmWohhMfApoGlHVcxO/xKAJPiXYgzLNeCQZ17fUrjEFUrU/4UoQmuHkTskc
+         9SR5nHoFGcKqUbQbeOuxwS8XreOkHSI3+1X1IGyVF8B++bylFYdkWDFH/9RYJ9kWZCJM
+         9qbLq0XtDFCPw/chXokwVWAGpNviZuwh5BHzECAQ915H88kjacn7fU2F9AQ2SKPFEu9x
+         zAtV5riBq2r8RclghpqFyzLXjAGd0WrEQFWcIm5VHBtZzjLH5ER0qQnlEr61amEZ7yha
+         TCS1YJqrbtAZiNlONBBPBzcj+pQ1lNYpEYQm5rc9lCikkB4hwyns19Y5VH+El+LWUSqW
+         Ez4w==
+X-Gm-Message-State: AOJu0Yz8lN1vLrGanvkgjmWhPfMD26tZdj9XwZYLG64G1Z6dA7UPkh+N
+        sqSXuuvyP4yd4+cOM99BTlTqvA==
+X-Google-Smtp-Source: AGHT+IF5GLRI9qQunLWRzrMod3FWnDE+uoxeFzNq35YPTOaf98ygydLZmEYH1BWul8Cf/WIu46bWag==
+X-Received: by 2002:a2e:9e53:0:b0:2bf:fa62:5d0e with SMTP id g19-20020a2e9e53000000b002bffa625d0emr18110256ljk.2.1697024105878;
+        Wed, 11 Oct 2023 04:35:05 -0700 (PDT)
+Received: from [172.30.204.240] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id c5-20020a2ea1c5000000b002bcbb464a28sm2882350ljm.59.2023.10.11.04.35.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Oct 2023 04:33:26 -0700 (PDT)
-Message-ID: <fc35b4e4-a1ef-4200-a7d4-1f8ea3afa5c9@linaro.org>
-Date:   Wed, 11 Oct 2023 12:33:25 +0100
+        Wed, 11 Oct 2023 04:35:05 -0700 (PDT)
+Message-ID: <7297b408-06e8-41f3-a732-64c3cc3194e1@linaro.org>
+Date:   Wed, 11 Oct 2023 13:35:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 4/4] clk: qcom: add clock controller driver for
- qca8386/qca8084
+Subject: Re: [PATCH v1 5/5] arm64: dts: qcom: sa8775p: Add ep pcie0 controller
+ node
 Content-Language: en-US
-To:     Jie Luo <quic_luoj@quicinc.com>, andersson@kernel.org,
-        agross@kernel.org, konrad.dybcio@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+To:     Mrinmay Sarkar <quic_msarkar@quicinc.com>,
+        Manivannan Sadhasivam <mani@kernel.org>
+Cc:     agross@kernel.org, andersson@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_srichara@quicinc.com
-References: <20230923112105.18102-1-quic_luoj@quicinc.com>
- <20230923112105.18102-5-quic_luoj@quicinc.com>
- <10bcb0cc-19db-4914-bbc4-ef79c238a70d@linaro.org>
- <49c8a8ff-bdb9-a523-9587-d2a46d401e41@quicinc.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <49c8a8ff-bdb9-a523-9587-d2a46d401e41@quicinc.com>
+        quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
+        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
+        quic_parass@quicinc.com, Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
+        linux-phy@lists.infradead.org
+References: <1695218113-31198-1-git-send-email-quic_msarkar@quicinc.com>
+ <1695218113-31198-6-git-send-email-quic_msarkar@quicinc.com>
+ <20230921094823.GE2891@thinkpad>
+ <ca898b48-78e0-4bc7-c88c-a33338e7e47a@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <ca898b48-78e0-4bc7-c88c-a33338e7e47a@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/10/2023 12:26, Jie Luo wrote:
->>
->> 0004-clk-qcom-add-clock-controller-driver-for-qca8386-qca.patch has 
->> style problems, please review.
+
+
+On 10/11/23 12:44, Mrinmay Sarkar wrote:
 > 
-> Thanks Bryan for the review. The code line mentioned by CHECK is more 
-> than 100 columns, so i separate the lines.
+> On 9/21/2023 3:18 PM, Manivannan Sadhasivam wrote:
+>> On Wed, Sep 20, 2023 at 07:25:12PM +0530, Mrinmay Sarkar wrote:
+>>> Add ep pcie dtsi node for pcie0 controller found on sa8775p platform.
+>>>
+>> It would be good to add more info in the commit message, like PCIe 
+>> Gen, lane
+>> info, IP revision etc...
+>>
+>>> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+>>> ---
+[...]
 
-Yep. Remember to align the indentation as much as possible/reasonable. 
-Use your discretion.
+>>> +        max-link-speed = <3>;
+>> Gen 3?
+> there is some stability issue with gen4 so going with gen3 as of now.
+> Will update once issue is resolved.
+That's something that should have definitely been mentioned in the 
+commit message..
 
----
-bod
+Please try resolving this first, if it ends up requiring bindings 
+changes (missing clocks or whatever), it will be a pain.
+
+Konrad
