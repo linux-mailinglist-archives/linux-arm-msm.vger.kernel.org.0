@@ -2,78 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7FB8B7C5B5A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 20:30:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5FA87C5B65
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 20:32:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235150AbjJKSao (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Oct 2023 14:30:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36948 "EHLO
+        id S1376302AbjJKScw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Oct 2023 14:32:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376265AbjJKSan (ORCPT
+        with ESMTP id S1346960AbjJKScv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Oct 2023 14:30:43 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA3569E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 11:30:38 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-99357737980so18291266b.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 11:30:38 -0700 (PDT)
+        Wed, 11 Oct 2023 14:32:51 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63A9A9D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 11:32:48 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-9ae7383b7ecso280612466b.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 11:32:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697049037; x=1697653837; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1697049166; x=1697653966; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=mcH3V1IIM4gjK5mZgH1a0+WgRkjoukx8EMq1WRiQrXA=;
-        b=KgTJ5MyTvVuyqC+yVBWKaARDt6cgb++V96iLusTihBqTIqRMjQ2R2mfIMfPUPgSX1j
-         BlGZWwmBkxWQAc7zRHkdRMIV6h77AAR7qZBm3QKSQG69YaYBi7STHUoZNvVhNCNPqKHi
-         lCnCbsgXjcVji2wOATw7R9iTqh3UbKTEc4bEezWMJz/Mi6KcMgsU+8utJyatcRyGgxLJ
-         Lp5AflQNI4t/QtJVkALhXjFfvvFiLfpeWPW4jqcjy3B1JibDG83PhLvrTEld+ZEm79y3
-         DQtNeMBzq8JDJ2rZTU6zMop2Nr+/tUnljNZ+T3eMic6nIcxK1p1IOHmzs/vfpUb9v95m
-         18qw==
+        bh=pbI8FrvRKFZu6B2DbOdgldrjIGyQyHavEvB5fYDKWGc=;
+        b=oJ7CHRF7aR8YnBsR4YzaQZH/BNZTGkjHnKo6cGDo1z+9EFnXfq4tqFUbxnhk7IE9y+
+         uBBlE6pKM6TnlZuNslYJtKPhUvocRdSbHKidQ/tmkAm6AOoEblcqWOhsLox4c0FMkxVf
+         V6MlxZTYImLBuczg8tQgoBbRHR3L4XzP9yRb6rXQhKedhCFQ20qB3HJ+Sp1EoBRXH+J0
+         1GJw7MeiRZFAxuCVSr1OG6tyMnaCxUE0Ib1THUkbcfEwvm+wfDI1XXFrV3HJoj69hOVw
+         ds6PGa55YN+01ZQx1Vckrd+wiJgJweTWOynCCFbIP6DKAOetqd76sB9gHe8XKp44mIxC
+         0v5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697049037; x=1697653837;
+        d=1e100.net; s=20230601; t=1697049166; x=1697653966;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mcH3V1IIM4gjK5mZgH1a0+WgRkjoukx8EMq1WRiQrXA=;
-        b=CJnvk560N/6vCrKO2/9Qmaf+3jqqV4taQYBZJ7MHJYQjad4NM4E3Mk0yTzNxaBgTTl
-         GdiLEg511O2/cU9LluDmFQ+g3kAQPFmiEyTV7f+cVsI26EmmxVnlisMhJIF6cScEMLEh
-         QxN8fPKvQpg/g2lmnRWtqJBXKr6SlPKj1v1eRGhWZU9CQ8ky/Su1g4x4ZNkUH7fmEZe7
-         10qSKQ5y4GTk2LhebIK9m5Q+xyqKIideXDkvduRPNRUGK5YBOX3tfVXBb+R6DKvleJ0g
-         +nFPWgAYj89Fxlq5LzYc6vizR64eL+RtOxkQ2mXBBbriiCD8/hpLbExz4HQT3vDl20BY
-         k3Wg==
-X-Gm-Message-State: AOJu0YwflQYd3Sy8NI4vSRk0rsHYzTL0l/Bw8JSgnU2tSx6BFl0XW01p
-        JbuXcUbxZ4H1Z3iJvbtd+Zmrkg==
-X-Google-Smtp-Source: AGHT+IHe7nTUHI8cvy09i0uo8fzRIdaXeqrydSlHFNQ6DWkpwNkQ5dyuK02qYJg25HZ1xNsBD9yT1w==
-X-Received: by 2002:a17:906:530b:b0:9a2:1e03:1573 with SMTP id h11-20020a170906530b00b009a21e031573mr21206782ejo.65.1697049037170;
-        Wed, 11 Oct 2023 11:30:37 -0700 (PDT)
+        bh=pbI8FrvRKFZu6B2DbOdgldrjIGyQyHavEvB5fYDKWGc=;
+        b=oqLlTxu5pHI2/YuX722Giq2VEIIyZuF+5zY2ZiN9foyqGih2UBqwx0Z/de/IC+CFib
+         5+WN4+SLHFk1C4gGM9WVe4z4kGYErZdPAUM7Thezb7PMM0TEJ6WYvyCb4/1GI908UYoC
+         GjGsP+F9q6l/WJsMzrfZiH2QA39U1ywffXLCA46v56jhh/LTmnFFVExL42gaiW647Byl
+         6+F31ESxqxPXC/1EvT203syz1Kd1wSWoPft2rJYzkGkofJ+CtKrf6FEOqWRA3Cv5rw7l
+         5QlIBgQKnvfwrjDmwNY+9/PqBwNnkJVg6qWXSsHm4AXwX85M7Uyzvalk4L1JLkZ/J9G/
+         u2/g==
+X-Gm-Message-State: AOJu0Yy7jsJKYQBZ3DMbARRFqw68RU7IS6i5KxDycO//1GUecQ9+bgzR
+        7sPRs72OhrAQrPX96dP3aA1oDQ==
+X-Google-Smtp-Source: AGHT+IEvKx/9opJD11I3yrmKNEw13sUWCZut4WzxFnQK6B1AxF0mQwdlkAO07i8hZ8p+0l/6MH4cSQ==
+X-Received: by 2002:a17:906:cc14:b0:9bb:a243:e6fb with SMTP id ml20-20020a170906cc1400b009bba243e6fbmr3947027ejb.3.1697049166581;
+        Wed, 11 Oct 2023 11:32:46 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.100])
-        by smtp.gmail.com with ESMTPSA id y6-20020a170906558600b009ad778a68c5sm10204490ejp.60.2023.10.11.11.30.34
+        by smtp.gmail.com with ESMTPSA id p16-20020a17090628d000b009b654ba498csm10114886ejd.90.2023.10.11.11.32.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Oct 2023 11:30:36 -0700 (PDT)
-Message-ID: <b5c5d0d5-2752-4725-b5d5-063725bdb3e9@linaro.org>
-Date:   Wed, 11 Oct 2023 20:30:33 +0200
+        Wed, 11 Oct 2023 11:32:46 -0700 (PDT)
+Message-ID: <2a500b1a-93ad-4c65-bc61-48a019afd348@linaro.org>
+Date:   Wed, 11 Oct 2023 20:32:42 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] dt-bindings: PCI: qcom-ep: Add support for SA8775P
- SoC
+Subject: Re: [PATCH v5 1/5] dt-bindings: ufs: common: add OPP table
 Content-Language: en-US
-To:     Mrinmay Sarkar <quic_msarkar@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, konrad.dybcio@linaro.org, mani@kernel.org
-Cc:     quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
-        quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
-        dmitry.baryshkov@linaro.org, robh@kernel.org,
-        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
-        quic_parass@quicinc.com, Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
-        linux-phy@lists.infradead.org
-References: <1697023109-23671-1-git-send-email-quic_msarkar@quicinc.com>
- <1697023109-23671-2-git-send-email-quic_msarkar@quicinc.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
+        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
+        cw00.choi@samsung.com, andersson@kernel.org,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        jejb@linux.ibm.com, martin.petersen@oracle.com
+Cc:     alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
+        linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
+        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
+        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
+        bmasney@redhat.com, linux-kernel@vger.kernel.org,
+        Rob Herring <robh@kernel.org>
+References: <20231011122543.11922-1-manivannan.sadhasivam@linaro.org>
+ <20231011122543.11922-2-manivannan.sadhasivam@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -119,11 +119,11 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <1697023109-23671-2-git-send-email-quic_msarkar@quicinc.com>
+In-Reply-To: <20231011122543.11922-2-manivannan.sadhasivam@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -132,36 +132,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/10/2023 13:18, Mrinmay Sarkar wrote:
-> Add devicetree bindings support for SA8775P SoC.
-> Define reg and interrupt per platform.
+On 11/10/2023 14:25, Manivannan Sadhasivam wrote:
+> From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > 
-> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+> Except scaling UFS and bus clocks, it's necessary to scale also the
+> voltages of regulators or power domain performance state levels.  Adding
+> Operating Performance Points table allows to adjust power domain
+> performance state, depending on the UFS clock speed.
+> 
+> OPPv2 deprecates previous property limited to clock scaling:
+> freq-table-hz.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
->  .../devicetree/bindings/pci/qcom,pcie-ep.yaml      | 131 +++++++++++++++++----
->  1 file changed, 109 insertions(+), 22 deletions(-)
+>  .../devicetree/bindings/ufs/ufs-common.yaml   | 35 +++++++++++++++++--
+>  1 file changed, 32 insertions(+), 3 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> index a223ce0..8f219a6e 100644
-> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> @@ -13,36 +13,28 @@ properties:
->    compatible:
->      oneOf:
->        - enum:
-> +          - qcom,sa8775p-pcie-ep
->            - qcom,sdx55-pcie-ep
->            - qcom,sm8450-pcie-ep
->        - items:
-> +          - const: qcom,sa8775p-pcie-ep
+> diff --git a/Documentation/devicetree/bindings/ufs/ufs-common.yaml b/Documentation/devicetree/bindings/ufs/ufs-common.yaml
+> index bbaee4f5f7b2..1cb022cdc349 100644
+> --- a/Documentation/devicetree/bindings/ufs/ufs-common.yaml
+> +++ b/Documentation/devicetree/bindings/ufs/ufs-common.yaml
+> @@ -6,6 +6,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
+>  
+>  title: Common properties for Universal Flash Storage (UFS) Host Controllers
+>  
+> +
 
-So you broke all existing users.
+Drop blank line.
 
-It does not look like you tested the DTS against bindings. Please run
-`make dtbs_check W=1` (see
-Documentation/devicetree/bindings/writing-schema.rst or
-https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
-for instructions).
+>  maintainers:
+>    - Alim Akhtar <alim.akhtar@samsung.com>
+>    - Avri Altman <avri.altman@wdc.com>
+> @@ -20,11 +21,24 @@ properties:
+>        items:
+>          - description: Minimum frequency for given clock in Hz
+>          - description: Maximum frequency for given clock in Hz
+> +    deprecated: true
+>      description: |
+> +      Preferred is operating-points-v2.
+> +
+>        Array of <min max> operating frequencies in Hz stored in the same order
+> -      as the clocks property. If this property is not defined or a value in the
+> -      array is "0" then it is assumed that the frequency is set by the parent
+> -      clock or a fixed rate clock source.
+> +      as the clocks property. If either this property or operating-points-v2 is
+> +      not defined or a value in the array is "0" then it is assumed that the
+> +      frequency is set by the parent clock or a fixed rate clock source.
+> +
+> +  operating-points-v2:
+> +    description:
+> +      Preferred over freq-table-hz.
+> +      If present, each OPP must contain array of frequencies stored in the same
+> +      order for each clock.  If clock frequency in the array is "0" then it is
+> +      assumed that the frequency is set by the parent clock or a fixed rate
+> +      clock source.
+> +
+> +  opp-table: true
+
+opp-table:
+  type: object
 
 
 
