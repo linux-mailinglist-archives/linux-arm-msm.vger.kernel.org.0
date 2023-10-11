@@ -2,189 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D4F8D7C60AF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 00:58:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1338F7C6130
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 01:39:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233277AbjJKW6E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Oct 2023 18:58:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41768 "EHLO
+        id S235217AbjJKXjZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Oct 2023 19:39:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230108AbjJKW6D (ORCPT
+        with ESMTP id S233796AbjJKXjZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Oct 2023 18:58:03 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF90AA4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 15:58:01 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-5042bfb4fe9so511900e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 15:58:01 -0700 (PDT)
+        Wed, 11 Oct 2023 19:39:25 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6846B9E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 16:39:22 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2c186ea81c7so4732911fa.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 16:39:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697065080; x=1697669880; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rl55h7C3SyZnNy+O71KrsWqYJTZ+/tLu3QsiXHqMENQ=;
-        b=cx5FoHWQwoDmo4aoVgZ/r24lAERsFtFrXStHows8HA1tBpDGOBrlkfQQ6l9EMhGLIy
-         q5fMnvA4NQRiaM/hhqJNRFs/3KfeBDhRpt3TLoEmINlvx58X0aBaVxiE56RI1GKpdJzH
-         /fek0ihMXYYmIX1o7gHFmV5k0mqwOZj9MbyuB+m1Ix7zQdOZBFgNde7aMNzLiI+TV/Qe
-         d7fjXypwSSekoBlMc9qUG01mExBy1R6CfP64XkYZ0mbaIwDmhXJegZD2QTWR7eO5Hxk6
-         i6TSas42r/6uXMjI+jd2Fs8oU9rFUtX3o/Im7xak/wIjEGYTajTHLMaV6Rmgu7GlW9Yn
-         8Ppw==
+        d=linaro.org; s=google; t=1697067560; x=1697672360; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=k9ZbNL2ZO2xnYw+f/qXgIy6W1+ECSK31UMyr+/My700=;
+        b=FZELL5pLvoNxVkwkPCUDYv0MJmtKiFmpyoAWeRM+vkY8qcrTi309QgdtA4LXEKfeyc
+         UzT1SCpavGrzcJoYyJqImCy2Sgx2FbTVNWCL7MnTMx1S2rfPPwOYEto8O9Yhh7ORXB3M
+         Bv9CRGuhehk+Nmb1HKCWgtbcdWUdDZbFkxFudUAGepSqYmGGT9/216PgxoZCjbTaMKHI
+         iP/FAbf/H0aoTu7siBiQ5YXLThEml2x8aaMGw8MD0tQGLbEKe2McIv73jXwk1v0kWFuW
+         XxWyOQqfbhNOBuDN92LA+ucprMULnseCjZFUducG/j7DH6GcruFiXtnFWPz+p73FeNw7
+         rjNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697065080; x=1697669880;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rl55h7C3SyZnNy+O71KrsWqYJTZ+/tLu3QsiXHqMENQ=;
-        b=pMSjC2blLp5Urs+kE2sLTy7F3moMoH3jimTANSxSBSP7C3pWEq7rzG8IkqIVWuH0gq
-         Zj1d5Bjf9y8IZZbZxtWexq6oL1Y43VaINnZQSVFCf/PcclupzPR84UvzmCFGVr730++s
-         Zb74fLGH90R6GxHsPeBOP/VSlsF/fEc1h8KJahwD5ZbOOuL7TKRk5qBPCYwd2BPTE6+L
-         mxVwOJiLH7HRZfmTOydIYsSKuVnRrL8jeK/Jj+AU7aNeieHEgr1O5V0d+X2ZFzewa8SF
-         FlmdFvfi6+7E2f4QQ6XwKNDKnZkS0L6IQjxN1/fYj6qL9mZLY4wYRgL5+orJ4kuEyoYY
-         yxBQ==
-X-Gm-Message-State: AOJu0YzSRlYy3OCTzpvNLUj3t3LjqGIv2RiurbTXK4UDBnj1cwpKulRQ
-        XCOHEuhTz/OufA9HhNdm66dVpHjo8rJqcvPEymE=
-X-Google-Smtp-Source: AGHT+IHHqCfRObisz/7qoLWP+tfTpeZpdEFKBHfRQVj/YsZMwVwnRuy2ankQ+Gac264p415ytkSyCA==
-X-Received: by 2002:ac2:4431:0:b0:503:258d:643c with SMTP id w17-20020ac24431000000b00503258d643cmr17413387lfl.21.1697065079860;
-        Wed, 11 Oct 2023 15:57:59 -0700 (PDT)
-Received: from [172.30.204.102] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id w5-20020ac25985000000b0050579c4d0d5sm2464180lfn.133.2023.10.11.15.57.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Oct 2023 15:57:59 -0700 (PDT)
-Message-ID: <5c4f1bb0-eaa0-4ed9-81aa-9755c033c832@linaro.org>
-Date:   Thu, 12 Oct 2023 00:57:57 +0200
+        d=1e100.net; s=20230601; t=1697067560; x=1697672360;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=k9ZbNL2ZO2xnYw+f/qXgIy6W1+ECSK31UMyr+/My700=;
+        b=YOoscWPOGYxhC1kkBy1UxlDmJA+jr5SXoouCOc13QBnRayRl3X1mj0/voJ9NjrkS9O
+         fkMnHrMhFFAUW/e03KMawxMY75huKuPkThS1a0bRwGmnrWG4RQpIsQGVbEaeoVozSr9b
+         cjjZx6qibfHuaqzG3FktLgnYdW0QKG9yiyUsPKQDND7e1F5jJIpKgR/pjvBYyp8ZCfnR
+         Iy1GAvHiddrt4qKoGpymh2HKtVp3RGwvVzrUC5qSY4BZcf6IPys840uxvwx+arS8gmlC
+         zqTCsEr3HpeOULY9cWXYVeifOLGIWTrCJq9Cn2ZVzfvbRjRsNJ4f1AJOnho81F8oDvJP
+         si4g==
+X-Gm-Message-State: AOJu0YyK7LroeVM/qcHoeNqXHT2ghzbuBIe9AJnvjRjOB6iv6P1731Lj
+        f2ZJDIzABOp3QuoDhQmO4tED3Q==
+X-Google-Smtp-Source: AGHT+IElT7AQoWznFRUzefnPxjuyk/f4YoUnTLHexKJLP0Tp7XWPjqhbr10/ecYGLyY7bzUkIUh3WQ==
+X-Received: by 2002:a05:6512:282b:b0:505:7371:ec83 with SMTP id cf43-20020a056512282b00b005057371ec83mr22292485lfb.48.1697067560648;
+        Wed, 11 Oct 2023 16:39:20 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id m27-20020a056512015b00b0050567cdb8f6sm2466032lfo.239.2023.10.11.16.39.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Oct 2023 16:39:20 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH 0/2] drm/msm/dsi: fix handling of TX DMA buffer
+Date:   Thu, 12 Oct 2023 02:39:17 +0300
+Message-Id: <20231011233919.410099-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: qcm6490: Add qcm6490 dts file
-Content-Language: en-US
-To:     Trilok Soni <quic_tsoni@quicinc.com>,
-        Mukesh Ojha <quic_mojha@quicinc.com>,
-        Komal Bajaj <quic_kbajaj@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, luca.weiss@fairphone.com
-References: <20231003175456.14774-1-quic_kbajaj@quicinc.com>
- <20231003175456.14774-3-quic_kbajaj@quicinc.com>
- <5da2ba4f-5bf7-46ff-8204-0c169042dbfa@linaro.org>
- <3fd31aaa-f6bf-8440-6b08-fca2803171d9@quicinc.com>
- <dba83334-3971-46e9-9342-1344c5858be8@linaro.org>
- <01c7a346-1e8b-1767-7594-c8adcd4823c3@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <01c7a346-1e8b-1767-7594-c8adcd4823c3@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Level: *
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Fix two issues in how the MSM DSI driver handles the GEM-allocated TX
+DMA buffer object.
 
+Dmitry Baryshkov (2):
+  drm/msm/dsi: use msm_gem_kernel_put to free TX buffer
+  drm/msm/dsi: free TX buffer in unbind
 
-On 10/11/23 19:35, Trilok Soni wrote:
-> On 10/11/2023 2:47 AM, Konrad Dybcio wrote:
->>
->>
->> On 10/11/23 07:40, Mukesh Ojha wrote:
->>>
->>>
->>> On 10/7/2023 5:02 AM, Konrad Dybcio wrote:
->>>> On 3.10.2023 19:54, Komal Bajaj wrote:
->>>>> Add qcm6490 devicetree file for QCM6490 SoC and QCM6490 IDP
->>>>> platform. QCM6490 is derived from SC7280 meant for various
->>>>> form factor including IoT.
->>>>>
->>>>> Supported features are, as of now:
->>>>> * Debug UART
->>>>> * eMMC
->>>>> * USB
->>>>>
->>>>> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
->>>>> ---
->>>> [...]
->>>>
->>>>> diff --git a/arch/arm64/boot/dts/qcom/qcm6490.dtsi b/arch/arm64/boot/dts/qcom/qcm6490.dtsi
->>>>> new file mode 100644
->>>>> index 000000000000..b93270cae9ae
->>>>> --- /dev/null
->>>>> +++ b/arch/arm64/boot/dts/qcom/qcm6490.dtsi
->>>>> @@ -0,0 +1,94 @@
->>>>> +// SPDX-License-Identifier: BSD-3-Clause
->>>>> +/*
->>>>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
->>>>> + */
->>>>> +
->>>>> +#include "sc7280.dtsi"
->>>>> +
->>>>> +/*
->>>>> + * Delete unused sc7280 memory nodes and define the memory regions
->>>>> + * required by qcm6490
->>>>> + */
->>>>> +/delete-node/ &rmtfs_mem;
->>>>> +/delete-node/ &wlan_ce_mem;
->>>>> +
->>>>> +/{
->>>>> +    reserved-memory {
->>>>> +        cdsp_secure_heap_mem: cdsp-secure-heap@81800000 {
->>>>> +            reg = <0x0 0x81800000 0x0 0x1e00000>;
->>>>> +            no-map;
->>>>> +        };
->>>>> +
->>>>> +        camera_mem: camera@84300000 {
->>>> Uhh.. this is totally not the same memory map that I have on a
->>>> random msm-5.4 source+devicetree drop (which does in turn align
->>>> with the one on QCM6490 Fairphone 5, as it should because it's
->>>> a rebadged reference device for the most part)..
->>>>
->>>> Did you guys *really* redo it between software releases?
->>>
->>> QCM6490 fairphone is special case where same SOC is used for mobile
->>> product and it uses sc7280 memory map.
->>>
->>> Current patch adds support for the same SOC marketed for IOT segment
->>> [1] and very active in the development and soon going to freeze its
->>> memory map, so we are deriving memory map from sc7280 and creating
->>> a new memory map for all IOT product with qcm6490.dtsi .
->> Stop reinventing the wheel. I'm not going to accept patches that are supposed to define ABI for products that are still in development.
->> Not unless Qualcomm changes their attitude towards unilaterally breaking things for no good reason.
->>
->>>
->>> [1]
->>> https://www.qualcomm.com/products/internet-of-things/industrial/building-enterprise/qcm6490
->>>
->>>>
->>>> This SoC family has been on the market for quite some time,
->>>> breaking software expectations like that is not cool, especially
->>>> on a product with a promised lifespan of 10 years or whatever!
->>>
->>> I agree, but we are not changing anything for product which are there
->>> in the market instead defining a new memory map what is going to come
->>> with qcm6490.dtsi for IOT.
->> Why would the OS care about the market segment you're targeting?
->> Why would the firmware you're building care about the market segment you're targeting? The LE vs LA vs LU vs WP vs whatever split is so unnecessary and arbitrary on the firmware/kernel side..
->>
->> The firmware should either be fully relocatable (so that dynamic memory reservation can be used), unified so that there's no changes or better yet stored in separate memory so that q6 cores don't steal the RAM that the user paid for and you can do whatever ugly magic you please in there.
->>
->> This arbitrary segmentation makes it impossible to have a common base, or to explain what device should go where to a newcomer.
-> 
-> Konrad it is possible to use the same SOC with the multiple segments w/ the different memory maps.
-> 
-> Memory map here is how you organize the DDR and give it to various S/W and DSP regions etc;
-> 
-> Also these SOCs are around for sometime and it is possible that new segments may use it. We can't solve
-> or know all the new segments need when the SOCs come out. Memory maps does provide that flexibility
-> and they don't change often. OEMs has also some flexibility to change the memory map if needed to optimize.
-> 
-> This SOC is around for quite sometime new usecases are expected to emerge. I don't see it as
-> way to stop us from taking these contributions into the linux-arm-msm.
-Yes I was way too harsh *and* didn't even clearly say what made me 
-upset, please see my reply at:
+ drivers/gpu/drm/msm/dsi/dsi.c      |  1 +
+ drivers/gpu/drm/msm/dsi/dsi.h      |  1 +
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 14 +++++++++-----
+ 3 files changed, 11 insertions(+), 5 deletions(-)
 
-https://lore.kernel.org/linux-arm-msm/01c7a346-1e8b-1767-7594-c8adcd4823c3@quicinc.com/T/#m717a0f6f6759606870a1f8c1383bc65408d8de07
+-- 
+2.39.2
 
-Konrad
