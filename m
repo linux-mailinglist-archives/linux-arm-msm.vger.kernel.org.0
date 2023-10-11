@@ -2,66 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EFA087C5937
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 18:34:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 231957C59CA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 19:02:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235111AbjJKQdp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Oct 2023 12:33:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49684 "EHLO
+        id S235057AbjJKRCi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Oct 2023 13:02:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230450AbjJKQdf (ORCPT
+        with ESMTP id S232796AbjJKRCh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Oct 2023 12:33:35 -0400
+        Wed, 11 Oct 2023 13:02:37 -0400
 Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F18EB6;
-        Wed, 11 Oct 2023 09:33:31 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0B9D98;
+        Wed, 11 Oct 2023 10:02:35 -0700 (PDT)
 Received: from [192.168.178.23] (k10064.upc-k.chello.nl [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id AD4F4CD2DE;
-        Wed, 11 Oct 2023 16:33:29 +0000 (UTC)
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 26F12C88E9;
+        Wed, 11 Oct 2023 17:02:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1697042009; bh=8g/YfES0v8t05diXHUePZLF5PXaN9mElmGUtMj35Yks=;
-        h=From:Date:Subject:References:In-Reply-To:To:Cc;
-        b=vwldJMw6ldNwjX5oSI6KMeA3dFITSEaXb9KFRUYhNJSsckpBSpOnKbObQSawYcWCr
-         0cxr3RBEfzf5VrtQjh6wnfU6LftAf/mcw/hSy2fIafSr1MoIqLJG1HLaa8cNelYA/e
-         Fv+cjNMc7zuwXUX6DSRt9OsBjVQ5LaoDMCfaMwmE=
+        t=1697043754; bh=+BQHia9/w67TGrZbccljU8R+/OKVwybI13ORg8GBv+U=;
+        h=From:Subject:Date:To:Cc;
+        b=VlBVF+QPMAPlEWjOiivDnpceTXFShZfa6zb2G74gIj4BDp4svClAmecSY0tWr4aRw
+         RgEZiHMiQXaoR7+h8dCDTZFh0PA9jAN3u8QhGU8rztHLjVs49zMTZd5BqM48nht4+o
+         k6r9mktcwuLTLsT2pDnyRmbjv8uUhjdXwLBviL/o=
 From:   Luca Weiss <luca@z3ntu.xyz>
-Date:   Wed, 11 Oct 2023 18:33:15 +0200
-Subject: [PATCH 3/3] ARM: dts: qcom: msm8974: Add watchdog node
+Subject: [PATCH 0/3] Add support for HTC One Mini 2 smartphone
+Date:   Wed, 11 Oct 2023 19:02:23 +0200
+Message-Id: <20231011-htc-memul-v1-0-76e57873190c@z3ntu.xyz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20231011-msm8226-msm8974-watchdog-v1-3-2c472818fbce@z3ntu.xyz>
-References: <20231011-msm8226-msm8974-watchdog-v1-0-2c472818fbce@z3ntu.xyz>
-In-Reply-To: <20231011-msm8226-msm8974-watchdog-v1-0-2c472818fbce@z3ntu.xyz>
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAB/VJmUC/03MSw7CIBSF4a00dyyGCzUUR+7DdICUColtDVDSR
+ 9i72Dhw+J+cfDsE450JcK128Ca54KaxBJ4q0FaNT0NcVxoYZRwpZcRGTQYzzC8iaqaaC4qO1Q8
+ o/7c3vVsO696Wti7Eya8HnfC7/hTEPyUhoUQKzSXSvqFK3jY+xvm8rBu0OecP4iMDuKIAAAA=
 To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Guenter Roeck <linux@roeck-us.net>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Luca Weiss <luca@z3ntu.xyz>,
-        =?utf-8?q?Matti_Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Luca Weiss <luca@z3ntu.xyz>
 X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=901; i=luca@z3ntu.xyz;
- h=from:subject:message-id; bh=E+F/Hhj1CB9aUX5EIjUXqb42IcC8Koc3Sj2dk06Hdx8=;
- b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBlJs5YtpYca/hMJceIqPYwj1svU5pSsXLWDgf94
- 40V5T76iIWJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZSbOWAAKCRBy2EO4nU3X
- VuuID/951JcQECOWy/t86yCyh2v2PPNrcv2msiFH+P4EIAo7tRkj7F9xpPyi0P5OSEsDNuARfyF
- n5FEgov7+x3zkuBFDmeVRvYuIvVd2CPaLnV6Lj3L3cHrdqq9bbGK4avzVGJYP/z1kJIXxbfanG6
- woPPHE002XNIABIwQRlORgguFbf5fSBAfxi7lNRtz9vMtn7HWePYrYLIAZ4mNUAjXFZlyrvaoc5
- KzCnCLuB/JzuZwJhO+hjYiKWXHevUTiuKUvjuVzYMvLDMsP6c3vezv/SZBtmiDs4vC/LubrqIaQ
- 2mSawN/werlLYgUFG7Vk8CxXxiJ5FfylDOSiq/upjhfMpksls4lo7UWwq0vsV7dPUg2nTzSBU0z
- wLtecla8QYbVfIn9/+J/4T565c/pNhJj0J6B1SG/Gm1o3HkCbKbT2Aln4IIx9Ac1KSvnGF3Ie+o
- oqoRJKNj/u0ponJT38AYbzpJhvs5RulDLpHwe4+EO2S6rQ7GOJHJWjssFab3rI426ial6fVIMh/
- CtrgdRDp9PZoj2FV94KEE7KfxE+YXfgmX0NSxXTx3WqRPi44Bc18nyBx3bP6c7qCS57W3lg9H/J
- bqkbYht0CUoAYpselD4MzU6OUNDHqEqo3N+CSbks5mDU2H3OK5igoQ9kV1VDTkfzOh017sfklJn
- N+yG3u3seS1w3Cw==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1286; i=luca@z3ntu.xyz;
+ h=from:subject:message-id; bh=+BQHia9/w67TGrZbccljU8R+/OKVwybI13ORg8GBv+U=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBlJtUmTdedyo0l7L3ekw0j64oi2aS9h6YOWXTZQ
+ sOttlwKQpKJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZSbVJgAKCRBy2EO4nU3X
+ VtJPD/wMT+efGfEKz5adZImikzgIl3STOSDFlAajmee3one3s1Uj/eIh6N90SkaEAfo4LdZppPm
+ ABn/8b6SrVVOirMbBbY0Ngfr65VjVss2jAEMJNdEo8ZDbDhnKuWBHOujCxC0LC6iGN4oNfYLdw1
+ 6xoKkWi2GEcwt44u4K+y8e2wzf6eKTrCsd1FLX9mxSlDKPlZu6MAw1lnrBLOWDOZcVMInA896E3
+ TjCZvqbiLxP7LL9WL4cWtxa13E7h+eeF9yd1dGoCngqxM5Td8V52I8NJApjtI3xKOX0c6mnMNNQ
+ jIyVNrlAFDDRFKSFMRBQ9q0GZwgea2ZBIcFRIe8zdnla7zuA7k3OpP3Qjf59fOMNq7BijsTY/Zm
+ Kf6XKqjFfh4bKndBBnPYwqj3KrOKAKhIwq8T80CsDUafBUpAKV/V14Bc/Lih+zZRVFlmAXUy6M8
+ WSLLPpN/dTtlJXaK8eQ0kxzTcmBzBBbdB2o2x8zEXt/DmRDzH0po3RSQ3OE/0Xo/pyl57/Um82a
+ +k0sdDXd6fBfPfBpUOG7A0szIBlYbixIQHl1xehNsQzlCvqw/Pcx5Fi9hu+LV7vvuldHeZa7goT
+ /WHavBF/h5ezVMFBZBQ+WWz8zWayyeXTQMJKVaBij8lwQGTJygAL15/FBK+FeSEzDukKm6TS4pe
+ WyvRFuUAvTCYQWg==
 X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
  fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -74,36 +71,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+Add support for this smartphone from HTC which is based on the MSM8926
+SoC and codenamed "memul".
 
-Add watchdog for MSM8974 platform.
+Depends on, runtime-only, bootloader enables watchdog so we need to pet
+it to stay alive:
+https://lore.kernel.org/linux-arm-msm/20231011-msm8226-msm8974-watchdog-v1-0-2c472818fbce@z3ntu.xyz/T/
 
-Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+Depends on, for dt-bindings & Makefile change, could also be re-ordered:
+https://lore.kernel.org/linux-arm-msm/20230930221323.101289-1-rayyan@ansari.sh/T/
+
+(Technically a resend of msg-id
+<20231011-htc-memul-v1-0-97c3910f80a9@z3ntu.xyz> where I missed adding
+most email addresses, sorry)
+
 Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 ---
- arch/arm/boot/dts/qcom/qcom-msm8974.dtsi | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Luca Weiss (3):
+      dt-bindings: vendor-prefixes: document HTC Corporation
+      dt-bindings: arm: qcom: Add HTC One Mini 2
+      ARM: dts: qcom: Add support for HTC One Mini 2
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
-index 0bc2e66d15b1..fbeadd43c9ad 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
-@@ -346,6 +346,14 @@ apcs: syscon@f9011000 {
- 			reg = <0xf9011000 0x1000>;
- 		};
- 
-+		watchdog@f9017000 {
-+			compatible = "qcom,apss-wdt-msm8974", "qcom,kpss-wdt";
-+			reg = <0xf9017000 0x1000>;
-+			interrupts = <GIC_SPI 3 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 4 IRQ_TYPE_EDGE_RISING>;
-+			clocks = <&sleep_clk>;
-+		};
-+
- 		timer@f9020000 {
- 			#address-cells = <1>;
- 			#size-cells = <1>;
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   1 +
+ .../devicetree/bindings/vendor-prefixes.yaml       |   2 +
+ arch/arm/boot/dts/qcom/Makefile                    |   1 +
+ arch/arm/boot/dts/qcom/qcom-msm8926-htc-memul.dts  | 337 +++++++++++++++++++++
+ 4 files changed, 341 insertions(+)
+---
+base-commit: 4a914c105417214fb38cd124317f174247c0a426
+change-id: 20231002-htc-memul-742a8517d24b
 
+Best regards,
 -- 
-2.42.0
+Luca Weiss <luca@z3ntu.xyz>
 
