@@ -2,234 +2,260 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0893E7C4C35
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 09:45:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3553D7C4C97
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 10:04:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345379AbjJKHpM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Oct 2023 03:45:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34916 "EHLO
+        id S230012AbjJKIEj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Oct 2023 04:04:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345349AbjJKHpL (ORCPT
+        with ESMTP id S229879AbjJKIEi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Oct 2023 03:45:11 -0400
-Received: from mail-vs1-xe2d.google.com (mail-vs1-xe2d.google.com [IPv6:2607:f8b0:4864:20::e2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A8939B
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 00:45:06 -0700 (PDT)
-Received: by mail-vs1-xe2d.google.com with SMTP id ada2fe7eead31-45289a987ddso2370115137.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 00:45:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1697010305; x=1697615105; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kH8dO8P8jk4qRPtIhdpshR5FUbXSZA/6Cs8Pjyzxf8I=;
-        b=H4/o8NBFF4tEYVkdZwImKnHmOBbCUsXQK09IMzqCTs5P21MJfi1bZUZh/FDyzz9Lmx
-         Q1hnCpjTl2MU4r6XLkTT3ZbzoyQGf2nL8dKppTG+B222VolDIEx6CAkKCzX7DwZlNMLi
-         yUglhzX0CDVSNzm1qD1gq9xsRO+UkrIa/fPNDgC7q2edfTbK1dEuOtvEj/JBUdj908AJ
-         zRx1YuRF7hreV4BeWyE8pS92eIBp1tek5gFjQdIXIig+klez4OK9WRqLLspxAGmbgO34
-         0jNudXH3rocr+YGnhC4CyB/otAILxrFnjziwUbpmFSvVcw6L4K376frvEJ6bzAb5XAYj
-         FYQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697010305; x=1697615105;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kH8dO8P8jk4qRPtIhdpshR5FUbXSZA/6Cs8Pjyzxf8I=;
-        b=v5VsrH4Xvrcf5m71hNYqUroRkar46KZVgMRK9HNLfLOg0Lsj5Gd2lP/lGdqm+6Vl7a
-         tgTiFxheTiebAVwAKsdA87wjmzf72NwIVspMxRXepRxFTYMEUeH3EJGuuaAkRVWkZNOh
-         ScKZAajNCABa5REIynY/L9o2DduyNTYGGVVQdYGso77zl94ibzFm28k+4fUzQ31yJdXT
-         PNfsEmiMW14UghS1H3uKIcrs6xDTydf+1L+9HiAcZEAzpcVN2n26udce3d3QoT8LnB6F
-         xvZWR8yjXmcCK0Z0+QQFUWyA8QBc+AhJdy01hWiXqeeQ3utWwdaaaRkvvy81OdYpERbI
-         pfSw==
-X-Gm-Message-State: AOJu0YwW5WyKYFMWu/7Wt7gYP7D8C0JN7ZRNVcsm9Ff1iDCxm5UNGAeC
-        zrEgsmHFNitG4yy9UtomKE0il7QPS1g199qVEZMjvQ==
-X-Google-Smtp-Source: AGHT+IHBzIdHIAC/Xi9T/BSsEBKTKirSfIIjBZMXX6Vq3zMSbOBpga7cOpH94Ly/Vr1jhGL17psjjlVJIPg+gS9tySA=
-X-Received: by 2002:a67:ce13:0:b0:44d:3d29:4940 with SMTP id
- s19-20020a67ce13000000b0044d3d294940mr12207630vsl.35.1697010305073; Wed, 11
- Oct 2023 00:45:05 -0700 (PDT)
+        Wed, 11 Oct 2023 04:04:38 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EA2792;
+        Wed, 11 Oct 2023 01:04:36 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3E60C433C7;
+        Wed, 11 Oct 2023 08:04:32 +0000 (UTC)
+Message-ID: <905d78f8-26a2-4229-8892-38d7cf24e39c@xs4all.nl>
+Date:   Wed, 11 Oct 2023 10:04:30 +0200
 MIME-Version: 1.0
-References: <20231009153427.20951-1-brgl@bgdev.pl> <20231009153427.20951-12-brgl@bgdev.pl>
- <y5otsuzhc27xeay6js4nkqss2bo5bsmygwdjuhqpdzce4yffxk@gkkh522s5e3b>
-In-Reply-To: <y5otsuzhc27xeay6js4nkqss2bo5bsmygwdjuhqpdzce4yffxk@gkkh522s5e3b>
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-Date:   Wed, 11 Oct 2023 09:44:54 +0200
-Message-ID: <CAMRc=MdfZzG-C7=OVhR7x_vEmCexS39GEJ3F-CHM7cfya+A-VA@mail.gmail.com>
-Subject: Re: [PATCH v3 11/15] firmware: qcom: qseecom: convert to using the TZ allocator
-To:     Andrew Halaney <ahalaney@redhat.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        Alex Elder <elder@linaro.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, kernel@quicinc.com,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 01/54] media: videobuf2: Rework offset 'cookie'
+ encoding pattern
+Content-Language: en-US, nl
+To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+        mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
+        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
+        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
+        nicolas.dufresne@collabora.com
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
+        kernel@collabora.com
+References: <20231003080704.43911-1-benjamin.gaignard@collabora.com>
+ <20231003080704.43911-2-benjamin.gaignard@collabora.com>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+In-Reply-To: <20231003080704.43911-2-benjamin.gaignard@collabora.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 11, 2023 at 12:49=E2=80=AFAM Andrew Halaney <ahalaney@redhat.co=
-m> wrote:
->
-> On Mon, Oct 09, 2023 at 05:34:23PM +0200, Bartosz Golaszewski wrote:
-> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >
-> > Drop the DMA mapping operations from qcom_scm_qseecom_app_send() and
-> > convert all users of it in the qseecom module to using the TZ allocator
-> > for creating SCM call buffers. Together with using the cleanup macros,
-> > it has the added benefit of a significant code shrink. As this is
-> > largely a module separate from the SCM driver, let's use a separate
-> > memory pool.
-> >
-> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->
-> <snip>
->
-> > @@ -567,20 +529,14 @@ static efi_status_t qsee_uefi_get_next_variable(s=
-truct qcuefi_client *qcuefi,
-> >               return EFI_INVALID_PARAMETER;
-> >
-> >       status =3D qcom_qseecom_app_send(qcuefi->client, req_data, req_si=
-ze, rsp_data, rsp_size);
-> > -     if (status) {
-> > -             efi_status =3D EFI_DEVICE_ERROR;
-> > -             goto out_free;
-> > -     }
-> > +     if (status)
-> > +             return EFI_DEVICE_ERROR;
-> >
-> > -     if (rsp_data->command_id !=3D QSEE_CMD_UEFI_GET_NEXT_VARIABLE) {
-> > -             efi_status =3D EFI_DEVICE_ERROR;
-> > -             goto out_free;
-> > -     }
-> > +     if (rsp_data->command_id !=3D QSEE_CMD_UEFI_GET_NEXT_VARIABLE)
-> > +             return EFI_DEVICE_ERROR;
-> >
-> > -     if (rsp_data->length < sizeof(*rsp_data)) {
-> > -             efi_status =3D EFI_DEVICE_ERROR;
-> > -             goto out_free;
-> > -     }
-> > +     if (rsp_data->length < sizeof(*rsp_data))
-> > +             return EFI_DEVICE_ERROR;
-> >
-> >       if (rsp_data->status) {
-> >               dev_dbg(qcuefi_dev(qcuefi), "%s: uefisecapp error: 0x%x\n=
-",
-> > @@ -595,77 +551,59 @@ static efi_status_t qsee_uefi_get_next_variable(s=
-truct qcuefi_client *qcuefi,
-> >               if (efi_status =3D=3D EFI_BUFFER_TOO_SMALL)
-> >                       *name_size =3D rsp_data->name_size;
-> >
-> > -             goto out_free;
-> > +             return efi_status;
-> >       }
-> >
-> > -     if (rsp_data->length > rsp_size) {
-> > -             efi_status =3D EFI_DEVICE_ERROR;
-> > -             goto out_free;
-> > -     }
-> > +     if (rsp_data->length > rsp_size)
-> > +             return EFI_DEVICE_ERROR;
-> >
-> > -     if (rsp_data->name_offset + rsp_data->name_size > rsp_data->lengt=
-h) {
-> > -             efi_status =3D EFI_DEVICE_ERROR;
-> > -             goto out_free;
-> > -     }
-> > +     if (rsp_data->name_offset + rsp_data->name_size > rsp_data->lengt=
-h)
-> > +             return EFI_DEVICE_ERROR;
-> >
-> > -     if (rsp_data->guid_offset + rsp_data->guid_size > rsp_data->lengt=
-h) {
-> > -             efi_status =3D EFI_DEVICE_ERROR;
-> > -             goto out_free;
-> > -     }
-> > +     if (rsp_data->guid_offset + rsp_data->guid_size > rsp_data->lengt=
-h)
-> > +             return EFI_DEVICE_ERROR;
-> >
-> >       if (rsp_data->name_size > *name_size) {
-> >               *name_size =3D rsp_data->name_size;
-> > -             efi_status =3D EFI_BUFFER_TOO_SMALL;
-> > -             goto out_free;
-> > +             return EFI_BUFFER_TOO_SMALL;
-> >       }
-> >
-> > -     if (rsp_data->guid_size !=3D sizeof(*guid)) {
-> > -             efi_status =3D EFI_DEVICE_ERROR;
-> > -             goto out_free;
-> > -     }
-> > +     if (rsp_data->guid_size !=3D sizeof(*guid))
-> > +             return EFI_DEVICE_ERROR;
-> >
-> >       memcpy(guid, ((void *)rsp_data) + rsp_data->guid_offset, rsp_data=
-->guid_size);
-> >       status =3D ucs2_strscpy(name, ((void *)rsp_data) + rsp_data->name=
-_offset,
-> >                             rsp_data->name_size / sizeof(*name));
-> >       *name_size =3D rsp_data->name_size;
-> >
-> > -     if (status < 0) {
-> > +     if (status < 0)
-> >               /*
-> >                * Return EFI_DEVICE_ERROR here because the buffer size s=
-hould
-> >                * have already been validated above, causing this functi=
-on to
-> >                * bail with EFI_BUFFER_TOO_SMALL.
-> >                */
-> >               return EFI_DEVICE_ERROR;
-> > -     }
->
-> Personally (no idea what the actual style guide says) leaving braces
-> around the multiline if statement would be nice.... that being said,
-> that's my opinion :)
->
-> <snip>
-> > @@ -704,12 +635,7 @@ static efi_status_t qsee_uefi_query_variable_info(=
-struct qcuefi_client *qcuefi,
-> >       if (max_variable_size)
-> >               *max_variable_size =3D rsp_data->max_variable_size;
-> >
-> > -out_free:
-> > -     kfree(rsp_data);
-> > -out_free_req:
-> > -     kfree(req_data);
-> > -out:
-> > -     return efi_status;
-> > +     return EFI_SUCCESS;
-> >  }
-> >
-> >  /* -- Global efivar interface. ---------------------------------------=
-------- */
-> > @@ -838,6 +764,10 @@ static int qcom_uefisecapp_probe(struct auxiliary_=
-device *aux_dev,
-> >       if (status)
-> >               qcuefi_set_reference(NULL);
-> >
-> > +     qcuefi->mempool =3D devm_qcom_tzmem_pool_new(&aux_dev->dev, SZ_25=
-6K);
->
-> Any particular reason for this size? Just curious, it was (one) of the
-> reasons I had not marked patch 4 yet (it looks good, but I wanted to get
-> through the series to digest the Kconfig as well).
->
+Hi Benjamin,
 
-I cannot test this. Do you know what the minimum correct size would be?
+On 03/10/2023 10:06, Benjamin Gaignard wrote:
+> Change how offset 'cookie' field value is computed to make possible
+> to use more buffers.
+> The maximum number of buffers depends of PAGE_SHIFT value and can
+> go up to 0x7fff when PAGE_SHIFT = 12.
+> With this encoding pattern we know the maximum number that a queue
+> could store so we can check it at  queue init time.
+> It also make easier and faster to find buffer and plane from using
+> the offset field.
+> Change __find_plane_by_offset() prototype to return the video buffer
+> itself rather than it index.
+> 
+> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+> ---
+> changes in version 10:
+> - Make BUFFER_INDEX_MASK definition more readable.
+> - Correct typo.
+> 
+>  .../media/common/videobuf2/videobuf2-core.c   | 72 +++++++++----------
+>  1 file changed, 33 insertions(+), 39 deletions(-)
+> 
+> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
+> index 27aee92f3eea..5591ac830668 100644
+> --- a/drivers/media/common/videobuf2/videobuf2-core.c
+> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
+> @@ -31,6 +31,11 @@
+>  
+>  #include <trace/events/vb2.h>
+>  
+> +#define PLANE_INDEX_SHIFT	(PAGE_SHIFT + 3)
+> +#define PLANE_INDEX_MASK	0x7
+> +#define MAX_BUFFER_INDEX	BIT_MASK(30 - PLANE_INDEX_SHIFT)
+> +#define BUFFER_INDEX_MASK	(MAX_BUFFER_INDEX - 1)
+> +
+>  static int debug;
+>  module_param(debug, int, 0644);
+>  
+> @@ -358,21 +363,24 @@ static void __setup_offsets(struct vb2_buffer *vb)
+>  	unsigned int plane;
+>  	unsigned long off = 0;
 
-Bart
+This is a rather ugly name. I suggest renaming this to "offset" to avoid
+confusion with "on"/"off". See additional comments on this below.
 
-> Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
->
+>  
+> -	if (vb->index) {
+> -		struct vb2_buffer *prev = q->bufs[vb->index - 1];
+> -		struct vb2_plane *p = &prev->planes[prev->num_planes - 1];
+> -
+> -		off = PAGE_ALIGN(p->m.offset + p->length);
+> -	}
+> +	/*
+> +	 * Offsets cookies value have the following constraints:
+
+I'd rephrase this a little bit:
+
+	 * The offset "cookie" value has the following constraints:
+
+> +	 * - a buffer can have up to 8 planes.
+> +	 * - v4l2 mem2mem uses bit 30 to distinguish between source and destination buffers.
+
+Related to Sakari's comments: the mem2mem framework uses source and destination
+a lot, but vb2 is mostly OUTPUT/CAPTURE. So it is best to mention both:
+
+source -> OUTPUT (aka "source", bit 30 is 0)
+destination -> CAPTURE (aka "destination", bit 30 is 1)
+
+> +	 * - must be page aligned
+> +	 * That led to this bit mapping when PAGE_SHIFT = 12:
+> +	 * |30                |29        15|14       12|11 0|
+> +	 * |DST_QUEUE_OFF_BASE|buffer index|plane index| 0  |
+> +	 * where there are 15 bits to store the buffer index.
+> +	 * Depending on PAGE_SHIFT value we can have fewer bits to store the buffer index.
+> +	 */
+> +	off = vb->index << PLANE_INDEX_SHIFT;
+>  
+>  	for (plane = 0; plane < vb->num_planes; ++plane) {
+> -		vb->planes[plane].m.offset = off;
+> +		vb->planes[plane].m.offset = off + (plane << PAGE_SHIFT);
+>  
+>  		dprintk(q, 3, "buffer %d, plane %d offset 0x%08lx\n",
+>  				vb->index, plane, off);
+> -
+> -		off += vb->planes[plane].length;
+> -		off = PAGE_ALIGN(off);
+>  	}
+>  }
+>  
+> @@ -2185,13 +2193,12 @@ int vb2_core_streamoff(struct vb2_queue *q, unsigned int type)
+>  EXPORT_SYMBOL_GPL(vb2_core_streamoff);
+>  
+>  /*
+> - * __find_plane_by_offset() - find plane associated with the given offset off
+> + * __find_plane_by_offset() - find video buffer and plane associated with the given offset off
+>   */
+>  static int __find_plane_by_offset(struct vb2_queue *q, unsigned long off,
+
+Same here: rename "off" to "offset", that also simplifies the comment above:
+"with the given offset off" can now just be "with the given offset".
+
+The same change can be done in vb2_mmap and vb2_get_unmapped_area.
+
+I think it would be best if the off -> offset rename is done in a separate initial
+patch.
+
+I know that this isn't really DELETE_BUFS related, but I think it makes the code
+a bit easier to follow.
+
+> -			unsigned int *_buffer, unsigned int *_plane)
+> +			struct vb2_buffer **vb, unsigned int *plane)
+>  {
+> -	struct vb2_buffer *vb;
+> -	unsigned int buffer, plane;
+> +	unsigned int buffer;
+>  
+>  	/*
+>  	 * Sanity checks to ensure the lock is held, MEMORY_MMAP is
+> @@ -2209,24 +2216,15 @@ static int __find_plane_by_offset(struct vb2_queue *q, unsigned long off,
+>  		return -EBUSY;
+>  	}
+>  
+> -	/*
+> -	 * Go over all buffers and their planes, comparing the given offset
+> -	 * with an offset assigned to each plane. If a match is found,
+> -	 * return its buffer and plane numbers.
+> -	 */
+> -	for (buffer = 0; buffer < q->num_buffers; ++buffer) {
+> -		vb = q->bufs[buffer];
+> +	/* Get buffer and plane from the offset */
+> +	buffer = (off >> PLANE_INDEX_SHIFT) & BUFFER_INDEX_MASK;
+> +	*plane = (off >> PAGE_SHIFT) & PLANE_INDEX_MASK;
+>  
+> -		for (plane = 0; plane < vb->num_planes; ++plane) {
+> -			if (vb->planes[plane].m.offset == off) {
+> -				*_buffer = buffer;
+> -				*_plane = plane;
+> -				return 0;
+> -			}
+> -		}
+> -	}
+> +	if (buffer >= q->num_buffers || *plane >= q->bufs[buffer]->num_planes)
+> +		return -EINVAL;
+>  
+> -	return -EINVAL;
+> +	*vb = q->bufs[buffer];
+> +	return 0;
+>  }
+>  
+>  int vb2_core_expbuf(struct vb2_queue *q, int *fd, unsigned int type,
+> @@ -2306,7 +2304,7 @@ int vb2_mmap(struct vb2_queue *q, struct vm_area_struct *vma)
+>  {
+>  	unsigned long off = vma->vm_pgoff << PAGE_SHIFT;
+>  	struct vb2_buffer *vb;
+> -	unsigned int buffer = 0, plane = 0;
+> +	unsigned int plane = 0;
+>  	int ret;
+>  	unsigned long length;
+>  
+> @@ -2335,12 +2333,10 @@ int vb2_mmap(struct vb2_queue *q, struct vm_area_struct *vma)
+>  	 * Find the plane corresponding to the offset passed by userspace. This
+>  	 * will return an error if not MEMORY_MMAP or file I/O is in progress.
+>  	 */
+> -	ret = __find_plane_by_offset(q, off, &buffer, &plane);
+> +	ret = __find_plane_by_offset(q, off, &vb, &plane);
+>  	if (ret)
+>  		goto unlock;
+>  
+> -	vb = q->bufs[buffer];
+> -
+>  	/*
+>  	 * MMAP requires page_aligned buffers.
+>  	 * The buffer length was page_aligned at __vb2_buf_mem_alloc(),
+> @@ -2368,7 +2364,7 @@ int vb2_mmap(struct vb2_queue *q, struct vm_area_struct *vma)
+>  	if (ret)
+>  		return ret;
+>  
+> -	dprintk(q, 3, "buffer %d, plane %d successfully mapped\n", buffer, plane);
+> +	dprintk(q, 3, "buffer %u, plane %d successfully mapped\n", vb->index, plane);
+>  	return 0;
+>  }
+>  EXPORT_SYMBOL_GPL(vb2_mmap);
+> @@ -2382,7 +2378,7 @@ unsigned long vb2_get_unmapped_area(struct vb2_queue *q,
+>  {
+>  	unsigned long off = pgoff << PAGE_SHIFT;
+>  	struct vb2_buffer *vb;
+> -	unsigned int buffer, plane;
+> +	unsigned int plane;
+>  	void *vaddr;
+>  	int ret;
+>  
+> @@ -2392,12 +2388,10 @@ unsigned long vb2_get_unmapped_area(struct vb2_queue *q,
+>  	 * Find the plane corresponding to the offset passed by userspace. This
+>  	 * will return an error if not MEMORY_MMAP or file I/O is in progress.
+>  	 */
+> -	ret = __find_plane_by_offset(q, off, &buffer, &plane);
+> +	ret = __find_plane_by_offset(q, off, &vb, &plane);
+>  	if (ret)
+>  		goto unlock;
+>  
+> -	vb = q->bufs[buffer];
+> -
+>  	vaddr = vb2_plane_vaddr(vb, plane);
+>  	mutex_unlock(&q->mmap_lock);
+>  	return vaddr ? (unsigned long)vaddr : -EINVAL;
+
+Regards,
+
+	Hans
