@@ -2,92 +2,187 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B9AB97C5237
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 13:36:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D00417C523C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 13:37:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234834AbjJKLgD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Oct 2023 07:36:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45324 "EHLO
+        id S234840AbjJKLhM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Oct 2023 07:37:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234772AbjJKLgC (ORCPT
+        with ESMTP id S234814AbjJKLhM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Oct 2023 07:36:02 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFD7898
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 04:35:59 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2c007d6159aso80148721fa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 04:35:59 -0700 (PDT)
+        Wed, 11 Oct 2023 07:37:12 -0400
+Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FD619D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 04:37:09 -0700 (PDT)
+Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-5a7c93507d5so17576367b3.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 04:37:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697024158; x=1697628958; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=yfU6ATFelrGu966VZVs/blAhCg+Ba8qkIlUWqDpamxM=;
-        b=nJYYvnrItx07ylnqmU6Yqw21DH6o0xsnEzFr7EHRZJXDxww8PnP9jAJPnGltO6/Z4T
-         lzierFc0lE+8puAu/shdeuSP1BCDcbGqDL42ZO+gVR5EmAt3i3C32FAO7w6EbSnZfkYp
-         3wTNZq8QOOBuBByhMFwwOc7r/DJHRN6QcTZZfOaquJgEssObpkU2P7hTMwJGsej0lPUE
-         Zwaik8hQyZqR1MLYu+J/st1wzgls8NJOi2irDfQg+op33neopZGhQ/3UOezqeP1QtcUz
-         EVHPfcdQkm1ZHq1yIgIvR/0Rld/6ItmdzADVV4c2Edsw0nJTHtwQjYzJr2rLVdzLIQXY
-         OCdA==
+        d=linaro.org; s=google; t=1697024228; x=1697629028; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ADnQSRKfiE11Fw6NWJPg4jyr5BhP2bgI5UYJpaw9Vtc=;
+        b=DSI5lwUwDGyERG61xBXpUKSy3GvB/kfAiO+etSzyzwvKW7xInaTSA5mMhXMj4UTCGj
+         56ph2HQPIykn15aWXu4RdNCQ6i6VnEbzP9NZV6mqxkNXck8kJd7F8BQXN+Ug4RM3FeE2
+         OkXA5YAVaHycYoGtI8kUGVIR42GEyf4RQzfTY3JTBW6a84+wuHiIV9Ju5ZIXmFdrvhnR
+         +8pHhBHViQZNAWFR6NIwlC8sBhI1oDJaBRLkyV2T7rLbbHeCLKAKDsed9qIUkKfZ9vLG
+         wJbHF5vecCFG0w4mzYWYIy6rFyUZl8fB+6goZHXEtnjFpS3LsAhbvojpFkW6pUduu4zg
+         NCUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697024158; x=1697628958;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yfU6ATFelrGu966VZVs/blAhCg+Ba8qkIlUWqDpamxM=;
-        b=YNRsIcyCsxT0VUn0sEIQXoRkGkeZoeqSTHGrfHL4f3PPnNiWJzNctD1Mh070yyp7J/
-         4Us/EyTA46lzqAfgv8kU4N05xyEpzF4PvMd5m52Cw7CKgjWDbeyAzVH9skyRKu3PPQ4C
-         2v5KqJffG9mAjisF/LCxcM/O6Dqwm7lP0YhR3pRkMtnvpgQxx1mWDg/vQN+htvoOfccd
-         LzsvdLlJrD9NKPPuziunV5yDqYSddOkYUKFSxj511R8ub0nvYBU0uVYd0/6HWxNMuUKK
-         mFa1mq3UuGSSk3x9jMgcLf6eI2Z/e40HStWPZeM05u7Jdox/yB4pNwop4bjw0O1Rhz3z
-         EP8g==
-X-Gm-Message-State: AOJu0Yz4ckU5r4+nMFYeLZWOi2wf+hOES7RCHrGPmpnNTIyI+ojnD43a
-        RABivFoCuClhXiJzSHFmPu6gWw==
-X-Google-Smtp-Source: AGHT+IEBaybj1t+dM2dbVVaw650KkAnqX2ygF1+tkCcOl8TohGtw/R9IYJXv5TipuD9uPEwiyFb/iw==
-X-Received: by 2002:a2e:9e19:0:b0:2bf:f989:b8e5 with SMTP id e25-20020a2e9e19000000b002bff989b8e5mr16412060ljk.33.1697024158103;
-        Wed, 11 Oct 2023 04:35:58 -0700 (PDT)
-Received: from [172.30.204.240] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id c5-20020a2ea1c5000000b002bcbb464a28sm2882350ljm.59.2023.10.11.04.35.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Oct 2023 04:35:57 -0700 (PDT)
-Message-ID: <21adc424-22e7-4469-b363-41e99f29c3bf@linaro.org>
-Date:   Wed, 11 Oct 2023 13:35:57 +0200
+        d=1e100.net; s=20230601; t=1697024228; x=1697629028;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ADnQSRKfiE11Fw6NWJPg4jyr5BhP2bgI5UYJpaw9Vtc=;
+        b=K9j+hsP3fCdyPK8mcsRiGGEuqbevmgMEXpAPZi3zBE6/iN2KTs/Qn3B0rQ3NwkyHV7
+         HY3b3ZNwEUFenKnFfShTbYxta6Pni5ojC2On6AvrRUn8c4JY84jrpHTT4vF458i3888V
+         lNRKD0REWp4VwkQvLPotH3b6+6539V54YX+XNB4EuwVJLVaASorGJWWFDqzoE9CpNimP
+         7WeVEgJQeTJYztro0k5UCwy5zqhZm6u2mW6F9jEBfzeugQqahhJOZyyo1Xy7lhi87OZj
+         wgagGW5UqV9O+GI3gLwesTrMVIl0zYs7Co2v9vdKXvHNryCwYN9ddhSJhV2AetWTzprl
+         WfkQ==
+X-Gm-Message-State: AOJu0Yy5dsR2QQxnj+i1Oq2Ued7AdRJxCzubE2puir1jbLDoBefHqSoZ
+        P1kXc6+lodC1lC0u3sfPHb1fOyDJiDD/cAMYk68Cy/dsnhqxEtTHeVw=
+X-Google-Smtp-Source: AGHT+IFRpepGKSGvXbAwCvg5/0it467EZf0qhpiwowhNbkcbVmcXi8gnzAdqnBvYtzILhbVKUdAlRHR97OtZsiekmHc=
+X-Received: by 2002:a5b:20d:0:b0:d15:7402:f7cd with SMTP id
+ z13-20020a5b020d000000b00d157402f7cdmr19392771ybl.27.1697024228604; Wed, 11
+ Oct 2023 04:37:08 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: defconfig: enable DisplayPort altmode support
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org
-References: <20231011103245.96638-1-dmitry.baryshkov@linaro.org>
- <20231011103245.96638-2-dmitry.baryshkov@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231011103245.96638-2-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+References: <1697023109-23671-1-git-send-email-quic_msarkar@quicinc.com> <1697023109-23671-3-git-send-email-quic_msarkar@quicinc.com>
+In-Reply-To: <1697023109-23671-3-git-send-email-quic_msarkar@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 11 Oct 2023 14:36:55 +0300
+Message-ID: <CAA8EJpoLxeSvxjcyq1BMR9XuAffrxLmO-eaBYJ+Fhnb4zYmxUQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] phy: qcom-qmp-pcie: add endpoint support for sa8775p
+To:     Mrinmay Sarkar <quic_msarkar@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        konrad.dybcio@linaro.org, mani@kernel.org,
+        quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
+        robh@kernel.org, quic_krichai@quicinc.com,
+        quic_vbadigan@quicinc.com, quic_parass@quicinc.com,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
+        linux-phy@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
-X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 10/11/23 12:32, Dmitry Baryshkov wrote:
-> Enable the DisplayPort altmode, it is required to get DisplayPort output
-> to work on devices like Qualcomm Robotics RB5 platform.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On Wed, 11 Oct 2023 at 14:19, Mrinmay Sarkar <quic_msarkar@quicinc.com> wrote:
+>
+> Add support for dual lane end point mode PHY found on sa8755p platform.
+>
+> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
 > ---
-Weird nobody enabled it to date
+>  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c   | 41 ++++++++++++++++++++++++++++++
+>  drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h |  2 ++
+>  2 files changed, 43 insertions(+)
 
-Reviewd-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Two minor questions.
 
-Konrad
+>
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> index a63ca74..962b4a1 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> @@ -2147,6 +2147,38 @@ static const struct qmp_phy_init_tbl sa8775p_qmp_gen4x4_pcie_rc_serdes_alt_tbl[]
+>         QMP_PHY_INIT_CFG(QSERDES_V5_COM_CLK_SELECT, 0x34),
+>  };
+>
+> +static const struct qmp_phy_init_tbl sa8775p_qmp_gen4x2_pcie_ep_serdes_alt_tbl[] = {
+> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_BG_TIMER, 0x02),
+> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_SYS_CLK_CTRL, 0x07),
+> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_CP_CTRL_MODE0, 0x27),
+> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_CP_CTRL_MODE1, 0x0a),
+> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_RCTRL_MODE0, 0x17),
+> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_RCTRL_MODE1, 0x19),
+> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_CCTRL_MODE0, 0x00),
+> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_CCTRL_MODE1, 0x03),
+> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_SYSCLK_EN_SEL, 0x00),
+> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_INTEGLOOP_GAIN0_MODE0, 0xfb),
+> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_INTEGLOOP_GAIN1_MODE0, 0x01),
+> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_INTEGLOOP_GAIN0_MODE1, 0xfb),
+> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_INTEGLOOP_GAIN1_MODE1, 0x01),
+> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_CMN_MODE, 0x14),
+
+I should check whether we miss QSERDES_V5_COM_CMN_MODE in
+sm8450_qmp_gen4x2_pcie_ep_serdes_tbl, which is otherwise nearly
+identical.
+Also do you need to set QSERDES_V5_COM_CORE_CLK_EN here?
+
+> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP1_MODE0, 0xff),
+> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP2_MODE0, 0x04),
+> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP1_MODE1, 0xff),
+> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP2_MODE1, 0x09),
+> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_DEC_START_MODE0, 0x19),
+> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_DEC_START_MODE1, 0x28),
+> +};
+> +
+> +static const struct qmp_phy_init_tbl sa8775p_qmp_gen4_pcie_ep_pcs_misc_tbl[] = {
+> +       QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_PCIE_OSC_DTCT_MODE2_CONFIG5, 0x08),
+> +};
+
+This is the same as sm8450_qmp_gen4x2_pcie_ep_pcs_misc_tbl
+
+> +
+> +static const struct qmp_phy_init_tbl sa8775p_qmp_gen4x2_pcie_ep_pcs_alt_tbl[] = {
+> +       QMP_PHY_INIT_CFG(QPHY_V5_PCS_INSIG_MX_CTRL7, 0x00),
+> +       QMP_PHY_INIT_CFG(QPHY_V5_PCS_INSIG_SW_CTRL7, 0x00),
+> +};
+
+Could you please confirm that these registers belong to the V5
+namespace rather than V5_20 one?
+
+> +
+>  struct qmp_pcie_offsets {
+>         u16 serdes;
+>         u16 pcs;
+> @@ -3043,6 +3075,15 @@ static const struct qmp_phy_cfg sa8775p_qmp_gen4x2_pciephy_cfg = {
+>                 .pcs_misc_num   = ARRAY_SIZE(sa8775p_qmp_gen4_pcie_rc_pcs_misc_tbl),
+>         },
+>
+> +       .tbls_ep = &(const struct qmp_phy_cfg_tbls) {
+> +               .serdes         = sa8775p_qmp_gen4x2_pcie_ep_serdes_alt_tbl,
+> +               .serdes_num     = ARRAY_SIZE(sa8775p_qmp_gen4x2_pcie_ep_serdes_alt_tbl),
+> +               .pcs_misc       = sa8775p_qmp_gen4_pcie_ep_pcs_misc_tbl,
+> +               .pcs_misc_num   = ARRAY_SIZE(sa8775p_qmp_gen4_pcie_ep_pcs_misc_tbl),
+> +               .pcs            = sa8775p_qmp_gen4x2_pcie_ep_pcs_alt_tbl,
+> +               .pcs_num        = ARRAY_SIZE(sa8775p_qmp_gen4x2_pcie_ep_pcs_alt_tbl),
+> +       },
+> +
+>         .reset_list             = sdm845_pciephy_reset_l,
+>         .num_resets             = ARRAY_SIZE(sdm845_pciephy_reset_l),
+>         .vreg_list              = qmp_phy_vreg_l,
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h
+> index 36cc80b..6ee1c33 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h
+> @@ -11,6 +11,8 @@
+>  #define QPHY_V5_PCS_PCS_STATUS1                                0x014
+>  #define QPHY_V5_PCS_POWER_DOWN_CONTROL                 0x040
+>  #define QPHY_V5_PCS_START_CONTROL                      0x044
+> +#define QPHY_V5_PCS_INSIG_SW_CTRL7                     0x060
+> +#define QPHY_V5_PCS_INSIG_MX_CTRL7                     0x07c
+>  #define QPHY_V5_PCS_LOCK_DETECT_CONFIG1                        0x0c4
+>  #define QPHY_V5_PCS_LOCK_DETECT_CONFIG2                        0x0c8
+>  #define QPHY_V5_PCS_LOCK_DETECT_CONFIG3                        0x0cc
+> --
+> 2.7.4
+>
+
+
+-- 
+With best wishes
+Dmitry
