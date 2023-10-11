@@ -2,168 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A39167C5167
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 13:17:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D3717C5186
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 13:19:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234878AbjJKLRC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Oct 2023 07:17:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46434 "EHLO
+        id S231956AbjJKLTU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Oct 2023 07:19:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234893AbjJKLQq (ORCPT
+        with ESMTP id S1346323AbjJKLTQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Oct 2023 07:16:46 -0400
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CEAB115
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 04:16:31 -0700 (PDT)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-5a7c95b8d14so18038827b3.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 04:16:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697022990; x=1697627790; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=wNjnYLa58DgBOBpUQ3L499a3tSmXMWsGVLMLAmZzoFw=;
-        b=QLLkr68rsLfoNDiwlTRjbOTniW4Z2N7GUQjpe1JAQJ79H3WNZGH9zp3vVtkzFg8+tm
-         EERstpna9H1eJcdPMIReu96WRkGxY9Uuv3a2SDcNwokCuH2AINruDLULAdP1Hh3kIJt8
-         XqUhlUGkSOYQbSDuNiitJA14Zq0WeJ8OyQQUCGK977KvhLRP6P40foZj2dnjF15yqeag
-         ixnWdOA0bwK5TvnmiMwaJSXdBEVJbK6Yufc4keEajUwE/T/bg7U3GSSHFEvqE60jY7sb
-         eoMLUN62dnOMLW7SXxDy3S92MBnQ/Wzy+NsvYjyp7vOvO3kP9QsAlJVNnlROnawsTIRl
-         Tbzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697022990; x=1697627790;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wNjnYLa58DgBOBpUQ3L499a3tSmXMWsGVLMLAmZzoFw=;
-        b=aHdVlo607tNuEKovO/q7NeEzIZ7XxKbH2IumUmiIBSLRzCptIeZDIG2FaeJAG3GAnz
-         tcjg1xWWBNE8qH35xZ0PJvZEscE+W/j69WCAmg30TsatlV8swHNaWa7XNBRnHYr6JjFz
-         w9crDdUITHNzK8t6TFpEuBqVQQgS/5L/nzaE1r7u40+QhW3dH0Jgf5OtuXCZ1c2a6QZH
-         qa0tSSyTMXFUfDdSTz9ohB1EHlIvrAq8IfT7L3Djry1JC0pUcTxinLykqWRDbQyBTqq3
-         sK6ZR5m3+sYKh/255vs5ZBn2BuRJS6Pxe5zE9OzXu2s98E/1XCyd5pHSG1Cys8Ba3hIE
-         Tbpg==
-X-Gm-Message-State: AOJu0Yz2Lv9tOMzVihBHKXeo1QO4AjENgOwO2oCAryjMiKuS6d6CFIEK
-        6jEhHqqPYQEf8f3ySc3qWEBBoUMj7WtykbD0Rz8dQg==
-X-Google-Smtp-Source: AGHT+IFOk3J6vBZTsJxg388MNQCJMjTcG8W+DH3dP6GL0deqCh8fFy9/EyNa6KL47kcSMuFWJadimLKiZWNtIiQzE1c=
-X-Received: by 2002:a0d:d8d3:0:b0:583:d1fa:1fc4 with SMTP id
- a202-20020a0dd8d3000000b00583d1fa1fc4mr20089253ywe.26.1697022990611; Wed, 11
- Oct 2023 04:16:30 -0700 (PDT)
-MIME-Version: 1.0
-References: <20231009172717.2695854-1-dmitry.baryshkov@linaro.org> <ZST_1ROGwLe4dZIm@gerhold.net>
-In-Reply-To: <ZST_1ROGwLe4dZIm@gerhold.net>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 11 Oct 2023 14:16:19 +0300
-Message-ID: <CAA8EJprAFLZQASs8p-mBbygNdP0Fax8NZK1_DeT2=gktX-4O7A@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: pad generated DTB files
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        Wed, 11 Oct 2023 07:19:16 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A9D78F;
+        Wed, 11 Oct 2023 04:19:15 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39B8phZW000559;
+        Wed, 11 Oct 2023 11:18:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=DRVR115ULH05dEvTGRQlvYcaD3JskA4PUOvyleNRpIM=;
+ b=QijTvPTl3CqjGvQvLBuj3rIhU+aONPBq/2DujmDeC9Fh0vP7nCxAVgn7dXzsMavNkXGL
+ 1mvlReGP1Z1y1xXOLlbZ0NNZp5E5CmxuaOZ0sSL/itoorILNQcRuysPTjO0eDcK4gkQ+
+ zyZ6opcqxTqPetD9y4UGHfYj17BcMQyNiL4eXWciKey+s3V7ShMSFMsds7nDKFzC9eX/
+ dN8IPxHBHEjS41wJ+5qwTrNvihzzdZZ/+obSRzBpNarMBhBQmQCYsKileMWHOi8LAci2
+ gMLlNU+tZmPppRj4mFLa/y2+C4R91gx46nHa9Hhs+ximaaM1fhfOPw1F5fxHEAGDOcHq Zw== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tnnvw8mmj-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 11 Oct 2023 11:18:46 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 39BBIc0Y011193;
+        Wed, 11 Oct 2023 11:18:38 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3tk0dkmawx-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Wed, 11 Oct 2023 11:18:38 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 39BBIcRd011187;
+        Wed, 11 Oct 2023 11:18:38 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-msarkar-hyd.qualcomm.com [10.213.111.194])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 39BBIbTT011186;
+        Wed, 11 Oct 2023 11:18:38 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3891782)
+        id CBB0343B8; Wed, 11 Oct 2023 16:48:36 +0530 (+0530)
+From:   Mrinmay Sarkar <quic_msarkar@quicinc.com>
+To:     agross@kernel.org, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        konrad.dybcio@linaro.org, mani@kernel.org
+Cc:     quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
+        dmitry.baryshkov@linaro.org, robh@kernel.org,
+        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
+        quic_parass@quicinc.com, Mrinmay Sarkar <quic_msarkar@quicinc.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
+        linux-phy@lists.infradead.org
+Subject: [PATCH v2 0/4] arm64: qcom: sa8775p: add support for EP PCIe
+Date:   Wed, 11 Oct 2023 16:48:25 +0530
+Message-Id: <1697023109-23671-1-git-send-email-quic_msarkar@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 1k85JyqyEewYSIU2u_O30ftyJ_7XE6Ux
+X-Proofpoint-GUID: 1k85JyqyEewYSIU2u_O30ftyJ_7XE6Ux
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-11_09,2023-10-11_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
+ impostorscore=0 mlxlogscore=399 bulkscore=0 adultscore=0 phishscore=0
+ clxscore=1015 spamscore=0 priorityscore=1501 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310110099
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 10 Oct 2023 at 10:40, Stephan Gerhold <stephan@gerhold.net> wrote:
->
-> On Mon, Oct 09, 2023 at 08:27:17PM +0300, Dmitry Baryshkov wrote:
-> > On Qualcomm platforms the bootloader populates device tree with some
-> > extra nodes / properties (like memory size, boot time, etc). Usually
-> > default padding is enough for the bootloader. But in some cases the
-> > board will fail to boot if there is not enough padding space.
-> >
-> > Add `--pad 4096' to DTC_FLAGS so that all Qualcomm DTB files get this
-> > extra padding space.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >
-> > This is primarily necessary for SA8155P, but I have the feeling that it
-> > might be better to be enabled on the global scale.
->
-> By default there should not be any padding at all. This is because the
-> bootloader is responsible to make room for new nodes by calling
-> fdt_open_into() with an adjusted size. This will result in a simple
-> memmove() that shifts the end of the DTB in memory so that the padding
-> can be used for new nodes and properties.
->
-> If the bootloader doesn't add enough padding then it is broken and
-> should be fixed.
+This series adds the relavent DT bindings, new compatible string,
+update PHY, add support to EPF driver and add EP PCIe node in dtsi
+file for ep pcie0 controller.
 
-Several other platforms use --pad, see microblaze, openrisc and
-powerpc. In some cases we just can not update the bootloader.
+v1 -> v2:
+- update description for dma
+- Reusing qcom,sdx55-pcie-ep compatibe so remove compaitable
+  for sa8775p
+- sort the defines in phy header file and remove extra defines
+- add const in return type pci_epf_header and remove MHI_EPF_USE_DMA
+  flag as hdma patch is not ready
+- add fallback compatiable as qcom,sdx55-pcie-ep, add iommu property
 
->
-> Both LK [1] and ABL [2] do or have done this correctly at some point.
-> If more space is needed for some weird new modifications the padding
-> size there should be adjusted.
->
-> [1]: https://git.codelinaro.org/clo/la/kernel/lk/-/blob/lk.lnx.1.0.r54-rel/platform/msm_shared/dev_tree.c#L2051-2057
-> [2]: https://git.codelinaro.org/clo/la/abl/tianocore/edk2/-/blob/uefi.lnx.4.0.r40-rel/QcomModulePkg/Library/BootLib/UpdateDeviceTree.c#L1402-1414
+Mrinmay Sarkar (4):
+  dt-bindings: PCI: qcom-ep: Add support for SA8775P SoC
+  phy: qcom-qmp-pcie: add endpoint support for sa8775p
+  PCI: epf-mhi: Add support for SA8775P
+  arm64: dts: qcom: sa8775p: Add ep pcie0 controller node
 
-In this case ABL fails to handle the situation:
+ .../devicetree/bindings/pci/qcom,pcie-ep.yaml      | 131 +++++++++++++++++----
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi              |  48 ++++++++
+ drivers/pci/endpoint/functions/pci-epf-mhi.c       |  17 +++
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c           |  41 +++++++
+ drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h         |   2 +
+ 5 files changed, 217 insertions(+), 22 deletions(-)
 
-Cmdline:  ignore_loglevel console=tty0 console=ttyMSM0,115200n8
-earlycon root=PARTLABEL=rootfs rootwait adbd --
-androidboot.verifiedbootstate
-Error adding node
-Error carving out UEFI memory: FFFFFFFF
+-- 
+2.7.4
 
-Adding --pad 1024 is enough for this board to boot.
-
->
-> By adding --pad 4096 globally we would waste pointless empty space for
-> every single DTB, which ends up on all systems that use generic kernels
-> with Qualcomm support included. With the ~230 DTBs we have at the moment
-> this would already waste ~1 MiB (~16 MiB -> ~17 MiB total).
->
-> So please:
->
->  - If you can, update the bootloader and fix the padding size there.
->
->  - If this is not possible: Add the padding only for the boards with
->    broken bootloaders with a clear comment that this should be the last
->    resort for devices that are locked down.
-
-Yep, this sounds like the correct approach in this case. Thank you.
-
->
->  - Or maybe boot a less broken bootloader inbetween (like U-Boot). :)
->
-> Thanks,
-> Stephan
->
-> >
-> > ---
-> >  arch/arm64/boot/dts/qcom/Makefile | 4 ++++
-> >  1 file changed, 4 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> > index d6cb840b7050..8e9fa2539265 100644
-> > --- a/arch/arm64/boot/dts/qcom/Makefile
-> > +++ b/arch/arm64/boot/dts/qcom/Makefile
-> > @@ -1,4 +1,8 @@
-> >  # SPDX-License-Identifier: GPL-2.0
-> > +
-> > +# pad DT allowing bootloader to populate several extra nodes
-> > +DTC_FLAGS += --pad 4096
-> > +
-> >  dtb-$(CONFIG_ARCH_QCOM)      += apq8016-sbc.dtb
-> >
-> >  apq8016-sbc-usb-host-dtbs    := apq8016-sbc.dtb apq8016-sbc-usb-host.dtbo
-> > --
-> > 2.39.2
-> >
-
-
-
---
-With best wishes
-Dmitry
