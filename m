@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F6947C4C1C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 09:39:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 74B847C4C24
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 09:42:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344614AbjJKHjd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Oct 2023 03:39:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34584 "EHLO
+        id S1344927AbjJKHmF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Oct 2023 03:42:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229504AbjJKHjc (ORCPT
+        with ESMTP id S229759AbjJKHmD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Oct 2023 03:39:32 -0400
-Received: from mail-ua1-x932.google.com (mail-ua1-x932.google.com [IPv6:2607:f8b0:4864:20::932])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25ECA91
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 00:39:30 -0700 (PDT)
-Received: by mail-ua1-x932.google.com with SMTP id a1e0cc1a2514c-7b07c3eaf9bso2152964241.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 00:39:30 -0700 (PDT)
+        Wed, 11 Oct 2023 03:42:03 -0400
+Received: from mail-vs1-xe29.google.com (mail-vs1-xe29.google.com [IPv6:2607:f8b0:4864:20::e29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50B029D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 00:42:01 -0700 (PDT)
+Received: by mail-vs1-xe29.google.com with SMTP id ada2fe7eead31-4577c1ae94fso1303977137.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 00:42:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1697009969; x=1697614769; darn=vger.kernel.org;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1697010120; x=1697614920; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OWrbWu0Oap0wNNOVGtrSvCx+2kjgQ+v9eimTvsjr3Uc=;
-        b=UbzsGaAvjJDDjAtrxt+DGTCOaCO5LOui8STj4oM+YBVj56kHK7hyLZHZAskHjMOUJD
-         uTnsH07u4d6kXZI0GBcA6moJbihWf7FfkLFqr5tcYgZ+sWIyiVX3p9NXVg2mDitU8nqL
-         TykxsDWeF1+RhnwtdWj5kT6z8pL/M2r9SVT8L+F7sELKxlWtMRPBdIDQH6uw1m6JJn68
-         zE9xbn9If3mWCzMW8Pxhzh8wVza72sudkeOBxqkFsxUOtsR2EmrZ14JzsdGXtVclHN6b
-         3qN0dYqAvIF9rsQM3t/nH2N8DFj6+m6D7kzbqaN4I83NNflAq3FSNQv37c0FMLnschfr
-         dPkg==
+        bh=gvr2mhxzZf0lzgYji+v1xxemtFF8X0p4vy2inlI9AV4=;
+        b=mk9nVMNOxoT6muqGaoAGI/iKmVzHUOrLSPPlpobqFpMv8BsU2yILfKmAnDmuYkMfyK
+         BF2Wx3XZeL/4Ezpq0wCdse3kOWm3SFE2fgtQdSl9OryulTn5oWnRIj7VQvBaILCdM2dX
+         olzhux03qfx76mVQQb4RXmbUKCnNHVHFzHn9z03uYwPqM4TywXEXlFloI5DcYuWW5Htc
+         v/HJ+VzQM3GQjaGKxxqtJSF5eWtHBW+aak1liqCpw4r7RpZUiyPcpwvmMyaDEryH2f/a
+         dCKucVdZddQMdIaoaQGINjsvTPW2YOxzqFpAj6LuPEG4z9zZN1CBB1C4Bs5cjINwV9XV
+         0tdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697009969; x=1697614769;
+        d=1e100.net; s=20230601; t=1697010120; x=1697614920;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OWrbWu0Oap0wNNOVGtrSvCx+2kjgQ+v9eimTvsjr3Uc=;
-        b=DVmvieISXXrA+QIA1uvKB9gUqF2I3+yPdDP2x+A4+0ZO7JgED0nNhTWcWHUiLG0Miw
-         XK3CZ/YTXdzVqIKW3lk76xsWh9EyqlesP2Uqcr+bW3wuYy9ASBSSKqQ12hoogAQmghoM
-         uTRkd7F5V+uF4OPfa17cIfvNLTlNjn6lYLBgjjCpvwQ9vWdC5tCurj974525pW/F+G1V
-         GY+nCcKsFp/YCokDW1UWGupuh0pFVjwQ147Ua+Wz2JRIhVdMIvlVLlzJ3apNC73PoWM8
-         ogCkvpX02rRyL2WnQkNhkHClYaXQzRudPFHUUyv+75CNWVhQkkAbTLBwmRkSVJa6IRGM
-         3gkg==
-X-Gm-Message-State: AOJu0YwHXU9py9VGIE+++eSEsJv239FNfBzFHXWJrRtFU2kwTmdDlB0W
-        I/0/WWVmRi0bM/0ZbI/Cab08UGiPj54f1ZDIkhzXRQ==
-X-Google-Smtp-Source: AGHT+IGT+p8cX4ZYoTo/8ckQrPA8I5Vc5IL/grT0LsRd6i2r04fEYIazqISHa9JfJgrXhgPtoVAT7EJr9hg2NXYOvWk=
-X-Received: by 2002:a67:e2da:0:b0:452:5e2e:a4e1 with SMTP id
- i26-20020a67e2da000000b004525e2ea4e1mr19185104vsm.14.1697009969146; Wed, 11
- Oct 2023 00:39:29 -0700 (PDT)
+        bh=gvr2mhxzZf0lzgYji+v1xxemtFF8X0p4vy2inlI9AV4=;
+        b=mdARe+TbaHocEjiiH2b7gwYee0ag90+b2gCVYDNiN6XVyJZ3/D/Tp7nv7EtaLA2F1i
+         U/MMLxVPJTR7ot4VJDQPmr6QZyzHj9HkN+9BVcbCfAhK62D1gSGvzj/oGMPP5fsfYGyw
+         C2+/zQxIMScHH7eSxzDge7kubIhtaq3WjnHP4hRWc8ANMGOXmacjJfA/PB7xd8ryH+dk
+         rAGifV6zfc8AywZoaFsE9bLBRxBtYQbNeU0SZylaQFLllSGlyosQdcXhys/ndMD6GaCr
+         7hmtXodrh7sXqEunnLUJM+/2Uh1R+r/6TrsQV9Ff2Vzn3V7Tv/HV4C5I7wPieE899u/y
+         HGyw==
+X-Gm-Message-State: AOJu0YxyHD4JFKYyGkL58S8iJJz+qglYaADC5k2jQk9+976fiAMPD89n
+        8/9GaQgsGxNFquq76ouJ91ZZ+liChAmB8R0mw514VQ==
+X-Google-Smtp-Source: AGHT+IFTN0EUHqjNAwPaRMQ3STkQCkK/6QueiW0s8LX0on+hLpESjYrqGF30v+DE1fEs2AWqmhEkVH78JN6521l4424=
+X-Received: by 2002:a67:fb59:0:b0:452:72ed:7020 with SMTP id
+ e25-20020a67fb59000000b0045272ed7020mr19480840vsr.32.1697010120424; Wed, 11
+ Oct 2023 00:42:00 -0700 (PDT)
 MIME-Version: 1.0
-References: <20231009153427.20951-1-brgl@bgdev.pl> <20231009153427.20951-5-brgl@bgdev.pl>
- <f6jspdoeyv6ntcrl6qndy2ud3mcdkoxxcnzqm3qpbtcd3ztdpi@7iw5f5og7is2>
- <CAMRc=MchBQrpSqHHs-cD0RmOdSoKt2SLd76a97E8mSmHYGUCUg@mail.gmail.com> <pmmetoy5pb6khrjzsg6cd565cw3eowvs5i67465ne4xlqkrqgk@befdv3vfran3>
-In-Reply-To: <pmmetoy5pb6khrjzsg6cd565cw3eowvs5i67465ne4xlqkrqgk@befdv3vfran3>
+References: <20231009153427.20951-1-brgl@bgdev.pl> <20231009153427.20951-8-brgl@bgdev.pl>
+ <v5ty4xeshodjlpyatqlrjipqejazamuhqhauorujveyqzpikoq@rftlvk6354yx>
+In-Reply-To: <v5ty4xeshodjlpyatqlrjipqejazamuhqhauorujveyqzpikoq@rftlvk6354yx>
 From:   Bartosz Golaszewski <brgl@bgdev.pl>
-Date:   Wed, 11 Oct 2023 09:39:18 +0200
-Message-ID: <CAMRc=MfnzH-oa926MQ4w+ELKc_S=PnTkmsmtEoiofp4om6mA8w@mail.gmail.com>
-Subject: Re: [PATCH v3 04/15] firmware: qcom: add a dedicated TrustZone buffer allocator
+Date:   Wed, 11 Oct 2023 09:41:49 +0200
+Message-ID: <CAMRc=MdGABGa_bc3_ug+iSKtMg9pcKe40F7zv9Ff2C0ed8i2=Q@mail.gmail.com>
+Subject: Re: [PATCH v3 07/15] firmware: qcom: scm: make qcom_scm_assign_mem()
+ use the TZ allocator
 To:     Andrew Halaney <ahalaney@redhat.com>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -80,160 +80,95 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 10, 2023 at 10:48=E2=80=AFPM Andrew Halaney <ahalaney@redhat.co=
+On Wed, Oct 11, 2023 at 12:19=E2=80=AFAM Andrew Halaney <ahalaney@redhat.co=
 m> wrote:
 >
-> On Tue, Oct 10, 2023 at 10:26:34AM +0200, Bartosz Golaszewski wrote:
-> > On Mon, Oct 9, 2023 at 11:28=E2=80=AFPM Andrew Halaney <ahalaney@redhat=
-.com> wrote:
-> > >
-> > > On Mon, Oct 09, 2023 at 05:34:16PM +0200, Bartosz Golaszewski wrote:
-> > > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > > >
-> > > > We have several SCM calls that require passing buffers to the Trust=
-Zone
-> > > > on top of the SMC core which allocates memory for calls that requir=
-e
-> > > > more than 4 arguments.
-> > > >
-> > > > Currently every user does their own thing which leads to code
-> > > > duplication. Many users call dma_alloc_coherent() for every call wh=
-ich
-> > > > is terribly unperformant (speed- and size-wise).
-> > > >
-> > > > Provide a set of library functions for creating and managing pool o=
-f
-> > > > memory which is suitable for sharing with the TrustZone, that is:
-> > > > page-aligned, contiguous and non-cachable as well as provides a way=
- of
-> > > > mapping of kernel virtual addresses to physical space.
-> > > >
-> > > > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > > > ---
+> On Mon, Oct 09, 2023 at 05:34:19PM +0200, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > >
-> > [snip]
+> > Let's use the new TZ memory allocator to obtain a buffer for this call
+> > instead of using dma_alloc_coherent().
 > >
-> > >
-> > > I got these warnings with this series:
-> > >
-> > >     ahalaney@fedora ~/git/linux-next (git)-[7204cc6c3d73] % ARCH=3Dar=
-m64 CROSS_COMPILE=3Daarch64-linux-gnu- make W=3D1 C=3D2 drivers/firmware/qc=
-om/
-> > >     drivers/firmware/qcom/qcom_tzmem.c:137: warning: Function paramet=
-er or member 'size' not described in 'qcom_tzmem_pool_new'
-> > >       CHECK   drivers/firmware/qcom/qcom_tzmem.c
-> > >     drivers/firmware/qcom/qcom_tzmem.c:204:17: warning: incorrect typ=
-e in assignment (different address spaces)
-> > >     drivers/firmware/qcom/qcom_tzmem.c:204:17:    expected void **slo=
-t
-> > >     drivers/firmware/qcom/qcom_tzmem.c:204:17:    got void [noderef] =
-__rcu **
-> > >     drivers/firmware/qcom/qcom_tzmem.c:204:17: warning: incorrect typ=
-e in assignment (different address spaces)
-> > >     drivers/firmware/qcom/qcom_tzmem.c:204:17:    expected void **slo=
-t
-> > >     drivers/firmware/qcom/qcom_tzmem.c:204:17:    got void [noderef] =
-__rcu **
-> > >     drivers/firmware/qcom/qcom_tzmem.c:204:17: warning: incorrect typ=
-e in argument 1 (different address spaces)
-> > >     drivers/firmware/qcom/qcom_tzmem.c:204:17:    expected void [node=
-ref] __rcu **slot
-> > >     drivers/firmware/qcom/qcom_tzmem.c:204:17:    got void **slot
-> > >     drivers/firmware/qcom/qcom_tzmem.c:204:17: warning: incorrect typ=
-e in assignment (different address spaces)
-> > >     drivers/firmware/qcom/qcom_tzmem.c:204:17:    expected void **slo=
-t
-> > >     drivers/firmware/qcom/qcom_tzmem.c:204:17:    got void [noderef] =
-__rcu **
-> > >     drivers/firmware/qcom/qcom_tzmem.c:339:13: warning: context imbal=
-ance in 'qcom_tzmem_to_phys' - wrong count at exit
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > ---
+> >  drivers/firmware/qcom/qcom_scm.c | 10 ++++++----
+> >  1 file changed, 6 insertions(+), 4 deletions(-)
 > >
-> > I fixed the other ones but this one I think comes from CHECK not
-> > dealing correctly with the spinlock guard.
+> > diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/q=
+com_scm.c
+> > index 71e98b666391..754f6056b99f 100644
+> > --- a/drivers/firmware/qcom/qcom_scm.c
+> > +++ b/drivers/firmware/qcom/qcom_scm.c
+> > @@ -4,6 +4,7 @@
+> >   */
 > >
-> > >
-> > >
-> > > All are confusing me, size seems described, I don't know much about
-> > > radix tree usage / rcu, and the locking in qcom_tzmem_to_phys seems s=
-ane
-> > > to me but I'm still grappling with the new syntax.
-> > >
-> > > For the one address space one, I _think_ maybe a diff like this is in
-> > > order?
-> > >
-> > >     diff --git a/drivers/firmware/qcom/qcom_tzmem.c b/drivers/firmwar=
-e/qcom/qcom_tzmem.c
-> > >     index b3137844fe43..5b409615198d 100644
-> > >     --- a/drivers/firmware/qcom/qcom_tzmem.c
-> > >     +++ b/drivers/firmware/qcom/qcom_tzmem.c
-> > >     @@ -193,7 +193,7 @@ void qcom_tzmem_pool_free(struct qcom_tzmem_p=
-ool *pool)
-> > >             struct qcom_tzmem_chunk *chunk;
-> > >             struct radix_tree_iter iter;
-> > >             bool non_empty =3D false;
-> > >     -       void **slot;
-> > >     +       void __rcu **slot;
-> > >
-> > >             if (!pool)
-> > >                     return;
-> > >     @@ -202,7 +202,7 @@ void qcom_tzmem_pool_free(struct qcom_tzmem_p=
-ool *pool)
-> > >
-> > >             scoped_guard(spinlock_irqsave, &qcom_tzmem_chunks_lock) {
-> > >                     radix_tree_for_each_slot(slot, &qcom_tzmem_chunks=
-, &iter, 0) {
-> > >     -                       chunk =3D *slot;
-> > >     +                       chunk =3D radix_tree_deref_slot_protected=
-(slot, &qcom_tzmem_chunks_lock);
-> >
-> > We need to keep the lock taken for the duration of the looping so we
-> > can use the regular radix_tree_deref_slot().
+> >  #include <linux/arm-smccc.h>
+> > +#include <linux/cleanup.h>
+> >  #include <linux/clk.h>
+> >  #include <linux/completion.h>
+> >  #include <linux/cpumask.h>
+> > @@ -998,14 +999,13 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, siz=
+e_t mem_sz,
+> >       struct qcom_scm_mem_map_info *mem_to_map;
+> >       phys_addr_t mem_to_map_phys;
+> >       phys_addr_t dest_phys;
+> > -     dma_addr_t ptr_phys;
+> > +     phys_addr_t ptr_phys;
+> >       size_t mem_to_map_sz;
+> >       size_t dest_sz;
+> >       size_t src_sz;
+> >       size_t ptr_sz;
+> >       int next_vm;
+> >       __le32 *src;
+> > -     void *ptr;
 >
-> IIUC, using the protected version is preferable since you already
-> have the lock in hand: https://www.kernel.org/doc/html/latest/RCU/whatisR=
-CU.html#id2
+> nit: couldn't you keep this up here?
 >
-> Quote:
->     The variant rcu_dereference_protected() can be used outside of an RCU
->     read-side critical section as long as the usage is protected by locks
->     acquired by the update-side code. This variant avoids the lockdep war=
-ning
->     that would happen when using (for example) rcu_dereference() without
->     rcu_read_lock() protection. Using rcu_dereference_protected() also ha=
-s
->     the advantage of permitting compiler optimizations that rcu_dereferen=
-ce()
->     must prohibit. The rcu_dereference_protected() variant takes a lockde=
-p
->     expression to indicate which locks must be acquired by the caller.
->     If the indicated protection is not provided, a lockdep splat is emitt=
-ed.
->
-> Thanks,
-> Andrew
 
-I should have RTFM I guess. I assumed that the _protected() variant
-just takes the indicated lock.
+This still needs to make its way into the coding style guide but I got
+yelled at by Linus Torvalds personally for not declaring the managed
+variables where they are initialized. So this is the correct approach.
 
-Thanks
 Bart
 
+> Otherwise,
 >
+> Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
 >
+> >       int ret, i, b;
+> >       u64 srcvm_bits =3D *srcvm;
 > >
-> > Bart
+> > @@ -1015,10 +1015,13 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, s=
+ize_t mem_sz,
+> >       ptr_sz =3D ALIGN(src_sz, SZ_64) + ALIGN(mem_to_map_sz, SZ_64) +
+> >                       ALIGN(dest_sz, SZ_64);
 > >
-> > >
-> > >                             if (chunk->owner =3D=3D pool)
-> > >                                     non_empty =3D true;
-> > >
-> > >
-> > > Still planning on reviewing/testing the rest, but got tripped up ther=
-e
-> > > so thought I'd highlight it before doing the rest.
-> > >
-> > > Thanks,
-> > > Andrew
-> > >
+> > -     ptr =3D dma_alloc_coherent(__scm->dev, ptr_sz, &ptr_phys, GFP_KER=
+NEL);
+> > +     void *ptr __free(qcom_tzmem) =3D qcom_tzmem_alloc(__scm->mempool,
+> > +                                                     ptr_sz, GFP_KERNE=
+L);
+> >       if (!ptr)
+> >               return -ENOMEM;
+> >
+> > +     ptr_phys =3D qcom_tzmem_to_phys(ptr);
+> > +
+> >       /* Fill source vmid detail */
+> >       src =3D ptr;
+> >       i =3D 0;
+> > @@ -1047,7 +1050,6 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, siz=
+e_t mem_sz,
+> >
+> >       ret =3D __qcom_scm_assign_mem(__scm->dev, mem_to_map_phys, mem_to=
+_map_sz,
+> >                                   ptr_phys, src_sz, dest_phys, dest_sz)=
+;
+> > -     dma_free_coherent(__scm->dev, ptr_sz, ptr, ptr_phys);
+> >       if (ret) {
+> >               dev_err(__scm->dev,
+> >                       "Assign memory protection call failed %d\n", ret)=
+;
+> > --
+> > 2.39.2
 > >
 >
