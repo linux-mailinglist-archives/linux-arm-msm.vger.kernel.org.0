@@ -2,99 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B28167C5876
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 17:49:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BF0A7C5930
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Oct 2023 18:33:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235099AbjJKPtk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Oct 2023 11:49:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49486 "EHLO
+        id S232701AbjJKQdp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Oct 2023 12:33:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235075AbjJKPtj (ORCPT
+        with ESMTP id S232718AbjJKQdf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Oct 2023 11:49:39 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0EC7A4;
-        Wed, 11 Oct 2023 08:49:38 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E50FCC433C7;
-        Wed, 11 Oct 2023 15:49:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1697039378;
-        bh=+4vMMnbz6QM3xqt6SUWU/u/wTBq1TQ2bMWhWyVpP1ck=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=neKr/JAWpIGZ6cQ0odUAwAzsX3izewlUsu5qdv35VN0D0QoFSqseHZk/VhagElKQ7
-         xO/Ep7SaCKgWM9l2v3e9586y8od72dvk7klu6xqQROrtbzceADDqAQZ9HU88O8eEo2
-         A1tkawJa3OkYvdouGHXKnYtjiLqtobcRHjy3L+13H6maeJxrYjzpnWAWNutUG/BOFg
-         K5vncX1Z4QhvXx3Rm9P3k7es1t7wWcZyDH3bM812FIHy1bi7WyNrx8MlmX+FYoSxF+
-         GErynuIp6oa2BbpPsQdRkeeggaHiZHdJkCL7/U+mh/ld31fKEpSxLaOpxR/y7NvWsB
-         YHcVjWyd/pqaQ==
-Received: (nullmailer pid 793454 invoked by uid 1000);
-        Wed, 11 Oct 2023 15:49:35 -0000
-Date:   Wed, 11 Oct 2023 10:49:35 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
+        Wed, 11 Oct 2023 12:33:35 -0400
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22EBFB0;
+        Wed, 11 Oct 2023 09:33:31 -0700 (PDT)
+Received: from [192.168.178.23] (k10064.upc-k.chello.nl [62.108.10.64])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id F38A6C88E9;
+        Wed, 11 Oct 2023 16:33:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1697042009; bh=qhKCT4xrkgikeWF4fbn1jxq8p8MIe5Q6C2l6e3PNY5U=;
+        h=From:Subject:Date:To:Cc;
+        b=JJHjEFTh/7Ebx5nZwH0dWU5pvi+UQhKvL++lM41KjvgR2JTNA7Dt9EP7fgPz8qhtO
+         WTxeRSc/x7b2HfNRiOjR4XouAQxXcY7YMz1bspN26XAcU4whLMYgi9lxaEHYWkvzS8
+         7bBYPqNkyZreyHfa2dk2idNQBemcQ1H282bGogSw=
+From:   Luca Weiss <luca@z3ntu.xyz>
+Subject: [PATCH 0/3] Add watchdog nodes to msm8226 & msm8974
+Date:   Wed, 11 Oct 2023 18:33:12 +0200
+Message-Id: <20231011-msm8226-msm8974-watchdog-v1-0-2c472818fbce@z3ntu.xyz>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAEjOJmUC/x2MQQqAIBAAvxJ7TsjNyvpKdJDacg9WaFQg/j3pN
+ MxhJkIgzxRgKCJ4ujnwsWeRZQGzNftGgpfsgBXWspJSuOA0Yvuz75R4zDXb5diE0ZpUsypCoyD
+ np6eV3389Til9TGLaR2oAAAA=
+To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Stephan Gerhold <stephan@gerhold.net>
-Subject: Re: [PATCH v4 08/23] soc: qcom: Add driver for Qualcomm Krait L2
- cache scaling
-Message-ID: <20231011154935.GA785564-robh@kernel.org>
-References: <20230827115033.935089-1-dmitry.baryshkov@linaro.org>
- <20230827115033.935089-9-dmitry.baryshkov@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230827115033.935089-9-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Luca Weiss <luca@z3ntu.xyz>,
+        =?utf-8?q?Matti_Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1366; i=luca@z3ntu.xyz;
+ h=from:subject:message-id; bh=qhKCT4xrkgikeWF4fbn1jxq8p8MIe5Q6C2l6e3PNY5U=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBlJs5TOneAtkZj1F5CsZKdsfrGSrlcZ3qmg2NP5
+ +G8AI9e782JAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZSbOUwAKCRBy2EO4nU3X
+ Vpx8D/4+FIELvM73S2A7NuOX0vSGtsp1r0yatMMV1Wch3QQ7mRCmUf/QYAUXzzHRMSndwTbSZoP
+ 4IlopG7Mehr9CmJDXnb5UqvQtUS2y9mtuhTqSi46h6MkeOKahnFzaKgg+CIwgCNtLPPLS/dNn7e
+ rTYWQsHj71XNTSEiMVOZa4p7bZkwHHBno0j471u+50B5OWCcsk+rjCKHZO191L0TlMgCDX9i5MT
+ N95M5MKc+0nBXzApPjgQjpr4fBPwMeaeEOo10CqEUbkWboQhMHB9X0uDePeZDZ2h0HgqIfRpwbn
+ sglh3bU3ZV7ylQfyn0Mx1l2TEhG5c+mNZ+d5r8FCIk2Z107FwGoPJq/JnMoHUR33sfhe9NaSO7h
+ QsH4CEgRqA1KDD5ivFB/fuZiWwcSzrZGlmXRH/3+eS9tnrsFmlR1ZBEMawYu8W8pPdBjgI5Rw7U
+ FML49dcMYg6wxgNFWlSOPP/b+Gz1Bjn5ggdTU3jDs8OGKb43caFM9qzFWu9B1XFYM5rQRLQ1VD8
+ 2p4jaWaLtkMjbEfdVv5OGkuIxQsMshoak9exWbYgXAJTxDbUpkYxLFOTWNDeynfy2prxeksjtPP
+ Xao+3N2cDUm1VqZBiXCODR/XuWfy83zk7FxoCWBSfJFooi0SgyuAc8J2HRaouZJipkhOPVLj/H6
+ Uv2pB34Thbld2uA==
+X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Aug 27, 2023 at 02:50:18PM +0300, Dmitry Baryshkov wrote:
-> Add a simple driver that handles scaling of L2 frequency and voltages.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+Document the compatible for the watchdog found on both SoCs, and add
+them to the SoC dtsi file. And especially for the case where the
+bootloader has already enabled the watchdog we need to start petting it
+on time, otherwise the system gets rebooted.
 
-[...]
+It's worth noting that the watchdog behaves a bit unexpectedly.
+It appears the watchdog counts down significantly slower when there's no
+load on the system and can last far longer than 30 seconds until they
+bark. Only when putting load on the system, e.g. with stress-ng does the
+watchdog interrupt fire and kill the system within an expected amount of
+time.
 
-> +static const struct of_device_id krait_l2_match_table[] = {
-> +	{ .compatible = "qcom,krait-l2-cache" },
-> +	{}
-> +};
-> +MODULE_DEVICE_TABLE(of, krait_l2_match_table);
-> +
-> +static struct platform_driver krait_l2_driver = {
-> +	.probe = krait_l2_probe,
-> +	.remove = krait_l2_remove,
-> +	.driver = {
-> +		.name = "qcom-krait-l2",
-> +		.of_match_table = krait_l2_match_table,
-> +		.sync_state = icc_sync_state,
-> +	},
-> +};
+This behavior has been observed on both msm8974 and msm8226 smartphones.
 
-As I mentioned in the other thread, cache devices already have a struct 
-device. Specifically, they have a struct device (no subclass) on the 
-cpu_subsys bus type. So there should be no need for a platform device 
-and second struct device.
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+Matti Lehtimäki (3):
+      dt-bindings: watchdog: qcom-wdt: Add MSM8226 and MSM8974 compatibles
+      ARM: dts: qcom: msm8226: Add watchdog node
+      ARM: dts: qcom: msm8974: Add watchdog node
 
-See drivers/acpi/processor_driver.c for an example. Or grep any use of 
-"cpu_subsys".
+ Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml | 2 ++
+ arch/arm/boot/dts/qcom/qcom-msm8226.dtsi                 | 8 ++++++++
+ arch/arm/boot/dts/qcom/qcom-msm8974.dtsi                 | 8 ++++++++
+ 3 files changed, 18 insertions(+)
+---
+base-commit: 2933a1156742d8c47550493a77af8e2d81cf3c84
+change-id: 20231011-msm8226-msm8974-watchdog-a88e45f4e2a4
 
-Rob
+Best regards,
+-- 
+Luca Weiss <luca@z3ntu.xyz>
+
