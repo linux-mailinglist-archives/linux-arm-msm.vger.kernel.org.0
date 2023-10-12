@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 45EC57C7434
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 19:22:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 687C57C7479
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 19:22:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379609AbjJLRWJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Oct 2023 13:22:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54394 "EHLO
+        id S1379637AbjJLRWl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Oct 2023 13:22:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379603AbjJLRWH (ORCPT
+        with ESMTP id S1379695AbjJLRWb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Oct 2023 13:22:07 -0400
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8275E7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 10:21:51 -0700 (PDT)
-Received: by mail-pl1-x62a.google.com with SMTP id d9443c01a7336-1c7373cff01so18651575ad.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 10:21:51 -0700 (PDT)
+        Thu, 12 Oct 2023 13:22:31 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 855F6184
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 10:22:00 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id d9443c01a7336-1c5bf7871dcso10269765ad.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 10:22:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697131311; x=1697736111; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1697131319; x=1697736119; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=emz03f3uxdP7Dq6lqeINaZBEdrIm5oTH0vEaEEX0iS4=;
-        b=Jsp8cAqZRfPoQAwyDLvOynGiSaXDUBIpdQIr9Sr23jifeiqV1AVkD9mJr/dTBRlynR
-         KzkeSfRdRsqx6ez3115boHO09wZqYQJuJ67bSH1WWI8g0srt3Vocn1BKnnYToSZ6wJ3F
-         sx6RS8jsItRWx7EXxbgz+qORos3T8PSdZrwGPdI0+A0f4YD1Jp2qe6NOpzAV5+DnlsOr
-         ikwyGtUbcTk4LEZWJb8e8bi+3rnDo3scwgSAoxRNahKhjSYpd1dBfi9POhKNSebJYJhe
-         HO+smd61N3vYZIq7uhoWf3QecIJfMwrzwVDxKMWqV7ynX3zSlVOSp+LO5zmiQaTMOYmX
-         FRYw==
+        bh=V5sltB5jFklAIWjHPpvRvj0gUOj1Qp4+ejgb/BMQP90=;
+        b=H5RoFJcqEzPVkDz6RykYoVYoO2Cs4bkhkFDAIAiflNkdcyGERG8YP4hwzRyxOGr8X2
+         uiACkhRBez/iCntDRqLoT5gskNjrxx4OgUgE3ldsBIL/0N/Lo+SdP3SjNvzBM1QLlWBG
+         doLyJSlVy6bMPL0hg4xl6s/nMNe50OLS5OjGiY+SwTt5Z+p6nH63yMvdE/Q6jhH0YhJG
+         SEQvPZS0t93bWwLNu68TZhfS3AOPfoA5v68BUJ9BGBXDw08M2q0qQclpkhkJNUYkgy/K
+         BkeNv2+uEBBKElgT6+6RAYhgCjZhZnXRQ33xG93GbWdNClk6l95DZRgGkEfqL1MwRCTK
+         oZzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697131311; x=1697736111;
+        d=1e100.net; s=20230601; t=1697131319; x=1697736119;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=emz03f3uxdP7Dq6lqeINaZBEdrIm5oTH0vEaEEX0iS4=;
-        b=kqIt6ekkQb9oqltIb1PlbPVVmruCl7rsxRq70IMcQebw7HGwozsP9Re0Qhwu86ylSH
-         r8yMzj7nrbQn66OuAXQa0Fy2qt5SG/h+twMWAjp2SQ/FRaxcQebHVE4E0G+e9t5As00w
-         h0DSPvvTk5M+a5QcIM3AucZ9weKqDIsCrdu2zdZsL4496d8eBbmnybDKI2bYCxQDIF+c
-         FomOouBC/4ZwNsvfY1qcmEkClByBG79L7aCNqhXDAP69XcCHLsYp4k335ozmIfe4ZOZ1
-         QVfbCa9Kr3FDBHiuE3EflrFpLwHwBodS53YrccYML7ZkNM54kyp/i/l7Hgn0FXHCsxUS
-         oO0w==
-X-Gm-Message-State: AOJu0YxLanfi18/hwFJsJfdXpNumdSR+HSvelOpbkE8y2z3oM2NptHuP
-        lm1ubx3jkjD7RzZnx0cmDr0I
-X-Google-Smtp-Source: AGHT+IEw8ngM9ONqiOY/Lpq6bCfVEQBRoq3XO4ZLXCgxF2MnAul4Mauj/JUwnqv5RWxQLqInE84Psg==
-X-Received: by 2002:a17:902:e5d1:b0:1c6:362:3553 with SMTP id u17-20020a170902e5d100b001c603623553mr31262262plf.31.1697131311172;
-        Thu, 12 Oct 2023 10:21:51 -0700 (PDT)
+        bh=V5sltB5jFklAIWjHPpvRvj0gUOj1Qp4+ejgb/BMQP90=;
+        b=dAlH2Ov6dVBVmj6Vp0GTIRgpOIqPWzmeUdQAXSZl95snC+LPvYFmiW8tvWub/TaHMe
+         wQwg74jVnYnNtJmH0Es2KBWWOnNTySgM+1XFqBRPkt6iDMhF3B7KKlaen+M/U12c76JD
+         dV97mCfDwFo8ZhZ98efK2AXemG8+mVLGPRa8frvBGzp/c8pkD21Suj/qJ4DUpXKob7Y3
+         DzU3SXiCJspIZJ56PDKh0EpI/kI5mlGLMEk82Qmv0FIG5Ty2ng9YjpjFHcvsj1g30D1q
+         wpEoWfaAdje8WfdVqR4GI4bkjPVd8alwhxk9tm9hbSLfhdznriUGqCsluWy3tLCQoQCT
+         DuQw==
+X-Gm-Message-State: AOJu0YzJ/wJ5OpZzl0o+smoPKA0fFA/gyQvsFXldc46Rx74YAjdRSbKO
+        oHbTeyy15jG1j4S125liuGqb
+X-Google-Smtp-Source: AGHT+IEoLJ/ZmxRetfea+zp9UehExuSxP1MEB1ijjDidgeHl0X81uReUQdzMTp94bD5/EQ9w8G40yw==
+X-Received: by 2002:a17:903:234e:b0:1bc:5924:2da2 with SMTP id c14-20020a170903234e00b001bc59242da2mr24720640plh.56.1697131319376;
+        Thu, 12 Oct 2023 10:21:59 -0700 (PDT)
 Received: from localhost.localdomain ([120.138.12.180])
-        by smtp.gmail.com with ESMTPSA id f9-20020a170902ce8900b001c75a07f62esm2242359plg.34.2023.10.12.10.21.43
+        by smtp.gmail.com with ESMTPSA id f9-20020a170902ce8900b001c75a07f62esm2242359plg.34.2023.10.12.10.21.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Oct 2023 10:21:50 -0700 (PDT)
+        Thu, 12 Oct 2023 10:21:58 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
         myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
@@ -66,18 +66,17 @@ Cc:     alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
         quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
         bmasney@redhat.com, krzysztof.kozlowski@linaro.org,
         linux-kernel@vger.kernel.org, alessandro.carminati@gmail.com,
-        Rob Herring <robh@kernel.org>,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v7 1/5] dt-bindings: ufs: common: add OPP table
-Date:   Thu, 12 Oct 2023 22:51:25 +0530
-Message-Id: <20231012172129.65172-2-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v7 2/5] scsi: ufs: core: Add OPP support for scaling clocks and regulators
+Date:   Thu, 12 Oct 2023 22:51:26 +0530
+Message-Id: <20231012172129.65172-3-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20231012172129.65172-1-manivannan.sadhasivam@linaro.org>
 References: <20231012172129.65172-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -86,80 +85,389 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+UFS core is only scaling the clocks during devfreq scaling and
+initialization. But for an optimum power saving, regulators should also
+be scaled along with the clocks.
 
-Except scaling UFS and bus clocks, it's necessary to scale also the
-voltages of regulators or power domain performance state levels.  Adding
-Operating Performance Points table allows to adjust power domain
-performance state, depending on the UFS clock speed.
+So let's use the OPP framework which supports scaling clocks, regulators,
+and performance state using OPP table defined in devicetree. For
+accomodating the OPP support, the existing APIs (ufshcd_scale_clks,
+ufshcd_is_devfreq_scaling_required and ufshcd_devfreq_scale) are modified
+to accept "freq" as an argument which in turn used by the OPP helpers.
 
-OPPv2 deprecates previous property limited to clock scaling:
-freq-table-hz.
+The OPP support is added along with the old freq-table based clock scaling
+so that the existing platforms work as expected.
 
+Co-developed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- .../devicetree/bindings/ufs/ufs-common.yaml   | 35 +++++++++++++++++--
- 1 file changed, 32 insertions(+), 3 deletions(-)
+ drivers/ufs/core/ufshcd.c | 144 +++++++++++++++++++++++++++++---------
+ include/ufs/ufshcd.h      |   4 ++
+ 2 files changed, 115 insertions(+), 33 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/ufs/ufs-common.yaml b/Documentation/devicetree/bindings/ufs/ufs-common.yaml
-index bbaee4f5f7b2..985ea8f64de8 100644
---- a/Documentation/devicetree/bindings/ufs/ufs-common.yaml
-+++ b/Documentation/devicetree/bindings/ufs/ufs-common.yaml
-@@ -20,11 +20,25 @@ properties:
-       items:
-         - description: Minimum frequency for given clock in Hz
-         - description: Maximum frequency for given clock in Hz
-+    deprecated: true
-     description: |
-+      Preferred is operating-points-v2.
-+
-       Array of <min max> operating frequencies in Hz stored in the same order
--      as the clocks property. If this property is not defined or a value in the
--      array is "0" then it is assumed that the frequency is set by the parent
--      clock or a fixed rate clock source.
-+      as the clocks property. If either this property or operating-points-v2 is
-+      not defined or a value in the array is "0" then it is assumed that the
-+      frequency is set by the parent clock or a fixed rate clock source.
-+
-+  operating-points-v2:
-+    description:
-+      Preferred over freq-table-hz.
-+      If present, each OPP must contain array of frequencies stored in the same
-+      order for each clock.  If clock frequency in the array is "0" then it is
-+      assumed that the frequency is set by the parent clock or a fixed rate
-+      clock source.
-+
-+  opp-table:
-+    type: object
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index c45737c5adb9..3f52e05002e4 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -20,6 +20,7 @@
+ #include <linux/delay.h>
+ #include <linux/interrupt.h>
+ #include <linux/module.h>
++#include <linux/pm_opp.h>
+ #include <linux/regulator/consumer.h>
+ #include <linux/sched/clock.h>
+ #include <linux/iopoll.h>
+@@ -275,7 +276,8 @@ static int ufshcd_host_reset_and_restore(struct ufs_hba *hba);
+ static void ufshcd_resume_clkscaling(struct ufs_hba *hba);
+ static void ufshcd_suspend_clkscaling(struct ufs_hba *hba);
+ static void __ufshcd_suspend_clkscaling(struct ufs_hba *hba);
+-static int ufshcd_scale_clks(struct ufs_hba *hba, bool scale_up);
++static int ufshcd_scale_clks(struct ufs_hba *hba, unsigned long freq,
++			     bool scale_up);
+ static irqreturn_t ufshcd_intr(int irq, void *__hba);
+ static int ufshcd_change_power_mode(struct ufs_hba *hba,
+ 			     struct ufs_pa_layer_attr *pwr_mode);
+@@ -1062,14 +1064,32 @@ static int ufshcd_set_clk_freq(struct ufs_hba *hba, bool scale_up)
+ 	return ret;
+ }
  
-   interrupts:
-     maxItems: 1
-@@ -75,8 +89,23 @@ properties:
- 
- dependencies:
-   freq-table-hz: [ clocks ]
-+  operating-points-v2: [ clocks, clock-names ]
- 
- required:
-   - interrupts
- 
-+allOf:
-+  - if:
-+      required:
-+        - freq-table-hz
-+    then:
-+      properties:
-+        operating-points-v2: false
-+  - if:
-+      required:
-+        - operating-points-v2
-+    then:
-+      properties:
-+        freq-table-hz: false
++static int ufshcd_opp_set_rate(struct ufs_hba *hba, unsigned long freq)
++{
++	struct dev_pm_opp *opp;
++	int ret;
 +
- additionalProperties: true
++	opp = dev_pm_opp_find_freq_floor_indexed(hba->dev,
++						 &freq, 0);
++	if (IS_ERR(opp))
++		return PTR_ERR(opp);
++
++	ret = dev_pm_opp_set_opp(hba->dev, opp);
++	dev_pm_opp_put(opp);
++
++	return ret;
++}
++
+ /**
+  * ufshcd_scale_clks - scale up or scale down UFS controller clocks
+  * @hba: per adapter instance
++ * @freq: frequency to scale
+  * @scale_up: True if scaling up and false if scaling down
+  *
+  * Return: 0 if successful; < 0 upon failure.
+  */
+-static int ufshcd_scale_clks(struct ufs_hba *hba, bool scale_up)
++static int ufshcd_scale_clks(struct ufs_hba *hba, unsigned long freq,
++			     bool scale_up)
+ {
+ 	int ret = 0;
+ 	ktime_t start = ktime_get();
+@@ -1078,13 +1098,21 @@ static int ufshcd_scale_clks(struct ufs_hba *hba, bool scale_up)
+ 	if (ret)
+ 		goto out;
+ 
+-	ret = ufshcd_set_clk_freq(hba, scale_up);
++	if (hba->use_pm_opp)
++		ret = ufshcd_opp_set_rate(hba, freq);
++	else
++		ret = ufshcd_set_clk_freq(hba, scale_up);
+ 	if (ret)
+ 		goto out;
+ 
+ 	ret = ufshcd_vops_clk_scale_notify(hba, scale_up, POST_CHANGE);
+-	if (ret)
+-		ufshcd_set_clk_freq(hba, !scale_up);
++	if (ret) {
++		if (hba->use_pm_opp)
++			ufshcd_opp_set_rate(hba,
++					    hba->devfreq->previous_freq);
++		else
++			ufshcd_set_clk_freq(hba, !scale_up);
++	}
+ 
+ out:
+ 	trace_ufshcd_profile_clk_scaling(dev_name(hba->dev),
+@@ -1096,12 +1124,13 @@ static int ufshcd_scale_clks(struct ufs_hba *hba, bool scale_up)
+ /**
+  * ufshcd_is_devfreq_scaling_required - check if scaling is required or not
+  * @hba: per adapter instance
++ * @freq: frequency to scale
+  * @scale_up: True if scaling up and false if scaling down
+  *
+  * Return: true if scaling is required, false otherwise.
+  */
+ static bool ufshcd_is_devfreq_scaling_required(struct ufs_hba *hba,
+-					       bool scale_up)
++					       unsigned long freq, bool scale_up)
+ {
+ 	struct ufs_clk_info *clki;
+ 	struct list_head *head = &hba->clk_list_head;
+@@ -1109,6 +1138,9 @@ static bool ufshcd_is_devfreq_scaling_required(struct ufs_hba *hba,
+ 	if (list_empty(head))
+ 		return false;
+ 
++	if (hba->use_pm_opp)
++		return freq != hba->clk_scaling.target_freq;
++
+ 	list_for_each_entry(clki, head, list) {
+ 		if (!IS_ERR_OR_NULL(clki->clk)) {
+ 			if (scale_up && clki->max_freq) {
+@@ -1304,12 +1336,14 @@ static void ufshcd_clock_scaling_unprepare(struct ufs_hba *hba, int err, bool sc
+ /**
+  * ufshcd_devfreq_scale - scale up/down UFS clocks and gear
+  * @hba: per adapter instance
++ * @freq: frequency to scale
+  * @scale_up: True for scaling up and false for scalin down
+  *
+  * Return: 0 for success; -EBUSY if scaling can't happen at this time; non-zero
+  * for any other errors.
+  */
+-static int ufshcd_devfreq_scale(struct ufs_hba *hba, bool scale_up)
++static int ufshcd_devfreq_scale(struct ufs_hba *hba, unsigned long freq,
++				bool scale_up)
+ {
+ 	int ret = 0;
+ 
+@@ -1324,7 +1358,7 @@ static int ufshcd_devfreq_scale(struct ufs_hba *hba, bool scale_up)
+ 			goto out_unprepare;
+ 	}
+ 
+-	ret = ufshcd_scale_clks(hba, scale_up);
++	ret = ufshcd_scale_clks(hba, freq, scale_up);
+ 	if (ret) {
+ 		if (!scale_up)
+ 			ufshcd_scale_gear(hba, true);
+@@ -1335,7 +1369,8 @@ static int ufshcd_devfreq_scale(struct ufs_hba *hba, bool scale_up)
+ 	if (scale_up) {
+ 		ret = ufshcd_scale_gear(hba, true);
+ 		if (ret) {
+-			ufshcd_scale_clks(hba, false);
++			ufshcd_scale_clks(hba, hba->devfreq->previous_freq,
++					  false);
+ 			goto out_unprepare;
+ 		}
+ 	}
+@@ -1393,9 +1428,22 @@ static int ufshcd_devfreq_target(struct device *dev,
+ 	if (!ufshcd_is_clkscaling_supported(hba))
+ 		return -EINVAL;
+ 
+-	clki = list_first_entry(&hba->clk_list_head, struct ufs_clk_info, list);
+-	/* Override with the closest supported frequency */
+-	*freq = (unsigned long) clk_round_rate(clki->clk, *freq);
++	if (hba->use_pm_opp) {
++		struct dev_pm_opp *opp;
++
++		/* Get the recommended frequency from OPP framework */
++		opp = devfreq_recommended_opp(dev, freq, flags);
++		if (IS_ERR(opp))
++			return PTR_ERR(opp);
++
++		dev_pm_opp_put(opp);
++	} else {
++		/* Override with the closest supported frequency */
++		clki = list_first_entry(&hba->clk_list_head, struct ufs_clk_info,
++					list);
++		*freq =	(unsigned long) clk_round_rate(clki->clk, *freq);
++	}
++
+ 	spin_lock_irqsave(hba->host->host_lock, irq_flags);
+ 	if (ufshcd_eh_in_progress(hba)) {
+ 		spin_unlock_irqrestore(hba->host->host_lock, irq_flags);
+@@ -1410,12 +1458,17 @@ static int ufshcd_devfreq_target(struct device *dev,
+ 		goto out;
+ 	}
+ 
+-	/* Decide based on the rounded-off frequency and update */
+-	scale_up = *freq == clki->max_freq;
+-	if (!scale_up)
++	/* Decide based on the target or rounded-off frequency and update */
++	if (hba->use_pm_opp)
++		scale_up = *freq > hba->clk_scaling.target_freq;
++	else
++		scale_up = *freq == clki->max_freq;
++
++	if (!hba->use_pm_opp && !scale_up)
+ 		*freq = clki->min_freq;
++
+ 	/* Update the frequency */
+-	if (!ufshcd_is_devfreq_scaling_required(hba, scale_up)) {
++	if (!ufshcd_is_devfreq_scaling_required(hba, *freq, scale_up)) {
+ 		spin_unlock_irqrestore(hba->host->host_lock, irq_flags);
+ 		ret = 0;
+ 		goto out; /* no state change required */
+@@ -1423,7 +1476,9 @@ static int ufshcd_devfreq_target(struct device *dev,
+ 	spin_unlock_irqrestore(hba->host->host_lock, irq_flags);
+ 
+ 	start = ktime_get();
+-	ret = ufshcd_devfreq_scale(hba, scale_up);
++	ret = ufshcd_devfreq_scale(hba, *freq, scale_up);
++	if (!ret)
++		hba->clk_scaling.target_freq = *freq;
+ 
+ 	trace_ufshcd_profile_clk_scaling(dev_name(hba->dev),
+ 		(scale_up ? "up" : "down"),
+@@ -1443,8 +1498,6 @@ static int ufshcd_devfreq_get_dev_status(struct device *dev,
+ 	struct ufs_hba *hba = dev_get_drvdata(dev);
+ 	struct ufs_clk_scaling *scaling = &hba->clk_scaling;
+ 	unsigned long flags;
+-	struct list_head *clk_list = &hba->clk_list_head;
+-	struct ufs_clk_info *clki;
+ 	ktime_t curr_t;
+ 
+ 	if (!ufshcd_is_clkscaling_supported(hba))
+@@ -1457,17 +1510,24 @@ static int ufshcd_devfreq_get_dev_status(struct device *dev,
+ 	if (!scaling->window_start_t)
+ 		goto start_window;
+ 
+-	clki = list_first_entry(clk_list, struct ufs_clk_info, list);
+ 	/*
+ 	 * If current frequency is 0, then the ondemand governor considers
+ 	 * there's no initial frequency set. And it always requests to set
+ 	 * to max. frequency.
+ 	 */
+-	stat->current_frequency = clki->curr_freq;
++	if (hba->use_pm_opp) {
++		stat->current_frequency = hba->clk_scaling.target_freq;
++	} else {
++		struct list_head *clk_list = &hba->clk_list_head;
++		struct ufs_clk_info *clki;
++
++		clki = list_first_entry(clk_list, struct ufs_clk_info, list);
++		stat->current_frequency = clki->curr_freq;
++	}
++
+ 	if (scaling->is_busy_started)
+ 		scaling->tot_busy_t += ktime_us_delta(curr_t,
+ 				scaling->busy_start_t);
+-
+ 	stat->total_time = ktime_us_delta(curr_t, scaling->window_start_t);
+ 	stat->busy_time = scaling->tot_busy_t;
+ start_window:
+@@ -1496,9 +1556,11 @@ static int ufshcd_devfreq_init(struct ufs_hba *hba)
+ 	if (list_empty(clk_list))
+ 		return 0;
+ 
+-	clki = list_first_entry(clk_list, struct ufs_clk_info, list);
+-	dev_pm_opp_add(hba->dev, clki->min_freq, 0);
+-	dev_pm_opp_add(hba->dev, clki->max_freq, 0);
++	if (!hba->use_pm_opp) {
++		clki = list_first_entry(clk_list, struct ufs_clk_info, list);
++		dev_pm_opp_add(hba->dev, clki->min_freq, 0);
++		dev_pm_opp_add(hba->dev, clki->max_freq, 0);
++	}
+ 
+ 	ufshcd_vops_config_scaling_param(hba, &hba->vps->devfreq_profile,
+ 					 &hba->vps->ondemand_data);
+@@ -1510,8 +1572,10 @@ static int ufshcd_devfreq_init(struct ufs_hba *hba)
+ 		ret = PTR_ERR(devfreq);
+ 		dev_err(hba->dev, "Unable to register with devfreq %d\n", ret);
+ 
+-		dev_pm_opp_remove(hba->dev, clki->min_freq);
+-		dev_pm_opp_remove(hba->dev, clki->max_freq);
++		if (!hba->use_pm_opp) {
++			dev_pm_opp_remove(hba->dev, clki->min_freq);
++			dev_pm_opp_remove(hba->dev, clki->max_freq);
++		}
+ 		return ret;
+ 	}
+ 
+@@ -1523,7 +1587,6 @@ static int ufshcd_devfreq_init(struct ufs_hba *hba)
+ static void ufshcd_devfreq_remove(struct ufs_hba *hba)
+ {
+ 	struct list_head *clk_list = &hba->clk_list_head;
+-	struct ufs_clk_info *clki;
+ 
+ 	if (!hba->devfreq)
+ 		return;
+@@ -1531,9 +1594,13 @@ static void ufshcd_devfreq_remove(struct ufs_hba *hba)
+ 	devfreq_remove_device(hba->devfreq);
+ 	hba->devfreq = NULL;
+ 
+-	clki = list_first_entry(clk_list, struct ufs_clk_info, list);
+-	dev_pm_opp_remove(hba->dev, clki->min_freq);
+-	dev_pm_opp_remove(hba->dev, clki->max_freq);
++	if (!hba->use_pm_opp) {
++		struct ufs_clk_info *clki;
++
++		clki = list_first_entry(clk_list, struct ufs_clk_info, list);
++		dev_pm_opp_remove(hba->dev, clki->min_freq);
++		dev_pm_opp_remove(hba->dev, clki->max_freq);
++	}
+ }
+ 
+ static void __ufshcd_suspend_clkscaling(struct ufs_hba *hba)
+@@ -1618,7 +1685,7 @@ static ssize_t ufshcd_clkscale_enable_store(struct device *dev,
+ 		ufshcd_resume_clkscaling(hba);
+ 	} else {
+ 		ufshcd_suspend_clkscaling(hba);
+-		err = ufshcd_devfreq_scale(hba, true);
++		err = ufshcd_devfreq_scale(hba, ULONG_MAX, true);
+ 		if (err)
+ 			dev_err(hba->dev, "%s: failed to scale clocks up %d\n",
+ 					__func__, err);
+@@ -7619,7 +7686,7 @@ static int ufshcd_host_reset_and_restore(struct ufs_hba *hba)
+ 	hba->silence_err_logs = false;
+ 
+ 	/* scale up clocks to max frequency before full reinitialization */
+-	ufshcd_scale_clks(hba, true);
++	ufshcd_scale_clks(hba, ULONG_MAX, true);
+ 
+ 	err = ufshcd_hba_enable(hba);
+ 
+@@ -9165,6 +9232,17 @@ static int ufshcd_init_clocks(struct ufs_hba *hba)
+ 		dev_dbg(dev, "%s: clk: %s, rate: %lu\n", __func__,
+ 				clki->name, clk_get_rate(clki->clk));
+ 	}
++
++	/* Set Max. frequency for all clocks */
++	if (hba->use_pm_opp) {
++		ret = ufshcd_opp_set_rate(hba, ULONG_MAX);
++		if (ret) {
++			dev_err(hba->dev, "%s: failed to set OPP: %d", __func__,
++				ret);
++			goto out;
++		}
++	}
++
+ out:
+ 	return ret;
+ }
+diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
+index e0d6590d163d..fc0d6d37319a 100644
+--- a/include/ufs/ufshcd.h
++++ b/include/ufs/ufshcd.h
+@@ -429,6 +429,7 @@ struct ufs_clk_gating {
+  * @workq: workqueue to schedule devfreq suspend/resume work
+  * @suspend_work: worker to suspend devfreq
+  * @resume_work: worker to resume devfreq
++ * @target_freq: frequency requested by devfreq framework
+  * @min_gear: lowest HS gear to scale down to
+  * @is_enabled: tracks if scaling is currently enabled or not, controlled by
+  *		clkscale_enable sysfs node
+@@ -448,6 +449,7 @@ struct ufs_clk_scaling {
+ 	struct workqueue_struct *workq;
+ 	struct work_struct suspend_work;
+ 	struct work_struct resume_work;
++	unsigned long target_freq;
+ 	u32 min_gear;
+ 	bool is_enabled;
+ 	bool is_allowed;
+@@ -862,6 +864,7 @@ enum ufshcd_mcq_opr {
+  * @auto_bkops_enabled: to track whether bkops is enabled in device
+  * @vreg_info: UFS device voltage regulator information
+  * @clk_list_head: UFS host controller clocks list node head
++ * @use_pm_opp: Indicates whether OPP based scaling is used or not
+  * @req_abort_count: number of times ufshcd_abort() has been called
+  * @lanes_per_direction: number of lanes per data direction between the UFS
+  *	controller and the UFS device.
+@@ -1012,6 +1015,7 @@ struct ufs_hba {
+ 	bool auto_bkops_enabled;
+ 	struct ufs_vreg_info vreg_info;
+ 	struct list_head clk_list_head;
++	bool use_pm_opp;
+ 
+ 	/* Number of requests aborts */
+ 	int req_abort_count;
 -- 
 2.25.1
 
