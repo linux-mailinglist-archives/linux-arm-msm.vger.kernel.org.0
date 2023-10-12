@@ -2,83 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 55E797C6716
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 09:57:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CDD7F7C684F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 10:54:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377950AbjJLHkO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Oct 2023 03:40:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49618 "EHLO
+        id S235407AbjJLIXX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Oct 2023 04:23:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235323AbjJLHkM (ORCPT
+        with ESMTP id S235385AbjJLIXW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Oct 2023 03:40:12 -0400
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A64AD9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 00:40:10 -0700 (PDT)
-Received: by mail-pf1-x430.google.com with SMTP id d2e1a72fcca58-692779f583fso554526b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 00:40:10 -0700 (PDT)
+        Thu, 12 Oct 2023 04:23:22 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71DB498
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 01:23:20 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-50305abe5f0so1017494e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 01:23:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697096409; x=1697701209; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=t0g3CHLupMrDhHkMlK6gfozlJQHBhX7jZYJ+e0keXWk=;
-        b=HDtVHuCftKxdgE/BPt0LBE9bFa1rKgr8eVqNClDcuKPHzaslCm+Yt5KQSaicOIhuCx
-         eq38bVojnj8VO69LgmZHEtJOY1djbZjOc/q7bRtS+xfb/ZOTtplBA2EQFp6iaULa/vqJ
-         SFnEOajDtrMUMld4MOjWyDtnKwwK+NkOzxi5tpSzueiHA9/D17qJ6POm/bYbavYodpRt
-         ypx5ns3frbzKMY6F3SDi/mh25/xZdmKtUW12WdpzT93T+wLYNdVSJvP0RsndMnJmzbLi
-         mR5eJvSJ8CfCNZsHqZdNwZ9CRnv7PD8znJlUvBhOnPHvpqkvCvfDLJQB/X+mE6XvqqnI
-         EfVQ==
+        d=linaro.org; s=google; t=1697098999; x=1697703799; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=p3fd/15RUmS8/J2LyPk4OkGg7Q+I1Eks/iQVPxR/ZFE=;
+        b=xt8LSPhqNjJkYCXNegIU3Lp4CJV7TAcbjsV/IruzOnP1rlvqwAbFZzEfjSFRbGgbhB
+         LqQt0TTIFWo7kfTYdItstET6vNYiDQm/TODYvCwFPzCHTcGueHSkNmnN0zkq+AZAuR4v
+         Ac493RO5PZMKHNlb/wZ59BXZLB3ji55LqfBlSBw6dFiUzuxOyoXL/gJ4R9AeliASShuy
+         APXsKVkG1uxdFUBuEvdBnASgb4J97t0nwOm3sle/sQZ6g229LqHEFNUW0VbeHt/R9dyC
+         pW+9UTa5xWk0sYwKWwOjIjjQokshgJNuDEnceVKREIuZlVclxWDtbiZkPWRLgX6tJQfT
+         tV8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697096409; x=1697701209;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1697098999; x=1697703799;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=t0g3CHLupMrDhHkMlK6gfozlJQHBhX7jZYJ+e0keXWk=;
-        b=bBFBjBTuMZlTfF1gU6Sx5NZsLs8hAtcwqbKMedgC9yH1YI4c4mR8tonAoex/MY0Iwj
-         F7wE4avIkZgoIsID0OWirFBdpYPCA2UTMq3NsOP5shtYVmHcD21ZegtfxiDy1pEEhmJ2
-         +9x0rtrgLZAuJPGvu43ZrkKErK3q5TeedfGDrwr2RXddd9cSmnQx/z7ygdHPjq1A++Ot
-         /85Re2n81JKuyCG7bq8I4S18G1Jc65qeoXpKJrjH0JrMr7w30TheVhvr9pnpgnroT8hM
-         lEO8Tj42eOGOiZV4BsQi+SEhoT2gdrSRC/bm2C2uFRlkIgsePUx/6YVLO5ClnJeoYGJo
-         xV2w==
-X-Gm-Message-State: AOJu0YwZX451J9uM4Q5orYZh4UzehgeGrHpVb9TKzC2DV9zaMgwUyhcR
-        4IwD7aViHQRsQ4zXEE+Jwr42
-X-Google-Smtp-Source: AGHT+IH0EXGX3kM6pYUNayPRavDSGKGosRNmNjQtofu1wwryxdfzHLf8UxV8MNlsKoohZ4oxr897Hg==
-X-Received: by 2002:aa7:88ca:0:b0:68e:2af1:b193 with SMTP id k10-20020aa788ca000000b0068e2af1b193mr24429012pff.28.1697096409579;
-        Thu, 12 Oct 2023 00:40:09 -0700 (PDT)
-Received: from thinkpad ([120.138.12.180])
-        by smtp.gmail.com with ESMTPSA id y12-20020a056a001c8c00b006a77343b0ccsm4896434pfw.89.2023.10.12.00.39.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Oct 2023 00:40:08 -0700 (PDT)
-Date:   Thu, 12 Oct 2023 13:09:55 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     "Alessandro Carminati (Red Hat)" <alessandro.carminati@gmail.com>
-Cc:     alim.akhtar@samsung.com, andersson@kernel.org, avri.altman@wdc.com,
-        bmasney@redhat.com, bvanassche@acm.org, conor+dt@kernel.org,
-        cw00.choi@samsung.com, devicetree@vger.kernel.org,
-        jejb@linux.ibm.com, konrad.dybcio@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org, krzysztof.kozlowski@linaro.org,
-        kyungmin.park@samsung.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-scsi@vger.kernel.org, martin.petersen@oracle.com,
-        myungjoo.ham@samsung.com, nm@ti.com, quic_asutoshd@quicinc.com,
-        quic_bhaskarv@quicinc.com, quic_cang@quicinc.com,
-        quic_narepall@quicinc.com, quic_nguyenb@quicinc.com,
-        quic_nitirawa@quicinc.com, quic_richardp@quicinc.com,
-        quic_ziqichen@quicinc.com, robh+dt@kernel.org, sboyd@kernel.org,
-        vireshk@kernel.org
-Subject: Re: [PATCH] scsi: ufs: core: Fix build error: ufshcd_opp_config_clks
-Message-ID: <20231012073955.GA14957@thinkpad>
-References: <20231011122543.11922-4-manivannan.sadhasivam@linaro.org>
- <20231012072051.1517826-1-alessandro.carminati@gmail.com>
+        bh=p3fd/15RUmS8/J2LyPk4OkGg7Q+I1Eks/iQVPxR/ZFE=;
+        b=KRAsEjBgCwKlmR+SFpROdEvQlKmzE92ob/RTOM+RjjSpDIMJn80NXpo5l5dS4qXbAF
+         OeFIsJsGfsbFtCnrE+rXbqn7aYcNBMMTm+VnqGYJExoolRwAkG3f9DGbHdAGC7PLPRZi
+         57F5WisTTwWjLz+eH0gRZIP4uyKMeFmnRsbF8GgXDNPG4kPJ1kV3MGfe8sOepkKDNRym
+         TpYekKA+YVZ0g+DJL5JK7O6bCee9I8yfHOpMsI6bdcYME5Hdf37RCR5ZgzNrLrMk8eFK
+         3dLu4TSbYVfffghclsq3psTivG4dBoKepNOpJQ39l2BWUc4W0ZjdqEynpHYtsIvfNjNQ
+         ZZFw==
+X-Gm-Message-State: AOJu0Yw8pEd40K3SS+gjpB104YQwq186nA7SggPMvqB3Zqhnw4cWohqf
+        RjtrOB1OedUu/ZV4FSKSDxU6Iw==
+X-Google-Smtp-Source: AGHT+IFGSheWNiPKf3Czyq7E/vwLEq/r9RnUAh1lzVUDvNzl0lK9+TXbBUfqaNXflXQUYF/3TWITvg==
+X-Received: by 2002:a19:f015:0:b0:500:92f1:c341 with SMTP id p21-20020a19f015000000b0050092f1c341mr18090318lfc.54.1697098998633;
+        Thu, 12 Oct 2023 01:23:18 -0700 (PDT)
+Received: from [87.246.221.191] (netpanel-87-246-221-191.pol.akademiki.lublin.pl. [87.246.221.191])
+        by smtp.gmail.com with ESMTPSA id j8-20020ac253a8000000b005030b40aa56sm2686512lfh.173.2023.10.12.01.23.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Oct 2023 01:23:18 -0700 (PDT)
+Message-ID: <6c691b17-d44b-4967-b957-c963fb136e24@linaro.org>
+Date:   Thu, 12 Oct 2023 10:23:16 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20231012072051.1517826-1-alessandro.carminati@gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] soc: qcom: llcc: Fix LLCC_TRP_ATTR2_CFGn offset
+To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Avinash Philip <quic_avinashp@quicinc.com>,
+        Umnathi Chalicheemala <quic_uchalich@quicinc.com>
+References: <20231012061127.95637-1-abel.vesa@linaro.org>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20231012061127.95637-1-abel.vesa@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SORTED_RECIPS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,48 +77,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 12, 2023 at 07:20:51AM +0000, Alessandro Carminati (Red Hat) wrote:
-> Building linux-6.6-rc3 with this patchset applied and the following
-> configuration:
-> 
-> CONFIG_SCSI_UFSHCD=m
-> CONFIG_SCSI_UFS_BSG=y
-> 
-> I got:
-> 
->    scripts/mod/modpost -M -m -a      -o Module.symvers -T modules.order vmlinux.o
-> ERROR: modpost: "ufshcd_opp_config_clks" [drivers/ufs/host/ufshcd-pltfrm.ko] undefined!
-> make[2]: *** [scripts/Makefile.modpost:145: Module.symvers] Error 1
-> make[1]: *** [/home/alessandro/src/linux-6.6-rc3/Makefile:1865: modpost] Error 2
-> make: *** [Makefile:234: __sub-make] Error 2
-> 
-> I needed to add an export symbol to have the build complete
-> 
-> Signed-off-by: Alessandro Carminati (Red Hat) <alessandro.carminati@gmail.com>
 
-Thanks for the diff. I will squash it with the offending patch.
 
-- Mani
-
+On 10/12/23 08:11, Abel Vesa wrote:
+> According to documentation, it has increments of 4, not 8.
+> 
+> Fixes: c72ca343f911 ("soc: qcom: llcc: Add v4.1 HW version support")
+> Reported-by: Umnathi Chalicheemala <quic_uchalich@quicinc.com>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
->  drivers/ufs/core/ufshcd.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-> index ccd7fcd18355..c0631c37c3d1 100644
-> --- a/drivers/ufs/core/ufshcd.c
-> +++ b/drivers/ufs/core/ufshcd.c
-> @@ -1098,6 +1098,7 @@ int ufshcd_opp_config_clks(struct device *dev, struct opp_table *opp_table,
->  
->  	return 0;
->  }
-> +EXPORT_SYMBOL_GPL(ufshcd_opp_config_clks);
->  
->  static int ufshcd_opp_set_rate(struct ufs_hba *hba, unsigned long freq)
->  {
-> -- 
-> 2.34.1
-> 
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
--- 
-மணிவண்ணன் சதாசிவம்
+Konrad
