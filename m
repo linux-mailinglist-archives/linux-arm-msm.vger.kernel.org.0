@@ -2,142 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2865F7C6BF8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 13:12:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 755CE7C6C4B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 13:31:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343730AbjJLLMK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Oct 2023 07:12:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45644 "EHLO
+        id S1347185AbjJLLbL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Oct 2023 07:31:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343805AbjJLLMK (ORCPT
+        with ESMTP id S1347163AbjJLLbK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Oct 2023 07:12:10 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id EB629B7;
-        Thu, 12 Oct 2023 04:12:07 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6E62713D5;
-        Thu, 12 Oct 2023 04:12:48 -0700 (PDT)
-Received: from [10.1.197.1] (ewhatever.cambridge.arm.com [10.1.197.1])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id CE1C43F762;
-        Thu, 12 Oct 2023 04:12:04 -0700 (PDT)
-Message-ID: <9eaae02d-360a-4676-98e9-1070222acc40@arm.com>
-Date:   Thu, 12 Oct 2023 12:12:03 +0100
+        Thu, 12 Oct 2023 07:31:10 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA833CC
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 04:31:05 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id ffacd0b85a97d-32d3755214dso850188f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 04:31:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1697110264; x=1697715064; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=CnuoW+FQCD/OpcgflvSx0Oe2LZM8hD2I1654SS3PYOc=;
+        b=pPD4LXApcviScq+lACrJ/cbam//ID6+iVyoZoX4FtxOhp3C7nJT4HCP3UnKwCotz0I
+         dzdYR+4pyFKwBJzv/NsyetIGGGrxP3dAaB84Ufkp8bxYsbaoulAb7tQDLj5ws4q+d3WH
+         yKw6sK/R7IkKy19lKVmWqHdHqFuOyP52SP+bTZ+hb5uSNyB6aNqkTsookAvvSU51dT4y
+         RdU0g6ls9hO2aucYbyfgthNx4TMfXQkv73SrML8wjqtaLlSHanSbWcBe/FmHKaIAzgu4
+         7uCPoeVG3/3BN7nOvmTCQAXu2VNU72aTfwtGCFhMy9nDZpEgUWKp5+F8rkV7Ytwbgx7Y
+         zlVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697110264; x=1697715064;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CnuoW+FQCD/OpcgflvSx0Oe2LZM8hD2I1654SS3PYOc=;
+        b=xMz/A25qFdnCF6xtfFAT9Ht2w4T+t7GFjb7C7JtLQY/Z0YjAsNmfv1YlyCPeilntjp
+         XKhWudTEC1OVszKvaBqogRXj31F73OVNPWkJtDIIa7H9p5rqWqytIiG0EfesbuBv3TnL
+         p9Ne70lR/g3lnk8/HWrh2/T907/kGyx57//pf6RiP8iyWHQlZZUzRiN0T2gN4mEAKHXl
+         hwan2oLKcVU+xL28W00YruQq6j25azEdeo48g8WoojYKlF20Lh/fI7LYKm2EHtmkvk+j
+         ND05UFopK/zLSs2egDDAyCycv3nXtO+29q4XJE2Qt/BXWBPQ+Q6TOa7EBegBlZlmNgK3
+         aIQg==
+X-Gm-Message-State: AOJu0YyqOzZTKZKpD7ZbdOosCk+vsyrba+h86r4ptqIQHWAxU97z1bcJ
+        yMxnCYndyWiuQt/p+npjchy9UQ==
+X-Google-Smtp-Source: AGHT+IGBdXRT0UtMVp+RpimAXsw2HQh3MU7GuKMfnrtGP6iY7VsQcYh19478v3IKMkocVBje2WrYow==
+X-Received: by 2002:a05:6000:250:b0:32d:825b:e7da with SMTP id m16-20020a056000025000b0032d825be7damr3858653wrz.41.1697110264167;
+        Thu, 12 Oct 2023 04:31:04 -0700 (PDT)
+Received: from x13s-linux.nxsw.local ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id l14-20020a5d480e000000b0031c5e9c2ed7sm18244891wrq.92.2023.10.12.04.31.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Oct 2023 04:31:03 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        dmitry.baryshkov@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        jonathan@marek.ca, quic_tdas@quicinc.com,
+        vladimir.zapolskiy@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bryan.odonoghue@linaro.org
+Subject: [PATCH v4 0/4] Add sc8280xp CCI and CAMSS core dtsi
+Date:   Thu, 12 Oct 2023 12:30:56 +0100
+Message-Id: <20231012113100.3656480-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] coresight-tmc-etr: Fix busy error when enable multiple
- sources
-To:     Mao Jinlong <quic_jinlmao@quicinc.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        James Clark <james.clark@arm.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc:     coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>
-References: <20231012110754.32635-1-quic_jinlmao@quicinc.com>
-Content-Language: en-US
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <20231012110754.32635-1-quic_jinlmao@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/10/2023 12:07, Mao Jinlong wrote:
-> In enable sink sysfs function, when etr is enabled, it doesn't need
-> to call enable hw function again.
-> 
-> [   91.057233] ------------[ cut here ]------------
-> [   91.061983] WARNING: CPU: 6 PID: 145 at drivers/hwtracing/coresight/coresight-tmc-etr.c:1038 tmc_etr_enable_hw+0xc4/0xd0
-> [   91.073153] Modules linked in:
-> [   91.076302] CPU: 6 PID: 145 Comm: sh Tainted: G S      W          6.5.0-rc3-g66d5eaa9e5a7 #111
-> [   91.085149] Hardware name: Qualcomm Technologies, Inc. SM8450 QRD (DT)
-> [   91.091847] pstate: 634000c5 (nZCv daIF +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
-> [   91.099000] pc : tmc_etr_enable_hw+0xc4/0xd0
-> [   91.103389] lr : tmc_enable_etr_sink+0x13c/0x294
-> [   91.108130] sp : ffff8000815cbb30
-> [   91.111537] x29: ffff8000815cbb30 x28: ffff68ce4352a800 x27: 0000000000000000
-> [   91.118868] x26: ffff68ce414cc040 x25: ffff68ce414a82e0 x24: 0000000000000000
-> [   91.126199] x23: ffff68ce423a1ee0 x22: ffff68ce423a1e80 x21: ffff68ce4352a800
-> [   91.133527] x20: 0000000000000001 x19: ffff68ce414aa500 x18: fffffda31cf9c008
-> [   91.140857] x17: 0000000000000040 x16: 0000000000000001 x15: fffffc0000000000
-> [   91.148188] x14: 00000000f0000080 x13: 0000000000000000 x12: ffff9739c0000000
-> [   91.155516] x11: ffffbe9cdf71e400 x10: 0000000000001000 x9 : ffff68d0b29e3b28
-> [   91.162845] x8 : fffffda31cf983c8 x7 : fffffda31cf98388 x6 : 00000000ffffffd0
-> [   91.170174] x5 : ffff68ce435d8ec0 x4 : ffff68d0b29e2610 x3 : ffff68ce435d8ec0
-> [   91.177502] x2 : ffff68ce414aa500 x1 : ffff68ce414aa500 x0 : ffff68ce423a1e80
-> [   91.184833] Call trace:
-> [   91.187349]  tmc_etr_enable_hw+0xc4/0xd0
-> [   91.191388]  tmc_enable_etr_sink+0x13c/0x294
-> [   91.195777]  coresight_enable_path+0x21c/0x24c
-> [   91.200347]  coresight_enable+0x9c/0x204
-> [   91.204379]  enable_source_store+0x58/0xa0
-> [   91.208595]  dev_attr_store+0x18/0x2c
-> [   91.212361]  sysfs_kf_write+0x40/0x54
-> [   91.216126]  kernfs_fop_write_iter+0x164/0x1dc
-> [   91.220692]  vfs_write+0x3a8/0x460
-> [   91.224191]  ksys_write+0x6c/0x100
-> [   91.227690]  __arm64_sys_write+0x1c/0x28
-> [   91.231728]  invoke_syscall+0x44/0x100
-> [   91.235586]  el0_svc_common.constprop.1+0x6c/0xe4
-> [   91.240418]  do_el0_svc+0x38/0x94
-> [   91.243833]  el0_svc+0x28/0x74
-> [   91.246981]  el0t_64_sync_handler+0xa0/0xc4
-> [   91.251282]  el0t_64_sync+0x174/0x178
-> [   91.255045] ---[ end trace 0000000000000000 ]---
-> sh: write error: Device or resource busy
-> 
+V4:
+- Adds RB - Krzysztof
+- Drops indicated newline - Krzysztof
+- Moves "This patch depends-on" below the "---" - Krsysztof
 
-Please could you try this patch ?
+Link next:
+https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-23-10-10-sc8280xp-camss-v4
 
-https://lore.kernel.org/r/20230823042948.12879-1-lcherian@marvell.com
+V3:
+- Expands description of ports to clarify mapping of port to CSIPHY
+  Rob
 
-It is queued in Greg's tree for v6.6, hopefully it will hit -rc6.
+- Adds the dependency link into the commit log of patch #3 - bod
 
-Suzuki
+Link next:
+https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-23-10-10-sc8280xp-camss-v3
 
+V2:
+- Drops specific sc8280xp-cci compat - Konrad
+- Drops minItems where maxItems are equal - Krzysztof
+- Uses suggested description for CAMSS - Krzysztof
+- Leaves indentation of ports/properties - Rob
+- NoISP. Supports bayer encoded upstream currently only - Krzysztof
+- Endpoint. Adds an example endpoint - Krzysztof
 
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-> ---
->   drivers/hwtracing/coresight/coresight-tmc-etr.c | 6 +++++-
->   1 file changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-> index 66dc5f97a009..e1c7bae9f6ee 100644
-> --- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
-> +++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-> @@ -1204,7 +1204,7 @@ static struct etr_buf *tmc_etr_get_sysfs_buffer(struct coresight_device *csdev)
->   
->   static int tmc_enable_etr_sink_sysfs(struct coresight_device *csdev)
->   {
-> -	int ret;
-> +	int ret = 0;
->   	unsigned long flags;
->   	struct tmc_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
->   	struct etr_buf *sysfs_buf = tmc_etr_get_sysfs_buffer(csdev);
-> @@ -1213,12 +1213,16 @@ static int tmc_enable_etr_sink_sysfs(struct coresight_device *csdev)
->   		return PTR_ERR(sysfs_buf);
->   
->   	spin_lock_irqsave(&drvdata->spinlock, flags);
-> +	if (drvdata->mode == CS_MODE_SYSFS)
-> +		goto out;
-> +
->   	ret = tmc_etr_enable_hw(drvdata, sysfs_buf);
->   	if (!ret) {
->   		drvdata->mode = CS_MODE_SYSFS;
->   		atomic_inc(&csdev->refcnt);
->   	}
->   
-> +out:
->   	spin_unlock_irqrestore(&drvdata->spinlock, flags);
->   
->   	if (!ret)
+Link next:
+https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-23-10-10-sc8280xp-camss-v2
+
+V1:
+The sc8280xp provides a standard Camera Control Interface and Camera
+SubSystem hardware interface similar to antecedent parts sdm845 and
+sm8250.
+
+Per the target segments for this part, sc8280xp has more of everything.
+More CCI, VFE, CSIPHY and therefore more interrupt lines and clocks to
+declare.
+
+CCI x 4
+CSIPHY x 4
+VFE x 4
+VFE Lite x 4
+CSID x 4
+
+Bootable 6.5.y x13s:
+https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/lenovo-x13s-linux-6.5.y
+
+Linux next:
+https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-23-10-06-sc8280xp-camss
+
+This patch depends-on:
+https://lore.kernel.org/lkml/20231004161853.86382-2-bryan.odonoghue@linaro.org/T/
+
+Bryan O'Donoghue (4):
+  arm64: dts: qcom: sc8280xp: Add in CAMCC for sc8280xp
+  arm64: dts: qcom: sc8280xp: camss: Add CCI definitions
+  media: dt-bindings: media: camss: Add qcom,sc8280xp-camss binding
+  arm64: dts: qcom: sc8280xp: camss: Add CAMSS block definition
+
+ .../bindings/media/qcom,sc8280xp-camss.yaml   | 581 ++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi        | 624 ++++++++++++++++++
+ 2 files changed, 1205 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
+
+-- 
+2.40.1
 
