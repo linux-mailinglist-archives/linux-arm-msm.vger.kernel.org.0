@@ -2,148 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 79D8A7C78D1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 23:51:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B14E7C7A5B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 01:23:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1442947AbjJLVvY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Oct 2023 17:51:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43906 "EHLO
+        id S1443083AbjJLXXJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Oct 2023 19:23:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1442945AbjJLVvW (ORCPT
+        with ESMTP id S1443006AbjJLXXI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Oct 2023 17:51:22 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F09CBB;
-        Thu, 12 Oct 2023 14:51:20 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39CLbjch027956;
-        Thu, 12 Oct 2023 21:51:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=voUltIrLrhXdVJp9/yCwFFwFBu2KkCyxDDIWBrI4Xog=;
- b=HjSHOCagbHCB6bOReW+vqK+Dfm07myfSFl8yPtmClixpKCcx4C5UnnqZmJp4EkkrDlGk
- sDingmngYmPHq+uM3HBBqPVeQGzhUBBMSXXi3SA5X0kNnLJQP6XLfqhUZ1vUA3G+umcu
- gEnsitEU8Llg9JgShMHxB3a5DvlmHMEYr5M5u84mB7GEvxhxzAQTFiqgJF+aWHmqIvr2
- 9/U+wcedGEb8KGNxTmqgyc7htL3M+bz8iq1TCdvyJkUU1ehqhGC3hPkWpIqnJq0Xm8vL
- 1+bDS61NU97RlA6x7NV16IlgORC6blhN3ETupnnFsJrRxkKbilBOeheB+98R4nhkHEJx pQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tnsmq4h32-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 12 Oct 2023 21:51:03 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39CLp1Wo011405
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 12 Oct 2023 21:51:01 GMT
-Received: from [10.110.43.201] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Thu, 12 Oct
- 2023 14:50:59 -0700
-Message-ID: <a2781978-2081-f4cb-dfe3-0489860dab8e@quicinc.com>
-Date:   Thu, 12 Oct 2023 14:50:42 -0700
+        Thu, 12 Oct 2023 19:23:08 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99503A9;
+        Thu, 12 Oct 2023 16:23:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1697152986; x=1728688986;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=fYSG4sqWrIC/2C2Ao8u1hyYEpig6sxUSVbww+LIg5f0=;
+  b=evWobl74g29pAC1VcQcaBBjvFpf7+owm8gXoDObp0VzQlLTtBoxb0rCR
+   ynpx3t7DMwTXK9i7qkeN+P3mDsHbYj3y3hYMe4sTwPJ7303JbXB+wuq21
+   AD2Y+oKF4y3b7YjGIjLmlLB9dvfUZp+qfxFy5PeDJG8OBv0KIG7Jf2AUP
+   DEdNmLQBM7idPApnNr7Rp+J8VipBEj7u9Do4/2cJgbdfE/DfkxujURjlN
+   iRfoVzG0CUvkOn7YhF8gyadf3vkcpr1nSJpI0kNGFI/mDik/KhPzySNoo
+   /XVZjq+N0YgNFidC41XtWHphpQzdh+3ZVJ+aogE7V5L9NXNiC+oanRIvx
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10861"; a="471299401"
+X-IronPort-AV: E=Sophos;i="6.03,219,1694761200"; 
+   d="scan'208";a="471299401"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Oct 2023 16:22:08 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10861"; a="928179846"
+X-IronPort-AV: E=Sophos;i="6.03,219,1694761200"; 
+   d="scan'208";a="928179846"
+Received: from lkp-server02.sh.intel.com (HELO f64821696465) ([10.239.97.151])
+  by orsmga005.jf.intel.com with ESMTP; 12 Oct 2023 16:22:04 -0700
+Received: from kbuild by f64821696465 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qr50D-00042J-0v;
+        Thu, 12 Oct 2023 23:22:01 +0000
+Date:   Fri, 13 Oct 2023 07:21:25 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Bartosz Golaszewski <brgl@bgdev.pl>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Andrew Halaney <ahalaney@redhat.com>,
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        Alex Elder <elder@linaro.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        kernel@quicinc.com,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v3 11/15] firmware: qcom: qseecom: convert to using the
+ TZ allocator
+Message-ID: <202310130731.YHBtmaQU-lkp@intel.com>
+References: <20231009153427.20951-12-brgl@bgdev.pl>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v5 0/7] Add support for LUT PPG
-Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>, <pavel@ucw.cz>,
-        <lee@kernel.org>, <thierry.reding@gmail.com>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <agross@kernel.org>, <andersson@kernel.org>
-CC:     <konrad.dybcio@linaro.org>, <u.kleine-koenig@pengutronix.de>,
-        <quic_subbaram@quicinc.com>, <quic_gurus@quicinc.com>,
-        <linux-leds@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pwm@vger.kernel.org>, <kernel@quicinc.com>
-References: <20230929003901.15086-1-quic_amelende@quicinc.com>
- <CVX5ZUGU9BVE.2TA819U1AI6BZ@otso>
-From:   Anjelique Melendez <quic_amelende@quicinc.com>
-In-Reply-To: <CVX5ZUGU9BVE.2TA819U1AI6BZ@otso>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: PeOLq1QMggphqx9nLudVIdQ5iZgaUs-J
-X-Proofpoint-ORIG-GUID: PeOLq1QMggphqx9nLudVIdQ5iZgaUs-J
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-12_14,2023-10-12_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
- mlxlogscore=999 lowpriorityscore=0 adultscore=0 priorityscore=1501
- impostorscore=0 spamscore=0 bulkscore=0 clxscore=1011 mlxscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310120183
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231009153427.20951-12-brgl@bgdev.pl>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Bartosz,
+
+kernel test robot noticed the following build errors:
+
+[auto build test ERROR on next-20231009]
+[cannot apply to arm64/for-next/core krzk-dt/for-next linus/master v6.6-rc5 v6.6-rc4 v6.6-rc3 v6.6-rc5]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Bartosz-Golaszewski/firmware-qcom-move-Qualcomm-code-into-its-own-directory/20231009-233826
+base:   next-20231009
+patch link:    https://lore.kernel.org/r/20231009153427.20951-12-brgl%40bgdev.pl
+patch subject: [PATCH v3 11/15] firmware: qcom: qseecom: convert to using the TZ allocator
+config: x86_64-allyesconfig (https://download.01.org/0day-ci/archive/20231013/202310130731.YHBtmaQU-lkp@intel.com/config)
+compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231013/202310130731.YHBtmaQU-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202310130731.YHBtmaQU-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   drivers/firmware/qcom/qcom_qseecom_uefisecapp.c: In function 'qcom_uefisecapp_probe':
+>> drivers/firmware/qcom/qcom_qseecom_uefisecapp.c:767:67: error: 'SZ_256K' undeclared (first use in this function)
+     767 |         qcuefi->mempool = devm_qcom_tzmem_pool_new(&aux_dev->dev, SZ_256K);
+         |                                                                   ^~~~~~~
+   drivers/firmware/qcom/qcom_qseecom_uefisecapp.c:767:67: note: each undeclared identifier is reported only once for each function it appears in
 
 
-On 10/1/2023 7:15 AM, Luca Weiss wrote:
-> On Fri Sep 29, 2023 at 2:38 AM CEST, Anjelique Melendez wrote:
->> In certain PMICs, LUT pattern and LPG configuration is stored in SDAM
->> modules instead of LUT peripheral. This feature is called PPG.
->>
->> This change series adds support for PPG. Thanks!
-[..]
->>
->> Tested-by: Luca Weiss <luca.weiss@fairphone.com> # sdm632-fairphone-fp3 (pmi632)
-> 
-> Hi Anjelique,
-> 
-> Actually I've retested this now on PMI632 (and also realized that my
-> previous tests weren't correct and wasn't actually using hw_pattern).
-> 
-> Using the following commands (after boot) I'm expecting to get a
-> 500ms on 500ms off blinking pattern between white (255 255 255) and off
-> (0 0 0).
-> 
->   echo pattern > /sys/class/leds/rgb:status/trigger
->   echo -1 > /sys/class/leds/rgb:status/repeat
-> 
->   echo "255 255 255" > /sys/class/leds/rgb:status/multi_intensity
->   echo "255 500 255 0 0 500 0 0" > /sys/class/leds/rgb:status/hw_pattern
-> 
-> What I actually see is it blinking between cyan (0 255 255) and red (255
-> 0 0).
-> At some point after playing with many patterns I got it to actually
-> cycle between white and off, but I couldn't reproduce this again (or I
-> didn't try hard enough).
-> 
-> 
-> But with this example it correctly blinks red on-off.
-> 
->   echo "255 0 0" > /sys/class/leds/rgb:status/multi_intensity
->   echo "255 500 255 0 0 500 0 0" > /sys/class/leds/rgb:status/hw_pattern
-> 
-> With "0 255 0" and "0 0 255" the other colors also work fine, it's just
-> the combinations that seem somewhat broken.
-> 
-> Regards
-> Luca
-> 
-> 
-Hi Luca,
+vim +/SZ_256K +767 drivers/firmware/qcom/qcom_qseecom_uefisecapp.c
 
-Thanks for testing again and the feedback!
-Looks like for multicolor devices there is a small concurrency issue with
-enabling pattern at the same time for all the led channels. This could be
-why you observed your device blinking between red (255 0 0) and cyan (0 255 255),
-instead of seeing all channels (255 255 255) blink.
-The fix I'm planing to include in the next series is is to disable the multicolor led
-channels first, then configure all channels, and finally re-enable channels
-so that pattern is triggered at the same time for each all of the channels.
+   745	
+   746	static int qcom_uefisecapp_probe(struct auxiliary_device *aux_dev,
+   747					 const struct auxiliary_device_id *aux_dev_id)
+   748	{
+   749		struct qcuefi_client *qcuefi;
+   750		int status;
+   751	
+   752		qcuefi = devm_kzalloc(&aux_dev->dev, sizeof(*qcuefi), GFP_KERNEL);
+   753		if (!qcuefi)
+   754			return -ENOMEM;
+   755	
+   756		qcuefi->client = container_of(aux_dev, struct qseecom_client, aux_dev);
+   757	
+   758		auxiliary_set_drvdata(aux_dev, qcuefi);
+   759		status = qcuefi_set_reference(qcuefi);
+   760		if (status)
+   761			return status;
+   762	
+   763		status = efivars_register(&qcuefi->efivars, &qcom_efivar_ops);
+   764		if (status)
+   765			qcuefi_set_reference(NULL);
+   766	
+ > 767		qcuefi->mempool = devm_qcom_tzmem_pool_new(&aux_dev->dev, SZ_256K);
+   768		if (IS_ERR(qcuefi->mempool))
+   769			return PTR_ERR(qcuefi->mempool);
+   770	
+   771		return status;
+   772	}
+   773	
 
-I am currently testing with pm8350c device so if you are able to test next series
-on pmi632 it would be very appreciated!
-
-Thanks,
-Anjelique
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
