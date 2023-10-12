@@ -2,75 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 96E247C734D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 18:43:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C2747C735F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 18:45:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235762AbjJLQnM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Oct 2023 12:43:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41048 "EHLO
+        id S1379509AbjJLQpe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Oct 2023 12:45:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235728AbjJLQnL (ORCPT
+        with ESMTP id S1379555AbjJLQpd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Oct 2023 12:43:11 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49423D6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 09:43:09 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2c16bc71e4cso14255881fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 09:43:09 -0700 (PDT)
+        Thu, 12 Oct 2023 12:45:33 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD5D3A9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 09:45:30 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-9b9ad5760b9so180650966b.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 09:45:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697128987; x=1697733787; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1697129129; x=1697733929; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=zYVY41+EgeHUWytKBAwadhC78OOG5e1qYcs03zGmgqw=;
-        b=tfCaWNK/ainnAAJXuPCnpqPAYdC3asa6RBHES/o/dc35QeFpH7VdRy0akVec+WSIHm
-         mWGyQPWe/MumoSfLhUyiGm+7nqpmsDxoSjmrOcPaOHF38g+nae/ASYXD8hJ3WPpleBNm
-         9WUkohsZHXA0SUc3LUlQGMJfG9yVgGzsjKiiRd0RMMUd4hQIOoM41PELkpjHstrBHyct
-         pm8ScKCEfOtXmPD02jJqWB45MLp4vvm7o1DO7lLtMJe/vtI9M3l9jXNi8i35kloYhFtD
-         jfUOFeLdokOwziZeKuXizjIWKniF7bLVjo85u5u1BuStLepKzuZgFE+oHVCi0YkvUfUO
-         RvCA==
+        bh=kRh+Vupx0XypJiTrUDbDPsKcsjU0eEhEwWX6GsRTbtw=;
+        b=M3WGMV8HoyeP3/jPDaNPDSuBqQsHKWODClmLyKtJx5di7YL2ABsiR3lArZpDnoumXB
+         8bFjAN3ypyaQqT81WUikEEqAnU98o/GReLZq3ZlWj2c9Q9Q3MC2EdTsdi45HU4B+KL9A
+         5TViomjOKTzo+8cszm5QM1cIqu/U67wiXDwLuXxnajEWKY3dcO4nc+5KwEIDyvAp5847
+         uINnPS8vjP/c9O+a2Em+7OVO6mOhnafH9oC7YOY264/3xg/tBtentb1fTonuEXjR9ThP
+         l4cwoSgJB6+9CdCHbHAkgNiqdmpSxWzYLQgcNtG2YTVoowrJLrQRX6tCPlaNFGVoiRWo
+         8+9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697128987; x=1697733787;
+        d=1e100.net; s=20230601; t=1697129129; x=1697733929;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zYVY41+EgeHUWytKBAwadhC78OOG5e1qYcs03zGmgqw=;
-        b=Z8IA5yeVebpTln7LioTdsN6DkgWjAzlWzfo0ukrzg9g1+0Qku/Q9JWGpnzcfb9MplY
-         b3ij3or6lY8ER6Fmr2SD7qAJ+H6MXAimPeoCHqnxXnX+ynb4YJMetEAj4xx/nRbXodZW
-         /+h1AXV6EgnTwHJILqf+/a6wpTzYjz9DJuSp89uRtIMobmTlBrxyYc9vEqR070Jgmms4
-         dBia+FGlKRkiTjaB3rStIEuJC00Nk94fmott5y4xyZ8gRX49LYE4IMfKTfflGcR5spyp
-         mUFWt+LOv0Qs7zkvYpA9Ud6w0lxii/CRPtqnm3ydIsNp1qHyOIXwGbBN8z0GAYV9P0iR
-         OX9Q==
-X-Gm-Message-State: AOJu0YwVZc6OT1e/ow2HqEBxwBRoO1tLEACNrY1y4+qCWIXmqLpqSPWP
-        ZqU7dmAFGjRmTl6+LyLqDq+bRQ==
-X-Google-Smtp-Source: AGHT+IGeenve8EbJFMQJB4qQEz2s+VqYDanWet9BRqfbaa2JmWYxFZ/zU/ld+lORuOYL+kjVoq3mMw==
-X-Received: by 2002:a2e:9f08:0:b0:2c0:300a:82ed with SMTP id u8-20020a2e9f08000000b002c0300a82edmr20041248ljk.7.1697128987482;
-        Thu, 12 Oct 2023 09:43:07 -0700 (PDT)
+        bh=kRh+Vupx0XypJiTrUDbDPsKcsjU0eEhEwWX6GsRTbtw=;
+        b=jZzRpirkQt3nUUo1cIr5cfR8w7Si8NHKlXA0Yod0aICTaTUl8rZdQzg/hHz/6qwt3C
+         WzWicM9iB6igBndxqL8Z91aCjjsZaO6yM6uH3cdbeLDS6psX/w4O9Y4Ta+w8jf8uFGqU
+         syYgyHiAdIOCZ47K/IOdgBLhfv5bCsLkFlIiwN7RG39dgVEVekYJh0zVaHHWjE9tJbwd
+         tR9jdg44okZSWCVMwD2dKxZu9GVwx8PT9kXyMQ40DygtCY30to50OskQaxkzuionafT6
+         5dbjnZ0WPJdC+ng6kQzWwrXoch9T9hZMk5T8q2PMRaQVtaQThhRD9t3hwNVpLrkgOUDn
+         O5rw==
+X-Gm-Message-State: AOJu0Yx2pcjRkh9vTM/loE6+Om2YCRcmnKfQRM82S/V9/Zja0t2M9i2k
+        J0hwZee0T4BCTCR/Al3yV/z6rA==
+X-Google-Smtp-Source: AGHT+IEXqEp3kFB6IUpjF8BAzbvasyJj3DSZYDjbuCP/F0tb8JGBX/QQLV+mGV4P8Tus5qj+oyhvlg==
+X-Received: by 2002:a17:906:24e:b0:9a1:e293:9882 with SMTP id 14-20020a170906024e00b009a1e2939882mr21330362ejl.63.1697129129266;
+        Thu, 12 Oct 2023 09:45:29 -0700 (PDT)
 Received: from [172.30.204.175] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id p9-20020a2e7409000000b002bfe8537f37sm3633373ljc.33.2023.10.12.09.43.06
+        by smtp.gmail.com with ESMTPSA id g7-20020a1709067c4700b0099bd1a78ef5sm11250236ejp.74.2023.10.12.09.45.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Oct 2023 09:43:07 -0700 (PDT)
-Message-ID: <05f205a0-7ec7-4679-83aa-3951302b4dda@linaro.org>
-Date:   Thu, 12 Oct 2023 18:43:06 +0200
+        Thu, 12 Oct 2023 09:45:28 -0700 (PDT)
+Message-ID: <fef38d0e-f24b-41ce-9d28-82cd637ce342@linaro.org>
+Date:   Thu, 12 Oct 2023 18:45:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: pad sa8155p-adp DTB file
+Subject: Re: [PATCH v5 4/4] ARM: dts: qcom: ipq8064: Add CPU OPP table
 Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20231011111936.165581-1-dmitry.baryshkov@linaro.org>
- <ZSabeBrfhFf8T8yM@gerhold.net>
+To:     Christian Marangi <ansuelsmth@gmail.com>
+Cc:     Robert Marko <robimarko@gmail.com>, ilia.lin@kernel.org,
+        vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, agross@kernel.org, andersson@kernel.org,
+        rafael@kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20230930102218.229613-1-robimarko@gmail.com>
+ <20230930102218.229613-4-robimarko@gmail.com>
+ <e2d6c9c7-ff59-408f-94cf-81e66d291963@linaro.org>
+ <6525ae86.050a0220.827f2.c59d@mx.google.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <ZSabeBrfhFf8T8yM@gerhold.net>
+In-Reply-To: <6525ae86.050a0220.827f2.c59d@mx.google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
         version=3.4.6
 X-Spam-Level: *
@@ -82,49 +85,65 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 10/11/23 14:56, Stephan Gerhold wrote:
-> On Wed, Oct 11, 2023 at 02:19:36PM +0300, Dmitry Baryshkov wrote:
->> On sa8155p-adp platfor the bootloader (ABL) fails to reserve enough
->> memory for updating the DTB:
+On 10/10/23 22:05, Christian Marangi wrote:
+> On Tue, Oct 10, 2023 at 09:55:26PM +0200, Konrad Dybcio wrote:
 >>
->> Cmdline:  console=tty0 console=ttyMSM0,115200n8 androidboot.verifiedbootstate
->> Error adding node
->> Error carving out UEFI memory: FFFFFFFF
 >>
->> Adding `--pad 1024' to DTC_FLAGS for this board fixes the issue by
->> providing enough empty space for node creation.
+>> On 9/30/23 12:21, Robert Marko wrote:
+>>> From: Christian Marangi <ansuelsmth@gmail.com>
+>>>
+>>> Add CPU OPP table for IPQ8062, IPQ8064 and IPQ8065 SoC.
+>>> Use opp-supported-hw binding to correctly enable and disable the
+>>> frequency as IPQ8062 supports up to 1.0Ghz, IPQ8064 supports up to
+>>> 1.4GHz with 1.2GHz as an additional frequency and IPQ8065 supports
+>>> 1.7GHZ but doesn't have 1.2GHZ frequency and has to be disabled.
+>>>
+>>> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+>>> Signed-off-by: Robert Marko <robimarko@gmail.com>
+>>> ---
+>>> Changes v4:
+>>> * Add OPP DTS patch for IPQ8064
+>>>
+>>>    arch/arm/boot/dts/qcom/qcom-ipq8062.dtsi | 30 +++++++++++
+>>>    arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi | 67 ++++++++++++++++++++++++
+>>>    arch/arm/boot/dts/qcom/qcom-ipq8065.dtsi | 65 +++++++++++++++++++++++
+>>>    3 files changed, 162 insertions(+)
+>>>
+>>> diff --git a/arch/arm/boot/dts/qcom/qcom-ipq8062.dtsi b/arch/arm/boot/dts/qcom/qcom-ipq8062.dtsi
+>>> index 5d3ebd3e2e51..72d9782c3d6f 100644
+>>> --- a/arch/arm/boot/dts/qcom/qcom-ipq8062.dtsi
+>>> +++ b/arch/arm/boot/dts/qcom/qcom-ipq8062.dtsi
+>>> @@ -6,3 +6,33 @@ / {
+>>>    	model = "Qualcomm Technologies, Inc. IPQ8062";
+>>>    	compatible = "qcom,ipq8062", "qcom,ipq8064";
+>>>    };
+>>> +
+>>> +&opp_table_cpu {
+>>> +	opp-384000000 {
+>>> +		opp-microvolt-speed0-pvs0 = <1000000 950000 1050000>;
+>>> +		opp-microvolt-speed0-pvs1 = <925000 878750 971250>;
+>>> +		opp-microvolt-speed0-pvs2 = <875000 831250 918750>;
+>>> +		opp-microvolt-speed0-pvs3 = <800000 760000 840000>;
+>> We can just make use of opp-supported-hw and define opp-384...-0,
+>> opp-384..-1 etc. with a valid corresponding bitmask in opp-supported-hw
 >>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>
->> This replaces my previous attempt, which added DTC_FLAGS globally ([1]),
->> which was rejected.
->>
->> [1] https://lore.kernel.org/linux-arm-msm/20231009172717.2695854-1-dmitry.baryshkov@linaro.org/
+>> otherwise it's somewhat confusing to follow, I think..
 >>
 > 
-> Thanks for making this specific to sa8155p-adp. I completely agree that
-> this workaround might be needed for devices that are locked down (with
-> no way to update the bootloader).
-> 
-> But is this really the case here? As far as I understand, the SA8155P
-> ADP is the "Automotive Development Platform", i.e. a developer board
-> where I would expect that secure boot is not enabled (just like on the
-> DragonBoards and RoboticBoards).
-> 
-> Fixing this properly in the bootloader would be very easy, you just need
-> to increase the DTB_PAD_SIZE I linked [1] by 1024 like in this patch.
-> This would fix the issue properly, with no change needed in Linux. And
-> if you have some way to communicate/contribute this back to Qualcomm
-> somehow we could reduce the chance to see this problem on actually
-> locked down devices in the future.
-> 
-> Thanks,
-> Stephan
-> 
-> [1]: https://git.codelinaro.org/clo/la/abl/tianocore/edk2/-/blob/LA.AU.1.4.1.r2-05100-sa8155.0/QcomModulePkg/Include/Library/LocateDeviceTree.h#L59
-I'm not sure how productized this platform is, but I'd be skewing 
-towards Stephan's solution, Qualcomm should fix the bootloader if it's 
-not EOL yet.
+> Ehh should we really double the nodes for ipq8062 and ipq8065?
+Hm.. I'm not 100% sure, both solutions are kinda meh, but perhaps 
+overwriting it will be less of a hassle for looking at the decompiled dt 
+indeed..
 
-Konrad
+> The idea here was to overwrite the one since the pvs always match and at
+> worst(ipq8065) have 7 pvs instead of 4. From the system it would be
+> easier to read since only one table is present in the final dts and not
+> 2 and referring to the opp-supported-hw.
+> 
+> The original idea was to declare one opp table and reuse pvs version (by
+> faking it with hardcoded values) to put additional pvs for ipq8062 and
+> ipq8065, but Dmitry didn't like it and asked to move the opp in
+> different dtsi.
+Yeah this fusing thing is complex enough already
+
+KOnrad
