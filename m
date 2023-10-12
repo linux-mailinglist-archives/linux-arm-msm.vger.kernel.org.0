@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 11E6C7C719F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 17:36:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D8427C71A3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 17:36:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235752AbjJLPf6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Oct 2023 11:35:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60418 "EHLO
+        id S1379454AbjJLPgL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Oct 2023 11:36:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235735AbjJLPf5 (ORCPT
+        with ESMTP id S1379456AbjJLPgJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Oct 2023 11:35:57 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED7D0D9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 08:35:54 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-507962561adso505631e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 08:35:54 -0700 (PDT)
+        Thu, 12 Oct 2023 11:36:09 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B143BE8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 08:36:07 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-505a62d24b9so1464381e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 08:36:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697124953; x=1697729753; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1697124965; x=1697729765; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vWEfZUnAs+DutIwU4c/k42cMnXYwnMbMTTHD3wX0MWE=;
-        b=CyXIA+5jyGiZ5iNycRT7F7ZwiLgLYMwRpiakgCVXfDkiWLrVub6lTd9TvXnj6SNytl
-         w4LqewHmJtbfV/ioQD21FR7VhkdNVwxQw+ZZy20kTqRWfdWM13cdRJfHpg8HKVPa7up+
-         iS1wY+XDipaXEOX8EhvUYtTYaQ6/LVE1Qy3jlTYZZfVEZwp6mQrGfuO3ifsXe5+f0VIw
-         yw49lbMO6LccC+u6KUtxxiSp6QDhalUh+igb0kGBXcu6kRMBsTH7idz4h4/HmUD9+OW1
-         cFOqk0FJ0qZpSpwu4lb5gph846eIBY0Sv3C1IfU3xl6wI/Cgba4TO/Ab2HyndvQRblI0
-         dTRg==
+        bh=6yEra9Cx7XV54gD7YoJL8PZvFj4AkKcsevplc+yUjjs=;
+        b=iVpU/7e/W+l21djRMT/avFeoxq6Vv+gnRBCsp4VRRi8IdkDLiPqUPRlGsDTnlyrqXC
+         CTL8d/sD88NYw60ZUYKtp9uJpYVeJ1QkzxkIgfkFWH9HwvkbnBCMQZ0Wc9hscBafbp+4
+         MJW2ksZLnw2sCxkVIma8voJvot/s4/ExRqFCUn2IK5t59/XhsbsaaYukxGxmEHZsYB5B
+         uHMAgnbuJGVm3MHSRDZvpcjPSS0Bl3obPX4Qm+3674D+mOY9tDiJXCTR6WmoBMcwxgbJ
+         WjfVQ3LCY4Eks9H/BW7tXkSidaWwzVsW5j7mIymEqzQyFmL+/63a7g2N5grse8/w3q7j
+         JNJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697124953; x=1697729753;
+        d=1e100.net; s=20230601; t=1697124965; x=1697729765;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vWEfZUnAs+DutIwU4c/k42cMnXYwnMbMTTHD3wX0MWE=;
-        b=aoHz52+V7gL8H9D9g5pXw5Jor7hk07ArbWDn0sljU6eEa0Bi/8FRHNQ+F34dL1FpTE
-         X2Az1WozjiRx208gvJ8JcSRVQH83HD4OozvINJDZVQ5/oa9x4pYHPIv31Dk1rTn1V5U+
-         cyht8gp0DB1o8ujQPTcWd8mIMXLgLjLbB/JdGZ5tKoXNrmhBW87HyPderXCpiHj7dYfr
-         vZ1h/T+uEsa1rtOWx64Al+QbPDZ2sPyxvtlY5GrKPXlePgRFOiffqUvpe+tEayR/I7no
-         +Ge3kOwhlcq5WXn7G0pmZYjrRRj8HlZr5ReWN4Xe6swPbFgKQ1/2ZfJVqpOqJ+HLz1dz
-         U/YQ==
-X-Gm-Message-State: AOJu0YwuRM2qAkPtd86n6G7GW3inIABPZVjE0Xw0J0XesuOa7WTzQNMP
-        Z040iXteafy7nt9j+sATY1Ling==
-X-Google-Smtp-Source: AGHT+IG8itGKixiAzNO1JpjFZ3jLYlcAXlQ9Rg/ns33QDYBT5y3HudL4oj39XJwH7IsjxCBUH5GYlw==
-X-Received: by 2002:a05:6512:118f:b0:500:adbd:43e9 with SMTP id g15-20020a056512118f00b00500adbd43e9mr26095749lfr.15.1697124953135;
-        Thu, 12 Oct 2023 08:35:53 -0700 (PDT)
+        bh=6yEra9Cx7XV54gD7YoJL8PZvFj4AkKcsevplc+yUjjs=;
+        b=WEZfvcD20Qb+6GVH4VJZGrFfUXb9zkNuhWW4HGjcyx3JEk9S2ewlZ3nBBNFRJwDE/J
+         HwflG0o9YRIeIPKYEvCwpqOTXod/1ZyHmRIN9GhlK9LZKn4ejkT8KFv8oK6OtvBVgTZi
+         ExJH9Gg2LHFlj2cd9zRsYXEXUZal/2hHgEeD8pkK23vLLbuCaVlTkXQg5YiYvHgcNf5q
+         Qj5JOxTqSmD6B698FGej9K/EALo8E3X8FTBpv6FXxoVC7ClgtCkRovJqEOt3QyF0bVDt
+         7BUMTXxRdBOKh+6ZzphGFhzTHlFk7+TL1mH2AYagxg4hb3GpDF3V3dCJ72iuWYrcH4J0
+         Cqiw==
+X-Gm-Message-State: AOJu0YxsrKFvw95FnAHUcy9Hxyn9a44WmrH4qXVp9H/UALbkhlI+HXGI
+        WLv/KG81shj2eiLGhBTxD8cKTA==
+X-Google-Smtp-Source: AGHT+IFP2ID5YRRW16YE9Knvq4A85dNzlJuJl5qRjUGexoKPVjohIWJG2IIteA2GoSjoLy+QpiukuA==
+X-Received: by 2002:a05:6512:1248:b0:4fe:711:2931 with SMTP id fb8-20020a056512124800b004fe07112931mr26256177lfb.22.1697124962504;
+        Thu, 12 Oct 2023 08:36:02 -0700 (PDT)
 Received: from uffe-tuxpro14.. (h-94-254-63-18.NA.cust.bahnhof.se. [94.254.63.18])
-        by smtp.gmail.com with ESMTPSA id d13-20020ac25ecd000000b0050481565679sm2845814lfq.167.2023.10.12.08.35.52
+        by smtp.gmail.com with ESMTPSA id b17-20020ac25631000000b0050482b29ac8sm2853085lff.31.2023.10.12.08.36.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Oct 2023 08:35:52 -0700 (PDT)
+        Thu, 12 Oct 2023 08:36:01 -0700 (PDT)
 From:   Ulf Hansson <ulf.hansson@linaro.org>
 To:     Ulf Hansson <ulf.hansson@linaro.org>, linux-pm@vger.kernel.org
 Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         linux-arm-msm@vger.kernel.org
-Subject: [PATCH 2/5] pmdomain: qcom: cpr: Drop the ->opp_to_performance_state() callback
-Date:   Thu, 12 Oct 2023 17:35:50 +0200
-Message-Id: <20231012153550.101425-1-ulf.hansson@linaro.org>
+Subject: [PATCH 3/5] pmdomain: qcom: rpmpd: Drop the ->opp_to_performance_state() callback
+Date:   Thu, 12 Oct 2023 17:35:58 +0200
+Message-Id: <20231012153558.101445-1-ulf.hansson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20231012152108.101270-1-ulf.hansson@linaro.org>
 References: 
@@ -83,34 +83,34 @@ Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc: linux-arm-msm@vger.kernel.org
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 ---
- drivers/pmdomain/qcom/cpr.c | 7 -------
+ drivers/pmdomain/qcom/rpmpd.c | 7 -------
  1 file changed, 7 deletions(-)
 
-diff --git a/drivers/pmdomain/qcom/cpr.c b/drivers/pmdomain/qcom/cpr.c
-index 94a3f0977212..e9dd42bded6f 100644
---- a/drivers/pmdomain/qcom/cpr.c
-+++ b/drivers/pmdomain/qcom/cpr.c
-@@ -1424,12 +1424,6 @@ static const struct cpr_acc_desc qcs404_cpr_acc_desc = {
- 	.acc_desc = &qcs404_acc_desc,
- };
+diff --git a/drivers/pmdomain/qcom/rpmpd.c b/drivers/pmdomain/qcom/rpmpd.c
+index 3135dd1dafe0..524631dcab4b 100644
+--- a/drivers/pmdomain/qcom/rpmpd.c
++++ b/drivers/pmdomain/qcom/rpmpd.c
+@@ -908,12 +908,6 @@ static int rpmpd_set_performance(struct generic_pm_domain *domain,
+ 	return ret;
+ }
  
--static unsigned int cpr_get_performance_state(struct generic_pm_domain *genpd,
--					      struct dev_pm_opp *opp)
+-static unsigned int rpmpd_get_performance(struct generic_pm_domain *genpd,
+-					  struct dev_pm_opp *opp)
 -{
 -	return dev_pm_opp_get_level(opp);
 -}
 -
- static int cpr_power_off(struct generic_pm_domain *domain)
+ static int rpmpd_probe(struct platform_device *pdev)
  {
- 	struct cpr_drv *drv = container_of(domain, struct cpr_drv, pd);
-@@ -1698,7 +1692,6 @@ static int cpr_probe(struct platform_device *pdev)
- 	drv->pd.power_off = cpr_power_off;
- 	drv->pd.power_on = cpr_power_on;
- 	drv->pd.set_performance_state = cpr_set_performance_state;
--	drv->pd.opp_to_performance_state = cpr_get_performance_state;
- 	drv->pd.attach_dev = cpr_pd_attach_dev;
+ 	int i;
+@@ -959,7 +953,6 @@ static int rpmpd_probe(struct platform_device *pdev)
+ 		rpmpds[i]->pd.power_off = rpmpd_power_off;
+ 		rpmpds[i]->pd.power_on = rpmpd_power_on;
+ 		rpmpds[i]->pd.set_performance_state = rpmpd_set_performance;
+-		rpmpds[i]->pd.opp_to_performance_state = rpmpd_get_performance;
+ 		pm_genpd_init(&rpmpds[i]->pd, NULL, true);
  
- 	ret = pm_genpd_init(&drv->pd, NULL, true);
+ 		data->domains[i] = &rpmpds[i]->pd;
 -- 
 2.34.1
 
