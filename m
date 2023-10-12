@@ -2,111 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B5C97C65B1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 08:36:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E9737C66C9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 09:56:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377391AbjJLGge (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Oct 2023 02:36:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42500 "EHLO
+        id S1347116AbjJLH2c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Oct 2023 03:28:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377275AbjJLGge (ORCPT
+        with ESMTP id S234125AbjJLH2b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Oct 2023 02:36:34 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F1E8BE;
-        Wed, 11 Oct 2023 23:36:32 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39C5tu39028698;
-        Thu, 12 Oct 2023 06:36:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Pw3jAkv2N7sjbwu9Davi8lxxfieHB88a1r7zD0/s9K8=;
- b=EHFeLzr2ah6j1pLzojsK/UeNUaY+V5+QybOt6nfl269zp+FCfmuCHvY96elzxhCwMmsj
- RRNYnDMYNYSRmYY+haltVFk/AqqZ36E1chVXVG0oxN2sIMYYW4tAwBUuaOIVHAaqfBo7
- RfYRQvVUeeEWWm2ifVLMjzCjfguDUum3nlpxLxHi5kARUXb3LZkUTjhxNnY9axBKpXd/
- mowJVrnhQ2d6dojZzLx9Lt8sGZrVB1f0hIgg+2FrIc+IHpL85aGs1mEMeZYTquDqSu0I
- ZJjMU4bLy0jrQW7HX5zaXPMKjFa8E743oz2yd4GQ/Lz3R3LXGN4aGRjsiffyPooalOAH Qg== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tnstytj68-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 12 Oct 2023 06:36:26 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39C6aPGH030709
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 12 Oct 2023 06:36:25 GMT
-Received: from [10.110.93.117] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Wed, 11 Oct
- 2023 23:36:25 -0700
-Message-ID: <845e2747-535e-80e0-342b-e5343bd620aa@quicinc.com>
-Date:   Wed, 11 Oct 2023 23:36:24 -0700
+        Thu, 12 Oct 2023 03:28:31 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 501CC9D;
+        Thu, 12 Oct 2023 00:28:27 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-9b2cee40de8so125154466b.1;
+        Thu, 12 Oct 2023 00:28:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1697095706; x=1697700506; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kEqKvIWeFRr8W5s0BPeSsPwNLKn93+5XPQoiJhuCABo=;
+        b=b5UXYZkc91cIBJ7igE7i2UsySuIydTQXjE55MupknR44qFIjeVJIL2eLMxwFvD7sSG
+         6h14rQqhPym0LJg/Vzb0XzLQdpSYqUhAx664sIYN12deQcb+bqTrskESdpJyaLSQKT2I
+         rIvMTcCZzZFiR5i0BeUDTYN+s2xAuoE5uDKViBFonnPCv4H3qts1V8fIOCx8zUVCE17U
+         Ve7GulhV/o0p6GLhQ/PXtE+0JvJYvdYZNiWtRU/PaQ3sk0aqoeevCGaXTb3qGe0TUNq9
+         naqOlSixCZu4HyuaUeXX0PZbun9xANgfKLsjImFXHepvL6TBt0norQ84MzrWL6Si+Ryw
+         WpZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697095706; x=1697700506;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kEqKvIWeFRr8W5s0BPeSsPwNLKn93+5XPQoiJhuCABo=;
+        b=IcufihXrY9gM7/bnLrIDjXMzSsTlYLJYW+0H30WIOidWyHcj1YTm1dLyAUqcxcwyTZ
+         KrJGRegIp6MmnMVSimjwyFj/mpQEVPVOyJDU/Z4eJb7RG8FdjTaM4NhRlPIXHkyxXwcW
+         ccXMI363j1mvzkj4Cj8Gql8DxlL6MXJU+u0HyL3AzDY9CK0h6keFU4ww3THpVXFAk0NY
+         enXSnk4POBEm9XIR465XVRDIhk8l+ugGht0YVoEZDvDqRCllOFTXoK3tD1y2j3wsTwvU
+         cx63jz7uiFGVlVtGCC1f57CLUmAupk4YrEt+QWVV+mgvA1PTI10wgKjbzeHqX8J4wuEk
+         cJcA==
+X-Gm-Message-State: AOJu0YxoHdRTMIBmMfrOGlHgKg60eK4WfUz23ZMQj5yu6919nY+Lf0zY
+        xopNcQhtxIs8BfpZHDS1//8=
+X-Google-Smtp-Source: AGHT+IFdcug422fZ9CQ3p/vnodtvTJxBtSb/0L4CdV5alrbUijpVrx+baQdM5YlE+adz/UU7cIal8g==
+X-Received: by 2002:a17:907:7f08:b0:9a9:9d19:b250 with SMTP id qf8-20020a1709077f0800b009a99d19b250mr16312225ejc.17.1697095705420;
+        Thu, 12 Oct 2023 00:28:25 -0700 (PDT)
+Received: from lab.hqhome163.com ([194.183.10.152])
+        by smtp.googlemail.com with ESMTPSA id a6-20020a170906468600b009a5f7fb51dcsm10616261ejr.42.2023.10.12.00.28.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Oct 2023 00:28:24 -0700 (PDT)
+From:   "Alessandro Carminati (Red Hat)" <alessandro.carminati@gmail.com>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     alim.akhtar@samsung.com, andersson@kernel.org, avri.altman@wdc.com,
+        bmasney@redhat.com, bvanassche@acm.org, conor+dt@kernel.org,
+        cw00.choi@samsung.com, devicetree@vger.kernel.org,
+        jejb@linux.ibm.com, konrad.dybcio@linaro.org,
+        krzysztof.kozlowski+dt@linaro.org, krzysztof.kozlowski@linaro.org,
+        kyungmin.park@samsung.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-scsi@vger.kernel.org, martin.petersen@oracle.com,
+        myungjoo.ham@samsung.com, nm@ti.com, quic_asutoshd@quicinc.com,
+        quic_bhaskarv@quicinc.com, quic_cang@quicinc.com,
+        quic_narepall@quicinc.com, quic_nguyenb@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_richardp@quicinc.com,
+        quic_ziqichen@quicinc.com, robh+dt@kernel.org, sboyd@kernel.org,
+        vireshk@kernel.org,
+        "Alessandro Carminati (Red Hat)" <alessandro.carminati@gmail.com>
+Subject: [PATCH] scsi: ufs: core: Fix build error: ufshcd_opp_config_clks
+Date:   Thu, 12 Oct 2023 07:20:51 +0000
+Message-Id: <20231012072051.1517826-1-alessandro.carminati@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20231011122543.11922-4-manivannan.sadhasivam@linaro.org>
+References: <20231011122543.11922-4-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] soc: qcom: llcc: Fix LLCC_TRP_ATTR2_CFGn offset
-To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Avinash Philip <quic_avinashp@quicinc.com>,
-        Umnathi Chalicheemala <quic_uchalich@quicinc.com>
-References: <20231012061127.95637-1-abel.vesa@linaro.org>
-Content-Language: en-US
-From:   Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>
-In-Reply-To: <20231012061127.95637-1-abel.vesa@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: vlfBxGbju9vImbXuTE9pS-u5PmSfuEyb
-X-Proofpoint-GUID: vlfBxGbju9vImbXuTE9pS-u5PmSfuEyb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-12_02,2023-10-11_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
- bulkscore=0 malwarescore=0 suspectscore=0 priorityscore=1501
- impostorscore=0 mlxlogscore=719 lowpriorityscore=0 clxscore=1011
- spamscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310120056
-X-Spam-Status: No, score=-0.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SORTED_RECIPS,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Building linux-6.6-rc3 with this patchset applied and the following
+configuration:
 
-On 10/11/2023 11:11 PM, Abel Vesa wrote:
-> According to documentation, it has increments of 4, not 8.
->
-> Fixes: c72ca343f911 ("soc: qcom: llcc: Add v4.1 HW version support")
-> Reported-by: Umnathi Chalicheemala <quic_uchalich@quicinc.com>
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+CONFIG_SCSI_UFSHCD=m
+CONFIG_SCSI_UFS_BSG=y
 
-Thanks Abel.
+I got:
 
-Reviewed-by: Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>
+   scripts/mod/modpost -M -m -a      -o Module.symvers -T modules.order vmlinux.o
+ERROR: modpost: "ufshcd_opp_config_clks" [drivers/ufs/host/ufshcd-pltfrm.ko] undefined!
+make[2]: *** [scripts/Makefile.modpost:145: Module.symvers] Error 1
+make[1]: *** [/home/alessandro/src/linux-6.6-rc3/Makefile:1865: modpost] Error 2
+make: *** [Makefile:234: __sub-make] Error 2
 
-> ---
->   drivers/soc/qcom/llcc-qcom.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-> index 674abd0d6700..fb4085b7cb19 100644
-> --- a/drivers/soc/qcom/llcc-qcom.c
-> +++ b/drivers/soc/qcom/llcc-qcom.c
-> @@ -47,7 +47,7 @@
->   #define LLCC_TRP_STATUSn(n)           (4 + n * SZ_4K)
->   #define LLCC_TRP_ATTR0_CFGn(n)        (0x21000 + SZ_8 * n)
->   #define LLCC_TRP_ATTR1_CFGn(n)        (0x21004 + SZ_8 * n)
-> -#define LLCC_TRP_ATTR2_CFGn(n)        (0x21100 + SZ_8 * n)
-> +#define LLCC_TRP_ATTR2_CFGn(n)        (0x21100 + SZ_4 * n)
->   
->   #define LLCC_TRP_SCID_DIS_CAP_ALLOC   0x21f00
->   #define LLCC_TRP_PCB_ACT              0x21f04
+I needed to add an export symbol to have the build complete
+
+Signed-off-by: Alessandro Carminati (Red Hat) <alessandro.carminati@gmail.com>
+---
+ drivers/ufs/core/ufshcd.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index ccd7fcd18355..c0631c37c3d1 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -1098,6 +1098,7 @@ int ufshcd_opp_config_clks(struct device *dev, struct opp_table *opp_table,
+ 
+ 	return 0;
+ }
++EXPORT_SYMBOL_GPL(ufshcd_opp_config_clks);
+ 
+ static int ufshcd_opp_set_rate(struct ufs_hba *hba, unsigned long freq)
+ {
+-- 
+2.34.1
+
