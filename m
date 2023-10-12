@@ -2,109 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 564E67C6DFB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 14:24:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 857DA7C6E8E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 14:54:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347193AbjJLMYy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Oct 2023 08:24:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59136 "EHLO
+        id S1347262AbjJLMyO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Oct 2023 08:54:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233496AbjJLMYx (ORCPT
+        with ESMTP id S1347254AbjJLMyN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Oct 2023 08:24:53 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50096B7;
-        Thu, 12 Oct 2023 05:24:52 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 703CCC433C7;
-        Thu, 12 Oct 2023 12:24:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1697113492;
-        bh=1GyAZLXBp65moRKSORYgOCHrvhgp+SxDzz7EnfVjVUk=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=aXAo4H2341hCLiNHeYtUIkEE8BIZpaaoCB0X8Xl5ewS0BVCn69f7haypyvkcPPIu4
-         dB6E8XstAvbZpOkfhtmE0cs5tYGcQbfxg/TmwlpmB23wZaLx9vvbNVIEHgRh3ZzLrA
-         LheqF5JlnNNk3/7I5cgbUtpdrbP39NRSk6KK+8zvmGu1h0YbRRmBzSpdGAd+RJhkGC
-         twuAC/6CQJqWhDw2PHPz47IjC1LuELgfbCstxM9EktBRM0dWvahPGzF9wU3fJZuxK7
-         +aM4/Nx2RV/KIhiOEhUp5fRCTzdo/dn6DsPnzUNWF7+YqDG/PbbWQRGm4WWDVCpgwp
-         bNmqclV3cVCrQ==
-Received: (nullmailer pid 393373 invoked by uid 1000);
-        Thu, 12 Oct 2023 12:24:49 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+        Thu, 12 Oct 2023 08:54:13 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0114DDE
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 05:54:09 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-53e08e439c7so1247804a12.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 05:54:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1697115248; x=1697720048; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=pR+mwXlnV0Z4bNYvJ6fPmgF9e3yoJxNlTwlXOBZHHNE=;
+        b=ixcMVo578dJATVQ7S29h/6Qf1H2TijQL/m2RBvq9E7WQP4TQhsCPp66vSwP7qL0wnS
+         In+40id5L8J9dMc/1eRnGzXWkmvVLRewNZsexI9xPr7K5hAagmwT5ZGTK7UYviz+mUXn
+         +V6h6uS9SfrtklC79McePlsFXsXQQo3SZYndvKNDLt52M3jZK74OsJUqgX7+LM9IitZJ
+         5zatav5vRaFhxZ1vYtZjhtkhqGqY/744nVW9Im7hqjssW3mXU6/j/sJMRJr0uGmLGyNv
+         kPCB/ArM+ZCjYENZTjX2HMpyynueZFSgchfeyIwD5SvT28h2CmCSy3H+KtJI+p7Lg9Bz
+         vd9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697115248; x=1697720048;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pR+mwXlnV0Z4bNYvJ6fPmgF9e3yoJxNlTwlXOBZHHNE=;
+        b=mtUddXGHREzWsI7lUc9SwilK3shADtbD5CLXnAJUyoThFU+uKBEoeRY5XmAio59piw
+         IOSHw1Zv+Y/Z5H6Nr34BKTMDuRrKWSQpRJOA16ko3evtoHE6NumVY2aFoTE40gmsRbVD
+         Hq6M2HfXM1fKfHeWlNm0EMUX6DECCFStIMXft5m0LiZFq4kozGaGlNpYtLfVy5gPR1K5
+         E81DEuTmo+T9C/GMDgoeFO03TfDt+q5RMX4edW5fDulTI5v+K9mEH451Tj+KpbWsvRPO
+         8nHbdVkpCZk5Wt7WbyEJ8+54FOJ4ysxQfuWV3bNUrznUOLVNYSi2mkHA4Hv3Xtv4zhZy
+         WrQA==
+X-Gm-Message-State: AOJu0YyIZGnkXKaFtnPolN+Fo3I32uqum0ezWw+4TJuHwKQCwfAk4+DV
+        krXSzTATYBkMrJZ/pdCJKRNpeg==
+X-Google-Smtp-Source: AGHT+IHhxwKcA6rURKmdoDhGMbxgA872Oj7NJ//V/raGh+sSlFetQGXa6cW2a3WixE9rzNcPaiJI7g==
+X-Received: by 2002:aa7:d501:0:b0:52f:2bd3:6f4d with SMTP id y1-20020aa7d501000000b0052f2bd36f4dmr22451869edq.0.1697115248166;
+        Thu, 12 Oct 2023 05:54:08 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.100])
+        by smtp.gmail.com with ESMTPSA id f18-20020a056402069200b005389ebf00a2sm10126879edy.76.2023.10.12.05.54.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Oct 2023 05:54:07 -0700 (PDT)
+Message-ID: <3bed0f5e-372c-45f3-8995-0e8e7cdf1690@linaro.org>
+Date:   Thu, 12 Oct 2023 14:54:04 +0200
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     agross@kernel.org, dmitry.baryshkov@linaro.org,
-        quic_tdas@quicinc.com, linux-arm-msm@vger.kernel.org,
-        andersson@kernel.org, vladimir.zapolskiy@linaro.org,
-        devicetree@vger.kernel.org, mturquette@baylibre.com,
-        krzysztof.kozlowski+dt@linaro.org, jonathan@marek.ca,
-        sboyd@kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
-        konrad.dybcio@linaro.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        conor+dt@kernel.org
-In-Reply-To: <20231012113100.3656480-4-bryan.odonoghue@linaro.org>
-References: <20231012113100.3656480-1-bryan.odonoghue@linaro.org>
- <20231012113100.3656480-4-bryan.odonoghue@linaro.org>
-Message-Id: <169711348945.393357.13855655138263608622.robh@kernel.org>
-Subject: Re: [PATCH v4 3/4] media: dt-bindings: media: camss: Add
- qcom,sc8280xp-camss binding
-Date:   Thu, 12 Oct 2023 07:24:49 -0500
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V1 1/4] dt-bindings: ufs: qcom: Add qos property
+Content-Language: en-US
+To:     Maramaina Naresh <quic_mnaresh@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>
+Cc:     Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_cang@quicinc.com, quic_nguyenb@quicinc.com
+References: <1696952947-18062-1-git-send-email-quic_mnaresh@quicinc.com>
+ <1696952947-18062-2-git-send-email-quic_mnaresh@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <1696952947-18062-2-git-send-email-quic_mnaresh@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Thu, 12 Oct 2023 12:30:59 +0100, Bryan O'Donoghue wrote:
-> Add bindings for qcom,sc8280xp-camss in order to support the camera
-> subsystem for sc8280xp as found in the Lenovo x13s Laptop.
+On 10/10/2023 17:49, Maramaina Naresh wrote:
+> Add bindings for per-cpu QoS for QCOM UFS. This improves random io
+> performance by 20% for QCOM UFS.
 > 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Maramaina Naresh <quic_mnaresh@quicinc.com>
 > ---
-> This patch depends-on:
-> https://lore.kernel.org/lkml/20231004161853.86382-2-bryan.odonoghue@linaro.org/T
->  .../bindings/media/qcom,sc8280xp-camss.yaml   | 581 ++++++++++++++++++
->  1 file changed, 581 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
+>  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
 > 
+> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> index 462ead5..d8b807e 100644
+> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> @@ -76,6 +76,14 @@ properties:
+>      $ref: /schemas/types.yaml#/definitions/phandle
+>      description: phandle to the Inline Crypto Engine node
+>  
+> +  qos:
+> +    minItems: 2
+> +    maxItems: 2
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+This was absolutely never tested.
 
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.example.dts:26:18: fatal error: dt-bindings/clock/qcom,sc8280xp-camcc.h: No such file or directory
-   26 |         #include <dt-bindings/clock/qcom,sc8280xp-camcc.h>
-      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-compilation terminated.
-make[2]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.example.dtb] Error 1
-make[2]: *** Waiting for unfinished jobs....
-make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1427: dt_binding_check] Error 2
-make: *** [Makefile:234: __sub-make] Error 2
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20231012113100.3656480-4-bryan.odonoghue@linaro.org
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+Best regards,
+Krzysztof
 
