@@ -2,125 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B17B07C7399
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 19:03:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D753A7C7401
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 19:21:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347328AbjJLRDU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Oct 2023 13:03:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50978 "EHLO
+        id S1347349AbjJLRVr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Oct 2023 13:21:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344025AbjJLRDU (ORCPT
+        with ESMTP id S1347347AbjJLRVp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Oct 2023 13:03:20 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED0A890;
-        Thu, 12 Oct 2023 10:03:18 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39C9sw0g002931;
-        Thu, 12 Oct 2023 17:02:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=ChLw1gPCreVADDqa++lhTytF91fEXU6wneQX61ewHlw=;
- b=E+SieSW09RwnewnsW8ff95xBYbrxXFJVazHl1hsCavh9XtIwo10JkY9H0kRHWTo6jhTa
- Hvl40w7iYxVfyNCCk1EpbVm7Vsgip9C0rfk8lTVoR7kkSm6E27sUwujknyGdE4sGqbE2
- hXi1vOjn8Gjd4Kewa2eYPSA7KHKA9kcLgt23uEm+7I7e1k4SwnYEOM5f6IEln/mMNEKs
- dcIzIpzL2MRvE1588Y8vMEc4VZ9skAXoGUG8xc/pg3Nj0K+f/rYZnq81Wp+6TxDe2wMC
- 4fcOUWZ3H/7GrEC27sQ9p2UmY8X+B460kJWO5y/cQ74u5DDfux7/HJpC6vfomy4B/ES3 Qg== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tp0vwapma-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 12 Oct 2023 17:02:40 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39CH2cE5005541
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 12 Oct 2023 17:02:39 GMT
-Received: from [10.216.58.179] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Thu, 12 Oct
- 2023 10:02:32 -0700
-Message-ID: <cceab5a9-ac0f-4ecd-9aa5-0ede5615a13d@quicinc.com>
-Date:   Thu, 12 Oct 2023 22:32:28 +0530
+        Thu, 12 Oct 2023 13:21:45 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBDCDDC
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 10:21:43 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id d9443c01a7336-1c9b7c234a7so10849735ad.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 10:21:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1697131303; x=1697736103; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=4o0VE3GXuM7/67ZO5GT2U/bw0PES2y181UsbC++z2Rs=;
+        b=Puj4pjSUZXL8tC4Mu1RXLH6ejEYdFmlVqbNtedtXB+xGkAc6ajBy+lfmf0lY3U8Xfn
+         Gd3/xMJFkMLIYgsJYXbhG/8pouOsYBi/kpSflyyE+qgnEn1BmhHwpx9LFH0oiSVv0p2M
+         40FTsyN0IPrpUWu4IAZK2UO8JH0zVqVT2KIHEz6i9i62+4JXiIvvMPlzjd9jU//TAP/S
+         ugpH70uc57Vbj4N521Nrt12hfIK6mPaDLMPzXBK0lJDaYdGmiF0hR5tbOuyxjAfX0LmV
+         k4GARgpqPdvTSxnBxxpyAvAD4m6inst1Dauwgp2p5ADGLjVCj1ipiRfG2o3KdbC+3//y
+         ubog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697131303; x=1697736103;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4o0VE3GXuM7/67ZO5GT2U/bw0PES2y181UsbC++z2Rs=;
+        b=u2dU0Hk1+ZpK9PP0X2bb3ipxtk98dUoMT8u0vbTWa4/+5JQHEtdKbvHz94Q7tPpgBj
+         /ik2k2jLvMDSgcQoffWPmx9otVj/x6sG45iY2l5DMUz9EO9tu83f850lWFVWu0JjtTOu
+         3rAznDAfllIkoTuTQExq7aB6l2+Q4KRFYBuvklKBw94NYSsdS3DztFok8oAlweV+BxBq
+         lgnuaYLHGlpA8IRAAKWqrPQOxNcojXsf2xn5IO7m3WUccT7pAF/NEyUQ8I1/1RDDSzxK
+         DdmAqWC9Ig9TOuEK0BZZ1bt/peQcRfa1EM1WT8pAj/MgbGNzSw3w8DbuTBxVUxVZDslu
+         lhEQ==
+X-Gm-Message-State: AOJu0YwN1zXq729082I+Hr+jVaeTLm+2cQ4kot8BdZ3+PamkAIEv3HuW
+        IBaL3opwjf0IEWm0ng9ELVAo
+X-Google-Smtp-Source: AGHT+IFucoxW73imfXYl6qZ7hJDLFsbG0EOZVauFefSh8gl9htQMON7uvSIswMx3E08U0aMzzT889w==
+X-Received: by 2002:a17:903:810:b0:1c9:e257:f88 with SMTP id kr16-20020a170903081000b001c9e2570f88mr1805665plb.10.1697131303216;
+        Thu, 12 Oct 2023 10:21:43 -0700 (PDT)
+Received: from localhost.localdomain ([120.138.12.180])
+        by smtp.gmail.com with ESMTPSA id f9-20020a170902ce8900b001c75a07f62esm2242359plg.34.2023.10.12.10.21.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Oct 2023 10:21:42 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
+        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
+        cw00.choi@samsung.com, andersson@kernel.org,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        jejb@linux.ibm.com, martin.petersen@oracle.com
+Cc:     alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
+        linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
+        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
+        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
+        bmasney@redhat.com, krzysztof.kozlowski@linaro.org,
+        linux-kernel@vger.kernel.org, alessandro.carminati@gmail.com,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v7 0/5] UFS: Add OPP support
+Date:   Thu, 12 Oct 2023 22:51:24 +0530
+Message-Id: <20231012172129.65172-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 08/10] arm64: dts: qcom: sc8280xp: Add multiport
- controller node for SC8280
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-CC:     <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
-        <quic_jackp@quicinc.com>, <ahalaney@redhat.com>,
-        <quic_shazhuss@quicinc.com>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "Andy Gross" <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        "Wesley Cheng" <quic_wcheng@quicinc.com>,
-        Johan Hovold <johan@kernel.org>
-References: <20231007154806.605-1-quic_kriskura@quicinc.com>
- <20231007154806.605-9-quic_kriskura@quicinc.com>
- <467dd1cc-64af-43d7-93ca-be28043e2765@linaro.org>
-Content-Language: en-US
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <467dd1cc-64af-43d7-93ca-be28043e2765@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 6Gz5k3DFi_elboXfzKuruuxvwtr9HH-t
-X-Proofpoint-ORIG-GUID: 6Gz5k3DFi_elboXfzKuruuxvwtr9HH-t
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-12_05,2023-10-12_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- phishscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015 mlxlogscore=774
- suspectscore=0 priorityscore=1501 adultscore=0 malwarescore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
- definitions=main-2310120141
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
+This series adds OPP (Operating Points) support to UFSHCD driver.
 
-On 10/12/2023 10:10 PM, Konrad Dybcio wrote:
-> 
-> 
-> On 10/7/23 17:48, Krishna Kurapati wrote:
->> Add USB and DWC3 node for tertiary port of SC8280 along with multiport
->> IRQ's and phy's. This will be used as a base for SA8295P and SA8295-Ride
->> platforms.
->>
->> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
->> ---
-> [...]
-> 
->> +
->> +            interconnects = <&aggre1_noc MASTER_USB3_MP 0 &mc_virt 
->> SLAVE_EBI1 0>,
->> +                    <&gem_noc MASTER_APPSS_PROC 0 &config_noc 
->> SLAVE_USB3_MP 0>;
-> Please use QCOM_ICC_TAG_ALWAYS from 
-> include/dt-bindings/interconnect/qcom,icc.h (like in sa8775p)
-> 
-> With that I think it's good to go :)
-> 
-Hi Konrad. Thanks for the review.
+Motivation behind adding OPP support is to scale both clocks as well as
+regulators/performance state dynamically. Currently, UFSHCD just scales
+clock frequency during runtime with the help of "freq-table-hz" property
+defined in devicetree. With the addition of OPP tables in devicetree (as
+done for Qcom SDM845 and SM8250 SoCs in this series) UFSHCD can now scale
+both clocks and performance state of power domain which helps in power
+saving.
 
-I see that the tags are used fr spi/i2c but not usb. So to maintain 
-uniformity, wanted to keep the same here.
+For the addition of OPP support to UFSHCD, there are changes required to
+the OPP framework and devfreq drivers. The OPP framework changes are already
+merged and the devfreq change is added in this series.
 
-Regards,
-Krishna,
+Credits
+=======
+
+This series is a continuation of previous work by Krzysztof Kozlowski [1].
+
+Testing
+=======
+
+This series is tested on 96Boards RB3 (SDM845 SoC) and RB5 (SM8250 SoC)
+development boards.
+
+Merging Strategy
+================
+
+Since the devfreq patch got an Ack from the maintainer, either it can be merged
+to scsi tree with rest of the patches or merged separately through devfreq tree.
+
+Thanks,
+Mani
+
+[1] https://lore.kernel.org/all/20220513061347.46480-1-krzysztof.kozlowski@linaro.org/
+
+Changes in v7:
+
+* Added missing EXPORT_SYMBOL_GPL() for ufshcd_opp_config_clks() API as reported
+  by Alessandro Carminati
+
+Changes in v6:
+
+* Collected tags from Dmitry
+* Fixed bindings issues reported by Krzysztof
+
+Changes in v5:
+
+* Dropped the devfreq patch since it got applied
+* Fixed the bindings issue reported by DT bot
+* Rebased on top of mkp/scsi/for-next
+
+Changes in v4:
+
+* Rebased on top of v6.6-rc3
+
+Changes in v3:
+
+* Rebased on top of linux-next/master tag: next-20230731
+* Dropped the already applied patches (dts, opp binding and framework)
+* Moved the interconnect patches to a separate series:
+  https://lore.kernel.org/linux-scsi/20230731145020.41262-1-manivannan.sadhasivam@linaro.org/
+* Moved ufshcd_opp_config_clks() API to ufshcd.c to fix the build failure
+  reported by Kbuild bot: https://lore.kernel.org/all/202307210542.KoLHRbU6-lkp@intel.com/
+* Collected Acks
+* v2: https://lore.kernel.org/all/20230720054100.9940-1-manivannan.sadhasivam@linaro.org/
+
+Changes in v2:
+
+* Added more description to the bindings patch 2/15
+* Fixed dev_pm_opp_put() usage in patch 10/15
+* Added a new patch for adding enums for UFS lanes 14/15
+* Changed the icc variables to mem_bw and cfg_bw and used
+  the enums for gears and lanes in bw_table
+* Collected review tags
+* Added SCSI list and folks
+* Removed duplicate patches
+
+Krzysztof Kozlowski (2):
+  dt-bindings: ufs: common: add OPP table
+  arm64: dts: qcom: sdm845: Add OPP table support to UFSHC
+
+Manivannan Sadhasivam (3):
+  scsi: ufs: core: Add OPP support for scaling clocks and regulators
+  scsi: ufs: host: Add support for parsing OPP
+  arm64: dts: qcom: sm8250: Add OPP table support to UFSHC
+
+ .../devicetree/bindings/ufs/ufs-common.yaml   |  35 +++-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  42 +++-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |  39 +++-
+ drivers/ufs/core/ufshcd.c                     | 180 ++++++++++++++----
+ drivers/ufs/host/ufshcd-pltfrm.c              |  78 ++++++++
+ include/ufs/ufshcd.h                          |   7 +
+ 6 files changed, 326 insertions(+), 55 deletions(-)
+
+-- 
+2.25.1
+
