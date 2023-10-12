@@ -2,67 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 87CF37C6DAC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 14:12:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B265B7C6DA5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 14:11:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347193AbjJLML7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Oct 2023 08:11:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45374 "EHLO
+        id S1347242AbjJLMLR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Oct 2023 08:11:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347177AbjJLML6 (ORCPT
+        with ESMTP id S1343987AbjJLMLQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Oct 2023 08:11:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39276B8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 05:10:34 -0700 (PDT)
+        Thu, 12 Oct 2023 08:11:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33610C6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 05:10:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1697112633;
+        s=mimecast20190719; t=1697112628;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=27M+MIAmpe+L/2HgaOkMQYAzM+WcqJam0R6eMp8zZVc=;
-        b=d1iVdSa97CjilKJHnv/QN5D8IEqZa6i3MJdqq6fp9bN6tvG00bp1APDsFipD9h95u5B/iQ
-        lQBz53LxKyYt57xSDuq9vL28Mi9A0WHAyLr243Ny+BP/zBS4sKh4d3H8+oEZbvVhEdId0m
-        amlHQoZsHdIeG1vkrm4R6nV8yMjZ2DI=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+        bh=e0nmqy59jy/rGMIg2W3+5Ft0g6PXLLlnoefzeVrsrTs=;
+        b=SrCSLvreBIdBuPQM/ha4E3z3Kz37BfdrQ3thw0VpnxSanDR3ndvLBJ71x8TJhN+DJy8VHq
+        yAGxBmUT9ArOJPrCPC4epac2kdYtpBbaCVMExKLLQv2h4+JZPC2dFCd/fgdGOPWIXyPBH9
+        v0ofpKPvkaib8MrgB921PlXT1F/HfzA=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-179-ASSRDZjqMhWIJ8fiOy6YGQ-1; Thu, 12 Oct 2023 08:10:16 -0400
-X-MC-Unique: ASSRDZjqMhWIJ8fiOy6YGQ-1
-Received: by mail-ej1-f69.google.com with SMTP id a640c23a62f3a-9ae0bf9c0b4so70633166b.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 05:10:16 -0700 (PDT)
+ us-mta-346-v9IWdNW-Pc2UpjQIxt15ww-1; Thu, 12 Oct 2023 08:10:27 -0400
+X-MC-Unique: v9IWdNW-Pc2UpjQIxt15ww-1
+Received: by mail-ej1-f71.google.com with SMTP id a640c23a62f3a-9a5d86705e4so68685466b.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 05:10:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697112615; x=1697717415;
+        d=1e100.net; s=20230601; t=1697112626; x=1697717426;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=27M+MIAmpe+L/2HgaOkMQYAzM+WcqJam0R6eMp8zZVc=;
-        b=BX1PJMD6svbHIJnBJ9icPT9nXKst7XpkykiCz9G2AO/cfqZXRzlCpV8SqjQpQsIsDG
-         eX/+sDNzPeGxti9GpjsdiSu6mmhYBfDI7Zvkb6CWcRQ0+WFR7KnRL3ArleadcCcHXYlh
-         b+f6as7nKDb1cervP+sJf9NKTgkvDkUT/Fke8wJC+Itx+TsRx15qNleSDKxQiJMHbYTy
-         BK2x4c36SQRwEueOrvt07gJwqColPFeAIo9dCgX516ghCNypBiQYIB8ib6qp8TOCvYqP
-         /3Mjw6Tsr0N0k1vGPOz2D7rYYqLOjK143dyz37FsE/B0isCbETcSsp5tMY2pjje8ricl
-         fpNA==
-X-Gm-Message-State: AOJu0Yy/6jHLuIh1cgRu84+xuWK1EMz5oJUA+nFr5M4CUjerOmJXwYKq
-        nnfDpF5RtJdDK78efR8I8G3zAvQZBYnvR4OvAf3LKmH+9nctcOHbIMP5It2v0DOu9jxlCm6IRDh
-        EKo4MFbt1V6VPek4rLqM5sNUGTw==
-X-Received: by 2002:a17:906:1092:b0:9bd:8cfd:e588 with SMTP id u18-20020a170906109200b009bd8cfde588mr1625682eju.27.1697112615683;
-        Thu, 12 Oct 2023 05:10:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHkVyuhaskOIIVNVit9o80c6O2JAINjoNgAy46RiSAkOYOLUZ42tscH4PSdUZo1OCucR3X4XQ==
-X-Received: by 2002:a17:906:1092:b0:9bd:8cfd:e588 with SMTP id u18-20020a170906109200b009bd8cfde588mr1625662eju.27.1697112615307;
-        Thu, 12 Oct 2023 05:10:15 -0700 (PDT)
+        bh=e0nmqy59jy/rGMIg2W3+5Ft0g6PXLLlnoefzeVrsrTs=;
+        b=EIdoExiK9qEHKVApy8M1pB1443eoJbegbdNp0aHq9r4kN3AKiXEnnAFM2EPpmqAqTH
+         5UYPl4rZ2tv3flpzugHvf+chYV/2QY0qzTcxKeSjjhTbtRoPPoxkBahn9jjCe2XNcT7g
+         WXDId1jr7GJ2KocpYuiTU0B4qnYc1JxL4scFt1VN0nIHpOtuWkNYX0SkY2niukNh6Tkm
+         4pRaXzDdqHg3G0gxT113N1eO1SYNqpuh6wptehfeh9yc/lSyL8GlBLfxDjm5kfDDNhMX
+         GklqhewSy8mYEopqS431lQ5WOcCIVj8rplHCcjO9fTFFEOE+LLpogwj/6M0msUWuvYSg
+         PdLQ==
+X-Gm-Message-State: AOJu0YwXvgPCHIJkWd++0flT4Pw9ELljfBINEcRUCXMC/4UiDx4mTPkU
+        Rihp+EAVTmKKDQWpE1MU1eLf6GdWxAAu+BFNmpFVD9CfSVu866rA4NsZQms5rYyjRFKnsaY77ti
+        mh7ndaN0vxQg2oKtG0XtIKciiLg==
+X-Received: by 2002:a17:906:cc13:b0:9b6:50d3:2a75 with SMTP id ml19-20020a170906cc1300b009b650d32a75mr19703357ejb.48.1697112625896;
+        Thu, 12 Oct 2023 05:10:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEjvJVtD0uQR8XMo2cR7XmHJlpYVc+HmbN4viv4pGPb6gmHPLLfBWOiJNvTCRNd4xhqfQomHg==
+X-Received: by 2002:a17:906:cc13:b0:9b6:50d3:2a75 with SMTP id ml19-20020a170906cc1300b009b650d32a75mr19703329ejb.48.1697112625566;
+        Thu, 12 Oct 2023 05:10:25 -0700 (PDT)
 Received: from ?IPV6:2001:1c00:c32:7800:5bfa:a036:83f0:f9ec? (2001-1c00-0c32-7800-5bfa-a036-83f0-f9ec.cable.dynamic.v6.ziggo.nl. [2001:1c00:c32:7800:5bfa:a036:83f0:f9ec])
-        by smtp.gmail.com with ESMTPSA id la18-20020a170906ad9200b0099cd008c1a4sm11019663ejb.136.2023.10.12.05.10.14
+        by smtp.gmail.com with ESMTPSA id x26-20020a170906711a00b0099329b3ab67sm11000199ejj.71.2023.10.12.05.10.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Oct 2023 05:10:14 -0700 (PDT)
-Message-ID: <7ad450c4-78df-ed5c-a05d-5dca8201d081@redhat.com>
-Date:   Thu, 12 Oct 2023 14:10:13 +0200
+        Thu, 12 Oct 2023 05:10:25 -0700 (PDT)
+Message-ID: <c9e693a2-845f-9ef1-e3cb-724cece84756@redhat.com>
+Date:   Thu, 12 Oct 2023 14:10:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH v11 16/56] media: atomisp: Use vb2_get_buffer() instead of
- directly access to buffers array
+Subject: Re: [PATCH v11 17/56] media: atomisp: Stop direct calls to queue
+ num_buffers field
 Content-Language: en-US, nl
 To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
         mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
@@ -75,16 +75,15 @@ Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
         kernel@collabora.com, Sakari Ailus <sakari.ailus@linux.intel.com>
 References: <20231012114642.19040-1-benjamin.gaignard@collabora.com>
- <20231012114642.19040-17-benjamin.gaignard@collabora.com>
+ <20231012114642.19040-18-benjamin.gaignard@collabora.com>
 From:   Hans de Goede <hdegoede@redhat.com>
-In-Reply-To: <20231012114642.19040-17-benjamin.gaignard@collabora.com>
+In-Reply-To: <20231012114642.19040-18-benjamin.gaignard@collabora.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -94,15 +93,10 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 Hi,
 
 On 10/12/23 13:46, Benjamin Gaignard wrote:
-> Use vb2_get_buffer() instead of directly access to vb2_buffer buffer array.
-> This could allow to change the type bufs[] field of vb2_buffer structure if
-> needed.
-> No need to check the result of vb2_get_buffer, vb2_ioctl_dqbuf() already
-> checked that it is valid.
+> Use vb2_get_num_buffers() to avoid using queue num_buffers field directly.
 > 
 > Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
 > CC: Hans de Goede <hdegoede@redhat.com>
-> CC: Mauro Carvalho Chehab <mchehab@kernel.org>
 > CC: Sakari Ailus <sakari.ailus@linux.intel.com>
 
 Thanks, patch looks good to me:
@@ -115,21 +109,22 @@ Hans
 
 
 
+
 > ---
 >  drivers/staging/media/atomisp/pci/atomisp_ioctl.c | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/drivers/staging/media/atomisp/pci/atomisp_ioctl.c b/drivers/staging/media/atomisp/pci/atomisp_ioctl.c
-> index a8e4779d007f..a8a964b2f1a8 100644
+> index a8a964b2f1a8..09c0091b920f 100644
 > --- a/drivers/staging/media/atomisp/pci/atomisp_ioctl.c
 > +++ b/drivers/staging/media/atomisp/pci/atomisp_ioctl.c
-> @@ -1059,7 +1059,7 @@ static int atomisp_dqbuf_wrapper(struct file *file, void *fh, struct v4l2_buffer
->  	if (ret)
->  		return ret;
+> @@ -1028,7 +1028,7 @@ static int atomisp_qbuf_wrapper(struct file *file, void *fh, struct v4l2_buffer
+>  	struct atomisp_device *isp = video_get_drvdata(vdev);
+>  	struct atomisp_video_pipe *pipe = atomisp_to_video_pipe(vdev);
 >  
-> -	vb = pipe->vb_queue.bufs[buf->index];
-> +	vb = vb2_get_buffer(&pipe->vb_queue, buf->index);
->  	frame = vb_to_frame(vb);
+> -	if (buf->index >= vdev->queue->num_buffers)
+> +	if (buf->index >= vb2_get_num_buffers(vdev->queue))
+>  		return -EINVAL;
 >  
->  	buf->reserved = asd->frame_status[buf->index];
+>  	if (buf->reserved2 & ATOMISP_BUFFER_HAS_PER_FRAME_SETTING) {
 
