@@ -2,78 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AE45A7C6206
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 03:04:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D8FD7C6225
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 03:20:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233969AbjJLBEN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Oct 2023 21:04:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44604 "EHLO
+        id S235231AbjJLBUT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Oct 2023 21:20:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233901AbjJLBEM (ORCPT
+        with ESMTP id S233913AbjJLBUS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Oct 2023 21:04:12 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB3A6A9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 18:04:10 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-50573e85ee0so573840e87.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 18:04:10 -0700 (PDT)
+        Wed, 11 Oct 2023 21:20:18 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BD9DB6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 18:20:16 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-50337b43ee6so622139e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 18:20:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697072649; x=1697677449; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=cT2LvUtpeUGiSyAgace36wLACMbz8k4swUVY/0XIdR4=;
-        b=SMcs6iTlqjrdBSqCK1v1Xq3kdw8F/RMx1bQ6JjzZj+HHhlx9kPxnGA/HaKtG3baLg6
-         QayvRP5n8ab3F1HBnUQEygZQK0RmkBzPYgHiMf3GH88eul6WLLI69YjXRgtiPtdqzNcG
-         Pq+Qflu/NJ3RH54h4vdgo0g7E42pG+4FT+qI7hQrDb2nSgvhdqK1hQ5lq9oFlnst/TAE
-         xPgM5lO15yxTrSRo9gk8i344YJi31PYzpHu9ZCXGqZPP73oXWOjo4a/eK8LXq2+LDuHo
-         Y2Z0d2vnAJBCLxknacGMXQMludyA8Rm7lfkdbDMCDn3jvPuvk8NYEJGpdnwc+g9Q1Tsi
-         nXVA==
+        d=linaro.org; s=google; t=1697073614; x=1697678414; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=z0QpM7iUu/pH8/30Lj+P5P2kendMvJf7ma+nZODDuwY=;
+        b=UiKK7UJmKpC6h0YTu4MXj5o7dZA4fD9TRggfToveixI/tH/jeOMHBhyrh56/XSq9Ik
+         ZSR8v2PdcvGaTkpXdYmEqLmqrIAmSD1B3N/lKg+EFHAHXbqFsXgGoWZMXcBQT2bVByH/
+         e2FjB20Da0rTr1hZUvXURXc9HG3aTjbXIfXfNFwmpD/jPWZYzyDXMQ0zF781LnWoOLo7
+         wPjmmzcm6F2AXpCCp5rdWlokGEPkpT88778u/J1mguDmpe6Sltc2TbmQGNrio5NgfuMx
+         GFE8YaMhne/1d8iLPiAPMwTs4qm5QcvCDCJrh5atjYLghIv/HMEuQ37/A+e7Sk95193n
+         ee6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697072649; x=1697677449;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cT2LvUtpeUGiSyAgace36wLACMbz8k4swUVY/0XIdR4=;
-        b=hiX/8YMXXgKvD920G4sg0sm0aGwOSk27VhNUj5HX4iHUd4itx8Z1hRl68F1Lqx9YRM
-         UdmdEB48PudzaxHUvYgZlgjsEnREkvy4vjELtuwF3UPMP+aYU/lrQ074N1y+yO/hhDCp
-         E6TINGKMpxDUpaVZDHgO3thBy7wGgR5wZQ1/mN0+tU+h75KfTkM5J4a24m3tZw4nOkXD
-         J+pHjEAP0L5fn79MMQdXcH7WEGSG4ZzfftnZaTMqo7DcwTiTZTAjg9sAZDvB0u+q1qFo
-         tNQ/BG+wd+MZ87CnY/PZpi34IEMIFd64pmiPm140XMzsDH+yRumBGbjgz9rIIBQLZQBL
-         Oz4Q==
-X-Gm-Message-State: AOJu0YxLOrN6ZT/1MaCh3cG8aaNLI3v7ufQGdr009GL+U7bymyxN777b
-        BbYy3Z//qKNW0xJs0A59AdRQdw==
-X-Google-Smtp-Source: AGHT+IGSAu+eKUIXsF6dkBUn9j2AAUPMBTfKhJbCHRbAEys0dyVfEobQLZa2SxiiI3uhWGT0+ZG/Zg==
-X-Received: by 2002:a19:ad04:0:b0:503:eac:747 with SMTP id t4-20020a19ad04000000b005030eac0747mr17643177lfc.47.1697072648996;
-        Wed, 11 Oct 2023 18:04:08 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id c20-20020ac25314000000b004fdba93b92asm2526936lfh.252.2023.10.11.18.04.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Oct 2023 18:04:08 -0700 (PDT)
-Message-ID: <c7e8d791-c8d5-440c-804d-4aa29be40f13@linaro.org>
-Date:   Thu, 12 Oct 2023 04:04:07 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 5/7] drm/msm/dp: incorporate pm_runtime framework into
- DP driver
-Content-Language: en-GB
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, andersson@kernel.org
-Cc:     quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com,
-        quic_sbillaka@quicinc.com, marijn.suijten@somainline.org,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1696632910-21942-1-git-send-email-quic_khsieh@quicinc.com>
- <1696632910-21942-6-git-send-email-quic_khsieh@quicinc.com>
+        d=1e100.net; s=20230601; t=1697073614; x=1697678414;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=z0QpM7iUu/pH8/30Lj+P5P2kendMvJf7ma+nZODDuwY=;
+        b=bEpk9/LvDlLzax+USc0Rr6DN83s+ubXgAzk6G9SqODt9USp2GVSskufy08oLGjLqpL
+         +nes0WnMje1v5vSQMzdIkmPdgp5VqPSpcpyZZY0+WpmTJX3/giwPerFyUBb4RZW7Ywm4
+         OsDFWBNBpMBLzPV6a3GxQl7PuafcjzrBL9Bs/re8qPjz3Ht6yFuhH/QMkl+Zwr6tXshU
+         VgJkW0opUyae31xSb9LUAOu+3KBjq5nuszZ4hfy3ge14f8oaozYXj0tqiZkovgcmPmkc
+         uOEaTP7nOi5LFNb8fv+Qwg+kyXfOKPk4A56dQpVmMHkQ7LZUuMqN+vsZ4o3PuLX+EDYC
+         Onew==
+X-Gm-Message-State: AOJu0Yy2lXv99Qb393DgyOKW6VZ+xxiRWiXRkuoljssmvVEt1zxqRl5I
+        4hkxK61gCtz6htEYuBgddat+4g==
+X-Google-Smtp-Source: AGHT+IH8qnQEiUNTgWFQZB4vHjuJ93fMWk4a1pMikLcYkzsMQSZa8cpLIN5nllg75n69SRdjQB5nbA==
+X-Received: by 2002:a05:6512:3118:b0:500:a0a3:80ff with SMTP id n24-20020a056512311800b00500a0a380ffmr17005309lfb.58.1697073614266;
+        Wed, 11 Oct 2023 18:20:14 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id y21-20020ac255b5000000b005056c997ed6sm2518994lfg.163.2023.10.11.18.20.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Oct 2023 18:20:13 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1696632910-21942-6-git-send-email-quic_khsieh@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH] drm/msm/a7xx: actually use a7xx state registers
+Date:   Thu, 12 Oct 2023 04:20:13 +0300
+Message-Id: <20231012012013.449918-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,95 +75,87 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/10/2023 01:55, Kuogee Hsieh wrote:
-> Currently DP driver is executed independent of PM runtime framework.
-> This leads msm eDP panel can not being detected by edp_panel driver
-> during generic_edp_panel_probe() due to AUX DPCD read failed at
-> edp panel driver. Incorporate PM runtime framework into DP driver so
-> that host controller's power and clocks are enable/disable through
-> PM runtime mechanism.  Once PM runtime framework is incorporated into
-> DP driver, waking up device from power up path is not necessary. Hence
-> remove it.
-> 
-> After incorporating pm_runtime framework into eDP/DP driver,
-> dp_pm_suspend() to handle power off both DP phy and controller during
-> suspend and dp_pm_resume() to handle power on both DP phy and controller
-> during resume are not necessary. Therefore both dp_pm_suspend() and
-> dp_pm_resume() are dropped and replace with dp_pm_runtime_suspend() and
-> dp_pm_runtime_resume() respectively.
-> 
-> Changes in v7:
-> -- add comments to dp_pm_runtime_resume()
-> -- add comments to dp_bridge_hpd_enable()
-> -- delete dp->hpd_state = ST_DISCONNECTED from dp_bridge_hpd_notify()
-> 
-> Changes in v6:
-> -- delete dp_power_client_deinit(dp->power);
-> -- remove if (!dp->dp_display.is_edp) condition checkout at plug_handle()
-> -- remove if (!dp->dp_display.is_edp) condition checkout at unplug_handle()
-> -- add IRQF_NO_AUTOEN to devm_request_irq()
-> -- add enable_irq() and disable_irq() to pm_runtime_resume()/suspend()
-> -- del dp->hpd_state = ST_DISCONNECTED from dp_bridge_hpd_disable()
-> 
-> Changes in v5:
-> -- remove pm_runtime_put_autosuspend feature, use pm_runtime_put_sync()
-> -- squash add pm_runtime_force_suspend()/resume() patch into this patch
-> 
-> Changes in v4:
-> -- reworded commit text to explain why pm_framework is required for
->     edp panel
-> -- reworded commit text to explain autosuspend is choiced
-> -- delete EV_POWER_PM_GET and PM_EV_POWER_PUT from changes #3
-> -- delete dp_display_pm_get() and dp_display_pm_Put() from changes #3
-> -- return value from pm_runtime_resume_and_get() directly
-> -- check return value of devm_pm_runtime_enable()
-> -- delete pm_runtime_xxx from dp_display_remove()
-> -- drop dp_display_host_init() from EV_HPD_INIT_SETUP
-> -- drop both dp_pm_prepare() and dp_pm_compete() from this change
-> -- delete ST_SUSPENDED state
-> -- rewording commit text to add more details regrading the purpose
->     of this change
-> 
-> Changes in v3:
-> -- incorporate removing pm_runtime_xx() from dp_pwer.c to this patch
-> -- use pm_runtime_resume_and_get() instead of pm_runtime_get()
-> -- error checking pm_runtime_resume_and_get() return value
-> -- add EV_POWER_PM_GET and PM_EV_POWER_PUT to handle HPD_GPIO case
-> -- replace dp_pm_suspend() with pm_runtime_force_suspend()
-> -- replace dp_pm_resume() with pm_runtime_force_resume()
-> 
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/dp/dp_aux.c     |   5 +
->   drivers/gpu/drm/msm/dp/dp_display.c | 177 ++++++++++++++----------------------
->   drivers/gpu/drm/msm/dp/dp_power.c   |  16 ----
->   drivers/gpu/drm/msm/dp/dp_power.h   |  11 ---
->   4 files changed, 72 insertions(+), 137 deletions(-)
+Make a6xx_get_registers() use a7xx registers instead of a6xx ones if the
+detected Adreno is from the A7xx family.
 
+Fixes: e997ae5f45ca ("drm/msm/a6xx: Mostly implement A7xx gpu_state")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 17 +++++++++++++----
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h | 10 ++++------
+ 2 files changed, 17 insertions(+), 10 deletions(-)
 
-[skipped the rest]
-
-> @@ -173,11 +162,7 @@ int dp_power_init(struct dp_power *dp_power)
->   
->   	power = container_of(dp_power, struct dp_power_private, dp_power);
->   
-> -	pm_runtime_get_sync(power->dev);
-> -
->   	rc = dp_power_clk_enable(dp_power, DP_CORE_PM, true);
-> -	if (rc)
-> -		pm_runtime_put_sync(power->dev);
->   
->   	return rc;
-
-Also this can not be as simple as:
-
-int dp_power_init(struct dp_power *dp_power)
-{
-   	return dp_power_clk_enable(dp_power, DP_CORE_PM, true);
-}
-
-
->   }-- 
-With best wishes
-Dmitry
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+index 18be2d3bde09..91a564a24dbe 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+@@ -882,12 +882,13 @@ static void a6xx_snapshot_gmu_hfi_history(struct msm_gpu *gpu,
+ 	}
+ }
+ 
++#define A6XX_REGLIST_SIZE        1
+ #define A6XX_GBIF_REGLIST_SIZE   1
+ static void a6xx_get_registers(struct msm_gpu *gpu,
+ 		struct a6xx_gpu_state *a6xx_state,
+ 		struct a6xx_crashdumper *dumper)
+ {
+-	int i, count = ARRAY_SIZE(a6xx_ahb_reglist) +
++	int i, count = A6XX_REGLIST_SIZE +
+ 		ARRAY_SIZE(a6xx_reglist) +
+ 		ARRAY_SIZE(a6xx_hlsq_reglist) + A6XX_GBIF_REGLIST_SIZE;
+ 	int index = 0;
+@@ -901,12 +902,20 @@ static void a6xx_get_registers(struct msm_gpu *gpu,
+ 
+ 	a6xx_state->nr_registers = count;
+ 
+-	for (i = 0; i < ARRAY_SIZE(a6xx_ahb_reglist); i++)
++	if (adreno_is_a7xx(adreno_gpu))
+ 		a6xx_get_ahb_gpu_registers(gpu,
+-			a6xx_state, &a6xx_ahb_reglist[i],
++			a6xx_state, &a7xx_ahb_reglist,
++			&a6xx_state->registers[index++]);
++	else
++		a6xx_get_ahb_gpu_registers(gpu,
++			a6xx_state, &a6xx_ahb_reglist,
+ 			&a6xx_state->registers[index++]);
+ 
+-	if (a6xx_has_gbif(adreno_gpu))
++	if (adreno_is_a7xx(adreno_gpu))
++		a6xx_get_ahb_gpu_registers(gpu,
++				a6xx_state, &a7xx_gbif_reglist,
++				&a6xx_state->registers[index++]);
++	else if (a6xx_has_gbif(adreno_gpu))
+ 		a6xx_get_ahb_gpu_registers(gpu,
+ 				a6xx_state, &a6xx_gbif_reglist,
+ 				&a6xx_state->registers[index++]);
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
+index 8d7e6f26480a..9560fc1b858a 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
+@@ -328,9 +328,8 @@ static const u32 a6xx_gbif_registers[] = {
+ 	0x3C00, 0X3C0B, 0X3C40, 0X3C47, 0X3CC0, 0X3CD1, 0xE3A, 0xE3A,
+ };
+ 
+-static const struct a6xx_registers a6xx_ahb_reglist[] = {
+-	REGS(a6xx_ahb_registers, 0, 0),
+-};
++static const struct a6xx_registers a6xx_ahb_reglist =
++	REGS(a6xx_ahb_registers, 0, 0);
+ 
+ static const struct a6xx_registers a6xx_vbif_reglist =
+ 			REGS(a6xx_vbif_registers, 0, 0);
+@@ -353,9 +352,8 @@ static const u32 a7xx_gbif_registers[] = {
+ 	0x3cc0, 0x3cd1,
+ };
+ 
+-static const struct a6xx_registers a7xx_ahb_reglist[] = {
+-	REGS(a7xx_ahb_registers, 0, 0),
+-};
++static const struct a6xx_registers a7xx_ahb_reglist=
++	REGS(a7xx_ahb_registers, 0, 0);
+ 
+ static const struct a6xx_registers a7xx_gbif_reglist =
+ 	REGS(a7xx_gbif_registers, 0, 0);
+-- 
+2.39.2
 
