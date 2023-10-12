@@ -2,106 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DA407C7201
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 18:05:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1877E7C7230
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 18:13:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235737AbjJLQFS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Oct 2023 12:05:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34586 "EHLO
+        id S235745AbjJLQNe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Oct 2023 12:13:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347251AbjJLQFQ (ORCPT
+        with ESMTP id S235765AbjJLQN2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Oct 2023 12:05:16 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2441DBB
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 09:05:15 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-9b98a699f45so183275266b.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 09:05:15 -0700 (PDT)
+        Thu, 12 Oct 2023 12:13:28 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA1F3EE
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 09:13:24 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-533df112914so1913454a12.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 09:13:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697126713; x=1697731513; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=h51OwobaWmMhVpSm7Wk+pDxKsEdIOYAESioL6so1I0s=;
-        b=uRFtU8k0/QpXCs6kAdXCJ4rawrksGSb7x/+ZAOcJ0XyuoABdQv+kgWmrHMMaqdzbCN
-         wElZt6YVGABkBF1alcBXWkZDfJWrT9BHiDcZCPpL2PpIt5lz2zZ8Qqss451l7eqKUCJR
-         xaiIfNYI2bOWn2mhIOopUBYkOY4wq2QXRMoUQniQqeyVjD22Cd7pZi4ACrJB2gc+/5HQ
-         8qZPQiN2pfXdQlcWgjbhRjKepiNOe+MdwHmcCcgtpGJru6alj6/9OZn0VZvPbM/Vlcre
-         LGmjg1g7otPI72zt2KD6Sw/i6Qyh5Mp+dnJeq1alDhZpbn8AM+y17RQQ0VwpbwNzegBd
-         omjQ==
+        d=linaro.org; s=google; t=1697127203; x=1697732003; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=MnFQr6jYAWszvBkm1ZQBSlRvBAO0cVodRWwMD84lNmo=;
+        b=g5/kzYwX0+W5cx1T3YboYvLDu0ueSn4Bsf3UZ0wiEUY1R41Ti1Z0gZY/0hPtuuOiTa
+         nTE2jP+K2cyR3qKAXPFjM18mG2vWBr0Lb0jSzlfq8g9YwDJryCH/DcbgBNhZ/UoGchki
+         thLvJxE9hn/kp2uRH81XVUZ/XSf5qWtKF0KHDylF1R+NEmwad9yIlws7wupTEKu6FRVl
+         DcEtJMMggSM/AifeWS3D0h2fshtu/sdYLPlcizl36BID9zmlEKEnoMRGzm0iYlTm3PoQ
+         f52/PXpLnOpWEBv4ShFPn48l3xZH1Vc6aWqBRIhITPea73OetuQJaXCcrs3PUj8MMLDx
+         WxXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697126713; x=1697731513;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=h51OwobaWmMhVpSm7Wk+pDxKsEdIOYAESioL6so1I0s=;
-        b=iz2vVWldHkSIDp3WZ5vsxUUVQp/yO/+jsENQG5HnyntN6KO2wQEuA1RPhf7K352g9T
-         qphzEORJT6EWrPYWDEw0kzLU3JPl/GbaJpvYvsGqJVP2DgnJf6OKDFxUVLKbhAUKQT2L
-         KnpZus5wA0pJypWOQqknEO+FPfjs5roiVk6JkuQ6wM7egf5LmEEhJbtgEGmwwj85B6Nb
-         W0mwFmGsrT8A1sVs6yBDOKSm9zpRzvSfsvGEJjKDpD5niVri1Bn+B6IxJ+b9fgLgIlSy
-         iJ9g4HqiXn5HE+N+/z1uMKTqrHxn7LbV+AkpM6W/I96alqtaH6NQOU6tHYhb+q47H+Mx
-         4QEg==
-X-Gm-Message-State: AOJu0YzXpZxshdUaqyuMQ8GpGCNXDKuRZ15Vf0I+IRjTMp4n+z9Lkwxt
-        T/AM/n9+dzu4d+J8524TPbtWvhEJlY9hIo/j99A=
-X-Google-Smtp-Source: AGHT+IGT12k6sPvkO6Vv3rzcDBB/BNyNYBf7jeFzK9zKN7/feuGRswJeTT5L4dbk2B/jghcibhbAqg==
-X-Received: by 2002:a17:906:8447:b0:9ad:fb49:4eda with SMTP id e7-20020a170906844700b009adfb494edamr19729931ejy.3.1697126713592;
-        Thu, 12 Oct 2023 09:05:13 -0700 (PDT)
-Received: from hackbox.lan ([79.115.22.174])
-        by smtp.gmail.com with ESMTPSA id k20-20020a170906681400b009b2d46425absm11305324ejr.85.2023.10.12.09.05.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Oct 2023 09:05:13 -0700 (PDT)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Avinash Philip <quic_avinashp@quicinc.com>,
-        Unnathi Chalicheemala <quic_uchalich@quicinc.com>,
-        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>
-Subject: [PATCH v2] soc: qcom: llcc: Fix LLCC_TRP_ATTR2_CFGn offset
-Date:   Thu, 12 Oct 2023 19:05:09 +0300
-Message-Id: <20231012160509.184891-1-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        d=1e100.net; s=20230601; t=1697127203; x=1697732003;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MnFQr6jYAWszvBkm1ZQBSlRvBAO0cVodRWwMD84lNmo=;
+        b=ipxz2XwAMtRV77V/P8gpNJrE2r+5lBPBf2PmKOoxIGAkMTGyyDFUUTC9gNxxAeUvBF
+         guNdyXouev1D9b6EPG9eELLHHGq7BP3/YLlrYpPGMeF6rFZKA90zPG+Adu0kWI3OGeuT
+         yQJZzQD00LpBt2wKP6a6m4Q1Vh4swfk0DvcEqlzAFnydgRK61aIhWQfQsFs6hR+Qec9M
+         MyOZ5mvfkJGLpVqlmWmGHXfZ+b2v72ohnFDfRnh5FgaQ3QFLAYn6uiqXhP7cw7dWK5RA
+         yW7Q3aClvwA0I7wKh2lDd4ORleXB7763RGltIu7cjLzX7AFn4Rzn1V9b7cC0l1cYJ6xb
+         9OIg==
+X-Gm-Message-State: AOJu0YxCEW5Ie2JeIDFj/se/Ucsy86/plkZxYVwq63qxIwudjaj/z4vB
+        jUQju/Bl5B0m5meAH6auAGvuzw==
+X-Google-Smtp-Source: AGHT+IFOiYf0k5d4B4vLBtX0oIcpHRdtEKqYYefcW1oOnsQ3xCONkHjy1mgRmErlEYAkDMqxvkKKsg==
+X-Received: by 2002:a17:907:b12:b0:9ba:246c:1fa9 with SMTP id h18-20020a1709070b1200b009ba246c1fa9mr8958480ejl.10.1697127203087;
+        Thu, 12 Oct 2023 09:13:23 -0700 (PDT)
+Received: from [172.30.204.175] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id lc16-20020a170906dff000b0099c53c44083sm11162480ejc.79.2023.10.12.09.13.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Oct 2023 09:13:22 -0700 (PDT)
+Message-ID: <0b51b73b-8ead-400f-bf66-1df1fde23b56@linaro.org>
+Date:   Thu, 12 Oct 2023 18:13:19 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] media: qcom: camss: clean up a check
+To:     Dan Carpenter <dan.carpenter@linaro.org>,
+        Robert Foss <rfoss@kernel.org>
+Cc:     Todor Tomov <todor.too@gmail.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        kernel-janitors@vger.kernel.org
+References: <f11b1d6b-5800-4d75-9732-506be3f8458d@moroto.mountain>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <f11b1d6b-5800-4d75-9732-506be3f8458d@moroto.mountain>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-According to documentation, it has increments of 4, not 8.
 
-Fixes: c72ca343f911 ("soc: qcom: llcc: Add v4.1 HW version support")
-Reported-by: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
-Reviewed-by: Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>
+
+On 10/12/23 11:42, Dan Carpenter wrote:
+> Imagine that "->vfe_num" is zero, then the subtraction will underflow to
+> UINT_MAX.  Plus it's just cleaner to use >= instead.
+> 
+> Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+> ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
 
-Changes since v1:
- * fixed Unnathi's first name typo
- * added Konrad's and Satya's R-b tags
-
- drivers/soc/qcom/llcc-qcom.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index 674abd0d6700..fb4085b7cb19 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -47,7 +47,7 @@
- #define LLCC_TRP_STATUSn(n)           (4 + n * SZ_4K)
- #define LLCC_TRP_ATTR0_CFGn(n)        (0x21000 + SZ_8 * n)
- #define LLCC_TRP_ATTR1_CFGn(n)        (0x21004 + SZ_8 * n)
--#define LLCC_TRP_ATTR2_CFGn(n)        (0x21100 + SZ_8 * n)
-+#define LLCC_TRP_ATTR2_CFGn(n)        (0x21100 + SZ_4 * n)
- 
- #define LLCC_TRP_SCID_DIS_CAP_ALLOC   0x21f00
- #define LLCC_TRP_PCB_ACT              0x21f04
--- 
-2.34.1
-
+Konrad
