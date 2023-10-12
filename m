@@ -2,79 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B00C7C7394
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 18:59:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B17B07C7399
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 19:03:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379526AbjJLQ74 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Oct 2023 12:59:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39826 "EHLO
+        id S1347328AbjJLRDU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Oct 2023 13:03:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347334AbjJLQ74 (ORCPT
+        with ESMTP id S1344025AbjJLRDU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Oct 2023 12:59:56 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC4BDC6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 09:59:53 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-5384975e34cso2291377a12.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 09:59:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697129992; x=1697734792; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=pJa6qviOc6NfzgcGhr4/+c108cgp9z9RgjqREJMTdj0=;
-        b=IY2BCzNqXfCcIAGU9WRWO08GgaNnvaSyI5DSjLBfzxr0fcTQ2xLNxyhdgrRJuV44aN
-         4UJ4fmukpO8gztRMcp3F5SMoNO9BgJlXqY3LRCfyCf/3IMP1UyYFcassG9uVkb2ifrNM
-         pnGVzncsS2rK+ozKa67udn1ReVYj0L3rxAu3mXLmb6bf/2G0UUinHX/oBoFUdfRXZZG9
-         h/1UfXxlTw6Je2F5vmGREQ6PRXrq4meqi7dZVQcXKvs1Lna3ICo2Qo4tk2lSNHANeGBa
-         T3GpSe7MqrLMfGFheLEGb4n+FNSlLtjko0FkSgNXIspKfl+SQiXkXd6a4Wmx+AS6zFk4
-         /oQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697129992; x=1697734792;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pJa6qviOc6NfzgcGhr4/+c108cgp9z9RgjqREJMTdj0=;
-        b=gnTIMyjm5jSVk0bdQz7Ka0MZnfP+9vCMqMDsLSt/MHlgTjXfJPlW0fBnwFpQ7S3Zgt
-         9+RlKr1RXfe0N3S0IlQ8M3deY7cLxJrYR/CehnwJ7lahkLIHbTHN3ARuGd+ObKzBZXkI
-         Dc9YyupJDiHACVcKXQfaT3MLHc+i+gF73JU3//X6CLhoNX95EBhiW1898u6y7bS+JNCe
-         GX8mScLJG06gpkfXtH13z+CFtsLdMFUJWIHdwdX/aUGtkhZb6fExYpRBDaRs1EMoDTe4
-         6zL7QKBDfCoGRbWPag4smdtw5tdI9/QM9OJX8GfVrb1PaiFhYiQ3IhOOBPl1hSGUojZu
-         ZwoA==
-X-Gm-Message-State: AOJu0YxqHe3FyXtQhlpcekKKJYvfGQQtofRDlDnLyeVzn8bCx2+T9wjn
-        3p6kSlotki/NLhp7zBo4UxyZlA==
-X-Google-Smtp-Source: AGHT+IEuPBo53ttTwjsowx5rW5/ddy4SAjK+lkxugYZUqKOgBzbExw2Vk+lqy5i94nS17dqL4kq5Nw==
-X-Received: by 2002:a50:9f4b:0:b0:53d:a1c0:410e with SMTP id b69-20020a509f4b000000b0053da1c0410emr7604135edf.7.1697129992402;
-        Thu, 12 Oct 2023 09:59:52 -0700 (PDT)
-Received: from [172.30.204.175] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id bf14-20020a0564021a4e00b005362bcc089csm10152630edb.67.2023.10.12.09.59.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Oct 2023 09:59:52 -0700 (PDT)
-Message-ID: <fe4da875-36d4-4eeb-ba83-8c24899c9097@linaro.org>
-Date:   Thu, 12 Oct 2023 18:59:48 +0200
+        Thu, 12 Oct 2023 13:03:20 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED0A890;
+        Thu, 12 Oct 2023 10:03:18 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39C9sw0g002931;
+        Thu, 12 Oct 2023 17:02:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=ChLw1gPCreVADDqa++lhTytF91fEXU6wneQX61ewHlw=;
+ b=E+SieSW09RwnewnsW8ff95xBYbrxXFJVazHl1hsCavh9XtIwo10JkY9H0kRHWTo6jhTa
+ Hvl40w7iYxVfyNCCk1EpbVm7Vsgip9C0rfk8lTVoR7kkSm6E27sUwujknyGdE4sGqbE2
+ hXi1vOjn8Gjd4Kewa2eYPSA7KHKA9kcLgt23uEm+7I7e1k4SwnYEOM5f6IEln/mMNEKs
+ dcIzIpzL2MRvE1588Y8vMEc4VZ9skAXoGUG8xc/pg3Nj0K+f/rYZnq81Wp+6TxDe2wMC
+ 4fcOUWZ3H/7GrEC27sQ9p2UmY8X+B460kJWO5y/cQ74u5DDfux7/HJpC6vfomy4B/ES3 Qg== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tp0vwapma-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 12 Oct 2023 17:02:40 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39CH2cE5005541
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 12 Oct 2023 17:02:39 GMT
+Received: from [10.216.58.179] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Thu, 12 Oct
+ 2023 10:02:32 -0700
+Message-ID: <cceab5a9-ac0f-4ecd-9aa5-0ede5615a13d@quicinc.com>
+Date:   Thu, 12 Oct 2023 22:32:28 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/3] arm64: dts: qcom: Add interconnect nodes for SDX75
+Subject: Re: [PATCH v13 08/10] arm64: dts: qcom: sc8280xp: Add multiport
+ controller node for SC8280
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+CC:     <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
+        <quic_jackp@quicinc.com>, <ahalaney@redhat.com>,
+        <quic_shazhuss@quicinc.com>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Andy Gross" <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        "Wesley Cheng" <quic_wcheng@quicinc.com>,
+        Johan Hovold <johan@kernel.org>
+References: <20231007154806.605-1-quic_kriskura@quicinc.com>
+ <20231007154806.605-9-quic_kriskura@quicinc.com>
+ <467dd1cc-64af-43d7-93ca-be28043e2765@linaro.org>
 Content-Language: en-US
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        dmitry.baryshkov@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1696406908-9688-1-git-send-email-quic_rohiagar@quicinc.com>
- <1696406908-9688-2-git-send-email-quic_rohiagar@quicinc.com>
- <3a042a26-81b4-4ab3-ba03-a38ae876634b@linaro.org>
- <6da8dc86-0b9a-488f-9046-9d9d269beeaf@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <6da8dc86-0b9a-488f-9046-9d9d269beeaf@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <467dd1cc-64af-43d7-93ca-be28043e2765@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Level: *
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 6Gz5k3DFi_elboXfzKuruuxvwtr9HH-t
+X-Proofpoint-ORIG-GUID: 6Gz5k3DFi_elboXfzKuruuxvwtr9HH-t
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-12_05,2023-10-12_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ phishscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015 mlxlogscore=774
+ suspectscore=0 priorityscore=1501 adultscore=0 malwarescore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
+ definitions=main-2310120141
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -83,75 +95,32 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 10/12/23 18:57, Rohit Agarwal wrote:
+On 10/12/2023 10:10 PM, Konrad Dybcio wrote:
 > 
-> On 10/12/2023 10:18 PM, Konrad Dybcio wrote:
+> 
+> On 10/7/23 17:48, Krishna Kurapati wrote:
+>> Add USB and DWC3 node for tertiary port of SC8280 along with multiport
+>> IRQ's and phy's. This will be used as a base for SA8295P and SA8295-Ride
+>> platforms.
 >>
->>
->> On 10/4/23 10:08, Rohit Agarwal wrote:
->>> Add interconnect nodes to support interconnects on SDX75.
->>> Also parallely add the interconnect property for UART required
->>> so that the bootup to shell does not break with interconnects
->>> in place.
->>>
->>> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
->>> ---
->>>   arch/arm64/boot/dts/qcom/sdx75.dtsi | 52 
->>> +++++++++++++++++++++++++++++++++++++
->>>   1 file changed, 52 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sdx75.dtsi 
->>> b/arch/arm64/boot/dts/qcom/sdx75.dtsi
->>> index e180aa4..b4723fa 100644
->>> --- a/arch/arm64/boot/dts/qcom/sdx75.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sdx75.dtsi
->>> @@ -8,6 +8,8 @@
->>>     #include <dt-bindings/clock/qcom,rpmh.h>
->>>   #include <dt-bindings/clock/qcom,sdx75-gcc.h>
->>> +#include <dt-bindings/interconnect/qcom,icc.h>
->>> +#include <dt-bindings/interconnect/qcom,sdx75.h>
->>>   #include <dt-bindings/interrupt-controller/arm-gic.h>
->>>   #include <dt-bindings/power/qcom,rpmhpd.h>
->>>   #include <dt-bindings/power/qcom-rpmpd.h>
->>> @@ -203,6 +205,19 @@
->>>           };
->>>       };
->>>   +    clk_virt: interconnect-0 {
->>> +        compatible = "qcom,sdx75-clk-virt";
->>> +        #interconnect-cells = <2>;
->>> +        qcom,bcm-voters = <&apps_bcm_voter>;
->>> +        clocks = <&rpmhcc RPMH_QPIC_CLK>;
->>> +    };
->>> +
->>> +    mc_virt: interconnect-1 {
->>> +        compatible = "qcom,sdx75-mc-virt";
->>> +        #interconnect-cells = <2>;
->>> +        qcom,bcm-voters = <&apps_bcm_voter>;
->>> +    };
->>> +
->>>       memory@80000000 {
->>>           device_type = "memory";
->>>           reg = <0x0 0x80000000 0x0 0x0>;
->>> @@ -434,6 +449,9 @@
->>>               clock-names = "m-ahb",
->>>                         "s-ahb";
->>>               iommus = <&apps_smmu 0xe3 0x0>;
->>> +            interconnects = <&clk_virt MASTER_QUP_CORE_0 
->>> QCOM_ICC_TAG_ALWAYS
->>> +                     &clk_virt SLAVE_QUP_CORE_0 QCOM_ICC_TAG_ALWAYS>;
->>> +            interconnect-names = "qup-core";
->> No qup-config?
->>
->> My brain compiler says this would cause a dt checker warning, at least 
->> on next-20231012.
-> If I check the tip, then there is only one interconnect entry.
-> https://github.com/torvalds/linux/blob/master/Documentation/devicetree/bindings/soc/qcom/qcom%2Cgeni-se.yaml#L50
-> For the debug uart, the qup-config is added.
-> I did check the dtbs_check before sending these patches.
-> Please let me know if I am missing anything.
-Oh, my brain compiler was correct, but for the wrong input data :)
+>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+>> ---
+> [...]
+> 
+>> +
+>> +            interconnects = <&aggre1_noc MASTER_USB3_MP 0 &mc_virt 
+>> SLAVE_EBI1 0>,
+>> +                    <&gem_noc MASTER_APPSS_PROC 0 &config_noc 
+>> SLAVE_USB3_MP 0>;
+> Please use QCOM_ICC_TAG_ALWAYS from 
+> include/dt-bindings/interconnect/qcom,icc.h (like in sa8775p)
+> 
+> With that I think it's good to go :)
+> 
+Hi Konrad. Thanks for the review.
 
-I thought you added this property to the UART itself, not to the QUP 
-controller. Yes, you're right.
+I see that the tags are used fr spi/i2c but not usb. So to maintain 
+uniformity, wanted to keep the same here.
 
-Konrad
+Regards,
+Krishna,
