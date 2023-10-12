@@ -2,63 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA4737C70E6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 17:04:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30A867C7138
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 17:16:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232712AbjJLPET (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Oct 2023 11:04:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51726 "EHLO
+        id S1378354AbjJLPQG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Oct 2023 11:16:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231290AbjJLPES (ORCPT
+        with ESMTP id S1347311AbjJLPQE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Oct 2023 11:04:18 -0400
+        Thu, 12 Oct 2023 11:16:04 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC2F4B8;
-        Thu, 12 Oct 2023 08:04:16 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 832D8C433CD;
-        Thu, 12 Oct 2023 15:04:16 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFCDCDE
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 08:16:00 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5718FC433BB;
+        Thu, 12 Oct 2023 15:15:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1697123056;
-        bh=Wg+9RqFKlFhtVv8OJE3FcYAhzK8o4Jsak7+oQ9IdYv4=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=RquMVZnHtNudVG7LgNUC2XAWr5xF9/mkQH7o5pl+5k4hvtJ43KUxF7gsLLtJ9bRFx
-         1qXo0R3XCt251Vt/MYiPzVdW4cwmcbHRAAYbVMf51YQkNP0Dlam5Q7lkAlT7OWOg6Y
-         HvxTbwK7M9GKbYU2NoxawFdypoyYSrqlMcM/xVatmPBnMZRnemPNqDqXHnUswnMFmK
-         VjwpFPhdmsbHtJnW6HoIq3kzbmXj9JsBB+ujequAAJYAD7M65wAgm6qgyeXuTEZMj9
-         k3KV6pv4vfHLhAySscU/JItfJX2hiKrb0681ODh6FHBm2x7zkcZBWdBE8HfKVy7Q3r
-         zwnPffk1Avm5A==
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-50305abe5f0so1516194e87.2;
-        Thu, 12 Oct 2023 08:04:16 -0700 (PDT)
-X-Gm-Message-State: AOJu0YzkPDh/eh/7xFUJ9ezdKvoQcOHPuCBgavALTtWeYxpNpewgBMuH
-        fLq7cCDehqRVirVKTX/jiNiFAU17vaH3uQts+A==
-X-Google-Smtp-Source: AGHT+IHIvQVJksv+cxRwuuB70cl4gPO5kN5IBSa3Kgn2Ca6c2r1lJhrSWvp9g3KCs3skbUuscijBaovAs8kQVvAkYKs=
-X-Received: by 2002:a05:6512:10c9:b0:504:3807:22a4 with SMTP id
- k9-20020a05651210c900b00504380722a4mr24937247lfg.23.1697123054598; Thu, 12
- Oct 2023 08:04:14 -0700 (PDT)
-MIME-Version: 1.0
-References: <20231009211356.3242037-3-robh@kernel.org> <CAGb2v66ZHD8mMMNVwp+sTYT6DAFDUrP8ydeTo7KW+uUtBRM3bQ@mail.gmail.com>
- <20231012092618.GF8314@google.com>
-In-Reply-To: <20231012092618.GF8314@google.com>
+        s=k20201202; t=1697123760;
+        bh=CS9VF07gkeV9AwiwyzlAL6GHT7P51hY0vpXVw5KAhCY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=lWh4zJpklxplOSn9C02a/hjA8K3FDeTWEEw+casdd7ipQTCi0UVGYh85MS5IP0tam
+         S/UXs3WpP/Vq6Aj98gLmi9nQaQi00C3lP5rcfF3NAu60D8MwVKJFmSLP35cHYLwHQG
+         43420c66qhUI3q9fWAPBk56uyBBzPO3TWpPTPPwHhVQhdQfQmeQ77NXunlKEk4RhFc
+         Wt2+Sk7vZYdW2FEGUTZc3Pr1HUAg2+Q03i6VjjcK/wu7N3TvNgqvBa+V78OOHYRAVc
+         aN1fcHO1ZI8KSg8srd1f7mMK8X8YN3E9boMUT0DMVQ/v/MUhTfl01Ehq3ZguMP58Om
+         4Zhfg+3Nk6gAA==
+Received: (nullmailer pid 689622 invoked by uid 1000);
+        Thu, 12 Oct 2023 15:15:57 -0000
+Date:   Thu, 12 Oct 2023 10:15:57 -0500
 From:   Rob Herring <robh@kernel.org>
-Date:   Thu, 12 Oct 2023 10:04:01 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqK22vWx1VPnrwEh+N-6vy5a7npFSW-=gp1uabTPSG2PpA@mail.gmail.com>
-Message-ID: <CAL_JsqK22vWx1VPnrwEh+N-6vy5a7npFSW-=gp1uabTPSG2PpA@mail.gmail.com>
-Subject: Re: [PATCH] mfd: Use device_get_match_data()
-To:     Lee Jones <lee@kernel.org>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc:     Chen-Yu Tsai <wens@csie.org>, Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Andy Gross <agross@kernel.org>,
+To:     Richard Acayan <mailingradian@gmail.com>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Ryan McCann <quic_rmccann@quicinc.com>,
+        David Airlie <airlied@gmail.com>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        Sean Paul <sean@poorly.run>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        devicetree@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Tony Lindgren <tony@atomide.com>, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-omap@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Liu Shixin <liushixin2@huawei.com>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        Daniel Vetter <daniel@ffwll.ch>, Robert Foss <rfoss@kernel.org>
+Subject: Re: [PATCH v3 3/6] dt-bindings: display: msm: Add SDM670 MDSS
+Message-ID: <169712375677.689486.15371215600805365343.robh@kernel.org>
+References: <20231009233337.485054-8-mailingradian@gmail.com>
+ <20231009233337.485054-11-mailingradian@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231009233337.485054-11-mailingradian@gmail.com>
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -68,41 +70,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 12, 2023 at 4:26=E2=80=AFAM Lee Jones <lee@kernel.org> wrote:
->
-> On Tue, 10 Oct 2023, Chen-Yu Tsai wrote:
->
-> > On Tue, Oct 10, 2023 at 5:14=E2=80=AFAM Rob Herring <robh@kernel.org> w=
-rote:
-> > >
-> > > Use preferred device_get_match_data() instead of of_match_device() to
-> > > get the driver match data. With this, adjust the includes to explicit=
-ly
-> > > include the correct headers.
-> > >
-> > > Signed-off-by: Rob Herring <robh@kernel.org>
-> > > ---
-> > >  drivers/mfd/axp20x.c           | 22 +++-------------------
-> >
-> > I'd keep the error message, but otherwise for axp20x,
-> >
-> > Reviewed-by: Chen-Yu Tsai <wens@csie.org>
-> >
-> > >  drivers/mfd/hi6421-pmic-core.c |  9 +++------
-> > >  drivers/mfd/mxs-lradc.c        |  9 ++-------
-> > >  drivers/mfd/qcom-spmi-pmic.c   |  6 ++++--
-> > >  drivers/mfd/qcom_rpm.c         |  8 ++++----
-> > >  drivers/mfd/tps65910.c         | 11 ++---------
-> > >  drivers/mfd/twl4030-power.c    |  9 +++------
-> > >  drivers/mfd/twl6030-irq.c      | 10 +++++-----
-> > >  8 files changed, 26 insertions(+), 58 deletions(-)
->
-> FYI, this patch is not in my inbox.
 
-There seems to be some issue with kernel.org delivering my mails. You
-are not the only one. I thought it was just ones with large numbers of
-recipients, but seems to be something else. Konstantin has been
-looking into it. Do you see any pattern of mails you do receive from
-me? Sent via google vs. kernel.org?
+On Mon, 09 Oct 2023 19:33:41 -0400, Richard Acayan wrote:
+> Add documentation for the SDM670 display subsystem, adapted from the
+> SDM845 and SM6125 documentation.
+> 
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> ---
+>  .../display/msm/qcom,sdm670-mdss.yaml         | 292 ++++++++++++++++++
+>  1 file changed, 292 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sdm670-mdss.yaml
+> 
 
-Rob
+Reviewed-by: Rob Herring <robh@kernel.org>
+
