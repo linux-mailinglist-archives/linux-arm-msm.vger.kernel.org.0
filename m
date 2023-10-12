@@ -2,85 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C03D7C7345
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 18:42:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 96E247C734D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 18:43:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235706AbjJLQmL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Oct 2023 12:42:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38922 "EHLO
+        id S235762AbjJLQnM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Oct 2023 12:43:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233988AbjJLQmL (ORCPT
+        with ESMTP id S235728AbjJLQnL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Oct 2023 12:42:11 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1225C0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 09:42:06 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2c3c661f1a8so14968311fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 09:42:06 -0700 (PDT)
+        Thu, 12 Oct 2023 12:43:11 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49423D6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 09:43:09 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2c16bc71e4cso14255881fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 09:43:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697128925; x=1697733725; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1697128987; x=1697733787; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=dg7mdO3+bBBGRgz1JJW3EWOQYH5H024kENOkHNU4kLA=;
-        b=ZJS9bGyU78/AYtxhqYj7bVywM/lXcS7GgCK0Ae6mQ3nwl7n6Izbbmeb8yrrdlJGZn8
-         9p8vehdzeRlnXGLbVXPh9qX2dQiZ3AALf6av1YH4vzQQrcU7H0IvnTv0yzChXjXqwjMW
-         jchhPZ8YLvrCJD5zuB7Uqgks08scAaij9KQBdkhPQlBg0kO6C5UUAKu2cjpKHSGvT4Xf
-         tlYT/a3x9wVxyrVNjVI0t5s++l3duxBWhv1fIUz2rFeTjFgGByZNDNFF11XvxnAxNarL
-         G41pryUAXjl9xMVJwTlsj1oCzXQ8setzO+TPwtExnWsIirlC6iqtsW8ZVlT9ye+8dXws
-         X3zg==
+        bh=zYVY41+EgeHUWytKBAwadhC78OOG5e1qYcs03zGmgqw=;
+        b=tfCaWNK/ainnAAJXuPCnpqPAYdC3asa6RBHES/o/dc35QeFpH7VdRy0akVec+WSIHm
+         mWGyQPWe/MumoSfLhUyiGm+7nqpmsDxoSjmrOcPaOHF38g+nae/ASYXD8hJ3WPpleBNm
+         9WUkohsZHXA0SUc3LUlQGMJfG9yVgGzsjKiiRd0RMMUd4hQIOoM41PELkpjHstrBHyct
+         pm8ScKCEfOtXmPD02jJqWB45MLp4vvm7o1DO7lLtMJe/vtI9M3l9jXNi8i35kloYhFtD
+         jfUOFeLdokOwziZeKuXizjIWKniF7bLVjo85u5u1BuStLepKzuZgFE+oHVCi0YkvUfUO
+         RvCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697128925; x=1697733725;
+        d=1e100.net; s=20230601; t=1697128987; x=1697733787;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dg7mdO3+bBBGRgz1JJW3EWOQYH5H024kENOkHNU4kLA=;
-        b=D0rZ/nvFuYyrUCv38QXponTiBn2mnX8K0mYXqAHvs0o9tYkYyovB6zEA0zTpfsWsw3
-         ukkVzT8wNAFQr8ozX5/bNbNMu9eBMQlQRpjPl3PHoSaNNeTFH19QNoy5pNNMlVuUGyfQ
-         O4ovrf07MWZ0GvpVpiFJg/qMqh3bDx3tgYyltt9vj0afh2xNcv+cKgOu9vf15SI1hA7E
-         CPS7WwNwwLccTqNQoRmJcgqTEYJJycp8WzsGFmt/f6QC7JSUk1KzKRd8eWCsHzt9/Y8S
-         DZ9kDLbc7ZQRVOJP4LAKagczsQiOys2Q7w3cT3ous1olNZbA51qoqxvDOo0GzAf2fP9X
-         QQuQ==
-X-Gm-Message-State: AOJu0YzciaaPfBrASz3LPdTOM7WhQx0qZaHPVDSz3qIaVt+rHu+4qVou
-        6VQ8TY3S2yKowS3FXxC6nkfSnw==
-X-Google-Smtp-Source: AGHT+IFBI9TpG5PuveaJYdzlvucg89JDXICF1SOKwex3xKjc7Qqn+pw4LfQpHoFOKn4cw2WXH+IZDA==
-X-Received: by 2002:a2e:8798:0:b0:2c0:cfa:a1a0 with SMTP id n24-20020a2e8798000000b002c00cfaa1a0mr20926580lji.46.1697128924867;
-        Thu, 12 Oct 2023 09:42:04 -0700 (PDT)
+        bh=zYVY41+EgeHUWytKBAwadhC78OOG5e1qYcs03zGmgqw=;
+        b=Z8IA5yeVebpTln7LioTdsN6DkgWjAzlWzfo0ukrzg9g1+0Qku/Q9JWGpnzcfb9MplY
+         b3ij3or6lY8ER6Fmr2SD7qAJ+H6MXAimPeoCHqnxXnX+ynb4YJMetEAj4xx/nRbXodZW
+         /+h1AXV6EgnTwHJILqf+/a6wpTzYjz9DJuSp89uRtIMobmTlBrxyYc9vEqR070Jgmms4
+         dBia+FGlKRkiTjaB3rStIEuJC00Nk94fmott5y4xyZ8gRX49LYE4IMfKTfflGcR5spyp
+         mUFWt+LOv0Qs7zkvYpA9Ud6w0lxii/CRPtqnm3ydIsNp1qHyOIXwGbBN8z0GAYV9P0iR
+         OX9Q==
+X-Gm-Message-State: AOJu0YwVZc6OT1e/ow2HqEBxwBRoO1tLEACNrY1y4+qCWIXmqLpqSPWP
+        ZqU7dmAFGjRmTl6+LyLqDq+bRQ==
+X-Google-Smtp-Source: AGHT+IGeenve8EbJFMQJB4qQEz2s+VqYDanWet9BRqfbaa2JmWYxFZ/zU/ld+lORuOYL+kjVoq3mMw==
+X-Received: by 2002:a2e:9f08:0:b0:2c0:300a:82ed with SMTP id u8-20020a2e9f08000000b002c0300a82edmr20041248ljk.7.1697128987482;
+        Thu, 12 Oct 2023 09:43:07 -0700 (PDT)
 Received: from [172.30.204.175] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id p9-20020a2e7409000000b002bfe8537f37sm3633373ljc.33.2023.10.12.09.41.44
+        by smtp.gmail.com with ESMTPSA id p9-20020a2e7409000000b002bfe8537f37sm3633373ljc.33.2023.10.12.09.43.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Oct 2023 09:42:04 -0700 (PDT)
-Message-ID: <02de745f-d648-497d-b520-712450f4ad9c@linaro.org>
-Date:   Thu, 12 Oct 2023 18:41:44 +0200
+        Thu, 12 Oct 2023 09:43:07 -0700 (PDT)
+Message-ID: <05f205a0-7ec7-4679-83aa-3951302b4dda@linaro.org>
+Date:   Thu, 12 Oct 2023 18:43:06 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 10/10] arm64: dts: qcom: sa8540-ride: Enable first
- port of tertiary usb controller
+Subject: Re: [PATCH] arm64: dts: qcom: pad sa8155p-adp DTB file
 Content-Language: en-US
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
+To:     Stephan Gerhold <stephan@gerhold.net>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Johan Hovold <johan@kernel.org>
-Cc:     linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
-        quic_jackp@quicinc.com, ahalaney@redhat.com,
-        quic_shazhuss@quicinc.com
-References: <20231007154806.605-1-quic_kriskura@quicinc.com>
- <20231007154806.605-11-quic_kriskura@quicinc.com>
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20231011111936.165581-1-dmitry.baryshkov@linaro.org>
+ <ZSabeBrfhFf8T8yM@gerhold.net>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231007154806.605-11-quic_kriskura@quicinc.com>
+In-Reply-To: <ZSabeBrfhFf8T8yM@gerhold.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
         version=3.4.6
 X-Spam-Level: *
@@ -92,52 +82,49 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 10/7/23 17:48, Krishna Kurapati wrote:
-> From: Andrew Halaney <ahalaney@redhat.com>
+On 10/11/23 14:56, Stephan Gerhold wrote:
+> On Wed, Oct 11, 2023 at 02:19:36PM +0300, Dmitry Baryshkov wrote:
+>> On sa8155p-adp platfor the bootloader (ABL) fails to reserve enough
+>> memory for updating the DTB:
+>>
+>> Cmdline:  console=tty0 console=ttyMSM0,115200n8 androidboot.verifiedbootstate
+>> Error adding node
+>> Error carving out UEFI memory: FFFFFFFF
+>>
+>> Adding `--pad 1024' to DTC_FLAGS for this board fixes the issue by
+>> providing enough empty space for node creation.
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>
+>> This replaces my previous attempt, which added DTC_FLAGS globally ([1]),
+>> which was rejected.
+>>
+>> [1] https://lore.kernel.org/linux-arm-msm/20231009172717.2695854-1-dmitry.baryshkov@linaro.org/
+>>
 > 
-> There is now support for the multiport USB controller this uses so
-> enable it.
+> Thanks for making this specific to sa8155p-adp. I completely agree that
+> this workaround might be needed for devices that are locked down (with
+> no way to update the bootloader).
 > 
-> The board only has a single port hooked up (despite it being wired up to
-> the multiport IP on the SoC). There's also a USB 2.0 mux hooked up,
-> which by default on boot is selected to mux properly. Grab the gpio
-> controlling that and ensure it stays in the right position so USB 2.0
-> continues to be routed from the external port to the SoC.
+> But is this really the case here? As far as I understand, the SA8155P
+> ADP is the "Automotive Development Platform", i.e. a developer board
+> where I would expect that secure boot is not enabled (just like on the
+> DragonBoards and RoboticBoards).
 > 
-> Co-developed-by: Andrew Halaney <ahalaney@redhat.com>
-> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-> [Krishna: Rebased on top of usb-next]
-> Co-developed-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> ---
->   arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 21 +++++++++++++++++++++
->   1 file changed, 21 insertions(+)
+> Fixing this properly in the bootloader would be very easy, you just need
+> to increase the DTB_PAD_SIZE I linked [1] by 1024 like in this patch.
+> This would fix the issue properly, with no change needed in Linux. And
+> if you have some way to communicate/contribute this back to Qualcomm
+> somehow we could reduce the chance to see this problem on actually
+> locked down devices in the future.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-> index b04f72ec097c..6904a4c201ff 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-> +++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-> @@ -503,6 +503,18 @@ &usb_2_qmpphy0 {
->   	status = "okay";
->   };
->   
-> +&usb_2 {
-> +	pinctrl-0 = <&usb2_en_state>;
-> +	pinctrl-names = "default";
-> +
-> +	status = "okay";
-> +};
-> +
-> +&usb_2_dwc3 {
-These additions are not quite sorted alphabetically, it seems
-
-> +	phy-names = "usb2-port0", "usb3-port0";
-> +	phys = <&usb_2_hsphy0>, <&usb_2_qmpphy0>;
-property
-property-names
-
-With that:
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Thanks,
+> Stephan
+> 
+> [1]: https://git.codelinaro.org/clo/la/abl/tianocore/edk2/-/blob/LA.AU.1.4.1.r2-05100-sa8155.0/QcomModulePkg/Include/Library/LocateDeviceTree.h#L59
+I'm not sure how productized this platform is, but I'd be skewing 
+towards Stephan's solution, Qualcomm should fix the bootloader if it's 
+not EOL yet.
 
 Konrad
