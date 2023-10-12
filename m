@@ -2,116 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FA347C635D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 05:42:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B56F7C64B7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 07:45:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233652AbjJLDmt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Oct 2023 23:42:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48862 "EHLO
+        id S1377159AbjJLFp3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Oct 2023 01:45:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343496AbjJLDms (ORCPT
+        with ESMTP id S1377111AbjJLFp2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Oct 2023 23:42:48 -0400
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 524ABB7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 20:42:45 -0700 (PDT)
-Received: by mail-pl1-x62b.google.com with SMTP id d9443c01a7336-1c87a85332bso4793995ad.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 20:42:45 -0700 (PDT)
+        Thu, 12 Oct 2023 01:45:28 -0400
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE158B8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 22:45:26 -0700 (PDT)
+Received: by mail-oi1-x22d.google.com with SMTP id 5614622812f47-3af5b26d599so382977b6e.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Oct 2023 22:45:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697082165; x=1697686965; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=7nADTi8p/TYCcFoqwy7wIdRGyUAvcVuWu1MGhn66nEA=;
-        b=Qe8o0U3g4ZajNWQpqJrfqnjeVRhtgFz6SqZYXAmyUP4UibufYVfyoIK9ilgZwlhD9C
-         /ivgEKBq/VazLMpAhhHa+Ev5i0JNpM1/nJzerAN/59/lOxEju7bP8k3J69RvO5g2yOfO
-         ads1hoMxg2yMiL8+qUCalIizd3iH5LhTrGdU4il+F9UcCcC0eRXgkbXGiBX6eaVOY27A
-         AI8iB2Bxb7XyTIjDgAvUaxVLw8eoFsmGD0YkT4cU7AZGQ4JMdL6ictFitGZIvpZbYzEE
-         6eClqQ7XggtjlsHVwGNIqLYLhBq95Dbh6Z2dff6XX4FmsEBu/rNEOdz5LNI7uTZT/4CU
-         4Asw==
+        d=linaro.org; s=google; t=1697089526; x=1697694326; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=raoSzlBu377kKldWUANth43g0MsA6j2B790E+ofOJ/U=;
+        b=K0xbE6FefcE+vu+l8RaU2MEnrpvjE5hCqFluoCSO3N5IZV+qGpZ1rUm/0cy7Zefx6g
+         T7L0vxm5kIf24iteZECcy0T2/s0gN5+1eV5ylwrmScVWYmrQZ4NQ0FhJhkNsbVTt0omI
+         KEsFlYRA82BUG1aB4R2GKWCo7SrahAsRr9KuwD1qdfSFk3JXU0GWZfdaEVW0dC+Nims4
+         tMeOhHzqnd54BNOyWWOuI1i7G/oHdLbzON84gk0wCysvR/X3mGLmUijai3+c6I6Cc9h7
+         eCbBsctqITEVbJxUT/Fb2k01iMj8kcXTDSVwNjVwpxBxha6EhSBSdP4wYpJ/KtC+9gf0
+         ap2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697082165; x=1697686965;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7nADTi8p/TYCcFoqwy7wIdRGyUAvcVuWu1MGhn66nEA=;
-        b=FV6yTXMFdqBDbIc4SBhO0ytSBig7IrDlrD0IdxPMTKcMtk9AjVviuRAa5SF+Zt24QO
-         UHS04pQyoVuD75y5Gfc7IZ2giNTYKKtLLVwwOkB0ZD/og0X2cBfTrEN2NzbhLZyoMwt9
-         ueEFsLAslmmnYYgPINOemn7bfjlJQXx+1bZeIhtX5pwFqGV8C0NJrkTGltjo7z0OQV2k
-         wTNVwJsSUN5Q0J6B3ZGIfiYvxIDKdu9gcOAQXiicJ/2ZNhmvjn+b0o+o5DJSRGRyzsXK
-         HoneqeKqCJUAss1HSn0Ha7BFss1kZmVe/1MO131Z2EtyYAoVvOWncGgsPbLpt836ocmL
-         A9Wg==
-X-Gm-Message-State: AOJu0YwFbQQU+scbVicuy2ZcBwwVw91Cyie6YHQ4Tr9h6vcQlwPSSOQT
-        n+yLKiJFXUX5LGpYGcrdBXEvbA==
-X-Google-Smtp-Source: AGHT+IH5vhqHicRELepcn9OOPQFFmVMWymakQt2rn9zy2Upu2MiP4JWmXB4wVeUfWQoNqfdb5giMlw==
-X-Received: by 2002:a17:903:810:b0:1c9:e257:f88 with SMTP id kr16-20020a170903081000b001c9e2570f88mr108445plb.10.1697082164766;
-        Wed, 11 Oct 2023 20:42:44 -0700 (PDT)
-Received: from localhost ([122.172.80.14])
-        by smtp.gmail.com with ESMTPSA id p6-20020a170902e74600b001c9c5a1b477sm685950plf.169.2023.10.11.20.42.43
+        d=1e100.net; s=20230601; t=1697089526; x=1697694326;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=raoSzlBu377kKldWUANth43g0MsA6j2B790E+ofOJ/U=;
+        b=tbJenjdsGkj3RpgAsZkLtR4pC79+IR6tdQxvH9pRVJwD24piVBMhhYerYwMfNfm5CH
+         5twKeNoOxQVw5ZYM5BZKo3T/PperJt2k4xUPsE4VdKh79lYu8Uw8MUyHtKjnWrTZuhQ4
+         5bag383Ipo3hPveEQQIGC2fQXCl8T6E0vphFeGS9tc6zqT4bHKFZ8w+Q29Pu7SBzD7mE
+         +4l6IVS0GilVy3Pbw3gZxzDyjkcdDq+KugBYL1wIvhN17VV5kQ1BWWIotqUMo7uCh14a
+         HZ4b/mr2/AdHZ/eMEmRvGoZTRynmvsyg7mgT1cTS7UtLptZ18r+ZlkFUYsR+DoirPDkr
+         Tv3Q==
+X-Gm-Message-State: AOJu0YwzaK+VmSKNx5K+vK31jIgkN91Jaxaumst1mYjl4Qm9W9nsGMJG
+        buqpKGW2z2XXAM5CaBXwHbcO
+X-Google-Smtp-Source: AGHT+IFVaISV/7UIfSrZc652ewcqW0S6kGKAv2RdH2i9tzTOlDpdz1KHLLqPcCZcgW0AF89218QNxg==
+X-Received: by 2002:aca:2808:0:b0:3a8:472b:febf with SMTP id 8-20020aca2808000000b003a8472bfebfmr23277086oix.21.1697089526137;
+        Wed, 11 Oct 2023 22:45:26 -0700 (PDT)
+Received: from localhost.localdomain ([120.138.12.180])
+        by smtp.gmail.com with ESMTPSA id c5-20020a633505000000b0057cb5a780ebsm812396pga.76.2023.10.11.22.45.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Oct 2023 20:42:44 -0700 (PDT)
-Date:   Thu, 12 Oct 2023 09:12:41 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
+        Wed, 11 Oct 2023 22:45:25 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
+        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
+        cw00.choi@samsung.com, andersson@kernel.org,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        jejb@linux.ibm.com, martin.petersen@oracle.com
+Cc:     alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
+        linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Stephan Gerhold <stephan@gerhold.net>
-Subject: Re: [PATCH v5 0/6] cpufreq: qcom-nvmem: support apq8064 cpufreq
- scaling
-Message-ID: <20231012034241.jwtsq22w2lwzfbvn@vireshk-i7>
-References: <20231002185940.1271800-1-dmitry.baryshkov@linaro.org>
- <20231010063235.rj2ehxugtjr5x2xr@vireshk-i7>
+        quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
+        quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
+        quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
+        bmasney@redhat.com, krzysztof.kozlowski@linaro.org,
+        linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v6 0/5] UFS: Add OPP support
+Date:   Thu, 12 Oct 2023 11:15:07 +0530
+Message-Id: <20231012054512.10963-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231010063235.rj2ehxugtjr5x2xr@vireshk-i7>
-X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Level: *
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10-10-23, 12:02, Viresh Kumar wrote:
-> On 02-10-23, 21:59, Dmitry Baryshkov wrote:
-> > This is a split of APQ8064 cpufreq series, as requested by Viresh. This
-> > series includes only opp and cpufreq parts, with the DT and soc parts
-> > being split to a separate patchset.
-> > 
-> > Each core has independent power and frequency control. Additionally the
-> > L2 cache is scaled to follow the CPU frequencies (failure to do so
-> > results in strange semi-random crashes).
-> > 
-> > Core voltage is controlled through the SAW2 devices, one for each core.
-> > The L2 has two regulators, vdd-mem and vdd-dig.
-> > 
-> > Changes since v4:
-> > - Reordered variables in qcom_cpufreq_init() (Konrad)
-> > - Fixed of_platform_device_create() error check (Konrad)
-> > - Dropped unused ret variable in qcom_cpufreq_apq8064_name_version() (Konrad)
-> 
-> Applied. Thanks.
+Hi,
 
-Since these are causing build issues, and it isn't entirely clear what's the
-right approach for now, I have dropped the changes from my branch to avoid any
-further issues. You don't need to resend these, lets finalize a solution and
-then I can apply them again.
+This series adds OPP (Operating Points) support to UFSHCD driver.
+
+Motivation behind adding OPP support is to scale both clocks as well as
+regulators/performance state dynamically. Currently, UFSHCD just scales
+clock frequency during runtime with the help of "freq-table-hz" property
+defined in devicetree. With the addition of OPP tables in devicetree (as
+done for Qcom SDM845 and SM8250 SoCs in this series) UFSHCD can now scale
+both clocks and performance state of power domain which helps in power
+saving.
+
+For the addition of OPP support to UFSHCD, there are changes required to
+the OPP framework and devfreq drivers. The OPP framework changes are already
+merged and the devfreq change is added in this series.
+
+Credits
+=======
+
+This series is a continuation of previous work by Krzysztof Kozlowski [1].
+
+Testing
+=======
+
+This series is tested on 96Boards RB3 (SDM845 SoC) and RB5 (SM8250 SoC)
+development boards.
+
+Merging Strategy
+================
+
+Since the devfreq patch got an Ack from the maintainer, either it can be merged
+to scsi tree with rest of the patches or merged separately through devfreq tree.
+
+Thanks,
+Mani
+
+[1] https://lore.kernel.org/all/20220513061347.46480-1-krzysztof.kozlowski@linaro.org/
+
+Changes in v6:
+
+* Collected tags from Dmitry
+* Fixed bindings issues reported by Krzysztof
+
+Changes in v5:
+
+* Dropped the devfreq patch since it got applied
+* Fixed the bindings issue reported by DT bot
+* Rebased on top of mkp/scsi/for-next
+
+Changes in v4:
+
+* Rebased on top of v6.6-rc3
+
+Changes in v3:
+
+* Rebased on top of linux-next/master tag: next-20230731
+* Dropped the already applied patches (dts, opp binding and framework)
+* Moved the interconnect patches to a separate series:
+  https://lore.kernel.org/linux-scsi/20230731145020.41262-1-manivannan.sadhasivam@linaro.org/
+* Moved ufshcd_opp_config_clks() API to ufshcd.c to fix the build failure
+  reported by Kbuild bot: https://lore.kernel.org/all/202307210542.KoLHRbU6-lkp@intel.com/
+* Collected Acks
+* v2: https://lore.kernel.org/all/20230720054100.9940-1-manivannan.sadhasivam@linaro.org/
+
+Changes in v2:
+
+* Added more description to the bindings patch 2/15
+* Fixed dev_pm_opp_put() usage in patch 10/15
+* Added a new patch for adding enums for UFS lanes 14/15
+* Changed the icc variables to mem_bw and cfg_bw and used
+  the enums for gears and lanes in bw_table
+* Collected review tags
+* Added SCSI list and folks
+* Removed duplicate patches
+
+Krzysztof Kozlowski (2):
+  dt-bindings: ufs: common: add OPP table
+  arm64: dts: qcom: sdm845: Add OPP table support to UFSHC
+
+Manivannan Sadhasivam (3):
+  scsi: ufs: core: Add OPP support for scaling clocks and regulators
+  scsi: ufs: host: Add support for parsing OPP
+  arm64: dts: qcom: sm8250: Add OPP table support to UFSHC
+
+ .../devicetree/bindings/ufs/ufs-common.yaml   |  35 +++-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  42 +++-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |  39 +++-
+ drivers/ufs/core/ufshcd.c                     | 179 ++++++++++++++----
+ drivers/ufs/host/ufshcd-pltfrm.c              |  78 ++++++++
+ include/ufs/ufshcd.h                          |   7 +
+ 6 files changed, 325 insertions(+), 55 deletions(-)
 
 -- 
-viresh
+2.25.1
+
