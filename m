@@ -2,54 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C18D7C77DB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 22:24:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9FD637C7816
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Oct 2023 22:51:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1442340AbjJLUYt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Oct 2023 16:24:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58726 "EHLO
+        id S1442277AbjJLUvG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Oct 2023 16:51:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1442679AbjJLUYs (ORCPT
+        with ESMTP id S1344156AbjJLUvF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Oct 2023 16:24:48 -0400
+        Thu, 12 Oct 2023 16:51:05 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4634ECF;
-        Thu, 12 Oct 2023 13:24:45 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D34CAC433C7;
-        Thu, 12 Oct 2023 20:24:44 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A0639D;
+        Thu, 12 Oct 2023 13:51:03 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86685C433C7;
+        Thu, 12 Oct 2023 20:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1697142284;
-        bh=2MF86sytX4fTZh0mQJESXVz65SbrM4mAf50g6EPGAGE=;
+        s=k20201202; t=1697143862;
+        bh=rV4lK4JGUrPmimJpLCdBBLhbiabz6+ijJVca0/lx3O4=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=g0OQJ9K4UECZWSfUIe4ERxixLwb2xg8590fKPYaqH/6dL3LcSejut5Z633jLleNGT
-         Xq0gL5XPBf1GODOb4nZEkRFykpDAcRUdMh0vRqMqntw8djf48L9xEr+KDEhYd47ee2
-         NnQmEaDZ19xHh7vVSxZlNwcqzyP4X4oSxEsxschiglljNmuA78asTgl3JL74Lx0PBH
-         g55M00+m/GdiDQBGWhF2vaIHFYd/paULQ+UzhL1SFwp7yiapiRsq6GdZzcLshZ+l98
-         a5GRlKJUVg5G6E5EeEmbY6EsmbwINBXcpd34Dv4XHWaiwkrjmOsRxpdhR8mKsL8D6M
-         TdNtxsp/Aiscw==
-Message-ID: <9888cc31bca1e1e148e3a0e4be4a0b5d.sboyd@kernel.org>
+        b=kPSf6VYSK5BQ3nE8zBMmnyNKnFSp/appVHQM6jBf6Ve3OBsW2QnIkohqv21Sn7Ksg
+         tYmgQqOyRulshSbD7Zf9rKhYpAowFGq9GKIU+rQk9k/3ImE4dDYVp6yL4zmAQISuwJ
+         qpCFQJx9bcw/FatgwudaCDzfc5pDizaRESeW5puhgo7A9jpr3n/WgifjySPe2sAklf
+         IAI2h1KjrBN79V6I5IGQdg4NCUE3fRvtflRbjZti2p2PYpPq8oopprzhFX1Hu794wq
+         2DRz1poNShwU0WHgsAy6PzqDyNn9YEMHIUNPDYAv5YAwBqZTt5XBDpd6fhJXFMtTid
+         e3YJZFRjNUWiA==
+Message-ID: <1dfef5d380b3a5f920620fbf491280f9.sboyd@kernel.org>
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20231011090028.1706653-3-quic_imrashai@quicinc.com>
-References: <20231011090028.1706653-1-quic_imrashai@quicinc.com> <20231011090028.1706653-3-quic_imrashai@quicinc.com>
-Subject: Re: [PATCH V2 2/4] clk: qcom: branch: Add mem ops support for branch2 clocks
+In-Reply-To: <000c61a028814f08a9fc6d1d5c446e8dad11a650.1697101543.git.quic_varada@quicinc.com>
+References: <cover.1697101543.git.quic_varada@quicinc.com> <000c61a028814f08a9fc6d1d5c446e8dad11a650.1697101543.git.quic_varada@quicinc.com>
+Subject: Re: [PATCH v2 4/8] clk: qcom: apss-ipq6018: ipq5332: add safe source switch for a53pll
 From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Taniya Das <quic_tdas@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
+Cc:     Varadarajan Narayanan <quic_varada@quicinc.com>
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, conor+dt@kernel.org,
+        devicetree@vger.kernel.org, ilia.lin@kernel.org,
+        konrad.dybcio@linaro.org, krzysztof.kozlowski+dt@linaro.org,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>
-Date:   Thu, 12 Oct 2023 13:24:42 -0700
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        mturquette@baylibre.com, quic_kathirav@quicinc.com,
+        rafael@kernel.org, robh+dt@kernel.org, viresh.kumar@linaro.org
+Date:   Thu, 12 Oct 2023 13:51:00 -0700
 User-Agent: alot/0.10
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
@@ -61,60 +56,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Imran Shaik (2023-10-11 02:00:26)
-> diff --git a/drivers/clk/qcom/clk-branch.c b/drivers/clk/qcom/clk-branch.c
-> index fc4735f74f0f..9ac8d04b425a 100644
-> --- a/drivers/clk/qcom/clk-branch.c
-> +++ b/drivers/clk/qcom/clk-branch.c
-> @@ -134,6 +135,42 @@ static void clk_branch2_disable(struct clk_hw *hw)
->         clk_branch_toggle(hw, false, clk_branch2_check_halt);
->  }
+Quoting Varadarajan Narayanan (2023-10-12 02:26:20)
+> diff --git a/drivers/clk/qcom/apss-ipq6018.c b/drivers/clk/qcom/apss-ipq6=
+018.c
+> index 4e13a08..c05c2b2 100644
+> --- a/drivers/clk/qcom/apss-ipq6018.c
+> +++ b/drivers/clk/qcom/apss-ipq6018.c
+> @@ -84,15 +87,63 @@ static const struct qcom_cc_desc apss_ipq6018_desc =
+=3D {
+>         .num_clks =3D ARRAY_SIZE(apss_ipq6018_clks),
+>  };
 > =20
-> +static int clk_branch2_mem_enable(struct clk_hw *hw)
+> +static int cpu_clk_notifier_fn(struct notifier_block *nb, unsigned long =
+action,
+> +                               void *data)
 > +{
-> +       struct clk_mem_branch *mem_br =3D to_clk_mem_branch(hw);
-> +       const char *name =3D clk_hw_get_name(&mem_br->branch.clkr.hw);
-> +       u32 val;
-> +       int timeout =3D 200, ret;
+> +       struct clk_hw *hw;
+> +       u8 index;
+> +       int err;
+> +
+> +       if (action =3D=3D PRE_RATE_CHANGE)
+> +               index =3D P_GPLL0;
+> +       else if ((action =3D=3D POST_RATE_CHANGE) || (action =3D=3D ABORT=
+_RATE_CHANGE))
 
-const int timeout?
+This has too many parenthesis.
+
+> +               index =3D P_APSS_PLL_EARLY;
+> +       else
+> +               return 0;
+
+Maybe 'return NOTIFY_OK' instead?
 
 > +
-> +       regmap_update_bits(mem_br->branch.clkr.regmap, mem_br->mem_enable=
-_reg,
-> +                       mem_br->mem_enable_ack_bit, mem_br->mem_enable_ac=
-k_bit);
+> +       hw =3D &apcs_alias0_clk_src.clkr.hw;
+> +       err =3D clk_rcg2_mux_closest_ops.set_parent(hw, index);
 > +
-> +       ret =3D regmap_read_poll_timeout(mem_br->branch.clkr.regmap, mem_=
-br->mem_ack_reg,
-> +                       val, val & mem_br->mem_enable_ack_bit, 0, timeout=
-);
-
-The 'mem_br->branch' is used a few times so please make another local
-variable for that called 'branch'.
-
-> +       if (ret) {
-> +               WARN(1, "%s mem enable failed", name);
-
-Needs a newline on the message string.
-
-> +               return ret;
-> +       }
-> +
-> +       return clk_branch2_enable(hw);
+> +       return notifier_from_errno(err);
 > +}
 > +
-> +static void clk_branch2_mem_disable(struct clk_hw *hw)
-> +{
-> +       struct clk_mem_branch *mem_br =3D to_clk_mem_branch(hw);
-> +
-> +       regmap_update_bits(mem_br->branch.clkr.regmap, mem_br->mem_enable=
-_reg,
-> +                                               mem_br->mem_enable_ack_bi=
-t, 0);
+> +static struct notifier_block cpu_clk_notifier =3D {
 
-Please add a newline here.
+Instead of a static global can this be allocated with kzalloc?
 
-> +       return clk_branch2_disable(hw);
-> +}
+> +       .notifier_call =3D cpu_clk_notifier_fn,
+> +};
 > +
+>  static int apss_ipq6018_probe(struct platform_device *pdev)
