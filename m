@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EE1027C9133
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Oct 2023 01:11:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EAC6B7C9139
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Oct 2023 01:13:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232433AbjJMXLc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Oct 2023 19:11:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48100 "EHLO
+        id S231924AbjJMXNg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Oct 2023 19:13:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232021AbjJMXLb (ORCPT
+        with ESMTP id S229830AbjJMXNf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Oct 2023 19:11:31 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E347AB7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 16:11:29 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2c50ec238aeso6785031fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 16:11:29 -0700 (PDT)
+        Fri, 13 Oct 2023 19:13:35 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE8ACBE
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 16:13:33 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-50435a9f800so3336675e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 16:13:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697238688; x=1697843488; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1697238812; x=1697843612; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=EWU/+WqAgXcxNYFK/JJOEWv3zLwoSSnl+KX8FO0LsS4=;
-        b=K/7eJcmTxUpFkXHXjohV5k+hqlyYSBv94aUq3CmhBGXtTrI8GD7gd1StiXIg9dAlcw
-         cUR3FtMOSW9THf5QSpVtW5xuK1DSyJZFPHGaM2hFP3nBqp76IeQIOK5ZFG0nmOugLZ7v
-         rlVafYMfJzJ0eA81gppPJ6JqrACZ+nllX/vTJWnxKd5yRzXnKlBERzFU4DZGIx/UTPMi
-         +BXfFEpFfWKzLJkau7Kr1DOxveMFF053zwX0gPvRn7eEA1tdV0Gu+Nf18Xm9RKcc0kW1
-         PRcCcRWjnf5+95OTrdz9j7AmGFHz0jM4MBc8ojes0HMRJtiIL/1BJlEBp6xLp8xYoT6D
-         bH0w==
+        bh=OjdlyeP+tUZpGPJVvoQ6uVyAvLdwDdzr6rSJ+TTmEaM=;
+        b=prXNXxrlJtgmjrwcXp953ZszfYnKQxJmltegBCuRxdPk/o0PmmVIwTpbEYtd/E49I2
+         5UOKEkXPfx9tYAs6ak1y87RVKRJ1qEXP5do5cfj0i4g75c7CuHO8OLHk9evIll8VviL1
+         1/cVOOArST/puCa1Mf+0yBuDKGAxWzVGXak/hNLMDjZ9NdHCXk/1e6IVZuRfzY8BQW9w
+         CM33bUT/GMOWRE1suA61IuMScZJFb2Nfpvu+UXA/ci6pUaQPt8qsLR1gCJaqyuhmOIMT
+         9Rzf3RpFCmIOemjOzMKBoNDGjdiylrLDRDM5euIxP3hnt30vElXO8QiDKHUPtHuFuLI8
+         sTKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697238688; x=1697843488;
+        d=1e100.net; s=20230601; t=1697238812; x=1697843612;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EWU/+WqAgXcxNYFK/JJOEWv3zLwoSSnl+KX8FO0LsS4=;
-        b=uVXZIp1VFJoxDPL7E5Lq7Vx+xtuy5kCDkrvC9Ztvj2mQv4Dn8NJta4aKmwc3r9Nw7V
-         ggpp8PfvU2XfiCfja6urvpWxtsAtGseyk0WsQW9iyBl73FXRZtQ/wijHTeh3e80kj4oB
-         IpuK58CuzQPa5K9HwTg0kJ47UffbYm5QCgotVzNJwqF6zqXcViD1U1R1KC5PSx3hXEKE
-         x3VI3U9wV/pnTLfhAewiu4L04aObqLLYN1aal5BTzL9CkLdbbEXClpgl04GBSWPTdcTu
-         asbPgLWkDH1q73DOcaS259q55JvC7C+W/M5q1YDmwSXnAnWc5bz3ZX1hVGbRFGg6b+JE
-         Cwow==
-X-Gm-Message-State: AOJu0YzMur0CBgZx76IB2VWrmxGiQJxqMUUIGu6ugG+H7OL+bgaPwBUw
-        E2/5vRpkvqp3mGgZUuLAbqS9dQ==
-X-Google-Smtp-Source: AGHT+IECxyFGX1stwS0bg8+VeZ3MRPq6ISGYinfcRWYkJ8MHbnb6mRRnht2So4Vb1GODNQnZeh0jhQ==
-X-Received: by 2002:a2e:7010:0:b0:2c1:2211:97d1 with SMTP id l16-20020a2e7010000000b002c1221197d1mr21619139ljc.50.1697238688141;
-        Fri, 13 Oct 2023 16:11:28 -0700 (PDT)
+        bh=OjdlyeP+tUZpGPJVvoQ6uVyAvLdwDdzr6rSJ+TTmEaM=;
+        b=VqkXoVzfIKOGki5BMn8Ql2Yv21QaoZ4ZuiVh2iUU2ElfNh9NBhaIlnQ83qA04wFzyW
+         X/Za5RWRtlNagiuriptufyUpqdV+lwj2aDDVDg04OFnlQqLSi6ijiJIl8FL/o+/v5vTh
+         VqwaCx4pmR6d2/A93AUXil6XdmJgtdL3FiB4tdkItRrMmAAypx5wQSt9nzwRmt3uGHGy
+         k/qFiQMYoS+TQmMWi/2FBAl5vgPNnRmfonFwTE+KAApC5fcveYNmKWR3MaNyIrD7DgSo
+         8r3XQY81+P2xPLDJmR32QMRdydUoYOQi4lh0X0+q0gK62A4N3U60Tq6th0xU0807zlJA
+         pPOQ==
+X-Gm-Message-State: AOJu0YxOdrXpDOgpWKXpsXhsf7mVhNPRVlmEqcIF1XMJIpLp375vcmEc
+        jn7r3F7dwZ9OC01Pyp2LA2pTWA==
+X-Google-Smtp-Source: AGHT+IG+1u/Gyc5mY1nzfYdzpFrgx1R5i2vWat40BYSCFhJKS40jsgZI8VENFkur0qpscTHcSRPQQg==
+X-Received: by 2002:a19:f015:0:b0:4fb:9168:1fce with SMTP id p21-20020a19f015000000b004fb91681fcemr21779934lfc.59.1697238812075;
+        Fri, 13 Oct 2023 16:13:32 -0700 (PDT)
 Received: from [192.168.4.141] (178235177169.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.169])
-        by smtp.gmail.com with ESMTPSA id s6-20020a2e81c6000000b002bffb3f8cebsm86473ljg.54.2023.10.13.16.11.26
+        by smtp.gmail.com with ESMTPSA id r1-20020ac24d01000000b005042ae2baf8sm3553655lfi.258.2023.10.13.16.13.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Oct 2023 16:11:27 -0700 (PDT)
-Message-ID: <84c7bc95-0252-4a5b-9591-6c6d5e3bdb1e@linaro.org>
-Date:   Sat, 14 Oct 2023 01:11:26 +0200
+        Fri, 13 Oct 2023 16:13:31 -0700 (PDT)
+Message-ID: <34da335e-cbcd-4dc2-8a86-f31369db1fcd@linaro.org>
+Date:   Sat, 14 Oct 2023 01:13:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] arm64: dts: qcom: qcm6490-fairphone-fp5: Add PM7250B
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: qcm6490-fairphone-fp5: Add PM7325
  thermals
 Content-Language: en-US
 To:     Luca Weiss <luca.weiss@fairphone.com>,
@@ -69,7 +69,7 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-iio@vger.kernel.org, devicetree@vger.kernel.org
 References: <20231013-fp5-thermals-v1-0-f14df01922e6@fairphone.com>
- <20231013-fp5-thermals-v1-2-f14df01922e6@fairphone.com>
+ <20231013-fp5-thermals-v1-4-f14df01922e6@fairphone.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -106,7 +106,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231013-fp5-thermals-v1-2-f14df01922e6@fairphone.com>
+In-Reply-To: <20231013-fp5-thermals-v1-4-f14df01922e6@fairphone.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -119,36 +119,54 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 13.10.2023 10:09, Luca Weiss wrote:
-> Configure the thermals for the CHARGER_SKIN_THERM and USB_CONN_THERM
-> thermistors connected to PM7250B.
+> Configure the thermals for the QUIET_THERM, CAM_FLASH_THERM, MSM_THERM
+> and RFC_CAM_THERM thermistors connected to PM7325.
+> 
+> With this PMIC the software communication to the ADC is going through
+> PMK7325 (= PMK8350).
 > 
 > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 > ---
->  arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 66 ++++++++++++++++++++++
->  1 file changed, 66 insertions(+)
+
+>  arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 117 +++++++++++++++++++++
+>  1 file changed, 117 insertions(+)
 > 
 > diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> index 2de0b8c26c35..7fe19b556e6a 100644
+> index 2c01f799a6b2..d0b1e4e507ff 100644
 > --- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
 > +++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> @@ -134,6 +134,36 @@ afvdd_2p8: regulator-afvdd-2p8 {
->  		enable-active-high;
->  		vin-supply = <&vreg_bob>;
+> @@ -9,6 +9,7 @@
+>  #define PM7250B_SID 8
+>  #define PM7250B_SID1 9
+>  
+> +#include <dt-bindings/iio/qcom,spmi-adc7-pm7325.h>
+>  #include <dt-bindings/iio/qcom,spmi-adc7-pmk8350.h>
+>  #include <dt-bindings/leds/common.h>
+>  #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+> @@ -137,6 +138,20 @@ afvdd_2p8: regulator-afvdd-2p8 {
 >  	};
-> +
-> +	thermal-zones {
-> +		chg-skin-thermal {
-skin
-
+>  
+>  	thermal-zones {
+> +		camera-thermal {
 > +			polling-delay-passive = <0>;
 > +			polling-delay = <0>;
-> +			thermal-sensors = <&pm7250b_adc_tm 0>;
+> +			thermal-sensors = <&pmk8350_adc_tm 2>;
 > +
 > +			trips {
 > +				active-config0 {
 > +					temperature = <125000>;
-125
+are
 
-hmm..
+> +		rear-cam-thermal {
+
+> +					temperature = <125000>;
+you
+
+> +		sdm-skin-thermal {
+
+> +					temperature = <125000>;
+sure
+
+about these temps?
 
 Konrad
