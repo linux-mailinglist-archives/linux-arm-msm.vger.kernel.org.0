@@ -2,57 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 655D57C82E0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 12:17:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 90EF67C82FC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 12:29:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229930AbjJMKRm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Oct 2023 06:17:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33702 "EHLO
+        id S229903AbjJMK3R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Oct 2023 06:29:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229923AbjJMKRl (ORCPT
+        with ESMTP id S229794AbjJMK3R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Oct 2023 06:17:41 -0400
+        Fri, 13 Oct 2023 06:29:17 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A23EBB7;
-        Fri, 13 Oct 2023 03:17:40 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E6D5C433C8;
-        Fri, 13 Oct 2023 10:17:36 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2C38AD;
+        Fri, 13 Oct 2023 03:29:14 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 898CFC433C8;
+        Fri, 13 Oct 2023 10:29:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1697192260;
-        bh=PduGR+0ma56Dbfse5BIk5TN6YS6QXizfqz1tDhApY7g=;
+        s=k20201202; t=1697192954;
+        bh=l95bX3pPU6Xb+bm+bl/UEw5wr1v071c9H3zW03wigRo=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Bkg3xrihknM18esv2S5ictlU/E6O8sPBZkndKX1ui9Rle2CkAXmzAny1XTM1yU//L
-         pqJ9Ic1RrhpUsjiQG58pYWejXDqCswK5hCUVtxv1jx5c+JKIMgR3hCPXIEyMTxR46A
-         iIhamaJQyvtcWKHaJ4RjXJtFFGJoeDOFDDmu/23UGcAPtWOdZQa4XV/4HGp/0XsrhG
-         0Eo8eqCfM6jObqs7s+1+LuVf0h5og7oUYNnOmN+vBoNZtZD0AdMPFFnrZLG48Gc7qC
-         qI58C/oHrOJQHK0qugR5YPr0HyPSytgwoNpjriIDkSAUmOkhnX2jFUf6JLYxNaHItp
-         3iZbS/e317RMg==
-Date:   Fri, 13 Oct 2023 11:17:34 +0100
-From:   Lee Jones <lee@kernel.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Chen-Yu Tsai <wens@csie.org>, Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Tony Lindgren <tony@atomide.com>, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-omap@vger.kernel.org
-Subject: Re: [PATCH] mfd: Use device_get_match_data()
-Message-ID: <20231013101734.GJ8314@google.com>
-References: <20231009211356.3242037-3-robh@kernel.org>
- <CAGb2v66ZHD8mMMNVwp+sTYT6DAFDUrP8ydeTo7KW+uUtBRM3bQ@mail.gmail.com>
- <20231012092618.GF8314@google.com>
- <CAL_JsqK22vWx1VPnrwEh+N-6vy5a7npFSW-=gp1uabTPSG2PpA@mail.gmail.com>
+        b=FbfU+w4WX0LSon1FyqCsQdLsG9mPqqB0Y7BbYtYtxBYkYV+pxTFzDnaxfI9NgbnCI
+         TLgv/pxRfVARWazaE9w8aPoIyqo1CVe7YRKvHZ/Sw5dJQ9ULx5zU1vDCSnrZW3U4Fy
+         0v5U0UZ5fTTISqRNlgU9NbnOEcu0Y3/XmGxE3TauD8vHDMCby1oBcC6eE33/9nriom
+         AOmijPEf+TfmvVh9P2EExazdsv/ppKAvl1KRjLBiG8rknnRxkRcHeEhO48GwUIxkmH
+         sQBnysLx0r4Y5DpKjKHVv1LQFlCZTefYZDn23qUZxS9IDxGrN85HLepzgvNtzb9FHp
+         y4wOOWgkgmbXg==
+Date:   Fri, 13 Oct 2023 15:59:09 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Rohit Agarwal <quic_rohiagar@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        gregkh@linuxfoundation.org, abel.vesa@linaro.org,
+        quic_wcheng@quicinc.com, dmitry.baryshkov@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, kernel@quicinc.com
+Subject: Re: [PATCH v4 0/5] Add USB Support on Qualcomm's SDX75 Platform
+Message-ID: <ZSkb9ajLZGpD46Ik@matsya>
+References: <1695359525-4548-1-git-send-email-quic_rohiagar@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAL_JsqK22vWx1VPnrwEh+N-6vy5a7npFSW-=gp1uabTPSG2PpA@mail.gmail.com>
+In-Reply-To: <1695359525-4548-1-git-send-email-quic_rohiagar@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -63,46 +55,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 12 Oct 2023, Rob Herring wrote:
-
-> On Thu, Oct 12, 2023 at 4:26 AM Lee Jones <lee@kernel.org> wrote:
-> >
-> > On Tue, 10 Oct 2023, Chen-Yu Tsai wrote:
-> >
-> > > On Tue, Oct 10, 2023 at 5:14 AM Rob Herring <robh@kernel.org> wrote:
-> > > >
-> > > > Use preferred device_get_match_data() instead of of_match_device() to
-> > > > get the driver match data. With this, adjust the includes to explicitly
-> > > > include the correct headers.
-> > > >
-> > > > Signed-off-by: Rob Herring <robh@kernel.org>
-> > > > ---
-> > > >  drivers/mfd/axp20x.c           | 22 +++-------------------
-> > >
-> > > I'd keep the error message, but otherwise for axp20x,
-> > >
-> > > Reviewed-by: Chen-Yu Tsai <wens@csie.org>
-> > >
-> > > >  drivers/mfd/hi6421-pmic-core.c |  9 +++------
-> > > >  drivers/mfd/mxs-lradc.c        |  9 ++-------
-> > > >  drivers/mfd/qcom-spmi-pmic.c   |  6 ++++--
-> > > >  drivers/mfd/qcom_rpm.c         |  8 ++++----
-> > > >  drivers/mfd/tps65910.c         | 11 ++---------
-> > > >  drivers/mfd/twl4030-power.c    |  9 +++------
-> > > >  drivers/mfd/twl6030-irq.c      | 10 +++++-----
-> > > >  8 files changed, 26 insertions(+), 58 deletions(-)
-> >
-> > FYI, this patch is not in my inbox.
+On 22-09-23, 10:42, Rohit Agarwal wrote:
+> Hi,
 > 
-> There seems to be some issue with kernel.org delivering my mails. You
-> are not the only one. I thought it was just ones with large numbers of
-> recipients, but seems to be something else. Konstantin has been
-> looking into it. Do you see any pattern of mails you do receive from
-> me? Sent via google vs. kernel.org?
+> Changes in v4:
+>  - Replaced the v5 offsets with v6 offsets as per Dmitry's suggestion in patch 5/5.
+> 
+> Changes in v3:
+>  - Removed the unnecessary change introduced in v2 of patch 2/5
+>  - Added Fixes tag in patch 3/5
+>  - Rebased patch 5/5 on Dmitry's cleanup patches.
+>    https://lore.kernel.org/all/20230911203842.778411-1-dmitry.baryshkov@linaro.org/
+>    https://lore.kernel.org/linux-phy/20230824211952.1397699-1-dmitry.baryshkov@linaro.org/
+> 
+> Changes in v2:
+>  - Dropped the new dt schema introduced in v1 for sdx75 usb3 phy
+>    and reusing the bindings.
+>  - Rephrased the commit message of patch 3/5
+>  - Removed stray lines from the patch 5/5
+> 
+> This series adds support of USB3 PHY support for Qualcomm's SDX75 Platform.
 
-How would I know which emails I haven't received from you? :)
-
-This is the only one that I'm aware of.
+The phy patches fail to apply, can you please rebase the three patches
+and resend
 
 -- 
-Lee Jones [李琼斯]
+~Vinod
