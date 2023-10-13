@@ -2,73 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C9B5A7C8B67
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 18:35:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 809157C8B53
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 18:35:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231452AbjJMQbt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Oct 2023 12:31:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51700 "EHLO
+        id S229679AbjJMQdI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Oct 2023 12:33:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231706AbjJMQbf (ORCPT
+        with ESMTP id S229518AbjJMQdH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Oct 2023 12:31:35 -0400
-Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9461EE
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 09:30:18 -0700 (PDT)
-Received: by mail-yb1-xb31.google.com with SMTP id 3f1490d57ef6-d852b28ec3bso2458921276.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 09:30:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697214618; x=1697819418; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=veDHOSSglRPxO++sDqxd9T/imdhN2ow5EstVAAB24X4=;
-        b=QEGmFTRzZ3laIo1+ekyJhzvzx0d86X4xE5SuRtC3/1v7k7azCPYMceImseS30h8Cch
-         HoB8/3P+9dRSQMs39GYRIvEf9X3K0hYtw+F9fKWuR1tP1wRfNHAhdwua9YY7f70Q2pfA
-         L9+r2J4zIRm4RLfseV8jeSfTqfM2ggOeTaNgVBOLTdXjTYkCO+jpmrPjPZUblYduzRKs
-         HeRiuSKU6u2He0U7Y/XiHzKYBfmYCxaikzZCwdVsUEnJFs3BIWxD24iYrvNoQS+XCHrX
-         dxxeSdDT4jtdJzSz4cVw4nx/yREUvfTaWa8oLlygDryRllzZaPliitHxkR3gyX8Q5PuM
-         jK/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697214618; x=1697819418;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=veDHOSSglRPxO++sDqxd9T/imdhN2ow5EstVAAB24X4=;
-        b=LwtrI/EMsDUcVMaZct+ZmyZV9SDv9ev3OiDcZJWkQhFlVaUc6yKuhOfcQJRP6hEFNH
-         1Di/BwQ+zHuard3Yi2lsPPuMP/NnxHziVz2KQDvuKo5G0JCvOLi2ZEo6KT7pwOg/5BsB
-         I6BtKCjx/hy37GJJFt5uRWjQBmWU5sNCn/JOodG9wbES8x8IYvEaiOkAv6niAF6gJMdi
-         Gqv4i4xN6kT0e97o/CK4a8f8gedgVV3kRTU9JxIDdcnwiIkgZojycHJOAcKohnPgFU88
-         m7YTBnibUWcSH0UWzV08XjFG/AzDk0LMFoVXM5uHXEA4fb2oI2TeaxhYeFikCWkiiMhu
-         m1xg==
-X-Gm-Message-State: AOJu0YyNN5Kt+zVqro/GtbDFZNVuSpUA7s33WjnNPyvrqVdv4gNhPjRC
-        Xjm5++LG+g6ksAQ4emDu3lJMNmgovZ6f/rSD2BVm9g==
-X-Google-Smtp-Source: AGHT+IGmGROLxFTg/QvBurrmJrb0DRXEr3xD4vja5abWktrT0Y4AE2J8f1r0WagBilg8IjNVZtcXk8Ii3xs4Np+B6ec=
-X-Received: by 2002:a5b:f86:0:b0:d7a:d716:233c with SMTP id
- q6-20020a5b0f86000000b00d7ad716233cmr23602244ybh.41.1697214617968; Fri, 13
- Oct 2023 09:30:17 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230817145940.9887-1-dmitry.baryshkov@linaro.org>
- <20230817145940.9887-5-dmitry.baryshkov@linaro.org> <dff4bd1d-e32a-9541-94d2-c354adf3d23b@arm.com>
-In-Reply-To: <dff4bd1d-e32a-9541-94d2-c354adf3d23b@arm.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 13 Oct 2023 19:30:06 +0300
-Message-ID: <CAA8EJpod3X_HJEUK4i=uO0KmBLUCE0D3pH1xGhezxF0U+cDucQ@mail.gmail.com>
-Subject: Re: Warning notice "Memory manager not clean during takedown" on RB5 runs
-To:     Aishwarya TCV <aishwarya.tcv@arm.com>
-Cc:     Andy Gross <agross@kernel.org>,
+        Fri, 13 Oct 2023 12:33:07 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0F36DC;
+        Fri, 13 Oct 2023 09:33:06 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39DEuLHS023685;
+        Fri, 13 Oct 2023 16:32:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=XQ3aeOmPzgrQrmVazfq5ZwF1RIShqKIieMaVMu6i7lY=;
+ b=bw6jflWHJEmnXkh/4KjMP3ZjEpk73vyQ+CEaZ+Sq+kzhVi2g1NjjTXq4p32B/kv+9ENI
+ SofSdbSula2hzKRrFWZSop48mTXDO770FluBcTMSI2YmMwJlWq5zXBBi7TOPSdskxKhV
+ p5Lw9J84C8pa3zQDm9/KEHz5b/ia8QooPcR4Z08zBCEN6LJHIpdKCOyx47/AlQVc8zSn
+ fwQW1RzhwwlInNPA8yvvmw0ityGBEujhu1DcItgykus+sviwWzzOH5Gjdv4x0uqYwlrw
+ IF22PX0+MpiF9ZoqoUHxVYHLuYpqTBTveJoqtZ9U2XxuhIThyQJs2c9bu6h/rbv+dzxC 0g== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tpt0x2a1n-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 13 Oct 2023 16:32:40 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39DGWeKr012683
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 13 Oct 2023 16:32:40 GMT
+Received: from quicinc.com (10.49.16.6) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Fri, 13 Oct
+ 2023 09:32:36 -0700
+Date:   Fri, 13 Oct 2023 09:32:35 -0700
+From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
+To:     Bartosz Golaszewski <brgl@bgdev.pl>
+CC:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Andrew Halaney <ahalaney@redhat.com>,
+        "Maximilian Luz" <luzmaximilian@gmail.com>,
+        Alex Elder <elder@linaro.org>,
+        "Srini Kandagatla" <srinivas.kandagatla@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <kernel@quicinc.com>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v4 06/15] firmware: qcom: scm: smc: switch to using the
+ SCM allocator
+Message-ID: <ZSlxI8mibrMtNzqU@quicinc.com>
+Mail-Followup-To: Bartosz Golaszewski <brgl@bgdev.pl>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andrew Halaney <ahalaney@redhat.com>,
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        Alex Elder <elder@linaro.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, kernel@quicinc.com,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20231013114843.63205-1-brgl@bgdev.pl>
+ <20231013114843.63205-7-brgl@bgdev.pl>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20231013114843.63205-7-brgl@bgdev.pl>
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: VcMdlBiGm54gxOOiTDHvqPoxZYYKcC4I
+X-Proofpoint-ORIG-GUID: VcMdlBiGm54gxOOiTDHvqPoxZYYKcC4I
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-13_07,2023-10-12_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 mlxscore=0
+ lowpriorityscore=0 bulkscore=0 spamscore=0 impostorscore=0 suspectscore=0
+ priorityscore=1501 malwarescore=0 mlxlogscore=598 phishscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310130140
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -78,33 +100,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Aishwarya,
+On Oct 13 2023 13:48, Bartosz Golaszewski wrote:
 
-On Fri, 13 Oct 2023 at 19:05, Aishwarya TCV <aishwarya.tcv@arm.com> wrote:
->
-> Hi Dmitry
->
->
-> On 17/08/2023 15:59, Dmitry Baryshkov wrote:
-> > Add displayport altmode declaration to the Type-C controller node to
-> > enable DP altmode negotiation.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 7 +++++++
-> >  1 file changed, 7 insertions(+)
-> >
->
-> At present RB5 runs against next-master are consistently throwing
-> warning messages (attached below with call trace) on "Memory manager not
-> clean during takedown". I can send full logs if required. However, the
-> runs are booting successfully so the logs are quite big. Tried running
-> with older dtb built, where these
-> warnings was not observed.
+[...]
 
-Thank you for the report. These patches should be fixed by the
-patchset at https://patchwork.freedesktop.org/series/125010/
+> @@ -192,25 +193,12 @@ int __scm_smc_call(struct device *dev, const struct qcom_scm_desc *desc,
+>  						      SCM_SMC_FIRST_EXT_IDX]);
+>  		}
+>  
+> -		args_phys = dma_map_single(dev, args_virt, alloc_len,
+> -					   DMA_TO_DEVICE);
+> -
+> -		if (dma_mapping_error(dev, args_phys)) {
+> -			kfree(args_virt);
+> -			return -ENOMEM;
+> -		}
+> -
+> -		smc.args[SCM_SMC_LAST_REG_IDX] = args_phys;
+> +		smc.args[SCM_SMC_LAST_REG_IDX] = qcom_tzmem_to_phys(args_virt);
+>  	}
+>  
+>  	/* ret error check follows after args_virt cleanup*/
 
--- 
-With best wishes
-Dmitry
+Since args_virt cleanup is being removed, please remove this comment also.
+
+>  	ret = __scm_smc_do(dev, &smc, &smc_res, atomic);
+>  
+> -	if (args_virt) {
+> -		dma_unmap_single(dev, args_phys, alloc_len, DMA_TO_DEVICE);
+> -		kfree(args_virt);
+> -	}
+> -
+>  	if (ret)
+>  		return ret;
+
+Guru Das.
