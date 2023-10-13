@@ -2,82 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 426477C912B
+	by mail.lfdr.de (Postfix) with ESMTP id 995F47C912C
 	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Oct 2023 01:08:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232273AbjJMXIE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S230469AbjJMXIE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Fri, 13 Oct 2023 19:08:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39880 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229830AbjJMXID (ORCPT
+        with ESMTP id S231924AbjJMXID (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 13 Oct 2023 19:08:03 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 916A6BE
+Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCB89C9
         for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 16:07:59 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-5079f9675c6so836997e87.2
+Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-5a7a7e9357eso31596677b3.0
         for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 16:07:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697238478; x=1697843278; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ntpWA0KpoWbL2Mip0SNW/VcCmMEOAdpN3Qpqu/MvN+k=;
-        b=iSMOv8rPVRXSMfZrkL+mUnc1wCEmwheuV7AP1QnoaFT9ntFpNhLF2SA4bUfvt/I8H2
-         VKtm6u0hdPJ5Jd3UFQUb7NT6x3R9NWysTV0QEBRgFugWlbULTOX2xlyOheyviT5IWq+k
-         pnDk0uaEHUQnx0dnPCjFdsDkUYXrdOljWn6QzMEQR3uovCDvjyJlW6QhTI8+Mfa1JGuG
-         hR/HcNdGp4QfRXhq7iw99eFJGaZeDZid6O3wspnEpgSQcxA4ZZ8pJIXNzFE8yN9PNjzW
-         iaFJTfrfNw1sZ59kdh6T0H5XqPMRvafQ7aZ2HZQfrStFAOUpdQpq+BxhzUghBYapvoJm
-         gxng==
+        d=linaro.org; s=google; t=1697238479; x=1697843279; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=GTZAp68ttuyTxKkLmjiKDcnt+ot03nWQqCAoiuWLPj4=;
+        b=XgUYQp9VvazENLlju8K1vLaG5E6Pd4U/7P1yfNrguASJ4IjSLNW+Hvyj/EQeuzTQBM
+         9NqGuyf45rliaT/JBLcg0mPLyWaIgTS9uP661Zpsr/3vCJTo9x1uyYb6zP4vUR0IlmZN
+         ITAxnHSYq0say4s8Zmgq4PIMtF6w0gac3OiJCf/Pg0fgf3v6DACvPZF46l+B4WBZAq0P
+         g9QmcmYIRS274JsmVP3iRM0L3mcOGLD5p62algh+RIgnlFAcKrB8vsa9AnLNQfrFGRX5
+         ZihNikwH2Eh2mPi2J+nh/Jiit5c1kmXBuZOBVwD6PES2G8VPMLja1tg4W7fccJoUHSUS
+         Ym/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697238478; x=1697843278;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1697238479; x=1697843279;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ntpWA0KpoWbL2Mip0SNW/VcCmMEOAdpN3Qpqu/MvN+k=;
-        b=IR7TfSGgHF36tqy52uekimdXfoV+ON9BBu1TLF/PFZdmKzXXEMuWY04a7i+y+Z8peW
-         cKxsjpT1dm8w9PV9dkc22xpdVz0rapBSZvxe0ZUXwKpEhQTmvMBtyiX4eWcF9Z9IRmv+
-         AI2WYMwth2kE9UMpTksLLAkuiicJi6EgUxB2YJLhApIOkrWDoLIPMTxJWeHetlcqma6w
-         1mVT4Qop+HFfISovGaGCFp2mWLJ786gdn3/UN/+S9E/m7sXRERkhgTJ37gH/IEEiCyRg
-         kFsbXCs1BW+dRQG1dq1lBsQDpKElZme1U3KmHSY4Tsat/vxKBHPJl7Fpp2LRJgcW7kjS
-         OUlg==
-X-Gm-Message-State: AOJu0Yy+EWOxewzgFjKkmGhQ0g58Q4VqyVDLvKCZQwWuTN0yjO6XeR7V
-        QkDmEC3ytUlMR+VLZISAvXQxBw==
-X-Google-Smtp-Source: AGHT+IEJMwBj1J0JzYtqJnElPMCb2Qn7Ch45pieeJc7RnMmM9cj9AkGLOPOfCuprWfC3Xg3v4+RMlA==
-X-Received: by 2002:a05:6512:1246:b0:500:9839:b13a with SMTP id fb6-20020a056512124600b005009839b13amr30206505lfb.66.1697238477814;
-        Fri, 13 Oct 2023 16:07:57 -0700 (PDT)
-Received: from [10.167.154.1] (178235177169.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.169])
-        by smtp.gmail.com with ESMTPSA id u13-20020ac248ad000000b00504818fcb07sm3553202lfg.266.2023.10.13.16.07.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Oct 2023 16:07:57 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Sat, 14 Oct 2023 01:07:46 +0200
-Subject: [PATCH] drm/msm/a6xx: Fix up QMP handling
+        bh=GTZAp68ttuyTxKkLmjiKDcnt+ot03nWQqCAoiuWLPj4=;
+        b=oB+5NNe441HwWJ6bkm2GHNh0of7v9SKiHZ+i9FlsVgUfz5RqAVxwEp9Ju+bMlsYIw6
+         8dhSKiiUb4yf4lR03M97l4BHR3kKBIMzrW04bpWKP75FbAIfAai0PpFp9HVouq/ycFBq
+         8445fTT/A1MVt2b7nRkodfRdIayzJn4vyvNWfIMMwX594m7aJ4WPmMrxNsfiDJLlwIOE
+         f9v9MZZ4IeowAKpqFLoUGxPMcyx8enUlyGz3IllEOZZpdsb9AMe6rgqiyGYmCRXMWwvo
+         xs5VN/TEQAP+04qGDpsRyU9KuHeMxHDRqRPZ8Xs9Plfsk0zmlnhfg/XXxR9o98+zREp5
+         Md/A==
+X-Gm-Message-State: AOJu0Yw77Gi7PfhJ2FfUlm8ggca6rOavzBExr/O/cc56uatkLD5dYOYW
+        N1q6KkGkEKVZh5SAvxDK5l2k2GWPLeZFcDMPDmftEg==
+X-Google-Smtp-Source: AGHT+IEV/6cjtm5aswWQE7+Xj1dG/j34dWuGSndGd1o4xDdSx/J/e4MW+VMXlArDM1lZpgch8aAfkjCvTI8QUarCcvU=
+X-Received: by 2002:a0d:d796:0:b0:5a8:2b82:a031 with SMTP id
+ z144-20020a0dd796000000b005a82b82a031mr2481006ywd.26.1697238478953; Fri, 13
+ Oct 2023 16:07:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231014-topic-a7xxv3-v1-1-616bc95f21ce@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAMHNKWUC/x2N0QqDMAwAf0XyvEBTNxR/RfYQ2zgDUqV1UhD/f
- WGPd3DcBUWySoGhuSDLqUW3ZECPBsLC6SOo0Ri88y05euKx7RqQu1rPFqOb2UfqO08vsGTiIjh
- lTmGxKH3X1eSeZdb6f4zv+/4Bzr+H7HMAAAA=
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Rob Clark <robdclark@chromium.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Dan Carpenter <dan.carpenter@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1697238476; l=2554;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=L0RoG9B+wKNyrZ4UA2Vwj13Xo0muadgjIRaCHVUzQ3I=;
- b=0Tz640xtbRU3aIFgDrl3cQRCFtrEfteAL/Yvax+E5GHso3rsWZ6bqFX9Y5eSvxekDoMSTJduI
- Bz7I7UTi6RMAfWwBf2cx/MoFPYBqP+UETorzEdjQS28mwPa60aYQxVG
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+References: <20231013164025.3541606-1-robimarko@gmail.com> <20231013164025.3541606-2-robimarko@gmail.com>
+In-Reply-To: <20231013164025.3541606-2-robimarko@gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sat, 14 Oct 2023 02:07:47 +0300
+Message-ID: <CAA8EJpqG0fL2j-+4qN9kw8fDdGmE7LpRYdJtqEPsGFScwRz4AQ@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: ipq8074: pass QMP PCI PHY PIPE
+ clocks to GCC
+To:     Robert Marko <robimarko@gmail.com>
+Cc:     andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -87,84 +70,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The commit referenced in the Fixes tag had a couple problems (as
-pointed out by Dan):
+On Fri, 13 Oct 2023 at 19:41, Robert Marko <robimarko@gmail.com> wrote:
+>
+> Pass QMP PCI PHY PIPE clocks to the GCC controller so it does not have to
+> find them by matching globaly by name.
+>
+> If not passed directly, driver maintains backwards compatibility by then
+> falling back to global lookup.
+>
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> ---
+> Changes in v2:
+> * Make clocks and clock-names one-per-line
+>
+>  arch/arm64/boot/dts/qcom/ipq8074.dtsi | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
 
-- qmp_put was never called, resulting in refcnt leaks
-- failling to acquire the QMP mailbox on A7xx would not undo the probe
-  function properly
-- the qmp_put call present in the code was unreachable
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Fix all of these issues.
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Fixes: 88a0997f2f94 ("drm/msm/a6xx: Send ACD state to QMP at GMU resume")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index 0555a0134fad..8c4900444b2c 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -1558,6 +1558,9 @@ void a6xx_gmu_remove(struct a6xx_gpu *a6xx_gpu)
- 		dev_pm_domain_detach(gmu->gxpd, false);
- 	}
- 
-+	if (!IS_ERR_OR_NULL(gmu->qmp))
-+		qmp_put(gmu->qmp);
-+
- 	iounmap(gmu->mmio);
- 	if (platform_get_resource_byname(pdev, IORESOURCE_MEM, "rscc"))
- 		iounmap(gmu->rscc);
-@@ -1654,6 +1657,7 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
- 	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
- 	struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
- 	struct platform_device *pdev = of_find_device_by_node(node);
-+	struct device_link *link;
- 	int ret;
- 
- 	if (!pdev)
-@@ -1777,15 +1781,17 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
- 		goto err_mmio;
- 	}
- 
--	if (!device_link_add(gmu->dev, gmu->cxpd,
--					DL_FLAG_PM_RUNTIME)) {
-+	link = device_link_add(gmu->dev, gmu->cxpd, DL_FLAG_PM_RUNTIME);
-+	if (!link) {
- 		ret = -ENODEV;
- 		goto detach_cxpd;
- 	}
- 
- 	gmu->qmp = qmp_get(gmu->dev);
--	if (IS_ERR(gmu->qmp) && adreno_is_a7xx(adreno_gpu))
--		return PTR_ERR(gmu->qmp);
-+	if (IS_ERR(gmu->qmp) && adreno_is_a7xx(adreno_gpu)) {
-+		ret = PTR_ERR(gmu->qmp);
-+		goto remove_device_link;
-+	}
- 
- 	init_completion(&gmu->pd_gate);
- 	complete_all(&gmu->pd_gate);
-@@ -1810,8 +1816,8 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
- 
- 	return 0;
- 
--	if (!IS_ERR_OR_NULL(gmu->qmp))
--		qmp_put(gmu->qmp);
-+remove_device_link:
-+	device_link_del(link);
- 
- detach_cxpd:
- 	dev_pm_domain_detach(gmu->cxpd, false);
-
----
-base-commit: e3b18f7200f45d66f7141136c25554ac1e82009b
-change-id: 20231014-topic-a7xxv3-d0fa2d187215
-
-Best regards,
 -- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
-
+With best wishes
+Dmitry
