@@ -2,33 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 738147C8E98
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 22:55:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A83D7C8E96
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 22:55:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231814AbjJMUzd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Oct 2023 16:55:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57348 "EHLO
+        id S231553AbjJMUzF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Oct 2023 16:55:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229830AbjJMUzc (ORCPT
+        with ESMTP id S231468AbjJMUzE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Oct 2023 16:55:32 -0400
+        Fri, 13 Oct 2023 16:55:04 -0400
 Received: from smtprelay02.ispgateway.de (smtprelay02.ispgateway.de [80.67.18.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E69E0B7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 13:55:30 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E3B4B7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 13:55:03 -0700 (PDT)
 Received: from [92.206.139.21] (helo=note-book.lan)
         by smtprelay02.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
         (Exim 4.96.1)
         (envelope-from <git@apitzsch.eu>)
-        id 1qrP98-0002ny-2y;
-        Fri, 13 Oct 2023 22:52:34 +0200
+        id 1qrP9A-0002ny-05;
+        Fri, 13 Oct 2023 22:52:36 +0200
 From:   =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
-Date:   Fri, 13 Oct 2023 22:51:36 +0200
-Subject: [PATCH 1/2] arm64: dts: qcom: msm8916-longcheer-l8910: Enable RGB
+Date:   Fri, 13 Oct 2023 22:51:37 +0200
+Subject: [PATCH 2/2] arm64: dts: qcom: msm8939-longcheer-l9100: Enable RGB
  LED
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20231013-bq_leds-v1-1-cc374369fc56@apitzsch.eu>
+Message-Id: <20231013-bq_leds-v1-2-cc374369fc56@apitzsch.eu>
 References: <20231013-bq_leds-v1-0-cc374369fc56@apitzsch.eu>
 In-Reply-To: <20231013-bq_leds-v1-0-cc374369fc56@apitzsch.eu>
 To:     Andy Gross <agross@kernel.org>,
@@ -40,8 +40,7 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
         ~postmarketos/upstreaming@lists.sr.ht,
-        =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
-        Stephan Gerhold <stephan@gerhold.net>
+        =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
 X-Mailer: b4 0.12.3
 X-Df-Sender: YW5kcmVAYXBpdHpzY2guZXU=
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
@@ -54,28 +53,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-l8910 uses KTD2026 LED driver. Add it to the device tree.
+l9100 uses KTD2026 LED driver. Add it to the device tree.
 
-Tested-by: Stephan Gerhold <stephan@gerhold.net>
 Signed-off-by: André Apitzsch <git@apitzsch.eu>
 ---
- .../boot/dts/qcom/msm8916-longcheer-l8910.dts      | 51 ++++++++++++++++++++++
+ .../boot/dts/qcom/msm8939-longcheer-l9100.dts      | 51 ++++++++++++++++++++++
  1 file changed, 51 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts
-index 41cadb906b98..68258cf4205f 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts
-@@ -6,6 +6,7 @@
- #include <dt-bindings/gpio/gpio.h>
+diff --git a/arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts b/arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts
+index 6802714fda3f..4eb33e36a8eb 100644
+--- a/arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts
++++ b/arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts
+@@ -8,6 +8,7 @@
  #include <dt-bindings/input/input.h>
+ #include <dt-bindings/interrupt-controller/irq.h>
  #include <dt-bindings/leds/common.h>
 +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+ #include <dt-bindings/pinctrl/qcom,pmic-mpp.h>
  
  / {
- 	model = "BQ Aquaris X5 (Longcheer L8910)";
-@@ -74,6 +75,46 @@ usb_id: usb-id {
- 	};
+@@ -120,6 +121,46 @@ usb_id: usb-id {
+ 
  };
  
 +&blsp_i2c2 {
@@ -121,7 +119,7 @@ index 41cadb906b98..68258cf4205f 100644
  &blsp_i2c3 {
  	status = "okay";
  
-@@ -107,6 +148,16 @@ &blsp_uart2 {
+@@ -184,6 +225,16 @@ &blsp_uart2 {
  	status = "okay";
  };
  
@@ -135,9 +133,9 @@ index 41cadb906b98..68258cf4205f 100644
 +	};
 +};
 +
- &pm8916_resin {
- 	status = "okay";
- 	linux,code = <KEY_VOLUMEDOWN>;
+ &pm8916_mpps {
+ 	pwm_out: mpp4-state {
+ 		pins = "mpp4";
 
 -- 
 2.42.0
