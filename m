@@ -2,145 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B14E7C7A5B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 01:23:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ED8F97C7D19
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 07:41:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1443083AbjJLXXJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Oct 2023 19:23:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38238 "EHLO
+        id S229587AbjJMFlr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Oct 2023 01:41:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34488 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1443006AbjJLXXI (ORCPT
+        with ESMTP id S229437AbjJMFlq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Oct 2023 19:23:08 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99503A9;
-        Thu, 12 Oct 2023 16:23:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1697152986; x=1728688986;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=fYSG4sqWrIC/2C2Ao8u1hyYEpig6sxUSVbww+LIg5f0=;
-  b=evWobl74g29pAC1VcQcaBBjvFpf7+owm8gXoDObp0VzQlLTtBoxb0rCR
-   ynpx3t7DMwTXK9i7qkeN+P3mDsHbYj3y3hYMe4sTwPJ7303JbXB+wuq21
-   AD2Y+oKF4y3b7YjGIjLmlLB9dvfUZp+qfxFy5PeDJG8OBv0KIG7Jf2AUP
-   DEdNmLQBM7idPApnNr7Rp+J8VipBEj7u9Do4/2cJgbdfE/DfkxujURjlN
-   iRfoVzG0CUvkOn7YhF8gyadf3vkcpr1nSJpI0kNGFI/mDik/KhPzySNoo
-   /XVZjq+N0YgNFidC41XtWHphpQzdh+3ZVJ+aogE7V5L9NXNiC+oanRIvx
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10861"; a="471299401"
-X-IronPort-AV: E=Sophos;i="6.03,219,1694761200"; 
-   d="scan'208";a="471299401"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Oct 2023 16:22:08 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10861"; a="928179846"
-X-IronPort-AV: E=Sophos;i="6.03,219,1694761200"; 
-   d="scan'208";a="928179846"
-Received: from lkp-server02.sh.intel.com (HELO f64821696465) ([10.239.97.151])
-  by orsmga005.jf.intel.com with ESMTP; 12 Oct 2023 16:22:04 -0700
-Received: from kbuild by f64821696465 with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1qr50D-00042J-0v;
-        Thu, 12 Oct 2023 23:22:01 +0000
-Date:   Fri, 13 Oct 2023 07:21:25 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Bartosz Golaszewski <brgl@bgdev.pl>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Andrew Halaney <ahalaney@redhat.com>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        Alex Elder <elder@linaro.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        kernel@quicinc.com,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v3 11/15] firmware: qcom: qseecom: convert to using the
- TZ allocator
-Message-ID: <202310130731.YHBtmaQU-lkp@intel.com>
-References: <20231009153427.20951-12-brgl@bgdev.pl>
+        Fri, 13 Oct 2023 01:41:46 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CA98B7;
+        Thu, 12 Oct 2023 22:41:44 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39D2iG5E009646;
+        Fri, 13 Oct 2023 05:41:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=k7srpVrEMj0jtruEIJpxYUZScvzOnfM7JeWmVEFFr2U=;
+ b=lpcjn1XJ2XPvk3Qoi+J3yETVKyweKrX755xZtx0LaKkGT36cVoKreyaFl+M4yFE+ibo4
+ D0IdtsMZzrtJBFD9chNMVLcq8es0054KlludOkaIQTFoGp08RWwYeoH99itD8Qm0AOkW
+ jGRY9Q9WeuQ2N+B2/YNvD1iPdggmUmwN9Eh+eV7KIqxRxWsud9Uoxdcj7JJloQvZZe1M
+ AaGj8F4kEWnGqcA4kcb91y6DpvG1lEi1SetMkeUcIGrlEwH4h1L1OtW1cz4gZflIIehQ
+ SYrkMGprEpMgx/ECV7TKa2fhKNldR0Ff/4WZhdIr/20I9uH+asAi12AzfvH8y11c3Ile xw== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tpt1u8nt2-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 13 Oct 2023 05:41:38 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39D5fAYU029856
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 13 Oct 2023 05:41:10 GMT
+Received: from [10.214.67.128] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 12 Oct
+ 2023 22:41:06 -0700
+Message-ID: <994a6ff0-9b6c-0ac8-9a6c-694a2abd0f4d@quicinc.com>
+Date:   Fri, 13 Oct 2023 11:11:00 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231009153427.20951-12-brgl@bgdev.pl>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: qcm6490: Add qcm6490 dts file
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <luca.weiss@fairphone.com>
+References: <20231003175456.14774-1-quic_kbajaj@quicinc.com>
+ <20231003175456.14774-3-quic_kbajaj@quicinc.com>
+ <e846215b-faba-4af6-a108-bae9b1deb2be@linaro.org>
+From:   Komal Bajaj <quic_kbajaj@quicinc.com>
+In-Reply-To: <e846215b-faba-4af6-a108-bae9b1deb2be@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Bdgp0tnyLPhoGmyKiLzGk3GKDixczKwO
+X-Proofpoint-ORIG-GUID: Bdgp0tnyLPhoGmyKiLzGk3GKDixczKwO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-13_03,2023-10-12_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ lowpriorityscore=0 phishscore=0 mlxlogscore=933 clxscore=1011 adultscore=0
+ malwarescore=0 bulkscore=0 impostorscore=0 mlxscore=0 suspectscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310130049
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bartosz,
-
-kernel test robot noticed the following build errors:
-
-[auto build test ERROR on next-20231009]
-[cannot apply to arm64/for-next/core krzk-dt/for-next linus/master v6.6-rc5 v6.6-rc4 v6.6-rc3 v6.6-rc5]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Bartosz-Golaszewski/firmware-qcom-move-Qualcomm-code-into-its-own-directory/20231009-233826
-base:   next-20231009
-patch link:    https://lore.kernel.org/r/20231009153427.20951-12-brgl%40bgdev.pl
-patch subject: [PATCH v3 11/15] firmware: qcom: qseecom: convert to using the TZ allocator
-config: x86_64-allyesconfig (https://download.01.org/0day-ci/archive/20231013/202310130731.YHBtmaQU-lkp@intel.com/config)
-compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231013/202310130731.YHBtmaQU-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202310130731.YHBtmaQU-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   drivers/firmware/qcom/qcom_qseecom_uefisecapp.c: In function 'qcom_uefisecapp_probe':
->> drivers/firmware/qcom/qcom_qseecom_uefisecapp.c:767:67: error: 'SZ_256K' undeclared (first use in this function)
-     767 |         qcuefi->mempool = devm_qcom_tzmem_pool_new(&aux_dev->dev, SZ_256K);
-         |                                                                   ^~~~~~~
-   drivers/firmware/qcom/qcom_qseecom_uefisecapp.c:767:67: note: each undeclared identifier is reported only once for each function it appears in
 
 
-vim +/SZ_256K +767 drivers/firmware/qcom/qcom_qseecom_uefisecapp.c
+On 10/7/2023 5:03 AM, Konrad Dybcio wrote:
+> On 3.10.2023 19:54, Komal Bajaj wrote:
+>> Add qcm6490 devicetree file for QCM6490 SoC and QCM6490 IDP
+>> platform. QCM6490 is derived from SC7280 meant for various
+>> form factor including IoT.
+>>
+>> Supported features are, as of now:
+>> * Debug UART
+>> * eMMC
+>> * USB
+>>
+>> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/Makefile        |   1 +
+>>   arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 333 +++++++++++++++++++++++
+>>   arch/arm64/boot/dts/qcom/qcm6490.dtsi    |  94 +++++++
+>>   3 files changed, 428 insertions(+)
+>>   create mode 100644 arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>>   create mode 100644 arch/arm64/boot/dts/qcom/qcm6490.dtsi
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+>> index 73c3be0f8872..3a2d9dbaacce 100644
+>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>> @@ -82,6 +82,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-sony-xperia-yoshino-maple.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-sony-xperia-yoshino-poplar.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-xiaomi-sagit.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-fairphone-fp5.dtb
+>> +dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-idp.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
+>> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>> new file mode 100644
+>> index 000000000000..d81a7810fd5a
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>> @@ -0,0 +1,333 @@
+>> +// SPDX-License-Identifier: BSD-3-Clause
+>> +/*
+>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
+>> +
+>> +/dts-v1/;
+>> +
+>> +#include <dt-bindings/iio/qcom,spmi-adc7-pmk8350.h>
+>> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>> +#include "pm7325.dtsi"
+>> +#include "pm8350c.dtsi"
+>> +#include "pmk8350.dtsi"
+>> +#include "qcm6490.dtsi"
+> As the kernel robot pointed out, this has clearly not even been
+> compile-tested..
 
-   745	
-   746	static int qcom_uefisecapp_probe(struct auxiliary_device *aux_dev,
-   747					 const struct auxiliary_device_id *aux_dev_id)
-   748	{
-   749		struct qcuefi_client *qcuefi;
-   750		int status;
-   751	
-   752		qcuefi = devm_kzalloc(&aux_dev->dev, sizeof(*qcuefi), GFP_KERNEL);
-   753		if (!qcuefi)
-   754			return -ENOMEM;
-   755	
-   756		qcuefi->client = container_of(aux_dev, struct qseecom_client, aux_dev);
-   757	
-   758		auxiliary_set_drvdata(aux_dev, qcuefi);
-   759		status = qcuefi_set_reference(qcuefi);
-   760		if (status)
-   761			return status;
-   762	
-   763		status = efivars_register(&qcuefi->efivars, &qcom_efivar_ops);
-   764		if (status)
-   765			qcuefi_set_reference(NULL);
-   766	
- > 767		qcuefi->mempool = devm_qcom_tzmem_pool_new(&aux_dev->dev, SZ_256K);
-   768		if (IS_ERR(qcuefi->mempool))
-   769			return PTR_ERR(qcuefi->mempool);
-   770	
-   771		return status;
-   772	}
-   773	
+Sorry for this.. I made this change as per the comment that I got to 
+sort the
+inclusion files in alphabetical order. Incremental build compilation 
+wasn't able
+to catch this error.
+I will move qcm6490.dtsi file inclusion before pm* files inclusion.
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Thanks
+Komal
+
+>
+> Konrad
+
