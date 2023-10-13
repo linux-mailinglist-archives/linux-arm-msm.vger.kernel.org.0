@@ -2,204 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 387597C8BA6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 18:48:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A22BA7C8BAD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 18:48:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230234AbjJMQi3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Oct 2023 12:38:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42934 "EHLO
+        id S232777AbjJMQlG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Oct 2023 12:41:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229695AbjJMQi2 (ORCPT
+        with ESMTP id S232386AbjJMQkx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Oct 2023 12:38:28 -0400
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BFE9B7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 09:38:26 -0700 (PDT)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-579de633419so27468187b3.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 09:38:26 -0700 (PDT)
+        Fri, 13 Oct 2023 12:40:53 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC477101;
+        Fri, 13 Oct 2023 09:40:31 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-53e3b8f906fso1703263a12.2;
+        Fri, 13 Oct 2023 09:40:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697215105; x=1697819905; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=y62C42hqOldBla5nOPJaFzuEZ48dSgIXLJ1wjt3nmfg=;
-        b=hiX5qt8Om7aIOlXShaWA/uFgbGLsgrOrS0YgTXtH4uupp/JMUbRTFPlZsoc6uTeK9y
-         2SUp6Wh9R2OJB97TR7w34YO2q+FNUhJhoh9SQ4/hw9o2GyXY4WNtkZJrWlPdGgtTv4zG
-         mRiIJ2H5iA/3QSkifXk55KaHR4+6TjdXUQImyKnrIoO6psCfHR6k9O2V6uyE+erFydbs
-         t4ps4GnHjxwSlR2yJ0jRYpQ6QwtTIWG12VcTLmTdwzAOMuHMrSHNcYj3ywTPf1df4nJ3
-         QFraTwARMRfNTF6mo5jBeADVpuZJq5474UKhGwEJEsY3Zn+IabZIc+BvFCnKnBKKBOi2
-         2Kbw==
+        d=gmail.com; s=20230601; t=1697215229; x=1697820029; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=igsu/mDD6XdnLZ3nDzMRhMBFqtqYaFu/W30OUakU5+8=;
+        b=iFhsodYIW4Mf3t7suO1hhRkIwKjeYJS6aJancBxKU9ax5yQY2KM2ptnzHe1Y4p/7YR
+         Xz3L2713BTdmZSikW3cUmXfo526Ru26qukZcO2cEhNo2fBQLRR3kfCNEZdv+lto2glsJ
+         6d8YyjjeLYR4jmbiUoK0FRcy/TU3Z2HEL0+4eP6hzyi1tzbHn0HTh0VrVAKWkgmj7LeX
+         TC9hoMsELW3vOeFtbfExgR89D9mgtBAAgjE3VLmKk3HsXaNaTI3d/2RtJTWKzU2bl35s
+         1EgR4nw9Z1nf0kMjSZPguzrgZrgaCTjMVus8frcKFfKtFHml6WyHH5nsqsvkeF9gnen+
+         VYog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697215105; x=1697819905;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1697215229; x=1697820029;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=y62C42hqOldBla5nOPJaFzuEZ48dSgIXLJ1wjt3nmfg=;
-        b=thsIxp8FcVWTx6e/9GELtIbD6AYoai8Ax1Mhbhmwe6/bPcE4O+WBkGk83T+Xb0uRUf
-         8zbsgQeMWqBMCan4T6+nqb0RswzvX37cAEHgoVv0LBiwPOp2lUrDsSrEpTVzwWuNP2Fj
-         wuEb2jkjzVzBnJ30gRWvFU2+LIhyRZgfrM1R9779OGJFc4rE61Sz6IuabYY7nqqSkXcx
-         Dg0vEaiYRVP0VGqPhekWtf2dPQfTdKNeXyppw/XRTRANw3L3dadAezYQIxZrIs+p+3xE
-         Rfgdg9AY9HbretxffRVZ5Baf9v4DZAs1UhnQwdyYD825O5+7QzEl+G+Jt+GQu2xd3xVy
-         ArAQ==
-X-Gm-Message-State: AOJu0Yz1lfgqyMIa7z6/WfJf3GJYq24AkgaK8H2cQ8f8ErO/CPwnSFVB
-        GZiR49WZScjz8FDAwLlTAkn6MVcsDQEMGSaE+VTabg==
-X-Google-Smtp-Source: AGHT+IGNSo+78yX/NsWCFtkVnlt0MXoHA1iGSKh5UHymJ8V2IoNpgMBwBsPLUuvZ85t7hTyy9e6zlHX6+UtYGK0YhjI=
-X-Received: by 2002:a0d:eb0e:0:b0:5a8:1654:4b6f with SMTP id
- u14-20020a0deb0e000000b005a816544b6fmr3585459ywe.17.1697215105287; Fri, 13
- Oct 2023 09:38:25 -0700 (PDT)
+        bh=igsu/mDD6XdnLZ3nDzMRhMBFqtqYaFu/W30OUakU5+8=;
+        b=rlwg0uqnXsM76M0MDsa7+ajMD7upqoXLvIsAu2ReSOUSv7PG6Iq/nYHmJSJ/Q4pO0b
+         Mros0uKBTCNsbxu1jj27+qhZVJL9++V22uUml/REC1DEk4exAWgTC3cm9ecPQZQuZigK
+         cvuFHRQR7+n1oaPkwcjuTg/l3bRNTNEwQW6+wKvjYsuIyHfGFHQPcJfnLNC35IAcv4dw
+         y0HaGZtklWJtnjK9ojV2H4gfl7/t16h5ssqGuGZd/0QNI6YovrEfUDME4qG82lEmjxSz
+         +A0R8hSEVUydqQAeJDhP742r6e0hEFzMo1UPq1eR8gRdpDEXujfhVDCa1zK4yesFhdkQ
+         TuKg==
+X-Gm-Message-State: AOJu0Yz2l5H8ZZxlAODahvhLZDzSqWYECr+wgAGE0Q8UxDmoPs+XNkxE
+        Qq0UjFoYUXGDCmhfw7pIM7gmgeBBHVMKLw==
+X-Google-Smtp-Source: AGHT+IG46/efdGsqBVwi2BN7FMlbH9aMseKY3y61y3LBMb5mfle8djHJNLa7hIkxkcixGTbAQ/sBwg==
+X-Received: by 2002:a17:907:774d:b0:9a2:ecd:d963 with SMTP id kx13-20020a170907774d00b009a20ecdd963mr24524148ejc.44.1697215228783;
+        Fri, 13 Oct 2023 09:40:28 -0700 (PDT)
+Received: from fedora.. ([213.149.38.59])
+        by smtp.googlemail.com with ESMTPSA id rn4-20020a170906d92400b0099bc038eb2bsm12531902ejb.58.2023.10.13.09.40.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Oct 2023 09:40:28 -0700 (PDT)
+From:   Robert Marko <robimarko@gmail.com>
+To:     andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Robert Marko <robimarko@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3 1/2] dt-bindings: clocks: qcom,gcc-ipq8074: allow QMP PCI PHY PIPE clocks
+Date:   Fri, 13 Oct 2023 18:39:33 +0200
+Message-ID: <20231013164025.3541606-1-robimarko@gmail.com>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-References: <1695218113-31198-1-git-send-email-quic_msarkar@quicinc.com>
- <1695218113-31198-2-git-send-email-quic_msarkar@quicinc.com>
- <20230921183850.GA762694-robh@kernel.org> <28bf111f-b965-4d38-884b-bc3a0b68a6cc@quicinc.com>
- <8effa7e5-a223-081b-75b8-7b94400d42e6@quicinc.com> <CAA8EJpp+3_A-9YXF1yOKdFweVKqrpTxvxKoJcUH6qiDHfCQ-dQ@mail.gmail.com>
- <31e6aab6-73f9-a421-9dfa-292d9d0e9649@quicinc.com>
-In-Reply-To: <31e6aab6-73f9-a421-9dfa-292d9d0e9649@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 13 Oct 2023 19:38:13 +0300
-Message-ID: <CAA8EJprSxKXjZTH8tCHGvw4zBp_H-DunS9v9kvp=aFRNd55OhA@mail.gmail.com>
-Subject: Re: [PATCH v1 1/5] dt-bindings: PCI: qcom-ep: Add support for SA8775P SoC
-To:     Mrinmay Sarkar <quic_msarkar@quicinc.com>
-Cc:     Shazad Hussain <quic_shazhuss@quicinc.com>,
-        Rob Herring <robh@kernel.org>, agross@kernel.org,
-        andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, konrad.dybcio@linaro.org, mani@kernel.org,
-        quic_nitegupt@quicinc.com, quic_ramkri@quicinc.com,
-        quic_nayiluri@quicinc.com, quic_krichai@quicinc.com,
-        quic_vbadigan@quicinc.com, quic_parass@quicinc.com,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
-        linux-phy@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 13 Oct 2023 at 15:55, Mrinmay Sarkar <quic_msarkar@quicinc.com> wrote:
->
->
-> On 10/11/2023 5:13 PM, Dmitry Baryshkov wrote:
-> > On Wed, 11 Oct 2023 at 14:14, Mrinmay Sarkar <quic_msarkar@quicinc.com> wrote:
-> >>
-> >> On 10/6/2023 4:24 PM, Shazad Hussain wrote:
-> >>>
-> >>> On 9/22/2023 12:08 AM, Rob Herring wrote:
-> >>>> On Wed, Sep 20, 2023 at 07:25:08PM +0530, Mrinmay Sarkar wrote:
-> >>>>> Add devicetree bindings support for SA8775P SoC.
-> >>>>> Define reg and interrupt per platform.
-> >>>>>
-> >>>>> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-> >>>>> ---
-> >>>>>    .../devicetree/bindings/pci/qcom,pcie-ep.yaml      | 130
-> >>>>> +++++++++++++++++----
-> >>>>>    1 file changed, 108 insertions(+), 22 deletions(-)
-> >>>>>
-> >>>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> >>>>> b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> >>>>> index a223ce0..e860e8f 100644
-> >>>>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> >>>>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> >>>>> @@ -13,6 +13,7 @@ properties:
-> >>>>>      compatible:
-> >>>>>        oneOf:
-> >>>>>          - enum:
-> >>>>> +          - qcom,sa8775p-pcie-ep
-> >>>>>              - qcom,sdx55-pcie-ep
-> >>>>>              - qcom,sm8450-pcie-ep
-> >>>>>          - items:
-> >>>>> @@ -20,29 +21,19 @@ properties:
-> >>>>>              - const: qcom,sdx55-pcie-ep
-> >>>>>        reg:
-> >>>>> -    items:
-> >>>>> -      - description: Qualcomm-specific PARF configuration registers
-> >>>>> -      - description: DesignWare PCIe registers
-> >>>>> -      - description: External local bus interface registers
-> >>>>> -      - description: Address Translation Unit (ATU) registers
-> >>>>> -      - description: Memory region used to map remote RC address space
-> >>>>> -      - description: BAR memory region
-> >>>>> +    minItems: 6
-> >>>>> +    maxItems: 7
-> >>>>>        reg-names:
-> >>>>> -    items:
-> >>>>> -      - const: parf
-> >>>>> -      - const: dbi
-> >>>>> -      - const: elbi
-> >>>>> -      - const: atu
-> >>>>> -      - const: addr_space
-> >>>>> -      - const: mmio
-> >>>>> +    minItems: 6
-> >>>>> +    maxItems: 7
-> >>>> Don't move these into if/then schemas. Then we are duplicating the
-> >>>> names, and there is no reason to keep them aligned for new compatibles.
-> >>>>
-> >>>> Rob
-> >>> Hi Rob,
-> >>> As we have one extra reg property (dma) required for sa8775p-pcie-ep,
-> >>> isn't it expected to be moved in if/then as per number of regs
-> >>> required. Anyways we would have duplication of some properties for new
-> >>> compatibles where the member numbers differs for a property.
-> >>>
-> >>> Are you suggesting to add the extra reg property (dma) in the existing
-> >>> reg and reg-names list, and add minItems/maxItems for all compatibles
-> >>> present in this file ?
-> > This is what we have been doing in other cases: if the list is an
-> > extension of the current list, there is no need to duplicate it. One
-> > can use min/maxItems instead.
-> Hi Dmitry
->
-> we have tried using min/maxItems rather than duplicating but somehow
-> catch up with some warnings in dt_bindings check
->
-> //local/mnt/workspace/Mrinmay/lemans/next-20230914/linux-next/out/Documentation/devicetree/bindings/pci/qcom,pcie-ep.example.dtb:
-> pcie-ep@1c00000: reg: [[29360128, 12288], [1073741824, 3869],
-> [1073745696, 200], [1073745920, 4096], [1073750016, 4096], [29372416,
-> 12288]] is too short//
-> //        from schema $id:
-> http://devicetree.org/schemas/pci/qcom,pcie-ep.yaml#//
-> ///local/mnt/workspace/Mrinmay/lemans/next-20230914/linux-next/out/Documentation/devicetree/bindings/pci/qcom,pcie-ep.example.dtb:
-> pcie-ep@1c00000: reg-names: ['parf', 'dbi', 'elbi', 'atu', 'addr_space',
-> 'mmio'] is too short//
-> //        from schema $id:
+QMP PCI PHY PIPE clocks are inputs for the GCC clock controller.
+In order to describe this in DTS, allow passing them as the inputs to GCC.
 
-missing min/maxItems for reg and reg-names
+This has a benefit that it avoids doing a global matching by name.
 
-> http://devicetree.org/schemas/pci/qcom,pcie-ep.yaml#//
-> ///local/mnt/workspace/Mrinmay/lemans/next-20230914/linux-next/out/Documentation/devicetree/bindings/pci/qcom,pcie-ep.example.dtb:
-> pcie-ep@1c00000: interrupts: [[0, 140, 4], [0, 145, 4]] is too short//
-> //        from schema $id:
-> http://devicetree.org/schemas/pci/qcom,pcie-ep.yaml#//
-> ///local/mnt/workspace/Mrinmay/lemans/next-20230914/linux-next/out/Documentation/devicetree/bindings/pci/qcom,pcie-ep.example.dtb:
-> pcie-ep@1c00000: interrupt-names: ['global', 'doorbell'] is too short//
-> //        from schema $id:
-> http://devicetree.org/schemas/pci/qcom,pcie-ep.yaml#//
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+Changes in v3:
+* Change the commit message to describe the relationship between PIPE
+clocks and GCC controller
 
-incorrect min/maxItems for interrupts.
+ Documentation/devicetree/bindings/clock/qcom,gcc-ipq8074.yaml | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-> //local/mnt/workspace/Mrinmay/lemans/next-20230914/linux-next/out/Documentation/devicetree/bindings/pci/qcom,pcie-ep.example.dtb:
-> pcie-ep@1c00000: interrupt-names: ['global', 'doorbell'] is too short/
->
-> added the patch in attachment.
->
-> --Mrinmay
->
-> >>> -Shazad
-> >> Here we have defined reg and interrupt per platform as clocks is defined.
-> >>
-> >> -Mrinmay
-> >>
-> >
-
-
-
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-ipq8074.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-ipq8074.yaml
+index 52e7831a8d6d..2d44ddc45aab 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,gcc-ipq8074.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc-ipq8074.yaml
+@@ -27,11 +27,15 @@ properties:
+     items:
+       - description: board XO clock
+       - description: sleep clock
++      - description: Gen3 QMP PCIe PHY PIPE clock
++      - description: Gen2 QMP PCIe PHY PIPE clock
+ 
+   clock-names:
+     items:
+       - const: xo
+       - const: sleep_clk
++      - const: pcie0_pipe
++      - const: pcie1_pipe
+ 
+ required:
+   - compatible
 -- 
-With best wishes
-Dmitry
+2.41.0
+
