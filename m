@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 068A07C83EC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 13:02:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7841E7C8403
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 13:05:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229688AbjJMLCL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Oct 2023 07:02:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52374 "EHLO
+        id S230018AbjJMLFx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Oct 2023 07:05:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229726AbjJMLCK (ORCPT
+        with ESMTP id S229886AbjJMLFw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Oct 2023 07:02:10 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63C1D91;
-        Fri, 13 Oct 2023 04:02:08 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-9936b3d0286so327859266b.0;
-        Fri, 13 Oct 2023 04:02:08 -0700 (PDT)
+        Fri, 13 Oct 2023 07:05:52 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B926BB7;
+        Fri, 13 Oct 2023 04:05:49 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-538e8eca9c1so3380165a12.3;
+        Fri, 13 Oct 2023 04:05:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697194927; x=1697799727; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1697195148; x=1697799948; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z/BQk+HYkPOCwfKTzErvfhOabI324ceUMs/WOvUQN+Q=;
-        b=HOJ64/0LJ6BZSrzIpPUsiSEM4wmDpJU+67sxR031GkwAO6SdO68v3qhRCSnHO+ygtv
-         sbtyBGC3P6IWVyk971Cu7ryz/LM7lqzEpNEF320qFwYpArSRRc123obZVjRHBVc3wnAm
-         d80rIm5ekK6rPFP+dUvephS4PS8WPk5qWfF9rppVJQCq+xmKlF5HUr42NEYGQ0BaiZll
-         AV5C6k0pqYFOCf4/nzg8woaM1nJM5ZyBfEZcHqn6dIL996qNCJD+6FGbyhWwO0CDAI7S
-         1R0XjTJapJW0qL2SgZRjh3pnMjWR+m355fvptZl99Jstf8A+kZMNssWpBPrNAAy3/eBu
-         B2JA==
+        bh=a7L8MMvBwWWMkmtOWzuzh7LjBvyg7mEIleh0lWEV/ZQ=;
+        b=I4yh/ItL2K9wUsVYFaRiUXuEI6WV8osmJuQ43cttsap+2wlHeXnOP24enX+hPqp5YE
+         fc0isGniDN/hZrHFvhdow16SVtKPwCtJoKbKBt2+dyG81u+EjV3i9M6FodK71Q0/vAIW
+         JrLFjWx3dEirWJndIgTqko+CE9GzS0svg04NltAKdOUVBf7dMdTCd3Vk1rVhGGG13LR+
+         kC23ClGRpHl7Gv155v6+7VMcElB+bBqdlUnv8WlaraCoEPHHqBuYhgO/fhjlKl2m7NYj
+         kM8Dijw2CDfJJzwiY5FfcY+xCvCCJUxKyJymAAi1VjSBerednI139xQLHOamfdRjNzpg
+         BTgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697194927; x=1697799727;
+        d=1e100.net; s=20230601; t=1697195148; x=1697799948;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Z/BQk+HYkPOCwfKTzErvfhOabI324ceUMs/WOvUQN+Q=;
-        b=HELKRneJkCId2zhR+1/9lPB/yISm2Z+j2m9H/vdHXnl1SG5lYNL6Z59lA6ZuwvWXZh
-         CrvtLLnWUmCvtw10bbKSB63HGNTCPU+IUk2lZK0QXfLlauBkCq0zqqYFn0eK5WQcOLAv
-         S4dmcVPpsX6O4AgfTc1zYgXKlb9G8FuK33Giv/Z6ntdnqgYA/BLVisexo1XQWepwx7Ph
-         tsTNhQ9uG2krSeX5Sc27b2gNpk3NK+nhuvc+z67KDMopTYWYaS0ThjPDufc0TKGxMlTa
-         xlHGb1z34rD0K/bnbkQUuBGTq7K+XuDBnBvVy43iIphLeEEuu0SmlDM9NJhbjAX0RqJR
-         BxZQ==
-X-Gm-Message-State: AOJu0YxCYnWD1PSoXcuSFFChMUFEvPAOO2bdggIhRfZQSlDkt6AZxU2m
-        7ijuzGZMO5c2P+caI8lCg9E=
-X-Google-Smtp-Source: AGHT+IFquNwq8Aav6LZJFXoWpkjPCAY+VtzFfCWRbnt1fjcsOHWkWpGpF5FYA2NGIsVJ9vtihYe1Ew==
-X-Received: by 2002:a17:906:7382:b0:9ae:284:c93d with SMTP id f2-20020a170906738200b009ae0284c93dmr20261880ejl.5.1697194926562;
-        Fri, 13 Oct 2023 04:02:06 -0700 (PDT)
+        bh=a7L8MMvBwWWMkmtOWzuzh7LjBvyg7mEIleh0lWEV/ZQ=;
+        b=XHWIcm7kjhTOVBnDtgyPrFyvZ4hDSPGf2z03p2c5RsCO8+wR4x/M6ROSdcRLdCbGFr
+         eYHu8O4A7Rr1Kr76PDkkg6tynock/WzS6UW4Up4obrFT5N7/Vbm/J8azzwXwMjchtZk2
+         SQpb3bMl2XiO/wxrf69cudGULDJ3N2THe0V8597ol2mz7ocJRs5AHZtr4kVSQTiZ2eWd
+         OVOvXoVEqvSn+aWqDeZfHz3QxWVzDrrXLDU75sBXHaPJuqs8p27i4kOXZAfNnK/eMUlS
+         NQKDPK8Ey9OehLRw1HHHeq21jLUwwrfkqU5nskzTHmxT8QU1oxDN1jQYaaJfUKUQhE9t
+         Er3Q==
+X-Gm-Message-State: AOJu0YzY/+EaUyiFUaW+05HEO/xKzIzelG+gr3UrijJrmYDDPe0ZAwSZ
+        en6wJw247VbRJ0lFXlv5FC64L6TsL3nGsQLU
+X-Google-Smtp-Source: AGHT+IHwESd3l/McN4iPb389kXzHruwSvPA8HvNROND749BipMU3/E/9clSdEVl6bvdo4P6a/9jgrw==
+X-Received: by 2002:aa7:cfd2:0:b0:534:6668:605b with SMTP id r18-20020aa7cfd2000000b005346668605bmr22340713edy.22.1697195147884;
+        Fri, 13 Oct 2023 04:05:47 -0700 (PDT)
 Received: from arch-laptop.tail46804.ts.net (net-93-65-126-31.cust.vodafonedsl.it. [93.65.126.31])
-        by smtp.googlemail.com with ESMTPSA id a6-20020a170906190600b009ad89697c86sm12341169eje.144.2023.10.13.04.02.05
+        by smtp.googlemail.com with ESMTPSA id i34-20020a0564020f2200b0053dec545c8fsm2884566eda.3.2023.10.13.04.05.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Oct 2023 04:02:06 -0700 (PDT)
-From:   M0Rf30 <morf3089@gmail.com>
+        Fri, 13 Oct 2023 04:05:47 -0700 (PDT)
+From:   Gianluca Boiano <morf3089@gmail.com>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
@@ -60,22 +60,20 @@ To:     Andy Gross <agross@kernel.org>,
         linux-kernel@vger.kernel.org
 Cc:     morf3089@gmail.com
 Subject: [PATCH] arm64: dts: qcom: msm8953: add SPI interfaces
-Date:   Fri, 13 Oct 2023 13:01:36 +0200
-Message-ID: <20231013110137.82439-1-morf3089@gmail.com>
+Date:   Fri, 13 Oct 2023 13:05:31 +0200
+Message-ID: <20231013110531.84140-1-morf3089@gmail.com>
 X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
-
-From: Gianluca Boiano <morf3089@gmail.com>
 
 This change add spi_3, spi_5 and spi_6 interfaces to
 MSM8953 devices.
