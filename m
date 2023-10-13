@@ -2,276 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EDA07C8778
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 16:06:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 716347C8782
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 16:09:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232017AbjJMOGu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Oct 2023 10:06:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39736 "EHLO
+        id S232017AbjJMOJ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Oct 2023 10:09:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231194AbjJMOGs (ORCPT
+        with ESMTP id S231194AbjJMOJ2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Oct 2023 10:06:48 -0400
-Received: from mail-vk1-xa2d.google.com (mail-vk1-xa2d.google.com [IPv6:2607:f8b0:4864:20::a2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0925F95
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 07:06:46 -0700 (PDT)
-Received: by mail-vk1-xa2d.google.com with SMTP id 71dfb90a1353d-49d0f24a815so826631e0c.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 07:06:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1697206005; x=1697810805; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kt0fl4zmpVCDg/iIyheiKGniBaGSQD47C4wQ8/liHAY=;
-        b=Q2HyXIlPZa0CssQLmgX2KN80scdTeB9cb/+f/2BMuztDjyARTtuvGACXkb1aJgkgIq
-         Pv5dY6Whysr2x5JO7mO1EMet5//mSxIgGRMW0DrUi1/38Vjqy7UQyLqlEGGcj1U7whJa
-         cq2cjKECHvK19PJfYxikkCRDdj4HhyHJt4X5l03vkHYCiO3ymPfeWX39W+OHMqvxbbEV
-         797xFE8KVsTjzsrTqFm2jg+uDjdw0LhldZFHx08tv8oAkQhNeOb0UhI0UIlecL15loyn
-         L34/pBXuq6kwdpo4uj/mip4WGHcujWHHwbRlgt6yovYKaM2VsQfLostLuD2GX5yADO0X
-         N+zQ==
+        Fri, 13 Oct 2023 10:09:28 -0400
+Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 406D2BD;
+        Fri, 13 Oct 2023 07:09:26 -0700 (PDT)
+Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-3b2b1a6fd5eso321281b6e.0;
+        Fri, 13 Oct 2023 07:09:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697206005; x=1697810805;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kt0fl4zmpVCDg/iIyheiKGniBaGSQD47C4wQ8/liHAY=;
-        b=HTX+IBjzhwcsJjE+Kestltn2S2o3wA81VR1UQJDjnKG4Flr8KQib63+km3Rn8JW0ps
-         vPEp6d153XgziOOGFOTEFe46ntldGmG/VTUszpACXWi5l+ScewUBsicRm1TArFIqJuNe
-         e3JbODow7muLPp69CUlUw5xNNpg2ZIMCf8aI0dDbdHQi9gN4YYAGQzUZKru4e0gLUKXH
-         zBv3dGPaOpRmd/ItuANroWzA1JBThroOqT+bpLI5DA5q9RZWNOQlD3j6I3L9N+koh/6n
-         gZumluNcf3wc1XM0RVNrgItAInl/mxlukhIhiNjajhDDi4D6t9LsiY/EwMUrASYmYs5R
-         86sQ==
-X-Gm-Message-State: AOJu0Yz/7RateF9HjAt5PLlDcLszT+6e29zLOqj9Sy/zSasUkpUjiruv
-        LoBSNiPc8cwpiA54ujf+FlcdHcARtVbcYNslLBsyyQ==
-X-Google-Smtp-Source: AGHT+IHHW8Cvi6xw76wjQvt7zAWuReiRAvKLMZtlUVHDQhJIZCO7syVhni+4FjqpV0pR1q0gxReM64HGLnzc7atULVU=
-X-Received: by 2002:a05:6122:ca8:b0:49d:120c:3c2a with SMTP id
- ba40-20020a0561220ca800b0049d120c3c2amr24587056vkb.11.1697206004911; Fri, 13
- Oct 2023 07:06:44 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1697206165; x=1697810965;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=32q64sOF2d1XvMlGkpm0O35o7axtMas1mV8rP6bTVn8=;
+        b=iw2k+HAuEPDhkAuHndh1Z9Uj5WBQ4OongTYhFJlddtTIlntpd+2nxt/bBcndzM82MR
+         VTrOHtGmcxV9KUrOVmnAFAeepuDiPnFS0appF0iNbIHu5mcfGP64LlPPUTuzLkmUskF5
+         KwZH+EK6+uUEgPKPtiOeVQ6qlct/rPglDWQPoCvTVyNoAocojp08PMA5JVht/WhwaR1W
+         otdiT2nrzxScEjEGR6dPcNJBJIRGGsZl26GkdoaXN/DN/tx4BWVAps4/ryv5JV1rKMhu
+         0k7MApEkDjDn8vrroPkJ92oNYonBZ2Fm0z3f2PkwaglhH5Pcu/b5sKwTKnfTdhPjkc0Z
+         qeXg==
+X-Gm-Message-State: AOJu0YzAnYZ6Y6n4qTVouyd3WVgau7WAAn4yxCgs518j+Wp0L/ibo54j
+        SH4gvBBQId7I2TaLkB82kAhmGElLHg==
+X-Google-Smtp-Source: AGHT+IE3WfnWPCV4ZgQOO+7n+hC2sS/a0WY7WfHDYyEnWNzabar4DxPdMiXBJQCW6Gy4BMVdliteAg==
+X-Received: by 2002:a05:6808:1302:b0:3a9:9bb4:485c with SMTP id y2-20020a056808130200b003a99bb4485cmr37530634oiv.8.1697206165505;
+        Fri, 13 Oct 2023 07:09:25 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id o15-20020a0568080f8f00b003a747ea96a8sm747696oiw.43.2023.10.13.07.09.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Oct 2023 07:09:23 -0700 (PDT)
+Received: (nullmailer pid 3793059 invoked by uid 1000);
+        Fri, 13 Oct 2023 14:09:21 -0000
+Date:   Fri, 13 Oct 2023 09:09:21 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        dmitry.baryshkov@linaro.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, jonathan@marek.ca, quic_tdas@quicinc.com,
+        vladimir.zapolskiy@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v4 3/4] media: dt-bindings: media: camss: Add
+ qcom,sc8280xp-camss binding
+Message-ID: <20231013140921.GA3773179-robh@kernel.org>
+References: <20231012113100.3656480-1-bryan.odonoghue@linaro.org>
+ <20231012113100.3656480-4-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
-References: <20231009153427.20951-1-brgl@bgdev.pl> <20231009153427.20951-14-brgl@bgdev.pl>
- <fr4jwbacvcheqtxy6php2u6wr72mqm5hgat6xwmxhijee7j6sk@azlu42eod6b4>
- <j543teo2apaugbq25to3un7f7iyh45tfxenmhj7vb3vwqd52i3@434do3lfdzq4>
- <CAMRc=Mcyp7GQ9Hb2crASW_Y_Q84tn977BXfrKDrM1N8ihdrvRQ@mail.gmail.com> <km6pp6ctzclrgrvfgpbhoykngcnyoqerjnng65x3mox7dzdwwt@nnvxbwqbygrw>
-In-Reply-To: <km6pp6ctzclrgrvfgpbhoykngcnyoqerjnng65x3mox7dzdwwt@nnvxbwqbygrw>
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-Date:   Fri, 13 Oct 2023 16:06:33 +0200
-Message-ID: <CAMRc=MenB-41Gf8hDQ-eO6V2CFCEqe-8uOMJ6FMneeb8xCmu-w@mail.gmail.com>
-Subject: Re: [PATCH v3 13/15] firmware: qcom: tzmem: enable SHM Bridge support
-To:     Andrew Halaney <ahalaney@redhat.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        Alex Elder <elder@linaro.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, kernel@quicinc.com,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231012113100.3656480-4-bryan.odonoghue@linaro.org>
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 13, 2023 at 3:31=E2=80=AFPM Andrew Halaney <ahalaney@redhat.com=
-> wrote:
->
-> On Fri, Oct 13, 2023 at 10:32:00AM +0200, Bartosz Golaszewski wrote:
-> > On Thu, Oct 12, 2023 at 12:17=E2=80=AFAM Andrew Halaney <ahalaney@redha=
-t.com> wrote:
-> > >
-> > > On Wed, Oct 11, 2023 at 04:14:32PM -0500, Andrew Halaney wrote:
-> > > > On Mon, Oct 09, 2023 at 05:34:25PM +0200, Bartosz Golaszewski wrote=
-:
-> > > > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > > > >
-> > > > > Add a new Kconfig option for selecting the SHM Bridge mode of ope=
-ration
-> > > > > for the TrustZone memory allocator.
-> > > > >
-> > > > > If enabled at build-time, it will still be checked for availabili=
-ty at
-> > > > > run-time. If the architecture doesn't support SHM Bridge, the all=
-ocator
-> > > > > will work just like in the default mode.
-> > > > >
-> > > > > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.or=
-g>
-> > > > > ---
-> > > > >  drivers/firmware/qcom/Kconfig      | 10 +++++
-> > > > >  drivers/firmware/qcom/qcom_tzmem.c | 67 ++++++++++++++++++++++++=
-+++++-
-> > > > >  2 files changed, 76 insertions(+), 1 deletion(-)
-> > > > >
-> > > > > diff --git a/drivers/firmware/qcom/Kconfig b/drivers/firmware/qco=
-m/Kconfig
-> > > > > index 237da40de832..e01407e31ae4 100644
-> > > > > --- a/drivers/firmware/qcom/Kconfig
-> > > > > +++ b/drivers/firmware/qcom/Kconfig
-> > > > > @@ -27,6 +27,16 @@ config QCOM_TZMEM_MODE_DEFAULT
-> > > > >       Use the default allocator mode. The memory is page-aligned,=
- non-cachable
-> > > > >       and contiguous.
-> > > > >
-> > > > > +config QCOM_TZMEM_MODE_SHMBRIDGE
-> > > > > +   bool "SHM Bridge"
-> > > > > +   help
-> > > > > +     Use Qualcomm Shared Memory Bridge. The memory has the same =
-alignment as
-> > > > > +     in the 'Default' allocator but is also explicitly marked as=
- an SHM Bridge
-> > > > > +     buffer.
-> > > > > +
-> > > > > +     With this selected, all buffers passed to the TrustZone mus=
-t be allocated
-> > > > > +     using the TZMem allocator or else the TrustZone will refuse=
- to use them.
-> > > > > +
-> > > > >  endchoice
-> > > > >
-> > > > >  config QCOM_SCM_DOWNLOAD_MODE_DEFAULT
-> > > > > diff --git a/drivers/firmware/qcom/qcom_tzmem.c b/drivers/firmwar=
-e/qcom/qcom_tzmem.c
-> > > > > index eee51fed756e..b3137844fe43 100644
-> > > > > --- a/drivers/firmware/qcom/qcom_tzmem.c
-> > > > > +++ b/drivers/firmware/qcom/qcom_tzmem.c
-> > > > > @@ -55,7 +55,72 @@ static void qcom_tzmem_cleanup_pool(struct qco=
-m_tzmem_pool *pool)
-> > > > >
-> > > > >  }
-> > > > >
-> > > > > -#endif /* CONFIG_QCOM_TZMEM_MODE_DEFAULT */
-> > > > > +#elif IS_ENABLED(CONFIG_QCOM_TZMEM_MODE_SHMBRIDGE)
-> > > > > +
-> > > > > +#include <linux/firmware/qcom/qcom_scm.h>
-> > > > > +
-> > > > > +#define QCOM_SHM_BRIDGE_NUM_VM_SHIFT 9
-> > > > > +
-> > > > > +static bool qcom_tzmem_using_shm_bridge;
-> > > > > +
-> > > > > +static int qcom_tzmem_init(void)
-> > > > > +{
-> > > > > +   int ret;
-> > > > > +
-> > > > > +   ret =3D qcom_scm_shm_bridge_enable();
-> > > > > +   if (ret =3D=3D -EOPNOTSUPP) {
-> > > > > +           dev_info(qcom_tzmem_dev, "SHM Bridge not supported\n"=
-);
-> > > > > +           ret =3D 0;
-> > > > > +   }
-> > > > > +
-> > > > > +   if (!ret)
-> > > > > +           qcom_tzmem_using_shm_bridge =3D true;
-> > > >
-> > > > Does the qcom_scm_shm_bridge_enable() returning -EOPNOTSUPP case ma=
-ke
-> > > > sense? Setting ret to 0 and then claiming we're using shm_bridge se=
-ems
-> > > > wrong to me.
-> > > >
-> >
-> > You answered yourself in the previous email. The size cannot be less
-> > than 4096 bytes. There's no need to check it anymore than that IMO.
-> >
->
-> Ok, I still think that would be nice but your call.
->
-> But this comment was about the above ret =3D 0 assignment. I am thinking
-> that's incorrect, because you fail to enable SHM bridge with
-> -EOPNOTSUPP, then you go ahead and tell the code to claim it is
-> supported with the if (!ret) conditional. This results in SHM bridge
-> trying to be used when its really not supported right?
->
-> Looks to me that you're really trying to return 0, not ret =3D 0.
->
+On Thu, Oct 12, 2023 at 12:30:59PM +0100, Bryan O'Donoghue wrote:
+> Add bindings for qcom,sc8280xp-camss in order to support the camera
+> subsystem for sc8280xp as found in the Lenovo x13s Laptop.
 
-Gah! You're right, I should have waited with v4. Oh well, I'll respin
-it next week.
+You don't need 2 'media' in the subject.
 
-Bart
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+> This patch depends-on:
+> https://lore.kernel.org/lkml/20231004161853.86382-2-bryan.odonoghue@linaro.org/T
 
-> > Bart
-> >
-> > > > > +
-> > > > > +   return ret;
-> > > > > +}
-> > > > > +
-> > > > > +static int qcom_tzmem_init_pool(struct qcom_tzmem_pool *pool)
-> > > > > +{
-> > > > > +   u64 pfn_and_ns_perm, ipfn_and_s_perm, size_and_flags, ns_perm=
-s, *handle;
-> > > > > +   int ret;
-> > > > > +
-> > > > > +   if (!qcom_tzmem_using_shm_bridge)
-> > > > > +           return 0;
-> > > > > +
-> > > > > +   ns_perms =3D (QCOM_SCM_PERM_WRITE | QCOM_SCM_PERM_READ);
-> > > > > +   pfn_and_ns_perm =3D (u64)pool->pbase | ns_perms;
-> > > > > +   ipfn_and_s_perm =3D (u64)pool->pbase | ns_perms;
-> > > > > +   size_and_flags =3D pool->size | (1 << QCOM_SHM_BRIDGE_NUM_VM_=
-SHIFT);
-> > > >
-> > > > Is there any sanity checking that can be done here? I assume bits 0=
--11 are all
-> > > > flag fields (or at least unrelated to size which I assume at a mini=
-mum
-> > > > must be 4k aka bit 12).
-> > >
-> > > I guess qcom_tzmem_pool_new's PAGE_ALIGN would make sure this is
-> > > probably ok for all future users, but I do think some sanity would be
-> > > nice to indicate the size's allowed for SHM bridge.
-> > >
-> > > >
-> > > > > +
-> > > > > +   handle =3D kzalloc(sizeof(*handle), GFP_KERNEL);
-> > > >
-> > > > Consider __free(kfree) + return_ptr() usage?
-> > > >
-> > > > > +   if (!handle)
-> > > > > +           return -ENOMEM;
-> > > > > +
-> > > > > +   ret =3D qcom_scm_shm_bridge_create(qcom_tzmem_dev, pfn_and_ns=
-_perm,
-> > > > > +                                    ipfn_and_s_perm, size_and_fl=
-ags,
-> > > > > +                                    QCOM_SCM_VMID_HLOS, handle);
-> > > > > +   if (ret) {
-> > > > > +           kfree(handle);
-> > > > > +           return ret;
-> > > > > +   }
-> > > > > +
-> > > > > +   pool->priv =3D handle;
-> > > > > +
-> > > > > +   return 0;
-> > > > > +}
-> > > > > +
-> > > > > +static void qcom_tzmem_cleanup_pool(struct qcom_tzmem_pool *pool=
-)
-> > > > > +{
-> > > > > +   u64 *handle =3D pool->priv;
-> > > > > +
-> > > > > +   if (!qcom_tzmem_using_shm_bridge)
-> > > > > +           return;
-> > > > > +
-> > > > > +   qcom_scm_shm_bridge_delete(qcom_tzmem_dev, *handle);
-> > > > > +   kfree(handle);
-> > > > > +}
-> > > > > +
-> > > > > +#endif /* CONFIG_QCOM_TZMEM_MODE_SHMBRIDGE */
-> > > > >
-> > > > >  /**
-> > > > >   * qcom_tzmem_pool_new() - Create a new TZ memory pool.
-> > > > > --
-> > > > > 2.39.2
-> > > > >
-> > >
-> >
->
+Who is supposed to apply the above and this patch? Normally, this would 
+go thru the media tree, but you didn't send it to them or the media 
+list. You did Cc the clock maintainers which seems weird on its own, but 
+I suppose based on the bot error that's because the above patch is a 
+clock patch. But why would the clock maintainers care about this one. I 
+can only guess your intent is for all of this to be merged thru the QCom 
+tree. We shouldn't have to sort thru these series and guess though. You 
+should state that unless you really don't know, but I'd expect you've 
+been around long enough to know.
+
+Rob
