@@ -2,110 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1EE5D7C84FB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 13:51:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 28D9D7C854B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 14:06:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231775AbjJMLuE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Oct 2023 07:50:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40636 "EHLO
+        id S231381AbjJMMFl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Oct 2023 08:05:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231293AbjJMLti (ORCPT
+        with ESMTP id S231452AbjJMMFk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Oct 2023 07:49:38 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EE26127
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 04:49:09 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-405524e6769so12850425e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 04:49:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1697197748; x=1697802548; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PE/p2CAXymaVYCSJyW/v/kTP5stsCvV8KjJ1np5Cumk=;
-        b=Be4Ywpk2wBnM9Llf72gBNK9yeikzw3ibCxGTVUaNkJefkYLZOect5uTT8HlhvzL18C
-         MQZ1YT+pDkhVD4Je0e66cN2f2L+dZHfW+ArNcK0IKGLlqd4mZW0v4fL+LyPCdVYlI4cN
-         gMjVvVbItaSDLThKd9Ly69ZeE8O2AfEC7Mgy4/JF5nB/z8DA71WAdoAl/BH+DI1t4BXz
-         JgdTwyC11gvRFuWq3AchwQjICN8Ozp0SeZl4gTFaXw7d4xFhAD6QENLtPbWUpg923QEK
-         ixKyoAaCcHbq7VNLztyo5cYHkGGi5JVJQbgZGDhmCtd2cf4f3+65+pIW9JBedYxW16y8
-         fhXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697197748; x=1697802548;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=PE/p2CAXymaVYCSJyW/v/kTP5stsCvV8KjJ1np5Cumk=;
-        b=VMZWW6svkL7skhZMXngVExlocd6SQGb7XULMu4QctZoXcME4S2uPS4PYxAcvZUWSAN
-         oT91szmGmv8kEzkHjkXb20uD04+4RiMIWI6CUPzVjvo/a/LzE8XuRrDKrkGmNlgbLRV/
-         AgRx2EnZ8F6DNQe1/VsXNqIZzdpCRxBUC+siejAgfXcvD9mN5Yuz+MnLQsHGwJ9D7/Yu
-         t6LYnOh2CpUcY7GNxRnSMvEkSKiAI7ZDeF2QSBZTXMInctm11N4LGWOFAhn8XG3WJrsc
-         /2p/+IIsT2c7SDfGuiAiHnn7t9V3bbZ0ubEAcciJQU0eBTJHFvPuqY/YUw2R4bMm10aR
-         raUw==
-X-Gm-Message-State: AOJu0YzGLC7LxBOjy9tqi/e1yYoAMUA3mC/aLfpTomRQukf2lIzoiQRA
-        tgDZ/ORammgJsyugMXqRyfQk5g==
-X-Google-Smtp-Source: AGHT+IE3EPZwdcV6+9c0MT7noLRZ3EscIaBUOrxg76lWbF2gmzuNksXZSHu188cOIVvgnjobPtdBNg==
-X-Received: by 2002:a05:600c:3659:b0:401:b425:2414 with SMTP id y25-20020a05600c365900b00401b4252414mr21070016wmq.18.1697197748446;
-        Fri, 13 Oct 2023 04:49:08 -0700 (PDT)
-Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:4209:13a:988d:80be])
-        by smtp.gmail.com with ESMTPSA id j23-20020a05600c1c1700b00407754b998dsm974509wms.27.2023.10.13.04.49.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Oct 2023 04:49:08 -0700 (PDT)
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Andrew Halaney <ahalaney@redhat.com>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        Alex Elder <elder@linaro.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, kernel@quicinc.com,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH v4 15/15] arm64: defconfig: enable SHM Bridge support for the TZ memory allocator
-Date:   Fri, 13 Oct 2023 13:48:43 +0200
-Message-Id: <20231013114843.63205-16-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20231013114843.63205-1-brgl@bgdev.pl>
-References: <20231013114843.63205-1-brgl@bgdev.pl>
+        Fri, 13 Oct 2023 08:05:40 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7C27CE;
+        Fri, 13 Oct 2023 05:05:38 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67647C433C7;
+        Fri, 13 Oct 2023 12:05:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1697198738;
+        bh=nzkUtLBqmirZ6m/6sa9MukyVECkrLso7I7MyMjnA/gA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=b35zLxn+F38/TILhl6VO9FmvMCSuPNzIzpLpZP/jSMd2JDh4SEwthFaIjP0ODkdO3
+         HNLOXWKvywrH9gZ/vLIXaTGucPlEoeG/eUyM0U6zc0ZhQkKuxp+78PJyK0P0ePXx9z
+         K3F3pnukV15Ld7Z+WWjcxRHnMXAJ9MQJoag8ODDaAyba7gAoRYV8FvipC5yvInrEDZ
+         Foo1vxyJJ7zM8BqsXdVvr+wCHfCdIJIBjVEmyb8u4GYvuTLEy8IcB9NiL5Glk9O4XX
+         b86ICOUpCa3IezU9mi3Oxv3HWhYpStHNMSMWnT8podKi7Aa4G3FmOdEV5UkHBL0i+5
+         8vNXJdsdg4m0Q==
+Received: from johan by xi.lan with local (Exim 4.96)
+        (envelope-from <johan@kernel.org>)
+        id 1qrGvh-0000sd-1v;
+        Fri, 13 Oct 2023 14:06:09 +0200
+Date:   Fri, 13 Oct 2023 14:06:09 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
+        dianders@chromium.org, vkoul@kernel.org, daniel@ffwll.ch,
+        airlied@gmail.com, agross@kernel.org, dmitry.baryshkov@linaro.org,
+        andersson@kernel.org, marijn.suijten@somainline.org,
+        quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1] drm/msm/dp: do not reinitialize phy unless retry
+ during link training
+Message-ID: <ZSkysaMcOQO89zpd@hovoldconsulting.com>
+References: <1691533190-19335-1-git-send-email-quic_khsieh@quicinc.com>
+ <ZRvaoz7CbNncM3t6@hovoldconsulting.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZRvaoz7CbNncM3t6@hovoldconsulting.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Tue, Oct 03, 2023 at 11:10:59AM +0200, Johan Hovold wrote:
+> On Tue, Aug 08, 2023 at 03:19:50PM -0700, Kuogee Hsieh wrote:
+> > DP PHY re-initialization done using dp_ctrl_reinitialize_mainlink() will
+> > cause PLL unlocked initially and then PLL gets locked at the end of
+> > initialization. PLL_UNLOCKED interrupt will fire during this time if the
+> > interrupt mask is enabled.
+> > However currently DP driver link training implementation incorrectly
+> > re-initializes PHY unconditionally during link training as the PHY was
+> > already configured in dp_ctrl_enable_mainlink_clocks().
+> > 
+> > Fix this by re-initializing the PHY only if the previous link training
+> > failed.
+> > 
+> > [drm:dp_aux_isr] *ERROR* Unexpected DP AUX IRQ 0x01000000 when not busy
+> > 
+> > Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
+> > Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/30
+> > Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> 
+> This fixes the above warning and avoids the unnecessary PHY power-off
+> and power-on during boot of the ThinkPad X13s:
+> 
+> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+> Tested-by: Johan Hovold <johan+linaro@kernel.org>
+> 
+> I guess this one should go to stable as well:
+> 
+> Cc: stable@vger.kernel.org	# 5.10
+> 
+> Is anyone planning on getting this fixed in 6.6-rc? I noticed that this
+> one still hasn't shown up linux-next.
 
-Enable SHM Bridge support in the Qualcomm TrustZone allocator by default
-as even on architectures that don't support it, we automatically fall
-back to the default behavior.
+For the record, this one showed up in a PR from Rob and has now been
+forwarded to Linus.
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+No stable tag included, but I guess we can ping the stable team unless
+AUTOSEL picks this up.
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index b4220fff2b44..8cca74242cf6 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -255,6 +255,7 @@ CONFIG_INTEL_STRATIX10_RSU=m
- CONFIG_EFI_CAPSULE_LOADER=y
- CONFIG_IMX_SCU=y
- CONFIG_IMX_SCU_PD=y
-+CONFIG_QCOM_TZMEM_MODE_SHMBRIDGE=y
- CONFIG_GNSS=m
- CONFIG_GNSS_MTK_SERIAL=m
- CONFIG_MTD=y
--- 
-2.39.2
-
+Johan
