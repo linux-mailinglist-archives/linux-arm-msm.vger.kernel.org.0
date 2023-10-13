@@ -2,77 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F5D17C7DC1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 08:35:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 544427C7E72
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 09:17:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229688AbjJMGfk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Oct 2023 02:35:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41974 "EHLO
+        id S229781AbjJMHRQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Oct 2023 03:17:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229644AbjJMGfi (ORCPT
+        with ESMTP id S229688AbjJMHRQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Oct 2023 02:35:38 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD162BD
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 23:35:33 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-9ba081173a3so286645966b.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 23:35:33 -0700 (PDT)
+        Fri, 13 Oct 2023 03:17:16 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB7DEB7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 00:17:14 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-405417465aaso19089695e9.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 00:17:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1697178932; x=1697783732; darn=vger.kernel.org;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mw7d2rWqkx84mECPA0MX5FELEn+q0S5ND1l7U6MlW1M=;
-        b=fm4Dbls/0njpq32LVctJfLhPqWi0yJ2J3EF7WOVckfgZlax20krmmVv5gg2VZIZt8H
-         NhlzC3+gxZ2F6XK/5uapNx04onfXTOVBbcfWS0WW+lINoVpDBp+TI3u7ug5XFIKcbB+a
-         UKvJinKavIL30e8Os1gt2Bav1/RsUt6iMBb6p1zUx+w5bEYJmBu/LsSgW7HzEQBceEpp
-         odky8UsJHB1frVNKCUg8W9NBNp55gWD6j/JsaZt8dHP/qzvK6CqzdyeiGZk0D3cBBYPq
-         h5vwJWeCb/PR/u0o9aRa2ZQZ0Yqg68m774t9QkukPBLVRqBv8mRQ2v6HLJA2YRmUOfvW
-         4nkw==
+        d=linaro.org; s=google; t=1697181433; x=1697786233; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kWaFz4n8BLo1UJoI34jBeJHgdxXO/CE+i3BR2uQsDEA=;
+        b=AQjFVp0SQ8uqfvjqEqLuY3mfJ3Dgv9219p/qdwBeBcyBrfLgT0ZYnRJTxuufyElCMm
+         MNReCjF+QiM/whxbFUEVJ+C+cTzogpWOR2yn7on1+8/yTQMLcEcyJ5rWz+Azn+gM8zqf
+         wE1HHF+eqZzVa2ll2JqmN3aeIPoHUuMbzvupEWAkyU7LDi/sAPDw4gSEkk1jhjBEWjk3
+         VPeettWomLhknGQzf86jNmzoSZDb0xIA40sQREDB3SEKGYAPQecuTx+wI2rYqFll1DnG
+         FgPnYrsmhE8+ghPD0qnvpmhbx0mmxWhV2gfdo+SsadpsH+Kd5dZOIorpCISt2Yt5BNnv
+         j9Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697178932; x=1697783732;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=mw7d2rWqkx84mECPA0MX5FELEn+q0S5ND1l7U6MlW1M=;
-        b=Vkxc3HyEKqQZpl1uHMDHpKvSo8W6t1dhXALOiBj52UgibZW1yQKfdXHtzpTF+8LbG+
-         H6vtk1N9XHIG/c6fBbWbt+P7XObPyHaHUx/iOYf0//v9SZdXreO+VtIOsdXYi5CvFqGO
-         CiWyRlbJazM19GGH0aX5eWH0eTmLpE+9jmy6d36nSYe9qyqaYeG5yWZv9jlcNIl42Dw8
-         zajrktPfqb6i9EkO80RemMAPlecQ7qOkWucog4Ai8cmC0oxJAWw1js+rZMTAEOVDt3RV
-         f/JGmVLP2d1J+OrONoGmirEHZ64vSzew9LwNo1ZeQ8VNuH06WfLhCMkzXcshlf8CXYXv
-         eKJw==
-X-Gm-Message-State: AOJu0YxqnvqbACe7IXMkGpVG+RF7T4LFrKp9OKYOMsvg8uduEG4w+hVc
-        DJTuLqRzkKNTEwCJgKrNDY6zcw==
-X-Google-Smtp-Source: AGHT+IGbjKov6XXZ6PjO42kk5Nimru0P7r6dHP1nYYD+Mxr/9oWhoDfATrLUq4GyB5DEQmuF+pYfpw==
-X-Received: by 2002:a17:906:20d8:b0:9b9:f990:c701 with SMTP id c24-20020a17090620d800b009b9f990c701mr17557436ejc.52.1697178932152;
-        Thu, 12 Oct 2023 23:35:32 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id u13-20020a1709060b0d00b009ad87d1be17sm11920164ejg.22.2023.10.12.23.35.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Oct 2023 23:35:31 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Fri, 13 Oct 2023 08:35:31 +0200
-Message-Id: <CW73PXH7OBDG.22PGA47PJR8T2@fairphone.com>
-Subject: Re: [PATCH v5 0/7] Add support for LUT PPG
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Anjelique Melendez" <quic_amelende@quicinc.com>, <pavel@ucw.cz>,
-        <lee@kernel.org>, <thierry.reding@gmail.com>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <agross@kernel.org>, <andersson@kernel.org>
-Cc:     <konrad.dybcio@linaro.org>, <u.kleine-koenig@pengutronix.de>,
-        <quic_subbaram@quicinc.com>, <quic_gurus@quicinc.com>,
-        <linux-leds@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pwm@vger.kernel.org>, <kernel@quicinc.com>
-X-Mailer: aerc 0.15.2
-References: <20230929003901.15086-1-quic_amelende@quicinc.com>
- <CVX5ZUGU9BVE.2TA819U1AI6BZ@otso>
- <a2781978-2081-f4cb-dfe3-0489860dab8e@quicinc.com>
-In-Reply-To: <a2781978-2081-f4cb-dfe3-0489860dab8e@quicinc.com>
+        d=1e100.net; s=20230601; t=1697181433; x=1697786233;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kWaFz4n8BLo1UJoI34jBeJHgdxXO/CE+i3BR2uQsDEA=;
+        b=Z/4YQRtp1oyABiabTTK9LEmdqW4zCAiRkabwu1wAklHoDX4pQuCMCuDqvlJitqPO/t
+         OyxW+E+IiYYB7Hmcu3cuNlP2mfL94vErqN/RoRIzjT4Jn6opyE/QPKriinEjgdk1UhSR
+         gjC1w8b76jRcx9pMD47EL/Zxe2aLVNYwcXu3IpKgYVaLAdiVm4j9vlFCVqXt5vGL5xWT
+         6CP8ChJ7THV589kGLTHz6CJ9RVri8IJplCUsi39V18uNPUkW9XbYFEfPbBn29rISjDsy
+         VxVf/Ix8UBWSUDcm/mAqEi091TZQX1miOMRDIaVTKnbFEkKFmTswegTDfLhgPMSnz2cQ
+         yXZw==
+X-Gm-Message-State: AOJu0YyYF7dYBXbjmeyTuBEpWOlCFgTeZb1YlL1FtksTl8lpFpBpI3KS
+        vs3CD9QD8S/5+wZCKee8iCqDgw==
+X-Google-Smtp-Source: AGHT+IEMChUF1nF5n5VUZpjuNffyhQxqCtCzn921jYAb9ji1wXEYdUyTy8LrYKKnYNgqSRFV3TqNLg==
+X-Received: by 2002:a1c:7c0a:0:b0:405:39c1:a98b with SMTP id x10-20020a1c7c0a000000b0040539c1a98bmr22624232wmc.20.1697181433171;
+        Fri, 13 Oct 2023 00:17:13 -0700 (PDT)
+Received: from localhost ([102.36.222.112])
+        by smtp.gmail.com with ESMTPSA id y11-20020a05600c20cb00b0040531f5c51asm1751016wmm.5.2023.10.13.00.17.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Oct 2023 00:17:12 -0700 (PDT)
+Date:   Fri, 13 Oct 2023 10:17:08 +0300
+From:   Dan Carpenter <dan.carpenter@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, Su Hui <suhui@nfschina.com>,
+        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+        <u.kleine-koenig@pengutronix.de>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        kernel-janitors@vger.kernel.org
+Subject: [PATCH] drm/msm: remove unnecessary NULL check
+Message-ID: <5de18b71-c3db-4820-b35e-262b4cac35fc@moroto.mountain>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-Mailer: git-send-email haha only kidding
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,85 +76,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu Oct 12, 2023 at 11:50 PM CEST, Anjelique Melendez wrote:
->
->
-> On 10/1/2023 7:15 AM, Luca Weiss wrote:
-> > On Fri Sep 29, 2023 at 2:38 AM CEST, Anjelique Melendez wrote:
-> >> In certain PMICs, LUT pattern and LPG configuration is stored in SDAM
-> >> modules instead of LUT peripheral. This feature is called PPG.
-> >>
-> >> This change series adds support for PPG. Thanks!
-> [..]
-> >>
-> >> Tested-by: Luca Weiss <luca.weiss@fairphone.com> # sdm632-fairphone-fp=
-3 (pmi632)
-> >=20
-> > Hi Anjelique,
-> >=20
-> > Actually I've retested this now on PMI632 (and also realized that my
-> > previous tests weren't correct and wasn't actually using hw_pattern).
-> >=20
-> > Using the following commands (after boot) I'm expecting to get a
-> > 500ms on 500ms off blinking pattern between white (255 255 255) and off
-> > (0 0 0).
-> >=20
-> >   echo pattern > /sys/class/leds/rgb:status/trigger
-> >   echo -1 > /sys/class/leds/rgb:status/repeat
-> >=20
-> >   echo "255 255 255" > /sys/class/leds/rgb:status/multi_intensity
-> >   echo "255 500 255 0 0 500 0 0" > /sys/class/leds/rgb:status/hw_patter=
-n
-> >=20
-> > What I actually see is it blinking between cyan (0 255 255) and red (25=
-5
-> > 0 0).
-> > At some point after playing with many patterns I got it to actually
-> > cycle between white and off, but I couldn't reproduce this again (or I
-> > didn't try hard enough).
-> >=20
-> >=20
-> > But with this example it correctly blinks red on-off.
-> >=20
-> >   echo "255 0 0" > /sys/class/leds/rgb:status/multi_intensity
-> >   echo "255 500 255 0 0 500 0 0" > /sys/class/leds/rgb:status/hw_patter=
-n
-> >=20
-> > With "0 255 0" and "0 0 255" the other colors also work fine, it's just
-> > the combinations that seem somewhat broken.
-> >=20
-> > Regards
-> > Luca
-> >=20
-> >=20
-> Hi Luca,
->
-> Thanks for testing again and the feedback!
-> Looks like for multicolor devices there is a small concurrency issue with
-> enabling pattern at the same time for all the led channels. This could be
-> why you observed your device blinking between red (255 0 0) and cyan (0 2=
-55 255),
-> instead of seeing all channels (255 255 255) blink.
-> The fix I'm planing to include in the next series is is to disable the mu=
-lticolor led
-> channels first, then configure all channels, and finally re-enable channe=
-ls
-> so that pattern is triggered at the same time for each all of the channel=
-s.
+This NULL check was required when it was added, but we shuffled the code
+around in commit 1f50db2f3e1e ("drm/msm/mdp5: move resource allocation
+to the _probe function") and now it's not.  The inconsistent NULL
+checking triggers a Smatch warning:
 
-Sounds reasonable I think!
+    drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c:847 mdp5_init() warn:
+    variable dereferenced before check 'mdp5_kms' (see line 782)
 
->
-> I am currently testing with pm8350c device so if you are able to test nex=
-t series
-> on pmi632 it would be very appreciated!
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+---
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-Will do, thanks for fixing it up!
-
-Regards
-Luca
-
->
-> Thanks,
-> Anjelique
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+index 11d9fc2c6bf5..ec933d597e20 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+@@ -844,8 +844,7 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
+ 
+ 	return 0;
+ fail:
+-	if (mdp5_kms)
+-		mdp5_destroy(mdp5_kms);
++	mdp5_destroy(mdp5_kms);
+ 	return ret;
+ }
+ 
+-- 
+2.39.2
 
