@@ -2,107 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CBE447C9117
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Oct 2023 00:58:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 426477C912B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Oct 2023 01:08:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232421AbjJMW6c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Oct 2023 18:58:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43484 "EHLO
+        id S232273AbjJMXIE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Oct 2023 19:08:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232021AbjJMW6b (ORCPT
+        with ESMTP id S229830AbjJMXID (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Oct 2023 18:58:31 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F5ECB7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 15:58:30 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2c50d1b9f22so7907121fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 15:58:30 -0700 (PDT)
+        Fri, 13 Oct 2023 19:08:03 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 916A6BE
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 16:07:59 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-5079f9675c6so836997e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 16:07:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697237908; x=1697842708; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=1uqCtAsTfHcqR/oA1gOEiEIXlrIe3/h8ohNMcatu9+4=;
-        b=sbHX+jn8vfJ83sj1VHP33aR/1aCrQhiFxuOqk72O6a13Onurk5PD1PqWcNWdJC6NwE
-         V2bL8Wn2ilzis6UiLggsPuV4gQ2Gdk6vudf5R6ePx99DP72ONHwgW7RI+w+zfOjFgYcg
-         9PK41w6F+UXH/jx+wRZnh5MnYgSV+9HDB/83qSPLVY7lZsNzyh+TOf/CE6prmm+oJEF+
-         mxsKlS9FRTRnOJSAZ+jHXTaY9rSh8fVb1dqcqoJKtKk1bvmcxgfHL0WKecN3Zra34u97
-         NnujeObq/FzKyf+/ZRktSjl3V5HAQarKdEVLmkXsNbKBlsKIk1O1WPCQp5gDOZyHoskC
-         qPQA==
+        d=linaro.org; s=google; t=1697238478; x=1697843278; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ntpWA0KpoWbL2Mip0SNW/VcCmMEOAdpN3Qpqu/MvN+k=;
+        b=iSMOv8rPVRXSMfZrkL+mUnc1wCEmwheuV7AP1QnoaFT9ntFpNhLF2SA4bUfvt/I8H2
+         VKtm6u0hdPJ5Jd3UFQUb7NT6x3R9NWysTV0QEBRgFugWlbULTOX2xlyOheyviT5IWq+k
+         pnDk0uaEHUQnx0dnPCjFdsDkUYXrdOljWn6QzMEQR3uovCDvjyJlW6QhTI8+Mfa1JGuG
+         hR/HcNdGp4QfRXhq7iw99eFJGaZeDZid6O3wspnEpgSQcxA4ZZ8pJIXNzFE8yN9PNjzW
+         iaFJTfrfNw1sZ59kdh6T0H5XqPMRvafQ7aZ2HZQfrStFAOUpdQpq+BxhzUghBYapvoJm
+         gxng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697237908; x=1697842708;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1uqCtAsTfHcqR/oA1gOEiEIXlrIe3/h8ohNMcatu9+4=;
-        b=TEq0J8KFHWr64q81mx9fi6JARySYJNMpZNWFpLzyd+NZUL9fJLXs2kcSvFSK/QBud/
-         S4FshkCgHyuNJSVnPyWYNnp7rTyj/flrDwgpxp10hbMnEyFAnGkHGWE7ddBIoqPe29e7
-         OQ2dnq0UazAo0TYtbdFMtBZAWPRFvKBZJQ6bZ0/WxwVC29z3ZNVEbXlHouGxOjIj94IS
-         JffZ22fnXSO5g86L/3jvHxrW7n/HZxg/ObGZG4/vbE3mNrrjUNf3/mSQHOUWmEAulKBP
-         EKQt/n7TgykBm7fLLxH0T1TlCQPbZcB/wmhJ5mW6ps7i8xlDDtt9FjpzXQiPnxjpOsCt
-         iBQg==
-X-Gm-Message-State: AOJu0YwRK4fUTfIQ/oVjhnPBsEUGv0zdfOSo+kvlnGsXDnW8ccXcOJxv
-        zNuCH6ZXZjAZcAQJssnDgQHhOg==
-X-Google-Smtp-Source: AGHT+IEYluYBp3QhexUDfG+FFIOoQ6SnqxeyN10CTUhvnzyRfci78xhHo498ZkzZvGT5/DId3jScTQ==
-X-Received: by 2002:a2e:8912:0:b0:2c0:923:19c2 with SMTP id d18-20020a2e8912000000b002c0092319c2mr24444696lji.15.1697237907999;
-        Fri, 13 Oct 2023 15:58:27 -0700 (PDT)
-Received: from [192.168.4.141] ([178.235.177.169])
-        by smtp.gmail.com with ESMTPSA id 8-20020a2e1448000000b002c27cd20711sm84658lju.3.2023.10.13.15.58.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Oct 2023 15:58:27 -0700 (PDT)
-Message-ID: <b1e3fdc4-8f7a-409d-87d3-5b837af703a9@linaro.org>
-Date:   Sat, 14 Oct 2023 00:58:21 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] soc: qcom: pmic_glink_altmode: Print error when retimer
- setup fails
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231013-glink-altmode-ret-v1-1-77941537a35b@fairphone.com>
-Content-Language: en-US
+        d=1e100.net; s=20230601; t=1697238478; x=1697843278;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ntpWA0KpoWbL2Mip0SNW/VcCmMEOAdpN3Qpqu/MvN+k=;
+        b=IR7TfSGgHF36tqy52uekimdXfoV+ON9BBu1TLF/PFZdmKzXXEMuWY04a7i+y+Z8peW
+         cKxsjpT1dm8w9PV9dkc22xpdVz0rapBSZvxe0ZUXwKpEhQTmvMBtyiX4eWcF9Z9IRmv+
+         AI2WYMwth2kE9UMpTksLLAkuiicJi6EgUxB2YJLhApIOkrWDoLIPMTxJWeHetlcqma6w
+         1mVT4Qop+HFfISovGaGCFp2mWLJ786gdn3/UN/+S9E/m7sXRERkhgTJ37gH/IEEiCyRg
+         kFsbXCs1BW+dRQG1dq1lBsQDpKElZme1U3KmHSY4Tsat/vxKBHPJl7Fpp2LRJgcW7kjS
+         OUlg==
+X-Gm-Message-State: AOJu0Yy+EWOxewzgFjKkmGhQ0g58Q4VqyVDLvKCZQwWuTN0yjO6XeR7V
+        QkDmEC3ytUlMR+VLZISAvXQxBw==
+X-Google-Smtp-Source: AGHT+IEJMwBj1J0JzYtqJnElPMCb2Qn7Ch45pieeJc7RnMmM9cj9AkGLOPOfCuprWfC3Xg3v4+RMlA==
+X-Received: by 2002:a05:6512:1246:b0:500:9839:b13a with SMTP id fb6-20020a056512124600b005009839b13amr30206505lfb.66.1697238477814;
+        Fri, 13 Oct 2023 16:07:57 -0700 (PDT)
+Received: from [10.167.154.1] (178235177169.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.169])
+        by smtp.gmail.com with ESMTPSA id u13-20020ac248ad000000b00504818fcb07sm3553202lfg.266.2023.10.13.16.07.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Oct 2023 16:07:57 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20231013-glink-altmode-ret-v1-1-77941537a35b@fairphone.com>
-Content-Type: text/plain; charset=UTF-8
+Date:   Sat, 14 Oct 2023 01:07:46 +0200
+Subject: [PATCH] drm/msm/a6xx: Fix up QMP handling
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20231014-topic-a7xxv3-v1-1-616bc95f21ce@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAMHNKWUC/x2N0QqDMAwAf0XyvEBTNxR/RfYQ2zgDUqV1UhD/f
+ WGPd3DcBUWySoGhuSDLqUW3ZECPBsLC6SOo0Ri88y05euKx7RqQu1rPFqOb2UfqO08vsGTiIjh
+ lTmGxKH3X1eSeZdb6f4zv+/4Bzr+H7HMAAAA=
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Rob Clark <robdclark@chromium.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Dan Carpenter <dan.carpenter@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1697238476; l=2554;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=L0RoG9B+wKNyrZ4UA2Vwj13Xo0muadgjIRaCHVUzQ3I=;
+ b=0Tz640xtbRU3aIFgDrl3cQRCFtrEfteAL/Yvax+E5GHso3rsWZ6bqFX9Y5eSvxekDoMSTJduI
+ Bz7I7UTi6RMAfWwBf2cx/MoFPYBqP+UETorzEdjQS28mwPa60aYQxVG
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -112,12 +87,84 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13.10.2023 15:56, Luca Weiss wrote:
-> It can be useful to know with which return value the retimer_set call
-> failed, so include this info in the dev_err print.
-> 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+The commit referenced in the Fixes tag had a couple problems (as
+pointed out by Dan):
 
-Konrad
+- qmp_put was never called, resulting in refcnt leaks
+- failling to acquire the QMP mailbox on A7xx would not undo the probe
+  function properly
+- the qmp_put call present in the code was unreachable
+
+Fix all of these issues.
+
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Fixes: 88a0997f2f94 ("drm/msm/a6xx: Send ACD state to QMP at GMU resume")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index 0555a0134fad..8c4900444b2c 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -1558,6 +1558,9 @@ void a6xx_gmu_remove(struct a6xx_gpu *a6xx_gpu)
+ 		dev_pm_domain_detach(gmu->gxpd, false);
+ 	}
+ 
++	if (!IS_ERR_OR_NULL(gmu->qmp))
++		qmp_put(gmu->qmp);
++
+ 	iounmap(gmu->mmio);
+ 	if (platform_get_resource_byname(pdev, IORESOURCE_MEM, "rscc"))
+ 		iounmap(gmu->rscc);
+@@ -1654,6 +1657,7 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ 	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
+ 	struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
+ 	struct platform_device *pdev = of_find_device_by_node(node);
++	struct device_link *link;
+ 	int ret;
+ 
+ 	if (!pdev)
+@@ -1777,15 +1781,17 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ 		goto err_mmio;
+ 	}
+ 
+-	if (!device_link_add(gmu->dev, gmu->cxpd,
+-					DL_FLAG_PM_RUNTIME)) {
++	link = device_link_add(gmu->dev, gmu->cxpd, DL_FLAG_PM_RUNTIME);
++	if (!link) {
+ 		ret = -ENODEV;
+ 		goto detach_cxpd;
+ 	}
+ 
+ 	gmu->qmp = qmp_get(gmu->dev);
+-	if (IS_ERR(gmu->qmp) && adreno_is_a7xx(adreno_gpu))
+-		return PTR_ERR(gmu->qmp);
++	if (IS_ERR(gmu->qmp) && adreno_is_a7xx(adreno_gpu)) {
++		ret = PTR_ERR(gmu->qmp);
++		goto remove_device_link;
++	}
+ 
+ 	init_completion(&gmu->pd_gate);
+ 	complete_all(&gmu->pd_gate);
+@@ -1810,8 +1816,8 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ 
+ 	return 0;
+ 
+-	if (!IS_ERR_OR_NULL(gmu->qmp))
+-		qmp_put(gmu->qmp);
++remove_device_link:
++	device_link_del(link);
+ 
+ detach_cxpd:
+ 	dev_pm_domain_detach(gmu->cxpd, false);
+
+---
+base-commit: e3b18f7200f45d66f7141136c25554ac1e82009b
+change-id: 20231014-topic-a7xxv3-d0fa2d187215
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
