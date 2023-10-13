@@ -2,243 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E30F7C804B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 10:32:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55DE27C807E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 10:38:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230098AbjJMIcP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Oct 2023 04:32:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41438 "EHLO
+        id S230151AbjJMIiz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Oct 2023 04:38:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230081AbjJMIcO (ORCPT
+        with ESMTP id S230124AbjJMIiw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Oct 2023 04:32:14 -0400
-Received: from mail-vs1-xe2e.google.com (mail-vs1-xe2e.google.com [IPv6:2607:f8b0:4864:20::e2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CADCAA9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 01:32:12 -0700 (PDT)
-Received: by mail-vs1-xe2e.google.com with SMTP id ada2fe7eead31-45271a44cc4so787537137.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 01:32:12 -0700 (PDT)
+        Fri, 13 Oct 2023 04:38:52 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30FEBDA
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 01:38:50 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-53d9f001b35so3157316a12.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 01:38:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1697185932; x=1697790732; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Aa7qpsXQ74LHlZliuPq5W6XoRIzH0nf1AuDsWbi9MR0=;
-        b=ll/ljGLeAPkFQQ87Te3ULVNpz1lDpI4fZy+98TL7iElkUqDWI2WuTdYeIMZI66Oab7
-         JLMZwNtiJgcipVehQ52inAFacSSXds+IW8hgoPzY8WBBDgkw8cjMg+TD2eNCuI9mqKwh
-         Npki3AOF3DO4W88XwUocpDdCuy8UJHWfEFLn67Vq4umaS20t7yL06KXUyfwN0AC3As8O
-         mbo7VW+qqCutDtpu1xQDW5VAoBkazdoDUiG70VvlmWqCK95woTXS0JBDDkmwbNaG8jWt
-         itGUlB5+OIP4uTwmSWeNScxtfLOdgcxryzNi9tlYHt+YybXJm7l40zrJWX3xaORwCZQ7
-         qv+A==
+        d=linaro.org; s=google; t=1697186328; x=1697791128; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2pzef8oUOw/bItOnmpMKqfrBzZur3DZX+/mfK3PIsTM=;
+        b=v6/fJpsgNbxkJ56C/RDzVSpI0Dn9YL7mGyU12id3D6LrzBW8QF2kVmQMhtXoJR05Xt
+         ecDX6S4/5tbIICnTQ4nRXLh4QkcMLab4PJKpmXpNZiHFyU9fkVQvnfO3VeGDAhU1yfWe
+         6t4MyKVwbty4GCOBw/+4GnfRfst+Pw65tOhjm8c3j+tOJi8P8xvtNBHbThkSKaxdqaR/
+         CyM9AAZyD2aryBGoxQaTk6DKWodZ18ufY/1407CMFr0QQmVvSgt7zSA56ai52P/diksj
+         lgUMbyw3/m28+JihGfKXSpTEaxFKTxEkE6MB823qtR55hXDCF2Ggl5ICDMhm8JEave0Q
+         kmjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697185932; x=1697790732;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Aa7qpsXQ74LHlZliuPq5W6XoRIzH0nf1AuDsWbi9MR0=;
-        b=N3PXeIGW5auOOHwdrWUw5kGr11hrpmsrxMmIq5e1/NyQLRWMIbYKZvHr6EElyDZ5Sa
-         Wz0dbwi4pcOzb9Ct30Lf64rjJRE4xRsyRu3mSfAnl8rLlJQkIugGmEsnHjtGlou9yTHA
-         uSGnQ6wBXjCr+AOWKMdE8/N86c8Yw2ckZgfOMuw5osHB1wrQT9TtiAAJyEPSrLPuJ4u8
-         6sCaVcFYkcpeXfT9QYMzok8swalAclg80R74rrazXvoxt6KCnr9BDoZizhQa15i4t7u+
-         S52EP53yAjTTUVTtJ3S8J51a/nG5b9s1GA4tUrKGF2cshKbriV3TE3pKWSWafktPB5+9
-         IG7A==
-X-Gm-Message-State: AOJu0YxSDs3/XRUUHA0x8ODJFsxFpESNl5rBqm3ohceRlmeHSUGKY9FX
-        xkdVyijLIDPELe8VM9E/pTGdRxVXoDxEbBvKKTPMFA==
-X-Google-Smtp-Source: AGHT+IEh/svN9CkCZWFT9mgnutJPkM5O+oq5bh30YsVPe+Vz3NzMOT0KUhUK/L08NjQQ0hXmUVyHIFmb3expDl5tOOg=
-X-Received: by 2002:a67:e118:0:b0:457:c6d4:1279 with SMTP id
- d24-20020a67e118000000b00457c6d41279mr521786vsl.5.1697185931904; Fri, 13 Oct
- 2023 01:32:11 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1697186328; x=1697791128;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2pzef8oUOw/bItOnmpMKqfrBzZur3DZX+/mfK3PIsTM=;
+        b=k2q7owyuH5AVfkeWhLU5UsCvu9tknDH+T3LTcuVotCgwJutQ89nUVFgl1+uZXJPpGu
+         DLgRSQtjGHmDONMkCUdkLrVaDV4eUwi9mLRX1yxM6sGLbvH3XtKt2wL2Pk/qx3L9Bzzn
+         w4mwwHeUGPSf0PQnw85zNT2zkNgUT6WwC+3tekT60TUgLEkYeBha9vNwJjuEt4KMRrYl
+         aR8+E8TNRDie/htTW3s2wak9UCwwAK6/5OaYBpaxD7IhMpQSISXyDbyQKOSDve9YOx46
+         3s/9/z4GtRekXWp3lBH7JIut9/5XDSYkK2kt95VIzafyv1b1V1YT/qLap2UX5ZGdj345
+         zy1A==
+X-Gm-Message-State: AOJu0YymhFTsa/QCmuRSrhJawJV/c1lPS6CePcScxZQGqYDVhL2KEiH0
+        xy/+ctJlZKIvOh0j+ZbBArySPw==
+X-Google-Smtp-Source: AGHT+IEUzupH94i/Ba+UxsRCjCERW5Gqr7bR7a5q+QctES779MNWhw3Nyy9PY85Spda49bq2pYLnZg==
+X-Received: by 2002:a05:6402:17c9:b0:53d:d879:34f4 with SMTP id s9-20020a05640217c900b0053dd87934f4mr5552320edy.15.1697186328642;
+        Fri, 13 Oct 2023 01:38:48 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.100])
+        by smtp.gmail.com with ESMTPSA id h16-20020a056402095000b0053e15aefb0fsm1664078edz.85.2023.10.13.01.38.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 Oct 2023 01:38:48 -0700 (PDT)
+Message-ID: <d1c8a6e2-1c12-4b67-bc67-45f0b41a2fef@linaro.org>
+Date:   Fri, 13 Oct 2023 10:38:46 +0200
 MIME-Version: 1.0
-References: <20231009153427.20951-1-brgl@bgdev.pl> <20231009153427.20951-14-brgl@bgdev.pl>
- <fr4jwbacvcheqtxy6php2u6wr72mqm5hgat6xwmxhijee7j6sk@azlu42eod6b4> <j543teo2apaugbq25to3un7f7iyh45tfxenmhj7vb3vwqd52i3@434do3lfdzq4>
-In-Reply-To: <j543teo2apaugbq25to3un7f7iyh45tfxenmhj7vb3vwqd52i3@434do3lfdzq4>
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-Date:   Fri, 13 Oct 2023 10:32:00 +0200
-Message-ID: <CAMRc=Mcyp7GQ9Hb2crASW_Y_Q84tn977BXfrKDrM1N8ihdrvRQ@mail.gmail.com>
-Subject: Re: [PATCH v3 13/15] firmware: qcom: tzmem: enable SHM Bridge support
-To:     Andrew Halaney <ahalaney@redhat.com>
-Cc:     Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] iio: adc: Add PM7325 PMIC7 ADC bindings
+Content-Language: en-US
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        Alex Elder <elder@linaro.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, kernel@quicinc.com,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-iio@vger.kernel.org, devicetree@vger.kernel.org
+References: <20231013-fp5-thermals-v1-0-f14df01922e6@fairphone.com>
+ <20231013-fp5-thermals-v1-1-f14df01922e6@fairphone.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20231013-fp5-thermals-v1-1-f14df01922e6@fairphone.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 12, 2023 at 12:17=E2=80=AFAM Andrew Halaney <ahalaney@redhat.co=
-m> wrote:
->
-> On Wed, Oct 11, 2023 at 04:14:32PM -0500, Andrew Halaney wrote:
-> > On Mon, Oct 09, 2023 at 05:34:25PM +0200, Bartosz Golaszewski wrote:
-> > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > >
-> > > Add a new Kconfig option for selecting the SHM Bridge mode of operati=
-on
-> > > for the TrustZone memory allocator.
-> > >
-> > > If enabled at build-time, it will still be checked for availability a=
-t
-> > > run-time. If the architecture doesn't support SHM Bridge, the allocat=
-or
-> > > will work just like in the default mode.
-> > >
-> > > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > > ---
-> > >  drivers/firmware/qcom/Kconfig      | 10 +++++
-> > >  drivers/firmware/qcom/qcom_tzmem.c | 67 ++++++++++++++++++++++++++++=
-+-
-> > >  2 files changed, 76 insertions(+), 1 deletion(-)
-> > >
-> > > diff --git a/drivers/firmware/qcom/Kconfig b/drivers/firmware/qcom/Kc=
-onfig
-> > > index 237da40de832..e01407e31ae4 100644
-> > > --- a/drivers/firmware/qcom/Kconfig
-> > > +++ b/drivers/firmware/qcom/Kconfig
-> > > @@ -27,6 +27,16 @@ config QCOM_TZMEM_MODE_DEFAULT
-> > >       Use the default allocator mode. The memory is page-aligned, non=
--cachable
-> > >       and contiguous.
-> > >
-> > > +config QCOM_TZMEM_MODE_SHMBRIDGE
-> > > +   bool "SHM Bridge"
-> > > +   help
-> > > +     Use Qualcomm Shared Memory Bridge. The memory has the same alig=
-nment as
-> > > +     in the 'Default' allocator but is also explicitly marked as an =
-SHM Bridge
-> > > +     buffer.
-> > > +
-> > > +     With this selected, all buffers passed to the TrustZone must be=
- allocated
-> > > +     using the TZMem allocator or else the TrustZone will refuse to =
-use them.
-> > > +
-> > >  endchoice
-> > >
-> > >  config QCOM_SCM_DOWNLOAD_MODE_DEFAULT
-> > > diff --git a/drivers/firmware/qcom/qcom_tzmem.c b/drivers/firmware/qc=
-om/qcom_tzmem.c
-> > > index eee51fed756e..b3137844fe43 100644
-> > > --- a/drivers/firmware/qcom/qcom_tzmem.c
-> > > +++ b/drivers/firmware/qcom/qcom_tzmem.c
-> > > @@ -55,7 +55,72 @@ static void qcom_tzmem_cleanup_pool(struct qcom_tz=
-mem_pool *pool)
-> > >
-> > >  }
-> > >
-> > > -#endif /* CONFIG_QCOM_TZMEM_MODE_DEFAULT */
-> > > +#elif IS_ENABLED(CONFIG_QCOM_TZMEM_MODE_SHMBRIDGE)
-> > > +
-> > > +#include <linux/firmware/qcom/qcom_scm.h>
-> > > +
-> > > +#define QCOM_SHM_BRIDGE_NUM_VM_SHIFT 9
-> > > +
-> > > +static bool qcom_tzmem_using_shm_bridge;
-> > > +
-> > > +static int qcom_tzmem_init(void)
-> > > +{
-> > > +   int ret;
-> > > +
-> > > +   ret =3D qcom_scm_shm_bridge_enable();
-> > > +   if (ret =3D=3D -EOPNOTSUPP) {
-> > > +           dev_info(qcom_tzmem_dev, "SHM Bridge not supported\n");
-> > > +           ret =3D 0;
-> > > +   }
-> > > +
-> > > +   if (!ret)
-> > > +           qcom_tzmem_using_shm_bridge =3D true;
-> >
-> > Does the qcom_scm_shm_bridge_enable() returning -EOPNOTSUPP case make
-> > sense? Setting ret to 0 and then claiming we're using shm_bridge seems
-> > wrong to me.
-> >
+On 13/10/2023 10:09, Luca Weiss wrote:
+> Add the defines for the ADC channels found on the PM7325. The list is
+> taken from downstream msm-5.4 and adjusted for mainline.
 
-You answered yourself in the previous email. The size cannot be less
-than 4096 bytes. There's no need to check it anymore than that IMO.
+Please use subject prefixes matching the subsystem. You can get them for
+example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
+your patch is touching.
 
-Bart
+> 
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+>  include/dt-bindings/iio/qcom,spmi-adc7-pm7325.h | 69 +++++++++++++++++++++++++
+>  1 file changed, 69 insertions(+)
+> 
+> diff --git a/include/dt-bindings/iio/qcom,spmi-adc7-pm7325.h b/include/dt-bindings/iio/qcom,spmi-adc7-pm7325.h
+> new file mode 100644
+> index 000000000000..96908014e09e
+> --- /dev/null
+> +++ b/include/dt-bindings/iio/qcom,spmi-adc7-pm7325.h
+> @@ -0,0 +1,69 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
 
-> > > +
-> > > +   return ret;
-> > > +}
-> > > +
-> > > +static int qcom_tzmem_init_pool(struct qcom_tzmem_pool *pool)
-> > > +{
-> > > +   u64 pfn_and_ns_perm, ipfn_and_s_perm, size_and_flags, ns_perms, *=
-handle;
-> > > +   int ret;
-> > > +
-> > > +   if (!qcom_tzmem_using_shm_bridge)
-> > > +           return 0;
-> > > +
-> > > +   ns_perms =3D (QCOM_SCM_PERM_WRITE | QCOM_SCM_PERM_READ);
-> > > +   pfn_and_ns_perm =3D (u64)pool->pbase | ns_perms;
-> > > +   ipfn_and_s_perm =3D (u64)pool->pbase | ns_perms;
-> > > +   size_and_flags =3D pool->size | (1 << QCOM_SHM_BRIDGE_NUM_VM_SHIF=
-T);
-> >
-> > Is there any sanity checking that can be done here? I assume bits 0-11 =
-are all
-> > flag fields (or at least unrelated to size which I assume at a minimum
-> > must be 4k aka bit 12).
->
-> I guess qcom_tzmem_pool_new's PAGE_ALIGN would make sure this is
-> probably ok for all future users, but I do think some sanity would be
-> nice to indicate the size's allowed for SHM bridge.
->
-> >
-> > > +
-> > > +   handle =3D kzalloc(sizeof(*handle), GFP_KERNEL);
-> >
-> > Consider __free(kfree) + return_ptr() usage?
-> >
-> > > +   if (!handle)
-> > > +           return -ENOMEM;
-> > > +
-> > > +   ret =3D qcom_scm_shm_bridge_create(qcom_tzmem_dev, pfn_and_ns_per=
-m,
-> > > +                                    ipfn_and_s_perm, size_and_flags,
-> > > +                                    QCOM_SCM_VMID_HLOS, handle);
-> > > +   if (ret) {
-> > > +           kfree(handle);
-> > > +           return ret;
-> > > +   }
-> > > +
-> > > +   pool->priv =3D handle;
-> > > +
-> > > +   return 0;
-> > > +}
-> > > +
-> > > +static void qcom_tzmem_cleanup_pool(struct qcom_tzmem_pool *pool)
-> > > +{
-> > > +   u64 *handle =3D pool->priv;
-> > > +
-> > > +   if (!qcom_tzmem_using_shm_bridge)
-> > > +           return;
-> > > +
-> > > +   qcom_scm_shm_bridge_delete(qcom_tzmem_dev, *handle);
-> > > +   kfree(handle);
-> > > +}
-> > > +
-> > > +#endif /* CONFIG_QCOM_TZMEM_MODE_SHMBRIDGE */
-> > >
-> > >  /**
-> > >   * qcom_tzmem_pool_new() - Create a new TZ memory pool.
-> > > --
-> > > 2.39.2
-> > >
->
+We expect the bindings to be dual licensed. What was the license of the
+original work?
+
+> +/*
+> + * Copyright (c) 2020 The Linux Foundation. All rights reserved.
+> + */
+
+
+
+Best regards,
+Krzysztof
+
