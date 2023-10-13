@@ -2,113 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C4427C7F43
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 10:02:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 39C0A7C7F97
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 10:10:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229879AbjJMICE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Oct 2023 04:02:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43838 "EHLO
+        id S230051AbjJMIKU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Oct 2023 04:10:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229726AbjJMICD (ORCPT
+        with ESMTP id S230015AbjJMIKT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Oct 2023 04:02:03 -0400
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 862E683
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 01:02:01 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qrD7I-00035s-Mq; Fri, 13 Oct 2023 10:01:52 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qrD7F-001LQq-WA; Fri, 13 Oct 2023 10:01:50 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qrD7F-00FPlj-Ma; Fri, 13 Oct 2023 10:01:49 +0200
-Date:   Fri, 13 Oct 2023 10:01:49 +0200
-From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To:     Dan Carpenter <dan.carpenter@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, Su Hui <suhui@nfschina.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, kernel-janitors@vger.kernel.org
-Subject: Re: [PATCH] drm/msm: remove unnecessary NULL check
-Message-ID: <20231013080149.hbcuxww6w362g6xh@pengutronix.de>
-References: <5de18b71-c3db-4820-b35e-262b4cac35fc@moroto.mountain>
+        Fri, 13 Oct 2023 04:10:19 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87CC0D8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 01:10:15 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-99357737980so297990866b.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 01:10:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1697184614; x=1697789414; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=tpzwZ+RNeBqt/RBUQJuOWXGZTsvoBXF446IDuijvCXI=;
+        b=kJ9EkaoogYB8jyX6l1iFyAJ3s7hSB02WpYBbOOVQodugp1bR8SG1UF51YbKsnJvX7b
+         DxcGX0qjJBxYr1s5M2tB50SFxwAso4qUntOoQ4/27Qs8Gjqq6346K/VhrPTR9SB3jzsB
+         qFASt53uqQZJPw4GUjVDwYUU5U0OIkUeMHZz3OSj/C02vDesb/TDcJ7Z7wJaaCinTOAe
+         DfX8tf2ff/GTDiTMrAdO2eBazQ0D1ovW2LBZds9d+fTV0Z9zm7AQc6CuRFJDQbmtwxFv
+         IBtYDfNCzZfEsICROYZ2YW9Mg+8psjR5hn7I8UUgZShJImyA1OS4wehql9Te77ttTBGL
+         kAAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697184614; x=1697789414;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tpzwZ+RNeBqt/RBUQJuOWXGZTsvoBXF446IDuijvCXI=;
+        b=oq5pRTlZRevv69OEfd7SzFjrxjyrOJnQAnkY9fPDNo4loXQgYDECs7p+cAQLg+ciFa
+         ohjGeWfWFoXnN1iSDdpfo4/DBDrKRz1RVWoSc96Ncgz69NO4iJcYIQCaetLa8MsuRrYB
+         4YWo/wK3FcYSmI9Nka28jtIXDq2mHcLZwmZZHa3fLpXe4ZQu3oIM9b5oEnXAyLRctSPL
+         RiPWGxh+HKkQoVd6o5BW6XibRjPBb5UpBhLaUeQcQoNY1EKgzWaRIAVYaV0rheiFRDJO
+         u3F/DYlxyMdXfRKEck+CrpUdnZId51LFee+83e2Jtd6f8kRxuRjXebG29xucBv8CBlYZ
+         s/kQ==
+X-Gm-Message-State: AOJu0YxZm7pkBONmolefZha1vYGBLtPCQKiIFU/tkCBGwdTxgvOxNyYZ
+        1ljCYWt3erZ+5OrjrAv0NfwF/Q==
+X-Google-Smtp-Source: AGHT+IElyBa/M08l1OcsNaeLT3o4FcMgzP19oxx4R3SJSqBBmUcsZEoHvdxs+bocsEUyU4kW0WXBxA==
+X-Received: by 2002:a17:906:311b:b0:9b0:169b:eedf with SMTP id 27-20020a170906311b00b009b0169beedfmr24945565ejx.7.1697184613862;
+        Fri, 13 Oct 2023 01:10:13 -0700 (PDT)
+Received: from otso.luca.vpn.lucaweiss.eu (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id q14-20020a170906360e00b009a5f1d1564dsm11910761ejb.126.2023.10.13.01.10.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Oct 2023 01:10:13 -0700 (PDT)
+From:   Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH 0/4] Add Fairphone 5 thermals (PMK7325, PM7250B, PM7325)
+Date:   Fri, 13 Oct 2023 10:09:52 +0200
+Message-Id: <20231013-fp5-thermals-v1-0-f14df01922e6@fairphone.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="wji2ulhqnz43jxlv"
-Content-Disposition: inline
-In-Reply-To: <5de18b71-c3db-4820-b35e-262b4cac35fc@moroto.mountain>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFD7KGUC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI2NDA0Nj3bQCU92SjNSi3MScYl2jJGNDi2QLU8uUFBMloJaCotS0zAqwcdG
+ xtbUA2B40Pl4AAAA=
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-iio@vger.kernel.org, devicetree@vger.kernel.org,
+        Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.12.3
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Configure the necessary components to register some thermal zones in
+Linux for the different thermistors found on the Fairphone 5.
 
---wji2ulhqnz43jxlv
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The names for the thermal zones and ADCs were taken from the downstream
+kernel but double checked against hardware schematics.
 
-Hello,
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Luca Weiss (4):
+      iio: adc: Add PM7325 PMIC7 ADC bindings
+      arm64: dts: qcom: qcm6490-fairphone-fp5: Add PM7250B thermals
+      arm64: dts: qcom: qcm6490-fairphone-fp5: Add PMK7325 thermals
+      arm64: dts: qcom: qcm6490-fairphone-fp5: Add PM7325 thermals
 
-On Fri, Oct 13, 2023 at 10:17:08AM +0300, Dan Carpenter wrote:
-> This NULL check was required when it was added, but we shuffled the code
-> around in commit 1f50db2f3e1e ("drm/msm/mdp5: move resource allocation
-> to the _probe function") and now it's not.  The inconsistent NULL
-> checking triggers a Smatch warning:
->=20
->     drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c:847 mdp5_init() warn:
->     variable dereferenced before check 'mdp5_kms' (see line 782)
->=20
-> Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+ arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 221 +++++++++++++++++++++
+ include/dt-bindings/iio/qcom,spmi-adc7-pm7325.h    |  69 +++++++
+ 2 files changed, 290 insertions(+)
+---
+base-commit: 7c0d0c1272e82888aa01017818d00245d452b895
+change-id: 20231013-fp5-thermals-2b318c859dd4
 
-LGTM
+Best regards,
+-- 
+Luca Weiss <luca.weiss@fairphone.com>
 
-Reviewed-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
-
-This patch opportunity is valid since commit 1f50db2f3e1e
-("drm/msm/mdp5: move resource allocation to the _probe function") but
-applies to older trees (where it introduces a bug).
-On one hand it's not really a fix, but maybe still add a Fixes: line to
-ensure it's not backported to older stables? Hmm, I don't know.
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
-
---wji2ulhqnz43jxlv
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmUo+WwACgkQj4D7WH0S
-/k4sEAf/UXusWyq09WzDKD7Q9pMG1laxguZOi/eLb/9XaAILoRE0zOQmC0FxjO7q
-23Ob8SBUww+V/X9zK1YOXP0gipT9qtG1RuEi5n02EArrrAs6cMbVYoAsuJ96JeaB
-WMkYfZAQbyioIsWqY44m9NxQYK8fJSGn7sg7da7sJkljUlqNVrN/WIKVjyKWO37N
-hA0ee7JDSOzjH5dN+n0CsYiBKSkapwUKbGm+SHFXhPSLfKsnYYl3vzTkVt26N1xo
-h5JpqEaBCzMdzfWCaCwEMGfTjl/VAxWS7gsft/X6q2MHNQSyyoEFPqdu3qY4JEvo
-3YEc6QGLuJlYfVNLxSwN8jm0zfIYlA==
-=5nCZ
------END PGP SIGNATURE-----
-
---wji2ulhqnz43jxlv--
