@@ -2,255 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D00847C7FA5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 10:10:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D0027C801E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 10:25:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229743AbjJMIKZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Oct 2023 04:10:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47636 "EHLO
+        id S230025AbjJMIZX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Oct 2023 04:25:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230032AbjJMIKV (ORCPT
+        with ESMTP id S229891AbjJMIZW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Oct 2023 04:10:21 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38E6EF5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 01:10:18 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-9b9ad5760b9so272686566b.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 01:10:18 -0700 (PDT)
+        Fri, 13 Oct 2023 04:25:22 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38433B8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 01:25:20 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-4056ce55e7eso18860145e9.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 01:25:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1697184617; x=1697789417; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dT253bU1TN+2VYGYyTK7tnK4dl9BBDdqFWVEHyQXP0Q=;
-        b=2nqsGwrRpvwg6YT0WPFGKfZl4mqK7tdOps0qTh8CCjsDTt1DJzlcUp1i28Ktc2oKnZ
-         bKCwiIBekakHVfrgr6XaJIy4/3l6pYYTSOdaRh6vLgJSHUk03WSHsYmH4CmO4U7N75VF
-         xWa+Rt3GqKoI0sLcpu2rvTRuB7L7OJRpNDnMVitQB4Fg8SghCOUKxnMOm5oLM4gzgMj9
-         o2yjA7kNylHnfk35yAZXYJraIWlZbufXXWqvt7ol+gmAV71g4mvfQ7xDDqVK1GSM8ovj
-         dz8r2BZbx/MeGkJQnxb4Cul4ZvSlSjDYQ0ycU4co/Ph3FVFv3e6eX5RhDn0DZEVaEFlz
-         Uu6A==
+        d=linaro.org; s=google; t=1697185518; x=1697790318; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=M+uauCSgQKcWUCd6FsYiqka8NNHbjlLVkJ7rYh7s+Tg=;
+        b=YRxxc1Qw02CIizIz0lAMetrEjcfh3grdv8x56ilWPCq5FAHPBRqS4IAi4WXlaPyZ12
+         fwlRnSRyySJZwlS2/gOAG0faI09Thr0v4tzl5JjAR0K5ePzimgGhndUBR59wE3jiUzSc
+         wAwfxbcX9sI7YeHgp8XMS19jP8OT7S953w0+0rnqfNoSTdxx8pbL3xOurqIJ+sn1Dzx8
+         i1C64qSH9P5BPhUTEY7n7WcIeyhO37jqthQwc9nUtb2n5X6E6Dp4cQBhlwIzo/9wkgeP
+         RtbZkzOl7nxgOQz5xf1jFloG3btcx32rZ3D2Nuo+gOiMnSZnw3xRrkQhBYyuB5mJGEFl
+         84+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697184617; x=1697789417;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dT253bU1TN+2VYGYyTK7tnK4dl9BBDdqFWVEHyQXP0Q=;
-        b=n+pA6VGP2XVQWBIzfQR2TigqYwB/wJlIZUQbV7O2gHAmmTugvtBSdkH9TT6PZttoIn
-         tGBml58j+aCp17wc8aw/S0Vzv/snjPXnTZyfTtNg/wJfamTjOzgcv5fn3pZr1eLDWVIL
-         0e165jr3qU+daPhVXVMqVGukEjC34egQtRj3qNuozrY1R0w2aEsipJDnsiGTeNlKZwi4
-         TZcHp5QQunMAUJe6HnybL47sjpg4Jm/Wkvjxy2/Hqzm8mIap7NxDmB8SvyiaxlXHH2Sk
-         jhBPbphE1tT86XZYRfLz8E9AA/ObA18iOMbSuxRJUwEQfSfx13Yevgqn9Wy0+x80S4Ci
-         /U5w==
-X-Gm-Message-State: AOJu0YwIKWOESn+SzaXL6chFAXqJzFUC6o7pAuxSqFyV21wX6HgZBgCb
-        Ut0vPFMOxdWY8vJLIugZaUBrig==
-X-Google-Smtp-Source: AGHT+IGPXVTWcKw9dwcC63fjjdOYNbEqaNkFCBQ0Y8FaQfhMMN2PFBzCRziai2IqwqfPGZjkOtmpKQ==
-X-Received: by 2002:a17:907:75da:b0:9ad:cf30:10c with SMTP id jl26-20020a17090775da00b009adcf30010cmr25008658ejc.46.1697184616863;
-        Fri, 13 Oct 2023 01:10:16 -0700 (PDT)
-Received: from otso.luca.vpn.lucaweiss.eu (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id q14-20020a170906360e00b009a5f1d1564dsm11910761ejb.126.2023.10.13.01.10.16
+        d=1e100.net; s=20230601; t=1697185518; x=1697790318;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=M+uauCSgQKcWUCd6FsYiqka8NNHbjlLVkJ7rYh7s+Tg=;
+        b=j95qgBorSYWK4v0xrJ5QpiN5SJ9+UaQZgILYutfHxVvrLdjERoN/OjMSgzEu0vKxnA
+         fL6O3uwaRWbwg/VU95rHOosQNS9nWVZ++iZiREVuDQmeve4TX/kjbCqM6p8V4cGk3EZM
+         HmrC8pIDSbRQmFkAYntI+mvVhGHF9UlndctUla7T+k/tP2cOD7gZolrebyiuX8tQS92p
+         2HWs2o7IB+r10AIo8rjINdJrxWVISYsGom6sHdOHCkBeU7+62Wa/oRWdaKiS8ZOHs/y8
+         pvyX3N07RzFLe5/ktWX82nztzURzvMesf1lOoQVO/nHD8tQs0f+9wmyMeIOUm3tZvv0/
+         uxrQ==
+X-Gm-Message-State: AOJu0Yz7ogaw91GgwDlu9QS9NGQrUh2kQYKzmrzlgZ5iQSQvUXW1Uf9t
+        KgNz9fETct71S62Or+FXlnwH/A==
+X-Google-Smtp-Source: AGHT+IEjRa/nZrp2h3uISb8MvRVIEmCnprt03btuSLuHCUEtgB3tAH3dRRIg0+64ePhtBFCv/YHqZg==
+X-Received: by 2002:a05:600c:282:b0:406:44e7:ef93 with SMTP id 2-20020a05600c028200b0040644e7ef93mr24194490wmk.1.1697185518504;
+        Fri, 13 Oct 2023 01:25:18 -0700 (PDT)
+Received: from localhost ([102.36.222.112])
+        by smtp.gmail.com with ESMTPSA id t9-20020a05600001c900b0032179c4a46dsm20236629wrx.100.2023.10.13.01.25.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Oct 2023 01:10:16 -0700 (PDT)
-From:   Luca Weiss <luca.weiss@fairphone.com>
-Date:   Fri, 13 Oct 2023 10:09:56 +0200
-Subject: [PATCH 4/4] arm64: dts: qcom: qcm6490-fairphone-fp5: Add PM7325
- thermals
+        Fri, 13 Oct 2023 01:25:17 -0700 (PDT)
+Date:   Fri, 13 Oct 2023 11:25:15 +0300
+From:   Dan Carpenter <dan.carpenter@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, Su Hui <suhui@nfschina.com>,
+        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+        <u.kleine-koenig@pengutronix.de>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        kernel-janitors@vger.kernel.org
+Subject: [PATCH v2] drm/msm: remove unnecessary NULL check
+Message-ID: <ZSj+6/J6YsoSpLak@kadam>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231013-fp5-thermals-v1-4-f14df01922e6@fairphone.com>
-References: <20231013-fp5-thermals-v1-0-f14df01922e6@fairphone.com>
-In-Reply-To: <20231013-fp5-thermals-v1-0-f14df01922e6@fairphone.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-iio@vger.kernel.org, devicetree@vger.kernel.org,
-        Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.12.3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Configure the thermals for the QUIET_THERM, CAM_FLASH_THERM, MSM_THERM
-and RFC_CAM_THERM thermistors connected to PM7325.
+This NULL check was required when it was added, but we shuffled the code
+around and now it's not.  The inconsistent NULL checking triggers a
+Smatch warning:
 
-With this PMIC the software communication to the ADC is going through
-PMK7325 (= PMK8350).
+    drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c:847 mdp5_init() warn:
+    variable dereferenced before check 'mdp5_kms' (see line 782)
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Fixes: 1f50db2f3e1e ("drm/msm/mdp5: move resource allocation to the _probe function"
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 117 +++++++++++++++++++++
- 1 file changed, 117 insertions(+)
+v2: Added a Fixes tag.  It's not really a bug fix and so adding the
+fixes tag is slightly unfair but it should prevent this patch from
+accidentally getting backported before the refactoring and causing an
+issue.
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-index 2c01f799a6b2..d0b1e4e507ff 100644
---- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-+++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-@@ -9,6 +9,7 @@
- #define PM7250B_SID 8
- #define PM7250B_SID1 9
- 
-+#include <dt-bindings/iio/qcom,spmi-adc7-pm7325.h>
- #include <dt-bindings/iio/qcom,spmi-adc7-pmk8350.h>
- #include <dt-bindings/leds/common.h>
- #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-@@ -137,6 +138,20 @@ afvdd_2p8: regulator-afvdd-2p8 {
- 	};
- 
- 	thermal-zones {
-+		camera-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pmk8350_adc_tm 2>;
-+
-+			trips {
-+				active-config0 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
- 		chg-skin-thermal {
- 			polling-delay-passive = <0>;
- 			polling-delay = <0>;
-@@ -165,6 +180,48 @@ active-config0 {
- 			};
- 		};
- 
-+		quiet-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pmk8350_adc_tm 1>;
-+
-+			trips {
-+				active-config0 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		rear-cam-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pmk8350_adc_tm 4>;
-+
-+			trips {
-+				active-config0 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		sdm-skin-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pmk8350_adc_tm 3>;
-+
-+			trips {
-+				active-config0 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
- 		xo-thermal {
- 			polling-delay-passive = <0>;
- 			polling-delay = <0>;
-@@ -538,6 +595,34 @@ xo-therm@0 {
- 		qcom,ratiometric;
- 		qcom,hw-settle-time-us = <200>;
- 	};
-+
-+	quiet-therm@1 {
-+		reg = <1>;
-+		io-channels = <&pmk8350_vadc PM7325_ADC7_AMUX_THM1_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time-us = <200>;
-+	};
-+
-+	cam-flash-therm@2 {
-+		reg = <2>;
-+		io-channels = <&pmk8350_vadc PM7325_ADC7_AMUX_THM2_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time-us = <200>;
-+	};
-+
-+	sdm-skin-therm@3 {
-+		reg = <3>;
-+		io-channels = <&pmk8350_vadc PM7325_ADC7_AMUX_THM3_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time-us = <200>;
-+	};
-+
-+	wide-rfc-therm@4 {
-+		reg = <4>;
-+		io-channels = <&pmk8350_vadc PM7325_ADC7_AMUX_THM4_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time-us = <200>;
-+	};
- };
- 
- &pmk8350_rtc {
-@@ -554,6 +639,38 @@ channel@44 {
- 		qcom,pre-scaling = <1 1>;
- 		label = "pmk8350_xo_therm";
- 	};
-+
-+	channel@144 {
-+		reg = <PM7325_ADC7_AMUX_THM1_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+		qcom,pre-scaling = <1 1>;
-+		label = "pm7325_quiet_therm";
-+	};
-+
-+	channel@145 {
-+		reg = <PM7325_ADC7_AMUX_THM2_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+		qcom,pre-scaling = <1 1>;
-+		label = "pm7325_cam_flash_therm";
-+	};
-+
-+	channel@146 {
-+		reg = <PM7325_ADC7_AMUX_THM3_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+		qcom,pre-scaling = <1 1>;
-+		label = "pm7325_sdm_skin_therm";
-+	};
-+
-+	channel@147 {
-+		reg = <PM7325_ADC7_AMUX_THM4_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+		qcom,pre-scaling = <1 1>;
-+		label = "pm7325_wide_rfc_therm";
-+	};
- };
- 
- &pon_pwrkey {
+Btw, fixes tags are often unfair like this.  People look at fixes tags
+and think, "the fix introduced a bug" but actually it's really common
+that the fix was just not complete.  But from a backporting perspective
+it makes sense to tie them together.
 
+Plus everyone introduces bugs.  If you're not introducing bugs, then
+you're probably not writing a lot of code.
+
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+index 11d9fc2c6bf5..ec933d597e20 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+@@ -844,8 +844,7 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
+ 
+ 	return 0;
+ fail:
+-	if (mdp5_kms)
+-		mdp5_destroy(mdp5_kms);
++	mdp5_destroy(mdp5_kms);
+ 	return ret;
+ }
+ 
 -- 
-2.42.0
-
+2.39.2
