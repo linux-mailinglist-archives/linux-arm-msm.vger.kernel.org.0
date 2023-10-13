@@ -2,153 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED8F97C7D19
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 07:41:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F5D17C7DC1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 08:35:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229587AbjJMFlr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Oct 2023 01:41:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34488 "EHLO
+        id S229688AbjJMGfk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Oct 2023 02:35:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbjJMFlq (ORCPT
+        with ESMTP id S229644AbjJMGfi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Oct 2023 01:41:46 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CA98B7;
-        Thu, 12 Oct 2023 22:41:44 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39D2iG5E009646;
-        Fri, 13 Oct 2023 05:41:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=k7srpVrEMj0jtruEIJpxYUZScvzOnfM7JeWmVEFFr2U=;
- b=lpcjn1XJ2XPvk3Qoi+J3yETVKyweKrX755xZtx0LaKkGT36cVoKreyaFl+M4yFE+ibo4
- D0IdtsMZzrtJBFD9chNMVLcq8es0054KlludOkaIQTFoGp08RWwYeoH99itD8Qm0AOkW
- jGRY9Q9WeuQ2N+B2/YNvD1iPdggmUmwN9Eh+eV7KIqxRxWsud9Uoxdcj7JJloQvZZe1M
- AaGj8F4kEWnGqcA4kcb91y6DpvG1lEi1SetMkeUcIGrlEwH4h1L1OtW1cz4gZflIIehQ
- SYrkMGprEpMgx/ECV7TKa2fhKNldR0Ff/4WZhdIr/20I9uH+asAi12AzfvH8y11c3Ile xw== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tpt1u8nt2-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 13 Oct 2023 05:41:38 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39D5fAYU029856
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 13 Oct 2023 05:41:10 GMT
-Received: from [10.214.67.128] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.30; Thu, 12 Oct
- 2023 22:41:06 -0700
-Message-ID: <994a6ff0-9b6c-0ac8-9a6c-694a2abd0f4d@quicinc.com>
-Date:   Fri, 13 Oct 2023 11:11:00 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: qcm6490: Add qcm6490 dts file
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <luca.weiss@fairphone.com>
-References: <20231003175456.14774-1-quic_kbajaj@quicinc.com>
- <20231003175456.14774-3-quic_kbajaj@quicinc.com>
- <e846215b-faba-4af6-a108-bae9b1deb2be@linaro.org>
-From:   Komal Bajaj <quic_kbajaj@quicinc.com>
-In-Reply-To: <e846215b-faba-4af6-a108-bae9b1deb2be@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Bdgp0tnyLPhoGmyKiLzGk3GKDixczKwO
-X-Proofpoint-ORIG-GUID: Bdgp0tnyLPhoGmyKiLzGk3GKDixczKwO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-13_03,2023-10-12_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- lowpriorityscore=0 phishscore=0 mlxlogscore=933 clxscore=1011 adultscore=0
- malwarescore=0 bulkscore=0 impostorscore=0 mlxscore=0 suspectscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310130049
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Fri, 13 Oct 2023 02:35:38 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD162BD
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 23:35:33 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-9ba081173a3so286645966b.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Oct 2023 23:35:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1697178932; x=1697783732; darn=vger.kernel.org;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mw7d2rWqkx84mECPA0MX5FELEn+q0S5ND1l7U6MlW1M=;
+        b=fm4Dbls/0njpq32LVctJfLhPqWi0yJ2J3EF7WOVckfgZlax20krmmVv5gg2VZIZt8H
+         NhlzC3+gxZ2F6XK/5uapNx04onfXTOVBbcfWS0WW+lINoVpDBp+TI3u7ug5XFIKcbB+a
+         UKvJinKavIL30e8Os1gt2Bav1/RsUt6iMBb6p1zUx+w5bEYJmBu/LsSgW7HzEQBceEpp
+         odky8UsJHB1frVNKCUg8W9NBNp55gWD6j/JsaZt8dHP/qzvK6CqzdyeiGZk0D3cBBYPq
+         h5vwJWeCb/PR/u0o9aRa2ZQZ0Yqg68m774t9QkukPBLVRqBv8mRQ2v6HLJA2YRmUOfvW
+         4nkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697178932; x=1697783732;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=mw7d2rWqkx84mECPA0MX5FELEn+q0S5ND1l7U6MlW1M=;
+        b=Vkxc3HyEKqQZpl1uHMDHpKvSo8W6t1dhXALOiBj52UgibZW1yQKfdXHtzpTF+8LbG+
+         H6vtk1N9XHIG/c6fBbWbt+P7XObPyHaHUx/iOYf0//v9SZdXreO+VtIOsdXYi5CvFqGO
+         CiWyRlbJazM19GGH0aX5eWH0eTmLpE+9jmy6d36nSYe9qyqaYeG5yWZv9jlcNIl42Dw8
+         zajrktPfqb6i9EkO80RemMAPlecQ7qOkWucog4Ai8cmC0oxJAWw1js+rZMTAEOVDt3RV
+         f/JGmVLP2d1J+OrONoGmirEHZ64vSzew9LwNo1ZeQ8VNuH06WfLhCMkzXcshlf8CXYXv
+         eKJw==
+X-Gm-Message-State: AOJu0YxqnvqbACe7IXMkGpVG+RF7T4LFrKp9OKYOMsvg8uduEG4w+hVc
+        DJTuLqRzkKNTEwCJgKrNDY6zcw==
+X-Google-Smtp-Source: AGHT+IGbjKov6XXZ6PjO42kk5Nimru0P7r6dHP1nYYD+Mxr/9oWhoDfATrLUq4GyB5DEQmuF+pYfpw==
+X-Received: by 2002:a17:906:20d8:b0:9b9:f990:c701 with SMTP id c24-20020a17090620d800b009b9f990c701mr17557436ejc.52.1697178932152;
+        Thu, 12 Oct 2023 23:35:32 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id u13-20020a1709060b0d00b009ad87d1be17sm11920164ejg.22.2023.10.12.23.35.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Oct 2023 23:35:31 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Fri, 13 Oct 2023 08:35:31 +0200
+Message-Id: <CW73PXH7OBDG.22PGA47PJR8T2@fairphone.com>
+Subject: Re: [PATCH v5 0/7] Add support for LUT PPG
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Anjelique Melendez" <quic_amelende@quicinc.com>, <pavel@ucw.cz>,
+        <lee@kernel.org>, <thierry.reding@gmail.com>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <agross@kernel.org>, <andersson@kernel.org>
+Cc:     <konrad.dybcio@linaro.org>, <u.kleine-koenig@pengutronix.de>,
+        <quic_subbaram@quicinc.com>, <quic_gurus@quicinc.com>,
+        <linux-leds@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pwm@vger.kernel.org>, <kernel@quicinc.com>
+X-Mailer: aerc 0.15.2
+References: <20230929003901.15086-1-quic_amelende@quicinc.com>
+ <CVX5ZUGU9BVE.2TA819U1AI6BZ@otso>
+ <a2781978-2081-f4cb-dfe3-0489860dab8e@quicinc.com>
+In-Reply-To: <a2781978-2081-f4cb-dfe3-0489860dab8e@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu Oct 12, 2023 at 11:50 PM CEST, Anjelique Melendez wrote:
+>
+>
+> On 10/1/2023 7:15 AM, Luca Weiss wrote:
+> > On Fri Sep 29, 2023 at 2:38 AM CEST, Anjelique Melendez wrote:
+> >> In certain PMICs, LUT pattern and LPG configuration is stored in SDAM
+> >> modules instead of LUT peripheral. This feature is called PPG.
+> >>
+> >> This change series adds support for PPG. Thanks!
+> [..]
+> >>
+> >> Tested-by: Luca Weiss <luca.weiss@fairphone.com> # sdm632-fairphone-fp=
+3 (pmi632)
+> >=20
+> > Hi Anjelique,
+> >=20
+> > Actually I've retested this now on PMI632 (and also realized that my
+> > previous tests weren't correct and wasn't actually using hw_pattern).
+> >=20
+> > Using the following commands (after boot) I'm expecting to get a
+> > 500ms on 500ms off blinking pattern between white (255 255 255) and off
+> > (0 0 0).
+> >=20
+> >   echo pattern > /sys/class/leds/rgb:status/trigger
+> >   echo -1 > /sys/class/leds/rgb:status/repeat
+> >=20
+> >   echo "255 255 255" > /sys/class/leds/rgb:status/multi_intensity
+> >   echo "255 500 255 0 0 500 0 0" > /sys/class/leds/rgb:status/hw_patter=
+n
+> >=20
+> > What I actually see is it blinking between cyan (0 255 255) and red (25=
+5
+> > 0 0).
+> > At some point after playing with many patterns I got it to actually
+> > cycle between white and off, but I couldn't reproduce this again (or I
+> > didn't try hard enough).
+> >=20
+> >=20
+> > But with this example it correctly blinks red on-off.
+> >=20
+> >   echo "255 0 0" > /sys/class/leds/rgb:status/multi_intensity
+> >   echo "255 500 255 0 0 500 0 0" > /sys/class/leds/rgb:status/hw_patter=
+n
+> >=20
+> > With "0 255 0" and "0 0 255" the other colors also work fine, it's just
+> > the combinations that seem somewhat broken.
+> >=20
+> > Regards
+> > Luca
+> >=20
+> >=20
+> Hi Luca,
+>
+> Thanks for testing again and the feedback!
+> Looks like for multicolor devices there is a small concurrency issue with
+> enabling pattern at the same time for all the led channels. This could be
+> why you observed your device blinking between red (255 0 0) and cyan (0 2=
+55 255),
+> instead of seeing all channels (255 255 255) blink.
+> The fix I'm planing to include in the next series is is to disable the mu=
+lticolor led
+> channels first, then configure all channels, and finally re-enable channe=
+ls
+> so that pattern is triggered at the same time for each all of the channel=
+s.
 
-
-On 10/7/2023 5:03 AM, Konrad Dybcio wrote:
-> On 3.10.2023 19:54, Komal Bajaj wrote:
->> Add qcm6490 devicetree file for QCM6490 SoC and QCM6490 IDP
->> platform. QCM6490 is derived from SC7280 meant for various
->> form factor including IoT.
->>
->> Supported features are, as of now:
->> * Debug UART
->> * eMMC
->> * USB
->>
->> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/Makefile        |   1 +
->>   arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 333 +++++++++++++++++++++++
->>   arch/arm64/boot/dts/qcom/qcm6490.dtsi    |  94 +++++++
->>   3 files changed, 428 insertions(+)
->>   create mode 100644 arch/arm64/boot/dts/qcom/qcm6490-idp.dts
->>   create mode 100644 arch/arm64/boot/dts/qcom/qcm6490.dtsi
->>
->> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
->> index 73c3be0f8872..3a2d9dbaacce 100644
->> --- a/arch/arm64/boot/dts/qcom/Makefile
->> +++ b/arch/arm64/boot/dts/qcom/Makefile
->> @@ -82,6 +82,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-sony-xperia-yoshino-maple.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-sony-xperia-yoshino-poplar.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-xiaomi-sagit.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-fairphone-fp5.dtb
->> +dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-idp.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
->> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
->> new file mode 100644
->> index 000000000000..d81a7810fd5a
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
->> @@ -0,0 +1,333 @@
->> +// SPDX-License-Identifier: BSD-3-Clause
->> +/*
->> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
->> + */
->> +
->> +/dts-v1/;
->> +
->> +#include <dt-bindings/iio/qcom,spmi-adc7-pmk8350.h>
->> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->> +#include "pm7325.dtsi"
->> +#include "pm8350c.dtsi"
->> +#include "pmk8350.dtsi"
->> +#include "qcm6490.dtsi"
-> As the kernel robot pointed out, this has clearly not even been
-> compile-tested..
-
-Sorry for this.. I made this change as per the comment that I got to 
-sort the
-inclusion files in alphabetical order. Incremental build compilation 
-wasn't able
-to catch this error.
-I will move qcm6490.dtsi file inclusion before pm* files inclusion.
-
-Thanks
-Komal
+Sounds reasonable I think!
 
 >
-> Konrad
+> I am currently testing with pm8350c device so if you are able to test nex=
+t series
+> on pmi632 it would be very appreciated!
+
+Will do, thanks for fixing it up!
+
+Regards
+Luca
+
+>
+> Thanks,
+> Anjelique
 
