@@ -2,97 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 086827C8EB3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 23:04:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CBE447C9117
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Oct 2023 00:58:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232272AbjJMVEL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Oct 2023 17:04:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35858 "EHLO
+        id S232421AbjJMW6c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Oct 2023 18:58:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232218AbjJMVEH (ORCPT
+        with ESMTP id S232021AbjJMW6b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Oct 2023 17:04:07 -0400
-Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40681BE;
-        Fri, 13 Oct 2023 14:04:06 -0700 (PDT)
-Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
-        by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39DKwxHp024337;
-        Fri, 13 Oct 2023 21:04:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=corp-2023-03-30;
- bh=SL0h6z/vV7VfUut/S0ZVh8mKDOxERh3hMQRoIaPeuGM=;
- b=KHL1OLwDAMTVhBq9JBbc8MOU7S8UMBj0l9UaQdW3Vu6OU3xB5WhRBEB4nIsrLL/xYuZC
- Gjp8iBrfILbQQS1wGVvUxrK0HFk7HHPbHu0OpBTgUtuIPTuX6aRSTqMlgjbTTnZMCAPc
- O1S5MdIDir6E6guCmggmll48897R3A1dVDKGjkCMNLgqUbhbMX8+l9oE9/uLpJc3rX8j
- sA/GeBh0pwQp1rfzmIfPou9zkBc4sgtgzc5uVjlHXwh9E/2PrqqxlGJHfeTVTlGL1ZLd
- 6a4Z+4HL4ib25MXWCl0X0Z59rbZPlKDdwz01Y0bclvfCL/st6r2h1RtrCw0H1+D43Taw cg== 
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
-        by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3tmh8a36xq-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Fri, 13 Oct 2023 21:04:01 +0000
-Received: from pps.filterd (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
-        by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19) with ESMTP id 39DKhOo8036883;
-        Fri, 13 Oct 2023 21:03:57 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 3tpt0uxn74-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Fri, 13 Oct 2023 21:03:57 +0000
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 39DL1kdh003704;
-        Fri, 13 Oct 2023 21:03:57 GMT
-Received: from ca-mkp2.ca.oracle.com.com (mpeterse-ol9.allregionaliads.osdevelopmeniad.oraclevcn.com [100.100.251.135])
-        by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id 3tpt0uxn63-2;
-        Fri, 13 Oct 2023 21:03:56 +0000
-From:   "Martin K. Petersen" <martin.petersen@oracle.com>
-To:     Manivannan Sadhasivam <mani@kernel.org>,
-        Dan Carpenter <dan.carpenter@linaro.org>
-Cc:     "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        kernel-janitors@vger.kernel.org
-Subject: Re: [PATCH] scsi: ufs: qcom: remove unnecessary check
-Date:   Fri, 13 Oct 2023 17:03:50 -0400
-Message-Id: <169721547131.1657123.11625044048800486728.b4-ty@oracle.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <fe3b8fcd-64a7-4887-bddd-32239a88a6a3@moroto.mountain>
-References: <fe3b8fcd-64a7-4887-bddd-32239a88a6a3@moroto.mountain>
+        Fri, 13 Oct 2023 18:58:31 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F5ECB7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 15:58:30 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2c50d1b9f22so7907121fa.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 15:58:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1697237908; x=1697842708; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=1uqCtAsTfHcqR/oA1gOEiEIXlrIe3/h8ohNMcatu9+4=;
+        b=sbHX+jn8vfJ83sj1VHP33aR/1aCrQhiFxuOqk72O6a13Onurk5PD1PqWcNWdJC6NwE
+         V2bL8Wn2ilzis6UiLggsPuV4gQ2Gdk6vudf5R6ePx99DP72ONHwgW7RI+w+zfOjFgYcg
+         9PK41w6F+UXH/jx+wRZnh5MnYgSV+9HDB/83qSPLVY7lZsNzyh+TOf/CE6prmm+oJEF+
+         mxsKlS9FRTRnOJSAZ+jHXTaY9rSh8fVb1dqcqoJKtKk1bvmcxgfHL0WKecN3Zra34u97
+         NnujeObq/FzKyf+/ZRktSjl3V5HAQarKdEVLmkXsNbKBlsKIk1O1WPCQp5gDOZyHoskC
+         qPQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697237908; x=1697842708;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1uqCtAsTfHcqR/oA1gOEiEIXlrIe3/h8ohNMcatu9+4=;
+        b=TEq0J8KFHWr64q81mx9fi6JARySYJNMpZNWFpLzyd+NZUL9fJLXs2kcSvFSK/QBud/
+         S4FshkCgHyuNJSVnPyWYNnp7rTyj/flrDwgpxp10hbMnEyFAnGkHGWE7ddBIoqPe29e7
+         OQ2dnq0UazAo0TYtbdFMtBZAWPRFvKBZJQ6bZ0/WxwVC29z3ZNVEbXlHouGxOjIj94IS
+         JffZ22fnXSO5g86L/3jvHxrW7n/HZxg/ObGZG4/vbE3mNrrjUNf3/mSQHOUWmEAulKBP
+         EKQt/n7TgykBm7fLLxH0T1TlCQPbZcB/wmhJ5mW6ps7i8xlDDtt9FjpzXQiPnxjpOsCt
+         iBQg==
+X-Gm-Message-State: AOJu0YwRK4fUTfIQ/oVjhnPBsEUGv0zdfOSo+kvlnGsXDnW8ccXcOJxv
+        zNuCH6ZXZjAZcAQJssnDgQHhOg==
+X-Google-Smtp-Source: AGHT+IEYluYBp3QhexUDfG+FFIOoQ6SnqxeyN10CTUhvnzyRfci78xhHo498ZkzZvGT5/DId3jScTQ==
+X-Received: by 2002:a2e:8912:0:b0:2c0:923:19c2 with SMTP id d18-20020a2e8912000000b002c0092319c2mr24444696lji.15.1697237907999;
+        Fri, 13 Oct 2023 15:58:27 -0700 (PDT)
+Received: from [192.168.4.141] ([178.235.177.169])
+        by smtp.gmail.com with ESMTPSA id 8-20020a2e1448000000b002c27cd20711sm84658lju.3.2023.10.13.15.58.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 Oct 2023 15:58:27 -0700 (PDT)
+Message-ID: <b1e3fdc4-8f7a-409d-87d3-5b837af703a9@linaro.org>
+Date:   Sat, 14 Oct 2023 00:58:21 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-13_12,2023-10-12_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 spamscore=0 malwarescore=0
- mlxlogscore=718 bulkscore=0 suspectscore=0 adultscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
- definitions=main-2310130183
-X-Proofpoint-GUID: ZBUGp6b0ICP-RIjqYNDJ1epwXUN3i8YB
-X-Proofpoint-ORIG-GUID: ZBUGp6b0ICP-RIjqYNDJ1epwXUN3i8YB
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] soc: qcom: pmic_glink_altmode: Print error when retimer
+ setup fails
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20231013-glink-altmode-ret-v1-1-77941537a35b@fairphone.com>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20231013-glink-altmode-ret-v1-1-77941537a35b@fairphone.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 02 Oct 2023 10:03:35 +0300, Dan Carpenter wrote:
-
-> The "attr" pointer points to an offset into the "host" struct so it
-> can't be NULL.  Delete the if statement and pull the code in a tab.
+On 13.10.2023 15:56, Luca Weiss wrote:
+> It can be useful to know with which return value the retimer_set call
+> failed, so include this info in the dev_err print.
 > 
-> 
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Applied to 6.7/scsi-queue, thanks!
-
-[1/1] scsi: ufs: qcom: remove unnecessary check
-      https://git.kernel.org/mkp/scsi/c/b6f2e063017b
-
--- 
-Martin K. Petersen	Oracle Linux Engineering
+Konrad
