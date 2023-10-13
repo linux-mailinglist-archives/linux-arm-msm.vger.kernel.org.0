@@ -2,110 +2,243 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DE3E57C8939
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 17:56:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 28BE27C8A4D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 18:16:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232507AbjJMP4W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Oct 2023 11:56:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34490 "EHLO
+        id S232710AbjJMQF2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Oct 2023 12:05:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232481AbjJMP4V (ORCPT
+        with ESMTP id S232626AbjJMQFY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Oct 2023 11:56:21 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 954F7BD
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 08:56:18 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-31c5cac3ae2so2058122f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 08:56:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20230601.gappssmtp.com; s=20230601; t=1697212577; x=1697817377; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rL18hk5JsFe4nXO4KOVUi65U7rixgreCJydX/X6y9mk=;
-        b=MFNMVQWIr33fr2xNVIQ62hr6045OYsT6A6NdQDqCN+o3+1kM5q5Or/4WEYsuErirFq
-         h+XAaFwTsxn0/IUjegURXb0zWIm9GewtqwPgVHCsr6QGQPM0MJaHpYlsFsWH7/BzX62v
-         bXepjcwN5coQQGwRpzBuiLgxlQJo70X5Db/qShAvK2c+lAeKwFprLQyu7jZBFCiCcBXY
-         rFcd6g9XPqqvsxEA/hA7tsnoCMqCxLAAFQ1n9ET1mHdHHpF6p58o8VReK9m5V4bIFTrd
-         EgOGeH2FHeAujzddTdb4mTJXAegRZ2AEmDh1nWSGy6zTXMmflP4UV6cESzN9CHwQQkJy
-         nEZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697212577; x=1697817377;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rL18hk5JsFe4nXO4KOVUi65U7rixgreCJydX/X6y9mk=;
-        b=ex3GjLbE6twvXCwfdChCLuFexLWThqhzeSagESsI3Zux9YO4uPMmrINt3kpwX+kxG0
-         XaxGcelWn9wIwVg2oTV+CZWfuPCsxvwQleZAgXZ4eRFcwW+Z0G92K+puBmCke0e4+Vo1
-         4/kO2t1aGx3rIRTGoBhDfhTwxvN5kOxy8yikXZTP6+E8VGbPKRTNPPAWVYXv85+Pe4BS
-         llt2qOfGwK1104wo+HZXc/J887P/7TgIshLgsVgFwHh1RI4gI3ugOmGQUNpMurF+XxjL
-         Ypz0NnPsSTFCqhOAfRut/qgcH5pzWD4jMDgjEok1woF41JCt51CDThym70GcqsFqcklB
-         0+yQ==
-X-Gm-Message-State: AOJu0YxZ+JTsA8SApLUx5I2g/a0nE8VOjLiw1invKpYGum7g62teeiUd
-        lVs2/34NrLjYlz9BCn+6lsqXww==
-X-Google-Smtp-Source: AGHT+IFCoo0IzBlMAA4TrE2I6pvmzmCXr+kr/lGD7qgNi5epMPiamTtxMdZhyMwsiYp+iIcP5iaD6w==
-X-Received: by 2002:a05:6000:1001:b0:32d:81fe:7104 with SMTP id a1-20020a056000100100b0032d81fe7104mr7622602wrx.63.1697212576925;
-        Fri, 13 Oct 2023 08:56:16 -0700 (PDT)
-Received: from [192.168.100.102] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id t15-20020a05600c450f00b0040651505684sm488980wmo.29.2023.10.13.08.56.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Oct 2023 08:56:16 -0700 (PDT)
-Message-ID: <6fab7459-42f1-4d3c-a777-d92ee000f243@nexus-software.ie>
-Date:   Fri, 13 Oct 2023 16:56:15 +0100
+        Fri, 13 Oct 2023 12:05:24 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 8BDA0BE;
+        Fri, 13 Oct 2023 09:05:08 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8800B11FB;
+        Fri, 13 Oct 2023 09:05:48 -0700 (PDT)
+Received: from [10.57.2.80] (unknown [10.57.2.80])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id BF0393F5A1;
+        Fri, 13 Oct 2023 09:05:05 -0700 (PDT)
+Message-ID: <dff4bd1d-e32a-9541-94d2-c354adf3d23b@arm.com>
+Date:   Fri, 13 Oct 2023 17:05:04 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/4] media: dt-bindings: media: camss: Add
- qcom,sc8280xp-camss binding
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Warning notice "Memory manager not clean during takedown" on RB5 runs
 Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        dmitry.baryshkov@linaro.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, jonathan@marek.ca, quic_tdas@quicinc.com,
-        vladimir.zapolskiy@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20231012113100.3656480-1-bryan.odonoghue@linaro.org>
- <20231012113100.3656480-4-bryan.odonoghue@linaro.org>
- <20231013140921.GA3773179-robh@kernel.org>
-From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <20231013140921.GA3773179-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, broonie@kernel.org
+References: <20230817145940.9887-1-dmitry.baryshkov@linaro.org>
+ <20230817145940.9887-5-dmitry.baryshkov@linaro.org>
+From:   Aishwarya TCV <aishwarya.tcv@arm.com>
+In-Reply-To: <20230817145940.9887-5-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/10/2023 15:09, Rob Herring wrote:
-> On Thu, Oct 12, 2023 at 12:30:59PM +0100, Bryan O'Donoghue wrote:
->> Add bindings for qcom,sc8280xp-camss in order to support the camera
->> subsystem for sc8280xp as found in the Lenovo x13s Laptop.
+Hi Dmitry
+
+
+On 17/08/2023 15:59, Dmitry Baryshkov wrote:
+> Add displayport altmode declaration to the Type-C controller node to
+> enable DP altmode negotiation.
 > 
-> You don't need 2 'media' in the subject.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 7 +++++++
+>  1 file changed, 7 insertions(+)
 > 
->>
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
->> This patch depends-on:
->> https://lore.kernel.org/lkml/20231004161853.86382-2-bryan.odonoghue@linaro.org/T
-> 
-> Who is supposed to apply the above and this patch? Normally, this would
-> go thru the media tree, but you didn't send it to them or the media
-> list. 
 
-Ah you're right.
+At present RB5 runs against next-master are consistently throwing
+warning messages (attached below with call trace) on "Memory manager not
+clean during takedown". I can send full logs if required. However, the
+runs are booting successfully so the logs are quite big. Tried running
+with older dtb built, where these
+warnings was not observed.
 
-I've reused the list of recipients for the camcc series and missed Hans 
-from linux-media.
 
----
-bod
+A bisect (full log below) identified this patch as
+introducing the failure.
 
+git bisect start
+# good: [8a749fd1a8720d4619c91c8b6e7528c0a355c0aa] Linux 6.6-rc4
+git bisect good 8a749fd1a8720d4619c91c8b6e7528c0a355c0aa
+# bad: [2a860505b617cf8fda4ebff6cf05d3f774145440] Add linux-next
+specific files for 20231009
+git bisect bad 2a860505b617cf8fda4ebff6cf05d3f774145440
+# bad: [11a92414d65ec3ea50b86004baa9b54e03fc454a] Merge branch 'master'
+of git://linuxtv.org/media_tree.git
+git bisect bad 11a92414d65ec3ea50b86004baa9b54e03fc454a
+# good: [d4ec2b3f0e34a40991fb8d5fb374c07382fe0892] bcachefs:
+stack_trace_save_tsk() depends on CONFIG_STACKTRACE
+git bisect good d4ec2b3f0e34a40991fb8d5fb374c07382fe0892
+# good: [94b6eadf2db4b7ec5b6e5c4dfd3d552ea388e441] Merge branch
+'for-next' of
+git://git.kernel.org/pub/scm/linux/kernel/git/tmlind/linux-omap.git
+git bisect good 94b6eadf2db4b7ec5b6e5c4dfd3d552ea388e441
+# bad: [15c1906eb69acb82e6992d701f9522216fdaf234] Merge branch
+'xtensa-for-next' of git://github.com/jcmvbkbc/linux-xtensa.git
+git bisect bad 15c1906eb69acb82e6992d701f9522216fdaf234
+# bad: [b837ae5f505e0a05329ab9c72ed1a6c55f70456c] Merge branch
+'for-next' of git://git.kernel.org/pub/scm/linux/kernel/git/krzk/linux.git
+git bisect bad b837ae5f505e0a05329ab9c72ed1a6c55f70456c
+# bad: [33e9032a1875bb1aee3c68a4540f5a577ff44130] arm64: dts: qcom:
+apq8016-sbc: Add missing ADV7533 regulators
+git bisect bad 33e9032a1875bb1aee3c68a4540f5a577ff44130
+# bad: [a6546460ca439bade19d64eb63cee2d97c29fb72] arm64: dts: qcom:
+sc8180x: switch PCIe QMP PHY to new style of bindings
+git bisect bad a6546460ca439bade19d64eb63cee2d97c29fb72
+# good: [4988881ec067c3e6d382de1583b7f5b1095ddea2] arm64: dts: qcom:
+sm6125: Add dispcc node
+git bisect good 4988881ec067c3e6d382de1583b7f5b1095ddea2
+# good: [ea96b90a58cf5d2e91ac177f081118ff26b85c1d] arm64: dts: qcom:
+sm8250: Define ports for qmpphy orientation-switching
+git bisect good ea96b90a58cf5d2e91ac177f081118ff26b85c1d
+# bad: [b3dea914127e9065df003002ed13a2ef40d19877] arm64: dts: qcom:
+qrb5165-rb5: enable DP altmode
+git bisect bad b3dea914127e9065df003002ed13a2ef40d19877
+# good: [25defdca4d902b338c05bc01a1de1064a6d3b7f3] arm64: dts: qcom:
+qrb5165-rb5: Switch on TCPM usb-role-switching for usb_1
+git bisect good 25defdca4d902b338c05bc01a1de1064a6d3b7f3
+# good: [956aa24b16350a50d3a6beb9237bc35aa2f447d6] arm64: dts: qcom:
+sm8250: Add DisplayPort device node
+git bisect good 956aa24b16350a50d3a6beb9237bc35aa2f447d6
+# bad: [96387ee7534dc449be35a9bb98b7668da2bed545] arm64: dts: qcom:
+qrb5165-rb5: enable displayport controller
+git bisect bad 96387ee7534dc449be35a9bb98b7668da2bed545
+# good: [d342e1c993bd7589cad9d2da099c6a9c652ecb9f] arm64: dts: qcom:
+qrb5165-rb5: add onboard USB-C redriver
+git bisect good d342e1c993bd7589cad9d2da099c6a9c652ecb9f
+# first bad commit: [96387ee7534dc449be35a9bb98b7668da2bed545] arm64:
+dts: qcom: qrb5165-rb5: enable displayport controller
+
+
+Boot log:
+
+<4>[   87.062915] ------------[ cut here ]------------
+<4>[   87.067944] Memory manager not clean during takedown.
+<4>[   87.074791] WARNING: CPU: 7 PID: 70 at
+drivers/gpu/drm/drm_mm.c:999 drm_mm_takedown+0x28/0x38 [drm]
+<4>[   87.084382] Modules linked in: fuse ip_tables x_tables ipv6
+r8153_ecm cdc_ether snd_soc_hdmi_codec ax88179_178a venus_dec venus_enc
+r8152 videobuf2_dma_contig usbnet videobuf2_memops onboard_usb_hub
+mcp251xfd nb7vpq904m can_dev lontium_lt9611uxc msm leds_qcom_lpg
+qcom_spmi_adc_tm5 qcom_spmi_adc5 rtc_pm8xxx led_class_multicolor ocmem
+qcom_pon qcom_spmi_temp_alarm qcom_vadc_common venus_core v4l2_mem2mem
+gpu_sched videobuf2_v4l2 crct10dif_ce drm_dp_aux_bus videodev
+snd_soc_sm8250 snd_soc_qcom_sdw drm_display_helper videobuf2_common
+snd_soc_qcom_common qrtr qcom_stats mc coresight_stm stm_core
+qcom_q6v5_pas spi_geni_qcom llcc_qcom phy_qcom_qmp_combo qcom_pil_info
+typec icc_bwmon i2c_qcom_geni phy_qcom_qmp_usb qcom_q6v5
+coresight_replicator coresight_tmc coresight_etm4x coresight_funnel
+phy_qcom_snps_femto_v2 qcom_rng qcom_sysmon snd_soc_lpass_va_macro
+qcom_common lpass_gfm_sm8250 qcrypto pinctrl_sm8250_lpass_lpi
+qcom_glink_smem snd_soc_lpass_macro_common coresight ufs_qcom
+sha256_generic mdt_loader libsha256 qmi_helpers
+<4>[   87.084435]  pinctrl_lpass_lpi soundwire_qcom soundwire_bus
+authenc display_connector qcom_wdt phy_qcom_qmp_ufs
+snd_soc_lpass_wsa_macro phy_qcom_qmp_pcie slimbus icc_osm_l3 libdes
+drm_kms_helper drm socinfo backlight qnoc_sm8250
+<4>[   87.198040] CPU: 7 PID: 70 Comm: kworker/u16:3 Tainted: G        W
+         6.6.0-rc5-next-20231013 #1
+<4>[   87.207857] Hardware name: Qualcomm Technologies, Inc. Robotics
+RB5 (DT)
+<4>[   87.215009] Workqueue: events_unbound deferred_probe_work_func
+<4>[   87.221273] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS
+BTYPE=--)
+<4>[   87.228686] pc : drm_mm_takedown+0x28/0x38 [drm]
+<4>[   87.233716] lr : drm_mm_takedown+0x28/0x38 [drm]
+<4>[   87.238741] sp : ffff800080743810
+<4>[   87.242416] x29: ffff800080743810 x28: ffff7824cd321880 x27:
+ffff7824c36c9d40
+<4>[   87.250007] x26: ffffb54fa83c71a0 x25: dead000000000100 x24:
+dead000000000122
+<4>[   87.257599] x23: ffff7824c3600810 x22: ffffb54f5a99b708 x21:
+ffff7824c3600800
+<4>[   87.265189] x20: ffff7824c4a4c600 x19: ffff7824c7752800 x18:
+ffffb54f5a8e0048
+<4>[   87.272779] x17: 0000000000010108 x16: 0000000000010108 x15:
+0000483e088c93ae
+<4>[   87.280371] x14: 00000000000002a4 x13: 00000000000002a4 x12:
+0000000000000000
+<4>[   87.287962] x11: 0000000000000001 x10: 0000000000000a60 x9 :
+ffff800080743680
+<4>[   87.295554] x8 : ffff7824c0320ac0 x7 : ffff78263efaf040 x6 :
+00000000012105e7
+<4>[   87.303140] x5 : 00000000410fd0d0 x4 : 0000000000f0000f x3 :
+0000000000100000
+<4>[   87.310730] x2 : 0000000000000000 x1 : 0000000000000000 x0 :
+ffff7824c0320000
+<4>[   87.318317] Call trace:
+<4>[   87.321103]  drm_mm_takedown+0x28/0x38 [drm]
+<4>[   87.325778]  drm_vma_offset_manager_destroy+0x14/0x20 [drm]
+<4>[   87.331794]  drm_gem_init_release+0x14/0x20 [drm]
+<4>[   87.336918]  drm_managed_release+0xac/0x140 [drm]
+<4>[   87.342043]  drm_dev_put+0x94/0xbc [drm]
+<4>[   87.346366]  msm_drm_uninit.isra.0+0x98/0xd0 [msm]
+<4>[   87.351594]  msm_drm_bind+0x20c/0x3b0 [msm]
+<4>[   87.356181]  try_to_bring_up_aggregate_device+0x168/0x1d4
+<4>[   87.361994]  __component_add+0xa4/0x170
+<4>[   87.366202]  component_add+0x14/0x20
+<4>[   87.370142]  dsi_dev_attach+0x20/0x2c [msm]
+<4>[   87.374731]  dsi_host_attach+0x9c/0x144 [msm]
+<4>[   87.379493]  devm_mipi_dsi_attach+0x34/0xb4
+<4>[   87.384064]  lt9611uxc_attach_dsi.isra.0+0x84/0xfc [lontium_lt9611uxc]
+<4>[   87.391040]  lt9611uxc_probe+0x598/0x65c [lontium_lt9611uxc]
+<4>[   87.397126]  i2c_device_probe+0x1a8/0x330
+<4>[   87.401520]  really_probe+0x148/0x2b4
+<4>[   87.405554]  __driver_probe_device+0x78/0x12c
+<4>[   87.410302]  driver_probe_device+0x3c/0x15c
+<4>[   87.414875]  __device_attach_driver+0xb8/0x134
+<4>[   87.419710]  bus_for_each_drv+0x84/0xe0
+<4>[   87.423929]  __device_attach+0xa8/0x1b0
+<4>[   87.428138]  device_initial_probe+0x14/0x20
+<4>[   87.432704]  bus_probe_device+0xa8/0xac
+<4>[   87.436913]  deferred_probe_work_func+0x88/0xc0
+<4>[   87.441829]  process_one_work+0x138/0x260
+<4>[   87.446225]  worker_thread+0x32c/0x438
+<4>[   87.450346]  kthread+0x118/0x11c
+<4>[   87.453941]  ret_from_fork+0x10/0x20
+<4>[   87.457888] ---[ end trace 0000000000000000 ]---
+
+Thanks,
+Aishwarya
+
+> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> index 3bd0c06e7315..c8cd40a462a3 100644
+> --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> @@ -1423,6 +1423,13 @@ PDO_FIXED_DUAL_ROLE |
+>  					 PDO_FIXED_USB_COMM |
+>  					 PDO_FIXED_DATA_SWAP)>;
+>  
+> +		altmodes {
+> +			displayport {
+> +				svid = <0xff01>;
+> +				vdo = <0x00001c46>;
+> +			};
+> +		};
+> +
+>  		ports {
+>  			#address-cells = <1>;
+>  			#size-cells = <0>;
