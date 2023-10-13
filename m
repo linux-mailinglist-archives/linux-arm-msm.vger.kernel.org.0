@@ -2,290 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B426D7C8C14
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 19:11:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7587D7C8C35
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 19:20:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230477AbjJMRLP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Oct 2023 13:11:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53338 "EHLO
+        id S229679AbjJMRUm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Oct 2023 13:20:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230458AbjJMRLO (ORCPT
+        with ESMTP id S229632AbjJMRUl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Oct 2023 13:11:14 -0400
-Received: from mail-vk1-xa2e.google.com (mail-vk1-xa2e.google.com [IPv6:2607:f8b0:4864:20::a2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A72A895
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 10:11:12 -0700 (PDT)
-Received: by mail-vk1-xa2e.google.com with SMTP id 71dfb90a1353d-49d14708479so921795e0c.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 10:11:12 -0700 (PDT)
+        Fri, 13 Oct 2023 13:20:41 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D644A9;
+        Fri, 13 Oct 2023 10:20:40 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-53e08e439c7so3661475a12.0;
+        Fri, 13 Oct 2023 10:20:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697217072; x=1697821872; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=LCaH9FAxcQll+uhN0AKMs+mxsjgEJ8l5KA3S9uEcl4A=;
-        b=xa7SOz3ImD/jJ9BHFgcTMf35+J6DxSOy9LwYeruewsefIzhsDW1iQoku3mwO9xKGU/
-         sTmo8cYAgSSkAKQZWuWqA8mLkgcMTlYwZh4ImmMmq2wcyLi8muLeupaS0FYmrlrS+AaL
-         /uUXMGcQXDA+IYPyvpG+2d77DJu5hYV5KeVgxiVJLZ/hhiD2BFEZfiofaESpiWFQYpT/
-         f5wSZQ7Oen0+pLZBrke3u1rC3+1CoyTAUIqeZP8dEoHB40eGogsyoi2Iic/SKO38DbdE
-         WW+87Kw1sqoqcBMRoziOS6OI1GzY4mN3VhtMtbxQ+iRtx2ffsxFXPdhT7cSDk48NJorL
-         yM1A==
+        d=gmail.com; s=20230601; t=1697217638; x=1697822438; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q8uXQkYNo3bGoskQXQpsae5HsE3SRZJlPG9uoRZ+Rcc=;
+        b=mPB8E6Vj2P2mo8o9BZ8cqVZsAX3SHdtoLWw+1RBRR4D22dUE7CCBAXrgGpVoCOA6qw
+         ZdCQ0S3B4nKW2Y90bw7rXx+GmVnEOtukBUSawfo0stKemp70/q0aYSq7PAMNevJRpJLj
+         wLOA00jOMOyMOOtX0JH0lZwj4bu5Naj0xftekrb/g8UgKww8d1P7C2JaZMDlg1d7LZd9
+         4eQAkKq4NymlaxZCiYb5igP3kVTGcgeokbocq5vHIwJqhlh2UEvrO+fB27Jn4dDo5FMI
+         5zlnn50Fs5LU7zOw9VrwIrIWjDDOUPo8zGIPy/w/Xysnw8uWFbd0nagrK37vK+aSVCQ/
+         7TLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697217072; x=1697821872;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=LCaH9FAxcQll+uhN0AKMs+mxsjgEJ8l5KA3S9uEcl4A=;
-        b=Va5eI8SkKeBvCZLZAGIqNkBvA6AtdILdMhLuNGKFUM8OsHloUDw6RP6K0urHGFr5zj
-         5iwrWnotSc/2AmeJCj4B61EEczLyKfK1RdBwQoGDceg6LobtlXMqzr/D6Ldxbhn2VBM3
-         QgntrP4tviiv5iVb4LDE5kOS6BNZbliz3Yb9597lz8OS8cTyFs3nKPZEEVLKYz9Zi8Sw
-         A1v9KJ1qJicm/NUxphvVD+GMZKxqP65MGLTxbNiLQIx6yFE11JK/LBPIhvxBZVqJR5IU
-         ZlXDC8Msg11351wgHo+NLw8qUPbfobelqS0Ck/j1FzrVjYhEb6qSz1wAygsYIqsideuQ
-         rXzw==
-X-Gm-Message-State: AOJu0YzhzzwraPp6pvIHYELudRqvWFCm5xaLZ7nHzF2g5LGeUzPT3tGt
-        1pK5FOZYUgqGFIh6gusrdIaMUjbnN9hO41O2xrLc9g==
-X-Google-Smtp-Source: AGHT+IHOQcE813YfP/iMX27AlZRWO0IvLUbkSTVcV/hLmWlwz9goai0MMXKoP5CmhUwHWKjXN1mkFEetWcaFy6yQgeA=
-X-Received: by 2002:a1f:4b85:0:b0:49d:d73e:5d07 with SMTP id
- y127-20020a1f4b85000000b0049dd73e5d07mr18361683vka.16.1697217071583; Fri, 13
- Oct 2023 10:11:11 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1697217638; x=1697822438;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Q8uXQkYNo3bGoskQXQpsae5HsE3SRZJlPG9uoRZ+Rcc=;
+        b=EZoH7DHKkXmE2yoH1M7kMUc5La9YlyYWcPQIslaa6DkaZO4RbEp/GOUuVCIFF0AF/i
+         vuOMPyiW13Pp7ZMJg0LrZRxoNj6aKH9yUILOmTKWdP71PGHjh826iWD9pMPASnYzw+Rn
+         jGv9drsi+b0p7IsI8KsW2K+JeltcpEmSxs48ai1MyKdGmIjcZqbOdWB7SrITQ95k1tWa
+         h5MlYqQCtP9ku40chLMID8C9oYQ+rLjgAzB73iBW4va8OBr6UAW/gSyBqk41dxn6YEX9
+         ZNtVUfJNqfBFdehaHI0A+gof5tEE5DdEeEF0apXSMgjGITJ2afAfJgUvzoyMonTnmuTU
+         djOA==
+X-Gm-Message-State: AOJu0Yx5N1EmVXjRjoBL0whk7dGRtLNjaGzMLOOx8bmLnXbTgi7GPhm4
+        aj/LNgOiV+F8bfHQyZ3qUuM=
+X-Google-Smtp-Source: AGHT+IHv3bBuzeeXYE32saD3QLU2OktKI977bWzTRNyRcoGH71CF7cTqqA49rb4LsybuQd2ZY/A/FA==
+X-Received: by 2002:a05:6402:42c5:b0:53e:1e7f:482f with SMTP id i5-20020a05640242c500b0053e1e7f482fmr5134815edc.3.1697217638057;
+        Fri, 13 Oct 2023 10:20:38 -0700 (PDT)
+Received: from fedora.. (dh207-96-122.xnet.hr. [88.207.96.122])
+        by smtp.googlemail.com with ESMTPSA id a90-20020a509ee3000000b0053e589016a7sm653125edf.16.2023.10.13.10.20.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Oct 2023 10:20:37 -0700 (PDT)
+From:   Robert Marko <robimarko@gmail.com>
+To:     rafael@kernel.org, viresh.kumar@linaro.org, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        ilia.lin@kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     Robert Marko <robimarko@gmail.com>
+Subject: [PATCH v6] cpufreq: qcom-nvmem: add support for IPQ8074
+Date:   Fri, 13 Oct 2023 19:20:02 +0200
+Message-ID: <20231013172033.3549476-1-robimarko@gmail.com>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-From:   Naresh Kamboju <naresh.kamboju@linaro.org>
-Date:   Fri, 13 Oct 2023 22:41:00 +0530
-Message-ID: <CA+G9fYvFkJy=e2-CZz_GhTRr2DBDA3-ZBBrASmF9nQMPf-KrQA@mail.gmail.com>
-Subject: WARNING: possible circular locking dependency detected -
- clk_smd_rpm_set_rate (drivers/clk/qcom/clk-smd-rpm.c:321)
-To:     linux-clk <linux-clk@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        lkft-triage@lists.linaro.org,
-        open list <linux-kernel@vger.kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Dan Carpenter <dan.carpenter@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Following deadlock warning noticed on arm64 Qcom APQ 8016 SBC device with
-a given config (kselftest merge configs) while booting.
+IPQ8074 comes in 3 families:
+* IPQ8070A/IPQ8071A (Acorn) up to 1.4GHz
+* IPQ8172/IPQ8173/IPQ8174 (Oak) up to 1.4GHz
+* IPQ8072A/IPQ8074A/IPQ8076A/IPQ8078A (Hawkeye) up to 2.2GHz
 
-This is almost always reproducible with a given config.
-started happening from stable-rc v6.1.55.
+So, in order to be able to share one OPP table lets add support for IPQ8074
+family based of SMEM SoC ID-s as speedbin fuse is always 0 on IPQ8074.
 
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+IPQ8074 compatible is blacklisted from DT platdev as the cpufreq device
+will get created by NVMEM CPUFreq driver.
 
-Boot log:
--------
-[   28.082133] ======================================================
-[   28.082673] WARNING: possible circular locking dependency detected
-[   28.088664] 6.1.55 #1 Not tainted
-[   28.094813] ------------------------------------------------------
-[   28.098211] (udev-worker)/278 is trying to acquire lock:
-[   28.104285] ffff80000b2b2d30 (rpm_smd_clk_lock){+.+.}-{3:3}, at:
-clk_smd_rpm_set_rate (drivers/clk/qcom/clk-smd-rpm.c:321)
-[   28.109772]
-[   28.109772] but task is already holding lock:
-[   28.118525] ffff80000b49f3e0 (icc_bw_lock){+.+.}-{3:3}, at:
-icc_node_add (drivers/interconnect/core.c:973)
-[   28.124175]
-[   28.124175] which lock already depends on the new lock.
-[   28.124175]
-[   28.131729]
-[   28.131729] the existing dependency chain (in reverse order) is:
-[   28.140058]
-[   28.140058] -> #2 (icc_bw_lock){+.+.}-{3:3}:
-[   28.147518] icc_init (drivers/interconnect/core.c:1159 (discriminator 1))
-[   28.153235] do_one_initcall (init/main.c:1292)
-[   28.156884] kernel_init_freeable (init/main.c:1364 (discriminator
-3) init/main.c:1381 (discriminator 3) init/main.c:1400 (discriminator
-3) init/main.c:1620 (discriminator 3))
-[   28.161227] kernel_init (init/main.c:1510)
-[   28.165910] ret_from_fork (arch/arm64/kernel/entry.S:861)
-[   28.170077]
-[   28.170077] -> #1 (fs_reclaim){+.+.}-{0:0}:
-[   28.174079] fs_reclaim_acquire (mm/page_alloc.c:4700 mm/page_alloc.c:4691)
-[   28.179890] __kmem_cache_alloc_node (include/linux/sched/mm.h:272
-mm/slab.h:710 mm/slub.c:3318 mm/slub.c:3437)
-[   28.184492] __kmalloc (mm/slab_common.c:956 mm/slab_common.c:968)
-[   28.189434] qcom_rpm_smd_write (include/linux/slab.h:558
-drivers/soc/qcom/smd-rpm.c:116)
-[   28.193084] clk_smd_rpm_prepare (drivers/clk/qcom/clk-smd-rpm.c:192
-drivers/clk/qcom/clk-smd-rpm.c:253)
-[   28.197945] clk_core_prepare (drivers/clk/clk.c:971)
-[   28.202545] clk_prepare (drivers/clk/clk.c:1004
-drivers/clk/clk.c:1027 drivers/clk/clk.c:1022)
-[   28.206881] amba_get_enable_pclk (include/linux/clk.h:1072
-drivers/amba/bus.c:70)
-[   28.211052] amba_read_periphid (drivers/amba/bus.c:146)
-[   28.215653] amba_match (drivers/amba/bus.c:222)
-[   28.220336] __device_attach_driver (drivers/base/base.h:147
-(discriminator 1) drivers/base/dd.c:913 (discriminator 1))
-[   28.223900] bus_for_each_drv (drivers/base/bus.c:427)
-[   28.229106] __device_attach (drivers/base/dd.c:1017)
-[   28.233359] device_initial_probe (drivers/base/dd.c:1065)
-[   28.237699] bus_probe_device (drivers/base/bus.c:489)
-[   28.242385] deferred_probe_work_func (drivers/base/dd.c:124)
-[   28.246729] process_one_work (kernel/workqueue.c:2297)
-[   28.251761] worker_thread (include/linux/list.h:292 (discriminator
-2) kernel/workqueue.c:2352 (discriminator 2) kernel/workqueue.c:2444
-(discriminator 2))
-[   28.256186] kthread (kernel/kthread.c:376)
-[   28.260697] ret_from_fork (arch/arm64/kernel/entry.S:861)
-[   28.264258]
-[   28.264258] -> #0 (rpm_smd_clk_lock){+.+.}-{3:3}:
-[   28.268351] __lock_acquire (kernel/locking/lockdep.c:3091
-(discriminator 1) kernel/locking/lockdep.c:3209 (discriminator 1)
-kernel/locking/lockdep.c:3824 (discriminator 1)
-kernel/locking/lockdep.c:5048 (discriminator 1))
-[   28.274503] lock_acquire (arch/arm64/include/asm/percpu.h:40
-kernel/locking/lockdep.c:467 kernel/locking/lockdep.c:5663
-kernel/locking/lockdep.c:5626)
-[   28.278929] __mutex_lock (kernel/locking/mutex.c:605
-kernel/locking/mutex.c:747)
-[   28.283095] mutex_lock_nested (kernel/locking/mutex.c:800)
-[   28.287263] clk_smd_rpm_set_rate (drivers/clk/qcom/clk-smd-rpm.c:321)
-[   28.291691] clk_change_rate (drivers/clk/clk.c:2278)
-[   28.296464] clk_core_set_rate_nolock (drivers/clk/clk.c:2382
-drivers/clk/clk.c:2340)
-[   28.300895] clk_set_rate (drivers/clk/clk.c:2423 drivers/clk/clk.c:2410)
-[   28.306012] qcom_icc_set+0x1d4/0x270 icc_smd_rpm
-[   28.310186] icc_node_add (drivers/interconnect/core.c:994)
-[   28.315561] qnoc_probe+0x240/0x420 icc_smd_rpm
-[   28.319558] platform_probe (drivers/base/platform.c:1400)
-[   28.324675] really_probe (drivers/base/dd.c:560 drivers/base/dd.c:639)
-[   28.328841] __driver_probe_device (drivers/base/dd.c:785)
-[   28.333011] driver_probe_device (drivers/base/dd.c:815)
-[   28.337786] __driver_attach (drivers/base/dd.c:1202)
-[   28.342646] bus_for_each_dev (drivers/base/bus.c:301)
-[   28.346984] driver_attach (drivers/base/dd.c:1219)
-[   28.351411] bus_add_driver (drivers/base/bus.c:618)
-[   28.355404] driver_register (drivers/base/driver.c:246)
-[   28.359832] __platform_driver_register (drivers/base/platform.c:868)
-[   28.364177] msm8916_noc_driver_init+0x28/0x1000 qnoc_msm8916
-[   28.369217] do_one_initcall (init/main.c:1292)
-[   28.375804] do_init_module (kernel/module/main.c:2464)
-[   28.380144] load_module (kernel/module/main.c:2873)
-[   28.384485] __do_sys_finit_module (kernel/module/main.c:2973
-(discriminator 1))
-[   28.388742] __arm64_sys_finit_module (kernel/module/main.c:2940)
-[   28.393342] invoke_syscall (arch/arm64/include/asm/current.h:19
-arch/arm64/kernel/syscall.c:57)
-[   28.398546] el0_svc_common.constprop.0 (arch/arm64/kernel/syscall.c:149)
-[   28.402894] do_el0_svc (arch/arm64/kernel/syscall.c:207)
-[   28.408179] el0_svc (arch/arm64/include/asm/daifflags.h:28
-arch/arm64/kernel/entry-common.c:133
-arch/arm64/kernel/entry-common.c:142
-arch/arm64/kernel/entry-common.c:638)
-[   28.411825] el0t_64_sync_handler (arch/arm64/kernel/entry-common.c:656)
-[   28.415651] el0t_64_sync (arch/arm64/kernel/entry.S:581)
-[   28.420248]
-[   28.420248] other info that might help us debug this:
-[   28.420248]
-[   28.424438] Chain exists of:
-[   28.424438]   rpm_smd_clk_lock --> fs_reclaim --> icc_bw_lock
-[   28.424438]
-[   28.432432]  Possible unsafe locking scenario:
-[   28.432432]
-[   28.442481]        CPU0                    CPU1
-[   28.448374]        ----                    ----
-[   28.452888]   lock(icc_bw_lock);
-Linux runner-vwmj3eza-project-40964107-concurrent-0 6.1.55 #1 SMP
-PREEMPT @1695871287 aarch6[   28.457396]
- lock(fs_reclaim);
-4
-[   28.475726]   lock(rpm_smd_clk_lock);
-[   28.475770]
-[   28.475770]  *** DEADLOCK ***
-[   28.475770]
-[   28.478630] 4 locks held by (udev-worker)/278:
-[   28.484350] #0: ffff000004e968f8 (&dev->mutex){....}-{3:3}, at:
-__driver_attach (drivers/base/dd.c:1201)
-[   28.488885] #1: ffff80000b49f2e8 (icc_lock){+.+.}-{3:3}, at:
-icc_node_add (drivers/interconnect/core.c:971)
-[   28.497475] #2: ffff80000b49f3e0 (icc_bw_lock){+.+.}-{3:3}, at:
-icc_node_add (drivers/interconnect/core.c:973)
-[   28.505202] #3: ffff80000b23eeb8 (prepare_lock){+.+.}-{3:3}, at:
-clk_prepare_lock (drivers/clk/clk.c:129 (discriminator 1))
-[   28.513363]
-[   28.513363] stack backtrace:
-[   28.521766] CPU: 3 PID: 278 Comm: (udev-worker) Not tainted 6.1.55 #1
-[   28.526028] Hardware name: Qualcomm Technologies, Inc. APQ 8016 SBC (DT)
-[   28.532453] Call trace:
-[   28.539202] dump_backtrace (arch/arm64/kernel/stacktrace.c:160
-arch/arm64/kernel/stacktrace.c:143)
-[   28.541379] show_stack (arch/arm64/kernel/stacktrace.c:167)
-[   28.545194] dump_stack_lvl (lib/dump_stack.c:107)
-[   28.548582] dump_stack (lib/dump_stack.c:114)
-[   28.552225] print_circular_bug (kernel/locking/lockdep.c:2048)
-[   28.555529] check_noncircular (kernel/locking/lockdep.c:2173)
-[   28.559521] __lock_acquire (kernel/locking/lockdep.c:3091
-(discriminator 1) kernel/locking/lockdep.c:3209 (discriminator 1)
-kernel/locking/lockdep.c:3824 (discriminator 1)
-kernel/locking/lockdep.c:5048 (discriminator 1))
-[   28.563687] lock_acquire (arch/arm64/include/asm/percpu.h:40
-kernel/locking/lockdep.c:467 kernel/locking/lockdep.c:5663
-kernel/locking/lockdep.c:5626)
-[   28.567767] __mutex_lock (kernel/locking/mutex.c:605
-kernel/locking/mutex.c:747)
-[   28.571411] mutex_lock_nested (kernel/locking/mutex.c:800)
-[   28.575059] clk_smd_rpm_set_rate (drivers/clk/qcom/clk-smd-rpm.c:321)
-[   28.578968] clk_change_rate (drivers/clk/clk.c:2278)
-[   28.583220] clk_core_set_rate_nolock (drivers/clk/clk.c:2382
-drivers/clk/clk.c:2340)
-[   28.587128] clk_set_rate (drivers/clk/clk.c:2423 drivers/clk/clk.c:2410)
-[   28.591724] qcom_icc_set+0x1d4/0x270 icc_smd_rpm
-[   28.595029] icc_node_add (drivers/interconnect/core.c:994)
-[   28.599884] qnoc_probe+0x240/0x420 icc_smd_rpm
-[   28.603709] platform_probe (drivers/base/platform.c:1400)
-[   28.608305] really_probe (drivers/base/dd.c:560 drivers/base/dd.c:639)
-[   28.611949] __driver_probe_device (drivers/base/dd.c:785)
-[   28.615599] driver_probe_device (drivers/base/dd.c:815)
-[   28.619851] __driver_attach (drivers/base/dd.c:1202)
-[   28.623844] bus_for_each_dev (drivers/base/bus.c:301)
-[   28.628010] driver_attach (drivers/base/dd.c:1219)
-[   28.631568] bus_add_driver (drivers/base/bus.c:618)
-[   28.635388] driver_register (drivers/base/driver.c:246)
-[   28.638948] __platform_driver_register (drivers/base/platform.c:868)
-[   28.642771] msm8916_noc_driver_init+0x28/0x1000 qnoc_msm8916
-[   28.647638] do_one_initcall (init/main.c:1292)
-[   28.653356] do_init_module (kernel/module/main.c:2464)
-[   28.657176] load_module (kernel/module/main.c:2873)
-[   28.660995] __do_sys_finit_module (kernel/module/main.c:2973
-(discriminator 1))
-[   28.664732] __arm64_sys_finit_module (kernel/module/main.c:2940)
-[   28.669159] invoke_syscall (arch/arm64/include/asm/current.h:19
-arch/arm64/kernel/syscall.c:57)
-[   28.673496] el0_svc_common.constprop.0 (arch/arm64/kernel/syscall.c:149)
-[   28.677321] do_el0_svc (arch/arm64/kernel/syscall.c:207)
-[   28.682087] el0_svc (arch/arm64/include/asm/daifflags.h:28
-arch/arm64/kernel/entry-common.c:133
-arch/arm64/kernel/entry-common.c:142
-arch/arm64/kernel/entry-common.c:638)
-[   28.685558] el0t_64_sync_handler (arch/arm64/kernel/entry-common.c:656)
-[   28.688516] el0t_64_sync (arch/arm64/kernel/entry.S:581)
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Changes in v6:
+* Split IPQ8074 from the IPQ8064 as IPQ8064 has additional dependencies.
 
-Links:
- - https://lkft.validation.linaro.org/scheduler/job/6819688#L3326
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.57-7-g3fe61dd155ac/testrun/20473398/suite/log-parser-test/tests/
+Changes in v4:
+* Add support for IPQ8174 (Oak) family
 
-metadata:
-  git_ref: linux-6.1.y
-  git_repo: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-  git_sha: d23900f974e0fb995b36ef47283a5aa74ca25f51
-  git_describe: v6.1.55
-  kernel_version: 6.1.55
-  kernel-config:
-    https://storage.tuxsuite.com/public/linaro/lkft/builds/2W0YTi5jyhwfHW8YVU86FdmCI85/config
-  artifact-location:
-    https://storage.tuxsuite.com/public/linaro/lkft/builds/2W0YTi5jyhwfHW8YVU86FdmCI85/
-  toolchain: gcc-13
+Changes in v3:
+* Use enum for SoC versions
 
+Changes in v2:
+* Print an error if SMEM ID is not part of the IPQ8074 family
+and restrict the speed to Acorn variant (1.4GHz)
 
---
-Linaro LKFT
-https://lkft.linaro.org
+ drivers/cpufreq/cpufreq-dt-platdev.c |  1 +
+ drivers/cpufreq/qcom-cpufreq-nvmem.c | 48 ++++++++++++++++++++++++++++
+ 2 files changed, 49 insertions(+)
+
+diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c b/drivers/cpufreq/cpufreq-dt-platdev.c
+index 0b3776f558db..675da7f36846 100644
+--- a/drivers/cpufreq/cpufreq-dt-platdev.c
++++ b/drivers/cpufreq/cpufreq-dt-platdev.c
+@@ -181,6 +181,7 @@ static const struct of_device_id blocklist[] __initconst = {
+ 	{ .compatible = "ti,am62p5", },
+ 
+ 	{ .compatible = "qcom,ipq8064", },
++	{ .compatible = "qcom,ipq8074", },
+ 	{ .compatible = "qcom,apq8064", },
+ 	{ .compatible = "qcom,msm8974", },
+ 	{ .compatible = "qcom,msm8960", },
+diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+index 84d7033e5efe..3fa12648ceb6 100644
+--- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
++++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+@@ -30,6 +30,11 @@
+ 
+ #include <dt-bindings/arm/qcom,ids.h>
+ 
++enum ipq8074_versions {
++	IPQ8074_HAWKEYE_VERSION = 0,
++	IPQ8074_ACORN_VERSION,
++};
++
+ struct qcom_cpufreq_drv;
+ 
+ struct qcom_cpufreq_match_data {
+@@ -203,6 +208,44 @@ static int qcom_cpufreq_krait_name_version(struct device *cpu_dev,
+ 	return ret;
+ }
+ 
++static int qcom_cpufreq_ipq8074_name_version(struct device *cpu_dev,
++					     struct nvmem_cell *speedbin_nvmem,
++					     char **pvs_name,
++					     struct qcom_cpufreq_drv *drv)
++{
++	u32 msm_id;
++	int ret;
++	*pvs_name = NULL;
++
++	ret = qcom_smem_get_soc_id(&msm_id);
++	if (ret)
++		return ret;
++
++	switch (msm_id) {
++	case QCOM_ID_IPQ8070A:
++	case QCOM_ID_IPQ8071A:
++	case QCOM_ID_IPQ8172:
++	case QCOM_ID_IPQ8173:
++	case QCOM_ID_IPQ8174:
++		drv->versions = BIT(IPQ8074_ACORN_VERSION);
++		break;
++	case QCOM_ID_IPQ8072A:
++	case QCOM_ID_IPQ8074A:
++	case QCOM_ID_IPQ8076A:
++	case QCOM_ID_IPQ8078A:
++		drv->versions = BIT(IPQ8074_HAWKEYE_VERSION);
++		break;
++	default:
++		dev_err(cpu_dev,
++			"SoC ID %u is not part of IPQ8074 family, limiting to 1.4GHz!\n",
++			msm_id);
++		drv->versions = BIT(IPQ8074_ACORN_VERSION);
++		break;
++	}
++
++	return 0;
++}
++
+ static const struct qcom_cpufreq_match_data match_data_kryo = {
+ 	.get_version = qcom_cpufreq_kryo_name_version,
+ };
+@@ -217,6 +260,10 @@ static const struct qcom_cpufreq_match_data match_data_qcs404 = {
+ 	.genpd_names = qcs404_genpd_names,
+ };
+ 
++static const struct qcom_cpufreq_match_data match_data_ipq8074 = {
++	.get_version = qcom_cpufreq_ipq8074_name_version,
++};
++
+ static int qcom_cpufreq_probe(struct platform_device *pdev)
+ {
+ 	struct qcom_cpufreq_drv *drv;
+@@ -360,6 +407,7 @@ static const struct of_device_id qcom_cpufreq_match_list[] __initconst = {
+ 	{ .compatible = "qcom,msm8996", .data = &match_data_kryo },
+ 	{ .compatible = "qcom,qcs404", .data = &match_data_qcs404 },
+ 	{ .compatible = "qcom,ipq8064", .data = &match_data_krait },
++	{ .compatible = "qcom,ipq8074", .data = &match_data_ipq8074 },
+ 	{ .compatible = "qcom,apq8064", .data = &match_data_krait },
+ 	{ .compatible = "qcom,msm8974", .data = &match_data_krait },
+ 	{ .compatible = "qcom,msm8960", .data = &match_data_krait },
+-- 
+2.41.0
+
