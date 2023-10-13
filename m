@@ -2,221 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7841E7C8403
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 13:05:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C2ED7C849E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 13:39:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230018AbjJMLFx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Oct 2023 07:05:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40664 "EHLO
+        id S231425AbjJMLiV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Oct 2023 07:38:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229886AbjJMLFw (ORCPT
+        with ESMTP id S231374AbjJMLiP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Oct 2023 07:05:52 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B926BB7;
-        Fri, 13 Oct 2023 04:05:49 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-538e8eca9c1so3380165a12.3;
-        Fri, 13 Oct 2023 04:05:49 -0700 (PDT)
+        Fri, 13 Oct 2023 07:38:15 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24E16E7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 04:38:10 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-523100882f2so3437744a12.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 04:38:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697195148; x=1697799948; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=a7L8MMvBwWWMkmtOWzuzh7LjBvyg7mEIleh0lWEV/ZQ=;
-        b=I4yh/ItL2K9wUsVYFaRiUXuEI6WV8osmJuQ43cttsap+2wlHeXnOP24enX+hPqp5YE
-         fc0isGniDN/hZrHFvhdow16SVtKPwCtJoKbKBt2+dyG81u+EjV3i9M6FodK71Q0/vAIW
-         JrLFjWx3dEirWJndIgTqko+CE9GzS0svg04NltAKdOUVBf7dMdTCd3Vk1rVhGGG13LR+
-         kC23ClGRpHl7Gv155v6+7VMcElB+bBqdlUnv8WlaraCoEPHHqBuYhgO/fhjlKl2m7NYj
-         kM8Dijw2CDfJJzwiY5FfcY+xCvCCJUxKyJymAAi1VjSBerednI139xQLHOamfdRjNzpg
-         BTgA==
+        d=fairphone.com; s=fair; t=1697197088; x=1697801888; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=aeuzswEtGNcv7PN7p/vCAjwlSADLyM73/cH0LYcA47I=;
+        b=ZmG025V4vsuxTVnYWAODi8mvbnl85+h9aWrAZT1KH17ad2i25YNQ/lktE+zpZUdv6V
+         dNsnqA3Cwuxbf2V7QlNpo3AyWsZmkWi6UiezX4AoQnT50DexT3xX2mVSQwJqM36spO/M
+         t9c13ciJUwGCVPbEreHdBmLjdptx78xcLSzv1QAXRkNx5M/pt8jfApSZHoGRJ4EZo7jj
+         4Nbe3hUNqyXGMXWIH3PpkwqlNc7QtoD8qDPMNBhLC4lZHNNuwVf3g1P4fYIhZAk039aV
+         LFxsPUHWx9o2lUip9BItNflyH20FX9/URpnrhyNUkDyRGkuKybguQoY6iYvRvT4DeJDX
+         SUHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697195148; x=1697799948;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1697197088; x=1697801888;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=a7L8MMvBwWWMkmtOWzuzh7LjBvyg7mEIleh0lWEV/ZQ=;
-        b=XHWIcm7kjhTOVBnDtgyPrFyvZ4hDSPGf2z03p2c5RsCO8+wR4x/M6ROSdcRLdCbGFr
-         eYHu8O4A7Rr1Kr76PDkkg6tynock/WzS6UW4Up4obrFT5N7/Vbm/J8azzwXwMjchtZk2
-         SQpb3bMl2XiO/wxrf69cudGULDJ3N2THe0V8597ol2mz7ocJRs5AHZtr4kVSQTiZ2eWd
-         OVOvXoVEqvSn+aWqDeZfHz3QxWVzDrrXLDU75sBXHaPJuqs8p27i4kOXZAfNnK/eMUlS
-         NQKDPK8Ey9OehLRw1HHHeq21jLUwwrfkqU5nskzTHmxT8QU1oxDN1jQYaaJfUKUQhE9t
-         Er3Q==
-X-Gm-Message-State: AOJu0YzY/+EaUyiFUaW+05HEO/xKzIzelG+gr3UrijJrmYDDPe0ZAwSZ
-        en6wJw247VbRJ0lFXlv5FC64L6TsL3nGsQLU
-X-Google-Smtp-Source: AGHT+IHwESd3l/McN4iPb389kXzHruwSvPA8HvNROND749BipMU3/E/9clSdEVl6bvdo4P6a/9jgrw==
-X-Received: by 2002:aa7:cfd2:0:b0:534:6668:605b with SMTP id r18-20020aa7cfd2000000b005346668605bmr22340713edy.22.1697195147884;
-        Fri, 13 Oct 2023 04:05:47 -0700 (PDT)
-Received: from arch-laptop.tail46804.ts.net (net-93-65-126-31.cust.vodafonedsl.it. [93.65.126.31])
-        by smtp.googlemail.com with ESMTPSA id i34-20020a0564020f2200b0053dec545c8fsm2884566eda.3.2023.10.13.04.05.46
+        bh=aeuzswEtGNcv7PN7p/vCAjwlSADLyM73/cH0LYcA47I=;
+        b=lXG1i4JZt6lbuKYN/noWnxhKJR4PutSDOtInNg64aadvSejXt77/3ewYWyHY/AKA7V
+         kVbW8vr5YY4YR5FlE8UXGcONZXMYloVTfaiczBKybUl5f96OLdHoCJlxnKbHuMRyYHsh
+         xC5zwe/JX3BUEhCPzJfYhHOiturVOm0TYPANj1CygNpzjRqTMbxMJe6bcI2Kn2NWS3Zl
+         GUkeE37gdpbfJuhgaJlGv7vOKCq4gU4QfwOL15xstvDwBJqzBerHUaW37U3TTJDpD67A
+         jyF1MLkf8i5tMviPxyskbA9i73zKXAtMsnLpwdKS/8ZJk1CL9ZAJI1l3wpbdl/d5gdJ5
+         v8wQ==
+X-Gm-Message-State: AOJu0Yx4UhRXfW2cxyzkpz06N7x6i6eRXplLzsNrDoG/0u2Zovp7OnuB
+        frk/QGQmhPFvoc2EfhEojNJQ6g==
+X-Google-Smtp-Source: AGHT+IFkTEGA0TMga8AxlgGtGhqbCixlBZi81dfQxvPnWxxILoG3AlMI2uAQ2CNX7IniM8KJqIQCNQ==
+X-Received: by 2002:a05:6402:3605:b0:53d:be55:3ee8 with SMTP id el5-20020a056402360500b0053dbe553ee8mr6667395edb.12.1697197088595;
+        Fri, 13 Oct 2023 04:38:08 -0700 (PDT)
+Received: from otso.luca.vpn.lucaweiss.eu (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id v18-20020aa7d652000000b00533dad8a9c5sm11360772edr.38.2023.10.13.04.38.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Oct 2023 04:05:47 -0700 (PDT)
-From:   Gianluca Boiano <morf3089@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Fri, 13 Oct 2023 04:38:08 -0700 (PDT)
+From:   Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH 0/3] Handle reversed SBU orientation for FSA4480
+Date:   Fri, 13 Oct 2023 13:38:04 +0200
+Message-Id: <20231013-fsa4480-swap-v1-0-b877f62046cc@fairphone.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABwsKWUC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI2NDA0Nj3bTiRBMTCwPd4vLEAl3LJIM0c7MUc+NkQ0sloJaCotS0zAqwcdG
+ xtbUA2ylJb14AAAA=
+To:     Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     morf3089@gmail.com
-Subject: [PATCH] arm64: dts: qcom: msm8953: add SPI interfaces
-Date:   Fri, 13 Oct 2023 13:05:31 +0200
-Message-ID: <20231013110531.84140-1-morf3089@gmail.com>
-X-Mailer: git-send-email 2.42.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.12.3
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This change add spi_3, spi_5 and spi_6 interfaces to
-MSM8953 devices.
+Short reason:
+Without swapping the SBU lanes, on QCM6490 Fairphone 5 the
+DisplayPort-over-USB-C doesn't work.
 
-Signed-off-by: Gianluca Boiano <morf3089@gmail.com>
+The Orient-Chip OCP96011 used in this phone is generally compatible with
+FSA4480 but has a difference how AUX+/- should be connected to SBU1/2.
+
+Long explanation, with my current understanding:
+* FSA4480 block diagram shows AUX+ connected to SBU2 and AUX- to SBU1.
+* OCP96011 block diagram shows AUX+ connected to SBU1 and AUX- to SBU2
+  (it's not 100% clear though in the picture but makes sense with the
+  observed behavior)
+* Fairphone 5 schematics have AUX+ connected to SBU2 and AUX- to SBU1,
+  which would be correct for FSA4480 but since OCP96011 is used (which
+  expects it to be the other way around) the Linux driver needs to
+  reverse it.
+  If AUX+ would be connected to SBU1 and AUX- to SBU2 as shown in the
+  OCP96011 block diagram, then no driver/dts change would be needed.
+
+Not sure if I've implemented the best solution in this patch. Other
+solutions I could think of are:
+* Add some custom boolean property to the node, e.g. 'fsa,swap-sbu'
+* Reverse when ocs,ocp96011 compatible is used. This would be incorrect
+  since when following the OCP96011 block diagram no reversing would be
+  needed, as explained above.
+
+However I think the current solution with data-lanes in the endpoint is
+the best fit and is also already used for a similar purpose in another
+USB mux driver.
+
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
- arch/arm64/boot/dts/qcom/msm8953.dtsi | 102 ++++++++++++++++++++++++++
- 1 file changed, 102 insertions(+)
+Luca Weiss (3):
+      dt-bindings: usb: fsa4480: Add data-lanes property to endpoint
+      usb: typec: fsa4480: Add support to swap SBU orientation
+      dt-bindings: usb: fsa4480: Add compatible for OCP96011
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8953.dtsi b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-index e7de7632669a..cdfc38e562b6 100644
---- a/arch/arm64/boot/dts/qcom/msm8953.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-@@ -726,6 +726,48 @@ i2c_8_sleep: i2c-8-sleep-state {
- 				bias-disable;
- 			};
- 
-+			spi_3_default: spi-3-default-state {
-+				pins = "gpio10", "gpio11";
-+				function = "blsp_spi3";
-+				drive-strength = <2>;
-+				bias-disable;
-+			};
-+
-+			spi_3_sleep: spi-3-sleep-state {
-+				pins = "gpio10", "gpio11";
-+				function = "gpio";
-+				drive-strength = <2>;
-+				bias-disable;
-+			};
-+
-+			spi_5_default: spi-5-default-state {
-+				pins = "gpio18", "gpio19";
-+				function = "blsp_spi5";
-+				drive-strength = <2>;
-+				bias-disable;
-+			};
-+
-+			spi_5_sleep: spi-5-sleep-state {
-+				pins = "gpio18", "gpio19";
-+				function = "gpio";
-+				drive-strength = <2>;
-+				bias-disable;
-+			};
-+
-+			spi_6_default: spi-6-default-state {
-+				pins = "gpio22", "gpio23";
-+				function = "blsp_spi6";
-+				drive-strength = <2>;
-+				bias-disable;
-+			};
-+
-+			spi_6_sleep: spi-6-sleep-state {
-+				pins = "gpio22", "gpio23";
-+				function = "gpio";
-+				drive-strength = <2>;
-+				bias-disable;
-+			};
-+
- 			wcnss_pin_a: wcnss-active-state {
- 
- 				wcss-wlan2-pins {
-@@ -1360,6 +1402,26 @@ i2c_3: i2c@78b7000 {
- 			status = "disabled";
- 		};
- 
-+		spi_3: spi@78b7000 {
-+			compatible = "qcom,spi-qup-v2.2.1";
-+			reg = <0x078b7000 0x600>;
-+			interrupts = <GIC_SPI 97 IRQ_TYPE_LEVEL_HIGH>;
-+			clock-names = "core", "iface";
-+			clocks = <&gcc GCC_BLSP1_QUP3_I2C_APPS_CLK>,
-+				 <&gcc GCC_BLSP1_AHB_CLK>;
-+			dmas = <&blsp1_dma 8>, <&blsp1_dma 9>;
-+			dma-names = "tx", "rx";
-+
-+			pinctrl-names = "default", "sleep";
-+			pinctrl-0 = <&spi_3_default>;
-+			pinctrl-1 = <&spi_3_sleep>;
-+
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			status = "disabled";
-+		};
-+
- 		i2c_4: i2c@78b8000 {
- 			compatible = "qcom,i2c-qup-v2.2.1";
- 			reg = <0x078b8000 0x600>;
-@@ -1413,6 +1475,26 @@ i2c_5: i2c@7af5000 {
- 			status = "disabled";
- 		};
- 
-+		spi_5: spi@7af5000 {
-+			compatible = "qcom,spi-qup-v2.2.1";
-+			reg = <0x07af5000 0x600>;
-+			interrupts = <GIC_SPI 299 IRQ_TYPE_LEVEL_HIGH>;
-+			clock-names = "core", "iface";
-+			clocks = <&gcc GCC_BLSP2_QUP1_I2C_APPS_CLK>,
-+				<&gcc GCC_BLSP2_AHB_CLK>;
-+			dmas = <&blsp2_dma 4>, <&blsp2_dma 5>;
-+			dma-names = "tx", "rx";
-+
-+			pinctrl-names = "default", "sleep";
-+			pinctrl-0 = <&spi_5_default>;
-+			pinctrl-1 = <&spi_5_sleep>;
-+
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			status = "disabled";
-+		};
-+
- 		i2c_6: i2c@7af6000 {
- 			compatible = "qcom,i2c-qup-v2.2.1";
- 			reg = <0x07af6000 0x600>;
-@@ -1433,6 +1515,26 @@ i2c_6: i2c@7af6000 {
- 			status = "disabled";
- 		};
- 
-+		spi_6: spi@7af6000 {
-+			compatible = "qcom,spi-qup-v2.2.1";
-+			reg = <0x07af6000 0x600>;
-+			interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
-+			clock-names = "core", "iface";
-+			clocks = <&gcc GCC_BLSP2_QUP2_I2C_APPS_CLK>,
-+				 <&gcc GCC_BLSP2_AHB_CLK>;
-+			dmas = <&blsp2_dma 6>, <&blsp2_dma 7>;
-+			dma-names = "tx", "rx";
-+
-+			pinctrl-names = "default", "sleep";
-+			pinctrl-0 = <&spi_6_default>;
-+			pinctrl-1 = <&spi_6_sleep>;
-+
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			status = "disabled";
-+		};
-+
- 		i2c_7: i2c@7af7000 {
- 			compatible = "qcom,i2c-qup-v2.2.1";
- 			reg = <0x07af7000 0x600>;
+ .../devicetree/bindings/usb/fcs,fsa4480.yaml       | 43 +++++++++++-
+ drivers/usb/typec/mux/fsa4480.c                    | 81 ++++++++++++++++++++++
+ 2 files changed, 121 insertions(+), 3 deletions(-)
+---
+base-commit: e3b18f7200f45d66f7141136c25554ac1e82009b
+change-id: 20231013-fsa4480-swap-9b0f76d73c19
+
+Best regards,
 -- 
-2.42.0
+Luca Weiss <luca.weiss@fairphone.com>
 
