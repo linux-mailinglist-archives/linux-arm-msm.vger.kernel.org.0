@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BE197C8836
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 17:02:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DEAB67C8845
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Oct 2023 17:04:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232248AbjJMPCx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Oct 2023 11:02:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52742 "EHLO
+        id S232285AbjJMPEy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Oct 2023 11:04:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232226AbjJMPCw (ORCPT
+        with ESMTP id S232252AbjJMPEv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Oct 2023 11:02:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1871095
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 08:02:05 -0700 (PDT)
+        Fri, 13 Oct 2023 11:04:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66F6CC2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 08:04:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1697209324;
+        s=mimecast20190719; t=1697209446;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
          in-reply-to:in-reply-to:references:references;
-        bh=rceeu0VCieDlV0IrlDkPVP2q5+HsG2v/f7CK5R/WNaw=;
-        b=GNsK/NEuyoycWLwqDwp4JeKqxZxU32HiASdB0Wgd0F9hbY2i29uFR0Ke3wwj6J2bcEgXxw
-        XVmVCzegsVETgXllKXrrUhmYvk/4aPbb/E5I3hDn8oeiQCLg1hu1FWSdFi3twS2fwPKHbl
-        h/P2zGsfw8haO0/Y6yyMsm3YyOpbjPw=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+        bh=Fanr2UVL+2nniIjAFaTEYZESUnPsIrFphLfF6ehOj0I=;
+        b=DK9mFlm6/rHdddgJMgcFb+rd7Icu40shkj9IV4CHRHfEDd+y4JrG+ZJSd82LYNjqS/gPlb
+        P4a5Yrw+Czfltcoq27satJj1EgFPt0+l06SjVqm1TwV7UtjmOElMHaRBUwr7cEu2mYwA/X
+        JU5SrHuTDa9x4173HR+5yp2cNx1nWX8=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-384-qKWPJfb7Oz-3-XIE6FkeOw-1; Fri, 13 Oct 2023 11:02:02 -0400
-X-MC-Unique: qKWPJfb7Oz-3-XIE6FkeOw-1
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7740c35073bso263623385a.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 08:02:02 -0700 (PDT)
+ us-mta-517-SZUam5m7NPGxuZ0dYc7i8w-1; Fri, 13 Oct 2023 11:04:05 -0400
+X-MC-Unique: SZUam5m7NPGxuZ0dYc7i8w-1
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-66d120c28afso22145366d6.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Oct 2023 08:04:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697209322; x=1697814122;
+        d=1e100.net; s=20230601; t=1697209443; x=1697814243;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rceeu0VCieDlV0IrlDkPVP2q5+HsG2v/f7CK5R/WNaw=;
-        b=NPhS0uuJfF71Lg+Jysw+Ffox4O3LGEKLpOCrpZg0xBbH8iHlGz7e1nU7u0EWQOVHSC
-         l8/b8B6lLPuuSGUO6u2se7BZU3QmK7XgDSbXFLghaqaNeEum6HmbIPLRyl/jVmpzQqlb
-         NqWL5QJQ8i/4LEo5oK829mIxN/sGXfBrESAgJVeuAtklw1ufqIH1qFTZMfeuQzEeXwyA
-         /dxlJH0dXwWXrLbVh8JgM9C8WRLcOtPHbgOsPwA329T1NUb3taiVXIHkfz556xU9uRUO
-         8kYtt4+oO+Yl+wlBIku2S5H2iGAUCQDaFYYr8KLLeSEXxd/bfLWcmWj3Jv4v07DgO5VZ
-         ruVw==
-X-Gm-Message-State: AOJu0YzU1Eip1m7QsW4w8PYwmjd8V0tRq2GchesZINWefN+lAh9fCApu
-        MQPYR8Lj9cIUvCaUbvEkf2VESexvL+P1Rj2ypJG9tjsvfzVNfO3orLfeZwCKAlk1HKHTN93/+/F
-        0uVqCbJmDHd2CthHhAWuPFtTdkA==
-X-Received: by 2002:a05:622a:44b:b0:418:17f3:ccc0 with SMTP id o11-20020a05622a044b00b0041817f3ccc0mr35404183qtx.56.1697209322042;
-        Fri, 13 Oct 2023 08:02:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHphW6kyjwXlo3xruqsPlCBj7jdExaUjCwBOnEuMwiuamZQ5i1GxIHDed5LrCyxmOv6ime41g==
-X-Received: by 2002:a05:622a:44b:b0:418:17f3:ccc0 with SMTP id o11-20020a05622a044b00b0041817f3ccc0mr35404135qtx.56.1697209321559;
-        Fri, 13 Oct 2023 08:02:01 -0700 (PDT)
+        bh=Fanr2UVL+2nniIjAFaTEYZESUnPsIrFphLfF6ehOj0I=;
+        b=NR2bwlelue64JC/f50MqinGwPKhByeS5m6fPJu3iKUNidKHGNSUF71UBa0uecHgXhJ
+         ZCDFlbvGea8lNzGcTGnsieFvMF6vEXACjPbsfkJDWqdyfjYxZ3FPzrmIhkuW8wljkCsv
+         FeJRZRVbwvyfg95iFdkQnfCJ59ZKYti2y8mlf0neEY2fWvrSjdyXB0MtX28BYu6fnbI2
+         8loxx//oJhs1QmkO2Hjo/3+mBIIy9JKoqu+rvilzbSv0YkS66O5RyA4v3ERSyZ390C8E
+         bNZrjHan/S62U4BhztymAENNaeLbxEbNqWmZXOOILjW+EkLWtDhSFHkoWoZPJJGI6Cb+
+         6y9g==
+X-Gm-Message-State: AOJu0Yy9ehdqTqUAXsqwbpTUrZu6qffSqqgwHvdXFdJifoMRLb0Pkw4C
+        S39YPwyyfy626xZP5JKvTC8Xu3XQPyD79PWDPod85vIswaRAW8UH0BB8+oh/ydqaQnbbzpC/t9R
+        CCR3UY5vmlRCgezpH5ZSC/nlP7hbSNaAA2A==
+X-Received: by 2002:a0c:ea2c:0:b0:656:51b9:990e with SMTP id t12-20020a0cea2c000000b0065651b9990emr26082256qvp.57.1697209443233;
+        Fri, 13 Oct 2023 08:04:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFrk96WeM7PEfTiXqFn+XI1KMhVsRiXg6a34mYtKQ92DjlhZ/wrrzpdhvKPOXfvZbnSnt+L+w==
+X-Received: by 2002:a0c:ea2c:0:b0:656:51b9:990e with SMTP id t12-20020a0cea2c000000b0065651b9990emr26082228qvp.57.1697209442773;
+        Fri, 13 Oct 2023 08:04:02 -0700 (PDT)
 Received: from fedora ([2600:1700:1ff0:d0e0::37])
-        by smtp.gmail.com with ESMTPSA id x26-20020ac84d5a000000b0041520676966sm664565qtv.47.2023.10.13.08.02.00
+        by smtp.gmail.com with ESMTPSA id a24-20020a0ca998000000b006616fbcc077sm732483qvb.129.2023.10.13.08.04.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Oct 2023 08:02:00 -0700 (PDT)
-Date:   Fri, 13 Oct 2023 10:01:58 -0500
+        Fri, 13 Oct 2023 08:04:02 -0700 (PDT)
+Date:   Fri, 13 Oct 2023 10:04:00 -0500
 From:   Andrew Halaney <ahalaney@redhat.com>
 To:     Bartosz Golaszewski <brgl@bgdev.pl>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -70,35 +70,35 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, kernel@quicinc.com,
         Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v4 05/15] firmware: qcom: scm: enable the TZ mem allocator
-Message-ID: <4ojnfvx3upmklxteisp7rgymfnkksqkq3s6ewg3fma5ywyd7cd@zqdr6ovehphh>
+Subject: Re: [PATCH v4 12/15] firmware: qcom: scm: add support for SHM bridge
+ operations
+Message-ID: <jcsd2xrj44ekh34ptl3gluzyikjqlauje7qdfohinju73twui7@fuglljx55uz7>
 References: <20231013114843.63205-1-brgl@bgdev.pl>
- <20231013114843.63205-6-brgl@bgdev.pl>
+ <20231013114843.63205-13-brgl@bgdev.pl>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231013114843.63205-6-brgl@bgdev.pl>
+In-Reply-To: <20231013114843.63205-13-brgl@bgdev.pl>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 13, 2023 at 01:48:33PM +0200, Bartosz Golaszewski wrote:
+On Fri, Oct 13, 2023 at 01:48:40PM +0200, Bartosz Golaszewski wrote:
 > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> Select the TrustZone memory allocator in Kconfig and create a pool of
-> memory shareable with the TrustZone when probing the SCM driver.
-> 
-> This will allow a gradual conversion of all relevant SCM calls to using
-> the dedicated allocator.
+> Add low-level primitives for enabling SHM bridge support as well as
+> creating and destroying SHM bridge pools to qcom-scm.
 > 
 > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+Code wise this looks good to me, firmware interface wise I can't
+properly review, so:
+
+Acked-by: Andrew Halaney <ahalaney@redhat.com>
 
