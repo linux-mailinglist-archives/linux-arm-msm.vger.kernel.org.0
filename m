@@ -2,159 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D96B7C94BE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Oct 2023 15:38:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F74A7C954E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Oct 2023 18:16:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233176AbjJNNil (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 14 Oct 2023 09:38:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33074 "EHLO
+        id S233250AbjJNQQJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 14 Oct 2023 12:16:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233046AbjJNNik (ORCPT
+        with ESMTP id S230211AbjJNQQJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 14 Oct 2023 09:38:40 -0400
-Received: from srv01.abscue.de (abscue.de [89.58.28.240])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2F25AD;
-        Sat, 14 Oct 2023 06:38:37 -0700 (PDT)
-Received: from srv01.abscue.de (localhost [127.0.0.1])
-        by spamfilter.srv.local (Postfix) with ESMTP id AAB491C071A;
-        Sat, 14 Oct 2023 15:38:34 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
-        lindbergh.monkeyblade.net
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_PASS,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
-Received: from fluffy-mammal.fritz.box (dslb-088-078-204-065.088.078.pools.vodafone-ip.de [88.78.204.65])
-        by srv01.abscue.de (Postfix) with ESMTPSA id 425A61C071E;
-        Sat, 14 Oct 2023 15:38:34 +0200 (CEST)
-From:   =?UTF-8?q?Otto=20Pfl=C3=BCger?= <otto.pflueger@abscue.de>
-To:     linux-arm-msm@vger.kernel.org
+        Sat, 14 Oct 2023 12:16:09 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50C4AA2;
+        Sat, 14 Oct 2023 09:16:06 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA56AC433C8;
+        Sat, 14 Oct 2023 16:16:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1697300166;
+        bh=bloyWWM50cgSdXW/M/ONp1t9BKdvFll8JAVkflss0qk=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=X1EmAge9ScIen7JtkLBWghNUQoZoy6NrdY9FNXqGPKimSOb8r1kTs7tfdeHZNPfu/
+         RNDhoI+VmRsexi0e0SXt+tc9EIjIPw60d/r6XV28LspIuwRUvGBI3kd8QaKzeGm5xO
+         hc/5VkpxH39bziNl07SEOdU0vq5RzDq1C+FQf1b2uytuIYtSFAbraSQ6PvaYPMD+Pn
+         fDZIA1nVe7FPGRpjsmAY+UsrMBb+u1HJKuhcDz0z/XmCgGRHTvAA2+eIWNZkz3ZVvN
+         EKkF8OvaUP1rPC18c8k7C6IkJHXQOQepCuXFEWq/hN9YlRf09M9E5jQs+JwqPpkXfK
+         ACSuaD8wHHS9w==
+Date:   Sat, 14 Oct 2023 17:16:19 +0100
+From:   Jonathan Cameron <jic23@kernel.org>
+To:     Luca Weiss <luca.weiss@fairphone.com>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
-        =?UTF-8?q?Otto=20Pfl=C3=BCger?= <otto.pflueger@abscue.de>
-Subject: [PATCH v4 3/3] pmdomain: qcom: rpmpd: Add QM215 power domains
-Date:   Sat, 14 Oct 2023 15:38:23 +0200
-Message-Id: <20231014133823.14088-4-otto.pflueger@abscue.de>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20231014133823.14088-1-otto.pflueger@abscue.de>
-References: <20231014133823.14088-1-otto.pflueger@abscue.de>
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-iio@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 1/4] iio: adc: Add PM7325 PMIC7 ADC bindings
+Message-ID: <20231014171619.7b7ea921@jic23-huawei>
+In-Reply-To: <20231013-fp5-thermals-v1-1-f14df01922e6@fairphone.com>
+References: <20231013-fp5-thermals-v1-0-f14df01922e6@fairphone.com>
+        <20231013-fp5-thermals-v1-1-f14df01922e6@fairphone.com>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
+X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
+        lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-QM215 is typically paired with a PM8916 PMIC and uses its SMPA1 and
-LDOA2 regulators in voltage level mode for VDDCX and VDDMX, respectively.
+On Fri, 13 Oct 2023 10:09:53 +0200
+Luca Weiss <luca.weiss@fairphone.com> wrote:
 
-Signed-off-by: Otto Pflüger <otto.pflueger@abscue.de>
----
- drivers/pmdomain/qcom/rpmpd.c | 58 +++++++++++++++++++++++++++++++++++
- 1 file changed, 58 insertions(+)
+> Add the defines for the ADC channels found on the PM7325. The list is
+> taken from downstream msm-5.4 and adjusted for mainline.
+> 
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 
-diff --git a/drivers/pmdomain/qcom/rpmpd.c b/drivers/pmdomain/qcom/rpmpd.c
-index 2980ebd6ed8c..d793cf2f3af8 100644
---- a/drivers/pmdomain/qcom/rpmpd.c
-+++ b/drivers/pmdomain/qcom/rpmpd.c
-@@ -105,6 +105,24 @@ static struct rpmpd cx_s1a_corner_ao = {
- 	.key = KEY_CORNER,
- };
- 
-+static struct rpmpd cx_s1a_lvl_ao;
-+static struct rpmpd cx_s1a_lvl = {
-+	.pd = { .name = "cx", },
-+	.peer = &cx_s1a_lvl_ao,
-+	.res_type = RPMPD_SMPA,
-+	.res_id = 1,
-+	.key = KEY_LEVEL,
-+};
-+
-+static struct rpmpd cx_s1a_lvl_ao = {
-+	.pd = { .name = "cx_ao", },
-+	.peer = &cx_s1a_lvl,
-+	.active_only = true,
-+	.res_type = RPMPD_SMPA,
-+	.res_id = 1,
-+	.key = KEY_LEVEL,
-+};
-+
- static struct rpmpd cx_s2a_corner_ao;
- static struct rpmpd cx_s2a_corner = {
- 	.pd = { .name = "cx", },
-@@ -180,6 +198,13 @@ static struct rpmpd cx_s1a_vfc = {
- 	.key = KEY_FLOOR_CORNER,
- };
- 
-+static struct rpmpd cx_s1a_vfl = {
-+	.pd = { .name = "cx_vfl", },
-+	.res_type = RPMPD_SMPA,
-+	.res_id = 1,
-+	.key = KEY_FLOOR_LEVEL,
-+};
-+
- static struct rpmpd cx_s2a_vfc = {
- 	.pd = { .name = "cx_vfc", },
- 	.res_type = RPMPD_SMPA,
-@@ -239,6 +264,24 @@ static struct rpmpd gx_rwgx0_lvl_ao = {
- };
- 
- /* MX */
-+static struct rpmpd mx_l2a_lvl_ao;
-+static struct rpmpd mx_l2a_lvl = {
-+	.pd = { .name = "mx", },
-+	.peer = &mx_l2a_lvl_ao,
-+	.res_type = RPMPD_LDOA,
-+	.res_id = 2,
-+	.key = KEY_LEVEL,
-+};
-+
-+static struct rpmpd mx_l2a_lvl_ao = {
-+	.pd = { .name = "mx_ao", },
-+	.peer = &mx_l2a_lvl,
-+	.active_only = true,
-+	.res_type = RPMPD_LDOA,
-+	.res_id = 2,
-+	.key = KEY_LEVEL,
-+};
-+
- static struct rpmpd mx_l3a_corner_ao;
- static struct rpmpd mx_l3a_corner = {
- 	.pd = { .name = "mx", },
-@@ -704,6 +747,20 @@ static const struct rpmpd_desc qcs404_desc = {
- 	.max_state = RPM_SMD_LEVEL_BINNING,
- };
- 
-+static struct rpmpd *qm215_rpmpds[] = {
-+	[QM215_VDDCX] =		&cx_s1a_lvl,
-+	[QM215_VDDCX_AO] =	&cx_s1a_lvl_ao,
-+	[QM215_VDDCX_VFL] =	&cx_s1a_vfl,
-+	[QM215_VDDMX] =		&mx_l2a_lvl,
-+	[QM215_VDDMX_AO] =	&mx_l2a_lvl_ao,
-+};
-+
-+static const struct rpmpd_desc qm215_desc = {
-+	.rpmpds = qm215_rpmpds,
-+	.num_pds = ARRAY_SIZE(qm215_rpmpds),
-+	.max_state = RPM_SMD_LEVEL_TURBO,
-+};
-+
- static struct rpmpd *sdm660_rpmpds[] = {
- 	[SDM660_VDDCX] =	&cx_rwcx0_lvl,
- 	[SDM660_VDDCX_AO] =	&cx_rwcx0_lvl_ao,
-@@ -805,6 +862,7 @@ static const struct of_device_id rpmpd_match_table[] = {
- 	{ .compatible = "qcom,msm8998-rpmpd", .data = &msm8998_desc },
- 	{ .compatible = "qcom,qcm2290-rpmpd", .data = &qcm2290_desc },
- 	{ .compatible = "qcom,qcs404-rpmpd", .data = &qcs404_desc },
-+	{ .compatible = "qcom,qm215-rpmpd", .data = &qm215_desc },
- 	{ .compatible = "qcom,sdm660-rpmpd", .data = &sdm660_desc },
- 	{ .compatible = "qcom,sm6115-rpmpd", .data = &sm6115_desc },
- 	{ .compatible = "qcom,sm6125-rpmpd", .data = &sm6125_desc },
--- 
-2.39.2
+I assume this will go with the dts changes that use it.
+
+Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+
+> ---
+>  include/dt-bindings/iio/qcom,spmi-adc7-pm7325.h | 69 +++++++++++++++++++++++++
+>  1 file changed, 69 insertions(+)
+> 
+> diff --git a/include/dt-bindings/iio/qcom,spmi-adc7-pm7325.h b/include/dt-bindings/iio/qcom,spmi-adc7-pm7325.h
+> new file mode 100644
+> index 000000000000..96908014e09e
+> --- /dev/null
+> +++ b/include/dt-bindings/iio/qcom,spmi-adc7-pm7325.h
+> @@ -0,0 +1,69 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2020 The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#ifndef _DT_BINDINGS_QCOM_SPMI_VADC_PM7325_H
+> +#define _DT_BINDINGS_QCOM_SPMI_VADC_PM7325_H
+> +
+> +#ifndef PM7325_SID
+> +#define PM7325_SID					1
+> +#endif
+> +
+> +#include <dt-bindings/iio/qcom,spmi-vadc.h>
+> +
+> +/* ADC channels for PM7325_ADC for PMIC7 */
+> +#define PM7325_ADC7_REF_GND			(PM7325_SID << 8 | ADC7_REF_GND)
+> +#define PM7325_ADC7_1P25VREF			(PM7325_SID << 8 | ADC7_1P25VREF)
+> +#define PM7325_ADC7_VREF_VADC			(PM7325_SID << 8 | ADC7_VREF_VADC)
+> +#define PM7325_ADC7_DIE_TEMP			(PM7325_SID << 8 | ADC7_DIE_TEMP)
+> +
+> +#define PM7325_ADC7_AMUX_THM1			(PM7325_SID << 8 | ADC7_AMUX_THM1)
+> +#define PM7325_ADC7_AMUX_THM2			(PM7325_SID << 8 | ADC7_AMUX_THM2)
+> +#define PM7325_ADC7_AMUX_THM3			(PM7325_SID << 8 | ADC7_AMUX_THM3)
+> +#define PM7325_ADC7_AMUX_THM4			(PM7325_SID << 8 | ADC7_AMUX_THM4)
+> +#define PM7325_ADC7_AMUX_THM5			(PM7325_SID << 8 | ADC7_AMUX_THM5)
+> +#define PM7325_ADC7_GPIO1			(PM7325_SID << 8 | ADC7_GPIO1)
+> +#define PM7325_ADC7_GPIO2			(PM7325_SID << 8 | ADC7_GPIO2)
+> +#define PM7325_ADC7_GPIO3			(PM7325_SID << 8 | ADC7_GPIO3)
+> +#define PM7325_ADC7_GPIO4			(PM7325_SID << 8 | ADC7_GPIO4)
+> +
+> +/* 30k pull-up1 */
+> +#define PM7325_ADC7_AMUX_THM1_30K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM1_30K_PU)
+> +#define PM7325_ADC7_AMUX_THM2_30K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM2_30K_PU)
+> +#define PM7325_ADC7_AMUX_THM3_30K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM3_30K_PU)
+> +#define PM7325_ADC7_AMUX_THM4_30K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM4_30K_PU)
+> +#define PM7325_ADC7_AMUX_THM5_30K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM5_30K_PU)
+> +#define PM7325_ADC7_GPIO1_30K_PU		(PM7325_SID << 8 | ADC7_GPIO1_30K_PU)
+> +#define PM7325_ADC7_GPIO2_30K_PU		(PM7325_SID << 8 | ADC7_GPIO2_30K_PU)
+> +#define PM7325_ADC7_GPIO3_30K_PU		(PM7325_SID << 8 | ADC7_GPIO3_30K_PU)
+> +#define PM7325_ADC7_GPIO4_30K_PU		(PM7325_SID << 8 | ADC7_GPIO4_30K_PU)
+> +
+> +/* 100k pull-up2 */
+> +#define PM7325_ADC7_AMUX_THM1_100K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM1_100K_PU)
+> +#define PM7325_ADC7_AMUX_THM2_100K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM2_100K_PU)
+> +#define PM7325_ADC7_AMUX_THM3_100K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM3_100K_PU)
+> +#define PM7325_ADC7_AMUX_THM4_100K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM4_100K_PU)
+> +#define PM7325_ADC7_AMUX_THM5_100K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM5_100K_PU)
+> +#define PM7325_ADC7_GPIO1_100K_PU		(PM7325_SID << 8 | ADC7_GPIO1_100K_PU)
+> +#define PM7325_ADC7_GPIO2_100K_PU		(PM7325_SID << 8 | ADC7_GPIO2_100K_PU)
+> +#define PM7325_ADC7_GPIO3_100K_PU		(PM7325_SID << 8 | ADC7_GPIO3_100K_PU)
+> +#define PM7325_ADC7_GPIO4_100K_PU		(PM7325_SID << 8 | ADC7_GPIO4_100K_PU)
+> +
+> +/* 400k pull-up3 */
+> +#define PM7325_ADC7_AMUX_THM1_400K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM1_400K_PU)
+> +#define PM7325_ADC7_AMUX_THM2_400K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM2_400K_PU)
+> +#define PM7325_ADC7_AMUX_THM3_400K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM3_400K_PU)
+> +#define PM7325_ADC7_AMUX_THM4_400K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM4_400K_PU)
+> +#define PM7325_ADC7_AMUX_THM5_400K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM5_400K_PU)
+> +#define PM7325_ADC7_GPIO1_400K_PU		(PM7325_SID << 8 | ADC7_GPIO1_400K_PU)
+> +#define PM7325_ADC7_GPIO2_400K_PU		(PM7325_SID << 8 | ADC7_GPIO2_400K_PU)
+> +#define PM7325_ADC7_GPIO3_400K_PU		(PM7325_SID << 8 | ADC7_GPIO3_400K_PU)
+> +#define PM7325_ADC7_GPIO4_400K_PU		(PM7325_SID << 8 | ADC7_GPIO4_400K_PU)
+> +
+> +/* 1/3 Divider */
+> +#define PM7325_ADC7_GPIO4_DIV3			(PM7325_SID << 8 | ADC7_GPIO4_DIV3)
+> +
+> +#define PM7325_ADC7_VPH_PWR			(PM7325_SID << 8 | ADC7_VPH_PWR)
+> +
+> +#endif /* _DT_BINDINGS_QCOM_SPMI_VADC_PM7325_H */
+> 
+
