@@ -2,147 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 49FC67C95CB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Oct 2023 19:53:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 439057C9607
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Oct 2023 21:32:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231330AbjJNRx2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 14 Oct 2023 13:53:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47478 "EHLO
+        id S229464AbjJNTcX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 14 Oct 2023 15:32:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230016AbjJNRxV (ORCPT
+        with ESMTP id S229445AbjJNTcW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 14 Oct 2023 13:53:21 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ECAEAD;
-        Sat, 14 Oct 2023 10:53:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1697305966; bh=J6E11bWGXsldQJECPuC0snlXP/OiLacD+sKcuNZkyLM=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=LHxU4RsKfzcPKNkWGel5p6xLlzZot7D1l8dhZ9lLIxbaXNCMd4FC1OB/U8Ssf79/n
-         MRk5MCU616km8zpjji8NK9FHAeUkHJh5ryfc96F1b2QWlM9UKZf8sK8e8YIMBgRR9u
-         1szYjx1LpkM4vHvGmBo9aLbB7BcpbQfyxve76LIo=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-iio@vger.kernel.org, devicetree@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: qcm6490-fairphone-fp5: Add PM7325 thermals
-Date:   Sat, 14 Oct 2023 19:52:45 +0200
-Message-ID: <4958673.31r3eYUQgx@z3ntu.xyz>
-In-Reply-To: <34da335e-cbcd-4dc2-8a86-f31369db1fcd@linaro.org>
-References: <20231013-fp5-thermals-v1-0-f14df01922e6@fairphone.com>
- <20231013-fp5-thermals-v1-4-f14df01922e6@fairphone.com>
- <34da335e-cbcd-4dc2-8a86-f31369db1fcd@linaro.org>
+        Sat, 14 Oct 2023 15:32:22 -0400
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC7E1B7;
+        Sat, 14 Oct 2023 12:32:21 -0700 (PDT)
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-1ca3a54d2c4so3915295ad.3;
+        Sat, 14 Oct 2023 12:32:21 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697311941; x=1697916741;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iKhePuOAptoWjKe6TXhvKtMSGVzQ/bretd2U0V8ZT00=;
+        b=T3MIxVqTx5OQMYUB4hqV0keslkkqN4MIbRfPvi1+BRLAOWqbOA5gTZiRBLHf2rxHDx
+         Asd2LULsB6jHcauFjYx/3Fmk4EINOp+RxsnqBjZYM5XrMoUjQjfvB5vVfVn/tmdCBwjV
+         yMiHLDRjubcBx7IrFPF6VSyfLMZCRlxwG/Zn8VN75J2l00hz/stDhxBB28WysW1WCDpy
+         LbMf8BgFHuEvkz4IvN27Fq/1A9O6FQBTbpReF8vmnQ12YH45hqgjO9c5aq/XcT/bfHNA
+         IjPlGS/UuT6DrIjMd9Jv6A5ifHv9L5E373YZv1weOTt029rd560Vixmi29hb2opa3TxC
+         BbGg==
+X-Gm-Message-State: AOJu0YzI/H5rh3QXUKlhNjrPQ/87/jjg1+UiH3TC49YpPR1RvV80Z4gz
+        jNc0qCqZM9MUf3e2yc4fGNRRfv9TDRE=
+X-Google-Smtp-Source: AGHT+IGHNZ01TW5fHze65ef5i4SbgLrlTX/HXVbOOnk7AVGwyUxulRQv9DIFy9+Zq0GJ8ZNPQmI62w==
+X-Received: by 2002:a17:902:c408:b0:1c5:f0fd:51b5 with SMTP id k8-20020a170902c40800b001c5f0fd51b5mr38241398plk.40.1697311940967;
+        Sat, 14 Oct 2023 12:32:20 -0700 (PDT)
+Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
+        by smtp.gmail.com with ESMTPSA id n6-20020a170902d2c600b001b9be3b94d3sm5840358plc.140.2023.10.14.12.32.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 14 Oct 2023 12:32:20 -0700 (PDT)
+Date:   Sun, 15 Oct 2023 04:32:19 +0900
+From:   Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     lpieralisi@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, bhelgaas@google.com,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, abel.vesa@linaro.org
+Subject: Re: [PATCH v4 1/3] PCI: qcom: Use PCIE_SPEED2MBS_ENC() macro for
+ encoding link speed
+Message-ID: <20231014193219.GA1190809@rocinante>
+References: <20231004164430.39662-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231004164430.39662-1-manivannan.sadhasivam@linaro.org>
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Samstag, 14. Oktober 2023 01:13:29 CEST Konrad Dybcio wrote:
-> On 13.10.2023 10:09, Luca Weiss wrote:
-> > Configure the thermals for the QUIET_THERM, CAM_FLASH_THERM, MSM_THERM
-> > and RFC_CAM_THERM thermistors connected to PM7325.
-> > 
-> > With this PMIC the software communication to the ADC is going through
-> > PMK7325 (= PMK8350).
-> > 
-> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> > ---
-> > 
-> >  arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 117
-> >  +++++++++++++++++++++ 1 file changed, 117 insertions(+)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> > b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts index
-> > 2c01f799a6b2..d0b1e4e507ff 100644
-> > --- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> > +++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> > @@ -9,6 +9,7 @@
-> > 
-> >  #define PM7250B_SID 8
-> >  #define PM7250B_SID1 9
-> > 
-> > +#include <dt-bindings/iio/qcom,spmi-adc7-pm7325.h>
-> > 
-> >  #include <dt-bindings/iio/qcom,spmi-adc7-pmk8350.h>
-> >  #include <dt-bindings/leds/common.h>
-> >  #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-> > 
-> > @@ -137,6 +138,20 @@ afvdd_2p8: regulator-afvdd-2p8 {
-> > 
-> >  	};
-> >  	
-> >  	thermal-zones {
-> > 
-> > +		camera-thermal {
-> > +			polling-delay-passive = <0>;
-> > +			polling-delay = <0>;
-> > +			thermal-sensors = <&pmk8350_adc_tm 2>;
-> > +
-> > +			trips {
-> > +				active-config0 {
-> > +					temperature = <125000>;
+Hello,
+
+> Instead of hardcoding the link speed in MBps, use existing
+> PCIE_SPEED2MBS_ENC() macro that does the encoding of the link speed for us.
+> Also, let's Wrap it with QCOM_PCIE_LINK_SPEED_TO_BW() macro to do the
+> conversion to ICC speed.
 > 
-> are
-> 
-> > +		rear-cam-thermal {
-> > 
-> > +					temperature = <125000>;
-> 
-> you
-> 
-> > +		sdm-skin-thermal {
-> > 
-> > +					temperature = <125000>;
-> 
-> sure
-> 
-> about these temps?
+> This eliminates the need for a switch case in qcom_pcie_icc_update() and
+> also works for future Gen speeds without any code modifications.
+[...]
 
-(email from my other address, quicker right now)
+Applied to controller/speed, thank you!
 
-Well yes and no.
+[1/3] PCI: qcom: Use PCIE_SPEED2MBS_ENC() macro for encoding link speed
+      https://git.kernel.org/pci/pci/c/8da2e9af0bb5
+[2/3] PCI: qcom-ep: Use PCIE_SPEED2MBS_ENC() macro for encoding link speed
+      https://git.kernel.org/pci/pci/c/dc2f2a9d1cf2
+[3/3] PCI: tegra194: Use Mbps_to_icc() macro for setting icc speed
+      https://git.kernel.org/pci/pci/c/85e9eb3e7727
 
-Yes as in those are the temps specified in downstream dtb.
-No as in I'm 99% sure there's user space with definitely lower threshold that 
-actually does something in response to the temps.
-
-I didn't look too much into this but does the kernel even do something when it 
-hits one of these trip points? I assume when there's a cooling device thing 
-specified then it can actually tell the driver to do something, but without 
-(and most drivers don't support this?) I'm assuming the kernel can't do much 
-anyways?
-
-So e.g. when the temperature for the flash led is reached I'm assuming 
-downstream (+Android) either dims the led or turns it off? But I'd have to dig 
-quite a bit into the thermal setup there to check what it's really doing.
-
-But for now I think it's okay to put this current thermal config into dts and 
-we'll improve it later when 1. I understand more and 2. maybe some useful 
-drivers support the cooling bits?
-
-Regards
-Luca
-
-> 
-> Konrad
-
-
-
-
+	Krzysztof
