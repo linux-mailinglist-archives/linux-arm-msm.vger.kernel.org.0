@@ -2,153 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F74A7C954E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Oct 2023 18:16:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B04F7C95BA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Oct 2023 19:28:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233250AbjJNQQJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 14 Oct 2023 12:16:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59340 "EHLO
+        id S233264AbjJNR25 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 14 Oct 2023 13:28:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230211AbjJNQQJ (ORCPT
+        with ESMTP id S233313AbjJNR25 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 14 Oct 2023 12:16:09 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50C4AA2;
-        Sat, 14 Oct 2023 09:16:06 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA56AC433C8;
-        Sat, 14 Oct 2023 16:16:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1697300166;
-        bh=bloyWWM50cgSdXW/M/ONp1t9BKdvFll8JAVkflss0qk=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=X1EmAge9ScIen7JtkLBWghNUQoZoy6NrdY9FNXqGPKimSOb8r1kTs7tfdeHZNPfu/
-         RNDhoI+VmRsexi0e0SXt+tc9EIjIPw60d/r6XV28LspIuwRUvGBI3kd8QaKzeGm5xO
-         hc/5VkpxH39bziNl07SEOdU0vq5RzDq1C+FQf1b2uytuIYtSFAbraSQ6PvaYPMD+Pn
-         fDZIA1nVe7FPGRpjsmAY+UsrMBb+u1HJKuhcDz0z/XmCgGRHTvAA2+eIWNZkz3ZVvN
-         EKkF8OvaUP1rPC18c8k7C6IkJHXQOQepCuXFEWq/hN9YlRf09M9E5jQs+JwqPpkXfK
-         ACSuaD8wHHS9w==
-Date:   Sat, 14 Oct 2023 17:16:19 +0100
-From:   Jonathan Cameron <jic23@kernel.org>
-To:     Luca Weiss <luca.weiss@fairphone.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-iio@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 1/4] iio: adc: Add PM7325 PMIC7 ADC bindings
-Message-ID: <20231014171619.7b7ea921@jic23-huawei>
-In-Reply-To: <20231013-fp5-thermals-v1-1-f14df01922e6@fairphone.com>
-References: <20231013-fp5-thermals-v1-0-f14df01922e6@fairphone.com>
-        <20231013-fp5-thermals-v1-1-f14df01922e6@fairphone.com>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Sat, 14 Oct 2023 13:28:57 -0400
+Received: from srv01.abscue.de (abscue.de [IPv6:2a03:4000:63:bf5:4817:8eff:feeb:8ac7])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FC9AC9
+        for <linux-arm-msm@vger.kernel.org>; Sat, 14 Oct 2023 10:28:53 -0700 (PDT)
+Received: from srv01.abscue.de (localhost [127.0.0.1])
+        by spamfilter.srv.local (Postfix) with ESMTP id 265CB1C0729;
+        Sat, 14 Oct 2023 19:28:51 +0200 (CEST)
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_PASS,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
+Received: from fluffy-mammal.fritz.box (dslb-088-078-204-065.088.078.pools.vodafone-ip.de [88.78.204.65])
+        by srv01.abscue.de (Postfix) with ESMTPSA id C34E91C0728;
+        Sat, 14 Oct 2023 19:28:50 +0200 (CEST)
+From:   =?UTF-8?q?Otto=20Pfl=C3=BCger?= <otto.pflueger@abscue.de>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, alsa-devel@alsa-project.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        =?UTF-8?q?Otto=20Pfl=C3=BCger?= <otto.pflueger@abscue.de>
+Subject: [PATCH 0/3] ASoC: qcom: check ADSP version when setting clocks
+Date:   Sat, 14 Oct 2023 19:26:21 +0200
+Message-Id: <20231014172624.75301-1-otto.pflueger@abscue.de>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 13 Oct 2023 10:09:53 +0200
-Luca Weiss <luca.weiss@fairphone.com> wrote:
+The apq8016_sbc driver currently works on APQ8016 and MSM8916 devices. It
+should also work on MSM8909 (and newer SoCs like MSM8917 and MSM8953 if
+the quinary MI2S line is added); however, newer devices with these SoCs
+ship with newer firmware that uses a different interface for controlling
+the digital codec and bit clocks, which causes the driver to fail because
+it cannot set LPAIF_BIT_CLK.
 
-> Add the defines for the ADC channels found on the PM7325. The list is
-> taken from downstream msm-5.4 and adjusted for mainline.
-> 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+In order to fix this problem, modify the LPAIF_* clock implementation in
+the qdsp6 driver to use the newer clock API if a newer firmware version is
+detected. This seems to be a better solution than exposing the firmware
+version to other drivers like apq8016_sbc and forcing them to figure out
+which clock to use.
 
-I assume this will go with the dts changes that use it.
+On MSM8916, a hack is currently used to control the LPAIF_DIG_CLK directly
+through the GCC driver, but on devices with the newer firmware, the
+INTERNAL_DIGITAL_CODEC_CORE clock provided by q6afe-clocks in the qdsp6
+driver can be used instead. Add a fallback to make this clock work with
+the older firmware too, allowing one to specify it as the codec's "mclk"
+in the device tree:
 
-Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+  compatible = "qcom,msm8916-wcd-digital-codec";
+  clocks = <&xo_board>,
+           <&q6afecc LPASS_CLK_ID_INTERNAL_DIGITAL_CODEC_CORE
+                     LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+  clock-names = "ahbix", "mclk";
+  assigned-clocks = <&q6afecc LPASS_CLK_ID_INTERNAL_DIGITAL_CODEC_CORE
+                              LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+  assigned-clock-rates = <9600000>;
 
-> ---
->  include/dt-bindings/iio/qcom,spmi-adc7-pm7325.h | 69 +++++++++++++++++++++++++
->  1 file changed, 69 insertions(+)
-> 
-> diff --git a/include/dt-bindings/iio/qcom,spmi-adc7-pm7325.h b/include/dt-bindings/iio/qcom,spmi-adc7-pm7325.h
-> new file mode 100644
-> index 000000000000..96908014e09e
-> --- /dev/null
-> +++ b/include/dt-bindings/iio/qcom,spmi-adc7-pm7325.h
-> @@ -0,0 +1,69 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (c) 2020 The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#ifndef _DT_BINDINGS_QCOM_SPMI_VADC_PM7325_H
-> +#define _DT_BINDINGS_QCOM_SPMI_VADC_PM7325_H
-> +
-> +#ifndef PM7325_SID
-> +#define PM7325_SID					1
-> +#endif
-> +
-> +#include <dt-bindings/iio/qcom,spmi-vadc.h>
-> +
-> +/* ADC channels for PM7325_ADC for PMIC7 */
-> +#define PM7325_ADC7_REF_GND			(PM7325_SID << 8 | ADC7_REF_GND)
-> +#define PM7325_ADC7_1P25VREF			(PM7325_SID << 8 | ADC7_1P25VREF)
-> +#define PM7325_ADC7_VREF_VADC			(PM7325_SID << 8 | ADC7_VREF_VADC)
-> +#define PM7325_ADC7_DIE_TEMP			(PM7325_SID << 8 | ADC7_DIE_TEMP)
-> +
-> +#define PM7325_ADC7_AMUX_THM1			(PM7325_SID << 8 | ADC7_AMUX_THM1)
-> +#define PM7325_ADC7_AMUX_THM2			(PM7325_SID << 8 | ADC7_AMUX_THM2)
-> +#define PM7325_ADC7_AMUX_THM3			(PM7325_SID << 8 | ADC7_AMUX_THM3)
-> +#define PM7325_ADC7_AMUX_THM4			(PM7325_SID << 8 | ADC7_AMUX_THM4)
-> +#define PM7325_ADC7_AMUX_THM5			(PM7325_SID << 8 | ADC7_AMUX_THM5)
-> +#define PM7325_ADC7_GPIO1			(PM7325_SID << 8 | ADC7_GPIO1)
-> +#define PM7325_ADC7_GPIO2			(PM7325_SID << 8 | ADC7_GPIO2)
-> +#define PM7325_ADC7_GPIO3			(PM7325_SID << 8 | ADC7_GPIO3)
-> +#define PM7325_ADC7_GPIO4			(PM7325_SID << 8 | ADC7_GPIO4)
-> +
-> +/* 30k pull-up1 */
-> +#define PM7325_ADC7_AMUX_THM1_30K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM1_30K_PU)
-> +#define PM7325_ADC7_AMUX_THM2_30K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM2_30K_PU)
-> +#define PM7325_ADC7_AMUX_THM3_30K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM3_30K_PU)
-> +#define PM7325_ADC7_AMUX_THM4_30K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM4_30K_PU)
-> +#define PM7325_ADC7_AMUX_THM5_30K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM5_30K_PU)
-> +#define PM7325_ADC7_GPIO1_30K_PU		(PM7325_SID << 8 | ADC7_GPIO1_30K_PU)
-> +#define PM7325_ADC7_GPIO2_30K_PU		(PM7325_SID << 8 | ADC7_GPIO2_30K_PU)
-> +#define PM7325_ADC7_GPIO3_30K_PU		(PM7325_SID << 8 | ADC7_GPIO3_30K_PU)
-> +#define PM7325_ADC7_GPIO4_30K_PU		(PM7325_SID << 8 | ADC7_GPIO4_30K_PU)
-> +
-> +/* 100k pull-up2 */
-> +#define PM7325_ADC7_AMUX_THM1_100K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM1_100K_PU)
-> +#define PM7325_ADC7_AMUX_THM2_100K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM2_100K_PU)
-> +#define PM7325_ADC7_AMUX_THM3_100K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM3_100K_PU)
-> +#define PM7325_ADC7_AMUX_THM4_100K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM4_100K_PU)
-> +#define PM7325_ADC7_AMUX_THM5_100K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM5_100K_PU)
-> +#define PM7325_ADC7_GPIO1_100K_PU		(PM7325_SID << 8 | ADC7_GPIO1_100K_PU)
-> +#define PM7325_ADC7_GPIO2_100K_PU		(PM7325_SID << 8 | ADC7_GPIO2_100K_PU)
-> +#define PM7325_ADC7_GPIO3_100K_PU		(PM7325_SID << 8 | ADC7_GPIO3_100K_PU)
-> +#define PM7325_ADC7_GPIO4_100K_PU		(PM7325_SID << 8 | ADC7_GPIO4_100K_PU)
-> +
-> +/* 400k pull-up3 */
-> +#define PM7325_ADC7_AMUX_THM1_400K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM1_400K_PU)
-> +#define PM7325_ADC7_AMUX_THM2_400K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM2_400K_PU)
-> +#define PM7325_ADC7_AMUX_THM3_400K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM3_400K_PU)
-> +#define PM7325_ADC7_AMUX_THM4_400K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM4_400K_PU)
-> +#define PM7325_ADC7_AMUX_THM5_400K_PU		(PM7325_SID << 8 | ADC7_AMUX_THM5_400K_PU)
-> +#define PM7325_ADC7_GPIO1_400K_PU		(PM7325_SID << 8 | ADC7_GPIO1_400K_PU)
-> +#define PM7325_ADC7_GPIO2_400K_PU		(PM7325_SID << 8 | ADC7_GPIO2_400K_PU)
-> +#define PM7325_ADC7_GPIO3_400K_PU		(PM7325_SID << 8 | ADC7_GPIO3_400K_PU)
-> +#define PM7325_ADC7_GPIO4_400K_PU		(PM7325_SID << 8 | ADC7_GPIO4_400K_PU)
-> +
-> +/* 1/3 Divider */
-> +#define PM7325_ADC7_GPIO4_DIV3			(PM7325_SID << 8 | ADC7_GPIO4_DIV3)
-> +
-> +#define PM7325_ADC7_VPH_PWR			(PM7325_SID << 8 | ADC7_VPH_PWR)
-> +
-> +#endif /* _DT_BINDINGS_QCOM_SPMI_VADC_PM7325_H */
-> 
+This works both on MSM8916 and on the newer SoCs mentioned above.
 
+Otto Pflüger (3):
+  ASoC: qcom: q6core: expose ADSP core firmware version
+  ASoC: qcom: q6afe: check ADSP version when setting clocks
+  ASoC: qcom: q6afe: remove "port already open" error
+
+ sound/soc/qcom/qdsp6/q6afe.c  | 85 +++++++++++++++++++++++++++++++++--
+ sound/soc/qcom/qdsp6/q6core.c | 61 +++++++++++++++++++++++++
+ sound/soc/qcom/qdsp6/q6core.h |  9 ++++
+ 3 files changed, 152 insertions(+), 3 deletions(-)
+
+
+base-commit: e3b18f7200f45d66f7141136c25554ac1e82009b
+-- 
+2.39.2
