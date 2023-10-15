@@ -2,35 +2,35 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B87CE7C9B3C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Oct 2023 22:07:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A053B7C9B6F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Oct 2023 22:26:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229649AbjJOUHC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 15 Oct 2023 16:07:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54578 "EHLO
+        id S229772AbjJOU0P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 15 Oct 2023 16:26:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229518AbjJOUHB (ORCPT
+        with ESMTP id S229766AbjJOU0L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 15 Oct 2023 16:07:01 -0400
+        Sun, 15 Oct 2023 16:26:11 -0400
 Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEADDB7;
-        Sun, 15 Oct 2023 13:06:58 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B1A8E4;
+        Sun, 15 Oct 2023 13:26:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1697400417; bh=gLXzkJlcOtiiXEeg7Iuty/PC2JvU2OIZdV/PvF/Q3tI=;
-        h=From:Date:Subject:To:Cc;
-        b=RN0J6xnJHoJM2GqLNuKraxSEjdpxtnbOWwlW8bSFR8bzyC1YvwKNIsWIkLN/vHi4G
-         Tk03S+7MiiBou2NRuVn0XSkeOhnRviUUDAzTYQKw0G/wKrutKC/ZGPzEAxDa2nRRfG
-         Z7PJy89ExVXA72jdu4ZGzwRfj+pPUYOoU4MaK75M=
+        t=1697401566; bh=pbPno1ZqQXw35M/Z5s/GrtA5wtsZugP/6ACjMTW6oyI=;
+        h=From:Subject:Date:To:Cc;
+        b=y0/Jbv6UIndPL2kJAXCBHdQCEHOq2+12DPYwiBKLPtMkruNpf6q79BY5pvN7L+HlX
+         SV9GUYRuAi/mpPxyiv7hB2sE+eYAR42RW5z+br7HrSJYydXnKk+haVM/5Z8XTjakfK
+         mkimPLriTz+M6HitnenEGtbJCjEEmFzh/cE1a1og=
 From:   Luca Weiss <luca@z3ntu.xyz>
-Date:   Sun, 15 Oct 2023 22:06:56 +0200
-Subject: [PATCH] arm64: dts: qcom: sdm632-fairphone-fp3: Enable LPASS
+Subject: [PATCH 0/2] Small dtsi fixes for msm8953 SoC
+Date:   Sun, 15 Oct 2023 22:26:00 +0200
+Message-Id: <20231015-msm8953-misc-fixes-v1-0-b800deca9e46@z3ntu.xyz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231015-fp3-lpass-v1-1-4d46a399a035@z3ntu.xyz>
-X-B4-Tracking: v=1; b=H4sIAF9GLGUC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI2NDA0NT3bQCY92cgsTiYt0koxRTI4MUYzPTxCQloPqCotS0zAqwWdGxtbU
- A2KJWP1sAAAA=
+X-B4-Tracking: v=1; b=H4sIANlKLGUC/x3LMQqAMAxA0auUzAbaBrF6FXEQTTVDVRoQQXp3i
+ +Pj819QzsIKg3kh8y0q51HhGgPLPh8bo6zV4K0nZ12LSVPoW8IkumCUhxVDF6kjbyn2Aep4Zf5
+ D/caplA8JleMIZAAAAA==
 To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -41,20 +41,20 @@ To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>
 X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=773; i=luca@z3ntu.xyz;
- h=from:subject:message-id; bh=gLXzkJlcOtiiXEeg7Iuty/PC2JvU2OIZdV/PvF/Q3tI=;
- b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBlLEZgmq7oITq5wM7PXUyggGCfRXuX9mJ0KLTY/
- SozJ5Fy2cGJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZSxGYAAKCRBy2EO4nU3X
- VpfjEACcqk+1T732HNrdfn+AJ9ugYpgKXBq9bE0K5SK+axr9bvZt6uRvclCYev4ciVyZ4ppoVcw
- rt+I4J63pPERvCHknnsTgye+0w6HwPtvbrWLlS209Qz2HvGx5XYFxyGSJno2YofRgtSTJPtAOrB
- dilapKAbC1RSfJz5MOkQCm0Av+Z2rJWiijswwuM/WHL6wlG8FcUd+fKCigWLewAQfVSTUfnWoL2
- 5Usr2cczDIbU9Si5qBbwRnFIbrBbV5VB696J9y6/qDbz/7J7YZ6IAn7jf9af3G3sfuKJZA3ccMM
- wDJjNpKoHVHJm/y1Dgdp1LwEusonryq7ZgY/8uEUQQiOJHWWGW4H7/nXWK8WP97gNY+ybC+6fSf
- XFywaQD79CsQejuQvadQmkemcnckdS5fALY6KkGdjKnojQnX47TxemxnWow8RKcgKNinVbE7Uff
- qkwe94C8BzqHeaikz11F+C6VFhfy78vvwEvf3YmekeJq7bwOo+PBDDESi3MQ1GJiS5vPnutQ4sF
- o8Kfb8V956/TYJNmEPWDCy16YUeyFPIVi+KId206+jbUKRY/m/x1RpyA/Fx/JGEqA9TS+hKqmPh
- QbdpHfA1sLICOPA1BiUW7uJcAevHkAmthkkJol/Fs1FNbnQPc398x1j9ccT1SXyqGzL1qv4vL6R
- 7ObCugIq3Q3hCbw==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=568; i=luca@z3ntu.xyz;
+ h=from:subject:message-id; bh=pbPno1ZqQXw35M/Z5s/GrtA5wtsZugP/6ACjMTW6oyI=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBlLErbYljQeUeEnk/kRf8HLnZdN7A7BH52pEftn
+ 02ca11hPyCJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZSxK2wAKCRBy2EO4nU3X
+ VgcyEADJc8/zuEHN1PkJE9JjkV9O+rffDd9h//I6YG8s0693AJe6i8CE8tURZQqj8aVUzxbvXGd
+ E4NyVjsns4NGY4oYJumwkMgrqDh64f4wpzcL+3fQka/fXeK119+VgtB5t+wZFa/vF2M68YAABlg
+ AaC7ViGqRCfRUY4SZjTM690Cyw+SPRoJmehY6U0X7Ure4uE1rNdFF4jTxXJgxkU3I+z1sBG/8e1
+ IUR1EIHTpCkmawHGF4Tqc25XvZzcpMl8Zd1vfUtmFiM0Nvq8sPCk2xLIy1bzJPYa5iq5WAmi08q
+ FdAEKirNMaEB+iwHXJs1eLb517zaSw7zFTonzfoKdLoytcVSqu06SVZjagOgleeI9PX3OT9JLby
+ byy+G26Ulx4A65u6iu3DsG1ZSmMxyTc0xLsEM85QtgUBEX2IecSXGDU3yreO1qMw+AgD1LVdBdU
+ 52ZomDx7yR1NvlihRhV4h7Kvy9GNUJqFvFU5uIwQt/2hD6ZckxleQDO7A9ZCzpjwFxKcStvoB+Y
+ utcmBBj8bkLE7KPodbvc8HP/K0JfrAiV2qOX0fFpt2yn9UF3M+LD672jzU8qjVY8igUIw5Ftnca
+ vSHMdZ+Q3xiCZF1j6N471YonU32A+NWCPWC1YuV3V9xcDaAw8ijSYvLm1qSMHfjivezUeNlkHz7
+ QILNZwJAlnIr2Hg==
 X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
  fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -66,32 +66,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the LPASS/ADSP found on the phone.
+Fix some small things in the qcom/msm8953.dtsi file to make dtbs_check
+happier than before.
 
 Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 ---
- arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts | 4 ++++
- 1 file changed, 4 insertions(+)
+Luca Weiss (2):
+      arm64: dts: qcom: msm8953: Set initial address for memory
+      arm64: dts: qcom: msm8953: Use non-deprecated qcom,domain in LPASS
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
-index 301eca9a4f31..50309b1a6b7a 100644
---- a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
-@@ -80,6 +80,10 @@ nfc@28 {
- 	};
- };
- 
-+&lpass {
-+	status = "okay";
-+};
-+
- &pm8953_resin {
- 	status = "okay";
- 	linux,code = <KEY_VOLUMEDOWN>;
-
+ arch/arm64/boot/dts/qcom/msm8953.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 ---
 base-commit: 2933a1156742d8c47550493a77af8e2d81cf3c84
-change-id: 20231015-fp3-lpass-b2d520d365ab
+change-id: 20231015-msm8953-misc-fixes-87f373203f98
 
 Best regards,
 -- 
