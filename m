@@ -2,257 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 434E77C96B5
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Oct 2023 00:00:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2AFFB7C97A8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Oct 2023 04:30:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233362AbjJNWAa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 14 Oct 2023 18:00:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36190 "EHLO
+        id S233401AbjJOCaZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 14 Oct 2023 22:30:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233033AbjJNWA3 (ORCPT
+        with ESMTP id S233328AbjJOCaX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 14 Oct 2023 18:00:29 -0400
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E3C7D6
-        for <linux-arm-msm@vger.kernel.org>; Sat, 14 Oct 2023 15:00:28 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qrmfV-0001zq-2D; Sat, 14 Oct 2023 23:59:33 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qrmfI-001hum-RA; Sat, 14 Oct 2023 23:59:20 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qrmfI-00GSU5-Fm; Sat, 14 Oct 2023 23:59:20 +0200
-Date:   Sat, 14 Oct 2023 23:59:18 +0200
-From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To:     soc@kernel.org
-Cc:     Nishanth Menon <nm@ti.com>,
-        Herve Codina <herve.codina@bootlin.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>,
-        Mateusz Holenko <mholenko@antmicro.com>,
-        Muhammad Usama Anjum <usama.anjum@collabora.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        "Conor.Dooley" <conor.dooley@microchip.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        linux-riscv@lists.infradead.org,
-        Karol Gugala <kgugala@antmicro.com>,
-        Qiang Zhao <qiang.zhao@nxp.com>,
-        Hitomi Hasegawa <hasegawa-hitomi@fujitsu.com>,
-        Rob Herring <robh@kernel.org>,
-        linux-samsung-soc@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
-        Ruan Jinjie <ruanjinjie@huawei.com>,
-        Yinbo Zhu <zhuyinbo@loongson.cn>,
-        Jon Hunter <jonathanh@nvidia.com>,
-        linux-rockchip@lists.infradead.org,
-        Gabriel Somlo <gsomlo@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Huisong Li <lihuisong@huawei.com>,
-        Joel Stanley <joel@jms.id.au>,
-        Yang Yingliang <yangyingliang@huawei.com>,
-        Sumit Gupta <sumitg@nvidia.com>,
-        "zhang.songyi" <zhang.songyi@zte.com.cn>,
-        Zev Weiss <zev@bewilderbeest.net>,
-        Arnd Bergmann <arnd@arndb.de>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Lubomir Rintel <lkundrak@v3.sk>,
-        Krzysztof Halasa <khalasa@piap.pl>, loongarch@lists.linux.dev,
-        Santosh Shilimkar <ssantosh@kernel.org>,
-        linux-tegra@vger.kernel.org, Michal Simek <michal.simek@amd.com>,
-        linux-arm-kernel@lists.infradead.org,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Daire McNamara <daire.mcnamara@microchip.com>,
-        linux-kernel@vger.kernel.org,
-        Shang XiaoJing <shangxiaojing@huawei.com>,
-        Leo Li <leoyang.li@nxp.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andrew Jeffery <andrew@aj.id.au>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        linux-mediatek@lists.infradead.org,
-        Nick Alcock <nick.alcock@oracle.com>,
-        linuxppc-dev@lists.ozlabs.org
-Subject: [GIT PULL] Convert drivers/soc to struct
- platform_driver::remove_new()
-Message-ID: <20231014215918.prqhkk7kp2vobe3a@pengutronix.de>
-References: <20230925095532.1984344-1-u.kleine-koenig@pengutronix.de>
- <CACPK8XeROYz_XaB3TvUhdXm7Vm8fjC8yU+mfvA58=_FiDrBy-g@mail.gmail.com>
- <1b2fddf8-c0a6-4afa-8ad0-f280dea1607f@app.fastmail.com>
- <f4hvrslynlgmxu4a2gogc5idvumskhaalxgwildy56yqk2wz7d@lkh4swkv52mi>
- <20230928061449.xxqhyyrg6e357dn2@pengutronix.de>
+        Sat, 14 Oct 2023 22:30:23 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA5E0CC;
+        Sat, 14 Oct 2023 19:30:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1697337021; x=1728873021;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=BUwl6/usmRlti/+3fPO0RhkKrPW43T4KsDphTzMcrXo=;
+  b=KvDeQ0n/ZR9SstlDI3+EINLBVOO7eOCLQ5bUbxdafprKdyz5GhVat6ky
+   rivAailrd4I0oXNK3QTtPkUtH45LnCtl+bAeBxakq6nEeo9PF6JvXJZGG
+   BnNSQ7TzeotQUAflzU8LqtlQlLML+mKZaZvYzwoMH8F2p/aWWqNIL0Ib1
+   CORKNYZ4nyRpKOx34jgsLKPF/di36SkxDfckcg6NnVXHt16C5rktj6QUt
+   PGgOlHVI4HL9KAAM8dUQUm8ugI4MuMxK+YlIrB7IXcS6huFBwAVeXESkJ
+   thd7HSpwlhUuqwIXJwotu/WK9FsjBzYkDBhBORbu43fZRdZ2TdwGDSof0
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10863"; a="388217590"
+X-IronPort-AV: E=Sophos;i="6.03,226,1694761200"; 
+   d="scan'208";a="388217590"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Oct 2023 19:30:20 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10863"; a="748833713"
+X-IronPort-AV: E=Sophos;i="6.03,226,1694761200"; 
+   d="scan'208";a="748833713"
+Received: from lkp-server02.sh.intel.com (HELO f64821696465) ([10.239.97.151])
+  by orsmga007.jf.intel.com with ESMTP; 14 Oct 2023 19:30:14 -0700
+Received: from kbuild by f64821696465 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qrqtQ-0006wJ-0q;
+        Sun, 15 Oct 2023 02:30:12 +0000
+Date:   Sun, 15 Oct 2023 10:29:22 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        dmitry.baryshkov@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        jonathan@marek.ca, quic_tdas@quicinc.com,
+        vladimir.zapolskiy@linaro.org
+Cc:     oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, bryan.odonoghue@linaro.org
+Subject: Re: [PATCH v3 1/4] arm64: dts: qcom: sc8280xp: Add in CAMCC for
+ sc8280xp
+Message-ID: <202310151043.01L92wwx-lkp@intel.com>
+References: <20231011185540.2282975-2-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="7gysnf7ldsm65nug"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230928061449.xxqhyyrg6e357dn2@pengutronix.de>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20231011185540.2282975-2-bryan.odonoghue@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Bryan,
 
---7gysnf7ldsm65nug
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+kernel test robot noticed the following build errors:
 
-Hello Arnd,
+[auto build test ERROR on robh/for-next]
+[also build test ERROR on linus/master v6.6-rc5 next-20231013]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-the following changes since commit 0bb80ecc33a8fb5a682236443c1e740d5c917d1d:
+url:    https://github.com/intel-lab-lkp/linux/commits/Bryan-O-Donoghue/arm64-dts-qcom-sc8280xp-Add-in-CAMCC-for-sc8280xp/20231012-025807
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+patch link:    https://lore.kernel.org/r/20231011185540.2282975-2-bryan.odonoghue%40linaro.org
+patch subject: [PATCH v3 1/4] arm64: dts: qcom: sc8280xp: Add in CAMCC for sc8280xp
+config: arm64-allyesconfig (https://download.01.org/0day-ci/archive/20231015/202310151043.01L92wwx-lkp@intel.com/config)
+compiler: aarch64-linux-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231015/202310151043.01L92wwx-lkp@intel.com/reproduce)
 
-  Linux 6.6-rc1 (2023-09-10 16:28:41 -0700)
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202310151043.01L92wwx-lkp@intel.com/
 
-are available in the Git repository at:
+All errors (new ones prefixed by >>):
 
-  https://git.pengutronix.de/git/ukl/linux tags/platform-remove-void-soc-fo=
-r-6.7-rc
+   In file included from arch/arm64/boot/dts/qcom/sa8540p.dtsi:7,
+                    from arch/arm64/boot/dts/qcom/sa8295p-adp.dts:13:
+>> arch/arm64/boot/dts/qcom/sc8280xp.dtsi:11:10: fatal error: dt-bindings/clock/qcom,sc8280xp-camcc.h: No such file or directory
+      11 | #include <dt-bindings/clock/qcom,sc8280xp-camcc.h>
+         |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   compilation terminated.
 
-for you to fetch changes up to e77e6e3e909d33361c58af848a96e1f7f71ba7e4:
 
-  soc/pxa: ssp: Convert to platform remove callback returning void (2023-10=
--14 23:27:34 +0200)
+vim +11 arch/arm64/boot/dts/qcom/sc8280xp.dtsi
 
-----------------------------------------------------------------
-Convert drivers/soc to struct platform_driver::remove_new()
+  > 11	#include <dt-bindings/clock/qcom,sc8280xp-camcc.h>
+    12	#include <dt-bindings/clock/qcom,sc8280xp-lpasscc.h>
+    13	#include <dt-bindings/interconnect/qcom,osm-l3.h>
+    14	#include <dt-bindings/interconnect/qcom,sc8280xp.h>
+    15	#include <dt-bindings/interrupt-controller/arm-gic.h>
+    16	#include <dt-bindings/mailbox/qcom-ipcc.h>
+    17	#include <dt-bindings/phy/phy-qcom-qmp.h>
+    18	#include <dt-bindings/power/qcom-rpmpd.h>
+    19	#include <dt-bindings/soc/qcom,gpr.h>
+    20	#include <dt-bindings/soc/qcom,rpmh-rsc.h>
+    21	#include <dt-bindings/sound/qcom,q6afe.h>
+    22	#include <dt-bindings/thermal/thermal.h>
+    23	
 
-This PR contains the patches I sent in the series available at
-https://lore.kernel.org/all/20230925095532.1984344-1-u.kleine-koenig@pengut=
-ronix.de
-that were not yet picked up in next as of next-20231013.
-
-It converts all drivers below drivers/soc to let their remove callback
-return void. See commit 5c5a7680e67b ("platform: Provide a remove
-callback that returns no value") for the rationale.
-
-----------------------------------------------------------------
-
-On Thu, Sep 28, 2023 at 08:14:49AM +0200, Uwe Kleine-K=F6nig wrote:
-> On Wed, Sep 27, 2023 at 04:01:58PM -0700, Bjorn Andersson wrote:
-> > On Wed, Sep 27, 2023 at 10:43:16AM +0200, Arnd Bergmann wrote:
-> > > On Wed, Sep 27, 2023, at 04:25, Joel Stanley wrote:
-> > > > On Mon, 25 Sept 2023 at 09:55, Uwe Kleine-K=F6nig <u.kleine-koenig@=
-pengutronix.de> wrote:
-> > > >>
-> > > >> this series converts all platform drivers below drivers/soc to use
-> > > >> .remove_new(). The motivation is to get rid of an integer return c=
-ode
-> > > >> that is (mostly) ignored by the platform driver core and error pro=
-ne on
-> > > >> the driver side.
-> > > >>
-> > > >> See commit 5c5a7680e67b ("platform: Provide a remove callback that
-> > > >> returns no value") for an extended explanation and the eventual go=
-al.
-> > > >>
-> > > >> As there is no single maintainer team for drivers/soc, I suggest t=
-he
-> > > >> individual maintainers to pick up "their" patches.
-> > > >
-> > > > I'd be happy if Arnd merged the lot at once. Arnd, what do you thin=
-k?
-> > > >
-> > > > If that will be too messy then I understand. I have queued the aspe=
-ed
-> > > > ones locally and will push that out if we decide that's the best way
-> > > > to go.
-> > >=20
-> > > The main downside of merging it all at once through the soc tree
-> > > is that there may be patches that conflict with other work going on
-> > > in individual drivers.
-> > >=20
-> > > What I'd suggest doing here is:
-> > >=20
-> > > - have platform maintainers pick up patches for their drivers
-> > >   if that is their preference for any reason
-> >=20
-> > I'd prefer this for the qcom drivers at least, please let me know if you
-> > would like me to proceed.
->
-> I can send a pull request as Arnd suggested. So iff you want the qcom
-> drivers not be a part of that PR, just make sure they appear in next
-> during the next week. :-)
->
-> > > - get a pull request from Uwe for the soc tree for anything that has
-> > >  not been picked up in one or two weeks from now
-
-Here comes the promised PR. The qcom patches are among the set of
-patches dropped here as they are already in next.
-
-To state the obvious: This is merge window material and the idea is that
-it's pulled into armsoc and then included in the armsoc v6.7-rc1 PR to
-Linus Torvalds. I hope it's not too late for that already.
-
-Best regards and thanks
-Uwe
-
-Uwe Kleine-K=F6nig (12):
-      soc/fsl: dpaa2-console: Convert to platform remove callback returning=
- void
-      soc/fsl: cpm: qmc: Convert to platform remove callback returning void
-      soc/fsl: cpm: tsa: Convert to platform remove callback returning void
-      soc/fujitsu: a64fx-diag: Convert to platform remove callback returnin=
-g void
-      soc/hisilicon: kunpeng_hccs: Convert to platform remove callback retu=
-rning void
-      soc/ixp4xx: ixp4xx-npe: Convert to platform remove callback returning=
- void
-      soc/ixp4xx: ixp4xx-qmgr: Convert to platform remove callback returnin=
-g void
-      soc/litex: litex_soc_ctrl: Convert to platform remove callback return=
-ing void
-      soc/loongson: loongson2_guts: Convert to platform remove callback ret=
-urning void
-      soc/mediatek: mtk-devapc: Convert to platform remove callback returni=
-ng void
-      soc/mediatek: mtk-mmsys: Convert to platform remove callback returnin=
-g void
-      soc/pxa: ssp: Convert to platform remove callback returning void
-
- drivers/soc/fsl/dpaa2-console.c       | 6 ++----
- drivers/soc/fsl/qe/qmc.c              | 6 ++----
- drivers/soc/fsl/qe/tsa.c              | 5 ++---
- drivers/soc/fujitsu/a64fx-diag.c      | 6 ++----
- drivers/soc/hisilicon/kunpeng_hccs.c  | 6 ++----
- drivers/soc/ixp4xx/ixp4xx-npe.c       | 6 ++----
- drivers/soc/ixp4xx/ixp4xx-qmgr.c      | 5 ++---
- drivers/soc/litex/litex_soc_ctrl.c    | 5 ++---
- drivers/soc/loongson/loongson2_guts.c | 6 ++----
- drivers/soc/mediatek/mtk-devapc.c     | 6 ++----
- drivers/soc/mediatek/mtk-mmsys.c      | 6 ++----
- drivers/soc/pxa/ssp.c                 | 6 ++----
- 12 files changed, 24 insertions(+), 45 deletions(-)
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
-
---7gysnf7ldsm65nug
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmUrDzUACgkQj4D7WH0S
-/k5j4gf/bF9kgxVuSiift0gAwVEYG58vErpILxnhavoGUJkIvS/2rxDkuHmTNQ5X
-QalfUGigAoE8LztKGVtaC0Xx+ie+VRIk5mw7tId7GP1bfzJnrekEsnRe0feT2zy4
-2d7Jc3JZ2H+C31SObKtmKNcav5jLzXd8vN/RS+w/tj9/nE/paVB+kcHIX17ZPGE2
-zIumGo0OqOAmN6fNwoqyqQuy22i5ECmPHi9DAJkeOg4/Hu017wBfW2V/FvHA+eee
-KpnkXofsyZDqGCLvlNHd4qBQG/88+W7qcVxbCoDebo18y86tj2IbgeeFfbihxKLO
-lcwKEm4ptKtWDPzYdLgO7nELl73FRw==
-=h2pz
------END PGP SIGNATURE-----
-
---7gysnf7ldsm65nug--
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
