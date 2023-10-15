@@ -2,76 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 28DD57C9B16
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Oct 2023 21:40:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AAF997C9B30
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Oct 2023 22:04:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230315AbjJOTj6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 15 Oct 2023 15:39:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46800 "EHLO
+        id S230527AbjJOUEJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 15 Oct 2023 16:04:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230254AbjJOTj5 (ORCPT
+        with ESMTP id S229559AbjJOUEG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 15 Oct 2023 15:39:57 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72733D6;
-        Sun, 15 Oct 2023 12:39:56 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39FJcCL8022363;
-        Sun, 15 Oct 2023 19:39:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=AAcFjT9QCxvCIkFQmPyfk++r1eVds3yE95VufmFsXwE=;
- b=PgBBPDbgUXcswg3sG1ZOSKOeNEZnGRtjJzqFNkTjzu8JcrBVIgzGYgEDixwoweigNJHO
- lRB7KAkjOuydOn3m35MNwq3LkXK73cqsxJLOifLjvl+Z6pvw2jXTVYbL5pgvUmIOoC2i
- s07Wvjh/q0B+rjFqiQf/O9JYVn4yhqgEdfTTnfE2Ar4pw1G1Txy5wscdTLFfi97YbdI1
- yqzDfQhfvOTmNkXGRzBExya7Kc8beJq1PKuFFFDSTwCsnNmkEl6HkC3GTxQA4AtXZJPw
- /BHSYTI4pxv9FYi9qR+LjNCIkuIAfBOhmm1LPIkzg4/Ja5gL2NoFI37lyZrz47JkoPeL DA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tqm61ag1k-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sun, 15 Oct 2023 19:39:45 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39FJdiPi003324
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sun, 15 Oct 2023 19:39:44 GMT
-Received: from hu-omprsing-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Sun, 15 Oct 2023 12:39:40 -0700
-From:   Om Prakash Singh <quic_omprsing@quicinc.com>
-To:     <quic_omprsing@quicinc.com>
-CC:     <neil.armstrong@linaro.org>, <konrad.dybcio@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>, <conor+dt@kernel.org>,
-        <davem@davemloft.net>, <devicetree@vger.kernel.org>,
-        <herbert@gondor.apana.org.au>, <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-crypto@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <marijn.suijten@somainline.org>,
-        <robh+dt@kernel.org>, <vkoul@kernel.org>
-Subject: [PATCH V1 4/4] arm64: dts: qcom: sc7280: add TRNG node
-Date:   Mon, 16 Oct 2023 01:09:01 +0530
-Message-ID: <20231015193901.2344590-5-quic_omprsing@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20231015193901.2344590-1-quic_omprsing@quicinc.com>
-References: <20231015193901.2344590-1-quic_omprsing@quicinc.com>
+        Sun, 15 Oct 2023 16:04:06 -0400
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37FF9C5;
+        Sun, 15 Oct 2023 13:04:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1697400212; bh=HsI6q5ZqWA2Xqb7iuplYKiKLey5gau/NWt1cjNPYiYY=;
+        h=From:Subject:Date:To:Cc;
+        b=eibEV0JgXjMSfigi6w8SQom18W9kxtWAUaGm3ygoHsIpQBIuT3Ls0VUtLq0m6LcGR
+         ioWkLPyESxVYM8f+klu/B7KfdFsbuts9Yb3Wo9J7GCh5dQxKZMoOVv1BpeJvPh9kZc
+         +qndWPnRl9OZebR6NZ0790k5kZQn4oOZThl4RG70=
+From:   Luca Weiss <luca@z3ntu.xyz>
+Subject: [PATCH 0/4] Add WCN3680B WiFi/Bluetooth and enable it on Fairphone
+ 3
+Date:   Sun, 15 Oct 2023 22:03:05 +0200
+Message-Id: <20231015-fp3-wcnss-v1-0-1b311335e931@z3ntu.xyz>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: HthjP5aohntTNbg3mxaGy9dy58W1VjeJ
-X-Proofpoint-GUID: HthjP5aohntTNbg3mxaGy9dy58W1VjeJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-15_06,2023-10-12_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 phishscore=0 mlxscore=0 clxscore=1015 lowpriorityscore=0
- malwarescore=0 suspectscore=0 bulkscore=0 adultscore=0 spamscore=0
- mlxlogscore=741 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310150179
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAHpFLGUC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI2NDA0NT3bQCY93y5LziYl0j41QL4yQLI2PTNFMloPqCotS0zAqwWdGxtbU
+ ALtuZRVsAAAA=
+To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Kalle Valo <kvalo@kernel.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        wcn36xx@lists.infradead.org, linux-wireless@vger.kernel.org,
+        Luca Weiss <luca@z3ntu.xyz>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1128; i=luca@z3ntu.xyz;
+ h=from:subject:message-id; bh=HsI6q5ZqWA2Xqb7iuplYKiKLey5gau/NWt1cjNPYiYY=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBlLEWG9Gp66ulRUz7oQWuzEBvMk2DKLUswm1NFY
+ OuLLA8+1VaJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZSxFhgAKCRBy2EO4nU3X
+ VspqD/0c+2OcM1vAUEhGee8RMbaeYcyy0yD6WuefeqaEEHO51eB9PlZimEv/NDVi2H/N1FFvKjG
+ PhA96ExHV1idW3gUcEod6w8QSGGSu8FSVEY08LfV8iIFxZiZazxvrKAzOOI5KpI28btSbsLjg4E
+ 4A6alHfxWSfoeAAvLwgb070Pj7D8mIqjhQ9gasW85r+Z5hb+5l/qOe/mp+gKXuQ+8vIu9b5OXFj
+ dEc+O0V3XEzfwANhzmYfZVcQoXqFAsPGyKLLuglHsVGXS7uSXxdEwR7XfXh5pmszFVAomIKjboY
+ U6NRRq6otOG/6nKxy8GLv4yQjuVd8I95IUvTk7wlMYJeJDnOAQmaHZGLcfHIfs5RpzITo+p8n+1
+ cSrpKVligbDsaJZBSct8IttOph6UL8XdhM7l9skVtlHLiMPLcbYFQaxwNDduJOxDyaC0ukQD/db
+ Mmsj38SNSAoJOIV43HTygfFHVB4en7/8CpyGSQ5xG35u1sdpT633ZSfZKBc8NXyCQMCtuRWUsdL
+ dJsCUg//rZ6JOSlfUg25WUXZeGO/60D86DZkyOk/KhYpSD77VpQDQTJ7oF/5qR9JwjCOfbNsGLa
+ T3X3Vz1YLzwn2bqqVL1t9P1GL1DbLir2IL2spBuk0qaEGAAYC6tQwbT9l3gbsM9eF+R9KDRY/nn
+ YhEGG6xQG3LxoQA==
+X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -81,30 +74,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The sc7280 SoC has a True Random Number Generator, add the node with
-the correct compatible set.
+Add a new compatible for the WCN3680B found together with some Qualcomm
+SoCs. And enable this WiFi/Bluetooth combo on Fairphone 3 smartphone.
 
-Signed-off-by: Om Prakash Singh <quic_omprsing@quicinc.com>
+Worth noting that I'm pretty sure some phones already in mainline do
+have this WCN3680B chip enabled but are using a different compatible,
+e.g. qcom,wcn3680 (without the b suffix).
+
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 ---
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 5 +++++
- 1 file changed, 5 insertions(+)
+Luca Weiss (4):
+      dt-bindings: remoteproc: qcom: wcnss: Add WCN3680B compatible
+      remoteproc: qcom_wcnss: Add WCN3680B compatible
+      wifi: wcn36xx: Add check for WCN3680B
+      arm64: dts: qcom: sdm632-fairphone-fp3: Enable WiFi/Bluetooth
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 925428a5f6ae..dc4332296a3e 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -5368,6 +5368,11 @@ cpufreq_hw: cpufreq@18591000 {
- 			#freq-domain-cells = <1>;
- 			#clock-cells = <1>;
- 		};
-+
-+		rng: rng@10d3000 {
-+			compatible = "qcom,sc7280-trng", "qcom,trng";
-+			reg = <0 0x10d3000 0 0x1000>;
-+		};
- 	};
- 
- 	thermal_zones: thermal-zones {
+ .../devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml    |  1 +
+ arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts         | 15 +++++++++++++++
+ drivers/net/wireless/ath/wcn36xx/main.c                   |  3 ++-
+ drivers/remoteproc/qcom_wcnss_iris.c                      |  1 +
+ 4 files changed, 19 insertions(+), 1 deletion(-)
+---
+base-commit: 09eda82818c490a6fb24f1374bd704ea5c3b577a
+change-id: 20231015-fp3-wcnss-23e83b8235f5
+
+Best regards,
 -- 
-2.25.1
+Luca Weiss <luca@z3ntu.xyz>
 
