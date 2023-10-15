@@ -2,126 +2,352 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2AFFB7C97A8
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Oct 2023 04:30:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B6BFA7C9941
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Oct 2023 16:00:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233401AbjJOCaZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 14 Oct 2023 22:30:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53940 "EHLO
+        id S229649AbjJOOAW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 15 Oct 2023 10:00:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37488 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233328AbjJOCaX (ORCPT
+        with ESMTP id S229555AbjJOOAW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 14 Oct 2023 22:30:23 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA5E0CC;
-        Sat, 14 Oct 2023 19:30:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1697337021; x=1728873021;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=BUwl6/usmRlti/+3fPO0RhkKrPW43T4KsDphTzMcrXo=;
-  b=KvDeQ0n/ZR9SstlDI3+EINLBVOO7eOCLQ5bUbxdafprKdyz5GhVat6ky
-   rivAailrd4I0oXNK3QTtPkUtH45LnCtl+bAeBxakq6nEeo9PF6JvXJZGG
-   BnNSQ7TzeotQUAflzU8LqtlQlLML+mKZaZvYzwoMH8F2p/aWWqNIL0Ib1
-   CORKNYZ4nyRpKOx34jgsLKPF/di36SkxDfckcg6NnVXHt16C5rktj6QUt
-   PGgOlHVI4HL9KAAM8dUQUm8ugI4MuMxK+YlIrB7IXcS6huFBwAVeXESkJ
-   thd7HSpwlhUuqwIXJwotu/WK9FsjBzYkDBhBORbu43fZRdZ2TdwGDSof0
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10863"; a="388217590"
-X-IronPort-AV: E=Sophos;i="6.03,226,1694761200"; 
-   d="scan'208";a="388217590"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Oct 2023 19:30:20 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10863"; a="748833713"
-X-IronPort-AV: E=Sophos;i="6.03,226,1694761200"; 
-   d="scan'208";a="748833713"
-Received: from lkp-server02.sh.intel.com (HELO f64821696465) ([10.239.97.151])
-  by orsmga007.jf.intel.com with ESMTP; 14 Oct 2023 19:30:14 -0700
-Received: from kbuild by f64821696465 with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1qrqtQ-0006wJ-0q;
-        Sun, 15 Oct 2023 02:30:12 +0000
-Date:   Sun, 15 Oct 2023 10:29:22 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        dmitry.baryshkov@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        jonathan@marek.ca, quic_tdas@quicinc.com,
-        vladimir.zapolskiy@linaro.org
-Cc:     oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, bryan.odonoghue@linaro.org
-Subject: Re: [PATCH v3 1/4] arm64: dts: qcom: sc8280xp: Add in CAMCC for
- sc8280xp
-Message-ID: <202310151043.01L92wwx-lkp@intel.com>
-References: <20231011185540.2282975-2-bryan.odonoghue@linaro.org>
+        Sun, 15 Oct 2023 10:00:22 -0400
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5799BB7
+        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Oct 2023 07:00:19 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qs1f8-0005It-Kp; Sun, 15 Oct 2023 16:00:10 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qs1f7-001rWq-Ti; Sun, 15 Oct 2023 16:00:09 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qs1f7-00Gg98-KE; Sun, 15 Oct 2023 16:00:09 +0200
+From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+To:     Georgi Djakov <djakov@kernel.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, kernel@pengutronix.de
+Subject: [PATCH] interconnect: qcom: Convert to platform remove callback returning void
+Date:   Sun, 15 Oct 2023 15:59:56 +0200
+Message-ID: <20231015135955.1537751-2-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231011185540.2282975-2-bryan.odonoghue@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=11798; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=2UrDKrtyMGyAoHwe+RkqXe3AcmNZEIMueBDj30f7KJs=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlK/BcISbsK16M78Xzy4osMTQ/JtVUbm+u2kN3n ga8P60nNbWJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZSvwXAAKCRCPgPtYfRL+ TntuB/9AlUz9CHs5iV1X5nOL2jqenQ6N3f9sXViOOLJqJZSL5AW/OCbMv/NnYttHatwCKTwIu7u wVWAMZJgZmz0R4jdfK7rP8GaQvik0PETDVHVXIw9A51+WbKtNkotZAoOBy8JaM02LiWTotLIhEu vaCsJDE0e8BGZZ/1CLrOZgkXXCIV99vdkRwAEk1P0SyzT4VqKhmtbytUWx1NP4tGpf2/28VtZy5 AxZtMmR78yFgsy+PQ1fhwdwc8rzaPfXeOykjDvNhmjkfEUT5xTfVyCSfx5Q9VLerdB5h81U8OlJ rIlj1Uhh0LozmUKU2oISKFjLV9fSe1AGfDn0aYV9LjCtwRv2
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bryan,
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new() which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-kernel test robot noticed the following build errors:
+Several drivers use qcom_icc_rpmh_remove() as remove callback which
+returns zero unconditionally. Make it return void and use .remove_new in
+the drivers. There is no change in behaviour.
 
-[auto build test ERROR on robh/for-next]
-[also build test ERROR on linus/master v6.6-rc5 next-20231013]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+---
+ drivers/interconnect/qcom/icc-rpmh.c | 4 +---
+ drivers/interconnect/qcom/icc-rpmh.h | 2 +-
+ drivers/interconnect/qcom/qdu1000.c  | 2 +-
+ drivers/interconnect/qcom/sa8775p.c  | 2 +-
+ drivers/interconnect/qcom/sc7180.c   | 2 +-
+ drivers/interconnect/qcom/sc7280.c   | 2 +-
+ drivers/interconnect/qcom/sc8180x.c  | 2 +-
+ drivers/interconnect/qcom/sc8280xp.c | 2 +-
+ drivers/interconnect/qcom/sdm670.c   | 2 +-
+ drivers/interconnect/qcom/sdm845.c   | 2 +-
+ drivers/interconnect/qcom/sdx55.c    | 2 +-
+ drivers/interconnect/qcom/sdx65.c    | 2 +-
+ drivers/interconnect/qcom/sdx75.c    | 2 +-
+ drivers/interconnect/qcom/sm6350.c   | 2 +-
+ drivers/interconnect/qcom/sm8150.c   | 2 +-
+ drivers/interconnect/qcom/sm8250.c   | 2 +-
+ drivers/interconnect/qcom/sm8350.c   | 2 +-
+ drivers/interconnect/qcom/sm8450.c   | 2 +-
+ drivers/interconnect/qcom/sm8550.c   | 2 +-
+ 19 files changed, 19 insertions(+), 21 deletions(-)
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Bryan-O-Donoghue/arm64-dts-qcom-sc8280xp-Add-in-CAMCC-for-sc8280xp/20231012-025807
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-patch link:    https://lore.kernel.org/r/20231011185540.2282975-2-bryan.odonoghue%40linaro.org
-patch subject: [PATCH v3 1/4] arm64: dts: qcom: sc8280xp: Add in CAMCC for sc8280xp
-config: arm64-allyesconfig (https://download.01.org/0day-ci/archive/20231015/202310151043.01L92wwx-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231015/202310151043.01L92wwx-lkp@intel.com/reproduce)
+diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
+index b9f27ce3b607..c1aa265c1f4e 100644
+--- a/drivers/interconnect/qcom/icc-rpmh.c
++++ b/drivers/interconnect/qcom/icc-rpmh.c
+@@ -253,14 +253,12 @@ int qcom_icc_rpmh_probe(struct platform_device *pdev)
+ }
+ EXPORT_SYMBOL_GPL(qcom_icc_rpmh_probe);
+ 
+-int qcom_icc_rpmh_remove(struct platform_device *pdev)
++void qcom_icc_rpmh_remove(struct platform_device *pdev)
+ {
+ 	struct qcom_icc_provider *qp = platform_get_drvdata(pdev);
+ 
+ 	icc_provider_deregister(&qp->provider);
+ 	icc_nodes_remove(&qp->provider);
+-
+-	return 0;
+ }
+ EXPORT_SYMBOL_GPL(qcom_icc_rpmh_remove);
+ 
+diff --git a/drivers/interconnect/qcom/icc-rpmh.h b/drivers/interconnect/qcom/icc-rpmh.h
+index 5f0af8b1fc43..2de29460e808 100644
+--- a/drivers/interconnect/qcom/icc-rpmh.h
++++ b/drivers/interconnect/qcom/icc-rpmh.h
+@@ -126,6 +126,6 @@ int qcom_icc_set(struct icc_node *src, struct icc_node *dst);
+ int qcom_icc_bcm_init(struct qcom_icc_bcm *bcm, struct device *dev);
+ void qcom_icc_pre_aggregate(struct icc_node *node);
+ int qcom_icc_rpmh_probe(struct platform_device *pdev);
+-int qcom_icc_rpmh_remove(struct platform_device *pdev);
++void qcom_icc_rpmh_remove(struct platform_device *pdev);
+ 
+ #endif
+diff --git a/drivers/interconnect/qcom/qdu1000.c b/drivers/interconnect/qcom/qdu1000.c
+index a7392eb73d4a..9cb477d2bdfe 100644
+--- a/drivers/interconnect/qcom/qdu1000.c
++++ b/drivers/interconnect/qcom/qdu1000.c
+@@ -1046,7 +1046,7 @@ MODULE_DEVICE_TABLE(of, qnoc_of_match);
+ 
+ static struct platform_driver qnoc_driver = {
+ 	.probe = qnoc_probe,
+-	.remove = qcom_icc_rpmh_remove,
++	.remove_new = qcom_icc_rpmh_remove,
+ 	.driver = {
+ 		.name = "qnoc-qdu1000",
+ 		.of_match_table = qnoc_of_match,
+diff --git a/drivers/interconnect/qcom/sa8775p.c b/drivers/interconnect/qcom/sa8775p.c
+index ef1b5e326089..dd6281db08ad 100644
+--- a/drivers/interconnect/qcom/sa8775p.c
++++ b/drivers/interconnect/qcom/sa8775p.c
+@@ -2519,7 +2519,7 @@ MODULE_DEVICE_TABLE(of, qnoc_of_match);
+ 
+ static struct platform_driver qnoc_driver = {
+ 	.probe = qcom_icc_rpmh_probe,
+-	.remove = qcom_icc_rpmh_remove,
++	.remove_new = qcom_icc_rpmh_remove,
+ 	.driver = {
+ 		.name = "qnoc-sa8775p",
+ 		.of_match_table = qnoc_of_match,
+diff --git a/drivers/interconnect/qcom/sc7180.c b/drivers/interconnect/qcom/sc7180.c
+index af2be1543840..34a1d163d6e1 100644
+--- a/drivers/interconnect/qcom/sc7180.c
++++ b/drivers/interconnect/qcom/sc7180.c
+@@ -1807,7 +1807,7 @@ MODULE_DEVICE_TABLE(of, qnoc_of_match);
+ 
+ static struct platform_driver qnoc_driver = {
+ 	.probe = qcom_icc_rpmh_probe,
+-	.remove = qcom_icc_rpmh_remove,
++	.remove_new = qcom_icc_rpmh_remove,
+ 	.driver = {
+ 		.name = "qnoc-sc7180",
+ 		.of_match_table = qnoc_of_match,
+diff --git a/drivers/interconnect/qcom/sc7280.c b/drivers/interconnect/qcom/sc7280.c
+index a626dbc71999..7d33694368e8 100644
+--- a/drivers/interconnect/qcom/sc7280.c
++++ b/drivers/interconnect/qcom/sc7280.c
+@@ -1835,7 +1835,7 @@ MODULE_DEVICE_TABLE(of, qnoc_of_match);
+ 
+ static struct platform_driver qnoc_driver = {
+ 	.probe = qcom_icc_rpmh_probe,
+-	.remove = qcom_icc_rpmh_remove,
++	.remove_new = qcom_icc_rpmh_remove,
+ 	.driver = {
+ 		.name = "qnoc-sc7280",
+ 		.of_match_table = qnoc_of_match,
+diff --git a/drivers/interconnect/qcom/sc8180x.c b/drivers/interconnect/qcom/sc8180x.c
+index bdd3471d4ac8..20331e119beb 100644
+--- a/drivers/interconnect/qcom/sc8180x.c
++++ b/drivers/interconnect/qcom/sc8180x.c
+@@ -1888,7 +1888,7 @@ MODULE_DEVICE_TABLE(of, qnoc_of_match);
+ 
+ static struct platform_driver qnoc_driver = {
+ 	.probe = qcom_icc_rpmh_probe,
+-	.remove = qcom_icc_rpmh_remove,
++	.remove_new = qcom_icc_rpmh_remove,
+ 	.driver = {
+ 		.name = "qnoc-sc8180x",
+ 		.of_match_table = qnoc_of_match,
+diff --git a/drivers/interconnect/qcom/sc8280xp.c b/drivers/interconnect/qcom/sc8280xp.c
+index 0270f6c64481..7acd152bf0dd 100644
+--- a/drivers/interconnect/qcom/sc8280xp.c
++++ b/drivers/interconnect/qcom/sc8280xp.c
+@@ -2391,7 +2391,7 @@ MODULE_DEVICE_TABLE(of, qnoc_of_match);
+ 
+ static struct platform_driver qnoc_driver = {
+ 	.probe = qcom_icc_rpmh_probe,
+-	.remove = qcom_icc_rpmh_remove,
++	.remove_new = qcom_icc_rpmh_remove,
+ 	.driver = {
+ 		.name = "qnoc-sc8280xp",
+ 		.of_match_table = qnoc_of_match,
+diff --git a/drivers/interconnect/qcom/sdm670.c b/drivers/interconnect/qcom/sdm670.c
+index 907e1ff4ff81..e5ee7fbaa641 100644
+--- a/drivers/interconnect/qcom/sdm670.c
++++ b/drivers/interconnect/qcom/sdm670.c
+@@ -1533,7 +1533,7 @@ MODULE_DEVICE_TABLE(of, qnoc_of_match);
+ 
+ static struct platform_driver qnoc_driver = {
+ 	.probe = qcom_icc_rpmh_probe,
+-	.remove = qcom_icc_rpmh_remove,
++	.remove_new = qcom_icc_rpmh_remove,
+ 	.driver = {
+ 		.name = "qnoc-sdm670",
+ 		.of_match_table = qnoc_of_match,
+diff --git a/drivers/interconnect/qcom/sdm845.c b/drivers/interconnect/qcom/sdm845.c
+index 855802be93fe..584800ac871a 100644
+--- a/drivers/interconnect/qcom/sdm845.c
++++ b/drivers/interconnect/qcom/sdm845.c
+@@ -1802,7 +1802,7 @@ MODULE_DEVICE_TABLE(of, qnoc_of_match);
+ 
+ static struct platform_driver qnoc_driver = {
+ 	.probe = qcom_icc_rpmh_probe,
+-	.remove = qcom_icc_rpmh_remove,
++	.remove_new = qcom_icc_rpmh_remove,
+ 	.driver = {
+ 		.name = "qnoc-sdm845",
+ 		.of_match_table = qnoc_of_match,
+diff --git a/drivers/interconnect/qcom/sdx55.c b/drivers/interconnect/qcom/sdx55.c
+index 4117db046fa0..e97f28b8d2b2 100644
+--- a/drivers/interconnect/qcom/sdx55.c
++++ b/drivers/interconnect/qcom/sdx55.c
+@@ -913,7 +913,7 @@ MODULE_DEVICE_TABLE(of, qnoc_of_match);
+ 
+ static struct platform_driver qnoc_driver = {
+ 	.probe = qcom_icc_rpmh_probe,
+-	.remove = qcom_icc_rpmh_remove,
++	.remove_new = qcom_icc_rpmh_remove,
+ 	.driver = {
+ 		.name = "qnoc-sdx55",
+ 		.of_match_table = qnoc_of_match,
+diff --git a/drivers/interconnect/qcom/sdx65.c b/drivers/interconnect/qcom/sdx65.c
+index d3a6c6c148e5..2f3f5479d8a5 100644
+--- a/drivers/interconnect/qcom/sdx65.c
++++ b/drivers/interconnect/qcom/sdx65.c
+@@ -897,7 +897,7 @@ MODULE_DEVICE_TABLE(of, qnoc_of_match);
+ 
+ static struct platform_driver qnoc_driver = {
+ 	.probe = qcom_icc_rpmh_probe,
+-	.remove = qcom_icc_rpmh_remove,
++	.remove_new = qcom_icc_rpmh_remove,
+ 	.driver = {
+ 		.name = "qnoc-sdx65",
+ 		.of_match_table = qnoc_of_match,
+diff --git a/drivers/interconnect/qcom/sdx75.c b/drivers/interconnect/qcom/sdx75.c
+index 7ef1f17f3292..7f422c27488d 100644
+--- a/drivers/interconnect/qcom/sdx75.c
++++ b/drivers/interconnect/qcom/sdx75.c
+@@ -1083,7 +1083,7 @@ MODULE_DEVICE_TABLE(of, qnoc_of_match);
+ 
+ static struct platform_driver qnoc_driver = {
+ 	.probe = qcom_icc_rpmh_probe,
+-	.remove = qcom_icc_rpmh_remove,
++	.remove_new = qcom_icc_rpmh_remove,
+ 	.driver = {
+ 		.name = "qnoc-sdx75",
+ 		.of_match_table = qnoc_of_match,
+diff --git a/drivers/interconnect/qcom/sm6350.c b/drivers/interconnect/qcom/sm6350.c
+index f41d7e19ba26..20923e8e6110 100644
+--- a/drivers/interconnect/qcom/sm6350.c
++++ b/drivers/interconnect/qcom/sm6350.c
+@@ -1702,7 +1702,7 @@ MODULE_DEVICE_TABLE(of, qnoc_of_match);
+ 
+ static struct platform_driver qnoc_driver = {
+ 	.probe = qcom_icc_rpmh_probe,
+-	.remove = qcom_icc_rpmh_remove,
++	.remove_new = qcom_icc_rpmh_remove,
+ 	.driver = {
+ 		.name = "qnoc-sm6350",
+ 		.of_match_table = qnoc_of_match,
+diff --git a/drivers/interconnect/qcom/sm8150.c b/drivers/interconnect/qcom/sm8150.c
+index edfe824cad35..f29b77556a79 100644
+--- a/drivers/interconnect/qcom/sm8150.c
++++ b/drivers/interconnect/qcom/sm8150.c
+@@ -1864,7 +1864,7 @@ MODULE_DEVICE_TABLE(of, qnoc_of_match);
+ 
+ static struct platform_driver qnoc_driver = {
+ 	.probe = qcom_icc_rpmh_probe,
+-	.remove = qcom_icc_rpmh_remove,
++	.remove_new = qcom_icc_rpmh_remove,
+ 	.driver = {
+ 		.name = "qnoc-sm8150",
+ 		.of_match_table = qnoc_of_match,
+diff --git a/drivers/interconnect/qcom/sm8250.c b/drivers/interconnect/qcom/sm8250.c
+index 661dc18d99db..83aeb3eedc19 100644
+--- a/drivers/interconnect/qcom/sm8250.c
++++ b/drivers/interconnect/qcom/sm8250.c
+@@ -1991,7 +1991,7 @@ MODULE_DEVICE_TABLE(of, qnoc_of_match);
+ 
+ static struct platform_driver qnoc_driver = {
+ 	.probe = qcom_icc_rpmh_probe,
+-	.remove = qcom_icc_rpmh_remove,
++	.remove_new = qcom_icc_rpmh_remove,
+ 	.driver = {
+ 		.name = "qnoc-sm8250",
+ 		.of_match_table = qnoc_of_match,
+diff --git a/drivers/interconnect/qcom/sm8350.c b/drivers/interconnect/qcom/sm8350.c
+index 562322d4fc3c..b321c3009acb 100644
+--- a/drivers/interconnect/qcom/sm8350.c
++++ b/drivers/interconnect/qcom/sm8350.c
+@@ -1961,7 +1961,7 @@ MODULE_DEVICE_TABLE(of, qnoc_of_match);
+ 
+ static struct platform_driver qnoc_driver = {
+ 	.probe = qcom_icc_rpmh_probe,
+-	.remove = qcom_icc_rpmh_remove,
++	.remove_new = qcom_icc_rpmh_remove,
+ 	.driver = {
+ 		.name = "qnoc-sm8350",
+ 		.of_match_table = qnoc_of_match,
+diff --git a/drivers/interconnect/qcom/sm8450.c b/drivers/interconnect/qcom/sm8450.c
+index eb7e17df32ba..b3cd0087377c 100644
+--- a/drivers/interconnect/qcom/sm8450.c
++++ b/drivers/interconnect/qcom/sm8450.c
+@@ -1884,7 +1884,7 @@ MODULE_DEVICE_TABLE(of, qnoc_of_match);
+ 
+ static struct platform_driver qnoc_driver = {
+ 	.probe = qcom_icc_rpmh_probe,
+-	.remove = qcom_icc_rpmh_remove,
++	.remove_new = qcom_icc_rpmh_remove,
+ 	.driver = {
+ 		.name = "qnoc-sm8450",
+ 		.of_match_table = qnoc_of_match,
+diff --git a/drivers/interconnect/qcom/sm8550.c b/drivers/interconnect/qcom/sm8550.c
+index a10c8b6549ee..629faa4c9aae 100644
+--- a/drivers/interconnect/qcom/sm8550.c
++++ b/drivers/interconnect/qcom/sm8550.c
+@@ -2219,7 +2219,7 @@ MODULE_DEVICE_TABLE(of, qnoc_of_match);
+ 
+ static struct platform_driver qnoc_driver = {
+ 	.probe = qcom_icc_rpmh_probe,
+-	.remove = qcom_icc_rpmh_remove,
++	.remove_new = qcom_icc_rpmh_remove,
+ 	.driver = {
+ 		.name = "qnoc-sm8550",
+ 		.of_match_table = qnoc_of_match,
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202310151043.01L92wwx-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   In file included from arch/arm64/boot/dts/qcom/sa8540p.dtsi:7,
-                    from arch/arm64/boot/dts/qcom/sa8295p-adp.dts:13:
->> arch/arm64/boot/dts/qcom/sc8280xp.dtsi:11:10: fatal error: dt-bindings/clock/qcom,sc8280xp-camcc.h: No such file or directory
-      11 | #include <dt-bindings/clock/qcom,sc8280xp-camcc.h>
-         |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   compilation terminated.
-
-
-vim +11 arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-
-  > 11	#include <dt-bindings/clock/qcom,sc8280xp-camcc.h>
-    12	#include <dt-bindings/clock/qcom,sc8280xp-lpasscc.h>
-    13	#include <dt-bindings/interconnect/qcom,osm-l3.h>
-    14	#include <dt-bindings/interconnect/qcom,sc8280xp.h>
-    15	#include <dt-bindings/interrupt-controller/arm-gic.h>
-    16	#include <dt-bindings/mailbox/qcom-ipcc.h>
-    17	#include <dt-bindings/phy/phy-qcom-qmp.h>
-    18	#include <dt-bindings/power/qcom-rpmpd.h>
-    19	#include <dt-bindings/soc/qcom,gpr.h>
-    20	#include <dt-bindings/soc/qcom,rpmh-rsc.h>
-    21	#include <dt-bindings/sound/qcom,q6afe.h>
-    22	#include <dt-bindings/thermal/thermal.h>
-    23	
-
+base-commit: 9330bf741fdac78c398a866f979fd29fea435a88
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.42.0
+
