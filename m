@@ -2,150 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA6897CA236
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 10:47:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C8B297CA264
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 10:49:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232884AbjJPIrR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Oct 2023 04:47:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40572 "EHLO
+        id S232884AbjJPItZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Oct 2023 04:49:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232871AbjJPIrK (ORCPT
+        with ESMTP id S232912AbjJPItX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Oct 2023 04:47:10 -0400
-Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6F6F11D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Oct 2023 01:47:07 -0700 (PDT)
-Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-5a86b6391e9so11943827b3.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Oct 2023 01:47:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697446027; x=1698050827; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=W5NJ69kX6Bm+ubsFCLmuvdrCURMYuhfL3kxTQtdRQ+o=;
-        b=NDfzuOtuFXPrbza2/JIvk8SJzRnoHadvnc4lSEoz3ZoB1hxYL/9U4eNiPtfpC7e0oY
-         g1CaX6WftO0AaYzWCA3Y4bJJAdw2zeWFRAeDwMoGInJYqmBievaBPkYpFJjpzDm2yjv4
-         KwpTGHDJM8boc1r23WOYKu3qh9S/vbVigURfoE4C+nkPO2zWlqLKD92jKc/YnB+IdP7I
-         FCsi4CYb8etuLw8KJCgPUfPkqPgHq6+BvtfFQnLlPKAn7+jm6vRSbzRT8eb4aOF6bX07
-         LJarDWzLy99oJRE/KVCpl0RqauR+k7tVlY4LiQuSF+cL1QpLQqeHddgpVPAvMKHhwBNc
-         XzBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697446027; x=1698050827;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=W5NJ69kX6Bm+ubsFCLmuvdrCURMYuhfL3kxTQtdRQ+o=;
-        b=Z3i6Ms0b3/TSADoG9c7lnrPjVPxe2DdjRBs/ijHB6xbwzCjGWjMe00fVPf8JI+z5Ya
-         YthYm0QnI32WrREdLT8A8kVOwwbgAV/VmT1WyQTtQasB3BIi2dwmwzUoapEJwgeRdx4W
-         Vhay/GZMaFGnHGfBVUgHVuGqzTTNqTT2La/V+jdi8HnIv4iJ1Z4z1TvolQJICeMtjPgH
-         xy8BglliO/d1Unsf6I2tMhlpMtCiRA3bYDVuB8pGodqdYiFo/XgNd7hI9la1cMdFlkck
-         0X8ThaKJ4CsPkzeNv1F4sqrJbD4QhXPkIKofKVLZhgOqHurJhYCjWRGFEit6P+NRHcC5
-         +fTw==
-X-Gm-Message-State: AOJu0Yw4TppsVGRtAHBFQEkURjRbBhv/gRD6xWxcKcsz79kzj5sKgMhN
-        koCZmYdOYTYPVZQI8CisgXWu6Qj1nJZktC3VWs3+DQ==
-X-Google-Smtp-Source: AGHT+IG8XvfaO2iDQZru45tosMwj2yXei141FG7yCZLeVf1EhFA7GavmH/c+LB3Hs9LuIeU78Tz3RVP03MeUP/zdExg=
-X-Received: by 2002:a05:690c:a08:b0:5a7:af51:e274 with SMTP id
- cg8-20020a05690c0a0800b005a7af51e274mr17967004ywb.18.1697446027019; Mon, 16
- Oct 2023 01:47:07 -0700 (PDT)
+        Mon, 16 Oct 2023 04:49:23 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E9A2DE;
+        Mon, 16 Oct 2023 01:49:21 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39G7p7GH020067;
+        Mon, 16 Oct 2023 08:49:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=sifPsxCDn4LKFjq3zQSutNGMmtzyW892LXiRq2gikAk=;
+ b=ormlZ5sE1TuPDGINSyatOVS1KPTFMyKy3ZR2VUbwU8Rwy4IsYJQfblPedjKIWNujpHId
+ xkBszs/ZP3Me7jev2ZODBNqLjwzNjOkTy76komnN8g0CD7EZegjYbO3xPSFzObElaQ+R
+ IMmJH/9M0DrsC89minDyw4r4t1iq8JTICt3YZsKyQHuvm6x8TtQPX1g1oG56BToXs21B
+ 0lZI1eXIijVk5v+qTsdlsQJCVtgQBW2GuTVR577mYvv4dMONn1V7J4Ey4ClLKDc5j4Pc
+ FV4tGIYSRV8bEB4JZVkwTla2w0U9apQNx38S1FF2u39fqmR3xDQUM+feungwaZTJv3pG 8Q== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tqj0hkhae-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 16 Oct 2023 08:49:14 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39G8nDAs029099
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 16 Oct 2023 08:49:13 GMT
+Received: from [10.253.8.47] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 16 Oct
+ 2023 01:49:11 -0700
+Message-ID: <10f05b5a-8046-4884-b375-007a14248e00@quicinc.com>
+Date:   Mon, 16 Oct 2023 16:49:08 +0800
 MIME-Version: 1.0
-References: <cover.1697101543.git.quic_varada@quicinc.com> <8f578277cc015cfe9cdca06586b2c82f1a728bad.1697101543.git.quic_varada@quicinc.com>
- <06b823d5c2ec05a940849ac341c48090.sboyd@kernel.org> <20231016070256.GA24128@varda-linux.qualcomm.com>
-In-Reply-To: <20231016070256.GA24128@varda-linux.qualcomm.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 16 Oct 2023 11:46:56 +0300
-Message-ID: <CAA8EJpoQwDaUa+-WyM6FBzQJo9gn1k2rYLmKSFBLUH00epGJ0Q@mail.gmail.com>
-Subject: Re: [PATCH v2 1/8] clk: qcom: clk-alpha-pll: introduce stromer plus ops
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc:     Stephen Boyd <sboyd@kernel.org>, agross@kernel.org,
-        andersson@kernel.org, conor+dt@kernel.org,
-        devicetree@vger.kernel.org, ilia.lin@kernel.org,
-        konrad.dybcio@linaro.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        mturquette@baylibre.com, quic_kathirav@quicinc.com,
-        rafael@kernel.org, robh+dt@kernel.org, viresh.kumar@linaro.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] bus: mhi: host: Take irqsave lock after TRE is
+ generated
+Content-Language: en-US
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>, <mani@kernel.org>
+CC:     <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
+        <quic_mrana@quicinc.com>, Hemant Kumar <quic_hemantk@quicinc.com>,
+        "Lazarus Motha" <quic_lmotha@quicinc.com>
+References: <1694594861-12691-1-git-send-email-quic_qianyu@quicinc.com>
+ <1694594861-12691-3-git-send-email-quic_qianyu@quicinc.com>
+ <e40a1dca-f23e-af32-320e-bf66a894bc6c@quicinc.com>
+ <a82e188e-2d0e-7c0f-de54-79bbc4b6957b@quicinc.com>
+ <6b396b1a-58a7-bf7c-f644-f1bf298a31e0@quicinc.com>
+From:   Qiang Yu <quic_qianyu@quicinc.com>
+In-Reply-To: <6b396b1a-58a7-bf7c-f644-f1bf298a31e0@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: jHtNlzqMbUmjkR8VBhuqH0hLk0LNKICW
+X-Proofpoint-GUID: jHtNlzqMbUmjkR8VBhuqH0hLk0LNKICW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-16_02,2023-10-12_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1015
+ mlxscore=0 lowpriorityscore=0 mlxlogscore=766 phishscore=0 suspectscore=0
+ impostorscore=0 spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
+ definitions=main-2310160076
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 16 Oct 2023 at 10:03, Varadarajan Narayanan
-<quic_varada@quicinc.com> wrote:
->
-> On Thu, Oct 12, 2023 at 01:55:36PM -0700, Stephen Boyd wrote:
-> > Quoting Varadarajan Narayanan (2023-10-12 02:26:17)
-> > > Stromer plus APSS PLL does not support dynamic frequency scaling.
-> > > To switch between frequencies, we have to shut down the PLL,
-> > > configure the L and ALPHA values and turn on again. So introduce the
-> > > separate set of ops for Stromer Plus PLL.
-> >
-> > Does this assume the PLL is always on?
->
-> Yes once the PLL is configured by apss-ipq-pll driver, it is always on.
->
-> > > Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
-> > > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> > > ---
-> > > v2:     Use clk_alpha_pll_stromer_determine_rate, instead of adding new
-> > >         clk_alpha_pll_stromer_plus_determine_rate as the alpha pll width
-> > >         is same for both
-> > >
-> > >         Fix review comments
-> > >                 udelay(50) -> usleep_range(50, 60)
-> > >                 Remove SoC-specific from print message
-> > > ---
-> > >  drivers/clk/qcom/clk-alpha-pll.c | 57 ++++++++++++++++++++++++++++++++++++++++
-> > >  drivers/clk/qcom/clk-alpha-pll.h |  1 +
-> > >  2 files changed, 58 insertions(+)
-> > >
-> > > diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-> > > index 4edbf77..5221b6c 100644
-> > > --- a/drivers/clk/qcom/clk-alpha-pll.c
-> > > +++ b/drivers/clk/qcom/clk-alpha-pll.c
-> > > @@ -2508,3 +2508,60 @@ const struct clk_ops clk_alpha_pll_stromer_ops = {
-> > >         .set_rate = clk_alpha_pll_stromer_set_rate,
-> > >  };
-> > >  EXPORT_SYMBOL_GPL(clk_alpha_pll_stromer_ops);
-> > > +
-> > > +static int clk_alpha_pll_stromer_plus_set_rate(struct clk_hw *hw,
-> > > +                                              unsigned long rate,
-> > > +                                              unsigned long prate)
-> > > +{
-> > > +       struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-> > > +       u32 l, alpha_width = pll_alpha_width(pll);
-> > > +       int ret;
-> > > +       u64 a;
-> > > +
-> > > +       rate = alpha_pll_round_rate(rate, prate, &l, &a, alpha_width);
-> > > +
-> > > +       regmap_write(pll->clkr.regmap, PLL_MODE(pll), 0);
-> >
-> > There's a theoretical problem here if I understand correctly. A call to
-> > clk_enable() can happen while clk_set_rate() is in progress or vice
-> > versa. Probably we need some sort of spinlock for this PLL that
-> > synchronizes any enable/disable with the rate change so that when we
-> > restore the enable bit the clk isn't enabled when it was supposed to be
-> > off.
->
-> Since the PLL is always on, should we worry about enable/disable?
-> If you feel it is better to synchronize with a spin lock, will
-> add and post a new revision. Please let me know.
 
-Probably another option might be to change stromer PLL ops to use
-prepare/unprepare instead of enable/disable. This way the
-clk_prepare_lock() in clk_set_rate() will take care of locking.
-
+On 9/29/2023 11:25 PM, Jeffrey Hugo wrote:
+> On 9/24/2023 10:08 PM, Qiang Yu wrote:
+>>
+>> On 9/22/2023 10:50 PM, Jeffrey Hugo wrote:
+>>> On 9/13/2023 2:47 AM, Qiang Yu wrote:
+>>>> From: Hemant Kumar <quic_hemantk@quicinc.com>
+>>>>
+>>>> Take irqsave lock after TRE is generated to avoid deadlock due to core
+>>>> getting interrupts enabled as local_bh_enable must not be called with
+>>>> irqs disabled based on upstream patch.
+>>>
+>>> Where is local_bh_enable() being called?  What patch?  What is 
+>>> upstream of the codebase you submitted this to?  Why is it safe to 
+>>> call mhi_gen_tre() without the lock?
+>>
+>> This patch is to fix the issue included by  "[PATCH v2 1/2] bus: mhi: 
+>> host: Add spinlock to protect WP access when queueing TREs". In that 
+>> patch, we add write_lock_bh/write_unlock_bh in mhi_gen_tre().
+>>
+>> However, before mhi_gen_tre() is invoked, mhi_cntrl->pm_lock is 
+>> getted, line 1125, and it is a spin lock. So it becomes we want to 
+>> get and release bh lock after spin lock. __local_bh_enable_ip is 
+>> called as part of write_unlock_bh
+>>
+>> and local_bh_enable. When CONFIG_TRACE_IRQFLAGS is enabled, irq will 
+>> be enabled once __local_bh_enable_ip is called. The commit message is 
+>> not clear and confusing, will change it in [patch v3].
+>>
 >
-> Thanks
-> Varada
-
-
-
--- 
-With best wishes
-Dmitry
+> In addition to clarifying the commit message, I recommend looking at 
+> adding this to the other patch.  It seems very odd to review a series 
+> where one patch introduces a known issue, and a following patch 
+> corrects that issue.  It would be better to not introduce the issue in 
+> the first place.
+OK, will squash two patches into one patch after we achieve an agreement.
