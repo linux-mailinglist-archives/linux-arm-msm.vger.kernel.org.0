@@ -2,29 +2,28 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 923627CA524
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 12:18:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40E007CA553
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 12:28:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232693AbjJPKSf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Oct 2023 06:18:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51652 "EHLO
+        id S230017AbjJPK2A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Oct 2023 06:28:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232828AbjJPKSP (ORCPT
+        with ESMTP id S229666AbjJPK2A (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Oct 2023 06:18:15 -0400
+        Mon, 16 Oct 2023 06:28:00 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1E37131;
-        Mon, 16 Oct 2023 03:18:04 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 896D5C433C8;
-        Mon, 16 Oct 2023 10:18:00 +0000 (UTC)
-Message-ID: <1b49bfc4-808a-48fe-97b3-b49067e5e18e@xs4all.nl>
-Date:   Mon, 16 Oct 2023 12:17:58 +0200
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD78A83;
+        Mon, 16 Oct 2023 03:27:58 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56797C433C8;
+        Mon, 16 Oct 2023 10:27:55 +0000 (UTC)
+Message-ID: <0b47f43b-1eba-48f3-b3a2-7b5ef441311a@xs4all.nl>
+Date:   Mon, 16 Oct 2023 12:27:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 40/56] sample: v4l: Stop direct calls to queue
- num_buffers field
+Subject: Re: [PATCH v11 44/56] media: core: Report the maximum possible number
+ of buffers for the queue
 Content-Language: en-US, nl
-From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
 To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
         mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
         ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
@@ -36,9 +35,9 @@ Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
         kernel@collabora.com
 References: <20231012114642.19040-1-benjamin.gaignard@collabora.com>
- <20231012114642.19040-41-benjamin.gaignard@collabora.com>
- <21864437-bfdd-4d39-91fa-f24fc1c7cf97@xs4all.nl>
-In-Reply-To: <21864437-bfdd-4d39-91fa-f24fc1c7cf97@xs4all.nl>
+ <20231012114642.19040-45-benjamin.gaignard@collabora.com>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+In-Reply-To: <20231012114642.19040-45-benjamin.gaignard@collabora.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,
@@ -50,91 +49,138 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/10/2023 10:23, Hans Verkuil wrote:
-> On 12/10/2023 13:46, Benjamin Gaignard wrote:
->> Use vb2_get_num_buffers() to avoid using queue num_buffers field directly.
->>
->> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
->> ---
->>  samples/v4l/v4l2-pci-skeleton.c | 5 +++--
->>  1 file changed, 3 insertions(+), 2 deletions(-)
->>
->> diff --git a/samples/v4l/v4l2-pci-skeleton.c b/samples/v4l/v4l2-pci-skeleton.c
->> index a61f94db18d9..a65aa9d1e9da 100644
->> --- a/samples/v4l/v4l2-pci-skeleton.c
->> +++ b/samples/v4l/v4l2-pci-skeleton.c
->> @@ -155,6 +155,7 @@ static int queue_setup(struct vb2_queue *vq,
->>  		       unsigned int sizes[], struct device *alloc_devs[])
->>  {
->>  	struct skeleton *skel = vb2_get_drv_priv(vq);
->> +	unsigned int q_num_bufs = vb2_get_num_buffers(vq);
->>  
->>  	skel->field = skel->format.field;
->>  	if (skel->field == V4L2_FIELD_ALTERNATE) {
->> @@ -167,8 +168,8 @@ static int queue_setup(struct vb2_queue *vq,
->>  		skel->field = V4L2_FIELD_TOP;
->>  	}
->>  
->> -	if (vq->num_buffers + *nbuffers < 3)
->> -		*nbuffers = 3 - vq->num_buffers;
->> +	if (q_num_bufs + *nbuffers < 3)
->> +		*nbuffers = 3 - q_num_bufs;
+On 12/10/2023 13:46, Benjamin Gaignard wrote:
+> Use one of the struct v4l2_create_buffers reserved bytes to report
+> the maximum possible number of buffers for the queue.
+> V4l2 framework set V4L2_BUF_CAP_SUPPORTS_SET_MAX_BUFS flags in queue
+
+Ah, that's not a correct cap name. That suggests that userspace can
+set the max number of buffers. Instead it should be:
+
+V4L2_BUF_CAP_SUPPORTS_MAX_NUM_BUFFERS
+
+indicating that userspace can use the max_num_buffers field.
+
+> capabilities so userland can know when the field is valid.
 > 
-> This should be dropped, and instead update q->min_buffers_needed from
-> 2 to 3.
+> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+> 
+> # Conflicts:
+> #	drivers/media/common/videobuf2/videobuf2-v4l2.c
+> ---
+>  .../userspace-api/media/v4l/vidioc-create-bufs.rst        | 8 ++++++--
+>  Documentation/userspace-api/media/v4l/vidioc-reqbufs.rst  | 1 +
+>  drivers/media/common/videobuf2/videobuf2-v4l2.c           | 2 ++
+>  drivers/media/v4l2-core/v4l2-ioctl.c                      | 4 ++--
+>  include/uapi/linux/videodev2.h                            | 7 ++++++-
+>  5 files changed, 17 insertions(+), 5 deletions(-)
+> 
+> diff --git a/Documentation/userspace-api/media/v4l/vidioc-create-bufs.rst b/Documentation/userspace-api/media/v4l/vidioc-create-bufs.rst
+> index a048a9f6b7b6..1a46549e7462 100644
+> --- a/Documentation/userspace-api/media/v4l/vidioc-create-bufs.rst
+> +++ b/Documentation/userspace-api/media/v4l/vidioc-create-bufs.rst
+> @@ -116,9 +116,13 @@ than the number requested.
+>        - ``flags``
+>        - Specifies additional buffer management attributes.
+>  	See :ref:`memory-flags`.
+> -
+>      * - __u32
+> -      - ``reserved``\ [6]
+> +      - ``max_buffers``
 
-Actually, that's not quite true. I realized that there is a subtle bug in
-the vb2 core and a general misunderstanding of min_buffers_needed in a lot
-of drivers.
+Call it max_num_buffers. It clearly indicates that it is about the maximum
+number of buffers, and not e.g. maximum buffer size or some other buffer
+property. It is also consistent with the internal field name.
 
-The min_buffers_needed field describes the minimum number of buffers needed
-before the DMA engine can start. This is typically 0, 1 or 2. Once that many
-buffers have been queued, then start_streaming callback is called. With fewer
-buffers queued the DMA engine cannot start, so this represents a DMA engine
-limitation.
-
-Currently vb2 also uses this field as the minimum number of buffers to
-allocate. However, that should be one more, so min_buffers_needed+1:
-'min_buffers_needed' buffers are in-flight, and you need one more that is
-owned by userspace, otherwise you would never be able to dequeue a buffer
-if you only created 'min_buffers_needed' buffers.
-
-But I noticed a lot of drivers that misinterpret this value as 'the minimum
-number of buffers to allocate', unrelated to any DMA engine limitations.
-This is most likely a bug, since this would unnecessarily delay the call to
-start_streaming().
-
-In other words, it is a mess.
-
-I think my earlier advice to change min_buffers_needed and drop the check
-in queue_setup should be disregarded. If the min_buffers_needed value
-is >= the value checked in queue_setup, then you can drop the check. In all
-other cases it is safer to keep it.
-
-So in other words, this patch is fine. But e.g. patch 21 needs to keep the
-check (although with a fix: *nbuffers = 2 - q_num_bufs).
-
-When this work is done, then I think I need to take a close review at all the
-drivers that set min_buffers_needed and/or check the number of buffers in
-queue_setup and fix it properly.
-
-Likely we need two different fields: one for the minimum number of buffers
-that need to be allocated, and one for the minimum number of buffers that
-need to be queued before start_streaming can be called. But that raises
-the question how the 'minimum number of buffers that need to be allocated'
-would interact with deleting buffers. It's actually not all that easy.
+> +      - If V4L2_BUF_CAP_SUPPORTS_SET_MAX_BUFS capability flag is set
+> +        this field indicate the maximum possible number of buffers
+> +        for this queue.
+> +    * - __u32
+> +      - ``reserved``\ [5]
+>        - A place holder for future extensions. Drivers and applications
+>  	must set the array to zero.
+>  
+> diff --git a/Documentation/userspace-api/media/v4l/vidioc-reqbufs.rst b/Documentation/userspace-api/media/v4l/vidioc-reqbufs.rst
+> index 099fa6695167..0395187e1a5a 100644
+> --- a/Documentation/userspace-api/media/v4l/vidioc-reqbufs.rst
+> +++ b/Documentation/userspace-api/media/v4l/vidioc-reqbufs.rst
+> @@ -120,6 +120,7 @@ aborting or finishing any DMA in progress, an implicit
+>  .. _V4L2-BUF-CAP-SUPPORTS-ORPHANED-BUFS:
+>  .. _V4L2-BUF-CAP-SUPPORTS-M2M-HOLD-CAPTURE-BUF:
+>  .. _V4L2-BUF-CAP-SUPPORTS-MMAP-CACHE-HINTS:
+> +.. _V4L2-BUF-CAP-SUPPORTS-SET-MAX-BUFS:
+>  
+>  .. raw:: latex
+>  
+> diff --git a/drivers/media/common/videobuf2/videobuf2-v4l2.c b/drivers/media/common/videobuf2/videobuf2-v4l2.c
+> index 799dd43b4aa9..5f4ea4485223 100644
+> --- a/drivers/media/common/videobuf2/videobuf2-v4l2.c
+> +++ b/drivers/media/common/videobuf2/videobuf2-v4l2.c
+> @@ -681,6 +681,7 @@ EXPORT_SYMBOL(vb2_querybuf);
+>  static void fill_buf_caps(struct vb2_queue *q, u32 *caps)
+>  {
+>  	*caps = V4L2_BUF_CAP_SUPPORTS_ORPHANED_BUFS;
+> +	*caps |= V4L2_BUF_CAP_SUPPORTS_SET_MAX_BUFS;
+>  	if (q->io_modes & VB2_MMAP)
+>  		*caps |= V4L2_BUF_CAP_SUPPORTS_MMAP;
+>  	if (q->io_modes & VB2_USERPTR)
+> @@ -763,6 +764,7 @@ int vb2_create_bufs(struct vb2_queue *q, struct v4l2_create_buffers *create)
+>  	fill_buf_caps(q, &create->capabilities);
+>  	validate_memory_flags(q, create->memory, &create->flags);
+>  	create->index = vb2_get_num_buffers(q);
+> +	create->max_buffers = q->max_num_buffers;
+>  	if (create->count == 0)
+>  		return ret != -EBUSY ? ret : 0;
+>  
+> diff --git a/drivers/media/v4l2-core/v4l2-ioctl.c b/drivers/media/v4l2-core/v4l2-ioctl.c
+> index 9b1de54ce379..da355355a869 100644
+> --- a/drivers/media/v4l2-core/v4l2-ioctl.c
+> +++ b/drivers/media/v4l2-core/v4l2-ioctl.c
+> @@ -483,9 +483,9 @@ static void v4l_print_create_buffers(const void *arg, bool write_only)
+>  {
+>  	const struct v4l2_create_buffers *p = arg;
+>  
+> -	pr_cont("index=%d, count=%d, memory=%s, capabilities=0x%08x, ",
+> +	pr_cont("index=%d, count=%d, memory=%s, capabilities=0x%08x, max buffers=%u",
+>  		p->index, p->count, prt_names(p->memory, v4l2_memory_names),
+> -		p->capabilities);
+> +		p->capabilities, p->max_buffers);
+>  	v4l_print_format(&p->format, write_only);
+>  }
+>  
+> diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
+> index c3d4e490ce7c..ef1402537395 100644
+> --- a/include/uapi/linux/videodev2.h
+> +++ b/include/uapi/linux/videodev2.h
+> @@ -1035,6 +1035,7 @@ struct v4l2_requestbuffers {
+>  #define V4L2_BUF_CAP_SUPPORTS_ORPHANED_BUFS		(1 << 4)
+>  #define V4L2_BUF_CAP_SUPPORTS_M2M_HOLD_CAPTURE_BUF	(1 << 5)
+>  #define V4L2_BUF_CAP_SUPPORTS_MMAP_CACHE_HINTS		(1 << 6)
+> +#define V4L2_BUF_CAP_SUPPORTS_SET_MAX_BUFS		(1 << 7)
+>  
+>  /**
+>   * struct v4l2_plane - plane info for multi-planar buffers
+> @@ -2605,6 +2606,9 @@ struct v4l2_dbg_chip_info {
+>   * @flags:	additional buffer management attributes (ignored unless the
+>   *		queue has V4L2_BUF_CAP_SUPPORTS_MMAP_CACHE_HINTS capability
+>   *		and configured for MMAP streaming I/O).
+> + * @max_buffers: if V4L2_BUF_CAP_SUPPORTS_SET_MAX_BUFS capability flag is set
+> + *		 this field indicate the maximum possible number of buffers
+> + *		 for this queue.
+>   * @reserved:	future extensions
+>   */
+>  struct v4l2_create_buffers {
+> @@ -2614,7 +2618,8 @@ struct v4l2_create_buffers {
+>  	struct v4l2_format	format;
+>  	__u32			capabilities;
+>  	__u32			flags;
+> -	__u32			reserved[6];
+> +	__u32			max_buffers;
+> +	__u32			reserved[5];
+>  };
+>  
+>  /*
 
 Regards,
 
 	Hans
-
-> 
-> Regards,
-> 
-> 	Hans
-> 
->>  
->>  	if (*nplanes)
->>  		return sizes[0] < skel->format.sizeimage ? -EINVAL : 0;
-> 
-
