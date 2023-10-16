@@ -2,53 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED1F27CB6BD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 00:56:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65CC87CB6F4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 01:22:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232896AbjJPW4G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Oct 2023 18:56:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38178 "EHLO
+        id S232985AbjJPXV7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Oct 2023 19:21:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231560AbjJPW4F (ORCPT
+        with ESMTP id S232345AbjJPXV7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Oct 2023 18:56:05 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 0FA6DB4;
-        Mon, 16 Oct 2023 15:56:03 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7DB6A1FB;
-        Mon, 16 Oct 2023 15:56:43 -0700 (PDT)
-Received: from ewhatever.cambridge.arm.com (ewhatever.cambridge.arm.com [10.1.197.1])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 732AB3F64C;
-        Mon, 16 Oct 2023 15:56:00 -0700 (PDT)
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Mike Leach <mike.leach@linaro.org>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        coresight@lists.linaro.org, andersson@kernel.org,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        devicetree@vger.kernel.org, Trilok Soni <quic_tsoni@quicinc.com>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, Hao Zhang <quic_hazha@quicinc.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v10 00/13] Add support to configure TPDM DSB subunit
-Date:   Mon, 16 Oct 2023 23:55:36 +0100
-Message-Id: <169749645670.708996.15857660455300716128.b4-ty@arm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <1695882586-10306-1-git-send-email-quic_taozha@quicinc.com>
-References: <1695882586-10306-1-git-send-email-quic_taozha@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        Mon, 16 Oct 2023 19:21:59 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDB619B;
+        Mon, 16 Oct 2023 16:21:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1697498516; x=1729034516;
+  h=date:from:to:cc:subject:message-id;
+  bh=OtQxmjoALgHa+s4AdJcPcEmcaL6nwt6LfGkkUOQIHZU=;
+  b=hyjkJUD3rV10o62EJMZLVD2tjqEHvbdenyF+54dCrMUR86xedf75AAQ9
+   TQdWIhSKzR+A0+mwNTdSV21TGQ9jn5f1gaLje1jW/mKSF+4bhrLNm12Ol
+   NpktznhWJ6HiHuwQ708l9g0VdsPOE9iH4V4AI98p31Q2vgUkDphm0EZHe
+   lJUy45UM4JY387jYHRFSdTkoyz0Ei2iZsyellVmOhr+OeabJF8LLJkCvO
+   zEsSLtKs13OVbhZoOCKVpAVpQW7trgScgbI8frbotfpBXr4rNIdgq5Nen
+   z8T6fPUt9uIPFhbZ4+0uAjTI3ydIUkbpUzGK++eL4b9XxAVbXCceeoo67
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10865"; a="452139630"
+X-IronPort-AV: E=Sophos;i="6.03,230,1694761200"; 
+   d="scan'208";a="452139630"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Oct 2023 16:21:56 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10865"; a="705779117"
+X-IronPort-AV: E=Sophos;i="6.03,230,1694761200"; 
+   d="scan'208";a="705779117"
+Received: from lkp-server02.sh.intel.com (HELO f64821696465) ([10.239.97.151])
+  by orsmga003.jf.intel.com with ESMTP; 16 Oct 2023 16:21:54 -0700
+Received: from kbuild by f64821696465 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qsWuF-0008kY-1v;
+        Mon, 16 Oct 2023 23:21:51 +0000
+Date:   Tue, 17 Oct 2023 07:21:20 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Andrew Morton <akpm@linux-foundation.org>
+Cc:     Linux Memory Management List <linux-mm@kvack.org>,
+        amd-gfx@lists.freedesktop.org, bpf@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org
+Subject: [linux-next:master] BUILD REGRESSION
+ 4d0515b235dec789578d135a5db586b25c5870cb
+Message-ID: <202310170705.YN3XVbWR-lkp@intel.com>
+User-Agent: s-nail v14.9.24
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -57,46 +62,258 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 28 Sep 2023 14:29:33 +0800, Tao Zhang wrote:
-> Introduction of TPDM DSB subunit
-> DSB subunit is responsible for creating a dataset element, and is also
-> optionally responsible for packing it to fit multiple elements on a
-> single ATB transfer if possible in the configuration. The TPDM Core
-> Datapath requests timestamps be stored by the TPDA and then delivering
-> ATB sized data (depending on ATB width and element size, this could
-> be smaller or larger than a dataset element) to the ATB Mast FSM.
-> 
-> [...]
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git master
+branch HEAD: 4d0515b235dec789578d135a5db586b25c5870cb  Add linux-next specific files for 20231016
 
-Applied, thanks!
+Error/Warning reports:
 
-[01/13] coresight-tpdm: Remove the unnecessary lock
-        https://git.kernel.org/coresight/c/5d49aeb1b3e4
-[02/13] dt-bindings: arm: Add support for DSB element size
-        https://git.kernel.org/coresight/c/a1ce72d22a2e
-[03/13] coresight-tpdm: Introduce TPDM subtype to TPDM driver
-        https://git.kernel.org/coresight/c/6b4fad1b665a
-[04/13] coresight-tpda: Add DSB dataset support
-        https://git.kernel.org/coresight/c/18e176f77986
-[05/13] coresight-tpdm: Initialize DSB subunit configuration
-        https://git.kernel.org/coresight/c/03f0ff5fcbec
-[06/13] coresight-tpdm: Add reset node to TPDM node
-        https://git.kernel.org/coresight/c/126f00822388
-[07/13] coresight-tpdm: Add nodes to set trigger timestamp and type
-        https://git.kernel.org/coresight/c/c821b93bb6eb
-[08/13] coresight-tpdm: Add node to set dsb programming mode
-        https://git.kernel.org/coresight/c/535d80d3c10f
-[09/13] coresight-tpdm: Add nodes for dsb edge control
-        https://git.kernel.org/coresight/c/dd60b994b3f8
-[10/13] coresight-tpdm: Add nodes to configure pattern match output
-        https://git.kernel.org/coresight/c/5898244cf458
-[11/13] coresight-tpdm: Add nodes for timestamp request
-        https://git.kernel.org/coresight/c/949a4f5b66d2
-[12/13] dt-bindings: arm: Add support for DSB MSR register
-        https://git.kernel.org/coresight/c/20dab0f44ac8
-[13/13] coresight-tpdm: Add nodes for dsb msr support
-        https://git.kernel.org/coresight/c/90a7371cb08d
+https://lore.kernel.org/oe-kbuild-all/202309212121.cul1pTRa-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202309212339.hxhBu2F1-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202310051547.40nm4Sif-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202310160401.RIcVn63P-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202310161945.VDy8ESWa-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202310170132.IrOpHglA-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202310170340.tkkfdZYn-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202310170627.2Kvf6ZHY-lkp@intel.com
 
-Best regards,
+Error/Warning: (recently discovered and may have been fixed)
+
+(.text+0x11c): undefined reference to `devm_hwrng_register'
+drivers/crypto/qcom-rng.c:213:(.text+0x16c): undefined reference to `devm_hwrng_register'
+drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c:274: warning: Function parameter or member 'gart_placement' not described in 'amdgpu_gmc_gart_location'
+drivers/net/ethernet/apm/xgene/xgene_enet_main.c:2004:34: warning: unused variable 'xgene_enet_of_match' [-Wunused-const-variable]
+idpf_txrx.c:(.text+0x2dbc): undefined reference to `tcp_gro_complete'
+include/linux/bitmap.h:527:25: error: 'EBUSY' undeclared (first use in this function)
+include/linux/bitmap.h:554:17: error: 'ENOMEM' undeclared (first use in this function)
+kernel/bpf/helpers.c:1909:19: warning: no previous declaration for 'bpf_percpu_obj_new_impl' [-Wmissing-declarations]
+kernel/bpf/helpers.c:1945:18: warning: no previous declaration for 'bpf_percpu_obj_drop_impl' [-Wmissing-declarations]
+kernel/bpf/helpers.c:2480:18: warning: no previous declaration for 'bpf_throw' [-Wmissing-declarations]
+qcom-rng.c:(.text+0x224): undefined reference to `devm_hwrng_register'
+
+Unverified Error/Warning (likely false positive, please contact us if interested):
+
+Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml:
+
+Error/Warning ids grouped by kconfigs:
+
+gcc_recent_errors
+|-- alpha-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- arc-allmodconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- arc-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- arm-allmodconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- arm-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- arm-buildonly-randconfig-r006-20220608
+|   `-- drivers-crypto-qcom-rng.c:(.text):undefined-reference-to-devm_hwrng_register
+|-- arm-randconfig-s032-20220424
+|   |-- include-linux-bitmap.h:error:EBUSY-undeclared-(first-use-in-this-function)
+|   `-- include-linux-bitmap.h:error:ENOMEM-undeclared-(first-use-in-this-function)
+|-- arm64-allmodconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- arm64-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- arm64-randconfig-001-20231016
+|   |-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|   `-- idpf_txrx.c:(.text):undefined-reference-to-tcp_gro_complete
+|-- arm64-randconfig-002-20231016
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- arm64-randconfig-r015-20220507
+|   `-- qcom-rng.c:(.text):undefined-reference-to-devm_hwrng_register
+|-- csky-allmodconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- csky-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- i386-randconfig-005-20231016
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- i386-randconfig-006-20231016
+|   |-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|   |-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_percpu_obj_drop_impl
+|   |-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_percpu_obj_new_impl
+|   `-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_throw
+|-- loongarch-allmodconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- loongarch-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- loongarch-defconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- loongarch-randconfig-001-20231016
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- loongarch-randconfig-001-20231017
+|   `-- Documentation-devicetree-bindings-mfd-qcom-pm8xxx.yaml:
+|-- loongarch-randconfig-002-20231016
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- microblaze-allmodconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- microblaze-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- mips-allmodconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- mips-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- openrisc-allmodconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- openrisc-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- parisc-allmodconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- parisc-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- parisc-randconfig-001-20231016
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- parisc-randconfig-r001-20221214
+|   `-- (.text):undefined-reference-to-devm_hwrng_register
+|-- powerpc-allmodconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- powerpc-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- powerpc-randconfig-001-20231016
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- powerpc64-randconfig-002-20231016
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- powerpc64-randconfig-003-20231016
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- riscv-allmodconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- riscv-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- riscv-randconfig-002-20231016
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- s390-allmodconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- s390-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- s390-randconfig-002-20231016
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- sparc-allmodconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- sparc-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- sparc64-allmodconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+|-- sparc64-allyesconfig
+|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+`-- x86_64-allyesconfig
+    `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
+clang_recent_errors
+`-- hexagon-randconfig-r005-20221019
+    `-- drivers-net-ethernet-apm-xgene-xgene_enet_main.c:warning:unused-variable-xgene_enet_of_match
+
+elapsed time: 1065m
+
+configs tested: 105
+configs skipped: 2
+
+tested configs:
+alpha                             allnoconfig   gcc  
+alpha                            allyesconfig   gcc  
+alpha                               defconfig   gcc  
+arc                              allmodconfig   gcc  
+arc                               allnoconfig   gcc  
+arc                              allyesconfig   gcc  
+arc                                 defconfig   gcc  
+arc                   randconfig-001-20231016   gcc  
+arm                              allmodconfig   gcc  
+arm                               allnoconfig   gcc  
+arm                              allyesconfig   gcc  
+arm                                 defconfig   gcc  
+arm                   randconfig-001-20231016   gcc  
+arm64                            allmodconfig   gcc  
+arm64                             allnoconfig   gcc  
+arm64                            allyesconfig   gcc  
+arm64                               defconfig   gcc  
+csky                             allmodconfig   gcc  
+csky                              allnoconfig   gcc  
+csky                             allyesconfig   gcc  
+csky                                defconfig   gcc  
+i386                             allmodconfig   gcc  
+i386                              allnoconfig   gcc  
+i386                             allyesconfig   gcc  
+i386                              debian-10.3   gcc  
+i386                                defconfig   gcc  
+i386                  randconfig-001-20231016   gcc  
+i386                  randconfig-002-20231016   gcc  
+i386                  randconfig-003-20231016   gcc  
+i386                  randconfig-004-20231016   gcc  
+i386                  randconfig-005-20231016   gcc  
+i386                  randconfig-006-20231016   gcc  
+loongarch                        allmodconfig   gcc  
+loongarch                         allnoconfig   gcc  
+loongarch                        allyesconfig   gcc  
+loongarch                           defconfig   gcc  
+loongarch             randconfig-001-20231016   gcc  
+loongarch             randconfig-001-20231017   gcc  
+m68k                             allmodconfig   gcc  
+m68k                              allnoconfig   gcc  
+m68k                             allyesconfig   gcc  
+m68k                                defconfig   gcc  
+microblaze                       allmodconfig   gcc  
+microblaze                        allnoconfig   gcc  
+microblaze                       allyesconfig   gcc  
+microblaze                          defconfig   gcc  
+mips                             allmodconfig   gcc  
+mips                              allnoconfig   gcc  
+mips                             allyesconfig   gcc  
+nios2                            allmodconfig   gcc  
+nios2                             allnoconfig   gcc  
+nios2                            allyesconfig   gcc  
+nios2                               defconfig   gcc  
+openrisc                         allmodconfig   gcc  
+openrisc                          allnoconfig   gcc  
+openrisc                         allyesconfig   gcc  
+openrisc                            defconfig   gcc  
+parisc                           allmodconfig   gcc  
+parisc                            allnoconfig   gcc  
+parisc                           allyesconfig   gcc  
+parisc                              defconfig   gcc  
+parisc64                            defconfig   gcc  
+powerpc                          allmodconfig   gcc  
+powerpc                           allnoconfig   gcc  
+powerpc                          allyesconfig   gcc  
+riscv                            allmodconfig   gcc  
+riscv                             allnoconfig   gcc  
+riscv                            allyesconfig   gcc  
+riscv                               defconfig   gcc  
+riscv                 randconfig-001-20231016   gcc  
+riscv                          rv32_defconfig   gcc  
+s390                             allmodconfig   gcc  
+s390                              allnoconfig   gcc  
+s390                             allyesconfig   gcc  
+s390                                defconfig   gcc  
+s390                  randconfig-001-20231016   gcc  
+sh                               allmodconfig   gcc  
+sh                                allnoconfig   gcc  
+sh                               allyesconfig   gcc  
+sh                                  defconfig   gcc  
+sparc                            allmodconfig   gcc  
+sparc                             allnoconfig   gcc  
+sparc                            allyesconfig   gcc  
+sparc                               defconfig   gcc  
+sparc                 randconfig-001-20231016   gcc  
+sparc64                          allmodconfig   gcc  
+sparc64                          allyesconfig   gcc  
+sparc64                             defconfig   gcc  
+um                               allmodconfig   clang
+um                                allnoconfig   clang
+um                               allyesconfig   clang
+um                                  defconfig   gcc  
+um                             i386_defconfig   gcc  
+um                           x86_64_defconfig   gcc  
+x86_64                            allnoconfig   gcc  
+x86_64                           allyesconfig   gcc  
+x86_64                              defconfig   gcc  
+x86_64                randconfig-001-20231016   gcc  
+x86_64                randconfig-002-20231016   gcc  
+x86_64                randconfig-003-20231016   gcc  
+x86_64                randconfig-004-20231016   gcc  
+x86_64                randconfig-005-20231016   gcc  
+x86_64                randconfig-006-20231016   gcc  
+x86_64                          rhel-8.3-rust   clang
+x86_64                               rhel-8.3   gcc  
+
 -- 
-Suzuki K Poulose <suzuki.poulose@arm.com>
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
