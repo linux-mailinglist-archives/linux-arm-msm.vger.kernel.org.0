@@ -2,78 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A7C367C9F58
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 08:17:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E5A37C9FFF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 08:56:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231510AbjJPGRC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Oct 2023 02:17:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57562 "EHLO
+        id S230257AbjJPG4h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Oct 2023 02:56:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229574AbjJPGRB (ORCPT
+        with ESMTP id S229523AbjJPG4g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Oct 2023 02:17:01 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E280DC
-        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Oct 2023 23:16:59 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-9b9faf05f51so620059866b.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Oct 2023 23:16:59 -0700 (PDT)
+        Mon, 16 Oct 2023 02:56:36 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA50B97
+        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Oct 2023 23:56:34 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-533d31a8523so6947999a12.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Oct 2023 23:56:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697437018; x=1698041818; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=rmF5+yStHKKyV0l0IYYnGUX1bf/bvuE2VGird9kSXYY=;
-        b=LfOO4QgwUVndQRyBa6FMS6AOoswCmmNb/p4TiCrF0HcMdL2l2b8lGxgXKznWZUM3bZ
-         defJsQm1MksmxGE/AbUrLm0UcViJSfxBn2Ki2ruPbG+iFi8zRxrt5IH3tJvRBOYCP6WM
-         GS8STZjsmsqCs3sjbcbVlQ3vBBMj570hcV7/KEQuslayh2b+Ma/FDJggNwHNkla8f6Qu
-         eukijTQtenZZ7PyvTGhSUOAv3Ux/RKC4Kg40zdntZ6HzHHIUmiIdfJKZ8D1g7MskLCB0
-         F5VyY8Mz5+Q7j4qaDsvvgpPfqOvvuLgW897YCPcfuEZeqzgZZ25sFmGxhX8oSy7GeOci
-         dj+g==
+        d=fairphone.com; s=fair; t=1697439393; x=1698044193; darn=vger.kernel.org;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mIKLA6FpZ/tBtyGW8aEqqSCm4XNwQ5xgOuHWuH9vZ2k=;
+        b=dgRfnslNP51vNXEBXGgtzViY1hDiPbXcKH64h7XpGd2FwvdfiieKiXj2Un7gGdAqaS
+         vkf+PE4FVGGosfPy5hch0EvkIlg3kyiDxEJGXGcELmoVjLGT1hQECaV3S7l7EqPs7zOm
+         WcDN2Sp5JxEOVuNkGPGs6EKj36ZvUwwzl7Bsh1qMMPrNhmakFTa882lmPmFSiRYK340y
+         45GsM8AeebGFyl9Jduy876Nsox2zOZvTRAomequZ49LdZxyErIrbbxlndnUlN5h/gAfU
+         rZoyD3vRjFlJNJtFFxDyeLMF2BamnuReJ7LskSGhVLkIRx52MuxyUC6EIA6QTUy0NAzh
+         5csA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697437018; x=1698041818;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rmF5+yStHKKyV0l0IYYnGUX1bf/bvuE2VGird9kSXYY=;
-        b=IwAOi5B4bBb940H6YIzGsjMNfNo35wlBanMfUkDAmc2FGS6384wCjtEs0m06WwLdFm
-         HI5RIG9gLutqdArF4+WABeUDdrOkjXJazSlmkDUlxc8pCgqu/wpOpCTZjkFnv6JJ2G6k
-         P+9POkY7ZB2tRllO1qCfp6WFi8ba9ll/7yFxhdlfScsf1lIRV+jWBUFfB42e7wz8S9Ls
-         qC2DyOCBq+UGWbqLKgyjYmhDBQjpNFtlBtCcro9LWhzgdQfoWL67eIx7/NQA9G/D0aZ7
-         dbMRei2BicWZuMYALTOX08y4r4svORE2ASpUq7FBQT2wuKuotHOham6XQy3HdAguza7C
-         iD9Q==
-X-Gm-Message-State: AOJu0YzpVrKuUTrhDyYYFEodACHIAUPpD32QrdYKBWVwhbm2uAInrkci
-        Qxj3aN3jE2543bK1pumFXQptBg==
-X-Google-Smtp-Source: AGHT+IHe5cIN5p6XbzVxAOUtSUAiESZxqFtes9yfDKxd+6qrsRtc0sPgEXvxqQS0q6JeXxxDJNhLZg==
-X-Received: by 2002:a17:906:3156:b0:9b2:b71f:83be with SMTP id e22-20020a170906315600b009b2b71f83bemr27707553eje.1.1697437017808;
-        Sun, 15 Oct 2023 23:16:57 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.219.154])
-        by smtp.gmail.com with ESMTPSA id rh14-20020a17090720ee00b009b947f81c4asm3318895ejb.155.2023.10.15.23.16.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 15 Oct 2023 23:16:57 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] dt-bindings: serial: re-order entries to match coding convention
-Date:   Mon, 16 Oct 2023 08:16:54 +0200
-Message-Id: <20231016061654.22267-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1697439393; x=1698044193;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=mIKLA6FpZ/tBtyGW8aEqqSCm4XNwQ5xgOuHWuH9vZ2k=;
+        b=MmR/bGFfcuLF8NKfvEKIs+qalFWVTLG2VF+DqgDcigJbOMUs8Jff4eBDKCLLyaVNPK
+         8+RDv9IA2axJEqKjExk+8xTJ60rtzoNBxtq1FAgQM2atWQyip1YYb6yaq2w0aT7u4f1n
+         a7yiV3GxB/MGuJ8uQfmZPkqf1fewCCp2mB+9+RMFkB9qx1Jczym+lD8fjEm01fNEhtiG
+         Y9lAK6lO6qPrwyC29ouQ8nCOeg28fybarHL8+UlA/hHqc2E0OPH1l8eezA+Yjp0YM99F
+         mEK0/DrYKUDqvcKaBOdQgd5CRu1VTVsyQwi14NIJLkEJ3lqNxIUsfxuP3eVbi/KxP+hm
+         IELA==
+X-Gm-Message-State: AOJu0YzJVWmw2yBg1PjRMx1D2R03sZogngPxMz0jWP8E/voaspYdrT/x
+        /U11xjAU2cjhLYyGzqM0b3K4Xg==
+X-Google-Smtp-Source: AGHT+IEso5kuLZbg9p8FT8lVYXeK62hYjaBJ2yzw2VF1TjF8zIDcesabpryDe3mRe4T/YBqRFzY95Q==
+X-Received: by 2002:a17:907:3da5:b0:9bd:d961:ddea with SMTP id he37-20020a1709073da500b009bdd961ddeamr6901803ejc.45.1697439393118;
+        Sun, 15 Oct 2023 23:56:33 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id e3-20020a1709062c0300b0099bcf1c07c6sm3389234ejh.138.2023.10.15.23.56.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 15 Oct 2023 23:56:32 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Mon, 16 Oct 2023 08:56:31 +0200
+Message-Id: <CW9O1NB1NZHP.34BW2ZGP1WV8C@fairphone.com>
+Subject: Re: [PATCH] soc: qcom: pmic_glink_altmode: Print error when retimer
+ setup fails
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Bjorn Andersson" <andersson@kernel.org>
+Cc:     "Andy Gross" <agross@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>,
+        <phone-devel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+X-Mailer: aerc 0.15.2
+References: <20231013-glink-altmode-ret-v1-1-77941537a35b@fairphone.com>
+ <6fw7eho6rapvlghujche4k3pm5mx7a7ojx6yyyreq6dhzjfwlt@ggqoxgirpcnr>
+In-Reply-To: <6fw7eho6rapvlghujche4k3pm5mx7a7ojx6yyyreq6dhzjfwlt@ggqoxgirpcnr>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,252 +77,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The DT schema coding convetion express in
-Documentation/devicetree/bindings/example-schema.yaml expects entries in
-following order:
- - properties, patternProperties
- - required
- - if blocks, allOf with if-blocks
- - additionalProperties/unevaluatedProperties
+On Mon Oct 16, 2023 at 5:18 AM CEST, Bjorn Andersson wrote:
+> On Fri, Oct 13, 2023 at 03:56:40PM +0200, Luca Weiss wrote:
+> > It can be useful to know with which return value the retimer_set call
+> > failed, so include this info in the dev_err print.
+> >=20
+>
+> Is this useful during development, or during normal execution etc. How
+> about using kretprobe or similar tools?
 
-Re-order few schemas to match the convention to avoid repeating reviews
-for new patches using existing code as template.  No functional changes.
+Hi Bjorn,
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- .../bindings/serial/nvidia,tegra20-hsuart.yaml   | 10 +++++-----
- .../bindings/serial/qcom,msm-uart.yaml           |  4 ++--
- .../bindings/serial/qcom,msm-uartdm.yaml         |  4 ++--
- .../bindings/serial/renesas,em-uart.yaml         | 14 +++++++-------
- .../bindings/serial/renesas,hscif.yaml           |  4 ++--
- .../bindings/serial/renesas,scifa.yaml           |  4 ++--
- .../bindings/serial/renesas,scifb.yaml           |  4 ++--
- .../devicetree/bindings/serial/samsung_uart.yaml |  4 ++--
- .../devicetree/bindings/serial/serial.yaml       | 16 ++++++++--------
- 9 files changed, 32 insertions(+), 32 deletions(-)
+IIRC I encountered this during development of my retimer driver, where
+the op in that driver failed for some reason and it was very useful to
+get the return value to debug that.
 
-diff --git a/Documentation/devicetree/bindings/serial/nvidia,tegra20-hsuart.yaml b/Documentation/devicetree/bindings/serial/nvidia,tegra20-hsuart.yaml
-index 04d55fecf47c..a5d67563cd53 100644
---- a/Documentation/devicetree/bindings/serial/nvidia,tegra20-hsuart.yaml
-+++ b/Documentation/devicetree/bindings/serial/nvidia,tegra20-hsuart.yaml
-@@ -91,11 +91,6 @@ properties:
-         - description: range upper bound
-         - description: adjustment (in permyriad, i.e. 0.01%)
- 
--allOf:
--  - $ref: serial.yaml
--
--unevaluatedProperties: false
--
- required:
-   - compatible
-   - reg
-@@ -106,6 +101,11 @@ required:
-   - dmas
-   - dma-names
- 
-+allOf:
-+  - $ref: serial.yaml
-+
-+unevaluatedProperties: false
-+
- examples:
-   - |
-     #include <dt-bindings/clock/tegra30-car.h>
-diff --git a/Documentation/devicetree/bindings/serial/qcom,msm-uart.yaml b/Documentation/devicetree/bindings/serial/qcom,msm-uart.yaml
-index a052aaef21f4..ea6abfe2d95e 100644
---- a/Documentation/devicetree/bindings/serial/qcom,msm-uart.yaml
-+++ b/Documentation/devicetree/bindings/serial/qcom,msm-uart.yaml
-@@ -40,11 +40,11 @@ required:
-   - interrupts
-   - reg
- 
--unevaluatedProperties: false
--
- allOf:
-   - $ref: /schemas/serial/serial.yaml#
- 
-+unevaluatedProperties: false
-+
- examples:
-   - |
-     serial@a9c00000 {
-diff --git a/Documentation/devicetree/bindings/serial/qcom,msm-uartdm.yaml b/Documentation/devicetree/bindings/serial/qcom,msm-uartdm.yaml
-index 484b9a51f6a9..ee52bf8e8917 100644
---- a/Documentation/devicetree/bindings/serial/qcom,msm-uartdm.yaml
-+++ b/Documentation/devicetree/bindings/serial/qcom,msm-uartdm.yaml
-@@ -78,8 +78,6 @@ required:
-   - interrupts
-   - reg
- 
--unevaluatedProperties: false
--
- allOf:
-   - $ref: /schemas/serial/serial.yaml#
- 
-@@ -97,6 +95,8 @@ allOf:
-         reg:
-           maxItems: 1
- 
-+unevaluatedProperties: false
-+
- examples:
-   - |
-     #include <dt-bindings/interrupt-controller/arm-gic.h>
-diff --git a/Documentation/devicetree/bindings/serial/renesas,em-uart.yaml b/Documentation/devicetree/bindings/serial/renesas,em-uart.yaml
-index 3fc2601f1338..89f1eb0f2c5a 100644
---- a/Documentation/devicetree/bindings/serial/renesas,em-uart.yaml
-+++ b/Documentation/devicetree/bindings/serial/renesas,em-uart.yaml
-@@ -38,6 +38,13 @@ properties:
-       - const: sclk
-       - const: pclk
- 
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - clocks
-+  - clock-names
-+
- allOf:
-   - $ref: serial.yaml#
- 
-@@ -53,13 +60,6 @@ allOf:
-         clock-names:
-           minItems: 2
- 
--required:
--  - compatible
--  - reg
--  - interrupts
--  - clocks
--  - clock-names
--
- unevaluatedProperties: false
- 
- examples:
-diff --git a/Documentation/devicetree/bindings/serial/renesas,hscif.yaml b/Documentation/devicetree/bindings/serial/renesas,hscif.yaml
-index 1c7f1276aed6..2046e2dc0a3d 100644
---- a/Documentation/devicetree/bindings/serial/renesas,hscif.yaml
-+++ b/Documentation/devicetree/bindings/serial/renesas,hscif.yaml
-@@ -111,8 +111,6 @@ required:
-   - clock-names
-   - power-domains
- 
--unevaluatedProperties: false
--
- if:
-   properties:
-     compatible:
-@@ -125,6 +123,8 @@ then:
-   required:
-     - resets
- 
-+unevaluatedProperties: false
-+
- examples:
-   - |
-     #include <dt-bindings/clock/r8a7795-cpg-mssr.h>
-diff --git a/Documentation/devicetree/bindings/serial/renesas,scifa.yaml b/Documentation/devicetree/bindings/serial/renesas,scifa.yaml
-index 499507678cdf..c98657cf4666 100644
---- a/Documentation/devicetree/bindings/serial/renesas,scifa.yaml
-+++ b/Documentation/devicetree/bindings/serial/renesas,scifa.yaml
-@@ -77,8 +77,6 @@ required:
-   - clock-names
-   - power-domains
- 
--unevaluatedProperties: false
--
- if:
-   properties:
-     compatible:
-@@ -89,6 +87,8 @@ then:
-   required:
-     - resets
- 
-+unevaluatedProperties: false
-+
- examples:
-   - |
-     #include <dt-bindings/clock/r8a7790-cpg-mssr.h>
-diff --git a/Documentation/devicetree/bindings/serial/renesas,scifb.yaml b/Documentation/devicetree/bindings/serial/renesas,scifb.yaml
-index 810d8a991fdd..fb695b3111ac 100644
---- a/Documentation/devicetree/bindings/serial/renesas,scifb.yaml
-+++ b/Documentation/devicetree/bindings/serial/renesas,scifb.yaml
-@@ -77,8 +77,6 @@ required:
-   - clock-names
-   - power-domains
- 
--unevaluatedProperties: false
--
- if:
-   properties:
-     compatible:
-@@ -89,6 +87,8 @@ then:
-   required:
-     - resets
- 
-+unevaluatedProperties: false
-+
- examples:
-   - |
-     #include <dt-bindings/clock/r8a7740-clock.h>
-diff --git a/Documentation/devicetree/bindings/serial/samsung_uart.yaml b/Documentation/devicetree/bindings/serial/samsung_uart.yaml
-index 8bd88d5cbb11..aecb6761b49c 100644
---- a/Documentation/devicetree/bindings/serial/samsung_uart.yaml
-+++ b/Documentation/devicetree/bindings/serial/samsung_uart.yaml
-@@ -86,8 +86,6 @@ required:
-   - interrupts
-   - reg
- 
--unevaluatedProperties: false
--
- allOf:
-   - $ref: serial.yaml#
- 
-@@ -128,6 +126,8 @@ allOf:
-             - const: uart
-             - const: clk_uart_baud0
- 
-+unevaluatedProperties: false
-+
- examples:
-   - |
-     #include <dt-bindings/clock/samsung,s3c64xx-clock.h>
-diff --git a/Documentation/devicetree/bindings/serial/serial.yaml b/Documentation/devicetree/bindings/serial/serial.yaml
-index 468af429c3e6..65804ca274ae 100644
---- a/Documentation/devicetree/bindings/serial/serial.yaml
-+++ b/Documentation/devicetree/bindings/serial/serial.yaml
-@@ -87,14 +87,6 @@ properties:
-     description:
-       TX FIFO threshold configuration (in bytes).
- 
--if:
--  required:
--    - uart-has-rtscts
--then:
--  properties:
--    cts-gpios: false
--    rts-gpios: false
--
- patternProperties:
-   "^(bluetooth|bluetooth-gnss|gnss|gps|mcu)$":
-     if:
-@@ -136,6 +128,14 @@ patternProperties:
-       required:
-         - compatible
- 
-+if:
-+  required:
-+    - uart-has-rtscts
-+then:
-+  properties:
-+    cts-gpios: false
-+    rts-gpios: false
-+
- additionalProperties: true
- 
- examples:
--- 
-2.34.1
+And sure, I guess kretprobe might be also useful here but I think it's
+very common to include the return value in the error message when
+something fails, no?
+
+> If you insist, could you please make sure that the style matches across
+> the various typec_*_set() calls in the driver?
+
+Do you mean adding the return value to the other dev_err prints after
+typec_*_set() calls also?
+
+Regards
+Luca
+
+>
+> Regards,
+> Bjorn
+>
+> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> > ---
+> >  drivers/soc/qcom/pmic_glink_altmode.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >=20
+> > diff --git a/drivers/soc/qcom/pmic_glink_altmode.c b/drivers/soc/qcom/p=
+mic_glink_altmode.c
+> > index 9569d999391d..136713e1155e 100644
+> > --- a/drivers/soc/qcom/pmic_glink_altmode.c
+> > +++ b/drivers/soc/qcom/pmic_glink_altmode.c
+> > @@ -168,7 +168,7 @@ static void pmic_glink_altmode_enable_dp(struct pmi=
+c_glink_altmode *altmode,
+> > =20
+> >  	ret =3D typec_retimer_set(port->typec_retimer, &port->retimer_state);
+> >  	if (ret)
+> > -		dev_err(altmode->dev, "failed to setup retimer to DP\n");
+> > +		dev_err(altmode->dev, "failed to setup retimer to DP: %d\n", ret);
+> >  }
+> > =20
+> >  static void pmic_glink_altmode_enable_usb(struct pmic_glink_altmode *a=
+ltmode,
+> >=20
+> > ---
+> > base-commit: e3b18f7200f45d66f7141136c25554ac1e82009b
+> > change-id: 20231013-glink-altmode-ret-3911e6c1eab5
+> >=20
+> > Best regards,
+> > --=20
+> > Luca Weiss <luca.weiss@fairphone.com>
+> >=20
 
