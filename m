@@ -2,87 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F40DC7CADC1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 17:40:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78FA47CAE4D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 17:55:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233219AbjJPPkK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Oct 2023 11:40:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45508 "EHLO
+        id S233869AbjJPPzR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Oct 2023 11:55:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233581AbjJPPkJ (ORCPT
+        with ESMTP id S233874AbjJPPzQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Oct 2023 11:40:09 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84DF9D9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Oct 2023 08:40:08 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DEBAC433C9;
-        Mon, 16 Oct 2023 15:40:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1697470808;
-        bh=x6oRhyvnMXidDUSwxZNupzsLuIKRsX2HDyNAn1+O64I=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=kXBxWqD4scC//5xFA/IbPLVe2hmBXfo/NuwPIiTN4Opt2RlGCYkMMH2UzKrvWrASn
-         EUagcH0hn8LcKPU5yzPgYcRjYlqahu+21++XIRYHjDU/UWV0cs1dhBfPjWlbuJB+Xg
-         EhtnShMNLxxQpT01801ABqnmKZ7izPuM1/ZoShWhR7KqDF4JeuKsbe0nTbF8Gs49y3
-         guav1fURR8Bzn2SJv+yUH/3X4FDUu7gH6IAiJgjkphGD76kv8OKOzVyrHaV6GxG1R0
-         Sjq5ncTm2umWjuG10RDeNLfC3fDEbia1yFGfIrMknth4yD7AKNBwmEpssbW5GR2c0j
-         5OsP0roHy64EQ==
-Date:   Mon, 16 Oct 2023 08:43:55 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Arnd Bergmann <arnd@arndb.de>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 3/5] arm64: dts: qcom: sdm845-mtp: switch to mbn
- firmware
-Message-ID: <af4fx3u6c3znawelenzwtm2cter7cpdis34q64ug3cqzina774@jhqj6o3ectv3>
-References: <20230826221915.846937-1-dmitry.baryshkov@linaro.org>
- <20230826221915.846937-4-dmitry.baryshkov@linaro.org>
- <a12eee9b-e159-4e1b-b812-60cdf93c1b41@app.fastmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a12eee9b-e159-4e1b-b812-60cdf93c1b41@app.fastmail.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Mon, 16 Oct 2023 11:55:16 -0400
+Received: from srv01.abscue.de (abscue.de [89.58.28.240])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79C4AAD
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Oct 2023 08:55:13 -0700 (PDT)
+Received: from srv01.abscue.de (localhost [127.0.0.1])
+        by spamfilter.srv.local (Postfix) with ESMTP id 341E31C07B1;
+        Mon, 16 Oct 2023 17:55:09 +0200 (CEST)
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_PASS,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
+Received: from abscue (dslb-088-078-201-093.088.078.pools.vodafone-ip.de [88.78.201.93])
+        by srv01.abscue.de (Postfix) with ESMTPSA id 974DE1C07B0;
+        Mon, 16 Oct 2023 17:55:08 +0200 (CEST)
+Date:   Mon, 16 Oct 2023 17:55:03 +0200
+From:   Otto =?iso-8859-1?Q?Pfl=FCger?= <otto.pflueger@abscue.de>
+To:     Mark Brown <broonie@kernel.org>
+Cc:     Otto =?iso-8859-1?Q?Pfl=FCger?= <otto.pflueger@abscue.de>,
+        linux-arm-msm@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        alsa-devel@alsa-project.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH 1/3] ASoC: qcom: q6core: expose ADSP core firmware version
+Message-ID: <ZS1c14Z+NUmlyvFx@abscue>
+References: <20231014172624.75301-1-otto.pflueger@abscue.de>
+ <20231014172624.75301-2-otto.pflueger@abscue.de>
+ <6ff78ead-fe41-496f-afdc-a83eee27f652@sirena.org.uk>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6ff78ead-fe41-496f-afdc-a83eee27f652@sirena.org.uk>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 16, 2023 at 03:39:01PM +0200, Arnd Bergmann wrote:
-> On Sun, Aug 27, 2023, at 00:19, Dmitry Baryshkov wrote:
-> > We have switched most of devices to use mbn (squashed) firmware files
-> > instead of spit mdt+bNN. Even this DT uses modem.mbn and a630_zap.mbn.
-> > Let's switch adsp and cdsp firmware files to use .mbn format too.
-> >
-> > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On Mon, Oct 16, 2023 at 01:47:28PM +0100, Mark Brown wrote:
+> On Sat, Oct 14, 2023 at 07:26:22PM +0200, Otto Pflüger wrote:
 > 
-> I saw this pop up in the dts pull request today, and this needs
-> some more clarification I think: Why does the dts have to know
-> about which format the files are in? I would expect that to be
-> handled by the driver internally.
+> > +		for (i = 0; i < g_core->svc_version->num_services; i++) {
+> > +			struct avcs_svc_info *info;
+> > +
+> > +			info = &g_core->svc_version->svc_api_info[i];
+> > +			if (info->service_id != APR_SVC_ADSP_CORE)
+> > +				continue;
+> > +
+> > +			switch (info->version) {
+> > +			case AVCS_CMDRSP_Q6_ID_2_6:
+> > +				core->adsp_version = Q6_ADSP_VERSION_2_6;
+> > +				break;
+> > +			case AVCS_CMDRSP_Q6_ID_2_7:
+> > +				core->adsp_version = Q6_ADSP_VERSION_2_7;
+> > +				break;
+> > +			case AVCS_CMDRSP_Q6_ID_2_8:
+> > +				core->adsp_version = Q6_ADSP_VERSION_2_8;
+> > +				break;
+> > +			}
 > 
-> From what I can tell, either the two files are compatible,
-> and the driver can just try both names by manipulating that
-> string, or the two are incompatible and changing the firmware
-> name would also mean that the dts node and driver would
-> have to be aware of the difference.
-> 
+> This doesn't handle unknown versions at all.
 
-The implementation does not care about the file name, it will detect
-which of the two formats is being provided and load the content
-accordingly.
-
-So what this patch does is to align the firmware file name to match what
-we have in linux-firmware, and what the few of us booting this device
-have hacked around in /lib/firmware for (quite) a while now.
-
-Regards,
-Bjorn
+The adsp_version is initialized to Q6_ADSP_VERSION_UNKNOWN in
+q6core_probe, so it should stay unknown if it doesn't match any of
+these values. I don't see any big problems here, but I agree that some
+additional handling such as a warning message could be useful.
