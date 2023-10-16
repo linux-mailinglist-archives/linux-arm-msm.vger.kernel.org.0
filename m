@@ -2,136 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F2BF7CB389
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 21:53:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C6497CB3A3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 22:04:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233412AbjJPTxh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Oct 2023 15:53:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32906 "EHLO
+        id S231955AbjJPUE0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Oct 2023 16:04:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233333AbjJPTxh (ORCPT
+        with ESMTP id S233788AbjJPUEZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Oct 2023 15:53:37 -0400
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41D038F;
-        Mon, 16 Oct 2023 12:53:35 -0700 (PDT)
-Received: by mail-pf1-x429.google.com with SMTP id d2e1a72fcca58-6b7f0170d7bso2527234b3a.2;
-        Mon, 16 Oct 2023 12:53:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697486015; x=1698090815; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=+Aw9zCawXUb/8I2OxKfjM/e6GKyR+BjkOIZEQ62H2Zw=;
-        b=c7tgnsvt7Q3YjLOBpGVzi/iW2Ezp6z2oCizvoyPiSnU71FEU0j83JbIeu38Tf1wGFr
-         V9oKf3UVWfAXzrxadmdisyyUTuLHLwCdU3/23juOhQe956z8ki0PHclHjBD8D3XYURQI
-         78ZciA07hrs5me/ddfCXDFhmmHx2eGM8yLECbe7WKvjZ3VI8cptcLoAf2b5Jpm5IsG+7
-         j3swQ0YUdwesL+XqkYZrm9FWO1yE7QU17O3WKAN8D4O0h1iqEbODNhZeNj38ZABMO5/a
-         GO2nOp0hsZSwKK3QXLCPnjsIsM6AcLPDYcTmqX0uruCgqi3SnFciWz2w7ZQaPWOw0Xgu
-         TX+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697486015; x=1698090815;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+Aw9zCawXUb/8I2OxKfjM/e6GKyR+BjkOIZEQ62H2Zw=;
-        b=dahy8KlyYDmzm/TTu8haK+4vacDyrEQAamOQkL5Tsv2a2sJj7CsgK6dLnj977K32VO
-         fv+kxE5YxD/ZUSbnBnE6pA0AOhx8kwp/71C4qzwXj7GAi6HFBz6dcI2STdq7Gq8tRwLd
-         UpZa/ZrNi5Ci/mV64ZVKDXOgMX3yQTpaKX4afhmkDb4f0evY72jwSbMBQBRm8TjzUcma
-         Q1EK8Lozd+nELFElQfe0u9S0N/Hvhfj1TcIbE/HayMM/ojgBJ9OC9yyAKKcrGgN842eL
-         S+dwpDpwjeVH6hOP364USRBHMY0RmO9xLi4hVTRWk7QEMatzE6kqooCUag3GW6O06Pef
-         nC/w==
-X-Gm-Message-State: AOJu0Ywc2CUDX1OPlkplZYRvLyrlIszbfL1KwMALGrSTGEf5HlSYpvPU
-        2pmi8q/3aAVCnRquVzwJZC5AThkUfRAv4qSkF+79H6Z1CXE=
-X-Google-Smtp-Source: AGHT+IEQOEZXdolJNp1JITV8/L9l/6LP67wZMyacV/ckwildAEdj1yGHe4CN91DLgyD7Ws2aOy1t252iVGeg8QtSGT8=
-X-Received: by 2002:a05:6a20:441b:b0:15e:d84:1c5e with SMTP id
- ce27-20020a056a20441b00b0015e0d841c5emr41050pzb.38.1697486014585; Mon, 16 Oct
- 2023 12:53:34 -0700 (PDT)
+        Mon, 16 Oct 2023 16:04:25 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F5CB83;
+        Mon, 16 Oct 2023 13:04:24 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76274C433C7;
+        Mon, 16 Oct 2023 20:04:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1697486664;
+        bh=LicEPcKoL9Sru0ZtpvzVU3YUUcuxZ6s7vspnx7TkER4=;
+        h=From:To:Cc:Subject:Date:From;
+        b=NF3cSB3najqsbPo3qib9+Dzj+MAvqLUUgu9V+CzC61e/PcC/3U8wuBF+GWcuNlajs
+         9PjV3EQnpMyo7CnVqq+v3ODtP8TTKE9CRBmXL5kvpIXalUTeT2UuUTIHPWM8IWXCM7
+         wpRkICK80B8j51mS3KMD2R/hsBQ2LoaBMEBFnE32fbJ5l3DOvJm/qxVqJMGXFUCy2W
+         UOgVv6nBwGvaTP4yA/h6hvSC+bg37y5ofArWrp75AYj0tDVeT+N/WdFNS0dPgqLVLC
+         TBbuYYR6lNGcw95F+epv8LeK9MXgh7bMTweBSxqzd9Ix6379AeQN9e163/BkVcuxf7
+         nymLpxS0Ju75A==
+From:   Arnd Bergmann <arnd@kernel.org>
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Arnd Bergmann <arnd@arndb.de>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/msm/a6xx: add QMP dependency
+Date:   Mon, 16 Oct 2023 22:04:03 +0200
+Message-Id: <20231016200415.791090-1-arnd@kernel.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-References: <20231004191303.331055-1-robimarko@gmail.com> <jxvpt2xo3fc2k7kflfsdov6uxpjpgqpomgmfvfgxwytejvkcgu@xwnfrg7be6qi>
-In-Reply-To: <jxvpt2xo3fc2k7kflfsdov6uxpjpgqpomgmfvfgxwytejvkcgu@xwnfrg7be6qi>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Mon, 16 Oct 2023 21:53:23 +0200
-Message-ID: <CAOX2RU6KfMeJRFKdo_Kmb2OxZ12TrB+mARo_1uLJB8JuFsv_3w@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: ipq5018: add QUP1 SPI controller
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     agross@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 16 Oct 2023 at 20:54, Bjorn Andersson <andersson@kernel.org> wrote:
->
-> On Wed, Oct 04, 2023 at 09:12:30PM +0200, Robert Marko wrote:
-> > Add the required BAM and QUP nodes for the QUP1 SPI controller on IPQ5018.
-> >
-> > Signed-off-by: Robert Marko <robimarko@gmail.com>
->
-> I padded the spi node to 8 digits, and applied the patch.
+From: Arnd Bergmann <arnd@arndb.de>
 
-Thank you for this, it was in my TODO but that is quite long.
+When QMP is in a loadable module, the A6xx GPU driver fails to link
+as built-in:
 
-Regards,
-Robert
->
-> Thanks,
-> Bjorn
->
-> > ---
-> >  arch/arm64/boot/dts/qcom/ipq5018.dtsi | 24 ++++++++++++++++++++++++
-> >  1 file changed, 24 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> > index 38ffdc3cbdcd..484034e65f4f 100644
-> > --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> > @@ -146,6 +146,16 @@ sdhc_1: mmc@7804000 {
-> >                       status = "disabled";
-> >               };
-> >
-> > +             blsp_dma: dma-controller@7884000 {
-> > +                     compatible = "qcom,bam-v1.7.0";
-> > +                     reg = <0x07884000 0x1d000>;
-> > +                     interrupts = <GIC_SPI 238 IRQ_TYPE_LEVEL_HIGH>;
-> > +                     clocks = <&gcc GCC_BLSP1_AHB_CLK>;
-> > +                     clock-names = "bam_clk";
-> > +                     #dma-cells = <1>;
-> > +                     qcom,ee = <0>;
-> > +             };
-> > +
-> >               blsp1_uart1: serial@78af000 {
-> >                       compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
-> >                       reg = <0x078af000 0x200>;
-> > @@ -156,6 +166,20 @@ blsp1_uart1: serial@78af000 {
-> >                       status = "disabled";
-> >               };
-> >
-> > +             blsp1_spi1: spi@78b5000 {
-> > +                     compatible = "qcom,spi-qup-v2.2.1";
-> > +                     #address-cells = <1>;
-> > +                     #size-cells = <0>;
-> > +                     reg = <0x78b5000 0x600>;
-> > +                     interrupts = <GIC_SPI 95 IRQ_TYPE_LEVEL_HIGH>;
-> > +                     clocks = <&gcc GCC_BLSP1_QUP1_SPI_APPS_CLK>,
-> > +                              <&gcc GCC_BLSP1_AHB_CLK>;
-> > +                     clock-names = "core", "iface";
-> > +                     dmas = <&blsp_dma 4>, <&blsp_dma 5>;
-> > +                     dma-names = "tx", "rx";
-> > +                     status = "disabled";
-> > +             };
-> > +
-> >               intc: interrupt-controller@b000000 {
-> >                       compatible = "qcom,msm-qgic2";
-> >                       reg = <0x0b000000 0x1000>,  /* GICD */
-> > --
-> > 2.41.0
-> >
+x86_64-linux-ld: drivers/gpu/drm/msm/adreno/a6xx_gmu.o: in function `a6xx_gmu_resume':
+a6xx_gmu.c:(.text+0xd62): undefined reference to `qmp_send'
+
+Add the usual dependency that still allows compiling without QMP but
+otherwise avoids the broken combination of options.
+
+Fixes: 88a0997f2f949 ("drm/msm/a6xx: Send ACD state to QMP at GMU resume")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+---
+ drivers/gpu/drm/msm/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
+index 6309a857ca312..ad70b611b44f0 100644
+--- a/drivers/gpu/drm/msm/Kconfig
++++ b/drivers/gpu/drm/msm/Kconfig
+@@ -6,6 +6,7 @@ config DRM_MSM
+ 	depends on ARCH_QCOM || SOC_IMX5 || COMPILE_TEST
+ 	depends on COMMON_CLK
+ 	depends on IOMMU_SUPPORT
++	depends on QCOM_AOSS_QMP || QCOM_AOSS_QMP=n
+ 	depends on QCOM_OCMEM || QCOM_OCMEM=n
+ 	depends on QCOM_LLCC || QCOM_LLCC=n
+ 	depends on QCOM_COMMAND_DB || QCOM_COMMAND_DB=n
+-- 
+2.39.2
+
