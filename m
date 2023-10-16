@@ -2,128 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 38A8E7CA1EE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 10:43:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ECAB27CA1FF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 10:44:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231796AbjJPInd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Oct 2023 04:43:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47552 "EHLO
+        id S232545AbjJPIoK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Oct 2023 04:44:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231795AbjJPInc (ORCPT
+        with ESMTP id S230413AbjJPIoJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Oct 2023 04:43:32 -0400
-Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98B5DE5;
-        Mon, 16 Oct 2023 01:43:30 -0700 (PDT)
-Received: by mail-il1-x133.google.com with SMTP id e9e14a558f8ab-352a1a0348fso17024435ab.1;
-        Mon, 16 Oct 2023 01:43:30 -0700 (PDT)
+        Mon, 16 Oct 2023 04:44:09 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E189BA1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Oct 2023 01:44:04 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-53e70b0a218so2714071a12.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Oct 2023 01:44:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697445810; x=1698050610; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=xQUA2kVIK9BvRQHq7INiXTqvFwcbvDawTtrHlGAf8Qg=;
-        b=lluTCjb2rbEV6RYhlHcRWXWJ9bdawhTL1SYsrbe4RjEesZRLtjgLEkcvDwSuwJ4n8P
-         7gpVxSEP/SBJZFt9u9HTi/Bi7EYZDxd/JJa/jWTOULz2ympIwermojD3KEHchXwOIcEJ
-         w9CTpb1grgGgnfcmgWQ2vYEgxEyTmgAAHrSTyvZR6SZNpEPywYc8Pc1B+aZv579NIPjA
-         yBCiSyW77P7YtbPKwGfPLz9HSFa2Zq34E6DG0ojmNL4pMxTiGHoCNQLlfpP8npyYCLrV
-         V+AEmw1zCFns45xx5/zOtWHLyJLzFXF/EC59TXJbuf7GL9+oGCBR1+8lxU22aufIoMO/
-         oPvg==
+        d=linaro.org; s=google; t=1697445843; x=1698050643; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=g6dRIr7OBjT8dKVceu+0z45PUl9k0elfoXVmV3iWMc0=;
+        b=EgrnO3QIC49K8jiVpylqVIiAcQ3jhzjaVlV6Cpb7S/taAsMordc8/uHMCwLAEf3znJ
+         YQAygBiFgB2KF9/C02bQttoTePOuzU+1DKbl/AkkOcxlJhh5SsScNrl8cxxrSKhw9ycJ
+         1OfKWAkwRqgc/+eLVwOJ2liEm64Uk/p1tn9EpIkKFV9Rnmob0NuVOnyKTpl4p8a8F7Q6
+         IsOApc7WedDjk/HcYDOBEXWo/ewdMfJaC99KzBRBoQ58Op3jKXI24WtUyYhFKFRCMd1O
+         EevAaIiCIHTMeZkQTsasNSh4MSKi2O72k67BtEQM2VVKwnCHe7AJYVNsZYcprhtQbxdU
+         XABQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697445810; x=1698050610;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1697445843; x=1698050643;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=xQUA2kVIK9BvRQHq7INiXTqvFwcbvDawTtrHlGAf8Qg=;
-        b=SwPy8RC+KmaMEqxkMaFhV20TQFjyp0Lfj97Xoia9QCpiiffOE3ZUHOonf1sTBBuYgg
-         HwjNk4ErZHpDJvA+avvxL4NGhDQJtZttalfTvUETGB1j6h3UDSwQWomtsEij03fAbArT
-         mRY7M3p7Tlc1lZDPqUUVna1HxvnZaSQapmtxSaYn33tvggjez0YjBsfwnRWo4hlAgrv7
-         5gSEPhDxDBKq+ee34CruM0ZIpFAgTIf7h8UbOW1eL/GbyXbtJ8AxDrUtkvU34urmbDBl
-         24PMAHqEo30gI8R35J5kttYgnaJjTlogPofBBEvFG9XwrT16YLkxC1IRkRu1e7ff3yqu
-         1DNA==
-X-Gm-Message-State: AOJu0YwNDa/9Jpi8fABKMKlW/FaxxsjMPKeDL0iFAHqDyUZU6BJGSz/A
-        zuRZWIFvAPNXPQMLPftg+syKi7fACuiXjD9qXHpuWnAB
-X-Google-Smtp-Source: AGHT+IGjLW7nb/ZlLwueRbrLE5qmdQxF+5HSgLfPcrsUVd2ctUvRcr8GmZwJlf4irl2Il4qJjf51CpdWBGi6yVKnO3c=
-X-Received: by 2002:a92:c54d:0:b0:352:8b80:4744 with SMTP id
- a13-20020a92c54d000000b003528b804744mr39881115ilj.4.1697445809913; Mon, 16
- Oct 2023 01:43:29 -0700 (PDT)
+        bh=g6dRIr7OBjT8dKVceu+0z45PUl9k0elfoXVmV3iWMc0=;
+        b=G2AdOw50Lw7MVQZuXhwG2+9vIeHg5tG+VfYA1Or7o7pyXsQlgXE2Pd1Z0UMOWvmiRO
+         XaaqmU95FUCXVtqO3brIsajGIT5Ue5BWwhKccC78ZlbudYjraNhrzQ9x22cyV1XcfSFT
+         25DbyrWUmkBkdJiyG10YdynLHe0+00eZtQ+zdhJ45EYGzMfA+1yCQEsWbxWbJpZvGnUE
+         ea9mgD4k/8PDL7etG5LPD0QM5pVT6l6Dh3HgwJx6i/2AdaMo8KhmUpkkPqhvEER2+9G0
+         nHPAHQF23adDxeQgsgzjWXWKbTnETRL/ha5UbNc2fDjs1QRJOwxcEhtyGNZNxAosDZW9
+         VLfg==
+X-Gm-Message-State: AOJu0Yxge6im1wg0ows5MYU8MYJnBGzjx8R/h/5E8yiDweNhZM15XuyK
+        LosRz/n5E8cnLjt/c1yOKb3LkU62FH3VizS2vpKXpqgf
+X-Google-Smtp-Source: AGHT+IE7QxRS5JEN3oMPpnmVmDGJPtO59JOddu2/BNlZxz2blgyWTl7CmodjcX7f1Qg4p9uzjihOcg==
+X-Received: by 2002:a50:c351:0:b0:53e:1434:25c2 with SMTP id q17-20020a50c351000000b0053e143425c2mr8735683edb.6.1697445843394;
+        Mon, 16 Oct 2023 01:44:03 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (i68975BB5.versanet.de. [104.151.91.181])
+        by smtp.gmail.com with ESMTPSA id l18-20020a056402029200b0053443c8fd90sm15021814edv.24.2023.10.16.01.44.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Oct 2023 01:44:02 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Jagadeesh Kona <quic_jkona@quicinc.com>
+Subject: [PATCH 1/2] clk: qcom: gpucc-sm8550: switch to clk_lucid_ole_pll_configure
+Date:   Mon, 16 Oct 2023 11:43:55 +0300
+Message-ID: <20231016084356.1301854-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
-References: <20231013172033.3549476-1-robimarko@gmail.com> <20231016033202.i54nequofzea6mfd@vireshk-i7>
- <20231016082239.2onlrqp4bpcgxhbt@vireshk-i7> <CAOX2RU5paPXyG-1Fbp+T9+Aycwno9DQ8ugMwUr_8iNhhc3HiHA@mail.gmail.com>
- <CAA8EJpq9=dtemYLCeL8=+q1x_i8Gp2duMSAo90ZttgaejBXCdg@mail.gmail.com>
-In-Reply-To: <CAA8EJpq9=dtemYLCeL8=+q1x_i8Gp2duMSAo90ZttgaejBXCdg@mail.gmail.com>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Mon, 16 Oct 2023 10:43:18 +0200
-Message-ID: <CAOX2RU6K7h8Xc0SGK2CeOCaAaimKRf9eqhMYAaySXxQLZiUNtg@mail.gmail.com>
-Subject: Re: [PATCH v6] cpufreq: qcom-nvmem: add support for IPQ8074
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Viresh Kumar <viresh.kumar@linaro.org>, rafael@kernel.org,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        ilia.lin@kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 16 Oct 2023 at 10:36, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Mon, 16 Oct 2023 at 11:29, Robert Marko <robimarko@gmail.com> wrote:
-> >
-> > On Mon, 16 Oct 2023 at 10:22, Viresh Kumar <viresh.kumar@linaro.org> wrote:
-> > >
-> > > On 16-10-23, 09:02, Viresh Kumar wrote:
-> > > > On 13-10-23, 19:20, Robert Marko wrote:
-> > > > > IPQ8074 comes in 3 families:
-> > > > > * IPQ8070A/IPQ8071A (Acorn) up to 1.4GHz
-> > > > > * IPQ8172/IPQ8173/IPQ8174 (Oak) up to 1.4GHz
-> > > > > * IPQ8072A/IPQ8074A/IPQ8076A/IPQ8078A (Hawkeye) up to 2.2GHz
-> > > > >
-> > > > > So, in order to be able to share one OPP table lets add support for IPQ8074
-> > > > > family based of SMEM SoC ID-s as speedbin fuse is always 0 on IPQ8074.
-> > > > >
-> > > > > IPQ8074 compatible is blacklisted from DT platdev as the cpufreq device
-> > > > > will get created by NVMEM CPUFreq driver.
-> > > > >
-> > > > > Signed-off-by: Robert Marko <robimarko@gmail.com>
-> > > > > Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > > > > ---
-> > > > > Changes in v6:
-> > > > > * Split IPQ8074 from the IPQ8064 as IPQ8064 has additional dependencies.
-> > > >
-> > > > Applied. Thanks.
-> > >
-> > > And it failed to build, please fix it. Dropped from my tree now.
-> >
-> > I am looking at the error and it should not happen as the ID-s have
-> > been in linux-next for a month now:
-> > https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/include/dt-bindings/arm/qcom,ids.h?h=next-20231016&id=b8c889bef9797a58b8b5aad23875cc4d04b3efd3
-> >
-> > They are also part of Bjorns 6.7 driver PR:
-> > https://lore.kernel.org/all/20231015204014.855672-1-andersson@kernel.org/T/
->
-> But Bjorn's tree isn't a part of the cpufreq tree. In such cases it is
-> typical to ask first maintainer to create an immutable branch / tag,
-> which can later be also merged into another tree without going into
-> troubles of merging the whole tree of the irrelevant subsystem.
+Instead of manually specifying the RINGOSC_CAL_L and CAL_L values in the
+alpha_pll_config.l field, use the proper clk_lucid_ole_pll_configure()
+function to configure the PLL.
 
-Ok, I understand now, the thing is that the ID-s were added for
-socinfo initially but recently
-I finally had somebody with access to the Oak HW so I added them to
-cpufreq as well.
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/clk/qcom/gpucc-sm8550.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-What can I do to help this get resolved?
+diff --git a/drivers/clk/qcom/gpucc-sm8550.c b/drivers/clk/qcom/gpucc-sm8550.c
+index 775e0b931923..420dcb27b47d 100644
+--- a/drivers/clk/qcom/gpucc-sm8550.c
++++ b/drivers/clk/qcom/gpucc-sm8550.c
+@@ -39,8 +39,7 @@ static const struct pll_vco lucid_ole_vco[] = {
+ };
+ 
+ static const struct alpha_pll_config gpu_cc_pll0_config = {
+-	/* .l includes RINGOSC_CAL_L_VAL, CAL_L_VAL, L_VAL fields */
+-	.l = 0x4444000d,
++	.l = 0x0d,
+ 	.alpha = 0x0,
+ 	.config_ctl_val = 0x20485699,
+ 	.config_ctl_hi_val = 0x00182261,
+@@ -71,8 +70,7 @@ static struct clk_alpha_pll gpu_cc_pll0 = {
+ };
+ 
+ static const struct alpha_pll_config gpu_cc_pll1_config = {
+-	/* .l includes RINGOSC_CAL_L_VAL, CAL_L_VAL, L_VAL fields */
+-	.l = 0x44440016,
++	.l = 0x16,
+ 	.alpha = 0xeaaa,
+ 	.config_ctl_val = 0x20485699,
+ 	.config_ctl_hi_val = 0x00182261,
+@@ -574,8 +572,8 @@ static int gpu_cc_sm8550_probe(struct platform_device *pdev)
+ 	if (IS_ERR(regmap))
+ 		return PTR_ERR(regmap);
+ 
+-	clk_lucid_evo_pll_configure(&gpu_cc_pll0, regmap, &gpu_cc_pll0_config);
+-	clk_lucid_evo_pll_configure(&gpu_cc_pll1, regmap, &gpu_cc_pll1_config);
++	clk_lucid_ole_pll_configure(&gpu_cc_pll0, regmap, &gpu_cc_pll0_config);
++	clk_lucid_ole_pll_configure(&gpu_cc_pll1, regmap, &gpu_cc_pll1_config);
+ 
+ 	/*
+ 	 * Keep clocks always enabled:
+-- 
+2.42.0
 
-Regards,
-Robert
->
->
-> --
-> With best wishes
-> Dmitry
