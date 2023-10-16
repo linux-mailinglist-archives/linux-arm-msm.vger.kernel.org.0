@@ -2,164 +2,331 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E9A797CABCD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 16:45:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E1D767CABFF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 16:48:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232003AbjJPOpF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Oct 2023 10:45:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51234 "EHLO
+        id S233580AbjJPOse (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Oct 2023 10:48:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbjJPOpF (ORCPT
+        with ESMTP id S233528AbjJPOsd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Oct 2023 10:45:05 -0400
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.84])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 571D8AB;
-        Mon, 16 Oct 2023 07:45:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1697467480; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=VQJg1RsTctPWMnunyunfLHy2rLs7zNB/CNL3uh76kEa1fZsXzKvAIpoB8tkgfT2RNu
-    2rKoWE5OPZRMM+BCSsYTpW6khc3tI1nH5N/1qJvDzfiYK5GlaTi3KbQDrkyeKDVWVMet
-    1A1bt/1meFjCYzuxWdYQsfyFAp9nQzs0T0qZM/x0FXBuhDfVWajh7E4FKGpP9uMECv4W
-    pH58fRwShTyIYR2EyKDqYwcy2HpGDlymYkPPDw1nmu2fhIAsnjXpQGKzZKO94ZNvNJKO
-    fhFeTMVj1meRxgiTyIgbwlDTjaiOswOuukT4Wc/XkYJFpqDhiQrrmpvh4S/2EAVFvBfv
-    REow==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1697467480;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=xX5hBwIyyt+mobzNXbEEyEPguKjaJlDcotBwI7v0tiw=;
-    b=n+Mfk6c1CeBShSjZ88173Z2R7ZIK1RjEdPw3nYDGYcW1wK28Gt5wqklMEffbVD8iV6
-    vkvS7zxhGbuoPoAMPbESIGocsGxi+axSxo35rbLCka5+DEJFF18Xd+u0t6QCLVkZvrrP
-    gcwp26JgNliUepXjbaDE8CEUI+8yF6e+sZ7c140P8ZvM5ztoWB5t6qma0hERztyvDMHR
-    0tdEUBIP/RCR/hx2iOYUnNFGWWSMGx+FAbyNvbmvOrK6kjGrHx7DI4yjdIbWBqxcLq/x
-    JpWL4ayjasaa4YLb1lIcnpJ2VFYTBRrMxtFsGtcA3ENaBTcGij1fb4H9Iv60gY0JgjLM
-    ic7A==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo02
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1697467480;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=xX5hBwIyyt+mobzNXbEEyEPguKjaJlDcotBwI7v0tiw=;
-    b=G+2o7R0QMJJBT+YXg8vDQQQxGzsXPhWuM22xgxnzxP2fhmYCupPM4yKQPOdo0U5/Up
-    MhRXevKhGuT76C/ItYHomUyvnv9EWLUe2MK3Bj4kJ4xWCzRV0H0w6Z6iXXMUokyHGaHQ
-    w0GLCb15rSUmK6bQ8BG9LeDYy3dv+ftDmBdLsz/sQ/9hxS9yMKJiVvLbS5u6Al4ttAkf
-    nuZsNP0hcx2KQjItQL7vm763usWbbpKa8F/hoIIjRr5nbDk65f/vR8OMz5Hrb6T1Eiu8
-    QMp+UHCm8n1iy0tPNJvRI4UlQKaXhMwwt5HEjoqtPCQqw/oIvP0NOYLotbfj9+ZdK0AB
-    I8yg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1697467480;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=xX5hBwIyyt+mobzNXbEEyEPguKjaJlDcotBwI7v0tiw=;
-    b=69+eKkTf5LWsB5y5p8U21qGYEfe9j1pEpjC8AFafAYiu3jM8pCAKLCE28qCC2LfAbd
-    s/WryFLK3a7YggE0SUCw==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA+p3h"
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.9.0 DYNA|AUTH)
-    with ESMTPSA id j34a49z9GEid25O
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Mon, 16 Oct 2023 16:44:39 +0200 (CEST)
-Date:   Mon, 16 Oct 2023 16:44:28 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     Luca Weiss <luca@z3ntu.xyz>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Mon, 16 Oct 2023 10:48:33 -0400
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C273EE
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Oct 2023 07:48:30 -0700 (PDT)
+Received: by mail-yb1-xb34.google.com with SMTP id 3f1490d57ef6-d857c8a1d50so4598953276.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Oct 2023 07:48:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1697467710; x=1698072510; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=GxypX+GEfUXKbSOzwP0/C/E3Z4J92Eo/3dLzh/Ra8sE=;
+        b=MDcKJvjoXcB8n0XH+nX/HCQCvKEIcbKdUTyyPGZPqWQYYWTu7wkVAU2/7pEPcqs3Nc
+         KvqnTXDtFs+UnWTNce8o1MU6XVPrs1QvyhJ/T2yttZwblBLVXgce3l0RSeWmlM3d4lRm
+         jyUle3M7pw8GXjpZTJQWRIJ6FZx95OPf3kYCrbNM92KeZQOAM3zhlwBUuHJFAJOh+/sr
+         jT7uA9ZxTVP8Jm03/XqJr7X6H0hOu6WkpTOTfh429GbPI/qMaJCsO0M/sSbVBbZBts8l
+         G8pnLnpPP/7nrxWqPZwxEIWq5jmiM7UBK6ZEdmnfWP3dCBjVX1uKvqiD2vJ78FRffZrS
+         UKqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697467710; x=1698072510;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GxypX+GEfUXKbSOzwP0/C/E3Z4J92Eo/3dLzh/Ra8sE=;
+        b=Csd91RnZUMtZJkY8/S6BSYmAdXEpGrQ2EXT6TTYc8QJiz0JMpq+EuRPYfmf9ZqDMLo
+         7sOTgjQr/PqdksNbCElS+N32vRKde3grIct6ttET/TCGZg0XxH2AYqxuIooAFMfT9n+C
+         4J4kSrBiL2py/pwpR+TKs0z8+KNZSJeyX2pB3aCtwgASpXGtYHrzNoeeG6ZhEj70exiD
+         sM2ILWmjM7N9NssIXdAUauFW+9QVn4YVP7TkfYUS2TYjEnVb5FXAQ4q2WAs+bgcWZKhn
+         1JXq8w5KUXF0tIZzxq0noxX3/kyhoNtoorROXOAf9GnCpiEW68T/k9Jlc5FvJ5vEdiS2
+         YuUQ==
+X-Gm-Message-State: AOJu0YzsZSH5/b2YVHPb+WMcuG5/nnWuiEP+CJhhY8P6rudOa/5tyqBB
+        FykTTKBIXqcq+cSXztMwAzJUxX8pbdwMQB2bnInASQ==
+X-Google-Smtp-Source: AGHT+IFydC4JiwFHumykEit+4bc15qpX+YfvV1l4iiaVG8PNsPGn4dovyuswKlpyIeP4zBTlngKF3aJXGed59EMhMvI=
+X-Received: by 2002:a25:2d15:0:b0:d9a:c4df:cd8e with SMTP id
+ t21-20020a252d15000000b00d9ac4dfcd8emr10401524ybt.33.1697467709642; Mon, 16
+ Oct 2023 07:48:29 -0700 (PDT)
+MIME-Version: 1.0
+References: <20230912-msm8909-cpufreq-v1-0-767ce66b544b@kernkonzept.com>
+ <20230912-msm8909-cpufreq-v1-1-767ce66b544b@kernkonzept.com>
+ <CAPDyKFq6U-MR4Bd+GmixYseRECDh142RhydtKbiPd3NHV2g6aw@mail.gmail.com>
+ <ZQGqfMigCFZP_HLA@gerhold.net> <CAPDyKFppdXe1AZo1jm2Bc_ZR18hw5Bmh1x+2P7Obhb_rJ2gc4Q@mail.gmail.com>
+ <ZRcC2IRRv6dtKY65@gerhold.net> <CAPDyKFoiup8KNv=1LFGKDdDLA1pHsdJUgTTWMdgxnikEmReXzg@mail.gmail.com>
+ <ZSg-XtwMxg3_fWxc@gerhold.net>
+In-Reply-To: <ZSg-XtwMxg3_fWxc@gerhold.net>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Mon, 16 Oct 2023 16:47:52 +0200
+Message-ID: <CAPDyKFoH5EOvRRKy-Bgp_B9B3rf=PUKK5N45s5PNgfBi55PaOQ@mail.gmail.com>
+Subject: Re: [PATCH 1/4] cpufreq: qcom-nvmem: Enable virtual power domain devices
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kalle Valo <kvalo@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        wcn36xx@lists.infradead.org, linux-wireless@vger.kernel.org
-Subject: Re: [PATCH 1/4] dt-bindings: remoteproc: qcom: wcnss: Add WCN3680B
- compatible
-Message-ID: <ZS1MTAHq6GLW6RAK@gerhold.net>
-References: <20231015-fp3-wcnss-v1-0-1b311335e931@z3ntu.xyz>
- <20231015-fp3-wcnss-v1-1-1b311335e931@z3ntu.xyz>
- <ffca099a-bf05-4973-885d-b049a45d466f@linaro.org>
- <CAMZdPi-S2_UQO-rD38-thwta-YgH3W78Ecd1Du7Q_US=J7k0ew@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMZdPi-S2_UQO-rD38-thwta-YgH3W78Ecd1Du7Q_US=J7k0ew@mail.gmail.com>
-Content-Transfer-Encoding: 7bit
+        Conor Dooley <conor+dt@kernel.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 16, 2023 at 03:16:14PM +0200, Loic Poulain wrote:
-> On Mon, 16 Oct 2023 at 07:35, Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
-> >
-> > On 15/10/2023 22:03, Luca Weiss wrote:
-> > > Add a compatible for the iris subnode in the WCNSS PIL.
+[...]
+
 > > >
-> > > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> > > ---
-> > >  Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml | 1 +
-> > >  1 file changed, 1 insertion(+)
-> > >
-> > > diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-> > > index 45eb42bd3c2c..0e5e0b7a0610 100644
-> > > --- a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-> > > +++ b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-> > > @@ -111,6 +111,7 @@ properties:
-> > >            - qcom,wcn3660
-> > >            - qcom,wcn3660b
-> > >            - qcom,wcn3680
-> > > +          - qcom,wcn3680b
+> > > Here are the two commits with the my current DT changes (WIP):
+> > >   - MSM8909+PM8909 (RPMPD only):
+> > >     https://github.com/msm8916-mainline/linux/commit/791e0c5a3162372a0738bc7b0f4a5e87247923db
 > >
-> > Looks like this should be made as compatible with qcom,wcn3680 (so with
-> > fallback).
-> 
-> Yes, agree, let's do a regular fallback as there is nothing 'b'
-> specific in the driver:
-> `compatible = "qcom,wcn3680b", "qcom,wcn3680";`
-> 
-> And yes, we should also have done that for qcom,wcn3660b...
-> 
+> > Okay, so this looks pretty straight forward. One thing though, it
+> > looks like we need to update the DT bindings for cpus.
+> >
+> > I recently updated Documentation/devicetree/bindings/arm/cpus.yaml
+> > [1], to let "perf" be the common "power-domain-name" for a CPU's SCMI
+> > performance-domain. I look like we should extend the description to
+> > allow "perf" to be used for all types of performance domains.
+> >
+>
+> "perf" sounds fine for a single power domain, I just used "apc" here for
+> consistency with the MSM8916 changes (which scales this power domain and
+> several others, as you saw).
+>
+> (BTW, I would appreciate such a generic name for the cpuidle case as
+>  well, so "idle" instead of "psci" vs "sbi". I have another WIP cpuidle
+>  driver and didn't want to invent another name there...)
 
-I don't think this would have worked properly for qcom,wcn3660b:
+Whether it's "idle" or "power" or something else, we should certainly
+avoid a provider specific (psci) name, as has been pointed out earlier
+by Rob too.
 
- - It's not compatible with "qcom,wcn3660", because they have different
-   regulator voltage requirements. wcn3660(a?) needs vddpa with
-   2.9-3.0V, but wcn3660b needs 3.3V. That's why wcn3660b uses the
-   wcn3680_data in qcom_wcnss.iris.c. Otherwise if you would run an
-   older kernel that knows "qcom,wcn3660" but not "qcom,wcn3660b" it
-   would apply the wrong voltage.
+I will try to get some time to update the DT docs as soon as I can.
+Unless you get to it first, feel free to do it.
 
- - It's not compatible with "qcom,wcn3680" either because that is used
-   as indication if 802.11ac is supported (wcn3660b doesn't).
+>
+> > >   - MSM8916 (CPR+RPMPD):
+> > >     https://github.com/msm8916-mainline/linux/commit/8880f39108206d7a60a0a8351c0373bddf58657c
+> >
+> > This looks a bit odd to me. Does a CPU really have four different
+> > power-domains, where three of them are performance-domains?
+> >
+>
+> Good question. I think we're largely entering "uncharted territory" with
+> these questions, I can just try to answer it the best I can from the
+> limited documentation and knowledge I have. :)
+>
+> The CPU does indeed use four different power domains. There also seem to
+> be additional power switches that gate power for some components without
+> having to turn off the entire supply.
+>
+> I'll list them twice from two points of view: Once mapping component ->
+> power domain, then again showing each power domain separately to make it
+> more clear. At the end I also want to make clear that MSM8909 (with the
+> "single" power domain) is actually exactly the same SoC design, just
+> with different regulators supplying the power domains.
+>
+> It's totally fine if you just skim over it. I'm listing it in detail
+> also as reference for myself. :D
+>
+> # Components
+>  - SoC
+>    - CPU subsystem ("APPS")
+>      - CPU cluster
+>        - 4x CPU core (logic and L1 cache) -> VDD_APC
+>        - Shared L2 cache
+>          - Logic -> VDD_APC
+>          - Memory -> VDD_MX
+>      - CPU clock controller (logic) -> VDD_CX
+>        - Provides CPU frequency from different clock sources
+>        - L2 cache runs at 1/2 of CPU frequency
+>        => Both VDD_APC and VDD_MX must be scaled based on frequency
+>      - CPU PLL clock source
+>        - Generates the higher (GHz) CPU frequencies
+>        - Logic (?, unsure) -> VDD_CX
+>        - ??? -> VDD_SR2_APPS_PLL
+>        => VDD_CX must be scaled based on PLL frequency
+>
+> # Power Domains
+> ## VDD_APC
+>  - dedicated for CPU
+>  - powered off completely in deepest cluster cpuidle state
+>
+>  - per-core power switch (per-core cpuidle)
+>    - CPU logic
+>    - L1 cache controller/logic and maybe memory(?, unsure)
+>  - shared L2 cache controller/logic
+>
+>  => must be scaled based on CPU frequency
+>
+> ## VDD_MX
+>  - global SoC power domain for "on-chip memories"
+>  - always on, reduced to minimal voltage when entire SoC is idle
+>
+>  - power switch (controlled by deepest cluster cpuidle state?, unsure)
+>    - L2 cache memory
+>
+>  => must be scaled based on L2 frequency (=> 1/2 CPU frequency)
+>
+> ## VDD_CX
+>  - global SoC power domain for "digital logic"
+>  - always on, reduced to minimal voltage when entire SoC is idle
+>  - voting for VDD_CX in the RPM firmware also affects VDD_MX performance
+>    state (firmware implicitly sets VDD_MX >= VDD_CX)
+>
+>  - CPU clock controller logic, CPU PLL logic(?, unsure)
+>
+>  => must be scaled based on CPU PLL frequency
+>
+> ## VDD_SR2_APPS_PLL
+>  - global SoC power domain for CPU clock PLLs
+>  - on MSM8916: always on with constant voltage
+>
+>  => ignored in Linux at the moment
+>
+> # Power Domain Regulators
+> These power domains are literally input pins on the SoC chip. In theory
+> one could connect any suitable regulator to each of those. In practice
+> there are just a couple of standard reference designs that everyone
+> uses:
+>
+> ## MSM8916 (SoC) + PM8916 (PMIC)
+> We need to scale 3 power domains together with cpufreq:
+>
+>  - VDD_APC (CPU logic) = &pm8916_spmi_s2 (via CPR)
+>  - VDD_MX  (L2 memory) = &pm8916_l3 (via RPMPD: MSM8916_VDDMX)
+>  - VDD_CX  (CPU PLL)   = &pm8916_s1 (via RPMPD: MSM8916_VDDCX)
+>
+> ## MSM8909 (SoC) + PM8909 (PMIC)
+> We need to scale 1 power domain together with cpufreq:
+>
+>  - VDD_APC = VDD_CX    = &pm8909_s1 (via RPMPD: MSM8909_VDDCX)
+>    (CPU logic, L2 logic and CPU PLL)
+> (- VDD_MX  (L2 memory) = &pm8909_l3 (RPM firmware enforces VDD_MX >= VDD_CX))
+>
+> There is implicit magic in the RPM firmware here that saves us from
+> scaling VDD_MX. VDD_CX/APC are the same power rail.
+>
+> ## MSM8909 (SoC) + PM8916 (PMIC)
+> When MSM8909 is paired with PM8916 instead of PM8909, the setup is
+> identical to MSM8916+PM8916. We need to scale 3 power domains.
+>
+> > In a way it sounds like an option could be to hook up the cpr to the
+> > rpmpd:s instead (possibly even set it as a child-domains to the
+> > rpmpd:s), assuming that is a better description of the HW, which it
+> > may not be, of course.
+>
+> Hm. It's definitely an option. I must admit I haven't really looked
+> much at child-domains so far, so spontaneously I'm not sure about
+> the implications, for both the abstract hardware description and
+> the implementation.
+>
+> There seems to be indeed some kind of relation between MX <=> CX/APC:
+>
+>  - When voting for CX in the RPM firmware, it will always implicitly
+>    adjust the MX performance state to be MX >= CX.
+>
+>  - When scaling APC up, we must increase MX before APC.
+>  - When scaling APC down, we must decrease MX after APC.
+>  => Clearly MX >= APC. Not in terms of raw voltage, but at least for the
+>     abstract performance state.
+>
+> Is this some kind of parent-child relationship between MX <=> CX and
+> MX <=> APC?
 
-The main question here is: What does the current "qcom,wcn3680"
-compatible actually represent? It's defined with vddpa = 3.3V in the
-driver, which would suggest that:
+Thanks for sharing the above. Yes, to me, it looks like there is a
+parent/child-domain relationship that could be worth describing/using.
 
- 1. It's actually meant to represent WCN3680B, which needs 3.3V vddpa
-    like WCN3660B, or
+>
+> If yes, maybe we could indeed bind MX to the CPR genpd somehow. They use
+> different performance state numbering, so we need some kind of
+> translation. I'm not entirely sure how that would be described.
 
- 2. WCN3680(A?) has different requirements than WCN3660(A?) and also
-    needs 3.3V vddpa. But then what is the difference between
-    WCN3680(A?) and WCN3680B? Is there even a variant without ...B?
+Both the power-domain and the required-opps DT bindings
+(Documentation/devicetree/bindings/opp/opp-v2-base.yaml) are already
+allowing us to describe these kinds of hierarchical
+dependencies/layouts.
 
-There is public documentation for WCN3660B and WCN3680B but the non-B
-variants are shrouded in mystery.
+In other words, to scale performance for a child domain, the child may
+rely on that we scale performance for the parent domain too. This is
+already supported by genpd and through the opp library - so it should
+just work. :-)
 
-Thanks,
-Stephan
+>
+> Scaling VDD_CX for the PLL is more complicated. APC <=> CX feel more
+> like siblings, so I don't think it makes sense to vote for CX as part of
+> the CPR genpd. Spontaneously I would argue scaling CX belongs into the
+> CPU PLL driver (since that's what the vote is for). However, for some
+> reason it was decided to handle such votes on the consumer side (here =
+> cpufreq) on mainline [1].
+>
+> [1]: https://lore.kernel.org/linux-arm-msm/20200910162610.GA7008@gerhold.net/
+
+Right. I assume the above works just fine, so probably best to stick
+to that for this case too.
+
+[...]
+
+> >
+> > *) The approach you have taken in the $subject patch with the call to
+> > pm_runtime_resume_and_get() works as a fix for QCS404, as there is
+> > only the CPR to attach to. The problem with it, is that it doesn't
+> > work for cases where the RPMPD is used for performance scaling, either
+> > separate or in combination with the CPR. It would keep the rpmpd:s
+> > powered-on, which would be wrong. In regards to the
+> > dev_pm_syscore_device() thingy, this should not be needed, as long as
+> > we keep the vdd-apc-supply enabled, right?
+> >
+> > **) A more generic solution, that would work for all cases (even
+> > when/if hooking up the CPR to the rpmpd:s), consists of tweaking genpd
+> > to avoid "caching" performance states for these kinds of devices. And
+> > again, I don't see that we need dev_pm_syscore_device(), assuming we
+> > manage the vdd-apc-supply correctly.
+> >
+> > Did I miss anything?
+> >
+>
+> We do need to keep the CPU-related RPMPDs always-on too.
+>
+> Keeping the CPU-related RPMPDs always-on is a bit counter-intuitive, but
+> it's because of this:
+>
+> > > > >  - RPMPD: This is the generic driver for all the SoC power domains
+> > > > >    managed by the RPM firmware. It's not CPU-specific. However, as
+> > > > >    special feature each power domain is exposed twice in Linux, e.g.
+> > > > >    "MSM8909_VDDCX" and "MSM8909_VDDCX_AO". The _AO ("active-only")
+> > > > >    variant tells the RPM firmware that the performance/enable vote only
+> > > > >    applies when the CPU is active (not in deep cpuidle state).
+>
+> The CPU only uses the "_AO"/active-only variants in RPMPD. Keeping these
+> always-on effectively means "keep the power domain on as long as the CPU
+> is active".
+>
+> I hope that clears up some of the confusion. :)
+
+Yes, it does, thanks! Is the below the correct conclusion for how we
+could move forward then?
+
+*) The pm_runtime_resume_and_get() works for QCS404 as a fix. It also
+works fine when there is only one RPMPD that manages the performance
+scaling.
+
+**) In cases where we have multiple PM domains to scale performance
+for, using pm_runtime_resume_and_get() would work fine too. Possibly
+we want to use device_link_add() to set up suppliers, to avoid calling
+pm_runtime_resume_and_get() for each and every device.
+
+***) Due to the above, we don't need a new mechanism to avoid
+"caching" performance states for genpd. At least for the time being.
+
+Kind regards
+Uffe
