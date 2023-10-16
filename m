@@ -2,74 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E5A37C9FFF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 08:56:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D9A1F7CA00D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 09:03:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230257AbjJPG4h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Oct 2023 02:56:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51190 "EHLO
+        id S229639AbjJPHDS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Oct 2023 03:03:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229523AbjJPG4g (ORCPT
+        with ESMTP id S229590AbjJPHDR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Oct 2023 02:56:36 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA50B97
-        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Oct 2023 23:56:34 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-533d31a8523so6947999a12.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Oct 2023 23:56:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1697439393; x=1698044193; darn=vger.kernel.org;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mIKLA6FpZ/tBtyGW8aEqqSCm4XNwQ5xgOuHWuH9vZ2k=;
-        b=dgRfnslNP51vNXEBXGgtzViY1hDiPbXcKH64h7XpGd2FwvdfiieKiXj2Un7gGdAqaS
-         vkf+PE4FVGGosfPy5hch0EvkIlg3kyiDxEJGXGcELmoVjLGT1hQECaV3S7l7EqPs7zOm
-         WcDN2Sp5JxEOVuNkGPGs6EKj36ZvUwwzl7Bsh1qMMPrNhmakFTa882lmPmFSiRYK340y
-         45GsM8AeebGFyl9Jduy876Nsox2zOZvTRAomequZ49LdZxyErIrbbxlndnUlN5h/gAfU
-         rZoyD3vRjFlJNJtFFxDyeLMF2BamnuReJ7LskSGhVLkIRx52MuxyUC6EIA6QTUy0NAzh
-         5csA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697439393; x=1698044193;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=mIKLA6FpZ/tBtyGW8aEqqSCm4XNwQ5xgOuHWuH9vZ2k=;
-        b=MmR/bGFfcuLF8NKfvEKIs+qalFWVTLG2VF+DqgDcigJbOMUs8Jff4eBDKCLLyaVNPK
-         8+RDv9IA2axJEqKjExk+8xTJ60rtzoNBxtq1FAgQM2atWQyip1YYb6yaq2w0aT7u4f1n
-         a7yiV3GxB/MGuJ8uQfmZPkqf1fewCCp2mB+9+RMFkB9qx1Jczym+lD8fjEm01fNEhtiG
-         Y9lAK6lO6qPrwyC29ouQ8nCOeg28fybarHL8+UlA/hHqc2E0OPH1l8eezA+Yjp0YM99F
-         mEK0/DrYKUDqvcKaBOdQgd5CRu1VTVsyQwi14NIJLkEJ3lqNxIUsfxuP3eVbi/KxP+hm
-         IELA==
-X-Gm-Message-State: AOJu0YzJVWmw2yBg1PjRMx1D2R03sZogngPxMz0jWP8E/voaspYdrT/x
-        /U11xjAU2cjhLYyGzqM0b3K4Xg==
-X-Google-Smtp-Source: AGHT+IEso5kuLZbg9p8FT8lVYXeK62hYjaBJ2yzw2VF1TjF8zIDcesabpryDe3mRe4T/YBqRFzY95Q==
-X-Received: by 2002:a17:907:3da5:b0:9bd:d961:ddea with SMTP id he37-20020a1709073da500b009bdd961ddeamr6901803ejc.45.1697439393118;
-        Sun, 15 Oct 2023 23:56:33 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id e3-20020a1709062c0300b0099bcf1c07c6sm3389234ejh.138.2023.10.15.23.56.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 15 Oct 2023 23:56:32 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Mon, 16 Oct 2023 08:56:31 +0200
-Message-Id: <CW9O1NB1NZHP.34BW2ZGP1WV8C@fairphone.com>
-Subject: Re: [PATCH] soc: qcom: pmic_glink_altmode: Print error when retimer
- setup fails
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Bjorn Andersson" <andersson@kernel.org>
-Cc:     "Andy Gross" <agross@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-X-Mailer: aerc 0.15.2
-References: <20231013-glink-altmode-ret-v1-1-77941537a35b@fairphone.com>
- <6fw7eho6rapvlghujche4k3pm5mx7a7ojx6yyyreq6dhzjfwlt@ggqoxgirpcnr>
-In-Reply-To: <6fw7eho6rapvlghujche4k3pm5mx7a7ojx6yyyreq6dhzjfwlt@ggqoxgirpcnr>
+        Mon, 16 Oct 2023 03:03:17 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3D9297;
+        Mon, 16 Oct 2023 00:03:15 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39G6H59K028812;
+        Mon, 16 Oct 2023 07:03:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=17sxN1p7rORK+aDYPpUNLI9nkqxS5BmjqXxXbni6Ke4=;
+ b=pkKpausmx3Qh6II+766RwgsTw7pfGUSLaGPYu0m2A6c/xJa4xGRyhASCX1PHERVRuYDd
+ orRPQIXpr2EgDUTurfFBK4F9kgqJuDiWyxDZ0sWUC2xhRjgLgxlF8OFCra+IZO1TQ0X1
+ CuEI9/Mkgj7JmNU+cf7VlJu9ab06pVFcVcss7ljs4i4sVMzcCG4F26d0VOhbF3Kc5p6K
+ UOYlzgFIEFBBpUdvXt14+eZX69nOHfrQKhgZ9xz5L1CiKYREu+gHEEv1/ErDyqlmRAqB
+ hGvAzpHHPuKYxuVAChe+6uYYD3yIgcuPlD94rcWpsT2lw2tuzpgHsSUKuLslvAoWUbxd 2g== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tqkrpbd87-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 16 Oct 2023 07:03:06 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39G736kW004835
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 16 Oct 2023 07:03:06 GMT
+Received: from varda-linux.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.36; Mon, 16 Oct 2023 00:03:00 -0700
+Date:   Mon, 16 Oct 2023 12:32:56 +0530
+From:   Varadarajan Narayanan <quic_varada@quicinc.com>
+To:     Stephen Boyd <sboyd@kernel.org>
+CC:     <agross@kernel.org>, <andersson@kernel.org>, <conor+dt@kernel.org>,
+        <devicetree@vger.kernel.org>, <ilia.lin@kernel.org>,
+        <konrad.dybcio@linaro.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <mturquette@baylibre.com>, <quic_kathirav@quicinc.com>,
+        <rafael@kernel.org>, <robh+dt@kernel.org>,
+        <viresh.kumar@linaro.org>
+Subject: Re: [PATCH v2 1/8] clk: qcom: clk-alpha-pll: introduce stromer plus
+ ops
+Message-ID: <20231016070256.GA24128@varda-linux.qualcomm.com>
+References: <cover.1697101543.git.quic_varada@quicinc.com>
+ <8f578277cc015cfe9cdca06586b2c82f1a728bad.1697101543.git.quic_varada@quicinc.com>
+ <06b823d5c2ec05a940849ac341c48090.sboyd@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <06b823d5c2ec05a940849ac341c48090.sboyd@kernel.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Is35Iy1OTMyWouqkVf0a2KM7CBzvmL3C
+X-Proofpoint-GUID: Is35Iy1OTMyWouqkVf0a2KM7CBzvmL3C
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-15_09,2023-10-12_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
+ malwarescore=0 adultscore=0 bulkscore=0 spamscore=0 priorityscore=1501
+ mlxscore=0 lowpriorityscore=0 suspectscore=0 mlxlogscore=999 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
+ definitions=main-2310160060
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,66 +84,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon Oct 16, 2023 at 5:18 AM CEST, Bjorn Andersson wrote:
-> On Fri, Oct 13, 2023 at 03:56:40PM +0200, Luca Weiss wrote:
-> > It can be useful to know with which return value the retimer_set call
-> > failed, so include this info in the dev_err print.
-> >=20
+On Thu, Oct 12, 2023 at 01:55:36PM -0700, Stephen Boyd wrote:
+> Quoting Varadarajan Narayanan (2023-10-12 02:26:17)
+> > Stromer plus APSS PLL does not support dynamic frequency scaling.
+> > To switch between frequencies, we have to shut down the PLL,
+> > configure the L and ALPHA values and turn on again. So introduce the
+> > separate set of ops for Stromer Plus PLL.
 >
-> Is this useful during development, or during normal execution etc. How
-> about using kretprobe or similar tools?
+> Does this assume the PLL is always on?
 
-Hi Bjorn,
+Yes once the PLL is configured by apss-ipq-pll driver, it is always on.
 
-IIRC I encountered this during development of my retimer driver, where
-the op in that driver failed for some reason and it was very useful to
-get the return value to debug that.
-
-And sure, I guess kretprobe might be also useful here but I think it's
-very common to include the return value in the error message when
-something fails, no?
-
-> If you insist, could you please make sure that the style matches across
-> the various typec_*_set() calls in the driver?
-
-Do you mean adding the return value to the other dev_err prints after
-typec_*_set() calls also?
-
-Regards
-Luca
-
->
-> Regards,
-> Bjorn
->
-> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> > Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 > > ---
-> >  drivers/soc/qcom/pmic_glink_altmode.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >=20
-> > diff --git a/drivers/soc/qcom/pmic_glink_altmode.c b/drivers/soc/qcom/p=
-mic_glink_altmode.c
-> > index 9569d999391d..136713e1155e 100644
-> > --- a/drivers/soc/qcom/pmic_glink_altmode.c
-> > +++ b/drivers/soc/qcom/pmic_glink_altmode.c
-> > @@ -168,7 +168,7 @@ static void pmic_glink_altmode_enable_dp(struct pmi=
-c_glink_altmode *altmode,
-> > =20
-> >  	ret =3D typec_retimer_set(port->typec_retimer, &port->retimer_state);
-> >  	if (ret)
-> > -		dev_err(altmode->dev, "failed to setup retimer to DP\n");
-> > +		dev_err(altmode->dev, "failed to setup retimer to DP: %d\n", ret);
-> >  }
-> > =20
-> >  static void pmic_glink_altmode_enable_usb(struct pmic_glink_altmode *a=
-ltmode,
-> >=20
+> > v2:     Use clk_alpha_pll_stromer_determine_rate, instead of adding new
+> >         clk_alpha_pll_stromer_plus_determine_rate as the alpha pll width
+> >         is same for both
+> >
+> >         Fix review comments
+> >                 udelay(50) -> usleep_range(50, 60)
+> >                 Remove SoC-specific from print message
 > > ---
-> > base-commit: e3b18f7200f45d66f7141136c25554ac1e82009b
-> > change-id: 20231013-glink-altmode-ret-3911e6c1eab5
-> >=20
-> > Best regards,
-> > --=20
-> > Luca Weiss <luca.weiss@fairphone.com>
-> >=20
+> >  drivers/clk/qcom/clk-alpha-pll.c | 57 ++++++++++++++++++++++++++++++++++++++++
+> >  drivers/clk/qcom/clk-alpha-pll.h |  1 +
+> >  2 files changed, 58 insertions(+)
+> >
+> > diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+> > index 4edbf77..5221b6c 100644
+> > --- a/drivers/clk/qcom/clk-alpha-pll.c
+> > +++ b/drivers/clk/qcom/clk-alpha-pll.c
+> > @@ -2508,3 +2508,60 @@ const struct clk_ops clk_alpha_pll_stromer_ops = {
+> >         .set_rate = clk_alpha_pll_stromer_set_rate,
+> >  };
+> >  EXPORT_SYMBOL_GPL(clk_alpha_pll_stromer_ops);
+> > +
+> > +static int clk_alpha_pll_stromer_plus_set_rate(struct clk_hw *hw,
+> > +                                              unsigned long rate,
+> > +                                              unsigned long prate)
+> > +{
+> > +       struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
+> > +       u32 l, alpha_width = pll_alpha_width(pll);
+> > +       int ret;
+> > +       u64 a;
+> > +
+> > +       rate = alpha_pll_round_rate(rate, prate, &l, &a, alpha_width);
+> > +
+> > +       regmap_write(pll->clkr.regmap, PLL_MODE(pll), 0);
+>
+> There's a theoretical problem here if I understand correctly. A call to
+> clk_enable() can happen while clk_set_rate() is in progress or vice
+> versa. Probably we need some sort of spinlock for this PLL that
+> synchronizes any enable/disable with the rate change so that when we
+> restore the enable bit the clk isn't enabled when it was supposed to be
+> off.
 
+Since the PLL is always on, should we worry about enable/disable?
+If you feel it is better to synchronize with a spin lock, will
+add and post a new revision. Please let me know.
+
+Thanks
+Varada
