@@ -2,125 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CF33A7CAB90
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 16:33:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BB787CAB9A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 16:35:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233788AbjJPOdi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Oct 2023 10:33:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51628 "EHLO
+        id S233782AbjJPOfE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Oct 2023 10:35:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233707AbjJPOdh (ORCPT
+        with ESMTP id S233765AbjJPOfE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Oct 2023 10:33:37 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2350EEB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Oct 2023 07:33:34 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-53e3b8f906fso5593588a12.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Oct 2023 07:33:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697466812; x=1698071612; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/9cl0XfvFGjZ0mqviaREEg8s3S3kUfmqVuMt9DyXc4w=;
-        b=v2/A+YX3CQs2o4ZwMir1Mnidixkzi2QzekDZZ0O6J1+xVlv23vT7Tuy1wMF4Bq9MQV
-         zrjEM2UHcS7kGG5bJYyY1ldL6r1hpl75Ad/yJDWRoeHYtAT2THXP5svRgzN7owQS5cIQ
-         TVVj/y50SYfqx3ppDBlAx4ZiTpgGomDfkL0QILbo5vHuXdaiIdCCvjd8IGL7wmYX2gxF
-         mMZBiSbO6eez8GsmpQNcQcGVu9+1j3p4O1+k9UQN/bJAVp0xb6vj7UfKTZRONPBR0OwG
-         w6YdxilxVsSrhfzHNiW1wmXRI/4/kyp5YXrAnGWLiYRmJS+VZVhsMPet2rfAdM20VBYR
-         zyBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697466812; x=1698071612;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/9cl0XfvFGjZ0mqviaREEg8s3S3kUfmqVuMt9DyXc4w=;
-        b=fvT9xTUAo1P4Khet/BhvvDjFATHnJJ5i23go3iFskpwzFdN5lPAYkx469DUEuCVCOA
-         lh+O+9r8a2GG/iqWj7aOy7Bcq71Bo5BiSgoBmzpTXSVgBJV9WWPk299mvvw1CwmpALx1
-         TIddpIyCuWSKxuWinIfV37/4Y2NpRUPo+FozTWExR8BFMt1lcpqdHJVh+BsKeakOxS46
-         s65QQUdJawyyp9h+HA0W1Fuj+TDeB4Wd5fVn1MzunwlhPp+PjX9e554c+t+bblg0LOu2
-         KrObY/N9rPNYiDTE8o+vyzja/3ZSWbB3Y6ihGtgGwL3QFlZbO22vnyb5uwv2FvJFnQab
-         q9zw==
-X-Gm-Message-State: AOJu0Yx2xDbdQDS9Ki1xw4a7ejfw9jn4YJDvoNtimF8/2D0/84WDVLll
-        6SON8tql6Tx9XicrF1URqhB+RA==
-X-Google-Smtp-Source: AGHT+IFyslTLdtWQZke/7rtFGYyKU93k4ENx8+WP6tj6Xir/n8aujyNL4Zw2dxteSst2mumDrkqtYA==
-X-Received: by 2002:a17:906:1ca:b0:9a5:9f3c:9615 with SMTP id 10-20020a17090601ca00b009a59f3c9615mr25894460ejj.63.1697466812422;
-        Mon, 16 Oct 2023 07:33:32 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.154])
-        by smtp.gmail.com with ESMTPSA id gw11-20020a170906f14b00b0098669cc16b2sm4105580ejb.83.2023.10.16.07.33.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Oct 2023 07:33:31 -0700 (PDT)
-Message-ID: <3a57e697-3958-4f6b-912d-e2ee0c41d4a1@linaro.org>
-Date:   Mon, 16 Oct 2023 16:33:30 +0200
+        Mon, 16 Oct 2023 10:35:04 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE7B19B;
+        Mon, 16 Oct 2023 07:35:02 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39GBmIJU000326;
+        Mon, 16 Oct 2023 14:34:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=0WZkMc2C+j8zX09SgVRcHLmnBapy2P6tKs/X88ldHaQ=;
+ b=g2tkhoKXKd/Fliq6JsXr2/Cb8Bp1FSEU4/ndKG1OtCCZBHkEpT1KpMpJ5F4pw5799Jve
+ IR3HNpipan4sM7sbBINe80EZ29ubp1lu9QSjLcYRBNtbhYqT8n4KP+UVOEqF/En/yblu
+ xi9t5rkxwsHD27HnLlGIkCn/axa4W5DoqyMyKR8/pCIfL3cshyHNhm8OcnM7wEXXuUIF
+ 5hVnb6InlK4iAXS65mFaw1O5HN1HtGDhpgqw0XMpVHST9SNA5uAnfLGDv3P1KOlJqIH9
+ 9zCV3tpPHmc9jpGRXUOfUPIOaZmjCJEpbTAC2JAWbSkStFs3nPC/+UpU1eUP032kwkUe 6Q== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tqkrpca6r-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 16 Oct 2023 14:34:51 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39GEYo7j008070
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 16 Oct 2023 14:34:50 GMT
+Received: from hu-omprsing-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.30; Mon, 16 Oct 2023 07:34:45 -0700
+From:   Om Prakash Singh <quic_omprsing@quicinc.com>
+To:     <quic_omprsing@quicinc.com>
+CC:     <neil.armstrong@linaro.org>, <konrad.dybcio@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>, <conor+dt@kernel.org>,
+        <davem@davemloft.net>, <devicetree@vger.kernel.org>,
+        <herbert@gondor.apana.org.au>, <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-crypto@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <marijn.suijten@somainline.org>,
+        <robh+dt@kernel.org>, <vkoul@kernel.org>
+Subject: [PATCH V2] dt-bindings: crypto: qcom,prng: document SA8775P and SC7280
+Date:   Mon, 16 Oct 2023 20:04:28 +0530
+Message-ID: <20231016143428.2992168-1-quic_omprsing@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] arm64: dts: qcom: sm8350-lemonade(p): new devices
-Content-Language: en-US
-To:     Nia Espera <nespera@igalia.com>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kees Cook <keescook@chromium.org>,
-        Tony Luck <tony.luck@intel.com>,
-        "Guilherme G. Piccoli" <gpiccoli@igalia.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
-        Rob <Me@orbit.sh>, Clayton Craft <clayton@igalia.com>,
-        ~postmarketos/upstreaming@lists.sr.ht
-References: <20231016-nia-sm8350-for-upstream-v1-0-bb557a0af2e9@igalia.com>
- <20231016-nia-sm8350-for-upstream-v1-5-bb557a0af2e9@igalia.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231016-nia-sm8350-for-upstream-v1-5-bb557a0af2e9@igalia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: FY6YJkgK1AYqWSesuMJ3ToTBARFAJefi
+X-Proofpoint-GUID: FY6YJkgK1AYqWSesuMJ3ToTBARFAJefi
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-16_07,2023-10-12_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
+ malwarescore=0 adultscore=0 bulkscore=0 spamscore=0 priorityscore=1501
+ mlxscore=0 lowpriorityscore=0 suspectscore=0 mlxlogscore=937 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
+ definitions=main-2310160126
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -130,281 +79,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/10/2023 14:47, Nia Espera wrote:
-> Device tree files for OnePlus 9 and 9 Pro. Details of supported features
-> mentioned in the cover letter for this patch series, but for
-> accessibility also repeated here:
-> 
-> - USB OTG
-> - UFS
-> - Framebuffer display
-> - Touchscreen (for lemonade)
-> - Power & volume down keys
-> - Battery reading
-> - Modem, IPA, and remoteproc bringup
-> 
-> Steps to get booting:
-> 
+Document SA8775P and SC7280 compatible for the True Random Number
+Generator.
 
-...
+Signed-off-by: Om Prakash Singh <quic_omprsing@quicinc.com>
+---
 
-> +};
-> +
-> +&pmk8350_adc_tm {
-> +	status = "okay";
-> +
-> +	pm8350_msm_therm {
+Changes in V2:
+  - Squashed two separate patches for SA8775P and SC7280 in one.
+  - Sort entries in alphabetic order.
 
-No, underscores are not allowed. Do not usptream junky DTS from
-downstream. Instead take upstream, good quality DTS and customize it.
-Why do we need to point the issue fixed long, long time ago?
+ Documentation/devicetree/bindings/crypto/qcom,prng.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-
-> +		reg = <0x144>;
-> +		qcom,ratiometric;
-> +		qcom,hw-settle-time = <0xc8>;
-> +	};
-> +
-> +	pm8350_cam_flash_therm {
-> +		reg = <0x145>;
-> +		qcom,ratiometric;
-> +		qcom,hw-settle-time = <0xc8>;
-> +	};
-> +
-> +	pm8350_hot_pocket_therm {
-> +		reg = <0x146>;
-> +		qcom,ratiometric;
-> +		qcom,hw-settle-time = <0xc8>;
-> +	};
-> +
-> +	pm8350_wide_rfc_therm {
-> +		reg = <0x147>;
-> +		qcom,ratiometric;
-> +		qcom,hw-settle-time = <0xc8>;
-> +	};
-> +
-> +	pm8350_rear_tof_therm {
-> +		reg = <0x148>;
-> +		qcom,ratiometric;
-> +		qcom,hw-settle-time = <0xc8>;
-> +	};
-> +
-> +	pm8350b_usb_conn_therm {
-> +		reg = <0x347>;
-> +		qcom,ratiometric;
-> +		qcom,hw-settle-time = <0xc8>;
-> +	};
-> +
-> +	pm8350b_wl_chg_therm {
-> +		reg = <0x34b>;
-> +		qcom,ratiometric;
-> +		qcom,hw-settle-time = <0xc8>;
-> +	};
-> +
-> +	pmk8350_xo_therm {
-> +		reg = <0x44>;
-> +		qcom,ratiometric;
-> +		qcom,hw-settle-time = <0xc8>;
-> +	};
-> +};
-> +
-> +&pon_pwrkey {
-> +	status = "okay";
-> +};
-> +
-> +&pon_resin {
-> +	linux,code = <KEY_VOLUMEUP>;
-> +	status = "okay";
-> +};
-> +
-> +&qupv3_id_0 {
-> +	status = "okay";
-> +};
-> +
-> +&qupv3_id_1 {
-> +	status = "okay";
-> +};
-> +
-> +&qupv3_id_2 {
-> +	status = "okay";
-> +};
-> +
-> +&gpi_dma0 {
-> +	status = "okay";
-> +};
-> +
-> +&gpi_dma1 {
-> +	status = "okay";
-> +};
-> +
-> +&gpi_dma2 {
-> +	status = "okay";
-> +};
-> +
-> +&removed_mem {
-
-Hm, what is removed_mem?
-
-> +	reg = <0x0 0xd8800000 0x0 0x8e00000>;
-> +};
-> +
-> +&tlmm {
-> +	gpio-reserved-ranges = <52 8>;
-> +
-> +	pcie0_default_state: pcie0-default-state {
-
-It does not look like you tested the DTS against bindings. Please run
-`make dtbs_check W=1` (see
-Documentation/devicetree/bindings/writing-schema.rst or
-https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
-for instructions).
-
-> +		perst-pins {
-> +			pins = "gpio94";
-> +			function = "gpio";
-> +			drive-strength = <2>;
-> +			bias-pull-down;
-> +		};
-> +
-
-
-> diff --git a/arch/arm64/boot/dts/qcom/sm8350-oneplus-lemonade.dts b/arch/arm64/boot/dts/qcom/sm8350-oneplus-lemonade.dts
-> new file mode 100644
-> index 000000000000..f2c27894f3c4
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sm8350-oneplus-lemonade.dts
-> @@ -0,0 +1,82 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2023 Igalia S.L.
-> + * Authors:
-> + *	Nia Espera <nespera@igalia.com>
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "sm8350-oneplus-common.dtsi"
-> +
-> +/ {
-> +	model = "OnePlus 9";
-> +	compatible = "oneplus,lemonade", "qcom,sm8350";
-> +};
-> +
-> +&i2c4 {
-> +	touchscreen@48 {
-> +		compatible = "samsung,s6sy761";
-> +		reg = <0x48>;
-> +		interrupts-extended = <&tlmm 23 0x2008>;
-> +
-> +		vdd-supply = <&pm8350c_l8>;
-> +		avdd-supply = <&pm8350c_l13>;
-> +
-> +		pinctrl-names = "default", "sleep";
-> +		pinctrl-0 = <&tp_rst_active &tp_irq_active>;
-
-Multiple phandles <>, not one.
-
-> +		pinctrl-1 = <&tp_rst_suspend &tp_irq_suspend>;
-> +	};
-> +};
-> +
-> +&tlmm {
-> +	tp_rst_suspend: tp_rst_suspend {
-
-Ehh...
-> +		pins = "gpio22";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-pull-down;
-> +	};
-> +
-> +	tp_enable_2v8: tp_enable_2v8 {
-> +		pins = "gpio74";
-> +		function = "gpio";
-> +		drive-strength = <8>;
-> +		bias-pull-up;
-> +		output-high;
-> +	};
-> +
-> +	/* Modem antenna pins exclusive to lemonade */
-> +	rf_cable_ant1_active: rf_cable_ant1_active {
-> +		pins = "gpio27";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-pull-up;
-> +	};
-> +	rf_cable_ant2_active: rf_cable_ant2_active {
-> +		pins = "gpio92";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-pull-up;
-> +	};
-> +	rf_cable_ant3_active: rf_cable_ant3_active {
-> +		pins = "gpio44";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-pull-up;
-> +	};
-> +	rf_cable_ant7_active: rf_cable_ant7_active {
-> +		pins = "gpio155";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-pull-up;
-> +	};
-> +};
-> +
-> +&mpss {
-
-Wrong order. t is after m
-
-> +	pinctrl-names = "default";
-> +	pinctrl-1 = <&rf_cable_ant0_active
-
-Same problem.
-
-> +		     &rf_cable_ant1_active
-> +		     &rf_cable_ant2_active
-> +		     &rf_cable_ant3_active
-> +		     &rf_cable_ant7_active>;
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sm8350-oneplus-lemonadep.dts b/arch/arm64/boot/dts/qcom/sm8350-oneplus-lemonadep.dts
-> new file mode 100644
-> index 000000000000..de8597d26091
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sm8350-oneplus-lemonadep.dts
-> @@ -0,0 +1,37 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2023 Igalia S.L.
-> + * Authors:
-> + *	Nia Espera <nespera@igalia.com>
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "sm8350-oneplus-common.dtsi"
-> +
-> +/ {
-> +	model = "OnePlus 9 Pro";
-> +	compatible = "oneplus,lemonadep", "qcom,sm8350";
-
-Missing bindings.
-
-> +};
-> +
-> +&tlmm {
-> +	tp_rst_suspend: tp_rst_suspend {
-
-No underscores in node names. This wasn't tested.
-
-It does not look like you tested the DTS against bindings. Please run
-`make dtbs_check W=1` (see
-Documentation/devicetree/bindings/writing-schema.rst or
-https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
-for instructions).
-
-
-
-Best regards,
-Krzysztof
+diff --git a/Documentation/devicetree/bindings/crypto/qcom,prng.yaml b/Documentation/devicetree/bindings/crypto/qcom,prng.yaml
+index 633993f801c6..13070db0f70c 100644
+--- a/Documentation/devicetree/bindings/crypto/qcom,prng.yaml
++++ b/Documentation/devicetree/bindings/crypto/qcom,prng.yaml
+@@ -17,6 +17,8 @@ properties:
+           - qcom,prng-ee  # 8996 and later using EE
+       - items:
+           - enum:
++              - qcom,sa8775p-trng
++              - qcom,sc7280-trng
+               - qcom,sm8450-trng
+               - qcom,sm8550-trng
+           - const: qcom,trng
+-- 
+2.25.1
 
