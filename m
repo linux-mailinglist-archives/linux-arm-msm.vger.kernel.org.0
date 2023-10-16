@@ -2,78 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA47D7C9E98
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 07:19:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 34BE37C9EA0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 07:24:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229668AbjJPFTX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Oct 2023 01:19:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60084 "EHLO
+        id S229815AbjJPFYC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Oct 2023 01:24:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229478AbjJPFTW (ORCPT
+        with ESMTP id S229501AbjJPFYB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Oct 2023 01:19:22 -0400
-Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 645FBE5
-        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Oct 2023 22:19:20 -0700 (PDT)
-Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-5a7c93507d5so48794837b3.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Oct 2023 22:19:20 -0700 (PDT)
+        Mon, 16 Oct 2023 01:24:01 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2768E6
+        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Oct 2023 22:23:59 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id ffacd0b85a97d-32003aae100so3244499f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Oct 2023 22:23:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697433559; x=1698038359; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=84IjWES4NlZNq0zAo2UaGKzhd/8FqYzYRf4g+hayiP4=;
-        b=Le0FQsGO828GcvmeiBCAo4NiB3IxL4HAvgwlJFEFS23RKWoHPi6S5vpc95ZXix6vhS
-         gFtyeGgG8ZrHeC8mMDM5KsmoKywM2JKPtJOJXnmJYmCcFKBb7ZBNO31uMORtyBEF5R8u
-         7qGHHx1vM63ARvOgVfKEowt2JuMdIer2cLCp2ru0pml8Vhf79kSSGfBS6/yQA2m+dZw6
-         QtJ9TFlfe4uoUdwhW8e7xvmmCnzKR6z0W6oBdg6nGW740URiOa0Kn6pgfVZDah759n6J
-         x3tiG3s+Ayqx5KEKE+Mvl8bfC/Xedy+rBOAmHZUss20pER0AOeUftz4BRfpf7tQxPzxR
-         F9lw==
+        d=linaro.org; s=google; t=1697433838; x=1698038638; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=BPg+u6DXoov81DzJxUpC55Cj3HjO/2ssQ4EG/89xapY=;
+        b=NI82ucMzje7+usxYa22yfnP+1QSf/XzfBP1R1R72gFyBOKkajzMNfnFBp6Iqhm/UWP
+         HaQVtzup5hbgg4lezFXvTOVag7l6ttwA3VIdHYFfvJY5m7Yrx/Iw0MWj2j0M2PneKoI6
+         i41ekNXs2+xxrqw8MFPTFjFkMxqDNaFmP7c0MudBE5o33ssDceVxbfqx64hc689P5Rlc
+         uZwH+MkjPBl6Wmb78FJMz7rHVKkZAXOqHQ7PsPIFHUhGAMvab52ncjUPKKJN68PuaZiu
+         9ytnDrlQW14+Ct8sqyvuvKn5ReuWyBo54BkQdaU5fUiaXfjCYcWNXvxXbrtEpGV6T/ri
+         13Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697433559; x=1698038359;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=84IjWES4NlZNq0zAo2UaGKzhd/8FqYzYRf4g+hayiP4=;
-        b=Ni4ziFn6IGI8hhj0RJGxg9wAJD0KbgbFUfoRLWSDCMbE5YZND5S1RaA+DLsOnlkCkZ
-         zFzDW1C47+T3n6lzVkfSmguMYXUw8efwIfPHmgW6hvEKU0yK2W7tzyIyNv3fk7Tt2ZMt
-         5GFPSG1av7K8YfBamYH6ZY8aHF9OtwGRTk2C+WQaBYyNpW+QqRp5PVPUWbLG5hD40xGg
-         aE6FEw/kx8BsC6vK7PJpG4RFAugUh1SNKBa6kmSDOt6Y34hbLxCYUUBxh0P8H+1pbJ6L
-         DO3BYnwZ9mL5Xbdozo2SCHA6SnHv2gXXmVYvl7NpkBA/DfOkRy1kuPJFLfg2lfSMh4vM
-         8LKw==
-X-Gm-Message-State: AOJu0YxM0+MLMXeeVcmId1ULUj97fzmeKsQyMiIV+g0NA7Bs/dU06bQA
-        5etL79DZKGmsK/zp6eyHi20ke3INoVIXoTiWfAHX5w==
-X-Google-Smtp-Source: AGHT+IE/vXkOLFuRYYMBg7ZvJNs5bHOB4hTJjGiuXZPuuYtQOwt1lltozcDD7mfPmsfdbCeYL+gkZLo7kSBUF3zo/ac=
-X-Received: by 2002:a05:690c:ec8:b0:5a8:19b0:513f with SMTP id
- cs8-20020a05690c0ec800b005a819b0513fmr12200346ywb.14.1697433559519; Sun, 15
- Oct 2023 22:19:19 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1697433838; x=1698038638;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BPg+u6DXoov81DzJxUpC55Cj3HjO/2ssQ4EG/89xapY=;
+        b=TS8gpfGbMFHPoPMNvgV0dUr+UjKMk8aXkP8CrIKt7wzB7iEYsZg+dG93nRzuhNIfp+
+         HS7lg8X3IhhGvosm70Xji7m64IlFUfWQQNpmSwKgtX4xWVaQHAP7lrXb31yvqtl5dsKV
+         WO9gWovFdS4Jq0SP+3SbS29d9OxX7Znl3pZHYcY3o9ah5dSG5mele9DUAH7/EduS+MIZ
+         bdt6kGIIfHFE2mKivX3eUn3KA+aha5k0eUhGUMbzGTt8sXXT0HOSRvf6vZEpac5QJimW
+         mIaL1VuXhKPpjI6N0V+vKWpHmUSmgaZIh1EbjkD4+QfrEsbvNOR/RGIkc1bMpeJcP1nf
+         8TZw==
+X-Gm-Message-State: AOJu0YwrX0YuMto8GTlmaL3wjZbAS6jeZJ5HglXQpWKYNyOzyX3JEmSI
+        9koy0kbiBCPXYJSwODYdjkcy4g==
+X-Google-Smtp-Source: AGHT+IG3U2VJhr1VhipPc3FkwcugR0JbK0DPX15Le2fihCwVyHMIBhQlIpyJsWHxkjAk9iEnpc+Yiw==
+X-Received: by 2002:a5d:680d:0:b0:32d:81e3:f0d8 with SMTP id w13-20020a5d680d000000b0032d81e3f0d8mr4030138wru.26.1697433838253;
+        Sun, 15 Oct 2023 22:23:58 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.154])
+        by smtp.gmail.com with ESMTPSA id i9-20020a5d6309000000b0032da40fd7bdsm5045106wru.24.2023.10.15.22.23.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 15 Oct 2023 22:23:57 -0700 (PDT)
+Message-ID: <9d18adbf-11f7-45ff-902f-e0092abb44a1@linaro.org>
+Date:   Mon, 16 Oct 2023 07:23:55 +0200
 MIME-Version: 1.0
-References: <1695218113-31198-1-git-send-email-quic_msarkar@quicinc.com>
- <1695218113-31198-2-git-send-email-quic_msarkar@quicinc.com>
- <20230921183850.GA762694-robh@kernel.org> <28bf111f-b965-4d38-884b-bc3a0b68a6cc@quicinc.com>
- <8effa7e5-a223-081b-75b8-7b94400d42e6@quicinc.com> <CAA8EJpp+3_A-9YXF1yOKdFweVKqrpTxvxKoJcUH6qiDHfCQ-dQ@mail.gmail.com>
- <31e6aab6-73f9-a421-9dfa-292d9d0e9649@quicinc.com>
-In-Reply-To: <31e6aab6-73f9-a421-9dfa-292d9d0e9649@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 16 Oct 2023 08:19:08 +0300
-Message-ID: <CAA8EJpoapMmeAxj0GyHnJixEeObpSa5gjQWfkxuZKnVoLg4Awg@mail.gmail.com>
-Subject: Re: [PATCH v1 1/5] dt-bindings: PCI: qcom-ep: Add support for SA8775P SoC
-To:     Mrinmay Sarkar <quic_msarkar@quicinc.com>
-Cc:     Shazad Hussain <quic_shazhuss@quicinc.com>,
-        Rob Herring <robh@kernel.org>, agross@kernel.org,
-        andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, konrad.dybcio@linaro.org, mani@kernel.org,
-        quic_nitegupt@quicinc.com, quic_ramkri@quicinc.com,
-        quic_nayiluri@quicinc.com, quic_krichai@quicinc.com,
-        quic_vbadigan@quicinc.com, quic_parass@quicinc.com,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
-        linux-phy@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V1 2/4] dt-bindings: crypto: qcom,prng: document SC7280
+Content-Language: en-US
+To:     Om Prakash Singh <quic_omprsing@quicinc.com>
+Cc:     neil.armstrong@linaro.org, konrad.dybcio@linaro.org,
+        agross@kernel.org, andersson@kernel.org, conor+dt@kernel.org,
+        davem@davemloft.net, devicetree@vger.kernel.org,
+        herbert@gondor.apana.org.au, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        linux-kernel@vger.kernel.org, marijn.suijten@somainline.org,
+        robh+dt@kernel.org, vkoul@kernel.org
+References: <20231015193901.2344590-1-quic_omprsing@quicinc.com>
+ <20231015193901.2344590-3-quic_omprsing@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20231015193901.2344590-3-quic_omprsing@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -83,133 +123,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 13 Oct 2023 at 15:55, Mrinmay Sarkar <quic_msarkar@quicinc.com> wrote:
->
->
-> On 10/11/2023 5:13 PM, Dmitry Baryshkov wrote:
-> > On Wed, 11 Oct 2023 at 14:14, Mrinmay Sarkar <quic_msarkar@quicinc.com> wrote:
-> >>
-> >> On 10/6/2023 4:24 PM, Shazad Hussain wrote:
-> >>>
-> >>> On 9/22/2023 12:08 AM, Rob Herring wrote:
-> >>>> On Wed, Sep 20, 2023 at 07:25:08PM +0530, Mrinmay Sarkar wrote:
-> >>>>> Add devicetree bindings support for SA8775P SoC.
-> >>>>> Define reg and interrupt per platform.
-> >>>>>
-> >>>>> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-> >>>>> ---
-> >>>>>    .../devicetree/bindings/pci/qcom,pcie-ep.yaml      | 130
-> >>>>> +++++++++++++++++----
-> >>>>>    1 file changed, 108 insertions(+), 22 deletions(-)
-> >>>>>
-> >>>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> >>>>> b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> >>>>> index a223ce0..e860e8f 100644
-> >>>>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> >>>>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> >>>>> @@ -13,6 +13,7 @@ properties:
-> >>>>>      compatible:
-> >>>>>        oneOf:
-> >>>>>          - enum:
-> >>>>> +          - qcom,sa8775p-pcie-ep
-> >>>>>              - qcom,sdx55-pcie-ep
-> >>>>>              - qcom,sm8450-pcie-ep
-> >>>>>          - items:
-> >>>>> @@ -20,29 +21,19 @@ properties:
-> >>>>>              - const: qcom,sdx55-pcie-ep
-> >>>>>        reg:
-> >>>>> -    items:
-> >>>>> -      - description: Qualcomm-specific PARF configuration registers
-> >>>>> -      - description: DesignWare PCIe registers
-> >>>>> -      - description: External local bus interface registers
-> >>>>> -      - description: Address Translation Unit (ATU) registers
-> >>>>> -      - description: Memory region used to map remote RC address space
-> >>>>> -      - description: BAR memory region
-> >>>>> +    minItems: 6
-> >>>>> +    maxItems: 7
-> >>>>>        reg-names:
-> >>>>> -    items:
-> >>>>> -      - const: parf
-> >>>>> -      - const: dbi
-> >>>>> -      - const: elbi
-> >>>>> -      - const: atu
-> >>>>> -      - const: addr_space
-> >>>>> -      - const: mmio
-> >>>>> +    minItems: 6
-> >>>>> +    maxItems: 7
-> >>>> Don't move these into if/then schemas. Then we are duplicating the
-> >>>> names, and there is no reason to keep them aligned for new compatibles.
-> >>>>
-> >>>> Rob
-> >>> Hi Rob,
-> >>> As we have one extra reg property (dma) required for sa8775p-pcie-ep,
-> >>> isn't it expected to be moved in if/then as per number of regs
-> >>> required. Anyways we would have duplication of some properties for new
-> >>> compatibles where the member numbers differs for a property.
-> >>>
-> >>> Are you suggesting to add the extra reg property (dma) in the existing
-> >>> reg and reg-names list, and add minItems/maxItems for all compatibles
-> >>> present in this file ?
-> > This is what we have been doing in other cases: if the list is an
-> > extension of the current list, there is no need to duplicate it. One
-> > can use min/maxItems instead.
-> Hi Dmitry
->
-> we have tried using min/maxItems rather than duplicating but somehow
-> catch up with some warnings in dt_bindings check
->
-> //local/mnt/workspace/Mrinmay/lemans/next-20230914/linux-next/out/Documentation/devicetree/bindings/pci/qcom,pcie-ep.example.dtb:
-> pcie-ep@1c00000: reg: [[29360128, 12288], [1073741824, 3869],
-> [1073745696, 200], [1073745920, 4096], [1073750016, 4096], [29372416,
-> 12288]] is too short//
-> //        from schema $id:
-> http://devicetree.org/schemas/pci/qcom,pcie-ep.yaml#//
-> ///local/mnt/workspace/Mrinmay/lemans/next-20230914/linux-next/out/Documentation/devicetree/bindings/pci/qcom,pcie-ep.example.dtb:
-> pcie-ep@1c00000: reg-names: ['parf', 'dbi', 'elbi', 'atu', 'addr_space',
-> 'mmio'] is too short//
-> //        from schema $id:
-> http://devicetree.org/schemas/pci/qcom,pcie-ep.yaml#//
-> ///local/mnt/workspace/Mrinmay/lemans/next-20230914/linux-next/out/Documentation/devicetree/bindings/pci/qcom,pcie-ep.example.dtb:
-> pcie-ep@1c00000: interrupts: [[0, 140, 4], [0, 145, 4]] is too short//
-> //        from schema $id:
-> http://devicetree.org/schemas/pci/qcom,pcie-ep.yaml#//
-> ///local/mnt/workspace/Mrinmay/lemans/next-20230914/linux-next/out/Documentation/devicetree/bindings/pci/qcom,pcie-ep.example.dtb:
-> pcie-ep@1c00000: interrupt-names: ['global', 'doorbell'] is too short//
-> //        from schema $id:
-> http://devicetree.org/schemas/pci/qcom,pcie-ep.yaml#//
-> /
->
-> //local/mnt/workspace/Mrinmay/lemans/next-20230914/linux-next/out/Documentation/devicetree/bindings/pci/qcom,pcie-ep.example.dtb:
-> pcie-ep@1c00000: interrupt-names: ['global', 'doorbell'] is too short/
->
-> added the patch in attachment.
+On 15/10/2023 21:38, Om Prakash Singh wrote:
+> Document SC7280 compatible for the True Random Number Generator.
+> 
+> Signed-off-by: Om Prakash Singh <quic_omprsing@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/crypto/qcom,prng.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/crypto/qcom,prng.yaml b/Documentation/devicetree/bindings/crypto/qcom,prng.yaml
+> index 85e6b1c199f5..d52355fbd1d6 100644
+> --- a/Documentation/devicetree/bindings/crypto/qcom,prng.yaml
+> +++ b/Documentation/devicetree/bindings/crypto/qcom,prng.yaml
+> @@ -20,6 +20,7 @@ properties:
+>                - qcom,sm8450-trng
+>                - qcom,sm8550-trng
+>                - qcom,sa8775p-trng
+> +              - qcom,sc7280-trng
 
-Please, don't send patches as attachments. It is impossible to comment on it.
+sc comes before sm
 
-So, few points I had to fix to make your patch to work:
+Best regards,
+Krzysztof
 
-- Please, understand the difference between enum and items. You'd need
-to add your compat string to only one of them. Or to a new entry. But
-adding it to both entries is a definite mistake.
-
-- You have extended items for existing platforms (reg, reg-names,
-interrupts, interrupt-names). However you failed to add corresponding
-minItems, allowing existing platforms to use the list with less items
-in it.
-
-- You do not need to have maxItems:N, minItems:N with the same value.
-Please drop these minItems, it is the default.
-
-- You haven't reviewed the patch on your own. You have erroneously
-nested 'properties' clauses in two places.
-
-$ git diff --stat
- Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml | 33
-+++++++++++----------------------
- 1 file changed, 11 insertions(+), 22 deletions(-)
-
-Hope this helps.
-
--- 
-With best wishes
-Dmitry
