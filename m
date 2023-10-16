@@ -2,73 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BB2107C9EA5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 07:24:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D93E7C9ED0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 07:32:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229680AbjJPFYh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Oct 2023 01:24:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49162 "EHLO
+        id S231587AbjJPFcu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Oct 2023 01:32:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbjJPFYg (ORCPT
+        with ESMTP id S230442AbjJPFcu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Oct 2023 01:24:36 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3416E6
-        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Oct 2023 22:24:33 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-32003aae100so3244635f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Oct 2023 22:24:33 -0700 (PDT)
+        Mon, 16 Oct 2023 01:32:50 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D309F4
+        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Oct 2023 22:32:47 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-32d9effe314so2099817f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Oct 2023 22:32:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697433872; x=1698038672; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
-         :from:content-language:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=K/b0EIw6Lv4KLA7L2mO3jyC4V0pA77j6I9zGomE3mmw=;
-        b=YluxtC7Iff28S9OsQpsDCaTAQVtWQ7+yE16xaH+tABYZIQSy5cepKiVPz6EJsqJHip
-         Nyga6q/C0GYNSPXmw9dPmrFAMBH/axGArn1oLX8TPaRuYufpVW2i3+YwrXwC3NlvPijK
-         rC7jUPolY4m2maX93hTMpvtnaQ1tcxwAIUGBFUJphgVQTqT6X853pcqTM1KFIrBR6N0I
-         28ilFDdCm/TCeQNeQ2Sl6zfnYPPTiEg6yWF+jyDoO2uBigl9fTVO4WirmJxyrTY9+HRX
-         rHKo7lyYbGLmzkjmAZOGzApzl4GxsX8hYf3fbppCavZsBQADqXEtW94TSznYdBHk/J08
-         748Q==
+        d=linaro.org; s=google; t=1697434365; x=1698039165; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cahZBYlxb+nHcg00wtQSR4/273TLxW5YHWH0Zq0a+9k=;
+        b=bC45lCxGEG9ymuPX2oiVUgCiTtGHuyYawQeLZOmWZ0OiQh2s5y0pYFenfTo/R84MLd
+         TqwZYJbFmkDyt8gZeMG7lSsZJY/TYWEO+bwYmXFMVXFB9pEf96cPUpmxQ8ZlSipdEy/u
+         zpb/WUWtZGSRjiP6lCNi1xs6LVgYA1iWec7kAb4emMakKD/sAIHBbxQkkevHyQ0Ygbzk
+         CwXBw/0Pb5+OecvV/0tTffalfhs9fKgSFlS6N4gWGV0nH1GhFwmdv/BtvYIB0DB+DlhE
+         9OpcZXThtnIm4hJBMCSPPwZ6Gk57yTo7CZzoUlXo/txhWIzuNrNY+JrSWDb5c5sT+cQZ
+         ZHTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697433872; x=1698038672;
-        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
-         :from:content-language:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=K/b0EIw6Lv4KLA7L2mO3jyC4V0pA77j6I9zGomE3mmw=;
-        b=h5s0T8sciSHzIJrx7V4oyBNFTH6FAsEdKnZB29u0oIS/OHg88oOlcTbcS7Uv1SJAwc
-         fFIRUoGxO1o0Rz7uJxui/7IArdkrtIVRGeXkPxe7tjcojFlFvYejniZA+Rgq4E8Cc3sL
-         fST/mCEIAGfc0dtv2JMHykU4167JfeTn0s0lScgH++uVjoKqAMLfzOrmgQuso7TX1Svu
-         6Sn6PQnp7A2i0FSr48J7P6zqf3UsjfUbceuuvJ0kIz7v2BYYjVnE6elGZc4JXqOunn66
-         VfaUBjBOtAPCFtZSVy6yCjaBdbwJeFCRTAFsvyoMQHWwaOTTNy5d/GmCYdkfVTl76I2T
-         uLVA==
-X-Gm-Message-State: AOJu0YzJisRKIoIKcuk9+V6rnbvF8dC0hfTv081xXe6ZVJ3PLqCxx9SR
-        TXm+K4B1oarktkxrJzShdSKvZA==
-X-Google-Smtp-Source: AGHT+IGpjHCdhzj/Snf+iK0GKEnaXdl8aZjMxPPXlx0SdfWi9I47a31bHKDbcXUGXNaqXJWLPQR0/w==
-X-Received: by 2002:adf:978d:0:b0:323:1df6:7c17 with SMTP id s13-20020adf978d000000b003231df67c17mr3874874wrb.9.1697433872398;
-        Sun, 15 Oct 2023 22:24:32 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1697434365; x=1698039165;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cahZBYlxb+nHcg00wtQSR4/273TLxW5YHWH0Zq0a+9k=;
+        b=JCGl6bTuw7dYEI/woBOKzJFeptvBYZ/M0iLvun8H9IMsdIslLhhXmaJyO5KVq52Plr
+         eSnplOnvTTbDcp8pAT8xQKKeH9UakaN8kDI8FnOHAkOXIqaAe4+0dJdf5m1+jIe3ie5h
+         SqgKN0pA8hPFeiVUwpoL2cs+n8UYtsZPG+4NcoUWvCazi0j2oQO9zI6NrMNjpvxAWUrE
+         apopWlZW8js3D9cGFeZONUgzW4LJLQ8FrgXR8zir8AR3Nx7ieVyy9sWiCirK+Y7HBhPF
+         zwOX7x+jE4hWPUBo0fys+8+4yujmP0tnqQjb9JVpWF+coWubsMwxr5x01LqD4V/ev6Ih
+         pokQ==
+X-Gm-Message-State: AOJu0YzPN17c2oazCwX2lyW0p+X16Lkfs1JSGdKbK/y4+1DO1IP+Co9h
+        V1yENTqDB7rmELzMXmMHL377Fg==
+X-Google-Smtp-Source: AGHT+IHT1DShnEauSsz6zKTV4Fd2wxmSLcXOWS+sIvsgHJ56bQ8Kjh/Cj77fjZJi0qpCVhhj/l+e/g==
+X-Received: by 2002:adf:f404:0:b0:31c:3136:60af with SMTP id g4-20020adff404000000b0031c313660afmr25541534wro.61.1697434365472;
+        Sun, 15 Oct 2023 22:32:45 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.154])
-        by smtp.gmail.com with ESMTPSA id i9-20020a5d6309000000b0032da40fd7bdsm5045106wru.24.2023.10.15.22.24.30
+        by smtp.gmail.com with ESMTPSA id w12-20020a05600c474c00b003fee6e170f9sm6128233wmo.45.2023.10.15.22.32.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 15 Oct 2023 22:24:31 -0700 (PDT)
-Message-ID: <b7be1f61-c11d-4138-897d-9d67ddd5c943@linaro.org>
-Date:   Mon, 16 Oct 2023 07:24:30 +0200
+        Sun, 15 Oct 2023 22:32:45 -0700 (PDT)
+Message-ID: <4ad7cea6-806b-44cb-80ad-73d2f459936a@linaro.org>
+Date:   Mon, 16 Oct 2023 07:32:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1 2/4] dt-bindings: crypto: qcom,prng: document SC7280
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: msm8953: Use non-deprecated
+ qcom,domain in LPASS
 Content-Language: en-US
+To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
+        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20231015-msm8953-misc-fixes-v1-0-b800deca9e46@z3ntu.xyz>
+ <20231015-msm8953-misc-fixes-v1-2-b800deca9e46@z3ntu.xyz>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Om Prakash Singh <quic_omprsing@quicinc.com>
-Cc:     neil.armstrong@linaro.org, konrad.dybcio@linaro.org,
-        agross@kernel.org, andersson@kernel.org, conor+dt@kernel.org,
-        davem@davemloft.net, devicetree@vger.kernel.org,
-        herbert@gondor.apana.org.au, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        linux-kernel@vger.kernel.org, marijn.suijten@somainline.org,
-        robh+dt@kernel.org, vkoul@kernel.org
-References: <20231015193901.2344590-1-quic_omprsing@quicinc.com>
- <20231015193901.2344590-3-quic_omprsing@quicinc.com>
- <9d18adbf-11f7-45ff-902f-e0092abb44a1@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -113,7 +113,7 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <9d18adbf-11f7-45ff-902f-e0092abb44a1@linaro.org>
+In-Reply-To: <20231015-msm8953-misc-fixes-v1-2-b800deca9e46@z3ntu.xyz>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -126,28 +126,13 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/10/2023 07:23, Krzysztof Kozlowski wrote:
-> On 15/10/2023 21:38, Om Prakash Singh wrote:
->> Document SC7280 compatible for the True Random Number Generator.
->>
->> Signed-off-by: Om Prakash Singh <quic_omprsing@quicinc.com>
->> ---
->>  Documentation/devicetree/bindings/crypto/qcom,prng.yaml | 1 +
->>  1 file changed, 1 insertion(+)
->>
->> diff --git a/Documentation/devicetree/bindings/crypto/qcom,prng.yaml b/Documentation/devicetree/bindings/crypto/qcom,prng.yaml
->> index 85e6b1c199f5..d52355fbd1d6 100644
->> --- a/Documentation/devicetree/bindings/crypto/qcom,prng.yaml
->> +++ b/Documentation/devicetree/bindings/crypto/qcom,prng.yaml
->> @@ -20,6 +20,7 @@ properties:
->>                - qcom,sm8450-trng
->>                - qcom,sm8550-trng
->>                - qcom,sa8775p-trng
->> +              - qcom,sc7280-trng
+On 15/10/2023 22:26, Luca Weiss wrote:
+> Use the qcom,domain property instead of the deprecated qcom,apr-domain,
+> which in turn also fixes a bunch of dtbs_checks warnings.
 > 
-> sc comes before sm
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 
-also, this should be squashed with previous patch.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
