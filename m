@@ -2,359 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 721F47CB0F7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 19:05:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 503997CB104
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 19:06:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234172AbjJPRFi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Oct 2023 13:05:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37820 "EHLO
+        id S234414AbjJPRGe convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Oct 2023 13:06:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234424AbjJPRFU (ORCPT
+        with ESMTP id S233863AbjJPRGQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Oct 2023 13:05:20 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1D642705
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Oct 2023 10:01:42 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39GCvVxK000688;
-        Mon, 16 Oct 2023 17:01:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=Ikpmv8XMkxaZhQ029tgFjYHr7NyJv24F3tc5j5v41k4=;
- b=kdM2KQYtJs7MyEB4QFvZqcZNUNSr0/nTHHG/TDhqKQR1Cx9psO/DnPrfRXHoLKY9FLUt
- PGxTdYLLeaXkZjAeqlqmVQ+3Ylq+wCV7kJKL7i1syzsGlbRlTEaluD8jSddAZEazCMti
- M2HsTjRJDNKZpsjMy5P4pzo7xm4mn5zz2Lyp/4jzKJ/bvxkS/ZT3q4g9QrymRT+qDDWv
- 7OUE+tZtfMfb5RaObziuueiLIAGw9mbOQtG89fV3w9B8JRTFk/7UaGFaku+Y1ipqivLF
- blNKnFh3azgbDokInzERpr1GoHZ/uq1hjdv73VLmbChZ4Oppm/CiTLdMu1uqrOITvT1X CA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ts49w8uh2-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 16 Oct 2023 17:01:36 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39GH1ZBw006509
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 16 Oct 2023 17:01:35 GMT
-Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.39; Mon, 16 Oct 2023 10:01:35 -0700
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-To:     <quic_ajitpals@quicinc.com>, <quic_carlv@quicinc.com>,
-        <quic_pkanojiy@quicinc.com>, <stanislaw.gruszka@linux.intel.com>,
-        <ogabbay@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>
-Subject: [PATCH v2 2/2] accel/qaic: Support MHI QAIC_TIMESYNC channel
-Date:   Mon, 16 Oct 2023 11:01:14 -0600
-Message-ID: <20231016170114.5446-3-quic_jhugo@quicinc.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20231016170114.5446-1-quic_jhugo@quicinc.com>
-References: <20231016170114.5446-1-quic_jhugo@quicinc.com>
+        Mon, 16 Oct 2023 13:06:16 -0400
+Received: from smtprelay05.ispgateway.de (smtprelay05.ispgateway.de [80.67.18.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C26592100;
+        Mon, 16 Oct 2023 10:04:21 -0700 (PDT)
+Received: from [92.206.139.21] (helo=note-book.lan)
+        by smtprelay05.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.96.1)
+        (envelope-from <git@apitzsch.eu>)
+        id 1qsR0t-0001Jg-0y;
+        Mon, 16 Oct 2023 19:04:19 +0200
+Message-ID: <f88b9f79fab9eded9ffb77e2347e028e53744707.camel@apitzsch.eu>
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: msm8939-longcheer-l9100: Enable
+ wcnss_mem
+From:   =?ISO-8859-1?Q?Andr=E9?= Apitzsch <git@apitzsch.eu>
+To:     Stephan Gerhold <stephan@gerhold.net>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Date:   Mon, 16 Oct 2023 19:04:18 +0200
+In-Reply-To: <20230921-msm8916-rmem-fixups-v1-2-34d2b6e721cf@gerhold.net>
+References: <20230921-msm8916-rmem-fixups-v1-0-34d2b6e721cf@gerhold.net>
+         <20230921-msm8916-rmem-fixups-v1-2-34d2b6e721cf@gerhold.net>
+Autocrypt: addr=git@apitzsch.eu; prefer-encrypt=mutual;
+ keydata=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
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+User-Agent: Evolution 3.50.0 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: b-7O3WAJuJgwHSWiLnu5f_sowyqIhRok
-X-Proofpoint-ORIG-GUID: b-7O3WAJuJgwHSWiLnu5f_sowyqIhRok
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-16_10,2023-10-12_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
- clxscore=1015 malwarescore=0 priorityscore=1501 mlxscore=0 spamscore=0
- lowpriorityscore=0 mlxlogscore=999 bulkscore=0 suspectscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
- definitions=main-2310160148
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Df-Sender: YW5kcmVAYXBpdHpzY2guZXU=
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+Am Donnerstag, dem 21.09.2023 um 20:56 +0200 schrieb Stephan Gerhold:
+> Enable &wcnss_mem for msm8939-longcheer-l9100. This is needed now to
+> have WCNSS working. It was missed when &wcnss_mem was disabled by
+> default because the patch with the msm8939-longcheer-l9100 device
+> tree
+> was not applied yet.
+> 
+> Fixes: 0ece6438a8c0 ("arm64: dts: qcom: msm8916/39: Disable unneeded
+> firmware reservations")
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> ---
+>  arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts
+> b/arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts
+> index 6802714fda3f..a3357513037c 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts
+> +++ b/arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts
+> @@ -247,6 +247,10 @@ &wcnss_iris {
+>  	compatible = "qcom,wcn3620";
+>  };
+>  
+> +&wcnss_mem {
+> +	status = "okay";
+> +};
+> +
+>  &tlmm {
+>  	button_backlight_default: button-backlight-default-state {
+>  		pins = "gpio17";
+> 
 
-Use QAIC_TIMESYNC MHI channel to send UTC time to device in SBL
-environment. Remove support for QAIC_TIMESYNC MHI channel in AMSS
-environment as it is not used in that environment.
-
-Signed-off-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
----
- Documentation/accel/qaic/aic100.rst |   2 +-
- drivers/accel/qaic/mhi_controller.c |   4 +-
- drivers/accel/qaic/qaic.h           |   4 +
- drivers/accel/qaic/qaic_drv.c       |   7 ++
- drivers/accel/qaic/qaic_timesync.c  | 154 +++++++++++++++++++++++++++-
- 5 files changed, 166 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/accel/qaic/aic100.rst b/Documentation/accel/qaic/aic100.rst
-index 78f6a4cbcc42..17f7b3551608 100644
---- a/Documentation/accel/qaic/aic100.rst
-+++ b/Documentation/accel/qaic/aic100.rst
-@@ -220,7 +220,7 @@ of the defined channels, and their uses.
- +----------------+---------+----------+----------------------------------------+
- | QAIC_DEBUG     | 18 & 19 | AMSS     | Not used.                              |
- +----------------+---------+----------+----------------------------------------+
--| QAIC_TIMESYNC  | 20 & 21 | SBL/AMSS | Used to synchronize timestamps in the  |
-+| QAIC_TIMESYNC  | 20 & 21 | SBL      | Used to synchronize timestamps in the  |
- |                |         |          | device side logs with the host time    |
- |                |         |          | source.                                |
- +----------------+---------+----------+----------------------------------------+
-diff --git a/drivers/accel/qaic/mhi_controller.c b/drivers/accel/qaic/mhi_controller.c
-index bea428e6d2e9..2ca52de2b184 100644
---- a/drivers/accel/qaic/mhi_controller.c
-+++ b/drivers/accel/qaic/mhi_controller.c
-@@ -348,7 +348,7 @@ static struct mhi_channel_config aic100_channels[] = {
- 		.local_elements = 0,
- 		.event_ring = 0,
- 		.dir = DMA_TO_DEVICE,
--		.ee_mask = MHI_CH_EE_SBL | MHI_CH_EE_AMSS,
-+		.ee_mask = MHI_CH_EE_SBL,
- 		.pollcfg = 0,
- 		.doorbell = MHI_DB_BRST_DISABLE,
- 		.lpm_notify = false,
-@@ -364,7 +364,7 @@ static struct mhi_channel_config aic100_channels[] = {
- 		.local_elements = 0,
- 		.event_ring = 0,
- 		.dir = DMA_FROM_DEVICE,
--		.ee_mask = MHI_CH_EE_SBL | MHI_CH_EE_AMSS,
-+		.ee_mask = MHI_CH_EE_SBL,
- 		.pollcfg = 0,
- 		.doorbell = MHI_DB_BRST_DISABLE,
- 		.lpm_notify = false,
-diff --git a/drivers/accel/qaic/qaic.h b/drivers/accel/qaic/qaic.h
-index e3f4c30f3ffd..2f42de3ae9be 100644
---- a/drivers/accel/qaic/qaic.h
-+++ b/drivers/accel/qaic/qaic.h
-@@ -137,6 +137,10 @@ struct qaic_device {
- 	u32 (*gen_crc)(void *msg);
- 	/* Validate the CRC of a control message */
- 	bool (*valid_crc)(void *msg);
-+	/* MHI "QAIC_TIMESYNC" channel device */
-+	struct mhi_device	*qts_ch;
-+	/* Work queue for tasks related to MHI "QAIC_TIMESYNC" channel */
-+	struct workqueue_struct	*qts_wq;
- };
- 
- struct qaic_drm_device {
-diff --git a/drivers/accel/qaic/qaic_drv.c b/drivers/accel/qaic/qaic_drv.c
-index 4f449ea7eb2f..4d3585a711ca 100644
---- a/drivers/accel/qaic/qaic_drv.c
-+++ b/drivers/accel/qaic/qaic_drv.c
-@@ -325,6 +325,7 @@ static void cleanup_qdev(struct qaic_device *qdev)
- 	cleanup_srcu_struct(&qdev->dev_lock);
- 	pci_set_drvdata(qdev->pdev, NULL);
- 	destroy_workqueue(qdev->cntl_wq);
-+	destroy_workqueue(qdev->qts_wq);
- }
- 
- static struct qaic_device *create_qdev(struct pci_dev *pdev, const struct pci_device_id *id)
-@@ -348,6 +349,12 @@ static struct qaic_device *create_qdev(struct pci_dev *pdev, const struct pci_de
- 	if (!qdev->cntl_wq)
- 		return NULL;
- 
-+	qdev->qts_wq = alloc_workqueue("qaic_ts", WQ_UNBOUND, 0);
-+	if (!qdev->qts_wq) {
-+		destroy_workqueue(qdev->cntl_wq);
-+		return NULL;
-+	}
-+
- 	pci_set_drvdata(pdev, qdev);
- 	qdev->pdev = pdev;
- 
-diff --git a/drivers/accel/qaic/qaic_timesync.c b/drivers/accel/qaic/qaic_timesync.c
-index 769250272c21..301f4462d51b 100644
---- a/drivers/accel/qaic/qaic_timesync.c
-+++ b/drivers/accel/qaic/qaic_timesync.c
-@@ -22,7 +22,8 @@ module_param(timesync_delay_ms, uint, 0600);
- MODULE_PARM_DESC(timesync_delay_ms, "Delay in ms between two consecutive timesync operations");
- 
- enum qts_msg_type {
--	QAIC_TS_SYNC_REQ = 1,
-+	QAIC_TS_CMD_TO_HOST,
-+	QAIC_TS_SYNC_REQ,
- 	QAIC_TS_ACK_TO_HOST,
- 	QAIC_TS_MSG_TYPE_MAX
- };
-@@ -83,6 +84,16 @@ struct mqts_dev {
- 	struct qts_host_time_sync_msg_data *sync_msg;
- };
- 
-+struct qts_resp_msg {
-+	struct qts_hdr	hdr;
-+} __packed;
-+
-+struct qts_resp {
-+	struct qts_resp_msg	data;
-+	struct work_struct	work;
-+	struct qaic_device	*qdev;
-+};
-+
- #ifdef readq
- static u64 read_qtimer(const volatile void __iomem *addr)
- {
-@@ -234,12 +245,151 @@ static struct mhi_driver qaic_timesync_driver = {
- 	},
- };
- 
-+static void qaic_boot_timesync_worker(struct work_struct *work)
-+{
-+	struct qts_resp *resp = container_of(work, struct qts_resp, work);
-+	struct qts_host_time_sync_msg_data *req;
-+	struct qts_resp_msg data = resp->data;
-+	struct qaic_device *qdev = resp->qdev;
-+	struct mhi_device *mhi_dev;
-+	struct timespec64 ts;
-+	int ret;
-+
-+	mhi_dev = qdev->qts_ch;
-+	/* Queue the response message beforehand to avoid race conditions */
-+	ret = mhi_queue_buf(mhi_dev, DMA_FROM_DEVICE, &resp->data, sizeof(resp->data), MHI_EOT);
-+	if (ret) {
-+		kfree(resp);
-+		dev_warn(&mhi_dev->dev, "Failed to re-queue response buffer %d\n", ret);
-+		return;
-+	}
-+
-+	switch (data.hdr.msg_type) {
-+	case QAIC_TS_CMD_TO_HOST:
-+		req = kzalloc(sizeof(*req), GFP_KERNEL);
-+		if (!req)
-+			break;
-+
-+		req->header = data.hdr;
-+		req->header.msg_type = QAIC_TS_SYNC_REQ;
-+		ktime_get_real_ts64(&ts);
-+		req->data.tv_sec = cpu_to_le64(ts.tv_sec);
-+		req->data.tv_usec = cpu_to_le64(div_u64(ts.tv_nsec, NSEC_PER_USEC));
-+
-+		ret = mhi_queue_buf(mhi_dev, DMA_TO_DEVICE, req, sizeof(*req), MHI_EOT);
-+		if (ret) {
-+			kfree(req);
-+			dev_dbg(&mhi_dev->dev, "Failed to send request message. Error %d\n", ret);
-+		}
-+		break;
-+	case QAIC_TS_ACK_TO_HOST:
-+		dev_dbg(&mhi_dev->dev, "ACK received from device\n");
-+		break;
-+	default:
-+		dev_err(&mhi_dev->dev, "Invalid message type %u.\n", data.hdr.msg_type);
-+	}
-+}
-+
-+static int qaic_boot_timesync_queue_resp(struct mhi_device *mhi_dev, struct qaic_device *qdev)
-+{
-+	struct qts_resp *resp;
-+	int ret;
-+
-+	resp = kzalloc(sizeof(*resp), GFP_KERNEL);
-+	if (!resp)
-+		return -ENOMEM;
-+
-+	resp->qdev = qdev;
-+	INIT_WORK(&resp->work, qaic_boot_timesync_worker);
-+
-+	ret = mhi_queue_buf(mhi_dev, DMA_FROM_DEVICE, &resp->data, sizeof(resp->data), MHI_EOT);
-+	if (ret) {
-+		kfree(resp);
-+		dev_warn(&mhi_dev->dev, "Failed to queue response buffer %d\n", ret);
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
-+static void qaic_boot_timesync_remove(struct mhi_device *mhi_dev)
-+{
-+	struct qaic_device *qdev;
-+
-+	qdev = dev_get_drvdata(&mhi_dev->dev);
-+	mhi_unprepare_from_transfer(qdev->qts_ch);
-+	qdev->qts_ch = NULL;
-+}
-+
-+static int qaic_boot_timesync_probe(struct mhi_device *mhi_dev, const struct mhi_device_id *id)
-+{
-+	struct qaic_device *qdev = pci_get_drvdata(to_pci_dev(mhi_dev->mhi_cntrl->cntrl_dev));
-+	int ret;
-+
-+	ret = mhi_prepare_for_transfer(mhi_dev);
-+	if (ret)
-+		return ret;
-+
-+	qdev->qts_ch = mhi_dev;
-+	dev_set_drvdata(&mhi_dev->dev, qdev);
-+
-+	ret = qaic_boot_timesync_queue_resp(mhi_dev, qdev);
-+	if (ret) {
-+		dev_set_drvdata(&mhi_dev->dev, NULL);
-+		qdev->qts_ch = NULL;
-+		mhi_unprepare_from_transfer(mhi_dev);
-+	}
-+
-+	return ret;
-+}
-+
-+static void qaic_boot_timesync_ul_xfer_cb(struct mhi_device *mhi_dev, struct mhi_result *mhi_result)
-+{
-+	kfree(mhi_result->buf_addr);
-+}
-+
-+static void qaic_boot_timesync_dl_xfer_cb(struct mhi_device *mhi_dev, struct mhi_result *mhi_result)
-+{
-+	struct qts_resp *resp = container_of(mhi_result->buf_addr, struct qts_resp, data);
-+
-+	if (mhi_result->transaction_status || mhi_result->bytes_xferd != sizeof(resp->data)) {
-+		kfree(resp);
-+		return;
-+	}
-+
-+	queue_work(resp->qdev->qts_wq, &resp->work);
-+}
-+
-+static const struct mhi_device_id qaic_boot_timesync_match_table[] = {
-+	{ .chan = "QAIC_TIMESYNC"},
-+	{},
-+};
-+
-+static struct mhi_driver qaic_boot_timesync_driver = {
-+	.id_table = qaic_boot_timesync_match_table,
-+	.remove = qaic_boot_timesync_remove,
-+	.probe = qaic_boot_timesync_probe,
-+	.ul_xfer_cb = qaic_boot_timesync_ul_xfer_cb,
-+	.dl_xfer_cb = qaic_boot_timesync_dl_xfer_cb,
-+	.driver = {
-+		.name = "qaic_timesync",
-+	},
-+};
-+
- int qaic_timesync_init(void)
- {
--	return mhi_driver_register(&qaic_timesync_driver);
-+	int ret;
-+
-+	ret = mhi_driver_register(&qaic_timesync_driver);
-+	if (ret)
-+		return ret;
-+	ret = mhi_driver_register(&qaic_boot_timesync_driver);
-+
-+	return ret;
- }
- 
- void qaic_timesync_deinit(void)
- {
-+	mhi_driver_unregister(&qaic_boot_timesync_driver);
- 	mhi_driver_unregister(&qaic_timesync_driver);
- }
--- 
-2.40.1
-
+Reviewed-by: André Apitzsch <git@apitzsch.eu>
+Tested-by: André Apitzsch <git@apitzsch.eu>
