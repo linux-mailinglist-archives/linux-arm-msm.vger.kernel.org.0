@@ -2,72 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D93E7C9ED0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 07:32:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B5DA37C9EE7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 07:36:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231587AbjJPFcu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Oct 2023 01:32:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46418 "EHLO
+        id S231861AbjJPFgP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Oct 2023 01:36:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230442AbjJPFcu (ORCPT
+        with ESMTP id S232026AbjJPFgC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Oct 2023 01:32:50 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D309F4
-        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Oct 2023 22:32:47 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-32d9effe314so2099817f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Oct 2023 22:32:46 -0700 (PDT)
+        Mon, 16 Oct 2023 01:36:02 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21F54110
+        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Oct 2023 22:35:38 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-40537481094so42039675e9.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Oct 2023 22:35:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697434365; x=1698039165; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1697434536; x=1698039336; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=cahZBYlxb+nHcg00wtQSR4/273TLxW5YHWH0Zq0a+9k=;
-        b=bC45lCxGEG9ymuPX2oiVUgCiTtGHuyYawQeLZOmWZ0OiQh2s5y0pYFenfTo/R84MLd
-         TqwZYJbFmkDyt8gZeMG7lSsZJY/TYWEO+bwYmXFMVXFB9pEf96cPUpmxQ8ZlSipdEy/u
-         zpb/WUWtZGSRjiP6lCNi1xs6LVgYA1iWec7kAb4emMakKD/sAIHBbxQkkevHyQ0Ygbzk
-         CwXBw/0Pb5+OecvV/0tTffalfhs9fKgSFlS6N4gWGV0nH1GhFwmdv/BtvYIB0DB+DlhE
-         9OpcZXThtnIm4hJBMCSPPwZ6Gk57yTo7CZzoUlXo/txhWIzuNrNY+JrSWDb5c5sT+cQZ
-         ZHTQ==
+        bh=1lRW6iqRQ1rx4JmMgr/7+KkLqDf3AWZfuUZmiEDm6kI=;
+        b=iMlkcRWP3YtzK34Q3y3gI6//E3vNBuxuRSN4UOnyZ0iD3/Shb4MQciYU7xlbESP5R3
+         92y82aZr03Kd2Jo7YD3GfSkJ80omqdGV5InepJaZ99Rc0qZCbbwKKH2B3AIsnd4Pq8Dh
+         QKl2mqtrKz0pj+dmrZOI5Mh42MLg09kEVLY8YgsuHtIMnG+6SykZZWXIRUJwAWSjhctt
+         Pu/0unsTAwV80ISk9p2WHceYUwmSxl+L503IX4k+ywM5mdVSy3SqHPUrbhKlXBwmsOvS
+         Ly13zTwc9Sb9t0HNUR+/bZlyvmvHYSJy9pjf4xMby5CBeREiv4iEn+7ne3XtqQF4J5Uc
+         6rAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697434365; x=1698039165;
+        d=1e100.net; s=20230601; t=1697434536; x=1698039336;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cahZBYlxb+nHcg00wtQSR4/273TLxW5YHWH0Zq0a+9k=;
-        b=JCGl6bTuw7dYEI/woBOKzJFeptvBYZ/M0iLvun8H9IMsdIslLhhXmaJyO5KVq52Plr
-         eSnplOnvTTbDcp8pAT8xQKKeH9UakaN8kDI8FnOHAkOXIqaAe4+0dJdf5m1+jIe3ie5h
-         SqgKN0pA8hPFeiVUwpoL2cs+n8UYtsZPG+4NcoUWvCazi0j2oQO9zI6NrMNjpvxAWUrE
-         apopWlZW8js3D9cGFeZONUgzW4LJLQ8FrgXR8zir8AR3Nx7ieVyy9sWiCirK+Y7HBhPF
-         zwOX7x+jE4hWPUBo0fys+8+4yujmP0tnqQjb9JVpWF+coWubsMwxr5x01LqD4V/ev6Ih
-         pokQ==
-X-Gm-Message-State: AOJu0YzPN17c2oazCwX2lyW0p+X16Lkfs1JSGdKbK/y4+1DO1IP+Co9h
-        V1yENTqDB7rmELzMXmMHL377Fg==
-X-Google-Smtp-Source: AGHT+IHT1DShnEauSsz6zKTV4Fd2wxmSLcXOWS+sIvsgHJ56bQ8Kjh/Cj77fjZJi0qpCVhhj/l+e/g==
-X-Received: by 2002:adf:f404:0:b0:31c:3136:60af with SMTP id g4-20020adff404000000b0031c313660afmr25541534wro.61.1697434365472;
-        Sun, 15 Oct 2023 22:32:45 -0700 (PDT)
+        bh=1lRW6iqRQ1rx4JmMgr/7+KkLqDf3AWZfuUZmiEDm6kI=;
+        b=aO/BLdUkduWEQ3bY9Vak6qgl6jB7VxsJ6sh8062SNi1xZSetnyrFgJA439SY8w13+S
+         zuTn5yBLfA8Jmi92PQe6QSxu7VyrwabFWeH7Qnyj+wt04AERTTU88jh+W6x2wI787cfY
+         +4W3ivhnbk7hebcKXpP5dUrS4u+OBsRX2UW1YthgpbfZEyLAzh20x+4vJf2GMCBRY0Ie
+         mgY+ll8LTEwgyioCaPNb3Uxf/StEFXpoZi/gsSJyJQYmcccC5v83qf1Rk8LxrTAvCRy9
+         E1Mb5kJaIHCA76GbgRBEQr7uMrmBsuoN9qeXm24mWwkS0lUM83NB6MicanfU/DMiQOEM
+         uchA==
+X-Gm-Message-State: AOJu0YxDbEhZLGzMdLGUXb6ndAxGV5wWGHmLir7uqIy/kIDvxN5mqR4l
+        O5EqJ7bczP9/Sz9Rljq+U11P0w==
+X-Google-Smtp-Source: AGHT+IERpfoiaji28Dum93uMtxDB7WpJU3fQVZVKC+lYEF1YzNOo/U9HY7otv0RfqmIdfi9cPXuwrQ==
+X-Received: by 2002:a05:600c:2050:b0:405:3955:5881 with SMTP id p16-20020a05600c205000b0040539555881mr27050920wmg.36.1697434536660;
+        Sun, 15 Oct 2023 22:35:36 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.154])
-        by smtp.gmail.com with ESMTPSA id w12-20020a05600c474c00b003fee6e170f9sm6128233wmo.45.2023.10.15.22.32.44
+        by smtp.gmail.com with ESMTPSA id p18-20020a05600c431200b0040642a1df1csm6114712wme.25.2023.10.15.22.35.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 15 Oct 2023 22:32:45 -0700 (PDT)
-Message-ID: <4ad7cea6-806b-44cb-80ad-73d2f459936a@linaro.org>
-Date:   Mon, 16 Oct 2023 07:32:44 +0200
+        Sun, 15 Oct 2023 22:35:36 -0700 (PDT)
+Message-ID: <ffca099a-bf05-4973-885d-b049a45d466f@linaro.org>
+Date:   Mon, 16 Oct 2023 07:35:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: msm8953: Use non-deprecated
- qcom,domain in LPASS
+Subject: Re: [PATCH 1/4] dt-bindings: remoteproc: qcom: wcnss: Add WCN3680B
+ compatible
 Content-Language: en-US
 To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
         phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20231015-msm8953-misc-fixes-v1-0-b800deca9e46@z3ntu.xyz>
- <20231015-msm8953-misc-fixes-v1-2-b800deca9e46@z3ntu.xyz>
+        Conor Dooley <conor+dt@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Kalle Valo <kvalo@kernel.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        wcn36xx@lists.infradead.org, linux-wireless@vger.kernel.org
+References: <20231015-fp3-wcnss-v1-0-1b311335e931@z3ntu.xyz>
+ <20231015-fp3-wcnss-v1-1-1b311335e931@z3ntu.xyz>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -113,7 +119,7 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231015-msm8953-misc-fixes-v1-2-b800deca9e46@z3ntu.xyz>
+In-Reply-To: <20231015-fp3-wcnss-v1-1-1b311335e931@z3ntu.xyz>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -126,13 +132,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/10/2023 22:26, Luca Weiss wrote:
-> Use the qcom,domain property instead of the deprecated qcom,apr-domain,
-> which in turn also fixes a bunch of dtbs_checks warnings.
+On 15/10/2023 22:03, Luca Weiss wrote:
+> Add a compatible for the iris subnode in the WCNSS PIL.
 > 
 > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> ---
+>  Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
+> index 45eb42bd3c2c..0e5e0b7a0610 100644
+> --- a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
+> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
+> @@ -111,6 +111,7 @@ properties:
+>            - qcom,wcn3660
+>            - qcom,wcn3660b
+>            - qcom,wcn3680
+> +          - qcom,wcn3680b
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Looks like this should be made as compatible with qcom,wcn3680 (so with
+fallback).
 
 Best regards,
 Krzysztof
