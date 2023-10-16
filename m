@@ -2,142 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A4437CB34F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 21:24:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B8D3E7CB386
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Oct 2023 21:52:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232217AbjJPTYM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Oct 2023 15:24:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36404 "EHLO
+        id S233788AbjJPTw6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Oct 2023 15:52:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233267AbjJPTYL (ORCPT
+        with ESMTP id S233853AbjJPTw5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Oct 2023 15:24:11 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0160B4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Oct 2023 12:24:07 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-53e08b60febso7496147a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Oct 2023 12:24:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697484246; x=1698089046; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=FHvkz9coAqkoROM5dEbJZXW8Uluiu0n8FU/Vi4kbyPY=;
-        b=zUBlddBJmTimJI6EYakjEV0Aa48suIjZ47Ipp4MQ+dakl05qwjYJZW/cS6S8N6DqxM
-         eAN0NvF1zCPy+fIzdmCxsslADj9sJw04Ow/bajBTYAsTyzE9XmMpebWcFK7Ps3pVegG3
-         E51sWqRSROm2AeEhf6R4Hs6RjJeJKf5INEou83i3GPb6eahkxtRwoJgvENXuLu0PeaP9
-         DMC45WcO+TU1dPRldptMJioiyzwg6ijnPtfd2n8dCiXgOLYoAi7M1Tz6VuQqeUWarFS4
-         tFzM8LU0NBPFdSlZXl1TggS5nQcu9ce61s5mycOi6tcT3HFe3qw1aPEgpdlB1Ut1VWBp
-         UQYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697484246; x=1698089046;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FHvkz9coAqkoROM5dEbJZXW8Uluiu0n8FU/Vi4kbyPY=;
-        b=s8Acsd0273K02lPQBaVAg7XjhKDZbcGmi7qrEteuNQl3/ChTdRQS8Q5RDEQwVyOqwM
-         VeA0vVrJLHVWZe31s8WwlI52COz4y9x3IPw1U9GXuDGkTXwo8iIxFDG+cLM+a/nDo3Ys
-         YSOUaxN7dm/RjvbkhkCZx5k/cO0A+Xi1xBQStbCge6CSraNdKoEXCsWczzsK1nBhc17+
-         Nwc3JdCndJ6rtNP3VII3NDx7GQ0exuYyrVSxsbOH30d8xONMMfCqTgelRqUzGfNoi8Rg
-         3Pq4IKX3HlO48z2PTSeRVEhA12ADa/VKKUravnIMX7E9UZ6kLhwmsUPbTF9+hw1BPFS3
-         moEQ==
-X-Gm-Message-State: AOJu0Yz2DJ6PcOprrddmRtm63hXUElEgEREPGPBja3I0hL2sXmy48oCI
-        IDBx+5bzvw9LznSYP62eQy+6Bg==
-X-Google-Smtp-Source: AGHT+IGQvg/j6pcxAIf51f+y0M2+kH5s4yLr89W/ublBzYndVrS/cPa9A2dA8NR7xsZoe3y57zPYcA==
-X-Received: by 2002:a05:6402:40ce:b0:53d:d8ad:4d46 with SMTP id z14-20020a05640240ce00b0053dd8ad4d46mr154524edb.36.1697484246461;
-        Mon, 16 Oct 2023 12:24:06 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.154])
-        by smtp.gmail.com with ESMTPSA id q23-20020a50aa97000000b0053eb9af1e15sm326573edc.77.2023.10.16.12.24.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Oct 2023 12:24:05 -0700 (PDT)
-Message-ID: <fe6a1b0c-7771-48ef-8671-625ddf70fdf7@linaro.org>
-Date:   Mon, 16 Oct 2023 21:24:03 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: soundwire: Add reference to
- soundwire-controller.yaml schema
-To:     Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
+        Mon, 16 Oct 2023 15:52:57 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE7ABF2;
+        Mon, 16 Oct 2023 12:52:54 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39GIQZef032666;
+        Mon, 16 Oct 2023 19:52:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=CSfTVt3cN4X2d6P5ijagINIHmjZ2J0w7LRo2wDpzxQs=;
+ b=hP2cbTWoVW5mnUzjTn0W+hbejfwFE7oN5vjANqS8Bsv3mGspvyEA4DjkQyqWk1ogSPbV
+ 2cOQcDPe+fAkejoG4dszfzDPU/EYo0fA8XTRYoVg90ExIdiCGul9GsZvcj784r50Gs3i
+ 3Dsgn/K0br+V2/qo5yIclVE8UzTXP/O2UJQbcekUnLiNQUkRjtvM8+Gi97Z0y6RKaL2z
+ WkXVBY5mYGLXcw7m245K8NVT+L48mgHXjZbdNKD+6wxu9qtEa0SZjwmiTxFA6nbCMBZh
+ mJIDhJ33gHBp/wQ5orB3E3PLLERWekC3qoWQh9WNLO4da4z7CgrUGv76JwJg2A+CYWTW og== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tsaf0r7sd-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 16 Oct 2023 19:52:38 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39GJqbns006120
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 16 Oct 2023 19:52:37 GMT
+Received: from akhilpo-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.39; Mon, 16 Oct 2023 12:52:30 -0700
+Date:   Tue, 17 Oct 2023 01:22:27 +0530
+From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+CC:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        <cros-qcom-dts-watchers@chromium.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20231016155537.2973625-1-robh@kernel.org>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzTRLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnp5c3p0b2Yua296bG93c2tpQGxpbmFyby5vcmc+wsGUBBMBCgA+FiEE
- m9B+DgxR+NWWd7dUG5NDfTtBYpsFAmI+BxMCGwMFCRRfreEFCwkIBwIGFQoJCAsCBBYCAwEC
- HgECF4AACgkQG5NDfTtBYptgbhAAjAGunRoOTduBeC7V6GGOQMYIT5n3OuDSzG1oZyM4kyvO
- XeodvvYv49/ng473E8ZFhXfrre+c1olbr1A8pnz9vKVQs9JGVa6wwr/6ddH7/yvcaCQnHRPK
- mnXyP2BViBlyDWQ71UC3N12YCoHE2cVmfrn4JeyK/gHCvcW3hUW4i5rMd5M5WZAeiJj3rvYh
- v8WMKDJOtZFXxwaYGbvFJNDdvdTHc2x2fGaWwmXMJn2xs1ZyFAeHQvrp49mS6PBQZzcx0XL5
- cU9ZjhzOZDn6Apv45/C/lUJvPc3lo/pr5cmlOvPq1AsP6/xRXsEFX/SdvdxJ8w9KtGaxdJuf
- rpzLQ8Ht+H0lY2On1duYhmro8WglOypHy+TusYrDEry2qDNlc/bApQKtd9uqyDZ+rx8bGxyY
- qBP6bvsQx5YACI4p8R0J43tSqWwJTP/R5oPRQW2O1Ye1DEcdeyzZfifrQz58aoZrVQq+innR
- aDwu8qDB5UgmMQ7cjDSeAQABdghq7pqrA4P8lkA7qTG+aw8Z21OoAyZdUNm8NWJoQy8m4nUP
- gmeeQPRc0vjp5JkYPgTqwf08cluqO6vQuYL2YmwVBIbO7cE7LNGkPDA3RYMu+zPY9UUi/ln5
- dcKuEStFZ5eqVyqVoZ9eu3RTCGIXAHe1NcfcMT9HT0DPp3+ieTxFx6RjY3kYTGLOwU0EVUNc
- NAEQAM2StBhJERQvgPcbCzjokShn0cRA4q2SvCOvOXD+0KapXMRFE+/PZeDyfv4dEKuCqeh0
- hihSHlaxTzg3TcqUu54w2xYskG8Fq5tg3gm4kh1Gvh1LijIXX99ABA8eHxOGmLPRIBkXHqJY
- oHtCvPc6sYKNM9xbp6I4yF56xVLmHGJ61KaWKf5KKWYgA9kfHufbja7qR0c6H79LIsiYqf92
- H1HNq1WlQpu/fh4/XAAaV1axHFt/dY/2kU05tLMj8GjeQDz1fHas7augL4argt4e+jum3Nwt
- yupodQBxncKAUbzwKcDrPqUFmfRbJ7ARw8491xQHZDsP82JRj4cOJX32sBg8nO2N5OsFJOcd
- 5IE9v6qfllkZDAh1Rb1h6DFYq9dcdPAHl4zOj9EHq99/CpyccOh7SrtWDNFFknCmLpowhct9
- 5ZnlavBrDbOV0W47gO33WkXMFI4il4y1+Bv89979rVYn8aBohEgET41SpyQz7fMkcaZU+ok/
- +HYjC/qfDxT7tjKXqBQEscVODaFicsUkjheOD4BfWEcVUqa+XdUEciwG/SgNyxBZepj41oVq
- FPSVE+Ni2tNrW/e16b8mgXNngHSnbsr6pAIXZH3qFW+4TKPMGZ2rZ6zITrMip+12jgw4mGjy
- 5y06JZvA02rZT2k9aa7i9dUUFggaanI09jNGbRA/ABEBAAHCwXwEGAEKACYCGwwWIQSb0H4O
- DFH41ZZ3t1Qbk0N9O0FimwUCYDzvagUJFF+UtgAKCRAbk0N9O0Fim9JzD/0auoGtUu4mgnna
- oEEpQEOjgT7l9TVuO3Qa/SeH+E0m55y5Fjpp6ZToc481za3xAcxK/BtIX5Wn1mQ6+szfrJQ6
- 59y2io437BeuWIRjQniSxHz1kgtFECiV30yHRgOoQlzUea7FgsnuWdstgfWi6LxstswEzxLZ
- Sj1EqpXYZE4uLjh6dW292sO+j4LEqPYr53hyV4I2LPmptPE9Rb9yCTAbSUlzgjiyyjuXhcwM
- qf3lzsm02y7Ooq+ERVKiJzlvLd9tSe4jRx6Z6LMXhB21fa5DGs/tHAcUF35hSJrvMJzPT/+u
- /oVmYDFZkbLlqs2XpWaVCo2jv8+iHxZZ9FL7F6AHFzqEFdqGnJQqmEApiRqH6b4jRBOgJ+cY
- qc+rJggwMQcJL9F+oDm3wX47nr6jIsEB5ZftdybIzpMZ5V9v45lUwmdnMrSzZVgC4jRGXzsU
- EViBQt2CopXtHtYfPAO5nAkIvKSNp3jmGxZw4aTc5xoAZBLo0OV+Ezo71pg3AYvq0a3/oGRG
- KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
- fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231016155537.2973625-1-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        Stephen Boyd <swboyd@chromium.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        "Rob Clark" <robdclark@chromium.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+Subject: Re: [PATCH 1/7] drm/msm/a6xx: Fix unknown speedbin case
+Message-ID: <bjcjeixkmvhjv7nke65maknrckxjyosqsqpdf5i5v4iingfwj4@bkdhb2nbwbqg>
+References: <20230926-topic-a643-v1-0-7af6937ac0a3@linaro.org>
+ <20230926-topic-a643-v1-1-7af6937ac0a3@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20230926-topic-a643-v1-1-7af6937ac0a3@linaro.org>
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: -A8NT9JnHrPrI5PwlHH6CjgHuQP9ALY4
+X-Proofpoint-ORIG-GUID: -A8NT9JnHrPrI5PwlHH6CjgHuQP9ALY4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-16_10,2023-10-12_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 suspectscore=0
+ priorityscore=1501 bulkscore=0 adultscore=0 mlxlogscore=999 malwarescore=0
+ mlxscore=0 impostorscore=0 spamscore=0 lowpriorityscore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
+ definitions=main-2310160173
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/10/2023 17:55, Rob Herring wrote:
-> The soundwire-controller.yaml schema already defines the form for devices
-> in child nodes, so there's no need to do the same in the QCom controller
-> binding. Add a $ref to the soundwire-controller.yaml schema and drop the
-> child node schema.
+On Tue, Sep 26, 2023 at 08:24:36PM +0200, Konrad Dybcio wrote:
 > 
-> Signed-off-by: Rob Herring <robh@kernel.org>
+> When opp-supported-hw is present under an OPP node, but no form of
+> opp_set_supported_hw() has been called, that OPP is ignored by the API
+> and marked as unsupported.
+> 
+> Before Commit c928a05e4415 ("drm/msm/adreno: Move speedbin mapping to
+> device table"), an unknown speedbin would result in marking all OPPs
+> as available, but it's better to avoid potentially overclocking the
+> silicon - the GMU will simply refuse to power up the chip.
+> 
+> Currently, the Adreno speedbin code does just that (AND returns an
+> invalid error, (int)UINT_MAX). Fix that by defaulting to speedbin 0
+> (which is conveniently always bound to fuseval == 0).
+
+Wish we documented somewhere that we should reserve BIT(0) for fuse
+val=0 always and assume that would be the super SKU.
+
+Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+
+-Akhil
+
+> 
+> Fixes: c928a05e4415 ("drm/msm/adreno: Move speedbin mapping to device table")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
-
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
-
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index d4e85e24002f..522ca7fe6762 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -2237,7 +2237,7 @@ static int a6xx_set_supported_hw(struct device *dev, const struct adreno_info *i
+>  		DRM_DEV_ERROR(dev,
+>  			"missing support for speed-bin: %u. Some OPPs may not be supported by hardware\n",
+>  			speedbin);
+> -		return UINT_MAX;
+> +		supp_hw = BIT(0); /* Default */
+>  	}
+>  
+>  	ret = devm_pm_opp_set_supported_hw(dev, &supp_hw, 1);
+> 
+> -- 
+> 2.42.0
+> 
