@@ -2,80 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3758F7CC8A4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 18:22:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 22AAD7CC8B8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 18:25:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234360AbjJQQWO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Oct 2023 12:22:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46552 "EHLO
+        id S230343AbjJQQZc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Oct 2023 12:25:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229848AbjJQQWN (ORCPT
+        with ESMTP id S232644AbjJQQZb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Oct 2023 12:22:13 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BA37A4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 09:22:12 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2c5087d19a6so56520981fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 09:22:11 -0700 (PDT)
+        Tue, 17 Oct 2023 12:25:31 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEC72B0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 09:25:26 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2c503da4fd6so61075651fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 09:25:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697559730; x=1698164530; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1697559925; x=1698164725; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=LhFXYnO9Sn+RH2C/xMmWiKTwoHM9JKuhK3zd261Cr0s=;
-        b=lT6jPE50MGNKevW1X1gWUvhfUODj4hpFpz71XE6+EhQjcAY6mVszKMQsWOqdqN456L
-         u/trIBom5FFuOP6aV931LjXIJ4ErxRfnN0QXFbC9LOISi3BjrmLNQ9jT7RZpLuIaNZGv
-         bIM9QPYA8vtUCb4QcBQ8Vn/qyCGytaghbhNw8yy0bc2rJljzMmhXwBqx8LURLw9mwByV
-         ls8RuC9LuMMPC/ZLd7ydE/G0e9YofuDOD4q+FxsjChkXQB7C2TKPf5nxkIMV8bsQk4pH
-         YRJefyNzqSai6w1qsK6iQKgMQ5QDTVByryuXoE0Fnbn6zGpeZNfRYXBVx4C7rBZa3iKk
-         oCmA==
+        bh=R2vb1XTNsfZ5m/BsQX9yIiGSsnUXjkotdRfEp1ocJIc=;
+        b=cR5IqRLhXGkfi0FuhyZRet7dGDLQ7a8XepbPVmgGmacw3y7tSzzNX4u1aUwZqphsWM
+         aj0ZizpigWJ0XelbmCRrxxX8kOoRBu5EORw8XXx7pRgUHNh7xXNtUAas+slDtiUGNebJ
+         SZB7GlxUfJm3GBNNuKY5zCMc/tM6EIU7YZMwl5+fssdInoUdrhiS8iPVwhlaSGD8AoRB
+         dB5yk8D3BKnegugzujD0V1k1LI9ntR0hE/Ky6svY1R58SVRrpwSmnUF3zI6I/bII70rg
+         nP3E7cfLhk4EHFjVCOFXJ4RSKQVxsYjkV94dvyuM7MPeDt30Qis4DsnbJQoagnQWNUmL
+         rxEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697559730; x=1698164530;
+        d=1e100.net; s=20230601; t=1697559925; x=1698164725;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LhFXYnO9Sn+RH2C/xMmWiKTwoHM9JKuhK3zd261Cr0s=;
-        b=RP48/Q0l+sITUnM0DmWuamvQJ4upznwLnx53Sy0OrzTEo0ml8tIDUmrj68WmYSTQ+f
-         wEapF7ZpheTtyVHDkuRIo9R9uJdnYP8rJ5h97G8PmJDK25pAOIMgmDxfxdliG4OZmfe8
-         cO1jcgDDeFMxNqzz2m5SM7lkElLPjdd4005+Z3nOcVJNIiBLxkKJ5XvHZZTeXwLh/07/
-         hN6feE/tripSlWLOYI3DtLae+NmXQ+aonKdBwgiSzXwUxmcbVVlKzElSOJoeHOIZScH9
-         soWksrkAmLovU8ggSoTuw1LrdXdG5Y+GKItZt0HWCMtznTpJ89aHjyeSVS11T2I1FtqD
-         mE+A==
-X-Gm-Message-State: AOJu0YxLb8uSZnjICw/D+z6kWq1f1eRiZ+P6GtFA+jUIjEpe+Q2FdnwI
-        yi7fpWkF+FG6RVftPM5CLuzYTg==
-X-Google-Smtp-Source: AGHT+IGe4/EPokGcR14WOKTrawH9tGwUZLQcJXRew6V+8JtVuXgdh2CH8CgJREzH8K+96cAmlsZdIg==
-X-Received: by 2002:a2e:99da:0:b0:2c5:19ab:726e with SMTP id l26-20020a2e99da000000b002c519ab726emr2386571ljj.47.1697559730239;
-        Tue, 17 Oct 2023 09:22:10 -0700 (PDT)
+        bh=R2vb1XTNsfZ5m/BsQX9yIiGSsnUXjkotdRfEp1ocJIc=;
+        b=AjecpumbROGf9Jo9ufVMwCVo6fFtUAscQSbRr6ct7NCRP1CoH8Xg0MFWVVaM7hLCrm
+         KgLvHlPb5QJsYoTWTYyPVXrx7R1StpGIp8F6XYwKI2BAKuHYJrmJDfEJdLF2eVF75R/v
+         2e3nimYqsrxlSWxhUR1y9l2UrZImbY5f9pJElAwgb6ZHIm7rRxOkccQ3YQkZ1Ga10bil
+         MNHyQc1guo3Gee1JJKmTQ7A1vNXEnr6WUxj0KbFKzOR0DJHGxeTNAp+iNmuoKVBid/jF
+         MXrERnDVcvZLMcdq/QrA+BexBHw55tqfRDBgBjde3mt0/UvOxLcTD3SAUhaHm3SkM78q
+         RZZg==
+X-Gm-Message-State: AOJu0YwampQcZg1dVv+Fzb+OCxquy/ug8i+mjPMEI0UhvpVZy1pfB0JX
+        DyUOHJbxN6Nb1QduW0Ut07huWQ==
+X-Google-Smtp-Source: AGHT+IHWYI3YdD4u17EV22k+TxJ8a4G31u0Rd7E+oANUptnfVtuZcNmNr3WukHh7GNrQrXXXJplpWg==
+X-Received: by 2002:a2e:9bce:0:b0:2c5:1f57:1ef5 with SMTP id w14-20020a2e9bce000000b002c51f571ef5mr2280248ljj.39.1697559924923;
+        Tue, 17 Oct 2023 09:25:24 -0700 (PDT)
 Received: from [172.30.204.57] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id 3-20020a05600c234300b0040813e14b49sm1684492wmq.30.2023.10.17.09.22.07
+        by smtp.gmail.com with ESMTPSA id f12-20020a05600c4e8c00b0040772934b12sm10459334wmq.7.2023.10.17.09.25.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Oct 2023 09:22:09 -0700 (PDT)
-Message-ID: <f4a5cd2e-112d-478c-b56b-68bc55ecbdf7@linaro.org>
-Date:   Tue, 17 Oct 2023 18:22:06 +0200
+        Tue, 17 Oct 2023 09:25:24 -0700 (PDT)
+Message-ID: <3aede886-3219-4b9f-a44d-0c414979c260@linaro.org>
+Date:   Tue, 17 Oct 2023 18:25:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-x13s: Use the correct DP PHY
- compatible
+Subject: Re: [PATCH] arm64: dts: qcom: msm8939-longcheer-l9100: Add
+ proximity-near-level
 Content-Language: en-US
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Johan Hovold <johan@kernel.org>, Andy Gross <agross@kernel.org>,
+To:     =?UTF-8?Q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230929-topic-x13s_edpphy-v1-1-ce59f9eb4226@linaro.org>
- <CAA8EJprXCzVyaU49qgVcVfF0-FJ3QqAfTMZj5CEZm187hoi4=g@mail.gmail.com>
- <ZSz7---IW_7Oj2Zr@hovoldconsulting.com>
- <CAA8EJpr=HQOs8Ho_s_34y0-krCHwq3MThMkUzhOkPVdOSMQ62A@mail.gmail.com>
- <20231017032810.GP3553829@hu-bjorande-lv.qualcomm.com>
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+References: <20231016-bqm5_prox-v1-1-2acdc732be9d@apitzsch.eu>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231017032810.GP3553829@hu-bjorande-lv.qualcomm.com>
+In-Reply-To: <20231016-bqm5_prox-v1-1-2acdc732be9d@apitzsch.eu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
@@ -89,50 +84,14 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 10/17/23 05:28, Bjorn Andersson wrote:
-> On Mon, Oct 16, 2023 at 12:10:18PM +0300, Dmitry Baryshkov wrote:
->> On Mon, 16 Oct 2023 at 12:01, Johan Hovold <johan@kernel.org> wrote:
->>>
->>> On Mon, Oct 16, 2023 at 11:51:33AM +0300, Dmitry Baryshkov wrote:
->>>> On Fri, 29 Sept 2023 at 19:03, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>>>>
->>>>> The DP PHY needs different settings when an eDP display is used.
->>>>> Make sure these apply on the X13s.
->>>>
->>>> Could you please clarify, is it the same PHY type, just being
->>>> repurposed for eDP or is it a different PHY type?
->>>
->>> Same PHY, just different settings AFAIK.
->>>
->>>> If the former is the case (and the same PHY can be used for both DP
->>>> and eDP), it should carry the same compatible string and use software
->>>> mechanisms (e.g. phy_set_mode_ext()) to be programmed for the correct
->>>> operation mode.
->>>
->>> Possibly, but that's not how the current binding and implementation
->>> works:
->>>
->>>          6993c079cd58 ("dt-bindings: phy: qcom-edp: Add SC8280XP PHY compatibles")
->>>          2300d1cb24b3 ("phy: qcom: edp: Introduce support for DisplayPort")
->>>          3b7267dec445 ("phy: qcom: edp: Add SC8280XP eDP and DP PHYs")
->>>
->>>          https://lore.kernel.org/lkml/20220810040745.3582985-1-bjorn.andersson@linaro.org/
->>>
->>> And you'd still need to infer the mode from DT somehow.
->>
->> If it is the same hardware block, it seems incorrect to have two
->> different compat entries. For example, for PCIe RC vs PCIe EP we
->> specify the PHY mode from the host controller driver.
->> I'd say, we need to fix the bindings for both DP/eDP controller and
->> the PHY.  See the `phy-mode` DT property for example.
->>
+On 10/16/23 22:18, André Apitzsch wrote:
+> Consider an object near to the sensor when their distance is about 4 cm
+> or below.
 > 
-> It is one hardware block, supporting both eDP and DP, so I like your
-> suggestion of having a single compatible instead and using some other
-> means of defining the configuration. I just wasn't able to find a
-> better way to do so back when I wrote the binding/driver...
-Since this one is still unused, we can deprecate it (not sure if remove, 
-but deprecate) and add phy-type instead. I was quite surprised to see 
-that a new compatible was added as well :/
+> Signed-off-by: André Apitzsch <git@apitzsch.eu>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Out of interest, what is it set to by default?
 
 Konrad
