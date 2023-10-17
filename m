@@ -2,83 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 905437CCED6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 23:02:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6FA127CCF84
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 23:51:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230056AbjJQVC0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Oct 2023 17:02:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54474 "EHLO
+        id S235030AbjJQVvC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Oct 2023 17:51:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229848AbjJQVCZ (ORCPT
+        with ESMTP id S233549AbjJQVvC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Oct 2023 17:02:25 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B88A93;
-        Tue, 17 Oct 2023 14:02:24 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39HJkhiW004984;
-        Tue, 17 Oct 2023 21:02:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=yJyE0osReE6bCCORSSyCgWhEu5H9mHN29yMoEw38mcs=;
- b=QaXsDMEFSLJ3pWjNsCH2VNZSkV5JdNVa5dDtmvzFT2Y7hzg7ZS7P6FlmDQu69kaPtuMi
- QhrczF7rGcIgjLWowyqo0Beq20/h+DLxxrwDXfsWOLrAdRwcnIkOmLnPGOeB4WlP+cLc
- t5uMwgoz5C4Vj016bG4uL+2uwiYnRiE8Te6B+XCA+TDZGvAawwXPucXg0/0jwC/F+PWc
- 4J4AsnW8IBn4QQ1d7Y22TaNHnlpRdB3ihuJAeLaGwI0PrIGhrJFX8wksCxI5ucvfKDTS
- Wr9m7sBfWBn6qpRz9HW7PfCNrvqYmvn6cSErOapYH8fowO6nVF5of5rMSOp2txBSC2JZ Lg== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tsb3xu3qw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 17 Oct 2023 21:02:11 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39HL2Bng013796
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 17 Oct 2023 21:02:11 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.39; Tue, 17 Oct 2023 14:02:10 -0700
-Date:   Tue, 17 Oct 2023 14:02:09 -0700
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Rob Herring <robh@kernel.org>
-CC:     Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Johan Hovold <johan@kernel.org>,
-        "Krishna Kurapati PSSNV" <quic_kriskura@quicinc.com>
-Subject: Re: [PATCH 10/12] dt-bindings: usb: qcom,dwc3: Introduce flattened
- qcom,dwc3 binding
-Message-ID: <20231017210209.GU3553829@hu-bjorande-lv.qualcomm.com>
-References: <20231016-dwc3-refactor-v1-0-ab4a84165470@quicinc.com>
- <20231016-dwc3-refactor-v1-10-ab4a84165470@quicinc.com>
- <20231017183136.GA2438579-robh@kernel.org>
+        Tue, 17 Oct 2023 17:51:02 -0400
+Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E4DEFA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 14:50:58 -0700 (PDT)
+Received: by mail-yb1-xb2f.google.com with SMTP id 3f1490d57ef6-d9a3d737d66so6572237276.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 14:50:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1697579457; x=1698184257; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=BfSq4fUe022kDtkFJa2azWpgcNmqdZxJ8fBh51QJEV8=;
+        b=tUifuL9+/C4O6RqXx9beMS8lhbBgG42woTccPBBbhbPVUNIm8zDKUDe/JU42ywRYQH
+         ALtxXdQjdzeMNzrWD0TbMDqBl83CSGjRy2yQzrBYyztrdkOh4zB2dwYsFuoStdIYevI6
+         bpSQ4/NnbpitUQP6O4NVmq3dwIaRGdab6sWrrQ0nb3uhkQLEKITy4c+5gZ06pDICEHvN
+         nJW9R2/7PRgNlIUUUf2yHSeTlVqKcYZZfU8GoYdXUENWiHZAz9kLf5CgW/1ji9P9GNQa
+         BA5rVV9uyiw6flCSONyeuSiA3mF4Md2pb/j+FdWcOMZ2mWmi9i7/18NQdfMIVT4tdDpC
+         /kPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697579457; x=1698184257;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BfSq4fUe022kDtkFJa2azWpgcNmqdZxJ8fBh51QJEV8=;
+        b=GyUYz8IB9tkr02xK60Tz5RQ3qGF2Vy4ORHNUDt+fm96OK08TgId2O9QNMb+PgQTLU0
+         PHhqaJ7rJBoxI+S9RTB3Z+di3EmNFXEe1JsriKVTV4B4IPWJaTns36i0dksuXZ+XeMP8
+         bJatBvIe2sUk4o7uqAP7ngUk84MnuG9+L06FlZ9Fq5z53Nz9+dp0Qfaz74qxs30S0EFe
+         f82fujSF5YMUK0rwxVHZq3DvrgzvMN2rJ77zIuPa0aQjqwTBsqlAOx236vowF+b92DQe
+         rjwaW54//K7BtCoWZGTJZhhsCV0zUruQ7hfGQqBcKVtJxw5VKN8Tk/MND7/DDxVqRhn8
+         Q3hA==
+X-Gm-Message-State: AOJu0Yy1uqr6MN3I7x5UIes+F8fQ8yqFjbjne2eULA7nW5gRvOXEyHS9
+        GT2wrHzy2LtrC+683dNHa1z/1fGPfY6dTdLBpr+HrA==
+X-Google-Smtp-Source: AGHT+IH4mYBk2x6zSCe/oj9jgMckIfEgIIlbaCnHdu+xq/07HUwai6hGnMdCcSxiF6naVzSWPbRy3VdGUHd2529Uuiw=
+X-Received: by 2002:a25:254:0:b0:d9b:6264:b79e with SMTP id
+ 81-20020a250254000000b00d9b6264b79emr3129729ybc.53.1697579457419; Tue, 17 Oct
+ 2023 14:50:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20231017183136.GA2438579-robh@kernel.org>
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: T3MFkpIuQZx7FAsFwol4n_WQd8xpNvQt
-X-Proofpoint-ORIG-GUID: T3MFkpIuQZx7FAsFwol4n_WQd8xpNvQt
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-17_04,2023-10-17_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- impostorscore=0 phishscore=0 mlxlogscore=769 malwarescore=0
- priorityscore=1501 mlxscore=0 adultscore=0 bulkscore=0 clxscore=1015
- lowpriorityscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2309180000 definitions=main-2310170178
+References: <20230912-msm8909-cpufreq-v1-0-767ce66b544b@kernkonzept.com>
+ <20230912-msm8909-cpufreq-v1-1-767ce66b544b@kernkonzept.com>
+ <CAPDyKFq6U-MR4Bd+GmixYseRECDh142RhydtKbiPd3NHV2g6aw@mail.gmail.com>
+ <ZQGqfMigCFZP_HLA@gerhold.net> <CAPDyKFppdXe1AZo1jm2Bc_ZR18hw5Bmh1x+2P7Obhb_rJ2gc4Q@mail.gmail.com>
+ <ZRcC2IRRv6dtKY65@gerhold.net> <CAPDyKFoiup8KNv=1LFGKDdDLA1pHsdJUgTTWMdgxnikEmReXzg@mail.gmail.com>
+ <ZSg-XtwMxg3_fWxc@gerhold.net> <CAPDyKFoH5EOvRRKy-Bgp_B9B3rf=PUKK5N45s5PNgfBi55PaOQ@mail.gmail.com>
+ <ZS70aZbP33fkf9dP@gerhold.net>
+In-Reply-To: <ZS70aZbP33fkf9dP@gerhold.net>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 17 Oct 2023 23:50:21 +0200
+Message-ID: <CAPDyKFpwZdx=vyuAZSv1WGYCyiohfnt87LM1jw=fhKsF5Ks1Yw@mail.gmail.com>
+Subject: Re: [PATCH 1/4] cpufreq: qcom-nvmem: Enable virtual power domain devices
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -88,19 +82,65 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 17, 2023 at 01:31:36PM -0500, Rob Herring wrote:
-> On Mon, Oct 16, 2023 at 08:11:18PM -0700, Bjorn Andersson wrote:
-> > diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-[..]
-> > +  reg:
-> > +    description: Offset and length of register set for QSCRATCH wrapper
-> > +    maxItems: 1
-> 
-> Isn't this more things now? Or the description is wrong.
-> 
+[...]
 
-The description is wrong, the single cell is now intended to cover the
-whole USB block, which spans XHCI, DWC3 and Qualcomm glue parts.
+> >
+> > *) The pm_runtime_resume_and_get() works for QCS404 as a fix. It also
+> > works fine when there is only one RPMPD that manages the performance
+> > scaling.
+> >
+>
+> Agreed.
+>
+> > **) In cases where we have multiple PM domains to scale performance
+> > for, using pm_runtime_resume_and_get() would work fine too. Possibly
+> > we want to use device_link_add() to set up suppliers, to avoid calling
+> > pm_runtime_resume_and_get() for each and every device.
+> >
+>
+> Hm. What would you use as "supplied" device? The CPU device I guess?
 
-Regards,
-Bjorn
+The consumer would be the device that is used to probe the cpureq
+driver and the supplier(s) the virtual devices returned from genpd
+when attaching.
+
+>
+> I'm looking again at my old patch from 2020 where I implemented this
+> with device links in the OPP core. Seems like you suggested this back
+> then too :)
+>
+>   https://lore.kernel.org/linux-pm/20200826093328.88268-1-stephan@gerhold.net/
+>
+> However, for the special case of the CPU I think we don't gain any code
+> simplification from using device links. There will just be a single
+> resume of each virtual genpd device, as well as one put during remove().
+> Exactly the same applies when using device links, we need to set up the
+> device links once for each virtual genpd device, and clean them up again
+> during remove().
+>
+> Or can you think of another advantage of using device links?
+
+No, not at this point.
+
+So, in this particular case it may not matter that much. But when the
+number of PM domains starts to vary between platforms it could be a
+nice way to abstract some logic. I guess starting without using
+device-links and seeing how it evolves could be a way forward too.
+
+>
+> > ***) Due to the above, we don't need a new mechanism to avoid
+> > "caching" performance states for genpd. At least for the time being.
+> >
+>
+> Right. Given *) and **) I'll prepare a v2 of $subject patch with the
+> remove() cleanup fixed and an improved commit description.
+>
+> I'll wait for a bit in case you have more thoughts about the device
+> links.
+
+One more thing though that crossed my mind. In the rpmpd case, is
+there anything we need to care about during system suspend/resume that
+isn't already taken care of correctly?
+
+Kind regards
+Uffe
