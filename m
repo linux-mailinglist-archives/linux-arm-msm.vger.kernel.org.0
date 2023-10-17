@@ -2,112 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 808AF7CBAA8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 08:13:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B8F2F7CBACE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 08:18:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234546AbjJQGN6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Oct 2023 02:13:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35516 "EHLO
+        id S234396AbjJQGSV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Oct 2023 02:18:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234535AbjJQGN6 (ORCPT
+        with ESMTP id S230343AbjJQGSV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Oct 2023 02:13:58 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B91ECAB;
-        Mon, 16 Oct 2023 23:13:56 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39H4qhHo013255;
-        Tue, 17 Oct 2023 06:13:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=qcppdkim1;
- bh=CUQyzaS/rAzu/i//gN/H3XFAidpt6/VMRPrMfGI20Zw=;
- b=KNEOJtIvJAA8UyOirlkHCY18PZDnWVaUoZ29A+J3iTq89lQxJDokVECHI42mvnon5odO
- mYXqLSplcaKoleEvA/177fy0ouWyC3utunKip0H6ZgB3euBeDOZQRrq90JqYWf79V7KJ
- avWJ0F8W7dtIA8HODe9CF1ZKz7CLgOg/mvN2G7JFk233q+0B3ktlZPcccJtSvZJyUexV
- Dwui9YE9rdR7UIhCn8ksp31ZP/4LlOqUTdFOzL80XYKN64o+wdrZnCBea8ONwEReLlmk
- 1B44CDfUMmhs4B2byKP+LLgB+BeVsSux9FwpnET9qzJjfUi3qpSTaZ5FVLulSf6jebFU qg== 
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tsaf0s7ry-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 17 Oct 2023 06:13:51 +0000
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 39H6DlAO029592;
-        Tue, 17 Oct 2023 06:13:48 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3tqm2m0cc5-1;
-        Tue, 17 Oct 2023 06:13:48 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 39H6DmIT029600;
-        Tue, 17 Oct 2023 06:13:48 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-sartgarg-hyd.qualcomm.com [10.213.105.147])
-        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 39H6DlWo029599;
-        Tue, 17 Oct 2023 06:13:48 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2339771)
-        id 59EBF57132F; Tue, 17 Oct 2023 11:43:47 +0530 (+0530)
-From:   Sarthak Garg <quic_sartgarg@quicinc.com>
-To:     Ulf Hansson <ulf.hansson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Adrian Hunter <adrian.hunter@intel.com>
-Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, quic_cang@quicinc.com,
-        quic_nguyenb@quicinc.com, quic_rampraka@quicinc.com,
-        quic_pragalla@quicinc.com, quic_sayalil@quicinc.com,
-        quic_nitirawa@quicinc.com, quic_sachgupt@quicinc.com,
-        quic_bhaskarv@quicinc.com, quic_narepall@quicinc.com,
-        kernel@quicinc.com, Sarthak Garg <quic_sartgarg@quicinc.com>
-Subject: [PATCH V3 3/3] mmc: sdhci-msm: Enable MMC_CAP2_SLEEP_AWAKE for Qualcomm controllers
-Date:   Tue, 17 Oct 2023 11:43:36 +0530
-Message-Id: <20231017061336.9355-4-quic_sartgarg@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20231017061336.9355-1-quic_sartgarg@quicinc.com>
-References: <20231017061336.9355-1-quic_sartgarg@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: rCLz6Mac_WWNiJ_Lp2mQv3xIOlHvUHAA
-X-Proofpoint-ORIG-GUID: rCLz6Mac_WWNiJ_Lp2mQv3xIOlHvUHAA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-16_13,2023-10-12_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
- priorityscore=1501 bulkscore=0 adultscore=0 mlxlogscore=959 malwarescore=0
- mlxscore=0 impostorscore=0 spamscore=0 lowpriorityscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
- definitions=main-2310170049
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=no
-        autolearn_force=no version=3.4.6
+        Tue, 17 Oct 2023 02:18:21 -0400
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7C45B0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Oct 2023 23:18:19 -0700 (PDT)
+Received: by mail-qt1-x833.google.com with SMTP id d75a77b69052e-419b232fc99so25351741cf.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Oct 2023 23:18:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1697523499; x=1698128299; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ceHtW9H2siBIBWG0gigB6B/LkLmcRGMR+a2ck1IcBwg=;
+        b=itGyNKLh5nD1XdD2ScLb24lq0uYk/PmlTQWibS/0cfoFatDws3i48nHE/4rwZpBvik
+         +LyFalHUyQOTCwEpSYYZqKhD0u7pUOOqltZQHRrRtSOnmpBO7Fvn7s/sdpHFf77ogGyF
+         1PTsEFlGqsY81FU6pKCCdpd/H1Efpb69Uvbzm0Z4sm9vlbTTgJ7YfArMyvv/OOJqCrp7
+         RS/roOxog5kT2rkvRfXgebzko0STCiL9Dh0Ktk+g3q7CWirIXhyaWXsdrcUAd6exEVYN
+         0nBMrbcIto55JCDQyluk4RWRLfPMsWYZ9BDaF+3SaI25IwOwlX4BTXMCB1LTrdMH+rpB
+         l4Mg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697523499; x=1698128299;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ceHtW9H2siBIBWG0gigB6B/LkLmcRGMR+a2ck1IcBwg=;
+        b=e1TBLQmR+Sy9BGZ+32otmZTRDmNJz8MT8DjfTm4uTBBCF1wPEfyv6N1W1SqXxIw4NO
+         E3plZK+uVjfQgmr8wLcuuavYCKqj3SolcIPR6GfLI6uBK1UVzWIhluQ6AXLg255xvHWf
+         JTAzU/kOOcwvA5Gedx1pn4LOQXUgkEXt6ANGLx9Cgs4Aim5p/SOB26kWALRDr1rVXmt2
+         hHopco+dRYZdcqj6jc262xfZF86luEetpepl4Zak6amSCmyJ6ZeTUxDzv9ih8SNciHx+
+         alklHOscjGi6iP3ZzErTSioWumAY/A0F5ewak5PrdKeIEyGOiQmoGRygzW0RHGapmpcs
+         sO0A==
+X-Gm-Message-State: AOJu0YwDRO7+SVWtn3+gLr1mDLnauvLrY2efkuzokahKzTWPDOkmh9mW
+        HtVl4Rv9qyMxC7A6UIoRnFoeKDbhhpFAyVp8bA==
+X-Google-Smtp-Source: AGHT+IH6onFgtojbAPtwq1nUfbLTYNwEUGI4rAghxeeUTFIt3K42uOklPDt+jOdwnKGTSf3yCD3soA==
+X-Received: by 2002:a05:6214:1d2d:b0:66d:5ee5:8158 with SMTP id f13-20020a0562141d2d00b0066d5ee58158mr1444238qvd.55.1697523498769;
+        Mon, 16 Oct 2023 23:18:18 -0700 (PDT)
+Received: from [127.0.1.1] ([117.207.31.199])
+        by smtp.gmail.com with ESMTPSA id f22-20020a05620a12f600b00765aa3ffa07sm390304qkl.98.2023.10.16.23.18.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Oct 2023 23:18:18 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 0/2] PCI: dwc: Fix the BAR size programming
+Date:   Tue, 17 Oct 2023 11:47:53 +0530
+Message-Id: <20231017-pcie-qcom-bar-v1-0-3e26de07bec0@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABEnLmUC/x3MQQqAIBBA0avErBvQlIquEi1smmoWpSlEEN49a
+ fkW/7+QOAonGKoXIt+SxJ8Fuq6AdndujLIUQ6Mao5XuMJAwXuQPnF1Esn1ryBhSbKE0IfIqz/8
+ bp5w/w+Gnn18AAAA=
+To:     Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>
+Cc:     linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Manivannan Sadhasivam <mani@kernel.org>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1599;
+ i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
+ bh=Gcs3HOsPBfF3cIkTmKhbvwJROzoVyq0co8h182wgdmE=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBlLicmF9zGtxWxnm6EWnPLFh5TL2I/hR68hJ1zH
+ Tam/uqLLgGJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZS4nJgAKCRBVnxHm/pHO
+ 9dfhB/9woGeMPND3WMkroRyWsqHjVp1whwd/ogF3rdrot3nWX4fUaqcueDpak9RrFwEDZgbrFb9
+ O/qOPzSYtzKqFXb3qHDuZA2PBcnqjn1qjkt3wCP4YXdgmjc96pLNqceOJbVh81CoWTVqoFiamHo
+ C9BzkENnesEWp4imFCwGHA69LMob07hExBKMIvVZO8GHK0qnJSaaJrn0ir47nYzzODaNh2yvKcI
+ lAr8fdn3yHK89loUJbefFNqrlDus4Y9PYnn/kfLRqRHirG21jUJp8GM+hXc91iq0WLAgmRO7yFC
+ JtO+wTjsnHqQHvegM8vG3TBej2R2dzmTFcinDNsCcC1/zDHj
+X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable MMC_CAP2_SLEEP_AWAKE for Qualcomm controllers to let them use
-sleep/awake functionality for faster eMMC resume instead of
-doing full initialization.
+Hello,
 
-Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
+This series fixes the issue seen on Qcom EP platforms implementing the DWC
+core while setting the BAR size. Currently, whatever the BAR size getting
+programmed through pci_epc_set_bar() is not reflected on the host side
+during enumeration.
+
+Debugging that issue revealed that the DWC Spec mandates asserting the DBI
+CS2 register in addition to DBI CS while programming some read only and
+shadow registers. On the Qcom EP platforms, the BAR mask register used to
+program the BAR size is marked as read only (RO). So the driver needs to
+assert DBI CS2 before programming and deassert it once done.
+
+Hence, this series adds two new macros for asserting/deasserting the DBI
+CS2 while programming BAR size and also introduces a new host callback,
+dbi_cs2_access() that the vendor drivers can implement.
+
+For platforms not requiring the DBI CS2 access, this is a no-op.
+
+This series has been tested on Qcom SM8450 based development platform.
+
 ---
- drivers/mmc/host/sdhci-msm.c | 1 +
- 1 file changed, 1 insertion(+)
+Manivannan Sadhasivam (2):
+      PCI: dwc: Add new accessors to enable/disable DBI CS2 while setting the BAR size
+      PCI: qcom-ep: Implement dbi_cs2_access() function callback for DBI CS2 access
 
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index 93c662e28b3b..edcf18c02bf7 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -2628,6 +2628,7 @@ static int sdhci_msm_probe(struct platform_device *pdev)
- 
- 	msm_host->mmc->caps |= MMC_CAP_WAIT_WHILE_BUSY | MMC_CAP_NEED_RSP_BUSY;
- 	msm_host->mmc->caps |= MMC_CAP_AGGRESSIVE_PM;
-+	msm_host->mmc->caps2 |= MMC_CAP2_SLEEP_AWAKE;
- 
- 	/* Set the timeout value to max possible */
- 	host->max_timeout_count = 0xF;
+ drivers/pci/controller/dwc/pcie-designware-ep.c |  6 ++++++
+ drivers/pci/controller/dwc/pcie-designware.h    | 13 +++++++++++++
+ drivers/pci/controller/dwc/pcie-qcom-ep.c       | 14 ++++++++++++++
+ 3 files changed, 33 insertions(+)
+---
+base-commit: a286439bbc71e8c9bb1660b7d4775efcab6011fa
+change-id: 20231017-pcie-qcom-bar-c4863c33c0e4
+
+Best regards,
 -- 
-2.17.1
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
