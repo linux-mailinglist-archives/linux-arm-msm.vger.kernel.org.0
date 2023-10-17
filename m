@@ -2,113 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 09E0D7CBEF7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 11:22:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 943FE7CBF0D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 11:26:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234890AbjJQJV7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Oct 2023 05:21:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43186 "EHLO
+        id S234829AbjJQJ0w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Oct 2023 05:26:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234906AbjJQJVq (ORCPT
+        with ESMTP id S234839AbjJQJ0v (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Oct 2023 05:21:46 -0400
-Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E94E7106;
-        Tue, 17 Oct 2023 02:21:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail3; t=1697534496; x=1697793696;
-        bh=OFdosyKcp6PhUrJ2tCBNQ9++8yaOxAtxpU+EBRrduxk=;
-        h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-         Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-        b=Y6ECVSLSwxbsC9spu35iGCIkBYplhs2ocrxGwobTOp1IeQHiBxrTITqbIBSmN350E
-         UPAkm/sKtClLj4PWv/GgztKzCB/jhS94h27uWIovdrWaK/uK8o5QV9RZHDGQGbXo8n
-         Xxs2WrGkhMAw6FkqR7UBz7CuhK/RBozUru/6ASbf8IRRRQmHK8HACsyUUBa9eoTpkw
-         ZL9R2Gg8FDBVAFR/uYC6aJVIpMqA9MoQujeMoWBGL3yYoe1VKrbvx/TmP5ahRDkQaE
-         Q4EA1bZ0bxVQP0z6Ptqd2++GrLdE7vBzUI4r67pQTJ4DxREFbEbYJnFZGyOrP4Tlxw
-         ekPJbMgRZjVrQ==
-Date:   Tue, 17 Oct 2023 09:21:30 +0000
-To:     linux-kernel@vger.kernel.org
-From:   Raymond Hackley <raymondhackley@protonmail.com>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Raymond Hackley <raymondhackley@protonmail.com>
-Subject: [PATCH] ARM: dts: exynos: fix input keys with Linux event codes for midas
-Message-ID: <20231017091953.43478-1-raymondhackley@protonmail.com>
-Feedback-ID: 49437091:user:proton
+        Tue, 17 Oct 2023 05:26:51 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D351FE8;
+        Tue, 17 Oct 2023 02:26:49 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39H8HNNr005313;
+        Tue, 17 Oct 2023 09:26:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=ifqRCltxvTbgUWdpLs0nzht25Xok/zc8SeaY70fDy6c=;
+ b=ohxLeWU73nWczI47i9MbetQqyDDR90nMXMz6ixL5ut7z+hd8MD6YmoWIin7qrFQQBJT8
+ Hm9aIvo1LE1f23tEtufKiPHcoaSZNK/pLHYmPnkBGDE9+sDMDjZiQ9se04MNrm7Bf8iM
+ s7/8jjcfSL2BqDdZ4ZxIBo7+MEg0mLefZ2u3lcrUHxTW3oylBH5irjpAm7qttSUrcBkL
+ uiNXsmTaZl0M3DrISy2jBs+8gGnQNNAoPbWsFJbLQkejWxFBGsBTdsC8MosT8dAMyTow
+ fVJOidqciuv0O+nH+XdlmWgf8+jvckJ54HTweQij8AMG2fzuRkiOk1ZBJ4j/i3QPTBBS dg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tsnej8akc-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 17 Oct 2023 09:26:47 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39H9QkqM014406
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 17 Oct 2023 09:26:46 GMT
+Received: from ekangupt-linux.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.39; Tue, 17 Oct 2023 02:26:43 -0700
+From:   Ekansh Gupta <quic_ekangupt@quicinc.com>
+To:     <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
+CC:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
+        <ekangupt@qti.qualcomm.com>, <gregkh@linuxfoundation.org>,
+        <linux-kernel@vger.kernel.org>, <fastrpc.upstream@qti.qualcomm.com>
+Subject: [PATCH v4 0/5] Add multimode invoke request IOCTL support
+Date:   Tue, 17 Oct 2023 14:56:34 +0530
+Message-ID: <1697534799-5124-1-git-send-email-quic_ekangupt@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: PppUMLcslcZozdy2IvrWHPTvw0DM4Skp
+X-Proofpoint-ORIG-GUID: PppUMLcslcZozdy2IvrWHPTvw0DM4Skp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-16_13,2023-10-12_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
+ bulkscore=0 impostorscore=0 mlxscore=0 lowpriorityscore=0 suspectscore=0
+ priorityscore=1501 phishscore=0 malwarescore=0 mlxlogscore=524
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310170078
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Input event code 139 stands for KEY_MENU, instead of KEY_OK as key-ok
-inplies. Fix all event codes with linux-event-codes.h included for midas.
+Add changes to support multimode invocation ioctl request. This
+ioctl call facilitates multiple types of requests from user including
+CRC check, performance counters, shared context bank usage, etc.
+This series also carries patch to save and restore interrupted
+context.
 
-Signed-off-by: Raymond Hackley <raymondhackley@protonmail.com>
----
- arch/arm/boot/dts/samsung/exynos4412-midas.dtsi | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+Ekansh Gupta (5):
+  misc: fastrpc: Add fastrpc multimode invoke request support
+  misc: fastrpc: Add CRC support for remote buffers
+  misc: fastrpc: Capture kernel and DSP performance counters
+  misc: fastrpc: Add support to save and restore interrupted
+  misc: fastrpc: Add support to allocate shared context bank
 
-diff --git a/arch/arm/boot/dts/samsung/exynos4412-midas.dtsi b/arch/arm/boo=
-t/dts/samsung/exynos4412-midas.dtsi
-index 7daf25865551..d00b500254ab 100644
---- a/arch/arm/boot/dts/samsung/exynos4412-midas.dtsi
-+++ b/arch/arm/boot/dts/samsung/exynos4412-midas.dtsi
-@@ -15,6 +15,7 @@
-=20
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/input/input.h>
-+#include <dt-bindings/input/linux-event-codes.h>
- #include <dt-bindings/interrupt-controller/irq.h>
- #include <dt-bindings/clock/maxim,max77686.h>
- #include "exynos-pinctrl.h"
-@@ -137,21 +138,21 @@ gpio-keys {
-=20
- =09=09key-down {
- =09=09=09gpios =3D <&gpx3 3 GPIO_ACTIVE_LOW>;
--=09=09=09linux,code =3D <114>;
-+=09=09=09linux,code =3D <KEY_VOLUMEDOWN>;
- =09=09=09label =3D "volume down";
- =09=09=09debounce-interval =3D <10>;
- =09=09};
-=20
- =09=09key-up {
- =09=09=09gpios =3D <&gpx2 2 GPIO_ACTIVE_LOW>;
--=09=09=09linux,code =3D <115>;
-+=09=09=09linux,code =3D <KEY_VOLUMEUP>;
- =09=09=09label =3D "volume up";
- =09=09=09debounce-interval =3D <10>;
- =09=09};
-=20
- =09=09key-power {
- =09=09=09gpios =3D <&gpx2 7 GPIO_ACTIVE_LOW>;
--=09=09=09linux,code =3D <116>;
-+=09=09=09linux,code =3D <KEY_POWER>;
- =09=09=09label =3D "power";
- =09=09=09debounce-interval =3D <10>;
- =09=09=09wakeup-source;
-@@ -159,7 +160,7 @@ key-power {
-=20
- =09=09key-ok {
- =09=09=09gpios =3D <&gpx0 1 GPIO_ACTIVE_LOW>;
--=09=09=09linux,code =3D <139>;
-+=09=09=09linux,code =3D <KEY_OK>;
- =09=09=09label =3D "ok";
- =09=09=09debounce-interval =3D <10>;
- =09=09=09wakeup-source;
---=20
-2.39.2
+ drivers/misc/fastrpc.c      | 491 ++++++++++++++++++++++++++++++++++++--------
+ include/uapi/misc/fastrpc.h |  52 +++++
+ 2 files changed, 458 insertions(+), 85 deletions(-)
 
+-- 
+2.7.4
 
