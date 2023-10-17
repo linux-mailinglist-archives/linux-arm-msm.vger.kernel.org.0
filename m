@@ -2,227 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D1897CD075
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 01:23:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D00D47CCFF5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 00:18:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344275AbjJQXX0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Oct 2023 19:23:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38592 "EHLO
+        id S232593AbjJQWSX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Oct 2023 18:18:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344307AbjJQXXU (ORCPT
+        with ESMTP id S230219AbjJQWSX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Oct 2023 19:23:20 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.120])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4613EF7;
-        Tue, 17 Oct 2023 16:23:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1697584999; x=1729120999;
-  h=message-id:date:mime-version:from:subject:to:cc:
-   references:in-reply-to:content-transfer-encoding;
-  bh=CHJ5c/rgNCeYwsWKj461nWA5YOYqSXvbYEb3J1+5U7Q=;
-  b=GzeSj5X+AP9euUybYwnPXA9j6RZlrHmHjI8CJP6UMnf2TOj+hBPZV4Ca
-   UB/RxCP79hCNPyUBUWT4U9/vTGqmNo7NS39OxMmRtfgbRh0/tOAUtls99
-   HYYtG5uMLJKZus1mP4APSbG7+BfnUwKo9Frw2mFfakkUIQwlwLtvaaFgv
-   P/B5781LIH80dIztJwG+IIip9dB3GvhVcZiKUHAXn8AgtfzqwBMOVJpSB
-   NtG7UoXK7BU8Yr61Xig6SiypEPns8qF9VMmlCONmn31y3dpb+IQJyYWcd
-   gy7a5212UdKSc+9alHmv+qTyOkG8NQbMWqE/T15ICp3gwjgKvjh95mFv5
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10866"; a="384778089"
-X-IronPort-AV: E=Sophos;i="6.03,233,1694761200"; 
-   d="scan'208";a="384778089"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Oct 2023 16:23:17 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10866"; a="826637462"
-X-IronPort-AV: E=Sophos;i="6.03,233,1694761200"; 
-   d="scan'208";a="826637462"
-Received: from asprado-mobl2.amr.corp.intel.com (HELO [10.212.55.179]) ([10.212.55.179])
-  by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Oct 2023 16:23:16 -0700
-Message-ID: <8eb90a7a-8649-4a31-9997-d970915510bf@linux.intel.com>
-Date:   Tue, 17 Oct 2023 16:48:06 -0500
+        Tue, 17 Oct 2023 18:18:23 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87C6E95;
+        Tue, 17 Oct 2023 15:18:21 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39HMIEBn028433;
+        Tue, 17 Oct 2023 22:18:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=yod7tKTiyenpKi21EI2xG36/BjlhaK3nnueHtQLNxnE=;
+ b=Q86VsmBJbl9UNZYZgUuhbH32T9rO/sTNx3jYWtCEL4MISbP52a4mijaajZp9DgQQFkG3
+ eAQvmJxeFNYpN2vI62riEkFUarZdMLHGG4bVxFRCRr21J1Bw82joCT//YRIhCt42GWOV
+ PMRYET5Hg8d1sUjWTcu6O2KSTYKRqVT9xp8BDCpxTn0PJncEQzP3fQtLSr0WFBAJSajx
+ V0/QIrp/RaLBy30FyaT+owzngzl19XL96nsBhPML0yFQYxjk9HO87c1oviPca6hxNGE7
+ Cq3I9Nf1gp2c64cpApD9i9kLP+v/6FcwH2MZRUtEmQAT1fCehcgYiEGx3aTn9d7fyNmz ew== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tsv0v143c-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 17 Oct 2023 22:18:13 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39HMICf4020266
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 17 Oct 2023 22:18:12 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.39; Tue, 17 Oct 2023 15:18:12 -0700
+Date:   Tue, 17 Oct 2023 15:18:11 -0700
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Manivannan Sadhasivam <mani@kernel.org>
+CC:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        <linux-pci@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH 2/2] PCI: qcom-ep: Implement dbi_cs2_access() function
+ callback for DBI CS2 access
+Message-ID: <20231017221811.GV3553829@hu-bjorande-lv.qualcomm.com>
+References: <20231017-pcie-qcom-bar-v1-0-3e26de07bec0@linaro.org>
+ <20231017-pcie-qcom-bar-v1-2-3e26de07bec0@linaro.org>
+ <20231017142431.GR3553829@hu-bjorande-lv.qualcomm.com>
+ <20231017162129.GF5274@thinkpad>
+ <20231017165609.GT3553829@hu-bjorande-lv.qualcomm.com>
+ <20231017174100.GA137137@thinkpad>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Subject: Re: [PATCH v9 07/34] ASoC: Add SOC USB APIs for adding an USB backend
-To:     Wesley Cheng <quic_wcheng@quicinc.com>, mathias.nyman@intel.com,
-        gregkh@linuxfoundation.org, lgirdwood@gmail.com,
-        broonie@kernel.org, perex@perex.cz, tiwai@suse.com,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, srinivas.kandagatla@linaro.org,
-        bgoswami@quicinc.com, Thinh.Nguyen@synopsys.com
-Cc:     linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20231017200109.11407-1-quic_wcheng@quicinc.com>
- <20231017200109.11407-8-quic_wcheng@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <20231017200109.11407-8-quic_wcheng@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20231017174100.GA137137@thinkpad>
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: AQEoIHNDHRf6LYsZYb5W1aCSSblSTH7a
+X-Proofpoint-GUID: AQEoIHNDHRf6LYsZYb5W1aCSSblSTH7a
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-17_06,2023-10-17_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 malwarescore=0 phishscore=0 mlxscore=0 mlxlogscore=881
+ impostorscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310170188
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, Oct 17, 2023 at 11:11:00PM +0530, Manivannan Sadhasivam wrote:
+> On Tue, Oct 17, 2023 at 09:56:09AM -0700, Bjorn Andersson wrote:
+> > On Tue, Oct 17, 2023 at 09:51:29PM +0530, Manivannan Sadhasivam wrote:
+> > > On Tue, Oct 17, 2023 at 07:24:31AM -0700, Bjorn Andersson wrote:
+> > > > On Tue, Oct 17, 2023 at 11:47:55AM +0530, Manivannan Sadhasivam wrote:
+> > > > > From: Manivannan Sadhasivam <mani@kernel.org>
+> > > > 
+> > > > Your S-o-b should match this.
+> > > > 
+> > > 
+> > > I gave b4 a shot for sending the patches and missed this. Will fix it in next
+> > > version.
+> > > 
+> > > > > 
+> > > > > Qcom EP platforms require enabling/disabling the DBI CS2 access while
+> > > > > programming some read only and shadow registers through DBI. So let's
+> > > > > implement the dbi_cs2_access() callback that will be called by the DWC core
+> > > > > while programming such registers like BAR mask register.
+> > > > > 
+> > > > > Without DBI CS2 access, writes to those registers will not be reflected.
+> > > > > 
+> > > > > Fixes: f55fee56a631 ("PCI: qcom-ep: Add Qualcomm PCIe Endpoint controller driver")
+> > > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > > > ---
+> > > > >  drivers/pci/controller/dwc/pcie-qcom-ep.c | 14 ++++++++++++++
+> > > > >  1 file changed, 14 insertions(+)
+> > > > > 
+> > > > > diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> > > > > index 32c8d9e37876..4653cbf7f9ed 100644
+> > > > > --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> > > > > +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> > > > > @@ -124,6 +124,7 @@
+> > > > >  
+> > > > >  /* ELBI registers */
+> > > > >  #define ELBI_SYS_STTS				0x08
+> > > > > +#define ELBI_CS2_ENABLE				0xa4
+> > > > >  
+> > > > >  /* DBI registers */
+> > > > >  #define DBI_CON_STATUS				0x44
+> > > > > @@ -262,6 +263,18 @@ static void qcom_pcie_dw_stop_link(struct dw_pcie *pci)
+> > > > >  	disable_irq(pcie_ep->perst_irq);
+> > > > >  }
+> > > > >  
+> > > > > +static void qcom_pcie_dbi_cs2_access(struct dw_pcie *pci, bool enable)
+> > > > > +{
+> > > > > +	struct qcom_pcie_ep *pcie_ep = to_pcie_ep(pci);
+> > > > > +
+> > > > > +	writel_relaxed(enable, pcie_ep->elbi + ELBI_CS2_ENABLE);
+> > > > 
+> > > > Don't you want to maintain the ordering of whatever write came before
+> > > > this?
+> > > > 
+> > > 
+> > > Since this in a dedicated function, I did not care about the ordering w.r.t
+> > > previous writes. Even if it gets inlined, the order should not matter since it
+> > > only enables/disables the CS2 access for the forthcoming writes.
+> > > 
+> > 
+> > The wmb() - in a non-relaxed writel -  would ensure that no earlier
+> > writes are reordered and end up in your expected set of "forthcoming
+> > writes".
+> > 
+> 
+> I was under the impression that the readl_relaxed() here serves as an implicit
+> barrier. But reading the holy memory-barriers documentation doesn't explicitly
+> say so. So I'm going to add wmb() to be on the safe side as you suggested.
+> 
 
+I'm talking about writes prior to this function is being called.
 
-On 10/17/23 15:00, Wesley Cheng wrote:
-> Some platforms may have support for offloading USB audio devices to a
-> dedicated audio DSP.  Introduce a set of APIs that allow for management of
-> USB sound card and PCM devices enumerated by the USB SND class driver.
-> This allows for the ASoC components to be aware of what USB devices are
+In other words, if you write:
 
-USB devices or USB endpoints? or both?
+writel_relaxed(A, ptr); (or writel, it doesn't matter)
+writel_relaxed(X, ELBI_CS2_ENABLE);
+readl_relaxed(ELBI_CS2_ENABLE);
 
-> available for offloading.
+Then there are circumstances where the write to ptr might be performed
+after ELBI_CS2_ENABLE.
 
-> +/**
-> + * struct snd_soc_usb_device
-> + * @card_idx - sound card index associated with USB device
-> + * @chip_idx - USB sound chip array index
-> + * @num_playback - number of playback streams
-> + * @num_capture - number of capture streams
+Iiuc, the way to avoid that is to either be certain that none of those
+circumstances applies, or to add a wmb(), like:
 
-presumably excluding explicit feedback streams?
+writel_relaxed(A, ptr); (or writel, it doesn't matter)
+wmb();
+writel_relaxed(X, ELBI_CS2_ENABLE);
+readl_relaxed(ELBI_CS2_ENABLE);
 
-> + **/
-> +struct snd_soc_usb_device {
-> +	int card_idx;
-> +	int chip_idx;
-> +	int num_playback;
-> +	int num_capture;
-> +};
-> +
-> +/**
-> + * struct snd_soc_usb
-> + * @list - list head for SND SOC struct list
-> + * @dev - USB backend device reference
-> + * @component - reference to ASoC component
-> + * @connection_status_cb - callback to notify connection events
-> + * @priv_data - driver data
-> + **/
-> +struct snd_soc_usb {
-> +	struct list_head list;
-> +	struct device *dev;
+or short hand:
 
-usbdev for consistency with the API below?
+writel_relaxed(A, ptr); (or writel, it doesn't matter)
+writel(X, ELBI_CS2_ENABLE);
+readl_relaxed(ELBI_CS2_ENABLE);
 
-> +	struct snd_soc_component *component;
+Where the wmb() will ensure the two writes happen in order.
 
-could you use component only and infer the device from component->dev?
+The read in your code will ensure that execution won't proceed until the
+write has hit the hardware, so that's good. But writing this makes me
+uncertain if there's sufficient guarantees for the CPU not reordering
+later operations.
 
-> +	int (*connection_status_cb)(struct snd_soc_usb *usb,
-> +			struct snd_soc_usb_device *sdev, bool connected);
-> +	void *priv_data;
-> +};
-> +
-> +int snd_soc_usb_connect(struct device *usbdev, struct snd_soc_usb_device *sdev);
-> +int snd_soc_usb_disconnect(struct device *usbdev, struct snd_soc_usb_device *sdev);
-> +void *snd_soc_usb_get_priv_data(struct device *usbdev);
-> +
-> +struct snd_soc_usb *snd_soc_usb_add_port(struct device *dev, void *priv,
-
-struct device *usbdev for consistency ?
-
-> +			int (*connection_cb)(struct snd_soc_usb *usb,
-> +			struct snd_soc_usb_device *sdev, bool connected));
-> +int snd_soc_usb_remove_port(struct device *dev);
-
-struct device *usbdev for consistency ?
-
-
-> +struct snd_soc_usb *snd_soc_usb_add_port(struct device *dev, void *priv,
-> +			int (*connection_cb)(struct snd_soc_usb *usb,
-> +			struct snd_soc_usb_device *sdev, bool connected))> +{
-> +	struct snd_soc_usb *usb;
-> +
-> +	usb = devm_kzalloc(dev, sizeof(*usb), GFP_KERNEL);
-> +	if (!usb)
-> +		return ERR_PTR(-ENOMEM);
-> +
-> +	usb->connection_status_cb = connection_cb;
-> +	usb->dev = dev;
-> +	usb->priv_data = priv;
-> +
-> +	mutex_lock(&ctx_mutex);
-> +	list_add_tail(&usb->list, &usb_ctx_list);
-> +	mutex_unlock(&ctx_mutex);
-> +
-> +	return usb;
-> +}
-> +EXPORT_SYMBOL_GPL(snd_soc_usb_add_port);
-> +
-> +/**
-> + * snd_soc_usb_remove_port() - Remove a USB backend port
-> + * @dev: USB backend device
-> + *
-> + * Remove a USB backend device from USB SND SOC.  Memory is freed when USB
-> + * backend is removed.
-
-when the USB backend driver is unbound?
-
-> + *
-> + */
-> +int snd_soc_usb_remove_port(struct device *dev)
-> +{
-> +	struct snd_soc_usb *ctx, *tmp;
-> +
-> +	mutex_lock(&ctx_mutex);
-> +	list_for_each_entry_safe(ctx, tmp, &usb_ctx_list, list) {
-> +		if (ctx->dev == dev) {
-> +			list_del(&ctx->list);
-> +			break;
-> +		}
-> +	}
-> +	mutex_unlock(&ctx_mutex);
-> +
-> +	return 0;
-
-can this return void to align with the current trend?
-
-> +}
-> +EXPORT_SYMBOL_GPL(snd_soc_usb_remove_port);
-> +
-> +/**
-> + * snd_soc_usb_connect() - Notification of USB device connection
-> + * @usbdev: USB bus device
-> + * @card_idx: USB SND card instance
-> + *
-> + * Notify of a new USB SND device connection.  The card_idx can be used to
-> + * handle how the DPCM backend selects, which device to enable USB offloading
-> + * on.
-
-card_idx is not used below, and I don't see how this relates to a
-notification?
-
-> + *
-> + */
-> +int snd_soc_usb_connect(struct device *usbdev, struct snd_soc_usb_device *sdev)
-> +{
-> +	struct snd_soc_usb *ctx;
-> +	struct device_node *node;
-> +
-> +	if (!usbdev)
-> +		return -ENODEV;
-> +
-> +	node = snd_soc_find_phandle(usbdev);
-> +	if (IS_ERR(node))
-> +		return -ENODEV;
-> +
-> +	ctx = snd_soc_find_usb_ctx(node);
-> +	of_node_put(node);
-> +	if (!ctx)
-> +		return -ENODEV;
-> +
-> +	if (ctx->connection_status_cb)
-> +		ctx->connection_status_cb(ctx, sdev, true);
-> +
-> +	return 0;
-> +}
-
+Regards,
+Bjorn
