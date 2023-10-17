@@ -2,79 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 64FA57CC8DC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 18:30:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CDE057CC8E9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 18:33:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234950AbjJQQac (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Oct 2023 12:30:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43990 "EHLO
+        id S232268AbjJQQdd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Oct 2023 12:33:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234986AbjJQQab (ORCPT
+        with ESMTP id S230343AbjJQQdc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Oct 2023 12:30:31 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93BADFE
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 09:30:28 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-507962561adso6747458e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 09:30:28 -0700 (PDT)
+        Tue, 17 Oct 2023 12:33:32 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9FCD9E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 09:33:30 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2c5039d4e88so67452271fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 09:33:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697560227; x=1698165027; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1697560409; x=1698165209; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=G0ZUMZHn3wvFYsU5SqLQBD+dmcl+H9Kyr5RC+TFVYd0=;
-        b=eY4f1UniU9X6quGsUIjVsa3Fmk4O4ZkihI/JleaqUjvBmkbEnEdZF6cTx/Pjq/4r65
-         PPL3arBQKeFHvwLNHXh84k7OctswFFW7bjzyg35GbxtS8LefErfoDL+34gqhv79CmRJx
-         iq8T33G26srcDkCTqyOTZHb+jJhQXVx1GtEenM0uLodVFlRZfaulwooc+qzckXcgUE8B
-         MUre7PHNPwKdAwXlSEqqMPz6ZlYP5D78t3eBwxwJapvd+cTS56qw+5RKSVO/XgqKSKNk
-         47Nn9jXZo50erwT9k+iRYYGfxEeP5yWbxEb5Cpt6o7mpzOG+KLZccqmG6cuQcj8IG4HQ
-         lz0g==
+        bh=yBFWGn/gvqVVyXZTf5VIIyU+5FQ2m7CQrE6bIJGKvHQ=;
+        b=EsSO6GsoJ7c1HaiGciObuJCFkMsumw/PoKYLaVhhXCUoArBdUHPfaPQVfzQ+1JDI+2
+         UL36JQsJbplaVWBqi1NFfN64pOYHoJcsqxNsK3gHDlQfDe7QSaQu2EVPwnva5DDd5Gbt
+         6mjdq6+Vbj4YWxcR63KfzrzH/g2p3fH04SdjTWtnf/Ng5SgzlSVPv4qpn1PgcrsRlYBc
+         7imXmjxHGxfdAvdo+NVUc7XJSGG5JJNi/NsodDc/71xhBLOhqGGj29n57geRMkKyVVz4
+         SzoXY1UFwAyBjobSX0rtIPdrp+AmhogRZpJ3yeC8BOfVYLf3MLEQbhN5887wX8SIWml2
+         NRWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697560227; x=1698165027;
+        d=1e100.net; s=20230601; t=1697560409; x=1698165209;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=G0ZUMZHn3wvFYsU5SqLQBD+dmcl+H9Kyr5RC+TFVYd0=;
-        b=KePg820+L8lsmXS5gSkJheCBun8rleB1wL/vphbTFlBLO4hzFApbBbKOmVJn64m2um
-         g2UDN7tGKbDwNP5v703bNNRKuNokfOoGBlvXbv228fKe8mYEFCQaXPrMvk9cli+b4oUl
-         RbtlLgrPI7dTLJnE+6iMQoY8m7x81Ck1VlUCSJBvlB4nQpBPVX/ue1fxSI8x5FYA3Z5N
-         YFAIJ6NsgCJEVOkaO/AKKl6KXUcQuBKDeZe3Yotn0r5DsV9T3BmBeCHxTAkM4CdhLMhi
-         gVxU/b4zQRvcg3o9Ppwy9toP59Q3j1PO2GH/zFj7/vWzGeYUCdOtiFS2defmw5awhrD/
-         u39g==
-X-Gm-Message-State: AOJu0YxfAGk4bZYPPqlGEdjd7tIyj8lmgK4np9jGEFgmK0Flx/f/H118
-        HarPzuAR+tA4XEZDclrcS2QJbw==
-X-Google-Smtp-Source: AGHT+IGG1ozaE0+IWIfhVotIqz0IAdLawX4MRfy3widezuDNZt4n9ouXns3q/MtSkRCIzjokPx3oKw==
-X-Received: by 2002:a05:6512:4004:b0:500:bd6f:a320 with SMTP id br4-20020a056512400400b00500bd6fa320mr2729902lfb.42.1697560226942;
-        Tue, 17 Oct 2023 09:30:26 -0700 (PDT)
+        bh=yBFWGn/gvqVVyXZTf5VIIyU+5FQ2m7CQrE6bIJGKvHQ=;
+        b=fT0OsTjd6+3Kf4jmi99J+KA4xfOsWBuln/FdQ4F++sLMKJFs7l9nttaGVME4PQXQsF
+         leD8dQh0OSfnWuDhG83eo0nqqGY5JCs9TbecXgByV4f+NLJ4CThefLJwYb9NBj9fg2Ne
+         kH5vvIcmG4ZD/52HBkJpWisSXIViDjF42893LJRUi5Ntd5c17lOrpmHcJVNwLAG6NpWj
+         Sdwz18ciRR0aJNxOzbkt++Lfor8YwOjPYl4cpb871UZJ2O45DOQtxMukqqdS8F1MOA8Q
+         Lqi2m/XG6EYSC1JYTn/BvnClj4/oHwj2N4R4zRFPGUsajRJeAIg0UIJqICQ0rJIq7OCA
+         8CYg==
+X-Gm-Message-State: AOJu0Ywx3qa5rnmEoSC2iavC1d97mhcBh01ohcU/VSUnl4qlyMASXKjT
+        x0rhS6W6tCO5m3mInZBDQH9EAA==
+X-Google-Smtp-Source: AGHT+IElFNOV8yNGHCszy8avNUOk1VnnkFpIAJDEWWtUw4SZJPVSp0RS4kPtlbCTXb5dkncA5hKIzg==
+X-Received: by 2002:a05:651c:2110:b0:2c5:56b:cbd1 with SMTP id a16-20020a05651c211000b002c5056bcbd1mr2477321ljq.10.1697560409049;
+        Tue, 17 Oct 2023 09:33:29 -0700 (PDT)
 Received: from [172.30.204.57] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id d15-20020a05600c34cf00b004063d8b43e7sm10257184wmq.48.2023.10.17.09.30.25
+        by smtp.gmail.com with ESMTPSA id l38-20020a05600c1d2600b004042dbb8925sm10368884wms.38.2023.10.17.09.33.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Oct 2023 09:30:26 -0700 (PDT)
-Message-ID: <c453e43c-2473-4da9-bc42-188cd4092682@linaro.org>
-Date:   Tue, 17 Oct 2023 18:30:25 +0200
+        Tue, 17 Oct 2023 09:33:28 -0700 (PDT)
+Message-ID: <d7d37fcf-e902-499e-a43b-c4b03d3e2caa@linaro.org>
+Date:   Tue, 17 Oct 2023 18:33:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: msm8953: Set initial address for
- memory
+Subject: Re: [PATCH] interconnect: qcom: Convert to platform remove callback
+ returning void
 Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>, Luca Weiss <luca@z3ntu.xyz>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20231015-msm8953-misc-fixes-v1-0-b800deca9e46@z3ntu.xyz>
- <20231015-msm8953-misc-fixes-v1-1-b800deca9e46@z3ntu.xyz>
- <ZSzoO9QhwVmL8jLk@gerhold.net>
+To:     =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+        Georgi Djakov <djakov@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, kernel@pengutronix.de
+References: <20231015135955.1537751-2-u.kleine-koenig@pengutronix.de>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <ZSzoO9QhwVmL8jLk@gerhold.net>
+In-Reply-To: <20231015135955.1537751-2-u.kleine-koenig@pengutronix.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
         version=3.4.6
 X-Spam-Level: *
@@ -86,19 +80,22 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 10/16/23 09:37, Stephan Gerhold wrote:
-> On Sun, Oct 15, 2023 at 10:26:01PM +0200, Luca Weiss wrote:
->> The dtbs_check really doesn't like having memory without reg set.
->> Address this by setting it to 0x10000000 which seems to be the value
->> filled in by the bootloader.
->>
+On 10/15/23 15:59, Uwe Kleine-König wrote:
+> The .remove() callback for a platform driver returns an int which makes
+> many driver authors wrongly assume it's possible to do error handling by
+> returning an error code. However the value returned is ignored (apart
+> from emitting a warning) and this typically results in resource leaks.
+> To improve here there is a quest to make the remove callback return
+> void. In the first step of this quest all drivers are converted to
+> .remove_new() which already returns void. Eventually after all drivers
+> are converted, .remove_new() will be renamed to .remove().
 > 
-> Looks like MSM8953 has the same RAM setup as MSM8916, where the base
-> address depends on the amount of RAM you have:
+> Several drivers use qcom_icc_rpmh_remove() as remove callback which
+> returns zero unconditionally. Make it return void and use .remove_new in
+> the drivers. There is no change in behaviour.
 > 
->    <= 2.00 GiB RAM: 0x80000000
->     = 3.00 GiB RAM: 0x40000000
->     = 3.75 GiB RAM: 0x10000000
-What a royal mess
+> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
