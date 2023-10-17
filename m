@@ -2,253 +2,400 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D8AA97CBE4B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 11:01:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7A4B7CBE97
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 11:09:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234032AbjJQJBT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Oct 2023 05:01:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52006 "EHLO
+        id S234975AbjJQJJj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Oct 2023 05:09:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234147AbjJQJBT (ORCPT
+        with ESMTP id S234796AbjJQJJY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Oct 2023 05:01:19 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D64EB0;
-        Tue, 17 Oct 2023 02:01:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1697533277; x=1729069277;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Ycdmn1yRnmUMNTHqsn5gHRBcw7LLPquXwlkEsT2ze3g=;
-  b=Wa4GYMuI6JT60yalyY6kyE6K8kEeO9oQFm1bkTtBew+BZEAbQbj8Zhq2
-   aoFSwrMiaqr/AaQtX2o46sAHHJ/DTivb6zuz6S37CK7tN3Yj0bXFYvw1L
-   SbwCJUxRbd8MeUEOBxI+4r/a1a6U7DvoE4uUXk28N7DUoE7WlMbjJ6A94
-   jx7EGqIXZdKgE2XC+n289sE6zh9mr7gjC1+0STdKjzIHv2Io3SIsOAeGH
-   fk2vqAh80KSRTUTT+3MFKtpNP7TjP3My7neCEpOVSkMUxDW/nuOO3mfms
-   Z+LIXztV8CtzN8dH/sIwiI7d0hhzQjK/Tq0F9btb9uC50FZEglPo1dZaT
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10865"; a="7296588"
-X-IronPort-AV: E=Sophos;i="6.03,231,1694761200"; 
-   d="scan'208";a="7296588"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Oct 2023 02:01:16 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10865"; a="705923313"
-X-IronPort-AV: E=Sophos;i="6.03,231,1694761200"; 
-   d="scan'208";a="705923313"
-Received: from kuha.fi.intel.com ([10.237.72.185])
-  by orsmga003.jf.intel.com with SMTP; 17 Oct 2023 02:01:12 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Tue, 17 Oct 2023 12:01:11 +0300
-Date:   Tue, 17 Oct 2023 12:01:11 +0300
-From:   Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To:     Luca Weiss <luca.weiss@fairphone.com>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 2/3] usb: typec: fsa4480: Add support to swap SBU
- orientation
-Message-ID: <ZS5NV43MhD3YNeDX@kuha.fi.intel.com>
-References: <20231013-fsa4480-swap-v1-0-b877f62046cc@fairphone.com>
- <20231013-fsa4480-swap-v1-2-b877f62046cc@fairphone.com>
+        Tue, 17 Oct 2023 05:09:24 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3222D10CA;
+        Tue, 17 Oct 2023 02:09:00 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39H7mUeA008676;
+        Tue, 17 Oct 2023 09:08:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=PVimyCO5k9k/ebomuq2s7w+2bBOqbDRmPdY9WCc3tZ8=;
+ b=IqhW7wEaxCt/0jm4lbqP+eHsuG4ruunFo2Z6crPp5H3aS664mqKmzhJ2PX/eiD9YeCLm
+ QWosPwREmcm44BKliXUiGz+7wKGtlVMabGJIrNo2zbG4OMni+dHBykiJX3X4DHfXj4H9
+ LOn3e0bHOUHhi/JHQ+nSjxVt7mKyxIuUxusod5ecxlmNOzhzUfi4W7zskR7LH345gQKN
+ 6Vj4RIjCcX32+09eRRFj6Fd6+FzlxUxuo9OmhtmwIVTP/6NjYWziUwvzPrJDEBLw0hWD
+ twxOhLvTG6UfTDQ0AjNhH85qz4AETgFLiOZCqdiKnBIeVpxXwpzoWFVwpejusFuWlP5b Jw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tsc00sd38-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 17 Oct 2023 09:08:46 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39H98jLR007335
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 17 Oct 2023 09:08:45 GMT
+Received: from [10.218.41.203] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Tue, 17 Oct
+ 2023 02:08:40 -0700
+Message-ID: <646dfd10-0270-462f-484c-50bcb5e9af64@quicinc.com>
+Date:   Tue, 17 Oct 2023 14:38:36 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231013-fsa4480-swap-v1-2-b877f62046cc@fairphone.com>
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH v2] bus: mhi: host: Add tracing support
+Content-Language: en-US
+To:     Steven Rostedt <rostedt@goodmis.org>
+CC:     Manivannan Sadhasivam <mani@kernel.org>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        <linux-kernel@vger.kernel.org>, <mhi@lists.linux.dev>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-trace-kernel@vger.kernel.org>, <quic_vbadigan@quicinc.com>,
+        <quic_ramkri@quicinc.com>, <quic_nitegupt@quicinc.com>,
+        <quic_skananth@quicinc.com>, <quic_parass@quicinc.com>
+References: <20231013-ftrace_support-v2-1-6e893ce010b5@quicinc.com>
+ <20231016111357.74b991d4@gandalf.local.home>
+From:   Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <20231016111357.74b991d4@gandalf.local.home>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 5DYZJkPQNPjYlScJsfzH-GbAaBOCuDJE
+X-Proofpoint-GUID: 5DYZJkPQNPjYlScJsfzH-GbAaBOCuDJE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-16_13,2023-10-12_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ impostorscore=0 priorityscore=1501 mlxlogscore=999 adultscore=0
+ clxscore=1015 bulkscore=0 spamscore=0 mlxscore=0 phishscore=0
+ lowpriorityscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2309180000 definitions=main-2310170075
+X-Spam-Status: No, score=-6.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Luca,
 
-On Fri, Oct 13, 2023 at 01:38:06PM +0200, Luca Weiss wrote:
-> On some hardware designs the AUX+/- lanes are connected reversed to
-> SBU1/2 compared to the expected design by FSA4480.
-> 
-> Made more complicated, the otherwise compatible Orient-Chip OCP96011
-> expects the lanes to be connected reversed compared to FSA4480.
-> 
-> * FSA4480 block diagram shows AUX+ connected to SBU2 and AUX- to SBU1.
-> * OCP96011 block diagram shows AUX+ connected to SBU1 and AUX- to SBU2.
-> 
-> So if OCP96011 is used as drop-in for FSA4480 then the orientation
-> handling in the driver needs to be reversed to match the expectation of
-> the OCP96011 hardware.
-> 
-> Support parsing the data-lanes parameter in the endpoint node to swap
-> this in the driver.
-> 
-> The parse_data_lanes_mapping function is mostly taken from nb7vpq904m.c.
-> 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
->  drivers/usb/typec/mux/fsa4480.c | 81 +++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 81 insertions(+)
-> 
-> diff --git a/drivers/usb/typec/mux/fsa4480.c b/drivers/usb/typec/mux/fsa4480.c
-> index e0ee1f621abb..6ee467c96fb6 100644
-> --- a/drivers/usb/typec/mux/fsa4480.c
-> +++ b/drivers/usb/typec/mux/fsa4480.c
-> @@ -9,6 +9,7 @@
->  #include <linux/kernel.h>
->  #include <linux/module.h>
->  #include <linux/mutex.h>
-> +#include <linux/of_graph.h>
+On 10/16/2023 8:43 PM, Steven Rostedt wrote:
+> On Fri, 13 Oct 2023 15:22:19 +0530
+> Krishna chaitanya chundru <quic_krichai@quicinc.com> wrote:
+>
+>> +++ b/include/trace/events/mhi_host.h
+>> @@ -0,0 +1,287 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-only */
+>> +/*
+>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
+>> +
+>> +#undef TRACE_SYSTEM
+>> +#define TRACE_SYSTEM mhi_host
+>> +
+>> +#if !defined(_TRACE_EVENT_MHI_HOST_H) || defined(TRACE_HEADER_MULTI_READ)
+>> +#define _TRACE_EVENT_MHI_HOST_H
+>> +
+>> +#include <linux/tracepoint.h>
+>> +#define MHI_STATE						\
+>> +	EM(MHI_STATE_RESET,	"RESET")			\
+>> +	EM(MHI_STATE_READY,	"READY")			\
+>> +	EM(MHI_STATE_M0,	"M0")				\
+>> +	EM(MHI_STATE_M1,	"M1")				\
+>> +	EM(MHI_STATE_M2,	"M2")				\
+>> +	EM(MHI_STATE_M3,	"M3")				\
+>> +	EM(MHI_STATE_M3_FAST,	"M3 FAST")			\
+>> +	EM(MHI_STATE_BHI,	"BHI")				\
+>> +	EMe(MHI_STATE_SYS_ERR,	"SYS ERROR")
+>> +
+>> +#define MHI_EE							\
+>> +	EM(MHI_EE_PBL,		"PRIMARY BOOTLOADER")		\
+>> +	EM(MHI_EE_SBL,		"SECONDARY BOOTLOADER")		\
+>> +	EM(MHI_EE_AMSS,		"MISSION MODE")			\
+>> +	EM(MHI_EE_RDDM,		"RAMDUMP DOWNLOAD MODE")	\
+>> +	EM(MHI_EE_WFW,		"WLAN FIRMWARE")		\
+>> +	EM(MHI_EE_PTHRU,	"PASS THROUGH")			\
+>> +	EM(MHI_EE_EDL,		"EMERGENCY DOWNLOAD")		\
+>> +	EM(MHI_EE_FP,		"FLASH PROGRAMMER")		\
+>> +	EM(MHI_EE_DISABLE_TRANSITION,	"DISABLE")		\
+>> +	EMe(MHI_EE_NOT_SUPPORTED,	"NOT SUPPORTED")
+>> +
+>> +#define MHI_PM_STATE							\
+>> +	EM(MHI_PM_STATE_DISABLE,	"DISABLE")			\
+>> +	EM(MHI_PM_STATE_POR,		"POWER ON RESET")		\
+>> +	EM(MHI_PM_STATE_M0,		"M0")				\
+>> +	EM(MHI_PM_STATE_M2,		"M2")				\
+>> +	EM(MHI_PM_STATE_M3_ENTER,	"M?->M3")			\
+>> +	EM(MHI_PM_STATE_M3,		"M3")				\
+>> +	EM(MHI_PM_STATE_M3_EXIT,	"M3->M0")			\
+>> +	EM(MHI_PM_STATE_FW_DL_ERR,	"Firmware Download Error")	\
+>> +	EM(MHI_PM_STATE_SYS_ERR_DETECT,		"SYS ERROR Detect")	\
+>> +	EM(MHI_PM_STATE_SYS_ERR_PROCESS,	"SYS ERROR Process")	\
+>> +	EM(MHI_PM_STATE_SHUTDOWN_PROCESS,	"SHUTDOWN Process")	\
+>> +	EMe(MHI_PM_STATE_LD_ERR_FATAL_DETECT,	"Linkdown or Error Fatal Detect")
+>> +
+>> +#define MHI_CH_STATE						\
+>> +	EM(MHI_CH_STATE_TYPE_RESET, "RESET")			\
+>> +	EM(MHI_CH_STATE_TYPE_STOP, "STOP")			\
+>> +	EMe(MHI_CH_STATE_TYPE_START, "START")
+>> +
+>> +#define MHI_DEV_ST_TRANSITION						\
+>> +	EM(DEV_ST_TRANSITION_PBL,	"PBL")				\
+>> +	EM(DEV_ST_TRANSITION_READY,	"READY")			\
+>> +	EM(DEV_ST_TRANSITION_SBL,	"SBL")				\
+>> +	EM(DEV_ST_TRANSITION_MISSION_MODE,	"MISSION MODE")		\
+>> +	EM(DEV_ST_TRANSITION_FP,		"FLASH PROGRAMMER")	\
+>> +	EM(DEV_ST_TRANSITION_SYS_ERR,		"SYS ERROR")		\
+>> +	EMe(DEV_ST_TRANSITION_DISABLE,		"DISABLE")
+>> +
+>> +/* Enums require being exported to userspace, for user tool parsing */
+>> +#undef	EM
+>> +#undef	EMe
+>> +#define	EM(a, b)	TRACE_DEFINE_ENUM(a);
+>> +#define	EMe(a, b)	TRACE_DEFINE_ENUM(a);
+>> +
+>> +MHI_STATE
+>> +MHI_EE
+>> +MHI_PM_STATE
+>> +MHI_CH_STATE
+>> +MHI_DEV_ST_TRANSITION
+>> +
+>> +/*
+>> + * Now redefine the EM() and EMe() macros to map the enums to the strings
+>> + * that will be printed in the output.
+>> + */
+>> +#undef EM
+>> +#undef EMe
+>> +#define EM(a, b)	{a, b},
+>> +#define EMe(a, b)	{a, b}
+>> +
+>> +TRACE_EVENT(mhi_gen_tre,
+>> +
+>> +	TP_PROTO(const char *name, int ch_num, u64 wp, __le64 tre_ptr,
+>> +		 __le32 dword0, __le32 dword1),
+>> +
+>> +	TP_ARGS(name, ch_num, wp, tre_ptr, dword0, dword1),
+>> +
+>> +	TP_STRUCT__entry(
+>> +		__string(name, name)
+>> +		__field(int, ch_num)
+> This is fine as __string() is four bytes in the event (2 bytes for offset
+> where the string exists, and 2 bytes for its length).
+>
+>> +		__field(u64, wp)
+>> +		__field(__le64, tre_ptr)
+> Which makes the two 8 byte fields aligned. Good!
+>
+>> +		__field(__le32, dword0)
+>> +		__field(__le32, dword1)
+>> +	),
+>> +
+>> +	TP_fast_assign(
+>> +		__assign_str(name, name);
+>> +		__entry->ch_num = ch_num;
+>> +		__entry->wp = wp;
+>> +		__entry->tre_ptr = tre_ptr;
+>> +		__entry->dword0 = dword0;
+>> +		__entry->dword1 = dword1;
+>> +	),
+>> +
+>> +	TP_printk("%s: Chan: %d WP: 0x%llx TRE: 0x%llx 0x%08x 0x%08x\n",
+>> +		  __get_str(name), __entry->ch_num, __entry->wp, __entry->tre_ptr,
+>> +		  __entry->dword0, __entry->dword1)
+>> +);
+>> +
+>> +TRACE_EVENT(mhi_intvec_threaded_handler,
+>> +
+>> +	TP_PROTO(const char *name, int local_ee, int state, int dev_ee, int dev_state),
+>> +
+>> +	TP_ARGS(name, local_ee, state, dev_ee, dev_state),
+>> +
+>> +	TP_STRUCT__entry(
+>> +		__string(name, name)
+>> +		__field(int, local_ee)
+>> +		__field(int, state)
+>> +		__field(int, dev_ee)
+>> +		__field(int, dev_state)
+>> +	),
+>> +
+>> +	TP_fast_assign(
+>> +		__assign_str(name, name);
+>> +		__entry->local_ee = local_ee;
+>> +		__entry->state = state;
+>> +		__entry->dev_ee = dev_ee;
+>> +		__entry->dev_state = dev_state;
+>> +	),
+>> +
+>> +	TP_printk("%s: local ee: %s state: %s device ee: %s state: %s\n",
+>> +		  __get_str(name),
+>> +		  __print_symbolic(__entry->local_ee, MHI_EE),
+>> +		  __print_symbolic(__entry->state, MHI_STATE),
+>> +		  __print_symbolic(__entry->dev_ee, MHI_EE),
+>> +		  __print_symbolic(__entry->dev_state, MHI_STATE))
+>> +);
+>> +
+>> +TRACE_EVENT(mhi_tryset_pm_state,
+>> +
+>> +	TP_PROTO(const char *name, int pm_state),
+>> +
+>> +	TP_ARGS(name, pm_state),
+>> +
+>> +	TP_STRUCT__entry(
+>> +		__string(name, name)
+>> +		__field(int, pm_state)
+>> +	),
+>> +
+>> +	TP_fast_assign(
+>> +		__assign_str(name, name);
+>> +		if (pm_state)
+>> +			pm_state = __fls(pm_state);
+>> +		__entry->pm_state = pm_state;
+>> +	),
+>> +
+>> +	TP_printk("%s: PM state: %s\n", __get_str(name),
+>> +		  __print_symbolic(__entry->pm_state, MHI_PM_STATE))
+>> +);
+>> +
+>> +TRACE_EVENT(mhi_process_data_event_ring,
+>> +
+>> +	TP_PROTO(const char *name, __le64 ptr, __le32 dword0, __le32 dword1),
+>> +
+>> +	TP_ARGS(name, ptr, dword0, dword1),
+>> +
+>> +	TP_STRUCT__entry(
+>> +		__string(name, name)
+>> +		__field(__le64, ptr)
+> Here, I would switch the __field(__le64, ptr) with the __string().
+>
+> 		__field(__le64, ptr)
+> 		__string(name, name)
+>
+> otherwise you just created a 4 byte hole in the ring buffer, wasting
+> precious ring buffer space.
+>
+>> +		__field(__le32, dword0)
+>> +		__field(__le32, dword1)
+>> +	),
+>> +
+>> +	TP_fast_assign(
+>> +		__assign_str(name, name);
+>> +		__entry->ptr = ptr;
+>> +		__entry->dword0 = dword0;
+>> +		__entry->dword1 = dword1;
+>> +	),
+>> +
+>> +	TP_printk("%s: Processing Event:0x%llx 0x%08x 0x%08x\n",
+>> +		  __get_str(name), __entry->ptr, __entry->dword0, __entry->dword1)
+>> +);
+>> +
+>> +TRACE_EVENT(mhi_process_ctrl_ev_ring,
+>> +
+>> +	TP_PROTO(const char *name, u64 rp, __le64 ptr, __le32 dword0, __le32 dword1, int state),
+>> +
+>> +	TP_ARGS(name, rp, ptr, dword0, dword1, state),
+>> +
+>> +	TP_STRUCT__entry(
+>> +		__string(name, name)
+>> +		__field(u64, rp)
+>> +		__field(__le64, ptr)
+> I would move __string(name, name) here (after the two 8 byte fields).
+>
+> -- Steve
 
-If you don't mind, let's keep this driver ready for ACPI, just in
-case...
+I will reoder as suggested in my next patch.
 
->  #include <linux/regmap.h>
->  #include <linux/usb/typec_dp.h>
->  #include <linux/usb/typec_mux.h>
-> @@ -60,6 +61,7 @@ struct fsa4480 {
->  	unsigned int svid;
->  
->  	u8 cur_enable;
-> +	bool swap_sbu_lanes;
->  };
->  
->  static const struct regmap_config fsa4480_regmap_config = {
-> @@ -76,6 +78,9 @@ static int fsa4480_set(struct fsa4480 *fsa)
->  	u8 enable = FSA4480_ENABLE_DEVICE;
->  	u8 sel = 0;
->  
-> +	if (fsa->swap_sbu_lanes)
-> +		reverse = !reverse;
-> +
->  	/* USB Mode */
->  	if (fsa->mode < TYPEC_STATE_MODAL ||
->  	    (!fsa->svid && (fsa->mode == TYPEC_MODE_USB2 ||
-> @@ -179,12 +184,84 @@ static int fsa4480_mux_set(struct typec_mux_dev *mux, struct typec_mux_state *st
->  	return ret;
->  }
->  
-> +enum {
-> +	NORMAL_LANE_MAPPING,
-> +	INVERT_LANE_MAPPING,
-> +};
-> +
-> +#define DATA_LANES_COUNT	2
-> +
-> +static const int supported_data_lane_mapping[][DATA_LANES_COUNT] = {
-> +	[NORMAL_LANE_MAPPING] = { 0, 1 },
-> +	[INVERT_LANE_MAPPING] = { 1, 0 },
-> +};
-> +
-> +static int fsa4480_parse_data_lanes_mapping(struct fsa4480 *fsa)
-> +{
-> +	struct device_node *ep;
+-- KC.
 
-        struct fwnode_handle *ep;
-
-> +	u32 data_lanes[DATA_LANES_COUNT];
-> +	int ret, i, j;
-> +
-> +	ep = of_graph_get_next_endpoint(fsa->client->dev.of_node, NULL);
-
-Shouldn't you loop through the endpoints? In any case:
-
-        ep = fwnode_graph_get_next_endpoint(dev_fwnode(&fsa->client->dev, NULL));
-
-> +	if (!ep)
-> +		return 0;
-> +
-> +	ret = of_property_count_u32_elems(ep, "data-lanes");
-
-        ret = fwnode_property_count_u32(ep, "data-lanes");
-
-But is this necessary at all in this case - why not just read the
-array since you expect a fixed size for it (if the read fails it fails)?
-
-> +	if (ret == -EINVAL)
-> +		/* Property isn't here, consider default mapping */
-> +		goto out_done;
-> +	if (ret < 0)
-> +		goto out_error;
-> +
-> +	if (ret != DATA_LANES_COUNT) {
-> +		dev_err(&fsa->client->dev, "expected 2 data lanes\n");
-> +		ret = -EINVAL;
-> +		goto out_error;
-> +	}
-> +
-> +	ret = of_property_read_u32_array(ep, "data-lanes", data_lanes, DATA_LANES_COUNT);
-
-        ret = fwnode_property_read_u32_array(ep, "data-lanes", data_lanes, DATA_LANES_COUNT);
-
-> +	if (ret)
-> +		goto out_error;
-> +
-> +	for (i = 0; i < ARRAY_SIZE(supported_data_lane_mapping); i++) {
-> +		for (j = 0; j < DATA_LANES_COUNT; j++) {
-> +			if (data_lanes[j] != supported_data_lane_mapping[i][j])
-> +				break;
-> +		}
-> +
-> +		if (j == DATA_LANES_COUNT)
-> +			break;
-> +	}
-> +
-> +	switch (i) {
-> +	case NORMAL_LANE_MAPPING:
-> +		break;
-> +	case INVERT_LANE_MAPPING:
-> +		fsa->swap_sbu_lanes = true;
-> +		dev_info(&fsa->client->dev, "using inverted data lanes mapping\n");
-
-That is just noise. Please drop it.
-
-> +		break;
-> +	default:
-> +		dev_err(&fsa->client->dev, "invalid data lanes mapping\n");
-> +		ret = -EINVAL;
-> +		goto out_error;
-> +	}
-> +
-> +out_done:
-> +	ret = 0;
-> +
-> +out_error:
-> +	of_node_put(ep);
-> +
-> +	return ret;
-> +}
-> +
->  static int fsa4480_probe(struct i2c_client *client)
->  {
->  	struct device *dev = &client->dev;
->  	struct typec_switch_desc sw_desc = { };
->  	struct typec_mux_desc mux_desc = { };
->  	struct fsa4480 *fsa;
-> +	int ret;
->  
->  	fsa = devm_kzalloc(dev, sizeof(*fsa), GFP_KERNEL);
->  	if (!fsa)
-> @@ -193,6 +270,10 @@ static int fsa4480_probe(struct i2c_client *client)
->  	fsa->client = client;
->  	mutex_init(&fsa->lock);
->  
-> +	ret = fsa4480_parse_data_lanes_mapping(fsa);
-> +	if (ret)
-> +		return ret;
-> +
->  	fsa->regmap = devm_regmap_init_i2c(client, &fsa4480_regmap_config);
->  	if (IS_ERR(fsa->regmap))
->  		return dev_err_probe(dev, PTR_ERR(fsa->regmap), "failed to initialize regmap\n");
-> 
-> -- 
-> 2.42.0
-
--- 
-heikki
+>> +		__field(__le32, dword0)
+>> +		__field(__le32, dword1)
+>> +		__field(int, state)
+>> +	),
+>> +
+>> +	TP_fast_assign(
+>> +		__assign_str(name, name);
+>> +		__entry->rp = rp;
+>> +		__entry->ptr = ptr;
+>> +		__entry->dword0 = dword0;
+>> +		__entry->dword1 = dword1;
+>> +		__entry->state = state;
+>> +	),
+>> +
+>> +	TP_printk("%s: RP:0x%llx Processing Event:0x%llx 0x%08x 0x%08x state:%s\n",
+>> +		  __get_str(name), __entry->rp, __entry->ptr, __entry->dword0,
+>> +		  __entry->dword1, __print_symbolic(__entry->state, MHI_STATE))
+>> +);
+>> +
+>> +TRACE_EVENT(mhi_update_channel_state_start,
+>> +
+>> +	TP_PROTO(const char *name, int ch_num, int state),
+>> +
+>> +	TP_ARGS(name, ch_num, state),
+>> +
+>> +	TP_STRUCT__entry(
+>> +		__string(name, name)
+>> +		__field(int, ch_num)
+>> +		__field(int, state)
+>> +	),
+>> +
+>> +	TP_fast_assign(
+>> +		__assign_str(name, name);
+>> +		__entry->ch_num = ch_num;
+>> +		__entry->state = state;
+>> +	),
+>> +
+>> +	TP_printk("%s: ch%d: Updating state to: %s\n",
+>> +		  __get_str(name), __entry->ch_num,
+>> +		  __print_symbolic(__entry->state, MHI_CH_STATE))
+>> +);
+>> +
+>> +TRACE_EVENT(mhi_update_channel_state_end,
+>> +
+>> +	TP_PROTO(const char *name, int ch_num, int state),
+>> +
+>> +	TP_ARGS(name, ch_num, state),
+>> +
+>> +	TP_STRUCT__entry(
+>> +		__string(name, name)
+>> +		__field(int, ch_num)
+>> +		__field(int, state)
+>> +	),
+>> +
+>> +	TP_fast_assign(
+>> +		__assign_str(name, name);
+>> +		__entry->ch_num = ch_num;
+>> +		__entry->state = state;
+>> +	),
+>> +
+>> +	TP_printk("%s: ch%d: Updated state to: %s\n",
+>> +		  __get_str(name), __entry->ch_num,
+>> +		  __print_symbolic(__entry->state, MHI_CH_STATE))
+>> +);
+>> +
+>> +TRACE_EVENT(mhi_pm_st_transition,
+>> +
+>> +	TP_PROTO(const char *name, int state),
+>> +
+>> +	TP_ARGS(name, state),
+>> +
+>> +	TP_STRUCT__entry(
+>> +		__string(name, name)
+>> +		__field(int, state)
+>> +	),
+>> +
+>> +	TP_fast_assign(
+>> +		__assign_str(name, name);
+>> +		__entry->state = state;
+>> +	),
+>> +
+>> +	TP_printk("%s: Handling state transition: %s\n", __get_str(name),
+>> +		  __print_symbolic(__entry->state, MHI_DEV_ST_TRANSITION))
+>> +);
+>> +
+>> +#endif
+>> +#include <trace/define_trace.h>
