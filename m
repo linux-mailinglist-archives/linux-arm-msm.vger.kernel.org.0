@@ -2,87 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 079AB7CC7B0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 17:43:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 13C947CC7BB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 17:44:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344119AbjJQPnz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Oct 2023 11:43:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55160 "EHLO
+        id S1344027AbjJQPoy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Oct 2023 11:44:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344430AbjJQPl6 (ORCPT
+        with ESMTP id S1344104AbjJQPox (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Oct 2023 11:41:58 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 617BEC4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 08:41:56 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-4079ed65582so6401045e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 08:41:56 -0700 (PDT)
+        Tue, 17 Oct 2023 11:44:53 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF392B0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 08:44:51 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id ffacd0b85a97d-31f71b25a99so5361903f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 08:44:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697557315; x=1698162115; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1697557490; x=1698162290; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=fhb/VbAKqWW2bljNb3g4iYW+C+1SCZk6etl2bAcOYLg=;
-        b=ndGJ0F+DYASH3lA6ZKOvJYiP4KYDBFMW8JyLPkmpwxPPg9lrGLWpJH5WQ/VE82eoiC
-         XyjJ9lyyS6QWOvORIcyWlczwFugb2H9nKNcN0jTxdDfnJJEEyVSHcUZSy+absxhtToH4
-         NyMJjTmGCoJZ9WtIupircSl1mOxEgFn2xVDfoPy7tunE3/p8UBM3nD9D08wB07a//bWk
-         Gy3VzjYEg1ekfQ+agevrBHc1uEG4EanU2nOoGLL454oi2C/WjxpN3T0JGYGyQuH/plef
-         FZMVdpdC5FAzCDrwKvffNvkqphKm3Hw0L+BFM/1x/3h0wWJPK0OWh84nuautTVIpyrLY
-         +jUw==
+        bh=6DtgUSYb0XXQqzXwICHZfgVDuua9U+i2U9Fqp8iMmb0=;
+        b=QCGLfJFf2ZzI/2bUqj24KjLWmxNWUJZCCbbvJCUPdIi4I1G6sq5XGn/nVnZbsxFez9
+         Mb7qRjg0oqbtsPZoQVjaK9j0JRWKhmxtIXMWvaqTboAgo575s3/GEeFA87OOhRdWvpCq
+         cJZLFXgy0pcqGSTVAGyDiwDnEuPDAZZvJlzeVtUXNwRAFLLU4wI+blBezEMQ05QHiVzP
+         MzCxsp8AjgSXlfvUroJGLSKeKYHSZHNmCzEEoKDOjRD7ur+9Mvef66UxJOdb13/SDHb/
+         Ynjt7Mc210EwsiEbfeLTOciU4hHgxMgHVMAHKk288wtEC+9THfCa08Z2dNzdmqC8G/nN
+         oUdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697557315; x=1698162115;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1697557490; x=1698162290;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fhb/VbAKqWW2bljNb3g4iYW+C+1SCZk6etl2bAcOYLg=;
-        b=az27aKXUrl0ZRO5DAieRv0coL2ljrHdU2vhqT3rMO+6XJE5Mc1d7BiUwd/zoPXcEFE
-         Ds0Y106BOaBeX6N5P9XesBIfZAfQn9jqucky7AqzDfdbbemA1KOQTTQKL0oSaaw4QM9f
-         oyRZXRljeSuscn8dobIQmkkgSeITZlFi30S9d/DGume6sjbPj6q+/c/ILcNJJyG5yell
-         1rX2gznMB83NYhw5DftQHtq3YmupTG6RR7SbIEZgMXIyxUr75N4SpuxKv5ZR7yP8HVMj
-         stBsgcy6BOIbn4zOzwFLMghgQA3n0WR9r9gtqG99JUj6RSCpCuN/8n0ENF84CnVk7m+t
-         0Dug==
-X-Gm-Message-State: AOJu0YxPqB7HwD8O37hxAMMVHmlkYU+V9x8hsTd19y7x+Wf569s2BceU
-        0kv14SXLmzmJ7T1H+g2Py0ajcQ==
-X-Google-Smtp-Source: AGHT+IEBdPfJkKsMwqOR6v2jaw8Ctfjv771N7HSdvQQL35i0TEr+3Xf1Wr87PCO+t6DIWat/o2wyKA==
-X-Received: by 2002:adf:fac9:0:b0:32d:8401:404a with SMTP id a9-20020adffac9000000b0032d8401404amr2001007wrs.10.1697557314693;
-        Tue, 17 Oct 2023 08:41:54 -0700 (PDT)
+        bh=6DtgUSYb0XXQqzXwICHZfgVDuua9U+i2U9Fqp8iMmb0=;
+        b=SGkSNgOk59+nKhnfJN3/67uU9vyApxfp2Dq2aNLxqBL+5I6XB9c7awKOmZfa0PKQjo
+         4AehdHonGKGCX0G0C5SYSmBglFPU6R7iKvc/0c8WOCh5DGseF4D+RNXIAfRkX/DUCoyb
+         GbWMt38kwmiNfO156Ym986TId0JSJ1ouMqkjqd27TML/4jMOQQV+KLoGGT5KtQuPQ/C4
+         b3ogNur7sBnvznOLx2+c5z25ithA8jnpD2kBf3pA3hLyzULoTuWzDeOT7TLctALLpT4X
+         6S6deeo5+z0pAmQhYsMKfN1S74MAS7ObL2ASb6kImpVSwCRdBwGPGqVmZnt2frvGkjig
+         AQeQ==
+X-Gm-Message-State: AOJu0YyqZUNAbqI7FijBNbMDEa1AzgoJfCYNhC18XZajBofy22z15kmu
+        JajUvC5rEU2yoFCm2dutx3Bmqg==
+X-Google-Smtp-Source: AGHT+IFTjtJ39W3KRhn5QvvknkJMZLuJDABRE9FG1cQ66UJhKTucaLmK/XbihixPbEDdCbWGRVW60A==
+X-Received: by 2002:a5d:68c4:0:b0:32d:6031:2824 with SMTP id p4-20020a5d68c4000000b0032d60312824mr2058463wrw.24.1697557490259;
+        Tue, 17 Oct 2023 08:44:50 -0700 (PDT)
 Received: from [172.30.204.57] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id e11-20020adffd0b000000b0032dbf26e7aesm38382wrr.65.2023.10.17.08.41.51
+        by smtp.gmail.com with ESMTPSA id f4-20020a056000128400b0031c5e9c2ed7sm33293wrx.92.2023.10.17.08.44.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Oct 2023 08:41:54 -0700 (PDT)
-Message-ID: <eb05e877-ad8f-4724-bcf9-6054ae14a5e8@linaro.org>
-Date:   Tue, 17 Oct 2023 17:41:48 +0200
+        Tue, 17 Oct 2023 08:44:49 -0700 (PDT)
+Message-ID: <69987d14-37d1-491e-99fa-9d0201112b67@linaro.org>
+Date:   Tue, 17 Oct 2023 17:44:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/7] drm/msm/adreno: Add ZAP firmware name to A635
-To:     Rob Clark <robdclark@chromium.org>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        cros-qcom-dts-watchers@chromium.org,
-        Andy Gross <agross@kernel.org>,
+Subject: Re: [PATCH 2/5] arm64: dts: qcom: sm8350: Fix DMA0 address
+Content-Language: en-US
+To:     Nia Espera <nespera@igalia.com>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230926-topic-a643-v1-0-7af6937ac0a3@linaro.org>
- <20230926-topic-a643-v1-2-7af6937ac0a3@linaro.org>
- <43q6mui3lofa4rqh667o54b2qcbqn5fg34ss5o7y7k7uxbxsro@dxgovofsrvqx>
- <CAJs_Fx7WkdhY31aP_buZP+b7ihOOmE8zBZFOLZ8z9uqcNmEhVw@mail.gmail.com>
-Content-Language: en-US
+        Kees Cook <keescook@chromium.org>,
+        Tony Luck <tony.luck@intel.com>,
+        "Guilherme G. Piccoli" <gpiccoli@igalia.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
+        Rob <Me@orbit.sh>, Clayton Craft <clayton@igalia.com>,
+        ~postmarketos/upstreaming@lists.sr.ht
+References: <20231016-nia-sm8350-for-upstream-v1-0-bb557a0af2e9@igalia.com>
+ <20231016-nia-sm8350-for-upstream-v1-2-bb557a0af2e9@igalia.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAJs_Fx7WkdhY31aP_buZP+b7ihOOmE8zBZFOLZ8z9uqcNmEhVw@mail.gmail.com>
+In-Reply-To: <20231016-nia-sm8350-for-upstream-v1-2-bb557a0af2e9@igalia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
@@ -96,48 +89,18 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 10/17/23 09:33, Rob Clark wrote:
-> On Mon, Oct 16, 2023 at 1:12 PM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
->>
->> On Tue, Sep 26, 2023 at 08:24:37PM +0200, Konrad Dybcio wrote:
->>>
->>> Some (many?) devices with A635 expect a ZAP shader to be loaded.
->>>
->>> Set the file name to allow for that.
->>>
->>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>> ---
->>>   drivers/gpu/drm/msm/adreno/adreno_device.c | 1 +
->>>   1 file changed, 1 insertion(+)
->>>
->>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
->>> index fa527935ffd4..16527fe8584d 100644
->>> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
->>> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
->>> @@ -454,6 +454,7 @@ static const struct adreno_info gpulist[] = {
->>>                .quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT |
->>>                        ADRENO_QUIRK_HAS_HW_APRIV,
->>>                .init = a6xx_gpu_init,
->>> +             .zapfw = "a660_zap.mbn",
->>
->> sc7280 doesn't have a TZ and so no zap shader support. Can we handle
->> this using "firmware-name" property in your top level platform dt? Zap
->> firmwares are signed with different keys for each OEMs. So there is
->> cross-compatibility anyway.
+On 10/16/23 14:47, Nia Espera wrote:
+> DMA0 node downstream is specified at 0x900000, so fix the typo. Without
+> this, enabling any i2c node using DMA0 causes a hang.
 > 
-> I think this ends up working out because the version of sc7280 that
-> doesn't have TZ also doesn't have the associated mem-region/etc..
-Yes
+> Signed-off-by: Nia Espera <nespera@igalia.com>
+> ---
+Oh hmm.. I wonder if that's why I could never get one of the i2c hosts 
+on 8350 to behave..
 
-> but
-> maybe we should deprecate the zapfw field as in practice it isn't
-> useful (ie. always overriden by firmware-name).
-Also yes, we've discussed that on IRC once
-
-> 
-> Fwiw there are windows laptops with sc7180/sc7280 which do use zap fw.
-Correct, e.g. the SC7180 Acer Aspire 1 that is supported upstream.
-
-Konrad
+Fixes: bc08fbf49bc8 ("arm64: dts: qcom: sm8350: Define GPI DMA engines")
+Fixes: 41d6bca799b3 ("arm64: dts: qcom: sm8350: correct DMA controller 
+unit address")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
