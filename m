@@ -2,140 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2998D7CCA01
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 19:41:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F72A7CCA16
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 19:46:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234304AbjJQRlL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Oct 2023 13:41:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38626 "EHLO
+        id S232804AbjJQRqg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Oct 2023 13:46:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231868AbjJQRlK (ORCPT
+        with ESMTP id S232025AbjJQRqf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Oct 2023 13:41:10 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C9CF90;
-        Tue, 17 Oct 2023 10:41:09 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24CFCC433C7;
-        Tue, 17 Oct 2023 17:41:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1697564469;
-        bh=CKtahp9lZame+MBMu3Ap4/3ql/d/3MJzImxyjKqupI8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=bs+pa9vphgySRe2g7P6+VZKhcOdLSVV04/fsM5WMqsb3cCmIgPptRi50dsrzs0K0b
-         ofISsaMSPvgfNlFQKbt5pfDi/8gMn/gmn3rSCizn7uU+s8+rECyYaW0K3m3DKVISQX
-         51WxR0duO6sKq2piZwBwUFxucunP1nUx3aXe+XYFQ1xykKiB+C6QaZpVbLE9WAiqne
-         eBMskLBH1ciewVZqRHMupvADF5+/iHqpsdWNkihmOMI+MrzMjfI3xRyR20wXFlBSN2
-         s5m7cXottrLKQQkrTu6/mIAHZfhrZAoxrXDDKX1bWtzw17sksnhhokELhcK63Vr2SP
-         xq3ZormSFlHNA==
-Date:   Tue, 17 Oct 2023 23:11:00 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/2] PCI: qcom-ep: Implement dbi_cs2_access() function
- callback for DBI CS2 access
-Message-ID: <20231017174100.GA137137@thinkpad>
-References: <20231017-pcie-qcom-bar-v1-0-3e26de07bec0@linaro.org>
- <20231017-pcie-qcom-bar-v1-2-3e26de07bec0@linaro.org>
- <20231017142431.GR3553829@hu-bjorande-lv.qualcomm.com>
- <20231017162129.GF5274@thinkpad>
- <20231017165609.GT3553829@hu-bjorande-lv.qualcomm.com>
+        Tue, 17 Oct 2023 13:46:35 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6037783;
+        Tue, 17 Oct 2023 10:46:34 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39HGsRWY022257;
+        Tue, 17 Oct 2023 17:46:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=wizOAI8PdKSoJNpWslPwAMKZwsvY0u4gK5kO6xEFiLU=;
+ b=ixaO6Kz03PxmXAqt3FzQQ8W074Fkj7I3UiHTl0WwUjWUFkCCaCGToHOaUlMTpNRqXCK0
+ b8auLdeGnl+aIJK9tZt4f8NVpYJTw1HVkjb1O9egHU431W1jABcFG7Eqk0UVN4h2bvqR
+ i8plg7snU86MINhuXfWqs0cVjHdyQhKr2qhyrDSESoR8vH0DQEIxq7MPGHD+CxRx9vh8
+ aLWrOaLjOMCxpFVLJ2VMYpvh1RkFxnOOYdBs+2VyBOEjZMKVzWsbNXSWpDFXqh4fbcfY
+ AUXY021ck0s/ONg+5OJaR8eqbL6TARv2WDNqSaEZ14Ce9nA0fstq4YvN7GXn5v4kBydC JQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tsvxwrds1-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 17 Oct 2023 17:46:24 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39HHkNwK000725
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 17 Oct 2023 17:46:23 GMT
+Received: from [10.216.40.160] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Tue, 17 Oct
+ 2023 10:46:17 -0700
+Message-ID: <189be124-efb1-4843-9a47-db84942838c9@quicinc.com>
+Date:   Tue, 17 Oct 2023 23:16:12 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20231017165609.GT3553829@hu-bjorande-lv.qualcomm.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 1/8] dt-bindings: usb: qcom,dwc3: Add bindings to enable
+ runtime
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_ppratap@quicinc.com>, <quic_jackp@quicinc.com>,
+        Conor Dooley <conor+dt@kernel.org>, <quic_wcheng@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Bjorn Andersson <andersson@kernel.org>
+References: <20231017131851.8299-1-quic_kriskura@quicinc.com>
+ <20231017131851.8299-2-quic_kriskura@quicinc.com>
+ <a3d612a8-1917-491d-a944-22ea39879a9d@linaro.org>
+From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <a3d612a8-1917-491d-a944-22ea39879a9d@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: GjAApdZHzVFdDuElrfluWIo4xkL-aJyZ
+X-Proofpoint-ORIG-GUID: GjAApdZHzVFdDuElrfluWIo4xkL-aJyZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-17_03,2023-10-17_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 impostorscore=0 adultscore=0 clxscore=1011 mlxscore=0
+ suspectscore=0 phishscore=0 mlxlogscore=999 lowpriorityscore=0 spamscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310170150
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 17, 2023 at 09:56:09AM -0700, Bjorn Andersson wrote:
-> On Tue, Oct 17, 2023 at 09:51:29PM +0530, Manivannan Sadhasivam wrote:
-> > On Tue, Oct 17, 2023 at 07:24:31AM -0700, Bjorn Andersson wrote:
-> > > On Tue, Oct 17, 2023 at 11:47:55AM +0530, Manivannan Sadhasivam wrote:
-> > > > From: Manivannan Sadhasivam <mani@kernel.org>
-> > > 
-> > > Your S-o-b should match this.
-> > > 
-> > 
-> > I gave b4 a shot for sending the patches and missed this. Will fix it in next
-> > version.
-> > 
-> > > > 
-> > > > Qcom EP platforms require enabling/disabling the DBI CS2 access while
-> > > > programming some read only and shadow registers through DBI. So let's
-> > > > implement the dbi_cs2_access() callback that will be called by the DWC core
-> > > > while programming such registers like BAR mask register.
-> > > > 
-> > > > Without DBI CS2 access, writes to those registers will not be reflected.
-> > > > 
-> > > > Fixes: f55fee56a631 ("PCI: qcom-ep: Add Qualcomm PCIe Endpoint controller driver")
-> > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > > ---
-> > > >  drivers/pci/controller/dwc/pcie-qcom-ep.c | 14 ++++++++++++++
-> > > >  1 file changed, 14 insertions(+)
-> > > > 
-> > > > diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > > > index 32c8d9e37876..4653cbf7f9ed 100644
-> > > > --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > > > +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > > > @@ -124,6 +124,7 @@
-> > > >  
-> > > >  /* ELBI registers */
-> > > >  #define ELBI_SYS_STTS				0x08
-> > > > +#define ELBI_CS2_ENABLE				0xa4
-> > > >  
-> > > >  /* DBI registers */
-> > > >  #define DBI_CON_STATUS				0x44
-> > > > @@ -262,6 +263,18 @@ static void qcom_pcie_dw_stop_link(struct dw_pcie *pci)
-> > > >  	disable_irq(pcie_ep->perst_irq);
-> > > >  }
-> > > >  
-> > > > +static void qcom_pcie_dbi_cs2_access(struct dw_pcie *pci, bool enable)
-> > > > +{
-> > > > +	struct qcom_pcie_ep *pcie_ep = to_pcie_ep(pci);
-> > > > +
-> > > > +	writel_relaxed(enable, pcie_ep->elbi + ELBI_CS2_ENABLE);
-> > > 
-> > > Don't you want to maintain the ordering of whatever write came before
-> > > this?
-> > > 
-> > 
-> > Since this in a dedicated function, I did not care about the ordering w.r.t
-> > previous writes. Even if it gets inlined, the order should not matter since it
-> > only enables/disables the CS2 access for the forthcoming writes.
-> > 
+
+
+On 10/17/2023 10:49 PM, Krzysztof Kozlowski wrote:
+> On 17/10/2023 15:18, Krishna Kurapati wrote:
+>> Add enable-rt binding to let the device register vendor hooks to
+>> core and facilitate runtime suspend and resume.
+>>
+>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+>> ---
+>>   Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 5 +++++
+>>   1 file changed, 5 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+>> index cb50261c6a36..788d9c510abc 100644
+>> --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+>> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+>> @@ -151,6 +151,11 @@ properties:
+>>         HS/FS/LS modes are supported.
+>>       type: boolean
+>>   
+>> +  qcom,enable-rt:
+>> +    description:
+>> +      If present, register vendor hooks to facilitate runtime suspend/resume
 > 
-> The wmb() - in a non-relaxed writel -  would ensure that no earlier
-> writes are reordered and end up in your expected set of "forthcoming
-> writes".
+> You described the desired Linux feature or behavior, not the actual
+> hardware. The bindings are about the latter, so instead you need to
+> rephrase the property and its description to match actual hardware
+> capabilities/features/configuration etc.
 > 
 
-I was under the impression that the readl_relaxed() here serves as an implicit
-barrier. But reading the holy memory-barriers documentation doesn't explicitly
-say so. So I'm going to add wmb() to be on the safe side as you suggested.
+Hi Krzysztof,
 
-Thanks for pointing it out.
+  Thanks for the review. Although it sounds like its a Linux property, 
+internally what it does is configuring qscratch registers properly when 
+(dr_mode == OTG)
 
-- Mani
+  Would it be fine to rephrase the property name to 
+"qcom,config-qscratch" and to make it dependent on dr_mode and 
+usb-role-switch properties ? Would it be possible to make such a 
+dependency in bindings ?
 
-> Not sure that the code is wrong, I just want you to be certain that this
-> isn't a problem.
-> 
-> Thanks,
-> Bjorn
-
--- 
-மணிவண்ணன் சதாசிவம்
+Regards,
+Krishna,
