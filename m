@@ -2,103 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9CA137CC864
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 18:08:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2030F7CC86C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 18:10:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343532AbjJQQIR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Oct 2023 12:08:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56236 "EHLO
+        id S232134AbjJQQKS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Oct 2023 12:10:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235046AbjJQQIQ (ORCPT
+        with ESMTP id S232577AbjJQQKS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Oct 2023 12:08:16 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52E26103
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 09:08:11 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2c509d5ab43so60490901fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 09:08:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697558889; x=1698163689; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DXUVFLuGWe++aoZT0wJj36hT5pM9P4ypUZCtPuexOjw=;
-        b=ZsHDtaFC4jqbz0k2U0XYVY5Ugpp5Vx3dNvixSgq2lGFIfQPjBFbCiOoSzDQZngWRjC
-         iLlVME80l3QJ44TFlTbdlauMZiAVj2YnL5hHKO5RoEmcJVVXXj/6jd4HCkTJO1wd0dt6
-         nC7Co9Qx9lxCQo6kR4kdu8Y88mwUvYSHMe7BPVx5L/P75YsNjNNOEc9mKRoALxR3N+zU
-         zMeFgWpstfb2JdnpRghi6V8R5U+nWFn8v5fG/4hOQPIhTeZfonB0psIiqWHl6tIzMQQy
-         fDePddXo4lpY7lOtxIftgZ90pDlhopfNKINi8I0Y7DheTEkldFdf6Qiv0fdellD2bSS4
-         qcOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697558889; x=1698163689;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DXUVFLuGWe++aoZT0wJj36hT5pM9P4ypUZCtPuexOjw=;
-        b=n9qUcE6sOdmS1Wx6obwEfBKPtYn2uCafMzJppjm6mdmyNskaUxweOTvs1a1INNd+Vu
-         dPb5zd2gBGIXkaL0uQyzOe2/4/o62tS9+8YJVEZfp49xT0Y0anqU40/wv8J4mrU8/3jk
-         BP/m3UTHR3SPWNaujztsVyva6JUfLvx5cEj6R4s0fTD1jdilqKe0a6GZ+lt/AkNfWLQq
-         Men1dr66+UJz7EER5IG+nTOM/q2o0+Z0rjlnpDIA1gZwmuIJq9vOAp8fzvHwtna2x94t
-         GVs7jOhAwM6b0PpmhzqrGMzJFoSxEJt6zHf6plik00ADcRLAa/jVSnu8gpeqSz7sES6A
-         9Oog==
-X-Gm-Message-State: AOJu0YxvbGzaHMiq82n8IUOxUhZNzccmANbals8ZM2gfFgomp+0gDCGT
-        GJU7QaI6olQpQE7skBN2Wp2KSA==
-X-Google-Smtp-Source: AGHT+IHh5FeDbyGyeVnlphOki8VZ9lFsnG2X0Mgs4+Vrv20Krkq5G5q3XcJAERLYzPkoSS+n65D84A==
-X-Received: by 2002:a2e:a793:0:b0:2c5:409a:a901 with SMTP id c19-20020a2ea793000000b002c5409aa901mr754407ljf.49.1697558889419;
-        Tue, 17 Oct 2023 09:08:09 -0700 (PDT)
-Received: from [172.30.204.57] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id l6-20020a2ea306000000b002c123b976acsm320345lje.76.2023.10.17.09.08.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Oct 2023 09:08:09 -0700 (PDT)
-Message-ID: <e2e8c78a-98b2-42a9-a472-fe0c3332a2d7@linaro.org>
-Date:   Tue, 17 Oct 2023 18:08:05 +0200
+        Tue, 17 Oct 2023 12:10:18 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2D419E;
+        Tue, 17 Oct 2023 09:10:16 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07DEEC433C7;
+        Tue, 17 Oct 2023 16:10:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1697559016;
+        bh=QVFWCEda7RXc1Fn/309y5pkkYsNBM3szVrP2lYj+EPk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=vEOkJaybM7jummksAK+zXzsR+Fc05d9bzchW3jdf4Nk1TDXgJ1wOX0jhW5rTwMe/9
+         FFwgXY4Nm9FUstXs+Pzz6tj0YIEj5n/FGFpgAz9p7qm7toZEnWk8btV8sRVQVst67T
+         yFvS3dEAgLG0WANjJ3Smnrb3Qrt7yH9zs+IQeiFo=
+Date:   Tue, 17 Oct 2023 18:10:08 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Ekansh Gupta <quic_ekangupt@quicinc.com>
+Cc:     srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
+        ekangupt@qti.qualcomm.com, linux-kernel@vger.kernel.org,
+        fastrpc.upstream@qti.qualcomm.com
+Subject: Re: [PATCH v4 4/5] misc: fastrpc: Add support to save and restore
+ interrupted
+Message-ID: <2023101743-discern-plunging-83e4@gregkh>
+References: <1697534799-5124-1-git-send-email-quic_ekangupt@quicinc.com>
+ <1697534799-5124-5-git-send-email-quic_ekangupt@quicinc.com>
+ <2023101739-heftiness-reproach-ef96@gregkh>
+ <d800dcbf-83dc-4b0f-bdd3-fc0efb5dd771@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/12] usb: dwc3: qcom: Rename dwc3 platform_device
- reference
-Content-Language: en-US
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Johan Hovold <johan@kernel.org>,
-        Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-References: <20231016-dwc3-refactor-v1-0-ab4a84165470@quicinc.com>
- <20231016-dwc3-refactor-v1-2-ab4a84165470@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231016-dwc3-refactor-v1-2-ab4a84165470@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Level: *
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d800dcbf-83dc-4b0f-bdd3-fc0efb5dd771@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 10/17/23 05:11, Bjorn Andersson wrote:
-> In preparation for the introduction of a direct reference to the struct
-> dwc3 in the dwc3_qcom struct, rename the generically named "dwc3" to
-> reduce the risk for confusion.
+On Tue, Oct 17, 2023 at 08:36:28PM +0530, Ekansh Gupta wrote:
 > 
-> No functional change.
+> On 10/17/2023 6:50 PM, Greg KH wrote:
+> > On Tue, Oct 17, 2023 at 02:56:38PM +0530, Ekansh Gupta wrote:
+> > > For any remote call, driver sends a message to DSP using RPMSG
+> > > framework. After message is sent, there is a wait on a completion
+> > > object at driver which is completed when DSP response is received.
+> > > 
+> > > There is a possibility that a signal is received while waiting
+> > > causing the wait function to return -ERESTARTSYS. In this case
+> > > the context should be saved and it should get restored for the
+> > > next invocation for the thread.
+> > > 
+> > > Adding changes to support saving and restoring of interrupted
+> > > fastrpc contexts.
+> > > 
+> > > Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+> > > Change-Id: Ia101acf7c1bf6018635536082bf7ea009093c948
+> > > ---
+> > > Changes in v2:
+> > >    - Fixed missing definition
+> > >    - Fixes compile time issue
+> > You forgot to run checkpatch.pl :(
 > 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> I did run checkpatch.pl and also tried compilation test. checkpatch.pl is
+> suggesting 0 errors, 0 warning and compilation also worked without any
+> errors. I might have checked on last week's base as there were no changes in
+> these files. I'll check the patches with latest version and update again if
+> any errors/warnings are observed. Thanks for reviewing the patch. -ekansh
 
-Konrad
+The "Change-Id:" should not be there, and I thought checkpatch would
+catch that.  If not, no big deal, you should have :)
+
