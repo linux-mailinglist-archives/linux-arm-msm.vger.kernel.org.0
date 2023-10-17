@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 13C947CC7BB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 17:44:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F76B7CC7C6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 17:46:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344027AbjJQPoy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Oct 2023 11:44:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58228 "EHLO
+        id S235172AbjJQPqD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Oct 2023 11:46:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344104AbjJQPox (ORCPT
+        with ESMTP id S233016AbjJQPpq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Oct 2023 11:44:53 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF392B0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 08:44:51 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id ffacd0b85a97d-31f71b25a99so5361903f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 08:44:51 -0700 (PDT)
+        Tue, 17 Oct 2023 11:45:46 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0940B136
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 08:45:39 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-3296b49c546so4676885f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 08:45:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697557490; x=1698162290; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1697557538; x=1698162338; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=6DtgUSYb0XXQqzXwICHZfgVDuua9U+i2U9Fqp8iMmb0=;
-        b=QCGLfJFf2ZzI/2bUqj24KjLWmxNWUJZCCbbvJCUPdIi4I1G6sq5XGn/nVnZbsxFez9
-         Mb7qRjg0oqbtsPZoQVjaK9j0JRWKhmxtIXMWvaqTboAgo575s3/GEeFA87OOhRdWvpCq
-         cJZLFXgy0pcqGSTVAGyDiwDnEuPDAZZvJlzeVtUXNwRAFLLU4wI+blBezEMQ05QHiVzP
-         MzCxsp8AjgSXlfvUroJGLSKeKYHSZHNmCzEEoKDOjRD7ur+9Mvef66UxJOdb13/SDHb/
-         Ynjt7Mc210EwsiEbfeLTOciU4hHgxMgHVMAHKk288wtEC+9THfCa08Z2dNzdmqC8G/nN
-         oUdw==
+        bh=+FlDi7fXdE0wEfZd9gB+1OuWbnJWsNKY37hZB2rRes8=;
+        b=eiNlSUk1EMfYP2LE38DJB7vdMj6pXoXBlT9pXDJysY/BnG89txIjNdbIuc3L2nxQkg
+         mYUSHwy9Khq3dlsnrp0EqgpPtX55hIGkUIqgYR12T5RzT2TNImQMRtEUCYNazHkm1eKo
+         m4yKw7vnMY+c3epKRB7VHnLI7HyawthYIOtVSKkQCC7dqiOmC52PuuhtHRrrzfG7XSde
+         3wNhw8O18LdN4rW6WiGyQVMC9VEZ8Me/wEzEnoOGelZ13WKqMD23/1ewNyu4KliW+8ds
+         4sKscibfoMvArNvD91igigc9SY9SNNBjwC5d4NOrFBe1aX3E/DwHQwhCKvn+pygmKhor
+         qJ8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697557490; x=1698162290;
+        d=1e100.net; s=20230601; t=1697557538; x=1698162338;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6DtgUSYb0XXQqzXwICHZfgVDuua9U+i2U9Fqp8iMmb0=;
-        b=SGkSNgOk59+nKhnfJN3/67uU9vyApxfp2Dq2aNLxqBL+5I6XB9c7awKOmZfa0PKQjo
-         4AehdHonGKGCX0G0C5SYSmBglFPU6R7iKvc/0c8WOCh5DGseF4D+RNXIAfRkX/DUCoyb
-         GbWMt38kwmiNfO156Ym986TId0JSJ1ouMqkjqd27TML/4jMOQQV+KLoGGT5KtQuPQ/C4
-         b3ogNur7sBnvznOLx2+c5z25ithA8jnpD2kBf3pA3hLyzULoTuWzDeOT7TLctALLpT4X
-         6S6deeo5+z0pAmQhYsMKfN1S74MAS7ObL2ASb6kImpVSwCRdBwGPGqVmZnt2frvGkjig
-         AQeQ==
-X-Gm-Message-State: AOJu0YyqZUNAbqI7FijBNbMDEa1AzgoJfCYNhC18XZajBofy22z15kmu
-        JajUvC5rEU2yoFCm2dutx3Bmqg==
-X-Google-Smtp-Source: AGHT+IFTjtJ39W3KRhn5QvvknkJMZLuJDABRE9FG1cQ66UJhKTucaLmK/XbihixPbEDdCbWGRVW60A==
-X-Received: by 2002:a5d:68c4:0:b0:32d:6031:2824 with SMTP id p4-20020a5d68c4000000b0032d60312824mr2058463wrw.24.1697557490259;
-        Tue, 17 Oct 2023 08:44:50 -0700 (PDT)
+        bh=+FlDi7fXdE0wEfZd9gB+1OuWbnJWsNKY37hZB2rRes8=;
+        b=s9l9rjHdE3YbeZZYHJHs/vI0b79cBF9gxrPxG2/x2NZGC60+D3HpxUmq2kM3RI3UCi
+         QL0O4DExgT7SHpljse30GiseoaPYuHzVH4zeiK0WAQuWMauDYhwM/LaA9a4CJyOicOAN
+         vZIkU7SNTuZqmIRN1Tt03NfHt6XxSb3Udw2eCma/x2WLOsYjgRm0YtL7HVq2VJZ0OU8j
+         h65bJKHeD51xjkGOKZKXU44DtgJBV4UTLJYubv+apV8DCfK8iO8jhrzaKMFG4XXnr7qo
+         MivIgFLdYx6jvZg33F+g/ZnIC7cdBMIb/kf3mhfly+4navsPsWZr7iJjCQrFnKHs3zI5
+         S3Ug==
+X-Gm-Message-State: AOJu0YwafqCJUdi5aDWC5qZQsjDA1bmgkjq5G0+NfDHlMCWplDgUlV1u
+        BVNVF3H5PxsECzeji1PXwfZ2xQ==
+X-Google-Smtp-Source: AGHT+IG/EPVXtSqFgm43PmkVaB0SUGu4vdHzUrVbvrAHjVXTj5k4rwRAj7tJfiwCiCWHLCq9csbOBw==
+X-Received: by 2002:adf:e412:0:b0:32d:8b1a:31a9 with SMTP id g18-20020adfe412000000b0032d8b1a31a9mr2260215wrm.41.1697557538172;
+        Tue, 17 Oct 2023 08:45:38 -0700 (PDT)
 Received: from [172.30.204.57] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id f4-20020a056000128400b0031c5e9c2ed7sm33293wrx.92.2023.10.17.08.44.47
+        by smtp.gmail.com with ESMTPSA id f4-20020a056000128400b0031c5e9c2ed7sm33293wrx.92.2023.10.17.08.45.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Oct 2023 08:44:49 -0700 (PDT)
-Message-ID: <69987d14-37d1-491e-99fa-9d0201112b67@linaro.org>
-Date:   Tue, 17 Oct 2023 17:44:45 +0200
+        Tue, 17 Oct 2023 08:45:37 -0700 (PDT)
+Message-ID: <6ecd937b-a741-4ac3-8b99-218fd1f3d084@linaro.org>
+Date:   Tue, 17 Oct 2023 17:45:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] arm64: dts: qcom: sm8350: Fix DMA0 address
+Subject: Re: [PATCH 3/5] arm64: dts: qcom: pm8350k: remove hanging whitespace
 Content-Language: en-US
 To:     Nia Espera <nespera@igalia.com>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -71,13 +71,13 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
         Rob <Me@orbit.sh>, Clayton Craft <clayton@igalia.com>,
         ~postmarketos/upstreaming@lists.sr.ht
 References: <20231016-nia-sm8350-for-upstream-v1-0-bb557a0af2e9@igalia.com>
- <20231016-nia-sm8350-for-upstream-v1-2-bb557a0af2e9@igalia.com>
+ <20231016-nia-sm8350-for-upstream-v1-3-bb557a0af2e9@igalia.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231016-nia-sm8350-for-upstream-v1-2-bb557a0af2e9@igalia.com>
+In-Reply-To: <20231016-nia-sm8350-for-upstream-v1-3-bb557a0af2e9@igalia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
         version=3.4.6
 X-Spam-Level: *
@@ -90,17 +90,10 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 10/16/23 14:47, Nia Espera wrote:
-> DMA0 node downstream is specified at 0x900000, so fix the typo. Without
-> this, enabling any i2c node using DMA0 causes a hang.
+> pmk8350 has a random tab character inserted, so remove it.
 > 
 > Signed-off-by: Nia Espera <nespera@igalia.com>
 > ---
-Oh hmm.. I wonder if that's why I could never get one of the i2c hosts 
-on 8350 to behave..
-
-Fixes: bc08fbf49bc8 ("arm64: dts: qcom: sm8350: Define GPI DMA engines")
-Fixes: 41d6bca799b3 ("arm64: dts: qcom: sm8350: correct DMA controller 
-unit address")
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
