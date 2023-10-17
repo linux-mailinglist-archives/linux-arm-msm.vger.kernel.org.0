@@ -2,84 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2030F7CC86C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 18:10:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2AF1E7CC886
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 18:14:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232134AbjJQQKS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Oct 2023 12:10:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46272 "EHLO
+        id S233719AbjJQQON (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Oct 2023 12:14:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232577AbjJQQKS (ORCPT
+        with ESMTP id S232804AbjJQQOM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Oct 2023 12:10:18 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2D419E;
-        Tue, 17 Oct 2023 09:10:16 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07DEEC433C7;
-        Tue, 17 Oct 2023 16:10:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1697559016;
-        bh=QVFWCEda7RXc1Fn/309y5pkkYsNBM3szVrP2lYj+EPk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=vEOkJaybM7jummksAK+zXzsR+Fc05d9bzchW3jdf4Nk1TDXgJ1wOX0jhW5rTwMe/9
-         FFwgXY4Nm9FUstXs+Pzz6tj0YIEj5n/FGFpgAz9p7qm7toZEnWk8btV8sRVQVst67T
-         yFvS3dEAgLG0WANjJ3Smnrb3Qrt7yH9zs+IQeiFo=
-Date:   Tue, 17 Oct 2023 18:10:08 +0200
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Ekansh Gupta <quic_ekangupt@quicinc.com>
-Cc:     srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
-        ekangupt@qti.qualcomm.com, linux-kernel@vger.kernel.org,
-        fastrpc.upstream@qti.qualcomm.com
-Subject: Re: [PATCH v4 4/5] misc: fastrpc: Add support to save and restore
- interrupted
-Message-ID: <2023101743-discern-plunging-83e4@gregkh>
-References: <1697534799-5124-1-git-send-email-quic_ekangupt@quicinc.com>
- <1697534799-5124-5-git-send-email-quic_ekangupt@quicinc.com>
- <2023101739-heftiness-reproach-ef96@gregkh>
- <d800dcbf-83dc-4b0f-bdd3-fc0efb5dd771@quicinc.com>
+        Tue, 17 Oct 2023 12:14:12 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F2A9ED
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 09:14:10 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-407da05f05aso6107025e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 09:14:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1697559249; x=1698164049; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AKmQY7BLgBndXsxrNKxMvIo95aL00rRTN4PkHuTiB8Q=;
+        b=jDPFaQj81Cg+o3/JqhA2Fjvipk6Qi9gIAUB0qDnPFsNldAL/h4vp7C6B02d98kO+2p
+         Xcnom30EmF9EGdCWVk3op4GX1E712IOfSXLgFGKNBpAL+YPC/j3wsVImHWGOI3H+hOB7
+         eadExD/JejqnECMLUE6RWnfihC5KLVbiAcwI+g4H1LbrSt8ZbVvQECQwPrVyBEeWzv60
+         mRV0+5xSkHiBKt5orZZbu+spPWXlfE/XskZp96DWpTYwL1pKjoClS9Qhexv6SR8qXWYb
+         jeVPThbzCTcSpuQReUHkFebutfMF2HUbcuagqryP32fvFNw06KnwrLEQ3sOuIfuSScPd
+         BfBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697559249; x=1698164049;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AKmQY7BLgBndXsxrNKxMvIo95aL00rRTN4PkHuTiB8Q=;
+        b=jnEeCC2rFMKs6EoLwa51l1w/TkQ07RsjinS4MftnGu2EWbRykbo3v3kiOlY1IY0BCQ
+         AV6OpgsBPRcB7Q/ufK2+2qrdIacaLeeg31w3pxXSaUKS/BunZ0749gamzWG+31rC/e7c
+         Br91lIOSl62e+TbB15pV7ZnE0npK7hz5dO2uJTSPreFdghko77E3c1VeNlth0XrRYQMO
+         /5ARrzWxrh/7qVvkw9WdBcxgbrzPpIaJqTqiRomfqC4m6tObxBLJD8PT5Uc0ECpRp5/7
+         SHNkNnwnLiGg1GSCQTPY/UdDoMoaqIIj5DcQ7pPY41m8YHfpONfQns/+eIUUysSsartg
+         FB6w==
+X-Gm-Message-State: AOJu0Yw7jJerXwITmY3LjlMKHSisI+KX2rqodUS4TGCk7jdMKypXQJZ4
+        gmgRx0uxnHvh3guwW4da0AnV3ADBVoljcWh1UKo=
+X-Google-Smtp-Source: AGHT+IHwbJv6j6ptrNMYA09wWv9S10K/f+EjOxDnfiiQo8bvQ8vYVhH6fnAwUJNi9K2IWSbOMWqomA==
+X-Received: by 2002:a05:600c:6021:b0:407:536d:47ae with SMTP id az33-20020a05600c602100b00407536d47aemr2085070wmb.38.1697559248879;
+        Tue, 17 Oct 2023 09:14:08 -0700 (PDT)
+Received: from [172.30.204.57] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id q28-20020adfab1c000000b003248a490e3asm101189wrc.39.2023.10.17.09.14.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Oct 2023 09:14:08 -0700 (PDT)
+Message-ID: <013b76ea-82d1-4bb2-9842-b47cc4ccfc55@linaro.org>
+Date:   Tue, 17 Oct 2023 18:14:05 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d800dcbf-83dc-4b0f-bdd3-fc0efb5dd771@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 05/12] usb: dwc3: Override end of dwc3 memory resource
+Content-Language: en-US
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Johan Hovold <johan@kernel.org>,
+        Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+References: <20231016-dwc3-refactor-v1-0-ab4a84165470@quicinc.com>
+ <20231016-dwc3-refactor-v1-5-ab4a84165470@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20231016-dwc3-refactor-v1-5-ab4a84165470@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 17, 2023 at 08:36:28PM +0530, Ekansh Gupta wrote:
-> 
-> On 10/17/2023 6:50 PM, Greg KH wrote:
-> > On Tue, Oct 17, 2023 at 02:56:38PM +0530, Ekansh Gupta wrote:
-> > > For any remote call, driver sends a message to DSP using RPMSG
-> > > framework. After message is sent, there is a wait on a completion
-> > > object at driver which is completed when DSP response is received.
-> > > 
-> > > There is a possibility that a signal is received while waiting
-> > > causing the wait function to return -ERESTARTSYS. In this case
-> > > the context should be saved and it should get restored for the
-> > > next invocation for the thread.
-> > > 
-> > > Adding changes to support saving and restoring of interrupted
-> > > fastrpc contexts.
-> > > 
-> > > Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-> > > Change-Id: Ia101acf7c1bf6018635536082bf7ea009093c948
-> > > ---
-> > > Changes in v2:
-> > >    - Fixed missing definition
-> > >    - Fixes compile time issue
-> > You forgot to run checkpatch.pl :(
-> 
-> I did run checkpatch.pl and also tried compilation test. checkpatch.pl is
-> suggesting 0 errors, 0 warning and compilation also worked without any
-> errors. I might have checked on last week's base as there were no changes in
-> these files. I'll check the patches with latest version and update again if
-> any errors/warnings are observed. Thanks for reviewing the patch. -ekansh
 
-The "Change-Id:" should not be there, and I thought checkpatch would
-catch that.  If not, no big deal, you should have :)
 
+On 10/17/23 05:11, Bjorn Andersson wrote:
+> In the case that the dwc3 core driver is instantiated from the same
+> memory resource information as the glue driver, the dwc_res memory
+> region will overlap with the memory region already mapped by the glue.
+> 
+> As the DWC3 core driver already does math on the passed memory region to
+> exclude the XHCI region, also adjust the end address, to avoid having to
+> pass an adjusted region from the glue explicitly.
+> 
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> ---
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
