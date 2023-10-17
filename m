@@ -2,70 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 36DC07CC997
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 19:13:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C1AB97CC9AC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 19:19:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234976AbjJQRNJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Oct 2023 13:13:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34666 "EHLO
+        id S234760AbjJQRTM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Oct 2023 13:19:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234896AbjJQRNI (ORCPT
+        with ESMTP id S229848AbjJQRTL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Oct 2023 13:13:08 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ADF694
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 10:13:06 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2c50fbc218bso51415431fa.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 10:13:06 -0700 (PDT)
+        Tue, 17 Oct 2023 13:19:11 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93F39BA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 10:19:09 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-9b6559cbd74so1035452666b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 10:19:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697562785; x=1698167585; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1697563148; x=1698167948; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=sh8eLOBFVl/qMkjQqVR7VwaPs8qPzyo0SZOnoQF1las=;
-        b=uzI6T7N/NSAYIc2Er26XScp9mEpeLfT5uGoHm1BCvIlmihfxOtrsJSwXDKRzAYPJUo
-         Ik/q+iKOnCfrwnYwsNqEGV3dauBNDBtOUdbX04m6GbsCEI7WZZ7UCLn5RJ86T0OhJbxM
-         QT2oij+1z1MLbtgUq4kA+Pg55HrRe8VEw+zCc22X77neRbqATbqBeapTXEFcizGB5zoG
-         hBkVJ4PHHlSv8622AV1Jy90MHnXfOO9Npvsvo9E9wzM1vNBponsUfBwubdeTaPmMSne+
-         Ch0vZxn45RDbQv1dschJixzxJPO21AS1Z+dY4sA0VOjOtGZZ2irL48yavFHTOt0NXESP
-         yEjQ==
+        bh=FzadHjSR+1eNj1x4ZdnanYUkENvCihGyspGgmsgRy3w=;
+        b=MgLgEcFP/D8/+GEV1PGcmt8636iLWX5zj+vtt92f3AY+WCVUmsPf0edD4nnJrYM+6K
+         F5QupgUcF+hVd8jnDtkP/NVS60UkMV5df1kPTWQ62YLY9XwjKlOKJ22j7YjXm7e6GlG4
+         EHfxfHpMh+Pk6CeuD0doVzOqbQAmEBrwXurkkwJIo1ch9JFDNQ7FvKD03qzMXToGlPkj
+         LcR9rtAVFZ6/ctNcY7UH9SbZ/rDMpYbv+KuL0ABqR+a6F1v0M74i8av8opvucHlMHXoS
+         7eCg8YdhqG82CsCB5vDFd9pCJpJhvdjyu5lGeYpCi0RXLpn3zx8UFjXQ77xE38j8Zpfu
+         TbzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697562785; x=1698167585;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1697563148; x=1698167948;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sh8eLOBFVl/qMkjQqVR7VwaPs8qPzyo0SZOnoQF1las=;
-        b=pZbFrmXVL0eRcKdftCCMvI7zrLLkMo1FJfAg01osqiB06FufD+67CIRW55n0o3mSJA
-         zq1VfMtz52AmhUxrMLJ7vIxcXGXPGu6PO76S/dEan5MunAiVY8PiU9O6Qq2W5ELd+ZTV
-         kZjJ8Q7YMlc/Nwvb3Y2QdKurQm0KuwDVZF0MfpTBuk7ZP67QHi++ZDnKbAx3Jb9Nh0W9
-         cyd/nj8K4+v7Ndkc7ozjvreUsgt/oghJp7oKcHGv79pFaVXbeF093xxX2zr3t1vUetg1
-         NbrzvFTsMlBCflYP6fbgiJTI6l1lLQkvdIx0kwW4EDQ+/S6VkiX2jDjp/PosZSPvseK+
-         4+Mg==
-X-Gm-Message-State: AOJu0YwyZjM5Bwp8LjMebPmoCiNn/YiaTEPcfySWl3T/8pb4PKUcks5b
-        3yXOgjq7lGZfni+jUVclA7qkpQ==
-X-Google-Smtp-Source: AGHT+IFciqtzoNcAnKm6FUo7fRMsIRy+b+gJyFmCmGopJYGEdxNdwig+tCTn4ivIW6GFHBJQC5iNbQ==
-X-Received: by 2002:a2e:8781:0:b0:2c5:1075:5ec9 with SMTP id n1-20020a2e8781000000b002c510755ec9mr2238626lji.13.1697562784813;
-        Tue, 17 Oct 2023 10:13:04 -0700 (PDT)
+        bh=FzadHjSR+1eNj1x4ZdnanYUkENvCihGyspGgmsgRy3w=;
+        b=Jm6waT+VMs/7GdxNju5sXg6FGSAr0ewkcKKQqi75zhgzOyx67pP1cfw/uE1vNo9UB/
+         FiB5rwLdVmyeTxqPXLd3fEAy0Xn0x8IJyG1kSDkCMtWV2rsIRF0puxNmORYuRtHkq4Dx
+         Z73d5b0WwQBw9FxLgfQgmfqlWl6i+kaR3mTFYNnrv92zow3kIVRoa6d2Z+uPhrwH5xEh
+         Sb0hRJsvNFB7L+XbsjzdsthmV2XdRKAx/OHajWdagvryc0N6Zjkq7Cp9mmht5dgr+kqU
+         p6fJlCqSxqBWyHm+78Tu6jm3Hhe1u9H1o8umy+/JIZiiK57K8/CEH80V3cg64ak4IlME
+         x3BQ==
+X-Gm-Message-State: AOJu0YxR4oMv3IlP1hv9VJ3QS5OtYhznaQwqOFCBRYAfXZMvlontatHf
+        bMUPHaRtY9y1f5k1YI8305RMcg==
+X-Google-Smtp-Source: AGHT+IFdd73Grali1HHgwcgH7BtJ7c29IY801EJQ4HC6O0Ynh2BAt+UGanvNtBmsVJBVAASLN1Pcuw==
+X-Received: by 2002:a17:906:4fc6:b0:9a9:eef6:434a with SMTP id i6-20020a1709064fc600b009a9eef6434amr2247902ejw.36.1697563148070;
+        Tue, 17 Oct 2023 10:19:08 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.154])
-        by smtp.gmail.com with ESMTPSA id j5-20020a05600c1c0500b003fe1c332810sm10487278wms.33.2023.10.17.10.13.02
+        by smtp.gmail.com with ESMTPSA id jt14-20020a170906ca0e00b009be23a040cfsm158464ejb.40.2023.10.17.10.19.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Oct 2023 10:13:04 -0700 (PDT)
-Message-ID: <44333dbf-7023-4124-9586-2ca13e83c0fd@linaro.org>
-Date:   Tue, 17 Oct 2023 19:13:02 +0200
+        Tue, 17 Oct 2023 10:19:07 -0700 (PDT)
+Message-ID: <a3d612a8-1917-491d-a944-22ea39879a9d@linaro.org>
+Date:   Tue, 17 Oct 2023 19:19:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: ipq6018: use CPUFreq NVMEM
+Subject: Re: [RFC 1/8] dt-bindings: usb: qcom,dwc3: Add bindings to enable
+ runtime
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Robert Marko <robimarko@gmail.com>, agross@kernel.org,
-        andersson@kernel.org, ilia.lin@kernel.org, rafael@kernel.org,
-        viresh.kumar@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231016175532.2081344-1-robimarko@gmail.com>
- <20231016175532.2081344-3-robimarko@gmail.com>
- <2f22ed28-47b1-4a92-aae5-b625ab4ad731@linaro.org>
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, quic_wcheng@quicinc.com
+Cc:     linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_ppratap@quicinc.com, quic_jackp@quicinc.com
+References: <20231017131851.8299-1-quic_kriskura@quicinc.com>
+ <20231017131851.8299-2-quic_kriskura@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -111,51 +117,44 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <2f22ed28-47b1-4a92-aae5-b625ab4ad731@linaro.org>
+In-Reply-To: <20231017131851.8299-2-quic_kriskura@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/10/2023 18:55, Konrad Dybcio wrote:
+On 17/10/2023 15:18, Krishna Kurapati wrote:
+> Add enable-rt binding to let the device register vendor hooks to
+> core and facilitate runtime suspend and resume.
 > 
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 5 +++++
+>  1 file changed, 5 insertions(+)
 > 
-> On 10/16/23 19:55, Robert Marko wrote:
->> IPQ6018 comes in multiple SKU-s and some of them dont support all of the
->> OPP-s that are current set, so lets utilize CPUFreq NVMEM to allow only
->> supported OPP-s based on the SoC dynamically.
->>
->> As an example, IPQ6018 is generaly rated at 1.8GHz but some silicon only
->> goes up to 1.5GHz and is marked as such via an eFuse.
->>
->> Signed-off-by: Robert Marko <robimarko@gmail.com>
->> ---
->>   arch/arm64/boot/dts/qcom/ipq6018.dtsi | 14 +++++++++++++-
->>   1 file changed, 13 insertions(+), 1 deletion(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
->> index 9aec89d5e095b..49f0e6aa4b5bb 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
->> @@ -96,42 +96,49 @@ scm {
->>   	};
->>   
-> [...]
-> 
->> +			cpu_speed_bin: cpu_speed_bin@135 {
-> underscore -> minus sign
-> 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> index cb50261c6a36..788d9c510abc 100644
+> --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> @@ -151,6 +151,11 @@ properties:
+>        HS/FS/LS modes are supported.
+>      type: boolean
+>  
+> +  qcom,enable-rt:
+> +    description:
+> +      If present, register vendor hooks to facilitate runtime suspend/resume
 
-I think Bjorn does not read comments, so he just picks up such patches
-because they got review. Better to ask for fixing it, instead of giving
-conditional review tag, IMHO.
+You described the desired Linux feature or behavior, not the actual
+hardware. The bindings are about the latter, so instead you need to
+rephrase the property and its description to match actual hardware
+capabilities/features/configuration etc.
 
 Best regards,
 Krzysztof
