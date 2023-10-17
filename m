@@ -2,228 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A8BF7CBC2D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 09:25:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38B1C7CBC4E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 09:34:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234525AbjJQHZ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Oct 2023 03:25:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53416 "EHLO
+        id S234503AbjJQHeA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Oct 2023 03:34:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234469AbjJQHZ2 (ORCPT
+        with ESMTP id S234451AbjJQHd7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Oct 2023 03:25:28 -0400
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 536F593
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 00:25:27 -0700 (PDT)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-5a7c95b8d14so68419597b3.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 00:25:27 -0700 (PDT)
+        Tue, 17 Oct 2023 03:33:59 -0400
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5906A93
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 00:33:57 -0700 (PDT)
+Received: by mail-io1-xd36.google.com with SMTP id ca18e2360f4ac-7a2a9e5451bso206064639f.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 00:33:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697527526; x=1698132326; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=MlhxWtNcEtPdlgFrUV2Qe5Hlpzoe4VwBmwyo3n0xQ7Y=;
-        b=JFJ2UgrdX7J1U/it2TBiA0kVHK/Hd+JGsBr6L6zwqhFG/bWv4arkKFbVMncihyEqPA
-         JuvT97RC5ZdEDeXU6MfHzXvuRXEmCUsBhCbnyBH6EQO128TPT1J5/Zq/y5RKVIOxly9S
-         eT1XMbTDyPc/LLeN3zC/zzWfA6QGQ5TFFlPwAefppAqU5skqxT28tkpHO13LzMf9hwps
-         oep/iM4XXPK73CGdPtwQGrckZxOMdza7Gp7KjriS45mzvvuWxbA5xyLgVsOp6fNaXmFh
-         +U70TIJDJPmshPu4nRPEG3I0BhhNLXcWGrqXq/sSKx9m0XxwE5aA8CPoS/3xLaXXuPFN
-         xFCw==
+        d=chromium.org; s=google; t=1697528036; x=1698132836; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/ApyDiANstYTWyWFRnukDgHnJl3tUXr1U5Y0xyV6mrc=;
+        b=UP1qyIM/5i3QaiC2OvN6xita6W2B7BoicollJXeex3cyiJwRu4auCzJNBJTP35HVMq
+         810C24YlJqSXU+q3D0xOVlFdNwOmakHDyQzku38N6Jm/wCWWH1yXPHHVuoVl1nG+1pxT
+         0Ru4LpPobj/TLicrmYvXKHhPgcU4okw+FFBU4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697527526; x=1698132326;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MlhxWtNcEtPdlgFrUV2Qe5Hlpzoe4VwBmwyo3n0xQ7Y=;
-        b=AFkQlHPaWYq/OvR9wGw3ukAQm52/zEI3oyqoMmcrYndQh9Oi3HTglHWujmetAfyyPz
-         cj7k2I5x0qgiVBgn6HjDPZbYKu/Hm2ETs/KpPnQgJi0pUZzEJR9XkcCPbyqrgu0DNhjI
-         f0mPVaBkZInOOV4BUqciH0IwK7G7Ert/tTog2cj+yJOgJXUAkMV5OrA5W3NvfeiXFnD9
-         CcwZEAlrNvmEW8+FHzN0L4aEVZ3tl/4g/7wdj2hl7RLrOPPhtzmG/XYyQXY0iLyL27lz
-         wZRJXMO+n6SEvjKu0Yt2wqzL4bs5nUD5Hug2eKoWtTKOV7RBMsTflTUsHB+JDiJumgEI
-         5B3Q==
-X-Gm-Message-State: AOJu0YwTg10L1lEVMYX4rDLXKi1MeLITtUz0nqtJC6DeQB7OYri/pyvo
-        wdObEKDxN/PTaIo7qD1UZHAAbhgUV4xYiHyVu60dGg==
-X-Google-Smtp-Source: AGHT+IENnjJOV5JRk8GZZ8lld1NThYpPL3nSEbH7tZD0rqOcShuOqE0pwsLzTmY5xzyWjOahVXDxQJiH030g1Mf79EA=
-X-Received: by 2002:a81:490b:0:b0:5a8:3f2:b538 with SMTP id
- w11-20020a81490b000000b005a803f2b538mr1472895ywa.37.1697527526514; Tue, 17
- Oct 2023 00:25:26 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1697528036; x=1698132836;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/ApyDiANstYTWyWFRnukDgHnJl3tUXr1U5Y0xyV6mrc=;
+        b=YEqOOlf0Fdu5CYqKYsjFuQaf7fQZEHpsF/6/xWh1FG7y/Y0/uewWFmnkBSZ8g4zXlP
+         baGf54glYGJ7SEvfwgPN87tttvGauwYDEi5umW2udF/1mD/ZUlffhfebDFYBqBksyCYr
+         Da7Rqj7HupiSoRd2wCxH8StMdI+SHoKUt+PI2HNcDyYkL9O7NpGC+w+RDgWtitn+qqyg
+         rvo7tfOOStNf91VFjJm1i48ishxzuqKgB377yNa2iIVXXUgMJhz4oGbL9dhixyCmgisl
+         Pmc+EBrYDNh/HRPTMr459r+CxkXvizU8LpOn8uEwS6tOE+njKAhXBV5szhjCXiBE015A
+         q9og==
+X-Gm-Message-State: AOJu0YxGeVLai7RclOVZYoHTo9I7WKM3flz3FMI1N0qOSWrb7nlXc9Yl
+        s2zqSGfpWlR7Ta1+Y1j4JgdtOPQRNtf9Td/ie1nRXg==
+X-Google-Smtp-Source: AGHT+IEAYKQ8Ud2dDCTFrFxk0sv/MWGDyTH5PUc94osy1+AGiIS89dM943n8PAfXr7KHqvHMo1X6R6r3/dT57OJulPY=
+X-Received: by 2002:a05:6602:1689:b0:790:f733:2f9e with SMTP id
+ s9-20020a056602168900b00790f7332f9emr1564343iow.13.1697528036747; Tue, 17 Oct
+ 2023 00:33:56 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230828-solid-fill-v6-0-a820efcce852@quicinc.com>
- <20230828-solid-fill-v6-7-a820efcce852@quicinc.com> <20230829112230.7106a8bf@eldfell>
- <752176d8-23f4-4689-8bf4-db27f153fd39@quicinc.com> <6851b864-447f-453f-8b34-1fbb6e97eefe@linaro.org>
- <26585954-7c86-45fd-9190-f1109cbe9901@quicinc.com>
-In-Reply-To: <26585954-7c86-45fd-9190-f1109cbe9901@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 17 Oct 2023 10:25:14 +0300
-Message-ID: <CAA8EJpoo4PSAzpjLcfdA0brNFZbTuCnv_HdztQ9Pnc_EnXgEmg@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH RFC v6 07/10] drm/atomic: Loosen FB atomic checks
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc:     Pekka Paalanen <ppaalanen@gmail.com>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        sebastian.wick@redhat.com, Thomas Zimmermann <tzimmermann@suse.de>,
-        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        quic_abhinavk@quicinc.com, Maxime Ripard <mripard@kernel.org>,
-        linux-kernel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        laurent.pinchart@ideasonboard.com, Daniel Vetter <daniel@ffwll.ch>,
-        contact@emersion.fr,
+References: <20230926-topic-a643-v1-0-7af6937ac0a3@linaro.org>
+ <20230926-topic-a643-v1-2-7af6937ac0a3@linaro.org> <43q6mui3lofa4rqh667o54b2qcbqn5fg34ss5o7y7k7uxbxsro@dxgovofsrvqx>
+In-Reply-To: <43q6mui3lofa4rqh667o54b2qcbqn5fg34ss5o7y7k7uxbxsro@dxgovofsrvqx>
+From:   Rob Clark <robdclark@chromium.org>
+Date:   Tue, 17 Oct 2023 00:33:45 -0700
+Message-ID: <CAJs_Fx7WkdhY31aP_buZP+b7ihOOmE8zBZFOLZ8z9uqcNmEhVw@mail.gmail.com>
+Subject: Re: [PATCH 2/7] drm/msm/adreno: Add ZAP firmware name to A635
+To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        cros-qcom-dts-watchers@chromium.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
         Marijn Suijten <marijn.suijten@somainline.org>,
-        wayland-devel@lists.freedesktop.org,
-        David Airlie <airlied@gmail.com>, ville.syrjala@linux.intel.com
+        Luca Weiss <luca.weiss@fairphone.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jessica,
-
-On Tue, 17 Oct 2023 at 03:41, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
-> On 9/24/2023 3:23 AM, Dmitry Baryshkov wrote:
-> > On 22/09/2023 20:49, Jessica Zhang wrote:
-> >>
-> >>
-> >> On 8/29/2023 1:22 AM, Pekka Paalanen wrote:
-> >>> On Mon, 28 Aug 2023 17:05:13 -0700
-> >>> Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
-> >>>
-> >>>> Loosen the requirements for atomic and legacy commit so that, in cases
-> >>>> where pixel_source != FB, the commit can still go through.
-> >>>>
-> >>>> This includes adding framebuffer NULL checks in other areas to
-> >>>> account for
-> >>>> FB being NULL when non-FB pixel sources are enabled.
-> >>>>
-> >>>> To disable a plane, the pixel_source must be NONE or the FB must be
-> >>>> NULL
-> >>>> if pixel_source == FB.
-> >>>>
-> >>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> >>>> ---
-> >>>>   drivers/gpu/drm/drm_atomic.c        | 20 +++++++++++---------
-> >>>>   drivers/gpu/drm/drm_atomic_helper.c | 36
-> >>>> ++++++++++++++++++++----------------
-> >>>>   include/drm/drm_atomic_helper.h     |  4 ++--
-> >>>>   include/drm/drm_plane.h             | 29
-> >>>> +++++++++++++++++++++++++++++
-> >>>>   4 files changed, 62 insertions(+), 27 deletions(-)
-> >>>
-> >>> ...
-> >>>
-> >>>> diff --git a/include/drm/drm_plane.h b/include/drm/drm_plane.h
-> >>>> index a58f84b6bd5e..4c5b7bcdb25c 100644
-> >>>> --- a/include/drm/drm_plane.h
-> >>>> +++ b/include/drm/drm_plane.h
-> >>>> @@ -992,6 +992,35 @@ static inline struct drm_plane
-> >>>> *drm_plane_find(struct drm_device *dev,
-> >>>>   #define drm_for_each_plane(plane, dev) \
-> >>>>       list_for_each_entry(plane, &(dev)->mode_config.plane_list, head)
-> >>>> +/**
-> >>>> + * drm_plane_solid_fill_enabled - Check if solid fill is enabled on
-> >>>> plane
-> >>>> + * @state: plane state
-> >>>> + *
-> >>>> + * Returns:
-> >>>> + * Whether the plane has been assigned a solid_fill_blob
-> >>>> + */
-> >>>> +static inline bool drm_plane_solid_fill_enabled(struct
-> >>>> drm_plane_state *state)
-> >>>> +{
-> >>>> +    if (!state)
-> >>>> +        return false;
-> >>>> +    return state->pixel_source == DRM_PLANE_PIXEL_SOURCE_SOLID_FILL
-> >>>> && state->solid_fill_blob;
-> >>>> +}
-> >>>> +
-> >>>> +static inline bool drm_plane_has_visible_data(const struct
-> >>>> drm_plane_state *state)
-> >>>> +{
-> >>>> +    switch (state->pixel_source) {
-> >>>> +    case DRM_PLANE_PIXEL_SOURCE_NONE:
-> >>>> +        return false;
-> >>>> +    case DRM_PLANE_PIXEL_SOURCE_SOLID_FILL:
-> >>>> +        return state->solid_fill_blob != NULL;
-> >>>
-> >>> This reminds me, new UAPI docs did not say what the requirements are for
-> >>> choosing solid fill pixel source. Is the atomic commit rejected if
-> >>> pixel source is solid fill, but solid_fill property has no blob?
-> >>
-> >> Hi Pekka,
-> >>
-> >> Yes, if pixel_source is solid_fill and the solid_fill property blob
-> >> isn't set, the atomic commit should throw an error.
-> >>
-> >> Will document this in the UAPI.
+On Mon, Oct 16, 2023 at 1:12=E2=80=AFPM Akhil P Oommen <quic_akhilpo@quicin=
+c.com> wrote:
+>
+> On Tue, Sep 26, 2023 at 08:24:37PM +0200, Konrad Dybcio wrote:
 > >
-> > I don't see a corresponding error check in atomic_check() functions.
-> > Could you please check that there is one, as you are updating the uAPI.
->
-> Hi Dmitry,
->
-> Sorry for the late response.
-
-No worries.
-
->
-> drm_plane_has_visible_data() is being called from
-> drm_atomic_plane_check() which is called from drm_atomic_commit() (via
-> drm_atomic_check_only()).
->
-> It's also called within the atomic_check() callstack in
-> drm_atomic_helper_check_plane_state(), though that check will set
-> plane.visible to false and return 0.
->
-> Would it be better to have a more explicit `if (source == solid_fill &&
-> !plane->solid_fill_blob) then return -EINVAL` check in atomic_check()?
-
-No. Your current code is good already. It was me who missed the
-visible data check.
-If you are going to send the next version for some reason, it might be
-good to add a small comment to drm_atomic_helper_check_plane_state().
-Something like 'check that the selected pixel source (fb, solid fill,
-etc.) is valid'.
-
->
-> Thanks,
->
-> Jessica Zhang
->
+> > Some (many?) devices with A635 expect a ZAP shader to be loaded.
 > >
-> >>
-> >> Thanks,
-> >>
-> >> Jessica Zhang
-> >>
-> >>>
-> >>> This should be doc'd.
-> >>>
-> >>>
-> >>> Thanks,
-> >>> pq
-> >>>
-> >>>> +    case DRM_PLANE_PIXEL_SOURCE_FB:
-> >>>> +    default:
-> >>>> +        WARN_ON(state->pixel_source != DRM_PLANE_PIXEL_SOURCE_FB);
-> >>>> +    }
-> >>>> +
-> >>>> +    return state->fb != NULL;
-> >>>> +}
-> >>>> +
-> >>>>   bool drm_any_plane_has_format(struct drm_device *dev,
-> >>>>                     u32 format, u64 modifier);
-> >>>>
-> >>>
+> > Set the file name to allow for that.
+> >
+> > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > ---
+> >  drivers/gpu/drm/msm/adreno/adreno_device.c | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/d=
+rm/msm/adreno/adreno_device.c
+> > index fa527935ffd4..16527fe8584d 100644
+> > --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> > +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> > @@ -454,6 +454,7 @@ static const struct adreno_info gpulist[] =3D {
+> >               .quirks =3D ADRENO_QUIRK_HAS_CACHED_COHERENT |
+> >                       ADRENO_QUIRK_HAS_HW_APRIV,
+> >               .init =3D a6xx_gpu_init,
+> > +             .zapfw =3D "a660_zap.mbn",
+>
+> sc7280 doesn't have a TZ and so no zap shader support. Can we handle
+> this using "firmware-name" property in your top level platform dt? Zap
+> firmwares are signed with different keys for each OEMs. So there is
+> cross-compatibility anyway.
+
+I think this ends up working out because the version of sc7280 that
+doesn't have TZ also doesn't have the associated mem-region/etc..  but
+maybe we should deprecate the zapfw field as in practice it isn't
+useful (ie. always overriden by firmware-name).
+
+Fwiw there are windows laptops with sc7180/sc7280 which do use zap fw.
+
+BR,
+-R
+
+>
+> -Ahil.
+>
+> >               .hwcg =3D a660_hwcg,
+> >               .address_space_size =3D SZ_16G,
+> >               .speedbins =3D ADRENO_SPEEDBINS(
 > >
 > > --
-> > With best wishes
-> > Dmitry
+> > 2.42.0
 > >
-
-
-
--- 
-With best wishes
-Dmitry
