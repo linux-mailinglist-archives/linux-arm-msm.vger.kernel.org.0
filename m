@@ -2,134 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 38B1C7CBC4E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 09:34:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A3B317CBC67
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 09:37:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234503AbjJQHeA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Oct 2023 03:34:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53430 "EHLO
+        id S234711AbjJQHhK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Oct 2023 03:37:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234451AbjJQHd7 (ORCPT
+        with ESMTP id S234658AbjJQHgx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Oct 2023 03:33:59 -0400
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5906A93
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 00:33:57 -0700 (PDT)
-Received: by mail-io1-xd36.google.com with SMTP id ca18e2360f4ac-7a2a9e5451bso206064639f.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 00:33:57 -0700 (PDT)
+        Tue, 17 Oct 2023 03:36:53 -0400
+Received: from mail-vs1-xe2f.google.com (mail-vs1-xe2f.google.com [IPv6:2607:f8b0:4864:20::e2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B14E711A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 00:36:51 -0700 (PDT)
+Received: by mail-vs1-xe2f.google.com with SMTP id ada2fe7eead31-457c19ebb3aso1695506137.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 00:36:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1697528036; x=1698132836; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/ApyDiANstYTWyWFRnukDgHnJl3tUXr1U5Y0xyV6mrc=;
-        b=UP1qyIM/5i3QaiC2OvN6xita6W2B7BoicollJXeex3cyiJwRu4auCzJNBJTP35HVMq
-         810C24YlJqSXU+q3D0xOVlFdNwOmakHDyQzku38N6Jm/wCWWH1yXPHHVuoVl1nG+1pxT
-         0Ru4LpPobj/TLicrmYvXKHhPgcU4okw+FFBU4=
+        d=linaro.org; s=google; t=1697528211; x=1698133011; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=cxT7pzdJESncQ/+9UX6/pYk1WP7pzSl0ESvB6teChuU=;
+        b=N4PouUvUPXdMGFCGy725Sjo9GsCmF1ksb61u7ioomtvpRTcsT2BEuoREoJ+kk1C6fF
+         xy0+ywyvWCE+fL4AtsQ3u63cS8U0uWzBDloHPziZfPs0ZUeBxMZ8SFR7/h9+V6iV0Gah
+         qMcozuXDAiRqp8BruQzlIVbtNb+A56OahvR68DjnFSMhqRyqo0usZTQ6oBFJ6Yo1af3C
+         iS7wE8O09mxgCx3IRpYnYoieWTjBdpFtmzee0MXLWqz7VceP/DGiHXGYgSz+P9WHHu1c
+         hIvseX0/0uU03n4zrWF9Vcg6lj0n3CcHwrvAUDQ8XH+o0Zxd8qE4WhSGWD+OGC73+bL+
+         24MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697528036; x=1698132836;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/ApyDiANstYTWyWFRnukDgHnJl3tUXr1U5Y0xyV6mrc=;
-        b=YEqOOlf0Fdu5CYqKYsjFuQaf7fQZEHpsF/6/xWh1FG7y/Y0/uewWFmnkBSZ8g4zXlP
-         baGf54glYGJ7SEvfwgPN87tttvGauwYDEi5umW2udF/1mD/ZUlffhfebDFYBqBksyCYr
-         Da7Rqj7HupiSoRd2wCxH8StMdI+SHoKUt+PI2HNcDyYkL9O7NpGC+w+RDgWtitn+qqyg
-         rvo7tfOOStNf91VFjJm1i48ishxzuqKgB377yNa2iIVXXUgMJhz4oGbL9dhixyCmgisl
-         Pmc+EBrYDNh/HRPTMr459r+CxkXvizU8LpOn8uEwS6tOE+njKAhXBV5szhjCXiBE015A
-         q9og==
-X-Gm-Message-State: AOJu0YxGeVLai7RclOVZYoHTo9I7WKM3flz3FMI1N0qOSWrb7nlXc9Yl
-        s2zqSGfpWlR7Ta1+Y1j4JgdtOPQRNtf9Td/ie1nRXg==
-X-Google-Smtp-Source: AGHT+IEAYKQ8Ud2dDCTFrFxk0sv/MWGDyTH5PUc94osy1+AGiIS89dM943n8PAfXr7KHqvHMo1X6R6r3/dT57OJulPY=
-X-Received: by 2002:a05:6602:1689:b0:790:f733:2f9e with SMTP id
- s9-20020a056602168900b00790f7332f9emr1564343iow.13.1697528036747; Tue, 17 Oct
- 2023 00:33:56 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1697528211; x=1698133011;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cxT7pzdJESncQ/+9UX6/pYk1WP7pzSl0ESvB6teChuU=;
+        b=FoqrRNFuLqxbnRM48Bgqe/+pvlEATIowRRR8tHZL/sHG4z4O5yWnR+4QBJiEoPwrKi
+         +eRZpGPUoYXPXJSyPxGGfUtGHWGUW8mYzHiixgzopH+W+xglWR8AmN9Zh34KQSFqnneX
+         biQLK1l/OLC3MUUH9HqnpNK4/Wtq4xXK4IoNZFGA9AYWj2eY38ceyhul9rHG3qEzX3Fe
+         90dJeuSkVH0aFaLqO3AS/Uzqu8sTsRlFk3KGTIoR2gofz4L7ybKaqPKXtAulCACt62hY
+         2wz4cn/lzzVwzxyE9vZsJVii7ccSA6pPSZSCBY9+d4LmzOEaAc4/62skN7gfVtGdJOBS
+         IMZQ==
+X-Gm-Message-State: AOJu0Yx5irSTgnJyRspxzMv4YPO0ng+AERBEu6NbdGjbIPhXWM6mfdC6
+        VtmEab6Q/t8wMRQSI2hIK8RWUvpBAPsGrXAfrQ==
+X-Google-Smtp-Source: AGHT+IGFV6Oy9oyt9cc9+QXaBhIphbHezPtFo1fpD4ru8RrTKL+MKRETflutZYL7NmHrrU3OkLGrxA==
+X-Received: by 2002:a05:6102:756:b0:457:cc6c:948f with SMTP id v22-20020a056102075600b00457cc6c948fmr1247130vsg.26.1697528210667;
+        Tue, 17 Oct 2023 00:36:50 -0700 (PDT)
+Received: from thinkpad ([117.207.31.199])
+        by smtp.gmail.com with ESMTPSA id mk2-20020a056214580200b0064c9f754794sm342250qvb.86.2023.10.17.00.36.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Oct 2023 00:36:49 -0700 (PDT)
+Date:   Tue, 17 Oct 2023 13:06:42 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     mhi@lists.linux.dev
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_msarkar@quicinc.com, schintav@quicinc.com,
+        stable@vger.kernel.org
+Subject: Re: [PATCH] bus: mhi: ep: Do not allocate event ring element on stack
+Message-ID: <20231017073642.GA5274@thinkpad>
+References: <20230901073502.69385-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-References: <20230926-topic-a643-v1-0-7af6937ac0a3@linaro.org>
- <20230926-topic-a643-v1-2-7af6937ac0a3@linaro.org> <43q6mui3lofa4rqh667o54b2qcbqn5fg34ss5o7y7k7uxbxsro@dxgovofsrvqx>
-In-Reply-To: <43q6mui3lofa4rqh667o54b2qcbqn5fg34ss5o7y7k7uxbxsro@dxgovofsrvqx>
-From:   Rob Clark <robdclark@chromium.org>
-Date:   Tue, 17 Oct 2023 00:33:45 -0700
-Message-ID: <CAJs_Fx7WkdhY31aP_buZP+b7ihOOmE8zBZFOLZ8z9uqcNmEhVw@mail.gmail.com>
-Subject: Re: [PATCH 2/7] drm/msm/adreno: Add ZAP firmware name to A635
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        cros-qcom-dts-watchers@chromium.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230901073502.69385-1-manivannan.sadhasivam@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 16, 2023 at 1:12=E2=80=AFPM Akhil P Oommen <quic_akhilpo@quicin=
-c.com> wrote:
->
-> On Tue, Sep 26, 2023 at 08:24:37PM +0200, Konrad Dybcio wrote:
-> >
-> > Some (many?) devices with A635 expect a ZAP shader to be loaded.
-> >
-> > Set the file name to allow for that.
-> >
-> > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > ---
-> >  drivers/gpu/drm/msm/adreno/adreno_device.c | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/d=
-rm/msm/adreno/adreno_device.c
-> > index fa527935ffd4..16527fe8584d 100644
-> > --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> > +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> > @@ -454,6 +454,7 @@ static const struct adreno_info gpulist[] =3D {
-> >               .quirks =3D ADRENO_QUIRK_HAS_CACHED_COHERENT |
-> >                       ADRENO_QUIRK_HAS_HW_APRIV,
-> >               .init =3D a6xx_gpu_init,
-> > +             .zapfw =3D "a660_zap.mbn",
->
-> sc7280 doesn't have a TZ and so no zap shader support. Can we handle
-> this using "firmware-name" property in your top level platform dt? Zap
-> firmwares are signed with different keys for each OEMs. So there is
-> cross-compatibility anyway.
+On Fri, Sep 01, 2023 at 01:05:02PM +0530, Manivannan Sadhasivam wrote:
+> It is possible that the host controller driver would use DMA framework to
+> write the event ring element. So avoid allocating event ring element on the
+> stack as DMA cannot work on vmalloc memory.
+> 
+> Cc: stable@vger.kernel.org
+> Fixes: 961aeb689224 ("bus: mhi: ep: Add support for sending events to the host")
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-I think this ends up working out because the version of sc7280 that
-doesn't have TZ also doesn't have the associated mem-region/etc..  but
-maybe we should deprecate the zapfw field as in practice it isn't
-useful (ie. always overriden by firmware-name).
+Applied to mhi-next!
 
-Fwiw there are windows laptops with sc7180/sc7280 which do use zap fw.
+- Mani
 
-BR,
--R
+> ---
+>  drivers/bus/mhi/ep/main.c | 52 +++++++++++++++++++++++++--------------
+>  1 file changed, 34 insertions(+), 18 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
+> index 600881808982..66ca470bf302 100644
+> --- a/drivers/bus/mhi/ep/main.c
+> +++ b/drivers/bus/mhi/ep/main.c
+> @@ -71,45 +71,61 @@ static int mhi_ep_send_event(struct mhi_ep_cntrl *mhi_cntrl, u32 ring_idx,
+>  static int mhi_ep_send_completion_event(struct mhi_ep_cntrl *mhi_cntrl, struct mhi_ep_ring *ring,
+>  					struct mhi_ring_element *tre, u32 len, enum mhi_ev_ccs code)
+>  {
+> -	struct mhi_ring_element event = {};
+> +	struct mhi_ring_element *event = kzalloc(sizeof(struct mhi_ring_element), GFP_KERNEL);
+> +	int ret;
+> +
+> +	event->ptr = cpu_to_le64(ring->rbase + ring->rd_offset * sizeof(*tre));
+> +	event->dword[0] = MHI_TRE_EV_DWORD0(code, len);
+> +	event->dword[1] = MHI_TRE_EV_DWORD1(ring->ch_id, MHI_PKT_TYPE_TX_EVENT);
+>  
+> -	event.ptr = cpu_to_le64(ring->rbase + ring->rd_offset * sizeof(*tre));
+> -	event.dword[0] = MHI_TRE_EV_DWORD0(code, len);
+> -	event.dword[1] = MHI_TRE_EV_DWORD1(ring->ch_id, MHI_PKT_TYPE_TX_EVENT);
+> +	ret = mhi_ep_send_event(mhi_cntrl, ring->er_index, event, MHI_TRE_DATA_GET_BEI(tre));
+> +	kfree(event);
+>  
+> -	return mhi_ep_send_event(mhi_cntrl, ring->er_index, &event, MHI_TRE_DATA_GET_BEI(tre));
+> +	return ret;
+>  }
+>  
+>  int mhi_ep_send_state_change_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_state state)
+>  {
+> -	struct mhi_ring_element event = {};
+> +	struct mhi_ring_element *event = kzalloc(sizeof(struct mhi_ring_element), GFP_KERNEL);
+> +	int ret;
+> +
+> +	event->dword[0] = MHI_SC_EV_DWORD0(state);
+> +	event->dword[1] = MHI_SC_EV_DWORD1(MHI_PKT_TYPE_STATE_CHANGE_EVENT);
+>  
+> -	event.dword[0] = MHI_SC_EV_DWORD0(state);
+> -	event.dword[1] = MHI_SC_EV_DWORD1(MHI_PKT_TYPE_STATE_CHANGE_EVENT);
+> +	ret = mhi_ep_send_event(mhi_cntrl, 0, event, 0);
+> +	kfree(event);
+>  
+> -	return mhi_ep_send_event(mhi_cntrl, 0, &event, 0);
+> +	return ret;
+>  }
+>  
+>  int mhi_ep_send_ee_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_ee_type exec_env)
+>  {
+> -	struct mhi_ring_element event = {};
+> +	struct mhi_ring_element *event = kzalloc(sizeof(struct mhi_ring_element), GFP_KERNEL);
+> +	int ret;
+> +
+> +	event->dword[0] = MHI_EE_EV_DWORD0(exec_env);
+> +	event->dword[1] = MHI_SC_EV_DWORD1(MHI_PKT_TYPE_EE_EVENT);
+>  
+> -	event.dword[0] = MHI_EE_EV_DWORD0(exec_env);
+> -	event.dword[1] = MHI_SC_EV_DWORD1(MHI_PKT_TYPE_EE_EVENT);
+> +	ret = mhi_ep_send_event(mhi_cntrl, 0, event, 0);
+> +	kfree(event);
+>  
+> -	return mhi_ep_send_event(mhi_cntrl, 0, &event, 0);
+> +	return ret;
+>  }
+>  
+>  static int mhi_ep_send_cmd_comp_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_ev_ccs code)
+>  {
+> +	struct mhi_ring_element *event = kzalloc(sizeof(struct mhi_ring_element), GFP_KERNEL);
+>  	struct mhi_ep_ring *ring = &mhi_cntrl->mhi_cmd->ring;
+> -	struct mhi_ring_element event = {};
+> +	int ret;
+> +
+> +	event->ptr = cpu_to_le64(ring->rbase + ring->rd_offset * sizeof(struct mhi_ring_element));
+> +	event->dword[0] = MHI_CC_EV_DWORD0(code);
+> +	event->dword[1] = MHI_CC_EV_DWORD1(MHI_PKT_TYPE_CMD_COMPLETION_EVENT);
+>  
+> -	event.ptr = cpu_to_le64(ring->rbase + ring->rd_offset * sizeof(struct mhi_ring_element));
+> -	event.dword[0] = MHI_CC_EV_DWORD0(code);
+> -	event.dword[1] = MHI_CC_EV_DWORD1(MHI_PKT_TYPE_CMD_COMPLETION_EVENT);
+> +	ret = mhi_ep_send_event(mhi_cntrl, 0, event, 0);
+> +	kfree(event);
+>  
+> -	return mhi_ep_send_event(mhi_cntrl, 0, &event, 0);
+> +	return ret;
+>  }
+>  
+>  static int mhi_ep_process_cmd_ring(struct mhi_ep_ring *ring, struct mhi_ring_element *el)
+> -- 
+> 2.25.1
+> 
 
->
-> -Ahil.
->
-> >               .hwcg =3D a660_hwcg,
-> >               .address_space_size =3D SZ_16G,
-> >               .speedbins =3D ADRENO_SPEEDBINS(
-> >
-> > --
-> > 2.42.0
-> >
+-- 
+மணிவண்ணன் சதாசிவம்
