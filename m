@@ -2,133 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CBDE27CC8A1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 18:21:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3758F7CC8A4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 18:22:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233862AbjJQQVk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Oct 2023 12:21:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35992 "EHLO
+        id S234360AbjJQQWO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Oct 2023 12:22:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229848AbjJQQVj (ORCPT
+        with ESMTP id S229848AbjJQQWN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Oct 2023 12:21:39 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 751949E;
-        Tue, 17 Oct 2023 09:21:38 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E0F6C433C8;
-        Tue, 17 Oct 2023 16:21:34 +0000 (UTC)
-Date:   Tue, 17 Oct 2023 21:51:29 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/2] PCI: qcom-ep: Implement dbi_cs2_access() function
- callback for DBI CS2 access
-Message-ID: <20231017162129.GF5274@thinkpad>
-References: <20231017-pcie-qcom-bar-v1-0-3e26de07bec0@linaro.org>
- <20231017-pcie-qcom-bar-v1-2-3e26de07bec0@linaro.org>
- <20231017142431.GR3553829@hu-bjorande-lv.qualcomm.com>
+        Tue, 17 Oct 2023 12:22:13 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BA37A4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 09:22:12 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2c5087d19a6so56520981fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 09:22:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1697559730; x=1698164530; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=LhFXYnO9Sn+RH2C/xMmWiKTwoHM9JKuhK3zd261Cr0s=;
+        b=lT6jPE50MGNKevW1X1gWUvhfUODj4hpFpz71XE6+EhQjcAY6mVszKMQsWOqdqN456L
+         u/trIBom5FFuOP6aV931LjXIJ4ErxRfnN0QXFbC9LOISi3BjrmLNQ9jT7RZpLuIaNZGv
+         bIM9QPYA8vtUCb4QcBQ8Vn/qyCGytaghbhNw8yy0bc2rJljzMmhXwBqx8LURLw9mwByV
+         ls8RuC9LuMMPC/ZLd7ydE/G0e9YofuDOD4q+FxsjChkXQB7C2TKPf5nxkIMV8bsQk4pH
+         YRJefyNzqSai6w1qsK6iQKgMQ5QDTVByryuXoE0Fnbn6zGpeZNfRYXBVx4C7rBZa3iKk
+         oCmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697559730; x=1698164530;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LhFXYnO9Sn+RH2C/xMmWiKTwoHM9JKuhK3zd261Cr0s=;
+        b=RP48/Q0l+sITUnM0DmWuamvQJ4upznwLnx53Sy0OrzTEo0ml8tIDUmrj68WmYSTQ+f
+         wEapF7ZpheTtyVHDkuRIo9R9uJdnYP8rJ5h97G8PmJDK25pAOIMgmDxfxdliG4OZmfe8
+         cO1jcgDDeFMxNqzz2m5SM7lkElLPjdd4005+Z3nOcVJNIiBLxkKJ5XvHZZTeXwLh/07/
+         hN6feE/tripSlWLOYI3DtLae+NmXQ+aonKdBwgiSzXwUxmcbVVlKzElSOJoeHOIZScH9
+         soWksrkAmLovU8ggSoTuw1LrdXdG5Y+GKItZt0HWCMtznTpJ89aHjyeSVS11T2I1FtqD
+         mE+A==
+X-Gm-Message-State: AOJu0YxLb8uSZnjICw/D+z6kWq1f1eRiZ+P6GtFA+jUIjEpe+Q2FdnwI
+        yi7fpWkF+FG6RVftPM5CLuzYTg==
+X-Google-Smtp-Source: AGHT+IGe4/EPokGcR14WOKTrawH9tGwUZLQcJXRew6V+8JtVuXgdh2CH8CgJREzH8K+96cAmlsZdIg==
+X-Received: by 2002:a2e:99da:0:b0:2c5:19ab:726e with SMTP id l26-20020a2e99da000000b002c519ab726emr2386571ljj.47.1697559730239;
+        Tue, 17 Oct 2023 09:22:10 -0700 (PDT)
+Received: from [172.30.204.57] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id 3-20020a05600c234300b0040813e14b49sm1684492wmq.30.2023.10.17.09.22.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Oct 2023 09:22:09 -0700 (PDT)
+Message-ID: <f4a5cd2e-112d-478c-b56b-68bc55ecbdf7@linaro.org>
+Date:   Tue, 17 Oct 2023 18:22:06 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20231017142431.GR3553829@hu-bjorande-lv.qualcomm.com>
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-x13s: Use the correct DP PHY
+ compatible
+Content-Language: en-US
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Johan Hovold <johan@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230929-topic-x13s_edpphy-v1-1-ce59f9eb4226@linaro.org>
+ <CAA8EJprXCzVyaU49qgVcVfF0-FJ3QqAfTMZj5CEZm187hoi4=g@mail.gmail.com>
+ <ZSz7---IW_7Oj2Zr@hovoldconsulting.com>
+ <CAA8EJpr=HQOs8Ho_s_34y0-krCHwq3MThMkUzhOkPVdOSMQ62A@mail.gmail.com>
+ <20231017032810.GP3553829@hu-bjorande-lv.qualcomm.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20231017032810.GP3553829@hu-bjorande-lv.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 17, 2023 at 07:24:31AM -0700, Bjorn Andersson wrote:
-> On Tue, Oct 17, 2023 at 11:47:55AM +0530, Manivannan Sadhasivam wrote:
-> > From: Manivannan Sadhasivam <mani@kernel.org>
+
+
+On 10/17/23 05:28, Bjorn Andersson wrote:
+> On Mon, Oct 16, 2023 at 12:10:18PM +0300, Dmitry Baryshkov wrote:
+>> On Mon, 16 Oct 2023 at 12:01, Johan Hovold <johan@kernel.org> wrote:
+>>>
+>>> On Mon, Oct 16, 2023 at 11:51:33AM +0300, Dmitry Baryshkov wrote:
+>>>> On Fri, 29 Sept 2023 at 19:03, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>>>>>
+>>>>> The DP PHY needs different settings when an eDP display is used.
+>>>>> Make sure these apply on the X13s.
+>>>>
+>>>> Could you please clarify, is it the same PHY type, just being
+>>>> repurposed for eDP or is it a different PHY type?
+>>>
+>>> Same PHY, just different settings AFAIK.
+>>>
+>>>> If the former is the case (and the same PHY can be used for both DP
+>>>> and eDP), it should carry the same compatible string and use software
+>>>> mechanisms (e.g. phy_set_mode_ext()) to be programmed for the correct
+>>>> operation mode.
+>>>
+>>> Possibly, but that's not how the current binding and implementation
+>>> works:
+>>>
+>>>          6993c079cd58 ("dt-bindings: phy: qcom-edp: Add SC8280XP PHY compatibles")
+>>>          2300d1cb24b3 ("phy: qcom: edp: Introduce support for DisplayPort")
+>>>          3b7267dec445 ("phy: qcom: edp: Add SC8280XP eDP and DP PHYs")
+>>>
+>>>          https://lore.kernel.org/lkml/20220810040745.3582985-1-bjorn.andersson@linaro.org/
+>>>
+>>> And you'd still need to infer the mode from DT somehow.
+>>
+>> If it is the same hardware block, it seems incorrect to have two
+>> different compat entries. For example, for PCIe RC vs PCIe EP we
+>> specify the PHY mode from the host controller driver.
+>> I'd say, we need to fix the bindings for both DP/eDP controller and
+>> the PHY.  See the `phy-mode` DT property for example.
+>>
 > 
-> Your S-o-b should match this.
-> 
+> It is one hardware block, supporting both eDP and DP, so I like your
+> suggestion of having a single compatible instead and using some other
+> means of defining the configuration. I just wasn't able to find a
+> better way to do so back when I wrote the binding/driver...
+Since this one is still unused, we can deprecate it (not sure if remove, 
+but deprecate) and add phy-type instead. I was quite surprised to see 
+that a new compatible was added as well :/
 
-I gave b4 a shot for sending the patches and missed this. Will fix it in next
-version.
-
-> > 
-> > Qcom EP platforms require enabling/disabling the DBI CS2 access while
-> > programming some read only and shadow registers through DBI. So let's
-> > implement the dbi_cs2_access() callback that will be called by the DWC core
-> > while programming such registers like BAR mask register.
-> > 
-> > Without DBI CS2 access, writes to those registers will not be reflected.
-> > 
-> > Fixes: f55fee56a631 ("PCI: qcom-ep: Add Qualcomm PCIe Endpoint controller driver")
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  drivers/pci/controller/dwc/pcie-qcom-ep.c | 14 ++++++++++++++
-> >  1 file changed, 14 insertions(+)
-> > 
-> > diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > index 32c8d9e37876..4653cbf7f9ed 100644
-> > --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > @@ -124,6 +124,7 @@
-> >  
-> >  /* ELBI registers */
-> >  #define ELBI_SYS_STTS				0x08
-> > +#define ELBI_CS2_ENABLE				0xa4
-> >  
-> >  /* DBI registers */
-> >  #define DBI_CON_STATUS				0x44
-> > @@ -262,6 +263,18 @@ static void qcom_pcie_dw_stop_link(struct dw_pcie *pci)
-> >  	disable_irq(pcie_ep->perst_irq);
-> >  }
-> >  
-> > +static void qcom_pcie_dbi_cs2_access(struct dw_pcie *pci, bool enable)
-> > +{
-> > +	struct qcom_pcie_ep *pcie_ep = to_pcie_ep(pci);
-> > +
-> > +	writel_relaxed(enable, pcie_ep->elbi + ELBI_CS2_ENABLE);
-> 
-> Don't you want to maintain the ordering of whatever write came before
-> this?
-> 
-
-Since this in a dedicated function, I did not care about the ordering w.r.t
-previous writes. Even if it gets inlined, the order should not matter since it
-only enables/disables the CS2 access for the forthcoming writes.
-
-- Mani
-
-> Regards,
-> Bjorn
-> 
-> > +	/*
-> > +	 * Do a dummy read to make sure that the previous write has reached the
-> > +	 * memory before returning.
-> > +	 */
-> > +	readl_relaxed(pcie_ep->elbi + ELBI_CS2_ENABLE);
-> > +}
-> > +
-> >  static void qcom_pcie_ep_icc_update(struct qcom_pcie_ep *pcie_ep)
-> >  {
-> >  	struct dw_pcie *pci = &pcie_ep->pci;
-> > @@ -500,6 +513,7 @@ static const struct dw_pcie_ops pci_ops = {
-> >  	.link_up = qcom_pcie_dw_link_up,
-> >  	.start_link = qcom_pcie_dw_start_link,
-> >  	.stop_link = qcom_pcie_dw_stop_link,
-> > +	.dbi_cs2_access = qcom_pcie_dbi_cs2_access,
-> >  };
-> >  
-> >  static int qcom_pcie_ep_get_io_resources(struct platform_device *pdev,
-> > 
-> > -- 
-> > 2.25.1
-> > 
-
--- 
-மணிவண்ணன் சதாசிவம்
+Konrad
