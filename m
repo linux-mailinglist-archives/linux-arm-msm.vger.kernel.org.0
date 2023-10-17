@@ -2,318 +2,224 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 65CC87CB6F4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 01:22:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C74CF7CB781
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 02:41:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232985AbjJPXV7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Oct 2023 19:21:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49542 "EHLO
+        id S233549AbjJQAlt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Oct 2023 20:41:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232345AbjJPXV7 (ORCPT
+        with ESMTP id S232873AbjJQAls (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Oct 2023 19:21:59 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDB619B;
-        Mon, 16 Oct 2023 16:21:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1697498516; x=1729034516;
-  h=date:from:to:cc:subject:message-id;
-  bh=OtQxmjoALgHa+s4AdJcPcEmcaL6nwt6LfGkkUOQIHZU=;
-  b=hyjkJUD3rV10o62EJMZLVD2tjqEHvbdenyF+54dCrMUR86xedf75AAQ9
-   TQdWIhSKzR+A0+mwNTdSV21TGQ9jn5f1gaLje1jW/mKSF+4bhrLNm12Ol
-   NpktznhWJ6HiHuwQ708l9g0VdsPOE9iH4V4AI98p31Q2vgUkDphm0EZHe
-   lJUy45UM4JY387jYHRFSdTkoyz0Ei2iZsyellVmOhr+OeabJF8LLJkCvO
-   zEsSLtKs13OVbhZoOCKVpAVpQW7trgScgbI8frbotfpBXr4rNIdgq5Nen
-   z8T6fPUt9uIPFhbZ4+0uAjTI3ydIUkbpUzGK++eL4b9XxAVbXCceeoo67
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10865"; a="452139630"
-X-IronPort-AV: E=Sophos;i="6.03,230,1694761200"; 
-   d="scan'208";a="452139630"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Oct 2023 16:21:56 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10865"; a="705779117"
-X-IronPort-AV: E=Sophos;i="6.03,230,1694761200"; 
-   d="scan'208";a="705779117"
-Received: from lkp-server02.sh.intel.com (HELO f64821696465) ([10.239.97.151])
-  by orsmga003.jf.intel.com with ESMTP; 16 Oct 2023 16:21:54 -0700
-Received: from kbuild by f64821696465 with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1qsWuF-0008kY-1v;
-        Mon, 16 Oct 2023 23:21:51 +0000
-Date:   Tue, 17 Oct 2023 07:21:20 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Andrew Morton <akpm@linux-foundation.org>
-Cc:     Linux Memory Management List <linux-mm@kvack.org>,
-        amd-gfx@lists.freedesktop.org, bpf@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org
-Subject: [linux-next:master] BUILD REGRESSION
- 4d0515b235dec789578d135a5db586b25c5870cb
-Message-ID: <202310170705.YN3XVbWR-lkp@intel.com>
-User-Agent: s-nail v14.9.24
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Mon, 16 Oct 2023 20:41:48 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79B1092;
+        Mon, 16 Oct 2023 17:41:46 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39GNGRQ0025543;
+        Tue, 17 Oct 2023 00:41:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=3RET9ouFZUaeggz8kqSdC+fqV+R0n5+qMpj00eTouGk=;
+ b=Mzi8EbDMxdZB4cziLAYPd2P2sk9TUdUjjvY++X6gESyr1KwcGsQoxzGKjaSdxW+UwMnH
+ 2if4/kOnl8sBbK8NMdWQoRiy4DGkvZbz5CaJWvd0M1wPISo8QhIR0qrTC0499YbTAd8l
+ drgKnVvGaM3xFgX+jd0MrKz/AE5TJar2S2+uBStl+Kehrqep79PyVh8Vp3o6A0L7BfTs
+ fHA6KQo5tksQtyF7SfxBy+JgCbjl0jHV2VrDRAG7DubkfifRXlIQao6LMwJdm8/Iz0wS
+ zQsiQUfGkDjv/o2izuJwJ8/6bliFHMP2thUkIJpcC28lzelfeM2c8D6qDeoRLrOEjEgX RQ== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ts9jnrw6r-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 17 Oct 2023 00:41:08 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39H0f7JM010862
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 17 Oct 2023 00:41:07 GMT
+Received: from [10.71.110.254] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 16 Oct
+ 2023 17:41:07 -0700
+Message-ID: <26585954-7c86-45fd-9190-f1109cbe9901@quicinc.com>
+Date:   Mon, 16 Oct 2023 17:40:53 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [Freedreno] [PATCH RFC v6 07/10] drm/atomic: Loosen FB atomic
+ checks
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Pekka Paalanen <ppaalanen@gmail.com>
+CC:     <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
+        <sebastian.wick@redhat.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        "Sean Paul" <sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        <quic_abhinavk@quicinc.com>, "Maxime Ripard" <mripard@kernel.org>,
+        <linux-kernel@vger.kernel.org>, Rob Clark <robdclark@gmail.com>,
+        <laurent.pinchart@ideasonboard.com>,
+        Daniel Vetter <daniel@ffwll.ch>, <contact@emersion.fr>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        <wayland-devel@lists.freedesktop.org>,
+        "David Airlie" <airlied@gmail.com>, <ville.syrjala@linux.intel.com>
+References: <20230828-solid-fill-v6-0-a820efcce852@quicinc.com>
+ <20230828-solid-fill-v6-7-a820efcce852@quicinc.com>
+ <20230829112230.7106a8bf@eldfell>
+ <752176d8-23f4-4689-8bf4-db27f153fd39@quicinc.com>
+ <6851b864-447f-453f-8b34-1fbb6e97eefe@linaro.org>
+Content-Language: en-US
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <6851b864-447f-453f-8b34-1fbb6e97eefe@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: QCU-Aw43O5SjvcqtE6It-mLC6vcuM1Uj
+X-Proofpoint-ORIG-GUID: QCU-Aw43O5SjvcqtE6It-mLC6vcuM1Uj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-16_13,2023-10-12_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ priorityscore=1501 mlxscore=0 clxscore=1011 phishscore=0 adultscore=0
+ malwarescore=0 bulkscore=0 suspectscore=0 mlxlogscore=999 spamscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310170003
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git master
-branch HEAD: 4d0515b235dec789578d135a5db586b25c5870cb  Add linux-next specific files for 20231016
 
-Error/Warning reports:
 
-https://lore.kernel.org/oe-kbuild-all/202309212121.cul1pTRa-lkp@intel.com
-https://lore.kernel.org/oe-kbuild-all/202309212339.hxhBu2F1-lkp@intel.com
-https://lore.kernel.org/oe-kbuild-all/202310051547.40nm4Sif-lkp@intel.com
-https://lore.kernel.org/oe-kbuild-all/202310160401.RIcVn63P-lkp@intel.com
-https://lore.kernel.org/oe-kbuild-all/202310161945.VDy8ESWa-lkp@intel.com
-https://lore.kernel.org/oe-kbuild-all/202310170132.IrOpHglA-lkp@intel.com
-https://lore.kernel.org/oe-kbuild-all/202310170340.tkkfdZYn-lkp@intel.com
-https://lore.kernel.org/oe-kbuild-all/202310170627.2Kvf6ZHY-lkp@intel.com
+On 9/24/2023 3:23 AM, Dmitry Baryshkov wrote:
+> On 22/09/2023 20:49, Jessica Zhang wrote:
+>>
+>>
+>> On 8/29/2023 1:22 AM, Pekka Paalanen wrote:
+>>> On Mon, 28 Aug 2023 17:05:13 -0700
+>>> Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
+>>>
+>>>> Loosen the requirements for atomic and legacy commit so that, in cases
+>>>> where pixel_source != FB, the commit can still go through.
+>>>>
+>>>> This includes adding framebuffer NULL checks in other areas to 
+>>>> account for
+>>>> FB being NULL when non-FB pixel sources are enabled.
+>>>>
+>>>> To disable a plane, the pixel_source must be NONE or the FB must be 
+>>>> NULL
+>>>> if pixel_source == FB.
+>>>>
+>>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>>>> ---
+>>>>   drivers/gpu/drm/drm_atomic.c        | 20 +++++++++++---------
+>>>>   drivers/gpu/drm/drm_atomic_helper.c | 36 
+>>>> ++++++++++++++++++++----------------
+>>>>   include/drm/drm_atomic_helper.h     |  4 ++--
+>>>>   include/drm/drm_plane.h             | 29 
+>>>> +++++++++++++++++++++++++++++
+>>>>   4 files changed, 62 insertions(+), 27 deletions(-)
+>>>
+>>> ...
+>>>
+>>>> diff --git a/include/drm/drm_plane.h b/include/drm/drm_plane.h
+>>>> index a58f84b6bd5e..4c5b7bcdb25c 100644
+>>>> --- a/include/drm/drm_plane.h
+>>>> +++ b/include/drm/drm_plane.h
+>>>> @@ -992,6 +992,35 @@ static inline struct drm_plane 
+>>>> *drm_plane_find(struct drm_device *dev,
+>>>>   #define drm_for_each_plane(plane, dev) \
+>>>>       list_for_each_entry(plane, &(dev)->mode_config.plane_list, head)
+>>>> +/**
+>>>> + * drm_plane_solid_fill_enabled - Check if solid fill is enabled on 
+>>>> plane
+>>>> + * @state: plane state
+>>>> + *
+>>>> + * Returns:
+>>>> + * Whether the plane has been assigned a solid_fill_blob
+>>>> + */
+>>>> +static inline bool drm_plane_solid_fill_enabled(struct 
+>>>> drm_plane_state *state)
+>>>> +{
+>>>> +    if (!state)
+>>>> +        return false;
+>>>> +    return state->pixel_source == DRM_PLANE_PIXEL_SOURCE_SOLID_FILL 
+>>>> && state->solid_fill_blob;
+>>>> +}
+>>>> +
+>>>> +static inline bool drm_plane_has_visible_data(const struct 
+>>>> drm_plane_state *state)
+>>>> +{
+>>>> +    switch (state->pixel_source) {
+>>>> +    case DRM_PLANE_PIXEL_SOURCE_NONE:
+>>>> +        return false;
+>>>> +    case DRM_PLANE_PIXEL_SOURCE_SOLID_FILL:
+>>>> +        return state->solid_fill_blob != NULL;
+>>>
+>>> This reminds me, new UAPI docs did not say what the requirements are for
+>>> choosing solid fill pixel source. Is the atomic commit rejected if
+>>> pixel source is solid fill, but solid_fill property has no blob?
+>>
+>> Hi Pekka,
+>>
+>> Yes, if pixel_source is solid_fill and the solid_fill property blob 
+>> isn't set, the atomic commit should throw an error.
+>>
+>> Will document this in the UAPI.
+> 
+> I don't see a corresponding error check in atomic_check() functions. 
+> Could you please check that there is one, as you are updating the uAPI.
 
-Error/Warning: (recently discovered and may have been fixed)
+Hi Dmitry,
 
-(.text+0x11c): undefined reference to `devm_hwrng_register'
-drivers/crypto/qcom-rng.c:213:(.text+0x16c): undefined reference to `devm_hwrng_register'
-drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c:274: warning: Function parameter or member 'gart_placement' not described in 'amdgpu_gmc_gart_location'
-drivers/net/ethernet/apm/xgene/xgene_enet_main.c:2004:34: warning: unused variable 'xgene_enet_of_match' [-Wunused-const-variable]
-idpf_txrx.c:(.text+0x2dbc): undefined reference to `tcp_gro_complete'
-include/linux/bitmap.h:527:25: error: 'EBUSY' undeclared (first use in this function)
-include/linux/bitmap.h:554:17: error: 'ENOMEM' undeclared (first use in this function)
-kernel/bpf/helpers.c:1909:19: warning: no previous declaration for 'bpf_percpu_obj_new_impl' [-Wmissing-declarations]
-kernel/bpf/helpers.c:1945:18: warning: no previous declaration for 'bpf_percpu_obj_drop_impl' [-Wmissing-declarations]
-kernel/bpf/helpers.c:2480:18: warning: no previous declaration for 'bpf_throw' [-Wmissing-declarations]
-qcom-rng.c:(.text+0x224): undefined reference to `devm_hwrng_register'
+Sorry for the late response.
 
-Unverified Error/Warning (likely false positive, please contact us if interested):
+drm_plane_has_visible_data() is being called from 
+drm_atomic_plane_check() which is called from drm_atomic_commit() (via 
+drm_atomic_check_only()).
 
-Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml:
+It's also called within the atomic_check() callstack in 
+drm_atomic_helper_check_plane_state(), though that check will set 
+plane.visible to false and return 0.
 
-Error/Warning ids grouped by kconfigs:
+Would it be better to have a more explicit `if (source == solid_fill && 
+!plane->solid_fill_blob) then return -EINVAL` check in atomic_check()?
 
-gcc_recent_errors
-|-- alpha-allyesconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- arc-allmodconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- arc-allyesconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- arm-allmodconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- arm-allyesconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- arm-buildonly-randconfig-r006-20220608
-|   `-- drivers-crypto-qcom-rng.c:(.text):undefined-reference-to-devm_hwrng_register
-|-- arm-randconfig-s032-20220424
-|   |-- include-linux-bitmap.h:error:EBUSY-undeclared-(first-use-in-this-function)
-|   `-- include-linux-bitmap.h:error:ENOMEM-undeclared-(first-use-in-this-function)
-|-- arm64-allmodconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- arm64-allyesconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- arm64-randconfig-001-20231016
-|   |-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|   `-- idpf_txrx.c:(.text):undefined-reference-to-tcp_gro_complete
-|-- arm64-randconfig-002-20231016
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- arm64-randconfig-r015-20220507
-|   `-- qcom-rng.c:(.text):undefined-reference-to-devm_hwrng_register
-|-- csky-allmodconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- csky-allyesconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- i386-randconfig-005-20231016
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- i386-randconfig-006-20231016
-|   |-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|   |-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_percpu_obj_drop_impl
-|   |-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_percpu_obj_new_impl
-|   `-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_throw
-|-- loongarch-allmodconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- loongarch-allyesconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- loongarch-defconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- loongarch-randconfig-001-20231016
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- loongarch-randconfig-001-20231017
-|   `-- Documentation-devicetree-bindings-mfd-qcom-pm8xxx.yaml:
-|-- loongarch-randconfig-002-20231016
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- microblaze-allmodconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- microblaze-allyesconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- mips-allmodconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- mips-allyesconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- openrisc-allmodconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- openrisc-allyesconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- parisc-allmodconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- parisc-allyesconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- parisc-randconfig-001-20231016
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- parisc-randconfig-r001-20221214
-|   `-- (.text):undefined-reference-to-devm_hwrng_register
-|-- powerpc-allmodconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- powerpc-allyesconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- powerpc-randconfig-001-20231016
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- powerpc64-randconfig-002-20231016
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- powerpc64-randconfig-003-20231016
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- riscv-allmodconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- riscv-allyesconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- riscv-randconfig-002-20231016
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- s390-allmodconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- s390-allyesconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- s390-randconfig-002-20231016
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- sparc-allmodconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- sparc-allyesconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- sparc64-allmodconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-|-- sparc64-allyesconfig
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-`-- x86_64-allyesconfig
-    `-- drivers-gpu-drm-amd-amdgpu-amdgpu_gmc.c:warning:Function-parameter-or-member-gart_placement-not-described-in-amdgpu_gmc_gart_location
-clang_recent_errors
-`-- hexagon-randconfig-r005-20221019
-    `-- drivers-net-ethernet-apm-xgene-xgene_enet_main.c:warning:unused-variable-xgene_enet_of_match
+Thanks,
 
-elapsed time: 1065m
+Jessica Zhang
 
-configs tested: 105
-configs skipped: 2
-
-tested configs:
-alpha                             allnoconfig   gcc  
-alpha                            allyesconfig   gcc  
-alpha                               defconfig   gcc  
-arc                              allmodconfig   gcc  
-arc                               allnoconfig   gcc  
-arc                              allyesconfig   gcc  
-arc                                 defconfig   gcc  
-arc                   randconfig-001-20231016   gcc  
-arm                              allmodconfig   gcc  
-arm                               allnoconfig   gcc  
-arm                              allyesconfig   gcc  
-arm                                 defconfig   gcc  
-arm                   randconfig-001-20231016   gcc  
-arm64                            allmodconfig   gcc  
-arm64                             allnoconfig   gcc  
-arm64                            allyesconfig   gcc  
-arm64                               defconfig   gcc  
-csky                             allmodconfig   gcc  
-csky                              allnoconfig   gcc  
-csky                             allyesconfig   gcc  
-csky                                defconfig   gcc  
-i386                             allmodconfig   gcc  
-i386                              allnoconfig   gcc  
-i386                             allyesconfig   gcc  
-i386                              debian-10.3   gcc  
-i386                                defconfig   gcc  
-i386                  randconfig-001-20231016   gcc  
-i386                  randconfig-002-20231016   gcc  
-i386                  randconfig-003-20231016   gcc  
-i386                  randconfig-004-20231016   gcc  
-i386                  randconfig-005-20231016   gcc  
-i386                  randconfig-006-20231016   gcc  
-loongarch                        allmodconfig   gcc  
-loongarch                         allnoconfig   gcc  
-loongarch                        allyesconfig   gcc  
-loongarch                           defconfig   gcc  
-loongarch             randconfig-001-20231016   gcc  
-loongarch             randconfig-001-20231017   gcc  
-m68k                             allmodconfig   gcc  
-m68k                              allnoconfig   gcc  
-m68k                             allyesconfig   gcc  
-m68k                                defconfig   gcc  
-microblaze                       allmodconfig   gcc  
-microblaze                        allnoconfig   gcc  
-microblaze                       allyesconfig   gcc  
-microblaze                          defconfig   gcc  
-mips                             allmodconfig   gcc  
-mips                              allnoconfig   gcc  
-mips                             allyesconfig   gcc  
-nios2                            allmodconfig   gcc  
-nios2                             allnoconfig   gcc  
-nios2                            allyesconfig   gcc  
-nios2                               defconfig   gcc  
-openrisc                         allmodconfig   gcc  
-openrisc                          allnoconfig   gcc  
-openrisc                         allyesconfig   gcc  
-openrisc                            defconfig   gcc  
-parisc                           allmodconfig   gcc  
-parisc                            allnoconfig   gcc  
-parisc                           allyesconfig   gcc  
-parisc                              defconfig   gcc  
-parisc64                            defconfig   gcc  
-powerpc                          allmodconfig   gcc  
-powerpc                           allnoconfig   gcc  
-powerpc                          allyesconfig   gcc  
-riscv                            allmodconfig   gcc  
-riscv                             allnoconfig   gcc  
-riscv                            allyesconfig   gcc  
-riscv                               defconfig   gcc  
-riscv                 randconfig-001-20231016   gcc  
-riscv                          rv32_defconfig   gcc  
-s390                             allmodconfig   gcc  
-s390                              allnoconfig   gcc  
-s390                             allyesconfig   gcc  
-s390                                defconfig   gcc  
-s390                  randconfig-001-20231016   gcc  
-sh                               allmodconfig   gcc  
-sh                                allnoconfig   gcc  
-sh                               allyesconfig   gcc  
-sh                                  defconfig   gcc  
-sparc                            allmodconfig   gcc  
-sparc                             allnoconfig   gcc  
-sparc                            allyesconfig   gcc  
-sparc                               defconfig   gcc  
-sparc                 randconfig-001-20231016   gcc  
-sparc64                          allmodconfig   gcc  
-sparc64                          allyesconfig   gcc  
-sparc64                             defconfig   gcc  
-um                               allmodconfig   clang
-um                                allnoconfig   clang
-um                               allyesconfig   clang
-um                                  defconfig   gcc  
-um                             i386_defconfig   gcc  
-um                           x86_64_defconfig   gcc  
-x86_64                            allnoconfig   gcc  
-x86_64                           allyesconfig   gcc  
-x86_64                              defconfig   gcc  
-x86_64                randconfig-001-20231016   gcc  
-x86_64                randconfig-002-20231016   gcc  
-x86_64                randconfig-003-20231016   gcc  
-x86_64                randconfig-004-20231016   gcc  
-x86_64                randconfig-005-20231016   gcc  
-x86_64                randconfig-006-20231016   gcc  
-x86_64                          rhel-8.3-rust   clang
-x86_64                               rhel-8.3   gcc  
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+> 
+>>
+>> Thanks,
+>>
+>> Jessica Zhang
+>>
+>>>
+>>> This should be doc'd.
+>>>
+>>>
+>>> Thanks,
+>>> pq
+>>>
+>>>> +    case DRM_PLANE_PIXEL_SOURCE_FB:
+>>>> +    default:
+>>>> +        WARN_ON(state->pixel_source != DRM_PLANE_PIXEL_SOURCE_FB);
+>>>> +    }
+>>>> +
+>>>> +    return state->fb != NULL;
+>>>> +}
+>>>> +
+>>>>   bool drm_any_plane_has_format(struct drm_device *dev,
+>>>>                     u32 format, u64 modifier);
+>>>>
+>>>
+> 
+> -- 
+> With best wishes
+> Dmitry
+> 
