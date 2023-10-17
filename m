@@ -2,78 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 761817CC70B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 17:08:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 079AB7CC7B0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 17:43:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344329AbjJQPID (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Oct 2023 11:08:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48124 "EHLO
+        id S1344119AbjJQPnz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Oct 2023 11:43:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344333AbjJQPHq (ORCPT
+        with ESMTP id S1344430AbjJQPl6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Oct 2023 11:07:46 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D171C10E5;
-        Tue, 17 Oct 2023 08:06:39 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39HEuIj7026852;
-        Tue, 17 Oct 2023 15:06:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=KEZdNzYRYywfB4yQ3nv8uljF/lqA7j7dSgwuUTqq8tU=;
- b=b/gRj6lQln4KDYUEX11phbX6fp2gJaQH2n7aDnKgv4/sTKl4QWbzGe9tUDlrjzEQG4h/
- 0+irZ3DFFrjBU+Cx+rg5WQ9JVKOiDac5OnPMFUbv2UAP8za+wWNabBb1wP6umfDPdLlu
- VJNUr+Xbbv8iDGoOnwSjEb5F3VeRwlS0wjf3W+5mWNCk517y83HGVBP6zekD+wZbx5cZ
- DEYIk3MpafDrd2LljuWkzvuFUV966qKFeEdvYzK5g7gWICAYFm0v39W+eHRmlk8cJhDT
- 0fMfOKYllJYHVSWzJuh4YUCNr81/PmJ8WB9lLI/kAx+p3n781esepVhIgSQ8L+sxYowj ow== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tsnearxnr-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 17 Oct 2023 15:06:36 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39HF6Zxj020106
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 17 Oct 2023 15:06:35 GMT
-Received: from [10.216.27.242] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Tue, 17 Oct
- 2023 08:06:32 -0700
-Message-ID: <d800dcbf-83dc-4b0f-bdd3-fc0efb5dd771@quicinc.com>
-Date:   Tue, 17 Oct 2023 20:36:28 +0530
+        Tue, 17 Oct 2023 11:41:58 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 617BEC4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 08:41:56 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-4079ed65582so6401045e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 08:41:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1697557315; x=1698162115; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fhb/VbAKqWW2bljNb3g4iYW+C+1SCZk6etl2bAcOYLg=;
+        b=ndGJ0F+DYASH3lA6ZKOvJYiP4KYDBFMW8JyLPkmpwxPPg9lrGLWpJH5WQ/VE82eoiC
+         XyjJ9lyyS6QWOvORIcyWlczwFugb2H9nKNcN0jTxdDfnJJEEyVSHcUZSy+absxhtToH4
+         NyMJjTmGCoJZ9WtIupircSl1mOxEgFn2xVDfoPy7tunE3/p8UBM3nD9D08wB07a//bWk
+         Gy3VzjYEg1ekfQ+agevrBHc1uEG4EanU2nOoGLL454oi2C/WjxpN3T0JGYGyQuH/plef
+         FZMVdpdC5FAzCDrwKvffNvkqphKm3Hw0L+BFM/1x/3h0wWJPK0OWh84nuautTVIpyrLY
+         +jUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697557315; x=1698162115;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fhb/VbAKqWW2bljNb3g4iYW+C+1SCZk6etl2bAcOYLg=;
+        b=az27aKXUrl0ZRO5DAieRv0coL2ljrHdU2vhqT3rMO+6XJE5Mc1d7BiUwd/zoPXcEFE
+         Ds0Y106BOaBeX6N5P9XesBIfZAfQn9jqucky7AqzDfdbbemA1KOQTTQKL0oSaaw4QM9f
+         oyRZXRljeSuscn8dobIQmkkgSeITZlFi30S9d/DGume6sjbPj6q+/c/ILcNJJyG5yell
+         1rX2gznMB83NYhw5DftQHtq3YmupTG6RR7SbIEZgMXIyxUr75N4SpuxKv5ZR7yP8HVMj
+         stBsgcy6BOIbn4zOzwFLMghgQA3n0WR9r9gtqG99JUj6RSCpCuN/8n0ENF84CnVk7m+t
+         0Dug==
+X-Gm-Message-State: AOJu0YxPqB7HwD8O37hxAMMVHmlkYU+V9x8hsTd19y7x+Wf569s2BceU
+        0kv14SXLmzmJ7T1H+g2Py0ajcQ==
+X-Google-Smtp-Source: AGHT+IEBdPfJkKsMwqOR6v2jaw8Ctfjv771N7HSdvQQL35i0TEr+3Xf1Wr87PCO+t6DIWat/o2wyKA==
+X-Received: by 2002:adf:fac9:0:b0:32d:8401:404a with SMTP id a9-20020adffac9000000b0032d8401404amr2001007wrs.10.1697557314693;
+        Tue, 17 Oct 2023 08:41:54 -0700 (PDT)
+Received: from [172.30.204.57] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id e11-20020adffd0b000000b0032dbf26e7aesm38382wrr.65.2023.10.17.08.41.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Oct 2023 08:41:54 -0700 (PDT)
+Message-ID: <eb05e877-ad8f-4724-bcf9-6054ae14a5e8@linaro.org>
+Date:   Tue, 17 Oct 2023 17:41:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/5] misc: fastrpc: Add support to save and restore
- interrupted
+Subject: Re: [PATCH 2/7] drm/msm/adreno: Add ZAP firmware name to A635
+To:     Rob Clark <robdclark@chromium.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        cros-qcom-dts-watchers@chromium.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230926-topic-a643-v1-0-7af6937ac0a3@linaro.org>
+ <20230926-topic-a643-v1-2-7af6937ac0a3@linaro.org>
+ <43q6mui3lofa4rqh667o54b2qcbqn5fg34ss5o7y7k7uxbxsro@dxgovofsrvqx>
+ <CAJs_Fx7WkdhY31aP_buZP+b7ihOOmE8zBZFOLZ8z9uqcNmEhVw@mail.gmail.com>
 Content-Language: en-US
-To:     Greg KH <gregkh@linuxfoundation.org>
-CC:     <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <ekangupt@qti.qualcomm.com>, <linux-kernel@vger.kernel.org>,
-        <fastrpc.upstream@qti.qualcomm.com>
-References: <1697534799-5124-1-git-send-email-quic_ekangupt@quicinc.com>
- <1697534799-5124-5-git-send-email-quic_ekangupt@quicinc.com>
- <2023101739-heftiness-reproach-ef96@gregkh>
-From:   Ekansh Gupta <quic_ekangupt@quicinc.com>
-In-Reply-To: <2023101739-heftiness-reproach-ef96@gregkh>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: sXMaRW1U0OxJEw7PMKx8dThuQCrxXIu5
-X-Proofpoint-ORIG-GUID: sXMaRW1U0OxJEw7PMKx8dThuQCrxXIu5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-17_03,2023-10-17_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
- phishscore=0 malwarescore=0 spamscore=0 mlxlogscore=666 mlxscore=0
- suspectscore=0 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2309180000 definitions=main-2310170128
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <CAJs_Fx7WkdhY31aP_buZP+b7ihOOmE8zBZFOLZ8z9uqcNmEhVw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -81,32 +95,49 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 10/17/2023 6:50 PM, Greg KH wrote:
-> On Tue, Oct 17, 2023 at 02:56:38PM +0530, Ekansh Gupta wrote:
->> For any remote call, driver sends a message to DSP using RPMSG
->> framework. After message is sent, there is a wait on a completion
->> object at driver which is completed when DSP response is received.
->>
->> There is a possibility that a signal is received while waiting
->> causing the wait function to return -ERESTARTSYS. In this case
->> the context should be saved and it should get restored for the
->> next invocation for the thread.
->>
->> Adding changes to support saving and restoring of interrupted
->> fastrpc contexts.
->>
->> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
->> Change-Id: Ia101acf7c1bf6018635536082bf7ea009093c948
->> ---
->> Changes in v2:
->>    - Fixed missing definition
->>    - Fixes compile time issue
-> You forgot to run checkpatch.pl :(
 
-I did run checkpatch.pl and also tried compilation test. checkpatch.pl 
-is suggesting 0 errors, 0 warning and compilation also worked without 
-any errors. I might have checked on last week's base as there were no 
-changes in these files. I'll check the patches with latest version and 
-update again if any errors/warnings are observed. Thanks for reviewing 
-the patch. -ekansh
+On 10/17/23 09:33, Rob Clark wrote:
+> On Mon, Oct 16, 2023 at 1:12 PM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
+>>
+>> On Tue, Sep 26, 2023 at 08:24:37PM +0200, Konrad Dybcio wrote:
+>>>
+>>> Some (many?) devices with A635 expect a ZAP shader to be loaded.
+>>>
+>>> Set the file name to allow for that.
+>>>
+>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>> ---
+>>>   drivers/gpu/drm/msm/adreno/adreno_device.c | 1 +
+>>>   1 file changed, 1 insertion(+)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+>>> index fa527935ffd4..16527fe8584d 100644
+>>> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+>>> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+>>> @@ -454,6 +454,7 @@ static const struct adreno_info gpulist[] = {
+>>>                .quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT |
+>>>                        ADRENO_QUIRK_HAS_HW_APRIV,
+>>>                .init = a6xx_gpu_init,
+>>> +             .zapfw = "a660_zap.mbn",
+>>
+>> sc7280 doesn't have a TZ and so no zap shader support. Can we handle
+>> this using "firmware-name" property in your top level platform dt? Zap
+>> firmwares are signed with different keys for each OEMs. So there is
+>> cross-compatibility anyway.
+> 
+> I think this ends up working out because the version of sc7280 that
+> doesn't have TZ also doesn't have the associated mem-region/etc..
+Yes
 
+> but
+> maybe we should deprecate the zapfw field as in practice it isn't
+> useful (ie. always overriden by firmware-name).
+Also yes, we've discussed that on IRC once
+
+> 
+> Fwiw there are windows laptops with sc7180/sc7280 which do use zap fw.
+Correct, e.g. the SC7180 Acer Aspire 1 that is supported upstream.
+
+Konrad
+
+Konrad
