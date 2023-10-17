@@ -2,152 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 520EE7CCC26
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 21:22:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CC0B17CCC74
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 21:41:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234998AbjJQTWE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Oct 2023 15:22:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54736 "EHLO
+        id S235054AbjJQTlF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Oct 2023 15:41:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234988AbjJQTWD (ORCPT
+        with ESMTP id S235050AbjJQTlE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Oct 2023 15:22:03 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E0DAED;
-        Tue, 17 Oct 2023 12:22:02 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39HJKJYE001291;
-        Tue, 17 Oct 2023 19:21:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- content-transfer-encoding : in-reply-to; s=qcppdkim1;
- bh=0LQuUlcaFUHetJiym4qKpAFghbPfRLvpwUs9ECHtN7o=;
- b=PuB1LbVxtgWCkaW5m2DPkDGTCxcBAmnpp4etA7IsiOmax86tX3EHLtSApDnQWIwUtXPu
- spw+LTpgDf6zWDnalUyLu5sjIOzs72rmpOSK6bXXF0/6CLMzne1YV0cY7/JGQozI6x0M
- pWVDu2qGkSIw/9ZNK8p7cNM5lgkWLDxRcT3JSDom9giM/WU1yDzCbEAC4NDCKQZvDul3
- 9OV0Bz8ns3hH6vuf6dvyv8LxFaYq2facJkOdA6N+DauyfRqgX5uh77xnsbsHy3tMEAFv
- 20Clp2GhHXAnMcIFzNgyNxrwIjz9qjP83AYTs5bsfKgF57texZR/C7m4Uj5XoBeiJzLj zg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tsb7xjvnv-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 17 Oct 2023 19:21:51 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39HJLNYW006533
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 17 Oct 2023 19:21:23 GMT
-Received: from akhilpo-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.39; Tue, 17 Oct 2023 12:21:16 -0700
-Date:   Wed, 18 Oct 2023 00:51:13 +0530
-From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
-To:     Rob Clark <robdclark@chromium.org>
-CC:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        <cros-qcom-dts-watchers@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Tue, 17 Oct 2023 15:41:04 -0400
+Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DD8BC6;
+        Tue, 17 Oct 2023 12:41:03 -0700 (PDT)
+Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-1dd5b98d9aeso3106665fac.0;
+        Tue, 17 Oct 2023 12:41:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697571663; x=1698176463;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uR3bNC3fTwfH0+mhYEnQAuVSq+ou4a66cQX/8jr0NI4=;
+        b=NRaVK5o3/weqRS13rtDjVoYGGQFc3ZP4GFwbaBT4Y9Vq6hWD8B0LYipKnf/Qbm0WAC
+         TgxGUSwRyX2Y6IyMG9APXfR2MyQ0j3KlnX4ftgnrwc/zLLLqm7sA7TQYY1jwOea/4SYy
+         i/VFSKr/mkgYszBAF8Bhpi5wXyTIoP6lwgK+1HKWEx/17YzSS57+zJfibjDsjfk1LQjO
+         7HQO0jgLp/DxjbY58b72IcakagpRAK1GVimZRUw6P5D8u+rFERVD0ZuCD5mT+orLAuS3
+         gtssOTkKZ45uQQ30Vle2KlO9SNJvrXb8wqvInAIZoES65WlQthxdXH/jesubpabczHcd
+         U6UQ==
+X-Gm-Message-State: AOJu0YyESgxKsTB4BgsErkdwEvM5Oq7FqqBYN1XK0AFugGP3WyGHPYmQ
+        H7MKcczEpJAGwBU70ZTLBsCBv7+X/g==
+X-Google-Smtp-Source: AGHT+IGe43wxLK4YykHPPU0FQkbx4eJdg+n8Sp4kw8kXBTquDgR1Xt7DwrQ1p1kv7FxLUlj0E0nwzA==
+X-Received: by 2002:a05:6870:11d0:b0:1e9:fb1e:870a with SMTP id 16-20020a05687011d000b001e9fb1e870amr1981537oav.3.1697571662697;
+        Tue, 17 Oct 2023 12:41:02 -0700 (PDT)
+Received: from herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id cj19-20020a05687c041300b001e11ad88f7csm379100oac.30.2023.10.17.12.41.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Oct 2023 12:41:02 -0700 (PDT)
+Received: (nullmailer pid 2561855 invoked by uid 1000);
+        Tue, 17 Oct 2023 19:41:00 -0000
+Date:   Tue, 17 Oct 2023 14:41:00 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Nia Espera <nespera@igalia.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-Subject: Re: [PATCH 2/7] drm/msm/adreno: Add ZAP firmware name to A635
-Message-ID: <hgpte7bfyjnhbxx2n3kxjl4yc4k536x5ljanmbyuro6rnnv6cs@3gtwwukp5uag>
-References: <20230926-topic-a643-v1-0-7af6937ac0a3@linaro.org>
- <20230926-topic-a643-v1-2-7af6937ac0a3@linaro.org>
- <43q6mui3lofa4rqh667o54b2qcbqn5fg34ss5o7y7k7uxbxsro@dxgovofsrvqx>
- <CAJs_Fx7WkdhY31aP_buZP+b7ihOOmE8zBZFOLZ8z9uqcNmEhVw@mail.gmail.com>
+        Kees Cook <keescook@chromium.org>,
+        Tony Luck <tony.luck@intel.com>,
+        "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
+        Rob <Me@orbit.sh>, Clayton Craft <clayton@igalia.com>,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH 1/5] iio: adc: add smb139x bindings
+Message-ID: <20231017194100.GA2560880-robh@kernel.org>
+References: <20231016-nia-sm8350-for-upstream-v1-0-bb557a0af2e9@igalia.com>
+ <20231016-nia-sm8350-for-upstream-v1-1-bb557a0af2e9@igalia.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJs_Fx7WkdhY31aP_buZP+b7ihOOmE8zBZFOLZ8z9uqcNmEhVw@mail.gmail.com>
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: cl4rbfVQDzRvzEbrtwXrLKy6DPQYGpYW
-X-Proofpoint-GUID: cl4rbfVQDzRvzEbrtwXrLKy6DPQYGpYW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-17_03,2023-10-17_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- mlxlogscore=999 suspectscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0
- mlxscore=0 phishscore=0 malwarescore=0 impostorscore=0 clxscore=1015
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310170164
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20231016-nia-sm8350-for-upstream-v1-1-bb557a0af2e9@igalia.com>
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Oct 16, 2023 at 02:47:01PM +0200, Nia Espera wrote:
+> Bindings for a charger controller chip found on sm8350
+> 
+> Signed-off-by: Nia Espera <nespera@igalia.com>
+> ---
+>  include/dt-bindings/iio/qcom,spmi-adc7-smb139x.h | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
+> 
+> diff --git a/include/dt-bindings/iio/qcom,spmi-adc7-smb139x.h b/include/dt-bindings/iio/qcom,spmi-adc7-smb139x.h
+> new file mode 100644
+> index 000000000000..fe163cd8bbdd
+> --- /dev/null
+> +++ b/include/dt-bindings/iio/qcom,spmi-adc7-smb139x.h
+> @@ -0,0 +1,17 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
 
-On Tue, Oct 17, 2023 at 12:33:45AM -0700, Rob Clark wrote:
-> 
-> On Mon, Oct 16, 2023 at 1:12 PM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
-> >
-> > On Tue, Sep 26, 2023 at 08:24:37PM +0200, Konrad Dybcio wrote:
-> > >
-> > > Some (many?) devices with A635 expect a ZAP shader to be loaded.
-> > >
-> > > Set the file name to allow for that.
-> > >
-> > > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > > ---
-> > >  drivers/gpu/drm/msm/adreno/adreno_device.c | 1 +
-> > >  1 file changed, 1 insertion(+)
-> > >
-> > > diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> > > index fa527935ffd4..16527fe8584d 100644
-> > > --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> > > +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> > > @@ -454,6 +454,7 @@ static const struct adreno_info gpulist[] = {
-> > >               .quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT |
-> > >                       ADRENO_QUIRK_HAS_HW_APRIV,
-> > >               .init = a6xx_gpu_init,
-> > > +             .zapfw = "a660_zap.mbn",
-> >
-> > sc7280 doesn't have a TZ and so no zap shader support. Can we handle
-> > this using "firmware-name" property in your top level platform dt? Zap
-> > firmwares are signed with different keys for each OEMs. So there is
-> > cross-compatibility anyway.
-I had a typo here. I meant "no cross compatibility".
+Dual license please (matching Qcom dts files)
 
+> +/*
+> + * Copyright (c) 2020 The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#ifndef _DT_BINDINGS_QCOM_SPMI_VADC_SMB139X_H
+> +#define _DT_BINDINGS_QCOM_SPMI_VADC_SMB139X_H
+> +
+> +#define SMB139x_1_ADC7_SMB_TEMP			(SMB139x_1_SID << 8 | 0x06)
+> +#define SMB139x_1_ADC7_ICHG_SMB			(SMB139x_1_SID << 8 | 0x18)
+> +#define SMB139x_1_ADC7_IIN_SMB			(SMB139x_1_SID << 8 | 0x19)
+> +
+> +#define SMB139x_2_ADC7_SMB_TEMP			(SMB139x_2_SID << 8 | 0x06)
+> +#define SMB139x_2_ADC7_ICHG_SMB			(SMB139x_2_SID << 8 | 0x18)
+> +#define SMB139x_2_ADC7_IIN_SMB			(SMB139x_2_SID << 8 | 0x19)
+> +
+> +#endif
 > 
-> I think this ends up working out because the version of sc7280 that
-> doesn't have TZ also doesn't have the associated mem-region/etc..  but
-> maybe we should deprecate the zapfw field as in practice it isn't
-> useful (ie. always overriden by firmware-name).
-Sounds good.
-
+> -- 
+> 2.42.0
 > 
-> Fwiw there are windows laptops with sc7180/sc7280 which do use zap fw.
-Aah! right.
-> 
-> BR,
-> -R
-> 
-> >
-> > -Ahil.
-> >
-> > >               .hwcg = a660_hwcg,
-> > >               .address_space_size = SZ_16G,
-> > >               .speedbins = ADRENO_SPEEDBINS(
-> > >
-> > > --
-> > > 2.42.0
-> > >
