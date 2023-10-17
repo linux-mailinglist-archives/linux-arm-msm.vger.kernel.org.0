@@ -2,163 +2,253 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F1507CBE36
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 10:55:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D8AA97CBE4B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Oct 2023 11:01:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234032AbjJQIzK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Oct 2023 04:55:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45658 "EHLO
+        id S234032AbjJQJBT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Oct 2023 05:01:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232134AbjJQIzK (ORCPT
+        with ESMTP id S234147AbjJQJBT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Oct 2023 04:55:10 -0400
-Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [217.70.183.195])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10A168E;
-        Tue, 17 Oct 2023 01:55:06 -0700 (PDT)
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 59F8C60012;
-        Tue, 17 Oct 2023 08:54:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1697532905;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=7iqwM5opDjnD+ixELUSySOVNyUQv89SINtLl3/UxmFE=;
-        b=YLPmSv2BCtXDB0ajUoTbluwBFmwofXadtU+GsY+4Sr2bStC/+57qJWEqHQxugCysJoJknP
-        /xES24Lgh/2iCrJ6gc7yDMdmhyFcxsPClA+nGs1zBJbYjmdnMazWn/GFZ5Ij1hd1/iYEOE
-        rnGM6Lou0DwZIc0pn6ZJD1neN06P0aE0s9hFnJ2NWCTv4jEGZeXwQLDI8oLcKrCQmu51Es
-        7Jaiw6FtcmzGD+tpz84+I5MJUp7c7og8dHm3VZNJP0PnF+sH4k76GF8Z+2YN+Oz/ROwvGD
-        z2Tzp5Q1gVXIAkN0JI1fQPn1a/bIY4ituL/pt69IiaEMm5cR9NQcbCEJEEXjLA==
-Date:   Tue, 17 Oct 2023 10:54:58 +0200
-From:   Paul Kocialkowski <paul.kocialkowski@bootlin.com>
-To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Cc:     mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
-        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
-        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
-        hverkuil-cisco@xs4all.nl, nicolas.dufresne@collabora.com,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
-        kernel@collabora.com, Maxime Ripard <mripard@kernel.org>
-Subject: Re: [PATCH v11 41/56] media: cedrus: Stop direct calls to queue
- num_buffers field
-Message-ID: <ZS5L4l2PzQgpJXua@aptenodytes>
-References: <20231012114642.19040-1-benjamin.gaignard@collabora.com>
- <20231012114642.19040-42-benjamin.gaignard@collabora.com>
+        Tue, 17 Oct 2023 05:01:19 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D64EB0;
+        Tue, 17 Oct 2023 02:01:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1697533277; x=1729069277;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Ycdmn1yRnmUMNTHqsn5gHRBcw7LLPquXwlkEsT2ze3g=;
+  b=Wa4GYMuI6JT60yalyY6kyE6K8kEeO9oQFm1bkTtBew+BZEAbQbj8Zhq2
+   aoFSwrMiaqr/AaQtX2o46sAHHJ/DTivb6zuz6S37CK7tN3Yj0bXFYvw1L
+   SbwCJUxRbd8MeUEOBxI+4r/a1a6U7DvoE4uUXk28N7DUoE7WlMbjJ6A94
+   jx7EGqIXZdKgE2XC+n289sE6zh9mr7gjC1+0STdKjzIHv2Io3SIsOAeGH
+   fk2vqAh80KSRTUTT+3MFKtpNP7TjP3My7neCEpOVSkMUxDW/nuOO3mfms
+   Z+LIXztV8CtzN8dH/sIwiI7d0hhzQjK/Tq0F9btb9uC50FZEglPo1dZaT
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10865"; a="7296588"
+X-IronPort-AV: E=Sophos;i="6.03,231,1694761200"; 
+   d="scan'208";a="7296588"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Oct 2023 02:01:16 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10865"; a="705923313"
+X-IronPort-AV: E=Sophos;i="6.03,231,1694761200"; 
+   d="scan'208";a="705923313"
+Received: from kuha.fi.intel.com ([10.237.72.185])
+  by orsmga003.jf.intel.com with SMTP; 17 Oct 2023 02:01:12 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Tue, 17 Oct 2023 12:01:11 +0300
+Date:   Tue, 17 Oct 2023 12:01:11 +0300
+From:   Heikki Krogerus <heikki.krogerus@linux.intel.com>
+To:     Luca Weiss <luca.weiss@fairphone.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 2/3] usb: typec: fsa4480: Add support to swap SBU
+ orientation
+Message-ID: <ZS5NV43MhD3YNeDX@kuha.fi.intel.com>
+References: <20231013-fsa4480-swap-v1-0-b877f62046cc@fairphone.com>
+ <20231013-fsa4480-swap-v1-2-b877f62046cc@fairphone.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="5XMse7FBKsXwfxlj"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231012114642.19040-42-benjamin.gaignard@collabora.com>
-X-GND-Sasl: paul.kocialkowski@bootlin.com
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20231013-fsa4480-swap-v1-2-b877f62046cc@fairphone.com>
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Luca,
 
---5XMse7FBKsXwfxlj
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hi Benjamin,
-
-On Thu 12 Oct 23, 13:46, Benjamin Gaignard wrote:
-> Use vb2_get_num_buffers() and queue max_num_buffers field
-> to avoid using queue num_buffer field directly.
-
-Thanks for the patch, this is indeed a nice cleanup and safer usage.
-Maybe the commit message needs to reflect why this change is welcome,
-not just what is being changed.
-
-> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-> CC: Maxime Ripard <mripard@kernel.org>
-> CC: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
+On Fri, Oct 13, 2023 at 01:38:06PM +0200, Luca Weiss wrote:
+> On some hardware designs the AUX+/- lanes are connected reversed to
+> SBU1/2 compared to the expected design by FSA4480.
+> 
+> Made more complicated, the otherwise compatible Orient-Chip OCP96011
+> expects the lanes to be connected reversed compared to FSA4480.
+> 
+> * FSA4480 block diagram shows AUX+ connected to SBU2 and AUX- to SBU1.
+> * OCP96011 block diagram shows AUX+ connected to SBU1 and AUX- to SBU2.
+> 
+> So if OCP96011 is used as drop-in for FSA4480 then the orientation
+> handling in the driver needs to be reversed to match the expectation of
+> the OCP96011 hardware.
+> 
+> Support parsing the data-lanes parameter in the endpoint node to swap
+> this in the driver.
+> 
+> The parse_data_lanes_mapping function is mostly taken from nb7vpq904m.c.
+> 
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 > ---
->  drivers/staging/media/sunxi/cedrus/cedrus_h264.c | 8 ++++++--
->  drivers/staging/media/sunxi/cedrus/cedrus_h265.c | 9 +++++++--
->  2 files changed, 13 insertions(+), 4 deletions(-)
->=20
-> diff --git a/drivers/staging/media/sunxi/cedrus/cedrus_h264.c b/drivers/s=
-taging/media/sunxi/cedrus/cedrus_h264.c
-> index dfb401df138a..95e490532a87 100644
-> --- a/drivers/staging/media/sunxi/cedrus/cedrus_h264.c
-> +++ b/drivers/staging/media/sunxi/cedrus/cedrus_h264.c
-> @@ -653,8 +653,12 @@ static void cedrus_h264_stop(struct cedrus_ctx *ctx)
-> =20
->  	vq =3D v4l2_m2m_get_vq(ctx->fh.m2m_ctx, V4L2_BUF_TYPE_VIDEO_CAPTURE);
-> =20
-> -	for (i =3D 0; i < vq->num_buffers; i++) {
-> -		buf =3D vb2_to_cedrus_buffer(vb2_get_buffer(vq, i));
-> +	for (i =3D 0; i < vb2_get_num_buffers(vq); i++) {
-> +		struct vb2_buffer *vb =3D vb2_get_buffer(vq, i);
+>  drivers/usb/typec/mux/fsa4480.c | 81 +++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 81 insertions(+)
+> 
+> diff --git a/drivers/usb/typec/mux/fsa4480.c b/drivers/usb/typec/mux/fsa4480.c
+> index e0ee1f621abb..6ee467c96fb6 100644
+> --- a/drivers/usb/typec/mux/fsa4480.c
+> +++ b/drivers/usb/typec/mux/fsa4480.c
+> @@ -9,6 +9,7 @@
+>  #include <linux/kernel.h>
+>  #include <linux/module.h>
+>  #include <linux/mutex.h>
+> +#include <linux/of_graph.h>
+
+If you don't mind, let's keep this driver ready for ACPI, just in
+case...
+
+>  #include <linux/regmap.h>
+>  #include <linux/usb/typec_dp.h>
+>  #include <linux/usb/typec_mux.h>
+> @@ -60,6 +61,7 @@ struct fsa4480 {
+>  	unsigned int svid;
+>  
+>  	u8 cur_enable;
+> +	bool swap_sbu_lanes;
+>  };
+>  
+>  static const struct regmap_config fsa4480_regmap_config = {
+> @@ -76,6 +78,9 @@ static int fsa4480_set(struct fsa4480 *fsa)
+>  	u8 enable = FSA4480_ENABLE_DEVICE;
+>  	u8 sel = 0;
+>  
+> +	if (fsa->swap_sbu_lanes)
+> +		reverse = !reverse;
 > +
-> +		if (!vb)
-> +			continue;
-
-Please add a newline here to be consistent with the other block being chang=
-ed.
-
-With this change and the commit log reworked, you can consider this:
-Acked-by: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
-
-Thanks!
-
-Paul
-
-> +		buf =3D vb2_to_cedrus_buffer(vb);
-> =20
->  		if (buf->codec.h264.mv_col_buf_size > 0) {
->  			dma_free_attrs(dev->dev,
-> diff --git a/drivers/staging/media/sunxi/cedrus/cedrus_h265.c b/drivers/s=
-taging/media/sunxi/cedrus/cedrus_h265.c
-> index fc9297232456..52e94c8f2f01 100644
-> --- a/drivers/staging/media/sunxi/cedrus/cedrus_h265.c
-> +++ b/drivers/staging/media/sunxi/cedrus/cedrus_h265.c
-> @@ -869,8 +869,13 @@ static void cedrus_h265_stop(struct cedrus_ctx *ctx)
-> =20
->  	vq =3D v4l2_m2m_get_vq(ctx->fh.m2m_ctx, V4L2_BUF_TYPE_VIDEO_CAPTURE);
-> =20
-> -	for (i =3D 0; i < vq->num_buffers; i++) {
-> -		buf =3D vb2_to_cedrus_buffer(vb2_get_buffer(vq, i));
-> +	for (i =3D 0; i < vb2_get_num_buffers(vq); i++) {
-> +		struct vb2_buffer *vb =3D vb2_get_buffer(vq, i);
+>  	/* USB Mode */
+>  	if (fsa->mode < TYPEC_STATE_MODAL ||
+>  	    (!fsa->svid && (fsa->mode == TYPEC_MODE_USB2 ||
+> @@ -179,12 +184,84 @@ static int fsa4480_mux_set(struct typec_mux_dev *mux, struct typec_mux_state *st
+>  	return ret;
+>  }
+>  
+> +enum {
+> +	NORMAL_LANE_MAPPING,
+> +	INVERT_LANE_MAPPING,
+> +};
 > +
-> +		if (!vb)
-> +			continue;
+> +#define DATA_LANES_COUNT	2
 > +
-> +		buf =3D vb2_to_cedrus_buffer(vb);
-> =20
->  		if (buf->codec.h265.mv_col_buf_size > 0) {
->  			dma_free_attrs(dev->dev,
-> --=20
-> 2.39.2
->=20
+> +static const int supported_data_lane_mapping[][DATA_LANES_COUNT] = {
+> +	[NORMAL_LANE_MAPPING] = { 0, 1 },
+> +	[INVERT_LANE_MAPPING] = { 1, 0 },
+> +};
+> +
+> +static int fsa4480_parse_data_lanes_mapping(struct fsa4480 *fsa)
+> +{
+> +	struct device_node *ep;
 
---=20
-Paul Kocialkowski, Bootlin
-Embedded Linux and kernel engineering
-https://bootlin.com
+        struct fwnode_handle *ep;
 
---5XMse7FBKsXwfxlj
-Content-Type: application/pgp-signature; name="signature.asc"
+> +	u32 data_lanes[DATA_LANES_COUNT];
+> +	int ret, i, j;
+> +
+> +	ep = of_graph_get_next_endpoint(fsa->client->dev.of_node, NULL);
 
------BEGIN PGP SIGNATURE-----
+Shouldn't you loop through the endpoints? In any case:
 
-iQEzBAEBCAAdFiEEJZpWjZeIetVBefti3cLmz3+fv9EFAmUuS+IACgkQ3cLmz3+f
-v9GV5wf/TYcN6gfAAjC5SFlkLJBI/nxR5YwIXXCHBgPuQD+SDdeQNLb/OK6/EjCw
-N8zdNrQdsMqz+Hm6oO5qJqU/MLD8+HLPgnFNSA/+tK7uynPhFwNaJ29bDaONj9KA
-kPiJruAS/e5SXFfEdhWnHxSz+OQWvqrOBAZj/WV/OVvm/Azl9oXg67oLddms1HV7
-5Gv7y0H2u60hmsjfTptTA1MwOKjZfKDpyuSr2iENNAiJTP1H6zjnY3f7aB5JjlP5
-kWrZG+P/x6WrrX62qyWdHVq366vg9bNyLrkDyxMxz/tcjShPcfyQQ7cU/15IKpGi
-uLOnI40+m0H1qMX4rElL2jp59ZfMLQ==
-=Xf+i
------END PGP SIGNATURE-----
+        ep = fwnode_graph_get_next_endpoint(dev_fwnode(&fsa->client->dev, NULL));
 
---5XMse7FBKsXwfxlj--
+> +	if (!ep)
+> +		return 0;
+> +
+> +	ret = of_property_count_u32_elems(ep, "data-lanes");
+
+        ret = fwnode_property_count_u32(ep, "data-lanes");
+
+But is this necessary at all in this case - why not just read the
+array since you expect a fixed size for it (if the read fails it fails)?
+
+> +	if (ret == -EINVAL)
+> +		/* Property isn't here, consider default mapping */
+> +		goto out_done;
+> +	if (ret < 0)
+> +		goto out_error;
+> +
+> +	if (ret != DATA_LANES_COUNT) {
+> +		dev_err(&fsa->client->dev, "expected 2 data lanes\n");
+> +		ret = -EINVAL;
+> +		goto out_error;
+> +	}
+> +
+> +	ret = of_property_read_u32_array(ep, "data-lanes", data_lanes, DATA_LANES_COUNT);
+
+        ret = fwnode_property_read_u32_array(ep, "data-lanes", data_lanes, DATA_LANES_COUNT);
+
+> +	if (ret)
+> +		goto out_error;
+> +
+> +	for (i = 0; i < ARRAY_SIZE(supported_data_lane_mapping); i++) {
+> +		for (j = 0; j < DATA_LANES_COUNT; j++) {
+> +			if (data_lanes[j] != supported_data_lane_mapping[i][j])
+> +				break;
+> +		}
+> +
+> +		if (j == DATA_LANES_COUNT)
+> +			break;
+> +	}
+> +
+> +	switch (i) {
+> +	case NORMAL_LANE_MAPPING:
+> +		break;
+> +	case INVERT_LANE_MAPPING:
+> +		fsa->swap_sbu_lanes = true;
+> +		dev_info(&fsa->client->dev, "using inverted data lanes mapping\n");
+
+That is just noise. Please drop it.
+
+> +		break;
+> +	default:
+> +		dev_err(&fsa->client->dev, "invalid data lanes mapping\n");
+> +		ret = -EINVAL;
+> +		goto out_error;
+> +	}
+> +
+> +out_done:
+> +	ret = 0;
+> +
+> +out_error:
+> +	of_node_put(ep);
+> +
+> +	return ret;
+> +}
+> +
+>  static int fsa4480_probe(struct i2c_client *client)
+>  {
+>  	struct device *dev = &client->dev;
+>  	struct typec_switch_desc sw_desc = { };
+>  	struct typec_mux_desc mux_desc = { };
+>  	struct fsa4480 *fsa;
+> +	int ret;
+>  
+>  	fsa = devm_kzalloc(dev, sizeof(*fsa), GFP_KERNEL);
+>  	if (!fsa)
+> @@ -193,6 +270,10 @@ static int fsa4480_probe(struct i2c_client *client)
+>  	fsa->client = client;
+>  	mutex_init(&fsa->lock);
+>  
+> +	ret = fsa4480_parse_data_lanes_mapping(fsa);
+> +	if (ret)
+> +		return ret;
+> +
+>  	fsa->regmap = devm_regmap_init_i2c(client, &fsa4480_regmap_config);
+>  	if (IS_ERR(fsa->regmap))
+>  		return dev_err_probe(dev, PTR_ERR(fsa->regmap), "failed to initialize regmap\n");
+> 
+> -- 
+> 2.42.0
+
+-- 
+heikki
