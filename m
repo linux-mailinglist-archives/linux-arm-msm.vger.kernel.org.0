@@ -2,78 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B6E07CD7A8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 11:16:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 18D287CD7D4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 11:24:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229749AbjJRJQf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Oct 2023 05:16:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47754 "EHLO
+        id S229747AbjJRJYc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Oct 2023 05:24:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229601AbjJRJQa (ORCPT
+        with ESMTP id S229544AbjJRJYb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Oct 2023 05:16:30 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF696124
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 02:16:21 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-507a55302e0so4811341e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 02:16:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697620580; x=1698225380; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AZ41pRho0HuiZRS9gRgVWISrteNQCafxPgDs5lLN4nQ=;
-        b=SWsNyyAC/BpKYxfAc+tWplOzVjgCRz2e+p9hX9/stjmqYjPVT0orwKzcHOBqWxYfIy
-         yYl5hZljMrposxTNdPls4ifEvAAwZt2j1GDrDrpnzOtPcIeINpU3CrbDPiT6eLGuvZGH
-         1goUVKPrRApJuci57HPwjt6xJORU+kaHnGoFiSvevASNmFpU/Sxy6HuyLrf3ZL7tDtqt
-         0snjwwSxvK918bJi4kXccyOsaX6K1Zv7uT1peNCx8MmawtyfT6NPEaL/bgDvDNCplmx9
-         U9F7Jmwqlpz/9NUHfmNIQIIXYSjNdZbscyAPW2PkOb7msBO3hgmCHErqv3LBFmyXimzc
-         vtSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697620580; x=1698225380;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AZ41pRho0HuiZRS9gRgVWISrteNQCafxPgDs5lLN4nQ=;
-        b=Juo66UZ6F26Z6pS5I/bDzwJ9n5556oe4SzKK6TakRhsSO3leB1B3rlSiFN2aSM3l0O
-         CYL6ifU/yxwGC1jx1M+pFwh/ZUj3ggEh2wiB9VLo/NOqMQxQAYIz1s4JIZkwyBFEP4Cr
-         NKeZZKQQAbFZOBv8DjDSHbtbTULu8KAjA2S4kl7ZZJI2RwECqkghXZjCRvSXl8hzlbT+
-         zdEakRuogMR/Zg0DyH1xFbRgBILmRhq8wRfzuBN0PGVfEpxTku80jBy0mxw8RwAWIgvq
-         hhhP4FEK/6wFSVvchf7+OHyQtSrsr2RAQJcYipaX6rmIhyOcgEQAeZQ7NqU2KmrClja8
-         EKjQ==
-X-Gm-Message-State: AOJu0YwiN6cjNFFwZai+lbH5UqAy7OSq2i1YvbebHrSv8mp3TJRbFHEu
-        Q8/6psNdw0oGDNS56d7/boZxMVMH3n21pi+c2y4=
-X-Google-Smtp-Source: AGHT+IGfutiJM8gG/RzWIslBZtWh5qieWDLLmmPzfMwJAmj4O9Zs/iCZCRzPD03dztF50asWIr/W8A==
-X-Received: by 2002:a19:e041:0:b0:503:99d:5a97 with SMTP id g1-20020a19e041000000b00503099d5a97mr3576574lfj.20.1697620580116;
-        Wed, 18 Oct 2023 02:16:20 -0700 (PDT)
-Received: from [172.30.204.55] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id b22-20020a0565120b9600b004edc72be17csm619367lfv.2.2023.10.18.02.16.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Oct 2023 02:16:19 -0700 (PDT)
-Message-ID: <4469ff06-fcb1-400d-848f-77c4b139a20d@linaro.org>
-Date:   Wed, 18 Oct 2023 11:16:16 +0200
+        Wed, 18 Oct 2023 05:24:31 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2775F7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 02:24:29 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39I7kfDU028707;
+        Wed, 18 Oct 2023 09:24:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=eqUAhgGFfN5evV7dATP9rpPAsRPLoLRHkDNDdhr8sbQ=;
+ b=QQlv6xoqIJ0sN+Ags1Z91RMLkULGiXPY8kuLDc92A6VwvMw5QZYqo/lVB0HLxtW+2UNs
+ N64YjKjXKp9oD0B/pH7TxP1isf7Slnq56k7cEvJNNukVv+tGZCopfuyIpHSNfRpOXUaA
+ kGQzkZ8D21MZGbI+Kbmbnr22Wn1+iqgFawcup9TJPVmgG4OuYJmKVqsAARNVCQjNuvmH
+ 22CUdNgjlNuq1F8Fal7rLTbGK5sH3trpFdWYltVJYUreW7jfnm+TOIp6/kCZgYNu+iP4
+ 5GdqPNOuV926RTFvcT396opibHfbczsPE3RY95rzFPGzfIJmcUHcfj6HBssswxQYNg/M Ag== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tsb7xm6np-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 18 Oct 2023 09:24:19 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39I9OI8X028815
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 18 Oct 2023 09:24:18 GMT
+Received: from [10.110.28.170] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 18 Oct
+ 2023 02:24:14 -0700
+Message-ID: <883e40de-7d1d-03fb-014f-74db5b6ab406@quicinc.com>
+Date:   Wed, 18 Oct 2023 02:24:11 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: msm8953: add SPI interfaces
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH] drm/msm/dp: attach the DP subconnector property
 Content-Language: en-US
-To:     Gianluca Boiano <morf3089@gmail.com>,
-        Andy Gross <agross@kernel.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20231013110531.84140-1-morf3089@gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231013110531.84140-1-morf3089@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20231018074627.55637-1-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20231018074627.55637-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Level: *
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 56nuk7U11qEA2F_4U_WkGMpi4IYu5Hx8
+X-Proofpoint-GUID: 56nuk7U11qEA2F_4U_WkGMpi4IYu5Hx8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-18_07,2023-10-17_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ mlxlogscore=999 suspectscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0
+ mlxscore=0 phishscore=0 malwarescore=0 impostorscore=0 clxscore=1015
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310180079
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -82,15 +87,59 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 10/13/23 13:05, Gianluca Boiano wrote:
-> This change add spi_3, spi_5 and spi_6 interfaces to
-> MSM8953 devices.
+On 10/18/2023 12:46 AM, Dmitry Baryshkov wrote:
+> While developing and testing the commit bfcc3d8f94f4 ("drm/msm/dp:
+> support setting the DP subconnector type") I had the patch [1] in my
+> tree. I haven't noticed that it was a dependency for the commit in
+> question. Mea culpa.
 > 
-> Signed-off-by: Gianluca Boiano <morf3089@gmail.com>
+
+I agree with you that, we should be setting this in the framework is better.
+
+Will review that one on the other patch.
+
+But yes, we need to fix this regression first.
+
+> Since the patch has not landed yet (and even was not reviewed)
+> and since one of the bridges erroneously uses USB connector type instead
+> of DP, attach the property directly from the MSM DP driver.
+> 
+> This fixes the following oops on DP HPD event:
+> 
+>   drm_object_property_set_value (drivers/gpu/drm/drm_mode_object.c:288)
+>   dp_display_process_hpd_high (drivers/gpu/drm/msm/dp/dp_display.c:402)
+>   dp_hpd_plug_handle.isra.0 (drivers/gpu/drm/msm/dp/dp_display.c:604)
+>   hpd_event_thread (drivers/gpu/drm/msm/dp/dp_display.c:1110)
+>   kthread (kernel/kthread.c:388)
+>   ret_from_fork (arch/arm64/kernel/entry.S:858)
+> 
+> Fixes: bfcc3d8f94f4 ("drm/msm/dp: support setting the DP subconnector type")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-Generally when you resend an email, you should edit the subject to 
-include the word "RESEND" and state the reason under the --- line.
 
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-Konrad
+One question, while reviewing the code, I see you have two calls to 
+drm_dp_set_subconnector_property() for the connect and disconnect case.
+
+Why cant we have just one call in dp_display_send_hpd_notification() for 
+both cases?
+
+
+>   drivers/gpu/drm/msm/dp/dp_drm.c | 3 +++
+>   1 file changed, 3 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
+> index 40e7344180e3..e3bdd7dd4cdc 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_drm.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+> @@ -345,6 +345,9 @@ struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display, struct dr
+>   	if (IS_ERR(connector))
+>   		return connector;
+>   
+> +	if (!dp_display->is_edp)
+> +		drm_connector_attach_dp_subconnector_property(connector);
+> +
+>   	drm_connector_attach_encoder(connector, encoder);
+>   
+>   	return connector;
