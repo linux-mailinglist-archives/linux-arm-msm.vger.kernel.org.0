@@ -2,77 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 847487CD693
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 10:32:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3A147CD6CA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 10:42:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344674AbjJRIcf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Oct 2023 04:32:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51182 "EHLO
+        id S230003AbjJRImj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Oct 2023 04:42:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344654AbjJRIce (ORCPT
+        with ESMTP id S230094AbjJRImh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Oct 2023 04:32:34 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C538F7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 01:32:32 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-507c8316abcso529139e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 01:32:32 -0700 (PDT)
+        Wed, 18 Oct 2023 04:42:37 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4EE010A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 01:42:34 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-5079f6efd64so5652923e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 01:42:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697617950; x=1698222750; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1697618553; x=1698223353; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=QT7FrcDEpu4yl2NICPsR7VhnQlPQr6RPzm03dF3NO8Y=;
-        b=bEdhttRlvYfHs/Pm3SNLzEy095LELKZzhztuXEGwjA5aw+vjw6uEhyLZlC1Nx0Rg78
-         QCyIln7TckoHeZn2Qi/h4zo+S650D/Sm9AZeIYK0JmGSLm8oBfojfO9xb+4nWrhgVFbe
-         /KfPBNVe1UtmbnShyFwJjhDuqSUTa0NVHXzcxEkHiC6bBP6EeI0DC5CF6YtYxy8GRyEH
-         yx/nK8Quagk0VVDr9Li9G9ftnH+xi2k0H4L7l1lu8xbCUzq93CwbTtb3gw8vfY2gtpjs
-         dIWVIIP9yjW+qRbW8/THy2kHYeUDnQBAmo14RGU8fuZUBmv2Efko1F8JDzKJKLRwznDy
-         DvBw==
+        bh=10OPZdJIcf5hY7AybgtKFxG5/1fKjVZqhVfHIM6Owj0=;
+        b=G3dIm7GgQe3RDGlGZV2uC3gzmTzERaGJWJbaudmttFWgEZXAFmjNkSelTEgesRMqui
+         FI0JPsBYqCl41STWrarBOQQCLpUHS/ft3nmXZphTjICGoX7Ex2AyOaiV3zx8OAOaBL+0
+         6buI6Kul9ZJaeWMAQElU5dODdLpnWfnZyohElywlvLLhT51RsQ3RSSPWRi8/MYDpRgoc
+         7eENPYu/b+WwJuobCPO763YaeotoTW4sOgFbeiVT0J8UQtmlNio6qkVuq1zjxmIV5Z5p
+         vaVyOF8dDRoh5P74shcbmwHUX7nK/kNyHXj4JEQqRWrXCHInpFmqhQw2mOvHcUSssypW
+         50dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697617950; x=1698222750;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1697618553; x=1698223353;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QT7FrcDEpu4yl2NICPsR7VhnQlPQr6RPzm03dF3NO8Y=;
-        b=VANp5ERdUsnj8oOeES0TgijKElwrxk3hsupPaz35o+lMO3pH6Q37l9thRkB2jO5hyZ
-         hrv7Jq85Apf+sZRKwkRC2Z4NcWkHABB+tq1bSAPuz3sY0bVgWFZj8xHn+GdnIgSA2IV+
-         /6auIYEoEC90Tt4xfdRFSEnpevaXqRxD1aGyDFPJQhzjfqg//scVFcrlMiOY+YmFexTk
-         NqloyzaVXt2jYf2MqXH3e+cJTDF6wERNfB9a9OLqWG7c5i7PFLajh1TBDK3nvxr752J8
-         YdvFuxtQEsinL3ncHhngZ9bRVwqODm/S7TjEYWNtxiNiBttK79NS9X3qaYTMSSkYAP5p
-         XYdQ==
-X-Gm-Message-State: AOJu0Yy2daUR8pPSip7TOBjU2OzxMaDCgkAHbUoQZAsNDYKF0aR7jE5D
-        z1XDksqGYRd7YgAn51TQ+1ZZwA==
-X-Google-Smtp-Source: AGHT+IF6n4gFncLoJDBDMzi+HL0OIP90t/LvbDcJiPonVILAGg4jFXxUKPf8y8Djp77SFQSHCfhX7Q==
-X-Received: by 2002:a19:654c:0:b0:4ff:b830:4b6b with SMTP id c12-20020a19654c000000b004ffb8304b6bmr3224287lfj.14.1697617950642;
-        Wed, 18 Oct 2023 01:32:30 -0700 (PDT)
+        bh=10OPZdJIcf5hY7AybgtKFxG5/1fKjVZqhVfHIM6Owj0=;
+        b=QaZAdYVGRoL129pPdt0T8Lt1O0w0XIYL346PV/0xMZD/J/wHxgK/8EEF5vB18YVJC6
+         5X5jFjG1LvhHSOXYB92TD0Zc0I5k8CkuGkg+HRqVHwH10rBI5tIBSCDiPzGl/Vw9QzKx
+         vjbOXXNBXKj85wOHMxWFnwAmKWKVsCbOw6jqRnivkiqQrjD5u9LNpdkioKbmbT6FTsJ5
+         5WZ8bxh6qiokFGSrCWFzEjo7qtYYYxRVu4MD0AdIkx92BXmCp3gdi1+0zi8ZcKtkjPgp
+         O+vBoZ3Ytoiy7tAvEiI5bAIhDrS1H/ASYbLWn9zw0qh61WLVdDGR/H5sl93ThEoqqvbO
+         ipNw==
+X-Gm-Message-State: AOJu0YzMmr/eBWW2H0Vfzj8Vw5uLXNMEUOAdUCVvh4Oiy5rWQkJUhOjG
+        XtZGmlP+X2bW9GhfMoUN9hhPdw==
+X-Google-Smtp-Source: AGHT+IEUfEjyjF0/7VMofGB08Y2b4pWlSpDzjdx6yvCvv2fAVYgWc5f8uuUJWLrh1OSXFGQKd0Bb3w==
+X-Received: by 2002:ac2:4da3:0:b0:503:3816:c42c with SMTP id h3-20020ac24da3000000b005033816c42cmr3050148lfe.41.1697618552939;
+        Wed, 18 Oct 2023 01:42:32 -0700 (PDT)
 Received: from [172.30.204.55] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id h9-20020a197009000000b005030cef433esm605906lfc.94.2023.10.18.01.32.29
+        by smtp.gmail.com with ESMTPSA id i5-20020ac25225000000b005007da9f823sm602353lfl.168.2023.10.18.01.42.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Oct 2023 01:32:30 -0700 (PDT)
-Message-ID: <a640a6c2-5b5c-48a5-9680-bec9514bd068@linaro.org>
-Date:   Wed, 18 Oct 2023 10:32:31 +0200
+        Wed, 18 Oct 2023 01:42:32 -0700 (PDT)
+Message-ID: <ceed957c-0d87-4d42-aa09-d068ef97c9b6@linaro.org>
+Date:   Wed, 18 Oct 2023 10:42:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: msm8939-longcheer-l9100: Add
- proximity-near-level
-To:     =?UTF-8?Q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
-        Andy Gross <agross@kernel.org>,
+Subject: Re: [PATCH v2 3/3] cpufreq: qcom-nvmem: Add MSM8909
+Content-Language: en-US
+To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-References: <20231016-bqm5_prox-v1-1-2acdc732be9d@apitzsch.eu>
- <3aede886-3219-4b9f-a44d-0c414979c260@linaro.org>
- <65214451e02a38032e9fc6ac4cff185c6b2b5fc8.camel@apitzsch.eu>
-Content-Language: en-US
+        Conor Dooley <conor+dt@kernel.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Ulf Hansson <ulf.hansson@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>
+References: <20231018-msm8909-cpufreq-v2-0-0962df95f654@kernkonzept.com>
+ <20231018-msm8909-cpufreq-v2-3-0962df95f654@kernkonzept.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <65214451e02a38032e9fc6ac4cff185c6b2b5fc8.camel@apitzsch.eu>
+In-Reply-To: <20231018-msm8909-cpufreq-v2-3-0962df95f654@kernkonzept.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
@@ -86,25 +87,33 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 10/17/23 22:03, André Apitzsch wrote:
-> Am Dienstag, dem 17.10.2023 um 18:25 +0200 schrieb Konrad Dybcio:
->>
->>
->> On 10/16/23 22:18, André Apitzsch wrote:
->>> Consider an object near to the sensor when their distance is about
->>> 4 cm
->>> or below.
->>>
->>> Signed-off-by: André Apitzsch <git@apitzsch.eu>
->>> ---
->> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>
->> Out of interest, what is it set to by default?
->>
->> Konrad
+On 10/18/23 10:06, Stephan Gerhold wrote:
+> When the MSM8909 SoC is used together with the PM8909 PMIC the primary
+> power supply for the CPU (VDD_APC) is shared with other components to
+> the SoC, namely the VDD_CX power domain typically supplied by the PM8909
+> S1 regulator. This means that all votes for necessary performance states
+> go via the RPM firmware which collects the requirements from all the
+> processors in the SoC. The RPM firmware then chooses the actual voltage
+> based on the performance states ("corners"), depending on calibration
+> values in the NVMEM and other factors.
 > 
-> The default value is 0.
-That much I could guess :) I was wondering if it meant more like "it can 
-detect movement from 1km away" or "disabled"
+> The MSM8909 SoC is also sometimes used with the PM8916 or PM660 PMIC.
+> In that case there is a dedicated regulator connected to VDD_APC and
+> Linux is responsible to do adaptive voltage scaling using CPR (similar
+> to the existing code for QCS404).
+> 
+> This difference can be described in the device tree, by either assigning
+> the CPU a power domain from RPMPD or from the CPR driver.
+> 
+> Describe this using "perf" as generic power domain name, which is also
+> used already for SCMI based platforms.
+> 
+> Also add a simple function that reads the speedbin from a NVMEM cell
+> and sets it as-is for opp-supported-hw. The actual bit position can be
+> described in the device tree without additional driver changes.
+> 
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+> ---
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
