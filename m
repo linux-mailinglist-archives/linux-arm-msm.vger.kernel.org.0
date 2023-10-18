@@ -2,56 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E79F77CD60D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 10:06:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C15B07CD63A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 10:20:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235048AbjJRIGZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Oct 2023 04:06:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36746 "EHLO
+        id S230001AbjJRIUW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Oct 2023 04:20:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235140AbjJRIGX (ORCPT
+        with ESMTP id S230031AbjJRIUV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Oct 2023 04:06:23 -0400
-Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AE55B6;
-        Wed, 18 Oct 2023 01:06:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=kernkonzept.com; s=mx1; h=Cc:To:In-Reply-To:References:Message-Id:
-        Content-Transfer-Encoding:Content-Type:MIME-Version:Subject:Date:From:
-        Reply-To:Content-ID:Content-Description;
-        bh=ee24+roHTQoZFVVx9N6XyCjPrXcrkPUK4h/ySpFKwAE=; b=E8hYlVyQjRGKI6S6CFOVTWmLv0
-        u1noWkd7WbREf8IDFxc3ASV7K98mS5tsuyz7DBkjFK1N79sPydTwMFOj1jKBOJMqKzR/ebbGD0s7W
-        rbtrtcYnhVUcTicO2fkP54Q10a+qmG4xi2ZHBU1qt0raBvMZqD9k4CY2S4uC/uJ5lVz1DukCikS3T
-        OYvvSe26D6JTG9baPfxYSUWDdOiI+vRrTPus2e2AAlrjkHTRyD9/aakqrCiXCsZtVFtxdN21cZUi2
-        TaOBJ6E163ozo3ZsCz2ipEVUXXkAU629XOob2i2URidTsSjyeXadkZFvfZhzadfEg9ijMvcQyfvxv
-        OIlhX4gA==;
-Received: from [10.22.3.24] (helo=serv1.dd1.int.kernkonzept.com)
-        by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.96)
-        id 1qt1ZI-009lIU-1g;
-        Wed, 18 Oct 2023 10:06:16 +0200
-From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Date:   Wed, 18 Oct 2023 10:06:04 +0200
-Subject: [PATCH v2 3/3] cpufreq: qcom-nvmem: Add MSM8909
+        Wed, 18 Oct 2023 04:20:21 -0400
+Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F61BC6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 01:20:19 -0700 (PDT)
+Received: by mail-yb1-xb2a.google.com with SMTP id 3f1490d57ef6-d9ac9573274so7274376276.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 01:20:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1697617218; x=1698222018; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=x3vk9WdgsgALGZ8oIqyx1M2Q98eDsGMriT18jqbbO68=;
+        b=Kh9p3022epOHgToQOIrhINz5Qp2Ls+7ptw7q3tZ6/DDnzeTdPTTDyPqucNDkQTe6+F
+         NeauNQWm8KGN437QkgXUXG2aS2yh+BdPPs4uIlSDvAHDvpYxZMX3dU6S/JeqmiIOSc/6
+         utCaGhxIbcTNNSEqkH+C1HfiB25u3dbWH2AM9HFpJl+mL+k4AsqrZnTqC/9SjeJCEl0X
+         SO4y64MauX85UID8Sacc+CMIQRoJ5w+cNetOkZq6gRCsZGZHFF7hVxcBtlGuxS0RBFoC
+         Ms4dF/G7bCChEIznfXFBCBSGOw8UGHvLIp8xQ0s5njBnne8lOgVu17mLckhu00BTJ1xR
+         aH5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697617218; x=1698222018;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=x3vk9WdgsgALGZ8oIqyx1M2Q98eDsGMriT18jqbbO68=;
+        b=hlvSLz2umP4MC5VgwndwZVS4pucrJQgiluER0zuG63mbCK4TIeh8jHIVSKgA4mJANX
+         FwclcEkhAA6CZZ5VR/WCbSnXUIkPbaUqHTakfNXeSv9u6vCohqAhbBGedAM91+AofQGx
+         zF/9v8OB2dI6bzf6QoEYO1z4yVheFX5RkfEswenJSJ+5QURJZC74RDUyvWzszXaBTddL
+         jR6TxCcjhpCtrdtqYyzdUiKcTVSKSaN2MayBlokvWD4jvZfkIHq/COKUBANOZpoJlx0J
+         NaoltOWXdF7zN79T6GvTcFJ+RYJ6++5DgCntDkVw1CLm6vFdvzIEzQayfR1lV8iylgQY
+         ltaQ==
+X-Gm-Message-State: AOJu0YzooTGhI+3WvNj3VvpV4bdGIVCwcNAflUoDHta3SoxdVz/dAvNC
+        Pf6GHZfdi3Zpjj8bakgwl9OZP7pS3G0sPsI07nEg+w==
+X-Google-Smtp-Source: AGHT+IHggL2ml69cTNJWS6QIps9q5qyFOKcfc/dxJ4/BM2XmWD+4v6A6o1A5nTOANs51qAxT9nbcCCKDJ7tLeD7rao8=
+X-Received: by 2002:a25:aab3:0:b0:d9a:e397:3b4 with SMTP id
+ t48-20020a25aab3000000b00d9ae39703b4mr4208649ybi.46.1697617218711; Wed, 18
+ Oct 2023 01:20:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231018-msm8909-cpufreq-v2-3-0962df95f654@kernkonzept.com>
-References: <20231018-msm8909-cpufreq-v2-0-0962df95f654@kernkonzept.com>
-In-Reply-To: <20231018-msm8909-cpufreq-v2-0-0962df95f654@kernkonzept.com>
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
+References: <20231017021805.1083350-9-mailingradian@gmail.com> <20231017021805.1083350-14-mailingradian@gmail.com>
+In-Reply-To: <20231017021805.1083350-14-mailingradian@gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 18 Oct 2023 11:20:07 +0300
+Message-ID: <CAA8EJppTrH0DG_i+hUeagsXodt88TG6vD3W-y9gKmxevWZbJig@mail.gmail.com>
+Subject: Re: [PATCH v4 5/6] drm/msm/dpu: Add hw revision 4.1 (SDM670)
+To:     Richard Acayan <mailingradian@gmail.com>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, Ulf Hansson <ulf.hansson@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-X-Mailer: b4 0.12.3
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        Ryan McCann <quic_rmccann@quicinc.com>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Liu Shixin <liushixin2@huawei.com>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -61,94 +86,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When the MSM8909 SoC is used together with the PM8909 PMIC the primary
-power supply for the CPU (VDD_APC) is shared with other components to
-the SoC, namely the VDD_CX power domain typically supplied by the PM8909
-S1 regulator. This means that all votes for necessary performance states
-go via the RPM firmware which collects the requirements from all the
-processors in the SoC. The RPM firmware then chooses the actual voltage
-based on the performance states ("corners"), depending on calibration
-values in the NVMEM and other factors.
+On Tue, 17 Oct 2023 at 05:18, Richard Acayan <mailingradian@gmail.com> wrote:
+>
+> The Snapdragon 670 uses similar clocks (with one frequency added) to the
+> Snapdragon 845 but reports DPU revision 4.1. Add support for this DPU
+> with configuration from the Pixel 3a downstream kernel.
+>
+> Since revision 4.0 is SDM845, reuse some configuration from its catalog
+> entry.
+>
+> Link: https://android.googlesource.com/kernel/msm/+/368478b0ae76566927a2769a2bf24dfe7f38bb78/arch/arm64/boot/dts/qcom/sdm670-sde.dtsi
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 
-The MSM8909 SoC is also sometimes used with the PM8916 or PM660 PMIC.
-In that case there is a dedicated regulator connected to VDD_APC and
-Linux is responsible to do adaptive voltage scaling using CPR (similar
-to the existing code for QCS404).
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-This difference can be described in the device tree, by either assigning
-the CPU a power domain from RPMPD or from the CPR driver.
-
-Describe this using "perf" as generic power domain name, which is also
-used already for SCMI based platforms.
-
-Also add a simple function that reads the speedbin from a NVMEM cell
-and sets it as-is for opp-supported-hw. The actual bit position can be
-described in the device tree without additional driver changes.
-
-Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
----
- drivers/cpufreq/qcom-cpufreq-nvmem.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
-
-diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-index 3794390089b0..e52031863350 100644
---- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-+++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-@@ -59,6 +59,24 @@ struct qcom_cpufreq_drv {
- 
- static struct platform_device *cpufreq_dt_pdev, *cpufreq_pdev;
- 
-+static int qcom_cpufreq_simple_get_version(struct device *cpu_dev,
-+					   struct nvmem_cell *speedbin_nvmem,
-+					   char **pvs_name,
-+					   struct qcom_cpufreq_drv *drv)
-+{
-+	u8 *speedbin;
-+
-+	*pvs_name = NULL;
-+	speedbin = nvmem_cell_read(speedbin_nvmem, NULL);
-+	if (IS_ERR(speedbin))
-+		return PTR_ERR(speedbin);
-+
-+	dev_dbg(cpu_dev, "speedbin: %d\n", *speedbin);
-+	drv->versions = 1 << *speedbin;
-+	kfree(speedbin);
-+	return 0;
-+}
-+
- static void get_krait_bin_format_a(struct device *cpu_dev,
- 					  int *speed, int *pvs, int *pvs_ver,
- 					  u8 *buf)
-@@ -252,6 +270,8 @@ static int qcom_cpufreq_ipq8074_name_version(struct device *cpu_dev,
- 	return 0;
- }
- 
-+static const char *generic_genpd_names[] = { "perf", NULL };
-+
- static const struct qcom_cpufreq_match_data match_data_kryo = {
- 	.get_version = qcom_cpufreq_kryo_name_version,
- };
-@@ -260,6 +280,11 @@ static const struct qcom_cpufreq_match_data match_data_krait = {
- 	.get_version = qcom_cpufreq_krait_name_version,
- };
- 
-+static const struct qcom_cpufreq_match_data match_data_msm8909 = {
-+	.get_version = qcom_cpufreq_simple_get_version,
-+	.genpd_names = generic_genpd_names,
-+};
-+
- static const char *qcs404_genpd_names[] = { "cpr", NULL };
- 
- static const struct qcom_cpufreq_match_data match_data_qcs404 = {
-@@ -434,6 +459,7 @@ static struct platform_driver qcom_cpufreq_driver = {
- 
- static const struct of_device_id qcom_cpufreq_match_list[] __initconst = {
- 	{ .compatible = "qcom,apq8096", .data = &match_data_kryo },
-+	{ .compatible = "qcom,msm8909", .data = &match_data_msm8909 },
- 	{ .compatible = "qcom,msm8996", .data = &match_data_kryo },
- 	{ .compatible = "qcom,qcs404", .data = &match_data_qcs404 },
- 	{ .compatible = "qcom,ipq8064", .data = &match_data_krait },
+> ---
+>  .../msm/disp/dpu1/catalog/dpu_4_1_sdm670.h    | 104 ++++++++++++++++++
+>  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |   1 +
+>  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   1 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   1 +
+>  4 files changed, 107 insertions(+)
+>  create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h
 
 -- 
-2.39.2
-
+With best wishes
+Dmitry
