@@ -2,275 +2,269 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E9047CDC37
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 14:47:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 47E1B7CDCBC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 15:08:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230360AbjJRMrw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Oct 2023 08:47:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43878 "EHLO
+        id S231432AbjJRNIz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Oct 2023 09:08:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230202AbjJRMrv (ORCPT
+        with ESMTP id S231319AbjJRNIx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Oct 2023 08:47:51 -0400
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85B1EA3;
-        Wed, 18 Oct 2023 05:47:49 -0700 (PDT)
-Received: by mail-pf1-x435.google.com with SMTP id d2e1a72fcca58-6b44befac59so3872898b3a.0;
-        Wed, 18 Oct 2023 05:47:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697633269; x=1698238069; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=9kzuTzxZVlGgh2f5mC3oIMplNBV8HnSfbYCkmlfvIO0=;
-        b=FghNIC/6Ky0TDrGA5L+6MIbYS4RZzOrcCQ/gvu+h3/36los+pKUA0A5Mhm1WOCz7IS
-         teerGv3bM5eUJ7csLv6Oi47uyim01+tB5nNTd17r+ulRBUqIIEscD39pnDRSTvAkatU3
-         2MqGzFLR7BMUVO75gqtjGdJbrEVEflCUNbNTEhqvw9lZDb8gDP3gyDfav/L9ohUExcgF
-         QAGAz2PMiEVU/trN9Ir0Zjc6sdqyYxcpsULMiTIJTM6V3SqgVi84m4q4veoBDCHsqKLv
-         eOG80aHVXHBIh/pYVzOeL37berqwA0Q6swHBd45EhS8x5DJvS5+0/1W02eewL1oLzo9j
-         lhMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697633269; x=1698238069;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9kzuTzxZVlGgh2f5mC3oIMplNBV8HnSfbYCkmlfvIO0=;
-        b=u40rByz1CfXpIApXfdLszdtmZAeiTWPwdnAwpnqMV/IkHTJ4ZunJC4Wyj6zUwsY3F3
-         7XLkDKTcwfnYBik7+uHZh+MHgZVm2IDjxwBHWmcEQh7VcL9QY4A+ar2KIzydodEmswxj
-         F0DpVUPQlkGK7BMOD/QAGpWEup6eTthwUuUzPZkbCNxnvJHox660Ve23nzhsKjbWwbGe
-         VVUo8I43cVo7Wy8yQHzwmo/vp6U8In98fnF+yY9Vhqg4NR0TkznyjdHeSwiDAdN9SsSa
-         UkjX8Mf39Hhp7t1DQHZrrRmP77UdaBAf7KQ7UTwS05C2PgXW5X3+eM69dlhblbbuqGKS
-         eoAA==
-X-Gm-Message-State: AOJu0YwVYjZs3z9WpmfvA9UqbhMiXxVaniZtx+wjkSQ/6/0Ao3IlPfR7
-        sWpszR4URTRAbp43sVyKEd+ZBkkTI/0RbQ==
-X-Google-Smtp-Source: AGHT+IGXGeVHsVlXRGS2m6a7frgX1L1AYtgLEn9FwtI5ugKjMogKB6UXepsFeotAkt1UZrRjKys6fw==
-X-Received: by 2002:a05:6a20:7288:b0:15d:4cf1:212e with SMTP id o8-20020a056a20728800b0015d4cf1212emr6856294pzk.4.1697633268764;
-        Wed, 18 Oct 2023 05:47:48 -0700 (PDT)
-Received: from thinkpad ([117.202.186.25])
-        by smtp.gmail.com with ESMTPSA id i13-20020a65484d000000b00578afd8e012sm1389183pgs.92.2023.10.18.05.47.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Oct 2023 05:47:48 -0700 (PDT)
-Date:   Wed, 18 Oct 2023 18:17:41 +0530
-From:   Manivannan Sadhasivam <manivannanece23@gmail.com>
-To:     Manivannan Sadhasivam <mani@kernel.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Can Guo <quic_cang@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "open list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
-        <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/6] scsi: ufs: ufs-qcom: Add support for UFS device
- version detection
-Message-ID: <20231018124741.GA47321@thinkpad>
-References: <1694411968-14413-1-git-send-email-quic_cang@quicinc.com>
- <1694411968-14413-3-git-send-email-quic_cang@quicinc.com>
- <6055cd57-4de7-4b7e-a4f3-68a7de1aef28@linaro.org>
- <6225a132-4b7f-bbb4-e863-4e62b99dd79d@quicinc.com>
- <31823dc4-6f50-435b-9a20-66471209ec31@linaro.org>
- <d34242f8-6e21-1549-b87d-3db2e825b7d5@quicinc.com>
- <1413119B-8B9C-4DE4-A086-476B2BAA60AD@linaro.org>
- <20230919120829.GB4732@thinkpad>
- <CAA8EJppwjzNDsPHZqUdmgQy3fAbP+AFnOo4+FTDCdpBEZp5S_w@mail.gmail.com>
- <20230920102327.GH4732@thinkpad>
+        Wed, 18 Oct 2023 09:08:53 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6037F7;
+        Wed, 18 Oct 2023 06:08:51 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C115C433CA;
+        Wed, 18 Oct 2023 13:08:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1697634531;
+        bh=59MIHQ5xze11X1GA0H585EDWrwAwT1Pnx5pWo4xmF+g=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=cC5/Mgcj98h1IrbbjUfngbT0g86KQQNui60+guG2C+Z6f5Aejwf1DdojOFHFooDEs
+         Q4/16gdfwhYSR7hK9LFBwvnEyluwDD8m8DGHfU35ZtrI2gcYJqeny5AGPppfrAm4W/
+         /N4BvJSfcNx1/pomDjDB10RTskPC+BfOsdQC+DSZkE7O9Ou3mHR3EwxCqI7ruvRw5O
+         0q2t4Llvo4J/X1IOgUj1A68t87IfNGh8PixqLfLsiXCrg0MsIQSCF29d0RwHdzOMEP
+         eJyPXj0nq9nxZ2XCMOjdZ+ve73O+7Ef3zetjoWAH89oE9lGAKEvbqfs7Z3VMGCrLFA
+         9/tBaRvFJrZ8g==
+Date:   Wed, 18 Oct 2023 18:38:43 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Qiang Yu <quic_qianyu@quicinc.com>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>, quic_jhugo@quicinc.com,
+        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
+        quic_mrana@quicinc.com
+Subject: Re: [PATCH] bus: mhi: host: pci_generic: Add SDX75 based modem
+ support
+Message-ID: <20231018130843.GB47321@thinkpad>
+References: <1691460215-45383-1-git-send-email-quic_qianyu@quicinc.com>
+ <20230808075103.GD4990@thinkpad>
+ <be205d43-b558-47eb-0250-b7415474b6e9@quicinc.com>
+ <20230808105928.GF4990@thinkpad>
+ <e3a206e7-f36b-d896-20f7-4e35b9743c1d@quicinc.com>
+ <20231017075035.GB5274@thinkpad>
+ <b7a35d1e-85e2-4c60-a049-e6234d6431df@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230920102327.GH4732@thinkpad>
-X-Spam-Status: No, score=-0.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,RCVD_IN_SORBS_WEB,SPF_HELO_NONE,
-        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+In-Reply-To: <b7a35d1e-85e2-4c60-a049-e6234d6431df@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 20, 2023 at 12:23:27PM +0200, Manivannan Sadhasivam wrote:
-> On Wed, Sep 20, 2023 at 01:27:59AM +0300, Dmitry Baryshkov wrote:
-> > On Tue, 19 Sept 2023 at 15:08, Manivannan Sadhasivam <mani@kernel.org> wrote:
-> > >
-> > > On Fri, Sep 15, 2023 at 05:31:45AM +0300, Dmitry Baryshkov wrote:
-> > > > On 11 September 2023 13:02:50 GMT+03:00, Can Guo <quic_cang@quicinc.com> wrote:
-> > > > >
-> > > > >On 9/11/2023 5:46 PM, Konrad Dybcio wrote:
-> > > > >> On 11.09.2023 11:42, Can Guo wrote:
-> > > > >>> Hi Konrad,
-> > > > >>>
-> > > > >>> On 9/11/2023 5:17 PM, Konrad Dybcio wrote:
-> > > > >>>> On 11.09.2023 07:59, Can Guo wrote:
-> > > > >>>>> From: "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
-> > > > >>>>>
-> > > > >>>>> Retrieve UFS device version from UFS host controller's spare register
-> > > > >>>>> which is populated by bootloader, and use the UFS device version together
-> > > > >>>>> with host controller's HW version to decide the proper power modes which
-> > > > >>>>> should be used to configure the UFS PHY.
-> > > > >>>> That sounds a bit fishy.. is there no bootloader-independent
-> > > > >>>> solution to that? Can't we bring in the code that the bootloader
-> > > > >>>> uses to determine these values?
-> > > > >>>>
-> > > > >>>> Konrad
-> > > > >>>
-> > > > >>> Agree, it is.
-> > > > >>>
-> > > > >>>
-> > > > >>> All these complexities come from one request from PHY design team - power saving.
-> > > > >>>
-> > > > >>> And to achieve power saving, Qualcomm UFS developers are requested to use the
-> > > > >>>
-> > > > >>> lowest hanging PHY settings which can sustain the Max agreed HS Gear (btw host
-> > > > >>>
-> > > > >>> and UFS device) during UFS's lifecycle in High Level OS,  whereas the power saving
-> > > > >>>
-> > > > >>> request does not apply to bootloader, which works for only a few seconds during
-> > > > >>>
-> > > > >>> bootup. Hence, there is no such version detect code in bootloader -  it just uses the
-> > > > >>>
-> > > > >>> highest PHY settings to configure PHY, boot up UFS and put UFS device version in this
-> > > > >>>
-> > > > >>> register.
-> > > > >> First of all, your email client seems to be inserting 2 newlines
-> > > > >> instead of 1. If you're using thunderbird, you may want to edit:
-> > > > >>
-> > > > >> mail.identity.(default or your mail identity idx).default.compose_html
-> > > > >>
-> > > > >> to `false`
-> > > > >>
-> > > > >> and add that to your internal wiki page, as I see many @quic folks having
-> > > > >> this issue.
-> > > > >>
-> > > > >>
-> > > > >> Going back to the main topic, I don't think we understood each other.
-> > > > >> The commit message states:
-> > > > >>
-> > > > >>
-> > > > >> "Retrieve UFS device version from UFS host controller's spare register
-> > > > >> which is populated by bootloader"
-> > > > >>
-> > > > >>
-> > > > >> Which means the bootloader is able to somehow determine the value
-> > > > >> that's in the spare register and write it there.
-> > > > >>
-> > > > >> I'm asking whether we can take the logic behind this value and
-> > > > >> move it to Linux so that we don't depend on the bootloader to
-> > > > >> guarantee it (e.g. Chrome or some other devices with more exotic
-> > > > >> fw may not work this way).
-> > > > >>
-> > > > >>
-> > > > >> Konrad
-> > > > >
-> > > > >
-> > > > >There is no logic behind this value at all in bootloader, as I explained, after bootloader
-> > > > >
-> > > > >initializes UFS, bootloader simply reads UFS's device version (the value you are referring)
-> > > > >
-> > > > >and write it to the register. But in Linux kernel, we need (or want to know) this value
-> > > > >
-> > > > >BEFORE we initialize UFS host controller (and UFS device).
-> > > >
-> > > > Depending on the bootloader behaviour is not an option. For example the kernel might be started via kexec. Or via u-boot. Or grub. Or any other bootloader. So please duplicate the logic to read the UFS version instead.
-> > > >
-> > >
-> > > As Can said, there is no logic in the bootloader. What it does it, after doing
-> > > the UFS initialization, it writes the agreed gear (between host and the device)
-> > > to this register. And in linux, we use that value to initialize the device
-> > > (i.e., not doing init based on the min gear).
-> > >
-> > > But the important factor here is that, we use this gear value to program the PHY
-> > > init sequence. So if there is no hint from the bootloader, linux will program
-> > > the min phy sequence (G3/G4) and then once the gear scaling happens, it will
-> > > program the max phy sequence (G4/G5).
-> > >
-> > > Now on recent platforms, the init sequences are not compatible with each other
-> > > i.e., once the min seq. is programmed, then before programming max seq. the
-> > > registers not common to both seq. should be programmed to default value. In
-> > > other words, min seq. specific registers should be reset to the default value.
-> > > Otherwise, there will be stability issues in the PHY.
+On Wed, Oct 18, 2023 at 09:52:55AM +0800, Qiang Yu wrote:
+> 
+> On 10/17/2023 3:50 PM, Manivannan Sadhasivam wrote:
+> > On Wed, Aug 09, 2023 at 11:42:39AM +0800, Qiang Yu wrote:
+> > > On 8/8/2023 6:59 PM, Manivannan Sadhasivam wrote:
+> > > > On Tue, Aug 08, 2023 at 04:53:32PM +0800, Qiang Yu wrote:
+> > > > > On 8/8/2023 3:51 PM, Manivannan Sadhasivam wrote:
+> > > > > > On Tue, Aug 08, 2023 at 10:03:35AM +0800, Qiang Yu wrote:
+> > > > > > > Add generic info for SDX75 based modems. SDX75 takes longer than expected
+> > > > > > > (default, 8 seconds) to set ready after reboot. Hence add optional ready
+> > > > > > > timeout parameter to wait enough for device ready as part of power up
+> > > > > > > sequence.
+> > > > > > > 
+> > > > > > > Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+> > > > > > > ---
+> > > > > > >     drivers/bus/mhi/host/init.c        |  1 +
+> > > > > > >     drivers/bus/mhi/host/main.c        |  7 ++++++-
+> > > > > > >     drivers/bus/mhi/host/pci_generic.c | 22 ++++++++++++++++++++++
+> > > > > > >     drivers/bus/mhi/host/pm.c          |  6 +++++-
+> > > > > > >     include/linux/mhi.h                |  4 ++++
+> > > > > > >     5 files changed, 38 insertions(+), 2 deletions(-)
+> > > > > > > 
+> > > > > > > diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+> > > > > > > index f78aefd..65ceac1 100644
+> > > > > > > --- a/drivers/bus/mhi/host/init.c
+> > > > > > > +++ b/drivers/bus/mhi/host/init.c
+> > > > > > > @@ -881,6 +881,7 @@ static int parse_config(struct mhi_controller *mhi_cntrl,
+> > > > > > >     	if (!mhi_cntrl->timeout_ms)
+> > > > > > >     		mhi_cntrl->timeout_ms = MHI_TIMEOUT_MS;
+> > > > > > > +	mhi_cntrl->ready_timeout_ms = config->ready_timeout_ms;
+> > > > > > >     	mhi_cntrl->bounce_buf = config->use_bounce_buf;
+> > > > > > >     	mhi_cntrl->buffer_len = config->buf_len;
+> > > > > > >     	if (!mhi_cntrl->buffer_len)
+> > > > > > > diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+> > > > > > > index 74a7543..8590926 100644
+> > > > > > > --- a/drivers/bus/mhi/host/main.c
+> > > > > > > +++ b/drivers/bus/mhi/host/main.c
+> > > > > > > @@ -43,8 +43,13 @@ int __must_check mhi_poll_reg_field(struct mhi_controller *mhi_cntrl,
+> > > > > > >     				    u32 mask, u32 val, u32 delayus)
+> > > > > > >     {
+> > > > > > >     	int ret;
+> > > > > > > -	u32 out, retry = (mhi_cntrl->timeout_ms * 1000) / delayus;
+> > > > > > > +	u32 out, retry;
+> > > > > > > +	u32 timeout_ms = mhi_cntrl->timeout_ms;
+> > > > > > > +	if (mhi_cntrl->ready_timeout_ms && mask == MHISTATUS_READY_MASK)
+> > > > > > > +		timeout_ms = mhi_cntrl->ready_timeout_ms;
+> > > > > > Instead of handling the timeout inside mhi_poll_reg_field(), you should pass the
+> > > > > > appropriate timeout value to this function.
+> > > > > OK, will do.
+> > > > > > > +
+> > > > > > > +	retry = (timeout_ms * 1000) / delayus;
+> > > > > > >     	while (retry--) {
+> > > > > > >     		ret = mhi_read_reg_field(mhi_cntrl, base, offset, mask, &out);
+> > > > > > >     		if (ret)
+> > > > > > > diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> > > > > > > index fcd80bc..9c601f0 100644
+> > > > > > > --- a/drivers/bus/mhi/host/pci_generic.c
+> > > > > > > +++ b/drivers/bus/mhi/host/pci_generic.c
+> > > > > > > @@ -269,6 +269,16 @@ static struct mhi_event_config modem_qcom_v1_mhi_events[] = {
+> > > > > > >     	MHI_EVENT_CONFIG_HW_DATA(5, 2048, 101)
+> > > > > > >     };
+> > > > > > > +static const struct mhi_controller_config modem_qcom_v2_mhiv_config = {
+> > > > > > > +	.max_channels = 128,
+> > > > > > > +	.timeout_ms = 8000,
+> > > > > > > +	.ready_timeout_ms = 50000,
+> > > > > > > +	.num_channels = ARRAY_SIZE(modem_qcom_v1_mhi_channels),
+> > > > > > > +	.ch_cfg = modem_qcom_v1_mhi_channels,
+> > > > > > > +	.num_events = ARRAY_SIZE(modem_qcom_v1_mhi_events),
+> > > > > > > +	.event_cfg = modem_qcom_v1_mhi_events,
+> > > > > > > +};
+> > > > > > > +
+> > > > > > >     static const struct mhi_controller_config modem_qcom_v1_mhiv_config = {
+> > > > > > >     	.max_channels = 128,
+> > > > > > >     	.timeout_ms = 8000,
+> > > > > > > @@ -278,6 +288,16 @@ static const struct mhi_controller_config modem_qcom_v1_mhiv_config = {
+> > > > > > >     	.event_cfg = modem_qcom_v1_mhi_events,
+> > > > > > >     };
+> > > > > > > +static const struct mhi_pci_dev_info mhi_qcom_sdx75_info = {
+> > > > > > > +	.name = "qcom-sdx75m",
+> > > > > > > +	.fw = "qcom/sdx75m/xbl.elf",
+> > > > > > > +	.edl = "qcom/sdx75m/edl.mbn",
+> > > > > > > +	.config = &modem_qcom_v2_mhiv_config,
+> > > > > > > +	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> > > > > > > +	.dma_data_width = 32,
+> > > > > > > +	.sideband_wake = false,
+> > > > > > > +};
+> > > > > > > +
+> > > > > > >     static const struct mhi_pci_dev_info mhi_qcom_sdx65_info = {
+> > > > > > >     	.name = "qcom-sdx65m",
+> > > > > > >     	.fw = "qcom/sdx65m/xbl.elf",
+> > > > > > > @@ -597,6 +617,8 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+> > > > > > >     		.driver_data = (kernel_ulong_t) &mhi_telit_fn990_info },
+> > > > > > >     	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
+> > > > > > >     		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
+> > > > > > > +	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0309),
+> > > > > > > +		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx75_info },
+> > > > > > >     	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1001), /* EM120R-GL (sdx24) */
+> > > > > > >     		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
+> > > > > > >     	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1002), /* EM160R-GL (sdx24) */
+> > > > > > > diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+> > > > > > > index 8a4362d..6f049e0 100644
+> > > > > > > --- a/drivers/bus/mhi/host/pm.c
+> > > > > > > +++ b/drivers/bus/mhi/host/pm.c
+> > > > > > > @@ -1202,14 +1202,18 @@ EXPORT_SYMBOL_GPL(mhi_power_down);
+> > > > > > >     int mhi_sync_power_up(struct mhi_controller *mhi_cntrl)
+> > > > > > >     {
+> > > > > > >     	int ret = mhi_async_power_up(mhi_cntrl);
+> > > > > > > +	u32 timeout_ms;
+> > > > > > >     	if (ret)
+> > > > > > >     		return ret;
+> > > > > > > +	/* Some devices need more time to set ready during power up */
+> > > > > > > +	timeout_ms = mhi_cntrl->ready_timeout_ms ?
+> > > > > > > +		mhi_cntrl->ready_timeout_ms : mhi_cntrl->timeout_ms;
+> > > > > > Since you are using this extended timeout value in a couple of places (not just
+> > > > > > for checking READY_STATE), it is better to use the existing "timeout_ms"
+> > > > > > parameter.
+> > > > > > 
+> > > > > > - Mani
+> > > > > We use ready_timeout_ms here is because READY_STATE is polled in a
+> > > > > workqueue,  in parallel with waiting valid EE.
+> > > > > 
+> > > > > That means we start to wait valid EE and poll ready like at same time
+> > > > > instead of starting to wait EE after ready state.
+> > > > > 
+> > > > > Thus the total time it takes to wait valid EE is about the time for polling
+> > > > > ready.
+> > > > > 
+> > > > Yes, but why can't you still increase "timeout_ms" for SDX75 and use the same?
+> > > > 
+> > > > Btw, please do not send another version while the discussion is going on for the
+> > > > current one.
+> > > > 
+> > > > - Mani
+> > > SDX75 only needs 50 seconds when setting ready for the first time after
+> > > power on. Other state transitions
+> > > 
+> > > is expected to wait only 8 seconds. If we use 50s for every state
+> > > transition, it's OK but not friendly in some cases.
+> > > 
+> > > 
+> > > For example, host is resuming from suspend, but device has already crashed
+> > > and tansferred to Sahara mode when
+> > > 
+> > > in suspended state. Thus host must wait M0 event timeout, and then reinit
+> > > mhi and tranfer to SBL state in recovery
+> > > 
+> > > process. If we set mhi_cntrl->timeout_ms=50s, we have to wait 50s to collect
+> > > crash dump after seeing resume fail log.
+> > > 
+> > Hmm. Can't you fix the firmware? Taking 50s to bootup doesn't look good from
+> > user perspective.
 > > 
-> > I see nothing wrong with adding 'default' register programming to the
-> > gear tables. If we have to reset them to the default values to switch
-> > the PHY settings, these writes must be a part of the corresponding
-> > tables.
-> > 
-> 
-> Yep, that's what I initially proposed. But Qcom wanted to avoid the cost of
-> programming the reset tables in the PHY driver.
-> 
-> Can, could you please check if programming the additional sequence doesn't cause
-> any power/performance effect?
-> 
+> > - Mani
+>  It is a firmware limitation and we can't fix it now.
 
-I'd like to simplify this conversion as there has been some misunderstanding.
+Okay. Then I'm fine with this workaround.
 
-First of all in linux, while probing the UFS device by the host controller, it
-needs to use _some_ gear. So far we were using HS_G2 as that gear and using the
-PHY init sequence of G3/G4 depending on the SoC. We do not need to use G2 init
-sequence because, there are only 2 init sequences available for any SoC and
-since the init sequences are backwards compatible, we mostly use the min init
-sequence, G3/G4. Even though this incurs slight power consumption during boot,
-the ufs host controller after probing the device will switch to max gear
-supported by both entities. If that max is G4/G5, then the respective init
-sequence will be programmed again.
-
-Now the issue is, for the automotive usecases, switching the gears 2 times
-during boot is affecting the boot KPI (Key Performance Inidicator). So the UFS
-team came with the idea of populating a spare register in the bootloader with
-the max gear info that the bootloader has already found out and using the same
-in the linux for first time itself. This helps linux in using a single gear
-during probe time.
-
-This is what this patch is doing. If for some reason, that register is not
-populated, then we default to the existing G2 gear and do init twice as the
-driver is doing currently.
-
-I hope this clarifies the intention of this patch.
+Please post the next version incorporating other comments.
 
 - Mani
 
-> - Mani
-> 
-> > >
-> > > So to avoid that, if we get the hint from bootloader (always the max supported
-> > > gear between host and device), then only one seq. will be programmed.
-> > >
-> > > Other way to solve this issue is to reset the non common registers in the init
-> > > seq. to default value. But that will be an additional overhead.
-> > >
-> > > But... if the bootloader doesn't populate this register (if the boot device is
-> > > not UFS, like in compute platforms), then this whole logic won't work. This
-> > > should also be taken into consideration.
-> > 
-> > Yep, that's the dependency on the bootloader. Which we should avoid.
-> > 
-> > >
-> > > - Mani
-> > >
-> > > >
-> > > > P.S. you have been asked to fix your email client. Please do so. Or, if you are inserting these linebreaks manually, please stop.
-> > > >
-> > > > >Thanks,
-> > > > >
-> > > > >Can Guo.
-> > > > >
-> > > >
-> > >
-> > > --
-> > > மணிவண்ணன் சதாசிவம்
-> > 
-> > 
-> > 
-> > -- 
-> > With best wishes
-> > Dmitry
-> 
-> -- 
-> மணிவண்ணன் சதாசிவம்
+> > > > > > >     	wait_event_timeout(mhi_cntrl->state_event,
+> > > > > > >     			   MHI_IN_MISSION_MODE(mhi_cntrl->ee) ||
+> > > > > > >     			   MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state),
+> > > > > > > -			   msecs_to_jiffies(mhi_cntrl->timeout_ms));
+> > > > > > > +			   msecs_to_jiffies(timeout_ms));
+> > > > > > >     	ret = (MHI_IN_MISSION_MODE(mhi_cntrl->ee)) ? 0 : -ETIMEDOUT;
+> > > > > > >     	if (ret)
+> > > > > > > diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> > > > > > > index f6de4b6..a43e5f8 100644
+> > > > > > > --- a/include/linux/mhi.h
+> > > > > > > +++ b/include/linux/mhi.h
+> > > > > > > @@ -266,6 +266,7 @@ struct mhi_event_config {
+> > > > > > >      * struct mhi_controller_config - Root MHI controller configuration
+> > > > > > >      * @max_channels: Maximum number of channels supported
+> > > > > > >      * @timeout_ms: Timeout value for operations. 0 means use default
+> > > > > > > + * @ready_timeout_ms: Timeout value for waiting device to be ready (optional)
+> > > > > > >      * @buf_len: Size of automatically allocated buffers. 0 means use default
+> > > > > > >      * @num_channels: Number of channels defined in @ch_cfg
+> > > > > > >      * @ch_cfg: Array of defined channels
+> > > > > > > @@ -277,6 +278,7 @@ struct mhi_event_config {
+> > > > > > >     struct mhi_controller_config {
+> > > > > > >     	u32 max_channels;
+> > > > > > >     	u32 timeout_ms;
+> > > > > > > +	u32 ready_timeout_ms;
+> > > > > > >     	u32 buf_len;
+> > > > > > >     	u32 num_channels;
+> > > > > > >     	const struct mhi_channel_config *ch_cfg;
+> > > > > > > @@ -326,6 +328,7 @@ struct mhi_controller_config {
+> > > > > > >      * @pm_mutex: Mutex for suspend/resume operation
+> > > > > > >      * @pm_lock: Lock for protecting MHI power management state
+> > > > > > >      * @timeout_ms: Timeout in ms for state transitions
+> > > > > > > + * @ready_timeout_ms: Timeout in ms for waiting device to be ready (optional)
+> > > > > > >      * @pm_state: MHI power management state
+> > > > > > >      * @db_access: DB access states
+> > > > > > >      * @ee: MHI device execution environment
+> > > > > > > @@ -413,6 +416,7 @@ struct mhi_controller {
+> > > > > > >     	struct mutex pm_mutex;
+> > > > > > >     	rwlock_t pm_lock;
+> > > > > > >     	u32 timeout_ms;
+> > > > > > > +	u32 ready_timeout_ms;
+> > > > > > >     	u32 pm_state;
+> > > > > > >     	u32 db_access;
+> > > > > > >     	enum mhi_ee_type ee;
+> > > > > > > -- 
+> > > > > > > 2.7.4
+> > > > > > > 
 
 -- 
 மணிவண்ணன் சதாசிவம்
