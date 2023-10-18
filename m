@@ -2,112 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C15B07CD63A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 10:20:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 847487CD693
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 10:32:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230001AbjJRIUW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Oct 2023 04:20:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48728 "EHLO
+        id S1344674AbjJRIcf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Oct 2023 04:32:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230031AbjJRIUV (ORCPT
+        with ESMTP id S1344654AbjJRIce (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Oct 2023 04:20:21 -0400
-Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F61BC6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 01:20:19 -0700 (PDT)
-Received: by mail-yb1-xb2a.google.com with SMTP id 3f1490d57ef6-d9ac9573274so7274376276.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 01:20:19 -0700 (PDT)
+        Wed, 18 Oct 2023 04:32:34 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C538F7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 01:32:32 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-507c8316abcso529139e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 01:32:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697617218; x=1698222018; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=x3vk9WdgsgALGZ8oIqyx1M2Q98eDsGMriT18jqbbO68=;
-        b=Kh9p3022epOHgToQOIrhINz5Qp2Ls+7ptw7q3tZ6/DDnzeTdPTTDyPqucNDkQTe6+F
-         NeauNQWm8KGN437QkgXUXG2aS2yh+BdPPs4uIlSDvAHDvpYxZMX3dU6S/JeqmiIOSc/6
-         utCaGhxIbcTNNSEqkH+C1HfiB25u3dbWH2AM9HFpJl+mL+k4AsqrZnTqC/9SjeJCEl0X
-         SO4y64MauX85UID8Sacc+CMIQRoJ5w+cNetOkZq6gRCsZGZHFF7hVxcBtlGuxS0RBFoC
-         Ms4dF/G7bCChEIznfXFBCBSGOw8UGHvLIp8xQ0s5njBnne8lOgVu17mLckhu00BTJ1xR
-         aH5g==
+        d=linaro.org; s=google; t=1697617950; x=1698222750; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QT7FrcDEpu4yl2NICPsR7VhnQlPQr6RPzm03dF3NO8Y=;
+        b=bEdhttRlvYfHs/Pm3SNLzEy095LELKZzhztuXEGwjA5aw+vjw6uEhyLZlC1Nx0Rg78
+         QCyIln7TckoHeZn2Qi/h4zo+S650D/Sm9AZeIYK0JmGSLm8oBfojfO9xb+4nWrhgVFbe
+         /KfPBNVe1UtmbnShyFwJjhDuqSUTa0NVHXzcxEkHiC6bBP6EeI0DC5CF6YtYxy8GRyEH
+         yx/nK8Quagk0VVDr9Li9G9ftnH+xi2k0H4L7l1lu8xbCUzq93CwbTtb3gw8vfY2gtpjs
+         dIWVIIP9yjW+qRbW8/THy2kHYeUDnQBAmo14RGU8fuZUBmv2Efko1F8JDzKJKLRwznDy
+         DvBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697617218; x=1698222018;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=x3vk9WdgsgALGZ8oIqyx1M2Q98eDsGMriT18jqbbO68=;
-        b=hlvSLz2umP4MC5VgwndwZVS4pucrJQgiluER0zuG63mbCK4TIeh8jHIVSKgA4mJANX
-         FwclcEkhAA6CZZ5VR/WCbSnXUIkPbaUqHTakfNXeSv9u6vCohqAhbBGedAM91+AofQGx
-         zF/9v8OB2dI6bzf6QoEYO1z4yVheFX5RkfEswenJSJ+5QURJZC74RDUyvWzszXaBTddL
-         jR6TxCcjhpCtrdtqYyzdUiKcTVSKSaN2MayBlokvWD4jvZfkIHq/COKUBANOZpoJlx0J
-         NaoltOWXdF7zN79T6GvTcFJ+RYJ6++5DgCntDkVw1CLm6vFdvzIEzQayfR1lV8iylgQY
-         ltaQ==
-X-Gm-Message-State: AOJu0YzooTGhI+3WvNj3VvpV4bdGIVCwcNAflUoDHta3SoxdVz/dAvNC
-        Pf6GHZfdi3Zpjj8bakgwl9OZP7pS3G0sPsI07nEg+w==
-X-Google-Smtp-Source: AGHT+IHggL2ml69cTNJWS6QIps9q5qyFOKcfc/dxJ4/BM2XmWD+4v6A6o1A5nTOANs51qAxT9nbcCCKDJ7tLeD7rao8=
-X-Received: by 2002:a25:aab3:0:b0:d9a:e397:3b4 with SMTP id
- t48-20020a25aab3000000b00d9ae39703b4mr4208649ybi.46.1697617218711; Wed, 18
- Oct 2023 01:20:18 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1697617950; x=1698222750;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QT7FrcDEpu4yl2NICPsR7VhnQlPQr6RPzm03dF3NO8Y=;
+        b=VANp5ERdUsnj8oOeES0TgijKElwrxk3hsupPaz35o+lMO3pH6Q37l9thRkB2jO5hyZ
+         hrv7Jq85Apf+sZRKwkRC2Z4NcWkHABB+tq1bSAPuz3sY0bVgWFZj8xHn+GdnIgSA2IV+
+         /6auIYEoEC90Tt4xfdRFSEnpevaXqRxD1aGyDFPJQhzjfqg//scVFcrlMiOY+YmFexTk
+         NqloyzaVXt2jYf2MqXH3e+cJTDF6wERNfB9a9OLqWG7c5i7PFLajh1TBDK3nvxr752J8
+         YdvFuxtQEsinL3ncHhngZ9bRVwqODm/S7TjEYWNtxiNiBttK79NS9X3qaYTMSSkYAP5p
+         XYdQ==
+X-Gm-Message-State: AOJu0Yy2daUR8pPSip7TOBjU2OzxMaDCgkAHbUoQZAsNDYKF0aR7jE5D
+        z1XDksqGYRd7YgAn51TQ+1ZZwA==
+X-Google-Smtp-Source: AGHT+IF6n4gFncLoJDBDMzi+HL0OIP90t/LvbDcJiPonVILAGg4jFXxUKPf8y8Djp77SFQSHCfhX7Q==
+X-Received: by 2002:a19:654c:0:b0:4ff:b830:4b6b with SMTP id c12-20020a19654c000000b004ffb8304b6bmr3224287lfj.14.1697617950642;
+        Wed, 18 Oct 2023 01:32:30 -0700 (PDT)
+Received: from [172.30.204.55] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id h9-20020a197009000000b005030cef433esm605906lfc.94.2023.10.18.01.32.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Oct 2023 01:32:30 -0700 (PDT)
+Message-ID: <a640a6c2-5b5c-48a5-9680-bec9514bd068@linaro.org>
+Date:   Wed, 18 Oct 2023 10:32:31 +0200
 MIME-Version: 1.0
-References: <20231017021805.1083350-9-mailingradian@gmail.com> <20231017021805.1083350-14-mailingradian@gmail.com>
-In-Reply-To: <20231017021805.1083350-14-mailingradian@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 18 Oct 2023 11:20:07 +0300
-Message-ID: <CAA8EJppTrH0DG_i+hUeagsXodt88TG6vD3W-y9gKmxevWZbJig@mail.gmail.com>
-Subject: Re: [PATCH v4 5/6] drm/msm/dpu: Add hw revision 4.1 (SDM670)
-To:     Richard Acayan <mailingradian@gmail.com>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: msm8939-longcheer-l9100: Add
+ proximity-near-level
+To:     =?UTF-8?Q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
-        Ryan McCann <quic_rmccann@quicinc.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Liu Shixin <liushixin2@huawei.com>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+References: <20231016-bqm5_prox-v1-1-2acdc732be9d@apitzsch.eu>
+ <3aede886-3219-4b9f-a44d-0c414979c260@linaro.org>
+ <65214451e02a38032e9fc6ac4cff185c6b2b5fc8.camel@apitzsch.eu>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <65214451e02a38032e9fc6ac4cff185c6b2b5fc8.camel@apitzsch.eu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 17 Oct 2023 at 05:18, Richard Acayan <mailingradian@gmail.com> wrote:
->
-> The Snapdragon 670 uses similar clocks (with one frequency added) to the
-> Snapdragon 845 but reports DPU revision 4.1. Add support for this DPU
-> with configuration from the Pixel 3a downstream kernel.
->
-> Since revision 4.0 is SDM845, reuse some configuration from its catalog
-> entry.
->
-> Link: https://android.googlesource.com/kernel/msm/+/368478b0ae76566927a2769a2bf24dfe7f38bb78/arch/arm64/boot/dts/qcom/sdm670-sde.dtsi
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-> ---
->  .../msm/disp/dpu1/catalog/dpu_4_1_sdm670.h    | 104 ++++++++++++++++++
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |   1 +
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   1 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   1 +
->  4 files changed, 107 insertions(+)
->  create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h
+On 10/17/23 22:03, André Apitzsch wrote:
+> Am Dienstag, dem 17.10.2023 um 18:25 +0200 schrieb Konrad Dybcio:
+>>
+>>
+>> On 10/16/23 22:18, André Apitzsch wrote:
+>>> Consider an object near to the sensor when their distance is about
+>>> 4 cm
+>>> or below.
+>>>
+>>> Signed-off-by: André Apitzsch <git@apitzsch.eu>
+>>> ---
+>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>
+>> Out of interest, what is it set to by default?
+>>
+>> Konrad
+> 
+> The default value is 0.
+That much I could guess :) I was wondering if it meant more like "it can 
+detect movement from 1km away" or "disabled"
 
--- 
-With best wishes
-Dmitry
+Konrad
