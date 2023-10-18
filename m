@@ -2,120 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E22C27CE2C6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 18:29:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 555537CE325
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 18:47:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229562AbjJRQ3h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Oct 2023 12:29:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46248 "EHLO
+        id S229786AbjJRQrf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Oct 2023 12:47:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbjJRQ3g (ORCPT
+        with ESMTP id S229447AbjJRQrf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Oct 2023 12:29:36 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6264AB
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 09:29:34 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-40836ea8cbaso13463065e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 09:29:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697646573; x=1698251373; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fOxskDfC7UdA36cNfLZwzB1EBzu5Hisy2kWvdoViG+M=;
-        b=IGrXPFmD55pH+pR/RxPHu403PGZO+5zzgRcdVyNI7KJeJij92YZoWXeoqSNI2rNX/z
-         /sM7aZX50h/dasWqrQuNA3HRyNsFgdOO7ID2tJOpFpvnB6mS0wEc664zuW20u5pc+iC4
-         X1cgF0PsmmSDBaBKU+5O83LPB03VeCu29QGgV7FIuQfGwxsUXlhemTFKMCMzDLGMzCMS
-         yHH5BbDdOWYVI+4M9B1kT9km47flMJpa6Xyltyqzeo7SFk839Feq2+NrZd3z2HY8OpsN
-         BaEvAN9FjoUEMQnS8pfvn8rHtkgCqKYtTJubTMZ6JU6mw0386xviqEVhiiMv74Ml29So
-         /Fiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697646573; x=1698251373;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fOxskDfC7UdA36cNfLZwzB1EBzu5Hisy2kWvdoViG+M=;
-        b=aDfv48DijaCwUCfoSUrrBc72ZUi439FSYqQYQ+pQOIVAieYqs9nQITREB1hmg6Higy
-         fhCQMWY5IPXFWOB0P2JEfegxwLOekOcAi0+gyO6nFcPxAotjqW/DvNE0oXRz21dNEjRT
-         nQfXW+cvMMCahfY3S9v6+xtrmxNLQkHYNNtpCmbggo8ecZ3qaV1HRcoUmf9VwUi1ND0k
-         hPPpXZ4h1IxXl/HBsUCYogKJB72wXASncS5rPaHkseW6w0jMpXMN4Ho8JGIImzPxT4Ei
-         IcGHWK/b6oC5c1lFq5fWWKf9TPIX+bfq2L09DGz2La+HadGIEiwroH5iCrwASZPjccXm
-         PN7Q==
-X-Gm-Message-State: AOJu0YzZllgJ583M0u35xR6xNyBCbnozurcNfD99WB515HZyR/9eK65f
-        YaDLx9lG+uYrISUCP3D7Vt7Qnw==
-X-Google-Smtp-Source: AGHT+IHlbC88Biwr7o4WQnFHw/cwAm5/kJ04aqB5iPYwY5HsICEStH+VlgSjG7uqaR0zaLdpP43TFA==
-X-Received: by 2002:a05:600c:1912:b0:401:bd2e:49fc with SMTP id j18-20020a05600c191200b00401bd2e49fcmr4202862wmq.24.1697646573072;
-        Wed, 18 Oct 2023 09:29:33 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.154])
-        by smtp.gmail.com with ESMTPSA id f19-20020adfb613000000b003232380ffd7sm2424163wre.102.2023.10.18.09.29.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Oct 2023 09:29:32 -0700 (PDT)
-Message-ID: <f87f480d-6775-44c9-8a2b-05d47bb0dc5d@linaro.org>
-Date:   Wed, 18 Oct 2023 18:29:30 +0200
+        Wed, 18 Oct 2023 12:47:35 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80E4EAB;
+        Wed, 18 Oct 2023 09:47:33 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3C32C433C7;
+        Wed, 18 Oct 2023 16:47:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1697647653;
+        bh=7DxP+VzAPrpmHrHz9hsz4GlUetrZemXQgLSBXuzIZcw=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=fT3vrmc3d8oRWFwdz2RG3CQg4HjjnhUByGGFLAXgqHKfXeIbYuX/BCemBrMEXe8rs
+         tHdCUrDG4efTyMzz9CfxETwf3aWfUxPyDmnW3l9kGJ1ZHDiJtsIRAbg0X4H/MK7pzJ
+         srtKYetYZeE+BsWnuSw/he8oXv+2dfBBntDCl4IAbKEkEqZ18ra2K8TWdXTE5qksRU
+         8qRUfJT798KY5c8bTG74vk9l3wI98kLG/3erO6//UDfgYzoyz/ziRTWel4uogZW0Kn
+         /d7yc1zMVV4ma2ykkUhS73h6TH0YGwDrjxKlJmM1mD6J/D/e8FfJqaLu2knqslDL/J
+         GASyDqQvTJtxA==
+Date:   Wed, 18 Oct 2023 11:47:31 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com,
+        robh@kernel.org, gustavo.pimentel@synopsys.com,
+        jingoohan1@gmail.com, andersson@kernel.org,
+        konrad.dybcio@linaro.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] PCI: dwc: Add host_post_init() callback
+Message-ID: <20231018164731.GA1365588@bhelgaas>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V15 0/4] Add PWM support for IPQ chipsets
-Content-Language: en-US
-To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, lee@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, thierry.reding@gmail.com,
-        ndesaulniers@google.com, trix@redhat.com, baruch@tkos.co.il,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, llvm@lists.linux.dev
-Cc:     linux-pwm@vger.kernel.org, u.kleine-koenig@pengutronix.de,
-        nathan@kernel.org
-References: <20231005160550.2423075-1-quic_devipriy@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231005160550.2423075-1-quic_devipriy@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231017075952.GC5274@thinkpad>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -123,14 +50,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/10/2023 18:05, Devi Priya wrote:
-> Add PWM driver and binding support for IPQ chipsets.
-> Also, add support for pwm node in ipq6018.
+On Tue, Oct 17, 2023 at 01:29:52PM +0530, Manivannan Sadhasivam wrote:
+> On Mon, Oct 16, 2023 at 03:58:49PM -0500, Bjorn Helgaas wrote:
+> > On Tue, Oct 10, 2023 at 09:29:13PM +0530, Manivannan Sadhasivam wrote:
+> > > This callback can be used by the platform drivers to do configuration once
+> > > all the devices are scanned. Like changing LNKCTL of all downstream devices
+> > > to enable ASPM etc...
+> > > 
+> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > ---
+> > >  drivers/pci/controller/dwc/pcie-designware-host.c | 3 +++
+> > >  drivers/pci/controller/dwc/pcie-designware.h      | 1 +
+> > >  2 files changed, 4 insertions(+)
+> > > 
+> > > diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> > > index a7170fd0e847..7991f0e179b2 100644
+> > > --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> > > +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> > > @@ -502,6 +502,9 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
+> > >  	if (ret)
+> > >  		goto err_stop_link;
+> > >  
+> > > +	if (pp->ops->host_post_init)
+> > > +		pp->ops->host_post_init(pp);
+> > 
+> > I know we talked about this a little bit in the context of enabling
+> > ASPM for devices below qcom 1.9.0 controllers at
+> > https://lore.kernel.org/r/20231011050058.GC3508@thinkpad
+> > 
+> > But I didn't realize at the time that this callback adds a fundamental
+> > difference between devices present at boot-time (these devices can be
+> > affected by this callback) and any devices hot-added later (we never
+> > run this callback again, so anything done by .host_post_init() never
+> > applies to them).
+> > 
+> > We merged this for now, and it helps enable ASPM for builtin devices
+> > on qcom, but I don't feel good about this from a larger DWC
+> > perspective.  If other drivers use this and they support hot-add, I
+> > think we're going to have problems.
 > 
+> If someone is going to add same ASPM code in host_post_init()
+> callback, they will most likely aware of the hotplug issue. I see
+> this as an interim solution overall and we should fix the PCI core
+> to handle this. But I do not see any straightforward way to enable
+> ASPM by default in PCI core as the misbehaving devices can pull the
+> system down (atleast in some x86 cases).
 
-You need to clearly mark dependencies. Next is now broken because of
-this patchset.
+Definitely an interim solution, but the interim is going to be long :)
 
-Best regards,
-Krzysztof
+I don't see the PCI core ASPM issue being resolved very soon; it's
+been this way ever since the beginning.  I guess there's no point in
+me whining without any proposals.
 
+Bjorn
