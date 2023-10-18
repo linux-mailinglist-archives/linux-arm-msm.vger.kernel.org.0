@@ -2,81 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 985F67CD6DE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 10:46:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 802577CD6ED
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 10:50:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230195AbjJRIqD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Oct 2023 04:46:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48430 "EHLO
+        id S229689AbjJRIuO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Oct 2023 04:50:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230185AbjJRIqA (ORCPT
+        with ESMTP id S229601AbjJRIuN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Oct 2023 04:46:00 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5482FF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 01:45:52 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-507ad511315so4353843e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 01:45:52 -0700 (PDT)
+        Wed, 18 Oct 2023 04:50:13 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F023F7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 01:50:10 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2c523ac38fbso42231781fa.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 01:50:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697618751; x=1698223551; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1697619008; x=1698223808; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=vuSYY3UGKypgoG2oO5ZQJosLBGlI5DqiAchgtxsdT+A=;
-        b=uiW4x9X7+oXbI5SPD38k2qtsRFEyiYJTgU1qhvI0tdGAWFi/ttyVByam7Ugtzm6/+V
-         7lgfI7267nazWExKIc9Ef0vV4K/IgmtraNyzUKdnq1trmUP5TOcHeadlSUjhvHZVkppC
-         kPmkZPtFOTCmiNFfHf44cLBJtI7526AaIol/IKAhP6RKAPQbLMrcy9JJXpVAguIsZCvE
-         uTFVs6OEaa2YRGX7ANbvT8AG7uFMhQow6MxFRAb5yFGlztSoM86p5qqBPVDQ/u9sDmZl
-         1flyMSo1DMeF2umSPWEd6J/YjyFD974gr23Ktn77PxHpFFHTnFhXaBQzuxvTVoY+sl/R
-         a9ig==
+        bh=VY8V074ZaWHR3uxPsaqqpbxmTtftcDfFzH7Dssm9LII=;
+        b=p5f7KhhSc7cBaTlx5VdOHiZxPxaZbsYhD5lw4ZBavMdgIgM/Vb6zaSFd6hl3orzys3
+         p9qKMeHQFkcQF4RrD7+t27oYC3f9U5jSzRAv3bIpWcITG/8D74GyWOREX3yGcmZXiO7b
+         a8Nb7uIgIgNJKTkHrz6P9Z9VLntIh4Vj72C5RC5IsCHfTiKdBPIhtlIW5l3d3triwBfI
+         RodFmm7ucL6GIWiY8wmtTPr07rhHDXOnvSoGj1aR9THKp8Of8ZTYwjHFcF3Q/r+CKmvL
+         aO7VFWJSJB3vzAZfi66DdWSTJukO9UziAZTuSyR5oFTV3MOtko17/iWfEXB61KosHiK7
+         Eouw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697618751; x=1698223551;
+        d=1e100.net; s=20230601; t=1697619008; x=1698223808;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vuSYY3UGKypgoG2oO5ZQJosLBGlI5DqiAchgtxsdT+A=;
-        b=TxefZu4qPp/eDva0NtpvbGJXg3cVx7GwwnVtohY2XxbLAdTBXXWxk5dz7Qka+bZkJ3
-         URyxyqbWQZNqLv3j9ks4WdT4mZGo09RSI8WxBM6dXI+BCdoOlG5G5HM0BL2/LkB3Un27
-         84eJSEDUX6LBR0pbrdTRuq0fd/2teRm0aSg83MQRzFv5UBos54/Z+wJprPWcAwAAwEzy
-         xkXzubPtN3N3gu9XsKm3ly9Oe1guzZLYu0b1DAoljNjZHk/4tcDuP+rhGwYti2O9xBUn
-         2DT6HkaEfIbtQVCbuuAaTNe8YynPC3WaGsx65LvYmubVl8CZ4sjuq0m9idEpeg6v9swt
-         eN/Q==
-X-Gm-Message-State: AOJu0YzLE5ZTS67kiGoQw7VWX4SRK8bsh2Xz03CFSNoXuJQGFtiv0341
-        I4XQ+X+7J4UmJjmz+xWOgbKJwA==
-X-Google-Smtp-Source: AGHT+IFSrAtYIXnsRJz+6mqib8VMrG9JuyZoa2zobypzJyTfE5YOgWamYLpLwlmq6ZWXvifQ2+ZqTA==
-X-Received: by 2002:a19:645b:0:b0:507:b935:9f5f with SMTP id b27-20020a19645b000000b00507b9359f5fmr3390635lfj.24.1697618750850;
-        Wed, 18 Oct 2023 01:45:50 -0700 (PDT)
+        bh=VY8V074ZaWHR3uxPsaqqpbxmTtftcDfFzH7Dssm9LII=;
+        b=YnY1hpIkq1YiTHc5lMrjgYXwspbzpOba7YsWnevOt09cHN3Ubr2S2CivvSeH41VGZT
+         TkvDlk/cRiq6hBdTcC3cY0oT+tOogwIfVuqzoRpxvNRxiFKn9idPXu6sMX93VhKwNHS/
+         BpgbzLhvIdoVutnT41V2dN/lwOp17R/PvpzJ/xXCftr/xLnN3Ammm+YiQHPEJBlpzIMd
+         KRi//iywrq04vrjA+FLOZ9ZrIwQl3YHOplZGnvuPf1LbpCNyNRntyOnVbQcFskSgbW8C
+         42CA3tszPj1Z3t69L9XkriY7DLMI7NghrhIFFsQ26JKzmG5nkAkN9ucgw9Ys2s6BeIO9
+         hoeA==
+X-Gm-Message-State: AOJu0Yxwx38Jh7GCbNOD6VxBvMmMLm/CibHMFZQFaURkuL49TjPG9T6e
+        Tha5OyFCShOmb/JgWI1Hs5gtSw==
+X-Google-Smtp-Source: AGHT+IF5XWZCdhFd+sdr7SW9sr+WDumaME1Zk8oICpesr0u85VtPi3laTpJVUkx0QZ0bIQz0st1WIg==
+X-Received: by 2002:ac2:5586:0:b0:500:95f7:c416 with SMTP id v6-20020ac25586000000b0050095f7c416mr2891199lfg.7.1697619008563;
+        Wed, 18 Oct 2023 01:50:08 -0700 (PDT)
 Received: from [172.30.204.55] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id l2-20020ac24a82000000b00502fd9110ffsm615707lfp.294.2023.10.18.01.45.48
+        by smtp.gmail.com with ESMTPSA id x20-20020a056512079400b00507a3b8b007sm615700lfr.110.2023.10.18.01.50.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Oct 2023 01:45:50 -0700 (PDT)
-Message-ID: <06f3e2b0-bfeb-40db-92e2-279abfbb98cd@linaro.org>
-Date:   Wed, 18 Oct 2023 10:45:49 +0200
+        Wed, 18 Oct 2023 01:50:08 -0700 (PDT)
+Message-ID: <6b4c544b-5325-42cc-9479-bd4db7250687@linaro.org>
+Date:   Wed, 18 Oct 2023 10:50:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] cpufreq: qcom-nvmem: Simplify driver data
- allocation
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: msm8916-longcheer-l8910: Enable RGB
+ LED
 Content-Language: en-US
-To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
-        Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+To:     =?UTF-8?Q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, Ulf Hansson <ulf.hansson@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
         Stephan Gerhold <stephan@gerhold.net>
-References: <20231018-msm8909-cpufreq-v2-0-0962df95f654@kernkonzept.com>
- <20231018-msm8909-cpufreq-v2-1-0962df95f654@kernkonzept.com>
+References: <20231013-bq_leds-v1-0-cc374369fc56@apitzsch.eu>
+ <20231013-bq_leds-v1-1-cc374369fc56@apitzsch.eu>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231018-msm8909-cpufreq-v2-1-0962df95f654@kernkonzept.com>
+In-Reply-To: <20231013-bq_leds-v1-1-cc374369fc56@apitzsch.eu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
         version=3.4.6
 X-Spam-Level: *
@@ -88,13 +86,11 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 10/18/23 10:06, Stephan Gerhold wrote:
-> Simplify the allocation and cleanup of driver data by using devm
-> together with a flexible array. Prepare for adding additional per-CPU
-> data by defining a struct qcom_cpufreq_drv_cpu instead of storing the
-> opp_tokens directly.
+On 10/13/23 22:51, André Apitzsch wrote:
+> l8910 uses KTD2026 LED driver. Add it to the device tree.
 > 
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+> Tested-by: Stephan Gerhold <stephan@gerhold.net>
+> Signed-off-by: André Apitzsch <git@apitzsch.eu>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
