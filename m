@@ -2,103 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B449F7CDDC0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 15:47:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B976C7CDE03
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 15:57:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231824AbjJRNr1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Oct 2023 09:47:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58582 "EHLO
+        id S1344804AbjJRN5S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Oct 2023 09:57:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231776AbjJRNr0 (ORCPT
+        with ESMTP id S1344803AbjJRN5R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Oct 2023 09:47:26 -0400
-Received: from fanzine2.igalia.com (fanzine.igalia.com [178.60.130.6])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14F5183;
-        Wed, 18 Oct 2023 06:47:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-        s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-        References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=kbDCGaShnOgb9MTpQ3xCa2htqfzPOv6O0lGoh7UvWhI=; b=T5poKZ68tPs6DbgM3IGbPARYFr
-        aAsS09loumfjF32M1C7xlnkwacysxfmLNNdG7P+CR/rkv5yj2BjkOb4AR5Udf/cbr3W4e5/jx/rWY
-        4FHv220tKNeK+PFQprjnC3gpvOPpKir6sySkgnoJUe7dFsilVOXwojKFa26kdAx7D1pq+yJdro2iz
-        6bHRyuapLo8i2LD8iUbXu++FPlq9yedCPvc9ifdDbXesJcp3gVxXY5zb06CeyZqDEt6lT2oyNcnHI
-        +1UbY15OMYvSGl/trRUSSOBJw4STDoatuufo+/zIkZZtpiH1gEYyxsK92wqADB+w5/hR2rxLTKGAf
-        83PBQExw==;
-Received: from [145.18.212.154]
-        by fanzine2.igalia.com with esmtpsa 
-        (Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
-        id 1qt6tB-001oxQ-Sr; Wed, 18 Oct 2023 15:47:09 +0200
-Message-ID: <adf80c31-dcb2-4991-a8c0-375d44ae379c@igalia.com>
-Date:   Wed, 18 Oct 2023 15:47:08 +0200
+        Wed, 18 Oct 2023 09:57:17 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DAC0115;
+        Wed, 18 Oct 2023 06:57:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1697637435; x=1729173435;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=5AeLSEWrRP+H5Fb6/38V6XWZBDN12WIWs+JsApoQgvk=;
+  b=gIuFcSgxsUhqDqyBq9S/VGO8JDa0jd+iMqgNUAIBIy552eXuCkKGXjJO
+   NOy8un5Mp26kTaL4ewZ8VUhpK8A4bLnQ1eQ1CfZafgjIDVVSnwt7/m5tH
+   WQXVKrRJMhZQvDqRv0Zy7A9MlXjzcP9zzUPYlSd398qOJ2xJbl5U63J3A
+   FiFbMYAZPnwrtyQr4HzdLsgx8A5YtFNA1HbFO7C6Te9VBZjzupFSZgrxU
+   //5hD8CSvTW9JwHQJ8qFOQQi9lfBeLoyMmszxi+J/BpklGfc0tJRppzDc
+   u0dCKZSDoKSFSKOtrvarm794X5vnU1JowAD0blCpyNrRFX3lTr53odO3t
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10867"; a="472242447"
+X-IronPort-AV: E=Sophos;i="6.03,235,1694761200"; 
+   d="scan'208";a="472242447"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Oct 2023 06:57:15 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10867"; a="930209923"
+X-IronPort-AV: E=Sophos;i="6.03,235,1694761200"; 
+   d="scan'208";a="930209923"
+Received: from dmangels-mobl.amr.corp.intel.com (HELO [10.209.187.130]) ([10.209.187.130])
+  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Oct 2023 06:57:13 -0700
+Message-ID: <2f05708e-3ee8-472e-a24f-6f3eb118133c@linux.intel.com>
+Date:   Wed, 18 Oct 2023 08:47:40 -0500
 MIME-Version: 1.0
-User-Agent: Thunderbird Daily
-Subject: Re: [PATCH 5/5] arm64: dts: qcom: sm8350-lemonade(p): new devices
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 09/34] ASoC: qcom: qdsp6: Introduce USB AFE port to
+ q6dsp
+To:     Wesley Cheng <quic_wcheng@quicinc.com>, mathias.nyman@intel.com,
+        gregkh@linuxfoundation.org, lgirdwood@gmail.com,
+        broonie@kernel.org, perex@perex.cz, tiwai@suse.com,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, srinivas.kandagatla@linaro.org,
+        bgoswami@quicinc.com, Thinh.Nguyen@synopsys.com
+Cc:     linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20231017200109.11407-1-quic_wcheng@quicinc.com>
+ <20231017200109.11407-10-quic_wcheng@quicinc.com>
+ <7aa4ea87-9d1f-400a-bcc5-b56e5b4500c6@linux.intel.com>
+ <c72bcf47-af0b-8819-1c30-06b51358381e@quicinc.com>
 Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kees Cook <keescook@chromium.org>,
-        Tony Luck <tony.luck@intel.com>,
-        "Guilherme G. Piccoli" <gpiccoli@igalia.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
-        Rob <Me@orbit.sh>, Clayton Craft <clayton@igalia.com>,
-        ~postmarketos/upstreaming@lists.sr.ht
-References: <20231016-nia-sm8350-for-upstream-v1-0-bb557a0af2e9@igalia.com>
- <20231016-nia-sm8350-for-upstream-v1-5-bb557a0af2e9@igalia.com>
- <CW9WUOLK18R1.2HI2MM4P47HPV@fairphone.com>
- <49850e9c-5307-489f-9587-f016188bb59a@igalia.com>
- <CWAI58LU9PXA.3N99LXRT1NWIM@fairphone.com>
-From:   Nia Espera <nespera@igalia.com>
-Autocrypt: addr=nespera@igalia.com; keydata=
- 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
- T+I7o407lOB8a/PJA2YXM4VVC/iyMBM=
-In-Reply-To: <CWAI58LU9PXA.3N99LXRT1NWIM@fairphone.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+In-Reply-To: <c72bcf47-af0b-8819-1c30-06b51358381e@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -106,50 +74,44 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 10/17/23 08:31, Luca Weiss wrote:
-> On Mon Oct 16, 2023 at 11:41 PM CEST, Nia Espera wrote:
->> Hi,
+>>> Specifically, the QC ADSP can support all potential endpoints that are
+>>> exposed by the audio data interface.  This includes, feedback endpoints
+>>> (both implicit and explicit) as well as the isochronous (data)
+>>> endpoints.
 >>
->> On 10/16/23 15:50, Luca Weiss wrote:
->>> Hi Nia,
->>>
->>> On Mon Oct 16, 2023 at 2:47 PM CEST, Nia Espera wrote:
-
-[ ... ]
-
->>>> +&i2c13 {
->>>> +	clock-frequency = <100000>;
->>>> +	status = "okay";
->>>> +
->>>> +	fsa4480@42 {
->>>> +		compatible = "fcs,fsa4480";
->>>> +		reg = <0x42>;
->>>> +		mode-switch;
->>>> +		orientation-switch;
->>>> +	};
->>>> +
->>>> +	/* Qualcomm PM8008i/PM8008j (?) @ 8, 9, c, d */
->>>
->>> Check again in downstream if the @c and @d are actually enabled, at
->>> least they're not on my boards and the PM8008 is only addressable on @8
->>> and @9.
+>> implicit feedback means support for capture. This is confusing...
 >>
->> Seems like they all are used on this device; (d) in particular seems to
->> be needed for the camera.
 > 
-> PM8008 is a I2C-addressable regulator that is just used for camera. But
-> still if you have some time, double check if really both 8+9 and c+d are
-> used. For example you could use i2cdetect on the bus, I think the PM8008
-> shows up without manually flipping some enable GPIO. Or check downstream
-> dmesg to see what it says, or at runtime in /sys (e.g. in TWRP should be
-> enough).
+> I mean, a USB device can expose a capture path, but as of now, we won't
+> enable the offloading to the audio DSP for it.  However, if we're
+> executing playback, and device does support implicit feedback, we will
+> pass that along to the audio DSP to utilize.
 
-It looks like there's something there, though it might not be touched 
-downstream on this device. dmesg spits out:
+Not following. Implicit feedback means a capture stream *SHALL* be
+started. Are you saying this capture stream is hidden and handled at the
+DSP level only? If yes, what prevents you from exposing the capture
+stream to userspace as well?
 
-[    2.005455] (3)[9:kworker/u24:0][    2.005452]@3 qcom,pm8008-chip: 
-probe of a94000.i2c:pm8008j@c:pm8008-chip@900 failed with error -107
+I must be missing something.
 
-which seems to imply c/d are unused; however, they do show up under 
-/sys/bus/i2c/devices/9-000[c/d], so I'm not quite sure what to make of it.
+>>>   +static const struct snd_soc_dai_ops q6usb_ops = {
+>>> +    .probe        = msm_dai_q6_dai_probe,
+>>> +    .prepare    = q6afe_dai_prepare,
+>>> +    .hw_params    = q6usb_hw_params,
+>>
+>> this is rather confusing with two different layers used for hw_params
+>> and prepare? Additional comments or explanations wouldn't hurt.
+>>
+> 
+> I thought this was how the ASoC design was.  Each DAI defined for a
+> particular path has it own set of callbacks implemented to bring up any
+> required resources for that entity.  So in this case, it initializes the
+> "cpu" DAI, which is the main component that handles communication with
+> the audio DSP.
 
+Usually prepare and hw_params rely on the type of DAI callbacks, but
+here you are mixing "q6afe" and "q6usb" which are shown in your Patch0
+diagram as "cpu" and "codec" dais respectively. I don't think it's
+correct to tie the two, it's a clear layering violation IMHO. The codec
+dai .prepare should not invoke something that modifies the state of the
+CPU dai, which should have its own .prepare callback.
