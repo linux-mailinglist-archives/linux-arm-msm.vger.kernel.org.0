@@ -2,184 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DAC577CD3DE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 08:10:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CBD8A7CD470
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 08:25:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229625AbjJRGKC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Oct 2023 02:10:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57834 "EHLO
+        id S235142AbjJRGZW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Oct 2023 02:25:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229606AbjJRGKB (ORCPT
+        with ESMTP id S235216AbjJRGZK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Oct 2023 02:10:01 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B630FF9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 23:09:58 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-9a6190af24aso1056176266b.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 23:09:58 -0700 (PDT)
+        Wed, 18 Oct 2023 02:25:10 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A56F128
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 23:24:10 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-53e07db272cso10057974a12.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 23:24:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697609397; x=1698214197; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=TOSDdTKHQ6Zn18zXh4dBj8ZhMSb7NfUjm1rV0GFHp+0=;
-        b=q8ec2Xev+rEuYa9JVBFAJ6mUanuZnt94sHGayOVXF0Hmjhto0zaka3XQlq0q0Z4bAi
-         i98smxaZHMy/snHypaaoQdLCW6aczp4Bhz2Yj/WwCX47IeEzfYFvULIZsfeRu0uyNalA
-         8L7mO3NC2HFgX/ccMfmoL4VL4ufldWfGGUQKDraDvyiHdHn61/j1AJfcyExZSVl8rz+T
-         4n0oT/X6zbkq/iByV5A01SNKqh0tbfQKw/ww2U6nQIdT5I0JUwYChl1/jtYEisx3mdOV
-         e/yXUgHb+TNHeLfBVAlvkjBmAPsYfHcyxt4L4OqKJEiCzE7ay38E3Pagz9xkC4+qoFz8
-         r3pg==
+        d=linaro.org; s=google; t=1697610248; x=1698215048; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=h0LSTDW6faOOZtWiReUGEV1kCZbo9a6/NHU8SOiXxrc=;
+        b=FLck6fm3Q50JXB/FT7td+1zfeI+Pj4RhU0M8Dt//vNxC6vtJw93rxQc6VSyEGKz1Tp
+         FOZan8trl2/3xGDNeX7Y/0qxJqIqCr50BIHBZOGf8iDwK+mZiwRGMYKMxmSJXoqC2XaO
+         ZnF/o1KGSZ/gn3Jj6V5YDJyw8vRrvwIGGIAnnTdx1r1w5n3N3cFJ/aNybbfETGPK6RD4
+         3uEHOajYE9VeDSwafuEC5eIAdsxqiEMB1KUKT60ZLyGdZf7iXgFf8xdPyJXYfppozTMJ
+         1P2o0VGytDp54t5YPwWsBmLKMZZa5mOEg2OTQ7723PQEx/6GKS8Y+GPs4knFTVHMWITH
+         xs1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697609397; x=1698214197;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TOSDdTKHQ6Zn18zXh4dBj8ZhMSb7NfUjm1rV0GFHp+0=;
-        b=vhe2cJ3SS+f3ZsRV5OeOo+uu9C0aACpg9QU4vFbHOiniN/QmtS6VRKheIRzGFEmDGG
-         p267zET/zZiC1OB9wgvI3167gF9rDT2vmlLGqfEEkkefJeEML+AJC/+7mimRcUX5t4x9
-         0GlNDuDlsTCAABJNaO2UsLmX0BBdLFTKbSyuPv6O1o/87iSicWEC1OYyYpvC5zhR9+co
-         nPeXsmdAzuhgzmPa7Go3jtAJafDNgZt9BN9iUiEsro96nUYJbvNCoSXCxTbDOeev4i97
-         2ws4a7YRCg9x89zt3Zbw4yo7m0JJIIjX8hU1cZ1nD+8iTwHQxDuHps1oJ33Xau0lwKue
-         4/Wg==
-X-Gm-Message-State: AOJu0YwYyXdTCofqCT0UyMk4NekhF75WUXQeg0m0eYZl7rxHIws/aisM
-        MxtIXQPCDwgnL88UYSVbWotKmQ==
-X-Google-Smtp-Source: AGHT+IFxJy7pc9qR58gBFWblDRsvoaM08c/0G6qwRhBGUOQIAkRSbEh09MIMTlEjzlwQdUZMeXgQlg==
-X-Received: by 2002:a17:907:2688:b0:9c5:2806:72e2 with SMTP id bn8-20020a170907268800b009c5280672e2mr3026227ejc.34.1697609397120;
-        Tue, 17 Oct 2023 23:09:57 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.154])
-        by smtp.gmail.com with ESMTPSA id j8-20020a1709064b4800b009a1a653770bsm933348ejv.87.2023.10.17.23.09.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Oct 2023 23:09:56 -0700 (PDT)
-Message-ID: <8059e5ab-672a-4808-9159-d67309625ef0@linaro.org>
-Date:   Wed, 18 Oct 2023 08:09:54 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 1/8] dt-bindings: usb: qcom,dwc3: Add bindings to enable
- runtime
-Content-Language: en-US
-To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_ppratap@quicinc.com, quic_jackp@quicinc.com,
-        Conor Dooley <conor+dt@kernel.org>, quic_wcheng@quicinc.com,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bjorn Andersson <andersson@kernel.org>
-References: <20231017131851.8299-1-quic_kriskura@quicinc.com>
- <20231017131851.8299-2-quic_kriskura@quicinc.com>
- <a3d612a8-1917-491d-a944-22ea39879a9d@linaro.org>
- <189be124-efb1-4843-9a47-db84942838c9@quicinc.com>
+        d=1e100.net; s=20230601; t=1697610248; x=1698215048;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=h0LSTDW6faOOZtWiReUGEV1kCZbo9a6/NHU8SOiXxrc=;
+        b=p1gjPBlp/xjGQLyOiVz8kssBlr6/3cLq4mjQprIgG1y9EgJAsU/vfo52FvbS9CWKhZ
+         eLTriMb0Tq6reN4xaJhB6twrXRgUGuxTdjFQGiFrd8GHhKhl9gaJGbbLU9TjcB/nNyap
+         9aedh1nAiIAuyo4Isk0cndV6Qj71yDONL7vYonksbAzHnYGQM3LtqxKtG7Qik7NqDOeJ
+         29KYr2mujYDfyBfwFMPMthEApl+3yW9VbkpXssNgvB1j9DvpAf+thkZaRldvjyJPM2AO
+         71kVMvTUFzipKMXxr1sU0GbJvXQ51oZBiHpNJJgdWo43AiI73Htu6wRABpgfRyEqBLQL
+         X+KA==
+X-Gm-Message-State: AOJu0YxkHjpZ7IAdi9P9BZMZpOEsVlUbZ4DqLKdI2FNyKl/FMsv8vMIT
+        bhMXTUAOGLlX7BWBckPVNpnp7g==
+X-Google-Smtp-Source: AGHT+IFkxm1MnB5ryqx/bxdOF9swb/7TUQl4dvCNn74j4MyU/6anDE4hDdxSnnwnnJXSJnG7ob0naA==
+X-Received: by 2002:a05:6402:4314:b0:53e:1b:15f5 with SMTP id m20-20020a056402431400b0053e001b15f5mr3286742edc.39.1697610248609;
+        Tue, 17 Oct 2023 23:24:08 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.219.154])
+        by smtp.gmail.com with ESMTPSA id h15-20020a0564020e0f00b00530a9488623sm2242277edh.46.2023.10.17.23.24.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Oct 2023 23:24:08 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <189be124-efb1-4843-9a47-db84942838c9@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To:     linux-kernel@vger.kernel.org,
+        Raymond Hackley <raymondhackley@protonmail.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH v2 0/2] ARM: dts: samsung: exynos4412-midas: fix key-ok and use Linux event codes
+Date:   Wed, 18 Oct 2023 08:24:04 +0200
+Message-Id: <169761020952.14892.6591419387867673696.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20231017101402.62740-1-raymondhackley@protonmail.com>
+References: <20231017101402.62740-1-raymondhackley@protonmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/10/2023 19:46, Krishna Kurapati PSSNV wrote:
-> 
-> 
-> On 10/17/2023 10:49 PM, Krzysztof Kozlowski wrote:
->> On 17/10/2023 15:18, Krishna Kurapati wrote:
->>> Add enable-rt binding to let the device register vendor hooks to
->>> core and facilitate runtime suspend and resume.
->>>
->>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
->>> ---
->>>   Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 5 +++++
->>>   1 file changed, 5 insertions(+)
->>>
->>> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
->>> index cb50261c6a36..788d9c510abc 100644
->>> --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
->>> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
->>> @@ -151,6 +151,11 @@ properties:
->>>         HS/FS/LS modes are supported.
->>>       type: boolean
->>>   
->>> +  qcom,enable-rt:
->>> +    description:
->>> +      If present, register vendor hooks to facilitate runtime suspend/resume
->>
->> You described the desired Linux feature or behavior, not the actual
->> hardware. The bindings are about the latter, so instead you need to
->> rephrase the property and its description to match actual hardware
->> capabilities/features/configuration etc.
->>
-> 
-> Hi Krzysztof,
-> 
->   Thanks for the review. Although it sounds like its a Linux property, 
-> internally what it does is configuring qscratch registers properly when 
-> (dr_mode == OTG)
 
-That's not what you wrote. You wrote "register vendor hooks". Really,
-this is nothing to do with hardware.
-
+On Tue, 17 Oct 2023 10:16:37 +0000, Raymond Hackley wrote:
+> Input event code 139 stands for KEY_MENU, instead of KEY_OK as node name
+> key-ok inplies. Fix it with correct event code 0x160.
 > 
->   Would it be fine to rephrase the property name to 
-> "qcom,config-qscratch" and to make it dependent on dr_mode and 
-> usb-role-switch properties ? Would it be possible to make such a 
-> dependency in bindings ?
+> Use event codes with linux-event-codes.h included for input keys on midas
+> in addition.
+> 
 
-Examples are in: example-schema or my talk.
+Applied, thanks!
+
+It is however very late in the cycle, so there is a chance this will miss the
+merge window. If this happens, I will keep it for the next cycle (no need for
+resending).
+
+[1/2] ARM: dts: samsung: exynos4412-midas: fix key-ok event code
+      https://git.kernel.org/krzk/linux/c/25e20eedc1d63dcdf6f781588e8dbc37cd0aad16
+[2/2] ARM: dts: samsung: exynos4412-midas: use Linux event codes for input keys
+      https://git.kernel.org/krzk/linux/c/4a48fa417abc5b86da393c93ab63a9160076a248
 
 Best regards,
-Krzysztof
-
+-- 
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
