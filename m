@@ -2,175 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECA5E7CDE74
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 16:10:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7AD47CDF0A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 16:16:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344992AbjJROJ6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Oct 2023 10:09:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60346 "EHLO
+        id S232013AbjJROQN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Oct 2023 10:16:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344879AbjJROJm (ORCPT
+        with ESMTP id S1345102AbjJROPb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Oct 2023 10:09:42 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AED6619B;
-        Wed, 18 Oct 2023 07:09:20 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39IDkGLG017627;
-        Wed, 18 Oct 2023 14:09:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=o4XBTkJlvarejnZV8pC470v6+3DYRzBxpiH+Yo4yy20=;
- b=Y2M5WhxHER5RKIvsMW6x4BCK6Yd7cRXarn7/Rdameqpf7ryiGrSAZccyo8/R9zy+w0bY
- JRU7b2K4D5xC3YGid8xwoKw1hsbiIYu94ZNSF9LEqzkPBzEgPsNw5W0aVtykBbn4u+NT
- JKke6kkBl1U8EZMUaacLywkPZ1Z4tc1GxBKLhralhC3EQ9z9UPhhj6706LHZF7SkVDEU
- C5UgxiCTyQAEEMDOfrd0of51xu9y+tF62ETfZSSl4yxbHOnCO1S5/AuVaeiX8KuXjSp9
- 54gD0McHM8rSjZVysEtHq49IgFZ2B55RxyL7Zhy8tt0cxD6M6xcNRbIEXPh59s1TAul9 5g== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tt8xs952p-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 18 Oct 2023 14:09:15 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39IE8vV8023216
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 18 Oct 2023 14:08:58 GMT
-Received: from [10.216.42.121] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 18 Oct
- 2023 07:08:49 -0700
-Message-ID: <ee431c51-1474-47f9-b298-8ca284ea353b@quicinc.com>
-Date:   Wed, 18 Oct 2023 19:38:44 +0530
+        Wed, 18 Oct 2023 10:15:31 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33390D61;
+        Wed, 18 Oct 2023 07:13:48 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-5079f9675c6so7255130e87.2;
+        Wed, 18 Oct 2023 07:13:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1697638426; x=1698243226; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=PhyxmUtG7ajyW2SjJyU5m+NzLdFKfkutpPsZw1ffkps=;
+        b=eHO5mQcHxbbVmVyUsdm3qfVjWzY+w9bQtxkJI0c35p3h7lQuNTeztpOG0cCewLmQuG
+         iyppswWFa3ckyNVz0D8+6kc0j8xcKXiTQQbMURHfXFsDOwHYfaE7BpgLwPlNYk9+tPw8
+         cNaKtQLzF297Fz9NAEOSXHPETpsOBD0gY71efeG7QWATTM8vdNEfn1pmlpRpSKevgBTJ
+         WWmzeGmKu2bGtHxDAGw2A+eJBzqTfT06YOI/qf+kexkieSvNvJl58D/a+ArLKW1H7J+2
+         zyQWK3zyMhZg8GjkI//OR4U+hFyzBezK2KBL8iCMH9A+IHvLayLasYc4PBA7G+eQIR7r
+         kVvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697638426; x=1698243226;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PhyxmUtG7ajyW2SjJyU5m+NzLdFKfkutpPsZw1ffkps=;
+        b=VeY2PyfFfoU8cpkNx+Gr+tOKc40DRQ7Zp2cI45eMqkoFLHzDhGwmosRzx9cb1D71Ri
+         v6ZN4gf2S4SNYBFjPujRv5WTkxabvnpK6B9CurGZIjsgaX4raoBepcbgYYHAEDkhYi61
+         14CTVkFZD1SNcof0XIhSZ9M2K3tZFO5EKBtOgf2sSPMNlXLiN4MSyYJ0REPBOW+476cf
+         jkOJAaDCDX+3zxUK2/5Si0r2WNIinLimPc7iPvYjheuzpMIJK8mO7Ik7WGSor2zB5C0Q
+         Sq+obrz93GdkL+tnCH1agg5RHde/aqfcpl4X+bK+dIqqmHdSegYCfBExA6k/DNgKvLQa
+         qIkQ==
+X-Gm-Message-State: AOJu0Yzhm967Z1byeowY5wuOn3VIg7CHIPeWbOCr6b7cRLzan+cx1fsy
+        QeKkmVCVbQrIEN3yJpGxOGs=
+X-Google-Smtp-Source: AGHT+IFXuSn1gbUFD88OFr29Di5DE0IEbBaKZ3/Kw7Gmui5oNJaleutG9zWrKFBSC2OhiZQESHKcTw==
+X-Received: by 2002:ac2:548e:0:b0:507:9fa0:e244 with SMTP id t14-20020ac2548e000000b005079fa0e244mr3912595lfk.65.1697638425660;
+        Wed, 18 Oct 2023 07:13:45 -0700 (PDT)
+Received: from mobilestation ([178.176.56.174])
+        by smtp.gmail.com with ESMTPSA id k10-20020ac257ca000000b00500a4679148sm714150lfo.20.2023.10.18.07.13.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Oct 2023 07:13:45 -0700 (PDT)
+Date:   Wed, 18 Oct 2023 17:13:41 +0300
+From:   Serge Semin <fancer.lancer@gmail.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/2] PCI: dwc: Add new accessors to enable/disable DBI
+ CS2 while setting the BAR size
+Message-ID: <rsv5vgle2d36skx75ds4hqzmlqwldmj4g4ghrlyfuu3ideb3rh@74mnro7qnp4v>
+References: <20231017-pcie-qcom-bar-v1-0-3e26de07bec0@linaro.org>
+ <20231017-pcie-qcom-bar-v1-1-3e26de07bec0@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/11] Add GPLL0 as clock provider for the Qualcomm's
- IPQ mailbox controller
-Content-Language: en-US
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        "Sricharan Ramabadhran" <quic_srichara@quicinc.com>,
-        Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>,
-        Varadarajan Narayanan <quic_varada@quicinc.com>,
-        Anusha Rao <quic_anusha@quicinc.com>,
-        Devi Priya <quic_devipriy@quicinc.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <stable@vger.kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Robert Marko <robimarko@gmail.com>
-References: <20230913-gpll_cleanup-v2-0-c8ceb1a37680@quicinc.com>
-From:   Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-In-Reply-To: <20230913-gpll_cleanup-v2-0-c8ceb1a37680@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ijw9qUUhIq2d-FlkW1rzCJGjGOrf2wun
-X-Proofpoint-ORIG-GUID: ijw9qUUhIq2d-FlkW1rzCJGjGOrf2wun
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-18_12,2023-10-18_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- lowpriorityscore=0 spamscore=0 mlxscore=0 suspectscore=0 clxscore=1011
- impostorscore=0 phishscore=0 adultscore=0 priorityscore=1501
- mlxlogscore=999 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2309180000 definitions=main-2310180117
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231017-pcie-qcom-bar-v1-1-3e26de07bec0@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, Oct 17, 2023 at 11:47:54AM +0530, Manivannan Sadhasivam wrote:
+> From: Manivannan Sadhasivam <mani@kernel.org>
+> 
+> As per the DWC databook v4.21a, section M.4.1, in order to write some read
+> only and shadow registers through application DBI, the device driver should
+> assert DBI Chip Select 2 (CS2) in addition to DBI Chip Select (CS).
+> 
+> This is a requirement at least on the Qcom platforms while programming the
+> BAR size, as the BAR mask registers are marked RO. So let's add two new
+> accessors dw_pcie_dbi_cs2_{en/dis} to enable/disable CS2 access in a vendor
+> specific way while programming the BAR size.
 
-On 9/14/2023 12:29 PM, Kathiravan Thirumoorthy wrote:
-> Currently mailbox controller takes the XO and APSS PLL as the input. It
-> can take the GPLL0 also as an input. This patch series adds the same and
-> fixes the issue caused by this.
->
-> Once the cpufreq driver is up, it tries to bump up the cpu frequency
-> above 800MHz, while doing so system is going to unusable state. Reason
-> being, with the GPLL0 included as clock source, clock framework tries to
-> achieve the required rate with the possible parent and since GPLL0
-> carries the CLK_SET_RATE_PARENT flag, clock rate of the GPLL0 is getting
-> changed, causing the issue.
->
-> First half of the series, removes the CLK_SET_RATE_PARENT flag from the
-> PLL clocks since the PLL clock rates shouldn't be changed. Another
-> half, add the necessary support to include the GPLL0 as clock provider
-> for mailbox and accomodate the changes in APSS clock driver.
->
-> This is also the preparatory series to enable the CPUFreq on IPQ5332
-> SoC. Dynamic scaling of CPUFreq is not supported on IPQ5332, so to
-> switch between the frequencies we need to park the APSS PLL in safe
-> source, here it is GPLL0 and then shutdown and bring up the APSS PLL in
-> the desired rate.
->
-> For IPQ5332 SoC, this series depends on the below patch
-> https://lore.kernel.org/linux-arm-msm/1693474133-10467-1-git-send-email-quic_varada@quicinc.com/
+Emm, it's a known thing for all IP-core versions: dbi_cs2 must be
+asserted to access the shadow DW PCIe CSRs space for both RC and
+EP including the BARs mask and their enabling/disabling flag (there
+are many more shadow CSRs available on DW PCIe EPs, and a few in DW
+PCIe RCs). That's why the dw_pcie_ops->writel_dbi2 pointer has been
+defined in the first place (dbi2 suffix means dbi_cs2). You should use
+it to create the platform-specific dbi_cs2 write accessors like it's
+done in pci-keystone.c and pcie-bt1.c. For instance like this:
 
+static void qcom_pcie_write_dbi2(struct dw_pcie *pci, u32 reg, size_t size, u32 val)
+{
+	struct qcom_pcie_ep *pcie_ep = to_pcie_ep(pci);
+	int ret;
 
-Bjorn, can this series picked up for v6.7?
+	writel(1, pcie_ep->elbi + ELBI_CS2_ENABLE);
 
-There is a minor nit the commit message. The statement "APSS PLL will be 
-running at 800MHz" should be "APSS clock / CPU clock will be running at 
-800MHz" and this should be taken care for clk and the dts patches. Do 
-let me know if I need to re-spin the address to address this.
+	ret = dw_pcie_write(pci->dbi_base2 + reg, size, val);
+	if (ret)
+		dev_err(pci->dev, "write DBI address failed\n");
 
-Thanks,
+	writel(0, pcie_ep->elbi + ELBI_CS2_ENABLE);
+}
 
+/* Common DWC controller ops */
+static const struct dw_pcie_ops pci_ops = {
+	.link_up = qcom_pcie_dw_link_up,
+	.start_link = qcom_pcie_dw_start_link,
+	.stop_link = qcom_pcie_dw_stop_link,
+	.write_dbi2 = qcom_pcie_write_dbi2,
+};
 
->
-> Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+For that reason there is absolutely no need in adding the new
+callbacks.
+
+-Serge(y)
+
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
-> Changes in v2:
-> - included the patch to drop the CLK_SET_RATE_PARENT from IPQ5018 GCC driver
-> - Splitted the DTS changes per target
-> - For IPQ8074 and IPQ6018 keep the CLK_SET_RATE_PARENT for UBI32 PLL
->    since the PLL clock rates can be changed
-> - Pick up the tags in the relevant patches
-> - Link to v1: https://lore.kernel.org/r/20230904-gpll_cleanup-v1-0-de2c448f1188@quicinc.com
->
-> ---
-> Kathiravan Thirumoorthy (11):
->        clk: qcom: ipq8074: drop the CLK_SET_RATE_PARENT flag from PLL clocks
->        clk: qcom: ipq6018: drop the CLK_SET_RATE_PARENT flag from PLL clocks
->        clk: qcom: ipq5018: drop the CLK_SET_RATE_PARENT flag from GPLL clocks
->        clk: qcom: ipq9574: drop the CLK_SET_RATE_PARENT flag from GPLL clocks
->        clk: qcom: ipq5332: drop the CLK_SET_RATE_PARENT flag from GPLL clocks
->        dt-bindings: mailbox: qcom: add one more clock provider for IPQ mailbox
->        clk: qcom: apss-ipq6018: add the GPLL0 clock also as clock provider
->        arm64: dts: qcom: ipq8074: include the GPLL0 as clock provider for mailbox
->        arm64: dts: qcom: ipq6018: include the GPLL0 as clock provider for mailbox
->        arm64: dts: qcom: ipq9574: include the GPLL0 as clock provider for mailbox
->        arm64: dts: qcom: ipq5332: include the GPLL0 as clock provider for mailbox
->
->   .../devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml          | 2 ++
->   arch/arm64/boot/dts/qcom/ipq5332.dtsi                               | 4 ++--
->   arch/arm64/boot/dts/qcom/ipq6018.dtsi                               | 4 ++--
->   arch/arm64/boot/dts/qcom/ipq8074.dtsi                               | 4 ++--
->   arch/arm64/boot/dts/qcom/ipq9574.dtsi                               | 4 ++--
->   drivers/clk/qcom/apss-ipq6018.c                                     | 3 +++
->   drivers/clk/qcom/gcc-ipq5018.c                                      | 3 ---
->   drivers/clk/qcom/gcc-ipq5332.c                                      | 2 --
->   drivers/clk/qcom/gcc-ipq6018.c                                      | 6 ------
->   drivers/clk/qcom/gcc-ipq8074.c                                      | 6 ------
->   drivers/clk/qcom/gcc-ipq9574.c                                      | 4 ----
->   11 files changed, 13 insertions(+), 29 deletions(-)
-> ---
-> base-commit: e143016b56ecb0fcda5bb6026b0a25fe55274f56
-> change-id: 20230913-gpll_cleanup-5d0a339ebd17
->
-> Best regards,
+>  drivers/pci/controller/dwc/pcie-designware-ep.c |  6 ++++++
+>  drivers/pci/controller/dwc/pcie-designware.h    | 13 +++++++++++++
+>  2 files changed, 19 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+> index d34a5e87ad18..1874fb3d8df4 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+> @@ -269,11 +269,17 @@ static int dw_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+>  
+>  	dw_pcie_dbi_ro_wr_en(pci);
+>  
+> +	dw_pcie_dbi_cs2_en(pci);
+>  	dw_pcie_writel_dbi2(pci, reg_dbi2, lower_32_bits(size - 1));
+> +	dw_pcie_dbi_cs2_dis(pci);
+> +
+>  	dw_pcie_writel_dbi(pci, reg, flags);
+>  
+>  	if (flags & PCI_BASE_ADDRESS_MEM_TYPE_64) {
+> +		dw_pcie_dbi_cs2_en(pci);
+>  		dw_pcie_writel_dbi2(pci, reg_dbi2 + 4, upper_32_bits(size - 1));
+> +		dw_pcie_dbi_cs2_dis(pci);
+> +
+>  		dw_pcie_writel_dbi(pci, reg + 4, 0);
+>  	}
+>  
+> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+> index 55ff76e3d384..3cba27b5bbe5 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware.h
+> +++ b/drivers/pci/controller/dwc/pcie-designware.h
+> @@ -379,6 +379,7 @@ struct dw_pcie_ops {
+>  			     size_t size, u32 val);
+>  	void    (*write_dbi2)(struct dw_pcie *pcie, void __iomem *base, u32 reg,
+>  			      size_t size, u32 val);
+> +	void	(*dbi_cs2_access)(struct dw_pcie *pcie, bool enable);
+>  	int	(*link_up)(struct dw_pcie *pcie);
+>  	enum dw_pcie_ltssm (*get_ltssm)(struct dw_pcie *pcie);
+>  	int	(*start_link)(struct dw_pcie *pcie);
+> @@ -508,6 +509,18 @@ static inline void dw_pcie_dbi_ro_wr_dis(struct dw_pcie *pci)
+>  	dw_pcie_writel_dbi(pci, reg, val);
+>  }
+>  
+> +static inline void dw_pcie_dbi_cs2_en(struct dw_pcie *pci)
+> +{
+> +	if (pci->ops && pci->ops->dbi_cs2_access)
+> +		pci->ops->dbi_cs2_access(pci, true);
+> +}
+> +
+> +static inline void dw_pcie_dbi_cs2_dis(struct dw_pcie *pci)
+> +{
+> +	if (pci->ops && pci->ops->dbi_cs2_access)
+> +		pci->ops->dbi_cs2_access(pci, false);
+> +}
+> +
+>  static inline int dw_pcie_start_link(struct dw_pcie *pci)
+>  {
+>  	if (pci->ops && pci->ops->start_link)
+> 
+> -- 
+> 2.25.1
+> 
