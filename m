@@ -2,304 +2,275 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B1B07CDB98
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 14:28:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E9047CDC37
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 14:47:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229957AbjJRM2c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Oct 2023 08:28:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50440 "EHLO
+        id S230360AbjJRMrw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Oct 2023 08:47:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbjJRM2b (ORCPT
+        with ESMTP id S230202AbjJRMrv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Oct 2023 08:28:31 -0400
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA32810E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 05:28:29 -0700 (PDT)
-Received: by mail-oi1-x22c.google.com with SMTP id 5614622812f47-3b2b1ad7ee6so3213008b6e.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 05:28:29 -0700 (PDT)
+        Wed, 18 Oct 2023 08:47:51 -0400
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85B1EA3;
+        Wed, 18 Oct 2023 05:47:49 -0700 (PDT)
+Received: by mail-pf1-x435.google.com with SMTP id d2e1a72fcca58-6b44befac59so3872898b3a.0;
+        Wed, 18 Oct 2023 05:47:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697632109; x=1698236909; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=gWJF8w+ZmKp1jb1CoVlOBJDONP0RLpMI50cE905pgWg=;
-        b=PwLtym1ncagTWpc5zAUR0U85UKogVLCEv9n4KE0e3KzROyXqrwa7YdWwycfK9gmI7M
-         51WF6Pc/gE+T6N2Awb74lI382swoJtP2FC3WeI4hcDOyYiexFDDvQlqixLNHeJjSdbu7
-         9divqXUnpMlQDWy+jQwfuYIyRNwo9dvUyo3C001qHRLsmlJ0UgzAsh1IgaR3hYIPzffg
-         GRNBZp9dsTBeZhEyQVwlvkx5bvORQqL8EPrai7GAFE+vBc44JR14u2Do78Xdu080k1Dz
-         l6B6RGnMX6h5lMQIN5JAJ6FbsXIUR404HkzMSKV7HZqa5cy0EvDyCOnz6kqzyPjpUU9G
-         gFbg==
+        d=gmail.com; s=20230601; t=1697633269; x=1698238069; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=9kzuTzxZVlGgh2f5mC3oIMplNBV8HnSfbYCkmlfvIO0=;
+        b=FghNIC/6Ky0TDrGA5L+6MIbYS4RZzOrcCQ/gvu+h3/36los+pKUA0A5Mhm1WOCz7IS
+         teerGv3bM5eUJ7csLv6Oi47uyim01+tB5nNTd17r+ulRBUqIIEscD39pnDRSTvAkatU3
+         2MqGzFLR7BMUVO75gqtjGdJbrEVEflCUNbNTEhqvw9lZDb8gDP3gyDfav/L9ohUExcgF
+         QAGAz2PMiEVU/trN9Ir0Zjc6sdqyYxcpsULMiTIJTM6V3SqgVi84m4q4veoBDCHsqKLv
+         eOG80aHVXHBIh/pYVzOeL37berqwA0Q6swHBd45EhS8x5DJvS5+0/1W02eewL1oLzo9j
+         lhMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697632109; x=1698236909;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gWJF8w+ZmKp1jb1CoVlOBJDONP0RLpMI50cE905pgWg=;
-        b=kZ/r8qsO0NDNgPhY/hKKRJZfavxoDUe/tGuEiKzpp7kkjuNLaXLCrekK9YlReLd0wG
-         jx42MbYELZOEB3EwecAOwmGQtS/XQ4s3wU/03OzSlNI+nv3N/zOJgoytkD8Be5DuV1u7
-         Ea7igCe+CSVNvpCUljjrZC9R6kBguriLzerfbiJgWeNCewxiHa0G0Nu+GSON6oo8XwO6
-         wJ0M4OYXRJoSSMhIZFv3Pf5h0OsjchONoX2z9RwpxGedX0N1v/cU27yKyzI2uwJV4zWB
-         6mqTQbyPg2G2RRnZil9NCk0PwcWDqQhgFFi7Bm0OHx/V3fW9d39Pry88j6ogg3E5Ew2P
-         9AZg==
-X-Gm-Message-State: AOJu0YxnLY4NyVNa7DT6ZUPD5AuyvNJoXn8GS3hdf35yaoEVudHP7v5C
-        LMdAFAJaKFLX1UATSxM9NO4ZNCGoTkwjitqkiw==
-X-Google-Smtp-Source: AGHT+IH+ZPOle3U+H6TZ/sMIPLF6eFrT7YLOVduG7uxDTyeVQuqGmjsQUbEA3+9fBXs2Yer4/7sE9g==
-X-Received: by 2002:a05:6358:e87:b0:150:8ba9:4d with SMTP id 7-20020a0563580e8700b001508ba9004dmr5613112rwg.3.1697632109011;
-        Wed, 18 Oct 2023 05:28:29 -0700 (PDT)
-Received: from localhost.localdomain ([117.202.186.25])
-        by smtp.gmail.com with ESMTPSA id k3-20020aa79d03000000b0069102aa1918sm3180708pfp.48.2023.10.18.05.28.26
+        d=1e100.net; s=20230601; t=1697633269; x=1698238069;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9kzuTzxZVlGgh2f5mC3oIMplNBV8HnSfbYCkmlfvIO0=;
+        b=u40rByz1CfXpIApXfdLszdtmZAeiTWPwdnAwpnqMV/IkHTJ4ZunJC4Wyj6zUwsY3F3
+         7XLkDKTcwfnYBik7+uHZh+MHgZVm2IDjxwBHWmcEQh7VcL9QY4A+ar2KIzydodEmswxj
+         F0DpVUPQlkGK7BMOD/QAGpWEup6eTthwUuUzPZkbCNxnvJHox660Ve23nzhsKjbWwbGe
+         VVUo8I43cVo7Wy8yQHzwmo/vp6U8In98fnF+yY9Vhqg4NR0TkznyjdHeSwiDAdN9SsSa
+         UkjX8Mf39Hhp7t1DQHZrrRmP77UdaBAf7KQ7UTwS05C2PgXW5X3+eM69dlhblbbuqGKS
+         eoAA==
+X-Gm-Message-State: AOJu0YwVYjZs3z9WpmfvA9UqbhMiXxVaniZtx+wjkSQ/6/0Ao3IlPfR7
+        sWpszR4URTRAbp43sVyKEd+ZBkkTI/0RbQ==
+X-Google-Smtp-Source: AGHT+IGXGeVHsVlXRGS2m6a7frgX1L1AYtgLEn9FwtI5ugKjMogKB6UXepsFeotAkt1UZrRjKys6fw==
+X-Received: by 2002:a05:6a20:7288:b0:15d:4cf1:212e with SMTP id o8-20020a056a20728800b0015d4cf1212emr6856294pzk.4.1697633268764;
+        Wed, 18 Oct 2023 05:47:48 -0700 (PDT)
+Received: from thinkpad ([117.202.186.25])
+        by smtp.gmail.com with ESMTPSA id i13-20020a65484d000000b00578afd8e012sm1389183pgs.92.2023.10.18.05.47.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Oct 2023 05:28:28 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     mhi@lists.linux.dev
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Alex Elder <elder@linaro.org>
-Subject: [PATCH] bus: mhi: ep: Use slab allocator where applicable
-Date:   Wed, 18 Oct 2023 17:58:12 +0530
-Message-Id: <20231018122812.47261-1-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
+        Wed, 18 Oct 2023 05:47:48 -0700 (PDT)
+Date:   Wed, 18 Oct 2023 18:17:41 +0530
+From:   Manivannan Sadhasivam <manivannanece23@gmail.com>
+To:     Manivannan Sadhasivam <mani@kernel.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Can Guo <quic_cang@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "open list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
+        <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 2/6] scsi: ufs: ufs-qcom: Add support for UFS device
+ version detection
+Message-ID: <20231018124741.GA47321@thinkpad>
+References: <1694411968-14413-1-git-send-email-quic_cang@quicinc.com>
+ <1694411968-14413-3-git-send-email-quic_cang@quicinc.com>
+ <6055cd57-4de7-4b7e-a4f3-68a7de1aef28@linaro.org>
+ <6225a132-4b7f-bbb4-e863-4e62b99dd79d@quicinc.com>
+ <31823dc4-6f50-435b-9a20-66471209ec31@linaro.org>
+ <d34242f8-6e21-1549-b87d-3db2e825b7d5@quicinc.com>
+ <1413119B-8B9C-4DE4-A086-476B2BAA60AD@linaro.org>
+ <20230919120829.GB4732@thinkpad>
+ <CAA8EJppwjzNDsPHZqUdmgQy3fAbP+AFnOo4+FTDCdpBEZp5S_w@mail.gmail.com>
+ <20230920102327.GH4732@thinkpad>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20230920102327.GH4732@thinkpad>
+X-Spam-Status: No, score=-0.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,RCVD_IN_SORBS_WEB,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use slab allocator for allocating the memory for objects used frequently
-and are of fixed size. This reduces the overheard associated with
-kmalloc().
+On Wed, Sep 20, 2023 at 12:23:27PM +0200, Manivannan Sadhasivam wrote:
+> On Wed, Sep 20, 2023 at 01:27:59AM +0300, Dmitry Baryshkov wrote:
+> > On Tue, 19 Sept 2023 at 15:08, Manivannan Sadhasivam <mani@kernel.org> wrote:
+> > >
+> > > On Fri, Sep 15, 2023 at 05:31:45AM +0300, Dmitry Baryshkov wrote:
+> > > > On 11 September 2023 13:02:50 GMT+03:00, Can Guo <quic_cang@quicinc.com> wrote:
+> > > > >
+> > > > >On 9/11/2023 5:46 PM, Konrad Dybcio wrote:
+> > > > >> On 11.09.2023 11:42, Can Guo wrote:
+> > > > >>> Hi Konrad,
+> > > > >>>
+> > > > >>> On 9/11/2023 5:17 PM, Konrad Dybcio wrote:
+> > > > >>>> On 11.09.2023 07:59, Can Guo wrote:
+> > > > >>>>> From: "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
+> > > > >>>>>
+> > > > >>>>> Retrieve UFS device version from UFS host controller's spare register
+> > > > >>>>> which is populated by bootloader, and use the UFS device version together
+> > > > >>>>> with host controller's HW version to decide the proper power modes which
+> > > > >>>>> should be used to configure the UFS PHY.
+> > > > >>>> That sounds a bit fishy.. is there no bootloader-independent
+> > > > >>>> solution to that? Can't we bring in the code that the bootloader
+> > > > >>>> uses to determine these values?
+> > > > >>>>
+> > > > >>>> Konrad
+> > > > >>>
+> > > > >>> Agree, it is.
+> > > > >>>
+> > > > >>>
+> > > > >>> All these complexities come from one request from PHY design team - power saving.
+> > > > >>>
+> > > > >>> And to achieve power saving, Qualcomm UFS developers are requested to use the
+> > > > >>>
+> > > > >>> lowest hanging PHY settings which can sustain the Max agreed HS Gear (btw host
+> > > > >>>
+> > > > >>> and UFS device) during UFS's lifecycle in High Level OS,  whereas the power saving
+> > > > >>>
+> > > > >>> request does not apply to bootloader, which works for only a few seconds during
+> > > > >>>
+> > > > >>> bootup. Hence, there is no such version detect code in bootloader -  it just uses the
+> > > > >>>
+> > > > >>> highest PHY settings to configure PHY, boot up UFS and put UFS device version in this
+> > > > >>>
+> > > > >>> register.
+> > > > >> First of all, your email client seems to be inserting 2 newlines
+> > > > >> instead of 1. If you're using thunderbird, you may want to edit:
+> > > > >>
+> > > > >> mail.identity.(default or your mail identity idx).default.compose_html
+> > > > >>
+> > > > >> to `false`
+> > > > >>
+> > > > >> and add that to your internal wiki page, as I see many @quic folks having
+> > > > >> this issue.
+> > > > >>
+> > > > >>
+> > > > >> Going back to the main topic, I don't think we understood each other.
+> > > > >> The commit message states:
+> > > > >>
+> > > > >>
+> > > > >> "Retrieve UFS device version from UFS host controller's spare register
+> > > > >> which is populated by bootloader"
+> > > > >>
+> > > > >>
+> > > > >> Which means the bootloader is able to somehow determine the value
+> > > > >> that's in the spare register and write it there.
+> > > > >>
+> > > > >> I'm asking whether we can take the logic behind this value and
+> > > > >> move it to Linux so that we don't depend on the bootloader to
+> > > > >> guarantee it (e.g. Chrome or some other devices with more exotic
+> > > > >> fw may not work this way).
+> > > > >>
+> > > > >>
+> > > > >> Konrad
+> > > > >
+> > > > >
+> > > > >There is no logic behind this value at all in bootloader, as I explained, after bootloader
+> > > > >
+> > > > >initializes UFS, bootloader simply reads UFS's device version (the value you are referring)
+> > > > >
+> > > > >and write it to the register. But in Linux kernel, we need (or want to know) this value
+> > > > >
+> > > > >BEFORE we initialize UFS host controller (and UFS device).
+> > > >
+> > > > Depending on the bootloader behaviour is not an option. For example the kernel might be started via kexec. Or via u-boot. Or grub. Or any other bootloader. So please duplicate the logic to read the UFS version instead.
+> > > >
+> > >
+> > > As Can said, there is no logic in the bootloader. What it does it, after doing
+> > > the UFS initialization, it writes the agreed gear (between host and the device)
+> > > to this register. And in linux, we use that value to initialize the device
+> > > (i.e., not doing init based on the min gear).
+> > >
+> > > But the important factor here is that, we use this gear value to program the PHY
+> > > init sequence. So if there is no hint from the bootloader, linux will program
+> > > the min phy sequence (G3/G4) and then once the gear scaling happens, it will
+> > > program the max phy sequence (G4/G5).
+> > >
+> > > Now on recent platforms, the init sequences are not compatible with each other
+> > > i.e., once the min seq. is programmed, then before programming max seq. the
+> > > registers not common to both seq. should be programmed to default value. In
+> > > other words, min seq. specific registers should be reset to the default value.
+> > > Otherwise, there will be stability issues in the PHY.
+> > 
+> > I see nothing wrong with adding 'default' register programming to the
+> > gear tables. If we have to reset them to the default values to switch
+> > the PHY settings, these writes must be a part of the corresponding
+> > tables.
+> > 
+> 
+> Yep, that's what I initially proposed. But Qcom wanted to avoid the cost of
+> programming the reset tables in the PHY driver.
+> 
+> Can, could you please check if programming the additional sequence doesn't cause
+> any power/performance effect?
+> 
 
-Suggested-by: Alex Elder <elder@linaro.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/bus/mhi/ep/main.c | 70 +++++++++++++++++++++++++++++----------
- include/linux/mhi_ep.h    |  3 ++
- 2 files changed, 56 insertions(+), 17 deletions(-)
+I'd like to simplify this conversion as there has been some misunderstanding.
 
-diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-index 66ca470bf302..834e7afadd64 100644
---- a/drivers/bus/mhi/ep/main.c
-+++ b/drivers/bus/mhi/ep/main.c
-@@ -71,7 +71,8 @@ static int mhi_ep_send_event(struct mhi_ep_cntrl *mhi_cntrl, u32 ring_idx,
- static int mhi_ep_send_completion_event(struct mhi_ep_cntrl *mhi_cntrl, struct mhi_ep_ring *ring,
- 					struct mhi_ring_element *tre, u32 len, enum mhi_ev_ccs code)
- {
--	struct mhi_ring_element *event = kzalloc(sizeof(struct mhi_ring_element), GFP_KERNEL);
-+	struct mhi_ring_element *event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache,
-+							   GFP_KERNEL | GFP_DMA);
- 	int ret;
- 
- 	event->ptr = cpu_to_le64(ring->rbase + ring->rd_offset * sizeof(*tre));
-@@ -79,42 +80,45 @@ static int mhi_ep_send_completion_event(struct mhi_ep_cntrl *mhi_cntrl, struct m
- 	event->dword[1] = MHI_TRE_EV_DWORD1(ring->ch_id, MHI_PKT_TYPE_TX_EVENT);
- 
- 	ret = mhi_ep_send_event(mhi_cntrl, ring->er_index, event, MHI_TRE_DATA_GET_BEI(tre));
--	kfree(event);
-+	kmem_cache_free(mhi_cntrl->ev_ring_el_cache, event);
- 
- 	return ret;
- }
- 
- int mhi_ep_send_state_change_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_state state)
- {
--	struct mhi_ring_element *event = kzalloc(sizeof(struct mhi_ring_element), GFP_KERNEL);
-+	struct mhi_ring_element *event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache,
-+							   GFP_KERNEL | GFP_DMA);
- 	int ret;
- 
- 	event->dword[0] = MHI_SC_EV_DWORD0(state);
- 	event->dword[1] = MHI_SC_EV_DWORD1(MHI_PKT_TYPE_STATE_CHANGE_EVENT);
- 
- 	ret = mhi_ep_send_event(mhi_cntrl, 0, event, 0);
--	kfree(event);
-+	kmem_cache_free(mhi_cntrl->ev_ring_el_cache, event);
- 
- 	return ret;
- }
- 
- int mhi_ep_send_ee_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_ee_type exec_env)
- {
--	struct mhi_ring_element *event = kzalloc(sizeof(struct mhi_ring_element), GFP_KERNEL);
-+	struct mhi_ring_element *event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache,
-+							   GFP_KERNEL | GFP_DMA);
- 	int ret;
- 
- 	event->dword[0] = MHI_EE_EV_DWORD0(exec_env);
- 	event->dword[1] = MHI_SC_EV_DWORD1(MHI_PKT_TYPE_EE_EVENT);
- 
- 	ret = mhi_ep_send_event(mhi_cntrl, 0, event, 0);
--	kfree(event);
-+	kmem_cache_free(mhi_cntrl->ev_ring_el_cache, event);
- 
- 	return ret;
- }
- 
- static int mhi_ep_send_cmd_comp_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_ev_ccs code)
- {
--	struct mhi_ring_element *event = kzalloc(sizeof(struct mhi_ring_element), GFP_KERNEL);
-+	struct mhi_ring_element *event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache,
-+							   GFP_KERNEL | GFP_DMA);
- 	struct mhi_ep_ring *ring = &mhi_cntrl->mhi_cmd->ring;
- 	int ret;
- 
-@@ -123,7 +127,7 @@ static int mhi_ep_send_cmd_comp_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_e
- 	event->dword[1] = MHI_CC_EV_DWORD1(MHI_PKT_TYPE_CMD_COMPLETION_EVENT);
- 
- 	ret = mhi_ep_send_event(mhi_cntrl, 0, event, 0);
--	kfree(event);
-+	kmem_cache_free(mhi_cntrl->ev_ring_el_cache, event);
- 
- 	return ret;
- }
-@@ -435,7 +439,7 @@ static int mhi_ep_process_ch_ring(struct mhi_ep_ring *ring, struct mhi_ring_elem
- 		mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
- 	} else {
- 		/* UL channel */
--		result.buf_addr = kzalloc(len, GFP_KERNEL);
-+		result.buf_addr = kmem_cache_zalloc(mhi_cntrl->tre_buf_cache, GFP_KERNEL | GFP_DMA);
- 		if (!result.buf_addr)
- 			return -ENOMEM;
- 
-@@ -443,7 +447,7 @@ static int mhi_ep_process_ch_ring(struct mhi_ep_ring *ring, struct mhi_ring_elem
- 			ret = mhi_ep_read_channel(mhi_cntrl, ring, &result, len);
- 			if (ret < 0) {
- 				dev_err(&mhi_chan->mhi_dev->dev, "Failed to read channel\n");
--				kfree(result.buf_addr);
-+				kmem_cache_free(mhi_cntrl->tre_buf_cache, result.buf_addr);
- 				return ret;
- 			}
- 
-@@ -455,7 +459,7 @@ static int mhi_ep_process_ch_ring(struct mhi_ep_ring *ring, struct mhi_ring_elem
- 			/* Read until the ring becomes empty */
- 		} while (!mhi_ep_queue_is_empty(mhi_chan->mhi_dev, DMA_TO_DEVICE));
- 
--		kfree(result.buf_addr);
-+		kmem_cache_free(mhi_cntrl->tre_buf_cache, result.buf_addr);
- 	}
- 
- 	return 0;
-@@ -764,14 +768,14 @@ static void mhi_ep_ch_ring_worker(struct work_struct *work)
- 		if (ret) {
- 			dev_err(dev, "Error updating write offset for ring\n");
- 			mutex_unlock(&chan->lock);
--			kfree(itr);
-+			kmem_cache_free(mhi_cntrl->ring_item_cache, itr);
- 			continue;
- 		}
- 
- 		/* Sanity check to make sure there are elements in the ring */
- 		if (ring->rd_offset == ring->wr_offset) {
- 			mutex_unlock(&chan->lock);
--			kfree(itr);
-+			kmem_cache_free(mhi_cntrl->ring_item_cache, itr);
- 			continue;
- 		}
- 
-@@ -783,12 +787,12 @@ static void mhi_ep_ch_ring_worker(struct work_struct *work)
- 			dev_err(dev, "Error processing ring for channel (%u): %d\n",
- 				ring->ch_id, ret);
- 			mutex_unlock(&chan->lock);
--			kfree(itr);
-+			kmem_cache_free(mhi_cntrl->ring_item_cache, itr);
- 			continue;
- 		}
- 
- 		mutex_unlock(&chan->lock);
--		kfree(itr);
-+		kmem_cache_free(mhi_cntrl->ring_item_cache, itr);
- 	}
- }
- 
-@@ -844,7 +848,7 @@ static void mhi_ep_queue_channel_db(struct mhi_ep_cntrl *mhi_cntrl, unsigned lon
- 		u32 ch_id = ch_idx + i;
- 
- 		ring = &mhi_cntrl->mhi_chan[ch_id].ring;
--		item = kzalloc(sizeof(*item), GFP_ATOMIC);
-+		item = kmem_cache_zalloc(mhi_cntrl->ring_item_cache, GFP_ATOMIC);
- 		if (!item)
- 			return;
- 
-@@ -1391,6 +1395,29 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
- 		goto err_free_ch;
- 	}
- 
-+	mhi_cntrl->ev_ring_el_cache = kmem_cache_create("mhi_ep_event_ring_el",
-+							sizeof(struct mhi_ring_element), 0,
-+							SLAB_CACHE_DMA, NULL);
-+	if (!mhi_cntrl->ev_ring_el_cache) {
-+		ret = -ENOMEM;
-+		goto err_free_cmd;
-+	}
-+
-+	mhi_cntrl->tre_buf_cache = kmem_cache_create("mhi_ep_tre_buf", MHI_EP_DEFAULT_MTU, 0,
-+						      SLAB_CACHE_DMA, NULL);
-+	if (!mhi_cntrl->tre_buf_cache) {
-+		ret = -ENOMEM;
-+		goto err_destroy_ev_ring_el_cache;
-+	}
-+
-+	mhi_cntrl->ring_item_cache = kmem_cache_create("mhi_ep_ring_item",
-+							sizeof(struct mhi_ep_ring_item), 0,
-+							0, NULL);
-+	if (!mhi_cntrl->ev_ring_el_cache) {
-+		ret = -ENOMEM;
-+		goto err_destroy_tre_buf_cache;
-+	}
-+
- 	INIT_WORK(&mhi_cntrl->state_work, mhi_ep_state_worker);
- 	INIT_WORK(&mhi_cntrl->reset_work, mhi_ep_reset_worker);
- 	INIT_WORK(&mhi_cntrl->cmd_ring_work, mhi_ep_cmd_ring_worker);
-@@ -1399,7 +1426,7 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
- 	mhi_cntrl->wq = alloc_workqueue("mhi_ep_wq", 0, 0);
- 	if (!mhi_cntrl->wq) {
- 		ret = -ENOMEM;
--		goto err_free_cmd;
-+		goto err_destroy_ring_item_cache;
- 	}
- 
- 	INIT_LIST_HEAD(&mhi_cntrl->st_transition_list);
-@@ -1458,6 +1485,12 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
- 	ida_free(&mhi_ep_cntrl_ida, mhi_cntrl->index);
- err_destroy_wq:
- 	destroy_workqueue(mhi_cntrl->wq);
-+err_destroy_ring_item_cache:
-+	kmem_cache_destroy(mhi_cntrl->ring_item_cache);
-+err_destroy_ev_ring_el_cache:
-+	kmem_cache_destroy(mhi_cntrl->ev_ring_el_cache);
-+err_destroy_tre_buf_cache:
-+	kmem_cache_destroy(mhi_cntrl->tre_buf_cache);
- err_free_cmd:
- 	kfree(mhi_cntrl->mhi_cmd);
- err_free_ch:
-@@ -1479,6 +1512,9 @@ void mhi_ep_unregister_controller(struct mhi_ep_cntrl *mhi_cntrl)
- 
- 	free_irq(mhi_cntrl->irq, mhi_cntrl);
- 
-+	kmem_cache_destroy(mhi_cntrl->tre_buf_cache);
-+	kmem_cache_destroy(mhi_cntrl->ev_ring_el_cache);
-+	kmem_cache_destroy(mhi_cntrl->ring_item_cache);
- 	kfree(mhi_cntrl->mhi_cmd);
- 	kfree(mhi_cntrl->mhi_chan);
- 
-diff --git a/include/linux/mhi_ep.h b/include/linux/mhi_ep.h
-index f198a8ac7ee7..ce85d42b685d 100644
---- a/include/linux/mhi_ep.h
-+++ b/include/linux/mhi_ep.h
-@@ -128,6 +128,9 @@ struct mhi_ep_cntrl {
- 	struct work_struct reset_work;
- 	struct work_struct cmd_ring_work;
- 	struct work_struct ch_ring_work;
-+	struct kmem_cache *ring_item_cache;
-+	struct kmem_cache *ev_ring_el_cache;
-+	struct kmem_cache *tre_buf_cache;
- 
- 	void (*raise_irq)(struct mhi_ep_cntrl *mhi_cntrl, u32 vector);
- 	int (*alloc_map)(struct mhi_ep_cntrl *mhi_cntrl, u64 pci_addr, phys_addr_t *phys_ptr,
+First of all in linux, while probing the UFS device by the host controller, it
+needs to use _some_ gear. So far we were using HS_G2 as that gear and using the
+PHY init sequence of G3/G4 depending on the SoC. We do not need to use G2 init
+sequence because, there are only 2 init sequences available for any SoC and
+since the init sequences are backwards compatible, we mostly use the min init
+sequence, G3/G4. Even though this incurs slight power consumption during boot,
+the ufs host controller after probing the device will switch to max gear
+supported by both entities. If that max is G4/G5, then the respective init
+sequence will be programmed again.
+
+Now the issue is, for the automotive usecases, switching the gears 2 times
+during boot is affecting the boot KPI (Key Performance Inidicator). So the UFS
+team came with the idea of populating a spare register in the bootloader with
+the max gear info that the bootloader has already found out and using the same
+in the linux for first time itself. This helps linux in using a single gear
+during probe time.
+
+This is what this patch is doing. If for some reason, that register is not
+populated, then we default to the existing G2 gear and do init twice as the
+driver is doing currently.
+
+I hope this clarifies the intention of this patch.
+
+- Mani
+
+> - Mani
+> 
+> > >
+> > > So to avoid that, if we get the hint from bootloader (always the max supported
+> > > gear between host and device), then only one seq. will be programmed.
+> > >
+> > > Other way to solve this issue is to reset the non common registers in the init
+> > > seq. to default value. But that will be an additional overhead.
+> > >
+> > > But... if the bootloader doesn't populate this register (if the boot device is
+> > > not UFS, like in compute platforms), then this whole logic won't work. This
+> > > should also be taken into consideration.
+> > 
+> > Yep, that's the dependency on the bootloader. Which we should avoid.
+> > 
+> > >
+> > > - Mani
+> > >
+> > > >
+> > > > P.S. you have been asked to fix your email client. Please do so. Or, if you are inserting these linebreaks manually, please stop.
+> > > >
+> > > > >Thanks,
+> > > > >
+> > > > >Can Guo.
+> > > > >
+> > > >
+> > >
+> > > --
+> > > மணிவண்ணன் சதாசிவம்
+> > 
+> > 
+> > 
+> > -- 
+> > With best wishes
+> > Dmitry
+> 
+> -- 
+> மணிவண்ணன் சதாசிவம்
+
 -- 
-2.25.1
-
+மணிவண்ணன் சதாசிவம்
