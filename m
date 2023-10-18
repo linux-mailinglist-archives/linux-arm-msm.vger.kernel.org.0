@@ -2,136 +2,304 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 34A4C7CDB14
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 13:57:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B1B07CDB98
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 14:28:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230131AbjJRL5x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Oct 2023 07:57:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59556 "EHLO
+        id S229957AbjJRM2c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Oct 2023 08:28:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230051AbjJRL5w (ORCPT
+        with ESMTP id S229441AbjJRM2b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Oct 2023 07:57:52 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5EF2114;
-        Wed, 18 Oct 2023 04:57:50 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39I70Xa2002870;
-        Wed, 18 Oct 2023 11:57:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=ysNYIQ/Zi0jfiz1sdI12w6m3V0yJAk77TlAx2uz/ZxI=;
- b=DpFlCSQXyxNa+tDPlv5SLX6BYQu8BzItHUmuYKoQfRlYaRQNkfYZ6f/9B1YfRC+tModD
- rHjvatR6Bffir4sT+gOas+u3HKdBz+m6nmjiuplN3VP88L8by0NDL1knnVqwFICUUp03
- KqbQhmyaDr1nwOioO1E44ZUI+WYjQYuNX9QARrU3zshX3amkKUuZM5FMouqYwlDS+yH3
- Ul3wMTAX8lXs7MwNYk+UbwxoItjNzNtl2XJE3xBbum9vFmvz1v0UNN5R5ZnyJ8C5/AM6
- DWtzoNFMEju1BCFULWhiEMtUx4CKhJfBPQdtAotKTO4N3RYUG3CjzxYMBMDNfNy4n8wy GQ== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tsv0v2nev-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 18 Oct 2023 11:57:33 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39IBvW3Q001045
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 18 Oct 2023 11:57:32 GMT
-Received: from [10.216.30.229] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 18 Oct
- 2023 04:57:26 -0700
-Message-ID: <4293617a-f6a7-444f-b6f8-ac7297d9e9b1@quicinc.com>
-Date:   Wed, 18 Oct 2023 17:27:21 +0530
+        Wed, 18 Oct 2023 08:28:31 -0400
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA32810E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 05:28:29 -0700 (PDT)
+Received: by mail-oi1-x22c.google.com with SMTP id 5614622812f47-3b2b1ad7ee6so3213008b6e.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 05:28:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1697632109; x=1698236909; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=gWJF8w+ZmKp1jb1CoVlOBJDONP0RLpMI50cE905pgWg=;
+        b=PwLtym1ncagTWpc5zAUR0U85UKogVLCEv9n4KE0e3KzROyXqrwa7YdWwycfK9gmI7M
+         51WF6Pc/gE+T6N2Awb74lI382swoJtP2FC3WeI4hcDOyYiexFDDvQlqixLNHeJjSdbu7
+         9divqXUnpMlQDWy+jQwfuYIyRNwo9dvUyo3C001qHRLsmlJ0UgzAsh1IgaR3hYIPzffg
+         GRNBZp9dsTBeZhEyQVwlvkx5bvORQqL8EPrai7GAFE+vBc44JR14u2Do78Xdu080k1Dz
+         l6B6RGnMX6h5lMQIN5JAJ6FbsXIUR404HkzMSKV7HZqa5cy0EvDyCOnz6kqzyPjpUU9G
+         gFbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697632109; x=1698236909;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gWJF8w+ZmKp1jb1CoVlOBJDONP0RLpMI50cE905pgWg=;
+        b=kZ/r8qsO0NDNgPhY/hKKRJZfavxoDUe/tGuEiKzpp7kkjuNLaXLCrekK9YlReLd0wG
+         jx42MbYELZOEB3EwecAOwmGQtS/XQ4s3wU/03OzSlNI+nv3N/zOJgoytkD8Be5DuV1u7
+         Ea7igCe+CSVNvpCUljjrZC9R6kBguriLzerfbiJgWeNCewxiHa0G0Nu+GSON6oo8XwO6
+         wJ0M4OYXRJoSSMhIZFv3Pf5h0OsjchONoX2z9RwpxGedX0N1v/cU27yKyzI2uwJV4zWB
+         6mqTQbyPg2G2RRnZil9NCk0PwcWDqQhgFFi7Bm0OHx/V3fW9d39Pry88j6ogg3E5Ew2P
+         9AZg==
+X-Gm-Message-State: AOJu0YxnLY4NyVNa7DT6ZUPD5AuyvNJoXn8GS3hdf35yaoEVudHP7v5C
+        LMdAFAJaKFLX1UATSxM9NO4ZNCGoTkwjitqkiw==
+X-Google-Smtp-Source: AGHT+IH+ZPOle3U+H6TZ/sMIPLF6eFrT7YLOVduG7uxDTyeVQuqGmjsQUbEA3+9fBXs2Yer4/7sE9g==
+X-Received: by 2002:a05:6358:e87:b0:150:8ba9:4d with SMTP id 7-20020a0563580e8700b001508ba9004dmr5613112rwg.3.1697632109011;
+        Wed, 18 Oct 2023 05:28:29 -0700 (PDT)
+Received: from localhost.localdomain ([117.202.186.25])
+        by smtp.gmail.com with ESMTPSA id k3-20020aa79d03000000b0069102aa1918sm3180708pfp.48.2023.10.18.05.28.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Oct 2023 05:28:28 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     mhi@lists.linux.dev
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Alex Elder <elder@linaro.org>
+Subject: [PATCH] bus: mhi: ep: Use slab allocator where applicable
+Date:   Wed, 18 Oct 2023 17:58:12 +0530
+Message-Id: <20231018122812.47261-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 08/10] arm64: dts: qcom: sc8280xp: Add multiport
- controller node for SC8280
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-CC:     <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
-        <quic_jackp@quicinc.com>, <ahalaney@redhat.com>,
-        <quic_shazhuss@quicinc.com>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "Andy Gross" <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        "Wesley Cheng" <quic_wcheng@quicinc.com>,
-        Johan Hovold <johan@kernel.org>
-References: <20231007154806.605-1-quic_kriskura@quicinc.com>
- <20231007154806.605-9-quic_kriskura@quicinc.com>
- <467dd1cc-64af-43d7-93ca-be28043e2765@linaro.org>
- <cceab5a9-ac0f-4ecd-9aa5-0ede5615a13d@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <cceab5a9-ac0f-4ecd-9aa5-0ede5615a13d@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: PMQY6-Tg_CmBeGvoPCNHn4GijJTX08sp
-X-Proofpoint-GUID: PMQY6-Tg_CmBeGvoPCNHn4GijJTX08sp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-18_09,2023-10-18_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 malwarescore=0 phishscore=0 mlxscore=0 mlxlogscore=705
- impostorscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310180098
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Use slab allocator for allocating the memory for objects used frequently
+and are of fixed size. This reduces the overheard associated with
+kmalloc().
 
+Suggested-by: Alex Elder <elder@linaro.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ drivers/bus/mhi/ep/main.c | 70 +++++++++++++++++++++++++++++----------
+ include/linux/mhi_ep.h    |  3 ++
+ 2 files changed, 56 insertions(+), 17 deletions(-)
 
-On 10/12/2023 10:32 PM, Krishna Kurapati PSSNV wrote:
-> 
-> 
-> On 10/12/2023 10:10 PM, Konrad Dybcio wrote:
->>
->>
->> On 10/7/23 17:48, Krishna Kurapati wrote:
->>> Add USB and DWC3 node for tertiary port of SC8280 along with multiport
->>> IRQ's and phy's. This will be used as a base for SA8295P and SA8295-Ride
->>> platforms.
->>>
->>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
->>> ---
->> [...]
->>
->>> +
->>> +            interconnects = <&aggre1_noc MASTER_USB3_MP 0 &mc_virt 
->>> SLAVE_EBI1 0>,
->>> +                    <&gem_noc MASTER_APPSS_PROC 0 &config_noc 
->>> SLAVE_USB3_MP 0>;
->> Please use QCOM_ICC_TAG_ALWAYS from 
->> include/dt-bindings/interconnect/qcom,icc.h (like in sa8775p)
->>
->> With that I think it's good to go :)
->>
-> Hi Konrad. Thanks for the review.
-> 
-> I see that the tags are used fr spi/i2c but not usb. So to maintain 
-> uniformity, wanted to keep the same here.
-> 
+diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
+index 66ca470bf302..834e7afadd64 100644
+--- a/drivers/bus/mhi/ep/main.c
++++ b/drivers/bus/mhi/ep/main.c
+@@ -71,7 +71,8 @@ static int mhi_ep_send_event(struct mhi_ep_cntrl *mhi_cntrl, u32 ring_idx,
+ static int mhi_ep_send_completion_event(struct mhi_ep_cntrl *mhi_cntrl, struct mhi_ep_ring *ring,
+ 					struct mhi_ring_element *tre, u32 len, enum mhi_ev_ccs code)
+ {
+-	struct mhi_ring_element *event = kzalloc(sizeof(struct mhi_ring_element), GFP_KERNEL);
++	struct mhi_ring_element *event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache,
++							   GFP_KERNEL | GFP_DMA);
+ 	int ret;
+ 
+ 	event->ptr = cpu_to_le64(ring->rbase + ring->rd_offset * sizeof(*tre));
+@@ -79,42 +80,45 @@ static int mhi_ep_send_completion_event(struct mhi_ep_cntrl *mhi_cntrl, struct m
+ 	event->dword[1] = MHI_TRE_EV_DWORD1(ring->ch_id, MHI_PKT_TYPE_TX_EVENT);
+ 
+ 	ret = mhi_ep_send_event(mhi_cntrl, ring->er_index, event, MHI_TRE_DATA_GET_BEI(tre));
+-	kfree(event);
++	kmem_cache_free(mhi_cntrl->ev_ring_el_cache, event);
+ 
+ 	return ret;
+ }
+ 
+ int mhi_ep_send_state_change_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_state state)
+ {
+-	struct mhi_ring_element *event = kzalloc(sizeof(struct mhi_ring_element), GFP_KERNEL);
++	struct mhi_ring_element *event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache,
++							   GFP_KERNEL | GFP_DMA);
+ 	int ret;
+ 
+ 	event->dword[0] = MHI_SC_EV_DWORD0(state);
+ 	event->dword[1] = MHI_SC_EV_DWORD1(MHI_PKT_TYPE_STATE_CHANGE_EVENT);
+ 
+ 	ret = mhi_ep_send_event(mhi_cntrl, 0, event, 0);
+-	kfree(event);
++	kmem_cache_free(mhi_cntrl->ev_ring_el_cache, event);
+ 
+ 	return ret;
+ }
+ 
+ int mhi_ep_send_ee_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_ee_type exec_env)
+ {
+-	struct mhi_ring_element *event = kzalloc(sizeof(struct mhi_ring_element), GFP_KERNEL);
++	struct mhi_ring_element *event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache,
++							   GFP_KERNEL | GFP_DMA);
+ 	int ret;
+ 
+ 	event->dword[0] = MHI_EE_EV_DWORD0(exec_env);
+ 	event->dword[1] = MHI_SC_EV_DWORD1(MHI_PKT_TYPE_EE_EVENT);
+ 
+ 	ret = mhi_ep_send_event(mhi_cntrl, 0, event, 0);
+-	kfree(event);
++	kmem_cache_free(mhi_cntrl->ev_ring_el_cache, event);
+ 
+ 	return ret;
+ }
+ 
+ static int mhi_ep_send_cmd_comp_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_ev_ccs code)
+ {
+-	struct mhi_ring_element *event = kzalloc(sizeof(struct mhi_ring_element), GFP_KERNEL);
++	struct mhi_ring_element *event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache,
++							   GFP_KERNEL | GFP_DMA);
+ 	struct mhi_ep_ring *ring = &mhi_cntrl->mhi_cmd->ring;
+ 	int ret;
+ 
+@@ -123,7 +127,7 @@ static int mhi_ep_send_cmd_comp_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_e
+ 	event->dword[1] = MHI_CC_EV_DWORD1(MHI_PKT_TYPE_CMD_COMPLETION_EVENT);
+ 
+ 	ret = mhi_ep_send_event(mhi_cntrl, 0, event, 0);
+-	kfree(event);
++	kmem_cache_free(mhi_cntrl->ev_ring_el_cache, event);
+ 
+ 	return ret;
+ }
+@@ -435,7 +439,7 @@ static int mhi_ep_process_ch_ring(struct mhi_ep_ring *ring, struct mhi_ring_elem
+ 		mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
+ 	} else {
+ 		/* UL channel */
+-		result.buf_addr = kzalloc(len, GFP_KERNEL);
++		result.buf_addr = kmem_cache_zalloc(mhi_cntrl->tre_buf_cache, GFP_KERNEL | GFP_DMA);
+ 		if (!result.buf_addr)
+ 			return -ENOMEM;
+ 
+@@ -443,7 +447,7 @@ static int mhi_ep_process_ch_ring(struct mhi_ep_ring *ring, struct mhi_ring_elem
+ 			ret = mhi_ep_read_channel(mhi_cntrl, ring, &result, len);
+ 			if (ret < 0) {
+ 				dev_err(&mhi_chan->mhi_dev->dev, "Failed to read channel\n");
+-				kfree(result.buf_addr);
++				kmem_cache_free(mhi_cntrl->tre_buf_cache, result.buf_addr);
+ 				return ret;
+ 			}
+ 
+@@ -455,7 +459,7 @@ static int mhi_ep_process_ch_ring(struct mhi_ep_ring *ring, struct mhi_ring_elem
+ 			/* Read until the ring becomes empty */
+ 		} while (!mhi_ep_queue_is_empty(mhi_chan->mhi_dev, DMA_TO_DEVICE));
+ 
+-		kfree(result.buf_addr);
++		kmem_cache_free(mhi_cntrl->tre_buf_cache, result.buf_addr);
+ 	}
+ 
+ 	return 0;
+@@ -764,14 +768,14 @@ static void mhi_ep_ch_ring_worker(struct work_struct *work)
+ 		if (ret) {
+ 			dev_err(dev, "Error updating write offset for ring\n");
+ 			mutex_unlock(&chan->lock);
+-			kfree(itr);
++			kmem_cache_free(mhi_cntrl->ring_item_cache, itr);
+ 			continue;
+ 		}
+ 
+ 		/* Sanity check to make sure there are elements in the ring */
+ 		if (ring->rd_offset == ring->wr_offset) {
+ 			mutex_unlock(&chan->lock);
+-			kfree(itr);
++			kmem_cache_free(mhi_cntrl->ring_item_cache, itr);
+ 			continue;
+ 		}
+ 
+@@ -783,12 +787,12 @@ static void mhi_ep_ch_ring_worker(struct work_struct *work)
+ 			dev_err(dev, "Error processing ring for channel (%u): %d\n",
+ 				ring->ch_id, ret);
+ 			mutex_unlock(&chan->lock);
+-			kfree(itr);
++			kmem_cache_free(mhi_cntrl->ring_item_cache, itr);
+ 			continue;
+ 		}
+ 
+ 		mutex_unlock(&chan->lock);
+-		kfree(itr);
++		kmem_cache_free(mhi_cntrl->ring_item_cache, itr);
+ 	}
+ }
+ 
+@@ -844,7 +848,7 @@ static void mhi_ep_queue_channel_db(struct mhi_ep_cntrl *mhi_cntrl, unsigned lon
+ 		u32 ch_id = ch_idx + i;
+ 
+ 		ring = &mhi_cntrl->mhi_chan[ch_id].ring;
+-		item = kzalloc(sizeof(*item), GFP_ATOMIC);
++		item = kmem_cache_zalloc(mhi_cntrl->ring_item_cache, GFP_ATOMIC);
+ 		if (!item)
+ 			return;
+ 
+@@ -1391,6 +1395,29 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
+ 		goto err_free_ch;
+ 	}
+ 
++	mhi_cntrl->ev_ring_el_cache = kmem_cache_create("mhi_ep_event_ring_el",
++							sizeof(struct mhi_ring_element), 0,
++							SLAB_CACHE_DMA, NULL);
++	if (!mhi_cntrl->ev_ring_el_cache) {
++		ret = -ENOMEM;
++		goto err_free_cmd;
++	}
++
++	mhi_cntrl->tre_buf_cache = kmem_cache_create("mhi_ep_tre_buf", MHI_EP_DEFAULT_MTU, 0,
++						      SLAB_CACHE_DMA, NULL);
++	if (!mhi_cntrl->tre_buf_cache) {
++		ret = -ENOMEM;
++		goto err_destroy_ev_ring_el_cache;
++	}
++
++	mhi_cntrl->ring_item_cache = kmem_cache_create("mhi_ep_ring_item",
++							sizeof(struct mhi_ep_ring_item), 0,
++							0, NULL);
++	if (!mhi_cntrl->ev_ring_el_cache) {
++		ret = -ENOMEM;
++		goto err_destroy_tre_buf_cache;
++	}
++
+ 	INIT_WORK(&mhi_cntrl->state_work, mhi_ep_state_worker);
+ 	INIT_WORK(&mhi_cntrl->reset_work, mhi_ep_reset_worker);
+ 	INIT_WORK(&mhi_cntrl->cmd_ring_work, mhi_ep_cmd_ring_worker);
+@@ -1399,7 +1426,7 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
+ 	mhi_cntrl->wq = alloc_workqueue("mhi_ep_wq", 0, 0);
+ 	if (!mhi_cntrl->wq) {
+ 		ret = -ENOMEM;
+-		goto err_free_cmd;
++		goto err_destroy_ring_item_cache;
+ 	}
+ 
+ 	INIT_LIST_HEAD(&mhi_cntrl->st_transition_list);
+@@ -1458,6 +1485,12 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
+ 	ida_free(&mhi_ep_cntrl_ida, mhi_cntrl->index);
+ err_destroy_wq:
+ 	destroy_workqueue(mhi_cntrl->wq);
++err_destroy_ring_item_cache:
++	kmem_cache_destroy(mhi_cntrl->ring_item_cache);
++err_destroy_ev_ring_el_cache:
++	kmem_cache_destroy(mhi_cntrl->ev_ring_el_cache);
++err_destroy_tre_buf_cache:
++	kmem_cache_destroy(mhi_cntrl->tre_buf_cache);
+ err_free_cmd:
+ 	kfree(mhi_cntrl->mhi_cmd);
+ err_free_ch:
+@@ -1479,6 +1512,9 @@ void mhi_ep_unregister_controller(struct mhi_ep_cntrl *mhi_cntrl)
+ 
+ 	free_irq(mhi_cntrl->irq, mhi_cntrl);
+ 
++	kmem_cache_destroy(mhi_cntrl->tre_buf_cache);
++	kmem_cache_destroy(mhi_cntrl->ev_ring_el_cache);
++	kmem_cache_destroy(mhi_cntrl->ring_item_cache);
+ 	kfree(mhi_cntrl->mhi_cmd);
+ 	kfree(mhi_cntrl->mhi_chan);
+ 
+diff --git a/include/linux/mhi_ep.h b/include/linux/mhi_ep.h
+index f198a8ac7ee7..ce85d42b685d 100644
+--- a/include/linux/mhi_ep.h
++++ b/include/linux/mhi_ep.h
+@@ -128,6 +128,9 @@ struct mhi_ep_cntrl {
+ 	struct work_struct reset_work;
+ 	struct work_struct cmd_ring_work;
+ 	struct work_struct ch_ring_work;
++	struct kmem_cache *ring_item_cache;
++	struct kmem_cache *ev_ring_el_cache;
++	struct kmem_cache *tre_buf_cache;
+ 
+ 	void (*raise_irq)(struct mhi_ep_cntrl *mhi_cntrl, u32 vector);
+ 	int (*alloc_map)(struct mhi_ep_cntrl *mhi_cntrl, u64 pci_addr, phys_addr_t *phys_ptr,
+-- 
+2.25.1
 
-Hi Konrad,
-
-  Even in sa8775p.dtsi, the interconnect nodes have 0 & 1 instead of 
-macros. So wouldn't it be disturbing the uniformity if we use ICC_TAG's 
-here. Let me know your thoughts on this.
-
-Regards,
-Krishna,
