@@ -2,162 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 23AC27CE7A1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 21:23:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 84E627CE7D3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 21:36:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229947AbjJRTXM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Oct 2023 15:23:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42916 "EHLO
+        id S231354AbjJRTg5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Oct 2023 15:36:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229695AbjJRTXL (ORCPT
+        with ESMTP id S229757AbjJRTg4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Oct 2023 15:23:11 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEAC9119
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 12:23:07 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2c501bd6ff1so86280811fa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 12:23:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697656986; x=1698261786; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4QGqGSeYSU5AAAAtMvrAGBTAF2iAfnQPJ8RF6LbXL/4=;
-        b=q37/DLs3pI7dCjPcdPX7BswMatWBy0gRH5MnTLCjO36RqTW7bg1Xg+yyEaf2xbeUBP
-         CLe0xzTbkfOpysRl/BPRnRqNdi2Sz0jWdHH1lE1jxMvg1VnYE2UqV/63hndVcnpGgVuJ
-         xtkdpr3BtpXBsbIsJrQdtunCLNWmZlhMb2BV5tIGitfClX+dXXC6w+EkJe5Qkn5P6ah1
-         Z0QuHKVBpe/S5+mNmvZy02OTlBsH/5sV2+47mKx05Wbzk41WZPnzrfJzJLABTVXVjrOQ
-         ot/ISn/JuS6+uY8vUqHhUiN44vVbicX7RaxGHVh2S8dHS4F++ml0a1B039YcuabvtsJB
-         qfGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697656986; x=1698261786;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4QGqGSeYSU5AAAAtMvrAGBTAF2iAfnQPJ8RF6LbXL/4=;
-        b=Z2dMvBgZFQlM+ikdMY1N7+GLEWXDyZt9HuYIIt7tM2mRQQ70JyLt7renXbj2V6eOv4
-         OChhXlRuNJWrtS4uLXq0BESPbEGtX2QVgxOqJA7cJxoBduuhfqnDveMzWSylBlVB8gnS
-         7Kv6o47DbVjmnGmiPKDJdSYNvH1FL6ei1JAGOw2sf4ieVv9y0Mxouf6OmOLqbkAVgEQC
-         PItmfqX+XvhD0y77O/c7NN8i1m/4ttGlA3PjZjryZhYr3n72mvP7oE7bdHGX9CaB0CQe
-         n14EpuZS+enLbw7IRtUadbqu6+adnhQaNrwnK4bJ35b5qjWNoOin9BkHHoqNqIjf1pxP
-         PGgA==
-X-Gm-Message-State: AOJu0Yziul7dXvsXJexBtmt6+zsRLTAePIGwjtRpAZLLHrk1G/3cE0c6
-        w04u/oz3lQUhby3Vdj/3D0lBug==
-X-Google-Smtp-Source: AGHT+IHCNI5mzstugxBm0hNPofclzBipc42huRu6dNFnV6+ucXum9Z2MGkMSZJPblFTCS0VA8Pl/VQ==
-X-Received: by 2002:a2e:730a:0:b0:2c5:1c4:9005 with SMTP id o10-20020a2e730a000000b002c501c49005mr4320757ljc.32.1697656985956;
-        Wed, 18 Oct 2023 12:23:05 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.49])
-        by smtp.gmail.com with ESMTPSA id o18-20020a05600c4fd200b0040472ad9a3dsm2469077wmq.14.2023.10.18.12.23.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Oct 2023 12:23:05 -0700 (PDT)
-Message-ID: <56a8ec24-789f-42ae-88ac-cb35693df390@linaro.org>
-Date:   Wed, 18 Oct 2023 21:23:04 +0200
+        Wed, 18 Oct 2023 15:36:56 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C5D0118;
+        Wed, 18 Oct 2023 12:36:52 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39IJaG89014404;
+        Wed, 18 Oct 2023 19:36:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=TEATBtwlN0xdO7XyXRXGo39Ssf+eHUfF3pME+T6mWEs=;
+ b=ToCA+QdpMzm9hMH5AfLrLDf54I1WgNJcXcva0b13rUQdEjeWsguIh3C2VYWteWqmmUHq
+ /vn6HyyCIYJrsfULZfpdqHsAy4UTCnaTuT8ulj1BV2XKDL4AXz1DPvOjwwVIW4rbCb1Z
+ DLTX2RNZDgtT4A54IhUlGjubGUsfqg1Y88hVBJfHV6IRZXBiV8r6wlW3xlYacpRGqMNr
+ KdiRz4s2WyHwfD+ii4Ap/cn3eL6/jQz9jvK38RrNL8hWJykG3CjoKbnmpf2jbmarC81V
+ dKaTGnzcC4eQXfyhkHXgj+jqDAaA6mX6UzqMdZMNj3D2XiosdgI6CeYWbNUen83M6LuM LQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ttnnag02n-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 18 Oct 2023 19:36:21 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39IJaJAF005566
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 18 Oct 2023 19:36:20 GMT
+Received: from [10.110.123.255] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 18 Oct
+ 2023 12:36:19 -0700
+Message-ID: <fcaa93ba-3ca4-5a18-d3bd-afebe8def327@quicinc.com>
+Date:   Wed, 18 Oct 2023 12:36:12 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: pinctrl: qcom,sa8775p-tlmm: add missing
- wakeup-parent
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v9 09/34] ASoC: qcom: qdsp6: Introduce USB AFE port to
+ q6dsp
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231018145750.429385-1-krzysztof.kozlowski@linaro.org>
- <25185346-2d5d-469c-8a88-0f0f9f02a739@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <25185346-2d5d-469c-8a88-0f0f9f02a739@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        <mathias.nyman@intel.com>, <gregkh@linuxfoundation.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <perex@perex.cz>,
+        <tiwai@suse.com>, <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <srinivas.kandagatla@linaro.org>, <bgoswami@quicinc.com>,
+        <Thinh.Nguyen@synopsys.com>
+CC:     <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+References: <20231017200109.11407-1-quic_wcheng@quicinc.com>
+ <20231017200109.11407-10-quic_wcheng@quicinc.com>
+ <7aa4ea87-9d1f-400a-bcc5-b56e5b4500c6@linux.intel.com>
+ <c72bcf47-af0b-8819-1c30-06b51358381e@quicinc.com>
+ <2f05708e-3ee8-472e-a24f-6f3eb118133c@linux.intel.com>
+From:   Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <2f05708e-3ee8-472e-a24f-6f3eb118133c@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: NFa6HSMZ_yo8oCq0OUSdSUKJSyyyPtQe
+X-Proofpoint-ORIG-GUID: NFa6HSMZ_yo8oCq0OUSdSUKJSyyyPtQe
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-18_18,2023-10-18_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
+ phishscore=0 adultscore=0 malwarescore=0 spamscore=0 bulkscore=0
+ clxscore=1015 mlxlogscore=525 impostorscore=0 suspectscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310180161
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/10/2023 19:44, Konrad Dybcio wrote:
+Hi Pierre,
+
+On 10/18/2023 6:47 AM, Pierre-Louis Bossart wrote:
 > 
+>>>> Specifically, the QC ADSP can support all potential endpoints that are
+>>>> exposed by the audio data interface.  This includes, feedback endpoints
+>>>> (both implicit and explicit) as well as the isochronous (data)
+>>>> endpoints.
+>>>
+>>> implicit feedback means support for capture. This is confusing...
+>>>
+>>
+>> I mean, a USB device can expose a capture path, but as of now, we won't
+>> enable the offloading to the audio DSP for it.  However, if we're
+>> executing playback, and device does support implicit feedback, we will
+>> pass that along to the audio DSP to utilize.
 > 
-> On 10/18/23 16:57, Krzysztof Kozlowski wrote:
->> Add missing wakeup-parent property, already used by DTS to indicate that
->> pins are wakeup capable:
->>
->>    sa8775p-ride.dtb: pinctrl@f000000: 'wakeup-parent' does not match any of the regexes: '-state$', 'pinctrl-[0-9]+'
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
->>   Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-tlmm.yaml | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-tlmm.yaml
->> index e119a226a4b1..2173c5255638 100644
->> --- a/Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-tlmm.yaml
->> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-tlmm.yaml
->> @@ -28,6 +28,7 @@ properties:
->>     gpio-controller: true
->>     "#gpio-cells": true
->>     gpio-ranges: true
->> +  wakeup-parent: true
->>   
->>     gpio-reserved-ranges:
->>       minItems: 1
-> All the properties visiable in this diff sound reasonable to
-> put in the common yaml, no?
+> Not following. Implicit feedback means a capture stream *SHALL* be
+> started. Are you saying this capture stream is hidden and handled at the
+> DSP level only? If yes, what prevents you from exposing the capture
+> stream to userspace as well?
+> 
+> I must be missing something.
+> 
 
-Is something missing from common?
+My understanding is that with implicit feedback endpoints, it allows for 
+another data endpoint in the opposite direction to be utilized as a 
+feedback endpoint (versus having to expose another EP, such as in the 
+case of explicit feedback).  For example, if we are enabling the 
+playback path (and the device does have a capture data ep) then the data 
+ep used for the capture path can be used.
 
-Best regards,
-Krzysztof
+USB2.0 spec, section 5.12.4.3 (Implicit Feedback)
+"
+Two cases can arise:
+• One or more asynchronous sink endpoints are accompanied by an 
+asynchronous source endpoint. The
+data rate on the source endpoint can be used as implicit feedback 
+information to adjust the data rate on
+the sink endpoint(s).
+• One or more adaptive source endpoints are accompanied by an adaptive 
+sink endpoint. The source
+endpoint can adjust its data rate based on the data rate received by the 
+sink endpoint.
+"
 
+The DSP will get this as part of the USB sync endpoint information which 
+it will use to enable this EP.
+
+>>>>    +static const struct snd_soc_dai_ops q6usb_ops = {
+>>>> +    .probe        = msm_dai_q6_dai_probe,
+>>>> +    .prepare    = q6afe_dai_prepare,
+>>>> +    .hw_params    = q6usb_hw_params,
+>>>
+>>> this is rather confusing with two different layers used for hw_params
+>>> and prepare? Additional comments or explanations wouldn't hurt.
+>>>
+>>
+>> I thought this was how the ASoC design was.  Each DAI defined for a
+>> particular path has it own set of callbacks implemented to bring up any
+>> required resources for that entity.  So in this case, it initializes the
+>> "cpu" DAI, which is the main component that handles communication with
+>> the audio DSP.
+> 
+> Usually prepare and hw_params rely on the type of DAI callbacks, but
+> here you are mixing "q6afe" and "q6usb" which are shown in your Patch0
+> diagram as "cpu" and "codec" dais respectively. I don't think it's
+> correct to tie the two, it's a clear layering violation IMHO. The codec
+> dai .prepare should not invoke something that modifies the state of the
+> CPU dai, which should have its own .prepare callback.
+
+OK, I think I know where the misunderstanding is.  The API callback for 
+hw_params() that is being registered here exists in q6afe, but with the 
+q6usb prefix.  I will fix that in the next rev.
+
+Thanks
+Wesley Cheng
