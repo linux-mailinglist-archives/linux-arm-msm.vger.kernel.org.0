@@ -2,212 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 096BE7CDE37
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 16:02:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ECA5E7CDE74
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 16:10:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231849AbjJROC5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Oct 2023 10:02:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35442 "EHLO
+        id S1344992AbjJROJ6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Oct 2023 10:09:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231839AbjJROC4 (ORCPT
+        with ESMTP id S1344879AbjJROJm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Oct 2023 10:02:56 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED8B483
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 07:02:51 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2c509f2c46cso70855771fa.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 07:02:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697637770; x=1698242570; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
-         :references:cc:to:content-language:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BrvJS16JwCCTQYGqZYQ32U8uJ0RKwf4JAv30R+ZXmZ8=;
-        b=PQZqOGiVjYZckjK5bRLTDhbHCT8J8PEpRUV2u+rpiuYQAIEC2wxvfCVgWZanNQ7T8x
-         qpBj+GEVa8CjhYEXpDJCvNAR4+kgieuysA85yEANEMcDvuQrxDKcCgZW9KtdcgYFkOeb
-         9I425vfBf9d698FCUKI8QPkTF/kVtDo4/OMmw1XS8n+ZgIkO0TJXxqAUId71t70tl3IK
-         MkpERzCaiocCFsiRzJCTNif2XBNIXEtFz0PE5Keajt8TwA85PxAknnSCrWYBVgLjqkO+
-         wk82gNPqbeXyGRXGPVS0iZUMPT7ePtQDQaHFTXUGpPEYAva8zfTe8pEs8GUBzgM8pZB/
-         oQtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697637770; x=1698242570;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
-         :references:cc:to:content-language:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=BrvJS16JwCCTQYGqZYQ32U8uJ0RKwf4JAv30R+ZXmZ8=;
-        b=gucJWvYWIoqbKACCSnGRQG2TSGi+YAz/qgU95cqVGdUoU+uZeT1yI2TUMbfDOwCpTZ
-         dNDAityV3fP0Kb8+fBNAOrrJ8vjefP+sw5WD70adtRz2ZSNc+MH/uPRxi1mVKVNI72Zv
-         Y6+D6IdcpXriE5o2Adk7YLp4CkHCWtneBTWUURRMfk8R5zqx/+SaXKBOFPeKD2ax2bwp
-         YaWdJywWLpvAmOnvrnVH9PInxHUym9t1cf8oa+9X4ECPJkr1D3hODGWxKOBOhTtO9cE9
-         G/AsZEJ1kRtCQ/B4FwHfHyJCNwuZ99L1QXlOpt4/Ia2lXDKtMzBTKf86SjlNTBL/Rqqf
-         F1VQ==
-X-Gm-Message-State: AOJu0Yyo7y1PNSymU8YmGabnIa1z5CLCZy/wnyblX56i5K9g46UaYTcs
-        mRsmm9Qd+iHTZ3cT3cPduXbfoQ==
-X-Google-Smtp-Source: AGHT+IFwm9UwIKru6U6PA5v6Sik26DhFXloXccGwkzfIWGxSemOJitg8JS639gA9BfXuUVOtyhKfCw==
-X-Received: by 2002:a2e:a0cb:0:b0:2c0:1fb4:446f with SMTP id f11-20020a2ea0cb000000b002c01fb4446fmr3743183ljm.14.1697637770014;
-        Wed, 18 Oct 2023 07:02:50 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:5d8f:701:423:3d05? ([2a01:e0a:982:cbb0:5d8f:701:423:3d05])
-        by smtp.gmail.com with ESMTPSA id fm12-20020a05600c0c0c00b004030e8ff964sm1758913wmb.34.2023.10.18.07.02.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Oct 2023 07:02:49 -0700 (PDT)
-Message-ID: <ccf40aed-3acc-474e-b456-031669b4a895@linaro.org>
-Date:   Wed, 18 Oct 2023 16:02:48 +0200
+        Wed, 18 Oct 2023 10:09:42 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AED6619B;
+        Wed, 18 Oct 2023 07:09:20 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39IDkGLG017627;
+        Wed, 18 Oct 2023 14:09:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=o4XBTkJlvarejnZV8pC470v6+3DYRzBxpiH+Yo4yy20=;
+ b=Y2M5WhxHER5RKIvsMW6x4BCK6Yd7cRXarn7/Rdameqpf7ryiGrSAZccyo8/R9zy+w0bY
+ JRU7b2K4D5xC3YGid8xwoKw1hsbiIYu94ZNSF9LEqzkPBzEgPsNw5W0aVtykBbn4u+NT
+ JKke6kkBl1U8EZMUaacLywkPZ1Z4tc1GxBKLhralhC3EQ9z9UPhhj6706LHZF7SkVDEU
+ C5UgxiCTyQAEEMDOfrd0of51xu9y+tF62ETfZSSl4yxbHOnCO1S5/AuVaeiX8KuXjSp9
+ 54gD0McHM8rSjZVysEtHq49IgFZ2B55RxyL7Zhy8tt0cxD6M6xcNRbIEXPh59s1TAul9 5g== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tt8xs952p-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 18 Oct 2023 14:09:15 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39IE8vV8023216
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 18 Oct 2023 14:08:58 GMT
+Received: from [10.216.42.121] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 18 Oct
+ 2023 07:08:49 -0700
+Message-ID: <ee431c51-1474-47f9-b298-8ca284ea353b@quicinc.com>
+Date:   Wed, 18 Oct 2023 19:38:44 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 2/6] scsi: ufs: ufs-qcom: Add support for UFS device
- version detection
-Content-Language: en-US, fr
-To:     Can Guo <quic_cang@quicinc.com>, mani@kernel.org,
-        quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
-        martin.petersen@oracle.com
-Cc:     linux-scsi@vger.kernel.org, Andy Gross <agross@kernel.org>,
+Subject: Re: [PATCH v2 00/11] Add GPLL0 as clock provider for the Qualcomm's
+ IPQ mailbox controller
+Content-Language: en-US
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "open list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
-        <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <1694411968-14413-1-git-send-email-quic_cang@quicinc.com>
- <1694411968-14413-3-git-send-email-quic_cang@quicinc.com>
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <1694411968-14413-3-git-send-email-quic_cang@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        "Sricharan Ramabadhran" <quic_srichara@quicinc.com>,
+        Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>,
+        Varadarajan Narayanan <quic_varada@quicinc.com>,
+        Anusha Rao <quic_anusha@quicinc.com>,
+        Devi Priya <quic_devipriy@quicinc.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <stable@vger.kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Robert Marko <robimarko@gmail.com>
+References: <20230913-gpll_cleanup-v2-0-c8ceb1a37680@quicinc.com>
+From:   Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+In-Reply-To: <20230913-gpll_cleanup-v2-0-c8ceb1a37680@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ijw9qUUhIq2d-FlkW1rzCJGjGOrf2wun
+X-Proofpoint-ORIG-GUID: ijw9qUUhIq2d-FlkW1rzCJGjGOrf2wun
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-18_12,2023-10-18_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ lowpriorityscore=0 spamscore=0 mlxscore=0 suspectscore=0 clxscore=1011
+ impostorscore=0 phishscore=0 adultscore=0 priorityscore=1501
+ mlxlogscore=999 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2309180000 definitions=main-2310180117
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/09/2023 07:59, Can Guo wrote:
-> From: "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
-> 
-> Retrieve UFS device version from UFS host controller's spare register
-> which is populated by bootloader, and use the UFS device version together
-> with host controller's HW version to decide the proper power modes which
-> should be used to configure the UFS PHY.
-> 
-> Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
-> Signed-off-by: Can Guo <quic_cang@quicinc.com>
-> ---
->   drivers/ufs/host/ufs-qcom.c | 30 +++++++++++++++++++++++-------
->   drivers/ufs/host/ufs-qcom.h |  2 ++
->   2 files changed, 25 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index 710f079..8a9d54f 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -1030,7 +1030,7 @@ static void ufs_qcom_advertise_quirks(struct ufs_hba *hba)
->   				| UFSHCD_QUIRK_BROKEN_PA_RXHSUNTERMCAP);
->   	}
->   
-> -	if (host->hw_ver.major > 0x3)
-> +	if (host->hw_ver.major > 0x3 && host->hw_ver.major < 0x5)
->   		hba->quirks |= UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH;
->   }
->   
-> @@ -1038,11 +1038,33 @@ static void ufs_qcom_set_pwr_mode_limits(struct ufs_hba *hba)
->   {
->   	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
->   	struct ufs_dev_params *host_pwr_cap = &host->host_pwr_cap;
-> +	u32 val, dev_major = 0;
->   
->   	ufshcd_init_pwr_dev_param(host_pwr_cap);
->   
->   	/* This driver only supports symmetic gear setting i.e., hs_tx_gear == hs_rx_gear */
->   	host_pwr_cap->hs_tx_gear = host_pwr_cap->hs_rx_gear = ufs_qcom_get_hs_gear(hba);
-> +	host->phy_gear = host_pwr_cap->hs_rx_gear;
-> +
-> +	if (host->hw_ver.major < 0x5) {
 
-Here you set G2 for < 0x5
+On 9/14/2023 12:29 PM, Kathiravan Thirumoorthy wrote:
+> Currently mailbox controller takes the XO and APSS PLL as the input. It
+> can take the GPLL0 also as an input. This patch series adds the same and
+> fixes the issue caused by this.
+>
+> Once the cpufreq driver is up, it tries to bump up the cpu frequency
+> above 800MHz, while doing so system is going to unusable state. Reason
+> being, with the GPLL0 included as clock source, clock framework tries to
+> achieve the required rate with the possible parent and since GPLL0
+> carries the CLK_SET_RATE_PARENT flag, clock rate of the GPLL0 is getting
+> changed, causing the issue.
+>
+> First half of the series, removes the CLK_SET_RATE_PARENT flag from the
+> PLL clocks since the PLL clock rates shouldn't be changed. Another
+> half, add the necessary support to include the GPLL0 as clock provider
+> for mailbox and accomodate the changes in APSS clock driver.
+>
+> This is also the preparatory series to enable the CPUFreq on IPQ5332
+> SoC. Dynamic scaling of CPUFreq is not supported on IPQ5332, so to
+> switch between the frequencies we need to park the APSS PLL in safe
+> source, here it is GPLL0 and then shutdown and bring up the APSS PLL in
+> the desired rate.
+>
+> For IPQ5332 SoC, this series depends on the below patch
+> https://lore.kernel.org/linux-arm-msm/1693474133-10467-1-git-send-email-quic_varada@quicinc.com/
 
-> +		/*
-> +		 * Power up the PHY using the minimum supported gear (UFS_HS_G2).
-> +		 * Switching to max gear will be performed during reinit if supported.
-> +		 */
-> +		host->phy_gear = UFS_HS_G2;
-> +	} else {
 
-So here is for >= 0x5
+Bjorn, can this series picked up for v6.7?
 
-> +		val = ufshcd_readl(host->hba, REG_UFS_DEBUG_SPARE_CFG);
-> +		dev_major = FIELD_GET(GENMASK(7, 4), val);
-> +
-> +		if (host->hw_ver.major == 0x5 && (dev_major >= 0x4 ||
-> +						  dev_major == 0)) {
-> +			/* For UFS 4.0 and newer, or dev version is not populated */
-> +			host_pwr_cap->hs_rate = PA_HS_MODE_A;
-> +		} else if (dev_major < 0x4 && dev_major > 0) {
-> +			/* For UFS 3.1 and older, apply HS-G4 PHY settings to save power */
-> +			host->phy_gear = UFS_HS_G4;
-> +		}
-
-But behavior of > 0x5 is not clear here, could you clarify it in v2 ?
+There is a minor nit the commit message. The statement "APSS PLL will be 
+running at 800MHz" should be "APSS clock / CPU clock will be running at 
+800MHz" and this should be taken care for clk and the dts patches. Do 
+let me know if I need to re-spin the address to address this.
 
 Thanks,
-Neil
 
-> +	}
->   }
->   
->   static void ufs_qcom_set_caps(struct ufs_hba *hba)
-> @@ -1287,12 +1309,6 @@ static int ufs_qcom_init(struct ufs_hba *hba)
->   		dev_warn(dev, "%s: failed to configure the testbus %d\n",
->   				__func__, err);
->   
-> -	/*
-> -	 * Power up the PHY using the minimum supported gear (UFS_HS_G2).
-> -	 * Switching to max gear will be performed during reinit if supported.
-> -	 */
-> -	host->phy_gear = UFS_HS_G2;
-> -
->   	return 0;
->   
->   out_variant_clear:
-> diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-> index 4db64d9..e10889f 100644
-> --- a/drivers/ufs/host/ufs-qcom.h
-> +++ b/drivers/ufs/host/ufs-qcom.h
-> @@ -56,6 +56,8 @@ enum {
->   	UFS_AH8_CFG				= 0xFC,
->   
->   	REG_UFS_CFG3				= 0x271C,
-> +
-> +	REG_UFS_DEBUG_SPARE_CFG			= 0x284C,
->   };
->   
->   /* QCOM UFS host controller vendor specific debug registers */
 
+>
+> Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+> ---
+> Changes in v2:
+> - included the patch to drop the CLK_SET_RATE_PARENT from IPQ5018 GCC driver
+> - Splitted the DTS changes per target
+> - For IPQ8074 and IPQ6018 keep the CLK_SET_RATE_PARENT for UBI32 PLL
+>    since the PLL clock rates can be changed
+> - Pick up the tags in the relevant patches
+> - Link to v1: https://lore.kernel.org/r/20230904-gpll_cleanup-v1-0-de2c448f1188@quicinc.com
+>
+> ---
+> Kathiravan Thirumoorthy (11):
+>        clk: qcom: ipq8074: drop the CLK_SET_RATE_PARENT flag from PLL clocks
+>        clk: qcom: ipq6018: drop the CLK_SET_RATE_PARENT flag from PLL clocks
+>        clk: qcom: ipq5018: drop the CLK_SET_RATE_PARENT flag from GPLL clocks
+>        clk: qcom: ipq9574: drop the CLK_SET_RATE_PARENT flag from GPLL clocks
+>        clk: qcom: ipq5332: drop the CLK_SET_RATE_PARENT flag from GPLL clocks
+>        dt-bindings: mailbox: qcom: add one more clock provider for IPQ mailbox
+>        clk: qcom: apss-ipq6018: add the GPLL0 clock also as clock provider
+>        arm64: dts: qcom: ipq8074: include the GPLL0 as clock provider for mailbox
+>        arm64: dts: qcom: ipq6018: include the GPLL0 as clock provider for mailbox
+>        arm64: dts: qcom: ipq9574: include the GPLL0 as clock provider for mailbox
+>        arm64: dts: qcom: ipq5332: include the GPLL0 as clock provider for mailbox
+>
+>   .../devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml          | 2 ++
+>   arch/arm64/boot/dts/qcom/ipq5332.dtsi                               | 4 ++--
+>   arch/arm64/boot/dts/qcom/ipq6018.dtsi                               | 4 ++--
+>   arch/arm64/boot/dts/qcom/ipq8074.dtsi                               | 4 ++--
+>   arch/arm64/boot/dts/qcom/ipq9574.dtsi                               | 4 ++--
+>   drivers/clk/qcom/apss-ipq6018.c                                     | 3 +++
+>   drivers/clk/qcom/gcc-ipq5018.c                                      | 3 ---
+>   drivers/clk/qcom/gcc-ipq5332.c                                      | 2 --
+>   drivers/clk/qcom/gcc-ipq6018.c                                      | 6 ------
+>   drivers/clk/qcom/gcc-ipq8074.c                                      | 6 ------
+>   drivers/clk/qcom/gcc-ipq9574.c                                      | 4 ----
+>   11 files changed, 13 insertions(+), 29 deletions(-)
+> ---
+> base-commit: e143016b56ecb0fcda5bb6026b0a25fe55274f56
+> change-id: 20230913-gpll_cleanup-5d0a339ebd17
+>
+> Best regards,
