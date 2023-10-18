@@ -2,80 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 471A57CD3C0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 08:00:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DAC577CD3DE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 08:10:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229613AbjJRGAm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Oct 2023 02:00:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59666 "EHLO
+        id S229625AbjJRGKC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Oct 2023 02:10:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229612AbjJRGAl (ORCPT
+        with ESMTP id S229606AbjJRGKB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Oct 2023 02:00:41 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFA47FA
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 23:00:38 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-4083f613272so569195e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 23:00:38 -0700 (PDT)
+        Wed, 18 Oct 2023 02:10:01 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B630FF9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 23:09:58 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-9a6190af24aso1056176266b.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 23:09:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697608837; x=1698213637; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1697609397; x=1698214197; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=6jYUU/zMwQ57icTdluFdkVmoJdfusA7m4N1I0RAQAJ8=;
-        b=SMW+4zZRxBpo0dDRtVQcrjed634Z5Y/sGjZBrbdcU0HGjd4e7RGpNLR/VaSgKeJ40o
-         pE+onUgqNbIEofkHB0KvK1Sa/IiIZdgJHVZaIy/8ylH6bi13x/JDnztldxDgtgzWg1py
-         hmEUSQ2TpQq1RR2PaRpQf59I+C52JkJ/h2jaPghymUYwv0HZaJf/9QN5DiwBDauUwRiu
-         3E26Oy/IqqXLegFI7Uz2wFM6WLaZiTLnd4biR6PFjCT0yLzzEYQVL2tvSAGyNm3RIBZ0
-         dRQk3NaxCW2ng+K1OeUOMHq5OaYEqN6d+dzMB8rfTWJnhKI0Zq5Oxy+UMomSlnvMRVkC
-         tmfA==
+        bh=TOSDdTKHQ6Zn18zXh4dBj8ZhMSb7NfUjm1rV0GFHp+0=;
+        b=q8ec2Xev+rEuYa9JVBFAJ6mUanuZnt94sHGayOVXF0Hmjhto0zaka3XQlq0q0Z4bAi
+         i98smxaZHMy/snHypaaoQdLCW6aczp4Bhz2Yj/WwCX47IeEzfYFvULIZsfeRu0uyNalA
+         8L7mO3NC2HFgX/ccMfmoL4VL4ufldWfGGUQKDraDvyiHdHn61/j1AJfcyExZSVl8rz+T
+         4n0oT/X6zbkq/iByV5A01SNKqh0tbfQKw/ww2U6nQIdT5I0JUwYChl1/jtYEisx3mdOV
+         e/yXUgHb+TNHeLfBVAlvkjBmAPsYfHcyxt4L4OqKJEiCzE7ay38E3Pagz9xkC4+qoFz8
+         r3pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697608837; x=1698213637;
+        d=1e100.net; s=20230601; t=1697609397; x=1698214197;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6jYUU/zMwQ57icTdluFdkVmoJdfusA7m4N1I0RAQAJ8=;
-        b=Ud3Wbx+a4XJR2CkUpaDTZh/RuIPcwg1ayRTK+B932cvmhQ7CzZKjFYrrJsHDUglgS+
-         5ZaV98TMmgZXuk+EXFJ6+DyFF0bWhfSuWilKiIbX4kh0RQ74+GgY2xcJPV/OcGclz+Mf
-         E9I7hRxjEJD+8onawE+uzmscsXp6gYnIqnXGPm5hcrGcsnH+95JENmY9buMyZDPhSHMd
-         RGMVH28aWIKcdlCuM9LWuaLHvQL5WeTXDlnTCHFKafevvR+vg6xSyJFIR0uUMlVPBslH
-         7t0N5k8OsK4cgFhvwkAyCgCKV/BhWaEz6kIEvy4dD+snOHwnRuaSh5izoB6kp8tf/5aO
-         Z7xw==
-X-Gm-Message-State: AOJu0Yyzp47p+LM2tXa1MjclIHmjwQ4MJ7cN7/0nDSXEbZy2ZdtR2uc9
-        suvKtSN2sWo0v26wJICtMuNSuQ==
-X-Google-Smtp-Source: AGHT+IGPB7PtgGhLJB00EPY5bCertig3g1OC/hkjJkff0FeRZ0lTrQed2+3auUs93GzcwOhS6dTgyw==
-X-Received: by 2002:a05:600c:19cc:b0:405:375d:b860 with SMTP id u12-20020a05600c19cc00b00405375db860mr3162436wmq.21.1697608837336;
-        Tue, 17 Oct 2023 23:00:37 -0700 (PDT)
+        bh=TOSDdTKHQ6Zn18zXh4dBj8ZhMSb7NfUjm1rV0GFHp+0=;
+        b=vhe2cJ3SS+f3ZsRV5OeOo+uu9C0aACpg9QU4vFbHOiniN/QmtS6VRKheIRzGFEmDGG
+         p267zET/zZiC1OB9wgvI3167gF9rDT2vmlLGqfEEkkefJeEML+AJC/+7mimRcUX5t4x9
+         0GlNDuDlsTCAABJNaO2UsLmX0BBdLFTKbSyuPv6O1o/87iSicWEC1OYyYpvC5zhR9+co
+         nPeXsmdAzuhgzmPa7Go3jtAJafDNgZt9BN9iUiEsro96nUYJbvNCoSXCxTbDOeev4i97
+         2ws4a7YRCg9x89zt3Zbw4yo7m0JJIIjX8hU1cZ1nD+8iTwHQxDuHps1oJ33Xau0lwKue
+         4/Wg==
+X-Gm-Message-State: AOJu0YwYyXdTCofqCT0UyMk4NekhF75WUXQeg0m0eYZl7rxHIws/aisM
+        MxtIXQPCDwgnL88UYSVbWotKmQ==
+X-Google-Smtp-Source: AGHT+IFxJy7pc9qR58gBFWblDRsvoaM08c/0G6qwRhBGUOQIAkRSbEh09MIMTlEjzlwQdUZMeXgQlg==
+X-Received: by 2002:a17:907:2688:b0:9c5:2806:72e2 with SMTP id bn8-20020a170907268800b009c5280672e2mr3026227ejc.34.1697609397120;
+        Tue, 17 Oct 2023 23:09:57 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.154])
-        by smtp.gmail.com with ESMTPSA id h5-20020a05600c350500b003fc0505be19sm722336wmq.37.2023.10.17.23.00.35
+        by smtp.gmail.com with ESMTPSA id j8-20020a1709064b4800b009a1a653770bsm933348ejv.87.2023.10.17.23.09.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Oct 2023 23:00:36 -0700 (PDT)
-Message-ID: <b52d0de7-e320-4c4c-876e-346281de23a1@linaro.org>
-Date:   Wed, 18 Oct 2023 08:00:35 +0200
+        Tue, 17 Oct 2023 23:09:56 -0700 (PDT)
+Message-ID: <8059e5ab-672a-4808-9159-d67309625ef0@linaro.org>
+Date:   Wed, 18 Oct 2023 08:09:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/12] dt-bindings: usb: qcom,dwc3: Introduce flattened
- qcom,dwc3 binding
+Subject: Re: [RFC 1/8] dt-bindings: usb: qcom,dwc3: Add bindings to enable
+ runtime
 Content-Language: en-US
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_ppratap@quicinc.com, quic_jackp@quicinc.com,
+        Conor Dooley <conor+dt@kernel.org>, quic_wcheng@quicinc.com,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Felipe Balbi <balbi@kernel.org>,
         Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Johan Hovold <johan@kernel.org>,
-        Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-References: <20231016-dwc3-refactor-v1-0-ab4a84165470@quicinc.com>
- <20231016-dwc3-refactor-v1-10-ab4a84165470@quicinc.com>
- <9f53e647-7c38-435f-bc74-e4f417445830@linaro.org>
- <20231017225433.GW3553829@hu-bjorande-lv.qualcomm.com>
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Bjorn Andersson <andersson@kernel.org>
+References: <20231017131851.8299-1-quic_kriskura@quicinc.com>
+ <20231017131851.8299-2-quic_kriskura@quicinc.com>
+ <a3d612a8-1917-491d-a944-22ea39879a9d@linaro.org>
+ <189be124-efb1-4843-9a47-db84942838c9@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -121,7 +119,7 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231017225433.GW3553829@hu-bjorande-lv.qualcomm.com>
+In-Reply-To: <189be124-efb1-4843-9a47-db84942838c9@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -134,124 +132,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/10/2023 00:54, Bjorn Andersson wrote:
-> On Tue, Oct 17, 2023 at 08:11:45AM +0200, Krzysztof Kozlowski wrote:
->> On 17/10/2023 05:11, Bjorn Andersson wrote:
+On 17/10/2023 19:46, Krishna Kurapati PSSNV wrote:
+> 
+> 
+> On 10/17/2023 10:49 PM, Krzysztof Kozlowski wrote:
+>> On 17/10/2023 15:18, Krishna Kurapati wrote:
+>>> Add enable-rt binding to let the device register vendor hooks to
+>>> core and facilitate runtime suspend and resume.
+>>>
+>>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+>>> ---
+>>>   Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 5 +++++
+>>>   1 file changed, 5 insertions(+)
+>>>
 >>> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> [..]
->>> +select:
->>> +  properties:
->>> +    compatible:
->>> +      items:
->>> +        - enum:
->>> +            - qcom,ipq4019-dwc3
-> [..]
->>> +            - qcom,sm8550-dwc3
+>>> index cb50261c6a36..788d9c510abc 100644
+>>> --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+>>> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+>>> @@ -151,6 +151,11 @@ properties:
+>>>         HS/FS/LS modes are supported.
+>>>       type: boolean
+>>>   
+>>> +  qcom,enable-rt:
+>>> +    description:
+>>> +      If present, register vendor hooks to facilitate runtime suspend/resume
 >>
->> This enum could be replaced with '{}'. Alternatively, drop enum entire
->> select replaced with:
->> - contains
->>   - items:
->>       - const: qcom,dwc3
->>       - const: snps,dwc3
->>
-> 
-> I thought this would be what I needed as well, but unfortunately this
-> select matches either qcom,dwc3, snps,dwc3, or both. With the result
-> that e.g. the example in the snps,dwc3 binding matches against this and
-> as expected fails when validated against this binding.
-> 
-> Taking yet another look at this, and reading more about json validation
-> I figured out that the following matches nodes with both the
-> compatibles:
-> 
-> select:
->   properties:
->     compatible:
->       items:
->         - const: qcom,dwc3
->         - const: snps,dwc3
->   required:
->     - compatible
-> 
-> [..]
->>> +
->>> +# Required child node:
->>
->> Drop
+>> You described the desired Linux feature or behavior, not the actual
+>> hardware. The bindings are about the latter, so instead you need to
+>> rephrase the property and its description to match actual hardware
+>> capabilities/features/configuration etc.
 >>
 > 
-> Of course.
+> Hi Krzysztof,
 > 
->>
->> ...
->>
->>> diff --git a/Documentation/devicetree/bindings/usb/snps,dwc3.yaml b/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
->>> index d81c2e849ca9..d6914b8cef6a 100644
->>> --- a/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
->>> +++ b/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
->>> @@ -44,14 +44,18 @@ properties:
->>>        It's either a single common DWC3 interrupt (dwc_usb3) or individual
->>>        interrupts for the host, gadget and DRD modes.
->>>      minItems: 1
->>> -    maxItems: 4
->>> +    maxItems: 5
->>>  
->>>    interrupt-names:
->>> -    minItems: 1
->>> -    maxItems: 4
->>>      oneOf:
->>> -      - const: dwc_usb3
->>> -      - items:
->>> +      - minItems: 1
->>> +        maxItems: 5
->>> +        items:
->>> +          - const: dwc_usb3
->>> +        additionalItems: true
->>
->> This is not correct change. Before, one dwc_usb3 interrupt was combined
->> allowed, or a set of host+peripheral+otg+wakeup. Now, you allow combined
->> dwc_usb3 with anything.
->>
-> 
-> My intention here is to make below list of 5 strings be valid according
-> to the snps,dwc3 (i.e. dwc_usb3 being the first item), and valid
-> according to the qcom,dwc3 binding with all 5 defined.
-> 
->   interrupt-names = "dwc_usb3", "hs_phy_irq", "ss_phy_irq",
-> 		    "dm_hs_phy_irq", "dp_hs_phy_irq";
-> 
-> When I express this as:
-> 
->   interrupt-names:
->     minItems: 1
->     maxItems: 5
->     oneOf:
->       - const: dwc_usb3
->       - items:
->           enum: [host, peripheral, otg, wakeup]
-> 
-> I get:
-> 
-> /local/mnt/workspace/bjorande/linux/Documentation/devicetree/bindings/usb/qcom,dwc3.example.dtb: usb@a600000: interrupt-names: 'oneOf' conditional failed, one must be fixed:
->         ['dwc_usb3', 'hs_phy_irq', 'ss_phy_irq', 'dm_hs_phy_irq', 'dp_hs_phy_irq'] is too long
->         'dwc_usb3' is not one of ['host', 'peripheral', 'otg', 'wakeup']
->         'hs_phy_irq' is not one of ['host', 'peripheral', 'otg', 'wakeup']
->         'ss_phy_irq' is not one of ['host', 'peripheral', 'otg', 'wakeup']
->         'dm_hs_phy_irq' is not one of ['host', 'peripheral', 'otg', 'wakeup']
->         'dp_hs_phy_irq' is not one of ['host', 'peripheral', 'otg', 'wakeup']
->         from schema $id: http://devicetree.org/schemas/usb/snps,dwc3.yaml#
-> 
-> Which to me sounds like the two oneOf branches allow me a single entry,
-> or items from the set given here. In contrast, I believe that my
-> proposal allow 1-5 items, where the first needs to be dwc_usb3.
-> 
-> But the proposal does look messy, so I'd appreciate some guidance on
-> this one.
+>   Thanks for the review. Although it sounds like its a Linux property, 
+> internally what it does is configuring qscratch registers properly when 
+> (dr_mode == OTG)
 
-Then you need three branches I guess, with your branch listing the Qcom
-specific interrupts. The point is that dwc_usb3 should not be allowed
-with host/peripheral/otg/wakeup.
+That's not what you wrote. You wrote "register vendor hooks". Really,
+this is nothing to do with hardware.
+
+> 
+>   Would it be fine to rephrase the property name to 
+> "qcom,config-qscratch" and to make it dependent on dr_mode and 
+> usb-role-switch properties ? Would it be possible to make such a 
+> dependency in bindings ?
+
+Examples are in: example-schema or my talk.
 
 Best regards,
 Krzysztof
