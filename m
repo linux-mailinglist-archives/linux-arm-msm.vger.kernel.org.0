@@ -2,86 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D5947CE90B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 22:34:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EFAC57CE94B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 22:46:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231454AbjJRUeR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Oct 2023 16:34:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43184 "EHLO
+        id S230051AbjJRUq0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Oct 2023 16:46:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229605AbjJRUeR (ORCPT
+        with ESMTP id S229757AbjJRUqZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Oct 2023 16:34:17 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9743E9B;
-        Wed, 18 Oct 2023 13:34:15 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39IHNxlB003122;
-        Wed, 18 Oct 2023 20:33:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=iaF4fZOLwaJ/KZ0QOfrm4IVew7yLHfkgzzwK04I4AIE=;
- b=KW4cTeCvVOwZRO6FsDVGC3bRI3dP+g76ArcwLxyrRqT0WZ+6xBj6WvujSbDhG6lshS0B
- yvvsB++TFm+Ss3Gph9w9V4SXXyWfaKPAfzS/ozuJLVsAaGeqjEX9a4Qr5tBvK/DUA4Kj
- 2J4rxNTn86z2QZ8cUuCYjJNLqaIU3/LacdPafs1coND6QAzy5OwVerPKS5OAJjFM0ZMU
- M5b+YJJyBAXrMFGUkS83fpeQNvMxZdl3i45o0N4fQaTolrKlgu/rIKsdy6HVXbzH9xiE
- vhDJPTRRQdvyO5dKRAoQHIjt6aOrVqy4bw7BaAwhbBv8igsdAMsM03OXlFltI70oZofL xw== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ttg82s19j-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 18 Oct 2023 20:33:59 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39IKXwRX024079
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 18 Oct 2023 20:33:58 GMT
-Received: from [10.110.123.255] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 18 Oct
- 2023 13:33:57 -0700
-Message-ID: <4ad7b474-257c-9934-8f1b-8ceb3a90af60@quicinc.com>
-Date:   Wed, 18 Oct 2023 13:33:56 -0700
+        Wed, 18 Oct 2023 16:46:25 -0400
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04FCCA4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 13:46:23 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qtDQh-0000gU-1z; Wed, 18 Oct 2023 22:46:11 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qtDQf-002dSA-0e; Wed, 18 Oct 2023 22:46:09 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qtDQe-001EpL-N1; Wed, 18 Oct 2023 22:46:08 +0200
+Date:   Wed, 18 Oct 2023 22:46:08 +0200
+From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To:     Devi Priya <quic_devipriy@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        lee@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        thierry.reding@gmail.com, ndesaulniers@google.com, trix@redhat.com,
+        baruch@tkos.co.il, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        llvm@lists.linux.dev, linux-pwm@vger.kernel.org, nathan@kernel.org
+Subject: Re: [PATCH V15 2/4] dt-bindings: pwm: add IPQ6018 binding
+Message-ID: <20231018204608.qyifcnnzgi2bgzn6@pengutronix.de>
+References: <20231005160550.2423075-1-quic_devipriy@quicinc.com>
+ <20231005160550.2423075-3-quic_devipriy@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v9 23/34] ALSA: usb-audio: Prevent starting of audio
- stream if in use
-Content-Language: en-US
-To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        <mathias.nyman@intel.com>, <gregkh@linuxfoundation.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <perex@perex.cz>,
-        <tiwai@suse.com>, <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <srinivas.kandagatla@linaro.org>, <bgoswami@quicinc.com>,
-        <Thinh.Nguyen@synopsys.com>
-CC:     <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-References: <20231017200109.11407-1-quic_wcheng@quicinc.com>
- <20231017200109.11407-24-quic_wcheng@quicinc.com>
- <a8dc2a3a-27a2-40d6-9e67-6ea475701e44@linux.intel.com>
-From:   Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <a8dc2a3a-27a2-40d6-9e67-6ea475701e44@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: TXpSOcmW4EEgl-PLKgoKBfqn-fPLzaEx
-X-Proofpoint-ORIG-GUID: TXpSOcmW4EEgl-PLKgoKBfqn-fPLzaEx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-18_18,2023-10-18_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- mlxlogscore=667 spamscore=0 priorityscore=1501 adultscore=0 bulkscore=0
- mlxscore=0 suspectscore=0 lowpriorityscore=0 phishscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2309180000
- definitions=main-2310180169
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="xtsetqyrpzzycxzw"
+Content-Disposition: inline
+In-Reply-To: <20231005160550.2423075-3-quic_devipriy@quicinc.com>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -90,32 +60,181 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Pierre,
 
-On 10/17/2023 3:37 PM, Pierre-Louis Bossart wrote:
-> 
-> 
-> On 10/17/23 15:00, Wesley Cheng wrote:
->> With USB audio offloading, an audio session is started from the ASoC
->> platform sound card and PCM devices.  Likewise, the USB SND path is still
->> readily available for use, in case the non-offload path is desired.  In
->> order to prevent the two entities from attempting to use the USB bus,
->> introduce a flag that determines when either paths are in use.
->>
->> If a PCM device is already in use, the check will return an error to
->> userspace notifying that the stream is currently busy.  This ensures that
->> only one path is using the USB substream.
->>
->> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
->> ---
->>   sound/usb/card.h                  |  1 +
->>   sound/usb/pcm.c                   | 19 +++++++++++++++++--
->>   sound/usb/qcom/qc_audio_offload.c | 15 ++++++++++++++-
-> 
-> should this be split in a generic part and a more specific qcom patch?
-> 
+--xtsetqyrpzzycxzw
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Got it.
+Hello,
 
-Thanks
-Wesley Cheng
+On Thu, Oct 05, 2023 at 09:35:48PM +0530, Devi Priya wrote:
+> DT binding for the PWM block in Qualcomm IPQ6018 SoC.
+>=20
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Co-developed-by: Baruch Siach <baruch.siach@siklu.com>
+> Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
+> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> ---
+> v15:
+>=20
+>   No change
+>=20
+> v14:
+>=20
+>   Picked up the R-b tag
+>=20
+> v13:
+>=20
+>   Updated the file name to match the compatible
+>  =20
+>   Sorted the properties and updated the order in the required field
+>=20
+>   Dropped the syscon node from examples
+>=20
+> v12:
+>=20
+>   Picked up the R-b tag
+>=20
+> v11:
+>=20
+>   No change
+>=20
+> v10:
+>=20
+>   No change
+>=20
+> v9:
+>=20
+>   Add 'ranges' property to example (Rob)
+>=20
+>   Drop label in example (Rob)
+>=20
+> v8:
+>=20
+>   Add size cell to 'reg' (Rob)
+>=20
+> v7:
+>=20
+>   Use 'reg' instead of 'offset' (Rob)
+>=20
+>   Drop 'clock-names' and 'assigned-clock*' (Bjorn)
+>=20
+>   Use single cell address/size in example node (Bjorn)
+>=20
+>   Move '#pwm-cells' lower in example node (Bjorn)
+>=20
+>   List 'reg' as required
+>=20
+> v6:
+>=20
+>   Device node is child of TCSR; remove phandle (Rob Herring)
+>=20
+>   Add assigned-clocks/assigned-clock-rates (Uwe Kleine-K=F6nig)
+>=20
+> v5: Use qcom,pwm-regs for phandle instead of direct regs (Bjorn
+>     Andersson, Kathiravan T)
+>=20
+> v4: Update the binding example node as well (Rob Herring's bot)
+>=20
+> v3: s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
+>=20
+> v2: Make #pwm-cells const (Rob Herring)
+>=20
+>  .../bindings/pwm/qcom,ipq6018-pwm.yaml        | 45 +++++++++++++++++++
+>  1 file changed, 45 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pwm/qcom,ipq6018-pw=
+m.yaml
+>=20
+> diff --git a/Documentation/devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml =
+b/Documentation/devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml
+> new file mode 100644
+> index 000000000000..6d0d7ed271f7
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml
+> @@ -0,0 +1,45 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pwm/qcom,ipq6018-pwm.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm IPQ6018 PWM controller
+> +
+> +maintainers:
+> +  - Baruch Siach <baruch@tkos.co.il>
+
+Not being very fluent in dt and binding yaml I wonder if adding
+
+	allOf:
+	  - $ref: pwm.yaml#
+
+would be beneficial?!
+
+> +properties:
+> +  compatible:
+> +    const: qcom,ipq6018-pwm
+> +
+> +  reg:
+> +    description: Offset of PWM register in the TCSR block.
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    maxItems: 1
+> +
+> +  "#pwm-cells":
+> +    const: 2
+
+The driver only supports normal polarity. Is this a shortcoming of the
+driver, or is the hardware incapable to do that, too?
+
+If it's only the former I'd want #pwm-cells =3D <3> here. For ease of use
+I'd not oppose if you pick #pwm-cells =3D <3> even if the hardware can
+only do normal polarity.
+
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - "#pwm-cells"
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-ipq6018.h>
+> +
+> +    pwm: pwm@a010 {
+> +        compatible =3D "qcom,ipq6018-pwm";
+> +        reg =3D <0xa010 0x20>;
+> +        clocks =3D <&gcc GCC_ADSS_PWM_CLK>;
+> +        assigned-clocks =3D <&gcc GCC_ADSS_PWM_CLK>;
+> +        assigned-clock-rates =3D <100000000>;
+> +        #pwm-cells =3D <2>;
+> +    };
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+
+--xtsetqyrpzzycxzw
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmUwRA8ACgkQj4D7WH0S
+/k4+QAf/WN6mLqG3+DlwosYZcJESOcX2S6K+CSxJ+01EkCGvXaNAPnaNasVmGzCa
+iWvYmgoRhuFYuzrppCsUER6+lrHZz/C4HfnOsQlsVfjRIm/Si4qelPWc0jKfvsQ9
+EV82d4hR/X2OT0ujmOcJZvwTMaITfER4B+9lzkVE0NvDzUIxzjZRgLDUX1j75All
+994dvdSy0b6x3NHnCuryt4ORwe8cIj866wXsJgrSC/Cg+9kyqW7UXWriTGQNAcfT
+0cfY92KCimjFjqfCuanOyBBN+41jlwwaiUnsB4gx8ZEh1mFgE50OXX9QK8eEgzzl
+56qTKAjNGv8LdOd+XgAiPuVPd0+6yg==
+=Vd7V
+-----END PGP SIGNATURE-----
+
+--xtsetqyrpzzycxzw--
