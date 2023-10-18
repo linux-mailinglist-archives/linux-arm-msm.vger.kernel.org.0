@@ -2,119 +2,257 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 927647CD36C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 07:12:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 471A57CD3C0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 08:00:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229537AbjJRFMO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Oct 2023 01:12:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39978 "EHLO
+        id S229613AbjJRGAm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Oct 2023 02:00:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229529AbjJRFMN (ORCPT
+        with ESMTP id S229612AbjJRGAl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Oct 2023 01:12:13 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A14DB0;
-        Tue, 17 Oct 2023 22:12:11 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39I4kI5D025553;
-        Wed, 18 Oct 2023 05:12:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=0g6yWnGi+kL/V+tl/8EBYh5Ghj1WRK7FcRlbWuHraF4=;
- b=id8tDVWu/HxjEUVoPMvoe2JlMYtUwQ1Di9Vfd66Dd99PJsrvEvx6K/h6lFD9gUaHMLgw
- 72UCvW2vMuuJB07XHOAHtWRxHCBmvSycMWN1SL2Orh3kNvwuc8zMSoQw2adjiUF4hL12
- PgI734UjQYh2OgvznL8sVPKifbqaupjQ+e3n5VL2hnGrNwCFAgk3vsveA3uqdqvSKBKR
- 75nXYwZ6ZhPSz03cbxfhd5IUz7Gd6dj70VBfq7DDK0FbVysE1c9clssFiWFhpT+gQWEj
- 4gZKzLsI5g9jq5r8KdV5nSFVtBqP+axZzz2dygE83O0emwdMi1uueT+lQlzgR7aN5AeG Sw== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tsv0v1s27-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 18 Oct 2023 05:12:08 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39I5C8we003320
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 18 Oct 2023 05:12:08 GMT
-Received: from [10.204.67.150] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Tue, 17 Oct
- 2023 22:12:05 -0700
-Message-ID: <02114b35-5e71-4f97-ba2c-9277103347d5@quicinc.com>
-Date:   Wed, 18 Oct 2023 10:42:02 +0530
+        Wed, 18 Oct 2023 02:00:41 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFA47FA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 23:00:38 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-4083f613272so569195e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Oct 2023 23:00:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1697608837; x=1698213637; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6jYUU/zMwQ57icTdluFdkVmoJdfusA7m4N1I0RAQAJ8=;
+        b=SMW+4zZRxBpo0dDRtVQcrjed634Z5Y/sGjZBrbdcU0HGjd4e7RGpNLR/VaSgKeJ40o
+         pE+onUgqNbIEofkHB0KvK1Sa/IiIZdgJHVZaIy/8ylH6bi13x/JDnztldxDgtgzWg1py
+         hmEUSQ2TpQq1RR2PaRpQf59I+C52JkJ/h2jaPghymUYwv0HZaJf/9QN5DiwBDauUwRiu
+         3E26Oy/IqqXLegFI7Uz2wFM6WLaZiTLnd4biR6PFjCT0yLzzEYQVL2tvSAGyNm3RIBZ0
+         dRQk3NaxCW2ng+K1OeUOMHq5OaYEqN6d+dzMB8rfTWJnhKI0Zq5Oxy+UMomSlnvMRVkC
+         tmfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697608837; x=1698213637;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6jYUU/zMwQ57icTdluFdkVmoJdfusA7m4N1I0RAQAJ8=;
+        b=Ud3Wbx+a4XJR2CkUpaDTZh/RuIPcwg1ayRTK+B932cvmhQ7CzZKjFYrrJsHDUglgS+
+         5ZaV98TMmgZXuk+EXFJ6+DyFF0bWhfSuWilKiIbX4kh0RQ74+GgY2xcJPV/OcGclz+Mf
+         E9I7hRxjEJD+8onawE+uzmscsXp6gYnIqnXGPm5hcrGcsnH+95JENmY9buMyZDPhSHMd
+         RGMVH28aWIKcdlCuM9LWuaLHvQL5WeTXDlnTCHFKafevvR+vg6xSyJFIR0uUMlVPBslH
+         7t0N5k8OsK4cgFhvwkAyCgCKV/BhWaEz6kIEvy4dD+snOHwnRuaSh5izoB6kp8tf/5aO
+         Z7xw==
+X-Gm-Message-State: AOJu0Yyzp47p+LM2tXa1MjclIHmjwQ4MJ7cN7/0nDSXEbZy2ZdtR2uc9
+        suvKtSN2sWo0v26wJICtMuNSuQ==
+X-Google-Smtp-Source: AGHT+IGPB7PtgGhLJB00EPY5bCertig3g1OC/hkjJkff0FeRZ0lTrQed2+3auUs93GzcwOhS6dTgyw==
+X-Received: by 2002:a05:600c:19cc:b0:405:375d:b860 with SMTP id u12-20020a05600c19cc00b00405375db860mr3162436wmq.21.1697608837336;
+        Tue, 17 Oct 2023 23:00:37 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.154])
+        by smtp.gmail.com with ESMTPSA id h5-20020a05600c350500b003fc0505be19sm722336wmq.37.2023.10.17.23.00.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Oct 2023 23:00:36 -0700 (PDT)
+Message-ID: <b52d0de7-e320-4c4c-876e-346281de23a1@linaro.org>
+Date:   Wed, 18 Oct 2023 08:00:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/5] misc: fastrpc: Add support to save and restore
- interrupted
+Subject: Re: [PATCH 10/12] dt-bindings: usb: qcom,dwc3: Introduce flattened
+ qcom,dwc3 binding
 Content-Language: en-US
-To:     Greg KH <gregkh@linuxfoundation.org>
-CC:     <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <ekangupt@qti.qualcomm.com>, <linux-kernel@vger.kernel.org>,
-        <fastrpc.upstream@qti.qualcomm.com>
-References: <1697534799-5124-1-git-send-email-quic_ekangupt@quicinc.com>
- <1697534799-5124-5-git-send-email-quic_ekangupt@quicinc.com>
- <2023101739-heftiness-reproach-ef96@gregkh>
- <d800dcbf-83dc-4b0f-bdd3-fc0efb5dd771@quicinc.com>
- <2023101743-discern-plunging-83e4@gregkh>
-From:   Ekansh Gupta <quic_ekangupt@quicinc.com>
-In-Reply-To: <2023101743-discern-plunging-83e4@gregkh>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Johan Hovold <johan@kernel.org>,
+        Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+References: <20231016-dwc3-refactor-v1-0-ab4a84165470@quicinc.com>
+ <20231016-dwc3-refactor-v1-10-ab4a84165470@quicinc.com>
+ <9f53e647-7c38-435f-bc74-e4f417445830@linaro.org>
+ <20231017225433.GW3553829@hu-bjorande-lv.qualcomm.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20231017225433.GW3553829@hu-bjorande-lv.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: vtfq0fXBlyGm1r7yVkKnnK5hVsxCH6HA
-X-Proofpoint-GUID: vtfq0fXBlyGm1r7yVkKnnK5hVsxCH6HA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-18_02,2023-10-17_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 malwarescore=0 phishscore=0 mlxscore=0 mlxlogscore=690
- impostorscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310180043
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 18/10/2023 00:54, Bjorn Andersson wrote:
+> On Tue, Oct 17, 2023 at 08:11:45AM +0200, Krzysztof Kozlowski wrote:
+>> On 17/10/2023 05:11, Bjorn Andersson wrote:
+>>> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> [..]
+>>> +select:
+>>> +  properties:
+>>> +    compatible:
+>>> +      items:
+>>> +        - enum:
+>>> +            - qcom,ipq4019-dwc3
+> [..]
+>>> +            - qcom,sm8550-dwc3
+>>
+>> This enum could be replaced with '{}'. Alternatively, drop enum entire
+>> select replaced with:
+>> - contains
+>>   - items:
+>>       - const: qcom,dwc3
+>>       - const: snps,dwc3
+>>
+> 
+> I thought this would be what I needed as well, but unfortunately this
+> select matches either qcom,dwc3, snps,dwc3, or both. With the result
+> that e.g. the example in the snps,dwc3 binding matches against this and
+> as expected fails when validated against this binding.
+> 
+> Taking yet another look at this, and reading more about json validation
+> I figured out that the following matches nodes with both the
+> compatibles:
+> 
+> select:
+>   properties:
+>     compatible:
+>       items:
+>         - const: qcom,dwc3
+>         - const: snps,dwc3
+>   required:
+>     - compatible
+> 
+> [..]
+>>> +
+>>> +# Required child node:
+>>
+>> Drop
+>>
+> 
+> Of course.
+> 
+>>
+>> ...
+>>
+>>> diff --git a/Documentation/devicetree/bindings/usb/snps,dwc3.yaml b/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
+>>> index d81c2e849ca9..d6914b8cef6a 100644
+>>> --- a/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
+>>> +++ b/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
+>>> @@ -44,14 +44,18 @@ properties:
+>>>        It's either a single common DWC3 interrupt (dwc_usb3) or individual
+>>>        interrupts for the host, gadget and DRD modes.
+>>>      minItems: 1
+>>> -    maxItems: 4
+>>> +    maxItems: 5
+>>>  
+>>>    interrupt-names:
+>>> -    minItems: 1
+>>> -    maxItems: 4
+>>>      oneOf:
+>>> -      - const: dwc_usb3
+>>> -      - items:
+>>> +      - minItems: 1
+>>> +        maxItems: 5
+>>> +        items:
+>>> +          - const: dwc_usb3
+>>> +        additionalItems: true
+>>
+>> This is not correct change. Before, one dwc_usb3 interrupt was combined
+>> allowed, or a set of host+peripheral+otg+wakeup. Now, you allow combined
+>> dwc_usb3 with anything.
+>>
+> 
+> My intention here is to make below list of 5 strings be valid according
+> to the snps,dwc3 (i.e. dwc_usb3 being the first item), and valid
+> according to the qcom,dwc3 binding with all 5 defined.
+> 
+>   interrupt-names = "dwc_usb3", "hs_phy_irq", "ss_phy_irq",
+> 		    "dm_hs_phy_irq", "dp_hs_phy_irq";
+> 
+> When I express this as:
+> 
+>   interrupt-names:
+>     minItems: 1
+>     maxItems: 5
+>     oneOf:
+>       - const: dwc_usb3
+>       - items:
+>           enum: [host, peripheral, otg, wakeup]
+> 
+> I get:
+> 
+> /local/mnt/workspace/bjorande/linux/Documentation/devicetree/bindings/usb/qcom,dwc3.example.dtb: usb@a600000: interrupt-names: 'oneOf' conditional failed, one must be fixed:
+>         ['dwc_usb3', 'hs_phy_irq', 'ss_phy_irq', 'dm_hs_phy_irq', 'dp_hs_phy_irq'] is too long
+>         'dwc_usb3' is not one of ['host', 'peripheral', 'otg', 'wakeup']
+>         'hs_phy_irq' is not one of ['host', 'peripheral', 'otg', 'wakeup']
+>         'ss_phy_irq' is not one of ['host', 'peripheral', 'otg', 'wakeup']
+>         'dm_hs_phy_irq' is not one of ['host', 'peripheral', 'otg', 'wakeup']
+>         'dp_hs_phy_irq' is not one of ['host', 'peripheral', 'otg', 'wakeup']
+>         from schema $id: http://devicetree.org/schemas/usb/snps,dwc3.yaml#
+> 
+> Which to me sounds like the two oneOf branches allow me a single entry,
+> or items from the set given here. In contrast, I believe that my
+> proposal allow 1-5 items, where the first needs to be dwc_usb3.
+> 
+> But the proposal does look messy, so I'd appreciate some guidance on
+> this one.
 
-On 10/17/2023 9:40 PM, Greg KH wrote:
-> On Tue, Oct 17, 2023 at 08:36:28PM +0530, Ekansh Gupta wrote:
->> On 10/17/2023 6:50 PM, Greg KH wrote:
->>> On Tue, Oct 17, 2023 at 02:56:38PM +0530, Ekansh Gupta wrote:
->>>> For any remote call, driver sends a message to DSP using RPMSG
->>>> framework. After message is sent, there is a wait on a completion
->>>> object at driver which is completed when DSP response is received.
->>>>
->>>> There is a possibility that a signal is received while waiting
->>>> causing the wait function to return -ERESTARTSYS. In this case
->>>> the context should be saved and it should get restored for the
->>>> next invocation for the thread.
->>>>
->>>> Adding changes to support saving and restoring of interrupted
->>>> fastrpc contexts.
->>>>
->>>> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
->>>> Change-Id: Ia101acf7c1bf6018635536082bf7ea009093c948
->>>> ---
->>>> Changes in v2:
->>>>     - Fixed missing definition
->>>>     - Fixes compile time issue
->>> You forgot to run checkpatch.pl :(
->> I did run checkpatch.pl and also tried compilation test. checkpatch.pl is
->> suggesting 0 errors, 0 warning and compilation also worked without any
->> errors. I might have checked on last week's base as there were no changes in
->> these files. I'll check the patches with latest version and update again if
->> any errors/warnings are observed. Thanks for reviewing the patch. -ekansh
-> The "Change-Id:" should not be there, and I thought checkpatch would
-> catch that.  If not, no big deal, you should have :)
+Then you need three branches I guess, with your branch listing the Qcom
+specific interrupts. The point is that dwc_usb3 should not be allowed
+with host/peripheral/otg/wakeup.
 
-Thanks for pointing this out, Greg. I'll update this with a new patch.
+Best regards,
+Krzysztof
 
->
