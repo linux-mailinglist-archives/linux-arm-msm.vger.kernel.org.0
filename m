@@ -2,69 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2850D7CD5A9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 09:48:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 91A527CD600
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 10:06:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229913AbjJRHsN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Oct 2023 03:48:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48868 "EHLO
+        id S235100AbjJRIGU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Oct 2023 04:06:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229638AbjJRHsM (ORCPT
+        with ESMTP id S235048AbjJRIGT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Oct 2023 03:48:12 -0400
-Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AF43F7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 00:48:09 -0700 (PDT)
-Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-5a7fb84f6ceso79825797b3.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 00:48:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697615288; x=1698220088; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=f747C4U8IoZwyu+El4waA+++U856sYb0R6YT3hMoxgc=;
-        b=WcfIie4Cx7luVB8N7hbrjPzTB7i+ZbPaI6oq/92bDiywVwvijhAVGBqsVsjqg3dod5
-         zJGeOF0waG9en3Rbw84WVK9h1J/xg0JGO2iUbImL2bDDSQjUL5gT+zuhWTuWlhbyEWmt
-         WvrfSr1yL7YGOkZJH+Qxf63dPcFhUWW+e86fqDidP8PmxDs63H0MjEq0iN9sVYW0cgmA
-         YFC8WbrVmM1f2W8GGU9EXBI/prY+8dD0IA3m589foqNJJVNRarCXEEsFnVwh9f0lBDvG
-         LgJvKJuzgYx1oQE9TDry0ckPXv9vjj7SW/eAlhmtjKzwsqRrNDbQ03KyVksDFM8EOML6
-         UyXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697615288; x=1698220088;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=f747C4U8IoZwyu+El4waA+++U856sYb0R6YT3hMoxgc=;
-        b=NqX8gTxt7eA/EryPTkGd4mVIz01Q6sGLKzUg1nXCREcq0X3D20FCfceSieiKcjAE9h
-         E4cUyphKTedzCit6ppu1XN53cve/yfcW5XLm0bhVX4sLTYGcDkY8WD2XGlYYpU/npnan
-         zbDWNvAHAfuMPyuZS7Bxw21R7WvxNU5OZozw+zaJFnUH2V2OctMaLhuEqAevCQzJwvMh
-         xPzpBuO43b3tLkfHA2N9moIG/NFwCNMI99AsOUFZ+IQfM3o6ny2OrH3YSkyD3gz9C797
-         iNRHMe2JtQjwgIC02g46jQa6m3Skb1WfC+LcksohhEZF5K8Z1rgLv6ophEkOpGBUCcWh
-         SJTA==
-X-Gm-Message-State: AOJu0YyUWUb4YHHatf2pqQ1BR3kBsMFrh3oL5lvoL6KCIdtJf0dHUGn+
-        vr6XimKG1Myr9wh6epLbdhej9w7Ht6RBdWS6R2sJzg==
-X-Google-Smtp-Source: AGHT+IH8nl7SgUpvgBkgQixVGgpK0NMaVDkGMP6hZfYjxi25iLCtiD6oyBiVsBxjJWdcHsNr7ZkLItkk3bbAVEPUkas=
-X-Received: by 2002:a0d:cccf:0:b0:5a7:fae6:1cc6 with SMTP id
- o198-20020a0dcccf000000b005a7fae61cc6mr5006410ywd.24.1697615288545; Wed, 18
- Oct 2023 00:48:08 -0700 (PDT)
+        Wed, 18 Oct 2023 04:06:19 -0400
+Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 411AB101;
+        Wed, 18 Oct 2023 01:06:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=kernkonzept.com; s=mx1; h=Cc:To:Content-Transfer-Encoding:Content-Type:
+        MIME-Version:Message-Id:Date:Subject:From:References:In-Reply-To:Reply-To:
+        Content-ID:Content-Description;
+        bh=wSnE6AHtReJkLWNCNsw2deG5mtnwk5thFtDKs+hSJYs=; b=o0YoW5fI8+ZfZjFx3X/xaPh/y3
+        r3mLLIkTjISzwpKgufg7Xo4C2xacaJkrWIDdZ75qIJ29D0NvK7k8dB+eIDDo3kNX/ER9/7j6F9OAA
+        A1IH8/6uuig++gr0I37pUrZInQDRkwvuygam54rUH09WSTF3LaPh3YR87IJTsjsv+uuZ5Yy9gKf/0
+        XzXed/knQrS7/NsQh4t6yE7UCPX+5wfBgGuaBs+Jc/epIbEBi/6PUA+7jHTYxkbdIA8VBIGg+UCZ1
+        rb9GRxByXCzyFkmafHXZSHzK9BOy9KgfpILk4wkLFJ2VrNtgGbOhpW0SXjk/Y7rfRhfTY8h4zfl2x
+        vFDOjTuQ==;
+Received: from [10.22.3.24] (helo=serv1.dd1.int.kernkonzept.com)
+        by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.96)
+        id 1qt1ZC-009lIU-04;
+        Wed, 18 Oct 2023 10:06:10 +0200
+From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Subject: [PATCH v2 0/3] cpufreq: Add basic cpufreq scaling for Qualcomm
+ MSM8909
+Date:   Wed, 18 Oct 2023 10:06:01 +0200
+Message-Id: <20231018-msm8909-cpufreq-v2-0-0962df95f654@kernkonzept.com>
 MIME-Version: 1.0
-References: <20231018074627.55637-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20231018074627.55637-1-dmitry.baryshkov@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 18 Oct 2023 10:47:57 +0300
-Message-ID: <CAA8EJprdiac17UfMLg-1Kg2urd4PZOs=5DT_1YGrN7u1W0=Bbw@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dp: attach the DP subconnector property
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAOmRL2UC/2WN0Q6CIBhGX8X919EQDcWr3qN5kfCTzAkE5irHu
+ 0euuy7P2b7zbRAxGIzQFRsEXE00zmZghwLkeLU3JEZlBkZZRQXlZI5zK6gg0j90wDtRWrOqVSi
+ 0riCvfEBtnnvx0mceTVxceO0Ha/m1v1bJ/lprSShpeCOR8+FU18N5wmAnZ9/ol6N0M/QppQ/Sh
+ gUztAAAAA==
+To:     Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Ulf Hansson <ulf.hansson@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        stable@vger.kernel.org
+X-Mailer: b4 0.12.3
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,30 +65,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 18 Oct 2023 at 10:46, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> While developing and testing the commit bfcc3d8f94f4 ("drm/msm/dp:
-> support setting the DP subconnector type") I had the patch [1] in my
-> tree. I haven't noticed that it was a dependency for the commit in
-> question. Mea culpa.
+Add the necessary definitions to the qcom-cpufreq-nvmem driver to
+support basic cpufreq scaling on the Qualcomm MSM8909 SoC. In practice
+the necessary power domains vary depending on the actual PMIC the SoC
+was combined with. With PM8909 the VDD_APC power domain is shared with
+VDD_CX so the RPM firmware handles all voltage adjustments, while with
+PM8916 and PM660 Linux is responsible to do adaptive voltage scaling
+of a dedicated CPU regulator using CPR.
 
-[1] https://patchwork.freedesktop.org/patch/555530/
+Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+---
+Changes in v2:
+- Reword commit messages based on discussion with Uffe
+- Use generic power domain name "perf" (Uffe)
+- Fix pm_runtime error handling (Uffe)
+- Add allocation cleanup patch as preparation
+- Fix ordering of qcom,msm8909 compatible (Konrad)
+- cpufreq-dt-platdev blocklist/dt-bindings patches were applied already
+- Link to v1: https://lore.kernel.org/r/20230912-msm8909-cpufreq-v1-0-767ce66b544b@kernkonzept.com
 
-> Since the patch has not landed yet (and even was not reviewed)
-> and since one of the bridges erroneously uses USB connector type instead
-> of DP, attach the property directly from the MSM DP driver.
->
-> This fixes the following oops on DP HPD event:
->
->  drm_object_property_set_value (drivers/gpu/drm/drm_mode_object.c:288)
->  dp_display_process_hpd_high (drivers/gpu/drm/msm/dp/dp_display.c:402)
->  dp_hpd_plug_handle.isra.0 (drivers/gpu/drm/msm/dp/dp_display.c:604)
->  hpd_event_thread (drivers/gpu/drm/msm/dp/dp_display.c:1110)
->  kthread (kernel/kthread.c:388)
->  ret_from_fork (arch/arm64/kernel/entry.S:858)
+---
+Stephan Gerhold (3):
+      cpufreq: qcom-nvmem: Simplify driver data allocation
+      cpufreq: qcom-nvmem: Enable virtual power domain devices
+      cpufreq: qcom-nvmem: Add MSM8909
 
+ drivers/cpufreq/qcom-cpufreq-nvmem.c | 124 +++++++++++++++++++++++++----------
+ 1 file changed, 90 insertions(+), 34 deletions(-)
+---
+base-commit: 2e12b516f5e6046ceabd4d24e24297e4d130b148
+change-id: 20230906-msm8909-cpufreq-dff238de9ff3
 
+Best regards,
 -- 
-With best wishes
-Dmitry
+Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Kernkonzept GmbH at Dresden, Germany, HRB 31129, CEO Dr.-Ing. Michael Hohmuth
+
