@@ -2,104 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 555537CE325
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 18:47:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 677157CE52D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 19:44:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229786AbjJRQrf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Oct 2023 12:47:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55372 "EHLO
+        id S231837AbjJRRox (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Oct 2023 13:44:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbjJRQrf (ORCPT
+        with ESMTP id S231984AbjJRRom (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Oct 2023 12:47:35 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80E4EAB;
-        Wed, 18 Oct 2023 09:47:33 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3C32C433C7;
-        Wed, 18 Oct 2023 16:47:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1697647653;
-        bh=7DxP+VzAPrpmHrHz9hsz4GlUetrZemXQgLSBXuzIZcw=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=fT3vrmc3d8oRWFwdz2RG3CQg4HjjnhUByGGFLAXgqHKfXeIbYuX/BCemBrMEXe8rs
-         tHdCUrDG4efTyMzz9CfxETwf3aWfUxPyDmnW3l9kGJ1ZHDiJtsIRAbg0X4H/MK7pzJ
-         srtKYetYZeE+BsWnuSw/he8oXv+2dfBBntDCl4IAbKEkEqZ18ra2K8TWdXTE5qksRU
-         8qRUfJT798KY5c8bTG74vk9l3wI98kLG/3erO6//UDfgYzoyz/ziRTWel4uogZW0Kn
-         /d7yc1zMVV4ma2ykkUhS73h6TH0YGwDrjxKlJmM1mD6J/D/e8FfJqaLu2knqslDL/J
-         GASyDqQvTJtxA==
-Date:   Wed, 18 Oct 2023 11:47:31 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com,
-        robh@kernel.org, gustavo.pimentel@synopsys.com,
-        jingoohan1@gmail.com, andersson@kernel.org,
-        konrad.dybcio@linaro.org, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] PCI: dwc: Add host_post_init() callback
-Message-ID: <20231018164731.GA1365588@bhelgaas>
+        Wed, 18 Oct 2023 13:44:42 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB7BB10DB
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 10:44:21 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-507a0907896so6466205e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 10:44:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1697651060; x=1698255860; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=YSjGpLh46b5iKDUK/TbTUkbxdrxFCdobLrJFcW9LwtE=;
+        b=SsJab72bA5lMF4oZHoL68uqcIzfhqPdAsbDWu/NqPboAGgDaiICt+HyTRf+SnD511a
+         7TSQv4NhXz4ff4lZqhlrKLB7r5SNCsqd50ca2YaDFf9YSw6tqMhXdfBwjI5skp7TC3y3
+         IZo1pIQnk5SCwGVMur4t+rsrjP6BOUf72uKGJkvbYZadoNYcFa5WDkYGM8lQp/RIPw9x
+         3K+xhAhIgyi4q+l7VORLnD0A9EXHxcYGp4XJHxXTf6rxMXvNZcI6nNid37oEVcKqc/R7
+         ZJZcbRAODPXFsW6pjCjcL7CdnbTtT76dbMkcHU0eQyjMr2yq3FI+tPPZNX5GJFF74b6x
+         hdLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697651060; x=1698255860;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YSjGpLh46b5iKDUK/TbTUkbxdrxFCdobLrJFcW9LwtE=;
+        b=lxFnXW6VWwgCp2aSEf/JLIGRRZ63VsDPWG6Ck90r6xyKkY9Cw3nI0UXizzPJEBWU8v
+         lQK9bOy0rAHALOQwomHSqWilOpRX7Y0zuQd7Wg6B0DoPvr+Jghikgjag2kMTM7iXSkF1
+         tRp4NGz4CvLaeR7WS3pDqhujMjCZjPSCshhcSWydXzeJVpHhYx1uHMV7y4et6sr2VAdu
+         L0m0eDJeytaYiGVql4DwobYkyG5IH1mD8tIzcHm2CaajxQn6TH2qBTsu2QMgdxUAgHok
+         U/sHIPvwTXDFLtsJioyiikgwW3L2hnN5Q7BaVLaMNl/8IfOkgH+oZZPNCaEf1K/9Syex
+         OyXw==
+X-Gm-Message-State: AOJu0YwO+ICRqxZEVUPuXByf3m95u7FoE6AXEtme4OYJJf6lupEpVTkN
+        qycUZ6Qs/fhrLxPaVxsGBQf7kA==
+X-Google-Smtp-Source: AGHT+IE3783iU1dnjkiPm2xolvCZbstnb7FsjsJDnjEBXm8/qAYzcn7KDeGomfE0PIigmE4UV7xHkw==
+X-Received: by 2002:a05:6512:60f:b0:4f9:5426:6622 with SMTP id b15-20020a056512060f00b004f954266622mr4400621lfe.69.1697651060022;
+        Wed, 18 Oct 2023 10:44:20 -0700 (PDT)
+Received: from [172.30.205.86] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id o15-20020ac24e8f000000b00502ae6b8ebcsm781411lfr.304.2023.10.18.10.44.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Oct 2023 10:44:19 -0700 (PDT)
+Message-ID: <25185346-2d5d-469c-8a88-0f0f9f02a739@linaro.org>
+Date:   Wed, 18 Oct 2023 19:44:15 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231017075952.GC5274@thinkpad>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dt-bindings: pinctrl: qcom,sa8775p-tlmm: add missing
+ wakeup-parent
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20231018145750.429385-1-krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20231018145750.429385-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 17, 2023 at 01:29:52PM +0530, Manivannan Sadhasivam wrote:
-> On Mon, Oct 16, 2023 at 03:58:49PM -0500, Bjorn Helgaas wrote:
-> > On Tue, Oct 10, 2023 at 09:29:13PM +0530, Manivannan Sadhasivam wrote:
-> > > This callback can be used by the platform drivers to do configuration once
-> > > all the devices are scanned. Like changing LNKCTL of all downstream devices
-> > > to enable ASPM etc...
-> > > 
-> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > ---
-> > >  drivers/pci/controller/dwc/pcie-designware-host.c | 3 +++
-> > >  drivers/pci/controller/dwc/pcie-designware.h      | 1 +
-> > >  2 files changed, 4 insertions(+)
-> > > 
-> > > diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-> > > index a7170fd0e847..7991f0e179b2 100644
-> > > --- a/drivers/pci/controller/dwc/pcie-designware-host.c
-> > > +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-> > > @@ -502,6 +502,9 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
-> > >  	if (ret)
-> > >  		goto err_stop_link;
-> > >  
-> > > +	if (pp->ops->host_post_init)
-> > > +		pp->ops->host_post_init(pp);
-> > 
-> > I know we talked about this a little bit in the context of enabling
-> > ASPM for devices below qcom 1.9.0 controllers at
-> > https://lore.kernel.org/r/20231011050058.GC3508@thinkpad
-> > 
-> > But I didn't realize at the time that this callback adds a fundamental
-> > difference between devices present at boot-time (these devices can be
-> > affected by this callback) and any devices hot-added later (we never
-> > run this callback again, so anything done by .host_post_init() never
-> > applies to them).
-> > 
-> > We merged this for now, and it helps enable ASPM for builtin devices
-> > on qcom, but I don't feel good about this from a larger DWC
-> > perspective.  If other drivers use this and they support hot-add, I
-> > think we're going to have problems.
+
+
+On 10/18/23 16:57, Krzysztof Kozlowski wrote:
+> Add missing wakeup-parent property, already used by DTS to indicate that
+> pins are wakeup capable:
 > 
-> If someone is going to add same ASPM code in host_post_init()
-> callback, they will most likely aware of the hotplug issue. I see
-> this as an interim solution overall and we should fix the PCI core
-> to handle this. But I do not see any straightforward way to enable
-> ASPM by default in PCI core as the misbehaving devices can pull the
-> system down (atleast in some x86 cases).
+>    sa8775p-ride.dtb: pinctrl@f000000: 'wakeup-parent' does not match any of the regexes: '-state$', 'pinctrl-[0-9]+'
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>   Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-tlmm.yaml | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-tlmm.yaml
+> index e119a226a4b1..2173c5255638 100644
+> --- a/Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-tlmm.yaml
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-tlmm.yaml
+> @@ -28,6 +28,7 @@ properties:
+>     gpio-controller: true
+>     "#gpio-cells": true
+>     gpio-ranges: true
+> +  wakeup-parent: true
+>   
+>     gpio-reserved-ranges:
+>       minItems: 1
+All the properties visiable in this diff sound reasonable to
+put in the common yaml, no?
 
-Definitely an interim solution, but the interim is going to be long :)
-
-I don't see the PCI core ASPM issue being resolved very soon; it's
-been this way ever since the beginning.  I guess there's no point in
-me whining without any proposals.
-
-Bjorn
+Konrad
