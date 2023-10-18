@@ -2,119 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 082F97CE8FF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 22:31:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2258A7CE917
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 22:35:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232438AbjJRUbn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Oct 2023 16:31:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56890 "EHLO
+        id S229757AbjJRUfx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Oct 2023 16:35:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232677AbjJRUba (ORCPT
+        with ESMTP id S1344773AbjJRUd4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Oct 2023 16:31:30 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9A48D5B
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 13:30:57 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-507975d34e8so8121910e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 13:30:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697661056; x=1698265856; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=PUFmNB1C9eKBrNEGefhzHUl4Gkv1IjDp8gNWoDQwEGk=;
-        b=g6YkwfXqwADUSouGWxg8GzFwFWNS3JMsfsZxJ8gEN6JiAiIXNBsMSlw+Zay9ubnBfs
-         62VQWUt4Fibk0ozzgeXnmNGWwHYSrbcYnFlogQ4SCGWOr5u1Z8HvbBItop8nT91BMtuf
-         8+QeFvuXa8Qc1cq2RFZE8xNF4OMcYpbRL2FA8/o2pMRdAaPC+qjXh0p7F5tIn1AekCdq
-         Fj+gJLsAc3Pg8mK+1Ek6ojS36Ju5bkJuRPDeLCBKv+QudDrJUje4MraShy3CF8d0ylG6
-         YPde/MG7w3AvEII1lUijAButu/IQOrEGp3VDMyURXJmqeUXcKflU9AFhg1stoA9QmoM1
-         aDlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697661056; x=1698265856;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PUFmNB1C9eKBrNEGefhzHUl4Gkv1IjDp8gNWoDQwEGk=;
-        b=WyyvgaC9rb6jS8urAQ3YcMFEhKDRHSyqZ87qjJNLbjCJEPp5mroXOuLVt5FqWHr8fS
-         8E///CmPvgTaHBIoW1B13MNt+GSD1CEXwYOD+fVm5M2cQMI6HSsjTjVNauKuN2OPwxT6
-         nsjIoTIdVbvJbWjZbkMDGD9hvUbUia2HpjOptd6tC4qeI7qQ1agi6bXlborRFSqzv4Fk
-         wTW2q2BOcK1lzvzqotKOXAjUK03/uuPNe0Ye6qfrlsVAHdAQyRhZumppnwLur9wgP0Z5
-         ZB7qMyrl5N97QjDJarAAseThDUKm0ERzqnFr6HQ+tH0D3GJCdNuhMdYP6fNxWpSTybbC
-         +cvQ==
-X-Gm-Message-State: AOJu0Yxg11+RXyVI19Xc7oKAX/bKwXSN8RJQcicmqbT/BtqqE+swluhB
-        e1YrD/XNmIANS6ix68tl3DP1jg==
-X-Google-Smtp-Source: AGHT+IHBjUypDmWrqXXAFpTBonvTU/yYmmcDyIk9OSHMujkMEV9jxWpZCCOnXesh0MIXVFwf/+WweA==
-X-Received: by 2002:a19:654c:0:b0:507:a8d1:6e57 with SMTP id c12-20020a19654c000000b00507a8d16e57mr73921lfj.40.1697661055845;
-        Wed, 18 Oct 2023 13:30:55 -0700 (PDT)
-Received: from [172.30.205.86] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id v12-20020ac2558c000000b00507aced147esm825302lfg.203.2023.10.18.13.30.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Oct 2023 13:30:55 -0700 (PDT)
-Message-ID: <5c97da4e-eb7a-47c2-9f0a-69e019a73778@linaro.org>
-Date:   Wed, 18 Oct 2023 22:30:53 +0200
+        Wed, 18 Oct 2023 16:33:56 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A70D1AA;
+        Wed, 18 Oct 2023 13:33:43 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39IKXGjj008745;
+        Wed, 18 Oct 2023 20:33:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=D3VEipluic1dnj4xaArrQ04lPUUz9iyghjTrQJeu5aE=;
+ b=HYRGvFZRbv9ZGlNVYgJ0bbpCQaouRJDG5GUWgOJMv8bbGAA6WVtbowAcpNgL1UIXgMf/
+ y50Q2HXtqKrGtoRkoxHIGNsZg/KRUx82bSURxVn8GlnUD0hKAcef5jIg57jToidW83gF
+ /23UwY9CiDh7BiNTTijZl9a34YGWQ7NBq3xASPduJKSoMFsA5GOq1lSfQ8TxdTEIYPQn
+ cXWTcYUbJj4i8e1TttKiXXDIs5icR3UvmFXC1k1Os16QVfcmoYhq+/UkLdWcODIbv4VC
+ rZDmGV+KbdLAT5Oy0EFnJMxKBjKtJNrYMdvFh2KPyoUOMlIul2f9XJ5ladpkYnZf9jwh fg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ttb7ahrvw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 18 Oct 2023 20:33:26 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39IKXPdM003412
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 18 Oct 2023 20:33:25 GMT
+Received: from [10.110.123.255] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 18 Oct
+ 2023 13:33:24 -0700
+Message-ID: <09bf52fe-0234-3fc6-1911-9d0f8217d8ad@quicinc.com>
+Date:   Wed, 18 Oct 2023 13:33:24 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] arm64: dts: qcom: qcm6490-fairphone-fp5: Add PM7250B
- thermals
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v9 21/34] ASoC: usb: Add PCM format check API for USB
+ backend
 Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-iio@vger.kernel.org, devicetree@vger.kernel.org
-References: <20231013-fp5-thermals-v1-0-f14df01922e6@fairphone.com>
- <20231013-fp5-thermals-v1-2-f14df01922e6@fairphone.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231013-fp5-thermals-v1-2-f14df01922e6@fairphone.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        <mathias.nyman@intel.com>, <gregkh@linuxfoundation.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <perex@perex.cz>,
+        <tiwai@suse.com>, <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <srinivas.kandagatla@linaro.org>, <bgoswami@quicinc.com>,
+        <Thinh.Nguyen@synopsys.com>
+CC:     <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+References: <20231017200109.11407-1-quic_wcheng@quicinc.com>
+ <20231017200109.11407-22-quic_wcheng@quicinc.com>
+ <dbb1f64b-8112-4a2f-9138-616e04bdc53c@linux.intel.com>
+From:   Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <dbb1f64b-8112-4a2f-9138-616e04bdc53c@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: GnQCwHKt7WkSwgc5_0rgRzLNxfyB9Hpg
+X-Proofpoint-GUID: GnQCwHKt7WkSwgc5_0rgRzLNxfyB9Hpg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-18_18,2023-10-18_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
+ lowpriorityscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ spamscore=0 suspectscore=0 clxscore=1015 mlxlogscore=727 adultscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310180169
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Pierre,
 
-
-On 10/13/23 10:09, Luca Weiss wrote:
-> Configure the thermals for the CHARGER_SKIN_THERM and USB_CONN_THERM
-> thermistors connected to PM7250B.
+On 10/17/2023 3:33 PM, Pierre-Louis Bossart wrote:
 > 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
->   arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 66 ++++++++++++++++++++++
->   1 file changed, 66 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> index 2de0b8c26c35..7fe19b556e6a 100644
-> --- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> @@ -134,6 +134,36 @@ afvdd_2p8: regulator-afvdd-2p8 {
->   		enable-active-high;
->   		vin-supply = <&vreg_bob>;
->   	};
-> +
-> +	thermal-zones {
-> +		chg-skin-thermal {
-> +			polling-delay-passive = <0>;
-> +			polling-delay = <0>;
-> +			thermal-sensors = <&pm7250b_adc_tm 0>;
-> +
-> +			trips {
-> +				active-config0 {
-> +					temperature = <125000>;
-I guess looking at skin-temp-thermal in x13s dts for starters
-is a good idea.. we should probably then adjust it to something
-more pocketable..
+> On 10/17/23 15:00, Wesley Cheng wrote:
+>> Introduce a check for if a particular PCM format is supported by the USB
+> 
+> Introduce a helper to check if a ...
+> 
 
-Konrad
+Ack.
+
+>> audio device connected.  If the USB audio device does not have an audio
+>> profile which can support the requested format, then notify the USB
+>> backend.
+>>
+>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+>> ---
+>>   include/sound/soc-usb.h |  3 +++
+>>   sound/soc/soc-usb.c     | 13 +++++++++++++
+>>   2 files changed, 16 insertions(+)
+>>
+>> diff --git a/include/sound/soc-usb.h b/include/sound/soc-usb.h
+>> index 58c686f4f7ba..c6ddc055c4cd 100644
+>> --- a/include/sound/soc-usb.h
+>> +++ b/include/sound/soc-usb.h
+>> @@ -37,6 +37,9 @@ struct snd_soc_usb {
+>>   	void *priv_data;
+>>   };
+>>   
+>> +int snd_soc_usb_find_format(int card_idx, struct snd_pcm_hw_params *params,
+>> +			int direction);
+>> +
+>>   int snd_soc_usb_connect(struct device *usbdev, struct snd_soc_usb_device *sdev);
+>>   int snd_soc_usb_disconnect(struct device *usbdev, struct snd_soc_usb_device *sdev);
+>>   void *snd_soc_usb_find_priv_data(struct device *usbdev);
+>> diff --git a/sound/soc/soc-usb.c b/sound/soc/soc-usb.c
+>> index 73b1bcc3b506..7407678a993e 100644
+>> --- a/sound/soc/soc-usb.c
+>> +++ b/sound/soc/soc-usb.c
+>> @@ -63,6 +63,19 @@ void *snd_soc_usb_find_priv_data(struct device *dev)
+>>   }
+>>   EXPORT_SYMBOL_GPL(snd_soc_usb_find_priv_data);
+>>   
+>> +int snd_soc_usb_find_format(int card_idx, struct snd_pcm_hw_params *params,
+>> +			int direction)
+>> +{
+>> +	struct snd_usb_stream *as;
+>> +
+>> +	as = snd_usb_find_suppported_substream(card_idx, params, direction);
+>> +	if (!as)
+>> +		return -EOPNOTSUPP;
+>> +
+>> +	return 0;
+>> +}
+>> +EXPORT_SYMBOL_GPL(snd_soc_usb_find_format);
+> 
+> Is this the right way to check for formats?
+> 
+> formats are defined within the scope of an endpoint, and those endpoints
+> are themselves defined within the scope of an interface?
+> 
+> I don't see a notion of endpoint here. Does this assume all endpoints
+> are valid, or maybe the existence of a single endpoint in a device?
+> 
+> Confused.
+
+At least in terms of USB and USB UAC, formats are defined within an 
+audio streaming interface descriptor, which will include multiple (up to 
+2) USB endpoints.  Those endpoints will be described w/ both an audio 
+streaming endpoint descriptor as well as a standard USB endpoint 
+descriptor.  The audio interface/format descriptors are the ones that 
+carry the information about what formats are supported by the USB 
+device.  So this API finds a possible USB AS streaming descriptor on the 
+device that matches the requested one.  Endpoints will be opened 
+subsequently when the audio stream is started, and an interface is 
+enabled by sending a SET_INTERFACE control packet on the USB bus.
+
+Thanks
+Wesley Cheng
