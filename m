@@ -2,284 +2,253 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 50BD27CD203
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 03:53:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 373607CD220
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Oct 2023 04:08:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229473AbjJRBxQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Oct 2023 21:53:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59292 "EHLO
+        id S229455AbjJRCIA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Oct 2023 22:08:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229454AbjJRBxP (ORCPT
+        with ESMTP id S229453AbjJRCH7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Oct 2023 21:53:15 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32B96C6;
-        Tue, 17 Oct 2023 18:53:13 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39I1qAPk002270;
-        Wed, 18 Oct 2023 01:53:00 GMT
+        Tue, 17 Oct 2023 22:07:59 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3DE6C6;
+        Tue, 17 Oct 2023 19:07:56 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39I1oOeB025756;
+        Wed, 18 Oct 2023 02:07:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=k2NUCQtsDNFxvztkSfiFcUZdV/NGVPeR98pLoo+67yY=;
- b=J4nW260AUWnAqUOpr3oTG8R0VQy52xNNnyJDlhQDgIpoX56UjbQ6LwK1J3oSgmlVHpAo
- 2EW2Qcl/aAmR53BTVDzDda4UI+kUF0QR5UKgLiheWoytcAIP28VbOsTjHOnMl4lNk0W1
- vNggkSed4U1Q2P84Ehn8VsJQ1M2Cav8/B5p2tj6bZ+5Qpc8fJHm/GeT5X8pIqVjJssEF
- C8NOV1wbtvi74639JQEh1PhOyVwqM6Tdt2Gju0K1UUP9CydvxvViOWeYNjJaOavEK8f4
- qlhHUGWDl1ojWeWVbXhjZ0v76VejYfy3oFdkjjQU2lA/PqKHeXBP+h4+UHFPmMtincWl NA== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tsneja8a5-1
+ bh=ZtNt64VNU1SsvqasCFCcRFAS3qPKkxZ+7k2bN0abCgI=;
+ b=k8FRfebcaPuNyPts1pnk+4330OH22W0o81uwh7O8JPv0N6qVAU8woGpFWIjtoWf5aWpH
+ pT5ivcFN/F/5xXVNCB1oA2to6rBuKRQDT49KFrzSDf5t0cyUjeZKtJH2j4ZqArHmauEp
+ Wc0Ts0f24JupV2S8K3gmu5d14JF3/msXj/CwmOeM+atQlMzHMAEVOao94e/1k8hdIgOa
+ VlHhj7Mnj9SuOnBO1apP8sYNn5Z3myKjZb5KN5sY5mU3pwxYRzxhIk+ODP6Nzl4RyhQO
+ P+l2jIWVLHv2nyTGq0x1ix5xQaPuuhoHlqNn7skEVfI8erVeBflAsk6lfeyd3f56GeSu NA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tsvxws9tt-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 18 Oct 2023 01:53:00 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39I1qxi9021338
+        Wed, 18 Oct 2023 02:07:20 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39I27JD4032754
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 18 Oct 2023 01:52:59 GMT
-Received: from [10.253.34.126] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+        Wed, 18 Oct 2023 02:07:19 GMT
+Received: from [10.71.115.127] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Tue, 17 Oct
- 2023 18:52:57 -0700
-Message-ID: <b7a35d1e-85e2-4c60-a049-e6234d6431df@quicinc.com>
-Date:   Wed, 18 Oct 2023 09:52:55 +0800
+ 2023 19:07:18 -0700
+Message-ID: <fb9c9c18-7383-da2f-86e3-348999b065bd@quicinc.com>
+Date:   Tue, 17 Oct 2023 19:07:18 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] bus: mhi: host: pci_generic: Add SDX75 based modem
- support
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v9 07/34] ASoC: Add SOC USB APIs for adding an USB backend
 Content-Language: en-US
-To:     Manivannan Sadhasivam <mani@kernel.org>
-CC:     <quic_jhugo@quicinc.com>, <mhi@lists.linux.dev>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_cang@quicinc.com>, <quic_mrana@quicinc.com>
-References: <1691460215-45383-1-git-send-email-quic_qianyu@quicinc.com>
- <20230808075103.GD4990@thinkpad>
- <be205d43-b558-47eb-0250-b7415474b6e9@quicinc.com>
- <20230808105928.GF4990@thinkpad>
- <e3a206e7-f36b-d896-20f7-4e35b9743c1d@quicinc.com>
- <20231017075035.GB5274@thinkpad>
-From:   Qiang Yu <quic_qianyu@quicinc.com>
-In-Reply-To: <20231017075035.GB5274@thinkpad>
+To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        <mathias.nyman@intel.com>, <gregkh@linuxfoundation.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <perex@perex.cz>,
+        <tiwai@suse.com>, <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <srinivas.kandagatla@linaro.org>, <bgoswami@quicinc.com>,
+        <Thinh.Nguyen@synopsys.com>
+CC:     <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+References: <20231017200109.11407-1-quic_wcheng@quicinc.com>
+ <20231017200109.11407-8-quic_wcheng@quicinc.com>
+ <8eb90a7a-8649-4a31-9997-d970915510bf@linux.intel.com>
+From:   Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <8eb90a7a-8649-4a31-9997-d970915510bf@linux.intel.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: YC-_rak-knUDFPsybw8aq1GBVRAC6zFV
-X-Proofpoint-ORIG-GUID: YC-_rak-knUDFPsybw8aq1GBVRAC6zFV
+X-Proofpoint-GUID: 9YDWsrNqH69mHL5udDVXDdGz8Xg6XRHO
+X-Proofpoint-ORIG-GUID: 9YDWsrNqH69mHL5udDVXDdGz8Xg6XRHO
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-10-17_08,2023-10-17_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
- bulkscore=0 impostorscore=0 mlxscore=0 lowpriorityscore=0 suspectscore=0
- priorityscore=1501 phishscore=0 malwarescore=0 mlxlogscore=999
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310180014
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 impostorscore=0 adultscore=0 clxscore=1015 mlxscore=0
+ suspectscore=0 phishscore=0 mlxlogscore=999 lowpriorityscore=0 spamscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310180016
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Pierre,
 
-On 10/17/2023 3:50 PM, Manivannan Sadhasivam wrote:
-> On Wed, Aug 09, 2023 at 11:42:39AM +0800, Qiang Yu wrote:
->> On 8/8/2023 6:59 PM, Manivannan Sadhasivam wrote:
->>> On Tue, Aug 08, 2023 at 04:53:32PM +0800, Qiang Yu wrote:
->>>> On 8/8/2023 3:51 PM, Manivannan Sadhasivam wrote:
->>>>> On Tue, Aug 08, 2023 at 10:03:35AM +0800, Qiang Yu wrote:
->>>>>> Add generic info for SDX75 based modems. SDX75 takes longer than expected
->>>>>> (default, 8 seconds) to set ready after reboot. Hence add optional ready
->>>>>> timeout parameter to wait enough for device ready as part of power up
->>>>>> sequence.
->>>>>>
->>>>>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
->>>>>> ---
->>>>>>     drivers/bus/mhi/host/init.c        |  1 +
->>>>>>     drivers/bus/mhi/host/main.c        |  7 ++++++-
->>>>>>     drivers/bus/mhi/host/pci_generic.c | 22 ++++++++++++++++++++++
->>>>>>     drivers/bus/mhi/host/pm.c          |  6 +++++-
->>>>>>     include/linux/mhi.h                |  4 ++++
->>>>>>     5 files changed, 38 insertions(+), 2 deletions(-)
->>>>>>
->>>>>> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
->>>>>> index f78aefd..65ceac1 100644
->>>>>> --- a/drivers/bus/mhi/host/init.c
->>>>>> +++ b/drivers/bus/mhi/host/init.c
->>>>>> @@ -881,6 +881,7 @@ static int parse_config(struct mhi_controller *mhi_cntrl,
->>>>>>     	if (!mhi_cntrl->timeout_ms)
->>>>>>     		mhi_cntrl->timeout_ms = MHI_TIMEOUT_MS;
->>>>>> +	mhi_cntrl->ready_timeout_ms = config->ready_timeout_ms;
->>>>>>     	mhi_cntrl->bounce_buf = config->use_bounce_buf;
->>>>>>     	mhi_cntrl->buffer_len = config->buf_len;
->>>>>>     	if (!mhi_cntrl->buffer_len)
->>>>>> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
->>>>>> index 74a7543..8590926 100644
->>>>>> --- a/drivers/bus/mhi/host/main.c
->>>>>> +++ b/drivers/bus/mhi/host/main.c
->>>>>> @@ -43,8 +43,13 @@ int __must_check mhi_poll_reg_field(struct mhi_controller *mhi_cntrl,
->>>>>>     				    u32 mask, u32 val, u32 delayus)
->>>>>>     {
->>>>>>     	int ret;
->>>>>> -	u32 out, retry = (mhi_cntrl->timeout_ms * 1000) / delayus;
->>>>>> +	u32 out, retry;
->>>>>> +	u32 timeout_ms = mhi_cntrl->timeout_ms;
->>>>>> +	if (mhi_cntrl->ready_timeout_ms && mask == MHISTATUS_READY_MASK)
->>>>>> +		timeout_ms = mhi_cntrl->ready_timeout_ms;
->>>>> Instead of handling the timeout inside mhi_poll_reg_field(), you should pass the
->>>>> appropriate timeout value to this function.
->>>> OK, will do.
->>>>>> +
->>>>>> +	retry = (timeout_ms * 1000) / delayus;
->>>>>>     	while (retry--) {
->>>>>>     		ret = mhi_read_reg_field(mhi_cntrl, base, offset, mask, &out);
->>>>>>     		if (ret)
->>>>>> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
->>>>>> index fcd80bc..9c601f0 100644
->>>>>> --- a/drivers/bus/mhi/host/pci_generic.c
->>>>>> +++ b/drivers/bus/mhi/host/pci_generic.c
->>>>>> @@ -269,6 +269,16 @@ static struct mhi_event_config modem_qcom_v1_mhi_events[] = {
->>>>>>     	MHI_EVENT_CONFIG_HW_DATA(5, 2048, 101)
->>>>>>     };
->>>>>> +static const struct mhi_controller_config modem_qcom_v2_mhiv_config = {
->>>>>> +	.max_channels = 128,
->>>>>> +	.timeout_ms = 8000,
->>>>>> +	.ready_timeout_ms = 50000,
->>>>>> +	.num_channels = ARRAY_SIZE(modem_qcom_v1_mhi_channels),
->>>>>> +	.ch_cfg = modem_qcom_v1_mhi_channels,
->>>>>> +	.num_events = ARRAY_SIZE(modem_qcom_v1_mhi_events),
->>>>>> +	.event_cfg = modem_qcom_v1_mhi_events,
->>>>>> +};
->>>>>> +
->>>>>>     static const struct mhi_controller_config modem_qcom_v1_mhiv_config = {
->>>>>>     	.max_channels = 128,
->>>>>>     	.timeout_ms = 8000,
->>>>>> @@ -278,6 +288,16 @@ static const struct mhi_controller_config modem_qcom_v1_mhiv_config = {
->>>>>>     	.event_cfg = modem_qcom_v1_mhi_events,
->>>>>>     };
->>>>>> +static const struct mhi_pci_dev_info mhi_qcom_sdx75_info = {
->>>>>> +	.name = "qcom-sdx75m",
->>>>>> +	.fw = "qcom/sdx75m/xbl.elf",
->>>>>> +	.edl = "qcom/sdx75m/edl.mbn",
->>>>>> +	.config = &modem_qcom_v2_mhiv_config,
->>>>>> +	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
->>>>>> +	.dma_data_width = 32,
->>>>>> +	.sideband_wake = false,
->>>>>> +};
->>>>>> +
->>>>>>     static const struct mhi_pci_dev_info mhi_qcom_sdx65_info = {
->>>>>>     	.name = "qcom-sdx65m",
->>>>>>     	.fw = "qcom/sdx65m/xbl.elf",
->>>>>> @@ -597,6 +617,8 @@ static const struct pci_device_id mhi_pci_id_table[] = {
->>>>>>     		.driver_data = (kernel_ulong_t) &mhi_telit_fn990_info },
->>>>>>     	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
->>>>>>     		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
->>>>>> +	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0309),
->>>>>> +		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx75_info },
->>>>>>     	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1001), /* EM120R-GL (sdx24) */
->>>>>>     		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
->>>>>>     	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1002), /* EM160R-GL (sdx24) */
->>>>>> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
->>>>>> index 8a4362d..6f049e0 100644
->>>>>> --- a/drivers/bus/mhi/host/pm.c
->>>>>> +++ b/drivers/bus/mhi/host/pm.c
->>>>>> @@ -1202,14 +1202,18 @@ EXPORT_SYMBOL_GPL(mhi_power_down);
->>>>>>     int mhi_sync_power_up(struct mhi_controller *mhi_cntrl)
->>>>>>     {
->>>>>>     	int ret = mhi_async_power_up(mhi_cntrl);
->>>>>> +	u32 timeout_ms;
->>>>>>     	if (ret)
->>>>>>     		return ret;
->>>>>> +	/* Some devices need more time to set ready during power up */
->>>>>> +	timeout_ms = mhi_cntrl->ready_timeout_ms ?
->>>>>> +		mhi_cntrl->ready_timeout_ms : mhi_cntrl->timeout_ms;
->>>>> Since you are using this extended timeout value in a couple of places (not just
->>>>> for checking READY_STATE), it is better to use the existing "timeout_ms"
->>>>> parameter.
->>>>>
->>>>> - Mani
->>>> We use ready_timeout_ms here is because READY_STATE is polled in a
->>>> workqueue,  in parallel with waiting valid EE.
->>>>
->>>> That means we start to wait valid EE and poll ready like at same time
->>>> instead of starting to wait EE after ready state.
->>>>
->>>> Thus the total time it takes to wait valid EE is about the time for polling
->>>> ready.
->>>>
->>> Yes, but why can't you still increase "timeout_ms" for SDX75 and use the same?
->>>
->>> Btw, please do not send another version while the discussion is going on for the
->>> current one.
->>>
->>> - Mani
->> SDX75 only needs 50 seconds when setting ready for the first time after
->> power on. Other state transitions
->>
->> is expected to wait only 8 seconds. If we use 50s for every state
->> transition, it's OK but not friendly in some cases.
->>
->>
->> For example, host is resuming from suspend, but device has already crashed
->> and tansferred to Sahara mode when
->>
->> in suspended state. Thus host must wait M0 event timeout, and then reinit
->> mhi and tranfer to SBL state in recovery
->>
->> process. If we set mhi_cntrl->timeout_ms=50s, we have to wait 50s to collect
->> crash dump after seeing resume fail log.
->>
-> Hmm. Can't you fix the firmware? Taking 50s to bootup doesn't look good from
-> user perspective.
->
-> - Mani
-  It is a firmware limitation and we can't fix it now.
->>>>>>     	wait_event_timeout(mhi_cntrl->state_event,
->>>>>>     			   MHI_IN_MISSION_MODE(mhi_cntrl->ee) ||
->>>>>>     			   MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state),
->>>>>> -			   msecs_to_jiffies(mhi_cntrl->timeout_ms));
->>>>>> +			   msecs_to_jiffies(timeout_ms));
->>>>>>     	ret = (MHI_IN_MISSION_MODE(mhi_cntrl->ee)) ? 0 : -ETIMEDOUT;
->>>>>>     	if (ret)
->>>>>> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
->>>>>> index f6de4b6..a43e5f8 100644
->>>>>> --- a/include/linux/mhi.h
->>>>>> +++ b/include/linux/mhi.h
->>>>>> @@ -266,6 +266,7 @@ struct mhi_event_config {
->>>>>>      * struct mhi_controller_config - Root MHI controller configuration
->>>>>>      * @max_channels: Maximum number of channels supported
->>>>>>      * @timeout_ms: Timeout value for operations. 0 means use default
->>>>>> + * @ready_timeout_ms: Timeout value for waiting device to be ready (optional)
->>>>>>      * @buf_len: Size of automatically allocated buffers. 0 means use default
->>>>>>      * @num_channels: Number of channels defined in @ch_cfg
->>>>>>      * @ch_cfg: Array of defined channels
->>>>>> @@ -277,6 +278,7 @@ struct mhi_event_config {
->>>>>>     struct mhi_controller_config {
->>>>>>     	u32 max_channels;
->>>>>>     	u32 timeout_ms;
->>>>>> +	u32 ready_timeout_ms;
->>>>>>     	u32 buf_len;
->>>>>>     	u32 num_channels;
->>>>>>     	const struct mhi_channel_config *ch_cfg;
->>>>>> @@ -326,6 +328,7 @@ struct mhi_controller_config {
->>>>>>      * @pm_mutex: Mutex for suspend/resume operation
->>>>>>      * @pm_lock: Lock for protecting MHI power management state
->>>>>>      * @timeout_ms: Timeout in ms for state transitions
->>>>>> + * @ready_timeout_ms: Timeout in ms for waiting device to be ready (optional)
->>>>>>      * @pm_state: MHI power management state
->>>>>>      * @db_access: DB access states
->>>>>>      * @ee: MHI device execution environment
->>>>>> @@ -413,6 +416,7 @@ struct mhi_controller {
->>>>>>     	struct mutex pm_mutex;
->>>>>>     	rwlock_t pm_lock;
->>>>>>     	u32 timeout_ms;
->>>>>> +	u32 ready_timeout_ms;
->>>>>>     	u32 pm_state;
->>>>>>     	u32 db_access;
->>>>>>     	enum mhi_ee_type ee;
->>>>>> -- 
->>>>>> 2.7.4
->>>>>>
+On 10/17/2023 2:48 PM, Pierre-Louis Bossart wrote:
+> 
+> 
+> On 10/17/23 15:00, Wesley Cheng wrote:
+>> Some platforms may have support for offloading USB audio devices to a
+>> dedicated audio DSP.  Introduce a set of APIs that allow for management of
+>> USB sound card and PCM devices enumerated by the USB SND class driver.
+>> This allows for the ASoC components to be aware of what USB devices are
+> 
+> USB devices or USB endpoints? or both?
+> 
+
+USB devices.  At least in our case, which endpoints being used will be 
+part of handling of the stream start QMI request coming from the audio 
+DSP at a later stage.
+
+>> available for offloading.
+> 
+>> +/**
+>> + * struct snd_soc_usb_device
+>> + * @card_idx - sound card index associated with USB device
+>> + * @chip_idx - USB sound chip array index
+>> + * @num_playback - number of playback streams
+>> + * @num_capture - number of capture streams
+> 
+> presumably excluding explicit feedback streams?
+> 
+
+That's correct.  This doesn't include explicit streams.  This is going 
+to be done during the stage mentioned above.  We find the alternate USB 
+interface that supports the requested audio profile.  From there the USB 
+SND already checks for if any feedback mechanism is used.
+
+>> + **/
+>> +struct snd_soc_usb_device {
+>> +	int card_idx;
+>> +	int chip_idx;
+>> +	int num_playback;
+>> +	int num_capture;
+>> +};
+>> +
+>> +/**
+>> + * struct snd_soc_usb
+>> + * @list - list head for SND SOC struct list
+>> + * @dev - USB backend device reference
+>> + * @component - reference to ASoC component
+>> + * @connection_status_cb - callback to notify connection events
+>> + * @priv_data - driver data
+>> + **/
+>> +struct snd_soc_usb {
+>> +	struct list_head list;
+>> +	struct device *dev;
+> 
+> usbdev for consistency with the API below?
+> 
+
+This is not the usbdev, but the device reference to the DPCM backend DAI 
+(q6usb)
+
+>> +	struct snd_soc_component *component;
+> 
+> could you use component only and infer the device from component->dev?
+> 
+
+True, will look into that.
+
+>> +	int (*connection_status_cb)(struct snd_soc_usb *usb,
+>> +			struct snd_soc_usb_device *sdev, bool connected);
+>> +	void *priv_data;
+>> +};
+>> +
+>> +int snd_soc_usb_connect(struct device *usbdev, struct snd_soc_usb_device *sdev);
+>> +int snd_soc_usb_disconnect(struct device *usbdev, struct snd_soc_usb_device *sdev);
+>> +void *snd_soc_usb_get_priv_data(struct device *usbdev);
+>> +
+>> +struct snd_soc_usb *snd_soc_usb_add_port(struct device *dev, void *priv,
+> 
+> struct device *usbdev for consistency ?
+> 
+>> +			int (*connection_cb)(struct snd_soc_usb *usb,
+>> +			struct snd_soc_usb_device *sdev, bool connected));
+>> +int snd_soc_usb_remove_port(struct device *dev);
+> 
+> struct device *usbdev for consistency ?
+> 
+> 
+>> +struct snd_soc_usb *snd_soc_usb_add_port(struct device *dev, void *priv,
+>> +			int (*connection_cb)(struct snd_soc_usb *usb,
+>> +			struct snd_soc_usb_device *sdev, bool connected))> +{
+>> +	struct snd_soc_usb *usb;
+>> +
+>> +	usb = devm_kzalloc(dev, sizeof(*usb), GFP_KERNEL);
+>> +	if (!usb)
+>> +		return ERR_PTR(-ENOMEM);
+>> +
+>> +	usb->connection_status_cb = connection_cb;
+>> +	usb->dev = dev;
+>> +	usb->priv_data = priv;
+>> +
+>> +	mutex_lock(&ctx_mutex);
+>> +	list_add_tail(&usb->list, &usb_ctx_list);
+>> +	mutex_unlock(&ctx_mutex);
+>> +
+>> +	return usb;
+>> +}
+>> +EXPORT_SYMBOL_GPL(snd_soc_usb_add_port);
+>> +
+>> +/**
+>> + * snd_soc_usb_remove_port() - Remove a USB backend port
+>> + * @dev: USB backend device
+>> + *
+>> + * Remove a USB backend device from USB SND SOC.  Memory is freed when USB
+>> + * backend is removed.
+> 
+> when the USB backend driver is unbound?
+> 
+
+Will rename.
+
+>> + *
+>> + */
+>> +int snd_soc_usb_remove_port(struct device *dev)
+>> +{
+>> +	struct snd_soc_usb *ctx, *tmp;
+>> +
+>> +	mutex_lock(&ctx_mutex);
+>> +	list_for_each_entry_safe(ctx, tmp, &usb_ctx_list, list) {
+>> +		if (ctx->dev == dev) {
+>> +			list_del(&ctx->list);
+>> +			break;
+>> +		}
+>> +	}
+>> +	mutex_unlock(&ctx_mutex);
+>> +
+>> +	return 0;
+> 
+> can this return void to align with the current trend?
+> 
+
+Sure.
+
+>> +}
+>> +EXPORT_SYMBOL_GPL(snd_soc_usb_remove_port);
+>> +
+>> +/**
+>> + * snd_soc_usb_connect() - Notification of USB device connection
+>> + * @usbdev: USB bus device
+>> + * @card_idx: USB SND card instance
+>> + *
+>> + * Notify of a new USB SND device connection.  The card_idx can be used to
+>> + * handle how the DPCM backend selects, which device to enable USB offloading
+>> + * on.
+> 
+> card_idx is not used below, and I don't see how this relates to a
+> notification?
+> 
+
+Will fix this comment.
+
+Thanks
+Wesley Cheng
