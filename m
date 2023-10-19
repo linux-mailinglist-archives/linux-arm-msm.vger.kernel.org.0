@@ -2,189 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6EF187CEEFC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 07:28:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03BE07CEF3D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 07:46:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230297AbjJSF2q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Oct 2023 01:28:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41312 "EHLO
+        id S232076AbjJSFp7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Oct 2023 01:45:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229894AbjJSF2p (ORCPT
+        with ESMTP id S229894AbjJSFp6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Oct 2023 01:28:45 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03A5411B;
-        Wed, 18 Oct 2023 22:28:44 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7F87C433C7;
-        Thu, 19 Oct 2023 05:28:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1697693323;
-        bh=tWq3rqiz/cNExCGNkKKHqtS0CnLQjbFNUb2+HC5UQhY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=VcU0GAdeSEqdV/wptE50hn5YApyKulkEBATXncys+kFprzpFI19uyWLFMcYHxw81D
-         njiGbWBWhh2bpxZt2UW2YgaWgyaMtPGxmvIOm8sCnbOpFZQcUkFX0NW9kQeQ6iTahN
-         yDKtI93Bd61VN9NRbVBltzMRldqcRjY83YlUdi3rIglzacek1YkZDemnSl1/oq7T56
-         R3vraAB3nl/aIacdH25v0D4bZhABM8LvtzcY5APGvmR3YKg+mpq9LzN2S2MCqp1GFb
-         m6q3WsApVy41pQpGvCA6uJcjo9ekRyWZguJrsHzmLMYYG0V4K1tP+UrAqI3R1qpebc
-         iJzKkAGp6xVjQ==
-Date:   Thu, 19 Oct 2023 10:58:35 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Serge Semin <fancer.lancer@gmail.com>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 1/2] PCI: dwc: Add new accessors to enable/disable DBI
- CS2 while setting the BAR size
-Message-ID: <20231019052835.GC5142@thinkpad>
-References: <20231017-pcie-qcom-bar-v1-0-3e26de07bec0@linaro.org>
- <20231017-pcie-qcom-bar-v1-1-3e26de07bec0@linaro.org>
- <rsv5vgle2d36skx75ds4hqzmlqwldmj4g4ghrlyfuu3ideb3rh@74mnro7qnp4v>
+        Thu, 19 Oct 2023 01:45:58 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3948B112;
+        Wed, 18 Oct 2023 22:45:56 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39J4Pcov009803;
+        Thu, 19 Oct 2023 05:45:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=iCBFaE9+zDenL5zSLDNt+FvMR6CJHoJMzI5B7X9ngNw=;
+ b=GrqrBXgwNUzsaRP8hqtu3JpIQUiUQDE2wApgPBefqChJMB0ApAaiXJaurzulKbGlvDP8
+ eQLdnHPviZvcKOR7qSC2gZnnUW3R5kOC3wrvB3olPvejbnmuPtgU7W9Tf2KRXkqc8KAW
+ 73SQoQwQsEbEN1+9A2f+mDEIb4EekOtWpu66YjBaO+7akUtUaKPIEnc+R4zC3qSr5av6
+ uJB0lnBnP/uMoCiY7OBDAO2LoLg6GyAviUlLjkxHt51nlf9IQMpLqVgYxhI4F99G0Gya
+ nx7o5+j6hU0Gzyzvo87AGsE20OjLuVfdaURDxWXryMX6EsXEmeCTVsOz+ZqOrmoMpHme KA== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tt9kjttjj-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 19 Oct 2023 05:45:50 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39J5jn62023695
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 19 Oct 2023 05:45:49 GMT
+Received: from [10.217.218.207] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 18 Oct
+ 2023 22:45:41 -0700
+Message-ID: <928acdad-2c8c-4cdf-ad96-7cf44e8ebc99@quicinc.com>
+Date:   Thu, 19 Oct 2023 11:15:38 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <rsv5vgle2d36skx75ds4hqzmlqwldmj4g4ghrlyfuu3ideb3rh@74mnro7qnp4v>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 0/3] mmc: Add partial initialization support
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+CC:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        <linux-mmc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <quic_cang@quicinc.com>,
+        <quic_nguyenb@quicinc.com>, <quic_rampraka@quicinc.com>,
+        <quic_pragalla@quicinc.com>, <quic_sayalil@quicinc.com>,
+        <quic_nitirawa@quicinc.com>, <quic_sachgupt@quicinc.com>,
+        <quic_bhaskarv@quicinc.com>, <quic_narepall@quicinc.com>,
+        <kernel@quicinc.com>
+References: <20231017061336.9355-1-quic_sartgarg@quicinc.com>
+ <CAPDyKFrxf4wAyJ94g5LYymSZgDJRWvSCy6C73xyYBfxiV+L83g@mail.gmail.com>
+Content-Language: en-US
+From:   Sarthak Garg <quic_sartgarg@quicinc.com>
+In-Reply-To: <CAPDyKFrxf4wAyJ94g5LYymSZgDJRWvSCy6C73xyYBfxiV+L83g@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: xZIGrsUzURHYH8vlvU9OSx-5cyeui5nz
+X-Proofpoint-GUID: xZIGrsUzURHYH8vlvU9OSx-5cyeui5nz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-19_04,2023-10-18_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ suspectscore=0 phishscore=0 mlxlogscore=758 spamscore=0 mlxscore=0
+ adultscore=0 clxscore=1015 lowpriorityscore=0 bulkscore=0 malwarescore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310190049
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 18, 2023 at 05:13:41PM +0300, Serge Semin wrote:
-> On Tue, Oct 17, 2023 at 11:47:54AM +0530, Manivannan Sadhasivam wrote:
-> > From: Manivannan Sadhasivam <mani@kernel.org>
-> > 
-> > As per the DWC databook v4.21a, section M.4.1, in order to write some read
-> > only and shadow registers through application DBI, the device driver should
-> > assert DBI Chip Select 2 (CS2) in addition to DBI Chip Select (CS).
-> > 
-> > This is a requirement at least on the Qcom platforms while programming the
-> > BAR size, as the BAR mask registers are marked RO. So let's add two new
-> > accessors dw_pcie_dbi_cs2_{en/dis} to enable/disable CS2 access in a vendor
-> > specific way while programming the BAR size.
-> 
-> Emm, it's a known thing for all IP-core versions: dbi_cs2 must be
-> asserted to access the shadow DW PCIe CSRs space for both RC and
-> EP including the BARs mask and their enabling/disabling flag (there
-> are many more shadow CSRs available on DW PCIe EPs, and a few in DW
-> PCIe RCs). That's why the dw_pcie_ops->writel_dbi2 pointer has been
-> defined in the first place (dbi2 suffix means dbi_cs2). You should use
-> it to create the platform-specific dbi_cs2 write accessors like it's
-> done in pci-keystone.c and pcie-bt1.c. For instance like this:
-> 
-> static void qcom_pcie_write_dbi2(struct dw_pcie *pci, u32 reg, size_t size, u32 val)
-> {
-> 	struct qcom_pcie_ep *pcie_ep = to_pcie_ep(pci);
-> 	int ret;
-> 
-> 	writel(1, pcie_ep->elbi + ELBI_CS2_ENABLE);
-> 
-> 	ret = dw_pcie_write(pci->dbi_base2 + reg, size, val);
-> 	if (ret)
-> 		dev_err(pci->dev, "write DBI address failed\n");
-> 
-> 	writel(0, pcie_ep->elbi + ELBI_CS2_ENABLE);
-> }
-> 
 
-Hmm, I was not aware that this write_dbi2() callback is supposed to enable the
-CS2 access internally. But this approach doesn't look good to me.
 
-We already have accessors for enabling write access to DBI RO registers:
-
-dw_pcie_dbi_ro_wr_en()
-dw_pcie_dbi_ro_wr_dis()
-
-And IMO DBI_CS2 access should also be done this way instead of hiding it inside
-the register write callback.
-
-- Mani
-
-> /* Common DWC controller ops */
-> static const struct dw_pcie_ops pci_ops = {
-> 	.link_up = qcom_pcie_dw_link_up,
-> 	.start_link = qcom_pcie_dw_start_link,
-> 	.stop_link = qcom_pcie_dw_stop_link,
-> 	.write_dbi2 = qcom_pcie_write_dbi2,
-> };
+On 10/17/2023 5:09 PM, Ulf Hansson wrote:
+> On Tue, 17 Oct 2023 at 08:13, Sarthak Garg <quic_sartgarg@quicinc.com> wrote:
+>>
+>> Add the ability to partially initialize the MMC device by
+>> using device sleep/awake sequence (CMD5).
+>> Device will be sent to sleep state during mmc runtime/system suspend
+>> and will be woken up during mmc runtime/system resume.
+>> By using this sequence the device doesn't need full initialization
+>> which gives 25% time reduction in system/runtime resume path.
+>> Also enable this feature along with mmc runtime PM for qualcomm
+>> controllers.
+>>
+>> Sarthak Garg (3):
+>>    mmc: core: Add partial initialization support
+>>    mmc: sdhci-msm: Enable MMC_CAP_AGGRESSIVE_PM for Qualcomm controllers
+>>    mmc: sdhci-msm: Enable MMC_CAP2_SLEEP_AWAKE for Qualcomm controllers
+>>
+>>   drivers/mmc/core/mmc.c       | 163 +++++++++++++++++++++++++++++++++--
+>>   drivers/mmc/host/sdhci-msm.c |   2 +
+>>   include/linux/mmc/card.h     |   4 +
+>>   include/linux/mmc/host.h     |   2 +
+>>   4 files changed, 162 insertions(+), 9 deletions(-)
 > 
-> For that reason there is absolutely no need in adding the new
-> callbacks.
+> Would mind resending this version and while doing that, please add
+> some version information to each patch in the series. This helps while
+> reviewing.
 > 
-> -Serge(y)
-> 
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  drivers/pci/controller/dwc/pcie-designware-ep.c |  6 ++++++
-> >  drivers/pci/controller/dwc/pcie-designware.h    | 13 +++++++++++++
-> >  2 files changed, 19 insertions(+)
-> > 
-> > diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-> > index d34a5e87ad18..1874fb3d8df4 100644
-> > --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-> > +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-> > @@ -269,11 +269,17 @@ static int dw_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
-> >  
-> >  	dw_pcie_dbi_ro_wr_en(pci);
-> >  
-> > +	dw_pcie_dbi_cs2_en(pci);
-> >  	dw_pcie_writel_dbi2(pci, reg_dbi2, lower_32_bits(size - 1));
-> > +	dw_pcie_dbi_cs2_dis(pci);
-> > +
-> >  	dw_pcie_writel_dbi(pci, reg, flags);
-> >  
-> >  	if (flags & PCI_BASE_ADDRESS_MEM_TYPE_64) {
-> > +		dw_pcie_dbi_cs2_en(pci);
-> >  		dw_pcie_writel_dbi2(pci, reg_dbi2 + 4, upper_32_bits(size - 1));
-> > +		dw_pcie_dbi_cs2_dis(pci);
-> > +
-> >  		dw_pcie_writel_dbi(pci, reg + 4, 0);
-> >  	}
-> >  
-> > diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-> > index 55ff76e3d384..3cba27b5bbe5 100644
-> > --- a/drivers/pci/controller/dwc/pcie-designware.h
-> > +++ b/drivers/pci/controller/dwc/pcie-designware.h
-> > @@ -379,6 +379,7 @@ struct dw_pcie_ops {
-> >  			     size_t size, u32 val);
-> >  	void    (*write_dbi2)(struct dw_pcie *pcie, void __iomem *base, u32 reg,
-> >  			      size_t size, u32 val);
-> > +	void	(*dbi_cs2_access)(struct dw_pcie *pcie, bool enable);
-> >  	int	(*link_up)(struct dw_pcie *pcie);
-> >  	enum dw_pcie_ltssm (*get_ltssm)(struct dw_pcie *pcie);
-> >  	int	(*start_link)(struct dw_pcie *pcie);
-> > @@ -508,6 +509,18 @@ static inline void dw_pcie_dbi_ro_wr_dis(struct dw_pcie *pci)
-> >  	dw_pcie_writel_dbi(pci, reg, val);
-> >  }
-> >  
-> > +static inline void dw_pcie_dbi_cs2_en(struct dw_pcie *pci)
-> > +{
-> > +	if (pci->ops && pci->ops->dbi_cs2_access)
-> > +		pci->ops->dbi_cs2_access(pci, true);
-> > +}
-> > +
-> > +static inline void dw_pcie_dbi_cs2_dis(struct dw_pcie *pci)
-> > +{
-> > +	if (pci->ops && pci->ops->dbi_cs2_access)
-> > +		pci->ops->dbi_cs2_access(pci, false);
-> > +}
-> > +
-> >  static inline int dw_pcie_start_link(struct dw_pcie *pci)
-> >  {
-> >  	if (pci->ops && pci->ops->start_link)
-> > 
-> > -- 
-> > 2.25.1
-> > 
+> Kind regards
+> Uffe
 
--- 
-மணிவண்ணன் சதாசிவம்
+Sure will repost with the version history.
+
+Thanks,
+Sarthak
