@@ -2,60 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BBACB7D037F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 23:06:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A8A57D04A2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Oct 2023 00:08:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235532AbjJSVGo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Oct 2023 17:06:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42644 "EHLO
+        id S231301AbjJSWIq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Oct 2023 18:08:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235529AbjJSVGn (ORCPT
+        with ESMTP id S230120AbjJSWIp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Oct 2023 17:06:43 -0400
+        Thu, 19 Oct 2023 18:08:45 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37A54136;
-        Thu, 19 Oct 2023 14:06:42 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82639C433CA;
-        Thu, 19 Oct 2023 21:06:41 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AF29A4;
+        Thu, 19 Oct 2023 15:08:44 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7149C433C7;
+        Thu, 19 Oct 2023 22:08:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1697749601;
-        bh=VY5heIBy9yftU7sYBNfoeKWqOwP4esxHzVS+2WzNFSc=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=CEmtcQ4IqPvbJWnxJuekiXHzD9SNs3kIEH+DgJzWzEXC5Q9YETxOU8YLkGXLGKUZD
-         LnmoApJt7vYJgs5O6OxnIm6mCL+WZifbVTrMqDFyj3j8n9WK/u6a9JGGVw0FrIB4e/
-         5Ec87wTgg1DWo6q0vAky2XeorzhdFNdrkoUOS4P4rw4/UPgQSM3wprhoratuzDCwjB
-         dpQ00Eth8jNgLt60yQ1zOZOn/zmFE6+XPNVVZMV4Pm/yvRQKlzTdZ+j12nTp2epE08
-         GyWZqkZRb5O9qqcNfO4bl/jOeKK02zywE9o1qXRgg2cMd9Y5eLwNO91bQAmpyZ/uK/
-         stJt683nTgvqw==
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-507bd19eac8so145444e87.0;
-        Thu, 19 Oct 2023 14:06:41 -0700 (PDT)
-X-Gm-Message-State: AOJu0YwhovISxy2sJd/SVg0h9ENC8NbYVn3plQw43ETPCgGXMeSnYVka
-        Q5pmUT2rtWgSMUDowAY8tGJCY2/AukgH8qPzLA==
-X-Google-Smtp-Source: AGHT+IFNNqLHq7e9rbvmn7g8Kf+819v49MVg4TY+Jdh4Fqqqe3ifpRBgvC9663PPxlQqPustO9R2FgtjwWcYakFNqKY=
-X-Received: by 2002:ac2:5464:0:b0:504:3c1f:cbd9 with SMTP id
- e4-20020ac25464000000b005043c1fcbd9mr2295837lfn.16.1697749599708; Thu, 19 Oct
- 2023 14:06:39 -0700 (PDT)
+        s=k20201202; t=1697753323;
+        bh=0xUExZaCnpOZe09w1IymOILE+jJMJDYlYAh9fZjofMw=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=qCC/P6Z7UE87jxBHLuDwBwT+KgZtuqPAHBmCFVYxig53subGe5m/UnXrOlQ1Kttxa
+         jHQ9vw1yma/irMtt9GBQsWafuxPEoxiRWnA0GU7VmuaxbveT4JBxu/b3ck3oQljMbu
+         J+rIs5mj40Ud/DefXs1Jzmu6Frp/rEI/BujGJIChvpy4PcE4+izgmrkMSHyUtVIG3Z
+         Xka4WoIrLTURuZrBfnFMC1SN/ijke3yG0jWrNymZ1tbywZ4jprIOCnnS5Wg6KUOxLr
+         J5f9qRyKtnqNXVlVSsS6DJ0jQxSBipUNP1vQCFrMYW5/mLuoBOOAi2Twt2xDZT9wuH
+         9WvO+5K4DSVMg==
+Message-ID: <4f4803d538c6727990cda8f2e4fd7397.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20231005160550.2423075-1-quic_devipriy@quicinc.com>
- <20231005160550.2423075-4-quic_devipriy@quicinc.com> <169710517252.1166696.13811645504228005200.b4-ty@kernel.org>
-In-Reply-To: <169710517252.1166696.13811645504228005200.b4-ty@kernel.org>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Thu, 19 Oct 2023 16:06:27 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqKdvnb7c_oMaMsQiJQzm1YF5uV+Tb9nQSgX0_+tP1KD8g@mail.gmail.com>
-Message-ID: <CAL_JsqKdvnb7c_oMaMsQiJQzm1YF5uV+Tb9nQSgX0_+tP1KD8g@mail.gmail.com>
-Subject: Re: (subset) [PATCH V15 3/4] dt-bindings: mfd: qcom,tcsr: Add
- simple-mfd support for IPQ6018
-To:     Lee Jones <lee@kernel.org>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        thierry.reding@gmail.com, ndesaulniers@google.com, trix@redhat.com,
-        baruch@tkos.co.il, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        llvm@lists.linux.dev, Devi Priya <quic_devipriy@quicinc.com>,
-        linux-pwm@vger.kernel.org, u.kleine-koenig@pengutronix.de,
-        nathan@kernel.org
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <76b652c8-041c-49d6-9804-2781fe2ccfe3@linaro.org>
+References: <20230913-gpll_cleanup-v2-0-c8ceb1a37680@quicinc.com> <20230913-gpll_cleanup-v2-1-c8ceb1a37680@quicinc.com> <76f3bc23-8677-42bd-a3a5-43b17cbe552e@linaro.org> <c3dfeecf5cde513cf675b2f1a382f7a4.sboyd@kernel.org> <76b652c8-041c-49d6-9804-2781fe2ccfe3@linaro.org>
+Subject: Re: [PATCH v2 01/11] clk: qcom: ipq8074: drop the CLK_SET_RATE_PARENT flag from PLL clocks
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        stable@vger.kernel.org
+To:     Andy Gross <agross@kernel.org>,
+        Anusha Rao <quic_anusha@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Devi Priya <quic_devipriy@quicinc.com>,
+        Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+        Varadarajan Narayanan <quic_varada@quicinc.com>
+Date:   Thu, 19 Oct 2023 15:08:41 -0700
+User-Agent: alot/0.10
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -65,19 +63,82 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 12, 2023 at 5:06=E2=80=AFAM Lee Jones <lee@kernel.org> wrote:
->
-> On Thu, 05 Oct 2023 21:35:49 +0530, Devi Priya wrote:
-> > Update the binding to include pwm as the child node to TCSR block and
-> > add simple-mfd support for IPQ6018.
-> >
-> >
->
-> Applied, thanks!
->
-> [3/4] dt-bindings: mfd: qcom,tcsr: Add simple-mfd support for IPQ6018
->       commit: b4a32d218d424b81a58fbd419e1114b1c1f76168
+Quoting Konrad Dybcio (2023-10-19 04:22:33)
+>=20
+>=20
+> On 10/19/23 02:16, Stephen Boyd wrote:
+> > Quoting Konrad Dybcio (2023-09-15 05:19:56)
+> >> On 14.09.2023 08:59, Kathiravan Thirumoorthy wrote:
+> >>> GPLL, NSS crypto PLL clock rates are fixed and shouldn't be scaled ba=
+sed
+> >>> on the request from dependent clocks. Doing so will result in the
+> >>> unexpected behaviour. So drop the CLK_SET_RATE_PARENT flag from the P=
+LL
+> >>> clocks.
+> >>>
+> >>> Cc: stable@vger.kernel.org
+> >>> Fixes: b8e7e519625f ("clk: qcom: ipq8074: add remaining PLL=E2=80=99s=
+")
+> >>> Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+> >>> ---
+> >> Stephen, do you think there should be some sort of error
+> >> or at least warning thrown when SET_RATE_PARENT is used with
+> >> RO ops?
+> >>
+> >=20
+> > Sure? How would that be implemented?
+> drivers/clk/clk.c : static void clk_change_rate()
+>=20
+> if (!skip_set_rate && core->ops->set_rate)
+>         core->ops->set_rate(core->hw, core->new_rate, best_parent_rate);
+>=20
+> ->
+>=20
+> if (!skip_set_rate) {
+>         if (core->ops->set_rate)
+>                 core->ops->set_rate(core->hw, core->new_rate,
+>                                     best_parent_rate);
+>         else
+>                 pr_err("bad idea");
+> }
+>=20
 
-This is dependent on patch 2 being applied.
+CLK_SET_RATE_PARENT means that "calling clk_set_rate() on this clk will
+propagate up to the parent". Changing the rate of the parent could
+change the rate of this clk to be the same frequency as the parent if
+this clk doesn't have a set_rate clk op, or it could be that this clk
+has a fixed divider so during the determine_rate() callback it
+calculated what rate the parent should be to achieve the requested rate
+in clk_set_rate().
 
-Rob
+It really matters what determine_rate() returns for a clk and if after
+changing rates that rate is actually achieved. I suppose if the
+determine_rate() callback returns some rate, and then we recalc rates
+and notice that the rate determined earlier doesn't match we're
+concerned. So far in the last decade we've never cared about this though
+and I'm hesitant to start adding that check. I believe some qcom clk
+drivers take a shortcut and round the rate in frequency tables so
+whatever is returned in determine_rate() doesn't match what
+recalc_rate() calculates.
+
+It would be interesting to get rid of the CLK_SET_RATE_PARENT check in
+clk_calc_new_rates() and simply always call clk_calc_new_rates() on the
+parent if the parent->rate doesn't match what determine_rate thought it
+should be. The framework currently calls the rounding clk op for a clk
+and gets back the parent rate that the clk requires to achieve that rate
+and then it blindly trusts that the parent rate is going to be achieved.
+If the CLK_SET_RATE_PARENT flag is set it calls clk_calc_new_rates()
+recursively on the parent, but then it doesn't check that the parent
+rate is what was requested. That's mostly there to figure out if the
+parent also needs to change rate, i.e. calculating the 'top' clk in a
+rate change. Note that this also calls determine_rate again on the
+parent, once from the child clk's determine_rate clk op and once from
+the framework.
+
+I wouldn't be surprised if some driver is relying on this behavior where
+the rate isn't checked after being set. Maybe when we extend struct
+clk_rate_request to have a linked list that allows a clk to build up a
+chain of rate requests we can also enforce more things like matching
+rates on recalc. Then any drivers that are relying on this behavior will
+have to opt in to a different method of changing rates and notice that
+things aren't working.
