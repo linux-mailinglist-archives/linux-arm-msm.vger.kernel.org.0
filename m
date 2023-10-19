@@ -2,134 +2,219 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 12A1D7CF65E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 13:13:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 79CC77CF685
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 13:20:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233136AbjJSLNi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Oct 2023 07:13:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41534 "EHLO
+        id S233155AbjJSLUG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Oct 2023 07:20:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230297AbjJSLNi (ORCPT
+        with ESMTP id S233147AbjJSLUF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Oct 2023 07:13:38 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D2BA119
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 04:13:36 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-4083cd39188so13484015e9.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 04:13:36 -0700 (PDT)
+        Thu, 19 Oct 2023 07:20:05 -0400
+Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5286D115
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 04:20:03 -0700 (PDT)
+Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-5a7c93507d5so93782267b3.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 04:20:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697714015; x=1698318815; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=POZqwrn3QOIkuNwW6uoa6fDBdqF1NUX/ckhVqnX/nGM=;
-        b=LnfDtTrXD+yj+uVRr8qunQ0kIOafx0qb8DABRt8tNjPpYjTdTcOvG5n6HP6sImfmxw
-         6wpjIFWq8SV9PODmf3K/oM8Z++Zifc1HIJ+qrsItCshl2KtKP0FKzV/8NyMBWhHox4aL
-         5uEi3u2H3V9bZJE9ZoFDwLQux8Y7L5yAcbZM2rTGfHEKMivz7O+WxPdShPu2RL/Wk7PU
-         BvXZjLz00igiX0SWJPnkeZhnzhPkJ1SGzQsbx4lXwwVlseA8G8DUuekgLc8SA9bNjvq5
-         UnSReHkaid1fEb8SzP016IjineELQ61fveMzZKFPpJUJ1dvXd4BUkrlYqyzOaRe+z2As
-         rR0Q==
+        d=linaro.org; s=google; t=1697714402; x=1698319202; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=LClJmbXBbgZZ9PL/ptRr8uW+H9M+Lhuk/jPg67TAQuM=;
+        b=Scw1PNSeXgotgZQKTuLd5d5wdM8SgZXZiHarEsfMMVLL6xjf08gdjyUNkgfH3AapTg
+         Jz/ftuxy6+1imNEuskuNvoZfURr0TBhi9nHOx0tGepw5Ax8gK44ktJI2FHAON0sihijY
+         ZCVkZD6h/5lPZulPHk1OvzJwNai2Dr9hOr/vkwXNMHAzdX3xMPuVu/Lmy8sYca+BQ2b/
+         ZFVPe0sjHT1IAjihIx2+9hVx4RKV5mIrbiRLnn3u8qVkhDVXvaq/8qrLtZ8lrcwq2SKh
+         BY7VpXMqsQRVr0IkiuAceJ+M7PBfa9jBysXVgtbwO/B5+SjB5KbCS9d7KTBF1fXKxKzG
+         A99w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697714015; x=1698318815;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=POZqwrn3QOIkuNwW6uoa6fDBdqF1NUX/ckhVqnX/nGM=;
-        b=UU/A7g7ZymrsNqIDlYhIFLYWOhw9ARhWsiQg9gJXTrHIclbczdj06yW+4GFlb2ltr4
-         gmZkO6RDtFXYvrYaKOpromRkdITQCxykBcFX0BsJ3UrKM9aJy61+GMuTT07RO2Hzh5Un
-         F5jiP54qOx52+S9MH8Y1kMecS1COG0GK/ZW/PxjXBWS+DjF66lMA250g2lAcCbfDEDLL
-         0RmFW3go2COVh0S/BByk7ajKvBZV6DJkqfu7ExQf+PrgQxA63ghk54i178LaDbYtBlNx
-         jaz2RwZ8UGHhGYH9aLh6+HBrEayBYwFQkTCmVVP4MwjoLxx0ytNX0amyvivZyKzW+p+A
-         tn/g==
-X-Gm-Message-State: AOJu0YwC5IIIvBsc/6oNbA2yKL5wVKvemKqmgwNp4PNgMR2Vz53YSBPO
-        zVyf1QRvWsLeh835MQOY476B1A==
-X-Google-Smtp-Source: AGHT+IESelDfNhrhBDzW3Tww8D/Nax8XajqTmvOsjCQY9+TpZo5BfDRDQhEygSKOyZRhdOccwizXEA==
-X-Received: by 2002:a05:600c:a0a:b0:408:3c10:ad47 with SMTP id z10-20020a05600c0a0a00b004083c10ad47mr1531323wmp.40.1697714014660;
-        Thu, 19 Oct 2023 04:13:34 -0700 (PDT)
-Received: from [172.30.205.86] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id q12-20020a05600c2e4c00b0040648217f4fsm4089784wmf.39.2023.10.19.04.13.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Oct 2023 04:13:34 -0700 (PDT)
-Message-ID: <1cdc2a68-a1e8-4cf2-8a1a-899d14f8db80@linaro.org>
-Date:   Thu, 19 Oct 2023 13:13:34 +0200
+        d=1e100.net; s=20230601; t=1697714402; x=1698319202;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LClJmbXBbgZZ9PL/ptRr8uW+H9M+Lhuk/jPg67TAQuM=;
+        b=DIZTSHebKc1tFhFh7i3fC7MN/z8jjk/eM+QgoDy6UpRHIWr8SIOctIuK/L/V8o/V+p
+         5SnpZwgIdz4TzNDsm4UHt8NRspWYDNvt3pdcaVQ1zoNecPDhobah6tpHDjnhy/wJGRx1
+         6Z/i8xvHDGyo4xCpKCu3DDf5P//mcqy4qABLQQiwuhc5GcROk/FWCHLrIQTm8jXAtOT8
+         5o1lKfDozR+sCulA9QX69ntenuidTFiWzNIhE0xyPJ8goasGfzBrWNZSKnlfHCRykWCv
+         7x+r7r7IKlbzf3evyNo1YwxCB/hOE7L1idym3RDrgMVAoopCdj/NqE3+ALTzmYMob+bC
+         KOxg==
+X-Gm-Message-State: AOJu0YxZFI9Z4Rh43EnaYV2SXhJEMDMMyAE4I3RLMrP466OUNPwI2QlD
+        AnM3BVpHma8shDsHJnqF+jEIOCSplN15DRinK3SWnw==
+X-Google-Smtp-Source: AGHT+IHsKrnC+HnnF2UK0XWJsB/bhHUzaseUh9wgYFQMhnXiNl5Q/h72pZzdPFWB8GR4VoHaQazj+FeGDz8qhVkt4fA=
+X-Received: by 2002:a25:285:0:b0:d9a:5f91:c616 with SMTP id
+ 127-20020a250285000000b00d9a5f91c616mr2004733ybc.46.1697714402196; Thu, 19
+ Oct 2023 04:20:02 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/6] iommu/arm-smmu-qcom: Add support for TBUs
-Content-Language: en-US
-To:     Georgi Djakov <quic_c_gdjako@quicinc.com>, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        will@kernel.org, robin.murphy@arm.com, joro@8bytes.org
-Cc:     devicetree@vger.kernel.org, andersson@kernel.org,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+References: <20231016165355.1327217-1-dmitry.baryshkov@linaro.org>
+ <20231016165355.1327217-4-dmitry.baryshkov@linaro.org> <7e4ak4e77fp5dat2aopyq3g4wnqu3tt7di7ytdr3dvgjviyhrd@vqiqx6iso6vg>
+In-Reply-To: <7e4ak4e77fp5dat2aopyq3g4wnqu3tt7di7ytdr3dvgjviyhrd@vqiqx6iso6vg>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 19 Oct 2023 14:19:51 +0300
+Message-ID: <CAA8EJpp48AdJmx_U=bEJZUWZgOiT1Ctz6Lpe9QwjLXkMQvsw5w@mail.gmail.com>
+Subject: Re: [RFC PATCH 03/10] drm/mipi-dsi: add API for manual control over
+ the DSI link power state
+To:     Maxime Ripard <mripard@kernel.org>
+Cc:     Dave Stevenson <dave.stevenson@raspberrypi.com>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Douglas Anderson <dianders@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Marek Vasut <marex@denx.de>, dri-devel@lists.freedesktop.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        quic_cgoldswo@quicinc.com, quic_sukadev@quicinc.com,
-        quic_pdaly@quicinc.com, quic_sudaraja@quicinc.com,
-        djakov@kernel.org
-References: <20231019021923.13939-1-quic_c_gdjako@quicinc.com>
- <20231019021923.13939-3-quic_c_gdjako@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231019021923.13939-3-quic_c_gdjako@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, 19 Oct 2023 at 12:26, Maxime Ripard <mripard@kernel.org> wrote:
+>
+> On Mon, Oct 16, 2023 at 07:53:48PM +0300, Dmitry Baryshkov wrote:
+> > The MIPI DSI links do not fully fall into the DRM callbacks model.
+>
+> Explaining why would help
+
+A kind of explanation comes afterwards, but probably I should change
+the order of the phrases and expand it:
+
+The atomic_pre_enable / atomic_enable and correspondingly
+atomic_disable / atomic_post_disable expect that the bridge links
+follow a simple paradigm: either it is off, or it is on and streaming
+video. Thus, it is fine to just enable the link at the enable time,
+doing some preparations during the pre_enable.
+
+But then it causes several issues with DSI. First, some of the DSI
+bridges and most of the DSI panels would like to send commands over
+the DSI link to setup the device. Next, some of the DSI hosts have
+limitations on sending the commands. The proverbial sunxi DSI host can
+not send DSI commands after the video stream has started. Thus most of
+the panels have opted to send all DSI commands from pre_enable (or
+prepare) callback (before the video stream has started).
+
+However this leaves no good place for the DSI host to power up the DSI
+link. By default the host's pre_enable callback is called after the
+DSI bridge's pre_enable. For quite some time we were powering up the
+DSI link from mode_set. This doesn't look fully correct. And also we
+got into the issue with ps8640 bridge, which requires for the DSI link
+to be quiet / unpowered at the bridge's reset time.
+
+Dave has come with the idea of pre_enable_prev_first /
+prepare_prev_first flags, which attempt to solve the issue by
+reversing the order of pre_enable callbacks. This mostly solves the
+issue. However during this cycle it became obvious that this approach
+is not ideal too. There is no way for the DSI host to know whether the
+DSI panel / bridge has been updated to use this flag or not, see the
+discussion at [1].
+
+Thus comes this proposal. It allows for the panels to explicitly bring
+the link up and down at the correct time, it supports automatic use
+case, where no special handling is required. And last, but not least,
+it allows the DSI host to note that the bridge / panel were not
+updated to follow new protocol and thus the link should be powered on
+at the mode_set time. This leaves us with the possibility of dropping
+support for this workaround once all in-kernel drivers are updated.
+
+> > The drm_bridge_funcs abstraction.
+>
+> Is there a typo or missing words?
+
+missing comma in front of The
+
+>
+> > Instead of having just two states (off and on) the DSI hosts have
+> > separate LP-11 state. In this state the host is on, but the video
+> > stream is not yet enabled.
+> >
+> > Introduce API that allows DSI bridges / panels to control the DSI host
+> > power up state.
+
+[1] https://lore.kernel.org/dri-devel/6c0dd9fd-5d8e-537c-804f-7a03d5899a07@linaro.org/
+
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  drivers/gpu/drm/drm_mipi_dsi.c | 31 +++++++++++++++++++++++++++++++
+> >  include/drm/drm_mipi_dsi.h     | 29 +++++++++++++++++++++++++----
+> >  2 files changed, 56 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_dsi.c
+> > index 14201f73aab1..c467162cb7d8 100644
+> > --- a/drivers/gpu/drm/drm_mipi_dsi.c
+> > +++ b/drivers/gpu/drm/drm_mipi_dsi.c
+> > @@ -428,6 +428,37 @@ int devm_mipi_dsi_attach(struct device *dev,
+> >  }
+> >  EXPORT_SYMBOL_GPL(devm_mipi_dsi_attach);
+> >
+> > +bool mipi_dsi_host_power_control_available(struct mipi_dsi_host *host)
+> > +{
+> > +     const struct mipi_dsi_host_ops *ops = host->ops;
+> > +
+> > +     return ops && ops->power_up;
+> > +}
+> > +EXPORT_SYMBOL_GPL(mipi_dsi_host_power_control_available);
+> > +
+> > +int mipi_dsi_host_power_up(struct mipi_dsi_host *host)
+> > +{
+> > +     const struct mipi_dsi_host_ops *ops = host->ops;
+> > +
+> > +     if (!mipi_dsi_host_power_control_available(host))
+> > +             return -EOPNOTSUPP;
+> > +
+> > +     return ops->power_up ? ops->power_up(host) : 0;
+> > +}
+> > +EXPORT_SYMBOL_GPL(mipi_dsi_host_power_up);
+> > +
+> > +void mipi_dsi_host_power_down(struct mipi_dsi_host *host)
+> > +{
+> > +     const struct mipi_dsi_host_ops *ops = host->ops;
+> > +
+> > +     if (!mipi_dsi_host_power_control_available(host))
+> > +             return;
+> > +
+> > +     if (ops->power_down)
+> > +             ops->power_down(host);
+> > +}
+> > +EXPORT_SYMBOL_GPL(mipi_dsi_host_power_down);
+> > +
+>
+> If this API is supposed to be used by DSI devices, it should probably
+> take a mipi_dsi_device pointer as a parameter?
+
+Ack.
+
+>
+> We should probably make sure it hasn't been powered on already too?
+
+Ack, I can add an atomic count there and a WARN_ON. However I don't
+think that it is a real problem.
+
+>
+> Maxime
 
 
-On 10/19/23 04:19, Georgi Djakov wrote:
-> The ARM MMU-500 implements a Translation Buffer Unit (TBU) for each
-> connected master besides a single TCU which controls and manages the
-> address translations.
-> 
-> Allow the Qualcomm SMMU driver to probe for any TBU devices that can
-> provide additional debug features like triggering transactions, logging
-> outstanding transactions, snapshot capture etc. The most basic use-case
-> would be to get information from the TBUs and print it during a context
-> fault.
-> 
-> Signed-off-by: Georgi Djakov <quic_c_gdjako@quicinc.com>
-> ---
->   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 12 ++++++++++++
->   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h |  4 +++-
->   2 files changed, 15 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> index 7f52ac67495f..655c7f50ca84 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> @@ -1,12 +1,14 @@
->   // SPDX-License-Identifier: GPL-2.0-only
->   /*
->    * Copyright (c) 2019, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved
->    */
->   
->   #include <linux/acpi.h>
->   #include <linux/adreno-smmu-priv.h>
->   #include <linux/delay.h>
->   #include <linux/of_device.h>
-> +#include <linux/of_platform.h>
->   #include <linux/firmware/qcom/qcom_scm.h>
->   
->   #include "arm-smmu.h"
-> @@ -466,6 +468,16 @@ static struct arm_smmu_device *qcom_smmu_create(struct arm_smmu_device *smmu,
->   	qsmmu->smmu.impl = impl;
->   	qsmmu->cfg = data->cfg;
->   
-> +	/* Populate TBU devices if such are present in DT */
-> +	if (np && of_device_is_compatible(np, "arm,mmu-500")) {
-I'd say this can be unconditional.
 
-> +		int ret;
-> +
-> +		INIT_LIST_HEAD(&qsmmu->tbu_list);
-This list is unused.
+--
+With best wishes
 
-Konrad
+Dmitry
