@@ -2,53 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 912147D02B6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 21:47:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BBACB7D037F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 23:06:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345366AbjJSTrC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Oct 2023 15:47:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43912 "EHLO
+        id S235532AbjJSVGo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Oct 2023 17:06:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345159AbjJSTrC (ORCPT
+        with ESMTP id S235529AbjJSVGn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Oct 2023 15:47:02 -0400
+        Thu, 19 Oct 2023 17:06:43 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0968114;
-        Thu, 19 Oct 2023 12:47:00 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C58FC433CA;
-        Thu, 19 Oct 2023 19:47:00 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37A54136;
+        Thu, 19 Oct 2023 14:06:42 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82639C433CA;
+        Thu, 19 Oct 2023 21:06:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1697744820;
-        bh=kJyJ53sEdpPJK6eagpUQpoxGIQ2v4UNjTrtx9ncWMjI=;
+        s=k20201202; t=1697749601;
+        bh=VY5heIBy9yftU7sYBNfoeKWqOwP4esxHzVS+2WzNFSc=;
         h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=nDFWVqRHy/C2zMBklJ2uAXHxqdaqyNK8XEpcMD3XPazOM4a+k7fcBDHTcyt7zP87m
-         BRoGBXdMVFnsreuu6oAkhuB84Hn7yaCb6NtgFo0JYvA3ethDF4zLq0EODdip5BHnJE
-         uNajNGFKDO4kgMYHhw53oYyl0Y8B9iYX9dY4q9AYVwM0z/6HkDJFlFodgiHOLguqIM
-         a6jWNYdB5MF1p3tiZZDjPIJs5Zj0f+gmi17m+01RO3fzNFX16MtotBWDwfdaIdUI5t
-         NHh9LOeIDN2aqzeZcgTB2Pb3Wzp5dC9gE8fUCg38u0sOYm+9uWfgvpKULSivuohuFX
-         KhFVy1K+yKSeQ==
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-507adc3381cso14464e87.3;
-        Thu, 19 Oct 2023 12:47:00 -0700 (PDT)
-X-Gm-Message-State: AOJu0YwoZWO2y+cBuFpssxAWespnrakCz4ZBLqydAWh3Cu/VhFbPTc3z
-        VAA+tcySJUJGYt97go9z05tA7p6kBMEUz+bHpQ==
-X-Google-Smtp-Source: AGHT+IEv0Yxf1FOVuXFGWen4jDWLp5PE11XXP+QWf6ZcfW0Lwd4xFfWSkOUQ2pkinfmyVX+ucqLtX8D9FLXWah8BxeU=
-X-Received: by 2002:ac2:5328:0:b0:500:b74b:e53 with SMTP id
- f8-20020ac25328000000b00500b74b0e53mr2215352lfh.46.1697744818512; Thu, 19 Oct
- 2023 12:46:58 -0700 (PDT)
+        b=CEmtcQ4IqPvbJWnxJuekiXHzD9SNs3kIEH+DgJzWzEXC5Q9YETxOU8YLkGXLGKUZD
+         LnmoApJt7vYJgs5O6OxnIm6mCL+WZifbVTrMqDFyj3j8n9WK/u6a9JGGVw0FrIB4e/
+         5Ec87wTgg1DWo6q0vAky2XeorzhdFNdrkoUOS4P4rw4/UPgQSM3wprhoratuzDCwjB
+         dpQ00Eth8jNgLt60yQ1zOZOn/zmFE6+XPNVVZMV4Pm/yvRQKlzTdZ+j12nTp2epE08
+         GyWZqkZRb5O9qqcNfO4bl/jOeKK02zywE9o1qXRgg2cMd9Y5eLwNO91bQAmpyZ/uK/
+         stJt683nTgvqw==
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-507bd19eac8so145444e87.0;
+        Thu, 19 Oct 2023 14:06:41 -0700 (PDT)
+X-Gm-Message-State: AOJu0YwhovISxy2sJd/SVg0h9ENC8NbYVn3plQw43ETPCgGXMeSnYVka
+        Q5pmUT2rtWgSMUDowAY8tGJCY2/AukgH8qPzLA==
+X-Google-Smtp-Source: AGHT+IFNNqLHq7e9rbvmn7g8Kf+819v49MVg4TY+Jdh4Fqqqe3ifpRBgvC9663PPxlQqPustO9R2FgtjwWcYakFNqKY=
+X-Received: by 2002:ac2:5464:0:b0:504:3c1f:cbd9 with SMTP id
+ e4-20020ac25464000000b005043c1fcbd9mr2295837lfn.16.1697749599708; Thu, 19 Oct
+ 2023 14:06:39 -0700 (PDT)
 MIME-Version: 1.0
-References: <20231019184825.9712-1-quic_obabatun@quicinc.com> <20231019184825.9712-2-quic_obabatun@quicinc.com>
-In-Reply-To: <20231019184825.9712-2-quic_obabatun@quicinc.com>
+References: <20231005160550.2423075-1-quic_devipriy@quicinc.com>
+ <20231005160550.2423075-4-quic_devipriy@quicinc.com> <169710517252.1166696.13811645504228005200.b4-ty@kernel.org>
+In-Reply-To: <169710517252.1166696.13811645504228005200.b4-ty@kernel.org>
 From:   Rob Herring <robh+dt@kernel.org>
-Date:   Thu, 19 Oct 2023 14:46:46 -0500
-X-Gmail-Original-Message-ID: <CAL_Jsq+pUv29277spzXB7QJ=OZTwGy_FmW55CzQPWYLPktA0EA@mail.gmail.com>
-Message-ID: <CAL_Jsq+pUv29277spzXB7QJ=OZTwGy_FmW55CzQPWYLPktA0EA@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/3] of: reserved_mem: Change the order that
- reserved_mem regions are stored
-To:     Oreoluwa Babatunde <quic_obabatun@quicinc.com>
-Cc:     catalin.marinas@arm.com, will@kernel.org, frowand.list@gmail.com,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        kernel@quicinc.com
+Date:   Thu, 19 Oct 2023 16:06:27 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqKdvnb7c_oMaMsQiJQzm1YF5uV+Tb9nQSgX0_+tP1KD8g@mail.gmail.com>
+Message-ID: <CAL_JsqKdvnb7c_oMaMsQiJQzm1YF5uV+Tb9nQSgX0_+tP1KD8g@mail.gmail.com>
+Subject: Re: (subset) [PATCH V15 3/4] dt-bindings: mfd: qcom,tcsr: Add
+ simple-mfd support for IPQ6018
+To:     Lee Jones <lee@kernel.org>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        thierry.reding@gmail.com, ndesaulniers@google.com, trix@redhat.com,
+        baruch@tkos.co.il, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        llvm@lists.linux.dev, Devi Priya <quic_devipriy@quicinc.com>,
+        linux-pwm@vger.kernel.org, u.kleine-koenig@pengutronix.de,
+        nathan@kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
@@ -60,61 +65,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 19, 2023 at 1:49=E2=80=AFPM Oreoluwa Babatunde
-<quic_obabatun@quicinc.com> wrote:
+On Thu, Oct 12, 2023 at 5:06=E2=80=AFAM Lee Jones <lee@kernel.org> wrote:
 >
-> The dynamic allocation of the reserved_mem array needs to be done after
-> paging_init() is called because memory allocated using memblock_alloc()
-> is not writeable before that.
+> On Thu, 05 Oct 2023 21:35:49 +0530, Devi Priya wrote:
+> > Update the binding to include pwm as the child node to TCSR block and
+> > add simple-mfd support for IPQ6018.
+> >
+> >
 >
-> Nodes that already have their starting address specified in the DT
-> (i.e. nodes that are defined using the "reg" property) can wait until
-> after paging_init() to be stored in the array.
-> But nodes that are dynamically placed need to be reserved and saved in
-> the array before paging_init() so that page table entries are not
-> created for these regions.
+> Applied, thanks!
 >
-> Hence, change the code to:
-> 1. Before paging_init(), allocate and store information for the
->    dynamically placed reserved memory regions.
-> 2. After paging_init(), store the rest of the reserved memory regions
->    which are defined with the "reg" property.
->
-> Signed-off-by: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
-> ---
->  arch/arm64/kernel/setup.c       |  4 +++
->  drivers/of/fdt.c                | 56 ++++++++++++++++++++++++++-------
->  drivers/of/of_private.h         |  1 -
->  drivers/of/of_reserved_mem.c    | 54 ++++++++++++++-----------------
->  include/linux/of_fdt.h          |  1 +
->  include/linux/of_reserved_mem.h |  9 ++++++
->  6 files changed, 83 insertions(+), 42 deletions(-)
->
-> diff --git a/arch/arm64/kernel/setup.c b/arch/arm64/kernel/setup.c
-> index 417a8a86b2db..6002d3ad0b19 100644
-> --- a/arch/arm64/kernel/setup.c
-> +++ b/arch/arm64/kernel/setup.c
-> @@ -27,6 +27,8 @@
->  #include <linux/proc_fs.h>
->  #include <linux/memblock.h>
->  #include <linux/of_fdt.h>
-> +#include <linux/of_reserved_mem.h>
-> +
->  #include <linux/efi.h>
->  #include <linux/psci.h>
->  #include <linux/sched/task.h>
-> @@ -346,6 +348,8 @@ void __init __no_sanitize_address setup_arch(char **c=
-mdline_p)
->
->         paging_init();
->
-> +       fdt_init_reserved_mem();
-> +
+> [3/4] dt-bindings: mfd: qcom,tcsr: Add simple-mfd support for IPQ6018
+>       commit: b4a32d218d424b81a58fbd419e1114b1c1f76168
 
-You removed this call from the common code and add it to arm64 arch
-code, doesn't that break every other arch?
-
-The very next thing done here is unflattening the DT. So another call
-from the arch code to the DT code isn't needed either.
+This is dependent on patch 2 being applied.
 
 Rob
