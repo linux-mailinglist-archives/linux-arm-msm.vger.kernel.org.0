@@ -2,75 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EA2407CF6B1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 13:27:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30EEC7CF701
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 13:37:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345351AbjJSL1A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Oct 2023 07:27:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41870 "EHLO
+        id S1345381AbjJSLhg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Oct 2023 07:37:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345324AbjJSL07 (ORCPT
+        with ESMTP id S235229AbjJSLhf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Oct 2023 07:26:59 -0400
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFB6A12A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 04:26:56 -0700 (PDT)
-Received: by mail-yb1-xb36.google.com with SMTP id 3f1490d57ef6-d9a3d737d66so8340480276.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 04:26:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697714816; x=1698319616; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=PUrrcj+/ipouo/XR5RIgfw8wVuJ5J+7IILf/FghVZXQ=;
-        b=L9f38YWU39ice32PN6Gk6IneWrA7GTaQko/2pMcAvyIFSspRayFYidiSyXxz2TvxN2
-         WN+AT23DvUuAmVfiqxO5t7JJvOjTG45teXEl1i17H6KohaXZ2J3HaEv4C1ZzxyqS7CSF
-         XDCY/nfkOClC2h/6Idw1icUqG5+fRg1yqlGOJjZgDiNHGJkLpOXPyvs8sHnJj5rhox1B
-         BIvDcp+Iy3H/Ax05TllbFrTpBmXIJ/lSJOP4Ebbl8eBdcc+w0f4Mwwh0bcjBz9O7taiH
-         WJ9OTdif9c/a0MKh1izip+0iJM2a1P6I0Ba36ezCz5zfbM2xput761mY9GEDuN0WUnMr
-         c5jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697714816; x=1698319616;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PUrrcj+/ipouo/XR5RIgfw8wVuJ5J+7IILf/FghVZXQ=;
-        b=g1Th/1HGGK6suazoHRJMwnrlsk7eEu8QFJs+ol+XNaHnfQwW021pd3rA49I11oP0Lz
-         wrv1p4AhOmVgMbzkZBErUXRf55M076uP8ITQP5mEGO/F1v3Snfu7HmhvDwV5oV+Tm+F5
-         TBgFzHyM2+W9NMffPbpubVXuMChsgHoF/guC75hOHmOuJ8CZmjL/XS4xBkys03D4NQoQ
-         PUYg2hT6vNSx/rs3jijKUhiaVG1ZrwaxrxFQOAY22sTgEviIXyKOSvPY5iNpj91JfHpr
-         pGhYoWH4GeqdmRPHMjKWdO38R817kXGKMGO0ViAqHYrC0R1EDFv/dYaocU2+0U7sDtc9
-         fJ0Q==
-X-Gm-Message-State: AOJu0YzHowURZILkDb1SHNzj5kLfkXJc11g218CL8pe3+22tNe0sqeIQ
-        78Hu1ZeMh6emTF2k+EaYRNyMjh7qbz1ZonpANZXf0w==
-X-Google-Smtp-Source: AGHT+IHHpyH97w+iL3El9mSizFMVO4FKJ8HXRgdkh6mPyu1/bq7yU2Ex3EFkQtcuQTKmfRtzWjhohIwy1xpnLV3M9ik=
-X-Received: by 2002:a25:ae99:0:b0:d9a:fc8e:7c05 with SMTP id
- b25-20020a25ae99000000b00d9afc8e7c05mr1859738ybj.45.1697714816028; Thu, 19
- Oct 2023 04:26:56 -0700 (PDT)
-MIME-Version: 1.0
-References: <20231018-msm8909-cpufreq-v2-0-0962df95f654@kernkonzept.com>
- <20231018-msm8909-cpufreq-v2-2-0962df95f654@kernkonzept.com> <CAPDyKFot9=M1ooP_Q1AOgG5o_4DTQ2qsyai1ZdXAzBwf89W4uA@mail.gmail.com>
-In-Reply-To: <CAPDyKFot9=M1ooP_Q1AOgG5o_4DTQ2qsyai1ZdXAzBwf89W4uA@mail.gmail.com>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 19 Oct 2023 13:26:19 +0200
-Message-ID: <CAPDyKFr5A-P=UhWs4rUMBWup3pH75WAhcZ56Y2_Sfk3=WfxRCQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] cpufreq: qcom-nvmem: Enable virtual power domain devices
-To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, Stephan Gerhold <stephan@gerhold.net>,
-        stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        Thu, 19 Oct 2023 07:37:35 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DCB1185;
+        Thu, 19 Oct 2023 04:37:32 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39JBJa4B006578;
+        Thu, 19 Oct 2023 11:37:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=Uibb7vCKN4Pe9NjvGIf8PjhMn2Ru/ZEvqI1gp9q/eWk=;
+ b=nvIBBWg8OIX1H/FwHvojwoI5mGZevNriC0+28e9UVt8IohFv8uwSiDGQ0l/X9J0WZQS9
+ hF50wqcUf1QO0Dz/LlpcbFU9w6zcITxTx2APY/jbJtbeC9pq1EvvdBRKKwrsvmBzuspz
+ wXGk5CmniLQfuem9sDeYEul05YGF+NNE+7+RRa4BAzQ2ZBIOL7CFku9FfzXy9Gj2yCB0
+ FAhgC7kmx4FG99v6IRWcMkQj9FN2ezpB9DnYLgyOPXcpSVq0fda37BxGecRckedOefQE
+ Dnk3sRpfg9Pp3SpyLQmMX/Hrk6MZ5YcEq5v9lTJAxEn0kzNNpoHyG5fxgiQXf0okzdti mA== 
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ttgw3tevg-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 19 Oct 2023 11:37:18 +0000
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 39JBbEWL000798;
+        Thu, 19 Oct 2023 11:37:14 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3tqm2mcs2y-1;
+        Thu, 19 Oct 2023 11:37:14 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 39JBbEdX000782;
+        Thu, 19 Oct 2023 11:37:14 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-msarkar-hyd.qualcomm.com [10.213.111.194])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 39JBbDPU000781;
+        Thu, 19 Oct 2023 11:37:14 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3891782)
+        id DD337441C; Thu, 19 Oct 2023 17:07:12 +0530 (+0530)
+From:   Mrinmay Sarkar <quic_msarkar@quicinc.com>
+To:     agross@kernel.org, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        konrad.dybcio@linaro.org, mani@kernel.org
+Cc:     quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
+        dmitry.baryshkov@linaro.org, robh@kernel.org,
+        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
+        quic_parass@quicinc.com, Mrinmay Sarkar <quic_msarkar@quicinc.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
+        linux-phy@lists.infradead.org
+Subject: [PATCH v3 0/5] arm64: qcom: sa8775p: add support for EP PCIe
+Date:   Thu, 19 Oct 2023 17:07:05 +0530
+Message-Id: <1697715430-30820-1-git-send-email-quic_msarkar@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: lpq5l2CFyOWGj1Os-hJ11DuALkuAS5Sq
+X-Proofpoint-GUID: lpq5l2CFyOWGj1Os-hJ11DuALkuAS5Sq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-19_09,2023-10-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ phishscore=0 lowpriorityscore=0 suspectscore=0 mlxscore=0 bulkscore=0
+ impostorscore=0 adultscore=0 clxscore=1015 malwarescore=0 mlxlogscore=362
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310190099
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,51 +89,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 19 Oct 2023 at 12:24, Ulf Hansson <ulf.hansson@linaro.org> wrote:
->
-> On Wed, 18 Oct 2023 at 10:06, Stephan Gerhold
-> <stephan.gerhold@kernkonzept.com> wrote:
-> >
-> > The genpd core caches performance state votes from devices that are
-> > runtime suspended as of commit 3c5a272202c2 ("PM: domains: Improve
-> > runtime PM performance state handling"). They get applied once the
-> > device becomes active again.
-> >
-> > To attach the power domains needed by qcom-cpufreq-nvmem the OPP core
-> > calls genpd_dev_pm_attach_by_id(). This results in "virtual" dummy
-> > devices that use runtime PM only to control the enable and performance
-> > state for the attached power domain.
-> >
-> > However, at the moment nothing ever resumes the virtual devices created
-> > for qcom-cpufreq-nvmem. They remain permanently runtime suspended. This
-> > means that performance state votes made during cpufreq scaling get
-> > always cached and never applied to the hardware.
-> >
-> > Fix this by enabling the devices after attaching them and use
-> > dev_pm_syscore_device() to ensure the power domains also stay on when
-> > going to suspend. Since it supplies the CPU we can never turn it off
-> > from Linux. There are other mechanisms to turn it off when needed,
-> > usually in the RPM firmware (RPMPD) or the cpuidle path (CPR genpd).
->
-> I believe we discussed using dev_pm_syscore_device() for the previous
-> version. It's not intended to be used for things like the above.
->
-> Moreover, I was under the impression that it wasn't really needed. In
-> fact, I would think that this actually breaks things for system
-> suspend/resume, as in this case the cpr driver's genpd
-> ->power_on|off() callbacks are no longer getting called due this,
-> which means that the cpr state machine isn't going to be restored
-> properly. Or did I get this wrong?
+This series adds the relavent DT bindings, new compatible string,
+update PHY, add support to EPF driver and add EP PCIe node in dtsi
+file for ep pcie0 controller.
 
-BTW, if you really need something like the above, the proper way to do
-it would instead be to call device_set_awake_path() for the device.
+v2 -> v3:
+- removed if/then schemas, added minItems for reg,
+  reg-bnames, interrupt and interrupt-names instead.
+- adding qcom,sa8775p-pcie-ep compitable for sa8775p
+  as we have some specific change to add.
+- reusing sm8450's pcs_misc num table as it is same as sa8775p.
+  used appropriate namespace for pcs.
+- remove const from sa8775p_header as kernel test robot
+  throwing some warnings due to this.
+- remove fallback compatiable as we are adding compatiable for sa8775p.
 
-This informs genpd that the device needs to stay powered-on during
-system suspend (assuming that GENPD_FLAG_ACTIVE_WAKEUP has been set
-for it), hence it will keep the corresponding PM domain powered-on
-too.
+v1 -> v2:
+- update description for dma
+- Reusing qcom,sdx55-pcie-ep compatibe so remove compaitable
+  for sa8775p
+- sort the defines in phy header file and remove extra defines
+- add const in return type pci_epf_header and remove MHI_EPF_USE_DMA
+  flag as hdma patch is not ready
+- add fallback compatiable as qcom,sdx55-pcie-ep, add iommu property
 
-[...]
+Mrinmay Sarkar (5):
+  dt-bindings: PCI: qcom-ep: Add support for SA8775P SoC
+  PCI: qcom-ep: Add support for SA8775P SOC
+  phy: qcom-qmp-pcie: add endpoint support for sa8775p
+  PCI: epf-mhi: Add support for SA8775P
+  arm64: dts: qcom: sa8775p: Add ep pcie0 controller node
 
-Kind regards
-Uffe
+ .../devicetree/bindings/pci/qcom,pcie-ep.yaml      | 44 +++++++++++++++++++-
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi              | 48 ++++++++++++++++++++++
+ drivers/pci/controller/dwc/pcie-qcom-ep.c          |  1 +
+ drivers/pci/endpoint/functions/pci-epf-mhi.c       | 17 ++++++++
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c           | 37 +++++++++++++++++
+ drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5_20.h      |  2 +
+ 6 files changed, 147 insertions(+), 2 deletions(-)
+
+-- 
+2.7.4
+
