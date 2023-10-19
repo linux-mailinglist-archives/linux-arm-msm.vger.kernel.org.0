@@ -2,242 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A76F37CF51C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 12:25:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F5667CF57C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 12:40:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229473AbjJSKZB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Oct 2023 06:25:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44838 "EHLO
+        id S232626AbjJSKkO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Oct 2023 06:40:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233027AbjJSKZA (ORCPT
+        with ESMTP id S229632AbjJSKkN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Oct 2023 06:25:00 -0400
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EF83130
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 03:24:58 -0700 (PDT)
-Received: by mail-yb1-xb2c.google.com with SMTP id 3f1490d57ef6-d9a7a3e17d1so9066065276.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 03:24:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697711097; x=1698315897; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=gUZeb0jKJJtlyWUIyBlImNnt+JsfVfhEYz3giXl9GK4=;
-        b=rREWxOlM9g3ay2zIZ3oLts2zMVCD3kO7bBZ9nMPrTAvDojb5XYZMHKZbbFekI5nUwI
-         6c7Ok3nnuAfXgC2xIK8pDwADsjQYhI0OWlD8LA+IVYdOFIF5dLZwh5/+9AXRHVjsbDrt
-         IockE7zLQhxYTZ939YteA4NamOdOOBRrKLWKfxVSoAZqEjTNgagIERBajAbhLLuElFZC
-         No05RNG02PKwKO3xoOho3C/Ih3ffHL9TxtExz49MwXFabcP9DHjrpp95XpSOX7Rh7cP8
-         Xf68LKlCXE/cfb8kFEri+DOATQ7p2Uf7ZRWdfGIdX7NGv3ZjTtuMPEfv3u0q2SubN0p3
-         paaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697711097; x=1698315897;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gUZeb0jKJJtlyWUIyBlImNnt+JsfVfhEYz3giXl9GK4=;
-        b=sRfqfl7gGbTKid2ow7HIXX+O80Q/551oE2eMo6k1b7GN2/oovhQVHYdjSP5Yi8Wtj5
-         kuCY9HWqmmCqCmQpRgQZN3CgbnLv5oVwf72pt3aaCRIprBgG5soq+KMmPLX5byTt2W6h
-         4n5tKKifsMrAxiKWoFqAl5aaDtCAVjdNTLHjknkembwOYqJtqyJKDSgQJAIE/W9oi8Ek
-         JyTc6xmbvsFmP3UFGE1B+WMaz5RHqe3pcJNhyJ3FGJ244b0UmGTqnazDuCcNZ9z8M9xe
-         B9QSNdE+GuJFBFlerUkLBqQ8Ev0Yuc98zaM0YGKIUxX8PqRtDArtfvDkFaVmEZ2YLf1O
-         GMmg==
-X-Gm-Message-State: AOJu0YzYNk8gbpDjwMaJ5SsD63MkjqsNFRrDR85PUmp4XiPPifxq1nQf
-        I/kbN164gbAM5HxLx8hYyVH1SX5VJFUuEqmwaiHRWA==
-X-Google-Smtp-Source: AGHT+IG3U91pn35gIMk/Vq4gvaPipHWqVQVRkkFkCZcPQu2WHiqMSphaji7MC775+JS3hurbXo66wbnl/P6oFsyG/oU=
-X-Received: by 2002:a25:ac1c:0:b0:d9a:c4cf:a066 with SMTP id
- w28-20020a25ac1c000000b00d9ac4cfa066mr2011553ybi.34.1697711097377; Thu, 19
- Oct 2023 03:24:57 -0700 (PDT)
+        Thu, 19 Oct 2023 06:40:13 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BDD111F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 03:40:11 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39J7stF4010740;
+        Thu, 19 Oct 2023 10:40:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=KbRvDpbeqLOvxS6ZIIq0KVzpkX8j4IaVci2TPTaMHOo=;
+ b=Al1OnbnypEHh3ewL/UTPBGt4T3Xr4kgtWbFq5vee5oIzU/HpyEAZzJcmBNsjs0sd3ITF
+ 7GmGeBq0KiDBQbTbLeDKsi4G/EwBablvw4/UQTAqkeRiOrPqJuU1yrjlyn8ppEuAek3r
+ eRKP47wwZVZSqnohA7oY0vUNFxpbBM96eJJ4BWEJqrjqvaW1P7xPolzYTuSRh5pW9kmy
+ MbeSyXqkCa8MHyXyNv+D6wWJs4dhV1wkFwGDsEKn28R0vNlPMOYxdR2+/uZLWyw+EuYu
+ ERFjHoXkrGC4tECzC1USx5icVYYPBozE6GmKuNeZnimMzhh//UlQIdTYP+kdSOLQ4g1R IQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tth2f2acs-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 19 Oct 2023 10:40:09 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39JAe8Po003721
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 19 Oct 2023 10:40:08 GMT
+Received: from [10.110.28.170] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Thu, 19 Oct
+ 2023 03:40:06 -0700
+Message-ID: <08cbf1e8-89c7-c0cd-2928-589e624710b1@quicinc.com>
+Date:   Thu, 19 Oct 2023 03:40:04 -0700
 MIME-Version: 1.0
-References: <20231018-msm8909-cpufreq-v2-0-0962df95f654@kernkonzept.com> <20231018-msm8909-cpufreq-v2-2-0962df95f654@kernkonzept.com>
-In-Reply-To: <20231018-msm8909-cpufreq-v2-2-0962df95f654@kernkonzept.com>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 19 Oct 2023 12:24:21 +0200
-Message-ID: <CAPDyKFot9=M1ooP_Q1AOgG5o_4DTQ2qsyai1ZdXAzBwf89W4uA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] cpufreq: qcom-nvmem: Enable virtual power domain devices
-To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, Stephan Gerhold <stephan@gerhold.net>,
-        stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH igt 1/2] tools/msm_dp_compliance: Small arg parsing
+ cleanup
+Content-Language: en-US
+To:     Rob Clark <robdclark@gmail.com>, <igt-dev@lists.freedesktop.org>
+CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, Rob Clark <robdclark@chromium.org>
+References: <20211208192216.743364-1-robdclark@gmail.com>
+ <20211208192216.743364-2-robdclark@gmail.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20211208192216.743364-2-robdclark@gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 3PppihBqfcmtgDdwtFVko9qJSEhe3GJP
+X-Proofpoint-GUID: 3PppihBqfcmtgDdwtFVko9qJSEhe3GJP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-19_08,2023-10-18_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
+ mlxlogscore=999 spamscore=0 malwarescore=0 suspectscore=0
+ lowpriorityscore=0 impostorscore=0 priorityscore=1501 clxscore=1011
+ adultscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310190090
+X-Spam-Status: No, score=-6.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 18 Oct 2023 at 10:06, Stephan Gerhold
-<stephan.gerhold@kernkonzept.com> wrote:
->
-> The genpd core caches performance state votes from devices that are
-> runtime suspended as of commit 3c5a272202c2 ("PM: domains: Improve
-> runtime PM performance state handling"). They get applied once the
-> device becomes active again.
->
-> To attach the power domains needed by qcom-cpufreq-nvmem the OPP core
-> calls genpd_dev_pm_attach_by_id(). This results in "virtual" dummy
-> devices that use runtime PM only to control the enable and performance
-> state for the attached power domain.
->
-> However, at the moment nothing ever resumes the virtual devices created
-> for qcom-cpufreq-nvmem. They remain permanently runtime suspended. This
-> means that performance state votes made during cpufreq scaling get
-> always cached and never applied to the hardware.
->
-> Fix this by enabling the devices after attaching them and use
-> dev_pm_syscore_device() to ensure the power domains also stay on when
-> going to suspend. Since it supplies the CPU we can never turn it off
-> from Linux. There are other mechanisms to turn it off when needed,
-> usually in the RPM firmware (RPMPD) or the cpuidle path (CPR genpd).
+Reviving this:
 
-I believe we discussed using dev_pm_syscore_device() for the previous
-version. It's not intended to be used for things like the above.
+On 12/8/2021 11:22 AM, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
+> 
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 
-Moreover, I was under the impression that it wasn't really needed. In
-fact, I would think that this actually breaks things for system
-suspend/resume, as in this case the cpr driver's genpd
-->power_on|off() callbacks are no longer getting called due this,
-which means that the cpr state machine isn't going to be restored
-properly. Or did I get this wrong?
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-Kind regards
-Uffe
+Nit: shouldnt the patch prefix be "PATCH i-g-t" ?
 
->
-> Without this fix performance states votes are silently ignored, and the
-> CPU/CPR voltage is never adjusted. This has been broken since 5.14 but
-> for some reason no one noticed this on QCS404 so far.
->
-> Cc: stable@vger.kernel.org
-> Fixes: 1cb8339ca225 ("cpufreq: qcom: Add support for qcs404 on nvmem driver")
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+We will test this out next week and land this.
+
 > ---
->  drivers/cpufreq/qcom-cpufreq-nvmem.c | 49 +++++++++++++++++++++++++++++++++---
->  1 file changed, 46 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> index 82a244f3fa52..3794390089b0 100644
-> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> @@ -25,6 +25,7 @@
->  #include <linux/platform_device.h>
->  #include <linux/pm_domain.h>
->  #include <linux/pm_opp.h>
-> +#include <linux/pm_runtime.h>
->  #include <linux/slab.h>
->  #include <linux/soc/qcom/smem.h>
->
-> @@ -47,6 +48,7 @@ struct qcom_cpufreq_match_data {
->
->  struct qcom_cpufreq_drv_cpu {
->         int opp_token;
-> +       struct device **virt_devs;
->  };
->
->  struct qcom_cpufreq_drv {
-> @@ -268,6 +270,18 @@ static const struct qcom_cpufreq_match_data match_data_ipq8074 = {
->         .get_version = qcom_cpufreq_ipq8074_name_version,
->  };
->
-> +static void qcom_cpufreq_put_virt_devs(struct qcom_cpufreq_drv *drv, unsigned cpu)
-> +{
-> +       const char * const *name = drv->data->genpd_names;
-> +       int i;
-> +
-> +       if (!drv->cpus[cpu].virt_devs)
-> +               return;
-> +
-> +       for (i = 0; *name; i++, name++)
-> +               pm_runtime_put(drv->cpus[cpu].virt_devs[i]);
-> +}
-> +
->  static int qcom_cpufreq_probe(struct platform_device *pdev)
->  {
->         struct qcom_cpufreq_drv *drv;
-> @@ -321,6 +335,7 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
->         of_node_put(np);
->
->         for_each_possible_cpu(cpu) {
-> +               struct device **virt_devs = NULL;
->                 struct dev_pm_opp_config config = {
->                         .supported_hw = NULL,
->                 };
-> @@ -341,7 +356,7 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
->
->                 if (drv->data->genpd_names) {
->                         config.genpd_names = drv->data->genpd_names;
-> -                       config.virt_devs = NULL;
-> +                       config.virt_devs = &virt_devs;
->                 }
->
->                 if (config.supported_hw || config.genpd_names) {
-> @@ -352,6 +367,30 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
->                                 goto free_opp;
->                         }
->                 }
-> +
-> +               if (virt_devs) {
-> +                       const char * const *name = config.genpd_names;
-> +                       int i, j;
-> +
-> +                       for (i = 0; *name; i++, name++) {
-> +                               ret = pm_runtime_resume_and_get(virt_devs[i]);
-> +                               if (ret) {
-> +                                       dev_err(cpu_dev, "failed to resume %s: %d\n",
-> +                                               *name, ret);
-> +
-> +                                       /* Rollback previous PM runtime calls */
-> +                                       name = config.genpd_names;
-> +                                       for (j = 0; *name && j < i; j++, name++)
-> +                                               pm_runtime_put(virt_devs[j]);
-> +
-> +                                       goto free_opp;
-> +                               }
-> +
-> +                               /* Keep CPU power domain always-on */
-> +                               dev_pm_syscore_device(virt_devs[i], true);
-> +                       }
-> +                       drv->cpus[cpu].virt_devs = virt_devs;
-> +               }
->         }
->
->         cpufreq_dt_pdev = platform_device_register_simple("cpufreq-dt", -1,
-> @@ -365,8 +404,10 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
->         dev_err(cpu_dev, "Failed to register platform device\n");
->
->  free_opp:
-> -       for_each_possible_cpu(cpu)
-> +       for_each_possible_cpu(cpu) {
-> +               qcom_cpufreq_put_virt_devs(drv, cpu);
->                 dev_pm_opp_clear_config(drv->cpus[cpu].opp_token);
-> +       }
->         return ret;
->  }
->
-> @@ -377,8 +418,10 @@ static void qcom_cpufreq_remove(struct platform_device *pdev)
->
->         platform_device_unregister(cpufreq_dt_pdev);
->
-> -       for_each_possible_cpu(cpu)
-> +       for_each_possible_cpu(cpu) {
-> +               qcom_cpufreq_put_virt_devs(drv, cpu);
->                 dev_pm_opp_clear_config(drv->cpus[cpu].opp_token);
-> +       }
->  }
->
->  static struct platform_driver qcom_cpufreq_driver = {
->
-> --
-> 2.39.2
->
+>   tools/msm_dp_compliance.c | 5 ++++-
+>   1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/tools/msm_dp_compliance.c b/tools/msm_dp_compliance.c
+> index 5e491c89..a15a8dd9 100644
+> --- a/tools/msm_dp_compliance.c
+> +++ b/tools/msm_dp_compliance.c
+> @@ -629,7 +629,9 @@ static const char optstr[] = "hi";
+>   static void __attribute__((noreturn)) usage(char *name, char opt)
+>   {
+>   	igt_info("usage: %s [-hi]\n", name);
+> -	igt_info("\t-i\tdump info\n");
+> +	igt_info("\t-h, --help           - print this usage message");
+> +	igt_info("\t--help-description   - print test description");
+> +	igt_info("\t-i, --info           - dump info\n");
+>   	igt_info("\tDefault is to respond to Qd980 tests\n");
+>   	exit((opt != 'h') ? -1 : 0);
+>   }
+> @@ -709,6 +711,7 @@ int main(int argc, char **argv)
+>   	struct option long_opts[] = {
+>   		{"help-description", 0, 0, HELP_DESCRIPTION},
+>   		{"help", 0, 0, 'h'},
+> +		{"info", 0, 0, 'i'},
+>   	};
+>   
+>   	enter_exec_path(argv);
