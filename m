@@ -2,219 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 79CC77CF685
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 13:20:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FED87CF69C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 13:22:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233155AbjJSLUG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Oct 2023 07:20:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36624 "EHLO
+        id S1345364AbjJSLWm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Oct 2023 07:22:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233147AbjJSLUF (ORCPT
+        with ESMTP id S1345339AbjJSLWl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Oct 2023 07:20:05 -0400
-Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5286D115
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 04:20:03 -0700 (PDT)
-Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-5a7c93507d5so93782267b3.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 04:20:03 -0700 (PDT)
+        Thu, 19 Oct 2023 07:22:41 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3140A116
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 04:22:39 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-50797cf5b69so8341149e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 04:22:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697714402; x=1698319202; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=LClJmbXBbgZZ9PL/ptRr8uW+H9M+Lhuk/jPg67TAQuM=;
-        b=Scw1PNSeXgotgZQKTuLd5d5wdM8SgZXZiHarEsfMMVLL6xjf08gdjyUNkgfH3AapTg
-         Jz/ftuxy6+1imNEuskuNvoZfURr0TBhi9nHOx0tGepw5Ax8gK44ktJI2FHAON0sihijY
-         ZCVkZD6h/5lPZulPHk1OvzJwNai2Dr9hOr/vkwXNMHAzdX3xMPuVu/Lmy8sYca+BQ2b/
-         ZFVPe0sjHT1IAjihIx2+9hVx4RKV5mIrbiRLnn3u8qVkhDVXvaq/8qrLtZ8lrcwq2SKh
-         BY7VpXMqsQRVr0IkiuAceJ+M7PBfa9jBysXVgtbwO/B5+SjB5KbCS9d7KTBF1fXKxKzG
-         A99w==
+        d=linaro.org; s=google; t=1697714557; x=1698319357; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=JF3I+wTLcoIXHkUlqgyCgajBza1SKWve0FuhZ7R74mQ=;
+        b=MjJyjHIm/7nbx/A2nNmykGOUKOAM+oZp1ydNLgCHWpflNhu+wm/MgHbvzqkQ6l+pid
+         Ml7bMm44FXr1S/1d9qUt0vZySzGXh8FmAJ/AQIWWkG0EEbbsXtRaMJcvxT+5d/MKAvwB
+         jTliervsvC3JsO+LKSyNgVasagxdoEuyd4EIfjRnnO3BBF90B41TMoUdUtGd0em3YZZD
+         M6CYdzCoiG7DogP7TB8VAcGn92GpY+t3kKyt4QLQ1tEnA7Jna7xYZASI3fEeyD7DDVJf
+         UI0b3qrGWHKt1rKZKVWsplxO7NJzReVlCrQHNSC4Ppk9ov3WiG3SsKUkPYuKwjU9M6AS
+         iwYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697714402; x=1698319202;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=LClJmbXBbgZZ9PL/ptRr8uW+H9M+Lhuk/jPg67TAQuM=;
-        b=DIZTSHebKc1tFhFh7i3fC7MN/z8jjk/eM+QgoDy6UpRHIWr8SIOctIuK/L/V8o/V+p
-         5SnpZwgIdz4TzNDsm4UHt8NRspWYDNvt3pdcaVQ1zoNecPDhobah6tpHDjnhy/wJGRx1
-         6Z/i8xvHDGyo4xCpKCu3DDf5P//mcqy4qABLQQiwuhc5GcROk/FWCHLrIQTm8jXAtOT8
-         5o1lKfDozR+sCulA9QX69ntenuidTFiWzNIhE0xyPJ8goasGfzBrWNZSKnlfHCRykWCv
-         7x+r7r7IKlbzf3evyNo1YwxCB/hOE7L1idym3RDrgMVAoopCdj/NqE3+ALTzmYMob+bC
-         KOxg==
-X-Gm-Message-State: AOJu0YxZFI9Z4Rh43EnaYV2SXhJEMDMMyAE4I3RLMrP466OUNPwI2QlD
-        AnM3BVpHma8shDsHJnqF+jEIOCSplN15DRinK3SWnw==
-X-Google-Smtp-Source: AGHT+IHsKrnC+HnnF2UK0XWJsB/bhHUzaseUh9wgYFQMhnXiNl5Q/h72pZzdPFWB8GR4VoHaQazj+FeGDz8qhVkt4fA=
-X-Received: by 2002:a25:285:0:b0:d9a:5f91:c616 with SMTP id
- 127-20020a250285000000b00d9a5f91c616mr2004733ybc.46.1697714402196; Thu, 19
- Oct 2023 04:20:02 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1697714557; x=1698319357;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JF3I+wTLcoIXHkUlqgyCgajBza1SKWve0FuhZ7R74mQ=;
+        b=O6Hn9t7PtL7dPP/7hHznnuQaLpo3rrpLQJIJSmiklQgAeMHKjX1Dc9gxBovgIllF+e
+         vsdXQQz2siLPlF1DzV7er3kXXbwLfz8IZz8ro8KkdeJMeLPcn2UBb3WQOQdtOLh/1+EQ
+         LQ1irghFtQUzjTx7km1ktceF9ESveqxRLquhlegx/bvudnEYXEgz7OzH2d1lbpb0gTR6
+         8Eji98fdGTVTT9m2Cvl+BFpV0PPaJzOEtlPFaft39FNPPOvnOxOW8M/q1RtavDrCl1Vj
+         q9Par8sLOMlT1DEV03SvVpAQJHwUQTHhw1WeX2jZqXAfWmKRpzL++oPLUwHRsPtx99Y7
+         I22Q==
+X-Gm-Message-State: AOJu0YyD9BdNBrnMzemS2wCdrOjnjlLEo/piYNJKSaQk6jrXgPLOcxup
+        2nFjcKJDj9RPFMay51ClEcHZuA==
+X-Google-Smtp-Source: AGHT+IGHu1SthsKQxFVZ5zrdpJuE4LvCEAyyAzSdVgld40OewvREW+BFTjg7BmlIMUrvGbJa0COjEA==
+X-Received: by 2002:a05:6512:2038:b0:507:9693:12aa with SMTP id s24-20020a056512203800b00507969312aamr1286536lfs.15.1697714557365;
+        Thu, 19 Oct 2023 04:22:37 -0700 (PDT)
+Received: from [172.30.205.86] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id e7-20020a195007000000b0050574829e48sm1075529lfb.298.2023.10.19.04.22.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Oct 2023 04:22:36 -0700 (PDT)
+Message-ID: <76b652c8-041c-49d6-9804-2781fe2ccfe3@linaro.org>
+Date:   Thu, 19 Oct 2023 13:22:33 +0200
 MIME-Version: 1.0
-References: <20231016165355.1327217-1-dmitry.baryshkov@linaro.org>
- <20231016165355.1327217-4-dmitry.baryshkov@linaro.org> <7e4ak4e77fp5dat2aopyq3g4wnqu3tt7di7ytdr3dvgjviyhrd@vqiqx6iso6vg>
-In-Reply-To: <7e4ak4e77fp5dat2aopyq3g4wnqu3tt7di7ytdr3dvgjviyhrd@vqiqx6iso6vg>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 19 Oct 2023 14:19:51 +0300
-Message-ID: <CAA8EJpp48AdJmx_U=bEJZUWZgOiT1Ctz6Lpe9QwjLXkMQvsw5w@mail.gmail.com>
-Subject: Re: [RFC PATCH 03/10] drm/mipi-dsi: add API for manual control over
- the DSI link power state
-To:     Maxime Ripard <mripard@kernel.org>
-Cc:     Dave Stevenson <dave.stevenson@raspberrypi.com>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Douglas Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Marek Vasut <marex@denx.de>, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 01/11] clk: qcom: ipq8074: drop the CLK_SET_RATE_PARENT
+ flag from PLL clocks
+Content-Language: en-US
+To:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        Anusha Rao <quic_anusha@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Devi Priya <quic_devipriy@quicinc.com>,
+        Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+        Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        stable@vger.kernel.org
+References: <20230913-gpll_cleanup-v2-0-c8ceb1a37680@quicinc.com>
+ <20230913-gpll_cleanup-v2-1-c8ceb1a37680@quicinc.com>
+ <76f3bc23-8677-42bd-a3a5-43b17cbe552e@linaro.org>
+ <c3dfeecf5cde513cf675b2f1a382f7a4.sboyd@kernel.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <c3dfeecf5cde513cf675b2f1a382f7a4.sboyd@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 19 Oct 2023 at 12:26, Maxime Ripard <mripard@kernel.org> wrote:
->
-> On Mon, Oct 16, 2023 at 07:53:48PM +0300, Dmitry Baryshkov wrote:
-> > The MIPI DSI links do not fully fall into the DRM callbacks model.
->
-> Explaining why would help
-
-A kind of explanation comes afterwards, but probably I should change
-the order of the phrases and expand it:
-
-The atomic_pre_enable / atomic_enable and correspondingly
-atomic_disable / atomic_post_disable expect that the bridge links
-follow a simple paradigm: either it is off, or it is on and streaming
-video. Thus, it is fine to just enable the link at the enable time,
-doing some preparations during the pre_enable.
-
-But then it causes several issues with DSI. First, some of the DSI
-bridges and most of the DSI panels would like to send commands over
-the DSI link to setup the device. Next, some of the DSI hosts have
-limitations on sending the commands. The proverbial sunxi DSI host can
-not send DSI commands after the video stream has started. Thus most of
-the panels have opted to send all DSI commands from pre_enable (or
-prepare) callback (before the video stream has started).
-
-However this leaves no good place for the DSI host to power up the DSI
-link. By default the host's pre_enable callback is called after the
-DSI bridge's pre_enable. For quite some time we were powering up the
-DSI link from mode_set. This doesn't look fully correct. And also we
-got into the issue with ps8640 bridge, which requires for the DSI link
-to be quiet / unpowered at the bridge's reset time.
-
-Dave has come with the idea of pre_enable_prev_first /
-prepare_prev_first flags, which attempt to solve the issue by
-reversing the order of pre_enable callbacks. This mostly solves the
-issue. However during this cycle it became obvious that this approach
-is not ideal too. There is no way for the DSI host to know whether the
-DSI panel / bridge has been updated to use this flag or not, see the
-discussion at [1].
-
-Thus comes this proposal. It allows for the panels to explicitly bring
-the link up and down at the correct time, it supports automatic use
-case, where no special handling is required. And last, but not least,
-it allows the DSI host to note that the bridge / panel were not
-updated to follow new protocol and thus the link should be powered on
-at the mode_set time. This leaves us with the possibility of dropping
-support for this workaround once all in-kernel drivers are updated.
-
-> > The drm_bridge_funcs abstraction.
->
-> Is there a typo or missing words?
-
-missing comma in front of The
-
->
-> > Instead of having just two states (off and on) the DSI hosts have
-> > separate LP-11 state. In this state the host is on, but the video
-> > stream is not yet enabled.
-> >
-> > Introduce API that allows DSI bridges / panels to control the DSI host
-> > power up state.
-
-[1] https://lore.kernel.org/dri-devel/6c0dd9fd-5d8e-537c-804f-7a03d5899a07@linaro.org/
-
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  drivers/gpu/drm/drm_mipi_dsi.c | 31 +++++++++++++++++++++++++++++++
-> >  include/drm/drm_mipi_dsi.h     | 29 +++++++++++++++++++++++++----
-> >  2 files changed, 56 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_dsi.c
-> > index 14201f73aab1..c467162cb7d8 100644
-> > --- a/drivers/gpu/drm/drm_mipi_dsi.c
-> > +++ b/drivers/gpu/drm/drm_mipi_dsi.c
-> > @@ -428,6 +428,37 @@ int devm_mipi_dsi_attach(struct device *dev,
-> >  }
-> >  EXPORT_SYMBOL_GPL(devm_mipi_dsi_attach);
-> >
-> > +bool mipi_dsi_host_power_control_available(struct mipi_dsi_host *host)
-> > +{
-> > +     const struct mipi_dsi_host_ops *ops = host->ops;
-> > +
-> > +     return ops && ops->power_up;
-> > +}
-> > +EXPORT_SYMBOL_GPL(mipi_dsi_host_power_control_available);
-> > +
-> > +int mipi_dsi_host_power_up(struct mipi_dsi_host *host)
-> > +{
-> > +     const struct mipi_dsi_host_ops *ops = host->ops;
-> > +
-> > +     if (!mipi_dsi_host_power_control_available(host))
-> > +             return -EOPNOTSUPP;
-> > +
-> > +     return ops->power_up ? ops->power_up(host) : 0;
-> > +}
-> > +EXPORT_SYMBOL_GPL(mipi_dsi_host_power_up);
-> > +
-> > +void mipi_dsi_host_power_down(struct mipi_dsi_host *host)
-> > +{
-> > +     const struct mipi_dsi_host_ops *ops = host->ops;
-> > +
-> > +     if (!mipi_dsi_host_power_control_available(host))
-> > +             return;
-> > +
-> > +     if (ops->power_down)
-> > +             ops->power_down(host);
-> > +}
-> > +EXPORT_SYMBOL_GPL(mipi_dsi_host_power_down);
-> > +
->
-> If this API is supposed to be used by DSI devices, it should probably
-> take a mipi_dsi_device pointer as a parameter?
-
-Ack.
-
->
-> We should probably make sure it hasn't been powered on already too?
-
-Ack, I can add an atomic count there and a WARN_ON. However I don't
-think that it is a real problem.
-
->
-> Maxime
 
 
+On 10/19/23 02:16, Stephen Boyd wrote:
+> Quoting Konrad Dybcio (2023-09-15 05:19:56)
+>> On 14.09.2023 08:59, Kathiravan Thirumoorthy wrote:
+>>> GPLL, NSS crypto PLL clock rates are fixed and shouldn't be scaled based
+>>> on the request from dependent clocks. Doing so will result in the
+>>> unexpected behaviour. So drop the CLK_SET_RATE_PARENT flag from the PLL
+>>> clocks.
+>>>
+>>> Cc: stable@vger.kernel.org
+>>> Fixes: b8e7e519625f ("clk: qcom: ipq8074: add remaining PLL’s")
+>>> Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+>>> ---
+>> Stephen, do you think there should be some sort of error
+>> or at least warning thrown when SET_RATE_PARENT is used with
+>> RO ops?
+>>
+> 
+> Sure? How would that be implemented?
+drivers/clk/clk.c : static void clk_change_rate()
 
---
-With best wishes
+if (!skip_set_rate && core->ops->set_rate)
+	core->ops->set_rate(core->hw, core->new_rate, best_parent_rate);
 
-Dmitry
+->
+
+if (!skip_set_rate) {
+	if (core->ops->set_rate)
+		core->ops->set_rate(core->hw, core->new_rate,
+				    best_parent_rate);
+	else
+		pr_err("bad idea");
+}
+
+Konrad
