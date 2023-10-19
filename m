@@ -2,143 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A8A57D04A2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Oct 2023 00:08:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C6AB77D050A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Oct 2023 00:53:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231301AbjJSWIq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Oct 2023 18:08:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59454 "EHLO
+        id S233383AbjJSWxp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Oct 2023 18:53:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230120AbjJSWIp (ORCPT
+        with ESMTP id S235553AbjJSWxo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Oct 2023 18:08:45 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AF29A4;
-        Thu, 19 Oct 2023 15:08:44 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7149C433C7;
-        Thu, 19 Oct 2023 22:08:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1697753323;
-        bh=0xUExZaCnpOZe09w1IymOILE+jJMJDYlYAh9fZjofMw=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=qCC/P6Z7UE87jxBHLuDwBwT+KgZtuqPAHBmCFVYxig53subGe5m/UnXrOlQ1Kttxa
-         jHQ9vw1yma/irMtt9GBQsWafuxPEoxiRWnA0GU7VmuaxbveT4JBxu/b3ck3oQljMbu
-         J+rIs5mj40Ud/DefXs1Jzmu6Frp/rEI/BujGJIChvpy4PcE4+izgmrkMSHyUtVIG3Z
-         Xka4WoIrLTURuZrBfnFMC1SN/ijke3yG0jWrNymZ1tbywZ4jprIOCnnS5Wg6KUOxLr
-         J5f9qRyKtnqNXVlVSsS6DJ0jQxSBipUNP1vQCFrMYW5/mLuoBOOAi2Twt2xDZT9wuH
-         9WvO+5K4DSVMg==
-Message-ID: <4f4803d538c6727990cda8f2e4fd7397.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+        Thu, 19 Oct 2023 18:53:44 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8294134;
+        Thu, 19 Oct 2023 15:45:59 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39JMWR8n012269;
+        Thu, 19 Oct 2023 22:45:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=HGh5RIhqjkjYPosV8+pUioVK+MKtfbrBwhNPit3GNXU=;
+ b=jrdiF//huxYBB5lmGOtZFKARb45SdOBUHpTj9WVdwB+mn9ME3fauwEzXRyIB0YYjtseD
+ DGh0gWk55tK1UVWUorn+qgWVD35DtC5dkiT3gebnLrq5qr/DlvbfI341kaq8qWDsoK8n
+ m2ndDPySi3igjsSVwI3ampRwEQR/z7mSOdKeNSo0ISTJlxr63mhl8rqQYXhpF7sVdDR3
+ zkK9cvkaYSdmMa6hiPQEEkh3XSEFU9V0VaVC20KyDH2n3SjFFxI3L4U41xr37lpvueGr
+ GFRNuxMGZPFuKPm3jhpvLdSbcZoikk3O53X8Zg7mkdhwVEz6AT1EvvVe0qEUuTnsFBbv bg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tubwr068f-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 19 Oct 2023 22:45:48 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39JMjmdr015028
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 19 Oct 2023 22:45:48 GMT
+Received: from [10.71.110.214] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Thu, 19 Oct
+ 2023 15:45:45 -0700
+Message-ID: <7e6ddffc-81a5-4183-9e59-7060776c936a@quicinc.com>
+Date:   Thu, 19 Oct 2023 15:45:37 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <76b652c8-041c-49d6-9804-2781fe2ccfe3@linaro.org>
-References: <20230913-gpll_cleanup-v2-0-c8ceb1a37680@quicinc.com> <20230913-gpll_cleanup-v2-1-c8ceb1a37680@quicinc.com> <76f3bc23-8677-42bd-a3a5-43b17cbe552e@linaro.org> <c3dfeecf5cde513cf675b2f1a382f7a4.sboyd@kernel.org> <76b652c8-041c-49d6-9804-2781fe2ccfe3@linaro.org>
-Subject: Re: [PATCH v2 01/11] clk: qcom: ipq8074: drop the CLK_SET_RATE_PARENT flag from PLL clocks
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        stable@vger.kernel.org
-To:     Andy Gross <agross@kernel.org>,
-        Anusha Rao <quic_anusha@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Devi Priya <quic_devipriy@quicinc.com>,
-        Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-        Varadarajan Narayanan <quic_varada@quicinc.com>
-Date:   Thu, 19 Oct 2023 15:08:41 -0700
-User-Agent: alot/0.10
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 1/3] of: reserved_mem: Change the order that
+ reserved_mem regions are stored
+Content-Language: en-US
+To:     Rob Herring <robh+dt@kernel.org>
+CC:     <catalin.marinas@arm.com>, <will@kernel.org>,
+        <frowand.list@gmail.com>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <kernel@quicinc.com>
+References: <20231019184825.9712-1-quic_obabatun@quicinc.com>
+ <20231019184825.9712-2-quic_obabatun@quicinc.com>
+ <CAL_Jsq+pUv29277spzXB7QJ=OZTwGy_FmW55CzQPWYLPktA0EA@mail.gmail.com>
+From:   Oreoluwa Babatunde <quic_obabatun@quicinc.com>
+In-Reply-To: <CAL_Jsq+pUv29277spzXB7QJ=OZTwGy_FmW55CzQPWYLPktA0EA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: C-h5FgffPKD3GbcCCAXzGuMC5Jn6tkiM
+X-Proofpoint-ORIG-GUID: C-h5FgffPKD3GbcCCAXzGuMC5Jn6tkiM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-19_21,2023-10-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ priorityscore=1501 bulkscore=0 mlxlogscore=999 impostorscore=0
+ adultscore=0 mlxscore=0 clxscore=1015 phishscore=0 spamscore=0
+ malwarescore=0 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2310170001 definitions=main-2310190193
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Konrad Dybcio (2023-10-19 04:22:33)
->=20
->=20
-> On 10/19/23 02:16, Stephen Boyd wrote:
-> > Quoting Konrad Dybcio (2023-09-15 05:19:56)
-> >> On 14.09.2023 08:59, Kathiravan Thirumoorthy wrote:
-> >>> GPLL, NSS crypto PLL clock rates are fixed and shouldn't be scaled ba=
-sed
-> >>> on the request from dependent clocks. Doing so will result in the
-> >>> unexpected behaviour. So drop the CLK_SET_RATE_PARENT flag from the P=
-LL
-> >>> clocks.
-> >>>
-> >>> Cc: stable@vger.kernel.org
-> >>> Fixes: b8e7e519625f ("clk: qcom: ipq8074: add remaining PLL=E2=80=99s=
-")
-> >>> Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-> >>> ---
-> >> Stephen, do you think there should be some sort of error
-> >> or at least warning thrown when SET_RATE_PARENT is used with
-> >> RO ops?
-> >>
-> >=20
-> > Sure? How would that be implemented?
-> drivers/clk/clk.c : static void clk_change_rate()
->=20
-> if (!skip_set_rate && core->ops->set_rate)
->         core->ops->set_rate(core->hw, core->new_rate, best_parent_rate);
->=20
-> ->
->=20
-> if (!skip_set_rate) {
->         if (core->ops->set_rate)
->                 core->ops->set_rate(core->hw, core->new_rate,
->                                     best_parent_rate);
->         else
->                 pr_err("bad idea");
-> }
->=20
 
-CLK_SET_RATE_PARENT means that "calling clk_set_rate() on this clk will
-propagate up to the parent". Changing the rate of the parent could
-change the rate of this clk to be the same frequency as the parent if
-this clk doesn't have a set_rate clk op, or it could be that this clk
-has a fixed divider so during the determine_rate() callback it
-calculated what rate the parent should be to achieve the requested rate
-in clk_set_rate().
+On 10/19/2023 12:46 PM, Rob Herring wrote:
+> On Thu, Oct 19, 2023 at 1:49 PM Oreoluwa Babatunde
+> <quic_obabatun@quicinc.com> wrote:
+>> The dynamic allocation of the reserved_mem array needs to be done after
+>> paging_init() is called because memory allocated using memblock_alloc()
+>> is not writeable before that.
+>>
+>> Nodes that already have their starting address specified in the DT
+>> (i.e. nodes that are defined using the "reg" property) can wait until
+>> after paging_init() to be stored in the array.
+>> But nodes that are dynamically placed need to be reserved and saved in
+>> the array before paging_init() so that page table entries are not
+>> created for these regions.
+>>
+>> Hence, change the code to:
+>> 1. Before paging_init(), allocate and store information for the
+>>    dynamically placed reserved memory regions.
+>> 2. After paging_init(), store the rest of the reserved memory regions
+>>    which are defined with the "reg" property.
+>>
+>> Signed-off-by: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
+>> ---
+>>  arch/arm64/kernel/setup.c       |  4 +++
+>>  drivers/of/fdt.c                | 56 ++++++++++++++++++++++++++-------
+>>  drivers/of/of_private.h         |  1 -
+>>  drivers/of/of_reserved_mem.c    | 54 ++++++++++++++-----------------
+>>  include/linux/of_fdt.h          |  1 +
+>>  include/linux/of_reserved_mem.h |  9 ++++++
+>>  6 files changed, 83 insertions(+), 42 deletions(-)
+>>
+>> diff --git a/arch/arm64/kernel/setup.c b/arch/arm64/kernel/setup.c
+>> index 417a8a86b2db..6002d3ad0b19 100644
+>> --- a/arch/arm64/kernel/setup.c
+>> +++ b/arch/arm64/kernel/setup.c
+>> @@ -27,6 +27,8 @@
+>>  #include <linux/proc_fs.h>
+>>  #include <linux/memblock.h>
+>>  #include <linux/of_fdt.h>
+>> +#include <linux/of_reserved_mem.h>
+>> +
+>>  #include <linux/efi.h>
+>>  #include <linux/psci.h>
+>>  #include <linux/sched/task.h>
+>> @@ -346,6 +348,8 @@ void __init __no_sanitize_address setup_arch(char **cmdline_p)
+>>
+>>         paging_init();
+>>
+>> +       fdt_init_reserved_mem();
+>> +
+> You removed this call from the common code and add it to arm64 arch
+> code, doesn't that break every other arch?
+Yes, the same changes will be needed for every other arch. I was hoping to
+get some feedback on the RFC before implementing this on other archs which
+is why the change is currently only in arm64.
+> The very next thing done here is unflattening the DT. So another call
+> from the arch code to the DT code isn't needed either.
+Yes, I see that unflatten_device_tree() is being called right after here.
+Just to clarify, are you suggesting to move fdt_init_reserved_mem() into the
+unflatten_device_tree() call?
 
-It really matters what determine_rate() returns for a clk and if after
-changing rates that rate is actually achieved. I suppose if the
-determine_rate() callback returns some rate, and then we recalc rates
-and notice that the rate determined earlier doesn't match we're
-concerned. So far in the last decade we've never cared about this though
-and I'm hesitant to start adding that check. I believe some qcom clk
-drivers take a shortcut and round the rate in frequency tables so
-whatever is returned in determine_rate() doesn't match what
-recalc_rate() calculates.
 
-It would be interesting to get rid of the CLK_SET_RATE_PARENT check in
-clk_calc_new_rates() and simply always call clk_calc_new_rates() on the
-parent if the parent->rate doesn't match what determine_rate thought it
-should be. The framework currently calls the rounding clk op for a clk
-and gets back the parent rate that the clk requires to achieve that rate
-and then it blindly trusts that the parent rate is going to be achieved.
-If the CLK_SET_RATE_PARENT flag is set it calls clk_calc_new_rates()
-recursively on the parent, but then it doesn't check that the parent
-rate is what was requested. That's mostly there to figure out if the
-parent also needs to change rate, i.e. calculating the 'top' clk in a
-rate change. Note that this also calls determine_rate again on the
-parent, once from the child clk's determine_rate clk op and once from
-the framework.
-
-I wouldn't be surprised if some driver is relying on this behavior where
-the rate isn't checked after being set. Maybe when we extend struct
-clk_rate_request to have a linked list that allows a clk to build up a
-chain of rate requests we can also enforce more things like matching
-rates on recalc. Then any drivers that are relying on this behavior will
-have to opt in to a different method of changing rates and notice that
-things aren't working.
+Thanks, Oreoluwa
