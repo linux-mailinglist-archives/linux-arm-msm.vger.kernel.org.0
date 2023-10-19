@@ -2,79 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C6167CF5E6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 12:53:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2799D7CF64D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 13:12:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344981AbjJSKxI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Oct 2023 06:53:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55062 "EHLO
+        id S1345301AbjJSLMJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Oct 2023 07:12:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345285AbjJSKxG (ORCPT
+        with ESMTP id S1345037AbjJSLMJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Oct 2023 06:53:06 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 506A2121;
-        Thu, 19 Oct 2023 03:53:04 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2c501bd6ff1so95111741fa.3;
-        Thu, 19 Oct 2023 03:53:04 -0700 (PDT)
+        Thu, 19 Oct 2023 07:12:09 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1AAB116
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 04:12:05 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2c53c5f7aaaso41216531fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 04:12:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697712782; x=1698317582; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=a2iJFIQZU3dMWJmF9fQqJT6sOJuhpG2IbdIzEIIeAV0=;
-        b=dMz2uwuSU7lYXT/hKRJL5HQ3W8Td6np6Idc0NASEawoS/cOZNPXZUZ70fPb0EkSMY3
-         /4nLqK4ym4DzImgE1lATwjbumLMqzZv1iTht9+HtDJb7XpNjQuX52HVsPvYLklOgo9/Y
-         VksStneetXYJSbyqPa1+ZPH1vyyHa6zXLZkKuAklvGvkmknT5YQHVTynKEK2eGQtES1z
-         62qNgWuJedYkJa2PlCPrkx8XQ6gzctVYIrpvxUdgb5eGOa0R2mD6CoSpta+ELwhVKj5J
-         OIkQZxU6ysIdJyAsuea+NBMKEcmcDTyVvYDPU169IfxvTzOvlrKiir/Nnr+1Q8uvscv2
-         f1DA==
+        d=linaro.org; s=google; t=1697713924; x=1698318724; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=RtOBMj5NZCZ3rE38kW7IfyaEnFmC+iva60OYyJozRyc=;
+        b=HC9q4g9KRXTci/2N6VeE6pmbpeeLpB7EUyt//4GaqTh/JjvSO+cA396lzB/hhJ/0sP
+         epHeTPGVSPG3zGFL9ChhqOzm5BC+fm6ww3eMQ7VvRhpAI7qZl0gWVMjleJs/ygAwA17/
+         NnPYnHehl8RgrvSYOsR4xy5nJp1FbUbd0n6WsP+O7EhtMU6bMIbEuz9dgjEC8yrQymS/
+         T+z+u3aTSAIzqh6DgJGHFU9/hPteD5fkKZnCN5FM5H5PfI/WuCMEL+6N1k0oMyTW3uBU
+         3tXEKiLQC1j9y0VlQoTZGY21YBmbjOgPnJIz/bPcEh/BRKFCwOM7KRUD5fJnRWtRofEf
+         hVbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697712782; x=1698317582;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=a2iJFIQZU3dMWJmF9fQqJT6sOJuhpG2IbdIzEIIeAV0=;
-        b=iqxGzS8Ha1W2i0SREbYt6KLDaZ4lSOdSLwAuy7oSAsolVTqHFFsHNl0qVyqbdY+c8U
-         2VPNXT+bzrEBsDCxad2bq0Fy15838jwdsV+RU8BZ/N/Ox2SDrHB7fwjn59bZIXxMjCjK
-         bYhhNYgeKHeujj1p+2H+y/2CSMgvBe4BvGzVM7fS7Lc2z5JtOGkHQ62J00qU9rpsi1cs
-         G98lqH611mt7mArPM1KpPlMCs/gxUIInaXYfxh7QSCXyxJYmaJIJNFH1s1ulMZki1PcA
-         bi+d6ZQfjZt1WIc/uOP1fK7TkgGeZs/fV/eZ5881jcb8A0vIgGVz7Vgdurp/gp3aJpcr
-         1gKg==
-X-Gm-Message-State: AOJu0YxDpRQ91ZH6fmGQlZYimEUOBXUor4lHosqIWyEg3Sg4vTDxgSDb
-        AMzj61w2aGI/HNvZqoHSWl8=
-X-Google-Smtp-Source: AGHT+IGzZ6w/a2I2t2hj+OoCFUEN+jp/x1/0jBQjv+5/Krw0aEMmBE8FvF+3HQVEJYZ7RYhQGJX34g==
-X-Received: by 2002:ac2:5194:0:b0:503:9eb:47f0 with SMTP id u20-20020ac25194000000b0050309eb47f0mr1122559lfi.59.1697712782192;
-        Thu, 19 Oct 2023 03:53:02 -0700 (PDT)
-Received: from Ansuel-xps. (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
-        by smtp.gmail.com with ESMTPSA id fb21-20020a056512125500b005031641b40asm1043740lfb.159.2023.10.19.03.52.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Oct 2023 03:53:01 -0700 (PDT)
-Message-ID: <65310a8d.050a0220.28bdd.4114@mx.google.com>
-X-Google-Original-Message-ID: <ZTEKiUCiP/fMJUdl@Ansuel-xps.>
-Date:   Thu, 19 Oct 2023 12:52:57 +0200
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Ilia Lin <ilia.lin@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 0/4] cpufreq: qcom-nvmem: add support for ipq806x
-References: <20231013173854.7399-1-ansuelsmth@gmail.com>
- <20231019064653.feqpjdmblm7mmsug@vireshk-i7>
+        d=1e100.net; s=20230601; t=1697713924; x=1698318724;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RtOBMj5NZCZ3rE38kW7IfyaEnFmC+iva60OYyJozRyc=;
+        b=Ab+Mt+NtS/JR42RFCFt6NzZDpnK/FTQnpjVc+zMpjH/2kn9CFGUd5NjPJcPgzDzdEM
+         2s13ffUDTgPSkrnhIextkZtazR4aSgEKhBLpye6CvHY1dyaRXAb+hUHThiMJF8s8PEhy
+         2ahGMNwcssDpsH8wd/odYou3Z7m0pYGPKX7X0zKQ/vd1foN8UVeuwJHzZls5hUwW9r6O
+         8XQclzm6eDw3+aWsE7aAEgUyWCFIlKqx0fMvb6DnK8gIW8HJ8AIA+i74L0hIIGakS0nR
+         oTsk0BVnOdYhnqWI5gT9gfaGqe8FYVLTHaLEG87slXAPoZ3VN1BpV4bynFnfLEpYwnDo
+         d4vg==
+X-Gm-Message-State: AOJu0Yxf+5uVROS1n4DpPQKI1UNnDKJTKg8r91D/EMY+0Bd8Tw145sTv
+        3skmmWroWF76bQsHJnkfoSO9CQ==
+X-Google-Smtp-Source: AGHT+IGX8OcOitOpOYyprBygGim1jCB9UfYAEhRf1IOq9svY+RPykFe2aA7gU/0+po21Z8CdD+v3kA==
+X-Received: by 2002:a05:651c:454:b0:2c5:cf0:74e9 with SMTP id g20-20020a05651c045400b002c50cf074e9mr1162473ljg.14.1697713923849;
+        Thu, 19 Oct 2023 04:12:03 -0700 (PDT)
+Received: from [172.30.205.86] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id q12-20020a05600c2e4c00b0040648217f4fsm4089784wmf.39.2023.10.19.04.12.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Oct 2023 04:12:03 -0700 (PDT)
+Message-ID: <e084e2f4-de2c-4850-a7b7-8b3b4a50c9b5@linaro.org>
+Date:   Thu, 19 Oct 2023 13:12:02 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231019064653.feqpjdmblm7mmsug@vireshk-i7>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/6] dt-bindings: iommu: Add Translation Buffer Unit
+ bindings
+To:     Georgi Djakov <quic_c_gdjako@quicinc.com>, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        will@kernel.org, robin.murphy@arm.com, joro@8bytes.org
+Cc:     devicetree@vger.kernel.org, andersson@kernel.org,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        quic_cgoldswo@quicinc.com, quic_sukadev@quicinc.com,
+        quic_pdaly@quicinc.com, quic_sudaraja@quicinc.com,
+        djakov@kernel.org
+References: <20231019021923.13939-1-quic_c_gdjako@quicinc.com>
+ <20231019021923.13939-2-quic_c_gdjako@quicinc.com>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20231019021923.13939-2-quic_c_gdjako@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,45 +82,134 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 19, 2023 at 12:16:53PM +0530, Viresh Kumar wrote:
-> On 13-10-23, 19:38, Christian Marangi wrote:
-> > The first patch of this series was split to a separate series as it
-> > doesn't depend on [1] and can be applied right away,
-> > [1] introduced some breaking change to function that ipq806x, ipq807x
-> > patch was dropped to permit an easier rebase and merge of both.
-> > 
-> > This small series adds support for ipq806x qcom-cpufreq-nvmem driver.
-> > Special function are required to make use of the opp-supported-hw
-> > binding by hardcoding custom bits based on the qcom SoC ID.
-> > 
-> > The qcom-cpufreq-nvmem driver had recent changes to also improve
-> > support for apq8064. Because of this, this series depends on a
-> > just merged series.
-> > 
-> > Depends on [1].
-> > 
-> > [1] https://lore.kernel.org/linux-pm/20231010063235.rj2ehxugtjr5x2xr@vireshk-i7/T/#t
-> > 
-> > Christian Marangi (4):
-> >   dt-bindings: cpufreq: qcom-cpufreq-nvmem: Document krait-cpu
-> >   dt-bindings: opp: opp-v2-kryo-cpu: Document named opp-microvolt
-> >     property
-> 
-> Applied above two. Thanks.
-> 
-> >   cpufreq: qcom-nvmem: add support for IPQ8064
-> 
-> This doesn't apply/build anymore.
->
 
-Hi, I sent v7 that fix the conflict problem. I dropped from the series
-the 2 applied patch and added the 2 dependent patch since it seems
-fixing the problem in the series might take longer times.
 
-Can you check? Thanks a lot for the help in accepting this series.
-
-> >   ARM: dts: qcom: ipq8064: Add CPU OPP table
+On 10/19/23 04:19, Georgi Djakov wrote:
+> The "apps_smmu" on the Qualcomm sdm845 platform is an implementation
+> of the ARM SMMU-500, that consists of a single TCU (Translation Control
+> Unit) and multiple TBUs (Translation Buffer Units). The TCU is already
+> being described in the ARM SMMU DT schema. Add also bindings for the
+> TBUs so that we can describe their properties.
 > 
+> In this DT schema, the TBUs are modelled as a child devices of the TCU
+> and each of them is described with it's own resources such as clocks,
+> power domains, interconnects etc.
+> 
+> Signed-off-by: Georgi Djakov <quic_c_gdjako@quicinc.com>
+> ---
+>   .../devicetree/bindings/iommu/arm,smmu.yaml   | 13 ++++
+>   .../bindings/iommu/qcom,qsmmuv500-tbu.yaml    | 67 +++++++++++++++++++
+>   2 files changed, 80 insertions(+)
+>   create mode 100644 Documentation/devicetree/bindings/iommu/qcom,qsmmuv500-tbu.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> index cf29ab10501c..afc323b4bbc5 100644
+> --- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> @@ -230,6 +230,19 @@ properties:
+>         enabled for any given device.
+>       $ref: /schemas/types.yaml#/definitions/phandle
+>   
+> +  '#address-cells':
+> +    const: 2
+> +
+> +  '#size-cells':
+> +    const: 2
+> +
+> +  ranges: true
+> +
+> +patternProperties:
+> +  "^tbu@[0-9a-f]+$":
+> +    $ref: qcom,qsmmuv500-tbu.yaml
+> +    description: The SMMU may include Translation Buffer Units (TBU) as subnodes
+> +
+>   required:
+>     - compatible
+>     - reg
+> diff --git a/Documentation/devicetree/bindings/iommu/qcom,qsmmuv500-tbu.yaml b/Documentation/devicetree/bindings/iommu/qcom,qsmmuv500-tbu.yaml
+> new file mode 100644
+> index 000000000000..4baba7397e90
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/iommu/qcom,qsmmuv500-tbu.yaml
+> @@ -0,0 +1,67 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/iommu/qcom,qsmmuv500-tbu.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm TBU (Translation Buffer Unit)
+> +
+> +maintainers:
+> +  - Georgi Djakov <quic_c_gdjako@quicinc.com>
+> +
+> +description:
+> +  TBU nodes represent Translation Buffer Units in an ARM SMMU. Each TBU node
+> +  should be a child node of the SMMU in the device tree.
+description: refers to the hardware, so it should say what this IP
+is, what it does and things like that
 
--- 
-	Ansuel
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,qsmmuv500-tbu
+Should we expect this list to grow?
+
+> +
+> +  reg:
+> +    items:
+> +      - description: Address and size of the TBU's register space.
+> +
+> +  reg-names:
+> +    items:
+> +      - const: base
+> +
+> +  clocks:
+> +    maxItems: 1
+> +
+> +  interconnects:
+> +    maxItems: 1
+> +
+> +  power-domains:
+> +    maxItems: 1
+> +
+> +  qcom,stream-id-range:
+> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+> +    description: Stream ID range (address and size) that is assigned by the TBU
+I believe you need to size-limit this.
+
+If it's only supposed to be a single tuple, perhaps it could be said
+explicitly.
+
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interconnects
+> +  - qcom,stream-id-range
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-sdm845.h>
+> +    #include <dt-bindings/interconnect/qcom,sdm845.h>
+> +    #include <dt-bindings/power/qcom-rpmpd.h>
+> +
+> +
+2 newlines seems excessive
+
+> +    tbu@150e1000 {
+> +        compatible = "qcom,qsmmuv500-tbu";
+> +        reg = <0x150e1000 0x1000>;
+> +        reg-names = "base";
+> +        clocks = <&gcc GCC_AGGRE_NOC_PCIE_TBU_CLK>;
+> +        power-domains = <&gcc HLOS1_VOTE_AGGRE_NOC_MMU_PCIE_TBU_GDSC>;
+> +        interconnects = <&system_noc MASTER_GNOC_SNOC 0 &config_noc SLAVE_IMEM_CFG 0>;
+> +        qcom,stream-id-range = <0x1c00 0x400>;
+> +    };
+I think it would be beneficial if this tbu was a child of some smmu node
+like it's intended to be.
+
+Konrad
