@@ -2,140 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C0DE57CF404
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 11:26:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 082F37CF4F7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 12:20:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345033AbjJSJ0a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Oct 2023 05:26:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46040 "EHLO
+        id S1345206AbjJSKUE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Oct 2023 06:20:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345035AbjJSJ01 (ORCPT
+        with ESMTP id S1345125AbjJSKUD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Oct 2023 05:26:27 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8B67106;
-        Thu, 19 Oct 2023 02:26:25 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B766EC433C7;
-        Thu, 19 Oct 2023 09:26:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1697707585;
-        bh=OCDUlYLWKH4hPIGJgGmkgyAHhL7/848MWsrLLQz3nbQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=q9FqAg7Z6b7b6Q+l58S5MAWVseQF0hpk4HZJmu/Hy2hgyt/hquWS//yFAFbJPXpcG
-         X4hOWD8y7KfJVGQ/eQL4O5JNMKRj8HKmPlKLZX5i8buLhzX+9g7jHDRGrLj9JjUTPX
-         DQrBMOOppV2i/G26YN4EKlDl3ibLcvVPJrTOGb4tYc3VFUZMCRBRlVqkw99uabprEt
-         SY0NBKCLqyNNgfC5G2jzbL1q7AYVrU6c8WN/+g30iejbiE4ZvhdsbR67AfG22oI3Ym
-         h0G4t60zOQjJPH4PS9JSY8nlfZC889dgSie0TKOnqdIF9FI+Fla58dEyHFqqmZUjZv
-         r/6eOlbpmKpvg==
-Date:   Thu, 19 Oct 2023 11:26:16 +0200
-From:   Maxime Ripard <mripard@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Dave Stevenson <dave.stevenson@raspberrypi.com>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Douglas Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Marek Vasut <marex@denx.de>, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [RFC PATCH 03/10] drm/mipi-dsi: add API for manual control over
- the DSI link power state
-Message-ID: <7e4ak4e77fp5dat2aopyq3g4wnqu3tt7di7ytdr3dvgjviyhrd@vqiqx6iso6vg>
-References: <20231016165355.1327217-1-dmitry.baryshkov@linaro.org>
- <20231016165355.1327217-4-dmitry.baryshkov@linaro.org>
+        Thu, 19 Oct 2023 06:20:03 -0400
+Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B839B8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 03:20:01 -0700 (PDT)
+Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-5a7dd65052aso104935987b3.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 03:20:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1697710800; x=1698315600; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=+2ay1Mv9/C/v7lm4yctcbzZyj+Oa+YNr3iWCqPoUf2M=;
+        b=h5Z/y7cFwgKw9S8cVQcz3HXGtNJ482/Ay6QvTVj5BIhhHjpsBC6AtLd2GgG5whjv1T
+         4AK6TzxScahwldNiLVBT9KlHQp7bAKa20Y5qhpjSfaKmba3uuY5eTlHvH0kVy3L7L9/Z
+         DxjmGXZ5yA/4g2KQNmgs8WsW1QDiBjPpPpYsvmAHQWMcsEe/8worgV2rQwOjQ1TE1byp
+         Cp6sAVfva1DDTbkqptl/RlP0HkRVLHDuplW7RLnnxMd1WI/go4pgNEMUiHuG+aCxYPCl
+         aUS09EB0oxeivbcK1KJy3cQN4va/4rQmXQT4pKdk2eok3+neGx8SeB2xdpcDE7Xub3mF
+         dX+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697710800; x=1698315600;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+2ay1Mv9/C/v7lm4yctcbzZyj+Oa+YNr3iWCqPoUf2M=;
+        b=NrRtUgSeejQL2I+aoeS4ttKcbM/sVxeyNo5hSPKUfETWgejz2KaF22E9Tl8tg8fmxb
+         2DgbAnnkXmcN+TjboFrzJSDaWLisXqoA93THeZ2+mr5fAj057ta3GBs+YXpXv3yAWtPj
+         wDQKiQ1K/LXqwRiMPJ3+RYdZEIT2gzE1JhjB0ESnavP0Z1AiFkHGV2sIuwzDu+4BBU3k
+         v0q1Fk29DJxA6Ds9SFD+9QZFHTeM/uO7nckeP6Y0f6GBO/XRDLUKYuxTjpH+6kHjedwf
+         Qgd2Rf6r/rPudgeteVwaQBpHkgPwHMSLS+LxGLDIofmZDNEGRftpFgvIgyBDOI659KTL
+         e09g==
+X-Gm-Message-State: AOJu0YzNSEu1emVkRGyFbfFs+sGxqvLql9F4WA3HstoHC0jHNFNTI1Ay
+        qi2BvvgjKggrkFo73weANwVoAaNZv1WeCrX1h2QfTQ==
+X-Google-Smtp-Source: AGHT+IH1co3QGaifyt8+FiiqfpjOwl6MBA08MqBPrTv2587EQVcy78LceP4jDc7WDl2ukXOpfEvW2AFLyTZgEbN6+oQ=
+X-Received: by 2002:a25:d0a:0:b0:d9a:fd25:e3ef with SMTP id
+ 10-20020a250d0a000000b00d9afd25e3efmr1674227ybn.64.1697710800490; Thu, 19 Oct
+ 2023 03:20:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20231016165355.1327217-4-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20231018-msm8909-cpufreq-v2-0-0962df95f654@kernkonzept.com> <20231019061608.wjlf4orkdlpnv3a5@vireshk-i7>
+In-Reply-To: <20231019061608.wjlf4orkdlpnv3a5@vireshk-i7>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Thu, 19 Oct 2023 12:19:23 +0200
+Message-ID: <CAPDyKFr5xC6yaB4REQ5FwROfh_Rsfco5KBw4A9T9A2JZepTk8w@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] cpufreq: Add basic cpufreq scaling for Qualcomm MSM8909
+To:     Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Stephan Gerhold <stephan@gerhold.net>,
+        stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 16, 2023 at 07:53:48PM +0300, Dmitry Baryshkov wrote:
-> The MIPI DSI links do not fully fall into the DRM callbacks model.
+On Thu, 19 Oct 2023 at 08:16, Viresh Kumar <viresh.kumar@linaro.org> wrote:
+>
+> On 18-10-23, 10:06, Stephan Gerhold wrote:
+> > Add the necessary definitions to the qcom-cpufreq-nvmem driver to
+> > support basic cpufreq scaling on the Qualcomm MSM8909 SoC. In practice
+> > the necessary power domains vary depending on the actual PMIC the SoC
+> > was combined with. With PM8909 the VDD_APC power domain is shared with
+> > VDD_CX so the RPM firmware handles all voltage adjustments, while with
+> > PM8916 and PM660 Linux is responsible to do adaptive voltage scaling
+> > of a dedicated CPU regulator using CPR.
+> >
+> > Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+>
+> Applied patch 1 and 3. Thanks.
 
-Explaining why would help
+I did spend quite some time reviewing the previous version. Please
+allow me to have a look at this too before applying.
 
-> The drm_bridge_funcs abstraction.
+Kind regards
+Uffe
 
-Is there a typo or missing words?
-
-> Instead of having just two states (off and on) the DSI hosts have
-> separate LP-11 state. In this state the host is on, but the video
-> stream is not yet enabled.
->=20
-> Introduce API that allows DSI bridges / panels to control the DSI host
-> power up state.
->=20
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/gpu/drm/drm_mipi_dsi.c | 31 +++++++++++++++++++++++++++++++
->  include/drm/drm_mipi_dsi.h     | 29 +++++++++++++++++++++++++----
->  2 files changed, 56 insertions(+), 4 deletions(-)
->=20
-> diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_ds=
-i.c
-> index 14201f73aab1..c467162cb7d8 100644
-> --- a/drivers/gpu/drm/drm_mipi_dsi.c
-> +++ b/drivers/gpu/drm/drm_mipi_dsi.c
-> @@ -428,6 +428,37 @@ int devm_mipi_dsi_attach(struct device *dev,
->  }
->  EXPORT_SYMBOL_GPL(devm_mipi_dsi_attach);
-> =20
-> +bool mipi_dsi_host_power_control_available(struct mipi_dsi_host *host)
-> +{
-> +	const struct mipi_dsi_host_ops *ops =3D host->ops;
-> +
-> +	return ops && ops->power_up;
-> +}
-> +EXPORT_SYMBOL_GPL(mipi_dsi_host_power_control_available);
-> +
-> +int mipi_dsi_host_power_up(struct mipi_dsi_host *host)
-> +{
-> +	const struct mipi_dsi_host_ops *ops =3D host->ops;
-> +
-> +	if (!mipi_dsi_host_power_control_available(host))
-> +		return -EOPNOTSUPP;
-> +
-> +	return ops->power_up ? ops->power_up(host) : 0;
-> +}
-> +EXPORT_SYMBOL_GPL(mipi_dsi_host_power_up);
-> +
-> +void mipi_dsi_host_power_down(struct mipi_dsi_host *host)
-> +{
-> +	const struct mipi_dsi_host_ops *ops =3D host->ops;
-> +
-> +	if (!mipi_dsi_host_power_control_available(host))
-> +		return;
-> +
-> +	if (ops->power_down)
-> +		ops->power_down(host);
-> +}
-> +EXPORT_SYMBOL_GPL(mipi_dsi_host_power_down);
-> +
-
-If this API is supposed to be used by DSI devices, it should probably
-take a mipi_dsi_device pointer as a parameter?
-
-We should probably make sure it hasn't been powered on already too?
-
-Maxime
+>
+> --
+> viresh
