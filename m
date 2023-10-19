@@ -2,175 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4804C7CEEEE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 07:19:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B00757CEEF3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 07:19:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232583AbjJSFTD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Oct 2023 01:19:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56786 "EHLO
+        id S232614AbjJSFTl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Oct 2023 01:19:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231421AbjJSFTC (ORCPT
+        with ESMTP id S231421AbjJSFTk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Oct 2023 01:19:02 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6025EA4;
-        Wed, 18 Oct 2023 22:19:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1697692740; x=1729228740;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=CHgu8VDG/VsrVs4cHfAZnVU204i5DaWqZKJi7cU7Wk4=;
-  b=G96/tylF4JQThu2BATBMi+qIH5R8KiGvPuQ99vT5aEUWvjSGb9b2NXrc
-   ppm1bs2pzp2R5JW/GR7tUsSGbjSqj7AmoXPwXGR58IiKcG9RY95w0fn7Y
-   QcElSXy9Zn3QDxEln0Yjpp4Vo2qL0Sm5W5BQeeu2fgKQkRBp+RZk3SuWk
-   590XoIbP/SlOk3+Pqgc8W2NBZklUzuP47Vs0lIqzYCJxHV4aWfsMKNY5A
-   s5/i0QN8f5hW67qAySJBbxLcCR12WqWmpIOcWcRmfJDKLkWjPEuqwe4Zg
-   vx2lWo5qAUiRa10mOXwaBmOuvJw6uMjxUO7HzkH4cVTa7HzYbAwcquaRm
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10867"; a="452644717"
-X-IronPort-AV: E=Sophos;i="6.03,236,1694761200"; 
-   d="scan'208";a="452644717"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Oct 2023 22:18:58 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10867"; a="756866215"
-X-IronPort-AV: E=Sophos;i="6.03,236,1694761200"; 
-   d="scan'208";a="756866215"
-Received: from lkp-server01.sh.intel.com (HELO 8917679a5d3e) ([10.239.97.150])
-  by orsmga002.jf.intel.com with ESMTP; 18 Oct 2023 22:18:51 -0700
-Received: from kbuild by 8917679a5d3e with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1qtLQn-0001fi-1d;
-        Thu, 19 Oct 2023 05:18:49 +0000
-Date:   Thu, 19 Oct 2023 13:18:24 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Richard Acayan <mailingradian@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
-        Ryan McCann <quic_rmccann@quicinc.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Liu Shixin <liushixin2@huawei.com>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     oe-kbuild-all@lists.linux.dev,
-        Richard Acayan <mailingradian@gmail.com>
-Subject: Re: [PATCH v4 5/6] drm/msm/dpu: Add hw revision 4.1 (SDM670)
-Message-ID: <202310191232.PtdOnTbi-lkp@intel.com>
-References: <20231017021805.1083350-14-mailingradian@gmail.com>
+        Thu, 19 Oct 2023 01:19:40 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF789A4;
+        Wed, 18 Oct 2023 22:19:38 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7C73C433C7;
+        Thu, 19 Oct 2023 05:19:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1697692778;
+        bh=EXzdeQ1GH3kZueYinwHXXHlHvuq/2uaQmEbSlzU2iCc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=fCXZEnCec4VeWFh/83MUZgZEXqbWLOlUWk3EjITy+HikX/NBvQ6tYzWOsmvVeSBiV
+         JfS7fk89KLJ8QKyYACpy2qUwWBO78z6RtxHFnT73DrHHu+XUAZ2QuDMRN2Ybw/OAN7
+         I9MkEfBtuU2dYzTp798818keOP7brjVVrxbywAdBbXeWBXipCl326czoVvE7ehuq3h
+         raU7+ogSGVk4J2m/wvXJ4H2AzQ2vqjrQAZytMfMmH36V49nT9u8JLTInW5QD7qVlJr
+         Zze+rra77OfjsPm2XQgnOWSwvqK2V9Qi8CUpvORh9A9Obi4lcEORGQOgyXYtN1BhjA
+         eYtuYr62ZEiUw==
+Date:   Thu, 19 Oct 2023 10:49:30 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 2/2] PCI: qcom-ep: Implement dbi_cs2_access() function
+ callback for DBI CS2 access
+Message-ID: <20231019051930.GB5142@thinkpad>
+References: <20231017-pcie-qcom-bar-v1-0-3e26de07bec0@linaro.org>
+ <20231017-pcie-qcom-bar-v1-2-3e26de07bec0@linaro.org>
+ <20231017142431.GR3553829@hu-bjorande-lv.qualcomm.com>
+ <20231017162129.GF5274@thinkpad>
+ <20231017165609.GT3553829@hu-bjorande-lv.qualcomm.com>
+ <20231017174100.GA137137@thinkpad>
+ <20231017221811.GV3553829@hu-bjorande-lv.qualcomm.com>
+ <20231018132758.GD47321@thinkpad>
+ <20231019031820.GX3553829@hu-bjorande-lv.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20231017021805.1083350-14-mailingradian@gmail.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20231019031820.GX3553829@hu-bjorande-lv.qualcomm.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Richard,
+On Wed, Oct 18, 2023 at 08:18:20PM -0700, Bjorn Andersson wrote:
+> On Wed, Oct 18, 2023 at 06:57:58PM +0530, Manivannan Sadhasivam wrote:
+> > On Tue, Oct 17, 2023 at 03:18:11PM -0700, Bjorn Andersson wrote:
+> > > On Tue, Oct 17, 2023 at 11:11:00PM +0530, Manivannan Sadhasivam wrote:
+> > > > On Tue, Oct 17, 2023 at 09:56:09AM -0700, Bjorn Andersson wrote:
+> > > > > On Tue, Oct 17, 2023 at 09:51:29PM +0530, Manivannan Sadhasivam wrote:
+> > > > > > On Tue, Oct 17, 2023 at 07:24:31AM -0700, Bjorn Andersson wrote:
+> > > > > > > On Tue, Oct 17, 2023 at 11:47:55AM +0530, Manivannan Sadhasivam wrote:
+> > > > > > > > From: Manivannan Sadhasivam <mani@kernel.org>
+> > > > > > > 
+> > > > > > > Your S-o-b should match this.
+> > > > > > > 
+> > > > > > 
+> > > > > > I gave b4 a shot for sending the patches and missed this. Will fix it in next
+> > > > > > version.
+> > > > > > 
+> > > > > > > > 
+> > > > > > > > Qcom EP platforms require enabling/disabling the DBI CS2 access while
+> > > > > > > > programming some read only and shadow registers through DBI. So let's
+> > > > > > > > implement the dbi_cs2_access() callback that will be called by the DWC core
+> > > > > > > > while programming such registers like BAR mask register.
+> > > > > > > > 
+> > > > > > > > Without DBI CS2 access, writes to those registers will not be reflected.
+> > > > > > > > 
+> > > > > > > > Fixes: f55fee56a631 ("PCI: qcom-ep: Add Qualcomm PCIe Endpoint controller driver")
+> > > > > > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > > > > > > ---
+> > > > > > > >  drivers/pci/controller/dwc/pcie-qcom-ep.c | 14 ++++++++++++++
+> > > > > > > >  1 file changed, 14 insertions(+)
+> > > > > > > > 
+> > > > > > > > diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> > > > > > > > index 32c8d9e37876..4653cbf7f9ed 100644
+> > > > > > > > --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> > > > > > > > +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> > > > > > > > @@ -124,6 +124,7 @@
+> > > > > > > >  
+> > > > > > > >  /* ELBI registers */
+> > > > > > > >  #define ELBI_SYS_STTS				0x08
+> > > > > > > > +#define ELBI_CS2_ENABLE				0xa4
+> > > > > > > >  
+> > > > > > > >  /* DBI registers */
+> > > > > > > >  #define DBI_CON_STATUS				0x44
+> > > > > > > > @@ -262,6 +263,18 @@ static void qcom_pcie_dw_stop_link(struct dw_pcie *pci)
+> > > > > > > >  	disable_irq(pcie_ep->perst_irq);
+> > > > > > > >  }
+> > > > > > > >  
+> > > > > > > > +static void qcom_pcie_dbi_cs2_access(struct dw_pcie *pci, bool enable)
+> > > > > > > > +{
+> > > > > > > > +	struct qcom_pcie_ep *pcie_ep = to_pcie_ep(pci);
+> > > > > > > > +
+> > > > > > > > +	writel_relaxed(enable, pcie_ep->elbi + ELBI_CS2_ENABLE);
+> > > > > > > 
+> > > > > > > Don't you want to maintain the ordering of whatever write came before
+> > > > > > > this?
+> > > > > > > 
+> > > > > > 
+> > > > > > Since this in a dedicated function, I did not care about the ordering w.r.t
+> > > > > > previous writes. Even if it gets inlined, the order should not matter since it
+> > > > > > only enables/disables the CS2 access for the forthcoming writes.
+> > > > > > 
+> > > > > 
+> > > > > The wmb() - in a non-relaxed writel -  would ensure that no earlier
+> > > > > writes are reordered and end up in your expected set of "forthcoming
+> > > > > writes".
+> > > > > 
+> > > > 
+> > > > I was under the impression that the readl_relaxed() here serves as an implicit
+> > > > barrier. But reading the holy memory-barriers documentation doesn't explicitly
+> > > > say so. So I'm going to add wmb() to be on the safe side as you suggested.
+> > > > 
+> > > 
+> > > I'm talking about writes prior to this function is being called.
+> > > 
+> > > In other words, if you write:
+> > > 
+> > > writel_relaxed(A, ptr); (or writel, it doesn't matter)
+> > > writel_relaxed(X, ELBI_CS2_ENABLE);
+> > > readl_relaxed(ELBI_CS2_ENABLE);
+> > > 
+> > > Then there are circumstances where the write to ptr might be performed
+> > > after ELBI_CS2_ENABLE.
+> > > 
+> > 
+> > That shouldn't cause any issues as CS2_ENABLE just opens up the write access to
+> > read only registers. It will cause issues if CPU/compiler reorders this write
+> > with the following writes where we actually write to the read only registers.
+> > 
+> 
+> Wouldn't that cause issues if previous writes are reordered past a
+> disable?
+> 
 
-kernel test robot noticed the following build errors:
+That should be fixed by wmb() after CS_ENABLE.
 
-[auto build test ERROR on drm-misc/drm-misc-next]
-[also build test ERROR on drm/drm-next robh/for-next linus/master v6.6-rc6 next-20231018]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+> > For that I initially thought the readl_relaxed() would be sufficient. But
+> > looking more, it may not be enough since CS2_ENABLE register lies in ELBI space
+> > and the read only registers are in DBI space. So the CPU may reorder writes if
+> > this function gets inlined by the compiler since both are in different hardware
+> > space (not sure if CPU considers both regions as one since they are in PCI
+> > domain, in that case the barrier is not required, but I'm not sure).
+> 
+> That is a very good question (if the regions are considered the same or
+> different), I don't know.
+> 
+> > 
+> > So to be on the safe side, I should add wmb() after the CS2_ENABLE write.
+> > 
+> 
+> Sounds reasonable, in absence of the answer to above question.
+> 
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Richard-Acayan/dt-bindings-display-msm-dsi-controller-main-add-SDM670-compatible/20231017-155345
-base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
-patch link:    https://lore.kernel.org/r/20231017021805.1083350-14-mailingradian%40gmail.com
-patch subject: [PATCH v4 5/6] drm/msm/dpu: Add hw revision 4.1 (SDM670)
-config: sparc-allyesconfig (https://download.01.org/0day-ci/archive/20231019/202310191232.PtdOnTbi-lkp@intel.com/config)
-compiler: sparc64-linux-gcc (GCC) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231019/202310191232.PtdOnTbi-lkp@intel.com/reproduce)
+Thanks!
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202310191232.PtdOnTbi-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   In file included from drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c:658:
->> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h:29:26: error: 'dpu_vig_sblk_qseed3_1_3' undeclared here (not in a function)
-      29 |                 .sblk = &dpu_vig_sblk_qseed3_1_3,
-         |                          ^~~~~~~~~~~~~~~~~~~~~~~
->> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h:45:26: error: 'dpu_dma_sblk' undeclared here (not in a function); did you mean 'dpu_dsc_blk'?
-      45 |                 .sblk = &dpu_dma_sblk,
-         |                          ^~~~~~~~~~~~
-         |                          dpu_dsc_blk
-
-
-vim +/dpu_vig_sblk_qseed3_1_3 +29 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h
-
-    23	
-    24	static const struct dpu_sspp_cfg sdm670_sspp[] = {
-    25		{
-    26			.name = "sspp_0", .id = SSPP_VIG0,
-    27			.base = 0x4000, .len = 0x1c8,
-    28			.features = VIG_SDM845_MASK_SDMA,
-  > 29			.sblk = &dpu_vig_sblk_qseed3_1_3,
-    30			.xin_id = 0,
-    31			.type = SSPP_TYPE_VIG,
-    32			.clk_ctrl = DPU_CLK_CTRL_VIG0,
-    33		}, {
-    34			.name = "sspp_1", .id = SSPP_VIG1,
-    35			.base = 0x6000, .len = 0x1c8,
-    36			.features = VIG_SDM845_MASK_SDMA,
-    37			.sblk = &dpu_vig_sblk_qseed3_1_3,
-    38			.xin_id = 4,
-    39			.type = SSPP_TYPE_VIG,
-    40			.clk_ctrl = DPU_CLK_CTRL_VIG0,
-    41		}, {
-    42			.name = "sspp_8", .id = SSPP_DMA0,
-    43			.base = 0x24000, .len = 0x1c8,
-    44			.features = DMA_SDM845_MASK_SDMA,
-  > 45			.sblk = &dpu_dma_sblk,
-    46			.xin_id = 1,
-    47			.type = SSPP_TYPE_DMA,
-    48			.clk_ctrl = DPU_CLK_CTRL_DMA0,
-    49		}, {
-    50			.name = "sspp_9", .id = SSPP_DMA1,
-    51			.base = 0x26000, .len = 0x1c8,
-    52			.features = DMA_CURSOR_SDM845_MASK_SDMA,
-    53			.sblk = &dpu_dma_sblk,
-    54			.xin_id = 5,
-    55			.type = SSPP_TYPE_DMA,
-    56			.clk_ctrl = DPU_CLK_CTRL_DMA1,
-    57		}, {
-    58			.name = "sspp_10", .id = SSPP_DMA2,
-    59			.base = 0x28000, .len = 0x1c8,
-    60			.features = DMA_CURSOR_SDM845_MASK_SDMA,
-    61			.sblk = &dpu_dma_sblk,
-    62			.xin_id = 9,
-    63			.type = SSPP_TYPE_DMA,
-    64			.clk_ctrl = DPU_CLK_CTRL_DMA2,
-    65		},
-    66	};
-    67	
+- Mani
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+மணிவண்ணன் சதாசிவம்
