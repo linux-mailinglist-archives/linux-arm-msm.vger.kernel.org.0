@@ -2,74 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C43AC7CFA48
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 15:03:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C507F7CF8FF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 14:33:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233193AbjJSNDU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Oct 2023 09:03:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40442 "EHLO
+        id S235340AbjJSMdK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Oct 2023 08:33:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235394AbjJSNDL (ORCPT
+        with ESMTP id S235325AbjJSMdJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Oct 2023 09:03:11 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.120])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4002181;
-        Thu, 19 Oct 2023 06:03:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1697720588; x=1729256588;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=VgSvxH67qt9LKjm5+c5G2G8wQo6a1gXmEAilB1I2dfg=;
-  b=J59FvaojU1bLb52ZkemRWNSr2TKWEa6heGKHIxtRL7pWr497hF41kZ02
-   zX/nm8+i662p0+nI+A64m9GY28SrghRQhW1TEHFTHir8lrlsBAgOcCnRD
-   mfylpcFwUjdw1lN7iKMDogrbOsBTBXUvC7anSeHyahCWQa7aM8MCmr7bz
-   QJYWs8ra9nkm7LCYNHou7Ued6Ob4JMDHS3Q/ks/ahhleQsuSGwQ3orX5f
-   9dfq7JI8qwNsGo4feX+NJKAfP0HiRJziRrvI0fIXYziRznmTerMtRJI99
-   CLwXU5hO2RU9HQqI18amuJVd995IVSCZihfdt0oIhkA3kIKf6E0PU12KP
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10868"; a="385115720"
-X-IronPort-AV: E=Sophos;i="6.03,237,1694761200"; 
-   d="scan'208";a="385115720"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2023 06:01:48 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10868"; a="757014468"
-X-IronPort-AV: E=Sophos;i="6.03,237,1694761200"; 
-   d="scan'208";a="757014468"
-Received: from mttran4-mobl2.amr.corp.intel.com (HELO [10.213.160.204]) ([10.213.160.204])
-  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2023 06:01:45 -0700
-Message-ID: <ec25bb67-6c83-430b-bc79-234c03801250@linux.intel.com>
-Date:   Wed, 18 Oct 2023 20:00:00 -0500
+        Thu, 19 Oct 2023 08:33:09 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFF5C91
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 05:33:06 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39JBUFEr015585;
+        Thu, 19 Oct 2023 12:32:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=BOaB8x2BCqf1V148pBBPgl6gGz11C2LqrwDvJVCEfI8=;
+ b=QijNL9NCCVl/qZUv37PfjoIiqh3oUHMlHvHwGpngOtrwOKr2uzzJv6WvK9/QZKiZbI8z
+ yDGJedDJtNVhLDAjXI3uU58FMrnIUtmS4z/fPtZispDydvdaZCKwyanIdRfPINYeIM5v
+ +EKZdud6+g4UnOIZxxroERkO2Ci6jZwYDfYTCoLqv7BP7bGnLy8sCndDoHbPXsFjkKWP
+ jeFhbvpIl0OqbssSBO3t3MbJtTRnajoaPJbkKjpfxugu/omHag+h+02pGIdC0eUEwqOQ
+ 3QxYYL/vsPJbyboF2qomRaDQbbYwENXmDs3wM+iuTR+okdNTX5ok9a3wbyCQ4XKRQlo3 pA== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tt6mw3w2h-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 19 Oct 2023 12:32:58 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39JCWvGL022377
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 19 Oct 2023 12:32:57 GMT
+Received: from [10.110.28.170] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Thu, 19 Oct
+ 2023 05:32:54 -0700
+Message-ID: <1ca930a4-60fe-a867-f676-0b79682982c2@quicinc.com>
+Date:   Thu, 19 Oct 2023 05:32:51 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 09/34] ASoC: qcom: qdsp6: Introduce USB AFE port to
- q6dsp
-To:     Wesley Cheng <quic_wcheng@quicinc.com>, mathias.nyman@intel.com,
-        gregkh@linuxfoundation.org, lgirdwood@gmail.com,
-        broonie@kernel.org, perex@perex.cz, tiwai@suse.com,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, srinivas.kandagatla@linaro.org,
-        bgoswami@quicinc.com, Thinh.Nguyen@synopsys.com
-Cc:     linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20231017200109.11407-1-quic_wcheng@quicinc.com>
- <20231017200109.11407-10-quic_wcheng@quicinc.com>
- <7aa4ea87-9d1f-400a-bcc5-b56e5b4500c6@linux.intel.com>
- <c72bcf47-af0b-8819-1c30-06b51358381e@quicinc.com>
- <2f05708e-3ee8-472e-a24f-6f3eb118133c@linux.intel.com>
- <fcaa93ba-3ca4-5a18-d3bd-afebe8def327@quicinc.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH] drm/msm/dp: cleanup debugfs handling
 Content-Language: en-US
-From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <fcaa93ba-3ca4-5a18-d3bd-afebe8def327@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DATE_IN_PAST_12_24,
-        DKIMWL_WL_HIGH,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        "Sankeerth Billakanti" <quic_sbillaka@quicinc.com>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20231019104419.1032329-1-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20231019104419.1032329-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: JQua2EpTFyi9lESJfsBUftcpjFd9Amkc
+X-Proofpoint-GUID: JQua2EpTFyi9lESJfsBUftcpjFd9Amkc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-19_09,2023-10-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
+ mlxscore=0 lowpriorityscore=0 clxscore=1015 priorityscore=1501
+ suspectscore=0 mlxlogscore=999 phishscore=0 adultscore=0 malwarescore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310190107
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -78,36 +88,351 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
->>>>> Specifically, the QC ADSP can support all potential endpoints that are
->>>>> exposed by the audio data interface.  This includes, feedback
->>>>> endpoints
->>>>> (both implicit and explicit) as well as the isochronous (data)
->>>>> endpoints.
->>>>
->>>> implicit feedback means support for capture. This is confusing...
->>>>
->>>
->>> I mean, a USB device can expose a capture path, but as of now, we won't
->>> enable the offloading to the audio DSP for it.  However, if we're
->>> executing playback, and device does support implicit feedback, we will
->>> pass that along to the audio DSP to utilize.
->>
->> Not following. Implicit feedback means a capture stream *SHALL* be
->> started. Are you saying this capture stream is hidden and handled at the
->> DSP level only? If yes, what prevents you from exposing the capture
->> stream to userspace as well?
->>
->> I must be missing something.
->>
+On 10/19/2023 3:44 AM, Dmitry Baryshkov wrote:
+> Currently there are two subdirs for DP debugfs files, e.g. DP-1, created
+> by the drm core for the connector, and the msm_dp-DP-1, created by the
+> DP driver itself. Merge those two, so that there are no extraneous
+> connector-related subdirs.
 > 
-> My understanding is that with implicit feedback endpoints, it allows for
-> another data endpoint in the opposite direction to be utilized as a
-> feedback endpoint (versus having to expose another EP, such as in the
-> case of explicit feedback).  For example, if we are enabling the
-> playback path (and the device does have a capture data ep) then the data
-> ep used for the capture path can be used.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
 
-That's right, so all the plumbing is enabled for the capture path...
-Making a decision to discard the data is very odd, all the work has
-already been done at lower levels, so why not expose the captured data?
 
+One concern with this is, we are migrating from one debugfs per 
+dp_display to one debugfs per bridge.
+
+Today we create one bridge per dp_display so its fine.
+
+With MST, I am unsure if there will be changes needed.
+
+But, we will figure that out once we add that support,
+
+Hence,
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+Overall, nice cleanup!
+
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c |  8 ---
+>   drivers/gpu/drm/msm/dp/dp_debug.c       | 69 ++++++-------------------
+>   drivers/gpu/drm/msm/dp/dp_debug.h       | 23 +++------
+>   drivers/gpu/drm/msm/dp/dp_display.c     |  5 +-
+>   drivers/gpu/drm/msm/dp/dp_display.h     |  1 +
+>   drivers/gpu/drm/msm/dp/dp_drm.c         | 16 ++++++
+>   drivers/gpu/drm/msm/msm_drv.h           |  6 ---
+>   7 files changed, 42 insertions(+), 86 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index fe7267b3bff5..f15cf7592212 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -275,8 +275,6 @@ static int dpu_kms_debugfs_init(struct msm_kms *kms, struct drm_minor *minor)
+>   	void *p = dpu_hw_util_get_log_mask_ptr();
+>   	struct dentry *entry;
+>   	struct drm_device *dev;
+> -	struct msm_drm_private *priv;
+> -	int i;
+>   
+>   	if (!p)
+>   		return -EINVAL;
+> @@ -286,7 +284,6 @@ static int dpu_kms_debugfs_init(struct msm_kms *kms, struct drm_minor *minor)
+>   		return 0;
+>   
+>   	dev = dpu_kms->dev;
+> -	priv = dev->dev_private;
+>   
+>   	entry = debugfs_create_dir("debug", minor->debugfs_root);
+>   
+> @@ -297,11 +294,6 @@ static int dpu_kms_debugfs_init(struct msm_kms *kms, struct drm_minor *minor)
+>   	dpu_debugfs_core_irq_init(dpu_kms, entry);
+>   	dpu_debugfs_sspp_init(dpu_kms, entry);
+>   
+> -	for (i = 0; i < ARRAY_SIZE(priv->dp); i++) {
+> -		if (priv->dp[i])
+> -			msm_dp_debugfs_init(priv->dp[i], minor);
+> -	}
+> -
+>   	return dpu_core_perf_debugfs_init(dpu_kms, entry);
+>   }
+>   #endif
+> diff --git a/drivers/gpu/drm/msm/dp/dp_debug.c b/drivers/gpu/drm/msm/dp/dp_debug.c
+> index 3bba901afe33..6c281dc095b9 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_debug.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_debug.c
+> @@ -19,13 +19,9 @@
+>   #define DEBUG_NAME "msm_dp"
+>   
+>   struct dp_debug_private {
+> -	struct dentry *root;
+> -
+>   	struct dp_link *link;
+>   	struct dp_panel *panel;
+>   	struct drm_connector *connector;
+> -	struct device *dev;
+> -	struct drm_device *drm_dev;
+>   
+>   	struct dp_debug dp_debug;
+>   };
+> @@ -204,35 +200,33 @@ static const struct file_operations test_active_fops = {
+>   	.write = dp_test_active_write
+>   };
+>   
+> -static void dp_debug_init(struct dp_debug *dp_debug, struct drm_minor *minor)
+> +static void dp_debug_init(struct dp_debug *dp_debug, struct dentry *root, bool is_edp)
+>   {
+> -	char path[64];
+>   	struct dp_debug_private *debug = container_of(dp_debug,
+>   			struct dp_debug_private, dp_debug);
+>   
+> -	snprintf(path, sizeof(path), "msm_dp-%s", debug->connector->name);
+> -
+> -	debug->root = debugfs_create_dir(path, minor->debugfs_root);
+> -
+> -	debugfs_create_file("dp_debug", 0444, debug->root,
+> +	debugfs_create_file("dp_debug", 0444, root,
+>   			debug, &dp_debug_fops);
+>   
+> -	debugfs_create_file("msm_dp_test_active", 0444,
+> -			debug->root,
+> -			debug, &test_active_fops);
+> +	if (!is_edp) {
+> +		debugfs_create_file("msm_dp_test_active", 0444,
+> +				    root,
+> +				    debug, &test_active_fops);
+>   
+> -	debugfs_create_file("msm_dp_test_data", 0444,
+> -			debug->root,
+> -			debug, &dp_test_data_fops);
+> +		debugfs_create_file("msm_dp_test_data", 0444,
+> +				    root,
+> +				    debug, &dp_test_data_fops);
+>   
+> -	debugfs_create_file("msm_dp_test_type", 0444,
+> -			debug->root,
+> -			debug, &dp_test_type_fops);
+> +		debugfs_create_file("msm_dp_test_type", 0444,
+> +				    root,
+> +				    debug, &dp_test_type_fops);
+> +	}
+>   }
+>   
+>   struct dp_debug *dp_debug_get(struct device *dev, struct dp_panel *panel,
+>   		struct dp_link *link,
+> -		struct drm_connector *connector, struct drm_minor *minor)
+> +		struct drm_connector *connector,
+> +		struct dentry *root, bool is_edp)
+>   {
+>   	struct dp_debug_private *debug;
+>   	struct dp_debug *dp_debug;
+> @@ -253,46 +247,15 @@ struct dp_debug *dp_debug_get(struct device *dev, struct dp_panel *panel,
+>   	debug->dp_debug.debug_en = false;
+>   	debug->link = link;
+>   	debug->panel = panel;
+> -	debug->dev = dev;
+> -	debug->drm_dev = minor->dev;
+> -	debug->connector = connector;
+>   
+>   	dp_debug = &debug->dp_debug;
+>   	dp_debug->vdisplay = 0;
+>   	dp_debug->hdisplay = 0;
+>   	dp_debug->vrefresh = 0;
+>   
+> -	dp_debug_init(dp_debug, minor);
+> +	dp_debug_init(dp_debug, root, is_edp);
+>   
+>   	return dp_debug;
+>    error:
+>   	return ERR_PTR(rc);
+>   }
+> -
+> -static int dp_debug_deinit(struct dp_debug *dp_debug)
+> -{
+> -	struct dp_debug_private *debug;
+> -
+> -	if (!dp_debug)
+> -		return -EINVAL;
+> -
+> -	debug = container_of(dp_debug, struct dp_debug_private, dp_debug);
+> -
+> -	debugfs_remove_recursive(debug->root);
+> -
+> -	return 0;
+> -}
+> -
+> -void dp_debug_put(struct dp_debug *dp_debug)
+> -{
+> -	struct dp_debug_private *debug;
+> -
+> -	if (!dp_debug)
+> -		return;
+> -
+> -	debug = container_of(dp_debug, struct dp_debug_private, dp_debug);
+> -
+> -	dp_debug_deinit(dp_debug);
+> -
+> -	devm_kfree(debug->dev, debug);
+> -}
+> diff --git a/drivers/gpu/drm/msm/dp/dp_debug.h b/drivers/gpu/drm/msm/dp/dp_debug.h
+> index 124227873d58..9b3b2e702f65 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_debug.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_debug.h
+> @@ -34,7 +34,8 @@ struct dp_debug {
+>    * @panel: instance of panel module
+>    * @link: instance of link module
+>    * @connector: double pointer to display connector
+> - * @minor: pointer to drm minor number after device registration
+> + * @root: connector's debugfs root
+> + * @is_edp: set for eDP connectors / panels
+>    * return: pointer to allocated debug module data
+>    *
+>    * This function sets up the debug module and provides a way
+> @@ -43,31 +44,21 @@ struct dp_debug {
+>   struct dp_debug *dp_debug_get(struct device *dev, struct dp_panel *panel,
+>   		struct dp_link *link,
+>   		struct drm_connector *connector,
+> -		struct drm_minor *minor);
+> -
+> -/**
+> - * dp_debug_put()
+> - *
+> - * Cleans up dp_debug instance
+> - *
+> - * @dp_debug: instance of dp_debug
+> - */
+> -void dp_debug_put(struct dp_debug *dp_debug);
+> +		struct dentry *root,
+> +		bool is_edp);
+>   
+>   #else
+>   
+>   static inline
+>   struct dp_debug *dp_debug_get(struct device *dev, struct dp_panel *panel,
+>   		struct dp_link *link,
+> -		struct drm_connector *connector, struct drm_minor *minor)
+> +		struct drm_connector *connector,
+> +		struct dentry *root,
+> +		bool is_edp)
+>   {
+>   	return ERR_PTR(-EINVAL);
+>   }
+>   
+> -static inline void dp_debug_put(struct dp_debug *dp_debug)
+> -{
+> -}
+> -
+>   #endif /* defined(CONFIG_DEBUG_FS) */
+>   
+>   #endif /* _DP_DEBUG_H_ */
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index e329e03e068d..2ac9d61501c7 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -715,7 +715,6 @@ static int dp_irq_hpd_handle(struct dp_display_private *dp, u32 data)
+>   
+>   static void dp_display_deinit_sub_modules(struct dp_display_private *dp)
+>   {
+> -	dp_debug_put(dp->debug);
+>   	dp_audio_put(dp->audio);
+>   	dp_panel_put(dp->panel);
+>   	dp_aux_put(dp->aux);
+> @@ -1451,7 +1450,7 @@ bool msm_dp_wide_bus_available(const struct msm_dp *dp_display)
+>   	return dp->wide_bus_en;
+>   }
+>   
+> -void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
+> +void dp_display_debugfs_init(struct msm_dp *dp_display, struct dentry *root, bool is_edp)
+>   {
+>   	struct dp_display_private *dp;
+>   	struct device *dev;
+> @@ -1462,7 +1461,7 @@ void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
+>   
+>   	dp->debug = dp_debug_get(dev, dp->panel,
+>   					dp->link, dp->dp_display.connector,
+> -					minor);
+> +					root, is_edp);
+>   	if (IS_ERR(dp->debug)) {
+>   		rc = PTR_ERR(dp->debug);
+>   		DRM_ERROR("failed to initialize debug, rc = %d\n", rc);
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
+> index f66cdbc35785..5e2fbd8318e9 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
+> @@ -42,5 +42,6 @@ int dp_display_get_test_bpp(struct msm_dp *dp_display);
+>   void dp_display_signal_audio_start(struct msm_dp *dp_display);
+>   void dp_display_signal_audio_complete(struct msm_dp *dp_display);
+>   void dp_display_set_psr(struct msm_dp *dp, bool enter);
+> +void dp_display_debugfs_init(struct msm_dp *dp_display, struct dentry *dentry, bool is_edp);
+>   
+>   #endif /* _DP_DISPLAY_H_ */
+> diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
+> index 284ff7df058a..7e34715bdd82 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_drm.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+> @@ -90,6 +90,13 @@ static int dp_bridge_get_modes(struct drm_bridge *bridge, struct drm_connector *
+>   	return rc;
+>   }
+>   
+> +static void dp_bridge_debugfs_init(struct drm_bridge *bridge, struct dentry *root)
+> +{
+> +	struct msm_dp *dp = to_dp_bridge(bridge)->dp_display;
+> +
+> +	dp_display_debugfs_init(dp, root, false);
+> +}
+> +
+>   static const struct drm_bridge_funcs dp_bridge_ops = {
+>   	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
+>   	.atomic_destroy_state   = drm_atomic_helper_bridge_destroy_state,
+> @@ -105,6 +112,7 @@ static const struct drm_bridge_funcs dp_bridge_ops = {
+>   	.hpd_enable   = dp_bridge_hpd_enable,
+>   	.hpd_disable  = dp_bridge_hpd_disable,
+>   	.hpd_notify   = dp_bridge_hpd_notify,
+> +	.debugfs_init = dp_bridge_debugfs_init,
+>   };
+>   
+>   static int edp_bridge_atomic_check(struct drm_bridge *drm_bridge,
+> @@ -260,6 +268,13 @@ static enum drm_mode_status edp_bridge_mode_valid(struct drm_bridge *bridge,
+>   	return MODE_OK;
+>   }
+>   
+> +static void edp_bridge_debugfs_init(struct drm_bridge *bridge, struct dentry *root)
+> +{
+> +	struct msm_dp *dp = to_dp_bridge(bridge)->dp_display;
+> +
+> +	dp_display_debugfs_init(dp, root, true);
+> +}
+> +
+>   static const struct drm_bridge_funcs edp_bridge_ops = {
+>   	.atomic_enable = edp_bridge_atomic_enable,
+>   	.atomic_disable = edp_bridge_atomic_disable,
+> @@ -270,6 +285,7 @@ static const struct drm_bridge_funcs edp_bridge_ops = {
+>   	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
+>   	.atomic_destroy_state = drm_atomic_helper_bridge_destroy_state,
+>   	.atomic_check = edp_bridge_atomic_check,
+> +	.debugfs_init = edp_bridge_debugfs_init,
+>   };
+>   
+>   int dp_bridge_init(struct msm_dp *dp_display, struct drm_device *dev,
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> index cd5bf658df66..628ef3e663ea 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -389,7 +389,6 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+>   void msm_dp_irq_postinstall(struct msm_dp *dp_display);
+>   void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp_display);
+>   
+> -void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor);
+>   bool msm_dp_wide_bus_available(const struct msm_dp *dp_display);
+>   
+>   #else
+> @@ -415,11 +414,6 @@ static inline void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm
+>   {
+>   }
+>   
+> -static inline void msm_dp_debugfs_init(struct msm_dp *dp_display,
+> -		struct drm_minor *minor)
+> -{
+> -}
+> -
+>   static inline bool msm_dp_wide_bus_available(const struct msm_dp *dp_display)
+>   {
+>   	return false;
