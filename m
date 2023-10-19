@@ -2,161 +2,233 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 38DFB7CF712
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 13:37:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 74A9D7CF735
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 13:42:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345430AbjJSLhj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Oct 2023 07:37:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58512 "EHLO
+        id S233048AbjJSLmb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Oct 2023 07:42:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233155AbjJSLhg (ORCPT
+        with ESMTP id S235244AbjJSLma (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Oct 2023 07:37:36 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3AA813E;
-        Thu, 19 Oct 2023 04:37:33 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39JAjt9V014928;
-        Thu, 19 Oct 2023 11:37:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=qcppdkim1;
- bh=9WSebA+wxvflAFy7chHmr6lERim/LgmFmXjnP3ZZp3Y=;
- b=nUHPVvJM0PRhy0wT5jXpmAGls5hRVOIrUWGzkjRz/TWWS260jOAz8wsDsRtMC4ot6HbF
- jaFAZEVeuIKtosOT2OVwS9AfSBdhQceWCsnwRBuZesuvh9x/HhZTc08+LtjZSzBsj/03
- MCj0Bx0EAmQq5qgMSYtqCvKm5vW487hlNEgpy3nOrWCIa9T5LUjTMMRQu6NvuDU3qa9Y
- Dw8SfQnHUdXHzyMhKoqu722Ldyv8NHOrE2VGIJvm3PTvJa2ouHoREkh462lG3clDCSQ5
- jUPe5JlhOhmwaxIiJvDCkOOEUgGR/8PjNBJ/jMSavEZd2qGZ0bMun+O5qKlD02U20qgB aw== 
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ttfeuapbg-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 19 Oct 2023 11:37:24 +0000
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 39JBbGNh000827;
-        Thu, 19 Oct 2023 11:37:21 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3tqm2mcs3w-1;
-        Thu, 19 Oct 2023 11:37:21 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 39JBbKjJ000894;
-        Thu, 19 Oct 2023 11:37:20 GMT
-Received: from hu-sgudaval-hyd.qualcomm.com (hu-msarkar-hyd.qualcomm.com [10.213.111.194])
-        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 39JBbKt5000885;
-        Thu, 19 Oct 2023 11:37:20 +0000
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3891782)
-        id 09C76441C; Thu, 19 Oct 2023 17:07:20 +0530 (+0530)
-From:   Mrinmay Sarkar <quic_msarkar@quicinc.com>
-To:     agross@kernel.org, andersson@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        konrad.dybcio@linaro.org, mani@kernel.org
-Cc:     quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
-        quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
-        dmitry.baryshkov@linaro.org, robh@kernel.org,
-        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
-        quic_parass@quicinc.com, Mrinmay Sarkar <quic_msarkar@quicinc.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
-        linux-phy@lists.infradead.org
-Subject: [PATCH v3 5/5] arm64: dts: qcom: sa8775p: Add ep pcie0 controller node
-Date:   Thu, 19 Oct 2023 17:07:10 +0530
-Message-Id: <1697715430-30820-6-git-send-email-quic_msarkar@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1697715430-30820-1-git-send-email-quic_msarkar@quicinc.com>
-References: <1697715430-30820-1-git-send-email-quic_msarkar@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: houZrgXEPQbdaH4WRiran116wJpoCU8E
-X-Proofpoint-GUID: houZrgXEPQbdaH4WRiran116wJpoCU8E
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-19_09,2023-10-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
- spamscore=0 impostorscore=0 bulkscore=0 adultscore=0 phishscore=0
- mlxlogscore=999 suspectscore=0 priorityscore=1501 mlxscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310190099
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        Thu, 19 Oct 2023 07:42:30 -0400
+Received: from mx1.tq-group.com (mx1.tq-group.com [93.104.207.81])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1324D139;
+        Thu, 19 Oct 2023 04:42:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=tq-group.com; i=@tq-group.com; q=dns/txt; s=key1;
+  t=1697715748; x=1729251748;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=dGVV1XZ3kTX7Tv24pGahJ1gi4uw7pJN6njyEQsHMwIA=;
+  b=kcWq2VBJgij19qfb9OZuRvNUJgk/GztKJgxi+gCHZY4v1HOhsNHdLM0S
+   pbEB/ra030cEIBOMI6v2KH2XktCL7sGaIVnl/+TO4VuSXMRdsWq47yC0A
+   sPXxpdfQ9k+fcAwL57ahWPlh4JdOvxUGHUkKDpWvoySm1tISNHrfNmNfL
+   GvleN9SQJbAJI97kVM3JDqqmM0CZ9NaKbkg8anFXhFoYjt6Kw3rH7CMEu
+   dMRgjHQqjXmWkYNv+x/u1ImYPJUy5svz/P8xI7tlT7MqFIpnCWfDlQXjO
+   x9ZI05cwsU5FeQiDhPXiuCPLMKRgw/tfkaL8geu0Pj8aVZ4nJdiJsYBxX
+   g==;
+X-IronPort-AV: E=Sophos;i="6.03,237,1694728800"; 
+   d="scan'208";a="33551544"
+Received: from vtuxmail01.tq-net.de ([10.115.0.20])
+  by mx1.tq-group.com with ESMTP; 19 Oct 2023 13:42:25 +0200
+Received: from steina-w.localnet (steina-w.tq-net.de [10.123.53.18])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by vtuxmail01.tq-net.de (Postfix) with ESMTPSA id 8F44D280082;
+        Thu, 19 Oct 2023 13:42:25 +0200 (CEST)
+From:   Alexander Stein <alexander.stein@ew.tq-group.com>
+To:     Maxime Ripard <mripard@kernel.org>, dri-devel@lists.freedesktop.org
+Cc:     dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Marek Vasut <marex@denx.de>, Robert Foss <rfoss@kernel.org>,
+        Dave Stevenson <dave.stevenson@raspberrypi.com>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Jonas Karlman <jonas@kwiboo.se>, linux-arm-msm@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        freedreno@lists.freedesktop.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [RFC PATCH 03/10] drm/mipi-dsi: add API for manual control over the DSI link power state
+Date:   Thu, 19 Oct 2023 13:42:27 +0200
+Message-ID: <1907377.IobQ9Gjlxr@steina-w>
+Organization: TQ-Systems GmbH
+In-Reply-To: <CAA8EJpp48AdJmx_U=bEJZUWZgOiT1Ctz6Lpe9QwjLXkMQvsw5w@mail.gmail.com>
+References: <20231016165355.1327217-1-dmitry.baryshkov@linaro.org> <7e4ak4e77fp5dat2aopyq3g4wnqu3tt7di7ytdr3dvgjviyhrd@vqiqx6iso6vg> <CAA8EJpp48AdJmx_U=bEJZUWZgOiT1Ctz6Lpe9QwjLXkMQvsw5w@mail.gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add ep pcie dtsi node for pcie0 controller found on sa8775p platform.
-It supports gen4 and x2 link width. Due to some stability issue in
-gen4 enabling gen3 as of now.
+Hi,
 
-Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sa8775p.dtsi | 48 +++++++++++++++++++++++++++++++++++
- 1 file changed, 48 insertions(+)
+Am Donnerstag, 19. Oktober 2023, 13:19:51 CEST schrieb Dmitry Baryshkov:
+> On Thu, 19 Oct 2023 at 12:26, Maxime Ripard <mripard@kernel.org> wrote:
+> > On Mon, Oct 16, 2023 at 07:53:48PM +0300, Dmitry Baryshkov wrote:
+> > > The MIPI DSI links do not fully fall into the DRM callbacks model.
+> >=20
+> > Explaining why would help
+>=20
+> A kind of explanation comes afterwards, but probably I should change
+> the order of the phrases and expand it:
+>=20
+> The atomic_pre_enable / atomic_enable and correspondingly
+> atomic_disable / atomic_post_disable expect that the bridge links
+> follow a simple paradigm: either it is off, or it is on and streaming
+> video. Thus, it is fine to just enable the link at the enable time,
+> doing some preparations during the pre_enable.
+>=20
+> But then it causes several issues with DSI. First, some of the DSI
+> bridges and most of the DSI panels would like to send commands over
+> the DSI link to setup the device. Next, some of the DSI hosts have
+> limitations on sending the commands. The proverbial sunxi DSI host can
+> not send DSI commands after the video stream has started. Thus most of
+> the panels have opted to send all DSI commands from pre_enable (or
+> prepare) callback (before the video stream has started).
+>=20
+> However this leaves no good place for the DSI host to power up the DSI
+> link. By default the host's pre_enable callback is called after the
+> DSI bridge's pre_enable. For quite some time we were powering up the
+> DSI link from mode_set. This doesn't look fully correct. And also we
+> got into the issue with ps8640 bridge, which requires for the DSI link
+> to be quiet / unpowered at the bridge's reset time.
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index 13dd44d..2aa7383 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -3714,4 +3714,52 @@
- 
- 		status = "disabled";
- 	};
-+
-+	pcie0_ep: pcie-ep@1c00000 {
-+		compatible = "qcom,sa8775p-pcie-ep";
-+		reg = <0x0 0x01c00000 0x0 0x3000>,
-+		      <0x0 0x40000000 0x0 0xf20>,
-+		      <0x0 0x40000f20 0x0 0xa8>,
-+		      <0x0 0x40001000 0x0 0x4000>,
-+		      <0x0 0x40200000 0x0 0x100000>,
-+		      <0x0 0x01c03000 0x0 0x1000>,
-+		      <0x0 0x40005000 0x0 0x2000>;
-+		reg-names = "parf", "dbi", "elbi", "atu", "addr_space",
-+			    "mmio", "dma";
-+
-+		clocks = <&gcc GCC_PCIE_0_AUX_CLK>,
-+			<&gcc GCC_PCIE_0_CFG_AHB_CLK>,
-+			<&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
-+			<&gcc GCC_PCIE_0_SLV_AXI_CLK>,
-+			<&gcc GCC_PCIE_0_SLV_Q2A_AXI_CLK>;
-+
-+		clock-names = "aux",
-+			      "cfg",
-+			      "bus_master",
-+			      "bus_slave",
-+			      "slave_q2a";
-+
-+		interrupts = <GIC_SPI 306 IRQ_TYPE_LEVEL_HIGH>,
-+			     <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>,
-+			     <GIC_SPI 630 IRQ_TYPE_LEVEL_HIGH>;
-+
-+		interrupt-names = "global", "doorbell", "dma";
-+
-+		interconnects = <&pcie_anoc MASTER_PCIE_0 0 &mc_virt SLAVE_EBI1 0>,
-+				<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_0 0>;
-+		interconnect-names = "pcie-mem", "cpu-pcie";
-+
-+		iommu-map = <0x0 &pcie_smmu 0x0000 0x1>,
-+			    <0x100 &pcie_smmu 0x0001 0x1>;
-+
-+		resets = <&gcc GCC_PCIE_0_BCR>;
-+		reset-names = "core";
-+		power-domains = <&gcc PCIE_0_GDSC>;
-+		phys = <&pcie0_phy>;
-+		phy-names = "pciephy";
-+		max-link-speed = <3>;
-+		num-lanes = <2>;
-+
-+		status = "disabled";
-+	};
- };
--- 
-2.7.4
+There are also bridges (e.g. tc358767) which require DSI-LP11 upon bridge=20
+reset. And additionally this DSI-(e)DP bridge requires LP11 while accessing=
+=20
+DP-AUX channel, e.g. reading EDID. So bridges need at least some control ov=
+er=20
+DSI line state.
+
+> Dave has come with the idea of pre_enable_prev_first /
+> prepare_prev_first flags, which attempt to solve the issue by
+> reversing the order of pre_enable callbacks. This mostly solves the
+> issue. However during this cycle it became obvious that this approach
+> is not ideal too. There is no way for the DSI host to know whether the
+> DSI panel / bridge has been updated to use this flag or not, see the
+> discussion at [1].
+>=20
+> Thus comes this proposal. It allows for the panels to explicitly bring
+> the link up and down at the correct time, it supports automatic use
+> case, where no special handling is required. And last, but not least,
+> it allows the DSI host to note that the bridge / panel were not
+> updated to follow new protocol and thus the link should be powered on
+> at the mode_set time. This leaves us with the possibility of dropping
+> support for this workaround once all in-kernel drivers are updated.
+
+I want to use this series to support tc358767 properly, because=20
+pre_enable_prev_first is not enough, see AUX channel above. I hope I'll fin=
+d=20
+any time soon.
+
+Best regards,
+Alexander
+
+>=20
+> > > The drm_bridge_funcs abstraction.
+> >=20
+> > Is there a typo or missing words?
+>=20
+> missing comma in front of The
+>=20
+> > > Instead of having just two states (off and on) the DSI hosts have
+> > > separate LP-11 state. In this state the host is on, but the video
+> > > stream is not yet enabled.
+> > >=20
+> > > Introduce API that allows DSI bridges / panels to control the DSI host
+> > > power up state.
+>=20
+> [1]
+> https://lore.kernel.org/dri-devel/6c0dd9fd-5d8e-537c-804f-7a03d5899a07@li=
+na
+> ro.org/
+> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > ---
+> > >=20
+> > >  drivers/gpu/drm/drm_mipi_dsi.c | 31 +++++++++++++++++++++++++++++++
+> > >  include/drm/drm_mipi_dsi.h     | 29 +++++++++++++++++++++++++----
+> > >  2 files changed, 56 insertions(+), 4 deletions(-)
+> > >=20
+> > > diff --git a/drivers/gpu/drm/drm_mipi_dsi.c
+> > > b/drivers/gpu/drm/drm_mipi_dsi.c index 14201f73aab1..c467162cb7d8
+> > > 100644
+> > > --- a/drivers/gpu/drm/drm_mipi_dsi.c
+> > > +++ b/drivers/gpu/drm/drm_mipi_dsi.c
+> > > @@ -428,6 +428,37 @@ int devm_mipi_dsi_attach(struct device *dev,
+> > >=20
+> > >  }
+> > >  EXPORT_SYMBOL_GPL(devm_mipi_dsi_attach);
+> > >=20
+> > > +bool mipi_dsi_host_power_control_available(struct mipi_dsi_host *hos=
+t)
+> > > +{
+> > > +     const struct mipi_dsi_host_ops *ops =3D host->ops;
+> > > +
+> > > +     return ops && ops->power_up;
+> > > +}
+> > > +EXPORT_SYMBOL_GPL(mipi_dsi_host_power_control_available);
+> > > +
+> > > +int mipi_dsi_host_power_up(struct mipi_dsi_host *host)
+> > > +{
+> > > +     const struct mipi_dsi_host_ops *ops =3D host->ops;
+> > > +
+> > > +     if (!mipi_dsi_host_power_control_available(host))
+> > > +             return -EOPNOTSUPP;
+> > > +
+> > > +     return ops->power_up ? ops->power_up(host) : 0;
+> > > +}
+> > > +EXPORT_SYMBOL_GPL(mipi_dsi_host_power_up);
+> > > +
+> > > +void mipi_dsi_host_power_down(struct mipi_dsi_host *host)
+> > > +{
+> > > +     const struct mipi_dsi_host_ops *ops =3D host->ops;
+> > > +
+> > > +     if (!mipi_dsi_host_power_control_available(host))
+> > > +             return;
+> > > +
+> > > +     if (ops->power_down)
+> > > +             ops->power_down(host);
+> > > +}
+> > > +EXPORT_SYMBOL_GPL(mipi_dsi_host_power_down);
+> > > +
+> >=20
+> > If this API is supposed to be used by DSI devices, it should probably
+> > take a mipi_dsi_device pointer as a parameter?
+>=20
+> Ack.
+>=20
+> > We should probably make sure it hasn't been powered on already too?
+>=20
+> Ack, I can add an atomic count there and a WARN_ON. However I don't
+> think that it is a real problem.
+>=20
+> > Maxime
+>=20
+> --
+> With best wishes
+>=20
+> Dmitry
+
+
+=2D-=20
+TQ-Systems GmbH | M=FChlstra=DFe 2, Gut Delling | 82229 Seefeld, Germany
+Amtsgericht M=FCnchen, HRB 105018
+Gesch=E4ftsf=FChrer: Detlef Schneider, R=FCdiger Stahl, Stefan Schneider
+http://www.tq-group.com/
+
 
