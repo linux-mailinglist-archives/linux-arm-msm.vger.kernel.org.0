@@ -2,188 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A91F17CF308
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 10:43:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C0DE57CF404
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 11:26:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235268AbjJSInA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Oct 2023 04:43:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46194 "EHLO
+        id S1345033AbjJSJ0a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Oct 2023 05:26:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345119AbjJSIm3 (ORCPT
+        with ESMTP id S1345035AbjJSJ01 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Oct 2023 04:42:29 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4B18182;
-        Thu, 19 Oct 2023 01:42:17 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39J7ubCM007234;
-        Thu, 19 Oct 2023 08:41:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=JIk2gX/el4YSdpH3SijmN7XQ28M3iMt/ElM1C5zqP/E=;
- b=edzZrsGlGsYvwDvJfEwcNJYEyryLrmtrF8qh2cQWTb0rxi6W+mRSDhrJ487QllGrF8Ot
- bnLTR8L4z/P64QFN7AqhgmJNDJcKb+nNczDHJat7brMsVE52q0O3JenG2omek89oztkZ
- WsH5cpj5J3Byq7CUjubOJjH08Ka57JrXXloGMhD30XO1KKqcbzMv282RPp+C3RrC6Dre
- 5wbcRCI+PiRKwxzW332ncb4uLdemWVXVxDdCs77WWDZuyE9YLrCNN/+R3yHyMAP9u3pr
- RfoteK+6sCJ8MUX/VGkc1MJll3LTmUihQ/if3L5AhJi05fbEgg9BH4L1H5lHcWZPqPjh Lw== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tt5v83fyj-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 19 Oct 2023 08:41:51 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39J8foNx023731
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 19 Oct 2023 08:41:50 GMT
-Received: from varda-linux.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.39; Thu, 19 Oct 2023 01:41:44 -0700
-From:   Varadarajan Narayanan <quic_varada@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>, <rafael@kernel.org>,
-        <viresh.kumar@linaro.org>, <ilia.lin@kernel.org>,
-        <sivaprak@codeaurora.org>, <quic_kathirav@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>
-CC:     Varadarajan Narayanan <quic_varada@quicinc.com>
-Subject: [PATCH v4 9/9] arm64: dts: qcom: ipq9574: populate the opp table based on the eFuse
-Date:   Thu, 19 Oct 2023 14:10:43 +0530
-Message-ID: <64535a8aeadbfa2cd0699175e262ec9bc70d1df9.1697694811.git.quic_varada@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1697694811.git.quic_varada@quicinc.com>
-References: <cover.1697694811.git.quic_varada@quicinc.com>
+        Thu, 19 Oct 2023 05:26:27 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8B67106;
+        Thu, 19 Oct 2023 02:26:25 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B766EC433C7;
+        Thu, 19 Oct 2023 09:26:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1697707585;
+        bh=OCDUlYLWKH4hPIGJgGmkgyAHhL7/848MWsrLLQz3nbQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=q9FqAg7Z6b7b6Q+l58S5MAWVseQF0hpk4HZJmu/Hy2hgyt/hquWS//yFAFbJPXpcG
+         X4hOWD8y7KfJVGQ/eQL4O5JNMKRj8HKmPlKLZX5i8buLhzX+9g7jHDRGrLj9JjUTPX
+         DQrBMOOppV2i/G26YN4EKlDl3ibLcvVPJrTOGb4tYc3VFUZMCRBRlVqkw99uabprEt
+         SY0NBKCLqyNNgfC5G2jzbL1q7AYVrU6c8WN/+g30iejbiE4ZvhdsbR67AfG22oI3Ym
+         h0G4t60zOQjJPH4PS9JSY8nlfZC889dgSie0TKOnqdIF9FI+Fla58dEyHFqqmZUjZv
+         r/6eOlbpmKpvg==
+Date:   Thu, 19 Oct 2023 11:26:16 +0200
+From:   Maxime Ripard <mripard@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Dave Stevenson <dave.stevenson@raspberrypi.com>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Douglas Anderson <dianders@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Marek Vasut <marex@denx.de>, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [RFC PATCH 03/10] drm/mipi-dsi: add API for manual control over
+ the DSI link power state
+Message-ID: <7e4ak4e77fp5dat2aopyq3g4wnqu3tt7di7ytdr3dvgjviyhrd@vqiqx6iso6vg>
+References: <20231016165355.1327217-1-dmitry.baryshkov@linaro.org>
+ <20231016165355.1327217-4-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 3Jc1PkdEsKbISKzlinlG2gcdnMVkI0I-
-X-Proofpoint-ORIG-GUID: 3Jc1PkdEsKbISKzlinlG2gcdnMVkI0I-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-19_06,2023-10-18_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- mlxlogscore=983 lowpriorityscore=0 phishscore=0 impostorscore=0
- suspectscore=0 mlxscore=0 clxscore=1015 bulkscore=0 priorityscore=1501
- spamscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310190070
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20231016165355.1327217-4-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-IPQ95xx SoCs have different OPPs available for the CPU based on
-SoC variant. This can be determined from an eFuse register
-present in the silicon.
+On Mon, Oct 16, 2023 at 07:53:48PM +0300, Dmitry Baryshkov wrote:
+> The MIPI DSI links do not fully fall into the DRM callbacks model.
 
-Add support to read the eFuse and populate the OPPs based on it.
+Explaining why would help
 
-Frequency	1.2GHz	1.8GHz	1.5GHz	No	opp-supported-hw
-					Limit
-------------------------------------------------------------
-936000000	1	1	1	1	0xf
-1104000000	1	1	1	1	0xf
-1200000000	1	1	1	1	0xf
-1416000000	0	1	1	1	0x7
-1488000000	0	1	1	1	0x7
-1800000000	0	1	0	1	0x5
-2208000000	0	0	0	1	0x1
------------------------------------------------------------
+> The drm_bridge_funcs abstraction.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
-Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
----
-v2:	cpu_speed_bin -> cpu-speed-bin in node name
-	Move comment to commit log
----
- arch/arm64/boot/dts/qcom/ipq9574.dtsi | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+Is there a typo or missing words?
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-index cc84f25..5f83ee4 100644
---- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-@@ -106,42 +106,56 @@
- 	};
- 
- 	cpu_opp_table: opp-table-cpu {
--		compatible = "operating-points-v2";
-+		compatible = "operating-points-v2-kryo-cpu";
- 		opp-shared;
-+		nvmem-cells = <&cpu_speed_bin>;
- 
- 		opp-936000000 {
- 			opp-hz = /bits/ 64 <936000000>;
- 			opp-microvolt = <725000>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 
- 		opp-1104000000 {
- 			opp-hz = /bits/ 64 <1104000000>;
- 			opp-microvolt = <787500>;
-+			opp-supported-hw = <0xf>;
-+			clock-latency-ns = <200000>;
-+		};
-+
-+		opp-1200000000 {
-+			opp-hz = /bits/ 64 <1200000000>;
-+			opp-microvolt = <862500>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 
- 		opp-1416000000 {
- 			opp-hz = /bits/ 64 <1416000000>;
- 			opp-microvolt = <862500>;
-+			opp-supported-hw = <0x7>;
- 			clock-latency-ns = <200000>;
- 		};
- 
- 		opp-1488000000 {
- 			opp-hz = /bits/ 64 <1488000000>;
- 			opp-microvolt = <925000>;
-+			opp-supported-hw = <0x7>;
- 			clock-latency-ns = <200000>;
- 		};
- 
- 		opp-1800000000 {
- 			opp-hz = /bits/ 64 <1800000000>;
- 			opp-microvolt = <987500>;
-+			opp-supported-hw = <0x5>;
- 			clock-latency-ns = <200000>;
- 		};
- 
- 		opp-2208000000 {
- 			opp-hz = /bits/ 64 <2208000000>;
- 			opp-microvolt = <1062500>;
-+			opp-supported-hw = <0x1>;
- 			clock-latency-ns = <200000>;
- 		};
- 	};
-@@ -223,6 +237,11 @@
- 			reg = <0x000a4000 0x5a1>;
- 			#address-cells = <1>;
- 			#size-cells = <1>;
-+
-+			cpu_speed_bin: cpu-speed-bin@15 {
-+				reg = <0x15 0x2>;
-+				bits = <7 2>;
-+			};
- 		};
- 
- 		cryptobam: dma-controller@704000 {
--- 
-2.7.4
+> Instead of having just two states (off and on) the DSI hosts have
+> separate LP-11 state. In this state the host is on, but the video
+> stream is not yet enabled.
+>=20
+> Introduce API that allows DSI bridges / panels to control the DSI host
+> power up state.
+>=20
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/gpu/drm/drm_mipi_dsi.c | 31 +++++++++++++++++++++++++++++++
+>  include/drm/drm_mipi_dsi.h     | 29 +++++++++++++++++++++++++----
+>  2 files changed, 56 insertions(+), 4 deletions(-)
+>=20
+> diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_ds=
+i.c
+> index 14201f73aab1..c467162cb7d8 100644
+> --- a/drivers/gpu/drm/drm_mipi_dsi.c
+> +++ b/drivers/gpu/drm/drm_mipi_dsi.c
+> @@ -428,6 +428,37 @@ int devm_mipi_dsi_attach(struct device *dev,
+>  }
+>  EXPORT_SYMBOL_GPL(devm_mipi_dsi_attach);
+> =20
+> +bool mipi_dsi_host_power_control_available(struct mipi_dsi_host *host)
+> +{
+> +	const struct mipi_dsi_host_ops *ops =3D host->ops;
+> +
+> +	return ops && ops->power_up;
+> +}
+> +EXPORT_SYMBOL_GPL(mipi_dsi_host_power_control_available);
+> +
+> +int mipi_dsi_host_power_up(struct mipi_dsi_host *host)
+> +{
+> +	const struct mipi_dsi_host_ops *ops =3D host->ops;
+> +
+> +	if (!mipi_dsi_host_power_control_available(host))
+> +		return -EOPNOTSUPP;
+> +
+> +	return ops->power_up ? ops->power_up(host) : 0;
+> +}
+> +EXPORT_SYMBOL_GPL(mipi_dsi_host_power_up);
+> +
+> +void mipi_dsi_host_power_down(struct mipi_dsi_host *host)
+> +{
+> +	const struct mipi_dsi_host_ops *ops =3D host->ops;
+> +
+> +	if (!mipi_dsi_host_power_control_available(host))
+> +		return;
+> +
+> +	if (ops->power_down)
+> +		ops->power_down(host);
+> +}
+> +EXPORT_SYMBOL_GPL(mipi_dsi_host_power_down);
+> +
 
+If this API is supposed to be used by DSI devices, it should probably
+take a mipi_dsi_device pointer as a parameter?
+
+We should probably make sure it hasn't been powered on already too?
+
+Maxime
