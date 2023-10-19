@@ -2,123 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 466607D0277
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 21:26:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 912147D02B6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 21:47:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346407AbjJST0B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Oct 2023 15:26:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45076 "EHLO
+        id S1345366AbjJSTrC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Oct 2023 15:47:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43912 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346477AbjJST0A (ORCPT
+        with ESMTP id S1345159AbjJSTrC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Oct 2023 15:26:00 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E016126;
-        Thu, 19 Oct 2023 12:25:57 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39JHS4wG021989;
-        Thu, 19 Oct 2023 19:25:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=7nZlr836Z1yRwKSJGkQXZps55FXeuMStkqXPcw7VZbM=;
- b=md0+6fSVejV8AMgpKlPvnBLl4J3FgpVtckN9oWAateqmPfpdkPBiI86G6LuaSblLw6UL
- r8DyTGz9RV+c/V2HTw5AesWtqrxjTxwXfgB8mxMm0UFqbmrO3fMq07cmq4yj7FdYmfyH
- 8nrCTTZ6DL4nMFLP0NMMqU7pEI+ZZeXUzmql10dl+Nyz4OVUqdo4wNitnAFjlrtWIb8f
- DHe3yjPLyUFi2UBC1FoDOQgopgqP4HP/AXmrN0ls7nkxL0c3vRNo+JYD30clGBtGHLoX
- LOBd1TafidfkchfJfwD8eAUYCeuCD75TfJ/GkGhyP4gTfve0uhE2RsLSzyrE9EJcWk9l ew== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tu14csexk-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 19 Oct 2023 19:25:37 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39JJPZKQ008993
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 19 Oct 2023 19:25:35 GMT
-Received: from [10.110.99.208] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Thu, 19 Oct
- 2023 12:25:35 -0700
-Message-ID: <2e300bef-3722-8b00-2bdf-e9386796f38f@quicinc.com>
-Date:   Thu, 19 Oct 2023 12:25:34 -0700
+        Thu, 19 Oct 2023 15:47:02 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0968114;
+        Thu, 19 Oct 2023 12:47:00 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C58FC433CA;
+        Thu, 19 Oct 2023 19:47:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1697744820;
+        bh=kJyJ53sEdpPJK6eagpUQpoxGIQ2v4UNjTrtx9ncWMjI=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=nDFWVqRHy/C2zMBklJ2uAXHxqdaqyNK8XEpcMD3XPazOM4a+k7fcBDHTcyt7zP87m
+         BRoGBXdMVFnsreuu6oAkhuB84Hn7yaCb6NtgFo0JYvA3ethDF4zLq0EODdip5BHnJE
+         uNajNGFKDO4kgMYHhw53oYyl0Y8B9iYX9dY4q9AYVwM0z/6HkDJFlFodgiHOLguqIM
+         a6jWNYdB5MF1p3tiZZDjPIJs5Zj0f+gmi17m+01RO3fzNFX16MtotBWDwfdaIdUI5t
+         NHh9LOeIDN2aqzeZcgTB2Pb3Wzp5dC9gE8fUCg38u0sOYm+9uWfgvpKULSivuohuFX
+         KhFVy1K+yKSeQ==
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-507adc3381cso14464e87.3;
+        Thu, 19 Oct 2023 12:47:00 -0700 (PDT)
+X-Gm-Message-State: AOJu0YwoZWO2y+cBuFpssxAWespnrakCz4ZBLqydAWh3Cu/VhFbPTc3z
+        VAA+tcySJUJGYt97go9z05tA7p6kBMEUz+bHpQ==
+X-Google-Smtp-Source: AGHT+IEv0Yxf1FOVuXFGWen4jDWLp5PE11XXP+QWf6ZcfW0Lwd4xFfWSkOUQ2pkinfmyVX+ucqLtX8D9FLXWah8BxeU=
+X-Received: by 2002:ac2:5328:0:b0:500:b74b:e53 with SMTP id
+ f8-20020ac25328000000b00500b74b0e53mr2215352lfh.46.1697744818512; Thu, 19 Oct
+ 2023 12:46:58 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v9 30/34] ASoC: qcom: qdsp6: Add SND kcontrol for fetching
- offload status
-Content-Language: en-US
-From:   Wesley Cheng <quic_wcheng@quicinc.com>
-To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        <mathias.nyman@intel.com>, <gregkh@linuxfoundation.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <perex@perex.cz>,
-        <tiwai@suse.com>, <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <srinivas.kandagatla@linaro.org>, <bgoswami@quicinc.com>,
-        <Thinh.Nguyen@synopsys.com>
-CC:     <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-References: <20231017200109.11407-1-quic_wcheng@quicinc.com>
- <20231017200109.11407-31-quic_wcheng@quicinc.com>
- <92971bbf-b890-4e41-8ef1-9213e15d81b2@linux.intel.com>
- <c9c5f13f-b3e7-6591-f277-cd86162152e4@quicinc.com>
-In-Reply-To: <c9c5f13f-b3e7-6591-f277-cd86162152e4@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: szZLkW7qgmVniayGieMMDVKlAabQiICH
-X-Proofpoint-ORIG-GUID: szZLkW7qgmVniayGieMMDVKlAabQiICH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-19_18,2023-10-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- mlxlogscore=459 clxscore=1015 suspectscore=0 impostorscore=0 adultscore=0
- bulkscore=0 mlxscore=0 spamscore=0 phishscore=0 lowpriorityscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310190164
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+References: <20231019184825.9712-1-quic_obabatun@quicinc.com> <20231019184825.9712-2-quic_obabatun@quicinc.com>
+In-Reply-To: <20231019184825.9712-2-quic_obabatun@quicinc.com>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Thu, 19 Oct 2023 14:46:46 -0500
+X-Gmail-Original-Message-ID: <CAL_Jsq+pUv29277spzXB7QJ=OZTwGy_FmW55CzQPWYLPktA0EA@mail.gmail.com>
+Message-ID: <CAL_Jsq+pUv29277spzXB7QJ=OZTwGy_FmW55CzQPWYLPktA0EA@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/3] of: reserved_mem: Change the order that
+ reserved_mem regions are stored
+To:     Oreoluwa Babatunde <quic_obabatun@quicinc.com>
+Cc:     catalin.marinas@arm.com, will@kernel.org, frowand.list@gmail.com,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        kernel@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Pierre,
+On Thu, Oct 19, 2023 at 1:49=E2=80=AFPM Oreoluwa Babatunde
+<quic_obabatun@quicinc.com> wrote:
+>
+> The dynamic allocation of the reserved_mem array needs to be done after
+> paging_init() is called because memory allocated using memblock_alloc()
+> is not writeable before that.
+>
+> Nodes that already have their starting address specified in the DT
+> (i.e. nodes that are defined using the "reg" property) can wait until
+> after paging_init() to be stored in the array.
+> But nodes that are dynamically placed need to be reserved and saved in
+> the array before paging_init() so that page table entries are not
+> created for these regions.
+>
+> Hence, change the code to:
+> 1. Before paging_init(), allocate and store information for the
+>    dynamically placed reserved memory regions.
+> 2. After paging_init(), store the rest of the reserved memory regions
+>    which are defined with the "reg" property.
+>
+> Signed-off-by: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
+> ---
+>  arch/arm64/kernel/setup.c       |  4 +++
+>  drivers/of/fdt.c                | 56 ++++++++++++++++++++++++++-------
+>  drivers/of/of_private.h         |  1 -
+>  drivers/of/of_reserved_mem.c    | 54 ++++++++++++++-----------------
+>  include/linux/of_fdt.h          |  1 +
+>  include/linux/of_reserved_mem.h |  9 ++++++
+>  6 files changed, 83 insertions(+), 42 deletions(-)
+>
+> diff --git a/arch/arm64/kernel/setup.c b/arch/arm64/kernel/setup.c
+> index 417a8a86b2db..6002d3ad0b19 100644
+> --- a/arch/arm64/kernel/setup.c
+> +++ b/arch/arm64/kernel/setup.c
+> @@ -27,6 +27,8 @@
+>  #include <linux/proc_fs.h>
+>  #include <linux/memblock.h>
+>  #include <linux/of_fdt.h>
+> +#include <linux/of_reserved_mem.h>
+> +
+>  #include <linux/efi.h>
+>  #include <linux/psci.h>
+>  #include <linux/sched/task.h>
+> @@ -346,6 +348,8 @@ void __init __no_sanitize_address setup_arch(char **c=
+mdline_p)
+>
+>         paging_init();
+>
+> +       fdt_init_reserved_mem();
+> +
 
-On 10/18/2023 6:41 PM, Wesley Cheng wrote:
-> Hi Pierre,
-> 
-> On 10/17/2023 3:53 PM, Pierre-Louis Bossart wrote:
->>
->>
->> On 10/17/23 15:01, Wesley Cheng wrote:
->>> Add a kcontrol to the platform sound card to fetch the current offload
->>> status.  This can allow for userspace to ensure/check which USB SND
->>> resources are actually busy versus having to attempt opening the USB SND
->>> devices, which will result in an error if offloading is active.
->>
->> I think I mentioned this a while back, but why not add the status in the
->> USB card itself? That's a generic component that all userspace agent
->> could query. Having a QCOM-specific control doesn't make the life of
->> userspace easier IMHO.
->>
->>
-> 
-> Will take a look at this based on the comments you had in the other 
-> kcontrol patch.  Seeing if we can move it to a more generic layer.
-> 
+You removed this call from the common code and add it to arm64 arch
+code, doesn't that break every other arch?
 
-I think it would make more sense to see if we can keep all the offload 
-kcontrols under the sound card exposed by the platform.  Especially, if 
-we are going to modify the components string of the card to signify that 
-it supports USB offload.
+The very next thing done here is unflattening the DT. So another call
+from the arch code to the DT code isn't needed either.
 
-Thanks
-Wesley Cheng
+Rob
