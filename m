@@ -2,102 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B04D7CFDC1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 17:25:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 387B67CFE19
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 17:39:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346204AbjJSPZC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Oct 2023 11:25:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57726 "EHLO
+        id S1346346AbjJSPjU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Oct 2023 11:39:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346183AbjJSPZB (ORCPT
+        with ESMTP id S1346030AbjJSPjT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Oct 2023 11:25:01 -0400
-Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C84A124
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 08:24:59 -0700 (PDT)
-Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-5a81ab75f21so83078797b3.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 08:24:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697729098; x=1698333898; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=J36Azv4uFKfg/u6mhROMjBfFW8n3utMKNNnMSljqYeE=;
-        b=VGveyvSvsLKS++qcGlCJY8A1pPq1gp7P3srPDzA18+MJK0rG0BCN21A6x5Tzy16lkU
-         7EH6I5h2SvXa1gd9zwkF0ednBzal4bCTSHwVoV1CRmeyKLWDR2XlUB0a6AfMcHyfyR5R
-         +qqrZhUHl8DmVQtPFvvfTDumVzsB1RM6f1E44o6CTrmPSzLt0rna837cqBjrGCtXip8j
-         qyOGTqsHSZ0rvBy2HgmZl6GVq8ULfsJIZXClOZ7A0wykBS+LBrTOV9QVb/Qsp6Eq0YIU
-         xDlBbRAwQdTbdiSIgMGb8OMJMU4gDjLHBDnNukqXcSpKM4NgPkJzx8MlT6fhze7wSPRf
-         XR+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697729098; x=1698333898;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=J36Azv4uFKfg/u6mhROMjBfFW8n3utMKNNnMSljqYeE=;
-        b=rDzlBbsOaWKf4vhKZgQQgoPY8eMv7XVTENyE06ttkFZgzx/bQJsUq0IsjLoWzZxg6F
-         aEUn6K2uuirkH5DSgdvhZi1Rnsl9yTyIK7S1wdo0ZzcKfKfryel6ir+5T+w5J/Juk8e9
-         K4FbeofIVdzsIACy2zGh9kzVCJY/lQ1IBgz9LvgcHHHZIAcy9TFSVwsOT7rm6Hz9LqWh
-         lQIPwvn3NJoLFc6IVR4BbekXub2ZDVIk45o8fwjPAmDJOu+iawQOuQ/N6lDQM6z6NyV1
-         J6uPpeppX24spk7AIcqKpg2JjX40/SWumwJGP1Uhs1EefgFnOdN1seqQKopAYxDFlBmQ
-         t60w==
-X-Gm-Message-State: AOJu0Yz2Wi267RiM89o1nyCV5KvncHq3veKznKGYffvQYVw2pHf1Ztfv
-        GLQlTou7FPmXNO6crjVWCRdVv0yu/Oe6+4cFsTk81EQ3FJCpGeRvbW8=
-X-Google-Smtp-Source: AGHT+IHoS3lOcMrgJgOvXlMdvEHQhDGEb0EgVhhsMBQfKYrpGUPWK2pq2iY+oQNE+Hf0v59dLYODm4po1Lsi9OCNyeU=
-X-Received: by 2002:a05:690c:dc4:b0:5a7:aa54:42b1 with SMTP id
- db4-20020a05690c0dc400b005a7aa5442b1mr3552884ywb.28.1697729098464; Thu, 19
- Oct 2023 08:24:58 -0700 (PDT)
+        Thu, 19 Oct 2023 11:39:19 -0400
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 851AE9E;
+        Thu, 19 Oct 2023 08:39:18 -0700 (PDT)
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+        by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39JFadhM006435;
+        Thu, 19 Oct 2023 15:38:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=date : from : to : cc :
+ subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=pp1; bh=j0R1Ga/kpGsfsZxYDsOKQGw5axBGZpmFvBJQOoMUbIU=;
+ b=GbHccPC3f5652sKQHy/rCTbSwZdvRDqPhlrZARyg/uBbQ3htwghs01EZk9vQXiMZ1GmD
+ 9sy8xQmnlZFD74BQGG05Ueb9OI9WAAf1IrmHHwUNxQC332qnzyY4Tj+n2jpoRmxrYkc2
+ WeDa1Dm0/td6cjlpgWmHK0pft+fPJJvwVAlf0/MWeX5LT36I+Bk9YW25QvxV16rU/xfo
+ 8AWWem0HqL791Vq5LTm3YbSspcyMHAGUgz5QoELfYCzbHvwuoS+rO8A2Md4aoeS5Xmt2
+ mR8bisLHydthj/dLUvxrgr/2ltm5GP0Mrls12vdWfQ4ODDTWQ7qopib6tQ4JlOHELK13 sg== 
+Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3tu71q0thp-10
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 19 Oct 2023 15:38:09 +0000
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+        by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 39JEin6J030742;
+        Thu, 19 Oct 2023 15:32:09 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+        by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3tr7hk1bbd-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 19 Oct 2023 15:32:09 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com [10.20.54.102])
+        by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 39JFW8NC44368204
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Thu, 19 Oct 2023 15:32:08 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id EE89020043;
+        Thu, 19 Oct 2023 15:32:07 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id 5A2FE20040;
+        Thu, 19 Oct 2023 15:32:07 +0000 (GMT)
+Received: from osiris (unknown [9.171.41.136])
+        by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+        Thu, 19 Oct 2023 15:32:07 +0000 (GMT)
+Date:   Thu, 19 Oct 2023 17:32:05 +0200
+From:   Heiko Carstens <hca@linux.ibm.com>
+To:     kernel test robot <lkp@intel.com>
+Cc:     Andrew Morton <akpm@linux-foundation.org>,
+        Linux Memory Management List <linux-mm@kvack.org>,
+        amd-gfx@lists.freedesktop.org, kvm@vger.kernel.org,
+        linux-arch@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org, linux-rockchip@lists.infradead.org,
+        linux-s390@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
+        linuxppc-dev@lists.ozlabs.org
+Subject: Re: [linux-next:master] BUILD REGRESSION
+ 2dac75696c6da3c848daa118a729827541c89d33
+Message-ID: <20231019153205.9160-A-hca@linux.ibm.com>
+References: <202310190456.pryB092r-lkp@intel.com>
 MIME-Version: 1.0
-References: <20231019144311.1035181-1-dmitry.baryshkov@linaro.org> <ZTFEVpNOkGedJGoj@gerhold.net>
-In-Reply-To: <ZTFEVpNOkGedJGoj@gerhold.net>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 19 Oct 2023 18:24:47 +0300
-Message-ID: <CAA8EJpruauNB6c7O1p3fRJRLPmL7bH=PoSffJiBoWn=pSOwryQ@mail.gmail.com>
-Subject: Re: [PATCH] thermal/qcom/tsens: drop ops_v0_1
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <202310190456.pryB092r-lkp@intel.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: pLCVHeZl1pGGUcpHU0HZgqokDhWlFOun
+X-Proofpoint-GUID: pLCVHeZl1pGGUcpHU0HZgqokDhWlFOun
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-19_14,2023-10-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 bulkscore=0
+ phishscore=0 spamscore=0 impostorscore=0 mlxlogscore=702
+ lowpriorityscore=0 malwarescore=0 priorityscore=1501 clxscore=1011
+ mlxscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310190130
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H4,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 19 Oct 2023 at 17:59, Stephan Gerhold <stephan@gerhold.net> wrote:
->
-> On Thu, Oct 19, 2023 at 05:43:11PM +0300, Dmitry Baryshkov wrote:
-> > Since the commit 6812d1dfbca9 ("thermal/drivers/qcom/tsens-v0_1: Fix
-> > mdm9607 slope values") the default v0.1 implementation of tsens options
-> > is unused by the driver. Drop it now to stop compiler complaining about
-> > the unused static const. If the need for the default v0.1 ops struct
-> > arives, this commit can be easily reverted without further
-> > considerations.
-> >
-> > Fixes: 6812d1dfbca9 ("thermal/drivers/qcom/tsens-v0_1: Fix mdm9607 slope values")
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->
-> Seems like I remember correctly that there was a patch for this already
-> that wasn't picked up yet(?):
-> https://lore.kernel.org/linux-arm-msm/20230617113837.3224912-1-trix@redhat.com/
->
-> It doesn't have the Fixes tag though. I think both patches are fine.
-> Thanks for fixing this. :-)
+On Thu, Oct 19, 2023 at 04:07:35AM +0800, kernel test robot wrote:
+> arch/s390/include/asm/ctlreg.h:129:9: warning: array subscript 0 is outside array bounds of 'struct ctlreg[0]' [-Warray-bounds=]
+> arch/s390/include/asm/ctlreg.h:80:9: warning: array subscript 0 is outside array bounds of 'struct ctlreg[0]' [-Warray-bounds=]
+...
+> |-- s390-defconfig
+> |   `-- arch-s390-include-asm-ctlreg.h:warning:array-subscript-is-outside-array-bounds-of-struct-ctlreg
+...
+> s390                                defconfig   gcc  
 
-I'm perfectly fine with either of the patches being picked up.
+I'm wondering how this warning can appear in the builds. array-bounds
+warnings are explicitly disabled, see init/Kconfig: CC_NO_ARRAY_BOUNDS. And
+as expected, if I compile the kernel with gcc, defconfig, and with or
+without W=1 the option -Wno-array-bounds is passed to the compiler.
 
->
+And also as expected I do not see the above warnings.
 
--- 
-With best wishes
-Dmitry
+So something is quite odd here.
