@@ -2,104 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 523647CFA9D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 15:13:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1AC387CFAC5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 15:20:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345828AbjJSNNu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Oct 2023 09:13:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37008 "EHLO
+        id S235388AbjJSNUY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Oct 2023 09:20:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345843AbjJSNNs (ORCPT
+        with ESMTP id S235385AbjJSNUX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Oct 2023 09:13:48 -0400
-Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79C1B182
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 06:13:46 -0700 (PDT)
-Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-5a7b3d33663so106366017b3.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 06:13:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697721225; x=1698326025; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=u5ChxAd/tAofPv7khr4Z6g73hAZNzmOJAjL/O4rF+Kk=;
-        b=dFG1cjb+9/V16wKOVwYPMCamWFW3GTEW/Woju68SieEcec0+vf279DTCU4xqrGIf2z
-         KG45eTcGp95GaOSFNK4kpMY7lKCEsSEL/M5hf8ovvz8NJ+Po2BShUlLXvluMOIQwieXi
-         AVNXwUbTsWs5DPr/gaHUcCnnTNfblslxPd6IK0TCrGkdGhiiIJ5ngzWz85EP0++1Q0oQ
-         MXH68ZGKNrlOiQA8gCcO+o9kwR8iwIZ9K6Gs6hw8mhNciDm56i1bLbu2tynWDyYPXKWX
-         YRjJSD1qGLd32mb+0vyYXltFcJp8m3B2SVwkE7uxubY93to+g0/FbG3OjaD6E+OXWbfX
-         B1Yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697721225; x=1698326025;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=u5ChxAd/tAofPv7khr4Z6g73hAZNzmOJAjL/O4rF+Kk=;
-        b=l5zNk6VNAZMyOlDlfKKmCcyWSq31vzxwfaVzSKxFJHWmo8MWL6eVrMPrtDaYcJq91a
-         H6hoyW5oSE3EqGVHUlDz7aeFZPC19CsJlsTIFM0rPf/5z+l8nWno/+tj9O1TJdKW30Rr
-         TgiXDnGIztUc2J8Kpdq/Snorh2aoosb/bPyvUrGJzRDBryNILRp5N8lFzQDraTiXBI80
-         ycK+aTJ3usbkK2uNF9knAOuwpMhg5IHhpKx9nAjjz2KEIlExuycXhCYHlKRtZxIvKXMQ
-         5On5B6NqcP5bWtjfKgkg9ZcAAEWrRq0JC3O5bOXeswKS7dtGpiztFCewvnJe0DEf7oOK
-         Y3pA==
-X-Gm-Message-State: AOJu0YxmYoxxrfaoBCgjEbA7zpk49sdRxqeiXwua/nTqaJLZMh8jNN/P
-        IXsA+0ZO5YjAINubi4EapG6OR2neQo3A1puH7ewGlA==
-X-Google-Smtp-Source: AGHT+IHHv5diCJ9edZeJViOL3pSd2253dXP9+SzRMkkAG2TKUPLe4GDcEKLsBUj2IrUb1nL3nyd6h1S4hyQu5T850po=
-X-Received: by 2002:a0d:f281:0:b0:589:f995:eb9f with SMTP id
- b123-20020a0df281000000b00589f995eb9fmr2396557ywf.45.1697721225666; Thu, 19
- Oct 2023 06:13:45 -0700 (PDT)
+        Thu, 19 Oct 2023 09:20:23 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 251EE106;
+        Thu, 19 Oct 2023 06:20:22 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F99CC433C8;
+        Thu, 19 Oct 2023 13:20:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1697721621;
+        bh=VOgijqnTNDtnP5vZfW0kZXy9HzFMq1AfoLyH43H+9QI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=euF/Oe30adccYRG1D2KqAdsZH6ES5G29fc3GYvg3jyHVY6vFkobKVbn1riBtcOn5q
+         Z4c1wx3MgCigZGA1EBi2YEoesdyEQKqxjFYLdFhGllTOteXp5i16TUIcRNH4rgW41X
+         cA0Le25PTRec0HIh52GVsWwxcL7z1HbJL6sXB3xyOiT6d9PBj/u11teLTqk7PWiZN2
+         QlvaedlZNZi3tBCzyes9RLtV1cDjE0oSccwDCzEulImuyl5KBhLqQwZ3uSSona6TeQ
+         U+lxWMPNCdk9aiwpYGGLNLLwD10Qa+C8SLKzcANg+Xvv5rbJiV/TOJJOKUskxqbezW
+         ZcLwZdq7m2A7Q==
+Received: from johan by xi.lan with local (Exim 4.96)
+        (envelope-from <johan@kernel.org>)
+        id 1qtSwq-0003YF-1G;
+        Thu, 19 Oct 2023 15:20:24 +0200
+Date:   Thu, 19 Oct 2023 15:20:24 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Cc:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "quic_pkondeti@quicinc.com" <quic_pkondeti@quicinc.com>,
+        "quic_ppratap@quicinc.com" <quic_ppratap@quicinc.com>,
+        "quic_jackp@quicinc.com" <quic_jackp@quicinc.com>,
+        "quic_harshq@quicinc.com" <quic_harshq@quicinc.com>,
+        "ahalaney@redhat.com" <ahalaney@redhat.com>,
+        "quic_shazhuss@quicinc.com" <quic_shazhuss@quicinc.com>
+Subject: Re: [PATCH v9 05/10] usb: dwc3: core: Refactor PHY logic to support
+ Multiport Controller
+Message-ID: <ZTEtGIerwI90P6aA@hovoldconsulting.com>
+References: <20230621043628.21485-1-quic_kriskura@quicinc.com>
+ <20230621043628.21485-6-quic_kriskura@quicinc.com>
+ <ZJrRe7HtMs0KbsCy@hovoldconsulting.com>
+ <e3e0c4c8-1e91-caf1-c1c4-86203a7ecba0@quicinc.com>
+ <ZLo6MwbuKNL5xtPE@hovoldconsulting.com>
+ <20230801013031.ft3zpoatiyfegmh6@synopsys.com>
 MIME-Version: 1.0
-References: <cover.1697694811.git.quic_varada@quicinc.com> <5e1c2ff9522dd29e69f286dbbe1c867433763629.1697694811.git.quic_varada@quicinc.com>
-In-Reply-To: <5e1c2ff9522dd29e69f286dbbe1c867433763629.1697694811.git.quic_varada@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 19 Oct 2023 16:13:34 +0300
-Message-ID: <CAA8EJpp64kdRbGYSqP302FikKuP2MYmRGePN0zKMygShPsCjKQ@mail.gmail.com>
-Subject: Re: [PATCH v4 2/9] clk: qcom: clk-alpha-pll: introduce stromer plus ops
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
-        rafael@kernel.org, viresh.kumar@linaro.org, ilia.lin@kernel.org,
-        sivaprak@codeaurora.org, quic_kathirav@quicinc.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230801013031.ft3zpoatiyfegmh6@synopsys.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 19 Oct 2023 at 11:42, Varadarajan Narayanan
-<quic_varada@quicinc.com> wrote:
->
-> Stromer plus APSS PLL does not support dynamic frequency scaling.
-> To switch between frequencies, we have to shut down the PLL,
-> configure the L and ALPHA values and turn on again. So introduce the
-> separate set of ops for Stromer Plus PLL.
->
-> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> ---
-> v4:     Ensure PLL is enabled before re-enabling
-> v3:     Use prepare/unprepare instead of disable/enable in clk_alpha_pll_stromer_plus_ops
-> v2:     Use clk_alpha_pll_stromer_determine_rate, instead of adding new
->         clk_alpha_pll_stromer_plus_determine_rate as the alpha pll width
->         is same for both
->
->         Fix review comments
->                 udelay(50) -> usleep_range(50, 60)
->                 Remove SoC-specific from print message
-> ---
->  drivers/clk/qcom/clk-alpha-pll.c | 63 ++++++++++++++++++++++++++++++++++++++++
->  drivers/clk/qcom/clk-alpha-pll.h |  1 +
->  2 files changed, 64 insertions(+)
+[ Digging through some old mails. ]
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On Tue, Aug 01, 2023 at 01:30:36AM +0000, Thinh Nguyen wrote:
+> On Fri, Jul 21, 2023, Johan Hovold wrote:
+> > On Mon, Jul 03, 2023 at 12:26:26AM +0530, Krishna Kurapati PSSNV wrote:
+  
+> > > >> +/* Number of ports supported by a multiport controller */
+> > > >> +#define DWC3_MAX_PORTS 4
+> > > > 
+> > > > You did not answer my question about whether this was an arbitrary
+> > > > implementation limit (i.e. just reflecting the only currently supported
+> > > > multiport controller)?
+> > > > 
+> > > I mentioned in commit text that it is limited to 4. Are you referring to 
+> > > state the reason why I chose the value 4 ?
+> > 
+> > Yes, and to clarify whether this was an arbitrary limit you chose
+> > because it was all that was needed for the hw you care about, or if it's
+> > a more general limitation.
+> > 
+> 
+> Note: We can support many, but we set the current limit to 4 usb3 ports
+> and up to 15 usb2 ports.
 
--- 
-With best wishes
-Dmitry
+Thanks for clarifying.
+
+Johan
