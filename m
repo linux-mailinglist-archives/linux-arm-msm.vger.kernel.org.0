@@ -2,419 +2,263 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 42D3D7CFD7B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 17:01:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B7C87CFDB1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 17:20:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346215AbjJSPBN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Oct 2023 11:01:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58130 "EHLO
+        id S1345472AbjJSPUd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Oct 2023 11:20:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346204AbjJSPBL (ORCPT
+        with ESMTP id S233195AbjJSPUc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Oct 2023 11:01:11 -0400
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50D4212A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 08:01:08 -0700 (PDT)
-Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-d9a398f411fso9132948276.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 08:01:08 -0700 (PDT)
+        Thu, 19 Oct 2023 11:20:32 -0400
+Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CD5E12D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 08:20:30 -0700 (PDT)
+Received: by mail-yb1-xb29.google.com with SMTP id 3f1490d57ef6-d9ac3b4f42cso813680276.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 08:20:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697727667; x=1698332467; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1697728829; x=1698333629; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=eOey+2KsoRv3Cbtz6P0LcLeSwTcUQ7Xt1JsnXF1/Vww=;
-        b=b0lUURBy1R1NLbpGIN648o+bAw61P5nnewD3IRqK5KZ3/rEvYww4w6+VVUbkfF7N/u
-         2FMlPgKs1DAcg15rWfQEPBV+OU5jtozMIrwInP/lZgB77fbyeOZkAHkRns7og+9Mc5Fo
-         t4zfpdMEUjKykSU7T2lDuqUkQENEihfuWNRr3wsxz8uyaQT7wpxlh1qlJkXss/ocoX9x
-         nCU+jTe4/4dZRPVojug7V4/MlhzJzVBI+tO6MKI8cnlwEoROFkTd1bUq4nXFZNmyUT+P
-         q5ZtX9OnWAfK6VF9eHjin15sZ4OiQnb7X80NpRXh/N4tcBT6udZkfnko4OcPT35Sr5zx
-         B5FQ==
+        bh=UzuYGgMfB2IgWrd3JwAlKJRMS7S7gxXt4VNaKRPI+4c=;
+        b=Xo2wMcj8QD+bl4VrwjB91/Y2C0ZxMO3I8l4MCmCc0ZErUV7GovJg/LcsghTu56ZlDW
+         hU5OkzcYNXgXmu3HSyLp7hUrkEf9fPpEC5EP0n+k0/W9z77xSMLgMbPZV2xjOM1b3v95
+         qhA4xXntYA3wdrl57jkNo3i+rOEuHSqzBp6wj2TecnDLampUM9+ZwUXtCSj/M/xCUfzU
+         IoFfYH+4E9sbizTjT6y7OJmzbGWKYbiAKmaA+jg5QYvp+/cZgdttfitbyuNr3JztiSA+
+         yh80o4ZjsiBF5clgX+BbOo9HRmvPSKKapxInUjlnGPJxyZ/wdWA2chJTrcgPtLUthhGE
+         CWVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697727667; x=1698332467;
+        d=1e100.net; s=20230601; t=1697728829; x=1698333629;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=eOey+2KsoRv3Cbtz6P0LcLeSwTcUQ7Xt1JsnXF1/Vww=;
-        b=Ukw66dkEcyeZqGscL8TClDupTNNT8PC8YNNSuZdtAEMxlS7ujxiO8H0CieXESNo/ZY
-         LOR1a8NobwHWJfRJd1fzQjQpaNteRle3KldtOGPLoSOzNiR99xUZNyRiUiCo0aoU9Hq+
-         NoiOodc1JmYljTTXSGgX8Fs4BCxlCDyhzn3sqOIq3KgB26UxsMatVlSzeBxNkMyo2Hnb
-         gGhiln2Q/CPFBWnh23kXDDb7jt++Q/qAQtcA1K/2Dei/zGt7Jhd9Eia1QDK+R3FitpJU
-         XvAU1TrG+qUQmlcBEXHLbuY+mx4sYuPzdMSWK/QNeEpwiIxXOXWWV8SkXmkXGwCwDI+J
-         zbjA==
-X-Gm-Message-State: AOJu0YwMNJeLv8fyddsRX7ByYHzJhyFAGmZYuVu9Fr9Cr+CB60PEZLXA
-        L+ukw0+IK/DciMM/bQSZuXd2dmk/e5mDwuYdneyctA==
-X-Google-Smtp-Source: AGHT+IFGteHEULRWiaWhQ4PBV50uPj7JRswpRnHQDgYtfg5pASIlIapoWS1+ZzlDMQo5JjykvQzLfebBPd3xDVancfI=
-X-Received: by 2002:a25:238a:0:b0:d9a:be79:c902 with SMTP id
- j132-20020a25238a000000b00d9abe79c902mr2759395ybj.53.1697727667120; Thu, 19
- Oct 2023 08:01:07 -0700 (PDT)
+        bh=UzuYGgMfB2IgWrd3JwAlKJRMS7S7gxXt4VNaKRPI+4c=;
+        b=lIT4l1X/mP8xkkt2LhZrELHksJiGNiPatoDbR0VQAqqcZNN/xbKDQQzqtOZofiueVY
+         nHCKcW0C0flQR2B+3hZBDqOanXIz5xnwO2VkMB81wf18clMlfkbzqP/UeoNqPk6yjK43
+         YqwqjVBocuE/hU0DNaKJo0WgfTMlJe208FotpdXoototXoERb2hM41d/Z6nk23aBjTpm
+         drPceKnociwhLiMdyDa0jfvQkx1+WcfM6z/6U8o6MmqjvCvB6eVJVSXzTVCfZRnFMaDk
+         Gvz3vz3RjfTy7AlU1jfv423wRc1LYny2wu1bbAZkh999uU1EzzbAPolVx+EBz/cMWvI4
+         Z0+w==
+X-Gm-Message-State: AOJu0Yxep2QfR0Y2F7EsHM/mLk1scJ1oHEWdIlizSj7LRlyDtajCUR6P
+        WnIV5Os9wQXpg9t9bptlSeyWf7usjYGluXqH8+Anfg==
+X-Google-Smtp-Source: AGHT+IGKbBoO/lWa/SG+c0KZzQWamY/96muNTJtMojdvtqQZPMShMcdRxDx8yzNIvpa501Ncxd01tIwIdamKiVS0ogc=
+X-Received: by 2002:a25:8e08:0:b0:d81:91b2:62ea with SMTP id
+ p8-20020a258e08000000b00d8191b262eamr1909318ybl.1.1697728829022; Thu, 19 Oct
+ 2023 08:20:29 -0700 (PDT)
 MIME-Version: 1.0
-References: <20231019054612.9192-1-quic_sartgarg@quicinc.com> <20231019054612.9192-2-quic_sartgarg@quicinc.com>
-In-Reply-To: <20231019054612.9192-2-quic_sartgarg@quicinc.com>
+References: <20231018-msm8909-cpufreq-v2-0-0962df95f654@kernkonzept.com>
+ <20231018-msm8909-cpufreq-v2-2-0962df95f654@kernkonzept.com>
+ <CAPDyKFot9=M1ooP_Q1AOgG5o_4DTQ2qsyai1ZdXAzBwf89W4uA@mail.gmail.com>
+ <CAPDyKFr5A-P=UhWs4rUMBWup3pH75WAhcZ56Y2_Sfk3=WfxRCQ@mail.gmail.com>
+ <ZTEph19CAvbgbN_E@gerhold.net> <CAPDyKFo1PVZYsdW_=92EtMmTT9hmkm-mBR69N_WvPh4f-Hw=NA@mail.gmail.com>
+ <ZTFBzjLAaaUHux4O@gerhold.net>
+In-Reply-To: <ZTFBzjLAaaUHux4O@gerhold.net>
 From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 19 Oct 2023 17:00:30 +0200
-Message-ID: <CAPDyKFofS16AsQeTVNiDi_PHUatGoQ3no-1+Azo+yqG0SPTe4Q@mail.gmail.com>
-Subject: Re: [PATCH V3 1/3] mmc: core: Add partial initialization support
-To:     Sarthak Garg <quic_sartgarg@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
+Date:   Thu, 19 Oct 2023 17:19:53 +0200
+Message-ID: <CAPDyKFruYqngQoW21Ra+hm4ybjS7LoD4casYbo8bP4J+hLUnaA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] cpufreq: qcom-nvmem: Enable virtual power domain devices
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, quic_cang@quicinc.com,
-        quic_nguyenb@quicinc.com, quic_rampraka@quicinc.com,
-        quic_pragalla@quicinc.com, quic_sayalil@quicinc.com,
-        quic_nitirawa@quicinc.com, quic_sachgupt@quicinc.com,
-        quic_bhaskarv@quicinc.com, quic_narepall@quicinc.com,
-        kernel@quicinc.com,
-        Veerabhadrarao Badiganti <quic_vbadigan@quicinc.com>
+        Ilia Lin <ilia.lin@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, stable@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 19 Oct 2023 at 07:46, Sarthak Garg <quic_sartgarg@quicinc.com> wrote:
+On Thu, 19 Oct 2023 at 16:49, Stephan Gerhold <stephan@gerhold.net> wrote:
 >
-> Add the ability to partially initialize the MMC device by
-> using device sleep/awake sequence (CMD5).
-> Device will be sent to sleep state during mmc runtime/system suspend
-> and will be woken up during mmc runtime/system resume.
-> By using this sequence the device doesn't need full initialization
-> which gives 25% time reduction in system/runtime resume path.
+> On Thu, Oct 19, 2023 at 04:12:56PM +0200, Ulf Hansson wrote:
+> > On Thu, 19 Oct 2023 at 15:05, Stephan Gerhold <stephan@gerhold.net> wrote:
+> > > On Thu, Oct 19, 2023 at 01:26:19PM +0200, Ulf Hansson wrote:
+> > > > On Thu, 19 Oct 2023 at 12:24, Ulf Hansson <ulf.hansson@linaro.org> wrote:
+> > > > > On Wed, 18 Oct 2023 at 10:06, Stephan Gerhold
+> > > > > <stephan.gerhold@kernkonzept.com> wrote:
+> > > > > >
+> > > > > > The genpd core caches performance state votes from devices that are
+> > > > > > runtime suspended as of commit 3c5a272202c2 ("PM: domains: Improve
+> > > > > > runtime PM performance state handling"). They get applied once the
+> > > > > > device becomes active again.
+> > > > > >
+> > > > > > To attach the power domains needed by qcom-cpufreq-nvmem the OPP core
+> > > > > > calls genpd_dev_pm_attach_by_id(). This results in "virtual" dummy
+> > > > > > devices that use runtime PM only to control the enable and performance
+> > > > > > state for the attached power domain.
+> > > > > >
+> > > > > > However, at the moment nothing ever resumes the virtual devices created
+> > > > > > for qcom-cpufreq-nvmem. They remain permanently runtime suspended. This
+> > > > > > means that performance state votes made during cpufreq scaling get
+> > > > > > always cached and never applied to the hardware.
+> > > > > >
+> > > > > > Fix this by enabling the devices after attaching them and use
+> > > > > > dev_pm_syscore_device() to ensure the power domains also stay on when
+> > > > > > going to suspend. Since it supplies the CPU we can never turn it off
+> > > > > > from Linux. There are other mechanisms to turn it off when needed,
+> > > > > > usually in the RPM firmware (RPMPD) or the cpuidle path (CPR genpd).
+> > > > >
+> > > > > I believe we discussed using dev_pm_syscore_device() for the previous
+> > > > > version. It's not intended to be used for things like the above.
+> > > > >
+> > >
+> > > Sorry, looks like we still had a misunderstanding in the conclusion of
+> > > the previous discussion. :')
+> > >
+> > > > > Moreover, I was under the impression that it wasn't really needed. In
+> > > > > fact, I would think that this actually breaks things for system
+> > > > > suspend/resume, as in this case the cpr driver's genpd
+> > > > > ->power_on|off() callbacks are no longer getting called due this,
+> > > > > which means that the cpr state machine isn't going to be restored
+> > > > > properly. Or did I get this wrong?
+> > > >
+> > >
+> > > We strictly need the RPMPDs to be always-on, also across system suspend
+> > > [1]. The RPM firmware will drop the votes internally as soon as the
+> > > CPU(s) have entered deep cpuidle. We can't do this from Linux, because
+> > > we need the CPU to continue running until it was shut down cleanly.
+> > >
+> > > For CPR, we strictly need the backing regulator to be always-on, also
+> > > across system suspend. Typically the hardware will turn off the
+> > > regulator as soon as the CPU(s) enter deep cpuidle. Similarly, we can't
+> > > do this from Linux, because we need the CPU to continue running until it
+> > > was shut down cleanly.
+> > >
+> > > My understanding was that we're going to pause the CPR state machine
+> > > using the system suspend/resume callbacks on the driver, instead of
+> > > using the genpd->power_on|off() callbacks [2]. I can submit a separate
+> > > patch for this.
+> >
+> > If we are going to do 1) as described below, this looks to me that
+> > it's going to be needed.
+> >
 >
-> 1) Micron eMMC (ManfID 0x13)
+> Yep.
 >
-> Partial init                            Full Init
+> > How will otherwise the cpr state machine be saved/restored during
+> > system suspend/resume? Note that, beyond 1), the genpd's
+> > ->power_on|off() callbacks are no longer going to be called during
+> > system suspend/resume.
+> >
 >
-> a) _mmc_resume:                         _mmc_resume :
+> (Side note: I think "save/restore" might be the wrong words for
+>  suspend/resume of CPR. Looking at the code most of the configuration
+>  appears to be preserved across suspend/resume. Nothing is saved, it
+>  literally just disables the state machine during suspend and re-enables
+>  it during resume.
 >
-> Total time : 62ms                       Total time : 84ms
-> (Improvement % from full init = ~26%)
->
-> 2) Kingston eMMC (ManfID 0x70)
->
-> Partial init                            Full Init
->
-> a) _mmc_resume:                 _mmc_resume :
-> Total time : 46ms                       Total time : 62ms
-> (Improvement % from full init = ~25%).
->
-> Co-developed-by: Veerabhadrarao Badiganti <quic_vbadigan@quicinc.com>
-> Signed-off-by: Veerabhadrarao Badiganti <quic_vbadigan@quicinc.com>
-> Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
-> ---
->  drivers/mmc/core/mmc.c   | 163 ++++++++++++++++++++++++++++++++++++---
->  include/linux/mmc/card.h |   4 +
->  include/linux/mmc/host.h |   2 +
->  3 files changed, 160 insertions(+), 9 deletions(-)
->
-> diff --git a/drivers/mmc/core/mmc.c b/drivers/mmc/core/mmc.c
-> index 8180983bd402..fb33bcf6d360 100644
-> --- a/drivers/mmc/core/mmc.c
-> +++ b/drivers/mmc/core/mmc.c
-> @@ -1956,7 +1956,28 @@ static int mmc_sleep_busy_cb(void *cb_data, bool *busy)
->         return 0;
->  }
->
-> -static int mmc_sleep(struct mmc_host *host)
-> +/*
-> + * Returns true if card supports sleep/awake command and host can simply do
-> + * sleep/awake instead of full card initialization as part of resume.
-> + */
-> +static inline int mmc_can_sleepawake(struct mmc_host *host)
+>  I'm not entirely sure what's the reason for doing this. Perhaps the
+>  main goal is just to prevent the CPR state machine from getting stuck
+>  or sending pointless IRQs that won't be handled while Linux is
+>  suspended.)
 
-Nitpick: Please rename to mmc_can_sleep_awake() to make the name more clear.
-
-> +{
-> +       return mmc_can_sleep(host->card) && (host->caps2 & MMC_CAP2_SLEEP_AWAKE);
-> +}
-> +
-> +/**
-> + * mmc_sleepawake - function to sleep or awake the device
-> + * @host: MMC host
-> + * @sleep: if true then sleep command is sent else awake
-> + *
-> + * This function first deselects the card and then sends the sleep command
-> + * in case of sleep whereas in case of awake first awake command is send
-> + * and then the card is selected.
-> + *
-> + * Returns 0 on success, non-zero value on failure
-> + */
-> +
-> +static int mmc_sleepawake(struct mmc_host *host, bool sleep)
-
-Nitpick: Please rename into mmc_sleep_awake()
-
->  {
->         struct mmc_command cmd = {};
->         struct mmc_card *card = host->card;
-> @@ -1967,14 +1988,17 @@ static int mmc_sleep(struct mmc_host *host)
->         /* Re-tuning can't be done once the card is deselected */
->         mmc_retune_hold(host);
->
-> -       err = mmc_deselect_cards(host);
-> -       if (err)
-> -               goto out_release;
-> +       if (sleep) {
-> +               err = mmc_deselect_cards(host);
-> +               if (err)
-> +                       goto out_release;
-> +       }
->
->         cmd.opcode = MMC_SLEEP_AWAKE;
->         cmd.arg = card->rca << 16;
-> -       cmd.arg |= 1 << 15;
->         use_r1b_resp = mmc_prepare_busy_cmd(host, &cmd, timeout_ms);
-> +       if (sleep)
-> +               cmd.arg |= BIT(15);
-
-Please move this above the call to mmc_prepare_busy_cmd(). For consistency.
+If only the latter, that is a very good reason too. Drivers should
+take care of their devices to make sure they are not triggering
+spurious irqs during system suspend.
 
 >
->         err = mmc_wait_for_cmd(host, &cmd, 0);
->         if (err)
-> @@ -1997,6 +2021,9 @@ static int mmc_sleep(struct mmc_host *host)
->         err = __mmc_poll_for_busy(host, 0, timeout_ms, &mmc_sleep_busy_cb, host);
+> > In a way this also means that the cpr genpd provider might as well
+> > also have GENPD_FLAG_ALWAYS_ON set for it.
 >
->  out_release:
-> +       if (!sleep)
-> +               err = mmc_select_card(card);
-> +
->         mmc_retune_release(host);
->         return err;
->  }
-> @@ -2094,6 +2121,73 @@ static int _mmc_flush_cache(struct mmc_host *host)
->                         pr_err("%s: cache flush error %d\n",
->                                mmc_hostname(host), err);
->         }
-> +       return err;
-> +}
-> +
-> +/*
-> + * Save read/write fields of ext_csd register that the sw changes
-> + * as part of suspend.
-> + */
-> +static int mmc_save_card_ext_csd(struct mmc_host *host)
-> +{
-> +       int err;
-> +       u8 *ext_csd;
-> +       struct mmc_card *card = host->card;
-> +
-> +       err = mmc_get_ext_csd(card, &ext_csd);
-> +       if (err || !ext_csd) {
-> +               pr_err("%s: %s: mmc_get_ext_csd failed (%d)\n",
-> +                       mmc_hostname(host), __func__, err);
-> +               return err;
-> +       }
-> +
-> +       card->ext_csd.raw_ext_csd_cmdq = ext_csd[EXT_CSD_CMDQ_MODE_EN];
-> +       card->ext_csd.raw_ext_csd_cache_ctrl = ext_csd[EXT_CSD_CACHE_CTRL];
-> +       card->ext_csd.raw_ext_csd_bus_width = ext_csd[EXT_CSD_BUS_WIDTH];
-> +       card->ext_csd.raw_ext_csd_hs_timing = ext_csd[EXT_CSD_HS_TIMING];
-> +
-> +       kfree(ext_csd);
-> +
-> +       return 0;
-> +}
-> +
-> +/*
-> + * Get the ext_csd register from the card post resume and compare with
-> + * read/write fields of ext_csd register that the sw changes.
-> + */
-> +static int mmc_test_awake_ext_csd(struct mmc_host *host)
-> +{
-> +       struct mmc_card *card = host->card;
-> +       u8 *ext_csd;
-> +       int err;
-> +
-> +       err = mmc_get_ext_csd(card, &ext_csd);
-> +       if (err) {
-> +               pr_err("%s: %s: mmc_get_ext_csd failed (%d)\n",
-> +                       mmc_hostname(host), __func__, err);
-> +               return err;
-> +       }
-> +
-> +       pr_debug("%s: %s: type(cached:current) cmdq(%d:%d) cache_ctrl(%d:%d) bus_width (%d:%d) timing(%d:%d)\n",
-> +               mmc_hostname(host), __func__,
-> +               card->ext_csd.raw_ext_csd_cmdq,
-> +               ext_csd[EXT_CSD_CMDQ_MODE_EN],
-> +               card->ext_csd.raw_ext_csd_cache_ctrl,
-> +               ext_csd[EXT_CSD_CACHE_CTRL],
-> +               card->ext_csd.raw_ext_csd_bus_width,
-> +               ext_csd[EXT_CSD_BUS_WIDTH],
-> +               card->ext_csd.raw_ext_csd_hs_timing,
-> +               ext_csd[EXT_CSD_HS_TIMING]);
-> +       err = !((card->ext_csd.raw_ext_csd_cmdq ==
-> +                       ext_csd[EXT_CSD_CMDQ_MODE_EN]) &&
-> +               (card->ext_csd.raw_ext_csd_cache_ctrl ==
-> +                       ext_csd[EXT_CSD_CACHE_CTRL]) &&
-> +               (card->ext_csd.raw_ext_csd_bus_width ==
-> +                       ext_csd[EXT_CSD_BUS_WIDTH]) &&
-> +               (card->ext_csd.raw_ext_csd_hs_timing ==
-> +                       ext_csd[EXT_CSD_HS_TIMING]));
-> +
-> +       kfree(ext_csd);
+> Conceptually I would consider CPR to be a generic power domain provider
+> that could supply any kind of device. I know at least of CPUs and GPUs.
+> We need "always-on" only for the CPU, but not necessarily for other
+> devices.
 >
->         return err;
->  }
-> @@ -2117,9 +2211,15 @@ static int _mmc_suspend(struct mmc_host *host, bool is_suspend)
->             ((host->caps2 & MMC_CAP2_FULL_PWR_CYCLE) || !is_suspend ||
->              (host->caps2 & MMC_CAP2_FULL_PWR_CYCLE_IN_SUSPEND)))
->                 err = mmc_poweroff_notify(host->card, notify_type);
-> -       else if (mmc_can_sleep(host->card))
-> -               err = mmc_sleep(host);
-> -       else if (!mmc_host_is_spi(host))
-> +       else if (mmc_can_sleep(host->card)) {
-> +               if (mmc_can_sleepawake(host)) {
-> +                       memcpy(&host->cached_ios, &host->ios, sizeof(host->cached_ios));
-> +                       err = mmc_save_card_ext_csd(host);
-
-I understand that you want to read/save the ext_csd at suspend to
-read/compare it at resume.
-
-Although, I don't understand *why* this is needed, can you please clarify?
-
-> +                       if (err)
-> +                               goto out;
-> +               }
-> +               err = mmc_sleepawake(host, true);
-> +       } else if (!mmc_host_is_spi(host))
->                 err = mmc_deselect_cards(host);
+> For a GPU, the Linux driver (running on the CPU) can stop the GPU, wait
+> for completion and then invoke the ->power_off() callback of CPR. In
+> that case it is also safe to disable the backing regulator from Linux.
+> (I briefly mentioned this already in the previous discussion I think.)
 >
->         if (!err) {
-> @@ -2131,6 +2231,39 @@ static int _mmc_suspend(struct mmc_host *host, bool is_suspend)
->         return err;
->  }
+> We could set GENPD_FLAG_ALWAYS_ON for the CPR compatibles where we know
+> that they are only used to supply CPUs, but if we're going to do (1)
+> anyway there might not be much of an advantage for the extra complexity.
+
+Okay, fair enough. Let's just stick with 1) and skip using
+GENPD_FLAG_ALWAYS_ON bit for the cpr genpd provider.
+
 >
-> +static int mmc_partial_init(struct mmc_host *host)
-
-Nitpick: Please rename this into mmc_restore_ios().
-
-> +{
-> +       int err = 0;
-> +       struct mmc_card *card = host->card;
-> +
-> +       mmc_set_bus_width(host, host->cached_ios.bus_width);
-> +       mmc_set_timing(host, host->cached_ios.timing);
-> +       if (host->cached_ios.enhanced_strobe) {
-> +               host->ios.enhanced_strobe = true;
-> +               if (host->ops->hs400_enhanced_strobe)
-> +                       host->ops->hs400_enhanced_strobe(host, &host->ios);
-> +       }
-> +       mmc_set_clock(host, host->cached_ios.clock);
-> +       mmc_set_bus_mode(host, host->cached_ios.bus_mode);
-> +
-
-Rather than re-using the above APIs and the ->set_ios() callback in
-the host, I believe it would be better to add a new host ops to manage
-all of the above at once instead. Something along the lines of the
-below, would then replace all of the above.
-
-host->ops->restore_ios(host, &host->cached_ios)
-memcpy(&host->ios, &host->cached_ios, sizeof(host->ios));
-
-Would that make sense to you too?
-
-> +       if (!mmc_card_hs400es(card) &&
-> +                       (mmc_card_hs200(card) || mmc_card_hs400(card))) {
-> +               err = mmc_execute_tuning(card);
-> +               if (err) {
-> +                       pr_err("%s: %s: Tuning failed (%d)\n",
-> +                               mmc_hostname(host), __func__, err);
-
-There is already a print being done in mmc_execute_tuning() at
-failure. So, let's drop the above print.
-
-> +                       goto out;
-> +               }
-> +       }
-> +
-> +       err = mmc_test_awake_ext_csd(host);
-
-Again, I don't get why this is needed, so let's discuss this more.
-
-> +       if (err)
-> +               pr_debug("%s: %s: fail on ext_csd read (%d)\n",
-> +                       mmc_hostname(host), __func__, err);
-> +out:
-> +       return err;
-> +}
-> +
->  /*
->   * Suspend callback
->   */
-> @@ -2161,7 +2294,19 @@ static int _mmc_resume(struct mmc_host *host)
->                 goto out;
+> >
+> > >
+> > > I didn't prioritize this because QCS404 (as the only current user of
+> > > CPR) doesn't have proper deep cpuidle/power management set up yet. It's
+> > > not entirely clear to me if there is any advantage (or perhaps even
+> > > disadvantage) if we pause the CPR state machine while the shared L2
+> > > cache is still being actively powered by the CPR power rail during
+> > > system suspend. I suspect this is a configuration that was never
+> > > considered in the hardware design.
+> >
+> > I see.
+> >
+> > >
+> > > Given the strict requirement for the RPMPDs, I only see two options:
+> > >
+> > >  1. Have an always-on consumer that prevents the power domains to be
+> > >     powered off during system suspend. This is what this patch tries to
+> > >     achieve.
+> > >
+> > > Or:
+> > >
+> > >  2. Come up with a way to register the RPMPDs used by the CPU with
+> > >     GENPD_FLAG_ALWAYS_ON. This would also be doable, but isn't as
+> > >     straightfoward as "regulator-always-on" in the DT because the rpmpd
+> > >     DT node represents multiple genpds in a single DT node [3].
+> >
+> > Yes, it sounds like it may be easier to do 1).
+> >
+> > >
+> > > What do you think? Do you see some other solution perhaps? I hope we can
+> > > clear up the misunderstanding. :-)
+> >
+> > Yes, thanks!
+> >
+> > >
+> > > [1]: https://lore.kernel.org/linux-arm-msm/ZQGqfMigCFZP_HLA@gerhold.net/
+> > > [2]: https://lore.kernel.org/linux-arm-msm/CAPDyKFoiup8KNv=1LFGKDdDLA1pHsdJUgTTWMdgxnikEmReXzg@mail.gmail.com/
+> > > [3]: https://lore.kernel.org/linux-arm-msm/ZSg-XtwMxg3_fWxc@gerhold.net/
+> > >
+> > > > BTW, if you really need something like the above, the proper way to do
+> > > > it would instead be to call device_set_awake_path() for the device.
+> > > >
+> > > > This informs genpd that the device needs to stay powered-on during
+> > > > system suspend (assuming that GENPD_FLAG_ACTIVE_WAKEUP has been set
+> > > > for it), hence it will keep the corresponding PM domain powered-on
+> > > > too.
+> > > >
+> > >
+> > > Thanks, I can try if this works as alternative to the
+> > > dev_pm_syscore_device()!
+> >
+> > Yes, please. We don't want to abuse the dev_pm_syscore_device() thingy.
+> >
 >
->         mmc_power_up(host, host->card->ocr);
-> -       err = mmc_init_card(host, host->card->ocr, host->card);
-> +
-> +       if (mmc_can_sleepawake(host)) {
-> +               err = mmc_sleepawake(host, false);
-> +               if (!err)
-> +                       err = mmc_partial_init(host);
-> +               else
-> +                       pr_err("%s: %s: awake failed (%d), fallback to full init\n",
-> +                               mmc_hostname(host), __func__, err);
+> Could you clarify the idea behind GENPD_FLAG_ACTIVE_WAKEUP? Would I set
+> it conditionally for all RPMPDs or just the ones consumed by the CPU?
+> How does the genpd *provider* know if one of its *consumer* devices
+> needs to have its power domain kept on for wakeup?
 
-We don't print other errors during resume - and I don't think there is
-any special reason to do it for this case only. Please drop it.
+We are thinking of the GENPD_FLAG_ACTIVE_WAKEUP as a platform
+configuration type of flag for the genpd in question. The consumer
+driver shouldn't need to know about the details of what is happening
+on the PM domain level - only whether it needs its device to remain
+powered-on during system suspend or not.
 
-> +       }
-> +
-> +       if (!mmc_can_sleepawake(host) || err)
-> +               err = mmc_init_card(host, host->card->ocr, host->card);
-> +
->         mmc_card_clr_suspended(host->card);
->
->  out:
-> diff --git a/include/linux/mmc/card.h b/include/linux/mmc/card.h
-> index daa2f40d9ce6..fbc832ec6d57 100644
-> --- a/include/linux/mmc/card.h
-> +++ b/include/linux/mmc/card.h
-> @@ -86,6 +86,8 @@ struct mmc_ext_csd {
->         unsigned int            data_tag_unit_size;     /* DATA TAG UNIT size */
->         unsigned int            boot_ro_lock;           /* ro lock support */
->         bool                    boot_ro_lockable;
-> +       u8                      raw_ext_csd_cmdq;       /* 15 */
-> +       u8                      raw_ext_csd_cache_ctrl; /* 33 */
->         bool                    ffu_capable;    /* Firmware upgrade support */
->         bool                    cmdq_en;        /* Command Queue enabled */
->         bool                    cmdq_support;   /* Command Queue supported */
-> @@ -96,7 +98,9 @@ struct mmc_ext_csd {
->         u8                      raw_partition_support;  /* 160 */
->         u8                      raw_rpmb_size_mult;     /* 168 */
->         u8                      raw_erased_mem_count;   /* 181 */
-> +       u8                      raw_ext_csd_bus_width;  /* 183 */
->         u8                      strobe_support;         /* 184 */
-> +       u8                      raw_ext_csd_hs_timing;  /* 185 */
->         u8                      raw_ext_csd_structure;  /* 194 */
->         u8                      raw_card_type;          /* 196 */
->         u8                      raw_driver_strength;    /* 197 */
-> diff --git a/include/linux/mmc/host.h b/include/linux/mmc/host.h
-> index 2f445c651742..836382a0b2e9 100644
-> --- a/include/linux/mmc/host.h
-> +++ b/include/linux/mmc/host.h
-> @@ -427,6 +427,7 @@ struct mmc_host {
->  #define MMC_CAP2_CRYPTO                0
->  #endif
->  #define MMC_CAP2_ALT_GPT_TEGRA (1 << 28)       /* Host with eMMC that has GPT entry at a non-standard location */
-> +#define MMC_CAP2_SLEEP_AWAKE   (1 << 29)       /* Use Sleep/Awake (CMD5) */
->
->         int                     fixed_drv_type; /* fixed driver type for non-removable media */
->
-> @@ -445,6 +446,7 @@ struct mmc_host {
->         spinlock_t              lock;           /* lock for claim and bus ops */
->
->         struct mmc_ios          ios;            /* current io bus settings */
-> +       struct mmc_ios          cached_ios;
->
->         /* group bitfields together to minimize padding */
->         unsigned int            use_spi_crc:1;
+I suspect that the GENPD_FLAG_ACTIVE_WAKEUP is probably okay to set
+for most genpds, but there may be some exceptions.
 
 Kind regards
 Uffe
