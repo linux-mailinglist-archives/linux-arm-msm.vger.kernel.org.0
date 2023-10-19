@@ -2,115 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0DC8B7CF056
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 08:47:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 033AB7CF053
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 08:47:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344730AbjJSGrE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Oct 2023 02:47:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40316 "EHLO
+        id S232752AbjJSGrD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Oct 2023 02:47:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232822AbjJSGrC (ORCPT
+        with ESMTP id S232818AbjJSGrC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 19 Oct 2023 02:47:02 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF433129;
-        Wed, 18 Oct 2023 23:46:59 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39J6Ax0q021596;
-        Thu, 19 Oct 2023 06:46:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=br6+Z//OonCZjY0jaV7sAbQUXzyAjhH/ygBUQZbeG4U=;
- b=TEAKw5U2QoeW3rF1haljhCE/8K7XIM25b7TkXQiezKC/wTWppp8+Szs30nZI/Wtyu/Fj
- el+92SEAXVCCkYruqstH4p2sfQ+waRZMeK7cJE1jckFMwUQuX8dvrG1+Z8PZQmpKQcGq
- RUh+cl8e0giuvcMxn6k6TYtRB/Pgzb1QXXMwqNyrcv5PTjcVXE5YfOlcWfDndBt+cBIS
- mtNQ9D6Z9VhbH8aFdOPk8RDns3oBRHffVCEzrko873BLileKwnhEELNXzKm06fzwM87d
- /nVskQ1zhskUX4QtIrCHqr64CfmHdlvJ7fkuztZ4zG96Dkc6DNQtmNvu17yxHPoFz/W3 Sw== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tt5v839vh-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 19 Oct 2023 06:46:51 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39J6koYE022328
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 19 Oct 2023 06:46:50 GMT
-Received: from [10.201.2.96] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 18 Oct
- 2023 23:46:47 -0700
-Message-ID: <8dce62b2-562c-4e00-840b-68e1cc865972@quicinc.com>
-Date:   Thu, 19 Oct 2023 12:16:09 +0530
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D48011F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 23:46:57 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id d2e1a72fcca58-6be1bc5aa1cso3637035b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Oct 2023 23:46:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1697698016; x=1698302816; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=M5ZJsyvfM+Zq9ZLZKJ7GPs5PPw+WA8Q5sgTdxbhgzH0=;
+        b=cxFHLl2gYPeArWdD8OdZ4mejp6dc7r3gfj3kn5D0G1algYTxcvkAHOWrjrGPG6ETBx
+         J9wxDboo42wHck5krM4EmfLvigMCRwOcAbB4P0piU/sFyylFhkXpz2KpMYP51vcWLj8H
+         eDk2lCNmjp6P6zE/yCTWiY6tQfa+b8GFDjVo8jN1qwQZNBCfmoAaNDupYVN8vVQJe/Un
+         z3N7vdLp03UAjESWeomWEdaGJQnAFhmQOGiE4NdEvYuSG290mSr+1xFr5U/3AOGaYD0v
+         +NYO7o+tCy1MapE75cB8P3o9iaFGcuhwIi50J/KmL8H0RE7BAjd0H96c2M3/ncaInnqg
+         0Q5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697698016; x=1698302816;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=M5ZJsyvfM+Zq9ZLZKJ7GPs5PPw+WA8Q5sgTdxbhgzH0=;
+        b=KldGlXMp7Cf4w+g66kYBg1ovvkIWDJoXU/3Wqd2n8z5gr0OPztxcL4xa8fEzE82Cu3
+         fAIq2pcvBmOftPYxNcyYw2u5FTzIO84PiIFqC+wsnJS5xl4UUIVMsbnf0vva9gyB/5Ja
+         W1bWOuCfTyPLoDVZ+p7tyP9DoL5ky7Lp6DN+NDNDZRF/hTPj+r5eJSd9cxCuNshmwh/k
+         ELlklYBfTWQr5aQlOrq0fGUqqdpZW33bqu3K5ZlUvhMZ2ZHGpzmg3rNcJOiPQdZ2WvIt
+         mb4Ab6F7BC1V6+VQ3zBrg+KRCodHSf6TfKXkDX9z+LdSI8xwTfGK77bENUP3Yd8Aa4p4
+         0o2Q==
+X-Gm-Message-State: AOJu0YxhmTwZghUWoWbLPjp66LStJbhD52cLSCRSFma16bPYfACEVyFy
+        pm4bmH4K5SqqullSFuak3CEBDA==
+X-Google-Smtp-Source: AGHT+IFth7U4xLVcr3gM1uaQR6mB4u9ZWR6FF+K5XnVT1FArumGmO27ywj8s+aGrhbgtYNodIWf60A==
+X-Received: by 2002:a05:6a21:7741:b0:13a:59b1:c884 with SMTP id bc1-20020a056a21774100b0013a59b1c884mr1325731pzc.40.1697698016581;
+        Wed, 18 Oct 2023 23:46:56 -0700 (PDT)
+Received: from localhost ([122.172.80.14])
+        by smtp.gmail.com with ESMTPSA id v2-20020a170902d68200b001c5f77e23a8sm1071860ply.73.2023.10.18.23.46.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Oct 2023 23:46:56 -0700 (PDT)
+Date:   Thu, 19 Oct 2023 12:16:53 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Christian Marangi <ansuelsmth@gmail.com>
+Cc:     Ilia Lin <ilia.lin@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 0/4] cpufreq: qcom-nvmem: add support for ipq806x
+Message-ID: <20231019064653.feqpjdmblm7mmsug@vireshk-i7>
+References: <20231013173854.7399-1-ansuelsmth@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] clk: qcom: gcc-ipq6018: add QUP6 I2C clock
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Robert Marko <robimarko@gmail.com>, <agross@kernel.org>,
-        <andersson@kernel.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20231015162114.976202-1-robimarko@gmail.com>
- <f27ff251-58b1-4fc5-8ad5-cd365b7eb976@linaro.org>
-Content-Language: en-US
-From:   Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-In-Reply-To: <f27ff251-58b1-4fc5-8ad5-cd365b7eb976@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: j_RNWGCpKnB_l9CD9omjLei1tVFOzZbY
-X-Proofpoint-ORIG-GUID: j_RNWGCpKnB_l9CD9omjLei1tVFOzZbY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-19_05,2023-10-18_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- mlxlogscore=911 lowpriorityscore=0 phishscore=0 impostorscore=0
- suspectscore=0 mlxscore=0 clxscore=1015 bulkscore=0 priorityscore=1501
- spamscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310190057
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231013173854.7399-1-ansuelsmth@gmail.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 13-10-23, 19:38, Christian Marangi wrote:
+> The first patch of this series was split to a separate series as it
+> doesn't depend on [1] and can be applied right away,
+> [1] introduced some breaking change to function that ipq806x, ipq807x
+> patch was dropped to permit an easier rebase and merge of both.
+> 
+> This small series adds support for ipq806x qcom-cpufreq-nvmem driver.
+> Special function are required to make use of the opp-supported-hw
+> binding by hardcoding custom bits based on the qcom SoC ID.
+> 
+> The qcom-cpufreq-nvmem driver had recent changes to also improve
+> support for apq8064. Because of this, this series depends on a
+> just merged series.
+> 
+> Depends on [1].
+> 
+> [1] https://lore.kernel.org/linux-pm/20231010063235.rj2ehxugtjr5x2xr@vireshk-i7/T/#t
+> 
+> Christian Marangi (4):
+>   dt-bindings: cpufreq: qcom-cpufreq-nvmem: Document krait-cpu
+>   dt-bindings: opp: opp-v2-kryo-cpu: Document named opp-microvolt
+>     property
 
-On 10/19/2023 1:59 AM, Konrad Dybcio wrote:
->
->
-> On 10/15/23 18:20, Robert Marko wrote:
->> QUP6 I2C clock is listed in the dt bindings but it was never included in
->> the GCC driver.
->> So lets add support for it, its intentionally marked to never be 
->> disabled
->> as its somehow affecting DVFS and if disabled it sometimes crashes the
->> board.
->>
->> Signed-off-by: Robert Marko <robimarko@gmail.com>
->> ---
-> Bjorn, would you be able to get an idea of what could be sitting
-> on that bus?
->
-> Or maybe the IPQ folks could know?
->
+Applied above two. Thanks.
 
-Konrad / Robert,
+>   cpufreq: qcom-nvmem: add support for IPQ8064
 
-Similar to IPQ9574, RPM needs this clock to communicate with PMIC over 
-I2C interface. Discussion happened here[1] is pretty much applicable to 
-IPQ6018 as well. Based on previous experience, we may need to document 
-the reason for CLK_IGNORE_UNUSED in driver as well. Nevertheless,
+This doesn't apply/build anymore.
 
-Reviewed-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+>   ARM: dts: qcom: ipq8064: Add CPU OPP table
 
-[1] 
-https://lore.kernel.org/linux-arm-msm/2852fc37-284f-6534-f163-45b37b153db1@quicinc.com/
-
-
-> Konrad
+-- 
+viresh
