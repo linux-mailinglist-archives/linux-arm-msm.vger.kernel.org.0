@@ -2,927 +2,261 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3141B7CFFDF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 18:45:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D8C237CFFF0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Oct 2023 18:50:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233278AbjJSQpm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Oct 2023 12:45:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54256 "EHLO
+        id S233104AbjJSQu0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Oct 2023 12:50:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232326AbjJSQpl (ORCPT
+        with ESMTP id S233035AbjJSQuZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Oct 2023 12:45:41 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF6F811B;
-        Thu, 19 Oct 2023 09:45:36 -0700 (PDT)
-Received: from [192.168.0.206] (unknown [179.221.49.105])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: koike)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 233226607342;
-        Thu, 19 Oct 2023 17:45:30 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1697733935;
-        bh=nKQH3Gkw5+XpzFXirF7iL4/r+34oiBWAqlrHag0FYYs=;
-        h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-        b=Rc6A/CRcWBSucq91Z/w+tgOHGs1/5C3pygiENgC50wOeEAv/qyf5s80ZJcmNsmvBF
-         hc9swWqEd4AxCetXJSfdqTQ4ct3OxPhyeHtSDK7znHl3Gpj1XRjLlUFoc9AN1m2qFH
-         VP7IJK7x77+Cd2zryUTIJYaSMjgBFhD9p+m94iCG7BeSxyZnKSDf9XhRJWuUkYRxla
-         oPWJEt1MvpCekwOeAhaMGJnKjLGWukZkuuR1/HDHwIsCEUraYH/znoJfnDnYwXpK+i
-         w7sMLdASSd0lW/J4zb8Ca1j+XWLvlQTqSGDLwk0FRDgIkf2qpgLvb8gKR9Y0NXX21n
-         LOmH+cjuPdQJA==
-Message-ID: <1b43d403-765c-411f-955f-1af04def4e9f@collabora.com>
-Date:   Thu, 19 Oct 2023 13:45:25 -0300
+        Thu, 19 Oct 2023 12:50:25 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D63411F;
+        Thu, 19 Oct 2023 09:50:23 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A32C433C7;
+        Thu, 19 Oct 2023 16:50:18 +0000 (UTC)
+Date:   Thu, 19 Oct 2023 22:20:13 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Serge Semin <fancer.lancer@gmail.com>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/2] PCI: dwc: Add new accessors to enable/disable DBI
+ CS2 while setting the BAR size
+Message-ID: <20231019165013.GB7254@thinkpad>
+References: <20231017-pcie-qcom-bar-v1-0-3e26de07bec0@linaro.org>
+ <20231017-pcie-qcom-bar-v1-1-3e26de07bec0@linaro.org>
+ <rsv5vgle2d36skx75ds4hqzmlqwldmj4g4ghrlyfuu3ideb3rh@74mnro7qnp4v>
+ <20231019052835.GC5142@thinkpad>
+ <vg7n2epn7ln77s34il5ojm6ixnboj6is4yq2jlfabnnjqmm4a6@ycsnoaixdnyn>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 9/9] drm: ci: Update xfails
-Content-Language: en-US
-From:   Helen Koike <helen.koike@collabora.com>
-To:     Vignesh Raman <vignesh.raman@collabora.com>, airlied@gmail.com,
-        daniel@ffwll.ch
-Cc:     daniels@collabora.com, emma@anholt.net,
-        gustavo.padovan@collabora.com, linux-arm-msm@vger.kernel.org,
-        guilherme.gallo@collabora.com, sergi.blanch.torne@collabora.com,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        virtualization@lists.linux-foundation.org,
-        david.heidelberg@collabora.com, linux-mediatek@lists.infradead.org
-References: <20231019070650.61159-1-vignesh.raman@collabora.com>
- <20231019070650.61159-10-vignesh.raman@collabora.com>
- <33b9f155-3c7c-408b-9863-54b451cb14f2@collabora.com>
-In-Reply-To: <33b9f155-3c7c-408b-9863-54b451cb14f2@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+In-Reply-To: <vg7n2epn7ln77s34il5ojm6ixnboj6is4yq2jlfabnnjqmm4a6@ycsnoaixdnyn>
+X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Oct 19, 2023 at 05:37:39PM +0300, Serge Semin wrote:
+> On Thu, Oct 19, 2023 at 10:58:35AM +0530, Manivannan Sadhasivam wrote:
+> > On Wed, Oct 18, 2023 at 05:13:41PM +0300, Serge Semin wrote:
+> > > On Tue, Oct 17, 2023 at 11:47:54AM +0530, Manivannan Sadhasivam wrote:
+> > > > From: Manivannan Sadhasivam <mani@kernel.org>
+> > > > 
+> > > > As per the DWC databook v4.21a, section M.4.1, in order to write some read
+> > > > only and shadow registers through application DBI, the device driver should
+> > > > assert DBI Chip Select 2 (CS2) in addition to DBI Chip Select (CS).
+> > > > 
+> > > > This is a requirement at least on the Qcom platforms while programming the
+> > > > BAR size, as the BAR mask registers are marked RO. So let's add two new
+> > > > accessors dw_pcie_dbi_cs2_{en/dis} to enable/disable CS2 access in a vendor
+> > > > specific way while programming the BAR size.
+> > > 
+> > > Emm, it's a known thing for all IP-core versions: dbi_cs2 must be
+> > > asserted to access the shadow DW PCIe CSRs space for both RC and
+> > > EP including the BARs mask and their enabling/disabling flag (there
+> > > are many more shadow CSRs available on DW PCIe EPs, and a few in DW
+> > > PCIe RCs). That's why the dw_pcie_ops->writel_dbi2 pointer has been
+> > > defined in the first place (dbi2 suffix means dbi_cs2). You should use
+> > > it to create the platform-specific dbi_cs2 write accessors like it's
+> > > done in pci-keystone.c and pcie-bt1.c. For instance like this:
+> > > 
+> > > static void qcom_pcie_write_dbi2(struct dw_pcie *pci, u32 reg, size_t size, u32 val)
+> > > {
+> > > 	struct qcom_pcie_ep *pcie_ep = to_pcie_ep(pci);
+> > > 	int ret;
+> > > 
+> > > 	writel(1, pcie_ep->elbi + ELBI_CS2_ENABLE);
+> > > 
+> > > 	ret = dw_pcie_write(pci->dbi_base2 + reg, size, val);
+> > > 	if (ret)
+> > > 		dev_err(pci->dev, "write DBI address failed\n");
+> > > 
+> > > 	writel(0, pcie_ep->elbi + ELBI_CS2_ENABLE);
+> > > }
+> > > 
+> > 
+> 
+> > Hmm, I was not aware that this write_dbi2() callback is supposed to enable the
+> > CS2 access internally. But this approach doesn't look good to me.
+> > 
+> > We already have accessors for enabling write access to DBI RO registers:
+> > 
+> > dw_pcie_dbi_ro_wr_en()
+> > dw_pcie_dbi_ro_wr_dis()
+> > 
+> > And IMO DBI_CS2 access should also be done this way instead of hiding it inside
+> > the register write callback.
+> 
+> No, for many-many reasons.
+> 
+> First of all, DBI RO/RW switch and DBI/DBI2 are absolutely different
+> things. Former one switches the CSRs access attributes in both DBI and
+> DBI2 CSR spaces. The later one are two CSR spaces, which access to is
+> platform-specific. They can't and shouldn't be compared.  DBI2 space
+> is a shadow DBI CSRs space, which registers aren't just the RW
+> versions of the DBI space, but its CSRs normally have different
+> semantics with respect to the normal DBI CSRs available on the same
+> offsets. I.e. BAR0 contains MEM/IO, TYPE, PREF flags and base address,
+> meanwhile DBI2-BAR0 - BAR enable/disable flag, BAR mask. From that
+> perspective having the dw_pcie_ops.write_dbi2 callback utilized for
+> the DBI2 space access would provide an interface looking similar to
+> the just DBI space - dw_pcie_ops.{write_dbi,read_dbi}. Thus the
+> unified access interface would provide much more readable code, where
+> based on the method name you'll be able to immediately infer the space
+> being accessed to.
+> 
+> Secondly, DBI RO/RW switch is a straight-forward CSR flag
+> clearing/setting DBI_RO_WR_EN. This mechanism is available on all DW
+> PCIe IP-cores and works in the _same_ way on all of them: just the
+> MISC_CONTROL_1_OFF.DBI_RO_WR_EN flag switching. It switches RO/RW
+> access attributes on both DBI_CS and DBI_CS2. So it's a cross-platform
+> thing independent from the vendor-specific IP-core settings. That's
+> why having generic functions for the RO/RW switch was the best choice:
+> it's cross-platform so no need in the platform-specific callbacks, it
+> works for both DBI and DBI2 so instead of implementing two additional
+> RW-accessors you can call the RW en/dis method around the DBI and DBI2
+> accessors whenever you need to switch the access attributes.
+> 
+> On the contrary DBI_CS2 is the DW PCIe IP-core input signal which
+> activation is platform-specific. Some platforms have it switchable via
+> a system-controller, some - via an additional elbi CSRs space, some -
+> provide an additional CSR space mapping DBI2 with no need in the
+> direct DBI_CS2 flag toggle, some may have an intermix of these
+> setups or may need some additional manipulation to access the DBI2
+> space. So your case of having the DBI_CS2 flag available via the elbi
+> space and having the DBI/DBI2 space mapped within the 4K offset with
+> respect to DBI is just a single possible option.
+> 
+> Finally, it's all about simplicity, maintainability and KIS principle.
+> Your approach would imply having additional platform-specific
+> callbacks, meanwhile there is already available DBI2 space accessor
+> which is more than enough to implement what you need.  Even if you
+> drop the later one (and convert all the already available LLDDs to
+> supporting what you want), having two callbacks instead of one will
+> still make things harder to read, because the kernel hacker would need
+> to keep in mind the DBI/DBI2 access context. Additionally calling
+> _three_ methods instead of a _single_ one will look much more complex.
+> Moreover having on/off antagonists prune to errors since a developer
+> may forget to disable the DBI2 flag, which on some platforms will
+> change the DBI CSRs semantics. Such error will be just impossible to
+> meet should the current interface is preserved unless the
+> platform-specific DBI2 accessor is incorrectly implemented, which
+> would be still specific to the particular platform, but not for the
+> entire DW PCIe driver. The last but not least, as I already mentioned
+> dw_pcie_ops.write_dbi2 and respective wrappers look as much like the
+> normal DBI accessors dw_pcie_ops.{write_dbi,read_dbi} which greatly
+> improves the code readability.
+> 
 
+Hmm, thanks for the detailed clarification, really appreciated.
 
-On 19/10/2023 13:42, Helen Koike wrote:
-> 
-> 
-> On 19/10/2023 04:06, Vignesh Raman wrote:
->> Update msm-apq8016-fails, mediatek-mt8173-fails and
->> virtio_gpu-none-fails to include the tests which fail.
->> Update mediatek-mt8173-flakes to include the tests which flakes.
->> Update virtio_gpu-none-skips to include the tests that need to be 
->> skipped.
->>
->> Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
->> ---
->>
->> v2:
->>    - No changes
->>
->> v3:
->>    - No changes
->>
->> v4:
->>    - No changes
->>
->> v5:
->>    - Generate fails and flakes file with the updated xfails script - 
->> https://www.spinics.net/lists/kernel/msg4959630.html
->>
->> ---
->>   .../drm/ci/xfails/mediatek-mt8173-fails.txt   |  24 +-
->>   .../drm/ci/xfails/mediatek-mt8173-flakes.txt  |   9 +
->>   .../gpu/drm/ci/xfails/msm-apq8016-fails.txt   |  17 +-
->>   .../drm/ci/xfails/virtio_gpu-none-fails.txt   |  65 +-
->>   .../drm/ci/xfails/virtio_gpu-none-skips.txt   | 632 +++++++++++++++++-
->>   5 files changed, 682 insertions(+), 65 deletions(-)
->>   create mode 100644 drivers/gpu/drm/ci/xfails/mediatek-mt8173-flakes.txt
->>
->> diff --git a/drivers/gpu/drm/ci/xfails/mediatek-mt8173-fails.txt 
->> b/drivers/gpu/drm/ci/xfails/mediatek-mt8173-fails.txt
->> index 671916067dba..d2261a40db11 100644
->> --- a/drivers/gpu/drm/ci/xfails/mediatek-mt8173-fails.txt
->> +++ b/drivers/gpu/drm/ci/xfails/mediatek-mt8173-fails.txt
->> @@ -1,5 +1,7 @@
->> +# https://gitlab.freedesktop.org/vigneshraman/linux/-/pipelines/1013011
->> +# https://gitlab.freedesktop.org/vigneshraman/linux/-/pipelines/1012894
->> +# https://gitlab.freedesktop.org/vigneshraman/linux/-/pipelines/1012949
->>   kms_3d,Fail
->> -kms_addfb_basic@addfb25-bad-modifier,Fail
->>   kms_bw@linear-tiling-1-displays-1920x1080p,Fail
->>   kms_bw@linear-tiling-1-displays-2560x1440p,Fail
->>   kms_bw@linear-tiling-1-displays-3840x2160p,Fail
->> @@ -9,20 +11,22 @@ kms_bw@linear-tiling-2-displays-3840x2160p,Fail
->>   kms_bw@linear-tiling-3-displays-1920x1080p,Fail
->>   kms_bw@linear-tiling-3-displays-2560x1440p,Fail
->>   kms_bw@linear-tiling-3-displays-3840x2160p,Fail
->> -kms_color@pipe-A-invalid-gamma-lut-sizes,Fail
->> -kms_color@pipe-B-invalid-gamma-lut-sizes,Fail
->> -kms_force_connector_basic@force-connector-state,Fail
->> -kms_force_connector_basic@force-edid,Fail
->> -kms_force_connector_basic@force-load-detect,Fail
->> -kms_force_connector_basic@prune-stale-modes,Fail
->> +kms_color@invalid-gamma-lut-sizes,Fail
->> +kms_cursor_legacy@cursor-vs-flip-atomic,Fail
->> +kms_cursor_legacy@cursor-vs-flip-legacy,Fail
->> +kms_flip@flip-vs-modeset-vs-hang,Fail
->> +kms_flip@flip-vs-panning-vs-hang,Fail
->> +kms_flip@flip-vs-suspend,Fail
->> +kms_flip@flip-vs-suspend-interruptible,Fail
->> +kms_hdmi_inject@inject-4k,Fail
->>   kms_invalid_mode@int-max-clock,Fail
->> +kms_plane_scaling@planes-downscale-factor-0-25-upscale-20x20,Fail
->> +kms_plane_scaling@planes-downscale-factor-0-5-upscale-20x20,Fail
->> +kms_plane_scaling@planes-downscale-factor-0-75-upscale-20x20,Fail
->>   kms_plane_scaling@planes-upscale-20x20,Fail
->>   kms_plane_scaling@planes-upscale-20x20-downscale-factor-0-25,Fail
->>   kms_plane_scaling@planes-upscale-20x20-downscale-factor-0-5,Fail
->>   kms_plane_scaling@planes-upscale-20x20-downscale-factor-0-75,Fail
->> -kms_plane_scaling@upscale-with-modifier-20x20,Fail
->> -kms_plane_scaling@upscale-with-pixel-format-20x20,Fail
->> -kms_plane_scaling@upscale-with-rotation-20x20,Fail
->>   kms_properties@get_properties-sanity-atomic,Fail
->>   kms_properties@plane-properties-atomic,Fail
->>   kms_properties@plane-properties-legacy,Fail
->> diff --git a/drivers/gpu/drm/ci/xfails/mediatek-mt8173-flakes.txt 
->> b/drivers/gpu/drm/ci/xfails/mediatek-mt8173-flakes.txt
->> new file mode 100644
->> index 000000000000..8b12e97d59f3
->> --- /dev/null
->> +++ b/drivers/gpu/drm/ci/xfails/mediatek-mt8173-flakes.txt
->> @@ -0,0 +1,9 @@
->> +# https://gitlab.freedesktop.org/vigneshraman/linux/-/pipelines/1013138
->> +# https://gitlab.freedesktop.org/vigneshraman/linux/-/pipelines/1012894
->> +# https://gitlab.freedesktop.org/vigneshraman/linux/-/pipelines/1013011
->> +# https://gitlab.freedesktop.org/vigneshraman/linux/-/pipelines/1013055
->> +kms_cursor_legacy@cursor-vs-flip-atomic-transitions
->> +kms_force_connector_basic@force-edid
->> +kms_force_connector_basic@prune-stale-modes
->> +kms_prop_blob@invalid-set-prop
->> +kms_prop_blob@invalid-set-prop-any
->> diff --git a/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt 
->> b/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt
->> index 9981682feab2..dcc49d560cef 100644
->> --- a/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt
->> +++ b/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt
->> @@ -1,15 +1,8 @@
->> +# https://gitlab.freedesktop.org/vigneshraman/linux/-/pipelines/1012932
->> +# https://gitlab.freedesktop.org/vigneshraman/linux/-/pipelines/1012894
->>   kms_3d,Fail
->>   kms_addfb_basic@addfb25-bad-modifier,Fail
->> -kms_cursor_legacy@all-pipes-forked-bo,Fail
->> -kms_cursor_legacy@all-pipes-forked-move,Fail
->> -kms_cursor_legacy@all-pipes-single-bo,Fail
->> -kms_cursor_legacy@all-pipes-single-move,Fail
->> -kms_cursor_legacy@all-pipes-torture-bo,Fail
->> -kms_cursor_legacy@all-pipes-torture-move,Fail
->> -kms_cursor_legacy@pipe-A-forked-bo,Fail
->> -kms_cursor_legacy@pipe-A-forked-move,Fail
->> -kms_cursor_legacy@pipe-A-single-bo,Fail
->> -kms_cursor_legacy@pipe-A-single-move,Fail
->> -kms_cursor_legacy@pipe-A-torture-bo,Fail
->> -kms_cursor_legacy@pipe-A-torture-move,Fail
->> +kms_cursor_legacy@forked-bo,Fail
->> +kms_cursor_legacy@forked-move,Fail
->> +kms_force_connector_basic@force-edid,Fail
->>   kms_hdmi_inject@inject-4k,Fail
->> diff --git a/drivers/gpu/drm/ci/xfails/virtio_gpu-none-fails.txt 
->> b/drivers/gpu/drm/ci/xfails/virtio_gpu-none-fails.txt
->> index 9586b2339f6f..4281bc25303f 100644
->> --- a/drivers/gpu/drm/ci/xfails/virtio_gpu-none-fails.txt
->> +++ b/drivers/gpu/drm/ci/xfails/virtio_gpu-none-fails.txt
->> @@ -1,38 +1,27 @@
->> -kms_addfb_basic@addfb25-bad-modifier,Fail
->> -kms_addfb_basic@bad-pitch-65536,Fail
->> -kms_addfb_basic@bo-too-small,Fail
->> -kms_addfb_basic@size-max,Fail
->> -kms_addfb_basic@too-high,Fail
->> -kms_atomic_transition@plane-primary-toggle-with-vblank-wait,Fail
->> -kms_bw@linear-tiling-1-displays-1920x1080p,Fail
->> -kms_bw@linear-tiling-1-displays-2560x1440p,Fail
->> -kms_bw@linear-tiling-1-displays-3840x2160p,Fail
->> -kms_bw@linear-tiling-2-displays-1920x1080p,Fail
->> -kms_bw@linear-tiling-2-displays-2560x1440p,Fail
->> -kms_bw@linear-tiling-2-displays-3840x2160p,Fail
->> -kms_invalid_mode@int-max-clock,Fail
->> -kms_plane_scaling@downscale-with-modifier-factor-0-25,Fail
->> -kms_plane_scaling@downscale-with-rotation-factor-0-25,Fail
->> -kms_plane_scaling@planes-upscale-20x20,Fail
->> -kms_plane_scaling@planes-upscale-20x20-downscale-factor-0-25,Fail
->> -kms_plane_scaling@planes-upscale-20x20-downscale-factor-0-5,Fail
->> -kms_plane_scaling@planes-upscale-20x20-downscale-factor-0-75,Fail
->> -kms_plane_scaling@upscale-with-modifier-20x20,Fail
->> -kms_plane_scaling@upscale-with-modifier-factor-0-25,Fail
->> -kms_plane_scaling@upscale-with-pixel-format-20x20,Fail
->> -kms_plane_scaling@upscale-with-pixel-format-factor-0-25,Fail
->> -kms_plane_scaling@upscale-with-rotation-20x20,Fail
->> -kms_vblank@crtc-id,Fail
->> -kms_vblank@invalid,Fail
->> -kms_vblank@pipe-A-accuracy-idle,Fail
->> -kms_vblank@pipe-A-query-busy,Fail
->> -kms_vblank@pipe-A-query-forked,Fail
->> -kms_vblank@pipe-A-query-forked-busy,Fail
->> -kms_vblank@pipe-A-query-idle,Fail
->> -kms_vblank@pipe-A-ts-continuation-idle,Fail
->> -kms_vblank@pipe-A-ts-continuation-modeset,Fail
->> -kms_vblank@pipe-A-ts-continuation-suspend,Fail
->> -kms_vblank@pipe-A-wait-busy,Fail
->> -kms_vblank@pipe-A-wait-forked,Fail
->> -kms_vblank@pipe-A-wait-forked-busy,Fail
->> -kms_vblank@pipe-A-wait-idle,Fail
->> +# https://gitlab.freedesktop.org/vigneshraman/linux/-/pipelines/1013138
->> +kms_flip@absolute-wf_vblank,Fail
->> +kms_flip@absolute-wf_vblank-interruptible,Fail
->> +kms_flip@basic-flip-vs-wf_vblank,Fail
->> +kms_flip@blocking-absolute-wf_vblank,Fail
->> +kms_flip@blocking-absolute-wf_vblank-interruptible,Fail
->> +kms_flip@blocking-wf_vblank,Fail
->> +kms_flip@busy-flip,Fail
->> +kms_flip@dpms-vs-vblank-race,Fail
->> +kms_flip@dpms-vs-vblank-race-interruptible,Fail
->> +kms_flip@flip-vs-absolute-wf_vblank,Fail
->> +kms_flip@flip-vs-absolute-wf_vblank-interruptible,Fail
->> +kms_flip@flip-vs-blocking-wf-vblank,Fail
->> +kms_flip@flip-vs-expired-vblank,Fail
->> +kms_flip@flip-vs-expired-vblank-interruptible,Fail
->> +kms_flip@flip-vs-modeset-vs-hang,Fail
->> +kms_flip@flip-vs-panning-vs-hang,Fail
->> +kms_flip@flip-vs-wf_vblank-interruptible,Fail
->> +kms_flip@modeset-vs-vblank-race,Fail
->> +kms_flip@modeset-vs-vblank-race-interruptible,Fail
->> +kms_flip@plain-flip-fb-recreate,Fail
->> +kms_flip@plain-flip-fb-recreate-interruptible,Fail
->> +kms_flip@plain-flip-ts-check,Fail
->> +kms_flip@plain-flip-ts-check-interruptible,Fail
->> +kms_flip@wf_vblank-ts-check,Fail
->> +kms_flip@wf_vblank-ts-check-interruptible,Fail
->> +kms_setmode@basic,Fail
->> diff --git a/drivers/gpu/drm/ci/xfails/virtio_gpu-none-skips.txt 
->> b/drivers/gpu/drm/ci/xfails/virtio_gpu-none-skips.txt
->> index 78be18174012..e40bd2cac849 100644
->> --- a/drivers/gpu/drm/ci/xfails/virtio_gpu-none-skips.txt
->> +++ b/drivers/gpu/drm/ci/xfails/virtio_gpu-none-skips.txt
->> @@ -1,6 +1,628 @@
->> -# Hits a "refcount_t: underflow; use-after-free" in 
->> virtio_gpu_fence_event_process
->> -# When run in a particular order with other tests
->> -kms_cursor_legacy.*
->> -
->>   # Job just hangs without any output
->> -kms_flip@flip-vs-suspend.*
->> \ No newline at end of file
->> +kms_flip@flip-vs-suspend.*
->> +
->> +# Some tests crashes with malloc error and IGT tests floods
->> +# the CI log with error messages and we end up with a warning message
->> +# Job's log exceeded limit of 4194304 bytes.
->> +# Job execution will continue but no more output will be collected.
->> +# Below is the error log:
->> +# malloc(): corrupted top size
->> +# Received signal SIGABRT.
->> +# Stack trace:
->> +#  #0 [fatal_sig_handler+0x17b]
->> +#  #1 [__sigaction+0x40]
->> +#  #2 [pthread_key_delete+0x14c]
->> +#  #3 [gsignal+0x12]
->> +#  #4 [abort+0xd3]
->> +#  #5 [__fsetlocking+0x290]
->> +#  #6 [timer_settime+0x37a]
->> +#  #7 [__default_morecore+0x1f1b]
->> +#  #8 [__libc_calloc+0x161]
->> +#  #9 [drmModeGetPlaneResources+0x44]
->> +#  #10 [igt_display_require+0x194]
->> +#  #11 [__igt_unique____real_main1356+0x93c]
->> +#  #12 [main+0x3f]
->> +#  #13 [__libc_init_first+0x8a]
->> +#  #14 [__libc_start_main+0x85]
->> +#  #15 [_start+0x21]
->> +# malloc(): corrupted top size
->> +# So skip these tests until the issue is fixed.
->> +drm_read@empty-block
->> +drm_read@empty-nonblock
->> +drm_read@fault-buffer
->> +drm_read@invalid-buffer
->> +drm_read@short-buffer-block
->> +drm_read@short-buffer-nonblock
->> +drm_read@short-buffer-wakeup
->> +kms_addfb_basic@addfb25-4-tiled
->> +kms_addfb_basic@addfb25-bad-modifier
->> +kms_addfb_basic@addfb25-framebuffer-vs-set-tiling
->> +kms_addfb_basic@addfb25-modifier-no-flag
->> +kms_addfb_basic@addfb25-x-tiled-legacy
->> +kms_addfb_basic@addfb25-x-tiled-mismatch-legacy
->> +kms_addfb_basic@addfb25-y-tiled-legacy
->> +kms_addfb_basic@addfb25-y-tiled-small-legacy
->> +kms_addfb_basic@addfb25-yf-tiled-legacy
->> +kms_addfb_basic@bad-pitch-0
->> +kms_addfb_basic@bad-pitch-1024
->> +kms_addfb_basic@bad-pitch-128
->> +kms_addfb_basic@bad-pitch-256
->> +kms_addfb_basic@bad-pitch-32
->> +kms_addfb_basic@bad-pitch-63
->> +kms_addfb_basic@bad-pitch-65536
->> +kms_addfb_basic@bad-pitch-999
->> +kms_addfb_basic@basic
->> +kms_addfb_basic@basic-x-tiled-legacy
->> +kms_addfb_basic@basic-y-tiled-legacy
->> +kms_addfb_basic@bo-too-small
->> +kms_addfb_basic@bo-too-small-due-to-tiling
->> +kms_addfb_basic@clobberred-modifier
->> +kms_addfb_basic@framebuffer-vs-set-tiling
->> +kms_addfb_basic@invalid-get-prop
->> +kms_addfb_basic@invalid-get-prop-any
->> +kms_addfb_basic@invalid-set-prop
->> +kms_addfb_basic@invalid-set-prop-any
->> +kms_addfb_basic@invalid-smem-bo-on-discrete
->> +kms_addfb_basic@legacy-format
->> +kms_addfb_basic@master-rmfb
->> +kms_addfb_basic@no-handle
->> +kms_addfb_basic@size-max
->> +kms_addfb_basic@small-bo
->> +kms_addfb_basic@tile-pitch-mismatch
->> +kms_addfb_basic@too-high
->> +kms_addfb_basic@too-wide
->> +kms_addfb_basic@unused-handle
->> +kms_addfb_basic@unused-modifier
->> +kms_addfb_basic@unused-offsets
->> +kms_addfb_basic@unused-pitches
->> +kms_async_flips@alternate-sync-async-flip
->> +kms_async_flips@async-flip-with-page-flip-events
->> +kms_async_flips@crc
->> +kms_async_flips@invalid-async-flip
->> +kms_async_flips@test-cursor
->> +kms_async_flips@test-time-stamp
->> +kms_atomic@atomic-invalid-params
->> +kms_atomic@atomic_plane_damage
->> +kms_atomic@crtc-invalid-params
->> +kms_atomic@crtc-invalid-params-fence
->> +kms_atomic@plane-cursor-legacy
->> +kms_atomic@plane-immutable-zpos
->> +kms_atomic@plane-invalid-params
->> +kms_atomic@plane-invalid-params-fence
->> +kms_atomic@plane-overlay-legacy
->> +kms_atomic@plane-primary-legacy
->> +kms_atomic@plane-primary-overlay-mutable-zpos
->> +kms_atomic@test-only
->> +kms_atomic_interruptible@atomic-setmode
->> +kms_atomic_interruptible@legacy-cursor
->> +kms_atomic_interruptible@legacy-dpms
->> +kms_atomic_interruptible@legacy-pageflip
->> +kms_atomic_interruptible@legacy-setmode
->> +kms_atomic_interruptible@universal-setplane-cursor
->> +kms_atomic_interruptible@universal-setplane-primary
->> +kms_atomic_transition@modeset-transition
->> +kms_atomic_transition@modeset-transition-fencing
->> +kms_atomic_transition@modeset-transition-nonblocking
->> +kms_atomic_transition@modeset-transition-nonblocking-fencing
->> +kms_atomic_transition@plane-all-modeset-transition
->> +kms_atomic_transition@plane-all-modeset-transition-fencing
->> +kms_atomic_transition@plane-all-modeset-transition-fencing-internal-panels
->> +kms_atomic_transition@plane-all-modeset-transition-internal-panels
->> +kms_atomic_transition@plane-all-transition
->> +kms_atomic_transition@plane-all-transition-fencing
->> +kms_atomic_transition@plane-all-transition-nonblocking
->> +kms_atomic_transition@plane-all-transition-nonblocking-fencing
->> +kms_atomic_transition@plane-primary-toggle-with-vblank-wait
->> +kms_atomic_transition@plane-toggle-modeset-transition
->> +kms_atomic_transition@plane-use-after-nonblocking-unbind
->> +kms_atomic_transition@plane-use-after-nonblocking-unbind-fencing
->> +kms_bw@linear-tiling-1-displays-1920x1080p
->> +kms_bw@linear-tiling-1-displays-2560x1440p
->> +kms_bw@linear-tiling-1-displays-3840x2160p
->> +kms_bw@linear-tiling-2-displays-1920x1080p
->> +kms_bw@linear-tiling-2-displays-2560x1440p
->> +kms_bw@linear-tiling-2-displays-3840x2160p
->> +kms_bw@linear-tiling-3-displays-1920x1080p
->> +kms_bw@linear-tiling-3-displays-2560x1440p
->> +kms_bw@linear-tiling-3-displays-3840x2160p
->> +kms_bw@linear-tiling-4-displays-1920x1080p
->> +kms_bw@linear-tiling-4-displays-2560x1440p
->> +kms_bw@linear-tiling-4-displays-3840x2160p
->> +kms_bw@linear-tiling-5-displays-1920x1080p
->> +kms_bw@linear-tiling-5-displays-2560x1440p
->> +kms_bw@linear-tiling-5-displays-3840x2160p
->> +kms_bw@linear-tiling-6-displays-1920x1080p
->> +kms_bw@linear-tiling-6-displays-2560x1440p
->> +kms_bw@linear-tiling-6-displays-3840x2160p
->> +kms_bw@linear-tiling-7-displays-1920x1080p
->> +kms_bw@linear-tiling-7-displays-2560x1440p
->> +kms_bw@linear-tiling-7-displays-3840x2160p
->> +kms_bw@linear-tiling-8-displays-1920x1080p
->> +kms_bw@linear-tiling-8-displays-2560x1440p
->> +kms_bw@linear-tiling-8-displays-3840x2160p
->> +kms_color@ctm-0-25
->> +kms_color@ctm-0-50
->> +kms_color@ctm-0-75
->> +kms_color@ctm-blue-to-red
->> +kms_color@ctm-green-to-red
->> +kms_color@ctm-max
->> +kms_color@ctm-negative
->> +kms_color@ctm-red-to-blue
->> +kms_color@ctm-signed
->> +kms_color@deep-color
->> +kms_color@degamma
->> +kms_color@gamma
->> +kms_color@invalid-ctm-matrix-sizes
->> +kms_color@invalid-degamma-lut-sizes
->> +kms_color@invalid-gamma-lut-sizes
->> +kms_color@legacy-gamma
->> +kms_color@legacy-gamma-reset
->> +kms_concurrent@pipe-A
->> +kms_concurrent@pipe-B
->> +kms_concurrent@pipe-C
->> +kms_concurrent@pipe-D
->> +kms_concurrent@pipe-E
->> +kms_concurrent@pipe-F
->> +kms_concurrent@pipe-G
->> +kms_concurrent@pipe-H
->> +kms_content_protection@LIC
->> +kms_content_protection@atomic
->> +kms_content_protection@atomic-dpms
->> +kms_content_protection@content_type_change
->> +kms_content_protection@dp-mst-lic-type-0
->> +kms_content_protection@dp-mst-lic-type-1
->> +kms_content_protection@dp-mst-type-0
->> +kms_content_protection@dp-mst-type-1
->> +kms_content_protection@legacy
->> +kms_content_protection@mei_interface
->> +kms_content_protection@srm
->> +kms_content_protection@type1
->> +kms_content_protection@uevent
->> +kms_cursor_crc@cursor-alpha-opaque
->> +kms_cursor_crc@cursor-alpha-transparent
->> +kms_cursor_crc@cursor-dpms
->> +kms_cursor_crc@cursor-offscreen-128x128
->> +kms_cursor_crc@cursor-offscreen-128x42
->> +kms_cursor_crc@cursor-offscreen-256x256
->> +kms_cursor_crc@cursor-offscreen-256x85
->> +kms_cursor_crc@cursor-offscreen-32x10
->> +kms_cursor_crc@cursor-offscreen-32x32
->> +kms_cursor_crc@cursor-offscreen-512x170
->> +kms_cursor_crc@cursor-offscreen-512x512
->> +kms_cursor_crc@cursor-offscreen-64x21
->> +kms_cursor_crc@cursor-offscreen-64x64
->> +kms_cursor_crc@cursor-offscreen-max-size
->> +kms_cursor_crc@cursor-onscreen-128x128
->> +kms_cursor_crc@cursor-onscreen-128x42
->> +kms_cursor_crc@cursor-onscreen-256x256
->> +kms_cursor_crc@cursor-onscreen-256x85
->> +kms_cursor_crc@cursor-onscreen-32x10
->> +kms_cursor_crc@cursor-onscreen-32x32
->> +kms_cursor_crc@cursor-onscreen-512x170
->> +kms_cursor_crc@cursor-onscreen-512x512
->> +kms_cursor_crc@cursor-onscreen-64x21
->> +kms_cursor_crc@cursor-onscreen-64x64
->> +kms_cursor_crc@cursor-onscreen-max-size
->> +kms_cursor_crc@cursor-random-128x128
->> +kms_cursor_crc@cursor-random-128x42
->> +kms_cursor_crc@cursor-random-256x256
->> +kms_cursor_crc@cursor-random-256x85
->> +kms_cursor_crc@cursor-random-32x10
->> +kms_cursor_crc@cursor-random-32x32
->> +kms_cursor_crc@cursor-random-512x170
->> +kms_cursor_crc@cursor-random-512x512
->> +kms_cursor_crc@cursor-random-64x21
->> +kms_cursor_crc@cursor-random-64x64
->> +kms_cursor_crc@cursor-random-max-size
->> +kms_cursor_crc@cursor-rapid-movement-128x128
->> +kms_cursor_crc@cursor-rapid-movement-128x42
->> +kms_cursor_crc@cursor-rapid-movement-256x256
->> +kms_cursor_crc@cursor-rapid-movement-256x85
->> +kms_cursor_crc@cursor-rapid-movement-32x10
->> +kms_cursor_crc@cursor-rapid-movement-32x32
->> +kms_cursor_crc@cursor-rapid-movement-512x170
->> +kms_cursor_crc@cursor-rapid-movement-512x512
->> +kms_cursor_crc@cursor-rapid-movement-64x21
->> +kms_cursor_crc@cursor-rapid-movement-64x64
->> +kms_cursor_crc@cursor-rapid-movement-max-size
->> +kms_cursor_crc@cursor-size-change
->> +kms_cursor_crc@cursor-sliding-128x128
->> +kms_cursor_crc@cursor-sliding-128x42
->> +kms_cursor_crc@cursor-sliding-256x256
->> +kms_cursor_crc@cursor-sliding-256x85
->> +kms_cursor_crc@cursor-sliding-32x10
->> +kms_cursor_crc@cursor-sliding-32x32
->> +kms_cursor_crc@cursor-sliding-512x170
->> +kms_cursor_crc@cursor-sliding-512x512
->> +kms_cursor_crc@cursor-sliding-64x21
->> +kms_cursor_crc@cursor-sliding-64x64
->> +kms_cursor_crc@cursor-sliding-max-size
->> +kms_cursor_crc@cursor-suspend
->> +kms_cursor_legacy@2x-cursor-vs-flip-atomic
->> +kms_cursor_legacy@2x-cursor-vs-flip-legacy
->> +kms_cursor_legacy@2x-flip-vs-cursor-atomic
->> +kms_cursor_legacy@2x-flip-vs-cursor-legacy
->> +kms_cursor_legacy@2x-long-cursor-vs-flip-atomic
->> +kms_cursor_legacy@2x-long-cursor-vs-flip-legacy
->> +kms_cursor_legacy@2x-long-flip-vs-cursor-atomic
->> +kms_cursor_legacy@2x-long-flip-vs-cursor-legacy
->> +kms_cursor_legacy@2x-long-nonblocking-modeset-vs-cursor-atomic
->> +kms_cursor_legacy@2x-nonblocking-modeset-vs-cursor-atomic
->> +kms_cursor_legacy@basic-busy-flip-before-cursor-atomic
->> +kms_cursor_legacy@basic-busy-flip-before-cursor-legacy
->> +kms_cursor_legacy@basic-busy-flip-before-cursor-varying-size
->> +kms_cursor_legacy@basic-flip-after-cursor-atomic
->> +kms_cursor_legacy@basic-flip-after-cursor-legacy
->> +kms_cursor_legacy@basic-flip-after-cursor-varying-size
->> +kms_cursor_legacy@basic-flip-before-cursor-atomic
->> +kms_cursor_legacy@basic-flip-before-cursor-legacy
->> +kms_cursor_legacy@basic-flip-before-cursor-varying-size
->> +kms_cursor_legacy@cursor-vs-flip-atomic
->> +kms_cursor_legacy@cursor-vs-flip-atomic-transitions
->> +kms_cursor_legacy@cursor-vs-flip-atomic-transitions-varying-size
->> +kms_cursor_legacy@cursor-vs-flip-legacy
->> +kms_cursor_legacy@cursor-vs-flip-toggle
->> +kms_cursor_legacy@cursor-vs-flip-varying-size
->> +kms_cursor_legacy@cursorA-vs-flipA-atomic
->> +kms_cursor_legacy@cursorA-vs-flipA-atomic-transitions
->> +kms_cursor_legacy@cursorA-vs-flipA-atomic-transitions-varying-size
->> +kms_cursor_legacy@cursorA-vs-flipA-legacy
->> +kms_cursor_legacy@cursorA-vs-flipA-toggle
->> +kms_cursor_legacy@cursorA-vs-flipA-varying-size
->> +kms_cursor_legacy@cursorA-vs-flipB-atomic
->> +kms_cursor_legacy@cursorA-vs-flipB-atomic-transitions
->> +kms_cursor_legacy@cursorA-vs-flipB-atomic-transitions-varying-size
->> +kms_cursor_legacy@cursorA-vs-flipB-legacy
->> +kms_cursor_legacy@cursorA-vs-flipB-toggle
->> +kms_cursor_legacy@cursorA-vs-flipB-varying-size
->> +kms_cursor_legacy@cursorB-vs-flipA-atomic
->> +kms_cursor_legacy@cursorB-vs-flipA-atomic-transitions
->> +kms_cursor_legacy@cursorB-vs-flipA-atomic-transitions-varying-size
->> +kms_cursor_legacy@cursorB-vs-flipA-legacy
->> +kms_cursor_legacy@cursorB-vs-flipA-toggle
->> +kms_cursor_legacy@cursorB-vs-flipA-varying-size
->> +kms_cursor_legacy@cursorB-vs-flipB-atomic
->> +kms_cursor_legacy@cursorB-vs-flipB-atomic-transitions
->> +kms_cursor_legacy@cursorB-vs-flipB-atomic-transitions-varying-size
->> +kms_cursor_legacy@cursorB-vs-flipB-legacy
->> +kms_cursor_legacy@cursorB-vs-flipB-toggle
->> +kms_cursor_legacy@cursorB-vs-flipB-varying-size
->> +kms_cursor_legacy@flip-vs-cursor-atomic
->> +kms_cursor_legacy@flip-vs-cursor-atomic-transitions
->> +kms_cursor_legacy@flip-vs-cursor-atomic-transitions-varying-size
->> +kms_cursor_legacy@flip-vs-cursor-busy-crc-atomic
->> +kms_cursor_legacy@flip-vs-cursor-busy-crc-legacy
->> +kms_cursor_legacy@flip-vs-cursor-crc-atomic
->> +kms_cursor_legacy@flip-vs-cursor-crc-legacy
->> +kms_cursor_legacy@flip-vs-cursor-legacy
->> +kms_cursor_legacy@flip-vs-cursor-toggle
->> +kms_cursor_legacy@flip-vs-cursor-varying-size
->> +kms_cursor_legacy@forked-bo
->> +kms_cursor_legacy@forked-move
->> +kms_cursor_legacy@long-nonblocking-modeset-vs-cursor-atomic
->> +kms_cursor_legacy@nonblocking-modeset-vs-cursor-atomic
->> +kms_cursor_legacy@short-busy-flip-before-cursor-atomic-transitions
->> +kms_cursor_legacy@short-busy-flip-before-cursor-atomic-transitions-varying-size
->> +kms_cursor_legacy@short-busy-flip-before-cursor-toggle
->> +kms_cursor_legacy@short-flip-after-cursor-atomic-transitions
->> +kms_cursor_legacy@short-flip-after-cursor-atomic-transitions-varying-size
->> +kms_cursor_legacy@short-flip-after-cursor-toggle
->> +kms_cursor_legacy@short-flip-before-cursor-atomic-transitions
->> +kms_cursor_legacy@short-flip-before-cursor-atomic-transitions-varying-size
->> +kms_cursor_legacy@short-flip-before-cursor-toggle
->> +kms_cursor_legacy@single-bo
->> +kms_cursor_legacy@single-move
->> +kms_cursor_legacy@torture-bo
->> +kms_cursor_legacy@torture-move
->> +kms_dither@FB-8BPC-Vs-Panel-6BPC
->> +kms_dither@FB-8BPC-Vs-Panel-8BPC
->> +kms_flip_event_leak@basic
->> +kms_getfb@getfb-handle-not-fb
->> +kms_getfb@getfb2-handle-not-fb
->> +kms_hdr@bpc-switch
->> +kms_hdr@bpc-switch-dpms
->> +kms_hdr@bpc-switch-suspend
->> +kms_hdr@invalid-hdr
->> +kms_hdr@invalid-metadata-sizes
->> +kms_hdr@static-swap
->> +kms_hdr@static-toggle
->> +kms_hdr@static-toggle-dpms
->> +kms_hdr@static-toggle-suspend
->> +kms_invalid_mode@bad-hsync-end
->> +kms_invalid_mode@bad-hsync-start
->> +kms_invalid_mode@bad-htotal
->> +kms_invalid_mode@bad-vsync-end
->> +kms_invalid_mode@bad-vsync-start
->> +kms_invalid_mode@bad-vtotal
->> +kms_invalid_mode@clock-too-high
->> +kms_invalid_mode@int-max-clock
->> +kms_invalid_mode@uint-max-clock
->> +kms_invalid_mode@zero-clock
->> +kms_invalid_mode@zero-hdisplay
->> +kms_invalid_mode@zero-vdisplay
->> +kms_panel_fitting@atomic-fastset
->> +kms_panel_fitting@legacy
->> +kms_plane_cursor@overlay
->> +kms_plane_cursor@primary
->> +kms_plane_cursor@viewport
->> +kms_plane_scaling@2x-scaler-multi-pipe
->> +kms_plane_scaling@intel-max-src-size
->> +kms_plane_scaling@invalid-num-scalers
->> +kms_plane_scaling@invalid-parameters
->> +kms_plane_scaling@plane-downscale-with-modifiers-factor-0-25
->> +kms_plane_scaling@plane-downscale-with-modifiers-factor-0-5
->> +kms_plane_scaling@plane-downscale-with-modifiers-factor-0-75
->> +kms_plane_scaling@plane-downscale-with-pixel-format-factor-0-25
->> +kms_plane_scaling@plane-downscale-with-pixel-format-factor-0-5
->> +kms_plane_scaling@plane-downscale-with-pixel-format-factor-0-75
->> +kms_plane_scaling@plane-downscale-with-rotation-factor-0-25
->> +kms_plane_scaling@plane-downscale-with-rotation-factor-0-5
->> +kms_plane_scaling@plane-downscale-with-rotation-factor-0-75
->> +kms_plane_scaling@plane-scaler-with-clipping-clamping-modifiers
->> +kms_plane_scaling@plane-scaler-with-clipping-clamping-pixel-formats
->> +kms_plane_scaling@plane-scaler-with-clipping-clamping-rotation
->> +kms_plane_scaling@plane-scaler-with-modifiers-unity-scaling
->> +kms_plane_scaling@plane-scaler-with-pixel-format-unity-scaling
->> +kms_plane_scaling@plane-scaler-with-rotation-unity-scaling
->> +kms_plane_scaling@plane-upscale-with-modifiers-20x20
->> +kms_plane_scaling@plane-upscale-with-modifiers-factor-0-25
->> +kms_plane_scaling@plane-upscale-with-pixel-format-20x20
->> +kms_plane_scaling@plane-upscale-with-pixel-format-factor-0-25
->> +kms_plane_scaling@plane-upscale-with-rotation-20x20
->> +kms_plane_scaling@plane-upscale-with-rotation-factor-0-25
->> +kms_plane_scaling@planes-downscale-factor-0-25
->> +kms_plane_scaling@planes-downscale-factor-0-25-unity-scaling
->> +kms_plane_scaling@planes-downscale-factor-0-25-upscale-20x20
->> +kms_plane_scaling@planes-downscale-factor-0-25-upscale-factor-0-25
->> +kms_plane_scaling@planes-downscale-factor-0-5
->> +kms_plane_scaling@planes-downscale-factor-0-5-unity-scaling
->> +kms_plane_scaling@planes-downscale-factor-0-5-upscale-20x20
->> +kms_plane_scaling@planes-downscale-factor-0-5-upscale-factor-0-25
->> +kms_plane_scaling@planes-downscale-factor-0-75
->> +kms_plane_scaling@planes-downscale-factor-0-75-unity-scaling
->> +kms_plane_scaling@planes-downscale-factor-0-75-upscale-20x20
->> +kms_plane_scaling@planes-downscale-factor-0-75-upscale-factor-0-25
->> +kms_plane_scaling@planes-scaler-unity-scaling
->> +kms_plane_scaling@planes-unity-scaling-downscale-factor-0-25
->> +kms_plane_scaling@planes-unity-scaling-downscale-factor-0-5
->> +kms_plane_scaling@planes-unity-scaling-downscale-factor-0-75
->> +kms_plane_scaling@planes-upscale-20x20
->> +kms_plane_scaling@planes-upscale-20x20-downscale-factor-0-25
->> +kms_plane_scaling@planes-upscale-20x20-downscale-factor-0-5
->> +kms_plane_scaling@planes-upscale-20x20-downscale-factor-0-75
->> +kms_plane_scaling@planes-upscale-factor-0-25
->> +kms_plane_scaling@planes-upscale-factor-0-25-downscale-factor-0-25
->> +kms_plane_scaling@planes-upscale-factor-0-25-downscale-factor-0-5
->> +kms_plane_scaling@planes-upscale-factor-0-25-downscale-factor-0-75
->> +kms_prime@D3hot
->> +kms_prime@basic-crc-hybrid
->> +kms_prime@basic-crc-vgem
->> +kms_prime@basic-modeset-hybrid
->> +kms_properties@connector-properties-atomic
->> +kms_properties@connector-properties-legacy
->> +kms_properties@crtc-properties-atomic
->> +kms_properties@crtc-properties-legacy
->> +kms_properties@get_properties-sanity-atomic
->> +kms_properties@get_properties-sanity-non-atomic
->> +kms_properties@invalid-properties-atomic
->> +kms_properties@invalid-properties-legacy
->> +kms_properties@plane-properties-atomic
->> +kms_properties@plane-properties-legacy
->> +kms_rmfb@close-fd
->> +kms_rmfb@rmfb-ioctl
->> +kms_scaling_modes@scaling-mode-center
->> +kms_scaling_modes@scaling-mode-full
->> +kms_scaling_modes@scaling-mode-full-aspect
->> +kms_scaling_modes@scaling-mode-none
->> +kms_tiled_display@basic-test-pattern
->> +kms_tiled_display@basic-test-pattern-with-chamelium
->> +kms_vblank@crtc-id
->> +kms_vblank@invalid
->> +kms_vblank@pipe-A-accuracy-idle
->> +kms_vblank@pipe-A-query-busy
->> +kms_vblank@pipe-A-query-busy-hang
->> +kms_vblank@pipe-A-query-forked
->> +kms_vblank@pipe-A-query-forked-busy
->> +kms_vblank@pipe-A-query-forked-busy-hang
->> +kms_vblank@pipe-A-query-forked-hang
->> +kms_vblank@pipe-A-query-idle
->> +kms_vblank@pipe-A-query-idle-hang
->> +kms_vblank@pipe-A-ts-continuation-dpms-rpm
->> +kms_vblank@pipe-A-ts-continuation-dpms-suspend
->> +kms_vblank@pipe-A-ts-continuation-idle
->> +kms_vblank@pipe-A-ts-continuation-idle-hang
->> +kms_vblank@pipe-A-ts-continuation-modeset
->> +kms_vblank@pipe-A-ts-continuation-modeset-hang
->> +kms_vblank@pipe-A-ts-continuation-modeset-rpm
->> +kms_vblank@pipe-A-ts-continuation-suspend
->> +kms_vblank@pipe-A-wait-busy
->> +kms_vblank@pipe-A-wait-busy-hang
->> +kms_vblank@pipe-A-wait-forked
->> +kms_vblank@pipe-A-wait-forked-busy
->> +kms_vblank@pipe-A-wait-forked-busy-hang
->> +kms_vblank@pipe-A-wait-forked-hang
->> +kms_vblank@pipe-A-wait-idle
->> +kms_vblank@pipe-A-wait-idle-hang
->> +kms_vblank@pipe-B-accuracy-idle
->> +kms_vblank@pipe-B-query-busy
->> +kms_vblank@pipe-B-query-busy-hang
->> +kms_vblank@pipe-B-query-forked
->> +kms_vblank@pipe-B-query-forked-busy
->> +kms_vblank@pipe-B-query-forked-busy-hang
->> +kms_vblank@pipe-B-query-forked-hang
->> +kms_vblank@pipe-B-query-idle
->> +kms_vblank@pipe-B-query-idle-hang
->> +kms_vblank@pipe-B-ts-continuation-dpms-rpm
->> +kms_vblank@pipe-B-ts-continuation-dpms-suspend
->> +kms_vblank@pipe-B-ts-continuation-idle
->> +kms_vblank@pipe-B-ts-continuation-idle-hang
->> +kms_vblank@pipe-B-ts-continuation-modeset
->> +kms_vblank@pipe-B-ts-continuation-modeset-hang
->> +kms_vblank@pipe-B-ts-continuation-modeset-rpm
->> +kms_vblank@pipe-B-ts-continuation-suspend
->> +kms_vblank@pipe-B-wait-busy
->> +kms_vblank@pipe-B-wait-busy-hang
->> +kms_vblank@pipe-B-wait-forked
->> +kms_vblank@pipe-B-wait-forked-busy
->> +kms_vblank@pipe-B-wait-forked-busy-hang
->> +kms_vblank@pipe-B-wait-forked-hang
->> +kms_vblank@pipe-B-wait-idle
->> +kms_vblank@pipe-B-wait-idle-hang
->> +kms_vblank@pipe-C-accuracy-idle
->> +kms_vblank@pipe-C-query-idle
->> +kms_vblank@pipe-C-query-busy
->> +kms_vblank@pipe-C-query-busy-hang
->> +kms_vblank@pipe-C-query-forked
->> +kms_vblank@pipe-C-query-forked-busy
->> +kms_vblank@pipe-C-query-forked-busy-hang
->> +kms_vblank@pipe-C-query-forked-hang
->> +kms_vblank@pipe-C-ts-continuation-dpms-rpm
->> +kms_vblank@pipe-C-ts-continuation-dpms-suspend
->> +kms_vblank@pipe-C-ts-continuation-idle
->> +kms_vblank@pipe-C-ts-continuation-idle-hang
->> +kms_vblank@pipe-C-ts-continuation-modeset
->> +kms_vblank@pipe-C-ts-continuation-modeset-hang
->> +kms_vblank@pipe-C-ts-continuation-modeset-rpm
->> +kms_vblank@pipe-C-ts-continuation-suspend
->> +kms_vblank@pipe-C-wait-busy
->> +kms_vblank@pipe-C-wait-busy-hang
->> +kms_vblank@pipe-C-wait-forked
->> +kms_vblank@pipe-C-wait-forked-busy
->> +kms_vblank@pipe-C-wait-forked-busy-hang
->> +kms_vblank@pipe-C-wait-forked-hang
->> +kms_vblank@pipe-C-wait-idle
->> +kms_vblank@pipe-C-wait-idle-hang
->> +kms_vblank@pipe-D-accuracy-idle
->> +kms_vblank@pipe-D-query-busy
->> +kms_vblank@pipe-D-query-busy-hang
->> +kms_vblank@pipe-D-query-forked
->> +kms_vblank@pipe-D-query-forked-busy
->> +kms_vblank@pipe-D-query-forked-busy-hang
->> +kms_vblank@pipe-D-query-forked-hang
->> +kms_vblank@pipe-D-query-idle
->> +kms_vblank@pipe-D-query-idle-hang
->> +kms_vblank@pipe-D-ts-continuation-dpms-rpm
->> +kms_vblank@pipe-D-ts-continuation-dpms-suspend
->> +kms_vblank@pipe-D-ts-continuation-idle
->> +kms_vblank@pipe-D-ts-continuation-idle-hang
->> +kms_vblank@pipe-D-ts-continuation-modeset
->> +kms_vblank@pipe-D-ts-continuation-modeset-hang
->> +kms_vblank@pipe-D-ts-continuation-modeset-rpm
->> +kms_vblank@pipe-D-ts-continuation-suspend
->> +kms_vblank@pipe-D-wait-busy
->> +kms_vblank@pipe-D-wait-busy-hang
->> +kms_vblank@pipe-D-wait-forked
->> +kms_vblank@pipe-D-wait-forked-busy
->> +kms_vblank@pipe-D-wait-forked-busy-hang
->> +kms_vblank@pipe-D-wait-forked-hang
->> +kms_vblank@pipe-D-wait-idle
->> +kms_vblank@pipe-D-wait-idle-hang
->> +kms_vblank@pipe-E-accuracy-idle
->> +kms_vblank@pipe-E-query-busy
->> +kms_vblank@pipe-E-query-busy-hang
->> +kms_vblank@pipe-E-query-forked
->> +kms_vblank@pipe-E-query-forked-busy
->> +kms_vblank@pipe-E-query-forked-busy-hang
->> +kms_vblank@pipe-E-query-forked-hang
->> +kms_vblank@pipe-E-query-idle
->> +kms_vblank@pipe-E-query-idle-hang
->> +kms_vblank@pipe-E-ts-continuation-dpms-rpm
->> +kms_vblank@pipe-E-ts-continuation-dpms-suspend
->> +kms_vblank@pipe-E-ts-continuation-idle
->> +kms_vblank@pipe-E-ts-continuation-idle-hang
->> +kms_vblank@pipe-E-ts-continuation-modeset
->> +kms_vblank@pipe-E-ts-continuation-modeset-hang
->> +kms_vblank@pipe-E-ts-continuation-modeset-rpm
->> +kms_vblank@pipe-E-ts-continuation-suspend
->> +kms_vblank@pipe-E-wait-busy
->> +kms_vblank@pipe-E-wait-busy-hang
->> +kms_vblank@pipe-E-wait-forked
->> +kms_vblank@pipe-E-wait-forked-busy
->> +kms_vblank@pipe-E-wait-forked-busy-hang
->> +kms_vblank@pipe-E-wait-forked-hang
->> +kms_vblank@pipe-E-wait-idle
->> +kms_vblank@pipe-E-wait-idle-hang
->> +kms_vblank@pipe-F-accuracy-idle
->> +kms_vblank@pipe-F-query-busy
->> +kms_vblank@pipe-F-query-busy-hang
->> +kms_vblank@pipe-F-query-forked
->> +kms_vblank@pipe-F-query-forked-busy
->> +kms_vblank@pipe-F-query-forked-busy-hang
->> +kms_vblank@pipe-F-query-forked-hang
->> +kms_vblank@pipe-F-query-idle
->> +kms_vblank@pipe-F-query-idle-hang
->> +kms_vblank@pipe-F-ts-continuation-dpms-rpm
->> +kms_vblank@pipe-F-ts-continuation-dpms-suspend
->> +kms_vblank@pipe-F-ts-continuation-idle
->> +kms_vblank@pipe-F-ts-continuation-idle-hang
->> +kms_vblank@pipe-F-ts-continuation-modeset
->> +kms_vblank@pipe-F-ts-continuation-modeset-hang
->> +kms_vblank@pipe-F-ts-continuation-modeset-rpm
->> +kms_vblank@pipe-F-ts-continuation-suspend
->> +kms_vblank@pipe-F-wait-busy
->> +kms_vblank@pipe-F-wait-busy-hang
->> +kms_vblank@pipe-F-wait-forked
->> +kms_vblank@pipe-F-wait-forked-busy
->> +kms_vblank@pipe-F-wait-forked-busy-hang
->> +kms_vblank@pipe-F-wait-forked-hang
->> +kms_vblank@pipe-F-wait-idle
->> +kms_vblank@pipe-F-wait-idle-hang
->> +kms_vblank@pipe-G-accuracy-idle
->> +kms_vblank@pipe-G-query-busy
->> +kms_vblank@pipe-G-query-busy-hang
->> +kms_vblank@pipe-G-query-forked
->> +kms_vblank@pipe-G-query-forked-busy
->> +kms_vblank@pipe-G-query-forked-busy-hang
->> +kms_vblank@pipe-G-query-forked-hang
->> +kms_vblank@pipe-G-query-idle
->> +kms_vblank@pipe-G-query-idle-hang
->> +kms_vblank@pipe-G-ts-continuation-dpms-rpm
->> +kms_vblank@pipe-G-ts-continuation-dpms-suspend
->> +kms_vblank@pipe-G-ts-continuation-idle
->> +kms_vblank@pipe-G-ts-continuation-idle-hang
->> +kms_vblank@pipe-G-ts-continuation-modeset
->> +kms_vblank@pipe-G-ts-continuation-modeset-hang
->> +kms_vblank@pipe-G-ts-continuation-modeset-rpm
->> +kms_vblank@pipe-G-ts-continuation-suspend
->> +kms_vblank@pipe-G-wait-busy
->> +kms_vblank@pipe-G-wait-busy-hang
->> +kms_vblank@pipe-G-wait-forked
->> +kms_vblank@pipe-G-wait-forked-busy
->> +kms_vblank@pipe-G-wait-forked-busy-hang
->> +kms_vblank@pipe-G-wait-forked-hang
->> +kms_vblank@pipe-G-wait-idle
->> +kms_vblank@pipe-G-wait-idle-hang
->> +kms_vblank@pipe-H-accuracy-idle
->> +kms_vblank@pipe-H-query-busy
->> +kms_vblank@pipe-H-query-busy-hang
->> +kms_vblank@pipe-H-query-forked
->> +kms_vblank@pipe-H-query-forked-busy
->> +kms_vblank@pipe-H-query-forked-busy-hang
->> +kms_vblank@pipe-H-query-forked-hang
->> +kms_vblank@pipe-H-query-idle
->> +kms_vblank@pipe-H-query-idle-hang
->> +kms_vblank@pipe-H-ts-continuation-dpms-rpm
->> +kms_vblank@pipe-H-ts-continuation-dpms-suspend
->> +kms_vblank@pipe-H-ts-continuation-idle
->> +kms_vblank@pipe-H-ts-continuation-idle-hang
->> +kms_vblank@pipe-H-ts-continuation-modeset
->> +kms_vblank@pipe-H-ts-continuation-modeset-hang
->> +kms_vblank@pipe-H-ts-continuation-modeset-rpm
->> +kms_vblank@pipe-H-ts-continuation-suspend
->> +kms_vblank@pipe-H-wait-busy
->> +kms_vblank@pipe-H-wait-busy-hang
->> +kms_vblank@pipe-H-wait-forked
->> +kms_vblank@pipe-H-wait-forked-busy
->> +kms_vblank@pipe-H-wait-forked-busy-hang
->> +kms_vblank@pipe-H-wait-forked-hang
->> +kms_vblank@pipe-H-wait-idle
->> +kms_vblank@pipe-H-wait-idle-hang
->> +kms_vrr@flip-basic
->> +kms_vrr@flip-dpms
->> +kms_vrr@flip-suspend
->> +kms_vrr@flipline
->> +kms_vrr@negative-basic
->> +kms_writeback@writeback-check-output
->> +kms_writeback@writeback-fb-id
->> +kms_writeback@writeback-invalid-parameters
->> +kms_writeback@writeback-pixel-formats
-> 
-> I wonder if we could just do
-> 
-> drm_read.*
-> kms_addfb_basic.*
-> kms_atomic.*
-> kms_bw.*
-> kms_color.*
-> kms_concurrent.*
-> kms_content_protection.*
-> kms_cursor_crc.*
-> kms_cursor_legacy.*
-> 
-> ... (and so on)
-> 
-> to simplify this list (in case most of the tests with that prefix are 
-> provoking that issue).
-> 
-> Regards,
-> Helen
+My understanding about the DBI2 space was not clear and your reply clarified
+that. I will implement the write_dbi2() callback as suggested.
 
-Sorry, I just saw Daniel's reply about Valgrind, agreed there (so just 
-ignore my comment above).
+- Mani
 
-Regards,
-Helen
+> So no, I failed to find any firm justification for the approach you
+> suggest.
+> 
+> -Serge(y)
+> 
+> > 
+> > - Mani
+> > 
+> > > /* Common DWC controller ops */
+> > > static const struct dw_pcie_ops pci_ops = {
+> > > 	.link_up = qcom_pcie_dw_link_up,
+> > > 	.start_link = qcom_pcie_dw_start_link,
+> > > 	.stop_link = qcom_pcie_dw_stop_link,
+> > > 	.write_dbi2 = qcom_pcie_write_dbi2,
+> > > };
+> > > 
+> > > For that reason there is absolutely no need in adding the new
+> > > callbacks.
+> > > 
+> > > -Serge(y)
+> > > 
+> > > > 
+> > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > > ---
+> > > >  drivers/pci/controller/dwc/pcie-designware-ep.c |  6 ++++++
+> > > >  drivers/pci/controller/dwc/pcie-designware.h    | 13 +++++++++++++
+> > > >  2 files changed, 19 insertions(+)
+> > > > 
+> > > > diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+> > > > index d34a5e87ad18..1874fb3d8df4 100644
+> > > > --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
+> > > > +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+> > > > @@ -269,11 +269,17 @@ static int dw_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+> > > >  
+> > > >  	dw_pcie_dbi_ro_wr_en(pci);
+> > > >  
+> > > > +	dw_pcie_dbi_cs2_en(pci);
+> > > >  	dw_pcie_writel_dbi2(pci, reg_dbi2, lower_32_bits(size - 1));
+> > > > +	dw_pcie_dbi_cs2_dis(pci);
+> > > > +
+> > > >  	dw_pcie_writel_dbi(pci, reg, flags);
+> > > >  
+> > > >  	if (flags & PCI_BASE_ADDRESS_MEM_TYPE_64) {
+> > > > +		dw_pcie_dbi_cs2_en(pci);
+> > > >  		dw_pcie_writel_dbi2(pci, reg_dbi2 + 4, upper_32_bits(size - 1));
+> > > > +		dw_pcie_dbi_cs2_dis(pci);
+> > > > +
+> > > >  		dw_pcie_writel_dbi(pci, reg + 4, 0);
+> > > >  	}
+> > > >  
+> > > > diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+> > > > index 55ff76e3d384..3cba27b5bbe5 100644
+> > > > --- a/drivers/pci/controller/dwc/pcie-designware.h
+> > > > +++ b/drivers/pci/controller/dwc/pcie-designware.h
+> > > > @@ -379,6 +379,7 @@ struct dw_pcie_ops {
+> > > >  			     size_t size, u32 val);
+> > > >  	void    (*write_dbi2)(struct dw_pcie *pcie, void __iomem *base, u32 reg,
+> > > >  			      size_t size, u32 val);
+> > > > +	void	(*dbi_cs2_access)(struct dw_pcie *pcie, bool enable);
+> > > >  	int	(*link_up)(struct dw_pcie *pcie);
+> > > >  	enum dw_pcie_ltssm (*get_ltssm)(struct dw_pcie *pcie);
+> > > >  	int	(*start_link)(struct dw_pcie *pcie);
+> > > > @@ -508,6 +509,18 @@ static inline void dw_pcie_dbi_ro_wr_dis(struct dw_pcie *pci)
+> > > >  	dw_pcie_writel_dbi(pci, reg, val);
+> > > >  }
+> > > >  
+> > > > +static inline void dw_pcie_dbi_cs2_en(struct dw_pcie *pci)
+> > > > +{
+> > > > +	if (pci->ops && pci->ops->dbi_cs2_access)
+> > > > +		pci->ops->dbi_cs2_access(pci, true);
+> > > > +}
+> > > > +
+> > > > +static inline void dw_pcie_dbi_cs2_dis(struct dw_pcie *pci)
+> > > > +{
+> > > > +	if (pci->ops && pci->ops->dbi_cs2_access)
+> > > > +		pci->ops->dbi_cs2_access(pci, false);
+> > > > +}
+> > > > +
+> > > >  static inline int dw_pcie_start_link(struct dw_pcie *pci)
+> > > >  {
+> > > >  	if (pci->ops && pci->ops->start_link)
+> > > > 
+> > > > -- 
+> > > > 2.25.1
+> > > > 
+> > 
+> > -- 
+> > மணிவண்ணன் சதாசிவம்
+
+-- 
+மணிவண்ணன் சதாசிவம்
