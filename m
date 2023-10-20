@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECC357D0FA6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Oct 2023 14:30:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BFF8E7D106F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Oct 2023 15:23:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377155AbjJTMaZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Oct 2023 08:30:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36222 "EHLO
+        id S1377176AbjJTNXY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Oct 2023 09:23:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376956AbjJTMaY (ORCPT
+        with ESMTP id S1377121AbjJTNXY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Oct 2023 08:30:24 -0400
+        Fri, 20 Oct 2023 09:23:24 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DE8711B;
-        Fri, 20 Oct 2023 05:30:23 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A12F2C433C9;
-        Fri, 20 Oct 2023 12:30:22 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2112E19E;
+        Fri, 20 Oct 2023 06:23:22 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F6ABC433C8;
+        Fri, 20 Oct 2023 13:23:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1697805022;
-        bh=+uf6l8qxqJVbft1lkynnlas3Eiq4n3dk8l8L9rbR2KU=;
+        s=k20201202; t=1697808201;
+        bh=TXLUQxsI9mTYageNVxgktdbFEEqiw6lkZcz9AFp4qBI=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=AdIZAzR2SeCY5X7Hmq7TjcXV2kOHMK1xcGYHqfbP/9kBYVoQauINtdOB2nGXFewPS
-         CGu4T/rYw8gHr5+ezTZCMSC78sKZE3tyFg8VrNCfH+ctrcT/SJJoSUQT6rxjz4JdPc
-         aAtNHlqzvU3/LPg+hZwVJv8egBBGZsufQhfmq0jDW5Czt0oyqjUKXQ4RwTNbow4zkr
-         nlHIfXwI8fBP5KTzRcJw1NYUyRBZdRUg9qpRLx2TMIZVetvgaDe9qGk5UTvQCrskEx
-         qwGD8+MTgCZX1CgYEdWa8TM5x05Gc3y0w+XWlx29FR3rnnksWvyQN+ixMjX4MuiUbl
-         4lSNYOHxpMZvg==
+        b=q6BPaSqGyPLft1OpOae26qJfcW2BHB791GbPCRW5WdcqIO7PwnREweScJjXR//tNh
+         2/ANzlOcenyu5Q3hEhIB4yJCoaMmeAzbhNNnCAp9zT6VjwWxjZoA18h2XEMcN0QgM0
+         GZFZknRBsWDlbyn9RcI17nyACYLUVEeXLeBFG5pnJ5TrDBEf7xdWlHjw//3dXG/It/
+         lJg5tozdst6Me5SZ6m5SrRUFO8X7cgtmdbhyuksC+QAXkGCAGqNhCyTQQuPF1X8XZ0
+         MuR0jm8PJyIPo0jLDyLlCf69SnOLRjT/acp8iE1nZUDoNiuQsPpWKkCjQ4ZXzv93/C
+         9WHB+P3M0dMMQ==
 Received: from johan by xi.lan with local (Exim 4.96)
         (envelope-from <johan@kernel.org>)
-        id 1qtoe3-0002Q9-1s;
-        Fri, 20 Oct 2023 14:30:28 +0200
-Date:   Fri, 20 Oct 2023 14:30:27 +0200
+        id 1qtpTL-0002fV-0v;
+        Fri, 20 Oct 2023 15:23:27 +0200
+Date:   Fri, 20 Oct 2023 15:23:27 +0200
 From:   Johan Hovold <johan@kernel.org>
 To:     Krishna Kurapati <quic_kriskura@quicinc.com>
 Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
@@ -48,88 +48,245 @@ Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
         quic_jackp@quicinc.com, ahalaney@redhat.com,
-        quic_shazhuss@quicinc.com,
-        Bjorn Andersson <quic_bjorande@quicinc.com>
-Subject: Re: [PATCH v13 04/10] usb: dwc3: qcom: Add helper function to
- request threaded IRQ
-Message-ID: <ZTJy456413VVT8Uv@hovoldconsulting.com>
+        quic_shazhuss@quicinc.com
+Subject: Re: [PATCH v13 05/10] usb: dwc3: qcom: Refactor IRQ handling in QCOM
+ Glue driver
+Message-ID: <ZTJ_T1UL8-s2cgNz@hovoldconsulting.com>
 References: <20231007154806.605-1-quic_kriskura@quicinc.com>
- <20231007154806.605-5-quic_kriskura@quicinc.com>
+ <20231007154806.605-6-quic_kriskura@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231007154806.605-5-quic_kriskura@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20231007154806.605-6-quic_kriskura@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Oct 07, 2023 at 09:18:00PM +0530, Krishna Kurapati wrote:
-> Cleanup setup irq call by implementing a new prep_irq helper function
-> and using it to request threaded IRQ's.
+First, drop "QCOM Glue driver" from Subject, you already have the "qcom"
+prefix.
 
-Please replace this with:
+On Sat, Oct 07, 2023 at 09:18:01PM +0530, Krishna Kurapati wrote:
+> Refactor setup_irq call to facilitate reading multiport IRQ's along
 
-	Refactor interrupt setup by adding a new helper function for
-	requesting the wakeup interrupts.
+"IRQs" or just "interrupts"
 
-and similarly for Subject ("wakeup interrupts").
+> with non mulitport ones. Read through the interrupt-names property
 
+"multiport"
+
+Please spell check all your patches (commit messages and code) before
+posting, it's not the reviewers job.
+
+> to figure out, the type of interrupt (DP/DM/HS/SS) and to which port
+> it belongs. Also keep track of port index to calculate port count
+> based on interrupts provided as input in DT.
+> 
 > Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > ---
->  drivers/usb/dwc3/dwc3-qcom.c | 59 ++++++++++++++++--------------------
->  1 file changed, 26 insertions(+), 33 deletions(-)
+>  drivers/usb/dwc3/dwc3-qcom.c | 210 +++++++++++++++++++++++++----------
+>  1 file changed, 154 insertions(+), 56 deletions(-)
 > 
 > diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index 3de43df6bbe8..ef2006db7601 100644
+> index ef2006db7601..863892284146 100644
 > --- a/drivers/usb/dwc3/dwc3-qcom.c
 > +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -535,6 +535,24 @@ static int dwc3_qcom_get_irq(struct platform_device *pdev,
->  	return ret;
->  }
+> @@ -53,14 +53,25 @@
+>  #define APPS_USB_AVG_BW 0
+>  #define APPS_USB_PEAK_BW MBps_to_icc(40)
 >  
-> +static int dwc3_qcom_prep_irq(struct dwc3_qcom *qcom, char *irq_name,
-> +				char *disp_name, int irq)
+> +#define NUM_PHY_IRQ		4
+> +
+> +enum dwc3_qcom_ph_index {
 
-Please rename this one dwc3_qcom_request_irq() so that is obvious what
-it does without having to look at the implementation.
+"phy_index"
 
-This series eventually makes the driver only call this with irq_name ==
-disp_name so just drop the latter and rename the parameter as "name" and
-mention that in the commit message.
+> +	DP_HS_PHY_IRQ_INDEX = 0,
+> +	DM_HS_PHY_IRQ_INDEX,
+> +	SS_PHY_IRQ_INDEX,
+> +	HS_PHY_IRQ_INDEX,
+> +};
+> +
+>  struct dwc3_acpi_pdata {
+>  	u32			qscratch_base_offset;
+>  	u32			qscratch_base_size;
+>  	u32			dwc3_core_base_size;
+> +	/*
+> +	 * The phy_irq_index corresponds to ACPI indexes of (in order) DP/DM/SS
+> +	 * IRQ's respectively.
+> +	 */
+> +	int			phy_irq_index[NUM_PHY_IRQ - 1];
+>  	int			hs_phy_irq_index;
+> -	int			dp_hs_phy_irq_index;
+> -	int			dm_hs_phy_irq_index;
+> -	int			ss_phy_irq_index;
+>  	bool			is_urs;
+>  };
+>  
+> @@ -73,10 +84,12 @@ struct dwc3_qcom {
+>  	int			num_clocks;
+>  	struct reset_control	*resets;
+>  
+> +	/*
+> +	 * The phy_irq corresponds to IRQ's registered for (in order) DP/DM/SS
+> +	 * respectively.
+> +	 */
+> +	int			phy_irq[NUM_PHY_IRQ - 1][DWC3_MAX_PORTS];
+>  	int			hs_phy_irq;
+> -	int			dp_hs_phy_irq;
+> -	int			dm_hs_phy_irq;
+> -	int			ss_phy_irq;
 
-Also move irq before name and add the missing const. That is:
+I'm not sure using arrays like this is a good idea (and haven't you
+switched the indexes above?).
 
-	static int dwc3_qcom_request_irq(struct dwc3_qcom *qcom, int irq, const char *name);
+Why not add a port structure instead?
 
+	struct dwc3_qcom_port {
+		int hs_phy_irq;
+		int dp_hs_phy_irq;
+		int dm_hs_phy_irq;
+		int ss_phy_irq;
+	};
+
+and then have
+
+	struct dwc3_qcom_port ports[DWC3_MAX_PORTS];
+
+in dwc3_qcom. The port structure can the later also be amended with
+whatever other additional per-port data there is need for.
+
+This should make the implementation cleaner.
+
+I also don't like the special handling of hs_phy_irq; if this is really
+just another name for the pwr_event_irq then this should be cleaned up
+before making the code more complicated than it needs to be.
+
+Make sure to clarify this before posting a new revision.
+
+>  	enum usb_device_speed	usb2_speed;
+>  
+>  	struct extcon_dev	*edev;
+  
+>  	if (qcom->usb2_speed == USB_SPEED_LOW) {
+> -		dwc3_qcom_disable_wakeup_irq(qcom->dm_hs_phy_irq);
+> +		dwc3_qcom_disable_wakeup_irq(qcom->phy_irq[DM_HS_PHY_IRQ_INDEX][0]);
+
+For example, this would become
+
+	dwc3_qcom_disable_wakeup_irq(qcom->ports[0].dm_hs_phy_irq);
+
+which is much more readable.
+
+> -static int dwc3_qcom_prep_irq(struct dwc3_qcom *qcom, char *irq_name,
+> -				char *disp_name, int irq)
+> +static int dwc3_qcom_prep_irq(struct dwc3_qcom *qcom, const char *irq_name,
+> +				const char *disp_name, int irq)
+
+Ok, here you did drop the second name parameter, but without renaming
+the first and hidden in a long diff without any mention anywhere.
+
+> +static int dwc3_qcom_get_port_index(const char *irq_name, int irq_index)
 > +{
-> +	int ret;
+> +	int port_index = -1;
 > +
-> +	/* Keep wakeup interrupts disabled until suspend */
-> +	irq_set_status_flags(irq, IRQ_NOAUTOEN);
-> +	ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
-> +					qcom_dwc3_resume_irq,
-> +					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
-> +					disp_name, qcom);
+> +	switch (irq_index) {
+> +	case DP_HS_PHY_IRQ_INDEX:
+> +		if (strcmp(irq_name, "dp_hs_phy_irq") == 0)
+> +			port_index = 1;
+> +		else
+> +			sscanf(irq_name, "dp_hs_phy_%d", &port_index);
+> +		break;
 > +
 
-Drop stray newline.
+No need for newlines after break.
 
-> +	if (ret)
-> +		dev_err(qcom->dev, "%s failed: %d\n", irq_name, ret);
-
-Please spell out
-
-	"failed to request irq %s: %d\n"
-
+> +	case DM_HS_PHY_IRQ_INDEX:
+> +		if (strcmp(irq_name, "dm_hs_phy_irq") == 0)
+> +			port_index = 1;
+> +		else
+> +			sscanf(irq_name, "dm_hs_phy_%d", &port_index);
+> +		break;
 > +
-> +	return ret;
+> +	case SS_PHY_IRQ_INDEX:
+> +		if (strcmp(irq_name, "ss_phy_irq") == 0)
+> +			port_index = 1;
+> +		else
+> +			sscanf(irq_name, "ss_phy_%d", &port_index);
+> +		break;
+> +
+> +	case HS_PHY_IRQ_INDEX:
+> +		port_index = 1;
+> +		break;
+> +	}
+> +
+> +	if (port_index > DWC3_MAX_PORTS)
+> +		port_index = -1;
+> +
+> +	return port_index;
 > +}
+
+>  static int dwc3_qcom_setup_irq(struct platform_device *pdev)
+>  {
+>  	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
+> -	const struct dwc3_acpi_pdata *pdata = qcom->acpi_pdata;
+> +	struct device_node *np = pdev->dev.of_node;
+> +	const char **irq_names;
+> +	int port_index;
+> +	int acpi_index;
+> +	int irq_count;
+> +	int irq_index;
+>  	int irq;
+>  	int ret;
+> +	int i;
+>  
+> -	irq = dwc3_qcom_get_irq(pdev, "hs_phy_irq",
+> -				pdata ? pdata->hs_phy_irq_index : -1);
+> -	if (irq > 0) {
+> -		ret = dwc3_qcom_prep_irq(qcom, "hs_phy_irq", "qcom_dwc3 HS", irq);
+> -		if (ret)
+> -			return ret;
+> -		qcom->hs_phy_irq = irq;
+> -	}
+> +	irq_count = of_property_count_strings(np, "interrupt-names");
+
+of_property_count_strings() can return negative errnos and you don't
+have any sanity checks for the return value...
+
+Please slow down, and also make sure to get your patches reviewed
+internally before posting new revisions.
+
+> +	irq_names = devm_kzalloc(&pdev->dev, sizeof(*irq_names) * irq_count, GFP_KERNEL);
+
+devm_kcalloc()
+
+> +	if (!irq_names)
+> +		return -ENOMEM;
+>  
+> -	irq = dwc3_qcom_get_irq(pdev, "dp_hs_phy_irq",
+> -				pdata ? pdata->dp_hs_phy_irq_index : -1);
+> -	if (irq > 0) {
+> -		ret = dwc3_qcom_prep_irq(qcom, "dp_hs_phy_irq", "qcom_dwc3 DP_HS", irq);
+> -		if (ret)
+> -			return ret;
+> -		qcom->dp_hs_phy_irq = irq;
+> -	}
+> +	ret = of_property_read_string_array(np, "interrupt-names",
+> +						irq_names, irq_count);
+
+No sanity check here either?
+
+> +	for (i = 0; i < irq_count; i++) {
+> +		irq_index = dwc3_qcom_get_irq_index(irq_names[i]);
+> +		if (irq_index == -1) {
+> +			dev_dbg(&pdev->dev, "Invalid IRQ not handled");
+> +			continue;
+> +		}
+
+I'll just stop reviewing here. This is a waste of my time.
 
 Johan
