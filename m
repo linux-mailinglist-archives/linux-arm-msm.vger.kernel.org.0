@@ -2,77 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A2D987D0CFE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Oct 2023 12:20:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 64C137D0D50
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Oct 2023 12:36:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376768AbjJTKUw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Oct 2023 06:20:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45200 "EHLO
+        id S1376937AbjJTKgG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Oct 2023 06:36:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376648AbjJTKUv (ORCPT
+        with ESMTP id S1376986AbjJTKf7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Oct 2023 06:20:51 -0400
-Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92620D55
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Oct 2023 03:20:48 -0700 (PDT)
-Received: by mail-yb1-xb2e.google.com with SMTP id 3f1490d57ef6-d9a7a3e17d1so633481276.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Oct 2023 03:20:48 -0700 (PDT)
+        Fri, 20 Oct 2023 06:35:59 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC2861712
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Oct 2023 03:35:51 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-51e28cac164so3714280a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Oct 2023 03:35:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697797247; x=1698402047; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=W79U9iklHwLSbhR/94JhGNefp7ntZs362QatUfI3IfI=;
-        b=nfxlTP0z3z6L6PAXEscyKxYpQTRCM9o0adr1SrnQ9q7CTPZqHv+abj+1QI+m0iKr2+
-         BBcWd5APgf9VIUg6OVry26MMWPBCNMIkeM3nzriOyFD6/q+KgwZohtWaGScP0H2GohMw
-         eM3dEx+RI6vZdgKAuJXQqLppBga08jWW/11ebkjXAqF5MRBprg1hXmfMcPX2PC9LFN8c
-         wideoaqq7CUToxKN310zNTGaXduLInkr2lJ9+W6obY+h/ynKuDoHRnLKLgwEoD85vP5b
-         NBXLAhzvJnAkR/oQxFosT3LkLycnau5bKrBvF6CWmlKPfhygvnwPUAvv+rROVDedtnpf
-         SebA==
+        d=fairphone.com; s=fair; t=1697798150; x=1698402950; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=GPV3+mSCa7UCq+L+t94qLITay8xgJ9TNT1tiFr6+L2c=;
+        b=im8LOf5Aa3rFTDlDd4uCcX98bBMcf5l9mwHcjs9CvBC0Cy1QhSvKJZBurpHsBmNtHz
+         akkOXLnSw+J1iIWa9jgI/4tyLTzWBRcAY9zL9d/gMFFO41A7RQ55wuDndVqqCA2XuP84
+         PHXxz68Ify+PA6KM7RPdiogAZDkmCwjJkjvwmsikOez4B4PvYZ9p6Huqv5VtwYQG8Xrl
+         dcMrzsIlTtEEU9MPj9Za6vBI4zgYd3N99YFvSrn1NWUMcntIEBgPtaPSYRMzHywTOGwJ
+         2sVlHfr/mOK2iKcG3LLSGK7aSYMp0nIlfanqtgFtRvtz1Rg1d96tL3leJQDZ+Zv4IIJE
+         Hukg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697797247; x=1698402047;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1697798150; x=1698402950;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=W79U9iklHwLSbhR/94JhGNefp7ntZs362QatUfI3IfI=;
-        b=NviGcdxBiO1/OUh/BVRJ1Kn+GUNysGsSnMA2An5V22f7lMwym5Z7uOUvO0Fd+qx+AY
-         u6BqBJjFPGUBEVOHufo3lYIl3yzAZRfZ9bHFCw3GVAP/J6UFsWJtxYdW0kRQ6jU54Vcf
-         +Q0yUCualmRpE6pfbh7iZildZNpfBhJ319AZL1vqV/1QLK8E4OXOFuJTmvvflfnfYfZn
-         niyqdV35yqOUMC9MFPrIvCCaHvcaM8mfG+ye710EgiypisLAUUOICfYyJt7tRFlZfUEM
-         idQpN+RFW8xwjXLEktcEdgmow4QZ8LA4VJdas7ugy9ULymbhJQ0dI9IQYw5sQ5lAtJ9P
-         E9lA==
-X-Gm-Message-State: AOJu0YyP0rkXmLnzfBJYX6CIHlNxRuwCbu/Z8WuUvJuxUtbKtuDwOQXS
-        4Te/puiZszDGQlru7JQNhWr8/fHm36iDy5mOVy0x9g==
-X-Google-Smtp-Source: AGHT+IFppxZveglONFPIGli2rJYFfP862ng1fj8gvWuwqd6m5OzeXOk1StoswlMPW+jNGU8qSha8o4+c/CfPZy2DJjA=
-X-Received: by 2002:a5b:f4c:0:b0:d9a:3bf1:35e9 with SMTP id
- y12-20020a5b0f4c000000b00d9a3bf135e9mr1288441ybr.3.1697797247740; Fri, 20 Oct
- 2023 03:20:47 -0700 (PDT)
+        bh=GPV3+mSCa7UCq+L+t94qLITay8xgJ9TNT1tiFr6+L2c=;
+        b=QF4RzCwc/2FUDYAT4HGd6wkc/kcueb+AwYCFldh2+1aurBV8h6ynglDn2du/Ov91dz
+         y28C4a/TZ3tRy9vArpVK5cKWfpnDIgwrEJTbC4j99cxtsopx25s0OeFmkRV6RU/fVM5C
+         cb5bCIet3BqrD226GsDzneDebZjQgBMTu2JLz5U6j4mvY2W60tyoJEAnlHbXhDVpshUQ
+         Ap4szTgb+e03jNwiWpTcabPGVKGtKY1qk4LjSmEzAvY0QmJMFNjo6NstTNHa6f0ef1YQ
+         3MfDctO1z8Y+2Yz5edEeGFA9hehXO8qG/G45oSTtx5w0/gTrX7FHsuyBqglU1GL+V3qz
+         NfOQ==
+X-Gm-Message-State: AOJu0Yx+u2bDWgheHDbrRYZbbdZzoyygufJ3/JpcrZHD479k4W9LDm9z
+        YIPF8gZJ9pndcOhrrpRFKPYoYQ==
+X-Google-Smtp-Source: AGHT+IHJToqlCc02RJhLLsWDtbne22EHGQDujcGIxJ09VOwX3CVtjhc4BmJbIkc8DjNLMYWuZ6+PBw==
+X-Received: by 2002:a17:907:728f:b0:9a5:7dec:fab9 with SMTP id dt15-20020a170907728f00b009a57decfab9mr4012688ejc.9.1697798149982;
+        Fri, 20 Oct 2023 03:35:49 -0700 (PDT)
+Received: from otso.luca.vpn.lucaweiss.eu (k10064.upc-k.chello.nl. [62.108.10.64])
+        by smtp.gmail.com with ESMTPSA id h7-20020a1709063c0700b0099c53c4407dsm1226701ejg.78.2023.10.20.03.35.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Oct 2023 03:35:49 -0700 (PDT)
+From:   Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH v2 0/2] Add driver for NXP PTN36502 Type-C redriver
+Date:   Fri, 20 Oct 2023 12:35:45 +0200
+Message-Id: <20231020-ptn36502-v2-0-b37a337d463e@fairphone.com>
 MIME-Version: 1.0
-References: <20231018-msm8909-cpufreq-v2-0-0962df95f654@kernkonzept.com>
- <20231018-msm8909-cpufreq-v2-2-0962df95f654@kernkonzept.com>
- <CAPDyKFot9=M1ooP_Q1AOgG5o_4DTQ2qsyai1ZdXAzBwf89W4uA@mail.gmail.com>
- <CAPDyKFr5A-P=UhWs4rUMBWup3pH75WAhcZ56Y2_Sfk3=WfxRCQ@mail.gmail.com>
- <ZTEph19CAvbgbN_E@gerhold.net> <CAPDyKFo1PVZYsdW_=92EtMmTT9hmkm-mBR69N_WvPh4f-Hw=NA@mail.gmail.com>
- <ZTFBzjLAaaUHux4O@gerhold.net> <CAPDyKFruYqngQoW21Ra+hm4ybjS7LoD4casYbo8bP4J+hLUnaA@mail.gmail.com>
- <ZTFiXJ2XO4WQN_gu@gerhold.net>
-In-Reply-To: <ZTFiXJ2XO4WQN_gu@gerhold.net>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Fri, 20 Oct 2023 12:20:11 +0200
-Message-ID: <CAPDyKFoRhDnx7SOiT1czcyteMJ=2KMOwZvn7ynDJsYtePthnxA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] cpufreq: qcom-nvmem: Enable virtual power domain devices
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAFYMmUC/23Myw7CIBCF4VdpZi1mAOlt5XuYLggd7CyEBhqia
+ fruYtcu/5OTb4dMiSnD2OyQqHDmGGqoSwNuseFJgufaoFBpiVKLdQu6NaiEsX1HBrtZtw7qfU3
+ k+X1Sj6n2wnmL6XPKRf7WP0iRAsXQSxzsTSN5d/eW07rEQFcXXzAdx/EFaEvHCKQAAAA=
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Conor Dooley <conor+dt@kernel.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.12.3
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -83,77 +83,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 19 Oct 2023 at 19:08, Stephan Gerhold <stephan@gerhold.net> wrote:
->
-> On Thu, Oct 19, 2023 at 05:19:53PM +0200, Ulf Hansson wrote:
-> > On Thu, 19 Oct 2023 at 16:49, Stephan Gerhold <stephan@gerhold.net> wrote:
-> > > On Thu, Oct 19, 2023 at 04:12:56PM +0200, Ulf Hansson wrote:
-> > > > On Thu, 19 Oct 2023 at 15:05, Stephan Gerhold <stephan@gerhold.net> wrote:
-> > > > > On Thu, Oct 19, 2023 at 01:26:19PM +0200, Ulf Hansson wrote:
-> > > > > > BTW, if you really need something like the above, the proper way to do
-> > > > > > it would instead be to call device_set_awake_path() for the device.
-> > > > > >
-> > > > > > This informs genpd that the device needs to stay powered-on during
-> > > > > > system suspend (assuming that GENPD_FLAG_ACTIVE_WAKEUP has been set
-> > > > > > for it), hence it will keep the corresponding PM domain powered-on
-> > > > > > too.
-> > > > >
-> > > > > Thanks, I can try if this works as alternative to the
-> > > > > dev_pm_syscore_device()!
-> > > >
-> > > > Yes, please. We don't want to abuse the dev_pm_syscore_device() thingy.
-> > >
-> > > Could you clarify the idea behind GENPD_FLAG_ACTIVE_WAKEUP? Would I set
-> > > it conditionally for all RPMPDs or just the ones consumed by the CPU?
-> > > How does the genpd *provider* know if one of its *consumer* devices
-> > > needs to have its power domain kept on for wakeup?
-> >
-> > We are thinking of the GENPD_FLAG_ACTIVE_WAKEUP as a platform
-> > configuration type of flag for the genpd in question. The consumer
-> > driver shouldn't need to know about the details of what is happening
-> > on the PM domain level - only whether it needs its device to remain
-> > powered-on during system suspend or not.
-> >
->
-> Thanks! I will test if this works for RPMPD and post new versions of the
-> patches. By coincidence I think this flag might actually be useful as
-> temporary solution for CPR. If I:
->
->  1. Change $subject patch to use device_set_awake_path() instead, and
->  2. Set GENPD_FLAG_ACTIVE_WAKEUP for the RPMPD genpds, but
->  3. Do *not* set GENPD_FLAG_ACTIVE_WAKEUP for the CPR genpd.
->
-> Then the genpd ->power_on|off() callbacks should still be called
-> for CPR during system suspend, right? :D
+The NXP PTN36502 is used in the Fairphone 5 smartphone, add a driver for
+it so we can soon enable DisplayPort over USB-C on this phone.
 
-Yes, correct, that should work fine!
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Changes in v2:
+- Use FIELD_PREP+GENMASK for register values
+- Move FIELD_GET for chip revision from macro to code (to align with
+  new register definition style)
+- Fix bad code alignment at ptn36502_bridge_attach function
+- Pick up tags
+- Link to v1: https://lore.kernel.org/r/20231013-ptn36502-v1-0-98109a430efc@fairphone.com
 
->
-> > I suspect that the GENPD_FLAG_ACTIVE_WAKEUP is probably okay to set
-> > for most genpds, but there may be some exceptions.
-> >
->
-> Out of curiosity, do you have an example for such an exception where
-> GENPD_FLAG_ACTIVE_WAKEUP shouldn't be set, aside from workarounds like
-> I just described?
->
-> As you said, the consumer device should just say that it wants to stay
-> powered for wakeup during suspend. But if its power domains get powered
-> off, I would expect that to break. How could a genpd driver still
-> provide power without being powered on? Wouldn't that rather be a low
-> performance state?
+---
+Luca Weiss (2):
+      dt-bindings: usb: add NXP PTN36502 Type-C redriver bindings
+      usb: typec: add support for PTN36502 redriver
 
-I think this boils down to how the power-rail that the genpd manages,
-is handled by the platform during system suspend.
+ .../devicetree/bindings/usb/nxp,ptn36502.yaml      |  94 +++++
+ drivers/usb/typec/mux/Kconfig                      |  10 +
+ drivers/usb/typec/mux/Makefile                     |   1 +
+ drivers/usb/typec/mux/ptn36502.c                   | 444 +++++++++++++++++++++
+ 4 files changed, 549 insertions(+)
+---
+base-commit: e3b18f7200f45d66f7141136c25554ac1e82009b
+change-id: 20231013-ptn36502-5a87e507d36c
 
-In principle there could be some other separate logic that helps a
-FW/PMIC to understand whether it needs to keep the power-rail on or
-not - no matter whether the genpd releases its vote for it during
-system suspend.
+Best regards,
+-- 
+Luca Weiss <luca.weiss@fairphone.com>
 
-This becomes mostly hypothetical, but clearly there are a lot of
-genpd/platforms that don't use GENPD_FLAG_ACTIVE_WAKEUP too. If those
-are just mistakes or just not needed, I don't actually know.
-
-Kind regards
-Uffe
