@@ -2,351 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 60EA17D0C66
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Oct 2023 11:57:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A2D987D0CFE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Oct 2023 12:20:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376648AbjJTJ5Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Oct 2023 05:57:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49914 "EHLO
+        id S1376768AbjJTKUw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Oct 2023 06:20:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376601AbjJTJ5X (ORCPT
+        with ESMTP id S1376648AbjJTKUv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Oct 2023 05:57:23 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B3D1C2;
-        Fri, 20 Oct 2023 02:57:21 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB53DC433C8;
-        Fri, 20 Oct 2023 09:57:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1697795841;
-        bh=8/3Mm/s+5mfGxjNsgZ92fL0tT02zsm5ukwZkUVOz8fM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Cnv5bBGr9VIi0j6jLXALUbaa464rEO7jQIXhrRckYRR6Gg5OPb2zzR2eLRIAuaUuD
-         gRmuvjKDtAm6n+qj5ZwGUiEXrWYgiJZc4kfUEv2MInmeAuSQweS/OQxBLFAvwLBRJl
-         eoOdJz0gFV2uOEAxsFnZrkuPv0YuxKIuIGaJgI3wDPxwWfOiaRJbOvNMV27sABO7Xx
-         VMUfO1mHC6ufHcNAdEEQx/NOShSoe7hSnds2jI0Ngpvy3nHZjEPu3+DrfSXUyktVgH
-         M8B0b0ZBi7yhRlkIwg+BBqfOEqDXk1baZDnAfjFs14udEPESB6nJ5ItRQggJMDQ2kP
-         XI66ij5EXgAjQ==
-Received: from johan by xi.lan with local (Exim 4.96)
-        (envelope-from <johan@kernel.org>)
-        id 1qtmFx-00023X-1n;
-        Fri, 20 Oct 2023 11:57:26 +0200
-Date:   Fri, 20 Oct 2023 11:57:25 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
+        Fri, 20 Oct 2023 06:20:51 -0400
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92620D55
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Oct 2023 03:20:48 -0700 (PDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id 3f1490d57ef6-d9a7a3e17d1so633481276.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Oct 2023 03:20:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1697797247; x=1698402047; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=W79U9iklHwLSbhR/94JhGNefp7ntZs362QatUfI3IfI=;
+        b=nfxlTP0z3z6L6PAXEscyKxYpQTRCM9o0adr1SrnQ9q7CTPZqHv+abj+1QI+m0iKr2+
+         BBcWd5APgf9VIUg6OVry26MMWPBCNMIkeM3nzriOyFD6/q+KgwZohtWaGScP0H2GohMw
+         eM3dEx+RI6vZdgKAuJXQqLppBga08jWW/11ebkjXAqF5MRBprg1hXmfMcPX2PC9LFN8c
+         wideoaqq7CUToxKN310zNTGaXduLInkr2lJ9+W6obY+h/ynKuDoHRnLKLgwEoD85vP5b
+         NBXLAhzvJnAkR/oQxFosT3LkLycnau5bKrBvF6CWmlKPfhygvnwPUAvv+rROVDedtnpf
+         SebA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697797247; x=1698402047;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=W79U9iklHwLSbhR/94JhGNefp7ntZs362QatUfI3IfI=;
+        b=NviGcdxBiO1/OUh/BVRJ1Kn+GUNysGsSnMA2An5V22f7lMwym5Z7uOUvO0Fd+qx+AY
+         u6BqBJjFPGUBEVOHufo3lYIl3yzAZRfZ9bHFCw3GVAP/J6UFsWJtxYdW0kRQ6jU54Vcf
+         +Q0yUCualmRpE6pfbh7iZildZNpfBhJ319AZL1vqV/1QLK8E4OXOFuJTmvvflfnfYfZn
+         niyqdV35yqOUMC9MFPrIvCCaHvcaM8mfG+ye710EgiypisLAUUOICfYyJt7tRFlZfUEM
+         idQpN+RFW8xwjXLEktcEdgmow4QZ8LA4VJdas7ugy9ULymbhJQ0dI9IQYw5sQ5lAtJ9P
+         E9lA==
+X-Gm-Message-State: AOJu0YyP0rkXmLnzfBJYX6CIHlNxRuwCbu/Z8WuUvJuxUtbKtuDwOQXS
+        4Te/puiZszDGQlru7JQNhWr8/fHm36iDy5mOVy0x9g==
+X-Google-Smtp-Source: AGHT+IFppxZveglONFPIGli2rJYFfP862ng1fj8gvWuwqd6m5OzeXOk1StoswlMPW+jNGU8qSha8o4+c/CfPZy2DJjA=
+X-Received: by 2002:a5b:f4c:0:b0:d9a:3bf1:35e9 with SMTP id
+ y12-20020a5b0f4c000000b00d9a3bf135e9mr1288441ybr.3.1697797247740; Fri, 20 Oct
+ 2023 03:20:47 -0700 (PDT)
+MIME-Version: 1.0
+References: <20231018-msm8909-cpufreq-v2-0-0962df95f654@kernkonzept.com>
+ <20231018-msm8909-cpufreq-v2-2-0962df95f654@kernkonzept.com>
+ <CAPDyKFot9=M1ooP_Q1AOgG5o_4DTQ2qsyai1ZdXAzBwf89W4uA@mail.gmail.com>
+ <CAPDyKFr5A-P=UhWs4rUMBWup3pH75WAhcZ56Y2_Sfk3=WfxRCQ@mail.gmail.com>
+ <ZTEph19CAvbgbN_E@gerhold.net> <CAPDyKFo1PVZYsdW_=92EtMmTT9hmkm-mBR69N_WvPh4f-Hw=NA@mail.gmail.com>
+ <ZTFBzjLAaaUHux4O@gerhold.net> <CAPDyKFruYqngQoW21Ra+hm4ybjS7LoD4casYbo8bP4J+hLUnaA@mail.gmail.com>
+ <ZTFiXJ2XO4WQN_gu@gerhold.net>
+In-Reply-To: <ZTFiXJ2XO4WQN_gu@gerhold.net>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Fri, 20 Oct 2023 12:20:11 +0200
+Message-ID: <CAPDyKFoRhDnx7SOiT1czcyteMJ=2KMOwZvn7ynDJsYtePthnxA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] cpufreq: qcom-nvmem: Enable virtual power domain devices
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
-        quic_jackp@quicinc.com, ahalaney@redhat.com,
-        quic_shazhuss@quicinc.com, Harsh Agarwal <quic_harshq@quicinc.com>,
-        kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH v13 03/10] usb: dwc3: core: Refactor PHY logic to support
- Multiport Controller
-Message-ID: <ZTJPBcyZ_zLXbgE5@hovoldconsulting.com>
-References: <20231007154806.605-1-quic_kriskura@quicinc.com>
- <20231007154806.605-4-quic_kriskura@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231007154806.605-4-quic_kriskura@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Conor Dooley <conor+dt@kernel.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Oct 07, 2023 at 09:17:59PM +0530, Krishna Kurapati wrote:
-> From: Harsh Agarwal <quic_harshq@quicinc.com>
-> 
-> Currently the DWC3 driver supports only single port controller
-> which requires at most one HS and one SS PHY.
+On Thu, 19 Oct 2023 at 19:08, Stephan Gerhold <stephan@gerhold.net> wrote:
+>
+> On Thu, Oct 19, 2023 at 05:19:53PM +0200, Ulf Hansson wrote:
+> > On Thu, 19 Oct 2023 at 16:49, Stephan Gerhold <stephan@gerhold.net> wrote:
+> > > On Thu, Oct 19, 2023 at 04:12:56PM +0200, Ulf Hansson wrote:
+> > > > On Thu, 19 Oct 2023 at 15:05, Stephan Gerhold <stephan@gerhold.net> wrote:
+> > > > > On Thu, Oct 19, 2023 at 01:26:19PM +0200, Ulf Hansson wrote:
+> > > > > > BTW, if you really need something like the above, the proper way to do
+> > > > > > it would instead be to call device_set_awake_path() for the device.
+> > > > > >
+> > > > > > This informs genpd that the device needs to stay powered-on during
+> > > > > > system suspend (assuming that GENPD_FLAG_ACTIVE_WAKEUP has been set
+> > > > > > for it), hence it will keep the corresponding PM domain powered-on
+> > > > > > too.
+> > > > >
+> > > > > Thanks, I can try if this works as alternative to the
+> > > > > dev_pm_syscore_device()!
+> > > >
+> > > > Yes, please. We don't want to abuse the dev_pm_syscore_device() thingy.
+> > >
+> > > Could you clarify the idea behind GENPD_FLAG_ACTIVE_WAKEUP? Would I set
+> > > it conditionally for all RPMPDs or just the ones consumed by the CPU?
+> > > How does the genpd *provider* know if one of its *consumer* devices
+> > > needs to have its power domain kept on for wakeup?
+> >
+> > We are thinking of the GENPD_FLAG_ACTIVE_WAKEUP as a platform
+> > configuration type of flag for the genpd in question. The consumer
+> > driver shouldn't need to know about the details of what is happening
+> > on the PM domain level - only whether it needs its device to remain
+> > powered-on during system suspend or not.
+> >
+>
+> Thanks! I will test if this works for RPMPD and post new versions of the
+> patches. By coincidence I think this flag might actually be useful as
+> temporary solution for CPR. If I:
+>
+>  1. Change $subject patch to use device_set_awake_path() instead, and
+>  2. Set GENPD_FLAG_ACTIVE_WAKEUP for the RPMPD genpds, but
+>  3. Do *not* set GENPD_FLAG_ACTIVE_WAKEUP for the CPR genpd.
+>
+> Then the genpd ->power_on|off() callbacks should still be called
+> for CPR during system suspend, right? :D
 
-Should that not be "at least one HS PHY and at most one SS PHY"?
- 
-> But the DWC3 USB controller can be connected to multiple ports and
-> each port can have their own PHYs. Each port of the multiport
-> controller can either be HS+SS capable or HS only capable
-> Proper quantification of them is required to modify GUSB2PHYCFG
-> and GUSB3PIPECTL registers appropriately.
-> 
-> Add support for detecting, obtaining and configuring phy's supported
+Yes, correct, that should work fine!
 
-"PHYs" for consistency, no apostrophe
+>
+> > I suspect that the GENPD_FLAG_ACTIVE_WAKEUP is probably okay to set
+> > for most genpds, but there may be some exceptions.
+> >
+>
+> Out of curiosity, do you have an example for such an exception where
+> GENPD_FLAG_ACTIVE_WAKEUP shouldn't be set, aside from workarounds like
+> I just described?
+>
+> As you said, the consumer device should just say that it wants to stay
+> powered for wakeup during suspend. But if its power domains get powered
+> off, I would expect that to break. How could a genpd driver still
+> provide power without being powered on? Wouldn't that rather be a low
+> performance state?
 
-> by a multiport controller and. Limit the max number of ports
+I think this boils down to how the power-rail that the genpd manages,
+is handled by the platform during system suspend.
 
-"and." what? Looks like part of the sentence is missing? Or just drop
-" and"?
+In principle there could be some other separate logic that helps a
+FW/PMIC to understand whether it needs to keep the power-rail on or
+not - no matter whether the genpd releases its vote for it during
+system suspend.
 
-> supported to 4 as only SC8280 which is a quad port controller supports
+This becomes mostly hypothetical, but clearly there are a lot of
+genpd/platforms that don't use GENPD_FLAG_ACTIVE_WAKEUP too. If those
+are just mistakes or just not needed, I don't actually know.
 
-s/4/four/
-
-Just change this to
-
-	Limit support to multiport controllers with up to four ports for
-	now (e.g. as needed for SC8280XP).
-
-> Multiport currently.
-
-You use capitalised "Multiport" in several places it seems. Is this an
-established term for these controllers or should it just be "multiport"
-or "multiple ports"?
-
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/oe-kbuild-all/202309200156.CxQ3yaLY-lkp@intel.com/
-
-Drop these two lines, as people have already suggested.
-
-> Co-developed-by: Harsh Agarwal <quic_harshq@quicinc.com>
-> Signed-off-by: Harsh Agarwal <quic_harshq@quicinc.com>
-> Co-developed-by:Krishna Kurapati <quic_kriskura@quicinc.com>
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-
-Thinh pointed out the problems with the above which were also reported
-by checkpatch.pl.
-
-> ---
-> Changes in v13:
-> Compiler issues found by kernel test robot have been fixed and tags added.
-> So removing maintainers reviewed-by tag as we have made a minor change
-> in the patch.
-
-In general this is the right thing to do when the change in question was
-non-trivial. I'm not sure that's the case here, but the robots tend to
-complain about smaller (but sometimes important) things.
-
-> @@ -748,23 +781,32 @@ static int dwc3_phy_setup(struct dwc3 *dwc)
->  static int dwc3_phy_init(struct dwc3 *dwc)
->  {
->  	int ret;
-> +	int i;
-> +	int j;
-
-These could be declared on one line (same throughout).
-
->  	usb_phy_init(dwc->usb2_phy);
->  	usb_phy_init(dwc->usb3_phy);
->  
-> -	ret = phy_init(dwc->usb2_generic_phy);
-> -	if (ret < 0)
-> -		goto err_shutdown_usb3_phy;
-> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +		ret = phy_init(dwc->usb2_generic_phy[i]);
-> +		if (ret < 0)
-> +			goto err_exit_phy;
->  
-> -	ret = phy_init(dwc->usb3_generic_phy);
-> -	if (ret < 0)
-> -		goto err_exit_usb2_phy;
-> +		ret = phy_init(dwc->usb3_generic_phy[i]);
-> +		if (ret < 0) {
-> +			phy_exit(dwc->usb2_generic_phy[i]);
-> +			goto err_exit_phy;
-> +		}
-> +	}
->  
->  	return 0;
->  
-> -err_exit_usb2_phy:
-> -	phy_exit(dwc->usb2_generic_phy);
-> -err_shutdown_usb3_phy:
-> +err_exit_phy:
-> +	for (j = i - 1; j >= 0; j--) {
-> +		phy_exit(dwc->usb2_generic_phy[j]);
-> +		phy_exit(dwc->usb3_generic_phy[j]);
-
-Try to always unwind in reverse order so in this case move phy_exit()
-for usb3 before usb2 here too.
-
-> +	}
-> +
->  	usb_phy_shutdown(dwc->usb3_phy);
->  	usb_phy_shutdown(dwc->usb2_phy);
-
-> @@ -783,23 +829,32 @@ static void dwc3_phy_exit(struct dwc3 *dwc)
->  static int dwc3_phy_power_on(struct dwc3 *dwc)
->  {
->  	int ret;
-> +	int i;
-> +	int j;
->  
->  	usb_phy_set_suspend(dwc->usb2_phy, 0);
->  	usb_phy_set_suspend(dwc->usb3_phy, 0);
->  
-> -	ret = phy_power_on(dwc->usb2_generic_phy);
-> -	if (ret < 0)
-> -		goto err_suspend_usb3_phy;
-> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +		ret = phy_power_on(dwc->usb2_generic_phy[i]);
-> +		if (ret < 0)
-> +			goto err_power_off_phy;
->  
-> -	ret = phy_power_on(dwc->usb3_generic_phy);
-> -	if (ret < 0)
-> -		goto err_power_off_usb2_phy;
-> +		ret = phy_power_on(dwc->usb3_generic_phy[i]);
-> +		if (ret < 0) {
-> +			phy_power_off(dwc->usb2_generic_phy[i]);
-> +			goto err_power_off_phy;
-> +		}
-> +	}
->  
->  	return 0;
->  
-> -err_power_off_usb2_phy:
-> -	phy_power_off(dwc->usb2_generic_phy);
-> -err_suspend_usb3_phy:
-> +err_power_off_phy:
-> +	for (j = i - 1; j >= 0; j--) {
-> +		phy_power_off(dwc->usb2_generic_phy[j]);
-> +		phy_power_off(dwc->usb3_generic_phy[j]);
-
-Same here.
-
-> +	}
-> +
->  	usb_phy_set_suspend(dwc->usb3_phy, 1);
->  	usb_phy_set_suspend(dwc->usb2_phy, 1);
-
-> @@ -1346,7 +1410,9 @@ static int dwc3_core_get_phy(struct dwc3 *dwc)
->  {
->  	struct device		*dev = dwc->dev;
->  	struct device_node	*node = dev->of_node;
-> +	char phy_name[13];
->  	int ret;
-> +	int i;
->  
->  	if (node) {
->  		dwc->usb2_phy = devm_usb_get_phy_by_phandle(dev, "usb-phy", 0);
-> @@ -1372,22 +1438,36 @@ static int dwc3_core_get_phy(struct dwc3 *dwc)
->  			return dev_err_probe(dev, ret, "no usb3 phy configured\n");
->  	}
->  
-> -	dwc->usb2_generic_phy = devm_phy_get(dev, "usb2-phy");
-> -	if (IS_ERR(dwc->usb2_generic_phy)) {
-> -		ret = PTR_ERR(dwc->usb2_generic_phy);
-> -		if (ret == -ENOSYS || ret == -ENODEV)
-> -			dwc->usb2_generic_phy = NULL;
-> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +		if (dwc->num_usb2_ports == 1)
-> +			sprintf(phy_name, "usb2-phy");
->  		else
-> -			return dev_err_probe(dev, ret, "no usb2 phy configured\n");
-> -	}
-> +			sprintf(phy_name, "usb2-port%d", i);
->  
-> -	dwc->usb3_generic_phy = devm_phy_get(dev, "usb3-phy");
-> -	if (IS_ERR(dwc->usb3_generic_phy)) {
-> -		ret = PTR_ERR(dwc->usb3_generic_phy);
-> -		if (ret == -ENOSYS || ret == -ENODEV)
-> -			dwc->usb3_generic_phy = NULL;
-> +		dwc->usb2_generic_phy[i] = devm_phy_get(dev, phy_name);
-> +		if (IS_ERR(dwc->usb2_generic_phy[i])) {
-> +			ret = PTR_ERR(dwc->usb2_generic_phy[i]);
-> +			if (ret == -ENOSYS || ret == -ENODEV)
-> +				dwc->usb2_generic_phy[i] = NULL;
-> +			else
-> +				return dev_err_probe(dev, ret,
-> +					"failed to lookup phy %s\n", phy_name);
-
-Continuation lines should be intented at least two tabs further.
-
-I generally suggest adding brackets around blocks with multiline
-statements to improve readability but if you move the string to the
-previous line and intend the continuation line (phy_name) one tab more I
-guess that's fine.
-
-> +		}
-> +
-> +		if (dwc->num_usb2_ports == 1)
-> +			sprintf(phy_name, "usb3-phy");
->  		else
-> -			return dev_err_probe(dev, ret, "no usb3 phy configured\n");
-> +			sprintf(phy_name, "usb3-port%d", i);
-> +
-> +		dwc->usb3_generic_phy[i] = devm_phy_get(dev, phy_name);
-> +		if (IS_ERR(dwc->usb3_generic_phy[i])) {
-> +			ret = PTR_ERR(dwc->usb3_generic_phy[i]);
-> +			if (ret == -ENOSYS || ret == -ENODEV)
-> +				dwc->usb3_generic_phy[i] = NULL;
-> +			else
-> +				return dev_err_probe(dev, ret,
-> +					"failed to lookup phy %s\n", phy_name);
-
-Same here.
-
-> +		}
->  	}
->  
->  	return 0;
-
-> @@ -1892,9 +1975,12 @@ static int dwc3_read_port_info(struct dwc3 *dwc)
->  
->  	dev_dbg(dwc->dev, "hs-ports: %u ss-ports: %u\n",
->  			dwc->num_usb2_ports, dwc->num_usb3_ports);
-> -
-
-Drop this random change.
-
->  	iounmap(base);
->  
-> +	if ((dwc->num_usb2_ports > DWC3_MAX_PORTS) ||
-> +		(dwc->num_usb3_ports > DWC3_MAX_PORTS))
-
-Again, continuation lines should be indented at least two tabs further.
-
-> +		return -ENOMEM;
-> +
->  	return 0;
->  }
-
-> diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-> index 2ea6df7e6571..fc5d15edab1c 100644
-> --- a/drivers/usb/dwc3/core.h
-> +++ b/drivers/usb/dwc3/core.h
-> @@ -33,6 +33,9 @@
->  
->  #include <linux/power_supply.h>
->  
-> +/* Number of ports supported by a multiport controller */
-
-	/*
-	 * Maximum number of ports currently supported for multiport
-	 * controllers.
-	 */
-
-> +#define DWC3_MAX_PORTS 4
-> +
->  #define DWC3_MSG_MAX	500
->  
->  /* Global constants */
-> @@ -1029,8 +1032,8 @@ struct dwc3_scratchpad_array {
->   * @usb_psy: pointer to power supply interface.
->   * @usb2_phy: pointer to USB2 PHY
->   * @usb3_phy: pointer to USB3 PHY
-> - * @usb2_generic_phy: pointer to USB2 PHY
-> - * @usb3_generic_phy: pointer to USB3 PHY
-> + * @usb2_generic_phy: pointer to array of USB2 PHY
-> + * @usb3_generic_phy: pointer to array of USB3 PHY
-
-s/PHY/PHYs/
-
->   * @num_usb2_ports: number of USB2 ports
->   * @num_usb3_ports: number of USB3 ports
->   * @phys_ready: flag to indicate that PHYs are ready
-
-Johan
+Kind regards
+Uffe
