@@ -2,91 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 292257D0A51
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Oct 2023 10:13:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F7277D0A8D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Oct 2023 10:32:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235672AbjJTINt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Oct 2023 04:13:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60710 "EHLO
+        id S1376452AbjJTIcA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Oct 2023 04:32:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233391AbjJTINs (ORCPT
+        with ESMTP id S1376433AbjJTIcA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Oct 2023 04:13:48 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78C3C115;
-        Fri, 20 Oct 2023 01:13:46 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39K53Vik013976;
-        Fri, 20 Oct 2023 08:13:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=hAa5xP/zdHOwe7AgtEatMAaLbQt+GDy2dBJpf3+UuxQ=;
- b=Zk7UZ9clYBucjamfluEsZinQJCrvv2v2KTj1m1RVrZftfMXf7drsXuPaovnCQb/YX86E
- DE3KCViIQz2XLtt5cTd1H1ZD1xdhMz7tkpPfrhXpr0PI88eO9RHTL4EhxvdbduFRwZjx
- +18io9KMv35PXBkfxvbETOBoHtA3Suok11ZY4h9cao7lcwp2yBX/axu0UW1NlfbTB7by
- 3Ey/l4EbjztJaVt7eQ2A8fdmH8iRqnB/F56w3NjcFI07txJtkvStwllyOBN3JwRPOSO4
- zh+gTQTiapZB1CD2HAo3ovi7d6MBsluyFu8TKmcVB70kuu7/h1VAXAX7gB+TqThdc9cp Dg== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tubxgh62k-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 20 Oct 2023 08:13:33 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39K8DVtn029798
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 20 Oct 2023 08:13:31 GMT
-Received: from [10.239.133.211] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Fri, 20 Oct
- 2023 01:13:27 -0700
-Message-ID: <d6cba576-5b65-425a-b769-e26a2595b391@quicinc.com>
-Date:   Fri, 20 Oct 2023 16:13:25 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] coresight-tpdm: Correct the property name of MSR number
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
+        Fri, 20 Oct 2023 04:32:00 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98943112;
+        Fri, 20 Oct 2023 01:31:58 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26E84C433C8;
+        Fri, 20 Oct 2023 08:31:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1697790718;
+        bh=l9qV989JwaBiiJEzdeKJlntVo1EREOKiVHaZsdwHnJo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=odWlbFAl7nFcaG6RVc59qHHDTE03y7C5RVLLzVqY7BcsH/eKUuqi5QJqQkX+DjdwI
+         MGqJeRYmQdvcSRri1kX3RgvV1r55817E6yF41wrXWIqo5pIlNcXsjKeToLo6uY9ABW
+         UxYMUZ96W4r3EENLUZY8CALyLETey9uFMBhkT5xxUmU4VFoRszx+PMFQHFLkBjMIvT
+         FW2cLYwr0ufo2kK6ijcppybmTvgPGluMjf7tr71bBpwCaB+vm4m9Ze9BXwgg4vIYP3
+         Zt1UoOfGnJt/jHxIp1PFWjQADpaEJhQVF6FOdx/cdngfKLYmWDl9DectfttbwX66k6
+         cWDca6gXppdOA==
+Received: from johan by xi.lan with local (Exim 4.96)
+        (envelope-from <johan@kernel.org>)
+        id 1qtkvK-0001jy-13;
+        Fri, 20 Oct 2023 10:32:03 +0200
+Date:   Fri, 20 Oct 2023 10:32:02 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <andersson@kernel.org>
-References: <1697770311-15392-1-git-send-email-quic_taozha@quicinc.com>
- <07ef7cf2-c5dc-4248-b72b-bad913f4508d@linaro.org>
-Content-Language: en-US
-From:   Tao Zhang <quic_taozha@quicinc.com>
-In-Reply-To: <07ef7cf2-c5dc-4248-b72b-bad913f4508d@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 7uMxeR5VRkq4q85BZUA38aaC4_sAOoWx
-X-Proofpoint-ORIG-GUID: 7uMxeR5VRkq4q85BZUA38aaC4_sAOoWx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-20_07,2023-10-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
- bulkscore=0 lowpriorityscore=0 phishscore=0 spamscore=0 priorityscore=1501
- mlxscore=0 impostorscore=0 mlxlogscore=999 adultscore=0 clxscore=1011
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2310170001
- definitions=main-2310200067
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
+        quic_jackp@quicinc.com, ahalaney@redhat.com,
+        quic_shazhuss@quicinc.com
+Subject: Re: [PATCH v13 01/10] usb: dwc3: core: Access XHCI address space
+ temporarily to read port info
+Message-ID: <ZTI7AtCJWgAnACSh@hovoldconsulting.com>
+References: <20231007154806.605-1-quic_kriskura@quicinc.com>
+ <20231007154806.605-2-quic_kriskura@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231007154806.605-2-quic_kriskura@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -94,59 +67,119 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Sat, Oct 07, 2023 at 09:17:57PM +0530, Krishna Kurapati wrote:
+> Currently host-only capable DWC3 controllers support Multiport.
 
-On 10/20/2023 2:55 PM, Krzysztof Kozlowski wrote:
-> On 20/10/2023 04:51, Tao Zhang wrote:
->> Correct the property name of the DSB MSR number that needs to be
->> read in TPDM driver. The right property name is
->> "qcom,dsb-msrs-num".
-> Missing Fixes tag.
-I will add it in the next patch.
->
->> This patch depends on patch series "Add support to configure TPDM DSB
->> subunit"
->> https://patchwork.kernel.org/project/linux-arm-kernel/list/?series=788353
-> This is not suitable for commit msg. Dependencies are noted under ---.
->
-> And how is this depending on that patch? Your buggy code was applied
-> long time ago!
-Yes, no need to depend on the patch series and it has been applied. I 
-will remove this comments
+You use the word "currently" in a few places like this (e.g. in comments
+in the code). What exactly do you mean? That all current multiport
+controllers are host-only, or that this is all that the driver supports
+after your changes?
 
-in the next patch.
+Please rephrase accordingly throughout so that this becomes clear.
 
->> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->> ---
->>   drivers/hwtracing/coresight/coresight-tpdm.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
->> index b25284e..97654aa 100644
->> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
->> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
->> @@ -892,7 +892,7 @@ static int tpdm_probe(struct amba_device *adev, const struct amba_id *id)
->>   
->>   	if (drvdata && tpdm_has_dsb_dataset(drvdata))
->>   		of_property_read_u32(drvdata->dev->of_node,
->> -			   "qcom,dsb_msr_num", &drvdata->dsb_msr_num);
->> +			   "qcom,dsb-msrs-num", &drvdata->dsb_msr_num);
-> So you never tested your DTS... We can keep asking about this but still
-> testing does not happen :/
+In any case it looks like the above sentence is at least missing an
+"only".
+ 
+> +static int dwc3_read_port_info(struct dwc3 *dwc)
+> +{
+> +	void __iomem *base;
+> +	u8 major_revision;
+> +	u32 offset = 0;
 
-Since this new property has not been applied on the exist upstream DTS, 
-I tested this driver with the
+I'd move the initialisation just before the loop.
 
-local DTS. Unfortunately, the property name in the local DTS is not 
-updated, this is why it is not found
+> +	u32 val;
+> +
+> +	/*
+> +	 * Remap xHCI address space to access XHCI ext cap regs,
 
-in the tests.
+Drop comma and merge with next line and break it closer to 80 chars
+(instead of 65).
 
+> +	 * since it is needed to get port info.
 
-Best,
+s/since it is needed to get/which hold the/?
 
-Tao
+> +	 */
+> +	base = ioremap(dwc->xhci_resources[0].start,
+> +				resource_size(&dwc->xhci_resources[0]));
+> +	if (IS_ERR(base))
+> +		return PTR_ERR(base);
+> +
+> +	do {
+> +		offset = xhci_find_next_ext_cap(base, offset,
+> +				XHCI_EXT_CAPS_PROTOCOL);
+> +		if (!offset)
+> +			break;
+> +
+> +		val = readl(base + offset);
+> +		major_revision = XHCI_EXT_PORT_MAJOR(val);
+> +
+> +		val = readl(base + offset + 0x08);
+> +		if (major_revision == 0x03) {
+> +			dwc->num_usb3_ports += XHCI_EXT_PORT_COUNT(val);
+> +		} else if (major_revision <= 0x02) {
+> +			dwc->num_usb2_ports += XHCI_EXT_PORT_COUNT(val);
+> +		} else {
+> +			dev_err(dwc->dev,
 
->
-> Best regards,
-> Krzysztof
->
+This should be dev_warn() (as in the xhci driver) now that you no longer
+treat it as a fatal error.
+
+> +				"Unrecognized port major revision %d\n",
+
+Merge this with the previous line (even if it makes that line 83 chars).
+
+Use a lower case 'U' for consistency with most of the error messages.
+
+> +							major_revision);
+> +		}
+> +	} while (1);
+> +
+> +	dev_dbg(dwc->dev, "hs-ports: %u ss-ports: %u\n",
+> +			dwc->num_usb2_ports, dwc->num_usb3_ports);
+> +
+> +	iounmap(base);
+> +
+> +	return 0;
+> +}
+> +
+>  static int dwc3_probe(struct platform_device *pdev)
+>  {
+>  	struct device		*dev = &pdev->dev;
+> @@ -1846,6 +1892,7 @@ static int dwc3_probe(struct platform_device *pdev)
+>  	void __iomem		*regs;
+>  	struct dwc3		*dwc;
+>  	int			ret;
+> +	unsigned int		hw_mode;
+
+Nit: I'd place this one before ret.
+
+>  
+>  	dwc = devm_kzalloc(dev, sizeof(*dwc), GFP_KERNEL);
+>  	if (!dwc)
+> @@ -1926,6 +1973,20 @@ static int dwc3_probe(struct platform_device *pdev)
+>  			goto err_disable_clks;
+>  	}
+>  
+> +	/*
+> +	 * Currently only DWC3 controllers that are host-only capable
+> +	 * support Multiport.
+> +	 */
+
+So is this is a limitation of the hardware or implementation?
+
+> +	hw_mode = DWC3_GHWPARAMS0_MODE(dwc->hwparams.hwparams0);
+> +	if (hw_mode == DWC3_GHWPARAMS0_MODE_HOST) {
+> +		ret = dwc3_read_port_info(dwc);
+> +		if (ret)
+> +			goto err_disable_clks;
+> +	} else {
+> +		dwc->num_usb2_ports = 1;
+> +		dwc->num_usb3_ports = 1;
+> +	}
+> +
+>  	spin_lock_init(&dwc->lock);
+>  	mutex_init(&dwc->mutex);
+
+Johan
