@@ -2,173 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 767677D08E2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Oct 2023 08:55:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 44D227D0937
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Oct 2023 09:09:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376365AbjJTGzk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Oct 2023 02:55:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57472 "EHLO
+        id S235632AbjJTHJx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Oct 2023 03:09:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376347AbjJTGzk (ORCPT
+        with ESMTP id S230371AbjJTHJx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Oct 2023 02:55:40 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F577D53
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 23:55:37 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-9b96c3b4be4so68903566b.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Oct 2023 23:55:37 -0700 (PDT)
+        Fri, 20 Oct 2023 03:09:53 -0400
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1807D4C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Oct 2023 00:09:50 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id 98e67ed59e1d1-27d5c71b4d7so1257854a91.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Oct 2023 00:09:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697784936; x=1698389736; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=oGqMY4K+B2HVw5c3OjyxezXqrQcTf69apDs4YWp1xms=;
-        b=U3nPCMWN0a/B3bPIDPh9W8MagBsG6fyk391O/ojAMUy2tpwTY0pR3HwKjzlQcqKYKM
-         /qklWuOolWLkVQ4CTyDNRHgYsRPfW2cbCpTACX07Jc+2K5eQSyjzKnYQtrSZZomd8VYt
-         d0VBlWnSY3GVNYt3FU86oWE1Zlrwee+BxeVCI8vRJOq/fqQyjKQNWAv3AodMh4hsvjnQ
-         MZXpPajxrM3UnK7dWfbHohPDeNmIq8biqJeE9sWXv6w9lMgdLhxf3ebhgjDlmz8BQRoG
-         iR+8OlrUMVZhzNxylykKJa7SFLwq4EJWnGPTenWwqBpm40P/3qniiuHNusmFfjtuAxBW
-         y/XQ==
+        d=linaro.org; s=google; t=1697785790; x=1698390590; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=CcNPWYHZsV1jl4Y6m712SS9BEogduv8nGwwMCSKf3jc=;
+        b=MVcyaPq5vwEGkbz0OxE4C2wShgo50AIMusLupnmjKwa0fJkJApLkKodQc8QHnYqp3/
+         XFtEB/OV61TH0+3t0O+JOTpGLJbOn8zSXbJs3vHPpRiPt8hbeJLZs1xX4ew8v94ZKagl
+         9yPwibQFin8xZHp+FkXeB/BmqFWaRIAFJ9BErkab6xxIQMWb6kCj4IDJZEPzEAbVwKdc
+         OARsNzbYtvyCr1uLOguJM63TaU00HowTIBzVQmh1n5fpYcSd2EmURshAzyFLUpc6GoSi
+         FrDi4q74p9qFup3PLmxSr7FqCOpstSxANN/et4csZUTq42zPb4/yDJBOQMESzxi0pcv1
+         eIQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697784936; x=1698389736;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oGqMY4K+B2HVw5c3OjyxezXqrQcTf69apDs4YWp1xms=;
-        b=sac7J+r0YIvVDS7iXjRB2wWhLvvqO2uNyOQslmdGuRQzUuavubrflIYyp1qmlhpDuC
-         1+jxp9Lc4yNVs5gXBgNGW4lg9P+JWbAH+JeMDukw2zlPHyvtB0Lfs5iTo9jCPRZHGwSF
-         m6nWAnE1zF4V/sNGPeSHLWwcr/AHpKK6tsajrxUVxaXiMNOwtabX1zuUE3Hs9KmVKKSw
-         vFJhq8JWvDkkjerK8jq9J5QKy3yoIfu+f1EszkVnv4E0q+1GWkXvIGpQpQFFmzpp5On0
-         KHcQRlJBqmsVhGqGw+PtYPdd+Mxhr0Ox5aZNls1geOKYW7L12j6s3sVaukoB1g/MhW2s
-         HrEg==
-X-Gm-Message-State: AOJu0YygJdPWVLwDMXJcPsr3TuwFN4B6pgxqoV5YbFBj02HoGXvZXEKr
-        Wjy2N2ZsjAzNHpP0DbZOp80ZvA==
-X-Google-Smtp-Source: AGHT+IGlpICr8L7mdq/Z2N2UKdNXuFCQQvBgNMgpOU5pY4hqAhBsQeg8LrJ3nDUPIlJhvswGpoQLAQ==
-X-Received: by 2002:a17:907:a45:b0:9bd:f902:9a62 with SMTP id be5-20020a1709070a4500b009bdf9029a62mr637240ejc.33.1697784935880;
-        Thu, 19 Oct 2023 23:55:35 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id m2-20020a17090607c200b009c6a4a5ac80sm866581ejc.169.2023.10.19.23.55.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Oct 2023 23:55:35 -0700 (PDT)
-Message-ID: <07ef7cf2-c5dc-4248-b72b-bad913f4508d@linaro.org>
-Date:   Fri, 20 Oct 2023 08:55:33 +0200
+        d=1e100.net; s=20230601; t=1697785790; x=1698390590;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CcNPWYHZsV1jl4Y6m712SS9BEogduv8nGwwMCSKf3jc=;
+        b=e228e/QQES0ByBcP8VDFT6BuVm9gK6CwCmIigp5gMUbRiaOQXPQH7DPxvJzmsGuNLc
+         eM1/xYOf7of35Nf7dSHyKgxdpG+z7+tepJ7H6E3RvRCUHYnqtd+b+qDOrRvzzP6NgKUX
+         VARSUIzJ0dh5hNDhSEyDg3M/IpaPyNKi/xtFY+C+6FFNb3GLifs4CbQ9JOXsUZvYtv0p
+         +1jN+7TP5aZqbH/HP9I3oZvUzGgewUd2FP52yM7wZzCeKxrLRy+lNn/jD+xee3u0nPmS
+         8f7Pdc4OHuzCK5s7IsNxsRHguqgMuLoa5AM+5naG3I5kMnBxOWSetyhepqtyC5/8SPSQ
+         Z2kg==
+X-Gm-Message-State: AOJu0YwD0Zd1xMb6dB2uiUlsQOGUYmRzppgTySal85TUh8nvxjBw2slF
+        /0FRsvHPXQ/LoX3Nku+tZk2MGA==
+X-Google-Smtp-Source: AGHT+IEGbSTpFO9vjBNdmRVUt1VTUISUjGcuoWitbvQsLR23qQQ7aO6ak2oavK26Yyl9K+kiLs8tsw==
+X-Received: by 2002:a17:90a:52:b0:27d:237b:5592 with SMTP id 18-20020a17090a005200b0027d237b5592mr1623090pjb.13.1697785790342;
+        Fri, 20 Oct 2023 00:09:50 -0700 (PDT)
+Received: from localhost ([122.172.80.14])
+        by smtp.gmail.com with ESMTPSA id bf15-20020a17090b0b0f00b0027463889e72sm813515pjb.55.2023.10.20.00.09.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Oct 2023 00:09:49 -0700 (PDT)
+Date:   Fri, 20 Oct 2023 12:39:47 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+        rafael@kernel.org, ilia.lin@kernel.org, sivaprak@codeaurora.org,
+        quic_kathirav@quicinc.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH v5 0/9] Enable cpufreq for IPQ5332 & IPQ9574
+Message-ID: <20231020070947.cwigtaa2haij56hz@vireshk-i7>
+References: <cover.1697781921.git.quic_varada@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] coresight-tpdm: Correct the property name of MSR number
-Content-Language: en-US
-To:     Tao Zhang <quic_taozha@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org
-References: <1697770311-15392-1-git-send-email-quic_taozha@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <1697770311-15392-1-git-send-email-quic_taozha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1697781921.git.quic_varada@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/10/2023 04:51, Tao Zhang wrote:
-> Correct the property name of the DSB MSR number that needs to be
-> read in TPDM driver. The right property name is
-> "qcom,dsb-msrs-num".
+On 20-10-23, 11:49, Varadarajan Narayanan wrote:
+> Varadarajan Narayanan (9):
+>   cpufreq: qti: Enable cpufreq for ipq53xx
+>   cpufreq: qti: Introduce cpufreq for ipq95xx
 
-Missing Fixes tag.
+Can I pick just these two ?
 
-> 
-> This patch depends on patch series "Add support to configure TPDM DSB
-> subunit"
-> https://patchwork.kernel.org/project/linux-arm-kernel/list/?series=788353
-
-This is not suitable for commit msg. Dependencies are noted under ---.
-
-And how is this depending on that patch? Your buggy code was applied
-long time ago!
-
-> 
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-> ---
->  drivers/hwtracing/coresight/coresight-tpdm.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
-> index b25284e..97654aa 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
-> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
-> @@ -892,7 +892,7 @@ static int tpdm_probe(struct amba_device *adev, const struct amba_id *id)
->  
->  	if (drvdata && tpdm_has_dsb_dataset(drvdata))
->  		of_property_read_u32(drvdata->dev->of_node,
-> -			   "qcom,dsb_msr_num", &drvdata->dsb_msr_num);
-> +			   "qcom,dsb-msrs-num", &drvdata->dsb_msr_num);
-
-So you never tested your DTS... We can keep asking about this but still
-testing does not happen :/
-
-Best regards,
-Krzysztof
-
+-- 
+viresh
