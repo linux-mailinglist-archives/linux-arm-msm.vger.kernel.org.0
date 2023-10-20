@@ -2,63 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5451A7D0BE9
+	by mail.lfdr.de (Postfix) with ESMTP id A9FC17D0BEA
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Oct 2023 11:34:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377083AbjJTJeP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Oct 2023 05:34:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44848 "EHLO
+        id S1376699AbjJTJeQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Oct 2023 05:34:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376826AbjJTJdk (ORCPT
+        with ESMTP id S1376679AbjJTJdm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Oct 2023 05:33:40 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97AF710DA
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Oct 2023 02:33:23 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-9adca291f99so89415266b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Oct 2023 02:33:23 -0700 (PDT)
+        Fri, 20 Oct 2023 05:33:42 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE7541996
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Oct 2023 02:33:24 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-9c773ac9b15so32258766b.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Oct 2023 02:33:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=fairphone.com; s=fair; t=1697794402; x=1698399202; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=/B2a2ZXqLwls1Vsw3h8JmPF3a45COfQmKittozQNWE4=;
-        b=kvsXwxgbbBHLrKSqKTT2LlGy7jtyy9VqQKk4e9XS5oHt79uosPExgdSzyY+wSI8Wcp
-         gd+GRl9EADqF5z47SjLWcXBBM7N+AdB5z0JZy8fLzkTOXDo6ZLdWvLi2p09deVy0qWr5
-         lQidFsZzjsRJHGy7fnR7xYFOFLlMFhe+iCo6jZzx8tZHcryIKZ9M7YXmlrztqetyr6Tc
-         U2BrSwV+yby/sxVS1JKklGCgYJtHVGchhlwWxIG6aj0Qzuz3CSvAtPubKF9ZOgvOKb7+
-         WmZbFyFhQXSuOcUWIq1GiR+IdFiMLvHNfMqSSvinAEIL3iySOEtvllMj0hK1vjM5AGOH
-         EUew==
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NPt+CEIhCocuFEjYEJNPHpjjDpAfwHYTgOkmzxyzoz0=;
+        b=zaGWjaxjbEFFV3LGlU1SXBviOittO024w4VisuWiBTKh6M/sf0Gi8iR/x7LTmegJo2
+         PxSaDSqcL2SO028gkWNoHF0SM4f6sNNs9hUMGrwDqAz+I2aDzo7BMr+iBnbRBpT+ThBx
+         lfx1ZJwPWUSOEKgRMCMDxqcQ4jy3IJ3GS+R/tXTdCMqOd4woPcFPAC6lH2vFj8hSLmxo
+         3JHYFNieswSrRRcz3NjKInKALq4e80ZUDqClOkxRn98azUJI1cbqHyNEGkytSAjxMAmz
+         7oOdEikDAwcmGR4m9s9pjYbtUUvJa7KbyCL1d57bnCJOSJl4NKIa4Evir24GJ8qqiuu4
+         qD6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1697794402; x=1698399202;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/B2a2ZXqLwls1Vsw3h8JmPF3a45COfQmKittozQNWE4=;
-        b=Q4gOHbm9vS9rA2qMjySIwUQZfAB+d7UAaMBw/9wX8+Mv7DlKa00tZwY/QPctElVGUz
-         7qnPhswP/uhv1KzJrzh6jqUyBAO1m+7nUKc3kmimrMCJSengsOS7uHrsqfrNZhTHB4bf
-         cX0gsC5YF913XD3I34GO04pHiHLECVKYacqLUIGVw6L/hPS6osRGOKBcOMsprAFf+GQ6
-         Wdx2GzzzwJN58HQPwPhZQQ5NkHB4OGosSVWPAea6Gw0T0hwtOV4bnJYS53aWWFy2lSsw
-         rp8UmmtZOVwtGBjGmy4vpGjHvxdvPZFFzUlB1/iPR8Miv7CmdKDE+K1cp/ruieLO+bIo
-         0tGA==
-X-Gm-Message-State: AOJu0Yxk+1aL2sB03kBhi2PdEZBBVxAIpThPUWZwjIPWsaZwyBpyNUR8
-        WX0/RNb61nD7Jgi3sme4KAUV/A==
-X-Google-Smtp-Source: AGHT+IFVzakVPdt1/cwktBRmr1g7l+TM3g6ka7ob34Ou2CK7EFqYB723oYUCwfieN9a13Q1zXeTLhA==
-X-Received: by 2002:a17:907:7ea3:b0:9c6:10d4:d09f with SMTP id qb35-20020a1709077ea300b009c610d4d09fmr993488ejc.63.1697794401731;
-        Fri, 20 Oct 2023 02:33:21 -0700 (PDT)
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NPt+CEIhCocuFEjYEJNPHpjjDpAfwHYTgOkmzxyzoz0=;
+        b=huLpltOfyafUc7ytmvr0UytHXlZusc1n1ctg7btwkCV73CjoRcrItmEeEpJTqhD5t2
+         FvrcWIzeDITHeWo3tJVkndw9wsEF1COaWcykFgwYuUgWefpK3fRwplK5CwzLYnm6heX2
+         SSQm7emJlc7ov4kfCPXsBFPfHTS2WFQa6Ri+sV6tmg69q4COFsBV23uZblL/DmbXtSt/
+         c45PedLw0LCD+nrErgYf9bRnbsrCdkp9o9jTkVqQPt2YA9x1MnS5Nrx3n0gubIGD6IzR
+         p+VPBQDfBP+pWmY1x2mODPE8viEaXVJDnPOzUU4rXPj99KCBkPKpA7Zw+9lo6SrMhYHJ
+         cfyA==
+X-Gm-Message-State: AOJu0Yy6nl+E9gQEhddPe1sSjy65UQeGPQPlQyRG635wO7/AoQVwQ4VW
+        BY7aOHNoQkXLGxN7BYQe4+rzsA==
+X-Google-Smtp-Source: AGHT+IGKQwW17Fy4T1BraCaYfTjGgV0tF528AbO3jxsar61meA0nxPsdWi7srJYGCContnpddhZyYQ==
+X-Received: by 2002:a17:906:da82:b0:9ad:a4bd:dc67 with SMTP id xh2-20020a170906da8200b009ada4bddc67mr1041118ejb.50.1697794402540;
+        Fri, 20 Oct 2023 02:33:22 -0700 (PDT)
 Received: from otso.luca.vpn.lucaweiss.eu (k10064.upc-k.chello.nl. [62.108.10.64])
-        by smtp.gmail.com with ESMTPSA id t15-20020a1709066bcf00b009a13fdc139fsm1102535ejs.183.2023.10.20.02.33.20
+        by smtp.gmail.com with ESMTPSA id t15-20020a1709066bcf00b009a13fdc139fsm1102535ejs.183.2023.10.20.02.33.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Oct 2023 02:33:21 -0700 (PDT)
+        Fri, 20 Oct 2023 02:33:22 -0700 (PDT)
 From:   Luca Weiss <luca.weiss@fairphone.com>
-Subject: [PATCH v2 0/3] Handle reversed SBU orientation for FSA4480
-Date:   Fri, 20 Oct 2023 11:33:17 +0200
-Message-Id: <20231020-fsa4480-swap-v2-0-9a7f9bb59873@fairphone.com>
+Date:   Fri, 20 Oct 2023 11:33:18 +0200
+Subject: [PATCH v2 1/3] dt-bindings: usb: fsa4480: Add data-lanes property
+ to endpoint
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAF1JMmUC/3XMSw7CIBSF4a00dyyGV6B15D5MB5SC3IHQgEFNw
- 97Fzh3+JznfDsVldAUuww7ZVSyYYg9+GsAGE++O4NobOOWCUSaIL0bKkZLyMhuZFuq1WrWwbIJ
- +2bLz+D6429w7YHmm/Dn0yn7rH6gyQskyau0Vp1JZe/UG8xZSdGebHjC31r4InkxlrAAAAA==
+Message-Id: <20231020-fsa4480-swap-v2-1-9a7f9bb59873@fairphone.com>
+References: <20231020-fsa4480-swap-v2-0-9a7f9bb59873@fairphone.com>
+In-Reply-To: <20231020-fsa4480-swap-v2-0-9a7f9bb59873@fairphone.com>
 To:     Heikki Krogerus <heikki.krogerus@linux.intel.com>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Neil Armstrong <neil.armstrong@linaro.org>,
@@ -81,60 +82,79 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Short reason:
-Without swapping the SBU lanes, on QCM6490 Fairphone 5 the
-DisplayPort-over-USB-C doesn't work.
+Allow specifying data-lanes to reverse the muxing orientation between
+AUX+/- and SBU1/2 where necessary by the hardware design.
 
-The Orient-Chip OCP96011 used in this phone is generally compatible with
-FSA4480 but has a difference how AUX+/- should be connected to SBU1/2.
+In the mux there's a switch that needs to be controlled from the OS, and
+it either connects AUX+ -> SBU1 and AUX- -> SBU2, or the reverse: AUX+
+-> SBU2 and AUX- -> SBU1, depending on the orientation of how the USB-C
+connector is plugged in.
 
-Long explanation, with my current understanding:
-* FSA4480 block diagram shows AUX+ connected to SBU2 and AUX- to SBU1.
-* OCP96011 block diagram shows AUX+ connected to SBU1 and AUX- to SBU2
-  (it's not 100% clear though in the picture but makes sense with the
-  observed behavior)
-* Fairphone 5 schematics have AUX+ connected to SBU2 and AUX- to SBU1,
-  which would be correct for FSA4480 but since OCP96011 is used (which
-  expects it to be the other way around) the Linux driver needs to
-  reverse it.
-  If AUX+ would be connected to SBU1 and AUX- to SBU2 as shown in the
-  OCP96011 block diagram, then no driver/dts change would be needed.
+With this data-lanes property we can now specify that AUX+ and AUX-
+connections are swapped between the SoC and the mux, therefore the OS
+needs to consider this and reverse the direction of this switch in the
+mux.
 
-Not sure if I've implemented the best solution in this patch. Other
-solutions I could think of are:
-* Add some custom boolean property to the node, e.g. 'fsa,swap-sbu'
-* Reverse when ocs,ocp96011 compatible is used. This would be incorrect
-  since when following the OCP96011 block diagram no reversing would be
-  needed, as explained above.
+_______          _______
+      |          |     |
+      |-- HP   --|     |
+      |-- MIC  --|     |or
+SoC   |          | MUX |-- SBU1 --->  To the USB-C
+Codec |-- AUX+ --|     |-- SBU2 --->  connected
+      |-- AUX- --|     |
+______|          |_____|
 
-However I think the current solution with data-lanes in the endpoint is
-the best fit and is also already used for a similar purpose in another
-USB mux driver.
+(thanks to Neil Armstrong for this ASCII art)
 
 Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
-Changes in v2:
-- Expand commit message for first dt-bindings patch incl. ASCII art
-- Use fwnode_* instead of_* APIs
-- Drop manual check for data-lanes property length, read_u32_array will
-  already error on too short or too long property.
-- Drop dev_info for reversed data-lanes mapping
-- Link to v1: https://lore.kernel.org/r/20231013-fsa4480-swap-v1-0-b877f62046cc@fairphone.com
+ .../devicetree/bindings/usb/fcs,fsa4480.yaml       | 29 +++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
 
----
-Luca Weiss (3):
-      dt-bindings: usb: fsa4480: Add data-lanes property to endpoint
-      usb: typec: fsa4480: Add support to swap SBU orientation
-      dt-bindings: usb: fsa4480: Add compatible for OCP96011
+diff --git a/Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml b/Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml
+index f6e7a5c1ff0b..86f6d633c2fb 100644
+--- a/Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml
++++ b/Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml
+@@ -32,10 +32,37 @@ properties:
+     type: boolean
+ 
+   port:
+-    $ref: /schemas/graph.yaml#/properties/port
++    $ref: /schemas/graph.yaml#/$defs/port-base
+     description:
+       A port node to link the FSA4480 to a TypeC controller for the purpose of
+       handling altmode muxing and orientation switching.
++    unevaluatedProperties: false
++
++    properties:
++      endpoint:
++        $ref: /schemas/graph.yaml#/$defs/endpoint-base
++        unevaluatedProperties: false
++
++        properties:
++          data-lanes:
++            $ref: /schemas/types.yaml#/definitions/uint32-array
++            description:
++              Specifies how the AUX+/- lines are connected to SBU1/2.
++            oneOf:
++              - items:
++                  - const: 0
++                  - const: 1
++                description: |
++                  Default AUX/SBU layout
++                  - AUX+ connected to SBU2
++                  - AUX- connected to SBU1
++              - items:
++                  - const: 1
++                  - const: 0
++                description: |
++                  Swapped AUX/SBU layout
++                  - AUX+ connected to SBU1
++                  - AUX- connected to SBU2
+ 
+ required:
+   - compatible
 
- .../devicetree/bindings/usb/fcs,fsa4480.yaml       | 43 ++++++++++++-
- drivers/usb/typec/mux/fsa4480.c                    | 71 ++++++++++++++++++++++
- 2 files changed, 111 insertions(+), 3 deletions(-)
----
-base-commit: e3b18f7200f45d66f7141136c25554ac1e82009b
-change-id: 20231013-fsa4480-swap-9b0f76d73c19
-
-Best regards,
 -- 
-Luca Weiss <luca.weiss@fairphone.com>
+2.42.0
 
