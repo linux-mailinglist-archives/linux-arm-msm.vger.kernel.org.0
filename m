@@ -2,242 +2,288 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF78C7D0E66
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Oct 2023 13:31:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0CCF67D0F04
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Oct 2023 13:44:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377081AbjJTLb3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Oct 2023 07:31:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49240 "EHLO
+        id S1377415AbjJTLoq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Oct 2023 07:44:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376996AbjJTLb2 (ORCPT
+        with ESMTP id S1377381AbjJTLog (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Oct 2023 07:31:28 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A40571BF
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Oct 2023 04:31:24 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-9c2a0725825so108712566b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Oct 2023 04:31:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1697801483; x=1698406283; darn=vger.kernel.org;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wq2xrfNltYx9WSMnF1/a8wXflPx/W1Agx/pfa3OmDS8=;
-        b=RHXNqmjaBKZTAcM5cWSGFFK5xghL1oI26DeoGCEFtbVthNIDcTg2ELcd2vLHvvVaaz
-         Xmh/8gCaHAr2HsEgV3K6m0rWirq5bHfp/mU7wQlJ6VvjDfREp98Ei1dfXUuE9DiYUupB
-         +pqHHUkMwkPiDNfCK4m4100Ob6tErA1krpZWae9F9XQt1fDpuKZhCBPVs4yklwzqvk0b
-         k506piHOxXfr9yCopSZ66h7BlDeTjdbZYoDoo1lymXjsti1vPAE+qFbinJYHxuI7U6C/
-         CvJE5kkfwYhPiB/Uit5AmFBRXUfbTw4aFC627iaWd5NdraVa00wU40xB44PDT/P2Z7CY
-         kYUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697801483; x=1698406283;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=wq2xrfNltYx9WSMnF1/a8wXflPx/W1Agx/pfa3OmDS8=;
-        b=H69Iab3W9GOF5dqom+i+cjUBuYa5TVDRHyTSIIWR8Hp4EPObVPoOEKWP9iwSAKjSPa
-         T1lUjZI0UzGaabeJC1J2u/qEMLYN04iS9ugKeS/u0yyso68O6G46VrH2bK3wU5eUwcke
-         e2OBXrASl4Ecux6eX73xqnwod9Z+Ve/eQCZCub5qCHcrvUUPqwMrDboqDbcU8AAAwMyp
-         LFIz5O7Er+f1M1MXqmXfWp+Nw7JTeydicmvHEjBOckxvHQkOhFeBoJiuhl+SJT8Epnmd
-         Kui2z1BzePx8tBH5vRbUBDtrE8Zo+ZXW50RrQWysoMtojCrOufth0Jqh7CBhF0MNnufg
-         EmwA==
-X-Gm-Message-State: AOJu0Yx4aNlNYzk2cazAJQzFVtp0Xe8p0qlzexwAYGVXnMtFFS7b+VU3
-        XfZcm4H0B63pZZEjGULRhX4j2A==
-X-Google-Smtp-Source: AGHT+IEoeeFassbx3MNsZzZQpCjvyxQFxuHG8gi+lfJpmHgfzm7BufAONGqis7o9C64A7nCYKhEJSA==
-X-Received: by 2002:a17:906:c112:b0:9a5:846d:d81f with SMTP id do18-20020a170906c11200b009a5846dd81fmr1026518ejc.17.1697801483081;
-        Fri, 20 Oct 2023 04:31:23 -0700 (PDT)
-Received: from localhost (k10064.upc-k.chello.nl. [62.108.10.64])
-        by smtp.gmail.com with ESMTPSA id o14-20020a17090611ce00b009b29553b648sm1279266eja.206.2023.10.20.04.31.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Oct 2023 04:31:22 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Fri, 20 Oct 2023 13:31:21 +0200
-Message-Id: <CWD8E95B0W8L.1UMMGJXJF47D@fairphone.com>
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        "Luca Weiss" <luca@z3ntu.xyz>, "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Jonathan Cameron" <jic23@kernel.org>,
-        "Lars-Peter Clausen" <lars@metafoo.de>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        "Conor Dooley" <conor+dt@kernel.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>
-Cc:     <phone-devel@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-iio@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: qcm6490-fairphone-fp5: Add PM7325
- thermals
-X-Mailer: aerc 0.15.2
-References: <20231013-fp5-thermals-v1-0-f14df01922e6@fairphone.com>
- <20231013-fp5-thermals-v1-4-f14df01922e6@fairphone.com>
- <34da335e-cbcd-4dc2-8a86-f31369db1fcd@linaro.org>
- <4958673.31r3eYUQgx@z3ntu.xyz>
- <5ac0d16a-0303-46c7-a008-31280629cc11@linaro.org>
-In-Reply-To: <5ac0d16a-0303-46c7-a008-31280629cc11@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Fri, 20 Oct 2023 07:44:36 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABCF246B3;
+        Fri, 20 Oct 2023 04:43:05 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39K7a7Pe002540;
+        Fri, 20 Oct 2023 11:41:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Bm51Om3gZzpa1v/vxVMnh6BhiJMwyK7YZWgdIj9tKfc=;
+ b=bO5ue8tmhYDYsaePp6uQ9DbiUgwiFIbqVlRbqjwidbu1epYkSWWo8DPuue0rLFYw5Qms
+ 7dGi/QnthVEJFm1MKAONsATel7Q24KzlfyekYbmYh/KY0u7QNf7T11JkMDP9nwMyEX4u
+ 9ngF/C/socdHK3KfcPA1k6mlJuzNBW5JWFXSd1Ebg0Y8INjIH8clNKIb0qnbo7lJ/hJV
+ RQzQg2OZ0c9aLCzPYL4YQyT/1O7IgINZBnBxrWSL9ugNR8VgBHRQwyHIo7MO7cOWTBuD
+ hWTiAYrR476QZkmq5G4M31kitn03oC21CkXGGF/EA4kGd3TMjBNysHWN53TlltzcgdLg Jg== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tubwr9qvv-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 20 Oct 2023 11:41:58 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39KBfvs4025304
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 20 Oct 2023 11:41:57 GMT
+Received: from [10.216.47.159] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Fri, 20 Oct
+ 2023 04:41:49 -0700
+Message-ID: <157d1c8d-5aa4-4488-bf85-7806c8fb00bc@quicinc.com>
+Date:   Fri, 20 Oct 2023 17:11:46 +0530
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v13 03/10] usb: dwc3: core: Refactor PHY logic to support
+ Multiport Controller
+Content-Language: en-US
+To:     Johan Hovold <johan@kernel.org>
+CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Andy Gross" <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
+        <quic_jackp@quicinc.com>, <ahalaney@redhat.com>,
+        <quic_shazhuss@quicinc.com>,
+        Harsh Agarwal <quic_harshq@quicinc.com>,
+        kernel test robot <lkp@intel.com>
+References: <20231007154806.605-1-quic_kriskura@quicinc.com>
+ <20231007154806.605-4-quic_kriskura@quicinc.com>
+ <ZTJPBcyZ_zLXbgE5@hovoldconsulting.com>
+From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <ZTJPBcyZ_zLXbgE5@hovoldconsulting.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: pUAqABDTDCaqWova7_OUswvp6OdFJFzK
+X-Proofpoint-GUID: pUAqABDTDCaqWova7_OUswvp6OdFJFzK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-20_10,2023-10-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
+ priorityscore=1501 impostorscore=0 spamscore=0 clxscore=1015 bulkscore=0
+ mlxscore=0 malwarescore=0 phishscore=0 lowpriorityscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2310170001
+ definitions=main-2310200097
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed Oct 18, 2023 at 10:28 PM CEST, Konrad Dybcio wrote:
->
->
-> On 10/14/23 19:52, Luca Weiss wrote:
-> > On Samstag, 14. Oktober 2023 01:13:29 CEST Konrad Dybcio wrote:
-> >> On 13.10.2023 10:09, Luca Weiss wrote:
-> >>> Configure the thermals for the QUIET_THERM, CAM_FLASH_THERM, MSM_THER=
-M
-> >>> and RFC_CAM_THERM thermistors connected to PM7325.
-> >>>
-> >>> With this PMIC the software communication to the ADC is going through
-> >>> PMK7325 (=3D PMK8350).
-> >>>
-> >>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> >>> ---
-> >>>
-> >>>   arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 117
-> >>>   +++++++++++++++++++++ 1 file changed, 117 insertions(+)
-> >>>
-> >>> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> >>> b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts index
-> >>> 2c01f799a6b2..d0b1e4e507ff 100644
-> >>> --- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> >>> +++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> >>> @@ -9,6 +9,7 @@
-> >>>
-> >>>   #define PM7250B_SID 8
-> >>>   #define PM7250B_SID1 9
-> >>>
-> >>> +#include <dt-bindings/iio/qcom,spmi-adc7-pm7325.h>
-> >>>
-> >>>   #include <dt-bindings/iio/qcom,spmi-adc7-pmk8350.h>
-> >>>   #include <dt-bindings/leds/common.h>
-> >>>   #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-> >>>
-> >>> @@ -137,6 +138,20 @@ afvdd_2p8: regulator-afvdd-2p8 {
-> >>>
-> >>>   	};
-> >>>   =09
-> >>>   	thermal-zones {
-> >>>
-> >>> +		camera-thermal {
-> >>> +			polling-delay-passive =3D <0>;
-> >>> +			polling-delay =3D <0>;
-> >>> +			thermal-sensors =3D <&pmk8350_adc_tm 2>;
-> >>> +
-> >>> +			trips {
-> >>> +				active-config0 {
-> >>> +					temperature =3D <125000>;
-> >>
-> >> are
-> >>
-> >>> +		rear-cam-thermal {
-> >>>
-> >>> +					temperature =3D <125000>;
-> >>
-> >> you
-> >>
-> >>> +		sdm-skin-thermal {
-> >>>
-> >>> +					temperature =3D <125000>;
-> >>
-> >> sure
-> >>
-> >> about these temps?
-> >=20
-> > (email from my other address, quicker right now)
-> >=20
-> > Well yes and no.
-> >=20
-> > Yes as in those are the temps specified in downstream dtb.
-> > No as in I'm 99% sure there's user space with definitely lower threshol=
-d that
-> > actually does something in response to the temps.
-> >=20
-> > I didn't look too much into this but does the kernel even do something =
-when it
-> > hits one of these trip points? I assume when there's a cooling device t=
-hing
-> > specified then it can actually tell the driver to do something, but wit=
-hout
-> > (and most drivers don't support this?) I'm assuming the kernel can't do=
- much
-> > anyways?
-> >=20
-> > So e.g. when the temperature for the flash led is reached I'm assuming
-> > downstream (+Android) either dims the led or turns it off? But I'd have=
- to dig
-> > quite a bit into the thermal setup there to check what it's really doin=
-g.
-> I think reaching "critical" shuts down the platform, unless something
-> registering the thermal zone explicitly overrides the behavior.
 
-Should probably be easy to test, especially the camera flash thermal
-zone heats up *very* quickly when the flash is on, so should be trivial
-to set the trip point down from 125degC to e.g. 45degC and see what
-happens.
 
-So I did this and... nothing happened.
-I watched /sys/class/thermal/thermal_zone34/temp climb above 45degC and
-nothing happened.
+On 10/20/2023 3:27 PM, Johan Hovold wrote:
+> On Sat, Oct 07, 2023 at 09:17:59PM +0530, Krishna Kurapati wrote:
+>> From: Harsh Agarwal <quic_harshq@quicinc.com>
+>>
+>> Currently the DWC3 driver supports only single port controller
+>> which requires at most one HS and one SS PHY.
+> 
+> Should that not be "at least one HS PHY and at most one SS PHY"?
+>   
+>> But the DWC3 USB controller can be connected to multiple ports and
+>> each port can have their own PHYs. Each port of the multiport
+>> controller can either be HS+SS capable or HS only capable
+>> Proper quantification of them is required to modify GUSB2PHYCFG
+>> and GUSB3PIPECTL registers appropriately.
+>>
+>> Add support for detecting, obtaining and configuring phy's supported
+> 
+> "PHYs" for consistency, no apostrophe
+> 
+>> by a multiport controller and. Limit the max number of ports
+> 
+> "and." what? Looks like part of the sentence is missing? Or just drop
+> " and"?
+> 
+>> supported to 4 as only SC8280 which is a quad port controller supports
+> 
+> s/4/four/
+> 
+> Just change this to
+> 
+> 	Limit support to multiport controllers with up to four ports for
+> 	now (e.g. as needed for SC8280XP).
+> 
+>> Multiport currently.
+> 
+> You use capitalised "Multiport" in several places it seems. Is this an
+> established term for these controllers or should it just be "multiport"
+> or "multiple ports"?
+> 
+>> Reported-by: kernel test robot <lkp@intel.com>
+>> Closes: https://lore.kernel.org/oe-kbuild-all/202309200156.CxQ3yaLY-lkp@intel.com/
+> 
+> Drop these two lines, as people have already suggested.
+> 
+>> Co-developed-by: Harsh Agarwal <quic_harshq@quicinc.com>
+>> Signed-off-by: Harsh Agarwal <quic_harshq@quicinc.com>
+>> Co-developed-by:Krishna Kurapati <quic_kriskura@quicinc.com>
+>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> 
+> Thinh pointed out the problems with the above which were also reported
+> by checkpatch.pl.
+> 
 
-I guess trip type being "passive" and no cooling-device makes it not do
-anything.
+I see that removing Co-Developed by tag for Harsh is helping with one 
+checkpatch issue. From what I know, although I made Harsh the Primary 
+author for the patch, should we still mention his Co-Developed-by along 
+with this Signed-Of by ?
 
-  =3D=3D> /sys/class/thermal/thermal_zone34/trip_point_0_hyst <=3D=3D
-  1000
-  =3D=3D> /sys/class/thermal/thermal_zone34/trip_point_0_temp <=3D=3D
-  45000
-  =3D=3D> /sys/class/thermal/thermal_zone34/trip_point_0_type <=3D=3D
-  passive
+>> ---
+>> Changes in v13:
+>> Compiler issues found by kernel test robot have been fixed and tags added.
+>> So removing maintainers reviewed-by tag as we have made a minor change
+>> in the patch.
+> 
+> In general this is the right thing to do when the change in question was
+> non-trivial. I'm not sure that's the case here, but the robots tend to
+> complain about smaller (but sometimes important) things.
+> 
 
-From Documentation/devicetree/bindings/thermal/thermal-zones.yaml:
+I too had this uncertainity, but I see that we must not add maintainers 
+reviewed by tag if we even make one letter of change. Wanted to adhere 
+to these rules and so removed Thinh's tag and asked for re-review.
 
-  - active   # enable active cooling e.g. fans
-  - passive  # enable passive cooling e.g. throttling cpu
-  - hot      # send notification to driver
-  - critical # send notification to driver, trigger shutdown
+>> @@ -748,23 +781,32 @@ static int dwc3_phy_setup(struct dwc3 *dwc)
+>>   static int dwc3_phy_init(struct dwc3 *dwc)
+>>   {
+>>   	int ret;
+>> +	int i;
+>> +	int j;
+> 
+> These could be declared on one line (same throughout).
+> 
 
-So unless we want to just shut down the system (with "critical"), I
-don't think thermal can't really do anything else right now, since e.g.
-leds-qcom-flash.c driver doesn't have any cooling support to lower the
-brightness or turn off the LED.
+I did so in v7, but was asked to put them in separate lines:
+https://lore.kernel.org/all/20230502221100.ecska23anlzv3iwq@synopsys.com/
 
-So.. in essence not much we can do right now.
 
-But seems we also cannot remove this (kinda useless) trip since we need
-at least one trip point in the dts if I read the bindings yaml
-correctly.
+>>   	usb_phy_init(dwc->usb2_phy);
+>>   	usb_phy_init(dwc->usb3_phy);
 
->
-> >=20
-> > But for now I think it's okay to put this current thermal config into d=
-ts and
-> > we'll improve it later when 1. I understand more and 2. maybe some usef=
-ul
-> > drivers support the cooling bits?
-> Yeah it's better than nothing, but ultimately we should probably move
-> the values that userspace daemon operates on here in the dt..
+				dwc->usb2_generic_phy[i] = NULL;
+>> +			else
+>> +				return dev_err_probe(dev, ret,
+>> +					"failed to lookup phy %s\n", phy_name);
+> 
+> Continuation lines should be intented at least two tabs further.
+> 
+> I generally suggest adding brackets around blocks with multiline
+> statements to improve readability but if you move the string to the
+> previous line and intend the continuation line (phy_name) one tab more I
+> guess that's fine.
+> 
+>> +		}
+>> +
+>> +		if (dwc->num_usb2_ports == 1)
+>> +			sprintf(phy_name, "usb3-phy");
+>>   		else
+>> -			return dev_err_probe(dev, ret, "no usb3 phy configured\n");
+>> +			sprintf(phy_name, "usb3-port%d", i);
+>> +
+>> +		dwc->usb3_generic_phy[i] = devm_phy_get(dev, phy_name);
+>> +		if (IS_ERR(dwc->usb3_generic_phy[i])) {
+>> +			ret = PTR_ERR(dwc->usb3_generic_phy[i]);
+>> +			if (ret == -ENOSYS || ret == -ENODEV)
+>> +				dwc->usb3_generic_phy[i] = NULL;
+>> +			else
+>> +				return dev_err_probe(dev, ret,
+>> +					"failed to lookup phy %s\n", phy_name);
+> 
+> Same here.
+> 
+>> +		}
+>>   	}
+>>   
+>>   	return 0;
+> 
+>> @@ -1892,9 +1975,12 @@ static int dwc3_read_port_info(struct dwc3 *dwc)
+>>   
+>>   	dev_dbg(dwc->dev, "hs-ports: %u ss-ports: %u\n",
+>>   			dwc->num_usb2_ports, dwc->num_usb3_ports);
+>> -
+> 
+> Drop this random change.
 
-For sure.. I spent a bit of time looking into the proprietary Qualcomm
-thermal-daemon sources but didn't really see much interesting things
-there for this platform, maybe some of this thermal handling is
-somewhere else - or half of these thermal zones aren't even used with
-Android.
+The removal of extra line here done you mean ?
 
-So.. good to get the current patch upstream or not? :)
+> 
+>>   	iounmap(base);
+>>   
+>> +	if ((dwc->num_usb2_ports > DWC3_MAX_PORTS) ||
+>> +		(dwc->num_usb3_ports > DWC3_MAX_PORTS))
+> 
+> Again, continuation lines should be indented at least two tabs further.
+> 
+>> +		return -ENOMEM;
+>> +
+>>   	return 0;
+>>   }
+> 
+>> diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
+>> index 2ea6df7e6571..fc5d15edab1c 100644
+>> --- a/drivers/usb/dwc3/core.h
+>> +++ b/drivers/usb/dwc3/core.h
+>> @@ -33,6 +33,9 @@
+>>   
+>>   #include <linux/power_supply.h>
+>>   
+>> +/* Number of ports supported by a multiport controller */
+> 
+> 	/*
+> 	 * Maximum number of ports currently supported for multiport
+> 	 * controllers.
+> 	 */
+> 
+>> +#define DWC3_MAX_PORTS 4
+>> +
+>>   #define DWC3_MSG_MAX	500
+>>   
+>>   /* Global constants */
+>> @@ -1029,8 +1032,8 @@ struct dwc3_scratchpad_array {
+>>    * @usb_psy: pointer to power supply interface.
+>>    * @usb2_phy: pointer to USB2 PHY
+>>    * @usb3_phy: pointer to USB3 PHY
+>> - * @usb2_generic_phy: pointer to USB2 PHY
+>> - * @usb3_generic_phy: pointer to USB3 PHY
+>> + * @usb2_generic_phy: pointer to array of USB2 PHY
+>> + * @usb3_generic_phy: pointer to array of USB3 PHY
+> 
+> s/PHY/PHYs/
+> 
+>>    * @num_usb2_ports: number of USB2 ports
+>>    * @num_usb3_ports: number of USB3 ports
+>>    * @phys_ready: flag to indicate that PHYs are ready
+> 
+> Johan
 
-Regards
-Luca
+Thanks for the review. Will fix these nits in v14.
 
->
-> Konrad
-
+Regards,
+Krishna,
