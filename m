@@ -2,184 +2,351 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E3057D0C3F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Oct 2023 11:49:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 60EA17D0C66
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Oct 2023 11:57:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376319AbjJTJte (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Oct 2023 05:49:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53282 "EHLO
+        id S1376648AbjJTJ5Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Oct 2023 05:57:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376601AbjJTJte (ORCPT
+        with ESMTP id S1376601AbjJTJ5X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Oct 2023 05:49:34 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE6BAD55
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Oct 2023 02:49:31 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-53de0d1dc46so858695a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Oct 2023 02:49:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1697795370; x=1698400170; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=y44OW1J6JIDiZk1ndwKKkQEZ9MRTX8zlFxWnOFyWMHw=;
-        b=GCvScr0TGlDunaG0QzaIyfycIG6wgJJ6B0+8dBGBYJXTpCAA6WTsHDWQQtXKKWc3XE
-         i9pHZ/BUWamiqauziyqvZHtGqjHmSNm6bunSSqq3KMqcPCufLIDCsirwo6QM5h0FkyUA
-         zqCaYPrUgMRJZSzr+6SzfjA3zzNQieg67d8nPaJ+x2bfebw6KIx0jNKRDrR4SVQTUBbz
-         /7T0PJDwATQbTFd13QFRlt77XgEhQiYGfIj2F9UkTfMeYsTmGwWTDcHweSzK0+aXKsje
-         j6WhSZHMUOlMwE+9Y8vA9sYyQIn2NQcVes4s+/UDGWxYTZO98UQTRRyFW3wpzUtf/ptn
-         haCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697795370; x=1698400170;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=y44OW1J6JIDiZk1ndwKKkQEZ9MRTX8zlFxWnOFyWMHw=;
-        b=a0ZwdOAiOmzs/uxmRKa3+HufdcyXGujKbtwN/sqNLbHhTZbxzfGhpCQAQMq+08WTQn
-         iIv03IKJ90TmiGnVAsgzQnbwdST4vG1Wu48fC96ztOaO1o3VTKlJVegyVbaex7znNCv7
-         Nt8CsvJc1zeu3/1HHBlcPReG2/dyw4yaF32rjWpBAeWqzcJM5DWOU2bBPDEivJ8xpMZM
-         7MMm4gknnbYt5fTHMNVDP27ffrIIYtElvE3IiXXQku3KQG5zOtJKi8M9Tr825wwYbLQX
-         xfZPrfB4UCgxpPChLDAHp0G4PaepqvyF+CkGwM5DNobAscvaflGFvJP8AUNlDlDjMMQB
-         6UUg==
-X-Gm-Message-State: AOJu0Yyk3/W4ersK0P8CmAsMDFYxP+k69bT0N9u1KMf5ljoEFuFWWbYJ
-        IiINwRALyqoPx5nlf1gCLA4aEQ==
-X-Google-Smtp-Source: AGHT+IEV1HsuFwDhHijM/7iC+A50rGae2ktwLJK4dZ7FF06nmrK6c3QxSHS7T8JUbYnkd0qj59n6bA==
-X-Received: by 2002:a17:907:c18:b0:9be:bf31:335f with SMTP id ga24-20020a1709070c1800b009bebf31335fmr989381ejc.46.1697795370105;
-        Fri, 20 Oct 2023 02:49:30 -0700 (PDT)
-Received: from localhost (k10064.upc-k.chello.nl. [62.108.10.64])
-        by smtp.gmail.com with ESMTPSA id pw7-20020a17090720a700b00992ea405a79sm1139574ejb.166.2023.10.20.02.49.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Oct 2023 02:49:28 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Fri, 20 Oct 2023 11:49:27 +0200
-Message-Id: <CWD6889N9X4U.3N5P65PFK5XK1@fairphone.com>
-Cc:     "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        "Conor Dooley" <conor+dt@kernel.org>,
-        "Liam Girdwood" <lgirdwood@gmail.com>,
-        "Mark Brown" <broonie@kernel.org>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH 2/2] usb: typec: add support for PTN36502 redriver
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     <neil.armstrong@linaro.org>,
-        "Heikki Krogerus" <heikki.krogerus@linux.intel.com>
-X-Mailer: aerc 0.15.2
-References: <20231013-ptn36502-v1-0-98109a430efc@fairphone.com>
- <20231013-ptn36502-v1-2-98109a430efc@fairphone.com>
- <ZS5HAQrUObdhHSdV@kuha.fi.intel.com>
- <CWD1MKL68P2V.1QBJXJ0E5U171@fairphone.com>
- <f29c43c6-0e73-4c04-9180-6c6088ab1f8a@linaro.org>
-In-Reply-To: <f29c43c6-0e73-4c04-9180-6c6088ab1f8a@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Fri, 20 Oct 2023 05:57:23 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B3D1C2;
+        Fri, 20 Oct 2023 02:57:21 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB53DC433C8;
+        Fri, 20 Oct 2023 09:57:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1697795841;
+        bh=8/3Mm/s+5mfGxjNsgZ92fL0tT02zsm5ukwZkUVOz8fM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Cnv5bBGr9VIi0j6jLXALUbaa464rEO7jQIXhrRckYRR6Gg5OPb2zzR2eLRIAuaUuD
+         gRmuvjKDtAm6n+qj5ZwGUiEXrWYgiJZc4kfUEv2MInmeAuSQweS/OQxBLFAvwLBRJl
+         eoOdJz0gFV2uOEAxsFnZrkuPv0YuxKIuIGaJgI3wDPxwWfOiaRJbOvNMV27sABO7Xx
+         VMUfO1mHC6ufHcNAdEEQx/NOShSoe7hSnds2jI0Ngpvy3nHZjEPu3+DrfSXUyktVgH
+         M8B0b0ZBi7yhRlkIwg+BBqfOEqDXk1baZDnAfjFs14udEPESB6nJ5ItRQggJMDQ2kP
+         XI66ij5EXgAjQ==
+Received: from johan by xi.lan with local (Exim 4.96)
+        (envelope-from <johan@kernel.org>)
+        id 1qtmFx-00023X-1n;
+        Fri, 20 Oct 2023 11:57:26 +0200
+Date:   Fri, 20 Oct 2023 11:57:25 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
+        quic_jackp@quicinc.com, ahalaney@redhat.com,
+        quic_shazhuss@quicinc.com, Harsh Agarwal <quic_harshq@quicinc.com>,
+        kernel test robot <lkp@intel.com>
+Subject: Re: [PATCH v13 03/10] usb: dwc3: core: Refactor PHY logic to support
+ Multiport Controller
+Message-ID: <ZTJPBcyZ_zLXbgE5@hovoldconsulting.com>
+References: <20231007154806.605-1-quic_kriskura@quicinc.com>
+ <20231007154806.605-4-quic_kriskura@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231007154806.605-4-quic_kriskura@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri Oct 20, 2023 at 9:18 AM CEST, Neil Armstrong wrote:
-> On 20/10/2023 08:13, Luca Weiss wrote:
-> > On Tue Oct 17, 2023 at 10:34 AM CEST, Heikki Krogerus wrote:
-> >> Hi,
-> >>
-> >> On Fri, Oct 13, 2023 at 04:24:48PM +0200, Luca Weiss wrote:
-> >>> Add a driver for the NXP PTN36502 Type-C USB 3.1 Gen 1 and DisplayPor=
-t
-> >>> v1.2 combo redriver.
-> >>>
-> >>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> >>
-> >> Looks OK to me, but couple of nitpicks below. With those fixed:
-> >>
-> >> Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-> >>
-> >>> ---
-> >>>   drivers/usb/typec/mux/Kconfig    |  10 +
-> >>>   drivers/usb/typec/mux/Makefile   |   1 +
-> >>>   drivers/usb/typec/mux/ptn36502.c | 421 ++++++++++++++++++++++++++++=
-+++++++++++
-> >>>   3 files changed, 432 insertions(+)
-> >>>
+On Sat, Oct 07, 2023 at 09:17:59PM +0530, Krishna Kurapati wrote:
+> From: Harsh Agarwal <quic_harshq@quicinc.com>
+> 
+> Currently the DWC3 driver supports only single port controller
+> which requires at most one HS and one SS PHY.
 
-[snip]
+Should that not be "at least one HS PHY and at most one SS PHY"?
+ 
+> But the DWC3 USB controller can be connected to multiple ports and
+> each port can have their own PHYs. Each port of the multiport
+> controller can either be HS+SS capable or HS only capable
+> Proper quantification of them is required to modify GUSB2PHYCFG
+> and GUSB3PIPECTL registers appropriately.
+> 
+> Add support for detecting, obtaining and configuring phy's supported
 
-> >>> +#define PTN36502_CHIP_ID_REG				0x00
-> >>> +#define PTN36502_CHIP_ID				0x02
-> >>> +
-> >>> +#define PTN36502_CHIP_REVISION_REG			0x01
-> >>> +#define PTN36502_CHIP_REVISION_BASE(val)		FIELD_GET(GENMASK(7, 4), (=
-val))
-> >>> +#define PTN36502_CHIP_REVISION_METAL(val)		FIELD_GET(GENMASK(3, 0), =
-(val))
-> >>> +
-> >>> +#define PTN36502_DP_LINK_CTRL_REG			0x06
-> >>> +#define PTN36502_DP_LINK_CTRL_LANES_2			(2 << 2)
-> >>> +#define PTN36502_DP_LINK_CTRL_LANES_4			(3 << 2)
-> >>> +#define PTN36502_DP_LINK_CTRL_LINK_RATE_5_4GBPS		(2 << 0)
-> >>> +
-> >>> +/* Registers for lane 0 (0x07) to lane 3 (0x0a) have the same layout=
- */
-> >>> +#define PTN36502_DP_LANE_CTRL_REG(n)			(0x07 + (n))
-> >>> +#define PTN36502_DP_LANE_CTRL_RX_GAIN_3DB		(2<<4)
-> >>> +#define PTN36502_DP_LANE_CTRL_TX_SWING_800MVPPD		(2<<2)
-> >>> +#define PTN36502_DP_LANE_CTRL_PRE_EMPHASIS_3_5DB	(1<<0)
-> >>> +
-> >>> +#define PTN36502_MODE_CTRL1_REG				0x0b
-> >>> +#define PTN36502_MODE_CTRL1_PLUG_ORIENT_REVERSE		(1<<5)
-> >>> +#define PTN36502_MODE_CTRL1_AUX_CROSSBAR_SW_ON		(1<<3)
-> >>> +#define PTN36502_MODE_CTRL1_MODE_OFF			(0<<0)
-> >>> +#define PTN36502_MODE_CTRL1_MODE_USB_ONLY		(1<<0)
-> >>> +#define PTN36502_MODE_CTRL1_MODE_USB_DP			(2<<0)
-> >>> +#define PTN36502_MODE_CTRL1_MODE_DP			(3<<0)
-> >>> +
-> >>> +#define PTN36502_DEVICE_CTRL_REG			0x0d
-> >>> +#define PTN36502_DEVICE_CTRL_AUX_MONITORING_EN		(1<<7)
-> >>
-> >> You have couple of different styles here. Please try to always use
-> >> BIT() and GENMASK() macros when possible. At the very least put spaces
-> >> around << and >>.
-> >=20
-> > Hi Heikki,
-> >=20
-> > I was wondering when writing that whether GENMASK was actually proper
-> > use for values you write to registers, when not actually used as a
-> > bitmask.
-> >=20
-> > Since the datasheet refers to e.g. with TX_SWING_800MVPPD (2<<2) that
-> > you write a '2' to the correct bits of this register. But when using
-> > BIT(3) kind of hides this relationship if someone refers back to the
-> > datasheet. Or same with "3<<2" -> GENMASK(3, 2) or whatever.
->
-> The proper way is to define the MASK for the field GENMASK(3, 2) and then
-> use FIELD_PREP(GENMASK(3, 2), 2) to write 2 in this field.
->
-> You could replace with:
-> #define PTN36502_DP_LANE_CTRL_TX_SWING_MASK		GENMASK(3, 2)
-> #define PTN36502_DP_LANE_CTRL_TX_SWING_800MVPPD		(2)
->
-> and in the code
-> lane_ctrl_val =3D FIELD_PREP(PTN36502_DP_LANE_CTRL_RX_GAIN_MASK,
-> 			   PTN36502_DP_LANE_CTRL_RX_GAIN_3DB) |
-> 		FIELD_PREP(PTN36502_DP_LANE_CTRL_TX_SWING_MASK,
-> 			   PTN36502_DP_LANE_CTRL_TX_SWING_800MVPPD) |
-> 		FIELD_PREP(PTN36502_DP_LANE_CTRL_PRE_EMPHASIS_MASK,
-> 			   PTN36502_DP_LANE_CTRL_PRE_EMPHASIS_3_5DB);
->
-> It's a little more verbose but it's much clearer and defines stuff correc=
-tly,
-> no confusion possible.
+"PHYs" for consistency, no apostrophe
 
-Thanks for the advise, I'll update for v2!
+> by a multiport controller and. Limit the max number of ports
 
-Regards
-Luca
+"and." what? Looks like part of the sentence is missing? Or just drop
+" and"?
+
+> supported to 4 as only SC8280 which is a quad port controller supports
+
+s/4/four/
+
+Just change this to
+
+	Limit support to multiport controllers with up to four ports for
+	now (e.g. as needed for SC8280XP).
+
+> Multiport currently.
+
+You use capitalised "Multiport" in several places it seems. Is this an
+established term for these controllers or should it just be "multiport"
+or "multiple ports"?
+
+> Reported-by: kernel test robot <lkp@intel.com>
+> Closes: https://lore.kernel.org/oe-kbuild-all/202309200156.CxQ3yaLY-lkp@intel.com/
+
+Drop these two lines, as people have already suggested.
+
+> Co-developed-by: Harsh Agarwal <quic_harshq@quicinc.com>
+> Signed-off-by: Harsh Agarwal <quic_harshq@quicinc.com>
+> Co-developed-by:Krishna Kurapati <quic_kriskura@quicinc.com>
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+
+Thinh pointed out the problems with the above which were also reported
+by checkpatch.pl.
+
+> ---
+> Changes in v13:
+> Compiler issues found by kernel test robot have been fixed and tags added.
+> So removing maintainers reviewed-by tag as we have made a minor change
+> in the patch.
+
+In general this is the right thing to do when the change in question was
+non-trivial. I'm not sure that's the case here, but the robots tend to
+complain about smaller (but sometimes important) things.
+
+> @@ -748,23 +781,32 @@ static int dwc3_phy_setup(struct dwc3 *dwc)
+>  static int dwc3_phy_init(struct dwc3 *dwc)
+>  {
+>  	int ret;
+> +	int i;
+> +	int j;
+
+These could be declared on one line (same throughout).
+
+>  	usb_phy_init(dwc->usb2_phy);
+>  	usb_phy_init(dwc->usb3_phy);
+>  
+> -	ret = phy_init(dwc->usb2_generic_phy);
+> -	if (ret < 0)
+> -		goto err_shutdown_usb3_phy;
+> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
+> +		ret = phy_init(dwc->usb2_generic_phy[i]);
+> +		if (ret < 0)
+> +			goto err_exit_phy;
+>  
+> -	ret = phy_init(dwc->usb3_generic_phy);
+> -	if (ret < 0)
+> -		goto err_exit_usb2_phy;
+> +		ret = phy_init(dwc->usb3_generic_phy[i]);
+> +		if (ret < 0) {
+> +			phy_exit(dwc->usb2_generic_phy[i]);
+> +			goto err_exit_phy;
+> +		}
+> +	}
+>  
+>  	return 0;
+>  
+> -err_exit_usb2_phy:
+> -	phy_exit(dwc->usb2_generic_phy);
+> -err_shutdown_usb3_phy:
+> +err_exit_phy:
+> +	for (j = i - 1; j >= 0; j--) {
+> +		phy_exit(dwc->usb2_generic_phy[j]);
+> +		phy_exit(dwc->usb3_generic_phy[j]);
+
+Try to always unwind in reverse order so in this case move phy_exit()
+for usb3 before usb2 here too.
+
+> +	}
+> +
+>  	usb_phy_shutdown(dwc->usb3_phy);
+>  	usb_phy_shutdown(dwc->usb2_phy);
+
+> @@ -783,23 +829,32 @@ static void dwc3_phy_exit(struct dwc3 *dwc)
+>  static int dwc3_phy_power_on(struct dwc3 *dwc)
+>  {
+>  	int ret;
+> +	int i;
+> +	int j;
+>  
+>  	usb_phy_set_suspend(dwc->usb2_phy, 0);
+>  	usb_phy_set_suspend(dwc->usb3_phy, 0);
+>  
+> -	ret = phy_power_on(dwc->usb2_generic_phy);
+> -	if (ret < 0)
+> -		goto err_suspend_usb3_phy;
+> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
+> +		ret = phy_power_on(dwc->usb2_generic_phy[i]);
+> +		if (ret < 0)
+> +			goto err_power_off_phy;
+>  
+> -	ret = phy_power_on(dwc->usb3_generic_phy);
+> -	if (ret < 0)
+> -		goto err_power_off_usb2_phy;
+> +		ret = phy_power_on(dwc->usb3_generic_phy[i]);
+> +		if (ret < 0) {
+> +			phy_power_off(dwc->usb2_generic_phy[i]);
+> +			goto err_power_off_phy;
+> +		}
+> +	}
+>  
+>  	return 0;
+>  
+> -err_power_off_usb2_phy:
+> -	phy_power_off(dwc->usb2_generic_phy);
+> -err_suspend_usb3_phy:
+> +err_power_off_phy:
+> +	for (j = i - 1; j >= 0; j--) {
+> +		phy_power_off(dwc->usb2_generic_phy[j]);
+> +		phy_power_off(dwc->usb3_generic_phy[j]);
+
+Same here.
+
+> +	}
+> +
+>  	usb_phy_set_suspend(dwc->usb3_phy, 1);
+>  	usb_phy_set_suspend(dwc->usb2_phy, 1);
+
+> @@ -1346,7 +1410,9 @@ static int dwc3_core_get_phy(struct dwc3 *dwc)
+>  {
+>  	struct device		*dev = dwc->dev;
+>  	struct device_node	*node = dev->of_node;
+> +	char phy_name[13];
+>  	int ret;
+> +	int i;
+>  
+>  	if (node) {
+>  		dwc->usb2_phy = devm_usb_get_phy_by_phandle(dev, "usb-phy", 0);
+> @@ -1372,22 +1438,36 @@ static int dwc3_core_get_phy(struct dwc3 *dwc)
+>  			return dev_err_probe(dev, ret, "no usb3 phy configured\n");
+>  	}
+>  
+> -	dwc->usb2_generic_phy = devm_phy_get(dev, "usb2-phy");
+> -	if (IS_ERR(dwc->usb2_generic_phy)) {
+> -		ret = PTR_ERR(dwc->usb2_generic_phy);
+> -		if (ret == -ENOSYS || ret == -ENODEV)
+> -			dwc->usb2_generic_phy = NULL;
+> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
+> +		if (dwc->num_usb2_ports == 1)
+> +			sprintf(phy_name, "usb2-phy");
+>  		else
+> -			return dev_err_probe(dev, ret, "no usb2 phy configured\n");
+> -	}
+> +			sprintf(phy_name, "usb2-port%d", i);
+>  
+> -	dwc->usb3_generic_phy = devm_phy_get(dev, "usb3-phy");
+> -	if (IS_ERR(dwc->usb3_generic_phy)) {
+> -		ret = PTR_ERR(dwc->usb3_generic_phy);
+> -		if (ret == -ENOSYS || ret == -ENODEV)
+> -			dwc->usb3_generic_phy = NULL;
+> +		dwc->usb2_generic_phy[i] = devm_phy_get(dev, phy_name);
+> +		if (IS_ERR(dwc->usb2_generic_phy[i])) {
+> +			ret = PTR_ERR(dwc->usb2_generic_phy[i]);
+> +			if (ret == -ENOSYS || ret == -ENODEV)
+> +				dwc->usb2_generic_phy[i] = NULL;
+> +			else
+> +				return dev_err_probe(dev, ret,
+> +					"failed to lookup phy %s\n", phy_name);
+
+Continuation lines should be intented at least two tabs further.
+
+I generally suggest adding brackets around blocks with multiline
+statements to improve readability but if you move the string to the
+previous line and intend the continuation line (phy_name) one tab more I
+guess that's fine.
+
+> +		}
+> +
+> +		if (dwc->num_usb2_ports == 1)
+> +			sprintf(phy_name, "usb3-phy");
+>  		else
+> -			return dev_err_probe(dev, ret, "no usb3 phy configured\n");
+> +			sprintf(phy_name, "usb3-port%d", i);
+> +
+> +		dwc->usb3_generic_phy[i] = devm_phy_get(dev, phy_name);
+> +		if (IS_ERR(dwc->usb3_generic_phy[i])) {
+> +			ret = PTR_ERR(dwc->usb3_generic_phy[i]);
+> +			if (ret == -ENOSYS || ret == -ENODEV)
+> +				dwc->usb3_generic_phy[i] = NULL;
+> +			else
+> +				return dev_err_probe(dev, ret,
+> +					"failed to lookup phy %s\n", phy_name);
+
+Same here.
+
+> +		}
+>  	}
+>  
+>  	return 0;
+
+> @@ -1892,9 +1975,12 @@ static int dwc3_read_port_info(struct dwc3 *dwc)
+>  
+>  	dev_dbg(dwc->dev, "hs-ports: %u ss-ports: %u\n",
+>  			dwc->num_usb2_ports, dwc->num_usb3_ports);
+> -
+
+Drop this random change.
+
+>  	iounmap(base);
+>  
+> +	if ((dwc->num_usb2_ports > DWC3_MAX_PORTS) ||
+> +		(dwc->num_usb3_ports > DWC3_MAX_PORTS))
+
+Again, continuation lines should be indented at least two tabs further.
+
+> +		return -ENOMEM;
+> +
+>  	return 0;
+>  }
+
+> diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
+> index 2ea6df7e6571..fc5d15edab1c 100644
+> --- a/drivers/usb/dwc3/core.h
+> +++ b/drivers/usb/dwc3/core.h
+> @@ -33,6 +33,9 @@
+>  
+>  #include <linux/power_supply.h>
+>  
+> +/* Number of ports supported by a multiport controller */
+
+	/*
+	 * Maximum number of ports currently supported for multiport
+	 * controllers.
+	 */
+
+> +#define DWC3_MAX_PORTS 4
+> +
+>  #define DWC3_MSG_MAX	500
+>  
+>  /* Global constants */
+> @@ -1029,8 +1032,8 @@ struct dwc3_scratchpad_array {
+>   * @usb_psy: pointer to power supply interface.
+>   * @usb2_phy: pointer to USB2 PHY
+>   * @usb3_phy: pointer to USB3 PHY
+> - * @usb2_generic_phy: pointer to USB2 PHY
+> - * @usb3_generic_phy: pointer to USB3 PHY
+> + * @usb2_generic_phy: pointer to array of USB2 PHY
+> + * @usb3_generic_phy: pointer to array of USB3 PHY
+
+s/PHY/PHYs/
+
+>   * @num_usb2_ports: number of USB2 ports
+>   * @num_usb3_ports: number of USB3 ports
+>   * @phys_ready: flag to indicate that PHYs are ready
+
+Johan
