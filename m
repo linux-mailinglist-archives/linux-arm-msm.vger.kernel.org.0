@@ -2,116 +2,381 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AB5667D15C1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Oct 2023 20:24:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 745BD7D1666
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Oct 2023 21:39:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229881AbjJTSXF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Oct 2023 14:23:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50126 "EHLO
+        id S231383AbjJTTjX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Oct 2023 15:39:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229843AbjJTSXD (ORCPT
+        with ESMTP id S230297AbjJTTjP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Oct 2023 14:23:03 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6347F1A8;
-        Fri, 20 Oct 2023 11:22:58 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39K9bPiN001148;
-        Fri, 20 Oct 2023 18:22:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=bpg5taB8iHb+lLch0rw4kcWlUAdHfVGrtLiZFvW6mm8=;
- b=iAwbXbkgvLav9XoJ17hQNeqZjoqQdvVmTFBekvDlV1rgzX0a15oPXeafMEzWdOUk/6mz
- cXU3cIcLRuYF5vQYIDf30SXPqmxjSyB4lkw1edCtActSHinxwpvfuqz4YqMARBxI6NlR
- g83Zdqp7FPj9EeG6/KfCYmYiiLK4l2bNmeXmduzP5mwbD0Fr2FCvEB5999FglZReEDDu
- UVk49tKjOzZ0hmiWdHL/jdRh65+9tIc7W6qC/5y0YzPf6GQV8zzd1YLAIu5NyJ485cKh
- 5xk+/VRbIqA/oeU7aHpORWDpp3YpkM6lw2qb0cCqYTwR4wbP4b/wt2OoFIzErqHu2lVj 2Q== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tubxhatdy-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 20 Oct 2023 18:22:49 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39KIMmHR009076
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 20 Oct 2023 18:22:48 GMT
-Received: from hu-amelende-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.39; Fri, 20 Oct 2023 11:22:47 -0700
-From:   Anjelique Melendez <quic_amelende@quicinc.com>
-To:     <pavel@ucw.cz>, <lee@kernel.org>, <thierry.reding@gmail.com>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <agross@kernel.org>, <andersson@kernel.org>
-CC:     <luca.weiss@fairphone.com>, <konrad.dybcio@linaro.org>,
-        <u.kleine-koenig@pengutronix.de>, <quic_subbaram@quicinc.com>,
-        <quic_gurus@quicinc.com>, <linux-leds@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pwm@vger.kernel.org>,
-        "Anjelique Melendez" <quic_amelende@quicinc.com>
-Subject: [PATCH v6 7/7] leds: rgb: Update PM8350C lpg_data to support two-nvmem PPG Scheme
-Date:   Fri, 20 Oct 2023 11:22:17 -0700
-Message-ID: <20231020182218.22217-8-quic_amelende@quicinc.com>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20231020182218.22217-1-quic_amelende@quicinc.com>
-References: <20231020182218.22217-1-quic_amelende@quicinc.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 3Ag_HZhkRTcpHy2YA1VZ8iLXs2EaAK9v
-X-Proofpoint-ORIG-GUID: 3Ag_HZhkRTcpHy2YA1VZ8iLXs2EaAK9v
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-20_10,2023-10-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- lowpriorityscore=0 mlxscore=0 suspectscore=0 phishscore=0 bulkscore=0
- priorityscore=1501 spamscore=0 malwarescore=0 mlxlogscore=979 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2310170001
- definitions=main-2310200154
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Fri, 20 Oct 2023 15:39:15 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E74C10C8;
+        Fri, 20 Oct 2023 12:39:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1697830741; x=1729366741;
+  h=date:from:to:cc:subject:message-id;
+  bh=51awEq1Hbqhwjn9m1iLRBIe0V1YVBVyuvLIMs47nU8U=;
+  b=ZDX5AwBkL+l8WwMJ7SwJX30gaY9cPqjhhUV/cGkz6eilpSexa3xFChFD
+   5S4WiLlQXi1CkgYAixIgkVcNtthcJPgcLAqO6ZMO5yVi4Hcpf5f4Dcbun
+   wxBdKdSOqNJ2Z7IcEzcXQpErjPyKfHDRtguBi19Zi7xipgzPbds0CNakG
+   ndkUXt7t3umFn5jt50qjfW/qQNScQI6Q9Yf9FeGmHJuVdZcDHDbV2IX2y
+   bUbhoiwziFOVQQju5CmUyqPTyZr7yhO4ByJKarAkpkU46DBvg0weOybNb
+   B6R1WO3XOfvfF8A82zFTski3XED/searFs6AwQstNFwjayadEDYs59Lq0
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10869"; a="389417484"
+X-IronPort-AV: E=Sophos;i="6.03,239,1694761200"; 
+   d="scan'208";a="389417484"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Oct 2023 12:38:30 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10869"; a="707309433"
+X-IronPort-AV: E=Sophos;i="6.03,239,1694761200"; 
+   d="scan'208";a="707309433"
+Received: from lkp-server01.sh.intel.com (HELO 8917679a5d3e) ([10.239.97.150])
+  by orsmga003.jf.intel.com with ESMTP; 20 Oct 2023 12:38:27 -0700
+Received: from kbuild by 8917679a5d3e with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qtvKD-0003v6-1T;
+        Fri, 20 Oct 2023 19:38:25 +0000
+Date:   Sat, 21 Oct 2023 03:38:07 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Andrew Morton <akpm@linux-foundation.org>
+Cc:     Linux Memory Management List <linux-mm@kvack.org>,
+        amd-gfx@lists.freedesktop.org, apparmor@lists.ubuntu.com,
+        bpf@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-staging@lists.linux.dev
+Subject: [linux-next:master] BUILD REGRESSION
+ 2030579113a1b1b5bfd7ff24c0852847836d8fd1
+Message-ID: <202310210349.MDQa2TXy-lkp@intel.com>
+User-Agent: s-nail v14.9.24
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update the pm8350c lpg_data struct so that pm8350c devices are treated as
-PWM devices that support two-nvmem PPG scheme.
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git master
+branch HEAD: 2030579113a1b1b5bfd7ff24c0852847836d8fd1  Add linux-next specific files for 20231020
 
-Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
-Reviewed-by: Lee Jones <lee@kernel.org>
----
- drivers/leds/rgb/leds-qcom-lpg.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+Error/Warning reports:
 
-diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
-index fdf453aa3859..3f22a8d260dd 100644
---- a/drivers/leds/rgb/leds-qcom-lpg.c
-+++ b/drivers/leds/rgb/leds-qcom-lpg.c
-@@ -1783,11 +1783,13 @@ static const struct lpg_data pm8150l_lpg_data = {
- static const struct lpg_data pm8350c_pwm_data = {
- 	.triled_base = 0xef00,
- 
-+	.lut_size = 122,
-+
- 	.num_channels = 4,
- 	.channels = (const struct lpg_channel_data[]) {
--		{ .base = 0xe800, .triled_mask = BIT(7) },
--		{ .base = 0xe900, .triled_mask = BIT(6) },
--		{ .base = 0xea00, .triled_mask = BIT(5) },
-+		{ .base = 0xe800, .triled_mask = BIT(7), .sdam_offset = 0x48 },
-+		{ .base = 0xe900, .triled_mask = BIT(6), .sdam_offset = 0x56 },
-+		{ .base = 0xea00, .triled_mask = BIT(5), .sdam_offset = 0x64 },
- 		{ .base = 0xeb00 },
- 	},
- };
+https://lore.kernel.org/oe-kbuild-all/202309212121.cul1pTRa-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202309212339.hxhBu2F1-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202310171905.azfrKoID-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202310201911.QT2YAa39-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202310210234.ArlqNeKe-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202310210303.l1aGutr9-lkp@intel.com
+
+Error/Warning: (recently discovered and may have been fixed)
+
+aarch64-linux-ld: s4-pll.c:(.text+0x168): undefined reference to `meson_clk_hw_get'
+arch/x86/include/asm/string_32.h:150:25: warning: '__builtin_memcpy' writing 3 bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+drivers/firmware/qcom_scm.c:1621:34: warning: 'qcom_scm_qseecom_allowlist' defined but not used [-Wunused-const-variable=]
+drivers/gpu/drm/amd/amdgpu/../pm/swsmu/smu13/smu_v13_0_6_ppt.c:286:52: warning: '%s' directive output may be truncated writing up to 29 bytes into a region of size 23 [-Wformat-truncation=]
+drivers/gpu/drm/amd/amdgpu/../pm/swsmu/smu14/smu_v14_0.c:72:52: warning: '%s' directive output may be truncated writing up to 29 bytes into a region of size 23 [-Wformat-truncation=]
+kernel/bpf/helpers.c:1909:19: warning: no previous declaration for 'bpf_percpu_obj_new_impl' [-Wmissing-declarations]
+kernel/bpf/helpers.c:1945:18: warning: no previous declaration for 'bpf_percpu_obj_drop_impl' [-Wmissing-declarations]
+kernel/bpf/helpers.c:2485:18: warning: no previous declaration for 'bpf_throw' [-Wmissing-declarations]
+s4-pll.c:(.text+0x164): undefined reference to `meson_clk_hw_get'
+security/apparmor/lsm.c:651:5: warning: no previous declaration for 'apparmor_uring_override_creds' [-Wmissing-declarations]
+security/apparmor/lsm.c:675:5: warning: no previous declaration for 'apparmor_uring_sqpoll' [-Wmissing-declarations]
+
+Unverified Error/Warning (likely false positive, please contact us if interested):
+
+Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml:
+Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml:
+drivers/staging/octeon/ethernet.c:204:37: error: storage size of 'rx_status' isn't known
+drivers/staging/octeon/ethernet.c:205:37: error: storage size of 'tx_status' isn't known
+drivers/staging/octeon/ethernet.c:801:49: error: storage size of 'imode' isn't known
+drivers/staging/octeon/ethernet.c:802:21: error: variable 'imode' has initializer but incomplete type
+
+Error/Warning ids grouped by kconfigs:
+
+gcc_recent_errors
+|-- alpha-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- arm-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- arm-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- arm-randconfig-004-20231020
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- arm64-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- arm64-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- arm64-buildonly-randconfig-r005-20211115
+|   |-- aarch64-linux-ld:s4-pll.c:(.text):undefined-reference-to-meson_clk_hw_get
+|   `-- s4-pll.c:(.text):undefined-reference-to-meson_clk_hw_get
+|-- csky-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- csky-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- csky-randconfig-001-20231020
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- i386-buildonly-randconfig-001-20231021
+|   `-- drivers-firmware-qcom_scm.c:warning:qcom_scm_qseecom_allowlist-defined-but-not-used
+|-- i386-buildonly-randconfig-006-20231020
+|   `-- arch-x86-include-asm-string_32.h:warning:__builtin_memcpy-writing-bytes-into-a-region-of-size-overflows-the-destination
+|-- i386-randconfig-002-20231020
+|   |-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_percpu_obj_drop_impl
+|   |-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_percpu_obj_new_impl
+|   `-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_throw
+|-- i386-randconfig-004-20231020
+|   |-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_percpu_obj_drop_impl
+|   |-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_percpu_obj_new_impl
+|   `-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_throw
+|-- loongarch-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- loongarch-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- loongarch-defconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- loongarch-randconfig-001-20231020
+|   |-- Documentation-devicetree-bindings-mfd-qcom-pm8xxx.yaml:
+|   |-- Documentation-devicetree-bindings-mfd-qcom-tcsr.yaml:
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- microblaze-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- microblaze-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- mips-cavium_octeon_defconfig
+|   |-- drivers-staging-octeon-ethernet.c:error:storage-size-of-imode-isn-t-known
+|   |-- drivers-staging-octeon-ethernet.c:error:storage-size-of-rx_status-isn-t-known
+|   |-- drivers-staging-octeon-ethernet.c:error:storage-size-of-tx_status-isn-t-known
+|   `-- drivers-staging-octeon-ethernet.c:error:variable-imode-has-initializer-but-incomplete-type
+|-- openrisc-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- openrisc-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- parisc-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- parisc-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- powerpc-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- powerpc-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- powerpc64-randconfig-003-20231020
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- riscv-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- riscv-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- s390-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- s390-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- sparc-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- sparc-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- sparc64-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- sparc64-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- sparc64-randconfig-001-20231020
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- x86_64-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- x86_64-randconfig-006-20231020
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- x86_64-randconfig-013-20231020
+|   |-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu13-smu_v13_0_6_ppt.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|   `-- drivers-gpu-drm-amd-amdgpu-..-pm-swsmu-smu14-smu_v14_0.c:warning:s-directive-output-may-be-truncated-writing-up-to-bytes-into-a-region-of-size
+|-- x86_64-randconfig-016-20231020
+|   |-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_percpu_obj_drop_impl
+|   |-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_percpu_obj_new_impl
+|   `-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_throw
+`-- x86_64-randconfig-072-20231020
+    |-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_percpu_obj_drop_impl
+    |-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_percpu_obj_new_impl
+    |-- kernel-bpf-helpers.c:warning:no-previous-declaration-for-bpf_throw
+    |-- security-apparmor-lsm.c:warning:no-previous-declaration-for-apparmor_uring_override_creds
+    `-- security-apparmor-lsm.c:warning:no-previous-declaration-for-apparmor_uring_sqpoll
+
+elapsed time: 740m
+
+configs tested: 134
+configs skipped: 2
+
+tested configs:
+alpha                             allnoconfig   gcc  
+alpha                            allyesconfig   gcc  
+alpha                               defconfig   gcc  
+arc                              allmodconfig   gcc  
+arc                               allnoconfig   gcc  
+arc                              allyesconfig   gcc  
+arc                                 defconfig   gcc  
+arc                   randconfig-001-20231020   gcc  
+arm                              allmodconfig   gcc  
+arm                               allnoconfig   gcc  
+arm                              allyesconfig   gcc  
+arm                                 defconfig   gcc  
+arm                   randconfig-001-20231020   gcc  
+arm64                            allmodconfig   gcc  
+arm64                             allnoconfig   gcc  
+arm64                            allyesconfig   gcc  
+arm64                               defconfig   gcc  
+csky                             allmodconfig   gcc  
+csky                              allnoconfig   gcc  
+csky                             allyesconfig   gcc  
+csky                                defconfig   gcc  
+i386                             allmodconfig   gcc  
+i386                              allnoconfig   gcc  
+i386                             allyesconfig   gcc  
+i386         buildonly-randconfig-001-20231020   gcc  
+i386         buildonly-randconfig-002-20231020   gcc  
+i386         buildonly-randconfig-003-20231020   gcc  
+i386         buildonly-randconfig-004-20231020   gcc  
+i386         buildonly-randconfig-005-20231020   gcc  
+i386         buildonly-randconfig-006-20231020   gcc  
+i386                              debian-10.3   gcc  
+i386                                defconfig   gcc  
+i386                  randconfig-001-20231020   gcc  
+i386                  randconfig-002-20231020   gcc  
+i386                  randconfig-003-20231020   gcc  
+i386                  randconfig-004-20231020   gcc  
+i386                  randconfig-005-20231020   gcc  
+i386                  randconfig-006-20231020   gcc  
+i386                  randconfig-011-20231020   gcc  
+i386                  randconfig-012-20231020   gcc  
+i386                  randconfig-013-20231020   gcc  
+i386                  randconfig-014-20231020   gcc  
+i386                  randconfig-015-20231020   gcc  
+i386                  randconfig-016-20231020   gcc  
+loongarch                        allmodconfig   gcc  
+loongarch                         allnoconfig   gcc  
+loongarch                        allyesconfig   gcc  
+loongarch                           defconfig   gcc  
+loongarch             randconfig-001-20231020   gcc  
+m68k                             allmodconfig   gcc  
+m68k                              allnoconfig   gcc  
+m68k                             allyesconfig   gcc  
+m68k                                defconfig   gcc  
+microblaze                       allmodconfig   gcc  
+microblaze                        allnoconfig   gcc  
+microblaze                       allyesconfig   gcc  
+microblaze                          defconfig   gcc  
+mips                             allmodconfig   gcc  
+mips                              allnoconfig   gcc  
+mips                             allyesconfig   gcc  
+nios2                            allmodconfig   gcc  
+nios2                             allnoconfig   gcc  
+nios2                            allyesconfig   gcc  
+nios2                               defconfig   gcc  
+openrisc                         allmodconfig   gcc  
+openrisc                          allnoconfig   gcc  
+openrisc                         allyesconfig   gcc  
+openrisc                            defconfig   gcc  
+parisc                           allmodconfig   gcc  
+parisc                            allnoconfig   gcc  
+parisc                           allyesconfig   gcc  
+parisc                              defconfig   gcc  
+parisc64                            defconfig   gcc  
+powerpc                          allmodconfig   gcc  
+powerpc                           allnoconfig   gcc  
+powerpc                          allyesconfig   gcc  
+riscv                            allmodconfig   gcc  
+riscv                             allnoconfig   gcc  
+riscv                            allyesconfig   gcc  
+riscv                               defconfig   gcc  
+riscv                 randconfig-001-20231020   gcc  
+riscv                          rv32_defconfig   gcc  
+s390                             allmodconfig   gcc  
+s390                              allnoconfig   gcc  
+s390                             allyesconfig   gcc  
+s390                                defconfig   gcc  
+s390                  randconfig-001-20231020   gcc  
+sh                               allmodconfig   gcc  
+sh                                allnoconfig   gcc  
+sh                               allyesconfig   gcc  
+sh                                  defconfig   gcc  
+sparc                            allmodconfig   gcc  
+sparc                             allnoconfig   gcc  
+sparc                            allyesconfig   gcc  
+sparc                               defconfig   gcc  
+sparc                 randconfig-001-20231020   gcc  
+sparc64                          allmodconfig   gcc  
+sparc64                          allyesconfig   gcc  
+sparc64                             defconfig   gcc  
+um                               allmodconfig   clang
+um                                allnoconfig   clang
+um                               allyesconfig   clang
+um                                  defconfig   gcc  
+um                             i386_defconfig   gcc  
+um                           x86_64_defconfig   gcc  
+x86_64                            allnoconfig   gcc  
+x86_64                           allyesconfig   gcc  
+x86_64       buildonly-randconfig-001-20231020   gcc  
+x86_64       buildonly-randconfig-002-20231020   gcc  
+x86_64       buildonly-randconfig-003-20231020   gcc  
+x86_64       buildonly-randconfig-004-20231020   gcc  
+x86_64       buildonly-randconfig-005-20231020   gcc  
+x86_64       buildonly-randconfig-006-20231020   gcc  
+x86_64                              defconfig   gcc  
+x86_64                randconfig-001-20231020   gcc  
+x86_64                randconfig-002-20231020   gcc  
+x86_64                randconfig-003-20231020   gcc  
+x86_64                randconfig-004-20231020   gcc  
+x86_64                randconfig-005-20231020   gcc  
+x86_64                randconfig-006-20231020   gcc  
+x86_64                randconfig-011-20231020   gcc  
+x86_64                randconfig-012-20231020   gcc  
+x86_64                randconfig-013-20231020   gcc  
+x86_64                randconfig-014-20231020   gcc  
+x86_64                randconfig-015-20231020   gcc  
+x86_64                randconfig-016-20231020   gcc  
+x86_64                randconfig-071-20231020   gcc  
+x86_64                randconfig-072-20231020   gcc  
+x86_64                randconfig-073-20231020   gcc  
+x86_64                randconfig-074-20231020   gcc  
+x86_64                randconfig-075-20231020   gcc  
+x86_64                randconfig-076-20231020   gcc  
+x86_64                          rhel-8.3-rust   clang
+x86_64                               rhel-8.3   gcc  
+
 -- 
-2.41.0
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
