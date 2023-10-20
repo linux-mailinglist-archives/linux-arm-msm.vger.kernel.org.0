@@ -2,231 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 778917D12B2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Oct 2023 17:30:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FC837D12DB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Oct 2023 17:34:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377616AbjJTPaB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Oct 2023 11:30:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60506 "EHLO
+        id S1377663AbjJTPef (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Oct 2023 11:34:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377601AbjJTPaA (ORCPT
+        with ESMTP id S1377658AbjJTPee (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Oct 2023 11:30:00 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68854D41;
-        Fri, 20 Oct 2023 08:29:58 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39KDUosx005737;
-        Fri, 20 Oct 2023 15:29:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Zivo8kx1pIerVJTmwPFk7leURv7N5iykBsr/H6Wnn2A=;
- b=QPmcon2GnKHdcKYFGDHMcTg56xRpOL9WMo6eVGOhI3dYrLUT2oIwEuBpshUMInXY0mcJ
- 5rk/uFkQYwdphK2MgvRPXW4MOYsbJkJey5O/310rkSngtMA4bsXTZbn7EYxAkAa0Gwee
- E+TZS03KVJXBGZ5lG6ChLq/sjU9IBy3R4HNgoe3QQ5/RVQL598sON1rPypbfGeGvi4Ec
- YGTg33z6FIoUR3IWFqIGYjq7QmsEDJAiMIGx20aJzaUGJ6A2rvxAVk1EbPn1NIDRceSF
- +DM+IBbbB1s6qL+DmsUwCiTmoaeD/8WWjYGyhYa87qU+xWRBDGfSAKXrJs0fYzsyIwgu aQ== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tubwr2d8e-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 20 Oct 2023 15:29:35 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39KFTZPr007813
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 20 Oct 2023 15:29:35 GMT
-Received: from [10.216.54.41] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Fri, 20 Oct
- 2023 08:29:27 -0700
-Message-ID: <8bc2b104-130e-4cdd-952c-662bc1b8759a@quicinc.com>
-Date:   Fri, 20 Oct 2023 20:59:22 +0530
+        Fri, 20 Oct 2023 11:34:34 -0400
+Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 743BCB3;
+        Fri, 20 Oct 2023 08:34:32 -0700 (PDT)
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        by box.trvn.ru (Postfix) with ESMTPSA id 18D4040541;
+        Fri, 20 Oct 2023 20:34:10 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+        t=1697816051; bh=qRQqOpHEja4+bOVE0+RE+KlNzc3wVdpb5/j4pLNNEf0=;
+        h=From:Subject:Date:To:Cc:From;
+        b=YnVp5gJtdwMX8ZMIaaDoSKDwjqJQvXXgxFshemOzI6ssvK8imq0f2jHehF8s02o+x
+         6NGZ1TvMAk5o+7eR7uq/vT7ksA6B+wl6irU+dIhUPh3msdagOUudzfv7Vl90VWBB4i
+         OMQY2GiQL/uYXK1IfT2VvprDGjejRSHWXgPhv1hJpxO6pcrNjDsG9QOxpUa1Q6y/aN
+         crB1K61TFsLQmVZdiDV4wyRf1/QZw4IIIHxLFHHXFDGTtsjungB2LYF6hgcOgIhQPI
+         /tIAllZyUlXmCjqtWZY28YcIwuQwelwJ0hu1p6ib9fTzshhpxcg0FLMFTBB/D+iF2g
+         mccbBzgZqcqTw==
+From:   Nikita Travkin <nikita@trvn.ru>
+Subject: [PATCH 0/2] sc7180: Add qdsp baked soundcard
+Date:   Fri, 20 Oct 2023 20:33:45 +0500
+Message-Id: <20231020-sc7180-qdsp-sndcard-v1-0-157706b7d06f@trvn.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V15 2/4] dt-bindings: pwm: add IPQ6018 binding
-Content-Language: en-US
-To:     Rob Herring <robh+dt@kernel.org>,
-        =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-        Devi Priya <quic_devipriy@quicinc.com>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <lee@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <thierry.reding@gmail.com>, <ndesaulniers@google.com>,
-        <trix@redhat.com>, <baruch@tkos.co.il>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <llvm@lists.linux.dev>,
-        <linux-pwm@vger.kernel.org>, <nathan@kernel.org>
-References: <20231005160550.2423075-1-quic_devipriy@quicinc.com>
- <20231005160550.2423075-3-quic_devipriy@quicinc.com>
- <20231018204608.qyifcnnzgi2bgzn6@pengutronix.de>
- <CAL_Jsq+df_nmNVuf46-a5Dafe4THxD-5HS-BPsTn_yzTckrOJw@mail.gmail.com>
-From:   Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-In-Reply-To: <CAL_Jsq+df_nmNVuf46-a5Dafe4THxD-5HS-BPsTn_yzTckrOJw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Dlg4fU-dsgrfd7ApwWBMi8TZKnzjSAmh
-X-Proofpoint-ORIG-GUID: Dlg4fU-dsgrfd7ApwWBMi8TZKnzjSAmh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-20_10,2023-10-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- priorityscore=1501 bulkscore=0 mlxlogscore=999 impostorscore=0
- adultscore=0 mlxscore=0 clxscore=1011 phishscore=0 spamscore=0
- malwarescore=0 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2310170001 definitions=main-2310200129
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANmdMmUC/x3MMQqAMAxA0atIZgNpFSteRRxqGzVL1QZEEO9uc
+ XzD/w8oZ2GFoXog8yUqeyowdQVh82lllFgMlmxjyBJqcKYnPKMeqCkGnyNyT50j43huA5TyyLz
+ I/V/H6X0/NZpha2UAAAA=
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
+Cc:     jenneron@postmarketos.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-sound@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Nikita Travkin <nikita@trvn.ru>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1022; i=nikita@trvn.ru;
+ h=from:subject:message-id; bh=qRQqOpHEja4+bOVE0+RE+KlNzc3wVdpb5/j4pLNNEf0=;
+ b=owEBbQKS/ZANAwAIAUMc7O4oGb91AcsmYgBlMp3uUQVyPi1hr+wNx22OyJ94FaggsSQx/aHpO
+ pCkc2BBfUKJAjMEAAEIAB0WIQTAhK9UUj+qg34uxUdDHOzuKBm/dQUCZTKd7gAKCRBDHOzuKBm/
+ deraD/44ZNzmfdkYDMy8y/DufJVaMHVQHxfIRanM6yiVCm0bQr+6bXRsPMrzxNhBAmU0xDEd69V
+ Tzd4/2b/Z8oAceWzPe+YzANtsN3BUL6W+sVKHv7h9FJoMazFdpVWk1UOhfNqSG5ycJMlylGyOLB
+ 1i96s/Fu2EGO5dc0eB48TWfDtPyxfnXPindRby3GFfy7xhOLDN3ix8UzaLlBpOT/FidRbWetzGO
+ liQOzYRC0laCjulrI/+88i2nGbdyELjoBAz2dNPRkDs81rbIjmRdpQCSHQLCUwhUHqKX3/veR46
+ LDouuaExRO5PUMhX2JDiIIgHT0f2lc25b3F/Od1RT7uP6BvdMXnQ5bGSu/jlg3uD4nXvrBxPuVJ
+ a4cU1OLcQY63zy1pGGfmBufxWxzNsiiArH159YfllUasvo6I7+TQCKX6XLNgZ4Gg6IkzpGL7ubo
+ Zo3WfntQNX3sXdmgatQwrzJxXpBG2MPhFGD59b1T21KVeT//Hzf65WLUVI6Bl3VXQrG6s7sES0z
+ Ncg7SDR4Sq4LhZq6RBu90R9G3taZNiaZiKccYwEd/rrQfn0XxfBT/dXRyAzwT0TiKjim7/xafY6
+ U3kcPXfVtq5ngscsz98JVMDs21XIk9pg3CcKHaaIR50ODYs5gmcQVPULZ6aMNSNyu1Jc6c1z9/9
+ 7IuV3DdXwpv7qdA==
+X-Developer-Key: i=nikita@trvn.ru; a=openpgp;
+ fpr=C084AF54523FAA837E2EC547431CECEE2819BF75
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Some devices, such as Acer Aspire 1, can't use lpass dirrectly, but
+instead must use adsp core to play sound. Since otherwise the hardware
+is, usually, very similar across the devices on the same platform, it
+makes sense to reuse the same boardfile.
 
-On 10/20/2023 8:44 PM, Rob Herring wrote:
-> On Wed, Oct 18, 2023 at 3:46 PM Uwe Kleine-König
-> <u.kleine-koenig@pengutronix.de> wrote:
->> Hello,
->>
->> On Thu, Oct 05, 2023 at 09:35:48PM +0530, Devi Priya wrote:
->>> DT binding for the PWM block in Qualcomm IPQ6018 SoC.
->>>
->>> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>> Co-developed-by: Baruch Siach <baruch.siach@siklu.com>
->>> Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
->>> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
->>> ---
->>> v15:
->>>
->>>    No change
->>>
->>> v14:
->>>
->>>    Picked up the R-b tag
->>>
->>> v13:
->>>
->>>    Updated the file name to match the compatible
->>>
->>>    Sorted the properties and updated the order in the required field
->>>
->>>    Dropped the syscon node from examples
->>>
->>> v12:
->>>
->>>    Picked up the R-b tag
->>>
->>> v11:
->>>
->>>    No change
->>>
->>> v10:
->>>
->>>    No change
->>>
->>> v9:
->>>
->>>    Add 'ranges' property to example (Rob)
->>>
->>>    Drop label in example (Rob)
->>>
->>> v8:
->>>
->>>    Add size cell to 'reg' (Rob)
->>>
->>> v7:
->>>
->>>    Use 'reg' instead of 'offset' (Rob)
->>>
->>>    Drop 'clock-names' and 'assigned-clock*' (Bjorn)
->>>
->>>    Use single cell address/size in example node (Bjorn)
->>>
->>>    Move '#pwm-cells' lower in example node (Bjorn)
->>>
->>>    List 'reg' as required
->>>
->>> v6:
->>>
->>>    Device node is child of TCSR; remove phandle (Rob Herring)
->>>
->>>    Add assigned-clocks/assigned-clock-rates (Uwe Kleine-König)
->>>
->>> v5: Use qcom,pwm-regs for phandle instead of direct regs (Bjorn
->>>      Andersson, Kathiravan T)
->>>
->>> v4: Update the binding example node as well (Rob Herring's bot)
->>>
->>> v3: s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
->>>
->>> v2: Make #pwm-cells const (Rob Herring)
->>>
->>>   .../bindings/pwm/qcom,ipq6018-pwm.yaml        | 45 +++++++++++++++++++
->>>   1 file changed, 45 insertions(+)
->>>   create mode 100644 Documentation/devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml
->>>
->>> diff --git a/Documentation/devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml b/Documentation/devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml
->>> new file mode 100644
->>> index 000000000000..6d0d7ed271f7
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml
->>> @@ -0,0 +1,45 @@
->>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->>> +%YAML 1.2
->>> +---
->>> +$id: http://devicetree.org/schemas/pwm/qcom,ipq6018-pwm.yaml#
->>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>> +
->>> +title: Qualcomm IPQ6018 PWM controller
->>> +
->>> +maintainers:
->>> +  - Baruch Siach <baruch@tkos.co.il>
->> Not being very fluent in dt and binding yaml I wonder if adding
->>
->>          allOf:
->>            - $ref: pwm.yaml#
->>
->> would be beneficial?!
-> Not really because the only thing you pick up is #pwm-cells, but
-> that's still needed here since that varies by binding. A reference
-> generally becomes useful when there are child nodes (e.g. a bus
-> binding) or multiple properties.
->
->>> +properties:
->>> +  compatible:
->>> +    const: qcom,ipq6018-pwm
->>> +
->>> +  reg:
->>> +    description: Offset of PWM register in the TCSR block.
->>> +    maxItems: 1
->>> +
->>> +  clocks:
->>> +    maxItems: 1
->>> +
->>> +  "#pwm-cells":
->>> +    const: 2
->> The driver only supports normal polarity. Is this a shortcoming of the
->> driver, or is the hardware incapable to do that, too?
->>
->> If it's only the former I'd want #pwm-cells = <3> here. For ease of use
->> I'd not oppose if you pick #pwm-cells = <3> even if the hardware can
->> only do normal polarity.
-> Devi, Can we get an answer here soon.
+This series refactors the sc7180.c slightly and adds the functions to
+control clocks via adsp instead of controlling the hardware directly.
 
+Existing google devices should experience no change.
 
-Rob, Devi is on vacation for couple of weeks. I don't have much idea on 
-this as of now, how can I help here, if needed?
+Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+---
+Nikita Travkin (2):
+      ASoC: dt-bindings: qcom,sm8250: Add sc7180-qdsp6-sndcard
+      ASoC: qcom: sc7180: Add support for qdsp6 baked sound
 
+ .../devicetree/bindings/sound/qcom,sm8250.yaml     |   1 +
+ sound/soc/qcom/sc7180.c                            | 195 ++++++++++++++++++---
+ 2 files changed, 174 insertions(+), 22 deletions(-)
+---
+base-commit: 2030579113a1b1b5bfd7ff24c0852847836d8fd1
+change-id: 20231020-sc7180-qdsp-sndcard-e8067017eb4c
 
->
-> The MFD part has been applied and it references this schema causing
-> warnings. So this needs to land or MFD schema reverted.
->
-> Rob
+Best regards,
+-- 
+Nikita Travkin <nikita@trvn.ru>
+
