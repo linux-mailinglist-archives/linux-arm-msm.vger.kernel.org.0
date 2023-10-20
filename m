@@ -2,111 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AD1A47D0A06
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Oct 2023 09:57:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 77F607D0A31
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Oct 2023 10:04:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376491AbjJTH5T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Oct 2023 03:57:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38946 "EHLO
+        id S235638AbjJTIEW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Oct 2023 04:04:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376524AbjJTH5E (ORCPT
+        with ESMTP id S235637AbjJTIEW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Oct 2023 03:57:04 -0400
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD1A8D60
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Oct 2023 00:56:47 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qtkN6-0003ZZ-10; Fri, 20 Oct 2023 09:56:40 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qtkN4-002yW2-41; Fri, 20 Oct 2023 09:56:38 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qtkN3-002OKM-R5; Fri, 20 Oct 2023 09:56:37 +0200
-From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-To:     Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        kernel@pengutronix.de
-Subject: [PATCH 33/42] crypto: qcom-rng - Convert to platform remove callback returning void
-Date:   Fri, 20 Oct 2023 09:55:55 +0200
-Message-ID: <20231020075521.2121571-77-u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231020075521.2121571-44-u.kleine-koenig@pengutronix.de>
-References: <20231020075521.2121571-44-u.kleine-koenig@pengutronix.de>
+        Fri, 20 Oct 2023 04:04:22 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 595C1114;
+        Fri, 20 Oct 2023 01:04:20 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39K59fDg021735;
+        Fri, 20 Oct 2023 08:03:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=E+vIHWF/VOHbQWF6DKPX7lBOBO/cN3atD6Cyf9pPEZE=;
+ b=I4x70mWgsspem5v5hqZK+HgA2c4ihNr4uO8V78xJqGhxmWy9ShLn3/iUKw13w73ajXUu
+ 5Mh9rs2AYn21hXyT0tAXyPRnXx+enxSb+e7AnN36YqqC9h0aC6qoKUEYRc3ub2Ock4ah
+ nEMi/a5zh30gBPzjYvrZm8nvQoNH9kqZC2LdTXfExbQzHJdsvTk9t9Czl0IqE6x/uizC
+ xoFhpgLGh8J+OoRnX0x/ZiQs9iIivUIL+grAj+u377BZ4gq8cbpg4yLU/hq0ofIJURmQ
+ ZO8icFwdZoysESgZCzvwvKMOUlg6WN1k7per9EqCrV//hePLRDktM+2Gl/1v29eCYUK5 Lg== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tubxd1500-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 20 Oct 2023 08:03:50 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39K83n8L027193
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 20 Oct 2023 08:03:49 GMT
+Received: from varda-linux.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.39; Fri, 20 Oct 2023 01:03:43 -0700
+Date:   Fri, 20 Oct 2023 13:33:39 +0530
+From:   Varadarajan Narayanan <quic_varada@quicinc.com>
+To:     Viresh Kumar <viresh.kumar@linaro.org>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>, <rafael@kernel.org>,
+        <ilia.lin@kernel.org>, <sivaprak@codeaurora.org>,
+        <quic_kathirav@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH v5 0/9] Enable cpufreq for IPQ5332 & IPQ9574
+Message-ID: <20231020080339.GA6197@varda-linux.qualcomm.com>
+References: <cover.1697781921.git.quic_varada@quicinc.com>
+ <20231020070947.cwigtaa2haij56hz@vireshk-i7>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1712; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=kUBCXyNhmAOITBuECHTgq8IeakGTUY+qub8iRJK7S1Y=; b=owGbwMvMwMXY3/A7olbonx/jabUkhlQjo36fAg6P9pJEzqmXDFT7xP8FSyfdUU+ILGvN3FAft U9MZVInozELAyMXg6yYIot945pMqyq5yM61/y7DDGJlApnCwMUpABN53M7B0HKfTWW3nk3DDBND I3vHP8dtY5292nrlHop1eLdMWHYn+hibqqgDR316Q4Vf2pnHwqnlZXrafa5hv/eulpt5cnL/2Zz bFS+vtuakPmPeqXVhvW3yVo+tXu7817OLl/z6uZA1qNvH78iRZ5yzph5iP/u4wc+PzTPJouBMb5 LQvdlG57csd1y4/bSPZZ7KUUbVgHdztnZ7707f3LJrlvYeZxndB4sFJy2uq/+ePvf03aiF0T7dd znTG/7dc3i8yljCdvodgau750zwLyjyyk+YzFRVOu+Vx5SHv2ebeqyrkMpUCrtztjfs2vtDjz4+ 3HZfflL4fNFEe7WZAsUTX1XZ6/nz/6ndc1Bo6orCbjkrAA==
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20231020070947.cwigtaa2haij56hz@vireshk-i7>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: kl9QQGze8np2GKWYd7S3IcrDapboGmle
+X-Proofpoint-ORIG-GUID: kl9QQGze8np2GKWYd7S3IcrDapboGmle
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-20_06,2023-10-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
+ phishscore=0 mlxlogscore=594 lowpriorityscore=0 suspectscore=0
+ impostorscore=0 malwarescore=0 priorityscore=1501 mlxscore=0 adultscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310170001 definitions=main-2310200066
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
+On Fri, Oct 20, 2023 at 12:39:47PM +0530, Viresh Kumar wrote:
+> On 20-10-23, 11:49, Varadarajan Narayanan wrote:
+> > Varadarajan Narayanan (9):
+> >   cpufreq: qti: Enable cpufreq for ipq53xx
+> >   cpufreq: qti: Introduce cpufreq for ipq95xx
+>
+> Can I pick just these two ?
 
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new(), which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
+ipq53xx patch is dependent on the previous safe source switching
+patch, hence not safe to pick that.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+	No -> cpufreq: qti: Enable cpufreq for ipq53xx
+	Yes -> cpufreq: qti: Introduce cpufreq for ipq95xx
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
----
- drivers/crypto/qcom-rng.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/crypto/qcom-rng.c b/drivers/crypto/qcom-rng.c
-index f46b92bb14b5..c670d7d0c11e 100644
---- a/drivers/crypto/qcom-rng.c
-+++ b/drivers/crypto/qcom-rng.c
-@@ -224,13 +224,11 @@ static int qcom_rng_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int qcom_rng_remove(struct platform_device *pdev)
-+static void qcom_rng_remove(struct platform_device *pdev)
- {
- 	crypto_unregister_rng(&qcom_rng_alg);
- 
- 	qcom_rng_dev = NULL;
--
--	return 0;
- }
- 
- static struct qcom_rng_of_data qcom_prng_of_data = {
-@@ -264,7 +262,7 @@ MODULE_DEVICE_TABLE(of, qcom_rng_of_match);
- 
- static struct platform_driver qcom_rng_driver = {
- 	.probe = qcom_rng_probe,
--	.remove =  qcom_rng_remove,
-+	.remove_new =  qcom_rng_remove,
- 	.driver = {
- 		.name = KBUILD_MODNAME,
- 		.of_match_table = of_match_ptr(qcom_rng_of_match),
--- 
-2.42.0
-
+Thanks
+Varada
