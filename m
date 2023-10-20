@@ -2,640 +2,235 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F25917D0946
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Oct 2023 09:18:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 68C3D7D0A1F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Oct 2023 09:58:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376359AbjJTHSr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Oct 2023 03:18:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46628 "EHLO
+        id S1376515AbjJTH6o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Oct 2023 03:58:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376319AbjJTHSq (ORCPT
+        with ESMTP id S1376534AbjJTH5x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Oct 2023 03:18:46 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F145CA
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Oct 2023 00:18:41 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-40838915cecso3937035e9.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Oct 2023 00:18:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697786319; x=1698391119; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
-         :references:cc:to:content-language:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uzbpIfmKIlbi4ryoi+BdJzoOKGlw+TbVYQP5Fq4KFGg=;
-        b=NiVyr5oYwAkHYAavABf9sCsRX2dMaTRDcqCM8Mmb3652EAgLS5LD1RhLjdwCGIkz2z
-         mZF/pz2TTxUsInr3DInWbS02/q/EYtZiJtnF/R+JvWhwYYG1tHoAjeiBYgZAlK8Rx8ce
-         pCNvlAct2ltayIWV3S4sR4HWc/utzHVgkJyM5HMOThda+tt50pyrL0RQaaKLyIrOyTj9
-         kR1IsXaUxXTJZt0QSJwP+rx4n7hDT/RJHVuaBv4TmrKwTHVklcMLZateGux5Jgb10Xwy
-         YYF8oo86lv0oExTgKpyv11NLx74QXM6q4ap5PIQBVYFub10BpR++8L/TAvIUjkXz3RAt
-         KDYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697786319; x=1698391119;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
-         :references:cc:to:content-language:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=uzbpIfmKIlbi4ryoi+BdJzoOKGlw+TbVYQP5Fq4KFGg=;
-        b=TSrMHMXySn8fPxvnbXAgRoGlmyvaQ8nu+DGSEinSPstOPvhi2hk35xH1/lC50+V15F
-         KSE9cHJy0T6IKEP5Qg8BltxfAq8lVAvw18pPFE9mWV+aZLG2UJQ8fOxaWIsR4bma9YHN
-         qsdVaKAx8Kr99+akb2a/CV3TqW82Qz77EZxMOBVLCIltv+T0ZQ4faM4DZjl/nBSl2jpA
-         7/m8McyZrtVRGrfgqjCp8eO1I7o0D7Cn8aAGIoh7q78a/TPcg/JuP6NW6S20fgArafvc
-         HRIpePpgM8Kime9R0GLeaPinpTtrhuu9eYLXhiX92F1XYv8EjvwmVtwSLQ2erFaDE9gH
-         7OlQ==
-X-Gm-Message-State: AOJu0YzpvVKB4qTB3rdeg4WvKFI5RceDaNGT0PyWNMrriQ6H9xueDKEn
-        PTqs1Vupc1wULujSKCtdLXeiDw==
-X-Google-Smtp-Source: AGHT+IGjRWcC33ZzdsbnHIoIQyHdOxSQ8Mgddoc2kpiTGbDz1KsMb7tdMs6dSlDuS4Zk/r0/L1A7rQ==
-X-Received: by 2002:a05:600c:4f49:b0:401:b204:3b97 with SMTP id m9-20020a05600c4f4900b00401b2043b97mr842617wmq.4.1697786319416;
-        Fri, 20 Oct 2023 00:18:39 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:e74c:7be5:76b9:cb31? ([2a01:e0a:982:cbb0:e74c:7be5:76b9:cb31])
-        by smtp.gmail.com with ESMTPSA id r6-20020a05600c458600b00406443c8b4fsm6311568wmo.19.2023.10.20.00.18.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Oct 2023 00:18:38 -0700 (PDT)
-Message-ID: <f29c43c6-0e73-4c04-9180-6c6088ab1f8a@linaro.org>
-Date:   Fri, 20 Oct 2023 09:18:37 +0200
+        Fri, 20 Oct 2023 03:57:53 -0400
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A43F510C7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Oct 2023 00:57:34 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qtkN5-0003Fj-Un; Fri, 20 Oct 2023 09:56:39 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qtkMx-002yU2-1K; Fri, 20 Oct 2023 09:56:31 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qtkMw-002OI5-Ky; Fri, 20 Oct 2023 09:56:30 +0200
+From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+To:     Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S. Miller" <davem@davemloft.net>
+Cc:     Corentin Labbe <clabbe.montjoie@gmail.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Rob Herring <robh@kernel.org>, linux-crypto@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
+        kernel@pengutronix.de, Yu Zhe <yuzhe@nfschina.com>,
+        Corentin Labbe <clabbe@baylibre.com>,
+        linux-amlogic@lists.infradead.org,
+        Neal Liu <neal_liu@aspeedtech.com>,
+        Joel Stanley <joel@jms.id.au>,
+        Andrew Jeffery <andrew@codeconstruct.com.au>,
+        linux-aspeed@lists.ozlabs.org,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+        Jesper Nilsson <jesper.nilsson@axis.com>,
+        Lars Persson <lars.persson@axis.com>,
+        linux-arm-kernel@axis.com, Arnd Bergmann <arnd@arndb.de>,
+        =?utf-8?q?Horia_Geant=C4=83?= <horia.geanta@nxp.com>,
+        Pankaj Gupta <pankaj.gupta@nxp.com>,
+        Gaurav Jain <gaurav.jain@nxp.com>,
+        Tom Lendacky <thomas.lendacky@amd.com>,
+        John Allen <john.allen@amd.com>,
+        Gilad Ben-Yossef <gilad@benyossef.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        linux-samsung-soc@vger.kernel.org,
+        Hans Ulli Kroll <ulli.kroll@googlemail.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Ruan Jinjie <ruanjinjie@huawei.com>,
+        Weili Qian <qianweili@huawei.com>,
+        Antoine Tenart <atenart@kernel.org>,
+        Linus Walleij <linusw@kernel.org>,
+        Imre Kaloz <kaloz@openwrt.org>,
+        Daniele Alessandrelli <daniele.alessandrelli@intel.com>,
+        Prabhjot Khurana <prabhjot.khurana@intel.com>,
+        Mark Gross <mgross@linux.intel.com>,
+        Declan Murphy <declan.murphy@intel.com>,
+        Boris Brezillon <bbrezillon@kernel.org>,
+        Arnaud Ebalard <arno@natisbad.org>,
+        Srujana Challa <schalla@marvell.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        linux-rockchip@lists.infradead.org,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        linux-stm32@st-md-mailman.stormreply.com,
+        nicolas.toromanoff@foss.st.com,
+        Colin Ian King <colin.i.king@gmail.com>,
+        Michal Simek <michal.simek@amd.com>,
+        Harsha <harsha.harsha@amd.com>
+Subject: [PATCH 00/42] crypto: Convert to platform remove callback returning void
+Date:   Fri, 20 Oct 2023 09:55:22 +0200
+Message-ID: <20231020075521.2121571-44-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 2/2] usb: typec: add support for PTN36502 redriver
-Content-Language: en-US, fr
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20231013-ptn36502-v1-0-98109a430efc@fairphone.com>
- <20231013-ptn36502-v1-2-98109a430efc@fairphone.com>
- <ZS5HAQrUObdhHSdV@kuha.fi.intel.com>
- <CWD1MKL68P2V.1QBJXJ0E5U171@fairphone.com>
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <CWD1MKL68P2V.1QBJXJ0E5U171@fairphone.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7162; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=fYXDo+SwqPnRrSUX87WtTlEzTyWK2MltdNBtAIlvcsY=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlMjJpzE2HUlHZs4ihOe48KpSg21c2ql9H8myWo h6r03hLF1qJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZTIyaQAKCRCPgPtYfRL+ TmPfB/9iXQL87/7FycODWMIqK5SyN7m0xz9BefT+JqnVhBolt0QFiitxce7amXYenEA5T/ngM/A ll68RzsV2xXP63v8vRfOT5RbaPxKPxZxDmduVXk25ZHk6KI+l2h0G17x3auG7RXqDXc99l7SAr2 832TuJfCQQkvLcqZSsOTFWkEX9WLeyuyoosSA8EULIPxuxzA/425u2juMif/CGd0x7bbjR8d5jU oyRKkLnq19O1GpKO8tWROFB1t6RiknCXyUaOkYrDIhsNLpQcLjyX9vlm613jQ6XjX3I/WXrRQbD JUWWmh09UWlmgv0bGpXHzPQIlH5OCgKSRf05fwbFndVZySn7
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/10/2023 08:13, Luca Weiss wrote:
-> On Tue Oct 17, 2023 at 10:34 AM CEST, Heikki Krogerus wrote:
->> Hi,
->>
->> On Fri, Oct 13, 2023 at 04:24:48PM +0200, Luca Weiss wrote:
->>> Add a driver for the NXP PTN36502 Type-C USB 3.1 Gen 1 and DisplayPort
->>> v1.2 combo redriver.
->>>
->>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>
->> Looks OK to me, but couple of nitpicks below. With those fixed:
->>
->> Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
->>
->>> ---
->>>   drivers/usb/typec/mux/Kconfig    |  10 +
->>>   drivers/usb/typec/mux/Makefile   |   1 +
->>>   drivers/usb/typec/mux/ptn36502.c | 421 +++++++++++++++++++++++++++++++++++++++
->>>   3 files changed, 432 insertions(+)
->>>
->>> diff --git a/drivers/usb/typec/mux/Kconfig b/drivers/usb/typec/mux/Kconfig
->>> index 65da61150ba7..816b9bd08355 100644
->>> --- a/drivers/usb/typec/mux/Kconfig
->>> +++ b/drivers/usb/typec/mux/Kconfig
->>> @@ -46,4 +46,14 @@ config TYPEC_MUX_NB7VPQ904M
->>>   	  Say Y or M if your system has a On Semiconductor NB7VPQ904M Type-C
->>>   	  redriver chip found on some devices with a Type-C port.
->>>   
->>> +config TYPEC_MUX_PTN36502
->>> +	tristate "NXP PTN36502 Type-C redriver driver"
->>> +	depends on I2C
->>> +	depends on DRM || DRM=n
->>> +	select DRM_PANEL_BRIDGE if DRM
->>> +	select REGMAP_I2C
->>> +	help
->>> +	  Say Y or M if your system has a NXP PTN36502 Type-C redriver chip
->>> +	  found on some devices with a Type-C port.
->>> +
->>>   endmenu
->>> diff --git a/drivers/usb/typec/mux/Makefile b/drivers/usb/typec/mux/Makefile
->>> index 76196096ef41..9d6a5557b0bd 100644
->>> --- a/drivers/usb/typec/mux/Makefile
->>> +++ b/drivers/usb/typec/mux/Makefile
->>> @@ -5,3 +5,4 @@ obj-$(CONFIG_TYPEC_MUX_GPIO_SBU)	+= gpio-sbu-mux.o
->>>   obj-$(CONFIG_TYPEC_MUX_PI3USB30532)	+= pi3usb30532.o
->>>   obj-$(CONFIG_TYPEC_MUX_INTEL_PMC)	+= intel_pmc_mux.o
->>>   obj-$(CONFIG_TYPEC_MUX_NB7VPQ904M)	+= nb7vpq904m.o
->>> +obj-$(CONFIG_TYPEC_MUX_PTN36502)	+= ptn36502.o
->>> diff --git a/drivers/usb/typec/mux/ptn36502.c b/drivers/usb/typec/mux/ptn36502.c
->>> new file mode 100644
->>> index 000000000000..91684a856f3a
->>> --- /dev/null
->>> +++ b/drivers/usb/typec/mux/ptn36502.c
->>> @@ -0,0 +1,421 @@
->>> +// SPDX-License-Identifier: GPL-2.0+
->>> +/*
->>> + * NXP PTN36502 Type-C driver
->>> + *
->>> + * Copyright (C) 2023 Luca Weiss <luca.weiss@fairphone.com>
->>> + *
->>> + * Based on NB7VPQ904M driver:
->>> + * Copyright (C) 2023 Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> + */
->>> +
->>> +#include <drm/drm_bridge.h>
->>> +#include <linux/bitfield.h>
->>> +#include <linux/i2c.h>
->>> +#include <linux/kernel.h>
->>> +#include <linux/module.h>
->>> +#include <linux/mutex.h>
->>> +#include <linux/of_graph.h>
->>> +#include <linux/regmap.h>
->>> +#include <linux/regulator/consumer.h>
->>> +#include <linux/usb/typec_dp.h>
->>> +#include <linux/usb/typec_mux.h>
->>> +#include <linux/usb/typec_retimer.h>
->>> +
->>> +#define PTN36502_CHIP_ID_REG				0x00
->>> +#define PTN36502_CHIP_ID				0x02
->>> +
->>> +#define PTN36502_CHIP_REVISION_REG			0x01
->>> +#define PTN36502_CHIP_REVISION_BASE(val)		FIELD_GET(GENMASK(7, 4), (val))
->>> +#define PTN36502_CHIP_REVISION_METAL(val)		FIELD_GET(GENMASK(3, 0), (val))
->>> +
->>> +#define PTN36502_DP_LINK_CTRL_REG			0x06
->>> +#define PTN36502_DP_LINK_CTRL_LANES_2			(2 << 2)
->>> +#define PTN36502_DP_LINK_CTRL_LANES_4			(3 << 2)
->>> +#define PTN36502_DP_LINK_CTRL_LINK_RATE_5_4GBPS		(2 << 0)
->>> +
->>> +/* Registers for lane 0 (0x07) to lane 3 (0x0a) have the same layout */
->>> +#define PTN36502_DP_LANE_CTRL_REG(n)			(0x07 + (n))
->>> +#define PTN36502_DP_LANE_CTRL_RX_GAIN_3DB		(2<<4)
->>> +#define PTN36502_DP_LANE_CTRL_TX_SWING_800MVPPD		(2<<2)
->>> +#define PTN36502_DP_LANE_CTRL_PRE_EMPHASIS_3_5DB	(1<<0)
->>> +
->>> +#define PTN36502_MODE_CTRL1_REG				0x0b
->>> +#define PTN36502_MODE_CTRL1_PLUG_ORIENT_REVERSE		(1<<5)
->>> +#define PTN36502_MODE_CTRL1_AUX_CROSSBAR_SW_ON		(1<<3)
->>> +#define PTN36502_MODE_CTRL1_MODE_OFF			(0<<0)
->>> +#define PTN36502_MODE_CTRL1_MODE_USB_ONLY		(1<<0)
->>> +#define PTN36502_MODE_CTRL1_MODE_USB_DP			(2<<0)
->>> +#define PTN36502_MODE_CTRL1_MODE_DP			(3<<0)
->>> +
->>> +#define PTN36502_DEVICE_CTRL_REG			0x0d
->>> +#define PTN36502_DEVICE_CTRL_AUX_MONITORING_EN		(1<<7)
->>
->> You have couple of different styles here. Please try to always use
->> BIT() and GENMASK() macros when possible. At the very least put spaces
->> around << and >>.
-> 
-> Hi Heikki,
-> 
-> I was wondering when writing that whether GENMASK was actually proper
-> use for values you write to registers, when not actually used as a
-> bitmask.
-> 
-> Since the datasheet refers to e.g. with TX_SWING_800MVPPD (2<<2) that
-> you write a '2' to the correct bits of this register. But when using
-> BIT(3) kind of hides this relationship if someone refers back to the
-> datasheet. Or same with "3<<2" -> GENMASK(3, 2) or whatever.
+Hello,
 
-The proper way is to define the MASK for the field GENMASK(3, 2) and then
-use FIELD_PREP(GENMASK(3, 2), 2) to write 2 in this field.
+this series converts all platform drivers below drivers/crypto to use
+.remove_new(). Compared to the traditional .remove() callback
+.remove_new() returns no value. This is a good thing because the driver
+core doesn't (and cannot) cope for errors during remove. The only effect
+of a non-zero return value in .remove() is that the driver core emits a
+warning. The device is removed anyhow and an early return from .remove()
+usually yields resource leaks and/or use-after-free bugs.
 
-You could replace with:
-#define PTN36502_DP_LANE_CTRL_TX_SWING_MASK		GENMASK(3, 2)
-#define PTN36502_DP_LANE_CTRL_TX_SWING_800MVPPD		(2)
+There are three drivers that got that wrong and potentially returned an
+error code (caam/jr.c, stm32/stm32-crc32.c, stm32/stm32-cryp.c). These
+are fixed accordingly. The other drivers could be transformed trivially.
 
-and in the code
-lane_ctrl_val = FIELD_PREP(PTN36502_DP_LANE_CTRL_RX_GAIN_MASK,
-			   PTN36502_DP_LANE_CTRL_RX_GAIN_3DB) |
-		FIELD_PREP(PTN36502_DP_LANE_CTRL_TX_SWING_MASK,
-			   PTN36502_DP_LANE_CTRL_TX_SWING_800MVPPD) |
-		FIELD_PREP(PTN36502_DP_LANE_CTRL_PRE_EMPHASIS_MASK,
-			   PTN36502_DP_LANE_CTRL_PRE_EMPHASIS_3_5DB);
+See commit 5c5a7680e67b ("platform: Provide a remove callback that
+returns no value") for an extended explanation and the eventual goal.
 
-It's a little more verbose but it's much clearer and defines stuff correctly,
-no confusion possible.
+There are no interdependencies in this series. As there are still quite
+a few drivers to convert, I'm happy about every patch that makes it in.
+So even if there is a merge conflict with one patch until you apply (or
+a different concern that doesn't apply to all patches), please apply the
+remainder of this series anyhow. I'll come back to the part that you
+(maybe) skipped at a later point.
 
-Neil
+Best regards and thanks
+Uwe
 
-> 
-> Let me know what you think.
-> 
-> Regards
-> Luca
-> 
->>
->>> +struct ptn36502 {
->>> +	struct i2c_client *client;
->>> +	struct regulator *vdd18_supply;
->>> +	struct regmap *regmap;
->>> +	struct typec_switch_dev *sw;
->>> +	struct typec_retimer *retimer;
->>> +
->>> +	struct typec_switch *typec_switch;
->>> +
->>> +	struct drm_bridge bridge;
->>> +
->>> +	struct mutex lock; /* protect non-concurrent retimer & switch */
->>> +
->>> +	enum typec_orientation orientation;
->>> +	unsigned long mode;
->>> +	unsigned int svid;
->>> +};
->>> +
->>> +static int ptn36502_set(struct ptn36502 *ptn)
->>> +{
->>> +	bool reverse = (ptn->orientation == TYPEC_ORIENTATION_REVERSE);
->>> +	unsigned int ctrl1_val = 0;
->>> +	unsigned int lane_ctrl_val = 0;
->>> +	unsigned int link_ctrl_val = 0;
->>> +
->>> +	switch (ptn->mode) {
->>> +	case TYPEC_STATE_SAFE:
->>> +		/* Deep power saving state */
->>> +		regmap_write(ptn->regmap, PTN36502_MODE_CTRL1_REG,
->>> +			     PTN36502_MODE_CTRL1_MODE_OFF);
->>> +		return 0;
->>> +
->>> +	case TYPEC_STATE_USB:
->>> +		/*
->>> +		 * Normal Orientation (CC1)
->>> +		 * A -> USB RX
->>> +		 * B -> USB TX
->>> +		 * C -> X
->>> +		 * D -> X
->>> +		 * Flipped Orientation (CC2)
->>> +		 * A -> X
->>> +		 * B -> X
->>> +		 * C -> USB TX
->>> +		 * D -> USB RX
->>> +		 */
->>> +
->>> +		/* USB 3.1 Gen 1 only */
->>> +		ctrl1_val = PTN36502_MODE_CTRL1_MODE_USB_ONLY;
->>> +		if (reverse)
->>> +			ctrl1_val |= PTN36502_MODE_CTRL1_PLUG_ORIENT_REVERSE;
->>> +
->>> +		regmap_write(ptn->regmap, PTN36502_MODE_CTRL1_REG, ctrl1_val);
->>> +		return 0;
->>> +
->>> +	default:
->>> +		if (ptn->svid != USB_TYPEC_DP_SID)
->>> +			return -EINVAL;
->>> +
->>> +		break;
->>> +	}
->>> +
->>> +	/* DP Altmode Setup */
->>> +
->>> +	switch (ptn->mode) {
->>> +	case TYPEC_DP_STATE_C:
->>> +	case TYPEC_DP_STATE_E:
->>> +		/*
->>> +		 * Normal Orientation (CC1)
->>> +		 * A -> DP3
->>> +		 * B -> DP2
->>> +		 * C -> DP1
->>> +		 * D -> DP0
->>> +		 * Flipped Orientation (CC2)
->>> +		 * A -> DP0
->>> +		 * B -> DP1
->>> +		 * C -> DP2
->>> +		 * D -> DP3
->>> +		 */
->>> +
->>> +		/* 4-lane DP */
->>> +		ctrl1_val |= PTN36502_MODE_CTRL1_MODE_DP;
->>> +		link_ctrl_val |= PTN36502_DP_LINK_CTRL_LANES_4;
->>> +		break;
->>> +
->>> +	case TYPEC_DP_STATE_D:
->>> +	case TYPEC_DP_STATE_F: /* State F is deprecated */
->>> +		/*
->>> +		 * Normal Orientation (CC1)
->>> +		 * A -> USB RX
->>> +		 * B -> USB TX
->>> +		 * C -> DP1
->>> +		 * D -> DP0
->>> +		 * Flipped Orientation (CC2)
->>> +		 * A -> DP0
->>> +		 * B -> DP1
->>> +		 * C -> USB TX
->>> +		 * D -> USB RX
->>> +		 */
->>> +
->>> +		/* USB 3.1 Gen 1 and 2-lane DP */
->>> +		ctrl1_val |= PTN36502_MODE_CTRL1_MODE_USB_DP;
->>> +		link_ctrl_val |= PTN36502_DP_LINK_CTRL_LANES_2;
->>> +		break;
->>> +
->>> +	default:
->>> +		return -EOPNOTSUPP;
->>> +	}
->>> +
->>> +	/* Enable AUX monitoring */
->>> +	regmap_write(ptn->regmap, PTN36502_DEVICE_CTRL_REG,
->>> +		     PTN36502_DEVICE_CTRL_AUX_MONITORING_EN);
->>> +
->>> +	/* Enable AUX switch path */
->>> +	ctrl1_val |= PTN36502_MODE_CTRL1_AUX_CROSSBAR_SW_ON;
->>> +	if (reverse)
->>> +		ctrl1_val |= PTN36502_MODE_CTRL1_PLUG_ORIENT_REVERSE;
->>> +	regmap_write(ptn->regmap, PTN36502_MODE_CTRL1_REG, ctrl1_val);
->>> +
->>> +	/* DP Link rate: 5.4 Gbps (HBR2) */
->>> +	link_ctrl_val |= PTN36502_DP_LINK_CTRL_LINK_RATE_5_4GBPS;
->>> +	regmap_write(ptn->regmap, PTN36502_DP_LINK_CTRL_REG, link_ctrl_val);
->>> +
->>> +	/*
->>> +	 * For all lanes:
->>> +	 * - Rx equivalization gain: 3 dB
->>> +	 * - TX output swing control: 800 mVppd
->>> +	 * - Pre-emphasis control: 3.5 dB
->>> +	 */
->>> +	lane_ctrl_val = PTN36502_DP_LANE_CTRL_RX_GAIN_3DB |
->>> +			PTN36502_DP_LANE_CTRL_TX_SWING_800MVPPD |
->>> +			PTN36502_DP_LANE_CTRL_PRE_EMPHASIS_3_5DB;
->>> +	regmap_write(ptn->regmap, PTN36502_DP_LANE_CTRL_REG(0), lane_ctrl_val);
->>> +	regmap_write(ptn->regmap, PTN36502_DP_LANE_CTRL_REG(1), lane_ctrl_val);
->>> +	regmap_write(ptn->regmap, PTN36502_DP_LANE_CTRL_REG(2), lane_ctrl_val);
->>> +	regmap_write(ptn->regmap, PTN36502_DP_LANE_CTRL_REG(3), lane_ctrl_val);
->>> +
->>> +	return 0;
->>> +}
->>> +
->>> +static int ptn36502_sw_set(struct typec_switch_dev *sw, enum typec_orientation orientation)
->>> +{
->>> +	struct ptn36502 *ptn = typec_switch_get_drvdata(sw);
->>> +	int ret;
->>> +
->>> +	ret = typec_switch_set(ptn->typec_switch, orientation);
->>> +	if (ret)
->>> +		return ret;
->>> +
->>> +	mutex_lock(&ptn->lock);
->>> +
->>> +	if (ptn->orientation != orientation) {
->>> +		ptn->orientation = orientation;
->>> +
->>> +		ret = ptn36502_set(ptn);
->>> +	}
->>> +
->>> +	mutex_unlock(&ptn->lock);
->>> +
->>> +	return ret;
->>> +}
->>> +
->>> +static int ptn36502_retimer_set(struct typec_retimer *retimer, struct typec_retimer_state *state)
->>> +{
->>> +	struct ptn36502 *ptn = typec_retimer_get_drvdata(retimer);
->>> +	int ret = 0;
->>> +
->>> +	mutex_lock(&ptn->lock);
->>> +
->>> +	if (ptn->mode != state->mode) {
->>> +		ptn->mode = state->mode;
->>> +
->>> +		if (state->alt)
->>> +			ptn->svid = state->alt->svid;
->>> +		else
->>> +			ptn->svid = 0; // No SVID
->>> +
->>> +		ret = ptn36502_set(ptn);
->>> +	}
->>> +
->>> +	mutex_unlock(&ptn->lock);
->>> +
->>> +	return ret;
->>> +}
->>> +
->>> +static int ptn36502_detect(struct ptn36502 *ptn)
->>> +{
->>> +	struct device *dev = &ptn->client->dev;
->>> +	unsigned int reg_val;
->>> +	int ret;
->>> +
->>> +	ret = regmap_read(ptn->regmap, PTN36502_CHIP_ID_REG,
->>> +			  &reg_val);
->>> +	if (ret < 0)
->>> +		return dev_err_probe(dev, ret, "Failed to read chip ID\n");
->>> +
->>> +	if (reg_val != PTN36502_CHIP_ID)
->>> +		return dev_err_probe(dev, -ENODEV, "Unexpected chip ID: %x\n", reg_val);
->>> +
->>> +	ret = regmap_read(ptn->regmap, PTN36502_CHIP_REVISION_REG,
->>> +			  &reg_val);
->>> +	if (ret < 0)
->>> +		return dev_err_probe(dev, ret, "Failed to read chip revision\n");
->>> +
->>> +	dev_dbg(dev, "Chip revision: base layer version %lx, metal layer version %lx\n",
->>> +		PTN36502_CHIP_REVISION_BASE(reg_val),
->>> +		PTN36502_CHIP_REVISION_METAL(reg_val));
->>> +
->>> +	return 0;
->>> +}
->>> +
->>> +#if IS_ENABLED(CONFIG_OF) && IS_ENABLED(CONFIG_DRM_PANEL_BRIDGE)
->>> +static int ptn36502_bridge_attach(struct drm_bridge *bridge,
->>> +				    enum drm_bridge_attach_flags flags)
->>
->> I applied this patch and realised that that's not correctly aligned.
->> There are couple of extra spaces.
->>
->>> +{
->>> +	struct ptn36502 *ptn = container_of(bridge, struct ptn36502, bridge);
->>> +	struct drm_bridge *next_bridge;
->>> +
->>> +	if (!(flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR))
->>> +		return -EINVAL;
->>> +
->>> +	next_bridge = devm_drm_of_get_bridge(&ptn->client->dev, ptn->client->dev.of_node, 0, 0);
->>> +	if (IS_ERR(next_bridge)) {
->>> +		dev_err(&ptn->client->dev, "failed to acquire drm_bridge: %pe\n", next_bridge);
->>> +		return PTR_ERR(next_bridge);
->>> +	}
->>> +
->>> +	return drm_bridge_attach(bridge->encoder, next_bridge, bridge,
->>> +				 DRM_BRIDGE_ATTACH_NO_CONNECTOR);
->>> +}
->>> +
->>> +static const struct drm_bridge_funcs ptn36502_bridge_funcs = {
->>> +	.attach	= ptn36502_bridge_attach,
->>> +};
->>> +
->>> +static int ptn36502_register_bridge(struct ptn36502 *ptn)
->>> +{
->>> +	ptn->bridge.funcs = &ptn36502_bridge_funcs;
->>> +	ptn->bridge.of_node = ptn->client->dev.of_node;
->>> +
->>> +	return devm_drm_bridge_add(&ptn->client->dev, &ptn->bridge);
->>> +}
->>> +#else
->>> +static int ptn36502_register_bridge(struct ptn36502 *ptn)
->>> +{
->>> +	return 0;
->>> +}
->>> +#endif
->>> +
->>> +static const struct regmap_config ptn36502_regmap = {
->>> +	.max_register = 0x0d,
->>> +	.reg_bits = 8,
->>> +	.val_bits = 8,
->>> +};
->>> +
->>> +static int ptn36502_probe(struct i2c_client *client)
->>> +{
->>> +	struct device *dev = &client->dev;
->>> +	struct typec_switch_desc sw_desc = { };
->>> +	struct typec_retimer_desc retimer_desc = { };
->>> +	struct ptn36502 *ptn;
->>> +	int ret;
->>> +
->>> +	ptn = devm_kzalloc(dev, sizeof(*ptn), GFP_KERNEL);
->>> +	if (!ptn)
->>> +		return -ENOMEM;
->>> +
->>> +	ptn->client = client;
->>> +
->>> +	ptn->regmap = devm_regmap_init_i2c(client, &ptn36502_regmap);
->>> +	if (IS_ERR(ptn->regmap)) {
->>> +		dev_err(&client->dev, "Failed to allocate register map\n");
->>> +		return PTR_ERR(ptn->regmap);
->>> +	}
->>> +
->>> +	ptn->mode = TYPEC_STATE_SAFE;
->>> +	ptn->orientation = TYPEC_ORIENTATION_NONE;
->>> +
->>> +	mutex_init(&ptn->lock);
->>> +
->>> +	ptn->vdd18_supply = devm_regulator_get_optional(dev, "vdd18");
->>> +	if (IS_ERR(ptn->vdd18_supply))
->>> +		return PTR_ERR(ptn->vdd18_supply);
->>> +
->>> +	ptn->typec_switch = fwnode_typec_switch_get(dev->fwnode);
->>> +	if (IS_ERR(ptn->typec_switch))
->>> +		return dev_err_probe(dev, PTR_ERR(ptn->typec_switch),
->>> +				     "Failed to acquire orientation-switch\n");
->>> +
->>> +	ret = regulator_enable(ptn->vdd18_supply);
->>> +	if (ret)
->>> +		return dev_err_probe(dev, ret, "Failed to enable vdd18\n");
->>> +
->>> +	ret = ptn36502_detect(ptn);
->>> +	if (ret)
->>> +		goto err_disable_regulator;
->>> +
->>> +	ret = ptn36502_register_bridge(ptn);
->>> +	if (ret)
->>> +		goto err_disable_regulator;
->>> +
->>> +	sw_desc.drvdata = ptn;
->>> +	sw_desc.fwnode = dev->fwnode;
->>> +	sw_desc.set = ptn36502_sw_set;
->>> +
->>> +	ptn->sw = typec_switch_register(dev, &sw_desc);
->>> +	if (IS_ERR(ptn->sw)) {
->>> +		ret = dev_err_probe(dev, PTR_ERR(ptn->sw),
->>> +				    "Failed to register typec switch\n");
->>> +		goto err_disable_regulator;
->>> +	}
->>> +
->>> +	retimer_desc.drvdata = ptn;
->>> +	retimer_desc.fwnode = dev->fwnode;
->>> +	retimer_desc.set = ptn36502_retimer_set;
->>> +
->>> +	ptn->retimer = typec_retimer_register(dev, &retimer_desc);
->>> +	if (IS_ERR(ptn->retimer)) {
->>> +		ret = dev_err_probe(dev, PTR_ERR(ptn->retimer),
->>> +				    "Failed to register typec retimer\n");
->>> +		goto err_switch_unregister;
->>> +	}
->>> +
->>> +	return 0;
->>> +
->>> +err_switch_unregister:
->>> +	typec_switch_unregister(ptn->sw);
->>> +
->>> +err_disable_regulator:
->>> +	regulator_disable(ptn->vdd18_supply);
->>> +
->>> +	return ret;
->>> +}
->>> +
->>> +static void ptn36502_remove(struct i2c_client *client)
->>> +{
->>> +	struct ptn36502 *ptn = i2c_get_clientdata(client);
->>> +
->>> +	typec_retimer_unregister(ptn->retimer);
->>> +	typec_switch_unregister(ptn->sw);
->>> +
->>> +	regulator_disable(ptn->vdd18_supply);
->>> +}
->>> +
->>> +static const struct i2c_device_id ptn36502_table[] = {
->>> +	{ "ptn36502" },
->>> +	{ }
->>> +};
->>> +MODULE_DEVICE_TABLE(i2c, ptn36502_table);
->>> +
->>> +static const struct of_device_id ptn36502_of_table[] = {
->>> +	{ .compatible = "nxp,ptn36502" },
->>> +	{ }
->>> +};
->>> +MODULE_DEVICE_TABLE(of, ptn36502_of_table);
->>> +
->>> +static struct i2c_driver ptn36502_driver = {
->>> +	.driver = {
->>> +		.name = "ptn36502",
->>> +		.of_match_table = ptn36502_of_table,
->>> +	},
->>> +	.probe		= ptn36502_probe,
->>> +	.remove		= ptn36502_remove,
->>> +	.id_table	= ptn36502_table,
->>> +};
->>> +module_i2c_driver(ptn36502_driver);
->>> +
->>> +MODULE_AUTHOR("Luca Weiss <luca.weiss@fairphone.com>");
->>> +MODULE_DESCRIPTION("NXP PTN36502 Type-C driver");
->>> +MODULE_LICENSE("GPL");
->>
->> thanks,
-> 
+Uwe Kleine-König (42):
+  crypto: sun4i-ss - Convert to platform remove callback returning void
+  crypto: sun8i-ce - Convert to platform remove callback returning void
+  crypto: sun8i-ss - Convert to platform remove callback returning void
+  crypto: amcc/crypto4xx - Convert to platform remove callback returning void
+  crypto: amlogic-gxl-core - Convert to platform remove callback returning void
+  crypto: aspeed-acry - Convert to platform remove callback returning void
+  crypto: aspeed-hace - Convert to platform remove callback returning void
+  crypto: atmel-aes - Convert to platform remove callback returning void
+  crypto: atmel-sha - Convert to platform remove callback returning void
+  crypto: atmel-tdes - Convert to platform remove callback returning void
+  crypto: axis/artpec6 - Convert to platform remove callback returning void
+  crypto: bcm/cipher - Convert to platform remove callback returning void
+  crypto: caam/jr - Convert to platform remove callback returning void
+  crypto: ccp/sp - Convert to platform remove callback returning void
+  crypto: ccree/cc - Convert to platform remove callback returning void
+  crypto: exynos-rng - Convert to platform remove callback returning void
+  crypto: gemini/sl3516-ce - Convert to platform remove callback returning void
+  crypto: hisilicon/sec - Convert to platform remove callback returning void
+  crypto: hisilicon/trng - Convert to platform remove callback returning void
+  crypto: img-hash - Convert to platform remove callback returning void
+  crypto: inside-secure/safexcel - Convert to platform remove callback returning void
+  crypto: intel/ixp4xx-crypto - Convert to platform remove callback returning void
+  crypto: intel/keembay-ocs-aes - Convert to platform remove callback returning void
+  crypto: intel/keembay-ocs-ecc - Convert to platform remove callback returning void
+  crypto: intel/keembay-ocs-hcu - Convert to platform remove callback returning void
+  crypto: marvell/cesa - Convert to platform remove callback returning void
+  crypto: mxs-dcp - Convert to platform remove callback returning void
+  crypto: n2_core - Convert to platform remove callback returning void
+  crypto: omap-aes - Convert to platform remove callback returning void
+  crypto: omap-des - Convert to platform remove callback returning void
+  crypto: omap-sham - Convert to platform remove callback returning void
+  crypto: qce - Convert to platform remove callback returning void
+  crypto: qcom-rng - Convert to platform remove callback returning void
+  crypto: rockchip/rk3288 - Convert to platform remove callback returning void
+  crypto: s5p-sss - Convert to platform remove callback returning void
+  crypto: sa2ul - Convert to platform remove callback returning void
+  crypto: sahara - Convert to platform remove callback returning void
+  crypto: stm32/crc32 - Convert to platform remove callback returning void
+  crypto: stm32/cryp - Convert to platform remove callback returning void
+  crypto: talitos - Convert to platform remove callback returning void
+  crypto: xilinx/zynqmp-aes-gcm - Convert to platform remove callback returning void
+  crypto: xilinx/zynqmp-sha - Convert to platform remove callback returning void
+
+ .../crypto/allwinner/sun4i-ss/sun4i-ss-core.c |  5 ++---
+ .../crypto/allwinner/sun8i-ce/sun8i-ce-core.c |  5 ++---
+ .../crypto/allwinner/sun8i-ss/sun8i-ss-core.c |  6 ++---
+ drivers/crypto/amcc/crypto4xx_core.c          |  6 ++---
+ drivers/crypto/amlogic/amlogic-gxl-core.c     |  5 ++---
+ drivers/crypto/aspeed/aspeed-acry.c           |  6 ++---
+ drivers/crypto/aspeed/aspeed-hace.c           |  6 ++---
+ drivers/crypto/atmel-aes.c                    |  6 ++---
+ drivers/crypto/atmel-sha.c                    |  6 ++---
+ drivers/crypto/atmel-tdes.c                   |  6 ++---
+ drivers/crypto/axis/artpec6_crypto.c          |  5 ++---
+ drivers/crypto/bcm/cipher.c                   |  5 ++---
+ drivers/crypto/caam/jr.c                      | 22 ++++++++-----------
+ drivers/crypto/ccp/sp-platform.c              |  6 ++---
+ drivers/crypto/ccree/cc_driver.c              |  6 ++---
+ drivers/crypto/exynos-rng.c                   |  6 ++---
+ drivers/crypto/gemini/sl3516-ce-core.c        |  6 ++---
+ drivers/crypto/hisilicon/sec/sec_drv.c        |  6 ++---
+ drivers/crypto/hisilicon/trng/trng.c          |  6 ++---
+ drivers/crypto/img-hash.c                     |  6 ++---
+ drivers/crypto/inside-secure/safexcel.c       |  6 ++---
+ drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c   |  6 ++---
+ .../intel/keembay/keembay-ocs-aes-core.c      |  6 ++---
+ .../crypto/intel/keembay/keembay-ocs-ecc.c    |  6 ++---
+ .../intel/keembay/keembay-ocs-hcu-core.c      |  6 ++---
+ drivers/crypto/marvell/cesa/cesa.c            |  6 ++---
+ drivers/crypto/mxs-dcp.c                      |  6 ++---
+ drivers/crypto/n2_core.c                      | 12 ++++------
+ drivers/crypto/omap-aes.c                     |  6 ++---
+ drivers/crypto/omap-des.c                     |  6 ++---
+ drivers/crypto/omap-sham.c                    |  6 ++---
+ drivers/crypto/qce/core.c                     |  5 ++---
+ drivers/crypto/qcom-rng.c                     |  6 ++---
+ drivers/crypto/rockchip/rk3288_crypto.c       |  5 ++---
+ drivers/crypto/s5p-sss.c                      |  6 ++---
+ drivers/crypto/sa2ul.c                        |  6 ++---
+ drivers/crypto/sahara.c                       |  6 ++---
+ drivers/crypto/stm32/stm32-crc32.c            | 15 +++++--------
+ drivers/crypto/stm32/stm32-cryp.c             | 16 +++++---------
+ drivers/crypto/talitos.c                      |  6 ++---
+ drivers/crypto/xilinx/zynqmp-aes-gcm.c        |  6 ++---
+ drivers/crypto/xilinx/zynqmp-sha.c            |  6 ++---
+ 42 files changed, 99 insertions(+), 187 deletions(-)
+
+base-commit: 4230ea146b1e64628f11e44290bb4008e391bc24
+-- 
+2.42.0
 
