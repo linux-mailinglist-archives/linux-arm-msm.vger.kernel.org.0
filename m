@@ -2,87 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EACCC7D1EB1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Oct 2023 19:44:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 873387D1EB6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Oct 2023 19:48:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231302AbjJURoa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 Oct 2023 13:44:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48256 "EHLO
+        id S229621AbjJURsQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 Oct 2023 13:48:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229478AbjJURoa (ORCPT
+        with ESMTP id S229478AbjJURsP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 Oct 2023 13:44:30 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEFAD13E
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Oct 2023 10:44:24 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2bfed7c4e6dso28177961fa.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Oct 2023 10:44:24 -0700 (PDT)
+        Sat, 21 Oct 2023 13:48:15 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CB6811B
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Oct 2023 10:48:10 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-507b18cf2e1so2511348e87.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Oct 2023 10:48:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697910263; x=1698515063; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1697910488; x=1698515288; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=UoasJeMHJhW5CXL/sOqNM0supbI5sNc/uFqVtuDpdGU=;
-        b=Fs3NgqHlDVkanP6y6zMeORMLG1v7obFTvG+ILSCqGy0WMGNKLjshF8vcJxJrUICmuv
-         DZUdNa0W61iQ5PelnPoAWXl1YOKJIaldwx8kSK2B7j4T49iIJX1oa4CYrXaspfL8ZADS
-         ok1OdtdJIaGjzpLXz0pIyXq2RUCJs2lw0bepS8piQ+VcntZA2vVzBTEHm7AcQfc19SHx
-         Yr49JGlRuXxjv9kf+fcuUIa8wVDIyknLurjXOq0Y5x72DKoO71XYo8obUMm6QQFGxome
-         5zwDV2YczpkVz33/CfJEmg/zoIXHEzFFBGF5p63Bw6JuaWIh64SXfVbLgHD0vLC6TN30
-         x6zw==
+        bh=USibswDTLV5hhcZmfwN5wG8LNAeE5Zw2XQaGAnkihLs=;
+        b=VNN02FtCZqKyG+jA86PXq8MyUCC2wgcBZf4BjMesMQC4y94wz0BqAi7o4T1he/Iq8J
+         vMX5IywG/ULd5cJBNAC299Wq0o9u6Xrl+PoJCXakH3W2VUMvtSbBhhYHsy9enCKGcfro
+         7HPu4Ip9n5NwRm1PjSYh1T8xHEk1Cg6t553/uNSPm/go7Kkv7EKayXSXv1bJCPBrrRzM
+         GkhzUBUpEQ8VgG0A7/M+snksdcPbm2PI+5Wj5G4hr2Tw++5o48tKR2geHBgzmtS6xlC5
+         GwkcGyDMnsqYXS3IGa+AMXBqwEeYGufjTIJ1Xskj3aXTODH8IoOc8nnnzRALesYhKrAg
+         sLIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697910263; x=1698515063;
+        d=1e100.net; s=20230601; t=1697910488; x=1698515288;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UoasJeMHJhW5CXL/sOqNM0supbI5sNc/uFqVtuDpdGU=;
-        b=V4YnAjAzAJ4domCxxcGuDnjdCDs6xc8y8Yqpe63AUWJEjl0oDvGIxXVculcorQi5gv
-         cLsh1dg77CN9zmfNJQLpCufO4aKTOQih7JvB5nM6xQfa9cVoDg2CliV08SnQJneMEjyH
-         R7UqaD6NaCJM9kBUB6w62rGf+rceGk0B6k0vt504A0qAuVS8O7F/YUrDwUXqGVv84HZv
-         PXCwZXtCnjNeUriAqce4tnQJtyQzjgfL+f5HgZ9lHp7jY0qBlXGA+XCkQX64XlEWHigo
-         zhNiuSPpsl8p66II9maBp7eg5szgH/9YRLNCsXJLqRyRWYJyYdwIkABmq32U4mL40gVX
-         zBaw==
-X-Gm-Message-State: AOJu0YzMyqeLL9i916aKdxMNOIpUeMh3eG3FvASJvq3JL1gBE4s6IQM2
-        bzTooR9w7RED2lIaZ6lxWr5PVQ==
-X-Google-Smtp-Source: AGHT+IEbFzaZS+dnmBS51ZSelYmo3ZzmrtQTm4KQyqkuixDFb0K0sGOqrz5O+WilnmyP7JPEXSDU/w==
-X-Received: by 2002:a05:651c:50f:b0:2c4:fe0a:dc3e with SMTP id o15-20020a05651c050f00b002c4fe0adc3emr3465198ljp.36.1697910263090;
-        Sat, 21 Oct 2023 10:44:23 -0700 (PDT)
+        bh=USibswDTLV5hhcZmfwN5wG8LNAeE5Zw2XQaGAnkihLs=;
+        b=r7Nv32W4X+txAr0pjZls3x7+oZEBDu29fl7Z5Y+vVZP7zIVyj+gLSdyKypSwW+wiLl
+         xXepIvWIt2dDK4sVAA3UQqMMfUIJ7OdyVhq6LxpeecSJhEMyWvuITKs/UmVL48ZFNP7a
+         y/jHIGMKPtPrsGvcZjJYkGgS4TVFfxp9CQI6BSnPl/s3Uq3OKV4lTOhjCM36O4Xjefbo
+         7rcef2VeqfZxNc2HU4DhScgesCYDDhLpvIbezEtddZO9g+qMOFSgd4JaWUzxrfTsOqs9
+         fyQ7uwWMxFi4ca2bLzYNShimCdytZMJe0oqWPVgQ5jJyRCWrc/92WbzznAYinrs+HdAV
+         p0LQ==
+X-Gm-Message-State: AOJu0Yy4DQ1ttPg8Mh/sIMyPwamiBNKHt4Cmwr6IWYjjl2abRGM6OSe7
+        ETbI7HqOYS+HET8ms6TEsUM7vA==
+X-Google-Smtp-Source: AGHT+IHTVRoSS6yO+9sgzU02SfQJ15ZB0Hj1Y7XN1P7chtA/q9VuZxPnVgkf9XbYeIQPlxCaC1+JNg==
+X-Received: by 2002:ac2:58e2:0:b0:500:99a9:bc40 with SMTP id v2-20020ac258e2000000b0050099a9bc40mr3174599lfo.69.1697910488571;
+        Sat, 21 Oct 2023 10:48:08 -0700 (PDT)
 Received: from [10.66.66.3] (9.ip-51-91-159.eu. [51.91.159.9])
-        by smtp.gmail.com with ESMTPSA id p12-20020a05600c418c00b0040773c69fc0sm9634204wmh.11.2023.10.21.10.44.20
+        by smtp.gmail.com with ESMTPSA id b11-20020a05600010cb00b00324853fc8adsm4061505wrx.104.2023.10.21.10.48.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 21 Oct 2023 10:44:22 -0700 (PDT)
-Message-ID: <ca42af11-7b92-4d07-9b93-367f92c886fe@linaro.org>
-Date:   Sat, 21 Oct 2023 19:44:20 +0200
+        Sat, 21 Oct 2023 10:48:08 -0700 (PDT)
+Message-ID: <a45a4bec-d675-42fc-b17b-a49f316ef5af@linaro.org>
+Date:   Sat, 21 Oct 2023 19:48:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/6] arm64: dts: qcom: sm8350: Fix remoteproc interrupt
- type
+Subject: Re: [PATCH v4 2/3] pmdomain: qcom: rpmpd: Add MSM8917 power domains
 Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Nia Espera <nespera@igalia.com>, Andy Gross <agross@kernel.org>,
+To:     =?UTF-8?Q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>,
+        linux-arm-msm@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
         Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Kees Cook <keescook@chromium.org>,
-        Tony Luck <tony.luck@intel.com>,
-        "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
-        Rob <Me@orbit.sh>, Clayton Craft <clayton@igalia.com>,
-        Caleb Connolly <caleb.connolly@linaro.org>,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        ~postmarketos/upstreaming@lists.sr.ht
-References: <20231018-nia-sm8350-for-upstream-v2-0-7b243126cb77@igalia.com>
- <20231018-nia-sm8350-for-upstream-v2-4-7b243126cb77@igalia.com>
- <6ac842b8-5fcb-4094-8488-4d6e250bf102@linaro.org>
- <20231019040623.GA5142@thinkpad>
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        devicetree@vger.kernel.org, linux-pm@vger.kernel.org
+References: <20231014133823.14088-1-otto.pflueger@abscue.de>
+ <20231014133823.14088-3-otto.pflueger@abscue.de>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231019040623.GA5142@thinkpad>
+In-Reply-To: <20231014133823.14088-3-otto.pflueger@abscue.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -95,35 +83,13 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 10/19/23 06:06, Manivannan Sadhasivam wrote:
-> On Wed, Oct 18, 2023 at 10:17:15PM +0200, Konrad Dybcio wrote:
->>
->>
->> On 10/18/23 16:25, Nia Espera wrote:
->>> In a similar vein to
->>> https://lore.kernel.org/lkml/20220530080842.37024-3-manivannan.sadhasivam@linaro.org/,
->>> the remote processors on sm8350 fail to initialize with the 'correct'
->>> (i.e., specified in downstream) IRQ type. Change this to EDGE_RISING.
->>>
->>> Signed-off-by: Nia Espera <nespera@igalia.com>
->>> ---
->> Hm, apparently 8250 and 7180 have the same thing.
->>
->> Mani, could you elaborate on this?
->>
+On 10/14/23 15:38, Otto Pflüger wrote:
+> MSM8917 uses the SMPA2 and LDOA3 regulators provided by the PM8937 PMIC
+> for the VDDCX and VDDMX power domains in voltage level mode,
+> respectively. These definitions should also work on MSM8937.
 > 
-> So the remoteproc driver expects the wdog interrupts to be edge triggered as the
-> rest of the interrupts, but DT specifies them as level triggered. This won't
-> cause any issue during the first instance of the probe as the driver requested
-> trigger will be given precedence. But if the probe defers for some reason and
-> during the next try, request_irq() will fail with error similar to below:
-> 
-> irq: type mismatch, failed to map hwirq-x for interrupt-controller@xxxxxx!
-> 
-> This error is often confusing and I tried to fix it. But Maz didn't agree with
-> me, so I just ended up fixing the DTs for some platform I have access to.
-> 
-> So ideally, DTs of all platforms should be fixed to pass correct trigger type.
-So, this should be edge for all platforms, correct?
+> Signed-off-by: Otto Pflüger <otto.pflueger@abscue.de>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
