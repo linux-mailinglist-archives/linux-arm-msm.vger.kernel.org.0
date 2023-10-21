@@ -2,278 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10B1D7D1FB5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Oct 2023 23:01:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 205597D2045
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Oct 2023 00:30:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232155AbjJUVBi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 Oct 2023 17:01:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49482 "EHLO
+        id S229437AbjJUWah (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 Oct 2023 18:30:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232097AbjJUVBg (ORCPT
+        with ESMTP id S229472AbjJUWag (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 Oct 2023 17:01:36 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 863C01A8;
-        Sat, 21 Oct 2023 14:01:34 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA24EC433C7;
-        Sat, 21 Oct 2023 21:01:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1697922094;
-        bh=M+M3q5sxfvxUvyeRGABwgSGpQ53ingORdN/e2crghb0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=o0Ht/7LnWMWbBtI4Nl6SK0U3pct/JGTwno/rTY8N9ECE7uDG/oKvZPG/MBSoUrpNQ
-         1JYl9QkpSAcVakb4/mqRlWI14WClVe6sOaiJe0fXujVr4BLLhhqyfvcxB0bdTYT8bl
-         rMCIkBJKkyrTpiEl6qIK7G087ud4lJybQJ/q6fsneyk5GIjvyhBaYG5PCByrm/bpGU
-         d9eR5Lc0Hfpqp0aXZrvK3vxhByEzdXxtSa0XVhRXvEEOCTlnl20XK7KmkdIXZsJ8kN
-         h5XOsKQDu+6CzSmRazKfUVqPYXCwzeCHqxdqoyZTOxZ3JGQNUBYlkb63NhQYRWjIqH
-         QisVVVRyLiiIA==
-Date:   Sat, 21 Oct 2023 14:05:13 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Georgi Djakov <quic_c_gdjako@quicinc.com>
-Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, will@kernel.org, robin.murphy@arm.com,
-        joro@8bytes.org, devicetree@vger.kernel.org,
-        konrad.dybcio@linaro.org, linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, quic_cgoldswo@quicinc.com,
-        quic_sukadev@quicinc.com, quic_pdaly@quicinc.com,
-        quic_sudaraja@quicinc.com, djakov@kernel.org
-Subject: Re: [PATCH 3/6] iommu/arm-smmu-qcom: Add Qualcomm TBU driver
-Message-ID: <ljbzuewnsi52qyolombjowuouiqmv5ybwbqf2z6ok34yuiacjc@7hwfysvidjqm>
-References: <20231019021923.13939-1-quic_c_gdjako@quicinc.com>
- <20231019021923.13939-4-quic_c_gdjako@quicinc.com>
+        Sat, 21 Oct 2023 18:30:36 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D860D7A;
+        Sat, 21 Oct 2023 15:30:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1697927429; x=1729463429;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=djejmMFC3O0wM8gMlGV7yHwjbMvqe1uwT0DwjkNsLLw=;
+  b=erxHbWhi5RmdjOh0Jvip+npImeeXMrHWnONK+6wjmjmyB4hJPsAx4uae
+   tnOnV661n5OJy6F0ILfjhFvzUCdT7Jff3cB6c5ekRRgSpkU9UuO3CPLHg
+   8LYPdbGVT8KiYoUv0iDFTgQRlKN2j3vHlSer9iSVnj/n5yPLKcl64FXp5
+   IJ9d8jpnnUFwmGol2ZoCzE4upN6/wemjyk0chqF49VAUTRqEhjL569vpc
+   tCtvshD3vr0Lkt0S+DIqJAGCqGAFpjJiESNa9rj7FDX/jC+ILbXjoQ+VF
+   sOO+synxVWpjZ1yaiYpHuAnPvo9MRXib1nI6X4UY6h8s345GmnbIa5fQz
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10870"; a="8224077"
+X-IronPort-AV: E=Sophos;i="6.03,242,1694761200"; 
+   d="scan'208";a="8224077"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Oct 2023 15:30:29 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10870"; a="881385640"
+X-IronPort-AV: E=Sophos;i="6.03,242,1694761200"; 
+   d="scan'208";a="881385640"
+Received: from lkp-server01.sh.intel.com (HELO 8917679a5d3e) ([10.239.97.150])
+  by orsmga004.jf.intel.com with ESMTP; 21 Oct 2023 15:30:26 -0700
+Received: from kbuild by 8917679a5d3e with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1quKUC-0005Hy-0o;
+        Sat, 21 Oct 2023 22:30:24 +0000
+Date:   Sun, 22 Oct 2023 06:29:33 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
+        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org
+Cc:     oe-kbuild-all@lists.linux.dev,
+        Ekansh Gupta <quic_ekangupt@quicinc.com>,
+        gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 1/5] misc: fastrpc: Add fastrpc multimode invoke
+ request support
+Message-ID: <202310220610.KdxUvBUu-lkp@intel.com>
+References: <1697612560-9726-2-git-send-email-quic_ekangupt@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231019021923.13939-4-quic_c_gdjako@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <1697612560-9726-2-git-send-email-quic_ekangupt@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 18, 2023 at 07:19:20PM -0700, Georgi Djakov wrote:
-> Add driver for the Qualcomm implementation of the ARM MMU-500 TBU.
-> The driver will enable the resources needed by the TBU and will
-> configure the registers for some debug features like checking if
-> there are any pending transactions, capturing transactions and
-> running ATOS (Address Translation Operations). ATOS/eCATS are used
-> to manually trigger an address translation of IOVA to physical
-> address by the SMMU hardware.
+Hi Ekansh,
 
-I still don't think this commit message clearly enough describe the
-problem you're trying to solve.
+kernel test robot noticed the following build errors:
 
-Not until I had read the Kconfig help text did I pay attention to the
-significance of the words "some debug features" in the middle of the
-paragraph.
+[auto build test ERROR on char-misc/char-misc-testing]
+[also build test ERROR on char-misc/char-misc-next linus/master v6.6-rc6]
+[cannot apply to char-misc/char-misc-linus next-20231020]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
+url:    https://github.com/intel-lab-lkp/linux/commits/Ekansh-Gupta/misc-fastrpc-Add-fastrpc-multimode-invoke-request-support/20231018-150423
+base:   char-misc/char-misc-testing
+patch link:    https://lore.kernel.org/r/1697612560-9726-2-git-send-email-quic_ekangupt%40quicinc.com
+patch subject: [PATCH v5 1/5] misc: fastrpc: Add fastrpc multimode invoke request support
+config: i386-randconfig-011-20231022 (https://download.01.org/0day-ci/archive/20231022/202310220610.KdxUvBUu-lkp@intel.com/config)
+compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231022/202310220610.KdxUvBUu-lkp@intel.com/reproduce)
 
-Please describe your changes in accordance with [1], i.e. clearly
-describe the problem you're trying to solve, then discuss the technical
-solution in the patch.
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202310220610.KdxUvBUu-lkp@intel.com/
 
-[1] https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
+All errors (new ones prefixed by >>):
 
-[..]
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-[..]
-> +#ifdef CONFIG_ARM_SMMU_QCOM_TBU
-> +
-> +struct qsmmuv500_tbu {
-> +	struct device *dev;
-> +	struct arm_smmu_device *smmu;
-> +	u32 sid_range[2];
-> +	struct list_head list;
-> +	struct clk *clk;
-> +	struct icc_path	*path;
-> +	void __iomem *base;
-> +	spinlock_t halt_lock; /* protects halt count */
+   In file included from <command-line>:
+>> ./usr/include/misc/fastrpc.h:89:33: error: C++ style comments are not allowed in ISO C90
+      89 |         __u32 reserved[8];      // keeping reserved bits for new requirements
+         |                                 ^
+   ./usr/include/misc/fastrpc.h:89:33: note: (this will be reported only once per input file)
 
-But in particular it makes sure that multiple halt or resume can't
-execute concurrently.
-
-> +	int halt_count;
-> +};
-> +
-> +static DEFINE_SPINLOCK(ecats_lock);
-> +
-> +static struct qsmmuv500_tbu *qsmmuv500_find_tbu(struct qcom_smmu *qsmmu, u32 sid)
-> +{
-> +	struct qsmmuv500_tbu *tbu = NULL;
-> +	u32 start, end;
-> +
-> +	mutex_lock(&qsmmu->tbu_list_lock);
-> +
-> +	list_for_each_entry(tbu, &qsmmu->tbu_list, list) {
-> +		start = tbu->sid_range[0];
-> +		end = start + tbu->sid_range[1];
-> +
-> +		if (start <= sid && sid < end)
-> +			break;
-> +	}
-> +
-> +	mutex_unlock(&qsmmu->tbu_list_lock);
-> +
-> +	return tbu;
-> +}
-> +
-> +static int qsmmuv500_tbu_halt(struct qsmmuv500_tbu *tbu, struct arm_smmu_domain *smmu_domain)
-> +{
-> +	struct arm_smmu_device *smmu = smmu_domain->smmu;
-> +	int ret = 0, idx = smmu_domain->cfg.cbndx;
-> +	unsigned long flags;
-> +	u32 val, fsr, status;
-> +
-> +	spin_lock_irqsave(&tbu->halt_lock, flags);
-
-Does this really need to run with interrupts disabled?
-
-> +	if (tbu->halt_count) {
-> +		tbu->halt_count++;
-> +		goto out;
-> +	}
-> +
-[..]
-> +static phys_addr_t qsmmuv500_iova_to_phys(struct arm_smmu_domain *smmu_domain,
-> +					  dma_addr_t iova, u32 sid)
-> +{
-[..]
-> +	/* Only one concurrent atos operation */
-> +	spin_lock_irqsave(&ecats_lock, flags);
-
-Does this require interrupts to be disabled?
-
-> +
-> +	/*
-> +	 * After a failed translation, the next successful translation will
-> +	 * incorrectly be reported as a failure.
-
-"So if the ECATS translation fails, attempt the lookup more time."
-
-> +	 */
-> +	do {
-> +		phys = qsmmuv500_tbu_trigger_atos(smmu_domain, tbu, iova, sid);
-> +
-> +		fsr = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSR);
-> +		if (fsr & ARM_SMMU_FSR_FAULT) {
-> +			/* Clear pending interrupts */
-> +			arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, fsr);
-> +			/*
-> +			 * Barrier required to ensure that the FSR is cleared
-> +			 * before resuming SMMU operation.
-> +			 */
-
-Better be clear on what this actually does, for future readers' sake:
-
-	 /* Ensure that FSR and RESUME operations aren't reordered. */
-
-But is this really necessary, the two writes are for the same device,
-can they still be reordered?
-
-> +			wmb();
-> +
-> +			if (fsr & ARM_SMMU_FSR_SS)
-> +				arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_RESUME,
-> +						  ARM_SMMU_RESUME_TERMINATE);
-> +		}
-> +	} while (!phys && needs_redo++ < 2);
-
-"needs_redo" sounds like a boolean to me. I think "attempt" would be a
-better fit here.
-
-> +
-> +	arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_SCTLR, sctlr_orig);
-> +	spin_unlock_irqrestore(&ecats_lock, flags);
-> +	qsmmuv500_tbu_resume(tbu);
-> +
-> +	/* Read to complete prior write transcations */
-> +	readl_relaxed(tbu->base + DEBUG_SR_HALT_ACK_REG);
-> +
-> +	/* Wait for read to complete */
-
-That's not what rmb() does. You don't need to do anything here,
-readl_relaxed() returns when the read is done.
-
-> +	rmb();
-> +
-> +disable_clk:
-> +	clk_disable_unprepare(tbu->clk);
-> +disable_icc:
-> +	icc_set_bw(tbu->path, 0, 0);
-> +
-> +	return phys;
-> +}
-> +#endif
-> +
->  static void qcom_smmu_tlb_sync(struct arm_smmu_device *smmu, int page,
->  				int sync, int status)
->  {
-> @@ -588,3 +895,80 @@ struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
->  
->  	return smmu;
->  }
-> +
-> +#ifdef CONFIG_ARM_SMMU_QCOM_TBU
-> +
-> +static const struct of_device_id qsmmuv500_tbu_of_match[] = {
-> +	{ .compatible = "qcom,qsmmuv500-tbu" },
-> +	{ }
-> +};
-
-Place this below the remove function, as most other drivers do.
-
-> +
-> +static int qsmmuv500_tbu_probe(struct platform_device *pdev)
-> +{
-[..]
-> +	mutex_lock(&qsmmu->tbu_list_lock);
-> +	list_add_tail(&tbu->list, &qsmmu->tbu_list);
-
-"tbu" is devres allocated, but you don't pull it off the list (or
-synchronize) during remove.
-
-> +	mutex_unlock(&qsmmu->tbu_list_lock);
-> +
-> +	dev_set_drvdata(dev, tbu);
-> +
-> +	return 0;
-> +}
-> +
-> +static void qsmmuv500_tbu_remove(struct platform_device *pdev)
-> +{
-> +	struct qsmmuv500_tbu *tbu = dev_get_drvdata(&pdev->dev);
-> +
-> +	clk_disable_unprepare(tbu->clk);
-
-This isn't balanced.
-
-> +	clk_put(tbu->clk);
-> +	icc_put(tbu->path);
-> +}
-> +
-> +static struct platform_driver qsmmuv500_tbu_driver = {
-> +	.driver = {
-> +		.name           = "qsmmuv500-tbu",
-> +		.of_match_table = of_match_ptr(qsmmuv500_tbu_of_match),
-
-Won't of_match_ptr() result in a build warning if built without
-CONFIG_OF?
-
-> +	},
-> +	.probe  = qsmmuv500_tbu_probe,
-> +	.remove_new = qsmmuv500_tbu_remove,
-> +};
-> +module_platform_driver(qsmmuv500_tbu_driver);
-
-This file acts as a library for the arm-smmu driver today, adding a
-platform_driver here makes it look like this is a separate driver.
-
-Which makes me wonder, why is this a separate driver? Why not just
-loop over the subnodes and build the tbu_list in qcom_smmu_impl_init()?
-
-Regards,
-Bjorn
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
