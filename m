@@ -2,97 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A3A567D1B77
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Oct 2023 09:16:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8AB937D1C72
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Oct 2023 12:20:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229472AbjJUHQ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 Oct 2023 03:16:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59832 "EHLO
+        id S230321AbjJUKUs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 Oct 2023 06:20:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229567AbjJUHQ2 (ORCPT
+        with ESMTP id S230200AbjJUKUr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 Oct 2023 03:16:28 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FB5AD79;
-        Sat, 21 Oct 2023 00:16:25 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-9bf0ac97fdeso228634266b.2;
-        Sat, 21 Oct 2023 00:16:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697872583; x=1698477383; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=319tOWKiJxTmOU+nAUz609yxNAFpaNDWP/G7nIp2qzU=;
-        b=i3ZgMJs7SRd58uk17jQYoyK3XIpmj4eha5pKpc8RKgzZiLpQUpAA+onu0H88M1BB33
-         vosslIoVtnWilOssmowBv94ik7nXykn6xcz/x5O7ucV+IhFXBwsrVS3t9VkNggM06gRT
-         gh0oiy6KEjW3sT5hHmgmlITOqh0zyodPD/KEWpXGPd/2r5yxxYMmJ6vwQWkHSCQNQNQT
-         XuvHnrF9JjbJR5jzoydjnLH+kCrIE+TsAyk32LE56w6QrgjrZ4TLghIbx4GUsbMNUgHb
-         VOX+rssSu5NOKPy1c7AHB3OG8D34sN1zRsP2N2gsTWnCvPbgi2zUvzW9BJulEGnY+92l
-         4pAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697872583; x=1698477383;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=319tOWKiJxTmOU+nAUz609yxNAFpaNDWP/G7nIp2qzU=;
-        b=Pq1G6FP1LOgV+pmaOXBkIUWZZmhtIv3Xq95buKEm+a0XSI7x7ftVaVbefzmV7RmZX1
-         rW7zl/4bBvCESKkMa42fJCxC8Mh2XhKV1FOEG2XN5LFOY953lFVQO/fMIEM/eaYluBwX
-         uumR2haNGsfXWua12n+WbrsVCNMGukxxBsBqe+4zLj+aODzHrIkNkpwajlqU88a0ZCcU
-         JVIwgbGOjjHb5/JenP0Gb+I/burF5oellGYCZ2GOhsVH/i7CZ+zE3WsFltX8eO1F8AHW
-         x2G4IGu4BofH3naiORZuh05CMuRvgtPFGc8J7NrcDg7tfRN7uz7JFEC4I4QFCstgCusq
-         77kA==
-X-Gm-Message-State: AOJu0YzuAJodXPmpfFab7+DeKVJ/5kRRYRXGlFTcEBahpO2Reycr6wg3
-        A9KcFUAzQMSh/ZdbIVSHE1A=
-X-Google-Smtp-Source: AGHT+IG39ADzdAQp/8lOcwMvnmWHY3WX5i0z7a25QTQrnwEW962Woy8xP2oOCPaDakreZrUU/rVAjg==
-X-Received: by 2002:a17:907:31c5:b0:9c3:cefa:93c0 with SMTP id xf5-20020a17090731c500b009c3cefa93c0mr2732945ejb.38.1697872583289;
-        Sat, 21 Oct 2023 00:16:23 -0700 (PDT)
-Received: from david-ryuzu.fritz.box ([188.195.202.64])
-        by smtp.googlemail.com with ESMTPSA id c11-20020a170906340b00b009be23a040cfsm2992035ejb.40.2023.10.21.00.16.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Oct 2023 00:16:22 -0700 (PDT)
-From:   David Wronek <davidwronek@gmail.com>
-To:     Rob Herring <robh+dt@kernel.org>,
+        Sat, 21 Oct 2023 06:20:47 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E66EF1BF;
+        Sat, 21 Oct 2023 03:20:45 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 786BEC433C8;
+        Sat, 21 Oct 2023 10:20:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1697883645;
+        bh=ZZ68ZPi/suxrQ2sypyhx1bc0WmB+NG00aBTdxhJfjdo=;
+        h=From:Subject:Date:To:Cc:Reply-To:From;
+        b=jm6nVF/3IUsjlV9huNxWCM9lmSvgJI83txk9a0uyNNPYfsY/vsl0O2QAYCRFeKgGK
+         Q0VRu3HXBnyZkoSQT54TsXNQ3ZvKtC2F3QEjy2rvfLoU9e2tXEvv/LLFq/m7cBQrXp
+         Ex0F8kNxcoZUCvqd1+s9Cg2xxSLu6ZXj0ImCnWF0qDodumbCU3eZUOnTfgqcj2wUcm
+         vvJe/uga4fAp9ME6MiGYD233p5wy3ov79rxwpgEaT03O6EnCHgMGZBUDjECUfc9PpD
+         gnndGJ+DiQvAKohbK3nvaziY9ZkrtekRlLft0hZVgzd85EuemGgWrsB5rw2ZItZhCy
+         gx75lqkBbiyaQ==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.lore.kernel.org (Postfix) with ESMTP id 58405C0032E;
+        Sat, 21 Oct 2023 10:20:45 +0000 (UTC)
+From:   Xilin Wu via B4 Relay <devnull+wuxilin123.gmail.com@kernel.org>
+Subject: [PATCH v2 0/3] Add initial support for Xiaomi Mi 11 Ultra
+Date:   Sat, 21 Oct 2023 18:20:37 +0800
+Message-Id: <20231021-sakuramist-mi11u-v2-0-fa82c91ecaf0@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAPWlM2UC/x3MQQqAIBBA0avErBN0CsKuEi3MphpCC6ciiO6et
+ HyL/x8QSkwCbfFAoouFt5iBZQF+cXEmxWM2oMbKaDRK3HomF1gOFdiYUw2WrCVsvK495GxPNPH
+ 9L7v+fT8M0WvJYgAAAA==
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        devicetree@vger.kernel.org, Joe Mason <buddyjojo06@outlook.com>
+        Kees Cook <keescook@chromium.org>,
+        Tony Luck <tony.luck@intel.com>,
+        "Guilherme G. Piccoli" <gpiccoli@igalia.com>
 Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        David Wronek <davidwronek@gmail.com>
-Subject: [PATCH] dt-bindings: arm: cpus: Add Qualcomm Kryo 465
-Date:   Sat, 21 Oct 2023 09:16:19 +0200
-Message-ID: <20231021071619.187374-1-davidwronek@gmail.com>
-X-Mailer: git-send-email 2.42.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        devicetree@vger.kernel.org, linux-hardening@vger.kernel.org,
+        Xilin Wu <wuxilin123@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1697883643; l=1030;
+ i=wuxilin123@gmail.com; s=20231021; h=from:subject:message-id;
+ bh=ZZ68ZPi/suxrQ2sypyhx1bc0WmB+NG00aBTdxhJfjdo=;
+ b=31ZrEbizsso30dbm1A04cuJgTiM7ym+eXyhFd0HHSVGVy7/2+Ti4kNF/dwpXCLPQPf0Y6VmLv
+ r7aUcnHQ9T1DX3ZGw3Msi7DkMCLxLIZGoI+4huWYjaq2KpuxwPM13bP
+X-Developer-Key: i=wuxilin123@gmail.com; a=ed25519;
+ pk=edoFbrGewAWr5/CxptHll7XzvXBjYiN49RrEgipi1Cg=
+X-Endpoint-Received: by B4 Relay for wuxilin123@gmail.com/20231021 with auth_id=89
+X-Original-From: Xilin Wu <wuxilin123@gmail.com>
+Reply-To: <wuxilin123@gmail.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FORGED_REPLYTO,
+        FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a compatible for the Qualcomm Kryo 465 found in SM7125.
+This patch series add support for Xiaomi Mi 11 Ultra.
 
-Signed-off-by: David Wronek <davidwronek@gmail.com>
+Signed-off-by: Xilin Wu <wuxilin123@gmail.com>
 ---
- Documentation/devicetree/bindings/arm/cpus.yaml | 1 +
- 1 file changed, 1 insertion(+)
+Changes in v2:
+- Modified framebuffer node name
+- Removed trailing blank line
+- Ensured all status property be the last one
+- Added UFS host controller supply
+- Link to v1: https://lore.kernel.org/r/all/20230806-xiaomi-star-v1-0-0c384e8b5737@gmail.com
+---
 
-diff --git a/Documentation/devicetree/bindings/arm/cpus.yaml b/Documentation/devicetree/bindings/arm/cpus.yaml
-index ad7fee0245fa..ffd526363fda 100644
---- a/Documentation/devicetree/bindings/arm/cpus.yaml
-+++ b/Documentation/devicetree/bindings/arm/cpus.yaml
-@@ -190,6 +190,7 @@ properties:
-       - qcom,kryo280
-       - qcom,kryo360
-       - qcom,kryo385
-+      - qcom,kryo465
-       - qcom,kryo468
-       - qcom,kryo485
-       - qcom,kryo560
+---
+Xilin Wu (3):
+      soc: qcom: pmic_glink: enable UCSI for SM8350
+      dt-bindings: arm: qcom: Add Xiaomi Mi 11 Ultra
+      arm64: dts: qcom: Add device tree for Xiaomi Mi 11 Ultra
+
+ Documentation/devicetree/bindings/arm/qcom.yaml |    1 +
+ arch/arm64/boot/dts/qcom/Makefile               |    1 +
+ arch/arm64/boot/dts/qcom/sm8350-xiaomi-star.dts | 1249 +++++++++++++++++++++++
+ drivers/soc/qcom/pmic_glink.c                   |    1 +
+ 4 files changed, 1252 insertions(+)
+---
+base-commit: 2dac75696c6da3c848daa118a729827541c89d33
+change-id: 20231021-sakuramist-mi11u-b9e99e27c04c
+
+Best regards,
 -- 
-2.42.0
+Xilin Wu <wuxilin123@gmail.com>
 
