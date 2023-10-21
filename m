@@ -2,79 +2,278 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4990A7D1F91
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Oct 2023 22:35:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 10B1D7D1FB5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Oct 2023 23:01:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231129AbjJUUfA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 Oct 2023 16:35:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47322 "EHLO
+        id S232155AbjJUVBi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 Oct 2023 17:01:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229478AbjJUUe7 (ORCPT
+        with ESMTP id S232097AbjJUVBg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 Oct 2023 16:34:59 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B3CC119;
-        Sat, 21 Oct 2023 13:34:57 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-9be3b66f254so283851166b.3;
-        Sat, 21 Oct 2023 13:34:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697920496; x=1698525296; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3XHrNWuB2xCxWV1xS25yFPA+pQI6IX5HCckbBT68qYs=;
-        b=gQJMNiQgrfi3GojnJ1XH8axEZ2PFLdEDvPXDahPzYjIJ20VVxJpt+tT1lR48NnL7/S
-         6tmme9W1KaWXloSw6tywQSynr3KWy2YHd3tmTOvve6hm2o+Ou56mTUP9HCMOmXKMKM6A
-         tK38ujcA9iqO+90176KgVvWIqsRE+eSzS2hVcYjntG9seBVDmAgHLSnbKemhInat6H2l
-         j+pgUV3uh1j/VwUmkiCg6ngL/m7wEjVpz77Z9mMQrKqQDpGjUNe7EJoBequFFv8UCfVv
-         9hGXvs93i5Mm+9RwsSyPxNw7+DuSfGd/C8i8DEIPujLLqzJHWpb03KnZA0sddfnHlATS
-         GafA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697920496; x=1698525296;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3XHrNWuB2xCxWV1xS25yFPA+pQI6IX5HCckbBT68qYs=;
-        b=AeyCzP2qrrY4xuz2ZEDN6EUx0XLWBKKm3pbRIj873q7Z8ZyRAqgegivR30aV6OVwL3
-         Nt7mBTvyRK8x5XJXap0tgpMBqpL9rHChq03GPoQG70cqXAVY8yitjpGm+TovaOECaNnW
-         NdQSQ9mJvqwkwunQkWrlI1OkcSOJPaVgLvEadL0JcmZ/Pn3XoxRDn0skxLPgJl4O7Hb1
-         1IwAFU3SW8UKGXg8I9YORJ8NJJ7Uvc7Sneok09LU9FD7Ok9re3HtHnHlY12eYXfFnNNZ
-         oigA+Llph1/aPC5OlfWIGh/fnA6hlOgpZgf3LQGhgJ0AVcY35MevjTaGumtB6kW3s5RX
-         f83g==
-X-Gm-Message-State: AOJu0YzriaAfvYVKOH5/ftTM1oKzRTQ/dxZ/v9vbpPTcd0KPNuPi6qx4
-        YxWP99J0nNqGgS4InSReXG0UjATOgFHAR+tksH0=
-X-Google-Smtp-Source: AGHT+IEpizVCkq78mP6QE92RpUDpj2LQ+n2Ma07XT4Eqgq3k5JJqUBtHoVJPruxE2/WxcnZmr8i2/3RmcRfcWrszYlQ=
-X-Received: by 2002:a17:907:d29:b0:9bd:f902:9a61 with SMTP id
- gn41-20020a1709070d2900b009bdf9029a61mr4449889ejc.18.1697920495469; Sat, 21
- Oct 2023 13:34:55 -0700 (PDT)
+        Sat, 21 Oct 2023 17:01:36 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 863C01A8;
+        Sat, 21 Oct 2023 14:01:34 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA24EC433C7;
+        Sat, 21 Oct 2023 21:01:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1697922094;
+        bh=M+M3q5sxfvxUvyeRGABwgSGpQ53ingORdN/e2crghb0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=o0Ht/7LnWMWbBtI4Nl6SK0U3pct/JGTwno/rTY8N9ECE7uDG/oKvZPG/MBSoUrpNQ
+         1JYl9QkpSAcVakb4/mqRlWI14WClVe6sOaiJe0fXujVr4BLLhhqyfvcxB0bdTYT8bl
+         rMCIkBJKkyrTpiEl6qIK7G087ud4lJybQJ/q6fsneyk5GIjvyhBaYG5PCByrm/bpGU
+         d9eR5Lc0Hfpqp0aXZrvK3vxhByEzdXxtSa0XVhRXvEEOCTlnl20XK7KmkdIXZsJ8kN
+         h5XOsKQDu+6CzSmRazKfUVqPYXCwzeCHqxdqoyZTOxZ3JGQNUBYlkb63NhQYRWjIqH
+         QisVVVRyLiiIA==
+Date:   Sat, 21 Oct 2023 14:05:13 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Georgi Djakov <quic_c_gdjako@quicinc.com>
+Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, will@kernel.org, robin.murphy@arm.com,
+        joro@8bytes.org, devicetree@vger.kernel.org,
+        konrad.dybcio@linaro.org, linux-arm-kernel@lists.infradead.org,
+        iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, quic_cgoldswo@quicinc.com,
+        quic_sukadev@quicinc.com, quic_pdaly@quicinc.com,
+        quic_sudaraja@quicinc.com, djakov@kernel.org
+Subject: Re: [PATCH 3/6] iommu/arm-smmu-qcom: Add Qualcomm TBU driver
+Message-ID: <ljbzuewnsi52qyolombjowuouiqmv5ybwbqf2z6ok34yuiacjc@7hwfysvidjqm>
+References: <20231019021923.13939-1-quic_c_gdjako@quicinc.com>
+ <20231019021923.13939-4-quic_c_gdjako@quicinc.com>
 MIME-Version: 1.0
-References: <20231021203403.215023-1-lukapanio@gmail.com>
-In-Reply-To: <20231021203403.215023-1-lukapanio@gmail.com>
-From:   =?UTF-8?B?0JvRg9C60LAg0J/QsNC90YzQvg==?= <lukapanio@gmail.com>
-Date:   Sat, 21 Oct 2023 22:34:44 +0200
-Message-ID: <CACi=Ov6hgbMX0c2mEodJdodm7Fsvjb-QWgb7ypBJKRSfSgFSbw@mail.gmail.com>
-Subject: Re: [PATCH v5 1/2] From: Luka Panio <lukapanio@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kees Cook <keescook@chromium.org>,
-        Tony Luck <tony.luck@intel.com>,
-        "Guilherme G . Piccoli" <gpiccoli@igalia.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231019021923.13939-4-quic_c_gdjako@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-Sorry for all the spam.
-Thanks,
-Luka Panio
+On Wed, Oct 18, 2023 at 07:19:20PM -0700, Georgi Djakov wrote:
+> Add driver for the Qualcomm implementation of the ARM MMU-500 TBU.
+> The driver will enable the resources needed by the TBU and will
+> configure the registers for some debug features like checking if
+> there are any pending transactions, capturing transactions and
+> running ATOS (Address Translation Operations). ATOS/eCATS are used
+> to manually trigger an address translation of IOVA to physical
+> address by the SMMU hardware.
+
+I still don't think this commit message clearly enough describe the
+problem you're trying to solve.
+
+Not until I had read the Kconfig help text did I pay attention to the
+significance of the words "some debug features" in the middle of the
+paragraph.
+
+
+Please describe your changes in accordance with [1], i.e. clearly
+describe the problem you're trying to solve, then discuss the technical
+solution in the patch.
+
+[1] https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
+
+[..]
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+[..]
+> +#ifdef CONFIG_ARM_SMMU_QCOM_TBU
+> +
+> +struct qsmmuv500_tbu {
+> +	struct device *dev;
+> +	struct arm_smmu_device *smmu;
+> +	u32 sid_range[2];
+> +	struct list_head list;
+> +	struct clk *clk;
+> +	struct icc_path	*path;
+> +	void __iomem *base;
+> +	spinlock_t halt_lock; /* protects halt count */
+
+But in particular it makes sure that multiple halt or resume can't
+execute concurrently.
+
+> +	int halt_count;
+> +};
+> +
+> +static DEFINE_SPINLOCK(ecats_lock);
+> +
+> +static struct qsmmuv500_tbu *qsmmuv500_find_tbu(struct qcom_smmu *qsmmu, u32 sid)
+> +{
+> +	struct qsmmuv500_tbu *tbu = NULL;
+> +	u32 start, end;
+> +
+> +	mutex_lock(&qsmmu->tbu_list_lock);
+> +
+> +	list_for_each_entry(tbu, &qsmmu->tbu_list, list) {
+> +		start = tbu->sid_range[0];
+> +		end = start + tbu->sid_range[1];
+> +
+> +		if (start <= sid && sid < end)
+> +			break;
+> +	}
+> +
+> +	mutex_unlock(&qsmmu->tbu_list_lock);
+> +
+> +	return tbu;
+> +}
+> +
+> +static int qsmmuv500_tbu_halt(struct qsmmuv500_tbu *tbu, struct arm_smmu_domain *smmu_domain)
+> +{
+> +	struct arm_smmu_device *smmu = smmu_domain->smmu;
+> +	int ret = 0, idx = smmu_domain->cfg.cbndx;
+> +	unsigned long flags;
+> +	u32 val, fsr, status;
+> +
+> +	spin_lock_irqsave(&tbu->halt_lock, flags);
+
+Does this really need to run with interrupts disabled?
+
+> +	if (tbu->halt_count) {
+> +		tbu->halt_count++;
+> +		goto out;
+> +	}
+> +
+[..]
+> +static phys_addr_t qsmmuv500_iova_to_phys(struct arm_smmu_domain *smmu_domain,
+> +					  dma_addr_t iova, u32 sid)
+> +{
+[..]
+> +	/* Only one concurrent atos operation */
+> +	spin_lock_irqsave(&ecats_lock, flags);
+
+Does this require interrupts to be disabled?
+
+> +
+> +	/*
+> +	 * After a failed translation, the next successful translation will
+> +	 * incorrectly be reported as a failure.
+
+"So if the ECATS translation fails, attempt the lookup more time."
+
+> +	 */
+> +	do {
+> +		phys = qsmmuv500_tbu_trigger_atos(smmu_domain, tbu, iova, sid);
+> +
+> +		fsr = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSR);
+> +		if (fsr & ARM_SMMU_FSR_FAULT) {
+> +			/* Clear pending interrupts */
+> +			arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, fsr);
+> +			/*
+> +			 * Barrier required to ensure that the FSR is cleared
+> +			 * before resuming SMMU operation.
+> +			 */
+
+Better be clear on what this actually does, for future readers' sake:
+
+	 /* Ensure that FSR and RESUME operations aren't reordered. */
+
+But is this really necessary, the two writes are for the same device,
+can they still be reordered?
+
+> +			wmb();
+> +
+> +			if (fsr & ARM_SMMU_FSR_SS)
+> +				arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_RESUME,
+> +						  ARM_SMMU_RESUME_TERMINATE);
+> +		}
+> +	} while (!phys && needs_redo++ < 2);
+
+"needs_redo" sounds like a boolean to me. I think "attempt" would be a
+better fit here.
+
+> +
+> +	arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_SCTLR, sctlr_orig);
+> +	spin_unlock_irqrestore(&ecats_lock, flags);
+> +	qsmmuv500_tbu_resume(tbu);
+> +
+> +	/* Read to complete prior write transcations */
+> +	readl_relaxed(tbu->base + DEBUG_SR_HALT_ACK_REG);
+> +
+> +	/* Wait for read to complete */
+
+That's not what rmb() does. You don't need to do anything here,
+readl_relaxed() returns when the read is done.
+
+> +	rmb();
+> +
+> +disable_clk:
+> +	clk_disable_unprepare(tbu->clk);
+> +disable_icc:
+> +	icc_set_bw(tbu->path, 0, 0);
+> +
+> +	return phys;
+> +}
+> +#endif
+> +
+>  static void qcom_smmu_tlb_sync(struct arm_smmu_device *smmu, int page,
+>  				int sync, int status)
+>  {
+> @@ -588,3 +895,80 @@ struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
+>  
+>  	return smmu;
+>  }
+> +
+> +#ifdef CONFIG_ARM_SMMU_QCOM_TBU
+> +
+> +static const struct of_device_id qsmmuv500_tbu_of_match[] = {
+> +	{ .compatible = "qcom,qsmmuv500-tbu" },
+> +	{ }
+> +};
+
+Place this below the remove function, as most other drivers do.
+
+> +
+> +static int qsmmuv500_tbu_probe(struct platform_device *pdev)
+> +{
+[..]
+> +	mutex_lock(&qsmmu->tbu_list_lock);
+> +	list_add_tail(&tbu->list, &qsmmu->tbu_list);
+
+"tbu" is devres allocated, but you don't pull it off the list (or
+synchronize) during remove.
+
+> +	mutex_unlock(&qsmmu->tbu_list_lock);
+> +
+> +	dev_set_drvdata(dev, tbu);
+> +
+> +	return 0;
+> +}
+> +
+> +static void qsmmuv500_tbu_remove(struct platform_device *pdev)
+> +{
+> +	struct qsmmuv500_tbu *tbu = dev_get_drvdata(&pdev->dev);
+> +
+> +	clk_disable_unprepare(tbu->clk);
+
+This isn't balanced.
+
+> +	clk_put(tbu->clk);
+> +	icc_put(tbu->path);
+> +}
+> +
+> +static struct platform_driver qsmmuv500_tbu_driver = {
+> +	.driver = {
+> +		.name           = "qsmmuv500-tbu",
+> +		.of_match_table = of_match_ptr(qsmmuv500_tbu_of_match),
+
+Won't of_match_ptr() result in a build warning if built without
+CONFIG_OF?
+
+> +	},
+> +	.probe  = qsmmuv500_tbu_probe,
+> +	.remove_new = qsmmuv500_tbu_remove,
+> +};
+> +module_platform_driver(qsmmuv500_tbu_driver);
+
+This file acts as a library for the arm-smmu driver today, adding a
+platform_driver here makes it look like this is a separate driver.
+
+Which makes me wonder, why is this a separate driver? Why not just
+loop over the subnodes and build the tbu_list in qcom_smmu_impl_init()?
+
+Regards,
+Bjorn
