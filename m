@@ -2,175 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F89D7D1AA8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Oct 2023 05:42:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A3A567D1B77
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Oct 2023 09:16:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229588AbjJUDmy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Oct 2023 23:42:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35440 "EHLO
+        id S229472AbjJUHQ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 Oct 2023 03:16:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229500AbjJUDmx (ORCPT
+        with ESMTP id S229567AbjJUHQ2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Oct 2023 23:42:53 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.126])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71392D76;
-        Fri, 20 Oct 2023 20:42:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1697859768; x=1729395768;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=8PNS9IwLu/TMYdHnEZRKjglbKlVyBvxRYtzA2v+FvTs=;
-  b=OYJNHGdjDY2uQiHI8RUMRE96033TPKS43bG7HrdlZVc9Uj9Khx8+0xOQ
-   BZBHufg2v1/Y1BFIZ2thkU3zva7Ayd4Q1YfRRyaMiBhrDCOPfy3Rj2jrp
-   IRaC9TcKyHfJrVQMnmUKEglAfBIYeDoTO5feQho+bLYhhLFyx7SbMoBae
-   L9ZZrb43oORBr1QsxXchuLO1Pk+CCyDAe9d2pImo1orAS1r2/XQu9rRbG
-   1agwxgzBq/BZzMHPuGfr7pUE0T493Shm9rQfQp8iETqrS8xPsRzHdMmuK
-   LEFGnjNg9nURigYqH4S5tp657aQpt1+yk97N3pQ1hJjxTE/Q9+ra7q6r1
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10869"; a="371676306"
-X-IronPort-AV: E=Sophos;i="6.03,239,1694761200"; 
-   d="scan'208";a="371676306"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Oct 2023 20:42:48 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10869"; a="881243647"
-X-IronPort-AV: E=Sophos;i="6.03,239,1694761200"; 
-   d="scan'208";a="881243647"
-Received: from lkp-server01.sh.intel.com (HELO 8917679a5d3e) ([10.239.97.150])
-  by orsmga004.jf.intel.com with ESMTP; 20 Oct 2023 20:42:45 -0700
-Received: from kbuild by 8917679a5d3e with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1qu2st-0004LK-1q;
-        Sat, 21 Oct 2023 03:42:43 +0000
-Date:   Sat, 21 Oct 2023 11:42:31 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        mhi@lists.linux.dev
-Cc:     oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: Re: [PATCH] bus: mhi: ep: Add support for interrupt moderation timer
-Message-ID: <202310211125.dCDfH087-lkp@intel.com>
-References: <20231019080911.57938-1-manivannan.sadhasivam@linaro.org>
+        Sat, 21 Oct 2023 03:16:28 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FB5AD79;
+        Sat, 21 Oct 2023 00:16:25 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-9bf0ac97fdeso228634266b.2;
+        Sat, 21 Oct 2023 00:16:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1697872583; x=1698477383; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=319tOWKiJxTmOU+nAUz609yxNAFpaNDWP/G7nIp2qzU=;
+        b=i3ZgMJs7SRd58uk17jQYoyK3XIpmj4eha5pKpc8RKgzZiLpQUpAA+onu0H88M1BB33
+         vosslIoVtnWilOssmowBv94ik7nXykn6xcz/x5O7ucV+IhFXBwsrVS3t9VkNggM06gRT
+         gh0oiy6KEjW3sT5hHmgmlITOqh0zyodPD/KEWpXGPd/2r5yxxYMmJ6vwQWkHSCQNQNQT
+         XuvHnrF9JjbJR5jzoydjnLH+kCrIE+TsAyk32LE56w6QrgjrZ4TLghIbx4GUsbMNUgHb
+         VOX+rssSu5NOKPy1c7AHB3OG8D34sN1zRsP2N2gsTWnCvPbgi2zUvzW9BJulEGnY+92l
+         4pAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697872583; x=1698477383;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=319tOWKiJxTmOU+nAUz609yxNAFpaNDWP/G7nIp2qzU=;
+        b=Pq1G6FP1LOgV+pmaOXBkIUWZZmhtIv3Xq95buKEm+a0XSI7x7ftVaVbefzmV7RmZX1
+         rW7zl/4bBvCESKkMa42fJCxC8Mh2XhKV1FOEG2XN5LFOY953lFVQO/fMIEM/eaYluBwX
+         uumR2haNGsfXWua12n+WbrsVCNMGukxxBsBqe+4zLj+aODzHrIkNkpwajlqU88a0ZCcU
+         JVIwgbGOjjHb5/JenP0Gb+I/burF5oellGYCZ2GOhsVH/i7CZ+zE3WsFltX8eO1F8AHW
+         x2G4IGu4BofH3naiORZuh05CMuRvgtPFGc8J7NrcDg7tfRN7uz7JFEC4I4QFCstgCusq
+         77kA==
+X-Gm-Message-State: AOJu0YzuAJodXPmpfFab7+DeKVJ/5kRRYRXGlFTcEBahpO2Reycr6wg3
+        A9KcFUAzQMSh/ZdbIVSHE1A=
+X-Google-Smtp-Source: AGHT+IG39ADzdAQp/8lOcwMvnmWHY3WX5i0z7a25QTQrnwEW962Woy8xP2oOCPaDakreZrUU/rVAjg==
+X-Received: by 2002:a17:907:31c5:b0:9c3:cefa:93c0 with SMTP id xf5-20020a17090731c500b009c3cefa93c0mr2732945ejb.38.1697872583289;
+        Sat, 21 Oct 2023 00:16:23 -0700 (PDT)
+Received: from david-ryuzu.fritz.box ([188.195.202.64])
+        by smtp.googlemail.com with ESMTPSA id c11-20020a170906340b00b009be23a040cfsm2992035ejb.40.2023.10.21.00.16.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 21 Oct 2023 00:16:22 -0700 (PDT)
+From:   David Wronek <davidwronek@gmail.com>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        devicetree@vger.kernel.org, Joe Mason <buddyjojo06@outlook.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        David Wronek <davidwronek@gmail.com>
+Subject: [PATCH] dt-bindings: arm: cpus: Add Qualcomm Kryo 465
+Date:   Sat, 21 Oct 2023 09:16:19 +0200
+Message-ID: <20231021071619.187374-1-davidwronek@gmail.com>
+X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231019080911.57938-1-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
-        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Manivannan,
+Add a compatible for the Qualcomm Kryo 465 found in SM7125.
 
-kernel test robot noticed the following build errors:
+Signed-off-by: David Wronek <davidwronek@gmail.com>
+---
+ Documentation/devicetree/bindings/arm/cpus.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-[auto build test ERROR on mani-mhi/mhi-next]
-[also build test ERROR on linus/master v6.6-rc6 next-20231020]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Manivannan-Sadhasivam/bus-mhi-ep-Add-support-for-interrupt-moderation-timer/20231019-161023
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git mhi-next
-patch link:    https://lore.kernel.org/r/20231019080911.57938-1-manivannan.sadhasivam%40linaro.org
-patch subject: [PATCH] bus: mhi: ep: Add support for interrupt moderation timer
-config: x86_64-buildonly-randconfig-003-20231021 (https://download.01.org/0day-ci/archive/20231021/202310211125.dCDfH087-lkp@intel.com/config)
-compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231021/202310211125.dCDfH087-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202310211125.dCDfH087-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   drivers/bus/mhi/ep/main.c: In function 'mhi_ep_send_event':
->> drivers/bus/mhi/ep/main.c:71:52: error: 'struct mhi_ep_ring' has no member named 'intmod_work'; did you mean 'intmodt_work'?
-      71 |                         cancel_delayed_work(&ring->intmod_work);
-         |                                                    ^~~~~~~~~~~
-         |                                                    intmodt_work
-   drivers/bus/mhi/ep/main.c:76:46: error: 'struct mhi_ep_ring' has no member named 'intmod_work'; did you mean 'intmodt_work'?
-      76 |                 schedule_delayed_work(&ring->intmod_work, msecs_to_jiffies(ring->intmodt));
-         |                                              ^~~~~~~~~~~
-         |                                              intmodt_work
-
-Kconfig warnings: (for reference only)
-   WARNING: unmet direct dependencies detected for VIDEO_OV7670
-   Depends on [n]: MEDIA_SUPPORT [=y] && VIDEO_DEV [=y] && VIDEO_CAMERA_SENSOR [=n]
-   Selected by [y]:
-   - VIDEO_CAFE_CCIC [=y] && MEDIA_SUPPORT [=y] && MEDIA_PLATFORM_SUPPORT [=y] && MEDIA_PLATFORM_DRIVERS [=y] && V4L_PLATFORM_DRIVERS [=y] && PCI [=y] && I2C [=y] && VIDEO_DEV [=y] && COMMON_CLK [=y]
-
-
-vim +71 drivers/bus/mhi/ep/main.c
-
-    27	
-    28	static int mhi_ep_send_event(struct mhi_ep_cntrl *mhi_cntrl, u32 ring_idx,
-    29				     struct mhi_ring_element *el, bool bei)
-    30	{
-    31		struct device *dev = &mhi_cntrl->mhi_dev->dev;
-    32		union mhi_ep_ring_ctx *ctx;
-    33		struct mhi_ep_ring *ring;
-    34		int ret;
-    35	
-    36		mutex_lock(&mhi_cntrl->event_lock);
-    37		ring = &mhi_cntrl->mhi_event[ring_idx].ring;
-    38		ctx = (union mhi_ep_ring_ctx *)&mhi_cntrl->ev_ctx_cache[ring_idx];
-    39		if (!ring->started) {
-    40			ret = mhi_ep_ring_start(mhi_cntrl, ring, ctx);
-    41			if (ret) {
-    42				dev_err(dev, "Error starting event ring (%u)\n", ring_idx);
-    43				goto err_unlock;
-    44			}
-    45		}
-    46	
-    47		/* Add element to the event ring */
-    48		ret = mhi_ep_ring_add_element(ring, el);
-    49		if (ret) {
-    50			dev_err(dev, "Error adding element to event ring (%u)\n", ring_idx);
-    51			goto err_unlock;
-    52		}
-    53	
-    54		mutex_unlock(&mhi_cntrl->event_lock);
-    55	
-    56		/*
-    57		 * As per the MHI specification, section 4.3, Interrupt moderation:
-    58		 *
-    59		 * 1. If BEI flag is not set, cancel any pending intmodt work if started
-    60		 * for the event ring and raise IRQ immediately.
-    61		 *
-    62		 * 2. If both BEI and intmodt are set, and if no IRQ is pending for the
-    63		 * same event ring, start the IRQ delayed work as per the value of
-    64		 * intmodt. If previous IRQ is pending, then do nothing as the pending
-    65		 * IRQ is enough for the host to process the current event ring element.
-    66		 *
-    67		 * 3. If BEI is set and intmodt is not set, no need to raise IRQ.
-    68		 */
-    69		if (!bei) {
-    70			if (READ_ONCE(ring->irq_pending))
-  > 71				cancel_delayed_work(&ring->intmod_work);
-    72	
-    73			mhi_cntrl->raise_irq(mhi_cntrl, ring->irq_vector);
-    74		} else if (ring->intmodt && !READ_ONCE(ring->irq_pending)) {
-    75			WRITE_ONCE(ring->irq_pending, true);
-    76			schedule_delayed_work(&ring->intmod_work, msecs_to_jiffies(ring->intmodt));
-    77		}
-    78	
-    79		return 0;
-    80	
-    81	err_unlock:
-    82		mutex_unlock(&mhi_cntrl->event_lock);
-    83	
-    84		return ret;
-    85	}
-    86	
-
+diff --git a/Documentation/devicetree/bindings/arm/cpus.yaml b/Documentation/devicetree/bindings/arm/cpus.yaml
+index ad7fee0245fa..ffd526363fda 100644
+--- a/Documentation/devicetree/bindings/arm/cpus.yaml
++++ b/Documentation/devicetree/bindings/arm/cpus.yaml
+@@ -190,6 +190,7 @@ properties:
+       - qcom,kryo280
+       - qcom,kryo360
+       - qcom,kryo385
++      - qcom,kryo465
+       - qcom,kryo468
+       - qcom,kryo485
+       - qcom,kryo560
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.42.0
+
