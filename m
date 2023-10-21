@@ -2,66 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C28B7D1CE9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Oct 2023 13:55:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4AC227D1CED
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Oct 2023 13:57:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231162AbjJULzx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 Oct 2023 07:55:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54288 "EHLO
+        id S230309AbjJUL5b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 Oct 2023 07:57:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229478AbjJULzw (ORCPT
+        with ESMTP id S230177AbjJUL5b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 Oct 2023 07:55:52 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9966FD67;
-        Sat, 21 Oct 2023 04:55:50 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-9ba1eb73c27so269860466b.3;
-        Sat, 21 Oct 2023 04:55:50 -0700 (PDT)
+        Sat, 21 Oct 2023 07:57:31 -0400
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84692D51;
+        Sat, 21 Oct 2023 04:57:29 -0700 (PDT)
+Received: by mail-oi1-x230.google.com with SMTP id 5614622812f47-3b2ec9a79bdso1261356b6e.3;
+        Sat, 21 Oct 2023 04:57:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697889349; x=1698494149; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Dz6kcRDJs2sEmG1mhBttulVCf9cJKsKoCbJ9XgaIGgs=;
-        b=NThi9T/NQtO+DIVymox1UIs0qdoClL1Xl1JGUVgLmmfEE7tqBqas9XXKlIpvA2S1mG
-         IPYb05Jv6HDFVWVGUbsbg9LYSGyD2AQSbyAMHuzEYdvtLUj//jlwQmouIYnR3sEvEXKI
-         HqPht0GDAyJKN4nRzlqsw4UF4sThwihR7woLgiG2S+ihQtijakea9eR46un4LVB7IFfi
-         ouEzQ2iL/1HnRYG0Esj29eQynwwrkqrP69O+tTv/iWoW6ZCbE3u63nQfDQtqqSciUOXP
-         YPVSHyyklqw8Pk2lapNryuwLF/wZvHuYsHhZRIHWNEEYqLB1417drr552VMsXQA7Ua3r
-         YFLg==
+        d=gmail.com; s=20230601; t=1697889449; x=1698494249; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=FxNz9djPi2ZFZLmpxAIXb8X9Wg3dZxfYM3EqSIAWSDg=;
+        b=g2wq64GTFlf+UyXvUUFB9kuU+pZT6wzK6Pap1BkVrO4ySfk+Jb07lTia+G9yU4dO1z
+         /MMOSzEDUUSFfNTrc7XkoaJ5J0zcsF/U3wbp9s+2WMosCYKGvQiJvEYouQFQ8oFPUuMl
+         SV2otip1MSjEZTIweOOzlUk/y6LjDnty5XD9S1G+8ZqWq0jSpaVua66SRockqb6w0kLX
+         S4tgpcmW+5EWBN9+GziZ8iw36cXFMt0Pl+1azsewGSxsYCsGU4bpfZ7MHQynGrYuBiB9
+         ci/d8yi1U5ilUKcMwnjai/NJCqBwkSDAlCoafEXop2fqz0PYvRNvJH/cCpD5iYS6m7+j
+         S9Pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697889349; x=1698494149;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1697889449; x=1698494249;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Dz6kcRDJs2sEmG1mhBttulVCf9cJKsKoCbJ9XgaIGgs=;
-        b=GdmaRCySNRldG3vsNNp29WGIvXt/hxNWaqpw9EVtpdFjtPkJHDJCaXBk+UHOvBe776
-         uxD1zoU3JZ3VTS2OCB8FYBdde7zpWui+9E1if1hRXTEhm2wExSQnp5X/aSTjx3Vg67rX
-         IooT5CbvR/e8e3yrCYoQlPOKp/6aIDIOWc/oR3mjXSfU/csy7BSQyiWX1xhq7serjVID
-         HbX8FGM2U+ARBK09jD4ihLdzzfoJlmEBmSJTtDPYv7N4LDyzN6rDWQsTzq85bQG1XUOx
-         BoIfqYzIeLRePP9DSTdRlemEzwsIdukpXK4zoD7POFr9Pzkc7m9+WT0wltrYGWAL01Tg
-         F7bA==
-X-Gm-Message-State: AOJu0Yx95exTsaSuklEOIl4FMrgoSsSwDj80PeBAEE/qDv+3DfRdHu/C
-        iykY/g0PGAoU1sVLU7i49hs=
-X-Google-Smtp-Source: AGHT+IHkEf2EQxbrNrvaL5WKe+RLiysLnfunng5mNwk66YE9zvvl876DnFUnJ2kIn5NEnWuLkE6pUg==
-X-Received: by 2002:a17:907:3688:b0:9be:2991:81fa with SMTP id bi8-20020a170907368800b009be299181famr3136291ejc.39.1697889348834;
-        Sat, 21 Oct 2023 04:55:48 -0700 (PDT)
-Received: from fedora.. (cpezg-94-253-130-100-cbl.xnet.hr. [94.253.130.100])
-        by smtp.googlemail.com with ESMTPSA id d11-20020a170906040b00b0099bd046170fsm3502776eja.104.2023.10.21.04.55.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Oct 2023 04:55:48 -0700 (PDT)
+        bh=FxNz9djPi2ZFZLmpxAIXb8X9Wg3dZxfYM3EqSIAWSDg=;
+        b=aSMCREsOWMiXVw7wl3wAYVWjMvyhI8q4+L8miPTlHYbU4UaGsE0LcIHT7ZNgtmMCDV
+         qUvXxP+PlGeiH2+ooo7Rpdl7ItwJxZfuC7JqTax4f5RdSvuBJ/XhF+QyHfIUUE6uMiNj
+         f8tUXK8TG34E91nT0CkFutfxXAPnRql3M7JTehqtl09o7a5HOs0+9PsqlnfhfD0cKjjR
+         sm1Z1wrUOTypOirmE8KAW2gCXUuOHzWVxNPeOG0z0FR5QCz2GiFkBxBZMWhq26V50/tz
+         fZiG9ssFu6bGAJscD9cMRD4FLeyKOGbalZpug/UI1/vpDBClesfjgH0U7w3E9E+R9cWZ
+         o1dg==
+X-Gm-Message-State: AOJu0Yxowp8z0ODbeAessnMHK8BFwYRD0f4S8HE28PAtKmb0CMnV81vY
+        +81c4+bxW9WRKjDFHASuSPYvyWYy2TfNw8BzXK4=
+X-Google-Smtp-Source: AGHT+IErCwbPPf2d1W2hR6YumknJe5gd9sptBaKAtjtmuKDZW7EB8QqNK+Wv7inqupTOwAHWQSjuO7Mf4Y/mKTyWbuk=
+X-Received: by 2002:a05:6808:12:b0:3ae:a81:55ba with SMTP id
+ u18-20020a056808001200b003ae0a8155bamr4812229oic.22.1697889448746; Sat, 21
+ Oct 2023 04:57:28 -0700 (PDT)
+MIME-Version: 1.0
+References: <20231015162114.976202-1-robimarko@gmail.com> <f27ff251-58b1-4fc5-8ad5-cd365b7eb976@linaro.org>
+ <8dce62b2-562c-4e00-840b-68e1cc865972@quicinc.com> <CAOX2RU4n8caVL33KkqgYK1_mTZv-oZtd0p=_dzPh-ntBBfH1zA@mail.gmail.com>
+ <b4ce1fdf-0a05-479d-90f8-3a2a2e40b07f@quicinc.com>
+In-Reply-To: <b4ce1fdf-0a05-479d-90f8-3a2a2e40b07f@quicinc.com>
 From:   Robert Marko <robimarko@gmail.com>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
+Date:   Sat, 21 Oct 2023 13:57:17 +0200
+Message-ID: <CAOX2RU7Z1BS0u_k=cx58oq8RODPV=a3kV26OsbYpkDaN1atixg@mail.gmail.com>
+Subject: Re: [PATCH] clk: qcom: gcc-ipq6018: add QUP6 I2C clock
+To:     Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>, agross@kernel.org,
+        andersson@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Cc:     Robert Marko <robimarko@gmail.com>,
-        Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-Subject: [PATCH v2] clk: qcom: gcc-ipq6018: add QUP6 I2C clock
-Date:   Sat, 21 Oct 2023 13:55:18 +0200
-Message-ID: <20231021115545.229060-1-robimarko@gmail.com>
-X-Mailer: git-send-email 2.41.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -72,62 +71,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-QUP6 I2C clock is listed in the dt bindings but it was never included in
-the GCC driver.
-So lets add support for it, it is marked as criticial as it is used by RPM
-to communicate to the external PMIC over I2C so this clock must not be
-disabled.
+On Fri, 20 Oct 2023 at 08:40, Kathiravan Thirumoorthy
+<quic_kathirav@quicinc.com> wrote:
+>
+>
+> On 10/19/2023 7:53 PM, Robert Marko wrote:
+> > On Thu, 19 Oct 2023 at 08:46, Kathiravan Thirumoorthy
+> > <quic_kathirav@quicinc.com> wrote:
+> >>
+> >> On 10/19/2023 1:59 AM, Konrad Dybcio wrote:
+> >>>
+> >>> On 10/15/23 18:20, Robert Marko wrote:
+> >>>> QUP6 I2C clock is listed in the dt bindings but it was never included in
+> >>>> the GCC driver.
+> >>>> So lets add support for it, its intentionally marked to never be
+> >>>> disabled
+> >>>> as its somehow affecting DVFS and if disabled it sometimes crashes the
+> >>>> board.
+> >>>>
+> >>>> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> >>>> ---
+> >>> Bjorn, would you be able to get an idea of what could be sitting
+> >>> on that bus?
+> >>>
+> >>> Or maybe the IPQ folks could know?
+> >>>
+> >> Konrad / Robert,
+> >>
+> >> Similar to IPQ9574, RPM needs this clock to communicate with PMIC over
+> >> I2C interface. Discussion happened here[1] is pretty much applicable to
+> >> IPQ6018 as well. Based on previous experience, we may need to document
+> >> the reason for CLK_IGNORE_UNUSED in driver as well. Nevertheless,
+> >>
+> >> Reviewed-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+> > Thanks for the explanation, it makes sense as I used to control the
+> > MP5496 directly
+> > via I2C.
+> >
+> > Is it possible to disable RPM so it doesn't conflict and just use the
+> > full MP5496 driver instead?
+> > I find the RPM quite limiting as there is no way to actually retrieve
+> > the current-voltage.
+>
+>
+> Robert, checked with the team and currently we don't have any option to
+> disable the RPM as such.
 
-Signed-off-by: Robert Marko <robimarko@gmail.com>
-Reviewed-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
----
-Changes in v2:
-* Mark the clock as critical
-* Add comment as to why its marked as critical
-* Update commit description thanks for explanation from Kathiravan
+Thanks for checking.
 
- drivers/clk/qcom/gcc-ipq6018.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+BTW, is there any information you could share on the USB GDSC-s?
+I tried converting them to GDSC-s like IPQ8074 has, but it seems that
+they have different features.
+It would be great to use proper GSDC support instead of manually
+setting bits during GCC probe.
 
-diff --git a/drivers/clk/qcom/gcc-ipq6018.c b/drivers/clk/qcom/gcc-ipq6018.c
-index aa94fcb1e4aa5..e24c2c2c0db71 100644
---- a/drivers/clk/qcom/gcc-ipq6018.c
-+++ b/drivers/clk/qcom/gcc-ipq6018.c
-@@ -2118,6 +2118,26 @@ static struct clk_branch gcc_blsp1_qup5_spi_apps_clk = {
- 	},
- };
- 
-+static struct clk_branch gcc_blsp1_qup6_i2c_apps_clk = {
-+	.halt_reg = 0x07010,
-+	.clkr = {
-+		.enable_reg = 0x07010,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_blsp1_qup6_i2c_apps_clk",
-+			.parent_hws = (const struct clk_hw *[]){
-+					&blsp1_qup6_i2c_apps_clk_src.clkr.hw },
-+			.num_parents = 1,
-+			/*
-+			 * RPM uses QUP6 I2C to communicate with the external
-+			 * PMIC so it must not be disabled.
-+			 */
-+			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
- static struct clk_branch gcc_blsp1_qup6_spi_apps_clk = {
- 	.halt_reg = 0x0700c,
- 	.clkr = {
-@@ -4274,6 +4294,7 @@ static struct clk_regmap *gcc_ipq6018_clks[] = {
- 	[GCC_BLSP1_QUP4_SPI_APPS_CLK] = &gcc_blsp1_qup4_spi_apps_clk.clkr,
- 	[GCC_BLSP1_QUP5_I2C_APPS_CLK] = &gcc_blsp1_qup5_i2c_apps_clk.clkr,
- 	[GCC_BLSP1_QUP5_SPI_APPS_CLK] = &gcc_blsp1_qup5_spi_apps_clk.clkr,
-+	[GCC_BLSP1_QUP6_I2C_APPS_CLK] = &gcc_blsp1_qup6_i2c_apps_clk.clkr,
- 	[GCC_BLSP1_QUP6_SPI_APPS_CLK] = &gcc_blsp1_qup6_spi_apps_clk.clkr,
- 	[GCC_BLSP1_UART1_APPS_CLK] = &gcc_blsp1_uart1_apps_clk.clkr,
- 	[GCC_BLSP1_UART2_APPS_CLK] = &gcc_blsp1_uart2_apps_clk.clkr,
--- 
-2.41.0
-
+Regards,
+Robert
+>
+>
+> >
+> > Regards,
+> > Robert
+> >> [1]
+> >> https://lore.kernel.org/linux-arm-msm/2852fc37-284f-6534-f163-45b37b153db1@quicinc.com/
+> >>
+> >>
+> >>> Konrad
