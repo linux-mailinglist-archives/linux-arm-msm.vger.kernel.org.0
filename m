@@ -2,93 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 672A17D1EB9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Oct 2023 19:50:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 861567D1F08
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Oct 2023 21:20:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231356AbjJURuK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 Oct 2023 13:50:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50582 "EHLO
+        id S231962AbjJUTUX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 Oct 2023 15:20:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229478AbjJURuK (ORCPT
+        with ESMTP id S229633AbjJUTUW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 Oct 2023 13:50:10 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9C41126
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Oct 2023 10:50:04 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-40850b244beso14339015e9.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Oct 2023 10:50:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697910603; x=1698515403; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DXcLZN8iPsWJ+ohhlVcmVKvXJcBROkJiCLLifqegDq8=;
-        b=Jh1dkaavSHj0FEYSVbYZdrf4AZpcrdRBW3FefgoQ16siRULN2xjZtegK2NgYQudqFX
-         3s858885568P2wlaLC0zUIYyPDnf2KC62OKyeh6/cEX1NFZnZMCWonVsvat7x0A/2zrL
-         ae7j5/lt9p0KV/OrfIFLquAYWnUYrFKNrI2Ww57zGTJlgLq/p4V2iuCoRnYyZoqrUOzA
-         ivqYA+4/omW6dWb1jFs92J4WtR/PlUvwNwS1yXM6cb18oWqoOHr6xd90OjCTtj+tKyqR
-         dN/mSw7MY+yA0zD62tg+DiJvYfWw+VMjmieaDTXTUBBE96VorUMRLWIYzqB7X2EQhsRq
-         nifQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697910603; x=1698515403;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DXcLZN8iPsWJ+ohhlVcmVKvXJcBROkJiCLLifqegDq8=;
-        b=f0ak6otE0p6y38AbFhecJMCiXJUW+CzYH/7niAr9mSonMCgWDcZXka1KvOEO1FZqEB
-         mVKKxa9+u7SI7so2x1cRa5AYqW8ALZ31KuB5sEGkBQ3TgEgitwXbbkOQIauCo5BeBSrC
-         9gfsYKvRcYS1ji08vW8iM/w9MUgmAKf+40GfTsfcZgfMIsxeps9x4jkgHSP1RC+9d9M8
-         5bWfUaJC84d/ejzNbJvheGb4TnsGkSPnuvb8t3FyTnBlXBEHNRHF9cygksgZ9XqhxvKU
-         yLVuH7wPfJ6eMWYWee3uzg8Z3PPxTAVtnA+7qNB988xfAvJTOWDRwg0K8JRO8wXJ1mOk
-         RFZA==
-X-Gm-Message-State: AOJu0Yz4YRrev3OGiahc9P0K6AYr3qzth2S3BOrJxu9GsUfywFSGEGQL
-        wP9nT8uPUSJ1OD32pYMNYLf+Cg==
-X-Google-Smtp-Source: AGHT+IHkyl2yWkeHcGeoYhzZ55Dt9w0PlfqwiFNT1KJ8m01Tc3KTdgBp3pJhtm9PxofJ0RQ7vRzKxg==
-X-Received: by 2002:a05:600c:1987:b0:408:56ea:f061 with SMTP id t7-20020a05600c198700b0040856eaf061mr2003852wmq.24.1697910603274;
-        Sat, 21 Oct 2023 10:50:03 -0700 (PDT)
-Received: from [10.66.66.3] (9.ip-51-91-159.eu. [51.91.159.9])
-        by smtp.gmail.com with ESMTPSA id l23-20020a1c7917000000b004063cced50bsm4980526wme.23.2023.10.21.10.50.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 21 Oct 2023 10:50:02 -0700 (PDT)
-Message-ID: <238b8cae-f1e5-4aad-953e-576460a41ac1@linaro.org>
-Date:   Sat, 21 Oct 2023 19:50:00 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/3] pmdomain: qcom: rpmpd: Add QM215 power domains
-Content-Language: en-US
-To:     =?UTF-8?Q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>,
-        linux-arm-msm@vger.kernel.org
+        Sat, 21 Oct 2023 15:20:22 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A89011B;
+        Sat, 21 Oct 2023 12:20:17 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 318DDC433C8;
+        Sat, 21 Oct 2023 19:20:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1697916016;
+        bh=nKj8aK3yWLZMRYvDNxgE4X1KMBF5HXTE3i4lzpALF0A=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=YGSV4tFOZ+DIvDrqjWBO/FKw31AoFM/fbYM5YZ2YsBzaDO5uDf7oSfuZANftSUdET
+         +SAYcLNgYipAbY1MHbW0Pu/6yxbhHNCpP9VaR4b3vocKLLY3OEo6VDjIZmqI7dk1QZ
+         3/wm1vgpyXWU+ELx4hxoV2hdXDUW8W/IobcRHLH0=
+Date:   Sat, 21 Oct 2023 21:20:13 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     luka177 <lukapanio@gmail.com>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        devicetree@vger.kernel.org, linux-pm@vger.kernel.org
-References: <20231014133823.14088-1-otto.pflueger@abscue.de>
- <20231014133823.14088-4-otto.pflueger@abscue.de>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231014133823.14088-4-otto.pflueger@abscue.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Kees Cook <keescook@chromium.org>,
+        Tony Luck <tony.luck@intel.com>,
+        "Guilherme G . Piccoli" <gpiccoli@igalia.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: sm8250-xiaomi-pipa: Add initial
+ device tree
+Message-ID: <2023102127-bash-stool-95a8@gregkh>
+References: <20231021173317.185460-1-lukapanio@gmail.com>
+ <20231021173317.185460-2-lukapanio@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231021173317.185460-2-lukapanio@gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 10/14/23 15:38, Otto Pflüger wrote:
-> QM215 is typically paired with a PM8916 PMIC and uses its SMPA1 and
-> LDOA2 regulators in voltage level mode for VDDCX and VDDMX, respectively.
+On Sat, Oct 21, 2023 at 07:33:17PM +0200, luka177 wrote:
+> Initial support for Xiaomi Pad 6 tablet, that have sm8250 soc.
 > 
-> Signed-off-by: Otto Pflüger <otto.pflueger@abscue.de>
+> Signed-off-by: luka177 <lukapanio@gmail.com>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>  .../boot/dts/qcom/sm8250-xiaomi-pipa.dts      | 625 ++++++++++++++++++
+>  2 files changed, 626 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sm8250-xiaomi-pipa.dts
+> 
 
-Konrad
+Hi,
+
+This is the friendly patch-bot of Greg Kroah-Hartman.  You have sent him
+a patch that has triggered this response.  He used to manually respond
+to these common problems, but in order to save his sanity (he kept
+writing the same thing over and over, yet to different people), I was
+created.  Hopefully you will not take offence and will fix the problem
+in your patch and resubmit it so that it can be accepted into the Linux
+kernel tree.
+
+You are receiving this message because of the following common error(s)
+as indicated below:
+
+- It looks like you did not use your name for the patch on either
+  the Signed-off-by: line, or the From: line (both of which have to
+  match).  Please read the kernel file,
+  Documentation/process/submitting-patches.rst for how to do this
+  correctly.
+
+- This looks like a new version of a previously submitted patch, but you
+  did not list below the --- line any changes from the previous version.
+  Please read the section entitled "The canonical patch format" in the
+  kernel file, Documentation/process/submitting-patches.rst for what
+  needs to be done here to properly describe this.
+
+If you wish to discuss this problem further, or you have questions about
+how to resolve this issue, please feel free to respond to this email and
+Greg will reply once he has dug out from the pending patches received
+from other developers.
+
+thanks,
+
+greg k-h's patch email bot
