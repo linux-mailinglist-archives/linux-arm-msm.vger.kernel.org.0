@@ -2,72 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 06F857D2424
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Oct 2023 18:05:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A82C7D2439
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Oct 2023 18:09:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232291AbjJVQFT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 22 Oct 2023 12:05:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34080 "EHLO
+        id S231908AbjJVQJh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 22 Oct 2023 12:09:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231909AbjJVQFS (ORCPT
+        with ESMTP id S229588AbjJVQJg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 22 Oct 2023 12:05:18 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BA89F3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Oct 2023 09:05:16 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-9c603e2354fso519588366b.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Oct 2023 09:05:16 -0700 (PDT)
+        Sun, 22 Oct 2023 12:09:36 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00D2DFB
+        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Oct 2023 09:09:34 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-53d8320f0easo3738891a12.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Oct 2023 09:09:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697990715; x=1698595515; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1697990973; x=1698595773; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Nz06fEKj+muIVWRsfDMqvTNTReSFYKNaOH4kHlQeJ1A=;
-        b=G0eoQu40BtGwWGNkt7oKofdSPevo9wBqzWJwY4tHUE081vwFH6a3rwhLOkSkhCBPtQ
-         tzmlOD04R8u0DyzOLByMFEk8BI79IkbatQ6NLI/H00ER4P8DvGnQ9LteIRlD8TWiVgJA
-         m97CY1ecwXQzeEloik4CQJv74v0/RFLvaJ/tpNU9qPzPJHK5dcM5r5NSnsI8PokJC3O7
-         tsHebEIXSJWeVB4QzaS5VXQ+RAJpsTpo/o5TsdU6JNjPRIuSa4t3awOFe3FQ3kyVhJx3
-         ggCV2Yw5J+ilR8ahBBiyzNY20XinOLjePsxeH19+G+RvxfggbSzr73o1SV6B5XdtBrMR
-         yk6w==
+        bh=zaErdBD/Zof7qEGhoIXEKedJ5RRKWeU2fXLAhDujbwk=;
+        b=Iot1OvRvw6HAWJ/meQMZl8I9KuGpyOwHXwa7/AIz+Ou0Q2uoQi2Y4HkUM2QdG+MKnE
+         9rsSevyM31ZLa2o6R7fb9GUOc8yEwowk3mvXf+6lVXT8K+lfvj1CxOGAmWq4GEC+HnlZ
+         fCdZM9Pouiy+xknLc020iea9PtkbcA3rfJNicxLtglIL1DQsopabm1YkIITjVDxlU0E4
+         op+DhhZ+BilDZMzh+PMk1f1beTAwGTj0BERmuQd91k3ZY4Ebkq/Mnfkn+WIp2gE0JlHg
+         5/ieRymQOx+lIqJ6WyddFpj5McsS8QEPcEfZ8YIo7+/q4QUtYOL2jHdhxyHr9Ch6Z891
+         2tSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697990715; x=1698595515;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1697990973; x=1698595773;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Nz06fEKj+muIVWRsfDMqvTNTReSFYKNaOH4kHlQeJ1A=;
-        b=g4vDNJVvSVEV4fQNgNNvPDwsz7SFq3dncMqJfi+/jXL8vMEg89SvKd9EeIFNMXNph+
-         s/e2TYY6nKNQV3nE6E0LbN1xtabrSpK87JCsD2R63Ugv8NGgV6GNc82i92YlYHTghimj
-         8luJDneLuV5phAqm8aQS0yfcgMo+VwwWywWksWkg8LRKBsLtscmm5zuMLS5dGGJEbqsg
-         fcIE7OqHHOtUCImmd1e8sTI/ZfXEIsAxW7SkVNUc5kmLO6P3+FsOK4UpeAyZSbl2p3iK
-         pGrX5BuVHRpNEdRshO5ZrG5doCPpvnQE1uQBheypXYHZodn9qtcIr7ZzHjHUAihNs4nu
-         jpYA==
-X-Gm-Message-State: AOJu0YyQv7BrLE/U1hHDpQS0fjVPovZj9bo6Nm32PWu8c3XoF3EmzgU8
-        oiBJagNPjgwVhGlzBtaOdCudsg==
-X-Google-Smtp-Source: AGHT+IEAzTWtz18JMGhSnUnDqlRCGbNPQLeKM2V9oMAWGvscRKTq7KEMZJCoMHeYA+eT5V2F0jJ0qA==
-X-Received: by 2002:a17:907:7d90:b0:9a1:8993:9532 with SMTP id oz16-20020a1709077d9000b009a189939532mr8572576ejc.30.1697990714806;
-        Sun, 22 Oct 2023 09:05:14 -0700 (PDT)
+        bh=zaErdBD/Zof7qEGhoIXEKedJ5RRKWeU2fXLAhDujbwk=;
+        b=ropAPjO2Twkk0c0RUvizCj4milZy8hQ5IMxZPGUxTEhl0btz1ECYrMbGkeINbcpg9q
+         cWWDqC8emXKptOSWuHqRCTTRdbixWFE42J1d2HAS7+Zr+U1QUl9DGgcxVtjFbCp522dD
+         0DSvOow8/Vr8FGW4N3eKqYsWwucRb+pDMFaYmAAU9qaixd/7GATBRO9m/wou5Q3tFoYH
+         MeOz+w3lRMhKjFi+Xl3BDFn2w9R/aEa4kj8SIyEsPJAw4RoAQtxexTqhMdU0sQq7rnMB
+         3hPLdKvrPxu5Rqh4FrWc7fuNkwNcdSBWiJTibzoDXz2z0LKuDTd6CbsXCqJtkAoRqZ1i
+         p1MQ==
+X-Gm-Message-State: AOJu0YytwegcEqI1SlTMEupBekVCbEFzqLWsMtVqsAnvHq6Rm/0wX8Xd
+        53iQyhP57Aom6AxJ0c+3NWEHCg==
+X-Google-Smtp-Source: AGHT+IG1VqebjDS/4SdzS4iDvslh7ghOyH8hqchoaphXFsDonvitbOWy/9QH+bHmoZ3R8UKvLgfheg==
+X-Received: by 2002:a05:6402:4305:b0:53e:7ec9:753d with SMTP id m5-20020a056402430500b0053e7ec9753dmr5047115edc.27.1697990973351;
+        Sun, 22 Oct 2023 09:09:33 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id mm27-20020a170906cc5b00b00993cc1242d4sm5244014ejb.151.2023.10.22.09.05.12
+        by smtp.gmail.com with ESMTPSA id ee8-20020a056402290800b00537666d307csm4957284edb.32.2023.10.22.09.09.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 22 Oct 2023 09:05:14 -0700 (PDT)
-Message-ID: <23fa10f5-1220-4e38-942d-4033deac2de0@linaro.org>
-Date:   Sun, 22 Oct 2023 18:05:11 +0200
+        Sun, 22 Oct 2023 09:09:32 -0700 (PDT)
+Message-ID: <675ad5e3-05ab-4431-a243-72e8a56e81d2@linaro.org>
+Date:   Sun, 22 Oct 2023 18:09:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/2] From: Luka Panio <lukapanio@gmail.com>
+Subject: Re: [PATCH] dt-bindings: arm: cpus: Add Qualcomm Kryo 465
 Content-Language: en-US
-To:     Luka Panio <lukapanio@gmail.com>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+To:     David Wronek <davidwronek@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Kees Cook <keescook@chromium.org>,
-        Tony Luck <tony.luck@intel.com>,
-        "Guilherme G . Piccoli" <gpiccoli@igalia.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
-References: <20231021203403.215023-1-lukapanio@gmail.com>
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        devicetree@vger.kernel.org, Joe Mason <buddyjojo06@outlook.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+References: <20231021071619.187374-1-davidwronek@gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -113,7 +110,7 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231021203403.215023-1-lukapanio@gmail.com>
+In-Reply-To: <20231021071619.187374-1-davidwronek@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -126,22 +123,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/10/2023 22:34, Luka Panio wrote:
-> dt-bindings: arm: qcom: Add Xiaomi Pad 6 (xiaomi-pipa)
-
-Your subject is not correct.
-
+On 21/10/2023 09:16, David Wronek wrote:
+> Add a compatible for the Qualcomm Kryo 465 found in SM7125.
 > 
-> Add a compatible for Xiaomi Pad 6.
-> 
-> Signed-off-by: Luka Panio <lukapanio@gmail.com>
-> 
+> Signed-off-by: David Wronek <davidwronek@gmail.com>
 > ---
-> Update commit message
+>  Documentation/devicetree/bindings/arm/cpus.yaml | 1 
 
-Please include full changelog. This is v5 so what happened between v1
-and v5?
-
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
