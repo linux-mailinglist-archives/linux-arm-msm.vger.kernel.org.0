@@ -2,50 +2,46 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 77BF17D2476
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Oct 2023 18:23:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65A3A7D247D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Oct 2023 18:23:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232096AbjJVQXx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 22 Oct 2023 12:23:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41474 "EHLO
+        id S232145AbjJVQXy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 22 Oct 2023 12:23:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232115AbjJVPqP (ORCPT
+        with ESMTP id S232181AbjJVPqQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 22 Oct 2023 11:46:15 -0400
+        Sun, 22 Oct 2023 11:46:16 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C5AFF3;
-        Sun, 22 Oct 2023 08:46:13 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E39C433D9;
-        Sun, 22 Oct 2023 15:46:12 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8386EF7;
+        Sun, 22 Oct 2023 08:46:14 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78D28C43395;
+        Sun, 22 Oct 2023 15:46:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1697989573;
-        bh=MgO5bjMvpO11GfjTzQbZpeaD/9DseAWTE89B2Y+hElw=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=PtzdmEYGtj1cFaaoEmaKgRC0lx+zqSu+Ia4BgCW2yxDArvcqTqroikivsf3akkOxE
-         vgl8wkv88uZHy0HWPUn+5niaK9CeB3wIBa1xod7c4vX8w4zpQ+fuEwMK+ibAIqa8fO
-         bJTE0+st8rKyJlW1p1ZbDWfFFnsDQRc2ULqmjq3YLCzSo8Gb2tntAMXN9nBhFAKODV
-         6r58pWMFmzdyGxqwfc4G1PxyxmdTsfenVpupPitDkTETvEVAJc+Lo+juySxcoLDUQs
-         oaT7Je3cFbA7ahS/Eb8WCCKISYy44G0jsqg5q4zkU3yIwj3M6s1c7tNQVAZnBlRXK8
-         k8bYd1umtEDtw==
+        s=k20201202; t=1697989574;
+        bh=xG2Tj9Dab8omFXwv+XzIHeLf8u48rq8d44pq+3OjGZ0=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=TL+XRI6q8gBzldTLIiHuxzNdFR9ZVsuUm1BLtjO40dY20pUWve4WRBcgYmZufKVvD
+         FzumuHXdwh35cGZy+fZFLIN0Db9B7dbMcdtrLTjyrIdOOh29NtJx0UIiAG4++Fh0rU
+         GG8O3bWsU8Nw9BBKdeeZc7fK/C4mOCHaw9Rm/GDJgF7iS0xlD4DhCJRvvD5A3DnT/k
+         eLnnz5Zcha2ZVzkZCjMnMAwsjwXMqBjyuqmW2qTnrC7IiFXPZn0KV9onRe39vuXVJJ
+         e/RPmABmRcqvffBWuQIMwgAf4vd87gHMu1SoZZuMISaltZ1W3G5TVNMOoVd+86orer
+         35jSF2diKsAuA==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+To:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Richard Acayan <mailingradian@gmail.com>
-Subject: Re: (subset) [PATCH v2 0/3] SDM670 CPU frequency scaling: dtschema fixes
-Date:   Sun, 22 Oct 2023 08:50:20 -0700
-Message-ID: <169798982274.271027.14966618047695117026.b4-ty@kernel.org>
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     "Maulik Shah (mkshah)" <quic_mkshah@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: (subset) [PATCH v5 0/2] irqchip/qcom-pdc: support v3.2 HW
+Date:   Sun, 22 Oct 2023 08:50:21 -0700
+Message-ID: <169798982232.271027.4963613790320740027.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230816230412.76862-6-mailingradian@gmail.com>
-References: <20230816230412.76862-6-mailingradian@gmail.com>
+In-Reply-To: <20230929-topic-sm8x50-upstream-pdc-ver-v5-0-800111572104@linaro.org>
+References: <20230929-topic-sm8x50-upstream-pdc-ver-v5-0-800111572104@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -60,20 +56,20 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Wed, 16 Aug 2023 19:04:14 -0400, Richard Acayan wrote:
-> Changes since v1 (20230815223108.306018-5-mailingradian@gmail.com):
->  - add compatible to allOf area (2/3)
->  - change subject line (Acked-by tag retained) (1/3)
->  - add fixes tag (2/3)
+On Fri, 29 Sep 2023 05:43:59 +0200, Neil Armstrong wrote:
+> Starting from HW version 3.2 the IRQ_ENABLE bit has moved to the
+> IRQ_i_CFG register and requires a change of the driver to avoid
+> writing into an undefined register address.
 > 
-> This adds appropriate compatible strings to pass bindings checks.
+> Get the HW version from registers and set the IRQ_ENABLE bit to the
+> correct register depending on the HW version.
 > 
 > [...]
 
 Applied, thanks!
 
-[3/3] arm64: dts: qcom: sdm670: add specific cpufreq compatible
-      commit: 032ff6a3b39addd54427844affaf21e1e80fabc2
+[2/2] arm64: dts: qcom: sm8150: extend the size of the PDC resource
+      commit: 00c86efb0f78319958b7bca3391c532016acf39c
 
 Best regards,
 -- 
