@@ -2,46 +2,45 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 810C87D23A2
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Oct 2023 17:46:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 01F3D7D23AC
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Oct 2023 17:46:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231616AbjJVPqK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 22 Oct 2023 11:46:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41402 "EHLO
+        id S231937AbjJVPqL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 22 Oct 2023 11:46:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231876AbjJVPqI (ORCPT
+        with ESMTP id S231908AbjJVPqJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 22 Oct 2023 11:46:08 -0400
+        Sun, 22 Oct 2023 11:46:09 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4A4FA7;
-        Sun, 22 Oct 2023 08:46:06 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DED23C433C7;
-        Sun, 22 Oct 2023 15:46:05 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD0CDF4;
+        Sun, 22 Oct 2023 08:46:07 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5007C433D9;
+        Sun, 22 Oct 2023 15:46:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1697989566;
-        bh=286IEr6Au2fjEg8EUTjPOBmNUpcywoLU8+MN1g61aBw=;
+        s=k20201202; t=1697989567;
+        bh=DrNGws2BbDIJSL5/4j3CgtnQlWq5CA2V5NGPeMNac00=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=UEDDOjk8xf2FP5mSSbJHg1CbKwjRtRe+R+MVb4G5Zvs7mxtvJjDe98jIJZwDwyOYj
-         Pj0hXih9Fd6hnKmoJjQu+bTuOvZQkPqS32qxg1EETMkexyqM3YtAq0H7yrOH522Zg0
-         LJa/WNSB302anTADe5FpE2214g4iNCyUYQQur2mepRyAhrvTXccN5Z+Ukg56NfBrcz
-         PSWBGpN9qDwqf6e4JqLnL2b5pckOp7sxZ9RjP5bsaMsWGmQnGVLeEasdvEtX/slfoN
-         guMiZIJA8arhpeEJb0tGHHJa62CEdBEU2Vl063zmgEERwBtzg9VkE64DbvHWusQw2r
-         iYdqofxEKtLEA==
+        b=PqrBIifUu6XWT1lpS5o+VILXZKP5gkGS6XZyYbvlfJvm3U8E7MUk/9Z/tmUUtHNGq
+         JwHC/QEGmoVz4CBGHx9Gwld6FQT2XkHwoRqwg0aY9iFzL6rL+WT/lW+Yffue4olBPY
+         VMNlnqvn6DailPOuhlsJ2fhRoqdms17AZOCJNr2TL/mk62LsvVdsw1YuojMuHDvHIT
+         Q/baKWbyUOfjV6Dy9GxoDB1MWGnsEFa+YjBH73Veoi82PijKfmAD1F7DLB2g1C4r2t
+         OoLa/Bi8mai5oOa2Cmv2eAMYV1CFz/aecUuFyxS1QLusf0/1pcJ5KRmIqxV3MuLR6M
+         44PhJPYcK+Zxw==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+To:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-x13s: add missing camera LED pin config
-Date:   Sun, 22 Oct 2023 08:50:14 -0700
-Message-ID: <169798982330.271027.9186412119973993390.b4-ty@kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-x13s: Use the correct DP PHY compatible
+Date:   Sun, 22 Oct 2023 08:50:15 -0700
+Message-ID: <169798982297.271027.18200659862754581550.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231003093647.3840-1-johan+linaro@kernel.org>
-References: <20231003093647.3840-1-johan+linaro@kernel.org>
+In-Reply-To: <20230929-topic-x13s_edpphy-v1-1-ce59f9eb4226@linaro.org>
+References: <20230929-topic-x13s_edpphy-v1-1-ce59f9eb4226@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -56,16 +55,20 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Tue, 03 Oct 2023 11:36:47 +0200, Johan Hovold wrote:
-> Add the missing pin configuration for the recently added camera
-> indicator LED.
+On Fri, 29 Sep 2023 18:02:57 +0200, Konrad Dybcio wrote:
+> The DP PHY needs different settings when an eDP display is used.
+> Make sure these apply on the X13s.
+> 
+> FWIW
+> I could not notice any user-facing change stemming from this commit.
 > 
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sc8280xp-x13s: add missing camera LED pin config
-      commit: a3457cc5bc30ad053c90ae9f14e9b7723d204a98
+[1/1] arm64: dts: qcom: sc8280xp-x13s: Use the correct DP PHY compatible
+      commit: 0cd080dd6d08817c9980d2069197b066636b0f23
 
 Best regards,
 -- 
