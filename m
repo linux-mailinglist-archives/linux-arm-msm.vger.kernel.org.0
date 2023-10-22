@@ -2,70 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BAF3B7D205D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Oct 2023 01:02:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0821A7D226A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Oct 2023 11:51:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230104AbjJUXCi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 Oct 2023 19:02:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39550 "EHLO
+        id S229574AbjJVJvP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 22 Oct 2023 05:51:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229472AbjJUXCi (ORCPT
+        with ESMTP id S229472AbjJVJvO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 Oct 2023 19:02:38 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B4B8D52;
-        Sat, 21 Oct 2023 16:02:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1697929352; x=1729465352;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=pmt27KfT/G9bsDK7DiYG9O0wXtKd+XBGH+QWyFzX+ic=;
-  b=f4ORRdYK1O6k2+tB9pblKx2e/2Rj4KH1OdSQiwMzV7YVqe1K81MGAyk8
-   3DHEF+xcckEUk43MGvtMmz5QXU7FozrG5sBakN9VHPJF2zi2RQk9qqn5i
-   ZdAC+mZniFmCyO6RD92Y8Lt3kPRMzveyb5PFDAjTABYzsQaX5p/XWISAj
-   BPLHunpJCSNVwOl0W7LSPjk0yS+xbsJ3FyVBGffsdpZ1+BO67mryyZscJ
-   S8dQuzLFunksC/izei0MdTu4rCUGl8iBBdysF03biALDYO/PO/HjXKIVy
-   S1iQDPoiQdgewS9QNSBtgEFqffrWq4YNSwYW3YtavmUbFwR0U0HjNqd8a
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10870"; a="366893169"
-X-IronPort-AV: E=Sophos;i="6.03,242,1694761200"; 
-   d="scan'208";a="366893169"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Oct 2023 16:02:32 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10870"; a="787125344"
-X-IronPort-AV: E=Sophos;i="6.03,242,1694761200"; 
-   d="scan'208";a="787125344"
-Received: from lkp-server01.sh.intel.com (HELO 8917679a5d3e) ([10.239.97.150])
-  by orsmga008.jf.intel.com with ESMTP; 21 Oct 2023 16:02:27 -0700
-Received: from kbuild by 8917679a5d3e with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1quKzB-0005Ju-18;
-        Sat, 21 Oct 2023 23:02:25 +0000
-Date:   Sun, 22 Oct 2023 07:02:16 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        dmitry.baryshkov@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        jonathan@marek.ca, quic_tdas@quicinc.com,
-        vladimir.zapolskiy@linaro.org
-Cc:     oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, bryan.odonoghue@linaro.org
-Subject: Re: [PATCH v4 1/4] arm64: dts: qcom: sc8280xp: Add in CAMCC for
- sc8280xp
-Message-ID: <202310220607.A7eqpgZt-lkp@intel.com>
-References: <20231012113100.3656480-2-bryan.odonoghue@linaro.org>
+        Sun, 22 Oct 2023 05:51:14 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6B98DC;
+        Sun, 22 Oct 2023 02:51:10 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C42D9C433C7;
+        Sun, 22 Oct 2023 09:51:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1697968270;
+        bh=SnPBKRlsfd5P/wfHagINAEGKFI4VwNidkAz/OUfiJjQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Heywy3pxCdwGuB4G6fZc2xsKk63oiSgejJcss4Pify0k2gsl0XjIuBlE3KDn7ZYB7
+         qRbrotadqYbWlwi72jJx9+SS6DPUNdSIrkkwdQn3H/kfMF60rZ3mgeegVnIoo16gzt
+         tlIoba+2DL4aVB796Ri+CGZsLyjczpX8c0i/9aD8m1QbQMsw89Qk5+FU92WlwiSrRH
+         sQVa2QJWVAAxgaS0aU6eQtejVaUuTl0QeakLUmYbQWM2Fie70rZDwdXH6wTSig64Gj
+         5ajk79k9+K9PI+VHMU6i7HdGYBjSRyK6hCKnNFqaN1deiLUlz6ddWspujg5gm9jQXy
+         wGBGghA08+9mQ==
+Date:   Sun, 22 Oct 2023 10:51:05 +0100
+From:   Conor Dooley <conor@kernel.org>
+To:     Lukas Walter <lukas.walter@aceart.de>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Add Huawei Honor 5X / GR5
+ (2016)
+Message-ID: <20231022-arousal-glowing-f72c8f2e44fa@spud>
+References: <20231021143025.77088-1-lukas.walter@aceart.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="PKpSqrrmkmWmTJ8Z"
 Content-Disposition: inline
-In-Reply-To: <20231012113100.3656480-2-bryan.odonoghue@linaro.org>
+In-Reply-To: <20231021143025.77088-1-lukas.walter@aceart.de>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,55 +59,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bryan,
 
-kernel test robot noticed the following build errors:
+--PKpSqrrmkmWmTJ8Z
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-[auto build test ERROR on robh/for-next]
-[also build test ERROR on linus/master v6.6-rc6 next-20231020]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+On Sat, Oct 21, 2023 at 04:30:24PM +0200, Lukas Walter wrote:
+> Add a compatible for Huawei Honor 5X / GR5 (2016).
+>=20
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Bryan-O-Donoghue/arm64-dts-qcom-sc8280xp-Add-in-CAMCC-for-sc8280xp/20231017-105406
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-patch link:    https://lore.kernel.org/r/20231012113100.3656480-2-bryan.odonoghue%40linaro.org
-patch subject: [PATCH v4 1/4] arm64: dts: qcom: sc8280xp: Add in CAMCC for sc8280xp
-config: arm64-allyesconfig (https://download.01.org/0day-ci/archive/20231022/202310220607.A7eqpgZt-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231022/202310220607.A7eqpgZt-lkp@intel.com/reproduce)
+How come this v1 has an ack?
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202310220607.A7eqpgZt-lkp@intel.com/
+> Signed-off-by: Lukas Walter <lukas.walter@aceart.de>
+> ---
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+>=20
+> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentat=
+ion/devicetree/bindings/arm/qcom.yaml
+> index 7f80f48a0954..20d914b21847 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> @@ -191,6 +191,7 @@ properties:
+> =20
+>        - items:
+>            - enum:
+> +              - huawei,kiwi
+>                - longcheer,l9100
+>                - samsung,a7
+>                - sony,kanuti-tulip
+> --=20
+> 2.42.0
+>=20
 
-All errors (new ones prefixed by >>):
+--PKpSqrrmkmWmTJ8Z
+Content-Type: application/pgp-signature; name="signature.asc"
 
-   In file included from arch/arm64/boot/dts/qcom/sa8540p.dtsi:7,
-                    from arch/arm64/boot/dts/qcom/sa8295p-adp.dts:13:
->> arch/arm64/boot/dts/qcom/sc8280xp.dtsi:11:10: fatal error: dt-bindings/clock/qcom,sc8280xp-camcc.h: No such file or directory
-      11 | #include <dt-bindings/clock/qcom,sc8280xp-camcc.h>
-         |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   compilation terminated.
+-----BEGIN PGP SIGNATURE-----
 
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZTTwiQAKCRB4tDGHoIJi
+0uDbAQDPkpkGHrfnaWBKGDPIjx9YeDekGkDq8gIfVjGhqlKb/wEAlHJiAJ47rl/P
+ZiCq7bPFZkjtY2BLCX0kIlH068uGpgo=
+=iAHj
+-----END PGP SIGNATURE-----
 
-vim +11 arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-
-  > 11	#include <dt-bindings/clock/qcom,sc8280xp-camcc.h>
-    12	#include <dt-bindings/clock/qcom,sc8280xp-lpasscc.h>
-    13	#include <dt-bindings/interconnect/qcom,osm-l3.h>
-    14	#include <dt-bindings/interconnect/qcom,sc8280xp.h>
-    15	#include <dt-bindings/interrupt-controller/arm-gic.h>
-    16	#include <dt-bindings/mailbox/qcom-ipcc.h>
-    17	#include <dt-bindings/phy/phy-qcom-qmp.h>
-    18	#include <dt-bindings/power/qcom-rpmpd.h>
-    19	#include <dt-bindings/soc/qcom,gpr.h>
-    20	#include <dt-bindings/soc/qcom,rpmh-rsc.h>
-    21	#include <dt-bindings/sound/qcom,q6afe.h>
-    22	#include <dt-bindings/thermal/thermal.h>
-    23	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+--PKpSqrrmkmWmTJ8Z--
