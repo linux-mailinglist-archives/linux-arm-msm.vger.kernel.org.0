@@ -2,116 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C1F337D22C7
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Oct 2023 12:51:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E0A67D22CE
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Oct 2023 13:07:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229574AbjJVKvq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 22 Oct 2023 06:51:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57958 "EHLO
+        id S229472AbjJVLHD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 22 Oct 2023 07:07:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231297AbjJVKvp (ORCPT
+        with ESMTP id S231485AbjJVLHC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 22 Oct 2023 06:51:45 -0400
-Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4C92119
-        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Oct 2023 03:51:42 -0700 (PDT)
-Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-5a7af52ee31so23347027b3.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Oct 2023 03:51:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697971902; x=1698576702; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=qtBLYHItiMRAtWv2eIIyDWdvOr+sJvW/WOE9B0k2XRw=;
-        b=NkuDTB4O/Nd48Yas/JhUC6lJqnb8ZTYBFcyAFQnf58+4ERJbJNFS6EIjiKsXode/1O
-         IfkXOwBc0PNWRITMYxnSiXUNm+D5b/jYFAkz51FcLgPe47Ux9KBzHB6JyuDqu2nvU6u2
-         EeDyjQOZUZYu+AvrVhEuTdZS7Dq7wNVY3dtqDyJBE1psT4VBFsnBMDaNY2JRYYBtk/nx
-         Wz8gbaPLbQwYtD8CprBZoF8h5rqD30Qn2a9AzRTEFoJSiFSifG3hRXIc1gUd3vBaXqSY
-         Y35sK0HAdzUMlBJLIJwiJviu58678KPSerquWshltnMO33OP8Twqj8U9FuqbEMstCAP7
-         TP6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697971902; x=1698576702;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qtBLYHItiMRAtWv2eIIyDWdvOr+sJvW/WOE9B0k2XRw=;
-        b=quLnZQEsxlLwGDPBGH6pS/x9TBt9pBrMfNqnIU4+MvxqoXZrKbvmiW06DZsZC5Dcyj
-         Mbda9YfBwsp591LIQpWb4NCpmyyuq4Rj6kFFjKV8gS7+KbB1hdYkI8OTP+ekV/48OYxU
-         zoleHK0tmVSWi2tnHW2bOW54JI9iny7wLF2PhPAy/TyNV6IonKZWhyzOFCLUd/qufUe7
-         DZwcxozDZL7NW0sUTZ9S8O3UmcKy+lgD78Oxai4D6HJy2uOuZT6Y3IwWfyi6SDIv7NnE
-         lIIk77I8cVFDNI3ddDwrEUHHLOh+NrkWr5H5ZGiiGFv5y1FTDsr5ffC2ilogl7HGuj97
-         EYdw==
-X-Gm-Message-State: AOJu0YyzzSFEkUQDWisUAu5P96dci91yD/Fmc8++MMH+Zg0pHes2y9wI
-        3f26LvAb3cJXXlHMaxdXcXSIWHcCWrDGbFyCWk3thg==
-X-Google-Smtp-Source: AGHT+IHvSGTdwWJCN+NUWfNu/iFOGpqaoQeYpFbg6MJyqmijJSTWlLgR/hV+HQSRRk+O0gguRdSlYnVT5vCX2KlXnKA=
-X-Received: by 2002:a0d:df02:0:b0:5a7:be1a:6c32 with SMTP id
- i2-20020a0ddf02000000b005a7be1a6c32mr7073499ywe.24.1697971902097; Sun, 22 Oct
- 2023 03:51:42 -0700 (PDT)
+        Sun, 22 Oct 2023 07:07:02 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD4E0DE
+        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Oct 2023 04:07:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1697972820; x=1729508820;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=2Ns3EHM0GGbKNIFnrn8QPMuDPeGzAj+D05NON+PgWlk=;
+  b=f4/usM5DU1S8AFenn7rIEF1TXE6myIRGtkGPcTXK4kpkUsEKO4MnJyq3
+   xUme358dvhlFVEEo50bgA9e1lK9F7MAgKgz0uCWpHe9anoPryNUl8Mn84
+   yMPCQ8BGp4yGo+3iLisFBlOLf4IqgL0jlmp1PhC6MLTJwoinmRvOeBhsX
+   bUFYs6gkr45e/8jRsiaAYpp9rd01X02sgPHHWCe5uCnbRSWvM9tqj9E+J
+   vNG1dUkxMw6p4EY748zgFu4/hv5mc1E8InJN8veHV0Lu3WjjjAMxX5VCn
+   xsuv/Le+nqomnoc2zSHcBpUQGSTsQ/q8G2CxBLXpvwDb4AFnMehyKMT+C
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10870"; a="385576639"
+X-IronPort-AV: E=Sophos;i="6.03,242,1694761200"; 
+   d="scan'208";a="385576639"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Oct 2023 04:07:00 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10870"; a="761478247"
+X-IronPort-AV: E=Sophos;i="6.03,242,1694761200"; 
+   d="scan'208";a="761478247"
+Received: from joe-255.igk.intel.com (HELO localhost) ([10.91.220.57])
+  by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Oct 2023 04:06:58 -0700
+Date:   Sun, 22 Oct 2023 13:06:56 +0200
+From:   Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc:     quic_ajitpals@quicinc.com, quic_carlv@quicinc.com,
+        quic_pkanojiy@quicinc.com, ogabbay@kernel.org,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH v2 1/2] accel/qaic: Add support for periodic timesync
+Message-ID: <20231022110656.GB704032@linux.intel.com>
+References: <20231016170114.5446-1-quic_jhugo@quicinc.com>
+ <20231016170114.5446-2-quic_jhugo@quicinc.com>
 MIME-Version: 1.0
-References: <20231021-sakuramist-mi11u-v2-0-fa82c91ecaf0@gmail.com> <20231021-sakuramist-mi11u-v2-1-fa82c91ecaf0@gmail.com>
-In-Reply-To: <20231021-sakuramist-mi11u-v2-1-fa82c91ecaf0@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sun, 22 Oct 2023 13:51:31 +0300
-Message-ID: <CAA8EJprtd8htkDWAvhamgEo3DWMMDYe-P6cnr6nwLnms=N0k9A@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] soc: qcom: pmic_glink: enable UCSI for SM8350
-To:     wuxilin123@gmail.com
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kees Cook <keescook@chromium.org>,
-        Tony Luck <tony.luck@intel.com>,
-        "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-hardening@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231016170114.5446-2-quic_jhugo@quicinc.com>
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 21 Oct 2023 at 13:20, Xilin Wu via B4 Relay
-<devnull+wuxilin123.gmail.com@kernel.org> wrote:
->
-> From: Xilin Wu <wuxilin123@gmail.com>
->
-> UCSI is supported on SM8350. Allow it to enable USB role switch and
-> altmode notifications on SM8350.
+On Mon, Oct 16, 2023 at 11:01:13AM -0600, Jeffrey Hugo wrote:
+> From: Ajit Pal Singh <quic_ajitpals@quicinc.com>
+> 
+> Device and Host have a time synchronization mechanism that happens once
+> during boot when device is in SBL mode. After that, in mission-mode there
+> is no timesync. In an experiment after continuous operation, device time
+> drifted w.r.t. host by approximately 3 seconds per day. This drift leads
+> to mismatch in timestamp of device and Host logs. To correct this
+> implement periodic timesync in driver. This timesync is carried out via
+> QAIC_TIMESYNC_PERIODIC MHI channel.
+> 
+> Signed-off-by: Ajit Pal Singh <quic_ajitpals@quicinc.com>
+> Signed-off-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+> Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
+> Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
 
-We have had troubles with UCSI on sm8350. I have a workaround for this
-(and earlier) platforms. Once it is ready to be posted, I'll include
-your patch in the series, if you don't mind.
+> @@ -586,8 +587,16 @@ static int __init qaic_init(void)
+>  		goto free_pci;
+>  	}
+>  
+> +	ret = qaic_timesync_init();
+> +	if (ret) {
+> +		pr_debug("qaic: qaic_timesync_init failed %d\n", ret);
+> +		goto free_mhi;
+I would print at error level here. Or if timesync is optional do not error exit. 
 
->
-> Signed-off-by: Xilin Wu <wuxilin123@gmail.com>
-> ---
->  drivers/soc/qcom/pmic_glink.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/drivers/soc/qcom/pmic_glink.c b/drivers/soc/qcom/pmic_glink.c
-> index 914057331afd..1196e79e6fb3 100644
-> --- a/drivers/soc/qcom/pmic_glink.c
-> +++ b/drivers/soc/qcom/pmic_glink.c
-> @@ -341,6 +341,7 @@ static const unsigned long pmic_glink_sm8450_client_mask = BIT(PMIC_GLINK_CLIENT
->                                                            BIT(PMIC_GLINK_CLIENT_UCSI);
->
->  static const struct of_device_id pmic_glink_of_match[] = {
-> +       { .compatible = "qcom,sm8350-pmic-glink", .data = &pmic_glink_sm8450_client_mask },
->         { .compatible = "qcom,sm8450-pmic-glink", .data = &pmic_glink_sm8450_client_mask },
->         { .compatible = "qcom,sm8550-pmic-glink", .data = &pmic_glink_sm8450_client_mask },
->         { .compatible = "qcom,pmic-glink" },
->
-> --
-> 2.42.0
->
+> +#ifdef readq
+> +static u64 read_qtimer(const volatile void __iomem *addr)
+> +{
+> +	return readq(addr);
+> +}
+> +#else
+> +static u64 read_qtimer(const volatile void __iomem *addr)
+> +{
+> +	u64 low, high;
+> +
+> +	low = readl(addr);
+> +	high = readl(addr + sizeof(u32));
+> +	return low | (high << 32);
+> +}
+If that's only for compile on 32-bit PowerPC, I think would be better
+to limit supported architectures on Kconfig. 
 
-
--- 
-With best wishes
-Dmitry
+Regards
+Stanislaw
