@@ -2,325 +2,265 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 75F307D2561
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Oct 2023 20:42:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 092B97D2568
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Oct 2023 20:46:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232291AbjJVSmT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 22 Oct 2023 14:42:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50256 "EHLO
+        id S231903AbjJVSqQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 22 Oct 2023 14:46:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229452AbjJVSmS (ORCPT
+        with ESMTP id S232291AbjJVSqP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 22 Oct 2023 14:42:18 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E16BAE0;
-        Sun, 22 Oct 2023 11:42:15 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39MINZlJ030162;
-        Sun, 22 Oct 2023 18:41:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Ritmfuc6Se9Vc4xPKPYBe0LSKU3x8kDYBvVduJlxJa4=;
- b=majhYMf+rJCUvCili4uIdEsm2I4n4ViWotBrIe0Pe8VNUvXLd4Z5FwKM7VFN4z27UOXd
- FKlk9Nkeb/aieN9zha4SKA2KvblKdxK+J9RXvr6BQBUSW2EkK+Ggh3tIKsd0Ca38Gw68
- uyFy+9daHZWTXWA8XeNVL4oVcUSGBvZFof/Kfu+5XWzYpZ37IV9Z2iefCeWfgGgCR0Gv
- Q32xf4JjSSjmqz2ik6CGvKk6PgS+IYRDXj75vKQ7+1CunAUnMWQBUwv21fcEADBv5vc/
- LKPOQ4xSsebPFpfsAQPIQ1I4osjZfOENL2C+LUDebkcS6YBnLBCNsKTiB/bDuBc6Xn3e XA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tv7u3tpgp-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sun, 22 Oct 2023 18:41:58 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39MIfvam017543
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sun, 22 Oct 2023 18:41:57 GMT
-Received: from [10.216.52.212] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Sun, 22 Oct
- 2023 11:41:50 -0700
-Message-ID: <14fc724c-bc99-4b5d-9893-3e5eff8895f7@quicinc.com>
-Date:   Mon, 23 Oct 2023 00:11:45 +0530
+        Sun, 22 Oct 2023 14:46:15 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92E85112
+        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Oct 2023 11:46:10 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-9b9faf05f51so365867266b.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Oct 2023 11:46:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1698000369; x=1698605169; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9jG3P+jRF5kVGk6CFsI11BtDJxKDzNxKy4q/HNvCw7w=;
+        b=Q+P+Wc9VRVBwp0pLDJJJufBV4jI1/8XXBE/NJdB3r1Ic5bL3hAJjhO7e7l3TC6KkvV
+         e+alF4As6rctl+a52Sulh+447/IdDkf84I1U8LEGr8kpGLgL6Iy4mGZywmuGF+rGPMi5
+         a3+99snjcg0wUWkUeICz+6xsZnscY1XEA9ahQ+PWuULk7CYaOPpI/g7qsfqU1G0/LL1O
+         ER6DXmK8WSY8DkJ+8CABi1/4TgQ7RDk7BtQNbX5uT8b4h8udc5ay02mD59Sm2gt0rOV9
+         NTEU11clCsqi22lUh2xgRic1YbD0hT9xAYFRITNmdrHG8UJ6ljeUhZSoG+V043NpLQkZ
+         5vxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698000369; x=1698605169;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9jG3P+jRF5kVGk6CFsI11BtDJxKDzNxKy4q/HNvCw7w=;
+        b=kJdUwEiFEkkgYZLje58gdCs5eoRo08WXs82E7yXlRut73zry9t2AYOvtfyiz4g6CYD
+         VLdD+3kxp1wWjy6tQCSr+1Z+Xur3v/Pi3XbJpNxnFQxzLLUTTuxjm0VmFR/ACCWDLoq5
+         0NsXR9Srd1po1Wk2KjxJ27FmXLrIB3C/LHqKjM28gRo1qGDXzPJdnoqzVjxi2ECXsi/P
+         VyUQnFN1eBFcyakJsiuZ+zy2ZVT8kfd1bt4QNLIvi+ZJbjAI4kKYYdJ+ppD0ra+YQTCl
+         s1EsymXEJhZgsemSHOVaP1j8tu3zexHyoRnvbW35KABGFvu2/cpklijVUgi9lmGxjf3L
+         gNQA==
+X-Gm-Message-State: AOJu0Yzd+qNwI88b9/cgGZBzllb3Kg00r0UjLPC3GjmxOWIOndL1aR6b
+        2xAUyXlie5kueriatossgqmXOQ==
+X-Google-Smtp-Source: AGHT+IGnvYQJ84z36CRbqHYncNuUq9WpKhqIP6bQ/DnagUTB8ZHJoYZggir8zL4NoxC5P5C9XhuI6Q==
+X-Received: by 2002:a17:907:3188:b0:9c7:4d3e:1e50 with SMTP id xe8-20020a170907318800b009c74d3e1e50mr5411501ejb.76.1698000368952;
+        Sun, 22 Oct 2023 11:46:08 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.218.126])
+        by smtp.gmail.com with ESMTPSA id f7-20020a1709062c4700b009c3828fec06sm5331727ejh.81.2023.10.22.11.46.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 22 Oct 2023 11:46:08 -0700 (PDT)
+Message-ID: <3307fcb9-1697-4a9e-b4f6-c00c2b10ba89@linaro.org>
+Date:   Sun, 22 Oct 2023 20:46:06 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 05/10] usb: dwc3: qcom: Refactor IRQ handling in QCOM
- Glue driver
-To:     Johan Hovold <johan@kernel.org>
-CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "Andy Gross" <agross@kernel.org>,
+Subject: Re: [PATCH v6 2/2] arm64: dts: qcom: sm8250-xiaomi-pipa: Add initial
+ device tree
+Content-Language: en-US
+To:     Luka Panio <lukapanio@gmail.com>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
-        <quic_jackp@quicinc.com>, <ahalaney@redhat.com>,
-        <quic_shazhuss@quicinc.com>
-References: <20231007154806.605-1-quic_kriskura@quicinc.com>
- <20231007154806.605-6-quic_kriskura@quicinc.com>
- <ZTJ_T1UL8-s2cgNz@hovoldconsulting.com>
-Content-Language: en-US
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <ZTJ_T1UL8-s2cgNz@hovoldconsulting.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Conor Dooley <conor+dt@kernel.org>,
+        Kees Cook <keescook@chromium.org>,
+        Tony Luck <tony.luck@intel.com>,
+        "Guilherme G . Piccoli" <gpiccoli@igalia.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
+References: <20231022173811.8229-1-lukapanio@gmail.com>
+ <20231022173811.8229-2-lukapanio@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20231022173811.8229-2-lukapanio@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: -STz74Ajs0z0XUfCN19hAX2Jv6XfQASf
-X-Proofpoint-ORIG-GUID: -STz74Ajs0z0XUfCN19hAX2Jv6XfQASf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-22_16,2023-10-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
- priorityscore=1501 lowpriorityscore=0 malwarescore=0 mlxlogscore=999
- suspectscore=0 mlxscore=0 phishscore=0 bulkscore=0 adultscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310170001 definitions=main-2310220172
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 10/20/2023 6:53 PM, Johan Hovold wrote:
-> First, drop "QCOM Glue driver" from Subject, you already have the "qcom"
-> prefix.
+On 22/10/2023 19:38, Luka Panio wrote:
+> Initial support for Xiaomi Pad 6 tablet, that have sm8250 soc.
 > 
-> On Sat, Oct 07, 2023 at 09:18:01PM +0530, Krishna Kurapati wrote:
->> Refactor setup_irq call to facilitate reading multiport IRQ's along
-> 
-> "IRQs" or just "interrupts"
-> 
->> with non mulitport ones. Read through the interrupt-names property
-> 
-> "multiport"
-> 
-> Please spell check all your patches (commit messages and code) before
-> posting, it's not the reviewers job.
-> 
->> to figure out, the type of interrupt (DP/DM/HS/SS) and to which port
->> it belongs. Also keep track of port index to calculate port count
->> based on interrupts provided as input in DT.
->>
->> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
->> ---
->>   drivers/usb/dwc3/dwc3-qcom.c | 210 +++++++++++++++++++++++++----------
->>   1 file changed, 154 insertions(+), 56 deletions(-)
->>
->> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
->> index ef2006db7601..863892284146 100644
->> --- a/drivers/usb/dwc3/dwc3-qcom.c
->> +++ b/drivers/usb/dwc3/dwc3-qcom.c
->> @@ -53,14 +53,25 @@
->>   #define APPS_USB_AVG_BW 0
->>   #define APPS_USB_PEAK_BW MBps_to_icc(40)
->>   
->> +#define NUM_PHY_IRQ		4
->> +
->> +enum dwc3_qcom_ph_index {
-> 
-> "phy_index"
-> 
->> +	DP_HS_PHY_IRQ_INDEX = 0,
->> +	DM_HS_PHY_IRQ_INDEX,
->> +	SS_PHY_IRQ_INDEX,
->> +	HS_PHY_IRQ_INDEX,
->> +};
->> +
->>   struct dwc3_acpi_pdata {
->>   	u32			qscratch_base_offset;
->>   	u32			qscratch_base_size;
->>   	u32			dwc3_core_base_size;
->> +	/*
->> +	 * The phy_irq_index corresponds to ACPI indexes of (in order) DP/DM/SS
->> +	 * IRQ's respectively.
->> +	 */
->> +	int			phy_irq_index[NUM_PHY_IRQ - 1];
->>   	int			hs_phy_irq_index;
->> -	int			dp_hs_phy_irq_index;
->> -	int			dm_hs_phy_irq_index;
->> -	int			ss_phy_irq_index;
->>   	bool			is_urs;
->>   };
->>   
->> @@ -73,10 +84,12 @@ struct dwc3_qcom {
->>   	int			num_clocks;
->>   	struct reset_control	*resets;
->>   
->> +	/*
->> +	 * The phy_irq corresponds to IRQ's registered for (in order) DP/DM/SS
->> +	 * respectively.
->> +	 */
->> +	int			phy_irq[NUM_PHY_IRQ - 1][DWC3_MAX_PORTS];
->>   	int			hs_phy_irq;
->> -	int			dp_hs_phy_irq;
->> -	int			dm_hs_phy_irq;
->> -	int			ss_phy_irq;
-> 
-> I'm not sure using arrays like this is a good idea (and haven't you
-> switched the indexes above?).
-> 
-> Why not add a port structure instead?
-> 
-> 	struct dwc3_qcom_port {
-> 		int hs_phy_irq;
-> 		int dp_hs_phy_irq;
-> 		int dm_hs_phy_irq;
-> 		int ss_phy_irq;
-> 	};
-> 
-> and then have
-> 
-> 	struct dwc3_qcom_port ports[DWC3_MAX_PORTS];
-> 
-> in dwc3_qcom. The port structure can the later also be amended with
-> whatever other additional per-port data there is need for.
-> 
-> This should make the implementation cleaner.
-> 
-> I also don't like the special handling of hs_phy_irq; if this is really
-> just another name for the pwr_event_irq then this should be cleaned up
-> before making the code more complicated than it needs to be.
-> 
-> Make sure to clarify this before posting a new revision.
+> Signed-off-by: Luka Panio <lukapanio@gmail.com>
+> ---
+> v2:
+> Update commit message. Drop reserved gpio's as this device in reality do not have gpio, and pins are not protected.
 > 
 
-hs_phy_irq is different from pwr_event_irq.
-AFAIK, there is only one of this per controller.
+> v3:
+> Update commit message.
+> 
+> v4:
+> Update commit message.
+> 
+> v5:
+> Update commit message.
+> 
+> v6:
+> Update commit message.
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>  .../boot/dts/qcom/sm8250-xiaomi-pipa.dts      | 625 ++++++++++++++++++
+>  2 files changed, 626 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sm8250-xiaomi-pipa.dts
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 2cca20563a1d..41ab333d1f81 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -208,6 +208,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-sony-xperia-edo-pdx203.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-sony-xperia-edo-pdx206.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-xiaomi-elish-boe.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-xiaomi-elish-csot.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-xiaomi-pipa.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-hdk.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-microsoft-surface-duo2.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-mtp.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-pipa.dts b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-pipa.dts
+> new file mode 100644
+> index 000000000000..41eae1aaa2a8
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-pipa.dts
+> @@ -0,0 +1,625 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
 
->> -static int dwc3_qcom_prep_irq(struct dwc3_qcom *qcom, char *irq_name,
->> -				char *disp_name, int irq)
->> +static int dwc3_qcom_prep_irq(struct dwc3_qcom *qcom, const char *irq_name,
->> +				const char *disp_name, int irq)
-> 
-> Ok, here you did drop the second name parameter, but without renaming
-> the first and hidden in a long diff without any mention anywhere.
-> 
-I didn't understand the comment. Can you please elaborate.
-I didn't drop the second parameter. In the usage of this call, I passed 
-same value to both irq_name and disp_name:
+If there are no other copyrights here, why did you use BSD-3 license?
 
-"dwc3_qcom_prep_irq(qcom, irq_names[i], irq_names[i], irq);"
+> +/*
+> + * Copyright (c) 2023 luka177 <lukapanio@gmail.com>
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include <dt-bindings/arm/qcom,ids.h>
+> +#include <dt-bindings/phy/phy.h>
+> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> +#include "sm8250.dtsi"
+> +#include "pm8150.dtsi"
+> +#include "pm8150b.dtsi"
+> +#include "pm8150l.dtsi"
+> +#include "pm8009.dtsi"
+> +
+> +/*
+> + * Delete following upstream (sm8250.dtsi) reserved
+> + * memory mappings which are different on this device.
+> + */
+> +/delete-node/ &adsp_mem;
+> +/delete-node/ &cdsp_secure_heap;
+> +/delete-node/ &slpi_mem;
+> +/delete-node/ &spss_mem;
+> +/delete-node/ &xbl_aop_mem;
+> +
+> +/ {
+> +
+> +	model = "Xiaomi Pad 6";
+> +	compatible = "xiaomi,pipa", "qcom,sm8250";
+> +
+> +	classis-type = "tablet";
 
-I mentioned in cover-letter that I am using same name as obtained from 
-DT to register the interrupts as well. Should've mentioned that in 
-commit text of this patch. Will do it in next version.
+chassis-type
 
->> +static int dwc3_qcom_get_port_index(const char *irq_name, int irq_index)
->> +{
->> +	int port_index = -1;
->> +
->> +	switch (irq_index) {
->> +	case DP_HS_PHY_IRQ_INDEX:
->> +		if (strcmp(irq_name, "dp_hs_phy_irq") == 0)
->> +			port_index = 1;
->> +		else
->> +			sscanf(irq_name, "dp_hs_phy_%d", &port_index);
->> +		break;
->> +
-> 
-> No need for newlines after break.
-> 
->> +	case DM_HS_PHY_IRQ_INDEX:
->> +		if (strcmp(irq_name, "dm_hs_phy_irq") == 0)
->> +			port_index = 1;
->> +		else
->> +			sscanf(irq_name, "dm_hs_phy_%d", &port_index);
->> +		break;
->> +
->> +	case SS_PHY_IRQ_INDEX:
->> +		if (strcmp(irq_name, "ss_phy_irq") == 0)
->> +			port_index = 1;
->> +		else
->> +			sscanf(irq_name, "ss_phy_%d", &port_index);
->> +		break;
->> +
->> +	case HS_PHY_IRQ_INDEX:
->> +		port_index = 1;
->> +		break;
->> +	}
->> +
->> +	if (port_index > DWC3_MAX_PORTS)
->> +		port_index = -1;
->> +
->> +	return port_index;
->> +}
-> 
->>   static int dwc3_qcom_setup_irq(struct platform_device *pdev)
->>   {
->>   	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
->> -	const struct dwc3_acpi_pdata *pdata = qcom->acpi_pdata;
->> +	struct device_node *np = pdev->dev.of_node;
->> +	const char **irq_names;
->> +	int port_index;
->> +	int acpi_index;
->> +	int irq_count;
->> +	int irq_index;
->>   	int irq;
->>   	int ret;
->> +	int i;
->>   
->> -	irq = dwc3_qcom_get_irq(pdev, "hs_phy_irq",
->> -				pdata ? pdata->hs_phy_irq_index : -1);
->> -	if (irq > 0) {
->> -		ret = dwc3_qcom_prep_irq(qcom, "hs_phy_irq", "qcom_dwc3 HS", irq);
->> -		if (ret)
->> -			return ret;
->> -		qcom->hs_phy_irq = irq;
->> -	}
->> +	irq_count = of_property_count_strings(np, "interrupt-names");
-> 
-> of_property_count_strings() can return negative errnos and you don't
-> have any sanity checks for the return value...
-> 
-> Please slow down, and also make sure to get your patches reviewed
-> internally before posting new revisions.
-> 
-It did go through internal review but probably went un-noticed. Will add 
-sanity checks here and below.
+It does not look like you tested the DTS against bindings. Please run
+`make dtbs_check W=1` (see
+Documentation/devicetree/bindings/writing-schema.rst or
+https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
+for instructions).
 
->> +	irq_names = devm_kzalloc(&pdev->dev, sizeof(*irq_names) * irq_count, GFP_KERNEL);
-> 
-> devm_kcalloc()
-> 
->> +	if (!irq_names)
->> +		return -ENOMEM;
->>   
->> -	irq = dwc3_qcom_get_irq(pdev, "dp_hs_phy_irq",
->> -				pdata ? pdata->dp_hs_phy_irq_index : -1);
->> -	if (irq > 0) {
->> -		ret = dwc3_qcom_prep_irq(qcom, "dp_hs_phy_irq", "qcom_dwc3 DP_HS", irq);
->> -		if (ret)
->> -			return ret;
->> -		qcom->dp_hs_phy_irq = irq;
->> -	}
->> +	ret = of_property_read_string_array(np, "interrupt-names",
->> +						irq_names, irq_count);
-> 
-> No sanity check here either?
-> 
->> +	for (i = 0; i < irq_count; i++) {
->> +		irq_index = dwc3_qcom_get_irq_index(irq_names[i]);
->> +		if (irq_index == -1) {
->> +			dev_dbg(&pdev->dev, "Invalid IRQ not handled");
->> +			continue;
->> +		}
-> 
-> I'll just stop reviewing here. This is a waste of my time.
-> 
 
-Regards,
-Krishna,
+> +
+> +	/* required for bootloader to select correct board */
+> +	qcom,msm-id = <QCOM_ID_SM8250 0x20001>; /* SM8250 v2.1 */
+> +	qcom,board-id = <0x34 0>;
+
+0x34 or 34?
+
+> +
+> +	chosen {
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+> +		ranges;
+
+....
+
+> +
+> +&i2c13 {
+> +	clock-frequency = <400000>;
+> +	status = "okay";
+> +
+> +	fuel-gauge@55 {
+> +		compatible = "ti,bq27z561";
+> +		reg = <0x55>;
+> +		monitored-battery = <&battery_l>;
+> +	};
+> +};
+> +
+> +
+> +
+
+Just one blank line
+
+> +&pcie0 {
+> +	status = "okay";
+> +};
+> +
+> +&pcie0_phy {
+> +	vdda-phy-supply = <&vreg_l5a_0p88>;
+> +	vdda-pll-supply = <&vreg_l9a_1p2>;
+> +	status = "okay";
+> +};
+
+
+
+Best regards,
+Krzysztof
+
