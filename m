@@ -2,117 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D33777D2272
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Oct 2023 12:00:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0CB027D22BC
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Oct 2023 12:49:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229500AbjJVKAQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 22 Oct 2023 06:00:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43178 "EHLO
+        id S229472AbjJVKtN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 22 Oct 2023 06:49:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229472AbjJVKAQ (ORCPT
+        with ESMTP id S231297AbjJVKtL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 22 Oct 2023 06:00:16 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65ECDE5;
-        Sun, 22 Oct 2023 03:00:14 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48913C433C7;
-        Sun, 22 Oct 2023 10:00:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1697968813;
-        bh=7PsMWbaVMedcFn6pPH+/OzV5PSechVS/ScQduga9eQk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=FLa/vHW7t8aqno59J8dt7ReYX8iDpAuNnwvWrlchV/dNSytiLmDRXjqasn6wdZfhk
-         hV+jNBGwOT+sXnjm7yMLdAhMCFi2vfSikzVUwjp+xu5F+lDFKAo/1xhHbJG19yBCCT
-         u5dBv5n7TsQlKrPbV3q/oNx4XbKb7cpayC7x9noJCcJGUV8bE4EUX+lZh+Z1kmiL+J
-         DyxNt3kT5d0Qh6rkMpm4BkWKjPFwdfsRUV2a6vtfbXTkfgrDjGAEXbMeirAqIStS9z
-         dUYV6L9LMJdnG0eujR0GuqeINj+D3/pHBDG+fz+zbbL3ozNoHFnYSqVzK8rYU+3eqv
-         T7FKjtPcjtZIA==
-Date:   Sun, 22 Oct 2023 11:00:07 +0100
-From:   Conor Dooley <conor@kernel.org>
-To:     Nikita Travkin <nikita@trvn.ru>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, jenneron@postmarketos.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] ASoC: dt-bindings: qcom,sm8250: Add
- sc7180-qdsp6-sndcard
-Message-ID: <20231022-snowy-flashily-0c814247e557@spud>
-References: <20231020-sc7180-qdsp-sndcard-v1-0-157706b7d06f@trvn.ru>
- <20231020-sc7180-qdsp-sndcard-v1-1-157706b7d06f@trvn.ru>
+        Sun, 22 Oct 2023 06:49:11 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30CC2BE
+        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Oct 2023 03:49:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1697971750; x=1729507750;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=BAzFzoEFjtpbdJFYOHSqY0/W0jpaLu4m/w/mAzU3BHs=;
+  b=I+7Lj3OOXb6tYniGd+4n0BcbcfxBNBUjHH6UexiZElh/f31Nm+Q4Y0Z/
+   ZxtuXJoVABXu6dM61gi4LNjkRnjRLOgF0dPZ/LVF71GLe6AWy0OtaJ9RD
+   Ig+y0QyFWF0GXl3GM4fGvCKtHHzQpjQ7QysFb8++8+ExxLWaMjwpOlfnf
+   Nq101c1z8aB0YMdd4dq6yDwG1BqWuO5dz9Ha6a7IlBMuC28Ed5LMnl+/o
+   P6yhBWQqthAZ+YbMWOphj3oSQJK/oeMhMoPpHraLIwKu0NMJYkmHURLLE
+   m6uhETBMqHzp5ENswyeHIbqIvflnnxhM+NNwHzeEUTTEO3VCJzY5AoY1O
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10870"; a="377070367"
+X-IronPort-AV: E=Sophos;i="6.03,242,1694761200"; 
+   d="scan'208";a="377070367"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Oct 2023 03:49:09 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.03,242,1694761200"; 
+   d="scan'208";a="5524281"
+Received: from joe-255.igk.intel.com (HELO localhost) ([10.91.220.57])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Oct 2023 03:47:54 -0700
+Date:   Sun, 22 Oct 2023 12:49:05 +0200
+From:   Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc:     quic_ajitpals@quicinc.com, quic_carlv@quicinc.com,
+        quic_pkanojiy@quicinc.com, ogabbay@kernel.org,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH v2] accel/qaic: Enable 1 MSI fallback mode
+Message-ID: <20231022104905.GA704032@linux.intel.com>
+References: <20231016170036.5409-1-quic_jhugo@quicinc.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="nNQF1DonWtR70u/D"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231020-sc7180-qdsp-sndcard-v1-1-157706b7d06f@trvn.ru>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20231016170036.5409-1-quic_jhugo@quicinc.com>
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
---nNQF1DonWtR70u/D
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Oct 20, 2023 at 08:33:46PM +0500, Nikita Travkin wrote:
-> sc7180 can make use of the adsp-baked soundcard, add relevant compatible
-> to the documentation.
->=20
-> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
-
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-
-Thanks,
-COnor.
-
-> ---
->  Documentation/devicetree/bindings/sound/qcom,sm8250.yaml | 1 +
->  1 file changed, 1 insertion(+)
->=20
-> diff --git a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml b/D=
-ocumentation/devicetree/bindings/sound/qcom,sm8250.yaml
-> index 262de7a60a73..e082a4fe095d 100644
-> --- a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
-> +++ b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
-> @@ -25,6 +25,7 @@ properties:
->            - qcom,apq8016-sbc-sndcard
->            - qcom,msm8916-qdsp6-sndcard
->            - qcom,qrb5165-rb5-sndcard
-> +          - qcom,sc7180-qdsp6-sndcard
->            - qcom,sc8280xp-sndcard
->            - qcom,sdm845-sndcard
->            - qcom,sm8250-sndcard
->=20
-> --=20
-> 2.41.0
->=20
-
---nNQF1DonWtR70u/D
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZTTypwAKCRB4tDGHoIJi
-0gl5AP0X+bwFzAyHiu5r1O6UFDt6fXJWOpKG7KiyYT2H/ADLfQEAv0d2OZNJEAOh
-3R4ScbuFOliRrkzghDPBebpGO59z+A0=
-=XI4e
------END PGP SIGNATURE-----
-
---nNQF1DonWtR70u/D--
+On Mon, Oct 16, 2023 at 11:00:36AM -0600, Jeffrey Hugo wrote:
+> From: Carl Vanderlip <quic_carlv@quicinc.com>
+> 
+> Several virtualization use-cases either don't support 32 MultiMSIs
+> (Xen/VMware) or have significant drawbacks to their use (KVM's vIOMMU,
+> which is required to support 32 MSI, needs to allocate an alternate
+> system memory space for each device using vIOMMU (e.g. 8GB VM mem and
+> 2 cards => 8 + 2 * 8 = 24GB host memory required)). Support these
+> cases by enabling a 1 MSI fallback mode.
+> 
+> Whenever all 32 MSIs requested are not available, a second request for
+> a single MSI is made. Its success is the initiator of single MSI mode.
+> This mode causes all interrupts generated by the device to be directed
+> to the 0th MSI (firmware >=v1.10 will do this as a response to the PCIe
+> MSI capability configuration). Likewise, all interrupt handlers for the
+> device are registered to the 0th MSI.
+> 
+> Since the DBC interrupt handler checks if the DBC is in use or if
+> there is any pending changes, the 'spurious' interrupts are
+> disregarded. If there is work to be done, the standard threaded IRQ
+> handler is dispatched.
+> 
+> On every interrupt, the MHI handler wakes up its threaded interrupt
+> handler, and attempts to wake any waiters for MHI state events.
+> 
+> Performance is within +-0.6% for test cases that typify real world
+> use. Larger differences ([-4,+132]%, avg +47%) exist for very simple
+> tasks (e.g. addition) compiled for single NSPs. It is assumed that the
+> small work and many interrupts typically cause contention (e.g. 16 NSPs
+> vs 4 CPUs), as evidenced by the standard deviation between runs also
+> decreasing (r=-0.48 between delta(Performace_test) and
+> delta(StdDev_test/Avg_test))
+> 
+> Signed-off-by: Carl Vanderlip <quic_carlv@quicinc.com>
+> Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+> Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
