@@ -2,155 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EA82B7D3E0E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 19:43:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C58E37D3F31
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 20:24:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233661AbjJWRnI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 13:43:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39162 "EHLO
+        id S233522AbjJWSYl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 14:24:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233780AbjJWRnG (ORCPT
+        with ESMTP id S233247AbjJWSYk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 13:43:06 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF9E498;
-        Mon, 23 Oct 2023 10:43:03 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39NGrEWF021316;
-        Mon, 23 Oct 2023 17:42:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Thbvvz6X+dAXdwI8GyfmFVSpYdfQyNnRvRh5T6KVgDs=;
- b=dnurKmnxAhvUTlo44pBlF+ZYn8UMDEf2aCqDckdxHoVmISI0dPSFEa6klZCDBWvH1moa
- lChPJ5MkEbpvaUwuWyvWPEkqNIAFgMF0wVZ4LmVS7rLaHXj5zIwt3IHnPd6ygP4IAJVr
- oK3afcJyYH4YUmLmu5uin15Uydp4YOE83PBb47Jazb9ij5z1x0jOL9vs4mW94AHFp9NW
- Q8EGeOHrFZ1OnxRAawB3XvbctXekLr9dpeZPkEXAsBXLJK8oiSDrBUNcBTRo67cea+jU
- bwCid2a/H2ONmnYlFk0uqPDDRkEOSZgl3L/JIMewKNtm5GeqXdpbv72HBQ5UMcO2p4bs rw== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3twtxwrejb-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 23 Oct 2023 17:42:52 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39NHgqIF007389
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 23 Oct 2023 17:42:52 GMT
-Received: from [10.216.7.46] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Mon, 23 Oct
- 2023 10:42:45 -0700
-Message-ID: <faa647ed-9692-4233-b421-b9e6271f8934@quicinc.com>
-Date:   Mon, 23 Oct 2023 23:12:40 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 09/10] arm64: dts: qcom: sa8295p: Enable tertiary
- controller and its 4 USB ports
-Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>
-CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "Andy Gross" <agross@kernel.org>,
+        Mon, 23 Oct 2023 14:24:40 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A336100
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 11:24:36 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-507ac66a969so4906691e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 11:24:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1698085474; x=1698690274; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=AXl7QD45QL6sivgQCN1vZsJFBc1tqDJMcsR0n1+9ZVA=;
+        b=daqprl+U42OIBvQ5tXF0x+KPqTr+l5gKICMowLVqUpwU46UPt8Z0LnPxG/oQyotROh
+         dXe1tdEyP2r5DMaevupFfO+QGEXaKNRlbUblqufFy4cSEKrP38LLr6CfKnojvdypjViK
+         mb4M0SYFap7nYZ6vWQhZpcGjmoIN1X1efL8DHbp7ndN/IAdX6T/Wn/4Dt5B754cQr0Dy
+         RdaXeUBbCAqDcaZDyFS7OmaFOX1Bgwm4NsI7ELsezLWhG4xhoH/ouclw2+lwUZ58DHG4
+         GAH4JolxLxhjaC322Z5a/2mB9vl7iQFzKFZ8R3+NDnPq6DmZSz5AKkcJJUWXWIC2+9Lz
+         5aaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698085474; x=1698690274;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AXl7QD45QL6sivgQCN1vZsJFBc1tqDJMcsR0n1+9ZVA=;
+        b=O8sw3hvHcbjyXLj/VBcAggMl78w9ipxmszgFE+zKRaGrdM600mbkm1S+0NGXbP4YdX
+         4cRtR6k4uUyvTETwVE4srlu5bzm1972COFeJCiHwmztypXOUlEiRxI/FJIGcO8ibGLn+
+         Ndab5/6khgNOSV6rn48OLA6lQmkfWeScqihHkDGRnPn+3ISJKrx/DLoCgjI2k5bZKo5l
+         Yo/ZH/2q/FuXbR24D9FokhX5sMszQO3g4l2PUkkEhnmTqugMCeic6Ej8WU1CESTwy2RX
+         hRTuzKsOtxDmwUfvL+PMwRvxgAWaxLXWpg4ZzSySHukk4qTi+0CN7a7trT07CQwrTINK
+         HSjA==
+X-Gm-Message-State: AOJu0YwQoaiSCO7CfMBQDs7/XtbvsfxOGs575X99hnmCmTGGvJsYkPA8
+        fjkrulRAB7NvrhCw1AnzWtKENg==
+X-Google-Smtp-Source: AGHT+IHkBgeiF76Bx8knzqTGYbXJFudDOPHcgula2SENkD2657KkYSAFEtuZJ/OAVh+6CzJaf2DBDA==
+X-Received: by 2002:ac2:5456:0:b0:507:b074:ecd4 with SMTP id d22-20020ac25456000000b00507b074ecd4mr6516885lfn.7.1698085474021;
+        Mon, 23 Oct 2023 11:24:34 -0700 (PDT)
+Received: from [127.0.0.1] (85-76-147-63-nat.elisa-mobile.fi. [85.76.147.63])
+        by smtp.gmail.com with ESMTPSA id z19-20020a19f713000000b00507a3b16d29sm1785836lfe.191.2023.10.23.11.24.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Oct 2023 11:24:33 -0700 (PDT)
+Date:   Mon, 23 Oct 2023 21:24:33 +0300
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Heikki Krogerus <heikki.krogerus@linux.intel.com>
+CC:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Janne Grunau <j@jannau.net>, Simon Ser <contact@emersion.fr>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
-        <quic_jackp@quicinc.com>, <ahalaney@redhat.com>,
-        <quic_shazhuss@quicinc.com>
-References: <20231007154806.605-1-quic_kriskura@quicinc.com>
- <20231007154806.605-10-quic_kriskura@quicinc.com>
- <ZTad-_toGkumYx6O@hovoldconsulting.com>
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <ZTad-_toGkumYx6O@hovoldconsulting.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: gM9Yoy4cwfT-mfFK2KJNiKj1cExvwry2
-X-Proofpoint-GUID: gM9Yoy4cwfT-mfFK2KJNiKj1cExvwry2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-23_16,2023-10-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- priorityscore=1501 clxscore=1015 phishscore=0 adultscore=0 spamscore=0
- malwarescore=0 bulkscore=0 impostorscore=0 suspectscore=0 mlxscore=0
- mlxlogscore=792 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310170001 definitions=main-2310230154
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [RFC PATCH v1 12/12] usb: typec: qcom: define the bridge's path
+User-Agent: K-9 Mail for Android
+In-Reply-To: <ZQRKq7K8jKlH/Y4X@kuha.fi.intel.com>
+References: <20230903214150.2877023-1-dmitry.baryshkov@linaro.org> <20230903214150.2877023-13-dmitry.baryshkov@linaro.org> <ZQRKq7K8jKlH/Y4X@kuha.fi.intel.com>
+Message-ID: <0F1BE090-92C4-4233-A77A-9B4C653DA1A7@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 10/23/2023 9:53 PM, Johan Hovold wrote:
-> On Sat, Oct 07, 2023 at 09:18:05PM +0530, Krishna Kurapati wrote:
->> Enable tertiary controller for SA8295P (based on SC8280XP).
->> Add pinctrl support for usb ports to provide VBUS to connected peripherals.
->>
->> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+On 15 September 2023 15:14:35 EEST, Heikki Krogerus <heikki=2Ekrogerus@linu=
+x=2Eintel=2Ecom> wrote:
+>Hi Dmitry,
+>
+>On Mon, Sep 04, 2023 at 12:41:50AM +0300, Dmitry Baryshkov wrote:
+>> In order to notify the userspace about the DRM connector's USB-C port,
+>> export the corresponding port's name as the bridge's path field=2E
+>>=20
+>> Signed-off-by: Dmitry Baryshkov <dmitry=2Ebaryshkov@linaro=2Eorg>
 >> ---
->>   arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 49 ++++++++++++++++++++++++
->>   1 file changed, 49 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
->> index fd253942e5e5..271000163823 100644
->> --- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
->> +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
->> @@ -9,6 +9,7 @@
->>   #include <dt-bindings/gpio/gpio.h>
->>   #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->>   #include <dt-bindings/spmi/spmi.h>
->> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-> 
-> Sort order ('p' < 'r').
+>>  drivers/usb/typec/tcpm/qcom/qcom_pmic_typec=2Ec     | 11 +++++++----
+>>  drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_drm=2Ec |  4 +++-
+>>  drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_drm=2Eh |  6 ++++--
+>>  3 files changed, 14 insertions(+), 7 deletions(-)
+>>=20
+>> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec=2Ec b/drivers/=
+usb/typec/tcpm/qcom/qcom_pmic_typec=2Ec
+>> index b9d4856101c7=2E=2E452dc6437861 100644
+>> --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec=2Ec
+>> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec=2Ec
+>> @@ -156,6 +156,7 @@ static int qcom_pmic_typec_probe(struct platform_de=
+vice *pdev)
+>>  	struct device_node *np =3D dev->of_node;
+>>  	const struct pmic_typec_resources *res;
+>>  	struct regmap *regmap;
+>> +	char *tcpm_name;
+>>  	u32 base[2];
+>>  	int ret;
+>> =20
+>> @@ -211,10 +212,6 @@ static int qcom_pmic_typec_probe(struct platform_d=
+evice *pdev)
+>>  	mutex_init(&tcpm->lock);
+>>  	platform_set_drvdata(pdev, tcpm);
+>> =20
+>> -	tcpm->pmic_typec_drm =3D qcom_pmic_typec_init_drm(dev);
+>> -	if (IS_ERR(tcpm->pmic_typec_drm))
+>> -		return PTR_ERR(tcpm->pmic_typec_drm);
+>> -
+>>  	tcpm->tcpc=2Efwnode =3D device_get_named_child_node(tcpm->dev, "conne=
+ctor");
+>>  	if (!tcpm->tcpc=2Efwnode)
+>>  		return -EINVAL;
+>> @@ -225,6 +222,12 @@ static int qcom_pmic_typec_probe(struct platform_d=
+evice *pdev)
+>>  		goto fwnode_remove;
+>>  	}
+>> =20
+>> +	tcpm_name =3D tcpm_port_get_name(tcpm->tcpm_port);
+>> +	tcpm->pmic_typec_drm =3D qcom_pmic_typec_init_drm(dev, tcpm_name);
+>
+>So I got some questions and concerns off-list=2E This was one of the
+>concerns=2E That tcpm_name is now the actual port device name, so I'm
+>afraid this is not acceptable=2E
+>
+>You can't use device name as a reference, ever=2E There is no way to
+>guarantee that a device with a specific name is what you meant it to
+>be by the time it's accessed=2E
 
-ACK
+Hmm, could you please be more specific, why? I mean, class devices are not=
+ that easy to be renamed in sysfs, are they? Or are you concerned about the=
+ device being destroyed behind userspace's back? At least for MSM this will=
+ be a huge problem already, with the bridge driver suddenly being removed=
+=2E
 
-> 
->> +&usb_2 {
->> +	pinctrl-0 = <&usb2_en_state>,
->> +		    <&usb3_en_state>,
->> +		    <&usb4_en_state>,
->> +		    <&usb5_en_state>;
->> +	pinctrl-names = "default";
->> +
->> +	status = "okay";
->> +};
->> +
->>   &usb_2_hsphy0 {
->>   	vdda-pll-supply = <&vreg_l5a>;
->>   	vdda18-supply = <&vreg_l7g>;
->> @@ -729,3 +740,41 @@ wake-n-pins {
->>   		};
->>   	};
->>   };
->> +
->> +&pmm8540c_gpios {
-> 
-> Sort order here too ('p' < 't' in "&tlmm").
-> 
+>
+>If you need to deal with a device, then you have to get an actual
+>reference to it (class_find_device_by_fwnode() should work in this
+>case)=2E
+>
+>Ideally you would get the reference in the place where you actually
+>use it (so drm_connector=2Ec or more likely drm_sysfs=2Ec) but that would
+>mean a dependency on typec in there, if the component framework or
+>something like that (device links?) is not an option=2E You could of
+>course try to confine the dependency somehow=2E drm_class does not have
+>implementation for dev_uevent, so you could take over that as a
+>temporary solution=2E
+>
+>The only way to avoid the dependency completely would be to pass that
+>device reference from here through your drm bridge chain somehow=2E
+>But that's also really fragile=2E But it could be acceptable as a
+>temporary solution perhaps, if it's even possible=2E
+>
+>Br,
+>
 
-ACK.
-
->> +	usb2_en_state: usb2-en-state {
-> 
-> No need to include '_state' in the labels.
-> 
-Any specific reason ? I have no problem if removing the suffix but just 
-wanted to know the reason.
-
-Regards,
-Krishna,
