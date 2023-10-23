@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 46C547D2E31
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 11:28:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 487C97D2E4C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 11:31:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229601AbjJWJ2G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 05:28:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42688 "EHLO
+        id S229749AbjJWJb2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 05:31:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229557AbjJWJ2E (ORCPT
+        with ESMTP id S233070AbjJWJb0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 05:28:04 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA746BE
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 02:28:02 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2c5039d4e88so45934901fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 02:28:02 -0700 (PDT)
+        Mon, 23 Oct 2023 05:31:26 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CEDE110
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 02:31:24 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-9adca291f99so446082566b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 02:31:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698053281; x=1698658081; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698053483; x=1698658283; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=scRXt0dR4CqMVIcOX1nOBi21OWZarp+zt7whuTxTtKA=;
-        b=YUT9tY/fYXdmqYOxebNOpyjKUJOz4Rd0Y9yjJm8il9qIornj7NOrDH4ZUADniyMCvs
-         bTQeaQiectW8dWewiJWGeJMv+P+ZtE2koSo0mR0EKQrN91ElP8OAgPSGHNdytGCBVWtb
-         3OAw3rcDYztgnntbRtgSbEZve35qCdKPkIJuAf39MLGj9utNKLjxxQMLb1sbSVMwkDq2
-         As91DkVPNS9cSA8x+3hB5tvW9H2BBDebnf4c/g0PKHeJYvQlMnHXbs5oz0wQyvpNRbD2
-         SCM1rUu4/73UKSxnwx74rtAxTOMI2qi05vjdFErhNKCI5ML4WzmGm/DhmfSZT7UCIXgz
-         Si0A==
+        bh=tyFzM67x1/2Iv4+IBgYZUNJYMjWASdOO23llnCqnyIA=;
+        b=wFkIGymV0HKs0TbYYDkZm2W3SnBBciJ4gyReg9y85QVJPACx08PaqGq3rHQpZF9iZT
+         2ev5DOa6KRr1GYlDmX5zOk2jktJsZ4/Ay66YD1VBwn+oOtrAcLc99kjx8h+TZJZ9g6ZO
+         3jDtvGokMSe6rkzxsueRJbkjq5UkeQGVHPJQZi/SjV+9iwT6zSGgyO7CaR3cSFrIdm6S
+         kopiOvx5PDDum24CAsgrcJ1TX+znpfhj0rFH3aNsWDGg/FpCco9jhXtcPQde0bJTzin3
+         wdDvE7m3EwoP4kmI+wmcuCBa7PM3+FVsdb84luBNLaogJkGYTR8bp2Z7YZOXVjVBrXnt
+         pQGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698053281; x=1698658081;
+        d=1e100.net; s=20230601; t=1698053483; x=1698658283;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=scRXt0dR4CqMVIcOX1nOBi21OWZarp+zt7whuTxTtKA=;
-        b=WgF+h7akqWQCHfvf01mCrz3/NNJzer8i/Vp0ZHkvxjQwKCpyan4ohOrUYnpYbTbFGF
-         3+MXdb4qLqzUYWRuHtXUbIKT+q0eOAMOD9Rf4AUVawfq79fz/8mVHONlCD3JNch0JS1X
-         xrw0PNEvKwojApkYGR4pGCLO6Dh23HF9oamLt5dIDVGORXUrOOOc7mtnlvcDmQmHk3+7
-         8wyeMPD2E3kYKL8B8EVGcwV0/U+GSW5i+EyTEf0oKWkQsV/5m2OKTjGZG5Nw7wiRJ5jc
-         yFMmSyLVnOIHxFBom3BxteA0wh+WVA94Yq1yZaq7gsdgvq0+G+wMrBgT5/Ug7DfT3q/n
-         rkig==
-X-Gm-Message-State: AOJu0Yz+3oO1W7nieQReqbJ7vD1p6lDSlrWga+rq1WQiuLHSsg0Mxfdb
-        DWiSy5mSzz1Nj8jlz3woDyn25w==
-X-Google-Smtp-Source: AGHT+IECaGiniILui9bl1pv2xFFLV6cw+DLoJLhHyz3h7YdS1a4kxiXrJ7ohCt65Z1NMwnfN9f7swg==
-X-Received: by 2002:a05:651c:14c:b0:2c5:9a5:a1c2 with SMTP id c12-20020a05651c014c00b002c509a5a1c2mr6124119ljd.30.1698053280948;
-        Mon, 23 Oct 2023 02:28:00 -0700 (PDT)
+        bh=tyFzM67x1/2Iv4+IBgYZUNJYMjWASdOO23llnCqnyIA=;
+        b=sCZRAqSN0mydMY70ucmMSoN4s/yogLJdVLFYcewC6h/u2m2j3OqBrrBVqrDzz5VKIs
+         VeLjO6BQmEJ9ZEf9azVhvwqtSZfb1Pv463415pqBoYVKCwdL191XYnBZrr5Mh8f/oarr
+         yF4/lDFCg5duye5kGOm858ztE55mbqp+gNLW3np+piGfmyk7oNtxQ1aiFfIMq1Qh7dEN
+         w/8fu5j2G786Wh0ZZLxl14AxJ/N6nV5PcAC/RK6jxHXqKXM+3ew/j1WJYjDraESdBcXJ
+         ike4EcrFnpTe+duXuYKnK8/ytGV3RMZyijHpvZHUtSmhZtVsD2mDNNMto3atu7XsL4r1
+         vdAg==
+X-Gm-Message-State: AOJu0YxuBwss++3Z3eo9cseHJUNm2HJpSjrFZG5vVyThDxqYqvuaTWN7
+        CyUDb1Y4W3BCK6GZ7OiFOG56sg==
+X-Google-Smtp-Source: AGHT+IGvGw7VaAxRV7tuzC8re9PUOmwoMFVRp8KzNDobE6qN4NnguuqTj3H6emVkvVYGFjMXYzsfWg==
+X-Received: by 2002:a17:907:3f85:b0:9be:4eb8:5b1e with SMTP id hr5-20020a1709073f8500b009be4eb85b1emr6832064ejc.59.1698053482830;
+        Mon, 23 Oct 2023 02:31:22 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id p12-20020a05600c418c00b0040773c69fc0sm13481557wmh.11.2023.10.23.02.27.59
+        by smtp.gmail.com with ESMTPSA id z23-20020a170906075700b009b27d4153cfsm6389962ejb.176.2023.10.23.02.31.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Oct 2023 02:28:00 -0700 (PDT)
-Message-ID: <bd85254e-b08b-4fec-ad42-b34e4183b5ff@linaro.org>
-Date:   Mon, 23 Oct 2023 11:27:59 +0200
+        Mon, 23 Oct 2023 02:31:22 -0700 (PDT)
+Message-ID: <5bac8188-7d27-4efe-9493-dec4393fbeb0@linaro.org>
+Date:   Mon, 23 Oct 2023 11:31:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/5] dt-bindings: sram: qcom,imem: document sm8250
+Subject: Re: [PATCH v1 3/5] soc: qcom: memory_dump: Add memory dump driver
 Content-Language: en-US
 To:     Zhenhua Huang <quic_zhenhuah@quicinc.com>, agross@kernel.org,
         andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
@@ -63,7 +63,7 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, kernel@quicinc.com,
         quic_tingweiz@quicinc.com
 References: <1698052857-6918-1-git-send-email-quic_zhenhuah@quicinc.com>
- <1698052857-6918-3-git-send-email-quic_zhenhuah@quicinc.com>
+ <1698052857-6918-4-git-send-email-quic_zhenhuah@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -109,11 +109,11 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <1698052857-6918-3-git-send-email-quic_zhenhuah@quicinc.com>
+In-Reply-To: <1698052857-6918-4-git-send-email-quic_zhenhuah@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -122,32 +122,194 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 23/10/2023 11:20, Zhenhua Huang wrote:
-> Add compatible for sm8250 IMEM.
+> Qualcomm memory dump driver initializes system memory dump table.
+> Firmware dumps system cache, internal memory, peripheral registers
+> to DDR as per this table after system crashes and warm resets. The
+> driver reserves memory, populates ids and sizes for firmware dumping
+> according to the configuration.
 > 
 > Signed-off-by: Zhenhua Huang <quic_zhenhuah@quicinc.com>
 > ---
->  Documentation/devicetree/bindings/sram/qcom,imem.yaml | 1 +
->  1 file changed, 1 insertion(+)
 
+...
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> +
+> +/* populate allocated region */
+> +static int __init mem_dump_populate_mem(struct device *dev,
+> +					struct page *start_page,
+> +					size_t total_size)
+> +{
+> +	struct qcom_memory_dump *memdump = dev_get_drvdata(dev);
+> +	struct qcom_dump_entry dump_entry;
+> +	struct qcom_dump_data *dump_data;
+> +	struct xbc_node *linked_list;
+> +	phys_addr_t phys_end_addr;
+> +	phys_addr_t phys_addr;
+> +	const char *size_p;
+> +	void *dump_vaddr;
+> +	const char *id_p;
+> +	int ret = 0;
+> +	int size;
+> +	int id;
+> +
+> +	phys_addr = page_to_phys(start_page);
+> +	phys_end_addr = phys_addr + total_size;
+> +	dump_vaddr = page_to_virt(start_page);
+> +
+> +	ret = mem_dump_register_data_table(dev, dump_vaddr, phys_addr);
+> +	if (ret) {
+> +		dev_err_probe(dev, ret, "Mem Dump table set up is failed\n");
+> +		return ret;
 
----
+That's not the syntax. Syntax is return dev_err_probe
 
-This is an automated instruction, just in case, because many review tags
-are being ignored. If you know the process, you can skip it (please do
-not feel offended by me posting it here - no bad intentions intended).
-If you do not know the process, here is a short explanation:
+> +	}
+> +
+> +	ret = qcom_init_memdump_imem_area(dev, total_size);
+> +	if (ret)
+> +		return ret;
+> +
+> +	/* Apply two tables: QCOM_DUMP_TYPE_TABLE and QCOM_DUMP_TYPE_DATA */
+> +	mem_dump_apply_offset(&dump_vaddr, &phys_addr,
+> +			      sizeof(struct qcom_dump_table) * 2);
+> +
+> +	/* Both "id" and "size" must be present */
+> +	xbc_node_for_each_subkey(memdump->mem_dump_node, linked_list) {
+> +		const char *name = xbc_node_get_data(linked_list);
+> +
+> +		if (!name)
+> +			continue;
+> +
+> +		id_p = xbc_node_find_value(linked_list, "id", NULL);
+> +		size_p = xbc_node_find_value(linked_list, "size", NULL);
+> +
+> +		if (id_p && size_p) {
+> +			ret = kstrtoint(id_p, 0, &id);
+> +			if (ret)
+> +				continue;
+> +
+> +			ret = kstrtoint(size_p, 0, &size);
+> +
+> +			if (ret)
+> +				continue;
+> +
+> +		/*
+> +		 * Physical layout: starting from two qcom_dump_data.
+> +		 * Following are respective dump meta data and reserved regions.
+> +		 * Qcom_dump_data is populated by the driver, fw parse it
+> +		 * and dump respective info into dump mem.
+> +		 * Illustrate the layout:
+> +		 *
+> +		 *   +------------------------+------------------------+
+> +		 *   | qcom_dump_table(TABLE) | qcom_dump_table(DATA)  |
+> +		 *   +------------------------+------------------------+
+> +		 *   +-------------+----------+-------------+----------+
+> +		 *   |qcom_dump_data| dump mem|qcom_dump_data| dump mem |
+> +		 *   +-------------+----------+-------------+----------+
+> +		 *   +-------------+----------+-------------+----------+
+> +		 *   |qcom_dump_data| dump mem|qcom_dump_data| dump mem |
+> +		 *   +-------------+----------+-------------+----------+
+> +		 *   ...
+> +		 */
 
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions, under or above your Signed-off-by tag. Tag is "received", when
-provided in a message replied to you on the mailing list. Tools like b4
-can help here. However, there's no need to repost patches *only* to add
-the tags. The upstream maintainer will do that for tags received on the
-version they apply.
+You have wrong indentation here.
 
-https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
+> +			dump_data = dump_vaddr;
+> +			dump_data->addr = phys_addr + QCOM_DUMP_DATA_SIZE;
+> +			dump_data->len = size;
+> +			dump_entry.id = id;
+> +			strscpy(dump_data->name, name,
+> +				sizeof(dump_data->name));
+> +			dump_entry.addr = phys_addr;
+> +			ret = mem_dump_data_register(dev, QCOM_DUMP_TABLE_LINUX,
+> +						     &dump_entry);
+> +			if (ret) {
+> +				dev_err_probe(dev, ret, "Dump data setup failed, id = %d\n",
+> +					      id);
 
+Syntax is return dev_err_probe
+
+> +				return ret;
+> +			}
+> +
+> +			mem_dump_apply_offset(&dump_vaddr, &phys_addr,
+> +					      size + QCOM_DUMP_DATA_SIZE);
+> +			if (phys_addr > phys_end_addr) {
+> +				dev_err_probe(dev, -ENOMEM, "Exceeding allocated region\n");
+
+ENOMEM? Does not look right then.
+
+> +				return -ENOMEM;
+> +			}
+> +		} else {
+> +			continue;
+> +		}
+> +	}
+> +
+> +	return ret;
+> +}
+> +
+> +static int __init mem_dump_probe(struct platform_device *pdev)
+> +{
+> +	struct qcom_memory_dump *memdump;
+> +	struct device *dev = &pdev->dev;
+> +	struct page *page;
+> +	size_t total_size;
+> +	int ret = 0;
+> +
+> +	memdump = devm_kzalloc(dev, sizeof(struct qcom_memory_dump),
+> +			       GFP_KERNEL);
+> +	if (!memdump)
+> +		return -ENOMEM;
+> +
+> +	dev_set_drvdata(dev, memdump);
+> +
+> +	/* check and initiate CMA region */
+> +	ret = mem_dump_reserve_mem(dev);
+> +	if (ret)
+> +		return ret;
+> +
+> +	/* allocate and populate */
+> +	page = mem_dump_alloc_mem(dev, &total_size);
+> +	if (IS_ERR(page)) {
+> +		ret = PTR_ERR(page);
+> +		dev_err_probe(dev, ret, "mem dump alloc failed\n");
+
+No, the syntax is:
+ret = dev_err_probe
+
+But why do you print messgaes for memory allocations?
+
+> +		goto release;
+> +	}
+> +
+> +	ret = mem_dump_populate_mem(dev, page, total_size);
+> +	if (!ret)
+> +		dev_info(dev, "Mem dump region populated successfully\n");
+
+Drop simple probe success messages. Not needed.
+
+> +	else
+> +		goto free;
+> +
+> +	return 0;
+> +
+> +free:
+> +	cma_release(dev_get_cma_area(dev), page, (total_size / PAGE_SIZE));
+> +
+> +release:
+> +	of_reserved_mem_device_release(dev);
+
+Where is cleanup on unbind?
+
+> +	return ret;
+> +}
+> +
+> +static const struct of_device_id mem_dump_match_table[] = {
+> +	{.compatible = "qcom,mem-dump",},
+> +	{}
+> +};
+> +
 Best regards,
 Krzysztof
 
