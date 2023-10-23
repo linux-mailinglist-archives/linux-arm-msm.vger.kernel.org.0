@@ -2,60 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F2CC7D3734
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 14:52:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D9E2D7D3738
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 14:53:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230140AbjJWMwo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 08:52:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60224 "EHLO
+        id S229698AbjJWMxz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 08:53:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229686AbjJWMwn (ORCPT
+        with ESMTP id S230240AbjJWMxy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 08:52:43 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DDD3DF
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 05:52:41 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-40839807e82so18679675e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 05:52:40 -0700 (PDT)
+        Mon, 23 Oct 2023 08:53:54 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAA03C4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 05:53:51 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2b9338e4695so44807491fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 05:53:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698065558; x=1698670358; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698065630; x=1698670430; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=kXXWpyKjaK7DwcYe+5XUUbyH6RNWVCkJ3QC/5EkaM0Y=;
-        b=Ni9TVP6OiMO4YxjB+t4z7u4VGfNCJJ8YmyHe9JIb6KNoiyYdpIr6AwOtixNeqiWcSk
-         UNGCCLpdwdZAzUl7UX4DbPnP4WvVmx8LuQ1eL0XfooFSzHmeXHXwKMEW+4KF0kIFAazU
-         YzZrCdPZjMeZ3YFyVkHrc7oNtmW9ZIeWZdJxUH6KgJoihLtvx+hRNJuNBzRxr0ELPfGU
-         kD2kvYnRN9jQjF5YevcDpPZxQBonhKHW+bW39xx6Uw9RLpvNLEXGVtAE6MqlsiO0Ushv
-         KHThtWPTiLAne09X2s/Up60fvi/6BYZwpqaBN8x5lASO5qWs7Rru0WZ/nwXxO0ysFEFK
-         cNsA==
+        bh=8TOj21DpFla94B3lrezd2m5FW2M9cR+LJFLebJcZV5s=;
+        b=z23NC1wVaz34BCqtA40QAperMFvZmB7BOxefq4W7hduS3dFmx5J58L7w3aRiNCg/FD
+         zpEjfNcTvoOh3DINOIxlH707OaoojK3f3pJtjHvxIdpyYXzAsP/QTnVvp7k1RZgDbHIx
+         NV9ddqAV7ubFWVUZTo6eR2dwB7uM5ll6RDJ+rvbv25NuPxp43O4XIKMJ5lR2SOm8ea6x
+         +mPubpgJ9tEAODWOqQ+jcFonLHBssDpHixpW6e1xUCzHYXVuIwvqTCAcnCV/NTUZtzoa
+         VQuDGmvJWVnTwHFPQM7zxG542uLr5+HzwipaCXVkAGxe/cVOM/ZrxMjhEKFbA+GG9jox
+         TaeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698065558; x=1698670358;
+        d=1e100.net; s=20230601; t=1698065630; x=1698670430;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kXXWpyKjaK7DwcYe+5XUUbyH6RNWVCkJ3QC/5EkaM0Y=;
-        b=sb/TeGxs1Yi6R/KnHQDZxIpFvWwWzUeewS9sPHrj+fp5np2V6oJEja2lr2vClBYWri
-         S4U8z7jLNId5oUzel5LKeFViLLTl7Ysn5BjO15UzU+L8qHS/z11/FVGj38dtbucrmii/
-         PTuhocWDk/mepqI6PTfvYhk9Hgy/5N7HN6BhuuG0/9d02LRCTv2szHMJsCLIQBwOr1j3
-         mcpjHNNA25bs5YXtv8lwQhBM55cN1L+ImFe1SzFBqC4syeDEhI6d8ok7WtCucrvqoU2b
-         0LNjWgLjzaSxEV+lhkK7OKQWFeR9bocVgxhIU+MYlUfEPFMhvAgZ/WHHClSl7QF1e7nh
-         OGmA==
-X-Gm-Message-State: AOJu0YwKtRDyCbA9cdPyc+iqIxrhfX5n4NmX+CTzaqaa/7ZrHaBlrTYW
-        HnRDLrXLfijs0F2sbbSJGys9tg==
-X-Google-Smtp-Source: AGHT+IEIurED8huKwHW14J8ccCKS0kJ5gkxIqQCQnQLtx99nfJT1Xuajn8thmM30NcJdyHOBHxinAQ==
-X-Received: by 2002:a05:600c:3c93:b0:407:4701:f9e with SMTP id bg19-20020a05600c3c9300b0040747010f9emr8863144wmb.17.1698065558628;
-        Mon, 23 Oct 2023 05:52:38 -0700 (PDT)
+        bh=8TOj21DpFla94B3lrezd2m5FW2M9cR+LJFLebJcZV5s=;
+        b=ERvykJWqNERGuGdGLUw+YYMfwURtt9FypMXen5BSbOnT3u0yU7r0brCBZHHZFY/j1F
+         MgbtwY6PBhk3/fVdPzd6hGf4X2+6DmmqVfS+lA6UUjEnWeGpkMLW3NkPlMvLvWCyfzX8
+         hZXHK/t/3A6f30rjSNCb7/VhpZP3guAEhbAPr8QtZzvDXk1gtFeiBRkcPmTjO5IQTE9l
+         XS1jwiwgQDad0yRA7oXVwaPKlQ5sNay636pXKI6TbaNbS35/V3YfZM0hOmMKL5HGEks8
+         STbK7AVUSgsxzXY8k/AyoiOzL4BWoorlvs4gpQoNFqUDmNW1oYtUb3fcD7VSjpKEannv
+         +/lQ==
+X-Gm-Message-State: AOJu0YzCHab+1i9ZV772XPK/NZ2y4DpSIKejw6Q3girWX68NXIEbOCJ0
+        /ZuuXlhpnT/6Ng8xUycRqPt16Q==
+X-Google-Smtp-Source: AGHT+IFJPdsoqx2RrcTYIQaWdx7rxWWMGcczasupIxWfHMHGwXQMYXjL9Vwq0Y/tOuhz8xM/sEuiEQ==
+X-Received: by 2002:a05:651c:1413:b0:2c5:cc7:d18a with SMTP id u19-20020a05651c141300b002c50cc7d18amr5649932lje.13.1698065630046;
+        Mon, 23 Oct 2023 05:53:50 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id i21-20020a05600c355500b00405bbfd5d16sm9509384wmq.7.2023.10.23.05.52.37
+        by smtp.gmail.com with ESMTPSA id i21-20020a05600c355500b00405bbfd5d16sm9509384wmq.7.2023.10.23.05.53.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Oct 2023 05:52:38 -0700 (PDT)
-Message-ID: <38aa02c4-5b8d-4978-96a2-241fe5f94b50@linaro.org>
-Date:   Mon, 23 Oct 2023 14:52:36 +0200
+        Mon, 23 Oct 2023 05:53:49 -0700 (PDT)
+Message-ID: <2c8cc463-84dd-4f28-812d-f5eea922daef@linaro.org>
+Date:   Mon, 23 Oct 2023 14:53:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/5] dt-bindings: soc: qcom: Add memory_dump driver
- bindings
+Subject: Re: [PATCH v1 3/5] soc: qcom: memory_dump: Add memory dump driver
 Content-Language: en-US
 To:     Zhenhua Huang <quic_zhenhuah@quicinc.com>, agross@kernel.org,
         andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
@@ -64,9 +63,11 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, kernel@quicinc.com,
         quic_tingweiz@quicinc.com
 References: <1698052857-6918-1-git-send-email-quic_zhenhuah@quicinc.com>
- <1698052857-6918-2-git-send-email-quic_zhenhuah@quicinc.com>
- <27fcdcc1-b29b-43b2-8b1a-c648dd9e696c@linaro.org>
- <d3b62002-c29c-a45e-279f-7d07c697aa77@quicinc.com>
+ <1698052857-6918-4-git-send-email-quic_zhenhuah@quicinc.com>
+ <5bac8188-7d27-4efe-9493-dec4393fbeb0@linaro.org>
+ <b455d4f7-0347-ac07-6d41-32b3f06c4f0a@quicinc.com>
+ <454c4267-6bb7-456e-8dc1-cba83ffd1641@linaro.org>
+ <1a5b2381-8987-2f92-d018-29fdbc23b826@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -112,42 +113,42 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <d3b62002-c29c-a45e-279f-7d07c697aa77@quicinc.com>
+In-Reply-To: <1a5b2381-8987-2f92-d018-29fdbc23b826@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/10/2023 13:54, Zhenhua Huang wrote:
+On 23/10/2023 14:19, Zhenhua Huang wrote:
 > 
 > 
-> On 2023/10/23 17:27, Krzysztof Kozlowski wrote:
->> On 23/10/2023 11:20, Zhenhua Huang wrote:
->>> Add bindings for the QCOM Memory Dump driver providing debug
+> On 2023/10/23 19:46, Krzysztof Kozlowski wrote:
+>> On 23/10/2023 13:43, Zhenhua Huang wrote:
+>>>>> +
+>>>>> +			mem_dump_apply_offset(&dump_vaddr, &phys_addr,
+>>>>> +					      size + QCOM_DUMP_DATA_SIZE);
+>>>>> +			if (phys_addr > phys_end_addr) {
+>>>>> +				dev_err_probe(dev, -ENOMEM, "Exceeding allocated region\n");
+>>>>
+>>>> ENOMEM? Does not look right then.
+>>>
+>>> ENOMEM means the memory allocated not enough? any suggestion? Thanks.
 >>
->> Bindings are for hardware, not driver. This suggests it is not suitable
->> for bindings at all.
->>
->>> facilities. Firmware dumps system cache, internal memory,
->>> peripheral registers to reserved DDR as per the table which
->>> populated by the driver, after crash and warm reset.
->>
->> Again driver :/
+>> The error code is okay, but we rarely need to print error messages for
+>> memory allocation failures. Core prints it already.
 > 
-> Thanks for pointing out. Qualcomm memory dump device is a reserved 
-> memory region which is used to communicate with firmware. I will update 
-> description in next version.
+> It's not same as below case. Allocation is successful here, while the 
+> driver used more than allocated size.
 
-I have still doubts that it is suitable for DT. I usually expect  such
-firmware feature-drivers to be instantiated by existing firmware
-drivers. You do not need DT for this.
+$ man errno
+ENOMEM means: Not enough space/cannot allocate memory
+
 
 Best regards,
 Krzysztof
