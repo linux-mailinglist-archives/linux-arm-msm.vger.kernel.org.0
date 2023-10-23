@@ -2,405 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E31C7D38D6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 16:04:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 640367D38EF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 16:07:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230250AbjJWOEo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 10:04:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53736 "EHLO
+        id S231259AbjJWOHC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 10:07:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231219AbjJWOEn (ORCPT
+        with ESMTP id S230250AbjJWOHB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 10:04:43 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FE63D73
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 07:04:39 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-32db8f8441eso2680162f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 07:04:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698069877; x=1698674677; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=feOKUCgu/NwWDJRdl5k00+5MbUdrzhLpwZuuii6+kaw=;
-        b=C/q7geUvj5BPCfDAEpc5fH2qGpQKXMydwwdEGvsD5fdW8oLGOfdx7lAxNs26aW1Lqd
-         TVSfW289P4rIgRuhKkHjDw7yy6O5y6pZgj/huAlF1nFivxiIdKJOkza3E9Yk4LBY0Ae+
-         uhrIjcm7lm+4fJ0TsrNSocVG6zLcBBd3bpjPkEkj9RY7BUV8m4IGwDx9pe60BgbdAL1i
-         Cs/o7U3pdeN6/4ckc04PRYWSBOCqokgHd8ZmTYpaPjUXRuoTVQDSEEXc0n6K5X361r8l
-         yDMtU643KAgXZgpsbUj445xh2yzjy8OBgJKltrMgXY/iiCjSlHWYa0OhflBLQ2b5FXSs
-         LdpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698069877; x=1698674677;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=feOKUCgu/NwWDJRdl5k00+5MbUdrzhLpwZuuii6+kaw=;
-        b=Y9d78QHen1fr6xNSn2caU7ACDWw8F3EccSICUItmug5D70ofG+LNmiGLLT5f9hkxH5
-         yAwjHEIhFu/JYr8PFV31tP8enH2+dK3qyXbsES4DmhQ3U1tdeez+KXCmi6y721izcWx9
-         mfGxYx1JoRNU4UubxqdCIn889cyyQ+Wq54HW3k+cvbtIF18CAcBoQS3lYMEJM81IhYBP
-         LMEQahg1pK40yYS4gdxCf0FPs6ief8L4ahi8FrJ3p0lYdG+ebiGtibPFQ3sUa/xPchbl
-         kHsLIUYeLU37dtgkxJ+OsT1o44Wnf9mLxzbz8nRYn4Ba905nWeUcZJB7qtGSjwnAPpGC
-         nu1g==
-X-Gm-Message-State: AOJu0YzrkfZEqWxS+AoG4bLHWIenPaTe2+XaUAHnfjeY29UrQL24eKi8
-        xkCnSB7GLY0RqXJ7AWv54BzK1Q==
-X-Google-Smtp-Source: AGHT+IHy+5g34JuyY2T0tSV2kR1cQY5CepkcDP3rqVrwZ20pyk2L/CnPgo0cBTG/n9ky2O9UJlK/xw==
-X-Received: by 2002:adf:e808:0:b0:32d:9a36:b518 with SMTP id o8-20020adfe808000000b0032d9a36b518mr6259762wrm.69.1698069877341;
-        Mon, 23 Oct 2023 07:04:37 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:a36e:a5d9:26ae:74b1? ([2a01:e0a:982:cbb0:a36e:a5d9:26ae:74b1])
-        by smtp.gmail.com with ESMTPSA id n7-20020a5d6b87000000b003140f47224csm7796062wrx.15.2023.10.23.07.04.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Oct 2023 07:04:36 -0700 (PDT)
-Message-ID: <925cc416-e8e0-4a68-addb-8a7d11d3895c@linaro.org>
-Date:   Mon, 23 Oct 2023 16:04:35 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v9 2/4] Input: add core support for Goodix Berlin
- Touchscreen IC
-Content-Language: en-US, fr
-To:     Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc:     linux-input@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Mon, 23 Oct 2023 10:07:01 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B31C10A;
+        Mon, 23 Oct 2023 07:07:00 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE822C433C8;
+        Mon, 23 Oct 2023 14:06:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1698070019;
+        bh=EFCcj+kM49q/Fckkag31hERshVse68raKNrkQaF+5ZE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=jY23vsQ5maPtg3WiklVBO5WrDgi3oiBq+nleb+bSxDOdxu7etyw40395PmLKcUXJQ
+         /C7QPkQN4FBPAFmoYwMLym5TGfyvKZZwu5LQOo3KRKpjcCBOOZArTSNmTalM2O7WwI
+         ROE7GQonuqIAHKpVD56N824eore4Y6NhWoAW3cJT+gftflAEmDrz7msTH+/ssAue12
+         hPVWxzoMdQmz+a/GdAbTnc+Z+fE6EyT1IUPJ3fMb80qkkB+yutnkPvmOsffjkuTPO+
+         9rDAlCNGA46AHMd7hX4HXzzbhb7Fz+0Hdzqxy2V6vEDiZoHVIHjMPlXGT07nbteHqq
+         qvLx+Cm4LPi8Q==
+Received: from johan by xi.lan with local (Exim 4.96)
+        (envelope-from <johan@kernel.org>)
+        id 1quvaM-0000YI-0b;
+        Mon, 23 Oct 2023 16:07:14 +0200
+Date:   Mon, 23 Oct 2023 16:07:14 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bastien Nocera <hadess@hadess.net>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Henrik Rydberg <rydberg@bitmath.org>,
-        Jeff LaBundy <jeff@labundy.com>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231021-topic-goodix-berlin-upstream-initial-v9-0-13fb4e887156@linaro.org>
- <20231021-topic-goodix-berlin-upstream-initial-v9-2-13fb4e887156@linaro.org>
- <ZTX4dPa3CxZacDph@google.com>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <ZTX4dPa3CxZacDph@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
+        quic_jackp@quicinc.com, ahalaney@redhat.com,
+        quic_shazhuss@quicinc.com
+Subject: Re: [PATCH v13 05/10] usb: dwc3: qcom: Refactor IRQ handling in QCOM
+ Glue driver
+Message-ID: <ZTZ-EvvbuA6HpycT@hovoldconsulting.com>
+References: <20231007154806.605-1-quic_kriskura@quicinc.com>
+ <20231007154806.605-6-quic_kriskura@quicinc.com>
+ <ZTJ_T1UL8-s2cgNz@hovoldconsulting.com>
+ <14fc724c-bc99-4b5d-9893-3e5eff8895f7@quicinc.com>
+ <ZTY7Lwjd3_8NlfEi@hovoldconsulting.com>
+ <cabf24d0-8eea-4eb5-8205-bf7fe6017ec2@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cabf24d0-8eea-4eb5-8205-bf7fe6017ec2@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
+On Mon, Oct 23, 2023 at 04:54:11PM +0530, Krishna Kurapati PSSNV wrote:
+> On 10/23/2023 2:51 PM, Johan Hovold wrote:
+> > On Mon, Oct 23, 2023 at 12:11:45AM +0530, Krishna Kurapati PSSNV wrote:
+> >> On 10/20/2023 6:53 PM, Johan Hovold wrote:
 
-On 23/10/2023 06:37, Dmitry Torokhov wrote:
-> Hi Neil,
+> >>> I also don't like the special handling of hs_phy_irq; if this is really
+> >>> just another name for the pwr_event_irq then this should be cleaned up
+> >>> before making the code more complicated than it needs to be.
+> >>>
+> >>> Make sure to clarify this before posting a new revision.
+> >>
+> >> hs_phy_irq is different from pwr_event_irq.
+> > 
+> > How is it different and how are they used?
+> > 
+> >> AFAIK, there is only one of this per controller.
+> > 
+> > But previous controllers were all single port so this interrupt is
+> > likely also per-port, even if your comment below seems to suggest even
+> > SC8280XP has one, which is unexpected (and not described in the updated
+> > binding):
+> > 
+> > 	Yes, all targets have the same IRQ's. Just that MP one's have
+> > 	multiple IRQ's of each type. But hs-phy_irq is only one in
+> > 	SC8280 as well.
+> > 
+> > 	https://lore.kernel.org/lkml/70b2495f-1305-05b1-2039-9573d171fe24@quicinc.com/
+> > 
+> > Please clarify.
+> > 
 > 
-> On Sat, Oct 21, 2023 at 01:09:24PM +0200, Neil Armstrong wrote:
->> +static int goodix_berlin_get_ic_info(struct goodix_berlin_core *cd)
->> +{
->> +	u8 afe_data[GOODIX_BERLIN_IC_INFO_MAX_LEN];
+> For sure pwr_event_irq and hs_phy_irq are different. I assumed it was 
+> per-controller and not per-phy because I took reference from software 
+> code we have on downstream and hs_phy for multiport is not used 
+> anywhere. I don't see any functionality implemented in downstream for 
+> that IRQ. And it is only one for single port controllers.
+>
+> But I got the following info from HW page and these are all the 
+> interrupts (on apss processor) for multiport (extra details removed):
 > 
-> You probably already saw the kernel test robot message, I think we
-> should allocate this buffer in the heap (and free it once its no longer
-> needed).
+> u_usb31_scnd_mvs_pipe_wrapper_usb31_power_event_irq_0	SYS_apcsQgicSPI[130]
+> u_usb31_scnd_mvs_pipe_wrapper_usb31_power_event_irq_1	SYS_apcsQgicSPI[135]
+> u_usb31_scnd_mvs_pipe_wrapper_usb31_power_event_irq_3	SYS_apcsQgicSPI[856]
+> u_usb31_scnd_mvs_pipe_wrapper_usb31_power_event_irq_2	SYS_apcsQgicSPI[857]
+> 
+> u_usb31_scnd_mvs_pipe_wrapper_usb31_ctrl_irq[0]	SYS_apcsQgicSPI[133]
+> u_usb31_scnd_mvs_pipe_wrapper_usb31_ctrl_irq[1]	SYS_apcsQgicSPI[134]
 
-Indeed I haven't received it on 9 patch submitting, anyway moved it to head.
+This second core interrupt is also missing in the updated binding... It
+is defined in the ACPI tables so presumably it is needed for the
+multiport controller.
 
-> 
->> +	__le16 length_raw;
->> +	u16 length;
->> +	int error;
->> +
->> +	error = regmap_raw_read(cd->regmap, GOODIX_BERLIN_IC_INFO_ADDR,
->> +				&length_raw, sizeof(length_raw));
->> +	if (error) {
->> +		dev_info(cd->dev, "failed get ic info length, %d\n", error);
->> +		return error;
->> +	}
->> +
->> +	length = le16_to_cpu(length_raw);
->> +	if (length >= GOODIX_BERLIN_IC_INFO_MAX_LEN) {
->> +		dev_info(cd->dev, "invalid ic info length %d\n", length);
->> +		return -EINVAL;
->> +	}
->> +
->> +	error = regmap_raw_read(cd->regmap, GOODIX_BERLIN_IC_INFO_ADDR,
->> +				afe_data, length);
->> +	if (error) {
->> +		dev_info(cd->dev, "failed get ic info data, %d\n", error);
->> +		return error;
->> +	}
->> +
->> +	/* check whether the data is valid (ex. bus default values) */
->> +	if (goodix_berlin_is_dummy_data(cd, (const uint8_t *)afe_data, length)) {
-> 
-> This cast is not needed.
-> 
->> +		dev_err(cd->dev, "fw info data invalid\n");
->> +		return -EINVAL;
->> +	}
->> +
->> +	if (!goodix_berlin_checksum_valid((const uint8_t *)afe_data, length)) {
-> 
-> This cast is not needed either.
-> 
->> +		dev_info(cd->dev, "fw info checksum error\n");
->> +		return -EINVAL;
->> +	}
->> +
->> +	error = goodix_berlin_convert_ic_info(cd, afe_data, length);
->> +	if (error)
->> +		return error;
->> +
->> +	/* check some key info */
->> +	if (!cd->touch_data_addr) {
->> +		dev_err(cd->dev, "touch_data_addr is null\n");
->> +		return -EINVAL;
->> +	}
->> +
->> +	return 0;
->> +}
->> +
->> +static void goodix_berlin_parse_finger(struct goodix_berlin_core *cd,
->> +				       const void *buf, int touch_num)
->> +{
->> +	const struct goodix_berlin_touch_data *touch_data = buf;
->> +	int i;
->> +
->> +	/* Check for data validity */
->> +	for (i = 0; i < touch_num; i++) {
->> +		unsigned int id;
->> +
->> +		id = FIELD_GET(GOODIX_BERLIN_TOUCH_ID_MASK, touch_data[i].id);
->> +
->> +		if (id >= GOODIX_BERLIN_MAX_TOUCH) {
->> +			dev_warn(cd->dev, "invalid finger id %d\n", id);
->> +			return;
-> 
-> Is it important to abort entire packet if one if the slots has incorrect
-> data? Can we simply skip over these contacts?
+Do you have any more details on this one?
 
-Indeed, merged the for loops and simply skip the invalid finger id.
+> u_cm_usb3_uni_wrapper_mp0_usb3phy_debug_irq	SYS_apcsQgicSPI[668]
+> u_usb31_scnd_mvs_pipe_wrapper_usb31_bam_irq[0]	SYS_apcsQgicSPI[830]
+> u_cm_usb3_uni_wrapper_mp1_usb3phy_debug_irq	SYS_apcsQgicSPI[855]
+> 
+> u_usb31_scnd_mvs_pipe_wrapper_usb31_hs_phy_irq_0	SYS_apcsQgicSPI[131]
+> u_usb31_scnd_mvs_pipe_wrapper_usb31_hs_phy_irq_1	SYS_apcsQgicSPI[136]
+> u_usb31_scnd_mvs_pipe_wrapper_usb31_hs_phy_irq_3	SYS_apcsQgicSPI[859]
+> u_usb31_scnd_mvs_pipe_wrapper_usb31_hs_phy_irq_2	SYS_apcsQgicSPI[860]
 
-> 
->> +		}
->> +	}
->> +
->> +	/* Report finger touches */
->> +	for (i = 0; i < touch_num; i++) {
->> +		input_mt_slot(cd->input_dev,
->> +			      FIELD_GET(GOODIX_BERLIN_TOUCH_ID_MASK,
->> +					touch_data[i].id));
->> +		input_mt_report_slot_state(cd->input_dev, MT_TOOL_FINGER, true);
->> +
->> +		touchscreen_report_pos(cd->input_dev, &cd->props,
->> +				       __le16_to_cpu(touch_data[i].x),
->> +				       __le16_to_cpu(touch_data[i].y),
->> +				       true);
->> +		input_report_abs(cd->input_dev, ABS_MT_TOUCH_MAJOR,
->> +				 __le16_to_cpu(touch_data[i].w));
->> +	}
->> +
->> +	input_mt_sync_frame(cd->input_dev);
->> +	input_sync(cd->input_dev);
->> +}
->> +
->> +static void goodix_berlin_touch_handler(struct goodix_berlin_core *cd,
->> +					const void *pre_buf, u32 pre_buf_len)
->> +{
->> +	static u8 buffer[GOODIX_BERLIN_IRQ_READ_LEN(GOODIX_BERLIN_MAX_TOUCH)];
-> 
-> No, please no static data. The drivers should be ready to handle more
-> than one device on a system. If the buffer is large-ish put it into
-> goodix_berlin_core.
+Ok, so at least we know hs_phy_irq and pwr_event_irq are distinct and
+both per-port.
 
-This is a typo from vendor kernel, I didn't want a static buffer here...
+The ACPI tables do not seem to include these, but yeah, that doesn't say
+much more than that the Windows implementation doesn't currently use
+them either.
 
-The buffer is only 26 bytes, it's small enough to stay here in non-static.
+> u_cm_dwc_usb2_hs0_usb2_dpse	apps_pdc_irq_out[127]
+> u_cm_dwc_usb2_hs0_usb2_dmse	apps_pdc_irq_out[126]
+> u_cm_dwc_usb2_hs1_usb2_dpse	apps_pdc_irq_out[129]
+> u_cm_dwc_usb2_hs1_usb2_dmse	apps_pdc_irq_out[128]
+> u_cm_dwc_usb2_hs2_usb2_dpse	apps_pdc_irq_out[131]
+> u_cm_dwc_usb2_hs2_usb2_dmse	apps_pdc_irq_out[130]
+> u_cm_dwc_usb2_hs3_usb2_dpse	apps_pdc_irq_out[133]
+> u_cm_dwc_usb2_hs3_usb2_dmse	apps_pdc_irq_out[132]
+> u_cm_usb3_uni_wrapper_mp0_qmp_usb3_lfps_rxterm_irq	apps_pdc_irq_out[16]
+> u_cm_usb3_uni_wrapper_mp1_qmp_usb3_lfps_rxterm_irq	apps_pdc_irq_out[17]
+> 
+> Seems like there are 4 IRQ's for HS.
 
-> 
-> 
->> +	u8 point_type, touch_num;
->> +	int error;
->> +
->> +	/* copy pre-data to buffer */
->> +	memcpy(buffer, pre_buf, pre_buf_len);
->> +
->> +	touch_num = FIELD_GET(GOODIX_BERLIN_TOUCH_COUNT_MASK,
->> +			      buffer[GOODIX_BERLIN_REQUEST_TYPE_OFFSET]);
->> +
->> +	if (touch_num > GOODIX_BERLIN_MAX_TOUCH) {
->> +		dev_warn(cd->dev, "invalid touch num %d\n", touch_num);
->> +		return;
->> +	}
->> +
->> +	if (touch_num) {
->> +		/* read more data if more than 2 touch events */
->> +		if (unlikely(touch_num > 2)) {
->> +			error = regmap_raw_read(cd->regmap,
->> +						cd->touch_data_addr + pre_buf_len,
->> +						&buffer[pre_buf_len],
->> +						(touch_num - 2) * GOODIX_BERLIN_BYTES_PER_POINT);
->> +			if (error) {
->> +				dev_err_ratelimited(cd->dev, "failed to get touch data, %d\n",
->> +						    error);
->> +				return;
->> +			}
->> +		}
->> +
->> +		point_type = FIELD_GET(GOODIX_BERLIN_POINT_TYPE_MASK,
->> +				       buffer[GOODIX_BERLIN_IRQ_EVENT_HEAD_LEN]);
->> +
->> +		if (point_type == GOODIX_BERLIN_POINT_TYPE_STYLUS ||
->> +		    point_type == GOODIX_BERLIN_POINT_TYPE_STYLUS_HOVER) {
->> +			dev_warn_once(cd->dev, "Stylus event type not handled\n");
->> +			return;
->> +		}
->> +
->> +		if (!goodix_berlin_checksum_valid(&buffer[GOODIX_BERLIN_IRQ_EVENT_HEAD_LEN],
->> +						  touch_num * GOODIX_BERLIN_BYTES_PER_POINT + 2)) {
->> +			dev_err(cd->dev, "touch data checksum error, data: %*ph\n",
->> +				touch_num * GOODIX_BERLIN_BYTES_PER_POINT + 2,
->> +				&buffer[GOODIX_BERLIN_IRQ_EVENT_HEAD_LEN]);
->> +			return;
->> +		}
->> +	}
->> +
->> +	goodix_berlin_parse_finger(cd, &buffer[GOODIX_BERLIN_IRQ_EVENT_HEAD_LEN],
->> +				   touch_num);
->> +}
->> +
->> +static int goodix_berlin_request_handle_reset(struct goodix_berlin_core *cd)
->> +{
->> +	gpiod_set_value(cd->reset_gpio, 1);
->> +	usleep_range(2000, 2100);
->> +	gpiod_set_value(cd->reset_gpio, 0);
->> +
->> +	msleep(GOODIX_BERLIN_NORMAL_RESET_DELAY_MS);
-> 
-> The reset line handling is optional, we should skip waits if there is
-> no GPIO defined for the board.
+Right. And I assume there are hs_phy_irqs also for the first two USB
+controllers on sc8280xp?
 
-Ack, instead I only call this if gpio is valid.
+Can you find out anything more about what hs_phy_irq is used for? It
+appears to be an HS wakeup interrupt like the dp/dm ones, but there are
+not really any details on how it is supposed to be used.
 
-> 
->> +
->> +	return 0;
->> +}
->> +
->> +static irqreturn_t goodix_berlin_threadirq_func(int irq, void *data)
->> +{
->> +	struct goodix_berlin_core *cd = data;
->> +	u8 buf[GOODIX_BERLIN_IRQ_READ_LEN(2)];
->> +	u8 event_status;
->> +	int error;
->> +
->> +	/* First, read buffer with space for 2 touch events */
->> +	error = regmap_raw_read(cd->regmap, cd->touch_data_addr, buf,
->> +				GOODIX_BERLIN_IRQ_READ_LEN(2));
->> +	if (error) {
->> +		dev_err_ratelimited(cd->dev, "failed get event head data, %d\n", error);
->> +		return IRQ_HANDLED;
->> +	}
->> +
->> +	if (buf[GOODIX_BERLIN_STATUS_OFFSET] == 0)
->> +		return IRQ_HANDLED;
->> +
->> +	if (!goodix_berlin_checksum_valid(buf, GOODIX_BERLIN_IRQ_EVENT_HEAD_LEN)) {
->> +		dev_warn_ratelimited(cd->dev, "touch head checksum err : %*ph\n",
->> +				     GOODIX_BERLIN_IRQ_EVENT_HEAD_LEN, buf);
->> +		return IRQ_HANDLED;
->> +	}
->> +
->> +	event_status = buf[GOODIX_BERLIN_STATUS_OFFSET];
->> +
->> +	if (event_status & GOODIX_BERLIN_TOUCH_EVENT)
->> +		goodix_berlin_touch_handler(cd, buf, GOODIX_BERLIN_IRQ_READ_LEN(2));
->> +
->> +	if (event_status & GOODIX_BERLIN_REQUEST_EVENT) {
->> +		switch (buf[GOODIX_BERLIN_REQUEST_TYPE_OFFSET]) {
->> +		case GOODIX_BERLIN_REQUEST_CODE_RESET:
->> +			goodix_berlin_request_handle_reset(cd);
->> +			break;
->> +
->> +		default:
->> +			dev_warn(cd->dev, "unsupported request code 0x%x\n",
->> +				 buf[GOODIX_BERLIN_REQUEST_TYPE_OFFSET]);
->> +		}
->> +	}
->> +
->> +	/* Clear up status field */
->> +	regmap_write(cd->regmap, cd->touch_data_addr, 0);
->> +
->> +	return IRQ_HANDLED;
->> +}
->> +
->> +static int goodix_berlin_input_dev_config(struct goodix_berlin_core *cd,
->> +					  const struct input_id *id)
->> +{
->> +	struct input_dev *input_dev;
->> +	int error;
->> +
->> +	input_dev = devm_input_allocate_device(cd->dev);
->> +	if (!input_dev)
->> +		return -ENOMEM;
->> +
->> +	cd->input_dev = input_dev;
->> +	input_set_drvdata(input_dev, cd);
->> +
->> +	input_dev->name = "Goodix Berlin Capacitive TouchScreen";
->> +	input_dev->phys = "input/ts";
->> +
->> +	input_dev->id = *id;
->> +
->> +	input_set_abs_params(cd->input_dev, ABS_MT_POSITION_X, 0, SZ_64K - 1, 0, 0);
->> +	input_set_abs_params(cd->input_dev, ABS_MT_POSITION_Y, 0, SZ_64K - 1, 0, 0);
->> +	input_set_abs_params(cd->input_dev, ABS_MT_TOUCH_MAJOR, 0, 255, 0, 0);
->> +
->> +	touchscreen_parse_properties(cd->input_dev, true, &cd->props);
->> +
->> +	error = input_mt_init_slots(cd->input_dev, GOODIX_BERLIN_MAX_TOUCH,
->> +				    INPUT_MT_DIRECT | INPUT_MT_DROP_UNUSED);
->> +	if (error)
->> +		return error;
->> +
->> +	return input_register_device(cd->input_dev);
-> 
-> Please in functions with multiple possible failure paths use format
-> 
-> 	error = op(...);
-> 	if (error)
-> 		return error;
-> 
-> 	return 0;
-
-Ack, will check for this in the whole patchset.
-
-Thanks for review,
-Neil
-
-> 
-> Thanks.
-> 
-
+Johan
