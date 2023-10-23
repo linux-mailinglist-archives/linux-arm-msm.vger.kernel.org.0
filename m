@@ -2,75 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D01477D3B03
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 17:38:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7BF347D3B2B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 17:47:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231426AbjJWPin (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 11:38:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44178 "EHLO
+        id S230158AbjJWPrL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 11:47:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231979AbjJWPig (ORCPT
+        with ESMTP id S229741AbjJWPrK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 11:38:36 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55B74127
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 08:38:33 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2c503da4fd6so50260921fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 08:38:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698075511; x=1698680311; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=i/dkqG7TFqhS22WCtOJCYFAnzbujpg+JGXvYF9Z8Jtw=;
-        b=qWTNjPXBXo02bg2JHbXcWVUvQi6uUlqULZ4dp/6ehrzn3gZJ44BxqzyYbkjS9lZd4m
-         eqJbN3ArmiAJhidSJuggjX7OrQmw9udwlQdfXwmXBN8SzDp5dDGT8abNR+5SYQVxnzAZ
-         oqUThjzYBHxpMftXe04NAbtK5LYRTuIvixecYgfP/FMA1HnZ+ot4WOyBspMQgkXQeMLh
-         PL/lg07mLYfiYU2yXIthAKnICyUXPJ2GXE51iG2Z5rwrt45Wi0u3MkSH51gMoXDPBsfj
-         W6Ql6WuIamK8yeG9fNeLsOgifZuWHl6ORLZwUTNveXbfMYmAe9Z6Yw1xPdGKMuJHob+G
-         mv0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698075511; x=1698680311;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=i/dkqG7TFqhS22WCtOJCYFAnzbujpg+JGXvYF9Z8Jtw=;
-        b=qPzFA5lCisi/GmufSLYabT+ZeWltHC7jdgfLeBfd5wLaJm7gmSsWgldrinWgGU+UX4
-         z+d/NRwwQV68iNB2zAceAT0fQS0MZspTYU4/hibsbDKj7T5m7bOJ4rGslgy1tgFiECO0
-         nqkTvh/zn3fZ2e9eAJbQz6NY8UTA4N/4+WfXixBjesEJPVC7cLYJK9ol00rzePnHnE78
-         ot7IVuh0ANgbk+ovaC78dJNk3LU87T1r1TrOyHsacSdTvgs7OqCjhjj9RP7wUiein72F
-         GsvMEJ1WZ0FgDpRGe7Gb8l+1Yotj7a0mH18SqBubYBy10Km9Y9LujnCeyVKPFPaV/7QP
-         OZ5Q==
-X-Gm-Message-State: AOJu0Yz1hxY48153TBxbzaZuoZRE8k0MGSYZ54PTC+dtC4KyyuMMzX83
-        +xSo0LVwXjF6WOvdwTcqH0gALA==
-X-Google-Smtp-Source: AGHT+IGngUR8rAtE5PrJsk2wr4hxv06C9qj0fa4jQ7I8UYFXCU2Nwn1OFEnlZtFqOWcVgZkXoUM5mg==
-X-Received: by 2002:a2e:8619:0:b0:2c5:1989:ce1c with SMTP id a25-20020a2e8619000000b002c51989ce1cmr5983085lji.26.1698075511078;
-        Mon, 23 Oct 2023 08:38:31 -0700 (PDT)
-Received: from x13s-linux.nxsw.local ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id f4-20020a5d50c4000000b0032da319a27asm8096929wrt.9.2023.10.23.08.38.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Oct 2023 08:38:30 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        dmitry.baryshkov@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        jonathan@marek.ca, quic_tdas@quicinc.com,
-        vladimir.zapolskiy@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        bryan.odonoghue@linaro.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v3.1 4/4] arm64: dts: qcom: sc8280xp: Add in CAMCC for sc8280xp
-Date:   Mon, 23 Oct 2023 16:38:21 +0100
-Message-Id: <20231023153821.189331-5-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20231023153821.189331-1-bryan.odonoghue@linaro.org>
-References: <20231023153821.189331-1-bryan.odonoghue@linaro.org>
+        Mon, 23 Oct 2023 11:47:10 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E5239D;
+        Mon, 23 Oct 2023 08:47:08 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BF3EC433C7;
+        Mon, 23 Oct 2023 15:47:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1698076028;
+        bh=L40xDQVgTfM0jKjY2CcPMsYuyMAVupFmFZq0N07DI+g=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=sbnK38bPQPrn092XhaR2cO/AxY4uEXjnMQcpC/NMA4g9AOotvxHqhhb8JjZVlNh5p
+         oB2FU40IkKtsr3pZCmQVe51Lr5/HnWBgZsWMQGvZ64zfZAY54H8mymRuRdAcimCse5
+         xL7UmT8q0D24Y0kqT/1VUpYyXsNAqiVjcXwlr0Hu/A4hfqXcuE3hpV0cF6PQV+Xi2y
+         Wx1tS2qxw+84a4lTKT6VkzZiIvuiWF3rQtSLm7nPb3rMCMjvNWcFBuI1y97XII3rRs
+         BRq4B6aNjAvrANDVhKkizGr3qX4UYGsxdi/14X66cP6GOTKAYmdHzHW6uQb2LKIVSZ
+         CyAZrzZt+q6Ng==
+Received: from johan by xi.lan with local (Exim 4.96)
+        (envelope-from <johan@kernel.org>)
+        id 1qux9F-0001yj-3D;
+        Mon, 23 Oct 2023 17:47:22 +0200
+Date:   Mon, 23 Oct 2023 17:47:21 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
+        quic_jackp@quicinc.com, ahalaney@redhat.com,
+        quic_shazhuss@quicinc.com
+Subject: Re: [PATCH v13 06/10] usb: dwc3: qcom: Enable wakeup for applicable
+ ports of multiport
+Message-ID: <ZTaViatsRY7LCbIX@hovoldconsulting.com>
+References: <20231007154806.605-1-quic_kriskura@quicinc.com>
+ <20231007154806.605-7-quic_kriskura@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231007154806.605-7-quic_kriskura@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,49 +67,130 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add in CAMCC for sc8280xp. The sc8280xp Camera Clock Controller looks
-similar to most of the sdmX, smX and now scX controllers.
+On Sat, Oct 07, 2023 at 09:18:02PM +0530, Krishna Kurapati wrote:
+> Currently wakeup is supported by only single port controllers. Read speed
+> of each port and accordingly enable IRQ's for those ports.
+> 
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> ---
+>  drivers/usb/dwc3/dwc3-qcom.c | 65 +++++++++++++++++++-----------------
+>  1 file changed, 35 insertions(+), 30 deletions(-)
+> 
+> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> index 863892284146..651b9775a0c2 100644
+> --- a/drivers/usb/dwc3/dwc3-qcom.c
+> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> @@ -90,7 +90,7 @@ struct dwc3_qcom {
+>  	 */
+>  	int			phy_irq[NUM_PHY_IRQ - 1][DWC3_MAX_PORTS];
+>  	int			hs_phy_irq;
+> -	enum usb_device_speed	usb2_speed;
+> +	enum usb_device_speed	usb2_speed[DWC3_MAX_PORTS];
 
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+This also belongs in a new port structure.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index cad59af7ccef..fafea0f34fd9 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -8,6 +8,7 @@
- #include <dt-bindings/clock/qcom,gcc-sc8280xp.h>
- #include <dt-bindings/clock/qcom,gpucc-sc8280xp.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
-+#include <dt-bindings/clock/qcom,sc8280xp-camcc.h>
- #include <dt-bindings/clock/qcom,sc8280xp-lpasscc.h>
- #include <dt-bindings/interconnect/qcom,osm-l3.h>
- #include <dt-bindings/interconnect/qcom,sc8280xp.h>
-@@ -3450,6 +3451,20 @@ usb_1_role_switch: endpoint {
- 			};
- 		};
+>  	struct extcon_dev	*edev;
+>  	struct extcon_dev	*host_edev;
+> @@ -335,7 +335,8 @@ static bool dwc3_qcom_is_host(struct dwc3_qcom *qcom)
+>  	return dwc->xhci;
+>  }
+>  
+> -static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom)
+> +static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom,
+> +							int port_index)
+
+No need for line break (since it's a function definition).
+
+>  {
+>  	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
+>  	struct usb_device *udev;
+> @@ -348,12 +349,10 @@ static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom)
+>  
+>  	/*
+>  	 * It is possible to query the speed of all children of
+> -	 * USB2.0 root hub via usb_hub_for_each_child(). DWC3 code
+> -	 * currently supports only 1 port per controller. So
+> -	 * this is sufficient.
+> +	 * USB2.0 root hub via usb_hub_for_each_child().
+
+This comment no longer makes sense with your current implementation.
+
+But perhaps this should be done using usb_hub_for_each_child() instead
+as that may be more efficient. Then you use this function to read out
+the speed for all the ports in go (and store it in the port structures I
+mentioned). Please determine which alternative is best.
+
+>  	 */
+>  #ifdef CONFIG_USB
+> -	udev = usb_hub_find_child(hcd->self.root_hub, 1);
+> +	udev = usb_hub_find_child(hcd->self.root_hub, port_index + 1);
+>  #else
+>  	udev = NULL;
+>  #endif
+> @@ -386,23 +385,29 @@ static void dwc3_qcom_disable_wakeup_irq(int irq)
+>  
+>  static void dwc3_qcom_disable_interrupts(struct dwc3_qcom *qcom)
+>  {
+> +	int i;
+> +
+>  	dwc3_qcom_disable_wakeup_irq(qcom->hs_phy_irq);
+>  
+> -	if (qcom->usb2_speed == USB_SPEED_LOW) {
+> -		dwc3_qcom_disable_wakeup_irq(qcom->phy_irq[DM_HS_PHY_IRQ_INDEX][0]);
+> -	} else if ((qcom->usb2_speed == USB_SPEED_HIGH) ||
+> -			(qcom->usb2_speed == USB_SPEED_FULL)) {
+> -		dwc3_qcom_disable_wakeup_irq(qcom->phy_irq[DP_HS_PHY_IRQ_INDEX][0]);
+> -	} else {
+> -		dwc3_qcom_disable_wakeup_irq(qcom->phy_irq[DP_HS_PHY_IRQ_INDEX][0]);
+> -		dwc3_qcom_disable_wakeup_irq(qcom->phy_irq[DM_HS_PHY_IRQ_INDEX][0]);
+> -	}
+> +	for (i = 0; i < qcom->num_ports; i++) {
+> +		if (qcom->usb2_speed[i] == USB_SPEED_LOW) {
+> +			dwc3_qcom_disable_wakeup_irq(qcom->phy_irq[DM_HS_PHY_IRQ_INDEX][i]);
+> +		} else if ((qcom->usb2_speed[i] == USB_SPEED_HIGH) ||
+> +			(qcom->usb2_speed[i] == USB_SPEED_FULL)) {
+> +			dwc3_qcom_disable_wakeup_irq(qcom->phy_irq[DP_HS_PHY_IRQ_INDEX][i]);
+> +		} else {
+> +			dwc3_qcom_disable_wakeup_irq(qcom->phy_irq[DP_HS_PHY_IRQ_INDEX][i]);
+> +			dwc3_qcom_disable_wakeup_irq(qcom->phy_irq[DM_HS_PHY_IRQ_INDEX][i]);
+> +		}
+>  
+> -	dwc3_qcom_disable_wakeup_irq(qcom->phy_irq[SS_PHY_IRQ_INDEX][0]);
+> +		dwc3_qcom_disable_wakeup_irq(qcom->phy_irq[SS_PHY_IRQ_INDEX][i]);
+> +	}
+>  }
+
+The above is hardly readable, partly because of the 2d array that I
+think you should drop, and partly because you add the port loop here
+instead of in the caller.
+
+A lot of these functions should become port operation where you either
+pass in a port structure directly or possibly a port index as I've
+mentioned before.
+
+[ I realise that the confusion around hs_phy_irq may be partly to blame
+for this but since that one is also a per-port interrupt, that's no
+longer an issue. ]
  
-+		camcc: clock-controller@ad00000 {
-+			compatible = "qcom,sc8280xp-camcc";
-+			reg = <0 0x0ad00000 0 0x20000>;
-+			clocks = <&gcc GCC_CAMERA_AHB_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK_A>,
-+				 <&sleep_clk>;
-+			power-domains = <&rpmhpd SC8280XP_MMCX>;
-+			required-opps = <&rpmhpd_opp_low_svs>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 		mdss0: display-subsystem@ae00000 {
- 			compatible = "qcom,sc8280xp-mdss";
- 			reg = <0 0x0ae00000 0 0x1000>;
--- 
-2.40.1
+>  static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
+> @@ -454,10 +461,8 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
+>  	 * The role is stable during suspend as role switching is done from a
+>  	 * freezable workqueue.
+>  	 */
+> -	if (dwc3_qcom_is_host(qcom) && wakeup) {
+> -		qcom->usb2_speed = dwc3_qcom_read_usb2_speed(qcom);
 
+So just let this function update the usb2 speed for all ports unless
+there are reasons not to.
+
+> +	if (dwc3_qcom_is_host(qcom) && wakeup)
+>  		dwc3_qcom_enable_interrupts(qcom);
+
+And then iterate over the ports and enable the interrupts here as you
+did above for the pwr_evnt_irqs.
+
+> -	}
+>  
+>  	qcom->is_suspended = true;
+
+Johan
