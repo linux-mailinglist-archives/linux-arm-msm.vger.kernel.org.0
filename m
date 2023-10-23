@@ -2,125 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2AFF17D40CC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 22:20:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 75A9E7D41C6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 23:36:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230228AbjJWUUr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 16:20:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41712 "EHLO
+        id S230486AbjJWVgi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 17:36:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230094AbjJWUUp (ORCPT
+        with ESMTP id S229845AbjJWVgh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 16:20:45 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E493D78;
-        Mon, 23 Oct 2023 13:20:41 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-53f9af41444so6009072a12.1;
-        Mon, 23 Oct 2023 13:20:41 -0700 (PDT)
+        Mon, 23 Oct 2023 17:36:37 -0400
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E07A3FD
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 14:36:34 -0700 (PDT)
+Received: by mail-yb1-xb34.google.com with SMTP id 3f1490d57ef6-d81d09d883dso3538405276.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 14:36:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698092439; x=1698697239; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698096994; x=1698701794; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WcJOgJNcS2p4NFz4YEARd6CEH2tDggIHToe8d/lsPVQ=;
-        b=VxcrThUfo0W4eyXlBjiuKB5S5dcnIHtdInr/IatALOPVCuqnG6HclRAKwL+mGC8cT2
-         S4VDN4PeIlnmEeNgcwTcHWCm2d/jQuuGnT0ggieiaUaimxzdGjZ+VMEIXiVykIqbF8lh
-         iWfsaRfSkon6H9cl+a9aJiQL4XQVhze2r2LXR4pkO83YaupK+cksVGu3DYSPP9OCazXV
-         PnCjnsGWoR0WOQlcpXXHqROl7ri6x5CT59kx0spvu3dI+38HJquiQY/QU/NKGURiv3LP
-         aWGE0uTfN9TGR6gUq0qMzxIksiDAeXv+zTNCRysxMIKVOrgQhQJG0qwXoi96fka3xsDK
-         /xVQ==
+        bh=dasD39M3kOdaux0g0YjT4u6dOP4/ZNPdFd3L1KQIfMs=;
+        b=R/rU3cEYS2UkifeZ6/rN64Sh/8jGbApgHPCWJuiqeoWuAds4F7OrUmW3r9/OmwDAjW
+         IO8bA13CrkqHhANtch9lN2UiajyKKXeFLDqzx+Ojvt8ZKKDYG6bE4pdGNaJ07SLCIXSt
+         Rxd/teCycFcYo8aq8Im1aG36yplPRkoaxayMEDgGhoWGyB6sYH29RohM84tUo3wv0E+V
+         tVtf/8HBuxLpcO5JDq7iZDSz8vsdDTL8/SUstPaigtpa/oSeWYMAqqbJp9KWcp4U3s//
+         rdSIpWy7k+FZ4T4sDxuj2AaSiDtaofBZlHK0OAy5rDFmDbSf706NF0rZ8qhBV3cveJTN
+         qCgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698092439; x=1698697239;
+        d=1e100.net; s=20230601; t=1698096994; x=1698701794;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WcJOgJNcS2p4NFz4YEARd6CEH2tDggIHToe8d/lsPVQ=;
-        b=JADEkVGexGtqnYm/m22VSc5atGb+VTfuZsOvxR8Kiw1MX7yFiP9fb0+0tq7Bo4eMVK
-         kA5ZRkAcJWSgA8ZxSdPdLZ3boYiS2/AiXy8UdNAOSbtzDU1/a3lhaTGqIT2+qxSlNqcc
-         8eh1m53+MbBEqa0sKBKdzCfEEmQVkowTSRhIDLdbCH7VNPW0gpbAptGGsCto2dSm954P
-         G7n7ddaFqx/U+cKIKe2F9h1Y0GG87UWtzrZbBxvgMB3XJ1JiwVkxWdC7uQpmUM1HE6uE
-         3fdYGrcYl2IZvF0cOY9sQpb1mZL4dPXjwuUvxBLmjTBh5EuMf90o/JZgi5rJQ0A7DU8p
-         Pghw==
-X-Gm-Message-State: AOJu0YwWKG2OVT5FIKc4FSL5AmtxnbzHWLGE+Dpj7ebDO9UX+v2AWL2+
-        iMpJFTsBwIeh6jThUsb6oM8SrgfoRjT1wc0mra8=
-X-Google-Smtp-Source: AGHT+IF0i4FCIEXJ5r+guzxgVZMg1LSWXPnTpOmpFJCUd+vzCdlua9+QP4fW2ZNfi7FYylAMHYWi/IN+X3DEJykeEoI=
-X-Received: by 2002:a50:d593:0:b0:53d:a0c9:dbd4 with SMTP id
- v19-20020a50d593000000b0053da0c9dbd4mr6379285edi.21.1698092439310; Mon, 23
- Oct 2023 13:20:39 -0700 (PDT)
+        bh=dasD39M3kOdaux0g0YjT4u6dOP4/ZNPdFd3L1KQIfMs=;
+        b=Sov272TNNJsgnelcmYb9kDGsVgrfUty/agrkrbEWky90F91qShoYyWlUyik0rDkyVt
+         PTUDmMaTrPI5HZ7lpOI+TYmh8g/Hj0Rw2QpJRvyjRv6JwMploPr5CLzi1VFn/OgYD6IV
+         vhtW5VrH0n2VwkaouPf78nsBYiOUv/weO6pdxk72A/gOfYwlduRX5FgwU93K/cunGwga
+         syFbOBnJiv699yEbsY9S173HlGuP175OtEs1ZkHmDaBIaJhwejrU8vkxYU7OpjqCEvWd
+         DUUY/C7tStbgZRmUqtFuVfcgJIBHzpyhoHcrYrBbA+4EHYCt4PCTY2AgxfLHfHJaobs9
+         NuIQ==
+X-Gm-Message-State: AOJu0YyvIF8VN1+gMlysaMiDUvEKdNl7qBtdyvctBgHSfI+SLc9hJVgZ
+        iWAaXxNKRXjGNF85Eczq0HTZA2X1lwb+kpi/wCDISw==
+X-Google-Smtp-Source: AGHT+IHlLgn1OLAqclnSuM/zDgOrhFwCvQfO7GPZvzYvmpAU5h/Cn4/Oq6Vt82z2nEaemKpE/WNLXgOlWVkp81RwaQQ=
+X-Received: by 2002:a25:10d6:0:b0:d9b:dfea:bc94 with SMTP id
+ 205-20020a2510d6000000b00d9bdfeabc94mr8213463ybq.31.1698096994064; Mon, 23
+ Oct 2023 14:36:34 -0700 (PDT)
 MIME-Version: 1.0
-References: <20231023-topic-adreno_warn-v1-1-bb1ee9391aa2@linaro.org>
- <CAF6AEGuS3PhNbh9Gmu1g9YpUcr3LOh1gZK-XBE+urdb5jRjorg@mail.gmail.com> <6a0398d1-22f4-4eb7-ba43-c448055be323@linaro.org>
-In-Reply-To: <6a0398d1-22f4-4eb7-ba43-c448055be323@linaro.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 23 Oct 2023 13:20:27 -0700
-Message-ID: <CAF6AEGuqrm0pssjRDa9DK=NppU4Qq5cPZicbGfxKH2czJmjK2A@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/adreno: Drop WARN_ON from patchid lookup for new GPUs
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Rob Clark <robdclark@chromium.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Abel Vesa <abel.vesa@linaro.org>
+References: <20231021-sakuramist-mi11u-v2-0-fa82c91ecaf0@gmail.com>
+ <20231021-sakuramist-mi11u-v2-1-fa82c91ecaf0@gmail.com> <CAA8EJprtd8htkDWAvhamgEo3DWMMDYe-P6cnr6nwLnms=N0k9A@mail.gmail.com>
+ <CAEPPPKt6fEyniHgietRcp0MYUErYfnLU-SjtsOofe8VaPiSwLg@mail.gmail.com>
+In-Reply-To: <CAEPPPKt6fEyniHgietRcp0MYUErYfnLU-SjtsOofe8VaPiSwLg@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 24 Oct 2023 00:36:23 +0300
+Message-ID: <CAA8EJppuf5Jiv1NJJLvmL25DgH6U=jZS=+zS_s_aJUfQWEa2Ug@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] soc: qcom: pmic_glink: enable UCSI for SM8350
+To:     Sophon Wu <wuxilin123@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Kees Cook <keescook@chromium.org>,
+        Tony Luck <tony.luck@intel.com>,
+        "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-hardening@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 23, 2023 at 12:56=E2=80=AFPM Konrad Dybcio <konrad.dybcio@linar=
-o.org> wrote:
+On Mon, 23 Oct 2023 at 08:06, Sophon Wu <wuxilin123@gmail.com> wrote:
 >
->
->
-> On 10/23/23 21:42, Rob Clark wrote:
-> > On Mon, Oct 23, 2023 at 7:29=E2=80=AFAM Konrad Dybcio <konrad.dybcio@li=
-naro.org> wrote:
-> >>
-> >> New GPUs still use the lower 2 bytes of the chip id (in whatever form
-> >> it comes) to signify silicon revision. Drop the warning that makes it
-> >> sound as if that was unintended.
-> >>
-> >> Fixes: 90b593ce1c9e ("drm/msm/adreno: Switch to chip-id for identifyin=
-g GPU")
-> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> >> ---
-> >>   drivers/gpu/drm/msm/adreno/adreno_gpu.h | 5 -----
-> >>   1 file changed, 5 deletions(-)
-> >>
-> >> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm=
-/msm/adreno/adreno_gpu.h
-> >> index 80b3f6312116..9a1ec42155fd 100644
-> >> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> >> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> >> @@ -203,11 +203,6 @@ struct adreno_platform_config {
-> >>
-> >>   static inline uint8_t adreno_patchid(const struct adreno_gpu *gpu)
-> >>   {
-> >> -       /* It is probably ok to assume legacy "adreno_rev" format
-> >> -        * for all a6xx devices, but probably best to limit this
-> >> -        * to older things.
-> >> -        */
-> >> -       WARN_ON_ONCE(gpu->info->family >=3D ADRENO_6XX_GEN1);
+> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =E4=BA=8E2023=E5=B9=B410=
+=E6=9C=8822=E6=97=A5=E5=91=A8=E6=97=A5 18:51=E5=86=99=E9=81=93=EF=BC=9A
 > >
-> > Maybe just change it to ADRENO_6XX_GEN4?
-> That also applies to 700
+> > On Sat, 21 Oct 2023 at 13:20, Xilin Wu via B4 Relay
+> > <devnull+wuxilin123.gmail.com@kernel.org> wrote:
+> > >
+> > > From: Xilin Wu <wuxilin123@gmail.com>
+> > >
+> > > UCSI is supported on SM8350. Allow it to enable USB role switch and
+> > > altmode notifications on SM8350.
+> >
+> > We have had troubles with UCSI on sm8350. I have a workaround for this
+> > (and earlier) platforms. Once it is ready to be posted, I'll include
+> > your patch in the series, if you don't mind.
+>
+> I don't mind of course. Do I possibly need to resend the series without t=
+he
+> pmic_glink patch?
 
-Then the warn is warning about what it is supposed to ;-)
+That depends on the review of the patch 3/3. If there are any
+comments, you'll have to resend. If not, maintainers can pick it up
+separately.
 
-I guess this is coming from a6xx_gmu_fw_start()?  I think we need a
-different way to construct the gmu chipid, since the point of this was
-to not depend on the low 8b having any particular meaning.  Perhaps we
-should just get the gmu chipid from the device table.
+> >
+> > >
+> > > Signed-off-by: Xilin Wu <wuxilin123@gmail.com>
+> > > ---
+> > >  drivers/soc/qcom/pmic_glink.c | 1 +
+> > >  1 file changed, 1 insertion(+)
+> > >
+> > > diff --git a/drivers/soc/qcom/pmic_glink.c b/drivers/soc/qcom/pmic_gl=
+ink.c
+> > > index 914057331afd..1196e79e6fb3 100644
+> > > --- a/drivers/soc/qcom/pmic_glink.c
+> > > +++ b/drivers/soc/qcom/pmic_glink.c
+> > > @@ -341,6 +341,7 @@ static const unsigned long pmic_glink_sm8450_clie=
+nt_mask =3D BIT(PMIC_GLINK_CLIENT
+> > >                                                            BIT(PMIC_G=
+LINK_CLIENT_UCSI);
+> > >
+> > >  static const struct of_device_id pmic_glink_of_match[] =3D {
+> > > +       { .compatible =3D "qcom,sm8350-pmic-glink", .data =3D &pmic_g=
+link_sm8450_client_mask },
+> > >         { .compatible =3D "qcom,sm8450-pmic-glink", .data =3D &pmic_g=
+link_sm8450_client_mask },
+> > >         { .compatible =3D "qcom,sm8550-pmic-glink", .data =3D &pmic_g=
+link_sm8450_client_mask },
+> > >         { .compatible =3D "qcom,pmic-glink" },
+> > >
+> > > --
+> > > 2.42.0
+> > >
+> >
+> >
+> > --
+> > With best wishes
+> > Dmitry
 
-BR,
--R
+
+
+--=20
+With best wishes
+Dmitry
