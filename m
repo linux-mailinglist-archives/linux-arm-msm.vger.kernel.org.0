@@ -2,70 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 714227D430E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 01:08:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B6FAA7D431C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 01:11:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229498AbjJWXIs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 19:08:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53706 "EHLO
+        id S229552AbjJWXL2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 19:11:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229482AbjJWXIr (ORCPT
+        with ESMTP id S229498AbjJWXL1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 19:08:47 -0400
-Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B28B1BD
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 16:08:45 -0700 (PDT)
-Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-59e88a28b98so32829307b3.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 16:08:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698102525; x=1698707325; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=k7q7uM7/5nANy1ke32gOriqsBEknknlJIz/6awHfnbE=;
-        b=Tgs9ewT4vJuzLgby3I0PD77fUXYX4AemNo7aMH0TRIth2HmUoDklfmYpmru0frRZCd
-         oyhoHm/ozVGoWJA07YFQGma6Yl6KNU+zAJUe9a7x5YsKrkyLXqI3HDuP5emHpiYV9JQR
-         uNLnchSHbIjGp0zMYt4Wsu5xOKF64mU6cLWB9KdIX4h2OhaRqxLRFaMiOzt+sHJ+eeZQ
-         ynpux6B1TsuVyR3RSy4VB3pswI6r9EpdHaUKgsMePmoh9mbaxMuARMDnt7M7EXa6zTMb
-         0nAZ+dQRDievduQLsxv5kbcPJSUBpXyya7qOvWIzVFaaG0ImugA6Fz6ttGvbyjO2zae4
-         5TMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698102525; x=1698707325;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=k7q7uM7/5nANy1ke32gOriqsBEknknlJIz/6awHfnbE=;
-        b=mgjMiYOkTShMbPEc4zktluccgjjsBMY2u/hTnp25RwTNpjsRYdgHwn+pKcntAI8aVb
-         D1OaUgFIAOLFANc/3ftfNJdtdn7v4Gnch8AtZLYQV0NgAsNM5YF9aPXgZOGZ6KkfbK9+
-         cyTK2mpazTuWj6OU/7VwZLBwJgJjCkV2xVZOtrUQ7Ifvql2RrNTyxYTyNLMM24lSrxcP
-         MUzV+yDbsoLWZmFqFSiacAHtciJwV7KW89UW7BWamZm12GDrJEfUvOHiTtX4OiNmUdYo
-         4wkUUD1gqeJaP1XXYBs2UP1P/nHoZt7lT5zWiXqSDVtH7PkgiyZMrzuAV3ZoUqdGKSO+
-         PjdA==
-X-Gm-Message-State: AOJu0Yxxm01/phLrwCY/VyKyDr1Qr9fu8arZ7+AsyC3OBsfWSb+UuU9J
-        qCke1iuatFpUzDjdFU1oZFQUKsaRMJbuBtmyEio3EyoOGQ8D5mVfE64=
-X-Google-Smtp-Source: AGHT+IF1UD1RP4wHymGVEkrmy7gPP2LYwDNQpg1Hhpm7M7ZCxzFvzznpj294sUDK2yY8mp7MdFhj7sdD6YOT/1NZ76k=
-X-Received: by 2002:a0d:d881:0:b0:5a7:fbac:4ffe with SMTP id
- a123-20020a0dd881000000b005a7fbac4ffemr14251409ywe.22.1698102524920; Mon, 23
- Oct 2023 16:08:44 -0700 (PDT)
-MIME-Version: 1.0
-References: <20231023215327.695720-1-dmitry.baryshkov@linaro.org>
- <20231023215327.695720-2-dmitry.baryshkov@linaro.org> <20231023224715.GN3553829@hu-bjorande-lv.qualcomm.com>
-In-Reply-To: <20231023224715.GN3553829@hu-bjorande-lv.qualcomm.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 24 Oct 2023 02:08:33 +0300
-Message-ID: <CAA8EJppen6Ebmv_fjdrHoUXRsFFH5TZonKck=bRDKgXTTWOxoQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] usb: typec: ucsi: fix UCSI on buggy Qualcomm devices
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Mon, 23 Oct 2023 19:11:27 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59AC7FD;
+        Mon, 23 Oct 2023 16:11:25 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39NNAxWq028760;
+        Mon, 23 Oct 2023 23:11:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=+ggcstRBUlOxqI1C8WEvKLN88XC31ynI06bBPZH6x8o=;
+ b=JrtGwX3UqANkRGvDEI937zvUheFhV3tVuX5JrLWlGNz8AbT5q+aR/IqMjT/DKrZFYU2j
+ t/u9QIXi6A5rkQQLdprjSVJSDUxaQewI4WMvZ+ln7AGOtesHDhpClDHYvVcI76Ed0xjr
+ teNQoZIoy+ms0Q2V66qq9VjkhkOY6Yd4xaoiBWFtg4BsHibG5VXi/cSs9uXoWm0OosUq
+ oDWdiQrPdVFtFesaZpBIrOpXIHo9Tuxwg7zniqeNz3CaGJVjfSh71cvs3DQoA/Zq4Vxy
+ MynQs6NQ4JUDzkFfmxPkXdr7zfH18kFMKCPNaKjb5Zkdbcpym/8kB8bOVND5BIDACpCy Dw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3twxw5gbev-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 23 Oct 2023 23:11:16 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39NNBFTN018082
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 23 Oct 2023 23:11:15 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.39; Mon, 23 Oct 2023 16:11:15 -0700
+Date:   Mon, 23 Oct 2023 16:11:14 -0700
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Mark Brown <broonie@kernel.org>
+CC:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Rob Herring <robh@kernel.org>, linux-usb@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        Stephan Gerhold <stephan@gerhold.net>
+Subject: Re: [PATCH RFC 1/2] regulator: core: Disable unused regulators with
+ unknown status
+Message-ID: <20231023231114.GO3553829@hu-bjorande-lv.qualcomm.com>
+References: <20231004-reg-smd-unused-v1-0-5d682493d555@kernkonzept.com>
+ <20231004-reg-smd-unused-v1-1-5d682493d555@kernkonzept.com>
+ <80307316-f55e-4540-9c5f-655844c3b3f4@sirena.org.uk>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <80307316-f55e-4540-9c5f-655844c3b3f4@sirena.org.uk>
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: drb0EoN6pcsxpKnK2EJ5p4HbtYMr4k9W
+X-Proofpoint-GUID: drb0EoN6pcsxpKnK2EJ5p4HbtYMr4k9W
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-23_21,2023-10-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ spamscore=0 mlxscore=0 bulkscore=0 impostorscore=0 phishscore=0
+ mlxlogscore=501 priorityscore=1501 suspectscore=0 clxscore=1011
+ adultscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2310170001 definitions=main-2310230203
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,96 +82,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 24 Oct 2023 at 01:47, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
->
-> On Tue, Oct 24, 2023 at 12:47:26AM +0300, Dmitry Baryshkov wrote:
-> > On sevral Qualcomm platforms (SC8180X, SM8350, SC8280XP) a call to
-> > UCSI_GET_PDOS for non-PD partners will cause a firmware crash with no
-> > easy way to recover from it. Since we have no easy way to determine
-> > whether the partner really has PD support, shortcut UCSI_GET_PDOS on
-> > such platforms. This allows us to enable UCSI support on such devices.
-> >
->
-> Really nice to see this. Thanks.
->
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  drivers/usb/typec/ucsi/ucsi.c       | 3 +++
-> >  drivers/usb/typec/ucsi/ucsi.h       | 3 +++
-> >  drivers/usb/typec/ucsi/ucsi_glink.c | 3 +++
-> >  3 files changed, 9 insertions(+)
-> >
-> > diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
-> > index 61b64558f96c..5392ec698959 100644
-> > --- a/drivers/usb/typec/ucsi/ucsi.c
-> > +++ b/drivers/usb/typec/ucsi/ucsi.c
-> > @@ -578,6 +578,9 @@ static int ucsi_read_pdos(struct ucsi_connector *con,
-> >       u64 command;
-> >       int ret;
-> >
-> > +     if (ucsi->quirks & UCSI_NO_PARTNER_PDOS)
-> > +             return 0;
-> > +
-> >       command = UCSI_COMMAND(UCSI_GET_PDOS) | UCSI_CONNECTOR_NUMBER(con->num);
-> >       command |= UCSI_GET_PDOS_PARTNER_PDO(is_partner);
-> >       command |= UCSI_GET_PDOS_PDO_OFFSET(offset);
-> > diff --git a/drivers/usb/typec/ucsi/ucsi.h b/drivers/usb/typec/ucsi/ucsi.h
-> > index 474315a72c77..6478016d5cb8 100644
-> > --- a/drivers/usb/typec/ucsi/ucsi.h
-> > +++ b/drivers/usb/typec/ucsi/ucsi.h
-> > @@ -317,6 +317,9 @@ struct ucsi {
-> >  #define EVENT_PENDING        0
-> >  #define COMMAND_PENDING      1
-> >  #define ACK_PENDING  2
-> > +
-> > +     unsigned long quirks;
-> > +#define UCSI_NO_PARTNER_PDOS BIT(0)  /* Don't read partner's PDOs */
-> >  };
-> >
-> >  #define UCSI_MAX_SVID                5
-> > diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-> > index db6e248f8208..5c159e7b2b65 100644
-> > --- a/drivers/usb/typec/ucsi/ucsi_glink.c
-> > +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-> > @@ -327,6 +327,8 @@ static int pmic_glink_ucsi_probe(struct auxiliary_device *adev,
-> >       if (ret)
-> >               return ret;
-> >
-> > +     ucsi->ucsi->quirks = id->driver_data;
-> > +
-> >       ucsi_set_drvdata(ucsi->ucsi, ucsi);
-> >
-> >       device_for_each_child_node(dev, fwnode) {
-> > @@ -379,6 +381,7 @@ static void pmic_glink_ucsi_remove(struct auxiliary_device *adev)
-> >
-> >  static const struct auxiliary_device_id pmic_glink_ucsi_id_table[] = {
-> >       { .name = "pmic_glink.ucsi", },
-> > +     { .name = "pmic_glink.ucsi-no-pdos", .driver_data = UCSI_NO_PARTNER_PDOS, },
->
-> In altmode and battmgr drivers we apply quirks based on the compatible
-> of the pmic_glink of_node.
+On Mon, Oct 23, 2023 at 01:09:11PM +0100, Mark Brown wrote:
+> On Wed, Oct 04, 2023 at 04:17:17PM +0200, Stephan Gerhold wrote:
+> 
+> > Instead of -EINVAL we could also use a different return code to indicate
+> > the initial status is unknown. Or maybe there is some other option that
+> > would be easier? This is working for me but I'm sending it as RFC to get
+> > more feedback. :)
+> 
+> The more normal thing here would be -EBUSY I think - -EINVAL kind of
+> indicates that the operation will never work while in reality it could
+> possibly work in future.  Though for the RPMH it's not really the case
+> that it ever supports readback, what it does is have it's own reference
+> counting in the driver.  Rather than doing this we should probably have
+> logic in the core which sees that the driver has a write operation but
+> no read operation and implements appropriate behaviour.
 
-... and I can't say that I like that. In typical drivers we perform
-driver tuning by looking at the device's data (e.g. by using
-of_device_is_compatible or by of_device_get_match_data. Checking the
-parent device seems like breaking the layering.
-But if you insist, I can follow that approach.
+I like the suggestion to not implement is_enabled, and handle that in
+the core instead, for all three generations of our rpm-based regulators.
 
->
-> Could we do the same here, instead of mixing the two schemes?
->
-> Regards,
-> Bjorn
->
-> >       {},
-> >  };
-> >  MODULE_DEVICE_TABLE(auxiliary, pmic_glink_ucsi_id_table);
-> > --
-> > 2.42.0
-> >
-
-
-
--- 
-With best wishes
-Dmitry
+Regards,
+Bjorn
