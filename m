@@ -2,249 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E08017D3A8C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 17:18:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21C267D3AF8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 17:38:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230094AbjJWPTA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 11:19:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60996 "EHLO
+        id S231475AbjJWPib (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 11:38:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44096 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229829AbjJWPS7 (ORCPT
+        with ESMTP id S231374AbjJWPia (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 11:18:59 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 934B9DD
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 08:18:56 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2c51388ccebso50791161fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 08:18:56 -0700 (PDT)
+        Mon, 23 Oct 2023 11:38:30 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC135DC
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 08:38:26 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-4083740f92dso28683035e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 08:38:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698074335; x=1698679135; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=P1MLGwaWl3ZChj/jIuzuUz8ORV4VhUnXGKItCTv8F9w=;
-        b=xdVSdIfMyUwRv/7v20t9Vdlx7Li3MMJtzxOO4G8hai1L67qPTHI3GiHCS+Lfph0XGK
-         iDhdUYpTtgqLkjAAZcdMfaq6x5Wv2xuZLZb3wYshElI8mXt6F6RllRts2KTjAXQSVYM0
-         vuAoW8SQ1QMkL2HOHZ14fCTI/YR1ZejLnnoWpulJvfkMdeqOTR7cb+qYEO81Ui0Ym8/P
-         fD1JfNCh6lpplmrHkntzwHQ9wUz0mkKPI2qBg3fOBgiT10IePhldYT/50x6L0WCfWpFA
-         GubgPvAL28q2IvdC1EkU9GxDdmAQAHLfK0pQzx7EIlYhArEqNzQ4M19ljGYrEjcS7DRS
-         VVAg==
+        d=linaro.org; s=google; t=1698075505; x=1698680305; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1N//AnYmHXkSl9KLuAZmJ5UEbGwSxaTciSmclXgwpFw=;
+        b=lZn7xze6i5sJtxmEE7vElFR9RoDhpiKu6QzApjydBSoxrSeKmAtwStwgPjkbbAwgeP
+         JqovTiQxodXK5+8cO2wAWb9dGkQUE6kYXCqXM+eQo7ZyldrX9e0KwvyXyL1I3oVaXP0G
+         BimFLIGceGJasDlLrephb2R2EYVT+utG6lzjuT7OP5b0bbAbL5cR81k1MDfNHR0lIBFR
+         c2mLZFgeWhwRibKf2MGI54ug2tqeYIwztH1ZK/S3V7MXwGgh05c6QmiYYdql2jUw4CpB
+         RnQlAP13ET4p/TuF0faI0lhmKR7wJD58/Vxv7JYfIAtmgeDMlenEZo5lMCPhWv1zpZBB
+         S99A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698074335; x=1698679135;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=P1MLGwaWl3ZChj/jIuzuUz8ORV4VhUnXGKItCTv8F9w=;
-        b=uBEtI5OTl2rJoLhV9tgXxU+chR7znR3nMWgdEKN8rKMbggcqRDoGjxiPkCOdrMKIEL
-         MMSz/22wDvFKJohkh6xav9xsUNePPBegR/4mhW7B4lm6D8mtKNA0nzhnpE5wtT1zpouC
-         Y5YInCt70HWbIj96rpKgPiEs1DmmU64/emvqzUpMoxBTMRH3DuNwt0Sc69doLZuFOsma
-         dbIHu4gYmpI3qXJhyGlPO7CIM6klbtAULnI/AHOnUGOiHaQ6LWVlCSGqapVatt2baANe
-         oo1u0pOf/Gu8zjh+I3gFak7w5Ns0qT15j4NaDiA1H7QWhu79xxm1CXRjMFyJBcK9LXNW
-         Ohug==
-X-Gm-Message-State: AOJu0YxrStPYNIyBHmF2HnnyOPtEnmlKheC1UQ3Lz5hv7/R5I0A7kDES
-        5FxWOh8wReoby52atRfUIf3oXA==
-X-Google-Smtp-Source: AGHT+IHB0J8y26HcqtTde0NBv2OOmtsa7H7+Log3XwhbM1zJ1Us50QS4+6dcdbGMQW98onusyJX6dQ==
-X-Received: by 2002:a2e:b4ba:0:b0:2c0:18b8:9656 with SMTP id q26-20020a2eb4ba000000b002c018b89656mr6038735ljm.24.1698074334662;
-        Mon, 23 Oct 2023 08:18:54 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:a36e:a5d9:26ae:74b1? ([2a01:e0a:982:cbb0:a36e:a5d9:26ae:74b1])
-        by smtp.gmail.com with ESMTPSA id t22-20020a05600c41d600b004083996dad8sm14241695wmh.18.2023.10.23.08.18.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Oct 2023 08:18:54 -0700 (PDT)
-Message-ID: <05ef5179-3233-4294-99e1-220454c5c81f@linaro.org>
-Date:   Mon, 23 Oct 2023 17:18:52 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v10 0/4] Input: add initial support for Goodix Berlin
- touchscreen IC
-Content-Language: en-US, fr
-To:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        linux-input@vger.kernel.org
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bastien Nocera <hadess@hadess.net>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Henrik Rydberg <rydberg@bitmath.org>,
-        Jeff LaBundy <jeff@labundy.com>, linux-arm-msm@vger.kernel.org,
+        d=1e100.net; s=20230601; t=1698075505; x=1698680305;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1N//AnYmHXkSl9KLuAZmJ5UEbGwSxaTciSmclXgwpFw=;
+        b=D+ZWZ/qHlE3byi9jzB/14FJDZA2wjQzifOi4A19KipthmfMBShA0AEUZaL1HVzw/LY
+         x8xxCVc1cUCGcnQHRFZqeAqP+jgadgZPE2O3rXUX8JtV7IvLPq8z2KYqDBuA+yH3g9Rk
+         WFXlemTALHt9JfPCniyswDe7LgKa0Tr5w8u9fdUXEZ8ZRQKhIcd/Gz9m9ReegB1fMWKU
+         Re3PC3Co6+/isPitHWR25oILfyFQk5csVz+sdTIuVYHQHf5uKu9Ja8h2J7Q1GgZ71vQm
+         o8rCGc8Ea4RNeuRWb5FUvVHnPjn9xmMkP3Y+mxj+rdbVq9gMPensn2pXzG7dqfwlapnE
+         kJ2Q==
+X-Gm-Message-State: AOJu0YwUfniagJBLFs3QH4obcQFzkPPV/XzUS47gpndvA1blHKPQV309
+        bLpEqo5WIEYztVgT9mjc5lfmIw==
+X-Google-Smtp-Source: AGHT+IGqtadhtCg8N+P5t3OwpPbwmHmbDPrJjZ66M1shJc2FWzZoaTgvgET3E215JeVdsaYY1PPRUQ==
+X-Received: by 2002:a05:600c:310f:b0:408:febf:831f with SMTP id g15-20020a05600c310f00b00408febf831fmr2870502wmo.28.1698075505064;
+        Mon, 23 Oct 2023 08:38:25 -0700 (PDT)
+Received: from x13s-linux.nxsw.local ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id f4-20020a5d50c4000000b0032da319a27asm8096929wrt.9.2023.10.23.08.38.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Oct 2023 08:38:24 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        dmitry.baryshkov@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        jonathan@marek.ca, quic_tdas@quicinc.com,
+        vladimir.zapolskiy@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Rob Herring <robh@kernel.org>
-References: <20231023-topic-goodix-berlin-upstream-initial-v10-0-59066cf1f56f@linaro.org>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <20231023-topic-goodix-berlin-upstream-initial-v10-0-59066cf1f56f@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        bryan.odonoghue@linaro.org
+Subject: [PATCH v3.1 0/4] Add sc8280xp CAMCC bindings and driver
+Date:   Mon, 23 Oct 2023 16:38:17 +0100
+Message-Id: <20231023153821.189331-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.40.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+V3.1
+- Drops dependency from below, since that patch needs a rebase
+  on clk-next now anyway.
+- Adds Krzysztof's RB as indicated to patches 1,2,4
 
-Please ignore this cover letter, gmail's SMTP returned an error while sending it
-but still sent it....
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/qcom-linux-clk-for-6.7-camcc-sc8280xp-v3.1 
 
-The properly sent patchset can be found at:
-https://lore.kernel.org/all/20231023-topic-goodix-berlin-upstream-initial-v10-0-88eec2e51c0b@linaro.org/
+V3:
 
-Neil
+This patch depends-on:
+https://lore.kernel.org/linux-arm-msm/20230923112105.18102-4-quic_luoj@quicinc.com
 
-On 23/10/2023 17:03, Neil Armstrong wrote:
-> These touchscreen ICs support SPI, I2C and I3C interface, up to
-> 10 finger touch, stylus and gestures events.
-> 
-> This initial driver is derived from the Goodix goodix_ts_berlin
-> available at [1] and [2] and only supports the GT9916 IC
-> present on the Qualcomm SM8550 MTP & QRD touch panel.
-> 
-> The current implementation only supports BerlinD, aka GT9916.
-> 
-> Support for advanced features like:
-> - Firmware & config update
-> - Stylus events
-> - Gestures events
-> - Previous revisions support (BerlinA or BerlinB)
-> is not included in current version.
-> 
-> The current support will work with currently flashed firmware
-> and config, and bail out if firmware or config aren't flashed yet.
-> 
-> [1] https://github.com/goodix/goodix_ts_berlin
-> [2] https://git.codelinaro.org/clo/la/platform/vendor/opensource/touch-drivers
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
-> Changes in v10:
-> - Fix according to Dmitry's review:
->   - move goodix_berlin_get_ic_info() afe_data to heap
->   - merge the goodix_berlin_parse_finger() loops and skip invalid fingers instead of returning
->   - remove unwanted goodix_berlin_touch_handler() "static" for buffer
->   - only call goodix_berlin_request_handle_reset() if gpio was provided
->   - use "error = func(); if(error) return error;" instead of "return func()" when function handles multiple error cases
-> - Link to v9: https://lore.kernel.org/r/20231021-topic-goodix-berlin-upstream-initial-v9-0-13fb4e887156@linaro.org
-> 
-> Changes in v9:
-> - Rebased on next-20231020
-> - Link to v8: https://lore.kernel.org/r/20231003-topic-goodix-berlin-upstream-initial-v8-0-171606102ed6@linaro.org
-> 
-> Changes in v8:
-> - Add missing bitfield.h include in core
-> - Link to v7: https://lore.kernel.org/r/20231002-topic-goodix-berlin-upstream-initial-v7-0-792fb91f5e88@linaro.org
-> 
-> Changes in v7:
-> - rebased on v6.6-rc3
-> - Link to v6: https://lore.kernel.org/r/20230912-topic-goodix-berlin-upstream-initial-v6-0-b4ecfa49fb9d@linaro.org
-> 
-> Changes in v6:
-> - rebased on v6.6-rc1
-> - changed commit message prefix to match the other Input commits
-> - Link to v5: https://lore.kernel.org/r/20230801-topic-goodix-berlin-upstream-initial-v5-0-079252935593@linaro.org
-> 
-> Changes in v5:
-> - rebased on next-20230801
-> - Link to v4: https://lore.kernel.org/r/20230606-topic-goodix-berlin-upstream-initial-v4-0-0947c489be17@linaro.org
-> 
-> Changes in v4:
-> - Core updates:
->   - drop kconfig depends, deps will be handled by _SPI and _I2C
->   - change power_on() error labels
->   - print errors on all dev_err() prints
->   - remove useless default variable initialization
->   - switch irq touch checksum error to dev_err()
->   - add Jeff's review tag
-> - I2C changes
->   - change REGMAP_I2C Kconfig from depends to select
->   - add Jeff's review tag
-> - SPI changes
->   - add select REGMAP to Kconfig
->   - added GOODIX_BERLIN_ prefix to defines
->   - switched from ret to error
->   - add Jeff's review tag
-> - Link to v3: https://lore.kernel.org/r/20230606-topic-goodix-berlin-upstream-initial-v3-0-f0577cead709@linaro.org
-> 
-> Changes in v3:
-> - Another guge cleanups after Jeff's review:
->   - appended goodix_berlin_ before all defines
->   - removed some unused defines
->   - removed retries on most of read functions, can be added back later
->   - added __le to ic_info structures
->   - reworked and simplified irq handling, dropped enum and ts_event structs
->   - added struct for touch data
->   - simplified and cleaned goodix_berlin_check_checksum & goodix_berlin_is_dummy_data
->   - moved touch_data_addr to the end of the main code_data
->   - reworked probe to get_irq last and right before setip input device
->   - cleaned probe by removing the "cd->dev"
->   - added short paragraph to justify new driver for berlin devices
->   - defined all offsets & masks
-> - Added bindings review tag
-> - Link to v2: https://lore.kernel.org/r/20230606-topic-goodix-berlin-upstream-initial-v2-0-26bc8fe1e90e@linaro.org
-> 
-> Changes in v2:
-> - Huge cleanups after Jeff's review:
->   - switch to error instead of ret
->   - drop dummy vendor/product ids
->   - drop unused defined/enums
->   - drop unused ic_info and only keep needes values
->   - cleanup namings and use goodix_berlin_ everywhere
->   - fix regulator setup
->   - fix default variables value when assigned afterwars
->   - removed indirections
->   - dropped debugfs
->   - cleaned input_dev setup
->   - dropped _remove()
->   - sync'ed i2c and spi drivers
-> - fixed yaml bindings
-> - Link to v1: https://lore.kernel.org/r/20230606-topic-goodix-berlin-upstream-initial-v1-0-4a0741b8aefd@linaro.org
-> 
-> ---
-> Neil Armstrong (4):
->        dt-bindings: input: document Goodix Berlin Touchscreen IC
->        Input: add core support for Goodix Berlin Touchscreen IC
->        Input: goodix-berlin - add I2C support for Goodix Berlin Touchscreen IC
->        Input: goodix-berlin - add SPI support for Goodix Berlin Touchscreen IC
-> 
->   .../bindings/input/touchscreen/goodix,gt9916.yaml  |  95 ++++
->   drivers/input/touchscreen/Kconfig                  |  31 ++
->   drivers/input/touchscreen/Makefile                 |   3 +
->   drivers/input/touchscreen/goodix_berlin.h          | 159 ++++++
->   drivers/input/touchscreen/goodix_berlin_core.c     | 594 +++++++++++++++++++++
->   drivers/input/touchscreen/goodix_berlin_i2c.c      |  74 +++
->   drivers/input/touchscreen/goodix_berlin_spi.c      | 177 ++++++
->   7 files changed, 1133 insertions(+)
-> ---
-> base-commit: 2030579113a1b1b5bfd7ff24c0852847836d8fd1
-> change-id: 20230606-topic-goodix-berlin-upstream-initial-ba97e8ec8f4c
-> 
-> Best regards,
+- Resolves CLK_CRITICAL camcc_gdsc_clk by making camcc_gdsc_clk
+  always-on and dropping the CLK_CRITICAL flag.
+  We want camcc_gdsc_clk for retention, however CLK_CRITICAL is not
+  compatible with pm_runtime suspend and power collapse. - Konrad, Bod
+
+- Uses gcc.yaml instead of camcc-common.yaml - Krzysztof
+
+- Drops fix for 8550, TBH I didn't know use for socname-ip.yaml
+  with compat strings for different drivers was OK, so long as the
+  content of the yaml was compliant for both. - Krzysztof
+
+- Drops clock-names, adds RB as indicated - Konrad
+
+- Reworks "really_probe" to account for patch from Lou Jie which
+  is RB from Stephen Boyd but not in any -next tree I can point to right
+  now. - Konrad, Bod
+
+- :g/CAM_CC/s//CAMCC/g - Bod
+
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/commits/clk-for-6.7-camcc-sc8280xp-v3
+ 
+V2:
+
+I've expanded the scope of this series to include some fixups for the
+camcc.yaml in general.
+
+- Adds qcom,camcc-common.yaml
+  There are a number of repeated patterns in the various camcc yaml
+  files which we can contain in a common camcc .yaml instead.
+  I used gcc.yaml as a base per Krzysztof's suggestion.
+
+- Adding the common values file I noticed that sm8450 and sm8550 were
+  both listed as compatible strings in qcom,sm8450-camcc.yaml.
+
+  This appears to be in error though since sm8450 and sm8550 are
+  not compat strings of the same driver but different drivers entirely.
+
+- Switches to indexing, instead of fw_name for clocks - Konrad
+
+- Adds the GCC AHB to the clock index - Bod/Konrad
+
+- Changes reference "cam_cc" to "camcc" throughout camcc-sc8280xp.c
+
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-26-10-23-sc8280xp-camcc-v2
+
+V1:
+This is a bog-standard series to add in the CAMCC for 8280xp.
+As a precursor to adding in sc8280xp I thought a bit of tidy up on the
+existing yaml for the camcc controllers in general would be worthwhile.
+
+As a result there's a precursor patch which aggregates the various camcc
+yaml files into one location.
+
+The sc8280xp looks like sdm845 with more blocks. Similar to sc8280xp we
+park GDSC to CXO. Thanks to Dmitry for the suggestion the GDSC parking.
+
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-23-09-23-sc8280xp-camcc
+
+Bryan O'Donoghue (4):
+  dt-bindings: clock: Use gcc.yaml for common clock properties
+  dt-bindings: clock: Add SC8280XP CAMCC
+  clk: qcom: camcc-sc8280xp: Add sc8280xp CAMCC
+  arm64: dts: qcom: sc8280xp: Add in CAMCC for sc8280xp
+
+ .../bindings/clock/qcom,camcc-sm8250.yaml     |   18 +-
+ .../bindings/clock/qcom,sc7180-camcc.yaml     |   18 +-
+ .../bindings/clock/qcom,sc7280-camcc.yaml     |   18 +-
+ .../bindings/clock/qcom,sdm845-camcc.yaml     |   18 +-
+ .../bindings/clock/qcom,sm8450-camcc.yaml     |   20 +-
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi        |   15 +
+ drivers/clk/qcom/Kconfig                      |    9 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/camcc-sc8280xp.c             | 3048 +++++++++++++++++
+ .../dt-bindings/clock/qcom,sc8280xp-camcc.h   |  179 +
+ 10 files changed, 3274 insertions(+), 70 deletions(-)
+ create mode 100644 drivers/clk/qcom/camcc-sc8280xp.c
+ create mode 100644 include/dt-bindings/clock/qcom,sc8280xp-camcc.h
+
+-- 
+2.40.1
 
