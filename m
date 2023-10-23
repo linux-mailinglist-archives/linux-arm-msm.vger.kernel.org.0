@@ -2,86 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 73B7E7D41FB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 23:55:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 651117D4292
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 00:12:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231450AbjJWVzn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 17:55:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47754 "EHLO
+        id S231316AbjJWWM6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 18:12:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229845AbjJWVzm (ORCPT
+        with ESMTP id S229657AbjJWWM5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 17:55:42 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41DDA98;
-        Mon, 23 Oct 2023 14:55:40 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39NJdt1X002491;
-        Mon, 23 Oct 2023 21:54:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=hVa/mq2VQpyWbZU8AbMbE350it4l72isr/X7+dQsCVw=;
- b=WRksQS2ghff9LS+dck6Eb9LoSUZajKXQPzLoN0iBfuMrRhwp9+whWjZLG9kV2ZI0bq84
- BkICQs1jVcdFakCj/zkMJUHVeHEwhCS3XBgSSmE4DCyRD+XJxCWadFRbSO0upGibuy9M
- dxxApoyvDi9By5YP6R5SoPb7fKm4z7Mpl1b4vNX4Z/+gluYx3X/5f+F5n/DZ3qH6KbZM
- f9O2u8AK+hAK7QJHcFqCOdMXgh09FxnTL/LpsSaN9syXq9cB4wbPDtSvpeezjmOU2zsM
- j33mz0FYjGZUPgfX1ogdrb5icHmvjIKa5KCc9NqHXO8d/m9luRO9RmrzGjedjf/EYRHe EQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tv40ungua-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 23 Oct 2023 21:54:57 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39NLsupN031852
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 23 Oct 2023 21:54:56 GMT
-Received: from [10.110.22.156] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Mon, 23 Oct
- 2023 14:54:55 -0700
-Message-ID: <6409c486-7393-4352-489c-ecd488597c4c@quicinc.com>
-Date:   Mon, 23 Oct 2023 14:54:50 -0700
+        Mon, 23 Oct 2023 18:12:57 -0400
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F237699;
+        Mon, 23 Oct 2023 15:12:54 -0700 (PDT)
+Received: by mail-pf1-x435.google.com with SMTP id d2e1a72fcca58-6b1ef786b7fso3645607b3a.3;
+        Mon, 23 Oct 2023 15:12:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698099174; x=1698703974; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=s3JBzSeEvFvVT5yIjIih/KnJNivc+rIAI/D1WIJlFoQ=;
+        b=XIzDcZ1FnkNj0M73Lf8QTvsi1wqLJHhOWaMSTGnSodghCA+l2OjZ4KUl8qUXXEqz2e
+         IYXTCc8uq97H3dpohjpgv0zRRaTV60PyiPy/H13hk9cItx8ufKp7pAIwLCfiinrfWMWy
+         lhqcCYDKp8hS+jnKb3TP5wbeeRsNLTWCgwSNpbKNFkiUwdaaDoxlOfRJ+NmzkXbr8m5N
+         L+wHIKhw8oedZRPa86/IZ+aXDDLspuhHC1CIQCDM3rcRR3NXZ2cGUfzqT5mnCD3pk0F1
+         xHurENYR2vaPc4GEjkmZ3rxt3c/MouU972e211x4a8L83bsm0LHnKWB2S5Tf545Fp/Vq
+         a1WQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698099174; x=1698703974;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=s3JBzSeEvFvVT5yIjIih/KnJNivc+rIAI/D1WIJlFoQ=;
+        b=ImVLqKqlZHCaFluyLp+rcGF0U3Mpx/DsD6iL685XCLjdWUwd7AC+GI11jnzluLk5MK
+         +irDQ+NBP6PGcjT2ehS8AUFhRvpzmm7TCXGHcmnN7h2w9YOsssD3+idQahE9IcMoHCXg
+         OAJbV+e3+2EauJtv09DPD9UvJZoVNbYap53rrke5VapV7sogax3/u8E//vwCCLGFsVDG
+         zgkmTQ2v7WfLurkdgrliLjW8a59E1MmkGdD6X3yfKXSCRk4OSRe2Sjq/v342xZ7fia3N
+         c6QuP0OZ+7Y7R7bBToInMP/pC6HKZI+29AsAlb6F5aVKru01yPX1Tigdeq8gGbQkMKHT
+         WP5g==
+X-Gm-Message-State: AOJu0YzvMsYinQCGws3J2xrjKk7ILi2Q1huqGMlHxYCT27n42Og+FvRB
+        gbBGyyM9OnMWwpXznS50lQs=
+X-Google-Smtp-Source: AGHT+IHRI3o5kP9LJxbKRQayyv+er+t4jJzqW5bf3iSbYYSe9HIKoosMkwVpSW6NjuPFc9z/zc6i/A==
+X-Received: by 2002:a05:6a20:8e0e:b0:129:d944:2e65 with SMTP id y14-20020a056a208e0e00b00129d9442e65mr1088606pzj.13.1698099174190;
+        Mon, 23 Oct 2023 15:12:54 -0700 (PDT)
+Received: from localhost ([2a00:79e1:abd:4a00:6c80:7c10:75a0:44f4])
+        by smtp.gmail.com with ESMTPSA id u7-20020a17090282c700b001bbb25dd3a7sm6317920plz.187.2023.10.23.15.12.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Oct 2023 15:12:53 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+        Kalyan Thota <quic_kalyant@quicinc.com>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Arnaud Vrac <rawoul@gmail.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Jeykumar Sankaran <quic_jeykumar@quicinc.com>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm/dpu: Fix encoder CRC to account for CTM enablement
+Date:   Mon, 23 Oct 2023 15:12:33 -0700
+Message-ID: <20231023221250.116500-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v9 34/34] ASoC: usb: Rediscover USB SND devices on USB
- port add
-Content-Language: en-US
-To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        <mathias.nyman@intel.com>, <gregkh@linuxfoundation.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <perex@perex.cz>,
-        <tiwai@suse.com>, <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <srinivas.kandagatla@linaro.org>, <bgoswami@quicinc.com>,
-        <Thinh.Nguyen@synopsys.com>
-CC:     <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-References: <20231017200109.11407-1-quic_wcheng@quicinc.com>
- <20231017200109.11407-35-quic_wcheng@quicinc.com>
- <b503058d-e23f-4a63-99b8-f0a62b2a2557@linux.intel.com>
-From:   Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <b503058d-e23f-4a63-99b8-f0a62b2a2557@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 3O20EUy7dwzYWHIPEZCZdjjATpyogG3y
-X-Proofpoint-ORIG-GUID: 3O20EUy7dwzYWHIPEZCZdjjATpyogG3y
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-23_21,2023-10-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
- phishscore=0 adultscore=0 clxscore=1015 spamscore=0 suspectscore=0
- impostorscore=0 priorityscore=1501 malwarescore=0 mlxlogscore=999
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310170001 definitions=main-2310230192
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -90,61 +84,153 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Pierre,
+From: Rob Clark <robdclark@chromium.org>
 
-On 10/17/2023 4:11 PM, Pierre-Louis Bossart wrote:
-> 
-> 
-> On 10/17/23 15:01, Wesley Cheng wrote:
->> In case the USB backend device has not been initialized/probed, USB SND
->> device connections can still occur.  When the USB backend is eventually
->> made available, previous USB SND device connections are not communicated to
->> the USB backend.  Call snd_usb_rediscover_devices() to generate the connect
->> callbacks for all USB SND devices connected.  This will allow for the USB
->> backend to be updated with the current set of devices available.
->>
->> The chip array entries are all populated and removed while under the
->> register_mutex, so going over potential race conditions:
->>
->> Thread#1:
->>    q6usb_component_probe()
->>      --> snd_soc_usb_add_port()
->>        --> snd_usb_rediscover_devices()
->>          --> mutex_lock(register_mutex)
->>
->> Thread#2
->>    --> usb_audio_disconnect()
->>      --> mutex_lock(register_mutex)
->>
->> So either thread#1 or thread#2 will complete first.  If
->>
->> Thread#1 completes before thread#2:
->>    SOC USB will notify DPCM backend of the device connection.  Shortly
->>    after, once thread#2 runs, we will get a disconnect event for the
->>    connected device.
->>
->> Thread#2 completes before thread#1:
->>    Then during snd_usb_rediscover_devices() it won't notify of any
->>    connection for that particular chip index.
-> Looks like you are assuming the regular USB audio stuff is probed first?
-> 
-> What if it's not the case? Have you tested with a manual 'blacklist' and
-> "modprobe" sequence long after all the DSP stuff is initialized?
-> 
-> It really reminds me of audio+display issues, and the same opens apply IMHO.
+Seems like we need to pick INPUT_SEL=1 when CTM is enabled.  But not
+otherwise.
 
-Not necessarily...if the USB audio driver is not probed, then that is 
-the same scenario as when there is no USB audio capable device plugged 
-in, while the offload path is waiting for the connect event. I think 
-this is the standard scenario.
+Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 4 ++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h | 3 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c | 4 ++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c   | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c | 5 ++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h | 3 ++-
+ 8 files changed, 15 insertions(+), 10 deletions(-)
 
-In the situation where the platform sound card hasn't probed yet and USB 
-audio devices are being identified, then that is basically the scenario 
-that would be more of an issue, since its USB SND that notifies of the 
-connection state (at the time of connect/disconnect).
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+index 2b83a13b3aa9..d93a92ffd5df 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+@@ -134,7 +134,7 @@ static void dpu_crtc_setup_encoder_misr(struct drm_crtc *crtc)
+ 	struct drm_encoder *drm_enc;
+ 
+ 	drm_for_each_encoder_mask(drm_enc, crtc->dev, crtc->state->encoder_mask)
+-		dpu_encoder_setup_misr(drm_enc);
++		dpu_encoder_setup_misr(drm_enc, !!crtc->state->ctm);
+ }
+ 
+ static int dpu_crtc_set_crc_source(struct drm_crtc *crtc, const char *src_name)
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index b0a7908418ed..12ee7acb5ea6 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -241,7 +241,7 @@ int dpu_encoder_get_crc_values_cnt(const struct drm_encoder *drm_enc)
+ 	return num_intf;
+ }
+ 
+-void dpu_encoder_setup_misr(const struct drm_encoder *drm_enc)
++void dpu_encoder_setup_misr(const struct drm_encoder *drm_enc, bool has_ctm)
+ {
+ 	struct dpu_encoder_virt *dpu_enc;
+ 
+@@ -255,7 +255,7 @@ void dpu_encoder_setup_misr(const struct drm_encoder *drm_enc)
+ 		if (!phys->hw_intf || !phys->hw_intf->ops.setup_misr)
+ 			continue;
+ 
+-		phys->hw_intf->ops.setup_misr(phys->hw_intf, true, 1);
++		phys->hw_intf->ops.setup_misr(phys->hw_intf, true, 1, has_ctm);
+ 	}
+ }
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+index 4c05fd5e9ed1..510783b2fb24 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+@@ -169,8 +169,9 @@ int dpu_encoder_get_crc_values_cnt(const struct drm_encoder *drm_enc);
+ /**
+  * dpu_encoder_setup_misr - enable misr calculations
+  * @drm_enc:    Pointer to previously created drm encoder structure
++ * @has_ctm:    Is CTM enabled
+  */
+-void dpu_encoder_setup_misr(const struct drm_encoder *drm_encoder);
++void dpu_encoder_setup_misr(const struct drm_encoder *drm_encoder, bool has_ctm);
+ 
+ /**
+  * dpu_encoder_get_crc - get the crc value from interface blocks
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+index e8b8908d3e12..cb06f80cc671 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+@@ -318,9 +318,9 @@ static u32 dpu_hw_intf_get_line_count(struct dpu_hw_intf *intf)
+ 	return DPU_REG_READ(c, INTF_LINE_COUNT);
+ }
+ 
+-static void dpu_hw_intf_setup_misr(struct dpu_hw_intf *intf, bool enable, u32 frame_count)
++static void dpu_hw_intf_setup_misr(struct dpu_hw_intf *intf, bool enable, u32 frame_count, bool has_ctm)
+ {
+-	dpu_hw_setup_misr(&intf->hw, INTF_MISR_CTRL, enable, frame_count);
++	dpu_hw_setup_misr(&intf->hw, INTF_MISR_CTRL, enable, frame_count, has_ctm);
+ }
+ 
+ static int dpu_hw_intf_collect_misr(struct dpu_hw_intf *intf, u32 *misr_value)
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+index c539025c418b..95aafc4cf58e 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+@@ -95,7 +95,7 @@ struct dpu_hw_intf_ops {
+ 
+ 	void (*bind_pingpong_blk)(struct dpu_hw_intf *intf,
+ 			const enum dpu_pingpong pp);
+-	void (*setup_misr)(struct dpu_hw_intf *intf, bool enable, u32 frame_count);
++	void (*setup_misr)(struct dpu_hw_intf *intf, bool enable, u32 frame_count, bool has_ctm);
+ 	int (*collect_misr)(struct dpu_hw_intf *intf, u32 *misr_value);
+ 
+ 	// Tearcheck on INTF since DPU 5.0.0
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+index d1c3bd8379ea..2efe29396c6a 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+@@ -83,7 +83,7 @@ static void dpu_hw_lm_setup_border_color(struct dpu_hw_mixer *ctx,
+ 
+ static void dpu_hw_lm_setup_misr(struct dpu_hw_mixer *ctx, bool enable, u32 frame_count)
+ {
+-	dpu_hw_setup_misr(&ctx->hw, LM_MISR_CTRL, enable, frame_count);
++	dpu_hw_setup_misr(&ctx->hw, LM_MISR_CTRL, enable, frame_count, false);
+ }
+ 
+ static int dpu_hw_lm_collect_misr(struct dpu_hw_mixer *ctx, u32 *misr_value)
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+index 9d2273fd2fed..528b8439209f 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+@@ -483,7 +483,7 @@ void _dpu_hw_setup_qos_lut(struct dpu_hw_blk_reg_map *c, u32 offset,
+ 
+ void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c,
+ 		u32 misr_ctrl_offset,
+-		bool enable, u32 frame_count)
++		bool enable, u32 frame_count, bool has_ctm)
+ {
+ 	u32 config = 0;
+ 
+@@ -496,6 +496,9 @@ void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c,
+ 		config = (frame_count & MISR_FRAME_COUNT_MASK) |
+ 			MISR_CTRL_ENABLE | MISR_CTRL_FREE_RUN_MASK;
+ 
++		if (!has_ctm)
++			config |= 1 << 24;
++
+ 		DPU_REG_WRITE(c, misr_ctrl_offset, config);
+ 	} else {
+ 		DPU_REG_WRITE(c, misr_ctrl_offset, 0);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+index 1f6079f47071..e42d9d00e40e 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+@@ -360,7 +360,8 @@ void _dpu_hw_setup_qos_lut(struct dpu_hw_blk_reg_map *c, u32 offset,
+ void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c,
+ 		u32 misr_ctrl_offset,
+ 		bool enable,
+-		u32 frame_count);
++		u32 frame_count,
++		bool has_ctm);
+ 
+ int dpu_hw_collect_misr(struct dpu_hw_blk_reg_map *c,
+ 		u32 misr_ctrl_offset,
+-- 
+2.41.0
 
-I've tried with building these drivers as modules and probing them at 
-different times/sequences, and I haven't seen an issue so far.
-
-Thanks
-Wesley Cheng
