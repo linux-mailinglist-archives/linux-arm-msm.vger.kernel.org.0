@@ -2,128 +2,242 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AC1527D2CD7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 10:37:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 678867D2CF4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 10:40:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229498AbjJWIhT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 04:37:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34826 "EHLO
+        id S229789AbjJWIk5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 04:40:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbjJWIhS (ORCPT
+        with ESMTP id S229498AbjJWIk4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 04:37:18 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4F73FC
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 01:37:16 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2b9c907bc68so44599141fa.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 01:37:16 -0700 (PDT)
+        Mon, 23 Oct 2023 04:40:56 -0400
+Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 205EBFC
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 01:40:54 -0700 (PDT)
+Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-5a8628e54d4so24871697b3.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 01:40:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698050235; x=1698655035; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=me2MC4nn/CV3tpkA7KZB34ZTwycbNAKshOBYMr2X+Pk=;
-        b=PPhvIOR7tf5eRKVGIOnItTLxoqVfUtMphG2mxi5WG83HKhPmatY8WspWdceVH+Cg98
-         tPjI+S9JB2VUevZ5k4WVdY/GNpKFmANGaU62cBOwNV+d875stIGB6pGbDiHI0/guxG3O
-         cZ5GUT+jyJqDHGUcrZrryE0G6mura5rZPg+ZhayY0tiW3RPFhmGdPJg3TJ0iDTRVy+7R
-         UymCwJWTXvYwYgB4+1SBaeX0BSbkVVhmEqPyc5eB//esbWk8et42rprRHXGu/q/nfi/J
-         WDQaBL4CDuTbYmsdvnkZWs+0P7RfzJka7VqSHui7+91ih2KozkMrxwxp4M6d6gUX/TW+
-         Mg+w==
+        d=linaro.org; s=google; t=1698050453; x=1698655253; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jaL68/qeer0rqmvgi8CDg0bYTQpez2jRXyNtczwGTGY=;
+        b=Jny/V4UoH7SF3JDIHj7MqWIKiwOqRhCGexce7aV4xy3KzRlaKj5eknJuN/HK3+PlKK
+         GGyvmtVzq14jzCwg1SzOJgg2ESPBXi5PTs5mBlzJ5p2wRrCdALTeJYsR2kefIWZRjQNE
+         lsKKZYu0aZeiCOlg9SEMmCGkfz84ExBZAJrcVIzDHCLn0t8tLu1gPbvv+q/16xzeEWBw
+         kkt0WPGNjbriX/gAikju93pQm6sVbLM6ICjLWN3a5aZyte+M7e0j0b+JGVT2wmOanuTH
+         dpsqIldsg9TUdyuRH19LAXmD5dfO1QLliZ9JmCoJWIuMSL23ygHl3Ut6CiJvDsPwbEY0
+         3fDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698050235; x=1698655035;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=me2MC4nn/CV3tpkA7KZB34ZTwycbNAKshOBYMr2X+Pk=;
-        b=SYOPa9Ez9Ov3Wwq0queYr4Fpm5gVbDDIqFgbn9IzJcTV2RlwXGOAKkl4D7T+sOJLfM
-         b60KaSBsS1BFTIsq26dIJxn9fHF4uLD5Yi3zXHq39b/QW3HMqm263Sof6b+KEP2z4bW3
-         VE7VMdTY8giRZBfvwmhcDN7TqQCru+0OrsoM9NQUlt1gHfpA4M64T+tlvn51DcC5BAvB
-         F8oPawUuDQ/LVadbjTFENDdTbQjVUS+chSRASFmJ1sBUUXvClPSfHtuwi522yV+Tufhv
-         AH7/1ef2jODwRqQy4MbiOkWZ0DMTqG8kA0LYQMXdQbQbzx1lmXPOqatcvEPJHZcnJwng
-         xk2w==
-X-Gm-Message-State: AOJu0YzZ6rWav0cAF/CMHvIgioKyNmHp6Hc+WHEUVMR8K1Nk51CKhwTW
-        HgvCeDkXx8zdd5ObVXQ5f/o73w==
-X-Google-Smtp-Source: AGHT+IHlKoNRRLj9D+bLl/GMYZXBlYtqehKTnbdPLVHoetbAT9+UytWeVgCL/DfTleBsee6/yAUHYQ==
-X-Received: by 2002:a2e:a589:0:b0:2c5:1a8e:e4c9 with SMTP id m9-20020a2ea589000000b002c51a8ee4c9mr6107923ljp.31.1698050234775;
-        Mon, 23 Oct 2023 01:37:14 -0700 (PDT)
-Received: from [192.168.86.24] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id az20-20020a05600c601400b004054dcbf92asm8758062wmb.20.2023.10.23.01.37.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Oct 2023 01:37:14 -0700 (PDT)
-Message-ID: <06a2c115-278a-47e0-b5ba-74639b6b23aa@linaro.org>
-Date:   Mon, 23 Oct 2023 09:37:10 +0100
+        d=1e100.net; s=20230601; t=1698050453; x=1698655253;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jaL68/qeer0rqmvgi8CDg0bYTQpez2jRXyNtczwGTGY=;
+        b=ocK7jeiF5DDRObDZYPqfhq2IqDOQQAvktZGeKpfoJxhw4uSgvCF4y6fljwzL3Llnf4
+         l0AIGVrMIKHeFo/Pin/QUar2BaYtCzxHrwhQPW+xiZgr+1DSZBpyE6+VyiY5yjVzM9oK
+         /+G4CkizlR4AAuf0yjO1l7M3iwb2V2bR6nmcwgGxscfUmuhaRo0R6zoLT4eb6WnQshD8
+         5XL5bRWJZ3DvLPAe3DTCZQt6xfI72sLO/4jN1eG3jwCNxblE1dZlk/oX0TBC2VGHE9xY
+         DTJ5V+4H9gaexXO5Xa013ruUfE6gZPxPLO8yL7nzF+MiLzUVNTil0i34muJG2FQRbB9j
+         x77g==
+X-Gm-Message-State: AOJu0YwRSfdyzbcPg/CCDDfQri70+qOUofVxYSZf3Mo34cDfbt8pPH6x
+        xkfYktVB9p5745ugFnEVqqMeABCMCdC0leLVQaWGhA==
+X-Google-Smtp-Source: AGHT+IGAkh/c3GbWNcWRXLTZ32eNfXArR9TC3Fd+iqsnvwbLzueIKhgdFmlb34ugIHWdJbPKSIqmrLsbZYsECiGgkW4=
+X-Received: by 2002:a0d:d6c2:0:b0:5a7:fcad:e865 with SMTP id
+ y185-20020a0dd6c2000000b005a7fcade865mr11281424ywd.2.1698050453310; Mon, 23
+ Oct 2023 01:40:53 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] ASoC: dt-bindings: qcom,q6dsp-lpass-ports: Add WSA2
- audio ports IDs
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+References: <20231016165355.1327217-1-dmitry.baryshkov@linaro.org>
+ <1871104.tdWV9SEqCh@steina-w> <CAA8EJpofiawC5z3jw1-TsxS+ZWz4QobCby3kScDDdk9Z-74mgQ@mail.gmail.com>
+ <3266380.44csPzL39Z@steina-w>
+In-Reply-To: <3266380.44csPzL39Z@steina-w>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Mon, 23 Oct 2023 11:40:42 +0300
+Message-ID: <CAA8EJpoF+r6a9cAnW0uT_YgBi=oC1dw9JYShau8ji-sR71iUxw@mail.gmail.com>
+Subject: Re: [RFC PATCH 03/10] drm/mipi-dsi: add API for manual control over
+ the DSI link power state
+To:     Alexander Stein <alexander.stein@ew.tq-group.com>
+Cc:     Maxime Ripard <mripard@kernel.org>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Marek Vasut <marex@denx.de>, Robert Foss <rfoss@kernel.org>,
+        Dave Stevenson <dave.stevenson@raspberrypi.com>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Jonas Karlman <jonas@kwiboo.se>, linux-arm-msm@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20231019153541.49753-1-krzysztof.kozlowski@linaro.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20231019153541.49753-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Level: *
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krzysztof,
+On Mon, 23 Oct 2023 at 11:14, Alexander Stein
+<alexander.stein@ew.tq-group.com> wrote:
+>
+> Am Montag, 23. Oktober 2023, 09:34:42 CEST schrieb Dmitry Baryshkov:
+> > On Mon, 23 Oct 2023 at 09:52, Alexander Stein
+> >
+> > <alexander.stein@ew.tq-group.com> wrote:
+> > > Hi Dmitry,
+> > >
+> > > Am Sonntag, 22. Oktober 2023, 12:49:41 CEST schrieb Dmitry Baryshkov:
+> > > > On Thu, 19 Oct 2023 at 14:42, Alexander Stein
+> > > >
+> > > > <alexander.stein@ew.tq-group.com> wrote:
+> > > > > Hi,
+> > > > >
+> > > > > Am Donnerstag, 19. Oktober 2023, 13:19:51 CEST schrieb Dmitry
+> Baryshkov:
+> > > > > > On Thu, 19 Oct 2023 at 12:26, Maxime Ripard <mripard@kernel.org=
+>
+> wrote:
+> > > > > > > On Mon, Oct 16, 2023 at 07:53:48PM +0300, Dmitry Baryshkov wr=
+ote:
+> > > > > > > > The MIPI DSI links do not fully fall into the DRM callbacks
+> > > > > > > > model.
+> > > > > > >
+> > > > > > > Explaining why would help
+> > > > > >
+> > > > > > A kind of explanation comes afterwards, but probably I should c=
+hange
+> > > > > > the order of the phrases and expand it:
+> > > > > >
+> > > > > > The atomic_pre_enable / atomic_enable and correspondingly
+> > > > > > atomic_disable / atomic_post_disable expect that the bridge lin=
+ks
+> > > > > > follow a simple paradigm: either it is off, or it is on and
+> > > > > > streaming
+> > > > > > video. Thus, it is fine to just enable the link at the enable t=
+ime,
+> > > > > > doing some preparations during the pre_enable.
+> > > > > >
+> > > > > > But then it causes several issues with DSI. First, some of the =
+DSI
+> > > > > > bridges and most of the DSI panels would like to send commands =
+over
+> > > > > > the DSI link to setup the device. Next, some of the DSI hosts h=
+ave
+> > > > > > limitations on sending the commands. The proverbial sunxi DSI h=
+ost
+> > > > > > can
+> > > > > > not send DSI commands after the video stream has started. Thus =
+most
+> > > > > > of
+> > > > > > the panels have opted to send all DSI commands from pre_enable =
+(or
+> > > > > > prepare) callback (before the video stream has started).
+> > > > > >
+> > > > > > However this leaves no good place for the DSI host to power up =
+the
+> > > > > > DSI
+> > > > > > link. By default the host's pre_enable callback is called after=
+ the
+> > > > > > DSI bridge's pre_enable. For quite some time we were powering u=
+p the
+> > > > > > DSI link from mode_set. This doesn't look fully correct. And al=
+so we
+> > > > > > got into the issue with ps8640 bridge, which requires for the D=
+SI
+> > > > > > link
+> > > > > > to be quiet / unpowered at the bridge's reset time.
+> > > > >
+> > > > > There are also bridges (e.g. tc358767) which require DSI-LP11 upo=
+n
+> > > > > bridge
+> > > > > reset. And additionally this DSI-(e)DP bridge requires LP11 while
+> > > > > accessing
+> > > > > DP-AUX channel, e.g. reading EDID. So bridges need at least some
+> > > > > control
+> > > > > over DSI line state.
+> > > >
+> > > > For sending commands in LP11 it is typical to toggle the
+> > > > MIPI_DSI_MODE_LPM flag, for example see panel-=3Djdi-lt070me05000.c=
+ or
+> > > > some other drives. It might be a good idea to make that more explic=
+it.
+> > > > All suggestions here would be appreciated.
+> > >
+> > > The biggest difference between that display and the tc358767 bridge i=
+s
+> > > that
+> > > the display uses DSI commands, while the bridge is using i2c transfer=
+ to
+> > > issue DP-AUX commands. There is no host_transfer [1] which would enab=
+le
+> > > LP-11. It seems this DSI-DP bridge requires LP-11/HS on DSI lanes all
+> > > times. This contradicts current Linux behaviour.
+> >
+> > I see. I took a quick glance at the driver. Does the device mark AUX
+> > as busy when there is a HS transfer?
+> > Because otherwise it might be pretty hard to synchronise DP-AUX
+> > transfers with the DSI link state. We might need to add an API for
+> > this, if the DSI hosts actually can signal the blanking / DSI LP.
+>
+> I don't see that a synchronization would be required. AUX should be
+> independent from DSI transfers. ASFAICS the bridge internals just require=
+s DSI
+> lines to be LP-00 or HS for AUX channel to be functioning.
 
-On 19/10/2023 16:35, Krzysztof Kozlowski wrote:
-> Add defines for audio ports used on Qualcomm WSA2 LPASS (Low Power
-> Audio SubSystem).
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->   include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h | 5 +++++
->   1 file changed, 5 insertions(+)
-> 
-> diff --git a/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h b/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
-> index 39f203256c4f..c5ea35abf129 100644
-> --- a/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
-> +++ b/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
-> @@ -139,6 +139,11 @@
->   #define DISPLAY_PORT_RX_5	133
->   #define DISPLAY_PORT_RX_6	134
->   #define DISPLAY_PORT_RX_7	135
-> +#define WSA2_CODEC_DMA_RX_0	136
-> +#define WSA2_CODEC_DMA_TX_0	137
-> +#define WSA2_CODEC_DMA_RX_1	138
-> +#define WSA2_CODEC_DMA_TX_1	139
-> +#define WSA2_CODEC_DMA_TX_2	140
->   
+Ah, LP or HS. Then it should be fine. I probably misread your original
+email. I thought that AUX transfers work only in the LP mode.
 
-Patches looks fine as it is, but do you realize that this s a dead code 
-w.r.t upstream.
-WSA2 is used only with 4 speaker setup and in such cases we use WSA 
-codec dma to drive 4 channels.
+>
+> >
+> > Side note: the driver needs some care. It doesn't support the aux-bus
+> > bindings for eDP panels, it doesn't support other bridges on top of DP
+> > connectors (but there can be e..g. dp-connector device).
+>
+> I don't think that this is necessary as you add an optional endpoint to p=
+ort2
+> which will then add an eDP display panel bridge. This should then handle =
+aux-
+> bus bindings.
 
-So WSA2 will not be used by itself.
-I would prefer support for this to be added when we are really able to 
-test WSA2 by itself.
+Not quite, see Documentation/devicetree/bindings/display/dp-aux-bus.yaml
+and devm_of_dp_aux_populate_bus().
 
-thanks,
-Srini
+It is expected that eDP panels are to be placed under the edp_bridge /
+aux-bus device node. But this is a separate topic, I just wanted to
+point out other missing pieces.
 
->   #define LPASS_CLK_ID_PRI_MI2S_IBIT	1
->   #define LPASS_CLK_ID_PRI_MI2S_EBIT	2
+>
+> Best regards,
+> Alexander
+>
+> > > Best regards,
+> > > Alexander
+> > >
+> > > [1]
+> > > https://www.kernel.org/doc/html/latest/gpu/drm-kms-helpers.html#mipi-=
+dsi-> > bridge-operation
+>
+>
+> --
+> TQ-Systems GmbH | M=C3=BChlstra=C3=9Fe 2, Gut Delling | 82229 Seefeld, Ge=
+rmany
+> Amtsgericht M=C3=BCnchen, HRB 105018
+> Gesch=C3=A4ftsf=C3=BChrer: Detlef Schneider, R=C3=BCdiger Stahl, Stefan S=
+chneider
+> http://www.tq-group.com/
+>
+>
+
+
+--=20
+With best wishes
+Dmitry
