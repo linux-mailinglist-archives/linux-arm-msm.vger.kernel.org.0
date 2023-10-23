@@ -2,81 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 89CAE7D2A9B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 08:41:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E4807D2AA6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 08:43:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233692AbjJWGk6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 02:40:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55404 "EHLO
+        id S229548AbjJWGnX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 02:43:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233625AbjJWGki (ORCPT
+        with ESMTP id S233489AbjJWGnW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 02:40:38 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7567310E9
-        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Oct 2023 23:40:35 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-99c1c66876aso427423066b.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Oct 2023 23:40:35 -0700 (PDT)
+        Mon, 23 Oct 2023 02:43:22 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82C41DF
+        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Oct 2023 23:43:19 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-52bd9ddb741so4353496a12.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Oct 2023 23:43:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698043234; x=1698648034; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698043398; x=1698648198; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=pEVOQI8t2jpIstILDxgVRQNq6M8ZE8UFb3N0bo6YIpg=;
-        b=vze9LOaBm14naryKVPSMQI874jEdDZFgsonLSYtn2xUciH910jUr2Iu4YKHF+8vjNt
-         u0YKd3TjMer4KHk8f9KPLALYvIy+aShcFpxKuENjXJrypZQHXGPJ60GEsAtukUaqFz04
-         YtunAbI39+aBF+yb+w+oD+kfQg3xyjTs3fUlh3vQqYGagy0MZO/rLBHRoBdJdXzhuh2K
-         t2SximbKk9gE9HWC6cS9Mg3fwyCAAbyfKvOPhY7YFSxYUKm1BoNEuSC8r447EN3hCgLN
-         5z3/bAXPPuqJ40JJ501CG3+T/hmJ5Uswo5Z1IMnJuHhTuKxnnDsVSvc40Z8yf/Pru/zP
-         U2tQ==
+        bh=ntCHjSsuUvChBXomyQUJzkjwjfRGxGWgLfHapq1IIEE=;
+        b=cguCd40NICVnS0CFfjf7g6k9cm+uBdKqc97Ym6C4+tTsn1S2uJOlwlEqMJb7Sds634
+         rLZZsLRGCRz3cLmmVD4VgXq149vMpkiK0OYj2vqCSL7SyyVDVK+fA5R1I66fxKf1JhkY
+         JjmLtwOGVVV66lE/yJe2llhA7WgQxfJdXNk0RbFc0IsZaOAZ9oGDUqewsJOlOKvfyZRc
+         x9k8Xlx3BdFAMacIGZ/j6663InTW5LXg6vzMxlSMTtCpXP/Pz1stBxFda6qmXTvLhDCg
+         LktReKmdpZkfMSwfxOdx4W+SF9Bc43cfebf8W+PeTCIW6BGMgu7j0BzOFL0HJLj6Qz2W
+         ay2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698043234; x=1698648034;
+        d=1e100.net; s=20230601; t=1698043398; x=1698648198;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pEVOQI8t2jpIstILDxgVRQNq6M8ZE8UFb3N0bo6YIpg=;
-        b=TLeGhnFZC1Ft53bhB7MTlEZO0xa0vN/WTsCbLnO3CijqimMSJgXXooZz/irg2wKQ7W
-         9Mju7oCp24bbDkk1iByiLw59BheS3hXdXTJ8M8sK41B1ip7ehYED0dBLaUaTv0c4oJEs
-         9kt/9Jgbk0VEEBcqRRo8HUIFpnSlO4fYIyuWSDwQBj/+U26KoCoJNFWpH6/oNoMRLj0k
-         WM3Svn2tFRH/WYbycLVYOk1W9G45Vpxk2V5HfqGH9Vc1u8I5QtG3jLk69Uin//ctJkDM
-         PTrnkfFzGm2OSB9Bt09/4wszZK/hhJN5UggnJqFDJPSO/mziQ8YhKIhHXhjoQryyNTv6
-         4ejA==
-X-Gm-Message-State: AOJu0Yyaj7cFWXIg6W4O4hG/vJD+3aid7Xr4BC5RqdgX7RhhXDS41DG/
-        NLUzkojyEmsMxlvhJfWnzIAoBQ==
-X-Google-Smtp-Source: AGHT+IEmbI2YY4b5sttRLNqwWJAoRXEGkX1rtVRv1Le68LtjiAgUKBWME6t4zNXqskdG8eWWaRXPXQ==
-X-Received: by 2002:a17:906:538d:b0:9a2:28dc:4166 with SMTP id g13-20020a170906538d00b009a228dc4166mr5499805ejo.75.1698043233908;
-        Sun, 22 Oct 2023 23:40:33 -0700 (PDT)
+        bh=ntCHjSsuUvChBXomyQUJzkjwjfRGxGWgLfHapq1IIEE=;
+        b=us4FV1TIwRhxP9okI433MB2yNQvlMEiQrqNpjweR0lcBXC6NrDRttxfQ1xmv8PNQBi
+         1KYSxfZr1udqQ9O2/LCD+yazWUj42y2+O9Br0hdjhqfiSoBAWXlsfK+qGR10nATMmBfo
+         B2SwlQjfg5izBr4XudHfKtX1rA24FlJGPsjyvWRUrWLibhWJ7PvuVQUut3r89zJFLz84
+         MepTdwuqEbCeOwE2hjh/7LMILrFHybcJ2d3w9mcEZm1cV6Mts7n+OgFm8QiK3Uw3NrZe
+         ka+0Ek6IBS3NwiTTyqFx0ET6wx3Me/Gc+lgv1vsQ014QZ5ArI2QnlTOExhfaUDritNjA
+         GrCQ==
+X-Gm-Message-State: AOJu0YyBYdcBdEef/pEJbJGvuTdILyRuJ+GUMe3OTUBvmokwH98rJvzM
+        isVHxBN74+rzJIDQrA3tTmdWCg==
+X-Google-Smtp-Source: AGHT+IES8pqkBsrm1XwY2HuATaUbhQYcZbHj4Uw/bXJUXHunIF8MlMbrQe2Sl9OXhcuNozAr/KyLbw==
+X-Received: by 2002:a05:6402:2813:b0:53f:8493:5b0b with SMTP id h19-20020a056402281300b0053f84935b0bmr6538691ede.35.1698043398010;
+        Sun, 22 Oct 2023 23:43:18 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id j12-20020a170906050c00b009c764341f74sm6111980eja.71.2023.10.22.23.40.31
+        by smtp.gmail.com with ESMTPSA id a17-20020a50c311000000b0053dfd3519f4sm5879824edb.22.2023.10.22.23.43.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 22 Oct 2023 23:40:33 -0700 (PDT)
-Message-ID: <91ebed22-76fc-4d9d-ae3d-64808ccc532a@linaro.org>
-Date:   Mon, 23 Oct 2023 08:40:30 +0200
+        Sun, 22 Oct 2023 23:43:17 -0700 (PDT)
+Message-ID: <2c3f95e3-26de-4911-a89c-c69690e0f370@linaro.org>
+Date:   Mon, 23 Oct 2023 08:43:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/11] dt-bindings: iio: remove QCOM ADC files from iio
- folder
+Subject: Re: [PATCH v6 2/2] arm64: dts: qcom: sm8250-xiaomi-pipa: Add initial
+ device tree
 Content-Language: en-US
-To:     Jishnu Prakash <quic_jprakash@quicinc.com>, agross@kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linus.walleij@linaro.org, Jonathan.Cameron@huawei.com,
-        sboyd@kernel.org, dmitry.baryshkov@linaro.org,
-        quic_subbaram@quicinc.com, quic_collinsd@quicinc.com,
-        quic_kamalw@quicinc.com, quic_jestar@quicinc.com,
-        marijn.suijten@somainline.org, andriy.shevchenko@linux.intel.com,
+To:     Luka Panio <lukapanio@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org
-Cc:     linux-arm-msm-owner@vger.kernel.org
-References: <20230708072835.3035398-1-quic_jprakash@quicinc.com>
- <20230708072835.3035398-12-quic_jprakash@quicinc.com>
- <8b2dd686-382a-f490-7b6e-9603d939bad7@linaro.org>
- <e6c27567-070e-1765-3d5a-30a6e6fa119b@quicinc.com>
+        Kees Cook <keescook@chromium.org>,
+        Tony Luck <tony.luck@intel.com>,
+        "Guilherme G . Piccoli" <gpiccoli@igalia.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
+References: <20231022173811.8229-1-lukapanio@gmail.com>
+ <20231022173811.8229-2-lukapanio@gmail.com>
+ <3307fcb9-1697-4a9e-b4f6-c00c2b10ba89@linaro.org>
+ <CACi=Ov58mGYT65kE2eHVx54v1g61Kpnn=pw4ETPmJBWuiJ3aOA@mail.gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -122,9 +118,9 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <e6c27567-070e-1765-3d5a-30a6e6fa119b@quicinc.com>
+In-Reply-To: <CACi=Ov58mGYT65kE2eHVx54v1g61Kpnn=pw4ETPmJBWuiJ3aOA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -135,31 +131,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/10/2023 08:19, Jishnu Prakash wrote:
-> Hi Krzysztof,
+On 22/10/2023 21:56, Luka Panio wrote:
+> On Sun, Oct 22, 2023 at 8:46 PM Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
 > 
-> On 7/9/2023 10:58 PM, Krzysztof Kozlowski wrote:
->> On 08/07/2023 09:28, Jishnu Prakash wrote:
->>> Now that the ADC dt-binding paths have been updated everywhere
->>> to use the files copied to the 'iio/adc' folder, remove them
->>> from the 'iio' folder.
->>>
->>> Signed-off-by: Jishnu Prakash <quic_jprakash@quicinc.com>
->>> ---
->> Nothing this was explained in previous patches... We should not have to
->> read patchset from the end to understand what is happening here. Anyway,
->> your commits lack rationale why this is done. Without it, this is pure
->> churn which breaks users. ABI breaks need to be explained in the commit
->> msg and come with some reason.
-> 
-> 
-> I'll try to do the changes in one or two patchsets, based on my replies 
-> for the previous few patchsets (8, 9, 10), hope this can work.
+>> If there are no other copyrights here, why did you use BSD-3 license?
+> I am by no means a licensing expert, but as sm8250.dts did use BSD-3
+> and other device tree's (for example sm8250-xiaomi-elish-boe.dts) did
+> use it, I thought I should do the same. Should I drop it?
 
-You are not responding to actual comment. Splitting this to one (??? it
-is already one patchset) or two patchsets will not fix anything. You
-still break users and break ABI without justification. Your marketing is
-not a justification for that.
+Did you base your work on these files? This would explain the license,
+but then please include original copyrights.
+
+> 
+>>
+>> chassis-type
+>>
+>> It does not look like you tested the DTS against bindings. Please run
+>> `make dtbs_check W=1` (see
+>> Documentation/devicetree/bindings/writing-schema.rst or
+>> https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
+>> for instructions).
+>>
+> Thanks, will do.
+> 
+>> 0x34 or 34?
+> Yes 0x24, should i tend to use decimal?
+
+Please do not trim the content that much. How can I know to what you
+refer here? What was in original code? 0x24?
+
+
 
 Best regards,
 Krzysztof
