@@ -2,82 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5EDB27D35F4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 13:59:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 49B8F7D3620
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 14:09:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233443AbjJWL7X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 07:59:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47890 "EHLO
+        id S230024AbjJWMJV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 08:09:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233419AbjJWL7W (ORCPT
+        with ESMTP id S230014AbjJWMJU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 07:59:22 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CD9EF5;
-        Mon, 23 Oct 2023 04:59:20 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-9b6559cbd74so488100666b.1;
-        Mon, 23 Oct 2023 04:59:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698062358; x=1698667158; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=nnqy7dSxOjQjqscv4DWvyJMFvfwEd0TnRvRI5+ZbjWo=;
-        b=m7flUE3mJRnPL2h+1TVvA1/SxuXPj/RJldsppMLplwaffwRWSGl9j75jV2r2mD6n8D
-         jqT4Qap+9N+Q3IIFQkmRVGRu6TC8Bdy6UcNOO8ri9kC+hhtkAwwnACPWMX8xFcYw+u7E
-         vLQvWiQuS8FZdPJgAXBtf6Ttr/KOmgHDl2f8kFHT/SrFT0mnMSKty0rCoDkj5NeC88Y9
-         jhKR+778paeJPa7eqc2FIzDiHOMyKUBzqdliNUVl6mJtJbzCm5rn7RBhFFn4L1NZPdrw
-         1nenTcSL8YbSswoXJ4jMIp/WphuhIQVe5N/t8c8fCY3+2yGgoLnypnRBoJqpwSgjAsiR
-         hnog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698062358; x=1698667158;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nnqy7dSxOjQjqscv4DWvyJMFvfwEd0TnRvRI5+ZbjWo=;
-        b=Ae6vsQtzLEWHZMnMixxytO9M+8tvW7i4ZqHkE06olrzvNWtzddw7ePkNEY2ny/+gRN
-         +1HawVZmH1A87Rjllk/YLRVLiomUP5TDXJQa7rimwP2PDsvaE79cIdLdl0dVkEviCj0R
-         9Y54+bRMsotQZmnkMo/AGhGbQdkPjxQwZEQMdv0gzAgvj/uEAGWhjoJc0K8/tPtt5lg8
-         M3zVXC4atrGCbeTgoUtKYz1sKBWiV9K+D2GI4dask5ByRTOqGDojcEqrB4EIjGlRl4b8
-         CacA2bc1IP1rQoSJi9MtVSkrCPtmLIgMv7dYZHoWiwREWQciGOODyk7Y6vZdap/S4dZg
-         JIbQ==
-X-Gm-Message-State: AOJu0YxnN7RwjPuc1hyQMUo1EuGfFCUboXRfLQUgfNs6cOHFp4TgTFL5
-        3NZIxnJBaEQJod4yx6tph/v5OzIOjOOczmHUJZL0873hk7Mj/6Qp
-X-Google-Smtp-Source: AGHT+IEn0NHJ4SfG0P+T4S3NwQqFTArELhFnDro91pfObDGaOIHYbJg5GjpcRO9l38DOWF/Ws4+OojefE8nrEYCon5s=
-X-Received: by 2002:a17:907:9485:b0:9be:f71d:9471 with SMTP id
- dm5-20020a170907948500b009bef71d9471mr7774826ejc.68.1698062358169; Mon, 23
- Oct 2023 04:59:18 -0700 (PDT)
-MIME-Version: 1.0
-References: <20231023090230.43210-1-lukapanio@gmail.com> <20231023090230.43210-2-lukapanio@gmail.com>
- <26b65551-1437-4e21-947e-1628052b7c36@linaro.org>
-In-Reply-To: <26b65551-1437-4e21-947e-1628052b7c36@linaro.org>
-From:   Luka Panio <lukapanio@gmail.com>
-Date:   Mon, 23 Oct 2023 13:59:07 +0200
-Message-ID: <CACi=Ov7MXJsEazZZbisHWUfZD4B8WxtKROjwu-EEQfRgPHSGkA@mail.gmail.com>
-Subject: Re: [PATCH v8 2/2] arm64: dts: qcom: sm8250-xiaomi-pipa: Add initial
- device tree
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Mon, 23 Oct 2023 08:09:20 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF2B8E9;
+        Mon, 23 Oct 2023 05:09:18 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCF8FC433C7;
+        Mon, 23 Oct 2023 12:09:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1698062958;
+        bh=RbWCwja07DafbippZrSFdtxJIN4etVdKpVKTGaVHeOA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=LCQgdLn2jvYJjLXPeS1gYaEliMFLBxOWUWhSwgjHA0D4C8hoNQt8EYZHZWcM0g5tS
+         UX4a954QZyVkkm7wHyxY2oy3s38ibn8iVQ6sXfUQUKDU88ix3eMeTiZ6vg5v919Mj0
+         xCXFu5Hz2YNjKRX15nDZhQbsIcUT2DSEn+8xomMlJxiKpbt90OT6uF/MvNuMKXisHA
+         iSeU3SO/7NFFYLw7yFMxNmd4NFPxg6c0neYuyeYAs5ez176Lel9SbpcwQFLm22aUZy
+         9OV0IRSvHzfrdGxNK6kqstI4xwppDKUtJjgAY7hth4YNtBrF/uUAk/57fFjOzmUuBI
+         JCPqAcQDacXuA==
+Date:   Mon, 23 Oct 2023 13:09:11 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Cc:     Liam Girdwood <lgirdwood@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kees Cook <keescook@chromium.org>,
-        Tony Luck <tony.luck@intel.com>,
-        "Guilherme G . Piccoli" <gpiccoli@igalia.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Stephan Gerhold <stephan@gerhold.net>
+Subject: Re: [PATCH RFC 1/2] regulator: core: Disable unused regulators with
+ unknown status
+Message-ID: <80307316-f55e-4540-9c5f-655844c3b3f4@sirena.org.uk>
+References: <20231004-reg-smd-unused-v1-0-5d682493d555@kernkonzept.com>
+ <20231004-reg-smd-unused-v1-1-5d682493d555@kernkonzept.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="SPN+lB5wKEJ80DqE"
+Content-Disposition: inline
+In-Reply-To: <20231004-reg-smd-unused-v1-1-5d682493d555@kernkonzept.com>
+X-Cookie: Never reveal your best argument.
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Ok sorry just didn't got it right. will send a new patchset tomorrow.
-Thanks,
-Luka Panio
+
+--SPN+lB5wKEJ80DqE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+On Wed, Oct 04, 2023 at 04:17:17PM +0200, Stephan Gerhold wrote:
+
+> Instead of -EINVAL we could also use a different return code to indicate
+> the initial status is unknown. Or maybe there is some other option that
+> would be easier? This is working for me but I'm sending it as RFC to get
+> more feedback. :)
+
+The more normal thing here would be -EBUSY I think - -EINVAL kind of
+indicates that the operation will never work while in reality it could
+possibly work in future.  Though for the RPMH it's not really the case
+that it ever supports readback, what it does is have it's own reference
+counting in the driver.  Rather than doing this we should probably have
+logic in the core which sees that the driver has a write operation but
+no read operation and implements appropriate behaviour.
+
+--SPN+lB5wKEJ80DqE
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmU2YmcACgkQJNaLcl1U
+h9DG1wf+NXfFlCEiYLkBH4eo1ZKPyDHhg/GfUj6L8qCoftmrX4MX5dd5FNe8MCOY
+w+ikBTafNI0VXvZrRy6Hi/b6iUK7LSB3teuJn0ppE5gXUmKpdzm09W9Rmh4GPMva
+SFkIgiYXL6ou15043YVm/h22qnISmsdgejTjDkocjhGLShocTS1h3wNDSLl5XdrX
+lFLJXxZHrxGu2KXvMNZDozkG4z8AbYOoN3M2hDOLk1lC0vEr/ZaIQYnR4Oqp8n1p
+SH3kG+TeIP91UeC7HXV25hiUwHximvgImM6sL9BtNkHAthrv5GGaeBAIwLrXLzIU
+uW4/pT3PRGlB6jtuNqlGKx3e4NMa/A==
+=Y0WM
+-----END PGP SIGNATURE-----
+
+--SPN+lB5wKEJ80DqE--
