@@ -2,253 +2,750 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C3217D2B86
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 09:40:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 388AF7D2B94
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 09:43:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233530AbjJWHkW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 03:40:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46788 "EHLO
+        id S229838AbjJWHna (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 03:43:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233483AbjJWHkU (ORCPT
+        with ESMTP id S229737AbjJWHna (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 03:40:20 -0400
-Received: from mail-ua1-x935.google.com (mail-ua1-x935.google.com [IPv6:2607:f8b0:4864:20::935])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF5D6D65
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 00:40:17 -0700 (PDT)
-Received: by mail-ua1-x935.google.com with SMTP id a1e0cc1a2514c-7b61de8e456so1015825241.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 00:40:17 -0700 (PDT)
+        Mon, 23 Oct 2023 03:43:30 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFC5CD65;
+        Mon, 23 Oct 2023 00:43:26 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-9be7e3fa1daso434372966b.3;
+        Mon, 23 Oct 2023 00:43:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698046817; x=1698651617; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=LTwZL7ZB+4qPOTcj2G/meZmbL6HBlSSmbTIpmPj/DWo=;
-        b=iwTylf5PFE0lK6nJdcspMuSGrVpuLBP7cuc+VzVsTtS2/H4GLfDLUQOZgBo4v8t/yZ
-         9cL99Yi0UEPWWpeOEX1wljhTCbt0k8lGyQxwpED15Uhs4cJy9MHhFy0C1YL82tzLxc4w
-         K/4Op01gBqWA60hZw1WHugxdOCwhaQOxjZibDqvtRF+9ndjMD+Aqc1u2uWeis90z9VCh
-         s4Ud1MnFWY3QM9MFYuAxMHvm5xO9kNX4cbv5a+Qs/tZIVknVoc74efL5MDLMM/rE2nVB
-         Wk2oMLahrMod0z822heYsA94KRCsQZ+ISndsGPopK3A2BZmRJL6GnX5KEkFPzCIvprqh
-         iTVQ==
+        d=gmail.com; s=20230601; t=1698047005; x=1698651805; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=c+xSq2VEEBtI6YfLIzXujyXYo7zN0oYKOxwJjgehpfI=;
+        b=ZRI1KX8Wq+/PnBWl6MaeezR0tBPV7DCuJeFXw65UWC7Ee1ROOvjhzSqsg5fezxZeha
+         9th8fA+/w4oS5WY7FyR4zbhLugNzpAd+/7eYKJxsxjiMHcm74QGJitwR5sRpFPZNGq31
+         1nQEQiu1FzHiBmATusvI2zylHqXZXB7JZzPyX0QEQPVL7WFidL0H2Lt2tgybYO0SjVY2
+         oi9l0eK8c8T54nKV7phuwjrCncB9afgBKHUk2YPxPXJLPIjk3FEqTjg5NdzQwH6/T0bt
+         WqsrZZLe8h/44IG+5x/6GngQeGxAMo845eJu5OoeOa8A0DdES9dd2abEUjhw3ZY7HcT7
+         S5dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698046817; x=1698651617;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1698047005; x=1698651805;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=LTwZL7ZB+4qPOTcj2G/meZmbL6HBlSSmbTIpmPj/DWo=;
-        b=fGePOtu6x3WQmz2EyX20qK9AYZPpUCsg/Pf3hrcRi5JYZrWSU8ddSVKzRgL5MA1El6
-         /C2g8GINjCNNkO9kve9D7+2kp2wHwBR5gJ1Z+AEpZ6y/Kgrx7kC6UUMHFUTR0s4ItLSH
-         N+6q7t8aHW9cdQx3M2dvWJ5aXNKtAnMUjUpKUPtGIS7e9bsrTIDTW6TqnS69gzYqVApj
-         E9chUoylN31dhOCawzu9PIKWGb7Ubb/mnvXeMDs3WFcNCru+0rJ+0TjgAUddRt/9MxXm
-         V93cdM4jAXgWLLFGIhWGsqeiktlCKMYqj9oVQjl4QCp+EpVSyyOKCjO/Es+MZ8IXucuf
-         rHlw==
-X-Gm-Message-State: AOJu0YzDzQQckedlZCGOLNXB+OQnVfmK2KpfoWD9OqfZ5ioozVdgiOrg
-        KiHiOMa1LH2CywkWnHgir8l4HDONOZSjij3O2T6DVg==
-X-Google-Smtp-Source: AGHT+IFIuNOE5csO/dEMQna24sjlvo6iAi0uk2UHGNbT+8VHC5+6qCdvQw7xewHtIa5zcWhbY15Yzb9NZ+ZLP2wfiNg=
-X-Received: by 2002:a1f:fc07:0:b0:49b:adce:e2d1 with SMTP id
- a7-20020a1ffc07000000b0049badcee2d1mr7498986vki.10.1698046816744; Mon, 23 Oct
- 2023 00:40:16 -0700 (PDT)
-MIME-Version: 1.0
-References: <20231016165355.1327217-1-dmitry.baryshkov@linaro.org>
- <20231016165355.1327217-4-dmitry.baryshkov@linaro.org> <d941462e-1ac8-4dce-bd09-ddb99d79578a@linaro.org>
-In-Reply-To: <d941462e-1ac8-4dce-bd09-ddb99d79578a@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 23 Oct 2023 10:40:05 +0300
-Message-ID: <CAA8EJpqB6eMCEEg3Ptg531mTiOsnP=3qE_C6dyA1_TO4ZbJAbw@mail.gmail.com>
-Subject: Re: [RFC PATCH 03/10] drm/mipi-dsi: add API for manual control over
- the DSI link power state
-To:     neil.armstrong@linaro.org
-Cc:     Dave Stevenson <dave.stevenson@raspberrypi.com>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Robert Foss <rfoss@kernel.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Douglas Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
+        bh=c+xSq2VEEBtI6YfLIzXujyXYo7zN0oYKOxwJjgehpfI=;
+        b=aQml35zC8t/jqStcNOSJMTd//Zp42JZpL0fq9DMHtSy0HGnsSrHhrg/SkVMg4s9HUf
+         x+UhwgzmBd1D+ntZ87oqTEaboB4THX6DHzdsyXLo/IG92X7jVTdoBRIiF9dyzSYK66wW
+         VgoywkoJ88c48aWHIq5hIz20Xl2AOVBhuRhQXqFjuU6QHXFreYApj9pi8GuGjQXV2L2E
+         rPeV/nyfq2JuIOrWAGJMGYvsGI5toPL1exZ0ZvFpIXkhi6XIYQeF1zoCzZEE2OX1bOsS
+         AwpsyJRSO62jXQU7oJKCBedjKDjrV1TkCoPQPfstjsS62VYMvEFC8KuCvTbxAVn0oxi+
+         XMpA==
+X-Gm-Message-State: AOJu0Yx8GWR92OeYVBE5840aIIdRVj3LhzPtM2IvwEs1dwJPpniv75Z4
+        IWN+K9xcPQb0cZuujzpHkvw=
+X-Google-Smtp-Source: AGHT+IFVIs3xBUGKwC7FXfvNmCuojAaJXcmROJpRGPkP9BW+pWxlhUFzZQf9B6gp+9K7Oy9Mus6ssg==
+X-Received: by 2002:a17:907:1c2a:b0:9be:9e69:488c with SMTP id nc42-20020a1709071c2a00b009be9e69488cmr6818231ejc.59.1698047004813;
+        Mon, 23 Oct 2023 00:43:24 -0700 (PDT)
+Received: from localhost.localdomain ([2a0d:3344:1b7d:7200::eba])
+        by smtp.gmail.com with ESMTPSA id gz11-20020a170906f2cb00b0099cd008c1a4sm6151415ejb.136.2023.10.23.00.43.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Oct 2023 00:43:24 -0700 (PDT)
+From:   Luka Panio <lukapanio@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Marek Vasut <marex@denx.de>, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Kees Cook <keescook@chromium.org>,
+        Tony Luck <tony.luck@intel.com>,
+        "Guilherme G . Piccoli" <gpiccoli@igalia.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
+Cc:     Luka Panio <lukapanio@gmail.com>
+Subject: [PATCH v7] arm64: dts: qcom: sm8250-xiaomi-pipa: Add initial device tree
+Date:   Mon, 23 Oct 2023 09:43:19 +0200
+Message-ID: <20231023074319.14456-1-lukapanio@gmail.com>
+X-Mailer: git-send-email 2.42.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 23 Oct 2023 at 10:35, Neil Armstrong <neil.armstrong@linaro.org> wrote:
->
-> On 16/10/2023 18:53, Dmitry Baryshkov wrote:
-> > The MIPI DSI links do not fully fall into the DRM callbacks model. The
-> > drm_bridge_funcs abstraction. Instead of having just two states (off and
-> > on) the DSI hosts have separate LP-11 state. In this state the host is
-> > on, but the video stream is not yet enabled.
-> >
-> > Introduce API that allows DSI bridges / panels to control the DSI host
-> > power up state.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >   drivers/gpu/drm/drm_mipi_dsi.c | 31 +++++++++++++++++++++++++++++++
-> >   include/drm/drm_mipi_dsi.h     | 29 +++++++++++++++++++++++++----
-> >   2 files changed, 56 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_dsi.c
-> > index 14201f73aab1..c467162cb7d8 100644
-> > --- a/drivers/gpu/drm/drm_mipi_dsi.c
-> > +++ b/drivers/gpu/drm/drm_mipi_dsi.c
-> > @@ -428,6 +428,37 @@ int devm_mipi_dsi_attach(struct device *dev,
-> >   }
-> >   EXPORT_SYMBOL_GPL(devm_mipi_dsi_attach);
-> >
-> > +bool mipi_dsi_host_power_control_available(struct mipi_dsi_host *host)
-> > +{
-> > +     const struct mipi_dsi_host_ops *ops = host->ops;
-> > +
-> > +     return ops && ops->power_up;
-> > +}
-> > +EXPORT_SYMBOL_GPL(mipi_dsi_host_power_control_available);
-> > +
-> > +int mipi_dsi_host_power_up(struct mipi_dsi_host *host)
-> > +{
-> > +     const struct mipi_dsi_host_ops *ops = host->ops;
-> > +
-> > +     if (!mipi_dsi_host_power_control_available(host))
-> > +             return -EOPNOTSUPP;
-> > +
-> > +     return ops->power_up ? ops->power_up(host) : 0;
-> > +}
-> > +EXPORT_SYMBOL_GPL(mipi_dsi_host_power_up);
-> > +
-> > +void mipi_dsi_host_power_down(struct mipi_dsi_host *host)
-> > +{
-> > +     const struct mipi_dsi_host_ops *ops = host->ops;
-> > +
-> > +     if (!mipi_dsi_host_power_control_available(host))
-> > +             return;
-> > +
-> > +     if (ops->power_down)
-> > +             ops->power_down(host);
-> > +}
-> > +EXPORT_SYMBOL_GPL(mipi_dsi_host_power_down);
-> > +
-> >   static ssize_t mipi_dsi_device_transfer(struct mipi_dsi_device *dsi,
-> >                                       struct mipi_dsi_msg *msg)
-> >   {
-> > diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
-> > index 167742e579e3..e503c3e4d057 100644
-> > --- a/include/drm/drm_mipi_dsi.h
-> > +++ b/include/drm/drm_mipi_dsi.h
-> > @@ -68,6 +68,8 @@ int mipi_dsi_create_packet(struct mipi_dsi_packet *packet,
-> >    * @attach: attach DSI device to DSI host
-> >    * @detach: detach DSI device from DSI host
-> >    * @transfer: transmit a DSI packet
-> > + * @power_up: enable DSI link and bring it to the LP-11 state
-> > + * @power_down: fully disable DSI link
-> >    *
-> >    * DSI packets transmitted by .transfer() are passed in as mipi_dsi_msg
-> >    * structures. This structure contains information about the type of packet
-> > @@ -81,10 +83,18 @@ int mipi_dsi_create_packet(struct mipi_dsi_packet *packet,
-> >    * function will seldomly return anything other than the number of bytes
-> >    * contained in the transmit buffer on success.
-> >    *
-> > - * Also note that those callbacks can be called no matter the state the
-> > - * host is in. Drivers that need the underlying device to be powered to
-> > - * perform these operations will first need to make sure it's been
-> > - * properly enabled.
-> > + * Note: currently there are two modes of DSI power control. Legacy drivers
-> > + * will call those callbacks no matter the state the host is in. DSI host
-> > + * drivers that need the underlying device to be powered to perform these
-> > + * operations will first need to make sure it's been properly enabled.
-> > + *
-> > + * Newer drivers will set the @MIPI_DSI_MANUAL_POWERUP flag to indicate that
-> > + * they will call @mipi_dsi_power_up() and @mipi_dsi_power_down() to control
-> > + * the link state of the DSI host or they will set @MIPI_DSI_AUTO_POWERUP to
-> > + * indicate that the driver is fine with the link being powered up in DSI
-> > + * host's (atomic_)pre_enable() callback and then being disabled in the
-> > + * (atomic_)post_disable() callback. The transfer callback must only be called
-> > + * if the DSI host has been powered up and was not brought down.
-> >    *
-> >    * Note: some hosts (sunxi) can not send LP commands between HS video
-> >    * packets. Thus all DSI transfers sent in LP mode should be limited to the
-> > @@ -97,6 +107,8 @@ struct mipi_dsi_host_ops {
-> >                     struct mipi_dsi_device *dsi);
-> >       ssize_t (*transfer)(struct mipi_dsi_host *host,
-> >                           const struct mipi_dsi_msg *msg);
-> > +     int (*power_up)(struct mipi_dsi_host *host);
-> > +     void (*power_down)(struct mipi_dsi_host *host);
-> >   };
-> >
-> >   /**
-> > @@ -143,6 +155,10 @@ struct mipi_dsi_host *of_find_mipi_dsi_host_by_node(struct device_node *node);
-> >   #define MIPI_DSI_MODE_LPM           BIT(11)
-> >   /* transmit data ending at the same time for all lanes within one hsync */
-> >   #define MIPI_DSI_HS_PKT_END_ALIGNED BIT(12)
-> > +/* DSI peripheral driver manually controls DSI link powerup */
-> > +#define MIPI_DSI_MANUAL_POWERUP              BIT(13)
-> > +/* DSI peripheral driver is fine with automatic DSI link power control */
-> > +#define MIPI_DSI_AUTO_POWERUP                BIT(14)
->
-> What happens if none of the bits are in the flags ?
->
-> Can't we implement "opportunistic power-up" on the first DSI command sent?
+Initial support for Xiaomi Pad 6 tablet, that have sm8250 soc.
 
-Not really. Such an opportunistic power up was expected to be there
-and ... it failed, as you can see from the pre_enable_prev_first and
-then by this series.
+Signed-off-by: Luka Panio <lukapanio@gmail.com>
+---
+v2:
+Update commit message. Drop reserved gpio's as this device in reality do not have gpio, and pins are not protected.
 
-If the device doesn't set either of these flags, the DSI host can not
-make any guesses about the time to power up the link. So, it should
-follow the previous approach of enabling the DSI link no later than
-mode_set. Otherwise the DSI sink might not be able to send DSI
-commands from pre_enable callback.
+v3:
+Update commit message.
 
->
-> If a bridge/panel sends a DSI command, and if it happens before the DSI host enable, then
-> the DSI host will "pre-enable" the host and put the link in LP-11.
->
-> This would be simpler and would work whatever the pre_enable order.
->
-> But this won't work for the tc358767, except if we add a dummy DSI host command
-> which powers up the DSI link.
->
-> This won't fix the PS8640 either who also needs a disabled DSI link to initialize.
+v4:
+Update commit message.
 
-Well, you have said it. The automatic enabling doesn't work if the DSI
-host has no information about the DSI sink.
+v5:
+Update commit message.
 
->
-> Neil
->
-> >
-> >   enum mipi_dsi_pixel_format {
-> >       MIPI_DSI_FMT_RGB888,
-> > @@ -235,6 +251,11 @@ void mipi_dsi_device_unregister(struct mipi_dsi_device *dsi);
-> >   struct mipi_dsi_device *
-> >   devm_mipi_dsi_device_register_full(struct device *dev, struct mipi_dsi_host *host,
-> >                                  const struct mipi_dsi_device_info *info);
-> > +
-> > +bool mipi_dsi_host_power_control_available(struct mipi_dsi_host *host);
-> > +int mipi_dsi_host_power_up(struct mipi_dsi_host *host);
-> > +void mipi_dsi_host_power_down(struct mipi_dsi_host *host);
-> > +
-> >   struct mipi_dsi_device *of_find_mipi_dsi_device_by_node(struct device_node *np);
-> >   int mipi_dsi_attach(struct mipi_dsi_device *dsi);
-> >   int mipi_dsi_detach(struct mipi_dsi_device *dsi);
->
+v6:
+Update commit message.
 
+v7:
+Fix typo in "chassis-type", remove useless newlines, update license
+---
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/sm8250-xiaomi-pipa.dts      | 623 ++++++++++++++++++
+ 2 files changed, 624 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sm8250-xiaomi-pipa.dts
 
+diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+index 2cca20563a1d..41ab333d1f81 100644
+--- a/arch/arm64/boot/dts/qcom/Makefile
++++ b/arch/arm64/boot/dts/qcom/Makefile
+@@ -208,6 +208,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-sony-xperia-edo-pdx203.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-sony-xperia-edo-pdx206.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-xiaomi-elish-boe.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-xiaomi-elish-csot.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-xiaomi-pipa.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-hdk.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-microsoft-surface-duo2.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-mtp.dtb
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-pipa.dts b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-pipa.dts
+new file mode 100644
+index 000000000000..0dd84aff4f6f
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-pipa.dts
+@@ -0,0 +1,623 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Copyright (c) 2023 luka177 <lukapanio@gmail.com>
++ */
++
++/dts-v1/;
++
++#include <dt-bindings/arm/qcom,ids.h>
++#include <dt-bindings/phy/phy.h>
++#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
++#include "sm8250.dtsi"
++#include "pm8150.dtsi"
++#include "pm8150b.dtsi"
++#include "pm8150l.dtsi"
++#include "pm8009.dtsi"
++
++/*
++ * Delete following upstream (sm8250.dtsi) reserved
++ * memory mappings which are different on this device.
++ */
++/delete-node/ &adsp_mem;
++/delete-node/ &cdsp_secure_heap;
++/delete-node/ &slpi_mem;
++/delete-node/ &spss_mem;
++/delete-node/ &xbl_aop_mem;
++
++/ {
++
++	model = "Xiaomi Pad 6";
++	compatible = "xiaomi,pipa", "qcom,sm8250";
++
++	chassis-type = "tablet";
++
++	/* required for bootloader to select correct board */
++	qcom,msm-id = <QCOM_ID_SM8250 0x20001>; /* SM8250 v2.1 */
++	qcom,board-id = <0x34 0>;
++
++	chosen {
++		#address-cells = <2>;
++		#size-cells = <2>;
++		ranges;
++
++		framebuffer: framebuffer@9c000000 {
++			compatible = "simple-framebuffer";
++			reg = <0x0 0x9c000000 0x0 0x2300000>;
++			width = <1800>;
++			height = <2880>;
++			stride = <(1800 * 4)>;
++			format = "a8r8g8b8";
++		};
++	};
++
++	battery_l: battery-l {
++		compatible = "simple-battery";
++		voltage-min-design-microvolt = <3870000>;
++		energy-full-design-microwatt-hours = <16700000>;
++		charge-full-design-microamp-hours = <4420000>;
++	};
++
++	battery_r: battery-r {
++		compatible = "simple-battery";
++		voltage-min-design-microvolt = <3870000>;
++		energy-full-design-microwatt-hours = <16700000>;
++		charge-full-design-microamp-hours = <4420000>;
++	};
++
++	bl_vddpos_5p5: bl-vddpos-regulator {
++		compatible = "regulator-fixed";
++		regulator-name = "bl_vddpos_5p5";
++		regulator-min-microvolt = <5500000>;
++		regulator-max-microvolt = <5500000>;
++		regulator-enable-ramp-delay = <233>;
++		gpio = <&tlmm 130 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++		regulator-boot-on;
++	};
++
++	bl_vddneg_5p5: bl-vddneg-regulator {
++		compatible = "regulator-fixed";
++		regulator-name = "bl_vddneg_5p5";
++		regulator-min-microvolt = <5500000>;
++		regulator-max-microvolt = <5500000>;
++		regulator-enable-ramp-delay = <233>;
++		gpio = <&tlmm 131 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++		regulator-boot-on;
++	};
++
++	gpio_keys: gpio-keys {
++		compatible = "gpio-keys";
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&vol_up_n>;
++
++		key-vol-up {
++			label = "Volume Up";
++			gpios = <&pm8150_gpios 6 GPIO_ACTIVE_LOW>;
++			linux,code = <KEY_VOLUMEUP>;
++			debounce-interval = <15>;
++			linux,can-disable;
++			wakeup-source;
++		};
++	};
++
++	vph_pwr: vph-pwr-regulator {
++		compatible = "regulator-fixed";
++		regulator-name = "vph_pwr";
++		regulator-min-microvolt = <3700000>;
++		regulator-max-microvolt = <3700000>;
++	};
++
++	/* S6c is really ebi.lvl but it's there for supply map completeness sake. */
++	vreg_s6c_0p88: smpc6-regulator {
++		compatible = "regulator-fixed";
++		regulator-name = "vreg_s6c_0p88";
++		regulator-min-microvolt = <880000>;
++		regulator-max-microvolt = <880000>;
++		regulator-always-on;
++		vin-supply = <&vph_pwr>;
++	};
++
++	reserved-memory {
++		xbl_aop_mem: xbl-aop@80700000 {
++			reg = <0x0 0x80600000 0x0 0x260000>;
++			no-map;
++		};
++
++		slpi_mem: slpi@88c00000 {
++			reg = <0x0 0x88c00000 0x0 0x2f00000>;
++			no-map;
++		};
++
++		adsp_mem: adsp@8bb00000 {
++			reg = <0x0 0x8bb00000 0x0 0x2500000>;
++			no-map;
++		};
++
++		spss_mem: spss@8e000000 {
++			reg = <0x0 0x8e000000 0x0 0x100000>;
++			no-map;
++		};
++
++		cdsp_secure_heap: cdsp-secure-heap@8e100000 {
++			reg = <0x0 0x8e100000 0x0 0x4600000>;
++			no-map;
++		};
++
++		cont_splash_mem: cont-splash@9c000000 {
++			reg = <0x0 0x9c000000 0x0 0x2300000>;
++			no-map;
++		};
++
++		ramoops@b0000000 {
++			compatible = "ramoops";
++			reg = <0x0 0xb0000000 0x0 0x400000>;
++			record-size = <0x1000>;
++			console-size = <0x200000>;
++			ecc-size = <16>;
++			no-map;
++		};
++	};
++};
++
++&adsp {
++	firmware-name = "qcom/sm8250/xiaomi/pipa/adsp.mbn";
++	status = "okay";
++};
++
++&apps_rsc {
++	regulators-0 {
++		compatible = "qcom,pm8150-rpmh-regulators";
++		qcom,pmic-id = "a";
++
++		vdd-s1-supply = <&vph_pwr>;
++		vdd-s2-supply = <&vph_pwr>;
++		vdd-s3-supply = <&vph_pwr>;
++		vdd-s4-supply = <&vph_pwr>;
++		vdd-s5-supply = <&vph_pwr>;
++		vdd-s6-supply = <&vph_pwr>;
++		vdd-s7-supply = <&vph_pwr>;
++		vdd-s8-supply = <&vph_pwr>;
++		vdd-s9-supply = <&vph_pwr>;
++		vdd-s10-supply = <&vph_pwr>;
++		vdd-l1-l8-l11-supply = <&vreg_s6c_0p88>;
++		vdd-l2-l10-supply = <&vreg_bob>;
++		vdd-l3-l4-l5-l18-supply = <&vreg_s6a_0p95>;
++		vdd-l6-l9-supply = <&vreg_s8c_1p35>;
++		vdd-l7-l12-l14-l15-supply = <&vreg_s5a_1p9>;
++		vdd-l13-l16-l17-supply = <&vreg_bob>;
++
++		/* (S1+S2+S3) - cx.lvl (ARC) */
++
++		vreg_s4a_1p8: smps4 {
++			regulator-name = "vreg_s4a_1p8";
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1920000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_s5a_1p9: smps5 {
++			regulator-name = "vreg_s5a_1p9";
++			regulator-min-microvolt = <1900000>;
++			regulator-max-microvolt = <2040000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_s6a_0p95: smps6 {
++			regulator-name = "vreg_s6a_0p95";
++			regulator-min-microvolt = <600000>;
++			regulator-max-microvolt = <1128000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l2a_3p1: ldo2 {
++			regulator-name = "vreg_l2a_3p1";
++			regulator-min-microvolt = <3072000>;
++			regulator-max-microvolt = <3072000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l3a_0p9: ldo3 {
++			regulator-name = "vreg_l3a_0p9";
++			regulator-min-microvolt = <928000>;
++			regulator-max-microvolt = <932000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		/* L4 - lmx.lvl (ARC) */
++
++		vreg_l5a_0p88: ldo5 {
++			regulator-name = "vreg_l5a_0p88";
++			regulator-min-microvolt = <880000>;
++			regulator-max-microvolt = <880000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l6a_1p2: ldo6 {
++			regulator-name = "vreg_l6a_1p2";
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1200000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		/* L7 is unused. */
++
++		vreg_l9a_1p2: ldo9 {
++			regulator-name = "vreg_l9a_1p2";
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1200000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		/* L10 is unused, L11 - lcx.lvl (ARC) */
++
++		vreg_l12a_1p8: ldo12 {
++			regulator-name = "vreg_l12a_1p8";
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		/* L13 is unused. */
++
++		vreg_l14a_1p88: ldo14 {
++			regulator-name = "vreg_l14a_1p88";
++			regulator-min-microvolt = <1880000>;
++			regulator-max-microvolt = <1880000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		/* L15 & L16 are unused. */
++
++		vreg_l17a_3p0: ldo17 {
++			regulator-name = "vreg_l17a_3p0";
++			regulator-min-microvolt = <2496000>;
++			regulator-max-microvolt = <3008000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l18a_0p9: ldo18 {
++			regulator-name = "vreg_l18a_0p9";
++			regulator-min-microvolt = <800000>;
++			regulator-max-microvolt = <920000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++	};
++
++	regulators-1 {
++		compatible = "qcom,pm8150l-rpmh-regulators";
++		qcom,pmic-id = "c";
++
++		vdd-s1-supply = <&vph_pwr>;
++		vdd-s2-supply = <&vph_pwr>;
++		vdd-s3-supply = <&vph_pwr>;
++		vdd-s4-supply = <&vph_pwr>;
++		vdd-s5-supply = <&vph_pwr>;
++		vdd-s6-supply = <&vph_pwr>;
++		vdd-s7-supply = <&vph_pwr>;
++		vdd-s8-supply = <&vph_pwr>;
++		vdd-l1-l8-supply = <&vreg_s4a_1p8>;
++		vdd-l2-l3-supply = <&vreg_s8c_1p35>;
++		vdd-l4-l5-l6-supply = <&vreg_bob>;
++		vdd-l7-l11-supply = <&vreg_bob>;
++		vdd-l9-l10-supply = <&vreg_bob>;
++		vdd-bob-supply = <&vph_pwr>;
++
++		vreg_bob: bob {
++			regulator-name = "vreg_bob";
++			regulator-min-microvolt = <3350000>;
++			regulator-max-microvolt = <3960000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_AUTO>;
++		};
++
++		/*
++		 * S1-S6 are ARCs:
++		 * (S1+S2) - gfx.lvl,
++		 * S3 - mx.lvl,
++		 * (S4+S5) - mmcx.lvl,
++		 * S6 - ebi.lvl
++		 */
++
++		vreg_s7c_0p35: smps7 {
++			regulator-name = "vreg_s7c_0p35";
++			regulator-min-microvolt = <348000>;
++			regulator-max-microvolt = <1000000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_s8c_1p35: smps8 {
++			regulator-name = "vreg_s8c_1p35";
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1400000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l1c_1p8: ldo1 {
++			regulator-name = "vreg_l1c_1p8";
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		/* L2-4 are unused. */
++
++		vreg_l5c_1p8: ldo5 {
++			regulator-name = "vreg_l5c_1p8";
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <2800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l6c_2p9: ldo6 {
++			regulator-name = "vreg_l6c_2p9";
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <2960000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l7c_2p85: ldo7 {
++			regulator-name = "vreg_l7c_2p85";
++			regulator-min-microvolt = <2856000>;
++			regulator-max-microvolt = <3104000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l8c_1p8: ldo8 {
++			regulator-name = "vreg_l8c_1p8";
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l9c_2p9: ldo9 {
++			regulator-name = "vreg_l9c_2p9";
++			regulator-min-microvolt = <2704000>;
++			regulator-max-microvolt = <2960000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l10c_3p3: ldo10 {
++			regulator-name = "vreg_l10c_3p3";
++			regulator-min-microvolt = <3000000>;
++			regulator-max-microvolt = <3312000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l11c_3p0: ldo11 {
++			regulator-name = "vreg_l11c_3p0";
++			regulator-min-microvolt = <3104000>;
++			regulator-max-microvolt = <3304000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++	};
++
++	regulators-2 {
++		compatible = "qcom,pm8009-rpmh-regulators";
++		qcom,pmic-id = "f";
++
++		vdd-s1-supply = <&vph_pwr>;
++		vdd-s2-supply = <&vreg_bob>;
++		vdd-l2-supply = <&vreg_s8c_1p35>;
++		vdd-l5-l6-supply = <&vreg_bob>;
++		vdd-l7-supply = <&vreg_s4a_1p8>;
++
++		vreg_s1f_1p2: smps1 {
++			regulator-name = "vreg_s1f_1p2";
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1300000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_s2f_0p5: smps2 {
++			regulator-name = "vreg_s2f_0p5";
++			regulator-min-microvolt = <512000>;
++			regulator-max-microvolt = <1100000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		/* L1 is unused. */
++
++		vreg_l2f_1p3: ldo2 {
++			regulator-name = "vreg_l2f_1p3";
++			regulator-min-microvolt = <1056000>;
++			regulator-max-microvolt = <1200000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		/* L3 & L4 are unused. */
++
++		vreg_l5f_2p8: ldo5 {
++			regulator-name = "vreg_l5f_2p85";
++			regulator-min-microvolt = <2800000>;
++			regulator-max-microvolt = <3000000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l6f_2p8: ldo6 {
++			regulator-name = "vreg_l6f_2p8";
++			regulator-min-microvolt = <2800000>;
++			regulator-max-microvolt = <3000000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l7f_1p8: ldo7 {
++			regulator-name = "vreg_l7f_1p8";
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++	};
++};
++
++&cdsp {
++	firmware-name = "qcom/sm8250/xiaomi/pipa/cdsp.mbn";
++	status = "okay";
++};
++
++&gmu {
++	status = "okay";
++};
++
++&gpi_dma0 {
++	status = "okay";
++};
++
++&gpi_dma1 {
++	status = "okay";
++};
++
++&gpi_dma2 {
++	status = "okay";
++};
++
++&gpu {
++	status = "okay";
++
++	zap-shader {
++		memory-region = <&gpu_mem>;
++		firmware-name = "qcom/sm8250/xiaomi/pipa/a650_zap.mbn";
++	};
++};
++
++&i2c0 {
++	clock-frequency = <400000>;
++	status = "okay";
++
++	fuel-gauge@55 {
++		compatible = "ti,bq27z561";
++		reg = <0x55>;
++		monitored-battery = <&battery_r>;
++	};
++};
++
++&i2c11 {
++	clock-frequency = <400000>;
++	status = "okay";
++
++	backlight: backlight@11 {
++		compatible = "kinetic,ktz8866";
++		reg = <0x11>;
++		vddpos-supply = <&bl_vddpos_5p5>;
++		vddneg-supply = <&bl_vddneg_5p5>;
++		enable-gpios = <&tlmm 139 GPIO_ACTIVE_HIGH>;
++		current-num-sinks = <5>;
++		kinetic,current-ramp-delay-ms = <128>;
++		kinetic,led-enable-ramp-delay-ms = <1>;
++		kinetic,enable-lcd-bias;
++	};
++};
++
++&i2c13 {
++	clock-frequency = <400000>;
++	status = "okay";
++
++	fuel-gauge@55 {
++		compatible = "ti,bq27z561";
++		reg = <0x55>;
++		monitored-battery = <&battery_l>;
++	};
++};
++
++&pcie0 {
++	status = "okay";
++};
++
++&pcie0_phy {
++	vdda-phy-supply = <&vreg_l5a_0p88>;
++	vdda-pll-supply = <&vreg_l9a_1p2>;
++	status = "okay";
++};
++
++&pm8150_gpios {
++	vol_up_n: vol-up-n-state {
++		pins = "gpio6";
++		function = "normal";
++		power-source = <1>;
++		input-enable;
++		bias-pull-up;
++	};
++};
++
++&pon_pwrkey {
++	status = "okay";
++};
++
++&pon_resin {
++	linux,code = <KEY_VOLUMEDOWN>;
++	status = "okay";
++};
++
++&qupv3_id_0 {
++	status = "okay";
++};
++
++&qupv3_id_1 {
++	status = "okay";
++};
++
++&qupv3_id_2 {
++	status = "okay";
++};
++
++&slpi {
++	firmware-name = "qcom/sm8250/xiaomi/pipa/slpi.mbn";
++	status = "okay";
++};
++
++&usb_1 {
++	status = "okay";
++};
++
++&usb_1_dwc3 {
++	dr_mode = "peripheral";
++};
++
++&usb_1_hsphy {
++	vdda-pll-supply = <&vreg_l5a_0p88>;
++	vdda18-supply = <&vreg_l12a_1p8>;
++	vdda33-supply = <&vreg_l2a_3p1>;
++	status = "okay";
++};
++
++&usb_1_qmpphy {
++	status = "okay";
++	vdda-phy-supply = <&vreg_l9a_1p2>;
++	vdda-pll-supply = <&vreg_l18a_0p9>;
++};
++
++&ufs_mem_hc {
++	vcc-supply = <&vreg_l17a_3p0>;
++	vcc-max-microamp = <800000>;
++	vccq-supply = <&vreg_l6a_1p2>;
++	vccq-max-microamp = <800000>;
++	vccq2-supply = <&vreg_s4a_1p8>;
++	vccq2-max-microamp = <800000>;
++	status = "okay";
++};
++
++&ufs_mem_phy {
++	vdda-phy-supply = <&vreg_l5a_0p88>;
++	vdda-pll-supply = <&vreg_l9a_1p2>;
++	status = "okay";
++};
++
++&venus {
++	firmware-name = "qcom/sm8250/xiaomi/pipa/venus.mbn";
++	status = "okay";
++};
 -- 
-With best wishes
-Dmitry
+2.42.0
+
