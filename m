@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D0A87D3B8D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 17:58:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40CD47D3BC8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 18:09:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229613AbjJWP6e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 11:58:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56036 "EHLO
+        id S233161AbjJWQJU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 12:09:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229448AbjJWP6e (ORCPT
+        with ESMTP id S231938AbjJWQJS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 11:58:34 -0400
+        Mon, 23 Oct 2023 12:09:18 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BA92E9;
-        Mon, 23 Oct 2023 08:58:32 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16FEBC433C8;
-        Mon, 23 Oct 2023 15:58:32 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2260810C;
+        Mon, 23 Oct 2023 09:09:15 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6AD1C433C7;
+        Mon, 23 Oct 2023 16:09:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1698076712;
-        bh=eHQE9AW+TMhNeP+Km14R1yq/+eqHlqagrK1M9EYQg3Q=;
+        s=k20201202; t=1698077354;
+        bh=q3udcmAsMOTYZRfyrRXc6quMPQsnI4nlAxg7mdbb+CM=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=uu2nv3x2wZYIXNe6hKG4VpNBSs9klnoB6Bb9jinZaTd8TzjvSgHgniv6jtd9n5vFs
-         7kPHt1G0/UyPeCs5f2oc+JOzFHFSzHAaoPLgfK3egiOe/npAd/llQkGThbE92+Rw/j
-         NoA8DMcD2UXJbL9U0JXG+m76kB2I5WrB2TB9JCMoub9aaVcgSvGwot81pmP9hd0Xz7
-         sD8fyyNRFmCL0zDAjtPkml5IuANJf+/MJWrqXPSdmGnkv3RA7EC5GVijuQnEECGKh1
-         3nZJrLxj6l3ouSEfkjosuXJNH/UUEVZ7X4H6++FTg0YturEfuuZr1dmJP+44g3MMKZ
-         F+5hYBiCLvW5Q==
+        b=nvlSqODPE4F0iXpYhyKCYN+IiPr3LmO2vXll5dwXTtPUb2mGp8x9DBelq0ZqWlamt
+         2hWzduky8atikefHg47Py6ZY8l+YERO56H2I9/GZT2SZN+cva8dwgSmIYGWvSU/YpJ
+         HVxJ63ukz/DmkAwlOm91Pnkpv6Cvz3/m2UPrhmAlcnXsYPjujLKxMC9ecRq/yny/F4
+         mduTZhMxLNzqCpzR02a3X0QGxhI/jnh0ja56CQksuJezRrU2+ucDBpf/XtGxH9SRlz
+         AEvPclrdYV/Dbq1V4ZaJVrC5zqwktCoUuCRk2i6ohGN4p0d0WCFy9FfP2thxhVhB1q
+         nQsg4pRJiY+pg==
 Received: from johan by xi.lan with local (Exim 4.96)
         (envelope-from <johan@kernel.org>)
-        id 1quxKI-00022S-02;
-        Mon, 23 Oct 2023 17:58:46 +0200
-Date:   Mon, 23 Oct 2023 17:58:46 +0200
+        id 1quxUf-00025R-0t;
+        Mon, 23 Oct 2023 18:09:29 +0200
+Date:   Mon, 23 Oct 2023 18:09:29 +0200
 From:   Johan Hovold <johan@kernel.org>
 To:     Krishna Kurapati <quic_kriskura@quicinc.com>
 Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
@@ -49,15 +49,15 @@ Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
         quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
         quic_jackp@quicinc.com, ahalaney@redhat.com,
         quic_shazhuss@quicinc.com
-Subject: Re: [PATCH v13 07/10] usb: dwc3: qcom: Add multiport suspend/resume
- support for wrapper
-Message-ID: <ZTaYNjRyT1Fn4QWX@hovoldconsulting.com>
+Subject: Re: [PATCH v13 08/10] arm64: dts: qcom: sc8280xp: Add multiport
+ controller node for SC8280
+Message-ID: <ZTaauQewazaaFonF@hovoldconsulting.com>
 References: <20231007154806.605-1-quic_kriskura@quicinc.com>
- <20231007154806.605-8-quic_kriskura@quicinc.com>
+ <20231007154806.605-9-quic_kriskura@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231007154806.605-8-quic_kriskura@quicinc.com>
+In-Reply-To: <20231007154806.605-9-quic_kriskura@quicinc.com>
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -67,114 +67,103 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Oct 07, 2023 at 09:18:03PM +0530, Krishna Kurapati wrote:
-> QCOM SoC SA8295P's tertiary quad port controller supports 2 HS+SS
-> ports and 2 HS only ports. Add support for configuring PWR_EVENT_IRQ's
-> for all the ports during suspend/resume.
-
-No need to mention SA8295P as this is needed for all multiport
-controllers.
-
-Say something about adding support for multiport controllers generally
-instead and mention what the power event irqs are used for.
- 
+On Sat, Oct 07, 2023 at 09:18:04PM +0530, Krishna Kurapati wrote:
+> Add USB and DWC3 node for tertiary port of SC8280 along with multiport
+> IRQ's and phy's. This will be used as a base for SA8295P and SA8295-Ride
+> platforms.
+> 
 > Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
 > ---
->  drivers/usb/dwc3/dwc3-qcom.c | 35 ++++++++++++++++++++++++++++-------
->  1 file changed, 28 insertions(+), 7 deletions(-)
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 84 ++++++++++++++++++++++++++
+>  1 file changed, 84 insertions(+)
 > 
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index 651b9775a0c2..dbd4239e61c9 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -37,7 +37,11 @@
->  #define PIPE3_PHYSTATUS_SW			BIT(3)
->  #define PIPE_UTMI_CLK_DIS			BIT(8)
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> index cad59af7ccef..5f64f75b07db 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> @@ -3330,6 +3330,90 @@ system-cache-controller@9200000 {
+>  			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
+>  		};
 >  
-> -#define PWR_EVNT_IRQ_STAT_REG			0x58
-> +#define PWR_EVNT_IRQ1_STAT_REG			0x58
-> +#define PWR_EVNT_IRQ2_STAT_REG			0x1dc
-> +#define PWR_EVNT_IRQ3_STAT_REG			0x228
-> +#define PWR_EVNT_IRQ4_STAT_REG			0x238
+> +		usb_2: usb@a4f8800 {
+> +			compatible = "qcom,sc8280xp-dwc3-mp", "qcom,dwc3";
 
-Not sure these defines makes sense on their own. You now only use them
-via the array below.
+So you went with a dedicated compatible even though you are now
+inferring the number of ports from the interrupts property.
 
-I think I already asked you whether these offsets depend on SoC and you
-said no, right?
+Should we drop that compatible again or is there any other reason to
+keep a separate one?
 
+> +			interrupts-extended = <&pdc 127 IRQ_TYPE_EDGE_RISING>,
+> +					      <&pdc 126 IRQ_TYPE_EDGE_RISING>,
+> +					      <&pdc 129 IRQ_TYPE_EDGE_RISING>,
+> +					      <&pdc 128 IRQ_TYPE_EDGE_RISING>,
+> +					      <&pdc 131 IRQ_TYPE_EDGE_RISING>,
+> +					      <&pdc 130 IRQ_TYPE_EDGE_RISING>,
+> +					      <&pdc 133 IRQ_TYPE_EDGE_RISING>,
+> +					      <&pdc 132 IRQ_TYPE_EDGE_RISING>,
+> +					      <&pdc 16 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&pdc 17 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&intc GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&intc GIC_SPI 135 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&intc GIC_SPI 857 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&intc GIC_SPI 856 IRQ_TYPE_LEVEL_HIGH>;
 > +
->  #define PWR_EVNT_LPM_IN_L2_MASK			BIT(4)
->  #define PWR_EVNT_LPM_OUT_L2_MASK		BIT(5)
->  
-> @@ -107,6 +111,19 @@ struct dwc3_qcom {
->  	int			num_ports;
->  };
->  
-> +/*
-> + * Currently non-multiport controller have only one PWR_EVENT_IRQ register,
-> + * but multiport controllers like SA8295 contain upto 4 of them.
-> + */
+> +			interrupt-names = "dp_hs_phy_1", "dm_hs_phy_1",
+> +					  "dp_hs_phy_2", "dm_hs_phy_2",
+> +					  "dp_hs_phy_3", "dm_hs_phy_3",
+> +					  "dp_hs_phy_4", "dm_hs_phy_4",
+> +					  "ss_phy_1", "ss_phy_2",
+> +					  "pwr_event_1",
+> +					  "pwr_event_2",
+> +					  "pwr_event_3",
+> +					  "pwr_event_4";
 
-Please try not talk about "currently" and as things are likely to
-change or, in fact, even *are* changing with your very patch series.
+The interrupt order does not match the binding, where the power event
+interrupts come first.
 
-Again, this is not SA8295 specific.
+And we probably also want the hs_phy_irqs here after fixing the
+incomplete binding.
 
-> +#define NUM_PWR_EVENT_STAT_REGS	4
+> +			usb_2_dwc3: usb@a400000 {
+> +				compatible = "snps,dwc3";
+> +				reg = <0 0x0a400000 0 0xcd00>;
+> +				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
 
-You already have MAX_PORTS, why are you defining a new define that will
-always have to be equal to MAX_PORTS?
+I'd also like to know what that second dwc3 interrupt is for and whether
+it should be defined here as well.
 
+> +				iommus = <&apps_smmu 0x800 0x0>;
+> +				phys = <&usb_2_hsphy0>, <&usb_2_qmpphy0>,
+> +				       <&usb_2_hsphy1>, <&usb_2_qmpphy1>,
+> +				       <&usb_2_hsphy2>,
+> +				       <&usb_2_hsphy3>;
+> +				phy-names = "usb2-port0", "usb3-port0",
+> +					    "usb2-port1", "usb3-port1",
+> +					    "usb2-port2",
+> +					    "usb2-port3";
 > +
-> +static u32 pwr_evnt_irq_stat_reg_offset[NUM_PWR_EVENT_STAT_REGS] = {
+> +				/*
+> +				 * Multiport controllers are host only contollers, so
 
-missing const
+spelling again...
 
-> +	PWR_EVNT_IRQ1_STAT_REG,
-> +	PWR_EVNT_IRQ2_STAT_REG,
-> +	PWR_EVNT_IRQ3_STAT_REG,
-> +	PWR_EVNT_IRQ4_STAT_REG,
-> +};
+> +				 * the dr_mode can be defaulted to host irrespective of
+> +				 * the platform.
+> +				 */
+
+I know someone asked you to add a comment, but I think you should drop
+it again because it makes little sense in its current form.
+
+This particular controller is always going to be host only so just set
+dr_mode here. No one is going to be overriding that.
+
+Any comment would need to be about this particular platform and not make
+claims about future controllers.
+
+> +				dr_mode = "host";
+> +			};
+> +		};
 > +
->  static inline void dwc3_qcom_setbits(void __iomem *base, u32 offset, u32 val)
->  {
->  	u32 reg;
-> @@ -446,9 +463,11 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
->  	if (qcom->is_suspended)
->  		return 0;
->  
-> -	val = readl(qcom->qscratch_base + PWR_EVNT_IRQ_STAT_REG);
-> -	if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
-> -		dev_err(qcom->dev, "HS-PHY not in L2\n");
-> +	for (i = 0; i < qcom->num_ports; i++) {
-> +		val = readl(qcom->qscratch_base + pwr_evnt_irq_stat_reg_offset[i]);
-> +		if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
-> +			dev_err(qcom->dev, "HS-PHY not in L2\n");
-
-Error message should contain the port number.
-
-> +	}
->  
->  	for (i = qcom->num_clocks - 1; i >= 0; i--)
->  		clk_disable_unprepare(qcom->clks[i]);
-> @@ -494,9 +513,11 @@ static int dwc3_qcom_resume(struct dwc3_qcom *qcom, bool wakeup)
->  		dev_warn(qcom->dev, "failed to enable interconnect: %d\n", ret);
->  
->  	/* Clear existing events from PHY related to L2 in/out */
-> -	dwc3_qcom_setbits(qcom->qscratch_base, PWR_EVNT_IRQ_STAT_REG,
-> -			  PWR_EVNT_LPM_IN_L2_MASK | PWR_EVNT_LPM_OUT_L2_MASK);
-> -
-> +	for (i = 0; i < qcom->num_ports; i++) {
-> +		dwc3_qcom_setbits(qcom->qscratch_base,
-> +			pwr_evnt_irq_stat_reg_offset[i],
-> +			PWR_EVNT_LPM_IN_L2_MASK | PWR_EVNT_LPM_OUT_L2_MASK);
-
-Again, continuation lines should be indented at least two tabs further.
-
-> +	}
->  	qcom->is_suspended = false;
->  
->  	return 0;
 
 Johan
