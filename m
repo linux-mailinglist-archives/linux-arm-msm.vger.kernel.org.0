@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B4D887D2E29
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 11:25:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B78907D2E2F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 11:27:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232894AbjJWJZt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 05:25:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49954 "EHLO
+        id S229714AbjJWJ1I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 05:27:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233042AbjJWJZn (ORCPT
+        with ESMTP id S229687AbjJWJ1H (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 05:25:43 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA18E10CE
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 02:25:40 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-40837ebba42so22529915e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 02:25:40 -0700 (PDT)
+        Mon, 23 Oct 2023 05:27:07 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C038DF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 02:27:04 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-40859dee28cso13881095e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 02:27:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698053139; x=1698657939; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698053223; x=1698658023; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=nW7i7b8vhIed47V4oIjE0BLCMbc+AJZblIGq7PmcJLw=;
-        b=vvznWHg4H/k/yMBpsXXrEDoPXAEF0NIpfM4NlGG/6VCP9Tanq/K6u9S5oq0UvyoPuk
-         15INw/7eyUN4H55/2AUDf9If7hX5xNWWuxqebkN8f2gXcyw60NH4IUk8msqmsjWEQYLB
-         2gPDeydYkegR/as9vfWYWV9z3qdNU7X3MIwNTMJesOy/0NJw/vdlpfHqQXAXFhuptcAP
-         mOYG+NxwLdfMp6Dk1mtXd3UOhLVn5+nf6a/3kmFAQe2jCEtxwQP2qCuw/1L647SV6ym4
-         G2/iotsrGOrAXrhG8mnJbK0KZeqn+HqSSbsrGv1YF1iicHwL7hYWH9mUoPcYWTF5+2iJ
-         jLog==
+        bh=uzKn9ZeksQ9p/OpB5UW9n5bh5oNl306T9AasHql+ieA=;
+        b=hQKRLjFSRohTvqyN1cklNJ9zYjHyG2mWcRWq4hLD/dYSBYINXEUYpaC7ZURLLQafMN
+         brw4UarAHqBfKI6E1ZEfHu6oUG2S+A0V6q7BQ32VbEufRz2R91OetHqE5VSQKoqiwcaI
+         euQvGwSQXi0W9hdtf045wq/ni3LCb+Ck7QHaqOge6ubzK3iMUIB62hbYVXIOiTVu67h3
+         xpxIyVzGkHfkzJLayHV2saAwKMYVm75ef+pk2rnszniy+UWO8VDZLkpC5/kWV2XSmvzV
+         uvx7HqF4GS5tl8LVdSzpexfv2lE96IwhbdL79//7MFVQblKH52xKQP5NjtWow1XBoRfp
+         CJPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698053139; x=1698657939;
+        d=1e100.net; s=20230601; t=1698053223; x=1698658023;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nW7i7b8vhIed47V4oIjE0BLCMbc+AJZblIGq7PmcJLw=;
-        b=DOz2KyTSKMS57qTIqmy3SRi1w+YViADb2oCPnSARAGiWQVRNaMH5ZaIi3Vdz2pxwNW
-         hxJ1+EXTYofzOMkQdwTUkWvE1dz/MN79Y4rkoB0zyDI6udvEkzt9aNl3YOa2vGF9Ar7O
-         3dQsA3CJ7RNE6yRZWjjW58VEVnuGm2GiJ6XBDhJDiTTsh1Cb34xeV2mx5CJXXKpHvB9C
-         Vah+y/OA4IFomnWCZc8zvu7sNS3jPc641J1mEy0/cxOF8QJiOSgTL7br2DeVYrDlMSBQ
-         OQF+EFTYn72iRzCxOzVNTwHs/rwM2U/Eq7azedFS5WkzRudvTZD5F+NXSy2d0zf4jVgS
-         53Hw==
-X-Gm-Message-State: AOJu0YzuorAgEa4QiRS2ie4CW+QS3sAPPzjrLiIiarYyGfLsNMj0q9mt
-        a8FEGN605yQMFxZApXAwcMVxlw==
-X-Google-Smtp-Source: AGHT+IFt6bH6eWAWqYdvbo82OTM0VsELjJsDajLCqJ5B8zgFbysym8oqDmMe3V7OGWNFqSaw0jxu1A==
-X-Received: by 2002:a05:600c:450d:b0:3ff:233f:2cfb with SMTP id t13-20020a05600c450d00b003ff233f2cfbmr6412466wmo.23.1698053139208;
-        Mon, 23 Oct 2023 02:25:39 -0700 (PDT)
+        bh=uzKn9ZeksQ9p/OpB5UW9n5bh5oNl306T9AasHql+ieA=;
+        b=hXZmS4zL7t7jmaVFZlzupTPNAAnA3pdqPmlJTAMbs3VkYwN4EOCRhiyQUffZT5vawS
+         AqTC/nYHsycAwLqGBS8ejeNJPkuKULm1XnamWn/whYg7utbCFaPHM4pNOzl90Ai7afiY
+         qsIyAqWD9qfdt1ycSjApatasKFvKW2rCccW2MdkAScy+iY0ST8QNb9DE++OgPPwYBixK
+         FbljrDncBZfFbmzd/NJ3HNB54sB3GJsrVv7FeeahyDQls6E2I7Mp8498MshYXG5T/pnW
+         ThuwxkvqL/zZOSUytulVKk+k4vnnEOwfqOqjurNtmbDiHfSqFd5HwiBFNeNYl/IngZPd
+         xkDQ==
+X-Gm-Message-State: AOJu0YwR3FwkSgsxx2l4uNtp/rEvMJNNg86xNRBzj3w4ldQZm5iidNOE
+        MP8Y+hu7OlFVDUrn/D1dLC2u4g==
+X-Google-Smtp-Source: AGHT+IGJi4MiDraW1b1J9l0aoIiVp3+7EUrWyEd8qAyuHc2ztqQUDlj9GWIQdtfDIG8AUg0BWEhPtg==
+X-Received: by 2002:a05:600c:4588:b0:409:2f7:d771 with SMTP id r8-20020a05600c458800b0040902f7d771mr1362277wmo.4.1698053222655;
+        Mon, 23 Oct 2023 02:27:02 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id p12-20020a05600c418c00b0040773c69fc0sm13481557wmh.11.2023.10.23.02.25.38
+        by smtp.gmail.com with ESMTPSA id p12-20020a05600c418c00b0040773c69fc0sm13481557wmh.11.2023.10.23.02.27.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Oct 2023 02:25:38 -0700 (PDT)
-Message-ID: <70072874-6fa8-46ba-bf26-c35aa6ec7bb6@linaro.org>
-Date:   Mon, 23 Oct 2023 11:25:37 +0200
+        Mon, 23 Oct 2023 02:27:02 -0700 (PDT)
+Message-ID: <27fcdcc1-b29b-43b2-8b1a-c648dd9e696c@linaro.org>
+Date:   Mon, 23 Oct 2023 11:27:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 0/5] soc/arm64: qcom: add initial version of memory
- dump
+Subject: Re: [PATCH v1 1/5] dt-bindings: soc: qcom: Add memory_dump driver
+ bindings
 Content-Language: en-US
 To:     Zhenhua Huang <quic_zhenhuah@quicinc.com>, agross@kernel.org,
         andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
@@ -64,6 +64,7 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, kernel@quicinc.com,
         quic_tingweiz@quicinc.com
 References: <1698052857-6918-1-git-send-email-quic_zhenhuah@quicinc.com>
+ <1698052857-6918-2-git-send-email-quic_zhenhuah@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -109,7 +110,7 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <1698052857-6918-1-git-send-email-quic_zhenhuah@quicinc.com>
+In-Reply-To: <1698052857-6918-2-git-send-email-quic_zhenhuah@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -123,50 +124,54 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 23/10/2023 11:20, Zhenhua Huang wrote:
-> Qualcomm memory dump driver is to cooperate with firmware, providing the
-> hints(id and size) of storing useful debugging information into pre-allocated
-> memory. Firmware then does the real data capture. The debugging information
-> includes cache contents, internal memory, registers. 
-> 
-> The driver dynamically reserves memory and provides the hints(dump id and size)
-> following specified protocols with firmware. After crash and warm reboot,
-> firmware scans these information and stores contents into reserved memory
-> accordingly. Firmware then enters into full dump mode which dumps whole DDR
-> to host through USB.
+> Add bindings for the QCOM Memory Dump driver providing debug
 
-How does it relate to minidump?
+Bindings are for hardware, not driver. This suggests it is not suitable
+for bindings at all.
+
+> facilities. Firmware dumps system cache, internal memory,
+> peripheral registers to reserved DDR as per the table which
+> populated by the driver, after crash and warm reset.
+
+Again driver :/
 
 > 
-> User then get full dump using PCAT and can parse out these informations.
+> Signed-off-by: Zhenhua Huang <quic_zhenhuah@quicinc.com>
+> ---
+>  .../bindings/soc/qcom/qcom,mem-dump.yaml           | 42 +++++++++++++++++++++
+>  .../devicetree/bindings/sram/qcom,imem.yaml        | 44 ++++++++++++++++++++++
+>  2 files changed, 86 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,mem-dump.yaml
 > 
-> Dump id and size are provided by bootconfig. The expected format of a
-> bootconfig file is as follows:-
-> memory_dump_config {
-> 	<node name> {
-> 		id = <id of HW component>
-> 		size = <dump size of HW component>
-> 	}
-> }
-> 
-> for example:
-> memory_dump_config {
->         c0_context_dump {
-> 		id = 0
-> 		size = 0x800
->         }
-> }
-> 
-> Test based on 6.6-rc1.
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,mem-dump.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,mem-dump.yaml
+> new file mode 100644
+> index 0000000..87f8f51
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,mem-dump.yaml
+> @@ -0,0 +1,42 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: "http://devicetree.org/schemas/soc/qcom/qcom,mem-dump.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
 
-I don't think so (or you miss yamllint).
+Drop quotes.
 
-$ git checkout v6.6-rc1
-$ b4 am...
-$ dt_binding_chec
+It does not look like you tested the bindings, at least after quick
+look. Please run `make dt_binding_check` (see
+Documentation/devicetree/bindings/writing-schema.rst for instructions).
+Maybe you need to update your dtschema and yamllint.
 
-qcom,mem-dump.yaml:5:10: [error] string value is redundantly quoted with
-any quotes (quoted-strings)
+> +
+> +title: Qualcomm memory dump
 
+Describe hardware, not driver.
+
+> +
+> +description: |
+> +  Qualcomm memory dump driver dynamically reserves memory and provides hints(id and size)
+
+Again, driver, so not suitable for DTS and bindings.
 
 Best regards,
 Krzysztof
