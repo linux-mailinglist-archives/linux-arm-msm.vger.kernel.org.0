@@ -2,148 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BCF9E7D2E12
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 11:22:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B2BE7D2E0D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 11:22:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233108AbjJWJWA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 05:22:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46688 "EHLO
+        id S232696AbjJWJVu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 05:21:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232934AbjJWJVo (ORCPT
+        with ESMTP id S232982AbjJWJVl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 05:21:44 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B448810D3;
-        Mon, 23 Oct 2023 02:21:40 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39N8Mr5o029770;
-        Mon, 23 Oct 2023 09:21:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=4+tRrjJHW/bnHCSG3tKfhqziZi7X03Kxepqnry+DFSc=;
- b=e7H46TRXMqYfDXMEDU99U/Hs/0InS3KfetgoRNVQ73E2F5WiwgDfwBF/PX0Hk0I3AiT8
- lqAHp/oFVej6Pqmf3hRojCyo0Q/AICK87vphBShjdKXp9AKGAatYaaazFKDgt+HEqdSY
- D0UZbWomDm+H5V5l7Nw7fLpYien3UQnmck7pjC5EK7wgC7jke9g92kbPS0ZhmdenLr4b
- NyiOsOQala9wpSHakQG0KeypnIhGfFdxPX+jdtrr8mnfd+WKvOOk3CWsZZuuS6HeInlb
- edxJGNbJvcKQeUSjwapycjk9I7iqfrcYI0YjGmps17bLVBDiW39/fKxCuEUv+ytFzfbJ Lw== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tv6873krx-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 23 Oct 2023 09:21:37 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39N9LZYg018595
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 23 Oct 2023 09:21:36 GMT
-Received: from zhenhuah-gv.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.39; Mon, 23 Oct 2023 02:21:30 -0700
-From:   Zhenhua Huang <quic_zhenhuah@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
-        <quic_tingweiz@quicinc.com>,
-        Zhenhua Huang <quic_zhenhuah@quicinc.com>
-Subject: [PATCH v1 5/5] arm64: dts: qcom: sm8250: Add memory dump node
-Date:   Mon, 23 Oct 2023 17:20:57 +0800
-Message-ID: <1698052857-6918-6-git-send-email-quic_zhenhuah@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1698052857-6918-1-git-send-email-quic_zhenhuah@quicinc.com>
-References: <1698052857-6918-1-git-send-email-quic_zhenhuah@quicinc.com>
+        Mon, 23 Oct 2023 05:21:41 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CCFCD71;
+        Mon, 23 Oct 2023 02:21:38 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5ABFC433C7;
+        Mon, 23 Oct 2023 09:21:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1698052897;
+        bh=uGmAHWWEHuC6CtTkdGrPEy+s20iQcX/+23N0QeT0Bkw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ublXkvkmewNO5+joVQ7EinSOUJ+/TGCa+HaP+yUl7fR8fEzCZKnjEGTQamdf4s6Tu
+         Eq611qj4Qv3n0bbj+bg6idQApdlwc8PYP7f4/8xHaFbmGBmLpRb2ohKubgYYZq//gf
+         iV2p0AnKrzU6hM6NXgqxC/a2OzXb5KV+t/zZ0tkStoa03ZJCHlmL8WnnkC9AQzvLe9
+         cAagHjNUonEAtB1egSy7/YwfmoEPSwx+ouI25HgdsVATWkUNE1LMFqDellVLOHdN2A
+         w/APbQM3fBYOLOOw0o4IPiMEV/2yOupLhjEFkWVBcsnXvLNNoO1Rl+E/4ErOlCEtw4
+         4w7D/PJ02BAcA==
+Received: from johan by xi.lan with local (Exim 4.96)
+        (envelope-from <johan@kernel.org>)
+        id 1qur8B-0007vL-2p;
+        Mon, 23 Oct 2023 11:21:51 +0200
+Date:   Mon, 23 Oct 2023 11:21:51 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
+        quic_jackp@quicinc.com, ahalaney@redhat.com,
+        quic_shazhuss@quicinc.com
+Subject: Re: [PATCH v13 05/10] usb: dwc3: qcom: Refactor IRQ handling in QCOM
+ Glue driver
+Message-ID: <ZTY7Lwjd3_8NlfEi@hovoldconsulting.com>
+References: <20231007154806.605-1-quic_kriskura@quicinc.com>
+ <20231007154806.605-6-quic_kriskura@quicinc.com>
+ <ZTJ_T1UL8-s2cgNz@hovoldconsulting.com>
+ <14fc724c-bc99-4b5d-9893-3e5eff8895f7@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: KE3nraj1n_KaN-1mmnFlERsTbk5orANf
-X-Proofpoint-ORIG-GUID: KE3nraj1n_KaN-1mmnFlERsTbk5orANf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-23_06,2023-10-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
- suspectscore=0 priorityscore=1501 bulkscore=0 phishscore=0
- lowpriorityscore=0 malwarescore=0 mlxlogscore=744 impostorscore=0
- spamscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310170001 definitions=main-2310230080
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <14fc724c-bc99-4b5d-9893-3e5eff8895f7@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device node for memory dump on sm8250. Usage of memory dump
-is to populate configuration in reserved memory, allowing
-firmware to do the dump accordingly.
+On Mon, Oct 23, 2023 at 12:11:45AM +0530, Krishna Kurapati PSSNV wrote:
+> On 10/20/2023 6:53 PM, Johan Hovold wrote:
+> > On Sat, Oct 07, 2023 at 09:18:01PM +0530, Krishna Kurapati wrote:
 
-Signed-off-by: Zhenhua Huang <quic_zhenhuah@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+> >> +#define NUM_PHY_IRQ		4
+> >> +
+> >> +enum dwc3_qcom_ph_index {
+> > 
+> > "phy_index"
+> > 
+> >> +	DP_HS_PHY_IRQ_INDEX = 0,
+> >> +	DM_HS_PHY_IRQ_INDEX,
+> >> +	SS_PHY_IRQ_INDEX,
+> >> +	HS_PHY_IRQ_INDEX,
+> >> +};
+> >> +
+> >>   struct dwc3_acpi_pdata {
+> >>   	u32			qscratch_base_offset;
+> >>   	u32			qscratch_base_size;
+> >>   	u32			dwc3_core_base_size;
+> >> +	/*
+> >> +	 * The phy_irq_index corresponds to ACPI indexes of (in order) DP/DM/SS
+> >> +	 * IRQ's respectively.
+> >> +	 */
+> >> +	int			phy_irq_index[NUM_PHY_IRQ - 1];
+> >>   	int			hs_phy_irq_index;
+> >> -	int			dp_hs_phy_irq_index;
+> >> -	int			dm_hs_phy_irq_index;
+> >> -	int			ss_phy_irq_index;
+> >>   	bool			is_urs;
+> >>   };
+> >>   
+> >> @@ -73,10 +84,12 @@ struct dwc3_qcom {
+> >>   	int			num_clocks;
+> >>   	struct reset_control	*resets;
+> >>   
+> >> +	/*
+> >> +	 * The phy_irq corresponds to IRQ's registered for (in order) DP/DM/SS
+> >> +	 * respectively.
+> >> +	 */
+> >> +	int			phy_irq[NUM_PHY_IRQ - 1][DWC3_MAX_PORTS];
+> >>   	int			hs_phy_irq;
+> >> -	int			dp_hs_phy_irq;
+> >> -	int			dm_hs_phy_irq;
+> >> -	int			ss_phy_irq;
+> > 
+> > I'm not sure using arrays like this is a good idea (and haven't you
+> > switched the indexes above?).
+> > 
+> > Why not add a port structure instead?
+> > 
+> > 	struct dwc3_qcom_port {
+> > 		int hs_phy_irq;
+> > 		int dp_hs_phy_irq;
+> > 		int dm_hs_phy_irq;
+> > 		int ss_phy_irq;
+> > 	};
+> > 
+> > and then have
+> > 
+> > 	struct dwc3_qcom_port ports[DWC3_MAX_PORTS];
+> > 
+> > in dwc3_qcom. The port structure can the later also be amended with
+> > whatever other additional per-port data there is need for.
+> > 
+> > This should make the implementation cleaner.
+> > 
+> > I also don't like the special handling of hs_phy_irq; if this is really
+> > just another name for the pwr_event_irq then this should be cleaned up
+> > before making the code more complicated than it needs to be.
+> > 
+> > Make sure to clarify this before posting a new revision.
+> 
+> hs_phy_irq is different from pwr_event_irq.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index a4e58ad..d379524 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -674,6 +674,11 @@
- 		reg = <0x0 0x80000000 0x0 0x0>;
- 	};
- 
-+	mem-dump {
-+		compatible = "qcom,mem-dump";
-+		memory-region = <&dump_mem>;
-+	};
-+
- 	pmu {
- 		compatible = "arm,armv8-pmuv3";
- 		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
-@@ -851,6 +856,13 @@
- 			reg = <0x0 0x8bf00000 0x0 0x4600000>;
- 			no-map;
- 		};
-+
-+		dump_mem: mem-dump-region {
-+			compatible = "shared-dma-pool";
-+			size = <0 0x2800000>;
-+			alloc-ranges = <0x0 0x00000000 0x0 0xffffffff>;
-+			reusable;
-+		};
- 	};
- 
- 	smem {
-@@ -5424,6 +5436,25 @@
- 			};
- 		};
- 
-+		sram@146bf000 {
-+			compatible = "qcom,sm8250-imem", "syscon", "simple-mfd";
-+			reg = <0 0x146bf000 0 0x1000>;
-+			ranges = <0 0 0x146bf000 0x1000>;
-+
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+
-+			mem-dump-table@10 {
-+			    compatible = "qcom,qcom-imem-mem-dump-table";
-+			    reg = <0x10 0x8>;
-+			};
-+
-+			mem-dump-table-size@724 {
-+				compatible = "qcom,qcom-imem-mem-dump-table-size";
-+				reg = <0x724 0x8>;
-+			};
-+		};
-+
- 		apps_smmu: iommu@15000000 {
- 			compatible = "qcom,sm8250-smmu-500", "qcom,smmu-500", "arm,mmu-500";
- 			reg = <0 0x15000000 0 0x100000>;
--- 
-2.7.4
+How is it different and how are they used?
 
+> AFAIK, there is only one of this per controller.
+
+But previous controllers were all single port so this interrupt is
+likely also per-port, even if your comment below seems to suggest even
+SC8280XP has one, which is unexpected (and not described in the updated
+binding):
+
+	Yes, all targets have the same IRQ's. Just that MP one's have
+	multiple IRQ's of each type. But hs-phy_irq is only one in
+	SC8280 as well.
+
+	https://lore.kernel.org/lkml/70b2495f-1305-05b1-2039-9573d171fe24@quicinc.com/
+
+Please clarify.
+
+> >> -static int dwc3_qcom_prep_irq(struct dwc3_qcom *qcom, char *irq_name,
+> >> -				char *disp_name, int irq)
+> >> +static int dwc3_qcom_prep_irq(struct dwc3_qcom *qcom, const char *irq_name,
+> >> +				const char *disp_name, int irq)
+> > 
+> > Ok, here you did drop the second name parameter, but without renaming
+> > the first and hidden in a long diff without any mention anywhere.
+> > 
+> I didn't understand the comment. Can you please elaborate.
+> I didn't drop the second parameter. In the usage of this call, I passed 
+> same value to both irq_name and disp_name:
+> 
+> "dwc3_qcom_prep_irq(qcom, irq_names[i], irq_names[i], irq);"
+> 
+> I mentioned in cover-letter that I am using same name as obtained from 
+> DT to register the interrupts as well. Should've mentioned that in 
+> commit text of this patch. Will do it in next version.
+
+Ah, sorry I misread the diff. You never drop the second name even though
+it is now redundant as I pointed on in a comment to one of the earlier
+patches.
+
+Johan
