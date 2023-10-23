@@ -2,85 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 627A87D394C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 16:29:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CC0F87D395B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 16:32:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230291AbjJWO3n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 10:29:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48078 "EHLO
+        id S230335AbjJWOcC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 10:32:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229686AbjJWO3m (ORCPT
+        with ESMTP id S230310AbjJWOcB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 10:29:42 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 799B1100
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 07:29:40 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2c16757987fso48919851fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 07:29:40 -0700 (PDT)
+        Mon, 23 Oct 2023 10:32:01 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B99F2D7D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 07:31:56 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2c16757987fso48962151fa.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 07:31:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698071379; x=1698676179; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=59STP8IG3xhkl1R+OwWbm4nT/u7IRLl4iyf5Y7WczEY=;
-        b=aV0lQEgNe6nzRLj3kLeArWz6mRwwpsfCl3CEcohtUfp13PW43qH15/GLwPHrI1mEqc
-         WSQBtuEdiw1WwfisryebMepzGcMKdic94zTaOIKbqeUzVrYF0dWI8I61JSV3t7zeluSw
-         4bShazqB5AtdEO9JU0Plo9EQ8BTwAsXuwUZXAw58BsaMKTmIGQp+uCkTn5n/3aBnA4A3
-         xRledW4M+q3LU+n0iav6YSEArFDOPDmey7Sn8WJAmBfa2YUDPaoPUI1ADpgll1NiOS1C
-         VxbRzlAbHS6osSS6AryQKicMHszh2C+WvpMKc+IjxSFaSNOMS1/Zsabo3ocqj/3R5z0p
-         l6mg==
+        d=linaro.org; s=google; t=1698071515; x=1698676315; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/RjxD/ZzePqPKNEmDNpLekYR5zJD70yVgVvS6NTSkRk=;
+        b=w9QwT6kc+ODiJxmlFSQ3kUqh0W7WEeN+0P54AkZvQd6oJCDa6YkaX3zlvbuWI0pBDM
+         91sZ29n/QubjP2WSYXV3z2fM9ezvsbMmuWCqwbILRhrMwtL/AXlhdu2ZiXUFS5oZKZz5
+         2xC5hlxat6lXjdChL3M0P8u8/X8vn8PVCCHlzvEFUgdaz3j3yQq4cafzrNK9ox0ofduL
+         1lYrXJqpdsdX68Um5GF69l92ZoyJUs+1MdTLcgwlqw0FrwRmsGJolWEkzYNCMY0sQ1Vd
+         ffPkMdCULZXzJ9JMzfkDGN5ylFcQvCH4ETP8ciF1gaGV+Jg411/NZ5PDDdU5WMKx3rtH
+         zH2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698071379; x=1698676179;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=59STP8IG3xhkl1R+OwWbm4nT/u7IRLl4iyf5Y7WczEY=;
-        b=P99uKBfsVt8zWvBPytayusPw2q5aom417LZcNad0P2v29RVXJz8jl+w2wiw2DqiozB
-         DH4WL2GeS5KoUvbvzUzDatdwUi/tfvO3PcyUfEWZe4gD9yeTBUR0Hw8FchkhH+oZF3w8
-         Msbd2IbBXobm1fPzIcsls3NGSVPpOGkr4Tl1pqzMbtGlVcOMvmRwgnIQRGq/2GvxC6rh
-         nP033VbYQJbmyFcoj7RggMMc1PVi00ukipFYJhiDNtLHplMXS0jks7D9M06OL603lB9b
-         QdDe+PuNNoRx9BU5+pPoPV321lwUYLZJ+qXcG4P4J/tWbS3cpkLJQh9fnXsqLFFdlQDO
-         COyw==
-X-Gm-Message-State: AOJu0YzZETMV0SbYaD8MjUJDjEYh8gF58zSEONYvbrSt+v/OwmzWQYHa
-        wRO0MR+E9bMBi9UHyyZxarpv2A==
-X-Google-Smtp-Source: AGHT+IH5WFoFfyNzJgl4CLmejLA/ZgHuJygZLcv0FelZqLu9BJ1k+mLHsMaN3Mm0ni7tH5Yu0rnSiQ==
-X-Received: by 2002:a2e:a7c7:0:b0:2c1:5645:a2c0 with SMTP id x7-20020a2ea7c7000000b002c15645a2c0mr5768343ljp.35.1698071378607;
-        Mon, 23 Oct 2023 07:29:38 -0700 (PDT)
-Received: from [10.167.154.1] (178235177080.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.80])
-        by smtp.gmail.com with ESMTPSA id t13-20020a2e8e6d000000b002c4faf47378sm1616655ljk.28.2023.10.23.07.29.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Oct 2023 07:29:38 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Mon, 23 Oct 2023 16:29:31 +0200
-Subject: [PATCH] drm/msm/adreno: Drop WARN_ON from patchid lookup for new
- GPUs
+        d=1e100.net; s=20230601; t=1698071515; x=1698676315;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/RjxD/ZzePqPKNEmDNpLekYR5zJD70yVgVvS6NTSkRk=;
+        b=TI0Mxz5GCPwVgs2m6wwdbL1RrLmjgGuPOTCUDl8NyUiYQGqjwuM0DkCZZk9NrcRUlZ
+         dwUixBrnqWftID4dZSoAtDjab3DpUF932d9KQtJqisLfPdnBQRpCixLdUL7DjElcHxs0
+         SpRwwdthkPtZ6l44HOjpDbcfgkQIF5of/TBFW78pSmpcXkajPEzFh/2uXip83yikfz6x
+         15w6vBBFmBYG5hvGKLRtl+1BpXtG7KiB+DvxkwymX8k3cmRrUUypOSBrlcLKXvaWt/ex
+         YqlyHn1047Sat7zqigPU++6kVKEddgZAQPMI0gRNmmY0TPlMl4qSO3Alu/QER48n7vb8
+         uORQ==
+X-Gm-Message-State: AOJu0YyYzHQsFdPhdokZAxHtEOJcy4W3DQga9GsUVDSFuVr5Ho3EI5un
+        dHfITwMnWyyJUM9P/A6Hlkj/UA==
+X-Google-Smtp-Source: AGHT+IGfNrDwf679B5UXwo443NxrFh3RP9MjjdQRlIg+Tr8Nwxxd30MzRmF8vBtnZ/17N3NNI1/JSw==
+X-Received: by 2002:a2e:9210:0:b0:2bf:f7ea:884a with SMTP id k16-20020a2e9210000000b002bff7ea884amr6754875ljg.30.1698071514822;
+        Mon, 23 Oct 2023 07:31:54 -0700 (PDT)
+Received: from [192.168.1.15] (host-2-99-112-229.as13285.net. [2.99.112.229])
+        by smtp.gmail.com with ESMTPSA id o30-20020a05600c511e00b004063cd8105csm14461859wms.22.2023.10.23.07.31.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Oct 2023 07:31:54 -0700 (PDT)
+Message-ID: <092c7a54-edb9-4ff5-8c35-a936461111df@linaro.org>
+Date:   Mon, 23 Oct 2023 15:31:53 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 0/5] soc/arm64: qcom: add initial version of memory
+ dump
+Content-Language: en-US
+To:     Zhenhua Huang <quic_zhenhuah@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kernel@quicinc.com,
+        quic_tingweiz@quicinc.com
+References: <1698052857-6918-1-git-send-email-quic_zhenhuah@quicinc.com>
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+In-Reply-To: <1698052857-6918-1-git-send-email-quic_zhenhuah@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231023-topic-adreno_warn-v1-1-bb1ee9391aa2@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAEqDNmUC/x2NywrCQAxFf6VkbaAdB0F/RUSSaWoDJVMyvqD03
- w0u7uJcOJwNmrhKg0u3gctbm1YLGA4dlJnsIahjMKQ+HYcYPuuqBWl0sXr/kBvmRP2ZOfN0yhA
- eUxNkJytzmPZaljhXl0m//9D1tu8/hqsr1XgAAAA=
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Rob Clark <robdclark@chromium.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1698071376; l=1189;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=CI9uW4HFCd+sT4l3B8ani/4HRFmQfbbgjJhTrM3t/ig=;
- b=SCcIvz1UzYt8XexR/pBOz+V+i46dV2cDA1630eMo2ve5CMi9C6GzQ58HdfRNOoV17ffhl+axh
- GqYKdlDyyY/DwK9zWKbyUnlzLfk2p9kjX0+mVT5IVcj8WRb7GEdWRi7
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -89,38 +78,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-New GPUs still use the lower 2 bytes of the chip id (in whatever form
-it comes) to signify silicon revision. Drop the warning that makes it
-sound as if that was unintended.
 
-Fixes: 90b593ce1c9e ("drm/msm/adreno: Switch to chip-id for identifying GPU")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/gpu/drm/msm/adreno/adreno_gpu.h | 5 -----
- 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-index 80b3f6312116..9a1ec42155fd 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -203,11 +203,6 @@ struct adreno_platform_config {
- 
- static inline uint8_t adreno_patchid(const struct adreno_gpu *gpu)
- {
--	/* It is probably ok to assume legacy "adreno_rev" format
--	 * for all a6xx devices, but probably best to limit this
--	 * to older things.
--	 */
--	WARN_ON_ONCE(gpu->info->family >= ADRENO_6XX_GEN1);
- 	return gpu->chip_id & 0xff;
- }
- 
+On 23/10/2023 10:20, Zhenhua Huang wrote:
+> Qualcomm memory dump driver is to cooperate with firmware, providing the
+> hints(id and size) of storing useful debugging information into pre-allocated
+> memory. Firmware then does the real data capture. The debugging information
+> includes cache contents, internal memory, registers. 
+> 
+> The driver dynamically reserves memory and provides the hints(dump id and size)
+> following specified protocols with firmware. After crash and warm reboot,
+> firmware scans these information and stores contents into reserved memory
+> accordingly. Firmware then enters into full dump mode which dumps whole DDR
+> to host through USB.
+> 
+> User then get full dump using PCAT and can parse out these informations.
 
----
-base-commit: e8361b005d7c92997d12f2b85a9e4a525738bd9d
-change-id: 20231023-topic-adreno_warn-42a09bb4bf64
+PCAT is a proprietary tool that requires signing up to qualcomm.com and
+installing the Qualcomm Package Manager to access. It also relies on
+another tool (QUTS) to actually interact with the board.
 
-Best regards,
+Shouldn't we have a FOSS (or at the very least OSS) tool that can be
+used to interact with these memory dumps?
+> 
+> Dump id and size are provided by bootconfig. The expected format of a
+> bootconfig file is as follows:-
+> memory_dump_config {
+> 	<node name> {
+> 		id = <id of HW component>
+> 		size = <dump size of HW component>
+> 	}
+> }
+> 
+> for example:
+> memory_dump_config {
+>         c0_context_dump {
+> 		id = 0
+> 		size = 0x800
+>         }
+> }
+> 
+> Test based on 6.6-rc1.
+> 
+> Zhenhua Huang (5):
+>   dt-bindings: soc: qcom: Add memory_dump driver bindings
+>   dt-bindings: sram: qcom,imem: document sm8250
+>   soc: qcom: memory_dump: Add memory dump driver
+>   arm64: defconfig: enable Qcom Memory Dump driver
+>   arm64: dts: qcom: sm8250: Add memory dump node
+> 
+>  .../bindings/soc/qcom/qcom,mem-dump.yaml           |  42 ++
+>  .../devicetree/bindings/sram/qcom,imem.yaml        |  45 ++
+>  MAINTAINERS                                        |   7 +
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi               |  31 ++
+>  arch/arm64/configs/defconfig                       |   1 +
+>  drivers/soc/qcom/Kconfig                           |  11 +
+>  drivers/soc/qcom/Makefile                          |   1 +
+>  drivers/soc/qcom/memory_dump.c                     | 540 +++++++++++++++++++++
+>  8 files changed, 678 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,mem-dump.yaml
+>  create mode 100644 drivers/soc/qcom/memory_dump.c
+> 
+
 -- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
-
+// Caleb (they/them)
